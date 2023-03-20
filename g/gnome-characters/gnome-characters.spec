@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Characters
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
 
 Name: gnome-characters
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Character map application for GNOME
@@ -80,6 +80,9 @@ characters.
 %doc NEWS COPYING README*
 
 %changelog
+* Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Mon Dec 05 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 

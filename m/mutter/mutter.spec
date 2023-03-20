@@ -3,10 +3,10 @@
 
 %def_disable snapshot
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 # %%ver_major - 32
-%define api_ver 11
+%define api_ver 12
 %define sover 0
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
@@ -18,7 +18,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -49,8 +49,9 @@ Patch: mutter-40.0-alt-gsettings_desktop_schemas_dep.patch
 #https://lists.altlinux.org/pipermail/sisyphus-incominger/2016-October/444041.html
 
 %define gtk_ver 3.20.0
+%define gtk4_ver 4.0.0
 %define gi_ver 0.9.5
-%define glib_ver 2.69.0
+%define glib_ver 2.75.1
 %define pango_ver 1.46.0
 %define cairo_ver 1.10.0
 %define Xi_ver 1.7.4
@@ -58,6 +59,7 @@ Patch: mutter-40.0-alt-gsettings_desktop_schemas_dep.patch
 %define wayland_protocols_ver 1.26
 %define upower_ver 0.99.0
 %define libinput_ver 1.18
+%define fribidi_ver 1.0.0
 %define gsds_ver 40
 %define gudev_ver 232
 %define pipewire_ver 0.3.21
@@ -76,6 +78,7 @@ BuildRequires: meson /proc xvfb-run
 #BuildRequires: catchsegv
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libcairo-devel >= %cairo_ver
@@ -91,7 +94,7 @@ BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
 BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
 BuildRequires: libgnome-desktop3-devel libupower-devel >= %upower_ver
 BuildRequires: libxkbcommon-x11-devel libinput-devel >= %libinput_ver
-BuildRequires: libxkbfile-devel xkeyboard-config-devel libfribidi-devel
+BuildRequires: libxkbfile-devel xkeyboard-config-devel libfribidi-devel >= %fribidi_ver
 BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: gnome-settings-daemon-devel
 BuildRequires: pkgconfig(sysprof-capture-4)
@@ -203,10 +206,11 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %_bindir/%name
 %_udevrulesdir/61-%name.rules
 %_libexecdir/%name-restart-helper
+%_libexecdir/%name-x11-frames
 %dir %pkglibdir/plugins
 %pkglibdir/plugins/*.so
 %{?_enable_installed_tests:%dir %pkgdatadir}
-%_desktopdir/%name.desktop
+#%_desktopdir/%name.desktop
 %_man1dir/*
 %doc NEWS README.md
 
@@ -235,6 +239,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %pkglibdir/Cogl-%api_ver.typelib
 %pkglibdir/CoglPango-%api_ver.typelib
 %pkglibdir/Meta-%api_ver.typelib
+%{?_enable_installed_tests:%pkglibdir/MetaTest-%api_ver.typelib}
 
 %files -n lib%name-gir-devel
 %pkglibdir/Cally-%api_ver.gir
@@ -242,6 +247,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %pkglibdir/Cogl-%api_ver.gir
 %pkglibdir/CoglPango-%api_ver.gir
 %pkglibdir/Meta-%api_ver.gir
+%{?_enable_installed_tests:%pkglibdir/MetaTest-%api_ver.gir}
 
 %files gnome
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -257,6 +263,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1:44.0-alt1
+- 44.0
+
 * Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1:43.4-alt1
 - 43.4
 

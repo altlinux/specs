@@ -3,13 +3,13 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define xdg_name org.gnome.Boxes
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -32,7 +32,7 @@ Source: %name-%version%beta.tar
 %define spice_gtk_ver 0.41
 %define phodav_ver 3.0
 %define gudev_ver 165
-%define osinfo_ver 0.2.12
+%define osinfo_ver 1.10.0
 %define tracker_ver 3.0
 %define uuid_ver 1.41.3
 %define soup3_ver 3.0.7
@@ -132,6 +132,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Fri Dec 23 2022 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
 - 43.2
 

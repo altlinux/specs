@@ -1,8 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 1.74
+%define ver_major 1.76
 %def_enable doctool
+%ifarch ppc64le armh
+%def_disable check
+%else
 %def_enable check
+%endif
 %def_enable gtk_doc
 
 Name: gobject-introspection
@@ -30,7 +34,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %filter_from_provides /python3(pkgconfig)/d
 %add_python3_req_skip distutils.msvccompiler
 
-%define glib_ver 2.58.0
+%define glib_ver 2.76.0
 %define python_ver 3.6
 
 BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
@@ -96,8 +100,7 @@ gobject-introspection.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test -v
 
 %files
 %_libdir/lib*.so.*
@@ -141,6 +144,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Mar 14 2023 Yuri N. Sedunov <aris@altlinux.org> 1.76.0-alt1
+- 1.76.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1.74.0-alt1
 - 1.74.0
 

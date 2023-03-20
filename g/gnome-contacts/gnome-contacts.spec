@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
@@ -8,7 +8,7 @@
 %def_without cheese
 
 Name: gnome-contacts
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Contacts manager for GNOME
@@ -22,14 +22,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.58
+%define glib_ver 2.64
 %define gtk4_ver 4.6.0
 %define adwaita_ver 1.2
 %define vala_ver 0.54
-%define folks_ver 0.14
-%define eds_ver 3.34
+%define folks_ver 0.15.6
+%define eds_ver 3.42
 %define cheese_ver 3.5.90
 %define portal_ver 0.6
+%define libqrencode_ver 4.1.1
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
@@ -39,6 +40,7 @@ BuildRequires: libfolks-devel >= %folks_ver libfolks-vala libvala-devel >= %vala
 BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-server-devel >= %eds_ver
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libportal-gtk4-devel >= %portal_ver
+BuildRequires: libqrencode-devel >= %libqrencode_ver
 %{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
 
 %description
@@ -73,6 +75,9 @@ BuildRequires: libportal-gtk4-devel >= %portal_ver
 %doc NEWS README*
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Wed Feb 08 2023 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 

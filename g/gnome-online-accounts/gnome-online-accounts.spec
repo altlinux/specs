@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.46
+%define ver_major 3.48
 %define _libexecdir %_prefix/libexec
 
 %def_enable backend
@@ -179,6 +179,9 @@ This package contains development documentation for the %name libraries.
 %endif
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
+- 3.48.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.0-alt1
 - 3.46.0
 

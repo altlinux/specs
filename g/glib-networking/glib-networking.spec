@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.74
+%define ver_major 2.76
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
@@ -34,9 +34,9 @@ Source: %name-%version.tar
 Requires: ca-certificates
 
 %define glib_ver 2.73.3
-%define gnutls_ver 3.6.5
+%define gnutls_ver 3.7.4
 %define p11kit_ver 0.20
-%define libproxy_ver 0.3.1
+%define libproxy_ver 0.4.16
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libgio-devel >= %glib_ver pkgconfig(systemd)
@@ -119,6 +119,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 2.76.0-alt1
+- 2.76.0
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.0-alt1
 - 2.74.0
 

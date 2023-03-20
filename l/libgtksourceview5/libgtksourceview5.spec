@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gtksourceview
-%define ver_major 5.6
+%define ver_major 5.8
 %define api_ver 5
 
 %def_disable static
@@ -20,7 +20,7 @@
 %endif
 
 Name: lib%{_name}%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -34,15 +34,12 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source: %_name-%version.tar
 %endif
 
-%define gtk_ver 4.4
+%define gtk_ver 4.6
 %define pcre2_ver 10.21
 %define libxml2_ver 2.6.0
 %define fribidi_ver 0.19.7
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-macros-valgrind
-
-# From meson.build
-BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir rpm-macros-valgrind
 BuildRequires: meson gcc-c++ gtk-doc itstool
 BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: libpcre2-devel >= %pcre2_ver
@@ -170,6 +167,9 @@ dbus-run-session xvfb-run %__meson_test
 
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 5.8.0-alt1
+- 5.8.0
+
 * Wed Jan 11 2023 Yuri N. Sedunov <aris@altlinux.org> 5.6.2-alt1
 - 5.6.2
 

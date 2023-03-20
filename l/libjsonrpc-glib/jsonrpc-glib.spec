@@ -4,7 +4,7 @@
 %define _name jsonrpc-glib
 # probably meson bug
 %define libname libjsonrpc-glib
-%define ver_major 3.42
+%define ver_major 3.44
 %define api_ver 1.0
 
 %def_enable introspection
@@ -117,6 +117,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
+- 3.44.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
 - 3.42.0
 

@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define api_ver 3.0
 %define api_ver4 4.0
@@ -19,7 +19,7 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major
 Release: alt1%beta
 
 Summary: Library with common API for various GNOME 3 modules
@@ -30,7 +30,7 @@ Url: http://www.gnome.org
 %if_disabled snapshot
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
 %else
-Source: %_name-%version.tar
+Source: %_name-%version%beta.tar
 %endif
 # add e2k to list of libseccomp incompatible cpus
 Patch: gnome-desktop-40.3-alt-e2k.patch
@@ -219,6 +219,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44-alt1
+- 44
+
 * Wed Feb 15 2023 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
 - 43.2
 

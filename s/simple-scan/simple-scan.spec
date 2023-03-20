@@ -1,5 +1,5 @@
-%def_enable snapshot
-%define ver_major 42
+%def_disable snapshot
+%define ver_major 44
 %define beta %nil
 %define xdg_name org.gnome.SimpleScan
 
@@ -7,8 +7,8 @@
 %def_enable packagekit
 
 Name: simple-scan
-Version: %ver_major.5
-Release: alt2%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Simple scanning utility
 License: GPL-3.0-or-later
@@ -67,6 +67,9 @@ sed -i 's|libsane-hpaio|hplip-sane|' src/app-window.vala
 %_man1dir/*
 
 %changelog
+* Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Mon Dec 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.5-alt2
 - 42.5-36-g86822905 (updated translations)
 - packagekit support: replaced libsane-hpaio by our hplip-sane (ALT #44683)

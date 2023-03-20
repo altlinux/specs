@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define api_ver 1.0
 
@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt1%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -36,7 +36,7 @@ Group: Graphical desktop/GNOME
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 Source1: gdm_xdmcp.control
@@ -297,6 +297,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Fri Oct 07 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt2
 - data/61-gdm.rules.in: /usr/bin/touch -> /bin/touch (reported by shaba@)
 

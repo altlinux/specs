@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.34
+%define ver_major 1.36
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -31,9 +31,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-BuildRequires(pre): meson
-BuildRequires: gnome-common
-BuildRequires: libgio-devel >= 2.38.0 libgtk+3-devel >= 3.0.0
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson gnome-common
+BuildRequires: libgio-devel >= 2.44.0 libgtk+3-devel >= 3.0.0
 # for python3 support
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
@@ -161,8 +161,7 @@ This package contains %name demonstration programs
 %find_lang --output=%name.lang %name-%api_ver
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-xvfb-run %meson_test
+xvfb-run %__meson_test
 
 
 %files -f %name.lang
@@ -222,6 +221,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.36.0-alt1
+- 1.36.0
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.34.0-alt1
 - 1.34.0
 

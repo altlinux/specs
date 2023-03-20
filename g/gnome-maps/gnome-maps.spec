@@ -1,11 +1,11 @@
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Maps is a map application for GNOME
@@ -28,7 +28,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %define shumate_ver 1.0.3
 %define gweather_api_ver 4.0
 %define soup_api_ver 3.0
-%define webkit_api_ver 5.0
+%define webkit_api_ver 6.0
 %define rest_api_ver 1.0
 
 Requires: geoclue2 >= %geoclue_ver
@@ -55,7 +55,7 @@ Requires: typelib(Rest) = %rest_api_ver
 Requires: typelib(Secret)
 Requires: typelib(Shumate)
 Requires: typelib(Soup) = %soup_api_ver
-Requires: typelib(WebKit2) = %webkit_api_ver
+#Requires: typelib(WebKit) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson >= %meson_ver yelp-tools %_bindir/appstream-util desktop-file-utils
@@ -99,6 +99,9 @@ sed -i 's/\(1.0.0\).beta/\1/' meson.build
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Wed Feb 01 2023 Yuri N. Sedunov <aris@altlinux.org> 43.4-alt1
 - 43.4
 

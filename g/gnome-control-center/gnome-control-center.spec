@@ -3,19 +3,19 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define api_ver 2.0
 %define xdg_name org.gnome.Settings
 
 %def_disable debug
 %def_with bluetooth
-%def_without snap
+%def_with snap
 %def_with malcontent
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.4.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -24,14 +24,15 @@ Group: Graphical desktop/GNOME
 Url: https://www.gnome.org
 
 %if_enabled snapshot
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %else
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
 
-%define gtk4_ver 4.4.0
-%define glib_ver 2.64.0
-%define desktop_ver 3.33.4
+%define glib_ver 2.75.0
+%define gtk4_ver 4.9.3
+%define adwaita_ver 1.2
+%define desktop_ver 43
 %define fontconfig_ver 1.0.0
 %define gsds_ver 42
 # nm_client_get_permissions_state()
@@ -52,8 +53,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %define snapd_ver 1.49
 %define malcontent_ver 0.11.0
 %define gudev_ver 232
-%define pulse_ver 12.99.3
-%define adwaita_ver 1.0
+%define pulse_ver 2.0
+%define cups_ver 1.4
 
 Requires: %name-data = %EVR
 
@@ -79,7 +80,8 @@ BuildRequires: libibus-devel >= %ibus_ver libxkbfile-devel
 BuildRequires: libupower-devel >= %upower_ver libpolkit1-devel >= %polkit_ver
 BuildRequires: libgio-devel librsvg-devel libxml2-devel
 BuildRequires: libX11-devel libXi-devel
-BuildRequires: libgtop-devel libcups-devel libpulseaudio-devel >= %pulse_ver iso-codes-devel
+BuildRequires: libgtop-devel libcups-devel >= %cups_ver
+BuildRequires: libpulseaudio-devel >= %pulse_ver iso-codes-devel
 BuildRequires: libpwquality-devel >= %pwq_ver libkrb5-devel libsmbclient-devel
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
 # for test-endianess
@@ -93,7 +95,7 @@ BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libsecret-devel libgnutls-devel
 BuildRequires: libudisks2-devel
 %{?_with_bluetooth:BuildRequires: pkgconfig(gnome-bluetooth-ui-%bt_api_ver) >= %bt_ver}
-%{?_with_snap:BuildRequires: lisnapd-glib-devel >= %snapd_ver}
+%{?_with_snap:BuildRequires: snapd-glib-devel >= %snapd_ver}
 %{?_with_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
 BuildRequires: libgudev-devel >= %gudev_ver libgsound-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
@@ -182,6 +184,9 @@ you'll want to install this package.
 
 
 %changelog
+* Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Mon Feb 13 2023 Yuri N. Sedunov <aris@altlinux.org> 43.4.1-alt1
 - 43.4.1
 

@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -19,7 +19,7 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A document viewer
@@ -43,7 +43,7 @@ Requires: dconf
 %define poppler_ver 22.02.0
 %define libarchive_ver 3.6.0
 %define gtk_ver 3.22
-%define handy_ver 1.0.0
+%define handy_ver 1.5.0
 %define spectre_ver 0.2.0
 
 BuildRequires(pre): rpm-macros-meson
@@ -54,6 +54,7 @@ BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel
 BuildRequires: libspectre-devel >= %spectre_ver libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel
 BuildRequires: zlib-devel libsecret-devel libarchive-devel >= %libarchive_ver libgspell-devel
+BuildRequires: libsynctex-devel
 BuildRequires: libgnome-desktop3-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_xps:BuildRequires: libgxps-devel}
@@ -227,6 +228,9 @@ using Evince library.
 
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Fri Oct 28 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 

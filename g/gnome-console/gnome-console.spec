@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define xdg_name org.gnome.Console
 %define binary_name kgx
@@ -25,9 +25,9 @@ Vcs: https://gitlab.gnome.org/GNOME/console.git
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.66
-%define gtk4_ver 3.24.0
-%define adwaita_ver 1.2
+%define glib_ver 2.72
+%define gtk4_ver 4.6
+%define adwaita_ver 1.3
 %define vte_ver 0.69.91
 %define nautilus_ver 43
 
@@ -85,6 +85,9 @@ Nautilus file manager.
 %endif
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Sun Sep 25 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 

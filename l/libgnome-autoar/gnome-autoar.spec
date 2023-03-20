@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Automatic archives creating and extracting library
@@ -26,15 +26,16 @@ Source: %_name-%version.tar
 %endif
 
 %define glib_ver 2.38
+%define gi_ver 1.30
 %define gtk_ver 3.2
-%define archive_ver 3.2.0
+%define archive_ver 3.4.0
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libarchive-devel >= %archive_ver
 %{?_enable_introspection:
 BuildRequires(pre): rpm-build-gir
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
+BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel}
 %{?_enable_vala:
 BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
@@ -135,6 +136,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
+- 0.4.4
+
 * Wed Mar 02 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
 - 0.4.3
 

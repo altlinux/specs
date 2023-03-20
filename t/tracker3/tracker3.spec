@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name tracker
-%define ver_major 3.4
+%define ver_major 3.5
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %{api_ver_major}.0
@@ -25,7 +25,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -71,7 +71,7 @@ BuildRequires: libjson-glib-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_upower:BuildRequires: libupower-devel >= %upower_ver}
 %{?_enable_stemmer:BuildRequires: libstemmer-devel}
-%{?_enable_docs:BuildRequires: hotdoc}
+%{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: asciidoc-a2x xsltproc}
 BuildRequires: vala-tools
 BuildRequires: sqlite3 libsqlite3-devel >= %sqlite_ver
@@ -184,6 +184,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 
 %files -n lib%name
 %_libdir/*.so.*
+%_libdir/%_name-%api_ver/lib%_name-parser-libicu.so
 %{?_enable_soup2:%_libdir/%_name-%api_ver/lib%_name-http-soup2.so}
 %{?_enable_soup3:%_libdir/%_name-%api_ver/lib%_name-http-soup3.so}
 
@@ -195,7 +196,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 
 %if_enabled docs
 %files devel-doc
-%_datadir/devhelp/books/Tracker/
+%_datadir/doc/Tracker-%api_ver
 %endif
 
 %if_enabled introspection
@@ -212,6 +213,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 %endif
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 3.5.0-alt1
+- 3.5.0
+
 * Mon Dec 05 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

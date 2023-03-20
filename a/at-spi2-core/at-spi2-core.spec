@@ -1,5 +1,5 @@
 %define _name at-spi2
-%define ver_major 2.46
+%define ver_major 2.48
 %define api_ver_major 2
 %define api_ver 2.0
 %define atk_api_ver 1.0
@@ -25,7 +25,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: lib%name = %version-%release
 Requires: dbus-tools-gui
 
-%define meson_ver 0.56.2
+%define meson_ver 0.63
 %define glib_ver 2.67.4
 %define dbus_ver 1.5
 
@@ -35,7 +35,7 @@ BuildRequires: libxml2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
 %{?_enable_xevie:BuildRequires: libXevie-devel}
-%{?_enable_doc:BuildRequires: gtk-doc}
+%{?_enable_doc:BuildRequires: /usr/bin/sphinx-build-3 python3-module-sphinx_rtd_theme gi-docgen}
 
 %description
 The Access Technology Service Provider Interface (AT-SPI) is a set of
@@ -171,12 +171,13 @@ This package provides development files for atk-bridge library.
 
 %prep
 %setup
+sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 
 %build
 %meson \
     -Ddbus_daemon=/bin/dbus-daemon \
-    %{?_disable_x11:-Denable-x11=false} \
-    %{?_disable_introspection:-Denable-introspection=false} \
+    %{?_disable_x11:-Dx11=disabled} \
+    %{?_disable_introspection:-Dintrospection=disabled} \
     %{?_enable_doc:-Ddocs=true}
 %nil
 %meson_build
@@ -240,13 +241,16 @@ This package provides development files for atk-bridge library.
 
 %if_enabled doc
 %files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/libatspi/
+%_datadir/doc/libatspi/
 
 %files -n libatk-devel-doc
-%_datadir/gtk-doc/html/atk/
+%_datadir/doc/atk/
 %endif
 
 %changelog
+* Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 2.48.0-alt1
+- 2.48.0
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.46.0-alt1
 - 2.46.0 (merged with ATK and ati-spi2-atk)
 

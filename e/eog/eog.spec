@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
@@ -12,7 +12,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Eye Of Gnome
@@ -177,6 +177,9 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Sun Jan 08 2023 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
 - 43.2
 

@@ -1,8 +1,8 @@
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 
 Name: gnome-backgrounds
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A collection of GNOME backgrounds
@@ -38,6 +38,9 @@ with the GNOME desktop.
 %doc NEWS README*
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Wed Feb 15 2023 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 

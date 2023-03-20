@@ -2,13 +2,13 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name vte
-%define ver_major 0.70
+%define ver_major 0.72
 %define api_ver 2.91
 # bindigs version for -gtk4 library
 %define bind_ver 3.91
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
@@ -212,6 +212,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.72.0-alt1
+- 0.72.0
+
 * Sun Feb 12 2023 Yuri N. Sedunov <aris@altlinux.org> 0.70.3-alt1
 - 0.70.3
 

@@ -7,7 +7,7 @@
 %def_enable ui
 
 Name: malcontent
-Version: 0.11.0
+Version: 0.11.1
 Release: alt1
 
 Summary: Parental controls implementation
@@ -203,6 +203,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%xdg_name.app
 
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
+- 0.11.1
+
 * Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
 - 0.11.0 (ui ported to GTK4/libadwaita)
 

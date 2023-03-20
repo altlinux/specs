@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define xdg_name org.gnome.TextEditor
 
@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: gnome-text-editor
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A simple Text Editor for GNOME
@@ -66,6 +66,9 @@ general purpose default editor.
 %doc README* NEWS
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Wed Jan 11 2023 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
 - 43.2
 

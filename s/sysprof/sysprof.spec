@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define ver_major 3.46
+%define ver_major 3.48
 %define api_ver 4
 %define ui_api_ver 5
 %define xdg_name org.gnome.Sysprof
@@ -35,7 +35,7 @@ Source: %name-%version.tar
 %define polkit_ver 0.105
 
 BuildRequires(pre): meson
-BuildRequires: gcc-c++ libappstream-glib-devel yelp-tools
+BuildRequires: gcc-c++ /usr/bin/appstream-util yelp-tools
 BuildRequires: glib2-devel >= %glib_ver libjson-glib-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_gtk:BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1)}
@@ -112,6 +112,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%api_ver.pc
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
+- 3.48.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.0-alt1
 - 3.46.0
 

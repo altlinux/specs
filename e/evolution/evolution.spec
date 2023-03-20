@@ -5,8 +5,8 @@
 
 %define xdg_name org.gnome.Evolution
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.46
-%define ver_base 3.46
+%define ver_major 3.48
+%define ver_base 3.48
 %define gst_api_ver 1.0
 
 %def_disable gtk_doc
@@ -21,7 +21,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -42,9 +42,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Provides: camel
 
-# from configure.ac
-%define glib_ver 2.40.0
-%define gtk_ver 3.10
+%define glib_ver 2.66.0
+%define gtk_ver 3.22
 %define clutter_gtk_ver 0.91.8
 %define eds_ver %version
 %define gnome_icon_ver 3.0.0
@@ -280,6 +279,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
+- 3.48.0
+
 * Fri Feb 10 2023 Yuri N. Sedunov <aris@altlinux.org> 3.46.4-alt1
 - 3.46.4
 

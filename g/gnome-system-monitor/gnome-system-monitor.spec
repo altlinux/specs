@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 42
+%define ver_major 44
 %define beta %nil
 %def_enable systemd
 %def_disable wnck
@@ -78,6 +78,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

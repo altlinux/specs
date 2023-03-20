@@ -33,7 +33,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -58,7 +58,7 @@ Patch1: gvfs-1.19.90-alt-1-logind-state.patch
 Obsoletes: %name-utils < 1.31
 Obsoletes: bash-completion-gvfs < 1.31
 
-%define glib_ver 2.66.0
+%define glib_ver 2.70.0
 %define libsoup3_ver 3.0.0
 %define avahi_ver 0.6
 %define libcdio_paranoia_ver 10.2
@@ -91,30 +91,30 @@ BuildRequires: openssh-clients
 BuildRequires: libgudev-devel
 # required if autoreconf used
 BuildRequires: libgcrypt-devel
-%{?_enable_afc:BuildPreReq: libimobiledevice-devel >= %imobiledevice_ver pkgconfig(libplist-2.0)}
-%{?_enable_afp:BuildPreReq: libgcrypt-devel}
-%{?_enable_archive:BuildPreReq: libarchive-devel >= %libarchive_ver}
-%{?_enable_dnssd:BuildPreReq: libavahi-glib-devel >= %avahi_ver libavahi-devel >= %avahi_ver}
+%{?_enable_afc:BuildRequires: libimobiledevice-devel >= %imobiledevice_ver pkgconfig(libplist-2.0)}
+%{?_enable_afp:BuildRequires: libgcrypt-devel}
+%{?_enable_archive:BuildRequires: libarchive-devel >= %libarchive_ver}
+%{?_enable_dnssd:BuildRequires: libavahi-glib-devel >= %avahi_ver libavahi-devel >= %avahi_ver}
 %{?_enable_bluray:BuildRequires: libbluray-devel}
-%{?_enable_cdda:BuildPreReq: libcdio-paranoia-devel >= %libcdio_paranoia_ver}
-%{?_enable_fuse:BuildPreReq: libfuse3-devel}
+%{?_enable_cdda:BuildRequires: libcdio-paranoia-devel >= %libcdio_paranoia_ver}
+%{?_enable_fuse:BuildRequires: libfuse3-devel}
 %{?_enable_gcr:BuildRequires: gcr-libs-devel}
-%{?_enable_gdu:BuildPreReq: libgdu-devel >= %gdu_ver libgudev-devel}
-%{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
-%{?_enable_gphoto2:BuildPreReq: libgphoto2-devel}
-%{?_enable_http:BuildPreReq: libsoup3.0-devel >= %libsoup3_ver libxml2-devel}
-%{?_enable_keyring:BuildPreReq: libsecret-devel}
-%{?_enable_libmtp:BuildPreReq: libmtp-devel >= %mtp_ver}
-%{?_enable_nfs:BuildPreReq: libnfs-devel >= %nfs_ver}
-%{?_enable_obexftp:BuildPreReq: libbluez-devel >= %bluez_ver libdbus-glib-devel libexpat-devel}
-%{?_enable_samba:BuildPreReq: libsmbclient-devel}
-%{?_enable_systemd_login:BuildPreReq: libsystemd-devel}
-%{?_enable_udisks2:BuildPreReq: libudisks2-devel >= %udisks_ver}
-%{?_enable_google:BuildPreReq: libgdata-devel >= %gdata_ver}
+%{?_enable_gdu:BuildRequires: libgdu-devel >= %gdu_ver libgudev-devel}
+%{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver}
+%{?_enable_gphoto2:BuildRequires: libgphoto2-devel}
+%{?_enable_http:BuildRequires: libsoup3.0-devel >= %libsoup3_ver libxml2-devel}
+%{?_enable_keyring:BuildRequires: libsecret-devel}
+%{?_enable_libmtp:BuildRequires: libmtp-devel >= %mtp_ver}
+%{?_enable_nfs:BuildRequires: libnfs-devel >= %nfs_ver}
+%{?_enable_obexftp:BuildRequires: libbluez-devel >= %bluez_ver libdbus-glib-devel libexpat-devel}
+%{?_enable_samba:BuildRequires: libsmbclient-devel}
+%{?_enable_systemd_login:BuildRequires: libsystemd-devel}
+%{?_enable_udisks2:BuildRequires: libudisks2-devel >= %udisks_ver}
+%{?_enable_google:BuildRequires: libgdata-devel >= %gdata_ver}
 %{?_enable_admin:BuildRequires: libpolkit-devel libcap-devel}
 %{?_enable_libusb:BuildRequires: libusb-devel >= %libusb_ver}
 
-BuildPreReq: desktop-file-utils
+BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++ perl-XML-Parser
 
 %if_enabled check
@@ -539,6 +539,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.50.4-alt1
+- 1.50.4
+
 * Sat Jan 07 2023 Yuri N. Sedunov <aris@altlinux.org> 1.50.3-alt1
 - 1.50.3
 

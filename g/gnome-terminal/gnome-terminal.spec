@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 3.46
+%define ver_major 3.48
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-4
@@ -8,7 +8,7 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.52
 %define gtk_ver 3.24
-%define vte_ver 0.70.0
+%define vte_ver 0.72.0
 
 Provides: xvt
 
@@ -107,6 +107,9 @@ EOF
 %endif
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
+- 3.48.0
+
 * Sun Feb 12 2023 Yuri N. Sedunov <aris@altlinux.org> 3.46.8-alt1
 - 3.46.8
 

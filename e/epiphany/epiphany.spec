@@ -3,12 +3,12 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define xdg_name org.gnome.Epiphany
 
 Name: epiphany
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -18,7 +18,7 @@ License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Web
 
 %if_enabled snapshot
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
@@ -28,39 +28,38 @@ Obsoletes: %name-extensions
 
 %add_findprov_lib_path %_libdir/%name
 
-%define glib_ver 2.67.4
-%define webki_api_ver 4.1
-%define webkit_ver 2.37.90
-%define gtk_ver 3.24.0
+%define glib_ver 2.70.0
+%define webki_api_ver 6.0
+%define webkit_ver 2.39.91
+%define gtk4_ver 4.9.3
+%define adwaita_ver 1.3
+%define gcr4_ver 3.9.0
 %define nettle_ver 3.4
 %define libxml2_ver 2.6.12
 %define soup3_ver 2.99.4
 %define secret_ver 0.19
-%define gcr_ver 3.5.5
-%define dazzle_ver 3.37.1
-%define handy_ver 1.5.0
 %define iso_codes_ver 0.35
 %define sqlite_ver 3.24
-%define portal_ver 0.5
+%define portal_ver 0.6
 
 Requires: %name-data = %version-%release indexhtml iso-codes
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson gcc-c++ yelp-tools libappstream-glib-devel desktop-file-utils
-BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: meson gcc-c++ yelp-tools /usr/bin/appstream-util desktop-file-utils
+BuildRequires: libgtk4-devel >= %gtk4_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: gcr4-libs-devel >= %gcr4_ver
+BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: libsecret-devel >= %secret_ver
-BuildRequires: gcr-libs-devel >= %gcr_ver
-BuildRequires: libdazzle-devel >= %dazzle_ver
-BuildRequires: libnotify-devel libsqlite3-devel >= %sqlite_ver
+BuildRequires: libsqlite3-devel >= %sqlite_ver
 BuildRequires: libnettle-devel >= %nettle_ver
 BuildRequires: iso-codes-devel >= %iso_codes_ver
-BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
-BuildRequires: libicu-devel libjson-glib-devel
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
-BuildRequires: libportal-gtk3-devel >= %portal_ver
+BuildRequires: gsettings-desktop-schemas-devel
+BuildRequires: libjson-glib-devel
+BuildRequires: libportal-gtk4-devel >= %portal_ver
 BuildRequires: libarchive-devel
-BuildRequires: libsoup3.0-devel >= %soup3_ver pkgconfig(webkit2gtk-%webki_api_ver) >= %webkit_ver
+BuildRequires: libsoup3.0-devel >= %soup3_ver pkgconfig(webkitgtk-%webki_api_ver) >= %webkit_ver
 
 %description
 Epiphany is a GNOME web browser based on the Webkit rendering engine.
@@ -114,6 +113,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0 (ported to GTK4/Adw-1/WebKitGTK-6.0)
+
 * Tue Feb 21 2023 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 

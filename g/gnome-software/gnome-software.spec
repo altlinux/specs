@@ -1,8 +1,8 @@
 %def_disable snapshot
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
-%define plugins_ver 19
+%define plugins_ver 20
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
 
@@ -34,7 +34,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -48,19 +48,19 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.66
+%define glib_ver 2.70
 %define gtk4_ver 4.0.0
 %define appstream_ver 0.14
-%define json_glib_ver 1.1.1
+%define json_glib_ver 1.6.0
 %define soup_ver 2.52
 %define soup3_ver 3.0
-%define packagekit_ver 1.1.9
+%define packagekit_ver 1.2.5
 %define gsds_ver 3.18
-%define fwupd_ver 1.0.3
-%define flatpak_ver 0.99.3
-%define ostree_ver 2018.4
+%define fwupd_ver 1.5.6
+%define flatpak_ver 1.9.1
+%define ostree_ver 2019.3
 %define xmlb_ver 0.1.4
-%define adwaita_ver 1.0.1
+%define adwaita_ver 1.3
 %define malcontent_ver 0.11
 
 %{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
@@ -82,6 +82,7 @@ BuildRequires: libsqlite3-devel libsecret-devel gsettings-desktop-schemas-devel 
 BuildRequires: libgnome-online-accounts-devel
 BuildRequires: libxmlb-devel >= %xmlb_ver
 BuildRequires: libglib-testing-devel
+BuildRequires: pkgconfig(sysprof-capture-4)
 %{?_enable sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_gnome_desktop:BuildRequires: gsettings-desktop-schemas >= %gsds_ver}
@@ -187,6 +188,9 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Thu Mar 16 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Fri Mar 03 2023 Yuri N. Sedunov <aris@altlinux.org> 43.5-alt1
 - 43.5
 

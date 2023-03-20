@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define api_ver 4.0
 %define ext_api_ver 4
@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -32,16 +32,16 @@ Source: %name-%version%beta.tar
 %endif
 
 %define desktop_file_utils_ver 0.8
-%define glib_ver 2.70
+%define glib_ver 2.72.0
 %define desktop_ver 43
 %define pango_ver 1.28.3
-%define gtk4_ver 4.7.2
-%define adwaita_ver 1.2
+%define gtk4_ver 4.9.1
+%define adwaita_ver 1.3
 %define libxml2_ver 2.7.8
 %define gexiv2_ver 0.14
 %define gir_ver 0.10.2
 %define tracker_ver 2.99.2
-%define autoar_ver 0.4
+%define autoar_ver 0.4.4
 %define portal_ver 0.5
 %define handy_ver 1.5.0
 %define selinux_ver 2.0
@@ -206,6 +206,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Sun Jan 08 2023 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
 - 43.2
 

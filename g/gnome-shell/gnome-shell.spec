@@ -2,8 +2,9 @@
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
+%define api_ver 12
 %define gst_api_ver 1.0
 %def_disable soup2
 %def_disable gtk_doc
@@ -12,7 +13,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -23,16 +24,15 @@ Url: https://wiki.gnome.org/Projects/GnomeShell
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define session_ver 3.26
-%define clutter_ver 1.21.5
 %define gjs_ver 1.73.1
-%define mutter_ver 43
+%define mutter_ver 44
 %define gtk_ver 3.16.0
 %define adwaita_ver 1.0
 %define gio_ver 2.56.0
@@ -102,13 +102,14 @@ Requires: typelib(GObject)
 Requires: typelib(Graphene)
 Requires: typelib(Gst)
 Requires: typelib(Gtk) = 3.0
+Requires: typelib(Gtk) = 4.0
 Requires: typelib(Gvc)
 Requires: typelib(GWeather) = %gweather_api_ver
 Requires: typelib(IBus)
 Requires: typelib(Malcontent)
 Requires: typelib(Meta)
 Requires: typelib(NM)
-Requires: typelib(NMA)
+Requires: typelib(NMA4) = 1.0
 Requires: typelib(Pango)
 Requires: typelib(Polkit)
 Requires: typelib(PolkitAgent)
@@ -227,12 +228,11 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_libexecdir/%name-perf-helper
 %_libexecdir/%name-hotplug-sniffer
 %_libexecdir/%name-portal-helper
-%_libexecdir/%name-overrides-migration.sh
 %dir %_libdir/%name
-%_libdir/%name/lib%name.so
 %_libdir/%name/lib%name-menu.so
 %_libdir/%name/libgvc.so
-%_libdir/%name/libst-1.0.so
+%_libdir/%name/libshell-%api_ver.so
+%_libdir/%name/libst-%api_ver.so
 %_libdir/%name/libshew-0.so
 %_libdir/%name/*.typelib
 %dir %_libdir/%name/girepository-1.0
@@ -241,11 +241,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 
 %files data -f %name.lang
 %_datadir/bash-completion/completions/gnome-extensions
-%_xdgconfigdir/autostart/%name-overrides-migration.desktop
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/org.gnome.Extensions.desktop
 %_desktopdir/%xdg_name.Extensions.desktop
-%_desktopdir/evolution-calendar.desktop
 %_desktopdir/%xdg_name.PortalHelper.desktop
 %_datadir/%name/
 %_datadir/dbus-1/services/%xdg_name.CalendarServer.service
@@ -274,7 +272,6 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_userunitdir/%{xdg_name}@wayland.service
 %_userunitdir/%{xdg_name}@x11.service
 
-
 %_man1dir/*
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/org.gnome.Extensions.metainfo.xml
@@ -287,6 +284,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 43.4-alt1
 - 43.4
 

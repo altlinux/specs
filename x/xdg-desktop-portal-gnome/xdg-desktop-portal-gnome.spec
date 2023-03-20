@@ -1,9 +1,9 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 
 Name: xdg-desktop-portal-gnome
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Desktop Portal
@@ -50,6 +50,9 @@ to provide various portal features.
 
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Tue Oct 18 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 

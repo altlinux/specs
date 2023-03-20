@@ -1,6 +1,6 @@
 %set_verify_elf_method unresolved=relaxed
 %define _name tracker-miners
-%define ver_major 3.4
+%define ver_major 3.5
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -8,7 +8,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -199,6 +199,9 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 3.5.0-alt1
+- 3.5.0
+
 * Thu Jan 12 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
 - 3.4.3
 

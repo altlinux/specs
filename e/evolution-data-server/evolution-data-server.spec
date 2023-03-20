@@ -7,8 +7,8 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.46
-%define ver_base 3.46
+%define ver_major 3.48
+%define ver_base 3.48
 %define ver_lib 1.2
 %define ver_libecal 2.0
 %define ver_serverui4 1.0
@@ -36,7 +36,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -53,8 +53,8 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 
 %add_findprov_lib_path %_libdir/%name
 
-%define glib_ver 2.40.0
-%define gtk3_ver 3.10.0
+%define glib_ver 2.68.0
+%define gtk3_ver 3.20.0
 %define gtk4_ver 4.6.6
 %define soup3_ver 3.1.1
 %define gcr_api_ver 4
@@ -296,6 +296,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
+- 3.48.0
+
 * Fri Feb 10 2023 Yuri N. Sedunov <aris@altlinux.org> 3.46.4-alt1
 - 3.46.4
 

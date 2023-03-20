@@ -1,8 +1,8 @@
-%def_disable snapshot
+%def_enable snapshot
 %define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define api_ver %ver_major.0
@@ -22,8 +22,8 @@
 %def_without gvls
 
 Name: gnome-builder
-Version: %ver_major.6
-Release: alt1%beta
+Version: %ver_major.1
+Release: alt0.1%beta
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -40,36 +40,37 @@ Source1: %name-ru.po
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-%define glib_ver 2.74
+%define glib_ver 2.75.0
 %define gtk_ver 4.8
-%define adwaita_ver 1.2
-%define panel_ver 1.0.2
+%define adwaita_ver 1.3
+%define panel_ver 1.2
 %define gtksourceview_api_ver 5
-%define gtksourceview_ver 5.6
+%define gtksourceview_ver 5.7.2
 %define git2_ver 1.1.0
 %define devhelp_ver 3.30.0
-%define gjs_ver 1.42
 %define xml_ver 2.9.0
 %define vala_ver 0.37
 %define sysprof_ver 3.34.0
 %define vte_ver 0.70
 %define gtkmm_ver 3.20
 %define gspell_ver 1.8.0
-%define peas_ver 1.22.0
+%define peas_ver 1.34.0
 %define json_glib_ver 1.2.0
 %define template_glib_ver 3.36
 %define soup3_ver 3.0
-%define webkit_ver 2.38
+%define webkit_api_ver 6.0
+%define webkit_ver 2.40.0
 %define portal_ver 0.5
 %define gi_docgen_ver 2021.9
-%define jsonrpc_ver 3.42
+%define jsonrpc_ver 3.43.0
+%define dex_ver 0.2.0
 
 %add_python3_path %_libdir/%name/plugins
 %add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
 
 Requires(pre): %name-data = %EVR
 # src/libide/gui/ide-application-plugins.c
-Requires: typelib(WebKit2) = 5.0
+Requires: typelib(WebKit) = %webkit_api_ver
 Requires: typelib(Jsonrpc) = 1.0
 
 %{?_with_autotools:Requires: automake autoconf libtool}
@@ -87,21 +88,23 @@ BuildRequires: libgtk4-devel >= %gtk_ver libadwaita-devel >= %adwaita_ver
 BuildRequires: libpanel-devel >= %panel_ver
 BuildRequires: libgtksourceview%gtksourceview_api_ver-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
-BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkitgtk5.0-devel >= %webkit_ver
+BuildRequires: libwebkitgtk%webkit_api_ver-devel >= %webkit_ver
 BuildRequires: libxml2-devel >= %xml_ver libpeas-devel >= %peas_ver libvte3-devel >= %vte_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver libpcre2-devel
 BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel libpanel-gir-devel libvte3-gir-devel
 BuildRequires: libgtksourceview%gtksourceview_api_ver-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
-BuildRequires: libjson-glib-gir-devel libsoup3.0-gir-devel >= %soup3_ver libwebkit2gtk5.0-gir-devel
+BuildRequires: libjson-glib-gir-devel libsoup3.0-gir-devel >= %soup3_ver libwebkitgtk%webkit_api_ver-gir-devel
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgspell-devel >= %gspell_ver libenchant2-devel
 BuildRequires: libtemplate-glib-devel >= %template_glib_ver libdspy-devel libeditorconfig-devel
 BuildRequires: libjsonrpc-glib-devel >= %jsonrpc_ver
 BuildRequires: libtemplate-glib-gir-devel libjsonrpc-glib-gir-devel
+BuildRequires: libdex-gir-devel
 BuildRequires: libgtkmm4-devel >= %gtkmm_ver
 BuildRequires: cmark-devel
 BuildRequires: pkgconfig(libportal-gtk4)
+BuildRequires: libdex-devel >= %dex_ver
 %{?_with_clang:BuildRequires: llvm-devel clang-devel}
 %{?_with_docs:BuildRequires: gi-docgen >= %gi_docgen_ver}
 %{?_with_help:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
@@ -180,11 +183,11 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %_datadir/glib-2.0/schemas/org.gnome.builder.editor.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.editor.language.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.extension-type.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.flatpak.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.plugin.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.project.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.project-tree.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.builder.rust-analyzer.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.shellcmd.command.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.shellcmd.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.spelling.gschema.xml
@@ -199,6 +202,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt0.1
+- updated to 44.0-6-g0b492218e
+
 * Sat Feb 04 2023 Yuri N. Sedunov <aris@altlinux.org> 43.6-alt1
 - 43.6
 

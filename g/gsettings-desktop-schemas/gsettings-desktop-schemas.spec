@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %def_enable introspection
 
@@ -128,6 +128,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 

@@ -3,7 +3,7 @@
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.74
+%define ver_major 2.76
 %define api_ver 2.0
 %define pcre2_ver 10.32
 %define meson_ver 0.60
@@ -29,7 +29,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -55,12 +55,11 @@ Source6: gio-compat-2.57.lds
 Source10: glib2.sh
 Source11: glib2.csh
 
-Patch: glib-2.73.2-alt-compat-version-script.patch
+Patch: glib-2.75.4-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
 Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
-Patch2: glib-2.61.3-alt-add-xvt.patch
+Patch2: glib-2.75.4-alt-add-xvt.patch
 Patch3: glib-2.71.3-alt-lfs.patch
-Patch4: glib-2.50.1-alt-dbus_socket_path.patch
 
 Patch2000: glib-2.64.5-1-alt-e2k.patch
 
@@ -229,7 +228,6 @@ the functionality of the installed glib2/libgio packages.
 %patch1
 %patch2 -p1 -b .xvt
 %patch3 -p1
-%patch4
 %ifarch %e2k
 subst "/subdir('fuzzing')/d" meson.build
 %patch2000 -p1
@@ -434,6 +432,11 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Fri Mar 10 2023 Yuri N. Sedunov <aris@altlinux.org> 2.76.0-alt1
+- 2.76.0
+- updated alt-{compat-version-script,add-xvt}.patch
+- removed alt-dbus_socket_path.patch, GLIB_RUNSTATEDIR is /run by default
+
 * Thu Feb 23 2023 Yuri N. Sedunov <aris@altlinux.org> 2.74.6-alt1
 - 2.74.6
 

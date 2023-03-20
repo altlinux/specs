@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _name connections
 %define xdg_name org.gnome.Connections
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 
 Name: gnome-%_name
@@ -70,6 +70,9 @@ BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 

@@ -1,4 +1,6 @@
-%define ver_major 43
+%def_disable snapshot
+
+%define ver_major 44
 %define beta %nil
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
@@ -9,15 +11,19 @@
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GNOME Initial Setup
 Group: Graphical desktop/GNOME
 License: GPL-2.0
 Url: https://gitlab.gnome.org/GNOME/gnome-initial-setup
 
+%if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
 
 %define systemd_ver 242
 %define nm_ver 1.2
@@ -32,13 +38,13 @@ Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.
 %define malcontent_ui_api_ver 1
 %define malcontent_ver 0.11
 %define adwaita_ver 1.2
-%define webkit_api_ver 5.0
-%define webkit_ver 2.36
+%define webkit_api_ver 6.0
+%define webkit_ver 2.39.1
 %define goa_ver 3.45.2
 
 #Requires: gnome-shell >= 3.37.92 gdm
 #Requires: gnome-online-accounts >= %goa_ver
-# to avoid conflict between webki2gtk{4.1,5.0}-debuginfo
+# to avoid conflict between webki2gtk{4.1,6.0}-debuginfo
 %add_debuginfo_skiplist %_libexecdir/*
 
 Requires: dconf geoclue2 >= %geoclue_ver
@@ -63,7 +69,7 @@ BuildRequires: gdm-libs-devel iso-codes-devel libpolkit-devel
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
 BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver pkgconfig(geocode-glib-2.0)
-BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
+BuildRequires: pkgconfig(webkitgtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: pkgconfig(systemd) >= %systemd_ver
 %{?_enable_software_sources:BuildRequires: pkgconfig(packagekit-glib2) >= %packagekit_ver}
 %{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-ui-%malcontent_ui_api_ver) >= %malcontent_ver}
@@ -113,6 +119,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Fri Dec 02 2022 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
 - 43.2
 

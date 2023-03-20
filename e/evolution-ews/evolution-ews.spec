@@ -1,9 +1,9 @@
 %set_verify_elf_method rpath=relaxed
-%define ver_major 3.46
+%define ver_major 3.48
 %define xdg_name org.gnome.Evolution
 
 Name: evolution-ews
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution extension for Exchange Web Services
@@ -13,14 +13,14 @@ Url: https://wiki.gnome.org/Apps/Evolution
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define ver_base 3.46
+%define ver_base 3.48
 %define evo_ver_base %ver_base
 
 %define evolution_ver %version
 %define eds_ver %version
-%define glib_ver 2.40
+%define glib_ver 2.68
 %define libmspack_ver 0.4
-%define soup_ver 2.42
+%define soup3_ver 3.0
 %define json_glib_ver 1.0.4
 
 Requires: evolution >= %evolution_ver
@@ -34,7 +34,7 @@ BuildRequires: evolution-devel >= %evolution_ver
 BuildRequires: libmspack-devel >= %libmspack_ver
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= 3.0
-BuildRequires: libsoup-devel >= %soup_ver
+BuildRequires: libsoup3.0-devel >= %soup3_ver
 BuildRequires: libsqlite3-devel libical-devel
 BuildRequires: pkgconfig(json-glib-1.0) >= %json_glib_ver
 
@@ -77,6 +77,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/metainfo/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
+- 3.48.0
+
 * Fri Feb 10 2023 Yuri N. Sedunov <aris@altlinux.org> 3.46.4-alt1
 - 3.46.4
 

@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.2
+%define ver_major 1.3
 %define beta %nil
 %define api_ver 1
 %define xdg_name org.gnome.Adwaita%api_ver
@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1%beta
 Epoch: 1
 
@@ -25,12 +25,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 #Source: %url/-/archive/%version/%name-%version.tar.bz2
 %else
 Vcs: https://gitlab.gnome.org/GNOME/libadwaita.git
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 %define meson_ver 0.59
-%define glib_ver 2.66
-%define gtk_ver 4.5.0
+%define glib_ver 2.72.0
+%define gtk_ver 4.9.5
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= %meson_ver sassc
@@ -109,8 +109,7 @@ demonstrates %name variety of all its widgets.
 %find_lang %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-xvfb-run -s -noreset %meson_test
+xvfb-run -s -noreset %__meson_test
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
@@ -144,6 +143,9 @@ xvfb-run -s -noreset %meson_test
 %endif
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1:1.3.1-alt1
+- 1.3.1
+
 * Sat Mar 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1:1.2.3-alt1
 - 1.2.3
 

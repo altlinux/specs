@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
@@ -22,7 +22,7 @@ Url: https://wiki.gnome.org/Projects/SessionManagement
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 Source1: gnome.svg
 
@@ -181,6 +181,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 

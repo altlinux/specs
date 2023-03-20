@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define xdg_name org.gnome.clocks
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 
 Name: gnome-clocks
@@ -15,10 +15,10 @@ Url: https://wiki.gnome.org/Apps/Clocks
 %if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.68
+%define glib_ver 2.72
 %define gweather_ver 3.99
 %define geocode_ver 3.26.0
 %define geoclue_ver 2.4
@@ -62,6 +62,9 @@ Clock application designed for GNOME 3
 %doc README* NEWS*
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 

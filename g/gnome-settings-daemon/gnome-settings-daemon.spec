@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define api_ver 43
 %define xdg_name org.gnome.SettingsDaemon
@@ -27,7 +27,7 @@ Url: http://www.gnome.org
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.58.0
@@ -191,6 +191,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 

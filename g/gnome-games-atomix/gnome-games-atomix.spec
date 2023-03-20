@@ -1,14 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define _name atomix
 %define xdg_name org.gnome.Atomix
-%define ver_major 3.34
+%define ver_major 44
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
 Version: %ver_major.0
-Release: alt2
+Release: alt1%beta
 
 Summary: Build molecules out of single atoms
 Group: Games/Boards
@@ -16,9 +17,9 @@ License: GPLv2+
 Url: https://wiki.gnome.org/Apps/Atomix
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 %else
-Source: %_name-%version.tar
+Source: %_name-%version%beta.tar
 %endif
 
 Provides:  %_name = %version-%release
@@ -26,8 +27,8 @@ Provides:  %_name = %version-%release
 %define glib_ver 2.36.0
 %define gtk_ver 3.22.0
 
-BuildRequires(pre): meson
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson yelp-tools /usr/bin/appstream-util desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libxml2-devel libgnome-games-support-devel
 
@@ -38,7 +39,7 @@ last levels, out of isolated atoms, which are laying around among walls and
 other obstacles on the playfield.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version%beta
 
 %build
 %meson
@@ -55,10 +56,13 @@ other obstacles on the playfield.
 %_datadir/%_name/
 %_iconsdir/hicolor/*/*/%{_name}*.*
 %_datadir/metainfo/%_name.appdata.xml
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Thu Dec 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
 - updated to 3.34.0-11-gbfe0acc (fixed build with gcc10/-fno-common)
 

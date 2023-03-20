@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Calendar application for GNOME
@@ -19,7 +19,7 @@ Url: https://wiki.gnome.org/Apps/Calendar
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-macros-meson
@@ -92,6 +92,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Thu Mar 16 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Tue Oct 18 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 

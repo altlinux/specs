@@ -1,5 +1,5 @@
 %define _name eog
-%define ver_major 42
+%define ver_major 44
 %define beta %nil
 %define api_ver 3.0
 %def_enable map
@@ -7,7 +7,7 @@
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: EOG plugins
@@ -102,6 +102,9 @@ This package provides Eog plugin for upload pictures to Picasa web albums.
 %endif
 
 %changelog
+* Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Sun Jan 08 2023 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
 - 42.3
 

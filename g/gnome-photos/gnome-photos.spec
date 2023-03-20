@@ -2,7 +2,7 @@
 
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
-%define ver_major 43
+%define ver_major 44
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.4
 %define tracker_api_ver 3.0
@@ -29,13 +29,10 @@ Source: %name-%version.tar
 %define tracker_ver 3.0
 %define gdata_ver 0.15.2
 %define gegl_ver 0.4.2
-%define grilo_ver 0.3.5
 %define png_ver 1.6
 %define dazzle_ver 3.28
-%define gexiv2_ver 0.12.1
+%define gexiv2_ver 0.14.0
 %define handy_ver 1.1.90
-
-Requires: grilo-plugins >= %grilo_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson yelp-tools %_bindir/appstream-util desktop-file-utils
@@ -44,7 +41,6 @@ BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
 BuildRequires: libgdata-devel >= %gdata_ver
 BuildRequires: libgegl-devel >= %gegl_ver
-BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libpng-devel >= %png_ver
 BuildRequires: libgexiv2-devel >= %gexiv2_ver
 BuildRequires: libexempi-devel liblcms2-devel librsvg-devel
@@ -57,7 +53,7 @@ BuildRequires: libdbus-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: pkgconfig(libportal)
 BuildRequires: pkgconfig(libportal-gtk3)
-%{?_enable_check:BuildRequires: dbus dogtail3}
+%{?_enable_check:BuildRequires: dbus dogtail}
 
 %description
 Photos, like Documents, Music and Videos, is one of the core GNOME
@@ -79,8 +75,7 @@ rm -rf %buildroot/%_datadir/doc/%name
 %find_lang --with-gnome %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -96,6 +91,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Tue Mar 07 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 
