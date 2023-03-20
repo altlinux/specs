@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -27,6 +27,9 @@ BuildRequires: kf5-kcmutils-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kpackage-devel kf5-kservice-devel
 
 Requires: lightdm
+Requires: plasma5-workspace-qml
+Requires: polkit
+
 Provides: lightdm-greeter
 
 %qml_req_skipall 0
@@ -75,6 +78,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Mon Mar 20 2023 Anton Golubev <golubevan@altlinux.org> 0.4.7-alt1
+- bugfixes, update dependencies
+
 * Tue Feb 21 2023 Anton Golubev <golubevan@altlinux.org> 0.4.6-alt1
 - use Plasma's background selection dialog
 
