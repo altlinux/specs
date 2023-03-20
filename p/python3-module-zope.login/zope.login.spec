@@ -1,21 +1,26 @@
 %define oname zope.login
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.0.0
-Release: alt4
+Version: 2.2
+Release: alt1
 
 Summary: Login helpers for zope.publisher / authentication
-License: ZPL
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.login/
+Url: https://pypi.org/project/zope.login
+VCS: https://github.com/zopefoundation/zope.login
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-
-%py3_requires zope zope.authentication zope.component zope.interface
-%py3_requires zope.publisher
-
+%if_with check
+BuildRequires: python3-module-zope.authentication
+BuildRequires: python3-module-zope.publisher
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.testing
+%endif
 
 %description
 This package provides a login helpers for zope.publisher based on the
@@ -24,7 +29,7 @@ concepts of zope.authentication.
 %package tests
 Summary: Tests for zope.login
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides a login helpers for zope.publisher based on the
@@ -47,16 +52,24 @@ mv %buildroot%python3_sitelibdir_noarch/* \
     %buildroot%python3_sitelibdir/
 %endif
 
+%check
+%tox_check
+
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope
+%python3_sitelibdir/%oname-%version-*.egg-info
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
+%files tests
 %python3_sitelibdir/*/*/tests
 
 
 %changelog
+* Mon Mar 20 2023 Anton Vyatkin <toni@altlinux.org> 2.2-alt1
+- New version 2.2.
+
 * Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt4
 - python2 disabled
 
