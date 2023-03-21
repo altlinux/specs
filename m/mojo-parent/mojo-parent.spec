@@ -13,8 +13,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           mojo-parent
-Version:        60
-Release:        alt1_3jpp11
+Version:        67
+Release:        alt1_2jpp11
 Summary:        Codehaus MOJO parent project pom file
 License:        ASL 2.0
 URL:            https://www.mojohaus.org/mojo-parent/
@@ -23,9 +23,10 @@ BuildArch:      noarch
 Source0:        https://github.com/mojohaus/mojo-parent/archive/%{name}-%{version}.tar.gz
 Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  maven-local
 %endif
 Source44: import.info
 
@@ -38,6 +39,7 @@ Codehaus MOJO parent project pom file
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_dep :junit-bom
 
 cp %SOURCE1 .
 
@@ -52,6 +54,9 @@ cp %SOURCE1 .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:67-alt1_2jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:60-alt1_3jpp11
 - update
 
