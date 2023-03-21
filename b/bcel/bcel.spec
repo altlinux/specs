@@ -5,8 +5,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           bcel
-Version:        6.4.1
-Release:        alt1_7jpp11
+Version:        6.5.0
+Release:        alt1_2jpp11
 Summary:        Byte Code Engineering Library
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-bcel/
@@ -46,6 +46,7 @@ This package provides %{summary}.
 %setup -q -n %{name}-%{version}-src
 
 %pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :spotbugs-maven-plugin
 
 %mvn_alias : bcel: apache:
 %mvn_file : %{name}
@@ -64,6 +65,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1:6.5.0-alt1_2jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1:6.4.1-alt1_7jpp11
 - update
 
