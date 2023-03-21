@@ -7,8 +7,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-clean-plugin
-Version:        3.1.0
-Release:        alt1_10jpp11
+Version:        3.2.0
+Release:        alt1_3jpp11
 Summary:        Maven Clean Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-clean-plugin/
@@ -20,7 +20,6 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
@@ -28,7 +27,7 @@ BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 Source44: import.info
 
 %description
-The Maven Clean Plugin is a plugin that removes files generated 
+The Maven Clean Plugin is a plugin that removes files generated
 at build-time in a project's directory.
 
 %package javadoc
@@ -41,7 +40,7 @@ This package provides %{summary}.
 
 
 %prep
-%setup -q 
+%setup -q
 
 # junit dependency was removed in Plexus 1.6
 %pom_add_dep junit:junit::test
@@ -59,6 +58,9 @@ This package provides %{summary}.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_3jpp11
+- new version
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_10jpp11
 - java11 build
 
