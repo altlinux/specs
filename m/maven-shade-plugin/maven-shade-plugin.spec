@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-shade-plugin
-Version:        3.2.4
-Release:        alt1_3jpp11
+Version:        3.3.0
+Release:        alt1_4jpp11
 Summary:        Maven plugin for packaging artifacts in an uber-jar
 License:        ASL 2.0
 
@@ -18,7 +18,6 @@ Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
@@ -40,13 +39,18 @@ BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(org.vafer:jdependency)
 BuildRequires:  mvn(xmlunit:xmlunit)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(javax.inject:javax.inject)
+BuildRequires:  mvn(org.apache.commons:commons-collections4)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.sonatype.sisu:sisu-guice::no_aop:)
+BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 Source44: import.info
 
 %description
 This plugin provides the capability to package the artifact in an
 uber-jar, including its dependencies and to shade - i.e. rename - the
 packages of some of the dependencies.
-
 
 %package javadoc
 Group: Development/Java
@@ -62,8 +66,7 @@ BuildArch: noarch
 rm src/test/jars/plexus-utils-1.4.1.jar
 ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 
-%pom_remove_dep 'com.google.guava:guava:'
-%pom_add_dep 'com.google.guava:guava'
+%pom_remove_dep 'org.eclipse.sisu:org.eclipse.sisu.inject:'
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -78,6 +81,9 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_4jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.2.4-alt1_3jpp11
 - new version
 
