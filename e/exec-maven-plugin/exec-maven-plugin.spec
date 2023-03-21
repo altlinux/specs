@@ -8,8 +8,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           exec-maven-plugin
-Version:        3.0.0
-Release:        alt1_2jpp11
+Version:        3.1.0
+Release:        alt1_1jpp11
 Summary:        Exec Maven Plugin
 
 License:        ASL 2.0
@@ -20,6 +20,7 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  maven-artifact-transfer
+BuildRequires:  maven-dependency-plugin
 BuildRequires:  mvn(org.apache.commons:commons-exec)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
@@ -40,13 +41,7 @@ Source44: import.info
 %description
 A plugin to allow execution of system and Java programs.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%javadoc_package
 
 %prep
 %setup -q -n exec-maven-plugin-%{version}
@@ -60,6 +55,9 @@ find . -name *.jar -delete
 %pom_remove_dep :mockito-core
 %pom_remove_dep :maven-plugin-testing-harness
 %pom_remove_dep :plexus-interpolation
+%pom_remove_dep :slf4j-simple
+
+%pom_remove_plugin :maven-dependency-plugin
 
 rm -rf src/test/
 
@@ -70,13 +68,13 @@ rm -rf src/test/
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %dir %{_javadir}/%{name}
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
-
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_1jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_2jpp11
 - new version
 
