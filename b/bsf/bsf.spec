@@ -6,7 +6,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           bsf
 Version:        2.4.0
-Release:        alt3_44jpp11
+Release:        alt3_46jpp11
 Summary:        Bean Scripting Framework
 License:        ASL 2.0
 URL:            http://commons.apache.org/bsf/
@@ -63,7 +63,7 @@ find -name \*.jar -delete
 
 %build
 export CLASSPATH=$(build-classpath apache-commons-logging xalan-j2)
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dsource.level=1.7 jar
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dsource.level=1.7 -Dant.build.javac.target=1.7 jar
 
 %mvn_artifact %{SOURCE1} build/lib/%{name}.jar
 
@@ -75,6 +75,9 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dsource.level=1.
 %doc AUTHORS.txt CHANGES.txt README.txt TODO.txt RELEASE-NOTE.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1:2.4.0-alt3_46jpp11
+- update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:2.4.0-alt3_44jpp11
 - update
 
