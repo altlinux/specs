@@ -7,8 +7,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-verifier-plugin
-Version:        1.0
-Release:        alt4_28jpp11
+Version:        1.1
+Release:        alt1_1jpp11
 Summary:        Maven Verifier Plugin
 
 License:        ASL 2.0
@@ -42,6 +42,7 @@ API documentation for %{name}.
 %mvn_file :%{name} %{name}
 %pom_remove_parent
 %pom_add_parent org.apache.maven.plugins:maven-plugins:34
+%pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId='maven-plugin-api']" '<scope>provided</scope>'
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -56,6 +57,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1.1-alt1_1jpp11
+- new version
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 1.0-alt4_28jpp11
 - fixed build with new maven-parent
 
