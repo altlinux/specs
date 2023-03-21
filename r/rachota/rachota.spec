@@ -1,37 +1,37 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires: /usr/bin/desktop-file-install swig
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global checkout 20130104cvs
+%global checkout 602hg
 Name:           rachota
-Version:        2.3
-Release:        alt1_21.20130104cvsjpp11
+Version:        2.4
+Release:        alt1_1.602hgjpp11
 Summary:        Straightforward timetracking
 
-License:        CDDL
+License:        CDDL-1.0
 URL:            http://rachota.sourceforge.net/en/index.html
 ## Upstream does not provide any source tarball.
-## We have to check them out via cvs.
-# cvs -z3 -d:pserver:anonymous@rachota.cvs.sourceforge.net:/cvsroot/rachota co -r release23 -D 2012-01-10 -P rachota
+## We have to check them out via mercurial.
+# hg clone http://hg.code.sf.net/p/rachota/code rachota
+# cd rachota
+# hg update -c 602
+# cd ..
 # tar caf rachota.tar.gz rachota
 Source0:        %{name}.tar.gz
 Source1:        %{name}.desktop
 Source2:        %{name}.png
 
-# Fix doclint issues that make the build fail with java 8
-Patch0:         doclint.patch
-
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 
+BuildRequires:  junit
 
-BuildRequires:  ant
+BuildRequires:  maven-local
 
 BuildRequires:  desktop-file-utils
 
@@ -57,18 +57,12 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1
 
 %build
-ANT_OPTS="-Dfile.encoding=UTF-8" ant
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
-
-install -D dist/Rachota.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-ln -s %{_javadir}/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/Rachota.jar
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr dist/javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
 %jpackage_script org.cesilko.rachota.gui.MainWindow "" "" %{name} %{name} true
 
@@ -81,18 +75,19 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 
-%files
-%{_javadir}/*.jar
+%files -f .mfiles
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 2.4-alt1_1.602hgjpp11
+- new version
+
 * Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 2.3-alt1_21.20130104cvsjpp11
 - rebuild with java11 and use jvm_run
 
