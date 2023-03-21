@@ -4,8 +4,9 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           tomcat-native
-Version:        1.2.23
-Release:        alt1_8jpp11
+Epoch:          1
+Version:        1.2.35
+Release:        alt1_1jpp11
 Summary:        Tomcat native library
 
 License:        ASL 2.0
@@ -65,6 +66,9 @@ rm -rf ${RPM_BUILD_ROOT}%{_includedir}/*.h
 
 
 %changelog
+* Tue Mar 21 2023 Igor Vlasenko <viy@altlinux.org> 1:1.2.35-alt1_1jpp11
+- update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.2.23-alt1_8jpp11
 - update
 
