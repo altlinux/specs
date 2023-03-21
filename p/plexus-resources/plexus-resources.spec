@@ -13,8 +13,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           plexus-resources
-Version:        1.1.0
-Release:        alt1_7jpp11
+Version:        1.2.0
+Release:        alt1_2jpp11
 Summary:        Plexus Resource Manager
 License:        MIT
 URL:            https://github.com/codehaus-plexus/plexus-resources
@@ -22,13 +22,15 @@ BuildArch:      noarch
 
 Source0:        https://github.com/codehaus-plexus/plexus-resources/archive/plexus-resources-%{version}.tar.gz
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
+BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
 %endif
 Source44: import.info
 Source45: plexus-resources-1.0-components.xml
@@ -68,6 +70,9 @@ cp -p %{SOURCE45} target/classes/META-INF/plexus/components.xml
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:1.2.0-alt1_2jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.0-alt1_7jpp11
 - update
 
