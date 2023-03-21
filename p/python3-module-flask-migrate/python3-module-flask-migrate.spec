@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-flask-migrate
-Version: 3.1.0
+Version: 4.0.4
 Release: alt1
 
 Summary: SQLAlchemy database migrations for Flask applications using Alembic
@@ -20,11 +20,14 @@ Patch0: %name-%version-%release.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-%if_enabled check
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_enabled check
 BuildRequires: python3-module-flask
 BuildRequires: python3-module-alembic >= 1.7.0
 BuildRequires: python3-module-flask-sqlalchemy
+BuildRequires: python3-module-greenlet
 %endif
 
 %description
@@ -38,19 +41,24 @@ under the flask db command.
 %patch0 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir/
-python3 -m unittest discover
+%tox_create_default_config
+%tox_check_pyproject -- -vra tests
 
 %files
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 21 2023 Danil Shein <dshein@altlinux.org> 4.0.4-alt1
+- new version 4.0.4
+  + fix FTBFS
+  + migrate to pyproject_installer
+
 * Sat Mar 05 2022 Danil Shein <dshein@altlinux.org> 3.1.0-alt1
 - new version 3.1.0
   + enable test

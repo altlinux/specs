@@ -4,7 +4,7 @@
 %def_without test
 
 Name: python3-module-alembic
-Version: 1.7.6
+Version: 1.10.2
 Release: alt1
 
 Summary: Database migration tool for SQLAlchemy
@@ -25,11 +25,16 @@ Provides: python-module-alembic = %EVR
 BuildRequires: help2man
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-devel python3-module-mako
-BuildRequires: python3-module-SQLAlchemy python3-module-setuptools
+BuildRequires: python3-module-SQLAlchemy
 BuildRequires: python3-module-dateutil
 %if_with test
-BuildRequires: python3-module-pytest python3-module-nose
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-greenlet
+BuildRequires: python3-module-sqlalchemy-tests
 %endif
 
 %description
@@ -52,15 +57,16 @@ Documentation and status of Alembic is at http://readthedocs.org/docs/alembic/
 %patch0 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 rm -rfv %buildroot%python3_sitelibdir/alembic/testing/
 
 %if_with test
 %check
-%python3_test
+%tox_create_default_config
+%tox_check_pyproject -- -vra
 %endif
 
 %files
@@ -69,8 +75,12 @@ rm -rfv %buildroot%python3_sitelibdir/alembic/testing/
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 21 2023 Danil Shein <dshein@altlinux.org> 1.10.2-alt1
+- new version 1.10.2
+  + migrate to pyproject_installer
+
 * Sat Mar 05 2022 Danil Shein <dshein@altlinux.org> 1.7.6-alt1
-- new version
+- new version 1.7.6
 
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.6.5-alt1
 - new version 1.6.5 (with rpmrb script)

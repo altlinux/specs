@@ -1,15 +1,17 @@
 %define oname Flask-SQLAlchemy
 %def_without docs
+%def_with tests
 
 Name: python3-module-flask-sqlalchemy
-Version: 2.5.1
+Version: 3.0.3
 Release: alt1
 
 Summary: Adds SQLAlchemy support to your Flask application
 
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Flask-SQLAlchemy/
+VCS: https://github.com/pallets-eco/flask-sqlalchemy.git
+Url: https://pypi.org/project/Flask-SQLAlchemy
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -20,17 +22,23 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-pdm-pep517
+
+%if_with tests
+BuildRequires: python3-module-sqlalchemy
+BuildRequires: python3-module-flask
+BuildRequires: python3-module-greenlet
+%endif
+
 %if_with docs
 BuildRequires: python3-module-sphinx flask-sphinx-themes
 %endif
 
 Obsoletes: python3-module-flask_sqlalchemy
 Provides: python3-module-flask_sqlalchemy
-
-%py3_use flask >= 0.10
-%py3_use SQLAlchemy >= 0.7
 
 %description
 Flask-SQLAlchemy is a Flask microframework extension which adds support
@@ -57,7 +65,7 @@ cp -fR %_datadir/flask-sphinx-themes/* docs/_themes/
 %endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH=$PWD
@@ -65,12 +73,12 @@ export PYTHONPATH=$PWD
 %endif
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
+%if_with tests
 %check
-python3 setup.py test
-
+%tox_check_pyproject
+%endif
 %files
 %doc README.rst
 %python3_sitelibdir/*
@@ -81,6 +89,10 @@ python3 setup.py test
 %endif
 
 %changelog
+* Tue Mar 21 2023 Danil Shein <dshein@altlinux.org> 3.0.3-alt1
+- new version 3.0.3
+  + migrate to pyproject_installer
+
 * Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
 - new version 2.5.1 (with rpmrb script)
 
