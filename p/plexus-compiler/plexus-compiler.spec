@@ -12,24 +12,24 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 %bcond_with bootstrap
 
-Name:       plexus-compiler
-Version:    2.8.8
-Release:    alt1_3jpp11
-Summary:    Compiler call initiators for Plexus
+Name:           plexus-compiler
+Version:        2.11.1
+Release:        alt1_2jpp11
+Summary:        Compiler call initiators for Plexus
 # extras subpackage has a bit different licensing
 # parts of compiler-api are ASL2.0/MIT
-License:    MIT and ASL 2.0
-URL:        https://github.com/codehaus-plexus/plexus-compiler
-BuildArch:  noarch
+License:        MIT and ASL 2.0
+URL:            https://github.com/codehaus-plexus/plexus-compiler
+BuildArch:      noarch
 
-Source0:    https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
-Source1:    https://www.apache.org/licenses/LICENSE-2.0.txt
-Source2:    LICENSE.MIT
+Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
+Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
+Source2:        LICENSE.MIT
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
@@ -77,6 +77,8 @@ find -name '.class' -delete
 cp %{SOURCE1} LICENSE
 cp %{SOURCE2} LICENSE.MIT
 
+%pom_remove_dep :junit-bom
+
 %pom_disable_module plexus-compiler-aspectj plexus-compilers
 # missing com.google.errorprone:error_prone_core
 %pom_disable_module plexus-compiler-javac-errorprone plexus-compilers
@@ -85,6 +87,7 @@ cp %{SOURCE2} LICENSE.MIT
 
 # don't build/install compiler-test module, it needs maven2 test harness
 %pom_disable_module plexus-compiler-test
+%pom_disable_module plexus-compiler-its
 
 # don't install sources jars
 %mvn_package ":*::sources:" __noinstall
@@ -117,6 +120,9 @@ cp %{SOURCE2} LICENSE.MIT
 %doc LICENSE LICENSE.MIT
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.11.1-alt1_2jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:2.8.8-alt1_3jpp11
 - update
 
