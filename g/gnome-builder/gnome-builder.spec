@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
@@ -23,7 +23,7 @@
 
 Name: gnome-builder
 Version: %ver_major.1
-Release: alt0.1%beta
+Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -202,6 +202,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Tue Mar 21 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
+- 44.1
+
 * Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt0.1
 - updated to 44.0-6-g0b492218e
 
