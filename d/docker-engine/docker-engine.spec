@@ -12,7 +12,7 @@
 
 Name:    docker-engine
 Version: 23.0.1
-Release: alt1
+Release: alt2
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -94,8 +94,8 @@ install -p -m 755 bundles/dynbinary-daemon/dockerd %{buildroot}%{_bindir}/docker
 install -p -m 755 bundles/dynbinary-daemon/docker-proxy %{buildroot}%{_bindir}/docker-proxy
 
 # install udev rules
-install -d %{buildroot}%{_sysconfdir}/udev/rules.d
-install -m 644 -p contrib/udev/80-docker.rules %{buildroot}%{_sysconfdir}/udev/rules.d
+install -d %{buildroot}%{_udevrulesdir}
+install -m 644 -p contrib/udev/80-docker.rules %{buildroot}%{_udevrulesdir}
 
 # install storage dir
 install -d %{buildroot}%{_sharedstatedir}/%{servicename}
@@ -145,9 +145,12 @@ exit 0
 %{_unitdir}/docker.socket
 %_initdir/docker
 %dir %{_sharedstatedir}/docker
-%{_sysconfdir}/udev/rules.d/80-docker.rules
+%_udevrulesdir/80-docker.rules
 
 %changelog
+* Tue Mar 21 2023 Vladimir Didenko <cow@altlinux.org> 23.0.1-alt2
+- Move udev rules config to /lib/udev/rules.d
+
 * Mon Feb 13 2023 Vladimir Didenko <cow@altlinux.org> 23.0.1-alt1
 - 23.0.1
 
