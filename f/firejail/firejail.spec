@@ -3,7 +3,7 @@
 %set_verify_elf_method strict,lfs=relaxed
 
 Name: firejail
-Version: 0.9.68
+Version: 0.9.72
 Release: alt1
 Summary: Linux namespaces sandbox program
 License: GPLv2+
@@ -39,6 +39,7 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %_bindir/firemon
 %_bindir/jailcheck
 %_libdir/%name
+%_datadir/gtksourceview-*/language-specs/firejail-profile.lang
 %_datadir/bash-completion/completions/%name
 %_datadir/bash-completion/completions/firecfg
 %_datadir/bash-completion/completions/firemon
@@ -56,6 +57,9 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %config %_sysconfdir/%name
 
 %changelog
+* Tue Mar 21 2023 Anton Farygin <rider@altlinux.ru> 0.9.72-alt1
+- 0.9.68 -> 0.9.72 (Fixes: CVE-2022-31214)
+
 * Wed Feb 16 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.68-alt1
 - Updated to upstream version 0.9.68.
 
