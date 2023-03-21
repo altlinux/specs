@@ -12,8 +12,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           plexus-components-pom
-Version:        6.5
-Release:        alt1_4jpp11
+Version:        6.6
+Release:        alt1_2jpp11
 Summary:        Plexus Components POM
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-components
@@ -22,10 +22,10 @@ BuildArch:      noarch
 Source0:        https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-components/%{version}/plexus-components-%{version}.pom
 Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 %endif
@@ -50,6 +50,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 6.6-alt1_2jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 6.5-alt1_4jpp11
 - update
 
