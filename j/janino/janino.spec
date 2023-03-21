@@ -5,13 +5,14 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           janino
-Version:        3.1.6
+Version:        3.1.7
 Release:        alt1_3jpp11
 Summary:        Super-small, super-fast Java compiler
 License:        BSD
 URL:            http://janino-compiler.github.io/janino
 BuildArch:      noarch
-Source0:        https://github.com/janino-compiler/janino/archive/v%{version}/%{name}-%{version}.tar.gz
+
+Source0:        https://github.com/janino-compiler/janino/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -19,7 +20,7 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
 
 Requires:       javapackages-tools
-Requires:       janino = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       commons-compiler = %{?epoch:%epoch:}%{version}-%{release}
 Source44: import.info
 
 %description
@@ -28,81 +29,84 @@ Janino is a super-small, super-fast Java compiler.
 The "JANINO" implementation of the "commons-compiler" API: Super-small,
 super-fast, independent from the JDK's "tools.jar".
 
-%package     -n commons-compiler
+%package -n commons-compiler
 Group: Development/Java
 Summary:        Commons Compiler
-
 %description -n commons-compiler
 The "commons-compiler" API, including the "IExpressionEvaluator",
 "IScriptEvaluator", "IClassBodyEvaluator" and "ISimpleCompiler" interfaces.
 
-%package     -n commons-compiler-jdk
+%package -n commons-compiler-jdk
 Group: Development/Java
 Summary:        Commons Compiler JDK
-
 %description -n commons-compiler-jdk
 The "JDK" implementation of the "commons-compiler" API that uses the
 JDK's Java compiler (JAVAC) in "tools.jar".
 
-%package        javadoc
+%package javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
 BuildArch: noarch
-
-%description    javadoc
+%description javadoc
 API documentation for %{name}.
 
 %prep
-
 %setup -q
 
-
+# delete precompiled jar and class files
 find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 
-pushd %{name}-parent
+cd %{name}-parent
+# remove maven.compiler.* properties
   %pom_xpath_remove pom:maven.compiler.source
   %pom_xpath_remove pom:maven.compiler.target
   %pom_xpath_remove pom:maven.compiler.executable
   %pom_xpath_remove pom:maven.compiler.fork
-
+# remove staging maven plugin
   %pom_remove_plugin :nexus-staging-maven-plugin
+# remove jarsigner plugin
   %pom_remove_plugin :maven-jarsigner-plugin
+# remove javadoc plugin:
+# - don't build *-javadoc.jar
   %pom_remove_plugin :maven-javadoc-plugin
+# remove source plugin:
+# - don't build *-sources.jar
   %pom_remove_plugin :maven-source-plugin
-
+# disable tests module
   %pom_disable_module ../commons-compiler-tests
-
+# don't install parent
   %mvn_package :%{name}-parent __noinstall
-popd
+cd -
 
 %build
 
-pushd %{name}-parent
+cd %{name}-parent
   %mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=8 -Dmaven.compiler.target=8
-popd
+cd -
 
 %install
 
-pushd %{name}-parent
+cd %{name}-parent
   %mvn_install
-  
+# create janinoc script
   %jpackage_script org.codehaus.commons.compiler.samples.CompilerDemo "" "" %{name}/janino:%{name}/commons-compiler janinoc true
-popd
+cd -
 
-%files                         -f %{name}-parent/.mfiles-%{name}
+%files -f %{name}-parent/.mfiles-%{name}
 %doc --no-dereference LICENSE
 %{_bindir}/janinoc
 
-%files -n commons-compiler     -f %{name}-parent/.mfiles-commons-compiler
+%files -n commons-compiler -f %{name}-parent/.mfiles-commons-compiler
 %doc --no-dereference LICENSE
-
 %files -n commons-compiler-jdk -f %{name}-parent/.mfiles-commons-compiler-jdk
 %doc --no-dereference LICENSE
-
-%files javadoc                 -f %{name}-parent/.mfiles-javadoc
+%files javadoc -f %{name}-parent/.mfiles-javadoc
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:3.1.7-alt1_3jpp11
+- new version
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:3.1.6-alt1_3jpp11
 - new version
 
