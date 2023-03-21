@@ -13,8 +13,8 @@ BuildRequires: jpackage-default
 
 Name:           clojure
 Epoch:          1
-Version:        1.10.3
-Release:        alt1_2jpp11
+Version:        1.11.1
+Release:        alt1_3jpp11
 Summary:        A dynamic programming language that targets the Java Virtual Machine
 
 License:        EPL-1.0
@@ -67,6 +67,9 @@ can avoid reflection.
 %{_bindir}/%{name}
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1:1.11.1-alt1_3jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 1:1.10.3-alt1_2jpp11
 - new version
 
