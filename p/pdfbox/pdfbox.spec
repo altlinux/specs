@@ -8,7 +8,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          pdfbox
-Version:       2.0.25
+Version:       2.0.26
 Release:       alt1_3jpp11
 Summary:       Apache PDFBox library for working with PDF documents
 License:       ASL 2.0
@@ -37,7 +37,7 @@ BuildRequires: fonts-ttf-dejavu
 BuildRequires: fonts-ttf-google-noto-emoji
 BuildRequires: fonts-ttf-liberation
 BuildRequires: icc-profiles-openicc
-BuildRequires: fontconfig
+BuildRequires: fontconfig libfontconfig1
 Requires:      fonts-ttf-liberation
 
 # TODO: Require liberation-sans-fonts >= 2 and don't ignore test failures
@@ -272,6 +272,9 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.0.26-alt1_3jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.0.25-alt1_3jpp11
 - new version
 
