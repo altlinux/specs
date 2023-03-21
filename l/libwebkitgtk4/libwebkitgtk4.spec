@@ -10,7 +10,7 @@
 %endif
 
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.38
+%define ver_major 2.40
 %define gtk_ver 3.0
 %define gst_ver 1.14.3
 
@@ -26,6 +26,7 @@
 %def_enable systemd
 %def_disable soup2
 %def_enable libavif
+%def_enable speech_synthesis
 # since 2.19.x in some build environments
 # while build webki2gtk-dep typelibs this error appears
 # FATAL: Could not allocate gigacage memory with maxAlignment = ..
@@ -35,7 +36,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk4
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -60,7 +61,7 @@ Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 %define soup3_ver 2.99.9
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gir rpm-build-python3
-BuildRequires: /proc gcc-c++ cmake
+BuildRequires: /proc gcc-c++ cmake unifdef
 %{?_enable_ninja:BuildRequires: ninja-build}
 BuildRequires: ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
 BuildRequires: flex >= 2.5.33
@@ -86,7 +87,9 @@ BuildRequires: libpango-devel >= 1.21.0 libcairo-devel >= 1.10 libcairo-gobject-
 BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel libharfbuzz-devel libwoff2-devel
 BuildRequires: libgio-devel >= 2.25.0
 BuildRequires: ruby ruby-stdlibs
-BuildRequires: libGL-devel libGLES-devel libXcomposite-devel libXdamage-devel
+BuildRequires: libdrm-devel libgbm-devel
+BuildRequires: libGL-devel libGLES-devel
+BuildRequires: libXcomposite-devel libXdamage-devel
 BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel 
 BuildRequires: geoclue2-devel libgeoclue2-devel
 BuildRequires: libenchant-devel libhyphen-devel
@@ -109,6 +112,7 @@ BuildRequires: libmanette-devel
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 # since 2.34.0
 %{?_enable_libavif:BuildRequires: libavif-devel}
+%{?_enable_speech_synthesis:BuildRequires: flite-devel >= 2.2}
 
 %description
 WebKit is an open source web browser engine.
@@ -251,6 +255,9 @@ rm -rf Source/ThirdParty/qunit/
 
 subst 's|Q\(unused-arguments\)|W\1|' Source/cmake/WebKitCompilerFlags.cmake
 
+# fix flite.h include
+[ ! -d %_includedir/flite ] && sed -i 's|<flite/flite.h>|<flite.h>|' Source/WebCore/platform/gstreamer/GUniquePtrFlite.h
+
 %build
 %ifarch %e2k
 # because of this error on linking:
@@ -315,9 +322,9 @@ export PYTHON=%__python3
 install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %endif
 
-%find_lang WebKit2GTK-%api_ver
+%find_lang WebKitGTK-%api_ver
 
-%files -n libwebkit2gtk -f WebKit2GTK-%api_ver.lang
+%files -n libwebkit2gtk -f WebKitGTK-%api_ver.lang
 %{?!_disable_webdriver:%_bindir/WebKitWebDriver}
 %_libdir/libwebkit2gtk-%api_ver.so.*
 %dir %pkglibexecdir
@@ -334,6 +341,7 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %files -n libwebkit2gtk-devel
 %_libdir/libwebkit2gtk-%api_ver.so
 %dir %_includedir/webkitgtk-%api_ver
+%_includedir/webkitgtk-%api_ver/webkit
 %_includedir/webkitgtk-%api_ver/webkit2
 %_includedir/webkitgtk-%api_ver/webkitdom
 %_pkgconfigdir/webkit2gtk-%api_ver.pc
@@ -372,6 +380,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %_girdir/JavaScriptCore-%api_ver.gir
 
 %changelog
+* Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
+- 2.40.0
+
 * Wed Feb 15 2023 Yuri N. Sedunov <aris@altlinux.org> 2.38.5-alt1
 - 2.38.5
 
