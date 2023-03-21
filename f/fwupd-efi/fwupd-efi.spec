@@ -1,17 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 
-Summary: EFI Application used by uefi-capsule plugin in fwupd
 Name: fwupd-efi
-Version: 1.3
+Version: 1.4
 Release: alt1
 License: LGPLv2+
+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd-efi
-Source0: %name-%version.tar
+Summary: EFI Application used by uefi-capsule plugin in fwupd
+
+Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 ExclusiveArch: x86_64 aarch64
+
 BuildRequires: meson
 BuildRequires: gnu-efi
+BuildRequires: python3-module-pefile
 
 %description
 fwupd-efi is the UEFI binary used with fwupd for installing UEFI firmware updates
@@ -38,6 +42,9 @@ fwupd-efi is the UEFI binary used with fwupd for installing UEFI firmware update
 %_libdir/pkgconfig/fwupd-efi.pc
 
 %changelog
+* Wed Feb 01 2023 Egor Ignatov <egori@altlinux.org> 1.4-alt1
+- 1.4
+
 * Wed May 04 2022 Nikolai Kostrigin <nickel@altlinux.org> 1.3-alt1
 - new version
 
