@@ -16,37 +16,39 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           modello
-Version:        1.11
-Release:        alt1_6jpp11
+Version:        2.0.0
+Release:        alt1_2jpp11
 Summary:        Modello Data Model toolkit
 # The majority of files are under MIT license, but some of them are ASL 2.0.
 # Some parts of the project are derived from the Exolab project,
 # and are licensed under a 5-clause BSD license.
 License:        MIT and ASL 2.0 and BSD
+URL:            https://codehaus-plexus.github.io/modello
 
-URL:            http://codehaus-plexus.github.io/modello
-Source0:        http://repo2.maven.org/maven2/org/codehaus/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source0:        https://repo1.maven.org/maven2/org/codehaus/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
+
+Patch0:         0001-Remove-dependency-on-Jsoup.patch
 
 BuildArch:      noarch
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-javac)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.jsoup:jsoup)
+BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
+BuildRequires:  mvn(org.sonatype.sisu:sisu-guice::no_aop:)
 %endif
 
 # Explicit javapackages-tools requires since modello script uses
@@ -73,12 +75,12 @@ API documentation for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 cp -p %{SOURCE1} LICENSE
 # We don't generate site; don't pull extra dependencies.
 %pom_remove_plugin :maven-site-plugin
-# Avoid using Maven 2.x APIs
-sed -i s/maven-project/maven-core/ modello-maven-plugin/pom.xml
 
+%pom_remove_dep :jackson-bom
 %pom_disable_module modello-plugin-jackson modello-plugins
 %pom_disable_module modello-plugin-jsonschema modello-plugins
 %pom_remove_dep :modello-plugin-jackson modello-maven-plugin
@@ -89,12 +91,12 @@ sed -i s/maven-project/maven-core/ modello-maven-plugin/pom.xml
 
 %build
 # skip tests because we have too old xmlunit in Fedora now (1.0.8)
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.version=3.1.1
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
-%jpackage_script org.codehaus.modello.ModelloCli "" "" modello:plexus-containers/plexus-container-default:plexus/classworlds:plexus/utils:plexus/plexus-build-api:xbean/xbean-reflect:guava %{name} true
+%jpackage_script org.codehaus.modello.ModelloCli "" "" modello:org.eclipse.sisu.plexus:org.eclipse.sisu.inject:google-guice-no_aop:atinject:plexus-containers/plexus-component-annotations:plexus/classworlds:plexus/utils:plexus/plexus-build-api:guava:plexus-compiler/plexus-compiler-api:plexus-compiler/plexus-compiler-javac %{name} true
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
@@ -108,6 +110,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.0.0-alt1_2jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.11-alt1_6jpp11
 - update
 
