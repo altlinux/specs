@@ -4,7 +4,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          javaparser
-Version:       3.22.0
+Version:       3.24.2
 Release:       alt1_3jpp11
 Summary:       Java 1 to 13 Parser and Abstract Syntax Tree for Java
 License:       LGPLv3+ or ASL 2.0
@@ -95,6 +95,9 @@ sed -i \
 %doc --no-dereference LICENSE LICENSE.APACHE LICENSE.GPL LICENSE.LGPL
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.24.2-alt1_3jpp11
+- new version
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 3.22.0-alt1_3jpp11
 - new version
 
