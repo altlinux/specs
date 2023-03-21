@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 5.6.7
-Release: alt2
+Version: 5.6.8
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -205,6 +205,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Mon Mar 20 2023 Vladimir Didenko <cow@altlinux.org> 5.6.8-alt1
+- 5.6.8
+
 * Mon Jan 30 2023 Vladimir Didenko <cow@altlinux.org> 5.6.7-alt2
 - obsolete cinnamon-minimal meta package
 
