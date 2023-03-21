@@ -5,8 +5,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jdependency
-Version:        2.7.0
-Release:        alt1_3jpp11
+Version:        2.8.0
+Release:        alt1_1jpp11
 Summary:        This project provides an API to analyse class dependencies
 License:        ASL 2.0
 URL:            http://github.com/tcurdt/%{name}
@@ -66,6 +66,9 @@ BuildArch: noarch
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.8.0-alt1_1jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.7.0-alt1_3jpp11
 - new version
 
