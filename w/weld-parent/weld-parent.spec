@@ -4,7 +4,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           weld-parent
-Version:        45
+Version:        46
 Release:        alt1_3jpp11
 Summary:        Parent POM for Weld
 License:        ASL 2.0
@@ -41,6 +41,9 @@ Parent POM for Weld
 %files -f .mfiles
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 46-alt1_3jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 45-alt1_3jpp11
 - new version
 
