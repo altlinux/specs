@@ -4,8 +4,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plantuml
-Version:        1.2022.2
-Release:        alt1_1jpp11
+Version:        1.2022.5
+Release:        alt1_3jpp11
 Epoch:          2
 Summary:        Program to generate UML diagram from a text description
 
@@ -13,7 +13,7 @@ License:        LGPLv3+
 URL:            http://plantuml.com/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-lgpl-%{version}.tar.gz
 #Fix compilation under openjdk
-Patch0:         build-with-javac-utf8-encoding.patch
+#Patch0:         build-with-javac-utf8-encoding.patch
 
 BuildArch:      noarch
 
@@ -51,7 +51,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -c -n plantuml
-%patch0 -p1
+#%patch0 -p1
 
 # Convert from dos to unix line ending
 sed -i.orig 's|\r||g' README
@@ -87,6 +87,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference COPYING
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 2:1.2022.5-alt1_3jpp11
+- new version
+
 * Wed Apr 06 2022 Igor Vlasenko <viy@altlinux.org> 2:1.2022.2-alt1_1jpp11
 - new version (closes: #42069)
 
