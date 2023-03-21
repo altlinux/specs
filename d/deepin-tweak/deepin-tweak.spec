@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: deepin-tweak
-Version: 1.1.0
-Release: alt1.1
+Version: 1.2.2
+Release: alt1
 Summary: Setting tool built on dtkdeclarative
 Summary(ru): Инструмент настройки, созданный на dtkdeclarative
 License: LGPL-3.0+
@@ -72,11 +72,13 @@ cmake --build %_cmake__builddir -j%__nprocs
 %dir %_datadir/%name/
 %dir %_datadir/%name/plugins/
 %_datadir/%name/plugins/*
-%dir %_libdir/dtkdeclarative/
-%dir %_libdir/dtkdeclarative/qml-app/
-%_libdir/dtkdeclarative/qml-app/*.so
+%dir %_libdir/%name/
+%_libdir/%name/libdtkqml-%{name}*.so
 
 %changelog
+* Tue Mar 21 2023 Leontiy Volodin <lvol@altlinux.org> 1.2.2-alt1
+- New version.
+
 * Fri Dec 02 2022 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1.1
 - Fixed startup.
 
