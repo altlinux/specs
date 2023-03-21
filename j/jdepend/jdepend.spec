@@ -4,49 +4,21 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
 Name:           jdepend
-Version:        2.9.1
-Release:        alt4_27jpp11
+Version:        2.10
+Release:        alt1_3jpp11
 Summary:        Java Design Quality Metrics
-License:        BSD
-URL:            http://www.clarkware.com/
-#Downloaded from http://github.com/clarkware/jdepend/tarball/2.9.1
-Source0:        clarkware-jdepend-5798059.tar.gz
-Source1:        %{name}-%{version}.pom
+License:        MIT
+URL:            https://github.com/clarkware/jdepend
 BuildArch:      noarch
+
+Source0:        https://github.com/clarkware/jdepend/archive/refs/tags/2.10.tar.gz#/jdepend-2.10.tar.gz
 
 BuildRequires:  ant
 BuildRequires:  javapackages-local
+
+# demo subpackages was removed in Fedora 37
+Obsoletes:      %{name}-demo < 2.10
 Source44: import.info
 
 %description
@@ -64,16 +36,8 @@ BuildArch: noarch
 %description javadoc
 Javadoc for %{name}.
 
-%package demo
-Group: Development/Java
-Summary:        Demos for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-
-%description demo
-Demonstrations and samples for %{name}.
-
 %prep
-%setup -q -n clarkware-jdepend-5798059
+%setup -q
 # remove all binary libs
 find . -name "*.jar" -delete
 # fix strange permissions
@@ -82,27 +46,23 @@ find . -type d -exec chmod 755 {} \;
 %mvn_file %{name}:%{name} %{name}
 
 %build
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dant.build.javac.source=1.7 -Dant.build.javac.target=1.7 jar javadoc
 
 %install
-%mvn_artifact %{SOURCE1} dist/%{name}-%{version}.jar
+%mvn_artifact jdepend:jdepend:%{version} dist/%{name}-%{version}.jar
 %mvn_install -J build/docs/api
-rm -rf build/docs/api
-# demo
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 %files -f .mfiles
-%doc README docs
-%doc --no-dereference LICENSE
+%doc README.md CHANGELOG.md docs
+%doc --no-dereference LICENSE.md
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-
-%files demo
-%{_datadir}/%{name}
+%doc --no-dereference LICENSE.md
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.10-alt1_3jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:2.9.1-alt4_27jpp11
 - update
 
