@@ -5,16 +5,16 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 %global build_javadoc 0
 
-Name:     mariadb-java-client
-Version:  3.0.3
-Release:  alt1_3jpp11
-Summary:  Connects applications developed in Java to MariaDB and MySQL databases
+Name:			mariadb-java-client
+Version:	3.0.7
+Release:	alt1_1jpp11
+Summary:	Connects applications developed in Java to MariaDB and MySQL databases
 # added BSD license because of https://bugzilla.redhat.com/show_bug.cgi?id=1291558#c13
-License:  BSD and LGPLv2+
-URL:      https://mariadb.com/kb/en/mariadb/about-mariadb-connector-j/
-Source0:  https://github.com/mariadb-corporation/mariadb-connector-j/archive/refs/tags/%{version}.tar.gz
+License:	BSD and LGPLv2+
+URL:			https://mariadb.com/kb/en/mariadb/about-mariadb-connector-j/
+Source0:	https://github.com/mariadb-corporation/mariadb-connector-j/archive/refs/tags/%{version}.tar.gz#/mariadb-connector-j-%{version}.tar.gz
 # optional dependency not in Fedora
-Patch0:   remove_waffle-jna.patch
+Patch0:		remove_waffle-jna.patch
 
 BuildArch:	noarch
 BuildRequires:	maven-local
@@ -24,8 +24,8 @@ BuildRequires:	mvn(com.google.code.maven-replacer-plugin:replacer)
 # fedora 25
 BuildRequires:	mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:	mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.osgi:osgi.cmpn)
-BuildRequires:  mvn(org.osgi:osgi.core)
+BuildRequires:	mvn(org.osgi:osgi.cmpn)
+BuildRequires:	mvn(org.osgi:osgi.core)
 # Since version 2.4.0
 # removing coverage test because of dependencies
 #BuildRequires:	mvn(org.jacoco:jacoco-maven-plugin)
@@ -33,7 +33,7 @@ BuildRequires:  mvn(org.osgi:osgi.core)
 #BuildRequires:	mvn(com.github.dblock.waffle:waffle-jna)
 
 %if %build_javadoc == 0
-Obsoletes:     %{name}-javadoc < 3.0.3
+Obsoletes:	%{name}-javadoc < 3.0.3
 %endif
 Source44: import.info
 
@@ -63,6 +63,8 @@ This package contains the API documentation for %{name}.
 %pom_remove_dep org.junit:junit-bom
 %pom_remove_dep org.junit.jupiter:junit-jupiter-engine
 %pom_remove_dep org.slf4j:slf4j-api
+# used in buildtime for generating OSGI metadata
+%pom_remove_plugin biz.aQute.bnd:bnd-maven-plugin
 
 %pom_add_dep net.java.dev.jna:jna
 %pom_add_dep net.java.dev.jna:jna-platform
@@ -117,6 +119,9 @@ opts="-j"
 %endif
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.0.7-alt1_1jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.0.3-alt1_3jpp11
 - new version
 
