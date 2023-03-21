@@ -4,8 +4,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jakarta-mail
-Version:        1.6.5
-Release:        alt1_8jpp11
+Version:        1.6.7
+Release:        alt1_3jpp11
 Summary:        Jakarta Mail API
 License:        EPL-2.0 or GPLv2 with exceptions
 URL:            https://github.com/eclipse-ee4j/mail
@@ -30,7 +30,7 @@ The Jakarta Mail API provides a platform-independent and
 protocol-independent framework to build mail and messaging applications.
 
 %prep
-%setup -n mail-%{version}
+%setup -q -n mail-%{version}
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
@@ -38,6 +38,7 @@ protocol-independent framework to build mail and messaging applications.
 # disable unnecessary maven plugins
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :osgiversion-maven-plugin
+%pom_remove_plugin :directory-maven-plugin
 
 # disable android-specific code
 %pom_disable_module android
@@ -46,8 +47,7 @@ protocol-independent framework to build mail and messaging applications.
 %pom_xpath_remove "pom:project/pom:profiles"
 
 # inject OSGi bundle versions manually instead of using osgiversion-maven-plugin
-sed -i "s/\${mail\.osgiversion}/%{version}/g" mail/pom.xml
-sed -i "s/\${mail\.osgiversion}/%{version}/g" mailapi/pom.xml
+find -name pom.xml -exec sed -i "s/\${mail\.osgiversion}/%{version}/g" {} +
 
 # -Werror is considered harmful
 sed -i "/-Werror/d" mail/pom.xml
@@ -80,7 +80,9 @@ sed -i "/-Werror/d" mail/pom.xml
 # Related bugs:
 # https://bugzilla.redhat.com/show_bug.cgi?id=2023741
 # https://bugzilla.redhat.com/show_bug.cgi?id=2033020
-%mvn_build -j -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+#
+# define the variable ${main.basedir} to avoid using directory-maven-plugin
+%mvn_build -j -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmain.basedir=${PWD}
 
 %install
 %mvn_install
@@ -90,6 +92,9 @@ sed -i "/-Werror/d" mail/pom.xml
 %doc README.md
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1.6.7-alt1_3jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.6.5-alt1_8jpp11
 - update
 
