@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.66
+Version: 0.8.67
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,10 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Sat Mar 18 2023 Dmitry V. Levin <ldv@altlinux.org> 0.8.67-alt1
+- 185-check-udev: new check, disallows packages containing
+  system udev rules files outside /lib/udev/rules.d/.
+
 * Wed Nov 16 2022 Vitaly Chikunov <vt@altlinux.org> 0.8.66-alt1
 - Add /var/crash for kdump-tools.
 
