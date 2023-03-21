@@ -13,8 +13,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           plexus-archiver
-Version:        4.2.4
-Release:        alt1_3jpp11
+Version:        4.2.7
+Release:        alt1_2jpp11
 Summary:        Plexus Archiver Component
 License:        ASL 2.0
 URL:            https://codehaus-plexus.github.io/plexus-archiver
@@ -24,10 +24,10 @@ Source0:        https://github.com/codehaus-plexus/plexus-archiver/archive/plexu
 
 Patch0:         0001-Remove-support-for-snappy.patch
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
@@ -85,6 +85,9 @@ sed -i '/getLoggerManager/d' src/test/java/org/codehaus/plexus/archiver/Duplicat
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:4.2.7-alt1_2jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:4.2.4-alt1_3jpp11
 - update
 
