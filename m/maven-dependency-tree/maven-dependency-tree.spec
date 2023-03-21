@@ -15,18 +15,19 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:          maven-dependency-tree
-Version:       3.0.1
-Release:       alt1_8jpp11
+Version:       3.1.0
+Release:       alt1_2jpp11
 Summary:       Maven dependency tree artifact
 License:       ASL 2.0
-Url:           http://maven.apache.org/
-Source0:       http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+URL:           https://maven.apache.org/
 BuildArch:     noarch
 
-BuildRequires:  maven-local
+Source0:       https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
@@ -54,7 +55,9 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q
 
-find -name Maven3DependencyGraphBuilder.java -delete
+rm -R src/main/java/org/apache/maven/shared/dependency/graph/internal/maven30
+rm src/main/java/org/apache/maven/shared/dependency/graph/internal/Maven3DependencyGraphBuilder.java
+rm src/main/java/org/apache/maven/shared/dependency/graph/internal/Maven3DependencyCollectorBuilder.java
 %pom_remove_dep org.sonatype.aether:
 
 %pom_remove_plugin :apache-rat-plugin
@@ -74,6 +77,9 @@ find -name Maven3DependencyGraphBuilder.java -delete
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_2jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.0.1-alt1_8jpp11
 - update
 
