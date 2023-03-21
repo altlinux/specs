@@ -1,5 +1,5 @@
 Name: alterator-net-iptables
-Version: 4.19.9
+Version: 4.19.10
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -69,6 +69,9 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Tue Mar 21 2023 Mikhail Efremov <sem@altlinux.org> 4.19.10-alt1
+- Add default values to net-ip6tables.conf (closes: #34291).
+
 * Thu Nov 18 2021 Mikhail Efremov <sem@altlinux.org> 4.19.9-alt1
 - net-dnat: Rewrite index.scm.
 - net-dnat: Add init-ui function.
