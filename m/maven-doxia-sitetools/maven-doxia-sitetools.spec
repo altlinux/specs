@@ -1,7 +1,6 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
@@ -16,22 +15,24 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 %bcond_with fop
 
-%global parent maven-doxia
+%global parent  maven-doxia
 %global subproj sitetools
 
 Name:           %{parent}-%{subproj}
-Version:        1.9.2
-Release:        alt1_7jpp11
+Version:        1.11.1
+Release:        alt1_3jpp11
 Summary:        Doxia content generation framework
 License:        ASL 2.0
-URL:            http://maven.apache.org/doxia/
+URL:            https://maven.apache.org/doxia/
 BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/doxia/doxia-sitetools/%{version}/doxia-%{subproj}-%{version}-source-release.zip
+Source1:        https://repo1.maven.org/maven2/org/apache/maven/doxia/doxia-sitetools/%{version}/doxia-%{subproj}-%{version}-source-release.zip.asc
+Source2:        https://downloads.apache.org/maven/KEYS
 
-Patch0:         0001-Port-to-plexus-utils-3.0.24.patch
 Patch1:         0002-Remove-dependency-on-velocity-tools.patch
 
+BuildRequires:  gnupg2
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-io:commons-io)
@@ -54,6 +55,7 @@ BuildRequires:  mvn(org.apache.maven:maven-model:2.2.1)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.velocity:velocity)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
@@ -66,9 +68,6 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
 BuildRequires:  mvn(xalan:xalan)
 BuildRequires:  mvn(xml-apis:xml-apis)
-
-Provides:      maven-doxia-tools = %{version}-%{release}
-Obsoletes:     maven-doxia-tools < 1.7
 Source44: import.info
 
 %description
@@ -88,12 +87,11 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n doxia-%{subproj}-%{version}
-%patch0 -p1
 %patch1 -p1
+
 
 # complains
 %pom_remove_plugin :apache-rat-plugin
-%pom_remove_plugin -r :maven-enforcer-plugin
 
 %pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin
 %pom_remove_dep net.sourceforge.htmlunit:htmlunit doxia-site-renderer/pom.xml
@@ -130,13 +128,15 @@ rm -r doxia-doc-renderer/src/main/java/org/apache/maven/doxia/docrenderer/pdf/fo
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:1.11.1-alt1_3jpp11
+- new version
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.9.2-alt1_7jpp11
 - java11 build
 
