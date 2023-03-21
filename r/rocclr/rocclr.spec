@@ -3,8 +3,8 @@
 %define bits 64
 
 Name: rocclr
-Version: 5.4.1
-Release: alt0.2
+Version: 5.4.3
+Release: alt0.1
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
 Url: https://github.com/ROCm-Developer-Tools/ROCclr
@@ -72,6 +72,9 @@ install -pD -m644 config/amdocl%{bits}.icd %buildroot%_sysconfdir/OpenCL/vendors
 %_sysconfdir/OpenCL/vendors/amdocl%{bits}.icd
 
 %changelog
+* Tue Mar 21 2023 L.A. Kostis <lakostis@altlinux.ru> 5.4.3-alt0.1
+- rocclr: updated to ccd065214094837dd59a45aa5111d860aff38ecf (rocm-5.4.3).
+
 * Wed Jan 04 2023 L.A. Kostis <lakostis@altlinux.ru> 5.4.1-alt0.2
 - Restrict build to 64-bit.
 
