@@ -7,8 +7,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           stringtemplate4
-Version:        4.3.1
-Release:        alt1_9jpp11
+Version:        4.3.3
+Release:        alt1_3jpp11
 Summary:        A Java template engine
 License:        BSD
 URL:            http://www.stringtemplate.org/
@@ -49,24 +49,23 @@ This package contains javadoc for %{name}.
 # sonatype-oss-parent is deprecated in Fedora
 %pom_remove_parent
 
-# The revapi plugin is an API checker.  That is a great thing for upstream to
-# use, but not for Fedora builds.  Plus Fedora doesn't currently have it.
-%pom_remove_plugin :revapi-maven-plugin
-
 %build
-xvfb-run -a -n 1 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
+xvfb-run -a -n 1 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc CHANGES.txt contributors.txt README.md
+%doc CHANGES.txt README.md
 %doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 4.3.3-alt1_3jpp11
+- new version
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 4.3.1-alt1_9jpp11
 - update
 
