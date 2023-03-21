@@ -2,11 +2,11 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 0.2.56
+%define version 0.2.62
 %global project     clojure
 %global artifactId  core.specs.alpha
 %global archivename %{artifactId}-%{artifactId}
@@ -14,14 +14,14 @@ BuildRequires: jpackage-11-compat
 
 Name:           clojure-core-specs-alpha
 Epoch:          1
-Version:        0.2.56
-Release:        alt1_1jpp11
+Version:        0.2.62
+Release:        alt1_3jpp11
 Summary:        Clojure library containing specs to describe Clojure core macros and functions
 
 Group:          Development/Other
 License:        EPL-1.0
 URL:            https://github.com/%{project}/%{artifactId}
-Source0:        https://github.com/%{project}/%{artifactId}}/archive/%{artifactId}-%{full_version}.zip
+Source0:        https://github.com/%{project}/%{artifactId}/archive/refs/tags/v%{full_version}.zip
 
 BuildArch:      noarch
 
@@ -38,7 +38,7 @@ Core.specs.alpha is a Clojure library containing specs to describe Clojure
 core macros and functions.
 
 %prep
-%setup -q -n %{archivename}-%{full_version}
+%setup -q -n %{artifactId}-%{full_version}
 # Remove unpackaged parent pom and add the required groupId
 %pom_remove_parent pom.xml
 %pom_xpath_inject pom:project "<groupId>org.clojure</groupId>"
@@ -103,6 +103,9 @@ core macros and functions.
 %doc epl-v10.html CHANGES.md README.md CONTRIBUTING.md
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1:0.2.62-alt1_3jpp11
+- new version
+
 * Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 1:0.2.56-alt1_1jpp11
 - new version
 
