@@ -15,8 +15,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           objectweb-asm
-Version:        9.2
-Release:        alt1_3jpp11
+Version:        9.3
+Release:        alt1_2jpp11
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            https://asm.ow2.org/
@@ -34,9 +34,10 @@ Source7:        https://repo1.maven.org/maven2/org/ow2/asm/asm-util/%{version}/a
 # The source contains binary jars that cannot be verified for licensing and could be proprietary
 Source9:        generate-tarball.sh
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  maven-local
 %endif
 
 # Explicit javapackages-tools requires since asm-processor script uses
@@ -92,6 +93,9 @@ done
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:9.3-alt1_2jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:9.2-alt1_3jpp11
 - new version
 
