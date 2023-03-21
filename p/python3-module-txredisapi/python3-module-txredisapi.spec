@@ -2,26 +2,28 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.4.7
-Release: alt2
+Version: 1.4.9
+Release: alt1
 
-Summary: Twisted client protocol for redis
+Summary: non-blocking redis client for python
 
-License: Apache
+License: Apache-2.0
 Group: Development/Python3
-URL: https://github.com/IlyaSkriblovsky/txredisapi/
+URL: https://pypi.org/project/txredisapi
+VCS: https://github.com/IlyaSkriblovsky/txredisapi
 
-Source0: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
 %description
-%summary
+txredisapi is a non-blocking client driver for the redis database, written
+in Python. It uses Twisted for the asynchronous communication with redis.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -35,6 +37,9 @@ BuildRequires(pre): rpm-build-python3
 
 
 %changelog
+* Tue Mar 21 2023 Anton Vyatkin <toni@altlinux.org> 1:1.4.9-alt1
+- New version 1.4.9.
+
 * Mon Mar 06 2023 Anton Vyatkin <toni@altlinux.org> 1:1.4.7-alt2
 - Fix BuildRequires
 
