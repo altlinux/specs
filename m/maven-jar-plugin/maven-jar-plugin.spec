@@ -15,20 +15,19 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-jar-plugin
-Version:        3.2.0
-Release:        alt1_7jpp11
+Version:        3.2.2
+Release:        alt1_2jpp11
 Summary:        Maven JAR Plugin
-
 License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-jar-plugin/
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
+URL:            https://maven.apache.org/plugins/maven-jar-plugin/
 BuildArch:      noarch
 
-BuildRequires:  maven-local
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-archiver)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
@@ -76,6 +75,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.2.2-alt1_2jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_7jpp11
 - update
 
