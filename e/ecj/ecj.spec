@@ -7,10 +7,10 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Epoch: 1
 
-%global eclipse_ver 4.22
-%global bundle_ver 3.28.0
-%global jar_ver %{eclipse_ver}RC2
-%global drop S-%{jar_ver}-202111241800
+%global eclipse_ver 4.23
+%global bundle_ver 3.29.0
+%global jar_ver %{eclipse_ver}
+%global drop R-%{jar_ver}-202203080310
 
 Summary: Eclipse Compiler for Java
 Name: ecj
@@ -99,6 +99,9 @@ install -m 644 -p ecj.1 $RPM_BUILD_ROOT%{_mandir}/man1/ecj.1
 %{_mandir}/man1/ecj*
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1:4.23-alt1_3jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:4.22-alt1_3jpp11
 - new version
 
