@@ -15,8 +15,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-plugin-build-helper
-Version:        3.2.0
-Release:        alt1_5jpp11
+Version:        3.3.0
+Release:        alt1_2jpp11
 Summary:        Build Helper Maven Plugin
 License:        MIT
 URL:            https://www.mojohaus.org/build-helper-maven-plugin/
@@ -24,10 +24,10 @@ BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/org/codehaus/mojo/build-helper-maven-plugin/%{version}/build-helper-maven-plugin-%{version}-source-release.zip
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
@@ -82,6 +82,9 @@ find -name BeanshellPropertyMojo.java -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_2jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_5jpp11
 - update
 
