@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 
 %def_enable vnc
@@ -10,7 +10,7 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -29,11 +29,10 @@ Source: %name-%version.tar
 %define pw_api_ver 0.3
 %define pw_ver 0.3.22
 %define vnc_ver 0.9.11
-%define freerdp_ver 2.3.1
-%define gst_ver 1.10
+%define freerdp_ver 2.10.0
 %define fuse_ver 3.9.1
 %define xkbc_ver 1.0.0
-%define nvenc_ver 11
+%define nvenc_ver 11.1.5.0
 
 Requires: pipewire >= %pw_ver
 Requires: fuse3 >= %fuse_ver
@@ -86,6 +85,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Mon Jan 09 2023 Yuri N. Sedunov <aris@altlinux.org> 43.3-alt1
 - 43.3
 
