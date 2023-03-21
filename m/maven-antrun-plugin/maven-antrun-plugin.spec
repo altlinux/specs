@@ -15,8 +15,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-antrun-plugin
-Version:        3.0.0
-Release:        alt1_3jpp11
+Version:        3.1.0
+Release:        alt1_2jpp11
 Summary:        Maven AntRun Plugin
 License:        ASL 2.0
 URL:            https://maven.apache.org/plugins/maven-antrun-plugin/
@@ -24,11 +24,10 @@ BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
-BuildRequires:  mvn(junit:junit)
+BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
@@ -36,8 +35,9 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.hamcrest:hamcrest-core)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-engine)
 BuildRequires:  mvn(org.xmlunit:xmlunit-core)
 BuildRequires:  mvn(org.xmlunit:xmlunit-matchers)
 %endif
@@ -71,6 +71,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_2jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_3jpp11
 - new version
 
