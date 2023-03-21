@@ -12,8 +12,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           plexus-languages
-Version:        1.0.6
-Release:        alt1_6jpp11
+Version:        1.1.1
+Release:        alt1_2jpp11
 Summary:        Plexus Languages
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-languages
@@ -25,15 +25,10 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 # Sources contain bundled jars that we cannot verify for licensing
 Source2:        generate-tarball.sh
 
-# Upstream patch: Jars of which modulename extraction cause an exception should end up on the classpath
-# https://github.com/codehaus-plexus/plexus-languages/issues/70
-# https://issues.apache.org/jira/browse/SUREFIRE-1897
-Patch0:         0001-70-Jars-of-which-modulename-extraction-cause-an-exce.patch
-
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
 BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
@@ -51,7 +46,6 @@ language features.
 
 %prep
 %setup -q -n plexus-languages-plexus-languages-%{version}
-%patch0 -p1
 
 cp %{SOURCE1} .
 
@@ -71,6 +65,9 @@ cp %{SOURCE1} .
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt1_2jpp11
+- new version
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 1.0.6-alt1_6jpp11
 - fc update
 
