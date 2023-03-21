@@ -7,7 +7,7 @@
 %def_without mbedtls
 
 Name: freerdp
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 
 Group: Networking/Remote access
@@ -370,6 +370,9 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Tue Mar 21 2023 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt1
+- New version (ALT #45580).
+
 * Fri Nov 18 2022 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt1
 - New version.
 - Fixed multiple client side input validation issues
