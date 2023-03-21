@@ -15,18 +15,18 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           apache-parent
-Version:        23
-Release:        alt1_6jpp11
+Version:        26
+Release:        alt1_3jpp11
 Summary:        Parent POM file for Apache projects
 License:        ASL 2.0
 URL:            http://apache.org/
 Source0:        https://repo1.maven.org/maven2/org/apache/apache/%{version}/apache-%{version}-source-release.zip
 BuildArch:      noarch
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 %endif
@@ -42,7 +42,7 @@ Source44: import.info
 This package contains the parent pom file for apache projects.
 
 %prep
-%setup -n apache-%{version}
+%setup -q -n apache-%{version}
 
 %pom_remove_plugin :maven-site-plugin
 
@@ -56,6 +56,9 @@ This package contains the parent pom file for apache projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 26-alt1_3jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 23-alt1_6jpp11
 - update
 
