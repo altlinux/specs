@@ -3,7 +3,7 @@
 %def_disable python2
 
 Name: cracklib
-Version: 2.9.8
+Version: 2.9.10
 Release: alt1
 
 Summary: A password-checking library.
@@ -13,7 +13,7 @@ Url: https://github.com/%name/%name
 
 Source: https://github.com/%name/%name/releases/download/v%version/%name-%version.tar.gz
 
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 
 BuildRequires: libX11-devel libICE-devel
 BuildRequires: zlib-devel
@@ -25,22 +25,22 @@ BuildRequires: python-devel}
 %package utils
 Summary: The CrackLib utilities for the build dictionaries.
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package devel
 Summary: %name link library & header file
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n python-module-%name
 Summary: Python module of %name
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n python3-module-%name
 Summary: Python3 module of %name
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description
 CrackLib tests passwords to determine whether they match certain
@@ -80,7 +80,6 @@ This package includes Python3 module for Cracklib.
 
 %prep
 %setup -n %name-%version
-%autopatch -p1
 %{?_enable_python2:%setup -D -c -n %name-%version
 mv %name-%version py2build
 %autopatch -p1}
@@ -95,7 +94,9 @@ export am_cv_python_version=%__python3_version%_python3_abiflags
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-	--disable-static
+	--disable-static \
+	%{?_disable_python:--without-python}
+%nil
 %make_build
 
 %if_enabled python2
@@ -143,6 +144,12 @@ _EOF_
 
 install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
+mkdir -p %buildroot%_sysconfdir/%name
+cat > %buildroot%_sysconfdir/%name/%name.conf << _EOF_
+# This is configuration file for cracklib-update.
+# See update-cracklib(8) for details.
+_EOF_
+
 %find_lang %name
 
 %files -f %name.lang
@@ -154,9 +161,12 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 %files devel
 %_includedir/*
 %_libdir/*.so
+%doc %_man3dir/*
 
 %files utils
+%_sysconfdir/%name/%name.conf
 %_sbindir/*
+%_man8dir/*
 
 %if_enabled python
 %files -n python3-module-%name
@@ -172,6 +182,9 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
 
 %changelog
+* Tue Mar 21 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.10-alt1
+- 2.9.10
+
 * Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 2.9.8-alt1
 - 2.9.8
 

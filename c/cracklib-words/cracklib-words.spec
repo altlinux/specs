@@ -1,7 +1,7 @@
 %define _name cracklib
 
 Name: %_name-words
-Version: 2.9.8
+Version: 2.9.10
 Release: alt1
 Epoch: 1
 
@@ -35,6 +35,9 @@ sort | uniq >%buildroot%_datadir/%_name/%name
 %_datadir/%_name/%name
 
 %changelog
+* Tue Mar 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1:2.9.10-alt1
+- 2.9.10
+
 * Thu Sep 08 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.9.8-alt1
 - 2.9.8
 
