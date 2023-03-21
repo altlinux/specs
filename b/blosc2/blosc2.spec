@@ -1,13 +1,13 @@
 Name:    blosc2
-Version: 2.6.1
+Version: 2.7.1
 Release: alt1
 
 Summary: A fast, compressed, persistent binary data store library for C
-License: BSD
+License: BSD-3-Clause
 Group:   System/Libraries
 Url:     https://www.blosc.org/
-
 VCS:     https://github.com/Blosc/c-blosc2
+
 Source:  %name-%version.tar
 
 BuildRequires(pre): cmake gcc-c++
@@ -57,6 +57,9 @@ rm -rf internal-complibs
 %build
 %cmake \
         -DBUILD_STATIC=OFF \
+        -DBUILD_EXAMPLES=OFF \
+        -DBUILD_FUZZERS=OFF \
+        -DBUILD_BENCHMARKS=OFF \
         -DPREFER_EXTERNAL_ZLIB=ON \
         -DPREFER_EXTERNAL_LZ4=ON \
         -DPREFER_EXTERNAL_ZSTD=ON
@@ -79,6 +82,7 @@ rm -rf internal-complibs
 %_libdir/libblosc2.so
 %dir %_includedir/blosc2
 %_includedir/blosc2.h
+%_includedir/b2nd.h
 %_includedir/blosc2/blosc2-export.h
 %_includedir/blosc2/blosc2-common.h
 %_includedir/blosc2/blosc2-stdio.h
@@ -87,5 +91,8 @@ rm -rf internal-complibs
 %_pkgconfigdir/blosc2.pc
 
 %changelog
+* Tue Mar 21 2023 Anton Vyatkin <toni@altlinux.org> 2.7.1-alt1
+- New version 2.7.1.
+
 * Mon Jan 16 2023 Anton Vyatkin <toni@altlinux.org> 2.6.1-alt1
 - Initial build for Sisyphus
