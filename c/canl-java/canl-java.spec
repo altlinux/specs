@@ -4,12 +4,11 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
-%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		canl-java
-Version:	2.7.0
-Release:	alt1_5jpp11
+Version:	2.8.2
+Release:	alt1_1jpp11
 Summary:	EMI Common Authentication library - bindings for Java
 
 #		The main parts of the code are BSD
@@ -22,17 +21,13 @@ URL:		https://github.com/eu-emi/%{name}/
 Source0:	https://github.com/eu-emi/%{name}/archive/canl-%{version}/%{name}-%{version}.tar.gz
 #		Disable tests that require network connections
 Patch0:		%{name}-test.patch
-#		Backported from upstream
-Patch1:		%{name}-parts-of-deprecated-API-not-used.patch
-#		Bump source and target to Java 1.8
-#		for compatibility with Apache Commons-IO 2.9 and later
-Patch2:		%{name}-src-tgt-1.8.patch
 
 BuildArch:	noarch
 
 BuildRequires:	maven-local
 BuildRequires:	mvn(commons-io:commons-io) >= 2.4
 BuildRequires:	mvn(junit:junit) >= 4.8
+BuildRequires:	mvn(org.assertj:assertj-core)
 BuildRequires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.69
 BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.69
 Requires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.69
@@ -53,8 +48,9 @@ Javadoc documentation for EMI caNl.
 %prep
 %setup -q -n %{name}-canl-%{version}
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
+
+%pom_change_dep org.bouncycastle:bcprov-jdk18on org.bouncycastle:bcprov-jdk15on
+%pom_change_dep org.bouncycastle:bcpkix-jdk18on org.bouncycastle:bcpkix-jdk15on
 
 # Remove maven-wagon-webdav-jackrabbit dependency
 %pom_xpath_remove pom:build/pom:extensions
@@ -62,11 +58,9 @@ Javadoc documentation for EMI caNl.
 # GPG signing requires a GPG key
 %pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin
 
-%if %{?fedora}%{!?fedora:0} >= 33 || %{?rhel}%{!?rhel:0} >= 8
 # F33+ and EPEL8+ doesn't use the maven-javadoc-plugin to generate javadoc
 # Remove maven-javadoc-plugin configuration to avoid build failure
 %pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin
-%endif
 
 # Do not create source jars
 %pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
@@ -89,6 +83,9 @@ Javadoc documentation for EMI caNl.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 2.8.2-alt1_1jpp11
+- new version
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt1_5jpp11
 - update
 
