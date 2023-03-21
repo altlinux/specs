@@ -12,19 +12,19 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           sisu-mojos
-Version:        0.3.4
-Release:        alt1_11jpp11
+Version:        0.3.5
+Release:        alt1_2jpp11
 Summary:        Sisu plugin for Apache Maven
 License:        EPL-1.0
-URL:            http://www.eclipse.org/sisu
+URL:            https://www.eclipse.org/sisu
 BuildArch:      noarch
 
-Source0:        http://git.eclipse.org/c/sisu/org.eclipse.sisu.mojos.git/snapshot/releases/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        https://github.com/eclipse/sisu.mojos/archive/refs/tags/releases/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
@@ -50,8 +50,7 @@ BuildArch: noarch
 This package contains %{summary}.
 
 %prep
-%setup -q -c
-mv releases/%{version}/* .
+%setup -q -n sisu.mojos-releases-%{version}
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
@@ -74,6 +73,9 @@ mv releases/%{version}/* .
 %doc LICENSE.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0.3.5-alt1_2jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.3.4-alt1_11jpp11
 - update
 
