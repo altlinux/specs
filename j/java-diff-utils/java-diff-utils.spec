@@ -4,7 +4,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           java-diff-utils
-Version:        4.11
+Version:        4.12
 Release:        alt1_1jpp11
 Summary:        Java library to create and apply patches
 
@@ -78,6 +78,9 @@ difference algorithms.
 %files jgit -f .mfiles-java-diff-utils-jgit
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 4.12-alt1_1jpp11
+- new version
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 4.11-alt1_1jpp11
 - new version
 
