@@ -5,15 +5,13 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           joni
-Version:        2.1.41
-Release:        alt1_1jpp11
+Version:        2.1.43
+Release:        alt1_3jpp11
 Summary:        Java port of Oniguruma regexp library
 License:        MIT
 URL:            https://github.com/jruby/%{name}
 BuildArch:      noarch
-
 Source0:        https://github.com/jruby/%{name}/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.jruby.jcodings:jcodings)
@@ -26,23 +24,21 @@ to java. It is used by jruby.
 %{?javadoc_package}
 
 %prep
+# -n: base directory name
 %setup -q -n %{name}-%{name}-%{version}
 
-
+# delete precompiled jar and class files
 find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
-
 # Remove pointless parent pom
 %pom_remove_parent
-
 # Remove wagon extension
 %pom_xpath_remove 'pom:build/pom:extensions'
-
 # Remove plugins not relevant for downstream RPM builds
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -52,6 +48,9 @@ find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 %doc README.md
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.1.43-alt1_3jpp11
+- new version
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:2.1.41-alt1_1jpp11
 - new version
 
