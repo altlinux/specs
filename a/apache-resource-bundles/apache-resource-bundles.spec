@@ -17,8 +17,8 @@ BuildRequires: jpackage-default
 %global id_version 1.1
 
 Name:           apache-resource-bundles
-Version:        30
-Release:        alt1_3jpp11
+Version:        36
+Release:        alt1_2jpp11
 Summary:        Apache Resource Bundles
 License:        ASL 2.0
 URL:            https://repo1.maven.org/maven2/org/apache/apache-resource-bundles/
@@ -32,10 +32,10 @@ Source4:        https://repo1.maven.org/maven2/org/apache/apache-license-header-
 Source5:        https://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}-sources.jar
 Source6:        https://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}.pom
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 %endif
@@ -101,6 +101,9 @@ popd
 %files -f .mfiles
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1:36-alt1_2jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 1:30-alt1_3jpp11
 - new version
 
