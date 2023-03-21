@@ -4,7 +4,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           google-gson
-Version:        2.9.0
+Version:        2.9.1
 Release:        alt1_1jpp11
 Summary:        Java lib for conversion of Java objects into JSON representation
 License:        ASL 2.0
@@ -37,6 +37,7 @@ pre-existing objects that you do not have source-code of.
 %package javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
+BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
@@ -61,16 +62,23 @@ rm ./gson/src/test/java/com/google/gson/internal/bind/DefaultDateTypeAdapterTest
 
 %pom_remove_plugin  :moditect-maven-plugin gson
 
+# Remove dependency on unavailable templating-maven-plugin
+%pom_remove_plugin  org.codehaus.mojo:templating-maven-plugin gson
+rm gson/src/test/java/com/google/gson/internal/GsonBuildConfigTest.java
+rm gson/src/test/java/com/google/gson/functional/GsonVersionDiagnosticsTest.java
+
+# to fix error: package javax.annotation is not visible import javax.annotation.PostConstruct;
+rm extras/src/main/java/com/google/gson/typeadapters/PostConstructAdapterFactory.java
+rm extras/src/test/java/com/google/gson/typeadapters/PostConstructAdapterFactoryTest.java
+
 #depends on com.google.caliper
 %pom_disable_module metrics
 
-#%%pom_xpath_remove pom:build/pom:extensions proto
-#%%pom_remove_plugin org.xolstice.maven.plugins:protobuf-maven-plugin proto
 #depends on com.google.protobuf:protobuf-java:jar:4.0.0-rc-2 and com.google.truth:truth:jar:1.1.3
 %pom_disable_module proto
 
 %build
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -79,10 +87,13 @@ rm ./gson/src/test/java/com/google/gson/internal/bind/DefaultDateTypeAdapterTest
 %doc --no-dereference LICENSE
 %doc README.md CHANGELOG.md UserGuide.md
 
-#%%files javadoc  -f .mfiles-javadoc
-#%%doc --no-dereference LICENSE
+%files javadoc  -f .mfiles-javadoc
+%doc --no-dereference LICENSE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 2.9.1-alt1_1jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.9.0-alt1_1jpp11
 - new version
 
