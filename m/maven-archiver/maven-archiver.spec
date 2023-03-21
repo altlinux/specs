@@ -16,8 +16,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-archiver
-Version:        3.5.1
-Release:        alt1_3jpp11
+Version:        3.5.2
+Release:        alt1_2jpp11
 Summary:        Maven Archiver
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-archiver/
@@ -25,10 +25,10 @@ BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
@@ -71,6 +71,9 @@ Javadoc for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:3.5.2-alt1_2jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:3.5.1-alt1_3jpp11
 - update
 
