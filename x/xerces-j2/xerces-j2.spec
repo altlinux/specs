@@ -9,11 +9,12 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global java_home %{_jvmdir}/java-1.8.0-openjdk
 %define __requires_exclude system.bundle
 
 Name:          xerces-j2
-Version:       2.12.1
-Release:       alt1_5jpp11
+Version:       2.12.2
+Release:       alt1_3jpp11
 Summary:       Java XML parser
 # Most of the source is ASL 2.0
 # W3C licensed files:
@@ -31,6 +32,10 @@ Source12:      %{name}-constants.1
 # Custom javac ant task used by the build
 Source3:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/XJavac.java
 
+# Custom doclet tags used in javadocs
+Source5:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/ExperimentalTaglet.java
+Source6:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/InternalTaglet.java
+
 Source7:       %{name}-pom.xml
 
 # Patch the build so that it doesn't try to use bundled xml-commons source
@@ -39,9 +44,6 @@ Patch0:        %{name}-build.patch
 # Patch the manifest so that it includes OSGi stuff
 Patch1:        %{name}-manifest.patch
 
-# Patch build.xml to patch modules as needed during javadoc generation
-Patch2:        %{name}-modulefix.patch
-
 BuildArch:     noarch
 
 BuildRequires: javapackages-local
@@ -49,6 +51,7 @@ BuildRequires: ant
 BuildRequires: apache-parent
 BuildRequires: xml-commons-apis >= 1.4.01
 BuildRequires: xml-commons-resolver >= 1.2
+BuildRequires: java-1.8.0-openjdk-devel
 
 Requires:      xml-commons-apis >= 1.4.01
 Requires:      xml-commons-resolver >= 1.2
@@ -58,14 +61,6 @@ Requires:      javapackages-tools
 
 Provides:      jaxp_parser_impl = 1.4
 Provides:      %{name}-scripts = %{version}-%{release}
-
-Obsoletes:     %{name}-scripts < 2.11.0-6
-
-# This documentation is provided by xml-commons-apis
-Obsoletes:     %{name}-javadoc-apis < %{version}-%{release}
-
-# http://mail-archives.apache.org/mod_mbox/xerces-j-dev/201008.mbox/%3COF8D7E2F83.0271A181-ON8525777F.00528302-8525777F.0054BBE0@ca.ibm.com%3E
-Obsoletes:     %{name}-manual < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -98,12 +93,6 @@ APIs are in use.
 %package        javadoc
 Group: Development/Java
 Summary:        Javadocs for %{name}
-
-# Consolidating all javadocs into one package
-Obsoletes:      %{name}-javadoc-impl < %{version}-%{release}
-Obsoletes:      %{name}-javadoc-xs < %{version}-%{release}
-Obsoletes:      %{name}-javadoc-xni < %{version}-%{release}
-Obsoletes:      %{name}-javadoc-other < %{version}-%{release}
 BuildArch: noarch
 
 %description    javadoc
@@ -118,15 +107,14 @@ Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 %{summary}.
 
 %prep
-%setup -n xerces-%{cvs_version}
+%setup -q -n xerces-%{cvs_version}
 %patch0 -p0
 %patch1 -p0
-%patch2 -p0
 
 # Copy the custom ant task into place
 mkdir -p tools/org/apache/xerces/util
 mkdir -p tools/bin
-cp -a %{SOURCE3} tools/org/apache/xerces/util
+cp -a %{SOURCE3} %{SOURCE5} %{SOURCE6} tools/org/apache/xerces/util
 
 # Make sure upstream hasn't sneaked in any jars we don't know about
 find . \( -name '*.class' -o -name '*.jar' \) -delete
@@ -144,17 +132,17 @@ sed -i -e "s|additionalparam='|additionalparam='-Xdoclint:none |" build.xml
 pushd tools
 
 # Build custom ant tasks
-javac -classpath $(build-classpath ant) org/apache/xerces/util/XJavac.java
-jar cf bin/xjavac.jar org/apache/xerces/util/XJavac.class
+%javac -classpath $(build-classpath ant) org/apache/xerces/util/XJavac.java
+%jar cf bin/xjavac.jar org/apache/xerces/util/XJavac.class
 
-jar cmf /dev/null serializer.jar
+%jar cmf /dev/null serializer.jar
 ln -sf $(build-classpath xml-commons-apis) xml-apis.jar
 ln -sf $(build-classpath xml-commons-resolver) resolver.jar
 popd
 
 # Build everything
 export ANT_OPTS="-Xmx512m -Djava.awt.headless=true -Dbuild.sysclasspath=first -Ddisconnected=true"
-ant -Djavac.source=1.8 -Djavac.target=1.8 \
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djavac.source=1.6 -Djavac.target=1.6 \
     -Dbuild.compiler=modern \
     clean jars javadocs
 
@@ -203,6 +191,9 @@ ln -sf %{name}.jar %{_javadir}/jaxp_parser_impl.jar
 %{_datadir}/%{name}
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.12.2-alt1_3jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:2.12.1-alt1_5jpp11
 - update
 
