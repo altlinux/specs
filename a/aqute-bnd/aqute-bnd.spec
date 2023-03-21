@@ -19,8 +19,8 @@ BuildRequires: jpackage-default
 %endif
 
 Name:           aqute-bnd
-Version:        5.2.0
-Release:        alt1_9jpp11
+Version:        6.2.0
+Release:        alt1_2jpp11
 Summary:        BND Tool
 # Part of jpm is under BSD, but jpm is not included in binary RPM
 License:        ASL 2.0 or EPL-2.0
@@ -39,15 +39,18 @@ Source4:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd/%{ver
 Source5:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bndlib/%{version}/biz.aQute.bndlib-%{version}.pom
 Source6:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd.annotation/%{version}/biz.aQute.bnd.annotation-%{version}.pom
 Source7:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd.ant/%{version}/biz.aQute.bnd.ant-%{version}.pom
+Source8:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd.util/%{version}/biz.aQute.bnd.util-%{version}.pom
 
 Patch1:         0001-Disable-removed-commands.patch
 Patch2:         0002-Port-to-OSGI-7.0.0.patch
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.junit:junit-bom:pom:)
 BuildRequires:  mvn(org.osgi:osgi.annotation)
 BuildRequires:  mvn(org.osgi:osgi.cmpn)
 BuildRequires:  mvn(org.osgi:osgi.core)
@@ -167,8 +170,19 @@ cp -p %{SOURCE4} pom.xml
 %pom_remove_dep :biz.aQute.remote.api
 %pom_remove_dep :snakeyaml
 %pom_remove_dep :jline
+%pom_remove_dep org.osgi:org.osgi.service.coordinator
+%pom_remove_dep org.osgi:org.osgi.service.resolver
 popd
 
+# bnd.util
+pushd biz.aQute.bnd.util
+cp -p %{SOURCE8} pom.xml
+%pom_add_parent biz.aQute.bnd:parent:%{version}
+%pom_add_dep biz.aQute.bnd:aQute.libg:%{version}
+popd
+
+%pom_remove_dep -r org.osgi:org.osgi.dto
+%pom_remove_dep -r org.osgi:org.osgi.framework
 %pom_remove_dep -r org.osgi:org.osgi.namespace.contract
 %pom_remove_dep -r org.osgi:org.osgi.namespace.extender
 %pom_remove_dep -r org.osgi:org.osgi.namespace.implementation
@@ -179,11 +193,13 @@ popd
 %pom_remove_dep -r org.osgi:org.osgi.service.serviceloader
 %pom_remove_dep -r org.osgi:org.osgi.util.function
 %pom_remove_dep -r org.osgi:org.osgi.util.promise
+%pom_remove_dep -r org.osgi:org.osgi.util.tracker
 
 %pom_xpath_remove -r pom:project/pom:dependencies/pom:dependency/pom:scope
 
 # maven-plugins
 cp -r biz.aQute.bnd.maven/src/aQute/bnd/maven/lib/configuration maven/bnd-maven-plugin/src/main/java/aQute/bnd/maven/lib
+cp -r biz.aQute.bnd.maven/src/aQute/bnd/maven/lib/executions maven/bnd-maven-plugin/src/main/java/aQute/bnd/maven/lib
 pushd maven
 %pom_remove_dep -r :biz.aQute.bnd.maven
 # Unavailable reactor dependency - org.osgi.impl.bundle.repoindex.cli
@@ -245,6 +261,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:6.2.0-alt1_2jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:5.2.0-alt1_9jpp11
 - update
 
