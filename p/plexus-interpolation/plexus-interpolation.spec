@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: maven-local
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # fedora bcond_with macro
@@ -14,7 +17,7 @@ BuildRequires: jpackage-default
 
 Name:           plexus-interpolation
 Version:        1.26
-Release:        alt1_8jpp11
+Release:        alt1_12jpp11
 Summary:        Plexus Interpolation API
 # Most of the code is ASL 2.0, a few source files are ASL 1.1 and some tests are MIT
 License:        ASL 2.0 and ASL 1.1 and MIT
@@ -25,7 +28,6 @@ Source0:        https://github.com/codehaus-plexus/plexus-interpolation/archive/
 
 Patch0:         0001-Use-PATH-env-variable-instead-of-JAVA_HOME.patch
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
@@ -46,6 +48,7 @@ related projects.
 %prep
 %setup -q -n plexus-interpolation-plexus-interpolation-%{version}
 %patch0 -p1
+%pom_add_dep junit:junit:4.13.1:test
 %pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin :maven-scm-publish-plugin
 
@@ -59,6 +62,9 @@ related projects.
 %files -f .mfiles
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:1.26-alt1_12jpp11
+- update
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:1.26-alt1_8jpp11
 - update
 
