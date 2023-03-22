@@ -14,7 +14,7 @@
 
 Name: blender
 Version: 3.4.1
-Release: alt2
+Release: alt2.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -185,6 +185,7 @@ This package contains documentation for Blender.
 %patch2000 -p1
 # lcc 1.25.15's EDG bug would fail building OPENVDB+TBB otherwise
 sed -i "/-Werror=return-type/d" CMakeLists.txt
+sed -i 's/"${CMAKE_C_COMPILER_VERSION}" VERSION_LESS/"100" VERSION_LESS/' CMakeLists.txt
 %endif
 
 # Delete the bundled FindOpenJPEG to make find_package use the system version
@@ -291,6 +292,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Wed Mar 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.1-alt2.1
+- Fixed build for Elbrus.
+
 * Mon Mar 20 2023 Alexander Burmatov <thatman@altlinux.org> 3.4.1-alt2
 - Fix build requires.
 
