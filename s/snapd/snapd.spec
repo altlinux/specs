@@ -29,7 +29,7 @@
 #%%define _libexecdir %%_prefix/libexec
 
 Name: snapd
-Version: 2.58
+Version: 2.58.3
 Release: alt1
 Summary: A transactional software package manager
 License: GPLv3
@@ -175,7 +175,8 @@ popd
 # Build systemd units, dbus services, and env files
 pushd ./data
 make BINDIR="%_bindir" LIBEXECDIR="%_libexecdir" DATADIR="%_datadir" \
-     SYSTEMDSYSTEMUNITDIR="%_unitdir" \
+     SYSTEMDSYSTEMUNITDIR="%_unitdir" SYSTEMDUSERUNITDIR="%_userunitdir" \
+     TMPFILESDIR="%_tmpfilesdir" \
      SNAP_MOUNT_DIR="%_sharedstatedir/snapd/snap" \
      SNAPD_ENVIRONMENT_FILE="%_sysconfdir/sysconfig/snapd"
 popd
@@ -262,9 +263,9 @@ popd
 pushd data
 %makeinstall_std BINDIR="%_bindir" LIBEXECDIR="%_libexecdir" DATADIR="%_datadir" \
               SYSTEMDSYSTEMUNITDIR="%_unitdir" SYSTEMDUSERUNITDIR="%_userunitdir" \
+              TMPFILESDIR="%_tmpfilesdir" \
               SNAP_MOUNT_DIR="%_sharedstatedir/snapd/snap" \
-              SNAPD_ENVIRONMENT_FILE="%_sysconfdir/sysconfig/snapd" \
-              TMPFILESDIR="%_tmpfilesdir"
+              SNAPD_ENVIRONMENT_FILE="%_sysconfdir/sysconfig/snapd"
 popd
 
 # Remove snappy core specific units
@@ -384,8 +385,8 @@ fi
 %attr(0755,root,root) %_sysconfdir/profile.d/snapd.sh
 %_mandir/man8/snapd-env-generator.8*
 %_systemd_system_env_generator_dir/snapd-env-generator
-%_tmpfilesdir/snapd.conf
 %_datadir/fish/vendor_conf.d/snapd.fish
+%_datadir/snapd/snapcraft-logo-bird.svg
 %_unitdir/snapd.socket
 %_unitdir/snapd.service
 %_unitdir/snapd.autoimport.service
@@ -395,6 +396,7 @@ fi
 %_unitdir/snapd.mounts-pre.target
 %_userunitdir/snapd.session-agent.service
 %_userunitdir/snapd.session-agent.socket
+%_tmpfilesdir/snapd.conf
 %_datadir/dbus-1/services/io.snapcraft.Launcher.service
 %_datadir/dbus-1/services/io.snapcraft.SessionAgent.service
 %_datadir/dbus-1/services/io.snapcraft.Settings.service
@@ -459,6 +461,9 @@ fi
 %endif
 
 %changelog
+* Wed Mar 22 2023 Alexey Shabalin <shaba@altlinux.org> 2.58.3-alt1
+- 2.58.3
+
 * Wed Dec 21 2022 Alexey Shabalin <shaba@altlinux.org> 2.58-alt1
 - 2.58 (Fixes: CVE 2022-3328)
 
