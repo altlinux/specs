@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A WPE backend designed for Linux desktop systems
@@ -73,6 +73,9 @@ This package provides development documentation for %_name library.
 %endif
 
 %changelog
+* Wed Mar 22 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
+- 1.14.2
+
 * Sun Mar 05 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
 - 1.14.1
 
