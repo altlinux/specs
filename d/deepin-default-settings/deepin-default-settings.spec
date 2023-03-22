@@ -1,7 +1,7 @@
 %define repo default-settings
 
 Name: deepin-default-settings
-Version: 2020.12.18
+Version: 2022.10.19
 Release: alt1
 Summary: deepin-default-settings
 License: GPL-3.0
@@ -22,12 +22,14 @@ deepin-default-settings
 %prep
 %setup -n %repo-%version
 subst 's|%_libexecdir/sysctl.d/|%_sysctldir/|' Makefile
+subst 's|/usr/bin/env python3|%__python3|' dde-first-run
 
 %install
 %makeinstall_std
 
 mkdir -p %buildroot%_binfmtdir/
 mv -f %buildroot/etc/binfmt.d/wine.conf %buildroot%_binfmtdir/wine.conf
+cp -r skel %buildroot/%_sysconfdir/
 # conflicts with xorg-drv-libinput
 rm -f %buildroot%_sysconfdir/X11/xorg.conf.d/40-libinput.conf
 # conflicts with altlinux-mime-defaults
@@ -36,21 +38,21 @@ rm -f %buildroot%_desktopdir/mimeapps.list
 %files
 %doc CHANGELOG.md LICENSE
 %_bindir/dde-first-run
+%_prefix/libexec/dde-first-run
 %_sysctldir/deepin.conf
 %_sysconfdir/X11/xinit/xinitrc.d/50-systemd-user.sh
 %config(noreplace) %_sysconfdir/X11/xorg.conf.d/*.conf
 %_binfmtdir/wine.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/*.conf
-%config(noreplace) %_sysconfdir/gimp/2.0/fonts.conf
 %_sysconfdir/lscolor-256color
 %config(noreplace) %_sysconfdir/modprobe.d/*.conf
-#%_sysconfdir/skel/.config/Trolltech.conf
-#%_sysconfdir/skel/.config/user-dirs.dirs
-#%_sysconfdir/skel/.config/SogouPY/sogouEnv.ini
-#%_sysconfdir/skel/.config/autostart/dde-first-run.desktop
-#%_sysconfdir/skel/.config/deepin/qt-theme.ini
-#%_sysconfdir/skel/.icons/default/index.theme
-#%_sysconfdir/skel/Music/bensound-sunny.mp3
+%_sysconfdir/skel/.config/Trolltech.conf
+%_sysconfdir/skel/.config/user-dirs.dirs
+%_sysconfdir/skel/.config/SogouPY/sogouEnv.ini
+%_sysconfdir/skel/.config/autostart/dde-first-run.desktop
+%_sysconfdir/skel/.config/deepin/qt-theme.ini
+%_sysconfdir/skel/.icons/default/index.theme
+%_sysconfdir/skel/Music/bensound-sunny.mp3
 %_sysconfdir/sudoers.d/01_always_set_sudoers_home
 %_udevrulesdir/99-deepin.rules
 %dir %_desktopdir/deepin/
@@ -64,6 +66,9 @@ rm -f %buildroot%_desktopdir/mimeapps.list
 %_datadir/music/bensound-sunny.mp3
 
 %changelog
+* Wed Mar 22 2023 Leontiy Volodin <lvol@altlinux.org> 2022.10.19-alt1
+- New version (2022.10.19).
+
 * Thu Sep 09 2021 Leontiy Volodin <lvol@altlinux.org> 2020.12.18-alt1
 - New version (2020.12.18).
 - Fixed default folders in $$HOME.
