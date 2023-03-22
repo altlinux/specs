@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 289
+%define centos_release 290
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,22 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Mar 22 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.290-alt1.el9
+- Updated to kernel-5.14.0-290.el9:
+  + block: update with upstream v6.3
+  + cifs: improve checking if we actually got a directory lease or not
+  + Draft: Merge tag 'kernel-5.14.0-284.3.1.el9_2' from 9.2
+  + Drivers: vmbus: Check for channel allocation before looking up relids
+  + Hyper-V: Misc driver updates for RHEL9.3
+  + livepatch: selected s390x fixes for rhel-9.3
+  + Merge commit 'dd7c5cb0f8ab998d09b29d884d940881e05bd662' into 9.2
+  + Merge tag 'kernel-5.14.0-284.3.1.el9_2' from 9.2
+  + nfsd fixes up to v6.3 for RHEL9.2
+  + ptp: vclock: use mutex to fix "sleep on atomic" bug
+  + Stop trying to set boost MSRs on CPUs that don't support boost.
+  + x86: hyperv: x86_64 updates for RHEL 9.3
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Mar 20 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.289-alt1.el9
 - Updated to kernel-5.14.0-289.el9:
   + Backport latest fixes and memory reclaiming feature from upstream s390x KVM for the RHEL 9.3 kernel
