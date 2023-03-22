@@ -1,6 +1,6 @@
 Name: linux-gpib
 Version: 4.3.4
-Release: alt1
+Release: alt2
 
 Summary: Support package for GPIB (IEEE 488) hardware
 Group: System/Kernel and hardware
@@ -67,6 +67,10 @@ mv %buildroot%_datadir/linux-gpib-user %buildroot%_docdir/%name-%version
 cp COPYING README doc/linux-gpib.pdf %buildroot%_docdir/%name-%version
 cp -r language/tcl/examples  %buildroot%_docdir/%name-%version/tcl-examples
 
+# move udev rules
+mkdir -p %buildroot/lib/udev
+mv %buildroot/%_sysconfdir/udev/rules.d %buildroot/lib/udev
+
 # install kernel module sources
 install -pDm0644 %SOURCE1 %kernel_srcdir/%name-%version.tar.bz2
 
@@ -79,11 +83,12 @@ install -pDm0644 %SOURCE1 %kernel_srcdir/%name-%version.tar.bz2
 %doc %_docdir/%name-%version/README
 %doc %_docdir/%name-%version/linux-gpib.pdf
 %doc %_docdir/%name-%version/html/*
-%config(noreplace) %_sysconfdir/udev/rules.d/*
-%config(noreplace) %_sysconfdir/gpib.conf
+/lib/udev/rules.d/*
 %_libexecdir/udev/*
+%config(noreplace) %_sysconfdir/gpib.conf
 %_bindir/ibterm
 %_bindir/ibtest
+%_bindir/findlisteners
 %_libdir/libgpib.so.*
 %_sbindir/gpib_config
 
@@ -104,6 +109,9 @@ install -pDm0644 %SOURCE1 %kernel_srcdir/%name-%version.tar.bz2
 %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Mar 22 2023 Vladislav Zavjalov <slazav@altlinux.org> 4.3.4-alt2
+- install udev rules to /lib/udev/rules.d (new sisyphus_check requirement)
+
 * Tue Apr 06 2021 Vladislav Zavjalov <slazav@altlinux.org> 4.3.4-alt1
 - v4.3.4
 
