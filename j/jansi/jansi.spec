@@ -14,7 +14,7 @@ BuildRequires: jpackage-default
 
 Name:             jansi
 Version:          2.4.0
-Release:          alt1_3jpp11
+Release:          alt1_7jpp11
 Summary:          Generate and interpret ANSI escape sequences in Java
 License:          ASL 2.0
 URL:              http://fusesource.github.io/jansi/
@@ -28,10 +28,10 @@ Source1:          generate-tarball.sh
 Patch0:           %{name}-jni.patch
 
 BuildRequires:    gcc
-BuildRequires:    maven-local
 %if %{with bootstrap}
 BuildRequires:    javapackages-bootstrap
 %else
+BuildRequires:    maven-local
 BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:    mvn(org.apache.maven.surefire:surefire-junit-platform)
@@ -48,8 +48,8 @@ when output is being sent to output devices which cannot support ANSI sequences.
 
 %package javadoc
 Group: Development/Java
+BuildArch:        noarch
 Summary:          Javadocs for %{name}
-BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
@@ -83,11 +83,12 @@ ln -s %{java_home}/include/jni.h src/main/native/inc_linux
 ln -s %{java_home}/include/linux/jni_md.h src/main/native/inc_linux
 
 # Set the JNI path
-sed -i 's,@LIBDIR@,%{_libdir},' \
+sed -i 's,@LIBDIR@,%{_prefix}/lib,' \
     src/main/java/org/fusesource/jansi/internal/JansiLoader.java
 
 %build
-export CC=gcc
+
+CC="${CC:-gcc}"
 # Build the native artifact
 CFLAGS="$CFLAGS -I. -I%{java_home}/include -I%{java_home}/include/linux -fPIC -fvisibility=hidden"
 cd src/main/native
@@ -103,26 +104,24 @@ cd -
 
 %install
 # Install the native artifact
-mkdir -p %{buildroot}%{_libdir}/%{name}
-cp -p src/main/native/libjansi.so %{buildroot}%{_libdir}/%{name}
+mkdir -p %{buildroot}%{_prefix}/lib/%{name}
+cp -p src/main/native/libjansi.so %{buildroot}%{_prefix}/lib/%{name}
 
 # Install the Java artifacts
 %mvn_install
 
-mkdir -p %{buildroot}%{_javadir}/%name/
-ln -s ../../../lib/java/%name/%{name}.jar %{buildroot}%{_javadir}/%name/%{name}.jar
-
 %files -f .mfiles
 %doc --no-dereference license.txt
 %doc readme.md changelog.md
-%{_libdir}/%{name}/
-%dir %{_javadir}/%name
-%{_javadir}/%name/%{name}.jar
+%{_prefix}/lib/%{name}/
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference license.txt
 
 %changelog
+* Wed Mar 22 2023 Igor Vlasenko <viy@altlinux.org> 0:2.4.0-alt1_7jpp11
+- update
+
 * Sat Jul 02 2022 Igor Vlasenko <viy@altlinux.org> 0:2.4.0-alt1_3jpp11
 - new version
 
