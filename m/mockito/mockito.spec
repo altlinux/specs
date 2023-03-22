@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 
 Name:           mockito
 Version:        3.12.4
-Release:        alt1_3jpp11
+Release:        alt1_5jpp11
 Summary:        Tasty mocking framework for unit tests in Java
 License:        MIT
 URL:            https://site.mockito.org/
@@ -38,10 +38,10 @@ Source4:        https://repo1.maven.org/maven2/org/mockito/mockito-junit-jupiter
 # we don't bundle in Fedora, so this patch makes mockito use ASM explicitly
 Patch0:         use-unbundled-asm.patch
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bnd)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.bytebuddy:byte-buddy)
@@ -179,6 +179,9 @@ bnd wrap --properties osgi-junit-jupiter.bnd --version %{version} \
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:3.12.4-alt1_5jpp11
+- update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:3.12.4-alt1_3jpp11
 - new version
 
