@@ -1,5 +1,5 @@
 Name: rpm-build-lua
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: RPM helpers to build lua packages
@@ -31,6 +31,9 @@ install -p -m0755 -D lua.req.files %buildroot%_rpmlibdir/lua.req.files
 %_rpmlibdir/lua.*
 
 %changelog
+* Wed Mar 22 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.3-alt1
+- lua.req.files: skip ELF files (thanks Egor Ignatov <egori@altlinux.org>)
+
 * Sun Mar 19 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.2-alt1
 - Fixed autoreq.
 
