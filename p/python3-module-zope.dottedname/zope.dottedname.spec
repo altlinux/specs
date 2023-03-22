@@ -1,43 +1,40 @@
 %define oname zope.dottedname
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 4.1.1
-Release: alt2
+Version: 5.0
+Release: alt1
 
 Summary: Resolver for Python dotted names
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.dottedname/
+Url: https://pypi.org/project/zope.dottedname
+Vcs: https://github.com/zopefoundation/zope.dottedname
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+%if_with check
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-sphinx
+%endif
+
 %py3_requires zope
 
-
 %description
-The zope.dottedname module provides one function, resolve that resolves
-strings containing dotted names into the appropriate python object.
-
-Dotted names are resolved by importing modules and by getting attributes
-from imported modules. Names may be relative, provided the module they
-are relative to is supplied.
+Resolve strings containing dotted names into the appropriate python object.
 
 %package tests
-Summary: Tests for Resolver for Python dotted names
+Summary: Tests for %oname
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py3_requires zope.testing
 
 %description tests
-The zope.dottedname module provides one function, resolve that resolves
-strings containing dotted names into the appropriate python object.
+Resolve strings containing dotted names into the appropriate python object.
 
-Dotted names are resolved by importing modules and by getting attributes
-from imported modules. Names may be relative, provided the module they
-are relative to is supplied.
-
-This package contains tests for Resolver for Python dotted names.
+This package contains tests for %oname.
 
 %prep
 %setup
@@ -55,25 +52,24 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%__python3 setup.py test -v
+%tox_check
 
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
-%exclude %python3_sitelibdir/*/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/example.*
-%exclude %python3_sitelibdir/*/*/*/example.*
 
 %files tests
 %python3_sitelibdir/*/*/tests.*
-%python3_sitelibdir/*/*/*/tests.*
 %python3_sitelibdir/*/*/example.*
-%python3_sitelibdir/*/*/*/example.*
 
 
 %changelog
+* Tue Mar 21 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Mon Dec 02 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.1.1-alt2
 - python2 disabled
 
