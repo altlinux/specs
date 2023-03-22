@@ -13,7 +13,7 @@
 %define llvm_version  12.0
 
 Name: 	 thunderbird
-Version: 102.8.0
+Version: 102.9.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -579,6 +579,16 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Mar 22 2023 Pavel Vasenkov <pav@altlinux.org> 102.9.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2023-25751 Incorrect code generation during JIT compilation
+  + CVE-2023-28164 URL being dragged from a removed cross-origin iframe into the same tab triggered navigation
+  + CVE-2023-28162 Invalid downcast in Worklets
+  + CVE-2023-25752 Potential out-of-bounds when accessing throttled streams
+  + CVE-2023-28163 Windows Save As dialog resolved environment variables
+  + CVE-2023-28176 Memory safety bugs fixed in Thunderbird 102.9
+
 * Tue Feb 28 2023 Pavel Vasenkov <pav@altlinux.org> 102.8.0-alt1
 - New version.
 - Security fixes:
