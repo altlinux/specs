@@ -51,26 +51,29 @@ BuildRequires: jpackage-default
 
 Name:           ant
 Version:        1.10.12
-Release:        alt1_3jpp11
+Release:        alt1_8jpp11
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
 Summary(fr):    Outil de compilation pour java
 License:        ASL 2.0
 URL:            https://ant.apache.org/
+BuildArch:      noarch
+
 Source0:        https://www.apache.org/dist/ant/source/apache-ant-%{version}-src.tar.bz2
 Source2:        apache-ant-1.8.ant.conf
 # manpage
 Source3:        ant.asciidoc
 
 Patch0:         %{name}-build.xml.patch
+Patch1:         0001-Fix-integer-overflow-when-parsing-SOURCE_DATE_EPOCH.patch
 
 BuildRequires:  asciidoc asciidoc-a2x
 BuildRequires:  xmlto
 
-BuildRequires:  javapackages-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  javapackages-local
 BuildRequires:  ant >= 1.10.2
 BuildRequires:  ant-junit
 
@@ -101,12 +104,6 @@ Requires:       %{name}-lib = %{?epoch:%epoch:}%{version}-%{release}
 # Require full javapackages-tools since the ant script uses
 # /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
-
-# Subpackage was removed, and would prevent upgrades because it
-# requires the exact old ant version.
-Obsoletes:      ant-apache-log4j < 1.10.9-5
-
-BuildArch:      noarch
 Source44: import.info
 
 Obsoletes:      %{name}-style-xsl < %{version}
@@ -388,6 +385,7 @@ Javadoc pour %{name}.
 %prep
 %setup -q -n apache-ant-%{version}
 %patch0 -p0
+%patch1 -p1
 
 # clean jar files
 find . -name "*.jar" | xargs -t rm
@@ -396,8 +394,12 @@ find . -name "*.jar" | xargs -t rm
 rm src/tests/junit/org/apache/tools/ant/types/selectors/SignedSelectorTest.java \
    src/tests/junit/org/apache/tools/ant/taskdefs/condition/IsFileSelectedTest.java \
    src/tests/junit/org/apache/tools/ant/taskdefs/condition/IsSignedTest.java \
+   src/tests/junit/org/apache/tools/ant/taskdefs/optional/image/ImageIOTest.java \
    src/tests/junit/org/apache/tools/ant/taskdefs/JarTest.java \
    src/tests/junit/org/apache/tools/mail/MailMessageTest.java
+
+# Test relies on internal JUnit 5 API that was changed
+rm src/tests/junit/org/apache/tools/ant/taskdefs/optional/junitlauncher/LegacyXmlResultFormatterTest.java
 
 # Log4jListener is deprecated by upstream: Apache Log4j (1) is not
 # developed any more. Last release is 1.2.17 from 26 May 2012 and
@@ -698,6 +700,9 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:1.10.12-alt1_8jpp11
+- update
+
 * Sat Jul 02 2022 Igor Vlasenko <viy@altlinux.org> 0:1.10.12-alt1_3jpp11
 - new version
 
