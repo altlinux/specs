@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: maven-local
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # fedora bcond_with macro
@@ -13,7 +16,7 @@ BuildRequires: jpackage-default
 
 Name:           apache-commons-lang3
 Version:        3.12.0
-Release:        alt1_3jpp11
+Release:        alt1_7jpp11
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 URL:            https://commons.apache.org/lang
@@ -22,7 +25,6 @@ BuildArch:      noarch
 Source0:        https://archive.apache.org/dist/commons/lang/source/commons-lang3-%{version}-src.tar.gz
 Patch1:         0001-Remove-test-dependency-on-JUnit-Pioneer.patch
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
@@ -57,7 +59,7 @@ package.
 %{?javadoc_package}
 
 %prep
-%setup -n commons-lang3-%{version}-src
+%setup -q -n commons-lang3-%{version}-src
 
 %patch1 -p1
 
@@ -83,7 +85,7 @@ sed -i '/<argLine>/d' pom.xml
 
 %build
 # See "-DcommonsLang3Version" in maven-surefire for the tested version
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -93,6 +95,9 @@ sed -i '/<argLine>/d' pom.xml
 %doc RELEASE-NOTES.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.12.0-alt1_7jpp11
+- update
+
 * Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 3.12.0-alt1_3jpp11
 - new version
 
