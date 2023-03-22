@@ -5,7 +5,7 @@
 %define oname altrepo_api
 
 Name: altrepo-api
-Version: 1.8.11
+Version: 1.9.4
 Release: alt1
 
 Summary: ALTRepo API is a REST API for the repository database of ALT distribution
@@ -30,7 +30,6 @@ BuildRequires: python3-module-mmh3
 BuildRequires: python3-module-gunicorn
 BuildRequires: python3-module-flask-restx
 BuildRequires: python3-module-clickhouse-driver
-BuildRequires: python3-module-tzdata
 %endif
 
 Source0: %name-%version.tar
@@ -82,6 +81,15 @@ mkdir -p %buildroot%_logdir/altrepo-api
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Mar 22 2023 Danil Shein <dshein@altlinux.org> 1.9.4-alt1
+ - 1.8.11 -> 1.9.4
+
+* Mon Mar 06 2023 Danil Shein <dshein@altlinux.org> 1.9.3-alt1
+ - new version 1.9.3
+
+* Mon Dec 12 2022 Danil Shein <dshein@altlinux.org> 1.9.0-alt1
+ - new version 1.9.0
+
 * Tue Nov 22 2022 Danil Shein <dshein@altlinux.org> 1.8.11-alt1
  - 1.8.8 -> 1.8.11
    + enable unit tests
@@ -94,18 +102,18 @@ mkdir -p %buildroot%_logdir/altrepo-api
  - 1.7.0 -> 1.8.0
 
 * Thu Apr 14 2022 Danil Shein <dshein@altlinux.org> 1.7.0-alt1
-- 1.6.0 -> 1.7.0
+ - 1.6.0 -> 1.7.0
 
 * Mon Feb 14 2022 Danil Shein <dshein@altlinux.org> 1.6.0-alt1
-- 1.5.4 -> 1.6.0
+ - 1.5.4 -> 1.6.0
 
 * Mon Jan 10 2022 Danil Shein <dshein@altlinux.org> 1.5.4-alt1
-- 1.5.1 -> 1.5.4
+ - 1.5.1 -> 1.5.4
 
 * Wed Dec 08 2021 Danil Shein <dshein@altlinux.org> 1.5.1-alt1
-- 1.5.0 -> 1.5.1
+ - 1.5.0 -> 1.5.1
 
 * Tue Dec 07 2021 Danil Shein <dshein@altlinux.org> 1.5.0-alt1
-- initial package build
+ - initial package build
 
 
