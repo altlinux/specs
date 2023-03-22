@@ -1,5 +1,5 @@
 Name: opencascade
-Version: 7.7.0
+Version: 7.7.1
 Release: alt1
 Summary: SDK intended for development of applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
@@ -12,7 +12,6 @@ Url: http://www.opencascade.org
 Source: %name-%version.tar
 Patch1: opencascade-cmake.patch
 Patch2: opencascade-alt-arm-build.patch
-Patch10: 0001-0033250-Configuration-Missing-Limits-header-file.patch
 Patch2000: opencascade-e2k-disable-fenv.patch
 
 Requires: lib%name = %version-%release
@@ -82,7 +81,6 @@ This package contains documentation for Open CASCADE.
 %ifarch %arm
 %patch2 -p2
 %endif
-%patch10 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -102,7 +100,7 @@ export DESTDIR="%buildroot"
 
 %install
 %ninja_install
-mv %buildroot%_bindir/DRAWEXE-%version %buildroot%_bindir/DRAWEXE
+mv %buildroot%_bindir/DRAWEXE-* %buildroot%_bindir/DRAWEXE
 
 # Install precompiled documentation
 cp -a doc/* %buildroot%_datadir/doc/%name/
@@ -133,6 +131,9 @@ rm -f /usr/share/doc/opencascade/*
 %_datadir/doc/%name
 
 %changelog
+* Tue Mar 21 2023 Andrey Cherepanov <cas@altlinux.org> 7.7.1-alt1
+- New version.
+
 * Tue Nov 08 2022 Andrey Cherepanov <cas@altlinux.org> 7.7.0-alt1
 - New version.
 
