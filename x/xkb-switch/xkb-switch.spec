@@ -1,14 +1,14 @@
-Summary:        Change keyboard layout from console
+Summary:        Switch your X keyboard layouts from the command line
 Name:           xkb-switch
-Version:        1.4.0
-Release:        alt1.git.d7c1856a
+Version:        1.8.5
+Release:        alt1
 URL:            https://github.com/ierton/xkb-switch
-Packager: 	Valentin Rosavitskiy <valintinr@altlinux.org>
-License:	GPL v2+
-Group:		Graphical desktop/Other
+Packager:       Valentin Rosavitskiy <valintinr@altlinux.org>
+License:        GPL-3.0
+Group:          Graphical desktop/Other
 
-Source:		%name-%version.tar
-BuildPreReq:	cmake rpm-macros-cmake gcc-c++ libX11-devel libxkbfile-devel
+Source:         %name-%version.tar
+BuildPreReq:    cmake rpm-macros-cmake gcc-c++ libX11-devel libxkbfile-devel
 
 
 %description
@@ -30,9 +30,14 @@ cmake . -DCMAKE_INSTALL_PREFIX:PATH=%_usr -DINSTALL_LIBDIR=:PATH=%_libdir .
 
 %files
 %_bindir/%name
-%_libdir/libxkbswitch.so
+%_libdir/libxkbswitch.so*
 
 %changelog
+* Tue Feb 21 2023 Ilya Demyanov <turbid@altlinux.org> 1.8.5-alt1
+- New version 
+- Change licence to GPL-3.0 (upstream)
+- Add .so symlinks to %files
+
 * Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.4.0-alt1.git.d7c1856a
 - New version
 
