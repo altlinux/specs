@@ -27,7 +27,7 @@
 
 Name: %{_name}2
 Version: 2.9.4
-Release: alt1
+Release: alt1.1
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -230,8 +230,8 @@ sed -i 's/mkfs\.vfat/mkfs.fat/
 touch %buildroot%_localstatedir/lib/%name/mtab
 
 # use /media for mounting by default
-mkdir -p %buildroot%_sysconfdir/udev/rules.d
-cat > %buildroot%_sysconfdir/udev/rules.d/99-alt-%name-media-mount-point.rules <<_EOF_
+mkdir -p %buildroot%_udevrulesdir
+cat > %buildroot%_udevrulesdir/99-alt-%name-media-mount-point.rules <<_EOF_
 ENV{ID_FS_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="0"
 _EOF_
 
@@ -254,10 +254,10 @@ fi
 %files -f %name.lang
 %_sbindir/umount.%name
 %_bindir/udisksctl
-/lib/udev/rules.d/80-%name.rules
+%_udevrulesdir/80-%name.rules
+%_udevrulesdir/99-alt-%name-media-mount-point.rules
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %_sysconfdir/%name/mount_options.conf.example
-%_sysconfdir/udev/rules.d/99-alt-%name-media-mount-point.rules
 %dir %_libexecdir/%name
 %_libexecdir/%name/udisksd
 %dir %_libdir/%name
@@ -349,6 +349,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Wed Mar 22 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.4-alt1.1
+- moved 99-alt-udisks2-media-mount-point.rules to %%_udevrulesdir
+
 * Sat Oct 02 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.4-alt1
 - 2.9.4
 
