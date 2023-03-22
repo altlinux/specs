@@ -1,14 +1,14 @@
 Name:    codelite
-Version: 16.7.0
+Version: 17.0.0
 Release: alt1
 
 Summary: CodeLite is a powerful open-source, cross platform code editor for C/C++
 
 License: GPLv2+
 Group:   Development/Tools
-Url:     http://codelite.sourceforge.net
+Url:     https://codelite.org/
 
-# https://github.com/eranif/codelite
+VCS:     https://github.com/eranif/codelite
 Source:  %name-%version.tar
 
 Requires: libedit-devel
@@ -16,7 +16,7 @@ Requires: libedit-devel
 BuildRequires: rpm-build-python3
 BuildRequires: cmake gcc-c++ libssh-devel libedit-devel libgtk+3-devel
 BuildRequires: libsqlite3-devel libwxGTK3.2-devel libatk-devel libpango-devel
-BuildRequires: libpcre-devel libffi-devel libfribidi-devel libtiff-devel
+BuildRequires: libffi-devel libfribidi-devel libtiff-devel
 BuildRequires: libmount-devel libpixman-devel libblkid-devel libuuid-devel
 BuildRequires: libselinux-devel bzlib-devel libexpat-devel libXdmcp-devel
 BuildRequires: libXdamage-devel libXxf86vm-devel libdrm-devel libXinerama-devel
@@ -25,6 +25,7 @@ BuildRequires: wayland-protocols libxkbcommon-devel libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel libepoxy-devel libhunspell-devel
 BuildRequires: libXtst-devel at-spi2-atk-devel libat-spi2-core-devel
 BuildRequires: glibc-devel-static
+BuildRequires: libpcre2-devel
 
 %add_python_req_skip gdb
 
@@ -55,6 +56,8 @@ cmake . -G "Unix Makefiles" \
 mkdir -p %buildroot%_datadir/mime/packages/
 cp -p %name.xml %buildroot%_datadir/mime/packages/
 rm -f %buildroot%_bindir/codelite_open_helper.py
+mkdir -p %buildroot%_datadir/man/man1/
+cp -p %buildroot%_datadir/%name/man/man1/%{name}* %buildroot%_datadir/man/man1/
 
 %find_lang %name
 
@@ -65,8 +68,8 @@ rm -f %buildroot%_bindir/codelite_open_helper.py
 %_datadir/applications/%name.desktop
 %_datadir/mime/packages/%name.xml
 %_datadir/icons/hicolor/*/apps/%name.png
-%_libdir/%name
-%_mandir/man1/%{name}*
+%_libexecdir/%name
+%_man1dir/%{name}*
 
 # Fix post-install unowned files
 %dir %_iconsdir/hicolor/128x128
@@ -85,6 +88,9 @@ rm -f %buildroot%_bindir/codelite_open_helper.py
 %dir %_iconsdir/hicolor/64x64@2x/apps
 
 %changelog
+* Sat Feb 04 2023 Anton Vyatkin <toni@altlinux.org> 17.0.0-alt1
+- new version 17.0.0.
+
 * Tue Dec 20 2022 Anton Vyatkin <toni@altlinux.org> 16.7.0-alt1
 - new version 16.7.0.
 
