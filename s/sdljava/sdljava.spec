@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 
 Name:           sdljava
 Version:        0.9.1
-Release:        alt2_56jpp11
+Release:        alt2_59jpp11
 Summary:        Java binding to the SDL API
 License:        LGPLv2+
 URL:            http://sdljava.sourceforge.net/
@@ -46,7 +46,8 @@ BuildRequires:  xml-commons-apis
 BuildRequires:  %{_bindir}/ruby
 BuildRequires:  gem
 # To generate the replacement font symlinks for the sdljava-demo testdata
-BuildRequires:  font(dejavusans) fontconfig
+BuildRequires:  font(dejavusans) fontconfig libfontconfig1
+# sdljava provides java bindings for SDL, so it can only run on java_arches
 
 Requires:       java
 Requires:       javapackages-filesystem
@@ -84,9 +85,10 @@ Demonstrations and samples for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -z .regen
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
+
 
 find -name '*.jar' -or -name '*.class' -or -name '*.bat' -name '*.so' -delete
 rm -r etc/build/gljava/windows etc/build/windows
@@ -228,6 +230,9 @@ ln -s $(fc-match -f "%{file}" "sans:bold:italic") \
 
 
 %changelog
+* Wed Mar 22 2023 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt2_59jpp11
+- update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt2_56jpp11
 - update
 
