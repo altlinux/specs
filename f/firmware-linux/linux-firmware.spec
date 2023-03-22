@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230313
+Version: 20230320
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,23 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Mar 22 2023 Cronbuild Service <cronbuild@altlinux.org> 20230320-alt1
+- upstream changes (GIT bcdcfbcf):
+  + Update firmware file for Intel Bluetooth AX101 (thx Aniket Sahu)
+  + Update firmware file for Intel Bluetooth 9462 (thx Aniket Sahu)
+  + Update firmware file for Intel Bluetooth 9560 (thx Aniket Sahu)
+  + Update firmware file for Intel Bluetooth AX203 (thx Aniket Sahu)
+  + Update firmware file for Intel Bluetooth AX211 (thx Aniket Sahu)
+  + Update firmware file for Intel Bluetooth AX210 (thx Aniket Sahu)
+  + add firmware files for NXP BT chipsets (thx Neeraj Kale)
+  + rtw89: 8852b: update format-1 fw to v0.29.29.0 (thx Ping-Ke Shih)
+  + rtw89: 8852b: add format-1 fw v0.29.26.0 (thx Ping-Ke Shih)
+  + rtw89: 8852b: rollback firmware to v0.27.32.1 (thx Ping-Ke Shih)
+  + i915: Update MTL DMC to v2.12 (thx Gustavo Sousa)
+  + i915: Update ADLP DMC to v2.19 (thx Gustavo Sousa)
+  + mediatek: Update mt8192/mt8195 SCP firmware to support MM21
+    and MT21 (thx Tinghan Shen)
+
 * Thu Mar 16 2023 Cronbuild Service <cronbuild@altlinux.org> 20230313-alt1
 - upstream changes (GIT c761dbe8):
   + iwlwifi: update core69 and core72 firmwares for So device (thx Gregory Greenman)
