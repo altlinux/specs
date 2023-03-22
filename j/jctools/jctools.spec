@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: maven-local
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -7,31 +10,19 @@ BuildRequires: jpackage-default
 
 Name:           jctools
 Version:        3.3.0
-Release:        alt2_1jpp11
+Release:        alt2_5jpp11
 Summary:        Java Concurrency Tools for the JVM
 License:        ASL 2.0
 
 URL:            https://github.com/JCTools/JCTools
-Source0:        %{url}/archive/v%{version}/%{srcname}-%{version}.tar.gz
+Source0:        https://github.com/JCTools/JCTools/archive/v%{version}/%{srcname}-%{version}.tar.gz
 
 BuildArch:      noarch
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.github.javaparser:javaparser-core:3.14.2)
 BuildRequires:  mvn(com.google.guava:guava-testlib)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  mvn(org.hamcrest:hamcrest-all)
-
-# unused parent package was removed for fedora 33+
-Obsoletes:      %{name}-parent < 3.1.0-1
-
-# unused channels and experimental modules disabled with 3.1.0 for fedora 33+
-# Unsafe.defineClass is not available in JDK 11:
-# https://github.com/JCTools/JCTools/issues/254
-Obsoletes:      %{name}-channels < 3.1.0-1
-Obsoletes:      %{name}-experimental < 3.1.0-1
 Source44: import.info
 
 %description
@@ -88,6 +79,9 @@ rm -r jctools-core/src/test/java/org/jctools/maps/linearizability_test/
 %pom_disable_module jctools-channels
 %pom_disable_module jctools-experimental
 
+%pom_disable_module jctools-build
+%pom_remove_plugin :exec-maven-plugin jctools-core
+
 # do not install internal build tools
 %mvn_package :jctools-build __noinstall
 
@@ -96,6 +90,7 @@ rm -r jctools-core/src/test/java/org/jctools/maps/linearizability_test/
 
 
 %build
+# Tests time out in Koji
 %mvn_build -s -f
 
 
@@ -112,6 +107,9 @@ rm -r jctools-core/src/test/java/org/jctools/maps/linearizability_test/
 
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt2_5jpp11
+- update
+
 * Tue Jul 12 2022 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt2_1jpp11
 - build with compat javaparser3
 
