@@ -3,16 +3,17 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.49.1
+Version: 0.49.3
 Release: alt1
 
 Summary: Entity / relation schema
 License: LGPL-2.1
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/yams/
-BuildArch: noarch
+Url: https://pypi.org/project/yams
 
 Source: %name-%version.tar
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -50,6 +51,9 @@ readable/writable from/to various formats.
 
 
 %changelog
+* Wed Mar 22 2023 Anton Vyatkin <toni@altlinux.org> 0.49.3-alt1
+- new version 0.49.3
+
 * Wed Mar 08 2023 Anton Vyatkin <toni@altlinux.org> 0.49.1-alt1
 - new version 0.49.1
 
