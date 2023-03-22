@@ -14,7 +14,7 @@
 
 Name: blender
 Version: 3.4.1
-Release: alt1
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -60,8 +60,9 @@ BuildRequires: libopenCOLLADA-devel >= 0-alt3
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libopenimageio-devel
-BuildRequires: libopencolorio2.0-devel
+BuildRequires: libopencolorio2.2-devel
 BuildRequires: openexr-devel
+BuildRequires: imath-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libglog-devel libgflags-devel eigen3-devel
 BuildRequires: libXxf86vm-devel libXrender-devel
@@ -255,6 +256,8 @@ fi
 	-DWITH_DOC_MANPAGE:BOOL=ON \
 	-DWITH_ASSERT_ABORT:BOOL=OFF \
 	-DWITH_LINKER_GOLD:BOOL=OFF \
+	-DWITH_OPENSUBDIV:BOOL=ON \
+	-DOPENEXR_INCLUDE_DIRS=%_includedir/OpenEXR \
 	%nil
 
 %cmake_build
@@ -288,6 +291,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Mon Mar 20 2023 Alexander Burmatov <thatman@altlinux.org> 3.4.1-alt2
+- Fix build requires.
+
 * Fri Dec 30 2022 Egor Ignatov <egori@altlinux.org> 3.4.1-alt1
 - Update to 3.4.1
 

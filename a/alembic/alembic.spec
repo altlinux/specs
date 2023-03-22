@@ -6,7 +6,7 @@
 
 Name: alembic
 Version: 1.8.3
-Release: alt1
+Release: alt2
 Summary: Open framework for storing and sharing scene data
 Group: Graphics
 License: BSD-3-Clause and BSL-1.0
@@ -26,7 +26,9 @@ BuildRequires: libhdf5-devel
 
 # Per https://github.com/alembic/alembic/blob/master/README.txt
 # alembic actually needs ilmbase, not OpenEXR.
-BuildRequires: ilmbase-devel
+BuildRequires: imath-devel
+BuildRequires: openexr-devel
+BuildRequires: python3-module-imath-devel
 BuildRequires: pkgconfig(zlib)
 
 %description
@@ -111,6 +113,9 @@ iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && 
 %_libdir/libAlembic.so
 
 %changelog
+* Tue Mar 21 2023 Alexander Burmatov <thatman@altlinux.org> 1.8.3-alt2
+- Fix build requires.
+
 * Mon Oct 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.3-alt1
 - Updated to upstream version 1.8.3.
 

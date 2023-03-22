@@ -10,7 +10,7 @@
 
 Name: openvdb
 Version: 9.0.0
-Release: alt1
+Release: alt2
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: MPL-2.0-no-copyleft-exception
@@ -30,7 +30,7 @@ BuildRequires: ghostscript
 BuildRequires: pkgconfig(blosc) >= 1.5.0
 BuildRequires: pkgconfig(cppunit) >= 1.10
 BuildRequires: pkgconfig(glfw3) >= 2.7
-BuildRequires: ilmbase-devel
+BuildRequires: imath-devel
 BuildRequires: pkgconfig(jemalloc)
 BuildRequires: pkgconfig(log4cplus) >= 1.0
 BuildRequires: tbb-devel
@@ -106,6 +106,8 @@ sed -i \
 	-DUSE_NUMPY:BOOL=ON \
 	-DPYOPENVDB_INSTALL_DIRECTORY=%python3_sitelibdir \
 	-DPython_EXECUTABLE=%_bindir/python3 \
+	-DOPENVDB_USE_IMATH_HALF:BOOL=ON \
+	-DOPENVDB_IMATH_VERSION=3 \
 	%nil
 
 %cmake_build
@@ -132,6 +134,9 @@ sed -i \
 %_libdir/cmake/*
 
 %changelog
+* Mon Mar 20 2023 Alexander Burmatov <thatman@altlinux.org> 9.0.0-alt2
+- Fix build requires.
+
 * Thu Feb 24 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.0-alt1
 - Updated to upstream version 9.0.0.
 

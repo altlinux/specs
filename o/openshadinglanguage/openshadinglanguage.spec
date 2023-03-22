@@ -6,7 +6,7 @@
 
 Name: openshadinglanguage
 Version: 1.12.8.0
-Release: alt1
+Release: alt2
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
 License: BSD-3-Clause
@@ -25,7 +25,7 @@ BuildRequires(pre): libopenimageio-devel
 BuildRequires: cmake gcc-c++
 BuildRequires: llvm-devel clang-devel
 BuildRequires: boost-complete
-BuildRequires: ilmbase-devel openexr-devel
+BuildRequires: openexr-devel
 BuildRequires: flex bison
 BuildRequires: libpugixml-devel
 BuildRequires: python3 pybind11-devel libnumpy-py3-devel
@@ -173,6 +173,9 @@ mv %buildroot%_libdir/osl.imageio.so %buildroot%_libdir/OpenImageIO-%{oiio_major
 %python3_sitelibdir/*.so
 
 %changelog
+* Mon Mar 20 2023 Alexander Burmatov <thatman@altlinux.org> 1.12.8.0-alt2
+- Fix build requires.
+
 * Wed Jan 18 2023 Alexander Burmatov <thatman@altlinux.org> 1.12.8.0-alt1
 - Updated to upstream version 1.12.8.0.
 

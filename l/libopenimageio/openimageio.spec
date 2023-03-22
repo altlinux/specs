@@ -11,7 +11,7 @@
 
 Name:           lib%oname
 Version:        2.3.21.0
-Release:        alt1
+Release:        alt2
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -35,7 +35,7 @@ BuildRequires:  txt2man
 BuildRequires:  qt5-base-devel
 BuildRequires:  boost-devel boost-python3-devel boost-filesystem-devel boost-asio-devel
 BuildRequires:  libGLEW-devel
-BuildRequires:  openexr-devel ilmbase-devel
+BuildRequires:  openexr-devel imath-devel
 BuildRequires:  libpng-devel libtiff-devel libjpeg-devel libopenjpeg2.0-devel
 BuildRequires:  libgif-devel
 BuildRequires:  libwebp-devel
@@ -178,6 +178,7 @@ sed -i 's/) || defined(__e2k__)/ || (defined(__e2k__) \&\& defined(__LCC__)))/' 
 	-DOIIO_BUILD_TESTS:BOOL=FALSE \
 	-DPLUGIN_SEARCH_PATH=%_libdir/OpenImageIO-%soname \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DOIIO_USING_IMATH=3 \
 	%nil
 
 %cmake_build
@@ -223,6 +224,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Mon Mar 20 2023 Alexander Burmatov <thatman@altlinux.org> 2.3.21.0-alt2
+- Fix build requires.
+
 * Mon Nov 28 2022 Ivan A. Melnikov <iv@altlinux.org> 2.3.21.0-alt1
 - Updated to upstream version 2.3.21.0
   (fixes CVE-2022-36354, CVE-2022-41977, CVE-2022-41639, CVE-2022-41988)
