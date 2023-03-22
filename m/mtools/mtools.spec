@@ -1,7 +1,7 @@
 %def_without floppyd
 
 Name: mtools
-Version: 4.0.42
+Version: 4.0.43
 Release: alt1
 Epoch: 1
 
@@ -9,8 +9,8 @@ Summary: Programs for accessing FAT formatted media without mounting it
 License: GPLv3
 Group: File tools
 
-Url: http://www.gnu.org/software/mtools/intro.html
-Source0: %url/%{name}-%{version}.tar.gz
+Url: https://www.gnu.org/software/mtools/
+Source0: https://ftp.gnu.org/gnu/mtools/%name-%version.tar.gz
 Source1: floppyd.xinetd
 Source100: mtools.watch
 Packager: Michael Shigorin <mike@altlinux.org>
@@ -139,6 +139,9 @@ touch EFI/BOOT/bootia32.efi EFI/enroll/cert
 # - review, rediff and send upstream patch1, patch2
 
 %changelog
+* Wed Mar 22 2023 Anton Midyukov <antohami@altlinux.org> 1:4.0.43-alt1
+- new version 4.0.43
+
 * Fri Nov 18 2022 Anton Midyukov <antohami@altlinux.org> 1:4.0.42-alt1
 - new version (4.0.42) with rpmgs script via gear-uupdate
 
