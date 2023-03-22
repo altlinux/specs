@@ -8,7 +8,7 @@
 
 Name: fontconfig
 Version: 2.14.2
-Release: alt2
+Release: alt3
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
@@ -40,7 +40,7 @@ select them according to requirements specified by applications.
 %package -n %libfontconfig
 Summary: Library for Font Configuration
 Group: System/Libraries
-Conflicts: fontconfig < 2.14.2
+Obsoletes: fontconfig < 2.14.2
 %description -n %libfontconfig
 %name library.
 
@@ -172,6 +172,9 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Wed Mar 22 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt3
+- fix upgrade on x86_64-i586
+
 * Fri Mar 03 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt2
 - prefer Noto fonts
 
