@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.56
-Release: alt1
+Release: alt2
 Epoch: 1
 
 License: %asl
@@ -980,7 +980,7 @@ install -pD -m644 %SOURCE38 \
 	%buildroot%_unitdir/%apache2_htcacheclean_dname.service
 
 # install sysconfig settings file
-install -pD -m 600 %SOURCE16 %buildroot%apache2_envconf
+install -pD -m 644 %SOURCE16 %buildroot%apache2_envconf
 install -pD -m 644 %SOURCE17 %buildroot%_sysconfdir/sysconfig/%apache2_htcacheclean_dname
 
 # install the cron script
@@ -1349,7 +1349,7 @@ exit 0
 %config %_initdir/%apache2_dname
 %_sbindir/a2*
 %_sbindir/apachectl*
-%attr(0600,root,root) %config(noreplace) %apache2_envconf
+%config(noreplace) %apache2_envconf
 %_unitdir/%apache2_dname.service
 
 
@@ -1539,6 +1539,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Wed Mar 22 2023 Alexey Shabalin <shaba@altlinux.org> 1:2.4.56-alt2
+- allow read for all /etc/sysconfig/httpd2
+
 * Thu Mar 09 2023 Anton Farygin <rider@altlinux.ru> 1:2.4.56-alt1
 - 2.4.56 (Fixes: CVE-2023-25690, CVE-2023-27522)
 

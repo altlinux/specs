@@ -1,10 +1,26 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_with nghttp2
+%def_with libssh2
 %def_with check
+%def_disable static
+
+# QUIC protocol not supported in standart openssl, ngtcp2 build with gnutls for http3 support
+%def_enable http3
+%if_enabled http3
+  %def_without openssl
+  %def_with gnutls
+  %def_with ngtcp2
+  %def_with nghttp3
+%else
+  %def_with openssl
+  %def_without gnutls
+  %def_without ngtcp2
+  %def_without nghttp3
+%endif
 
 Name: curl
 Version: 8.0.1
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -18,12 +34,23 @@ Patch0: curl-%version-alt.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: glibc-devel-static groff-base libidn2-devel libssh2-devel libssl-devel libkrb5-devel
-BuildRequires: zlib-devel libpsl-devel libldap-devel libbrotli-devel
-%{?_with_check:BuildRequires: python3-base}
+%{?_enable_static:BuildRequires: glibc-devel-static}
+BuildRequires: groff-base
+BuildRequires: libidn2-devel libkrb5-devel libgsasl-devel
+BuildRequires: zlib-devel libzstd-devel libpsl-devel libldap-devel libbrotli-devel
+%{?_with_check:BuildRequires: python3-base /proc}
 %{?_with_check:BuildRequires: libnghttp2-tools}
+%{?_with_check:BuildRequires: gnutls-utils}
+%{?_with_check:BuildRequires: /usr/bin/stunnel}
+%{?_with_check:BuildRequires: perl(Digest/SHA.pm) openssh-server openssh-clients}
+%{?_with_check:BuildRequires: apache2-devel apache2-mod_http2 apache2-mod_ssl caddy pytest3 python3-module-cryptography}
 
+%{?_with_openssl:BuildRequires: libssl-devel}
+%{?_with_gnutls:BuildRequires: libgnutls-devel libnettle-devel}
+%{?_with_libssh2:BuildRequires: libssh2-devel}
 %{?_with_nghttp2:BuildRequires: libnghttp2-devel}
+%{?_with_ngtcp2:BuildRequires: libngtcp2-devel}
+%{?_with_nghttp3:BuildRequires: libnghttp3-devel}
 
 %package -n lib%name
 Summary: The shared library for file transfer
@@ -109,18 +136,23 @@ applications that utilize lib%name.
 %patch0 -p1
 
 %build
+export PATH=/sbin:/usr/sbin:$PATH
 ./maketgz %version only
 %autoreconf
 %configure \
-	--with-ssl \
-	--with-libidn \
+	%{subst_enable static} \
+	%{subst_with openssl} \
+	%{subst_with gnutls} \
+	%{subst_with ngtcp2} \
+	%{subst_with nghttp3} \
+	--with-libidn2 \
 	--enable-ipv6 \
-	--disable-rpat \
 	--enable-ldap \
-	--enable-sspi \
 	--enable-threaded-resolver \
-	--with-ssl --enable-openssl-auto-load-config \
+	--enable-openssl-auto-load-config \
 	--with-gssapi \
+	--enable-websockets \
+	%{subst_with libssh2} \
 	--with-ca-bundle=%_datadir/ca-certificates/ca-bundle.crt
 
 %make_build
@@ -131,6 +163,9 @@ applications that utilize lib%name.
 
 %check
 %make -k test-full
+pushd tests/http
+python3 -m pytest -v ||:
+popd
 
 %files
 %_bindir/curl
@@ -151,10 +186,20 @@ applications that utilize lib%name.
 %_man1dir/curl-config.1*
 %doc docs/{THANKS,TODO,examples,BUGS.md,TheArtOfHttpScripting.md}
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif
 
 %changelog
+* Tue Mar 21 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.1-alt2
+- disable build static library
+- fix configure options
+- fix build with libssh2
+- build with WebSockets support
+- build with gnutls instead of openssl, and build with http3 support
+- increased the number of tests to be execute
+
 * Mon Mar 20 2023 Anton Farygin <rider@altlinux.ru> 8.0.1-alt1
 - 8.0.0 -> 8.0.1
 
