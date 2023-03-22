@@ -1,36 +1,39 @@
 %define oname zope.structuredtext
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 4.1.1
-Release: alt3
+Version: 4.4
+Release: alt1
 
 Summary: StructuredText parser
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.structuredtext/
+Url: https://pypi.org/project/zope.structuredtext
+Vcs: https://github.com/zopefoundation/zope.structuredtext
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage
-
-%py3_requires zope
-
+%if_with check
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-sphinx
+%endif
 
 %description
 This package provides a parser and renderers for the classic Zope
 "structured text" markup dialect (STX). STX is a plain text markup in
-which document structure is signalled primarily by identation
+which document structure is signalled primarily by identation.
 
 %package tests
 Summary: Tests for StructuredText parser
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides a parser and renderers for the classic Zope
 "structured text" markup dialect (STX). STX is a plain text markup in
-which document structure is signalled primarily by identation
+which document structure is signalled primarily by identation.
 
 This package contains tests for StructuredText parser.
 
@@ -50,23 +53,25 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%__python3 setup.py test -v
+%tox_check
 
 %files
 %doc *.txt *.rst docs/*.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope
+%python3_sitelibdir/%oname-%version-*.egg-info
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
-%exclude %python3_sitelibdir/*/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/examples*
 
 %files tests
 %python3_sitelibdir/*/*/tests.*
-%python3_sitelibdir/*/*/*/tests.*
 %python3_sitelibdir/*/*/*/examples*
 
 
 %changelog
+* Mon Mar 20 2023 Anton Vyatkin <toni@altlinux.org> 4.4-alt1
+- New version 4.4.
+
 * Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt3
 - Fixed BuildRequires.
 
