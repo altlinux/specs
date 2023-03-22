@@ -1,9 +1,9 @@
 %define module_name	lkrg
 %define module_version	0.9.6
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		un-def
-%define karch		aarch64 %arm %ix86 x86_64
+%define karch		aarch64 %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
@@ -211,6 +211,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Wed Mar 22 2023 Vitaly Chikunov <vt@altlinux.org> 0.9.6-alt2
+- Remove armh from build architectures.
 
 * Fri Dec 16 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.6-alt1
 - Updated to v0.9.6.
