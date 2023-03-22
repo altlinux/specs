@@ -4,71 +4,44 @@
 %def_without check
 
 Name:       python3-module-%oname
-Version:    6.0.0.2
-Release:    alt1.1
+Version:    15.0.6.1
+Release:    alt1
 
-Summary:    libclang python bindings
-License:    MIT
+Summary:    Libclang python bindings
+License:    Apache-2.0
 Group:      Development/Python3
-Url:        https://pypi.python.org/pypi/clang/
+Url:        https://pypi.org/project/libclang/
+VCS:        https://github.com/sighingnow/libclang
 
 BuildArch:  noarch
 
 Source0:    %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python-tools-2to3
-
-Requires: clang
-
 
 %description
-This is the python bindings subdir of llvm clang repository.
-https://github.com/llvm-mirror/clang/tree/master/bindings/python
-
-This is a fork. Mainly for Pypi packaging purposes.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/
-
-%description tests
-This is the python bindings subdir of llvm clang repository.
-https://github.com/llvm-mirror/clang/tree/master/bindings/python
-
-This is a fork. Mainly for Pypi packaging purposes.
-
-This package contains tests for %oname.
+The aim of this project is to make the clang.cindex
+(aka., Clang Python Bindings) available for more Python users, without setting
+up the LLVM environment.
 
 %prep
 %setup
 
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
-mv tests/ %buildroot%python3_sitelibdir/%oname/
-
-%check
-%__python3 setup.py test
-
 %files
-%doc LICENSE README.txt examples/
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests/
-
-%files tests
-%python3_sitelibdir/%oname/tests/
-
+%doc LICENSE.TXT README.md docs/
+%python3_sitelibdir/%oname
+%python3_sitelibdir/lib%oname-%version-*.egg-info
 
 %changelog
+* Fri Mar 17 2023 Anton Vyatkin <toni@altlinux.org> 15.0.6.1-alt1
+- New version 15.0.6.1
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 6.0.0.2-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
