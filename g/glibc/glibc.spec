@@ -1,8 +1,8 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.35.0.6.491f2e
-Release: alt2
+Version: 2.35.0.234.3f63f9dfe1
+Release: alt1
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -786,6 +786,9 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Tue Mar 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.35.0.234.3f63f9dfe1-alt1
+- Updated to glibc-2.35-234-g3f63f9dfe1.
+
 * Sat Nov 12 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.35.0.6.491f2e-alt2
 - Backported upstream commits:
   + "Makerules: fix MAKEFLAGS assignment for upcoming make-4.4" to fix build with
