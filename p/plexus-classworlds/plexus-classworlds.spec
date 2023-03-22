@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: maven-local
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
@@ -16,7 +19,7 @@ BuildRequires: jpackage-default
 
 Name:           plexus-classworlds
 Version:        2.6.0
-Release:        alt1_8jpp11
+Release:        alt1_12jpp11
 Summary:        Plexus Classworlds Classloader Framework
 License:        ASL 2.0 and Plexus
 URL:            https://github.com/codehaus-plexus/plexus-classworlds
@@ -24,10 +27,10 @@ BuildArch:      noarch
 
 Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 %endif
@@ -50,6 +53,8 @@ classworlds.
 %mvn_file : %{name} plexus/classworlds
 %mvn_alias : classworlds:classworlds
 
+%pom_add_dep junit:junit:4.13.1:test
+
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-dependency-plugin
 
@@ -67,6 +72,9 @@ sed -i /testConfigure_Optionally_Existent/s/./@org.junit.Ignore/ $(find -name Co
 %doc --no-dereference LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.6.0-alt1_12jpp11
+- update
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:2.6.0-alt1_8jpp11
 - update
 
