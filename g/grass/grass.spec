@@ -3,7 +3,7 @@
 
 Name:    grass
 Version: 8.2.1
-Release: alt1
+Release: alt1.1
 
 %def_with mysql
 %def_with postgres
@@ -84,6 +84,10 @@ BuildRequires: libnetcdf-devel
 BuildRequires: opencl-headers
 BuildRequires: libgomp-devel
 BuildRequires: liblz4-devel
+%ifarch %e2k
+# has a preprocessor with -dD support
+BuildRequires: clang llvm llvm-devel
+%endif
 
 # internal modules
 %if_with python3
@@ -129,6 +133,13 @@ rm lib/gis/lz4{.h,.c}
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%ifarch %e2k
+sed -i "s|GOMP_parallel_start|__omp_parallel_start|;s|-lgomp|-fopenmp|" configure
+sed -i '/--cpp/s/$(CC)/clang/' python/libgrass_interface_generator/Makefile
+sed -E -i '/#pragma omp/{s/^(.*if *)(\([^(]*\))/for(int __cond=\2,__xxx=1;__xxx;__xxx=0)\n\1(__cond)/};' raster/r.neighbors/main.c
+# very bad code
+sed -i 's/^dbHandle handle;//' vector/v.vol.rst/main.c
+%endif
 subst 's/\t/        /g' \
       scripts/v.db.dropcolumn/v.db.dropcolumn.py \
       scripts/v.db.addtable/v.db.addtable.py
@@ -309,6 +320,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Wed Mar 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.2.1-alt1.1
+- Fixed build for Elbrus.
+
 * Mon Jan 23 2023 Andrey Cherepanov <cas@altlinux.org> 8.2.1-alt1
 - New version.
 
