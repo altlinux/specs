@@ -1,5 +1,5 @@
 Name: sngrep
-Version: 1.4.7
+Version: 1.6.0
 Release: alt1
 
 Summary: sngrep is a tool for displaying SIP calls message flows from terminal
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 
 Patch0: %name-%version-alt.patch
 
-BuildRequires: libncurses-devel libpcap libgnutls-devel libpcap-devel libpcre-devel libgcrypt-devel libncursesw-devel libssl-devel
+BuildRequires: libncurses-devel libpcap libgnutls-devel libpcap-devel libpcre2-devel libgcrypt-devel libncursesw-devel libssl-devel
 
 %description
 sngrep is a tool for displaying SIP calls message flows from terminal.
@@ -27,7 +27,7 @@ as PCAP viewer.
 %autoreconf
 %configure \
            --enable-eep \
-           --with-pcre \
+           --with-pcre2 \
            --with-openssl \
            --enable-unicode \
            --enable-ipv6 \
@@ -43,6 +43,10 @@ as PCAP viewer.
 %_man8dir/sngrep.8*
 
 %changelog
+* Fri Jan 27 2023 Demyanov Ilya <turbid@altlinux.org> 1.6.0-alt1
+- new upstream version
+- migrate to pcre2
+
 * Fri Aug 28 2020 Bolshedvorsky Evgeny <jenya@altlinux.org> 1.4.7-alt1
 - added support for ipv6,unicode
 
