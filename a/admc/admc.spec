@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.11.2
+Version: 0.12.0
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,27 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Wed Mar 22 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.12.0-alt1
+- Indents at selected OU's widget with policies list are minimized.
+- Ellipsis for too long names in description bar is added. Label is located to
+  the right of the tree with chosen object. Tool tip for that label is added.
+  Tool tip contains full object name.
+- Attribute groupType display and edit are changed from decimal to hexadecimal.
+  Attribute value also contains flag names that were set.
+- Error dialog after critical policy selection is removed. Error is displayed
+  in log now. Dialog error messages after critical policy deletion attempt are
+  clarified.
+- Russian language is removed from english logs and vice versa.
+- Block inheritance indicator is added to OU's icon from group policy objects.
+- Enforced link indicator is added to policy icon from group policy objects.
+- Disabled policies appearence changing is added to policies from group policy
+  objects. Policy item icon changes appearance (fades) after group policy link
+  disabling.
+- Policy link indicator is added to policy icon from group policy objects.
+  Indicator is located in left bottom policy icon corner.
+- Policies that are linked to domain is visible in group policy objects now.
+- Group policy objects order is changed. Policies is placed higher than OUs now.
+
 * Tue Jan 10 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.11.2-alt1
 - Fix race condition problems with AdInterface.
 
