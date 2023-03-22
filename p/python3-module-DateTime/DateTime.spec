@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 5.0
+Version: 5.1
 Release: alt1
 
 Summary: This package provides a DateTime data type, as known from Zope
@@ -68,6 +68,9 @@ py.test-3
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Mar 22 2023 Anton Vyatkin <toni@altlinux.org> 1:5.1-alt1
+- New version 5.1.
+
 * Tue Mar 14 2023 Anton Vyatkin <toni@altlinux.org> 1:5.0-alt1
 - New version 5.0.
 
