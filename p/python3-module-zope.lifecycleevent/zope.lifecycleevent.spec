@@ -4,43 +4,36 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.3
+Version: 4.4
 Release: alt1
 
 Summary: Object life-cycle events
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.lifecycleevent
-#Git: https://github.com/zopefoundation/zope.lifecycleevent.git
+Url: https://pypi.org/project/zope.lifecycleevent
+Vcs: https://github.com/zopefoundation/zope.lifecycleevent.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-setuptools
-
 %if_with check
-BuildRequires: python3-module-zope.event
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.interface
 BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.configuration
 BuildRequires: python3-module-zope.component
 BuildRequires: python3-module-zope.component-tests
-BuildRequires: python3-module-zope.configuration
-BuildRequires: python3-module-coverage
+BuildRequires: python3-module-zope.testing
 %endif
 
 %py3_requires zope
 
 %description
-In Zope, events are used by components to inform each other about
-relevant new objects and object modifications.
-
-To keep all subscribers up to date it is indispensable that the life
-cycle of an object is accompanied by various events.
+This package defines a specific set of event objects and API functions for
+describing the life-cycle of objects in the system: object creation, object
+modification, and object removal.
 
 %package tests
-Summary: Tests for zope.lifecycleevent (Python 3)
+Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
 %py3_requires zope.configuration zope.testrunner
@@ -56,6 +49,7 @@ This package contains tests for %oname
 
 %install
 %python3_install
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -63,21 +57,22 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-export PYTHONPATH=src
-coverage3 run -m zope.testrunner --test-path=src -vv
+%tox_check
 
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
-%exclude %python3_sitelibdir/*/*/*/tests.*
 
 %files tests
 %python3_sitelibdir/*/*/tests.*
-%python3_sitelibdir/*/*/*/tests.*
+
 
 %changelog
+* Tue Mar 21 2023 Anton Vyatkin <toni@altlinux.org> 4.4-alt1
+- New version 4.4.
+
 * Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.3-alt1
 - NMU: 4.2.0 -> 4.3
 - Remove python2 module build

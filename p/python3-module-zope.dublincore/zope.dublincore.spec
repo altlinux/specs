@@ -1,24 +1,36 @@
 %define oname zope.dublincore
 
+%def_with check
+
 Name: python3-module-%oname
 Epoch: 1
-Version: 4.1.1
-Release: alt2
+Version: 4.3.0
+Release: alt1
 
 Summary: Zope Dublin Core implementation
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.dublincore/
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
-
-%py3_requires zope pytz zope.component zope.datetime zope.interface
-%py3_requires zope.lifecycleevent zope.location zope.schema zope.security
-%py3_requires zope.annotation
-%add_python3_req_skip annotatableadapter
-
+%if_with check
+BuildRequires: python3-module-persistent
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-zope.annotation
+BuildRequires: python3-module-zope.datetime
+BuildRequires: python3-module-zope.lifecycleevent
+BuildRequires: python3-module-zope.security
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.publisher
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-repoze
+BuildRequires: python3-module-repoze.sphinx
+BuildRequires: python3-module-repoze.sphinx.autointerface
+%endif
 
 %description
 zope.dublincore provides a Dublin Core support for Zope-based web
@@ -28,8 +40,6 @@ applications.
 Summary: Tests for zope.dublincore
 Group: Development/Python3
 Requires: %name = %EVR
-%py3_requires zope.testing zope.annotation zope.configuration
-%py3_requires zope.testrunner
 
 %description tests
 zope.dublincore provides a Dublin Core support for Zope-based web
@@ -39,8 +49,6 @@ This package contains tests for zope.dublincore.
 
 %prep
 %setup
-
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %python3_build
@@ -54,19 +62,26 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
 
+%check
+%tox_check
+
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/dublincore
+%python3_sitelibdir/%oname-%version-*.egg-info
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/zope/dublincore/tests
+%exclude %python3_sitelibdir/zope/dublincore/browser/tests
 
 %files tests
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/zope/dublincore/tests
+%python3_sitelibdir/zope/dublincore/browser/tests
 
 
 %changelog
+* Tue Mar 07 2023 Anton Vyatkin <toni@altlinux.org> 1:4.3.0-alt1
+- new version 4.3.0
+
 * Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:4.1.1-alt2
 - disable python2
 

@@ -4,30 +4,24 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.7.0
-Release: alt2
+Version: 4.8
+Release: alt1
 
 Summary: Object annotation mechanism
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.annotation
-#Git: https://github.com/zopefoundation/zope.annotation.git
+VCS: https://github.com/zopefoundation/zope.annotation.git
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-zope.interface
-BuildRequires: python3-module-zope.component
-BuildRequires: python3-module-zope.location
-BuildRequires: python3-module-zope.proxy
-
 %if_with check
-BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.location
 %endif
 
 %description
@@ -45,13 +39,13 @@ This package contains tests for %oname
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %python3_build
 
 %install
 %python3_install
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -59,23 +53,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-# cancel coverage execution during unit testing
-sed -i 's|btrees,||g' tox.ini
-sed -i 's|-m zope.testrunner |-m zope-testrunner3 |g' tox.ini
-sed -i 's|coverage run [ -a]\{0,\}-m||g' tox.ini
-sed -i 's|[[:space:]]coverage|#coverage|g' tox.ini
-# cancel docbuild tests
-sed -i 's|sphinx|#py3_sphinx|g' tox.ini
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
-sed -i '/setenv =$/a \
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%tox_check
 
 %files
 %doc *.txt *.rst
@@ -87,6 +65,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Tue Mar 07 2023 Anton Vyatkin <toni@altlinux.org> 4.8-alt1
+- New version 4.8.
+
 * Thu Dec 26 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.7.0-alt2
 - Rollback to arch dependent build to guarantee all Zope modules
   are at the same location
