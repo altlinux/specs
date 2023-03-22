@@ -4,46 +4,39 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0.2
+Version: 5.2
 Release: alt1
 
 Summary: Zope Template Application Language Expression Syntax (TALES)
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-# Source-git https://github.com/zopefoundation/zope.tales.git
-Url: http://pypi.python.org/pypi/zope.tales
+Url: https://pypi.org/project/zope.tales
+VCS: https://github.com/zopefoundation/zope.tales.git
 
-Source: %oname-%version.tar
-Patch0: fix-import.patch
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+BuildRequires: python3-module-zope.interface
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-six
-BuildRequires: python3-module-zope.tales
-BuildRequires: python3-module-zope.tales-tests
 %endif
-
-%py3_requires zope.interface six
-
 
 %description
 Template Attribute Language - Expression Syntax.
 
 %package tests
-Summary: Tests for zope.tales (Python 3)
+Summary: Tests for zope.tales
 Group: Development/Python3
-Requires: python3-module-%oname = %EVR
+Requires: %name = %EVR
 %py3_requires zope.testrunner
 
 %description tests
 This package contains tests for %oname
 
 %prep
-%setup -q -n %oname-%version
-%patch0 -p2
+%setup
 
 %build
 %python3_build
@@ -58,13 +51,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%if 0
-zope-testrunner3 --test-path=src -vv
-%endif
+%tox_check
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope
+%python3_sitelibdir/%oname-%version-*.egg-info
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
@@ -73,6 +65,9 @@ zope-testrunner3 --test-path=src -vv
 
 
 %changelog
+* Mon Mar 20 2023 Anton Vyatkin <toni@altlinux.org> 5.2-alt1
+- New version 5.2.
+
 * Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.0.2-alt1
 - Version updated to 5.0.2.
 
