@@ -1,7 +1,7 @@
 %define oname httplib2
 
 Name: python3-module-httplib2
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: A comprehensive HTTP client library in Python
@@ -17,6 +17,8 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 A comprehensive HTTP client library that supports many features left out
@@ -26,18 +28,22 @@ of other HTTP libraries.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %files
 #doc CHANGELOG *.html *.md doc/html
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname-*.dist-info/
 
 %changelog
+* Wed Mar 22 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.22.0-alt1
+- NMU: new version 0.22.0
+- migrate to pyproject
+
 * Tue Nov 15 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.21.0-alt1
 - NMU: new version 0.21.0
 
