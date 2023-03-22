@@ -1,5 +1,5 @@
 %global import_path github.com/gokcehan/lf
-%define lf_ver 20
+%define lf_ver 28
 Name:     lf
 Version:  r%lf_ver
 Release:  alt1
@@ -47,6 +47,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Thu Feb 02 2023 Ilya Demyanov <turbid@altlinux.org> r28-alt1
+- New upstream version r28
+
 * Tue Feb 09 2021 Nikita Ermakov <arei@altlinux.org> r20-alt1
 - Update to r20
 - Fix a '-version' option
