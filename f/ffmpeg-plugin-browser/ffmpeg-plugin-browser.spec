@@ -158,7 +158,7 @@
 %endif
 
 Name:		ffmpeg-plugin-browser
-Version:	106
+Version:	108
 Release:	alt1
 
 Summary:	FFmpeg built specifically for codec support in special browser
@@ -173,7 +173,7 @@ Source:		%name-%version.tar
 Source1: find-provides.sh
 Patch1: chromium.patch
 Patch2: ffmpeg-chromium-100.patch
-Patch3: alt-av_sscanf.patch
+Patch3: alt-vulkan-decode-defines.patch
 Patch2000: ffmpeg-e2k-simd.patch
 
 %define __find_provides %SOURCE1
@@ -576,7 +576,7 @@ This package contains static development files for libswscale.
 %setup
 %patch1 -p1
 %patch2 -p1
-#patch3 -p1
+%patch3 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -754,7 +754,7 @@ rm -rf %buildroot/%_libdir/*.a ||:
 rm -rf %buildroot/%_pkgconfigdir ||:
 
 %check
-%ifnarch armh
+%ifnarch armh %ix86
 tests/checkasm/checkasm
 %endif
 
@@ -764,6 +764,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Thu Mar 23 2023 Sergey V Turchin <zerg@altlinux.org> 108-alt1
+- new version
+
 * Wed Nov 23 2022 Sergey V Turchin <zerg@altlinux.org> 106-alt1
 - new version
 
