@@ -1,11 +1,12 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
+%define pypi_name Markdown
 %define modname markdown
 
 %def_enable check
 
 Name: python3-module-%modname
-Version: 3.4.1
+Version: 3.4.3
 Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
@@ -14,7 +15,7 @@ License: BSD-3-Clause
 Url: http://pypi.python.org/pypi/Markdown/
 
 %if_disabled snapshot
-Source: https://pypi.io/packages/source/M/Markdown/Markdown-%version.tar.gz
+Source: https://pypi.io/packages/source/M/%pypi_name/%pypi_name-%version.tar.gz
 %else
 Vcs: git://github.com/waylan/Python-Markdown.git
 Source: Markdown-%version.tar
@@ -29,11 +30,12 @@ Requires: python3-module-Pygments
 Requires: python3-module-importlib-metadata >= %metadata_ver
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools python3(wheel)
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-nose python3-module-coverage
 BuildRequires: python3-module-Pygments
 BuildRequires: python3-module-importlib-metadata >= %metadata_ver
+%{?_enable_check:BuildRequires: python3(tox)}
 
 %description
 Markdown is a plain text formatting syntax designed to be as readable as
@@ -53,27 +55,31 @@ possible while being structured enough to allow conversion to other formats.
 This package contains documentation for Markdown.
 
 %prep
-%setup -n Markdown-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 mv %buildroot%_bindir/%{modname}_py \
 	%buildroot%_bindir/%{modname}_py3
 
 %check
+%tox_check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%__python3 -m unittest discover tests
 %buildroot%_bindir/%{modname}_py3 README.md >README.html
 
 %files
 %_bindir/%{modname}_py3
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%modname/
+%python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Thu Mar 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
+- 3.4.3
+- ported to %%pyproject* macros
+
 * Sat Jul 16 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 
