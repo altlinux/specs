@@ -1,5 +1,5 @@
 Name: nv-codec-headers
-Version: 11.1.5.1
+Version: 12.0.16.0
 Release: alt1
 Group: Development/C
 License: MIT
@@ -29,9 +29,15 @@ make PREFIX=/usr LIBDIR=share DESTDIR=%buildroot install
 %files
 %_includedir/*
 %_datadir/pkgconfig/*.pc
-%doc LICENSE
+%doc LICENSE README
 
 %changelog
+* Thu Mar 23 2023 L.A. Kostis <lakostis@altlinux.ru> 12.0.16.0-alt1
+- n12.0.16.0.
+
+* Wed Dec 14 2022 L.A. Kostis <lakostis@altlinux.ru> 11.1.5.2-alt1
+- Updated to n11.1.5.2.
+
 * Sun Jan 30 2022 L.A. Kostis <lakostis@altlinux.ru> 11.1.5.1-alt1
 - Updated to n11.1.5.1.
 
