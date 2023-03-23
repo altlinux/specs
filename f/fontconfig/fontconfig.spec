@@ -8,13 +8,12 @@
 
 Name: fontconfig
 Version: 2.14.2
-Release: alt3
+Release: alt4
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
 License: MIT
 Url: http://fontconfig.org/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
 Source1: fontconfig-firsttime
@@ -40,7 +39,7 @@ select them according to requirements specified by applications.
 %package -n %libfontconfig
 Summary: Library for Font Configuration
 Group: System/Libraries
-Obsoletes: fontconfig < 2.14.2
+Conflicts: fontconfig < 2.14.2
 %description -n %libfontconfig
 %name library.
 
@@ -172,6 +171,9 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Thu Mar 23 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt4
+- revert previous changes
+
 * Wed Mar 22 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt3
 - fix upgrade on x86_64-i586
 
