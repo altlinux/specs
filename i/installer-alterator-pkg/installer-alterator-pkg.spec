@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.0.5
+Version: 3.0.6
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -58,6 +58,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Mar 23 2023 Anton Midyukov <antohami@altlinux.org> 3.0.6-alt1
+- initinstall.d/90-pkg.sh: use apt method 'copy' instead 'file'
+
 * Wed Jan 25 2023 Anton Midyukov <antohami@altlinux.org> 3.0.5-alt1
 - fix for case when /etc/apt/source.list.d/ is empty
 
