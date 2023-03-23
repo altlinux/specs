@@ -1,7 +1,7 @@
 %define dist MooseX-AuthorizedMethods
 Name: perl-%dist
 Version: 0.006
-Release: alt1.1
+Release: alt2
 
 Summary: Syntax sugar for authorized methods
 License: GPL or Artistic
@@ -13,7 +13,7 @@ Source: %dist-%version.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Nov 20 2011
-BuildRequires: perl-Moose perl-Pod-Escapes perl-aliased perl-devel
+BuildRequires: perl-Moose perl-Pod-Escapes perl-aliased perl-devel perl(Sub/Name.pm)
 
 %description
 This method exports the "authorized" declarator that makes a
@@ -35,6 +35,9 @@ method result and call "roles" to list the roles given to that user.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Thu Mar 23 2023 Igor Vlasenko <viy@altlinux.org> 0.006-alt2
+- fixed build
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1.1
 - rebuild to restore role requires
 
