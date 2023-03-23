@@ -7,7 +7,7 @@
 %define rdn_name org.rncbc.qjackctl
 
 Name: qjackctl
-Version: 0.9.9
+Version: 0.9.10
 Release: alt1
 
 Summary: Qjackctl is a programm to control the JACK sound server daemon
@@ -77,6 +77,9 @@ JACK-клиентов.
 %doc ChangeLog README
 
 %changelog
+* Thu Mar 23 2023 Yuri N. Sedunov <aris@altlinux.org> 0.9.10-alt1
+- 0.9.10
+
 * Wed Dec 28 2022 Yuri N. Sedunov <aris@altlinux.org> 0.9.9-alt1
 - 0.9.9
 
