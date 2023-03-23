@@ -1,7 +1,7 @@
 %define soversion 11
 
 Name: libwlroots%soversion
-Version: 0.16.0
+Version: 0.16.2
 Release: alt1
 
 Summary: Modular Wayland compositor library
@@ -94,6 +94,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/wlroots.pc
 
 %changelog
+* Fri Mar 10 2023 Alexey Gladkov <legion@altlinux.ru> 0.16.2-alt1
+- New version (0.16.2)
+
 * Sat Dec 03 2022 Alexey Gladkov <legion@altlinux.ru> 0.16.0-alt1
 - New version (0.16.0)
 - Soversion change.
