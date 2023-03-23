@@ -1,13 +1,11 @@
 Name: isight-firmware-tools
 Version: 1.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: Apple Built-In iSight Firmware Tools
 License: GPL
 Group: System/Kernel and hardware
 Url: https://launchpad.net/isight-firmware-tools/main
-
-Packager: Igor Zubkov <icesik@altlinux.org>
 
 Source: %name-%version.tar.gz
 Patch0: isight-firmware-tools-1.5.90-alt.patch
@@ -32,17 +30,22 @@ Apple Built-In iSight Firmware Tools.
 %make_install DESTDIR=%buildroot install
 %find_lang %name
 
+mkdir -p %buildroot%_udevrulesdir
+mv %buildroot%_sysconfdir/udev/rules.d/isight.rules %buildroot%_udevrulesdir/
 rm -rf %buildroot%_datadir/doc/isight-firmware-tools/
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog HOWTO NEWS README
-%_sysconfdir/udev/rules.d/isight.rules
+%_udevrulesdir/isight.rules
 /lib/udev/ift-load
 %_bindir/*
 %_infodir/*
 %_man1dir/*
 
 %changelog
+* Thu Mar 23 2023 Igor Vlasenko <viy@altlinux.org> 1.6-alt1.qa1
+- NMU: fix build, use %%_udevrulesdir
+
 * Thu Apr 12 2012 Igor Zubkov <icesik@altlinux.org> 1.6-alt1
 - 1.5.90 -> 1.6
 - Fix repocop warning
