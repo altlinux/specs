@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 6.0.0
+Version: 6.0.5
 Release: alt1
 Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
@@ -12,11 +12,6 @@ Url: https://github.com/linuxdeepin/deepin-editor
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: deepin-editor-5.10.21-alt-aarch64-armh.patch
-Patch1: 0001-feat-adapt-V23-DDE-DBus.patch
-Patch2: 0001-fix-UTF-16LE-210.patch
-Patch3: 0001-fix-crashes-when-reading-large-files.patch
-Patch4: 0001-chore-correct-some-typos-and-improve-log.patch
-Patch5: 0001-fix-version-error-in-about-dialog.patch
 
 %if_enabled clang
 #BuildRequires(pre): rpm-macros-llvm-common
@@ -87,6 +82,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.editor/
+%_datadir/dsg/configs/org.deepin.editor/org.deepin.editor.json
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
@@ -94,6 +93,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Thu Mar 23 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt1
+- New version (6.0.5).
+
 * Mon Feb 06 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt1
 - New version (6.0.0).
 - Applied fixes from master branch.
