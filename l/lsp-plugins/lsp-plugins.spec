@@ -2,8 +2,8 @@
 %define xdg_name in.lsp_plug.lsp_plugins
 
 Name: lsp-plugins
-Version: 1.2.5
-Release: alt1.1
+Version: 1.2.6
+Release: alt1
 
 Summary: Linux Studio Plugins
 Group: Sound
@@ -124,6 +124,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Thu Mar 23 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1
+- 1.2.6
+
 * Thu Feb 02 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1.1
 - fixed build for %e2k (mike@)
 
