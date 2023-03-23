@@ -1,20 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Devel-MAT-Dumper
 %set_perl_req_method relaxed
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/CBuilder.pm) perl(File/Spec.pm) perl(Module/Build.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.46
-Release: alt1.1
+Version: 0.47
+Release: alt1
 Summary: write a heap dump file for later analysis
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 
 %description
 This module provides the memory-dumping function that creates a heap dump file
@@ -42,11 +42,14 @@ elsewhere.
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README doc
+%doc Changes README doc
 %perl_vendor_archlib/D*
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Mar 23 2023 Igor Vlasenko <viy@altlinux.org> 0.47-alt1
+- automated CPAN update
+
 * Thu Dec 01 2022 Igor Vlasenko <viy@altlinux.org> 0.46-alt1.1
 - to Sisyphus as perl-Sub-HandlesVia dep
 
