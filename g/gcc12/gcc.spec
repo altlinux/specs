@@ -1,8 +1,8 @@
 %define gcc_branch 12
 
 Name: gcc%gcc_branch
-Version: 12.1.1
-Release: alt2
+Version: 12.2.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +17,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20220518
+%define snapshot 20230322
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -48,14 +48,14 @@ Url: https://gcc.gnu.org/
 %define d_arches		%ix86 x86_64 %arm aarch64 %mips s390x riscv64
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
-%define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le
+%define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le mipsel riscv64
 %define libhwasan_arches	aarch64
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le
 %define liblsan_arches		x86_64 aarch64 ppc64le
 %define libquadmath_arches	%ix86 x86_64 ppc64le
 %define libtsan_arches		x86_64 aarch64 ppc64le
-%define libubsan_arches		%ix86 x86_64 %arm aarch64 ppc64le
+%define libubsan_arches		%ix86 x86_64 %arm aarch64 ppc64le riscv64
 %define libvtv_arches		%ix86 x86_64
 
 %ifarch %d_arches
@@ -1190,7 +1190,7 @@ CONFIGURE_OPTS="\
 	--with-madd4=no \
 %endif
 %ifarch riscv64
-	--without-multilib-list --with-arch=rv64gc --with-abi=lp64d \
+	--with-arch=rv64gc --with-abi=lp64d \
 %endif
 	"
 
@@ -1379,7 +1379,7 @@ pushd %buildroot%_libdir
 	rm libssp*
 	rm libiberty.a ||:
 	mv *.a %buildroot%gcc_target_libdir/
-%ifnarch mips mipsel s390x riscv64
+%ifnarch mips s390x
 	mv *.o %buildroot%gcc_target_libdir/
 %endif
 	for f in *.so; do
@@ -2100,12 +2100,24 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Wed Mar 22 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 12.2.1-alt1
+- Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-12-branch
+  commit b3f5a0d53b84ed27cf00cfa2b9c3e2c78935c07d;
+  + releases/gcc-12 (snapshot 20230321)
+  commit r12-9307-g9ead8cb47b047c85deda01abe89b2a8291bb2780.
+- libsanitizer (by Ivan A. Melnikov):
+  + enabled asan and ubsan on riscv;
+  + enabled asan on mipsel.
+- riscv64: dropped --without-multilib-list from configure args to fix build
+  (by Ivan A. Melnikov).
+
 * Mon Sep 19 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.1.1-alt2
 - configured libgccjit with major-version-only (closes: 43840)
 
 * Wed May 18 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 12.1.1-alt1
 - Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
-  + vendors/redhat/heads/gcc-11-branch
+  + vendors/redhat/heads/gcc-12-branch
   commit fa107326a13af9a7d7aa0df28fe364db0f6fb171;
   + releases/gcc-12 (snapshot 20220518)
   commit r12-8392-ga048e606e6036258b98fabf9ae31a2e8a17169d4.
