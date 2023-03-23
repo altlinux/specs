@@ -2,7 +2,7 @@
 
 Name: directx-headers
 Version: 1.608.2
-Release: alt1
+Release: alt1.b
 
 Summary: Official DirectX headers available under an open source license
 Group: Development/C++
@@ -48,5 +48,8 @@ Additionally, this package provides several helpers for using these headers.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 21 2023 L.A. Kostis <lakostis@altlinux.ru> 1.608.2-alt1.b
+- Updated to v1.608.2b.
+
 * Fri Feb 24 2023 L.A. Kostis <lakostis@altlinux.ru> 1.608.2-alt1
 - Initial build for ALTLinux.
