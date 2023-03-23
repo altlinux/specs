@@ -11,7 +11,7 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 057
+Version: 059
 Release: alt1
 
 Summary: Initramfs generator using udev
@@ -110,8 +110,8 @@ Group: System/Base
 BuildArch: noarch
 Requires: %name = %EVR
 Requires: %name-network = %EVR
-Requires: tar gzip coreutils bash dmsetup curl
-Requires: fuse ntfs-3g
+Requires: tar gzip coreutils bash dmsetup curl parted
+#Requires: fuse ntfs-3g
 AutoReq: noshell, noshebang
 
 %description live
@@ -308,11 +308,14 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/01systemd-ask-password
 %dracutlibdir/modules.d/01systemd-coredump
 %dracutlibdir/modules.d/01systemd-hostnamed
-%dracutlibdir/modules.d/01systemd-ldconfig
 %dracutlibdir/modules.d/01systemd-initrd
 %dracutlibdir/modules.d/01systemd-integritysetup
 %dracutlibdir/modules.d/01systemd-journald
+%dracutlibdir/modules.d/01systemd-ldconfig
 %dracutlibdir/modules.d/01systemd-modules-load
+%dracutlibdir/modules.d/01systemd-pcrphase
+%dracutlibdir/modules.d/01systemd-portabled
+%dracutlibdir/modules.d/01systemd-pstore
 %dracutlibdir/modules.d/01systemd-repart
 %dracutlibdir/modules.d/01systemd-resolved
 %dracutlibdir/modules.d/01systemd-rfkill
@@ -340,6 +343,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/62bluetooth
 %dracutlibdir/modules.d/80lvmmerge
 %dracutlibdir/modules.d/80lvmthinpool-monitor
+%dracutlibdir/modules.d/80test
+%dracutlibdir/modules.d/80test-makeroot
+%dracutlibdir/modules.d/80test-root
 %dracutlibdir/modules.d/90btrfs
 %dracutlibdir/modules.d/90crypt
 %dracutlibdir/modules.d/90dm
@@ -350,6 +356,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/90mdraid
 %dracutlibdir/modules.d/90multipath
 %dracutlibdir/modules.d/90nvdimm
+%dracutlibdir/modules.d/90overlayfs
 %ifarch ppc ppc64
 %dracutlibdir/modules.d/90ppcmac
 %endif
@@ -448,6 +455,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %files live
 %dracutlibdir/modules.d/99img-lib
 %dracutlibdir/modules.d/90dmsquash-live
+%dracutlibdir/modules.d/90dmsquash-live-autooverlay
 %dracutlibdir/modules.d/90dmsquash-live-ntfs
 %dracutlibdir/modules.d/90livenet
 
@@ -482,6 +490,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 059-alt1
+- 059
+
 * Sat Jul 23 2022 Alexey Shabalin <shaba@altlinux.org> 057-alt1
 - 057
 
