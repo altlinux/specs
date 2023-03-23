@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name XS-Parse-Sublike
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Sub/Util.pm) perl(Test/Fatal.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.16
-Release: alt1.1
+Version: 0.17
+Release: alt1
 Summary: XS functions to assist in parsing C<sub>-like syntax
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 
 %description
 This module provides some XS functions to assist in writing parsers for
@@ -37,11 +37,14 @@ It is hoped eventually this will be useful for other modules too.
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes
+%doc README Changes
 %perl_vendor_archlib/X*
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Mar 23 2023 Igor Vlasenko <viy@altlinux.org> 0.17-alt1
+- automated CPAN update
+
 * Fri Dec 02 2022 Igor Vlasenko <viy@altlinux.org> 0.16-alt1.1
 - to Sisyphus as perl-Sub-HandlesVia dep
 
