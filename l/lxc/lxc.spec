@@ -25,6 +25,9 @@
 #
 # Spec file adapted for ALT Linux.
 
+%define _unpackaged_files_terminate_build 1
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %define sover 1
 %def_with systemd
 
@@ -39,8 +42,8 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 4.0.12
-Release: alt2
+Version: 5.0.2
+Release: alt1
 
 Summary: Linux Containers
 
@@ -59,9 +62,14 @@ Patch: %name-%version-%release.patch
 
 Requires: lxc-core lxc-net lxc-templates
 
-# Automatically added by buildreq on Tue Aug 04 2020
-# optimized out: docbook-dtds glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl perl-Encode perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-parent pkg-config python-modules python2-base python3 python3-base sh4 xml-common xsltproc
-BuildRequires: docbook2X libcap-devel libcap-devel-static libpam-devel libseccomp-devel libselinux-devel python3-dev
+BuildRequires(pre): meson >= 0.61 rpm-macros-pam
+BuildRequires: docbook2X
+BuildRequires: libcap-devel libcap-devel-static
+BuildRequires: libpam-devel
+BuildRequires: libseccomp-devel libselinux-devel libssl-devel
+BuildRequires: python3-dev
+BuildRequires: pkgconfig(systemd)
+BuildRequires: libpam-devel
 
 %description
 Containers are insulated areas inside a system, which have their own namespace
@@ -79,7 +87,7 @@ Requires: service
 %ifarch x86_64 aarch64 ppc64le
 Requires: criu >= 3.15
 %endif
-Obsoletes: lxc-sysvinit
+Obsoletes: lxc-sysvinit < %EVR
 
 %package net
 BuildArch: noarch
@@ -101,20 +109,19 @@ Requires: lxc-runtime
 %package runtime
 Summary: Runtime files for LXC
 Group: System/Configuration/Other
-Provides: lxc-libs
+Provides: lxc-libs = %EVR
 Obsoletes: lxc-libs < %EVR
 Requires(pre): /usr/sbin/groupadd
 
 %package -n liblxc-devel
 Summary: Development files for LXC
 Group: Development/Other
-Provides: lxc-devel
+Provides: lxc-devel = %EVR
 
 %set_pam_name pam_cgfs
 %package -n %pam_name
 Summary: %summary
 Group: System/Base
-BuildRequires(pre): libpam-devel
 
 %description core
 Containers are insulated areas inside a system, which have their own namespace
@@ -181,34 +188,34 @@ echo -e "#undef ARRAY_SIZE\n#define ARRAY_SIZE(x) (sizeof(x)/sizeof(*(x)))" >> s
 %endif
 
 %build
-export bashcompdir="%_datadir/bash-completion/completions"
-%autoreconf
-%configure \
-	--disable-werror \
-	--disable-cgmanager \
-	--disable-rpath \
-	--disable-static \
-	--enable-capabilities \
-	--enable-pam \
-	--enable-seccomp \
-	--enable-selinux \
-	--localstatedir=%_var \
-	--with-config-path=%_var/lib/lxc \
-	--with-distro=altlinux \
-	--with-init-script=%{?_with_systemd:systemd,}sysvinit
+%meson \
+    -Ddistrosysconfdir='/etc/sysconfig' \
+    -Dinit-script=%{?_with_systemd:systemd,}sysvinit \
+    -Dcapabilities=true \
+    -Dapparmor=false \
+    -Dselinux=true \
+    -Dseccomp=true \
+    -Dpam-cgroup=true \
+    -Dcgroup-pattern='lxc/%%n'
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
+mkdir -p %buildroot%_initdir
+mv %buildroot%_sysconfdir/init.d/* %buildroot%_initdir/
+mv %buildroot%_initdir/lxc-containers %buildroot%_initdir/lxc
+mkdir -p %buildroot/%_lib
+mv %buildroot%_libdir/security %buildroot/%_lib/
 mkdir -p %buildroot%_localstatedir/lxc
 install -pm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/lxc-net
 install -pDm755 %SOURCE2 %buildroot%_controldir/lxc-user-nic
 
 rm %buildroot%_datadir/lxc/lxc-patch.py
+find %buildroot -name '*.a' -delete
 
 %post core
+usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 if [ $1 -eq 1 ]; then
 	/sbin/chkconfig --add lxc ||:
 fi
@@ -245,7 +252,6 @@ groupadd -r -f vmusers ||:
 %config(noreplace) %_sysconfdir/lxc/*
 %config(noreplace) %_sysconfdir/sysconfig/lxc*
 
-%dir %_datadir/bash-completion/completions
 %_datadir/bash-completion/completions/*
 
 %_bindir/lxc-*
@@ -269,10 +275,11 @@ groupadd -r -f vmusers ||:
 %if_with systemd
 %_unitdir/lxc.service
 %_unitdir/lxc@.service
+%_unitdir/lxc-monitord.service
 %endif
 
 %files net
-%attr(555,root,root) %_libexecdir/lxc/lxc-net
+%_libexecdir/lxc/lxc-net
 
 %_initdir/lxc-net
 
@@ -290,7 +297,7 @@ groupadd -r -f vmusers ||:
 
 %files runtime
 %attr(4710,root,vmusers) %_libexecdir/lxc/lxc-user-nic
-%attr(555,root,root) %_libexecdir/lxc/lxc-containers
+%_libexecdir/lxc/lxc-containers
 
 %_libexecdir/lxc/lxc-apparmor-load
 %_libexecdir/lxc/lxc-containers
@@ -321,6 +328,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Thu Mar 23 2023 Alexey Shabalin <shaba@altlinux.org> 5.0.2-alt1
+- Updated to 5.0.2.
+
 * Tue Feb 15 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.12-alt2
 - Actually built 4.0.12 (pointed by shaba@).
 

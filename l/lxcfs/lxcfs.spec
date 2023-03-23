@@ -1,5 +1,5 @@
 Name:		lxcfs
-Version:	4.0.11
+Version:	5.0.3
 Release:	alt1
 Summary:	FUSE filesystem for LXC
 
@@ -10,11 +10,13 @@ URL:		https://github.com/lxc/lxcfs
 VCS:		https://github.com/lxc/lxcfs.git
 Source0:	%name-%version.tar
 Source1:	lxcfs.sysvinit
+# revert https://github.com/lxc/lxcfs/pull/555
+Patch:		lxcfs-5.0.3-fix-service.patch
 
-# git://git.altlinux.org/gears/l/lxcfs.git
-Patch:		%name-%version-%release.patch
-
-BuildRequires: libfuse3-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson >= 0.61 python3-module-jinja2
+BuildRequires: libfuse-devel
+BuildRequires: pkgconfig(systemd)
 BuildRequires: help2man
 
 %define _check_contents_method relaxed
@@ -31,15 +33,16 @@ FUSE filesystem for LXC, offering the following features:
 %prep
 %setup
 %patch -p1
+sed -i 's|/bin/fusermount|/usr/bin/fusermount|' config/init/systemd/lxcfs.service.in
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-./bootstrap.sh
-%configure --disable-static --with-init-script=systemd --localstatedir=%_var
-%make_build
+%meson \
+    -Dinit-script=systemd
+
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 mkdir -p %buildroot%_localstatedir/%name
 install -Dm0755 %SOURCE1 %buildroot%_initdir/lxcfs
@@ -47,7 +50,6 @@ install -Dm0755 %SOURCE1 %buildroot%_initdir/lxcfs
 find %buildroot -name '*.la' -delete
 
 %post
-[ -d "%_localstatedir/%name" ] || mkdir -p %_localstatedir/%name
 %post_service %name
 
 %preun
@@ -61,11 +63,14 @@ find %buildroot -name '*.la' -delete
 %_initdir/%name
 %_unitdir/%name.service
 %_datadir/lxc/config/common.conf.d/*
-%dir %_datadir/%name
-%_datadir/%name/*
-%ghost %dir %_localstatedir/%name
+%_datadir/%name
+%dir %_localstatedir/%name
 
 %changelog
+* Thu Mar 23 2023 Alexey Shabalin <shaba@altlinux.org> 5.0.3-alt1
+- Updated to 5.0.3.
+- Built against libfuse-2.
+
 * Sat Dec 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.11-alt1
 - Updated to lxcfs-4.0.11.
 
