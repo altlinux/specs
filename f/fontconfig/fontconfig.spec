@@ -8,7 +8,7 @@
 
 Name: fontconfig
 Version: 2.14.2
-Release: alt4
+Release: alt5
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
@@ -75,6 +75,12 @@ documentation required for development of fontconfig-based software.
 
 %make PDF_FILES=
 
+%ifarch %ix86
+echo "void ___save_i586_fontconfig_package___() {}" >save_i586_fontconfig_package.c
+gcc %optflags -c save_i586_fontconfig_package.c -o save_i586_fontconfig_package.o
+ld --shared save_i586_fontconfig_package.o -o save_i586_fontconfig_package.so
+%endif
+
 %install
 %make DESTDIR=%buildroot PDF_FILES= install
 install -pm644 AUTHORS README %buildroot%docdir/
@@ -96,6 +102,11 @@ find %buildroot/%_sysconfdir/fonts/conf.avail/ -type f -name \*.conf | sed -e 's
 while read CONF ; do
     ln -sr %buildroot/%_sysconfdir/fonts/conf.avail/$CONF %buildroot/%_datadir/%name/conf.avail/$CONF
 done
+
+mkdir -p %buildroot/%_libdir/libfontconfig/
+%ifarch %ix86
+install -m 0644 save_i586_fontconfig_package.so %buildroot/%_libdir/libfontconfig/
+%endif
 
 %find_lang --output=%name.lang --append fontconfig fontconfig-conf
 
@@ -148,6 +159,9 @@ fi
 %ghost %_sysconfdir/fonts/conf.d/11-lcdfilter-none.conf
 %ghost %config(missingok,noreplace) %_sysconfdir/fonts/local.conf
 %_bindir/fc-*
+%ifarch %ix86
+%_libdir/libfontconfig/save_i586_fontconfig_package.so
+%endif
 %_rpmlibdir/%name.filetrigger
 %_datadir/%name
 %_datadir/xml/%name
@@ -158,6 +172,7 @@ fi
 %exclude %docdir/%name-devel*
 
 %files -n %libfontconfig
+%dir %_libdir/libfontconfig/
 %_libdir/libfontconfig.so.%sover
 %_libdir/libfontconfig.so.*
 
@@ -171,6 +186,12 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Thu Mar 23 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt5
+- save i586-fontconfig package for x86_64-i586 to dist-upgrade
+
+* Thu Mar 23 2023 Sergey V Turchin <zerg@altlinux.org> 2.13.1-alt6
+- prefer Noto fonts
+
 * Thu Mar 23 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt4
 - revert previous changes
 
