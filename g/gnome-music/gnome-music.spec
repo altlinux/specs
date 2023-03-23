@@ -1,14 +1,14 @@
 %def_disable snapshot
 
-%define ver_major 42
+%define ver_major 44
 %define beta %nil
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
-%define soup_api_ver 2.4
+%define soup_api_ver 3.0
 %define tracker_api_ver 3.0
 
 Name: gnome-music
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Music playing application for GNOME3
@@ -26,13 +26,13 @@ BuildArch: noarch
 
 %define tracker_ver 3.0
 %define gtk4_ver 4.5.0
+%define adwaita_ver 1.2
 %define grilo_ver 0.3.13
 %define python_ver 3.7
 %define mediaart_ver 1.9.1
 %define pygobject_ver 3.36.1
 %define pycairo_ver 1.14.0
 %define goa_ver 3.35.90
-%define adwaita_ver 1.0
 
 Requires: tracker-miners3 >= %tracker_ver typelib(Tracker) = %tracker_api_ver
 Requires: grilo-tools >= %grilo_ver grilo-plugins
@@ -45,10 +45,10 @@ BuildRequires: meson %_bindir/git
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
-BuildRequires: libsoup-devel
+BuildRequires: libsoup%soup_api_ver-devel
 BuildRequires: libgrilo-devel >= %grilo_ver grilo-plugins-devel
 BuildRequires: libmediaart2.0-devel >= %mediaart_ver
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: gobject-introspection-devel libgtk4-gir-devel
 BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
 BuildRequires: python3-devel >= %python_ver
 BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver python3-module-pycairo-devel >= %pycairo_ver
@@ -80,6 +80,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Thu Mar 23 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Mon Apr 25 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 
