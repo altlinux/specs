@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %global import_path github.com/coreos/ignition
 %define dracutlibdir %{_prefix}/lib/dracut
+%define _libexecdir %_prefix/libexec
 
 Name:     ignition
-Version:  2.14.0
+Version:  2.15.0
 Release:  alt1
 
 Summary:  First boot installer and configuration tool
@@ -80,14 +82,19 @@ pushd .build/src/%import_path
 popd
 
 %files
-%doc README.md NEWS docs
+%doc README.md docs
 %dracutlibdir/modules.d/*
+%_libexecdir/*
+%_unitdir/*
 
 %files validate
 %doc README.md
 %_bindir/%name-validate
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 2.15.0-alt1
+- New version 2.15.0.
+
 * Wed Jun 15 2022 Alexey Shabalin <shaba@altlinux.org> 2.14.0-alt1
 - new version 2.14.0
 
