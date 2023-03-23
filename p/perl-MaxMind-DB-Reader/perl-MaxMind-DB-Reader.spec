@@ -1,11 +1,9 @@
 %define module_name MaxMind-DB-Reader
 %define _unpackaged_files_terminate_build 1
-# due Net-Works->Int128 deps
-ExcludeArch: %ix86 armh
 
 Name: perl-%module_name
 Version: 1.000014
-Release: alt3
+Release: alt4
 Summary: Read MaxMind DB files and look up IP addresses
 Group: Development/Perl
 License: %artistic_license_v2
@@ -13,9 +11,21 @@ URL: http://metacpan.org/release/MaxMind-DB-Reader
 
 Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/MA/MAXMIND/%{module_name}-%{version}.tar.gz
 
+%ifnarch %ix86 %arm
+# required for test data
+BuildRequires: perl(Net/Works/Network.pm) perl(Math/Int128.pm)
+%else
+%define _without_test 1
+%endif
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=45638
+%def_disable girar_repacks_srpm
+%if_enabled  girar_repacks_srpm
+BuildArch: noarch
+%endif
+
+
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(Cpanel/JSON/XS.pm) perl(Data/IEEE754.pm) perl(Data/Printer.pm) perl(Data/Validate/IP.pm) perl(DateTime.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurper.pm) perl(File/Spec.pm) perl(Getopt/Long.pm) perl(List/AllUtils.pm) perl(Math/BigInt.pm) perl(Math/Int128.pm) perl(MaxMind/DB/Common.pm) perl(MaxMind/DB/Metadata.pm) perl(MaxMind/DB/Role/Debugs.pm) perl(MaxMind/DB/Types.pm) perl(Module/Implementation.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(MooX/StrictConstructor.pm) perl(Net/Works/Network.pm) perl(Path/Class.pm) perl(Role/Tiny.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Test/Bits.pm) perl(Test/Fatal.pm) perl(Test/MaxMind/DB/Common/Data.pm) perl(Test/MaxMind/DB/Common/Util.pm)
-BuildRequires: perl(Test/More.pm) perl(Test/Number/Delta.pm) perl(Test/Requires.pm) perl(autodie.pm) perl(bytes.pm) perl(constant.pm) perl(lib.pm) perl(namespace/autoclean.pm) perl(strict.pm) perl(utf8.pm) perl(warnings.pm)
+BuildRequires: perl(Cpanel/JSON/XS.pm) perl(Data/IEEE754.pm) perl(Data/Printer.pm) perl(Data/Validate/IP.pm) perl(DateTime.pm) perl(Encode.pm) perl(File/Slurper.pm) perl(List/AllUtils.pm) perl(Math/BigInt.pm) perl(MaxMind/DB/Common.pm) perl(MaxMind/DB/Metadata.pm) perl(MaxMind/DB/Role/Debugs.pm) perl(MaxMind/DB/Types.pm) perl(Module/Implementation.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(MooX/StrictConstructor.pm) perl(Path/Class.pm) perl(Role/Tiny.pm) perl(Test/Bits.pm) perl(Test/Fatal.pm) perl(Test/MaxMind/DB/Common/Data.pm) perl(Test/MaxMind/DB/Common/Util.pm) perl(Test/Number/Delta.pm) perl(Test/Requires.pm) perl(autodie.pm) perl(namespace/autoclean.pm)
 # END SourceDeps(oneline)
 
 BuildRequires(pre): rpm-build-licenses
@@ -49,14 +59,26 @@ scripts for %module_name
 %install
 %perl_vendor_install
 
+%if_disabled  girar_repacks_srpm
+# something fake arch-like to bypass girar checks
+mkdir -p %buildroot%perl_vendor_autolib/%module_name
+%endif
+
 %files
 %doc LICENSE Changes README.md CONTRIBUTING.md
 %perl_vendor_privlib/M*
+%if_disabled  girar_repacks_srpm
+%perl_vendor_autolib/%module_name
+%endif
 
 %files scripts
 %_bindir/*
 
 %changelog
+* Wed Mar 22 2023 Igor Vlasenko <viy@altlinux.org> 1.000014-alt4
+- restored build on 32-bit arches
+- updated BuildRequires
+
 * Fri Mar 10 2023 L.A. Kostis <lakostis@altlinux.ru> 1.000014-alt3
 - Exclude 32-bit arches.
 
