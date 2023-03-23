@@ -2,12 +2,12 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(List/Util.pm) perl(base.pm) perl-podlators
+BuildRequires: perl(List/Util.pm) perl(Test2/V0.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Convert-Color
-Version:        0.14
+Version:        0.16
 Release:        alt1
 Summary:        Color space conversions and named lookups
 License:        GPL+ or Artistic
@@ -56,6 +56,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 23 2023 Igor Vlasenko <viy@altlinux.org> 0.16-alt1
+- automated CPAN update
+
 * Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 0.14-alt1
 - automated CPAN update
 
