@@ -7,7 +7,7 @@
 
 
 Name: gnome-firmware
-Version: 43.1
+Version: 43.2
 Release: alt1
 Summary: Install firmware on devices
 Group: System/Configuration/Hardware
@@ -59,6 +59,9 @@ export LIB=%_lib
 %_man1dir/*
 
 %changelog
+* Thu Mar 23 2023 L.A. Kostis <lakostis@altlinux.ru> 43.2-alt1
+- 43.2.
+
 * Mon Jan 02 2023 L.A. Kostis <lakostis@altlinux.ru> 43.1-alt1
 - 43.1.
 
