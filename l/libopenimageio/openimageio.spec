@@ -11,7 +11,7 @@
 
 Name:           lib%oname
 Version:        2.3.21.0
-Release:        alt2
+Release:        alt2.1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -27,6 +27,7 @@ Source0:        %name-%version.tar
 Source2: %oname.watch
 
 Patch1: %oname-alt-armh-disable-neon.patch
+Patch2000: %oname-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
@@ -138,6 +139,12 @@ Development files for package %name
 %ifarch armh
 %patch1 -p1
 %endif
+%ifarch %e2k
+%patch2000 -p1
+# simplifies the patch
+sed -i '/#if OIIO_SIMD_SSE >= 4/{N;/_mm_dp_ps/s/#if /&!defined(__e2k__) \&\& /}' \
+	src/include/OpenImageIO/simd.h
+%endif
 
 # Remove bundled pugixml
 rm -fr src/include/OpenImageIO/detail/pugixml/
@@ -156,10 +163,7 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 # disable debugging stuff
 %add_optflags -DNDEBUG
 %ifarch %e2k
-# skip x86 asm (reported upstream); suggested by darktemplar@
-%add_optflags -DOIIO_NO_AVX=1 -DOIIO_NO_SSE=1 -U__AES__
-# e2k backend for Clang doesn't support x86 intrinsics and SIMD
-sed -i 's/) || defined(__e2k__)/ || (defined(__e2k__) \&\& defined(__LCC__)))/' src/include/OpenImageIO/simd.h
+%add_optflags -mno-sse4.2 -mno-avx
 %endif
 
 # set -DCMAKE_BUILD_TYPE=RelWithDebInfo to skip stripping debuginfo from python modules built via pybind11
@@ -224,6 +228,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Thu Mar 23 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.3.21.0-alt2.1
+- Patch for Elbrus.
+
 * Mon Mar 20 2023 Alexander Burmatov <thatman@altlinux.org> 2.3.21.0-alt2
 - Fix build requires.
 
