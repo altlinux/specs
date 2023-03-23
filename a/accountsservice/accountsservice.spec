@@ -1,9 +1,9 @@
-%def_disable check
+%def_enable check
 %define _localstatedir %_var
 %define _libexecdir %_prefix/libexec
 
 Name: accountsservice
-Version: 22.08.8
+Version: 23.11.69
 Release: alt1
 Summary: D-Bus interfaces for querying and manipulating user account information
 
@@ -124,6 +124,9 @@ GObject introspection devel data for the accountsservice library
 %_girdir/*.gir
 
 %changelog
+* Thu Mar 23 2023 Alexey Shabalin <shaba@altlinux.org> 23.11.69-alt1
+- 23.11.69
+
 * Mon Apr 04 2022 Alexey Shabalin <shaba@altlinux.org> 22.08.8-alt1
 - 22.08.8
 
