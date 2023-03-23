@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: autoconf-archive
-Version: 2022.09.03
+Version: 2023.02.20
 Release: alt1
 Summary: The Autoconf Macro Archive
 
@@ -41,7 +41,7 @@ touch ChangeLog
 echo -n %version > .tarball-version
 
 %build
-# %autoreconf
+# %%autoreconf
 ./bootstrap.sh
 %configure
 %make maintainer-all
@@ -61,6 +61,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_infodir/autoconf-archive.info*
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 2023.02.20-alt1
+- 2023.02.20
+
 * Fri Oct 21 2022 Alexey Shabalin <shaba@altlinux.org> 2022.09.03-alt1
 - 2022.09.03
 
