@@ -3,7 +3,7 @@
 
 Name: perl-%module_name
 Version: 2.006002
-Release: alt3
+Release: alt4
 Summary: Perl API for MaxMind's GeoIP2 web services and databases
 Group: Development/Perl
 License: %perl_license
@@ -11,11 +11,21 @@ URL: http://metacpan.org/release/GeoIP2
 
 Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/MA/MAXMIND/%{module_name}-%{version}.tar.gz
 
-# due Net/Works/Network.pm
-ExcludeArch: %ix86 armh
+%ifnarch %ix86 %arm
+# required for test data
+BuildRequires: perl(Net/Works/Network.pm) perl(Math/Int128.pm)
+%else
+%define _without_test 1
+%endif
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=45638
+%def_disable girar_repacks_srpm
+%if_enabled  girar_repacks_srpm
+BuildArch: noarch
+%endif
 
-BuildRequires: perl(B.pm) perl(Cpanel/JSON/XS.pm) perl(Data/Dumper.pm) perl(Data/Validate/IP.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurper.pm) perl(File/Spec.pm) perl(Getopt/Long.pm) perl(HTTP/Headers.pm) perl(HTTP/Request.pm) perl(HTTP/Response.pm) perl(HTTP/Status.pm) perl(IO/Compress/Gzip.pm) perl(JSON/MaybeXS.pm) perl(LWP/Protocol/https.pm) perl(LWP/UserAgent.pm) perl(List/SomeUtils.pm) perl(List/Util.pm) perl(MIME/Base64.pm) perl(Math/Int128.pm) perl(MaxMind/DB/Metadata.pm) perl(MaxMind/DB/Reader.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Net/Works/Network.pm) perl(Params/Validate.pm) perl(Path/Class.pm) perl(Scalar/Util.pm) perl(Sub/Quote.pm) perl(Test/Builder.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Number/Delta.pm) perl(Throwable/Error.pm) perl(Try/Tiny.pm) perl(URI.pm)
-BuildRequires: perl(autodie.pm) perl(base.pm) perl(lib.pm) perl(namespace/clean.pm) perl(strict.pm) perl(utf8.pm) perl(warnings.pm)
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Cpanel/JSON/XS.pm) perl(Data/Validate/IP.pm) perl(File/Slurper.pm) perl(HTTP/Headers.pm) perl(HTTP/Request.pm) perl(HTTP/Response.pm) perl(HTTP/Status.pm) perl(IO/Compress/Gzip.pm) perl(JSON/MaybeXS.pm) perl(LWP/Protocol/https.pm) perl(LWP/UserAgent.pm) perl(List/SomeUtils.pm) perl(MaxMind/DB/Metadata.pm) perl(MaxMind/DB/Reader.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Params/Validate.pm) perl(Path/Class.pm) perl(Sub/Quote.pm) perl(Test/Fatal.pm) perl(Test/MaxMind/DB/Common/Util.pm) perl(Test/Number/Delta.pm) perl(Throwable/Error.pm) perl(Try/Tiny.pm) perl(URI.pm) perl(autodie.pm) perl(namespace/clean.pm)
+# END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 BuildRequires(pre): rpm-build-licenses
 
@@ -45,14 +55,26 @@ scripts for %module_name
 %install
 %perl_vendor_install
 
+%if_disabled  girar_repacks_srpm
+# something fake arch-like to bypass girar checks
+mkdir -p %buildroot%perl_vendor_autolib/%module_name
+%endif
+
 %files
 %doc CONTRIBUTING.md Changes README.md LICENSE
 %perl_vendor_privlib/G*
+%if_disabled  girar_repacks_srpm
+%perl_vendor_autolib/%module_name
+%endif
 
 %files scripts
 %_bindir/*
 
 %changelog
+* Thu Mar 23 2023 Igor Vlasenko <viy@altlinux.org> 2.006002-alt4
+- restored build on 32-bit arches
+- updated BuildRequires
+
 * Fri Mar 10 2023 L.A. Kostis <lakostis@altlinux.ru> 2.006002-alt3
 - Exclude 32-bit arches.
 
