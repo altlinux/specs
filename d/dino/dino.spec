@@ -3,7 +3,7 @@
 %define rdn_name im.dino.Dino
 
 Name: dino
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Modern Jabber/XMPP client
@@ -34,7 +34,7 @@ BuildRequires: gst-plugins%gst_api_ver-devel libnice-devel
 BuildRequires: pkgconfig(webrtc-audio-processing) >= %webrtc_ver
 BuildRequires: libgcrypt-devel libgpgme-devel libgnutls-devel
 BuildRequires: libsignal-protocol-c-devel libsqlite3-devel libsrtp2-devel
-BuildRequires: libenchant-devel libgspell-devel
+BuildRequires: libenchant-devel
 
 %description
 Dino is a modern open-source chat client for the desktop. It focuses on
@@ -108,6 +108,9 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_datadir/vala/vapi/xmpp-vala.vapi
 
 %changelog
+* Thu Mar 23 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Thu Mar 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
