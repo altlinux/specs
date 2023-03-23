@@ -43,7 +43,7 @@
 
 Name: lxc
 Version: 5.0.2
-Release: alt1
+Release: alt2
 
 Summary: Linux Containers
 
@@ -328,6 +328,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Thu Mar 23 2023 Alexey Shabalin <shaba@altlinux.org> 5.0.2-alt2
+- convert AppArmor and SELinux confile parsing from errors to warnings
+
 * Thu Mar 23 2023 Alexey Shabalin <shaba@altlinux.org> 5.0.2-alt1
 - Updated to 5.0.2.
 
