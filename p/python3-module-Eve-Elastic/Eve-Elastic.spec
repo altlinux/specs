@@ -1,26 +1,22 @@
 %define oname Eve-Elastic
 
-%def_disable check
-
 Name: python3-module-%oname
-Version: 0.2.5
-Release: alt2
+Version: 7.3.0
+Release: alt1
 
 Summary: Elasticsearch data layer for eve rest framework
 License: GPLv3
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Eve-Elastic/
-# https://github.com/petrjasek/eve-elastic.git
-BuildArch: noarch
+Url: https://pypi.org/project/Eve-Elastic
+Vcs: https://github.com/petrjasek/eve-elastic.git
 
 Source: %name-%version.tar
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
 %py3_provides eve_elastic
-
-BuildRequires: python3-module-nose python3-module-pytest python3-module-urllib3
-
 
 %description
 Eve-Elastic is elasticsearch data layer for eve REST framework.
@@ -36,24 +32,22 @@ Features:
 %prep
 %setup
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
-%check
-python3 setup.py test
-
 %files
 %doc *.md *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/eve_elastic
+%python3_sitelibdir/Eve_Elastic-%version-*.egg-info
 
 
 %changelog
+* Thu Mar 23 2023 Anton Vyatkin <toni@altlinux.org> 7.3.0-alt1
+- New version 7.3.0.
+
 * Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.5-alt2
 - python2 disabled
 
