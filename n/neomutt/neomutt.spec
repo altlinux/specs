@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: neomutt
-Version: 20220429
-Release: alt2.1
+Version: 20230322
+Release: alt1
 Summary: A version of Mutt with added features
 License: GPL-2.0-only and ALT-Public-Domain
 Group: Networking/Mail
@@ -17,6 +17,7 @@ Vcs: https://github.com/neomutt/neomutt.git
 # Where test-files remote is https://github.com/neomutt/neomutt-test-files
 
 Requires: mailcap
+AutoReqProv: nopython nopython3
 
 Source: %name-%version.tar
 Source1: neomutt.desktop
@@ -101,8 +102,12 @@ make -s test
 %docdir
 %_desktopdir/neomutt.desktop
 %_pixmapsdir/neomutt.xpm
+%_datadir/neomutt
 
 %changelog
+* Thu Mar 23 2023 Vitaly Chikunov <vt@altlinux.org> 20230322-alt1
+- Update to 20230322 (2023-03-22).
+
 * Wed Nov 02 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20220429-alt2.1
 - Fixed build for Elbrus.
 
