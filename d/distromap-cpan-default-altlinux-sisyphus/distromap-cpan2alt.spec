@@ -6,7 +6,7 @@ BuildRequires: perl(Pod/Usage.pm) perl(Source/Repository/Matcher/CPAN2ALT.pm) pe
 %define module %orepo-%obranch-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.291
+Version: 0.292
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -51,6 +51,9 @@ install -m 755 bin/* %buildroot%_bindir/
 %_datadir/distromap/*
 
 %changelog
+* Thu Mar 23 2023 Igor Vlasenko <viy@altlinux.org> 0.292-alt1
+- db update
+
 * Tue Jan 17 2023 Igor Vlasenko <viy@altlinux.org> 0.291-alt1
 - db update
 
