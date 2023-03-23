@@ -5,10 +5,10 @@
 %def_enable maxminddb
 %def_enable xdp
 %def_disable documentation
-%def_disable quic
+%def_enable quic
 
 Name: knot
-Version: 3.2.4
+Version: 3.2.5
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -31,7 +31,7 @@ BuildRequires: pkgconfig(libidn2)
 BuildRequires: pkgconfig(libnghttp2)
 %{?_enable_maxminddb:BuildRequires: pkgconfig(libmaxminddb)}
 %{?_enable_xdp:BuildRequires: pkgconfig(libbpf) >= 0.0.6 pkgconfig(libmnl)}
-%{?_enable_quic:BuildRequires: pkgconfig(libngtcp2) >= 0.10.0 pkgconfig(gnutls) >= 3.7.2}
+%{?_enable_quic:BuildRequires: pkgconfig(libngtcp2) >= 0.13.0 pkgconfig(gnutls) >= 3.7.2}
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(systemd)
 %{?_enable_documentation:BuildRequires: /usr/bin/sphinx-build-3}
@@ -203,6 +203,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.5-alt1
+- New version 3.2.5.
+
 * Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.4-alt1
 - new version 3.2.4
 
