@@ -27,10 +27,10 @@
 %define label digiKam
 Name: kde5-%rname
 %define ver_major 7
-%define ver_minor 9
+%define ver_minor 10
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
-Release: alt2
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 %define sover %version
@@ -69,7 +69,7 @@ BuildRequires: qt5-webengine-devel
 %else
 BuildRequires: qt5-webkit-devel
 %endif
-BuildRequires: libx265-devel
+BuildRequires: libx265-devel libheif-devel
 BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjpeg-devel libpng-devel
 %{?_enable_jasper:BuildRequires: libjasper-devel}
 BuildRequires: libqtav-devel libde265-devel
@@ -330,6 +330,9 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Thu Mar 23 2023 Sergey V Turchin <zerg@altlinux.org> 7.10.0-alt1
+- new version
+
 * Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 7.9.0-alt2
 - update russian translation
 
