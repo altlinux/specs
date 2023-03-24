@@ -1,5 +1,5 @@
 Name:           nss_wrapper
-Version:        1.1.12
+Version:        1.1.15
 Release:        alt1
 License:        BSD
 Group:          Development/Other
@@ -64,6 +64,14 @@ development/testing.
 %_mandir/man1/nss_wrapper.1*
 
 %changelog
+* Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.1.15-alt1
+- Fixed linking issue in tests
+- Fixed a memory leak in tests
+- Fixed implementation of initgroups()
+- Fixed implementation of getgrouplist()
+- Avoid dclose(RTLD_NEXT)
+- Fixed possible mutex and threading issues
+
 * Sat Sep 17 2022 Evgeny Sinelnikov <sin@altlinux.org> 1.1.12-alt1
 - Fixed possible crash in getaddrinfo()
 - Fixed issues with processes closing all fds when forking

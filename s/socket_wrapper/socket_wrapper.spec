@@ -1,6 +1,6 @@
 Name:           socket_wrapper
-Version:        1.3.4
-Release:        alt1
+Version:        1.4.0
+Release:        alt2
 Group:          Development/Other
 License:        BSD
 Summary:        A library passing all socket communications through Unix sockets
@@ -29,6 +29,23 @@ SOCKET_WRAPPER_DIR=/path/to/swrap_dir
 
 This package doesn't have a devel package because this project is for
 development/testing.
+
+%package -n libsocket_wrapper_noop
+Summary:        A library providing dummies for socket_wrapper
+Group:          Development/Other
+
+%description -n libsocket_wrapper_noop
+Applications with the need to call socket_wrapper_enabled() should link against
+-lsocket_wrapper_noop in order to resolve the symbol at link time.
+
+%package -n libsocket_wrapper_noop-devel
+Summary:        Development headers for libsocket_wrapper_noop
+Requires:       libsocket_wrapper_noop = %version-%release
+Group:          Development/C
+
+%description -n libsocket_wrapper_noop-devel
+Development headers for applications with the need to call
+socket_wrapper_enabled().
 
 %prep
 %setup -q
@@ -63,14 +80,39 @@ popd
 
 %files
 %doc AUTHORS README.md CHANGELOG LICENSE
-%_libdir/lib%{name}*.so*
+%_libdir/lib%name.so*
 %dir %_libdir/cmake/%name
-%_libdir/cmake/%name/*.cmake
-%_includedir/%name.h
-%_pkgconfigdir/%{name}*.pc
+%_pkgconfigdir/%name.pc
+%_libdir/cmake/%name/%name-config*.cmake
 %_man1dir/%name.1*
 
+%files -n libsocket_wrapper_noop
+%_libdir/lib%{name}_noop.so.*
+
+%files -n libsocket_wrapper_noop-devel
+%_includedir/%name.h
+%_pkgconfigdir/%{name}_noop.pc
+%_libdir/lib%{name}_noop.so
+%_libdir/cmake/%name/%{name}_noop-config*.cmake
+
 %changelog
+* Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.4.0-alt2
+- Skip test_syscall_swrap for arm archicture
+
+* Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.4.0-alt1
+- Added support for sendmmsg()/recvmmsg()
+- Added support for handling close, recvmmsg and sendmmsg syscalls
+- Added support to interact with uid_wrapper syscall()
+- Improved IP address tracing output
+- Inject O_LARGEFILE as needed on 32bit
+- pkgconfig: Fix path to libsocket_wrapper.so
+- Fix -Wcast-qual warnings
+- Fix dclose(RTLD_NEXT)
+
+* Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.3.4-alt2
+- Split and place libsocket_wrapper_noop library and it's development files
+  to separate subpackages.
+
 * Fri Sep 16 2022 Evgeny Sinelnikov <sin@altlinux.org> 1.3.4-alt1
 - Fixed TOCTOU issue with udp auto binding
 
