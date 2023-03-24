@@ -1,7 +1,7 @@
 %global import_path github.com/docker/distribution
 Name:     docker-registry
 Version:  2.8.1
-Release:  alt1
+Release:  alt2
 
 Summary:  The Docker toolset to pack, ship, store, and deliver content
 License:  Apache-2.0
@@ -48,6 +48,12 @@ install -pDm 0644 %SOURCE2 %buildroot%_sysconfdir/%name/config.yml
 
 mkdir -p %buildroot/%_localstatedir/%name
 
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
 %files
 %_bindir/docker-registry
 %doc README.md
@@ -57,6 +63,9 @@ mkdir -p %buildroot/%_localstatedir/%name
 %dir %_localstatedir/%name
 
 %changelog
+* Fri Mar 24 2023 Mikhail Gordeev <obirvalger@altlinux.org> 2.8.1-alt2
+- Add service macros
+
 * Fri Apr 15 2022 Mikhail Gordeev <obirvalger@altlinux.org> 2.8.1-alt1
 - new version 2.8.1
 
