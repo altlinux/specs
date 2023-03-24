@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define _name klotski
@@ -8,14 +9,18 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Derivative game from Klotski
 Group: Games/Boards
 License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Klotski
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
+%else
+Source: %__name-%version.tar
+%endif
 
 Provides:  %__name = %version-%release
 Obsoletes: gnome-games-gnotski
@@ -24,8 +29,8 @@ Provides:  gnome-games-gnotski = %version-%release
 %define glib_ver 2.40.0
 %define gtk_ver 3.22.0
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
@@ -48,7 +53,7 @@ from a game called "Klotski".
 %find_lang --with-gnome %__name
 
 %files -f gnome-%_name.lang
-%attr(2711,root,games) %_bindir/%__name
+%_bindir/%__name
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %_man6dir/%__name.*
@@ -58,6 +63,10 @@ from a game called "Klotski".
 
 
 %changelog
+* Fri Mar 24 2023 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt2
+- 3.38.2-32-gc4b6491 (updated translations)
+- removed rudimentary suid bit
+
 * Sun Nov 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 
