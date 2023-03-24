@@ -1,6 +1,6 @@
 Name: phpMyAdmin
-Version: 5.2.0
-Release: alt2
+Version: 5.2.1
+Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
 
@@ -319,6 +319,10 @@ fi
 %endif
 
 %changelog
+* Thu Mar 23 2023 Vitaly Lipatov <lav@altlinux.ru> 5.2.1-alt1
+- new version 5.2.1 (with rpmrb script)
+ + PMASA-2023-01: fix for an XSS vulnerability in the drag-and-drop upload functionality
+
 * Thu Feb 02 2023 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt2
 - remove obsoleted ALT README
 - BR: rpm-macros-features >= 0.8 (where if_feature php* introduced)
