@@ -1,5 +1,5 @@
 Name: uperf
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 
 Summary: A network performance tool
@@ -10,7 +10,6 @@ Url: http://uperf.org/
 
 #source from: https://sourceforge.net/projects/uperf/files/uperf/
 Source: %name-%version.tar
-Patch0: uperf-1.0.5-alt-warnings.patch
 
 BuildRequires: liblksctp-devel libssl-devel
 
@@ -20,9 +19,9 @@ various networking patterns.
 
 %prep
 %setup
-%patch0 -p2
 
 %build
+%autoreconf
 %configure --datadir=%_datadir/%name --enable-ssl
 %make_build
 
@@ -36,6 +35,9 @@ various networking patterns.
 %_datadir/%name/*.xml
 
 %changelog
+* Fri Mar 24 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.8-alt1
+- Automatically updated to 1.0.8.
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.7-alt1
 - Build new version.
 
