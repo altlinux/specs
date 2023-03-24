@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define lvm2version 2.03.18
-%define dmversion 1.02.189
+%define lvm2version 2.03.20
+%define dmversion 1.02.193
 
 %define _sbindir /sbin
 %define usrsbindir %_prefix/sbin
@@ -31,7 +31,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt2
+Release: alt1
 License: GPLv2+ AND LGPL-2.1+
 
 Group: System/Base
@@ -63,9 +63,9 @@ BuildRequires: autoconf-archive
 %{?_enable_thin:BuildRequires: thin-provisioning-tools >= 0.5.4}
 BuildRequires(pre): rpm-build-python3
 %{?_enable_lvmdbusd:BuildRequires: python3-devel python3-module-setuptools python3-module-dbus python3-module-pyudev}
-%{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static libaio-devel-static}
+%{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static libaio-devel-static libblkid-devel-static}
 %{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
-%{?_enable_blkid_wiping:BuildRequires: libblkid-devel >= 2.23}
+%{?_enable_blkid_wiping:BuildRequires: libblkid-devel >= 2.24}
 %{?_enable_lvmlockd_sanlock:BuildRequires: sanlock-devel >= 3.3.0}
 %{?_enable_lvmlockd_dlm:BuildRequires: libdlm-devel >= 4.0.9}
 %{?_enable_cmirrord:BuildRequires: libcorosync-devel}
@@ -495,6 +495,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 2.03.20-alt1
+- 2.03.20
+
 * Wed Feb 08 2023 Alexey Shabalin <shaba@altlinux.org> 2.03.18-alt2
 - backport from main branch:
   + lvresize: fix cryptsetup resize in helper
