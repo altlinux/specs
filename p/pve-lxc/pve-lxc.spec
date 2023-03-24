@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %define rname lxc
 
 Name: pve-%rname
-Version: 4.0.12
+Version: 5.0.2
 Release: alt1
-Summary: Linux containers usersapce tools
+Summary: Linux containers userspace tools
 Group: System/Configuration/Other
 License: LGPL-2.1+
 URL: https://linuxcontainers.org/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64 aarch64
 
@@ -25,9 +25,11 @@ Requires: iproute2 iptables iptables-ipv6
 Conflicts: %rname %rname-libs liblxc1 %rname-core %rname-net %rname-runtime
 Provides: %rname-pve = %EVR
 
-BuildRequires: docbook-utils
+BuildRequires(pre): meson >= 0.61
+BuildRequires: docbook2X
 BuildRequires: libcap-devel libseccomp-devel libselinux-devel libssl-devel
 BuildRequires: bash-completion
+BuildRequires: pkgconfig(systemd)
 
 %description
 Containers provides resource management through control groups and
@@ -52,25 +54,19 @@ for p in `cat debian/patches/series`; do
 done
 
 %build
-%autoreconf
-%configure \
-    --disable-werror \
-    --disable-rpath \
-    --with-distro=altlinux \
-    --with-init-script=systemd \
-    --disable-apparmor \
-    --enable-selinux \
-    --enable-bash \
-    --disable-examples \
-    --enable-seccomp \
-    --disable-static \
-    --with-cgroup-pattern='lxc/%%n' \
-    --localstatedir=%_var
+%meson \
+    -Ddistrosysconfdir='/etc/sysconfig' \
+    -Dinit-script=systemd \
+    -Dapparmor=false \
+    -Dselinux=true \
+    -Dseccomp=true \
+    -Dexamples=false \
+    -Dcgroup-pattern='lxc/%%n'
 
-%make_build
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 mkdir -p %buildroot%_datadir/lxc/config
 for i in config/*.conf.in; do
@@ -82,6 +78,7 @@ rm -fr %buildroot%_libexecdir/%rname/%rname-apparmor-load
 rm -f %buildroot%_datadir/lxc/lxc-patch.py
 rm -fr %buildroot%_includedir
 rm -f %buildroot%_libdir/liblxc.so
+rm -f %buildroot%_libdir/liblxc.a
 rm -fr %buildroot%_pkgconfigdir
 rm -fr %buildroot%_mandir/{ja,ko}
 
@@ -105,6 +102,9 @@ usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 %_man7dir/*.7*
 
 %changelog
+* Wed Mar 22 2023 Alexey Shabalin <shaba@altlinux.org> 5.0.2-alt1
+- 5.0.2-2
+
 * Mon Apr 11 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.12-alt1
 - 4.0.12
 

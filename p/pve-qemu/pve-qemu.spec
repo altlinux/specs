@@ -1,15 +1,15 @@
 #global __find_debuginfo_files %nil
+%global optflags_lto %nil
 %define _unpackaged_files_terminate_build 1
 %define rname qemu
 %define _group vmusers
-%define rulenum 90
 %define _libexecdir /usr/libexec
 %define _localstatedir /var
 %global firmwaredirs "%_datadir/qemu:%_datadir/seabios:%_datadir/seavgabios:%_datadir/ipxe:%_datadir/ipxe.efi"
 
 Name: pve-%rname
-Version: 7.1.0
-Release: alt4
+Version: 7.2.0
+Release: alt1
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -21,14 +21,10 @@ Source99: debian.tar
 Source100: keycodemapdb.tar
 Source101: berkeley-testfloat-3.tar
 Source102: berkeley-softfloat-3.tar
-Source2: qemu-kvm.control.in
-Source4: qemu-kvm.rules
 # qemu-kvm back compat wrapper
 Source5: qemu-kvm.sh
 # /etc/qemu/bridge.conf
 Source12: bridge.conf
-
-Patch100: cpu-add-Kunpeng-920-cpu-support.patch
 
 %set_verify_elf_method fhs=relaxed
 %add_verify_elf_skiplist %_datadir/%rname/*
@@ -46,6 +42,7 @@ BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libisc
 BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpci-devel libpixman-devel libpng-devel ceph-devel
 BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libusbredir-devel libxfs-devel libepoxy-devel libgbm-devel
 BuildRequires: makeinfo perl-Pod-Usage pkgconfig(glusterfs-api) pkgconfig(virglrenderer) liburing-devel libuuid-devel
+BuildRequires: libslirp-devel >= 4.7.0
 BuildRequires: libsystemd-devel libtasn1-devel libpmem-devel libzstd-devel zlib-devel spice-protocol
 BuildRequires: ipxe-roms-qemu seavgabios seabios edk2-ovmf edk2-aarch64 qboot
 #BuildRequires: librdmacm-devel libibverbs-devel libibumad-devel
@@ -117,10 +114,6 @@ for p in `cat debian/patches/series`; do
     patch -p1 < debian/patches/$p
 done
 
-%patch100 -p1
-
-cp -f %SOURCE2 qemu-kvm.control.in
-
 %build
 export CFLAGS="%optflags"
 # non-GNU configure
@@ -136,11 +129,7 @@ export CFLAGS="%optflags"
         --extra-cflags="%optflags" \
         --with-pkgversion=%name-%version-%release \
         --firmwarepath="%firmwaredirs" \
-%if "%__gcc_version_major" >= "11"
-        --enable-lto \
-%else
         --disable-lto \
-%endif
         --disable-werror \
         --disable-debug-tcg \
         --audio-drv-list="alsa" \
@@ -166,6 +155,7 @@ export CFLAGS="%optflags"
         --enable-opengl \
         --enable-rbd \
         --enable-seccomp \
+	--enable-slirp \
         --enable-spice \
         --enable-usb-redir \
         --enable-virglrenderer \
@@ -174,8 +164,6 @@ export CFLAGS="%optflags"
         --enable-zstd
 
 %make_build V=1
-
-sed -i 's/@GROUP@/%_group/g' qemu-kvm.control.in
 
 %install
 %makeinstall_std
@@ -192,12 +180,8 @@ ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/qemu
 ln -sf qemu.1.xz %buildroot%_man1dir/qemu-kvm.1.xz
 
 rm -f %buildroot%_bindir/check-*
-rm -f %buildroot%_sysconfdir/udev/rules.d/*
 rm -f %buildroot%_desktopdir/%rname.desktop
 rm -rf %buildroot%_iconsdir
-
-install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/udev/rules.d/%rulenum-%rname-kvm.rules
-install -D -m 0755 %rname-kvm.control.in %buildroot%_controldir/kvm
 
 # TODO:
 # Install qemu-pr-helper service
@@ -265,15 +249,6 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 
 %pre common
 %_sbindir/groupadd -r -f %_group
-if [ -f %_controldir/qemu-kvm ];then
-%pre_control qemu-kvm
-mv -f /var/run/control/qemu-kvm /var/run/control/kvm
-else
-%pre_control kvm
-fi
-
-%post common
-%post_control -s vmusers kvm
 
 %files
 
@@ -284,8 +259,6 @@ fi
 %_datadir/%rname
 %_datadir/pve-edk2-firmware
 %dir %_sysconfdir/%name
-%_sysconfdir/udev/rules.d/%rulenum-%rname-kvm.rules
-%_controldir/*
 %if_enabled vnc_sasl
 %config(noreplace) %_sysconfdir/sasl2/%rname.conf
 %endif
@@ -328,6 +301,12 @@ fi
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Fri Mar 17 2023 Alexey Shabalin <shaba@altlinux.org> 1:7.2.0-alt1
+- 7.2.0-8 (Fixes: CVE-2022-4172)
+- delete cpu-add-Kunpeng-920-cpu-support.patch
+- lto disable
+- drop control and udev rules for set access mode to /dev/kvm
+
 * Thu Dec 01 2022 Alexey Shabalin <shaba@altlinux.org> 1:7.1.0-alt4
 - skip requires on files in /usr/share/OVMF and /usr/share/AAVMF
 
@@ -341,7 +320,7 @@ fi
 * Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 1:7.1.0-alt1
 - 7.1.0-3 (Fixes: CVE-2020-14394, CVE-2022-0216, CVE-2021-3507
    CVE-2021-4206, CVE-2021-4207, CVE-2021-3611, CVE-2022-26353
-   CVE-2022-26354, CVE-2021-3929)
+   CVE-2022-26354, CVE-2021-3929, CVE-2022-35414)
 
 * Wed Jun 22 2022 Alexey Shabalin <shaba@altlinux.org> 1:6.2.0-alt2
 - 6.2.0-11

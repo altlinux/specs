@@ -3,8 +3,8 @@
 
 Name: pve-%sname
 Summary: HTML5 VNC client
-Version: 1.3.3
-Release: alt2
+Version: 1.4.0
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -44,6 +44,9 @@ install -m0644 %sname/vnc.html %buildroot%_datadir/%pname/index.html.tpl
 %_datadir/%pname
 
 %changelog
+* Fri Mar 10 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.4.0-alt1
+- 1.4.0-1
+
 * Sat Nov 26 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.3.3-alt2
 - add Russian locale
 

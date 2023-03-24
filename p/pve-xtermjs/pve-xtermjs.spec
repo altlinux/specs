@@ -1,40 +1,39 @@
+%global _unpackaged_files_terminate_build 1
+
 Name: pve-xtermjs
 Summary: HTML/JS Shell client
-Version: 4.12.0
+Version: 4.16.0
 Release: alt1
-License: GPL
+License: AGPL-3.0+
 Group: Networking/WWW
 Url: https://git.proxmox.com/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source0: %name.tar.xz
-Source1: proxmox-0.10.0.tar.xz
-Source2: %name-cargo.tar
-
-Patch0: %name-cargo.patch
+Vcs: git://git.proxmox.com/git/pve-xtermjs.git
+Source: %name-%version.tar
 
 ExclusiveArch: x86_64 aarch64
-BuildRequires: /proc clang-devel rust-cargo pkgconfig(openssl) libuuid-devel
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust pkgconfig(openssl) libuuid-devel
+BuildRequires: /proc
 
 %description
 This is an xterm.js client for PVE Host, Container and Qemu Serial Terminal
 
 %prep
-%setup -q -n %name -a1 -a2
-%patch0 -p1
+%setup
 
 %build
-rm -fr .cargo
-export CARGO_HOME=%_builddir/%name/cargo
-cargo build --release --offline
+#export BUILD_MODE=release
+#%%make_build
+%rust_build
 
-sed -i 's|Proxmox|PVE|' src/www/index.html.tpl.in
+#sed -i 's|Proxmox|PVE|' src/www/index.html.tpl.in
 sed -e "s/@VERSION@/%version/" src/www/index.html.tpl.in > src/www/index.html.tpl
 sed -e "s/@VERSION@/%version/" src/www/index.html.hbs.in > src/www/index.html.hbs
 rm src/www/index.html.tpl.in src/www/index.html.hbs.in
 
 %install
-install -pD -m755 target/release/termproxy %buildroot%_bindir/termproxy
+%rust_install termproxy
 mkdir -p %buildroot%_datadir/%name
 cp src/www/* %buildroot%_datadir/%name/
 
@@ -43,6 +42,9 @@ cp src/www/* %buildroot%_datadir/%name/
 %_datadir/%name
 
 %changelog
+* Mon Mar 20 2023 Alexey Shabalin <shaba@altlinux.org> 4.16.0-alt1
+- 4.16.0-1
+
 * Fri Nov 05 2021 Valery Inozemtsev <shrek@altlinux.ru> 4.12.0-alt1
 - 4.12.0-1
 

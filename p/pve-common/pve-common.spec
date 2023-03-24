@@ -2,8 +2,8 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 7.2.8
-Release: alt2
+Version: 7.3.3
+Release: alt1
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -38,6 +38,7 @@ BuildRequires: perl(HTTP/Daemon.pm)
 BuildRequires: perl(CPAN/Meta/YAML.pm)
 BuildRequires: perl(Net/LDAP.pm)
 BuildRequires: perl(PVE/RS/CalendarEvent.pm)
+BuildRequires: perl(AnyEvent.pm)
 # alt regressive tests
 BuildRequires: perl(TAP/Harness.pm)
 BuildRequires: perl(Test/MockModule.pm)
@@ -70,6 +71,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Mon Mar 20 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.3-alt1
+- 7.3-3
+
 * Fri Feb 10 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.2.8-alt2
 - fix HOST for vlan device (ALT #44032)
 

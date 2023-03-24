@@ -2,12 +2,12 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/ExtMetric.pm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 
-%define ver_major 7.2
-%define ver_minor 15
+%define ver_major 7.3
+%define ver_minor 6
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt4
+Release: alt1
 License: AGPL-3.0+ AND GPLv3 AND MIT
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -34,6 +34,7 @@ BuildRequires: pve-doc-generator >= 7.2.3 xmlto perl-Pod-Parser
 BuildRequires: pve-storage >= 7.2.12 pve-cluster >= 7.2.3
 BuildRequires: libpve-cluster-perl >= 6.1.6 libpve-cluster-api-perl >= 7.0.5 pve-container pve-qemu-server >= 7.2.8
 BuildRequires: pve-acme pve-http-server >= 2.0.12 pve-access-control >= 7.0.2
+BuildRequires: proxmox-widget-toolkit >= 3.4.9
 BuildRequires: perl(AptPkg/Cache.pm) perl(File/ReadBackwards.pm) perl(Template.pm) perl(Net/DNS/Resolver.pm)
 BuildRequires: unzip gnupg
 
@@ -124,7 +125,13 @@ rm -f  %buildroot%_man1dir/pveupgrade.1*
 %_man8dir/*
 
 %changelog
+* Fri Mar 10 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.6-alt1
+- 7.3-6
+
 * Mon Feb 20 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.15-alt4
+- change delimiter between major and minor parts of the VERSION
+
+* Mon Feb 20 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.11-alt5
 - change delimiter between major and minor parts of the VERSION
 
 * Sat Feb 04 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.15-alt3

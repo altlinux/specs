@@ -2,8 +2,8 @@
 
 Name: pve-firewall
 Summary: Proxmox VE Firewall
-Version: 4.2.6
-Release: alt3
+Version: 4.3.1
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -19,6 +19,7 @@ Requires: ebtables ipset iptables iptables-ipv6 iproute2
 
 BuildRequires: pve-access-control libpve-cluster-perl pve-common pve-cluster pve-doc-generator
 BuildRequires: pkgconfig(libnetfilter_log) pkgconfig(libnetfilter_conntrack) pkgconfig(glib-2.0)
+BuildRequires: perl(IO/Zlib.pm)
 
 %description
 %summary.
@@ -64,11 +65,15 @@ __EOF__
 %_sbindir/*
 %perl_vendor_privlib/PVE/*.pm
 %perl_vendor_privlib/PVE/API2/Firewall
+%perl_vendor_privlib/PVE/Firewall
 %perl_vendor_privlib/PVE/Service/*.pm
 %_localstatedir/%name
 %_man8dir/*
 
 %changelog
+* Mon Mar 20 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.3.1-alt1
+- 4.3-1
+
 * Tue Feb 28 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.2.6-alt3
 - ipset: support old 5.10 kernel too, no bucketsize
 
