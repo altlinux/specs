@@ -17,7 +17,7 @@
 %def_disable static
 %define contrib_slapo_name addpartial allop allowed authzid autogroup cloak datamorph denyop lastbind noopsrch passwd/sha2 passwd/pbkdf2 trace usn variant vc
 Name: openldap
-Version: 2.6.3
+Version: 2.6.4
 Release: alt1
 
 Obsoletes: openldap2.4 < %version-%release
@@ -721,6 +721,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.4-alt1
+- 2.6.4
+
 * Mon Sep 05 2022 Alexey Shabalin <shaba@altlinux.org> 2.6.3-alt1
 - 2.6.3
 - rename package libldap to libldap%%{so_ver}
