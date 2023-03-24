@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2.2
+Version: 2.3
 Release: alt1
 
 Summary: Full featured consistent hashing python library compatible with ketama
@@ -70,5 +70,8 @@ ring.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Mar 24 2023 Grigory Ustinov <grenka@altlinux.org> 2.3-alt1
+- Automatically updated to 2.3.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 2.2-alt1
 - Initial build for Sisyphus.
