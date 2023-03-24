@@ -1,62 +1,68 @@
 %define oname pg8000
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.11.0
-Release: alt2
+Version: 1.29.4
+Release: alt1
 
 Summary: PostgreSQL interface library
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/pg8000/
-BuildArch: noarch
+Vcs: https://github.com/tlocke/pg8000
 
-# https://github.com/mfenniak/pg8000.git
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python3-module-pytz
-BuildRequires: python3-module-six
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-scramp
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-dateutil
+%endif
 
 %py3_provides %oname
 
-
 %description
-pg8000 is a Pure-Python interface to the PostgreSQL database engine. It
-is one of many PostgreSQL interfaces for the Python programming
-language. pg8000 is somewhat distinctive in that it is written entirely
-in Python and does not rely on any external libraries (such as a
-compiled python module, or PostgreSQL's libpq library). pg8000 supports
-the standard Python DB-API version 2.0.
-
-pg8000's name comes from the belief that it is probably about the 8000th
-PostgreSQL interface for Python.
+pg8000 is a pure-Python PostgreSQL driver that complies with DB-API 2.0.
+It is tested on Python versions 3.7+, on CPython and PyPy, and PostgreSQL
+versions 10+. pg8000's name comes from the belief that it is probably about
+the 8000th PostgreSQL interface for Python. pg8000 is distributed under the
+BSD 3-clause license.
 
 %prep
 %setup
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
-# fix version info
-sed -i \
-	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: %version\)\"/" \
-	%oname/_version.py
+# Fix version
+sed -i '/dynamic = /d' pyproject.toml
+sed -i '9a version = "%version"' pyproject.toml
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
+# Most of tests need access to database
 %check
-%__python3 setup.py test -v
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -x test -k 'test_converters'
 
 %files
-%doc README*
-%python3_sitelibdir/*
+%doc README.rst LICENSE
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 
 %changelog
+* Fri Mar 24 2023 Anton Vyatkin <toni@altlinux.org> 1.29.4-alt1
+- New version 1.29.4.
+
 * Fri Nov 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.11.0-alt2
 - python2 disabled
 
