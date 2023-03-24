@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: Fiona reads and writes spatial data files
@@ -117,6 +117,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html docs/*.txt
 
 %changelog
+* Thu Mar 23 2023 Grigory Ustinov <grenka@altlinux.org> 1.9.2-alt1
+- Automatically updated to 1.9.2.
+
 * Wed Feb 15 2023 Grigory Ustinov <grenka@altlinux.org> 1.9.1-alt1
 - Automatically updated to 1.9.1.
 
