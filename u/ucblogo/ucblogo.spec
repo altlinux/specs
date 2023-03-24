@@ -1,6 +1,6 @@
 Name: ucblogo
-Version: 6.2.2
-Release: alt2
+Version: 6.2.3
+Release: alt1
 Summary: An interpreter for the Logo programming language
 Group: Development/Functional
 License: GPLv2+
@@ -93,6 +93,7 @@ rm %buildroot%_datadir/emacs/site-lisp/logo/*.el
 %_desktopdir/*
 %_iconsdir/*/*/*/*
 %_pixmapsdir/*
+%exclude %_defaultdocdir/%name
 
 %files emacs
 %doc emacs/README
@@ -100,6 +101,9 @@ rm %buildroot%_datadir/emacs/site-lisp/logo/*.el
 %_datadir/emacs/site-lisp/site-start.d
 
 %changelog
+* Fri Mar 24 2023 Fr. Br. George <george@altlinux.org> 6.2.3-alt1
+- Autobuild version bump to 6.2.3
+
 * Wed Sep 21 2022 Anton Midyukov <antohami@altlinux.org> 6.2.2-alt2
 - NMU: rebuild with wxGTK3.2
 - NMU: fix desktop file (Closes: 43837)
