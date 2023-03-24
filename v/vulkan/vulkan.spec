@@ -1,5 +1,5 @@
 Name: vulkan
-Version: 1.3.239
+Version: 1.3.243
 Release: alt1
 Summary: Khronos group Vulkan API SDK
 
@@ -22,9 +22,9 @@ BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 # strict requires due internal dependency
-BuildRequires: glslang-devel = 12.0.0
-BuildRequires: libspirv-tools-devel >= 2023.1
-BuildRequires: spirv-headers >= 1.5.5-alt6
+BuildRequires: glslang-devel = 12.1.0
+BuildRequires: libspirv-tools-devel >= 2023.2
+BuildRequires: spirv-headers >= 1.5.5-alt7
 # -layers need it
 BuildRequires: librobin-hood-hashing-devel
 # - tolls need it
@@ -50,8 +50,8 @@ Vulkan.
 %package -n lib%{name}1
 Summary: Vulkan loader libraries
 Group: System/Libraries
-Requires: vulkan-filesystem = %version-%release
-Provides: %name = %version-%release
+Requires: vulkan-filesystem = %EVR
+Provides: %name = %EVR
 Obsoletes: %name
 
 %description -n lib%{name}1
@@ -73,8 +73,8 @@ Vulkan API validation layer for developers.
 %package -n lib%name-devel
 Summary: Vulkan development package
 Group: Development/C++
-Requires: lib%{name}1 = %version-%release
-Provides: %name-devel = %version-%release
+Requires: lib%{name}1 = %EVR, %{name}-registry = %EVR
+Provides: %name-devel = %EVR
 Obsoletes: %name-devel
 
 %description -n lib%name-devel
@@ -91,12 +91,21 @@ Filesystem for Vulkan API.
 %package tools
 Summary: Vulkan tools and utilities
 Group: System/X11
-Requires: lib%{name}1 = %version-%release
+Requires: lib%{name}1 = %EVR
 Obsoletes: %name-demos
 
 %description tools
 Tools and utilities that can assist development by enabling developers to
 verify their applications correct use of the Vulkan API.
+
+%package registry
+Summary: Vulkan API registry
+Group: Development/C++
+BuildArch: noarch
+Requires: %name-filesystem = %EVR
+
+%description registry
+Vulkan SDK API registry files.
 
 %prep
 %setup -n %name-loader -b0 -b1 -b2 -b3
@@ -152,7 +161,7 @@ mkdir -p %buildroot%_datadir/vulkan/{explicit,implicit}_layer.d/ ||:
 mkdir -p %buildroot%_datadir/vulkan/icd.d ||:
 
 # remove RPATH
-chrpath -d %buildroot%_bindir/vulkaninfo
+chrpath -d %buildroot%_bindir/{vulkaninfo,vkcubepp}
 
 # remove static libs to make LTO checks happy
 rm -rf %buildroot%_libdir/libVkLayer*.a ||:
@@ -165,16 +174,12 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %_libdir/libvulkan.so.1*
 
 %files -n lib%name-devel
-%dir %_includedir/vulkan
-%dir %_includedir/vk_video
 %_includedir/vulkan
 %_includedir/vk_video
 %_libdir/libvulkan.so
 %_pkgconfigdir/vulkan.pc
-%_datadir/vulkan/registry
+%dir %_datadir/cmake/VulkanHeaders
 %_datadir/cmake/VulkanHeaders/*.cmake
-# requires vulkan-docs tools
-%exclude %_datadir/vulkan/registry/genvk.py
 
 %files validation-layers
 %_datadir/vulkan/explicit_layer.d/*.json
@@ -188,7 +193,23 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %dir %_datadir/vulkan/explicit_layer.d
 %dir %_datadir/vulkan/implicit_layer.d
 
+%files registry
+%_datadir/vulkan/registry
+# requires vulkan-docs tools
+%exclude %_datadir/vulkan/registry/genvk.py
+
 %changelog
+* Thu Mar 23 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.243-alt1
+- Bump BR.
+- Updated to sdk-1.3.243:
+  + vulkan-layers: Updated to 81cb9ef1f.
+  + vulkan-tools: Updated to f196c8d3c.
+  + vulkan-loader: Updated to 22407d780.
+  + vulkan-headers: Updated to 65ad768d8.
+- .spec:
+  + cleanup obsoleted macros.
+  + make separate pkg for registry.
+
 * Fri Mar 03 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.239-alt1
 - Bump BR.
 - Updated to sdk-1.3.239:

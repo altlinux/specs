@@ -1,11 +1,12 @@
 %define sover 0
 %define git %nil
-
+%define build_type RelWithDebInfo
+%define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type
 %define optflags_lto %nil
 
 Name: spirv-tools
-Version: 2023.1
-Release: alt0.1
+Version: 2023.2
+Release: alt0.1.rc1
 Epoch: 1
 
 Summary: API and commands for processing SPIR-V modules
@@ -23,7 +24,7 @@ BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
 # due sdk requires
-BuildRequires: spirv-headers >= 2:1.5.5-alt6.gd13b522
+BuildRequires: spirv-headers >= 2:1.5.5-alt7
 
 %description
 The package includes an assembler, binary module parser,
@@ -58,7 +59,7 @@ integration into other code bases directly.
 # will check protobuf support later
 # for fuzzler
 %build
-%cmake \
+%_cmake \
   -GNinja \
   -DSPIRV_BUILD_COMPRESSION=OFF \
   -DSPIRV_BUILD_FUZZER=OFF \
@@ -95,6 +96,10 @@ ninja \
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Thu Mar 23 2023 L.A. Kostis <lakostis@altlinux.ru> 1:2023.2-alt0.1.rc1
+- Updated to v2023.2.rc1 (for sdk-1.3.243).
+- Set cmake release target again.
+
 * Fri Mar 03 2023 L.A. Kostis <lakostis@altlinux.ru> 1:2023.1-alt0.1
 - Updated to v2023.1 (for sdk-1.3.239).
 

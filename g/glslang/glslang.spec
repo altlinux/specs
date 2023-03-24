@@ -1,9 +1,10 @@
 %define soname 12
-
+%define build_type RelWithDebInfo
+%define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type
 %define optflags_lto %nil
 
 Name: glslang
-Version: 12.0.0
+Version: 12.1.0
 Release: alt1
 Epoch: 1
 
@@ -15,12 +16,11 @@ Url: https://www.khronos.org/opengles/sdk/tools/Reference-Compiler/
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
 Source: https://github.com/KhronosGroup/%name/archive/%version/%name-%version.tar
-Patch0: %{name}-alt-soname.patch
-Patch1: %{name}-alt-shared-opt.patch
+Patch0: %{name}-alt-shared-opt.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
-BuildRequires: python3-devel libspirv-tools-devel >= 2023.1
+BuildRequires: python3-devel libspirv-tools-devel >= 2023.2
 
 %description
 glslang is the official reference compiler front end for the OpenGL
@@ -52,11 +52,10 @@ Requires: %name = %EVR
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p2
+%autopatch -p2
 
 %build
-%cmake \
+%_cmake \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DCMAKE_INSTALL_DATADIR=%_libdir/cmake \
   -DBUILD_SHARED_LIBS:BOOL=TRUE
@@ -82,6 +81,10 @@ popd
 %_includedir/SPIRV
 
 %changelog
+* Thu Mar 23 2023 L.A. Kostis <lakostis@altlinux.ru> 1:12.1.0-alt1
+- 12.1.0.
+- Return cmake hacks.
+
 * Fri Mar 03 2023 L.A. Kostis <lakostis@altlinux.ru> 1:12.0.0-alt1
 - 12.0.0.
 - Bump soname.
