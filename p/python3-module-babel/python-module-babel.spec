@@ -4,12 +4,12 @@
 %define cldr_name cldr-%cldr_version
 
 %def_with doc
-%def_without check
+%def_with check
 
-Name:    python3-module-babel
-Version: 2.9.1
+Name: python3-module-babel
+Version: 2.12.1
 Release: alt1
-Epoch:   1
+Epoch: 1
 
 Summary: a collection of tools for internationalizing Python applications
 License: BSD
@@ -18,20 +18,23 @@ Group: Development/Python3
 Url: http://babel.pocoo.org/
 
 # Source-url: %__pypi_url %oname
-Source: %name-%version.tar
+Source: Babel-%version.tar.gz
+Source1: Babel-failed_tests
+# LC_ALL=ru_RU.UTF-8 python3 -m pytest tests |& sed -En '/^FAILED tests/s/.*::([^[ ]*).*/\1/p' | sort -u | tr '\n' ' ' > Babel-failed_tests
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-pytz >= 2015.7
-BuildRequires: %cldr_name-common >= %cldr_version
 
-#BuildRequires: python3-module-pytest-cov python3-module-freezegun
-#py3_requires pytz
+# Automatically added by buildreq on Fri Mar 24 2023
+# optimized out: libgpg-error python-sphinx-objects.inv python3 python3-base python3-dev python3-module-Pygments python3-module-cffi python3-module-charset-normalizer python3-module-pkg_resources python3-module-pytz python3-module-setuptools python3-module-sphinx sh4
+BuildRequires: cldr-37-common python3-module-pyproject-installer python3-module-wheel python3-module-sphinx
+
+%if_with check
+BuildRequires: python3-module-pytest python3-module-freezegun python3-module-pytz
+%endif
 
 %description
 Babel is an integrated collection of utilities that assist in
@@ -45,7 +48,7 @@ localization (L10N) can be separated into two different aspects:
     and date formatting, etc.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %if_with doc
 %prepare_sphinx3 .
@@ -53,11 +56,11 @@ ln -s ../objects.inv docs/
 %endif
 
 %build
-%__python3 scripts/import_cldr.py /usr/share/unicode/%cldr_name/common
-%python3_build
+python3 scripts/import_cldr.py /usr/share/unicode/%cldr_name/common
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %if_with doc
@@ -66,11 +69,11 @@ ln -s ../objects.inv docs/
 
 %if_with check
 %check
-%python3_test
+LC_ALL=ru_RU.UTF-8 python3 -m pytest tests -k "not `sed -E 's/ (.)/ and not \1/g' %SOURCE1`"
 %endif
 
 %files
-%doc AUTHORS CHANGES README.rst
+%doc AUTHORS* CHANGES* README*
 %if_with doc
 %doc docs/_build/html
 %endif
@@ -78,6 +81,10 @@ ln -s ../objects.inv docs/
 %python3_sitelibdir/*
 
 %changelog
+* Fri Mar 24 2023 Fr. Br. George <george@altlinux.org> 1:2.12.1-alt1
+- Autobuild version bump to 2.12.1
+- Enable most of tests
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1:2.9.1-alt1
 - new version 2.9.1 (with rpmrb script)
 
