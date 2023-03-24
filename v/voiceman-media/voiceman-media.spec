@@ -1,7 +1,7 @@
 
 Name: voiceman-media
 Version: 20111127
-Release: alt1
+Release: alt1.qa1
 BuildArch: noarch
 License: GPL
 Group: Sound
@@ -18,16 +18,19 @@ speech notifications of any newly inserted removable media.
 %prep
 %setup -q
 %install
-%__install -pD -m 644 voiceman-media.rules %buildroot%_sysconfdir/udev/rules.d/50-voiceman-media.rules
+%__install -pD -m 644 voiceman-media.rules %buildroot%{_udevrulesdir}/50-voiceman-media.rules
 %__install -pD -m 755 %name %buildroot%_bindir/%name
 %__install -pD -m 644 media.ogg %buildroot%_datadir/sounds/voiceman/media.ogg
 
 %files
-%_sysconfdir/udev/rules.d/*
+%{_udevrulesdir}/*
 %_bindir/*
 %_datadir/sounds/voiceman/*
 
 %changelog
+* Fri Mar 24 2023 Igor Vlasenko <viy@altlinux.org> 20111127-alt1.qa1
+- fixed udevrulesdir
+
 * Sun Nov 27 2011 Michael Pozhidaev <msp@altlinux.ru> 20111127-alt1
 - Notifications are disabled without logged in users
 
