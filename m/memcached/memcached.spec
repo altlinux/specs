@@ -5,7 +5,7 @@
 %def_enable tls
 
 Name: memcached
-Version: 1.6.18
+Version: 1.6.19
 Release: alt1
 
 Summary: memcached - memory caching daemon
@@ -52,19 +52,19 @@ memcached instance.
 %prep
 %setup
 %patch -p1
-%ifarch %e2k
-sed -i "s/-Werror/-Wno-error/" configure.ac
-%endif
 sed -i 's,`git describe`,"%version-%release",g' version.pl
 
 %build
 perl version.pl
 %autoreconf
 %configure \
-	%{subst_enable seccomp} \
-	%{subst_enable extstore} \
-	%{subst_enable sasl} \
-	%{subst_enable tls}
+%ifnarch %e2k
+        --enable-werror \
+%endif
+        %{subst_enable seccomp} \
+        %{subst_enable extstore} \
+        %{subst_enable sasl} \
+        %{subst_enable tls}
 
 %make_build
 
@@ -83,9 +83,8 @@ install -pD -m644 scripts/memcached-tool.1 %buildroot%_man1dir/memcached-tool.1
 %make test ||:
 
 %pre
-%_sbindir/groupadd -r -f %pkg_group
-%_sbindir/useradd -r -g %pkg_group -d /dev/null -s /dev/null -n %pkg_user \
-	2> /dev/null > /dev/null ||:
+groupadd -r -f %pkg_group
+useradd -r -g %pkg_group -d /dev/null -s /dev/null -n %pkg_user >/dev/null 2>&1 ||:
 if [ $1 -eq 2 ] && [ ! -f /var/run/%name/%name.pid ] && [ -f /var/run/%name.pid ]; then
    mkdir /var/run/%name/
    mv /var/run/%name.pid /var/run/%name/%name.pid
@@ -113,6 +112,9 @@ fi
 %_man1dir/%name-tool.*
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 1.6.19-alt1
+- New version 1.6.19.
+
 * Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.6.18-alt1
 - new version 1.6.18
 
@@ -253,7 +255,7 @@ fi
 - Fixed lowering privileges and pidfile writing.
 - Rewritten startup script.
 - Replaced /etc/memcached.conf with /etc/sysconfig/memcached
-- Packaged %name-devel as noarch.
+- Packaged %%name-devel as noarch.
 
 * Tue Jun 14 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.5-alt4
 - fix VERSION UNKNOWN error
