@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.7
+Version: 1.3.8
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Thu Mar 23 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.8-alt1
+- Add support for "X11 Layout" and "VC Keymap".
+
 * Fri Apr 22 2022 Slava Aseev <ptrnine@altlinux.org> 1.3.7-alt1
 - sysconfig-proxy: Write KDE/kio proxy settings
 

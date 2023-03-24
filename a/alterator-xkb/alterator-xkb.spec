@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-xkb
-Version: 3.1
+Version: 3.2
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -40,6 +40,9 @@ alterator module for XKB administration
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Mar 23 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 3.2-alt1
+- Add support for "X11 Layout" and "VC Keymap".
+
 * Tue May 28 2019 Paul Wolneykien <manowar@altlinux.org> 3.1-alt1
 - Backend update: Filter only the "grp:" options.
 - New static XKB rules parser: whitelist XML path check.
