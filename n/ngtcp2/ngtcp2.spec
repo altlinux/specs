@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: ngtcp2
-Version: 0.13.0
+Version: 0.13.1
 Release: alt1
 Summary: An implementation of the RFC9000 QUIC protocol
 
@@ -64,5 +64,8 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_libdir/*.so
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 0.13.1-alt1
+- New version 0.13.1.
+
 * Tue Mar 21 2023 Alexey Shabalin <shaba@altlinux.org> 0.13.0-alt1
 - Initial build.
