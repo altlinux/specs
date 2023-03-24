@@ -2,7 +2,7 @@
 
 Name: pve-storage
 Summary: PVE storage management library
-Version: 7.3.2
+Version: 7.4.2
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -58,6 +58,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Fri Mar 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.2-alt1
+- 7.4-2
+
 * Fri Mar 10 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.2-alt1
 - 7.3-2
 

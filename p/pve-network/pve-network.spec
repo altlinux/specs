@@ -2,7 +2,7 @@
 
 Name: pve-network
 Summary: PVE SDN package
-Version: 0.7.1
+Version: 0.7.3
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -48,7 +48,6 @@ This package contains the experimental SDN library used by Proxmox VE.
 
 %prep
 %setup -q -n %name-%version
-# sed -i 's|Proxmox VE|PVE|' src/PVE/Tools.pm
 
 %install
 %make DESTDIR=%buildroot install
@@ -62,6 +61,12 @@ make test
 %perl_vendor_privlib/PVE
 
 %changelog
+* Fri Mar 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.7.3-alt1
+- 0.7.3
+
+* Fri Mar 10 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Thu Oct 06 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.7.1-alt1
 - Initial build for ALT
 

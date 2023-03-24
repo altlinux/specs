@@ -2,8 +2,8 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/ExtMetric.pm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 
-%define ver_major 7.3
-%define ver_minor 6
+%define ver_major 7.4
+%define ver_minor 3
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
@@ -125,6 +125,9 @@ rm -f  %buildroot%_man1dir/pveupgrade.1*
 %_man8dir/*
 
 %changelog
+* Fri Mar 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt1
+- 7.4-3
+
 * Fri Mar 10 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.6-alt1
 - 7.3-6
 
