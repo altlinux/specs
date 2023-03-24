@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.13.5
+Version: 1.13.6
 Release: alt1
 
 Summary: Installer common parts
@@ -104,6 +104,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Mar 24 2023 Oleg Solovyov <mcpain@altlinux.org> 1.13.6-alt1
+- install2-init: do dot kill mdmon among other processes
+
 * Tue Mar 21 2023 Sergey V Turchin <zerg@altlinux.org> 1.13.5-alt1
 - alterator-vnc: using xvt instead of xterm
 
