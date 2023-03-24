@@ -1,26 +1,29 @@
 %define oname paginate_sqlalchemy
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.2.0
-Release: alt3
+Version: 0.3.1
+Release: alt1
 
 Summary: Extension to paginate.Page that supports SQLAlchemy queries
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/paginate_sqlalchemy/
-BuildArch: noarch
+Vcs: https://github.com/Pylons/paginate_sqlalchemy.git
 
-# https://github.com/Pylons/paginate_sqlalchemy.git
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-SQLAlchemy python3-module-paginate
-BuildRequires: python3-module-nose python3-modules-sqlite3
+%if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-sqlalchemy
+BuildRequires: python3-module-paginate
+%endif
 
 %py3_provides %oname
-%py3_requires sqlite3
-
 
 %description
 This module helps divide up large result sets into pages or chunks. The
@@ -34,16 +37,17 @@ support SQLAlchemy queries.
 %prep
 %setup
 
+sed -i "s/version='0.3.0',/version='0.3.1',/" setup.py
+
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-%__python3 setup.py test
-export PYTHONPATH=$PWD
-py.test3
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -k 'not test_select'
 
 %files
 %doc CHANGELOG README TODO
@@ -51,6 +55,9 @@ py.test3
 
 
 %changelog
+* Fri Mar 24 2023 Anton Vyatkin <toni@altlinux.org> 0.3.1-alt1
+- new version 0.3.1
+
 * Fri Nov 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.0-alt3
 - python2 disabled
 

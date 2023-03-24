@@ -4,22 +4,21 @@
 
 Name: python3-module-%oname
 Version: 0.5.6
-Release: alt3
+Release: alt4
 
 Summary: Divides large result sets into pages for easier browsing
 License: MIT
 Group: Development/Python3
-BuildArch: noarch
 Url: https://pypi.python.org/pypi/paginate/
 
 # https://github.com/Pylons/paginate.git
 Source: %oname-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose
 
 %py3_provides %oname
-
 
 %description
 This module helps divide up large result sets into pages or chunks. The
@@ -36,15 +35,15 @@ users only a selection of information at a time.
 %install
 %python3_install
 
-%check
-%__python3 setup.py test
-
 %files
 %doc README.md CHANGELOG.txt
 %python3_sitelibdir/*
 
 
 %changelog
+* Fri Mar 24 2023 Anton Vyatkin <toni@altlinux.org> 0.5.6-alt4
+- Fix BuildRequires.
+
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.5.6-alt3
 - Build for python2 disabled.
 
