@@ -4,7 +4,7 @@
 %def_enable clang
 
 Name: deepin-movie
-Version: 6.0.1
+Version: 6.0.5
 Release: alt1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and CC0-1.0 and CC-BY-4.0
@@ -130,6 +130,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Fri Mar 24 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt1
+- New version 6.0.5.
+
 * Tue Jan 31 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt1
 - New version (6.0.1).
 - Updated libmpv patch.
