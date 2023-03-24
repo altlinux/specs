@@ -1,7 +1,7 @@
 %define oname pyperf
 
 Name: python3-module-%oname
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Python module to run and analyze benchmarks
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 The Python pyperf module is a toolkit to write, run and analyze benchmarks.
@@ -25,10 +27,10 @@ The Python pyperf module is a toolkit to write, run and analyze benchmarks.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 rm -rfv %buildroot%python3_sitelibdir/pyperf/_win_memory.py
 rm -rfv %buildroot%python3_sitelibdir/pyperf/tests/
@@ -37,9 +39,12 @@ rm -rfv %buildroot%python3_sitelibdir/pyperf/tests/
 %_bindir/pyperf
 %doc README.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Mar 24 2023 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1
+- Automatically updated to 2.6.0.
+
 * Sat Nov 05 2022 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
 - Automatically updated to 2.5.0.
 
