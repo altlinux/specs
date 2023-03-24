@@ -10,7 +10,7 @@
 
 Name:     vzmigrate
 Version:  7.0.149
-Release:  alt2
+Release:  alt3
 
 Summary:  Virtuozzo migration tool
 License:  GPLv2+
@@ -78,6 +78,9 @@ make install \
 %doc *.md
 
 %changelog
+* Fri Mar 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.0.149-alt3
+- FTBFS: add ctime prototype for GCC 12
+
 * Wed Nov 09 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.149-alt2
 - use rsync-ovz with redirected descriptors
 - several logging and build fixes
