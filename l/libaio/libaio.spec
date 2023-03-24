@@ -1,5 +1,5 @@
 Name: libaio
-Version: 0.3.112
+Version: 0.3.113
 Release: alt1
 
 Summary: Linux-native asynchronous I/O access library
@@ -7,8 +7,9 @@ License: LGPLv2+
 Group: System/Libraries
 Url: https://pagure.io/libaio
 Source: %name-%version.tar
-
 Patch: %name-%version.patch
+
+BuildRequires: /proc
 
 %description
 The Linux-native asynchronous I/O facility ("async I/O", or "aio") has a richer
@@ -46,6 +47,9 @@ the Linux-native asynchronous I/O facility ("async I/O", or "aio").
 %makeinstall_std \
 	prefix=%_prefix libdir=/%_lib usrlibdir=%_libdir
 
+%check
+%make partcheck
+
 %files
 /%_lib/*.so.*
 
@@ -57,6 +61,9 @@ the Linux-native asynchronous I/O facility ("async I/O", or "aio").
 %_libdir/*.a
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 0.3.113-alt1
+- new version 0.3.113
+
 * Thu Jun 24 2021 Alexey Shabalin <shaba@altlinux.org> 0.3.112-alt1
 - new version 0.3.112
 
