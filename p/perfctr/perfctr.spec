@@ -1,7 +1,7 @@
 Name: perfctr
 Summary: Linux performance monitoring counters software
 Version: 2.6.42
-Release: alt1
+Release: alt1.qa1
 License: LGPL
 Group: Development/Tools
 URL: http://user.it.uu.se/~mikpe/linux/perfctr/
@@ -9,6 +9,7 @@ Source: %name-%version.tar.gz
 Source1: init.info
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Requires: lib%name = %version-%release
+ExcludeArch: aarch64 ppc64le
 
 %description
 This package adds support for using the Performance-Monitoring
@@ -69,6 +70,10 @@ mv %buildroot%_includedir/asm/%name.h \
 	%buildroot%_includedir/asm_%name.h
 sed -i 's|asm/%name.h|asm_%name.h|' \
 	%buildroot%_includedir/%name.h
+# _udevrulesdir fix
+mkdir -p %buildroot%{_udevrulesdir}
+mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%{_udevrulesdir}/
+
 
 %post
 %post_service %name
@@ -79,7 +84,7 @@ sed -i 's|asm/%name.h|asm_%name.h|' \
 %files
 %_bindir/perfex
 %config %_initdir/perfctr
-%config %_sysconfdir/udev/rules.d/*perfctr.rules
+%{_udevrulesdir}/*perfctr.rules
 
 %doc README CHANGES TODO OTHER
 
@@ -94,6 +99,9 @@ sed -i 's|asm/%name.h|asm_%name.h|' \
 %_libdir/*.a
 
 %changelog
+* Fri Mar 24 2023 Igor Vlasenko <viy@altlinux.org> 2.6.42-alt1.qa1
+- fixed udevrulesdir
+
 * Sat Apr 09 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.42-alt1
 - Version 2.6.42
 
