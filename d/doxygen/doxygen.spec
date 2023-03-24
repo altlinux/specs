@@ -1,5 +1,5 @@
 Name: doxygen
-Version: 1.9.1
+Version: 1.9.6
 Release: alt1
 Epoch: 1
 
@@ -13,10 +13,7 @@ Source: %name-%version.src.tar.gz
 Source500: %name.unused
 
 ## FC patches
-Patch1: FC-doxgen-1.9.1-crash-when-parsing-config-file.patch
-Patch2: FC-doxgen-1.9.1-crash-when-parsing-config-file-part2.patch
-Patch3: FC-1.9.1-Coverity_issues.patch
-Patch4: FC-1.9.1-crash_in_docparser.patch
+Patch1: FC-obsolete-egrep.patch
 
 ## Ubuntu patches
 Patch101: Ubuntu-manpages.patch
@@ -26,15 +23,21 @@ Patch104: Ubuntu-avoid-compass.patch
 Patch105: Ubuntu-fix-pdflatex-invocation.patch
 Patch106: Ubuntu-faketime_pdflatex.patch
 Patch107: Ubuntu-libatomic.patch
-Patch108: Ubuntu-reproducible_changelog.patch
-Patch109: Ubuntu-reproducible_manpages.patch
-Patch110: Ubuntu-sass_fix.patch
+Patch108: Ubuntu-reproducible_manpages.patch
+Patch109: Ubuntu-sass_fix.patch
+Patch110: Ubuntu-gcc12.patch
+Patch111: Ubuntu-0001-Fix-typo-in-generated-Makefile-for-LaTex.patch
+Patch112: Ubuntu-filesystem_glibc.patch
 
 ## ALT patches
 
-# Automatically added by buildreq on Wed May 10 2017
-# optimized out: cmake-modules fontconfig fonts-type1-urw ghostscript-classic libgpg-error libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libqt4-xml libstdc++-devel libwayland-client libwayland-server perl python-base python-modules tex-common texlive-base texlive-base-bin texlive-common texlive-extra-utils texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-extra texlive-latex-recommended texlive-xetex texmf-latex-xcolor xml-utils
-BuildRequires: cmake flex gcc-c++ ghostscript-common graphviz qt5-base-devel python-modules-xml texlive-collection-publishers tex(tabu.sty)
+# Automatically added by buildreq on Wed Mar 22 2023
+# optimized out: cmake-modules fontconfig fonts-type1-urw gcc-c++ ghostscript-classic git-core glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libgpg-error libqt5-core libqt5-gui libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel perl perl-parent python-modules python2-base python3 python3-base qt5-base-devel sh4 tex-common texlive texlive-collection-basic texlive-dist
+BuildRequires: cmake flex ghostscript-common graphviz qt5-svg-devel qt5-virtualkeyboard-devel qt5-wayland-devel texlive-collection-basic texlive-dist
+
+%ifnarch ppc64le
+BuildRequires: qt5-webengine-devel qt5-webglplugin-devel
+%endif
 
 %description
 Doxygen is a documentation system for C, C++ and IDL.  It can generate
@@ -71,25 +74,24 @@ pdf formats.
 %setup
 
 ## Remove junk
-rm src/._xmlgen.cpp
+find * -name "*._*" -delete
 
 ## FC apply patches
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 ## Ubuntu apply patches
 %patch101 -p1
 %patch102 -p1
-%patch103 -p1
+##patch103 -p1
 %patch104 -p1
 %patch105 -p1
 #patch106 -p1
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
-%patch110 -p1
+#patch110 -p1
+##patch111 -p1
+%patch112 -p1
 
 ## ALT apply patches
 
@@ -105,7 +107,6 @@ export PATH="$QTDIR/bin:$PATH"
 	-DDOC_INSTALL_DIR=share/doc/%name-%version \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix
 %cmake_build
-export NPROCS=1
 %cmake_build -t docs
 
 %install
@@ -125,13 +126,16 @@ cd BUILD && make tests
 
 %files doc
 %_defaultdocdir/%name-%version
-#exclude %_defaultdocdir/%name-%version/html
 %exclude %_defaultdocdir/%name-%version/README.md
 %exclude %_man1dir/doxy[is]*
 
 %changelog
-* Wed Aug 18 2021 Fr. Br. George <george@altlinux.ru> 1:1.9.1-alt1
+* Fri Mar 24 2023 Fr. Br. George <george@altlinux.org> 1:1.9.6-alt1
+- Autobuild version bump to 1.9.6
+
+* Fri Mar 24 2023 Fr. Br. George <george@altlinux.org> 1:1.9.1-alt1
 - Autobuild version bump to 1.9.1
+- Introducing Qt5 wizard
 
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1:1.8.17-alt2.1
 - NMU: spec: adapted to new cmake macros.
