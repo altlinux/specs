@@ -1,6 +1,6 @@
 Name: tunctl
 Version: 1.5
-Release: alt1.qa1
+Release: alt1.qa2
 Epoch: 1
 
 Summary: Tool to create and manage persistent TUN/TAP interfaces
@@ -25,7 +25,7 @@ may not change any aspects of the host side of the interface.
 make CFLAGS="%optflags"
 
 %install
-install -pm0644 -D tun.rules %buildroot%_sysconfdir/udev/rules.d/90-tun.rules
+install -pm0644 -D tun.rules %buildroot%{_udevrulesdir}/90-tun.rules
 install -pm0755 -D %name %buildroot%_sbindir/%name
 install -pm0644 -D %name.8 %buildroot%_man8dir/%name.8
 
@@ -33,11 +33,14 @@ install -pm0644 -D %name.8 %buildroot%_man8dir/%name.8
 /usr/sbin/groupadd -r -f tun &>/dev/null
 
 %files
-%_sysconfdir/udev/rules.d/90-tun.rules
+%{_udevrulesdir}/90-tun.rules
 %_sbindir/%name
 %_man8dir/%name.8*
 
 %changelog
+* Fri Mar 24 2023 Igor Vlasenko <viy@altlinux.org> 1:1.5-alt1.qa2
+- fixed udevrulesdir
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
