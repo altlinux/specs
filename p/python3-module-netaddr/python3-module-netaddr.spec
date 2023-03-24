@@ -2,8 +2,8 @@
 %def_enable check
 
 Name:		python3-module-%{pypi_name}
-Version:	0.7.19
-Release:	alt2
+Version:	0.8.0
+Release:	alt1
 Summary:	A pure Python network address representation and manipulation library
 
 Group:		Development/Python3
@@ -13,15 +13,9 @@ URL:		http://github.com/drkjam/netaddr
 Source0:	%name-%version.tar
 BuildArch: noarch
 
-Patch0001: 0001-fixed-broken-tests.patch
-Patch0002: 0002-PEP-479-return-instead-of-raise-StopIteration.patch
-Patch0003: 0003-Use-raw-strings-for-escape-characters-used-in-regex.patch
-Patch0004: 0004-fix-Python-38-SyntaxWarning-on-using-is-not-with-a-string-literal.patch
-Patch0005: 0005-Do-not-override-executable-path.patch
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-sphinx
-%{?_enable_check:BuildRequires: python3-module-pytest}
+%{?_enable_check:BuildRequires: python3-module-pytest python3-module-pytest-cov}
 
 %description
 A pure Python network address representation and manipulation library.
@@ -54,11 +48,6 @@ API documentation for the latest release is available here :-
 
 %prep
 %setup
-%patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
-%patch0005 -p1
 
 # Make rpmlint happy, get rid of DOS line endings
 %{__sed} -i 's/\r//' netaddr/*.py
@@ -69,8 +58,6 @@ API documentation for the latest release is available here :-
 # modules
 find netaddr -name "*.py" | \
   xargs sed -i -e '1 {/^#!\//d}'
-# Fix python executable
-sed -i -e '1s,/usr/bin/env python,%__python3,' netaddr/tools/netaddr
 
 # Make rpmlint happy, fix permissions on documentation files
 chmod 0644 AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE REFERENCES THANKS
@@ -92,11 +79,14 @@ py.test3
 
 %files
 %doc AUTHORS CHANGELOG COPYRIGHT LICENSE REFERENCES THANKS
-%doc README.md docs/html
+%doc README.rst docs/html
 %python3_sitelibdir/*
 %_bindir/netaddr
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Mon Mar 23 2020 Alexey Shabalin <shaba@altlinux.org> 0.7.19-alt2
 - build as new python3 package
 - backported patch from upstream
