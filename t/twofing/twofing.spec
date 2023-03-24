@@ -1,6 +1,6 @@
 Name: twofing
 Version: 0.0.9
-Release: alt2
+Release: alt2.qa1
 Summary: Daemon for two-finger gestures support on touchscreen 
 License: BSD-like
 Group: System/X11
@@ -31,17 +31,21 @@ Wine applications) without having to modify them.
 
 %install
 mkdir -p %buildroot/%_bindir
-mkdir -p %buildroot/%_sysconfdir/udev/rules.d/
+mkdir -p %buildroot/%{_udevrulesdir}/
+sed -i s,/etc/udev/rules.d,%{_udevrulesdir}, Makefile
 %make DESTDIR=%buildroot install
 mkdir -p %buildroot/%_sysconfdir/xdg/autostart/
 install -m0644 %name.desktop %buildroot/%_sysconfdir/xdg/autostart/
 
 %files
 %_bindir/*
-%_sysconfdir/udev/rules.d/*
+%{_udevrulesdir}/*
 %_sysconfdir/xdg/autostart/*
 
 %changelog
+* Fri Mar 24 2023 Igor Vlasenko <viy@altlinux.org> 0.0.9-alt2.qa1
+- fixed udevrulesdir
+
 * Fri May 11 2012 Paul Wolneykien <manowar@altlinux.ru> 0.0.9-alt2
 - Fix/improve udev rules.
 
