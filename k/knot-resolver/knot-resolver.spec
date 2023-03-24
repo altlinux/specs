@@ -5,7 +5,7 @@
 %def_disable doc
 
 Name: knot-resolver
-Version: 5.5.3
+Version: 5.6.0
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -184,6 +184,9 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %_libdir/%name/kres_modules/prometheus.lua
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 5.6.0-alt1
+- 5.6.0
+
 * Thu Sep 29 2022 Alexey Shabalin <shaba@altlinux.org> 5.5.3-alt1
 - 5.5.3
 
