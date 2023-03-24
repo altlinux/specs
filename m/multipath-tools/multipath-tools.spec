@@ -5,8 +5,8 @@
 %define libmpathdir %syslibdir/multipath
 
 Name: multipath-tools
-Version: 0.9.3
-Release: alt2
+Version: 0.9.4
+Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPL-2.0-only
@@ -99,37 +99,36 @@ sed -i "s|-Werror -Wall|-Wall|" Makefile.inc
 %build
 unset RPM_OPT_FLAGS
 %make_build \
-	prefix=%_prefix \
-	libdir=%libmpathdir \
-	plugindir=%libmpathdir \
+    prefix=%_prefix \
+    systemd_prefix="" \
+    syslibdir=%syslibdir \
+    libdir=%libmpathdir \
+    plugindir=%libmpathdir \
     configdir=%_sysconfdir/multipath/conf.d \
-	LIB=%_lib \
-	RUN=run \
-	%{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
-	SYSTEMDPATH=lib \
+    LIB=%_lib \
+    %{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
     EXTRAVERSION=%release
 
 %install
 mkdir -p %buildroot{/sbin,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
 %makeinstall_std \
-	prefix=%_prefix \
-	DESTDIR=%buildroot \
-	SYSTEMDPATH=lib \
-	%{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
-	LIB=%_lib \
-	RUN=run \
-	bindir=/sbin \
-	syslibdir=%syslibdir \
-	libdir=%libmpathdir \
-	plugindir=%libmpathdir \
-	usr_prefix=%_prefix \
+    prefix=%_prefix \
+    systemd_prefix="" \
+    DESTDIR=%buildroot \
+    %{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
+    LIB=%_lib \
+    bindir=/sbin \
+    syslibdir=%syslibdir \
+    libdir=%libmpathdir \
+    plugindir=%libmpathdir \
+    usr_prefix=%_prefix \
     configdir=%_sysconfdir/multipath/conf.d \
-	rcdir=%_initrddir \
-	udevrulesdir=%_udevrulesdir \
-	unitdir=%_unitdir \
-	libudevdir=/lib/udev \
-	tmpfilesdir=%_tmpfilesdir \
-	modulesloaddir=%_modulesloaddir \
+    rcdir=%_initrddir \
+    udevrulesdir=%_udevrulesdir \
+    unitdir=%_unitdir \
+    libudevdir=/lib/udev \
+    tmpfilesdir=%_tmpfilesdir \
+    modulesloaddir=%_modulesloaddir \
     EXTRAVERSION=%release
 
 install -pm755 %SOURCE3 %buildroot%_initdir/multipathd
@@ -198,6 +197,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.4-alt1
+- 0.9.4
+
 * Fri Dec 02 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.3-alt2
 - fixed plugin path (ALT #44524)
 - fixed configdir path
