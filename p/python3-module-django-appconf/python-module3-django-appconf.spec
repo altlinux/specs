@@ -1,7 +1,7 @@
 %define oname django-appconf
 
 Name: python3-module-%oname
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: A helper class for handling configuration defaults of packaged apps gracefully
@@ -35,6 +35,9 @@ apps gracefully.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Tue Jul 13 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.4-alt1
 - 1.0.4
 - Build python3 only package.
