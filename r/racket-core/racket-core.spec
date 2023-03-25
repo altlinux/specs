@@ -15,7 +15,7 @@
 
 Name: racket-core
 Version: 8.8
-Release: alt1
+Release: alt2
 
 Summary: Racket, the programming language (base package)
 License: Apache-2.0 or MIT
@@ -51,6 +51,9 @@ This package contains minimal Racket which can install packages for itself.
 
 %prep
 %setup
+
+sed -i 's|@RACKETLIBDIR@|%racket_libdir|' %SOURCE1
+sed -i 's|@RACKETLIBDIR@|%racket_libdir|' %SOURCE2
 
 %build
 mkdir -p racket/src/build && cd racket/src/build
@@ -140,6 +143,9 @@ chmod 0755 %buildroot%_rpmlibdir/racket-update-mans.filetrigger
 %endif
 
 %changelog
+* Sat Mar 25 2023 Anton Zhukharev <ancieg@altlinux.org> 8.8-alt2
+- Fixed paths for filetriggers.
+
 * Sun Mar 12 2023 Anton Zhukharev <ancieg@altlinux.org> 8.8-alt1
 - 8.6 -> 8.8.
 
