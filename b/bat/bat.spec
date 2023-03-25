@@ -1,5 +1,5 @@
 Name: bat
-Version: 0.22.1
+Version: 0.23.0
 Release: alt1
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
@@ -8,7 +8,6 @@ Url: https://github.com/sharkdp/bat
 Source: %name-%version.tar
 
 BuildRequires: rust-cargo
-BuildRequires: /proc
 Conflicts: bacula9-bat
 Conflicts: bacula11-bat
 
@@ -39,6 +38,10 @@ install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.bash %b
 install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.zsh %buildroot%_datadir/zsh/site-functions/_bat
 install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.fish %buildroot%_datadir/fish/vendor_completions.d/bat.fish
 
+%check
+# Test no_args_doesnt_break failed in hasher with error "Couldn't open pty"
+cargo test -- --skip no_args_doesnt_break
+
 %files
 %_bindir/%name
 %_man1dir/%name.1.xz
@@ -48,6 +51,10 @@ install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.fish %b
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Sat Mar 25 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.23.0-alt1
+- Updated to version 0.23.0
+- Enabled tests
+
 * Fri Oct 07 2022 Alexander Makeenkov <amakeenk@altlinux.org> 0.22.1-alt1
 - Updated to version 0.22.1
 
