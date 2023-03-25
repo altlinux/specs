@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libdeflate
-Version: 1.14
+Version: 1.18
 Release: alt1
 
 Summary: Heavily optimized library for DEFLATE/zlib/gzip compression and decompression
@@ -18,6 +18,9 @@ Source: %name-%version.tar
 # armh is excluded due to https://bugzilla.altlinux.org/43475
 # ppc64le is excluded due to requirement on glibc-core-debuginfo
 
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: ctest
 BuildRequires: zlib-devel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: banner
@@ -63,7 +66,6 @@ streaming support and therefore does not yet support very large files
 
 %prep
 %setup
-sed -i s/-fomit-frame-pointer// Makefile
 
 %build
 %add_optflags %(getconf LFS_CFLAGS) -Werror
@@ -72,16 +74,17 @@ sed -i s/-fomit-frame-pointer// Makefile
 %add_optflags -fanalyzer
 %endif
 # It's sensitive to build options, avoid "Rebuilding due to new settings".
-%global build_settings CFLAGS="%optflags" PREFIX=%_prefix LIBDIR=%_libdir USE_SHARED_LIB=1
-%make_build %build_settings all test_programs V=1
+%cmake \
+	-DLIBDEFLATE_BUILD_STATIC_LIB=OFF \
+	-DLIBDEFLATE_BUILD_TESTS=ON
+%cmake_build
 
 %install
-%makeinstall_std %build_settings V=1
-rm %buildroot%_libdir/%name.a
+%cmake_install
 
 %check
 banner check
-%make_build %build_settings check V=1
+%cmake_build --target test
 
 export PATH=%buildroot%_bindir:$PATH LD_LIBRARY_PATH=%buildroot%_libdir
 libdeflate-gzip -V
@@ -112,11 +115,15 @@ b2sum --check test-file.b2sum
 %_includedir/libdeflate.h
 %_libdir/libdeflate.so
 %_pkgconfigdir/libdeflate.pc
+%_libdir/cmake/libdeflate
 
 %files utils
 %_bindir/libdeflate-*
 
 %changelog
+* Sat Mar 25 2023 Vitaly Chikunov <vt@altlinux.org> 1.18-alt1
+- Update to v1.18 (2023-03-23).
+
 * Sun Sep 11 2022 Vitaly Chikunov <vt@altlinux.org> 1.14-alt1
 - Update to v1.14 (2022-09-10).
 
