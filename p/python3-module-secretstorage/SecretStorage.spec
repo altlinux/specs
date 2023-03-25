@@ -1,5 +1,5 @@
 Name: python3-module-secretstorage
-Version: 3.3.2
+Version: 3.3.3
 Release: alt1
 
 Summary: Python bindings to Freedesktop.org Secret Service API
@@ -49,6 +49,9 @@ The documentation can be found on secretstorage.readthedocs.io.
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Fri Mar 24 2023 Fr. Br. George <george@altlinux.org> 3.3.3-alt1
+- Autobuild version bump to 3.3.3
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 3.3.2-alt1
 - Autobuild version bump to 3.3.2
 
