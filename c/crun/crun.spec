@@ -1,12 +1,12 @@
 %global _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%define git_commit bf70c97995109417ac0c5ed0a758d82662456724
+%define git_commit 59f2beb7efb0d35611d5818fd0311883676f6f7e
 %define __nprocs 8
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 1.8.2
-Release: alt2
+Version: 1.8.3
+Release: alt1
 Group: Development/Other
 License: GPLv2+
 Url: https://github.com/containers/crun
@@ -31,14 +31,21 @@ BuildRequires: cmake
 Provides: oci-runtime = 2
 
 %description
-crun is a runtime for running OCI containers
+crun is a runtime for running OCI containers.
+
+%package -n lib%name
+Summary: C library for crun
+Group: System/Libraries
+
+%description -n lib%name
+C library for crun.
 
 %package -n python3-module-crun
 Summary: Python bindings for crun
-Group: Development/Other
+Group: System/Libraries
 
 %description -n python3-module-crun
-A fast and lightweight fully featured OCI runtime and C library for running containers, including Python bindings.
+Python bindings for crun.
 
 %prep
 %setup
@@ -64,15 +71,20 @@ rm -f %buildroot%_libdir/lib%name.{a,la,so}
 rm -f %buildroot%python3_sitelibdir/*.{a,la}
 
 %files
-%doc COPYING
+%doc COPYING README.md
 %_bindir/%name
-%_libdir/lib%name.so.*
 %_man1dir/*
+
+%files -n lib%name
+%_libdir/lib%name.so.*
 
 %files -n python3-module-crun
 %python3_sitelibdir/python_%name.so
 
 %changelog
+* Sat Mar 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.8.3-alt1
+- 1.8.3
+
 * Tue Mar 21 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.8.2-alt2
 - build with python bindings (ALT #45612)
 
