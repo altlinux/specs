@@ -1,6 +1,6 @@
 Name: steam
-Version: 1.0.0.75
-Release: alt2
+Version: 1.0.0.76
+Release: alt1
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -66,6 +66,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Sat Mar 25 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.76-alt1
+- Version 1.0.0.76
+
 * Tue Nov 15 2022 Nazarov Denis <nenderus@altlinux.org> 1.0.0.75-alt2
 - Remove require on xterm (ALT #44303)
 
