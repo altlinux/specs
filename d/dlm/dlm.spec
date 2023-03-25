@@ -1,5 +1,5 @@
 Name: dlm
-Version: 4.1.1
+Version: 4.2.0
 Release: alt1
 
 Summary: dlm control daemon and tool
@@ -45,6 +45,9 @@ developing applications that use %name.
 sed -i 's,-fstack-clash-protection,,' */Makefile
 # needs libpacemaker-devel (ftbfs atm)
 sed -i 's,fence,,' Makefile
+%endif
+%ifnarch x86_64
+sed -i 's, -fcf-protection=full,,' */Makefile
 %endif
 
 %build
@@ -92,6 +95,9 @@ touch %buildroot%_sysconfdir/dlm/dlm.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Oct 12 2022 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
+- New version.
+
 * Tue Nov 16 2021 Andrey Cherepanov <cas@altlinux.org> 4.1.1-alt1
 - New version.
 
