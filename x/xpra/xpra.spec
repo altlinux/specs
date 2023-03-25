@@ -2,7 +2,7 @@
 
 Name: xpra
 Version: 4.4.4
-Release: alt1
+Release: alt2
 
 Summary: X Persistent Remote Applications
 License: GPLv2
@@ -64,6 +64,7 @@ AutoProv: yes, nopython3
 %add_python3_req_skip xpra.x11.bindings.core_bindings xpra.x11.bindings.display_source
 %add_python3_req_skip xpra.x11.bindings.keyboard_bindings xpra.x11.bindings.randr_bindings
 %add_python3_req_skip xpra.x11.bindings.window_bindings xpra.x11.bindings.ximage
+%add_python3_req_skip xpra.net.websockets.mask xpra.x11.bindings.res_bindings xpra.x11.gtk3.gdk_bindings
 
 # disabled during build
 %add_python3_req_skip xpra.net.mdns
@@ -181,6 +182,9 @@ rm -rv %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 %_sysconfdir/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Sat Mar 25 2023 Andrey Cherepanov <cas@altlinux.org> 4.4.4-alt2
+- NMU: remove internal modules from requirements
+
 * Wed Mar 15 2023 Vitaly Lipatov <lav@altlinux.ru> 4.4.4-alt1
 - new version 4.4.4 (with rpmrb script)
 
