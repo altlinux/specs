@@ -1,8 +1,9 @@
 %def_disable demos
+%def_disable tests
 %define major 1
 
 Name: vkd3d
-Version: 1.6
+Version: 1.7
 Release: alt1
 Summary: The vkd3d 3D Graphics Library
 
@@ -13,17 +14,18 @@ Url: https://source.winehq.org/git/vkd3d.git/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libvulkan-devel spirv-headers wine-devel-tools
-BuildRequires: libspirv-tools-devel spirv-tools flex
+# Automatically added by buildreq on Sat Mar 25 2023 (-ba)
+BuildRequires: flex libspirv-tools-devel libvulkan-devel spirv-headers wine-devel-tools
+
 %if_enabled demos
 BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel libxcbutil-icccm-devel
+%endif
+%if_enabled tests
+BuildRequires: vulkan-lvp
 %endif
 
 # same as wine
 ExclusiveArch: %ix86 x86_64 aarch64
-
-# fix LTO
-%global optflags_lto %optflags_lto -ffat-lto-objects
 
 %description
 Vkd3d is a 3D graphics library built on top of Vulkan. It has an API very
@@ -68,10 +70,17 @@ Requires: lib%{name}%{major} = %EVR
 %autoreconf
 %configure \
   %{subst_enable demos} \
+  %{subst_enable_tests} \
   --with-spirv-tools
 
 %build
 %make_build
+
+# still fails
+%if_enabled tests
+%check
+%make check
+%endif
 
 %install
 %makeinstall
@@ -81,6 +90,8 @@ for f in demos/{gears,triangle}; do
   cp -a "$i" %buildroot%_bindir/%{name}_"$f";
 done
 %endif
+# to make LTO checks happy
+rm -f %buildroot%_libdir/*.a
 
 %files -n lib%{name}%{major}
 %_libdir/*.so.*
@@ -100,6 +111,11 @@ done
 %endif
 
 %changelog
+* Sat Mar 25 2023 L.A. Kostis <lakostis@altlinux.ru> 1.7-alt1
+- 1.7.
+- Add tests knob.
+- Fix LTO flags.
+
 * Thu Feb 02 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6-alt1
 - 1.6.
 
