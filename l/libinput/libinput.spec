@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.22.1
+Version: 1.23.0
 Release: alt1
 
 Summary: Input devices library
@@ -130,24 +130,25 @@ the functionality of the installed libinput library.
 %files tools
 %_bindir/%name
 %dir %_libexecdir/%name
-%_libexecdir/%name/libinput-analyze
-%_libexecdir/%name/libinput-analyze-per-slot-delta
-%_libexecdir/%name/libinput-analyze-recording
-%_libexecdir/%name/libinput-analyze-touch-down-state
-%_libexecdir/%name/libinput-debug-events
-%_libexecdir/%name/libinput-debug-gui
-%_libexecdir/%name/libinput-debug-tablet
-%_libexecdir/%name/libinput-list-devices
-%_libexecdir/%name/libinput-measure
-%_libexecdir/%name/libinput-measure-fuzz
-%_libexecdir/%name/libinput-measure-touchpad-pressure
-%_libexecdir/%name/libinput-measure-touchpad-size
-%_libexecdir/%name/libinput-measure-touchpad-tap
-%_libexecdir/%name/libinput-measure-touch-size
-%_libexecdir/%name/libinput-quirks
-%_libexecdir/%name/libinput-record
-%_libexecdir/%name/libinput-replay
-%_libexecdir/%name/libinput-test
+%_libexecdir/%name/%name-analyze
+%_libexecdir/%name/%name-analyze-per-slot-delta
+%_libexecdir/%name/%name-analyze-recording
+%_libexecdir/%name/%name-analyze-touch-down-state
+%_libexecdir/%name/%name-debug-events
+%_libexecdir/%name/%name-debug-gui
+%_libexecdir/%name/%name-debug-tablet
+%_libexecdir/%name/%name-list-devices
+%_libexecdir/%name/%name-list-kernel-devices
+%_libexecdir/%name/%name-measure
+%_libexecdir/%name/%name-measure-fuzz
+%_libexecdir/%name/%name-measure-touchpad-pressure
+%_libexecdir/%name/%name-measure-touchpad-size
+%_libexecdir/%name/%name-measure-touchpad-tap
+%_libexecdir/%name/%name-measure-touch-size
+%_libexecdir/%name/%name-quirks
+%_libexecdir/%name/%name-record
+%_libexecdir/%name/%name-replay
+%_libexecdir/%name/%name-test
 %{?_enable_debug_gui:%exclude %_libexecdir/%name/%name-debug-gui}
 %_man1dir/%name.1.*
 %_man1dir/%name-analyze.1*
@@ -157,6 +158,7 @@ the functionality of the installed libinput library.
 %_man1dir/%name-debug-events.1.*
 %_man1dir/%name-debug-tablet.1.*
 %_man1dir/%name-list-devices.1.*
+%_man1dir/%name-list-kernel-devices.1.*
 %_man1dir/%name-measure.1.*
 %_man1dir/%name-measure-fuzz.1.*
 %_man1dir/%name-measure-touchpad-pressure.1.*
@@ -179,12 +181,15 @@ the functionality of the installed libinput library.
 
 %if_enabled install_tests
 %files tests
-%_libexecdir/%name/libinput-test-suite
-%_libexecdir/%name/libinput-test-utils
+%_libexecdir/%name/%name-test-suite
+%_libexecdir/%name/%name-test-utils
 %_man1dir/%name-test-suite.1.*
 %endif
 
 %changelog
+* Sun Mar 26 2023 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1
+- 1.23.0
+
 * Mon Jan 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.1-alt1
 - 1.22.1
 
