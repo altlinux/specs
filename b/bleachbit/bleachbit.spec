@@ -1,6 +1,6 @@
 Name:     bleachbit
 Version:  4.4.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Remove unnecessary files, free space, and maintain privacy
 License:  GPL-3.0+
@@ -15,7 +15,12 @@ Patch2:   %name-alt-reasonable-config.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-gnome python3-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-gnome
+BuildRequires(pre): rpm-build-gir
+BuildRequires(pre): python3-devel
+
+Requires: typelib(Gtk) = 3.0
 
 %add_python3_req_skip win32api win32con win32file winioctlcon
 %add_python3_path %_datadir/%name
@@ -62,6 +67,10 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Sun Mar 26 2023 Andrey Cherepanov <cas@altlinux.org> 4.4.2-alt2
+- Rebuilt with rpm-build-gir.
+- Required typelib(Gtk).
+
 * Sun Nov 14 2021 Andrey Cherepanov <cas@altlinux.org> 4.4.2-alt1
 - New version.
 
