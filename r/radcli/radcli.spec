@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: radcli
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Summary: RADIUS protocol client library
 Group: System/Libraries
@@ -71,6 +71,9 @@ cp -p %buildroot%_datadir/%name/dictionary %buildroot%_sysconfdir/%name/dictiona
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Mar 26 2023 Alexey Shabalin <shaba@altlinux.org> 1.3.1-alt1
+- New version 1.3.1.
+
 * Wed Nov 25 2020 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
 - new version 1.3.0
 
