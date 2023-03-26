@@ -1,5 +1,5 @@
 Name:    patroni
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: A template for PostgreSQL High Availability with Etcd, Consul, ZooKeeper, or Kubernetes
@@ -45,5 +45,8 @@ or plug-and-play replication system. It will have its own caveats. Use wisely.
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Sun Mar 26 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
+- New version.
+
 * Sat Mar 18 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
 - Initial build for Sisyphus
