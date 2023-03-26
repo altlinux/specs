@@ -1,7 +1,8 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname dynflow
 
 Name:          gem-dynflow
-Version:       1.6.7
+Version:       1.6.10
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine
 License:       MIT
@@ -11,20 +12,12 @@ Vcs:           https://github.com/dynflow/dynflow.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
-Source3:       dynflow.service
-Source2:       dynflow.sysconfig
-Source1:       dynflow
 Source:        %name-%version.tar
-Patch:         1.4.7.patch
+Source1:       dynflow
+Source2:       dynflow.sysconfig
+Source3:       dynflow.service
 BuildRequires(pre): rpm-build-ruby
 %if_with check
-BuildRequires: gem(multi_json) >= 0
-BuildRequires: gem(msgpack) >= 1.3.3 gem(msgpack) < 2
-BuildRequires: gem(apipie-params) >= 0
-BuildRequires: gem(algebrick) >= 0.7.0 gem(algebrick) < 0.8
-BuildRequires: gem(concurrent-ruby) >= 1.1.3 gem(concurrent-ruby) < 1.2
-BuildRequires: gem(concurrent-ruby-edge) >= 0.6.0 gem(concurrent-ruby-edge) < 0.7
-BuildRequires: gem(sequel) >= 4.0.0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rack-test) >= 0
 BuildRequires: gem(minitest) >= 0
@@ -35,20 +28,52 @@ BuildRequires: gem(activejob) >= 0
 BuildRequires: gem(sqlite3) >= 0
 BuildRequires: gem(sinatra) >= 0
 BuildRequires: gem(mocha) >= 0
+BuildRequires: gem(concurrent-ruby-ext) >= 1.1.3
+BuildRequires: gem(pry) >= 0
+BuildRequires: gem(pry-byebug) >= 0
+BuildRequires: gem(sidekiq) >= 0
+BuildRequires: gem(gitlab-sidekiq-fetcher) >= 0
+BuildRequires: gem(pg) >= 0
+BuildRequires: gem(mysql2) >= 0
+BuildRequires: gem(rubocop) >= 0.39.0
+BuildRequires: gem(get_process_mem) >= 0
+BuildRequires: gem(daemons) >= 0
+BuildRequires: gem(rails) >= 4.2.9
+BuildRequires: gem(logging) >= 0
+BuildRequires: gem(statsd-instrument) >= 0
+BuildRequires: gem(multi_json) >= 0
+BuildRequires: gem(msgpack) >= 1.3.3
+BuildRequires: gem(apipie-params) >= 0
+BuildRequires: gem(algebrick) >= 0.7.0
+BuildRequires: gem(concurrent-ruby) >= 1.1.3
+BuildRequires: gem(concurrent-ruby-edge) >= 0.6.0
+BuildRequires: gem(sequel) >= 4.0.0
+BuildConflicts: gem(concurrent-ruby-ext) >= 1.2
+BuildConflicts: gem(rubocop) >= 2
+BuildConflicts: gem(rails) >= 7
+BuildConflicts: gem(msgpack) >= 2
+BuildConflicts: gem(algebrick) >= 0.8
+BuildConflicts: gem(concurrent-ruby) >= 1.2
+BuildConflicts: gem(concurrent-ruby-edge) >= 0.7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 Requires:      gem(multi_json) >= 0
-Requires:      gem(msgpack) >= 1.3.3 gem(msgpack) < 2
+Requires:      gem(msgpack) >= 1.3.3
 Requires:      gem(apipie-params) >= 0
-Requires:      gem(algebrick) >= 0.7.0 gem(algebrick) < 0.8
-Requires:      gem(concurrent-ruby) >= 1.1.3 gem(concurrent-ruby) < 1.2
-Requires:      gem(concurrent-ruby-edge) >= 0.6.0 gem(concurrent-ruby-edge) < 0.7
+Requires:      gem(algebrick) >= 0.7.0
+Requires:      gem(concurrent-ruby) >= 1.1.3
+Requires:      gem(concurrent-ruby-edge) >= 0.6.0
 Requires:      gem(sequel) >= 4.0.0
+Conflicts:     gem(msgpack) >= 2
+Conflicts:     gem(algebrick) >= 0.8
+Conflicts:     gem(concurrent-ruby) >= 1.2
+Conflicts:     gem(concurrent-ruby-edge) >= 0.7
 Obsoletes:     ruby-dynflow < %EVR
 Provides:      ruby-dynflow = %EVR
-Provides:      gem(dynflow) = 1.6.7
+Provides:      gem(dynflow) = 1.6.10
 
 
 %description
@@ -75,14 +100,14 @@ choosing the right one (providing default implementations as well).
 
 
 %package       -n gem-dynflow-doc
-Version:       1.6.7
+Version:       1.6.10
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета dynflow
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.6.7
+Requires:      gem(dynflow) = 1.6.10
 
 %description   -n gem-dynflow-doc
 DYNamic workFLOW orchestration engine documentation files.
@@ -113,14 +138,14 @@ choosing the right one (providing default implementations as well).
 
 
 %package       -n gem-dynflow-devel
-Version:       1.6.7
+Version:       1.6.10
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета dynflow
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.6.7
+Requires:      gem(dynflow) = 1.6.10
 Requires:      gem(rake) >= 0
 Requires:      gem(rack-test) >= 0
 Requires:      gem(minitest) >= 0
@@ -131,6 +156,22 @@ Requires:      gem(activejob) >= 0
 Requires:      gem(sqlite3) >= 0
 Requires:      gem(sinatra) >= 0
 Requires:      gem(mocha) >= 0
+Requires:      gem(concurrent-ruby-ext) >= 1.1.3
+Requires:      gem(pry) >= 0
+Requires:      gem(pry-byebug) >= 0
+Requires:      gem(sidekiq) >= 0
+Requires:      gem(gitlab-sidekiq-fetcher) >= 0
+Requires:      gem(pg) >= 0
+Requires:      gem(mysql2) >= 0
+Requires:      gem(rubocop) >= 0.39.0
+Requires:      gem(get_process_mem) >= 0
+Requires:      gem(daemons) >= 0
+Requires:      gem(rails) >= 4.2.9
+Requires:      gem(logging) >= 0
+Requires:      gem(statsd-instrument) >= 0
+Conflicts:     gem(concurrent-ruby-ext) >= 1.2
+Conflicts:     gem(rubocop) >= 2
+Conflicts:     gem(rails) >= 7
 
 %description   -n gem-dynflow-devel
 DYNamic workFLOW orchestration engine development package.
@@ -161,14 +202,14 @@ choosing the right one (providing default implementations as well).
 
 
 %package       -n dynflow
-Version:       1.6.7
+Version:       1.6.10
 Release:       alt1
-Summary:       DYNamic workFLOW orchestration engine executable(s)
+Summary:       DYNamic workFLOW engine executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета dynflow
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.6.7
+Requires:      gem(dynflow) = 1.6.10
 Requires:      gem-dynflow = %EVR
 
 %description   -n dynflow
@@ -227,6 +268,9 @@ exit 0
 
 
 %changelog
+* Sun Mar 26 2023 Pavel Skrylev <majioa@altlinux.org> 1.6.10-alt1
+- ^ 1.6.7 -> 1.6.10
+
 * Fri Oct 07 2022 Pavel Skrylev <majioa@altlinux.org> 1.6.7-alt1
 - ^ 1.6.5 -> 1.6.7
 
