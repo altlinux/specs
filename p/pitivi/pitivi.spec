@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2022
+%define ver_major 2023
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %define gst_ver 1.18.0
@@ -11,7 +11,7 @@
 %define xdg_name org.pitivi.Pitivi
 
 Name: pitivi
-Version: %ver_major.06
+Version: %ver_major.03
 Release: alt1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
@@ -41,8 +41,8 @@ Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: gst-plugins-ugly%gst_api_ver >= %gst_ver
 Requires: python3-module-canberra
 
-BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
-BuildRequires: desktop-file-utils gtk-doc python3-module-nose2
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires: meson desktop-file-utils gtk-doc python3-module-nose2
 BuildRequires: yelp-tools libappstream-glib-devel libcairo-devel
 BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: python3-module-pycairo-devel
@@ -80,6 +80,9 @@ newbies and professionals alike.
 
 
 %changelog
+* Mon Mar 27 2023 Yuri N. Sedunov <aris@altlinux.org> 2023.03-alt1
+- 2023.03
+
 * Sat Jun 25 2022 Yuri N. Sedunov <aris@altlinux.org> 2022.06-alt1
 - 2022.06
 
