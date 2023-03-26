@@ -1,5 +1,11 @@
+%ifnarch armh
+%def_with check
+%else
+%def_without check
+%endif
+
 Name:    blosc2
-Version: 2.7.1
+Version: 2.8.0
 Release: alt1
 
 Summary: A fast, compressed, persistent binary data store library for C
@@ -68,11 +74,8 @@ rm -rf internal-complibs
 %install
 %cmakeinstall_std
 
-# few tests fail on armh, 1 test (test_lz4_bitshuffle_n) fail on aarch64
-%ifnarch armh aarch64
 %check
 %cmake_build --target test
-%endif
 
 %files -n lib%name
 %doc README.rst LICENSE.txt RELEASE_NOTES.md
@@ -91,6 +94,9 @@ rm -rf internal-complibs
 %_pkgconfigdir/blosc2.pc
 
 %changelog
+* Sun Mar 26 2023 Anton Vyatkin <toni@altlinux.org> 2.8.0-alt1
+- New version 2.8.0.
+
 * Tue Mar 21 2023 Anton Vyatkin <toni@altlinux.org> 2.7.1-alt1
 - New version 2.7.1.
 
