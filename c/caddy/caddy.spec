@@ -6,7 +6,7 @@
 
 Name: caddy
 Version: 2.6.4
-Release: alt1
+Release: alt2
 Summary: Web server with automatic HTTPS
 License: Apache-2.0
 Url: https://caddyserver.com
@@ -43,12 +43,12 @@ Caddy is the web server with automatic HTTPS.
 
 %setup
 %patch -p1
-sed -e '/mod.Version/ s/unknown/%{version}-%{release}/' -i caddy.go
 
 %build
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export LDFLAGS="-X github.com/caddyserver/caddy/v2.CustomVersion=v%version"
 
 %golang_prepare
 export CGO_ENABLED=0
@@ -108,6 +108,9 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
 %_datadir/zsh/site-functions/_caddy
 
 %changelog
+* Sun Mar 26 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.4-alt2
+- fix version info
+
 * Mon Feb 20 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.4-alt1
 - new version 2.6.4
 
