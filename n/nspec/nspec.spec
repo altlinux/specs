@@ -1,6 +1,6 @@
 Name: nspec
-Version: 16.5881
-Release: alt1
+Version: 16.5888
+Release: alt2
 Summary: Nspec Universal SPM & Spectroscopy Software - Nano Scan Technologies Ltd.
 Summary(ru_RU.UTF-8): Nspec - универсальная программа для СЗМ и спектроскопии для приборов фирмы НСТ
 License: BSD 4-clause, 2008-2020, Nano Scan Technologies Ltd.
@@ -73,19 +73,23 @@ echo -e "%version-%release\n" >> src/data/nst_build.txt
 %qmake_qt5 "CONFIG += no_external_deps no_ftdi" nst.pro
 # non-SMP make
 %make
+# SMP build
+# %make_build
 
 cd gwy_proxy/gcc_make
 make -f Makefile.linux
 
 %install
-install -D -m0644 lib/linux/nst-udev.rules %buildroot/%_sysconfdir/udev/rules.d/99-nst.rules
+install -D -m0644 lib/linux/nst-udev.rules %buildroot/%_udevrulesdir/99-nst.rules
 install -D -m0644 lib/linux/99-shuttle_ignore_xorg.conf %buildroot/%_sysconfdir/X11/xorg.conf.d/99-shuttle_ignore_xorg.conf
 install -m 755 -d %buildroot/%_bindir/
 install -m 755 -d %buildroot/%_libdir/nspec
-install -m 755 -d %buildroot/%_pixmapsdir/
+install -m 755 -d %buildroot/%_liconsdir/
+install -m 755 -d %buildroot/%_iconsdir/hicolor/scalable/apps
 install -m 755 -d %buildroot/%_desktopdir/
 install -m 755 -d %buildroot/%_datadir/mime/packages/
-install -m 644 lib/linux/ALT_RPM/%name.svg %buildroot/%_pixmapsdir/
+install -m 644 lib/linux/ALT_RPM/nspec_48x48.png %buildroot/%_liconsdir/%name.png
+install -m 644 lib/linux/ALT_RPM/%name.svg %buildroot/%_iconsdir/hicolor/scalable/apps
 install -m 644 lib/linux/%name.desktop %buildroot/%_desktopdir/
 install -m 644 lib/linux/ALT_RPM/%name.xml %buildroot/%_datadir/mime/packages/
 
@@ -104,12 +108,11 @@ cp gwy_proxy/gcc_make/nst_proxy.so %buildroot/%_libdir/gwyddion/modules
 %files
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_sysconfdir/udev/rules.d/99-nst.rules
+%_udevrulesdir/*
 %_sysconfdir/X11/xorg.conf.d/99-shuttle_ignore_xorg.conf
-%_pixmapsdir/%name.svg
+%_liconsdir/%name.*
+%_iconsdir/hicolor/scalable/apps/%name.*
 %_datadir/mime/packages/%name.xml
-##%attr(777, root, root) %dir /opt/nspec
-##/opt/nspec/nspec
 
 %files gwyddion-plugin
 %_libdir/gwyddion/modules/*.so
@@ -118,6 +121,16 @@ cp gwy_proxy/gcc_make/nst_proxy.so %buildroot/%_libdir/gwyddion/modules
 %_libdir/nspec/*
 
 %changelog
+* Sun Mar 26 2023 Alexei Mezin <alexvm@altlinux.org> 16.5888-alt2
+- Move udev rules to /lib/udev/rules.d/ (ALT policy)
+
+* Wed Dec 15 2021 Alexei Mezin <alexvm@altlinux.org> 16.5888-alt1
+- New version
+- spec cleanup: put icons according to the Policy
+
+* Thu Nov 25 2021 Alexei Mezin <alexvm@altlinux.org> 16.5884-alt1
+- New version
+
 * Tue Nov 23 2021 Alexei Mezin <alexvm@altlinux.org> 16.5881-alt1
 - New version
 
@@ -145,7 +158,6 @@ cp gwy_proxy/gcc_make/nst_proxy.so %buildroot/%_libdir/gwyddion/modules
 * Tue Aug 06 2019 Alexei Mezin <alexvm@altlinux.org> 15.5597-alt1
 - New version
 - Remove obsolete FTDI support
-
 
 * Sat Jan 06 2018 Alexei Mezin <alexvm@altlinux.org> 15.5547-alt2
 - spec file fixes
