@@ -3,9 +3,11 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%define sover 10
+
 Name: yara
-Version: 4.2.3
-Release: alt2
+Version: 4.3.0
+Release: alt1
 License: BSD-3-Clause and Apache-2.0
 Group: Development/Tools
 Summary: The pattern matching swiss knife for malware researchers (and everyone else)
@@ -28,17 +30,17 @@ malware families (or whatever you want to describe) based on textual or binary
 patterns. Each description, a.k.a rule, consists of a set of strings and a
 boolean expression which determine its logic.
 
-%package -n libyara4
+%package -n libyara%sover
 Summary: YARA dynamic libraries (pattern matcher)
 Group: System/Libraries
 
-%description -n libyara4
+%description -n libyara%sover
 Dynamic library for YARA.
 
 %package -n libyara-devel
 Summary: YARA development files (pattern matcher)
 Group: Development/C
-Requires: libyara4 = %EVR
+Requires: libyara%sover = %EVR
 AutoReqProv: nocpp
 
 %description -n libyara-devel
@@ -84,8 +86,9 @@ yara main.rule -r . | grep MAIN.*yara.spec
 %_bindir/yara*
 %_man1dir/yara*.1*
 
-%files -n libyara4
-%_libdir/libyara.so.*
+%files -n libyara%sover
+%_libdir/libyara.so.%sover
+%_libdir/libyara.so.%sover.*
 
 %files -n libyara-devel
 %_libdir/libyara.so
@@ -93,6 +96,9 @@ yara main.rule -r . | grep MAIN.*yara.spec
 %_pkgconfigdir/yara.pc
 
 %changelog
+* Sat Mar 25 2023 Vitaly Chikunov <vt@altlinux.org> 4.3.0-alt1
+- Update to v4.3.0 (2023-03-22).
+
 * Sat Jan 28 2023 Vitaly Chikunov <vt@altlinux.org> 4.2.3-alt2
 - Fix ALT beekeeper rebuild by updating test-magic for libmagic 5.44.
 
