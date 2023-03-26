@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: rpmlint
-Version: 2.2.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Tool for checking common errors in RPM packages
@@ -73,6 +73,9 @@ python3 -m pytest
 %python3_sitelibdir/*
 
 %changelog
+* Sun Mar 26 2023 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.0-alt1
 - new version 2.2.0
 
