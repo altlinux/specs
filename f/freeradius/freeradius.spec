@@ -2,7 +2,7 @@
 
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
@@ -701,6 +701,9 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Sun Mar 26 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.2-alt1
+- 3.2.2
+
 * Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.1-alt1
 - 3.2.1
 
