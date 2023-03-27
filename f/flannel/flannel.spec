@@ -4,7 +4,7 @@
 %define _libexecdir /usr/libexec
 
 Name: flannel
-Version: 0.20.2
+Version: 0.21.4
 Release: alt1
 Summary: flannel is a network fabric for containers
 Group: Development/Other
@@ -15,6 +15,7 @@ Source1: flanneld.sysconfig
 Source2: flanneld.service
 Source3: flannel-docker.conf
 Source4: flannel-tmpfiles.conf
+Patch: %name-%version.patch
 
 ExclusiveArch: %go_arches
 
@@ -26,19 +27,15 @@ Flannel is a simple and easy way to configure
 a layer 3 network fabric designed for Kubernetes.
 
 %prep
-%setup -q
+%setup
+%patch -p1
 
 %build
-gofmt -w -r "x -> \"%{version}\"" version/version.go
+export GOFLAGS="-mod=vendor"
 
-%ifarch x86_64
-CGO_ENABLED=1 \
-%else
-CGO_ENABLED=0 \
-%endif
-go build -ldflags " \
+CGO_ENABLED=1 go build -ldflags " \
     -s -w \
-    -X github.com/flannel-io/flannel/version.Version=%version \
+    -X %import_path/version.Version=%version \
     " -o dist ./...
 
 %install
@@ -60,6 +57,9 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Mon Mar 27 2023 Alexey Shabalin <shaba@altlinux.org> 0.21.4-alt1
+- New version 0.21.4.
+
 * Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 0.20.2-alt1
 - new version 0.20.2
 
