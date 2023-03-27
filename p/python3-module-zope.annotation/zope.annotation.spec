@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.8
+Version: 5.0
 Release: alt1
 
 Summary: Object annotation mechanism
@@ -65,6 +65,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Mon Mar 27 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Tue Mar 07 2023 Anton Vyatkin <toni@altlinux.org> 4.8-alt1
 - New version 4.8.
 
