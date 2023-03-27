@@ -2,8 +2,8 @@
 %filter_from_requires /sed/d
 
 Name: kde5-plasma-theme-qogir
-Version: 2022.07.08
-Release: alt1.gitf240eae
+Version: 2023.01.30
+Release: alt1.git5f80b0a
 Summary: Qogir KDE theme
 
 Group: Graphical desktop/KDE
@@ -58,6 +58,9 @@ mv -f %buildroot%_datadir/kf5/Kvantum/* %buildroot%_datadir/Kvantum/
 %_datadir/kf5/wallpapers/Qogir*
 
 %changelog
+* Mon Mar 27 2023 Leontiy Volodin <lvol@altlinux.org> 2023.01.30-alt1.git5f80b0a
+- Updated from git (commit: 5f80b0a).
+
 * Fri Jul 15 2022 Leontiy Volodin <lvol@altlinux.org> 2022.07.08-alt1.gitf240eae
 - Updated from git (commit: f240eae).
 
