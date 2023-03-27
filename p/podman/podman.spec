@@ -4,7 +4,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     podman
-Version:  4.4.2
+Version:  4.4.3
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -153,6 +153,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Mon Mar 27 2023 Alexey Shabalin <shaba@altlinux.org> 4.4.3-alt1
+- New version 4.4.3 (Fixes: CVE-2022-41723).
+
 * Mon Feb 27 2023 Alexey Shabalin <shaba@altlinux.org> 4.4.2-alt1
 - new version 4.4.2 (Fixes: CVE-2023-0778)
 
