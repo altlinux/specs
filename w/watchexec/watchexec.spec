@@ -1,5 +1,5 @@
 Name:    watchexec
-Version: 1.21.1
+Version: 1.22.2
 Release: alt1
 
 Summary: Executes commands in response to file modifications
@@ -50,6 +50,9 @@ install -Dm 644 doc/%name.1 %buildroot/%_man1dir/%name.1
 %doc *.md
 
 %changelog
+* Mon Mar 27 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.2-alt1
+- new version 1.22.2
+
 * Wed Mar 15 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.21.1-alt1
 - new version 1.21.1
 
