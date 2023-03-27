@@ -4,7 +4,7 @@
 
 Name: libseccomp
 Version: 2.5.4
-Release: alt2
+Release: alt3
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
 Group: System/Libraries
@@ -15,7 +15,9 @@ Source: %name-%version.tar
 Patch1: %name-%version.patch
 
 BuildRequires: gperf
-%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: /proc
+}}
 
 %description
 The libseccomp library provides and easy to use, platform independent,
@@ -67,19 +69,30 @@ export  LIBSECCOMP_TSTCFG_JOBS=0 \
 	LIBSECCOMP_TSTCFG_MODE_LIST=c
 %make_build check V=1
 
+install -p tools/scmp_api_level     %buildroot%_bindir
+install -p tools/scmp_app_inspector %buildroot%_bindir
+install -p tools/scmp_arch_detect   %buildroot%_bindir
+install -p tools/scmp_bpf_disasm    %buildroot%_bindir
+install -p tools/scmp_bpf_sim       %buildroot%_bindir
+
+%define _customdocdir %_docdir/%name
+
 %files
-%doc CHANGELOG CREDITS README.md
-%_bindir/*
 /%_lib/lib*.so.*
-%_man1dir/*
 
 %files devel
+%doc CHANGELOG CREDITS *.md src/syscalls.csv
+%_bindir/scmp_*
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
+%_man1dir/*
 %_man3dir/*
 
 %changelog
+* Mon Mar 27 2023 Vitaly Chikunov <vt@altlinux.org> 2.5.4-alt3
+- spec: Move doc and developer tools into -devel package.
+
 * Wed Feb 01 2023 Vitaly Chikunov <vt@altlinux.org> 2.5.4-alt2
 - spec: Verbose build and add %%check section.
 
