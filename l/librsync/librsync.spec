@@ -4,8 +4,8 @@
 %def_with doc
 
 Name: librsync
-Version: 2.3.2
-Release: alt2
+Version: 2.3.4
+Release: alt1
 
 Summary: remote delta-compression library
 License: LGPL-2.1
@@ -115,6 +115,9 @@ use librsync.
 %endif
 
 %changelog
+* Mon Mar 27 2023 Egor Ignatov <egori@altlinux.org> 2.3.4-alt1
+- New version 2.3.4.
+
 * Wed Apr 20 2022 Egor Ignatov <egori@altlinux.org> 2.3.2-alt2
 - enable trace (closes: #42493)
 
