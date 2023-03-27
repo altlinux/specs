@@ -1,8 +1,8 @@
-%define ver_major 43
+%define ver_major 44
 
 Name: gnome3
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -20,18 +20,18 @@ BuildRequires(pre): rpm-build-licenses
 
 ## Applications
 %define nautilus_ver %ver_major
-%define seahorse_ver %ver_major
+%define seahorse_ver 43
 %define utils_ver 3.20
 %define monitor_ver 42
 %define games_ver 42
 %define weather_ver %ver_major
-%define pm_ver %ver_major
+%define pm_ver 43
 %define yelp_ver 42.2
-%define dconf_editor_ver %ver_major
+%define dconf_editor_ver 43
 %define contacts_ver %ver_major
 %define bijiben_ver 41
 %define cheese_ver 41.0
-%define roller_ver %ver_major
+%define roller_ver 43
 %define eog_ver %ver_major
 %define network_manager_ver 1.26.0
 %define terminal_ver 3.46
@@ -46,15 +46,17 @@ BuildRequires(pre): rpm-build-licenses
 %define gdu_ver %ver_major
 %define evo_ver 3.46
 %define emp_ver 3.12.11
-%define polari_ver %ver_major
+%define polari_ver 43
 %define brasero_ver 3.12.3
 %define accerciser_ver 3.40
 %define recorder_ver 42.0
+%define logs_ver 43
 %define todo_ver 41.0
 %define characters_ver %ver_major
 %define music_ver 42.1
 %define photos_ver %ver_major
 %define nettool_ver 42.0
+%define gucharmap_ver 15.0.2
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
@@ -85,7 +87,7 @@ Requires: gnome-shell-extensions >= %ver_major
 Requires: gnome-browser-connector
 # user settings utility
 Requires: gnome-tweaks >= 40
-Requires: dconf-editor >= %ver_major
+Requires: dconf-editor >= %dconf_editor_ver
 
 # default font
 Requires: fonts-otf-abattis-cantarell
@@ -97,8 +99,8 @@ Requires: yelp >= %yelp_ver
 
 # GNOME Utilities
 Requires: gnome-system-monitor >= %monitor_ver
-Requires: gnome-logs >= %ver_major
-Requires: gucharmap >= 15.0.0
+Requires: gnome-logs >= %logs_ver
+Requires: gucharmap >= %gucharmap_ver
 Requires: gnome-calculator >= %ver_major
 Requires: gnome-calendar >= %ver_major
 #Requires: gnome-todo >= %todo_ver
@@ -390,6 +392,14 @@ Requires: %name-office-light = %version-%release
 Requires: %name-a11y = %version-%release
 Requires: %name-mobile = %version-%release
 # And
+## Additional gnome-shell extensions
+Requires: gnome-shell-extension-extension-list
+Requires: gnome-shell-extension-appindicator
+Requires: gnome-shell-extension-dash-to-dock
+Requires: gnome-shell-extension-blur-my-shell
+Requires: gnome-shell-extension-caffeine
+Requires: gnome-shell-extension-openweather
+
 ## CD-ripper
 Requires: goobox
 ## Image viewer, browser and simple editor
@@ -452,6 +462,10 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Mon Mar 27 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- regular: added appindicator, blur-my-shell, caffeine, dash-to-dock,
+  extension-list and openweather gnome-shell extensions.
+
 * Wed Dec 14 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt2
 - mobile: added geary, gnome-console, gnome-text-editor
 
