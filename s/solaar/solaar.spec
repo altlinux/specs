@@ -1,26 +1,23 @@
-%def_with bootstrap
+Name:    solaar
+Version: 1.1.8
+Release: alt3
 
-Name:           solaar
-Version:        1.1.8
-Release:        alt2
+Summary: Device manager for Logitech Unifying Receiver
+License: GPL-2.0
+Group:   System/Configuration/Hardware
+URL:     https://pwr-solaar.github.io/Solaar/
 
-Group:          System/Configuration/Hardware
-Summary:        Device manager for Logitech Unifying Receiver
-URL:            https://pwr-solaar.github.io/Solaar/
-BuildArch:      noarch
-License:        GPL-2.0
+BuildArch: noarch
 
-Packager:	Andrey Cherepanov <cas@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-gir
 BuildRequires:  python3-module-pyudev
 
-Requires:  	unifying-receiver-udev
+Requires: unifying-receiver-udev
 
-%if_with bootstrap
 %add_python3_req_skip gi.repository.GObject gi.repository.Gdk
-%endif
 
 # require typelib(AyatanaAppIndicator3) instead typelib(AppIndicator3)
 %add_typelib_req_skiplist typelib(AppIndicator3)
@@ -38,10 +35,9 @@ the devices paired to a Unifying Receiver, show detailed info for each
 device, and also pair/unpair supported devices with the receiver.
 
 %package doc
-Group:          Documentation
-Summary:        Documentation for Solaar
-Requires:       %name = %version-%release
-BuildArch:      noarch
+Summary: Documentation for Solaar
+Group: Documentation
+Requires: %name = %EVR
 
 %description doc
 This package provides documentation for Solaar, a device manager for
@@ -62,7 +58,7 @@ tools/po-compile.sh
 %files -f %name.lang
 %doc COPYRIGHT share/README
 %config(noreplace) %_sysconfdir/xdg/autostart/solaar.desktop
-%_libexecdir/udev/rules.d/*.rules
+%config %attr (644,root,root) %_udevrulesdir/*.rules
 %_bindir/solaar
 %python3_sitelibdir/*
 %_datadir/solaar/
@@ -74,6 +70,9 @@ tools/po-compile.sh
 %doc docs
 
 %changelog
+* Mon Mar 27 2023 Andrey Cherepanov <cas@altlinux.org> 1.1.8-alt3
+- Fix udev rules directory.
+
 * Mon Mar 06 2023 Anton Midyukov <antohami@altlinux.org> 1.1.8-alt2
 - NMU: require typelib(AyatanaAppIndicator3) instead typelib(AppIndicator3)
 
