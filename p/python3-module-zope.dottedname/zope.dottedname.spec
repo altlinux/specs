@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0
+Version: 6.0
 Release: alt1
 
 Summary: Resolver for Python dotted names
@@ -67,6 +67,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Mon Mar 27 2023 Anton Vyatkin <toni@altlinux.org> 6.0-alt1
+- New version 6.0.
+
 * Tue Mar 21 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 
