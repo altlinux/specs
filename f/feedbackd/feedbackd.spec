@@ -13,7 +13,7 @@
 
 Name: feedbackd
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Feedback library for GNOME
 Group: System/Servers
@@ -137,6 +137,9 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 %endif
 
 %changelog
+* Mon Mar 27 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt2
+- updated to v0.1.0-10-g1dbad7e (fixed crash exposed by glib 2.76)
+
 * Wed Mar 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - 0.1.0
 
