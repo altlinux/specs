@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 290
+%define centos_release 291
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,16 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Mar 27 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.291-alt1.el9
+- Updated to kernel-5.14.0-291.el9:
+  + Backport Core MapleTree Framework
+  + gfs2: file corruption in large data files
+  + intel_idle: add Emerald Rapids Xeon support
+  + Merge tag 'kernel-5.14.0-284.4.1.el9_2' from 9.2
+  + powercap: intel_rapl: add support for Emerald Rapids
+  + redhat/configs: Disable CONFIG_GCC_PLUGINS
+  + redhat/configs: Revert "enable DAMON configs"
+
 * Wed Mar 22 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.290-alt1.el9
 - Updated to kernel-5.14.0-290.el9:
   + block: update with upstream v6.3
