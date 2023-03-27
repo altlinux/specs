@@ -34,9 +34,10 @@
 %define libkritaresourcewidgets libkritaresourcewidgets%sover
 %define libkritapsdutils libkritapsdutils%sover
 %define libkritatiffpsd libkritatiffpsd%sover
+%define libkritaexifcommon libkritaexifcommon%sover
 
 Name: krita
-Version: 5.1.3
+Version: 5.1.5
 Release: alt1
 %K5init no_altplace
 
@@ -354,6 +355,13 @@ Obsoletes: libkritatiffpsd17
 %description -n %libkritatiffpsd
 %name library
 
+%package -n %libkritaexifcommon
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libkritaexifcommon
+%name library
+
 %prep
 %setup
 %patch1 -p1
@@ -497,8 +505,14 @@ done
 %files -n %libkritatiffpsd
 %_libdir/libkritatiffpsd.so.%sover
 %_libdir/libkritatiffpsd.so.*
+%files -n %libkritaexifcommon
+%_libdir/libkritaexifcommon.so.%sover
+%_libdir/libkritaexifcommon.so.*
 
 %changelog
+* Mon Mar 27 2023 Sergey V Turchin <zerg@altlinux.org> 5.1.5-alt1
+- new version
+
 * Mon Nov 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.1.3-alt1
 - new version
 
