@@ -2,7 +2,7 @@
 
 Name: proxmox-widget-toolkit
 Summary: ExtJS Helper Classes for Proxmox
-Version: 3.6.3
+Version: 3.6.4
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Other
@@ -50,6 +50,9 @@ install -pD -m644 src/api-viewer/APIViewer.js %buildroot%_datadir/javascript/%na
 %_datadir/javascript/%name-dev
 
 %changelog
+* Mon Mar 27 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.6.4-alt1
+- 3.6.4
+
 * Fri Mar 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.6.3-alt1
 - 3.6.3
 

@@ -3,7 +3,7 @@
 
 Name: pve-guest-common
 Summary: PVE common guest-related modules
-Version: 4.2.3
+Version: 4.2.4
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -21,9 +21,16 @@ Conflicts: pve-container < 3.1.4
 Conflicts: pve-manager < 6.0.10
 Conflicts: qemu-server < 6.1.19
 
-Requires: libpve-cluster-perl pve-cluster pve-storage pve-common proxmox-websocket-tunnel
+Requires: libpve-cluster-perl >= 7.2.3
+Requires: pve-cluster
+Requires: pve-common >= 7.2.6
+Requires: pve-storage >= 7.2.6
+Requires: proxmox-websocket-tunnel
 
-BuildRequires: libpve-cluster-perl pve-common pve-storage pve-cluster
+BuildRequires: libpve-cluster-perl >= 7.2.3
+BuildRequires: pve-cluster
+BuildRequires: pve-common >= 7.2.6
+BuildRequires: pve-storage >= 7.2.6
 
 %description
 This package contains a common code base used by pve-container and qemu-server
@@ -38,6 +45,9 @@ This package contains a common code base used by pve-container and qemu-server
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Mon Mar 27 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.2.4-alt1
+- 4.2-4
+
 * Wed Nov 23 2022 Andrew A. Vasilyev <andy@altlinux.org> 4.2.3-alt1
 - 4.2-3
 
