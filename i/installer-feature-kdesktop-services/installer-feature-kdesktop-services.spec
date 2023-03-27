@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-services
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Mar 27 2023 Sergey V Turchin <zerg@altlinux.org> 0.10.1-alt1
+- don't force user obex service to start
+
 * Mon Apr 05 2021 Sergey V Turchin <zerg@altlinux.org> 0.10.0-alt1
 - enable lightdm first then sddm
 
