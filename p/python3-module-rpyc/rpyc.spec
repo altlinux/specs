@@ -1,27 +1,31 @@
 %define oname rpyc
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 4.1.2
+Version: 5.3.1
 Release: alt1
 
 Summary: Remote Python Call (RPyC), a transparent and symmetric RPC library
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/rpyc/
-BuildArch: noarch
+Vcs: https://github.com/tomerfiliba-org/rpyc
 
-# https://github.com/tomerfiliba/rpyc.git
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python3-module-pytest
+BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-sphinx
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-plumbum
+%endif
 
 %py3_provides %oname
-
 
 %description
 RPyC (pronounced like are-pie-see), or Remote Python Call, is a
@@ -69,10 +73,10 @@ sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %make -C docs pickle
 %make -C docs html
@@ -80,23 +84,34 @@ sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-export PYTHONPATH=$PWD
-%__python3 setup.py test
+%pyproject_run_pytest -k "\
+not TestDeploy \
+and not test_pinned_to_0 \
+and not win32pipes \
+and not TestUdpRegistry \
+and not test_connection \
+and not test_multiple_connection \
+and not test_parallelism"
 
 %files
 %doc *.rst
 %_bindir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
+%exclude %python3_sitelibdir/%oname/pickle
 
 %files pickles
-%python3_sitelibdir/*/pickle
+%dir %python3_sitelibdir/%oname
+%python3_sitelibdir/%oname/pickle
 
 %files docs
 %doc docs/_build/html demos
 
 
 %changelog
+* Mon Mar 27 2023 Anton Vyatkin <toni@altlinux.org> 5.3.1-alt1
+- New version 5.3.1.
+
 * Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.1.2-alt1
 - python2 disabled
 
