@@ -2,8 +2,8 @@
 %define php_version 8.0
 
 Name: nextcloud
-Version: 25.0.3
-Release: alt2
+Version: 26.0.0
+Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -162,6 +162,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Mon Mar 27 2023 Andrey Cherepanov <cas@altlinux.org> 26.0.0-alt1
+- New version.
+
 * Mon Feb 13 2023 Andrey Cherepanov <cas@altlinux.org> 25.0.3-alt2
 - Removed composer requirement (ALT #43336).
 
