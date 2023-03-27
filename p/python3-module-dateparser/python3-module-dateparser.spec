@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.8
-Release: alt1
+Release: alt1.1
 
 Summary: Python parser for human readable dates 
 License: BSD-3-Clause
@@ -22,7 +22,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-wheel  python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-mock
 BuildRequires: python3-module-parameterized
-BuildRequires: python3-module-dateutil python3-module-tzlocal python3-module-regex
+BuildRequires: python3-module-dateutil python3-module-tzlocal
+BuildRequires: python3-module-pytz python3-module-regex
 BuildRequires: python3-module-sphinx-devel python3-module-sphinx_rtd_theme
 %{?_enable_check:BuildRequires: python3-module-tox
 BuildRequires: python3-module-flake8 python3-module-pytest
@@ -87,6 +88,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%pypi_name/
 
 
 %changelog
+* Mon Mar 27 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1.8-alt1.1
+- fixed BR
+
 * Thu Mar 23 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1.8-alt1
 - 1.1.8
 
