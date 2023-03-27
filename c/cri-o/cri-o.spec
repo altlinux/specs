@@ -5,15 +5,13 @@
 
 %global provider_prefix %provider/%project/%repo
 %global import_path %provider_prefix
-%global commit 0e724229f2a81e08a5e05cef0b125ee0dadda08e
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %global _unpackaged_files_terminate_build 1
 
 %define _libexecdir /usr/libexec
 
 Name: cri-o
-Version: 1.24.3
+Version: 1.26.2
 Release: alt1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
@@ -68,7 +66,7 @@ export GOPATH="$BUILDDIR:%go_path"
 
 %golang_prepare
 
-export COMMIT_NO=%commit
+export COMMIT_NO=%release
 export GIT_TREE_STATE=clean
 export BRANCH=altlinux
 export GOFLAGS="-mod=vendor"
@@ -91,8 +89,8 @@ cd .build/src/%import_path
 
 # install conf files
 install -dp %buildroot%_sysconfdir/cni/net.d
-install -p -m 644 contrib/cni/10-crio-bridge.conf %buildroot%_sysconfdir/cni/net.d/100-crio-bridge.conf.sample
-install -p -m 644 contrib/cni/99-loopback.conf %buildroot%_sysconfdir/cni/net.d/200-loopback.conf.sample
+install -p -m 644 contrib/cni/10-crio-bridge.conflist %buildroot%_sysconfdir/cni/net.d/100-crio-bridge.conflist.sample
+install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/net.d/200-loopback.conflist.sample
 
 %make PREFIX=%buildroot%prefix DESTDIR=%buildroot \
             install.bin \
@@ -100,6 +98,12 @@ install -p -m 644 contrib/cni/99-loopback.conf %buildroot%_sysconfdir/cni/net.d/
             install.config \
             install.man \
             install.systemd
+
+%post
+%post_service crio
+
+%preun
+%preun_service crio
 
 %files
 %_bindir/crio
@@ -110,8 +114,8 @@ install -p -m 644 contrib/cni/99-loopback.conf %buildroot%_sysconfdir/cni/net.d/
 %_man8dir/crio-status.*
 %dir %_sysconfdir/crio
 %config(noreplace) %_sysconfdir/crio/crio.conf
-%_sysconfdir/cni/net.d/100-crio-bridge.conf.sample
-%_sysconfdir/cni/net.d/200-loopback.conf.sample
+%_sysconfdir/cni/net.d/100-crio-bridge.conflist.sample
+%_sysconfdir/cni/net.d/200-loopback.conflist.sample
 %config(noreplace) %_sysconfdir/crictl.yaml
 %_unitdir/*.service
 %_datadir/oci-umount
@@ -120,6 +124,10 @@ install -p -m 644 contrib/cni/99-loopback.conf %buildroot%_sysconfdir/cni/net.d/
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Mar 27 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.2-alt1
+- 1.26.2
+- Fixes: CVE-2022-2995, CVE-2022-27652, CVE-2022-4318
+
 * Thu Nov 24 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.24.3-alt1
 - 1.24.3
 - Fixes: CVE-2022-1708

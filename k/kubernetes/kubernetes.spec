@@ -1,12 +1,11 @@
 
 %global import_path github.com/kubernetes/kubernetes
-%global commit 7061dbbf75f9f82e8ab21f9be7e8ffcaae8e0d44
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
 Name: kubernetes
-Version: 1.24.11
+Version: 1.26.3
 Release: alt1
 Summary: Container cluster management
 
@@ -139,17 +138,23 @@ Packege contains files specific for using crio.
 
 %prep
 %setup -q
-rm -f go.{mod,sum}
 
 %build
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export KUBE_GIT_COMMIT=%commit
+export KUBE_GIT_COMMIT=%release
 export KUBE_GIT_TREE_STATE="clean"
 export KUBE_GIT_VERSION="v%version"
 
+# Fixes https://github.com/golang/go/issues/58425
+%ifarch armh
+export GOEXPERIMENT=nounified
+%endif
+
 %golang_prepare
+# .go-version is needed for successfull build
+cp -alv -- .go-version "$BUILDDIR/src/$IMPORT_PATH"
 pushd .gopath/src/%import_path
 export KUBE_EXTRA_GOPATH=$(pwd)/Godeps/_workspace
 
@@ -169,8 +174,6 @@ popd
 %install
 export BUILDDIR="$PWD/.gopath"
 export GOPATH="%go_path"
-#%golang_install
-#rm -rf -- %buildroot%_datadir
 
 cd .gopath/src/%import_path
 %ifarch ppc64le aarch64
@@ -337,6 +340,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Fri Mar 24 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.3-alt1
+- 1.26.3 (Fixes: CVE-2022-3172, CVE-2022-3162, CVE-2022-3294)
+
 * Fri Mar 17 2023 Alexander Stepchenko <geochip@altlinux.org> 1.24.11-alt1
 - 1.24.11
 
@@ -432,14 +438,14 @@ fi
 * Mon Oct 01 2018 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
-* Fri Aug 17 2018 Alexey Shabalin <shaba@altlinux.org> 1.11.2-alt1%ubt
+* Fri Aug 17 2018 Alexey Shabalin <shaba@altlinux.org> 1.11.2-alt1
 - 1.11.2
 
-* Fri Jul 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.11.0-alt1%ubt
+* Fri Jul 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.11.0-alt1
 - 1.11.0
 
-* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.10.4-alt1%ubt
+* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.10.4-alt1
 - 1.10.4
 
-* Mon May 14 2018 Alexey Shabalin <shaba@altlinux.ru> 1.10.2-alt1%ubt
+* Mon May 14 2018 Alexey Shabalin <shaba@altlinux.ru> 1.10.2-alt1
 - Initial build for ALT
