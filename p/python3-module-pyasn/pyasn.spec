@@ -1,24 +1,25 @@
 %define oname pyasn
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.5.0
-Release: alt2
+Version: 1.6.1
+Release: alt1
 
 Summary: Offline IP address to Autonomous System Number lookup module
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/pyasn/
+Vcs: https://github.com/hadiasghari/pyasn.git
 
-# https://github.com/hadiasghari/pyasn.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
-%py3_requires ipaddress
-
-BuildRequires: python3-module-coverage python3-module-nose
-
 
 %description
 pyasn is a Python extension module that enables very fast IP address to
@@ -40,15 +41,20 @@ makes pyasn much faster than online dig/whois/json lookups.
 %python3_install
 
 %check
-%__python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3
 
 %files
-%doc *.md *.txt
+%doc *.md *.txt LICENSE
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 
 %changelog
+* Mon Mar 27 2023 Anton Vyatkin <toni@altlinux.org> 1.6.1-alt1
+- new version 1.6.1
+
 * Fri Nov 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.5.0-alt2
 - python2 disabled
 
