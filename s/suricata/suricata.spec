@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable ebpf_build
+%def_enable unwind
 %def_disable prelude
 
 %ifarch x86_64
@@ -9,7 +10,7 @@
 %endif
 
 Name: suricata
-Version: 6.0.4
+Version: 6.0.10
 Release: alt1
 
 Summary: Intrusion Detection System
@@ -27,19 +28,22 @@ Source5: suricata.init
 
 BuildRequires: /proc
 BuildRequires: gcc gcc-c++
-BuildRequires: rust >= 1.34.2 rust-cargo cbindgen
-BuildRequires: python3-dev python3-module-yaml
+BuildRequires: rust >= 1.41.1 rust-cargo cbindgen
+BuildRequires: python3-dev
 BuildRequires: libpcap-devel libpcre-devel libyaml-devel
 BuildRequires: libjansson-devel libnss-devel libcap-ng-devel libgnutls-devel
 BuildRequires: libnet-devel libmagic-devel liblua-devel
 BuildRequires: zlib-devel liblzma-devel liblz4-devel
 %{?_enable_ebpf_build:BuildRequires: libelf-devel libbpf-devel clang llvm}
 BuildRequires: libnfnetlink-devel libnetfilter_queue-devel libnetfilter_log-devel
-BuildRequires: libhtp-devel >= 0.5.39
+BuildRequires: libhtp-devel >= 0.5.42
 BuildRequires: libmaxminddb-devel
 BuildRequires: libhiredis-devel
 %{?_enable_prelude:BuildRequires: libprelude-devel}
 %{?_enable_hyperscan:BuildRequires: libhyperscan-devel}
+%{?_enable_unwind:BuildRequires: libunwind-devel}
+
+%add_python3_path %_prefix/lib/%name/python
 
 %description
 The Suricata Engine is an Open Source Next Generation Intrusion
@@ -66,7 +70,9 @@ Matching, and GeoIP identification.
            --enable-geoip \
            --enable-lua \
            --enable-hiredis \
+	   --enable-http2-decompression \
 	   %{subst_enable prelude} \
+	   %{subst_enable unwind} \
 	   %{?_enable_ebpf_build:--enable-ebpf --enable-ebpf-build} \
            --enable-non-bundled-htp \
            --with-libpcre-includes=%_includedir/pcre \
@@ -77,10 +83,6 @@ Matching, and GeoIP identification.
 
 %install
 %makeinstall_std
-
-%if "%_libexecdir" != "%_libdir"
-    mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
 
 # Setup etc directory
 mkdir -p %buildroot%_sysconfdir/%name/rules
@@ -130,7 +132,7 @@ useradd -r -g _suricata -c 'Suricata User' \
 %_bindir/%name
 %_bindir/suricatasc
 %_bindir/suricatactl
-%python3_sitelibdir/suricata*
+%_prefix/lib/%name/python
 %config(noreplace) %attr(-,_suricata,root) %_sysconfdir/%name/suricata.yaml
 %config(noreplace) %attr(-,_suricata,root) %_sysconfdir/%name/*.config
 %config(noreplace) %attr(-,_suricata,root) %_sysconfdir/%name/rules/*.rules
@@ -146,8 +148,11 @@ useradd -r -g _suricata -c 'Suricata User' \
 %_datadir/%name
 
 %changelog
+* Mon Mar 27 2023 Alexey Shabalin <shaba@altlinux.org> 6.0.10-alt1
+- 6.0.10
+
 * Fri Jan 28 2022 Alexey Shabalin <shaba@altlinux.org> 6.0.4-alt1
-- 6.0.4 (Fixes: CVE-2021-35063, CVE-2021-37592)
+- 6.0.4 (Fixes: CVE-2021-35063, CVE-2021-37592, CVE-2021-45098)
 - Build without prelude.
 - Build with eBPF support.
 - Build with Hyperscan support for x86_64 arch.
