@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit 04ae9058ed5b135c27a3662b1153e129e5cf1483
+%global commit 74040b457b50417b58eae7cb17c63428a0e2dd44
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2022-12-07T00-56-37Z
-%define version 2022.12.07
+%global tag RELEASE.2023-03-24T21-41-23Z
+%define version 2023.03.24
 
 %global _unpackaged_files_terminate_build 1
 
@@ -45,11 +45,11 @@ export TAG=%tag
 export VERSION=${TAG#RELEASE.}
 export COMMIT=%commit
 export SCOMMIT=%shortcommit
-export YEAR=2022
+export YEAR=2023
 export prefix=%import_path/cmd
 
 # setup flags like 'go run buildscripts/gen-ldflags.go' would do
-export LDFLAGS="-X $prefix.Version=$VERSION -X $prefix.ReleaseTag=$TAG -X $prefix.CommitID=$COMMIT -X $prefix.ShortCommitID=$SCOMMIT  -X github.com/minio/minio/cmd.CopyrightYear=$YEAR"
+export LDFLAGS="-X $prefix.Version=$VERSION -X $prefix.ReleaseTag=$TAG -X $prefix.CommitID=$COMMIT -X $prefix.ShortCommitID=$SCOMMIT  -X .$prefix.CopyrightYear=$YEAR"
 export TAGS="kqueue"
 
 sed -e "s|DEVELOPMENT.GOGET|$VERSION|g" -i cmd/build-constants.go
@@ -96,6 +96,9 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Mon Mar 27 2023 Alexey Shabalin <shaba@altlinux.org> 2023.03.24-alt1
+- Update to RELEASE.2023-03-24T21-41-23Z
+
 * Wed Dec 21 2022 Alexey Shabalin <shaba@altlinux.org> 2022.12.07-alt1
 - Update to RELEASE.2022-12-07T00-56-37Z
 
