@@ -8,7 +8,7 @@
 
 Name: ppsspp
 Version: 1.14.4
-Release: alt1
+Release: alt2
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -27,19 +27,16 @@ Source1: armips-%armips_commit.tar
 Source2: discord-rpc-%discord_rpc_commit.tar
 # https://github.com/hrydgard/glslang/archive/%glslang_commit/glslang-%glslang_commit.tar.gz
 Source3: glslang-%glslang_commit.tar
-# https://github.com/hrydgard/miniupnp/archive/%miniupnp_commit/miniupnp-%miniupnp_commit.tar.gz
-Source4: miniupnp-%miniupnp_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Cross/archive/%spirv_cross_commit/SPIRV-Cross-%spirv_cross_commit.tar.gz
-Source5: SPIRV-Cross-%spirv_cross_commit.tar
-# https://github.com/facebook/zstd/archive/%zstd_commit/zstd-%zstd_commit.tar.gz
-Source6: zstd-%zstd_commit.tar
+Source4: SPIRV-Cross-%spirv_cross_commit.tar
 # https://github.com/Kingcom/filesystem/archive/%filesystem_commit/filesystem-%filesystem_commit.tar.gz
-Source7: filesystem-%filesystem_commit.tar
+Source5: filesystem-%filesystem_commit.tar
 
 Patch0: %name-alt-ffmpeg.patch
 Patch1: %name-alt-git.patch
 
 BuildRequires: cmake
+BuildRequires: libminiupnpc-devel
 BuildRequires: pkgconfig(Qt5Multimedia)
 BuildRequires: pkgconfig(RapidJSON)
 BuildRequires: pkgconfig(glew)
@@ -52,6 +49,7 @@ BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libzip)
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: pkgconfig(snappy)
+BuildRequires: pkgconfig(libzstd)
 
 Requires: %name-common = %EVR
 
@@ -85,14 +83,12 @@ PPSSPP is a PSP emulator written in C++, and translates PSP CPU instructions dir
 This build using the Qt frontend.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7
+%setup -b 1 -b 2 -b 3 -b 4 -b 5
 
 %__mv -Tf ../armips-%armips_commit ext/armips
 %__mv -Tf ../discord-rpc-%discord_rpc_commit ext/discord-rpc
 %__mv -Tf ../glslang-%glslang_commit ext/glslang
-%__mv -Tf ../miniupnp-%miniupnp_commit ext/miniupnp
 %__mv -Tf ../SPIRV-Cross-%spirv_cross_commit ext/SPIRV-Cross
-%__mv -Tf ../zstd-%zstd_commit ext/zstd
 %__mv -Tf ../filesystem-%filesystem_commit ext/armips/ext/filesystem
 
 %patch0 -p1
@@ -114,6 +110,8 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 	-DUSE_SYSTEM_SNAPPY:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBZIP:BOOL=TRUE \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
+	-DUSE_SYSTEM_ZSTD:BOOL=TRUE \
+	-DUSE_SYSTEM_MINIUPNPC:BOOL=TRUE \
 	-DHEADLESS:BOOL=TRUE \
 	-DLIBZIP_INCLUDE_DIR=%_includedir \
 %ifarch %arm
@@ -134,6 +132,8 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 	-DUSE_SYSTEM_SNAPPY:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBZIP:BOOL=TRUE \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
+	-DUSE_SYSTEM_ZSTD:BOOL=TRUE \
+	-DUSE_SYSTEM_MINIUPNPC:BOOL=TRUE \
 	-DUSING_QT_UI:BOOL=TRUE \
 	-DLIBZIP_INCLUDE_DIR=%_includedir \
 %ifarch %arm
@@ -172,6 +172,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Mon Mar 27 2023 Nazarov Denis <nenderus@altlinux.org> 1.14.4-alt2
+- Build with system miniupnpc and zstd (ALT #45656)
+
 * Tue Jan 03 2023 Nazarov Denis <nenderus@altlinux.org> 1.14.4-alt1
 - Version 1.14.4
 
