@@ -1,5 +1,5 @@
 Name: xfce4-screensaver
-Version: 4.18.0
+Version: 4.18.1
 Release: alt1
 
 Summary: Screen saver and locker for Xfce
@@ -75,6 +75,9 @@ and the Xfconf configuration backend.
 %_pixmapsdir/*.svg
 
 %changelog
+* Mon Mar 27 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
+- 4.18.0 -> 4.18.1.
+
 * Sat Mar 18 2023 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
 - Fixed setresgid()/setresuid() implicit declaration warning.
 - 4.16.0 -> 4.18.0.
