@@ -1,6 +1,6 @@
 Name:     ovirt-guest-agent
 Version:  1.0.16
-Release:  alt2
+Release:  alt3
 
 Summary:  The oVirt Guest Agent
 License:  Apache-2.0
@@ -12,6 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
 Patch1:   allowed-dbus-user.patch
+Patch2:   alt-udev-dir.patch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++
@@ -42,6 +43,7 @@ oVirt automatic log-in system.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -121,7 +123,7 @@ fi
 %config %_sysconfdir/pam.d/ovirt-shutdown
 %config %_sysconfdir/pam.d/ovirt-hibernate
 %config %_sysconfdir/pam.d/ovirt-flush-caches
-%config %attr (644,root,root) %_sysconfdir/udev/rules.d/55-ovirt-guest-agent.rules
+%config %attr (644,root,root) %_udevrulesdir/55-ovirt-guest-agent.rules
 %config %_sysconfdir/dbus-1/system.d/org.ovirt.vdsm.Credentials.conf
 %config %_sysconfdir/security/console.apps/ovirt-logout
 %config %_sysconfdir/security/console.apps/ovirt-locksession
@@ -173,6 +175,9 @@ fi
 %_pam_modules_dir/pam_ovirt_cred.so
 
 %changelog
+* Mon Mar 27 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.16-alt3
+- Moved udev rules to %%_udevrulesdir.
+
 * Thu Jul 29 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.16-alt2
 - Fix dbus service permissions.
 - Remove deprecated requirements.
