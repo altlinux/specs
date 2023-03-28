@@ -2,7 +2,7 @@
 
 Name: gap-ctbllib
 Summary: GAP Character Table Library
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 License: GPL-3.0+
 Group: Sciences/Mathematics
@@ -35,6 +35,9 @@ The package contains the GAP Character Table Library.
 %gap_sitelib/%repo/*
 
 %changelog
+* Tue Mar 28 2023 Leontiy Volodin <lvol@altlinux.org> 1.3.5-alt1
+- New version (1.3.5) with rpmgs script.
+
 * Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.3.4-alt1
 - New version (1.3.4) with rpmgs script.
 
