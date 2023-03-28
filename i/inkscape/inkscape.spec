@@ -12,7 +12,7 @@
 
 Name: inkscape
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
@@ -33,6 +33,13 @@ Patch: poppler-22.03.0.patch
 AutoProv:no
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-cmake
+
+# for c9f2 / p9
+# fix /usr/bin/ld.default: cannot find -lstdc++fs
+%if "%__gcc_version_major" == "8"
+BuildRequires: libstdc++8-devel-static
+%endif
 
 BuildRequires: cmake gcc-c++ intltool
 BuildRequires: boost-devel-headers boost-filesystem-devel
@@ -244,6 +251,9 @@ true
 %files checkinstall
 
 %changelog
+* Tue Mar 28 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt2
+- add BuildRequires: libstdc++8-devel-static for gcc8
+
 * Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
 - new version 1.2.2 (with rpmrb script)
 - set BR: lib2geom-devel >= 1.2.2
