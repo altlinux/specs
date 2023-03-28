@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2022.07.26
+Version: 2022.11.15
 Release: alt1
 Summary: Base component for Deepin
 License: GPL-3.0
@@ -10,6 +10,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 Source1: distribution.info
 Patch: deepin-desktop-base-2022.07.26-alt-fix-multiarch-build.patch
+Patch1: deepin-desktop-base-2022.11.15-upstream-chore-208-release.patch
 
 BuildArch: noarch
 #Recommends:     deepin-wallpapers
@@ -26,7 +27,7 @@ This package provides some components for Deepin desktop environment.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %make_build
@@ -57,6 +58,9 @@ rm -r %buildroot/usr/share/python-apt
 %exclude %_datadir/plymouth/deepin-logo.png
 
 %changelog
+* Tue Mar 28 2023 Leontiy Volodin <lvol@altlinux.org> 2022.11.15-alt1
+- New version 2022.11.15.
+
 * Mon Aug 08 2022 Leontiy Volodin <lvol@altlinux.org> 2022.07.26-alt1
 - New version (2022.07.26).
 - Used distribution logo.
