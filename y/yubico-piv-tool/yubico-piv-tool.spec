@@ -1,8 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
 Name: yubico-piv-tool
-Version: 2.3.0
-Release: alt1.gitd9d05fcc
+Version: 2.3.1
+Release: alt1
 
 Summary: Command line tool for the YubiKey PIV application
 License: BSD-2-Clause
@@ -58,17 +62,24 @@ Requires: %name = %EVR
 %files
 %doc COPYING NEWS README
 %_bindir/%name
-%_libdir/libykpiv.so*
-%_libdir/libykcs11.so*
+%_libdir/libykpiv.so.*
+%_libdir/libykcs11.so.*
 %_man1dir/%name.*
 
 %files devel
 %doc COPYING NEWS README
 %_includedir/ykpiv/
+%_libdir/libykpiv.so
+%_libdir/libykcs11.so
 %_libdir/pkgconfig/ykpiv.pc
 %_libdir/pkgconfig/ykcs11.pc
 
 %changelog
+* Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 2.3.1-alt1
+- New version.
+- Set strict ELF verification.
+- Follow SharedLib policy.
+
 * Sat Aug 27 2022 Anton Zhukharev <ancieg@altlinux.org> 2.3.0-alt1.gitd9d05fcc
 - fix tests
 
