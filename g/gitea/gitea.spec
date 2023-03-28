@@ -4,7 +4,7 @@
 %def_enable tarball
 
 Name:    gitea
-Version: 1.18.2
+Version: 1.19.0
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -27,9 +27,9 @@ Patch2: ALT_config.patch
 Patch3: disable-strip.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang >= 1.18
+BuildRequires: golang >= 1.19
 %if_disabled tarball
-BuildRequires: npm >= 6.13.6-alt2 node >= 12.17 esbuild node-gyp go-bindata
+BuildRequires: npm >= 6.13.6-alt2 node >= 14.0.0 esbuild node-gyp go-bindata
 %endif
 BuildRequires: libpam-devel
 BuildRequires: /proc
@@ -85,6 +85,10 @@ mkdir -p %buildroot%_docdir/%name
 install -Dm 0644 custom/conf/app.example.ini %buildroot%_docdir/%name/default-app.ini
 install -Dm 0644 %SOURCE4 %buildroot%_docdir/%name/
 
+# install completions
+install -D -p -m 0644 contrib/autocompletion/bash_autocomplete %buildroot%_datadir/bash-completion/completions/gitea
+install -D -p -m 0644 contrib/autocompletion/zsh_autocomplete %buildroot%_datadir/zsh/site-functions/_gitea
+
 %pre
 groupadd -r -f %name 2>/dev/null ||:
 useradd -r -g %name -c 'Gitea daemon' \
@@ -97,6 +101,8 @@ useradd -r -g %name -c 'Gitea daemon' \
 %preun_service %name
 
 %files
+%doc *.md
+%_docdir/%name
 %_bindir/%name
 %dir %attr(0750,%name,%name) %_localstatedir/%name
 %dir %attr(0770,root,%name) %_logdir/%name
@@ -106,10 +112,14 @@ useradd -r -g %name -c 'Gitea daemon' \
 %config(noreplace) %_sysconfdir/systemd/system/gitea.service.d/port.conf
 %_unitdir/%name.service
 %_man1dir/*
-%_docdir/%name
-%doc *.md
+%_datadir/bash-completion/completions/gitea
+%_datadir/zsh/site-functions/_gitea
+
 
 %changelog
+* Tue Mar 28 2023 Alexey Shabalin <shaba@altlinux.org> 1.19.0-alt1
+- 1.19.0
+
 * Mon Jan 23 2023 Alexey Shabalin <shaba@altlinux.org> 1.18.2-alt1
 - 1.18.2
 
