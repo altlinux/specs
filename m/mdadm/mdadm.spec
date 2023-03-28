@@ -8,7 +8,7 @@
 
 Name: mdadm
 Version: 4.2
-Release: alt2
+Release: alt3
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
@@ -111,6 +111,9 @@ rm -f %buildroot%_unitdir/{mdmonitor-oneshot,mdcheck_continue,mdcheck_start}.{se
 %doc TODO ChangeLog.* mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Fri Mar 24 2023 Oleg Solovyov <mcpain@altlinux.org> 4.2-alt3
+- add mdmon.service
+
 * Mon Jun 06 2022 Alexey Shabalin <shaba@altlinux.org> 4.2-alt2
 - upstream snapshot 52c67fcdd6dadc4138ecad73e65599551804d445
 
