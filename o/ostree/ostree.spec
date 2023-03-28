@@ -6,7 +6,7 @@
 
 Name: ostree
 Version: 2023.2
-Release: alt1
+Release: alt1.1
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -114,6 +114,10 @@ This package contains development documentation for lib%name.
 %prep
 %setup -a1 -a2
 %patch1 -p1
+%ifarch %e2k
+# patch against paranoid -Werror
+sed -i "/-Werror=/d" configure.ac
+%endif
 %__subst 's|$(prefix)\(/lib/tmpfiles.d\)|\1|g' Makefile-boot.am
 
 %build
@@ -196,6 +200,9 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue Mar 28 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2023.2-alt1.1
+- Fixed build for Elbrus
+
 * Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 2023.2-alt1
 - 2023.2
 
