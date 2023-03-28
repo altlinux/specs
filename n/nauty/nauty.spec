@@ -1,7 +1,8 @@
 Name: nauty
-%define lname   libnauty-2_7_4
-Version: 27r4
+%define lname   libnauty-2_8_6
+Version: 2.8.6
 Release: alt1
+Epoch: 1
 Summary: Tools for computing automorphism groups of graphs
 License: Apache-2.0
 Group: Sciences/Mathematics
@@ -10,7 +11,6 @@ Url: http://pallini.di.uniroma1.it/
 Source: http://pallini.di.uniroma1.it/nauty%version.tar.gz
 Patch1: nauty-am.diff
 Patch2: nauty-uninitialized.diff
-Patch3: nauty-0.7.3-am.patch
 BuildRequires: automake
 BuildRequires: libgmp-devel
 BuildRequires: libtool >= 2
@@ -50,9 +50,7 @@ applications that want to make use of libnauty.
 
 %prep
 %setup -n nauty%version
-#%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 %build
 rm -f makefile
@@ -67,11 +65,11 @@ rm -f %buildroot%_libdir/*.la
 
 %files
 %_bindir/*
-%doc changes24-27.txt
+%doc changes24-28.txt
 %doc COPYRIGHT
 
 %files -n %lname
-%_libdir/libnauty*-2.7.4.so
+%_libdir/libnauty*-%version.so
 
 %files devel
 %_includedir/nauty/
@@ -85,6 +83,9 @@ rm -f %buildroot%_libdir/*.la
 %_libdir/libnautyW1.so
 
 %changelog
+* Tue Mar 28 2023 Leontiy Volodin <lvol@altlinux.org> 1:2.8.6-alt1
+- New version 2.8.6.
+
 * Fri Jul 15 2022 Leontiy Volodin <lvol@altlinux.org> 27r4-alt1
 - New version (27r4).
 

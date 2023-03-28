@@ -1,7 +1,7 @@
 %define repo grape
 
 Name: gap-grape
-Version: 4.8.5
+Version: 4.9.0
 Release: alt1
 Summary: GAP: GRaph Algorithms using PErmutation groups
 License: GPL-2.0+
@@ -28,6 +28,7 @@ groups, finite geometries, and designs.
 
 %prep
 %setup -n grape-%version
+rm -rf nauty2_8_6
 
 %build
 %install
@@ -39,6 +40,10 @@ rm -Rf scripts doc/.Rhistory
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Tue Mar 28 2023 Leontiy Volodin <lvol@altlinux.org> 4.9.0-alt1
+- New version 4.9.0.
+- Removed bundled nauty.
+
 * Wed May 18 2022 Leontiy Volodin <lvol@altlinux.org> 4.8.5-alt1
 - 4.8.5.
 - Updated url tag.
