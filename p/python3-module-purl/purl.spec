@@ -1,29 +1,32 @@
 %define oname purl
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0.2
-Release: alt2
+Version: 1.6
+Release: alt1
 
 Summary: An immutable URL class for easy URL-building and manipulation
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/purl/
-BuildArch: noarch
+Url: https://pypi.org/project/purl/
+Vcs: https://github.com/codeinthehole/purl
 
-# https://github.com/codeinthehole/purl.git
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-six python3-module-nose
-BuildRequires: python3-module-pip python3-module-wheel
-BuildRequires: python3-module-tox
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-six
+%endif
 
 %py3_provides %oname
 
-
 %description
 A simple, immutable URL class with a clean API for interrogation and
-manipulation. Supports Python 2.6, 2.7, 3.3, 3.4 and pypy.
+manipulation. Supports Pythons 2.7, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8 and pypy.
 
 Also supports template URLs as per RFC 6570.
 
@@ -40,14 +43,19 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %python3_install
 
 %check
-%__python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -ra -qq tests
 
 %files
-%doc AUTHORS *.rst docs/*.rst
-%python3_sitelibdir/*
+%doc AUTHORS *.rst docs/*.rst LICENSE
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 
 %changelog
+* Tue Mar 28 2023 Anton Vyatkin <toni@altlinux.org> 1.6-alt1
+- New version 1.6.
+
 * Sat Dec 07 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt2
 - build for python2 disabled
 
