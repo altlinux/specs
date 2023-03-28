@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.13.0
+Version: 1.14.2
 Release: alt1
 
 Summary: A fast and reliable distributed task processing library for Python 3
@@ -55,6 +55,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.14.2-alt1
+- New version.
+
 * Wed Oct 05 2022 Anton Zhukharev <ancieg@altlinux.org> 1.13.0-alt1
 - initial build for Sisyphus
 
