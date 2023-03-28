@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: shadowsocks-rust
-Version: 1.15.2
+Version: 1.15.3
 Release: alt1
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: MIT
@@ -46,9 +46,14 @@ strip = false
 EOF
 
 %build
+# To avoid: "error: could not find native static library rustix_outline_x86"
+#   https://github.com/bytecodealliance/rustix/issues/574
+export RUSTFLAGS="--cfg=rustix_use_libc"
 cargo build %_smp_mflags --offline --release
 
 %install
+# To avoid: "the rustflags changed"
+export RUSTFLAGS="--cfg=rustix_use_libc"
 cargo install %_smp_mflags --offline --no-track --path .
 mkdir -p %buildroot%_unitdir %buildroot%_sysconfdir/%name
 install -m0644 .gear/%name.service %buildroot%_unitdir/%name-local.service
@@ -74,6 +79,9 @@ install -m0640 .gear/*.json %buildroot%_sysconfdir/%name
 %_bindir/ss*
 
 %changelog
+* Tue Mar 28 2023 Vitaly Chikunov <vt@altlinux.org> 1.15.3-alt1
+- Update to v1.15.3 (2023-03-13).
+
 * Sun Dec 25 2022 Vitaly Chikunov <vt@altlinux.org> 1.15.2-alt1
 - Update to v1.15.2 (2022-12-24).
 
