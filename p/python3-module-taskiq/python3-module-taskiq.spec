@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name taskiq
 
-# due to too new importlib-metadata in the repository
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Distributed task queue with full async support 
@@ -26,6 +25,10 @@ BuildRequires: python3(pydantic)
 BuildRequires: python3(pycron)
 BuildRequires: python3(watchdog)
 BuildRequires: python3(importlib-metadata)
+BuildRequires: python3(taskiq-dependencies)
+BuildRequires: python3(gitignore-parser)
+BuildRequires: python3(mock)
+BuildRequires: python3(anyio)
 %endif
 
 BuildArch: noarch
@@ -58,6 +61,10 @@ understands all types correctly.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.4-alt1
+- New version.
+- Enabled %%check.
+
 * Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.3-alt1
 - New version.
 

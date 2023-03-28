@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.2
-Release: alt1
+Release: alt2
 
 Summary: FastAPI-like dependency injection implementation
 License: Unlicense
@@ -21,6 +21,7 @@ BuildRequires: python3(poetry.core)
 
 %if_with check
 BuildRequires: python3(pytest)
+BuildRequires: python3(anyio)
 %endif
 
 BuildArch: noarch
@@ -53,6 +54,9 @@ dependencies, and you can easily integrate it in any project.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.2-alt2
+- Updated BR for %%check.
+
 * Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.2-alt1
 - New version.
 
