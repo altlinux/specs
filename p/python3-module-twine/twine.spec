@@ -1,60 +1,81 @@
 %define oname twine
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.9.1
-Release: alt2
+Version: 4.0.2
+Release: alt1
 
 Summary: Collection of utilities for interacting with PyPI
-License: ASL
+License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/twine/
-BuildArch: noarch
+Url: https://pypi.org/project/twine/
+Vcs: https://github.com/pypa/twine
 
-# https://github.com/pypa/twine.git
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-chardet python3-module-nose
-BuildRequires: python3-module-pkginfo python3-module-pytest
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-keyring
+BuildRequires: python3-module-rich
+BuildRequires: python3-module-pkginfo
 BuildRequires: python3-module-urllib3
+BuildRequires: python3-module-rfc3986
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-requests_toolbelt
+BuildRequires: python3-module-readme-renderer
+BuildRequires: python3-module-importlib-metadata
+BuildRequires: python3-module-secretstorage
+BuildRequires: python3-module-jaraco.classes
+BuildRequires: python3-module-pretend
+BuildRequires: python3-module-build
+BuildRequires: python3-module-munch
+%endif
 
 %py3_provides %oname
 
-
 %description
 Twine is a utility for interacting with PyPI.
-
-Currently it only supports uploading distributions.
+It provides build system independent uploads of source and binary distribution
+artifacts for both new and existing projects.
 
 %prep
 %setup
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
-find . -name '*.py' -type f -print0 | xargs -0 sed -i \
-    -e 's:from requests\.packages\.:from :g'
+# pytest-socket dep relevant only to test_integration, and upstream
+# disables it anyway
+sed -i '/--disable-socket/d' pytest.ini
 
 %build
-%python3_build_debug
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=$PWD
-%__python3 setup.py test
-py.test3
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PYTHONPATH=%buildroot%python3_sitelibdir
+python3 -m pytest --ignore-glob '*integration*.py' -k "\
+not test_exception_handling \
+and not test_http_exception_handling"
 
 %files
-%doc AUTHORS *.rst docs/*.rst
+%doc AUTHORS *.rst docs/*.rst LICENSE
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 
 %changelog
+* Tue Mar 28 2023 Anton Vyatkin <toni@altlinux.org> 4.0.2-alt1
+- New version 4.0.2.
+
 * Wed Dec 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.9.1-alt2
 - build for python2 disabled
 
