@@ -18,18 +18,21 @@ pyproject_metadata \\\
 
 Name: python3-module-%pypi_name
 Version: 2.0.5
-Release: alt1
+Release: alt2
+
 Summary: The build backend used by PDM that supports latest packaging standards
 License: MIT
 Group: Development/Python3
+
 Url: https://pypi.org/project/pdm-backend/
 VCS: https://github.com/pdm-project/pdm-backend
-BuildArch: noarch
 Source: %name-%version.tar
 %if_without vendored
 Source1: debundler.py.in
 %endif
 Patch: %name-%version-alt.patch
+
+BuildArch: noarch
 
 # namespace root
 %py3_requires pdm
@@ -59,8 +62,10 @@ BuildRequires: python3(pytest)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(editables)
 BuildRequires: python3-devel
-BuildRequires: /usr/bin/git
 %endif
+
+BuildRequires: /usr/bin/git
+BuildRequires: python3(pyproject_metadata)
 
 %description
 This is the backend for PDM projects that is fully-compatible with PEP 517 spec,
@@ -122,6 +127,11 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 28 2023 Michael Shigorin <mike@altlinux.org> 2.0.5-alt2
+- NMU:
+  + fix build --without check
+  + minor spec cleanup
+
 * Tue Feb 28 2023 Stanislav Levin <slev@altlinux.org> 2.0.5-alt1
 - 2.0.3 -> 2.0.5.
 
