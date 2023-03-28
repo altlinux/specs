@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt9.1
+Release: alt9.2
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -38,7 +38,8 @@ Patch1: rmsysusers.patch
 #BuildArch: noarch
 
 BuildRequires: %t_requires
-BuildRequires: spectool postgresql15-server systemd ruby-rb-inotify sass ruby-sass-listen os-autoinst osc
+BuildRequires: spectool postgresql15-server systemd os-autoinst osc
+BuildRequires: sass
 BuildRequires: python3-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-requests
@@ -95,7 +96,7 @@ Requires: openqa-client = %EVR
 Requires: perl(DBD/SQLite.pm) perl(SQL/SplitStatement.pm) perl(Mojo/SQLite.pm)
 Requires(post): coreutils
 Requires(post): os-autoinst >= 4.4
-PreReq: qemu-common
+Requires(pre,postun): qemu-common
 
 %description worker
 The openQA worker manages the os-autoinst test engine. A system with
@@ -453,6 +454,9 @@ fi
 %files single-instance
 
 %changelog
+* Tue Mar 28 2023 Pavel Skrylev <majioa@altlinux.org> 4.6-alt9.2
+- ! fixed build deps to ruby gems and some syntax
+
 * Thu Feb 09 2023 Alexei Takaseev <taf@altlinux.org> 4.6-alt9.1
 - Change BR: postgresql10-server -> postgresql15-server
 - Change Requires: postgresql10-server -> postgresql15-server
