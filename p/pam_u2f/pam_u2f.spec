@@ -1,7 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
 Name: pam_u2f
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Pluggable Authentication Module (PAM) for U2F and FIDO2
@@ -48,6 +52,10 @@ your existing infrastructure.
 %make_build check
 
 %changelog
+* Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
+- New version.
+- Set strict ELF verification.
+
 * Tue Aug 02 2022 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt1
 - initial build for Sisyphus
 
