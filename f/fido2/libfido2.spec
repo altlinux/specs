@@ -5,7 +5,7 @@
 %add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
 Name: fido2
-Version: 1.12.0
+Version: 1.13.0
 Release: alt1
 
 Summary: Command-line tools to communicate with a FIDO device over USB.
@@ -80,6 +80,9 @@ Provides development header files for lib%name.
 %_man3dir/*
 
 %changelog
+* Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.13.0-alt1
+- New version.
+
 * Sun Jan 08 2023 Anton Zhukharev <ancieg@altlinux.org> 1.12.0-alt1
 - 1.12.0
 - follow sharedlib policy
