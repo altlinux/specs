@@ -3,7 +3,7 @@
 Name: dnsmasq
 Version: 2.89
 
-Release: alt1
+Release: alt2
 Summary: A lightweight caching nameserver
 License: GPLv2+
 Group: System/Servers
@@ -15,6 +15,17 @@ Source2: %name.sysconfig
 Source3: %name-helper
 Source4: %name.service
 Patch: %name-%version-%release.patch
+
+# Patches from upstream git, must be droped
+# wen new version will be released.
+Patch1: Avoid-undefined-behaviour-with-the-ctype-3-functions.patch
+Patch2: Fix-rev-server-option.-It-was-broken-in-1db9943c6879.patch
+Patch3: Fix-possible-SEGV-when-no-servers-defined.patch
+
+# Fixes CVE-2023-28450
+Patch4: Set-the-default-maximum-DNS-UDP-packet-size-to-1232.patch
+
+Patch5: Fix-DHCPv6-use-multicast-response-which-previously-f.patch
 
 BuildPreReq: glibc-kernheaders
 
@@ -63,6 +74,12 @@ query/remove a DHCP server's leases.
 %prep
 %setup
 %patch -p1
+
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 # Setup version
 sed -r -i "s;-DVERSION=.+;-DVERSION='\\\\\"%version\\\\\"';" Makefile
@@ -142,6 +159,15 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Tue Mar 28 2023 Mikhail Efremov <sem@altlinux.org> 2.89-alt2
+- Added patches from upstream git:
+  + Avoid undefined behaviour with the ctype(3) functions
+  + Fix --rev-server option
+  + Fix possible SEGV when no servers defined
+  + Set the default maximum DNS UDP packet size to 1232
+    (fixes: CVE-2023-28450)
+  + Fix DHCPv6 "use multicast" response which previously failed
+
 * Tue Feb 07 2023 Mikhail Efremov <sem@altlinux.org> 2.89-alt1
 - Updated to 2.89.
 
