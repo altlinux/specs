@@ -1,9 +1,9 @@
 Name:    telegram-bot-api
-Version: 6.6
+Version: 6.6.2
 Release: alt1
 
 Summary: The Telegram Bot API provides an HTTP API for creating Telegram Bots.
-License: Boost Software License
+License: BSL-1.0
 Group:   Other
 Url:     https://github.com/tdlib/telegram-bot-api
 
@@ -35,5 +35,8 @@ The Telegram Bot API provides an HTTP API for creating Telegram Bots.
 %_bindir/*
 
 %changelog
+* Tue Mar 28 2023 Hihin Ruslan <ruslandh@altlinux.ru> 6.6.2-alt1
+- New Version
+
 * Sun Mar 12 2023 Hihin Ruslan <ruslandh@altlinux.ru> 6.6-alt1
 - Initial build for Sidyphus
