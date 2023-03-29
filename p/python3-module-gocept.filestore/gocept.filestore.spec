@@ -1,26 +1,27 @@
 %define mname gocept
 %define oname %mname.filestore
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Provides maildir like access to files
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/gocept.filestore/
+Url: https://pypi.org/project/gocept.filestore/
+Vcs: https://github.com/gocept/gocept.filestore
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-pytest
+%if_with check
 BuildRequires: python3-module-zope.deferredimport
-BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+%endif
 
 %py3_provides %oname
-%py3_requires zope.deferredimport zope.interface
-
 
 %description
 The filestore is an easy way to to process files with multiple processes
@@ -52,20 +53,24 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-%__python3 setup.py test
-nosetests3 -v
+%tox_check
 
 %files
-%doc *.txt
+%doc *.txt README.md
+%dir %python3_sitelibdir/%mname
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/%mname/*/tests.*
+%exclude %python3_sitelibdir/*.pth
 
 %files tests
 %python3_sitelibdir/%mname/*/tests.*
 
 
 %changelog
+* Wed Mar 29 2023 Anton Vyatkin <toni@altlinux.org> 0.5-alt1
+- New version 0.5.
+
 * Wed Jan 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4-alt1
 - Version updated to 0.4
 - porting on python3
