@@ -2,21 +2,26 @@
 
 %define oname glob2
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 0.7
-Release: alt1
+Release: alt2
 
 Summary: Extended version of Python's builtin glob module
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/glob2/
-BuildArch: noarch
+Vcs: https://github.com/miracle2k/python-glob2.git
 
-# https://github.com/miracle2k/python-glob2.git
 Source0: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
 
@@ -35,8 +40,8 @@ recursive wildcards.
 %python3_install
 
 %check
-%__python3 setup.py test
-nosetests3
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 test.py
 
 %files
 %doc CHANGES *.rst PKG-INFO
@@ -44,6 +49,9 @@ nosetests3
 
 
 %changelog
+* Wed Mar 29 2023 Anton Vyatkin <toni@altlinux.org> 0.7-alt2
+- Fix BuildRequires.
+
 * Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.7-alt1
 - Version updated to 0.7
 - build for python2 disabled.
