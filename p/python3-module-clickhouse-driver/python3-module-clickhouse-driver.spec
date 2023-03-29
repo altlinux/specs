@@ -2,17 +2,19 @@
 %define oname clickhouse-driver
 
 Name:       python3-module-%oname
-Version:    0.2.4
-Release:    alt2.1
-License:    %mit
+Version:    0.2.5
+Release:    alt1
+License:    MIT
 Group:      Development/Python3
 Summary:    ClickHouse Python Driver with native interface support.
 Url:        https://github.com/mymarilyn/clickhouse-driver
 Source:     %name-%version.tar
-BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-tzlocal
+BuildRequires: python3-module-pytz
 
 Requires: python3-module-clickhouse-cityhash
 Requires: python3-module-numpy
@@ -39,7 +41,7 @@ Package contains tests for %name.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 # install module for sphinx to temporary directory 
 %__python3 setup.py install --skip-build --root=_build --force
@@ -47,7 +49,7 @@ export PYTHONPATH=$PWD/_build/%python3_sitelibdir
 %make -C docs/ man SPHINXBUILD=sphinx-build-3
 
 %install
-%python3_install
+%pyproject_install
 
 cp -fR tests/ %buildroot%python3_sitelibdir/clickhouse_driver/
 mkdir -p %buildroot/%_man1dir
@@ -63,6 +65,11 @@ install -pm0644 docs/*/man/*.1 %buildroot/%_man1dir/
 %python3_sitelibdir/clickhouse_driver/tests/
 
 %changelog
+* Wed Mar 29 2023 Danil Shein <dshein@altlinux.org> 0.2.5-alt1
+- NMU: 0.2.4 -> 0.2.5
+  + fix FTBFS
+  + migarte to pyproject_installer
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.2.4-alt2.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
