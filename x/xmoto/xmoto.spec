@@ -1,18 +1,20 @@
-%define git 470ddaf
+%define git %nil
 
 Name: xmoto
-Version: 0.6.1
-Release: alt3.g%{git}
+Version: 0.6.2
+Release: alt1
 
 Summary: A challenging 2D motocross platform game.
 License: GPLv2
 Group: Games/Arcade
 
-Url: http://xmoto.tuxfamily.org
+Url: https://xmoto.tuxfamily.org
+# https://github.com/%name/%name/archive/%version/%version.tar.gz
 Source: %name-%version-src.tar
 Packager: Denis Pynkin <dans@altlinux.ru>
 
-Patch: xmoto-0.6.1-alt-system-ode.patch
+Patch0: %name-0.6.2-alt-system-ode.patch
+Patch1: %name-0.6.1-alt-asian-font-path.patch
 
 BuildRequires: gcc-c++ libSDL2-devel libSDL2_mixer-devel libjpeg-devel
 BuildRequires: lua-devel libode-devel libpng-devel libstdc++-devel
@@ -22,7 +24,7 @@ BuildRequires: libSDL2_net-devel
 BuildRequires: libxdg-basedir-devel
 BuildRequires(pre): rpm-build-fonts cmake ninja-build
 BuildRequires: libxml2-devel libGLU-devel liblzma-devel
-
+# chinese locale requires fonts-ttf-chinese-big5, JFI
 Requires: fonts-ttf-dejavu, %name-data = %EVR
 
 %description
@@ -59,12 +61,7 @@ ninja \
 %install
 DESTDIR=%buildroot ninja -C %_cmake__builddir install
 
-mkdir -p %buildroot%_datadir/applications
-cp -a extra/xmoto.desktop %buildroot%_datadir/applications
-install -pDm644 extra/xmoto.xpm %buildroot%_liconsdir/%name.xpm
-
 rm -rf %buildroot%_datadir/%name/Textures/Fonts/*.ttf
-
 ln -sr %buildroot%_ttffontsdir/dejavu/DejaVuSans{,Mono}.ttf \
 	%buildroot%_datadir/%name/Textures/Fonts/
 
@@ -73,14 +70,23 @@ ln -sr %buildroot%_ttffontsdir/dejavu/DejaVuSans{,Mono}.ttf \
 %files -f %name.files
 %doc ChangeLog COPYING README.md
 %_bindir/*
-%_liconsdir/%name.xpm
-%_datadir/applications/*
+%_pixmapsdir/%name.png
+%_datadir/applications/%name.desktop
 %_man6dir/*
 
 %files data
 %_datadir/%name
 
 %changelog
+* Wed Mar 29 2023 L.A. Kostis <lakostis@altlinux.ru> 0.6.2-alt1
+- 0.6.2.
+
+* Mon Sep 19 2022 L.A. Kostis <lakostis@altlinux.ru> 0.6.1-alt4.g470ddaf
+- .spec:
+  + fix URL (use https)
+  + add suggestion which asian font to use
+- src: fix asian font path.
+
 * Mon Sep 19 2022 L.A. Kostis <lakostis@altlinux.ru> 0.6.1-alt3.g470ddaf
 - Added LZMA support.
 - Use system libode.
