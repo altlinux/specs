@@ -4,7 +4,7 @@
 %def_enable check
 
 Name:        python3-module-%oname
-Version:     3.0.0
+Version:     3.1.0
 Release:     alt1
 
 Summary:     Python wrapper for MurmurHash (MurmurHash3), a set of fast and robust hash functions.
@@ -15,7 +15,6 @@ VCS:         https://github.com/hajimes/mmh3.git
 
 Source:      %name-%version.tar
 Patch0:      %name-%version-%release.patch
-Patch1:      alt-32bit-arch-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:      python3-devel
@@ -58,6 +57,10 @@ in fields such as data mining, machine learning, and natural language processing
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Wed Mar 29 2023 Danil Shein <dshein@altlinux.org> 3.1.0-alt1
+- new version 3.1.0
+  + delete 32bit archs patch (merged by upstream)
+
 * Tue Nov 08 2022 Danil Shein <dshein@altlinux.org> 3.0.0-alt1
 - new version 3.0.0
   + actually enable tests
