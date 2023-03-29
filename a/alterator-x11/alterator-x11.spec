@@ -1,8 +1,8 @@
 %define guile22 1
 
 Name: alterator-x11
-Version: 1.98.14
-Release: alt3
+Version: 1.98.15
+Release: alt1
 
 Url: http://www.altlinux.com
 Source:%name-%version.tar
@@ -96,6 +96,9 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout/
 %_bindir/xsetup*
 
 %changelog
+* Mon Mar 27 2023 Anton Midyukov <antohami@altlinux.org> 1.98.15-alt1
+- video_scan: fix read escaped quotes in scan_lspci (Closes: 45668)
+
 * Thu May 23 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.98.14-alt3
 - Fixed previous change (aarch64 is non-x86 too).
 
