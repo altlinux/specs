@@ -1,9 +1,9 @@
-%define git da66af2
+%define git %nil
 
 Name: vdpauinfo
-Version: 1.4
+Version: 1.5
 Summary: VDPAU acceleration information utility
-Release: alt1.g%{git}
+Release: alt1
 License: MIT/X Consortium
 Group: System/X11
 URL: https://www.freedesktop.org/wiki/Software/VDPAU/
@@ -11,7 +11,7 @@ URL: https://www.freedesktop.org/wiki/Software/VDPAU/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libvdpau-devel
+BuildRequires: gcc-c++ libvdpau-devel >= 1.5
 BuildRequires: libX11-devel xorg-xproto-devel
 
 %description
@@ -38,6 +38,9 @@ Tool to query the capabilities of a VDPAU implementation.
 
 
 %changelog
+* Wed Mar 29 2023 L.A. Kostis <lakostis@altlinux.ru> 1.5-alt1
+- 1.5.
+
 * Sun May 29 2022 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt1.gda66af2
 - 1.4-1-gda66af2.
 
