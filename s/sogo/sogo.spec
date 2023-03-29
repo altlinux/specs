@@ -3,22 +3,15 @@
 
 Summary: SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:    sogo
-Version: 5.8.0
-Release: alt3
+Version: 5.8.2
+Release: alt1
 
 License: GPL-2.0+ and LGPL-2.1+
-URL:     https://sogo.nu/
-# VCS:   https://github.com/inverse-inc/sogo
-# Do not forget to update angular submodule and 
-# update CSS as describe in https://sogo.nu/files/docs/SOGoDevelopersGuide.pdf
-#  git submodule init
-#  git submodule update
-#  cd UI/WebServerResources
-#  npm install
-#  ./node_modules/grunt/bin/grunt build
-
 Group:   Communications
-Packager:Andrey Cherepanov <cas@altlinux.org>
+URL: https://sogo.nu/
+VCS: https://github.com/Alinto/sogo
+
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: SOGo-%version.tar
 Source1: sogo.init
@@ -28,7 +21,6 @@ Patch2: sogo-alt-fixes.patch
 Patch4: sogo-alt-fix-timeZoneWithAbbreviation.patch
 Patch5: sogo-alt-libzip-includes.patch
 Patch6: sogo-alt-libytnef-includes.patch
-Patch7: sogo-fix3981.patch
 
 Requires: gnustep-base >= 1.28.1
 Requires: stmpclean
@@ -47,7 +39,13 @@ BuildRequires: gnustep-base-devel
 # To ignore a patched submodule:
 BuildPreReq: patchutils
 BuildRequires: gcc-objc
-BuildRequires: sope-appserver-devel sope-core-devel sope-ldap-devel sope-mime-devel sope-xml-devel sope-gdl1-devel sope-sbjson-devel
+BuildRequires: sope-appserver-devel
+BuildRequires: sope-core-devel
+BuildRequires: sope-ldap-devel
+BuildRequires: sope-mime-devel
+BuildRequires: sope-xml-devel
+BuildRequires: sope-gdl1-devel
+BuildRequires: sope-sbjson-devel
 BuildRequires: libcurl-devel
 BuildRequires: libffi-devel
 BuildRequires: libgcrypt-devel
@@ -262,7 +260,6 @@ tar xf %SOURCE2
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 
 # Set correct python3 executable in shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
@@ -442,6 +439,12 @@ fi
 %preun_service sogo
 
 %changelog
+* Wed Mar 29 2023 Andrey Cherepanov <cas@altlinux.org> 5.8.2-alt1
+- New version.
+
+* Wed Mar 29 2023 Andrey Cherepanov <cas@altlinux.org> 5.8.1-alt1
+- New version.
+
 * Mon Mar 13 2023 Andrey Cherepanov <cas@altlinux.org> 5.8.0-alt3
 - Fixed images not displayed when forward / reply to a mail (#3981).
 
