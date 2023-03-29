@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: %pkgname-compat
-Version: 2.28.2
+Version: 2.28.3
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -137,6 +137,9 @@ sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
 %endif
 
 %changelog
+* Wed Mar 29 2023 Nazarov Denis <nenderus@altlinux.org> 2.28.3-alt1
+- Version 2.28.3
+
 * Fri Dec 16 2022 Nazarov Denis <nenderus@altlinux.org> 2.28.2-alt1
 - Version 2.28.2
 
