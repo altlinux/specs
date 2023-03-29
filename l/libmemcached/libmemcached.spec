@@ -1,18 +1,16 @@
 Name: libmemcached
-Version: 1.0.18
-Release: alt3
+Version: 1.1.4
+Release: alt1
 
 Summary: Client library to the memcached
 License: BSD
 Group: System/Libraries
-Url: http://libmemcached.org/
-# http://launchpad.net/%name/1.0/%version/+download/%name-%version.tar.gz
+Url: https://github.com/awesomized/libmemcached/
 Source: %name-%version.tar
-Patch1: libmemcached-1.0.5-alt-disable-network-tests.patch
-Patch2: libmemcached-fix-gcc7-build.patch
-Patch3: libmemcached-fix-automake-build.patch
+Patch0: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ memcached-devel perl-podlators libevent-devel
+BuildRequires(pre): cmake
+BuildRequires: flex gcc-c++
 
 %description
 libmemcached is a C and C++ client library to the memcached
@@ -42,42 +40,42 @@ for %name.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p0
-%patch3 -p1
+%patch0 -p1
 
 %build
-%autoreconf
-%configure --disable-static
-%make_build
+%cmake -DENABLE_STATIC=FALSE
+%cmake_build
 
 %install
-%makeinstall_std
-
-%check
-#make test
+%cmakeinstall_std
+rm -f %buildroot%_libdir/libp9y.a
+rm -f %buildroot%_libdir/cmake/libmemcached-awesome/p9y*
 
 %files
 %_libdir/*.so.*
-%doc AUTHORS ChangeLog COPYING README THANKS
+%doc AUTHORS ChangeLog COPYING README.md BUGS.md TODO
 
 %files utils
 %_bindir/*
-%_man1dir/*
 
 %files devel
 %_libdir/*.so
-%_includedir/%name
 %_includedir/libhashkit
 %_includedir/libhashkit-1.0
 %_includedir/libmemcached
 %_includedir/libmemcached-1.0
+%_includedir/libmemcachedprotocol-0.0
 %_includedir/libmemcachedutil-1.0
 %_aclocaldir/*.m4
 %_pkgconfigdir/%name.pc
-%_man3dir/*
+%_libdir/cmake/*
 
 %changelog
+* Wed Mar 29 2023 Alexei Takaseev <taf@altlinux.org> 1.1.4-alt1
+- 1.1.4 (Fixes CVE-2023-27478)
+- Change URL to new upstream project
+- Use CMAKE
+
 * Wed Apr 10 2019 Alexei Takaseev <taf@altlinux.org> 1.0.18-alt3
 - Fix build with automake 1.16
 
