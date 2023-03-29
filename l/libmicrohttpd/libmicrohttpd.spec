@@ -1,6 +1,6 @@
 Name: libmicrohttpd
-Version: 0.9.75
-Release: alt2
+Version: 0.9.76
+Release: alt1
 
 Summary: Library providing compact API and implementation of an HTTP/1.1 webserver
 License: LGPL-2.1-or-later
@@ -55,6 +55,9 @@ sed -ri '/^\s+TEST_HTTPS_SNI/ s,=.+$,=,' src/testcurl/https/Makefile.am
 %_pkgconfigdir/*
 
 %changelog
+* Wed Mar 29 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.76-alt1
+- 0.9.76 released (fixes: CVE-2023-27371)
+
 * Fri Apr 15 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.75-alt2
 - disable broken https_sni test
 
