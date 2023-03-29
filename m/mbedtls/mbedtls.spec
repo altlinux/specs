@@ -1,11 +1,11 @@
 %define __nprocs 1
 %define so_tls_version 19
-%define so_crypto_version 13
-%define so_x509_version 4
+%define so_crypto_version 14
+%define so_x509_version 5
 %def_disable static
 
 Name: mbedtls
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -108,11 +108,8 @@ sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
 %install
 %cmakeinstall_std
 mkdir -p %buildroot%_libexecdir/%name
-mkdir -p %buildroot%_libdir/cmake/%name
 mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
-mv %buildroot%_prefix/cmake/* %buildroot%_libdir/cmake/%name
 rm -rf %buildroot%_bindir
-rm -rf %buildroot%_prefix/cmake
 
 %files -n lib%name%so_tls_version
 %_libdir/lib%name.so.*
@@ -132,8 +129,8 @@ rm -rf %buildroot%_prefix/cmake
 %_libdir/libmbedcrypto.so
 %_libdir/lib%name.so
 %_libdir/libmbedx509.so
-%dir %_libdir/cmake/%name
-%_libdir/cmake/%name/*.cmake
+%dir %_libdir/cmake/MbedTLS
+%_libdir/cmake/MbedTLS/*.cmake
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -147,6 +144,9 @@ rm -rf %buildroot%_prefix/cmake
 %_libexecdir/%name/*
 
 %changelog
+* Wed Mar 29 2023 Nazarov Denis <nenderus@altlinux.org> 3.4.0-alt1
+- Version 3.4.0
+
 * Thu Dec 15 2022 Nazarov Denis <nenderus@altlinux.org> 3.3.0-alt1
 - Version 3.3.0
 
