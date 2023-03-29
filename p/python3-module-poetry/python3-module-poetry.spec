@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Poetry -- Python build system
@@ -22,9 +22,11 @@ Source: %pypi_name-%version.tar
 
 BuildArch: noarch
 
-%define core_ver 1.5.1
+%define core_ver 1.5.2
+%define dulwich_ver 0.21.2
 
 Requires: python3-module-poetry-core >= %core_ver
+Requires: python3-module-dulwich >= %dulwich_ver
 Provides: %pypi_name = %EVR
 Provides: /usr/bin/%pypi_name
 
@@ -40,6 +42,7 @@ BuildRequires: python3(pep517)
 BuildRequires: python3(keyring)
 BuildRequires: python3-module-pkginfo > 1.9.4
 BuildRequires: python3-module-poetry-core >= %core_ver
+BuildRequires: python3-module-dulwich >= %dulwich_ver
 BuildRequires: python3(%{pypi_name}_plugin_export)}
 
 %description
@@ -66,6 +69,9 @@ that: the new, standardized pyproject.toml.
 %doc README.md CHANGELOG.md 
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
 * Tue Feb 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
