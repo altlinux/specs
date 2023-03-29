@@ -5,7 +5,7 @@
 %def_with aqbanking
 
 Name: 	 gnucash
-Version: 4.13
+Version: 5.0
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -58,7 +58,10 @@ BuildRequires: libsecret-devel
 BuildRequires: xsltproc
 BuildRequires: zlib-devel
 BuildRequires: libxslt-devel
-BuildRequires: boost-locale-devel boost-filesystem-devel boost-program_options-devel
+BuildRequires: boost-locale-devel
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: boost-asio-devel
 %if_with aqbanking
 BuildRequires: aqbanking-devel
 %endif
@@ -68,6 +71,7 @@ BuildRequires: libwebkit2gtk-devel
 BuildRequires: python3-devel
 %endif
 BuildRequires: perl-podlators
+BuildRequires: perl-JSON
 BuildRequires: perl-Date-Manip
 BuildRequires: /proc
 
@@ -213,6 +217,9 @@ rm -rf %buildroot%_datadir/guile/site/*/tests \
 %files quotes
 
 %changelog
+* Tue Mar 28 2023 Andrey Cherepanov <cas@altlinux.org> 5.0-alt1
+- New version.
+
 * Sun Dec 18 2022 Andrey Cherepanov <cas@altlinux.org> 4.13-alt1
 - New version.
 
