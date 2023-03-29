@@ -4,8 +4,8 @@
 %def_without python2
 
 Name: nut
-Version: 2.7.4
-Release: alt7
+Version: 2.8.0
+Release: alt1
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -22,30 +22,25 @@ Source4: upsd.sysconfig
 
 Source104: libs.sh
 
-Patch4: nut-2.6.0-alt-chroot.patch
-Patch5: nut-2.6.0-alt-upsdrvctl-list.patch
 Patch6: nut-2.6.0-alt-upsstats.patch
-Patch7: nut-2.6.0-alt-drivers.patch
-Patch10: nut-2.6.0-alt-usb.patch
-Patch20: nut-2.6.2-snmp-noAES.patch
 Patch21: nut-2.6.0-upsd-listen.patch
-Patch22: nut-2.6.0-usb_submit_urb.patch
-Patch23: nut-2.6.5-alt-systemd.patch
 Patch24: nut-2.6.5-bcmxcp.patch
-Patch25: nut-2.7.4-alt-gdlib.patch
-Patch26: nut-2.7.4-alt-linking.patch
-Patch27: nut-2.7.4-github-504-openssl.patch
-Patch28: nut-2.7.4-man-parralel-build.patch
-Patch29: nut-2.7.4-alt-python-compat.patch
-Patch30: nut-2.7.4-alt-dont-autoreconf.patch
-Patch31: nut-2.7.4-alt-fix-strip.patch
+Patch25: nut-2.8.0-alt-chroot.patch
+Patch26: nut-2.8.0-alt-upsdrvctl-list.patch
+Patch27: nut-2.8.0-alt-drivers.patch
+Patch28: nut-2.8.0-alt-usb.patch
+Patch29: nut-2.8.0-snmp-noAES.patch
+Patch30: nut-2.8.0-usb_submit_urb.patch
+Patch31: nut-2.8.0-alt-systemd.patch
+Patch32: nut-2.8.0-alt-gdlib.patch
+Patch33: nut-2.8.0-alt-dont-autoreconf.patch
+Patch34: nut-2.8.0-alt-fix-strip.patch
+Patch35: nut-2.8.0-alt-upssched-cmd.patch
 
 # Fedora patches
-Patch103: nut-2.6.5-quickfix.patch
-Patch105: nut-2.6.5-dlfix.patch
-Patch107: nut-2.6.5-foreground.patch
-Patch108: nut-2.6.5-unreachable.patch
-Patch109: nut-2.6.5-rmpidf.patch
+Patch110: nut-2.8.0-dlfix.patch
+Patch111: nut-2.8.0-rmpidf.patch
+Patch112: nut-2.8.0-unreachable.patch
 
 %def_with ssl
 %def_with cgi
@@ -103,6 +98,7 @@ BuildRequires: libfreeipmi-devel
 %endif
 
 %add_findreq_skiplist /lib/systemd/system-shutdown/nutshutdown
+%add_findreq_skiplist /usr/lib/nut-driver-enumerator.sh
 
 BuildRequires: %libusb
 
@@ -146,6 +142,10 @@ Summary: Shared library libnutscan of nut
 Group: Development/C
 
 %package -n libnutclient
+Summary: Shared library libnutclient of nut
+Group: Development/C
+
+%package -n libnutclientstub
 Summary: Shared library libnutclient of nut
 Group: Development/C
 
@@ -240,6 +240,15 @@ live status tracking on web pages, and more.
 
 This package includes shared library of NUT project.
 
+%description -n libnutclientstub
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
+serial ports of some kind that allow some form of state checking.  This
+capability has been harnessed where possible to allow for safe shutdowns,
+live status tracking on web pages, and more.
+
+This package includes shared library of NUT project.
+
 %description -n libupsclient-devel
 These programs are part of a developing project to monitor the assortment
 of UPSes that are found out there in the field.  Many models have serial
@@ -298,28 +307,7 @@ This package contains python bindings for NUT.
 
 %prep
 %setup
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch10 -p2
-%patch21 -p1
-%patch24 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-
-%patch103 -p1 -b .quickfix
-%patch105 -p1 -b .dlfix
-%patch107 -p1 -b .foreground
-%patch108 -p1 -b .unreachable
-%patch109 -p1 -b .rmpidf
-
-%patch23 -p2
-%patch25 -p2
-%patch26 -p2
+%autopatch -p1
 
 # fix cgi path in html links for current %%cgidir
 sed -i 's@/cgi-bin/nut/@/cgi-bin/@g' data/html/header.html.in
@@ -413,7 +401,7 @@ mv %buildroot/lib/udev/rules.d/52-nut-ipmipsu.rules %buildroot/lib/udev/rules.d/
 %if_with systemd
 # Add symlink for SysV compatibility
 ln -s nut-monitor.service %buildroot%_unitdir/upsmon.service
-ln -s nut-driver.service %buildroot%_unitdir/upsdrv.service
+ln -s nut-driver@.service %buildroot%_unitdir/upsdrv.service
 ln -s nut-server.service %buildroot%_unitdir/upsd.service
 %endif
 
@@ -425,10 +413,17 @@ install -p -D -m 644 scripts/python/module/PyNUT.py %buildroot%python3_sitelibdi
 install -p -D -m 644 scripts/python/module/PyNUT.py %buildroot%python_sitelibdir/PyNUT.py
 
 mkdir -p %buildroot%_datadir/nut/nut-monitor/pixmaps
+mkdir -p %buildroot%_datadir/nut/nut-monitor/ui
+mkdir -p %buildroot%_iconsdir/hicolor/64x64
+mkdir -p %buildroot%_iconsdir/hicolor/256x256
+
 install -p -m 755 scripts/python/app/NUT-Monitor %buildroot%_datadir/nut/nut-monitor/nut-monitor
-install -p -m 644 scripts/python/app/gui-1.3.glade %buildroot%_datadir/nut/nut-monitor
+install -p -m 644 scripts/python/app/ui/gui-1.3.glade %buildroot%_datadir/nut/nut-monitor/ui/gui-1.3.glade
 install -p -m 644 scripts/python/app/pixmaps/* %buildroot%_datadir/nut/nut-monitor/pixmaps/
-install -p -D scripts/python/app/nut-monitor.png %buildroot%_pixmapsdir/nut-monitor.png
+install -p -D scripts/python/app/icons/scalable/nut-monitor.svg %buildroot%_pixmapsdir/nut-monitor.svg
+install -p -D scripts/python/app/icons/48x48/nut-monitor.png %buildroot%_liconsdir/nut-monitor.png
+install -p -D scripts/python/app/icons/64x64/nut-monitor.png %buildroot%_iconsdir/hicolor/64x64/nut-monitor.png
+install -p -D scripts/python/app/icons/256x256/nut-monitor.png %buildroot%_iconsdir/hicolor/256x256/nut-monitor.png
 install -p -D -m 644 scripts/python/app/nut-monitor.desktop %buildroot%_desktopdir/nut-monitor.desktop
 ln -sr %buildroot%_datadir/nut/nut-monitor/nut-monitor %buildroot%_bindir/nut-monitor
 %endif
@@ -482,7 +477,10 @@ fi
 %dir %attr(710,root,%runas) %confdir/certs
 %config(noreplace) %attr(640,root,%runas) %confdir/upsmon.conf
 %config(noreplace) %attr(640,root,%runas) %confdir/upssched.conf
+%exclude %confdir/solaris-init
 %_initdir/upsmon
+/lib/tmpfiles.d/nut-common.tmpfiles
+
 %if_with systemd
 %_unitdir/nut-monitor.service
 %_unitdir/upsmon.service
@@ -518,8 +516,14 @@ fi
 %if_with systemd
 %_unitdir/nut-server.service
 %_unitdir/upsd.service
-%_unitdir/nut-driver.service
+%_unitdir/nut-driver@.service
 %_unitdir/upsdrv.service
+%_unitdir/nut-driver-enumerator.path
+%_unitdir/nut-driver-enumerator.service
+%_unitdir/nut-driver.target
+%_unitdir/nut.target
+%_sbindir/upsdrvsvcctl
+%_libexecdir/nut-driver-enumerator.sh
 %endif
 %dir %confdir
 
@@ -628,6 +632,9 @@ fi
 %files -n libnutclient
 %_libdir/libnutclient.so.*
 
+%files -n libnutclientstub
+%_libdir/libnutclientstub.so.*
+
 %files -n libupsclient-devel
 %_libdir/*.so
 %_includedir/*
@@ -637,7 +644,10 @@ fi
 %if_with python2
 %files client
 %_bindir/nut-monitor
-%_pixmapsdir/nut-monitor.png
+%_pixmapsdir/nut-monitor.svg
+%_liconsdir/nut-monitor.png
+%_iconsdir/hicolor/64x64/nut-monitor.png
+%_iconsdir/hicolor/256x256/nut-monitor.png
 %_desktopdir/nut-monitor.desktop
 %_datadir/nut
 
@@ -650,6 +660,13 @@ fi
 %python3_sitelibdir/__pycache__/PyNUT.*
 
 %changelog
+* Mon Mar 20 2023 Elizaveta Morozova <morozovaes@altlinux.org> 2.8.0-alt1
+- Update to upstream version 2.8.0
+  + Update patches alt-chroot, alt-dont-autoreconf, alt-drivers, alt-fix-header, alt-fix-strip, alt-gdlib, alt-systemd, alt-upsdrvctl-list, alt-linking, alt-usb, dlfix, rmpidf, unreachable for 2.8.0
+  + Add patch alt-upsshed-cmd: fix invalid path
+  + Remove Fedora patches accepted into upstream: github-504-openssl, man-parralel-build, foreground, quickfix
+  + Remove patches alt-python-compat (forced python2 usage), alt-linking (obsolete)
+
 * Sun Dec 05 2021 Anton Farygin <rider@altlinux.ru> 2.7.4-alt7
 - FTBFS: built with forced C++14 to make gcc 11.2 happy
 - the License tag was formatted in according to SPDX
