@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Korinf multidistro single source build system
@@ -52,6 +52,21 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Tue Mar 28 2023 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
+- mount: big improvement build via docker
+- korinf: set KORINFMODULE by bin-* dir name
+- robot/service: add systemd services
+- improve docker build
+- improve build scripts to new policy
+- hasher: use modern BINARYREPO
+- korinf/mount: refactor docker image related code
+- get_bin_package: use mask from MAINFILES (EXTRAFILES) firstly, then use BUILDNAME
+- funcs/build: add BINBUILDNAME support (in addition to BUILDNAME)
+- fix run 32 bit docker containers
+- robot wine-etersoft: fixes for build old style packages
+- /etc/korinf: docker by default
+- korinf/install: fix buildstrap for new platforms
+
 * Tue May 11 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - hasher: clean code for using existed repo during build
 - add initial docker support
