@@ -1,33 +1,34 @@
 %define oname pycountry
 
-%define py3name python3-module-%oname
-%define py3dir %py3name-%version
+%def_with check
 
-Name: %py3name
-Version: 1.10
-Release: alt2
+Name: python3-module-%oname
+Version: 22.3.5
+Release: alt1
 
 Summary: ISO country, subdivision, language, currency and script definitions
-License: LGPLv2.1
+License: LGPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/pycountry
+Url: https://pypi.org/project/pycountry/
+Vcs: https://github.com/flyingcircusio/pycountry
 
-# hg clone https://bitbucket.org/gocept/pycountry
 Source: %name-%version.tar
-Patch10: %name-%version-alt-python3.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose
-
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest-cov
+%endif
 
 %description
 ISO country, subdivision, language, currency and script definitions and
 their translations.
 
 %package tests
-Summary: Tests ISO country, subdivision, language, currency and script definitions
+Summary: Tests for %oname
 Group: Development/Python3
 BuildArch: noarch
 Requires: %name = %EVR
@@ -36,32 +37,34 @@ Requires: %name = %EVR
 Tests for ISO country, subdivision, language, currency and script
 definitions and their translations.
 
+This package contains tests for %oname
+
 %prep
 %setup
-%patch10 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
-nosetests3
+%tox_check_pyproject
 
 %files
-%doc *.txt
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests.*
-%exclude %python3_sitelibdir/%oname/__pycache__/tests.*
+%doc *.txt *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/%oname/tests.*
-%python3_sitelibdir/%oname/__pycache__/tests.*
+%python3_sitelibdir/%oname/tests
 
 
 %changelog
+* Wed Mar 29 2023 Anton Vyatkin <toni@altlinux.org> 22.3.5-alt1
+- New version 22.3.5.
+
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.10-alt2
 - Build for python2 disabled.
 
