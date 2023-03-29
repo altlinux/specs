@@ -1,20 +1,23 @@
 %define oname ExtensionClass
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 4.3.0
-Release: alt2
+Version: 5.0
+Release: alt1
 
 Summary: Metaclass for subclassable extension types
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/ExtensionClass/
+Url: https://pypi.org/project/ExtensionClass/
+Vcs: https://github.com/zopefoundation/ExtensionClass.git
 
-# https://github.com/zopefoundation/ExtensionClass.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose
-
+%if_with check
+BuildRequires: python3-module-zope.testrunner
+%endif
 
 %description
 ExtensionClass:
@@ -42,7 +45,7 @@ attached to and will receive that instance object as a first parameter
 %package tests
 Summary: Tests for ExtensionClass, ComputedAttribute and MethodObject
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 Tests for ExtensionClass, ComputedAttribute and MethodObject.
@@ -58,11 +61,10 @@ Tests for ExtensionClass, ComputedAttribute and MethodObject.
 %python3_install
 
 %check
-%__python3 setup.py test
-nosetests3
+%tox_check
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests.*
 
@@ -71,6 +73,9 @@ nosetests3
 
 
 %changelog
+* Wed Mar 29 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Wed Jan 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.3.0-alt2
 - porting on python3
 
