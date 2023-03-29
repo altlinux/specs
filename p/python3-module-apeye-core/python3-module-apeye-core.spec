@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
-Release: alt3
+Version: 1.1.1
+Release: alt1
 
 Summary: Core (offline) functionality for the apeye library
 License: MIT
@@ -16,7 +16,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3(flit)
+BuildRequires: python3(hatchling)
+BuildRequires: python3(hatch-requirements-txt)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -28,6 +29,7 @@ BuildRequires: python3(coverage-pyver-pragma)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox-envlist)
 BuildRequires: python3(coincidence)
+BuildRequires: python3(idna)
 %endif
 
 BuildArch: noarch
@@ -55,6 +57,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 29 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.1-alt1
+- New version.
+
 * Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt3
 - add convenient 'python3(apeye-core)' provide
 

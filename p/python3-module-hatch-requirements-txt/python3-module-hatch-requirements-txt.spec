@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.1
+Version: 0.4.0
 Release: alt1
 
 Summary: Hatchling plugin to read project dependencies from requirements.txt
@@ -24,6 +24,7 @@ BuildRequires: python3(pytest-datadir)
 BuildRequires: python3(coincidence)
 BuildRequires: python3(handy-archives)
 BuildRequires: python3(dist-meta)
+BuildRequires: python3(pkginfo)
 %endif
 
 BuildArch: noarch
@@ -52,6 +53,12 @@ Hatchling plugin to read project dependencies from requirements.txt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 29 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
+- New version.
+
+* Mon Feb 13 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.0-alt1
+- 0.1.1 -> 0.3.0
+
 * Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 0.1.1-alt1
 - initial build for Sisyphus
 

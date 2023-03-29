@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.3
+Version: 1.1.1
 Release: alt1
 
 Summary: Markdown extension resources for MkDocs Material
@@ -16,8 +16,7 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3(hatchling)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -30,6 +29,8 @@ BuildRequires: python3(bs4)
 %endif
 
 BuildArch: noarch
+
+%py3_provides %pypi_name
 
 %description
 Markdown extension resources for MkDocs for Material
@@ -55,6 +56,9 @@ sed -i tests/extensions/test_emoji.py -e \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 29 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.1-alt1
+- New version.
+
 * Fri Aug 25 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.3-alt1
 - initial build for Sisyphus
 

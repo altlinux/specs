@@ -2,7 +2,7 @@
 %define pypi_name mkdocs-material
 
 Name: python3-module-%pypi_name
-Version: 8.5.3
+Version: 9.1.4
 Release: alt1
 
 Summary: Documentation that simply works
@@ -40,6 +40,9 @@ more than 50 languages, for all devices.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 29 2023 Anton Zhukharev <ancieg@altlinux.org> 9.1.4-alt1
+- New version.
+
 * Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 8.5.3-alt1
 - 8.4.1 -> 8.5.3
 - clean up spec
