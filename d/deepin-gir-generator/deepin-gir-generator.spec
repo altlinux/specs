@@ -1,53 +1,46 @@
-Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
 BuildRequires: libgudev-gir
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
+%define _localstatedir %_var
 %global repo go-gir-generator
 
-Name:           deepin-gir-generator
-Version:        3.0.0
-Release:        alt1
-Summary:        Generate static golang bindings for GObject
-License:        GPL-3.0+
-URL:            https://github.com/linuxdeepin/go-gir-generator
-Source0:        %{url}/archive/%{version}/%{repo}-%{version}.tar.gz
-Patch0:         SettingsBackendLike.patch
-Patch1:         launch_uris_as_manager_with_fds.patch
-Patch2:         deepin-gir-generator_2.0.2_fix_build_with_glib_2.63.patch
+Name: deepin-gir-generator
+Version: 3.0.1
+Release: alt1
+
+Summary: Generate static golang bindings for GObject
+
+License: GPL-3.0+
+Group: Other
+Url: https://github.com/linuxdeepin/go-gir-generator
+
+Source: %url/archive/%version/%repo-%version.tar.gz
+Source44: import.info
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
-ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 %{arm}}
+ExclusiveArch: %{?go_arches:%go_arches}%{!?go_arches:%ix86 x86_64 %arm}
+
+Provides: golang(gir/gobject-2.0)
+Provides: golang(gir/gio-2.0)
+Provides: golang(gir/glib-2.0)
+Provides: golang(gir/gudev-1.0)
+
 # If go_compiler is not set to 1, there is no virtual provide. Use golang instead.
-BuildRequires:  %{?go_compiler:compiler(go-compiler)}%{!?go_compiler:golang}
-BuildRequires:  pkgconfig(gobject-introspection-1.0)
-BuildRequires:  pkgconfig(gudev-1.0)
-Provides:       golang(gir/gobject-2.0)
-Provides:       golang(gir/gio-2.0)
-Provides:       golang(gir/glib-2.0)
-Provides:       golang(gir/gudev-1.0)
-Source44: import.info
+BuildRequires: %{?go_compiler:compiler(go-compiler)}%{!?go_compiler:golang}
+BuildRequires: pkgconfig(gobject-introspection-1.0)
+BuildRequires: pkgconfig(gudev-1.0)
 
 %description
 Generate static golang bindings for GObject
 
 %prep
-%setup -q -n %{repo}-%{version}
-
-GIO_VER=$(v=$(rpm -q --qf %{VERSION} gobject-introspection); echo ${v//./})
-#if [ $GIO_VER -ge 1521 ]; then
-# Our gobject-introspection is too new
-# https://cr.deepin.io/#/c/16880/
-#patch0 -p1
-#patch1 -p1
-#fi
-#patch2 -p2
+%setup -n %repo-%version
 
 %build
-export GOPATH="%{go_path}"
+export GOPATH="%go_path"
 export GO111MODULE="auto"
 %make_build
 
@@ -57,10 +50,16 @@ export GO111MODULE="auto"
 %files
 %doc README.md
 %doc --no-dereference LICENSE
-%{_bindir}/gir-generator
-%{go_path}/src/github.com/linuxdeepin/go-gir/
+%_bindir/gir-generator
+%go_path/src/github.com/linuxdeepin/go-gir/
 
 %changelog
+* Wed Mar 29 2023 Leontiy Volodin <lvol@altlinux.org> 3.0.1-alt1
+- New version 3.0.1.
+- NMU:
+  + Removed unneeded patches.
+  + Cleanup spec.
+
 * Wed Mar 16 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt1
 - new version (3.0.0) with rpmgs script
 
