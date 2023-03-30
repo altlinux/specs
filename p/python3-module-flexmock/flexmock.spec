@@ -4,25 +4,26 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.10.4
-Release: alt2
+Version: 0.11.3
+Release: alt1
 
 Summary: Mock/Stub/Spy library for Python
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/flexmock/
+Url: https://pypi.org/project/flexmock/
+Vcs: https://github.com/flexmock/flexmock
+
+Source: %name-%version.tar
 
 BuildArch: noarch
 
-# https://github.com/has207/flexmock.git
-Source: %name-%version.tar.gz
-
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires: python3-module-poetry-core
 %if_with check
-BuildRequires: python3(nose)
-BuildRequires: python3(pytest)
-BuildRequires: python3(twisted)
+BuildRequires: python3-module-twisted-core-tests
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-testtools
+BuildRequires: python3-module-subunit
 %endif
 
 %description
@@ -33,22 +34,24 @@ mocks, stubs and fakes.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHON_VERSIONS='%_python3_version'
-tests/run_tests.sh
+sed -i '/python tests\/test_teamcity.py/d' tox.ini
+%tox_check_pyproject
 
 %files
-%doc CHANGELOG README.rst docs
-%python3_sitelibdir/flexmock.py
-%python3_sitelibdir/__pycache__/flexmock.cpython-*
-%python3_sitelibdir/flexmock-%version-py%_python3_version.egg-info/
+%doc *.md LICENSE
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Mar 30 2023 Anton Vyatkin <toni@altlinux.org> 0.11.3-alt1
+- New version 0.11.3.
+
 * Thu Apr 09 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.10.4-alt2
 - Build for python2 disabled.
 
