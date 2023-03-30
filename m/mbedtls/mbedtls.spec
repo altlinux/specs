@@ -6,7 +6,7 @@
 
 Name: mbedtls
 Version: 3.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
@@ -91,6 +91,7 @@ Cryptographic utilities based on mbed TLS
 %ifarch %e2k
 # unsupported as of lcc 1.25.17
 sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
+%add_optflags -mno-aes
 %endif
 
 %build
@@ -144,6 +145,9 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Thu Mar 30 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.0-alt1.1
+- Fixed build for Elbrus
+
 * Wed Mar 29 2023 Nazarov Denis <nenderus@altlinux.org> 3.4.0-alt1
 - Version 3.4.0
 
