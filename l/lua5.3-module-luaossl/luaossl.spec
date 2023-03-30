@@ -6,7 +6,7 @@
 
 Name: lua%luaver-module-%oname
 Version: 20220711
-Release: alt1
+Release: alt2
 
 Summary: Most comprehensive OpenSSL module in the Lua universe.
 License: MIT
@@ -24,6 +24,9 @@ BuildRequires: libssl-devel
 
 # Remove self-requires
 %filter_from_requires /lua%luaver(_openssl.*)/d
+
+# Remove duplicate provides are starting with dot
+%filter_from_provides /lua%luaver(.openssl.*)/d
 
 Provides: luarocks%luaver(%oname) = %EVR
 
@@ -52,6 +55,9 @@ alternative name, and X.509v3 extension interfaces.
 %exclude %luarocks_dbdir/manifest
 
 %changelog
+* Thu Mar 30 2023 Alexandr Shashkin <dutyrok@altlinux.org> 20220711-alt2
+- delete duplicate provides that starts with dot inside brackets
+
 * Sat Mar 18 2023 Alexandr Shashkin <dutyrok@altlinux.org> 20220711-alt1
 - Initial build for Sisyphus
 
