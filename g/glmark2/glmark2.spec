@@ -2,7 +2,7 @@
 
 Name:		glmark2
 Version:	2021.12
-Release:	alt2
+Release:	alt3
 
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark
 Url:		https://github.com/glmark2/glmark2
@@ -33,6 +33,7 @@ Requires:	%name-common
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark - ES 2.0 flavour
 Group:		Graphics
 Requires:	%name-common
+Requires:	libGLES
 
 %package	drm
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark - DRM flavor
@@ -43,6 +44,7 @@ Requires:	%name-common
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark - ES 2.0 DRM flavor
 Group:		Graphics
 Requires:	%name-common
+Requires:	libGLES
 
 %package	wayland
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark - Wayland flavor
@@ -53,6 +55,7 @@ Requires:	%name-common
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark - ES 2.0 Wayland flavor
 Group:		Graphics
 Requires:	%name-common
+Requires:	libGLES
 
 %package	common
 Summary:	Common graphical assets for an OpenGL 2.0 and ES 2.0 benchmark
@@ -145,6 +148,9 @@ export CXXFLAGS="${CFLAGS}"
 %_datadir/%name
 
 %changelog
+* Thu Mar 30 2023 Anton Midyukov <antohami@altlinux.org> 2021.12-alt3
+- require libGLES for es2* subpackages (closes: #45706)
+
 * Fri Jun 03 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 2021.12-alt2
 - Fixed build failure with GCC 12
 
