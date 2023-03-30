@@ -11,7 +11,7 @@
 
 Name: muon
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: C-implemetation of Meson build system
 License: GPL-3.0-only
@@ -20,8 +20,8 @@ Url: https://github.com/annacrombie/muon
 
 Vcs: https://github.com/annacrombie/muon.git
 Source: %name-%version.tar
-Source1: https://mochiro.moe/wrap/samurai-1.2-28-g4e3a595.tar.gz
-Source2: https://mochiro.moe/wrap/meson-docs-0.63.0-239-g41a05ff93.tar.gz
+Source1: https://mochiro.moe/wrap/samurai-1.2-32-g81cef5d.tar.gz
+Source2: https://mochiro.moe/wrap/meson-docs-0.64.1-19-g39c6fa4bc.tar.gz
 Source3: %name.macros
 Source4: %name.env
 
@@ -41,6 +41,7 @@ dependencies.
 %package -n rpm-macros-%name
 Summary: RPM macros for Muon build system
 Group: Development/Other
+BuildArch: noarch
 
 %description -n rpm-macros-%name
 This package provides RPM macros for Muon build system.
@@ -60,7 +61,7 @@ mv samurai meson-docs subprojects/
 mkdir %__builddir
 
 %build
-CC=gcc ./bootstrap.sh
+CC=gcc ./bootstrap.sh ./
 CFLAGS="${CFLAGS:-%optflags %(getconf LFS_CFLAGS)}"; export CFLAGS;
 ./muon setup \
     -Dprefix=%{_prefix} \
@@ -96,6 +97,11 @@ install -Dpm 0755 %SOURCE4 %buildroot%_rpmmacrosdir/%name.env
 
 
 %changelog
+* Thu Mar 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt2
+- 0.1.0-187-gc7b33f70
+- muon.macros: added %%muon_meson macros for experimental meson cli
+  compatibility layer
+
 * Tue Oct 11 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - 0.1.0-5-gab1e044c
 
