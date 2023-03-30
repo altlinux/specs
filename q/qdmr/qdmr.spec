@@ -1,7 +1,7 @@
 
 Name: qdmr
 Version: 0.11.2
-Release: alt1
+Release: alt2
 
 Summary: GUI application and command-line-tool to program DMR radios
 License: GPLv3+
@@ -19,6 +19,7 @@ BuildRequires: qt5-location-devel
 BuildRequires: qt5-serialport-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: rpm-macros-cmake
+BuildRequires: findutils
 
 %description
 QDMR is a friendly code-plug programming software for DMR radios.
@@ -57,12 +58,18 @@ with libdmrconf. It is not required for QDMR users.
 
 %install
 %cmakeinstall_std
+if [ -d %buildroot/etc/udev/rules.d ]; then
+	# XXX: relocate udev rules to /lib/udev/rules.d
+	mkdir -p %buildroot/%_udevrulesdir
+	find %buildroot/etc/udev/rules.d -type f -print0 | \
+	xargs -0 -r mv -f --target-directory=%buildroot/%_udevrulesdir
+fi
 
 %files
 %doc README.md
 %_bindir/qdmr
 %_bindir/dmrconf
-%_sysconfdir/udev/rules.d/*
+%_udevrulesdir/*
 %_datadir/icons/hicolor/*/*.png
 %_datadir/applications/qdmr.desktop
 
@@ -75,6 +82,9 @@ with libdmrconf. It is not required for QDMR users.
 %prefix/include/libdmrconf/*.h
 
 %changelog
+* Thu Mar 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.11.2-alt2
+- Relocated udev rules to /lib/udev, no functional changes intended
+
 * Wed Feb 08 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.11.2-alt1
 - v0.11.2, amongst other things
   + BTECH DMR-6X2UV support
