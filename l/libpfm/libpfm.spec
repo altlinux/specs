@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libpfm
-Version: 4.12.1
+Version: 4.13.0
 Release: alt1
 Summary: Library to encode performance events for use by perf tool
 License: MIT
@@ -69,6 +69,9 @@ tests/validate -A
 %_man3dir/*pfm*.3*
 
 %changelog
+* Wed Mar 29 2023 Vitaly Chikunov <vt@altlinux.org> 4.13.0-alt1
+- Update to v4.13.0 (2023-03-28).
+
 * Tue Sep 20 2022 Vitaly Chikunov <vt@altlinux.org> 4.12.1-alt1
 - Update to v4.12.1 (2022-09-20).
 
