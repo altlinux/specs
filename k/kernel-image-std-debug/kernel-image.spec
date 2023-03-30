@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel	.104
+%define kernel_sublevel	.105
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -619,6 +619,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Mar 30 2023 Kernel Bot <kernelbot@altlinux.org> 2:5.15.105-alt1
+- v5.15.105 (2023-03-30).
+
 * Wed Mar 22 2023 Kernel Bot <kernelbot@altlinux.org> 2:5.15.104-alt1
 - v5.15.104 (2023-03-22).
 
