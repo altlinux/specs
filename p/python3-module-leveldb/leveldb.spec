@@ -1,29 +1,28 @@
 %define oname leveldb
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.193
-Release: alt4
+Version: 0.201
+Release: alt1
 
 Summary: Python bindings for leveldb database library
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/leveldb/
 
 Source: %name-%version.tar
-Patch0: py38-compat.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ python3-module-nose
+BuildRequires: gcc-c++
 
 %py3_provides %oname
-
 
 %description
 Python bindings for leveldb database library.
 
 %prep
 %setup
-%patch0 -p2
 
 %build
 %python3_build_debug
@@ -32,16 +31,18 @@ Python bindings for leveldb database library.
 %python3_install
 
 %check
-%__python3 setup.py test
 export PYTHONPATH=%buildroot%python3_sitelibdir
-nosetests3
+%__python3 -m unittest discover -v test/
 
 %files
-%doc README
+%doc README LICENSE
 %python3_sitelibdir/*
 
 
 %changelog
+* Thu Mar 30 2023 Anton Vyatkin <toni@altlinux.org> 0.201-alt1
+- New version 0.201.
+
 * Tue Feb 25 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.193-alt4
 - Build for python 3.8 fixed.
 
