@@ -1,26 +1,29 @@
 %define oname rabbitpy
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.23.0
-Release: alt2.git20141105.1.2
+Version: 2.0.1
+Release: alt1
 
 Summary: A pure python, thread-safe, minimalistic and pythonic RabbitMQ client library
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/rabbitpy/
+Vcs: https://github.com/gmr/rabbitpy.git
+
+
+Source: %name-%version.tar
 
 BuildArch: noarch
-
-# https://github.com/gmr/rabbitpy.git
-Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-pamqp
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-mock
-BuildRequires: python3-module-nose
+%endif
 
 %description
 A pure python, thread-safe, minimalistic and pythonic BSD Licensed
@@ -73,20 +76,26 @@ sed -i 's|sphinx-build|&-3|' docs/Makefile
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-%__python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3
 
 %files
 %doc *.rst examples
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
+%dir %python3_sitelibdir/%oname
 %python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 
 %changelog
+* Thu Mar 30 2023 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt1
+- New version 2.0.1.
+
 * Fri Apr 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.23.0-alt2.git20141105.1.2
 - Build for python2 disabled.
 
