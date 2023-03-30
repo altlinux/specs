@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.7
+Version: 0.4.8
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -33,9 +33,20 @@ Requires: polkit
 Provides: lightdm-greeter
 
 %qml_req_skipall 0
-# QtQuick is not provided yet
+
+# libqt5-qml should provide qml(QtQml)
+%qml_add_req_skip QtQml
+
+# libqt5-quick should provide
 %qml_add_req_skip QtQuick
+
+# qt5-graphicaleffects should provide
+%qml_add_req_skip QtGraphicalEffects
+
+# libkf5quickaddons should provide
 %qml_add_req_skip org.kde.kquickcontrolsaddons
+
+# plasma5-workspace-qml should provide
 %qml_add_req_skip org.kde.plasma.wallpapers.image
 
 %description
@@ -78,6 +89,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Wed Mar 29 2023 Anton Golubev <golubevan@altlinux.org> 0.4.8-alt1
+- improve config handling
+- bring the userbar theme closer visually to the design of the breeze theme
+
 * Mon Mar 20 2023 Anton Golubev <golubevan@altlinux.org> 0.4.7-alt1
 - bugfixes, update dependencies
 
