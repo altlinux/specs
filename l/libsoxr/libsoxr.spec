@@ -1,19 +1,23 @@
 %define realname soxr
+%def_enable check
+%def_enable CR32S
 
 Name: lib%realname
-Version: 0.1.2
-Release: alt4
-Group: System/Libraries
-Summary: The SoX Resampler library
+Version: 0.1.3
+Release: alt1
 
+Summary: The SoX Resampler library
+Group: System/Libraries
 License: LGPLv2+
 Url: https://sourceforge.net/p/soxr/wiki/Home/
-Source0: http://downloads.sourceforge.net/%name/%realname-%version-Source.tar.xz
-Patch0: https://raw.githubusercontent.com/videolan/vlc/master/contrib/src/soxr/0003-config-use-stdint.h-and-stdbool.h.patch
 
-# Automatically added by buildreq on Wed Apr 22 2015 (-bi)
-# optimized out: cmake cmake-modules elfutils pkg-config python-base xz
-BuildRequires: ccmake ctest
+Vcs: https://github.com/chirlu/soxr.git
+#Source: http://downloads.sourceforge.net/%realname/%realname-%version-Source.tar.xz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake ctest
 
 %description
 The SoX Resampler library `libsoxr' performs one-dimensional sample-rate
@@ -29,7 +33,7 @@ The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
-%setup -n %realname-%version-Source
+%setup -n %name-%version
 %patch -p1
 %ifarch %e2k
 # has up to SSE4.1 actually
@@ -37,34 +41,43 @@ sed -i 's,defined\([( ]\)__x86_64__\([ )]\),& || defined\1__e2k__\2,' src/{pffft
 %endif
 
 %build
-mkdir build && cd build
-cmake	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%cmake	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DLIB_INSTALL_DIR:PATH=%_libdir \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	../.
-%make_build
+	%{?_disable_CR32S:-DWITH_CR32S=FALSE}
+%nil
+%cmake_build
 
 %install
-cd build
-%makeinstall_std
+%cmake_install
 
 # Remove docs and use the rpmbuild macro instead
 rm -rf %buildroot%_docdir/*
 
+%check
+%cmake_build -t test
+
 %files
-%doc LICENCE NEWS README
 %_libdir/*.so.*
+%doc LICENCE NEWS README
 
 %files devel
-%doc examples
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/soxr-lsr.pc
 %_pkgconfigdir/soxr.pc
+%doc examples
 
 %changelog
+* Thu Mar 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
+- 0.1.3
+- switched to upstream git
+- removed obsolete VLC patch
+- fixed Source, added Vcs tags
+- ported to cmake macros, updated BR, enabled %%check
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 0.1.2-alt4
 - Replace e2k arch name with %%e2k macro (grenka@)
 

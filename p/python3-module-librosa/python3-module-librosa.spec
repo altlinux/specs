@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 0.9.2
+Version: 0.10.0
 Release: alt1
 
 Summary: A python package for music and audio analysis
@@ -41,6 +41,9 @@ BuildRequires: python3-module-setuptools >= 48 python3-module-wheel >= 0.29
 
 
 %changelog
+* Wed Feb 22 2023 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Wed Jul 20 2022 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
 - 0.9.2
 - ported to %%pyproject* macros
