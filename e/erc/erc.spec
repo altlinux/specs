@@ -1,5 +1,5 @@
 Name: erc
-Version: 0.9.5
+Version: 1.0.0
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -48,6 +48,14 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Fri Mar 31 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- use 7z as backend if patool is missed
+- erc: add --use-7z and --use-patool to force using patool or 7z
+
+* Wed Sep 28 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.6-alt1
+- erc: fix unerc support
+- erc-archive: add .tar.xz and .tar.std
+
 * Thu Nov 19 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.5-alt1
 - erc: improve print supported formats
 - erc: add exe archives support (hack)
