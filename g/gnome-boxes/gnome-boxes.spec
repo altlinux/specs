@@ -9,13 +9,12 @@
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
-Summary: A simple GNOME 3 application to access remote or virtual systems
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Summary: A GNOME 3 application to access virtual systems
 Group: Emulators
-License: LGPL-2.0
+License: LGPL-2.1
 Url: https://wiki.gnome.org/Apps/Boxes
 
 %if_disabled snapshot
@@ -30,14 +29,11 @@ Source: %name-%version%beta.tar
 %define libxml2_ver 2.7.8
 %define libusb_ver 1.0.9
 %define spice_gtk_ver 0.41
-%define phodav_ver 3.0
 %define gudev_ver 165
 %define osinfo_ver 1.10.0
-%define tracker_ver 3.0
 %define uuid_ver 1.41.3
 %define soup3_ver 3.0.7
 %define libarchive_ver 3.0.0
-%define vte_ver 0.40.2
 %define webkit_api_ver 4.1
 %define webkit_ver 2.36
 %define handy_ver 1.5.0
@@ -52,11 +48,11 @@ Requires: qemu-kvm
 Requires: fuseiso
 Requires: mtools
 
-BuildRequires(pre): meson
-BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools
+BuildRequires: yelp-tools /usr/bin/appstream-util /usr/bin/desktop-file-validate
 BuildRequires: gobject-introspection-devel >= 0.9.6
 BuildRequires: libvala-devel >= 0.28.0.16
-BuildRequires: vala-tools
 BuildRequires: glib2-devel >= %glib_ver libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libgtk+3-gir-devel
 BuildRequires: libsecret-devel libsecret-gir-devel
@@ -65,17 +61,12 @@ BuildRequires: libvirt-gconfig-devel >= %libvirt_glib_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: libusb-devel >= %libusb_ver
 BuildRequires: pkgconfig(spice-client-gtk-3.0) >= %spice_gtk_ver
-BuildRequires: libphodav-devel >= %phodav_ver
 BuildRequires: libgudev-devel >= %gudev_ver
 BuildRequires: libosinfo-devel >= %osinfo_ver
-BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver
 BuildRequires: libuuid-devel >= %uuid_ver
 BuildRequires: libsoup3.0-devel >= %soup3_ver
 BuildRequires: libarchive-devel >= %libarchive_ver
 BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
-BuildRequires: libfreerdp-devel
-BuildRequires: libvte3-devel >= %vte_ver
-BuildRequires: pkgconfig(gtksourceview-4)
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 %description
@@ -132,6 +123,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Fri Mar 31 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
+- 44.1
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 
