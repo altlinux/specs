@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.5.9
-Release: alt6
+Release: alt8
 License: GPL-3.0+
 URL:     https://www.altlinux.org/Education
 Group:   Education
@@ -302,7 +302,7 @@ Requires: wxMaxima
 %endif
 Requires: octave
 Requires: gnuplot-qt
-%ifnarch %e2k ppc64le
+%ifnarch %e2k %ix86 armh
 Requires: qt-creator
 Requires: qt-creator-doc
 %endif
@@ -328,7 +328,7 @@ Summary(ru_RU.UTF-8): Образовательное программное об
 Summary: Educational software (university)
 Group: Education
 Requires: codeblocks
-%ifnarch %e2k ppc64le
+%ifnarch %e2k %ix86 armh
 Requires: qt-creator
 Requires: qt-creator-doc
 %endif
@@ -551,13 +551,19 @@ Requires: task-edu-teacher
 
 %files server-apps
 
-%ifnarch %e2k
+%ifnarch %e2k %ix86 armh
 %files video-conferencing
 %endif
 
 %files school
 
 %changelog
+* Thu Mar 30 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt8
+- Do not require qt-creator for i586 and armh.
+
+* Mon Mar 20 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt7
+- Do not build task-edu-video-conferencing for 32-bit architectures and e2k.
+
 * Wed Dec 21 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt6
 - Exclude applications with old map of Russia.
 

@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with ClangCodeModel
-%define llvm_version 13.0
-%define qt_version 6.2.0
+%define llvm_version 14.0
+%define qt_version 6.2.4
 
 %ifarch %not_qt6_qtwebengine_arches
 %def_disable qtwebengine
@@ -14,7 +14,7 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 9.0.2
+Version: 10.0.0
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -25,14 +25,17 @@ URL: http://qt-project.org/wiki/Category:Tools::QtCreator
 VCS: git://code.qt.io/qt-creator/qt-creator.git
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
+ExcludeArch: %ix86 armh
+
 Source: %name-%version.tar
 Source1: submodules.tar
 
 Patch0: %name-%version-%release.patch
 
 Provides: qtcreator = %EVR
-Obsoletes: qtcreator-clangcodemodel
-Provides: qtcreator-clangcodemodel = %EVR
+Obsoletes: qtcreator < %EVR
+Provides: qt-creator-clangcodemodel = %EVR
+Obsoletes: qt-creator-clangcodemodel < %EVR
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -71,6 +74,11 @@ BuildRequires: libxml2-devel
 #BuildRequires: python3-module-bs4
 # Missing build requirements
 #BuildRequires: litehtml-devel
+BuildRequires: libffi-devel
+BuildRequires: mlir%llvm_version-tools
+BuildRequires: xml-utils
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-beautifulsoup4
 
 Requires: %name-core = %EVR
 # Add Qt5 build environment to build Qt project
@@ -200,6 +208,11 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Thu Mar 30 2023 Andrey Cherepanov <cas@altlinux.org> 10.0.0-alt1
+- New version.
+- Built using LLVM 14.
+- Do not built for i586 and armh.
+
 * Sat Feb 25 2023 Andrey Cherepanov <cas@altlinux.org> 9.0.2-alt1
 - New version.
 
