@@ -5,7 +5,7 @@
 
 Name: libtool_%ltversion
 Version: 2.4.7
-Release: alt1
+Release: alt2
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -166,6 +166,9 @@ ln -rsnf %buildroot/usr/share/gnu-config/config.{guess,sub} \
 %_libdir/*.a
 
 %changelog
+* Fri Mar 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.4.7-alt2
+- Adjusted libtool.m4 to use lib64 suffix for LoongArch 64-bit ABIs (closes: #45720)
+
 * Thu Mar 17 2022 Dmitry V. Levin <ldv@altlinux.org> 2.4.7-alt1
 - v2.4.6-44-gb9b44533 -> 2.4.7.
 
