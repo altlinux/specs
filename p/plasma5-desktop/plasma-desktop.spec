@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.27.3
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -36,7 +36,7 @@ Patch15: alt-menu-add-tooltip.patch
 Patch16: alt-kicker-custom-btn-img-size.patch
 Patch17: alt-users-use-gost-yescrypt.patch
 Patch18: alt-kxkb-indicator-uppercase.patch
-#
+Patch19: alt-def-screenreader.patch
 Patch20: alt-knetattach-test-unlock-ui.patch
 # Fix bug #42348
 Patch21: alt-re-set-xkb-mappings.patch
@@ -139,7 +139,7 @@ Common polkit files for %name
 # use-gost-yescrypt
 #%patch17 -p1
 %patch18 -p1
-#
+%patch19 -p1
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -250,6 +250,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Fri Mar 31 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.3-alt3
+- disable screen reader by default
+
 * Wed Mar 22 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.3-alt2
 - fix setup xkb map
 
