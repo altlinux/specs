@@ -7,7 +7,7 @@
 
 Name: kf5-%rname
 Version: 5.104.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -132,11 +132,11 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 %files -n libkf5authcore
 %_K5lib/libKF5AuthCore.so.*
+%_K5libexecdir/kauth/*
+%_K5plug/kauth/
 
 %files -n libkf5auth
 %_K5lib/libKF5Auth.so.*
-%_K5libexecdir/kauth/*
-%_K5plug/kauth/
 
 %if_enabled python
 #%files -n python-module-%rname
@@ -150,6 +150,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Fri Mar 31 2023 Sergey V Turchin <zerg@altlinux.org> 5.104.0-alt2
+- fix package plugins
+
 * Tue Mar 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.104.0-alt1
 - new version
 
