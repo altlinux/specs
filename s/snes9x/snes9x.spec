@@ -2,7 +2,7 @@
 %define spirv_cross_commit 4e2fdb25671c742a9fbe93a6034eb1542244c7e
 
 Name: snes9x
-Version: 1.62.2
+Version: 1.62.3
 Release: alt1
 
 Summary: Super Nintendo Entertainment System emulator
@@ -136,6 +136,9 @@ popd
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Mar 31 2023 Nazarov Denis <nenderus@altlinux.org> 1.62.3-alt1
+- Version 1.62.3
+
 * Tue Mar 28 2023 Nazarov Denis <nenderus@altlinux.org> 1.62.2-alt1
 - Version 1.62.2
 
