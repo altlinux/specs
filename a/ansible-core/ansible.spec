@@ -2,8 +2,8 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.14.3
-Release: alt3
+Version: 2.14.4
+Release: alt1
 
 Group:   System/Configuration/Other
 License: GPL-3.0
@@ -85,6 +85,9 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Fri Mar 31 2023 Andrey Cherepanov <cas@altlinux.org> 2.14.4-alt1
+- New version.
+
 * Fri Mar 03 2023 Andrey Cherepanov <cas@altlinux.org> 2.14.3-alt3
 - ansible-galaxy requires python3(resolvelib).
 
