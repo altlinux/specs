@@ -1,5 +1,5 @@
 Name: kodi-addon-pvr-vdr-vnsi
-Version: 20.4.0
+Version: 20.4.1
 Release: alt1
 
 Summary: PVR VDR addon for Kodi
@@ -30,6 +30,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.vdr.vnsi
 
 %changelog
+* Fri Mar 31 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.4.1-alt1
+- 20.4.1 released
+
 * Thu Jan 19 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.4.0-alt1
 - 20.4.0 released
 
