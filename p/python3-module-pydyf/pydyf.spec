@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: A low-level PDF creator
@@ -49,5 +49,8 @@ BuildArch: noarch
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Fri Mar 31 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
+- New version 0.6.0.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus.
