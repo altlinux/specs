@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: A lexer and codec to work with LaTeX code in Python
 License: MIT
@@ -14,7 +14,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage python3-module-nose
+BuildRequires: python3-module-coverage
 BuildRequires: python3-module-sphinx python3-module-six
 BuildRequires: python3-module-pytest
 
@@ -51,9 +51,8 @@ export PYTHONPATH=$PWD
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-%__python3 setup.py test -v
 export PYTHONPATH=$PWD
-coverage3 run --source=latexcodec $(type -p nosetests3) -vv
+py.test-3
 
 %files
 %doc *.rst doc/_build/html
@@ -65,6 +64,9 @@ coverage3 run --source=latexcodec $(type -p nosetests3) -vv
 
 
 %changelog
+* Fri Mar 31 2023 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt2
+- Fix BuildRequires.
+
 * Tue Mar 30 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
 - Build new version.
 
