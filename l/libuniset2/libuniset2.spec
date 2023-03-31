@@ -27,7 +27,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.28.1
+Version: 2.29.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -672,6 +672,11 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Fri Mar 31 2023 Pavel Vainerman <pv@altlinux.ru> 2.29.1-alt1
+- (uwebsocket): optimization
+- (unet): exchange control
+- fixed xinclude processing
+
 * Wed Mar 22 2023 Pavel Vainerman <pv@altlinux.ru> 2.28.1-alt1
 - (opcua): supported "opcua_mask", supported "float", supported exchangeMode
 - (modbus): supported "mbmask"
