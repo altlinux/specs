@@ -1,9 +1,9 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
-%K5init altplace
+%K5init no_altplace
 
 #Group: Graphics
 Group: Graphical desktop/KDE
@@ -26,6 +26,7 @@ BuildRequires: qt5-tools
 BuildRequires: kf5-kwindowsystem-devel
 Requires: qt5-translations convert
 Requires: %rname-backend
+Requires: libkf5auth
 
 %description
 The ALT tool for KDE to customize branding
@@ -70,8 +71,7 @@ mkdir -p %buildroot%_datadir/plymouth/themes/%rname
 %find_lang --with-qt --all-name %rname
 
 %postun backend
-currentBranding=`basename $(readlink -nf /usr/share/design/current)`
-if [ $1 -eq 0 ] && [ "$currentBranding" = "%rname"]; then
+if [ $1 -eq 0 ] ; then
     %define configFile alt-customize-branding-settings.ini
     %define configDir /var/lib
     if [ -f %configDir/%rname/%configFile ] ; then
@@ -102,7 +102,8 @@ if [ $1 -eq 0 ] && [ "$currentBranding" = "%rname"]; then
     fi
 # Toggle/repair alternatives
     alternatives-update
-    make-initrd
+    currentBranding=`basename $(readlink -nf /usr/share/design/current)`
+    [ "$currentBranding" = "%rname" ] && make-initrd || :
 fi
 
 %files -f %rname.lang
@@ -126,6 +127,11 @@ fi
 #%%doc README
 
 %changelog
+* Thu Mar 30 2023 Dmitrii Fomchenkov <sirius@altlinux.org>  1.1.2-alt1
+- fix branding change bug in desktop environments other than KDE
+- fix branding installation script
+- fix the display of the utility in the menu
+
 * Thu Jan 19 2023 Dmitrii Fomchenkov <sirius@altlinux.org>  1.1.1-alt1
 - rename button '...' to 'Choose'
 - update translation
