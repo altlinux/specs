@@ -1,31 +1,34 @@
 %define oname z3c.zcmlhook
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0b1
-Release: alt4
+Version: 2.0
+Release: alt1
 
 Summary: Easily hook into the ZCML processing machinery
-License: ZPL
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/z3c.zcmlhook/
+Url: https://pypi.org/project/z3c.zcmlhook/
+Vcs: https://github.com/zopefoundation/z3c.zcmlhook
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-
-%py3_requires zope.component zope.interface zope.schema
-%py3_requires zope.configuration
-
+%if_with check
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.testrunner
+%endif
 
 %description
 This package provides means of hooking into the Zope (ZCML)
 configuration process.
 
 %package tests
-Summary: Tests for z3c.zcmlhook
-Group: Development/Python
-Requires: %name = %version-%release
-%py3_requires nose
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
 
 %description tests
 This package provides means of hooking into the Zope (ZCML)
@@ -48,8 +51,11 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
 
+%check
+%tox_check
+
 %files
-%doc *.txt docs/*
+%doc *.txt *.rst *.md
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
@@ -59,6 +65,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sat Apr 01 2023 Anton Vyatkin <toni@altlinux.org> 2.0-alt1
+- New version 2.0
+
 * Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0b1-alt4
 - python2 disabled
 
