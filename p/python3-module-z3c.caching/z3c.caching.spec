@@ -1,21 +1,27 @@
 %define oname z3c.caching
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.2
+Version: 3.0
 Release: alt1
 
 Summary: Caching infrastructure for web apps
-License: ZPL
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/z3c.caching/
+Url: https://pypi.org/project/z3c.caching/
+Vcs: https://github.com/zopefoundation/z3c.caching
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-
-%py3_requires zope.interface zope.component zope.event
-%py3_requires zope.lifecycleevent zope.browser
-
+%if_with check
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.browser
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.lifecycleevent
+%endif
 
 %description
 Caching of web pages is a complicated process: there are many possible
@@ -32,10 +38,9 @@ every component. Administrators can then define a policy which dictates
 the correct caching behaviour for each ruleset.
 
 %package tests
-Summary: Tests for Caching infrastructure for web apps
+Summary: Tests for %oname
 Group: Development/Python3
-Requires: %name = %version-%release
-%py3_requires nose
+Requires: %name = %EVR
 
 %description tests
 Caching of web pages is a complicated process: there are many possible
@@ -68,8 +73,11 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
 
+%check
+%tox_check
+
 %files
-%doc *.txt *.rst
+%doc *.txt *.rst *.md
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
@@ -79,6 +87,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sat Apr 01 2023 Anton Vyatkin <toni@altlinux.org> 3.0-alt1
+- New version 3.0.
+
 * Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.2-alt1
 - version updated to 2.2
 - python2 disabled
