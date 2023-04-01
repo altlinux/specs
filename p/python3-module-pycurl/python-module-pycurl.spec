@@ -2,21 +2,20 @@
 %define oversion %(echo %version | sed -e "s|\\.|_|g")
 
 Name: python3-module-pycurl
-Version: 7.43.0.6
-Release: alt3
+Version: 7.45.2
+Release: alt1
 
 Summary: Python bindings to libcurl
-License: LGPL
+License: LGPLv2.1 and MIT
 Group: Development/Python3
 Url: http://pycurl.io/
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/pycurl/pycurl/archive/REL_%oversion.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): libcurl
-BuildRequires: libcurl-devel libssl-devel
+BuildRequires: libcurl-devel libgnutls-devel
 
 Requires: python3 >= 3.5
 Requires: libcurl >= %get_version libcurl
@@ -40,8 +39,10 @@ This module provides the Python bindings to libcurl.
 %_docdir/%oname/
 %python3_sitelibdir/*
 
-
 %changelog
+* Sat Apr 01 2023 Anton Farygin <rider@altlinux.ru> 7.45.2-alt1
+- update to 7.45.2
+
 * Mon Oct 12 2020 Vitaly Lipatov <lav@altlinux.ru> 7.43.0.6-alt3
 - use get_version macro for get package version
 
