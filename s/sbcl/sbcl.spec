@@ -1,8 +1,8 @@
-%ifarch %ix86 x86_64 armh aarch64
+#ifarch %ix86 x86_64 armh aarch64
 %def_without bootstrap
-%else
-%def_with bootstrap
-%endif
+#else
+#def_with bootstrap
+#endif
 
 %define common_lisp_controller 0
 
@@ -15,7 +15,7 @@
 
 Name: sbcl
 Summary: Steel Bank Common Lisp
-Version: 2.2.0
+Version: 2.3.3
 Release: alt1
 Group: Development/Lisp
 License: BSD
@@ -82,11 +82,9 @@ Source201: sbcl.rc
 Source202: sbcl-install-clc.lisp
 %endif
 
-Patch1: sbcl-2.0.4-lib_dir.patch
 Patch2: sbcl-2.2.0-personality.patch
 Patch3: sbcl-2.2.0-optflags.patch
 Patch6: sbcl-0.9.5-verbose-build.patch
-Patch7: sbcl-2.0.4-runtime.patch
 Patch8: concurrency-tests-frlock.patch
 Patch9: sbcl-2.2.0-asm-sb-thread.patch
 ## upstreamable patches
@@ -98,6 +96,9 @@ BuildRequires: patchelf
 %else
 BuildRequires: sbcl
 %endif
+
+BuildRequires: emacs-common
+BuildRequires: libzstd-devel
 
 # %%check/tests
 BuildRequires: ed /proc sbcl /usr/bin/tex
@@ -120,18 +121,16 @@ interpreter, and debugger.
 %setup -c -n sbcl-%version -a 1 %{?sbcl_bootstrap_src}
 
 pushd sbcl-%version
-%patch1 -p2
 %patch2 -p2 -b .personality
 %patch3 -p2 -b .optflags
 %{?sbcl_verbose:%patch6 -p1 -b .verbose-build}
 %ifarch aarch64 x86_64
-%patch7 -p2
 %patch8 -p2
 %endif
 %patch9 -p2
 %patch50 -p2
 
-%__subst "s|/usr/lib/sbcl/|%_libdir/sbcl/|" src/runtime/runtime.c
+%__subst "s|/usr/lib/sbcl/|%_libexecdir/sbcl/|" src/runtime/runtime.c
 
 # fix permissions (some have eXecute bit set)
 find . -name '*.c' | xargs chmod 644
@@ -145,17 +144,15 @@ ln -s sbcl-%version/doc ../doc
 popd
 
 %build
+%add_optflags -D_GNU_SOURCE
 pushd sbcl-%version
-
-export SBCL_HOME=%_libdir/sbcl/
+export SBCL_HOME=%_libexecdir/sbcl/
 export INSTALL_ROOT=%prefix
-
-
-#export SBCL_HOME=%prefix/lib/sbcl
 %{?sbcl_arch:export SBCL_ARCH=%sbcl_arch}
 %{?sbcl_shell} \
 ./make.sh \
   --prefix=%prefix \
+  --with-sb-core-compression \
   %{?sbcl_bootstrap_dir:--xc-host="`pwd`/../%sbcl_bootstrap_dir/run-sbcl.sh"}
 
 # docs
@@ -170,23 +167,21 @@ popd
 
 %install
 pushd sbcl-%version
-mkdir -p %buildroot{%_bindir,%_libdir,%_mandir}
+mkdir -p %buildroot{%_bindir,%_libexecdir,%_mandir}
 
 #unset SBCL_HOME
 
 export INSTALL_ROOT=%buildroot%prefix
-export LIB_DIR=%buildroot%_libdir
+export LIB_DIR=%buildroot%_libexecdir
 
 %{?sbcl_shell} ./install.sh
 
-
-
 %if 0%{?common_lisp_controller}
-install -m744 -p -D %SOURCE200 %buildroot%_libdir/common-lisp/bin/sbcl.sh
+install -m744 -p -D %SOURCE200 %buildroot%_libexecdir/common-lisp/bin/sbcl.sh
 install -m644 -p -D %SOURCE201 %buildroot%_sysconfdir/sbcl.rc
-install -m644 -p -D %SOURCE202 %buildroot%_libdir/sbcl/install-clc.lisp
+install -m644 -p -D %SOURCE202 %buildroot%_libexecdir/sbcl/install-clc.lisp
 # linking ok? -- Rex
-cp -p %buildroot%prefix/lib/sbcl/sbcl.core %buildroot%_libdir/sbcl/sbcl-dist.core
+cp -p %buildroot%prefix/lib/sbcl/sbcl.core %buildroot%_libexecdir/sbcl/sbcl-dist.core
 %endif
 popd
 
@@ -205,7 +200,7 @@ ERROR=0
 # sanity check, essential contrib modules get built/included?
 CONTRIBS="sb-posix.fasl sb-bsd-sockets.fasl"
 for CONTRIB in $CONTRIBS ; do
-  if [ ! -f %buildroot%_libdir/sbcl/contrib/$CONTRIB ]; then
+  if [ ! -f %buildroot%_libexecdir/sbcl/contrib/$CONTRIB ]; then
     echo "WARNING: ${CONTRIB} awol!"
     ERROR=1
     echo "ulimit -a"
@@ -221,12 +216,6 @@ time %{?sbcl_shell} ./run-tests.sh ||:
 popd
 exit $ERROR
 popd
-
-#mkdir -p %buildroot{%_libdir/sbcl/contrib,%_libdir/sbcl/site-systems}
-#mv %buildroot%prefix/lib/sbcl/* %buildroot%_libdir/sbcl/*
-#mv %buildroot%prefix/lib/contrib/* %_libdir/sbcl/contrib/
-#mv %buildroot%prefix/lib/site-systems/* %_libdir/sbcl/site-systems/
-
 
 %post
 %if 0%{?common_lisp_controller}
@@ -244,9 +233,9 @@ popd
 %doc COPYING
 %doc BUGS CREDITS NEWS PRINCIPLES README TLA TODO
 %_bindir/sbcl
-%dir %_libdir/sbcl/
-%_libdir/sbcl/contrib/
-%_libdir/sbcl/sbcl.mk
+%dir %_libexecdir/sbcl/
+%_libexecdir/sbcl/contrib/
+%_libexecdir/sbcl/sbcl.mk
 %_man1dir/sbcl.1*
 %if 0%{?docs}
 %doc doc/manual/sbcl.html
@@ -255,17 +244,21 @@ popd
 #_infodir/sbcl.info*
 %endif
 %if 0%{?common_lisp_controller}
-%_libdir/common-lisp/bin/*
-%_libdir/sbcl/install-clc.lisp
-%_libdir/sbcl/sbcl-dist.core
-%verify(not md5 size) %_libdir/sbcl/sbcl.core
+%_libexecdir/common-lisp/bin/*
+%_libexecdir/sbcl/install-clc.lisp
+%_libexecdir/sbcl/sbcl-dist.core
+%verify(not md5 size) %_libexecdir/sbcl/sbcl.core
 %config(noreplace) %_sysconfdir/sbcl.rc
 %else
-%_libdir/sbcl/sbcl.core
+%_libexecdir/sbcl/sbcl.core
 %endif
 %_infodir/*.info*
 
 %changelog
+* Fri Mar 31 2023 Andrey Cherepanov <cas@altlinux.org> 2.3.3-alt1
+- 2.3.3 (ALT #44041)
+- Moved to /usr/lib (ALT #38529).
+
 * Tue Jan 25 2022 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
