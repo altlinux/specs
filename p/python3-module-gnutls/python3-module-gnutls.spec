@@ -1,7 +1,7 @@
 %define  modulename gnutls
 
 Name:    python3-module-%modulename
-Version: 3.1.8
+Version: 3.1.10
 Release: alt1
 
 Summary: GnuTLS bindings for Python
@@ -12,7 +12,7 @@ URL:     https://github.com/AGProjects/python3-gnutls
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-dev python3-module-setuptools python3-module-wheel
 
 BuildArch: noarch
 
@@ -39,16 +39,19 @@ extend without any need to write C code or recompile anything.
 %setup -n python3-%modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/python3_%{pyproject_distinfo %modulename}
 
 %changelog
+* Sun Apr 02 2023 Andrey Cherepanov <cas@altlinux.org> 3.1.10-alt1
+- new version 3.1.10
+
 * Thu May 27 2021 Andrey Cherepanov <cas@altlinux.org> 3.1.8-alt1
 - Initial build for Sisyphus
