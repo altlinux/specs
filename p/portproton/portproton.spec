@@ -1,6 +1,6 @@
 Name: portproton
 Version: 1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Installer for PortProton
 
@@ -37,6 +37,7 @@ Icon=%name
 StartupNotify=false
 Terminal=false
 Categories=Game;
+MimeType=application/x-wine-extension-msp;application/x-msi;application/x-ms-dos-executable;
 EOF
 
 install -m755 -D %SOURCE0 %buildroot%_bindir/%name
@@ -48,6 +49,9 @@ install -m644 -D %SOURCE1 %buildroot%_pixmapsdir/%name.png
 %_pixmapsdir/%name.png
 
 %changelog
+* Sat Apr  1 2023 Artyom Bystrov <arbars@altlinux.org> 1.0-alt1.1
+- Add MimeType description in desktop file
+
 * Mon Mar 20 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - initial build for ALT Sisyphus
 
