@@ -4,7 +4,7 @@
 
 Name: lib%realname
 Version: 0.1.3
-Release: alt1
+Release: alt1.1
 
 Summary: The SoX Resampler library
 Group: System/Libraries
@@ -36,8 +36,8 @@ developing applications that use %name.
 %setup -n %name-%version
 %patch -p1
 %ifarch %e2k
-# has up to SSE4.1 actually
-sed -i 's,defined\([( ]\)__x86_64__\([ )]\),& || defined\1__e2k__\2,' src/{pffft.c,soxr.c}
+sed -i 's/__x86_64__/__e2k__/' src/pffft.c
+sed -i 's/void __cpuidex.*$/#elif 1\n#include <e2kbuiltin.h>/' src/soxr.c
 %endif
 
 %build
@@ -46,6 +46,9 @@ sed -i 's,defined\([( ]\)__x86_64__\([ )]\),& || defined\1__e2k__\2,' src/{pffft
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DLIB_INSTALL_DIR:PATH=%_libdir \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
+%ifarch %e2k
+	-DWITH_CR64S=FALSE \
+%endif
 	%{?_disable_CR32S:-DWITH_CR32S=FALSE}
 %nil
 %cmake_build
@@ -71,6 +74,9 @@ rm -rf %buildroot%_docdir/*
 %doc examples
 
 %changelog
+* Sun Apr 02 2023 Michael Shigorin <mike@altlinux.org> 0.1.3-alt1.1
+- E2K: updated ftbfs fix (ilyakurduikov@)
+
 * Thu Mar 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
 - 0.1.3
 - switched to upstream git
