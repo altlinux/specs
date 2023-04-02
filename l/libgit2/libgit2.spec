@@ -1,8 +1,9 @@
-# some online tests
-%def_disable check
+%def_enable ssh
+%def_disable cli
+%def_enable check
 
 Name: libgit2
-Version: 1.3.2
+Version: 1.6.3
 Release: alt1
 
 Summary: linkable library for Git
@@ -16,7 +17,8 @@ Source: %url/%name/archive/v%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake ninja-build python3
-BuildRequires: zlib-devel libpcre-devel libssl-devel libssh2-devel
+BuildRequires: zlib-devel libpcre2-devel libssl-devel
+%{?_enable_ssh:BuildRequires: libssh2-devel}
 BuildRequires: libkrb5-devel libhttp-parser-devel
 %{?_enable_check:BuildRequires: ctest}
 
@@ -27,7 +29,7 @@ in your applications.
 %package devel
 Group: Development/C
 Summary: linkable library for Git - development files
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 A cross-platform, linkable library implementation of Git that you can use
@@ -37,16 +39,25 @@ This package contains %name development files.
 
 %prep
 %setup
-rm -rf deps/{pcre,zlib}
+rm -rf deps/{pcre,zlib,http-parser}
 sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 
+# Disable online tests
+sed -i '/-sonline/s/^/#/' tests/libgit2/CMakeLists.txt
+
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake -G Ninja \
-       -DTHREADSAFE:BOOL=ON \
-       -DUSE_SHA1DC:BOOL=ON \
-       -DPCRE_INCLUDE_DIR=%_includedir/pcre \
-       -DENABLE_REPRODUCIBLE_BUILD=ON \
-       -DDEPRECATE_HARD=OFF
+   -DBUILD_TYPE=Release \
+   -DTHREADSAFE:BOOL=ON \
+   -DUSE_SHA1DC:BOOL=ON \
+   -DREGEX_BACKEND=pcre2 \
+   -DUSE_HTTP_PARSER=system \
+   -DENABLE_REPRODUCIBLE_BUILDS=ON \
+   -DDEPRECATE_HARD=OFF \
+   -DUSE_NTLMCLIENT=OFF \
+   %{?_disable_cli:-DBUILD_CLI=OFF} \
+   %{?_enable_ssh:-DUSE_SSH=ON}
 %nil
 %cmake_build
 
@@ -57,6 +68,7 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %cmake_build -t test
 
 %files
+%{?_enable_cli:%_bindir/git2}
 %_libdir/%name.so.*
 %doc README.md AUTHORS COPYING
 
@@ -69,6 +81,12 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Mar 22 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
+- 1.6.3
+
+* Wed Oct 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
+- 1.4.4 (ported to PCRE2)
+
 * Fri Sep 30 2022 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - 1.3.2
 
