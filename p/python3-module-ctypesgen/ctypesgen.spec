@@ -1,50 +1,68 @@
 %define _unpackaged_files_terminate_build 1
 %define oname ctypesgen
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0.2
-Release: alt1.1
+Version: 1.1.1
+Release: alt1
 
 Summary: Python wrapper generator for ctypes
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/ctypesgen/
+Url: https://pypi.org/project/ctypesgen/
+Vcs: https://github.com/ctypesgen/ctypesgen
+
+Source: %name-%version.tar
+
 BuildArch: noarch
 
-# https://github.com/davidjamesca/ctypesgen.git
-Source: %{oname}-%{version}.tar
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/test
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
 
 %description
-ctypesgen is a pure-python ctypes wrapper generator. It can also
-output JSON, which can be used with Mork, which generates bindings for
-Lua, using the alien module (which binds libffi to Lua).
+ctypesgen is a pure-python ctypes wrapper generator. It parses C header files
+and creates a wrapper for libraries based on what it finds.
+Preprocessor macros are handled in a manner consistent with typical C code.
+Preprocessor macro functions are translated into Python functions that are
+then made available to the user of the newly-generated Python wrapper library.
+It can also output JSON, which can be used with Mork, which generates bindings
+for Lua, using the alien module (which binds libffi to Lua).
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
-rm -f ctypesgen/printer_python/preamble/2_*.py
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%tox_check_pyproject
 
 %files
-%doc CONTRIBUTING LICENSE README.md
+%doc LICENSE *.md
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 
 %changelog
+* Mon Apr 03 2023 Anton Vyatkin <toni@altlinux.org> 1.1.1-alt1
+- New version 1.1.1
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.2-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
