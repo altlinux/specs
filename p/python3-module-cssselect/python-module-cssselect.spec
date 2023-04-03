@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Parses CSS3 Selectors and translates them to XPath 1.0
@@ -49,6 +49,9 @@ engine to find the matching elements in an XML or HTML document.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 03 2023 Anton Vyatkin <toni@altlinux.org> 1.2.0-alt1
+- (NMU) New version 1.2.0.
+
 * Tue Aug 09 2022 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 0.9.1 -> 1.1.0.
 
