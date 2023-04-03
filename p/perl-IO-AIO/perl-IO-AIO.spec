@@ -2,11 +2,11 @@
 #set_perl_req_method relaxed
 #define _without_test 1
 BuildRequires: perl-podlators
-Epoch: 2
+Epoch: 3
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.79
-Release: alt1
+Version: 4.8
+Release: alt1.1
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -76,6 +76,9 @@ scripts for %name
 
 
 %changelog
+* Mon Apr 03 2023 Igor Vlasenko <viy@altlinux.org> 3:4.8-alt1.1
+- automated CPAN update
+
 * Tue Sep 27 2022 Igor Vlasenko <viy@altlinux.org> 2:4.79-alt1
 - automated CPAN update
 
