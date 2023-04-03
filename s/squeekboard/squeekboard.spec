@@ -1,5 +1,5 @@
 Name: squeekboard
-Version: 1.20.0
+Version: 1.22.0
 Release: alt1
 
 Summary: A Wayland on-screen keyboard
@@ -11,6 +11,7 @@ Source0: %name-%version.tar
 Source1: crates.tar
 
 BuildRequires: meson rust-cargo /proc rpm-build-python3
+BuildRequires: pkgconfig(libbsd)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(wayland-protocols)
@@ -46,6 +47,9 @@ export CARGO_HOME=${PWD}/cargo
 %_desktopdir/*.desktop
 
 %changelog
+* Mon Apr 03 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.22.0-alt1
+- 1.22.0 released
+
 * Thu Oct 06 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.20.0-alt1
 - 1.20.0 released
 
