@@ -8,7 +8,7 @@ BuildRequires: perl(Sub/Uplevel.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Scope-Upper
 Summary:        Act on upper scopes
-Version:        0.33
+Version:        0.34
 Release:        alt1
 License:        GPL+ or Artistic
 Source0:        http://www.cpan.org/authors/id/V/VP/VPIT/Scope-Upper-%{version}.tar.gz
@@ -71,11 +71,14 @@ find %{buildroot} -type f -name '*.bs' -a -size 0 -delete
 make test
 
 %files
-%doc README Changes samples
+%doc README Changes samples CONTRIBUTING
 %{perl_vendor_archlib}/*
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Mon Apr 03 2023 Igor Vlasenko <viy@altlinux.org> 0.34-alt1
+- automated CPAN update
+
 * Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.33-alt1
 - automated CPAN update
 
