@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: libglibmm
-Version: %major.5
+Version: %major.6
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -29,8 +29,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%major/%rname-%version.tar.
 
 %add_perl_lib_path %_libdir/glibmm-%api_ver/proc/pm
 
-BuildRequires(pre): meson
-BuildRequires: mm-common gcc-c++
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson mm-common gcc-c++
 BuildRequires: libgio-devel >= %glib_ver libsigc++2-devel >= %sigc_ver
 BuildRequires: perl-XML-Parser
 %{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz fonts-ttf-open-sans xsltproc}
@@ -83,8 +83,7 @@ sed -i  '/giomm_tls_client/d' tests/meson.build
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %doc AUTHORS NEWS
@@ -105,6 +104,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Apr 03 2023 Yuri N. Sedunov <aris@altlinux.org> 2.66.6-alt1
+- 2.66.6
+
 * Mon Sep 26 2022 Yuri N. Sedunov <aris@altlinux.org> 2.66.5-alt1
 - 2.66.5
 

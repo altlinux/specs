@@ -3,11 +3,11 @@
 
 %define _name libsigc++
 %define api_ver 2.0
-%define ver_major 2.10
+%define ver_major 2.12
 %def_enable docs
 
 Name: %{_name}2
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -26,7 +26,7 @@ Provides: libsigc++2.0 = %version-%release
 Obsoletes: libsigc++2.0 < %version-%release
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson gcc-c++ mm-common >= 1.0.4
+BuildRequires: meson gcc-c++ mm-common >= 1.0.5
 %{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 
 %description
@@ -72,11 +72,10 @@ This package provides API documentation of libsigc++ library.
 %meson_install
 %define docdir %_docdir/%_name-%api_ver
 %{?_disable_docs:mkdir -p %buildroot%docdir}
-install -pm644 AUTHORS NEWS README %buildroot%docdir/
+install -pm644 AUTHORS NEWS README* %buildroot%docdir/
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/libsigc-%api_ver.so.*
@@ -96,6 +95,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Apr 03 2023 Yuri N. Sedunov <aris@altlinux.org> 2.12.0-alt1
+- 2.12.0
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 2.10.8-alt1
 - 2.10.8
 
