@@ -7,7 +7,7 @@ BuildRequires: gnuplot
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.041
+Version: 1.042
 Release: alt1
 Summary: Find and verify functionality of the gnuplot executable.
 Group: Development/Perl
@@ -41,6 +41,9 @@ Source0: http://www.cpan.org/authors/id/E/ET/ETJ/%{module_name}-%{version}.tar.g
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Apr 03 2023 Igor Vlasenko <viy@altlinux.org> 1.042-alt1
+- automated CPAN update
+
 * Thu Mar 16 2023 Igor Vlasenko <viy@altlinux.org> 1.041-alt1
 - automated CPAN update
 
