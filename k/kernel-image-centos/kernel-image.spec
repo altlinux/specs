@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 291
+%define centos_release 295
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -63,6 +63,9 @@ Url: https://gitlab.com/redhat/centos-stream/src/kernel/centos-stream-9
 Source0: %name.tar
 Patch0001: 0001-Fix-build-with-new-pahole-adjust-flags.patch
 Patch0002: 0002-fscache-Convert-fscache_set_page_dirty-to-fscache_di.patch
+Patch0003: 0003-9p-Convert-to-invalidate_folio.patch
+Patch0004: 0004-9p-Convert-from-launder_page-to-launder_folio.patch
+Patch0005: 0005-9p-Convert-to-release_folio.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: x86_64 aarch64
@@ -635,6 +638,57 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Apr 03 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.295-alt1.el9
+- Updated to kernel-5.14.0-295.el9 (fixes: CVE-2022-2196, CVE-2022-42895, CVE-2022-4744):
+  + arm64: updates for NXP i.MX93 support
+  + Backport afs updates and fixes from upstream
+  + blk-mq: fix "bad unlock balance detected" on q->srcu in __blk_mq_run_dispatch_ops
+  + block: bio-integrity: Copy flags when bio_integrity_payload is cloned
+  + Bluetooth: L2CAP: Fix attempting to access uninitialized memory
+  + bpf/selftests: disable get_branch_snapshot test
+  + bpf/xdp: stable backports from upstream for 9.2
+  + bpf, xdp: update to 6.1
+  + ceph: blocklist the kclient when receiving corrupted snap trace
+  + CNB: genetlink: start to validate reserved header bytes
+  + CNB: genetlink: support per op type policies
+  + CNB: netlink: add support for formatted extack messages
+  + CNB: netlink: support reporting missing attributes
+  + CNB: net: move from strlcpy with unused retval to strscpy
+  + CNB: rtnetlink: verify rate parameters for calls to ndo_set_vf_rate
+  + CNB: timers: Provide timer_shutdown[_sync]()
+  + dm: sync with upstream 6.3
+  + Draft: Merge tag 'kernel-5.14.0-284.6.1.el9_2' from 9.2
+  + Fix the random kdump kernel panic with call trace tick_handle_periodic
+  + ice: fix lost multicast packets in promisc mode
+  + kernel-rt: config: disable saa6588, saa6752hs and snd-soc-sdw-mockup to match stock kernel
+  + kernel-rt: config: enable DEBUG_PREEMPT in the production kernel
+  + KVM: VMX: Execute IBPB on emulated VM-exit when guest has IBRS
+  + Merge commit '920f6ac650b20db91b11d5b435376c276c4ab47c' from documentation
+  + Merge commit '920f6ac650b20db91b11d5b435376c276c4ab47c' into 9.2
+  + Merge tag 'kernel-5.14.0-284.5.1.el9_2' from 9.2
+  + Merge tag 'kernel-5.14.0-284.6.1.el9_2' from 9.2
+  + MM changes for RHEL 9.3
+  + mm/debug: use valid physical memory for pmd/pud tests
+  + netfilter: conntrack: Fix data-races around ct mark
+  + net: use indirect calls helpers for sk_exit_memory_pressure()
+  + NFS: Correct timing for assigning access cache timestamp
+  + nfsd: don't replace page in rq_pages if it's a continuation of last page
+  + platform/x86: ISST: PUNIT device mapping with Sub-NUMA clustering
+  + pmem 9.3 update
+  + powerpc/eeh: Set channel state after notifying the drivers
+  + rcu: Backport upstream RCU commits up to v6.1
+  + redhat/configs: Revert "enable DAMON configs"
+  + redhat: Fix kernel-rt-kvm scripts
+  + redhat: fix trivial syntax error in 64k-debug modules signing
+  + RHEL-only: Build CXL code as modules
+  + sched/deadline: Add more reschedule cases to prio_changed_dl()
+  + scsi: qla2xxx: Perform lockless command completion in abort path
+  + tun: avoid double free in tun_free_netdev
+  + Update kernel's PCI subsystem to v6.2
+  + Update kernel's PCI subsystem to v6.3
+  + x86/nmi: Make register_nmi_handler() more robust
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Mar 27 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.291-alt1.el9
 - Updated to kernel-5.14.0-291.el9:
   + Backport Core MapleTree Framework
