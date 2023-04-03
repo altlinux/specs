@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: A pure-Python implementation of the HTTP/2 priority tree
 
@@ -16,6 +16,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # https://github.com/python-hyper/priority
 Source: %name-%version.tar
+Patch1: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -47,7 +48,7 @@ requests of their clients.
 
 %prep
 %setup
-
+%patch1 -p1
 %build
 %python3_build
 
@@ -61,6 +62,9 @@ requests of their clients.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 03 2023 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 2.0.0-alt2
+- Increase tests timeout
+
 * Thu Dec 08 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Build new version.
 - Build with check.
