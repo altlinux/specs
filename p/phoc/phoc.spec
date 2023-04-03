@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.25
+%define ver_major 0.26
 %define beta %nil
 
 %define dev_uid 500
@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: phoc
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Display compositor designed for mobile devices
@@ -83,6 +83,9 @@ xvfb-run %__meson_test
 %doc README.md
 
 %changelog
+* Fri Mar 31 2023 Yuri N. Sedunov <aris@altlinux.org> 0.26.0-alt1
+- 0.26.0
+
 * Sun Mar 12 2023 Yuri N. Sedunov <aris@altlinux.org> 0.25.2-alt1
 - 0.25.2
 
