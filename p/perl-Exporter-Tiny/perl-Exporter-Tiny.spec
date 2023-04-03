@@ -6,7 +6,7 @@ BuildRequires: perl(B.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/Mo
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.006000
+Version: 1.006002
 Release: alt1
 Summary: an exporter with the features of Sub::Exporter but only core dependencies
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/E*
 
 %changelog
+* Mon Apr 03 2023 Igor Vlasenko <viy@altlinux.org> 1.006002-alt1
+- automated CPAN update
+
 * Mon Nov 28 2022 Igor Vlasenko <viy@altlinux.org> 1.006000-alt1
 - automated CPAN update
 
