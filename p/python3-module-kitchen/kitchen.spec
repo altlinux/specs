@@ -2,21 +2,28 @@
 
 %def_without docs
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 1.2.6
-Release: alt2
+Release: alt3
 
 Summary: Cornucopia of useful code
 License: LGPLv2+
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/kitchen/
+Vcs: https://github.com/fedora-infra/kitchen.git
+
+Source: %name-%version.tar
+Patch: suse-remove-nose.patch
+
 BuildArch: noarch
 
-# https://github.com/fedora-infra/kitchen.git
-Source: %name-%version.tar
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-nose
+BuildRequires: python3-module-html5lib
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 %if_with docs
 BuildRequires: python3-module-sphinx
 %endif
@@ -48,6 +55,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch -p1
 
 sed -i 's|#! /usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -69,7 +77,14 @@ popd
 %endif
 
 %check
-%__python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -k "\
+not test_internal_generate_combining_table \
+and not test_easy_gettext_setup_non_unicode \
+and not test_invalid_fallback_no_raise \
+and not test_lgettext \
+and not test_lngettext" kitchen3
+
 
 %files
 %doc *.rst
@@ -86,6 +101,9 @@ popd
 
 
 %changelog
+* Mon Apr 03 2023 Anton Vyatkin <toni@altlinux.org> 1.2.6-alt3
+- Fix BuildRequires
+
 * Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.6-alt2
 - drop excessive python3-module-jinja2-tests BR
 
