@@ -3,7 +3,7 @@
 %def_disable python2
 
 Name: cracklib
-Version: 2.9.10
+Version: 2.9.11
 Release: alt1
 
 Summary: A password-checking library.
@@ -11,7 +11,7 @@ License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://github.com/%name/%name
 
-Source: https://github.com/%name/%name/releases/download/v%version/%name-%version.tar.gz
+Source: https://github.com/%name/%name/releases/download/v%version/%name-%version.tar.xz
 
 Requires: %name-utils = %EVR
 
@@ -182,6 +182,9 @@ _EOF_
 
 
 %changelog
+* Mon Apr 03 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.11-alt1
+- 2.9.11
+
 * Tue Mar 21 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.10-alt1
 - 2.9.10
 

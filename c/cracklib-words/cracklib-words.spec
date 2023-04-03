@@ -1,7 +1,7 @@
 %define _name cracklib
 
 Name: %_name-words
-Version: 2.9.10
+Version: 2.9.11
 Release: alt1
 Epoch: 1
 
@@ -10,7 +10,7 @@ License: Freely distributable
 Group: System/Libraries
 Url: https://github.com/%_name/%_name
 
-Source: https://github.com/%_name/%_name/releases/download/v%version/%name-%version.gz
+Source: https://github.com/%_name/%_name/releases/download/v%version/%name-%version.xz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ sort | uniq >%buildroot%_datadir/%_name/%name
 %_datadir/%_name/%name
 
 %changelog
+* Mon Apr 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1:2.9.11-alt1
+- 2.9.11
+
 * Tue Mar 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1:2.9.10-alt1
 - 2.9.10
 
