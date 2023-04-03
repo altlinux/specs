@@ -2,7 +2,7 @@
 %define pkgsystem apt-rpm
 
 Name: eepm
-Version: 3.34.1
+Version: 3.40.1
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -26,15 +26,19 @@ Obsoletes: epm
 Provides: epm = %EVR
 
 # FIXHERE: Replace with target platform package manager
-Requires: apt rpm
+Requires: apt rpm apt-scripts
 # TODO: don't use at all
 Requires: apt-repo
 
-AutoProv:no
-AutoReq:no,shell
 %endif
 
+AutoProv:no
+AutoReq:no
+
 Requires: which
+
+# TODO: drop gzip
+Requires: coreutils diffutils findutils file gawk grep gzip less sed bash termutils
 
 %description
 Etersoft EPM is the package manager for any platform
@@ -87,6 +91,10 @@ mkdir -p %buildroot%_sysconfdir/eepm/repack.d/
 cp repack.d/* %buildroot%_sysconfdir/eepm/repack.d/
 chmod 0755 %buildroot%_sysconfdir/eepm/repack.d/*.sh
 
+mkdir -p %buildroot%_sysconfdir/eepm/pack.d/
+cp pack.d/* %buildroot%_sysconfdir/eepm/pack.d/
+chmod 0755 %buildroot%_sysconfdir/eepm/pack.d/*.sh
+
 mkdir -p %buildroot%_sysconfdir/eepm/prescription.d/
 cp prescription.d/* %buildroot%_sysconfdir/eepm/prescription.d/
 chmod 0755 %buildroot%_sysconfdir/eepm/prescription.d/*.sh
@@ -114,12 +122,14 @@ rm -v %buildroot%_bindir/yum
 %doc README.md TODO LICENSE
 %dir %_sysconfdir/eepm/
 %dir %_sysconfdir/eepm/play.d/
+%dir %_sysconfdir/eepm/pack.d/
 %dir %_sysconfdir/eepm/repack.d/
 %dir %_sysconfdir/eepm/prescription.d/
 %config(noreplace) %_sysconfdir/eepm/eepm.conf
 %config(noreplace) %_sysconfdir/eepm/serv.conf
 %config(noreplace) %_sysconfdir/eepm/*.list
 %config(noreplace) %_sysconfdir/eepm/repack.d/*
+%config(noreplace) %_sysconfdir/eepm/pack.d/*
 %config(noreplace) %_sysconfdir/eepm/play.d/*
 %config(noreplace) %_sysconfdir/eepm/prescription.d/*
 %_bindir/epm*
@@ -147,6 +157,154 @@ rm -v %buildroot%_bindir/yum
 %endif
 
 %changelog
+* Mon Apr 03 2023 Vitaly Lipatov <lav@altlinux.ru> 3.40.1-alt1
+- epm play: add DVJ2
+- epm.spec: require bash instead of sh
+
+* Fri Mar 31 2023 Vitaly Lipatov <lav@altlinux.ru> 3.40.0-alt1
+- epm play: add alivecolors support
+- epm play: add freeoffice
+- epm addrepo: add astra repos with [arch-=i386]
+- erc: use 7z if patool is missed
+- erc: add --use-7z and --use-patool
+- add prepare_to_eepm.sh
+- eget: improve is_url checking
+- eget: disable checking for globbing symbol ? in URL
+- epm: add -y as --auto alias
+- epm: print short help when run without params
+- epm prescription: add i586-support
+- epm install: don't use --replacepkgs when install only one package
+- epm prescription: add nvidia-remove
+- epm: add --norepack option
+- epm pack: rewrite
+- epm repack: move repack stoplist to /etc/eepm/repackstoplist.list
+- epm repack generic.sh: skip links
+- epm release-upgrade: print info about ALT wiki when update to ALT Sisyphus
+
+* Thu Mar 30 2023 Vitaly Lipatov <lav@altlinux.ru> 3.39.3-alt1
+- eget: make correct URL if file part parsed by mask separately
+- epm play: add vuescan
+- epm play: fix download url for anydesk (according to latest eget)
+- epm play: add cuda-z support
+- eget: big rewrite
+- epm play: add netbeans
+- epm ei: add help, rewrite parsing
+- epm ei: add support to set Korinf URL
+- epm addrepo: add support for AstraLinux
+
+* Wed Mar 29 2023 Vitaly Lipatov <lav@altlinux.ru> 3.39.2-alt1
+- epm ei: add fallback to vendor/repo dir
+- distr_info: print bug report url
+- distr_info: add default repo name (the same like distro version)
+- epm download: use eget --latest if mask is not *.something
+- epm: allow --dry-run for kernel-update/remove-old-kernels
+- epm full-upgrade: skip snap if snap service is not running (ALT bug 45666)
+- epm install: add --download-only support for repository packages (via epm download)
+- epm download: implement package download for ALT via apt-get install --print-uris
+- add epm download --url for apt-rpm and apt-dpkg systems
+
+* Tue Mar 28 2023 Vitaly Lipatov <lav@altlinux.ru> 3.39.1-alt1
+- distr_info: add --repo-name, --distro-name, --base-distro-name
+- distr_info: add full version for Astra
+- distr_info: add long options, rearrange default output
+
+* Mon Mar 27 2023 Vitaly Lipatov <lav@altlinux.ru> 3.39.0-alt1
+- epm repo implement enable/disable for ALT
+- epm repo list:  add (-a|--all) support (print commented out lines)
+- epm repo index/add: big rewrite
+- epm repack: skip find requires for update_mpeg in yandex-browser and vivaldi
+- epm repack yandex-browser: add fonts-ttf-google-noto-emoji-color require only if it is exists
+- epm repo add: add support for various url and dir forms
+- epm repo add: add support for short form: 'rpm url component' and use it
+- eget: add support for URL in form file:/ or /path
+- epm install: add --replacepkgs (and --test for --dry-run case) to rpm -Uvh
+
+* Mon Mar 27 2023 Vitaly Lipatov <lav@altlinux.ru> 3.38.1-alt1
+- epm repack unigine-superposition: fix issue with libssl/libcrypto
+- epm repack: add initial cnrdrvcups-ufr2-uk
+- epm: fix epm version checking
+- epm play common.sh: fix checking for available version
+- epm repo: add enable/disable support
+- epm print: add arch
+- epm repo add: add support for dir
+- epm repo: implement initial support for create local repo (index,pkgadd,pkgdel,pkgupdate)
+
+* Sun Mar 26 2023 Vitaly Lipatov <lav@altlinux.ru> 3.38.0-alt1
+- epm prescription i586-fix: add missed nvidia_glx, primus
+- epm repack: many fixes
+- epm repack vinteo.desktop: skip lib.req for foreign binaries
+- epm prescription common.sh: add is_root, assure_root
+- epm play telegram: move repacking to pack.d
+- epm play 64Gram: move packing to pack.d
+- epm repack liteide.sh: add Conflicts to liteidex
+- epm play common.sh: check app version in versioned epm info firstly
+- epm repack: add --install support
+- epm play common.sh: fix checking if update is needed
+- epm full-upgrade: allow skip kernel update (via eepm.conf)
+- epm kernel-update: disable remove-old-kernels after update
+- eepm.spec: add Requires: apt-scripts (for emergencies)
+- print note about autoremove only after epm clean (with caution!)
+- epm play --update: skip updating if the package is on hold (see epm mark --help)
+- eget: implement --check-mirrors
+- epm ei: drop update_url_if_need_mirrored using, we hope eget will helps here
+- epm play: drop update_url_if_need_mirrored, we hope eget will helps us
+- epm pack: drop update_url_if_need_mirrored, we hope eget will help us
+- epm play: drop check_url_is_accessible using
+- set BIGTMPDIR and use in cd_to_temp_dir
+- epm play ktalk: rename to correct name
+
+* Fri Mar 24 2023 Vitaly Lipatov <lav@altlinux.ru> 3.37.0-alt1
+- epm play master-pdf-editor: get package name from site
+- epm play: add realvnc-server and realvnc-viewer
+- epm repack ipera-mediaserver: drom libQt5 libGL from reqs
+- epm tool: add erc and ercat
+- eepm.spec: disable AutoReq at all, use direct requires
+- epm play unigine-*: move unpacking to pack.d
+
+* Fri Mar 24 2023 Vitaly Lipatov <lav@altlinux.ru> 3.36.2-alt1
+- epm repack icq: fix requires (ALT bug 44899)
+- epm repack vkteams: fix requires
+- epm repack far2l-portable: add package meta info
+- epm play wine: add missed wine-etersoft
+- epm repack meridius: fix icon name
+- epm repack: implement add_requires and use it
+- epm repack liteide: fix desktop, add golang requires (ALT bug 45635)
+- distro_info: add --glibc-version
+- epm play jetbrains-toolbox: rewrite with epm pack
+- epm play kyodialog: rewrite with epm pack
+
+* Thu Mar 23 2023 Vitaly Lipatov <lav@altlinux.ru> 3.36.1-alt1
+- epm-pack: install PKGFORMAT package after repack
+- replace --download-only with --save-only
+- epm repack generic.sh: add remove_dir /usr/lib/.build-id
+- epm repack: add portproton.sh (add needed requires)
+- epm-pack: reset EPMCURDIR as hack
+
+* Thu Mar 23 2023 Vitaly Lipatov <lav@altlinux.ru> 3.36.0-alt1
+- epm play: add far2l-portable
+- epm-pack: add --verbose support
+- epm pack 1c83-client: add support for unpack downloaded tar.gz
+- epm install: add --download_only (save after repack) and --direct + --download_only (save before repack)
+- epm repack 64Gram: fix name
+- epm-sh-functions: hide direct /bin/echo using
+- epm repack Autodesk_EAGLE: drop internal libxcb-dri?.so.0 (ALT bug 44898)
+- remove CURDIR to EPMCURDIR and export it without override
+
+* Tue Mar 21 2023 Vitaly Lipatov <lav@altlinux.ru> 3.35.1-alt1
+- epm pack 1c83-client: fixes
+- epm repack rstudio: fix chrome-sandbox
+- epm play steam: add install Steam from the repo
+
+* Mon Mar 20 2023 Vitaly Lipatov <lav@altlinux.ru> 3.35.0-alt1
+- epm play: rewrite, add applications list support, use app=version form
+- add epm pack
+- epm play: add initial portproton support
+- epm pack: add 1c83-client support
+- rewrite all browser-codecs install via epm pack
+- epm play opera: rewrite, fix other systems install
+- epm play: move wine to play list
+- epm repack: add r7-office (with support for 7.3)
+
 * Sat Mar 18 2023 Vitaly Lipatov <lav@altlinux.ru> 3.34.1-alt1
 - epm repack codium: fix path to binary
 - epm repack rustdesk: fix install pynput
