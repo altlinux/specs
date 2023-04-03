@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.12.3
+Version: 0.1.12.4
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,11 @@ done
 %_destdir
 
 %changelog
+* Mon Apr 03 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.12.4-alt1
+- Fix typos in adml files (closes: 42365)
+- Changed policy definition to "Mechanism for copying files"
+- Fixed policy "General mount policy".
+
 * Thu Mar 09 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.1.12.3-alt1
 - Fix typos in adml files (closes: 42355, 42365, 42358).
 
