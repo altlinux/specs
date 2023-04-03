@@ -6,7 +6,7 @@ BuildRequires: perl(Class/Forward.pm) perl(Class/Method/Modifiers.pm) perl(Clone
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 7.900058
+Version: 7.900059
 Release: alt1
 Summary: Centralized Data Validation Framework
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/V*
 
 %changelog
+* Mon Apr 03 2023 Igor Vlasenko <viy@altlinux.org> 7.900059-alt1
+- automated CPAN update
+
 * Thu Jun 23 2022 Igor Vlasenko <viy@altlinux.org> 7.900058-alt1
 - automated CPAN update
 
