@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		3f184b456c7
+%define svnrev		287da69c170
 
 %def_with pgsql
 %def_enable java
@@ -16,8 +16,8 @@
 %endif
 
 Name: zabbix
-Version: 6.0.14
-Release: alt2
+Version: 6.0.15
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -779,6 +779,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Apr 03 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.15-alt1
+- 6.0.15
+
 * Thu Mar 09 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.14-alt2
 - Add support php 8.2
 - Fix typo Summary for phpfrontend-php8.1
