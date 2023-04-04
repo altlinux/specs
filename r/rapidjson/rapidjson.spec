@@ -6,22 +6,18 @@
 
 Name: rapidjson
 Version: 1.1.0
-Release: alt3
+Release: alt4
 
 Summary: Fast JSON parser and generator for C++
 
 License: MIT
 Group: Development/C++
-Url: http://rapidjson.org/
+Url: https://rapidjson.org/
 
 # URL: https://github.com/miloyip/%name
 Source: %name-%version.tar
 # Downstream-patch for gtest.
 Patch: rapidjson-1.1.0-do_not_include_gtest_src_dir.patch
-
-Packager: Anton Midyukov <antohami@altlinux.org>
-
-BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-valgrind
@@ -30,9 +26,39 @@ BuildRequires: libgtest-devel
 %{?_enable_valgrind:BuildRequires: valgrind}
 %{?_with_docs:BuildRequires: doxygen python3-module-pydot}
 
-Provides: %name-devel == %version-%release
-
 %description
+RapidJSON is a fast JSON parser and generator for C++.  It was
+inspired by RapidXml.
+
+RapidJSON is small but complete.  It supports both SAX and DOM style
+API. The SAX parser is only a half thousand lines of code.
+
+RapidJSON is fast.  Its performance can be comparable to strlen().
+It also optionally supports SSE2/SSE4.1 for acceleration.
+
+RapidJSON is self-contained.  It does not depend on external
+libraries such as BOOST.  It even does not depend on STL.
+
+RapidJSON is memory friendly.  Each JSON value occupies exactly
+16/20 bytes for most 32/64-bit machines (excluding text string). By
+default it uses a fast memory allocator, and the parser allocates
+memory compactly during parsing.
+
+RapidJSON is Unicode friendly.  It supports UTF-8, UTF-16, UTF-32
+(LE & BE), and their detection, validation and transcoding
+internally. For example, you can read a UTF-8 file and let RapidJSON
+transcode the JSON strings into UTF-16 in the DOM. It also supports
+surrogates and "\u0000" (null character).
+
+JSON(JavaScript Object Notation) is a light-weight data exchange
+format. RapidJSON should be in fully compliance with RFC4627/ECMA-404.
+
+%package devel
+Summary: Fast JSON parser and generator for C++
+Group: Development/C++
+Provides: %name = %EVR
+
+%description devel
 RapidJSON is a fast JSON parser and generator for C++.  It was
 inspired by RapidXml.
 
@@ -106,7 +132,7 @@ cp -at %buildroot%_docdir/%name-%version -- \
 find %buildroot -type f -name 'CMake*.txt' -print0 |
 	xargs -r0 rm -fv --
 
-%files
+%files devel
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/license.txt
 %doc %_docdir/%name-%version/CHANGELOG.md
@@ -123,6 +149,10 @@ find %buildroot -type f -name 'CMake*.txt' -print0 |
 %endif # docs
 
 %changelog
+* Tue Apr 04 2023 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt4
+- rename package rapidjson to rapidjson-devel (Closes: 45742)
+- Clear Packager
+
 * Sat Jan 28 2023 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt3
 - Don't force C++11 to fix FTBFS with gtest 1.13+
 
