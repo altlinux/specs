@@ -1,8 +1,10 @@
 %define oname jmespath
 %def_disable doc
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.9.5
+Version: 1.0.1
 Release: alt1
 Summary: JSON Matching Expressions
 License: MIT
@@ -16,8 +18,10 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 %{?_enable_doc:BuildRequires: python3-module-sphinx python3-module-guzzle_sphinx_theme}
-BuildRequires: python3-module-nose python3-module-setuptools python3-module-tox
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-hypothesis
+%endif
 
 %description
 JMESPath allows you to declaratively specify how to extract elements
@@ -48,9 +52,8 @@ sphinx-build-3 -b html -d build/doctrees doc/source build/html
 %endif
 
 %check
-export LC_ALL=en_US.UTF-8
-python3 setup.py test
-PYTHONPATH=$(pwd) py.test3 ||:
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3
 
 %files
 %doc *.rst
@@ -63,6 +66,9 @@ PYTHONPATH=$(pwd) py.test3 ||:
 %endif
 
 %changelog
+* Tue Apr 04 2023 Anton Vyatkin <toni@altlinux.org> 1.0.1-alt1
+- (NMU) New version 1.0.1.
+
 * Tue Mar 24 2020 Alexey Shabalin <shaba@altlinux.org> 0.9.5-alt1
 - new version 0.9.5
 - build python3 only
