@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -32,6 +32,17 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Apr 04 2023 Ivan Savin <svn17@altlinux.org> 0.1.2-alt1
+- Add the ability to return stdout and stderr through an array of strings or
+  an array of bytes (stdout only).
+- The signal name is now formed by concatenating the string specified in
+  the backend file and the sender. Dots and colons in the sender are replaced
+  with underscores. If the signal name in the backend file is not specified,
+  then the signals are disabled.
+- Add the ability to limit stdout and stderr arrays in bytes (Default 524288).
+- Add the ability to disable the return of stdout and stderr arrays using
+  special options in the backend file.
+
 * Mon Feb 27 2023 Ivan Savin <svn17@altlinux.org> 0.1.1-alt1
 - Fix child's stderr and stdout pipes not closing.
 
