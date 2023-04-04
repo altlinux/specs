@@ -1,7 +1,7 @@
 Summary: Wrapper for apt-rpm utilities
 
 Name: papt
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 License: GPL-2.0-or-later
@@ -57,6 +57,9 @@ install -D -m644 papt-query.1 %buildroot%_man1dir/papt-query.1
 %_man1dir/papt*.1*
 
 %changelog
+* Tue Apr 04 2023 Alexey Gladkov <legion@altlinux.ru> 0.5.1-alt1
+- Use curl utility by default.
+
 * Tue Mar 22 2022 Alexey Gladkov <legion@altlinux.ru> 0.5.0-alt1
 - papt:
   + Assume the answer is no if stdin is not available.
