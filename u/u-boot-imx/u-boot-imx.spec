@@ -1,5 +1,5 @@
 Name: u-boot-imx
-Version: 2023.01
+Version: 2023.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -65,6 +65,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Apr 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.04-alt1
+- 2023.04 released
+
 * Tue Jan 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.01-alt1
 - 2023.01 released
 
