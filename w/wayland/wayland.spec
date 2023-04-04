@@ -2,7 +2,7 @@
 %def_enable doc
 %def_enable check
 # since mesa-18.0 wayland-egl moved to this wayland package
-%define main_ver 1.21.0
+%define main_ver 1.22.0
 %define egl_ver 18.1.0
 %define mesa_epoch 4
 
@@ -158,7 +158,7 @@ Wayland-EGL development package
 
 %files -n lib%name-client
 %_libdir/lib%name-client.so.*
-%doc README COPYING
+%doc README* COPYING
 
 %files -n lib%name-client-devel
 %_includedir/%name-client*.h
@@ -194,6 +194,9 @@ Wayland-EGL development package
 
 
 %changelog
+* Tue Apr 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1.1
+- 1.22.0
+
 * Fri Jul 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.21.0-alt1.1
 - 1.21.0
 
