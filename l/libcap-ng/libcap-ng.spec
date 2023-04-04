@@ -1,6 +1,8 @@
+%def_disable bootstrap
+
 Name: libcap-ng
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Summary: An alternate posix capabilities library
 License: LGPLv2+
@@ -15,9 +17,11 @@ BuildRequires: libattr-devel
 # not BR(pre) as we don't need those macros to rpm -bs
 # (only used within setup/build/install/files sections);
 # see also https://bugzilla.altlinux.org/8579
+%if_disabled bootstrap
 BuildPreReq: rpm-build-python3
 BuildPreReq: python3-devel
 BuildRequires: swig
+%endif
 
 %description
 Libcap-ng is a library that makes using posix capabilities easier
@@ -33,6 +37,8 @@ Requires: %name = %EVR
 The libcap-ng-devel package contains the files needed for developing
 applications that need to use the libcap-ng library.
 
+%if_disabled bootstrap
+
 %package -n python3-module-%name
 Summary: Python bindings for libcap-ng library
 License: LGPLv2+
@@ -42,6 +48,8 @@ Requires: %name = %EVR
 %description -n python3-module-%name
 The libcap-ng-python package contains the bindings so that libcap-ng
 and can be used by python applications.
+
+%endif
 
 %package utils
 Summary: Utilities for analysing and setting file capabilities
@@ -58,10 +66,21 @@ lets you set the file system based capabilities.
 
 %build
 %autoreconf
+%if_disabled bootstrap
+
 export PYTHON=python3
 %configure --libdir=/%_lib
 %make_build PYLIBVER=python%_python3_version%_python3_abiflags
 
+%else
+
+%configure --libdir=/%_lib \
+	--with-python=no \
+	--with-python3=no \
+	%nil
+%make_build
+
+%endif
 
 %install
 %makeinstall_std
@@ -103,10 +122,17 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %_man8dir/*
 %_man7dir/*
 
+%if_disabled bootstrap
+
 %files -n python3-module-%name
 %python3_sitelibdir/*
 
+%endif
+
 %changelog
+* Mon Apr 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.8.3-alt2
+- Simplified the bootstrap sequence (closes: #45741)
+
 * Wed Apr 06 2022 Anton Farygin <rider@altlinux.ru> 0.8.3-alt1
 - 0.8.3
 
