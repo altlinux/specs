@@ -6,7 +6,7 @@
 %add_findreq_skiplist %_qt6_examplesdir/*
 
 Name: qt6-webchannel
-Version: 6.2.4
+Version: 6.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -88,8 +88,9 @@ export QT_HASH_SEED=0
 %endif
 
 %files common
+%doc LICENSES/*
+
 %files -n libqt6-webchannel
-%doc LICENSE*EXCEPT*
 %_qt6_libdir/libQt?WebChannel.so.*
 %_qt6_qmldir/QtWebChannel/
 
@@ -104,6 +105,7 @@ export QT_HASH_SEED=0
 %_qt6_archdatadir/mkspecs/modules/*.pri
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if_disabled bootstrap
@@ -114,6 +116,9 @@ export QT_HASH_SEED=0
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Tue May 31 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build
 

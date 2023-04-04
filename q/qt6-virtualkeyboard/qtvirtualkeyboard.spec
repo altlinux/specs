@@ -2,8 +2,8 @@
 %global qt_module qtvirtualkeyboard
 
 Name: qt6-virtualkeyboard
-Version: 6.2.4
-Release: alt2
+Version: 6.4.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtQuick virtual keyboard component
@@ -103,10 +103,10 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %endif
 
 %files common
+%doc LICENSES/*
 
 %files
 %_qt6_plugindir/platforminputcontexts/*virtualkeyboard*.so
-%_qt6_plugindir/virtualkeyboard/
 %_qt6_qmldir/QtQuick/VirtualKeyboard/
 
 %files devel
@@ -119,11 +119,12 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %_libdir/cmake/Qt?VirtualKeyboard/
 %_libdir/cmake/Qt*InputMethod*/
 %_libdir/cmake/Qt?BuildInternals/StandaloneTests/*VirtualKeyboard*.cmake
-%_libdir/cmake/Qt?Qml/QmlPlugins/*irtual*eyboard*.cmake
+%_libdir/cmake/Qt?Qml/QmlPlugins/Qt?qtvkb*plugin*.cmake
 %_qt6_headerdir/Qt*/
 %_qt6_archdatadir/mkspecs/modules/qt_lib_*.pri
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
@@ -137,6 +138,9 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %_qt6_libdir/libQt?HunspellInputMethod.so.*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Thu Oct 13 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
 - fix requires
 

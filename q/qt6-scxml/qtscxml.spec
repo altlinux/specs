@@ -2,7 +2,7 @@
 %global qt_module qtscxml
 
 Name: qt6-scxml
-Version: 6.2.4
+Version: 6.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -99,11 +99,10 @@ Requires: libqt6-core = %_qt6_version
 %endif
 
 %files common
-%doc LICENSE.GPL3-EXCEPT
+%doc LICENSES/*
 
 %files
-%_bindir/qscxmlc*
-%_qt6_bindir/qscxmlc*
+%_qt6_libexecdir/qscxmlc
 %_qt6_plugindir/scxmldatamodel/
 %_qt6_qmldir/QtQml/StateMachine/
 %_qt6_qmldir/QtScxml/
@@ -128,6 +127,7 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_archdatadir/mkspecs/features/*scxml*.prf
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
@@ -136,5 +136,8 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed Jun 08 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build

@@ -6,7 +6,7 @@
 %def_disable fmt_jp2
 
 Name: qt6-imageformats
-Version: 6.2.4
+Version: 6.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -68,8 +68,9 @@ rm -rf  config.tests/libmng
 %endif
 
 %files common
+%doc LICENSES/*
+
 %files
-%doc LICENSE*EXCEPT*
 %_qt6_plugindir/imageformats/*.so
 %_libdir/cmake/Qt?Gui/Qt?Q*Plugin*.cmake
 %_libdir/cmake/Qt6/Find*.cmake
@@ -80,5 +81,8 @@ rm -rf  config.tests/libmng
 %endif
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Thu Jun 02 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build

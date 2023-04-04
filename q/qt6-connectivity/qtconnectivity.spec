@@ -2,7 +2,7 @@
 %global qt_module qtconnectivity
 
 Name: qt6-connectivity
-Version: 6.2.4
+Version: 6.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -81,7 +81,7 @@ Requires: libqt6-core = %_qt6_version
 %endif
 
 %files common
-%doc LICENSE*EXCEPT*
+%doc LICENSES/*
 
 %files -n libqt6-bluetooth
 %_qt6_libexecdir/sdpscanner
@@ -102,6 +102,7 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_archdatadir/mkspecs/modules/qt_lib_*.pri
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
@@ -110,5 +111,8 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Mon Jun 06 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build

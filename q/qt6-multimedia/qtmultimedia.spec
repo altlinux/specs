@@ -1,11 +1,12 @@
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+%define optflags_lto -ffat-lto-objects
 
 %global qt_module qtmultimedia
 %def_disable bootstrap
 %def_enable pulse
 
 Name: qt6-multimedia
-Version: 6.2.4
+Version: 6.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -22,8 +23,9 @@ Source: %qt_module-everywhere-src-%version.tar
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires: cmake glibc-devel
 BuildRequires: rpm-build-qml6
-BuildRequires: qt6-base-devel qt6-declarative-devel qt6-shadertools-devel qt6-svg-devel
+BuildRequires: qt6-base-devel qt6-declarative qt6-declarative-devel qt6-shadertools-devel qt6-svg-devel
 BuildRequires: libxkbcommon-x11-devel
+BuildRequires: libavformat-devel libavcodec-devel libswresample-devel libswscale-devel libavutil-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-app-1.0)
@@ -102,6 +104,14 @@ Requires: libqt6-core = %_qt6_version
 %description -n libqt6-multimediawidgets
 %summary
 
+%package -n libqt6-spatialaudio
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common = %EVR
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-spatialaudio
+%summary
+
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
@@ -118,9 +128,13 @@ Requires: libqt6-core = %_qt6_version
 %make -C BUILD DESTDIR=%buildroot install_docs ||:
 %endif
 
+# relax depends on plugins files
+for f in %buildroot/%_libdir/cmake/Qt?*/{*,}/Qt*Targets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
 
 %files common
-%doc *LICENSE*
+%doc LICENSES/*
 
 %files
 %doc *LICENSE*
@@ -128,6 +142,7 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_plugindir/audio/
 #%_qt6_plugindir/mediaservice/
 #%_qt6_plugindir/playlistformats/
+%_qt6_plugindir/multimedia/
 
 %files -n libqt6-multimedia
 %_qt6_libdir/libQt?Multimedia.so.*
@@ -135,17 +150,23 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_libdir/libQt?MultimediaQuick.so.*
 %files -n libqt6-multimediawidgets
 %_qt6_libdir/libQt?MultimediaWidgets.so.*
+%files -n libqt6-spatialaudio
+%_qt6_libdir/libQt?SpatialAudio.so.*
 
 %files devel
 %_qt6_headerdir/QtMultimedia*/
+%_qt6_headerdir/QtSpatialAudio/
 %_qt6_libdir/lib*.so
+%_qt6_libdir/lib*.a
 %_qt6_libdatadir/lib*.so
+%_qt6_libdatadir/lib*.a
 %_qt6_libdir/lib*.prl
 %_qt6_libdatadir/lib*.prl
 %_qt6_libdir/cmake/Qt*/
 %_qt6_archdatadir/mkspecs/modules/*.pri
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if_disabled bootstrap
@@ -156,6 +177,9 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 

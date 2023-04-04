@@ -2,7 +2,7 @@
 %global qt_module qt3d
 
 Name: qt6-3d
-Version: 6.2.4
+Version: 6.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -172,6 +172,7 @@ __EOF__
 
 
 %files common
+%doc LICENSES/*
 %dir %_qt6_plugindir/sceneparsers
 %dir %_qt6_plugindir/geometryloaders/
 %dir %_qt6_plugindir/renderplugins/
@@ -221,6 +222,7 @@ __EOF__
 %_qt6_archdatadir/mkspecs/modules/qt_lib_*.pri
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
@@ -229,5 +231,8 @@ __EOF__
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Thu Jun 09 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build

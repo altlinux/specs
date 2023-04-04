@@ -2,8 +2,8 @@
 %global qt_module qttranslations
 
 Name: qt6-translations
-Version: 6.2.4
-Release: alt3
+Version: 6.4.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtTranslations module
@@ -38,8 +38,12 @@ done
 %find_lang --with-qt --without-mo --append --output=%name.lang qt_help
 
 %files -f %name.lang
+%doc LICENSES/*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Tue Jul 19 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
 - fix compile translations
 

@@ -2,7 +2,7 @@
 %global qt_module qtnetworkauth
 
 Name: qt6-networkauth
-Version: 6.2.4
+Version: 6.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -67,6 +67,7 @@ Requires: libqt6-core = %_qt6_version
 
 
 %files common
+%doc LICENSES/*
 
 %files -n libqt6-networkauth
 %_qt6_libdir/libQt?NetworkAuth.so.*
@@ -83,6 +84,7 @@ Requires: libqt6-core = %_qt6_version
 %_libdir/cmake/Qt*/
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
@@ -91,5 +93,8 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed Jun 08 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build

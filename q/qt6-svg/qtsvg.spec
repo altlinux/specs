@@ -2,7 +2,7 @@
 %global qt_module qtsvg
 
 Name: qt6-svg
-Version: 6.2.4
+Version: 6.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -86,10 +86,15 @@ Provides: %name = %EVR
 %make -C BUILD DESTDIR=%buildroot install_docs ||:
 %endif
 
+# relax depends on plugins files
+for f in %buildroot/%_libdir/cmake/Qt?*/Qt*Targets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
+
 
 %files common
 %files
-%doc *LICENSE*
+%doc LICENSES/*
 %_qt6_plugindir/iconengines/libqsvgicon.so
 %_qt6_plugindir/imageformats/libqsvg.so
 
@@ -109,19 +114,22 @@ Provides: %name = %EVR
 %_qt6_libdir/cmake/Qt?Svg/
 %_qt6_libdir/cmake/Qt?SvgWidgets/
 %_qt6_libdir/cmake/Qt?Gui/*Svg*.cmake
-%_qt6_libdir/cmake/Qt?BuildInternals/
-%_qt6_libdir/cmake/Qt6BuildInternals/StandaloneTests/*Svg*.cmake
+%_qt6_libdir/cmake/Qt?BuildInternals/StandaloneTests/*Svg*.cmake
 %_qt6_archdatadir/mkspecs/modules/qt_lib_svg*.pri
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
 %_qt6_docdir/*
 %endif
-%_qt6_examplesdir/*
+#%_qt6_examplesdir/*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 

@@ -2,7 +2,7 @@
 %global qt_module qtwayland
 
 Name: qt6-wayland
-Version: 6.2.4
+Version: 6.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -11,7 +11,6 @@ Url: http://qt.io/
 License:  GPL-3.0-or-later AND (LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-or-later)
 
 Source: %qt_module-everywhere-src-%version.tar
-Patch1: 0001-CMake-Fix-qtwayland-feature-detection.patch
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: cmake fontconfig-devel zlib-devel glib2-devel
@@ -109,7 +108,6 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -qn %qt_module-everywhere-src-%version
-%patch1 -p1
 #for d in gl nogl; do
 #mkdir $d
 #done
@@ -131,7 +129,7 @@ Requires: libqt6-core = %_qt6_version
 %endif
 
 %files common
-%doc LICENSE*EXCEPT*
+%doc LICENSES/*
 
 %files
 %_qt6_plugindir/platforms/*
@@ -158,7 +156,7 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_libdir/libQt?WlShellIntegration.so.*
 
 %files devel
-%doc LICENSE*EXCEPT*
+%doc LICENSES/*
 %_qt6_libexecdir/qtwaylandscanner
 %_qt6_headerdir/Qt*/
 %_qt6_libdir/libQt*.so
@@ -169,6 +167,7 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_archdatadir/mkspecs/modules/*.pri
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
@@ -176,5 +175,8 @@ Requires: libqt6-core = %_qt6_version
 %endif
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed Jun 01 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build

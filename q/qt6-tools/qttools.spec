@@ -4,8 +4,8 @@
 %define kf6_bindir %prefix/lib/kf6/bin
 
 Name: qt6-tools
-Version: 6.2.4
-Release: alt4
+Version: 6.4.2
+Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -218,7 +218,13 @@ if [ -z "`ls -1 %buildroot/%_qt6_examplesdir/`" ] ; then
     >%buildroot/%_qt6_examplesdir/%name
 fi
 
+# relax depends on plugins files
+for f in %buildroot/%_libdir/cmake/Qt?*/Qt*luginTargets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
+
 %files common
+%doc LICENSES/*
 %_qt6_datadir/phrasebooks/
 
 %files -f main.filelist
@@ -226,7 +232,6 @@ fi
 %_bindir/lrelease*
 %_bindir/lupdate*
 %_bindir/pixeltool*
-%_bindir/qhelpgenerator*
 %_bindir/qtdiag*
 %_bindir/qtplugininfo*
 %_bindir/qdistancefieldgenerator*
@@ -234,7 +239,6 @@ fi
 %_qt6_bindir/lrelease*
 %_qt6_bindir/lupdate*
 %_qt6_bindir/pixeltool*
-%_qt6_bindir/qhelpgenerator*
 %_qt6_bindir/qtdiag*
 %_qt6_bindir/qtplugininfo*
 %_qt6_bindir/qdistancefieldgenerator*
@@ -242,6 +246,7 @@ fi
 %_qt6_libexecdir/lprodump
 %_qt6_libexecdir/lrelease-pro
 %_qt6_libexecdir/lupdate-pro
+%_qt6_libexecdir/qhelpgenerator
 
 %files -n qt6-assistant
 %_bindir/assistant-qt6
@@ -269,7 +274,6 @@ fi
 %_bindir/linguist*
 %_qt6_bindir/linguist*
 %_qt6_bindir/designer*
-%_qt6_plugindir/designer/lib*.so
 %_desktopdir/*designer.desktop
 %_desktopdir/*linguist.desktop
 %_iconsdir/hicolor/*/apps/designer*.*
@@ -287,10 +291,12 @@ fi
 %_qt6_libdatadir/libQt*.prl
 %_qt6_libdir/libQt*.so
 %_qt6_libdatadir/libQt*.so
+%_qt6_plugindir/designer/lib*.so
 %_qt6_archdatadir/mkspecs/modules/*.pri
 %_libdir/cmake/Qt*/
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 # devel-static
 #%_qt6_libdir/libQt?*.a
 #%_qt6_libdatadir/libQt?*.a
@@ -315,6 +321,9 @@ fi
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Thu Dec 15 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt4
 - automate bootstrap mode
 

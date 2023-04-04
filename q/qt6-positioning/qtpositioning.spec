@@ -3,7 +3,7 @@
 %global qt_module qtpositioning
 
 Name: qt6-positioning
-Version: 6.2.4
+Version: 6.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -95,6 +95,8 @@ sed -i 's|-ftree-vectorize||' src/3rdparty/*/*.pro
 %endif
 
 %files common
+%doc LICENSES/*
+
 %files -n libqt6-positioning
 %_qt6_libdir/libQt?Positioning.so.*
 %_qt6_qmldir/QtPositioning/
@@ -114,6 +116,7 @@ sed -i 's|-ftree-vectorize||' src/3rdparty/*/*.pro
 %_qt6_archdatadir/mkspecs/modules/qt_lib_*.pri
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
@@ -122,5 +125,8 @@ sed -i 's|-ftree-vectorize||' src/3rdparty/*/*.pro
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Tue Jun 07 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build

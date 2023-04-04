@@ -15,7 +15,7 @@
 
 Name:    qt-creator
 Version: 10.0.0
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -51,9 +51,9 @@ BuildRequires: qt6-serialport-devel
 BuildRequires: qt6-webengine-devel >= %qt_version
 %endif
 BuildRequires: qt6-svg-devel >= %qt_version
-BuildRequires: qt6-5compat-devel >= %qt_version
+BuildRequires: qt6-5compat qt6-5compat-devel >= %qt_version
 BuildRequires: qt6-shadertools-devel >= %qt_version
-BuildRequires: qt6-quicktimeline-devel >= %qt_version
+BuildRequires: qt6-quicktimeline qt6-quicktimeline-devel >= %qt_version
 BuildRequires: kf5-syntax-highlighting-devel
 %if_with ClangCodeModel
 BuildRequires: clang%llvm_version
@@ -208,6 +208,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Tue Apr 04 2023 Sergey V Turchin <zerg@altlinux.org> 10.0.0-alt2
+- Update build requires.
+
 * Thu Mar 30 2023 Andrey Cherepanov <cas@altlinux.org> 10.0.0-alt1
 - New version.
 - Built using LLVM 14.

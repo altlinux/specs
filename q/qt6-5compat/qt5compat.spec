@@ -3,7 +3,7 @@
 %global qt_module qt5compat
 
 Name: qt6-5compat
-Version: 6.2.4
+Version: 6.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -16,7 +16,7 @@ Source: %qt_module-everywhere-src-%version.tar
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires(pre): qt6-tools
 BuildRequires: cmake glibc-devel libxkbcommon-x11-devel libicu-devel
-BuildRequires: qt6-base-devel qt6-declarative-devel
+BuildRequires: qt6-base-devel  qt6-shadertools-devel qt6-declarative qt6-declarative-devel
 
 %description
 Porting support from Qt5 to Qt6.
@@ -77,7 +77,7 @@ Requires: libqt6-core = %_qt6_version
 
 
 %files common
-%doc *LICENSE*
+%doc LICENSES/*
 
 %files
 %_qt6_archdatadir/qml/Qt5Compat/
@@ -95,6 +95,7 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_archdatadir/mkspecs/modules/*.pri
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
@@ -103,6 +104,9 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 

@@ -8,7 +8,6 @@
 %define IF_ver_not_lt() %if "%(rpmvercmp '%2' '%1')" <= "0"
 %define IF_ver_not_lteq() %if "%(rpmvercmp '%2' '%1')" < "0"
 %define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
-%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 
 %def_enable sql_pgsql
 %def_enable sql_odbc
@@ -32,8 +31,8 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.2.4
-Release: alt4
+Version: 6.4.2
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -69,7 +68,7 @@ Patch1005: e2k-qt-6.patch
 # optimized out: at-spi2-atk bash4 bashrc cmake cmake-modules debugedit elfutils fontconfig fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXmu-devel libXrender-devel libXt-devel libalsa-devel libassuan-devel libat-spi2-core libatk-devel libatomic_ops-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcanberra-devel libcom_err-devel libcrypt-devel libctf-nobfd0 libdbus-devel libdouble-conversion3 libffi-devel libfreetype-devel libgdbm-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmp-devel libgpg-error libgpg-error-devel libharfbuzz-devel libicu-devel libjpeg-devel libkrb5-devel libmpfr-devel libncurses-devel libp11-kit libpango-devel libpng-devel libpopt-devel libsasl2-3 libsndfile-devel libssl-devel libstdc++-devel libtinfo-devel libudev-devel libunixODBC-devel-compat libverto-devel libvulkan-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxkbcommon-devel libxkbcommon-x11 perl pkg-config postgresql-devel python-modules python2-base python3 python3-base python3-module-paste rpm-build-file rpm-build-python3 rpm-macros-python sh4 tcl-devel tzdata wayland-devel xorg-proto-devel xorg-xf86miscproto-devel xxd zlib-devel zlib-devel-static
 #BuildRequires: aalib-devel asio-devel binutils-devel bzlib-devel catch-devel ccmake cmark-devel drumstick-devel ebook-tools-devel eglexternalplatform-devel firebird-devel flex flite-devel frei0r-devel gambit glslang id3lib-devel ilbc-devel imlib2-devel ktoblzcheck-devel ladspa_sdk libGLU-devel libGeoIP-devel libXScrnSaver-devel libXaw-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libaio-devel libarchive-devel libargon2-devel libat-spi2-core-devel libaudiofile-devel libaudit-devel libbrotli-devel libcanberra-gtk-common-devel libcap-ng-devel libcares-devel libcdaudio-devel libcdparanoia-devel libcheck-devel libchm-devel libchromaprint-devel libcmocka-devel libcrossguid-devel libcryptsetup-devel libcups-devel libdb4-devel libdca-devel libddcutil-devel libdevmapper-devel libdiscount-devel libdmtx-devel libdouble-conversion-devel libdrm-devel libedit-devel libelf-devel libenca-devel libevent-devel libexpat-devel libf2c-ng-devel libfaad-devel libfaudio-devel libfftw3-devel libfluidsynth-devel libfreetds-devel libfuse-devel libgadu-devel libgamin-devel libgbm-devel libgc-devel libgcrypt-devel libgd3-devel libgit2-devel libgmpxx-devel libgpgme-devel libgps-devel libgsm-devel libgsoap-devel libgtk+3-devel libgts-devel libhdf5-devel libid3tag-devel libidn-devel libinput-devel libkmod-devel libksba-devel liblasi-devel liblcms-devel liblcms2-devel libldap-devel liblirc-devel liblksctp-devel liblmdb-devel liblmdbxx-devel liblrdf-devel libltdl7-devel liblz4-devel liblzma-devel libmad-devel libmd-devel libmicrohttpd-devel libmng-devel libmpg123-devel libmsgpack-devel libmtdev-devel libmtp-devel libmtxclient-devel libmuparser-devel libmysqlclient21-devel libnewt-devel libnpth-devel libopenconnect-devel libopenslp-devel libpcap-devel libpciaccess-devel libpcre2-devel libportaudio2-devel libproj-devel libproxy-devel libpth-devel libpwquality-devel libqrencode4-devel libredland-devel libsamplerate-devel libscotch-devel libseccomp-devel libshape-devel libsnappy-devel libsodium-devel libsox-devel libsoxr-devel libspnav-devel libsqlite3-devel libssh2-devel libsuitesparse-devel libsystemd-devel libtar-devel libtasn1-devel libtidy-devel libtiff-devel libtimidity-devel libts-devel libturbojpeg-devel libtwolame-devel libunixODBC-devel libusb-compat-devel libusbmuxd-devel libutempter-devel libuv-devel libv4l-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel libwildmidi-devel libwlocate-devel libx264-devel libx265-devel libxapian-devel libxcb-render-util-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel libxine2-devel libxkbcommon-x11-devel libxkbfile-devel libxosd-devel libxvid-devel libyasm-devel libzbar-devel libzip-devel libzstd-devel libzvbi-devel lua-devel lv2-devel mpir-devel ninja-build postgresql-devel-static python-modules-compiler python3-dev swig tbb-devel tinyxml-devel tk-devel
 BuildRequires(pre): qt6-tools-common
-BuildRequires: cmake gcc-c++ ninja-build
+BuildRequires: cmake gcc-c++ ninja-build rpm-build-python3
 BuildRequires: binutils-devel bzlib-devel libb2-devel libssl-devel libdbus-devel libkrb5-devel
 BuildRequires: eglexternalplatform-devel flex libGLU-devel
 BuildRequires: libXScrnSaver-devel libXaw-devel libXcomposite-devel libXcursor-devel libXdamage-devel
@@ -92,7 +91,7 @@ BuildRequires: libxkbcommon-x11-devel libxkbfile-devel libzstd-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: libsqlite3-devel
 %if_disabled bootstrap
-BuildRequires(pre): qt6-base-devel qt6-tools
+BuildRequires: qt6-base-devel qt6-tools
 %endif
 
 %description
@@ -278,6 +277,7 @@ DBus support library for the Qt%major toolkit
 Summary: Network support library for the Qt%major toolkit
 Group: System/Libraries
 Requires: %name-common
+Requires: ca-certificates
 %description -n lib%gname-network
 Network support library for the Qt%major toolkit
 
@@ -400,75 +400,82 @@ mkdir -p BUILD
 pushd BUILD
 #    -DCMAKE_INSTALL_PREFIX=%_qt6_prefix \
 cmake .. \
-    -DCMAKE_INSTALL_PREFIX=%prefix \
-    -DINSTALL_ARCHDATADIR=%_qt6_archdatadir \
-    -DINSTALL_BINDIR=%_qt6_bindir \
-    -DINSTALL_DATADIR=%_qt6_datadir \
-    -DINSTALL_DOCDIR=%_qt6_docdir \
-    -DINSTALL_EXAMPLESDIR=%_qt6_examplesdir \
-    -DINSTALL_INCLUDEDIR=%_qt6_headerdir \
-    -DINSTALL_QMLDIR=%_qt6_qmldir \
-    -DINSTALL_LIBDIR=%_qt6_libdir \
-    -DINSTALL_LIBEXECDIR=%_qt6_libexecdir \
-    -DINSTALL_PLUGINSDIR=%_qt6_plugindir \
-    -DINSTALL_SYSCONFDIR=%_qt6_sysconfdir \
-    -DINSTALL_TRANSLATIONSDIR=%_qt6_translationdir \
-    -DINSTALL_MKSPECSDIR=%_qt6_mkspecsdir \
+    -DCMAKE_INSTALL_PREFIX:STRING=%prefix \
+    -DINSTALL_ARCHDATADIR:STRING=%_qt6_archdatadir \
+    -DINSTALL_BINDIR:STRING=%_qt6_bindir \
+    -DINSTALL_DATADIR:STRING=%_qt6_datadir \
+    -DINSTALL_DOCDIR:STRING=%_qt6_docdir \
+    -DINSTALL_EXAMPLESDIR:STRING=%_qt6_examplesdir \
+    -DINSTALL_INCLUDEDIR:STRING=%_qt6_headerdir \
+    -DINSTALL_QMLDIR:STRING=%_qt6_qmldir \
+    -DINSTALL_LIBDIR:STRING=%_qt6_libdir \
+    -DINSTALL_LIBEXECDIR:STRING=%_qt6_libexecdir \
+    -DINSTALL_PLUGINSDIR:STRING=%_qt6_plugindir \
+    -DINSTALL_SYSCONFDIR:STRING=%_qt6_sysconfdir \
+    -DINSTALL_TRANSLATIONSDIR:STRING=%_qt6_translationdir \
+    -DINSTALL_MKSPECSDIR:STRING=%_qt6_mkspecsdir \
     \
     -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DBUILD_SHARED_LIBS=ON \
-    -DBUILD_WITH_PCH=OFF \
-    -DQT_QMAKE_TARGET_MKSPEC=%platform \
+    -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+    -DBUILD_SHARED_LIBS:BOOL=ON \
+    -DBUILD_WITH_PCH:BOOL=OFF \
+    -DQT_QMAKE_TARGET_MKSPEC:STRING=%platform \
     \
-    -DQT_FEATURE_enable_new_dtags=ON \
-    -DQT_FEATURE_reduce_relocations=OFF \
-    -DQT_FEATURE_relocatable=OFF \
-    -DQT_FEATURE_separate_debug_info=OFF \
-    -DQT_FEATURE_rpath=OFF \
-    -DQT_FEATURE_use_gold_linker=OFF \
-    -DQT_DISABLE_RPATH=TRUE \
-    \
-    -DQT_BUILD_EXAMPLES=ON \
-    -DQT_BUILD_TESTS=OFF \
-    -DQT_BUILD_STANDALONE_TESTS=OFF \
-    -DQT_FEATURE_journald=OFF \
-    -DQT_FEATURE_openssl_linked=ON \
-    -DQT_FEATURE_accessibility=ON \
-    -DQT_FEATURE_fontconfig=ON \
-    -DQT_FEATURE_glib=ON \
-%ifarch x86_64 %e2k
-    -DQT_FEATURE_sse2=ON \
+    -DQT_FEATURE_enable_new_dtags:BOOL=ON \
+    -DQT_FEATURE_reduce_relocations:BOOL=OFF \
+    -DQT_FEATURE_relocatable:BOOL=OFF \
+    -DQT_FEATURE_separate_debug_info:BOOL=OFF \
+    -DQT_FEATURE_rpath:BOOL=OFF \
+    -DQT_FEATURE_use_gold_linker:BOOL=OFF \
+    -DQT_DISABLE_RPATH:BOOL=ON \
+    -DQT_CREATE_VERSIONED_HARD_LINK:BOOL=OFF \
+%ifnarch ppc64le
+    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
 %endif
-    -DQT_FEATURE_icu=ON \
-    -DQT_FEATURE_system_jpeg=ON \
-    -DQT_FEATURE_system_png=ON \
-    -DQT_FEATURE_system_zlib=ON \
-    -DQT_FEATURE_dbus_linked=ON \
-    -DQT_FEATURE_system_pcre2=ON \
-    -DQT_FEATURE_libproxy=ON \
-    -DQT_FEATURE_sctp=%{?_enable_sctp:ON}%{!?_enable_sctp:OFF} \
-    -DQT_FEATURE_mimetype=ON \
-    -DQT_FEATURE_mimetype_database=OFF \
     \
-    -DQT_FEATURE_sql_odbc=ON \
-    -DQT_FEATURE_sql_sqlite=ON \
-    -DQT_FEATURE_system_sqlite=ON \
-    -DQT_FEATURE_sql_mysql=ON \
-    -DQT_FEATURE_sql_tds=%{?_enable_sql_tds:ON}%{!?_enable_sql_tds:OFF} \
-    -DQT_FEATURE_sql_ibase=%{?_enable_sql_ibase:ON}%{!?_enable_sql_ibase:OFF} \
-    -DQT_FEATURE_sql_odbc=%{?_enable_sql_odbc:ON}%{!?_enable_sql_odbc:OFF} \
-    -DQT_FEATURE_sql_psql=%{?_enable_sql_pgsql:ON}%{!?_enable_sql_pgsql:OFF} \
+    -DQT_BUILD_EXAMPLES:BOOL=ON \
+    -DQT_BUILD_TESTS:BOOL=OFF \
+    -DQT_BUILD_STANDALONE_TESTS:BOOL=OFF \
+    -DQT_FEATURE_journald:BOOL=OFF \
+    -DQT_FEATURE_openssl_linked:BOOL=ON \
+    -DQT_FEATURE_accessibility:BOOL=ON \
+    -DQT_FEATURE_fontconfig:BOOL=ON \
+    -DQT_FEATURE_glib:BOOL=ON \
+%ifarch x86_64 %e2k
+    -DQT_FEATURE_sse2:BOOL=ON \
+%endif
+    -DQT_FEATURE_icu:BOOL=ON \
+    -DQT_FEATURE_system_jpeg:BOOL=ON \
+    -DQT_FEATURE_system_png:BOOL=ON \
+    -DQT_FEATURE_system_zlib:BOOL=ON \
+    -DQT_FEATURE_dbus_linked:BOOL=ON \
+    -DQT_FEATURE_system_pcre2:BOOL=ON \
+    -DQT_FEATURE_libproxy:BOOL=ON \
+    -DQT_FEATURE_sctp:BOOL=%{?_enable_sctp:ON}%{!?_enable_sctp:OFF} \
+    -DQT_FEATURE_mimetype:BOOL=ON \
+    -DQT_FEATURE_mimetype_database:BOOL=OFF \
     \
-    -DQT_FEATURE_xcb=ON \
-    -DQT_FEATURE_system_xcb_xinput=ON \
-    -DQT_FEATURE_xkbcommon=ON \
-    -DQT_FEATURE_opengl=ON \
-    -DQT_FEATURE_eglfs=ON \
-    -DQT_FEATURE_egl=ON \
-    -DQT_FEATURE_kms=ON \
+    -DQT_FEATURE_sql_odbc:BOOL=ON \
+    -DQT_FEATURE_sql_sqlite:BOOL=ON \
+    -DQT_FEATURE_system_sqlite:BOOL=ON \
+    -DQT_FEATURE_sql_mysql:BOOL=ON \
+    -DQT_FEATURE_sql_tds:BOOL=%{?_enable_sql_tds:ON}%{!?_enable_sql_tds:OFF} \
+    -DQT_FEATURE_sql_ibase:BOOL=%{?_enable_sql_ibase:ON}%{!?_enable_sql_ibase:OFF} \
+    -DQT_FEATURE_sql_odbc:BOOL=%{?_enable_sql_odbc:ON}%{!?_enable_sql_odbc:OFF} \
+    -DQT_FEATURE_sql_psql:BOOL=%{?_enable_sql_pgsql:ON}%{!?_enable_sql_pgsql:OFF} \
+    \
+    -DQT_FEATURE_xcb:BOOL=ON \
+    -DQT_FEATURE_system_xcb_xinput:BOOL=ON \
+    -DQT_FEATURE_xkbcommon:BOOL=ON \
+    -DQT_FEATURE_opengl:BOOL=ON \
+    -DQT_FEATURE_eglfs:BOOL=ON \
+    -DQT_FEATURE_egl:BOOL=ON \
+    -DQT_FEATURE_kms:BOOL=ON \
+%if "%opengl_type" == "es2"
+     -DINPUT_opengl:STRING=es2 \
+     -DFEATURE_opengles3:BOOL=ON \
+%endif
     #
-#    -DINPUT_opengl=%opengl_type \
 popd
 cmake --build BUILD %_smp_mflags --verbose
 %if %qdoc_found
@@ -477,6 +484,7 @@ cmake --build BUILD --target docs
 
 %install
 cmake --install BUILD --prefix %buildroot/%prefix
+cmake --install BUILD/examples --prefix %buildroot/%_qt6_examplesdir
 %if %qdoc_found
 DESTDIR=%buildroot cmake --build BUILD --target install_docs
 %endif
@@ -531,7 +539,7 @@ translationdir=%_qt6_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 6.2.4
+%{nil}Version: %version
 __EOF__
 
 # rpm macros
@@ -588,11 +596,15 @@ done
 # link includes into qt prefix
 ln -s `relative %buildroot/%_qt6_headerdir %buildroot/%_qt6_prefix/include` %buildroot/%_qt6_prefix/include
 
+# relax depends on sql plugins files
+for f in %buildroot/%_libdir/cmake/Qt?Sql/Qt*DriverPluginTargets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
 
 %files -n qt6-qtbase
 %files -n qt6-qtbase-gui
 %files common
-%doc LICENSE.*
+%doc LICENSES/*
 %dir %_sysconfdir/qt6/
 %dir %_qt6_docdir/
 %dir %_qt6_archdatadir/
@@ -668,6 +680,7 @@ ln -s `relative %buildroot/%_qt6_headerdir %buildroot/%_qt6_prefix/include` %bui
 %_qt6_bindir/qmake*
 #
 %_qt6_libexecdir/moc
+%_qt6_libexecdir/qt-testrunner.py
 %_qt6_libexecdir/rcc
 %_qt6_libexecdir/syncqt.pl
 %_qt6_libexecdir/uic
@@ -695,7 +708,7 @@ ln -s `relative %buildroot/%_qt6_headerdir %buildroot/%_qt6_prefix/include` %bui
 %_qt6_libdir/metatypes/qt%{major}*.json
 %dir %_qt6_datadir/modules/
 %_qt6_datadir/modules/*.json
-%_pkgconfigdir/Qt%major.pc
+%_pkgconfigdir/Qt%{major}*.pc
 
 %files devel-static
 
@@ -795,6 +808,9 @@ ln -s `relative %buildroot/%_qt6_headerdir %buildroot/%_qt6_prefix/include` %bui
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Fri Dec 09 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt4
 - automate bootstrap mode
 

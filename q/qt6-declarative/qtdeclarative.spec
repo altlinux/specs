@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.2.4
-Release: alt6
+Version: 6.4.2
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -38,7 +38,6 @@ BuildRequires: gcc-c++ glibc-devel qt6-base-devel qt6-shadertools-devel
 BuildRequires: cmake glslang libGLU-devel libxkbcommon-devel
 %if_disabled bootstrap
 BuildRequires: qt6-tools
-BuildRequires: rpm-build-qml6
 %endif
 
 %description
@@ -278,6 +277,14 @@ Requires: libqt6-core = %_qt6_version
 %description -n libqt6-labsanimation
 %summary
 
+%package -n libqt6-qmlcompiler
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common = %EVR
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-qmlcompiler
+%summary
+
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
@@ -311,6 +318,11 @@ popd
 %endif
 %endif
 
+# relax depends on plugins files
+for f in %buildroot/%_libdir/cmake/Qt?*/{*,}/Qt*Targets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
+
 #install rpm-build-qml
 pushd src/rpm-build-qml
 
@@ -334,7 +346,7 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_qmldir/*
 
 %files common
-%doc *LICENSE*
+%doc LICENSES/*
 %doc dist/changes*
 %dir %_qt6_qmldir/
 %dir %_qt6_qmldir/Qt/
@@ -360,6 +372,8 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_libdir/libQt?QuickWidgets.so.*
 %files -n libqt6-quickshapes
 %_qt6_libdir/libQt?QuickShapes.so.*
+%files -n libqt6-qmlcompiler
+%_qt6_libdir/libQt6QmlCompiler.so.*
 %files -n libqt6-qmlmodels
 %_qt6_libdir/libQt?QmlModels.so.*
 %files -n libqt6-qmlworkerscript
@@ -402,6 +416,7 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_bindir/qml*
 %_qt6_libexecdir/qml*
 %_qt6_plugindir/qmltooling/*
+%_qt6_plugindir/qmllint/*
 %_qt6_libdir/libQt*.so
 %_qt6_libdatadir/libQt*.so
 %_qt6_libdir/libQt*.prl
@@ -414,6 +429,7 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_libdir/libQt?*.a
 %_qt6_libdir/metatypes/qt*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %files devel-static
 
@@ -429,6 +445,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Mon Dec 19 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt6
 - automate bootstrap mode
 

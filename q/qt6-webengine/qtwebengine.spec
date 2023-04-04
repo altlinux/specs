@@ -24,8 +24,8 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.2.4
-Release: alt2
+Version: 6.4.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -36,8 +36,7 @@ ExclusiveArch: %qt6_qtwebengine_arches
 Source: %qt_module-everywhere-src-%version.tar
 Source100: jquery.min.js
 Source101: jquery.tablesorter.min.js
-# SuSE
-Patch100: qtwebengine-icu70.patch
+Patch1: alt-ftbfs.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
@@ -62,12 +61,12 @@ BuildRequires: libcups-devel
 BuildRequires: gyp libudev-devel libxml2-devel jsoncpp-devel liblcms2-devel
 BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp2-devel
 BuildRequires: libwebp-devel libxslt-devel ninja-build protobuf-compiler libva-devel libvdpau-devel
+BuildRequires: libopenjpeg2.0-devel
 BuildRequires: node-yargs node-terser
-BuildRequires: python-devel python-modules-json
-BuildRequires: qt6-multimedia-devel qt6-svg-devel qt6-tools-devel qt6-declarative-devel
-BuildRequires: qt6-websockets-devel qt6-webchannel-devel
-#BuildRequires: qt6-connectivity-devel qt6-sensors-devel qt6-serialport-devel
-#BuildRequires: qt6-x11extras-devel qt6-location-devel
+BuildRequires: python3(json) python3(html5lib)
+BuildRequires: qt6-multimedia-devel qt6-svg-devel qt6-tools-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-websockets-devel qt6-webchannel-devel qt6-positioning-devel
 #BuildRequires: qt6-phonon-devel
 
 %description
@@ -180,7 +179,7 @@ Requires: libqt6-core = %_qt6_version
 %endif
 %setup -n %qt_module-everywhere-src-%version
 #
-%patch100 -p1
+%patch1 -p1
 #
 %patch200 -p1
 %patch201 -p1
@@ -231,13 +230,13 @@ cp %SOURCE100 src/3rdparty/chromium/third_party/pycoverage/coverage/htmlfiles/
 cp %SOURCE101 src/3rdparty/chromium/third_party/pycoverage/coverage/htmlfiles/
 
 # copy the Chromium license so it is installed with the appropriate name
-cp -p src/3rdparty/chromium/LICENSE LICENSE.Chromium
+cp -p src/3rdparty/chromium/LICENSE LICENSES/LICENSE.Chromium
 
 # fix find system ninja
 mkdir -p bin
 ln -s %_bindir/ninja-build bin/ninja
 # fix find system python
-ln -s %__python bin/python
+ln -s %__python3 bin/python
 
 #syncqt.pl-qt6  -version %version
 
@@ -274,7 +273,9 @@ export CFLAGS="$OPTFLAGS" CXXFLAGS="$OPTFLAGS"
 %if "%_lib" == "lib"
 export LDFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-overheads"
 %endif
+%global __qt6_build_tool ninja
 %Q6cmake \
+    --log-level=STATUS \
     -DCMAKE_TOOLCHAIN_FILE:STRING="%_libdir/cmake/Qt6/qt.toolchain.cmake" \
 %if %is_ffmpeg
     -DFEATURE_webengine_system_ffmpeg:BOOL=ON \
@@ -283,6 +284,7 @@ export LDFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-ove
     -DFEATURE_webengine_system_icu:BOOL=ON \
 %endif
     -DFEATURE_webengine_system_libevent:BOOL=ON \
+    -DFEATURE_webengine_system_libopenjpeg2:BOOL=ON \
     -DFEATURE_qtpdf_build:BOOL=ON \
     -DFEATURE_qtpdf_widgets_build:BOOL=ON \
     -DFEATURE_qtpdf_quick_build:BOOL=ON \
@@ -291,22 +293,23 @@ export LDFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-ove
     -DFEATURE_webengine_developer_build:BOOL=OFF \
     -DFEATURE_webengine_embedded_build:BOOL=OFF \
     -DFEATURE_webengine_extensions:BOOL=ON \
-    -DFEATURE_webengine_kerberos:BOOL=ON \
     -DFEATURE_webengine_webrtc:BOOL=ON \
     -DFEATURE_webengine_webrtc_pipewire:BOOL=OFF \
     -DFEATURE_webengine_spellchecker:BOOL=OFF \
+    -DFEATURE_webengine_native_spellchecker:BOOL=OFF \
     #
 #    -DFEATURE_webengine_spellchecker:BOOL=ON \
 #    -DFEATURE_webengine_native_spellchecker:BOOL=OFF \
-%make_build -C BUILD -Onone
+#make -Onone
+%Q6make
 %if %qdoc_found
-%make -C BUILD docs
+cmake --build BUILD --target docs ||:
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
+cmake --install BUILD --target docs ||:
 %endif
 
 %if_disabled system_icu
@@ -338,7 +341,7 @@ do
 done
 
 %files common -f translations_list.lang
-%doc LICENSE.* LICENSE*EXCEPT*
+%doc LICENSES/*
 %dir %_qt6_translationdir/qtwebengine_locales/
 %dir %_qt6_datadir/resources/
 %_qt6_datadir/resources/qtwebengine*.pak
@@ -367,13 +370,15 @@ done
 
 %files doc
 %if %qdoc_found
-%_qt6_docdir/*
+#%_qt6_docdir/*
 %endif
-%_qt6_examplesdir/*
+#%_qt6_examplesdir/*
 
 %files devel
 #%_bindir/qwebengine_convert_dict*
 #%_qt6_bindir/qwebengine_convert_dict*
+#
+%_qt6_libexecdir/gn
 #
 %_qt6_plugindir/designer/libqwebengineview.so
 %_qt6_headerdir/QtWebEngine*/
@@ -386,8 +391,12 @@ done
 %_qt6_archdatadir/mkspecs/modules/qt_*.pri
 %_qt6_libdir/metatypes/qt6*.json
 %_qt6_datadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Mon Jun 06 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
 - workaround agains build system open descriptors limit
 
