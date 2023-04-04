@@ -1,7 +1,7 @@
 %define _sysusersdir /lib/sysusers.d
 
 Name: deepin-anything
-Version: 6.0.3
+Version: 6.0.4
 Release: alt1
 Summary: Global search tool for Deepin
 License: GPL-3.0+
@@ -71,6 +71,9 @@ rm -rf %buildroot/usr/src/deepin-anything-0.0/
 %_pkgconfigdir/deepin-anything-server-lib.pc
 
 %changelog
+* Tue Apr 04 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt1
+- New version 6.0.4.
+
 * Thu Dec 29 2022 Leontiy Volodin <lvol@altlinux.org> 6.0.3-alt1
 - New version (6.0.3).
 
