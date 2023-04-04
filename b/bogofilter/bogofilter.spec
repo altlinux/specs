@@ -1,27 +1,31 @@
 Name: bogofilter
 Version: 1.2.5
-Release: alt1
+Release: alt2
 
 Summary: Fast anti-spam filtering by Bayesian statistical analysis
 Summary(ru_RU.CP1251): Быстрая фильтрация спама на основе статистической формулы Байеса
 Group: Networking/Mail
-License: GPL
+License: GPL-2.0-or-later AND GPL-3.0-only
 URL: http://bogofilter.sourceforge.net/
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-%define gsl_ver 1.4
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
-%define pkgdocdir %_docdir/%name-%version
+Source0: %name-%version.tar
+Patch0001: 0001-ALT-Hide-qmail-inject-from-dependency-search-because.patch
+Patch0002: 0002-DEBIAN-Make-bf_tar-use-tar-instead-of-pax-to-drop-de.patch
 
-Source: %name-%version.tar.xz
-Patch0: %name-0.96.4-alt-bogus-deps.patch
+Requires: %name-bdb
+Requires: %name-doc
 
-Requires: libgsl >= %gsl_ver
+BuildRequires(pre): rpm-macros-alternatives
 
-BuildRequires: OpenSP flex
-BuildRequires: libgsl-devel >= %gsl_ver
-BuildRequires: libdb4.7-devel 
+BuildRequires: flex
+BuildRequires: libgsl-devel >= 1.4
+BuildRequires: libdb4.7-devel
+BuildRequires: libsqlite3-devel
 BuildRequires: perl-Pod-Parser
 
 %description
@@ -43,95 +47,191 @@ Bogofilter — это фильтр для спама на основе формулы Байеса. В обычном
 что он может быть использован для серверов, которые обрабатывают большое
 количество почты.
 
-%package utils
-Summary: Bogofilter utilities
+%package bdb
+Summary: Fast anti-spam filtering by Bayesian statistical analysis with Berkeley DB backend
 Group: Networking/Mail
-Requires: %name = %version-%release pax
+
+Requires: %name-common = %EVR
+Provides: %name-backend = %EVR
+
 Provides: bogofilter-tuning
 Obsoletes: bogofilter-tuning
 
-%description utils
-This package features various utilities to maintain bogofilter installations.
-Bogofilter is a Bayesian spam filter using databases of "good" and "bad"
-words for operation.
+Provides: bogofilter-utils = %EVR
+Obsoletes: bogofilter-utils <= 1.2.5-alt1
+
+%description bdb
+Bogofilter is a Bayesian spam filter.  In its normal mode of
+operation, it takes an email message or other text on standard input,
+does a statistical check against lists of "good" and "bad" words, and
+returns a status code indicating whether or not the message is spam.
+Bogofilter is designed with fast algorithms  (including Berkeley DB system),
+coded directly in C, and tuned for speed, so it can be used for production
+by sites that process a lot of mail.
+
+This package contains %name build with the Berkeley DB backend.
+
+
+%package sqlite
+Summary: Fast anti-spam filtering by Bayesian statistical analysis with SQLite backend
+Group: Networking/Mail
+
+Provides: %name-backend = %EVR
+Requires: %name-common = %EVR
+
+%description sqlite
+Bogofilter is a Bayesian spam filter.  In its normal mode of
+operation, it takes an email message or other text on standard input,
+does a statistical check against lists of "good" and "bad" words, and
+returns a status code indicating whether or not the message is spam.
+Bogofilter is designed with fast algorithms  (including Berkeley DB system),
+coded directly in C, and tuned for speed, so it can be used for production
+by sites that process a lot of mail.
+
+This package contains %name build with the sqlite3 backend.
+
+
+%package common
+Summary: Common files for Bogofilter
+Group: Networking/Mail
+BuildArch: noarch
+
+%description common
+This package contains shared files for various %name backends
+
 
 %package contrib
 Summary: Scripts contributed to Bogofilter
 Group: Networking/Mail
-Requires: %name = %version-%release
+BuildArch: noarch
+Requires: %name-backend = %version-%release
 
-AutoReq: yes, noperl
+AutoReq: yes, noperl, noshell
 
 %description contrib
 Helpful scripts contributed to the bogofilter package.
 Bogofilter is a Bayesian spam filter.
 
+
+%package doc
+Summary: Bogofilter documentation
+Group: Networking/Mail
+BuildArch: noarch
+
+%description doc
+This package contains the documentation of bogofilter.
+
 %prep
 %setup -q
-%patch0 -p1
+%autopatch -p2
 
 %build
-%configure --disable-dependency-tracking \
-    --with-database=db --disable-rpath
-%make_build
-%{?!_disable_check:%make check}
+%define _configure_script ../configure
+
+build()
+{
+	local flavour=$1; shift
+
+	mkdir -p build-$flavour
+	cd build-$flavour
+
+	%configure \
+		--disable-dependency-tracking \
+		--disable-rpath \
+		"$@" ||
+		return $?
+
+	%make_build ||
+		return $?
+	cd -
+}
+
+mkdir -p build-common
+cd build-common
+%configure
+cd -
+
+build bdb    --program-suffix=-bdb    --with-database=db
+build sqlite --program-suffix=-sqlite --with-database=sqlite
 
 %install
-%set_verify_info_method relaxed
-%makeinstall
-#cp $RPM_BUILD_ROOT%_sysconfdir/bogofilter.cf.example \
-#   $RPM_BUILD_ROOT%_sysconfdir/bogofilter.cf
+%define _makeinstall_target install-exec-recursive
 
-install -d -m755 $RPM_BUILD_ROOT%_libdir/%name
-install -d -m755 $RPM_BUILD_ROOT%_libdir/%name/contrib
-for f in $(find contrib -type f ! \( -name 'Makefile*' -o -name '*.c' -o -name '*.o' -o -name '*.Po' \)); do
-    cp -p "$f" $RPM_BUILD_ROOT%_libdir/%name/contrib
+%makeinstall_std -C build-common/doc install
+
+mkdir -p --  $RPM_BUILD_ROOT%_altdir
+for o in bdb sqlite; do
+	%makeinstall_std -C "build-$o" \
+		mandir="/.ignore"
+	{
+		printf '%%s\t%%s\t1\n' "%_bindir/bogofilter" "%_bindir/bogofilter-$o"
+		find "$RPM_BUILD_ROOT%_bindir" -type f \
+			\( -name "*-$o" -a \! -name "bogofilter-$o" \) \
+			-printf '%%f\n' | sort |
+			sed -re 's|(.*)-([^-]+)$|%_bindir/\1\t%_bindir/&\t%_bindir/bogofilter-\2|'
+	} > "$RPM_BUILD_ROOT%_altdir/%name-$o"
 done
+rm -rf -- "$RPM_BUILD_ROOT/.ignore"
 
-install -d -m755 $RPM_BUILD_ROOT%pkgdocdir
-ln -s %_licensedir/GPL-2 $RPM_BUILD_ROOT%pkgdocdir/COPYING
-install -m644 AUTHORS GETTING.STARTED NEWS README RELEASE.NOTES TODO \
-    $RPM_BUILD_ROOT%pkgdocdir/
-install -m644 doc/*.html \
-    $RPM_BUILD_ROOT%pkgdocdir/
-install -m644 doc/integrating-with-* \
-    $RPM_BUILD_ROOT%pkgdocdir/
-install -m644 doc/README.db \
-    $RPM_BUILD_ROOT%pkgdocdir/
+mkdir -p -m755 -- $RPM_BUILD_ROOT%_datadir/%name/contrib
+find contrib -type f \
+	! \( -name 'Makefile*' -o -name '*.[co]' -o -name '*.Po' \) \
+	-execdir cp -pt "$RPM_BUILD_ROOT%_datadir/%name/contrib" -- '{}' '+'
+
+%check
+%make -C build-bdb check
+%make -C build-sqlite check
 
 %files
-%dir %pkgdocdir
-%pkgdocdir/COPYING
-%pkgdocdir/AUTHORS
-%pkgdocdir/GETTING.STARTED
-%pkgdocdir/NEWS
-%pkgdocdir/README*
-%pkgdocdir/RELEASE.NOTES
-%pkgdocdir/TODO
-%pkgdocdir/*.html
-%pkgdocdir/integrating-with-*
-%_bindir/bogofilter
-%_man1dir/bogofilter.1*
-%_sysconfdir/bogofilter.cf.example
-#%config(noreplace) %_sysconfdir/bogofilter.cf
 
-%files utils
-%_bindir/bf_*
-%_bindir/bogolexer
-%_bindir/bogotune
-%_bindir/bogoupgrade
-%_bindir/bogoutil
-%_man1dir/bf_*
+%files common
+%_sysconfdir/bogofilter.cf.example
+%_man1dir/bogofilter.1*
+%_man1dir/bf_*.1*
 %_man1dir/bogolexer.1*
 %_man1dir/bogotune.1*
 %_man1dir/bogoupgrade.1*
 %_man1dir/bogoutil.1*
 
+%files bdb
+%_altdir/bogofilter-bdb
+%_bindir/bogofilter-bdb
+%_bindir/bf_compact-bdb
+%_bindir/bf_copy-bdb
+%_bindir/bf_tar-bdb
+%_bindir/bogolexer-bdb
+%_bindir/bogotune-bdb
+%_bindir/bogoupgrade-bdb
+%_bindir/bogoutil-bdb
+
+%files sqlite
+%_altdir/bogofilter-sqlite
+%_bindir/bogofilter-sqlite
+%_bindir/bf_compact-sqlite
+%_bindir/bf_copy-sqlite
+%_bindir/bf_tar-sqlite
+%_bindir/bogolexer-sqlite
+%_bindir/bogotune-sqlite
+%_bindir/bogoupgrade-sqlite
+%_bindir/bogoutil-sqlite
+
 %files contrib
-%dir %_libdir/%name
-%_libdir/%name/contrib
+%_datadir/%name
+
+%files doc
+%doc AUTHORS COPYING GETTING.STARTED NEWS README RELEASE.NOTES TODO
+%doc doc/*.html doc/integrating-with-* doc/README.*
 
 %changelog
+* Sun Apr 02 2023 Alexey Gladkov <legion@altlinux.ru> 1.2.5-alt2
+- Split package by database backends (Berkeley DB and SQLite).
+- Put all utilites in the single package.
+- Add alternative for utilities to be able to install them in parallel.
+- Make bf_tar use tar instead of pax.
+- Move contrib to _datadir.
+- Move docs in to separate package.
+- Fix License tag.
+
 * Sun Mar 28 2021 Ilya Mashkin <oddity@altlinux.ru> 1.2.5-alt1
 - 1.2.5
 
