@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
-Version: 2023.01
-Release: alt2
+Version: 2023.04
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -10,7 +10,7 @@ ExclusiveArch: aarch64
 
 Source: %name-%version-%release.tar
 
-BuildRequires: atf-rockchip >= 2.6
+BuildRequires: atf-rockchip >= 2.6 rk35-firmware
 BuildRequires: bc ccache dtc >= 1.4 flex libssl-devel libuuid-devel libgnutls-devel
 BuildRequires: python3(libfdt)
 BuildRequires: python3(setuptools)
@@ -44,6 +44,14 @@ boards=$(fgrep -lr CONFIG_ROCKCHIP_${soc} configs |sed 's,^configs/\(.\+\)_defco
 for board in $boards; do buildit ${soc,,[A-Z]}; done
 done
 
+export RKBIN=%_datadir/rkbin/bin/rk35
+export ROCKCHIP_TPL=$RKBIN/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.08.bin
+
+for soc in RK3588; do
+boards=$(fgrep -lr CONFIG_ROCKCHIP_${soc} configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
+for board in $boards; do buildit ${soc,,[A-Z]}; done
+done
+
 %install
 mkdir -p %buildroot%_datadir/u-boot
 cd out 
@@ -54,6 +62,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Apr 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.04-alt1
+- 2023.04 released
+
 * Thu Feb 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.01-alt2
 - add orange pi 4 board variants (closes: 45235)
 
