@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 0.1.31
-Release: alt2
+Version: 0.1.32
+Release: alt1
 Epoch: 1
 
 Summary: A command line application framework
@@ -15,7 +15,6 @@ Url: https://pypi.python.org/pypi/Naked/
 
 # https://github.com/chrissimpkins/naked.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-build.patch
 
 # due commands in bindir
 Conflicts: python-module-Naked
@@ -23,7 +22,7 @@ Conflicts: python-module-Naked
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-Cython python3-module-nose python3-module-yaml
+BuildRequires: python3-module-Cython python3-module-yaml
 
 %py3_use requests
 %py3_use yaml
@@ -34,7 +33,6 @@ development. The current release is a stable, testing release.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 export LC_ALL=en_US.UTF-8
@@ -81,6 +79,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 04 2023 Anton Vyatkin <toni@altlinux.org> 1:0.1.32-alt1
+- (NMU) New version 0.1.32.
+
 * Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1:0.1.31-alt2
 - build python3 module
 
