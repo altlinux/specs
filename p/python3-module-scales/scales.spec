@@ -1,20 +1,26 @@
 %define mname greplin
 %define oname scales
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0.8
-Release: alt3
+Version: 1.0.9
+Release: alt1
 
 Summary: Stats for Python processes
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/scales/
-# https://github.com/Cue/scales.git
+Url: https://pypi.org/project/scales/
+Vcs: https://github.com/Cue/scales.git
 
 Source: %name-%version.tar
+Patch: clean_testsuit.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-six python3-module-nose
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-six
+%endif
 
 %py3_provides %oname
 Requires: python3-module-%mname = %EVR
@@ -48,6 +54,7 @@ Core files of %mname.
 
 %prep
 %setup
+%patch -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -68,7 +75,8 @@ install -p -m644 src/%mname/__init__.py \
 	%buildroot%python3_sitelibdir/%mname/
 
 %check
-python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3
 
 %files
 %doc AUTHORS *.md
@@ -90,6 +98,9 @@ python3 setup.py test
 
 
 %changelog
+* Tue Apr 04 2023 Anton Vyatkin <toni@altlinux.org> 1.0.9-alt1
+- New version 1.0.9.
+
 * Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.8-alt3
 - compatibility with python 3.8
 
