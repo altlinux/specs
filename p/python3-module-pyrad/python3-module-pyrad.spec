@@ -1,8 +1,10 @@
 %define  modulename pyrad
 
+%def_with check
+
 Name:    python3-module-%modulename
 Version: 2.4
-Release: alt1
+Release: alt2
 
 Summary: Python RADIUS Implementation
 License: BSD-3-Clause
@@ -12,8 +14,10 @@ URL:     https://github.com/pyradius/pyrad
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-nose python3-module-netaddr python3-module-six
+BuildRequires: python3-module-poetry
+%if_with check
+BuildRequires: python3-module-netaddr
+%endif
 
 BuildArch: noarch
 
@@ -28,20 +32,24 @@ decoding responses.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%{__python3} setup.py test
+%pyproject_run_unittest
 
 %files
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %modulename}
+%exclude %python3_sitelibdir/example
 %doc *.rst
 
 %changelog
+* Tue Apr 04 2023 Anton Vyatkin <toni@altlinux.org> 2.4-alt2
+- (NMU) Fix BuildRequires.
+
 * Thu Nov 26 2020 Grigory Ustinov <grenka@altlinux.org> 2.4-alt1
 - Automatically updated to 2.4.
 
