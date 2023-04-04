@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Planar geometries, predicates, and operations
 License: BSD
@@ -21,7 +21,6 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
 BuildRequires: libgeos-devel
 BuildRequires: python3-module-Cython libnumpy-py3-devel
-BuildRequires: python3-module-descartes
 BuildRequires: python3-module-packaging
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
@@ -117,6 +116,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Tue Apr 04 2023 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt2
+- (NMU) Fix BuildRequires.
+
 * Mon Jan 30 2023 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
 - New version.
 
