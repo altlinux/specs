@@ -1,7 +1,6 @@
 Name:		sisyphus-updates
-Version:	0.1
-Release:	alt7.1
-Packager:       Stanislav Ievlev <inger@altlinux.org>
+Version:	0.2
+Release:	alt1
 
 Summary:	Simple system updater
 License:	GPL
@@ -33,6 +32,9 @@ install -dpm 755 %buildroot%_localstatedir/%name
 %_localstatedir/%name
 
 %changelog
+* Tue Apr 04 2023 Andrey Cherepanov <cas@altlinux.org> 0.2-alt1
+- Added arepo source line if it exists for repository (ALT #31605).
+
 * Wed Oct 07 2009 Alexey I. Froloff <raorn@altlinux.org> 0.1-alt7.1
 - NMU:
   + in local mode also browse DNS-SD services in all available domains
