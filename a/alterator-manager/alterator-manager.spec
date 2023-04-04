@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -48,6 +48,9 @@ mkdir -p %buildroot%_datadir/alterator/backends
 %_includedir/alterator
 
 %changelog
+* Tue Apr 04 2023 Ivan Savin <svn17@altlinux.org> 0.1.1-alt2
+- Add readme file (RU).
+
 * Thu Mar 09 2023 Ivan Savin <svn17@altlinux.org> 0.1.1-alt1
 - Add a default interface called manager into root.
 - The manager contains a method get_objects that returns object paths by
