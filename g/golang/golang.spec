@@ -38,8 +38,8 @@
 %def_disable check
 
 Name:    golang
-Version: 1.20.2
-Release: alt2
+Version: 1.20.3
+Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -337,6 +337,9 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Tue Apr 04 2023 Alexey Shabalin <shaba@altlinux.org> 1.20.3-alt1
+- New version (1.20.3) (Fixes: CVE-2023-24534, CVE-2023-24536, CVE-2023-24537, CVE-2023-24538).
+
 * Thu Mar 16 2023 Alexey Shabalin <shaba@altlinux.org> 1.20.2-alt2
 - Disable shell autoreq for golang-src (ALT#45547).
 
