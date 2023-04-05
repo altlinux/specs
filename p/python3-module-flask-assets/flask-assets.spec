@@ -1,8 +1,10 @@
 %define  srcname flask-assets
 
+%def_disable check
+
 Name:    python3-module-%srcname
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: Asset management for flask
 License: BSD
@@ -23,7 +25,6 @@ BuildRequires: python3-module-webassets
 %else
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-flask
-BuildRequires: python3-module-nose
 BuildRequires: python3-module-yaml
 %endif
 
@@ -51,5 +52,8 @@ py.test3 -v || :
 %doc *.rst
 
 %changelog
+* Wed Apr 05 2023 Anton Vyatkin <toni@altlinux.org> 2.0-alt2
+- (NMU) Fix BuildRequires
+
 * Thu Jul 29 2021 Anton Midyukov <antohami@altlinux.org> 2.0-alt1
 - Initial build for Sisyphus
