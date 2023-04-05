@@ -1,27 +1,25 @@
 %define oname imagesize
 
+%def_with check
+
 Name: python3-module-imagesize
-Version: 1.2.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Getting image size from png/jpeg/jpeg2000/gif file in pure Python
 
 License: MIT
 Group: Development/Python3
-Url: https://github.com/shibukawa/imagesize_py
+Url: https://pypi.org/project/imagesize/
+Vcs: https://github.com/shibukawa/imagesize_py
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-setuptools
-
-# For %%check:
-BuildRequires: python3-module-nose
 
 %description
  It parses image files' header and return image size.
@@ -30,6 +28,10 @@ BuildRequires: python3-module-nose
 * JPEG
 * JPEG2000
 * GIF
+* TIFF
+* SVG
+* Netpbm
+* WebP
 
 %prep
 %setup
@@ -41,20 +43,18 @@ BuildRequires: python3-module-nose
 %python3_install
 
 %check
-cd test
-
-# Just in case:
-# make sure we test the installed modules from %%buildroot,
-#rm imagesize.py
-
-[ -n "$NOSE_PROCESSES" ] || NOSE_PROCESSES=%__nprocs; export NOSE_PROCESSES # like in %%make_build
-PYTHONPATH=%buildroot%python3_sitelibdir nosetests3 test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 -m unittest
 
 %files
-%doc LICENSE.rst README.rst
-%python3_sitelibdir/*
+%doc *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Wed Apr 05 2023 Anton Vyatkin <toni@altlinux.org> 1.4.1-alt1
+- New version 1.4.1
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - build python3 module separately, rewrite spec
 - new version (1.2.0) with rpmgs script
