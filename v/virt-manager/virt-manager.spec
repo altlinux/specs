@@ -3,7 +3,7 @@
 
 Name: virt-manager
 Version: 4.1.0
-Release: alt1
+Release: alt2
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -14,6 +14,7 @@ AutoReqProv: nopython
 
 # https://github.com/virt-manager/virt-manager
 Source: %name-%version.tar
+Source2: %name-ru.po
 Patch0001: 0001-fixed-build-with-python3-module-docutils-on-p9-branch.patch
 # Patch: %%name-%%version-%%release.patch
 
@@ -83,6 +84,7 @@ machine).
 %setup
 #%%patch -p1
 %patch0001 -p1
+cp -f %SOURCE2 po/ru.po
 
 %build
 python3 setup.py configure
@@ -92,8 +94,8 @@ python3 setup.py configure
 %install
 #%%python_install
 python3 setup.py \
-	--no-update-icon-cache --no-compile-schemas \
-	install --root=%buildroot
+    --no-update-icon-cache --no-compile-schemas \
+    install --root=%buildroot
 
 %find_lang --with-gnome %name
 
@@ -133,6 +135,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Wed Apr 05 2023 Alexey Shabalin <shaba@altlinux.org> 4.1.0-alt2
+- updated Russian translation
+
 * Thu Aug 11 2022 Alexey Shabalin <shaba@altlinux.org> 4.1.0-alt1
 - new version 4.1.0
 
