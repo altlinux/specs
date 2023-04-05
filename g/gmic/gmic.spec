@@ -12,12 +12,12 @@
 # no tags
 %define zart_ver 34ebf6c
 # https://github.com/c-koi/gmic-qt
-%define gmic_qt_ver v.3.2.2-3-g684211c
+%define gmic_qt_ver v.3.2.3
 # https://github.com/dtschump/gmic-community.git
-%define gmic_comm_ver gmic-3.2.1-353-gbcc32414
+%define gmic_comm_ver gmic-3.2.1-375-g215267c1
 
 Name: gmic
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -207,6 +207,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Tue Apr 04 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt1
+- 3.2.3
+
 * Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
 - 3.2.2
 
