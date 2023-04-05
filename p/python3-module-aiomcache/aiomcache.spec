@@ -1,25 +1,31 @@
 %define oname aiomcache
 
-%def_disable check
+%def_without check
 
 Name: python3-module-%oname
-Version: 0.1
-Release: alt2.git20140713
-Summary: memcached client for asyncio
-License: BSD
-Group: Development/Python3
-Url: https://pypi.python.org/pypi/aiomcache/
+Version: 0.8.1
+Release: alt1
 
-# https://github.com/aio-libs/aiomcache.git
+Summary: Minimal pure python memcached client
+License: BSD-2-Clause
+Group: Development/Python3
+Url: https://pypi.org/project/aiomcache/
+Vcs: https://github.com/aio-libs/aiomcache.git
+
 Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+%if_with check
+BuildRequires: python3-module-typing_extensions
+BuildRequires: python3-module-docker
+BuildRequires: python3-module-memcached
+BuildRequires: python3-module-pytest-asyncio
+%endif
 
 %py3_provides %oname
 %py3_requires asyncio
-
-BuildRequires: python3-module-nose python3-module-pytest
 
 %description
 asyncio (PEP 3156) library to work with memcached.
@@ -34,16 +40,20 @@ asyncio (PEP 3156) library to work with memcached.
 %python3_install
 
 %check
-%__python3 setup.py test
-%__python3 runtests.py -v
-%__python3 examples/simple.py
+sed -i 's/docker_mod.Client/docker_mod.client/g' tests/conftest.py
+%tox_create_default_config
+%tox_check
 
 %files
-%doc *.txt *.rst examples
-%python3_sitelibdir/*
+%doc LICENSE *.rst examples
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 %exclude %python3_sitelibdir/tests
 
 %changelog
+* Wed Apr 05 2023 Anton Vyatkin <toni@altlinux.org> 0.8.1-alt1
+- New version 0.8.1.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.1-alt2.git20140713
 - Drop python2 support.
 
