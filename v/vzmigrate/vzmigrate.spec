@@ -9,8 +9,8 @@
 %define bashcompldir /etc/bash_completion.d
 
 Name:     vzmigrate
-Version:  7.0.149
-Release:  alt3
+Version:  7.0.150
+Release:  alt1
 
 Summary:  Virtuozzo migration tool
 License:  GPLv2+
@@ -78,6 +78,9 @@ make install \
 %doc *.md
 
 %changelog
+* Wed Apr 05 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.0.150-alt1
+- 7.0.150
+
 * Fri Mar 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.0.149-alt3
 - FTBFS: add ctime prototype for GCC 12
 
