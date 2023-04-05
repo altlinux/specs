@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt82
+Release: alt83
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -581,6 +581,15 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Tue Feb 21 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt83
+- Made a bit nicer and more informative the new Debug::pkgMarkInstall messages,
+  which were introduced in 0.5.15lorg2-alt81; renamed and mentioned there
+  the new options: Debug::pkgMark-shallow, Debug::pkgMark-allcalls.
+- Worked around the problem with printing long messages by making the buffer
+  1200 bytes large. (ALT#44941)
+- Avoid installing extra packages in some cases when this is really not needed
+  to satisfy a request. (Correct cleanup in pkgProblemResolver::DoUpgrade.)
+
 * Fri Sep 02 2022 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt82
 - tests:
   + Enhanced to be able to work with test packages containing some files.
