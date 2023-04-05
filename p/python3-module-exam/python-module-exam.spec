@@ -1,8 +1,10 @@
 %define oname exam
 
+%def_with check
+
 Name: python3-module-exam
 Version: 0.10.6
-Release: alt3
+Release: alt4
 Summary: Helpers for better testing
 
 License: MIT
@@ -11,10 +13,11 @@ Url: https://pypi.python.org/pypi/%oname
 Packager: Python Development Team <python at packages.altlinux.org>
 
 Source: https://pypi.python.org/packages/c7/bd/c15ce029540bb1b551af83c0df502ba47e019ce7132a65db046ad16b8eda/%oname-%version.tar.gz
+Patch0: remove-nose.patch
+Patch1: no-mock.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-mock python3-module-nose
 %py3_provides %oname
 
 %description
@@ -24,6 +27,8 @@ conventions and adhering to the unit testing interface.
 
 %prep
 %setup -n %oname-%version
+%patch0 -p1
+%patch1 -p1
 
 %build
 %python3_build
@@ -32,7 +37,8 @@ conventions and adhering to the unit testing interface.
 %python3_install
 
 %check
-python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 -m unittest discover -s tests/ -v
 
 %files
 %doc *.rst
@@ -40,6 +46,9 @@ python3 setup.py test
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Apr 05 2023 Anton Vyatkin <toni@altlinux.org> 0.10.6-alt4
+- (NMU) Fix BuildRequires.
+
 * Wed Jun 09 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.6-alt3
 - Drop python2 support.
 
