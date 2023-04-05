@@ -1,5 +1,5 @@
 Name: tinyproxy
-Version: 1.11.0
+Version: 1.11.1
 Release: alt1
 
 Summary: A small, efficient HTTP/SSL proxy daemon
@@ -88,6 +88,9 @@ fi
 %attr(2770,root,%tinyproxy_group) %dir %tinyproxy_logdir
 
 %changelog
+* Wed Apr 05 2023 Nikolay Burykin <bne@altlinux.org> 1.11.1-alt1
+- New version 1.11.1
+
 * Fri Aug 20 2021 Nikolay Burykin <bne@altlinux.org> 1.11.0-alt1
 - Initial build for ALT
 
