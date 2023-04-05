@@ -1,5 +1,5 @@
 Name: ndisc6
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: IPv6 diagnostic tools
@@ -15,6 +15,7 @@ Source3: rdnssd.service
 Patch: %name-%version-%release.patch
 
 %define _unpackaged_files_terminate_build 1
+%set_verify_elf_method strict
 
 %description
 This package gathers a few diagnostic tools for IPv6 networks:
@@ -42,6 +43,7 @@ autoconfiguration (RFC5006).
 find /usr/share/gettext -name gettext.h -exec ln -s '{}' include/gettext.h ';' -quit
 
 %autoreconf
+%add_optflags %(getconf LFS_CFLAGS)
 CFLAGS="%optflags -fno-strict-aliasing" \
 %configure \
 	--localstatedir=%_var \
@@ -87,6 +89,11 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Wed Apr 05 2023 Mikhail Efremov <sem@altlinux.org> 1.0.7-alt1
+- Enabled LFS on 32-bit systems.
+- Added 'set_verify_elf_method strict'.
+- Updated to 1.0.7.
+
 * Wed Aug 03 2022 Mikhail Efremov <sem@altlinux.org> 1.0.6-alt1
 - Updated to 1.0.6.
 
