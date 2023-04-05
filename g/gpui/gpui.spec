@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.22
+Version: 0.2.23
 Release: alt1
 
 Summary: Group policy editor
@@ -111,6 +111,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Wed Apr 05 2023 Vladimir Rubanov <august@altlinux.org> 0.2.23-alt1
+- 0.2.23-alt1
+- Fixes:
+  + Fix support for files without extensions in files preference.
+
 * Wed Mar 29 2023 Vladimir Rubanov <august@altlinux.org> 0.2.22-alt1
 - 0.2.22-alt1
 - Fixes:
