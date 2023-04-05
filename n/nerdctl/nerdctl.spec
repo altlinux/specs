@@ -1,7 +1,7 @@
 %global import_path github.com/containerd/nerdctl
 Name:     nerdctl
-Version:  1.2.1
-Release:  alt2
+Version:  1.3.0
+Release:  alt1
 
 Summary:  contaiNERD CTL - Docker-compatible CLI for containerd
 License:  Apache-2.0
@@ -18,7 +18,8 @@ Patch2:   add-sbin-to-path-to-work-in-rootless-mode.patch
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 
-Requires: containerd cni-plugins iptables
+Requires: containerd >= 1.6
+Requires: cni-plugins iptables
 
 %description
 Docker-compatible CLI for containerd, with support for Compose, Rootless,
@@ -81,6 +82,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu Apr 06 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.0-alt1
+- new version 1.3.0
+
 * Tue Mar 14 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.1-alt2
 - Add sbin to path to work in rootless mode (Closes: 44495)
 
