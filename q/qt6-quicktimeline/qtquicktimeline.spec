@@ -3,7 +3,7 @@
 
 Name: qt6-quicktimeline
 Version: 6.4.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - Keyframe-based timeline construction
@@ -69,6 +69,10 @@ Requires: libqt6-core = %_qt6_version
 %make -C BUILD DESTDIR=%buildroot install_docs ||:
 %endif
 
+# relax depends on plugins files
+for f in %buildroot/%_libdir/cmake/Qt?*/{*,}/Qt*Targets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
 
 %files common
 %doc LICENSES/*
@@ -99,6 +103,9 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Apr 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
+- relax depends on plugins files when build with
+
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 
