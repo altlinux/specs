@@ -11,8 +11,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 23.0.1
-Release: alt2
+Version: 23.0.2
+Release: alt1
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -148,6 +148,9 @@ exit 0
 %_udevrulesdir/80-docker.rules
 
 %changelog
+* Tue Apr 4 2023 Vladimir Didenko <cow@altlinux.org> 23.0.2-alt1
+- 23.0.2
+
 * Tue Mar 21 2023 Vladimir Didenko <cow@altlinux.org> 23.0.1-alt2
 - Move udev rules config to /lib/udev/rules.d
 
