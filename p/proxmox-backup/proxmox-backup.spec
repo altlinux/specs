@@ -3,8 +3,8 @@
 %define proxy_user backup
 
 Name: proxmox-backup
-Version: 2.2.6
-Release: alt2
+Version: 2.4.1.1
+Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -25,7 +25,7 @@ BuildRequires: rpm-build-rust clang-devel
 BuildRequires: libudev-devel libssl-devel libacl-devel libsystemd-devel libpam-devel libfuse3-devel libuuid-devel
 BuildRequires: libsgutils-devel python3-module-sphinx python3-module-docutils python3-module-sphinx-sphinx-build-symlink
 BuildRequires: proxmox-widget-toolkit-dev
-BuildRequires: rsync
+BuildRequires: rsync jq
 BuildRequires: /proc
 
 %description
@@ -118,6 +118,8 @@ mkdir -p %buildroot%_sysconfdir/%name
 touch %buildroot%_sysconfdir/%name/{authkey.key,authkey.pub,csrf.key,proxy.key,proxy.pem,user.cfg}
 mkdir -p %buildroot{%_logdir,%_localstatedir,%_cachedir}/%name
 mkdir -p %buildroot%_localstatedir/backups
+mkdir -p %buildroot%_sysconfdir/pam.d
+ln -s system-auth %buildroot%_sysconfdir/pam.d/proxmox-backup-auth
 
 # Cleanup
 rm -f %buildroot%_libexecdir/%name/%name-banner
@@ -140,6 +142,7 @@ usermod -a -G tape %proxy_user ||:
 %files server
 %dir %attr(0700,%proxy_user,%proxy_user) %_sysconfdir/%name
 %ghost %_sysconfdir/%name/*
+%config(noreplace) %_sysconfdir/pam.d/proxmox-backup-auth
 %_bindir/pmt*
 %_bindir/proxmox-tape
 %_sbindir/proxmox-backup-manager
@@ -197,6 +200,10 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Tue Apr 04 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:2.4.1.1-alt1
+- 2.4.1-1
+- remove Updates and Repositories from Server Administration
+
 * Thu Nov 17 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:2.2.6-alt2
 - disable repository/subscription status
 
