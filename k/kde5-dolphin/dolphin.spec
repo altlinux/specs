@@ -11,7 +11,7 @@
 
 Name: kde5-%rname
 Version: 22.12.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: File tools
@@ -98,6 +98,7 @@ KF5 library
 
 desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
     --add-mime-type=x-scheme-handler/ftp \
+    --add-mime-type=x-scheme-handler/smb \
     --add-mime-type=x-scheme-handler/trash \
     %buildroot/%_K5xdgapp/org.kde.dolphin.desktop
 # kf5-kio-extras
@@ -140,6 +141,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt2
+- add x-scheme-handler/smb mime handler
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 
