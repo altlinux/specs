@@ -1,41 +1,34 @@
 %define oname aiohttp-wsgi
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.6.3
-Release: alt2
-Summary: WSGI adapter for aiohttp
-License: BSD
-Group: Development/Python3
-Url: https://pypi.python.org/pypi/aiohttp-wsgi/
+Version: 0.10.0
+Release: alt1
 
-# https://github.com/etianen/aiohttp-wsgi.git
-Source0: https://pypi.python.org/packages/72/ff/21ac6cde48057c92cfc7076c1d9281560c0b586dfc90838bdce6e2bc4e08/%{oname}-%{version}.tar.gz
+Summary: WSGI adapter for aiohttp
+License: BSD-3-Clause
+Group: Development/Python3
+Url: https://pypi.org/project/aiohttp-wsgi/
+Vcs: https://github.com/etianen/aiohttp-wsgi.git
+
+Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+%if_with check
+BuildRequires: python3-module-aiohttp
+%endif
 
 %py3_provides aiohttp_wsgi
 %py3_requires aiohttp
 
-BuildRequires: python3-module-coverage python3-module-nose python3-module-pytest
-
 %description
 aiohttp-wsgi is a WSGI adapter for aiohttp.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-aiohttp-wsgi is a WSGI adapter for aiohttp.
-
-This package contains tests for %oname.
-
 %prep
-%setup -n %{oname}-%{version}
+%setup
 
 %build
 %python3_build
@@ -44,18 +37,20 @@ This package contains tests for %oname.
 %python3_install
 
 %check
-python3 setup.py test
-nosetests3 -v --cover-package=aiohttp_wsgi --cover-erase --with-coverage
+%tox_create_default_config
+%tox_check
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc *.rst LICENSE
+%_bindir/*
+%python3_sitelibdir/aiohttp_wsgi
+%python3_sitelibdir/aiohttp_wsgi-%version-*.egg-info
 
-#%files -n python3-module-%oname-tests
-#python3_sitelibdir/*/test*
-#python3_sitelibdir/*/*/test*
 
 %changelog
+* Thu Apr 06 2023 Anton Vyatkin <toni@altlinux.org> 0.10.0-alt1
+- New version 0.10.0
+
 * Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt2
 - Drop python2 support.
 
