@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230320
+Version: 20230403
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,23 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Apr 06 2023 Cronbuild Service <cronbuild@altlinux.org> 20230403-alt1
+- upstream changes (GIT 2e92a49f):
+  + nvidia: update Tu10x and Tu11x signed firmware to support newer
+    Turing HW (thx Gourav Samaiya)
+  + update firmware for MT7922 WiFi device (thx Deren Wu)
+  + update firmware for mediatek bluetooth chip (MT7922) (thx Sean Wang)
+  + Amphion: Update vpu firmware (thx Ming Qian)
+  + iwlwifi: add new FWs from core78-32 release (thx Gregory Greenman)
+  + iwlwifi: update 9000-family firmwares to core78-32 (thx Gregory Greenman)
+  + amdgpu: Update SDMA 6.0.1 firmware (thx Mario Limonciello)
+  + amdgpu: Add PSP 13.0.11 firmware (thx Mario Limonciello)
+  + amdgpu: Update PSP 13.0.4 firmware (thx Mario Limonciello)
+  + amdgpu: Update GC 11.0.1 firmware (thx Mario Limonciello)
+  + amdgpu: Update DCN 3.1.4 firmware (thx Mario Limonciello)
+  + amdgpu: Add GC 11.0.4 firmware (thx Mario Limonciello)
+  + rtw88: 8822c: Update normal firmware to v9.9.15 (thx Po-Hao Huang)
+
 * Wed Mar 22 2023 Cronbuild Service <cronbuild@altlinux.org> 20230320-alt1
 - upstream changes (GIT bcdcfbcf):
   + Update firmware file for Intel Bluetooth AX101 (thx Aniket Sahu)
