@@ -1,7 +1,7 @@
-%def_disable check
+%def_enable check
 
 Name: realmd
-Version: 0.17.0
+Version: 0.17.1
 Release: alt1
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
@@ -18,6 +18,7 @@ BuildRequires: pkgconfig(libsystemd)
 BuildRequires: /usr/bin/krb5-config
 BuildRequires: libldap-devel
 BuildRequires: xsltproc xmlto
+BuildRequires: /usr/bin/net
 %{?_enable_check:BuildRequires: python3-devel}
 
 %description
@@ -50,7 +51,7 @@ applications that use %name.
 %install
 %makeinstall_std
 
-%find_lang realmd
+%find_lang %name
 
 %check
 %make check
@@ -72,6 +73,9 @@ applications that use %name.
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Fri Apr 07 2023 Alexey Shabalin <shaba@altlinux.org> 0.17.1-alt1
+- 0.17.1
+
 * Sat Jun 26 2021 Alexey Shabalin <shaba@altlinux.org> 0.17.0-alt1
 - 0.17.0
 
