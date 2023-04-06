@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.31
+Version: 0.4.32
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -37,6 +37,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed Apr 05 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.32-alt1
+- warn if /boot/efi is on RAID
+
 * Tue Mar 07 2023 Slava Aseev <ptrnine@altlinux.org> 0.4.31-alt1
 - introduce IMSM support
 

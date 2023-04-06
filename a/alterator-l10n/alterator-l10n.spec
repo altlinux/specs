@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.125
+Version: 2.9.126
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -120,6 +120,9 @@ make check
 %lang(da) %_datadir/alterator/help/da_DK/*.html
 
 %changelog
+* Wed Apr 05 2023 Oleg Solovyov <mcpain@altlinux.org> 2.9.126-alt1
+- alterator-vm: new translation
+
 * Mon Mar 27 2023 Sergey V Turchin <zerg@altlinux.org> 2.9.125-alt1
 - fix alterator-x11 russian translation
 
