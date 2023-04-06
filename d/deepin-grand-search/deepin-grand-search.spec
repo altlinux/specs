@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-grand-search
-Version: 5.3.2
+Version: 5.4.2
 Release: alt1
 Summary: Basic search tool for DDE
 License: GPL-3.0+
@@ -35,6 +35,7 @@ sed -i 's|lib/${CMAKE_LIBRARY_ARCHITECTURE}|%_lib|' \
   CMakeLists.txt
 
 %build
+%define optflags_lto %nil
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -56,11 +57,14 @@ cmake --build %_cmake__builddir -j%__nprocs
 %find_lang --with-qt %repo
 
 %files -f %repo.lang
-%doc README.md LICENSE
+%doc README.md LICENSE.txt
 %_bindir/dde-grand-search*
-%_sysconfdir/xdg/autostart/dde-grand-search-daemon.desktop
+%_desktopdir/dde-grand-search-daemon.desktop
+%dir %_libdir/dde-dock/
+%dir %_libdir/dde-dock/plugins/
 %_libdir/dde-dock/plugins/libddegrandsearch_dockplugin.so
 %dir %_libdir/dde-grand-search-daemon/
+%_libdir/dde-grand-search-daemon/libdde-grand-search-daemon.so
 %dir %_libdir/dde-grand-search-daemon/plugins/
 %dir %_libdir/dde-grand-search-daemon/plugins/searcher/
 %_libdir/dde-grand-search-daemon/plugins/searcher/.readme
@@ -76,5 +80,8 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.grand-search.gschema.xml
 
 %changelog
+* Thu Apr 06 2023 Leontiy Volodin <lvol@altlinux.org> 5.4.2-alt1
+- New version 5.4.2.
+
 * Fri Dec 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.3.2-alt1
 - Initial build for ALT Sisyphus.
