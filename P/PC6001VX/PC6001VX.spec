@@ -1,6 +1,6 @@
 Name:     PC6001VX
 Version:  4.1.3
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Cross platform version of NEC PC-6001 emulator based on PC6001V
 License:  LGPL-2.1
@@ -48,7 +48,7 @@ cp %SOURCE3 %SOURCE4 src/Qt/translation/
 
 %build
 
-qmake6 PC6001VX.pro
+qmake-qt6 PC6001VX.pro
 %make_build
 
 %install
@@ -94,6 +94,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_man6dir/ru/man6/%name.6
 %doc LICENSE README.adoc
 
 %changelog
+* Thu Apr  6 2023 Artyom Bystrov <arbars@altlinux.org> 4.1.3-alt1.1
+- Fix build
+
 * Sun Jan 29 2023 Artyom Bystrov <arbars@altlinux.org> 4.1.3-alt1
 - new version 4.1.3
 - russian locale added to upstream
