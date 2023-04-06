@@ -5,7 +5,7 @@
 
 Name: nut
 Version: 2.8.0
-Release: alt1
+Release: alt2
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -660,6 +660,9 @@ fi
 %python3_sitelibdir/__pycache__/PyNUT.*
 
 %changelog
+* Thu Apr 06 2023 Elizaveta Morozova <morozovaes@altlinux.org> 2.8.0-alt2
+- Fix patch alt-systemd: incorrect full path
+
 * Mon Mar 20 2023 Elizaveta Morozova <morozovaes@altlinux.org> 2.8.0-alt1
 - Update to upstream version 2.8.0
   + Update patches alt-chroot, alt-dont-autoreconf, alt-drivers, alt-fix-header, alt-fix-strip, alt-gdlib, alt-systemd, alt-upsdrvctl-list, alt-linking, alt-usb, dlfix, rmpidf, unreachable for 2.8.0
