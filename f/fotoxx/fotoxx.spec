@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 23.1
+Version: 23.32
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -8,7 +8,7 @@ License: GPL-3.0-or-later
 Url: http://www.kornelix.com/%name/%name.html
 
 Vcs: https://gitlab.com/fotoxx/fotoxx.git
-Source: http://www.kornelix.com/downloads/downloads/%name-%version.tar.gz
+Source: http://www.kornelix.com/downloads/downloads/%name-%version-source.tar.gz
 Source1: fotoxx.desktop
 Source2: fotoxx16.png
 Source3: fotoxx32.png
@@ -72,11 +72,14 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %_datadir/%name/
 %_man1dir/*
 %_datadir/metainfo/kornelix.fotoxx.metainfo.xml
-%doc doc/Changelog doc/Copyright
+%doc doc/changelog doc/copyright
 
 %exclude %_datadir/doc/%name
 
 %changelog
+* Thu Apr 06 2023 Yuri N. Sedunov <aris@altlinux.org> 23.32-alt1
+- 23.32
+
 * Tue Feb 07 2023 Yuri N. Sedunov <aris@altlinux.org> 23.1-alt1
 - 23.1
 

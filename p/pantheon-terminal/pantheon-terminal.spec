@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 6.1
 %define _name terminal
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-terminal
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -29,7 +29,7 @@ Requires: elementary-icon-theme
 Provides: %rdn_name = %version-%release
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson appstream desktop-file-utils
+BuildRequires: meson appstream desktop-file-utils xvfb-run
 BuildRequires: libgranite-devel >= %granite_ver libnotify-devel
 BuildRequires: libvte3-devel >= %vte_ver libpcre2-devel libgee0.8-devel
 BuildRequires: vala-tools >= %vala_ver libgranite-vala
@@ -81,6 +81,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Thu Apr 06 2023 Yuri N. Sedunov <aris@altlinux.org> 6.1.2-alt1
+- 6.1.2
+
 * Sun Nov 13 2022 Yuri N. Sedunov <aris@altlinux.org> 6.1.1-alt1
 - updated to 6.1.1-7-g6f08bbdf
 
