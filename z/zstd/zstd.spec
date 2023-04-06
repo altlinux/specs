@@ -1,6 +1,6 @@
 Name: zstd
-Version: 1.5.4
-Release: alt2
+Version: 1.5.5
+Release: alt1
 Summary: Zstd compression library and tools
 License: BSD-3-Clause
 Group: Archiving/Compression
@@ -138,6 +138,9 @@ export CXXFLAGS="$CFLAGS"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 04 2023 Dmitry V. Levin <ldv@altlinux.org> 1.5.5-alt1
+- 1.5.4 -> 1.5.5 (closes: #45515).
+
 * Mon Feb 13 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.4-alt2
 - Only a few cli-tests are excluded, instead of all.
 - Switched to PGO build.
