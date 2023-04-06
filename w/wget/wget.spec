@@ -1,24 +1,40 @@
-%define beta %nil
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: wget
 Version: 1.21.3
-Release: alt1
+Release: alt2
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
-License: GPLv3
+License: GPL-3.0-or-later
 Group: Networking/WWW
 
 Url: http://www.gnu.org/software/wget/wget.html
-Source: ftp://ftp.gnu.org/gnu/wget/%name-%version.tar
-Patch1: %name-1.14-alt-texinfo.patch
-Patch2: %name-1.6-mdk-passive_ftp.patch
-Patch3: %name-1.7-alt-locale.patch
-Patch10: wget-1.10.1-alt-ntlm-buffer.patch
+Vcs: https://git.savannah.gnu.org/cgit/wget.git
 Packager: Michael Shigorin <mike@altlinux.org>
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Mon Mar 20 2017
-# optimized out: gnu-config libcom_err-devel libkrb5-devel perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-podlators pkg-config python-base tzdata
-BuildRequires: libidn2-devel libssl-devel libunistring-devel makeinfo perl-Pod-Usage zlib-devel
+BuildRequires: autoconf-archive
+BuildRequires: flex
+BuildRequires: gnulib
+BuildRequires: gperf
+BuildRequires: libcap-devel
+BuildRequires: libcares-devel
+BuildRequires: libidn2-devel
+BuildRequires: libproxy-devel
+BuildRequires: libseccomp-devel
+BuildRequires: libssl-devel
+BuildRequires: libunistring-devel
+BuildRequires: makeinfo
+BuildRequires: perl-Pod-Usage
+BuildRequires: texinfo
+BuildRequires: zlib-devel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: perl-HTTP-Daemon
+BuildRequires: perl-IO-Socket-SSL
+BuildRequires: strace
+}}
 
 Summary(zh_CN.UTF-8):	[通讯]功能强大的下载程序,支持断点续传
 Summary(es_ES.UTF-8): Cliente en línea de comando para bajar archivos WWW/FTP con recursión opcional
@@ -27,8 +43,6 @@ Summary(pl_PL.UTF-8): Wsadowy klient HTTP/FTP
 Summary(pt_BR.UTF-8): Cliente na linha de comando para baixar arquivos WWW/FTP com recursão opcional
 Summary(ru_RU.UTF-8): Утилита для получения файлов по протоколам HTTP и FTP
 Summary(uk_UA.UTF-8): Утиліта для отримання файлів по протоколам HTTP та FTP
-# explicitly added texinfo for info files
-BuildRequires: texinfo
 
 %description
 GNU Wget is a file retrieval utility which can use either the HTTP,
@@ -113,36 +127,58 @@ find doc -type f -print0 |
 	xargs -r0 grep -FZl /usr/local/ -- |
 	xargs -r0 sed -i 's,/usr/local/,/,g' --
 
-%patch1 -p2
-#patch10 -p1
-
 %build
+if [ ! -e .tarball-version ]; then
+	# Update from Git.
+	echo "%version-%release"> .tarball-version
+	./bootstrap --gnulib-srcdir=/usr/share/gnulib --no-git --skip-po --bootstrap-sync
+fi
 %ifarch %e2k
 # lcc-1.23.12: work around the lack of some builtins
 %add_optflags -D__ICC -D__STRICT_ANSI__
 %endif
-%configure --with-ssl=openssl
+%configure --with-ssl=openssl --with-cares --disable-ntlm
 # TODO: consider some of these:
 #	--enable-fsanitize-ubsan
 #	--enable-fsanitize-asan
 #	--enable-fsanitize-msan
 # https://bugzilla.altlinux.org/show_bug.cgi?id=14239
 (cd po; make update-po)
-%make_build
+%make_build V=1
 
 %install
 %makeinstall
 
 %find_lang --output=%name.lang %name %name-gnulib
 
+%check
+src/wget --version
+export SECCOMP_DEFAULT_ACTION=trap
+if ! strace -o a -f -e t=none -e s=sys -- %make_build -C tests check VERBOSE=1; then
+	grep syscall= a
+	exit 1
+else
+	! grep syscall= a
+fi
+
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/%{name}rc
 %_bindir/*
 %_mandir/man?/*
 %_infodir/*.info*
-%doc AUTHORS MAILING-LIST NEWS README*
+%doc COPYING ChangeLog* AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Thu Apr 06 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.3-alt2
+- Update form Git repo v1.21.3-23-g9a35fe609 (2023-03-19).
+  Packaging changed from tar ball to a git merge style. All patches
+  will apply as git commits instead of another layer of spec patches.
+- Support libproxy (and some other minor patches from opensuse).
+- Add process hardening (seccomp, noexec, drop caps).
+  Set env SECCOMP_DEFAULT_ACTION=allow to bypass seccomp sandbox.
+- spec: Add %%check with tests. Which also checks seccomp filtering (may miss
+  some syscalls though).
+
 * Fri Mar 25 2022 Ilya Mashkin <oddity@altlinux.ru> 1.21.3-alt1
 - 1.21.3
 
