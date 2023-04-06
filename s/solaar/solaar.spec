@@ -1,6 +1,6 @@
 Name:    solaar
-Version: 1.1.8
-Release: alt3
+Version: 1.1.9
+Release: alt1
 
 Summary: Device manager for Logitech Unifying Receiver
 License: GPL-2.0
@@ -70,6 +70,9 @@ tools/po-compile.sh
 %doc docs
 
 %changelog
+* Thu Apr 06 2023 Andrey Cherepanov <cas@altlinux.org> 1.1.9-alt1
+- new version 1.1.9
+
 * Mon Mar 27 2023 Andrey Cherepanov <cas@altlinux.org> 1.1.8-alt3
 - Fix udev rules directory.
 
