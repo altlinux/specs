@@ -1,8 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
+%define __isa_bits %(s="%_lib"; s=${s#lib}; echo "${s:-32}")
+
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 7.0.1
+Version: 7.0.3
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -18,8 +20,8 @@ Source: %name-%version.tar
 %endif
 
 %define sigc_ver 3.0.6
-%define gtk_ver 4.2.1
-%define adwaita_ver 1.0.0
+%define gtk_ver 4.10
+%define adwaita_ver 1.2.0
 %define pw_api_ver 0.3
 %define pw_ver 0.3.41
 %define lv2_ver 1.18.2
@@ -31,7 +33,7 @@ Requires: pipewire >= %pw_ver dconf
 Requires: ladspa-rubberband
 Requires: ladspa-zam-plugins
 Requires: calf-plugins >= %calf_ver
-%ifarch %ix86 x86_64 aarch64
+%ifarch %ix86 x86_64 aarch64 %e2k
 Requires: lv2-lsp-plugins >= %lsp_ver
 %endif
 
@@ -63,6 +65,9 @@ PipeWire filters.
 
 %prep
 %setup
+%if "%__isa_bits" == "32"
+sed -i 's/tbb/tbb32/' src/meson.build
+%endif
 
 %build
 %meson
@@ -86,6 +91,9 @@ mkdir -p %buildroot%_sysconfdir/EasyEffects
 %doc README* CHANGELOG.*
 
 %changelog
+* Thu Apr 06 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.3-alt1
+- 7.0.3
+
 * Tue Feb 28 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.1-alt1
 - updated to v7.0.1-5-g224b641a
 
