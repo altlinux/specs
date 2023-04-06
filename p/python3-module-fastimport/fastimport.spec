@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.9.14
-Release: alt1
+Release: alt2
 Summary: VCS fastimport/fastexport parser
 License: GPLv2+
 Group: Development/Python3
@@ -15,9 +15,6 @@ BuildArch: noarch
 Source0: %{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-%if_with check
-BuildRequires: python3-module-nose
-%endif
 
 %py3_provides %oname
 
@@ -55,7 +52,7 @@ This package contains tests for fastimport.
 %python3_install
 
 %check
-PYTHONPATH=%buildroot%python3_sitelibdir %_bindir/nosetests-3.* %oname
+%tox_check
 
 %files
 %doc PKG-INFO
@@ -67,6 +64,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir %_bindir/nosetests-3.* %oname
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Apr 06 2023 Anton Vyatkin <toni@altlinux.org> 0.9.14-alt2
+- Fix BuildRequires.
+
 * Thu Oct 14 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.14-alt1
 - Build new version.
 
