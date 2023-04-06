@@ -4,7 +4,7 @@
 %define soname 3
 
 Name: lib%oname
-Version: 3.1.5
+Version: 3.2.0
 Release: alt1
 
 Summary: Library providing binary-decimal and decimal-binary routines for IEEE doubles
@@ -74,6 +74,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/%oname
 
 %changelog
+* Thu Apr 06 2023 Anton Farygin <rider@altlinux.ru> 3.2.0-alt1
+- 3.1.5 -> 3.2.0
+
 * Fri May 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.5-alt1
 - Updated to upstream version 3.1.5.
 - Renamed packages due to Shared Libs Policy.
