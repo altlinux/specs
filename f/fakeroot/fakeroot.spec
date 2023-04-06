@@ -1,6 +1,6 @@
 Name: fakeroot
 Version: 1.29
-Release: alt1
+Release: alt2
 
 Summary: Run a command in an environment faking root privileges for file manipulation
 License: GPLv3+
@@ -51,6 +51,10 @@ find %buildroot%_libdir -type f -name \*.la -delete
 %doc doc/README* DEBUG
 
 %changelog
+* Wed Apr  5 2023 Ivan Zakharyaschev <imz@altlinux.org> 1.29-alt2
+- Fixed the wrapper for syscall function so that it works even with the e2k
+  calling convention, which is special for variadic functions. (ALT#45757)
+
 * Sat Jan 21 2023 Dmitry V. Levin <ldv@altlinux.org> 1.29-alt1
 - 1.28 -> 1.29.
 - Wrap syscall function.
