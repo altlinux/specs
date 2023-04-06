@@ -1,19 +1,20 @@
-%define optflags_lto %nil
+%define optflags_lto -flto=thin
+%define llvm_version 13.0
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20220924172107
+%define svn_rev 20230406142819
 
 %define libchdr_commit 5de1a59019815ccdbba0fe07c71b31406d023248
-%define gtest_version 1.11.0
+%define gtest_version 1.12.1
 %define libzip_commit bdc03ab23b703fcc516436d6ebcbfb6ac4484033
 %define zstd_version 1.5.2
 %define vulkan_headers_version 1.3.226
-%define cubeb_commit dc511c6b3597b6384d28949285b9289e009830ea
 %define glslang_version 11.7.1
+%define rcheevos_commit 31f8788fe0e694e99db7ce138d45a655c556fa96
 
 Name: pcsx2
-Version: 1.7.3332
-Release: alt1.1
+Version: 1.7.4342
+Release: alt1
 
 Summary: Playstation 2 console emulator
 License: GPLv3 and LGPLv3
@@ -43,8 +44,6 @@ BuildRequires(pre): libselinux-devel
 BuildRequires(pre): libthai-devel
 BuildRequires(pre): libtiff-devel
 BuildRequires(pre): libuuid-devel
-BuildRequires(pre): libwayland-cursor-devel
-BuildRequires(pre): libwayland-egl-devel
 BuildRequires(pre): wayland-protocols
 
 # https://github.com/PCSX2/%name/archive/v%version/%name-%version.tar.gz
@@ -59,42 +58,49 @@ Source3: libzip-%libzip_commit.tar
 Source4: zstd-%zstd_version.tar
 # https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
 Source5: Vulkan-Headers-%vulkan_headers_version.tar
-# https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
-Source6: cubeb-%cubeb_commit.tar
 # https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
-Source7: glslang-%glslang_version.tar
+Source6: glslang-%glslang_version.tar
+# https://github.com/RetroAchievements/rcheevos/archive/%rcheevos_commit/rcheevos-%rcheevos_commit.tar.gz
+Source7: rcheevos-%rcheevos_commit.tar
 
+BuildRequires: clang%llvm_version
 BuildRequires: cmake
-BuildRequires: doxygen
-BuildRequires: gcc-c++
-BuildRequires: graphviz
 BuildRequires: libGLU-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libXdmcp-devel
+BuildRequires: libXft-devel
 BuildRequires: libXinerama-devel
 BuildRequires: libXmu-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXtst-devel
 BuildRequires: libaio-devel
 BuildRequires: libalsa-devel
+BuildRequires: libavformat-devel
+BuildRequires: libbacktrace-devel
+BuildRequires: libcurl-devel
+BuildRequires: libfast_float-devel
 BuildRequires: libfmt-devel
-BuildRequires: libgtk+3-devel
 BuildRequires: liblzma-devel
 BuildRequires: libpcap-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libryml-devel
-BuildRequires: libsamplerate-devel
 BuildRequires: libsoundtouch-devel
-BuildRequires: libssl-devel
+BuildRequires: libswresample-devel
+BuildRequires: libswscale-devel
 BuildRequires: libudev-devel
-BuildRequires: libwxBase3.2-devel
-BuildRequires: libxkbcommon-devel
+BuildRequires: libwayland-cursor-devel
+BuildRequires: libwayland-egl-devel
+BuildRequires: libwayland-server-devel
 BuildRequires: libzip-devel
 BuildRequires: libzip-utils
+BuildRequires: lld%llvm_version
+BuildRequires: llvm%llvm_version
+BuildRequires: llvm%llvm_version-gold
 BuildRequires: ninja-build
+BuildRequires: qt6-tools-devel
 
 %description
 PCSX2 is an emulator for the playstation 2 video game console. It is written mostly in C++, some part are in C and x86 assembly.
@@ -108,11 +114,19 @@ There is still lot of on going work to improve compatibility & speed.
 %__mv -Tf ../libzip-%libzip_commit 3rdparty/libzip/libzip
 %__mv -Tf ../zstd-%zstd_version 3rdparty/zstd/zstd
 %__mv -Tf ../Vulkan-Headers-%vulkan_headers_version 3rdparty/vulkan-headers
-%__mv -Tf ../cubeb-%cubeb_commit 3rdparty/cubeb/cubeb
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
+%__mv -Tf ../rcheevos-%rcheevos_commit 3rdparty/rcheevos/rcheevos
 
 %build
-%cmake .. \
+export ALTWRAP_LLVM_VERSION=%llvm_version
+
+%cmake \
+	-DCMAKE_C_COMPILER:STRING=clang \
+	-DCMAKE_CXX_COMPILER:STRING=clang++ \
+	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
+	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
+	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
+	-DCMAKE_EXE_LINKER_FLAGS:STRING="-fuse-ld=lld" \
 	-DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" \
 	-DCMAKE_DISABLE_PRECOMPILE_HEADERS:BOOL=TRUE \
 	-DCMAKE_BUILD_PO:BOOL=TRUE \
@@ -134,18 +148,23 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %cmake_build
 
 %install
-%cmake_install
+%__install -Dp -m0755 %_target_platform/bin/%name-qt %buildroot%_bindir/%name-qt
+%__mkdir_p %buildroot%_datadir/PCSX2
+%__cp -r %_target_platform/bin/resources %buildroot%_datadir/PCSX2
+%__install -Dp -m0644 %_target_platform/bin/resources/icons/AppIconLarge.png %buildroot%_iconsdir/hicolor/256x256/apps/PCSX2.png
+%__install -Dp -m0644 .github/workflows/scripts/linux/%name-qt.desktop %buildroot%_desktopdir/%name-qt.desktop
 
 %files
-%_bindir/%name
-%_desktopdir/PCSX2.desktop
-%_man1dir/PCSX2.1.*
+%doc README.md
+%_bindir/%name-qt
+%_desktopdir/%name-qt.desktop
 %_datadir/PCSX2
-%_pixmapsdir/PCSX2.xpm
-%dir %_defaultdocdir/Pcsx2
-%_defaultdocdir/Pcsx2/*.pdf
+%_iconsdir/hicolor/256x256/apps/PCSX2.png
 
 %changelog
+* Thu Apr 06 2023 Nazarov Denis <nenderus@altlinux.org> 1.7.4342-alt1
+- Version 1.7.4342
+
 * Mon Dec 19 2022 Nazarov Denis <nenderus@altlinux.org> 1.7.3332-alt1.1
 - Fix build
 
