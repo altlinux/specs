@@ -5,7 +5,7 @@
 
 Name: python3-module-%mname
 Version: 0.15.0
-Release: alt1
+Release: alt2
 
 Summary: Python LESS Compiler
 License: MIT
@@ -23,10 +23,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3(ply)
 BuildRequires: python3(six)
 
-BuildRequires: python3(nose)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(pytest)
 %endif
 
 BuildArch: noarch
@@ -50,9 +47,8 @@ utilize this to build in proper syntax checking and perhaps YUI compressing.
 mv %buildroot/%_bindir/{lesscpy,py3-lesscpy}
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3
 
 %files
 %doc LICENSE README.rst
@@ -61,6 +57,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
 %python3_sitelibdir/%mname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Apr 06 2023 Anton Vyatkin <toni@altlinux.org> 0.15.0-alt2
+- Fix BuildRequires
+
 * Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 0.15.0-alt1
 - 0.13.0 -> 0.15.0.
 
