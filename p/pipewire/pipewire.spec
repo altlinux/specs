@@ -37,7 +37,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.67
+Version: %ver_major.68
 Release: alt1
 
 Summary: Media Sharing Server
@@ -207,6 +207,19 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/%name/%name-pulse.conf
 %_datadir/%name/filter-chain.conf
 
+%dir %_datadir/%name/client-rt.conf.avail
+%_datadir/%name/client-rt.conf.avail/20-upmix.conf
+
+%dir %_datadir/%name/client.conf.avail
+%_datadir/%name/client.conf.avail/20-upmix.conf
+
+%dir %_datadir/%name/%name-pulse.conf.avail
+%_datadir/%name/%name-pulse.conf.avail/20-upmix.conf
+
+%dir %_datadir/%name/%{name}.conf.avail
+%_datadir/%name/%{name}.conf.avail/10-rates.conf
+%_datadir/%name/%{name}.conf.avail/20-upmix.conf
+
 %dir %_datadir/%name/media-session.d
 %_datadir/%name/media-session.d/alsa-monitor.conf
 %_datadir/%name/media-session.d/bluez-monitor.conf
@@ -312,6 +325,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Apr 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.68-alt1
+- 0.3.68
+
 * Thu Mar 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.67-alt1
 - 0.3.67
 
