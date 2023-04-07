@@ -1,12 +1,14 @@
 %define oname cycler
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: Composable style cycles
 
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/Cycler
 
@@ -18,8 +20,9 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools
 BuildPreReq: python3-module-six
-BuildPreReq: python3-module-nose
+%if_with check
 BuildPreReq: python3-module-pytest
+%endif
 
 %description
 The public API of cycler consists of a class Cycler and a factory
@@ -37,13 +40,17 @@ iteration logic.
 %python3_install
 
 %check
-python3 setup.py test -v
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3
 
 %files
 %doc *.rst doc/source/*.rst
 %python3_sitelibdir/*
 
 %changelog
+* Fri Apr 07 2023 Anton Vyatkin <toni@altlinux.org> 0.11.0-alt2
+- Fix BuildRequires
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
 - new version 0.11.0 (with rpmrb script)
 
