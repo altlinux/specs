@@ -1,6 +1,7 @@
 %global import_path github.com/flannel-io/cni-plugin
 Name:     cni-plugin-flannel
-Version:  1.2.0
+Epoch:    1
+Version:  1.1.2
 Release:  alt1
 
 Summary:  A CNI network plugin that is powered by flannel
@@ -58,6 +59,9 @@ rm %buildroot%_bindir/cni-plugin
 %doc README.md RELEASING.md LICENSE
 
 %changelog
+* Thu Apr 06 2023 Alexander Stepchenko <geochip@altlinux.org> 1:1.1.2-alt1
+- Fix the wrong version.
+
 * Mon Dec 05 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
 - Build to Sisyphus.
 
