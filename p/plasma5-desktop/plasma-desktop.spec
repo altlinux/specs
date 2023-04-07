@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.27.4
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -35,7 +35,7 @@ Patch14: alt-def-desktop-icons.patch
 Patch15: alt-menu-add-tooltip.patch
 Patch16: alt-kicker-custom-btn-img-size.patch
 Patch17: alt-users-use-gost-yescrypt.patch
-Patch18: alt-kxkb-indicator-uppercase.patch
+Patch18: alt-keyboard-indicator-uppercase.patch
 Patch19: alt-def-screenreader.patch
 Patch20: alt-knetattach-test-unlock-ui.patch
 # Fix bug #42348
@@ -250,6 +250,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Fri Apr 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt2
+- fix to uppercase keyboard indicator on wayland
+
 * Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt1
 - new version
 
