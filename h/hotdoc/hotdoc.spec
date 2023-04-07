@@ -1,12 +1,12 @@
 %def_enable snapshot
-%define ver_major 0.13
+%define ver_major 0.14
 
 %def_disable bootstrap_theme
 %def_enable check
 
 Name: hotdoc
-Version: %ver_major.7
-Release: alt2.2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Hotdoc is a documentation framework
 License: LGPL-2.1-or-later
@@ -27,16 +27,20 @@ Requires: clang-devel llvm-devel
 Requires: bison flex
 Requires: python3-module-appdirs >= 1.4.4
 Requires: python3-module-contextlib2 >= 0.6.0
-Requires: python3-module-cchardet >= 2.1.7
+Requires: python3-module-charset-normalizer >= 2.1.1
+Requires: python3-module-faust-cchardet >= 2.1.18
 Requires: python3-module-wheezy.template >= 3.0.3
 Requires: python3-module-contextlib2 >= 0.5.5
-Requires: python3-module-dbus-deviation >= 0.6.0
-Requires: python3-module-decorator >= 4.4.2
-Requires: python3-module-lxml >= 4.6.3
+Requires: python3-module-dateutil >= 2.8.2
+Requires: python3-module-dbus-deviation >= 0.6.1
+Requires: python3-module-feedgen >= 0.9.0
+Requires: python3-module-lxml >= 4.9.1
+Requires: python3-module-pkgconfig >= 1.5.1
 Requires: python3-module-toposort >= 1.6
 Requires: python3-module-yaml >= 5.4.1
 Requires: python3-module-schema >= 0.7.2
-Requires: python3-module-networkx-core >= 2.5
+Requires: python3-module-six >= 1.16.0
+Requires: python3-module-networkx-core >= 2.8.8
 
 BuildRequires(pre): rpm-build-gir rpm-build-python3
 BuildRequires: python3-module-setuptools cmake gcc-c++ bison flex
@@ -45,11 +49,12 @@ BuildRequires: pkgconfig(libxml-2.0) pkgconfig(gio-2.0) pkgconfig(json-glib-1.0)
 BuildRequires: meson npm node-gyp
 %{?_enable_check:
 BuildRequires: python3-module-appdirs python3-module-contextlib2
-BuildRequires: python3-module-lxml python3-module-cchardet
+BuildRequires: python3-module-lxml python3-module-charset-normalizer
+BuildRequires: python3-module-dateutil python3-module-feedgen
 BuildRequires: python3-module-schema python3-module-toposort
-BuildRequires: python3-module-wheezy.template
+BuildRequires: python3-module-wheezy.template python3-module-six
 BuildRequires: python3-module-yaml python3-module-dbus-deviation
-BuildRequires: python3-module-networkx-core python3-module-feedgen}
+BuildRequires: python3-module-networkx-core}
 
 %description
 Hotdoc is a documentation micro-framework. It provides an interface for
@@ -60,7 +65,7 @@ See https://hotdoc.github.io for more unformation.
 %setup %{?_disable_bootstrap_theme:-a1}
 %if_enabled bootstrap_theme
 pushd %name/%{name}_bootstrap_theme
-npm install && npm audit fix && ./node_modules/bower/bin/bower install
+npm install && npm audit fix && ./node_modules/bower/bin/bower install &&
 popd
 tar -cf %name-%version-bootstrap_theme.tar hotdoc/hotdoc_bootstrap_theme/{node_modules,bower_components}/ && \
 mv %name-%version-bootstrap_theme.tar %_sourcedir/
@@ -82,6 +87,9 @@ mv %name-%version-bootstrap_theme.tar %_sourcedir/
 %doc README.md
 
 %changelog
+* Fri Apr 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0-7-g29901af
+
 * Mon May 30 2022 Yuri N. Sedunov <aris@altlinux.org> 0.13.7-alt2.2
 - fixed BR
 
