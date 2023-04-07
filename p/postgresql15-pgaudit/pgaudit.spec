@@ -2,7 +2,7 @@
 
 Name:    postgresql%pg_ver-pgaudit
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: PostgreSQL Audit Extension
 License: PostgreSQL
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 
 BuildRequires: libssl-devel libkrb5-devel
 BuildRequires: postgresql%pg_ver-server-devel
+
+Requires: postgresql%pg_ver-server
 
 %description
 The PostgreSQL Audit Extension (pgAudit) provides detailed session and/or
@@ -42,12 +44,14 @@ this documentation.
 echo "Execute the following psql command inside any database that you want to update:"
 echo "ALTER EXTENSION pgaudit UPDATE;                                                "
 
-
 %files
 %doc README.md LICENSE
 %_libdir/pgsql/*
 %_datadir/pgsql/extension/*
 
 %changelog
+* Fri Apr 07 2023 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt2
+- Required postgresql%%pg_ver-server.
+
 * Fri Mar 17 2023 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
 - Initial build for Sisyphus.
