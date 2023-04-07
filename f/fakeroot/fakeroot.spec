@@ -1,6 +1,8 @@
+%set_verify_elf_method strict
+
 Name: fakeroot
 Version: 1.29
-Release: alt2
+Release: alt3
 
 Summary: Run a command in an environment faking root privileges for file manipulation
 License: GPLv3+
@@ -11,7 +13,7 @@ Url: http://packages.qa.debian.org/f/fakeroot.html
 Source: %name-%version-%release.tar
 
 Requires: getopt
-BuildRequires: gcc-c++, libacl-devel, libcap-devel
+BuildRequires: libacl-devel, libcap-devel
 %{!?_without_check:%{!?_disable_check:BuildRequires: sharutils}}
 
 %description
@@ -51,6 +53,15 @@ find %buildroot%_libdir -type f -name \*.la -delete
 %doc doc/README* DEBUG
 
 %changelog
+* Thu Apr  6 2023 Ivan Zakharyaschev <imz@altlinux.org> 1.29-alt3
+- Fixed a compiler error of older GCCs (for p10) in the wrapper for
+  syscall function.
+- Warn the maintainer if a function definition is missing (when it is not
+  generated for special cases like calling a variadic function like syscall).
+- Added Large-File support in all internal actions (for emulating mknod with
+  a normal file; storing internal database; and for querying the fake owner).
+- Shut up a few compiler warnings.
+
 * Wed Apr  5 2023 Ivan Zakharyaschev <imz@altlinux.org> 1.29-alt2
 - Fixed the wrapper for syscall function so that it works even with the e2k
   calling convention, which is special for variadic functions. (ALT#45757)
