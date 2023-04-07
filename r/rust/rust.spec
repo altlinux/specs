@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
 Version: 1.68.2
-Release: alt1
+Release: alt2
 Summary: The Rust Programming Language
 
 %define r_ver 1.67.0
@@ -13,8 +13,10 @@ URL: http://www.rust-lang.org/
 # https://static.rust-lang.org/dist/rustc-%version-src.tar.gz
 Source: %name-%version.tar
 
-Patch1: rust-gdb.patch
-Patch2: rust-disable-lint-tests.patch
+Patch0001: 0001-ALT-Disable-lint-tests.patch
+Patch0002: 0002-ALT-gdb-Fix-libdir.patch
+Patch0003: 0003-ReErased-regions-are-local.patch
+Patch0004: 0004-yet-another-ui-test.patch
 
 %def_without bootstrap
 %def_without bundled_llvm
@@ -465,6 +467,9 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Fri Apr 07 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.68.2-alt2
+- Backport 9d110847ab7f ("ReErased regions are local").
+
 * Tue Mar 28 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.68.2-alt1
 - New version (1.68.2).
 
