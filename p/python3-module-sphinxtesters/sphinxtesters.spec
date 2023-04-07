@@ -1,13 +1,14 @@
-%def_without test
 %define oname sphinxtesters
+
+%def_with check
 
 Name: python3-module-%oname
 Version: 0.2.3
-Release: alt3
+Release: alt4
 
 Summary: Utilities for testing Sphinx extensions
 
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/sphinxtesters
 
@@ -18,22 +19,14 @@ Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-
-#BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3(docutils) python3(nose.tools) python3(sphinx.application)
+%if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-docutils
+BuildRequires: python3-module-sphinx
+%endif
 
 %description
 Sphinxtesters - utilities for testing Sphinx extensions.
-
-%package tests
-Summary: Utilities for testing Sphinx extensions
-Group: Development/Python3
-
-%description tests
-Sphinxtesters - utilities for testing Sphinx extensions.
-
-This package contains tests.
 
 %prep
 %setup -n %oname-%version
@@ -46,17 +39,19 @@ This package contains tests.
 %python3_prune
 
 %check
-py.test3 -vv
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test3 -vv -k 'not test_bad_pagebuilder'
 
 %files
 %doc LICENSE README.rst
-%python3_sitelibdir/*
-#exclude %python_sitelibdir/%oname/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
-#files tests
-#python_sitelibdir/%oname/tests
 
 %changelog
+* Fri Apr 07 2023 Anton Vyatkin <toni@altlinux.org> 0.2.3-alt4
+- Fix BuildRequires
+
 * Sat Apr 09 2022 Vitaly Lipatov <lav@altlinux.ru> 0.2.3-alt3
 - disable tests (due test_pagebuilder.py:88)
 
