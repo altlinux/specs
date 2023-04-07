@@ -1,28 +1,30 @@
 %define _unpackaged_files_terminate_build 1
-%define oname chevron
+%define pypi_name chevron
 
-Name: python3-module-%oname
-Version: 0.11.1
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 0.14.0
+Release: alt1
 
 Summary: Mustache templating language renderer
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/chevron/
+Vcs: https://github.com/noahmorrison/chevron.git
+
 BuildArch: noarch
 
-Source: %oname-%version.tar
+#Source: http://pypi.io/packages/source/c/%pypi_name/%pypi_name-%version.tar.gz
+Source: %pypi_name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-%py3_provides %oname
-
+%py3_provides %pypi_name
 
 %description
 A python implementation of the mustache templating language.
 
 %prep
-%setup -n %oname-%version
+%setup -n %pypi_name-%version
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -41,6 +43,9 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
 
 
 %changelog
+* Fri Apr 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Mon Nov 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.11.1-alt2
 - python2 disabled
 
