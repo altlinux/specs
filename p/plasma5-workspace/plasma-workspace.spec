@@ -36,7 +36,7 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.27.3
+Version: 5.27.4
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -549,6 +549,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 
 
 %changelog
+* Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.4-alt1
+- new version
+
 * Thu Mar 16 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.3-alt1
 - new version
 

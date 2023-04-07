@@ -5,7 +5,7 @@
 %endif
 
 Name: plasma5-%rname
-Version: 5.27.3
+Version: 5.27.4
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -66,7 +66,7 @@ developing applications that use %name.
 %prep
 %setup -n %rname-%version
 #%patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 
 sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 
@@ -107,6 +107,9 @@ rm -f po/ru/kscreen.po.tmp
 #%_K5archdata/mkspecs/modules/qt_KScreen.pri
 
 %changelog
+* Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.4-alt1
+- new version
+
 * Thu Mar 16 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.3-alt1
 - new version
 
