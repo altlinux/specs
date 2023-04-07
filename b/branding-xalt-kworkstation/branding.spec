@@ -1,3 +1,12 @@
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
+
 %ifarch %ix86 x86_64
 %def_enable gfxboot
 %else
@@ -13,13 +22,14 @@
 %define fakebrand xalt
 
 %define major 10
-%define minor 1
-%define bugfix 1
+%define minor 2
+%define bugfix 0
 %define altversion %major.%minor
+%define altmajor %major
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -282,8 +292,9 @@ ID=altlinux
 VERSION_ID=%altversion
 PRETTY_NAME="%ProductName%status (%codename)"
 ANSI_COLOR="1;33"
-CPE_NAME="cpe:/o:%brand:%smalltheme:%altversion"
+CPE_NAME="cpe:/o:%brand:%smalltheme:%altmajor"
 BUILD_ID="%Brand %altversion%status"
+ALT_BRANCH_ID="%altbranch"
 HOME_URL="%url"
 BUG_REPORT_URL="https://bugs.altlinux.org/"
 DOCUMENTATION_URL="https://docs.altlinux.org/"
@@ -475,6 +486,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Apr 07 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt1
+- add ALT_BRANCH_ID to os-release
+- fix version in os-release CPE_NAME
+
 * Wed Nov 09 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.1-alt2
 - remove extra space in os-release PRETTY_NAME
 
