@@ -1,13 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define oname affine
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 
 Summary: Affine transformation matrices
 
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/affine/
 
@@ -18,12 +20,13 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
+%if_with check
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-responses
+%endif
 
 BuildArch: noarch
-
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-nose
-BuildPreReq: python3-module-pytest
 
 %py3_provides %oname
 
@@ -35,22 +38,24 @@ Matrices describing affine transformation of the plane.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %check
-python3 setup.py test
-rm -fR build
-py.test3 -vv
+%tox_check_pyproject
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Apr 07 2023 Anton Vyatkin <toni@altlinux.org> 2.4.0-alt1
+- new version 2.4.0
+
 * Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
 - new version 2.3.1 (with rpmrb script)
 
