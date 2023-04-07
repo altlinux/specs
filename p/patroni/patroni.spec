@@ -1,6 +1,6 @@
 Name:    patroni
 Version: 3.0.2
-Release: alt1
+Release: alt2
 
 Summary: A template for PostgreSQL High Availability with Etcd, Consul, ZooKeeper, or Kubernetes
 License: MIT
@@ -18,6 +18,8 @@ BuildRequires: python3-module-psycopg2
 BuildArch: noarch
 
 Source: %name-%version.tar
+
+%py3_requires ydiff
 
 %description
 Patroni is a template for you to create your own customized, high-availability
@@ -45,6 +47,9 @@ or plug-and-play replication system. It will have its own caveats. Use wisely.
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Fri Apr 07 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt2
+- Required python3(ydiff) (ALT #45744).
+
 * Sun Mar 26 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
 - New version.
 
