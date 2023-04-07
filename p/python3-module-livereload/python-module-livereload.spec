@@ -4,20 +4,23 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.6.1
-Release: alt2.1
-Summary: Utility for starting a server in a directory
-License: BSD
-Url: https://github.com/lepture/python-livereload
+Version: 2.6.3
+Release: alt1
+
+Summary: Python LiveReload is an awesome tool for web developers
+License: BSD-3-Clause
 Group: Development/Python3
+Url: https://pypi.org/project/livereload/
+Vcs: https://github.com/lepture/python-livereload
+
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 %if_with check
-BuildRequires: python3(nose)
-BuildRequires: python3(tornado)
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-tornado
 %endif
 
 # we have several versions of Django
@@ -32,7 +35,6 @@ for web developers who know Python.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %python3_build
@@ -41,7 +43,9 @@ for web developers who know Python.
 %python3_install
 
 %check
-nosetests3 -s
+export PYTHONPATH=%buildroot%python3_sitelibdir
+# https://github.com/lepture/python-livereload/issues/200
+py.test-3 -k 'not test_watch_multiple_dirs'
 
 %files
 %doc README.rst CHANGES.rst LICENSE
@@ -50,6 +54,9 @@ nosetests3 -s
 %python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Apr 07 2023 Anton Vyatkin <toni@altlinux.org> 2.6.3-alt1
+- New version 2.6.3
+
 * Sun Mar 06 2022 Ivan A. Melnikov <iv@altlinux.org> 2.6.1-alt2.1
 - Fix FTBFS with python 3.10
 
