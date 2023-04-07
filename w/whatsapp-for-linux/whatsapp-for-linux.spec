@@ -1,5 +1,5 @@
 Name: whatsapp-for-linux
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: An unofficial WhatsApp linux client written in C++ with the help of gtkmm-3.0 and webkit2
@@ -27,6 +27,7 @@ Whatsapp-for-linux is an unofficial WhatsApp linux client written in C++ with th
 
 %prep
 %setup
+subst 's|"hw-accel", 1|"hw-accel", 0|' src/ui/WebView.cpp
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
@@ -48,6 +49,10 @@ rm -rv %buildroot%_datadir/locale/pt-br/
 /usr/share/metainfo/com.github.eneshecan.WhatsAppForLinux.appdata.xml
 
 %changelog
+* Fri Apr 07 2023 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
+- new version 1.6.2 (with rpmrb script)
+- disable hw-accel by default (ALT bug 43906)
+
 * Wed Mar 08 2023 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
 - new version 1.6.1 (with rpmrb script) (ALT bug 45056)
 
