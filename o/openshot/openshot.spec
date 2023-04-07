@@ -1,5 +1,4 @@
-
-%def_enable snapshot
+%def_disable snapshot
 
 %ifarch %e2k ppc64le
 %def_disable qtwebengine
@@ -7,11 +6,11 @@
 %def_enable qtwebengine
 %endif
 
-%define ver_major 2.6
+%define ver_major 3.1
 %define xdg_name org.openshot.OpenShot
 Name: openshot
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Non Linear Video Editor using Python and MLT
 Group: Video
@@ -28,22 +27,20 @@ Vcs: https://github.com/OpenShot/openshot-qt.git
 Source: %_name-%version.tar
 %endif
 
-# https://github.com/OpenShot/openshot-qt/pull/4527
-Patch10: %_name-2.6.1-py310_fix.patch
-
 # blender > 2.80 doesn't support 32-bit
 ExcludeArch: i586 armh
 
-Requires: python3-module-%name >= 0.2.7
+Requires: python3-module-%name >= 0.3.1
 Requires: blender inkscape xdg-utils
 
 %add_typelib_req_skiplist typelib(Unity)
 # should be self-satisfied
-%add_python3_req_skip classes classes.legacy.openshot.classes images
+%filter_from_requires /[classes\|images\|windows]/d
 # should be provided by blender
 %add_python3_req_skip bpy.props
 %if_enabled qtwebengine
 %add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
+Requires: python3(PyQt5.QtWebEngine)
 %else
 %add_python3_req_skip PyQt5.QtWebEngineCore PyQt5.QtWebEngineWidgets
 %endif
@@ -59,7 +56,6 @@ Xbox, and many more common formats.
 
 %prep
 %setup -n %_name-%version
-%patch10 -p1 -b .python3-10
 
 %build
 %python3_build
@@ -80,6 +76,12 @@ Xbox, and many more common formats.
 
 
 %changelog
+* Fri Apr 07 2023 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
+* Fri Dec 02 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt2
 - updated to v2.6.1-74-gb72327d1 from develop branch as in fedora/rpmfusion
   openshot-2.6.2*fc37.src.rpm package

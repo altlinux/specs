@@ -1,8 +1,8 @@
 %def_disable snapshot
 %define _name openshot
 
-%define ver_major 0.2
-%define api_ver 20
+%define ver_major 0.3
+%define api_ver 24
 
 %def_enable python
 %def_enable opencv
@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.7
+Version: %ver_major.1
 Release: alt1
 
 Summary: OpenShot Video Library
@@ -27,8 +27,11 @@ Vcs: https://github.com/OpenShot/libopenshot.git
 Source: %name-%version.tar
 %endif
 
+# based on http://github.com/EntityFX/libopenshot
+Patch2000: libopenshot-0.3.0-entityfx-e2k.patch
+
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
-BuildRequires: %name-audio-devel >= 0.2.2
+BuildRequires: %name-audio-devel >= 0.3.1
 BuildRequires: /proc cmake gcc-c++ libgomp-devel libunittest-cpp-devel jsoncpp-devel
 BuildRequires: libalsa-devel qt5-multimedia-devel qt5-svg-devel libzeromq-cpp-devel
 BuildRequires: libImageMagick-devel zlib-devel
@@ -51,7 +54,7 @@ added if requested.
 %package devel
 Summary: OpenShot Video Library development package
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development libraries and header files
@@ -60,16 +63,22 @@ that are needed to write applications that use %name.
 %package -n python3-module-%_name
 Summary: Python3 bindings for OpenShot Video Library
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n python3-module-%_name
 This package provides Python3 bindings for OpenShot Video Library.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %add_optflags %(getconf LFS_CFLAGS) -DNDEBUG
+%ifarch %e2k
+%add_optflags -DJUCE_NO_INLINE_ASM=1 -DJUCE_USE_SIMD=0
+%endif
 %cmake  -DUSE_SYSTEM_JSONCPP:BOOL=ON \
 	-DMAGICKCORE_HDRI_ENABLE:BOOL=ON \
 	-DMAGICKCORE_QUANTUM_DEPTH=16 \
@@ -87,18 +96,23 @@ This package provides Python3 bindings for OpenShot Video Library.
 
 %files
 %_libdir/%name.so.*
-%{?_enable_opencv:%_libdir/%{name}_protobuf.so.*}
 %doc AUTHORS README*
 
 %files devel
 %_includedir/%name/
 %_libdir/%name.so
-%{?_enable_opencv:%_libdir/%{name}_protobuf.so}
 
 %files -n python3-module-%_name
 %python3_sitelibdir/*
 
 %changelog
+* Fri Apr 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
+* Fri Dec 02 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+- applied fix for %%e2k (artem.solopiy@ & mike@)
+
 * Tue Sep 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.7-alt1
 - 0.2.7
 

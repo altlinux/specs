@@ -1,13 +1,13 @@
 %define _name libopenshot
-%define ver_major 0.2
-%define api_ver 7
-%define libopenshot_ver 0.2.6
+%define ver_major 0.3
+%define api_ver 9
+%define libopenshot_ver 0.3
 
 # no tests
 %def_disable check
 
 Name: %_name-audio
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: OpenShot Audio Library
@@ -23,7 +23,6 @@ Source: https://github.com/OpenShot/%name/archive/v%version/%name-%version.tar.g
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: cmake gcc-c++ python3 >= %python_ver zlib-devel libalsa-devel libfreetype-devel
-BuildRequires: libX11-devel libXrandr-devel libXext-devel libXinerama-devel libXcursor-devel
 %{?_enable_check:BuildRequires: ctest}
 
 %description
@@ -33,7 +32,7 @@ and playback of audio, and is based on the amazing JUCE library.
 %package devel
 Summary: OpenShot Audio Library development package
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development libraries and header files
@@ -44,7 +43,11 @@ that are needed to write applications that use %name.
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%cmake
+%ifarch %e2k
+%add_optflags -DJUCE_NO_INLINE_ASM=1 -DJUCE_USE_SIMD=0
+%endif
+%cmake \
+    -DENABLE_AUDIO_DOCS=OFF
 %cmake_build
 
 %install
@@ -65,6 +68,13 @@ that are needed to write applications that use %name.
 %_libdir/cmake/OpenShotAudio/
 
 %changelog
+* Fri Apr 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
+* Fri Dec 02 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+- applied fix for %%e2k (ilyakurdyukov@ & mike@)
+
 * Tue Sep 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
 - 0.2.2
 
