@@ -1,7 +1,7 @@
 %define repo transgrp
 
 Name: gap-transgrp
-Version: 3.6.3
+Version: 3.6.4
 Release: alt1
 Summary: GAP: Transitive Groups Library
 License: Artistic-2.0 AND GPL-2.0-only AND GPL-3.0-only
@@ -30,6 +30,9 @@ The TransGrp package provides the library of transitive groups.
 %gap_sitelib/%repo/*
 
 %changelog
+* Fri Apr 07 2023 Leontiy Volodin <lvol@altlinux.org> 3.6.4-alt1
+- 3.6.4.
+
 * Tue Nov 08 2022 Leontiy Volodin <lvol@altlinux.org> 3.6.3-alt1
 - 3.6.3.
 
