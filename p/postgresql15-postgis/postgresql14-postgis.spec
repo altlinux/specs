@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define pg_ver 14
+%define pg_ver 15
 
 Name: postgresql%pg_ver-postgis
 Version: 3.3.2

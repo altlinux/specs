@@ -3,7 +3,7 @@
 
 Name: postgresql%pg_ver-postgis
 Version: 3.3.2
-Release: alt2
+Release: alt3
 
 Summary: Geographic Information Systems Extensions to PostgreSQL %pg_ver
 Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL %pg_ver
@@ -89,12 +89,15 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_datadir/pgsql/extension
 
 %changelog
+* Sat Apr 08 2023 Andrey Cherepanov <cas@altlinux.org> 3.3.2-alt3
+- Used specsubst.
+
 * Tue Nov 22 2022 Michael Shigorin <mike@altlinux.org> 3.3.2-alt2
 - E2K: no bitcode.
 
 * Mon Nov 14 2022 Andrey Cherepanov <cas@altlinux.org> 3.3.2-alt1
 - New version.
-- Packaged as one package postgresql13-postgis.
+- Packaged as one package postgresql14-postgis.
 
 * Wed Sep 14 2022 Andrey Cherepanov <cas@altlinux.org> 3.3.1-alt1
 - New version.
