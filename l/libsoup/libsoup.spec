@@ -10,13 +10,13 @@
 %def_with gssapi
 %def_enable brotli
 %def_disable debug
-%def_disable sysprof
+%def_enable sysprof
 # fails server-test in hasher
 %def_disable check
 
 Name: libsoup
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
@@ -67,7 +67,7 @@ and the glib main loop, to integrate well with GNOME applications.
 %package gnome
 Summary: HTTP client/server library for GNOME (GNOME part)
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gnome
 Simple Object Access Protocol implementation Library (GNOME part)
@@ -75,7 +75,7 @@ Simple Object Access Protocol implementation Library (GNOME part)
 %package devel
 Summary: Headers for HTTP client/server library for GNOME
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: soup-devel = %version libsoup%api_ver-devel = %version
 Obsoletes: soup-devel = %version libsoup%api_ver-devel < %version
 
@@ -88,8 +88,8 @@ This package allows to develop applications that use the Soup library.
 %package gnome-devel
 Summary: Headers for HTTP client/server library for GNOME (GNOME part)
 Group: Development/C
-Requires: %name-gnome = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gnome = %EVR
+Requires: %name-devel = %EVR
 
 %description gnome-devel
 libsoup is an HTTP client/server library for GNOME. It uses GObjects
@@ -114,7 +114,7 @@ This package contains development documentation for Soup.
 %package devel-static
 Summary: Headers for Simple Object Access Protocol static library
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 Provides: soup-devel-static = %version libsoup%api_ver-devel-static = %version
 Obsoletes: soup-devel-static < %version libsoup%api_ver-devel-static < %version
 
@@ -125,7 +125,7 @@ against Soup library.
 %package gir
 Summary: GObject introspection data for the Soup library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 libsoup is an HTTP client/server library for GNOME. It uses GObjects
@@ -137,7 +137,7 @@ This package provides GObject introspection data for the Soup library
 Summary: GObject introspection devel data for the Soup library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 libsoup is an HTTP client/server library for GNOME. It uses GObjects
@@ -148,8 +148,8 @@ This package provides GObject introspection devel data for the Soup library
 %package gnome-gir
 Summary: GObject introspection data for the Soup-GNOME library
 Group: System/Libraries
-Requires: %name-gir = %version-%release
-Requires: %name-gnome = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-gnome = %EVR
 
 %description gnome-gir
 This package provides GObject introspection data for the GNOME part of Soup library
@@ -158,8 +158,8 @@ This package provides GObject introspection data for the GNOME part of Soup libr
 Summary: GObject introspection devel data for the Soup-GNOME library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir-devel = %version-%release
-Requires: %name-gnome-gir = %version-%release
+Requires: %name-gir-devel = %EVR
+Requires: %name-gnome-gir = %EVR
 
 %description gnome-gir-devel
 This package provides GObject introspection devel data for the GNOME
@@ -192,8 +192,7 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %find_lang %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
@@ -239,6 +238,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Apr 08 2023 Yuri N. Sedunov <aris@altlinux.org> 2.74.3-alt1.1
+- rebuilt
+
 * Tue Oct 11 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.3-alt1
 - 2.74.3
 
