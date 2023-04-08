@@ -1,6 +1,6 @@
 Name:    patroni
 Version: 3.0.2
-Release: alt2
+Release: alt3
 
 Summary: A template for PostgreSQL High Availability with Etcd, Consul, ZooKeeper, or Kubernetes
 License: MIT
@@ -19,7 +19,19 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-%py3_requires ydiff
+# From requirements.txt
+Requires: python3-module-urllib3 >= 1.19.1
+Requires: python3(boto3)
+Requires: python3(yaml)
+Requires: python3-module-kazoo >= 1.3.1
+Requires: python3-module-etcd >= 0.4.3
+Requires: python3-module-consul >= 0.7.1
+Requires: python3-module-click >= 4.1
+Requires: python3-module-prettytable >= 0.7
+Requires: python3-module-pysyncobj >= 0.3.8
+Requires: python3-module-cryptography >= 1.4
+Requires: python3-module-psutil >= 2.0.0
+Requires: python3-module-ydiff >= 1.2
 
 %description
 Patroni is a template for you to create your own customized, high-availability
@@ -47,6 +59,9 @@ or plug-and-play replication system. It will have its own caveats. Use wisely.
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Sat Apr 08 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt3
+- Set Python module requirements from requirements.txt.
+
 * Fri Apr 07 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt2
 - Required python3(ydiff) (ALT #45744).
 
