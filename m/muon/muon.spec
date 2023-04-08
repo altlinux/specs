@@ -1,6 +1,6 @@
 %define __builddir %_target_platform
 
-%define ver_major 0.1
+%define ver_major 0.2
 %define _libexecdir %_prefix/libexec
 %define pkgconf_ver 1.8.0
 
@@ -11,7 +11,7 @@
 
 Name: muon
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: C-implemetation of Meson build system
 License: GPL-3.0-only
@@ -97,6 +97,9 @@ install -Dpm 0755 %SOURCE4 %buildroot%_rpmmacrosdir/%name.env
 
 
 %changelog
+* Sun Apr 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Thu Mar 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt2
 - 0.1.0-187-gc7b33f70
 - muon.macros: added %%muon_meson macros for experimental meson cli
