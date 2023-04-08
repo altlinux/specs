@@ -2,17 +2,15 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
-
 Name: fido2
 Version: 1.13.0
-Release: alt1
+Release: alt2
 
 Summary: Command-line tools to communicate with a FIDO device over USB.
 License: BSD-2-Clause
 Group: System/Configuration/Hardware
-Url: https://github.com/Yubico/libfido2
 
+Url: https://github.com/Yubico/libfido2
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
@@ -25,6 +23,8 @@ BuildRequires: libcbor-devel
 BuildRequires: zlib-devel
 
 Requires: lib%name = %EVR
+
+%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
 %description
 Provides command-line tools to communicate with a FIDO device over USB,
@@ -57,6 +57,10 @@ Provides development header files for lib%name.
 %setup
 
 %build
+%ifarch %e2k
+# hid.c has questionable code as for lcc 1.26.16
+sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
+%endif
 %cmake -DBUILD_STATIC_LIBS=OFF
 %cmake_build
 
@@ -80,6 +84,9 @@ Provides development header files for lib%name.
 %_man3dir/*
 
 %changelog
+* Sat Apr 08 2023 Michael Shigorin <mike@altlinux.org> 1.13.0-alt2
+- E2K: ftbfs workaround
+
 * Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.13.0-alt1
 - New version.
 
