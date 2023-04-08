@@ -1,7 +1,7 @@
 %define oname vimwiki
 
 Name: vim-plugin-vimwiki
-Version: 2022.12.02
+Version: 2023.04.04_1
 Release: alt1
 
 Summary: A personal wiki for Vim
@@ -11,7 +11,7 @@ Group: Editors
 Url: https://vimwiki.github.io/
 
 VCS: git://git.altlinux.org/gears/v/%name.git
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 Source1: %name.watch
 
 Provides: %oname = %version
@@ -36,7 +36,7 @@ wiki file. By default, it is located in `~/vimwiki/index.wiki`. See `:h vimwiki_
 for registering a different path/wiki.
 
 %prep
-%setup -n %name-%version-%release
+%setup
 
 %install
 mkdir -p %buildroot%vim_runtime_dir
@@ -53,6 +53,9 @@ cp -a doc/*.txt %buildroot%vim_runtime_dir/doc
 %vim_runtime_dir/*/*
 
 %changelog
+* Sat Apr 08 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 2023.04.04_1-alt1
+- Updated to v2023.04.04_1.
+
 * Sun Dec 18 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2022.12.02-alt1
 - Updated to v2022.12.02.
 
