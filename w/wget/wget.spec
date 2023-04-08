@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.21.3
-Release: alt2
+Release: alt3
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPL-3.0-or-later
@@ -169,6 +169,9 @@ fi
 %doc COPYING ChangeLog* AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Sat Apr 08 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.3-alt3
+- Update seccomp filtering rules.
+
 * Thu Apr 06 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.3-alt2
 - Update form Git repo v1.21.3-23-g9a35fe609 (2023-03-19).
   Packaging changed from tar ball to a git merge style. All patches
