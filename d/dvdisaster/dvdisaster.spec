@@ -1,6 +1,6 @@
 Name: dvdisaster
 Version: 0.79.10
-Release: alt1
+Release: alt2
 
 Summary: Additional error protection for CD/DVD media
 License: GPL-3.0+
@@ -39,7 +39,16 @@ subst 's/-O2/%optflags/' configure
 
 %build
 export CFLAGS="$CFLAGS -fcommon"
-./configure --prefix=/usr --with-embedded-src-path=no --docdir=%_docdir --with-nls=yes
+./configure \
+	--prefix=/usr \
+	--with-embedded-src-path=no \
+	--docdir=%_docdir \
+	--with-nls=yes \
+%ifarch %e2k
+	--with-sse2=no \
+%endif
+	%nil
+
 # parallel builds fail randomly (sometimes), therefore:
 NPROCS=1
 %make_build
@@ -84,6 +93,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_defaultdocdir/dvdisaster-%version
 
 %changelog
+* Sat Apr 08 2023 Michael Shigorin <mike@altlinux.org> 0.79.10-alt2
+- E2K: explicitly disable SSE2
+
 * Tue Aug 02 2022 Leontiy Volodin <lvol@altlinux.org> 0.79.10-alt1
 - 0.79.10 (with rpmgs script)
 
