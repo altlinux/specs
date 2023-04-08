@@ -2,11 +2,11 @@
 %define ver_major 1.6
 %define api_ver %ver_major
 
-%def_enable gegl
+%def_disable gegl
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: The brush library used by MyPaint
 Group: System/Libraries
@@ -93,6 +93,9 @@ This package provides GObject introspection devel data for %name.
 %{?_enable_gegl:%_girdir/MyPaintGegl-%api_ver.gir}
 
 %changelog
+* Sat Apr 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1.1
+- disabled gegl support
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
