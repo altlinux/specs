@@ -2,7 +2,7 @@
 
 Name: ctags
 Version: 5.8
-Release: alt5
+Release: alt6
 
 Summary: A C programming language indexing and/or cross-reference tool
 License: GPLv2+
@@ -36,6 +36,8 @@ Patch17: 0017-Go-language-support.patch
 # Covered by SOURCE_DATE_EPOCH
 # Patch19: 0019-Do-not-include-build-time-in-binary.patch
 Patch20: ctags-gcc11.patch
+# diff from orig patch: changed sort binary location
+Patch21: CVE-2022-4515.patch
 
 # ALT patches
 Patch101: ctags-5.8-alt-warnings.patch
@@ -68,11 +70,15 @@ in a set of language files.
 %makeinstall
 
 %files
-%_bindir/*
-%_mandir/man?/*
+%_bindir/ctags
+%_mandir/man1/ctags.1*
 %doc EXTENDING.html FAQ NEWS README
 
 %changelog
+* Thu Apr 06 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.8-alt6
+- Fixed arbitrary command execution via a tag file with
+  a crafted filename (fixes CVE-2022-4515).
+
 * Sat Apr 23 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.8-alt5
 - Synced with SUSE devel:tools/ctags r36:
   + Included bugfixes and improvements;
