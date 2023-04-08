@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.22.10
+Version: 3.23.3
 Release: alt1
 Epoch:   1
 
@@ -504,7 +504,7 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 %patch123 -p1 -b .silence-ioerror
 %patch124 -p1 -b .sourceoption
 %if_without ernie
-%patch125 -p1 -b .no-ernie
+%patch125 -p2 -b .no-ernie
 rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 %endif
 #patch126 -p1 -b .appdata
@@ -513,24 +513,24 @@ rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 %patch131 -p1 -b .use-binary-str
 %patch132 -p2 -b .error-print-fix
 %patch133 -p1 -b .hpfax-import-error-print
-%patch134 -p1 -b .wifisetup-bad-call-fix
+%patch134 -p2 -b .wifisetup-bad-call-fix
 %patch135 -p1 -b .keyserver
-%patch136 -p1 -b .qmsgbox-typos-fix
+%patch136 -p2 -b .qmsgbox-typos-fix
 %patch138 -p1 -b .toolbox-crash
-%patch139 -p1 -b .add-ppd-crash
+%patch139 -p2 -b .add-ppd-crash
 %patch140 -p1 -b .missing-links
 %patch141 -p1 -b .hp-laserjet-3052-broken-scanning
 %patch142 -p1 -b .hpmud-string-parse
 %patch143 -p1 -b .m278-m281-needs-plugin
 %patch144 -p1 -b .hpcups-crash
-%patch145 -p1 -b .covscan
+%patch145 -p2 -b .covscan
 %patch146 -p1 -b .logging-segfault
 %patch147 -p1 -b .systray-blockerror
 %patch149 -p1 -b .model-mismatch
 %patch150 -p1 -b .unicodeerror
 %patch151 -p1 -b .Wreturn-fix
 %patch152 -p1 -b .configure-python
-%patch153 -p1 -b .dialog-infinite-loop
+%patch153 -p2 -b .dialog-infinite-loop
 %patch154 -p1 -b .find-driver
 %patch155 -p1 -b .clean-ldl
 %patch156 -p2 -b .revert-plugins
@@ -994,6 +994,7 @@ fi
 # CUPS filter
 %_prefix/lib/cups/filter/hpcups
 %_prefix/lib/cups/filter/hpcupsfax
+%_prefix/lib/cups/filter/hpcdmfax
 %{_bindir}/hpcups-update-ppds
 # moved from common
 %_prefix/lib/cups/filter/hpps
@@ -1119,6 +1120,14 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Apr 05 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.23.3-alt1
+- New version.
+- Added support for the following new printers:
+  + HP Smart Tank 520_540 series
+  + HP Smart Tank 580-590 series
+  + HP Smart Tank 5100 series
+  + HP Smart Tank 210-220 series
+
 * Sat Nov 05 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.22.10-alt1
 - New version.
 
