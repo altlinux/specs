@@ -6,7 +6,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: Python-SoXR is a Python wrapper of libsoxr
@@ -46,6 +46,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc README*
 
 %changelog
+* Sat Apr 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
+- 0.3.5
+
 * Fri Mar 31 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
