@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt13
+Release: alt14
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -95,6 +95,10 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Sat Apr  8 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt14
+- Fixed build by including a necessary header
+  (an error that surfaced with gcc-12.2.1-alt1).
+
 * Wed Apr  7 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt13
 - Reverted some changes from the previous release, since we recently reverted
   some changes in the APT API in apt-0.5.15lorg2-alt72;
