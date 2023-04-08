@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: esbuild
-Version: 0.14.39
+Version: 0.14.54
 Release: alt1
 Summary: An extremely fast JavaScript and CSS bundler and minifier
 Group: Development/Other
@@ -43,6 +43,9 @@ install -D -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Apr 07 2023 Alexey Shabalin <shaba@altlinux.org> 0.14.54-alt1
+- 0.14.54
+
 * Mon Jun 13 2022 Alexey Shabalin <shaba@altlinux.org> 0.14.39-alt1
 - 0.14.39
 
