@@ -3,7 +3,7 @@
 %def_disable test
 
 Name: python3-module-%oname
-Version: 39.0.2
+Version: 40.0.1
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers
@@ -61,6 +61,9 @@ EOF
 
 %build
 export CARGO_NET_OFFLINE=true
+export OPENSSL_INCLUDE_DIR="%_includedir"
+export OPENSSL_LIB_DIR="%_libdir"
+export OPENSSL_NO_VENDOR=1
 %pyproject_build
 
 %install
@@ -83,6 +86,9 @@ py.test3
 %python3_sitelibdir/%oname-%version.dist-info/*
 
 %changelog
+* Fri Apr 7 2023 Vladimir Didenko <cow@altlinux.ru> 40.0.1-alt1
+- new version
+
 * Mon Mar 20 2023 Vladimir Didenko <cow@altlinux.ru> 39.0.2-alt1
 - new version
 
