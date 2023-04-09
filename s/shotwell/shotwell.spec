@@ -1,5 +1,5 @@
 %set_verify_elf_method unresolved=relaxed
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shotwell
 
@@ -11,8 +11,8 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.7
-Release: alt2
+Version: %ver_major.90
+Release: alt1
 
 Summary: A digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -86,11 +86,12 @@ mode, and export them to share with others.
 %_bindir/%name
 %dir %_libexecdir/%name
 %_libexecdir/%name/%name-video-thumbnailer
+%_libexecdir/%name/%name-settings-migrator
 %if_enabled face_detection
 %_libexecdir/%name/%name-facedetect
 %_datadir/dbus-1/services/%xdg_name.Faces1.service
 %dir %_datadir/%name
-%_datadir/%name/facedetect-haarcascade.xml
+%_datadir/%name/facedetect/
 %endif
 %_libdir/lib%name-plugin-common.so.*
 %_libdir/lib%name-plugin-dev-%api_ver.so.*
@@ -109,6 +110,9 @@ mode, and export them to share with others.
 
 
 %changelog
+* Sun Apr 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.31.90-alt1
+- 0.31.90
+
 * Mon Feb 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.31.7-alt2
 - updated to shotwell-0.31.7-49-gad6b9931
 
