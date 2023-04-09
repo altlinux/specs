@@ -9,7 +9,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt11
+Release: alt12
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -209,6 +209,12 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Sun Apr 09 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt12
+- bootchain-altboot: use altboot forever by check logic (ALT #45787)
+- bootchain-core: delay switching to localdev boot method after loop
+- download: don't set NFS method when loading via HTTP (ALT #43970)
+- liveboot: add check for init= in propagator mode (ALT #44061)
+
 * Wed Aug 31 2022 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt11
 - cifs, nfs: revert back PREFIX, it repairs work with overlays
 
