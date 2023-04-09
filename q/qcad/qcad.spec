@@ -2,15 +2,16 @@
 
 Name: 	 qcad
 Version: 3.28.1.0
-Release: alt1
+Release: alt2
+
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
+License: GPL-3.0 with Qt-GPL-exception-1.0 and CC-BY-3.0 and GPL-2.0+ and MIT and BSD-2-Clause and ALT-Public-Domain
+Group:   Graphics
 
 Url: 	 http://www.ribbonsoft.com/qcad.html
 # VCS:   https://github.com/qcad/qcad.git
 # TODO: remove bundled fonts or specify their licenses  
-License: GPL-3.0 with Qt-GPL-exception-1.0 and CC-BY-3.0 and GPL-2.0+ and MIT and BSD-2-Clause and ALT-Public-Domain
-Group:   Graphics
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -19,11 +20,13 @@ Source1: qcadcore_ru.ts
 Source2: qcadentity_ru.ts
 Source3: scripts_ru.ts
 
-Patch:   %name-%version-%release.patch
+Patch0:  %name-%version-%release.patch
 Patch2:  qcad-alt-use-system-zlib.patch
 Patch3:  qcad-alt-check-translation-file.patch
 Patch4:  qcad-disable-macos.patch
 Patch5:  qcad-fix-lto.patch
+
+BuildRequires(pre): rpm-macros-qt5-webengine
 
 BuildRequires: gcc-c++ qt5-base-devel python
 BuildRequires: desktop-file-utils
@@ -37,7 +40,7 @@ BuildRequires: qt5-script-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-tools-devel-static
-%ifnarch ppc64le
+%ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel
 %endif
 BuildRequires: qt5-webkit-devel
@@ -76,17 +79,21 @@ rm -rf src/3rdparty/opennurbs/zlib
 %if_with debug
 echo 'DEFINES -= QT_NO_DEBUG_OUTPUT' >> shared.pri
 %endif
+
+%ifarch %e2k
+sed -i '/CONFIG += precompile_header/d' src/scripting/ecmaapi/ecmaapi.pro
+%endif
+
+%build
 %qmake_qt5
 
-%define fallback_qt_version 5.12.3
+%define fallback_qt_version 5.15.3
 if [ ! -e src/3rdparty/qt-labs-qtscriptgenerator-%_qt5_version ] ; then
     pushd src/3rdparty
     cp -ar qt-labs-qtscriptgenerator-%fallback_qt_version qt-labs-qtscriptgenerator-%_qt5_version
     mv qt-labs-qtscriptgenerator-%_qt5_version/qt-labs-qtscriptgenerator-%fallback_qt_version.pro qt-labs-qtscriptgenerator-%_qt5_version/qt-labs-qtscriptgenerator-%_qt5_version.pro
     popd
 fi
-
-%build
 # Regenerate all translations
 lupdate-qt5 ts/scripts.pro
 for pro in ts/scripts.pro src/gui/gui.pro src/entity/entity.pro src/core/core.pro; do lrelease-qt5 ${pro};done
@@ -145,6 +152,10 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Apr 09 2023 Michael Shigorin <mike@altlinux.org> 3.28.1.0-alt2
+- use rpm-macros-qt5-webengine
+- E2K: avoid precompile_header feature to fix ftbfs (ilyakurdyukov@)
+
 * Sat Apr 01 2023 Andrey Cherepanov <cas@altlinux.org> 3.28.1.0-alt1
 - new version 3.28.1.0
 
