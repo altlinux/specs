@@ -1,6 +1,6 @@
 Name:    ibus-pinyin
 Version: 1.5.0
-Release: alt6
+Release: alt7
 Summary: The Chinese Pinyin and Bopomofo engines for IBus input platform
 
 License: GPL-2.0+
@@ -35,6 +35,8 @@ The Chinese Pinyin and Bopomofo input methods for IBus platform.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p2
+# Replace doublequotes to singlequotes for sqlite3
+subst "s|\\\\\"|\\\\'|g" data/db/english/english.awk
 
 %build
 #./autogen.sh
@@ -62,6 +64,9 @@ The Chinese Pinyin and Bopomofo input methods for IBus platform.
 %_desktopdir/*.desktop
 
 %changelog
+* Sun Apr 09 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt7
+- FTBFS: replaced doublequotes to singlequotes for sqlite3.
+
 * Mon Aug 29 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt6
 - FTBFS: disabled lua extension.
 
