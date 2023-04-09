@@ -2,7 +2,7 @@
 
 Name:          gem-foreman-puppet
 Version:       4.0.3
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Add Puppet features to Foreman
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -28,7 +28,7 @@ Allow assigning Puppet environments and classes to the Foreman Hosts.
 
 %package       -n gem-foreman-puppet-doc
 Version:       4.0.3
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Add Puppet features to Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_puppet
 Group:         Development/Documentation
@@ -47,7 +47,7 @@ Allow assigning Puppet environments and classes to the Foreman Hosts.
 
 %package       -n gem-foreman-puppet-devel
 Version:       4.0.3
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Add Puppet features to Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_puppet
 Group:         Development/Ruby
@@ -94,6 +94,9 @@ cp -rp public %buildroot%_datadir/foreman
 
 
 %changelog
+* Thu Apr 06 2023 Pavel Skrylev <majioa@altlinux.org> 4.0.3-alt1.2
+- ! public webpack
+
 * Fri Nov 11 2022 Pavel Skrylev <majioa@altlinux.org> 4.0.3-alt1.1
 - ! fixed www data paths to store
 

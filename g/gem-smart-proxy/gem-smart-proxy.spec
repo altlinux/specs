@@ -2,7 +2,7 @@
 
 Name:          gem-smart-proxy
 Version:       3.5.1
-Release:       alt2
+Release:       alt3
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -62,6 +62,7 @@ BuildRequires: gem(webrick) >= 1.0 gem(webrick) < 2
 %ruby_use_gem_dependency rsec >= 1.0.0,rsec < 2
 %ruby_use_gem_dependency ci_reporter >= 2.0.0,ci_reporter < 3
 %ruby_alias_names smart_proxy,smart-proxy
+Requires:      /usr/sbin/railsctl
 Requires:      gem(json) >= 0
 Requires:      gem(logging) >= 0
 Requires:      gem(rack) >= 1.3
@@ -96,7 +97,7 @@ booting
 
 %package       -n smart-proxy
 Version:       3.5.1
-Release:       alt2
+Release:       alt3
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета smart_proxy
 Group:         Development/Ruby
@@ -157,7 +158,7 @@ booting
 
 %package       -n gem-smart-proxy-doc
 Version:       3.5.1
-Release:       alt2
+Release:       alt3
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета smart_proxy
 Group:         Development/Documentation
@@ -195,7 +196,7 @@ booting
 
 %package       -n gem-smart-proxy-devel
 Version:       3.5.1
-Release:       alt2
+Release:       alt3
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета smart_proxy
 Group:         Development/Ruby
@@ -319,6 +320,9 @@ rm -rf %_localstatedir/smart-proxy/Gemfile.lock
 
 
 %changelog
+* Mon Apr 10 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt3
+- * using railsctl to run service
+
 * Tue Feb 28 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt2
 - ! runtime deps to smart_proxy_remote_execution_ssh and smart_proxy_ansible
 - * since for now smart-proxy support not the daemonize with pid, change service

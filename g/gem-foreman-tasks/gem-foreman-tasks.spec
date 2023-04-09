@@ -3,7 +3,7 @@
 Name:          gem-foreman-tasks
 Epoch:         1
 Version:       7.0.0
-Release:       alt1.1
+Release:       alt2.1
 Summary:       Foreman plugin for showing tasks information for resources and users
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -14,6 +14,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 Source1:       public.tar
+Patch:         save-record.patch
 BuildRequires(pre): rpm-build-ruby
 %if_with check
 BuildRequires: gem(factory_bot_rails) >= 4.8.0
@@ -59,7 +60,7 @@ optionally provides Dynflow infrastructure for using it for managing the tasks.
 
 %package       -n gem-foreman-tasks-doc
 Version:       7.0.0
-Release:       alt1.1
+Release:       alt2.1
 Summary:       Foreman plugin for showing tasks information for resources and users documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman-tasks
 Group:         Development/Documentation
@@ -83,7 +84,7 @@ optionally provides Dynflow infrastructure for using it for managing the tasks.
 
 %package       -n gem-foreman-tasks-devel
 Version:       7.0.0
-Release:       alt1.1
+Release:       alt2.1
 Summary:       Foreman plugin for showing tasks information for resources and users development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman-tasks
 Group:         Development/Ruby
@@ -119,6 +120,7 @@ optionally provides Dynflow infrastructure for using it for managing the tasks.
 %prep
 %setup
 %setup -a 1
+%autopatch
 
 %build
 %ruby_build
@@ -146,6 +148,12 @@ cp -rp public %buildroot%_datadir/foreman
 
 
 %changelog
+* Thu Apr 06 2023 Pavel Skrylev <majioa@altlinux.org> 1:7.0.0-alt2.1
+- ! public webpack and assets
+
+* Thu Mar 30 2023 Pavel Skrylev <majioa@altlinux.org> 1:7.0.0-alt2
+- ! patch to properly save a host record
+
 * Tue Jan 31 2023 Pavel Skrylev <majioa@altlinux.org> 1:7.0.0-alt1.1
 - ! with closing build deps under check condition
 

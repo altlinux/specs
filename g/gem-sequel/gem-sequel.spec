@@ -3,7 +3,7 @@
 
 Name:          gem-sequel
 Version:       5.66.0
-Release:       alt2
+Release:       alt3
 Summary:       Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -48,7 +48,7 @@ Ruby.
 
 %package       -n sequel
 Version:       5.66.0
-Release:       alt2
+Release:       alt3
 Summary:       Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета sequel
 Group:         Development/Ruby
@@ -66,7 +66,7 @@ executable(s).
 
 %package       -n gem-sequel-doc
 Version:       5.66.0
-Release:       alt2
+Release:       alt3
 Summary:       Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sequel
 Group:         Development/Documentation
@@ -84,7 +84,7 @@ documentation files.
 
 %package       -n gem-sequel-devel
 Version:       5.66.0
-Release:       alt2
+Release:       alt3
 Summary:       Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета sequel
 Group:         Development/Ruby
@@ -137,6 +137,9 @@ development package.
 
 
 %changelog
+* Wed Mar 29 2023 Pavel Skrylev <majioa@altlinux.org> 5.66.0-alt3
+- ! fixed previous patch
+
 * Mon Mar 27 2023 Pavel Skrylev <majioa@altlinux.org> 5.66.0-alt2
 - ! fixed to more than 1 row in migrator table (closes #45669)
 

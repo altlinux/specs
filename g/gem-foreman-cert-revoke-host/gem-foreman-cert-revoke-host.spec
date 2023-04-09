@@ -2,8 +2,8 @@
 %define        gemname foreman_cert_revoke_host
 
 Name:          gem-foreman-cert-revoke-host
-Version:       0.1.2
-Release:       alt1
+Version:       0.1.2.1
+Release:       alt0.1
 Summary:       Plugin to revoke host certificate
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -13,6 +13,7 @@ Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         version.patch
 BuildRequires(pre): rpm-build-ruby
 %if_with check
 BuildRequires: gem(rake) >= 12.0
@@ -22,22 +23,23 @@ BuildConflicts: gem(rake) >= 14
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rake >= 13.0.1,rake < 14
-Provides:      gem(foreman_cert_revoke_host) = 0.1.2
+Provides:      gem(foreman_cert_revoke_host) = 0.1.2.1
 
+%ruby_use_gem_version foreman_cert_revoke_host:0.1.2.1
 
 %description
 Plugin to revoke certificate from host properties.
 
 
 %package       -n gem-foreman-cert-revoke-host-doc
-Version:       0.1.2
-Release:       alt1
+Version:       0.1.2.1
+Release:       alt0.1
 Summary:       Plugin to revoke host certificate documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_cert_revoke_host
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(foreman_cert_revoke_host) = 0.1.2
+Requires:      gem(foreman_cert_revoke_host) = 0.1.2.1
 
 %description   -n gem-foreman-cert-revoke-host-doc
 Plugin to revoke host certificate documentation files.
@@ -49,14 +51,14 @@ Plugin to revoke certificate from host properties.
 
 
 %package       -n gem-foreman-cert-revoke-host-devel
-Version:       0.1.2
-Release:       alt1
+Version:       0.1.2.1
+Release:       alt0.1
 Summary:       Plugin to revoke host certificate development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_cert_revoke_host
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(foreman_cert_revoke_host) = 0.1.2
+Requires:      gem(foreman_cert_revoke_host) = 0.1.2.1
 Requires:      gem(rake) >= 12.0
 Conflicts:     gem(rake) >= 14
 
@@ -71,6 +73,7 @@ Plugin to revoke certificate from host properties.
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -95,5 +98,8 @@ Plugin to revoke certificate from host properties.
 
 
 %changelog
+* Sat Apr 08 2023 Pavel Skrylev <majioa@altlinux.org> 0.1.2.1-alt0.1
+- ^ 0.1.2 -> 0.1.2[1]
+
 * Thu Mar 16 2023 Pavel Skrylev <majioa@altlinux.org> 0.1.2-alt1
 - + packaged gem with Ruby Policy 2.0

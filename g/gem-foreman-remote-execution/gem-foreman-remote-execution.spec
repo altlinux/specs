@@ -2,7 +2,7 @@
 
 Name:          gem-foreman-remote-execution
 Version:       8.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A plugin bringing remote execution to the Foreman
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -40,7 +40,7 @@ management functionality with remote management functionality.
 
 %package       -n gem-foreman-remote-execution-doc
 Version:       8.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A plugin bringing remote execution to the Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_remote_execution
 Group:         Development/Documentation
@@ -60,7 +60,7 @@ management functionality with remote management functionality.
 
 %package       -n gem-foreman-remote-execution-devel
 Version:       8.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A plugin bringing remote execution to the Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_remote_execution
 Group:         Development/Ruby
@@ -111,6 +111,9 @@ cp -rp public %buildroot%_datadir/foreman/
 
 
 %changelog
+* Thu Apr 06 2023 Pavel Skrylev <majioa@altlinux.org> 8.0.0-alt1.1
+- ! public assets and webpack
+
 * Fri Sep 23 2022 Pavel Skrylev <majioa@altlinux.org> 8.0.0-alt1
 - ^ 4.7.0 -> 8.0.0
 

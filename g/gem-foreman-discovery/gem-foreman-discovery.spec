@@ -2,7 +2,7 @@
 
 Name:          gem-foreman-discovery
 Version:       21.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       MaaS Discovery Plugin for Foreman
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -28,7 +28,7 @@ A plugin to enable Metal-as-a-Service discovery functionality in foreman.
 
 %package       -n gem-foreman-discovery-doc
 Version:       21.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       MaaS Discovery Plugin for Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_discovery
 Group:         Development/Documentation
@@ -47,7 +47,7 @@ A plugin to enable Metal-as-a-Service discovery functionality in foreman.
 
 %package       -n gem-foreman-discovery-devel
 Version:       21.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       MaaS Discovery Plugin for Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_discovery
 Group:         Development/Ruby
@@ -95,6 +95,9 @@ cp -rp public %buildroot%_datadir/foreman/
 
 
 %changelog
+* Thu Apr 06 2023 Pavel Skrylev <majioa@altlinux.org> 21.0.3-alt1.1
+- ! public webpack
+
 * Fri Sep 23 2022 Pavel Skrylev <majioa@altlinux.org> 21.0.3-alt1
 - ^ 18.0.4 -> 21.0.3
 

@@ -2,7 +2,7 @@
 
 Name:          gem-foreman-ansible
 Version:       10.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ansible integration in Foreman
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -59,7 +59,7 @@ foreman_ansible_inventory
 
 %package       -n gem-foreman-ansible-doc
 Version:       10.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ansible integration in Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_ansible
 Group:         Development/Documentation
@@ -86,7 +86,7 @@ foreman_ansible_inventory
 
 %package       -n gem-foreman-ansible-devel
 Version:       10.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ansible integration in Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_ansible
 Group:         Development/Ruby
@@ -149,6 +149,9 @@ cp -rp public %buildroot%_datadir/foreman
 
 
 %changelog
+* Thu Apr 06 2023 Pavel Skrylev <majioa@altlinux.org> 10.0.1-alt1.1
+- ! public webpack and assets
+
 * Tue Jan 31 2023 Pavel Skrylev <majioa@altlinux.org> 10.0.1-alt1
 - ^ 10.0.0 -> 10.0.1
 

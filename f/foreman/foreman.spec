@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.5.1
-Release:       alt2
+Release:       alt3
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -343,7 +343,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.5.1
-Release:       alt2
+Release:       alt3
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -448,12 +448,24 @@ getent passwd _foreman >/dev/null || \
    %_sbindir/useradd -r -g foreman -G foreman -M -d %_localstatedir/%name -s /bin/bash -c "Foreman" _foreman
 getent group puppet >/dev/null || \
    %_sbindir/usermod -a -G puppet _foreman
+usermod -a -G foreman,puppet _nginx # add _nginx into foreman and puppet groups
 rm -rf %_libexecdir/%name/public %_libexecdir/%name/db/openid-store
 exit 0
 
 %post
 %post_service foreman
 %post_service foreman-jobs
+
+# ssl key generation
+puppetserver ca setup --certname $(hostname) --subject-alt-names $(hostname) >> /var/log/foreman/key_generation.log 2>&1
+
+cp -fp /etc/puppet/ssl/ca/root_key.pem /etc/foreman/rootCA.pem 2>/dev/null
+cp -fp /etc/puppet/ssl/certs/$(hostname).pem /etc/foreman/ssl_cert.pem 2>/dev/null
+cp -fp /etc/puppet/ssl/private_keys/$(hostname).pem /etc/foreman/ssl_key.pem 2>/dev/null
+
+ln -sf /etc/nginx/sites-available.d/foreman.conf /etc/nginx/sites-enabled.d/ 2>/dev/null
+
+echo 'NOTE: To complete update/install procedure, make sure you have followed manuals at https://www.altlinux.org/Связка_Puppet_и_Foreman' 1>&2
 
 %preun
 railsctl cleanup %name
@@ -496,6 +508,11 @@ railsctl cleanup %name
 
 
 %changelog
+* Thu Apr 06 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt3
+- ! fixed public webpack and assets
+- ! fixed spec pre section and nginx conf
+- ! fixed many configs to disable direct ssl (usign via nginx only)
+
 * Thu Mar 16 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt2
 - + dep to foreman_cert_revoke_host gem
 - ! default sysconfig

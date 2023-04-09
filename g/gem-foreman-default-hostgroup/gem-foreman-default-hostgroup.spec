@@ -1,8 +1,8 @@
 %define        gemname foreman_default_hostgroup
 
 Name:          gem-foreman-default-hostgroup
-Version:       6.0.0.1
-Release:       alt0.1
+Version:       6.0.0.2
+Release:       alt0.2
 Summary:       A plugin to set the default hostgroup when hosts are created
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -18,9 +18,9 @@ BuildRequires(pre): rpm-build-ruby
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_alias_names foreman_default_hostgroup,foreman-default-hostgroup
-Provides:      gem(foreman_default_hostgroup) = 6.0.0.1
+Provides:      gem(foreman_default_hostgroup) = 6.0.0.2
 
-%ruby_use_gem_version foreman_default_hostgroup:6.0.0.1
+%ruby_use_gem_version foreman_default_hostgroup:6.0.0.2
 
 %description
 A quick plugin to set a default hostgroup on hosts which check-in via Puppet
@@ -28,14 +28,14 @@ without a Hostgroup set.
 
 
 %package       -n gem-foreman-default-hostgroup-doc
-Version:       6.0.0.1
-Release:       alt0.1
+Version:       6.0.0.2
+Release:       alt0.2
 Summary:       A plugin to set the default hostgroup when hosts are created documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_default_hostgroup
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(foreman_default_hostgroup) = 6.0.0.1
+Requires:      gem(foreman_default_hostgroup) = 6.0.0.2
 
 %description   -n gem-foreman-default-hostgroup-doc
 A plugin to set the default hostgroup when hosts are created documentation
@@ -72,6 +72,9 @@ without a Hostgroup set.
 
 
 %changelog
+* Tue Apr 04 2023 Pavel Skrylev <majioa@altlinux.org> 6.0.0.2-alt0.2
+- ^ 6.0.0[1] -> 6.0.0[2] with patch
+
 * Fri Sep 23 2022 Pavel Skrylev <majioa@altlinux.org> 6.0.0.1-alt0.1
 - ^ 6.0.0 -> 6.0.0[1]
 

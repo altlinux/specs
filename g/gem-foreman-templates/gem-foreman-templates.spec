@@ -2,7 +2,7 @@
 
 Name:          gem-foreman-templates
 Version:       9.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Template-syncing engine for Foreman
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -33,7 +33,7 @@ Engine to synchronise provisioning templates from GitHub
 
 %package       -n gem-foreman-templates-doc
 Version:       9.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Template-syncing engine for Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_templates
 Group:         Development/Documentation
@@ -52,7 +52,7 @@ Engine to synchronise provisioning templates from GitHub
 
 %package       -n gem-foreman-templates-devel
 Version:       9.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Template-syncing engine for Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_templates
 Group:         Development/Ruby
@@ -101,6 +101,9 @@ cp -rp public %buildroot%_datadir/foreman
 
 
 %changelog
+* Thu Apr 06 2023 Pavel Skrylev <majioa@altlinux.org> 9.3.0-alt1.1
+- ! public build
+
 * Fri Sep 23 2022 Pavel Skrylev <majioa@altlinux.org> 9.3.0-alt1
 - ^ 9.1.0 -> 9.3.0
 
