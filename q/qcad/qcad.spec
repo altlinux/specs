@@ -2,7 +2,7 @@
 
 Name: 	 qcad
 Version: 3.28.1.0
-Release: alt2
+Release: alt3
 
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
@@ -63,8 +63,8 @@ QCad это профессиональная CAD система. С QCad вы м
 системами (например, AutoCAD).
 
 %prep
-%setup -q
-%patch -p1
+%setup
+%patch0 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -82,6 +82,8 @@ echo 'DEFINES -= QT_NO_DEBUG_OUTPUT' >> shared.pri
 
 %ifarch %e2k
 sed -i '/CONFIG += precompile_header/d' src/scripting/ecmaapi/ecmaapi.pro
+# cpio archive too big - 4622M
+%add_optflags -g0
 %endif
 
 %build
@@ -152,6 +154,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Apr 09 2023 Michael Shigorin <mike@altlinux.org> 3.28.1.0-alt3
+- E2K: -g0 to avoid "cpio archive too big" (ilyakurdyukov@)
+
 * Sun Apr 09 2023 Michael Shigorin <mike@altlinux.org> 3.28.1.0-alt2
 - use rpm-macros-qt5-webengine
 - E2K: avoid precompile_header feature to fix ftbfs (ilyakurdyukov@)
