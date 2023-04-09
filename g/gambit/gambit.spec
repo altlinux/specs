@@ -1,27 +1,23 @@
 %define _unpackaged_files_terminate_build 1
+%def_with emacs
 
 Name: gambit
 Version: 4.9.4
-Release: alt2
+Release: alt3
 
 Summary: Gambit-C Scheme programming system
 License: Apache-2.0
 Group: Development/Other
-URL: http://www.iro.umontreal.ca/~gambit/
-Conflicts: ghostscript-minimal < 8.64-alt5
+
+Url: http://www.iro.umontreal.ca/~gambit/
 
 Packager: Paul Wolneykien <manowar@altlinux.org>
 
+Conflicts: ghostscript-minimal < 8.64-alt5
+
 Source: %name-%version.tar
 
-Patch0: gambit-4.9.4-alt-e2k-lcc123.patch
-Patch1: gambit-4.9.4-fix-texi-utf-bytes.patch
-
-%ifarch %e2k
-%def_without emacs
-%else
-%def_with emacs
-%endif
+Patch: gambit-4.9.4-fix-texi-utf-bytes.patch
 
 %if_with emacs
 BuildRequires: emacs-nox
@@ -39,7 +35,6 @@ The Gambit-C system conforms to the R4RS and IEEE Scheme standards.  The full
 numeric tower is implemented, including: infinite precision integers (bignums),
 rationals, inexact reals (floating point numbers), and complex numbers.
 
-%if_with emacs
 %package -n emacs-gambit
 Summary: Emacs mode for Gambit-C
 Group: Editors
@@ -48,7 +43,6 @@ BuildArch: noarch
 
 %description -n emacs-gambit
 Emacs mode for running Gambit-C
-%endif
 
 %package docs
 Summary: Gambit-C manuals ang examples
@@ -150,12 +144,11 @@ Development files for Gambit Scheme (x86 processor family)
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p2
+%patch -p2
 
 %build
 %ifarch %e2k
-%add_optflags -D___LITTLE_ENDIAN
+%add_optflags -D___LITTLE_ENDIAN -D___DONT_USE_builtin_setjmp
 %endif
 %configure --enable-single-host --enable-shared \
 	   --disable-absolute-shared-libs \
@@ -268,6 +261,10 @@ EOF
 %_bindir/gambuild-x86-64
 
 %changelog
+* Sun Apr 09 2023 Michael Shigorin <mike@altlinux.org> 4.9.4-alt3
+- E2K: update build fix, drop the obsolete patch (ilyakurdyukov@)
+- minor spec cleanup
+
 * Mon Feb 13 2023 Paul Wolneykien <manowar@altlinux.org> 4.9.4-alt2
 - Fixed file list for the %name-devel package.
 
