@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.17.1
+Version: 0.18.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -45,6 +45,10 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Sat Apr 08 2023 Alexey Appolonov <alexey@altlinux.org> 0.18.0-alt1
+- Ability to enable the "alerts only" and "plain" printing modes after
+  initialization of a "Printer" object.
+
 * Thu May 05 2022 Alexey Appolonov <alexey@altlinux.org> 0.17.1-alt1
 - Improved algorithm of the "CompareLVersions" function;
 - The name of a "Printer" class method that clears the stack of indentation
