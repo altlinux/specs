@@ -1,18 +1,21 @@
 %define oname netkit
 
 Name: python3-module-%oname
-Version: 3.1.10
+Version: 3.1.12
 Release: alt1
 
 Summary: Useful kit for network programming
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/netkit/
-BuildArch: noarch
 
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 Useful kit for network programming.
@@ -21,18 +24,21 @@ Useful kit for network programming.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc PKG-INFO
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 
 %changelog
+* Mon Apr 10 2023 Anton Vyatkin <toni@altlinux.org> 3.1.12-alt1
+- new version 3.1.12
+
 * Thu Mar 09 2023 Anton Vyatkin <toni@altlinux.org> 3.1.10-alt1
 - new version 3.1.10
 
