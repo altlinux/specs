@@ -3,9 +3,11 @@
 %global __ospython %{_bindir}/python3
 %global python3_sitelib %(%{__ospython} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
 
+%def_with check
+
 Name:           %{srcname}
 Version:        0.4.5
-Release:        alt1
+Release:        alt2
 Summary:        A python client library for etcd
 Group:          System/Libraries
 License:        MIT
@@ -22,9 +24,11 @@ BuildRequires:  python3-dev
 BuildRequires:  python3-module-setuptools
 BuildRequires:  python3-module-dns
 BuildRequires:  python3-module-mock
-BuildRequires:  python3-module-nose
 BuildRequires:  python3-module-urllib3
 BuildRequires:  python3-module-OpenSSL
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 Client library for interacting with an etcd service, providing Python
@@ -58,7 +62,8 @@ election.
 %{__ospython} setup.py install --root %{buildroot} -O1 --skip-build
 
 %check
-nosetests-3 src/etcd/tests/unit/
+export PYTHONPATH=%buildroot%python3_sitelib
+py.test-3 src/etcd/tests/unit/
 
 # This seems to require a newer python3-mock than what's currently available
 # in F23, and even Rawhide.  If I let it download mock-1.3.0 from the Python
@@ -69,8 +74,12 @@ nosetests-3 src/etcd/tests/unit/
 %doc README.rst
 %doc LICENSE.txt
 %{python3_sitelib}/*
+%exclude %python3_sitelib/*/tests
 
 %changelog
+* Mon Apr 10 2023 Anton Vyatkin <toni@altlinux.org> 0.4.5-alt2
+- Fix BuildRequires
+
 * Fri Oct 07 2022 Ilfat Aminov <aminov@altlinux.org> 0.4.5-alt1
 - initial build for alt sisyphus
 
