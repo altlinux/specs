@@ -1,7 +1,7 @@
 # %%set_findreq_skiplist %%_iconsdir/bloom/actions/24/arrow-{down,left,right,up,empty}.svg
 
 Name: icon-theme-deepin
-Version: 2021.11.24
+Version: 2023.04.03
 Release: alt1
 Summary: Icons for the Deepin Desktop Environment
 License: GPL-3.0-only
@@ -30,7 +30,7 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
 
 %install
 %makeinstall DESTDIR=%buildroot
-cp -a ./Sea ./usr/share/icons/hicolor %buildroot/usr/share/icons/
+cp -a ./Sea ./bloom-fantacy ./usr/share/icons/hicolor %buildroot%_iconsdir/
 
 %files
 %doc LICENSE
@@ -39,11 +39,15 @@ cp -a ./Sea ./usr/share/icons/hicolor %buildroot/usr/share/icons/
 %_iconsdir/bloom-classic-dark/
 %_iconsdir/bloom-classic/
 %_iconsdir/bloom-dark/
+%_iconsdir/bloom-fantacy/
 %_iconsdir/bloom/
 %_iconsdir/Sea/
-%_iconsdir/Vintage/
+%_iconsdir/vintage/
 
 %changelog
+* Mon Apr 10 2023 Leontiy Volodin <lvol@altlinux.org> 2023.04.03-alt1
+- New version 2023.04.03.
+
 * Tue Mar 15 2022 Leontiy Volodin <lvol@altlinux.org> 2021.11.24-alt1
 - New version (2021.11.24).
 - Fixed missing icons (ALT #41363).
