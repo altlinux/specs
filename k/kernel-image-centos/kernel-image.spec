@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 295
+%define centos_release 297
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -66,6 +66,7 @@ Patch0002: 0002-fscache-Convert-fscache_set_page_dirty-to-fscache_di.patch
 Patch0003: 0003-9p-Convert-to-invalidate_folio.patch
 Patch0004: 0004-9p-Convert-from-launder_page-to-launder_folio.patch
 Patch0005: 0005-9p-Convert-to-release_folio.patch
+Patch0006: 0006-Add-sysctl-to-disable-idmapped-mounts.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: x86_64 aarch64
@@ -638,6 +639,39 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Apr 07 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.297-alt1.el9
+- Updated to kernel-5.14.0-297.el9:
+  + CNB: net: rename reference+tracking helpers
+  + Draft: Merge tag 'kernel-5.14.0-284.8.1.el9_2' from 9.2
+  + iavf: fix hang on reboot with ice
+  + igb: conditionalize I2C bit banging on external thermal sensor support
+  + kernel-rt: config: adjust MAX_LOCKDEP_ENTRIES and MAX_LOCKDEP_CHAINS for RT
+  + macsec: rebase to upstream
+  + Merge commit '0d4d2d5d4c69a285d379337fc2e674935573f8a6' into 9.2
+  + Merge tag 'kernel-5.14.0-284.8.1.el9_2' from 9.2
+  + Rebase VFIO and IOMMUFD up to v6.2
+  + [redhat] add symbols to stablelist and enable check-kabi
+  + Reinstate "GFS2: free disk inode which is deleted by remote node -V2"
+  + Updates for PLPKS
+  + vfs: file locking fixes and cleanups for 9.3
+  + x86/tsc: Add option to force frequency recalibration with HW timer
+  + xfs: fix off-by-one-block in xfs_discard_folio()
+
+* Wed Apr 05 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.296-alt1.el9
+- Updated to kernel-5.14.0-296.el9:
+  + Backport net/rxrpc changes from upstream
+  + Draft: Merge tag 'kernel-5.14.0-284.7.1.el9_2' from 9.2
+  + Fixes for rpm changes
+  + fs: backport idmapped mounts fixes
+  + i40e: Fix for VF MAC address 0
+  + Merge commit '0d4d2d5d4c69a285d379337fc2e674935573f8a6'
+  + Merge tag 'kernel-5.14.0-284.7.1.el9_2' from 9.2
+  + net: allow out-of-order netdev unregistration
+  + powerclamp: Enable Low Power Mode (LPM mode) in Meteor Lake
+  + sched deadline updates for 9.3
+  + Updates for hvcs drivers
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Apr 03 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.295-alt1.el9
 - Updated to kernel-5.14.0-295.el9 (fixes: CVE-2022-2196, CVE-2022-42895, CVE-2022-4744):
   + arm64: updates for NXP i.MX93 support
