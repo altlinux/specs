@@ -1,21 +1,28 @@
-%define module_name blinker
+%define oname blinker
 
-Name: python3-module-%module_name
-Version: 1.5
+%def_with check
+
+Name: python3-module-%oname
+Version: 1.6.1
 Release: alt1
 
 Group: Development/Python3
-License: MIT License
+License: MIT
 Summary: Fast, simple object-to-object and broadcast signaling
 URL: https://pypi.org/project/blinker/
+VCS: https://github.com/pallets-eco/blinker
 
-# https://github.com/pallets-eco/blinker
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(wheel)
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-typing_extensions
+BuildRequires: python3-module-pytest-asyncio
+%endif
 
 %description
 Blinker provides a fast dispatching system that allows any number of
@@ -37,10 +44,14 @@ sent by any sender.
 %tox_check_pyproject
 
 %files
-%doc docs/ CHANGES.rst LICENSE.rst README.rst MANIFEST.in
-%python3_sitelibdir/%{module_name}*
+%doc docs *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Apr 10 2023 Anton Vyatkin <toni@altlinux.org> 1.6.1-alt1
+- New version 1.6.1.
+
 * Tue Jan 03 2023 Anton Vyatkin <toni@altlinux.org> 1.5-alt1
 - new version 1.5
 
