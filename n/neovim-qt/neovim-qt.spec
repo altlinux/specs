@@ -1,6 +1,6 @@
 Name: neovim-qt
 Version: 0.2.17
-Release: alt4.git2b4cb87
+Release: alt5.git3ac3d4d
 
 Summary: Neovim client library and GUI, in Qt6.
 
@@ -13,7 +13,7 @@ Source: %name-%version-%release.tar
 BuildRequires(pre): rpm-macros-cmake cmake
 BuildRequires: gcc-c++
 BuildRequires: qt6-base-devel
-BuildRequires: libmsgpack-devel
+BuildRequires: libmsgpack-c-devel
 BuildRequires: nvim
 BuildRequires: qt6-svg-devel
 
@@ -32,7 +32,7 @@ Neovim client library and GUI, in Qt6.
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DNVIM_VERSION_RELEASE=%release \
 	-DUSE_SYSTEM_MSGPACK=ON \
-	-DQT_PACKAGES=Qt6 \
+	-DWITH_QT=Qt6 \
 	#
 %cmake_build
 
@@ -50,6 +50,10 @@ Neovim client library and GUI, in Qt6.
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Mon Apr 10 2023 Vladimir Didenko <cow@altlinux.org> 0.2.17-alt5.git3ac3d4d
+ - New version (git3ac3d4d)
+ - Fix build with msgpack-c 6.0.0
+
 * Mon Jan 9 2023 Vladimir Didenko <cow@altlinux.org> 0.2.17-alt4.git2b4cb87
  - New version (git2b4cb87)
  - Switch to Qt6

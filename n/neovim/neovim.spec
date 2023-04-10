@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.8.3
+Version: 0.9.0
 Release: alt1
 
 Summary: heavily refactored vim fork
@@ -19,7 +19,7 @@ BuildRequires: /proc
 BuildRequires: gcc-c++
 BuildRequires: gperf
 BuildRequires: libjemalloc-devel
-BuildRequires: libmsgpack-devel
+BuildRequires: libmsgpack-c-devel
 BuildRequires: libtermkey-devel
 BuildRequires: libuv-devel
 BuildRequires: libvterm-devel
@@ -92,6 +92,10 @@ install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
 %_datadir/nvim/sysinit.vim
 
 %changelog
+* Mon Apr 10 2023 Vladimir Didenko <cow@altlinux.org> 0.9.0-alt1
+- New version
+- Rebuild with libmsgpack-c
+
 * Mon Feb 6 2023 Vladimir Didenko <cow@altlinux.org> 0.8.3-alt1
 - New version
 
