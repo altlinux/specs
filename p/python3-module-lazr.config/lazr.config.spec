@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname lazr.config
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.2.3
+Version: 3.0
 Release: alt1
 
 Summary: Create configuration schemas, and process and validate configurations
@@ -16,6 +18,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+%if_with check
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-lazr.delegates
+BuildRequires: python3-module-zope.testrunner
+%endif
 
 %description
 The LAZR config system is typically used to manage process configuration.
@@ -31,6 +38,9 @@ on different machines, or under different circumstances.
 %install
 %python3_install
 
+%check
+%tox_check
+
 %files
 %doc *.rst *.txt
 %python3_sitelibdir/lazr
@@ -40,6 +50,9 @@ on different machines, or under different circumstances.
 
 
 %changelog
+* Mon Apr 10 2023 Anton Vyatkin <toni@altlinux.org> 3.0-alt1
+- New version 3.0.
+
 * Wed Mar 22 2023 Anton Vyatkin <toni@altlinux.org> 2.2.3-alt1
 - New version 2.2.3.
 
