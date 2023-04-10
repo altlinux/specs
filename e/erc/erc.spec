@@ -1,5 +1,5 @@
 Name: erc
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -17,6 +17,8 @@ BuildArchitectures: noarch
 
 # who really does all our work
 Requires: patool >= 1.1
+# also we have alternative
+#Requires: p7zip
 
 %description
 Etersoft Universal Archive Tool is the archive manager for any format.
@@ -48,6 +50,11 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Mon Apr 10 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- erc-sh-functions: sync which using
+- ercat: use is_command instead of which
+- erc-sh-functions: improve color functions (don't use tput directly)
+
 * Fri Mar 31 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - use 7z as backend if patool is missed
 - erc: add --use-7z and --use-patool to force using patool or 7z
