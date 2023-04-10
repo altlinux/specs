@@ -1,34 +1,46 @@
 Name: volk
 Version: 3.0.0
-Release: alt1
+Release: alt2
+
 Summary: Vector-Optimized Library of Kernels
 License: LGPLv3+
 Group: Development/C++
+
 Url: http://libvolk.org/
-
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source1: cpu_features.tar
+Patch2000: %name-e2k.patch
 
-%description
-VOLK:
-- is the Vector-Optimized Library of Kernels;
-- is a free library, currently offered under the GPLv3 license;
-- provides an abstraction of optimized math routines targetting several SIMD processors.
-
-%package -n lib%name
-Group: Development/C++
-Summary: Vector-Optimized Library of Kernels
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
 BuildRequires: liborc-devel orc
 BuildRequires: boost-filesystem-devel
 BuildRequires: git-core
 
+# python subpackage
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-six
+BuildRequires: python3-module-mako
+
+%define descr \
+VOLK:\
+- is the Vector-Optimized Library of Kernels;\
+- is a free library, currently offered under the GPLv3 license;\
+- provides an abstraction of optimized math routines targetting\
+  several SIMD processors.
+
+%description
+%descr
+
+%package -n lib%name
+Group: Development/C++
+Summary: Vector-Optimized Library of Kernels
+
 %description -n lib%name
-VOLK:
-- is the Vector-Optimized Library of Kernels;
-- is a free library, currently offered under the GPLv3 license;
-- provides an abstraction of optimized math routines targetting several SIMD processors.
+%descr
+
+This package contains the shared library for %name.
 
 %package -n lib%name-devel
 Summary: Vector-Optimized Library of Kernels
@@ -36,25 +48,27 @@ Group: Development/C++
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
-VOLK:
-- is the Vector-Optimized Library of Kernels;
-- is a free library, currently offered under the GPLv3 license;
-- provides an abstraction of optimized math routines targetting several SIMD processors.
+%descr
+
+This package contains the headers to build software against %name.
 
 %package -n python3-module-%name
 Summary: The Python 3 bindings for VOLK
 Group: Development/Python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-six
-BuildRequires: python3-module-mako
 Requires: lib%name = %version
 
 %description -n python3-module-%name
-Python 3 module for VOLK.
+%descr
+
+This package contains Python 3 module for VOLK.
 
 %prep
 %setup -a 1
+%ifarch %e2k
+sed -i "/incompatible-pointer-types/d" CMakeLists.txt
+%patch2000 -p1
+%add_optflags -mno-sse4.2
+%endif
 
 %build
 %cmake \
@@ -88,6 +102,10 @@ rm -fr %buildroot%_libdir/cmake/CpuFeatures
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 10 2023 Michael Shigorin <mike@altlinux.org> 3.0.0-alt2
+- E2K: fix build (ilyakurdyukov@)
+- spec cleanup
+
 * Fri Feb 24 2023 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
 - new version 3.0.0
 - Update License (GPLv3 -> LGPLv3+)
