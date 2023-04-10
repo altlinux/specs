@@ -1,5 +1,5 @@
 Name: eget
-Version: 6.0
+Version: 6.1
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,16 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Mon Apr 10 2023 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt1
+- eget: improve is_url checking
+- eget: disable checking for globbing symbol ? in URL
+- eget: fix URL concatenation
+- eget: add -4/-6 support (force use IPv4/6)
+- eget: comment out set_quiet for --check
+- eget: add support for single quote
+- eget: update which workaround
+- eget: update tty functions
+
 * Thu Mar 30 2023 Vitaly Lipatov <lav@altlinux.ru> 6.0-alt1
 - eget: add --second-latest support
 - eget: add support -O when wildcards are used
