@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Cheese
@@ -170,6 +170,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Mon Apr 10 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Tue Dec 13 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 
