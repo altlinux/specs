@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: Makes working with XML feel like you are working with JSON
 
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-python3
 BuildArch: noarch
 
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-nose python3-module-coverage
+BuildRequires: python3-module-coverage
 BuildRequires: python3-module-pytest
 
 %py3_provides %oname
@@ -47,6 +47,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 10 2023 Anton Vyatkin <toni@altlinux.org> 0.13.0-alt2
+- Fix BuildRequires
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 0.13.0-alt1
 - new version 0.13.0 (with rpmrb script)
 
