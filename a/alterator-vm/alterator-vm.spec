@@ -1,6 +1,6 @@
 Name: alterator-vm
 Version: 0.4.32
-Release: alt1
+Release: alt2
 
 Summary: Alterator module for volume management
 License: GPL
@@ -37,6 +37,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Thu Apr 06 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.32-alt2
+- evms: ext2 plugin was renamed
+
 * Wed Apr 05 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.32-alt1
 - warn if /boot/efi is on RAID
 

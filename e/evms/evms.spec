@@ -5,7 +5,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt64
+Release: alt65
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -174,6 +174,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Thu Apr 06 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt65
+- ext2 plugin: rename to Ext4
+
 * Tue Mar 07 2023 Slava Aseev <ptrnine@altlinux.org> 2.5.5-alt64
 - Introduce IMSM support
 
