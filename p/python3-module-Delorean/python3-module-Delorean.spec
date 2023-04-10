@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Delorean: Time Travel Made Easy
 License: MIT
@@ -21,12 +21,12 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 %if_with check
-BuildRequires: python3(nose)
 BuildRequires: python3(mock)
 BuildRequires: python3(babel)
 BuildRequires: python3(humanize)
 BuildRequires: python3(tzlocal)
 BuildRequires: python3(tzdata)
+BuildRequires: python3(pytz)
 %endif
 
 BuildArch: noarch
@@ -55,7 +55,7 @@ Pretty much make you a badass time traveller.
 %pyproject_install
 
 %check
-%_bindir/nosetests3 -v
+%pyproject_run_unittest tests/delorean_tests.py
 
 %files
 %doc README.rst LICENSE.txt CHANGES.rst
@@ -63,5 +63,8 @@ Pretty much make you a badass time traveller.
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Mon Apr 10 2023 Anton Vyatkin <toni@altlinux.org> 1.0.0-alt2
+- Fix BuildRequires
+
 * Sat Dec 10 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt1
 - initial build for Sisyphus
