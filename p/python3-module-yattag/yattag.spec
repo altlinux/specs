@@ -3,7 +3,7 @@
 
 Name:    python3-module-%pkgname
 Version: 1.14.0
-Release: alt1
+Release: alt2
 Summary: Generate HTML or XML in a concise and pythonic way
 Group:   Development/Python3
 
@@ -16,7 +16,6 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
-BuildRequires: python3(nose)
 
 %description
 Why use a template engine when you can generate HTML or XML documents
@@ -32,12 +31,15 @@ with Python in a very readable way?
 %pyproject_install
 
 %check
-nosetests3
+%pyproject_run_unittest discover -v test
 
 %files
 %python3_sitelibdir/%pkgname/
 %python3_sitelibdir/%{pyproject_distinfo %pkgname}
 
 %changelog
+* Tue Apr 11 2023 Anton Vyatkin <toni@altlinux.org> 1.14.0-alt2
+- Fix BuildRequires
+
 * Tue Dec 27 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.14.0-alt1
 - Initial build
