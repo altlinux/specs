@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.26.14
-Release: alt1
+Release: alt2
 
 Epoch: 2
 
@@ -24,7 +24,6 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-six
 BuildRequires: python3-module-mock
-BuildRequires: python3-module-nose
 #Requires: python3-module-ndg-httpsclient
 Requires: python3-module-six ca-certificates
 %if_with docs
@@ -115,6 +114,9 @@ py.test-3
 %endif
 
 %changelog
+* Tue Apr 11 2023 Anton Vyatkin <toni@altlinux.org> 2:1.26.14-alt2
+- Fix BuildRequires
+
 * Thu Jan 12 2023 Vladimir Didenko <cow@altlinux.org> 2:1.26.14-alt1
 - 1.26.6 -> 1.26.14 (fixes compatibility with cryptography >= 39)
 
