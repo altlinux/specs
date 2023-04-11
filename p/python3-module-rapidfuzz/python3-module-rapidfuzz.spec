@@ -1,9 +1,9 @@
 %define pypi_name rapidfuzz
 
-%def_disable check
+%def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.13.3
+Version: 2.15.1
 Release: alt1
 
 Summary: Fast string Python 3 matching library for Python and C++
@@ -12,12 +12,13 @@ License: MIT
 Url: http://pypi.python.org/pypi/%pypi_name
 
 Vcs: https://github.com/maxbachmann/RapidFuzz.git
-Source: http://pypi.io/packages/source/r/%pypi_name/%pypi_name-%version.tar.gz
+Source: https://pypi.io/packages/source/r/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-wheel
 BuildRequires: python3-module-setuptools python3(skbuild)
-%{?_enable_check:BuildRequires: python3-module-pytest}
+%{?_enable_check:BuildRequires: /proc python3(pytest) python3(mypy) python3(pylint)
+BuildRequires: python3(hypothesis)}
 
 %add_python3_req_skip PyInstaller
 
@@ -36,7 +37,7 @@ using the string similarity calculations from FuzzyWuzzy.
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test3
 
 %files
@@ -46,6 +47,9 @@ py.test3
 
 
 %changelog
+* Tue Apr 11 2023 Yuri N. Sedunov <aris@altlinux.org> 2.15.1-alt1
+- 2.15.1
+
 * Sun Dec 04 2022 Yuri N. Sedunov <aris@altlinux.org> 2.13.3-alt1
 - 2.13.3
 
