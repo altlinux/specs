@@ -2,7 +2,7 @@
 
 Name: mate-utils
 Version: 1.26.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE utility programs
 License: GPLv3+
@@ -185,6 +185,9 @@ rm -fr gsearchtool/help/pt
 %_desktopdir/mate-disk-image-mounter.desktop
 
 %changelog
+* Tue Apr 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
+- updated translation
+
 * Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
 - 1.26.0
 
