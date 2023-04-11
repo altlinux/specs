@@ -1,6 +1,14 @@
 Name: procps
 Version: 3.3.17
-Release: alt6.g37f1060
+Release: alt7.g37f1060
+
+%def_disable bootstrap
+%if_enabled bootstrap
+%force_without systemd
+%force_disable check
+%else
+%def_with systemd
+%endif
 
 Summary: System and process monitoring utilities
 License: GPLv2+ and LGPLv2+
@@ -20,7 +28,9 @@ Requires: lib%name = %version-%release
 Requires: coreutils >= 0:5.2.1-alt2
 
 BuildRequires: libncursesw-devel
+%if_with systemd
 BuildRequires: libsystemd-devel
+%endif
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu}}
 
 %define _unpackaged_files_terminate_build 1
@@ -67,7 +77,7 @@ echo -n %version-%release > .tarball-version
 	--disable-pidof \
 	--disable-nls \
 	--disable-modern-top \
-	--with-systemd \
+	%{subst_with systemd} \
 	#
 %make_build
 
@@ -111,6 +121,12 @@ make check
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 07 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.3.17-alt7.g37f1060
+- spec: added knobs to make the bootstrap easier:
+  + --with=systemd (default on): build with/without systemd.
+  + --enable=bootstrap (default false): disable systemd and tests.
+  Closes: #45779
+
 * Wed Feb 08 2023 Mikhail Efremov <sem@altlinux.org> 3.3.17-alt6.g37f1060
 - sysctl: Fixed maybe-uninitialized warning.
 - sysctl: Dropped unused variables and functions.
