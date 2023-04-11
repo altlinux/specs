@@ -3,7 +3,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 3005.1
-Release: alt3
+Release: alt4
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -27,7 +27,7 @@ Patch3: salt-3005.1-version.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
-BuildRequires: python3-module-nose libzeromq-devel
+BuildRequires: libzeromq-devel
 BuildRequires: python3-module-msgpack python3-module-yaml
 BuildRequires: python3-module-distro
 BuildRequires: python3-module-wheel
@@ -256,6 +256,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Tue Apr 11 2023 Anton Vyatkin <toni@altlinux.org> 3005.1-alt4
+- Fix BuildRequires
+
 * Sat Jan 21 2023 Andrey Cherepanov <cas@altlinux.org> 3005.1-alt3
 - Fixed salt-3005.1-version.patch applying.
 
