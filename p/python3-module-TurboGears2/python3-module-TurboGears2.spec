@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.3
-Release: alt1
+Release: alt2
 
 Summary: Back-to-front web development in Python
 
@@ -17,6 +17,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools rpm-build-python3 time
 
 Source: %name-%version.tar
+
+# not need for python3
+%add_python3_req_skip tgming.auth
 
 %description
 TurboGears brings together four major pieces to create an
@@ -65,6 +68,9 @@ This package contains tests for TurboGears.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 11 2023 Anton Vyatkin <toni@altlinux.org> 2.4.3-alt2
+- Fix requirement
+
 * Mon Nov 29 2021 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1
 - 2.4.3
 
