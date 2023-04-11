@@ -3,7 +3,7 @@
 
 Name: mate-file-archiver
 Version: 1.26.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE Desktop file archiver
 License: GPLv2+ and LGPLv2+
@@ -69,6 +69,9 @@ Mate-file-manager extension for mount archiver
 %_datadir/caja/extensions/libcaja-engrampa.caja-extension
 
 %changelog
+* Tue Apr 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
+- updated translation (closes: #43510)
+
 * Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
 - 1.26.0
 
