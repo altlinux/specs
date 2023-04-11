@@ -7,23 +7,22 @@
 
 Name: libsuitesparse
 Version: 5.10.1
-Release: alt1
+Release: alt2
 
 Summary: Shared libraries for sparse matrix calculations
 License: LGPL and GPL
 Group: Sciences/Mathematics
+
 Url: http://faculty.cse.tamu.edu/davis/suitesparse.html
 
 # https://github.com/DrTimothyAldenDavis/SuiteSparse.git
-Source: %name-%version.tar
+Source0: %name-%version.tar
 
 Source1: cholmod.pc
 Source2: umfpack.pc
 
 Patch1: %name-alt-rename-build-directory.patch
 Patch2: %name-alt-link-with-libatomic-on-mipsel.patch
-
-Patch2000: %name-e2k.patch
 
 BuildRequires: libmetis-devel gcc-c++ libtbb-devel
 BuildRequires: libblas-devel
@@ -90,11 +89,13 @@ mongoose <MM-input-file.mtx> [output-file]
 
 %prep
 %setup
-install -m644 %SOURCE1 %SOURCE2 .
+install -p -m644 %SOURCE1 %SOURCE2 .
 %patch1 -p1
 %patch2 -p1
 %ifarch %e2k
-%patch2000 -p1
+# -fopenmp must also be set when linking
+sed -i '/CF += $(CFOPENMP)/a LDFLAGS += $(CFOPENMP)' \
+    SuiteSparse_config/SuiteSparse_config.mk
 %endif
 
 # Copy examples src
@@ -113,7 +114,10 @@ pushd GraphBLAS
 %cmake -DCMAKE_INSTALL_LIBDIR=%_libdir -DCMAKE_INSTALL_INCLUDEDIR=%_includedir
 popd
 pushd Mongoose
-%cmake -DCMAKE_INSTALL_BINDIR=%_bindir -DCMAKE_INSTALL_LIBDIR=%_libdir -DCMAKE_INSTALL_INCLUDEDIR=%_includedir
+%cmake \
+	-DCMAKE_INSTALL_BINDIR=%_bindir \
+	-DCMAKE_INSTALL_LIBDIR=%_libdir \
+	-DCMAKE_INSTALL_INCLUDEDIR=%_includedir
 popd
 pushd metis-5.1.0
 export GKLIB_PATH=$(pwd)/GKlib
@@ -123,14 +127,21 @@ popd
 export JOBS=%__nprocs
 %make -C SuiteSparse_config MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
 %make -C CCOLAMD MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
-%make TOPDIR=$PWD LD_LIBRARY_PATH=%_builddir/%name-%version/lib MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
+%make TOPDIR=$PWD LD_LIBRARY_PATH=%_builddir/%name-%version/lib \
+	MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
 %make docs MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
 
 %install
 install -d %buildroot%_libdir
 install -d %buildroot%_includedir/suitesparse
 
-%makeinstall_std MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis INSTALL=%buildroot%_exec_prefix INSTALL_LIB=%buildroot%_libdir INSTALL_DOC=%buildroot%_docdir/%name-%version INSTALL_INCLUDE=%buildroot%_includedir/suitesparse
+%makeinstall_std \
+	MY_METIS_LIB=-lmetis \
+	MY_METIS_INC=%_includedir/metis \
+	INSTALL=%buildroot%_exec_prefix \
+	INSTALL_LIB=%buildroot%_libdir \
+	INSTALL_DOC=%buildroot%_docdir/%name-%version \
+	INSTALL_INCLUDE=%buildroot%_includedir/suitesparse
 
 # Remove unnecessary static libraries
 rm -f %buildroot%_libdir/*.a
@@ -138,7 +149,7 @@ rm -f %buildroot%_libdir/*.a
 install -p -m644 CXSparse/Include/cs.h \
 	%buildroot%_includedir/suitesparse/cx_cs.h
 install -d %buildroot%_pkgconfigdir
-install -m644 *.pc %buildroot%_pkgconfigdir
+install -p -m644 *.pc %buildroot%_pkgconfigdir
 
 pushd demos-src/
 for i in $(find ./ -name Demo); do
@@ -170,7 +181,7 @@ do
 	install -p -m644 $i/Doc/*.pdf %buildroot%_docdir/%name-%version/pdf
 done
 
-mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf/
+mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf
 
 %files
 %_libdir/*.so.*
@@ -190,6 +201,11 @@ mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf
 %_bindir/mongoose
 
 %changelog
+* Tue Apr 11 2023 Michael Shigorin <mike@altlinux.org> 5.10.1-alt2
+- Dropped patch for Elbrus (unneeded with lcc 1.26);
+  fixed linking against openmp (ilyakurdyukov@).
+- Minor spec cleanup.
+
 * Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.1-alt1
 - Updated to upstream version 5.10.1.
 
