@@ -2,7 +2,7 @@
 
 Name: mate-screensaver
 Version: 1.26.1
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: MATE Screensaver
 License: GPLv2+ and LGPLv2+
@@ -85,6 +85,9 @@ install -m644 -pD doc/mate-screensaver.html %buildroot%_datadir/doc/mate-screens
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Apr 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:1.26.1-alt2
+- set default background to design/current/backgrounds/default.png (closes: #45817)
+
 * Sat Dec 18 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.26.1-alt1
 - 1.26.1
 
