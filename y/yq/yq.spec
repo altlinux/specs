@@ -3,7 +3,7 @@
 %def_enable check
 
 Name:    yq
-Version: 3.1.1
+Version: 3.2.1
 Release: alt1
 
 Summary: Command-line YAML, XML and TOML processor
@@ -19,7 +19,7 @@ BuildRequires: python3(pip) python3(setuptools_scm)
 %if_enabled check
 BuildRequires: jq
 BuildRequires: python3-module-xmltodict >= 0.11.0
-BuildRequires: python3-module-toml >= 0.10.0
+BuildRequires: python3-module-tomlkit >= 0.11.6
 BuildRequires: python3(argcomplete)
 BuildRequires: python3(yaml)
 BuildRequires: /proc
@@ -31,7 +31,7 @@ Source:  %name-%version.tar
 
 Requires: jq
 Requires: python3-module-xmltodict >= 0.11.0
-Requires: python3-module-toml >= 0.10.0
+Requires: python3-module-tomlkit >= 0.11.6
 
 %description
 yq is a command-line YAML, XML and TOML processor.
@@ -58,6 +58,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Apr 10 2023 Ivan A. Melnikov <iv@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Wed Feb 22 2023 Ivan A. Melnikov <iv@altlinux.org> 3.1.1-alt1
 - 3.1.1
 
