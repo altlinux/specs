@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.23
+Version: 0.2.24
 Release: alt1
 
 Summary: Group policy editor
@@ -26,6 +26,7 @@ BuildRequires: libuuid-devel
 BuildRequires: glib2-devel
 BuildRequires: libpcre-devel
 BuildRequires: libkrb5-devel
+BuildRequires: libgtest-devel
 
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
@@ -111,6 +112,12 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Tue Apr 11 2023 Vladimir Rubanov <august@altlinux.org> 0.2.24-alt1
+- 0.2.24-alt1
+- Fixes:
+  + Fix laguage loading in plugins.
+  + Fix tests.
+
 * Wed Apr 05 2023 Vladimir Rubanov <august@altlinux.org> 0.2.23-alt1
 - 0.2.23-alt1
 - Fixes:
