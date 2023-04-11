@@ -4,12 +4,14 @@
 
 Name: python3-module-%modname
 Version: 3.10.0
-Release: alt1
+Release: alt2
 Summary: Turns CSS blocks into style attributes
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://github.com/peterbe/premailer
+
 Source: %name-%version.tar
+Patch: %modname-%version-alt-nose-fix.patch
 
 BuildArch: noarch
 
@@ -22,9 +24,9 @@ BuildRequires: python3(cachetools)
 BuildRequires: python3(cssutils)
 BuildRequires: python3(cssselect)
 BuildRequires: python3(lxml)
-BuildRequires: python3(nose)
-BuildRequires: python3(mock)
 BuildRequires: python3(requests)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-cov)
 %endif
 
 %description
@@ -34,6 +36,7 @@ the DOM nodes and puts style attributes in instead.
 
 %prep
 %setup
+%patch -p0
 
 %build
 %pyproject_build
@@ -42,13 +45,16 @@ the DOM nodes and puts style attributes in instead.
 %pyproject_install
 
 %check
-%pyproject_run nosetests
+%tox_check_pyproject
 
 %files
 %python3_sitelibdir/%modname
 %python3_sitelibdir/%{pyproject_distinfo %modname}
 
 %changelog
+* Tue Apr 11 2023 Anton Vyatkin <toni@altlinux.org> 3.10.0-alt2
+- Fix BuildRequires
+
 * Wed Jan 25 2023 Alexander Makeenkov <amakeenk@altlinux.org> 3.10.0-alt1
 - Updated to version 3.10.0
 - Use pyproject macroses for build
