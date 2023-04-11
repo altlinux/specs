@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 525
-%define nv_release 89
-%define nv_minor 02
-%define pkg_rel alt261
+%define nv_release 105
+%define nv_minor 17
+%define pkg_rel alt262
 %define set_gl_nvidia_ver 1.6.1
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -344,6 +344,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Tue Apr 11 2023 Sergey V Turchin <zerg@altlinux.org> 525.105.17-alt262
+- new version
+
 * Fri Feb 10 2023 Sergey V Turchin <zerg@altlinux.org> 525.89.02-alt261
 - new version
 

@@ -17,7 +17,7 @@
 %endif
 
 Name: nvidia_glx_libs
-Version: 525.89.02
+Version: 525.105.17
 Release: alt1
 
 ExclusiveArch: %ix86 x86_64 aarch64
@@ -71,6 +71,14 @@ Obsoletes: libnvidia-cuda < %EVR
 %description -n libcuda
 nvidia CUDA library
 
+%package -n libcudadebugger
+Group: System/Libraries
+Summary: nvidia library
+Provides: libnvidia-cuda = %EVR
+Obsoletes: libnvidia-cuda < %EVR
+%description -n libcudadebugger
+nvidia CUDA debugger library
+
 %package -n libnvidia-opencl
 Group: System/Libraries
 Summary: nvidia library
@@ -104,6 +112,13 @@ Summary: nvidia library
 %description -n libnvidia-ngx
 nvidia library
 
+%package -n nvidia-smi
+Group: System/Libraries
+Summary: NVIDIA System Management Interface program
+%description -n nvidia-smi
+nvidia-smi (also NVSMI) provides monitoring and management capabilities for each of
+NVIDIA's Tesla, Quadro, GRID and GeForce devices from Fermi and higher architecture families.
+
 %prep
 %setup -T -c -n %tbname-%version%dirsuffix
 rm -rf %_builddir/%tbname-%version%dirsuffix
@@ -133,47 +148,57 @@ install -m 0644 %subd/libnvidia-encode.so.%version %buildroot/%_libdir/
 %if "%_lib" != "lib"
 install -m 0644 %subd/libnvoptix.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ngx.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libcudadebugger.so.%version %buildroot/%_libdir/
+# install programs
+mkdir -p %buildroot/%_bindir/
+install -m 0755 nvidia-smi %buildroot/%_bindir/
+mkdir -p %buildroot/%_man1dir/
+install -m 0644 nvidia-smi.1.gz %buildroot/%_man1dir/
 %endif
 mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
 install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 
 %files -n ocl-nvidia
-
 %files -n libnvidia-ptxjitcompiler
 %_libdir/libnvidia-ptxjitcompiler.so.%version
 %_libdir/libnvidia-ptxjitcompiler.so.%{nvidia_sover}
-
 %files -n libnvidia-ml
 %_libdir/libnvidia-ml.so.%version
 %_libdir/libnvidia-ml.so.%{nvidia_sover}
-
 %files -n libcuda
 %_libdir/libcuda.so.%{nvidia_sover}
 %_libdir/libcuda.so.%version
-
 %files -n libnvidia-opencl
 %_libdir/libnvidia-opencl.so.%{nvidia_sover}
 %_libdir/libnvidia-opencl.so.%version
 %_sysconfdir/OpenCL/vendors/nvidia.icd
-
 %files -n libnvcuvid
 %_libdir/libnvcuvid.so.%{nvidia_sover}
 %_libdir/libnvcuvid.so.%version
-
 %files -n libnvidia-encode
 %_libdir/libnvidia-encode.so.%{nvidia_sover}
 %_libdir/libnvidia-encode.so.%version
-
 %if "%_lib" != "lib"
+%files -n nvidia-smi
+%_bindir/nvidia-smi
+%_man1dir/nvidia-smi.1.*
 %files -n libnvidia-ngx
 %_libdir/libnvidia-ngx.so.%{nvidia_sover}
 %_libdir/libnvidia-ngx.so.%version
 %files -n libnvoptix
 %_libdir/libnvoptix.so.%{nvidia_sover}
 %_libdir/libnvoptix.so.%version
+%files -n libcudadebugger
+%_libdir/libcudadebugger.so.%{nvidia_sover}
+%_libdir/libcudadebugger.so.%version
 %endif
 
 %changelog
+* Tue Apr 11 2023 Sergey V Turchin <zerg@altlinux.org> 525.105.17-alt1
+- new version
+- package libcudadebugger
+- package nvidia-smi
+
 * Fri Feb 10 2023 Sergey V Turchin <zerg@altlinux.org> 525.89.02-alt1
 - new version
 
