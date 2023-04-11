@@ -1,8 +1,8 @@
 %define rname kiconthemes
 
 Name: kf5-%rname
-Version: 5.104.0
-Release: alt2
+Version: 5.105.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -11,7 +11,6 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later or LGPL-2.0-or-later
 
 Source: %rname-%version.tar
-Patch1: alt-ftbfs.patch
 
 # Automatically added by buildreq on Thu Feb 12 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base qt5-base-devel ruby ruby-stdlibs
@@ -52,7 +51,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
@@ -81,6 +79,9 @@ KF5 library
 %_K5plug/iconengines/KIconEnginePlugin.so
 
 %changelog
+* Mon Apr 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.105.0-alt1
+- new version
+
 * Mon Mar 20 2023 Sergey V Turchin <zerg@altlinux.org> 5.104.0-alt2
 - fix kiconloader.h
 

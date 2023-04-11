@@ -1,7 +1,7 @@
 %define rname kcontacts
 
 Name: kf5-%rname
-Version: 5.104.0
+Version: 5.105.0
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -78,6 +78,9 @@ mkdir -p %buildroot/%_K5data/kcontacts/
 %_K5lib/libKF5Contacts.so.*
 
 %changelog
+* Mon Apr 10 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.105.0-alt1
+- new version
+
 * Tue Mar 14 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.104.0-alt1
 - new version
 

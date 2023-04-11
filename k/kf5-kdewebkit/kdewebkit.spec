@@ -1,7 +1,7 @@
 %define rname kdewebkit
 
 Name: kf5-%rname
-Version: 5.104.0
+Version: 5.105.0
 Release: alt1
 %K5init altplace
 
@@ -10,14 +10,12 @@ Summary: KDE Frameworks 5 integration of the HTML rendering engine WebKit
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-ExclusiveArch: %e2k ppc64le
-
 Source: %rname-%version.tar
 
 # Automatically added by buildreq on Wed Feb 18 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libgst-plugins1.0 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel python-module-google qt5-webkit-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: extra-cmake-modules gcc-c++ qt5-webkit-devel qt5-tools-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel
@@ -67,21 +65,33 @@ KF5 library
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
+%ifarch %qt5_qtwebengine_arches
+rm -rf %buildroot/%_K5plug/designer/* ||:
+rm -rf %buildroot/%_K5inc/* ||:
+rm -rf %buildroot/%_K5link/* ||:
+rm -rf %buildroot/%_K5lib/cmake/* ||:
+rm -rf %buildroot/%_K5archdata/mkspecs/modules/* ||:
+%endif
+
 %files common -f %name.lang
 %doc COPYING.* README.md
 
 %files devel
+%ifarch %not_qt5_qtwebengine_arches
 %_K5plug/designer/*.so
-#%_K5inc/kdewebkit_version.h
 %_K5inc/KDEWebKit/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5WebKit
 %_K5archdata/mkspecs/modules/qt_KDEWebKit.pri
+%endif
 
 %files -n libkf5webkit
 %_K5lib/libKF5WebKit.so.*
 
 %changelog
+* Mon Apr 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.105.0-alt1
+- new version
+
 * Tue Mar 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.104.0-alt1
 - new version
 
@@ -226,67 +236,67 @@ KF5 library
 * Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
 - new version
 
-* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
+* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1
 - new version
 
-* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1
 - new version
 
-* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
+* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1
 - new version
 
-* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
+* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1
 - new version
 
-* Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt
+* Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1
 - new version
 
-* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1%ubt
+* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1
 - new version
 
-* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
+* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1
 - new version
 
-* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1
 - new version
 
-* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1%ubt
+* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1
 - new version
 
-* Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1%ubt
+* Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1
 - new version
 
-* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.39.0-alt1%ubt
+* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.39.0-alt1
 - new version
 
-* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1%ubt
+* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1
 - new version
 
-* Wed Aug 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt1%ubt
+* Wed Aug 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt1
 - new version
 
-* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.36.0-alt1%ubt
+* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.36.0-alt1
 - new version
 
-* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1%ubt
+* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1
 - new version
 
-* Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt1%ubt
+* Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt1
 - new version
 
-* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.33.0-alt1%ubt
+* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.33.0-alt1
 - new version
 
-* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.32.0-alt1%ubt
+* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.32.0-alt1
 - new version
 
-* Mon Feb 13 2017 Sergey V Turchin <zerg@altlinux.org> 5.31.0-alt1%ubt
+* Mon Feb 13 2017 Sergey V Turchin <zerg@altlinux.org> 5.31.0-alt1
 - new version
 
-* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1
 - new version
 
-* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1
 - new version
 
 * Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1

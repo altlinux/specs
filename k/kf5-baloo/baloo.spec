@@ -5,7 +5,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.104.0
+Version: 5.105.0
 Release: alt1
 %K5init altplace
 
@@ -124,6 +124,9 @@ done
 %_K5lib/libKF5BalooEngine.so.*
 
 %changelog
+* Mon Apr 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.105.0-alt1
+- new version
+
 * Tue Mar 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.104.0-alt1
 - new version
 
