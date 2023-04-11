@@ -2,9 +2,8 @@
 %define Brand ALT
 %define theme spserver
 %define Theme SP Server
-%define codename cliff
 %define LKNV 11100-01
-%define BRANCH $(rpm --eval %_priority_distbranch)
+%define altbranch %_priority_distbranch
 %define status %nil
 %define status_en %nil
 %define flavour %brand-%theme
@@ -19,8 +18,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.2
+Version: 10
 Release: alt1
+Epoch: 1
 Url: https://altsp.su
 
 BuildRequires(pre): rpm-macros-branding
@@ -205,7 +205,7 @@ Requires(post): indexhtml-common
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' LKNV='%LKNV' BRANCH=%BRANCH ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' LKNV='%LKNV' BRANCH='%altbranch' ./configure
 make
 
 %install
@@ -263,7 +263,7 @@ fi
 %files notes
 %dir %data_cur_dir
 %data_cur_dir/alt-notes
-%_datadir/alt-notes/livecd-*
+%exclude %_datadir/alt-notes/livecd-*
 %_datadir/alt-notes/release-notes.*
 %ghost %config(noreplace) %_datadir/alt-notes/license.*.html
 
@@ -282,6 +282,15 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Sun Apr 09 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt1
+- set version 10, Epoch 1
+- remove codename, add LKNV in altlinux-release
+- notes: change product name to english name in release-notes.all.html
+- notes: add word 'version' in release-notes
+- notes: exclude alt-notes/livecd-*
+- os-release: add BUILD_ID
+- os-release: add ALT_BRANCH_ID
+
 * Tue Mar 14 2023 Anton Midyukov <antohami@altlinux.org> 10.2-alt1
 - notes: update license
 
