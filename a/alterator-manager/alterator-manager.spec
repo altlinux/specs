@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.1
-Release: alt2
+Version: 0.1.2
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -48,6 +48,11 @@ mkdir -p %buildroot%_datadir/alterator/backends
 %_includedir/alterator
 
 %changelog
+* Tue Apr 11 2023 Ivan Savin <svn17@altlinux.org> 0.1.2-alt1
+- Add the get_signals method to the ru.basealt.alterator.manager interface that
+  returns a list of signal names (stdout/stderr). The arguments to this method
+  are the interface name and the method name.
+
 * Tue Apr 04 2023 Ivan Savin <svn17@altlinux.org> 0.1.1-alt2
 - Add readme file (RU).
 
