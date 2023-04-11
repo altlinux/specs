@@ -2,7 +2,7 @@
 
 Name:     imagescan
 Version:  3.65.0
-Release:  alt3
+Release:  alt4
 
 Summary:  EPSON Image Scan v3 front-end for scanners and all-in-ones
 License:  GPL-3.0+
@@ -84,6 +84,7 @@ sed -ie "s|v = \\(utsushi::value (.*)\\);|v = sane::value (\\1);|" sane/handle.c
     --without-boost-unit-test-framework \
     --enable-sane-config \
     --enable-udev-config \
+    --with-udev-confdir=/lib/udev \
     --with-boost-libdir=%_libdir \
     --without-included-ltdl \
     --with-gtkmm \
@@ -130,7 +131,7 @@ chmod +x %buildroot%_bindir/imagescan
 %exclude %_libexecdir/utsushi/utsushi-scan-gtkmm
 %_bindir/*
 %_sysconfdir/sane.d/dll.d/utsushi
-%_sysconfdir/udev/rules.d/utsushi-esci.rules
+%config %attr (644,root,root) %_udevrulesdir/*.rules
 %_libdir/utsushi/sane
 %_libdir/utsushi/libutsushi.so*
 %_libdir/utsushi/libflt-all.so*
@@ -140,6 +141,9 @@ chmod +x %buildroot%_bindir/imagescan
 %_datadir/utsushi/drivers
 
 %changelog
+* Tue Apr 11 2023 Andrey Cherepanov <cas@altlinux.org> 3.65.0-alt4
+- FTBFS: use correct directory for udev rules.
+
 * Sun Dec 25 2022 Andrey Cherepanov <cas@altlinux.org> 3.65.0-alt3
 - FTBFS: fixed build with new version of sane package.
 
