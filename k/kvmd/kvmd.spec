@@ -1,12 +1,13 @@
 Name: kvmd
-Version: 3.191
-Release: alt3
+Version: 3.211
+Release: alt1
 
 Summary: The PiKVM daemon
 License: GPLv3
 Group: System/Servers
 Url: https://pikvm.org/
 
+Requires: libxkbcommon
 Requires: kvmd-janus
 Requires: ustreamer
 Requires: ustreamer-plugin-janus
@@ -52,8 +53,7 @@ cp -at %buildroot%_sysconfdir configs/kvmd
 cp -at %buildroot%_sysconfdir/kvmd configs/janus configs/nginx
 mkdir -p %buildroot%_sysconfdir/kvmd/override.d
 mkdir -p %buildroot%_sysconfdir/kvmd/vnc/ssl
-ln -srv %buildroot%_sysconfdir/kvmd/main/v4mini-hdmi-rpi4.yaml \
-	%buildroot%_sysconfdir/kvmd/main.yaml
+touch %buildroot%_sysconfdir/kvmd/main.yaml
 
 mkdir -p %buildroot%_datadir/kvmd
 cp -at %buildroot%_datadir/kvmd extras hid contrib/keymaps web
@@ -74,6 +74,7 @@ rm -v %buildroot%_unitdir/kvmd-certbot.service
 %_sysconfdir/sudoers.d/kvmd
 
 %_sysconfdir/kvmd
+%ghost %config(noreplace) %attr(0640,root,kvmd) %_sysconfdir/kvmd/main.yaml
 
 %_bindir/kvmd*
 
@@ -83,6 +84,9 @@ rm -v %buildroot%_unitdir/kvmd-certbot.service
 %python3_sitelibdir/kvmd-%version.dist-info
 
 %changelog
+* Tue Apr 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.211-alt1
+- 3.211 released
+
 * Fri Jan 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.191-alt3
 - fixed janus js location
 
