@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.7.3
-Release: alt1
+Release: alt2
 Summary: The Jupyter Notebook format
 License: BSD-3-Clause
 Group: Development/Python3
@@ -21,7 +21,7 @@ BuildRequires: python3-module-hatchling
 BuildRequires: python3-dev
 BuildRequires: python3-module-pytest python3(testpath)
 BuildRequires: python3-module-jsonschema python3-module-jupyter_core
-BuildRequires: python3-module-nose python3-modules-sqlite3
+BuildRequires: python3-modules-sqlite3
 BuildRequires: python3(fastjsonschema)
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
@@ -65,6 +65,9 @@ sed -i "s/{VERSION}/%{version}/" pyproject.toml
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 11 2023 Anton Vyatkin <toni@altlinux.org> 5.7.3-alt2
+- Fix BuildRequires
+
 * Sat Feb 04 2023 Anton Farygin <rider@altlinux.ru> 5.7.3-alt1
 - 5.7.0 -> 5.7.3
 
