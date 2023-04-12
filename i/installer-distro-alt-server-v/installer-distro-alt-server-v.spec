@@ -1,8 +1,8 @@
 %define distro alt-server-v
 
 Name: installer-distro-%distro
-Version: 10.0.0
-Release: alt2
+Version: 10.1.0
+Release: alt1
 
 Summary: Installer configuration (Server V)
 License: GPLv2
@@ -79,6 +79,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Apr 12 2023 Andrew A. Vasilyev <andy@altlinux.org> 10.1.0-alt1
+- move initinstall.d/05-vm-profile to separate package volumes-profile-alt-server-v
+
 * Tue Dec 28 2021 Alexey Shabalin <shaba@altlinux.org> 10.0.0-alt2
 - decrease minimal root size to 7GB
 
