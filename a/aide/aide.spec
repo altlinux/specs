@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: aide
-Version: 0.17.4
+Version: 0.18.2
 Release: alt1
 Summary: Intrusion Detection Environment
 License: GPL-2.0-or-later
@@ -14,7 +14,7 @@ Vcs: https://github.com/aide/aide
 
 Source: %name-%version.tar
 
-
+BuildRequires: autoconf-archive
 BuildRequires: flex
 BuildRequires: libacl-devel
 BuildRequires: libattr-devel
@@ -24,7 +24,7 @@ BuildRequires: libcheck-devel
 BuildRequires: libcurl-devel
 BuildRequires: libe2fs-devel
 BuildRequires: libgcrypt-devel
-BuildRequires: libpcre-devel
+BuildRequires: libpcre2-devel
 BuildRequires: libselinux-devel
 BuildRequires: zlib-devel
 %description
@@ -80,7 +80,7 @@ make check
 .gear/test.sh %buildroot
 
 %files
-%doc AUTHORS COPYING ChangeLog README NEWS contrib
+%doc AUTHORS COPYING ChangeLog README NEWS contrib SECURITY.md
 %config(noreplace) %attr(0600,root,root) %_sysconfdir/aide.conf
 %_sbindir/aide
 %dir %attr(0700,root,root) %_localstatedir/%name
@@ -89,5 +89,8 @@ make check
 %_man5dir/*.5*
 
 %changelog
+* Sat Apr 08 2023 Vitaly Chikunov <vt@altlinux.org> 0.18.2-alt1
+- Update to v0.18.2 (2023-04-07).
+
 * Fri Feb 03 2023 Vitaly Chikunov <vt@altlinux.org> 0.17.4-alt1
 - First import v0.17.4 (2022-01-19).
