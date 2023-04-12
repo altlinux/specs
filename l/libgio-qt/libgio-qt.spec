@@ -3,7 +3,7 @@
 %def_enable doc
 
 Name: libgio-qt
-Version: 0.0.11
+Version: 0.0.12
 Release: alt1
 Summary: Qt wrapper library of Gio
 License: LGPL-3.0+
@@ -70,6 +70,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Wed Apr 12 2023 Leontiy Volodin <lvol@altlinux.org> 0.0.12-alt1
+- New version.
+
 * Mon May 23 2022 Leontiy Volodin <lvol@altlinux.org> 0.0.11-alt1
 - New version.
 
