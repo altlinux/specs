@@ -2,7 +2,7 @@
 
 Name: emonoda
 Version: 2.1.36
-Release: alt1
+Release: alt2
 
 Summary: The set of tools to organize and management of your torrents
 
@@ -24,7 +24,7 @@ Obsoletes: rtfetch
 # manually removed:  ruby ruby-stdlibs
 # Automatically added by buildreq on Sun Jul 19 2015
 # optimized out: python3 python3-base python3-module-greenlet python3-module-pycparser 
-BuildRequires: python3-module-chardet python3-module-nose python3-module-setuptools
+BuildRequires: python3-module-chardet python3-module-setuptools
 
 BuildRequires: python3-dev python3-module-Cython 
 
@@ -60,6 +60,9 @@ The set of tools to organize and management of your torrents.
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Wed Apr 12 2023 Anton Vyatkin <toni@altlinux.org> 2.1.36-alt2
+- Fix BuildRequires
+
 * Sat Feb 25 2023 Vitaly Lipatov <lav@altlinux.ru> 2.1.36-alt1
 - new version 2.1.36 (with rpmrb script)
 
