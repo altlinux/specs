@@ -4,7 +4,7 @@
 
 Name: python3-module-tqdm
 Version: 4.65.0
-Release: alt1
+Release: alt2
 
 Summary: A fast, extensible progress bar for Python and CLI
 
@@ -22,7 +22,7 @@ Obsoletes: python-module-%oname
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-module-setuptools_scm python3-module-toml
-BuildRequires: python3-module-nose python3-module-flake8 python3-module-coverage
+BuildRequires: python3-module-flake8 python3-module-coverage
 
 # make optional
 %add_python3_req_skip dask.callbacks rich.progress
@@ -54,6 +54,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 12 2023 Anton Vyatkin <toni@altlinux.org> 4.65.0-alt2
+- Fix BuildRequires
+
 * Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 4.65.0-alt1
 - new version 4.65.0 (with rpmrb script)
 
