@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.21.3
-Release: alt4
+Release: alt5
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPL-3.0-or-later
@@ -169,8 +169,11 @@ fi
 %doc COPYING ChangeLog* AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Wed Apr 12 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.3-alt5
+- Update seccomp filtering for '--timeout' (ALT#45799).
+
 * Mon Apr 10 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.3-alt4
-- Update seccomp filtering rules (ALT#45799).
+- Update seccomp filtering for libproxy and tsocks (ALT#45799).
 
 * Sat Apr 08 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.3-alt3
 - Update seccomp filtering rules.
