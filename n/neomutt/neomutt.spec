@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: neomutt
-Version: 20230322
+Version: 20230407
 Release: alt1
 Summary: A version of Mutt with added features
 License: GPL-2.0-only and ALT-Public-Domain
@@ -105,6 +105,9 @@ make -s test
 %_datadir/neomutt
 
 %changelog
+* Sat Apr 08 2023 Vitaly Chikunov <vt@altlinux.org> 20230407-alt1
+- Update to 20230407 (2023-04-07).
+
 * Thu Mar 23 2023 Vitaly Chikunov <vt@altlinux.org> 20230322-alt1
 - Update to 20230322 (2023-03-22).
 
