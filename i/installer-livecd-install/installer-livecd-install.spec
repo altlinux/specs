@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: installer-livecd-install
-Version: 0.9.2
+Version: 0.10.0
 Release: alt1
 
 Summary: Special step livecd-install for installers
@@ -17,6 +17,7 @@ Requires: alterator-l10n >= 2.5-alt1
 Requires: alterator-browser-qt >= 2.17.0
 Requires: alterator-lookout => 2.4-alt1
 Requires: util-linux
+Requires: installer-scripts-remount-stage2 >= 0.6.0
 BuildRequires: rpm-macros-alterator
 BuildRequires: alterator >= 4.10-alt6
 
@@ -37,6 +38,11 @@ BuildArch: noarch
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Apr 06 2023 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
+- mount virtual filesystem for chroot after extract squash
+- Requires: installer-scripts-remount-stage2 >= 0.6.0
+- Run systemd-tmpfiles in chroot
+
 * Wed Jan 18 2023 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
 - Unpacking loop device directly instead squash file
 

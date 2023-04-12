@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-preinstall
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: Alterator preinstall hooks runner module
@@ -12,11 +12,10 @@ BuildArch: noarch
 Url: http://www.altlinux.org/Alterator
 Source: %name-%version.tar
 
-Requires: alterator >= 4.17-alt1
+Requires: alterator >= 5.0-alt1
 Requires: alterator-l10n >= 2.1-alt4
-Requires: installer-scripts-remount-stage2 >= 0.5.21-alt1
 Conflicts: alterator-lookout < 1.6-alt6
-Conflicts: installer-common-stage2 < 1.8.4-alt1
+Conflicts: installer-common-stage2 < 1.14.0-alt1
 
 BuildPreReq: alterator >= 4.7-alt6
 
@@ -37,6 +36,10 @@ This is an alterator preinstall hooks runner module.
 %_alterator_backend3dir/*
 
 %changelog
+* Sun Apr 02 2023 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
+- do not run remount_chroot
+- update requires, confilcts
+
 * Mon Nov 14 2022 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt1
 - copy preinstall scripts from $destdir in order to:
   + execute scripts strictly by numbering

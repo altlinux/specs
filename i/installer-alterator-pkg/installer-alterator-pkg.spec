@@ -1,12 +1,10 @@
 Name: installer-alterator-pkg
-Version: 3.0.6
+Version: 3.1.0
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
-
-Packager: Andrey Cherepanov <cas@altlinux.org> 
 
 BuildArch: noarch
 
@@ -21,6 +19,7 @@ Requires: alterator-browser-qt >= 2.17.0
 Requires: apt >= 0.5.15lorg2-alt23
 Requires: alterator-lookout => 2.4-alt1
 Requires: altlinux-repos
+Requires: installer-scripts-remount-stage2 >= 0.6.0
 Conflicts: alterator-fbi < 5.10-alt1
 
 Provides: alterator-apt = %EVR
@@ -58,6 +57,12 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Apr 05 2023 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
+- pkg-init: mount virtual filesystems with mount_chroot fuction from
+  install2-remount-functions
+- Requires: installer-scripts-remount-stage2 >= 0.6.0
+- Clear Packager
+
 * Thu Mar 23 2023 Anton Midyukov <antohami@altlinux.org> 3.0.6-alt1
 - initinstall.d/90-pkg.sh: use apt method 'copy' instead 'file'
 

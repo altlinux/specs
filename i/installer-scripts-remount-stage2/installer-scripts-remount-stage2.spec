@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.30
+Version: 0.6.0
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,15 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Thu Apr 06 2023 Anton Midyukov <antohami@altlinux.org> 0.6.0-alt1
+- initial mount_destfs function
+- Add remount_destination function
+- execute systemd_tmpfiles outside of mount_chroot in separate function
+- fix set_active for use in mount_destination
+- mount /dev/pts also into mount_chroot
+- mount /dev/pts also into mount_chroot
+- mount /run, /tmp with '-o mode 755'
+
 * Thu Mar 16 2023 Slava Aseev <ptrnine@altlinux.org> 0.5.30-alt1
 - do not skip containers while generating /tmp/mdadm.conf
 

@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.13.7
+Version: 1.14.0
 Release: alt1
 
 Summary: Installer common parts
@@ -20,7 +20,9 @@ Group: System/Configuration/Other
 Provides: %name-stage2 = %version-%release
 Obsoletes: %name-stage2 < %version-%release
 # installer-preinstall.desktop
-Requires: alterator-preinstall >= 0.7-alt1
+Requires: alterator-preinstall >= 0.9-alt1
+# remount.desktop
+Requires: installer-alterator-remount-destination
 # scripts/install2
 Requires: alterator-wizardface alterator-backend-x11 >= 0.21-alt2 xinit xinitrc xorg-server xorg-drv-video
 Requires: glibc-locales
@@ -104,6 +106,13 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Apr 03 2023 Anton Midyukov <antohami@altlinux.org> 1.14.0-alt1
+- Add steps/remount.desktop
+- Add preinstall.d/05-copy-fstab
+- Add initinstall.d/95-add-remout-step.sh
+- Requires: alterator-preinstall >= 0.9-alt1
+- Requires: installer-alterator-remount-destination
+
 * Fri Mar 24 2023 Oleg Solovyov <mcpain@altlinux.org> 1.13.7-alt1
 - install2: setup mdmon after install
 
