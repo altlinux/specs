@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo
-Version: 4.4.17
-Release: alt2
+Version: 4.4.20
+Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
 
@@ -195,6 +195,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Apr 12 2023 Alexei Takaseev <taf@altlinux.org> 4.4.20-alt1
+- 4.4.20
+
 * Wed Nov 02 2022 Alexei Takaseev <taf@altlinux.org> 4.4.17-alt2
 - Fix typo ppc64le arch
 
