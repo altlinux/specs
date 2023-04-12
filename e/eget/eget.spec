@@ -1,5 +1,5 @@
 Name: eget
-Version: 6.1
+Version: 7.1
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,25 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Wed Apr 12 2023 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt1
+- eget: fix --check
+- eget: add filename support in ipfs://Qm...filename=real.name
+- eget: hide IPFS mode status when IPFS mode is disabled
+- eget: add --quiet alias for -q
+- eget: add --verbose support
+- eget --check: allow --verbose
+- eget: fix quiet mode
+
+* Wed Apr 12 2023 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt1
+- eget: add --get-ipfs-cid, --get-real-url, --get-filename, --get-response
+- eget: add ipfs mode support (EGET_IPFS={disabled,auto,brave,local,gateway)
+- eget: add ipfs:// support
+- eget: add EGET_IPFS_DB file support (save after download, get when download)
+- eget: use scat only for get remote page content
+- eget: add support for EGET_BACKEND={curl,wget}, refactoring wget/curl detection
+- eget: stop recursion with EGET_ vars
+- eget: add hack to get headers ever if HEAD is not allowed
+
 * Mon Apr 10 2023 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt1
 - eget: improve is_url checking
 - eget: disable checking for globbing symbol ? in URL
