@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.33.3
-Release: alt1
+Release: alt2
 
 Summary: Highly concurrent networking library
 License: MIT
@@ -15,6 +15,7 @@ Url: https://pypi.org/project/eventlet/
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+Patch: remove-nose.patch
 
 BuildArch: noarch
 
@@ -32,7 +33,6 @@ BuildRequires: python3-module-urllib3
 %py3_use six >= 1.10.0
 
 %if_with check
-BuildRequires: python3(nose)
 BuildRequires: python3(zmq)
 BuildRequires: pytest3
 %endif
@@ -92,6 +92,8 @@ This package contains documentation for Eventlet.
 
 %prep
 %setup
+%patch -p1
+
 # requires thrift, python 2.7 only
 rm -rv eventlet/zipkin
 
@@ -150,6 +152,9 @@ py.test3 -v -o norecursedirs="tests/*" -k "
 %endif
 
 %changelog
+* Wed Apr 12 2023 Anton Vyatkin <toni@altlinux.org> 0.33.3-alt2
+- Fix BuildRequires
+
 * Fri Mar 17 2023 Vitaly Lipatov <lav@altlinux.ru> 0.33.3-alt1
 - new version 0.33.3 (with rpmrb script)
 - remove obsoleted OpenSSL.tsafe using (ALT bug 45443)
