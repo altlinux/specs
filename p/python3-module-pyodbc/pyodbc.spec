@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 4.0.35
+Version: 4.0.38
 Release: alt1
 
 Summary: Python ODBC bridge
@@ -13,7 +13,6 @@ URL:     https://pypi.org/project/pyodbc/
 VCS:     https://github.com/mkleehammer/pyodbc
 
 Source: %name-%version.tar
-Patch: odbc-4.0.35-alt-fix-pyodbc.pyi-location.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -29,7 +28,6 @@ more Pythonic convenience.
 
 %prep
 %setup
-%patch -p0
 
 echo 'Version: %{version}' > PKG-INFO
 
@@ -50,5 +48,8 @@ python3 tests3/sqlitetests.py -v "Driver=SQLITE3;Database=sqlite.db"
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Wed Apr 12 2023 Anton Vyatkin <toni@altlinux.org> 4.0.38-alt1
+- New version 4.0.38.
+
 * Tue Mar 28 2023 Anton Vyatkin <toni@altlinux.org> 4.0.35-alt1
 - Initial build for Sisyphus
