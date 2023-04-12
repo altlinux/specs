@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-file-manager
-Version: 1.26.0
+Version: 1.26.1
 Release: alt2
 Epoch: 1
 Summary: File manager for MATE
@@ -104,6 +104,12 @@ mkdir -p %buildroot%_libdir/caja/extensions-2.0
 %_datadir/gtk-doc/html/libcaja-extension
 
 %changelog
+* Wed Apr 12 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
+- added x-scheme-handler/smb mimetype to caja-folder-handler.desktop
+
+* Wed Apr 12 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
+- 1.26.1
+
 * Mon Nov 21 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
 - updated ru translation
 
