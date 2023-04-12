@@ -16,7 +16,7 @@
 %endif
 
 Name: exiv2
-Version: 0.27.5
+Version: 0.27.6
 Release: alt1%beta
 
 Summary: Command line tool to access EXIF data in image files
@@ -101,6 +101,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Jan 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.27.6-alt1
+- 0.27.6
+
 * Mon Oct 25 2021 Yuri N. Sedunov <aris@altlinux.org> 0.27.5-alt1
 - 0.27.5 (https://github.com/Exiv2/exiv2/issues/1018#issuecomment-948573657)
 
