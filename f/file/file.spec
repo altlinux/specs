@@ -5,7 +5,7 @@
 
 Name: file
 Version: 5.44
-Release: alt1
+Release: alt2
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -132,6 +132,9 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Mon Apr 10 2023 Vitaly Chikunov <vt@altlinux.org> 5.44-alt2
+- Update seccomp rules and support SECCOMP_DEFAULT_ACTION.
+
 * Mon Jan 09 2023 Vitaly Chikunov <vt@altlinux.org> 5.44-alt1
 - Update to FILE5_44-13-g1dd21dd3 (2023-01-08).
 
