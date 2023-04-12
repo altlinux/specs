@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Diff JSON and JSON-like structures in Python
 
@@ -17,7 +17,6 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-nose-random
 
 %description
 Diff JSON and JSON-like structures in Python.
@@ -41,6 +40,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 12 2023 Anton Vyatkin <toni@altlinux.org> 1.3.0-alt2
+- Fix BuildRequires
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - new version 1.3.0 (with rpmrb script)
 
