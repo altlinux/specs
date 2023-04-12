@@ -1,7 +1,7 @@
 %define oname Sunflower
 Name:    sunflower
 Version: 0.5.63
-Release: alt1
+Release: alt2
 
 Summary: Small and highly customizable twin-panel file manager for Linux with support for plugins
 License: GPL-3.0
@@ -25,6 +25,7 @@ BuildArch: noarch
 Source:  %name-%version.tar
 
 Patch1:  update-path-for-icon.patch
+Patch2:  add-locale.patch
 
 %description
 Sunflower is a small and highly customizable twin-panel file manager for Linux
@@ -35,14 +36,16 @@ file manager that seamlessly integrates into the GNOME desktop environment
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+%find_lang %name
 
-%files
+%files -f %name.lang
 %_bindir/%name
 %python3_sitelibdir/%name
 %python3_sitelibdir/%oname-%version.dist-info
@@ -50,6 +53,9 @@ file manager that seamlessly integrates into the GNOME desktop environment
 %_datadir/applications/%oname.desktop
 
 %changelog
+* Tue Apr 11 2023 Alexander Burmatov <thatman@altlinux.org> 0.5.63-alt2
+- Add translations (tnx respublica@)
+
 * Fri Mar 10 2023 Alexander Burmatov <thatman@altlinux.org> 0.5.63-alt1
 - Initial build for Sisyphus
 - New file manager (ALT #45433)
