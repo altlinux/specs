@@ -1,8 +1,8 @@
 %def_enable check
 
 Name: nasm
-Version: 2.15.05
-Release: alt1.1
+Version: 2.16.01
+Release: alt1
 
 Summary: The Netwide Assembler, a portable x86 assembler with Intel-like syntax
 License: BSD-2-Clause
@@ -11,49 +11,43 @@ Url: http://www.nasm.us/
 
 Vcs: https://github.com/netwide-assembler/nasm.git
 Source: http://www.nasm.us/pub/nasm/releasebuilds/%version/nasm-%version.tar.bz2
-# fc
-Patch: nasm-SourceSans-font-name.patch
+Source1: https://www.nasm.us/pub/nasm/releasebuilds/%version/%name-%version-xdoc.tar.xz
+
+# Support for the rdf format has been discontinued and all the RDOFF
+# utilities has been removed.
+Obsoletes: %name-rdoff < 2.16.01
 
 BuildRequires: ghostscript-utils groff-base xmlto asciidoc-a2x
-BuildRequires: texinfo
 BuildRequires: perl-Font-TTF perl-Sort-Versions
 # some fonts required, see doc/psfonts.ph
 BuildRequires: fonts-otf-adobe-source-code-pro fonts-otf-adobe-source-sans-pro fonts-ttf-liberation
 %{?_enable_check:BuildRequires: python3}
-
-%package doc
-Summary: Extensive documentation for NASM
-Group: Development/Other
-BuildArch: noarch
-
-%package rdoff
-Summary: Tools for the RDOFF binary format, sometimes used with NASM
-Group: Development/Other
 
 %description
 NASM is the Netwide Assembler, a free portable assembler for the Intel
 80x86 microprocessor series, using primarily the traditional Intel
 instruction mnemonics and syntax.
 
+%package doc
+Summary: Extensive documentation for NASM
+Group: Development/Other
+Conflicts: %name < %version
+BuildArch: noarch
+
 %description doc
 Extensive documentation for the Netwide Assembler, NASM, in HTML,
 PostScript and text formats.
 
-%description rdoff
-Tools for the operating-system independent RDOFF binary format, which
-is sometimes used with the Netwide Assembler (NASM). These tools
-include linker, library manager, loader, and information dump.
-
 %prep
 %setup
-%patch -p1
+tar Jxf %SOURCE1 --strip-components 1
 
 %build
 %configure
 %make_build everything
 
 %install
-%makeinstall_std install_rdf
+%makeinstall_std
 
 cd doc
 gzip -9f *.txt *.ps || true
@@ -73,21 +67,10 @@ python3 travis/nasm-t.py run
 %files doc
 %doc doc/nasmdoc.pdf doc/nasmdoc.txt.gz doc/html
 
-%files rdoff
-%doc rdoff/README
-%_bindir/ldrdf
-%_bindir/rdf2bin
-%_bindir/rdf2com
-%_bindir/rdfdump
-%_bindir/rdf2ihx
-%_bindir/rdf2ith
-%_bindir/rdflib
-%_bindir/rdf2srec
-%_bindir/rdx
-%_man1dir/*rdf*
-%_man1dir/rdx*
-
 %changelog
+* Wed Apr 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.16.01-alt1
+- 2.16.01
+
 * Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 2.15.05-alt1.1
 - doc/psfonts.ph: renamed SourceSans font family to fix docs build (fc)
 
