@@ -11,6 +11,7 @@
 %def_enable wayland
 %def_enable zbar
 %def_enable faad
+%def_enable faac
 %def_enable srtp
 %def_disable rtmp
 %def_enable openh264
@@ -36,7 +37,7 @@
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -83,10 +84,13 @@ BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
 BuildRequires: libclutter-devel
 BuildRequires: libbs2b-devel
+BuildRequires: libopenal-devel
+BuildRequires: flite-devel
 %{?_enable_srtp:BuildRequires: libsrtp2-devel >= 2.1.0}
 #BuildRequires: pkgconfig(wpe-webkit-1.0) pkgconfig(wpebackend-fdo-1.0)
-BuildRequires: liborc-test-devel
+BuildRequires: liborc-test-devel gstreamer1.0-utils
 %{?_enable_faad:BuildRequires: libfaad-devel}
+%{?_enable_faac:BuildRequires: libfaac-devel}
 %{?_enable_openh264:BuildRequires: libopenh264-devel >= 1.3.0}
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_aom:BuildRequires: libaom-devel}
@@ -206,6 +210,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Wed Apr 12 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt1
+- 1.22.2
+
 * Sat Mar 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.1-alt1
 - 1.22.1
 

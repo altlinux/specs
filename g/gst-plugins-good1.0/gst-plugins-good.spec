@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -31,6 +31,8 @@ Url: http://gstreamer.freedesktop.org/
 Source: http://gstreamer.freedesktop.org/src/%_name-good/%_name-good-%version.tar.xz
 
 Provides: %_name-good = %version-%release
+# https://bugzilla.altlinux.org/45382
+Conflicts: gst-plugins-ugly%api_ver < 1.22.0
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ orc nasm liborc-devel
@@ -129,6 +131,9 @@ This package contains development documentation for GStreamer Good Plugins
 %endif
 
 %changelog
+* Wed Apr 12 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt1
+- 1.22.2
+
 * Sat Mar 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.1-alt1
 - 1.22.1
 - new qt6 subpackage
