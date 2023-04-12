@@ -17,7 +17,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.4
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -207,6 +207,9 @@ done
 
 
 %changelog
+* Wed Apr 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt3
+- update to 5.27.4.1
+
 * Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt2
 - fix default keyboard layout switch mode
 
