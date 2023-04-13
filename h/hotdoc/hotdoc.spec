@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: hotdoc
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Hotdoc is a documentation framework
@@ -65,7 +65,8 @@ See https://hotdoc.github.io for more unformation.
 %setup %{?_disable_bootstrap_theme:-a1}
 %if_enabled bootstrap_theme
 pushd %name/%{name}_bootstrap_theme
-npm install && npm audit fix && ./node_modules/bower/bin/bower install &&
+npm install || npm audit fix --force &&
+./node_modules/bower/bin/bower install &&
 popd
 tar -cf %name-%version-bootstrap_theme.tar hotdoc/hotdoc_bootstrap_theme/{node_modules,bower_components}/ && \
 mv %name-%version-bootstrap_theme.tar %_sourcedir/
@@ -87,6 +88,9 @@ mv %name-%version-bootstrap_theme.tar %_sourcedir/
 %doc README.md
 
 %changelog
+* Thu Apr 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt1
+- 0.14.1
+
 * Fri Apr 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
 - 0.14.0-7-g29901af
 
