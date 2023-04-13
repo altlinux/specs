@@ -20,7 +20,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.4
-Release: alt1
+Release: alt2
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -181,9 +181,9 @@ KF5 library
 %patch6 -p1
 %patch7 -p1
 %patch8 -p2
-%patch9 -p1
+#patch9 -p1
 %patch10 -p2
-%patch11 -p1
+#%patch11 -p1 -b .autoreboot
 %patch12 -p1
 %patch13 -p1
 
@@ -290,6 +290,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Thu Apr 13 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt2
+- don't hide autoreboot button
+
 * Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt1
 - new version
 
