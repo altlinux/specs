@@ -1,8 +1,9 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname foreman_chef
 
 Name:          gem-foreman-chef
 Version:       0.10.0.1
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Plugin for Chef integration with Foreman
 License:       GPL-3
 Group:         Development/Ruby
@@ -12,6 +13,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Source1:       public.tar
 Patch:         foreman-3.5.0.patch
 BuildRequires(pre): rpm-build-ruby
 %if_with check
@@ -36,7 +38,7 @@ Foreman extensions that are required for better Chef integration.
 
 %package       -n gem-foreman-chef-doc
 Version:       0.10.0.1
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Plugin for Chef integration with Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_chef
 Group:         Development/Documentation
@@ -55,7 +57,7 @@ Foreman extensions that are required for better Chef integration.
 
 %package       -n gem-foreman-chef-devel
 Version:       0.10.0.1
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Plugin for Chef integration with Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_chef
 Group:         Development/Ruby
@@ -76,6 +78,7 @@ Foreman extensions that are required for better Chef integration.
 
 %prep
 %setup
+%setup -a 1
 %autopatch
 
 %build
@@ -83,6 +86,8 @@ Foreman extensions that are required for better Chef integration.
 
 %install
 %ruby_install
+install -d %buildroot%_datadir/foreman
+cp -rp public %buildroot%_datadir/foreman
 
 %check
 %ruby_test
@@ -91,6 +96,7 @@ Foreman extensions that are required for better Chef integration.
 %doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
+%_datadir/foreman/public
 
 %files         -n gem-foreman-chef-doc
 %doc README.md
@@ -101,6 +107,9 @@ Foreman extensions that are required for better Chef integration.
 
 
 %changelog
+* Thu Apr 13 2023 Pavel Skrylev <majioa@altlinux.org> 0.10.0.1-alt0.3
+- + lost public modules
+
 * Thu Apr 06 2023 Pavel Skrylev <majioa@altlinux.org> 0.10.0.1-alt0.2
 - ! public assets
 
