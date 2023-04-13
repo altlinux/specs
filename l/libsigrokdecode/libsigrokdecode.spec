@@ -1,6 +1,6 @@
 Name: libsigrokdecode
 Version: 0.6.0
-Release: alt0.202204220
+Release: alt0.202212300
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -62,6 +62,9 @@ make check
 %_pkgconfigdir/libsigrokdecode.pc
 
 %changelog
+* Thu Apr 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt0.202212300
+- git snapshot libsigrokdecode-unreleased-709-g73cb546
+
 * Mon Jun 06 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt0.202204220
 - git snapshot libsigrokdecode-unreleased-691-ge556e11
 
