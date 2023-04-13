@@ -1,6 +1,6 @@
 Name: sigrok-cli
 Version: 0.7.2
-Release: alt1
+Release: alt2
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -41,6 +41,9 @@ Visit http://sigrok.org/wiki/Sigrok-cli for more.
 %_man1dir/sigrok-cli.1*
 
 %changelog
+* Thu Apr 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.2-alt2
+- sigrok-cli-unreleased-89-g394fd9b
+
 * Wed Mar 17 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.2-alt1
 - 0.7.2 released
 
