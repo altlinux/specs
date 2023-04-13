@@ -1,6 +1,6 @@
 Name: pulseview
 Version: 0.5.0
-Release: alt0.20220310
+Release: alt0.20230409
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -43,6 +43,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix
 %_man1dir/pulseview.1*
 
 %changelog
+* Thu Apr 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt0.20230409
+- git snapshot pulseview-unreleased-793-g292b6ebc
+
 * Mon Jun 06 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt0.20220310
 - git snapshot pulseview-unreleased-767-g7e5c8396
 
