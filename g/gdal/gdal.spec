@@ -8,7 +8,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 3.6.2
-Release: alt1
+Release: alt1.1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -119,10 +119,6 @@ Python module for %name.
 
 %build
 %add_optflags -fno-strict-aliasing -I%_includedir/netcdf
-%ifarch %e2k
-# lcc 1.23 can't do those __builtin_functions (mcst#3588)
-%add_optflags -D__INTEL_COMPILER
-%endif
 %cmake \
     -DBUILD_SHARED_LIBS:BOOL=ON \
     -DCMAKE_INSTALL_INCLUDEDIR:PATH=%_includedir/%name \
@@ -224,6 +220,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu Apr 13 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.2-alt1.1
+- Removed obsolete e2k fix that became a problem
+
 * Sat Feb 11 2023 Alexander Stepchenko <geochip@altlinux.org> 3.6.2-alt1
 - Update to 3.6.2
 
