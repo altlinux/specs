@@ -16,7 +16,7 @@
 
 Name: yuzu
 Version: 1139
-Release: alt1
+Release: alt1.1
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv2
@@ -54,6 +54,8 @@ Source11: sanitizers-cmake-%sanitizers_cmake_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_commit/SPIRV-Headers-%spirv_headers_commit.tar.gz
 Source12: SPIRV-Headers-%spirv_headers_commit.tar
 
+Patch0: %name-zstd.patch
+
 BuildRequires: boost-asio-devel
 BuildRequires: boost-context-devel
 BuildRequires: boost-filesystem-devel
@@ -88,6 +90,8 @@ BuildRequires: zlib-devel
 
 %prep
 %setup -n %name-mainline-mainline-0-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
+
+%patch0 -p1
 
 %__mv -Tf ../inih-%inih_version externals/inih/inih
 %__mv -Tf ../cpp-httplib-%cpp_httplib_commit externals/cpp-httplib
@@ -140,6 +144,9 @@ src/common/scm_rev.cpp.in
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Thu Apr 13 2023 Nazarov Denis <nenderus@altlinux.org> 1139-alt1.1
+- Add zstd patch
+
 * Sun Aug 21 2022 Nazarov Denis <nenderus@altlinux.org> 1139-alt1
 - Version 1139
 
