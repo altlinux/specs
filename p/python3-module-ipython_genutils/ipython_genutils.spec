@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.2.0
-Release: alt1
+Release: alt2
 Summary: Vestigial utilities from IPython
 License: BSD-3-Clause
 Group: Development/Python3
@@ -14,9 +14,10 @@ BuildArch: noarch
 
 # https://github.com/ipython/ipython_genutils.git
 Source: %name-%version.tar
+Patch: remove-nose.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python3-module-pytest
+BuildRequires: python3-module-pytest
 
 %description
 Vestigial utilities from IPython.
@@ -33,6 +34,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build_debug
@@ -43,7 +45,7 @@ This package contains tests for %oname.
 %check
 export LC_ALL=en_US.UTF-8
 export PYTHONPATH=%buildroot%python3_sitelibdir
-nosetests3 -vv %oname
+py.test-3
 
 %files
 %doc COPYING.md
@@ -56,6 +58,9 @@ nosetests3 -vv %oname
 %python3_sitelibdir/%oname/test*
 
 %changelog
+* Thu Apr 13 2023 Anton Vyatkin <toni@altlinux.org> 0.2.0-alt2
+- Fix BuildRequires
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt1
 - Updated to upstream version 0.2.0.
 - Disabled build for python-2.
