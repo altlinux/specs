@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Group: Development/Python3
@@ -49,6 +49,9 @@ sent by any sender.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Apr 13 2023 Anton Vyatkin <toni@altlinux.org> 1.6.2-alt1
+- New version 1.6.2.
+
 * Mon Apr 10 2023 Anton Vyatkin <toni@altlinux.org> 1.6.1-alt1
 - New version 1.6.1.
 
