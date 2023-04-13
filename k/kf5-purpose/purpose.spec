@@ -1,6 +1,6 @@
 %define rname purpose
 
-%def_enable bootstrap
+%def_disable bootstrap
 
 %define sover 5
 %define libphabricatorhelpers libphabricatorhelpers%sover
@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.105.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -18,7 +18,7 @@ License: LGPLv2.1+
 
 Requires: kf5-kirigami
 %if_disabled bootstrap
-Requires: kde5-connect
+#Requires: kde5-connect
 %endif
 
 Source: %rname-%version.tar
@@ -144,6 +144,9 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Thu Apr 13 2023 Sergey V Turchin <zerg@altlinux.org> 5.105.0-alt2
+- disable bootstrap mode by default
+
 * Mon Apr 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.105.0-alt1
 - new version
 
