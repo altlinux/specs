@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 0.16.7
+Version: 0.17.1
 Release: alt1
 
 Summary: Improved build system generator for CPython C/C++/Fortran/Cython extensions
@@ -14,7 +14,7 @@ License: MIT
 Url: http://pypi.python.org/pypi/%modname
 
 Vcs: https://github.com/scikit-build/scikit-build.git
-Source: http://pypi.io/packages/source/s/%pypi_name/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/s/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ Requires: cmake make ninja-build gcc-c++
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-wheel
-BuildRequires: python3-module-setuptools python3-module-setuptools_scm
+BuildRequires: python3(hatchling) python3(hatch-fancy-pypi-readme) python3(hatch-vcs)
 %{?_enable_check:BuildRequires: python3-module-pytest}
 
 %description
@@ -35,7 +35,7 @@ The scikit-build package is fundamentally just glue between the
 setuptools Python module and CMake.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
 %pyproject_build
@@ -50,10 +50,13 @@ py.test3
 %files
 %python3_sitelibdir_noarch/%_name/
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
-%doc README* HISTORY* CHANGES*
+%doc README* CHANGES*
 
 
 %changelog
+* Thu Apr 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.17.1-alt1
+- 0.17.1
+
 * Thu Feb 23 2023 Yuri N. Sedunov <aris@altlinux.org> 0.16.7-alt1
 - 0.16.7
 
