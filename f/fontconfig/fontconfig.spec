@@ -8,7 +8,7 @@
 
 Name: fontconfig
 Version: 2.14.2
-Release: alt5
+Release: alt6
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
@@ -111,23 +111,10 @@ install -m 0644 save_i586_fontconfig_package.so %buildroot/%_libdir/libfontconfi
 %find_lang --output=%name.lang --append fontconfig fontconfig-conf
 
 %post
-XMLCATALOG_BIN=%xmlcatalog_bin
-if [ -e %xmlcatalog -a -x $XMLCATALOG_BIN ]; then
-  %xmlcatalog_bin --noout --add system \
-    "urn:fontconfig:fonts.dtd" \
-    "file://%_datadir/xml/fontconfig/fonts.dtd" \
-    %xmlcatalog ||:
-fi
 [ -n "$DURING_INSTALL" ] || %_sysconfdir/firsttime.d/%name ||:
 
-%postun
-XMLCATALOG_BIN=%xmlcatalog_bin
-if [ -e %xmlcatalog -a -x $XMLCATALOG_BIN ]; then
-  %xmlcatalog_bin --noout --del system \
-    "urn:fontconfig:fonts.dtd" \
-    "file://%_datadir/xml/fontconfig/fonts.dtd" \
-    %xmlcatalog ||:
-fi
+%triggerpostun -- fontconfig <= 2.14.2-alt7
+[ -e '/urn:fontconfig:fonts.dtd' ] && rm -f '/urn:fontconfig:fonts.dtd' ||:
 
 %files -f %name.lang
 %_sysconfdir/firsttime.d/%name
@@ -186,6 +173,9 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Thu Apr 13 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt6
+- cleanup postinstall scripts
+
 * Thu Mar 23 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt5
 - save i586-fontconfig package for x86_64-i586 to dist-upgrade
 
