@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230403
+Version: 20230406
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,28 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Apr 13 2023 Cronbuild Service <cronbuild@altlinux.org> 20230406-alt1
+- upstream changes (GIT 86da2ac9):
+  + update firmware for MT7916 (thx Shayne Chen)
+  + rtw89: 8852b: update format-1 fw to v0.29.29.1 (thx Ping-Ke Shih)
+  + rtw89: 8852c: update fw to v0.27.56.13 (thx Chin-Yen Lee)
+  + ath11k: WCN6855 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath11k: WCN6750 hw1.0: update to
+    WLAN.MSL.1.0.1-01160-QCAMSLSWPLZ-1 (thx Kalle Valo)
+  + ath11k: QCN9074 hw1.0: update to
+    WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1 (thx Kalle Valo)
+  + ath11k: IPQ8074 hw2.0: update to
+    WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1 (thx Kalle Valo)
+  + ath11k: IPQ8074 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath11k: IPQ6018 hw1.0: update to
+    WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1 (thx Kalle Valo)
+  + ath11k: IPQ6018 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA99X0 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA9984 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA6174 hw3.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA4019 hw1.0: update board-2.bin (thx Kalle Valo)
+
 * Thu Apr 06 2023 Cronbuild Service <cronbuild@altlinux.org> 20230403-alt1
 - upstream changes (GIT 2e92a49f):
   + nvidia: update Tu10x and Tu11x signed firmware to support newer
