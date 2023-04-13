@@ -1,12 +1,13 @@
 
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt21
+Release: alt22
+%K5init no_altplace
 
 Group: System/X11
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
-License: %gpl2plus
+License: GPL-2.0-or-later
 
 Source: %name-%version.tar
 Source10: ru.po
@@ -23,9 +24,11 @@ Patch9: alt-password-dialog-ontop.patch
 Patch10: krb5-ticket-watcher-add-pw-exp-notif.patch
 Patch11: fix-deprecated-krb5-api-meth.patch
 Patch12: alt-crash-1.patch
+Patch13: alt-ignore-localhost-ip-as-def-realm.patch
 
+BuildRequires(pre): rpm-build-xdg rpm-build-kf5
 BuildRequires: desktop-file-utils
-BuildRequires: kde-common-devel rpm-build-licenses rpm-build-xdg libkrb5-devel libkeyutils-devel
+BuildRequires: libkrb5-devel libkeyutils-devel
 BuildRequires: cmake gcc-c++ libcom_err-devel qt5-base-devel qt5-tools
 
 %description
@@ -46,6 +49,7 @@ tickets.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 cat %SOURCE10 > po/ru.po
 
 %build
@@ -53,10 +57,10 @@ cat %SOURCE10 > po/ru.po
 %ifarch %e2k
 %add_optflags -std=c++11
 %endif
-%Kbuild
+%K5build
 
 %install
-%Kinstall
+%K5install
 desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/krb5-ticket-watcher.desktop
 desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
@@ -71,6 +75,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Thu Apr 13 2023 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt22
+- ignore 127.0.0.1 as realm
+
 * Mon Aug 22 2022 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt21
 - update changelog
 
