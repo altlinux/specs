@@ -6,15 +6,13 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    etcd
-Version: 3.5.1
+Version: 3.5.8
 Release: alt1
 Summary: A highly-available key value store for shared configuration
 Group:   System/Servers
 
 URL:     https://etcd.io/
 License: Apache-2.0
-
-Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
 
@@ -102,6 +100,9 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Fri Apr 14 2023 Alexey Shabalin <shaba@altlinux.org> 3.5.8-alt1
+- 3.5.8 (Fixes: CVE-2021-28235).
+
 * Fri Jan 28 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.1-alt1
 - 3.5.1
 
@@ -121,7 +122,8 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 - 3.4.14
 
 * Sat Sep 05 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.13-alt1
-- 3.4.13
+- 3.4.13 (Fixes: CVE-2020-15106, CVE-2020-15112, CVE-2020-15113, CVE-2020-15114,
+                 CVE-2020-15115, CVE-2020-15136).
 
 * Fri May 29 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.9-alt1
 - 3.4.9.
@@ -130,7 +132,7 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 - add post_service and preun_service.
 
 * Sun Apr 26 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.7-alt1
-- 3.4.7.
+- 3.4.7 (Fixes: CVE-2018-1098, CVE-2018-1099, CVE-2018-16886).
 
 * Tue Aug 08 2017 Alexey Gladkov <legion@altlinux.ru> 3.2.5-alt1
 - First build for ALTLinux.
