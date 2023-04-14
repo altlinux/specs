@@ -3,8 +3,8 @@
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 Name: editorconfig
-Version: 0.12.5
-Release: alt1.1
+Version: 0.12.6
+Release: alt1
 
 Summary: Parser for EditorConfig files written in C
 Group: Development/Other
@@ -86,9 +86,13 @@ This package contains files needed for development EditorConfig plugins.
 %_libdir/lib%name.so
 %_libdir/cmake/EditorConfig/
 %_pkgconfigdir/%name.pc
-%{?_enable_docs:%_man3dir/%{name}*}
+%{?_enable_docs:%_man3dir/%{name}*
+%doc %_cmake__builddir/doc/html}
 
 %changelog
+* Sat Jan 21 2023 Yuri N. Sedunov <aris@altlinux.org> 0.12.6-alt1
+- 0.12.6
+
 * Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.12.5-alt1.1
 - disabled static build
 
