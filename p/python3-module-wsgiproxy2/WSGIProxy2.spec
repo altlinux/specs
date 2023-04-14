@@ -1,38 +1,29 @@
 %define oname WSGIProxy2
 
-%def_without test
+%def_with check
 
 Name:    python3-module-wsgiproxy2
-Version: 0.4.6
-Release: alt2
+Version: 0.5.1
+Release: alt1
 
 Summary: WSGI Proxy that supports several HTTP backends
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/WSGIProxy2/
+Url: https://pypi.org/project/WSGIProxy2/
+Vcs: https://github.com/gawel/WSGIProxy2.git
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/gawel/WSGIProxy2.git
 Source: %name-%version.tar
 
-BuildArch:      noarch
+BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-webob python3-module-six
-BuildRequires: python3-module-http-parser
-BuildRequires: python3-module-urllib3 python3-module-requests
-BuildRequires: python3-module-nose
-
-# optional (and stalled)
-#BuildRequires: python3-module-restkit
-%add_python3_req_skip restkit
-
-%if_with test
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+%if_with check
+BuildRequires: python3-module-webob
 BuildRequires: python3-module-webtest
-BuildRequires: python3-module-coverage
+BuildRequires: python3-module-urllib3
+BuildRequires: python3-module-requests
 %endif
 
 Provides: python3-module-%oname
@@ -40,21 +31,8 @@ Provides: python3-module-%oname
 %py3_provides wsgiproxy
 Conflicts: python3-module-wsgiproxy
 
-
 %description
 A WSGI Proxy with various http client backends.
-
-%if_with test
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-A WSGI Proxy with various http client backends.
-
-This package contains tests for %oname.
-%endif
 
 %prep
 %setup
@@ -67,19 +45,18 @@ This package contains tests for %oname.
 %python3_prune
 
 %check
-nosetests3 -vv
+%tox_check
 
 %files
-%doc README_fixt.py README.rst
+%doc *.rst COPYING
 %python3_sitelibdir/*
-%if 0
 %exclude %python3_sitelibdir/*/test_*
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test_*
-%endif
 
 %changelog
+* Fri Apr 14 2023 Anton Vyatkin <toni@altlinux.org> 0.5.1-alt1
+- New version 0.5.1.
+
 * Mon Nov 23 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.6-alt2
 - build python3 package only
 
