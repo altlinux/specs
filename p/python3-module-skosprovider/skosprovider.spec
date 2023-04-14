@@ -1,23 +1,29 @@
 %define oname skosprovider
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.5.0
-Release: alt2.git20141218
+Version: 1.2.0
+Release: alt1
 
 Summary: Abstraction layer for SKOS vocabularies
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/skosprovider/
+Url: https://pypi.org/project/skosprovider/
+Vcs: https://github.com/koenedaele/skosprovider.git
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/koenedaele/skosprovider.git
 Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-language-tags python3-module-nose python3-module-pytest-cov python3-module-setuptools
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-rfc3987
+BuildRequires: python3-module-language-tags
+BuildRequires: python3-module-html5lib
+%endif
 
 %description
 This library helps abstract vocabularies (thesauri, controlled lists,
@@ -35,14 +41,18 @@ where deemed useful.
 %python3_install
 
 %check
-export LC_ALL=en_US.UTF-8
-python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc *.rst LICENSE
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Fri Apr 14 2023 Anton Vyatkin <toni@altlinux.org> 1.2.0-alt1
+- New version 1.2.0.
+
 * Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt2.git20141218
 - build python3 module
 
