@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 6.0.5
+Version: 6.0.6
 Release: alt1
 Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
@@ -93,6 +93,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Fri Apr 14 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.6-alt1
+- New version 6.0.6.
+
 * Thu Mar 23 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt1
 - New version (6.0.5).
 
