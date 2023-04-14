@@ -32,7 +32,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.4.2
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -380,7 +380,7 @@ sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = $QM
 
 # remove some bundled libs to ensure they're not accidentally used
 pushd src/3rdparty
-rm -rf freetype libjpeg libpng zlib xcb
+rm -rf freetype/{src,include} libjpeg libpng zlib xcb
 popd
 
 # exclude from build
@@ -808,6 +808,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Thu Apr 13 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
+- fix to build docs
+
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 
