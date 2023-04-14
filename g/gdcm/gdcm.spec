@@ -6,7 +6,9 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/castxml /usr/bin/latex java-devel-default libcurl-devel libqt4-devel rpm-build-java rpm-build-perl zlib-devel
+BuildRequires: /usr/bin/latex java-devel-default libcurl-devel libqt4-devel rpm-build-java rpm-build-perl zlib-devel
+# castxml is only used with GDCM_WRAP_CSHARP=ON but it's OFF
+#BuildRequires: /usr/bin/castxml
 # END SourceDeps(oneline)
 BuildRequires: xsltproc
 %define fedora 34
@@ -28,7 +30,7 @@ BuildRequires: /usr/bin/git
 
 Name:       gdcm
 Version:    3.0.12
-Release:    alt2
+Release:    alt3
 Summary:    Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:    BSD
 URL:        http://gdcm.sourceforge.net/wiki/index.php/Main_Page
@@ -174,6 +176,9 @@ rm -rf Utilities/wxWidgets
 #rm -rf Utilities/gdcmmd5
 
 %build
+%ifarch %e2k
+%add_optflags -std=c++17
+%endif
 %{fedora_v2_cmake}  .. \
     -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DGDCM_INSTALL_PACKAGE_DIR=%{_libdir}/cmake/%{name} \
@@ -306,6 +311,9 @@ make test -C %{__cmake_builddir} || exit 0
 %{python3_sitelibdir}/__pycache__/%{name}*
 
 %changelog
+* Fri Apr 14 2023 Michael Shigorin <mike@altlinux.org> 3.0.12-alt3
+- E2K: fix build (ilyakurdyukov@)
+
 * Mon May 23 2022 Slava Aseev <ptrnine@altlinux.org> 3.0.12-alt2
 - do not pack manuals for non-existent executables (closes: #42141)
 - remove import.info
