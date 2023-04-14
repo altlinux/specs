@@ -4,8 +4,8 @@
 %define majver 7.0
 
 Name: kicad
-Version: 7.0.0
-Release: alt1.1
+Version: 7.0.2
+Release: alt1
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -173,6 +173,9 @@ rm -r %buildroot/%_datadir/locale/pt_br
 %dir %_datadir/kicad/template
 
 %changelog
+* Fri Apr 14 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.2-alt1
+- New version 7.0.2.
+
 * Mon Mar 13 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:7.0.0-alt1.1
 - Fixed build for Elbrus.
 
