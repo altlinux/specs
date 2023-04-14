@@ -1,6 +1,6 @@
 Name: mate-terminal
 Version: 1.26.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Terminal emulator for MATE
 License: GPLv3+
@@ -8,7 +8,7 @@ Group: Graphical desktop/MATE
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Provides: xvt
+Provides: xvt x-terminal-emulator
 
 Source: %name-%version.tar
 Source1: mate-submodules-%name.tar
@@ -38,7 +38,9 @@ clickable URLs.
 mkdir -p %buildroot%_altdir
 cat << __EOF__ > %buildroot%_altdir/%name
 %_bindir/xvt    %_bindir/%name  48
+%_bindir/x-terminal-emulator    %_bindir/%name  48
 __EOF__
+
 
 %find_lang %name --with-gnome --all-name
 
@@ -53,6 +55,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Fri Apr 14 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
+- provides x-terminal-emulator (closes: #45558)
+
 * Sun Aug 08 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
 - 1.26.0
 
