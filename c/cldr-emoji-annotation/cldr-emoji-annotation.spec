@@ -1,4 +1,4 @@
-%define ver_major 42
+%define ver_major 43
 %define tag_ver release-%ver_major
 %def_enable check
 
@@ -96,6 +96,9 @@ done
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Sat Apr 15 2023 Yuri N. Sedunov <aris@altlinux.org> 43-alt1
+- 43
+
 * Thu Nov 17 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt1
 - 42
 
