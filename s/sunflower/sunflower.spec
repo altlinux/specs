@@ -1,7 +1,7 @@
 %define oname Sunflower
 Name:    sunflower
 Version: 0.5.63
-Release: alt2
+Release: alt3
 
 Summary: Small and highly customizable twin-panel file manager for Linux with support for plugins
 License: GPL-3.0
@@ -35,6 +35,18 @@ file manager that seamlessly integrates into the GNOME desktop environment
 
 %prep
 %setup
+rm -fr ./translations/be
+rm -fr ./translations/ca
+rm -fr ./translations/cs_CZ
+rm -fr ./translations/de_DE
+rm -fr ./translations/eh_AU
+rm -fr ./translations/lv
+rm -fr ./translations/nl_BE
+rm -fr ./translations/pl_PL
+rm -fr ./translations/ru_RU
+rm -fr ./translations/sv
+rm -fr ./translations/tr
+rm -fr ./translations/zh_TW
 %patch1 -p1
 %patch2 -p1
 
@@ -53,6 +65,9 @@ file manager that seamlessly integrates into the GNOME desktop environment
 %_datadir/applications/%oname.desktop
 
 %changelog
+* Fri Apr 14 2023 Alexander Burmatov <thatman@altlinux.org> 0.5.63-alt3
+- Remove empty translations
+
 * Tue Apr 11 2023 Alexander Burmatov <thatman@altlinux.org> 0.5.63-alt2
 - Add translations (tnx respublica@)
 
