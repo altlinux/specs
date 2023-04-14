@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -52,7 +52,7 @@ Requires: kde5-display-manager
 Requires: plasma5-polkit-kde-agent kf5-kio-extras plasma5-breeze plasma5-powerdevil plasma5-systemmonitor
 Requires: plasma5-drkonqi plasma5-milou plasma5-systemsettings plasma5-integration
 Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
-Requires: kde5-kcalc kde5-kdebugsettings kde5-kross-python
+Requires: kde5-kcalc kde5-kross-python
 %description -n kde5-small
 %summary
 
@@ -125,6 +125,7 @@ Requires: kde5-juk kde5-kmouth
 Requires: kdenlive
 Requires: kde5-k3b kde5-kwave kde5-konversation
 Requires: kde5-digikam
+Requires: kde5-kdebugsettings
 %description -n kde5-maxi
 %summary
 
@@ -227,6 +228,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Fri Apr 14 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- don't require kde5-kdebugsettings for all
+
 * Mon Dec 26 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - clean requires
 
