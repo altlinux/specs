@@ -1,6 +1,7 @@
-Name: ghostscript
-Version: 10.01.1
-Release: alt1
+%define origname ghostscript
+Name: ghostscript9
+Version: 9.54.0
+Release: alt4
 
 %define ijsver	0.35
 %global origver %version
@@ -20,99 +21,46 @@ Source2: ghostscript.unused
 Source3: README.patches
 
 ## FC patches
-Patch1: FC-10.01.0-pdfwrite-Substituted-TTF-CIDFont-CID-hand.patch
-Patch2: FC-10.01.0-convert-defaultpage-to-lowercase.patch
-Patch3: FC-10.01.0-CVE-2023-28879.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-1004_enable_spot_devices.patch
-Patch102: Ubuntu-2001_docdir_fix_for_debian.patch
-Patch103: Ubuntu-2002_gs_man_fix_debian.patch
-Patch104: Ubuntu-2003_support_multiarch.patch
-Patch105: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
-Patch106: Ubuntu-2005_fix_Debian_paths_in_docs.patch
-Patch107: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
-Patch108: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
-Patch109: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
+Patch101: Ubuntu-2001_docdir_fix_for_debian.patch
+Patch102: Ubuntu-2002_gs_man_fix_debian.patch
+Patch103: Ubuntu-2003_support_multiarch.patch
+Patch104: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
+Patch105: Ubuntu-2005_fix_Debian_paths_in_docs.patch
+Patch106: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
+Patch107: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
+Patch108: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
+Patch109: Ubuntu-2009_use_system_javascript.patch
 Patch110: Ubuntu-2010_add_build_timestamp_setting.patch
 Patch111: Ubuntu-2011_avoid_remote_font.patch
-Patch112: Ubuntu-020220925~387f094.patch
+Patch112: Ubuntu-2012_avoid_googletagmanager.patch
+Patch113: Ubuntu-CVE-2020-15900.patch
 
 ## ALT patches
 Patch500: ghostscript-alt-ijs-version.patch
 Patch501: alt-urw-fonts-naming.patch
 Patch502: ghostscript-9.23-100-run-dvipdf-securely.patch
-
-#compatibility requires
-Requires: %name-classic = %version-%release
-Provides: %esp_name = %version, %gnu_name = %version
-Obsoletes: %gnu_name, %esp_name
-
-# Automatically added by buildreq on Mon Aug 27 2018
-# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libSM-devel libX11-devel libXext-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libpng-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl pkg-config python-base python-modules python3 python3-base sh3 xorg-proto-devel zlib-devel
-BuildRequires: docbook-utils-print ghostscript-utils glibc-devel-static imake libXt-devel libcups-devel libexpat-devel libgtk+3-devel libjpeg-devel libopenjpeg2.0-devel libpaper-devel libtiff-devel xorg-cf-files
+Patch600: CVE-2021-3781.patch
 
 # Eliminate libpng12-devel
-BuildRequires: libpng-devel
+# Automatically added by buildreq on Thu Apr 13 2023
+# optimized out: fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libfreetype-devel libgpg-error libpng-devel perl pkg-config python3 python3-base sh4 zlib-devel
+BuildRequires: libcups-devel libjpeg-devel libopenjpeg2.0-devel libpaper-devel libtiff-devel
 
-%package module-X
-Summary: PostScript interpreter and renderer (additional support for X)
-Group: Publishing
-Requires: %name-classic = %version-%release
-Provides: %esp_name-module-X = %version, %gnu_name-module-X = %version
-Obsoletes: %gnu_name-module-X, %esp_name-module-X
+BuildRequires: libpng-devel libfreetype-devel
 
-%package utils
-Summary: Additional tools for configuring printers
-Group: Publishing
-Requires: %name-classic = %version-%release
-Provides: %esp_name-utils = %version, %gnu_name-utils = %version
-Obsoletes: %gnu_name-utils, %esp_name-utils
-BuildArch: noarch
-
-%package -n libgs
+%package -n libgs9
 Summary: Shared library for %name
 Group: Publishing
 Provides: %esp_name-lib = %version, %gnu_name-lib = %version, %name-lib = %version
 Obsoletes: %gnu_name-lib, %esp_name-lib, %name-lib
-
-%package -n libgs-devel
-Summary: Development library for %name
-Group: Development/C
-
-%package classic
-Summary: classic edition of %name
-Group: Publishing
-Requires: %name-common = %version-%release
-Provides: %esp_name-classic = %version, %gnu_name-classic = %version, %name-minimal = %version
-Obsoletes: %gnu_name-classic, %esp_name-classic, %name-minimal
-
-%package gtk
-Summary: %name with gtk
-Group: Publishing
-Provides: %esp_name-gtk = %version, %gnu_name-gtk = %version
-Obsoletes: %gnu_name-gtk, %esp_name-gtk
-
-%package -n libijs
-Summary: Dynamic library for the IJS printer driver plug-in interface
-Version: %{ijsver}_%version
-Group: Publishing
-Provides: libespijs = %version, libgnuijs = %version
-Obsoletes: libgnuijs, libespijs
-
-%package -n libijs-devel
-Summary: Headers and links for compiling against
-Group: Development/C
-Requires: libijs = %version-%release
-Provides: libespijs-devel = %version, libgnuijs-devel = %version
-Obsoletes: libgnuijs-devel, libespijs-devel
 
 %package common
 Version: %origver
 Summary: Common files for the %name
 Group: Publishing
 Requires: urw-fonts >= 1.1
-Requires: %name-classic = %version-%release
 Provides: %esp_name-common = %version, %gnu_name-common = %version
 Obsoletes: %gnu_name-common, %esp_name-common
 BuildArch: noarch
@@ -134,40 +82,8 @@ models.
 You should install ghostscript if you need to display PostScript files, or
 if you have a non-PostScript printer.
 
-%description module-X
-Ghostscript is a PostScript interpreter. It can render both PostScript
-and PDF compliant files to devices which include an X window, many printer
-formats (including support for colour printers), and popular graphics
-file formats.
-This version enhances ghostscript with X windows support.
-
-%description utils
-Tools for printer maintenance: Setting default options for most laser
-printers (PJL-capable printers), cartridge changing and head aligning
-for inkjet winprinters.
-
-%description -n libijs
-This is the API library for programs using the IJS printer driver
-plug-in interface. Printer drivers using this interface can be added
-to GhostScript (6.53 or newer) without needing to rebuild
-GhostScript. Application programs providing an IJS interface can make
-use of IJS printer drivers directly, without needing GhostScript.
-
-%description -n libijs-devel
-This package contains the static library and the header files needed
-to compile applications using this library.
-
-%description -n libgs
+%description -n libgs9
 Shared library for %name
-
-%description -n libgs-devel
-Development library for %name
-
-%description classic
-Classic edition of %name
-
-%description gtk
-%name with gtk
 
 %description common
 Common files for the %name
@@ -178,28 +94,27 @@ Common files for the %name
 rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/libs
 
 ## FC apply patches
-%patch1 -p1
-%patch2 -p1
-#patch3 -p1
 
 ## Ubuntu apply patches
 %patch101 -p1
-%patch102 -p1
+#patch102 -p1
 #patch103 -p1
-#patch104 -p1
-%patch105 -p1
+%patch104 -p1
+#patch105 -p1
 #patch106 -p1
 #patch107 -p1
 #patch108 -p1
-#patch109 -p1
+%patch109 -p1
 %patch110 -p1
-#patch111 -p1
+%patch111 -p1
 #patch112 -p1
+#patch113 -p1
 
 ## ALT apply patches
 %patch500 -p1
 %patch501 -p1
 %patch502 -p1
+%patch600 -p1
 
 sed -i 's/FT_CALLBACK_DEF(\(.*\))/static \1/g' base/fapi_ft.c
 sed -i 's/ -dNO/ -dNOSAFER -dNO/' lib/pfbtopfa
@@ -207,126 +122,79 @@ sed -i 's/ -dNO/ -dNOSAFER -dNO/' lib/pfbtopfa
 %build
 export CFLAGS=-DA4
 %autoreconf
-cd ijs; %autoreconf; cd -
-%configure \
-           --enable-dynamic \
-	   --disable-hidden-visibility \
-	   --enable-gpdl \
+
+%configure --enable-dynamic \
+	   --disable-gpdl \
 	   --with-system-libtiff \
-           --with-ijs \
+           --without-ijs \
 	   --with-drivers=ALL \
 	   --disable-compile-inits \
+           --without-x \
+           --without-pcl \
+           --without-xps \
+           --without-gpdl \
+           --disable-gtk \
 	   --with-fontpath=/usr/share/fonts/default:\
 /usr/share/fonts/type1:\
 /usr/share/fonts/type1/urw:\
 /usr/share/fonts:\
 %_datadir/ghostscript/conf.d \
 
-cd ijs; %configure --enable-shared --disable-static; cd -
-
-%make_build experimental
-
-# XXX no libgpd.so in 9.27
-%if "%version" == "9.27"
-%make_build so || :
-sed 's#-o ./bin/gpdl#-shared -Wl,-soname=libgpdl.so.9 -o ./sobin/libgpdl.so.%version#
-s#./[^/]*obj/realmain.o ##' < obj/gpdlldt.tr > soobj/gpdlldt.tr
-sh soobj/gpdlldt.tr
-%endif
-
-%make_build so
-
-cd ijs; %make_build; cd -
+%make_build so \
+	prefix=%prefix \
+	mandir=%_mandir \
+	datadir=%_datadir \
+	gsincludedir=%_includedir/ghostscript/ \
+	bindir=%_bindir \
+	libdir=%_libdir \
+	docdir=%_defaultdocdir/%origname-%version \
+	gsdir=%_datadir/%origname \
+	gsdatadir=%_datadir/%origname/%version \
+	gssharedir=%_libdir/%origname/%version \
 
 %install
-make install soinstall \
+make soinstall \
 	prefix=$RPM_BUILD_ROOT%prefix \
 	mandir=$RPM_BUILD_ROOT%_mandir \
 	datadir=$RPM_BUILD_ROOT%_datadir \
 	gsincludedir=$RPM_BUILD_ROOT%_includedir/ghostscript/ \
 	bindir=$RPM_BUILD_ROOT%_bindir \
 	libdir=$RPM_BUILD_ROOT%_libdir \
-	docdir=$RPM_BUILD_ROOT%_docdir/%name-%version \
-	gsdir=$RPM_BUILD_ROOT%_datadir/%name \
-	gsdatadir=$RPM_BUILD_ROOT%_datadir/%name/%version \
-	gssharedir=$RPM_BUILD_ROOT%_libdir/%name/%version \
-	CUPSSERVERROOT=$RPM_BUILD_ROOT`cups-config --serverroot` \
-	CUPSSERVERBIN=$RPM_BUILD_ROOT`cups-config --serverbin` \
-	CUPSDATA=$RPM_BUILD_ROOT`cups-config --datadir`
+	docdir=$RPM_BUILD_ROOT%_defaultdocdir/%origname-%version \
+	gsdir=$RPM_BUILD_ROOT%_datadir/%origname \
+	gsdatadir=$RPM_BUILD_ROOT%_datadir/%origname/%version \
+	gssharedir=$RPM_BUILD_ROOT%_libdir/%origname/%version \
+
 
 # XXX upstream soinstall is incomplete!
-cp -ap sobin/lib* %buildroot%_libdir/
-for N in sobin/g*c; do T="`basename $N`"; T="${T%%c}"; install $N %buildroot%_bindir/$T; done
+# cp -ap sobin/lib* %buildroot%_libdir/
+# for N in sobin/g*c; do T="`basename $N`"; T="${T%%c}"; install $N %buildroot%_bindir/$T; done
 
 # XXX upstream soinstall junk
-rm %buildroot%_bindir/gsc
+# rm %buildroot%_bindir/gsc
 
-cd ijs
-    %makeinstall
-cd -
-
-rm -rf -- %buildroot%_mandir/de
-rm -rf -- %buildroot%_datadir/ghostscript/%version/Resource/Font
-rm -f  -- %buildroot%_bindir/ijs_{client,server}_example
-
-# X11.so always gets loaded, even with 'gs --help'
-mkdir -p %buildroot/etc/buildreqs/packages/ignore.d
-echo %name-module-X >%buildroot/etc/buildreqs/packages/ignore.d/%name-module-X
+# rm -rf -- %buildroot%_mandir/de
+# rm -rf -- %buildroot%_datadir/ghostscript/%version/Resource/Font
+# rm -f  -- %buildroot%_bindir/ijs_{client,server}_example
 
 mkdir -p %buildroot/%_datadir/ghostscript/conf.d
-cp -a examples %buildroot%_docdir/%name-%version
-
-%files
-%doc %_docdir/%name-%version
 
 %files common
 %_datadir/ghostscript
 %_datadir/ghostscript/conf.d
 
-%files classic
-%doc pcl/examples
-%doc xps/tools
-%_bindir/*
-%_man1dir/*
-%exclude %_bindir/unix*
-%exclude %_bindir/dvi*
-%exclude %_bindir/gsx
-%exclude %_man1dir/dvi*
-
-%files gtk
-%_bindir/gsx
-
-%files utils
-%_bindir/dvi*
-%_bindir/unix*
-%_man1dir/dvi*
-
-%files module-X
-%_libdir/ghostscript
-/etc/buildreqs/packages/ignore.d/%name-module-X
-
-%files -n libgs
+%files -n libgs9
 %_libdir/lib*.so.*
-%exclude %_libdir/libijs*
-
-%files -n libgs-devel
-%_libdir/lib*.so
-%_includedir/%name
-%exclude %_libdir/libijs*
-
-%files -n libijs
-%_libdir/libijs.so.*
-
-%files -n libijs-devel
-%doc ijs/README
-%_libdir/pkgconfig/*
-%_libdir/libijs.so
-%_includedir/ijs
+%exclude %_mandir
+%exclude %_defaultdocdir/*
+%exclude %_bindir/*
+%exclude %_includedir
+%exclude %_libdir/*.so
+%exclude %_libdir/ghostscript
 
 %changelog
-* Thu Apr 13 2023 Fr. Br. George <george@altlinux.org> 10.01.1-alt1
-- Autobuild version bump to 10.01.1
-- (Fixes: CVE-2023-28879)
+* Thu Apr 13 2023 Fr. Br. George <george@altlinux.ru> 9.54.0-alt4
+- Build library only version
 
 * Sat Sep 11 2021 Fr. Br. George <george@altlinux.ru> 9.54.0-alt3
 - (Fixes: CVE-2021-3781)
