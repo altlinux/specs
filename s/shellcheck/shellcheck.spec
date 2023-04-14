@@ -3,7 +3,7 @@
 %def_disable getsource
 
 Name: shellcheck
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 License: GPL-3.0-or-later
 Url: https://github.com/koalaman/shellcheck
@@ -65,6 +65,9 @@ cp shellcheck.1 %buildroot%_man1dir
 %_man1dir/shellcheck.1*
 
 %changelog
+* Thu Apr 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.0-alt1
+- Updated to 0.9.0.
+
 * Thu Jan 20 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.0-alt1
 - Updated to 0.8.0.
 
