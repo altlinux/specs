@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.105.0
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -20,6 +20,7 @@ Source10: ru-libplasma5.po
 Patch1: alt-def-theme-wallpaper.patch
 Patch2: alt-plasma-install-dir.patch
 Patch3: alt-armh.patch
+Patch2000: alt-e2k.patch
 
 # Automatically added by buildreq on Thu Feb 19 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -78,6 +79,10 @@ KF5 library
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%ifarch %e2k
+# remove after update to LCC 1.27
+%patch2000 -p2
+%endif
 
 #cat %SOURCE10 >po/ru/libplasma5.po
 
@@ -141,6 +146,10 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Fri Apr 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.105.0-alt2
+- E2K: added patch to fix build with lcc < 1.27.08
+  (ilyakurdyukov@; rare lambda case, see mcst#7731)
+
 * Mon Apr 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.105.0-alt1
 - new version
 
