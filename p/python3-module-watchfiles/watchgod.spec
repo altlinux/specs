@@ -1,20 +1,20 @@
 Name: python3-module-watchfiles
-Version: 0.18.1
+Version: 0.19.0
 Release: alt1
 
 Summary: Simple, modern file watching and code reload in python.
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/watchifiles/
+Url: https://pypi.org/project/watchfiles/
 
 Source0: %name-%version.tar
 Source1: crates.tar
 
 BuildRequires: rust-cargo /proc
+BuildRequires: maturin >= 0.14.17
 BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
-BuildRequires: python3(maturin)
 
 %description
 %summary
@@ -42,6 +42,9 @@ export CARGO_HOME=${PWD}/cargo
 %python3_sitelibdir/watchfiles-%version.dist-info
 
 %changelog
+* Fri Apr 14 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.19.0-alt1
+- 0.19.0 released
+
 * Wed Nov 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.18.1-alt1
 - 0.18.1 released
 
