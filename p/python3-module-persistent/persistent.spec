@@ -4,31 +4,25 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.7.0
+Version: 5.0
 Release: alt1
 
 Summary: Translucent persistent objects
 License: ZPL-2.1
 Group: Development/Python3
-Url: http://www.zope.org/Products/ZODB
-#Git: https://github.com/zopefoundation/persistent.git
+Url: https://pypi.org/project/persistent/
+Vcs: https://github.com/zopefoundation/persistent.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-alabaster
-BuildRequires: python3-module-docutils
-BuildRequires: python3-module-html5lib
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-objects.inv
 BuildRequires: python3-module-repoze.sphinx.autointerface
 BuildRequires: python3-dev
 %if_with check
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-zope
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-manuel
 BuildRequires: python3-module-manuel-tests
@@ -70,37 +64,28 @@ ln -s ../objects.inv3 docs/
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-install -p -m644 persistent/_compat.h \
+%pyproject_install
+install -p -m644 src/persistent/_compat.h \
 	%buildroot%_includedir/python%_python3_version%_python3_abiflags/
 
+# Build documentation
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
 
-%check
-export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH=%python3_sitelibdir:%python3_sitelibdir_noarch
-sed -i 's|zope-testrunner|zope-testrunner3|g' tox.ini
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
+rm -f docs/_build/html/.buildinfo
 
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -v
+%check
+%tox_check_pyproject
 
 %files
 %doc *.txt
 %_includedir/python%_python3_version%_python3_abiflags
 %python3_sitelibdir/%oname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/%oname/test*
-%python3_sitelibdir/*.egg-info
 
 %files docs
 %doc docs/_build/html/*
@@ -109,6 +94,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -
 %python3_sitelibdir/%oname/test*
 
 %changelog
+* Fri Apr 14 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Mon May 10 2021 Grigory Ustinov <grenka@altlinux.org> 4.7.0-alt1
 - Automatically updated to 4.7.0.
 
