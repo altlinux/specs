@@ -6,7 +6,7 @@
 Name: kdump-tools
 Summary: Scripts and configuration files to use kdump
 Version: 1.8
-Release: alt3
+Release: alt4
 Group: System/Kernel and hardware
 License: GPL-2.0-or-later
 Vcs: https://salsa.debian.org/debian/kdump-tools.git
@@ -88,6 +88,9 @@ install -d -m755 /var/crash
 # NB: We don't install /var/lib/kdump
 
 %changelog
+* Sat Apr 15 2023 Vitaly Chikunov <vt@altlinux.org> 1.8-alt4
+- Fix (ALT beekeeper) rebuild after shellcheck update.
+
 * Sun Dec 04 2022 Vitaly Chikunov <vt@altlinux.org> 1.8-alt3
 - Secure permissions for dumps.
 - Remove timestamp out of dump/dmesg file extensions, and rename 'dump'
