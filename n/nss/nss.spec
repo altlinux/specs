@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.88.1
+Version:	3.89.0
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -13,7 +13,8 @@ Source4:	nss-db-%version.tar
 Source5:	setup-nsssysinit.sh
 Source6:	system-pkcs11.txt
 
-Patch1: 0001-Disable-test-dbtest-r-w-in-a-readonly-directory.patch
+Patch0001: 0001-Disable-test-dbtest-r-w-in-a-readonly-directory.patch
+Patch0002: 0002-ALT-Disable-flaky-tests.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  chrpath zlib-devel libsqlite3-devel
@@ -100,7 +101,8 @@ Netscape Network Security Services Utilities
 
 %prep
 %setup -q
-%patch1 -p1 -d nss
+cd nss
+%autopatch -p1
 
 %build
 mkdir -p bin
@@ -259,6 +261,9 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Wed Apr 12 2023 Alexey Gladkov <legion@altlinux.ru> 3.89.0-alt1
+- New version (3.89).
+
 * Mon Feb 13 2023 Alexey Gladkov <legion@altlinux.ru> 3.88.1-alt1
 - New version (3.88.1).
 

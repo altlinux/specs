@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 111.0
+Version: 112.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -15,15 +15,16 @@ Patch001: 0001-FEDORA-build-arm-libopus.patch
 Patch002: 0002-FEDORA-build-arm.patch
 Patch003: 0003-ALT-Fix-aarch64-build.patch
 Patch004: 0004-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch005: 0005-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch006: 0006-use-floats-for-audio-on-arm-too.patch
-Patch007: 0007-bmo-847568-Support-system-harfbuzz.patch
-Patch008: 0008-bmo-847568-Support-system-graphite2.patch
-Patch009: 0009-bmo-1559213-Support-system-av1.patch
-Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch011: 0011-ALT-fix-double_t-redefinition.patch
-Patch012: 0012-build-Disable-Werror.patch
-Patch013: 0013-WAYLAND-call-wl_display_roundtrip-early.patch
+Patch005: 0005-use-floats-for-audio-on-arm-too.patch
+Patch006: 0006-bmo-847568-Support-system-harfbuzz.patch
+Patch007: 0007-bmo-847568-Support-system-graphite2.patch
+Patch008: 0008-bmo-1559213-Support-system-av1.patch
+Patch009: 0009-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch010: 0010-ALT-fix-double_t-redefinition.patch
+Patch011: 0011-build-Disable-Werror.patch
+Patch012: 0012-WAYLAND-call-wl_display_roundtrip-early.patch
+Patch013: 0013-Bug-1827429-Wayland-Call-NotifyOcclusionState-Occlus.patch
+Patch014: 0014-Bug-1826583-Wayland-Don-t-crash-on-Wayland-log-handl.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -320,11 +321,11 @@ make -C objdir \
 
 # install altlinux-specific configuration
 install -D -m 644 .rpm/firefox-prefs.js %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
-install -D -m 644 .rpm/firefox-privacy-prefs.js %buildroot/%_sysconfdir/firefox/pref/all-privacy.js
+install -D -m 644 .rpm/firefox-privacy-prefs.js %buildroot/%_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 sed -i \
 	-e 's#@VERSION@#%{version}#g' \
-	%buildroot/%_sysconfdir/firefox/pref/all-privacy.js
+	%buildroot/%_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 cat > %buildroot/%firefox_prefix/browser/defaults/preferences/firefox-l10n.js <<EOF
 pref("intl.locale.matchOS", true);
@@ -392,9 +393,18 @@ rm -rf -- \
 	done
 )
 
+%triggerin -- firefox < 112.0-alt1
+if [ -d "%_sysconfdir/firefox/pref" ]; then
+	for f in "%_sysconfdir/firefox/pref"/*.js "%_sysconfdir/firefox/pref"/*.js.*; do
+		[ ! -e "$f" ] ||
+			cp -af -- "$f" "%_sysconfdir/firefox/defaults/pref/"
+	done
+fi
+
 %files
 %dir %_sysconfdir/firefox
-%dir %_sysconfdir/firefox/pref
+%dir %_sysconfdir/firefox/defaults
+%dir %_sysconfdir/firefox/defaults/pref
 %_altdir/firefox
 %_bindir/firefox
 %_bindir/firefox-wayland
@@ -411,9 +421,35 @@ rm -rf -- \
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %files -n firefox-config-privacy
-%config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
+%config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Apr 12 2023 Alexey Gladkov <legion@altlinux.ru> 112.0-alt1
+- New release (112.0).
+- Security fixes:
+  + CVE-2023-29531: Out-of-bound memory access in WebGL on macOS
+  + CVE-2023-29532: Mozilla Maintenance Service Write-lock bypass
+  + CVE-2023-29533: Fullscreen notification obscured
+  + CVE-2023-29534: Fullscreen notification could have been obscured on Firefox for Android
+  + MFSA-TMP-2023-0001: Double-free in libwebp
+  + CVE-2023-29535: Potential Memory Corruption following Garbage Collector compaction
+  + CVE-2023-29536: Invalid free from JavaScript code
+  + CVE-2023-29537: Data Races in font initialization code
+  + CVE-2023-29538: Directory information could have been leaked to WebExtensions
+  + CVE-2023-29539: Content-Disposition filename truncation leads to Reflected File Download
+  + CVE-2023-29540: Iframe sandbox bypass using redirects and sourceMappingUrls
+  + CVE-2023-29541: Files with malicious extensions could have been downloaded unsafely on Linux
+  + CVE-2023-29542: Bypass of file download extension restrictions
+  + CVE-2023-29543: Use-after-free in debugging APIs
+  + CVE-2023-29544: Memory Corruption in garbage collector
+  + CVE-2023-29545: Windows Save As dialog resolved environment variables
+  + CVE-2023-29546: Screen recording in Private Browsing included address bar on Android
+  + CVE-2023-29547: Secure document cookie could be spoofed with insecure cookie
+  + CVE-2023-29548: Incorrect optimization result on ARM64
+  + CVE-2023-29549: Javascript's bind function may have failed
+  + CVE-2023-29550: Memory safety bugs fixed in Firefox 112 and Firefox ESR 102.10
+  + CVE-2023-29551: Memory safety bugs fixed in Firefox 112
+
 * Tue Mar 14 2023 Alexey Gladkov <legion@altlinux.ru> 111.0-alt1
 - New release (111.0).
 - Exclude arch i586.
