@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 4.0.38
+Version: 4.0.39
 Release: alt1
 
 Summary: Python ODBC bridge
@@ -48,6 +48,9 @@ python3 tests3/sqlitetests.py -v "Driver=SQLITE3;Database=sqlite.db"
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Sat Apr 15 2023 Anton Vyatkin <toni@altlinux.org> 4.0.39-alt1
+- New version 4.0.39.
+
 * Wed Apr 12 2023 Anton Vyatkin <toni@altlinux.org> 4.0.38-alt1
 - New version 4.0.38.
 
