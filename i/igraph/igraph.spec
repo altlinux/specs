@@ -1,18 +1,22 @@
 %define llvm_ver 15
+%ifarch %e2k
+%define gcc_ver %nil
+%else
 %define gcc_ver 12
+%endif
 %define soname 3
 
 %def_disable clang
 
 Name: igraph
 Version: 0.10.4
-Release: alt1
-Summary: Library for creating and manipulating graphs
+Release: alt2
 
+Summary: Library for creating and manipulating graphs
 License: GPL-2.0+
 Group: System/Libraries
-Url: https://igraph.org/
 
+Url: https://igraph.org/
 Source: https://github.com/igraph/igraph/releases/download/%version/igraph-%version.tar.gz
 
 %if_enabled clang
@@ -89,8 +93,10 @@ export CC=clang-%llvm_ver
 export CXX=clang++-%llvm_ver
 export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
 %else
+%if 0%gcc_ver
 export CC=gcc-%gcc_ver
 export CXX=g++-%gcc_ver
+%endif
 %endif
 %cmake \
     -GNinja \
@@ -110,11 +116,11 @@ export CXX=g++-%gcc_ver
     -DIGRAPH_GRAPHML_SUPPORT=1 \
     -DCMAKE_INSTALL_INCLUDEDIR=include/ \
 #
-cmake --build "%_cmake__builddir" -j%__nprocs
+%cmake_build
 
 %install
 %cmake_install
-install -Dm0644 doc/igraph.3 %buildroot%_man3dir/igraph.3
+install -pDm0644 doc/igraph.3 %buildroot%_man3dir/igraph.3
 find . -name '.arch-ids' | xargs rm -rf
 
 %files -n lib%name%soname
@@ -131,6 +137,10 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Sat Apr 15 2023 Michael Shigorin <mike@altlinux.org> 0.10.4-alt2
+- E2K: do not mandate particular gcc version
+- Minor spec cleanup.
+
 * Mon Jan 30 2023 Leontiy Volodin <lvol@altlinux.org> 0.10.4-alt1
 - New version (0.10.4).
 
