@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.1
+Version: 7.2
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,12 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Sat Apr 15 2023 Vitaly Lipatov <lav@altlinux.ru> 7.2-alt1
+- eget: fix get real url again
+- eget: fix embedded mode
+- eget: don't return put error in gateway mode
+- eget: add --compressed (send Accept-Encoding and decode result)
+
 * Wed Apr 12 2023 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt1
 - eget: fix --check
 - eget: add filename support in ipfs://Qm...filename=real.name
