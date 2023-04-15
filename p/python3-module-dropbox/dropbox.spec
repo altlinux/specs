@@ -2,33 +2,40 @@
 
 %define oname dropbox
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 11.36.0
+Version: 11.36.1
 Release: alt1
 
 Summary: A Python SDK for integrating with the Dropbox API v2
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/dropbox/
-
 Vcs: https://github.com/dropbox/dropbox-sdk-python
+
 Source: %name-%version.tar
-Patch0: setup-alt-fix.patch
-Patch1: req-alt-fix.patch
-Patch2: test-req-alt-fix.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-stone
+BuildRequires: python3-module-pytest-mock
+%endif
 
 %description
 %summary.
 
 %prep
 %setup
-%patch0
-%patch1
-%patch2
+
+sed -i "s/__version__ = '.*'/__version__ = '%version'/" dropbox/dropbox_client.py
+
+sed -i '/pytest-runner/d' setup.py
+sed -i 's/import mock/from unittest import mock/' test/unit/test_dropbox_unit.py
 
 %build
 %python3_build
@@ -36,7 +43,9 @@ BuildRequires(pre): rpm-build-python3
 %install
 %python3_install
 
-# Tests require an access token
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -vv --ignore test/integration/
 
 %files
 %doc README.rst LICENSE
@@ -45,6 +54,9 @@ BuildRequires(pre): rpm-build-python3
 
 
 %changelog
+* Sat Apr 15 2023 Anton Vyatkin <toni@altlinux.org> 11.36.1-alt1
+- new version 11.36.1
+
 * Thu Feb 16 2023 Anton Vyatkin <toni@altlinux.org> 11.36.0-alt1
 - new version 11.36.0 (Closes #44637).
 
