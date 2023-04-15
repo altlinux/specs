@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: vcmi
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
@@ -12,8 +12,6 @@ Group: Games/Strategy
 Url: http://wiki.vcmi.eu/index.php?title=Main_Page
 Source0: %name-%version.tar
 #Patch: %name-%version-%release.patch
-
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 # Currently only luajit compiles with VCMI
 ExclusiveArch: %luajit_arches
@@ -49,6 +47,7 @@ BuildRequires: pkgconfig(zlib)
 BuildRequires: tbb-devel
 BuildRequires: libfuzzylite-devel >= 6.0
 BuildRequires: libluajit-devel
+BuildRequires: qt5-tools-devel
 #BuildRequires: git-core
 
 Requires: ffmpeg
@@ -109,7 +108,7 @@ mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/libvcmi.so
 rm -f %buildroot%_libdir/*.a
 
 %files
-%doc README.md AUTHORS ChangeLog
+%doc README.md AUTHORS
 %_bindir/%{name}*
 %_datadir/%name/
 %_datadir/metainfo/eu.vcmi.VCMI.metainfo.xml
@@ -119,6 +118,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Sat Dec 24 2022 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
 - new version 1.1.0
 
