@@ -10,7 +10,7 @@
 
 Name: igraph
 Version: 0.10.4
-Release: alt2
+Release: alt2.1
 
 Summary: Library for creating and manipulating graphs
 License: GPL-2.0+
@@ -98,6 +98,9 @@ export CC=gcc-%gcc_ver
 export CXX=g++-%gcc_ver
 %endif
 %endif
+%ifarch %e2k
+export LDFLAGS="$LDFLAGS -fopenmp"
+%endif
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -137,6 +140,9 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Sat Apr 15 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.10.4-alt2.1
+- E2K: fixed underlinked libigraph.so
+
 * Sat Apr 15 2023 Michael Shigorin <mike@altlinux.org> 0.10.4-alt2
 - E2K: do not mandate particular gcc version
 - Minor spec cleanup.
