@@ -9,7 +9,7 @@
 
 Name: cgit
 Version: 1.2.3
-Release: alt1
+Release: alt2
 
 Summary: A hyperfast web frontend for git repositories written in C
 Url: https://git.zx2c4.com/cgit/
@@ -111,6 +111,9 @@ install -Dp -m0644 httpd.conf %buildroot/%cgit_httpd_conf
 %_sysconfdir/%cgitrc
 
 %changelog
+* Sat Apr 15 2023 Alexandr Shashkin <dutyrok@altlinux.org> 1.2.3-alt2
+- cgitrc.example: add lines from man cgitrc example
+
 * Sat Oct 01 2022 Alexandr Shashkin <dutyrok@altlinux.org> 1.2.3-alt1
 - Initial build for sisyphus
 
