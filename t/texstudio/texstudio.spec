@@ -6,8 +6,8 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libqt4-devel p
 %define _localstatedir %{_var}
 %define fontpkgname texstudio
 Name:           texstudio
-Version:        4.5.1
-Release:        alt2
+Version:        4.5.2
+Release:        alt1
 
 Summary:        A feature-rich editor for LaTeX documents
 # texstudio binary: GPLv3 due to static linkage of bundled qcodeedit
@@ -134,6 +134,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %doc utilities/AUTHORS utilities/COPYING utilities/manual/CHANGELOG.txt
 
 %changelog
+* Sun Apr 16 2023 Ilya Mashkin <oddity@altlinux.ru> 4.5.2-alt1
+- 4.5.2
+
 * Mon Feb 06 2023 Ilya Mashkin <oddity@altlinux.ru> 4.5.1-alt2
 - Remove some unneeded BR
 
