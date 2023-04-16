@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo
-Version: 4.4.20
+Version: 6.0.5
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
@@ -20,14 +20,14 @@ ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 
 BuildRequires(pre): rpm-macros-valgrind
 
-BuildRequires: /proc gcc-c++ python3-module-pymongo python3-module-pkg_resources scons
+BuildRequires: /proc gcc-c++ python3-module-pymongo python3-module-pkg_resources
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
 BuildRequires: libyaml-cpp-devel zlib-devel python-modules-json
 BuildRequires: python3-module-Cheetah python3-module-yaml python3-module-psutil
-BuildRequires: libcurl-devel
+BuildRequires: libcurl-devel python3-module-packaging
 BuildRequires: liblzma-devel
 
 %if_enabled valgrind
@@ -71,10 +71,9 @@ MongoDB instance.
 
 %prep
 %setup
-
-# CRLF -> LF
-sed -i 's/\r//' README
-
+#%%ifarch aarch64
+#patch -p1 < patch-fix-build-gcc12-aarch64.patch
+#%%endif
 
 %build
 %ifarch aarch64
@@ -95,29 +94,27 @@ sed -i 's/\r//' README
        --use-system-zlib \\\
        --use-system-stemmer \\\
        --use-system-yaml \\\
-       --nostrip \\\
        --use-sasl-client \\\
        %opt_wt \\\
        --ssl=on \\\
+       --release \\\
        MONGO_VERSION="%{version}-%{release}" \\\
        --disable-warnings-as-errors \\\
        CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
-scons %build_opts --install-mode=legacy core
+python3 src/third_party/scons-3.1.2/scons.py %build_opts
 
 %install
-
 # cow@: It seems that mongo 4.2 + scons 3.1.1 doesn't provide a clean way to
 # specify location to install binaries (at least I wasn't able to find it).
-install -p -D -m 755 mongod %buildroot%_bindir/mongod
-install -p -D -m 755 mongos %buildroot%_bindir/mongos
-install -p -D -m 755 mongo %buildroot%_bindir/mongo
+install -p -D -m 755 build/install/bin/mongod %buildroot%_bindir/mongod
+install -p -D -m 755 build/install/bin/mongos %buildroot%_bindir/mongos
 
 mkdir -p %buildroot%_logdir/%name
 mkdir -p %buildroot%_runtimedir/%name
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_man1dir
-cp debian/*.1 %buildroot%_man1dir/
+cp debian/{mongod,mongos}.1 %buildroot%_man1dir/
 
 #mongod
 install -p -D -m 644 mongod.logrotate %buildroot%_logrotatedir/mongod
@@ -161,14 +158,8 @@ rm -fr build
 %preun server-mongos
 %preun_service mongos
 
-
-%files
-%doc README LICENSE-Community.txt
-%_bindir/mongo
-%_man1dir/*
-
 %files server-mongod
-%doc README LICENSE-Community.txt
+%doc README.md LICENSE-Community.txt
 %config(noreplace) %_sysconfdir/%name/mongod.conf
 %config(noreplace) %_sysconfdir/sysconfig/mongod
 %config(noreplace) %_logrotatedir/mongod
@@ -182,7 +173,7 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %files server-mongos
-%doc README LICENSE-Community.txt
+%doc README.md LICENSE-Community.txt
 %config(noreplace) %_sysconfdir/%name/mongos.conf
 %config(noreplace) %_sysconfdir/sysconfig/mongos
 %config(noreplace) %_logrotatedir/mongos
@@ -195,6 +186,11 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Apr 12 2023 Alexei Takaseev <taf@altlinux.org> 6.0.5-alt1
+- 6.0.5 (ALT#45823)
+- Remove /usr/bin/mongo as deprecated on 5.0 and deleted on 6.0
+- Build with bandled scons
+
 * Wed Apr 12 2023 Alexei Takaseev <taf@altlinux.org> 4.4.20-alt1
 - 4.4.20
 
