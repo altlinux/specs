@@ -1,12 +1,13 @@
 Name: taucs
 Version: 2.2
-Release: alt12
+Release: alt12.1
+
 Summary: C library of sparse linear solvers
 License: MIT
 Group: Sciences/Mathematics
+
 Url: http://www.tau.ac.il/~stoledo/taucs/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 Source: %name-%version.tar.gz
 
 Requires: lib%name = %version-%release
@@ -34,7 +35,7 @@ BuildArch: noarch
 %description doc
 TAUCS is a C library of sparse linear solvers.
 
-This package documentation for TAUCS.
+This package contains documentation for TAUCS.
 
 %package -n lib%name
 Summary: Shared library of TAUCS
@@ -60,6 +61,11 @@ This package contains development files of TAUCS.
 rm -fR $(find ./ -name CVS) external/lib
 rm -f progs/taucs_cilk_test.c
 
+%ifarch %e2k
+# ...at least with lcc 1.26.16; looks like it's somewhat common case
+sed -i 's,^LIBF77 = -lgfortran,& -lquadmath,' config/linux.mk
+%endif
+
 %build
 OSTYPE=linux ./configure
 %make_build
@@ -78,6 +84,7 @@ rmdir lib/linux/tmp
 %make_build
 
 %install
+find -name exists.log -delete
 install -d %buildroot%_bindir
 for i in direct iter taucs_run; do
 	install -m755 bin/linux/$i %buildroot%_bindir
@@ -106,6 +113,10 @@ install -p -m644 doc/%name.pdf %buildroot%_docdir/%name
 %_docdir/%name
 
 %changelog
+* Sun Apr 16 2023 Michael Shigorin <mike@altlinux.org> 2.2-alt12.1
+- E2K: fix build with lcc 1.26.16
+- Minor spec cleanup
+
 * Sat Jan 01 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.2-alt12
 - Fixed build for Elbrus and armh
 
