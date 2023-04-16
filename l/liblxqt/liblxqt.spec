@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: liblxqt
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Core utility library for LxQt components
@@ -69,6 +69,9 @@ This package provides the development files for LXQt library.
 %_datadir/cmake/*/
 
 %changelog
+* Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
+- New version 1.3.0.
+
 * Sat Nov 05 2022 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 

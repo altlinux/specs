@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-config
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
 License: LGPL
@@ -11,7 +11,6 @@ Group: Graphical desktop/Other
 
 Url: https://lxqt.org
 Source: %name-%version.tar
-Patch: 0001-lxqt-config-monitor-add-more-header-file-inclusion-f.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: libXau-devel libXcursor-devel libXdmcp-devel libXfixes-devel
@@ -60,6 +59,9 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
+- New version 1.3.0.
+
 * Tue Mar 07 2023 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt2
 - add upstream patch and build option '-DCMAKE_CXX_STANDARD=17' for
   fix build with libkscreen >= 5.26.90 (Closes: 45508)

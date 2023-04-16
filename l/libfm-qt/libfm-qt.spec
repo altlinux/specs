@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfm-qt
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
@@ -46,7 +46,8 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.h' -print0 |
 %endif
 
 %build
-%cmake -DREQUIRED_QT_VERSION=5.9
+%cmake
+export NPROCS=1
 %cmake_build
 
 %install
@@ -68,6 +69,12 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
+- New version 1.3.0.
+
+* Sat Nov 26 2022 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1.1
+- fix
+
 * Sat Nov 05 2022 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 

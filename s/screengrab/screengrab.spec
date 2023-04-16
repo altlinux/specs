@@ -4,7 +4,7 @@
 #set_verify_elf_method relaxed
 
 Name: screengrab
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: ScreenGrab is a tool for geting screenshots
@@ -70,6 +70,9 @@ sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' 
 %_datadir/metainfo/screengrab.metainfo.xml
 
 %changelog
+* Sun Apr 16 2023 Anton Midyukov <antohami@altlinux.org> 2.6.0-alt1
+- New version 2.6.0.
+
 * Sat Nov 05 2022 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
 - new version 2.5.0
 

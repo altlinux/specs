@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    qps
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 Summary: Visual process status monitor
 License: GPLv2+
@@ -65,6 +65,9 @@ convert -resize 16x16 icon/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 2.7.0-alt1
+- New version 2.7.0.
+
 * Sat Nov 05 2022 Anton Midyukov <antohami@altlinux.org> 2.6.0-alt1
 - new version 2.6.0
 

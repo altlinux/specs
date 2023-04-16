@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-panel
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Desktop panel
@@ -87,6 +87,9 @@ This package provides the development files for %name.
 %_includedir/*/*.h
 
 %changelog
+* Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
+- New version 1.3.0.
+
 * Sat Nov 05 2022 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
