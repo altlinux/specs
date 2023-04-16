@@ -1,5 +1,5 @@
 Name: lxqt
-Version: 1.2
+Version: 1.3
 Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
@@ -91,6 +91,9 @@ Requires: xdg-desktop-portal-lxqt
 %files regular
 
 %changelog
+* Sun Apr 16 2023 Anton Midyukov <antohami@altlinux.org> 1.3-alt1
+- new version 1.3
+
 * Tue Nov 08 2022 Anton Midyukov <antohami@altlinux.org> 1.2-alt1
 - new version 1.2
 
