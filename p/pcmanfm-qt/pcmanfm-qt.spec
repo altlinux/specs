@@ -3,7 +3,7 @@
 
 Name:    pcmanfm-qt
 Version: 1.3.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
@@ -51,6 +51,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Apr 16 2023 Anton Midyukov <antohami@altlinux.org> 1:1.3.0-alt2
+- alt-settings.patch: fix typo in SuCommand
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1:1.3.0-alt1
 - New version 1.3.0.
 
