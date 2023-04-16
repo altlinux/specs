@@ -8,7 +8,7 @@
 %define unicode_ver 14.0.0
 
 Name: gucharmap
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 Requires: lib%name = %EVR
 Requires: dconf gnome-icon-theme
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson >= %meson_ver unicode-ucd >= %unicode_ver unzip
 BuildRequires: gnome-common desktop-file-utils appdata-tools
 BuildRequires: glib2-devel >= %glib_ver
@@ -134,6 +134,9 @@ character map library.
 %endif
 
 %changelog
+* Sun Apr 16 2023 Yuri N. Sedunov <aris@altlinux.org> 15.0.4-alt1
+- 15.0.4
+
 * Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 15.0.3-alt1
 - 15.0.3
 
