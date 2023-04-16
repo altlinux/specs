@@ -1,5 +1,5 @@
 Name: vifm
-Version: 0.12.1
+Version: 0.13
 Release: alt1
 
 Summary: Two pane file manager with vi-like keybindings
@@ -42,6 +42,9 @@ sed -i 's/#!\/usr\/bin\/env perl/#!\/usr\/bin\/perl/' src/vifm-convert-dircolors
 %_bindir/*
 %_datadir/%name
 %_datadir/zsh/site-functions/_%name
+%_datadir//fish/vendor_completions.d/vifm.fish
+%_datadir/icons/hicolor/128x128/apps/%name.png
+%_datadir/icons/hicolor/scalable/apps/%name.svg
 %_datadir/bash-completion/completions/%name
 %_sysconfdir/%name/colors/Default-256.%name
 %_man1dir/*
@@ -49,6 +52,9 @@ sed -i 's/#!\/usr\/bin\/env perl/#!\/usr\/bin\/perl/' src/vifm-convert-dircolors
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Apr 16 2023 Ilya Mashkin <oddity@altlinux.ru> 0.13-alt1
+- 0.13
+
 * Mon Sep 26 2022 Ilya Mashkin <oddity@altlinux.ru> 0.12.1-alt1
 - 0.12.1
 
