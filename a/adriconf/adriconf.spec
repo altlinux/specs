@@ -1,7 +1,7 @@
 %define name adriconf
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
-%define version 2.6.0
+%define version 2.7.0
 %define release alt1
 
 Summary: Advanced Mesa DRI Configurator
@@ -50,6 +50,9 @@ install -m644 flatpak/org.freedesktop.%name.metainfo.xml %buildroot%{_datadir}/m
 %_iconsdir/*.png
 
 %changelog
+* Sun Apr 16 2023 L.A. Kostis <lakostis@altlinux.ru> 2.7.0-alt1
+- 2.7.0.
+
 * Thu Mar 23 2023 L.A. Kostis <lakostis@altlinux.ru> 2.6.0-alt1
 - 2.6.0.
 - BR: migrate to gtkmm4 + add libatkmm2.36.
