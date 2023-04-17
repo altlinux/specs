@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Builder and installer of Python project
@@ -59,6 +59,9 @@ export PYTHONPATH=$(pwd)/src
 %python3_sitelibdir/%pep503_name-%version.dist-info/
 
 %changelog
+* Fri Apr 14 2023 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1
+- 0.4.0 -> 0.5.0.
+
 * Wed Jan 11 2023 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
 - 0.3.0 -> 0.4.0.
 
