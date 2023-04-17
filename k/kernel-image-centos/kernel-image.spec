@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 297
+%define centos_release 300
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -639,6 +639,42 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Apr 17 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.300-alt1.el9
+- Updated to kernel-5.14.0-300.el9 (fixes: CVE-2023-0386, CVE-2023-1252):
+  + Add support for Interrupt Message Storage (IMS)
+  + blk-mq: fix bad queue mapping created by blk_mq_map_queues()
+  + cifs: fix regression in very old smb1 mounts
+  + clk: imx: imx93: driver updates
+  + CNB: hwrng: core: Misc updates
+  + CNB: netfilter: flowtable updates for unidirectional udp hardware offload
+  + CNB: rebase/update netdevsim for RHEL 9.3
+  + dm: discard IOs on striped or snap LVs can trigger data corruption
+  + Draft: Merge tag 'kernel-5.14.0-284.10.1.el9_2' from 9.2
+  + Draft: Merge tag 'kernel-5.14.0-284.9.1.el9_2' from 9.2
+  + io_uring: update to v5.19
+  + ipvs: add sysctl_run_estimation to support disable estimation
+  + kernel-rt: config: disable KGDB in the production and development variants
+  + kernel-rt: config: disable SLUB_CPU_PARTIAL for real time kernels
+  + KVM: VMX: Fix crash due to uninitialized current_vmcs
+  + Merge tag 'kernel-5.14.0-284.10.1.el9_2' from 9.2
+  + Merge tag 'kernel-5.14.0-284.9.1.el9_2' from 9.2
+  + mm/filemap: fix page end in filemap_get_read_batch
+  + mm: Remember a/d bits for migration entries
+  + nvme: Update the nvme drivers
+  + ovl: fail on invalid uid/gid mapping at copy up
+  + ovl: fix use after free in struct ovl_aio_req
+  + remoteproc: imx_rproc: updates for NXP i.MX93 support
+  + [RHEL-9.3] IPMI updates and bug fixes
+  + scsi: target: update the target driver
+  + sfc: Change VF mac via PF as first preference if available.
+  + soc: imx: imx93-pd and imx93-src updates to not set device_driver owner
+  + Update cpumask and bitmask operations
+  + Update locking code to upstream 6.1 + follow up fixes
+  + Update RHEL9.3 USB And Thunderbolt to linux_v6.1
+  + Updates for powerpc radix
+  + watchdog: imx7ulp: Use devm_clk_get_enabled() helper
+  + x86/cpu: Support AMD autoIBRS in Genoa
+
 * Fri Apr 07 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.297-alt1.el9
 - Updated to kernel-5.14.0-297.el9:
   + CNB: net: rename reference+tracking helpers
