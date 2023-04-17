@@ -2,11 +2,14 @@
 
 %define oname unicode_slugify
 
+%def_without check
+
 Name: python3-module-%oname
 Version: 0.1.5
-Release: alt4
+Release: alt5
+
 Summary: A slugifier that works in unicode
-License: BSD
+License: BSD-3-Clause
 BuildArch: noarch
 Group: Development/Python3
 Url: https://pypi.org/project/unicode-slugify
@@ -15,9 +18,9 @@ Url: https://pypi.org/project/unicode-slugify
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(six) python3(unidecode)
-BuildRequires: python3-module-nose
 
 %description
 Unicode Slugify is a slugifier that generates unicode slugs.
@@ -25,20 +28,6 @@ It was originally used in the Firefox Add-ons web site
 to generate slugs for add-ons and add-on collections.
 Many of these add-ons and collections had
 unicode characters and required more than simple transliteration.
-
-%package tests
-Summary: A slugifier that works in unicode
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Unicode Slugify is a slugifier that generates unicode slugs.
-It was originally used in the Firefox Add-ons web site
-to generate slugs for add-ons and add-on collections.
-Many of these add-ons and collections had
-unicode characters and required more than simple transliteration.
-
-This package contains tests.
 
 %prep
 %setup
@@ -49,6 +38,7 @@ This package contains tests.
 
 %install
 %python3_install
+%python3_prune
 
 %check
 python3 setup.py test
@@ -57,13 +47,12 @@ python3 setup.py test
 %doc README.md LICENSE
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests.*
-%exclude %python3_sitelibdir/%oname/*/tests.*
 
-%files tests
-%python3_sitelibdir/%oname/tests.*
-%python3_sitelibdir/%oname/*/tests.*
 
 %changelog
+* Mon Apr 17 2023 Anton Vyatkin <toni@altlinux.org> 0.1.5-alt5
+- Fix BuildRequires
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.5-alt4
 - Drop python2 support.
 
