@@ -2,8 +2,8 @@
 %define module_name Compress-Stream-Zstd
 
 Name: perl-%module_name
-Version: 0.205
-Release: alt2
+Version: 0.206
+Release: alt1
 
 Summary: Perl interface to the Zstd (Zstandard) (de)compressor
 License: BSD
@@ -43,6 +43,9 @@ sed -i "1i override CFLAGS += %optflags" ext/zstd/*/Makefile
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 0.206-alt1
+- automated CPAN update
+
 * Sun Mar 19 2023 Igor Vlasenko <viy@altlinux.org> 0.205-alt2
 - e2k patch by Ilya Kurdyukov
 
