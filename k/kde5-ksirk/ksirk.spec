@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 22.12.3
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Games/Strategy
@@ -15,6 +15,7 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-libiris-so-version.patch
+Patch2: alt-config-help-btn.patch
 
 # Automatically added by buildreq on Thu Dec 21 2017 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libgpg-error libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules qt5-base-common qt5-base-devel xml-common xml-utils
@@ -56,6 +57,7 @@ Requires: %name-common = %version-%release
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build
@@ -85,6 +87,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libiris_ksirk.so.*
 
 %changelog
+* Mon Apr 17 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt2
+- fix configuration dialog help button
+
 * Tue Mar 07 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 
