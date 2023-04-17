@@ -12,7 +12,7 @@
 
 Name:    docker-engine
 Version: 23.0.3
-Release: alt1
+Release: alt2
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -148,6 +148,10 @@ exit 0
 %_udevrulesdir/80-docker.rules
 
 %changelog
+* Mon Apr 17 2023 Alexey Shabalin <shaba@altlinux.org> 23.0.3-alt2
+- fix integration with flannel (ALT#45878),
+  read DOCKER_NETWORK_OPTIONS from /run/flannel/docker
+
 * Thu Apr 6 2023 Vladimir Didenko <cow@altlinux.org> 23.0.3-alt1
 - 23.0.3
 
