@@ -3,7 +3,7 @@
 
 Name: dm-secdel
 Version: 1.0.9
-Release: alt2
+Release: alt3
 
 Summary: dm-linear with secure deletion on discard
 License: GPL-2.0-only
@@ -51,6 +51,7 @@ make KDIR=$(echo /lib/modules/*-std-def-*/build) VERSION=%version clean all
 # Build and run functional tests
 banner un-def
 make KDIR=$(echo /lib/modules/*-un-def-*/build) VERSION=%version clean all
+[ "$HOSTTYPE" = armh ] || \
 timeout 60 \
 vm-run --kvm=cond --sbin --udevd --kernel=un-def ./tests.sh
 
@@ -71,6 +72,10 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Mon Apr 17 2023 Vitaly Chikunov <vt@altlinux.org> 1.0.9-alt3
+- Fix build for v6.2 (bio_set_op_attrs).
+- spec: Do not run tests on armh.
+
 * Mon Oct 31 2022 Vitaly Chikunov <vt@altlinux.org> 1.0.9-alt2
 - Fix build on v6.0 (bio_op).
 
