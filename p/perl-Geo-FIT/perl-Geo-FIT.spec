@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Geo-FIT
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(HTML/Entities.pm) perl(IPC/System/Simple.pm) perl(Math/BigInt.pm) perl(Module/Build.pm) perl(Test/More.pm)
+BuildRequires: perl(Clone.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(HTML/Entities.pm) perl(IPC/System/Simple.pm) perl(Math/BigInt.pm) perl(Module/Build.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.07
+Version: 1.08
 Release: alt1
 Summary: Decode Garmin FIT files
 Group: Development/Perl
@@ -47,6 +47,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 1.08-alt1
+- automated CPAN update
+
 * Mon Apr 03 2023 Igor Vlasenko <viy@altlinux.org> 1.07-alt1
 - automated CPAN update
 
