@@ -1,22 +1,28 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 0.3
 %define api_ver %ver_major
 %define gupnp_api_ver 1.2
 
-%def_disable soup3
+%def_enable soup3
 %def_enable lua_factory
 %def_enable tracker3
+
+%if 0
 # test_lua_theaudiodb failed for
 %ifnarch %ix86 armh aarch64 %e2k
 %def_enable check
 %else
 %def_disable check
 %endif
+%endif
+
+# dbus tests broken since dbus-1.14.4
+%def_disable check
 
 Name: grilo-plugins
-Version: %ver_major.15
-Release: alt2.1
+Version: %ver_major.16
+Release: alt1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -30,9 +36,9 @@ Source: %name-%version.tar
 %endif
 
 %define tracker3_ver 2.99.2
-%define lua_api_ver 5.3
+%define lua_api_ver 5.4
 
-Requires: grilo-tools >= %version
+Requires: grilo-tools >= 0.3.15-alt2
 %{?_enable_tracker3:Requires: tracker-miners3 >= %tracker3_ver}
 # chromaprint plugin required
 Requires: gst-plugins-bad1.0 >= 1.20.3-alt2
@@ -52,8 +58,10 @@ BuildRequires: libgdata-devel >= 0.17
 BuildRequires: libgom-devel >= 0.3.2
 %if_disabled soup3
 BuildRequires: libsoup-devel >= 2.41.3
+BuildRequires: pkgconfig(libdmapsharing-3.0) >= 2.9.12
 %else
 BuildRequires: libsoup3.0-devel >= 3.0.0
+BuildRequires: pkgconfig(libdmapsharing-4.0) >= 3.9.12
 %endif
 BuildRequires: libgcrypt-devel
 BuildRequires: libgmime3.0-devel
@@ -61,16 +69,15 @@ BuildRequires: libgmime3.0-devel
 BuildRequires: liboauth-devel
 BuildRequires: libgnome-online-accounts-devel >= 3.18.0
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
-BuildRequires: pkgconfig(libdmapsharing-3.0) >= 2.9.12
-#BuildRequires: pkgconfig(libdmapsharing-4.0) >= 3.9.9
 BuildRequires: libjson-glib-devel
 BuildRequires: libavahi-gobject-devel libavahi-glib-devel libavahi-devel
 BuildRequires: libmediaart2.0-devel
 BuildRequires: librest-devel
 BuildRequires: libarchive-devel
+BuildRequires: gst-plugins-bad1.0-devel
 %{?_enable_lua_factory:BuildRequires: liblua%lua_api_ver-devel >= 5.3.0}
 %{?_enable_check:BuildRequires: xvfb-run lua%lua_api_ver
-BuildRequires: grilo-tools tracker-miners3 gst-plugins-bad1.0}
+BuildRequires: grilo-tools tracker-miners3 gst-plugins-bad1.0 upower}
 
 %description
 Grilo is a framework that provides access to different sources of
@@ -120,7 +127,7 @@ This package contains the pkg-config file for Grilo plugins package.
 
 %check
 export LANG=en_US.UTF-8
-xvfb-run %__meson_test
+xvfb-run %__meson_test -t 2
 
 
 %files -f %name.lang
@@ -138,7 +145,7 @@ xvfb-run %__meson_test
 %{?_enable_lua_factory:%_libdir/grilo-%ver_major/libgrlluafactory.so}
 %_libdir/grilo-%ver_major/libgrlmagnatune.so
 %_libdir/grilo-%ver_major/libgrlmetadatastore.so
-%_libdir/grilo-%ver_major/libgrlopensubtitles.so
+%{?_disable_soup3:%_libdir/grilo-%ver_major/libgrlopensubtitles.so}
 %_libdir/grilo-%ver_major/libgrlopticalmedia.so
 %_libdir/grilo-%ver_major/libgrlpodcasts.so
 %_libdir/grilo-%ver_major/libgrlraitv.so
@@ -146,7 +153,7 @@ xvfb-run %__meson_test
 %_libdir/grilo-%ver_major/libgrlthetvdb.so
 %_libdir/grilo-%ver_major/libgrltmdb.so
 %{?_enable_tracker3:%_libdir/grilo-%ver_major/libgrltracker3.so}
-%_libdir/grilo-%ver_major/libgrlyoutube.so
+%{?_disable_soup3%_libdir/grilo-%ver_major/libgrlyoutube.so}
 %if_enabled lua_factory
 %dir %_datadir/%name
 %_datadir/%name/grl-lua-factory/
@@ -158,6 +165,10 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Tue Apr 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1
+- 0.3.16
+- switched build to lua-5.4, libsoup-3.0/libdmapsharing-4.0
+
 * Thu Dec 08 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt2.1
 - removed useless luajson dependency
 

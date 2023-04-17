@@ -1,12 +1,12 @@
 %define ver_major 0.3
 %define api_ver %ver_major
-%def_disable soup3
+%def_enable soup3
 %def_enable gtk_doc
 %def_enable check
 
 Name: grilo
 Version: %ver_major.15
-Release: alt1
+Release: alt2
 
 Summary: Content discovery framework
 Group: Sound
@@ -14,6 +14,7 @@ License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Grilo
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Patch10: grilo-0.3.15-alt-potfiles.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
@@ -96,6 +97,7 @@ Tools for the %name library
 
 %prep
 %setup
+%patch10 -p1
 
 %build
 %meson \
@@ -152,6 +154,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Tue Apr 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt2
+- rebuilt with libsoup-3.0
+
 * Tue Aug 16 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt1
 - 0.3.15
 - made libsoup3 build optional

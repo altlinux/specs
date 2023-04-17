@@ -6,7 +6,7 @@
 %define gst_api_ver 1.0
 
 %def_enable gudev
-%def_disable vala
+%def_enable vala
 %def_enable gtk_doc
 %def_enable daap
 %def_enable grilo
@@ -22,7 +22,7 @@
 %def_disable context
 
 Name: rhythmbox
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1%rev
 
 Summary: Music Management Application
@@ -39,18 +39,18 @@ Source: %name-%version.tar
 %endif
 
 %define dbus_ver 0.35
-%define glib_ver 2.36.0
+%define glib_ver 2.66.0
 %define gst_ver 1.0
 %define gtk_ver 3.20.0
 %define mtp_ver 0.3
 %define brasero_ver 2.31.5
-%define soup_ver 2.42.0
+%define soup3_ver 3.0.7
 %define totem_ver 3.2.0
 %define udev_ver 143
 %define gpod_ver 0.8
 %define mx_ver 1.0.1
 %define secret_ver 0.18
-%define dmapsharing_ver 2.9.19
+%define dmapsharing_ver 3.9.11
 %define grilo_ver 0.3
 
 Requires: lib%name = %EVR
@@ -82,8 +82,7 @@ BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: yelp-tools desktop-file-utils %_bindir/appstream-util
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libdbus-glib-devel >= %dbus_ver
-BuildRequires: libsoup-devel >= %soup_ver
-BuildRequires: libsoup-gnome-devel >= %soup_ver
+BuildRequires: libsoup3.0-devel >= %soup3_ver
 BuildRequires: libbrasero-devel >= %brasero_ver
 BuildRequires: libtotem-pl-parser-devel >= %totem_ver
 BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver
@@ -100,7 +99,7 @@ BuildRequires: libpeas-devel libtdb-devel zlib-devel
 %{?_enable_mtp:BuildRequires: libmtp-devel >= %mtp_ver}
 %{?_enable_grilo:BuildRequires: libgrilo-devel >= %grilo_ver}
 BuildRequires: libavahi-glib-devel
-%{?_enable_daap:BuildRequires: libdmapsharing-devel >= %dmapsharing_ver}
+%{?_enable_daap:BuildRequires: pkgconfig(libdmapsharing-4.0) >= %dmapsharing_ver}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 BuildRequires: libgtk+3-gir-devel libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
 
@@ -345,6 +344,8 @@ This virtual package installs all Rhythmbox plugins
     %{?_disable_brasero:-Dbrasero=disabled} \
     %{?_disable_mtp:-Dmtp=disabled} \
     %{?_disable_ipod:-Dipod=disabled} \
+    %{?_enable_daap:-Ddaap=enabled} \
+    %{?_disable_vala:-Dplugins_vala=disabled} \
     %{?_enable_sample_plugins:-Dsample-plugins=true}
 %nil
 %meson_build
@@ -476,6 +477,9 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %endif
 
 %changelog
+* Sun Apr 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.7-alt1
+- 3.4.7 (ported to libsoup-3.0/libdmapsharing-4.0)
+
 * Wed Jun 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.6-alt1
 - 3.4.6
 
