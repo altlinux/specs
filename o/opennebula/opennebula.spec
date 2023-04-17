@@ -13,7 +13,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.2.0.1
-Release: alt3.1
+Release: alt4
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -43,66 +43,66 @@ BuildRequires: node node-bower node-gyp npm node-devel node-sass libsass libzero
 BuildRequires: ronn
 BuildRequires: groff-base
 %if_with check
-BuildRequires: gem(sinatra) >= 0
-BuildRequires: gem(json) >= 0
-BuildRequires: gem(xml-simple) >= 0
-BuildRequires: gem(treetop) >= 0
-BuildRequires: gem(parse-cron) >= 0
-BuildRequires: gem(xmlrpc) >= 0
-BuildRequires: gem(rexml) >= 0
+BuildRequires: gem(json)
+BuildRequires: gem(xml-simple)
+BuildRequires: gem(treetop)
+BuildRequires: gem(parse-cron)
+BuildRequires: gem(xmlrpc)
+BuildRequires: gem(rexml)
 BuildRequires: gem(ffi-rzmq) >= 2.0.7
-BuildRequires: gem(net-ldap) >= 0
-BuildRequires: gem(nokogiri) >= 0
-BuildRequires: gem(public_suffix) >= 0
-BuildRequires: gem(gnuplot) >= 0
+BuildRequires: gem(net-ldap)
+BuildRequires: gem(nokogiri)
+BuildRequires: gem(public_suffix)
+BuildRequires: gem(gnuplot)
 BuildRequires: gem(highline) >= 1.7
-BuildRequires: gem(mysql2) >= 0
-BuildRequires: gem(pg) >= 0
-BuildRequires: gem(sqlite3) >= 0
-BuildRequires: gem(sequel) >= 0
+BuildRequires: gem(mysql2)
+BuildRequires: gem(pg)
+BuildRequires: gem(sqlite3)
+BuildRequires: gem(sequel)
 BuildRequires: gem(augeas) >= 0.6
 BuildRequires: gem(json) >= 2.0
 BuildRequires: gem(git) >= 1.5
 BuildRequires: gem(aws-sdk-ec2) >= 1.151
-BuildRequires: gem(aws-sdk-s3) >= 0
-BuildRequires: gem(aws-sdk-cloudwatch) >= 0
-BuildRequires: gem(azure_mgmt_compute) >= 0
-BuildRequires: gem(azure_mgmt_monitor) >= 0
-BuildRequires: gem(azure_mgmt_network) >= 0
-BuildRequires: gem(azure_mgmt_resources) >= 0
-BuildRequires: gem(azure_mgmt_storage) >= 0
-BuildRequires: gem(configparser) >= 0
-BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(aws-sdk-s3)
+BuildRequires: gem(aws-sdk-cloudwatch)
+BuildRequires: gem(azure_mgmt_compute)
+BuildRequires: gem(azure_mgmt_monitor)
+BuildRequires: gem(azure_mgmt_network)
+BuildRequires: gem(azure_mgmt_resources)
+BuildRequires: gem(azure_mgmt_storage)
+BuildRequires: gem(configparser)
+BuildRequires: gem(minitest)
 BuildRequires: gem(faraday_middleware) >= 1.2.0
 BuildRequires: gem(activesupport) >= 4.2
 BuildRequires: gem(i18n) >= 0.9
-BuildRequires: gem(rack) >= 0
-BuildRequires: gem(thin) >= 0
-BuildRequires: gem(uuidtools) >= 0
-BuildRequires: gem(curb) >= 0
+BuildRequires: gem(rack)
+BuildRequires: gem(thin)
+BuildRequires: gem(uuidtools)
+BuildRequires: gem(curb)
 BuildRequires: gem(ipaddress) >= 0.8.3
 BuildRequires: gem(treetop) >= 1.6.3
-BuildRequires: gem(webauthn) >= 0
-BuildRequires: gem(zendesk_api) >= 0
-BuildRequires: gem(rqrcode) >= 0
-BuildRequires: gem(memcache-client) >= 0
-BuildRequires: gem(dalli) >= 0
-BuildRequires: gem(rotp) >= 0
-BuildRequires: gem(ox) >= 0
-BuildRequires: gem(addressable) >= 0
+BuildRequires: gem(webauthn)
+BuildRequires: gem(zendesk_api)
+BuildRequires: gem(rqrcode)
+BuildRequires: gem(memcache-client)
+BuildRequires: gem(dalli)
+BuildRequires: gem(rotp)
+BuildRequires: gem(ox)
+BuildRequires: gem(addressable)
 BuildRequires: gem(vsphere-automation-cis) >= 0.4.6
 BuildRequires: gem(vsphere-automation-vcenter) >= 0.4.6
 BuildRequires: gem(rbvmomi) >= 3.0.0
-BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rake)
 BuildRequires: gem(rspec) >= 3
 BuildRequires: gem(webmock) >= 1.20
 BuildRequires: gem(rdoc) >= 4
 BuildRequires: gem(bundler) >= 1.0
-BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(simplecov)
 BuildRequires: gem(rubocop) >= 0.43.0
 BuildRequires: gem(sinatra) >= 1.4
-BuildRequires: gem(pry) >= 0
+BuildRequires: gem(pry)
 BuildRequires: gem(faraday) >= 1.9.3
+BuildRequires: gem(polyglot) >= 0.3
 BuildConflicts: gem(ffi-rzmq) >= 2.1
 BuildConflicts: gem(highline) >= 3
 BuildConflicts: gem(augeas) >= 1
@@ -181,50 +181,52 @@ Summary: Common OpenNebula package shared by various components
 Group: System/Servers
 BuildArch: noarch
 
-Requires: gem(xmlrpc) >= 0
-Requires: gem(rexml) >= 0
+Requires: gem(xmlrpc)
+Requires: gem(rexml)
 Requires: gem(ffi-rzmq) >= 2.0.7
-Requires: gem(net-ldap) >= 0
-Requires: gem(nokogiri) >= 0
-Requires: gem(public_suffix) >= 0
-Requires: gem(gnuplot) >= 0
+Requires: gem(net-ldap)
+Requires: gem(nokogiri)
+Requires: gem(public_suffix)
+Requires: gem(gnuplot)
 Requires: gem(highline) >= 1.7
-Requires: gem(mysql2) >= 0
-Requires: gem(pg) >= 0
-Requires: gem(sqlite3) >= 0
-Requires: gem(sequel) >= 0
+Requires: gem(mysql2)
+Requires: gem(pg)
+Requires: gem(sqlite3)
+Requires: gem(sequel)
 Requires: gem(augeas) >= 0.6
 Requires: gem(json) >= 2.0
 Requires: gem(git) >= 1.5
 Requires: gem(aws-sdk-ec2) >= 1.151
-Requires: gem(aws-sdk-s3) >= 0
-Requires: gem(aws-sdk-cloudwatch) >= 0
-Requires: gem(azure_mgmt_compute) >= 0
-Requires: gem(azure_mgmt_monitor) >= 0
-Requires: gem(azure_mgmt_network) >= 0
-Requires: gem(azure_mgmt_resources) >= 0
-Requires: gem(azure_mgmt_storage) >= 0
-Requires: gem(configparser) >= 0
-Requires: gem(minitest) >= 0
+Requires: gem(aws-sdk-s3)
+Requires: gem(aws-sdk-cloudwatch)
+Requires: gem(azure_mgmt_compute)
+Requires: gem(azure_mgmt_monitor)
+Requires: gem(azure_mgmt_network)
+Requires: gem(azure_mgmt_resources)
+Requires: gem(azure_mgmt_storage)
+Requires: gem(configparser)
+Requires: gem(minitest)
 Requires: gem(faraday_middleware) >= 1.2.0
 Requires: gem(activesupport) >= 4.2
 Requires: gem(i18n) >= 0.9
-Requires: gem(rack) >= 0
-Requires: gem(sinatra) >= 0
-Requires: gem(thin) >= 0
-Requires: gem(uuidtools) >= 0
-Requires: gem(curb) >= 0
+Requires: gem(rack)
+Requires: gem(sinatra)
+Requires: gem(thin)
+Requires: gem(uuidtools)
+Requires: gem(curb)
 Requires: gem(ipaddress) >= 0.8.3
 Requires: gem(treetop) >= 1.6.3
-Requires: gem(parse-cron) >= 0
-Requires: gem(webauthn) >= 0
-Requires: gem(zendesk_api) >= 0
-Requires: gem(rqrcode) >= 0
-Requires: gem(memcache-client) >= 0
-Requires: gem(dalli) >= 0
-Requires: gem(rotp) >= 0
-Requires: gem(ox) >= 0
-Requires: gem(addressable) >= 0
+Requires: gem(parse-cron)
+Requires: gem(webauthn)
+Requires: gem(zendesk_api)
+Requires: gem(rqrcode)
+Requires: gem(memcache-client)
+Requires: gem(dalli)
+Requires: gem(rotp)
+Requires: gem(ox)
+Requires: gem(addressable)
+Requires: gem(polyglot) >= 0.3
+Requires: gem(sorted_set) gem(set)
 Requires: gem(vsphere-automation-cis) >= 0.4.6
 Requires: gem(vsphere-automation-vcenter) >= 0.4.6
 Requires: gem(rbvmomi) >= 3.0.0
@@ -339,11 +341,11 @@ BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: gem-%name = %EVR
 Requires: %name-sunstone = %EVR
-Requires: gem(sinatra) >= 0
-Requires: gem(json) >= 0
-Requires: gem(xml-simple) >= 0
-Requires: gem(treetop) >= 0
-Requires: gem(parse-cron) >= 0
+Requires: gem(sinatra)
+Requires: gem(json)
+Requires: gem(xml-simple)
+Requires: gem(treetop)
+Requires: gem(parse-cron)
 
 %description flow
 Server for multi-VM orchestration.
@@ -1132,6 +1134,11 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Mon Apr 17 2023 Alexey Shabalin <shaba@altlinux.org> 6.2.0.1-alt4
+- default disable fireedge endpoint in config
+- disable provisionactions
+- update Requires
+
 * Mon Feb 06 2023 Pavel Skrylev <majioa@altlinux.org> 6.2.0.1-alt3.1
 - ! fixed build and runtime deps
 
