@@ -23,7 +23,7 @@
 
 Name: openblas
 Version: 0.3.19
-Release: alt1.1
+Release: alt1.2
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -111,8 +111,12 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 %make_build SMP=1 MAKE_NB_JOBS=${NPROCS:-%__nprocs} \
 %if "%_lib" == "lib64"
 	BINARY=64 \
+	BINARY64=1 \
 %else
 	BINARY=32 \
+%endif
+%ifarch %ix86
+	STATIC_ALLOCATION=1 \
 %endif
 	%{?oblas_target:TARGET=%oblas_target} \
 	COMMON_OPT="$FLAGS" \
@@ -144,9 +148,14 @@ sed -i 's,%buildroot,,' %buildroot%_pkgconfigdir/openblas.pc
 %exclude %_libdir/*-r*.so
 %_libdir/*.so
 %_pkgconfigdir/openblas.pc
+%_libdir/cmake/%name/
 %_includedir/openblas
 
 %changelog
+* Mon Apr 17 2023 Michael Shigorin <mike@altlinux.org> 0.3.19-alt1.2
+- spec fixes mentioned by slazav@ back in 2019
+- added cmake files
+
 * Thu Jan 20 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.3.19-alt1.1
 - e2k patch update
 
