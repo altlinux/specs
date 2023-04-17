@@ -8,7 +8,7 @@ BuildRequires: libgudev-gir
 %global repo go-gir-generator
 
 Name: deepin-gir-generator
-Version: 3.0.1
+Version: 3.0.4
 Release: alt1
 
 Summary: Generate static golang bindings for GObject
@@ -18,30 +18,33 @@ Group: Other
 Url: https://github.com/linuxdeepin/go-gir-generator
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Source1: gopath.tar
 Source44: import.info
 
-# e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
-ExclusiveArch: %{?go_arches:%go_arches}%{!?go_arches:%ix86 x86_64 %arm}
+BuildArch: noarch
 
 Provides: golang(gir/gobject-2.0)
 Provides: golang(gir/gio-2.0)
 Provides: golang(gir/glib-2.0)
 Provides: golang(gir/gudev-1.0)
 
-# If go_compiler is not set to 1, there is no virtual provide. Use golang instead.
-BuildRequires: %{?go_compiler:compiler(go-compiler)}%{!?go_compiler:golang}
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(gudev-1.0)
+BuildRequires: pkgconfig(gdk-3.0)
 
 %description
 Generate static golang bindings for GObject
 
 %prep
 %setup -n %repo-%version
+# Unpacked vendor/ into the source (used .gear/tags).
+tar -xf %SOURCE1
+sed -i '/rm -rf/d' Makefile
 
 %build
-export GOPATH="%go_path"
-export GO111MODULE="auto"
+export GOPATH="$(pwd)/gopath:%go_path"
+export GOFLAGS="-mod=vendor"
+export GO111MODULE="off"
 %make_build
 
 %install
@@ -50,10 +53,14 @@ export GO111MODULE="auto"
 %files
 %doc README.md
 %doc --no-dereference LICENSE
-%_bindir/gir-generator
 %go_path/src/github.com/linuxdeepin/go-gir/
 
 %changelog
+* Mon Apr 17 2023 Leontiy Volodin <lvol@altlinux.org> 3.0.4-alt1
+- New version 3.0.4.
+- NMU:
+  + Built as noarch package.
+
 * Wed Mar 29 2023 Leontiy Volodin <lvol@altlinux.org> 3.0.1-alt1
 - New version 3.0.1.
 - NMU:
