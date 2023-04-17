@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.4.2
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -100,6 +100,7 @@ BuildRequires: gcc-c++ libacl-devel libaudit-devel libavahi-devel libdbus-devel 
 
 BuildRequires: dbus python3 python3-module-polib
 BuildRequires: libgnutls-devel
+BuildRequires: libkrb5-devel
 
 %description
 The Common Unix Printing System provides a portable printing layer for
@@ -254,6 +255,7 @@ export LIBS="-laudit -lselinux"
    --enable-gnutls \
    --enable-sync-on-close \
    --with-error-policy=retry-job \
+   --enable-gssapi \
    %nil
 
 %make_build
@@ -425,6 +427,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Mon Apr 17 2023 Andrey Cherepanov <cas@altlinux.org> 2.4.2-alt2
+- NMU: build with --enable-gssapi
+
 * Wed Aug 03 2022 Fr. Br. George <george@altlinux.org> 2.4.2-alt1
 - Autobuild version bump to 2.4.2 (Closes: #43413)
 - Update patchset
