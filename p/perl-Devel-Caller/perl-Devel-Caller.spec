@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Devel-Caller
 Name: perl-%dist
-Version: 2.06
-Release: alt2.2
+Version: 2.07
+Release: alt1
 
 Summary: Meatier versions of caller()
 License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RC/RCLAMP/Devel-Caller-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RC/RCLAMP/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-PadWalker perl-devel
@@ -17,7 +18,7 @@ BuildRequires: perl-PadWalker perl-devel
 Devel::Caller module provides meatier versions of "caller" function.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,6 +32,9 @@ Devel::Caller module provides meatier versions of "caller" function.
 %perl_vendor_autolib/Devel
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 2.07-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.06-alt2.2
 - rebuild with new perl 5.28.1
 
