@@ -1,14 +1,16 @@
 %define somver 0
 %define sover %somver.4.0
+
 Name: hlzpack
 Version: 04.00
-Release: alt8
+Release: alt9
+
 Summary: Hermitian LancZos PACKage
 License: BSD
 Group: Sciences/Mathematics
+
 Url: http://crd.lbl.gov/~osni/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 Source: http://crd.lbl.gov/~osni/Codes/hlzpack.zip
 
 BuildPreReq: liblapack-devel libparmetis-devel
@@ -88,6 +90,11 @@ This package contains development documentation for HLZPACK.
 %setup
 touch Makefile sys/Makefile src/double/Makefile
 
+%ifarch %e2k
+# as of lcc 1.26.16
+sed -i 's/-fno-f2c//g' {,drv/}Makefile
+%endif
+
 %build
 sed -i 's|@BUILDLIBS@|%buildroot%_libdir|g' \
 	Makefile drv/Makefile
@@ -126,6 +133,9 @@ install -p -m644 src/double/*.f \
 %_libdir/%name/examples
 
 %changelog
+* Mon Apr 17 2023 Michael Shigorin <mike@altlinux.org> 04.00-alt9
+- E2K: fix build (ilyakurdyukov@)
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 04.00-alt8
 - Built with OpenBLAS instead of GotoBLAS2
 
