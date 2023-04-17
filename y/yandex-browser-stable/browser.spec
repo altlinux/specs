@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 23.3.1.916
+Version: 23.3.1.929
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -87,53 +87,6 @@ if [ -d "%{_builddir}/%{name}-%{version}%{_sysconfdir}/" ]; then
   cp -a "%{_builddir}/%{name}-%{version}%{_sysconfdir}/" "%buildroot/"
 fi
 
-#partner config
-maybe_create_dir() {
-  if [ ! -d "$1" ]; then
-    mkdir -p "$1"
-  fi
-}
-store_partner_file() {
-  if [ -z "$1" ]; then
-    local source_file="%{_builddir}/%{name}-%{version}/%{_libdir}/yandex/browser/$2"
-  else
-    local source_file="%{_builddir}/%{name}-%{version}/%{_libdir}/yandex/browser/$1/$2"
-  fi
-  local destination_dir="%buildroot%{_localstatedir}/yandex/browser/$1"
-  if [ -f "${source_file}" ]; then
-    maybe_create_dir "${destination_dir}"
-    cp -f "${source_file}" "${destination_dir}"
-  fi
-}
-remove_partner_storage() {
-  local partner_storage_dir="%{_localstatedir}/yandex/browser"
-  if [ -d "${partner_storage_dir}" ]; then
-    rm -rf "${partner_storage_dir}"
-  fi
-}
-store_partner_files() {
-  local source_dir="%{_builddir}/%{name}-%{version}/%{_libdir}/yandex/browser/$1"
-  local destination_dir="%buildroot%{_localstatedir}/yandex/browser/$1"
-  maybe_create_dir "${destination_dir}"
-  find "${source_dir}" -maxdepth 1 -type f -name "$2" -exec cp -f {} "${destination_dir}" \;
-}
-store_partner_data() {
-  local partner_config="%{_builddir}/%{name}-%{version}/%{_libdir}/yandex/browser/partner_config"
-  if [ -f "${partner_config}" ]; then
-    remove_partner_storage
-    store_partner_file "" "partner_config"
-    store_partner_file "" "distrib_info"
-    store_partner_file "" "initial_preferences"
-    store_partner_file "" "master_preferences"
-    store_partner_file "Extensions" "external_extensions.json"
-    store_partner_files "resources" "tablo*"
-    store_partner_files "resources" "*.png"
-    store_partner_files "resources" "*.svg"
-    store_partner_files "resources/wallpapers" "*"
-  fi
-}
-store_partner_data
-
 # install icons
 for size in 16 24 32 48 64 128 256; do
   install -Dm644 "%{_builddir}/%{name}-%{version}/%{_libdir}/yandex/browser/product_logo_$size.png" \
@@ -180,6 +133,58 @@ EOF
 %{_mandir}/man1/yandex-browser-stable.1.xz
 
 # =============== END files ===============
+#------------------------------------------------------------------------------
+#   Post installation script
+#------------------------------------------------------------------------------
+%post
+#partner config
+maybe_create_dir() {
+  if [ ! -d "$1" ]; then
+    mkdir -p "$1"
+  fi
+}
+store_partner_file() {
+  if [ -z "$1" ]; then
+    local source_file="%{_libdir}/yandex/browser/$2"
+  else
+    local source_file="%{_libdir}/yandex/browser/$1/$2"
+  fi
+  local destination_dir="%{_localstatedir}/yandex/browser/$1"
+  if [ -f "${source_file}" ]; then
+    maybe_create_dir "${destination_dir}"
+    cp -f "${source_file}" "${destination_dir}"
+  fi
+}
+remove_partner_storage() {
+  local partner_storage_dir="%{_localstatedir}/yandex/browser"
+  if [ -d "${partner_storage_dir}" ]; then
+    rm -rf "${partner_storage_dir}"
+  fi
+}
+store_partner_files() {
+  local source_dir="%{_libdir}/yandex/browser/$1"
+  local destination_dir="%{_localstatedir}/yandex/browser/$1"
+  maybe_create_dir "${destination_dir}"
+  find "${source_dir}" -maxdepth 1 -type f -name "$2" -exec cp -f {} "${destination_dir}" \;
+}
+store_partner_data() {
+  local partner_config="%{_libdir}/yandex/browser/partner_config"
+  if [ -f "${partner_config}" ]; then
+    remove_partner_storage
+    store_partner_file "" "partner_config"
+    store_partner_file "" "distrib_info"
+    store_partner_file "" "initial_preferences"
+    store_partner_file "" "master_preferences"
+    store_partner_file "Extensions" "external_extensions.json"
+    store_partner_files "resources" "tablo*"
+    store_partner_files "resources" "*.png"
+    store_partner_files "resources" "*.svg"
+    store_partner_files "resources/wallpapers" "*"
+  fi
+}
+store_partner_data
+exit 0
+# =============== END post ===============
 
 #------------------------------------------------------------------------------
 #   Pre uninstallation script
@@ -199,6 +204,10 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+* Mon Apr 17 2023 yabro <yabro@altlinux.org> 23.3.1.929-alt1
+- Browser updated to 23.3.1.929
+- Fix installation of partner data
+
 * Fri Apr 11 2023 yabro <yabro@altlinux.org> 23.3.1.916-alt1
 - Browser updated to 23.3.1
   + Critical CVE-2023-0941: Use after free in Prompts.
