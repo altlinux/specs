@@ -1,16 +1,16 @@
-# ExclusiveArch until someone update (lib)atlas-devel
-# due to armadillo dependency
-ExclusiveArch: %ix86 x86_64
-BuildRequires: libhdf5-devel libsuperlu-devel
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # END SourceDeps(oneline)
+BuildRequires: libhdf5-devel libsuperlu-devel
+# for test, ver >= 2.19.0
+BuildRequires: libflexiblas-devel
+
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ensmallen
-Version:        2.17.0
-Release:        alt1_1
+Version:        2.19.0
+Release:        alt1_3
 Summary:        Header-only C++ library for efficient mathematical optimization
 
 License:        BSD
@@ -19,13 +19,11 @@ Source0:        https://www.ensmallen.org/files/%{name}-%{version}.tar.gz
 
 BuildRequires:  ctest cmake
 BuildRequires:	gcc-c++
-BuildRequires:	libarmadillo-devel >= 8.400.0
+BuildRequires:	libarmadillo-devel >= 9.800.0
 
 # ensmallen is header-only, and the build just builds the tests, so there's no
 # use for a debuginfo package.
 %global debug_package %{nil}
-
-Patch0:		catch_constexpr.patch
 Source44: import.info
 
 %description
@@ -38,7 +36,6 @@ gradient-free optimizers, and constrained optimization.
 
 %prep
 %setup -q
-%patch0 -p1
 
 
 %build
@@ -95,6 +92,9 @@ gradient-free optimizers, and constrained optimization.
 %{_libdir}/cmake/ensmallen/ensmallen-targets.cmake
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 2.19.0-alt1_3
+- new version
+
 * Thu Oct 14 2021 Igor Vlasenko <viy@altlinux.org> 2.17.0-alt1_1
 - update to new release by fcimport
 
