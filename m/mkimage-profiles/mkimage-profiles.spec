@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -129,6 +129,25 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Apr 17 2023 Anton Midyukov <antohami@altlinux.org> 1.5.4-alt1
+- e2k: fix scripts 20-e2k-boot
+- e2k: add live-install feature support
+- x11-autologin: rename script 40-x11-autologin -> 60-x11-autologin
+- l10n: set LANG to /etc/sysconfig/i18n, /etc/locale.conf
+- deflogin: add variable DEFAULT_SESSION (for AccountsService)
+- tty: Allow any tty* variants, allow override TTYDEV, TTYRATE
+- alternatives: initial feature
+- live-install: set xterm as alternative to xvt (See ALT bug 45574)
+- install2: cleanup udev/rules.d/64-md-raid-assembly.rules
+- grub, syslinux: clean lowmem for menu item Install
+- base+rescue: add open-iscsi (Closes: 45792)
+- stage2: fix use/stage2/kms/nvidia (See ALT bug 31971)
+- kworkstation.mk: fix nvidia support in live (Closes: 31971)
+- kworkstation: add latest commits from zerg@
+- tar2fs: grub-install --uefi-secureboot for all platforms
+- initrd-bootchain: add kbd initrd feature
+- install2: do not cleanup wi-fi drivers
+
 * Mon Mar 20 2023 Anton Midyukov <antohami@altlinux.org> 1.5.3-alt1
 - services: fix DEFAULT_SYSTEMD_USER_SERVICES_{DISABLE,ENABLE} support
 - Initial feature live-install
