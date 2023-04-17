@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-11
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -25,7 +25,7 @@ BuildRequires: jpackage-11-compat
 
 Name:             byteman
 Version:          4.0.16
-Release:          alt1_2jpp11
+Release:          alt1_7jpp11
 Summary:          Java agent-based bytecode injection tool
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
@@ -235,6 +235,9 @@ ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.j
 %{apphomedir}/lib/byteman-dtest.jar
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 4.0.16-alt1_7jpp11
+- update
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 4.0.16-alt1_2jpp11
 - new version
 
