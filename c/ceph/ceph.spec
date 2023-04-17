@@ -1,4 +1,4 @@
-%define git_version 4c3647a322c0ff5a1dd2344e039859dcbd28c830
+%define git_version 98318ae89f1a893a6ded3a640405cdbb33e08757
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -33,6 +33,9 @@
 %def_without kafka_endpoint
 %def_with grafana
 %def_with lua_packages
+%def_with system_arrow
+%def_with system_utf8proc
+%def_with system_zstd
 
 %if_with python3
 %add_python3_path %_datadir/ceph/mgr
@@ -48,7 +51,7 @@
 %endif
 
 Name: ceph
-Version: 16.2.11
+Version: 17.2.6
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -66,7 +69,6 @@ Source10: https://downloads.sourceforge.net/project/boost/boost/1.72.0/boost_1_7
 Source11: ceph-erasure-code-corpus.tar
 Source12: ceph-object-corpus.tar
 Source14: blkin.tar
-Source15: civetweb.tar
 Source16: isa-l_crypto.tar
 Source17: dpdk.tar
 Source18: gf-complete.tar
@@ -85,13 +87,11 @@ Source31: fmt.tar
 Source32: spawn.tar
 Source33: rook-client-python.tar
 Source34: s3select.tar
-Source35: opentracing-cpp.tar
-Source36: jaeger-client-cpp.tar
-Source37: thrift.tar
-Source38: libkmip.tar
+Source35: libkmip.tar
+Source36: arrow.tar
+Source37: utf8proc.tar
 
 Patch: %name-%version.patch
-Patch100: erasure_code-aarch64-textrel.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-systemd >= 5
@@ -108,21 +108,23 @@ BuildRequires: libaio-devel libblkid-devel libcryptsetup-devel
 BuildRequires: libcurl-devel libexpat-devel libcap-ng-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: libfuse-devel libkeyutils-devel
-BuildRequires: libldap-devel libleveldb-devel libnss-devel
+BuildRequires: libldap-devel libnss-devel
 #BuildRequires: libkrb5-devel
 BuildRequires: libssl-devel libudev-devel libxfs-devel libbtrfs-devel libnl-devel
+BuildRequires: xmlstarlet
 %{?_with_libzfs:BuildRequires: libzfs-devel}
 BuildRequires: nasm
 %{?_with_amqp_endpoint:BuildRequires: librabbitmq-c-devel}
 %{?_with_kafka_endpoint:BuildRequires: librdkafka-devel}
-BuildRequires: zlib-devel bzlib-devel liblz4-devel libzstd-devel libsnappy-devel
+BuildRequires: zlib-devel bzlib-devel liblz4-devel libsnappy-devel
+%{?_with_system_zstd:BuildRequires: libzstd-devel}
 BuildRequires: libsqlite3-devel
 BuildRequires: libxml2-devel
 BuildRequires: libuuid-devel
 BuildRequires: libncurses-devel
 BuildRequires: libicu-devel
 BuildRequires: liboath-devel
-%{?_with_system_fmt:BuildRequires: libfmt-devel >= 5.2.1}
+%{?_with_system_fmt:BuildRequires: libfmt-devel >= 6.2.1}
 BuildRequires: jq gperf
 %{?_with_tcmalloc:BuildRequires: libgperftools-devel >= 2.7.90}
 %{?_with_lttng:BuildRequires: liblttng-ust-devel libbabeltrace-devel}
@@ -132,13 +134,16 @@ BuildRequires: jq gperf
 BuildRequires: libsystemd-devel
 %{?_with_system_rocksdb:BuildRequires: librocksdb-devel}
 BuildRequires: liblua5-devel >= 5.3 liblua5-devel-static >= 5.3
-%{?_with_lua_packages:BuildRequires: lua5.3-luarocks}
+%{?_with_lua_packages:BuildRequires: luarocks}
 %{?_with_system_dpdk:BuildRequires: dpdk-devel dpdk-tools}
 %{?_with_dpdk:BuildRequires: libcryptopp-devel}
 %{?_with_spdk:BuildRequires: CUnit-devel libiscsi-devel libnuma-devel}
 %{?_with_zbd:BuildRequires: libzbd-devel}
-%{?_with_pmem:BuildRequires: libpmem-devel libpmemobj-devel}
+%{?_with_pmem:BuildRequires: libpmem-devel libpmemobj-devel libndctl-devel}
 %{?_with_grafana:BuildRequires: jsonnet}
+%{?_with_system_arrow:BuildRequires: arrow-devel >= 4.0.0 libparquet-devel libprotobuf-devel libgrpc++-devel}
+%{?_with_system_utf8proc:BuildRequires: libutf8proc-devel}
+
 %ifnarch %arm
 BuildRequires: rdma-core-devel
 %endif
@@ -151,8 +156,6 @@ BuildRequires: libhwloc-devel
 BuildRequires: libpciaccess-devel
 BuildRequires: liblksctp-tools-devel
 BuildRequires: libnumactl-devel
-BuildRequires: protobuf-compiler
-BuildRequires: libprotobuf-devel
 BuildRequires: ragel
 BuildRequires: systemtap-sdt-devel
 BuildRequires: libyaml-cpp-devel
@@ -164,12 +167,13 @@ BuildRequires: flex
 BuildRequires: nlohmann-json-devel
 BuildRequires: libevent-devel
 BuildRequires: libyaml-cpp-devel
+BuildRequires: thrift-devel >= 0.13.0
 %endif
 
 %if_with python3
 BuildRequires: python3-module-Cython python3-module-OpenSSL python3-devel python3-module-setuptools
 %{?_with_system_boost:BuildRequires: boost-python3-devel}
-BuildRequires: python3-module-prettytable python3-module-routes python3-module-bcrypt
+BuildRequires: python3-module-prettytable python3-module-routes python3-module-bcrypt python3-module-yaml
 BuildRequires: python3-module-html5lib python3-module-pyasn1
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 BuildRequires: libxmlsec1-devel
@@ -213,8 +217,10 @@ Comprised of files that are common to Ceph clients and servers.
 Summary: Utility to bootstrap Ceph clusters
 Group: System/Base
 BuildArch: noarch
-Requires: podman >= 2.0.2
+# Requires: podman >= 2.0.2
 Requires: lvm2
+Requires: openssh-server
+Requires: /usr/bin/which
 %description -n cephadm
 Utility to bootstrap a Ceph cluster and manage Ceph daemons deployed
 with systemd and podman.
@@ -232,7 +238,6 @@ Summary: Python3 utility libraries for Ceph CLI
 Group: Development/Python3
 BuildArch: noarch
 Requires: python3-module-ceph-common = %EVR
-
 %description -n python3-module-ceph_volume
 %summary
 
@@ -259,7 +264,6 @@ namespace, coordinating access to the shared OSD cluster.
 Summary: Ceph Monitor Daemon
 Group: System/Base
 Requires: ceph-base = %EVR
-
 %description mon
 ceph-mon is the cluster monitor daemon for the Ceph distributed file
 system. One or more instances of ceph-mon form a Paxos part-time
@@ -277,7 +281,7 @@ AutoProv: no
 %py3_provides ceph_module
 %py3_provides mgr_module
 %py3_provides mgr_util
-%py3_provides orchestrator
+%py3_provides object_format
 %endif
 
 %description mgr
@@ -290,6 +294,9 @@ exposes all these to the python modules.
 Summary: Ceph Manager modules which are always enabled
 Group: System/Base
 Conflicts: ceph-mgr < 15.2.5-alt1
+%if_with python3
+%py3_provides orchestrator
+%endif
 %description mgr-modules-core
 ceph-mgr-modules-core provides a set of modules which are always
 enabled by ceph-mgr.
@@ -467,6 +474,7 @@ in realtime.
 Summary: OCF-compliant resource agents for Ceph daemons
 Group: System/Configuration/Other
 License: LGPLv2
+#BuildArch: noarch
 Requires: %name = %EVR
 %description resource-agents
 Resource agents for monitoring and managing Ceph daemons
@@ -478,14 +486,30 @@ Summary: Ceph Object Storage Daemon
 Group: System/Base
 Requires: ceph-base = %EVR
 Requires: sudo
-Requires: lvm2
 Requires: /usr/sbin/smartctl
 Requires: /usr/sbin/nvme
-Requires: python3-module-ceph_volume = %EVR
 %description osd
 ceph-osd is the object storage daemon for the Ceph distributed file
 system.  It is responsible for storing objects on a local file system
 and providing access to them over the network.
+
+%package volume
+Summary: Ceph OSD deployment and inspection tool
+Group: System/Base
+#BuildArch: noarch
+Requires: ceph-osd = %EVR
+Requires: cryptsetup
+Requires: e2fsprogs
+Requires: lvm2
+Requires: parted
+Requires: util-linux
+Requires: xfsprogs
+Requires: python3-module-ceph-common = %EVR
+Requires: python3-module-ceph_volume = %EVR
+%description volume
+This package contains a tool to deploy OSD with different devices like
+lvm or physical disks, and trying to follow a predictable, and robust
+way of preparing, activating, and starting the deployed OSD.
 
 %package -n librados2
 Summary: RADOS distributed object store client library
@@ -647,18 +671,13 @@ Conflicts: python3-module-ceph < %EVR
 This package contains Python3 libraries for interacting with Ceph distributed
 file system.
 
-%package -n libjaeger
-Summary: Ceph distributed file system tracing library
-Group: System/Libraries
-%description -n libjaeger
-This package contains libraries needed to provide distributed
-tracing for Ceph.
-
 %package test
 Summary: Ceph benchmarks and test tools
 Group: System/Libraries
 Requires: ceph-common = %EVR
 Requires: xmlstarlet
+Requires: jq
+Requires: socat
 %description test
 This package contains Ceph benchmarks and test tools.
 
@@ -752,6 +771,13 @@ Group: Monitoring
 %description prometheus-alerts
 This package provides Ceph default alerts for Prometheus.
 
+%package exporter
+Summary: Daemon for exposing perf counters as Prometheus metrics
+Group: Monitoring
+Requires: ceph-base = %EVR
+%description exporter
+Daemon for exposing perf counters as Prometheus metrics
+
 %prep
 %setup
 
@@ -766,15 +792,11 @@ install -m644 %SOURCE10 build/boost/src/
 tar -xf %SOURCE11 -C ceph-erasure-code-corpus
 tar -xf %SOURCE12 -C ceph-object-corpus
 tar -xf %SOURCE14 -C src/blkin
-tar -xf %SOURCE15 -C src/civetweb
 tar -xf %SOURCE16 -C src/crypto/isa-l/isa-l_crypto
 tar -xf %SOURCE18 -C src/erasure-code/jerasure/gf-complete
 tar -xf %SOURCE19 -C src/erasure-code/jerasure/jerasure
 tar -xf %SOURCE20 -C src/googletest
 tar -xf %SOURCE21 -C src/isa-l
-pushd src/isa-l
-%patch100 -p1
-popd
 tar -xf %SOURCE23 -C src/rapidjson
 %if_without system_rocksdb
 tar -xf %SOURCE24 -C src/rocksdb
@@ -784,7 +806,9 @@ tar -xf %SOURCE25 -C src/spdk
 tar -xf %SOURCE17 -C src/spdk/dpdk
 %endif
 tar -xf %SOURCE26 -C src/xxHash
-#tar -xf %%SOURCE27 -C src/zstd
+%if_without system_zstd
+tar -xf %SOURCE27 -C src/zstd
+%endif
 tar -xf %SOURCE28 -C src/c-ares
 tar -xf %SOURCE29 -C src/dmclock
 tar -xf %SOURCE30 -C src/seastar
@@ -794,10 +818,13 @@ tar -xf %SOURCE31 -C src/fmt
 tar -xf %SOURCE32 -C src/spawn
 tar -xf %SOURCE33 -C src/pybind/mgr/rook/rook-client-python
 tar -xf %SOURCE34 -C src/s3select
-tar -xf %SOURCE35 -C src/jaegertracing/opentracing-cpp
-tar -xf %SOURCE36 -C src/jaegertracing/jaeger-client-cpp
-tar -xf %SOURCE37 -C src/jaegertracing/thrift
-tar -xf %SOURCE38 -C src/libkmip
+tar -xf %SOURCE35 -C src/libkmip
+%if_without system_arrow
+tar -xf %SOURCE36 -C src/arrow
+%endif
+%if_without system_utf8proc
+tar -xf %SOURCE37 -C src/utf8proc
+%endif
 
 %patch -p1
 
@@ -823,122 +850,131 @@ export CPPFLAGS="$java_inc"
     -DCMAKE_COLOR_MAKEFILE:BOOL=OFF \
     -DBUILD_CONFIG=rpmbuild \
     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-    -DCMAKE_INSTALL_PREFIX=%prefix \
-    -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir \
-    -DCMAKE_INSTALL_LOCALSTATEDIR=%_localstatedir \
-    -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
-    -DCMAKE_INSTALL_MANDIR=%_mandir \
-    -DCMAKE_INSTALL_DOCDIR=%_docdir/ceph \
-    -DCMAKE_INSTALL_INCLUDEDIR=%_includedir \
-    -DCMAKE_INSTALL_SYSTEMD_SERVICEDIR=%_unitdir \
+    -DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+    -DCMAKE_INSTALL_LIBDIR:PATH=%_libdir \
+    -DCMAKE_INSTALL_LIBEXECDIR:PATH=%_libexecdir \
+    -DCMAKE_INSTALL_LOCALSTATEDIR:PATH=%_localstatedir \
+    -DCMAKE_INSTALL_SYSCONFDIR:PATH=%_sysconfdir \
+    -DCMAKE_INSTALL_MANDIR:PATH=%_mandir \
+    -DCMAKE_INSTALL_DOCDIR:PATH=%_docdir/ceph \
+    -DCMAKE_INSTALL_INCLUDEDIR:PATH=%_includedir \
+    -DSYSTEMD_SYSTEM_UNIT_DIR:PATH=%_unitdir \
     -DCMAKE_C_FLAGS:STRING='%optflags' \
     -DCMAKE_CXX_FLAGS:STRING='%optflags' \
-    -DWITH_REENTRANT_STRSIGNAL=ON \
-    -DWITH_THREAD_SAFE_RES_QUERY=ON \
+    -DWITH_REENTRANT_STRSIGNAL:BOOL=ON \
+    -DWITH_THREAD_SAFE_RES_QUERY:BOOL=ON \
 %if_with system_boost
-    -DWITH_SYSTEM_BOOST=ON \
+    -DWITH_SYSTEM_BOOST:BOOL=ON \
 %else
     -DBOOST_J=$NPROCS \
 %endif
 %if_with system_rocksdb
-    -DWITH_SYSTEM_ROCKSDB=ON \
+    -DWITH_SYSTEM_ROCKSDB:BOOL=ON \
 %endif
-    -DWITH_SYSTEMD=ON \
-    -DWITH_LZ4=ON \
+    -DWITH_SYSTEMD:BOOL=ON \
+    -DWITH_LZ4:BOOL=ON \
 %if_with python3
-    -DWITH_PYTHON3=3 \
+    -DWITH_PYTHON3:STRING=3 \
+%endif
+%if_with system_zstd
+    -DWITH_SYSTEM_ZSTD:BOOL=ON \
 %endif
 %if_without mgr_dashboard
-    -DWITH_MGR_DASHBOARD_FRONTEND=OFF \
+    -DWITH_MGR_DASHBOARD_FRONTEND:BOOL=OFF \
 %endif
 %if_without ceph_test_package
-    -DWITH_TESTS=OFF \
+    -DWITH_TESTS:BOOL=OFF \
 %endif
 %if_with cephfs_java
-    -DWITH_CEPHFS_JAVA=ON \
+    -DWITH_CEPHFS_JAVA:BOOL=ON \
 %endif
 %if_with selinux
-    -DWITH_SELINUX=ON \
+    -DWITH_SELINUX:BOOL=ON \
 %endif
 %if_with lttng
-    -DWITH_LTTNG=ON \
-    -DWITH_BABELTRACE=ON \
+    -DWITH_LTTNG:BOOL=ON \
+    -DWITH_BABELTRACE:BOOL=ON \
 %else
-    -DWITH_LTTNG=OFF \
-    -DWITH_BABELTRACE=OFF \
+    -DWITH_LTTNG:BOOL=OFF \
+    -DWITH_BABELTRACE:BOOL=OFF \
 %endif
 %if_with ocf
-    -DWITH_OCF=ON \
+    -DWITH_OCF:BOOL=ON \
 %endif
 %if_with libzfs
-    -DWITH_ZFS=ON \
+    -DWITH_ZFS:BOOL=ON \
 %endif
 %if_with cephfs_shell
-    -DWITH_CEPHFS_SHELL=ON \
+    -DWITH_CEPHFS_SHELL:BOOL=ON \
 %endif
 %if_with libradosstriper
-    -DWITH_LIBRADOSSTRIPER=ON \
+    -DWITH_LIBRADOSSTRIPER:BOOL=ON \
 %else
-    -DWITH_LIBRADOSSTRIPER=OFF \
+    -DWITH_LIBRADOSSTRIPER:BOOL=OFF \
 %endif
 %if_with amqp_endpoint
-    -DWITH_RADOSGW_AMQP_ENDPOINT=ON \
+    -DWITH_RADOSGW_AMQP_ENDPOINT:BOOL=ON \
 %else
-    -DWITH_RADOSGW_AMQP_ENDPOINT=OFF \
+    -DWITH_RADOSGW_AMQP_ENDPOINT:BOOL=OFF \
 %endif
 %if_with kafka_endpoint
-    -DWITH_RADOSGW_KAFKA_ENDPOINT=ON \
+    -DWITH_RADOSGW_KAFKA_ENDPOINT:BOOL=ON \
 %else
-    -DWITH_RADOSGW_KAFKA_ENDPOINT=OFF \
+    -DWITH_RADOSGW_KAFKA_ENDPOINT:BOOL=OFF \
 %endif
 %if_without lua_packages
-    -DWITH_RADOSGW_LUA_PACKAGES=OFF \
+    -DWITH_RADOSGW_LUA_PACKAGES:BOOL=OFF \
 %endif
 %if_with blustore
-    -DWITH_BLUESTORE=ON \
+    -DWITH_BLUESTORE:BOOL=ON \
 %else
-    -DWITH_BLUESTORE=OFF \
+    -DWITH_BLUESTORE:BOOL=OFF \
 %endif
 %if_with zbd
-    -DWITH_ZBD=ON \
+    -DWITH_ZBD:BOOL=ON \
 %endif
 %if_with liburing
-    -DWITH_LIBURING=ON -DWITH_SYSTEM_LIBURING=ON \
+    -DWITH_LIBURING:BOOL=ON -DWITH_SYSTEM_LIBURING:BOOL=ON \
 %else
-    -DWITH_LIBURING=OFF \
+    -DWITH_LIBURING:BOOL=OFF \
 %endif
 %if_with pmem
-    -DWITH_BLUESTORE_PMEM=ON -DWITH_SYSTEM_PMDK=ON \
+    -DWITH_BLUESTORE_PMEM:BOOL=ON -DWITH_SYSTEM_PMDK:BOOL=ON \
 %if_with rbd_rwl_cache
-    -DWITH_RBD_RWL=ON \
+    -DWITH_RBD_RWL:BOOL=ON \
 %endif
 %endif
 %if_with rbd_ssd_cache
-    -DWITH_RBD_SSD_CACHE=ON \
+    -DWITH_RBD_SSD_CACHE:BOOL=ON \
 %endif
 %if_with jaeger
-    -DWITH_JAEGER=ON \
+    -DWITH_JAEGER:BOOL=ON \
 %else
-    -DWITH_JAEGER=OFF \
+    -DWITH_JAEGER:BOOL=OFF \
 %endif
 %if_with dpdk
-    -DWITH_DPDK=ON \
+    -DWITH_DPDK:BOOL=ON \
 %else
-    -DWITH_DPDK=OFF \
+    -DWITH_DPDK:BOOL=OFF \
 %endif
 %if_with spdk
-    -DWITH_SPDK=ON \
+    -DWITH_SPDK:BOOL=ON \
 %else
-    -DWITH_SPDK=OFF \
+    -DWITH_SPDK:BOOL=OFF \
 %endif
 %ifarch %arm
-    -DWITH_RDMA=OFF \
+    -DWITH_RDMA:BOOL=OFF \
 %endif
 %if_with grafana
-    -DWITH_GRAFANA=ON \
+    -DWITH_GRAFANA:BOOL=ON \
 %endif
-    -DWITH_MANPAGE=ON
+%if_with system_arrow
+    -DWITH_SYSTEM_ARROW:BOOL=ON \
+%endif
+%if_with system_utf8proc
+    -DWITH_SYSTEM_UTF8PROC:BOOL=ON \
+%endif
+    -DWITH_MANPAGE:BOOL=ON
 
 export VERBOSE=1
 export V=1
@@ -1115,12 +1151,32 @@ if [ $1 -ge 2 ] ; then
     source $SYSCONF_CEPH
   fi
   if [ "X$CEPH_AUTO_RESTART_ON_UPGRADE" = "Xyes" ] ; then
-    systemctl try-restart ceph-osd@\*.service ceph-volume@\*.service > /dev/null 2>&1 || :
+    systemctl try-restart ceph-osd@\*.service > /dev/null 2>&1 || :
   fi
 fi
 
 %preun osd
 %systemd_preun ceph-osd.target
+
+%post volume
+if [ $1 -eq 1 ] ; then
+  systemctl preset ceph-volume@\*.service >/dev/null 2>&1 || :
+fi
+
+if [ $1 -ge 2 ] ; then
+  # Restart on upgrade, but only if "CEPH_AUTO_RESTART_ON_UPGRADE" is set to
+  # "yes". In any case: if units are not running, do not touch them.
+  SYSCONF_CEPH=%_sysconfdir/sysconfig/ceph
+  if [ -f $SYSCONF_CEPH -a -r $SYSCONF_CEPH ] ; then
+    source $SYSCONF_CEPH
+  fi
+  if [ "X$CEPH_AUTO_RESTART_ON_UPGRADE" = "Xyes" ] ; then
+    systemctl try-restart ceph-volume@\*.service > /dev/null 2>&1 || :
+  fi
+fi
+
+%preun volume
+%systemd_preun ceph-volume@\*.service
 
 %post mgr
 %systemd_post ceph-mgr.target
@@ -1312,7 +1368,6 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %config(noreplace) %_logrotatedir/ceph
 %config(noreplace) %_sysconfdir/sysconfig/ceph
 %_unitdir/ceph.target
-%_mandir/man8/ceph-deploy.8*
 %_mandir/man8/ceph-create-keys.8*
 %_mandir/man8/ceph-run.8*
 %_mandir/man8/crushtool.8*
@@ -1341,6 +1396,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_bindir/cephfs-data-scan
 %_bindir/cephfs-journal-tool
 %_bindir/cephfs-table-tool
+%_bindir/crushdiff
 %_bindir/rados
 %_bindir/radosgw-admin
 %_bindir/rbd
@@ -1362,6 +1418,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_mandir/man8/ceph-syn.8*
 %_mandir/man8/ceph-post-file.8*
 %_mandir/man8/ceph.8*
+%_mandir/man8/crushdiff.8*
 %_mandir/man8/mount.ceph.8*
 %_mandir/man8/rados.8*
 %_mandir/man8/radosgw-admin.8*
@@ -1413,6 +1470,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_datadir/ceph/mgr/__pycache__
 %_datadir/ceph/mgr/mgr_module.*
 %_datadir/ceph/mgr/mgr_util.*
+%_datadir/ceph/mgr/object_format.*
 %_unitdir/ceph-mgr@.service
 %_unitdir/ceph-mgr.target
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/mgr
@@ -1534,19 +1592,21 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_bindir/ceph-objectstore-tool
 %_bindir/ceph-osdomap-tool
 %_bindir/ceph-osd
-%_sbindir/ceph-volume
-%_sbindir/ceph-volume-systemd
 %_libexecdir/ceph/ceph-osd-prestart.sh
 %_mandir/man8/ceph-clsinfo.8*
 %_mandir/man8/ceph-osd.8*
 %_mandir/man8/ceph-bluestore-tool.8*
-%_mandir/man8/ceph-volume.8*
-%_mandir/man8/ceph-volume-systemd.8*
 %_unitdir/ceph-osd@.service
 %_unitdir/ceph-osd.target
-%_unitdir/ceph-volume@.service
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/osd
 %_sysctldir/90-ceph-osd.conf
+
+%files volume
+%_sbindir/ceph-volume
+%_sbindir/ceph-volume-systemd
+%_mandir/man8/ceph-volume.8*
+%_mandir/man8/ceph-volume-systemd.8*
+%_unitdir/ceph-volume@.service
 
 %if_with ocf
 %files resource-agents
@@ -1646,18 +1706,10 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_bindir/cephfs-top
 %_mandir/man8/cephfs-top.8*
 
-%if_with jaeger
-%files -n libjaeger
-%_libdir/libopentracing.so.*
-%_libdir/libthrift.so.*
-%_libdir/libjaegertracing.so.*
-%endif
-
 %if_with ceph_test_package
 %files test
 %_bindir/ceph_bench_log
 %_bindir/ceph-client-debug
-%_bindir/ceph_kvstorebench
 %_bindir/ceph_multi_stress_watch
 %_bindir/ceph_erasure_code_benchmark
 %_bindir/ceph_omapbench
@@ -1714,6 +1766,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %dir %_sysconfdir/prometheus/ceph
 %config(noreplace) %_sysconfdir/prometheus/ceph/ceph_default_alerts.yml
 
+%files exporter
+%_bindir/ceph-exporter
+
 %files devel
 
 %if_with python3
@@ -1749,17 +1804,19 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %files -n python3-module-cephfs
 %python3_sitelibdir/cephfs.cpython*.so
 %python3_sitelibdir/cephfs-*.egg-info
-%python3_sitelibdir_noarch/ceph_volume_client.py*
-%python3_sitelibdir_noarch/__pycache__/ceph_volume_client.cpython*.py*
 
 %if_with cephfs_shell
 %files -n cephfs-shell
 %_bindir/cephfs-shell
+%_man8dir/cephfs-shell.8*
 %endif
 
 %endif
 
 %changelog
+* Thu Apr 13 2023 Alexey Shabalin <shaba@altlinux.org> 17.2.6-alt1
+- 17.2.6
+
 * Fri Mar 03 2023 Alexey Shabalin <shaba@altlinux.org> 16.2.11-alt1
 - 16.2.11.
 - enable lto.

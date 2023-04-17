@@ -1,12 +1,12 @@
-%global optflags_lto %optflags_lto -ffat-lto-objects
+%define _unpackaged_files_terminate_build 1
 
 # Can't be build with packaged GTest: https://github.com/abseil/abseil-cpp/issues/1102
 # And these tests are very long
-%def_without test
+%def_enable check
 
 Name: libabseil-cpp
-Version: 20211102.0
-Release: alt3
+Version: 20230125.2
+Release: alt1
 
 Summary: C++ Common Libraries
 
@@ -19,10 +19,14 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/abseil/abseil-cpp/archive/%version/abseil-cpp-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake ninja-build
 BuildRequires: gcc-c++
+BuildRequires: /proc
 
+%if_enabled check
 BuildRequires: libgtest-devel libgmock-devel ctest
+%endif
 
 # https://bugzilla.altlinux.org/42411
 Conflicts: libclickhouse-cpp-devel <= 1.2.2-alt1
@@ -60,36 +64,49 @@ sed -i "/static_assert(value.empty()/{N;d}" absl/strings/internal/string_constan
 %endif
 
 %build
-%add_optflags "-fPIC"
+%add_optflags -fPIC
 # about -DCMAKE_CXX_STANDARD=17 see https://github.com/desktop-app/tg_owt/pull/55#discussion_r599718405
-%cmake_insource -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_CXX_STANDARD=17 \
-    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-%if_with test
-    -DBUILD_TESTING=ON \
-    -DABSL_USE_EXTERNAL_GOOGLETEST=ON \
-    -DABSL_FIND_GOOGLETEST=ON \
-#    -DABSL_USE_GOOGLETEST_HEAD=ON \
+%cmake \
+    -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+    -DBUILD_SHARED_LIBS:BOOL=ON \
+    -DCMAKE_CXX_STANDARD:STRING=17 \
+    -DABSL_ENABLE_INSTALL:BOOL=ON \
+    -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
+%if_enabled check
+    -DABSL_BUILD_TESTING:BOOL=ON \
+    -DABSL_USE_EXTERNAL_GOOGLETEST:BOOL=ON \
+    -DABSL_FIND_GOOGLETEST:BOOL=ON \
 %endif
-    -DABSL_ENABLE_INSTALL=ON
-%make_build
+    -GNinja
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %check
-ctest
+%ifarch x86_64 aarch64
+ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process %_smp_mflags
+%else
+ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process %_smp_mflags ||:
+%endif
+
+%files
+%_libdir/libabsl_*.so.*
 
 %files devel
 %doc LICENSE
 %doc *.md
-%_libdir/libabsl_*.a
+%_libdir/libabsl_*.so
 #files devel
 %_includedir/absl/
 %_libdir/cmake/absl/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Apr 10 2023 Alexey Shabalin <shaba@altlinux.org> 20230125.2-alt1
+- 20230125.2
+- switched build from static to shared libs
+
 * Tue Aug 30 2022 Yuri N. Sedunov <aris@altlinux.org> 20211102.0-alt3
 - rebuilt with -DCMAKE_POSITION_INDEPENDENT_CODE=ON
   (see https://github.com/abseil/abseil-cpp/issues/225)

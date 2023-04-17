@@ -15,7 +15,7 @@
 %def_disable static
 
 Name: rocksdb
-Version: 6.25.3
+Version: 7.9.2
 Release: alt1
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
@@ -23,7 +23,6 @@ Group: Databases
 License: GPL-2.0-only AND Apache-2.0
 Url: https://rocksdb.org/
 Vcs: https://github.com/facebook/rocksdb.git
-ExcludeArch: %arm %ix86
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -111,21 +110,17 @@ rm build_tools/gnu_parallel
     %{?_with_rocksdb_lite:-DROCKSDB_LITE:BOOL=ON} \
     %{?_without_liburing:-DWITH_LIBURING:BOOL=OFF} \
     -DWITH_CORE_TOOLS:BOOL=ON \
-    -DWITH_BENCHMARK_TOOLS:BOOL=OFF \
-    -DWITH_TOOLS:BOOL=OFF \
-    -DPORTABLE:BOOL=ON
+    -DWITH_BENCHMARK_TOOLS:BOOL=ON \
+    -DWITH_TOOLS:BOOL=ON \
+    -DUSE_RTTI=ON \
+    -DFAIL_ON_WARNINGS=OFF \
+    -DPORTABLE:BOOL=ON \
+    -DWITH_TESTS=ON
 
-#export EXTRA_CFLAGS="-fPIC"
-#export EXTRA_CXXFLAGS="-fPIC"
 %cmake_build
-
-#export PORTABLE="1"
-#%%make_build static_lib
-#%%make_build shared_lib
 
 %install
 %cmake_install
-#%%makeinstall_std PREFIX=%_prefix LIBDIR=%_libdir
 
 %if_disabled static
 rm -f %buildroot%_libdir/*.a
@@ -142,6 +137,7 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 %_includedir/*
 %_libdir/cmake/%name
+%_pkgconfigdir/%name.pc
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -149,6 +145,10 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu Apr 13 2023 Alexey Shabalin <shaba@altlinux.org> 7.9.2-alt1
+- 7.9.2
+- build for all arches
+
 * Mon Oct 25 2021 Alexey Shabalin <shaba@altlinux.org> 6.25.3-alt1
 - 6.25.3
 - Exclude build on ix86.

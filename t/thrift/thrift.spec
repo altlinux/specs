@@ -1,44 +1,26 @@
-# Work around this for now by disabling LTO:
-%define optflags_lto %nil
+%define _unpackaged_files_terminate_build 1
 
-Name:    thrift
-Version: 0.14.0
-Release: alt2
+Name: thrift
+Version: 0.18.1
+Release: alt1
 Summary: Software framework for cross-language services development
 Group: Development/Other
-ExcludeArch: armh
+License: Apache-2.0
+Url: https://thrift.apache.org/
+Source: %name-%version.tar
+Patch0001: 0001-fix-install-thrift_c_glibpc.patch
 
-# Parts of the source are used under the BSD and zlib licenses, but
-# these are OK for inclusion in an Apache 2.0-licensed whole:
-# https://www.apache.org/legal/3party.html
-
-# Here's the breakdown:
-# ./lib/py/compat/win32/stdint.h is 2-clause BSD
-# ./compiler/cpp/src/md5.[ch] are zlib
-License: ASL 2.0 and BSD and zlib
-URL:     https://thrift.apache.org/
-
-Source0: %name-%version.tar
-
-Source1: https://repo1.maven.org/maven2/org/apache/thrift/lib%name/%version/lib%name-%version.pom
-Source2: https://raw.github.com/apache/%name/%version/bootstrap.sh
-
-# Fix char warning
-# https://issues.apache.org/jira/browse/THRIFT-5350
-Patch0: thrift-char.patch
-
-BuildRequires(pre): rpm-build-perl rpm-build-python3
-BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel perl(CPAN/Meta.pm) perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Socket/SSL.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Test/Exception.pm) perl(parent.pm) perl-podlators
-BuildRequires: chrpath
-BuildRequires: boost-complete
-#BuildRequires: boost-devel-static
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
+BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel boost-locale-devel
+BuildRequires: cmake ninja-build flex
 BuildRequires: gcc-c++
-BuildRequires: glib2-devel libgio libgio-devel
-#BuildRequires: libevent-devel # for libthriftnb.so
+BuildRequires: glib2-devel libgio-devel
+BuildRequires: libevent-devel
 BuildRequires: libssl-devel
 BuildRequires: qt5-base-devel
-BuildRequires: texlive-texmf
 BuildRequires: zlib-devel
+
+Provides: lib%name = %EVR
 
 %description
 The Apache Thrift software framework for cross-language services
@@ -49,20 +31,21 @@ Python, %{?php_langname}and other languages.
 %package devel
 Group: Development/C++
 Summary: Development files for %name
+Provides: lib%name-devel = %EVR
 Requires: %name = %EVR
-Requires: boost-complete
+#Requires: boost-complete
 
 %description devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
 
 %package qt5
 Group: Development/Other
-Summary: Qt5 support for %{name}
+Summary: Qt5 support for %name
 Requires: %name = %EVR
 
 %description qt5
-The %{name}-qt package contains Qt bindings for %name.
+The %name-qt package contains Qt bindings for %name.
 
 %package glib
 Group: Development/Other
@@ -82,129 +65,49 @@ Requires: %name = %EVR
 %description -n python3-module-thrift
 The python3-%name package contains Python bindings for %name.
 
-%package -n perl-%name
-Group: Development/Perl
-Summary: Perl support for %{name}
-BuildArch: noarch
-BuildRequires: perl(Bit/Vector.pm)
-BuildRequires: perl(Class/Accessor.pm)
-BuildRequires: perl(ExtUtils/MakeMaker.pm)
-BuildRequires: rpm-build-perl
-Requires: perl(Bit/Vector.pm)
-Requires: perl(Encode.pm)
-Requires: perl(HTTP/Request.pm)
-Requires: perl(IO/Select.pm)
-Requires: perl(IO/Socket/INET.pm)
-Requires: perl(IO/String.pm)
-Requires: perl(LWP/UserAgent.pm)
-Requires: perl(POSIX.pm)
-Requires: perl(base.pm)
-Requires: perl(constant.pm)
-Requires: perl(strict.pm)
-Requires: perl(utf8.pm)
-Requires: perl(warnings.pm)
-# thrift improperly packages some components in files with names different
-# than the package they contain
-Provides: perl(Thrift/Exception.pm)
-Provides: perl(Thrift/MessageType.pm)
-Provides: perl(Thrift/Type.pm)
-
-%description -n perl-%name
-The perl-%name package contains Perl bindings for %name.
-
 %prep
 %setup
-%patch0 -p1
-
-# avoid spurious executable permissions in debuginfo package
-find . -name \*.cpp -or -name \*.cc -or -name \*.h | xargs -r chmod 644
-
-cp -p %SOURCE2 bootstrap.sh
-
-# work around linking issues
-echo 'libthrift_c_glib_la_LIBADD = $(GLIB_LIBS) $(GOBJECT_LIBS) -L../cpp/.libs ' >> lib/c_glib/Makefile.am
-echo 'libthriftqt5_la_LIBADD = $(QT_LIBS) -lthrift -L.libs' >> lib/cpp/Makefile.am
-echo 'libthriftz_la_LIBADD = $(ZLIB_LIBS) -lthrift -L.libs' >> lib/cpp/Makefile.am
-echo 'EXTRA_libthriftqt5_la_DEPENDENCIES = libthrift.la' >> lib/cpp/Makefile.am
-echo 'EXTRA_libthriftz_la_DEPENDENCIES = libthrift.la' >> lib/cpp/Makefile.am
-
-# explicitly set python3
-shopt -s globstar
-sed -i -E 's@^(#!.*/env) *python *$@\1 python3@' **/*.py
+%patch0001 -p1
 
 %build
-export PY_PREFIX=%prefix
-export PERL_PREFIX=%prefix
-export GLIB_LIBS=$(pkg-config --libs glib-2.0)
-export GLIB_CFLAGS=$(pkg-config --cflags glib-2.0)
-export GOBJECT_LIBS=$(pkg-config --libs gobject-2.0)
-export GOBJECT_CFLAGS=$(pkg-config --cflags gobject-2.0)
-
-find . -name rebar -exec rm -f '{}' \;
-find . -name Makefile\* -exec sed -i -e 's/[.][/]rebar/rebar/g' {} \;
-
-sh ./bootstrap.sh
-
-# use unversioned doc dirs where appropriate (via _pkgdocdir macro)
-export PYTHON=%{_bindir}/python3
-%configure --disable-dependency-tracking --disable-static --with-boost=%prefix \
-  --docdir=%_docdir/%name-%version
-
-# eliminate unused direct shlib dependencies
-sed -i -e 's/ -shared / -Wl,--as-needed\0/g' libtool
-
-%make_build
+export PYTHON=%__python3
+%cmake \
+  -DBUILD_COMPILER=ON \
+  -DBUILD_SHARED_LIBS=ON \
+  -DWITH_NODEJS=OFF \
+  -DWITH_JAVASCRIPT=OFF \
+  -DBUILD_PYTHON=ON \
+  -DCMAKE_INSTALL_DIR=%_libdir/cmake \
+  -DPKGCONFIG_INSTALL_DIR=%_pkgconfigdir \
+  -GNinja
+%cmake_build
 
 %install
-%makeinstall_std
-find %buildroot -name '*.la' -exec rm -f {} ';'
-find %buildroot -name fastbinary.so | xargs -r chmod 755
-find %buildroot -name \*.erl -or -name \*.hrl -or -name \*.app | xargs -r chmod 644
-
-# Move perl files into appropriate places
-find %buildroot -name \*.pod -exec rm -f '{}' \;
-find %buildroot -name .packlist -exec rm -f '{}' \;
-find %buildroot/usr/lib/perl5 -type d -empty -delete
-mkdir -p %buildroot/%perl_vendor_privlib/
-mv %buildroot/usr/lib/perl5/* %buildroot/%perl_vendor_privlib
-
-# Fix permissions on Thread.h
-find %buildroot -name Thread.h -exec chmod a-x '{}' \;
-
-# Ensure all python scripts are executable
-find %buildroot -name \*.py -exec grep -q /usr/bin/env {} \; -print | xargs -r chmod 755
-# kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
-	chrpath -d $i ||:
-done
+%cmake_install
+#fix cmake
+sed -i 's|/usr//usr|%_prefix|g' %buildroot%_libdir/cmake/thrift/ThriftConfig.cmake
+pushd lib/py
+%python3_install
+popd
 
 %files
 %doc LICENSE NOTICE
-%_bindir/thrift
-%_libdir/libthrift-%version.so
-%_libdir/libthriftz-%version.so
-#_libdir/libthriftnb-%version.so
+%_bindir/%name
+%_libdir/libthrift.so.*
+%_libdir/libthriftnb.so.*
+%_libdir/libthriftz.so.*
 
 %files glib
-%_libdir/libthrift_c_glib.so.*
+%_libdir/libthrift_c_glib*.so.*
 
 %files qt5
-%_libdir/libthriftqt5-%version.so
+%_libdir/libthriftqt5.so.*
 
 %files devel
-%_includedir/thrift
+%_includedir/%name
 %_libdir/*.so
-%exclude %_libdir/lib*-%version.so
-%_libdir/pkgconfig/thrift-z.pc
-%_libdir/pkgconfig/thrift-qt5.pc
-#_libdir/pkgconfig/thrift-nb.pc
-%_libdir/pkgconfig/thrift.pc
-%_libdir/pkgconfig/thrift_c_glib.pc
-%doc NOTICE
-
-%files -n perl-%name
-%perl_vendor_privlib/Thrift
-%perl_vendor_privlib/Thrift.pm
+%_pkgconfigdir/*
+%_libdir/cmake/%name
 %doc NOTICE
 
 %files -n python3-module-%name
@@ -212,6 +115,11 @@ done
 %python3_sitelibdir/%name-%version-py*.egg-info
 
 %changelog
+* Wed Apr 12 2023 Alexey Shabalin <shaba@altlinux.org> 0.18.1-alt1
+- 0.18.1
+- switch to build with cmake
+- not build perl module
+
 * Wed Mar 15 2023 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt2
 - fix build
 - disable build libthriftnb.so

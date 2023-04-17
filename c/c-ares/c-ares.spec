@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: c-ares
 Version: 1.19.0
-Release: alt1
+Release: alt2
 
 Summary: A library that performs asynchronous DNS operations
 License: MIT
@@ -10,10 +12,12 @@ Url: http://c-ares.haxx.se/
 Source: %url/download/c-ares-%version.tar
 Patch0: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
 # need for test/configure
 BuildRequires: gcc-c++
 
-%description -n c-ares
+%description
 c-ares is a C library that performs DNS requests and name resolves
 asynchronously. This package contains little utilities built with
 this library.
@@ -41,28 +45,18 @@ compile applications or shared objects that use c-ares.
 %patch0 -p1
 
 %build
-%autoreconf
-%configure \
-	--enable-shared \
-	--disable-static \
-	--enable-debug
-# strip rpath
-subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-%make_build
+%cmake -DCMAKE_INSTALL_LIBDIR:PATH="%_libdir" -DCARES_BUILD_TESTS:BOOL=ON
+%cmake_build
 
 %install
-%makeinstall_std
-install -d %buildroot%_bindir
-install -pm755 src/tools/.libs/{acountry,adig,ahost} %buildroot%_bindir/
+%cmake_install
 
 %check
-pushd test/
-./arestest --gtest_filter=-*.Live*
-popd
+%_cmake__builddir/bin/arestest --gtest_filter=-*.Live*
 
-%files -n c-ares
+%files
 %_bindir/*
+%_man1dir/*
 
 %files -n libcares
 %_libdir/*.so.*
@@ -71,11 +65,16 @@ popd
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_libdir/cmake/%name
 %_man3dir/*
 
 %changelog
+* Mon Apr 10 2023 Alexey Shabalin <shaba@altlinux.org> 1.19.0-alt2
+- switch to build with cmake
+- backport patch for fix memory leak in ares_send
+
 * Sat Feb 04 2023 Anton Farygin <rider@altlinux.ru> 1.19.0-alt1
-- 1.19.0
+- 1.19.0 (Fixes: CVE-2022-4904)
 
 * Thu Nov 25 2021 Anton Farygin <rider@altlinux.ru> 1.18.1-alt1
 - 1.18.1
