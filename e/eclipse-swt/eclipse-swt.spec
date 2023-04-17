@@ -11,17 +11,17 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 4.23
+%define version 4.25
 Epoch:                  1
 
-%global swtdir          eclipse-platform-sources-I20220308-0310
+%global swtdir          eclipse-platform-sources-I20220831-1800
 %global eclipse_rel     %{version}
-%global eclipse_tag     R-%{eclipse_rel}-202203080310
+%global eclipse_tag     R-%{eclipse_rel}-202208311800
 %global swtsrcdir       eclipse.platform.swt/bundles/org.eclipse.swt
 %global eclipse_arch    %{_arch}
 
 Name:           eclipse-swt
-Version:        4.23
+Version:        4.25
 Release:        alt1_1jpp11
 Summary:        Eclipse SWT: The Standard Widget Toolkit for GTK+
 
@@ -93,7 +93,7 @@ mv %{swtsrcdir}/Eclipse-SWT-PI %{swtsrcdir}/Eclipse\ SWT\ PI
   "<environment><os>linux</os><ws>gtk</ws><arch>s390x</arch></environment>" eclipse-platform-parent
 rm -rf eclipse.platform.swt.binaries/bundles/org.eclipse.swt.gtk.linux.s390x
 rm -rf rt.equinox.framework/bundles/org.eclipse.equinox.launcher.gtk.linux.s390x
-for dir in rt.equinox.binaries rt.equinox.framework/bundles eclipse.platform.swt.binaries/bundles ; do
+for dir in rt.equinox.binaries equinox/bundles eclipse.platform.swt.binaries/bundles ; do
   %{_sourcedir}/ensure_arch.sh "$dir" x86_64 s390x	
 done
 
@@ -148,6 +148,9 @@ cp -a %{swtsrcdir}/*.so %{buildroot}/%{_libdir}/%{name}
 %doc --no-dereference NOTICE
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 1:4.25-alt1_1jpp11
+- update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:4.23-alt1_1jpp11
 - new version
 
