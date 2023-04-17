@@ -3,14 +3,14 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+#BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 
 Summary:       Official JDBC driver for MySQL
 Name:          mysql-connector-java
-Version:       8.0.28
-Release:       alt1_3jpp11
+Version:       8.0.30
+Release:       alt1_2jpp11
 Epoch:         1
 License:       GPLv2 with exceptions
 URL:           http://dev.mysql.com/downloads/connector/j/
@@ -55,7 +55,7 @@ BuildRequires: javapackages-local
 BuildRequires: junit5
 BuildRequires: protobuf-java
 BuildRequires: slf4j
-BuildRequires: java-11-openjdk-devel
+BuildRequires: java-17-openjdk-devel
 
 Requires:      slf4j
 Requires: java
@@ -99,7 +99,7 @@ rm src/test/java/testsuite/regression/ConnectionRegressionTest.java
 rm src/test/java/testsuite/regression/DataSourceRegressionTest.java
 rm src/test/java/testsuite/simple/StatementsTest.java
 
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcom.mysql.cj.build.jdk=/usr/lib/jvm/java-11-openjdk \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcom.mysql.cj.build.jdk=/usr/lib/jvm/java-17-openjdk \
     -Dcom.mysql.cj.extra.libs=%{_javadir} \
     test dist
 
@@ -114,6 +114,9 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcom.mysql.cj.bu
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 1:8.0.30-alt1_2jpp11
+- update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:8.0.28-alt1_3jpp11
 - new version
 
