@@ -17,7 +17,7 @@
 
 Name: zabbix
 Version: 6.0.15
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -676,6 +676,10 @@ fi
 %if_with pgsql
 %files common-database-pgsql
 %doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql database/postgresql/double.sql database/postgresql/timescaledb.sql database/postgresql/history_pk_prepare.sql
+%doc database/postgresql/tsdb_history_pk_upgrade_no_compression
+%doc database/postgresql/tsdb_history_pk_upgrade_no_compression/*
+%doc database/postgresql/tsdb_history_pk_upgrade_with_compression
+%doc database/postgresql/tsdb_history_pk_upgrade_with_compression/*
 %endif
 
 %files server-common
@@ -779,6 +783,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Apr 17 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.15-alt2
+- Pack tsdb_history_pk_upgrade_*_compression/*.sql files
+
 * Mon Apr 03 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.15-alt1
 - 6.0.15
 
