@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-Pg
 Name: perl-%dist
-Version: 3.16.1
+Version: 3.16.3
 Release: alt1
 
 Summary: PostgreSQL database driver for the DBI module
@@ -41,6 +41,9 @@ rm %buildroot%perl_vendor_archlib/Bundle/DBD/Pg.pm
 %perl_vendor_autolib/DBD
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 3.16.3-alt1
+- automated CPAN update
+
 * Mon Mar 06 2023 Igor Vlasenko <viy@altlinux.org> 3.16.1-alt1
 - automated CPAN update
 
