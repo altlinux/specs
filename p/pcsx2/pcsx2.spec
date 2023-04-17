@@ -2,7 +2,7 @@
 %define llvm_version 13.0
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20230415042910
+%define svn_rev 20230416211526
 
 %define libchdr_commit 5de1a59019815ccdbba0fe07c71b31406d023248
 %define gtest_version 1.12.1
@@ -13,7 +13,7 @@
 %define rcheevos_commit 31f8788fe0e694e99db7ce138d45a655c556fa96
 
 Name: pcsx2
-Version: 1.7.4383
+Version: 1.7.4395
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -163,6 +163,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %_iconsdir/hicolor/256x256/apps/PCSX2.png
 
 %changelog
+* Mon Apr 17 2023 Nazarov Denis <nenderus@altlinux.org> 1.7.4395-alt1
+- Version 1.7.4395
+
 * Sat Apr 15 2023 Nazarov Denis <nenderus@altlinux.org> 1.7.4383-alt1
 - Version 1.7.4383
 
