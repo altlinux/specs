@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.12
+Version: 3.4.13
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,10 @@ __EOF__
 
 
 %changelog
+* Mon Apr 17 2023 Sergey V Turchin <zerg at altlinux dot org> 3.4.13-alt1
+- fix default font
+- fix style when change font size from help browser
+
 * Thu Feb 02 2023 Sergey V Turchin <zerg at altlinux dot org> 3.4.12-alt1
 - optimize string conversions
 
