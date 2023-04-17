@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.8
+Version: 1.3.9
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,10 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Mon Apr 17 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.9-alt1
+- Remove extra Unicode characters from the condition in which the check
+ is made whether the "UNIMAP" variable is set, the same for "KEYTABLE".
+
 * Thu Mar 23 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.8-alt1
 - Add support for "X11 Layout" and "VC Keymap".
 
