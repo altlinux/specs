@@ -7,8 +7,12 @@
 # (at least for now).
 %def_disable gsettings
 
+# Workaround for ALT bug #45542.
+# Should be dropped when/if the issue will be fixed.
+%def_disable check
+
 Name: lib%_name
-Version: 4.18.0
+Version: 4.18.1
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -165,6 +169,10 @@ xvfb-run make -k check
 %endif
 
 %changelog
+* Mon Apr 17 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
+- Disabled tests (closes: #45324).
+- Updated to 4.18.1.
+
 * Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
 - Fixed gsettings knob.
 - Updated to 4.18.0.
