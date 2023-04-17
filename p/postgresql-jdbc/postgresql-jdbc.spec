@@ -57,9 +57,9 @@ BuildRequires: jpackage-default
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:    42.3.1
-Release:	alt1_3jpp11
-License:	BSD
+Version:	42.6.0
+Release:	alt1_1jpp11
+License:	BSD-2-Clause
 URL:		http://jdbc.postgresql.org/
 
 Source0:	https://repo1.maven.org/maven2/org/postgresql/postgresql/%{version}/postgresql-%{version}-jdbc-src.tar.gz
@@ -80,7 +80,7 @@ BuildRequires:	mvn(org.junit.jupiter:junit-jupiter-params)
 BuildRequires:	mvn(org.junit.vintage:junit-vintage-engine)
 
 %if %runselftest
-BuildRequires:	postgresql-contrib
+BuildRequires:	postgresql15-server
 BuildRequires:	postgresql-test-rpm-macros
 %endif
 
@@ -122,6 +122,16 @@ find -type f \( -name "*.jar" -or -name "*.class" \) | xargs rm -f
 
 # For compat reasons, make Maven artifact available under older coordinates.
 %mvn_alias org.postgresql:postgresql postgresql:postgresql
+
+# remove unmet dependency
+%pom_remove_dep uk.org.webcompere:system-stubs-jupiter
+
+# remove tests that depend on the system-stubs-jupiter
+rm src/test/java/org/postgresql/test/jdbc2/DriverTest.java \
+   src/test/java/org/postgresql/util/OSUtilTest.java \
+   src/test/java/org/postgresql/jdbcurlresolver/PgServiceConfParserTest.java \
+   src/test/java/org/postgresql/jdbcurlresolver/PgPassParserTest.java \
+   src/test/java/org/postgresql/util/StubEnvironmentAndProperties.java
 
 
 %build
@@ -174,6 +184,9 @@ opts="-f"
 
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 0:42.6.0-alt1_1jpp11
+- update
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 0:42.3.1-alt1_3jpp11
 - new version
 
