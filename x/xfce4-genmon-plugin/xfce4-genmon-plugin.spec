@@ -1,5 +1,5 @@
 Name: xfce4-genmon-plugin
-Version: 4.1.1
+Version: 4.2.0
 Release: alt1
 
 Summary: Generic monitor plugin for the Xfce panel
@@ -13,9 +13,9 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfconf-devel
 
-Requires: xfce4-panel >= 4.9
+Requires: xfce4-panel >= 4.12
 
 %define _unpackaged_files_terminate_build 1
 
@@ -37,8 +37,11 @@ captures its output and displays it as a string into the panel.
 %makeinstall_std
 %find_lang %name
 
+chmod +x scripts/migrate_to_xfconf.sh
+
 %files -f %name.lang
-%doc README AUTHORS
+%doc README AUTHORS NEWS
+%doc scripts/
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
 %_iconsdir/hicolor/*/apps/*
@@ -46,6 +49,11 @@ captures its output and displays it as a string into the panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Apr 17 2023 Mikhail Efremov <sem@altlinux.org> 4.2.0-alt1
+- Packaged example scripts.
+- Packaged NEWS file.
+- Updated to 4.2.0.
+
 * Sun Jan 24 2021 Mikhail Efremov <sem@altlinux.org> 4.1.1-alt1
 - Updated to 4.1.1.
 
