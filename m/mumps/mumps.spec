@@ -7,10 +7,12 @@
 
 Name: mumps
 Version: 5.3.5
-Release: alt1
+Release: alt3
+
 Summary: MUltifrontal Massively Parallel sparse direct Solver
 License: ALT-Public-Domain
 Group: Sciences/Mathematics
+
 Url: http://mumps.enseeiht.fr/
 
 # http://mumps.enseeiht.fr/MUMPS_%{version}.tar.gz
@@ -132,6 +134,11 @@ This package contains examples for MUMPS (sequential version).
 
 mv examples/README examples/README-examples
 
+%ifarch %e2k
+# openmp troubles as of lcc 1.26.16
+sed -i '/^!\$/d' src/{{s,d,z,c}sol_{distrhs,c},zsol_{lr,fwd_aux},csol_lr}.F
+%endif
+
 pushd ..
 cp -r %name-%version %name-%version-seq
 popd
@@ -141,9 +148,13 @@ pushd ../%name-%version-seq
 popd
 
 %build
+%ifarch %e2k
+%define build_fflags %optflags
+%else
 # Workaround for GCC-10
 # https://gcc.gnu.org/gcc-10/porting_to.html
-%define build_fflags %{optflags} -fallow-argument-mismatch
+%define build_fflags %optflags -fallow-argument-mismatch
+%endif
 
 %define mpif77_cflags %(env PKG_CONFIG_PATH=%mpidir/lib/pkgconfig pkg-config --cflags ompi-f77)
 %define mpif77_libs %(env PKG_CONFIG_PATH=%mpidir/lib/pkgconfig pkg-config --libs ompi-f77)
@@ -187,7 +198,7 @@ export LDFLAGS="${OMPI_LDFLAGS}"
 export LIBBLAS="-L%_libdir -lopenblas"
 export INCBLAS=-I%_includedir/openblas
 
-make all \
+%make_build all \
 	SONAME_VERSION=%{soname_version} \
 	CC=%mpidir/bin/mpicc \
 	FC=%mpidir/bin/mpif77 \
@@ -230,7 +241,7 @@ export LIBBLAS="-L%_libdir -lopenblas"
 export INCBLAS=-I%_includedir/openblas
 export LDFLAGS="-fopenmp -lgomp -lrt"
 
-make all \
+%make_build all \
 	SONAME_VERSION=%{soname_version} \
 	CC=gcc \
 	FC=gfortran \
@@ -351,6 +362,14 @@ popd
 %_libdir/%name-%version-seq-examples
 
 %changelog
+* Mon Apr 17 2023 Michael Shigorin <mike@altlinux.org> 5.3.5-alt3
+- E2K: ftbfs workarounds (ICE; ilyakurdyukov@)
+- enable parallel build (ilyakurdyukov@)
+
+* Fri Jul 23 2021 Michael Shigorin <mike@altlinux.org> 5.3.5-alt2
+- E2K: avoid lcc-unsupported option
+  (it's not gcc10 to work around in the first place...)
+
 * Wed Apr 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.5-alt1
 - Updated to upstream version 5.3.5 by adapting spec and patches from Fedora.
 
