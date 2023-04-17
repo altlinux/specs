@@ -8,7 +8,7 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^objectweb-asm/d
 %define _unpackaged_files_terminate_build 1
 
-BuildRequires: source-highlight python3-module-nose python3-module-setuptools
+BuildRequires: source-highlight python3-module-setuptools
 BuildRequires(pre): rpm-build-python3
 %add_python3_path /usr/share/java-utils/
 BuildRequires: /proc rpm-build-java
@@ -42,7 +42,7 @@ BuildRequires: jpackage-default
 
 Name:           javapackages-tools
 Version:        6.0.0
-Release:        alt1_7jpp11
+Release:        alt2_7jpp11
 Summary:        Macros and scripts for Java packaging support
 License:        BSD
 URL:            https://github.com/fedora-java/javapackages
@@ -352,6 +352,9 @@ rm %buildroot%_datadir/xmvn/conf/toolchains.xml-openjdk1*
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Apr 17 2023 Anton Vyatkin <toni@altlinux.org> 1:6.0.0-alt2_7jpp11
+- Fix BuildRequires
+
 * Sat Jul 16 2022 Igor Vlasenko <viy@altlinux.org> 1:6.0.0-alt1_7jpp11
 - update
 
