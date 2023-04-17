@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.6
-Release: alt5
+Release: alt6
 Summary: behave is behaviour-driven development, Python style
 License: BSD
 Group: Development/Python3
@@ -20,15 +20,12 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+BuildRequires: python3(pytest)
 BuildRequires: python3(hamcrest)
 BuildRequires: python3(mock)
-BuildRequires: python3(nose)
 BuildRequires: python3(parse)
 BuildRequires: python3(parse_type)
 BuildRequires: python3(path)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 Requires: %oname-common = %EVR
@@ -78,11 +75,8 @@ install -d %buildroot%_sysconfdir
 cp -fR etc/* %buildroot%_sysconfdir/
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-sed -i -e '/behave --format=/d' tox.ini
-
-%_bindir/tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 tests
 
 %files
 %doc *.rst *features
@@ -100,6 +94,9 @@ sed -i -e '/behave --format=/d' tox.ini
 %_sysconfdir/junit.xml/junit-4.xsd
 
 %changelog
+* Mon Apr 17 2023 Anton Vyatkin <toni@altlinux.org> 1.2.6-alt6
+- Fix BuildRequires
+
 * Wed Sep 15 2021 Stanislav Levin <slev@altlinux.org> 1.2.6-alt5
 - Fixed FTBFS (setuptools 58).
 
