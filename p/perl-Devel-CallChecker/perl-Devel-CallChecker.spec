@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Devel-CallChecker
-Version: 0.008
-Release: alt1.2
+Version: 0.009
+Release: alt1
 
 Summary: custom op checking attached to subroutines
 Group: Development/Perl
@@ -29,6 +30,9 @@ BuildRequires: perl(parent.pm) perl-devel perl(DynaLoader/Functions.pm) perl(Mod
 %doc Changes README
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 0.009-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1.2
 - rebuild with new perl 5.28.1
 
