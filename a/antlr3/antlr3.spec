@@ -1,8 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat rpm-macros-java
-BuildRequires: gcc-c++ perl(Digest.pm) perl(English.pm) perl(Error.pm) perl(Exception/Class.pm) perl(Exception/Class/Base.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurp.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Moose.pm) perl(Moose/Object.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(Params/Validate.pm) perl(Readonly.pm) perl(Switch.pm) perl(Test/Builder/Module.pm) perl(Test/Class/Load.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(UNIVERSAL.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(blib.pm) perl(overload.pm) perl-devel unzip
+BuildRequires: gcc-c++ perl(Error.pm) perl(Exception/Class.pm) perl(Exception/Class/Base.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurp.pm) perl(Module/Build.pm) perl(Moose.pm) perl(Moose/Object.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(Params/Validate.pm) perl(Readonly.pm) perl(Switch.pm) perl(Test/Builder/Module.pm) perl(Test/Class/Load.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(YAML/Tiny.pm) perl(blib.pm) perl-devel unzip
 # END SourceDeps(oneline)
+#BuildRequires: perl(Java/JVM/Classfile.pm) 
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # fedora bcond_with macro
@@ -13,10 +14,10 @@ BuildRequires: jpackage-default
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global antlr_version 3.5.2
+%global antlr_version 3.5.3
 %global c_runtime_version 3.4
 %global javascript_runtime_version 3.1
-%global baserelease 33
+%global baserelease 3
 
 # This package needs itself to build.  Use this to bootstrap on a new system.
 %bcond_with bootstrap
@@ -28,33 +29,33 @@ BuildRequires: jpackage-default
 %global ST4ver2 4.0.8
 %global stringtemplatever 3.2.1
 
-Summary:            ANother Tool for Language Recognition
-Name:               antlr3
-Epoch:              1
-Version:            %{antlr_version}
-Release:            alt1_33jpp11
-License:            BSD
-URL:                http://www.antlr3.org/
+Summary:        ANother Tool for Language Recognition
+Name:           antlr3
+Epoch:          1
+Version:        %{antlr_version}
+Release:        alt2_3jpp11
+License:        BSD
+URL:            https://www.antlr3.org/
 
-Source0:            https://github.com/antlr/antlr3/archive/%{antlr_version}/%{name}-%{antlr_version}.tar.gz
-Source1:            http://www.antlr3.org/download/antlr-javascript-runtime-%{javascript_runtime_version}.zip
+Source0:        https://github.com/antlr/antlr3/archive/%{antlr_version}/%{name}-%{antlr_version}.tar.gz
+Source1:        http://www.antlr3.org/download/antlr-javascript-runtime-%{javascript_runtime_version}.zip
 %if %{with bootstrap}
 # Get prebuilt versions to bootstrap
-Source2:            https://repo1.maven.org/maven2/org/antlr/ST4/%{ST4ver1}/ST4-%{ST4ver1}.jar
-Source3:            https://repo1.maven.org/maven2/org/antlr/ST4/%{ST4ver1}/ST4-%{ST4ver1}.pom
-Source4:            https://repo1.maven.org/maven2/org/antlr/ST4/%{ST4ver2}/ST4-%{ST4ver2}.jar
-Source5:            https://repo1.maven.org/maven2/org/antlr/ST4/%{ST4ver2}/ST4-%{ST4ver2}.pom
-Source6:            https://repo1.maven.org/maven2/org/antlr/antlr/%{bootstrap_version}/antlr-%{bootstrap_version}.jar
-Source7:            https://repo1.maven.org/maven2/org/antlr/antlr/%{bootstrap_version}/antlr-%{bootstrap_version}.pom
-Source8:            https://repo1.maven.org/maven2/org/antlr/antlr-master/%{bootstrap_version}/antlr-master-%{bootstrap_version}.pom
-Source9:            https://repo1.maven.org/maven2/org/antlr/antlr-runtime/%{bootstrap_version}/antlr-runtime-%{bootstrap_version}.jar
-Source10:           https://repo1.maven.org/maven2/org/antlr/antlr-runtime/%{bootstrap_version}/antlr-runtime-%{bootstrap_version}.pom
-Source11:           https://repo1.maven.org/maven2/org/antlr/antlr3-maven-plugin/%{bootstrap_version}/antlr3-maven-plugin-%{bootstrap_version}.jar
-Source12:           https://repo1.maven.org/maven2/org/antlr/antlr3-maven-plugin/%{bootstrap_version}/antlr3-maven-plugin-%{bootstrap_version}.pom
-Source13:           https://repo1.maven.org/maven2/org/antlr/stringtemplate/%{stringtemplatever}/stringtemplate-%{stringtemplatever}.jar
-Source14:           https://repo1.maven.org/maven2/org/antlr/stringtemplate/%{stringtemplatever}/stringtemplate-%{stringtemplatever}.pom
-Source15:           https://repo1.maven.org/maven2/antlr/antlr/%{antlr2_version}/antlr-%{antlr2_version}.jar
-Source16:           https://repo1.maven.org/maven2/antlr/antlr/%{antlr2_version}/antlr-%{antlr2_version}.pom
+Source2:        https://repo1.maven.org/maven2/org/antlr/ST4/%{ST4ver1}/ST4-%{ST4ver1}.jar
+Source3:        https://repo1.maven.org/maven2/org/antlr/ST4/%{ST4ver1}/ST4-%{ST4ver1}.pom
+Source4:        https://repo1.maven.org/maven2/org/antlr/ST4/%{ST4ver2}/ST4-%{ST4ver2}.jar
+Source5:        https://repo1.maven.org/maven2/org/antlr/ST4/%{ST4ver2}/ST4-%{ST4ver2}.pom
+Source6:        https://repo1.maven.org/maven2/org/antlr/antlr/%{bootstrap_version}/antlr-%{bootstrap_version}.jar
+Source7:        https://repo1.maven.org/maven2/org/antlr/antlr/%{bootstrap_version}/antlr-%{bootstrap_version}.pom
+Source8:        https://repo1.maven.org/maven2/org/antlr/antlr-master/%{bootstrap_version}/antlr-master-%{bootstrap_version}.pom
+Source9:        https://repo1.maven.org/maven2/org/antlr/antlr-runtime/%{bootstrap_version}/antlr-runtime-%{bootstrap_version}.jar
+Source10:       https://repo1.maven.org/maven2/org/antlr/antlr-runtime/%{bootstrap_version}/antlr-runtime-%{bootstrap_version}.pom
+Source11:       https://repo1.maven.org/maven2/org/antlr/antlr3-maven-plugin/%{bootstrap_version}/antlr3-maven-plugin-%{bootstrap_version}.jar
+Source12:       https://repo1.maven.org/maven2/org/antlr/antlr3-maven-plugin/%{bootstrap_version}/antlr3-maven-plugin-%{bootstrap_version}.pom
+Source13:       https://repo1.maven.org/maven2/org/antlr/stringtemplate/%{stringtemplatever}/stringtemplate-%{stringtemplatever}.jar
+Source14:       https://repo1.maven.org/maven2/org/antlr/stringtemplate/%{stringtemplatever}/stringtemplate-%{stringtemplatever}.pom
+Source15:       https://repo1.maven.org/maven2/antlr/antlr/%{antlr2_version}/antlr-%{antlr2_version}.jar
+Source16:       https://repo1.maven.org/maven2/antlr/antlr/%{antlr2_version}/antlr-%{antlr2_version}.pom
 %endif
 
 Patch0:         0001-java8-fix.patch
@@ -83,17 +84,17 @@ BuildRequires:  mvn(org.antlr:ST4)
 BuildRequires:  mvn(org.antlr:stringtemplate)
 %endif
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 
-BuildRequires:      autoconf
-BuildRequires:      automake
-BuildRequires:      libtool
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
 
-# we don't build it now
-Obsoletes:       antlr3-gunit < 3.2-15
+# https://fedoraproject.org/wiki/Changes/Drop_i686_JDKs
 Source44: import.info
 
 %description
@@ -102,68 +103,64 @@ that provides a framework for constructing recognizers,
 interpreters, compilers, and translators from grammatical
 descriptions containing actions in a variety of target languages.
 
-%package     tool
+%package        tool
 Group: Development/Java
-Summary:     ANother Tool for Language Recognition
-BuildArch:   noarch
-Provides:    %{name} = %{epoch}:%{antlr_version}-%{release}
-Obsoletes:   %{name} < %{epoch}:%{antlr_version}-%{release}
-Requires:    %{name}-java = %{epoch}:%{antlr_version}-%{release}
+Summary:        ANother Tool for Language Recognition
+BuildArch:      noarch
+Provides:       %{name} = %{epoch}:%{antlr_version}-%{release}
+Obsoletes:      %{name} < %{epoch}:%{antlr_version}-%{release}
+Requires:       %{name}-java = %{epoch}:%{antlr_version}-%{release}
 # Explicit requires for javapackages-tools since antlr3-script
 # uses /usr/share/java-utils/java-functions
-Requires:    javapackages-tools
+Requires:       javapackages-tools
 
-
-Provides:    ant-antlr3 = %{epoch}:%{antlr_version}-%{release}
-Obsoletes:   ant-antlr3 < %{epoch}:%{antlr_version}-%{release}
-
-%description tool
+%description    tool
 ANother Tool for Language Recognition, is a language tool
 that provides a framework for constructing recognizers,
 interpreters, compilers, and translators from grammatical
 descriptions containing actions in a variety of target languages.
 
-%package     java
+%package        java
 Group: Development/Java
-Summary:     Java run-time support for ANTLR-generated parsers
-BuildArch:   noarch
+Summary:        Java run-time support for ANTLR-generated parsers
+BuildArch:      noarch
 
-%description java
+%description    java
 Java run-time support for ANTLR-generated parsers
 
-%package javadoc
+%package        javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
 BuildArch:      noarch
 
-%description javadoc
+%description    javadoc
 %{summary}.
 
-%package      javascript
+%package        javascript
 Group: Development/Java
-Summary:      Javascript run-time support for ANTLR-generated parsers
-Version:      %{javascript_runtime_version}
-BuildArch:    noarch
+Summary:        Javascript run-time support for ANTLR-generated parsers
+Version:        %{javascript_runtime_version}
+BuildArch:      noarch
 
-%description  javascript
+%description    javascript
 Javascript run-time support for ANTLR-generated parsers
 
-%package   C
+%package        C
 Group: Development/Java
-Summary:   C run-time support for ANTLR-generated parsers
-Version:   %{c_runtime_version}
+Summary:        C run-time support for ANTLR-generated parsers
+Version:        %{c_runtime_version}
 
-%description C
+%description    C
 C run-time support for ANTLR-generated parsers
 
-%package   C-devel
+%package        C-devel
 Group: Development/Java
-Summary:   Header files for the C bindings for ANTLR-generated parsers
-Requires:  %{name}-C = %{epoch}:%{c_runtime_version}-%{release}
-Version:   %{c_runtime_version}
+Summary:        Header files for the C bindings for ANTLR-generated parsers
+Requires:       %{name}-C = %{epoch}:%{c_runtime_version}-%{release}
+Version:        %{c_runtime_version}
 
 
-%description C-devel
+%description    C-devel
 Header files for the C bindings for ANTLR-generated parsers
 
 %package        C-docs
@@ -173,31 +170,32 @@ BuildArch:      noarch
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  doxygen
 Requires:       %{name}-C = %{epoch}:%{c_runtime_version}-%{release}
-Version:   %{c_runtime_version}
+Version:        %{c_runtime_version}
 
 %description    C-docs
 This package contains doxygen documentation with instruction
 on how to use the C target in ANTLR and complete API description of the
 C run-time support for ANTLR-generated parsers.
 
-%package C++-devel
+%package        C++-devel
 Group: Development/Java
 Summary:        C++ runtime support for ANTLR-generated parsers
 
-%description C++-devel
+%description    C++-devel
 C++ runtime support for ANTLR-generated parsers.
 
 %prep
 %setup -q -n antlr3-%{antlr_version} -a 1
-sed -i "s,\${buildNumber},`cat %{_sysconfdir}/fedora-release` `date`," tool/src/main/resources/org/antlr/antlr.properties
 %patch0 -p1
-%patch1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+
+sed -i "s,\${buildNumber},`cat %{_sysconfdir}/fedora-release` `date`," tool/src/main/resources/org/antlr/antlr.properties
 
 # remove pre-built artifacts
 find -type f -a -name *.jar -delete
@@ -211,7 +209,7 @@ find -type f -a -name *.class -delete
 %pom_disable_module antlr-complete
 
 %pom_remove_plugin :maven-source-plugin
-%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
 
 # workarounds bug in filtering (Mark invalid)
 %pom_xpath_remove pom:resource/pom:filtering
@@ -270,7 +268,7 @@ popd
 # build ant task
 pushd antlr-ant/main/antlr3-task/
 export CLASSPATH=$(build-classpath ant)
-javac  -encoding ISO-8859-1 -source 1.8 -target 1.8 \
+javac  -target 1.8 -source 1.8 -encoding ISO-8859-1 -source 1.8 -target 1.8 \
   antlr3-src/org/apache/tools/ant/antlr/ANTLR3.java
 jar cvf ant-antlr3.jar \
   -C antlr3-src org/apache/tools/ant/antlr/antlib.xml \
@@ -304,8 +302,8 @@ done
 sed -i -e 's,^\.so man3/pANTLR3,.so man3/antlr3-pANTLR3,' `grep -rl 'man3/pANTLR3' .`
 gzip *
 popd
-#mv api/man/man3 $RPM_BUILD_ROOT%{_mandir}/
-#rmdir api/man
+mv api/man/man3 $RPM_BUILD_ROOT%{_mandir}/
+rmdir api/man
 popd
 
 # install javascript runtime
@@ -329,7 +327,7 @@ install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 %{_libdir}/libantlr3c.so
 
 %files C-devel
-#%{_mandir}/man3/*
+%{_mandir}/man3/*
 %{_includedir}/*.h
 
 %files C-docs
@@ -351,6 +349,9 @@ install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 %doc tool/LICENSE.txt
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 1:3.5.3-alt2_3jpp11
+- update
+
 * Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 1:3.5.2-alt1_33jpp11
 - update
 
