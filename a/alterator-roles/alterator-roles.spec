@@ -1,6 +1,6 @@
 Name: alterator-roles
 Version: 1.3
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -49,6 +49,9 @@ An alterator module for managing roles (it uses libnss-role).
 %_datadir/dbus-1/interfaces/*.xml
 
 %changelog
+* Tue Apr 18 2023 Ivan Savin <svn17@altlinux.org> 1.3-alt2
+- Remove width and height from dialogs.
+
 * Wed Apr 06 2022 Ivan Savin <svn17@altlinux.org> 1.3-alt1
 - Fix bugs after rename.
 - Add ability to enable/disable libnss-role module.
