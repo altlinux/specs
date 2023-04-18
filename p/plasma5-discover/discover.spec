@@ -20,7 +20,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.4
-Release: alt2
+Release: alt3
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -34,6 +34,9 @@ Requires: %name-packagekit
 Source: %rname-%version.tar
 Source1: env-flatpak.sh
 Source2: env-snap.sh
+# upstream
+Patch0: fwupd-set-user-agent.patch
+# ALT
 Patch1: alt-offline-updates.patch
 Patch2: alt-skip-obsoleted-and-removed-from-upgrade.patch
 Patch3: alt-discover-update-all-packages-from-appstream.patch
@@ -173,6 +176,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 #%patch3 -p2 -b .upd-appstream
@@ -290,6 +294,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Tue Apr 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt3
+- fix connection to fwupd.org (closes: 45889)
+
 * Thu Apr 13 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt2
 - don't hide autoreboot button
 
