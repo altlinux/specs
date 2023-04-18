@@ -10,7 +10,7 @@ BuildRequires: jpackage-default
 
 Name:           resteasy
 Version:        3.0.26
-Release:        alt1_15jpp11
+Release:        alt1_17jpp11
 Summary:        Framework for RESTful Web services and Java applications
 License:        ASL 2.0
 URL:            http://resteasy.jboss.org/
@@ -25,7 +25,8 @@ BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.apache.tomcat:tomcat-servlet-api)
+#BuildRequires:  mvn(org.apache.tomcat:tomcat-servlet-api)
+BuildRequires:  tomcat-servlet-4.0-api
 
 # Jackson 2
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
@@ -232,6 +233,9 @@ find -name '*.jar' -print -delete
 %doc --no-dereference License.html
 
 %changelog
+* Tue Apr 18 2023 Igor Vlasenko <viy@altlinux.org> 3.0.26-alt1_17jpp11
+- update
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 3.0.26-alt1_15jpp11
 - fc update
 
