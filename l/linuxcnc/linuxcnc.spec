@@ -1,11 +1,10 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%def_without docs
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.0
-Release: alt0.6.20220115.1
+Release: alt0.7.20230413
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -15,19 +14,16 @@ Url: https://github.com/LinuxCNC/linuxcnc
 
 ExclusiveArch: aarch64 alpha %arm ia64 %ix86 x86_64 %e2k
 
-Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Patch1: fix-dir-path.patch
 Patch6: qtvcp_import_fix.patch
 Patch7: not_require_dpkg.patch
-Patch8: linuxcnc-alt-python3.patch
-Patch9: linuxcnc-alt-tirpc.patch
-Patch10: autoconf.patch
 Buildrequires(pre): rpm-build-tcl rpm-build-python3
 Buildrequires: rpm-build-gir
 Buildrequires: python3-devel
 BuildRequires: gcc-c++ pkgconfig(glib-2.0)
 BuildRequires: libgtk+3-gir-devel
+BuildRequires: libgtk+2-devel
 BuildRequires: python3-module-pygobject3
 BuildRequires: libGL-devel libGLU-devel
 BuildRequires: libXaw-devel libXinerama-devel libXmu-devel libXt-devel xorg-cf-files
@@ -49,10 +45,9 @@ BuildRequires: tcl-devel tk-devel tcl-img tclx bwidget
 #BuildRequires: tcl-blt-devel
 BuildRequires: intltool
 #BuildRequires: pkgconfig(libgnomeprintui-2.2)
-%if_with docs
-BuildRequires: asciidoc-a2x ghostscript-common ghostscript-utils source-highlight graphviz groff-ps
-%endif
 BuildRequires: desktop-file-utils ImageMagick-tools
+BuildRequires: asciidoc-a2x
+BuildRequires: dos2unix
 
 Obsoletes: %name-data =< %EVR
 Requires: lib%name = %EVR
@@ -71,8 +66,10 @@ Requires: tclx tcl-blt
 # Fix me!!!
 %add_python3_req_skip __main__ gi.repository.GdkPixbuf gst gtk gtk.glade Cairo
 %add_python3_req_skip emccanon interpreter
+%add_python3_req_skip plasmac qtvcp.lib.qt_pdf
 
 %filter_from_requires s/^.*rip-environment//
+%filter_from_requires s/^.*typelib(Cairo)//
 
 %add_python3_path %_datadir/qtvcp
 %add_python3_path %_datadir/%name/ncfiles
@@ -150,17 +147,14 @@ sed -i 's,-fno-fast-math,,' src/Makefile*
 sed -i 's,sparc64|,&e2k|,' src/m4/ax_boost_base.m4
 %endif
 
+find . -name '*.py' -exec dos2unix "{}" \;
+
 %build
 pushd src
-%autoreconf
+./autogen.sh
 %configure \
     --enable-non-distributable=yes \
-    --with-realtime=uspace \
-    --disable-gtk2 \
-    --disable-gtk \
-    %if_with docs
-    --enable-build-documentation=pdf
-    %endif
+    --with-realtime=uspace
 
 %make_build
 popd
@@ -170,41 +164,31 @@ pushd src
 %makeinstall_std
 popd
 
-install -d -m755 %buildroot%_desktopdir
-cp debian/extras/usr/share/applications/linuxcnc.desktop %buildroot%_desktopdir
-cp debian/extras/usr/share/applications/linuxcnc-latency.desktop %buildroot%_desktopdir
-cp debian/extras/usr/share/applications/linuxcnc-pncconf.desktop %buildroot%_desktopdir
-cp debian/extras/usr/share/applications/linuxcnc-stepconf.desktop %buildroot%_desktopdir
+# install rules
+mkdir -p %buildroot%_udevrulesdir
+cp debian/extras/lib/udev/rules.d/* %buildroot%_udevrulesdir
 
-#fix desktop Name
-pushd %buildroot%_desktopdir
-sed 's/Name=/Name=LinuxCNC /g' -i linuxcnc-pncconf.desktop \
-    linuxcnc-stepconf.desktop linuxcnc-latency.desktop
-popd
+# fix desktop Name
+sed 's/Name=/Name=LinuxCNC /g' -i %buildroot%_desktopdir/linuxcnc-*.desktop
 
-#fix desktop categories
+# fix desktop categories
 desktop-file-install --dir %buildroot%_desktopdir \
         --remove-key=Version \
         --remove-category=X-CNC \
-        --add-category=Development \
-        --add-category=Engineering \
+        --remove-category=Utility \
         %buildroot%_desktopdir/*.desktop
 
 ### == desktop file documentation
 cat>%buildroot%_desktopdir/%name-documentation.desktop<<END
 [Desktop Entry]
 Name=LinuxCNC Documentation
-Name[ru_RU]= LinuxCNC Документация 
+Name[ru_RU]=LinuxCNC Документация 
 Exec=%_bindir/xdg-open %_docdir/%name
 Icon=linuxcncicon
 Terminal=false
 Type=Application
-Categories=Development;Engineering;
+Categories=Science;Engineering;
 END
-
-#install rules
-mkdir -p %buildroot%_udevrulesdir
-cp debian/extras/lib/udev/rules.d/* %buildroot%_udevrulesdir
 
 # convert and install icon files
 for x in 16 32 48; do
@@ -213,7 +197,7 @@ for x in 16 32 48; do
             %buildroot%_iconsdir/hicolor/$x'x'$x/apps/linuxcncicon.png
 done
 
-#fix uncompressed manual pages
+# fix uncompressed manual pages
 pushd %buildroot%_mandir
 xz `find -name *.?`
 popd
@@ -226,6 +210,7 @@ rm %buildroot%_libdir/*.a
 %files -f %name.lang
 %_bindir/*
 %_libexecdir/%name
+%_libdir/%name
 %_tcllibdir/%name
 %python3_sitelibdir/*
 %_sysconfdir/%name
@@ -234,19 +219,16 @@ rm %buildroot%_libdir/*.a
 %_sysconfdir/X11/app-defaults/*
 %_datadir/axis
 %_datadir/%name
-%_datadir/glade3
+%_datadir/glade
 %_datadir/gmoccapy
 %_datadir/gscreen
 %_datadir/gtksourceview-2.0/*
-%_datadir/qtvcp/*
+%_datadir/qtvcp
 %_liconsdir/*
 %_niconsdir/*
 %_miconsdir/*
 %_mandir/man?/*
 %_docdir/%name
-%if_with docs
-%exclude %_docdir/%name/*.pdf
-%endif
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -255,19 +237,12 @@ rm %buildroot%_libdir/*.a
 %_includedir/%name
 %_libdir/*.so
 
-%if_with docs
-%files doc
-%_docdir/%name/*.pdf
-%exclude %_docdir/%name/*_??.pdf
-
-%files doc-fr
-%_docdir/%name/*_fr.pdf
-
-%files doc-es
-%_docdir/%name/*_es.pdf
-%endif
-
 %changelog
+* Mon Apr 17 2023 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.7.20230413
+- new snapshot
+- cleanup spec, old patches
+- build classicladder again
+
 * Fri May 06 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.9.0-alt0.6.20220115.1
 - fixed build for Elbrus
 
