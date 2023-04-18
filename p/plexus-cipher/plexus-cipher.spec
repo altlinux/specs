@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: maven-local
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # fedora bcond_with macro
@@ -12,8 +15,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           plexus-cipher
-Version:        1.8
-Release:        alt1_3jpp11
+Version:        2.0
+Release:        alt1_2jpp11
 Summary:        Plexus Cipher: encryption/decryption Component
 License:        ASL 2.0
 # project moved to GitHub and it looks like there is no official website anymore
@@ -22,14 +25,15 @@ BuildArch:      noarch
 
 Source0:        https://github.com/codehaus-plexus/plexus-cipher/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
-BuildRequires:  mvn(javax.enterprise:cdi-api)
+BuildRequires:  maven-local
 BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.sonatype.plugins:sisu-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
+BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 %endif
 Source44: import.info
 
@@ -40,26 +44,11 @@ Plexus Cipher: encryption/decryption Component
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-
-%pom_remove_parent .
-
-%pom_xpath_inject 'pom:project' '<groupId>org.codehaus.plexus</groupId>' .
-
-# fedora moved from sonatype sisu to eclipse sisu. sisu-inject-bean artifact
-# doesn't exist in eclipse sisu. this artifact contains nothing but
-# bundled classes from atinject, cdi-api, aopalliance and maybe others.
-%pom_remove_dep org.sonatype.sisu:sisu-inject-bean
-
-%pom_add_dep javax.inject:javax.inject:1:provided
-
-%pom_add_dep javax.enterprise:cdi-api:1.0:provided
-
 %mvn_file : plexus/%{name}
-
 %mvn_alias org.codehaus.plexus: org.sonatype.plexus:
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -68,6 +57,9 @@ Plexus Cipher: encryption/decryption Component
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 2.0-alt1_2jpp11
+- update
+
 * Sat Jul 02 2022 Igor Vlasenko <viy@altlinux.org> 1.8-alt1_3jpp11
 - new version
 
