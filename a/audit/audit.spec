@@ -5,7 +5,7 @@
 %def_without prelude
 
 Name: audit
-Version: 3.0.9
+Version: 3.1
 Release: alt1
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
@@ -107,6 +107,9 @@ sed -i 's|#include <linux/audit.h>|#include "audit.h"|' lib/libaudit.h
 	--with-aarch64 \
 	--with-arm \
 	--with-libcap-ng=auto \
+	--without-golang \
+	--enable-experimental \
+	--with-io_uring \
 %if_with bootstrap
 	--without-python \
 	--without-python3 \
@@ -119,7 +122,7 @@ sed -i 's|#include <linux/audit.h>|#include "audit.h"|' lib/libaudit.h
 
 %make_build
 
-# undo the workaround
+# undo swig flexible array workaround done in %%prep section
 sed -i 's|#include "audit.h"|#include <linux/audit.h>|' lib/libaudit.h
 
 %install
@@ -167,6 +170,7 @@ fi
 %files
 %doc README ChangeLog contrib
 %config(noreplace) %_sysconfdir/cron.weekly/%{name}d
+%config(noreplace) %_sysconfdir/sysconfig/auditd
 %_initdir/%{name}d
 %attr(700,root,root) %_logdir/%name
 %config %_unitdir/%{name}d.service
@@ -180,6 +184,8 @@ fi
 %attr(750,root,root) /sbin/autrace
 %attr(750,root,root) /sbin/audisp-remote
 %attr(750,root,root) /sbin/audisp-syslog
+%attr(750,root,root) /sbin/audisp-ids
+%attr(750,root,root) /sbin/audisp-statsd
 %if_with prelude
 %attr(750,root,root) /sbin/audisp-prelude
 %endif
@@ -197,7 +203,6 @@ fi
 
 %_datadir/%name/
 
-%exclude %_sysconfdir/sysconfig/%{name}d
 %attr(700,root,root) %dir %_sysconfdir/%name
 %config(noreplace) %attr(600,root,root) %_sysconfdir/%name/auditd.conf
 %config(noreplace) %attr(600,root,root) %_sysconfdir/%name/audit-stop.rules
@@ -209,6 +214,8 @@ fi
 
 %config(noreplace) %attr(640,root,root) /etc/audit/audisp-remote.conf
 %config(noreplace) %attr(640,root,root) /etc/audit/zos-remote.conf
+%config(noreplace) %attr(640,root,root) /etc/audit/ids.conf
+%config(noreplace) %attr(640,root,root) /etc/audit/audisp-statsd.conf
 
 %attr(700,root,root) %dir %_libdir/audit
 /usr/libexec/service/legacy-actions/%{name}d
@@ -238,6 +245,9 @@ fi
 %endif
 
 %changelog
+* Wed Feb 15 2023 Egor Ignatov <egori@altlinux.org> 3.1-alt1
+- new version 3.1
+
 * Tue Aug 30 2022 Egor Ignatov <egori@altlinux.org> 3.0.9-alt1
 - new version 3.0.9
 
