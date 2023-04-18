@@ -1,6 +1,6 @@
 Name: thunar
 Version: 4.18.4
-Release: alt1
+Release: alt2
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -120,7 +120,7 @@ make check
 %_datadir/metainfo/org.xfce.thunar.appdata.xml
 %_datadir/Thunar
 %_datadir/xfce4/panel/plugins/*.desktop
-%_user_unitdir/thunar.service
+%_usr/lib/systemd/user/thunar.service
 %_libdir/xfce4/panel/plugins/*.so
 %exclude %_libdir/xfce4/panel/plugins/*.la
 %dir %_libdir/thunarx-*/
@@ -143,6 +143,9 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Tue Apr 18 2023 Mikhail Efremov <sem@altlinux.org> 4.18.4-alt2
+- Don't use _user_unitdir macro.
+
 * Mon Feb 27 2023 Mikhail Efremov <sem@altlinux.org> 4.18.4-alt1
 - Updated to 4.18.4.
 
