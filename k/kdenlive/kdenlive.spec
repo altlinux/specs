@@ -4,8 +4,9 @@
 
 Name: kdenlive
 Version: 22.12.3
-Release: alt1
+Release: alt2
 %K5init no_altplace man appdata
+%add_python3_path %_datadir/%name/scripts
 
 Summary: KDE Non Linear Video Editor
 Summary(ru_RU.utf8): Редактор нелинейного видео монтажа для KDE
@@ -14,11 +15,15 @@ License: GPL-3.0-or-later
 Group: Video
 URL: http://kdenlive.org/
 
-AutoReq: yes, nopython nopython3
+AutoReq: yes, nopython
 AutoProv: yes, nopython nopython3
+%add_python3_req_skip opentimelineio
+%add_python3_req_skip srt
+%add_python3_req_skip vosk
 Requires: mlt-utils >= %current_ver_mlt frei0r-plugins
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
-Requires: icon-theme-breeze kde5-runtime
+Requires: icon-theme-breeze kde5-runtime kde5-kio-extras
+Requires: qml(org.kde.kcm) qml(org.kde.kirigami)
 %if %is_ffmpeg
 Requires: /usr/bin/ffmpeg /usr/bin/ffplay /usr/bin/ffprobe
 %else
@@ -36,6 +41,7 @@ Patch3: alt-ffmpegaudiothumbnails.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): libavformat-devel
 BuildRequires(pre): mlt-utils
+BuildRequires: rpm-build-python3
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-multimedia-devel qt5-quickcontrols2-devel qt5-networkauth-devel
 BuildRequires: shared-mime-info libEGL-devel libGLU-devel libv4l-devel
@@ -97,6 +103,11 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Tue Apr 18 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt2
+- require kde5-kio-extras (closes: 45888)
+- require kcm and kirigami qml modules (closes: 45890)
+- fix python requires (closes: 45891)
+
 * Mon Apr 10 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 
