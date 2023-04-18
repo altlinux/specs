@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: maven-local
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # fedora bcond_with macro
@@ -13,16 +16,16 @@ BuildRequires: jpackage-default
 
 Name:           sisu
 Epoch:          2
-Version:        0.3.4
-Release:        alt2_7jpp11
+Version:        0.3.5
+Release:        alt1_2jpp11
 Summary:        Eclipse dependency injection framework
 # sisu is EPL-1.0, the bundled asm is BSD
 License:        EPL-1.0 and BSD
-URL:            http://eclipse.org/sisu
+URL:            https://eclipse.org/sisu/
 BuildArch:      noarch
 
-Source0:        http://git.eclipse.org/c/sisu/org.eclipse.sisu.inject.git/snapshot/releases/%{version}.tar.gz#/org.eclipse.sisu.inject-%{version}.tar.gz
-Source1:        http://git.eclipse.org/c/sisu/org.eclipse.sisu.plexus.git/snapshot/releases/%{version}.tar.gz#/org.eclipse.sisu.plexus-%{version}.tar.gz
+Source0:        https://github.com/eclipse/sisu.inject/archive/refs/tags/releases/%{version}.tar.gz#/org.eclipse.sisu.inject-%{version}.tar.gz
+Source1:        https://github.com/eclipse/sisu.plexus/archive/refs/tags/releases/%{version}.tar.gz#/org.eclipse.sisu.plexus-%{version}.tar.gz
 
 Source100:      sisu-parent.pom
 Source101:      sisu-inject.pom
@@ -33,10 +36,10 @@ Patch2:         sisu-ignored-tests.patch
 Patch3:         sisu-osgi-api.patch
 Patch4:         0001-Remove-dependency-on-glassfish-servlet-api.patch
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.inject.extensions:guice-servlet)
 BuildRequires:  mvn(com.google.inject:guice::no_aop:)
 BuildRequires:  mvn(javax.annotation:javax.annotation-api)
@@ -51,15 +54,15 @@ BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.testng:testng)
 %endif
 
+Provides:       %{name}-inject = %{epoch}:%{version}-%{release}
+Provides:       %{name}-plexus = %{epoch}:%{version}-%{release}
 Provides:       bundled(objectweb-asm)
+Source44: import.info
 
 Obsoletes:      %{name}-inject < 1:0.3.4-alt1_6
 Conflicts:      %{name}-inject < 1:0.3.4-alt1_6
 Obsoletes:      %{name}-plexus < 1:0.3.4-alt1_6
 Conflicts:      %{name}-plexus < 1:0.3.4-alt1_6
-Provides:       %{name}-inject = %{epoch}:%{version}-%{release}
-Provides:       %{name}-plexus = %{epoch}:%{version}-%{release}
-Source44: import.info
 
 %description
 Java dependency injection framework with backward support for plexus and bean
@@ -69,8 +72,8 @@ style dependency injection.
 
 %prep
 %setup -q -c -T
-tar xf %{SOURCE0} && mv releases/* sisu-inject && rmdir releases
-tar xf %{SOURCE1} && mv releases/* sisu-plexus && rmdir releases
+tar xf %{SOURCE0} && mv sisu.inject-releases-* sisu-inject
+tar xf %{SOURCE1} && mv sisu.plexus-releases-* sisu-plexus
 
 cp %{SOURCE100} pom.xml
 cp %{SOURCE101} sisu-inject/pom.xml
@@ -100,6 +103,9 @@ cp %{SOURCE102} sisu-plexus/pom.xml
 %doc --no-dereference sisu-inject/LICENSE.txt
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 2:0.3.5-alt1_2jpp11
+- update
+
 * Sun Jul 10 2022 Igor Vlasenko <viy@altlinux.org> 2:0.3.4-alt2_7jpp11
 - added proper Obsoletes/Confilcts:
 
