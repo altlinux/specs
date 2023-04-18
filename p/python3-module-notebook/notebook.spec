@@ -9,7 +9,7 @@
 
 Name: python3-module-%oname
 Version: 6.4.12
-Release: alt1
+Release: alt2
 Summary: Jupyter Interactive Notebook
 License: BSD
 Group: Development/Python3
@@ -38,9 +38,10 @@ BuildRequires: python3-module-traitlets-tests
 %py3_use ipykernel
 %endif
 BuildRequires: python3-module-mock
-BuildRequires: python3-module-nose python3-module-requests
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-coverage
-%{?!_without_check:%{?!_disable_check:BuildRequires: python3(pandocfilters) python3(nose_warnings_filters)}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: python3(pandocfilters) }}
 %if_with doc
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3(nbsphinx) python3-module-sphinx_rtd_theme
@@ -119,7 +120,7 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %if_with bootstrap
 %check
-nosetests3 -vv --with-coverage --cover-package=%oname %oname
+py.test-3 -v
 %endif
 
 %files
@@ -153,6 +154,9 @@ nosetests3 -vv --with-coverage --cover-package=%oname %oname
 %endif
 
 %changelog
+* Tue Apr 18 2023 Anton Vyatkin <toni@altlinux.org> 6.4.12-alt2
+- Fix BuildRequires
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 6.4.12-alt1
 - new version 6.4.12 (with rpmrb script)
 
