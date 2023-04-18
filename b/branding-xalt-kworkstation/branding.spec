@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -486,6 +486,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Apr 18 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt2
+- update indexhtml product URL
+
 * Fri Apr 07 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt1
 - add ALT_BRANCH_ID to os-release
 - fix version in os-release CPE_NAME
