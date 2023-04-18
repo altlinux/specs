@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: maven-local
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
@@ -15,8 +18,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           plexus-containers
-Version:        2.1.0
-Release:        alt1_7jpp11
+Version:        2.1.1
+Release:        alt1_2jpp11
 Summary:        Containers for Plexus
 # Most of the files are either under ASL 2.0 or MIT
 # The following files are under xpp:
@@ -30,10 +33,10 @@ Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{ver
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 Source2:        LICENSE.MIT
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
 BuildRequires:  mvn(junit:junit)
@@ -91,8 +94,6 @@ cp %{SOURCE2} .
 
 %pom_remove_plugin -r :maven-site-plugin
 
-%pom_change_dep -r :google-collections com.google.guava:guava
-
 # Generate OSGI info
 %pom_xpath_inject "pom:project" "
     <packaging>bundle</packaging>
@@ -123,7 +124,7 @@ rm plexus-component-metadata/src/test/java/org/codehaus/plexus/metadata/merge/Co
 rm plexus-component-metadata/src/test/java/org/codehaus/plexus/metadata/DefaultComponentDescriptorWriterTest.java
 
 %build
-%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -142,6 +143,9 @@ rm plexus-component-metadata/src/test/java/org/codehaus/plexus/metadata/DefaultC
 %doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 0:2.1.1-alt1_2jpp11
+- update
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:2.1.0-alt1_7jpp11
 - update
 
