@@ -1,6 +1,6 @@
 Name: mate-terminal
 Version: 1.26.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Terminal emulator for MATE
 License: GPLv3+
@@ -55,6 +55,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Tue Apr 18 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt3
+- update help translations
+
 * Fri Apr 14 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
 - provides x-terminal-emulator (closes: #45558)
 
