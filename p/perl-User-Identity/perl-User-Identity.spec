@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Hash/Ordered.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 #
 #   - User::Identity -
@@ -15,7 +18,7 @@
 %define _enable_test 1
 
 Name: perl-User-Identity
-Version: 1.01
+Version: 1.02
 Release: alt1
 
 Summary: Define a user
@@ -59,6 +62,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Mail/*
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 1.02-alt1
+- automated CPAN update
+
 * Sun Feb 13 2022 Igor Vlasenko <viy@altlinux.org> 1.01-alt1
 - automated CPAN update
 
