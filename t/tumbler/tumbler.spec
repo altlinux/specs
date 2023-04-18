@@ -4,7 +4,7 @@
 
 Name: tumbler
 Version: 4.18.1
-Release: alt1
+Release: alt2
 
 Summary: A thumbnail D-Bus service
 License: GPLv2+ and LGPLv2+
@@ -78,7 +78,7 @@ Development files and headers for %name
 %_prefix/libexec/%name-1
 %_libdir/%name-1
 %_datadir/dbus-1/services/*.service
-%_user_unitdir/*.service
+%_usr/lib/systemd/user/*.service
 %_iconsdir/hicolor/*/apps/*
 
 %exclude %_libdir/%name-1/plugins/*.la
@@ -93,6 +93,9 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 18 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt2
+- Don't use _user_unitdir macro.
+
 * Mon Apr 17 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
 - Updated to 4.18.1.
 
