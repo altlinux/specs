@@ -7,15 +7,17 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:             jline
-Version:          3.21.0
-Release:          alt1_3jpp11
-Summary:          Java library for handling console input
-License:          BSD
-URL:              https://github.com/jline/jline3
-BuildArch:        noarch
+Name:           jline
+Version:        3.21.0
+Release:        alt1_4jpp11
+Summary:        Java library for handling console input
+License:        BSD
+URL:            https://github.com/jline/jline3
+BuildArch:      noarch
 
-Source0:          https://github.com/jline/jline3/archive/jline-parent-%{version}.tar.gz
+Source0:        https://github.com/jline/jline3/archive/jline-parent-%{version}.tar.gz
+# Adapt to changed package names in apache-sshd 2.8.0
+Patch0:         %{name}-apache-sshd.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.googlecode.juniversalchardet:juniversalchardet)
@@ -47,7 +49,7 @@ This package contains the parent POM for the jline project
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:        Javadocs for %{name}
 BuildArch: noarch
 
 %description javadoc 
@@ -156,6 +158,8 @@ This package contains a telnet client.
 
 %prep
 %setup -q -n jline3-jline-parent-%{version}
+# @viy: tmp til apache-ssh update
+#patch0
 
 
 # remove unnecessary dependency on parent POM
@@ -211,6 +215,9 @@ This package contains a telnet client.
 %files remote-telnet -f .mfiles-jline-remote-telnet
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:3.21.0-alt1_4jpp11
+- update
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:3.21.0-alt1_3jpp11
 - new version
 
