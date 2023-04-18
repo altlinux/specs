@@ -4,7 +4,7 @@
 %define _vstring %(echo %{version} |tr -d ".")
 
 Name: shotcut
-Version: 22.12.21
+Version: 23.04.03
 Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платформенный видеоредактор
@@ -21,26 +21,28 @@ BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
-BuildRequires: pkgconfig(Qt5Concurrent)
-BuildRequires: pkgconfig(Qt5Core) >= 5.9.1
-BuildRequires: pkgconfig(Qt5Gui)
-BuildRequires: pkgconfig(Qt5Multimedia)
-BuildRequires: pkgconfig(Qt5Network)
-BuildRequires: pkgconfig(Qt5OpenGL)
-BuildRequires: pkgconfig(Qt5PrintSupport)
-BuildRequires: pkgconfig(Qt5Quick)
-BuildRequires: pkgconfig(Qt5WebKitWidgets)
-BuildRequires: pkgconfig(Qt5WebSockets)
-BuildRequires: pkgconfig(Qt5X11Extras)
-BuildRequires: pkgconfig(Qt5Xml)
-BuildRequires: qt5-linguist
+BuildRequires: pkgconfig(Qt6Concurrent)
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Qml)
+BuildRequires: pkgconfig(Qt6Multimedia)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6OpenGL)
+BuildRequires: pkgconfig(Qt6PrintSupport)
+BuildRequires: pkgconfig(Qt6Quick)
+BuildRequires: pkgconfig(Qt6WebSockets)
+BuildRequires: pkgconfig(Qt6Xml)
+BuildRequires: pkgconfig(Qt6Sql)
+BuildRequires: pkgconfig(Qt6UiTools)
+BuildRequires: qt6-linguist
 BuildRequires: mlt7xx-devel
 BuildRequires: pkgconfig(mlt-framework)
 BuildRequires: libx264-devel
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: ImageMagick-tools
-BuildRequires: qt5-quickcontrols2-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-imageformats
 BuildRequires: libfftw3-devel
 
 Requires: %name-data = %version
@@ -52,9 +54,11 @@ Requires: lame
 Requires: ffmpeg ffprobe ffplay
 Requires: libSDL2
 # see bug 34876
-Requires: qt5-quickcontrols2
+Requires: libqt6-quickcontrols2
 # see bug 34877
-Requires: qt5-graphicaleffects
+Requires: qt6-5compat
+# Needed for timeline
+Requires: libqt6-sql qt6-declarative
 
 Provides: %name-data = %EVR
 Obsoletes: %name-data < %EVR
@@ -137,6 +141,10 @@ done
 %_man1dir/*
 
 %changelog
+* Mon Apr 10 2023 Leonid Znamenok <respublica@altlinux.org> 23.04.03-alt1
+- New version 23.04.03.
+- Updated to QT 6
+
 * Tue Dec 27 2022 Andrey Cherepanov <cas@altlinux.org> 22.12.21-alt1
 - New version.
 
