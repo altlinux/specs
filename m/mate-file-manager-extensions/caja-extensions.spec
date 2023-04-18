@@ -2,7 +2,7 @@
 
 Name: mate-file-manager-extensions
 Version: 1.26.1
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Set of extensions for caja file manager
 License: GPLv2+
@@ -107,7 +107,7 @@ Caja xattr-tags extension, allows to quickly set xattr-tags
 	--enable-image-converter \
 	--enable-open-terminal \
 	--enable-sendto \
-	--with-sendto-plugins=all \
+	--with-sendto-plugins=emailclient \
 	--enable-share \
 	--enable-gksu \
 	--enable-wallpaper
@@ -165,6 +165,10 @@ find %buildroot%_libdir -name \*.la -delete
 #_datadir/caja/extensions/libcaja-xattr-tags.caja-extension
 
 %changelog
+* Tue Apr 18 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt3
+- updated translations
+- sendto: emailclient only (closes: #44272)
+
 * Wed Nov 23 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
 - fixed translate image converter dialogs
 
