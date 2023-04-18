@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: maven-local
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # fedora bcond_with macro
@@ -13,8 +16,8 @@ BuildRequires: jpackage-default
 
 Name:           apache-commons-io
 Epoch:          1
-Version:        2.8.0
-Release:        alt1_5jpp11
+Version:        2.11.0
+Release:        alt1_2jpp11
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
 URL:            https://commons.apache.org/io
@@ -22,12 +25,10 @@ BuildArch:      noarch
 
 Source0:        https://archive.apache.org/dist/commons/io/source/commons-io-%{version}-src.tar.gz
 
-Patch0:         0001-Fix-Files.size-failing-when-symlink-target-is-non-ex.patch
-
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
@@ -45,7 +46,6 @@ to assist with developing IO functionality.
 
 %prep
 %setup -q -n commons-io-%{version}-src
-%patch0 -p1
 sed -i 's/\r//' *.txt
 
 # Run tests in multiple reusable forks to improve test performance
@@ -56,6 +56,7 @@ sed -i '/<argLine>/d' pom.xml
 %mvn_alias : org.apache.commons:
 
 %pom_remove_dep org.junit-pioneer:junit-pioneer
+%pom_remove_dep :junit-bom
 %pom_remove_dep com.google.jimfs:jimfs
 
 # Test depends on com.google.jimfs:jimfs
@@ -85,6 +86,9 @@ sed -i '/DefaultLocale/d' src/test/java/org/apache/commons/io/input/XmlStreamRea
 %doc RELEASE-NOTES.txt
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 1:2.11.0-alt1_2jpp11
+- update
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 1:2.8.0-alt1_5jpp11
 - update
 
