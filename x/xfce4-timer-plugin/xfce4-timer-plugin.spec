@@ -1,5 +1,5 @@
 Name: xfce4-timer-plugin
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: Timer plugin for Xfce
@@ -12,9 +12,9 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-timer-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
-BuildRequires: perl-XML-Parser intltool
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
+BuildRequires: intltool
 
 Requires: xfce4-panel
 
@@ -40,7 +40,7 @@ of them can be run at a time.
 %find_lang %name
 
 %files -f %name.lang
-%doc README ChangeLog AUTHORS
+%doc README.md NEWS AUTHORS
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
 %_iconsdir/hicolor/*/apps/*.*
@@ -48,6 +48,9 @@ of them can be run at a time.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Tue Apr 18 2023 Mikhail Efremov <sem@altlinux.org> 1.7.2-alt1
+- Updated to 1.7.2.
+
 * Fri Jul 24 2020 Mikhail Efremov <sem@altlinux.org> 1.7.1-alt1
 - Added Vcs tag.
 - Don't use rpm-build-licenses.
