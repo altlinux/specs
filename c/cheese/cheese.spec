@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: cheese
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
@@ -170,6 +170,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Tue Apr 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0.1-alt1
+- 44.0.1
+
 * Mon Apr 10 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 
