@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.6.9
+Version: 0.6.10
 Release: alt1
 
 Summary: Simple, fast and efficient podcast parser written in Python3.
@@ -43,6 +43,9 @@ py.test3
 
 
 %changelog
+* Tue Apr 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.10-alt1
+- 0.6.10
+
 * Wed Dec 14 2022 Yuri N. Sedunov <aris@altlinux.org> 0.6.9-alt1
 - 0.6.9
 - ported to %%pyproject* macros
