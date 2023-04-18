@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name dash-to-dock
-%define ver_major 79
+%define ver_major 80
 %define beta %nil
 %define uuid %_name@micxgx.gmail.com
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -55,6 +55,9 @@ available.
 %doc README.md
 
 %changelog
+* Tue Apr 18 2023 Yuri N. Sedunov <aris@altlinux.org> 80-alt1
+- 80
+
 * Sun Mar 26 2023 Yuri N. Sedunov <aris@altlinux.org> 79-alt1
 - first build for Sisyphus
 
