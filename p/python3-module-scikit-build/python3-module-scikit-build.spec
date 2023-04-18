@@ -6,7 +6,7 @@
 
 Name: python3-module-%modname
 Version: 0.17.1
-Release: alt1
+Release: alt1.1
 
 Summary: Improved build system generator for CPython C/C++/Fortran/Cython extensions
 Group: Development/Python3
@@ -19,6 +19,12 @@ Source: https://pypi.io/packages/source/s/%pypi_name/%pypi_name-%version.tar.gz
 BuildArch: noarch
 
 Requires: cmake make ninja-build gcc-c++
+# skbuild/_compat/tomllib.py
+%if "%__python3_version" <= "3.11"
+Requires: python3(tomli)
+%else
+Requires: python3(tomllib)
+%endif
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-wheel
@@ -54,6 +60,9 @@ py.test3
 
 
 %changelog
+* Tue Apr 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.17.1-alt1.1
+- explicitly required python3(tomli) if %%__python_version <= 3.11
+
 * Thu Apr 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.17.1-alt1
 - 0.17.1
 
