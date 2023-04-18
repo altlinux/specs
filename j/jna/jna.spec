@@ -16,8 +16,8 @@ BuildRequires: jpackage-default
 %bcond_without reflections
 
 Name:           jna
-Version:        5.10.0
-Release:        alt1_3jpp11
+Version:        5.12.1
+Release:        alt1_2jpp11
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1+ only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -48,6 +48,7 @@ Patch4:         0005-Fix-duplicate-manifest-entry.patch
 Patch5:         0006-Remove-Werror.patch
 
 Patch6:         0007-Support-openjdk-17.patch
+
 
 # We manually require libffi because find-requires doesn't work
 # inside jars.
@@ -108,6 +109,13 @@ cp %{SOURCE1} .
 chmod -Rf a+rX,u+w,g-w,o-w .
 sed -i 's|@LIBDIR@|%{_libdir}/%{name}|' src/com/sun/jna/Native.java
 
+# TEMPLATE has to be changed to %%version in the pom files
+# in order to generate correct provides
+sed -i 's/TEMPLATE/%{version}/' pom-jna-jpms.xml \
+				pom-jna-platform.xml \
+				pom-jna.xml \
+				pom-jna-platform-jpms.xml
+
 # clean LICENSE.txt
 sed -i 's/\r//' LICENSE
 
@@ -127,8 +135,6 @@ ln -s $(xmvn-resolve org.hamcrest:hamcrest-all) lib/hamcrest-core-1.3.jar
 ln -s $(xmvn-resolve org.reflections:reflections) lib/test/reflections.jar
 
 cp lib/native/aix-ppc64.jar lib/clover.jar
-
-%pom_remove_plugin -r :maven-javadoc-plugin parent
 
 
 %build
@@ -172,6 +178,9 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 5.12.1-alt1_2jpp11
+- update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 5.10.0-alt1_3jpp11
 - new version
 
