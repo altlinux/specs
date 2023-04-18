@@ -9,7 +9,7 @@
 %def_without selinux
 
 Name: NetworkManager-applet-gtk
-Version: 1.30.0
+Version: 1.32.0
 Release: alt1%git_hash
 License: GPLv2+
 Group: Graphical desktop/GNOME
@@ -95,6 +95,9 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Tue Apr 18 2023 Mikhail Efremov <sem@altlinux.org> 1.32.0-alt1
+- Updated to 1.32.0.
+
 * Tue Nov 08 2022 Mikhail Efremov <sem@altlinux.org> 1.30.0-alt1
 - Packaged org.gnome.nm-applet.gschema.xml.
 - Dropped libnotify-devel from BR.
