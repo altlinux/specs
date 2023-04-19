@@ -1,10 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name hatchling
 
-%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
-
 Name: python3-module-%pypi_name
-Version: 1.13.0
+Version: 1.14.0
 Release: alt1
 Summary: Modern, extensible Python build backend
 License: MIT
@@ -13,26 +11,13 @@ Url: https://pypi.org/project/hatchling
 VCS: https://github.com/pypa/hatch
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: pyproject_deps.json
 Patch: %name-%version-alt.patch
 
-# try-except import
-%py3_requires editables
-%if %tomli
-# rebuild against Python 3.11 is required to get rid of old dependency
-%py3_requires tomli
-%endif
+%pyproject_runtimedeps_metadata
 
-BuildRequires(pre): rpm-build-python3
-
-# self-bootstraps deps
-# see backend/src/hatchling/ouroboros.py
-BuildRequires: python3(editables)
-BuildRequires: python3(packaging)
-BuildRequires: python3(pathspec)
-BuildRequires: python3(pluggy)
-%if %tomli
-BuildRequires: python3(tomli)
-%endif
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
 %summary.
@@ -40,6 +25,9 @@ BuildRequires: python3(tomli)
 %prep
 %setup
 %autopatch -p1
+
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -57,6 +45,9 @@ BuildRequires: python3(tomli)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 18 2023 Stanislav Levin <slev@altlinux.org> 1.14.0-alt1
+- 1.13.0 -> 1.14.0.
+
 * Mon Feb 20 2023 Stanislav Levin <slev@altlinux.org> 1.13.0-alt1
 - 1.12.2 -> 1.13.0.
 
