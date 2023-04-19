@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Amazon-S3
-Version: 0.62
+Version: 0.63
 Release: alt1
 
 Summary: A portable client library for working with and
@@ -84,6 +84,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Amazon/*
 
 %changelog
+* Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 0.63-alt1
+- automated CPAN update
+
 * Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 0.62-alt1
 - automated CPAN update
 
