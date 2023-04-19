@@ -1,6 +1,6 @@
 Name: radiotray-ng
-Version: 0.2.7
-Release: alt2
+Version: 0.2.8
+Release: alt1
 Summary: Internet radio player
 
 License: GPLv3+
@@ -25,7 +25,7 @@ BuildRequires: jsoncpp-devel
 BuildRequires: gstreamer-devel
 BuildRequires: libxdg-basedir-devel
 BuildRequires: libbsd-devel
-BuildRequires: libappindicator-gtk3-devel
+BuildRequires: libayatana-appindicator3-devel
 BuildRequires: libnotify-devel
 BuildRequires: libglibmm-devel
 BuildRequires: desktop-file-utils
@@ -129,6 +129,10 @@ desktop-file-validate %buildroot%_desktopdir/rtng-bookmark-editor.desktop
 %_datadir/%name
 
 %changelog
+* Wed Apr 19 2023 Anton Midyukov <antohami@altlinux.org> 0.2.8-alt1
+- new version 0.2.8
+- build with libayatana-appindicator3
+
 * Sat Oct 02 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 0.2.7-alt2
 - Fix building on %%e2k, thanks to mike@ (closes: 40634)
 
