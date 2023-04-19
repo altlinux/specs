@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.27.4
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -250,6 +250,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Apr 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt3
+- fix to uppercase keyboard indicator on x11
+
 * Fri Apr 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt2
 - fix to uppercase keyboard indicator on wayland
 
