@@ -2,9 +2,9 @@
 %def_enable valgrind
 %endif
 
-Name: mongo
+Name: mongo6.0
 Version: 6.0.5
-Release: alt1
+Release: alt2
 Summary: mongo client shell and tools
 License: SSPL-1.0
 
@@ -45,8 +45,12 @@ This package provides the mongo shell.
 %package server-mongod
 Summary: mongo server, sharding server,  and support scripts
 Group: Development/Databases
-Provides: %name-server
-Obsoletes: %name-server
+Provides: mongo-server
+Obsoletes: mongo-server
+
+Provides: mongo-server-mongod = %EVR
+Conflicts: mongo-server-mongod < %EVR
+Conflicts: mongo-server-mongod > %EVR
 
 %description server-mongod
 Mongo (from "huMONGOus") is a schema-free document-oriented database.
@@ -58,6 +62,9 @@ and performs background management operations.
 %package server-mongos
 Summary: mongo routing service, and support scripts
 Group: Development/Databases
+Provides: mongo-server-mongos = %EVR
+Conflicts: mongo-server-mongos < %EVR
+Conflicts: mongo-server-mongos > %EVR
 
 %description server-mongos
 Mongo (from "huMONGOus") is a schema-free document-oriented database.
@@ -71,9 +78,6 @@ MongoDB instance.
 
 %prep
 %setup
-#%%ifarch aarch64
-#patch -p1 < patch-fix-build-gcc12-aarch64.patch
-#%%endif
 
 %build
 %ifarch aarch64
@@ -186,6 +190,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Tue Apr 18 2023 Alexei Takaseev <taf@altlinux.org> 6.0.5-alt2
+- Rename mongo-* -> mongo6.0-*
+
 * Wed Apr 12 2023 Alexei Takaseev <taf@altlinux.org> 6.0.5-alt1
 - 6.0.5 (ALT#45823)
 - Remove /usr/bin/mongo as deprecated on 5.0 and deleted on 6.0
