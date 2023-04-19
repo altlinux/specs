@@ -1,5 +1,5 @@
 Name: erc
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -50,6 +50,9 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Wed Apr 19 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
+- erc-sh-archive: add ERC_BACKEND parsing
+
 * Mon Apr 10 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
 - erc-sh-functions: sync which using
 - ercat: use is_command instead of which
