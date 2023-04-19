@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Perl4-CoreLibs
 Name: perl-%dist
-Version: 0.004
-Release: alt2
+Version: 0.005
+Release: alt1
 
 Summary: Libraries historically supplied with Perl 4
 License: ALT-Perl
@@ -10,8 +11,6 @@ Group: Development/Perl
 URL: %CPAN %dist
 # http://search.cpan.org/CPAN/authors/id/Z/ZE/ZEFRAM/Perl4-CoreLibs-%version.tar.gz
 Source: %dist-%version.tar
-# https://rt.cpan.org/Ticket/Display.html?id=131341
-Patch: Perl4-CoreLibs-debian-y2k20.patch
 
 %add_findreq_skiplist %perl_vendor_privlib/chat2.pl
 
@@ -35,7 +34,6 @@ warning when loaded.  The CPAN version will not emit such a warning.
 
 %prep
 %setup -n %dist-%version
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -49,6 +47,9 @@ warning when loaded.  The CPAN version will not emit such a warning.
 %perl_vendor_privlib/*.pl
 
 %changelog
+* Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 0.005-alt1
+- new version
+
 * Sun Aug 16 2020 Dmitry V. Levin <ldv@altlinux.org> 0.004-alt2
 - NMU.
 - Applied Debian t/timelocal.t fix for Y2K20 problem.
