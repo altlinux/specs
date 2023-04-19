@@ -1,40 +1,60 @@
+%set_verify_elf_method rpath=relaxed
+
 %define modulename talib
 
+%def_without check
+
 Name: python3-module-%modulename
-Version: 0.4.17
-Release: alt3
+Version: 0.4.26
+Release: alt1
 
 Summary: This is a Python wrapper for TA-LIB
-License: BSD2
+License: BSD-2-Clause
 Group: Development/Python3
-Url: https://github.com/mrjbq7/ta-lib
+Url: https://pypi.org/project/TA-Lib
 
 Source: %modulename-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libta-lib-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-numpy
+BuildRequires: libta-lib-devel
 BuildRequires: libnumpy-py3-devel
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
+Requires: python3-module-numpy
 
 %description
-This is a Python wrapper for TA-LIB based on Cython instead of SWIG
+This is a Python wrapper for TA-LIB based on Cython instead of SWIG.
 
 %prep
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+%python3_prune
+
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 talib --ignore=.talib/test_polars.py
 
 %files
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/TA_Lib-%version.dist-info
+%exclude %python3_sitelibdir/%modulename/test_*
 
 
 %changelog
+* Wed Apr 19 2023 Anton Vyatkin <toni@altlinux.org> 0.4.26-alt1
+- New version 0.4.26.
+
 * Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.17-alt3
 - Fixed build with numpy.
 
