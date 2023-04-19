@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230406
+Version: 20230418
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,17 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Apr 19 2023 Cronbuild Service <cronbuild@altlinux.org> 20230418-alt1
+- upstream changes (GIT 8451c2b1):
+  + mt76xx: Move the old Mediatek WiFi firmware to mediatek (thx Peter Robinson)
+  + rtl_bt: Add firmware and config files for RTL8851B (thx Max Chou)
+  + Update AMD cpu microcode (thx John Allen)
+  + add firmware for MT7981 (thx Shayne Chen)
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+  + update firmware for mediatek bluetooth chip (MT7921) (thx Sean Wang)
+  + update qat firmware (thx Adam Guerin)
+  + Add firmware for Cirrus CS35L41 on Lenovo Laptops (thx Stefan Binding)
+
 * Thu Apr 13 2023 Cronbuild Service <cronbuild@altlinux.org> 20230406-alt1
 - upstream changes (GIT 86da2ac9):
   + update firmware for MT7916 (thx Shayne Chen)
