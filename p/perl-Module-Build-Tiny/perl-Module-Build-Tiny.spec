@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -7,11 +8,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
-Version:	0.039
-Release:	alt1_15
+Version:	0.043
+Release:	alt1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Module-Build-Tiny
-Source0:	https://cpan.metacpan.org/modules/by-module/Module/Module-Build-Tiny-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	rpm-build-perl
@@ -86,11 +87,13 @@ perl Build.PL --installdirs=vendor
 AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 
 %files
-%doc --no-dereference LICENSE
 %doc Changes README Todo
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 0.043-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_15
 - update to new release by fcimport
 
