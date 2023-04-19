@@ -38,7 +38,7 @@
 
 Name: krita
 Version: 5.1.5
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphics
@@ -81,10 +81,12 @@ BuildRequires: quazip-qt5-devel
 BuildRequires: libopencolorio2.0-devel
 BuildRequires: libXres-devel libxcbutil-devel
 BuildRequires: libjpeg-devel libpng-devel libpoppler-qt5-devel libraw-devel libtiff-devel libwebp-devel
-BuildRequires: libturbojpeg-devel pkgconfig(libopenjp2)
-#BuildRequires: libheif-devel openexr-devel
+BuildRequires: libturbojpeg-devel pkgconfig(libopenjp2) libjxl-devel
+BuildRequires: libheif-devel
+#BuildRequires: openexr-devel
 BuildRequires: libexiv2-devel liblcms2-devel
 #BuildRequires: libmypaint-devel
+#BuildRequires: xsimd-devel
 BuildRequires: kf5-karchive-devel kf5-kcrash-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kwindowsystem-devel
 
 %description
@@ -510,6 +512,9 @@ done
 %_libdir/libkritaexifcommon.so.*
 
 %changelog
+* Wed Apr 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.1.5-alt2
+- update build requries
+
 * Mon Mar 27 2023 Sergey V Turchin <zerg@altlinux.org> 5.1.5-alt1
 - new version
 
