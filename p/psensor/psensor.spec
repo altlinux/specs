@@ -1,6 +1,6 @@
 Name:		psensor
 Version:	1.2.1
-Release:	alt1
+Release:	alt2
 
 Summary:	A Graphical Temperature Monitor
 License:	GPLv2
@@ -12,6 +12,7 @@ Url:		http://wpitchoune.net/blog/psensor/
 Source0:	%name-%version.tar
 
 Patch1:		0001-fix-compilation-with-microhttpd-since-version-0.9.71.patch
+Patch2:		0001-Port-to-Ayatana-Indicator.patch
 
 BuildRequires: libsensors-devel
 BuildRequires: libX11-devel
@@ -20,7 +21,7 @@ BuildRequires: libgtk+3-devel
 BuildRequires: libudisks2-devel
 BuildRequires: libatasmart-devel
 BuildRequires: libnotify-devel
-BuildRequires: libappindicator-gtk3-devel
+BuildRequires: libayatana-appindicator3-devel
 BuildRequires: libcurl-devel
 BuildRequires: libjson-c-devel
 BuildRequires: nvidia-settings-devel
@@ -45,13 +46,13 @@ It can monitor:
 
 %prep
 %setup -q
-%patch1 -p1
+%autopatch1 -p1
 
 %build
 export CFLAGS="%{optflags} -fno-strict-aliasing -Wno-error=incompatible-pointer-types -Wno-misleading-indentation"
 %autoreconf
 %configure
-%__make -j1
+make -j1
 
 %install
 %makeinstall_std
@@ -69,6 +70,9 @@ export CFLAGS="%{optflags} -fno-strict-aliasing -Wno-error=incompatible-pointer-
 %exclude %_datadir/icons/ubuntu*
 
 %changelog
+* Wed Apr 19 2023 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt2
+- rebuild with libayatana-appindicator3
+
 * Sun Oct 03 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.2.1-alt1
 - Initial build in Sisyphus (thanks Fedora for the spec)
 
