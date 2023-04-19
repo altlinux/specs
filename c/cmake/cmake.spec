@@ -11,7 +11,7 @@
 
 Name: cmake
 Version: 3.23.2
-Release: alt2
+Release: alt3
 
 Summary: Cross-platform, open-source make system
 
@@ -342,6 +342,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Wed Apr 19 2023 Alexey Shabalin <shaba@altlinux.org> 3.23.2-alt3
+- add ctest macro (ALT#45833)
+
 * Wed Mar 29 2023 Michael Shigorin <mike@altlinux.org> 3.23.2-alt2
 - cherry-picked upstream commit g28b1c5f to improve lcc 1.26 support on e2k
 
