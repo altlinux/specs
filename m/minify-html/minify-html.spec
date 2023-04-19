@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: minify-html
-Version: 0.10.0
+Version: 0.10.8
 Release: alt1
 
 Summary: A Rust HTML minifier
@@ -74,6 +74,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 19 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 0.10.8-alt1
+- New version v0.10.8
+
 * Tue Sep 20 2022 Dmitry Lyalyaev <fruktime@altlinux.org> 0.10.0-alt1
 - New version v0.10.0
   + Remove update_crates.sh for build the vendor dependencies

@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Use minify-html, the extremely fast HTML + JS + CSS minifier, with Django.
@@ -17,6 +17,8 @@ ExcludeArch: i586 armh
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-minify-html
 
 %if_with check
@@ -52,22 +54,28 @@ within Django, at the point of HTML generation.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install --install-lib=%python3_sitelibdir
+%pyproject_install
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+        %buildroot%python3_sitelibdir/
+%endif
 
 %check
-DJANGO_VERSION=$(python3 -c "import django; django_version = django.__version__.split('.'); print(''.join(('django', *django_version[:2])))")
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-tox.py3 --sitepackages --no-deps -e py%{python_version_nodots python3}-$DJANGO_VERSION -vvr
+%tox_check_pyproject
 
 %files
 %doc *.rst LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 19 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 1.5.0-alt1
+- New version 1.5.0
+  + migrate to pyproject
+
 * Tue Sep 20 2022 Dmitry Lyalyaev <fruktime@altlinux.org> 1.3.0-alt1
 - New version 1.3.0
   + Move .spec in the "alt" directory
