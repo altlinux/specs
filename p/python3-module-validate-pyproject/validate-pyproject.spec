@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name validate-pyproject
-%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.12.1
+Version: 0.12.2
 Release: alt1
 Summary: Validation pyproject.toml files using JSON Schema
 License: MPL-2.0 and MIT and BSD-3-Clause
@@ -14,31 +13,21 @@ Url: https://pypi.org/project/validate-pyproject
 VCS: https://github.com/abravalheri/validate-pyproject.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: pyproject_deps.json
 Patch: %name-%version-alt.patch
+
+%pyproject_runtimedeps_metadata
 
 # PEP503 name
 %py3_provides %pypi_name
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: /usr/bin/git
+%pyproject_builddeps_build
 
 %if_with check
-# deps
-BuildRequires: python3(fastjsonschema)
-
-# extra: all
-BuildRequires: python3(trove-classifiers)
-BuildRequires: python3(packaging)
-%if %tomli
-BuildRequires: python3(tomli)
-%endif
-# extra: testing
-BuildRequires: python3(setuptools)
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata_extra all
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -59,6 +48,9 @@ git add .
 git commit -m 'release'
 git tag '%version'
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
 %build
 %pyproject_build
 
@@ -75,6 +67,9 @@ git tag '%version'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 18 2023 Stanislav Levin <slev@altlinux.org> 0.12.2-alt1
+- 0.12.1 -> 0.12.2.
+
 * Fri Mar 10 2023 Stanislav Levin <slev@altlinux.org> 0.12.1-alt1
 - 0.12 -> 0.12.1.
 

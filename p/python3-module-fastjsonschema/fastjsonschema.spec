@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.16.2
+Version: 2.16.3
 Release: alt1
 Summary: Fast JSON schema validator for Python
 License: BSD-3-Clause
@@ -15,18 +15,19 @@ VCS: https://github.com/horejsek/python-fastjsonschema
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
 # submodules
 Source1: %name-%version-JSON-Schema-Test-Suite.tar
+Source2: pyproject_deps.json
+Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -35,6 +36,13 @@ Fast JSON schema validator for Python
 %prep
 %setup -a1
 %autopatch -p1
+
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -51,6 +59,9 @@ Fast JSON schema validator for Python
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 18 2023 Stanislav Levin <slev@altlinux.org> 2.16.3-alt1
+- 2.16.2 -> 2.16.3.
+
 * Wed Jan 25 2023 Stanislav Levin <slev@altlinux.org> 2.16.2-alt1
 - 2.15.1 -> 2.16.2.
 
