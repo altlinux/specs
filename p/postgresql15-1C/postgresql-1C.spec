@@ -10,7 +10,7 @@
 %define prog_name            postgresql
 %define postgresql_major     15
 %define postgresql_minor     2
-%define postgresql_altrel    4
+%define postgresql_altrel    5
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -837,6 +837,7 @@ fi
 %_libdir/%PGSQL/plpgsql.so
 %_datadir/%PGSQL/extension/plpgsql-*.sql
 %_datadir/%PGSQL/extension/plpgsql.control
+%_libdir/%PGSQL/dbcopies_decoding.so
 %_libdir/%PGSQL/dict_snowball.so
 %_libdir/%PGSQL/*_and_*.so
 %_libdir/%PGSQL/euc2004_sjis2004.so
@@ -952,6 +953,9 @@ fi
 %endif
 
 %changelog
+* Wed Apr 19 2023 Alexei Takaseev <taf@altlinux.org> 15.2-alt5
+- Add lost dbcopies_decoding.so
+
 * Tue Apr 18 2023 Alexei Takaseev <taf@altlinux.org> 15.2-alt4
 - Update 1C patch
 
