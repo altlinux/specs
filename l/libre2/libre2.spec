@@ -1,15 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oldname re2
 Name: libre2
-Version: 20230201
+Version: 20230301
 Release: alt1
 Summary: C++ fast alternative to backtracking RE engines
 Group: System/Libraries
-License: BSD
+License: BSD-3-Clause
 Url: http://github.com/google/re2/
 # repack from git
 Source0: %name-%version.tar
-BuildRequires: gcc-c++
 Provides: re2 = %EVR
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake ctest
 
 %description
 RE2 is a C++ library providing a fast, safe, thread-friendly alternative to
@@ -39,16 +43,20 @@ you will need to install %name-devel.
 %setup
 
 %build
-%make_build  CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" includedir=%_includedir libdir=%_libdir
+%cmake \
+  -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+  -DCMAKE_COLOR_MAKEFILE:BOOL=OFF \
+  -DBUILD_SHARED_LIBS:BOOL=ON
+%cmake_build
 
 %install
-%makeinstall_std includedir=%_includedir libdir=%_libdir 
+%cmake_install
 
 # Suppress the static library
 find %buildroot -name '%name.a' -delete
 
 %check
-make shared-test
+ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process %_smp_mflags
 
 %files
 %doc LICENSE
@@ -58,9 +66,14 @@ make shared-test
 %files devel
 %_includedir/%oldname
 %_libdir/%name.so
-%_libdir/pkgconfig/%oldname.pc
+%_pkgconfigdir/%oldname.pc
+%_libdir/cmake/%oldname
 
 %changelog
+* Wed Apr 19 2023 Alexey Shabalin <shaba@altlinux.org> 20230301-alt1
+- update to 2023-03-01
+- switch to cmake for build
+
 * Mon Feb 20 2023 Anton Farygin <rider@altlinux.ru> 20230201-alt1
 - update to 2023-02-01
 
