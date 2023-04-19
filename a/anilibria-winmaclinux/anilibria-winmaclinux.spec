@@ -1,5 +1,5 @@
 Name: anilibria-winmaclinux
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: AniLibria online video player for desktop platforms
@@ -67,6 +67,9 @@ popd
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Wed Apr 19 2023 Evgeny Chuck <koi@altlinux.org> 1.2.5-alt1
+- new version (1.2.5) with rpmgs script (Closes: 45781)
+
 * Wed Feb 08 2023 Evgeny Chuck <koi@altlinux.org> 1.2.4-alt1
 - new version (1.2.4) with rpmgs script
 
