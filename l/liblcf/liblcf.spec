@@ -11,7 +11,7 @@ BuildRequires: /usr/bin/update-mime-database gcc-c++
 
 Name:           liblcf
 Version:        0.7.0
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Library to handle RPG Maker 2000/2003 and EasyRPG projects
 Group:          System/Libraries
 License:        MIT
@@ -97,6 +97,9 @@ ln -s %{name}.so.%{major} %{name}.so.%{version}
 
 
 %changelog
+* Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 0.7.0-alt1_3
+- update by mgaimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.7.0-alt1_2
 - update by mgaimport
 
