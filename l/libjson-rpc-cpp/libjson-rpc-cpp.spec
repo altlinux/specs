@@ -9,15 +9,14 @@ BuildRequires: gcc-c++
 %define develname     libjsonrpccpp-devel
 
 Name:           libjson-rpc-cpp
-Version:        1.3.0
-Release:        alt1_5
+Version:        1.4.1
+Release:        alt1_1
 Summary:        C++ JSON Library
 License:        Public Domain
 Group:          System/Libraries
 #Url:           http://jsoncpp.sourceforge.net/
 URL:            https://github.com/cinemast/libjson-rpc-cpp
-Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
-Patch0:         libjson-rpc-cpp-1.3.0-compatibility-with-libmicrohttpd-0.9.71.patch
+Source0:        https://github.com/cinemast/libjson-rpc-cpp/archive/v%{version}/%{name}-%{version}.tar.gz
 #To generate docs
 BuildRequires:  ccmake cmake ctest
 BuildRequires:  doxygen
@@ -35,7 +34,6 @@ and unserialization to string.
 %package -n %libname
 Summary:        JsonCpp library
 Group:          System/Libraries
-Obsoletes:      %{_lib}libjson-rpc-cpp1 < 1.0.0-2
 
 %description -n %libname
 This framework provides cross platform JSON-RPC (remote procedure call)
@@ -47,8 +45,6 @@ Group:          System/Libraries
 Requires:       %{libname} = %{version}-%{release}
 Provides:       json-rpc-cpp-devel = %{version}-%{release}
 Provides:       libjson-rpc-cpp-devel = %{version}-%{release}
-Obsoletes:      %{_lib}libjson-rpc-cpp-devel >= 1.0.0
-Conflicts:      libjsonrpccpp0.6-devel < 1.0.0
 
 %description -n    %{develname}
 It can also preserve existing comment in unserialization/serialization steps,
@@ -58,7 +54,6 @@ Files for building applications with %{name} support.
 
 %prep
 %setup -q
-%patch0 -p1
 
 
 %build
@@ -87,6 +82,9 @@ Files for building applications with %{name} support.
 
 
 %changelog
+* Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 1.4.1-alt1_1
+- update by mgaimport
+
 * Wed Jan 13 2021 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_5
 - update by mgaimport
 
