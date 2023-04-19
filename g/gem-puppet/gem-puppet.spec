@@ -1,59 +1,125 @@
-%define        gemname puppet
 %define        _unpackaged_files_terminate_build 1
-%define        confdir ext/redhat
+%define        gemname puppet
 
 Name:          gem-puppet
-Version:       7.24.0
+Version:       7.24.0.161
 Release:       alt1
 Summary:       A network tool for managing many disparate systems
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://puppet.com/
 Vcs:           https://github.com/puppetlabs/puppet.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
-Source5:       puppet.conf
-Source4:       auth.conf
-Source3:       puppet-nm-dispatcher
-Source2:       puppet.service
-Source1:       client.init
 Source:        %name-%version.tar
-Patch4:        fix_yaml.patch
-Patch3:        puppet-alt-aptrpm-osfamily.patch
-Patch2:        puppet-fix-locale-loading.patch
+Source1:       client.init
+Source2:       puppet.service
+Source3:       puppet-nm-dispatcher
+Source4:       auth.conf
+Source5:       puppet.conf
 Patch1:        puppet-alt-adjust-default-paths.patch
+Patch2:        puppet-fix-locale-loading.patch
+Patch3:        puppet-alt-aptrpm-osfamily.patch
+Patch4:        fix_yaml.patch
+Patch5:        fix_dep.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(facter) >= 2.4.0 gem(facter) < 5
-BuildRequires: gem(hiera) >= 3.2.1 gem(hiera) < 4
-BuildRequires: gem(semantic_puppet) >= 1.0 gem(semantic_puppet) < 2
-BuildRequires: gem(fast_gettext) >= 1.1 gem(fast_gettext) < 3
-BuildRequires: gem(locale) >= 2.1 gem(locale) < 3
-BuildRequires: gem(multi_json) >= 1.13 gem(multi_json) < 2
-BuildRequires: gem(concurrent-ruby) >= 1.0 gem(concurrent-ruby) < 2
-BuildRequires: gem(deep_merge) >= 1.0 gem(deep_merge) < 2
-BuildRequires: gem(scanf) >= 1.0 gem(scanf) < 2
-BuildRequires: gem(CFPropertyList) >= 2.2 gem(CFPropertyList) < 4
-BuildRequires: gem(gettext-setup) >= 1.0.1 gem(gettext-setup) < 1.1
+%if_with check
+BuildRequires: gem(facter) >= 4.3.0
+BuildRequires: gem(semantic_puppet) >= 1.0
+BuildRequires: gem(puppet-resource_api) >= 1.5
+BuildRequires: gem(diff-lcs) >= 1.3
+BuildRequires: gem(hiera-eyaml) >= 0
+BuildRequires: gem(hocon) >= 1.0
+BuildRequires: gem(minitar) >= 0.9
+BuildRequires: gem(msgpack) >= 1.2
+BuildRequires: gem(puppetserver-ca) >= 2.0
+BuildRequires: gem(ffi) >= 0
+BuildRequires: gem(json-schema) >= 2.0
+BuildRequires: gem(rake) >= 13.0
+BuildRequires: gem(rspec) >= 3.1
+BuildRequires: gem(rspec-its) >= 1.1
+BuildRequires: gem(vcr) >= 6.1
+BuildRequires: gem(webmock) >= 3.0
+BuildRequires: gem(webrick) >= 1.7
+BuildRequires: gem(yard) >= 0
+BuildRequires: gem(rubocop) >= 1.15.0
+BuildRequires: gem(rubocop-i18n) >= 3.0
+BuildRequires: gem(memory_profiler) >= 0
+BuildRequires: gem(pry) >= 0
+BuildRequires: gem(racc) >= 1.5.2
+BuildRequires: gem(ruby-prof) >= 0.16.0
+BuildRequires: gem(packaging) >= 0.99
+BuildRequires: gem(gettext-setup) >= 1.0
+BuildRequires: gem(ronn) >= 0.7.3
+BuildRequires: gem(fast_gettext) >= 2.1
+BuildRequires: gem(locale) >= 2.1
+BuildRequires: gem(multi_json) >= 1.13
+BuildRequires: gem(concurrent-ruby) >= 1.0
+BuildRequires: gem(deep_merge) >= 1.0
+BuildRequires: gem(scanf) >= 1.0
+BuildRequires: gem(CFPropertyList) >= 2.2
+BuildConflicts: gem(facter) >= 5
+BuildConflicts: gem(semantic_puppet) >= 2.0
+BuildConflicts: gem(puppet-resource_api) >= 2.0
+BuildConflicts: gem(diff-lcs) >= 2
+BuildConflicts: gem(hocon) >= 2
+BuildConflicts: gem(minitar) >= 1
+BuildConflicts: gem(msgpack) >= 2
+BuildConflicts: gem(rdoc) >= 7
+BuildConflicts: gem(puppetserver-ca) >= 3
+BuildConflicts: gem(json-schema) >= 3
+BuildConflicts: gem(rake) >= 14
+BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(rspec-its) >= 2
+BuildConflicts: gem(vcr) >= 7
+BuildConflicts: gem(webmock) >= 4
+BuildConflicts: gem(webrick) >= 2
+BuildConflicts: gem(rubocop) >= 2
+BuildConflicts: gem(rubocop-i18n) >= 4
+BuildConflicts: gem(packaging) >= 1
+BuildConflicts: gem(gettext-setup) >= 2
+BuildConflicts: gem(ronn) >= 0.8
+BuildConflicts: gem(fast_gettext) >= 3
+BuildConflicts: gem(locale) >= 3
+BuildConflicts: gem(multi_json) >= 2
+BuildConflicts: gem(concurrent-ruby) >= 2
+BuildConflicts: gem(deep_merge) >= 2
+BuildConflicts: gem(scanf) >= 2
+BuildConflicts: gem(CFPropertyList) >= 4
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency CFPropertyList >= 2.2,CFPropertyList < 4
-%ruby_use_gem_dependency gettext-setup >= 1.1,gettext-setup < 2
-Requires:      gem(facter) >= 2.4.0 gem(facter) < 5
-Requires:      gem(hiera) >= 3.2.1 gem(hiera) < 4
-Requires:      gem(semantic_puppet) >= 1.0 gem(semantic_puppet) < 2
-Requires:      gem(fast_gettext) >= 1.1 gem(fast_gettext) < 3
-Requires:      gem(locale) >= 2.1 gem(locale) < 3
-Requires:      gem(multi_json) >= 1.13 gem(multi_json) < 2
-Requires:      gem(concurrent-ruby) >= 1.0 gem(concurrent-ruby) < 2
-Requires:      gem(deep_merge) >= 1.0 gem(deep_merge) < 2
-Requires:      gem(scanf) >= 1.0 gem(scanf) < 2
-Requires:      gem(CFPropertyList) >= 2.2 gem(CFPropertyList) < 4
+%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency rspec-expectations >= 3.10.1,rspec-expectations < 4
+%ruby_use_gem_dependency CFPropertyList >= 3.0.2,CFPropertyList < 4
+%ruby_use_gem_dependency racc >= 1.6.1,racc < 2
+Requires:      gem(facter) >= 4.3.0
+Requires:      gem(semantic_puppet) >= 1.0
+Requires:      gem(puppet-resource_api) >= 1.5
+Requires:      gem(fast_gettext) >= 2.1
+Requires:      gem(locale) >= 2.1
+Requires:      gem(multi_json) >= 1.13
+Requires:      gem(concurrent-ruby) >= 1.0
+Requires:      gem(deep_merge) >= 1.0
+Requires:      gem(scanf) >= 1.0
+Requires:      gem(CFPropertyList) >= 2.2
 Requires:      puppet = %EVR
-Provides:      gem(puppet) = %EVR
+Conflicts:     gem(facter) >= 5
+Conflicts:     gem(semantic_puppet) >= 2.0
+Conflicts:     gem(puppet-resource_api) >= 2.0
+Conflicts:     gem(fast_gettext) >= 3
+Conflicts:     gem(locale) >= 3
+Conflicts:     gem(multi_json) >= 2
+Conflicts:     gem(concurrent-ruby) >= 2
+Conflicts:     gem(deep_merge) >= 2
+Conflicts:     gem(scanf) >= 2
+Conflicts:     gem(CFPropertyList) >= 4
+Provides:      gem(puppet) = 7.24.0.161
 
-%ruby_use_gem_version puppet:%version
+%ruby_use_gem_version puppet:7.24.0.161
 
 %description
 Puppet lets you centrally manage every important aspect of your system using a
@@ -63,12 +129,14 @@ with obviously discrete elements like packages, services, and files.
 
 
 %package       -n puppet
+Version:       7.24.0.161
+Release:       alt1
 Summary:       A network tool for managing many disparate systems executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppet
 Group:         System/Servers
 BuildArch:     noarch
 
-Requires:      gem(puppet) = %EVR
+Requires:      gem(puppet) = 7.24.0.161
 Requires:      shadow-change
 Requires(preun,post): %name = %EVR
 
@@ -85,12 +153,14 @@ with obviously discrete elements like packages, services, and files.
 
 
 %package       -n gem-puppet-doc
+Version:       7.24.0.161
+Release:       alt1
 Summary:       A network tool for managing many disparate systems documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puppet) = %EVR
+Requires:      gem(puppet) = 7.24.0.161
 
 %description   -n gem-puppet-doc
 A network tool for managing many disparate systems documentation files.
@@ -105,14 +175,56 @@ with obviously discrete elements like packages, services, and files.
 
 
 %package       -n gem-puppet-devel
+Version:       7.24.0.161
+Release:       alt1
 Summary:       A network tool for managing many disparate systems development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puppet) = %EVR
-Requires:      gem(gettext-setup) >= 1.0.1 gem(gettext-setup) < 1.1
-Requires:      gem(CFPropertyList) >= 3.0 gem(CFPropertyList) < 4
+Requires:      gem(puppet) = 7.24.0.161
+Requires:      gem(diff-lcs) >= 1.3
+Requires:      gem(hiera-eyaml) >= 0
+Requires:      gem(hocon) >= 1.0
+Requires:      gem(minitar) >= 0.9
+Requires:      gem(msgpack) >= 1.2
+Requires:      gem(puppetserver-ca) >= 2.0
+Requires:      gem(ffi) >= 0
+Requires:      gem(json-schema) >= 2.0
+Requires:      gem(rake) >= 13.0
+Requires:      gem(rspec) >= 3.1
+Requires:      gem(rspec-its) >= 1.1
+Requires:      gem(vcr) >= 6.1
+Requires:      gem(webmock) >= 3.0
+Requires:      gem(webrick) >= 1.7
+Requires:      gem(yard) >= 0
+Requires:      gem(rubocop) >= 1.15.0
+Requires:      gem(rubocop-i18n) >= 3.0
+Requires:      gem(memory_profiler) >= 0
+Requires:      gem(pry) >= 0
+Requires:      gem(racc) >= 1.5.2
+Requires:      gem(ruby-prof) >= 0.16.0
+Requires:      gem(packaging) >= 0.99
+Requires:      gem(gettext-setup) >= 1.0
+Requires:      gem(ronn) >= 0.7.3
+Conflicts:     gem(diff-lcs) >= 2
+Conflicts:     gem(hocon) >= 2
+Conflicts:     gem(minitar) >= 1
+Conflicts:     gem(msgpack) >= 2
+Conflicts:     gem(rdoc) >= 7
+Conflicts:     gem(puppetserver-ca) >= 3
+Conflicts:     gem(json-schema) >= 3
+Conflicts:     gem(rake) >= 14
+Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(rspec-its) >= 2
+Conflicts:     gem(vcr) >= 7
+Conflicts:     gem(webmock) >= 4
+Conflicts:     gem(webrick) >= 2
+Conflicts:     gem(rubocop) >= 2
+Conflicts:     gem(rubocop-i18n) >= 4
+Conflicts:     gem(packaging) >= 1
+Conflicts:     gem(gettext-setup) >= 2
+Conflicts:     gem(ronn) >= 0.8
 
 %description   -n gem-puppet-devel
 A network tool for managing many disparate systems development package.
@@ -128,7 +240,7 @@ with obviously discrete elements like packages, services, and files.
 
 %prep
 %setup
-%autopatch -p1
+%autopatch
 
 %build
 %ruby_build
@@ -137,7 +249,7 @@ with obviously discrete elements like packages, services, and files.
 %ruby_install
 
 # SysVInit files
-install -Dp -m0644 %confdir/client.sysconfig %buildroot%_sysconfdir/sysconfig/puppet
+install -Dp -m0644 ./ext/redhat/client.sysconfig %buildroot%_sysconfdir/sysconfig/puppet
 install -Dp -m0755 %SOURCE1 %buildroot%_initrddir/puppet
 # Systemd files
 install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/puppet.service
@@ -261,6 +373,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 
 
 %changelog
+* Thu Apr 13 2023 Pavel Skrylev <majioa@altlinux.org> 7.24.0.161-alt1
+- ^ 7.24.0 -> 7.24.0p161
+
 * Thu Apr 06 2023 Andrey Cherepanov <cas@altlinux.org> 7.24.0-alt1
 - New version.
 

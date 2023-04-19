@@ -3,7 +3,7 @@
 
 Name:          gem-dynflow
 Version:       1.6.10
-Release:       alt1
+Release:       alt1.1
 Summary:       DYNamic workFLOW orchestration engine
 License:       MIT
 Group:         Development/Ruby
@@ -48,18 +48,21 @@ BuildRequires: gem(algebrick) >= 0.7.0
 BuildRequires: gem(concurrent-ruby) >= 1.1.3
 BuildRequires: gem(concurrent-ruby-edge) >= 0.6.0
 BuildRequires: gem(sequel) >= 4.0.0
-BuildConflicts: gem(concurrent-ruby-ext) >= 1.2
+BuildConflicts: gem(concurrent-ruby-ext) >= 2
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rails) >= 7
 BuildConflicts: gem(msgpack) >= 2
 BuildConflicts: gem(algebrick) >= 0.8
-BuildConflicts: gem(concurrent-ruby) >= 1.2
-BuildConflicts: gem(concurrent-ruby-edge) >= 0.7
+BuildConflicts: gem(concurrent-ruby) >= 2
+BuildConflicts: gem(concurrent-ruby-edge) >= 1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency concurrent-ruby >= 1.2.2,concurrent-ruby < 2
+%ruby_use_gem_dependency concurrent-ruby-ext >= 1.2.2,concurrent-ruby-ext < 2
+%ruby_use_gem_dependency concurrent-ruby-edge >= 0.7,concurrent-ruby-edge < 1
 Requires:      gem(multi_json) >= 0
 Requires:      gem(msgpack) >= 1.3.3
 Requires:      gem(apipie-params) >= 0
@@ -69,8 +72,8 @@ Requires:      gem(concurrent-ruby-edge) >= 0.6.0
 Requires:      gem(sequel) >= 4.0.0
 Conflicts:     gem(msgpack) >= 2
 Conflicts:     gem(algebrick) >= 0.8
-Conflicts:     gem(concurrent-ruby) >= 1.2
-Conflicts:     gem(concurrent-ruby-edge) >= 0.7
+Conflicts:     gem(concurrent-ruby) >= 2
+Conflicts:     gem(concurrent-ruby-edge) >= 1
 Obsoletes:     ruby-dynflow < %EVR
 Provides:      ruby-dynflow = %EVR
 Provides:      gem(dynflow) = 1.6.10
@@ -101,7 +104,7 @@ choosing the right one (providing default implementations as well).
 
 %package       -n gem-dynflow-doc
 Version:       1.6.10
-Release:       alt1
+Release:       alt1.1
 Summary:       DYNamic workFLOW orchestration engine documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета dynflow
 Group:         Development/Documentation
@@ -139,7 +142,7 @@ choosing the right one (providing default implementations as well).
 
 %package       -n gem-dynflow-devel
 Version:       1.6.10
-Release:       alt1
+Release:       alt1.1
 Summary:       DYNamic workFLOW orchestration engine development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета dynflow
 Group:         Development/Ruby
@@ -169,7 +172,7 @@ Requires:      gem(daemons) >= 0
 Requires:      gem(rails) >= 4.2.9
 Requires:      gem(logging) >= 0
 Requires:      gem(statsd-instrument) >= 0
-Conflicts:     gem(concurrent-ruby-ext) >= 1.2
+Conflicts:     gem(concurrent-ruby-ext) >= 2
 Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rails) >= 7
 
@@ -203,7 +206,7 @@ choosing the right one (providing default implementations as well).
 
 %package       -n dynflow
 Version:       1.6.10
-Release:       alt1
+Release:       alt1.1
 Summary:       DYNamic workFLOW engine executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета dynflow
 Group:         Development/Other
@@ -268,6 +271,9 @@ exit 0
 
 
 %changelog
+* Tue Apr 11 2023 Pavel Skrylev <majioa@altlinux.org> 1.6.10-alt1.1
+- ! fixed deps to concurrent-ruby tree gems
+
 * Sun Mar 26 2023 Pavel Skrylev <majioa@altlinux.org> 1.6.10-alt1
 - ^ 1.6.7 -> 1.6.10
 

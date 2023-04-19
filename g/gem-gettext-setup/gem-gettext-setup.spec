@@ -1,8 +1,8 @@
 %define        gemname gettext-setup
 
 Name:          gem-gettext-setup
-Version:       1.0.1
-Release:       alt2
+Version:       1.1.0
+Release:       alt1
 Summary:       A gem that configures gettext for internationalization
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -12,29 +12,38 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         patch.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(fast_gettext) >= 1.1 gem(fast_gettext) < 2
-BuildRequires: gem(gettext) >= 3.0.2 gem(gettext) < 4
-BuildRequires: gem(locale) >= 0
+%if_with check
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(rake) >= 0
-BuildRequires: gem(rspec) >= 3.1 gem(rspec) < 4
-BuildRequires: gem(rspec-core) >= 3.1 gem(rspec-core) < 4
-BuildRequires: gem(rspec-expectations) >= 3.1 gem(rspec-expectations) < 4
-BuildRequires: gem(rspec-mocks) >= 3.1 gem(rspec-mocks) < 4
+BuildRequires: gem(rspec) >= 3.1
+BuildRequires: gem(rspec-core) >= 3.1
+BuildRequires: gem(rspec-expectations) >= 3.1
+BuildRequires: gem(rspec-mocks) >= 3.1
 BuildRequires: gem(rubocop) >= 0
 BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(fast_gettext) >= 2.1
+BuildRequires: gem(gettext) >= 3.4
+BuildRequires: gem(locale) >= 0
+BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(rspec-core) >= 4
+BuildConflicts: gem(rspec-expectations) >= 4
+BuildConflicts: gem(rspec-mocks) >= 4
+BuildConflicts: gem(fast_gettext) >= 3
+BuildConflicts: gem(gettext) >= 4
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_version gettext-setup:1.0.1
-%ruby_use_gem_dependency gettext >= 3.3.5,gettext < 4
-Requires:      gem(fast_gettext) >= 1.1 gem(fast_gettext) < 2
-Requires:      gem(gettext) >= 3.0.2 gem(gettext) < 4
+Requires:      gem(fast_gettext) >= 2.1
+Requires:      gem(gettext) >= 3.4
 Requires:      gem(locale) >= 0
-Obsoletes:     ruby-%gemname < %EVR
-Provides:      ruby-%gemname = %EVR
-Provides:      gem(gettext-setup) = 1.0.1
+Conflicts:     gem(fast_gettext) >= 3
+Conflicts:     gem(gettext) >= 4
+Obsoletes:     ruby-gettext-setup < %EVR
+Provides:      ruby-gettext-setup = %EVR
+Provides:      gem(gettext-setup) = 1.1.0
 
 
 %description
@@ -47,14 +56,14 @@ strings and data formatting will be customized for that locale.
 
 
 %package       -n gem-gettext-setup-doc
-Version:       1.0.1
-Release:       alt2
+Version:       1.1.0
+Release:       alt1
 Summary:       A gem that configures gettext for internationalization documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gettext-setup
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(gettext-setup) = 1.0.1
+Requires:      gem(gettext-setup) = 1.1.0
 
 %description   -n gem-gettext-setup-doc
 A gem that configures gettext for internationalization documentation
@@ -72,22 +81,26 @@ strings and data formatting will be customized for that locale.
 
 
 %package       -n gem-gettext-setup-devel
-Version:       1.0.1
-Release:       alt2
+Version:       1.1.0
+Release:       alt1
 Summary:       A gem that configures gettext for internationalization development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gettext-setup
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gettext-setup) = 1.0.1
+Requires:      gem(gettext-setup) = 1.1.0
 Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
-Requires:      gem(rspec) >= 3.1 gem(rspec) < 4
-Requires:      gem(rspec-core) >= 3.1 gem(rspec-core) < 4
-Requires:      gem(rspec-expectations) >= 3.1 gem(rspec-expectations) < 4
-Requires:      gem(rspec-mocks) >= 3.1 gem(rspec-mocks) < 4
+Requires:      gem(rspec) >= 3.1
+Requires:      gem(rspec-core) >= 3.1
+Requires:      gem(rspec-expectations) >= 3.1
+Requires:      gem(rspec-mocks) >= 3.1
 Requires:      gem(rubocop) >= 0
 Requires:      gem(simplecov) >= 0
+Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(rspec-core) >= 4
+Conflicts:     gem(rspec-expectations) >= 4
+Conflicts:     gem(rspec-mocks) >= 4
 
 %description   -n gem-gettext-setup-devel
 A gem that configures gettext for internationalization development
@@ -106,6 +119,7 @@ strings and data formatting will be customized for that locale.
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -130,6 +144,9 @@ strings and data formatting will be customized for that locale.
 
 
 %changelog
+* Thu Apr 13 2023 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1
+- ^ 1.0.1 -> 1.1.0
+
 * Fri Sep 03 2021 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt2
 - ! spec
 

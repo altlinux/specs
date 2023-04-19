@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.5.1
-Release:       alt3
+Release:       alt4
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -23,7 +23,6 @@ Source11:      foreman-jobs.service
 Source12:      foreman-jobs.sysconfig
 Patch6:        rails_6.patch
 Patch5:        asciidoctor-doc.patch
-Patch4:        puppet_enc_script.patch
 Patch3:        invalid_premission.patch
 Patch1:        gemfile.patch
 Patch:         alt.patch
@@ -343,7 +342,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.5.1
-Release:       alt3
+Release:       alt4
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -508,6 +507,10 @@ railsctl cleanup %name
 
 
 %changelog
+* Mon Apr 10 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt4
+- * allowed to direct proxy pass in nginx conf with forwarding the https params
+- - crop out embedded node method/resource in favor of foreman-pupper gem's one
+
 * Thu Apr 06 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt3
 - ! fixed public webpack and assets
 - ! fixed spec pre section and nginx conf

@@ -1,7 +1,8 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname facter
 
 Name:          gem-facter
-Version:       4.2.13
+Version:       4.3.1
 Release:       alt1
 Summary:       Ruby library for retrieving facts from operating systems
 License:       Apache-2.0
@@ -13,23 +14,43 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libcpp-hocon-devel
-BuildRequires: libyaml-cpp-devel
-BuildRequires: libleatherman-devel
-BuildRequires: boost-program_options-devel
 %if_with check
 BuildRequires: gem(rake) >= 12.3
-BuildRequires: gem(rspec) >= 3.0 gem(rspec) < 4
-BuildRequires: gem(rubocop) >= 0.81.0 gem(rubocop) < 2
-BuildRequires: gem(rubocop-performance) >= 1.5.2 gem(rubocop-performance) < 2
-BuildRequires: gem(rubocop-rspec) >= 1.38 gem(rubocop-rspec) < 3
-BuildRequires: gem(simplecov) >= 0.17 gem(simplecov) < 1
-BuildRequires: gem(sys-filesystem) >= 1.3 gem(sys-filesystem) < 2
-BuildRequires: gem(timecop) >= 0.9 gem(timecop) < 1
-BuildRequires: gem(webmock) >= 3.12 gem(webmock) < 4
-BuildRequires: gem(yard) >= 0.9 gem(yard) < 1
-BuildRequires: gem(hocon) >= 1.3 gem(hocon) < 2
-BuildRequires: gem(thor) >= 1.0.1 gem(thor) < 2.0
+BuildRequires: gem(rspec) >= 3.0
+BuildRequires: gem(rubocop) >= 0.81.0
+BuildRequires: gem(rubocop-performance) >= 1.5.2
+BuildRequires: gem(rubocop-rspec) >= 1.38
+BuildRequires: gem(simplecov) >= 0.17
+BuildRequires: gem(sys-filesystem) >= 1.3
+BuildRequires: gem(webmock) >= 3.12
+BuildRequires: gem(yard) >= 0.9
+BuildRequires: gem(octokit) >= 4.18.0
+BuildRequires: gem(packaging) >= 0
+BuildRequires: gem(ffi) >= 1.15
+BuildRequires: gem(ronn) >= 0.7.3
+BuildRequires: gem(hocon) >= 1.3
+BuildRequires: gem(thor) >= 1.0.1
+BuildRequires: gem(bundler) >= 2.0
+BuildRequires: gem(coveralls) >= 0.8.23
+BuildRequires: gem(rubocop) >= 0.74.0
+BuildRequires: gem(rubycritic) >= 4.1.0
+BuildRequires: gem(ffi) >= 1.9
+BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(rubocop) >= 2
+BuildConflicts: gem(rubocop-performance) >= 2
+BuildConflicts: gem(rubocop-rspec) >= 3
+BuildConflicts: gem(simplecov) >= 1
+BuildConflicts: gem(sys-filesystem) >= 2
+BuildConflicts: gem(webmock) >= 4
+BuildConflicts: gem(yard) >= 1
+BuildConflicts: gem(octokit) >= 6
+BuildConflicts: gem(ffi) >= 2
+BuildConflicts: gem(ronn) >= 0.8
+BuildConflicts: gem(hocon) >= 2
+BuildConflicts: gem(thor) >= 2.0
+BuildConflicts: gem(bundler) >= 3
+BuildConflicts: gem(coveralls) >= 0.9
+BuildConflicts: gem(rubycritic) >= 4.2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -39,17 +60,20 @@ BuildRequires: gem(thor) >= 1.0.1 gem(thor) < 2.0
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
 %ruby_use_gem_dependency rubocop-rspec >= 2.4.0,rubocop-rspec < 3
 %ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
+%ruby_use_gem_dependency octokit >= 5.6.1,octokit < 6
 %ruby_ignore_names facter-ng
-Requires:      gem(hocon) >= 1.3 gem(hocon) < 2
-Requires:      gem(thor) >= 1.0.1 gem(thor) < 2.0
+Requires:      gem(hocon) >= 1.3
+Requires:      gem(thor) >= 1.0.1
 Requires:      coreutils
 Requires:      dmidecode
 Requires:      net-tools
 Requires:      pciutils
 Requires:      bind-utils
+Conflicts:     gem(hocon) >= 2
+Conflicts:     gem(thor) >= 2.0
 Obsoletes:     ruby-facter
 Provides:      ruby-facter
-Provides:      gem(facter) = 4.2.13
+Provides:      gem(facter) = 4.3.1
 
 
 %description
@@ -64,14 +88,14 @@ additional mechanisms for retrieving facts.
 
 
 %package       -n facter
-Version:       4.2.13
+Version:       4.3.1
 Release:       alt1
 Summary:       Ruby library for retrieving facts from operating systems executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета facter
 Group:         System/Base
 BuildArch:     noarch
 
-Requires:      gem(facter) = 4.2.13
+Requires:      gem(facter) = 4.3.1
 
 %description   -n facter
 Ruby library for retrieving facts from operating systems executable(s).
@@ -90,14 +114,14 @@ additional mechanisms for retrieving facts.
 
 
 %package       -n gem-facter-doc
-Version:       4.2.13
+Version:       4.3.1
 Release:       alt1
 Summary:       Ruby library for retrieving facts from operating systems documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета facter
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(facter) = 4.2.13
+Requires:      gem(facter) = 4.3.1
 
 %description   -n gem-facter-doc
 Ruby library for retrieving facts from operating systems documentation files.
@@ -116,24 +140,38 @@ additional mechanisms for retrieving facts.
 
 
 %package       -n gem-facter-devel
-Version:       4.2.13
+Version:       4.3.1
 Release:       alt1
 Summary:       Ruby library for retrieving facts from operating systems development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета facter
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(facter) = 4.2.13
+Requires:      gem(facter) = 4.3.1
 Requires:      gem(rake) >= 12.3
-Requires:      gem(rspec) >= 3.0 gem(rspec) < 4
-Requires:      gem(rubocop) >= 0.81.0 gem(rubocop) < 2
-Requires:      gem(rubocop-performance) >= 1.5.2 gem(rubocop-performance) < 2
-Requires:      gem(rubocop-rspec) >= 1.38 gem(rubocop-rspec) < 3
-Requires:      gem(simplecov) >= 0.17 gem(simplecov) < 1
-Requires:      gem(sys-filesystem) >= 1.3 gem(sys-filesystem) < 2
-Requires:      gem(timecop) >= 0.9 gem(timecop) < 1
-Requires:      gem(webmock) >= 3.12 gem(webmock) < 4
-Requires:      gem(yard) >= 0.9 gem(yard) < 1
+Requires:      gem(rspec) >= 3.0
+Requires:      gem(rubocop) >= 0.81.0
+Requires:      gem(rubocop-performance) >= 1.5.2
+Requires:      gem(rubocop-rspec) >= 1.38
+Requires:      gem(simplecov) >= 0.17
+Requires:      gem(sys-filesystem) >= 1.3
+Requires:      gem(webmock) >= 3.12
+Requires:      gem(yard) >= 0.9
+Requires:      gem(octokit) >= 4.18.0
+Requires:      gem(packaging) >= 0
+Requires:      gem(ffi) >= 1.15
+Requires:      gem(ronn) >= 0.7.3
+Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(rubocop) >= 2
+Conflicts:     gem(rubocop-performance) >= 2
+Conflicts:     gem(rubocop-rspec) >= 3
+Conflicts:     gem(simplecov) >= 1
+Conflicts:     gem(sys-filesystem) >= 2
+Conflicts:     gem(webmock) >= 4
+Conflicts:     gem(yard) >= 1
+Conflicts:     gem(octokit) >= 6
+Conflicts:     gem(ffi) >= 2
+Conflicts:     gem(ronn) >= 0.8
 
 %description   -n gem-facter-devel
 Ruby library for retrieving facts from operating systems development package.
@@ -169,6 +207,7 @@ additional mechanisms for retrieving facts.
 
 %files         -n facter
 %_bindir/facter
+%_man8dir/facter.8.xz
 
 %files         -n gem-facter-doc
 %ruby_gemdocdir
@@ -177,6 +216,9 @@ additional mechanisms for retrieving facts.
 
 
 %changelog
+* Thu Apr 13 2023 Pavel Skrylev <majioa@altlinux.org> 4.3.1-alt1
+- ^ 4.2.13 -> 4.3.1
+
 * Fri Oct 07 2022 Pavel Skrylev <majioa@altlinux.org> 4.2.13-alt1
 - ^ 4.2.9 -> 4.2.13
 

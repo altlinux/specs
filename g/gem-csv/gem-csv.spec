@@ -1,7 +1,7 @@
 %define        gemname csv
 
 Name:          gem-csv
-Version:       3.2.0
+Version:       3.2.6
 Release:       alt1
 Summary:       CSV Reading and Writing
 License:       Ruby or BSD-2-Clause
@@ -13,14 +13,17 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%if_with check
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(benchmark_driver) >= 0
-BuildRequires: gem(test-unit) >= 3.3.5 gem(test-unit) < 4
+BuildRequires: gem(test-unit) >= 3.3.5
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(csv) = 3.2.0
+%ruby_use_gem_dependency test-unit >= 3.3.5,test-unit < 4
+Provides:      gem(csv) = 3.2.6
 
 
 %description
@@ -30,14 +33,14 @@ needed.
 
 
 %package       -n gem-csv-doc
-Version:       3.2.0
+Version:       3.2.6
 Release:       alt1
 Summary:       CSV Reading and Writing documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета csv
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(csv) = 3.2.0
+Requires:      gem(csv) = 3.2.6
 
 %description   -n gem-csv-doc
 CSV Reading and Writing documentation files.
@@ -51,18 +54,18 @@ needed.
 
 
 %package       -n gem-csv-devel
-Version:       3.2.0
+Version:       3.2.6
 Release:       alt1
 Summary:       CSV Reading and Writing development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета csv
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(csv) = 3.2.0
+Requires:      gem(csv) = 3.2.6
 Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(benchmark_driver) >= 0
-Requires:      gem(test-unit) >= 3.3.5 gem(test-unit) < 4
+Requires:      gem(test-unit) >= 3.3.5
 
 %description   -n gem-csv-devel
 CSV Reading and Writing development package.
@@ -101,6 +104,9 @@ needed.
 
 
 %changelog
+* Fri Apr 14 2023 Pavel Skrylev <majioa@altlinux.org> 3.2.6-alt1
+- ^ 3.2.0 -> 3.2.6
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 3.2.0-alt1
 - ^ 3.1.2 -> 3.2.0
 
