@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2023.3.9
+Version: 2023.4.18
 Release: alt1
 Summary: Canonical source for classifiers on PyPI
 License: Apache-2.0
@@ -13,19 +13,23 @@ Url: https://pypi.org/project/trove-classifiers
 VCS: https://github.com/pypa/trove-classifiers.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+
+%pyproject_runtimedeps_metadata
 
 # PEP503 name
 %py3_provides %pypi_name
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
+# unused
+%add_pyproject_deps_check_filter jinja2 natsort
+
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -41,6 +45,13 @@ classifiers in packages for PyPI upload or download.
 
 # calver doesn't provide means for reproducible builds from source tree
 echo '%version' > ./calver_version
+
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements/dev.txt
+%endif
 
 %build
 %pyproject_build
@@ -58,6 +69,9 @@ echo '%version' > ./calver_version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 19 2023 Stanislav Levin <slev@altlinux.org> 2023.4.18-alt1
+- 2023.3.9 -> 2023.4.18.
+
 * Fri Mar 10 2023 Stanislav Levin <slev@altlinux.org> 2023.3.9-alt1
 - 2023.2.20 -> 2023.3.9.
 
