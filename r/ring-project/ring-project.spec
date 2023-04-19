@@ -30,7 +30,7 @@
 
 Name: ring-project
 Version: 20211223
-Release: alt2
+Release: alt3
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -68,7 +68,7 @@ BuildRequires: libspeexdsp-devel libswscale-devel libudev-devel libupnp-devel li
 BuildRequires: zlib-devel libopus-devel libspeex-devel libilbc-devel libmsgpack-devel libx264-devel libx265-devel libva-devel libvdpau-devel
 BuildRequires: libyaml-cpp-devel yasm perl-Pod-Usage cppunit-devel libgmp-devel libexpat-devel
 BuildRequires: evolution-data-server-devel libclutter-gtk3-devel libnotify-devel libpixman-devel
-BuildRequires: libXdmcp-devel libpng-devel libXxf86vm-devel libappindicator-gtk3-devel libwebkit2gtk-devel libqrencode-devel
+BuildRequires: libXdmcp-devel libpng-devel libXxf86vm-devel libayatana-appindicator3-devel libwebkit2gtk-devel libqrencode-devel
 BuildRequires: libcanberra-gtk3-devel
 
 %description
@@ -363,6 +363,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Wed Apr 19 2023 Anton Midyukov <antohami@altlinux.org> 20211223-alt3
+- rebuild with libayatana-appindicator3
+
 * Thu Mar 17 2022 Sergey V Turchin <zerg@altlinux.org> 20211223-alt2
 - merge p10 changes
 
