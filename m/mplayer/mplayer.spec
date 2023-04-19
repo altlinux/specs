@@ -315,7 +315,7 @@
 
 Name: %lname
 Version: 1.5
-Release: alt1.%svnrev.1
+Release: alt1.%svnrev.2
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1158,6 +1158,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Wed Apr 19 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5-alt1.38416.2
+- Fixed patch for Elbrus.
+
 * Sun Apr 09 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.5-alt1.38416.1
 - Updated to SVN snapshot (revision 38416).
 - Secured IPC permissions.
