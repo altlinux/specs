@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 BuildRequires: perl-podlators
 Name: perl-Glib-Object-Introspection
-Version: 0.049
+Version: 0.050
 Release: alt1
 
 Summary: Dynamically create Perl language bindings
 Group: Development/Perl
-License: lgpl
+License: LGPL-2.1+
 
 Url: %CPAN Glib-Object-Introspection
 Source: %name-%version.tar
 
-BuildRequires: gobject-introspection-devel libcairo-gobject-devel perl-devel perl-ExtUtils-Depends perl-Glib-devel perl-ExtUtils-PkgConfig perl(XML/LibXML.pm)
+BuildRequires: gobject-introspection-devel libcairo-gobject-devel perl-devel perl-ExtUtils-Depends perl-Glib-devel perl-ExtUtils-PkgConfig perl(XML/LibXML.pm) perl(Gtk3.pm)
 
 %description
 %summary
@@ -37,14 +37,18 @@ export LANG=ru_RU.UTF-8
 %perl_vendor_install
 
 %files
+%doc README.md NEWS LICENSE
 %perl_vendor_autolib/Glib/Object/Introspection*
 %perl_vendor_archlib/Glib/Object/Introspection*
-%doc README
 
 %files scripts
 %_bindir/perli11ndoc
+%_man1dir/perli11ndoc.1*
 
 %changelog
+* Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 0.050-alt1
+- new version
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.049-alt1
 - new version
 
