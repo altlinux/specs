@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ pkgconfig(aubio) pkgconfig(
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		qtractor
-Version:	0.9.29
+Version:	0.9.31
 Release:	alt1_1
 Summary:	An Audio/MIDI multi-track sequencer
 License:	GPLv2+
@@ -40,7 +40,7 @@ Source44: import.info
 
 %description
 Qtractor is an Audio/MIDI multi-track sequencer application
-written in C++ around the Qt4 or Qt5 toolkit using Qt Designer.
+written in C++ around the Qt5 or Qt6 toolkit using Qt Designer.
 
 The initial target platform will be Linux, where the Jack Audio
 Connection Kit (JACK) for audio, and the Advanced Linux Sound
@@ -92,6 +92,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 0.9.31-alt1_1
+- update by mgaimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.9.29-alt1_1
 - update by mgaimport
 
