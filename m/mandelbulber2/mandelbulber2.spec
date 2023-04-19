@@ -1,8 +1,8 @@
 %define manualpdf usr/share/doc/mandelbulber2/Mandelbulber_Manual.pdf
 
 Name: mandelbulber2
-Version: 2.28
-Release: alt4
+Version: 2.29
+Release: alt1
 
 Summary: 3D fractal visualization tool
 Summary(ru_RU.UTF-8): Инструмент 3D фрактальной визуализации
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Source1: ru.tar
 
 Patch1: %name-2.28-alt-add_language_ru.patch
+Patch2: %name-2.28-alt-desktop.patch
 
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
@@ -84,6 +85,12 @@ lconvert-qt5 %buildroot%_datadir/%name/language/formula_ru.ts -o %buildroot%_dat
 %_niconsdir/mandelbulber.png
 
 %changelog
+* Wed Apr 19 2023 Evgeny Chuck <koi@altlinux.org> 2.29-alt1
+- new version (2.29) with rpmgs script
+
+* Sat Sep 17 2022 Evgeny Chuck <koi@altlinux.org> 2.28-alt5
+- Fixed desktop category
+
 * Sun Sep 04 2022 Evgeny Chuck <koi@altlinux.org> 2.28-alt4
 - Russian translation fix
 
