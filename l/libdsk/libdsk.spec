@@ -11,12 +11,12 @@ BuildRequires: gcc-c++
 
 Name:           lib%sname
 Summary:        A library for accessing floppy drives and disk images transparently
-Version:        1.5.15
+Version:        1.5.19
 Release:        alt1_1
 License:        LGPLv2+
 Group:          System/Libraries
-URL:            http://www.seasip.info/Unix/LibDsk/index.html
-Source:         http://www.seasip.info/Unix/LibDsk/%{name}-%{version}.tar.gz
+URL:            https://www.seasip.info/Unix/LibDsk/index.html
+Source:         https://www.seasip.info/Unix/LibDsk/%{name}-%{version}.tar.gz
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  pkgconfig(bzip2)
 BuildRequires:  lyx
@@ -103,6 +103,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 1.5.19-alt1_1
+- update by mgaimport
+
 * Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 1.5.15-alt1_1
 - update by mgaimport
 
