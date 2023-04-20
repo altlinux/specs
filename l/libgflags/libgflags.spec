@@ -1,15 +1,16 @@
 Name: libgflags
 Summary: A commandline flags library that allows for distributed flags
 Version: 2.2.2
-Release: alt1
+Release: alt2
 Group: System/Libraries
 Url: http://gflags.github.io/gflags/
 License: BSD
 
 Source: v%version.tar
+Patch1: gflags-fix_pkgconfig.patch
 
-# Automatically added by buildreq on Wed Mar 30 2011
-BuildRequires: gcc-c++ cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake ctest
 
 %description
 The %name package contains a library that implements commandline flags
@@ -28,32 +29,48 @@ files for developing applications that use the %name package.
 
 %prep
 %setup -n gflags-%version
+%patch1 -p1
 
 mv BUILD BUILD.txt
 
 %build
-%cmake -DBUILD_SHARED_LIBS=True -DBUILD_gflags_nothreads_LIB=False
+%cmake \
+  -DBUILD_SHARED_LIBS:BOOL=ON \
+  -DINSTALL_HEADERS:BOOL=ON \
+  -DBUILD_TESTING:BOOL=ON \
+  -DREGISTER_BUILD_DIR:BOOL=OFF \
+  -DREGISTER_INSTALL_PREFIX:BOOL=OFF
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # remove cmake files
 # they are broken, due to that can't build blender with this library on aarch64/ppc64le arches
-rm -rf %buildroot%_libdir/cmake
+#rm -rf %buildroot%_libdir/cmake
+
+%check
+%ctest
 
 %files
-%doc AUTHORS.txt BUILD.txt ChangeLog.txt COPYING.txt
+%doc AUTHORS.txt COPYING.txt
 %_libdir/*.so.*
 %_bindir/gflags_completions.sh
 
 %files devel
-%doc README.md
+%doc README.md BUILD.txt ChangeLog.txt
 %_includedir/gflags
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_libdir/cmake/*
 
 %changelog
+* Thu Apr 20 2023 Alexey Shabalin <shaba@altlinux.org> 2.2.2-alt2
+- package cmake files.
+- fix pkgconfig file.
+- enable tests.
+- build nothreads and threads libs.
+
 * Thu Aug 01 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.2-alt1
 - Updated to upstream version 2.2.2.
 
