@@ -6,10 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           pengupop
 Version:        2.2.2
-Release:        alt4_31
+Release:        alt4_32
 Summary:        Networked Game in the vein of Move/Puzzle Bobble
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            http://www.junoplay.com/pengupop
 Source0:        http://www.junoplay.com/files/%{name}-%{version}.tar.gz
 Patch0: pengupop-c99.patch
@@ -56,6 +56,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 2.2.2-alt4_32
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.2.2-alt4_31
 - update to new release by fcimport
 
