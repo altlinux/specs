@@ -8,13 +8,13 @@ Name: mythes-el
 Summary: Greek thesaurus
 %global upstreamid 20070412
 Version: 0.%{upstreamid}
-Release: alt1_19
+Release: alt1_30
 # below links are dead and can't find any mirror for it
 # please don't report any FTBFS bugs
 #Source: http://www.ellak.gr/pub/oo_extras/th_el.zip
 Source: th_el.zip
 URL: wiki.services.openoffice.org/wiki/Dictionaries
-License: GPLv2+
+License: GPL-2.0-or-later
 BuildArch: noarch
 Requires: libmythes
 Source44: import.info
@@ -55,6 +55,9 @@ done
 %{_datadir}/mythes/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20070412-alt1_30
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20070412-alt1_19
 - update to new release by fcimport
 
