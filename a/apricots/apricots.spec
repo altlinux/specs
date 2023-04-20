@@ -9,18 +9,20 @@ BuildRequires: /usr/bin/desktop-file-install
 %define apricotsdir %{_datadir}/apricots
 Name: apricots
 Version:  0.2.7
-Release:  alt1_2
+Release:  alt1_6
 Summary: 2D air combat game
 
-License: GPLv2
+License: GPL-2.0-only
 URL: https://github.com/moggers87/apricots
-Source0: %{url}/archive/v%{version}/apricots-%{version}.tar.gz
+Source0: https://github.com/moggers87/apricots/archive/v%{version}/apricots-%{version}.tar.gz
 Source1: apricots.png
 #Icon created from screenshot on website
 Source2: apricots.desktop
 
+Patch0: noinline.patch
+
 BuildRequires: gcc gcc-c++
-BuildRequires: libSDL2-devel
+BuildRequires: libSDL2-devel libSDL2-devel-static
 BuildRequires: libalut-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libopenal-devel
@@ -35,6 +37,8 @@ and fun.
 
 %prep
 %setup -q
+
+%patch0 -p0
 # e2k support (deprecated in 0.2.7)
 #cp -at admin -- \
 #       /usr/share/gnu-config/config.sub /usr/share/gnu-config/config.guess
@@ -79,6 +83,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.2.7-alt1_6
+- update to new release by fcimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.2.7-alt1_2
 - new version
 
