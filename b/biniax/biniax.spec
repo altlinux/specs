@@ -6,10 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		biniax
 Version:	1.2
-Release:	alt3_28
+Release:	alt3_36
 Summary:	A unique arcade logic game
 
-License:	zlib
+License:	Zlib
 URL:		http://www.biniax.com/
 Source0:	http://mordred.dir.bg/%{name}/%{name}-src.zip
 Source1:	%{name}.desktop
@@ -83,6 +83,9 @@ install -p -m 0644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.2-alt3_36
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_28
 - update to new release by fcimport
 
