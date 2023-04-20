@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -5,16 +6,16 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name: xgrav
 Version:  1.2.0
-Release:  alt2_21
+Release:  alt2_33
 Summary: A simple physics simulation for a large number of particles
 
-Group: Games/Other
-License: GPLv2+
+License: GPL-2.0-or-later
 URL: http://aass.oru.se/~mbl/xgrav/
 Source0: http://www.aass.oru.se/~mbl/xgrav/xgrav-%{version}.tgz
 Source1: xgrav.desktop
 #Created from screenshot of example1.g run.
 Source2: xgrav.png
+BuildRequires:  gcc
 BuildRequires: desktop-file-utils, libSDL-devel, flex, zlib-devel
 Requires: icon-theme-hicolor
 Source44: import.info
@@ -62,6 +63,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/32x32/apps/xgrav.png
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.2.0-alt2_33
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_21
 - update to new release by fcimport
 
