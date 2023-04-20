@@ -2,7 +2,7 @@
 
 Name: mailman3
 Version: 3.2.2
-Release: alt2
+Release: alt3
 
 Summary: Managing electronic mail discussion and e-newsletter lists.
 License: GPLv3
@@ -58,7 +58,6 @@ BuildArch: noarch
 Requires: python3-module-alembic
 Requires: python3-module-atpublic
 Requires: python3-module-editor
-Requires: python3-module-nose
 Requires: python3-module-aiosmtpd
 Requires: python3-module-alembic
 Requires: python3-module-atpublic
@@ -162,6 +161,9 @@ getent passwd mailman >/dev/null || \
 
 
 %changelog
+* Thu Apr 20 2023 Anton Vyatkin <toni@altlinux.org> 3.2.2-alt3
+- Fix Requires
+
 * Mon Jul 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.2.2-alt2
 - fix import module 'importlib_resources'
 
