@@ -7,18 +7,19 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmlto libalsa-devel libglv
 %define _localstatedir %{_var}
 Name:           milkytracker
 Version:        1.03.00
-Release:        alt1_1
+Release:        alt1_5
 Summary:        Module tracker software for creating music
 
 License:        GPLv3+
 URL:            http://www.milkytracker.org/
 Source0:        https://github.com/milkytracker/MilkyTracker/archive/v%{version}.tar.gz
+Patch0:         milkytracker-1.03.00-c++11.patch
 
-BuildRequires:  libSDL2-devel
+BuildRequires:  libSDL2-devel libSDL2-devel-static
 BuildRequires:  ctest cmake
 BuildRequires:  desktop-file-utils
 BuildRequires:  gcc-c++
-BuildRequires:  libappstream-glib
+BuildRequires:  libappstream-glib libappstream-glib-gir
 BuildRequires:  librtmidi-devel
 BuildRequires:  zlib-devel
 BuildRequires:  zziplib-devel
@@ -32,6 +33,7 @@ Its goal is to be free replacement for the popular Fasttracker II software.
 
 %prep
 %setup -q -n MilkyTracker-%{version}
+%patch0 -p1
 
 find . -regex '.*\.\(cpp\|h\|inl\)' -print0 | xargs -0 chmod 644
 %patch33 -p1
@@ -72,6 +74,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 %{_docdir}/%{name}
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.03.00-alt1_5
+- update to new release by fcimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 1.03.00-alt1_1
 - update to new release by fcimport
 
