@@ -10,12 +10,12 @@ BuildRequires: /usr/bin/desktop-file-install cppunit-devel imake libSDL-devel li
 
 Name:           pinball
 Version:        0.3.4
-Release:        alt1_10
+Release:        alt1_13
 Summary:        Emilia 3D Pinball Game
 # core license is GPLv2+
 # gnu table licenses are (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA
 # hurd table license is GPLv2+
-License: GPLv2+ and (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA
+License: GPL-2.0-or-later AND FSFAP AND LGPL-2.0-or-later AND GPL-3.0-or-later AND CC-BY-SA
 URL:            http://pinball.sourceforge.net
 Source0:        https://github.com/sergiomb2/pinball/archive/%{version}/%{name}-%{version}.tar.gz
 BuildRequires:  gcc-c++
@@ -105,6 +105,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.3.4-alt1_13
+- update to new release by fcimport
+
 * Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 0.3.4-alt1_10
 - update to new release by fcimport
 
