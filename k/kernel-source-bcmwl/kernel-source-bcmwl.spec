@@ -8,7 +8,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt5.g%{git}
+Release: alt6.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Broadcom WiFi chipset series module sources
 License: Propreitary
@@ -26,17 +26,48 @@ BuildPreReq: kernel-build-tools
 
 Patched for Linux >= 4.7
 
+%package -n bcmwl-kernel-conf
+Summary: bcmwl kernel module configuration
+Group: System/Kernel and hardware
+BuildArch: noarch
+
+%description -n bcmwl-kernel-conf
+bcmwl kernel module configuration.
+
 %prep
 %setup -c -q
 
 %install
+# blacklist several modules (see ALT bugs #26265, #26250)
+mkdir -p %buildroot/%_sysconfdir/modprobe.d
+cat > %buildroot/%_sysconfdir/modprobe.d/blacklist-bcm.conf << __EOF__
+blacklist bcm43xx
+blacklist ssb
+blacklist b43
+__EOF__
+cat > %buildroot/%_sysconfdir/modprobe.d/blacklist-bcm2.conf << __EOF__
+blacklist b44
+blacklist b43legacy
+blacklist bcma
+blacklist brcmsmac
+blacklist brcmfmac
+blacklist bcma-pci-bridge
+__EOF__
+
 mkdir -p %kernel_srcdir
 tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version/bcmwl
 
 %files
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
+%files -n bcmwl-kernel-conf
+%config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm.conf
+%config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm2.conf
+
 %changelog
+* Wed Apr 05 2023 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt6.g6adc981
+- Add kernel-module configuration subpkg (closes #45082).
+
 * Wed Oct 19 2022 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt5.g6adc981
 - GIT 6adc981 from github (kernel 6.x compatible).
 

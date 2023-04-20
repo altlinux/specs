@@ -1,6 +1,6 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.271
-%define module_release alt13
+%define module_release alt14
 
 %define flavour		centos
 %define karch x86_64
@@ -34,6 +34,7 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+Requires: %{module_name}-kernel-conf = %version
 ExclusiveArch: %karch
 
 Patch: %{module_name}-centos9.patch
@@ -69,30 +70,15 @@ cd bcmwl
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
 make -C %_usrsrc/linux-%kversion-%flavour INSTALL_MOD_PATH=%buildroot INSTALL_MOD_DIR=net M=`pwd`  modules_install
 
-# blacklist several modules (see ALT bugs #26265, #26250)
-mkdir -p %buildroot/%_sysconfdir/modprobe.d
-cat > %buildroot/%_sysconfdir/modprobe.d/blacklist-bcm.conf << __EOF__
-blacklist bcm43xx
-blacklist ssb
-blacklist b43
-__EOF__
-cat > %buildroot/%_sysconfdir/modprobe.d/blacklist-bcm2.conf << __EOF__
-blacklist b44
-blacklist b43legacy
-blacklist bcma
-blacklist brcmsmac
-blacklist brcmfmac
-blacklist bcma-pci-bridge
-__EOF__
-
 %files
 %module_dir
-%config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm.conf
-%config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm2.conf
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Apr 05 2023 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt14
+- Remove conflicting configuration (closes #45082).
 
 * Mon Feb 13 2023 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt13
 - Update -centos patch.
