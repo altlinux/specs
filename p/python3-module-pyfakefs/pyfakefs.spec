@@ -4,29 +4,26 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.0
+Version: 5.2.2
 Release: alt1
-
 Summary: Implements a fake file system that mocks the Python file system modules
 License: Apache-2.0
 Group: Development/Python3
-# Source-git: https://github.com/jmcgeheeiv/pyfakefs.git
 Url: https://pypi.org/project/pyfakefs/
-
+Vcs: https://github.com/pytest-dev/pyfakefs
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
+%pyproject_runtimedeps_metadata
 
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
+%pyproject_builddeps_check
 %endif
-
-BuildArch: noarch
 
 %description
 %pypi_name implements a fake file system that mocks the Python file system
@@ -38,6 +35,13 @@ modification to work with pyfakefs.
 %setup
 %autopatch -p1
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements.txt
+%endif
+
 %build
 %pyproject_build
 
@@ -47,13 +51,18 @@ modification to work with pyfakefs.
 rm -r %buildroot%python3_sitelibdir/%pypi_name/{tests,pytest_tests}
 
 %check
-%tox_check_pyproject
+%pyproject_run -- python -m pyfakefs.tests.all_tests
+%pyproject_run -- python -m pyfakefs.tests.all_tests_without_extra_packages
+%pyproject_run -- python -m pytest pyfakefs/pytest_tests/pytest_plugin_test.py
 
 %files
 %python3_sitelibdir/pyfakefs/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 18 2023 Stanislav Levin <slev@altlinux.org> 5.2.2-alt1
+- 5.0.0 -> 5.2.2.
+
 * Mon Oct 10 2022 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
 - 4.7.0 -> 5.0.0.
 

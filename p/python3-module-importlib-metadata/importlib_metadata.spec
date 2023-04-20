@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.0
+Version: 6.5.0
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
@@ -13,27 +13,26 @@ Url: https://pypi.org/project/importlib-metadata/
 VCS: https://github.com/python/importlib_metadata.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+
+%pyproject_runtimedeps_metadata
 
 # PyPI name(dash, underscore)
 %py3_provides %pypi_name
 Provides: python3-module-importlib_metadata = %EVR
 Obsoletes: python3-module-importlib_metadata <= 1.5.0-alt1
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: /usr/bin/git
+%pyproject_builddeps_build
 
 %if_with check
-# install_requires:
-BuildRequires: python3(zipp)
+# pytest-perf is not packaged and perf tests are skipped anyway
+%add_pyproject_deps_check_filter pytest-perf
+%pyproject_builddeps_metadata_extra testing
 
-BuildRequires: python3(packaging)
-BuildRequires: python3(pyfakefs)
-BuildRequires: python3(pytest)
+# internal CPython's test package
 BuildRequires: python3(test)
 %endif
 
@@ -60,6 +59,9 @@ if [ ! -d .git ]; then
     git tag '%version'
 fi
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
 %build
 %pyproject_build
 
@@ -75,6 +77,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 18 2023 Stanislav Levin <slev@altlinux.org> 6.5.0-alt1
+- 6.0.0 -> 6.5.0.
+
 * Fri Jan 27 2023 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
 - 5.1.0 -> 6.0.0.
 
