@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
@@ -5,16 +6,15 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name: agistudio
 Version: 1.3.0
-Release: alt1_15
+Release: alt1_28
 Summary: AGI integrated development environment
-License: GPLv2+
-Group: Games/Other
+License: GPL-2.0-or-later
 Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1: %{name}.desktop
 Patch0: agistudio-1.3.0-format.patch
 URL: http://agistudio.sourceforge.net/
 
-BuildRequires: libqt4-declarative libqt4-devel libqt5-declarative qt4-designer qt5-designer qt5-tools qt5-xmlpatterns-devel desktop-file-utils
+BuildRequires: libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools desktop-file-utils
 #Requiring nagi, needed at runtime, not picked up by rpm.
 Requires: icon-theme-hicolor, nagi libgail libgtk+2
 Source44: import.info
@@ -63,6 +63,9 @@ desktop-file-install  \
 %{_datadir}/icons/hicolor/32x32/apps/agistudio.xpm
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt1_28
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_15
 - update to new release by fcimport
 
