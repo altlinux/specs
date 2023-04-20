@@ -5,7 +5,7 @@ Group: Games/Other
 Summary: An interpreter for AGI games
 Name: nagi
 Version: 2.06
-Release: alt2_26
+Release: alt2_33
 License: MIT
 URL: http://www.agidev.com/projects/nagi/
 Source0: http://www.agidev.com/dl_files/nagi/nagi_src_-_2002-11-14.tar.gz
@@ -57,6 +57,9 @@ install -Dp -m644 src/nagi.1 %{buildroot}%{_mandir}/man1
 %{_mandir}/man1/nagi.1*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 2.06-alt2_33
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.06-alt2_26
 - update to new release by fcimport
 
