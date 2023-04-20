@@ -7,10 +7,10 @@ BuildRequires: boost-program_options-devel
 %define _localstatedir %{_var}
 Name:		bastet
 Version:	0.43.2
-Release:	alt1_1
+Release:	alt1_5
 Summary:	An evil falling bricks game
 
-License:	GPLv3+
+License:	GPL-3.0-or-later
 URL:		https://github.com/fph/bastet
 Source0:	https://github.com/fph/bastet/archive/%{version}.zip
 Source1:	%{name}.desktop
@@ -89,6 +89,9 @@ mkdir -p %{buildroot}%{_mandir}/man6/
 
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.43.2-alt1_5
+- update to new release by fcimport
+
 * Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 0.43.2-alt1_1
 - update to new release by fcimport
 
