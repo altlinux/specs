@@ -7,9 +7,10 @@
 Name: qca-qt5
 %define major 2
 %define minor 3
-%define bugfix 4
+%define bugfix 5
 Version: %major.%minor.%bugfix
 Release: alt1
+%K5init no_altplace man
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -19,16 +20,17 @@ Url: https://userbase.kde.org/QCA
 Requires: lib%name = %version-%release
 
 Source: %name-%version.tar
+# upstream
+Patch1: 0001-Remove-test-that-openssl-has-decided-it-s-wrong.patch
+Patch2: 0001-hashunittest-run-sha384longtest-only-for-providers-t.patch
 # ALT
 Patch10: qca-2.0.3-alt-paths.patch
-# SuSE
-Patch30: qca-2.3.0-fixDSA.patch
 
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: cmake gcc-c++ glibc-devel ca-certificates
 BuildRequires: qt5-base-devel
 BuildRequires: zlib-devel bzlib-devel libgmp-devel
 BuildRequires: libgcrypt-devel libnss-devel libsasl2-devel pkcs11-helper-devel
-BuildRequires: kde-common-devel
 %if_enabled botan
 BuildRequires: libbotan-devel
 %endif
@@ -207,26 +209,31 @@ This plugin provides features based on Botan. It implements:
 
 %prep
 %setup -q -n %name-%version
-%patch10 -p1
+%patch1 -p1
+%patch2 -p1
 #
-%patch30 -p1
+%patch10 -p1
 
 
 %build
 export QTDIR=%_qt5_prefix
 export QC_CERTSTORE_PATH="%_datadir/ca-certificates/ca-bundle.crt"
-%Kbuild \
-    -DBUILD_TESTS=OFF \
-    -DQCA_INSTALL_IN_QT_PREFIX=ON \
-    -Dqca_CERTSTORE=%_datadir/ca-certificates/ca-bundle.crt \
-    -DQCA_GPG_EXECUTABLE=gpg \
-    -DQT4_BUILD=OFF \
-    -DQCA_SUFFIX=qt5 \
-    -DQCA_MAN_INSTALL_DIR=%_mandir \
+%K5build \
+    -DDEVELOPER_MODE:BOOL=OFF \
+    -DBUILD_TESTS:BOOL=OFF \
+    -DQCA_INSTALL_IN_QT_PREFIX:BOOL=ON \
+    -Dqca_CERTSTORE:STRING=%_datadir/ca-certificates/ca-bundle.crt \
+    -DQCA_GPG_EXECUTABLE:STRING=gpg \
+    -DQT4_BUILD:BOOL=OFF \
+    -DQCA_SUFFIX:STRING=qt5 \
+    -DQCA_MAN_INSTALL_DIR:STRING=%_mandir \
     #
 
 %install
-%Kinstall
+%K5install
+
+rm -f %buildroot/%_K5link/*
+ln -s libqca-qt5.so.2 %buildroot/%_libdir/libqca-qt5.so
 
 mkdir -p %buildroot/%_bindir
 ls -1d %buildroot/%_qt5_bindir/* 2>/dev/null | while read f ; do
@@ -273,9 +280,11 @@ done
 %_libdir/cmake/Qca-qt5/
 %_qt5_archdatadir/mkspecs/features/crypto.prf
 %_qt5_headerdir/Qca-qt5/
-#%_qt5_headerdir/Qca-qt5/QtCrypto
 
 %changelog
+* Thu Apr 20 2023 Sergey V Turchin <zerg@altlinux.org> 2.3.5-alt1
+- new version
+
 * Wed Sep 22 2021 Sergey V Turchin <zerg@altlinux.org> 2.3.4-alt1
 - new version
 
