@@ -4,11 +4,11 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 0.7.0
-Release: alt2
+Version: 0.9.4
+Release: alt1
 
 Summary: Sphinx "images" extension
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/sphinxcontrib-images/
@@ -16,9 +16,7 @@ Url: https://pypi.python.org/pypi/sphinxcontrib-images/
 
 Source: %name-%version.tar
 # https://github.com/lokesh/lightbox2.git
-Source1: lightbox2.tar
-
-Patch1: %oname-%version-alt-build.patch
+Source1: lightbox2-0.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-requests
@@ -44,11 +42,7 @@ Features:
 
 %prep
 %setup
-%patch1 -p1
-
-pushd sphinxcontrib_images_lightbox2
-tar -xf %SOURCE1
-popd
+tar xf %SOURCE1 -C sphinxcontrib_images_lightbox2
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -77,6 +71,9 @@ export PYTHONPATH=$PWD
 
 
 %changelog
+* Thu Apr 20 2023 Fr. Br. George <george@altlinux.org> 0.9.4-alt1
+- Submajor version upgrade
+
 * Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.7.0-alt2
 - disable python2
 

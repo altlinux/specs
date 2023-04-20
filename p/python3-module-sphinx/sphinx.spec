@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name Sphinx
 %define oname sphinx
 
 %def_enable docs
@@ -11,6 +10,7 @@
 %define dependencies \\\
 python3(sphinxcontrib.applehelp) \\\
 python3(sphinxcontrib.devhelp) \\\
+python3(sphinxcontrib.jquery) \\\
 python3(sphinxcontrib.jsmath) \\\
 python3(sphinxcontrib.htmlhelp) \\\
 python3(sphinxcontrib.serializinghtml) \\\
@@ -28,8 +28,8 @@ python3(packaging) \\\
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 5.0.1
-Release: alt2
+Version: 6.1.3
+Release: alt1
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -46,7 +46,6 @@ Source2: macro3
 Source3: refcounting.py
 
 Patch1: %oname-alt-tests-offline.patch
-Patch2: Fix-tests-for-Pygments-2.14.patch
 
 Requires: %(echo "%dependencies")
 Provides: python3-module-objects.inv
@@ -57,7 +56,7 @@ BuildRequires: python-sphinx-objects.inv
 BuildRequires: /usr/bin/convert
 
 # build backend and its deps
-BuildRequires: python3(setuptools)
+BuildRequires: python3(flit_core)
 BuildRequires: python3(wheel)
 
 %if_enabled docs
@@ -157,8 +156,8 @@ This packages contains RPM macros for build with Sphinx.
 %autopatch -p1
 
 # ship the stable releases
-sed -i '/^tag_build =.*/d;/^tag_date =.*/d' setup.cfg
-sed -i 's/docutils>=0.14,<0.18/docutils>=0.14,<0.19/' setup.py
+## sed -i '/^tag_build =.*/d;/^tag_date =.*/d' setup.cfg
+## sed -i 's/docutils>=0.14,<0.18/docutils>=0.14,<0.19/' setup.py
 
 install -pm644 %SOURCE1 .
 
@@ -173,7 +172,7 @@ install -pm644 %SOURCE2 .
 
 %if_enabled docs
 # docs
-export PYTHONPATH=`pwd`/build/lib
+export PYTHONPATH=`pwd`
 %make_build -C doc html
 %make_build -C doc man
 %make_build -C doc pickle
@@ -242,7 +241,7 @@ EOF
 %exclude %sphinx3_dir/pickle
 %exclude %sphinx3_dir/doctrees
 %endif
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %files devel
 %files tests
@@ -263,6 +262,10 @@ EOF
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Sat Mar 25 2023 Fr. Br. George <george@altlinux.org> 1:6.1.3-alt1
+- Autobuild version bump to 6.1.3
+- Use pyproject build scheme
+
 * Wed Jan 25 2023 Stanislav Levin <slev@altlinux.org> 1:5.0.1-alt2
 - Fixed FTBFS (Pygments 2.14.0).
 
