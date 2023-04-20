@@ -1,6 +1,6 @@
 Name: nfs
-Version: 2.6.2
-Release: alt2
+Version: 2.6.3
+Release: alt1
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -102,7 +102,6 @@ This package provides the Linux NFS stats utilities.
     --with-statdpath=%_localstatedir/nfs/statd \
     --with-systemd=%systemd_unitdir \
     --with-pluginpath=%_libdir/libnfsidmap \
-    --with-modprobedir=/lib/modprobe.d \
     --disable-nfsdcld \
     --disable-static \
     #
@@ -197,6 +196,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/nfs.service
 %systemd_unitdir/idmapd.service
 %systemd_unitdir/svcgssd.service
+%systemd_unitdir/fsidd.service
 
 %systemd_unitdir/nfs-server.service
 %systemd_unitdir/nfs-mountd.service
@@ -208,6 +208,7 @@ touch /var/lock/subsys/rpc.svcgssd
 
 /sbin/nfsdcltrack
 %_sbindir/exportfs
+%_sbindir/fsidd
 %_sbindir/nfsstat
 %_sbindir/rpc.idmapd
 %_sbindir/rpc.mountd
@@ -291,7 +292,6 @@ touch /var/lock/subsys/rpc.svcgssd
 #-------------------------------------------------------------------------------
 %files utils
 %config %_sysconfdir/control.d/facilities/nfsmount
-%config /lib/modprobe.d/nfs.conf
 %_udevrulesdir/*.rules
 %attr(700,root,root) /sbin/mount.nfs
 /sbin/mount.nfs4
@@ -316,6 +316,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Thu Apr 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.3-alt1
+- 2.6.3 released
+
 * Tue Feb 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.6.2-alt2
 - Moved %_sbindir/rpcctl from %name-utils to %name-clients subpackage
   (ALT#45347).
