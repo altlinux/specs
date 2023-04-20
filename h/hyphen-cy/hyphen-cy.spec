@@ -5,12 +5,12 @@ Name: hyphen-cy
 Summary: Welsh hyphenation rules
 %global upstreamid 20110620
 Version: 0.%{upstreamid}
-Release: alt1_11
+Release: alt1_23
 #? in a url causes trouble
 #http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-cy.tex?view=co
 Source: hyph-cy.tex
 URL: http://tug.org/tex-hyphen
-License: LPPL
+License: LPPL-1.3a
 BuildArch: noarch
 BuildRequires: libhyphen-devel
 Requires: libhyphen
@@ -41,6 +41,9 @@ cp -p hyph_cy_GB.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20110620-alt1_23
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20110620-alt1_11
 - update to new release by fcimport
 
