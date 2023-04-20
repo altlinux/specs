@@ -8,10 +8,10 @@ Name: hyphen-ca
 Summary: Catalan hyphenation rules
 #Epoch: 1
 Version: 0.9.3
-Release: alt1_15
+Release: alt1_25
 Source: https://downloads.sourceforge.net/project/aoo-extensions/2010/7/hyph-ca.oxt
 URL: http://extensions.services.openoffice.org/project/ca_hyph
-License: GPLv3
+License: GPL-3.0-only
 BuildArch: noarch
 
 Requires: libhyphen
@@ -47,6 +47,9 @@ popd
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.9.3-alt1_25
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_15
 - update to new release by fcimport
 
