@@ -1,7 +1,7 @@
 %define guile22 1
 
 Name: alterator-x11
-Version: 1.98.15
+Version: 1.98.16
 Release: alt1
 
 Url: http://www.altlinux.com
@@ -96,6 +96,9 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout/
 %_bindir/xsetup*
 
 %changelog
+* Tue Apr 18 2023 Anton Midyukov <antohami@altlinux.org> 1.98.16-alt1
+- monitor_ddc: use timeout 5 s for ddcprobe
+
 * Mon Mar 27 2023 Anton Midyukov <antohami@altlinux.org> 1.98.15-alt1
 - video_scan: fix read escaped quotes in scan_lspci (Closes: 45668)
 
