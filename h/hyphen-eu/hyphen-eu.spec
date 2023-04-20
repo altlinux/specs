@@ -7,7 +7,7 @@ Summary: Basque hyphenation rules
 # let's choose older timestamp here
 %global upstreamid 20190406
 Version: 0.%{upstreamid}
-Release: alt1_1
+Release: alt1_6
 Source: http://mirrors.ctan.org/language/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-eu.tex
 URL: http://tp.lc.ehu.es/jma/basque.html
 License: MIT
@@ -42,6 +42,9 @@ cp -p hyph_eu_ES.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20190406-alt1_6
+- update to new release by fcimport
+
 * Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 0.20190406-alt1_1
 - update to new release by fcimport
 
