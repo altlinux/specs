@@ -6,10 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install imake libSDL-devel libX11-devel lib
 %define _localstatedir %{_var}
 Name:           biloba
 Version:        0.9.3
-Release:        alt2_20
+Release:        alt2_28
 Summary:        A tactical board game
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            http://biloba.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1:        biloba.desktop
@@ -30,10 +30,9 @@ your opponents.
 
 
 %build
+export CFLAGS="$CFLAGS -fcommon -g"
 autoreconf -if
-CFLAGS="-fcommon -g"
-export CFLAGS
-./configure --prefix=%{_prefix}
+%configure --prefix=%{_prefix}
 %make_build
 
 iconv -f iso-8859-1 -t utf-8 ChangeLog -o ChangeLog.char
@@ -98,6 +97,9 @@ desktop-file-install                    \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.9.3-alt2_28
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt2_20
 - update to new release by fcimport
 
