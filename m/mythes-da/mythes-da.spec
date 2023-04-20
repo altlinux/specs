@@ -8,10 +8,10 @@ Name: mythes-da
 Summary: Danish thesaurus
 %global upstreamid 20100629.15.16
 Version: 0.%{upstreamid}
-Release: alt1_14
+Release: alt1_25
 Source: https://excellmedia.dl.sourceforge.net/project/aoo-extensions/1388/12/danskesynonymer.oxt
 URL: https://extensions.openoffice.org/fr/project/danske-synonymer
-License: GPLv2 or LGPLv2 or MPLv1.1
+License: GPL-2.0-only OR LGPL-2.1-only OR MPL-1.1
 BuildArch: noarch
 Requires: libmythes
 Source44: import.info
@@ -41,6 +41,9 @@ cp -p th_da_DK.idx $RPM_BUILD_ROOT/%{_datadir}/mythes/th_da_DK_v2.idx
 %{_datadir}/mythes/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20100629.15.16-alt1_25
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20100629.15.16-alt1_14
 - update to new release by fcimport
 
