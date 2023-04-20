@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel	.107
+%define kernel_sublevel	.108
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -478,6 +478,7 @@ KbuildFiles="
 	scripts/depmod.sh
 	scripts/gcc-plugins/*.so
 	scripts/ld-version.sh
+	scripts/pahole-flags.sh
 	tools/objtool/objtool
 
 	.config
@@ -619,6 +620,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Apr 20 2023 Kernel Bot <kernelbot@altlinux.org> 2:5.15.108-alt1
+- v5.15.108 (2023-04-20).
+- kernel-headers-modules: Fix build time message about pahole-flags.
+
 * Thu Apr 13 2023 Kernel Bot <kernelbot@altlinux.org> 2:5.15.107-alt1
 - v5.15.107 (2023-04-13).
 
