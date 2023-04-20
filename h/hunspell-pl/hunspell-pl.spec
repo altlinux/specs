@@ -2,16 +2,22 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} > 35
+%global dict_dirname hunspell 
+%else
+%global dict_dirname myspell
+%endif
 Name: hunspell-pl
 Summary: Polish hunspell dictionaries
 %global upstreamid 20180707
 Version: 0.%{upstreamid}
-Release: alt1_1
+Release: alt1_13
 Source: http://sjp.pl/slownik/ort/sjp-myspell-pl-%{upstreamid}.zip
 URL: https://sjp.pl/slownik/ort/
-License: LGPLv2+ or GPL+ or MPLv1.1 or ASL 2.0 or CC-BY-SA
+License: LGPL-2.1-or-later OR GPL-1.0-or-later OR MPL-1.1 OR Apache-2.0 OR CC-BY-SA-4.0
 BuildArch: noarch
 
 Requires: hunspell
@@ -28,15 +34,18 @@ Polish hunspell dictionaries.
 unzip pl_PL.zip
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 
 %files
 %doc README_pl_PL.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20180707-alt1_13
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20180707-alt1_1
 - update to new release by fcimport
 
