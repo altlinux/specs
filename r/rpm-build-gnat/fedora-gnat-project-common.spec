@@ -3,8 +3,8 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           rpm-build-gnat
-Version:        3.17
-Release:        alt1_2
+Version:        3.18
+Release:        alt1_1
 Summary:        Files shared by Ada libraries
 Summary(sv):    Gemensamma filer för adabibliotek
 
@@ -75,6 +75,9 @@ cp -p macros.gnat %{buildroot}%{_rpmmacrosdir}/gnat
 
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 3.18-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 3.17-alt1_2
 - update to new release by fcimport
 
