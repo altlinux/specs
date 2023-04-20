@@ -23,7 +23,7 @@ relational or object oriented databases.
 
 Name: py%oname
 Version: 3.8.0
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -37,10 +37,11 @@ Source: %name-%version.tar
 
 # Patch from Debian
 Patch1: 0004-remove-gtags.patch
-
 Patch2: pytables-3.8.0-alt-fix-blosc2-get-directories.patch
+Patch3: pytables-3.8.0-find-blosc2.patch
 
 Requires: python3-module-%oname = %EVR
+Requires: libblosc2
 
 BuildRequires: libhdf5-devel liblzo2-devel bzlib-devel
 BuildRequires: xsltproc inkscape fop
@@ -110,6 +111,7 @@ This package contains documentation for PyTables.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -152,6 +154,10 @@ cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 %python3_sitelibdir/%oname/tests/
 
 %changelog
+* Thu Apr 20 2023 Fr. Br. George <george@altlinux.org> 1:3.8.0-alt3
+- Fix -test package cross-dependency
+- Fix libblosc2 loading
+
 * Fri Feb 03 2023 Anton Vyatkin <toni@altlinux.org> 1:3.8.0-alt2
 - update pytables-3.8.0-alt-fix-blosc2-get-directories.patch
 
