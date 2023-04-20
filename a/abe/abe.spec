@@ -6,10 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install imake libXt-devel xorg-cf-files
 %define _localstatedir %{_var}
 Name:           abe
 Version:        1.1
-Release:        alt5_45
+Release:        alt5_47
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
-License:        GPL+
+License:        GPL-1.0-or-later
 URL:            http://abe.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/abe/%{name}-%{version}.tar.gz
 Source1:        %{name}-icons.tar.xz
@@ -98,6 +98,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT/%{_datadir}/applications/ %{name}.des
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.1-alt5_47
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.1-alt5_45
 - update to new release by fcimport
 
