@@ -24,7 +24,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.8.12
+Version: 1.8.14
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -35,7 +35,6 @@ Source2: fwupd.watch
 Patch0: %name-%version-alt.patch
 
 BuildRequires: bash-completion
-BuildRequires: pandoc
 BuildRequires: cmake
 BuildRequires: gcab
 BuildRequires: rpm-build-python3
@@ -218,7 +217,7 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %endif
 
 %files -f %name.lang
-%doc README.md AUTHORS COPYING
+%doc README.md COPYING
 %_man1dir/fwupdtool.1*
 %_man1dir/fwupdmgr.1*
 %if_enabled uefi
@@ -338,6 +337,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %endif
 
 %changelog
+* Fri Mar 31 2023 Egor Ignatov <egori@altlinux.org> 1.8.14-alt1
+- New version 1.8.14.
+
 * Mon Feb 27 2023 Egor Ignatov <egori@altlinux.org> 1.8.12-alt1
 - 1.8.10 -> 1.8.12
 
