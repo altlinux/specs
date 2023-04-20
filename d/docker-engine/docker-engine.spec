@@ -7,12 +7,12 @@
 %global servicename     docker
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      59118bff500fc0d95d0560a9788735a8d89568ce
+%global commit      cbce3319305c39df3405c969a12e0a5d2bad3f4f
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 23.0.3
-Release: alt2
+Version: 23.0.4
+Release: alt1
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -148,6 +148,9 @@ exit 0
 %_udevrulesdir/80-docker.rules
 
 %changelog
+* Wed Apr 19 2023 Vladimir Didenko <cow@altlinux.org> 23.0.4-alt1
+- 23.0.4
+
 * Mon Apr 17 2023 Alexey Shabalin <shaba@altlinux.org> 23.0.3-alt2
 - fix integration with flannel (ALT#45878),
   read DOCKER_NETWORK_OPTIONS from /run/flannel/docker

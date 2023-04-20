@@ -7,7 +7,7 @@
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
-%global commit      5fd4c4d144137e991c4acebb2146ab1483a97925
+%global commit      0f48801a0e21e3f0bc4e74643ead2a502df4818d
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
@@ -15,7 +15,7 @@
 %brp_strip_none %_bindir/*
 
 Name:           runc
-Version:        1.1.5
+Version:        1.1.6
 Release:        alt1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
@@ -75,6 +75,9 @@ EOF
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Wed Apr 19 2023 Vladimir Didenko <cow@altlinux.ru> 1.1.6-alt1
+- New version
+
 * Tue Apr 4 2023 Vladimir Didenko <cow@altlinux.ru> 1.1.5-alt1
 - New version (Fixes: CVE-2023-25809, CVE-2023-27561, CVE-2023-28642)
 
