@@ -7,22 +7,24 @@ BuildRequires: boost-devel rpm-build-python3
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cli11
+# There are no ELF objects in this package, so turn off debuginfo generation.
+%global debug_package %{nil}
+
 # Install documentation with the devel package documentation
 %global _docdir_fmt %{name}-devel
 
 Name:           cli11
 Version:        2.3.2
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Command line parser for C++11
 
 License:        BSD-3-Clause
 URL:            https://github.com/CLIUtils/CLI11
 Source0:        https://github.com/CLIUtils/CLI11/archive/v%{version}/%{name}-%{version}.tar.gz
 
-BuildArch:      noarch
 BuildRequires:  boost-complete
-BuildRequires:  ctest cmake
 BuildRequires:  catch2-devel
+BuildRequires:  ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  gcc-c++
 BuildRequires:  python3-devel
@@ -35,6 +37,7 @@ rich feature set with a simple and intuitive interface.
 %package devel
 Group: Development/C++
 Summary:        Command line parser for C++11
+BuildArch:      noarch
 Provides:       %{name}-static = %{version}-%{release}
 
 %description devel
@@ -51,7 +54,7 @@ Group: Development/C++
 # MIT: dynsections.js, jquery.js, menu.js, menudata.js, search/search.js
 License:        BSD-3-Clause AND GPL-1.0-or-later AND MIT
 Summary:        Documentation for CLI11
-BuildArch: noarch
+BuildArch:      noarch
 
 %description    docs
 Documentation for CLI11.
@@ -94,6 +97,9 @@ CXXFLAGS='%{build_cxxflags} -DCLI11_OPTIONAL -DCLI11_STD_OPTIONAL=1'
 %doc docs/CLI11.svg docs/CLI11_100.png
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt1_3
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt1_2
 - update to new release by fcimport
 
