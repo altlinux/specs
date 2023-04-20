@@ -6,10 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           ularn
 Version:        1.5p4
-Release:        alt2_41
+Release:        alt2_43
 Summary:        Simple roguelike game
 
-License:        GPL+
+License:        GPL-1.0-or-later
 URL:            http://www.ularn.org
 Source0:        http://downloads.sourceforge.net/ularn/Ularn-1.5ishPL4.tar.gz
 Source1:        config.sh.in
@@ -79,6 +79,9 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/app
 %doc --no-dereference GPL
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.5p4-alt2_43
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.5p4-alt2_41
 - update to new release by fcimport
 
