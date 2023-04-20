@@ -7,10 +7,10 @@ BuildRequires: unzip
 Name: hyphen-gl
 Summary: Galician hyphenation rules
 Version: 0.99
-Release: alt1_25
+Release: alt1_27
 Source: https://forxa.mancomun.org/frs/download.php/534/hyph_gl.oxt
 URL: https://forxa.mancomun.org/projects/hyphenation-gl
-License: GPLv3
+License: GPL-3.0-only
 BuildArch: noarch
 Requires: libhyphen
 Source44: import.info
@@ -35,6 +35,9 @@ cp -p hyph_gl_ANY.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_gl_ES.dic
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.99-alt1_27
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.99-alt1_25
 - update to new release by fcimport
 
