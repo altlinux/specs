@@ -2,18 +2,24 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} > 35
+%global dict_dirname hunspell 
+%else
+%global dict_dirname myspell
+%endif
 Name: hunspell-quh
 Summary: Quechua, South Bolivia hunspell dictionaries
 %global upstreamid 20110816
 Version: 0.%{upstreamid}
-Release: alt1_13
+Release: alt1_25
 # Following links are dead now
 # don't report any bugs
 Source: http://www.runasimipi.org/quh_BO-pack.zip
 URL: http://www.runasimipi.org/blanco-en.php?file=desarrollar-orto
-License: GPLv2+
+License: GPL-2.0-or-later
 BuildArch: noarch
 
 Requires: hunspell
@@ -30,16 +36,19 @@ unzip -qq quh_BO.zip
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p quh_BO/quh_BO.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p quh_BO/quh_BO.* $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 
 
 %files
 %doc quh_BO/Copyright quh_BO/README_quh_BO.txt
 %doc --no-dereference quh_BO/COPYING
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20110816-alt1_25
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20110816-alt1_13
 - update to new release by fcimport
 
