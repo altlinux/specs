@@ -1,15 +1,18 @@
 Group: Editors
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Digest/SHA1.pm) perl(Encode.pm) unzip
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 BuildRequires: /usr/bin/git
 Name:           dc3dd
-Version:        7.2.646
-Release:        alt1_14
+Version:        7.3.0
+Release:        alt1_1
 Summary:        Patched version of GNU dd for use in computer forensics
 
 License:        GPLv3+
 URL:            http://sourceforge.net/projects/dc3dd/
-Source0:        http://downloads.sourceforge.net/dc3dd/%{name}-%{version}.tar
+Source0:        http://downloads.sourceforge.net/dc3dd/%{name}-%{version}.zip
 
 #Fixing build error: automatic de-ANSI-fication support has been removed
 #Removing the check for AM_C_PROTOTYPES
@@ -17,12 +20,13 @@ Patch1:         dc3dd-01_automake.patch
 
 # Original Archlinux patch to fix build with recent libtools version
 # Author: mschlenker
-Patch2:         dc3dd-02_fix-FTBFS-with-glibc-2.28.patch
+# included upstream in version 7.3.0
+# Patch2:         dc3dd-02_fix-FTBFS-with-glibc-2.28.patch
 
 
 BuildRequires:  gcc
 BuildRequires:  git
-BuildRequires:  gettext gettext-tools
+BuildRequires:  gettext-tools
 BuildRequires:  gettext-tools libasprintf-devel
 BuildRequires:  gnulib
 BuildRequires:  perl(Locale/gettext.pm)
@@ -61,8 +65,6 @@ git add --force .
 git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
 cat %_sourcedir/dc3dd-01_automake.patch | git apply --index --reject  -
 git commit -q -m dc3dd-01_automake.patch --author "rpmbuild <rpmbuild>"
-cat %_sourcedir/dc3dd-02_fix-FTBFS-with-glibc-2.28.patch | git apply --index --reject  -
-git commit -q -m dc3dd-02_fix-FTBFS-with-glibc-2.28.patch --author "rpmbuild <rpmbuild>"
 
 
 #Missing x flag in version 7.2.646 makes the build fail
@@ -91,6 +93,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_mandir}/man1/%{name}.*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 7.3.0-alt1_1
+- update to new release by fcimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 7.2.646-alt1_14
 - update to new release by fcimport
 
