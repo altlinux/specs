@@ -6,9 +6,9 @@ BuildRequires: /usr/bin/desktop-file-install imake libX11-devel libXext-devel pe
 %define _localstatedir %{_var}
 Name:           xgalaxy
 Version:        2.0.34
-Release:        alt2_40
+Release:        alt2_41
 Summary:        Arcade game: shoot down the space ships attacking the planet
-License:        GPL+
+License:        GPL-1.0-or-later
 URL:            http://sourceforge.net/projects/xgalaga/
 Source0:        http://downloads.sourceforge.net/xgalaga/xgalaga_%{version}.orig.tar.gz
 Source1:        %{name}.desktop
@@ -105,6 +105,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 2.0.34-alt2_41
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.0.34-alt2_40
 - update to new release by fcimport
 
