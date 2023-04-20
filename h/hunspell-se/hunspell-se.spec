@@ -1,13 +1,19 @@
 Group: Text tools
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} > 35
+%global dict_dirname hunspell 
+%else
+%global dict_dirname myspell
+%endif
 Name: hunspell-se
 Summary: Northern Saami hunspell dictionaries
 Version: 1.0
-Release: alt2_0.13.beta7
+Release: alt2_0.26.beta7
 Source: http://divvun.no/static_files/hunspell-se.tar.gz
 URL: http://www.divvun.no/index.html
-License: GPLv3
+License: GPL-3.0-only
 BuildArch: noarch
 
 Requires: hunspell
@@ -22,11 +28,11 @@ Northern Saami hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p se.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/se_NO.aff
-cp -p se.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/se_NO.dic
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p se.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/se_NO.aff
+cp -p se.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/se_NO.dic
 
-pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
+pushd $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 se_NO_aliases="se_SE se_FI"
 for lang in $se_NO_aliases; do
         ln -s se_NO.aff $lang.aff
@@ -36,9 +42,12 @@ done
 
 %files
 %doc Copyright README GPL-3
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_0.26.beta7
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.13.beta7
 - update to new release by fcimport
 
