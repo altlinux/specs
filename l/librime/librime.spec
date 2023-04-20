@@ -6,8 +6,8 @@ Group: Development/C
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           librime
-Version:        1.8.4
-Release:        alt1_2
+Version:        1.8.5
+Release:        alt1_1
 Summary:        Rime Input Method Engine Library
 
 License:        GPLv3
@@ -107,6 +107,9 @@ The %{name}-tools package contains tools for %{name}.
 
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.8.5-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.8.4-alt1_2
 - update to new release by fcimport
 
