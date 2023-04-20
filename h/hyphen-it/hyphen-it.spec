@@ -8,10 +8,10 @@ Name: hyphen-it
 Summary: Italian hyphenation rules
 %global upstreamid 20071127
 Version: 0.%{upstreamid}
-Release: alt1_18
+Release: alt1_29
 Source: http://download.services.openoffice.org/contrib/dictionaries/hyph_it_IT.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 BuildArch: noarch
 Requires: libhyphen
 Provides: hyphen-la = 0.%{upstreamid}-3%{?dist}
@@ -44,6 +44,9 @@ done
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20071127-alt1_29
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20071127-alt1_18
 - update to new release by fcimport
 
