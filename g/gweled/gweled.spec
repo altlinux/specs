@@ -6,11 +6,11 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize pkgconfig(
 %define _localstatedir %{_var}
 Name:           gweled
 Version:        0.9.1
-Release:        alt2_19.20130730git819bed
+Release:        alt2_30.20130730git819bed
 
 Summary:        Swapping gem game
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            http://launchpad.net/gweled
 #Source0:        http://launchpad.net/gweled/trunk/0.9/+download/gweled-%%{version}.tar.gz
 #Fork using sdl_mixer rather than libcanberra or mikmod
@@ -20,7 +20,6 @@ Patch0:		gweled-fix-librsvg-segfault-v2.patch
 
 BuildRequires:  libgnomeui-devel >= 2.0.0
 BuildRequires:  librsvg-devel librsvg-gir-devel
-BuildRequires:  libcroco-devel >= 0.3.0
 BuildRequires:  desktop-file-utils
 BuildRequires:	intltool libtool
 BuildRequires:	libSDL_mixer-devel
@@ -109,6 +108,9 @@ EOF
 %{_datadir}/sounds/%{name}/
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt2_30.20130730git819bed
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_19.20130730git819bed
 - update to new release by fcimport
 
