@@ -1,13 +1,19 @@
 Group: Text tools
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} > 35
+%global dict_dirname hunspell 
+%else
+%global dict_dirname myspell
+%endif 
 Name: hunspell-nl
 Summary: Dutch hunspell dictionaries
 Version: 2.20.19
-Release: alt1_2
+Release: alt1_9
 Source: https://github.com/OpenTaal/opentaal-hunspell/archive/2.20.19.tar.gz
 URL: https://opentaal.org/
-License: BSD or CC-BY
+License: BSD-3-Clause OR CC-BY-3.0
 BuildArch: noarch
 
 Requires: hunspell
@@ -22,11 +28,11 @@ Dutch hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p nl.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/nl_NL.dic
-cp -p nl.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/nl_NL.aff
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p nl.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/nl_NL.dic
+cp -p nl.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/nl_NL.aff
 
-pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
+pushd $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 nl_NL_aliases="nl_AW nl_BE"
 for lang in $nl_NL_aliases; do
         ln -s nl_NL.aff $lang.aff
@@ -36,9 +42,12 @@ done
 
 %files
 %doc LICENSE.txt README.md
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 2.20.19-alt1_9
+- update to new release by fcimport
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 2.20.19-alt1_2
 - update to new release by fcimport
 
