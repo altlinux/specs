@@ -8,10 +8,10 @@ Group: Development/Other
 %define _localstatedir %{_var}
 Name:           libguichan05
 Version:        0.5.0
-Release:        alt1_36
+Release:        alt1_37
 Summary:        Compatibility libraries for older guichan versions
 
-License:        BSD
+License:        BSD-3-Clause
 URL:            http://guichan.sourceforge.net
 Source0:        http://downloads.sourceforge.net/guichan/guichan-%{version}-src.tar.gz
 Patch0:         compat-guichan05-configure-c99.patch
@@ -96,6 +96,9 @@ done
 
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.5.0-alt1_37
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.5.0-alt1_36
 - update to new release by fcimport
 
