@@ -3,10 +3,10 @@ Group: Games/Other
 %define _localstatedir %{_var}
 Name:           pmars
 Version:        0.9.2
-Release:        alt2_27
+Release:        alt2_29
 Summary:        Portable corewar system with ICWS'94 extensions
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            http://www.koth.org/pmars/
 Source0:        http://downloads.sourceforge.net/corewar/%{name}-%{version}.tar.gz
 # Patch to disable stripping of binary in spec file
@@ -61,6 +61,9 @@ install -D -p -m 644 doc/pmars.6 %{buildroot}%{_mandir}/man6/pmars.6
 %{_mandir}/man6/pmars.6*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.9.2-alt2_29
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.9.2-alt2_27
 - update to new release by fcimport
 
