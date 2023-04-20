@@ -8,7 +8,7 @@ Group: Development/C
 %define autorelease 1
 
 Name:       xcb-imdkit
-Version:    1.0.4
+Version:    1.0.5
 Release:    alt1_1
 Summary:    Input method development support for xcb
 # source files in src/xlibi18n use the "old style" MIT license known as NTP.
@@ -83,6 +83,9 @@ Devel files for xcb-imdkit
 %{_libdir}/pkgconfig/xcb-imdkit.pc
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.0.5-alt1_1
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt1_1
 - update to new release by fcimport
 
