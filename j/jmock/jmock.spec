@@ -6,23 +6,23 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jmock
 Version:        2.12.0
-Release:        alt1_7jpp11
+Release:        alt1_10jpp11
 Summary:        Java library for testing code with mock objects
 License:        BSD
 URL:            http://www.jmock.org/
 BuildArch:      noarch
 
 Source0:        https://github.com/jmock-developers/jmock-library/archive/%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
 BuildRequires:  mvn(com.google.auto.service:auto-service)
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(javax.xml.ws:jaxws-api)
+BuildRequires:  mvn(jakarta.xml.ws:jakarta.xml.ws-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.bytebuddy:byte-buddy)
 BuildRequires:  mvn(org.apache-extras.beanshell:bsh)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  mvn(org.hamcrest:hamcrest)
 BuildRequires:  mvn(org.hamcrest:hamcrest-library)
@@ -49,113 +49,93 @@ The jMock library:
   * plugs into your favorite test framework
   * is easy to extend.
 
-
 %package example
 Group: Development/Java
 Summary:        jMock Examples
-
 %description example
 jMock Examples.
-
 
 %package imposters
 Group: Development/Java
 Summary:        jMock imposters
-
 %description imposters
 jMock imposters.
-
 
 %package junit3
 Group: Development/Java
 Summary:        jMock JUnit 3 Integration
-
 %description junit3
 jMock JUnit 3 Integration.
-
 
 %package junit4
 Group: Development/Java
 Summary:        jMock JUnit 4 Integration
-
 %description junit4
 jMock JUnit 4 Integration.
-
 
 %package junit5
 Group: Development/Java
 Summary:        jMock JUnit 5 Integration
-
 %description junit5
 jMock JUnit 5 Integration.
-
 
 %package legacy
 Group: Development/Java
 Summary:        jMock Legacy Plugins
-
 %description legacy
 Plugins that make it easier to use jMock with legacy code.
-
 
 %package testjar
 Group: Development/Java
 Summary:        jMock Test Jar
-
 %description testjar
 Source for JAR files used in jMock Core tests.
 
-
 %{?javadoc_package}
 
-
 %prep
+# -p1: strip one level directory in patch
+# -n: base directory name
 %setup -q -n %{name}-library-%{version}
-
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
-
 # remove maven plugins that are not required for RPM builds
-%pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :nexus-staging-maven-plugin
 %pom_remove_plugin -r :versions-maven-plugin
 %pom_remove_plugin :maven-gpg-plugin testjar
-
+# change dep artifact
+%pom_change_dep :jaxws-api jakarta.xml.ws:jakarta.xml.ws-api jmock
 # use correct maven artifact for @javax.annotations.Nullable
 %pom_change_dep com.google.code.findbugs:annotations com.google.code.findbugs:jsr305 testjar
-
 # don't install imposters-tests and parent package
 %mvn_package :jmock-imposters-tests __noinstall
 %mvn_package :jmock-parent __noinstall
 
-
 %build
 %mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
-
 
 %install
 %mvn_install
 
-
 %files           -f .mfiles-%{name}
 %doc README*
 %doc --no-dereference LICENSE.txt
-
 %files example   -f .mfiles-%{name}-example
 %files imposters -f .mfiles-%{name}-imposters
 %files junit3    -f .mfiles-%{name}-junit3
 %files junit4    -f .mfiles-%{name}-junit4
 %files junit5    -f .mfiles-%{name}-junit5
 %files legacy    -f .mfiles-%{name}-legacy
-
 %files testjar   -f .mfiles-%{name}-testjar
 %doc --no-dereference LICENSE.txt
 
-
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.12.0-alt1_10jpp11
+- update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.12.0-alt1_7jpp11
 - update
 
