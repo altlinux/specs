@@ -7,10 +7,10 @@ BuildRequires: unzip
 Name: mythes-ro
 Summary: Romanian thesaurus
 Version: 3.3
-Release: alt1_13
+Release: alt1_25
 Source: http://downloads.sourceforge.net/rospell/th_ro_RO.%{version}.zip
 URL: http://rospell.sourceforge.net/
-License: GPLv2+
+License: GPL-2.0-or-later
 BuildArch: noarch
 Requires: libmythes
 Source44: import.info
@@ -34,6 +34,9 @@ cp -p th_ro_RO.idx $RPM_BUILD_ROOT/%{_datadir}/mythes/th_ro_RO_v2.idx
 %{_datadir}/mythes/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 3.3-alt1_25
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1_13
 - update to new release by fcimport
 
