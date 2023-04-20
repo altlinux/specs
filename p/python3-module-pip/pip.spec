@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 23.0.1
+Version: 23.1
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -15,31 +15,23 @@ Url: https://pip.pypa.io
 VCS: https://github.com/pypa/pip.git
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 # namespace package for system seed wheels which will be used within venv
 # created by virtualenv
 BuildRequires: python3(system_seed_wheels)
 
 %if_with check
-BuildRequires: git-core
-# synced to tests/requirements.txt
-BuildRequires: python3(cryptography)
-BuildRequires: python3(freezegun)
-BuildRequires: python3(installer)
-BuildRequires: python3(pytest)
-BuildRequires: python3(scripttest)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(virtualenv)
-BuildRequires: python3(werkzeug)
-BuildRequires: python3(tomli_w)
-BuildRequires: python3(wheel)
+# used in tests/functional/test_vcs_git.py
+BuildRequires: /usr/bin/git
+
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 Obsoletes: python3-module-pip-pickles
@@ -84,6 +76,12 @@ rm -f ./src/pip/_vendor/distlib/*.exe
 # never unbundle vendored packages
 # built wheel being installed into virtualenv will lack of unbundled packages
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+%endif
+
 %build
 %pyproject_build
 
@@ -123,6 +121,9 @@ export NO_LATEST_WHEELS=YES
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 23.1-alt1
+- 23.0.1 -> 23.1.
+
 * Mon Feb 20 2023 Stanislav Levin <slev@altlinux.org> 23.0.1-alt1
 - 23.0 -> 23.0.1.
 
