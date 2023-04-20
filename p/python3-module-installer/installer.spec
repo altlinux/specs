@@ -4,28 +4,27 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
-
 Summary: A library for installing Python wheels
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/installer
 VCS: https://github.com/pypa/installer.git
-
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend
-BuildRequires: python3(flit_core)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
+%add_pyproject_deps_check_filter pytest-xdist
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-BuildArch: noarch
 
 %description
 %pypi_name is a low-level library for installing a Python package from a
@@ -44,6 +43,12 @@ handling wheels and installing packages from wheels.
 # don't ship `exe`s
 find -type f -name '*.exe' -delete
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+%endif
+
 %build
 %pyproject_build
 
@@ -51,8 +56,7 @@ find -type f -name '*.exe' -delete
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %doc README.md
@@ -60,6 +64,9 @@ find -type f -name '*.exe' -delete
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1
+- 0.6.0 -> 0.7.0.
+
 * Wed Dec 07 2022 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
 - 0.5.1 -> 0.6.0.
 
