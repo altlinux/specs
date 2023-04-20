@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname requirements-detector
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Summary: Python tool to find and list requirements of a Python project
 License: MIT
@@ -15,8 +17,10 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-astroid python3-module-nose
-BuildRequires: python3-module-coverage
+BuildRequires: python3-module-astroid
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides requirements_detector
 %py3_requires astroid
@@ -40,10 +44,8 @@ depends on.
 %python3_install
 
 %check
-python3 setup.py test
-nosetests3 -v -s --with-coverage \
-	--cover-package requirements_detector \
-	--cover-inclusive
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3
 
 %files
 %doc *.md
@@ -52,6 +54,9 @@ nosetests3 -v -s --with-coverage \
 
 
 %changelog
+* Thu Apr 20 2023 Anton Vyatkin <toni@altlinux.org> 0.6-alt3
+- Fix BuildRequires
+
 * Wed Nov 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt2
 - python2 disabled
 
