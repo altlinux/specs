@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 6.2.0
-Release: alt2
+Release: alt3
 Summary: Jupyter Terminal Console
 License: BSD-3-Clause
 Group: Development/Python3
@@ -30,7 +30,7 @@ BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3-module-vine >= 1.3.0
 BuildRequires: python3-module-jupyter_client ipython3
 BuildRequires: python3-module-ipykernel python3-module-mock
-BuildRequires: python3-module-pexpect python3-module-nose
+BuildRequires: python3-module-pexpect
 BuildRequires: python3-module-coverage python3-module-traitlets-tests
 BuildRequires: python3(IPython)
 BuildRequires: python3(IPython.testing.tests)
@@ -39,6 +39,8 @@ BuildRequires: python3(pathlib2) python3(PIL)
 
 %py3_provides %oname
 %py3_requires jupyter_client IPython ipykernel
+
+%add_python3_req_skip nose
 
 %description
 A terminal-based console frontend for Jupter kernels. This code is based
@@ -90,6 +92,9 @@ JUPYTER_CONSOLE_TEST=yes nosetests3 -vv --with-coverage --cover-package=%oname %
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Apr 20 2023 Anton Vyatkin <toni@altlinux.org> 6.2.0-alt3
+- Fix BuildRequires
+
 * Thu Jun 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt2
 - Updated build dependencies.
 - Disabled tests due to broken aarch64 builder.
