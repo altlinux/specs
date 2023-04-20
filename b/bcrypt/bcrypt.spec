@@ -3,10 +3,10 @@ Group: File tools
 %define _localstatedir %{_var}
 Name:           bcrypt
 Version:        1.1
-Release:        alt2_22
+Release:        alt2_32
 Summary:        File encryption utility
 
-License:        BSD
+License:        Zlib
 URL:            http://%{name}.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:         bcrypt-fencepost.patch
@@ -52,6 +52,9 @@ make install PREFIX="%{buildroot}%{_prefix}"
 %{_bindir}/bcrypt
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.1-alt2_32
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_22
 - update to new release by fcimport
 
