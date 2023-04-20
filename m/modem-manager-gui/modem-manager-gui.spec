@@ -3,7 +3,7 @@ Summary:       Graphical interface for ModemManager
 Summary(de):   Grafische Oberfläche für ModemManager
 Summary(ru):   Графический интерфейс для ModemManager
 Version:       0.0.20
-Release:       alt3
+Release:       alt4
 
 Group:	       System/Configuration/Networking	
 License:       GPL-3.0+
@@ -17,6 +17,7 @@ Source1:       %name.watch
 
 # Drop positional arguments to fix build with meson 0.61
 Patch: fix_build_with_meson_0.61.patch
+Patch1: fix-segfault-on-DNS-entries.patch
 
 BuildRequires(pre): meson
 BuildRequires(pre): rpm-build-python3
@@ -24,7 +25,7 @@ BuildRequires: pkgconfig
 BuildRequires: desktop-file-utils
 BuildRequires: gdbm-devel
 BuildRequires: glib2-devel
-BuildRequires: libappindicator-gtk3-devel
+BuildRequires: libayatana-appindicator3-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libgtkspell3-devel
 BuildRequires: libnotify-devel
@@ -108,6 +109,10 @@ mv %buildroot%_datadir/metainfo/%name.appdata.xml %buildroot%_datadir/appdata
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed Apr 19 2023 Anton Midyukov <antohami@altlinux.org> 0.0.20-alt4
+- fix segfault on DNS entries
+- rebuild with libayatana-appindicator3
+
 * Mon Jul 11 2022 Anton Midyukov <antohami@altlinux.org> 0.0.20-alt3
 - FTBFS: Drop positional arguments to fix build with meson 0.61
 
