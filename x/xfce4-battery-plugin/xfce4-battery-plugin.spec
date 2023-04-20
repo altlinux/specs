@@ -1,5 +1,5 @@
 Name: xfce4-battery-plugin
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 
 Summary: Battery monitor plugin for the Xfce panel
@@ -11,10 +11,10 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-battery-plugin.git
 Source: %name-%version.tar
 
-Requires: xfce4-panel >= 4.12
+Requires: xfce4-panel
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel >= 4.14
 
 %define _unpackaged_files_terminate_build 1
 
@@ -46,6 +46,9 @@ BuildPreReq: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/xfce4-battery-plugin.mo
 
 %changelog
+* Thu Apr 20 2023 Mikhail Efremov <sem@altlinux.org> 1.1.5-alt1
+- Updated to 1.1.5.
+
 * Tue Mar 23 2021 Mikhail Efremov <sem@altlinux.org> 1.1.4-alt1
 - Cleanup BR.
 - Added Vcs tag.
