@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-build-pyproject
-Version: 0.0.2
+Version: 0.0.3
 Release: alt1
 Summary: Extra RPM macros for packaging Python projects
 License: GPLv2+
@@ -39,6 +39,9 @@ install -pD -m0644 macros/pyproject -t %buildroot%_rpmmacrosdir/
 %doc docs/*
 
 %changelog
+* Wed Apr 19 2023 Stanislav Levin <slev@altlinux.org> 0.0.3-alt1
+- Added %%pyproject_scm_init.
+
 * Wed Apr 19 2023 Stanislav Levin <slev@altlinux.org> 0.0.2-alt1
 - Added %%pyproject_deps_config_name.
 - Added more default exclusions of check dependencies.

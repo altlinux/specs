@@ -1,16 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name black
 
-%define typing_extensions %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 10)))')
-
-# tomli is tomllib(stdlib) on Python 3.11
-%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
-
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 23.1.0
-Release: alt2
+Version: 23.3.0
+Release: alt1
 Summary: The Uncompromising Code Formatter
 License: MIT
 Group: Development/Python3
@@ -18,44 +13,23 @@ Url: https://pypi.org/project/black/
 VCS: https://github.com/psf/black
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-%if %typing_extensions
-%py3_requires typing_extensions
-%endif
-%if %tomli
-%py3_requires tomli
-%endif
+%pyproject_runtimedeps_metadata
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/blib2to3/pgen2
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(hatchling)
-BuildRequires: python3(hatch-vcs)
-BuildRequires: python3(hatch-fancy-pypi-readme)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-# install_requires=
-BuildRequires: python3(click)
-BuildRequires: python3(platformdirs)
-BuildRequires: python3(pathspec)
-BuildRequires: python3(mypy_extensions)
-BuildRequires: python3(packaging)
-%if %tomli
-BuildRequires: python3(tomli)
-%endif
-%if %typing_extensions
-BuildRequires: python3(typing_extensions)
-%endif
+%set_pyproject_deps_check_filter tox pytest-cov pre-commit coverage
+%pyproject_builddeps_metadata_extra d
+%pyproject_builddeps_check
 
-# tests
-BuildRequires: python3(aiohttp)
-BuildRequires: python3(aiohttp.test_utils)
-BuildRequires: python3(click.testing)
-BuildRequires: python3(parameterized)
-BuildRequires: python3(pytest)
+# aiohttp.test_utils is shipped by tests subpackage
+BuildRequires: python3-module-aiohttp-tests
 %endif
 
 %description
@@ -74,16 +48,12 @@ Black makes code review faster by producing the smallest diffs possible.
 %setup
 %autopatch -p1
 
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile test_requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -106,6 +76,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 19 2023 Stanislav Levin <slev@altlinux.org> 23.3.0-alt1
+- 23.1.0 -> 23.3.0.
+
 * Mon Feb 27 2023 Stanislav Levin <slev@altlinux.org> 23.1.0-alt2
 - Fixed FTBFS (setuptools 67.3.0).
 
