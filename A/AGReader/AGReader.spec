@@ -3,9 +3,9 @@ Group: Text tools
 %define _localstatedir %{_var}
 Name:           AGReader
 Version:        1.2
-Release:        alt2_26
+Release:        alt2_32
 Summary:        Console reader for viewing AmigaGuide files
-License:        GPL+
+License:        GPL-1.0-or-later
 URL:            http://main.aminet.net/misc/unix/
 Source0:        http://main.aminet.net/misc/unix/%{name}.tar.bz2
 Source1:        agr.1
@@ -41,6 +41,9 @@ install -m0755 Sources/agr %{buildroot}%{_bindir}
 
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.2-alt2_32
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_26
 - update to new release by fcimport
 
