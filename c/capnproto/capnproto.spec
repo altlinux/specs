@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: capnproto
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 Summary: A data interchange format and capability-based RPC system
 Group: Development/C
@@ -64,6 +64,7 @@ developing applications that use %name.
 %endif
 
 %build
+%define optflags_lto %nil
 %ifarch %e2k
 # too many warnings of this type on tests
 %add_optflags -Wno-unused-variable
@@ -103,6 +104,10 @@ subst '/TEST(AsyncIo, AncillaryMessageHandler)/,/^}/s/^/\/\//' src/kj/async-io-t
 %_libdir/lib*.so
 
 %changelog
+* Tue Apr 18 2023 Vitaly Chikunov <vt@altlinux.org> 0.10.4-alt1
+- Update to v0.10.4 (2023-04-13).
+- spec: Disable LTO build (issues/1660).
+
 * Thu Dec 01 2022 Vitaly Chikunov <vt@altlinux.org> 0.10.3-alt1
 - Update to v0.10.3 (2022-11-29).
 
