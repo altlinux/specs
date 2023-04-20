@@ -37,7 +37,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.69
+Version: %ver_major.70
 Release: alt1
 
 Summary: Media Sharing Server
@@ -289,6 +289,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %files utils
 %_bindir/pw-cat
 %_bindir/pw-cli
+%_bindir/pw-config
 %_bindir/pw-dot
 %_bindir/pw-dsdplay
 %_bindir/pw-dump
@@ -314,6 +315,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %if_enabled man
 %_man1dir/pw-cat.1.*
 %_man1dir/pw-cli.1*
+%_man1dir/pw-config.1*
 %_man1dir/pw-dot.1.*
 %_man1dir/pw-link.1.*
 %_man1dir/pw-metadata.1.*
@@ -325,6 +327,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Apr 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.70-alt1
+- 0.3.70
+
 * Thu Apr 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.69-alt1
 - 0.3.69
 
