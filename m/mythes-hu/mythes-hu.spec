@@ -8,13 +8,13 @@ Name: mythes-hu
 Summary: Hungarian thesaurus
 %global upstreamid 20101019
 Version: 0.%{upstreamid}
-Release: alt1_15
+Release: alt1_26
 Source: https://downloads.sourceforge.net/project/aoo-extensions/1283/9/dict-hu.oxt
 URL: http://extensions.services.openoffice.org/project/hu_dicts
 #bundled but unused spell-checking stuff is under GPLv2+ or LGPLv2+ or MPLv1.1
 #base for bundled but unused hyphenation stuff is under GPLv2
 #additional patch to unused hyphenation stuff is MPL/GPL/LGPL
-License: GPLv2+ and (GPLv2+ or LGPLv2+ or MPLv1.1) and GPLv2 and (GPL+ or LGPLv2+ or MPLv1.1)
+License: GPL-2.0-or-later AND ( GPL-2.0-or-later OR LGPL-2.1-or-later OR MPL-1.1 ) AND GPL-2.0-only AND ( GPL-1.0-or-later OR LGPL-2.1-or-later OR MPL-1.1 )
 BuildArch: noarch
 Requires: libmythes
 Source44: import.info
@@ -37,6 +37,9 @@ cp -p th_hu_HU_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20101019-alt1_26
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20101019-alt1_15
 - update to new release by fcimport
 
