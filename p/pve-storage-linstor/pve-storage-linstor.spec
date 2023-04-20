@@ -1,7 +1,7 @@
 
 Name: pve-storage-linstor
-Version: 6.1.0
-Release: alt2
+Version: 7.0.0
+Release: alt1
 
 Summary: LINSTOR Proxmox Plugin
 Group: System/Servers
@@ -21,6 +21,7 @@ BuildRequires: pve-storage
 BuildRequires: perl-JSON-XS
 BuildRequires: perl(REST/Client.pm)
 Requires: linstor-controller pve-manager
+# Requires: linstor-satellite >= 1.21.1
 
 %add_perl_lib_path %buildroot%perl_vendor_privlib
 
@@ -57,6 +58,9 @@ fi
 %_cachedir/linstor-proxmox/
 
 %changelog
+* Wed Apr 19 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.0.0-alt1
+- 7.0.0
+
 * Tue Nov 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 6.1.0-alt2
 - pack /var/cache/linstor-proxmox directory
 
