@@ -2,7 +2,7 @@
 
 Name: menu
 Version: 2.1.41
-Release: alt22.qa1
+Release: alt23
 
 Group: System/Base
 Summary: Menu system
@@ -191,6 +191,9 @@ sh -n %buildroot%_sysconfdir/firsttime.d/menu
 %doc doc/{*html,README*,BUGS,menu.txt*} AUTHORS debian/changelog debian/copyright examples
 
 %changelog
+* Fri Apr 21 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.41-alt23
+- don't use egrep
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.1.41-alt22.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
