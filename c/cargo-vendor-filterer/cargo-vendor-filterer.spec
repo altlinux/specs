@@ -1,6 +1,6 @@
 Name:    cargo-vendor-filterer
 Version: 0.5.9
-Release: alt1
+Release: alt2
 
 Summary: Tool to `cargo vendor` with filtering
 License: Apache-2.0
@@ -46,5 +46,8 @@ install -pDm 0755 cargo-vendor-alt %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Fri Apr 21 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.9-alt2
+- Vendor all features in cargo-vendor-alt
+
 * Wed Apr 19 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.9-alt1
 - Initial build for Sisyphus
