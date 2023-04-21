@@ -1,5 +1,5 @@
 Name: xfce4-mailwatch-plugin
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: The Xfce4 Mailwatch Plugin is a multi-protocol, multi-mailbox mail watcher
@@ -55,6 +55,9 @@ Currently, the protocols supported are:
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Apr 21 2023 Mikhail Efremov <sem@altlinux.org> 1.3.1-alt1
+- Updated to 1.3.1.
+
 * Mon Nov 09 2020 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
 - Use _unpackaged_files_terminate_build.
 - Enabled debug (minimum level).
