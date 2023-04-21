@@ -9,8 +9,8 @@
 %define ver_major 3.1
 %define xdg_name org.openshot.OpenShot
 Name: openshot
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: Non Linear Video Editor using Python and MLT
 Group: Video
@@ -30,7 +30,7 @@ Source: %_name-%version.tar
 # blender > 2.80 doesn't support 32-bit
 ExcludeArch: i586 armh
 
-Requires: python3-module-%name >= 0.3.1
+Requires: python3-module-%name >= 0.3.2
 Requires: blender inkscape xdg-utils
 # https://bugzilla.altlinux.org/45836
 Requires: python3-module-PyQt5 python3-module-zmq
@@ -78,6 +78,9 @@ Xbox, and many more common formats.
 
 
 %changelog
+* Fri Apr 21 2023 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
+- 3.1.1
+
 * Wed Apr 12 2023 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1.1
 - explicitly required python3-module-PyQt5, python3-module-zmq (ALT #45836)
 

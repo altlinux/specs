@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: OpenShot Video Library
@@ -31,13 +31,16 @@ Source: %name-%version.tar
 Patch2000: libopenshot-0.3.0-entityfx-e2k.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
-BuildRequires: %name-audio-devel >= 0.3.1
+BuildRequires: %name-audio-devel >= 0.3.2
 BuildRequires: /proc cmake gcc-c++ libgomp-devel libunittest-cpp-devel jsoncpp-devel
 BuildRequires: libalsa-devel qt5-multimedia-devel qt5-svg-devel libzeromq-cpp-devel
 BuildRequires: libImageMagick-devel zlib-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
 BuildRequires: libavresample-devel libswresample-devel libswscale-devel
 BuildRequires: libavdevice-devel libpostproc-devel
+BuildRequires: libbabl-devel
+# https://github.com/RazrFalcon/resvg
+# BuildRequires: libresvg-devel
 %{?_enable_opencv:BuildRequires: boost-devel libopencv-devel libprotobuf-devel %_bindir/protoc}
 %{?_enable_python:BuildRequires: python3-devel python3-module-zmq swig}
 %{?_enable_check:BuildRequires: ctest ImageMagick-tools
@@ -106,6 +109,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Apr 21 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Fri Apr 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
