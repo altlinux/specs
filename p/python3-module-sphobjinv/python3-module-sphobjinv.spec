@@ -1,9 +1,9 @@
 %define modname sphobjinv
-# no tests defined
+# network required
 %def_disable check
 
 Name: python3-module-%modname
-Version: 2.2.2
+Version: 2.3.1
 Release: alt1
 
 Summary: Sphinx objects.inv Inspection/Manipulation Tool
@@ -18,8 +18,9 @@ Source: https://github.com/bskinn/%modname/archive/v%version/%modname-%version.t
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-%{?_enable_check:BuildRequires: python3-module-pytest}
+BuildRequires: python3-module-wheel python3-module-setuptools
+%{?_enable_check:BuildRequires: python3-module-tox python3(sphinx) python3(stdio_mgr)
+BuildRequires: python3(dictdiffer) python3(jsonschema)}
 
 %description
 %summary
@@ -28,14 +29,13 @@ BuildRequires: python3-devel
 %setup -n %modname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-py.test3
+%tox_check
 
 %files
 %_bindir/*
@@ -44,6 +44,14 @@ py.test3
 
 
 %changelog
+* Thu Apr 20 2023 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
+- 2.3.1
+
+* Tue Nov 15 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3-alt1
+- 2.3
+- ported to %%pyproject macros
+- prepared %%check
+
 * Fri Mar 25 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
 - 2.2.2
 
