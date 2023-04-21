@@ -1,6 +1,6 @@
 Name: linux-gpib
-Version: 4.3.4
-Release: alt2
+Version: 4.3.5
+Release: alt1
 
 Summary: Support package for GPIB (IEEE 488) hardware
 Group: System/Kernel and hardware
@@ -9,7 +9,7 @@ License: GPLv2
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: rpm-build-kernel docbook-utils
-BuildRequires: python3-devel tcl-devel perl-devel
+BuildRequires: python3-devel python3-module-setuptools tcl-devel perl-devel
 Requires: fxload firmware-gpib
 
 Source0: %name-%version.tar
@@ -109,6 +109,9 @@ install -pDm0644 %SOURCE1 %kernel_srcdir/%name-%version.tar.bz2
 %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri Apr 21 2023 Vladislav Zavjalov <slazav@altlinux.org> 4.3.5-alt1
+- v4.3.5
+
 * Wed Mar 22 2023 Vladislav Zavjalov <slazav@altlinux.org> 4.3.4-alt2
 - install udev rules to /lib/udev/rules.d (new sisyphus_check requirement)
 
