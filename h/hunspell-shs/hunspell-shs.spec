@@ -1,16 +1,22 @@
 Group: Text tools
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} > 35
+%global dict_dirname hunspell 
+%else
+%global dict_dirname myspell
+%endif
 Name: hunspell-shs
 Summary: Shuswap hunspell dictionaries
 %global upstreamid 20090828
 Version: 0.%{upstreamid}
-Release: alt2_12
+Release: alt2_25
 Source: http://secpewt.sd73.bc.ca/hunspell/hunspell-shs-ca.tar.gz
 URL: http://secpewt.sd73.bc.ca/wordlist
-License: GPLv2+
+License: GPL-2.0-or-later
 BuildArch: noarch
-BuildRequires: libhunspell-devel hunspell-utils
+BuildRequires: hunspell-utils libhunspell-devel
 
 Requires: hunspell
 Source44: import.info
@@ -24,15 +30,18 @@ Shuswap hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p hunspell/shs_CA.* $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p hunspell/shs_CA.* $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 
 %files
 %doc hunspell/COPYING hunspell/Copyright hunspell/README
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20090828-alt2_25
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20090828-alt2_12
 - update to new release by fcimport
 
