@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.38.4
+Version: 0.40.0
 Release: alt1
 Summary: A built-package format for Python3
 License: MIT
@@ -14,21 +14,22 @@ Url: https://pypi.org/project/wheel/
 VCS: https://github.com/pypa/wheel.git
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-# wheel is build dependency of setuptools backend, but we skip it for bootstrap
-# see https://github.com/pypa/wheel/issues/429
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 # namespace package for system seed wheels which will be used within venv
 # created by virtualenv
 BuildRequires: python3(system_seed_wheels)
 
 %if_with check
-BuildRequires: python3(pytest)
+# missing tests requirement
+BuildRequires: python3-module-setuptools
+
+%pyproject_builddeps_metadata_extra test
 %endif
 
 # hide provides of bundled packages
@@ -58,10 +59,10 @@ Provides the seed package for virtualenv(packaged as wheel).
 # never unbundle vendored packages
 # built wheel being installed into virtualenv will lack of unbundled packages
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
 %build
-# wheel is build dependency of setuptools backend, so build wheel with wheel
-export PYTHONPATH="$(pwd)/src"
-export WHEEL_BOOTSTRAP=1
 %pyproject_build
 
 %install
@@ -77,10 +78,10 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 built_wheel=$(cat ./dist/.wheeltracker) || \
         { echo Make sure you built a pyproject ; exit 1 ; }
 mkdir -p "%buildroot%system_wheels_path"
-cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
+install -m0644 -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %doc *.txt
@@ -92,6 +93,9 @@ cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 0.40.0-alt1
+- 0.38.4 -> 0.40.0.
+
 * Fri Nov 11 2022 Stanislav Levin <slev@altlinux.org> 0.38.4-alt1
 - 0.37.1 -> 0.38.4.
 
