@@ -1,9 +1,9 @@
 Name: xinitrc
 Version: 2.4.47
-Release: alt2
+Release: alt3
 
 Summary: The default startup scripts for the X Window System
-License: GPL
+License: GPLv2
 Group: System/X11
 
 Source: %name-%version.tar
@@ -72,6 +72,10 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Fri Apr 21 2023 Fr. Br. George <george@altlinux.org> 2.4.47-alt3
+- Fix [ef]grep issue
+- Change "GPL" license to GPLv2 ("if no version use any")
+
 * Thu Aug 15 2019 Paul Wolneykien <manowar@altlinux.org> 2.4.47-alt2
 - Allow to run WM by a command name not by an abstract name (closes:
   #36913).
