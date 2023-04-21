@@ -6,10 +6,10 @@ BuildRequires: /usr/bin/desktop-file-validate
 %define _localstatedir %{_var}
 Name:           garden
 Version:        1.0.9
-Release:        alt1_11
+Release:        alt1_18
 Summary:        An innovative old-school 2D vertical shoot-em-up
 
-License:        GPLv3+
+License:        GPL-3.0-or-later
 URL:            http://garden.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 #Patch0:         garden-dso.patch
@@ -102,6 +102,9 @@ desktop-file-validate \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.0.9-alt1_18
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_11
 - update to new release by fcimport
 
