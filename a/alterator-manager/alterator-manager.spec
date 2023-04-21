@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -48,6 +48,10 @@ mkdir -p %buildroot%_datadir/alterator/backends
 %_includedir/alterator
 
 %changelog
+* Fri Apr 21 2023 Ivan Savin <svn17@altlinux.org> 0.1.3-alt1
+- Add thread_limit option to manager section in backend file.
+- Update doc/README-ru.md.
+
 * Tue Apr 11 2023 Ivan Savin <svn17@altlinux.org> 0.1.2-alt1
 - Add the get_signals method to the ru.basealt.alterator.manager interface that
   returns a list of signal names (stdout/stderr). The arguments to this method
