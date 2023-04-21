@@ -2,7 +2,7 @@
 
 Name: ccache
 Version: 4.6
-Release: alt1
+Release: alt2
 
 Summary: Compiler cache
 License: GPLv3+
@@ -60,6 +60,9 @@ EOF
 %prefix/lib/rpm/ccache.filetrigger
 
 %changelog
+* Sat Apr 22 2023 Vitaly Lipatov <lav@altlinux.ru> 4.6-alt2
+- ccache.filetrigger: replace egrep with grep -E
+
 * Wed Mar 23 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.6-alt1
 - new version 4.6
 - in particular solves .incbin false positive
