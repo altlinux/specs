@@ -1,8 +1,10 @@
 %define oname influxdb
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 5.2.2
-Release: alt4
+Version: 5.3.1
+Release: alt1
 
 Summary: Python client for InfluxDB
 
@@ -11,10 +13,19 @@ Group: Development/Python3
 Url: https://github.com/influxdata/influxdb-python
 
 Source: %name-%version.tar
+Patch: remove-nose.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-msgpack
+BuildRequires: python3-module-requests-mock
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-pandas-tests
+%endif
 
 %add_python3_req_skip pandas
 
@@ -31,12 +42,20 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch -p1
+sed -e 's/^import mock/from unittest import mock/' \
+    -e 's/^from mock import/from unittest.mock import/' \
+    -i influxdb/tests/*.py influxdb/tests/*/*.py
 
 %build
 %python3_build
 
 %install
 %python3_install
+
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -k 'not test_write_points_from_dataframe_with_tags_and_nan_json'
 
 %files
 %python3_sitelibdir/*
@@ -47,6 +66,9 @@ This package contains tests for %oname.
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Apr 21 2023 Anton Vyatkin <toni@altlinux.org> 5.3.1-alt1
+- New version 5.3.1.
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 5.2.2-alt4
 - make pandas requirement optional
 
