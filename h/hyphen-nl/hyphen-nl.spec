@@ -8,10 +8,10 @@ Name: hyphen-nl
 Summary: Dutch hyphenation rules
 %global upstreamid 20050617
 Version: 0.%{upstreamid}
-Release: alt1_18
+Release: alt1_29
 Source: http://download.services.openoffice.org/contrib/dictionaries/hyph_nl_NL.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
-License: GPLv2
+License: GPL-2.0-only
 BuildArch: noarch
 Requires: libhyphen
 Source44: import.info
@@ -46,6 +46,9 @@ done
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20050617-alt1_29
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050617-alt1_18
 - update to new release by fcimport
 
