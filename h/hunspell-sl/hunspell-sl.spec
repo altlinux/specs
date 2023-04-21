@@ -2,16 +2,22 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} > 35
+%global dict_dirname hunspell 
+%else
+%global dict_dirname myspell
+%endif
 Name: hunspell-sl
 Summary: Slovenian hunspell dictionaries
 %global upstreamid 20070127
 Version: 0.%{upstreamid}
-Release: alt2_18
+Release: alt2_30
 Source: http://download.services.openoffice.org/contrib/dictionaries/sl_SI.zip
 URL: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/
-License: GPL+ or LGPLv2+
+License: GPL-1.0-or-later OR LGPL-2.1-or-later
 BuildArch: noarch
 
 Requires: hunspell
@@ -28,15 +34,18 @@ Slovenian hunspell dictionaries.
 chmod -x *
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 
 %files
 %doc README_sl_SI.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20070127-alt2_30
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20070127-alt2_18
 - update to new release by fcimport
 
