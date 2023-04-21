@@ -34,7 +34,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        111.0.5563.64
+Version:        112.0.5615.165
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -508,6 +508,30 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Apr 20 2023 Alexey Gladkov <legion@altlinux.ru> 112.0.5615.165-alt1
+- New version (112.0.5615.165).
+- Security fixes:
+  - CVE-2023-1810: Heap buffer overflow in Visuals.
+  - CVE-2023-1811: Use after free in Frames.
+  - CVE-2023-1812: Out of bounds memory access in DOM Bindings.
+  - CVE-2023-1813: Inappropriate implementation in Extensions.
+  - CVE-2023-1814: Insufficient validation of untrusted input in Safe Browsing.
+  - CVE-2023-1815: Use after free in Networking APIs.
+  - CVE-2023-1816: Incorrect security UI in Picture In Picture.
+  - CVE-2023-1817: Insufficient policy enforcement in Intents.
+  - CVE-2023-1818: Use after free in Vulkan.
+  - CVE-2023-1819: Out of bounds read in Accessibility.
+  - CVE-2023-1820: Heap buffer overflow in Browser History.
+  - CVE-2023-1821: Inappropriate implementation in WebShare.
+  - CVE-2023-1822: Incorrect security UI in Navigation.
+  - CVE-2023-1823: Inappropriate implementation in FedCM.
+  - CVE-2023-2033: Type Confusion in V8.
+  - CVE-2023-2133: Out of bounds memory access in Service Worker API.
+  - CVE-2023-2134: Out of bounds memory access in Service Worker API.
+  - CVE-2023-2135: Use after free in DevTools.
+  - CVE-2023-2136: Integer overflow in Skia.
+  - CVE-2023-2137: Heap buffer overflow in sqlite.
+
 * Wed Mar 08 2023 Alexey Gladkov <legion@altlinux.ru> 111.0.5563.64-alt1
 - New version (111.0.5563.64).
 - Security fixes:
