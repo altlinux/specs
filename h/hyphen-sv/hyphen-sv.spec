@@ -7,10 +7,10 @@ BuildRequires: unzip
 Name: hyphen-sv
 Summary: Swedish hyphenation rules
 Version: 1.00.1
-Release: alt1_28
+Release: alt1_30
 Source: https://downloads.sourceforge.net/project/aoo-extensions/1966/4/hyph_sv_se.oxt
 URL: http://extensions.services.openoffice.org/node/1968
-License: LGPLv2+ or GPLv2+
+License: LGPL-2.1-or-later OR GPL-2.0-or-later
 BuildArch: noarch
 Requires: libhyphen
 Source44: import.info
@@ -52,6 +52,9 @@ popd
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.00.1-alt1_30
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.00.1-alt1_28
 - update to new release by fcimport
 
