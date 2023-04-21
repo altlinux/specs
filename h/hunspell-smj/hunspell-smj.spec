@@ -1,13 +1,19 @@
 Group: Text tools
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} > 35
+%global dict_dirname hunspell 
+%else
+%global dict_dirname myspell
+%endif
 Name: hunspell-smj
 Summary: Lule Saami hunspell dictionaries
 Version: 1.0
-Release: alt2_0.13.beta7
+Release: alt2_0.26.beta7
 Source: http://divvun.no/static_files/hunspell-smj.tar.gz
 URL: http://www.divvun.no/index.html
-License: GPLv3
+License: GPL-3.0-only
 BuildArch: noarch
 
 Requires: hunspell
@@ -22,11 +28,11 @@ Lule Saami hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p smj.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/smj_NO.aff
-cp -p smj.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/smj_NO.dic
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p smj.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/smj_NO.aff
+cp -p smj.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/smj_NO.dic
 
-pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
+pushd $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 smj_NO_aliases="smj_SE"
 for lang in $smj_NO_aliases; do
         ln -s smj_NO.aff $lang.aff
@@ -36,9 +42,12 @@ done
 
 %files
 %doc Copyright README GPL-3
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_0.26.beta7
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.13.beta7
 - update to new release by fcimport
 
