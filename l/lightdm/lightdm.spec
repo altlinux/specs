@@ -9,7 +9,7 @@
 
 Name: lightdm
 Version: 1.32.0
-Release: alt1
+Release: alt2
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -285,6 +285,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Fri Apr 21 2023 Paul Wolneykien <manowar@altlinux.org> 1.32.0-alt2
+- Fix: Make the session key not to include any prefix (closes: 45929).
+
 * Thu Apr 20 2023 Paul Wolneykien <manowar@altlinux.org> 1.32.0-alt1
 - Update the version: 1.32.0 (thx Robert Ancell).
 - Make the session key include the directory position (liblightdm-gobject).
