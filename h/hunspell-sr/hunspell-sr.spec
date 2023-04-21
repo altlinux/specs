@@ -2,16 +2,22 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} > 35
+%global dict_dirname hunspell 
+%else
+%global dict_dirname myspell
+%endif
 Name: hunspell-sr
 Summary: Serbian hunspell dictionaries
 %global upstreamid 20130330
 Version: 0.%{upstreamid}
-Release: alt1_10
+Release: alt1_22
 Source: https://downloads.sourceforge.net/project/aoo-extensions/1572/10/dict-sr.oxt
 URL: http://extensions.services.openoffice.org/project/dict-sr
-License: LGPLv3
+License: LGPL-3.0-only
 BuildArch: noarch
 Requires: hunspell
 Provides: hunspell-bs = %{version}-%{release}
@@ -36,11 +42,11 @@ Serbian hyphenation rules.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p sr.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/sr_YU.dic
-cp -p sr.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/sr_YU.aff
-cp -p sr-Latn.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/sh_YU.dic
-cp -p sr-Latn.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/sh_YU.aff
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p sr.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/sr_YU.dic
+cp -p sr.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/sr_YU.aff
+cp -p sr-Latn.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/sh_YU.dic
+cp -p sr-Latn.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/sh_YU.aff
 
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p hyph_sr.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_sr_YU.dic
@@ -49,7 +55,7 @@ cp -p hyph_sr-Latn.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_sh_YU.dic
 sr_YU_aliases="sr_ME sr_RS"
 sh_YU_aliases="sh_ME sh_RS bs_BA"
 
-pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
+pushd $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 for lang in $sr_YU_aliases; do
 	ln -s sr_YU.aff $lang.aff
 	ln -s sr_YU.dic $lang.dic
@@ -72,13 +78,16 @@ popd
 
 %files
 %doc registration/license*.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %files -n hyphen-sr
 %doc registration/license*.txt
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20130330-alt1_22
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20130330-alt1_10
 - update to new release by fcimport
 
