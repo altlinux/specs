@@ -2,16 +2,22 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} > 35
+%global dict_dirname hunspell 
+%else
+%global dict_dirname myspell
+%endif
 Name: hunspell-st
 Summary: Southern Sotho hunspell dictionaries
 %global upstreamid 20091030
 Version: 0.%{upstreamid}
-Release: alt2_14
+Release: alt2_26
 Source: https://downloads.sourceforge.net/project/aoo-extensions/3138/0/dict-st_za-2009.10.30.oxt
 URL: http://www.translate.org.za/
-License: LGPLv2+
+License: LGPL-2.1-or-later
 BuildArch: noarch
 
 Requires: hunspell
@@ -37,15 +43,18 @@ for i in README-st_ZA.txt release-notes-st_ZA.txt package-description.txt; do
 done
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 
 %files
 %doc README-st_ZA.txt release-notes-st_ZA.txt package-description.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20091030-alt2_26
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_14
 - update to new release by fcimport
 
