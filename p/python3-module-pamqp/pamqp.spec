@@ -1,29 +1,29 @@
 %define oname pamqp
 
-%def_disable check
+%def_without docs
+
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.6.1
-Release: alt3
-Summary: RabbitMQ Focused AMQP low-level library
-License: BSD
-Group: Development/Python3
-BuildArch: noarch
-Url: https://pypi.python.org/pypi/pamqp/
+Version: 3.2.1
+Release: alt1
 
-# https://github.com/gmr/pamqp.git
+Summary: RabbitMQ Focused AMQP low-level library
+License: BSD-3-Clause
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/pamqp/
+Vcs: https://github.com/gmr/pamqp.git
+
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+%if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
-
-%if_with check
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-unittest2
-%endif
-
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx-autodoc-typehints
+%endif
 
 %py3_provides %oname
 
@@ -32,6 +32,7 @@ pamqp is a pure-python AMQP 0-9-1 frame encoder and decoder. The aim is
 to create a client agnostic python encoder and decoder for general
 purpose use.
 
+%if_with docs
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python3
@@ -54,40 +55,50 @@ to create a client agnostic python encoder and decoder for general
 purpose use.
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup
-%patch1 -p1
-
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
 
 %build
-%python3_build_debug
+%python3_build
+
+%if_with docs
+export PYTHONPATH="$PWD"
+sphinx-build-3 docs pickle
+sphinx-build-3 docs html
+%endif
 
 %install
 %python3_install
 
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
-%make SPHINXBUILD="sphinx-build-3" -C docs html
-
+%if_with docs
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
-python3 setup.py test
+%tox_create_default_config
+%tox_check
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc *.rst LICENSE
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
+%if_with docs
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
+%dir %python3_sitelibdir/%oname
 %python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %changelog
+* Thu Apr 13 2023 Anton Vyatkin <toni@altlinux.org> 3.2.1-alt1
+- (NMU) New version 3.2.1.
+
 * Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1.6.1-alt3
 - Dropped dependency on coveralls.
 

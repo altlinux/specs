@@ -1,29 +1,30 @@
 %define oname aioamqp
 
+%def_without check
+
 Name: python3-module-%oname
-Version: 0.13.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 
 Summary: AMQP implementation using asyncio
 
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/aioamqp/
+Url: https://pypi.org/project/aioamqp/
+Vcs: https://github.com/Polyconseil/aioamqp
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/Polyconseil/aioamqp.git
-# Source-url: https://pypi.io/packages/source/a/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+%if_with check
 BuildRequires: python3-module-pamqp
-BuildRequires: pylint-py3 python3-module-coverage python3-module-nose python3-module-setuptools rpm-build-python3
+BuildRequires: python3-module-asynctest
+BuildRequires: python3-module-pyrabbit2
+%endif
 
 %py3_provides %oname
-%py3_requires asyncio
 
 %description
 aioamqp library is a pure-Python implementation of the AMQP 0.9.1
@@ -43,13 +44,17 @@ highly concurrent applications.
 %python3_install
 
 %check
-python3 setup.py test
+%tox_check
 
 %files
-%doc *.rst docs/*.rst examples
-%python3_sitelibdir/*
+%doc *.rst docs/*.rst examples LICENSE
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Fri Mar 31 2023 Anton Vyatkin <toni@altlinux.org> 0.15.0-alt1
+- (NMU) New version 0.15.0
+
 * Sat Aug 01 2020 Grigory Ustinov <grenka@altlinux.org> 0.13.0-alt2
 - Drop python2 support.
 
