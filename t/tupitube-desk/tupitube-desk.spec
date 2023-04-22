@@ -1,5 +1,5 @@
 Name:     tupitube-desk
-Version:  0.2.19
+Version:  0.2.20
 Release:  alt1
 
 Summary:  TupiTube Desk is vector editor for images, storyboards and animations
@@ -25,6 +25,10 @@ BuildRequires: libavformat-devel
 BuildRequires: libsndfile-devel
 BuildRequires: quazip-qt5-devel
 BuildRequires: zlib-devel
+BuildRequires: libswscale-devel
+BuildRequires: libavdevice-devel
+BuildRequires: libavfilter-devel
+BuildRequires: libswresample-devel
 
 %description
 TupiTube Desk is a desktop application focused on 2D vector-based
@@ -57,6 +61,9 @@ subst 's|@LIBDIR@|%_libdir|' src/framework/gui/gui.pro
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Sat Apr 22 2023 Andrey Cherepanov <cas@altlinux.org> 0.2.20-alt1
+- New version.
+
 * Mon Feb 06 2023 Andrey Cherepanov <cas@altlinux.org> 0.2.19-alt1
 - New version.
 
