@@ -1,8 +1,5 @@
-# redefined during rpmbps (originally set from rpm-build-intro)
-%define pkgsystem apt-rpm
-
 Name: eepm
-Version: 3.52.4
+Version: 3.52.6
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -13,8 +10,8 @@ Url: http://wiki.etersoft.ru/EPM
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# git clone https://github.com/Etersoft/eepm.git
-Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%version.tar
+# Source-url: https://github.com/Etersoft/eepm/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
 
 BuildArchitectures: noarch
 
@@ -61,60 +58,15 @@ This package has requirements needed for using epm repack on ALT
 See https://bugzilla.altlinux.org/show_bug.cgi?id=34308 for
 a discussion about extra requirements.
 
-%package yum
-Summary: yum like frontend for Etersoft EPM package manager
-Group: System/Configuration/Packaging
-Requires: %name = %EVR
-Conflicts: yum
-
-%description yum
-This package contains yum like frontend for Etersoft EPM package manager.
-
-
 %prep
 %setup
 
 %install
 # install to datadir and so on
 # do not use uncommon makeinstall_std here
-%make_install install DESTDIR=%buildroot datadir=%_datadir bindir=%_bindir mandir=%_mandir sysconfdir=%_sysconfdir version=%version-%release
-#install -m 0755 packed/epm.sh %buildroot/%_datadir/%name/epm-packed.sh
-#install -m 0755 packed/serv.sh %buildroot/%_datadir/%name/serv-packed.sh
-
-cat <<EOF >%buildroot%_sysconfdir/eepm/serv.conf
-# serv config (will insource in serv shell script)
-EOF
-
-mkdir -p %buildroot%_sysconfdir/eepm/repack.d/
-cp repack.d/* %buildroot%_sysconfdir/eepm/repack.d/
-chmod 0755 %buildroot%_sysconfdir/eepm/repack.d/*.sh
-
-mkdir -p %buildroot%_sysconfdir/eepm/pack.d/
-cp pack.d/* %buildroot%_sysconfdir/eepm/pack.d/
-chmod 0755 %buildroot%_sysconfdir/eepm/pack.d/*.sh
-
-mkdir -p %buildroot%_sysconfdir/eepm/prescription.d/
-cp prescription.d/* %buildroot%_sysconfdir/eepm/prescription.d/
-chmod 0755 %buildroot%_sysconfdir/eepm/prescription.d/*.sh
-
-mkdir -p %buildroot%_sysconfdir/eepm/play.d/
-cp play.d/* %buildroot%_sysconfdir/eepm/play.d/
-chmod 0755 %buildroot%_sysconfdir/eepm/play.d/*.sh
-
-mkdir -p %buildroot%_sysconfdir/bash_completion.d/
-install -m 0644 bash_completion/serv %buildroot%_sysconfdir/bash_completion.d/serv
-install -m 0644 bash_completion/cerv %buildroot%_sysconfdir/bash_completion.d/cerv
-
-# shebang.req.files
-chmod a+x %buildroot%_datadir/%name/{serv-,epm-}*
-chmod a+x %buildroot%_datadir/%name/tools_*
-
-mkdir -p %buildroot/var/lib/eepm/
-
-%if "%pkgsystem" == "yum-rpm"
-rm -v %buildroot%_bindir/yum
-%endif
-
+%make_install install DESTDIR=%buildroot \
+	datadir=%_datadir bindir=%_bindir mandir=%_mandir \
+	sysconfdir=%_sysconfdir version=%version-%release
 
 %files
 %doc README.md TODO LICENSE
@@ -133,28 +85,33 @@ rm -v %buildroot%_bindir/yum
 %_bindir/epm*
 %_bindir/eepm
 %_bindir/serv
-%_bindir/cerv
-%if "%pkgsystem" != "yum-rpm"
-%exclude %_bindir/yum
-%endif
-%dir /var/lib/eepm/
 %_bindir/distr_info
+%dir /var/lib/eepm/
 %_man1dir/*
 %_datadir/%name/
 %_sysconfdir/bash_completion.d/serv
-%_sysconfdir/bash_completion.d/cerv
 
 %if "%_vendor" == "alt"
 %files repack
 %endif
 
-%if "%pkgsystem" != "yum-rpm"
-# not for yum based system
-%files yum
-%_bindir/yum
-%endif
 
 %changelog
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 3.52.6-alt1
+- makefile: fix install play.d
+
+* Sat Apr 22 2023 Vitaly Lipatov <lav@altlinux.ru> 3.52.5-alt1
+- tools_json: replace egrep with grep -E
+- eget: add -H (--header) support
+- epm play icq: get latest version from snapcraft.io
+- distr_info: fix Manjaro support
+- epm ei: use --auto in pipe mode
+- generic-appimage.sh: use cd & run (some progs runs only relative to current dir)
+- epm play: add clibgrab
+- eepm.spec: move install code to Makefile
+- eepm.spec: update Source URL
+- remove yum subpackage (will pack separately)
+
 * Sat Apr 22 2023 Vitaly Lipatov <lav@altlinux.ru> 3.52.4-alt1
 - epm play: add cnrdrvcups-ufr2 support
 - epm repo add/remove: add korinf support
