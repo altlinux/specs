@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo5.0
-Version: 5.0.16
+Version: 5.0.17
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
@@ -123,16 +123,16 @@ install -p -D -m 755 build/install/bin/mongod %buildroot%_bindir/mongo
 install -p -D -m 755 build/install/bin/mongod %buildroot%_bindir/mongod
 install -p -D -m 755 build/install/bin/mongos %buildroot%_bindir/mongos
 
-mkdir -p %buildroot%_logdir/%name
-mkdir -p %buildroot%_runtimedir/%name
-mkdir -p %buildroot%_localstatedir/%name
+mkdir -p %buildroot%_logdir/mongo
+mkdir -p %buildroot%_runtimedir/mongo
+mkdir -p %buildroot%_localstatedir/mongo
 mkdir -p %buildroot%_man1dir
 cp debian/{mongo,mongod,mongos}.1 %buildroot%_man1dir/
 
 #mongod
 install -p -D -m 644 mongod.logrotate %buildroot%_logrotatedir/mongod
 install -p -D -m 755 mongod.init.alt %buildroot%_initddir/mongod
-install -p -D -m 644 mongod.conf %buildroot%_sysconfdir/%name/mongod.conf
+install -p -D -m 644 mongod.conf %buildroot%_sysconfdir/mongo/mongod.conf
 install -p -D -m 644 mongod.sysconf %buildroot%_sysconfdir/sysconfig/mongod
 install -p -D -m 644 mongod.service %buildroot%_unitdir/mongod.service
 install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongod.conf
@@ -140,7 +140,7 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongod.conf
 #mongos
 install -p -D -m 644 mongos.logrotate %buildroot%_logrotatedir/mongos
 install -p -D -m 755 mongos.init.alt %buildroot%_initddir/mongos
-install -p -D -m 644 mongos.conf %buildroot%_sysconfdir/%name/mongos.conf
+install -p -D -m 644 mongos.conf %buildroot%_sysconfdir/mongo/mongos.conf
 install -p -D -m 644 mongod.sysconf %buildroot%_sysconfdir/sysconfig/mongos
 install -p -D -m 644 mongos.service %buildroot%_unitdir/mongos.service
 install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
@@ -178,7 +178,7 @@ rm -fr build
 
 %files server-mongod
 %doc README LICENSE-Community.txt
-%config(noreplace) %_sysconfdir/%name/mongod.conf
+%config(noreplace) %_sysconfdir/mongo/mongod.conf
 %config(noreplace) %_sysconfdir/sysconfig/mongod
 %config(noreplace) %_logrotatedir/mongod
 %_bindir/mongod
@@ -186,13 +186,13 @@ rm -fr build
 %_initdir/mongod
 %systemd_unitdir/mongod.service
 %_tmpfilesdir/mongod.conf
-%attr(0750,mongod,mongod) %dir %_localstatedir/%name
-%attr(1770,root,mongod) %dir %_logdir/%name
-%attr(0750,mongod,mongod) %dir %_runtimedir/%name
+%attr(0750,mongod,mongod) %dir %_localstatedir/mongo
+%attr(1770,root,mongod) %dir %_logdir/mongo
+%attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %files server-mongos
 %doc README LICENSE-Community.txt
-%config(noreplace) %_sysconfdir/%name/mongos.conf
+%config(noreplace) %_sysconfdir/mongo/mongos.conf
 %config(noreplace) %_sysconfdir/sysconfig/mongos
 %config(noreplace) %_logrotatedir/mongos
 %_bindir/mongos
@@ -200,10 +200,14 @@ rm -fr build
 %_initdir/mongos
 %systemd_unitdir/mongos.service
 %_tmpfilesdir/mongos.conf
-%attr(1770,root,mongod) %dir %_logdir/%name
-%attr(0750,mongod,mongod) %dir %_runtimedir/%name
+%attr(1770,root,mongod) %dir %_logdir/mongo
+%attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Fri Apr 21 2023 Alexei Takaseev <taf@altlinux.org> 5.0.17-alt1
+- 5.0.17
+- Fix path
+
 * Wed Apr 19 2023 Alexei Takaseev <taf@altlinux.org> 5.0.16-alt1
 - 5.0.16
 - Rename mongo-* -> mongo5.0-*
