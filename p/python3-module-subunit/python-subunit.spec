@@ -1,7 +1,7 @@
 %define oname python-subunit
 
 Name: python3-module-subunit
-Version: 1.4.0
+Version: 1.4.2
 Release: alt1
 
 Summary: Python implementation of subunit test streaming protocol
@@ -53,6 +53,9 @@ write for other languages.
 
 
 %changelog
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
+- new version 1.4.2 (with rpmrb script)
+
 * Tue Oct 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0 (with rpmrb script)
 
