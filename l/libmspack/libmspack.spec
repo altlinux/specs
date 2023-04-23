@@ -1,6 +1,6 @@
 Name: libmspack
-Version: 0.6
-Release: alt2
+Version: 1.11
+Release: alt1
 
 Summary: Compressors and decompressors for Microsoft compression formats
 
@@ -10,7 +10,7 @@ Url: http://www.cabextract.org.uk/libmspack/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/kyz/libmspack/archive/v%{version}alpha.tar.gz
+# Source-url: https://github.com/kyz/libmspack/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 Patch1: upstream-CVE-2018-18584.patch
@@ -47,7 +47,7 @@ based on %name.
 
 %prep
 %setup
-%patch1 -p1
+#patch1 -p1
 
 %build
 cd libmspack
@@ -70,14 +70,20 @@ cd libmspack
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+# don't pack examples
+%if 0
 %files tools
 %doc libmspack/README
 %_bindir/cabrip
 %_bindir/chmextract
 %_bindir/msexpand
 %_bindir/oabextract
+%endif
 
 %changelog
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt1
+- new version 1.11 (with rpmrb script)
+
 * Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6-alt2
 - Applied security fix from upstream (Fixes CVE-2018-18584).
 
