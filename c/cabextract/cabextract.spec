@@ -1,5 +1,7 @@
+%def_without libmspack
+
 Name: cabextract
-Version: 1.7
+Version: 1.11
 Release: alt1
 
 Summary: Utility for extracting Microsoft Cabinet files
@@ -11,7 +13,10 @@ URL: http://cabextract.org.uk/
 Source: http://cabextract.org.uk/cabextract-%version.tar.gz
 #Patch: cabextract-1.0-alt-fixes.patch
 
-BuildRequires: tzdata libmspack-devel >= 0.6
+BuildRequires: tzdata
+%if_with libmspack
+BuildRequires: libmspack-devel >= 0.8alpha
+%endif
 
 %description
 A program for extracting Microsoft Cabinet (.CAB) files.
@@ -19,11 +24,17 @@ A program for extracting Microsoft Cabinet (.CAB) files.
 %prep
 %setup
 #patch -p1
+%if_with libmspack
 rm -rf mspack/
+%endif
 
 %build
 %autoreconf
-%configure --with-external-libmspack
+%configure \
+%if_with libmspack
+    --with-external-libmspack \
+%endif
+    %nil
 
 %make_build
 
@@ -36,6 +47,10 @@ rm -rf mspack/
 %doc NEWS README
 
 %changelog
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt1
+- new version 1.11 (with rpmrb script)
+- build without external libmspack (headers is missed)
+
 * Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt1
 - new version 1.7 (with rpmrb script)
 
