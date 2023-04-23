@@ -1,5 +1,5 @@
 Name: backupninja
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: backup system
@@ -10,7 +10,7 @@ Url: https://0xacab.org/riseuplabs/backupninja
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://0xacab.org/riseuplabs/backupninja/repository/%name-%version/archive.tar.bz2
+# Source-url: https://0xacab.org/liberate/backupninja/-/archive/backupninja_upstream/%version/backupninja-backupninja_upstream-%version.tar.bz2
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -67,6 +67,9 @@ mkdir -p %buildroot%_sysconfdir/backup.d/
 %_sbindir/ninjahelper
 
 %changelog
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
+- new version (1.2.2) with rpmgs script
+
 * Mon Mar 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - new version 1.2.1 (with rpmrb script)
 
