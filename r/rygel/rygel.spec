@@ -22,7 +22,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -81,7 +81,7 @@ BuildRequires: pkgconfig(gio-2.0) >= %gio_ver
 BuildRequires: pkgconfig(gmodule-2.0)
 BuildRequires: pkgconfig(gee-0.8) >= %gee_ver
 BuildRequires: pkgconfig(uuid) >= %uuid_ver
-BuildRequires: pkgconfig(libsoup-2.4) >= %libsoup_ver
+BuildRequires: pkgconfig(libsoup-3.0) >= %libsoup_ver
 BuildRequires: pkgconfig(libxml-2.0) >= %libxml_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gstreamer_ver
 BuildRequires: pkgconfig(gstreamer-base-1.0) >= %gstreamer_ver
@@ -239,6 +239,9 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_girdir/*.gir
 
 %changelog
+* Sat Apr 22 2023 Yuri N. Sedunov <aris@altlinux.org> 0.42.3-alt1
+- 0.42.3
+
 * Sat Apr 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.42.2-alt1
 - 0.42.2
 

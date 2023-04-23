@@ -6,12 +6,12 @@
 %def_enable face_detection
 %def_enable check
 
-%define ver_major 0.31
+%define ver_major 0.32
 %define api_ver 1.0
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: A digital photo organizer designed for the GNOME desktop environment
@@ -110,6 +110,9 @@ mode, and export them to share with others.
 
 
 %changelog
+* Sat Apr 22 2023 Yuri N. Sedunov <aris@altlinux.org> 0.32.0-alt1
+- 0.32.0
+
 * Sun Apr 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.31.90-alt1
 - 0.31.90
 
