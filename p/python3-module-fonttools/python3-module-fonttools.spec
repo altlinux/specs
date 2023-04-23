@@ -1,7 +1,7 @@
 %define modulename fontTools
 
 Name: python3-module-fonttools
-Version: 4.39.0
+Version: 4.39.3
 Release: alt1
 
 Summary: Converts OpenType and TrueType fonts to and from XML
@@ -90,6 +90,9 @@ rm -fv %buildroot%python3_sitelibdir/%modulename/pens/quartzPen.py
 
 
 %changelog
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 4.39.3-alt1
+- new version 4.39.3 (with rpmrb script)
+
 * Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 4.39.0-alt1
 - new version 4.39.0 (with rpmrb script)
 
