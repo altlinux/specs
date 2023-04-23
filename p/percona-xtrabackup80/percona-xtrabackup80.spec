@@ -1,11 +1,14 @@
 %global pxbu_major_minor 80
 
+# TODO remove it, after fix sphinx
+%def_without man
+
 %define optflags_lto %nil
 
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup%pxbu_major_minor
 Version: 8.0.32
-Release: alt2
+Release: alt3
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
 Group: Databases
@@ -53,6 +56,9 @@ pathfix.py -pni "%__python3 -s" . ./storage/innobase/xtrabackup/test/subunit2jun
   -DINSTALL_MYSQLTESTDIR=%_datadir/percona-xtrabackup-test-%pxbu_major_minor \
   -DINSTALL_PLUGINDIR="%_lib/xtrabackup/plugin" -DFORCE_INSOURCE_BUILD=1 \
   -DWITH_ZLIB=system -DWITH_ZSTD=system \
+%if_without man
+   -DWITH_MAN_PAGES=FALSE \
+%endif
   -DWITH_ICU=system
 
 %cmake_build
@@ -81,12 +87,17 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_bindir/xbcloud
 %_bindir/xbcloud_osenv
 %doc README.md XB_VERSION LICENSE
+%if_with man
 %_mandir/man1/xtrabackup.1.*
 %_mandir/man1/xbstream.1.*
 %_mandir/man1/xbcrypt.1.*
+%endif
 %_libdir/xtrabackup
 
 %changelog
+* Fri Apr 21 2023 Alexei Takaseev <taf@altlinux.org> 8.0.32-alt3
+- Fix build, disable man files
+
 * Wed Apr 05 2023 Alexei Takaseev <taf@altlinux.org> 8.0.32-alt2
 - 8.0.32-26
 
