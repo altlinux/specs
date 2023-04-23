@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: supervisor
-Version: 4.1.0
-Release: alt2
+Version: 4.2.5
+Release: alt1
 
 Summary: A System for Allowing the Control of Process State on UNIX
 License: ZPLv2.1 and BSD and MIT
@@ -91,6 +91,9 @@ rm -f %buildroot%prefix/doc/*.txt
 
 
 %changelog
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 4.2.5-alt1
+- new version 4.2.5 (with rpmrb script)
+
 * Tue May 24 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt2
 - The meld3 package is no longer a dependency.
 
