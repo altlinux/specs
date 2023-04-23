@@ -1,6 +1,6 @@
 Name: bluefish
-Version: 2.2.12
-Release: alt3
+Version: 2.2.13
+Release: alt1
 
 Summary: A GTK3 web development application for experienced users
 
@@ -11,7 +11,7 @@ License: GPL-3.0-or-later
 Group: Editors
 
 Source: %name-%version.tar
-# Source-url: https://jztkft.dl.sourceforge.net/project/bluefish/bluefish/%version/bluefish-%version.tar.gz
+# Source-url: https://sourceforge.net/projects/bluefish/files/bluefish/%version/bluefish-%version.tar.gz/download
 
 # Russian translation
 Source1: ru.po
@@ -20,19 +20,17 @@ Source3: plugin_htmlbar-ru.po
 
 # Fedora patchs
 # Avoid potential aliasing issues in zencoding plugin
-Patch0: bluefish-2.2.10-strict-aliasing.patch
+Patch0: bluefish-2.2.13-strict-aliasing.patch
 
 # Avoid use of /usr/bin/env in shipped scripts
-# Also change /usr/bin/python → /usr/bin/python2 (for now)
+# Also change /usr/bin/python → /usr/bin/python3 (for now)
 Patch1: bluefish-2.2.12-shellbang.patch
-
-# Strip all python content if we don't have Python
-Patch2: bluefish-2.2.12-no-python.patch
 
 Patch3: bluefish-2.2.12-fix-command-chmod-a-x.patch
 
 Requires: bluefish-common = %serial:%version-%release
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: intltool
 BuildRequires: libgtk+3-devel
 BuildRequires: libgucharmap-devel
@@ -63,7 +61,6 @@ find data -type f -name \*.py -exec sed -i 's/\r//' {} \;
 
 %patch0
 %patch1
-%patch2
 %patch3 -p2
 
 # Update russian translation
@@ -106,7 +103,7 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/%name/*
 %_datadir/pixmaps/*
 %_datadir/applications/*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_datadir/mime/packages/*
 %_iconsdir/hicolor/*/*/*.??g
 %_man1dir/*
@@ -114,6 +111,11 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Sun Apr 23 2023 Anton Midyukov <antohami@altlinux.org> 2:2.2.13-alt1
+- new version 2.2.13
+- update strict-aliasing.patch
+- enable python 3 support
+
 * Mon Jan 17 2022 Anton Midyukov <antohami@altlinux.org> 2:2.2.12-alt3
 - Update russian translation for plugins (thanks Olesya Gerasimenko)
 
