@@ -6,7 +6,7 @@
 %def_without packaged_gumbo
 
 Name: python3-module-html5-parser
-Version: 0.4.10
+Version: 0.4.11
 Release: alt1
 
 Summary: Fast C based HTML 5 parsing for python
@@ -69,6 +69,9 @@ sed -i "s|'gumbo/gumbo.h',||" build.py
 %python3_sitelibdir/*
 
 %changelog
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 0.4.11-alt1
+- new version 0.4.11 (with rpmrb script)
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 0.4.10-alt1
 - new version 0.4.10 (with rpmrb script)
 
