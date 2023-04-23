@@ -3,7 +3,7 @@
 %def_without doc_package
 
 Name: python3-module-openssl
-Version: 23.0.0
+Version: 23.1.1
 Release: alt1
 
 Summary: Python wrapper module around the OpenSSL library
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 23.1.1-alt1
+- new version 23.1.1 (with rpmrb script)
+
 * Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 23.0.0-alt1
 - new version 23.0.0 (with rpmrb script)
 
