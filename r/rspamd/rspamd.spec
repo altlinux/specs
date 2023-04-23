@@ -1,6 +1,8 @@
+#define optflags_lto %nil
+
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
-Version: 3.2
+Version: 3.5
 Release: alt1
 
 Summary: Fast and modular antispam system written in C
@@ -16,10 +18,13 @@ Source3: %name.service
 Source4: %name.sysconfig
 Source5: %name.logrotate
 
+Patch1: rspamd-fix-error.patch
+
 BuildRequires: gcc-c++
 BuildRequires: cmake libdb4-devel libevent-devel libgmime-devel liblua5-devel
 BuildRequires: libpcre2-devel libsqlite3-devel libunwind-devel libicu-devel
 BuildRequires: libssl-devel libmagic-devel zlib-devel libluajit-devel libsodium-devel
+BuildRequires: libxxhash-devel libzstd-devel doctest-devel libfmt-devel
 
 BuildRequires: perl-XML-Parser perl-Term-Cap perl-Pod-Usage
 
@@ -27,8 +32,10 @@ BuildRequires: ragel
 
 BuildRequires(pre): rpm-build-intro
 
-#%#add_verify_elf_skiplist %_libdir/rspamd/lib*.so
+#add_verify_elf_skiplist %_libdir/rspamd/lib*.so
 #./usr/lib64/librspamd-actrie.so
+
+AutoReq: yes,nolua
 
 %description
 Rspamd filtering system is created as a replacement of popular
@@ -40,12 +47,9 @@ anywhere in code.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
-#__subst "s|/init.d|/rc.d/init.d|g" CMakeLists.txt
-#__subst 's|SET(ETC_PREFIX "\${CMAKE_INSTALL_PREFIX}/etc")|SET(ETC_PREFIX "/etc")|g' CMakeLists.txt
-#__subst 's|gmime-2.4|gmime-2.6|g' CMakeLists.txt
-#__subst 's|TARGET_LINK_LIBRARIES(rspamdclient pcre)|TARGET_LINK_LIBRARIES(rspamdclient pcre m)|g' lib/CMakeLists.txt
 %cmake_insource -DSYSTEMDDIR=%{_unitdir} \
                 -DENABLE_LUAJIT=ON \
                 -DLIBDIR=%{_libdir}/rspamd/ \
@@ -54,7 +58,11 @@ anywhere in code.
                 -DENABLE_LIBUNWIND=ON \
                 -DENABLE_PCRE2=ON \
                 -DCONFDIR=%{_sysconfdir}/rspamd \
-                -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF -DCMAKE_SKIP_RPATH:BOOL=OFF
+                -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF -DCMAKE_SKIP_RPATH:BOOL=OFF \
+                -DSYSTEM_ZSTD=ON \
+                -DSYSTEM_FMT=ON \
+                -DSYSTEM_DOCTEST=ON \
+                -DSYSTEM_XXHASH=ON
 
 %make_build
 
@@ -109,6 +117,14 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt1
+- new version 3.5 (with rpmrb script)
+- build with system libxxhash-devel libzstd-devel doctest-devel libfmt-devel
+- add AutoReq: yes,nolua (all lua requires are internal: rspamd/lualib)
+
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt1
+- new version 3.4 (with rpmrb script)
+
 * Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 3.2-alt1
 - new version 3.2 (with rpmrb script)
 
