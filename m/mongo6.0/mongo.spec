@@ -4,15 +4,12 @@
 
 Name: mongo6.0
 Version: 6.0.5
-Release: alt2
+Release: alt3
 Summary: mongo client shell and tools
 License: SSPL-1.0
-
 Group: Development/Databases
-
 Url: https://www.mongodb.org
 Source: %name-%version.tar
-Packager: Vladimir Didenko <cow@altlinux.org>
 
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
@@ -20,7 +17,7 @@ ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 
 BuildRequires(pre): rpm-macros-valgrind
 
-BuildRequires: /proc gcc-c++ python3-module-pymongo python3-module-pkg_resources
+BuildRequires: /proc gcc10-c++ gcc10 python3-module-pymongo python3-module-pkg_resources
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
@@ -106,7 +103,7 @@ MongoDB instance.
        --disable-warnings-as-errors \\\
        CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
-python3 src/third_party/scons-3.1.2/scons.py %build_opts
+python3 src/third_party/scons-3.1.2/scons.py CC=gcc-10 CXX=g++-10 %build_opts
 
 %install
 # cow@: It seems that mongo 4.2 + scons 3.1.1 doesn't provide a clean way to
@@ -114,16 +111,16 @@ python3 src/third_party/scons-3.1.2/scons.py %build_opts
 install -p -D -m 755 build/install/bin/mongod %buildroot%_bindir/mongod
 install -p -D -m 755 build/install/bin/mongos %buildroot%_bindir/mongos
 
-mkdir -p %buildroot%_logdir/%name
-mkdir -p %buildroot%_runtimedir/%name
-mkdir -p %buildroot%_localstatedir/%name
+mkdir -p %buildroot%_logdir/mongo
+mkdir -p %buildroot%_runtimedir/mongo
+mkdir -p %buildroot%_localstatedir/mongo
 mkdir -p %buildroot%_man1dir
 cp debian/{mongod,mongos}.1 %buildroot%_man1dir/
 
 #mongod
 install -p -D -m 644 mongod.logrotate %buildroot%_logrotatedir/mongod
 install -p -D -m 755 mongod.init.alt %buildroot%_initddir/mongod
-install -p -D -m 644 mongod.conf %buildroot%_sysconfdir/%name/mongod.conf
+install -p -D -m 644 mongod.conf %buildroot%_sysconfdir/mongo/mongod.conf
 install -p -D -m 644 mongod.sysconf %buildroot%_sysconfdir/sysconfig/mongod
 install -p -D -m 644 mongod.service %buildroot%_unitdir/mongod.service
 install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongod.conf
@@ -131,7 +128,7 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongod.conf
 #mongos
 install -p -D -m 644 mongos.logrotate %buildroot%_logrotatedir/mongos
 install -p -D -m 755 mongos.init.alt %buildroot%_initddir/mongos
-install -p -D -m 644 mongos.conf %buildroot%_sysconfdir/%name/mongos.conf
+install -p -D -m 644 mongos.conf %buildroot%_sysconfdir/mongo/mongos.conf
 install -p -D -m 644 mongod.sysconf %buildroot%_sysconfdir/sysconfig/mongos
 install -p -D -m 644 mongos.service %buildroot%_unitdir/mongos.service
 install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
@@ -164,7 +161,7 @@ rm -fr build
 
 %files server-mongod
 %doc README.md LICENSE-Community.txt
-%config(noreplace) %_sysconfdir/%name/mongod.conf
+%config(noreplace) %_sysconfdir/mongo/mongod.conf
 %config(noreplace) %_sysconfdir/sysconfig/mongod
 %config(noreplace) %_logrotatedir/mongod
 %_bindir/mongod
@@ -172,13 +169,13 @@ rm -fr build
 %_initdir/mongod
 %systemd_unitdir/mongod.service
 %_tmpfilesdir/mongod.conf
-%attr(0750,mongod,mongod) %dir %_localstatedir/%name
-%attr(1770,root,mongod) %dir %_logdir/%name
-%attr(0750,mongod,mongod) %dir %_runtimedir/%name
+%attr(0750,mongod,mongod) %dir %_localstatedir/mongo
+%attr(1770,root,mongod) %dir %_logdir/mongo
+%attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %files server-mongos
 %doc README.md LICENSE-Community.txt
-%config(noreplace) %_sysconfdir/%name/mongos.conf
+%config(noreplace) %_sysconfdir/mongo/mongos.conf
 %config(noreplace) %_sysconfdir/sysconfig/mongos
 %config(noreplace) %_logrotatedir/mongos
 %_bindir/mongos
@@ -186,10 +183,14 @@ rm -fr build
 %_initdir/mongos
 %systemd_unitdir/mongos.service
 %_tmpfilesdir/mongos.conf
-%attr(1770,root,mongod) %dir %_logdir/%name
-%attr(0750,mongod,mongod) %dir %_runtimedir/%name
+%attr(1770,root,mongod) %dir %_logdir/mongo
+%attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Fri Apr 21 2023 Alexei Takaseev <taf@altlinux.org> 6.0.5-alt3
+- Use GCC 10
+- Fix path
+
 * Tue Apr 18 2023 Alexei Takaseev <taf@altlinux.org> 6.0.5-alt2
 - Rename mongo-* -> mongo6.0-*
 
