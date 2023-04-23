@@ -3,7 +3,7 @@
 
 Name: i2pd
 Version: 2.47.0
-Release: alt1
+Release: alt2
 
 Summary: Full C++ implementation of I2P router
 
@@ -84,8 +84,7 @@ ln -s $(relative %_sysconfdir/%name/tunnels.conf %_i2pd_root/tunnels.conf) tunne
 ln -s $(relative %_sysconfdir/%name/subscriptions.txt %_i2pd_root/subscriptions.txt) subscriptions.txt
 popd
 
-mkdir -p %buildroot%_logdir/%name
-touch %buildroot%_logdir/%name/%name.log
+mkdir -p %buildroot%_logdir/%name/
 
 %pre
 /usr/sbin/groupadd -r -f %i2pduser
@@ -103,7 +102,6 @@ touch %buildroot%_logdir/%name/%name.log
 %_datadir/%name/
 %_unitdir/%name.service
 %_man1dir/%name.1.*
-%ghost %attr(640,%i2pduser,adm) %_logdir/%name/%name.log
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 
 # configs:
@@ -121,6 +119,9 @@ touch %buildroot%_logdir/%name/%name.log
 %dir %_logdir/%name/
 
 %changelog
+* Sat Apr 08 2023 Vitaly Lipatov <lav@altlinux.ru> 2.47.0-alt2
+- don't pack /var/log/i2pd/i2pd.log
+
 * Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 2.47.0-alt1
 - new version 2.47.0 (with rpmrb script)
 
