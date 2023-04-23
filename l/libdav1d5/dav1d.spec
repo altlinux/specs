@@ -1,10 +1,11 @@
-Name: dav1d
-Version: 1.1.0
-Release: alt1
+%define abiversion 5
+Name: libdav1d%abiversion
+Version: 0.9.2
+Release: alt2
 
 Summary: AV1 cross-platform Decoder
 License: BSD
-Group: Video
+Group: System/Legacy libraries
 
 Url: https://code.videolan.org/videolan/dav1d
 # Source-url: https://github.com/videolan/dav1d/archive/%version.tar.gz
@@ -20,20 +21,7 @@ BuildRequires: meson >= 0.47.0
 dav1d is a new AV1 cross-platform Decoder, open-source, and focused on speed
 and correctness.
 
-%package -n libdav1d
-Group: Video
-Summary: Library files for dav1d
-
-%description -n libdav1d
 Library files for dav1d, the AV1 cross-platform Decoder.
-
-%package -n libdav1d-devel
-Group: Video
-Summary: Development files for dav1d
-Requires: libdav1d = %EVR
-
-%description -n libdav1d-devel
-Development files for dav1d, the AV1 cross-platform Decoder.
 
 %prep
 %setup
@@ -52,22 +40,12 @@ Development files for dav1d, the AV1 cross-platform Decoder.
 
 %files
 %doc COPYING doc/PATENTS
-%doc CONTRIBUTING.md NEWS README.md
-%_bindir/dav1d
-
-%files -n libdav1d
-%doc COPYING doc/PATENTS
-%_libdir/libdav1d.so.*
-
-%files -n libdav1d-devel
-#doc %_target_platform/doc/html
-%_includedir/%name
-%_libdir/libdav1d.so
-%_pkgconfigdir/%name.pc
+%_libdir/libdav1d.so.%abiversion
+%_libdir/libdav1d.so.%abiversion.*
 
 %changelog
-* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
-- new version 1.1.0 (with rpmrb script)
+* Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt2
+- build legacy version
 
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1
 - new version 0.9.2 (with rpmrb script)
