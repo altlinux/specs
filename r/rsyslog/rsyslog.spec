@@ -24,9 +24,10 @@
 %def_enable imdocker
 %def_enable impcap
 %def_enable libzstd
+%def_enable libcap_ng
 
 Name: rsyslog
-Version: 8.2212.0
+Version: 8.2304.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -70,6 +71,7 @@ BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_imdocker:BuildRequires: libcurl-devel >= 7.40.0}
 %{?_enable_impcap:BuildRequires: libpcap-devel}
 %{?_enable_libzstd:BuildRequires: libzstd-devel >= 1.4.0}
+%{?_enable_libcap_ng:BuildRequires: libcap-ng-devel >= 0.8.2}
 
 BuildRequires: iproute2
 BuildRequires: /usr/bin/rst2man
@@ -465,6 +467,7 @@ export HIREDIS_LIBS=-lhiredis
 	%{subst_enable mmkubernetes} \
 	%{subst_enable clickhouse} \
 	%{subst_enable libsystemd} \
+	%{?_enable_libcap_ng:--enable-libcap-ng} \
 	--with-systemdsystemunitdir=%_unitdir
 
 %make_build
@@ -685,6 +688,10 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Mon Apr 24 2023 Alexey Shabalin <shaba@altlinux.org> 8.2304.0-alt1
+- New version 8.2304.0.
+- build with libcap-ng support.
+
 * Tue Jan 10 2023 Alexey Shabalin <shaba@altlinux.org> 8.2212.0-alt1
 - new version 8.2212.0
 
