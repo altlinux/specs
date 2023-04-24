@@ -1,55 +1,59 @@
-%define version 2.1.8
-%define release alt1
-
 %define modulename textile
 
-Summary: This is Textile. A Humane Web Text Generator
+%def_with check
+
 Name: python3-module-%modulename
-Version: %version
-Release: alt2
-Source0: %modulename-%version.tar.gz
-License: Freely Distributable
+Version: 4.0.2
+Release: alt1
+
+Summary: This is Textile. A Humane Web Text Generator
+
 Group: Development/Python3
+License: BSD-3-Clause
+URL: https://pypi.org/project/textile/
+VCS: https://github.com/textile/python-textile
+
+Source: %name-%version.tar
+
 BuildArch: noarch
-URL: http://loopcore.com/python-textile/
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-html5lib
+%endif
 
 %description
 Textile is a XHTML generator using a simple markup developed by Dean
 Allen. This is a Python port with support for code validation, itex to
 MathML translation, Python code coloring and much more.
 
-%package tests
-Summary: Tests for %modulename
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Textile is a XHTML generator using a simple markup developed by Dean
-Allen. This is a Python port with support for code validation, itex to
-MathML translation, Python code coloring and much more.
-
-This package contains tests for %modulename.
-
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest
 
 %files
-%doc PKG-INFO
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%doc *.txt *.textile
+%_bindir/pytextile
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%{pyproject_distinfo %modulename}
 
-%files tests
-%python3_sitelibdir/*/tests
 
 %changelog
+* Mon Apr 24 2023 Anton Vyatkin <toni@altlinux.org> 4.0.2-alt1
+- New version 4.0.2.
+
 * Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 2.1.8-alt2
 - Drop python2 support.
 
