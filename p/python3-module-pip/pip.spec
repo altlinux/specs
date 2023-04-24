@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 23.1
+Version: 23.1.1
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -111,7 +111,7 @@ export NO_LATEST_WHEELS=YES
 %_bindir/pip
 
 %files
-%doc *.txt *.rst
+%doc *.rst
 %_bindir/pip3
 %_bindir/pip%__python3_version
 %python3_sitelibdir/pip/
@@ -121,6 +121,9 @@ export NO_LATEST_WHEELS=YES
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 23.1.1-alt1
+- 23.1 -> 23.1.1.
+
 * Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 23.1-alt1
 - 23.0.1 -> 23.1.
 
