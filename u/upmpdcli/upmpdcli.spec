@@ -1,5 +1,5 @@
 Name: upmpdcli
-Version: 1.7.7
+Version: 1.7.9
 Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
@@ -82,6 +82,8 @@ rm -rf %buildroot%_datadir/%name/web
 %add_python3_req_skip minimconfig uprclindex uprclinit uprclsearch uprclutils
 %add_python3_req_skip upradioconf
 %add_python3_req_skip xbmcplug
+%add_python3_req_skip album_util
+%add_python3_req_skip codec
 # conditional(py2):
 %add_python3_req_skip ConfigParser
 %add_python3_req_skip Cookie
@@ -129,6 +131,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Mon Apr 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.9-alt1
+- 1.7.9 released
+
 * Thu Mar 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.7-alt1
 - 1.7.7 released
 
