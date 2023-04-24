@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: Easy access to NIfTI images from within Python
 License: MIT
@@ -31,6 +31,9 @@ Patch1: %oname-alt-doc.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-numpy
+
+# https://github.com/nipy/nibabel/pull/865
+%add_python3_req_skip nose.tools
 
 Conflicts: python-module-%oname
 
@@ -142,6 +145,9 @@ rm -f %buildroot%python3_sitelibdir/conf.py
 %python3_sitelibdir/%oname/*/*/test*
 
 %changelog
+* Mon Apr 24 2023 Anton Vyatkin <toni@altlinux.org> 3.1.1-alt2
+- Fix Requires
+
 * Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.1-alt1
 - Updated to upstream version 3.1.1.
 
