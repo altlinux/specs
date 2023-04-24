@@ -1,10 +1,10 @@
 %define oname snowballstemmer
 
 Name: python3-module-%oname
-Version: 1.2.0
-Release: alt3
+Version: 2.2.0
+Release: alt1
 Summary: 16 stemmer algorithms (15 + Poerter English stemmer) generated from Snowball algorithms
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/snowballstemmer
 
@@ -45,10 +45,13 @@ It includes following language algorithms:
 %python3_install
 
 %files
-%doc *.rst
+%doc COPYING *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 24 2023 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt1
+- Build new version (Closes: #45945).
+
 * Wed Sep 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt3
 - Drop python2 support.
 
