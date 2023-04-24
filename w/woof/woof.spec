@@ -1,5 +1,5 @@
 Name: woof
-Version: 10.4.0
+Version: 10.5.1
 Release: alt1
 Summary: continuation of Lee Killough's Doom source port MBF targeted at modern systems
 Group: Games/Arcade
@@ -9,7 +9,7 @@ Url: https://github.com/fabiangreffrath/woof
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: libSDL2-devel libSDL2_mixer-devel libSDL2_net-devel
+BuildRequires: libSDL2-devel libSDL2_mixer-devel libSDL2_net-devel libopenal-devel libsndfile-devel
 BuildRequires: make
 BuildRequires: python3-module-cmake_build_extension
 
@@ -41,6 +41,8 @@ cp -r ./%_arch-alt-linux/src/autoload %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Mon Apr 24 2023 Artyom Bystrov <arbars@altlinux.org> 10.5.1-alt1
+- Update to new version
 
 * Sun Nov 13 2022 Artyom Bystrov <arbars@altlinux.org> 10.4.0-alt1
 - Update to new version
