@@ -12,7 +12,7 @@
 %endif
 
 Name: angie-pro-repo
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Link to the Angie PRO repository and GPG-key
@@ -26,7 +26,6 @@ Url: https://wbsrv.ru/angie-pro/docs/install/
 
 Packager: Leonid Krivoshein <klark@altlinux.org>
 
-Requires: apt-conf-branch
 Requires: apt-https
 Requires: alt-gpgkeys
 
@@ -70,6 +69,9 @@ echo "/usr/lib/alt-gpgkeys/pubring.gpg" |
 /usr/lib/rpm/angie-repo.filetrigger
 
 %changelog
+* Mon Apr 24 2023 Leonid Krivoshein <klark@altlinux.org> 1.0.3-alt1
+- Dropped explicit dependency on apt-conf-branch (ALT #45938).
+
 * Thu Apr 20 2023 Leonid Krivoshein <klark@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus.
 
