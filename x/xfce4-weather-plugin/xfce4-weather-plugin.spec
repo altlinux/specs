@@ -1,5 +1,5 @@
 Name: xfce4-weather-plugin
-Version: 0.11.0
+Version: 0.11.1
 Release: alt1
 
 Summary: Weather plugin for the Xfce panel
@@ -45,15 +45,18 @@ mkdir m4
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS
+%doc README AUTHORS NEWS
 %_libdir/xfce4/panel/plugins/*
 %_datadir/xfce4/weather
 %_datadir/xfce4/panel/plugins/*.desktop
-%_liconsdir/*.png
+%_iconsdir/hicolor/*/apps/*.*
 
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Apr 24 2023 Mikhail Efremov <sem@altlinux.org> 0.11.1-alt1
+- Updated to 0.11.1.
+
 * Fri Feb 12 2021 Mikhail Efremov <sem@altlinux.org> 0.11.0-alt1
 - Updated to 0.11.0.
 
