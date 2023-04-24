@@ -2,7 +2,7 @@
 %define oname sqlparse
 
 Name: python3-module-%oname
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 Summary: Non-validating SQL parser
 License: BSD
@@ -15,7 +15,8 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires(pre): python3-module-sphinx
+BuildRequires: python3-module-flit
+BuildRequires: python3-module-sphinx
 
 Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
@@ -52,10 +53,10 @@ This package contains documentation for %oname.
 ln -s ../objects.inv docs/source/
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
@@ -80,6 +81,9 @@ install -p -m644 docs/*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Mon Apr 24 2023 Grigory Ustinov <grenka@altlinux.org> 0.4.4-alt1
+- Automatically updated to 0.4.4.
+
 * Sat Sep 24 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt1
 - Automatically updated to 0.4.3.
 
