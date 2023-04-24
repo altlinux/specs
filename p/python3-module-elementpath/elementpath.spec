@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 4.1.0
+Version: 4.1.1
 Release: alt1
 
 Summary: XPath 1.0 and 2.0 selectors for Python's ElementTree XML data
@@ -23,7 +23,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(lxml)
 BuildRequires: python3(tox)
 %endif
-
 
 %description
 %oname provides XPath 1.0 and 2.0 selectors for Python's ElementTree XML data
@@ -55,6 +54,9 @@ LANG=en_US.utf8 tox.py3 --sitepackages -vr -p auto -o
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Apr 24 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt1
+- Automatically updated to 4.1.1.
+
 * Thu Mar 23 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
 - Automatically updated to 4.1.0.
 
