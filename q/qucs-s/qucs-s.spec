@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Circuit simulator
@@ -64,6 +64,9 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Tue Apr 25 2023 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt1
+- New version 1.0.2.
+
 * Sun Feb 05 2023 Anton Midyukov <antohami@altlinux.org> 1.0.1-alt1
 - new version 1.0.1
 
