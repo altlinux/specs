@@ -7,7 +7,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.29.33
+Version: 0.29.34
 Release: alt1
 
 Summary: C-extensions for Python 3
@@ -18,6 +18,8 @@ Url: http://www.cython.org
 Vcs: https://github.com/cython/cython.git
 #Source: https://pypi.io/packages/source/C/%pypi_name/%pypi_name-%version.tar.gz
 Source: https://github.com/cython/cython/archive/%version/%pypi_name-%version.tar.gz
+
+Provides: python3-module-cython = %EVR
 
 %add_python3_req_skip IPython IPython.core IPython.core.magic IPython.utils IPython.utils.text
 
@@ -126,6 +128,10 @@ done
 %endif
 
 %changelog
+* Mon Apr 24 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.34-alt1
+- 0.29.34
+- provides python3-module-cython (ALT #45944)
+
 * Mon Jan 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.33-alt1
 - 0.29.33
 
