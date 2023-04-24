@@ -7,7 +7,7 @@
 %define llvm_ver 13.0
 %define gcc_ver 9
 
-%define _vk_api_version 1.3.241
+%define _vk_api_version 1.3.246
 
 %def_with clang
 %def_with wayland
@@ -23,7 +23,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2023.Q1.3
+Version: 2023.Q2.1
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -92,6 +92,9 @@ export GCC_VERSION=%{gcc_ver} \
 %if_with shader_cache
 	-DLLPC_ENABLE_SHADER_CACHE=1 \
 %endif
+%ifarch %ix86
+	-DVKI_RAY_TRACING=OFF \
+%endif
 	-DCMAKE_BUILD_TYPE=Release \
         -DXGL_METROHASH_PATH=%_builddir/metrohash \
         -DXGL_CWPACK_PATH=%_builddir/cwpack \
@@ -120,6 +123,20 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Mon Apr 24 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q2.1-alt1
+- 2023-4-18 update:
+  + icd: bump vulkan version
+  + llvm-dialects: Updated to ef2e7bfe83fb
+  + llvm-project: Updated to 6053b88f3401
+  + gpurt: Updated to 2c399b3971c1
+  + llpc: Updated to 6527fd70d704
+  + pal: Updated to 4b53bc00c4d3
+  + xgl: Updated to 5301cf5222c6
+
+* Sun Mar 26 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q1.3-alt1.1
+- gpurt: disable on 32-bit due unstable compilation with recent dxc
+  (see gpurt issue #5).
+
 * Thu Mar 16 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q1.3-alt1
 - 2023-3-14 update:
   + icd: bump vulkan version
