@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2.2.0
+Version: 3.0.0
 Release: alt1
 
 Summary: Mutable mapping tools
@@ -20,6 +20,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-HeapDict
 BuildRequires: python3-module-lmdb
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-repeat
 %endif
 
 BuildArch: noarch
@@ -54,5 +57,8 @@ py.test-3 -ra
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Apr 24 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Thu Jul 21 2022 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt1
 - Initial build for Sisyphus.
