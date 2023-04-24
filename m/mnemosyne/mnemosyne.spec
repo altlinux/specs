@@ -18,7 +18,7 @@ BuildRequires: /usr/bin/desktop-file-install python3(sqlite3) python3-module-set
 Name:		mnemosyne
 Summary:	Flash-card learning tool
 Version:	2.6.1
-Release:	alt3_4.1
+Release:	alt3_4.2
 URL:		https://www.mnemosyne-proj.org/
 Source0:	https://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
 # contains missing tests and LICENSE files from upstream repo
@@ -38,7 +38,6 @@ BuildRequires:	python3-module-distribute
 # unpackaged https://pypi.python.org/pypi/Cheroot
 #BuildRequires: python3-cheroot
 BuildRequires:	python3-module-cherrypy
-BuildRequires:	python3-module-nose
 BuildRequires:	python3-module-PyQt5
 BuildRequires:	texlive-collection-latexrecommended
 BuildRequires:	texlive
@@ -114,6 +113,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Apr 24 2023 Anton Vyatkin <toni@altlinux.org> 2.6.1-alt3_4.2
+- NMU: Fix BuildRequires
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.6.1-alt3_4.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
