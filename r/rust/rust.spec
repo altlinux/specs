@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.68.2
-Release: alt2
+Version: 1.69.0
+Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.67.0
+%define r_ver 1.68.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -15,8 +15,6 @@ Source: %name-%version.tar
 
 Patch0001: 0001-ALT-Disable-lint-tests.patch
 Patch0002: 0002-ALT-gdb-Fix-libdir.patch
-Patch0003: 0003-ReErased-regions-are-local.patch
-Patch0004: 0004-yet-another-ui-test.patch
 
 %def_without bootstrap
 %def_without bundled_llvm
@@ -25,6 +23,10 @@ Patch0004: 0004-yet-another-ui-test.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+
+# This component was removed as of Rust 1.69.0.
+# https://github.com/rust-lang/rust/pull/101841
+Obsoletes: %name-analysis < 1.69.0
 
 Requires: /proc
 
@@ -160,7 +162,6 @@ A tool for formatting Rust code according to style guidelines.
 %package -n rls
 Summary: Rust Language Server for IDE integration
 Group: Development/Tools
-Requires: rust-analysis
 Requires: %name = %epoch:%version-%release
 Provides: rust-analyzer = %epoch:%version-%release
 
@@ -191,16 +192,6 @@ AutoProv: no
 %description src
 This package includes source files for the Rust standard library.  It may be
 useful as a reference for code completion tools in various editors.
-
-%package analysis
-Summary: Compiler analysis data for the Rust standard library
-Group: Development/Tools
-Requires: %name = %epoch:%version-%release
-
-%description analysis
-This package contains analysis data files produced with rustc's -Zsave-analysis
-feature for the Rust standard library. The RLS (Rust Language Server) uses this
-data to provide information about the Rust standard library.
 
 %prep
 %setup
@@ -285,7 +276,7 @@ docs = true
 verbose = 2
 vendor = true
 extended = true
-tools = ["cargo", "rust-analyzer", "clippy", "rustfmt", "analysis", "src"]
+tools = ["cargo", "rust-analyzer", "clippy", "rustfmt", "src"]
 build-stage = 2
 test-stage = 2
 doc-stage = 2
@@ -419,7 +410,6 @@ rm -rf %rustdir
 %dir %rustlibdir/etc
 %dir %rustlibdir/%rust_triple
 %rustlibdir/%rust_triple/*
-%exclude %rustlibdir/%rust_triple/analysis
 %exclude %rustlibdir/etc/*
 %_man1dir/rustc.*
 %_man1dir/rustdoc.*
@@ -463,10 +453,11 @@ rm -rf %rustdir
 %files src
 %rustlibdir/src
 
-%files analysis
-%rustlibdir/%rust_triple/analysis
-
 %changelog
+* Sat Apr 22 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.69.0-alt1
+- New version (1.69.0).
+- Obsolete rust-analysis.
+
 * Fri Apr 07 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.68.2-alt2
 - Backport 9d110847ab7f ("ReErased regions are local").
 
