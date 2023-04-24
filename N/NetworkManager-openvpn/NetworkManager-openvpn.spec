@@ -1,6 +1,6 @@
 %define nm_version 1.7.0
-%define git_date %nil
-#define git_date .git20111101
+#define git_hash %nil
+%define git_hash .ge1c5978
 
 %def_with gtk4
 
@@ -13,8 +13,8 @@
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.10.2
-Release: alt1%git_date
+Version: 1.10.3
+Release: alt1%git_hash
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for OpenVPN
@@ -117,6 +117,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Apr 24 2023 Mikhail Efremov <sem@altlinux.org> 1.10.3-alt1.ge1c5978
+- Upstream git snapshot (master branch).
+
 * Mon Nov 21 2022 Mikhail Efremov <sem@altlinux.org> 1.10.2-alt1
 - Updated to 1.10.2.
 
