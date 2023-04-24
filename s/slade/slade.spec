@@ -1,5 +1,5 @@
 Name: slade
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 
 Summary: SLADE3 Doom editor
@@ -23,7 +23,7 @@ BuildRequires: p7zip
 BuildRequires: bzlib-devel
 BuildRequires: libfreeimage-devel
 BuildRequires: libpulseaudio-devel
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: libfluidsynth-devel
 BuildRequires: libftgl-devel
 BuildRequires: libglvnd
@@ -97,6 +97,9 @@ done
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Apr 24 2023 Artyom Bystrov <arbars@altlinux.org> 3.2.2-alt1
+- Update to new version
+
 * Sun Jul 9 2022 Artyom Bystrov <arbars@altlinux.org> 3.2.1-alt1
 - Update to new version
 
