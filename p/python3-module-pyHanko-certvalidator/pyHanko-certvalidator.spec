@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.20.1
+Version: 0.22.0
 Release: alt1
 
 Summary: Python library for validating X.509 certificates and paths
@@ -16,6 +16,9 @@ URL:     https://github.com/MatthiasValvekens/certvalidator
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -42,10 +45,10 @@ whitelisting and revocation checks.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -59,9 +62,12 @@ not test_basic_certificate_validator_tls_aia"
 %files
 %doc *.md
 %python3_sitelibdir/%mname
-%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%mname-%version.dist-info
 
 %changelog
+* Mon Apr 24 2023 Grigory Ustinov <grenka@altlinux.org> 0.22.0-alt1
+- Automatically updated to 0.22.0.
+
 * Fri Feb 24 2023 Grigory Ustinov <grenka@altlinux.org> 0.20.1-alt1
 - Automatically updated to 0.20.1.
 
