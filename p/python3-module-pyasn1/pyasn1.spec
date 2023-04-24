@@ -1,30 +1,28 @@
 %define _unpackaged_files_terminate_build 1
-%define mname pyasn1
+%define pypi_name pyasn1
 
 %def_with check
 
-Name: python3-module-%mname
-Version: 0.4.8
-Release: alt2
-
-Summary: Abstract Syntax Notation One (ASN.1), Python implementation
-License: BSD
+Name: python3-module-%pypi_name
+Version: 0.5.0
+Release: alt1
+Summary: Pure-Python implementation of ASN.1 types and DER/BER/CER codecs (X.208)
+License: BSD-2-Clause
 Group: Development/Python3
-# Source-git: https://github.com/etingof/pyasn1.git
-Url: https://pypi.python.org/pypi/pyasn1
-
+Url: https://pypi.org/project/pyasn1/
+Vcs: https://github.com/pyasn1/pyasn1
+BuildArch: noarch
 Source0: %name-%version.tar
-Source1: pyasn1.watch
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
+%pyproject_builddeps_metadata
 %endif
-
-BuildArch: noarch
 
 %description
 This is an implementation of ASN.1 types and codecs in Python programming
@@ -35,29 +33,27 @@ based on ASN.1 specification.
 %prep
 %setup
 %patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} -m pytest {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%pyproject_run_unittest discover -s tests
 
 %files
-%doc LICENSE.rst README.md CHANGES.rst
+%doc README.md CHANGES.rst
 %python3_sitelibdir/pyasn1/
-%python3_sitelibdir/pyasn1-%version-*.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1
+- 0.4.8 -> 0.5.0.
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.4.8-alt2
 - Built Python3 package from its ows src.
 

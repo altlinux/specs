@@ -1,64 +1,55 @@
 %define _unpackaged_files_terminate_build 1
-%define mname pyasn1-modules
+%define pypi_name pyasn1-modules
 
 %def_with check
 
-Name: python3-module-%mname
-Version: 0.2.8
-Release: alt2
-
-Summary: ASN.1 modules for Python
+Name: python3-module-%pypi_name
+Version: 0.3.0
+Release: alt1
+Summary: A collection of ASN.1-based protocols modules
 License: BSD-2-Clause
 Group: Development/Python3
-# Source-git: https://github.com/etingof/pyasn1-modules.git
-Url: https://pypi.python.org/pypi/pyasn1-modules
-
+Url: https://pypi.org/project/pyasn1-modules/
+Vcs: https://github.com/pyasn1/pyasn1-modules
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(pyasn1)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
+%pyproject_builddeps_metadata
 %endif
 
-Requires: python3-module-pyasn1 >= 0.4.6
-BuildArch: noarch
-
 %description
-This is a small but growing collection of ASN.1 data structures
-expressed in Python terms using pyasn1 data model.
-
-It's thought to be useful to protocol developers and testers.
+The %pypi_name package contains a collection of ASN.1 data structures
+expressed as Python classes based on pyasn1 data model.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} -m pytest {posargs:-vra}
-EOF
-
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%pyproject_run_unittest discover -s tests
 
 %files
-%doc LICENSE.txt README.md
+%doc README.md
 %python3_sitelibdir/pyasn1_modules/
-%python3_sitelibdir/pyasn1_modules-%version-*.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
+- 0.2.8 -> 0.3.0.
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.2.8-alt2
 - Built Python3 package from its ows src.
 
