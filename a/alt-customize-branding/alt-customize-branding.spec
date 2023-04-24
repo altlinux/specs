@@ -1,12 +1,12 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 %K5init no_altplace
 
 #Group: Graphics
-Group: Graphical desktop/KDE
+Group: Graphical desktop/Other
 Summary: Customize branding tool
 License: GPL-3.0-or-later
 Url: https://www.basealt.ru/
@@ -29,7 +29,7 @@ Requires: %rname-backend
 Requires: libkf5auth
 
 %description
-The ALT tool for KDE to customize branding
+The ALT tool to customize branding
 
 %package backend
 Summary: Customize branding tool backend
@@ -84,7 +84,7 @@ if [ $1 -eq 0 ] ; then
 # generate file "/boot/grub/grub.cfg"
         /usr/sbin/grub-mkconfig -o /boot/grub/grub.cfg
 # Change theme name in file 'plymouthd.conf':
-        sed -i "s/Theme=.*/Theme=$previousThemeName/" /etc/plymouth/plymouthd.conf
+        [ -f "/etc/plymouth/plymouthd.conf" ] && sed -i "s/Theme=.*/Theme=$previousThemeName/" /etc/plymouth/plymouthd.conf || :
     fi
 # Remove directories
 #rm -R %%_localstatedir/%%rname
@@ -127,6 +127,15 @@ fi
 #%%doc README
 
 %changelog
+* Fri Apr 21 2023 Dmitrii Fomchenkov <sirius@altlinux.org>  1.1.3-alt1
+- add a check to the script for the existence of the plymouthd.conf
+ (/etc/plymouth/plymouthd.conf) file (Bugzilla: #45851)
+- add and fix the desc of the utility in the application
+ menu (Bugzilla: #45815)
+- edit desc and category (Bugzilla: #45147)
+- fix incorrect display of branding elements after clearing the preview
+ area and re-adding the background and logo. (Bugzilla: #45829)
+
 * Thu Mar 30 2023 Dmitrii Fomchenkov <sirius@altlinux.org>  1.1.2-alt1
 - fix branding change bug in desktop environments other than KDE
 - fix branding installation script
