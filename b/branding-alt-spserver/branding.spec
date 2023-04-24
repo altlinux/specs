@@ -19,7 +19,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt1
+Release: alt2
 Epoch: 1
 Url: https://altsp.su
 
@@ -282,6 +282,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Apr 17 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt2
+- indexhtml: add link "Report a Bug"
+- notes: use word 'release' instead 'version'
+
 * Sun Apr 09 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt1
 - set version 10, Epoch 1
 - remove codename, add LKNV in altlinux-release
