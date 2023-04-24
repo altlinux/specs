@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 300
+%define centos_release 303
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -639,6 +639,42 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Apr 24 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.303-alt1.el9
+- Updated to kernel-5.14.0-303.el9 (fixes: CVE-2023-26545):
+  + arch/x86: Update to 5.16
+  + arm64: rebase arm core code to upstream v6.2
+  + blk-mq: directly poll requests
+  + cnic: update cnic driver to latest upstream
+  + cpuidle: psci: Do not suspend topology CPUs on PREEMPT_RT
+  + crypto: qat: Update QAT drivers upto v6.2
+  + Ignore VAS update for DLPAR
+  + ipv4: First round of upstream fixes for RHEL 9.3.
+  + ipv6: Make sockopt IPV6_TCLASS behave like IP_TOS
+  + net: Let sockets explicitely choose between task and sock page_frag.
+  + net: mpls: fix stale pointer if allocation fails during device rename
+  + nfs42: do not fail with EIO if ssc returns NFS4ERR_OFFLOAD_DENIED
+  + PCI: Fix use-after-free in pci_bus_release_domain_nr()
+  + Remove unneeded kABI hack from 9.3 file locking code
+  + [s390]: RHEL9.0 - kernel: fix __clear_user() inline assembly constraints
+  + [s390]: RHEL9.0 - s390/qeth: NET2016 - fix use-after-free in HSCI
+  + SUNRPC: Fix a server shutdown leak
+  + tracing/hwlat: Replace sched_setaffinity with set_cpus_allowed_ptr
+
+* Wed Apr 19 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.301-alt1.el9
+- Updated to kernel-5.14.0-301.el9:
+  + Backport multichannel updates from upstream
+  + Backport small patches to bring us close to 6.1
+  + block: don't set GD_NEED_PART_SCAN if scan partition failed
+  + CNB: ethtool: update ethtool core to latest upstream
+  + CNB: net/sched: Extend action skbedit to RX queue mapping
+  + Fix crashdumping on s390x
+  + kbuild: add fixes to scripts/Makefile.build to fix /bin/sh: Argument list too long build error
+  + kernel.spec: gcov: make gcov subpackages per variant
+  + Merge commit 'c52201bfc7be5cff56cbae3a9f3287f296ecb173' from documentation
+  + redhat/kernel.spec.template: fix installonlypkg for meta package
+  + wifi: iwlwifi: mvm: protect TXQ list manipulation
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Apr 17 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.300-alt1.el9
 - Updated to kernel-5.14.0-300.el9 (fixes: CVE-2023-0386, CVE-2023-1252):
   + Add support for Interrupt Message Storage (IMS)
