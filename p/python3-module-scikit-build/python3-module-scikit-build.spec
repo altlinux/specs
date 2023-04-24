@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 0.17.1
-Release: alt1.1
+Version: 0.17.2
+Release: alt1
 
 Summary: Improved build system generator for CPython C/C++/Fortran/Cython extensions
 Group: Development/Python3
@@ -60,6 +60,9 @@ py.test3
 
 
 %changelog
+* Mon Apr 24 2023 Yuri N. Sedunov <aris@altlinux.org> 0.17.2-alt1
+- 0.17.2
+
 * Tue Apr 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.17.1-alt1.1
 - explicitly required python3(tomli) if %%__python_version <= 3.11
 
