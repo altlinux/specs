@@ -3,7 +3,7 @@
 
 %define fsname f2fs
 Name: %fsname-tools
-Version: 1.15.0
+Version: 1.16.0
 Release: alt1
 
 Summary: Tools for Flash-Friendly File System (F2FS)
@@ -97,6 +97,9 @@ install -m 644 mkfs/f2fs_format_utils.h %buildroot%_includedir
 %endif
 
 %changelog
+* Mon Apr 24 2023 Grigory Ustinov <grenka@altlinux.org> 1.16.0-alt1
+- Automatically updated to 1.16.0.
+
 * Mon May 23 2022 Grigory Ustinov <grenka@altlinux.org> 1.15.0-alt1
 - Automatically updated to 1.15.0.
 
