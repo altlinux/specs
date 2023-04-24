@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-dbusmock
-Version: 0.28.7
+Version: 0.29.0
 Release: alt1
 
 Summary: mock D-Bus objects for tests
@@ -12,7 +12,9 @@ Group: Development/Python3
 Url: https://github.com/martinpitt/python-dbusmock
 # https://pypi.python.org/pypi/%pypi_name
 
-Source: %url/releases/download/%version/%pypi_name-%version.tar.gz
+Vcs: https://github.com/martinpitt/python-dbusmock.git
+#Source: %url/releases/download/%version/%pypi_name-%version.tar.gz
+Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 Requires: dbus
@@ -56,6 +58,9 @@ python3 -m unittest
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Mon Apr 24 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1
+- 0.29.0
+
 * Wed Jan 11 2023 Yuri N. Sedunov <aris@altlinux.org> 0.28.7-alt1
 - 0.28.7
 
