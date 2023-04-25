@@ -4,31 +4,28 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.28.0
+Version: 1.31.0
 Release: alt1
 Summary: A linter for YAML files
-Group: Development/Python
 License: GPLv3
-Url: https://github.com/adrienverge/yamllint
-Source0: %name-%version.tar
+Group: Development/Python
+Url: https://pypi.org/project/yamllint/
+Vcs: https://github.com/adrienverge/yamllint
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
-
-%if_with check
-BuildRequires: /dev/pts
-BuildRequires: python3(pathspec)
-BuildRequires: python3(yaml)
-%endif
-
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Provides: yamllint = %EVR
 Obsoletes: yamllint <= 1.24.2-alt1
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+BuildRequires: /dev/pts
+%pyproject_builddeps_metadata
+%endif
+
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
 A linter for YAML files.
@@ -39,6 +36,8 @@ indentation, etc.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -55,13 +54,7 @@ popd
 install -D -m0644 docs/_build/man/yamllint.1 %buildroot/%_man1dir/yamllint.1
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} -m unittest discover -vv tests {posargs}
-EOF
-export TOX_TESTENV_PASSENV='HOME'
-%tox_check_pyproject
+%pyproject_run_unittest discover
 
 %files
 %doc README.rst CHANGELOG.rst
@@ -72,6 +65,9 @@ export TOX_TESTENV_PASSENV='HOME'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 1.31.0-alt1
+- 1.28.0 -> 1.31.0.
+
 * Mon Sep 12 2022 Stanislav Levin <slev@altlinux.org> 1.28.0-alt1
 - 1.24.2 -> 1.28.0.
 
