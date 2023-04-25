@@ -7,12 +7,13 @@ BuildRequires: python3-dev python3-module-PyQt5 python3-module-sip
 BuildRequires: python3-module-keyring python3-module-dbus
 BuildRequires: python3-module-psutil
 BuildRequires: /proc
+BuildRequires: python3-module-importlib-metadata
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
 Name:           nagstamon
 Version:        3.5.0
-Release:        alt3.rc1
+Release:        alt4
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
@@ -85,6 +86,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Apr 25 2023 Paul Wolneykien <manowar@altlinux.org> 3.5.0-alt4
+- Fix: Require python3-module-importlib-metadata.
+
 * Tue Feb 14 2023 Stanislav Levin <slev@altlinux.org> 3.5.0-alt3.rc1
 - Fixed FTBFS (setuptools 66).
 
