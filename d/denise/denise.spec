@@ -1,6 +1,6 @@
 %define optflags_lto %nil
 Name:     denise
-Version:  1.1.3.1
+Version:  2.0
 Release:  alt1
 
 Summary:  Highly accurate C64/Amiga emulator
@@ -12,7 +12,7 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source:   %name-%version.tar
 Source2:  LICENSE
-BuildRequires: gcc-c++ libSDL2-devel libgtk+3-devel libpulseaudio-devel libopenal-devel libXrandr-devel libXfixes-devel bzlib-devel libpcre2-devel libbrotli-devel libudev-devel libfreetype-devel
+BuildRequires: gcc-c++ libSDL2-devel libgtk+3-devel libpulseaudio-devel libopenal-devel libXrandr-devel libXfixes-devel bzlib-devel libpcre2-devel libbrotli-devel libudev-devel libfreetype-devel libpcre-devel
 
 
 %description
@@ -48,5 +48,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_datadir
 
 
 %changelog
+* Tue Apr 25 2023 Artyom Bystrov <arbars@altlinux.org> 2.0-alt1
+- update to new version
+- added Commodore Amiga initial support
+
 * Wed Dec 21 2022 Artyom Bystrov <arbars@altlinux.org> 1.1.3.1-alt1
 - Initial build for Sisyphus
