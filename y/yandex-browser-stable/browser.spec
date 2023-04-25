@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 23.3.1.929
+Version: 23.3.1.946
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -204,6 +204,10 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+* Tue Apr 25 2023 yabro <yabro@altlinux.org> 23.3.1.946-alt1
+- Browser updated to 23.3.1.946
+  + Critical CVE-2023-2033: Type confusion in V8
+
 * Mon Apr 17 2023 yabro <yabro@altlinux.org> 23.3.1.929-alt1
 - Browser updated to 23.3.1.929
 - Fix installation of partner data
