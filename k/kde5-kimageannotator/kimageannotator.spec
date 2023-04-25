@@ -4,7 +4,7 @@
 %define libkimageannotator libkimageannotator%sover
 
 Name: kde5-%rname
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 %K5init altplace
 
@@ -79,6 +79,9 @@ KF5 library
 %_K5lib/libkImageAnnotator.so.*
 
 %changelog
+* Tue Apr 25 2023 Sergey V Turchin <zerg@altlinux.org> 0.6.1-alt1
+- new version
+
 * Mon Aug 01 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 0.6.0-alt1
 - NMU:
       + new version
