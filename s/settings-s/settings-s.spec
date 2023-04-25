@@ -1,5 +1,5 @@
 Name:     settings-s
-Version:  0.4.1
+Version:  0.4.2
 Release:  alt1
 
 Summary:  settings for custom distro
@@ -21,7 +21,6 @@ These are settings for custom distro.
 Summary: integrity checker script and settings
 Group: System/Configuration/Other
 Requires: systemd
-Requires: osec-controls
 Requires: osec-cronjob >= 1.3.1-alt2
 
 %description -n integ
@@ -38,7 +37,6 @@ Run integrity check after install (installer files).
 Summary: Run integrity check after install
 Group: System/Configuration/Other
 Requires: integ = %version-%release
-Requires: osec-controls
 
 %description -n installer-integ-stage3
 Run integrity check after install (chroot files).
@@ -52,12 +50,14 @@ mkdir -p %buildroot/sbin
 mkdir -p %buildroot%_unitdir
 mkdir -p %buildroot/%_sysconfdir/firsttime.d
 mkdir -p %buildroot/lib/systemd/system-preset
+mkdir -p %buildroot/%_sysconfdir/osec/integalert
 
 install -Dm 0644 65-integrity.preset %buildroot/lib/systemd/system-preset/
 install -Dm 0755 65-settings.sh  %buildroot%_datadir/install2/postinstall.d/
 install -Dm 0755 90-integrity-init.sh  %buildroot%_datadir/install2/postinstall.d/
 install -Dm 0644 integalert.service %buildroot%_unitdir/
 install -Dm 0700 integalert %buildroot/sbin/
+install -D -m 0600 dirs.conf %buildroot/%_sysconfdir/osec/integalert/dirs.conf
 
 
 %post -n integ
@@ -80,9 +80,17 @@ fi
 %_unitdir/integalert.service
 /lib/systemd/system-preset/65-integrity.preset
 /sbin/integalert
+%dir %_sysconfdir/osec/integalert
+%config(noreplace) %_sysconfdir/osec/integalert/*.conf
 
 
 %changelog
+* Tue Apr 25 2023 Paul Wolneykien <manowar@altlinux.org> 0.4.2-alt1
+- Provide the default dirs.conf for 'integalert' profile as a part of
+  the 'integ' package.
+- Output a warning and exit if dirs.conf is empty.
+- Support for 'container' and 'vm' profiles.
+
 * Fri Oct 02 2020 Paul Wolneykien <manowar@altlinux.org> 0.4.1-alt1
 - Set integalert service state from its preset after system
   installation.
