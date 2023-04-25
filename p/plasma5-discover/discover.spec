@@ -20,7 +20,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.4
-Release: alt4
+Release: alt5
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -294,6 +294,10 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Tue Apr 25 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt5
+- fix view additional info on update
+- update russian translation
+
 * Thu Apr 20 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt4
 - require plasma5-flatpak-kcm for flatpak subpackage
 
