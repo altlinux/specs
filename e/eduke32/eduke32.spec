@@ -1,5 +1,5 @@
 Name: eduke32
-Version: 20221225
+Version: 20230123.10167
 Release: alt1
 Summary: Source port of Duke Nukem 3D
 License: GPL-2.0-only
@@ -29,6 +29,7 @@ BuildRequires: libSDL2-devel
 BuildRequires: libvorbis-devel
 BuildRequires: libvpx-devel
 BuildRequires: libGLU-devel
+BuildRequires: imgui-devel
 
 ExcludeArch: %ix86
 
@@ -60,6 +61,8 @@ cp %SOURCE4 .
 cp %SOURCE5 .
 cp %SOURCE6 .
 cp %SOURCE7 .
+
+sed -i 's/ -save-temps=obj / /g' GNUmakefile
 
 %build
 export CFLAGS='%optflags -Wno-format'
@@ -105,6 +108,9 @@ install -Dm 0644 %{name}_128x128.png %buildroot%_iconsdir/hicolor/128x128/apps/%
 %_bindir/mapster32
 
 %changelog
+* Tue Apr 25 2023 Artyom Bystrov <arbars@altlinux.org> 20230123.10167-alt1
+- update to new version
+
 * Thu Jan 19 2023 Artyom Bystrov <arbars@altlinux.org> 20221225-alt1
 - initial build for ALT Sisyphus
 
