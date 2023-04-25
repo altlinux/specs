@@ -3,14 +3,14 @@
 
 Name: widelands
 Version: 1.1
-Release: alt1
+Release: alt1.1
 Epoch: 1
-Summary: Open source realtime-strategy game
 
+Summary: Open source realtime-strategy game
 License: GPLv2+
 Group: Games/Strategy
-Url: http://www.widelands.org
 
+Url: http://www.widelands.org
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
@@ -38,12 +38,16 @@ BuildRequires: doxygen
 %description
 Widelands is an open source (GPLed), realtime-strategy game, using SDL and
 other free libraries, which is still under development. Widelands is inspired
-by Settlers II (Bluebyte) and is partly similar to it, so if you know it, you
-perhaps will have a thought, what Widelands is all about.
+by Settlers II (Bluebyte) and is partly similar to it, so if you know it,
+you perhaps will have a thought what Widelands is all about.
 
 %prep
 %setup
 %autopatch -p1
+%ifarch %e2k
+# unsupported as of lcc 1.26.18 (mcst#7644)
+sed -i '/-fno-elide-constructors/d' CMakeLists.txt
+%endif
 
 %build
 %cmake \
@@ -75,6 +79,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml
 %_datadir/%name
 
 %changelog
+* Tue Apr 25 2023 Michael Shigorin <mike@altlinux.org> 1:1.1-alt1.1
+- E2K: avoid lcc-unsupported option (mcst#7644)
+- minor spec cleanup
+
 * Sun Oct 23 2022 Anton Midyukov <antohami@altlinux.org> 1:1.1-alt1
 - New version 1.1
 
