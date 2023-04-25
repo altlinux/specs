@@ -3,7 +3,7 @@
 
 Name: openscad
 Version: 2021.01
-Release: alt4
+Release: alt4.1
 
 Summary: The Programmers Solid 3D CAD Modeller
 
@@ -36,7 +36,7 @@ BuildRequires: cmake
 BuildRequires: cgal-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: xorg-xvfb xvfb-run
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-signals-devel boost-wave-devel
+BuildRequires: boost-asio-devel boost-context-devel boost-devel boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-signals-devel boost-wave-devel
 BuildRequires: desktop-file-utils
 BuildRequires: eigen3
 BuildRequires: libfreetype-devel >= 2.4
@@ -57,7 +57,11 @@ BuildRequires: qt5-multimedia-devel
 BuildRequires: flex
 BuildRequires: libqscintilla2-qt5-devel
 BuildRequires: libcairo-devel
+%ifnarch %e2k
+# act -> go
 BuildRequires: lib3mf-devel
+BuildRequires: boost-coroutine-devel
+%endif
 
 Requires: %name-MCAD = %EVR
 %add_python3_path %_datadir/%name/libraries/MCAD
@@ -89,6 +93,15 @@ changes, however many things are already working.
 %setup
 %autopatch -p1
 
+%ifarch %e2k
+# mcst#8018
+sed -i "s/c++14/c++17/" c++std.pri
+# lcc 1.25 didn't grok that (1.26 does)
+cc -v 2>&1 | grep -q 'lcc:1\.25' && {
+sed -i 's/std::array<uint8_t,.*data()/"\\x89\\x50\\x4e\\x47\\x0d\\x0a\\x1a\\x0a"/' src/surface.cc
+}
+%endif
+
 cp -f %SOURCE1 locale/ru.po
 
 # Unbundle polyclipping
@@ -107,7 +120,13 @@ popd
 sed -i 's@MCAD/__init__.py@MCAD/gears.scad@' tests/CMakeLists.txt
 
 %build
-%qmake_qt5 PREFIX=%prefix  VERSION=%version CONFIG-=debug
+%qmake_qt5 \
+	PREFIX=%prefix \
+	VERSION=%version \
+%ifnarch %e2k
+	CONFIG-=debug \
+%endif
+	%nil
 %make_build
 
 # tests
@@ -156,6 +175,14 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Tue Apr 25 2023 Michael Shigorin <mike@altlinux.org> 2021.01-alt4.1
+- E2K (thx ilyakurdyukov@):
+  + avoid BR: lib3mf for now (BR chain boils down to go)
+  + avoid BR: boost-coroutine-devel (missing so far)
+  + get *-debuginfo back
+  + explicit -std=c++17 (mcst#8018)
+  + lcc 1.25 ftbfs workaround
+
 * Mon Jun 20 2022 Anton Midyukov <antohami@altlinux.org> 2021.01-alt4
 - Fixes:
   + CVE-2022-0496 Out-of-bounds memory access in DXF loader (path
