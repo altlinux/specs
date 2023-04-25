@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: Support for unittest subTest() and subtests fixture
 
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
 
 %if_with check
+BuildRequires: python3-module-attrs
 BuildRequires: python3-module-pytest
 %endif
 
@@ -51,6 +52,9 @@ py.test-3
 %python3_sitelibdir/pytest_subtests-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 0.10.0-alt2
+- Fixed FTBFS (pytest 7.3.1).
+
 * Thu Feb 16 2023 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
 - Automatically updated to 0.10.0.
 

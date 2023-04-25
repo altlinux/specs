@@ -1,13 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest
 
-%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
-%define exceptiongroup %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
-
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.2.2
+Version: 7.3.1
 Release: alt1
 Summary: Python test framework
 License: MIT
@@ -16,52 +13,17 @@ Url: https://pypi.org/project/pytest/
 VCS: https://github.com/pytest-dev/pytest.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-%py3_requires packaging
-%if %tomli
-%py3_requires tomli
-%endif
-%if %exceptiongroup
-%py3_requires exceptiongroup
-%endif
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-# install_requires:
-%if %tomli
-BuildRequires: python3(tomli)
-%endif
-%if %exceptiongroup
-BuildRequires: python3(exceptiongroup)
-%endif
-BuildRequires: python3(attr)
-BuildRequires: python3(iniconfig)
-BuildRequires: python3(packaging)
-BuildRequires: python3(pluggy)
-
-# extras_require:
-BuildRequires: python3(argcomplete)
-BuildRequires: python3(hypothesis)
-BuildRequires: python3(mock)
-BuildRequires: python3(requests)
-BuildRequires: python3(xmlschema)
-BuildRequires: python3-module-Pygments >= 2.14.0
-
+%pyproject_builddeps_metadata_extra testing
 BuildRequires: /dev/pts
 BuildRequires: /dev/shm
-
-# optional
-BuildRequires: python3(decorator)
-BuildRequires: python3(jinja2)
-BuildRequires: python3(numpy)
-BuildRequires: python3(pexpect)
 %endif
 
 # don't provide limited compat shim for python3(py) from python3-module-py
@@ -85,16 +47,9 @@ scales to support complex functional testing for applications and libraries.
 %prep
 %setup
 %patch -p1
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -126,6 +81,9 @@ export TERM=xterm
 %_bindir/pytest-3
 
 %changelog
+* Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 7.3.1-alt1
+- 7.2.2 -> 7.3.1.
+
 * Mon Mar 06 2023 Stanislav Levin <slev@altlinux.org> 7.2.2-alt1
 - 7.2.1 -> 7.2.2.
 

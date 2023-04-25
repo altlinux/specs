@@ -1,16 +1,17 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name exceptiongroup
+%define pypi_name linkify-it-py
+%define mod_name linkify_it
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.1
+Version: 2.0.0
 Release: alt1
-Summary: Backport of PEP 654 (exception groups)
+Summary: Links recognition library with FULL unicode support
 License: MIT
 Group: Development/Python3
-VCS: https://github.com/agronholm/exceptiongroup
-Url: https://pypi.org/project/exceptiongroup
+Url: https://pypi.org/project/linkify-it-py
+Vcs: https://github.com/tsutsu3/linkify-it-py.git
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
@@ -19,18 +20,16 @@ Patch: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata_extra test
 %endif
 
 %description
-Backport of PEP 654 (exception groups)
+This is Python port of linkify-it.
 
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -41,22 +40,13 @@ Backport of PEP 654 (exception groups)
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -ra
 
 %files
-%doc README.rst
-%python3_sitelibdir/%pypi_name/
+%doc README.*
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
-* Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1
-- 1.1.0 -> 1.1.1.
-
-* Tue Jan 24 2023 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
-- 1.0.4 -> 1.1.0.
-
-* Wed Nov 16 2022 Stanislav Levin <slev@altlinux.org> 1.0.4-alt1
-- 1.0.1 -> 1.0.4.
-
-* Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
+* Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus.

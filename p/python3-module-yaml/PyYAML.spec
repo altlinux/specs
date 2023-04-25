@@ -1,17 +1,34 @@
-Name: python3-module-yaml
+%define _unpackaged_files_terminate_build 1
+%define pypi_name PyYAML
+%define mod_name yaml
+
+%def_with check
+
+Name: python3-module-%mod_name
 Version: 6.0
-Release: alt1
+Release: alt2
 
 Summary: PyYAML, a YAML parser and emitter for Python
 License: MIT
 Group: Development/Python3
-Url: https://github.com/yaml/pyyaml
+Url: https://pypi.org/project/PyYAML/
+Vcs: https://github.com/yaml/pyyaml
 
-# Source-url: https://github.com/yaml/pyyaml/archive/%version.tar.gz
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 BuildRequires: libyaml-devel
-BuildRequires: rpm-build-python3 python3-module-Cython
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 
 %description
 YAML is a data serialization format designed for human readability
@@ -23,19 +40,29 @@ support, and relatively sensible error messages.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build build_ext
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run -- python3 tests/lib/test_all.py
 
 %files
 %doc CHANGES README*
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/_yaml/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 6.0-alt2
+- Modernized packaging.
+
 * Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0-alt1
 - 6.0 released
 

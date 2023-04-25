@@ -5,27 +5,23 @@
 
 Name: python3-module-%pypi_name
 Version: 8.1.3
-Release: alt1
-
+Release: alt2
 Summary: Composable command line interface toolkit
-
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python
 Url: https://pypi.org/project/click/
-
-# Source-git: https://github.com/pallets/click.git
+Vcs: https://github.com/pallets/click.git
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-BuildArch: noarch
-BuildRequires: rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -42,6 +38,11 @@ implement an intended CLI API.
 %setup
 %autopatch -p1
 rm src/click/_winconsole.py
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements/tests.txt
+%endif
 
 %build
 %pyproject_build
@@ -50,14 +51,17 @@ rm src/click/_winconsole.py
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
-%doc README.* LICENSE.rst
+%doc README.*
 %python3_sitelibdir/click/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 8.1.3-alt2
+- Fixed FTBFS (pytest 7.3.1).
+
 * Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 8.1.3-alt1
 - 8.1.2 -> 8.1.3.
 

@@ -1,6 +1,6 @@
 Name: python3-module-Pillow
 Version: 9.4.0
-Release: alt1
+Release: alt2
 
 Summary: Python Imaging Library
 License: MIT
@@ -8,6 +8,9 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/Pillow/
 
 Source0: %name-%version-%release.tar
+
+# mapping from PyPI name
+Provides: python3-module-pillow = %EVR
 
 BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -48,6 +51,9 @@ PIL is the Python Imaging Library by Fredrik Lundh and Contributors.
 %python3_sitelibdir/Pillow-%version.dist-info
 
 %changelog
+* Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 9.4.0-alt2
+- Mapped PyPI name to distro's one.
+
 * Mon Feb 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 9.4.0-alt1
 - 9.4.0 released
 

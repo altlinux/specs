@@ -2,24 +2,29 @@
 
 %define oname markdown-it
 %define mname markdown_it
+%define pypi_name markdown-it-py
+
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.1.0
+Version: 2.2.0
 Release: alt1
-Summary: Markdown parser, done right. 100%% CommonMark support, extensions, syntax plugins & high speed. Now in Python!
+Summary: Python port of markdown-it. Markdown parsing, done right!
 License: MIT
 Group: Development/Python3
-Url: https://markdown-it-py.readthedocs.io/
-
+Url: https://pypi.org/project/markdown-it-py/
+Vcs: https://github.com/executablebooks/markdown-it-py
 BuildArch: noarch
-
-# https://github.com/executablebooks/markdown-it-py
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: /usr/bin/py.test3
-BuildRequires: python3(pytest_benchmark)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra linkify
+%endif
 
 %description
 Markdown parser done right.
@@ -34,7 +39,7 @@ This is a Python port of markdown-it, and some of its associated plugins.
 For more details see: https://markdown-it-py.readthedocs.io.
 
 %package -n %oname
-Summary: Markdown parser, done right. 100%% CommonMark support, extensions, syntax plugins & high speed. Now in Python!
+Summary: Python port of markdown-it. Markdown parsing, done right!
 Group: Development/Python3
 Requires: %name = %EVR
 
@@ -52,34 +57,29 @@ For more details see: https://markdown-it-py.readthedocs.io.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test3 -vv \
-	--deselect=tests/test_linkify.py::test_token_levels \
-	--deselect=tests/test_port/test_fixtures.py::test_linkify \
-	--deselect=tests/test_tree.py::test_pretty \
-	--deselect=tests/test_api/test_main.py::test_table_tokens \
-	--deselect=tests/test_cmark_spec/test_spec.py::test_file \
-	--deselect=tests/test_port/test_references.py::test_use_existing_env \
-	--deselect=tests/test_port/test_references.py::test_store_labels \
-	%nil
+%pyproject_run_pytest -ra tests
 
 %files
-%doc LICENSE LICENSE.markdown-it
 %doc README.md
-%python3_sitelibdir/%mname
-%python3_sitelibdir/%{mname}_py-%version-py3*.egg-info
+%python3_sitelibdir/%mname/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files -n %oname
 %_bindir/%oname
 
 %changelog
+* Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 1.1.0 -> 2.2.0.
+
 * Thu Oct 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1
 - Initial build for ALT.
