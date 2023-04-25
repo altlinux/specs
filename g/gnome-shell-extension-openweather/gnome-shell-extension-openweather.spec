@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _name openweather
-%define ver_major 120
+%define ver_major 121
 %define beta %nil
 %define uuid %_name-extension@jenslody.de
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt0.5
+Release: alt1
 
 Summary: Weather extension for the GNOME Shell
 Group: Graphical desktop/GNOME
@@ -21,13 +21,11 @@ Url: https://gitlab.com/skrewball/openweather
 BuildArch: noarch
 
 %if_disabled snapshot
-Source: %url/archive/v%version%beta/%_name-%version%beta.tar.gz
+Source: %url/-/archive/v%version%beta/%_name-%version%beta.tar.gz
 %else
 Vcs: https://gitlab.com/skrewball/openweather.git
 Source: %name-%version%beta.tar
 %endif
-#https://gitlab.com/skrewball/openweather/-/issues/74
-Patch: %name-120-up-shell-44.patch
 
 Requires: gnome-shell >= 44
 Requires: typelib(Gtk) = 4.0
@@ -46,7 +44,6 @@ including 3 hour forecasts for up to 5 days.
 
 %prep
 %setup -n %name-%version%beta
-%patch -p1
 
 %build
 %make VERSION=%version
@@ -62,6 +59,9 @@ including 3 hour forecasts for up to 5 days.
 %doc AUTHORS README.md
 
 %changelog
+* Tue Apr 25 2023 Yuri N. Sedunov <aris@altlinux.org> 121-alt1
+- 121
+
 * Sat Mar 25 2023 Yuri N. Sedunov <aris@altlinux.org> 120-alt0.5
 - first build for Sisyphus
 

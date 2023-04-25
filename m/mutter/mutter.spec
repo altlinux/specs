@@ -18,11 +18,11 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 Epoch: 1
 
-Summary: Clutter based compositing GTK3 Window Manager
+Summary: Clutter based compositing Window Manager
 Group: Graphical desktop/GNOME
 License: GPL-2.0
 Url: http://ftp.gnome.org/pub/gnome/sources/%name
@@ -109,11 +109,7 @@ BuildRequires: libdbus-devel
 %{?_enable_wayland_eglstream:BuildRequires: egl-wayland-devel}
 
 %description
-mutter is a minimal X window manager aimed at nontechnical users and is
-designed  to  integrate well with the GNOME desktop.  mutter lacks some
-features that may be expected by traditional UNIX  or  other  technical
-users; these users may want to investigate other available window
-managers for use with GNOME or standalone.
+Mutter is a Wayland display server and X11 window manager and compositor library.
 
 %package -n lib%name
 Summary: Shared library for Mutter
@@ -263,6 +259,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Tue Apr 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1:44.1-alt1
+- 44.1
+
 * Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1:44.0-alt1
 - 44.0
 
