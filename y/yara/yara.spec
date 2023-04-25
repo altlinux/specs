@@ -6,7 +6,7 @@
 %define sover 10
 
 Name: yara
-Version: 4.3.0
+Version: 4.3.1
 Release: alt1
 License: BSD-3-Clause and Apache-2.0
 Group: Development/Tools
@@ -96,6 +96,9 @@ yara main.rule -r . | grep MAIN.*yara.spec
 %_pkgconfigdir/yara.pc
 
 %changelog
+* Tue Apr 25 2023 Vitaly Chikunov <vt@altlinux.org> 4.3.1-alt1
+- Update to v4.3.1 (2023-04-20).
+
 * Sat Mar 25 2023 Vitaly Chikunov <vt@altlinux.org> 4.3.0-alt1
 - Update to v4.3.0 (2023-03-22).
 
