@@ -1,5 +1,5 @@
 Name:    ktechlab
-Version: 0.50.0
+Version: 0.51.0
 Release: alt1
 
 Summary: Development and simulation of micro-controllers and electronic circuits
@@ -31,6 +31,7 @@ BuildRequires: kf5-solid-devel
 BuildRequires: glib2-devel
 BuildRequires: libgpsim-devel
 BuildRequires: readline-devel
+BuildRequires: qt5-serialport-devel
 BuildRequires: desktop-file-utils
 
 # Ktechlab requires gputils for PIC simulation.
@@ -64,7 +65,7 @@ echo "Comment[ru]=Среда разработки микроконтроллер
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog README
+%doc AUTHORS ChangeLog README.md
 %doc %_K5doc/en/%name
 %_bindir/%name
 %_bindir/microbe
@@ -78,6 +79,9 @@ echo "Comment[ru]=Среда разработки микроконтроллер
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Tue Apr 25 2023 Andrey Cherepanov <cas@altlinux.org> 0.51.0-alt1
+- New version.
+
 * Thu Jul 01 2021 Andrey Cherepanov <cas@altlinux.org> 0.50.0-alt1
 - Ressurection of the package (ALT #40340).
 - Fix upstream URL and License tag.
