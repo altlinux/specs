@@ -1,7 +1,7 @@
 %define rname markdownpart
 
 Name: kde5-%rname
-Version: 22.12.2
+Version: 23.04.0
 Release: alt1
 %K5init no_appdata
 
@@ -39,9 +39,12 @@ Extends: Ark, Kate, KDevelop, Konqueror, Krusader.
 %files -f %name.lang
 %doc README* LICENSES/*
 %_K5plug/kf5/parts/markdownpart.so
-%_K5srv/markdownpart.desktop
+#%_K5srv/markdownpart.desktop
 
 %changelog
+* Tue Apr 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.0-alt1
+- new version
+
 * Tue Feb 07 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
 - new version
 
