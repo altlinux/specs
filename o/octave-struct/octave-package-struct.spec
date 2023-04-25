@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/octave-config makeinfo
 %define octpkg struct
 Epoch: 1
 Name: octave-%octpkg
-Version: 1.0.17
+Version: 1.0.18
 Release: alt1
 Summary: Structure Handling.
 
@@ -47,6 +47,9 @@ Additional structure manipulation functions.
 %endif
 
 %changelog
+* Sat Mar 11 2023 Andrey Cherepanov <cas@altlinux.org> 1:1.0.18-alt1
+- new version
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.0.17-alt1
 - regenerated from template by package builder
 

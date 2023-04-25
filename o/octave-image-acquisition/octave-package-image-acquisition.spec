@@ -5,7 +5,7 @@ BuildRequires: fontconfig-devel libXcursor-devel libXext-devel libXfixes-devel l
 %define octpkg image-acquisition
 Name: octave-%octpkg
 Version: 0.2.2
-Release: alt5
+Release: alt6
 Summary: Image Acquisition
 
 Group: Sciences/Mathematics
@@ -34,6 +34,7 @@ The Octave-forge Image Aquisition package provides functions
 
 %prep
 %setup -q -n %{octpkg}-%{version}
+subst 's/error_state/0/' `grep -Rlw error_state *`
 
 %build
 %octave_build
@@ -49,6 +50,9 @@ The Octave-forge Image Aquisition package provides functions
 %endif
 
 %changelog
+* Sat Mar 11 2023 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt6
+- rebuild with octave 8
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt5
 - rebuild with octave 5
 

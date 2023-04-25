@@ -4,8 +4,8 @@
 %endif
 
 Name: octave
-Version: 7.3.0
-Release: alt2
+Version: 8.2.0
+Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -20,12 +20,9 @@ Source0: %name-%version-%release.tar
 Source1: octave.filetrigger
 Source2: %name.watch
 
-Patch0: octave-include-pcre.patch
 Patch1: octave-alt-desktop-l10n.patch
-Patch2: octave-alt-fix-build.patch
+Patch2: octave-alt-lcc.patch
 Patch3: octave-alt-fix-doc-build.patch
-Patch4: assume-blas-integer-size.patch
-Patch5: octave-alt-lcc.patch
 
 BuildRequires: flex gcc-c++ gcc-fortran libcurl-devel libfftw3-devel libglpk-devel
 BuildRequires: libhdf5-devel liblapack-devel libncurses-devel libpcre-devel
@@ -154,17 +151,15 @@ GNU Octave является высокоуровневым языком, в пе
 
 %prep
 %setup
-%patch0 -p2
 %patch1 -p2
-%patch4 -p1
-%patch5 -p2
+%patch2 -p2
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
 %add_optflags $(pkg-config fontconfig --cflags) -fpermissive -lm
 %undefine _configure_gettext
 %autoreconf
-patch -p2 < %PATCH3
+#patch -p2 < %PATCH3
 %configure \
 	--with-blas=openblas \
 	--enable-dl \
@@ -238,6 +233,12 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Tue Apr 18 2023 Andrey Cherepanov <cas@altlinux.org> 8.2.0-alt1
+- New version.
+
+* Wed Mar 08 2023 Andrey Cherepanov <cas@altlinux.org> 8.1.0-alt1
+- New version.
+
 * Wed Dec 28 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.0-alt2
 - Required makeinfo for help generation (ALT #43252).
 
