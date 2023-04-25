@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    makedumpfile
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 Summary: Make vmcore smaller by filtering and compressing pages
 Group:   System/Kernel and hardware
@@ -47,9 +47,7 @@ export LINKTYPE=dynamic
 
 %install
 %makeinstall_std
-# Install in non-versioned dirs.
 install -Dm0755 eppic_makedumpfile.so %buildroot%_libdir/%name/eppic_makedumpfile.so
-mv %buildroot%_datadir/makedumpfile-%version %buildroot%_datadir/makedumpfile
 
 %files
 %doc COPYING README IMPLEMENTATION
@@ -61,6 +59,9 @@ mv %buildroot%_datadir/makedumpfile-%version %buildroot%_datadir/makedumpfile
 %_libdir/%name
 
 %changelog
+* Tue Apr 25 2023 Vitaly Chikunov <vt@altlinux.org> 1.7.3-alt1
+- Update to 1.7.3 (2023-04-25).
+
 * Fri Oct 21 2022 Vitaly Chikunov <vt@altlinux.org> 1.7.2-alt1
 - Update to 1.7.2 (2022-10-20).
 
