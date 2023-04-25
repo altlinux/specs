@@ -1,11 +1,11 @@
 Name: RODOS3
 
-Version: 1.1
+Version: 1.3
 Release: alt1
 
 Summary: Control tool for RODOS-3 controllers
 Summary(ru_RU.UTF-8): Инструмент управления для контроллеров RODOS-3
-License: GPL
+License: GPL-3.0
 Group: System/Configuration/Hardware
 Url: https://www.olimp-z.ru/products/RODOS-3/RODOS3.tar.gz
 
@@ -41,6 +41,10 @@ install -D -m0644 %_sourcedir/udev.rules %buildroot%_udevrulesdir/40-%name.rules
 %attr(4711, root, root) %_bindir/%name
 
 %changelog
+* Tue Apr 25 2023 Pavel Isopenko <pauli@altlinux.org> 1.3-alt1
+- vew version 1.03
+- change license
+
 * Mon Jan 07 2019 Pavel isopenko <pauli@altlinux.org> 1.1-alt1
 - initial build for Sisyphus
 
