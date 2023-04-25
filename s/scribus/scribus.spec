@@ -1,14 +1,13 @@
 Name: scribus
 Version: 1.5.8
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
-
-Group: Publishing
 License: GPLv2+
-Url: http://www.scribus.net/
+Group: Publishing
 
+Url: http://www.scribus.net/
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 ##Source-url: https://github.com/scribusproject/scribus/archive/master.zip
@@ -18,8 +17,12 @@ Source: %name-%version.tar
 Patch0: scribus-1.5.7-up-harfbuzz-3.0.0.patch
 Patch1: scribus-1.5.7-no-execbit-plugins.patch
 Patch2: scribus-1.5.7-fix-undefined-mnone-color.patch
-Patch3: poppler-22.02.0.patch
-Patch4: poppler-22.03.0.patch
+# upstream revisions as debian patches
+Patch3: 24883.patch
+Patch4: 24886.patch
+Patch5: 24981.patch
+Patch6: 25073.patch
+Patch7: 25139.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake zlib-devel libssl-devel
@@ -120,19 +123,17 @@ BuildArch: noarch
 #patch2 -p2
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
-# don't
+# don't do that
 # brain damage with #if (PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 9, 7))
-subst 's|\(pBase->SetOwner\)|//\1|' scribus/pdf_analyzer.cpp
-
-%ifarch %e2k
-# until lcc-1.24: strip UTF-8 BOM
-find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
-%endif
+sed -i 's|\(pBase->SetOwner\)|//\1|' scribus/pdf_analyzer.cpp
 
 %build
 %cmake \
-%ifarch x86_64
+%if "%_lib" == "lib64"
 	-DWANT_LIB64=true \
 %endif
 	-DWANT_NORPATH=true \
@@ -161,7 +162,7 @@ popd
 %doc %_docdir/%name/ChangeLog*
 %doc %_docdir/%name/COPYING
 %doc %_docdir/%name/README
-#%doc %_docdir/%name/TODO
+#doc %_docdir/%name/TODO
 %_bindir/%name
 %_desktopdir/scribus.desktop
 %_datadir/metainfo/scribus.appdata.xml
@@ -175,15 +176,15 @@ popd
 %files data
 %_datadir/%name
 
-#%files devel
-#%doc AUTHORS COPYING
-#%_includedir/%name
+#files devel
+#doc AUTHORS COPYING
+#_includedir/%name
 
 %files doc
 %dir %_docdir/%name
-#%_docdir/%name/BUILDING
-#%_docdir/%name/NEWS
-#%_docdir/%name/PACKAGING
+#_docdir/%name/BUILDING
+#_docdir/%name/NEWS
+#_docdir/%name/PACKAGING
 %_docdir/%name/LINKS
 %_docdir/%name/TRANSLATION
 %_docdir/%name/en/
@@ -192,6 +193,10 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Tue Apr 25 2023 Michael Shigorin <mike@altlinux.org> 1:1.5.8-alt2
+- fix build against poppler 22.09 with debian patches (ALT#44772)
+- spec cleanup
+
 * Sat Apr 09 2022 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.8-alt1
 - new version 1.5.8 (with rpmrb script)
 - fix build with poppler 22.02 and poppler 22.03
