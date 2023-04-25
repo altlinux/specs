@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 112.0.1
+Version: 112.0.2
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -23,8 +23,6 @@ Patch009: 0009-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch010: 0010-ALT-fix-double_t-redefinition.patch
 Patch011: 0011-build-Disable-Werror.patch
 Patch012: 0012-WAYLAND-call-wl_display_roundtrip-early.patch
-Patch013: 0013-Bug-1827429-Wayland-Call-NotifyOcclusionState-Occlus.patch
-Patch014: 0014-Bug-1826583-Wayland-Don-t-crash-on-Wayland-log-handl.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -424,6 +422,9 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Apr 25 2023 Alexey Gladkov <legion@altlinux.ru> 112.0.2-alt1
+- New release (112.0.2).
+
 * Tue Apr 18 2023 Alexey Gladkov <legion@altlinux.ru> 112.0.1-alt1
 - New release (112.0.1).
 
