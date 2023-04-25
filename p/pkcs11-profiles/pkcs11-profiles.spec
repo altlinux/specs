@@ -10,7 +10,7 @@
 %def_disable isbc
 %endif
 
-%ifarch x86_64 armh aarch64 mipsel %e2k
+%ifarch x86_64 aarch64 e2kv4
 %def_enable jacarta
 %else
 %def_disable jacarta
@@ -18,7 +18,7 @@
 
 Name: pkcs11-profiles
 Version: 0.1.13
-Release: alt2
+Release: alt3
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -169,6 +169,9 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Tue Apr 18 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.13-alt3
+- JaCarta: Drop support for i586, armh, e2k and mipsel architectures.
+
 * Tue Dec 20 2022 Andrey Cherepanov <cas@altlinux.org> 0.1.13-alt2
 - Disable ppc64le support for librtpkcs11ecp-2.7.1.0.
 

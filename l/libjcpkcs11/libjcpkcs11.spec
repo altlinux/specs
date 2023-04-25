@@ -7,8 +7,8 @@
 %brp_strip_none
 
 Name: libjcpkcs11
-Version: 2.7.4
-Release: alt6
+Version: 2.8.0
+Release: alt2
 
 Summary: Aladdin JaCarta PKCS#11 library
 License: Proprietary
@@ -16,7 +16,7 @@ Group: System/Configuration/Hardware
 
 Url: https://www.aladdin-rd.ru/support/downloads/c9b88e95-aaef-4448-9c86-745639439189
 Source: %name-%version.tar
-ExclusiveArch: i586 x86_64 aarch64 armh e2k e2kv4 mipsel
+ExclusiveArch: x86_64 aarch64 e2kv4
 
 BuildRequires: libpcsclite-devel
 
@@ -58,6 +58,14 @@ L-02210004 от 04.02.2021.
 %config(noreplace) %_sysconfdir/pkcs11/modules/jcpkcs11.module
 
 %changelog
+* Tue Apr 25 2023 Paul Wolneykien <manowar@altlinux.org> 2.8.0-alt2
+- Restore support for i586, armh and mipsel architectures. E2K is
+  replaced by e2kv4.
+
+* Tue Apr 18 2023 Paul Wolneykien <manowar@altlinux.org> 2.8.0-alt1
+- Update to v2.8.0.
+- Drop support for i586, armh, e2k and mipsel architectures.
+
 * Thu Apr 07 2022 Paul Wolneykien <manowar@altlinux.org> 2.7.4-alt6
 - Make symlinks to all installed libraries from the pkcs11/ subdir
   (closes: 42342).
