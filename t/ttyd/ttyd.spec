@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     ttyd
-Version:  1.7.2
+Version:  1.7.3
 Release:  alt1
 
 Summary:  Share your terminal over the web
@@ -40,6 +40,9 @@ ttyd is a simple command-line tool for sharing terminal over the web.
 
 
 %changelog
+* Tue Apr 25 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.3-alt1
+- 1.7.3 released
+
 * Mon Dec 26 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.2-alt1
 - 1.7.2 released
 
