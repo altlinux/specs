@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.5.0
+Version: 6.6.0
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
@@ -48,17 +48,7 @@ CPython.
 %prep
 %setup
 %patch -p1
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
-
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -77,6 +67,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 6.6.0-alt1
+- 6.5.0 -> 6.6.0.
+
 * Tue Apr 18 2023 Stanislav Levin <slev@altlinux.org> 6.5.0-alt1
 - 6.0.0 -> 6.5.0.
 
