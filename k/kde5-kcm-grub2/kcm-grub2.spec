@@ -7,7 +7,7 @@
 
 Name: kde5-kcm-grub2
 Version: 0.6.4
-Release: alt7
+Release: alt8
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -69,6 +69,9 @@ A KDE Control Module for configuring the GRUB2 bootloader.
 
 
 %changelog
+* Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 0.6.4-alt8
+- update to master branch 25898367
+
 * Mon Oct 31 2022 Sergey V Turchin <zerg@altlinux.org> 0.6.4-alt7
 - update to master branch bdb458c9
 
