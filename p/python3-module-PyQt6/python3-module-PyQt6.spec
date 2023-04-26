@@ -12,7 +12,7 @@
 
 Name: python3-module-%oname
 Version: 6.5.0
-Release: alt1
+Release: alt2
 
 Summary: Python 3 bindings for Qt 6
 
@@ -44,7 +44,7 @@ BuildRequires: qt6-svg-devel qt6-tools-devel qt6-websockets-devel libqt6-qml
 
 #if_with dbus
 # https://bugzilla.altlinux.org/show_bug.cgi?id=33873
-#py3_provides dbus.mainloop.PyQt6
+%py3_provides dbus.mainloop.PyQt6
 #endif
 
 Requires: python3-module-PyQt6-sip
@@ -139,5 +139,8 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Tue Apr 25 2023 Anton Midyukov <antohami@altlinux.org> 6.5.0-alt2
+- Add missing provides dbus.mainloop.pyqt6
+
 * Mon Apr 24 2023 Anton Midyukov <antohami@altlinux.org> 6.5.0-alt1
 - initial build
