@@ -2,7 +2,7 @@
 %define sover 9
 
 Name: libmtp
-Version: 1.1.20
+Version: 1.1.21
 Release: alt1
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
@@ -105,6 +105,9 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Wed Apr 26 2023 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.21-alt1
+- 1.1.21
+
 * Sat Jul 23 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.20-alt1
 - 1.1.20
 
