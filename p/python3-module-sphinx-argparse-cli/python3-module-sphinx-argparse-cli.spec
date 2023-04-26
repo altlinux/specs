@@ -1,9 +1,10 @@
+%def_disable snapshot
 %define modname sphinx-argparse-cli
-%define _modname sphinx_argparse_cli
+%define pypi_name sphinx_argparse_cli
 %def_enable check
 
 Name: python3-module-%modname
-Version: 1.9.0
+Version: 1.11.0
 Release: alt1
 
 Summary: CLI arguments renderer for Sphinx
@@ -11,20 +12,28 @@ Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/%modname
 
-Vcs: https://github.com/gaborbernat/sphinx-argparse-cli.git
-Source: https://pypi.io/packages/source/s/%_modname/%_modname-%version.tar.gz
+%if_disabled snapshot
+Source: https://pypi.io/packages/source/s/%pypi_name/%pypi_name-%version.tar.gz
+Source1: %pypi_name-1.11.0-roots.tar
+%else
+Vcs: https://github.com/tox-dev/sphinx-argparse-cli.git
+Source: %pypi_name-%version.tar
+%endif
 
 BuildArch: noarch
 
+%define sphinx_ver 6.1.3
+
 BuildRequires(pre): rpm-build-python3 >= 0.1.19
-BuildRequires: python3-module-setuptools python3-module-setuptools_scm python3-module-wheel
-%{?_enable_check:BuildRequires: python3-module-sphinx-tests python3-module-pytest-cov}
+BuildRequires: python3-module-hatchling python3-module-hatch-vcs python3-module-wheel
+%{?_enable_check:BuildRequires: python3-module-sphinx-tests >= %sphinx_ver python3-module-pytest-cov
+BuildRequires: python3-module-covdefaults}
 
 %description
 Render CLI arguments (sub-commands friendly) defined by the argparse module.
 
 %prep
-%setup -n %_modname-%version
+%setup -n %pypi_name-%version -a1
 
 %build
 %pyproject_build
@@ -33,16 +42,25 @@ Render CLI arguments (sub-commands friendly) defined by the argparse module.
 %pyproject_install
 
 %check
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+#%%tox_check
+#%%pyproject_run_pytest
 #export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-#py.test3
-%tox_check
+py.test3
 
 %files
-%python3_sitelibdir_noarch/*
-%doc README* CHANGELOG*
+%python3_sitelibdir_noarch/%pypi_name
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
+%doc README*
 
 
 %changelog
+* Thu Apr 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
+- 1.11.0
+
+* Wed Aug 10 2022 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Fri Jun 24 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0
 - spec ported to %%pyproject/%%tox macros
