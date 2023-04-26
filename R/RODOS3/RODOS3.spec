@@ -1,13 +1,13 @@
 Name: RODOS3
 
 Version: 1.3
-Release: alt1
+Release: alt2
 
 Summary: Control tool for RODOS-3 controllers
 Summary(ru_RU.UTF-8): Инструмент управления для контроллеров RODOS-3
 License: GPL-3.0
 Group: System/Configuration/Hardware
-Url: https://www.olimp-z.ru/products/RODOS-3/RODOS3.tar.gz
+Url: https://silines.ru/rodos-3
 
 Packager: Pavel Isopenko <pauli@altlinux.org>
 Source: %name-%version.tar
@@ -41,6 +41,9 @@ install -D -m0644 %_sourcedir/udev.rules %buildroot%_udevrulesdir/40-%name.rules
 %attr(4711, root, root) %_bindir/%name
 
 %changelog
+* Wed Apr 26 2023 Pavel Isopenko <pauli@altlinux.org> 1.3-alt2
+- change Url
+
 * Tue Apr 25 2023 Pavel Isopenko <pauli@altlinux.org> 1.3-alt1
 - vew version 1.03
 - change license
