@@ -15,7 +15,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Url: http://en.altlinux.org/starterkits
@@ -236,14 +236,9 @@ install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%
 for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
-install -pD -m644 components/systemd/os-release %buildroot%_sysconfdir/os-release
 
-# save release
-mkdir -p %buildroot/%branding_data_dir/release/
-cp -ar %buildroot/%_sysconfdir/altlinux-release %buildroot/%branding_data_dir/release/altlinux-release
-cp -ar %buildroot/%_sysconfdir/os-release %buildroot/%branding_data_dir/release/os-release
 mkdir -p %buildroot/%prefix/lib/
-cp -ar %buildroot/%_sysconfdir/os-release %buildroot/%prefix/lib/os-release
+install -pD -m644 components/systemd/os-release %buildroot/%prefix/lib/os-release
 
 #notes
 pushd notes
@@ -303,15 +298,8 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 #_datadir/plymouth/themes/%theme/*
 
 %files release
-%ghost %config(noreplace) %_sysconfdir/os-release
-%_sysconfdir/altlinux-release
-%config(noreplace) %_sysconfdir/fedora-release
-%config(noreplace) %_sysconfdir/redhat-release
-%config(noreplace) %_sysconfdir/system-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
-%dir %branding_data_dir/
-%dir %branding_data_dir/release/
-%branding_data_dir/release/*-release
+%_sysconfdir/*-release
 %prefix/lib/os-release
 
 %files notes
@@ -338,6 +326,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Wed Apr 26 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt2
+- Don't save original /etc/*-release
+
 * Sun Apr 09 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt1
 - version without 'p', bump Epoch
 - os-release: remove CODENAME from VERSION
