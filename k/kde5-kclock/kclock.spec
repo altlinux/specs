@@ -1,7 +1,7 @@
 %define rname kclock
 
 Name: kde5-%rname
-Version: 23.01.0
+Version: 23.04.0
 Release: alt1
 %K5init altplace no_appdata
 
@@ -73,24 +73,19 @@ Requires: %name-common
 %_K5plug/plasma/applets/*kclock*.so
 %_K5start/*kclock*.desktop
 %_K5xdgapp/*kclock*.desktop
-%_K5srv/*kclock*.desktop
 %_K5dbus_srv/*kclock*.service
 %_K5icon/*/*/apps/*kclock*.*
 %_K5data/plasma/plasmoids/org.kde.plasma.kclock*/
 %_K5notif/*kclock*.notifyrc
 
 %files devel
-#%_K5inc/kclock_version.h
-#%_K5inc/kclock/
-#%_K5link/lib*.so
-#%_K5lib/cmake/kclock
-#%_K5archdata/mkspecs/modules/qt_kclock.pri
 %_K5dbus_iface/org.kde.kclockd.*.xml
 
-#%files -n libkf5clock
-#%_K5lib/libkclock.so.*
 
 %changelog
+* Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.0-alt1
+- new version
+
 * Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 23.01.0-alt1
 - new version
 

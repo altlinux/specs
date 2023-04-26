@@ -1,9 +1,9 @@
 %define rname alligator
 
 Name: kde5-%rname
-Version: 23.01.0
+Version: 23.04.0
 Release: alt1
-%K5init no_appdata
+%K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
 Summary: RSS/Atom feed reader
@@ -77,6 +77,9 @@ Requires: %name-common
 #%_K5lib/liballigator.so.*
 
 %changelog
+* Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.0-alt1
+- new version
+
 * Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 23.01.0-alt1
 - new version
 
