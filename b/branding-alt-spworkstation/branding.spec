@@ -24,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt2
+Release: alt3
 Epoch: 1
 Url: https://altsp.su
 
@@ -318,6 +318,10 @@ subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.c
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Apr 26 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt3
+- indexhtml/index-en.html.in: fix html tag for "Report a bug"
+- os-release: add BUG_REPORT_URL
+
 * Mon Apr 17 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt2
 - indexhtml: add link "Report a Bug"
 - notes: use word 'release' instead 'version'
