@@ -2,7 +2,7 @@
 
 Name: rpmlint
 Version: 2.4.0
-Release: alt1
+Release: alt2
 
 Summary: Tool for checking common errors in RPM packages
 License: GPL-2
@@ -43,7 +43,8 @@ Requires: /usr/bin/perl
 Requires: /usr/bin/readelf
 Requires: /usr/bin/xz
 Requires: /usr/bin/zstd
-
+%py3_requires tomli
+%py3_requires magic
 %py3_provides rpmlint.checks
 
 %description
@@ -73,6 +74,10 @@ python3 -m pytest
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 26 2023 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt2
+- backport fix for python-magic and add requires python3(magic).
+- add requires python3(tomli).
+
 * Sun Mar 26 2023 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 
