@@ -5,7 +5,7 @@
 
 Name: python3-module-%modname
 Version: 1.2.4
-Release: alt1
+Release: alt2
 
 Summary: template library written in Python
 
@@ -51,6 +51,24 @@ inheritance to produce one of the most straightforward and flexible
 models available, while also maintaining close ties to Python calling
 and scoping semantics.
 
+%package tests
+Summary: template library written in Python
+Group: Development/Python3
+License: MIT
+
+%description tests
+Mako is a template library written in Python. It provides a familiar,
+non-XML syntax which compiles into Python modules for maximum
+performance. Mako's syntax and API borrows from the best ideas of many
+others, including Django templates, Cheetah, Myghty, and Genshi.
+Conceptually, Mako is an embedded Python (i.e. Python Server Page)
+language, which refines the familiar ideas of componentized layout and
+inheritance to produce one of the most straightforward and flexible
+models available, while also maintaining close ties to Python calling
+and scoping semantics.
+
+This package contains tests for %modname.
+
 %prep
 %setup
 
@@ -67,10 +85,18 @@ py.test-3 -v
 %files
 %doc CHANGES LICENSE README*
 %_bindir/mako-render
-%python3_sitelibdir/mako/
+%python3_sitelibdir/mako
 %python3_sitelibdir/Mako-%{version}*.egg-info
+%exclude %python3_sitelibdir/mako/testing
+
+%files tests
+%doc CHANGES LICENSE README*
+%python3_sitelibdir/mako/testing
 
 %changelog
+* Wed Apr 26 2023 Grigory Ustinov <grenka@altlinux.org> 1.2.4-alt2
+- Move tests in own subpackage (Closes: #45922).
+
 * Tue Nov 29 2022 Grigory Ustinov <grenka@altlinux.org> 1.2.4-alt1
 - Automatically updated to 1.2.4.
 
