@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.04.0
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata man
 
 Group: Sound
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
+Patch1: alt-reduce-cmake-requires.patch
 
 # Automatically added by buildreq on Tue Apr 25 2023 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libdbusmenu-qt52 libglvnd-devel libgpg-error libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-texttospeech libqt5-widgets libqt5-x11extras libsasl2-3 libssl-devel libstdc++-devel libxcbutil-keysyms python-modules python2-base python3 python3-base python3-dev python3-module-paste qt5-base-devel rpm-build-file rpm-build-python3 rpm-macros-python sh4 tzdata
@@ -27,6 +28,7 @@ Sporting a kded module to tell you when things are getting dicey and a CLI tool 
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -47,5 +49,8 @@ Sporting a kded module to tell you when things are getting dicey and a CLI tool 
 %_datadir/polkit-1/actions/*inotify*.policy
 
 %changelog
+* Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.0-alt2
+- reduce cmake requires
+
 * Tue Apr 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.0-alt1
 - initial build
