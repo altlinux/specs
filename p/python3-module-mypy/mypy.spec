@@ -1,7 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-# tomllib is a part of Python's stdlib since 3.11
-%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
-
 %define pypi_name mypy
 %def_with check
 
@@ -14,7 +11,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
@@ -22,44 +19,21 @@ Group: Development/Python3
 Url: https://pypi.org/project/mypy/
 VCS: https://github.com/python/mypy
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-%if %tomli
-# rebuild against Python 3.11 is required to get rid of old dependency
-%py3_requires tomli
-%endif
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-# Needed to generate the man pages
-BuildRequires: help2man
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_build_filter types-
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(typing_extensions)
-BuildRequires: python3(mypy_extensions)
-
-%if %tomli
-BuildRequires: python3(tomli)
-%endif
-
-# TODO: unbundle googletest
 BuildRequires: /proc
 BuildRequires: gcc-c++
-BuildRequires: python3(lxml)
-BuildRequires: python3(psutil)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_xdist)
-BuildRequires: python3(typing)
-BuildRequires: python3(six)
-BuildRequires: python3(attrs)
-BuildRequires: python3(filelock)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
+# Needed to generate the man pages
+BuildRequires: help2man
 
 %description
 Mypy is an optional static type checker for Python.  You can add type
@@ -85,6 +59,11 @@ mypyc. Compiled mypy is about 4x faster than without compilation.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile test-requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -149,6 +128,9 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %endif
 
 %changelog
+* Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.1 -> 1.2.0.
+
 * Tue Mar 07 2023 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1
 - 1.0.1 -> 1.1.1.
 
