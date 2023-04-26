@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.21
+Version: 0.1.22
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -139,6 +139,9 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Sat Apr 22 2023 Vitaly Lipatov <lav@altlinux.ru> 0.1.22-alt1
+- NMU: brp-fix_python3_site-packages_location: replace egrep with grep -E
+
 * Thu Jan 12 2023 Stanislav Levin <slev@altlinux.org> 0.1.21-alt1
 - Added support for run command (closes: #44884).
 
