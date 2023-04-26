@@ -1,9 +1,11 @@
 %def_disable snapshot
 %define modname hijri-converter
+%define pypi_name hijri_converter
+
 %def_enable check
 
 Name: python3-module-%modname
-Version: 2.2.4
+Version: 2.3.1
 Release: alt1
 
 Summary: Hijri to Gregorian dates converter
@@ -19,10 +21,11 @@ Source: %modname-%version.tar
 %endif
 
 BuildArch: noarch
+Provides: python3-module-%pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel >= 3.6
-%{?_enable_check:BuildRequires: python3-module-pytest}
+BuildRequires: python3-devel >= 3.6 python3-module-setuptools python3-module-wheel
+%{?_enable_check:BuildRequires: python3-module-pytest-cov}
 
 %description
 A Python package to convert accurately between Hijri and Gregorian dates
@@ -32,20 +35,26 @@ using the Umm al-Qura calendar of Saudi Arabia.
 %setup -n %modname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py check
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+py.test-3
 
 %files
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/%pypi_name/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc README* CHANGELOG*
 
 
 %changelog
+* Wed Apr 26 2023 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
+- 2.3.1
+- ported to %%pyproject macros
+
 * Thu May 26 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2.4-alt1
 - 2.2.4
 
