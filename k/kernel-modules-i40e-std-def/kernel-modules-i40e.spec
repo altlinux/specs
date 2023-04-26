@@ -1,5 +1,5 @@
 %define module_name      i40e
-%define module_version   2.18.9
+%define module_version   2.22.18
 %define module_release   alt1
 
 %define flavour          std-def
@@ -61,6 +61,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Apr 26 2023 Alexey Shabalin <shaba@altlinux.org> 2.22.18-alt1
+- update to 2.22.18.
 
 * Wed May 11 2022 Alexey Shabalin <shaba@altlinux.org> 2.18.9-alt1
 - Initial build.
