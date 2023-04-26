@@ -11,10 +11,12 @@
 %define flavour %brand-%theme
 %define distro_name ALT Starterkit
 %define branding_data_dir %_datadir/branding-data-current
+%define altbranch %_priority_distbranch
 
 Name: branding-%flavour
-Version: p10
-Release: alt4
+Version: 10
+Release: alt1
+Epoch: 1
 
 Url: http://en.altlinux.org/starterkits
 
@@ -195,7 +197,7 @@ XFCE settings for %Brand %version %Theme
 
 %build
 autoconf
-THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME='%distro_name' CODENAME=%codename URL='%url' ./configure
+THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME='%distro_name' CODENAME=%codename URL='%url' BRANCH='%altbranch' ./configure
 LC_ALL=en_US.UTF-8 make
 
 %install
@@ -336,6 +338,12 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Sun Apr 09 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt1
+- version without 'p', bump Epoch
+- os-release: remove CODENAME from VERSION
+- os-release: add BUILD_ID
+- os-release: add ALT_BRANCH_ID
+
 * Mon Oct 31 2022 Anton Midyukov <antohami@altlinux.org> p10-alt4
 - disable slideshow subpackage
 
