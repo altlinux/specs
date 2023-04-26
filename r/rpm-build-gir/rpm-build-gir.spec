@@ -1,6 +1,6 @@
 Name: rpm-build-gir
 Version: 0.7.3
-Release: alt3
+Release: alt3.1
 
 Summary: RPM helper macros and dependency utils to build GObject Introspection packages
 License: GPL
@@ -39,6 +39,9 @@ ln -s gir.prov.files %buildroot%_rpmlibdir/gir.req.files
 %_rpmlibdir/typelib*
 
 %changelog
+* Wed Apr 26 2023 Yuri N. Sedunov <aris@altlinux.org> 0.7.3-alt3.1
+- replaced "egrep" with "grep -E"
+
 * Mon Dec 02 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.3-alt3
 - gir-python.req: switched to libpeas-python3-loader
 
