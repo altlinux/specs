@@ -1,5 +1,5 @@
 Name: eepm
-Version: 3.52.7
+Version: 3.53.1
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -14,9 +14,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArchitectures: noarch
-
-# use distr_vendor from it
-BuildRequires: rpm-build-intro
 
 %if "%_vendor" == "alt"
 Obsoletes: epm
@@ -62,8 +59,6 @@ a discussion about extra requirements.
 %setup
 
 %install
-# install to datadir and so on
-# do not use uncommon makeinstall_std here
 %make_install install DESTDIR=%buildroot \
 	datadir=%_datadir bindir=%_bindir mandir=%_mandir \
 	sysconfdir=%_sysconfdir version=%version-%release
@@ -97,6 +92,35 @@ a discussion about extra requirements.
 
 
 %changelog
+* Wed Apr 26 2023 Vitaly Lipatov <lav@altlinux.ru> 3.53.1-alt1
+- epm play: add yaradio-yamusic
+- epm play: add lycheeslicer support
+- epm: use bash directly
+- serv: add all initial detection, use bash directly
+- epm play: add libicu56 (for ALT only)
+- epm repack trueconf: update script
+- epm play.d/common.sh: fix PKGNAME detection
+- epm repack synology-drive: ignore if removed extra files is missed
+- epm play: fix download name in various scripts
+- epm play: update synology* scripts
+- eepm.spec: drop BR: rpm-build-intro (isn't used anymore)
+
+* Tue Apr 25 2023 Vitaly Lipatov <lav@altlinux.ru> 3.53.0-alt1
+- epm repack microsoft-edge: use one file, add conflicts
+- epm play: update IPFS DB every time (and merge with sort)
+- epm status: add --validate (check for package correctness)
+- epm play: add check for origin of install repo for all targets
+- epm play: fix --force handling
+- fatal(): add epm version to error message
+- epm status --original: don't check Signature field
+- epm autoorphans: don't call epm remove without packages
+- pkgallowscripts.list: add lsb-cprocsp exclude
+- i586-fix.sh: comment out NetworkManager-libnm
+- make epm update-kernel no fatal on apt systems
+- epm play: rewrite to support set version where possible
+- rewrite check for package vendor and package source
+- rename --thirdpart to --thirdparty
+
 * Mon Apr 24 2023 Vitaly Lipatov <lav@altlinux.ru> 3.52.7-alt1
 - makefile: drop bashisms
 - epm restore: add meson.build support
