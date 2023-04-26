@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-LibXML
-%def_with bootstrap
+%def_without bootstrap
 Name: perl-%dist
 Version: 2.0208
-Release: alt2.1
+Release: alt3
 
 Summary: Perl binding for libxml2
 License: GPL or Artistic
@@ -66,6 +66,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Wed Apr 26 2023 Alexey Shabalin <shaba@altlinux.org> 2.0208-alt3
+- unbootstrap
+
 * Tue Apr 25 2023 Alexey Shabalin <shaba@altlinux.org> 2.0208-alt2.1
 - rebuild with new libxml2 2.10.4 (bootstrapped)
 
