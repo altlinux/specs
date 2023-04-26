@@ -4,8 +4,8 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 0.8.1
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: Style checker for sphinx (or other) rst documentation.
 
@@ -18,13 +18,8 @@ BuildArch: noarch
 Source:  %modulename-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr
-BuildRequires: python3-module-chardet
-BuildRequires: python3-module-docutils
-BuildRequires: python3-module-restructuredtext_lint >= 0.7
-BuildRequires: python3-module-six
-BuildRequires: python3-module-stevedore
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
 
 %if_with docs
 BuildRequires: python3-module-sphinx_rtd_theme
@@ -32,10 +27,11 @@ BuildRequires: python3-module-sphinx_rtd_theme
 
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-testtools
+BuildRequires: python3-module-stevedore
+BuildRequires: python3-module-restructuredtext_lint
 %endif
+
+Requires: python3-module-tomli
 
 %description
 Doc8 is an opinionated style checker for rst_ (with basic support for
@@ -54,10 +50,10 @@ Documentation for %modulename.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -69,11 +65,13 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %check
-py.test3 -vv
+%pyproject_run_pytest
 
 %files
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%{pyproject_distinfo %modulename}
+%exclude %python3_sitelibdir/%modulename/tests
 
 %if_with docs
 %files doc
@@ -81,6 +79,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Wed Apr 26 2023 Anton Vyatkin <toni@altlinux.org> 1.1.1-alt1
+- NMU: New version 1.1.1 (Fix BuildRequires)
+
 * Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.1-alt2
 - NMU: fix build (add missed mock)
 
