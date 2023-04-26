@@ -1,12 +1,12 @@
 Name: shadow
-Version: 4.5
-Release: alt8
+Version: 4.13
+Release: alt3
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
-License: BSD-style
+License: BSD-3-Clause and GPL-2.0-or-later
 Group: System/Base
-Url: ftp://ftp.pld.org.pl/software/shadow
+Url: https://github.com/shadow-maint/shadow
 
 Source0: %url/%name-%version.tar
 Source1: login.defs
@@ -26,13 +26,28 @@ Source14: newgidmap.control
 
 Patch: %name-%version-%release.patch
 
-%def_disable shared
+%def_disable bootstrap
+%if_enabled bootstrap
+%def_without selinux
+%def_without audit
+%def_without btrfs
+%def_without pam
+%def_disable man
+%else
 %def_with selinux
 %def_with audit
+%def_with btrfs
+%def_with pam
+%def_enable man
+%endif
+
+%set_verify_elf_method strict
 
 BuildPreReq: mktemp >= 1:1.3.1, rpm-build >= 4.0.4-alt10
 # for man pages generation
+%if_enabled man
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
+%endif
 
 %if_with selinux
 BuildPreReq: libselinux-devel libsemanage-devel
@@ -40,48 +55,22 @@ BuildPreReq: libselinux-devel libsemanage-devel
 
 %{?_with_audit:BuildRequires: libaudit-devel}
 
+%if_with pam
 BuildRequires: libpam-devel libtcb-devel pam_userpass-devel
+%endif
 BuildRequires: libcrypt-devel >= 4.0.1-alt1
 
 %description
 This package includes the tools necessary for manipulating local user and
 group databases. It supports both traditional and tcb shadow password files.
 
-%package -n lib%name
-Summary: Shadow password file routines library
-Group: System/Libraries
-
-%description -n lib%name
-Shadow library manipulates local user and group databases. It supports both
-traditional and tcb shadow password files.
-This package contains shared library required for various shadow utils.
-
-%package -n lib%name-devel
-Summary: Development files for the shadow password file routines library
-Group: Development/C
-Requires: lib%name = %EVR
-
-%description -n lib%name-devel
-Shadow library manipulates local user and group databases. It supports both
-traditional and tcb shadow password files.
-This package contains files required for development software based
-on lib%name.
-
-%package -n lib%name-devel-static
-Summary: Shadow password file routines static library
-Group: Development/C
-Requires: lib%name-devel = %EVR
-
-%description -n lib%name-devel-static
-Shadow library manipulates local user and group databases. It supports both
-traditional and tcb shadow password files.
-This package contains static library required for development statically
-linked software based on lib%name.
-
 %package utils
 Summary: Utilities for managing shadow password files and user/group accounts
 Group: System/Base
-Requires: %name-convert = %EVR, tcb-utils >= 0.9.8
+Requires: %name-convert = %EVR
+%if_with pam
+Requires: tcb-utils >= 0.9.8
+%endif
 Obsoletes: adduser
 
 %description utils
@@ -110,9 +99,6 @@ shadow-password, or shadow-group files:
 %package convert
 Summary: Utilities for convertion to and from shadow passwords and groups
 Group: System/Base
-%if_enabled shadow
-Requires: lib%name = %EVR
-%endif
 
 %description convert
 This package includes utilities for convertion to and from shadow passwords
@@ -169,6 +155,24 @@ in user namespaces:
 * newuidmap: set the uid mapping of a user namespace;
 * newgidmap: set the gid mapping of a user namespace.
 
+%package -n libsubid
+Summary: Subordinate id handling library
+Group: System/Libraries
+
+%description -n libsubid
+The library provides an interface for querying, granding and ungranting
+subordinate user and group ids.
+
+%package -n libsubid-devel
+Summary: Development files for the subordinate id handling library
+Group: Development/C
+Requires: libsubid = %EVR
+
+%description -n libsubid-devel
+The library provides an interface for querying, granding and ungranting
+subordinate user and group ids.
+This package contains development files for libsubid.
+
 %package log
 Summary: Utilities for examining lastlog and faillog files
 Group: System/Base
@@ -201,30 +205,45 @@ This virtual package unifies all shadow suite subpackages.
 %patch -p1
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %ifnarch %e2k
 %add_optflags -Werror -Wno-error=address -Wno-error=cpp
 %endif
 %add_optflags -DEXTRA_CHECK_HOME_DIR
 %configure \
-	%{subst_enable shared} \
-	--with-tcb \
-	--with-libpam \
+	--disable-static \
+	%{?_with_pam:--with-tcb} \
+	%{?_with_pam:--with-libpam} \
 	--without-libcrack \
 	%{subst_with selinux} \
 	%{subst_with audit} \
+	%{subst_with btrfs} \
 	--with-group-name-max-length=32 \
 	--without-sha-crypt \
-	--enable-man
+	--without-su \
+	%{?_with_pam:--enable-account-tools-setuid} \
+	%{subst_enable man}
 %make_build
+
+make -C po/ ru.gmo
 
 %install
 %makeinstall
 
 install -pD -m640 %_sourcedir/login.defs %buildroot%_sysconfdir/login.defs
+%if_without pam
+sed -i %buildroot%_sysconfdir/login.defs \
+	-r \
+	-e 's/^(TCB_AUTH_GROUP.*)$/# \1/' \
+	-e 's/^(USE_TCB.*)$/# \1/' \
+	-e 's/^(TCB_SYMLINKS.*)$/# \1/' \
+	%nil
+%endif
 install -pD -m600 %_sourcedir/useradd.default %buildroot%_sysconfdir/default/useradd
 
 rm -rf %buildroot%_sysconfdir/pam.d
+%if_with pam
 mkdir -p %buildroot%_sysconfdir/pam.d
 pushd %buildroot%_sysconfdir/pam.d
 install -pm600 %_sourcedir/user-group-mod.pamd user-group-mod
@@ -243,6 +262,7 @@ ln -s chpasswd-newusers chpasswd
 ln -s chpasswd-newusers newusers
 install -pm600 %_sourcedir/groupmems.pamd groupmems
 popd
+%endif
 
 ln -s useradd %buildroot%_sbindir/adduser
 
@@ -258,8 +278,12 @@ install -pD -m755 %_sourcedir/newgidmap.control %buildroot%_controldir/newgidmap
 touch %buildroot%_sysconfdir/subuid
 touch %buildroot%_sysconfdir/subgid
 
+mkdir -p %buildroot%_sysconfdir/shadow-maint/user{add,del}-{pre,post}.d
+
 %find_lang %name
 %define _unpackaged_files_terminate_build 1
+
+%define save_login_defs_file  /tmp/shadow-utils-update-save-old-login.defs
 
 %post convert
 if [ $1 = 1 ]; then
@@ -270,6 +294,25 @@ if [ $1 = 1 ]; then
 		%_sbindir/pwconv
 	fi
 fi
+
+%pre utils
+if [ $1 -eq 2 ]; then
+	OLD_VERSION="$(rpm -q --qf '%%{EPOCH}:%%{VERSION}-%%{RELEASE}' %name-utils)"
+	[ -z "$OLD_VERSION" ] || RES="$(rpmevrcmp "$OLD_VERSION" 1:4.13-alt3)"
+	if [ -n "$RES" ] && [ $RES -lt 0 ]; then
+		cp -a /etc/login.defs %save_login_defs_file
+		# Ensure that old /etc/login.defs.rpmnew doesn't exist
+		rm -f /etc/login.defs.rpmnew
+	fi
+fi
+
+%triggerpostun utils -- %name-utils < 1:4.13-alt3
+if [ -e %save_login_defs_file ] && [ ! -e /etc/login.defs.rpmnew ]; then
+		mv /etc/login.defs /etc/login.defs.rpmnew && \
+		  mv %save_login_defs_file /etc/login.defs && \
+		  echo "warning: /etc/login.defs created as /etc/login.defs.rpmnew due to UID_MIN/GID_MIN change"
+fi
+rm -f %save_login_defs_file
 
 %pre change
 %pre_control chage chfn chsh
@@ -289,25 +332,18 @@ fi
 %post submap
 %post_control -s restricted newuidmap newgidmap
 
-%if_enabled shadow
-%files -n lib%name
-%_libdir/*.so*
-
-%files -n lib%name-devel
-%_libdir/*.so
-%_man3dir/*
-
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif
-
 %files convert
 %_sbindir/*conv
+%if_enabled man
 %_mandir/man?/*conv.*
+%endif
 
 %files utils -f %name.lang
 %attr(600,root,root) %config(noreplace) %_sysconfdir/default/useradd
 %attr(640,root,shadow) %config(noreplace) %_sysconfdir/login.defs
+%dir %attr(770,root,root) %_sysconfdir/shadow-maint/
+%dir %attr(770,root,root) %_sysconfdir/shadow-maint/user*.d/
+%if_with pam
 %config(noreplace) %_sysconfdir/pam.d/user-group-mod
 %_sysconfdir/pam.d/groupadd
 %_sysconfdir/pam.d/groupdel
@@ -318,46 +354,61 @@ fi
 %config(noreplace) %_sysconfdir/pam.d/chpasswd-newusers
 %_sysconfdir/pam.d/chpasswd
 %_sysconfdir/pam.d/newusers
+%endif
 %_sbindir/user*
 %_sbindir/group*
 %_sbindir/adduser
 %_sbindir/newusers
 %_sbindir/chpasswd
+%if_enabled man
 %_man5dir/login.defs.*
 %_man5dir/shadow.*
 %_man8dir/chpasswd.*
 %_man8dir/group*.*
 %_man8dir/newusers.*
 %_man8dir/user*.*
+%endif
 %doc README TODO
 %exclude %_bindir/groupmems
+%if_enabled man
 %exclude %_man8dir/groupmems.*
+%endif
 
 %files check
 %_sbindir/*ck
+%if_enabled man
 %_mandir/man?/*ck.*
+%endif
 
 %files change
 %config %_controldir/chage
 %config %_controldir/chfn
 %config %_controldir/chsh
+%if_with pam
 %attr(640,root,shadow) %config(noreplace) %_sysconfdir/pam.d/chage-chfn-chsh
 %_sysconfdir/pam.d/chage
 %_sysconfdir/pam.d/chfn
 %_sysconfdir/pam.d/chsh
+%endif
 %attr(700,root,root) %verify(not mode,group) %_bindir/chage
 %attr(700,root,root) %verify(not mode) %_bindir/chfn
 %attr(700,root,root) %verify(not mode) %_bindir/chsh
+%if_enabled man
 %_mandir/man?/chage.*
 %_mandir/man?/chfn.*
 %_mandir/man?/chsh.*
+%endif
 
 %files edit
 %_sbindir/vi??
+%if_enabled man
 %_mandir/man?/vi??.*
+%endif
 
 %files groups
+%if_with pam
 %_sysconfdir/pam.d/groupmems
+%endif
 %config %_controldir/gpasswd
 %config %_controldir/newgrp
 %config %_controldir/groupmems
@@ -365,10 +416,12 @@ fi
 %attr(700,root,root) %verify(not mode,group) %_bindir/newgrp
 %_bindir/sg
 %attr(700,root,root) %verify(not mode,group) %_bindir/groupmems
+%if_enabled man
 %_mandir/man?/gpasswd.*
 %_mandir/man?/newgrp.*
 %_mandir/man?/sg.*
 %_man8dir/groupmems.*
+%endif
 
 %files submap
 %config(noreplace) %_sysconfdir/subuid
@@ -377,14 +430,27 @@ fi
 %config %_controldir/newgidmap
 %attr(700,root,root) %verify(not mode,group) %_bindir/newuidmap
 %attr(700,root,root) %verify(not mode,group) %_bindir/newgidmap
+%_bindir/getsubids
+%if_enabled man
 %_man1dir/newuidmap.*
 %_man1dir/newgidmap.*
+%_man1dir/getsubids.*
 %_man5dir/subuid.*
 %_man5dir/subgid.*
+%endif
+
+%files -n libsubid
+%_libdir/libsubid.so.*
+
+%files -n libsubid-devel
+%_libdir/libsubid.so
+%_includedir/shadow/
 
 %files log
 %_bindir/*log
+%if_enabled man
 %_mandir/man?/*log.*
+%endif
 
 %files suite
 
@@ -392,6 +458,7 @@ fi
 %exclude %_sbindir/chgpasswd
 %exclude %_sbindir/logoutd
 %exclude %_sbindir/nologin
+%if_enabled man
 %exclude %_man1dir/expiry.1.*
 %exclude %_man3dir/getspnam.3.*
 %exclude %_man3dir/shadow.3.*
@@ -401,8 +468,56 @@ fi
 %exclude %_man8dir/chgpasswd.8.*
 %exclude %_man8dir/logoutd.8.*
 %exclude %_man8dir/nologin.8.*
+%endif
+%if_without pam
+%exclude %_sysconfdir/limits
+%exclude %_sysconfdir/login.access
+%endif
 
 %changelog
+* Tue Apr 25 2023 Mikhail Efremov <sem@altlinux.org> 1:4.13-alt3
+- Keep old login.defs when UID_MIN/GID_MIN changed.
+- Increase default UID_MIN/GID_MIN to 1000.
+- remove_tree: Allow a symlink as root if it shouldn't be removed.
+
+* Tue Apr 11 2023 Mikhail Efremov <sem@altlinux.org> 1:4.13-alt2
+- Added libsubid subpackage.
+- Dropped disabled libshadow* subpackages.
+
+* Mon Apr 10 2023 Mikhail Efremov <sem@altlinux.org> 1:4.13-alt1
+- Fixed build without TCB.
+- spec: simplified the bootstrap sequence (by Alexey Sheplyakov).
+- Fixed build without PAM.
+- fixed build without TCB and/or PAM (by Alexey Sheplyakov).
+- useradd: Fixed Russian translation.
+- Use /bin/run-parts if able.
+- utils: Packaged user{add,del}-{pre,post}.d directories.
+- useradd: Set default group to 100 (users).
+- login.defs: Added HOME_MODE variable.
+- login.defs: Added HMAC_CRYPTO_ALGO variable.
+- login.defs: Added GRANT_AUX_GROUP_SUBIDS variable.
+- login.defs: Added NONEXISTENT variable.
+- Explicitly enabled btrfs support.
+- Use 'set_verify_elf_method strict'.
+- Enabled LFS on 32-bit systems.
+- lib/commonio: Fixed fprintf() format.
+- tcb: Added remove_tcbdir() function.
+- shadow: Don't use relaxed usernames.
+- newusers,pwck,useradd,usermod: Removed --badname option.
+- Ensured that prefix is not '/'.
+- userdel: Fixed mailbox removing.
+- Added prefix support for TCB.
+- Don't install libsubid static library.
+- usermod: Don't call gr_free() with const variable.
+- useradd: Fixed "discards 'const' qualifiers" warning.
+- Updated 'alt-progname' patch.
+- tcbfuncs.c: Fixed and updated selinux support.
+- Updated 'copy_dir perms' patch.
+- src/Makefile.am: Fixed noinst_PROGRAMS.
+- Fixed license.
+- Updated url.
+- Updated to 4.13 (closes: #45794).
+
 * Mon Aug 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5-alt8
 - NMU: fixed build with new selinux.
 
