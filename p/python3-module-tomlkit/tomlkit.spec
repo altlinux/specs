@@ -4,30 +4,27 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.6
+Version: 0.11.7
 Release: alt1
-
 Summary: Style preserving TOML library
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/tomlkit
 VCS: https://github.com/sdispater/tomlkit.git
-
+BuildArch: noarch
 Source: %name-%version.tar
 Source1: toml-test.tar
+Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(poetry-core)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(yaml)
-BuildRequires: python3(pytest)
+%add_pyproject_deps_check_filter furo sphinx
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-BuildArch: noarch
 
 %description
 TOML Kit is a 1.0.0-compliant TOML library. It includes a parser that preserves
@@ -38,6 +35,11 @@ documents from scratch using the provided helpers.
 %prep
 %setup -a1
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
 %pyproject_build
@@ -46,8 +48,7 @@ documents from scratch using the provided helpers.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra tests
 
 %files
 %doc README.md
@@ -55,6 +56,9 @@ documents from scratch using the provided helpers.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 0.11.7-alt1
+- 0.11.6 -> 0.11.7.
+
 * Thu Oct 27 2022 Stanislav Levin <slev@altlinux.org> 0.11.6-alt1
 - 0.11.5 -> 0.11.6.
 

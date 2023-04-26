@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.2
+Version: 0.10.0
 Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
@@ -13,22 +13,14 @@ Url: https://pypi.org/project/pyproject-fmt
 VCS: https://github.com/tox-dev/pyproject-fmt.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# PEP503 name
-%py3_provides %pypi_name
 
-BuildRequires(pre): rpm-build-python3
-# build backend and its deps
-BuildRequires: python3(hatchling)
-BuildRequires: python3(hatch-vcs)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# dependencies=
-BuildRequires: python3(packaging)
-BuildRequires: python3(tomlkit)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-mock)
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -37,18 +29,9 @@ BuildRequires: python3(pytest-mock)
 %prep
 %setup
 %autopatch -p1
-
-# hatch-vcs can use setuptools_scm which implements a file_finders entry point
-# which returns all files tracked by SCM. Though that is version detection usage
-# only (at least for now), it's safer to provide a real git tree.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -66,6 +49,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
+- 0.9.2 -> 0.10.0.
+
 * Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1
 - 0.4.1 -> 0.9.2.
 

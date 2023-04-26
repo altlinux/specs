@@ -4,48 +4,29 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.3
+Version: 0.12
 Release: alt1
-
 Summary: Automatically conversion of .ini/.cfg files to TOML equivalents
 License: MPL-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/ini2toml
 VCS: https://github.com/abravalheri/ini2toml.git
-
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage extras dependencies with metadata
+AutoReq: yes, nopython3
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-# install_requires=
-BuildRequires: python3(packaging)
-
-# extras
-BuildRequires: python3(configupdater)
-BuildRequires: python3(tomlkit)
-BuildRequires: python3(tomli-w)
-BuildRequires: python3(validate-pyproject)
-BuildRequires: python3(pyproject-fmt)
-
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata_extra all
+%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra experimental
 %endif
-
-BuildArch: noarch
-
-# try-except import
-%py3_requires packaging
-
-# manually manage extra dependencies
-%filter_from_requires /python3(tomlkit\(\..*\)\?)/d
-%filter_from_requires /python3(tomli_w\(\..*\)\?)/d
-%filter_from_requires /python3(configupdater\(\..*\)\?)/d
 
 %description
 The original purpose of this project is to help migrating setup.cfg files to
@@ -56,7 +37,8 @@ file to TOML.
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%py3_requires tomli-w
+%pyproject_runtimedeps_metadata -- --extra lite
+Provides: %name+lite = %EVR
 
 %description lite
 Extra 'lite' for %pypi_name.
@@ -65,8 +47,8 @@ Extra 'lite' for %pypi_name.
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%py3_requires configupdater
-%py3_requires tomlkit
+%pyproject_runtimedeps_metadata -- --extra full
+Provides: %name+full = %EVR
 
 %description full
 Extra 'full' for %pypi_name.
@@ -74,16 +56,9 @@ Extra 'full' for %pypi_name.
 %prep
 %setup
 %autopatch -p1
-
-# if build from git source tree
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
-git init
-git config user.email author@example.com
-git config user.name author
-git add .
-git commit -m 'release'
-git tag '%version'
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -92,7 +67,7 @@ git tag '%version'
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %doc README.rst
@@ -105,6 +80,9 @@ git tag '%version'
 %files full
 
 %changelog
+* Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 0.12-alt1
+- 0.11.3 -> 0.12.
+
 * Thu Nov 24 2022 Stanislav Levin <slev@altlinux.org> 0.11.3-alt1
 - 0.11.1 -> 0.11.3.
 
