@@ -3,8 +3,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy
-Version: 0.36.1
-Release: alt2
+Version: 0.39.0
+Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
 Group: Monitoring
@@ -61,6 +61,9 @@ rm -rf -- %buildroot%go_root
 %_bindir/%name
 
 %changelog
+* Tue Apr 25 2023 Stepan Paksashvili <paksa@altlinux.org> 0.39.0-alt1
+- Added full ALT support.
+
 * Wed Jan 25 2023 Alexey Shabalin <shaba@altlinux.org> 0.36.1-alt2
 - Added basic ALT support.
 
