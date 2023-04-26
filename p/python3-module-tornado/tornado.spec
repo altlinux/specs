@@ -1,7 +1,7 @@
 %define oname tornado
 
 Name: python3-module-%oname
-Version: 6.2.0
+Version: 6.3.1
 Release: alt1
 Summary: Scalable, non-blocking web server and tools
 
@@ -52,9 +52,12 @@ export ASYNC_TEST_TIMEOUT=120
 %files
 %doc *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-6.2-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed Apr 26 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.1-alt1
+- Automatically updated to 6.3.1.
+
 * Mon Jul 25 2022 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1
 - Automatically updated to 6.2.0.
 
