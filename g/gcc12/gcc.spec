@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 12.2.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +17,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20230322
+%define snapshot 20230424
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -2100,11 +2100,17 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Tue Apr 25 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 12.2.1-alt2
+- Updated to git://gcc.gnu.org/git/gcc.git:
+  + releases/gcc-12 (snapshot 20230424)
+  commit r12-9468-gff74cd168e2e3ace29db96da0822a40207a329c4.
+- Enabled _FORTIFY_SOURCE=3 by default for all optimization levels.
+
 * Wed Mar 22 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 12.2.1-alt1
 - Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
   + vendors/redhat/heads/gcc-12-branch
   commit b3f5a0d53b84ed27cf00cfa2b9c3e2c78935c07d;
-  + releases/gcc-12 (snapshot 20230321)
+  + releases/gcc-12 (snapshot 20230322)
   commit r12-9307-g9ead8cb47b047c85deda01abe89b2a8291bb2780.
 - libsanitizer (by Ivan A. Melnikov):
   + enabled asan and ubsan on riscv;
