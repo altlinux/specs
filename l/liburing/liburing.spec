@@ -5,7 +5,7 @@
 
 Name: liburing
 Version: 2.3
-Release: alt2
+Release: alt3
 
 Summary: The io_uring library
 License: (GPL-2.0-only AND LGPL-2.1-or-later) OR MIT
@@ -14,6 +14,8 @@ Group: System/Libraries
 Url: http://git.kernel.dk/cgit/liburing
 # Author's Vcs and CI: https://github.com/axboe/liburing
 Source: %name-%version.tar
+Patch: liburing-e2k.patch
+
 BuildRequires: gcc-c++
 %{?!_without_check:%{?!_disable_check:BuildRequires: strace /proc}}
 
@@ -36,9 +38,13 @@ for the Linux-native io_uring.
 
 %prep
 %setup
+%ifarch %e2k
+%patch -p1
+%endif
 
 %build
 %add_optflags %(getconf LFS_CFLAGS) -ffat-lto-objects
+# homegrown one
 ./configure \
 	--prefix=%_prefix \
 	--includedir=%_includedir \
@@ -102,6 +108,9 @@ TEST_EXCLUDE="
 %_man7dir/*
 
 %changelog
+* Thu Apr 27 2023 Michael Shigorin <mike@altlinux.org> 2.3-alt3
+- E2K: fix build (ilyakurdyukov@).
+
 * Thu Jan 26 2023 Vitaly Chikunov <vt@altlinux.org> 2.3-alt2
 - Add 'io_uring_ok' tool.
 
