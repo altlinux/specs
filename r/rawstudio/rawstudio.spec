@@ -3,7 +3,7 @@
 
 Name: rawstudio
 Version: %ver_major
-Release: alt0.7
+Release: alt0.8
 
 Summary: Rawstudio is an open source raw-image converter written in GTK+
 License: GPLv2+
@@ -37,6 +37,8 @@ Rawstudio can read and convert RAW-images from most digital cameras.
 %patch2
 %ifarch %e2k
 %patch3 -p2
+# workaround mcst#6575 for lcc < 1.27 (ilyakurdyukov@)
+sed -i "s/^inline/static &/" plugins/dcp/dcp.c
 %endif
 
 [ ! -d m4 ] && mkdir m4
@@ -73,6 +75,9 @@ glib-gettextize -c -f
 %exclude %_pkgconfigdir
 
 %changelog
+* Thu Apr 27 2023 Michael Shigorin <mike@altlinux.org> 2.1-alt0.8
+- E2K: fix broken inline (ilyakurdyukov@; cf. mcst#6575)
+
 * Thu Mar 30 2023 Michael Shigorin <mike@altlinux.org> 2.1-alt0.7
 - E2K: avoid nested functions (ilyakurdyukov@)
 
