@@ -22,7 +22,7 @@
 %def_disable sndio
 %def_enable aio
 %def_enable io_uring
-%def_enable blobs
+%def_enable install_blobs
 %def_enable smartcard
 %def_enable libusb
 %def_enable usb_redir
@@ -39,6 +39,7 @@
 %else
 %def_enable rbd
 %endif
+%def_enable vitastor
 %def_enable libnfs
 %def_enable zstd
 %def_enable seccomp
@@ -59,8 +60,6 @@
 %else
 %def_disable numa
 %endif
-%def_disable tcmalloc
-%def_disable jemalloc
 %def_enable replication
 %def_enable rdma
 %def_enable lzo
@@ -115,7 +114,7 @@
 %def_enable have_kvm
 
 %define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa} %{?_enable_jack:jack} %{?_enable_sndio:sndio} dbus
-%define block_drv_list curl dmg %{?_enable_glusterfs:gluster} %{?_enable_libiscsi:iscsi} %{?_enable_libnfs:nfs} %{?_enable_rbd:rbd} %{?_enable_libssh:ssh}
+%define block_drv_list curl dmg %{?_enable_glusterfs:gluster} %{?_enable_libiscsi:iscsi} %{?_enable_libnfs:nfs} %{?_enable_rbd:rbd} %{?_enable_libssh:ssh}  %{?_enable_vitastor:vitastor}
 %define ui_list %{?_enable_gtk:gtk} %{?_enable_curses:curses} %{?_enable_sdl:sdl} %{?_enable_opengl:opengl} dbus
 %define ui_spice_list %{?_enable_spice:app core}
 %define device_usb_list redirect %{?_enable_smartcard:smartcard} host
@@ -131,8 +130,8 @@
 # }}}
 
 Name: qemu
-Version: 7.2.0
-Release: alt3
+Version: 8.0.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -143,8 +142,6 @@ Source0: %name-%version.tar
 Source100: keycodemapdb.tar
 Source101: berkeley-testfloat-3.tar
 Source102: berkeley-softfloat-3.tar
-Source2: qemu-kvm.control.in
-Source4: qemu-kvm.rules
 # qemu-kvm back compat wrapper
 Source5: qemu-kvm.sh
 # guest agent service
@@ -166,8 +163,9 @@ Requires: %name-user = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: meson >= 0.61.3
-BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre2-devel-static libattr-devel-static
+BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre2-devel-static libattr-devel-static libdw-devel-static
 BuildRequires: glib2-devel >= 2.56 libgio-devel
+BuildRequires: libdw-devel
 BuildRequires: makeinfo perl-devel python3-module-sphinx python3-module-sphinx_rtd_theme
 BuildRequires: libcap-ng-devel
 BuildRequires: libxfs-devel
@@ -175,6 +173,7 @@ BuildRequires: zlib-devel libcurl-devel >= 7.29.0 libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.5.0.0.20.2431 qboot
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: python3-devel
+BuildRequires: flex
 %ifarch riscv64
 BuildRequires: libatomic-devel-static
 %endif
@@ -187,18 +186,19 @@ BuildRequires: libatomic-devel-static
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vnc_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_png:BuildRequires: libpng-devel >= 1.6.34}
-%{?_enable_xkbcommon:BuildRequires: libxkbcommon-devel}
+%{?_enable_xkbcommon:BuildRequires: libxkbcommon-devel xkeyboard-config-devel}
 %{?_enable_vde:BuildRequires: libvde-devel}
 %{?_enable_aio:BuildRequires: libaio-devel}
 %{?_enable_io_uring:BuildRequires: liburing-devel >= 0.3}
 %{?_enable_bpf:BuildRequires: libbpf-devel}
-%{?_enable_spice:BuildRequires: libspice-server-devel >= 0.12.5 spice-protocol >= 0.12.3}
+%{?_enable_spice:BuildRequires: libspice-server-devel >= 0.14.0 spice-protocol >= 0.14.0}
 BuildRequires: libuuid-devel
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.1}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
 %{?_enable_opengl:BuildRequires: libepoxy-devel libgbm-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel >= 2.38}
 %{?_enable_rbd:BuildRequires: ceph-devel >= 1.12.0}
+%{?_enable_vitastor:BuildRequires: libvitastor-devel}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
 %{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
 %{?_enable_zstd:BuildRequires: libzstd-devel >= 1.4.0}
@@ -217,8 +217,6 @@ BuildRequires: libslirp-devel >= 4.1.0
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
 %{?_enable_rdma:BuildRequires: rdma-core-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel}
-%{?_enable_tcmalloc:BuildRequires: libgperftools-devel}
-%{?_enable_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_enable_snappy:BuildRequires: libsnappy-devel}
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
@@ -240,6 +238,7 @@ Requires: %name-block-dmg  \
 %{?_enable_libiscsi:Requires: %name-block-iscsi} \
 %{?_enable_libnfs:Requires: %name-block-nfs}     \
 %{?_enable_rbd:Requires: %name-block-rbd}        \
+%{?_enable_vitasor:Requires: %name-block-vitasor} \
 %{?_enable_libssh:Requires: %name-block-ssh}     \
 %{?_enable_alsa:Requires: %name-audio-alsa}      \
 %{?_enable_oss:Requires: %name-audio-oss}        \
@@ -290,7 +289,6 @@ to use.
 %package common
 Summary: QEMU CPU Emulator - common files
 Group: Emulators
-Requires(pre): control >= 0.7.2
 Requires(pre): shadow-utils sysvinit-utils
 Requires: %name-img = %EVR
 Requires: ipxe-roms-qemu
@@ -307,7 +305,6 @@ BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: %name-tools = %EVR
 %{?_enable_mpath:Requires: %name-pr-helper = %EVR}
-Requires: vhostuser-backend(fs)
 Conflicts: %name-img < %EVR
 %{expand:%(for i in %qemu_arches; do echo Requires: %%name-system-$i ; done)}
 
@@ -443,16 +440,6 @@ Group: Emulators
 %description pr-helper
 This package provides the qemu-pr-helper utility that is required for certain
 SCSI features.
-
-%package virtiofsd
-Summary: QEMU virtio-fs shared file system daemon
-Group: Emulators
-Provides: vhostuser-backend(fs)
-
-%description virtiofsd
-This package provides virtiofsd daemon. This program is a vhost-user backend
-that implements the virtio-fs device that is used for sharing a host directory
-tree with a guest.
 
 %package tests
 Summary: tests for the %name package
@@ -651,6 +638,9 @@ Summary: QEMU system emulator for %%{1} \
 Group: Emulators \
 Requires: %%name-system-%%{1}-core \
 %%requires_all_modules \
+%%ifnarch %%arm %%ix86 %%mips32 \
+Requires: vhostuser-backend(fs) \
+%%endif \
 %%description system-%%{1} \
 This package provides the system emulator for %%{1}. \
 %%files system-%%{1} \
@@ -681,7 +671,6 @@ This package provides the system emulator for %%{1}. \
 %%_libdir/%%name/accel-tcg-i386.so \
 %%_libdir/%%name/accel-tcg-x86_64.so \
 %%_datadir/%%name/bios* \
-%%_datadir/%%name/sgabios.bin \
 %%_datadir/%%name/linuxboot* \
 %%_datadir/%%name/multiboot.bin \
 %%_datadir/%%name/multiboot_dma.bin \
@@ -742,7 +731,6 @@ tar -xf %SOURCE101 -C tests/fp/berkeley-testfloat-3 --strip-components 1
 tar -xf %SOURCE102 -C tests/fp/berkeley-softfloat-3 --strip-components 1
 
 %patch -p1
-cp -f %SOURCE2 qemu-kvm.control.in
 
 %build
 run_configure() {
@@ -787,7 +775,9 @@ run_configure \
 	--disable-auth-pam \
 	--disable-avx2 \
 	--disable-avx512f \
-	--disable-blobs \
+	--disable-avx512bw \
+	--disable-install-blobs \
+	--disable-blkio \
 	--disable-bochs \
 	--disable-bpf \
 	--disable-brlapi \
@@ -808,8 +798,10 @@ run_configure \
 	--disable-dmg \
 	--disable-docs \
 	--disable-dsound \
+	--disable-fuse \
 	--disable-gcrypt \
 	--disable-gio \
+	--disable-gtk \
 	--disable-gettext \
 	--disable-glusterfs \
 	--disable-gnutls \
@@ -829,7 +821,6 @@ run_configure \
 	--disable-libiscsi \
 	--disable-libnfs \
 	--disable-libpmem \
-	--disable-blkio \
 	--disable-libssh \
 	--disable-libudev \
 	--disable-libusb \
@@ -856,6 +847,7 @@ run_configure \
 	--disable-qed \
 	--disable-qom-cast-debug \
 	--disable-rbd \
+	--disable-vitastor \
 	--disable-rdma \
 	--disable-replication \
 	--disable-rng-none \
@@ -948,7 +940,7 @@ run_configure \
 	%{?_disable_vde:--disable-vde} \
 	%{?_disable_aio:--disable-linux-aio} \
 	%{?_disable_io_uring:--disable-linux-io-uring} \
-	%{?_disable_blobs: --disable-blobs} \
+	%{?_disable_install_blobs: --disable-install-blobs} \
 	%{subst_enable spice} \
 	%{subst_enable brlapi} \
 	--enable-curl \
@@ -968,6 +960,7 @@ run_configure \
 	%{subst_enable seccomp} \
 	%{subst_enable libiscsi} \
 	%{subst_enable rbd} \
+	%{subst_enable vitastor} \
 	%{subst_enable libnfs} \
 	%{subst_enable glusterfs} \
 	%{subst_enable libssh} \
@@ -992,12 +985,11 @@ run_configure \
 	%{subst_enable libdaxctl} \
 	%{subst_enable fuse} \
 	--enable-xkbcommon \
+	--sphinx-build=sphinx-build-3 \
 	--disable-xen
 
 %make_build V=1 $buildldflags
 popd
-
-sed -i 's/@GROUP@/%_group/g' qemu-kvm.control.in
 
 %install
 %define docdir %_docdir/%name-%version
@@ -1037,9 +1029,6 @@ ln -sf qemu.1.xz %buildroot%_man1dir/qemu-kvm.1.xz
 
 rm -f %buildroot%_bindir/check-*
 rm -f %buildroot%_sysconfdir/udev/rules.d/*
-
-install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/udev/rules.d/%rulenum-%name-kvm.rules
-install -D -m 0755 %name-kvm.control.in %buildroot%_controldir/kvm
 
 # Install qemu-guest-agent service and udev rules
 install -D -m 0644 %SOURCE8 %buildroot%_udevrulesdir/%rulenum-%name-guest-agent.rules
@@ -1109,8 +1098,6 @@ rm -f %buildroot%_datadir/%name/vgabios*bin
 rm -f %buildroot%_datadir/%name/bios.bin
 rm -f %buildroot%_datadir/%name/bios-256k.bin
 rm -f %buildroot%_datadir/%name/bios-microvm.bin
-# Provided by package sgabios
-#rm -f %buildroot%_datadir/%name/sgabios.bin
 # Provided by package qboot
 rm -f %buildroot%_datadir/%name/qboot.rom
 # Provided by package edk2
@@ -1203,16 +1190,6 @@ popd
 
 %pre common
 %_sbindir/groupadd -r -f %_group
-if [ -f %_controldir/qemu-kvm ];then
-%pre_control qemu-kvm
-mv -f /var/run/control/qemu-kvm /var/run/control/kvm
-else
-%pre_control kvm
-fi
-
-%post common
-%post_control -s vmusers kvm
-
 %files
 
 %files aux
@@ -1229,8 +1206,6 @@ fi
 %_datadir/%name/vgabios*.bin
 %dir %_datadir/%name/firmware
 %_man1dir/%name.1*
-%_sysconfdir/udev/rules.d/%rulenum-%name-kvm.rules
-%_controldir/*
 %if_enabled vnc_sasl
 %config(noreplace) %_sysconfdir/sasl2/%name.conf
 %endif
@@ -1293,11 +1268,6 @@ fi
 %_datadir/%name/tracetool
 %_datadir/%name/trace-events-all
 
-%files -n qemu-virtiofsd
-%_man1dir/virtiofsd.1*
-%_libexecdir/virtiofsd
-%_datadir/qemu/vhost-user/50-qemu-virtiofsd.json
-
 %files tests
 #%testsdir
 %_libdir/%name/accel-qtest-*.so
@@ -1343,6 +1313,11 @@ fi
 %exclude %docdir/LICENSE
 
 %changelog
+* Mon Apr 24 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt1
+- 8.0.0
+- Add vitastor support (https://vitastor.io).
+- Drop udev rules and control for /dev/kvm.
+
 * Tue Jan 10 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.0-alt3
 - Build with enable-replication.
 - Allow build with sndio.
