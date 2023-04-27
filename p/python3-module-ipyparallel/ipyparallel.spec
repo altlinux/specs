@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 6.3.0
-Release: alt3
+Release: alt4
 Summary: Interactive Parallel Computing with IPython
 License: BSD-3-Clause
 Group: Development/Python3
@@ -28,7 +28,7 @@ BuildRequires: python3-module-pytest
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-alabaster python3-module-html5lib python3-module-zope
-BuildRequires: python3-module-nose python3-module-notebook python3-module-objects.inv
+BuildRequires: python3-module-notebook python3-module-objects.inv
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3(IPython)
 BuildRequires: python3(IPython.testing.tests)
@@ -150,6 +150,9 @@ iptest3 --coverage xml ipyparallel.tests
 %endif
 
 %changelog
+* Thu Apr 27 2023 Anton Vyatkin <toni@altlinux.org> 6.3.0-alt4
+- Fix BuildRequires
+
 * Thu Jun 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.3.0-alt3
 - Updated build dependencies.
 
