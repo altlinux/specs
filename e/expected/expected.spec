@@ -1,6 +1,6 @@
 Name: expected
-Version: 1.0.0
-Release: alt1.1
+Version: 1.1.0
+Release: alt1
 
 Summary: C++11/14/17 std::expected with functional-style extensions
 
@@ -11,9 +11,6 @@ BuildArch: noarch
 
 # Source-url: https://github.com/TartanLlama/expected/archive/v%version.tar.gz
 Source: %name-%version.tar
-
-# Backported upstream patch with cmake fixes.
-Patch100: %name-cmake.patch
 
 BuildRequires: ninja-build rpm-macros-ninja-build
 BuildRequires: gcc-c++
@@ -40,7 +37,6 @@ coding with expected cleaner.
 
 %prep
 %setup
-%patch100 -p1
 
 %build
 %cmake -G Ninja \
@@ -60,6 +56,9 @@ coding with expected cleaner.
 %_datadir/cmake/tl-%name
 
 %changelog
+* Thu Apr 27 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
