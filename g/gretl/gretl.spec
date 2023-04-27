@@ -2,7 +2,7 @@
 %def_with openmpi
 
 Name: gretl
-Version: 2022c
+Version: 2023a
 Release: alt1
 
 Summary: A tool for econometric analysis
@@ -157,6 +157,9 @@ desktop-file-install						\
 %endif
 
 %changelog
+* Thu Apr 27 2023 Vitaly Lipatov <lav@altlinux.ru> 2023a-alt1
+- new version 2023a (with rpmrb script)
+
 * Sun Feb 05 2023 Vitaly Lipatov <lav@altlinux.ru> 2022c-alt1
 - initial build for ALT Sisyphus (thanks, Fedora!)
 
