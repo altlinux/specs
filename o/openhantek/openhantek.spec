@@ -1,5 +1,5 @@
 Name: openhantek
-Version: 3.3.2
+Version: 3.3.2.2
 Release: alt1
 Epoch: 1
 
@@ -32,7 +32,7 @@ Supported devices: DSO2xxx Series, DSO52xx Series, 6022BE/BL
 
 %prep
 %setup
-%patch1 -p1
+%patch1 -p2
 
 %build
 export VERSION=%version
@@ -54,6 +54,10 @@ ln -s OpenHantek %buildroot%_bindir/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Thu Apr 27 2023 Vitaly Lipatov <lav@altlinux.ru> 1:3.3.2.2-alt1
+- new version 3.3.2.2 (with rpmrb script)
+- update version patch
+
 * Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 1:3.3.2-alt1
 - new version 3.3.2 (with rpmrb script)
 
