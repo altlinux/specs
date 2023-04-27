@@ -1,11 +1,11 @@
 %def_enable snapshot
-%define ver_major 0.14
+%define ver_major 0.15
 
 %def_disable bootstrap_theme
 %def_enable check
 
 Name: hotdoc
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: Hotdoc is a documentation framework
@@ -43,7 +43,8 @@ Requires: python3-module-six >= 1.16.0
 Requires: python3-module-networkx-core >= 2.8.8
 
 BuildRequires(pre): rpm-build-gir rpm-build-python3
-BuildRequires: python3-module-setuptools cmake gcc-c++ bison flex
+BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: cmake gcc-c++ bison flex
 BuildRequires: pkgconfig(libxml-2.0) pkgconfig(gio-2.0) pkgconfig(json-glib-1.0)
 # for hotdoc_bootstrap_theme
 BuildRequires: meson npm node-gyp
@@ -88,6 +89,9 @@ mv %name-%version-bootstrap_theme.tar %_sourcedir/
 %doc README.md
 
 %changelog
+* Thu Apr 27 2023 Yuri N. Sedunov <aris@altlinux.org> 0.15-alt1
+- 0.15
+
 * Thu Apr 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt1
 - 0.14.1
 
