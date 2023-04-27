@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: phpldapadmin
-Version: 1.2.5
+Version: 1.2.6.6
 Release: alt1
 
 Summary: Handle the adminstration of LDAP server over the web
@@ -87,6 +87,9 @@ install -m644  %name.conf %buildroot%apache2_sites_available
 %doc INSTALL.md README.md LICENSE
 
 %changelog
+* Wed Apr 26 2023 Andrey Cherepanov <cas@altlinux.org> 1.2.6.6-alt1
+- New version.
+
 * Tue May 19 2020 Nikita Obukhov <nickf@altlinux.org> 1.2.5-alt1
 - Update to 1.2.5
 
