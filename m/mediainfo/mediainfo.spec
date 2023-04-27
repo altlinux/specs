@@ -1,7 +1,7 @@
 %def_disable kde4
 
 Name: mediainfo
-Version: 23.03
+Version: 23.04
 Release: alt1
 
 Group: File tools
@@ -152,6 +152,9 @@ rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Thu Apr 27 2023 Yuri N. Sedunov <aris@altlinux.org> 23.04-alt1
+- 23.04
+
 * Wed Mar 29 2023 Yuri N. Sedunov <aris@altlinux.org> 23.03-alt1
 - 23.03
 
