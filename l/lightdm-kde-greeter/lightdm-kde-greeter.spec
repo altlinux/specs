@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.8
+Version: 0.4.9
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -89,6 +89,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Tue Apr 25 2023 Anton Golubev <golubevan@altlinux.org> 0.4.9-alt1
+- apply scales to screens
+
 * Wed Mar 29 2023 Anton Golubev <golubevan@altlinux.org> 0.4.8-alt1
 - improve config handling
 - bring the userbar theme closer visually to the design of the breeze theme
