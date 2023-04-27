@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 0.23.2
-Release: alt1
+Release: alt2
 
 Summary: A set of python modules for machine learning and data mining
 License: BSD-3-Clause
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ liblapack-devel xvfb-run
 BuildRequires: libgomp-devel
 BuildRequires: libnumpy-py3-devel python3-module-numpy-testing python3-module-scipy python3-module-zope python3-module-pytest
-BuildRequires: python3-module-six python3-module-joblib python3-module-Cython python3(nose)
+BuildRequires: python3-module-six python3-module-joblib python3-module-Cython
 BuildRequires: python3(threadpoolctl)
 
 %py3_provides sklearn
@@ -87,6 +87,9 @@ xvfb-run py.test3 -vv
 %doc examples doc
 
 %changelog
+* Thu Apr 27 2023 Anton Vyatkin <toni@altlinux.org> 0.23.2-alt2
+- Fix BuildRequries
+
 * Mon Aug 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.23.2-alt1
 - Updated to upstream version 0.23.2.
 
