@@ -6,7 +6,7 @@
 
 Name: kubernetes
 Version: 1.26.3
-Release: alt1
+Release: alt2
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -225,13 +225,15 @@ install -d %buildroot%_man1dir
 install -p -m 644 docs/man/man1/* %buildroot%_man1dir
 
 # install config files
-install -d -m 0755 %buildroot%_sysconfdir/%name
+install -d -m 0775 %buildroot%_sysconfdir/%name
 for src in %SOURCE20 %SOURCE21 %SOURCE22 %SOURCE23 %SOURCE24 %SOURCE25 ; do
   install -m 0644 -t %buildroot%_sysconfdir/%name "$src"
 done
 
+# install home dir kube user
+install -d -m 0775 %buildroot%_localstatedir/%name
 # manifests file for the kubelet
-install -d -m 0755 %buildroot%_sysconfdir/%name/manifests
+install -d -m 0775 %buildroot%_sysconfdir/%name/manifests
 
 # place kubernetes.tmpfiles to /lib/tmpfiles.d/kubernetes.conf
 install -d -m 0755 %buildroot%_tmpfilesdir
@@ -251,8 +253,8 @@ install -d -m 0755 %buildroot/%_sysconfdir/systemd/system.conf.d
 install -p -m 0644 -t %buildroot/%_sysconfdir/systemd/system.conf.d %SOURCE3
 
 %pre common
-%_sbindir/groupadd -r -f kube > /dev/null 2>&1 ||:
-%_sbindir/useradd -r -g kube -d %_localstatedir/%name -s /dev/null -c "Kubernetes user" kube > /dev/null 2>&1 ||:
+groupadd -r -f kube > /dev/null 2>&1 ||:
+useradd -r -g kube -M -d %_localstatedir/%name -s /dev/null -c "Kubernetes user" kube > /dev/null 2>&1 ||:
 
 %post master
 %post_service kube-apiserver
@@ -285,9 +287,10 @@ if [ -f /etc/net/sysctl.conf ]; then
 fi
 
 %files common
-%dir %_sysconfdir/%name
+%attr(775,root,kube) %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/config
 %_tmpfilesdir/%name.conf
+%attr(775,kube,kube) %dir %_localstatedir/%name
 
 %files master
 %doc README.md LICENSE
@@ -319,7 +322,7 @@ fi
 %_unitdir/kubelet.service
 %dir %_localstatedir/kubelet
 %config(noreplace) %_sysconfdir/%name/kubelet
-%dir %_sysconfdir/%name/manifests
+%attr(775,root,kube) %dir %_sysconfdir/%name/manifests
 
 %files kubeadm
 %doc README.md LICENSE
@@ -340,6 +343,10 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Thu Apr 27 2023 Alexey Shabalin <shaba@altlinux.org> 1.26.3-alt2
+- Allow write to config dir /etc/kubernetes for kube group
+- Allow write to home dir /var/lib/kubernetes for kube group
+
 * Fri Mar 24 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.3-alt1
 - 1.26.3 (Fixes: CVE-2022-3172, CVE-2022-3162, CVE-2022-3294)
 
