@@ -5,10 +5,10 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.3
+Version: 1.2.5
 Release: alt1
 Summary: Base common calendaring features: Convinience or not coverd yet
-License: GPL
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/bda.calendar.base/
 #Git: https://github.com/bluedynamics/bda.calendar.base.git
@@ -19,11 +19,12 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pytz
 BuildRequires: python3-module-zope.interface
-BuildRequires: python-tools-2to3
 
 %py3_provides %oname
 Requires: python3-module-%mname = %EVR
 %py3_requires zope.interface
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/bda/calendar/base
 
 %description
 bda.calendar.base contains functions adressing programmers all-day tasks
@@ -44,7 +45,6 @@ Core files of %mname.
 
 %prep
 %setup
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %python3_build_debug
@@ -74,6 +74,9 @@ python3 setup.py test
 %python3_sitelibdir/bda/calendar/__init__.py*
 
 %changelog
+* Thu Apr 27 2023 Anton Vyatkin <toni@altlinux.org> 1.2.5-alt1
+- 1.2.3 -> 1.2.5
+
 * Fri Sep 24 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.2.3-alt1
 - 1.2.2 -> 1.2.3
   + switch to github upstream
