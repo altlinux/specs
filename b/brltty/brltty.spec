@@ -1,6 +1,8 @@
 %define _libexecdir %_prefix/libexec
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 %define _localstatedir %_var
+%define optflags_lto %nil
+%filter_from_requires /^sudo$/d
 
 %define pkg_version 6.5
 %define xdg_name org.a11y.brlapi
@@ -25,7 +27,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt1
+Release: alt1.1
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -401,6 +403,10 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %endif
 
 %changelog
+* Thu Apr 27 2023 Sergey V Turchin <zerg@altlinux.org> 6.5-alt1.1
+- NMU: don't require sudo (closes: 45900)
+- NMU: disable LTO to fix compile
+
 * Sun Jun 12 2022 Yuri N. Sedunov <aris@altlinux.org> 6.5-alt1
 - 6.5
 
