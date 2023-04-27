@@ -4,14 +4,16 @@
 %def_without docs
 
 # TODO: remove later this fix for documentation
-%define _cmake__builddir BUILD
+#%%define _cmake__builddir BUILD
 
-%define sover 2
-%define libvxl libvxl%sover
+%define openjpeg2_sover 2
+%define ver_maj 3
+%define sover 3.5
+%define libvxl libvxl%ver_maj
 
 Name: libvxl
-Version: 2.0.2
-Release: alt4
+Version: 3.5.0
+Release: alt1
 
 Group: System/Libraries
 Summary: C++ Libraries for Computer Vision Research and Implementation
@@ -22,7 +24,7 @@ Url: https://vxl.github.io/
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
-BuildRequires: gcc-c++ cmake libdcmtk-devel dcmtk libtiff-devel libjpeg-devel libssl-devel
+BuildRequires: gcc-c++ cmake libdcmtk-devel dcmtk libtiff-devel libjpeg-devel libssl-devel rpm-build-ninja
 BuildRequires: libpng-devel libxml2-devel libgeotiff-devel
 %if_with docs
 BuildRequires: doxygen /usr/bin/dot texi2html
@@ -69,10 +71,9 @@ This package contains documentation for VXL.
 %prep
 %setup
 %patch1 -p1
-rm -rf v3p/{bzlib,dcmtk,geotiff,j2k,png,rply,tiff,zlib,jpeg}
 
 %build
-%cmake \
+%cmake -GNinja \
     -DBUILD_SHARED_LIBS:BOOL=ON \
     -DVXL_INSTALL_LIBRARY_DIR=%_libdir \
     -DVXL_INSTALL_ARCHIVE_DIR=%_libdir \
@@ -96,18 +97,19 @@ rm -rf v3p/{bzlib,dcmtk,geotiff,j2k,png,rply,tiff,zlib,jpeg}
     -DVXL_LEGACY_FUTURE_REMOVE:BOOL=OFF \
     %nil
 
-%cmake_build
+%ninja_build -C "%_cmake__builddir"
 
 %if_with docs
-%cmake_build -t build_doxygen_doc
+%ninja_build -C "%_cmake__builddir" build_doxygen_doc
 %endif
 
 %install
-%cmakeinstall_std
+%ninja_install -C "%_cmake__builddir"
 
 %files -n %libvxl
 %_libdir/lib*.so.%sover
 %_libdir/lib*.so.%sover.*
+%_libdir/libopenjpeg2.so.%openjpeg2_sover.*
 %dir %_datadir/vxl/
 
 %files devel
@@ -121,6 +123,11 @@ rm -rf v3p/{bzlib,dcmtk,geotiff,j2k,png,rply,tiff,zlib,jpeg}
 %endif
 
 %changelog
+* Mon Apr 17 2023 Elizaveta Morozova <morozovaes@altlinux.org> 3.5.0-alt1
+- New version
+- Build using ninja-build
+- Include DCMTK-3.6.4 API update
+
 * Wed Sep 22 2021 Slava Aseev <ptrnine@altlinux.org> 2.0.2-alt4
 - Include missing "limits" std header
 
