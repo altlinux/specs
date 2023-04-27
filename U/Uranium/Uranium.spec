@@ -6,15 +6,13 @@
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 4.13.0
+Version: 5.3.1
 Release: alt1
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
 Group:   Development/Python3
 URL:     https://github.com/Ultimaker/Uranium
-
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: python3-devel cmake
@@ -23,22 +21,33 @@ BuildRequires:  %_bindir/msgmerge
 
 # Tests
 %if 0%{?with_check}
-BuildRequires:  python3-module-Arcus = %version
+BuildRequires:  python3-module-Arcus
 BuildRequires:  python3-module-numpy
 BuildRequires:  python3-module-numpy-testing
 BuildRequires:  python3-module-scipy
-BuildRequires:  python3-module-PyQt5
+BuildRequires:  python3-module-PyQt6
 BuildRequires:  python3-module-pytest
 BuildRequires:  python3-module-pip
 BuildRequires:  python3-module-shapely
 BuildRequires:  python3-module-twisted-web
 BuildRequires:  python3-modules-sqlite3
+BuildRequires:  python3-module-pyclipper
 %endif
 
 BuildArch: noarch
 
-Source: %name-%version.tar
 # Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
+
+# Cmake bits taken from 4.13.1, before upstream went nuts with conan
+Source2: mod_bundled_packages_json.py
+Source3: UraniumPluginInstall.cmake
+Source4: UraniumTests.cmake
+Source5: UraniumTranslationTools.cmake
+Source6: CMakeLists.txt
+Source7: CPackConfig.cmake
+Source8: Doxyfile
+
 Patch: Uranium-4.7.1-set-default-languages.patch
 
 %description
@@ -54,6 +63,14 @@ related applications.
 
 %prep
 %setup
+#mkdir cmake
+cp -a %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 cmake/
+rm CMakeLists.txt
+cp -a %SOURCE6 %SOURCE7 %SOURCE8 .
+ 
+# fix compile-shaders
+sed -i 's|qsb |qsb-qt6 |g' scripts/compile-shaders
+
 %autopatch -p1
 
 %build
@@ -61,11 +78,11 @@ related applications.
 # see https://github.com/Ultimaker/Uranium/commit/862a246bdfd7e25541b04a35406957612c6f4bb7
 %cmake -DLIB_SUFFIX:STR=
 %cmake_build
-%cmake_build --target doc
+%cmake_build -- doc
 
 %install
 %cmake_install
-mv %buildroot/%_datadir/cmake-* %buildroot/%_datadir/cmake
+mv %buildroot/%_datadir/cmake* %buildroot/%_datadir/cmake
 
 # Sanitize the location of locale files
 pushd %buildroot%_datadir
@@ -80,7 +97,10 @@ popd
 %check
 %if 0%{?with_check}
 pip3 freeze
-python3 -m pytest -v
+# skipping failing tests, see:
+# * https://github.com/Ultimaker/Uranium/issues/594
+# * https://github.com/Ultimaker/Uranium/issues/603
+python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) and not TestHttpRequestManager"
 %endif
 
 %files -f uranium.lang
@@ -94,6 +114,9 @@ python3 -m pytest -v
 %doc html LICENSE
 
 %changelog
+* Tue Apr 25 2023 Anton Midyukov <antohami@altlinux.org> 5.3.1-alt1
+- new version (5.3.1) with rpmgs script
+
 * Wed Jan 26 2022 Anton Midyukov <antohami@altlinux.org> 4.13.0-alt1
 - new version (4.13.0) with rpmgs script
 

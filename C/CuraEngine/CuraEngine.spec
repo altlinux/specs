@@ -3,7 +3,7 @@
 
 Name: CuraEngine
 Epoch: 1
-Version: 4.13.0
+Version: 5.3.1
 Release: alt1
 
 Summary: Engine for processing 3D models into G-code instructions for 3D printers
@@ -11,15 +11,17 @@ License: AGPL-3.0
 Group: Engineering
 Url: https://github.com/Ultimaker/CuraEngine
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
-Source: %name-%version.tar
 # Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
+
+# Cmake bits taken from 4.13.1, before upstream went nuts with conan
+Source2: FindGMock.cmake
+Source3: FindPolyclipping.cmake
+Source4: FindStb.cmake
+Source5: CMakeLists.txt
+Source6: CPackConfig.cmake
 
 Patch2: %name-static-libstdcpp.patch
-
-# A weird part of cmake stuff that does not work at all, not present in upstream master
-Patch3: fix-stb-PATH.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -28,8 +30,13 @@ BuildRequires: protobuf-compiler
 BuildRequires: pkgconfig(protobuf)
 BuildRequires: libpolyclipping-devel
 BuildRequires: pkgconfig(RapidJSON)
-BuildRequires: libArcus-devel = %version
+BuildRequires: libArcus-devel
 BuildRequires: libstb-devel
+BuildRequires: libfmt-devel
+BuildRequires: libspdlog-devel
+BuildRequires: boost-devel-headers
+BuildRequires: librange-v3-devel
+BuildRequires: boost-polygon-devel
 
 %description
 CuraEngine is a powerful, fast and robust engine for processing 3D
@@ -43,6 +50,12 @@ to the old Skeinforge engine.
 
 %prep
 %setup
+
+mkdir cmake
+cp -a %SOURCE2 %SOURCE3 %SOURCE4 cmake
+rm -rf CMakeLists.txt
+cp -a %SOURCE5 %SOURCE6 .
+
 %autopatch -p1
 
 # bundled libraries
@@ -59,17 +72,20 @@ rm -rf libs
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
 # Smoke test
 %buildroot%_bindir/%name help
 
 %files
-%_bindir/*
-%doc LICENSE README.md
+%_bindir/%name
+%doc README.md
 
 %changelog
+* Thu Apr 27 2023 Anton Midyukov <antohami@altlinux.org> 1:5.3.1-alt1
+- new version (5.3.1) with rpmgs script
+
 * Wed Jan 26 2022 Anton Midyukov <antohami@altlinux.org> 1:4.13.0-alt1
 - new version (4.13.0) with rpmgs script
 

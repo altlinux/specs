@@ -2,17 +2,30 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libsavitar
-Version: 4.13.0
+Version: 5.2.2
 Release: alt1
 Summary: C++ implementation of 3mf loading with SIP Python bindings
 License: LGPLv3+
 Group: Development/Other
 Url: https://github.com/Ultimaker/libSavitar
-Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: %name-%version.tar
 # Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
-Patch: %name-no-pugixml.patch
+Source: %name-%version.tar
+
+# Python bits
+# Source1-url: https://github.com/Ultimaker/pySavitar/archive/%version.tar.gz
+Source1: pySavitar-%version.tar
+
+# Cmake bits taken from 4.13.1, before upstream went nuts with conan
+Source2: FindSIP.cmake
+Source3: SIPMacros.cmake
+Source4: CMakeLists.txt
+Source5: SavitarConfig.cmake.in
+Source6: COPYING-CMAKE-SCRIPTS
+ 
+# Actually export symbols into the shared lib
+Patch0: libsavitar-5.2.2-export-fix.patch
+
 Patch1: find-sip3.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
@@ -27,7 +40,7 @@ Summary: Development files for libsavitar
 # The cmake scripts are BSD
 License: AGPLv3+ and BSD
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Savitar is a C++ implementation of 3mf loading with SIP Python bindings.
@@ -38,9 +51,9 @@ Development files.
 %package -n python3-module-savitar
 Summary: Python 3 libSavitar bindings
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py3_provides Savitar
-Requires: python3-module-sip
+Requires: python3-module-PyQt5-sip
 
 %description -n python3-module-savitar
 Savitar is a C++ implementation of 3mf loading with SIP Python bindings.
@@ -49,26 +62,31 @@ Savitar is a C++ implementation of 3mf loading with SIP Python bindings.
 The Python bindings.
 
 %prep
-%setup
-%patch -p1
-%patch1 -p1
+%setup -a 1
+
+cp -a pySavitar-%version/python .
+mkdir cmake
+cp -a %SOURCE2 %SOURCE3 %SOURCE6 cmake/
+rm -rf CMakeLists.txt
+cp -a %SOURCE4 %SOURCE5 .
+%autopatch -p1
 
 # Wrong end of line encoding
 dos2unix README.md
 
-# Bundling
-rm pugixml -rf
-%__subst 's|"../pugixml/src/pugixml.hpp"|<pugixml.hpp>|g' src/*.cpp src/*.h
+# https://github.com/Ultimaker/libSavitar/pull/18
+sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
 
 %build
+%add_optflags '-Wl,--as-needed'
 %cmake -DCMAKE_SKIP_RPATH:BOOL=ON
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
-%doc README.md LICENSE
+%doc README.md
 %_libdir/libSavitar.so.*
 
 %files devel
@@ -79,10 +97,13 @@ rm pugixml -rf
 %_libdir/cmake
 
 %files -n python3-module-savitar
-%doc README.md LICENSE
-%python3_sitelibdir/Savitar.so
+%doc README.md
+%python3_sitelibdir/pySavitar.so
 
 %changelog
+* Tue Apr 25 2023 Anton Midyukov <antohami@altlinux.org> 5.2.2-alt1
+- new version (5.2.2) with rpmgs script
+
 * Wed Jan 26 2022 Anton Midyukov <antohami@altlinux.org> 4.13.0-alt1
 - new version (4.13.0) with rpmgs script
 

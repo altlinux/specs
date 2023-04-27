@@ -6,25 +6,32 @@
 
 Name: cura
 Epoch: 1
-Version: 4.13.0
-Release: alt3
+Version: 5.3.1
+Release: alt1
 Summary: 3D printer control software
 License: LGPLv3+
 
 Group: Engineering
 Url: https://github.com/Ultimaker/Cura
-Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: %name-%version.tar
 # Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
 
-# OpenSUSE path
-# PATCH-FIX-OPENSUSE disable-code-style-check.patch code style is no distro buisiness
-Patch1: disable-code-style-check.patch
-# PATCH-FIX-OPENSUSE fix-crash-on-start.patch
-Patch3:         fix-crash-on-start.patch
+# Cmake bits taken from 4.13.1, before upstream went nuts with conan
+Source2: mod_bundled_packages_json.py
+Source3: CuraPluginInstall.cmake
+Source4: CuraTests.cmake
+Source5: com.ultimaker.cura.desktop.in
+Source6: CMakeLists.txt
+Source7: CuraVersion.py.in
+Source8: com.ultimaker.cura.appdata.xml
+
 # PATCH-FIX-OPENSUSE -- avoid bad UI layout and crash in preview
-Patch4:         0001-Avoid-crash-caused-by-KDE-qqc2-desktop-style.patch
+Patch4: 0001-Avoid-crash-caused-by-KDE-qqc2-desktop-style.patch
+
+# Fedora patch
+# Skip forced loading SentryLogger to avoid an error on startup
+Patch10: 028e7f7.patch
 
 BuildArch: noarch
 
@@ -48,15 +55,13 @@ BuildRequires: python3(importlib_metadata)
 %endif
 
 %py3_requires serial zeroconf
-Requires: python3-module-savitar = %version
+Requires: python3-module-savitar
 Requires: Uranium = %version
-Requires: qt5-quickcontrols
-Requires: qt5-quickcontrols2
-Requires: qt5-graphicaleffects
 Requires: CuraEngine = %epoch:%version
 Requires: cura-fdm-materials
 Requires: 3dprinter-udev-rules
 Requires: python3-module-keyring >= 21
+Requires: qt6-declarative
 # need for plugins
 Requires: python3-module-Charon
 Requires: python3-module-trimesh
@@ -77,9 +82,13 @@ needs. As it's open source, our community helps enrich it even more.
 
 %prep
 %setup
-%patch1 -p1
-%patch3 -p1
-%patch4 -p1
+%autopatch1 -p1
+
+mkdir cmake
+cp -a %SOURCE2 %SOURCE3 %SOURCE4 cmake
+rm -rf CMakeLists.txt
+cp -a %SOURCE5 %SOURCE6 %SOURCE8 .
+cp -a %SOURCE7 cura
 
 # Wrong end of line encoding
 dos2unix docs/How_to_use_the_flame_graph_profiler.md
@@ -110,7 +119,14 @@ EOF
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
+
+mkdir -p %buildroot%_datadir/%name/resources/images/whats_new
+mkdir -p %buildroot%_datadir/%name/resources/texts/whats_new
+mkdir -p %buildroot%_datadir/%name/resources/scripts
+
+# Remove failing plugins
+rm -r %buildroot%_prefix/lib/cura/plugins/{SentryLogger,UFPReader,UFPWriter}
 
 %find_lang cura fdmextruder.def.json fdmprinter.def.json --output=%name.lang
 
@@ -134,6 +150,9 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Thu Apr 27 2023 Anton Midyukov <antohami@altlinux.org> 1:5.3.1-alt1
+- new version (5.3.1) with rpmgs script (Closes: 43069)
+
 * Mon Mar 06 2023 Anton Midyukov <antohami@altlinux.org> 1:4.13.0-alt3
 - add 'BuildRequires: python3(importlib_metadata)' for fix build with check
 

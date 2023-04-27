@@ -2,22 +2,45 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libArcus
-Version: 4.13.0
-Release: alt2
+Version: 5.2.2
+Release: alt1
 
 Summary: Communication library between internal components for Ultimaker software
 License: LGPLv3+
 Group: Development/Other
 Url: https://github.com/Ultimaker/libArcus
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
-Source: %name-%version.tar
 # Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
+
+# Python bits
+# Source1-url: https://github.com/Ultimaker/pyArcus/archive/%version.tar.gz
+Source1: pyArcus-%version.tar
+
+# Cmake bits taken from 4.13.1, before upstream went nuts with conan
+Source2: FindSIP.cmake
+Source3: SIPMacros.cmake
+Source4: CMakeLists.txt
+Source5: CPackConfig.cmake
+Source6: ArcusConfig.cmake.in
+Source7: COPYING-CMAKE-SCRIPTS
+
 Patch: fix_find_sip.patch
-Patch2: libarcus_protobuf.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1601917
+Patch1: libArcus-3.10.0-PyQt6.sip.patch
+ 
+# Actually export symbols
+Patch2: libArcus-5.2.2-actually-export-symbols.patch
+
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
-BuildRequires: python3-dev cmake gcc-c++ pkgconfig(protobuf) python3-module-sip-devel protobuf-compiler
+BuildRequires: python3-dev
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig(protobuf)
+BuildRequires: protobuf-compiler
+BuildRequires: python3-module-sip-devel
+BuildRequires: python3-module-PyQt6-sip
 
 %description
 %summary
@@ -35,15 +58,23 @@ Summary: Communication library between internal components for Ultimaker softwar
 Group:   Development/Python3
 %py3_provides Arcus
 Requires: %name = %EVR
-Requires: python3-module-sip
+Requires: python3-module-PyQt5-sip
 
 %description -n python3-module-Arcus
 Communication library between internal components for Ultimaker software
 
 %prep
-%setup
-%patch -p1
-%patch2 -p1
+%setup -n libArcus-%{version} -a 1
+ 
+cp -a pyArcus-%version/python .
+cp -a pyArcus-%version/include/pyArcus include
+mkdir cmake
+cp -a %SOURCE2 %SOURCE3 %SOURCE7 cmake/
+rm CMakeLists.txt
+cp -a %SOURCE4 %SOURCE5 %SOURCE6 .
+cp -a pyArcus-%version/src/PythonMessage.cpp python/
+
+%autopatch -p1
 
 # https://github.com/Ultimaker/libArcus/pull/94#issuecomment-505376760
 sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
@@ -54,21 +85,24 @@ sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
-%_libdir/*.so.*
-%doc LICENSE README.md
+%_libdir/libArcus.so.*
+%doc README.md
 
 %files devel
-%_libdir/*.so
+%_libdir/libArcus.so
 %_includedir/Arcus
 %_libdir/cmake/Arcus
 
 %files -n python3-module-Arcus
-%python3_sitelibdir/*
+%python3_sitelibdir/pyArcus.so
 
 %changelog
+* Tue Apr 25 2023 Anton Midyukov <antohami@altlinux.org> 5.2.2-alt1
+- new version (5.2.2) with rpmgs script
+
 * Thu Dec 29 2022 Alexey Shabalin <shaba@altlinux.org> 4.13.0-alt2
 - fixed build with new protobuf
 
