@@ -2,7 +2,7 @@
 %def_enable python
 
 Name: sudo
-Version: 1.9.13p2
+Version: 1.9.13p3
 Release: alt1
 Epoch: 1
 
@@ -256,6 +256,18 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Mon Apr 17 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.13p3-alt1
+- Update to latest stable release with regressions.
+- Fixed a bug that could cause sudo to hang when running a command
+  in a pseudo-terminal when there is still input buffered after a
+  command has exited.
+- Fixed regressions in sudo 1.9.13:
+ + Fixed a bug introduced in sudo 1.9.13 that caused a syntax error
+   when "list" was used as a user or host name (GitHub #246).
+ + Fixed "sudo -U otheruser -l command" (GitHub #248).
+ + Fixed "sudo -l command args" when matching a command in sudoers
+   with command line arguments (GitHub #249).
+
 * Mon Feb 27 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.13p2-alt1
 - Update to latest stable release.
 - Fix run_time message validation in logsrvd.
