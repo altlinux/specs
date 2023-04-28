@@ -4,23 +4,33 @@
 
 %def_without docs
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.5.1
-Release: alt2
+Version: 0.5.3
+Release: alt1
 Summary: A Python package for describing statistical models and for building design matrices
 License: BSD-2-Clause and Python
 Group: Development/Python3
 Url: http://patsy.readthedocs.org/en/latest/
+Vcs: https://github.com/pydata/patsy.git
 
-BuildArch: noarch
 
-# https://github.com/pydata/patsy.git
 Source: %name-%version.tar
 
 Patch1: %oname-alt-doc.patch
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-six
+BuildRequires: python3-module-numpy-testing
+%endif
 
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
@@ -81,7 +91,7 @@ ln -s ../objects.inv doc/
 %endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %if_with docs
 %make -C doc pickle
@@ -89,17 +99,20 @@ ln -s ../objects.inv doc/
 %endif
 
 %install
-%python3_build_install
+%pyproject_install
 
 %if_with docs
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
+%check
+%pyproject_run_pytest
+
 %files
 %doc LICENSE.txt
-%doc *.rst *.md TODO
+%doc *.md TODO
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %if_with docs
 %exclude %python3_sitelibdir/%oname/pickle
 %endif
@@ -119,6 +132,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Apr 28 2023 Anton Vyatkin <toni@altlinux.org> 0.5.3-alt1
+- New version 0.5.3.
+
 * Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.1-alt2
 - Fixed build.
 
