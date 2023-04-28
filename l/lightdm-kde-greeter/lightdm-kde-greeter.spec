@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.9
+Version: 0.4.10
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -89,6 +89,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Fri Apr 28 2023 Anton Golubev <golubevan@altlinux.org> 0.4.10-alt1
+- explicitly specify output names for screen scales
+
 * Tue Apr 25 2023 Anton Golubev <golubevan@altlinux.org> 0.4.9-alt1
 - apply scales to screens
 
