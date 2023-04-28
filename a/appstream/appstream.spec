@@ -2,8 +2,8 @@
 %def_without docs
 
 Name:    appstream
-Version: 0.16.1
-Release: alt2
+Version: 0.16.2
+Release: alt1
 
 Summary: Utilities to generate, maintain and access the AppStream Xapian database
 # library; LGPLv2+, tools: GPLv2+
@@ -169,6 +169,9 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 %_datadir/gtk-doc/html/appstream
 
 %changelog
+* Fri Apr 28 2023 Andrey Cherepanov <cas@altlinux.org> 0.16.2-alt1
+- New version.
+
 * Mon Mar 13 2023 Michael Shigorin <mike@altlinux.org> 0.16.1-alt2
 - E2K: workaround for an inadequate warning in tests (ilyakurdyukov@)
 - spec cleanup according to [[ALT Packaging HOWTO]]
