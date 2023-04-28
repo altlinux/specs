@@ -2,7 +2,7 @@
 
 Name: realmd
 Version: 0.17.1
-Release: alt1
+Release: alt2
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
 Group: Security/Networking
@@ -53,6 +53,8 @@ applications that use %name.
 
 %find_lang %name
 
+install -m755 -D service/realmd-altlinux-helper %buildroot%_prefix/lib/realmd/
+
 %check
 %make check
 
@@ -73,6 +75,9 @@ applications that use %name.
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Fri Apr 28 2023 Alexander Burmatov <thatman@altlinux.org> 0.17.1-alt2
+- Added fixes for joining a domain using sss
+
 * Fri Apr 07 2023 Alexey Shabalin <shaba@altlinux.org> 0.17.1-alt1
 - 0.17.1
 
