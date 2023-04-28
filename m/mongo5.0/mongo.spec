@@ -4,7 +4,7 @@
 
 Name: mongo5.0
 Version: 5.0.17
-Release: alt1
+Release: alt2
 Summary: mongo client shell and tools
 License: SSPL-1.0
 Group: Development/Databases
@@ -14,9 +14,7 @@ Source: %name-%version.tar
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
 ExclusiveArch: x86_64 aarch64 ppc64le %e2k
-
 BuildRequires(pre): rpm-macros-valgrind
-
 BuildRequires: /proc gcc10-c++ gcc10 python3-module-pymongo python3-module-pkg_resources
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
@@ -26,13 +24,10 @@ BuildRequires: libyaml-cpp-devel zlib-devel python-modules-json
 BuildRequires: python3-module-Cheetah python3-module-yaml python3-module-psutil
 BuildRequires: libcurl-devel python3-module-packaging
 BuildRequires: liblzma-devel
-
 %if_enabled valgrind
 BuildRequires: valgrind-devel
 %endif
 
-Provides: mongo
-Obsoletes: mongo
 Provides: mongo = %EVR
 Conflicts: mongo < %EVR
 Conflicts: mongo > %EVR
@@ -119,7 +114,7 @@ python3 src/third_party/scons-3.1.2/scons.py CC=gcc-10 CXX=g++-10 %build_opts
 
 # cow@: It seems that mongo 4.2 + scons 3.1.1 doesn't provide a clean way to
 # specify location to install binaries (at least I wasn't able to find it).
-install -p -D -m 755 build/install/bin/mongod %buildroot%_bindir/mongo
+install -p -D -m 755 build/install/bin/mongo %buildroot%_bindir/mongo
 install -p -D -m 755 build/install/bin/mongod %buildroot%_bindir/mongod
 install -p -D -m 755 build/install/bin/mongos %buildroot%_bindir/mongos
 
@@ -204,6 +199,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Thu Apr 27 2023 Alexei Takaseev <taf@altlinux.org> 5.0.17-alt2
+- Remove unneeded Provides
+- Fix pack mongod as mongo
+
 * Fri Apr 21 2023 Alexei Takaseev <taf@altlinux.org> 5.0.17-alt1
 - 5.0.17
 - Fix path
