@@ -1,8 +1,10 @@
 %define oname pyroute2
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.5.19
-Release: alt2.1
+Version: 0.7.7
+Release: alt1
 
 Summary: Python Netlink library
 
@@ -15,6 +17,12 @@ Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-modules-sqlite3
+%endif
 
 %add_python3_req_skip pyroute2.bsd.rtmsocket
 %add_python3_req_skip dhclient
@@ -27,47 +35,28 @@ It requires only Python stdlib, no 3rd party libraries.
 The library was started as an RTNL protocol implementation,
 so the name is pyroute2, but now it supports many netlink protocols.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/pytest/pr2test
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/utils.py
-
-%description tests
-This package contains tests for %oname.
-
 %prep
 %setup -n %oname-%version
 
 %build
-%python3_build
-
-# git describe is useless inside hasher, so make version file manually
-echo '__version__ = "%version"' > pyroute2/config/version.py
+%pyproject_build
 
 %install
-%python3_install
-# install tests
-cp -pr tests %buildroot%python3_sitelibdir/%oname/
+%pyproject_install
 
-# It is the file in the package whose name matches the format emacs or vim uses
-# for backup and autosave files. It may have been installed by  accident.
-find %buildroot \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
-# failsafe cleanup if the file is declared as %%doc
-find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+%check
+%pyproject_run_pytest -- tests/test_minimal/*.py tests/test_unit/*.py
 
 %files
-%doc README.rst
+%doc *.rst
 %_bindir/*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
 
-%files tests
-%python3_sitelibdir/*/tests
 
 %changelog
+* Fri Apr 28 2023 Anton Vyatkin <toni@altlinux.org> 0.7.7-alt1
+- NMU: New version 0.7.7.
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.5.19-alt2.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
