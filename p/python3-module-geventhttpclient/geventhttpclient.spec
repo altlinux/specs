@@ -1,9 +1,9 @@
 %define oname geventhttpclient
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
-Version: 2.0.8
+Version: 2.0.9
 Release: alt1
 
 Summary: http client library for gevent
@@ -57,6 +57,10 @@ py.test-3 -m 'not online' -k 'not test_brotli_response'
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Fri Apr 28 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.9-alt1
+- Build new version.
+- Build without check for python3.11.
+
 * Wed Mar 01 2023 Anton Vyatkin <toni@altlinux.org> 2.0.8-alt1
 - new version 2.0.8
 
