@@ -1,15 +1,15 @@
 %define rname kdenetwork-filesharing
-%define req_samba_pkgs samba,samba-common-tools,samba-client
+%define req_samba_pkgs samba,samba-common-tools,samba-client,samba-usershares
 
 Name: kde5-network-filesharing
 Version: 22.12.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
 Summary: Samba Filesharing Plugin
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
 
 #Requires: %req_samba_pkgs
 
@@ -70,6 +70,9 @@ rm -f po/ru/kfileshare.po.old
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Fri Apr 28 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt2
+- fix samba packages list to install for filesharing
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 
