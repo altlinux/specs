@@ -1,5 +1,5 @@
 Name: nvme
-Version: 2.3
+Version: 2.4
 Release: alt1
 Summary: NVM-Express user space tooling for Linux
 License: GPL-2.0+
@@ -70,6 +70,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Fri Apr 28 2023 L.A. Kostis <lakostis@altlinux.ru> 2.4-alt1
+- 2.4.
+
 * Thu Mar 02 2023 L.A. Kostis <lakostis@altlinux.ru> 2.3-alt1
 - First build of 2.x version for ALTLinux.
 

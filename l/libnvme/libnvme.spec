@@ -1,7 +1,7 @@
 %define soname 1
 
 Name: libnvme
-Version: 1.3
+Version: 1.4
 Release: alt1
 Summary: Linux-native nvme device management library
 Group: System/Libraries
@@ -63,6 +63,9 @@ rm -f %buildroot%_libdir/*.a
 %_man2dir/*
 
 %changelog
+* Fri Apr 28 2023 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt1
+- 1.4.
+
 * Thu Mar 02 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3-alt1
 - Initial build for ALTLinux.
 
