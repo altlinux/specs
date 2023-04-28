@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.4
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -35,6 +35,7 @@ Requires: /usr/sbin/dmidecode
 
 Source: %rname-%version.tar
 Source10: ansi2html.sh
+Source20: add-ru.po
 Patch1: alt-usbids-path.patch
 Patch2: alt-mark-usb-drives.patch
 Patch3: alt-no-aha-tool.patch
@@ -98,6 +99,16 @@ grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
  && echo 'set_target_properties(KInfoCenterInternal PROPERTIES VERSION 0.0.0 SOVERSION 0)' >>src/CMakeLists.txt \
  ||:
 
+for p in po/ru/*.po ; do
+    mv ${p}{,.old}
+    msgcat --use-first ${p}.old %SOURCE20 > ${p}
+    rm -f ${p}.old
+done
+#mv po/ru/kcm_about-distro.po{,.old}
+#msgcat --use-first po/ru/kcm_about-distro.po.old %SOURCE20 > po/ru/kcm_about-distro.po
+#rm -f po/ru/kcm_about-distro.po.old
+
+
 %build
 %K5build
 
@@ -133,6 +144,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K5bin/kinfocenter5-ansi2html.sh
 %_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
 
 %changelog
+* Thu Apr 27 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt2
+- update russian translation
+
 * Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt1
 - new version
 
