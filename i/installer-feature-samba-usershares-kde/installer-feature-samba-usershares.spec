@@ -1,0 +1,69 @@
+Name: installer-feature-samba-usershares-kde
+Version: 1.5.0
+Release: alt1
+
+Summary: Installer hooks for Samba usershares
+License: GPL
+Group: System/Configuration/Other
+Url: http://www.altlinux.org/Installer/beans
+BuildArch: noarch
+Source: installer-feature-samba-usershares-%version.tar
+
+%description
+This package contains installer hooks for
+enabling Samba usershares.
+
+%package stage2
+Summary: Installer stage2 hook for Samba usershares
+Group: System/Configuration/Other
+
+%description stage2
+This package contains installer stage2 hook for
+enabling Samba usershares.
+
+%prep
+%setup -n installer-feature-samba-usershares-%version
+
+%install
+%define hookdir %_datadir/install2/preinstall.d
+mkdir -p %buildroot%hookdir
+install -pm755 *.sh %buildroot%hookdir/
+for f in %buildroot%hookdir/*.sh ; do
+    mv $f `echo "$f" | sed 's|\.sh$|-kde.sh|'`
+done
+
+%files stage2
+%hookdir/*
+
+%changelog
+* Fri Apr 28 2023 Sergey V Turchin <zerg@altlinux.org> 1.5.0-alt1
+- fork from installer-feature-samba-usershares
+- don't change home dirs permissions
+
+* Thu Dec 08 2022 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
+- Don't require samba.
+- Use control role-usershares if libnss-role enabled.
+- Use drop-in file for alterator-users with usershare group.
+- Use samba-usershares package.
+
+* Tue Apr 12 2016 Michael Shigorin <mike@altlinux.org> 0.4.1-alt1
+- Don't do anything if samba is unavailable.
+
+* Mon Feb 13 2012 Mikhail Efremov <sem@altlinux.org> 0.4-alt1
+- Rename hook: 75-* -> 85-* (closes: #26930).
+
+* Fri May 20 2011 Mikhail Efremov <sem@altlinux.org> 0.3-alt1
+- Enable samba service.
+- Change group name to sambashare.
+- Set UMASK for home dirs to 076.
+- smb.conf: Change workgroup MYGROUP -> WORKGROUP.
+- Typo in comment.
+- Don't add existing users to smbusershare group.
+- Stage3 hook -> stage2 hook.
+
+* Thu May 19 2011 Mikhail Efremov <sem@altlinux.org> 0.2-alt1
+- Create default-groups file for alterator-users.
+- Fix users searching.
+
+* Wed May 04 2011 Mikhail Efremov <sem@altlinux.org> 0.1-alt1
+- Initial build
