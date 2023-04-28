@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.7.4
-Release: alt2.1
+Version: 4.8.0
+Release: alt1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
-# https://github.com/veyon/veyon/
+VCS: https://github.com/veyon/veyon/
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
@@ -95,6 +95,10 @@ Veyon доступен на разных языках и предоставля�
 %patch1 -p1
 %patch4 -p1
 
+# Fix: error: "_FORTIFY_SOURCE" redefined [-Werror]
+# _FORTIFY_SOURCE enabled by default
+sed -i -e '/-D_FORTIFY_SOURCE=2/d' CMakeLists.txt
+
 %ifarch %e2k
 sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
 # workaround of SIGILL in ecf_opt64 from LCC 1.25.23
@@ -127,6 +131,9 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_datadir/%name
 
 %changelog
+* Fri Apr 28 2023 Egor Ignatov <egori@altlinux.org> 4.8.0-alt1
+- new version 4.8.0
+
 * Mon Sep 05 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.7.4-alt2.1
 - fixed build for Elbrus
 
