@@ -65,7 +65,7 @@
 
 
 Name: virtualbox
-Version: 7.0.6
+Version: 7.0.8
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -114,7 +114,7 @@ Source99:	%vboxdbg.in
 Patch:		%name-%version-alt.patch
 
 BuildPreReq: dev86 iasl gcc-c++ libstdc++-devel-static
-BuildPreReq: libIDL-devel libSDL-devel libpng-devel
+BuildPreReq: libIDL-devel libSDL-devel libpng-devel libSDL2-devel-static
 BuildPreReq: libXcursor-devel libXext-devel
 BuildPreReq: xsltproc
 BuildPreReq: rpm-build-kernel
@@ -148,7 +148,8 @@ BuildRequires: libXdamage-devel libXcomposite-devel libXcomposite
 BuildRequires: xorg-xf86driproto-devel xorg-glproto-devel
 BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 BuildRequires(pre): xorg-sdk
-BuildPreReq: yasm kBuild >= 0.1.9998.r3178
+BuildPreReq: yasm >= 1.3.0
+BuildPreReq: kBuild >= 0.1.9998.r3592
 BuildRequires: glslang-devel
 BuildRequires: qt5-tools-devel
 %if_with webservice
@@ -953,6 +954,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Wed Apr 19 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.8-alt1
+- Update to newest version 7.0.8 (Closes: 45732)
+
 * Wed Jan 18 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.6-alt1
 - Update to newest version 7.0.6
 

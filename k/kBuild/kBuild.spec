@@ -1,12 +1,12 @@
 %def_disable    bootstrap
 %define         short_version 0.1.9998
-%define         svn_revision 3493
+%define         svn_revision 3592
 
 ExclusiveArch: %ix86 x86_64
 
 Name:           kBuild
 Version:        %short_version.r%svn_revision
-Release:        alt5
+Release:        alt1
 License:        %gpl3plus
 Group:          Development/Other
 Summary:        A cross-platform build environment framework for complex tasks
@@ -59,11 +59,13 @@ chmod a+x src/sed/configure
 
 %build
 %define bootstrap_mflags %_smp_mflags   \\\
+        TMP_QUOTE_SLASH='\\'            \\\
         CFLAGS="%optflags"              \\\
         KBUILD_SVN_REV=%svn_revision    \\\
         KBUILD_VERBOSE=1
 
 %define mflags %bootstrap_mflags        \\\
+        TMP_QUOTE_SLASH='\\'            \\\
         NIX_INSTALL_DIR=%_prefix        \\\
         BUILD_TYPE=release              \\\
         MY_INST_MODE=0644               \\\
@@ -79,8 +81,8 @@ pod2man -c 'kBuild for ALT Linux' -r %name-%version dist/debian/kmk.pod |sed -e 
 
 %install
 kBuild/env.sh kmk install PATH_INS=%buildroot %mflags
-install -m 644 -D kmk.1 %buildroot/%_man1dir/kmk.1
-chmod a-x %buildroot%_datadir/%name/*/*kmk
+install -m 644 -D kmk.1 %buildroot%_man1dir/kmk.1
+
 
 %files
 %_docdir/%name-%short_version
@@ -89,6 +91,9 @@ chmod a-x %buildroot%_datadir/%name/*/*kmk
 %_datadir/%name
 
 %changelog
+* Mon Apr 24 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.9998.r3592-alt1
+- Update to last unstable release from svn trunk (r3592) with LIBSDL2 support
+
 * Fri Apr 16 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3493-alt5
 - Update to last unstable release from svn trunk (r3493)
 - Replace using of yacc with bison during building kash
