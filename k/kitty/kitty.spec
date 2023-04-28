@@ -3,7 +3,7 @@
 
 Name: kitty
 Version: 0.28.1
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -133,6 +133,10 @@ find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%__python3|g'  \
                                     -e 's|/usr/bin/env python|%__python3|g'   \
                                     -i "{}" \;
 
+# Match _FORTIFY_SOURCE with gcc's default to fix
+# error "_FORTIFY_SOURCE" redefined
+sed -i -e "s/-D_FORTIFY_SOURCE=2/-D_FORTIFY_SOURCE=3/" setup.py
+
 %build
 export CFLAGS="${CFLAGS:-%optflags}"
 export CGO_ENABLED=0
@@ -186,6 +190,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_libexecdir/kitty/shell-integration
 
 %changelog
+* Fri Apr 28 2023 Egor Ignatov <egori@altlinux.org> 0.28.1-alt2
+- FTBFS: fix build with new gcc defaults
+
 * Fri Apr 21 2023 Egor Ignatov <egori@altlinux.org> 0.28.1-alt1
 - new version 0.28.1
 
