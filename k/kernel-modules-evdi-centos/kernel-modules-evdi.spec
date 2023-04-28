@@ -1,6 +1,6 @@
 %define module_name	evdi
-%define module_version	1.12.0
-%define module_release	alt3
+%define module_version	1.13.1
+%define module_release	alt1
 
 %define flavour		centos
 %define karch x86_64 aarch64
@@ -31,8 +31,7 @@ PreReq: coreutils
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
-Patch1: %module_name-1.12.0-centos9.patch
-Patch2: %module_name-1.12.0-drm-framebuffer.patch
+Patch: %module_name-1.13.1-centos9.patch
 
 %description
 Extensible Virtual Display Interface
@@ -49,13 +48,11 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 # centos backported some fixes for 5.15+
 if [ %flavour == "centos" ]; then
-%patch1 -p1
-else
-%patch2 -p1
+%patch -p1
 fi
 
 %build
-%make_build -C %_usrsrc/linux-%kversion-%flavour M=`pwd` modules
+%make_build -C %_usrsrc/linux-%kversion-%flavour M=`pwd` V=1 modules
 
 %install
 install -d %buildroot%module_dir
@@ -68,6 +65,13 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Apr 26 2023 L.A. Kostis <lakostis@altlinux.org> 1.13.1-alt1
+- Updated to 1.13.1.
+- Cleanup patches.
+
+* Sun Mar 12 2023 L.A. Kostis <lakostis@altlinux.org> 1.12.0-alt4
+- Added patch for 6.2+ kernels (gh pull #401).
 
 * Thu Dec 08 2022 L.A. Kostis <lakostis@altlinux.org> 1.12.0-alt3
 - update centos9 patch.
