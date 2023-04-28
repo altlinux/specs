@@ -1,8 +1,8 @@
-%define git bce1f392
+%define git %nil
 
 Name: libopus
-Version: 1.3.1
-Release: alt158.g%{git}.1
+Version: 1.4
+Release: alt1
 
 Summary: Opus Audio Codec library
 License: BSD
@@ -76,6 +76,9 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 %endif
 
 %changelog
+* Fri Apr 28 2023 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt1
+- 1.4.
+
 * Mon Oct 03 2022 Ivan A. Melnikov <iv@altlinux.org> 1.3.1-alt158.gbce1f392.1
 - increase tests timeout to enable %%check on armh, mipsel and riscv64
 
