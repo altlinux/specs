@@ -5,38 +5,28 @@
 
 Name: python3-module-%pypi_name
 Version: 2.4.0
-Release: alt1
-
+Release: alt2
 Summary: Classes for orchestrating Python virtual environments
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/jaraco/jaraco.envs.git
 Url: https://pypi.org/project/jaraco.envs/
-
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
-%if_with check
-# dependencies=
-BuildRequires: python3(path)
-BuildRequires: python3(virtualenv)
-BuildRequires: python3(tox)
-
-BuildRequires: python3(pytest)
-%endif
-
+Vcs: https://github.com/jaraco/jaraco.envs.git
 BuildArch: noarch
-
-%py3_provides %pypi_name
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 %py3_requires virtualenv
 %py3_requires tox
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata_extra testing
+%endif
 
 %description
 %pypi_name provides classes for orchestrating Python virtual environments.
@@ -44,16 +34,9 @@ BuildArch: noarch
 %prep
 %setup
 %autopatch -p1
-
-# if build from git source tree
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
-git init
-git config user.email author@example.com
-git config user.name author
-git add .
-git commit -m 'release'
-git tag '%version'
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -62,7 +45,7 @@ git tag '%version'
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %doc README.rst
@@ -71,6 +54,9 @@ git tag '%version'
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 2.4.0-alt2
+- Mapped PyPI name to distro's one.
+
 * Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1
 - 2.3.0 -> 2.4.0.
 

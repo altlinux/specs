@@ -9,7 +9,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 67.4.0
+Version: 67.7.2
 Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -17,6 +17,7 @@ Group: Development/Python3
 Url: https://pypi.org/project/setuptools/
 VCS: https://github.com/pypa/setuptools
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
 Requires: python3-module-pkg_resources = %EVR
@@ -37,32 +38,15 @@ Provides: python3-module-distribute = %EVR
 %add_findprov_skiplist %python3_sitelibdir/setuptools/_vendor/*
 %add_findprov_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
 
-BuildRequires(pre): rpm-build-python3
-
-# deps of self-hosted build backend
-BuildRequires: python3(wheel)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
 BuildRequires: /dev/shm
-BuildRequires: python3(jaraco.envs)
-BuildRequires: python3(jaraco.path)
-BuildRequires: python3(pip)
-BuildRequires: python3(build)
-BuildRequires: python3(filelock)
-BuildRequires: python3(pip_run)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_xdist)
-BuildRequires: python3(pytest_virtualenv)
-BuildRequires: python3(pytest_enabler)
-BuildRequires: python3(pytest_timeout)
-BuildRequires: python3(tomli)
-BuildRequires: python3(virtualenv)
-BuildRequires: python3(wheel)
-BuildRequires: python3-module-ini2toml-lite
-BuildRequires: python3(tomli-w)
-
 # For the tests of the setuptools commands to do binary builds:
 BuildPreReq: python3-dev
+%add_pyproject_deps_check_filter pytest-perf
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 # namespace package for system seed wheels which will be used within venv
@@ -144,6 +128,9 @@ sed -i '/^tag_build =.*/d;/^tag_date = 1/d' setup.cfg
 sed -i "s@'pyconfig.h'@'%_pyconfig_h'@" setuptools/_distutils/sysconfig.py
 %endif
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
 %build
 %pyproject_build
 
@@ -187,6 +174,9 @@ cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 1:67.7.2-alt1
+- 67.4.0 -> 67.7.2.
+
 * Fri Mar 03 2023 Stanislav Levin <slev@altlinux.org> 1:67.4.0-alt1
 - 67.3.3 -> 67.4.0.
 

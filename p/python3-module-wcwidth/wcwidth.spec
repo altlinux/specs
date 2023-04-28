@@ -1,27 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define oname wcwidth
+%define pypi_name wcwidth
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.2.5
+Name: python3-module-%pypi_name
+Version: 0.2.6
 Release: alt1
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/wcwidth/
-
-# https://github.com/jquast/wcwidth.git
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
+Vcs: https://github.com/jquast/wcwidth
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
+%add_pyproject_deps_check_filter docformatter restructuredtext-lint
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -33,25 +35,33 @@ Terminal. It is implemented in python (no C library calls) and has no
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-tests39.in
+%endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr --no-deps -s false -- -vra
+# get rid of tox.ini as pytest's config:
+# [pytest] section and its cov cli options
+rm tox.ini
+%pyproject_run_pytest -ra tests
 
 %files
-%doc README.rst LICENSE
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
-%python3_sitelibdir/%oname/
+%doc README.rst
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 27 2023 Stanislav Levin <slev@altlinux.org> 0.2.6-alt1
+- 0.2.5 -> 0.2.6.
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.2.5-alt1
 - 0.1.9 -> 0.2.5.
 

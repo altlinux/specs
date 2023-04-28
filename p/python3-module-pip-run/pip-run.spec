@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 10.0.5
+Version: 10.0.7
 Release: alt1
 Summary: Install packages and run Python with them
 License: MIT
@@ -13,37 +13,15 @@ Url: https://pypi.org/project/pip-run
 VCS: https://github.com/jaraco/pip-run.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-# hidden with `sys.executable -m pip`
-%py3_requires pip
-# PEP503 name
-%py3_provides %pypi_name
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-# install_requires=
-BuildRequires: python3(pip)
-BuildRequires: python3(autocommand)
-BuildRequires: python3(path)
-BuildRequires: python3(packaging)
-BuildRequires: python3(more_itertools)
-BuildRequires: python3(jaraco.context)
-BuildRequires: python3(jaraco.text)
-BuildRequires: python3(platformdirs)
-BuildRequires: python3(jaraco.functools)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(nbformat)
-BuildRequires: python3(pygments)
-BuildRequires: python3(jaraco.path)
-BuildRequires: python3(jaraco.test)
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -53,17 +31,9 @@ interpreter run.
 %prep
 %setup
 %autopatch -p1
-
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -83,6 +53,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 10.0.7-alt1
+- 10.0.5 -> 10.0.7.
+
 * Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 10.0.5-alt1
 - 9.2.0 -> 10.0.5.
 

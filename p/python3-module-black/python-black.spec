@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 23.3.0
-Release: alt1
+Release: alt2
 Summary: The Uncompromising Code Formatter
 License: MIT
 Group: Development/Python3
@@ -76,6 +76,9 @@ Black makes code review faster by producing the smallest diffs possible.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 27 2023 Stanislav Levin <slev@altlinux.org> 23.3.0-alt2
+- Fixed FTBFS (setuptools 67.5.0).
+
 * Wed Apr 19 2023 Stanislav Levin <slev@altlinux.org> 23.3.0-alt1
 - 23.1.0 -> 23.3.0.
 

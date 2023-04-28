@@ -1,10 +1,11 @@
-%define oname pyOpenSSL
+%define pypi_name pyOpenSSL
+%define oname %pypi_name
 
 %def_without doc_package
 
 Name: python3-module-openssl
 Version: 23.1.1
-Release: alt1
+Release: alt2
 
 Summary: Python wrapper module around the OpenSSL library
 Summary(ru_RU.UTF-8): Модуль-обвязка библиотеки OpenSSL для python
@@ -18,6 +19,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 Provides: python3-module-OpenSSL = %EVR
 Obsoletes: python3-module-OpenSSL
 
@@ -92,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 27 2023 Stanislav Levin <slev@altlinux.org> 23.1.1-alt2
+- Mapped PyPI name to distro's one.
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 23.1.1-alt1
 - new version 23.1.1 (with rpmrb script)
 

@@ -1,44 +1,34 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name trio
+%define modulename %pypi_name
 
 %def_with check
 
-%define  modulename trio
-
-Name:    python3-module-%modulename
+Name: python3-module-%modulename
 Version: 0.22.0
-Release: alt2
-
+Release: alt3
 Summary: Trio - Pythonic async I/O for humans and snake people
-
 License: MIT or Apache-2.0
-Group:   Development/Python3
-URL:     https://github.com/python-trio/trio
+Group: Development/Python3
+Url: https://pypi.org/project/trio/
+Vcs: https://github.com/python-trio/trio
+BuildArch: noarch
+Source: %modulename-%version.tar
+Source1: %pyproject_deps_config_name
 
-Packager: Evgeny Sinelnikov <sin@altlinux.org>
-
-BuildRequires(pre): rpm-build-python3
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-Buildrequires: python3-module-async_generator
-Buildrequires: python3-module-idna
-Buildrequires: python3-module-sniffio
-Buildrequires: python3-module-outcome
-Buildrequires: python3-module-sortedcontainers
-Buildrequires: python3-module-astor
-Buildrequires: python3-module-trustme
-Buildrequires: python3-module-OpenSSL
-Buildrequires: python3-module-jedi
-Buildrequires: python3-module-pylint
+%add_pyproject_deps_check_filter types-
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 # Self provides
 %add_python3_req_skip _common simple_excepthook
 # Only in ubuntu
 %add_python3_req_skip apport_python_hook
-
-BuildArch: noarch
-
-Source:  %modulename-%version.tar
 
 %description
 The Trio project's goal is to produce a production-quality, permissively
@@ -65,25 +55,25 @@ This package contains tests for %modulename.
 # Upstream doesn't care about version
 sed -i 's/0.21.0+dev/%version/' trio/_version.py
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile test-requirements.in
+%endif
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_create_default_config
-# Seems that upstream checks this project with very old pytest
-%tox_check -- -k" \
-not test_simple_cancel_scope_usage_doesnt_create_cyclic_garbage \
-and not test_cancel_scope_exit_doesnt_create_cyclic_garbage \
-and not test_nursery_cancel_doesnt_create_cyclic_garbage \
-and not test_locals_destroyed_promptly_on_cancel"
+%pyproject_run_pytest -ra -m 'not redistributors_should_skip'
 
 %files
-%doc *.md *.rst
-%python3_sitelibdir/%modulename
-%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
+%doc README.*
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/%modulename/tests
 %exclude %python3_sitelibdir/%modulename/testing
 %exclude %python3_sitelibdir/%modulename/_core/tests
@@ -92,9 +82,12 @@ and not test_locals_destroyed_promptly_on_cancel"
 %python3_sitelibdir/%modulename/tests
 %python3_sitelibdir/%modulename/testing
 %python3_sitelibdir/%modulename/_core/tests
-%doc *.md *.rst
 
 %changelog
+* Thu Apr 27 2023 Stanislav Levin <slev@altlinux.org> 0.22.0-alt3
+- Modernized packaging.
+- Fixed FTBFS (setuptools 67.7.2).
+
 * Wed Feb 08 2023 Grigory Ustinov <grenka@altlinux.org> 0.22.0-alt2
 - Fixed packaging tests.
 

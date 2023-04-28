@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.11.1
-Release: alt1
+Release: alt2
 Summary: Module for text manipulation
 License: MIT
 Group:   Development/Python3
@@ -13,24 +13,18 @@ URL: https://pypi.org/project/jaraco.text/
 VCS: https://github.com/jaraco/jaraco.text
 BuildArch: noarch
 Source:  %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-python3
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-# deps
-BuildRequires: python3(jaraco.functools)
-BuildRequires: python3(jaraco.context)
-BuildRequires: python3(autocommand)
-BuildRequires: python3(inflect)
-BuildRequires: python3(more_itertools)
-
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -39,15 +33,9 @@ BuildRequires: python3(pytest)
 %prep
 %setup
 %patch0 -p1
-
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -63,6 +51,9 @@ fi
 %python3_sitelibdir/jaraco.text-%version.dist-info/
 
 %changelog
+* Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 3.11.1-alt2
+- Mapped PyPI name to distro's one.
+
 * Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 3.11.1-alt1
 - 3.11.0 -> 3.11.1.
 
