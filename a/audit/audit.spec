@@ -5,7 +5,7 @@
 %def_without prelude
 
 Name: audit
-Version: 3.1
+Version: 3.1.1
 Release: alt1
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
@@ -184,6 +184,7 @@ fi
 %attr(750,root,root) /sbin/autrace
 %attr(750,root,root) /sbin/audisp-remote
 %attr(750,root,root) /sbin/audisp-syslog
+%attr(750,root,root) /sbin/audisp-af_unix
 %attr(750,root,root) /sbin/audisp-ids
 %attr(750,root,root) /sbin/audisp-statsd
 %if_with prelude
@@ -245,6 +246,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 28 2023 Egor Ignatov <egori@altlinux.org> 3.1.1-alt1
+- new version 3.1.1
+
 * Wed Feb 15 2023 Egor Ignatov <egori@altlinux.org> 3.1-alt1
 - new version 3.1
 
