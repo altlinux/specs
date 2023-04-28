@@ -4,7 +4,7 @@
 %define lname libopen62541
 
 Name: open62541
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 
 Summary: open62541 is an open source and free implementation of OPC UA (OPC Unified Architecture) written in the common subset of the C99 and C++98 languages.
@@ -61,7 +61,7 @@ subst 's|#!/usr/bin/env python|#!/usr/bin/env python3|g' tools/nodeset_compiler/
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-%cmake -DBUILD_SHARED_LIBS=ON -DUA_BUILD_TOOLS=ON -DOPEN62541_VERSION="v%{version}" -DUA_ENABLE_JSON_ENCODING=ON
+%cmake -DBUILD_SHARED_LIBS=ON -DUA_BUILD_TOOLS=ON -DOPEN62541_VERSION="v%{version}" -DUA_ENABLE_JSON_ENCODING=ON -DUA_BUILD_EXAMPLES=ON -DUA_MULTITHREADING=100 -DCMAKE_SKIP_RPATH:BOOL=ON
 #-DUA_ENABLE_WEBSOCKET_SERVER=ON -DUA_ENABLE_AMALGAMATION=ON
 %cmake_build
 
@@ -84,9 +84,14 @@ ctest -V
 
 %files -n %lname-tools
 %_datadir/%{name}/
+%exclude %_bindir/*
 
 
 %changelog
+* Thu Apr 27 2023 Pavel Vainerman <pv@altlinux.ru> 1.3.5-alt1
+- new version (1.3.5) with rpmgs script
+- enabled multithread 
+
 * Sun Jan 01 2023 Pavel Vainerman <pv@altlinux.ru> 1.3.4-alt1
 - new version (1.3.4) with rpmgs script
 
