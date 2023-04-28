@@ -1,4 +1,3 @@
-
 %define sover 5
 %define libgetfem libgetfem%sover
 %add_python3_req_skip _getfem
@@ -6,7 +5,7 @@
 %define rname getfem
 Name: getfemxx
 Version: 5.3
-Release: alt8
+Release: alt9
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
@@ -55,9 +54,13 @@ Python bindings to %name
 
 
 %prep
-%setup -q -n %rname-%version
+%setup -n %rname-%version
 %patch1 -p1
 %patch2 -p2
+%ifarch %e2k
+# broken lib64 test
+sed -i 's/|sparc64|/&e2k|/' m4/ax_boost_base.m4
+%endif
 %autoreconf
 
 ln -sf %__python3 bin/python
@@ -86,14 +89,14 @@ CUT_CFLAGS=`grep "^CXXFLAGS" Makefile | head -n 1| sed "s|^CXXFLAGS[[:space:]][[
 %makeinstall_std
 
 %if "%python3_sitelibdir_noarch/getfem" != "%python3_sitelibdir/getfem"
-mv %buildroot/%python3_sitelibdir_noarch/getfem/* \
-	%buildroot/%python3_sitelibdir/getfem/
+mv %buildroot%python3_sitelibdir_noarch/getfem/* \
+	%buildroot%python3_sitelibdir/getfem/
 %endif
 
-mkdir -p %buildroot/%__python3_dynlibdir
+mkdir -p %buildroot%__python3_dynlibdir
 install -m 0644 \
     interface/src/python/_getfem.cpython*.so \
-    %buildroot/%python3_sitelibdir/
+    %buildroot%python3_sitelibdir/
 
 %files
 %doc NEWS AUTHORS
@@ -112,6 +115,9 @@ install -m 0644 \
 %python3_sitelibdir/*getfem*.so
 
 %changelog
+* Fri Apr 28 2023 Michael Shigorin <mike@altlinux.org> 5.3-alt9
+- E2K: fix broken lib64 boost test (ilyakurdyukov@)
+
 * Tue Jan 25 2022 Grigory Ustinov <grenka@altlinux.org> 5.3-alt8
 - fix build with python3.10
 
