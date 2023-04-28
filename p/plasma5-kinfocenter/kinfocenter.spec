@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.4
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -15,23 +15,9 @@ License: GPL-2.0-or-later
 
 Provides:  kf5-kinfocenter = %EVR kf5-kinfocenter-common = %EVR plasma5-kinfocenter-common = %EVR
 Obsoletes: kf5-kinfocenter < %EVR kf5-kinfocenter-common < %EVR plasma5-kinfocenter-common < %EVR
-Requires: usbids kf5-kirigami
-# OpenGL (EGL)
-Requires: /usr/bin/eglinfo
-# OpenGL (GLX)
-Requires: /usr/bin/glxinfo
-# X-Server
-Requires: /usr/bin/xdpyinfo
-# Wayland
-Requires: /usr/bin/wayland-info
-# PCI
-Requires: /usr/bin/lspci
-# CPU
-Requires: /usr/bin/lscpu
-# Vulkan
-Requires: /usr/bin/vulkaninfo
-# About
-Requires: /usr/sbin/dmidecode
+Requires: kf5-kirigami
+# USB
+Requires: usbids
 
 Source: %rname-%version.tar
 Source10: ansi2html.sh
@@ -72,6 +58,35 @@ Obsoletes: kf5-kinfocenter-common < %EVR
 %description common
 %name common package
 
+%package maxi
+Summary: %name maximum package
+Group: System/Configuration/Packaging
+Requires: %name
+# Window Manager
+Requires: /usr/share/qt5/bin/qdbus
+# OpenCL
+Requires: /usr/bin/clinfo
+# OpenGL (EGL)
+Requires: /usr/bin/eglinfo
+# OpenGL (GLX)
+Requires: /usr/bin/glxinfo
+# X-Server
+Requires: /usr/bin/xdpyinfo
+# Wayland
+Requires: /usr/bin/wayland-info
+# PCI
+Requires: /usr/bin/lspci
+# CPU
+Requires: /usr/bin/lscpu
+# Vulkan
+Requires: /usr/bin/vulkaninfo
+# Firmware Security
+#Requires: /usr/bin/fwupdmgr
+# About
+Requires: /usr/sbin/dmidecode
+%description maxi
+%name maximum package.
+
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
@@ -101,12 +116,9 @@ grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
 
 for p in po/ru/*.po ; do
     mv ${p}{,.old}
-    msgcat --use-first ${p}.old %SOURCE20 > ${p}
+    msgcat --use-first %SOURCE20 ${p}.old > ${p}
     rm -f ${p}.old
 done
-#mv po/ru/kcm_about-distro.po{,.old}
-#msgcat --use-first po/ru/kcm_about-distro.po.old %SOURCE20 > po/ru/kcm_about-distro.po
-#rm -f po/ru/kcm_about-distro.po.old
 
 
 %build
@@ -122,6 +134,8 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K5bin/kinfocenter5-ansi2html.sh
 
 %files common  -f %name.lang
 %doc LICENSES/*
+
+%files maxi
 
 %files
 %_K5bin/*
@@ -144,6 +158,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K5bin/kinfocenter5-ansi2html.sh
 %_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
 
 %changelog
+* Fri Apr 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt3
+- optimize requires
+
 * Thu Apr 27 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt2
 - update russian translation
 
