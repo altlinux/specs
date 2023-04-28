@@ -2,7 +2,7 @@
 %def_without extbuild
 
 Name: dpkg
-Version: 1.21.9
+Version: 1.21.21
 Release: alt1
 
 Summary: Package maintenance system for Debian Linux
@@ -14,10 +14,6 @@ Url: http://packages.debian.org/unstable/base/dpkg
 Source0: http://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.xz
 Patch: dpkg-ALT-e2k-cputable.patch
 
-# Automatically added by buildreq on Tue Feb 20 2018
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 perl perl-Locale-gettext perl-parent perl-podlators pkg-config python-base xz
-BuildRequires: perl-podlators zlib-devel
-
 # boostrap notes:
 # 1) build dep loop via perl-Dpkg (just add noarch package);
 # 2) dpkg stub is really needed (for abitable, cputable, ostable,
@@ -25,7 +21,9 @@ BuildRequires: perl-podlators zlib-devel
 
 %{?!_with_bootstrap:BuildRequires: po4a}
 
-BuildRequires: perl-Storable perl-TimeDate perl-File-FcntlLock perl-parent perl-Time-Piece
+BuildRequires: perl-podlators perl-Storable perl-TimeDate perl-File-FcntlLock perl-parent perl-Time-Piece
+
+BuildRequires: zlib-devel liblzma-devel libmd-devel libzstd-devel
 
 %description
 This is dpkg, Debian's package maintenance system.
@@ -93,6 +91,7 @@ cat dpkg-dev.lang >> %name.lang
 %dir %_sysconfdir/%name
 %_man1dir/dpkg*
 %_man5dir/*
+%_man8dir/*
 %if_with extbuild
 %lang(pl) %_mandir/pl/man?/*
 %lang(de) %_mandir/de/man?/*
@@ -114,6 +113,10 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Fri Apr 28 2023 Vitaly Lipatov <lav@altlinux.ru> 1.21.21-alt1
+- new version 1.21.21 (with rpmrb script)
+- add BR: liblzma-devel libmd-devel libzstd-devel
+
 * Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 1.21.9-alt1
 - new version 1.21.9 (with rpmrb script)
 - remove unpacked files
