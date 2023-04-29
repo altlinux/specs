@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Install
 Name: perl-%dist
-Version: 1.19
-Release: alt3
+Version: 1.21
+Release: alt1
 
 Summary: Standalone, extensible Perl module installer
 License: GPL or Artistic
@@ -48,6 +48,9 @@ EOF
 /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Sat Apr 29 2023 Igor Vlasenko <viy@altlinux.org> 1.21-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.19-alt3
 - Reverted previous change.
 
