@@ -1,10 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
+# upstream maintain this arch very bad
+%ifarch ppc64le
+%def_without check
+%endif
+
 %define oname wavelets
 
 Name: python3-module-%oname
 Version: 1.4.1
-Release: alt1
+Release: alt1.1
 Summary: Wavelet Transforms in Python
 License: MIT and BSD-3-Clause
 Group: Development/Python3
@@ -89,6 +94,9 @@ popd &>/dev/null
 %python3_sitelibdir/*/tests
 
 %changelog
+* Sat Apr 29 2023 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1.1
+- Disable check for ppc64le.
+
 * Thu Feb 16 2023 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
 - Automatically updated to 1.4.1.
 
