@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,17 +7,15 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-File-Find-Rule-VCS
-Version:        1.08
-Release:        alt3_25
+Version:        1.09
+Release:        alt1
 Summary:        Exclude files/directories for Version Control Systems
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/File-Find-Rule-VCS
-Source0:        https://cpan.metacpan.org/authors/id/A/AD/ADAMK/File-Find-Rule-VCS-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/E/ET/ETHER/File-Find-Rule-VCS-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
-BuildRequires:  perl(inc/Module/Install/DSL.pm)
-BuildRequires:  perl(Module/Install/Metadata.pm)
 # Run-time
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(constant.pm)
@@ -35,9 +34,6 @@ that has been checked out from revision control systems.
 %prep
 %setup -q -n File-Find-Rule-VCS-%{version}
 
-# Remove bundled libraries
-rm -r inc
-sed -i -e '/^inc\// d' MANIFEST
 find -type f -exec chmod -x {} +
 
 %build
@@ -53,11 +49,13 @@ find $RPM_BUILD_ROOT -type f -name .packlist -delete
 make test
 
 %files
-%doc --no-dereference LICENSE
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Apr 29 2023 Igor Vlasenko <viy@altlinux.org> 1.09-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.08-alt3_25
 - update to new release by fcimport
 
