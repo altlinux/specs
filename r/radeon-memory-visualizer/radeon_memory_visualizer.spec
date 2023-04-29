@@ -1,6 +1,8 @@
+%define optflags_lto %nil
+
 Name: radeon-memory-visualizer
-Version: 1.5
-Release: alt0.2
+Version: 1.6
+Release: alt0.1
 License: MIT
 Summary: Software tool to analyze video memory usage on AMD Radeon GPUs
 Url: https://github.com/GPUOpen-Tools/radeon_memory_visualizer
@@ -42,6 +44,9 @@ Samples and help files for Radeon Memory Visualizer (RMV).
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DDISABLE_EXTRA_QT_LIB_DEPLOY=ON
 %cmake_build
+pushd external/radeon_developer_panel/docs
+/usr/bin/sphinx-build ./source %_builddir/%name-%version/%_cmake__builddir/docs/help/rdp/html/. -t public
+popd
 
 %install
 pushd %_cmake__builddir
@@ -49,6 +54,8 @@ mkdir -p %buildroot{%_bindir,%_datadir/rmv}
 install -m755 frontend/RadeonMemoryVisualizer %buildroot%_bindir/
 cp -ar docs %buildroot%_datadir/rmv/
 cp -ar samples %buildroot%_datadir/rmv/
+popd
+install -m644 License.txt %buildroot%_datadir/rmv/
 
 %files
 %doc License.txt NOTICES.txt README.md Release_Notes.txt
@@ -59,6 +66,13 @@ cp -ar samples %buildroot%_datadir/rmv/
 %_datadir/rmv/*
 
 %changelog
+* Sat Apr 29 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6-alt0.1
+- 1.6.
+
+* Fri Jan 13 2023 L.A. Kostis <lakostis@altlinux.ru> 1.5-alt0.3
+- Added Radeon Developer Panel documentation.
+- Fixed samples, license and documentation links.
+
 * Thu Jan 12 2023 L.A. Kostis <lakostis@altlinux.ru> 1.5-alt0.2
 - Set arch to 64-bit only.
 
