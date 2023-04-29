@@ -11,7 +11,7 @@ BuildRequires: perl-podlators
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    1.31
+Version:    1.32
 Release:    alt1
 
 Summary:    Generic interface to Unix and Win32 background process management
@@ -50,6 +50,9 @@ rm -rf $RPM_BUILD_ROOT/%{perl_vendor_archlib}
 %{_bindir}/*
 
 %changelog
+* Sat Apr 29 2023 Igor Vlasenko <viy@altlinux.org> 1.32-alt1
+- automated CPAN update
+
 * Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 1.31-alt1
 - automated CPAN update
 
