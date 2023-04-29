@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: Fiona reads and writes spatial data files
@@ -27,6 +27,8 @@ BuildRequires: python3-module-attrs
 BuildRequires: python3-module-click
 BuildRequires: python3-module-cligj
 BuildRequires: python3-module-munch
+BuildRequires: python3-module-sphinx-click
+BuildRequires: python3-module-sphinx_rtd_theme
 
 Conflicts: fio
 Conflicts: python-module-fiona < %EVR
@@ -117,6 +119,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html docs/*.txt
 
 %changelog
+* Tue Apr 25 2023 Grigory Ustinov <grenka@altlinux.org> 1.9.3-alt1
+- Automatically updated to 1.9.3.
+
 * Thu Mar 23 2023 Grigory Ustinov <grenka@altlinux.org> 1.9.2-alt1
 - Automatically updated to 1.9.2.
 
