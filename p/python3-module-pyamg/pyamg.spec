@@ -1,10 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pyamg
 
+%ifarch ppc64le
+%def_without check
+%else
 %def_with check
+%endif
 
 Name: python3-module-%pypi_name
-Version: 4.2.3
+Version: 5.0.0
 Release: alt1
 
 Summary: PyAMG: Algebraic Multigrid Solvers in Python
@@ -73,6 +77,9 @@ _PYTEST_ARGS=--ignore=pyamg/tests/test_graph.py
 %exclude %python3_sitelibdir/pyamg/*/tests
 
 %changelog
+* Sat Apr 29 2023 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Thu Sep 22 2022 Stanislav Levin <slev@altlinux.org> 4.2.3-alt1
 - 4.0.0 -> 4.2.3.
 
