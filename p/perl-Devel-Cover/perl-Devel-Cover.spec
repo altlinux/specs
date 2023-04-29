@@ -1,12 +1,12 @@
-#set_perl_req_method relaxed
 %define _unpackaged_files_terminate_build 1
+#set_perl_req_method relaxed
 BuildRequires: perl-podlators
 %add_findreq_skiplist %_bindir/cpancover
 %add_findreq_skiplist %perl_vendor_archlib/Devel/Cover/Collection.pm
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 1.38
-Release: alt2
+Version: 1.39
+Release: alt1
 
 Summary: Code coverage metrics for Perl
 License: GPL or Artistic
@@ -63,6 +63,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %_man1dir/*
 
 %changelog
+* Sat Apr 29 2023 Igor Vlasenko <viy@altlinux.org> 1.39-alt1
+- automated CPAN update
+
 * Thu Aug 11 2022 Igor Vlasenko <viy@altlinux.org> 1.38-alt2
 - removed unused crutches
 
