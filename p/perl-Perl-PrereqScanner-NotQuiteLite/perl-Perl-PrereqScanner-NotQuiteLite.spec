@@ -7,7 +7,7 @@ BuildRequires: perl(Plack/Builder.pm) perl(Pod/POM.pm) perl(Pod/POM/View/HTML.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.9916
+Version: 0.9917
 Release: alt1
 Summary: a tool to scan your Perl code for its prerequisites
 Group: Development/Perl
@@ -80,6 +80,9 @@ rm -f t/unless.t
 %_bindir/*
 
 %changelog
+* Sat Apr 29 2023 Igor Vlasenko <viy@altlinux.org> 0.9917-alt1
+- automated CPAN update
+
 * Fri Apr 08 2022 Igor Vlasenko <viy@altlinux.org> 0.9916-alt1
 - automated CPAN update
 
