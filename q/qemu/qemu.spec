@@ -55,10 +55,12 @@
 %def_enable libssh
 %def_enable live_block_migration
 %def_enable replication
-%ifnarch armh
+%ifnarch %arm %ix86 %mips32
 %def_enable numa
+%def_enable libpmem
 %else
 %def_disable numa
+%def_disable libpmem
 %endif
 %def_enable replication
 %def_enable rdma
@@ -68,8 +70,7 @@
 %def_disable lzfse
 %def_disable xen
 %def_enable mpath
-%def_disable libpmem
-%def_disable blkio
+%def_enable blkio
 %def_enable libudev
 %def_enable libdaxctl
 %def_enable fuse
@@ -114,7 +115,7 @@
 %def_enable have_kvm
 
 %define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa} %{?_enable_jack:jack} %{?_enable_sndio:sndio} dbus
-%define block_drv_list curl dmg %{?_enable_glusterfs:gluster} %{?_enable_libiscsi:iscsi} %{?_enable_libnfs:nfs} %{?_enable_rbd:rbd} %{?_enable_libssh:ssh}  %{?_enable_vitastor:vitastor}
+%define block_drv_list curl dmg %{?_enable_glusterfs:gluster} %{?_enable_libiscsi:iscsi} %{?_enable_libnfs:nfs} %{?_enable_rbd:rbd} %{?_enable_libssh:ssh} %{?_enable_blkio:blkio} %{?_enable_vitastor:vitastor}
 %define ui_list %{?_enable_gtk:gtk} %{?_enable_curses:curses} %{?_enable_sdl:sdl} %{?_enable_opengl:opengl} dbus
 %define ui_spice_list %{?_enable_spice:app core}
 %define device_usb_list redirect %{?_enable_smartcard:smartcard} host
@@ -131,7 +132,7 @@
 
 Name: qemu
 Version: 8.0.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1313,6 +1314,10 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Fri Apr 28 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt2
+- Build with libpmem support.
+- Build with libblkio support.
+
 * Mon Apr 24 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt1
 - 8.0.0
 - Add vitastor support (https://vitastor.io).
