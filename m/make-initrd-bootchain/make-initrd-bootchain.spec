@@ -9,7 +9,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt12
+Release: alt13
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -209,6 +209,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Sun Apr 30 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt13
+- rebuilt with shellcheck 0.9.0
+
 * Sun Apr 09 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt12
 - bootchain-altboot: use altboot forever by check logic (ALT #45787)
 - bootchain-core: delay switching to localdev boot method after loop
