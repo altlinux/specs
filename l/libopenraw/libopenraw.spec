@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: libopenraw
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: Decode camera RAW files
@@ -78,8 +78,6 @@ _EOF_
 tar -cf %_sourcedir/%name-%version-mp4.tar vendor .cargo
 popd
 }
-#mv vendor .cargo lib/mp4
-sed -i 's/byteorder = "1.2.1"/byteorder = "1.2.2"/' lib/mp4/mp4parse/Cargo.toml
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -118,6 +116,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Apr 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
+- 0.3.5
+
 * Wed Feb 15 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
