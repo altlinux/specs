@@ -1,6 +1,6 @@
 Name: TetrisGL
 Version: 1.0.2
-Release: alt4
+Release: alt5
 
 Summary: Just another tetris game with OpenGL graphics
 License: GPLv3
@@ -13,6 +13,8 @@ Source2: TetrisGL-48.png
 Source3: TetrisGL-64.png
 Source4: TetrisGL-96.png
 Source5: TetrisGL-128.png
+
+Patch0: 0001-Add-time.h-in-Crosy.cpp.patch
 
 BuildRequires: cmake rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -36,6 +38,8 @@ care for them not to get stuck!
 
 %prep
 %setup
+
+%patch0 -p1
 
 %build
 %cmake_insource
@@ -84,7 +88,7 @@ done
 %files
 %doc README.md
 %_libexecdir/%name
-%attr(0750,root,games) %_bindir/%name
+%attr(0755,root,games) %_bindir/%name
 %attr(2711,root,games) %_libexecdir/%name/%name
 %attr(0664,root,games) %_localstatedir/games/%name.scores
 %attr(0664,root,games) %_localstatedir/games/%name.settings
@@ -92,6 +96,10 @@ done
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Apr 30 2023 Artyom Bystrov <arbars@altlinux.org> 1.0.2-alt5
+- fix build proccess on modern Sisyphus stack
+- fix rights of running script
+
 * Tue Jul 05 2022 Michael Shigorin <mike@altlinux.org> 1.0.2-alt4
 - updated to g24aec3e, dropped glfw version hack
 
