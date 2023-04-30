@@ -2,7 +2,7 @@
 
 Name: update-kernel
 Version: 1.7
-Release: alt1
+Release: alt2
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
@@ -56,8 +56,11 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sun Apr 30 2023 Vitaly Chikunov <vt@altlinux.org> 1.7-alt2
+- Spelling corrections.
+
 * Sun Apr 30 2023 Vitaly Chikunov <vt@altlinux.org> 1.7-alt1
-- Do not unstall analyze-kmodules at all (for p10).
+- Do not install analyze-kmodules at all (for p10).
 
 * Tue Apr 25 2023 Vitaly Chikunov <vt@altlinux.org> 1.6-alt1
 - update-kernel: Check existence of DKMS tool, not just the DKMS package.
