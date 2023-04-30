@@ -1,14 +1,14 @@
 %def_disable snapshot
 %def_enable installed_tests
 %{?_enable_snapshot:%def_enable gtk_doc}
-%def_disable check
+%def_enable check
 
 %define _name gspell
 %define ver_major 1.12
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A spell-checking library for GTK+ applications
@@ -126,6 +126,10 @@ xvfb-run %make -k check VERBOSE=1
 
 
 %changelog
+* Sun Apr 30 2023 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
+- 1.12.1
+- enabled %%check
+
 * Tue Sep 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
