@@ -1,5 +1,5 @@
 Name: cppi
-Version: 1.18.0.27.0405
+Version: 1.18.0.36.4f20
 Release: alt1
 
 Summary: C preprocessor directive indenter
@@ -60,6 +60,9 @@ sed -i '/^\(git\|makeinfo\|rsync\)[[:space:]]/d' bootstrap.conf
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Sun Apr 30 2023 Dmitry V. Levin <ldv@altlinux.org> 1.18.0.36.4f20-alt1
+- cppi: v1.18-27-g040518f -> v1.18-36-g4f206f0.
+
 * Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 1.18.0.27.0405-alt1
 - cppi: v1.18-19-g0ac456b -> v1.18-27-g040518f.
 - gnulib BR: v0.1-2305-g95c96b6dd-> v0.1-4170-gb07286e46.
