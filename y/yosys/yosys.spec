@@ -1,7 +1,10 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 # do not forget to update Git revision in setup section
 
 Name: yosys
-Version: 0.25
+Version: 0.28
 Release: alt1
 
 Summary: Yosys Open SYnthesis Suite
@@ -74,6 +77,9 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Sun Apr 30 2023 Anton Midyukov <antohami@altlinux.org> 0.28-alt1
+- new version 0.28
+
 * Sun Jan 15 2023 Anton Midyukov <antohami@altlinux.org> 0.25-alt1
 - new version 0.25
 
