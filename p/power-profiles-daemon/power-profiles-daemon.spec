@@ -1,5 +1,5 @@
 Name:           power-profiles-daemon
-Version:        0.12
+Version:        0.13
 Release:        alt1
 
 Summary:        Makes power profiles handling available over D-Bus
@@ -7,6 +7,7 @@ Group: System/Configuration/Hardware
 License:        GPLv3+
 URL:            https://gitlab.freedesktop.org/hadess/power-profiles-daemon
 
+VCS: https://gitlab.freedesktop.org/hadess/power-profiles-daemon.git
 Source:        %name-%version.tar
 
 BuildRequires:  meson
@@ -74,5 +75,8 @@ mkdir -p %buildroot/%_localstatedir/power-profiles-daemon
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sun Apr 30 2023 Roman Alifanov <ximper@altlinux.org> 0.13-alt1
+- new version (0.13)
+
 * Fri Nov 18 2022 Roman Alifanov <ximper@altlinux.org> 0.12-alt1
 - Initial build for Sisyphus (based on spec for OpenSUSE)
