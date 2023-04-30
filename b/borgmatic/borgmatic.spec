@@ -1,6 +1,6 @@
 Name: borgmatic
-Version: 1.6.4
-Release: alt1.1
+Version: 1.7.12
+Release: alt1
 
 Summary: borgmatic (formerly atticmatic) is a simple Python wrapper script for the Borg
 
@@ -15,7 +15,7 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 # Source-url: https://github.com/witten/borgmatic/archive/%version.tar.gz
 Source: %name-%version.tar
 
-Requires: python3-module-pykwalify >= 1:1.6.1-alt1
+Requires: python3-module-pykwalify >= 1:1.6.1-alt1 python3-module-ruamel-yaml.clib
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 
@@ -24,8 +24,6 @@ BuildRequires: python3-dev python3-module-setuptools
 # according to setup.py
 %py3_use pykwalify < 14.06
 %py3_use pykwalify > 1.6.0
-%py3_use ruamel-yaml > 0.15.0
-%py3_use ruamel-yaml < 0.18.0
 
 
 %description
@@ -50,6 +48,9 @@ rather than having to put them all on the command-line, and handles common error
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Sun Apr 30 2023 Pavel Vainerman <pv@altlinux.ru> 1.7.12-alt1
+- new version (1.7.12) with rpmgs script
+
 * Thu Jul 21 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.4-alt1.1
 - NMU: fixed requires according to setup.py
 
