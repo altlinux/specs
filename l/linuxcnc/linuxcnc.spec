@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.0
-Release: alt0.7.20230413
+Release: alt0.8.20230413
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 Patch1: fix-dir-path.patch
 Patch6: qtvcp_import_fix.patch
 Patch7: not_require_dpkg.patch
+# https://lists.altlinux.org/pipermail/devel/2023-April/217491.html
+Patch8: linuxcnc-2.9-clear__FORTIFY_SOURCE.patch
 Buildrequires(pre): rpm-build-tcl rpm-build-python3
 Buildrequires: rpm-build-gir
 Buildrequires: python3-devel
@@ -238,6 +240,10 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Sun Apr 30 2023 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.8.20230413
+- clear '_FORTIFY_SOURCE=2' compiler flag
+  (fix FTBFS with gcc 12.2.1-alt2: -D_FORTIFY_SOURCE=3)
+
 * Mon Apr 17 2023 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.7.20230413
 - new snapshot
 - cleanup spec, old patches
