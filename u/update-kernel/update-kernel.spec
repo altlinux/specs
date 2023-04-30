@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.6
+Version: 1.7
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -40,7 +40,6 @@ This is recommended way of upgrading kernel for ALT Linux.
 mkdir -p %buildroot%_sbindir
 install -pm755 update-kernel %buildroot%_sbindir/
 install -pm755 remove-old-kernels %buildroot%_sbindir/
-install -pm755 analyze-kmodules %buildroot%_sbindir/analyze-kmodules-experimental
 install -Dp update-kernel.8 -t %buildroot%_man8dir/
 install -Dp update-kernel.8.ru %buildroot%_mandir/ru/man8/update-kernel.8
 install -Dp bash_completion %buildroot/usr/share/bash-completion/completions/update-kernel
@@ -52,12 +51,14 @@ make check
 %files
 %_sbindir/update-kernel
 %_sbindir/remove-old-kernels
-%_sbindir/analyze-kmodules-experimental
 %_man8dir/*.8*
 %_mandir/ru/man8/*.8*
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sun Apr 30 2023 Vitaly Chikunov <vt@altlinux.org> 1.7-alt1
+- Do not unstall analyze-kmodules at all (for p10).
+
 * Tue Apr 25 2023 Vitaly Chikunov <vt@altlinux.org> 1.6-alt1
 - update-kernel: Check existence of DKMS tool, not just the DKMS package.
 - update-kernel: Support -D option to exclude modules from install (ALT#44158).
