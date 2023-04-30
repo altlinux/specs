@@ -1,5 +1,5 @@
 Name: can-utils
-Version: v2021.08.0
+Version: v2023.03
 Release: alt1
 
 Summary: SocketCAN userspace utilities and tools
@@ -45,6 +45,9 @@ subst 's|#include <sys/socket.h>|#include <linux/sockios.h>\n#include <sys/socke
 
 
 %changelog
+* Sun Apr 30 2023 Pavel Vainerman <pv@altlinux.ru> v2023.03-alt1
+- new version (v2023.03) with rpmgs script
+
 * Thu Aug 19 2021 Pavel Vainerman <pv@altlinux.ru> v2021.08.0-alt1
 - new version (v2021.08.0) with rpmgs script
 
