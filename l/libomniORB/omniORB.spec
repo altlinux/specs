@@ -1,8 +1,8 @@
 %def_disable static
 
 Name:    libomniORB
-Version: 4.2.4
-Release: alt4
+Version: 4.3.0
+Release: alt1
 
 Summary: ORB from AT&T (core libraries)
 
@@ -18,9 +18,8 @@ Source1: omniORB.cfg
 Source2: omninames
 Source3: omninames.sysconfig
 
-Patch0: libomniORB-non-strict.patch
-Patch1: libomniORB-all-cosifaces.patch
-Patch2: libomniORB-ziopdynamic-link.patch
+Patch0: libomniORB-all-cosifaces.patch
+Patch1: libomniORB-ziopdynamic-link.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -120,8 +119,7 @@ for the omniORB package (COS module).
 %prep
 %setup
 %patch0 -p 1
-%patch1 -p 1
-%patch2 -p 0
+%patch1 -p 0
 
 subst "s|AM_PATH_PYTHON|AM_PATH_PYTHON(3.3)|" configure.ac
 
@@ -225,6 +223,9 @@ install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/omninames
 %endif
 
 %changelog
+* Sun Apr 30 2023 Pavel Vainerman <pv@altlinux.ru> 4.3.0-alt1
+- new version (4.3.0) with rpmgs script
+
 * Fri Sep 10 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.4-alt4
 - disable build devel-static subpackages
 
