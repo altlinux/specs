@@ -1,13 +1,14 @@
+%define _unpackaged_files_terminate_build 1
 %def_without tests
 %ifarch %e2k ppc64le
 %def_disable qtwebengine
 %else
-%def_enable qtwebengine
+%def_disable qtwebengine
 %endif
 
 Name:    retext
-Version: 7.2.3
-Release: alt2
+Version: 8.0.0
+Release: alt1
 License: GPL-3.0+
 Summary: Text editor for Markdown and reStructuredText
 Summary(de): Texteditor für Markdown und reStructuredText
@@ -21,7 +22,7 @@ AutoProv:yes,nopython3
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): python3-devel
-BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt6
 BuildRequires: python3-module-setuptools
 BuildRequires: /dev/pts
 BuildRequires: python3-module-markups
@@ -32,7 +33,7 @@ BuildRequires: libpng-devel
 BuildRequires: librsvg-devel
 BuildRequires: librsvg-utils
 BuildRequires: ImageMagick-tools
-BuildRequires: qt5-tools-devel
+BuildRequires: qt6-tools-devel
 
 %if_with tests
 BuildRequires:  libappstream-glib
@@ -41,9 +42,9 @@ BuildRequires:  libappstream-glib
 %py3_requires docutils enchant markdown mdx_math chardet pygments
 %add_python3_req_skip FakeVim
 %if_enabled qtwebengine
-%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
+%add_python3_req_skip PyQt6.QtWebKit PyQt6.QtWebKitWidgets
 %else
-%add_python3_req_skip PyQt5.QtWebEngineCore PyQt5.QtWebEngineWidgets
+%add_python3_req_skip PyQt6.QtWebEngineCore PyQt6.QtWebEngineWidgets
 %endif
 
 %description
@@ -58,7 +59,7 @@ für Markdown und reStructuredText.
 %setup
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_qt6_bindir:$PATH
 %python3_build_debug
 
 %install
@@ -71,7 +72,7 @@ fi
 install -Dm 0644 %SOURCE1 %buildroot/%_man1dir/%name.1
 
 # Generate resized icons
-pushd icons
+pushd ReText/icons
 mkdir -p %buildroot/%_datadir/icons/hicolor/{16x16,22x22,24x24,32x32,48x48,64x64,72x72,96x96,128x128,scalable}/apps
 for s in 16x16 22x22 24x24 32x32 48x48 64x64 72x72 96x96 128x128
 do
@@ -94,12 +95,14 @@ python3 setup.py test
 %_datadir/metainfo/*.appdata.xml
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/%name.*
-%_datadir/%name/
 %_man1dir/*.1*
 %python3_sitelibdir/ReText/
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Mon May 01 2023 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
+- New version using PyQt6.
+
 * Fri Mar 10 2023 Andrey Cherepanov <cas@altlinux.org> 7.2.3-alt2
 - Removed wrong requirement python3(sip).
 
