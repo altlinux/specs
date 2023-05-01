@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.1.1
+Version: 3.2.0
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon May 01 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
+- gitask: improve description
+- myhsh: add -e for fast build after -l (lazy cleanup)
+- rpmbsh: implement -e for fast build (via hsh-rebuild) after -l (lazy cleanup)
+- rpmbps: use name part for release from KORINFTARGETRELEASE if set
+- rpmbs: remove obsoleted key -e
+- runinhsh: rewrite
+- /etc/apt/sources: add examples for p10 and Sisyphus
+
 * Fri Mar 17 2023 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt1
 - rpmreqs: fix missed reqs
 - functions/common: improve git root detection
