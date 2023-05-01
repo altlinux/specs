@@ -8,7 +8,7 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.24.3
+Version: 3.30.1
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -23,8 +23,8 @@ Source3: qgis-server-httpd.conf
 Source4: qgis-server-README
 Source5: qgis.xml
 
-Patch1: qgis-lib64.patch
-Patch2: qgis-serverprefix.patch
+Patch1: qgis-serverprefix.patch
+Patch2: qgis-no-politics.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -75,6 +75,7 @@ BuildRequires: python3-module-OWSLib
 %endif
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-location-devel
+BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-tools-devel-static
@@ -355,6 +356,10 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Sun Apr 30 2023 Andrey Cherepanov <cas@altlinux.org> 3.30.1-alt1
+- New version.
+- No politics on News pane.
+
 * Tue Jan 24 2023 Andrey Cherepanov <cas@altlinux.org> 3.24.3-alt1
 - New version.
 
