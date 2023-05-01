@@ -2,7 +2,7 @@
 
 Name:    libomniORB
 Version: 4.3.0
-Release: alt1
+Release: alt2
 
 Summary: ORB from AT&T (core libraries)
 
@@ -223,6 +223,9 @@ install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/omninames
 %endif
 
 %changelog
+* Mon May 01 2023 Pavel Vainerman <pv@altlinux.ru> 4.3.0-alt2
+- fixed default config
+
 * Sun Apr 30 2023 Pavel Vainerman <pv@altlinux.ru> 4.3.0-alt1
 - new version (4.3.0) with rpmgs script
 
