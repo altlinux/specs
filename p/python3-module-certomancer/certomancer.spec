@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.9.1
-Release: alt2
+Version: 0.10.0
+Release: alt1
 
 Summary: PKI testing tool
 
@@ -45,8 +45,6 @@ BuildRequires: python3-module-pkcs11
 BuildArch: noarch
 
 Source:  %name-%version.tar
-# https://github.com/MatthiasValvekens/certomancer/issues/8
-Patch0: certomancer-0.9.1-Bump-pyhanko-certvalidator-test-dep.patch
 
 %description
 Quickly construct, mock & deploy PKI test configurations using
@@ -55,7 +53,6 @@ service provisioning.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -74,6 +71,9 @@ service provisioning.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon May 01 2023 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
+- Automatically updated to 0.10.0.
+
 * Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 0.9.1-alt2
 - Fixed FTBFS (packaging 22 and pyhanko-certvalidator 0.20.0).
 
