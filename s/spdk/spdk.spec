@@ -12,13 +12,15 @@
 %def_enable clang
 
 Name: spdk
-Version: 23.01
+Version: 23.01.1
 Release: alt1
 
 Summary: Storage Performance Development Kit
+
 License: BSD-3-Clause
 Group: Development/Tools
 Url: https://spdk.io
+
 ExcludeArch: i586 ppc64le armh
 
 Source: spdk-%version.tar.gz
@@ -45,6 +47,7 @@ Patch2: spdk-23.01-alpinelinux-use-system-isal.patch
 # %%filter_from_requires /bpftrace/d
 
 Requires: systemd-utils
+
 BuildPreReq: libfuse3-devel
 %if_enabled clang
 #BuildRequires(pre): rpm-macros-llvm-common
@@ -267,6 +270,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue May 02 2023 Leontiy Volodin <lvol@altlinux.org> 23.01.1-alt1
+- New version 23.01.1.
+
 * Fri Mar 10 2023 Leontiy Volodin <lvol@altlinux.org> 23.01-alt1
 - New version (23.01).
 - Built with system isa-l (thanks alpinelinux for the patch).
