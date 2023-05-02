@@ -1,5 +1,5 @@
 Name:    puppetboard
-Version: 2.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: Web frontend for PuppetDB
@@ -30,6 +30,8 @@ Source:  %name-%version.tar
 Source1: wsgi.py
 Source2: %name.conf
 Source3: %name.start
+
+Requires: python3-module-commonmark >= 0.9.1
 
 %define wsgi_dir %_datadir/puppetboard
 
@@ -81,7 +83,7 @@ getent passwd puppetboard > /dev/null || \
 %_sbindir/useradd -M -r -g puppetboard -c 'Puppetboard Daemon' \
      -d / -s /sbin/nologin puppetboard 2> /dev/null ||:
 
-%post
+%post apache2
 %_sbindir/a2enmod wsgi-py3
 
 %files
@@ -96,6 +98,12 @@ getent passwd puppetboard > /dev/null || \
 %dir %wsgi_dir
 
 %changelog
+* Tue May 02 2023 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1
+- New version.
+
+* Fri Jun 04 2021 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version.
+
 * Fri Jul 31 2020 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
 - New version.
 
