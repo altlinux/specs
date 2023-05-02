@@ -4,7 +4,7 @@
 
 Name: ltp
 Version: 20220930
-Release: alt2
+Release: alt3
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -14,6 +14,12 @@ Vcs: https://github.com/linux-test-project/ltp.git
 
 Requires: ltp-alt-lists
 Requires: ltp-testsuite = %EVR
+# `Autoreq lib` fails with test files like these:
+#   lib.req: ERROR: /usr/src/tmp/ltp-buildroot/usr/lib/ltp/testcases/data/ldd01/lddfile.out: library lddfile5.obj.so not found
+# For memory tests:
+%ifnarch armh
+Requires: libnuma
+%endif
 
 Source: %name-%version.tar
 BuildRequires: rpm-build-python3
@@ -193,6 +199,9 @@ fi
 %files testsuite-checkinstall
 
 %changelog
+* Tue May 02 2023 Vitaly Chikunov <vt@altlinux.org> 20220930-alt3
+- Add `Requires: libnuma` which absence triggered mem tests failures on i586.
+
 * Tue Oct 11 2022 Vitaly Chikunov <vt@altlinux.org> 20220930-alt2
 - Fix circular dependence on ltp-alt-lists by creating ltp-testsuite
   subpackage. ltp now is just umbrella package.
