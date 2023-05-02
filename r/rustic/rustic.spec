@@ -1,5 +1,5 @@
 Name:    rustic
-Version: 0.4.2
+Version: 0.5.3
 Release: alt1
 
 Summary: rustic - fast, encrypted, deduplicated backups powered by pure Rust
@@ -37,11 +37,11 @@ EOF
 
 %install
 %rust_install
-mkdir -p %buildroot/%_datadir/zsh/site-functions
-mkdir -p %buildroot/%_sysconfdir/bash_completion.d
+mkdir -p %buildroot%_datadir/zsh/site-functions
+mkdir -p %buildroot%_datadir/bash-completion/completions
 mkdir -p %buildroot%_datadir/fish/vendor_completions.d
-%buildroot%_bindir/%name completions zsh > %buildroot/%_datadir/zsh/site-functions/_%name
-%buildroot%_bindir/%name completions bash > %buildroot/%_sysconfdir/bash_completion.d/%name
+%buildroot%_bindir/%name completions zsh > %buildroot%_datadir/zsh/site-functions/_%name
+%buildroot%_bindir/%name completions bash > %buildroot%_datadir/bash-completion/completions/%name
 %buildroot%_bindir/%name completions fish > %buildroot%_datadir/fish/vendor_completions.d/%name.fish
 
 %check
@@ -50,10 +50,13 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %files
 %doc *.md
 %_bindir/%name
-%_sysconfdir/bash_completion.d/%name
+%_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue May 02 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.3-alt1
+- new version 0.5.3
+
 * Tue Jan 17 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.4.2-alt1
 - Initial build for Sisyphus
