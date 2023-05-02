@@ -38,7 +38,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.20.3
+Version: 1.20.4
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -337,6 +337,9 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Tue May 02 2023 Alexey Shabalin <shaba@altlinux.org> 1.20.4-alt1
+- New version (1.20.4) (Fixes: CVE-2023-24539, CVE-2023-24540, CVE-2023-29400)
+
 * Tue Apr 04 2023 Alexey Shabalin <shaba@altlinux.org> 1.20.3-alt1
 - New version (1.20.3) (Fixes: CVE-2023-24534, CVE-2023-24536, CVE-2023-24537, CVE-2023-24538).
 
