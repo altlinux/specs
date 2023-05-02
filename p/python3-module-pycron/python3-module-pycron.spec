@@ -5,9 +5,9 @@
 
 Name: python3-module-%pypi_name
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
-Summary: Simple cron-like parser for Python, which determines if current datetime matches conditions 
+Summary: Simple cron-like parser for Python, which determines if current datetime matches conditions
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pycron
@@ -23,7 +23,6 @@ BuildRequires: python3(wheel)
 %if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytz)
-BuildRequires: python3(nose)
 BuildRequires: python3(pendulum)
 BuildRequires: python3(arrow)
 BuildRequires: python3(udatetime)
@@ -37,6 +36,10 @@ BuildArch: noarch
 
 %prep
 %setup
+
+# Replace nose with pytest
+sed -i 's/from nose.tools import assert_raises/import pytest/' tests/test_has_been.py
+sed -i 's/assert_raises/pytest.raises/' tests/test_has_been.py
 
 %build
 %pyproject_build
@@ -54,5 +57,8 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 02 2023 Anton Vyatkin <toni@altlinux.org> 3.0.0-alt2
+- Fix BuildRequires
+
 * Sat Dec 10 2022 Anton Zhukharev <ancieg@altlinux.org> 3.0.0-alt1
 - initial build for Sisyphus
