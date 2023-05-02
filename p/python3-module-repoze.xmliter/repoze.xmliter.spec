@@ -1,8 +1,10 @@
 %define oname repoze.xmliter
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: Wrapper for lxml trees which serializes to string upon iteration
 
@@ -16,7 +18,10 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
-BuildPreReq: python3-devel python3-module-setuptools python3-tools
+BuildPreReq: python3-devel python3-module-setuptools
+%if_with check
+BuildRequires: python3-module-lxml
+%endif
 
 %py3_requires repoze lxml
 
@@ -32,7 +37,6 @@ needless XML parsing and serialization.
 
 %prep
 %setup
-find . -type f -name '*.py' -exec python3-2to3 -w -n '{}' +
 
 %build
 %python3_build
@@ -48,11 +52,18 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 rm -fv %buildroot%python3_sitelibdir/*.pth
 rm -fv %buildroot%python3_sitelibdir/repoze/xmliter/tests.py
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 -m unittest discover -v
+
 %files
 %doc *.txt
 %python3_sitelibdir/*
 
 %changelog
+* Tue May 02 2023 Anton Vyatkin <toni@altlinux.org> 0.6.1-alt2
+- Fix BuildRequires (build with check)
+
 * Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
 - new version 0.6.1 (with rpmrb script)
 
