@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name nibbles
 %define __name gnome-%_name
@@ -8,8 +8,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: A cute little game that has no short description
 Group: Games/Boards
@@ -65,6 +65,9 @@ it.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon May 01 2023 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
+- 3.38.3
+
 * Mon Mar 01 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt2
 - updated to 3.38.2-8-g374f9bd (fixed build with vala-0.50.4)
 
