@@ -52,7 +52,7 @@
 
 Name: ceph
 Version: 17.2.6
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -181,7 +181,7 @@ BuildRequires: libxmlsec1-devel
 %endif
 
 
-Requires: ceph-osd = %EVR
+Requires: ceph-osd = %EVR ceph-volume = %EVR
 Requires: ceph-mds = %EVR
 Requires: ceph-mgr = %EVR
 Requires: ceph-mon = %EVR
@@ -1814,6 +1814,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Tue May 02 2023 Alexey Shabalin <shaba@altlinux.org> 17.2.6-alt2
+- add requires ceph-volume to ceph package.
+
 * Thu Apr 13 2023 Alexey Shabalin <shaba@altlinux.org> 17.2.6-alt1
 - 17.2.6
 
