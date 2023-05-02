@@ -1,7 +1,8 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.26
+%define ver_major 0.27
 %define beta %nil
+%define rdn_name sm.puri.Phoc
 
 %define dev_uid 500
 
@@ -79,10 +80,15 @@ xvfb-run %__meson_test
 
 %files
 %_bindir/%name
+%_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/sm.puri.phoc.gschema.xml
-%doc README.md
+%_iconsdir/hicolor/symbolic/apps/%rdn_name.svg
+%doc README.md NEWS
 
 %changelog
+* Mon May 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.27.0-alt1
+- 0.27.0
+
 * Fri Mar 31 2023 Yuri N. Sedunov <aris@altlinux.org> 0.26.0-alt1
 - 0.26.0
 

@@ -1,9 +1,13 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.26
+%define ver_major 0.27
 %define beta %nil
+%define api_ver 0
 %define rdn_name sm.puri.Phosh
-%define dev_uid 500
+%define dev_uid 1000
+
+%def_enable gtk_doc
+%def_enable man
 
 # not installed
 %def_disable tools
@@ -65,6 +69,8 @@ BuildRequires: pkgconfig(fribidi)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libecal-2.0)
 BuildRequires: pkgconfig(evince-document-3.0)
+%{?_enable_gtk_doc:BuildRequires: gi-docgen libhandy1-gir-devel}
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_check:BuildRequires: xvfb-run dbus at-spi2-core}
 
 %description
@@ -94,6 +100,8 @@ sed -i 's|\(User=\)1000|\1%dev_uid|' data/%name.service
 %build
 %meson \
     -Dsystemd=true \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_enable_man:-Dman=true} \
     %{?_enable_tools:-Dtools=true} \
     -Dphoc_tests=disabled
 %nil
@@ -147,14 +155,21 @@ xvfb-run %__meson_test
 %_userunitdir/%rdn_name.target
 %_datadir/xdg-desktop-portal/portals/%name.portal
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
+%{?_enable_man:%_man1dir/%name.1*
+%_man1dir/%name-session.1*}
 %doc NEWS README.md
 
 %files devel
 %_includedir/%name/
 %_pkgconfigdir/%name-plugins.pc
-
+%{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Tue May 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.27.0-alt1
+- 0.27.0
+- restored default UID from 500 to 1000
+- enabled gtk-doc and man builds
+
 * Mon Apr 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.26.0-alt1
 - 0.26.0
 
