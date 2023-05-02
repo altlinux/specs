@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pkgname
-Version: 2.28.2
+Version: 2.29.0
 Release: alt1
 
 Summary: HTTP library, written in Python, for human beings
@@ -14,33 +14,17 @@ Group: Development/Python3
 Url: https://pypi.org/project/requests/
 VCS: https://github.com/psf/requests
 BuildArch: noarch
-
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# direct dependencies
-BuildRequires: python3(charset_normalizer)
-BuildRequires: python3(idna)
-BuildRequires: python3(urllib3)
-
-# extra
-BuildRequires: python3(PySocks)
-BuildRequires: python3(chardet)
-
-BuildRequires: python3(trustme)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-mock)
-BuildRequires: python3(pytest-httpbin)
+%pyproject_builddeps_metadata_extra socks
+%pyproject_builddeps_check
 %endif
-
-%py3_requires charset_normalizer
 
 %description
 Requests allows you to send HTTP/1.1 requests extremely easily. There's no need
@@ -53,6 +37,11 @@ Keep-alive and HTTP connection pooling are 100%% automatic, thanks to urllib3.
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
+%endif
 
 %build
 %pyproject_build
@@ -69,6 +58,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/%{pyproject_distinfo %pkgname}/
 
 %changelog
+* Fri Apr 28 2023 Stanislav Levin <slev@altlinux.org> 2.29.0-alt1
+- 2.28.2 -> 2.29.0.
+
 * Mon Jan 23 2023 Stanislav Levin <slev@altlinux.org> 2.28.2-alt1
 - 2.28.1 -> 2.28.2.
 

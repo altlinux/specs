@@ -1,36 +1,36 @@
 %define _unpackaged_files_terminate_build 1
 
-%define  modulename socks
-%define  pypi_name PySocks
+%define modulename socks
+%define pypi_name PySocks
 
-Name:    python3-module-%modulename
+Name: python3-module-%modulename
 Version: 1.7.1
-Release: alt3
-
-Summary: A SOCKS proxy client and wrapper for Python.
+Release: alt4
+Summary: A SOCKS proxy client and wrapper for Python
 License: BSD
-Group:   Development/Python
-URL:     https://github.com/Anorov/PySocks
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Group: Development/Python
+Url: https://pypi.org/project/PySocks/
+Vcs: https://github.com/Anorov/PySocks
 BuildArch: noarch
-
+Source: %pypi_name-%version.tar
+Source1: %pyproject_deps_config_name
 # PyPI name
 %py3_provides %pypi_name
 Provides: python3-module-%pypi_name = %EVR
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
-Source:  %pypi_name-%version.tar
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
 %summary
 
 %prep
 %setup -n %pypi_name-%version
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -44,6 +44,9 @@ Source:  %pypi_name-%version.tar
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Fri Apr 28 2023 Stanislav Levin <slev@altlinux.org> 1.7.1-alt4
+- Mapped PyPI name to distro's one.
+
 * Tue Jul 26 2022 Stanislav Levin <slev@altlinux.org> 1.7.1-alt3
 - Provided well-known PyPI name.
 
