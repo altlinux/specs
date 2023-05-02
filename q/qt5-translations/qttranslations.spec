@@ -2,7 +2,7 @@
 %global qt_module qttranslations
 
 Name: qt5-translations
-Version: 5.15.8
+Version: 5.15.9
 Release: alt1
 
 Group: System/Libraries
@@ -46,6 +46,9 @@ done
 %files -f %name.lang
 
 %changelog
+* Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt1
+- new version
+
 * Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
 - new version
 

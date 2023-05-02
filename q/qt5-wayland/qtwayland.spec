@@ -2,8 +2,8 @@
 %global qt_module qtwayland
 
 Name: qt5-wayland
-Version: 5.15.8
-Release: alt2
+Version: 5.15.9
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - Wayland platform support and QtCompositor module
@@ -150,6 +150,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt1
+- new version
+
 * Tue Feb 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt2
 - update fixes from kde/qt-5.15
 

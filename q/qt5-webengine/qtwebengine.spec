@@ -30,20 +30,19 @@
 
 Name: qt5-webengine
 Version: 5.15.13
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
 Url: http://qt.io/
-License: GPLv2 / GPLv3 / LGPLv3
+License: LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 ExclusiveArch: %qt5_qtwebengine_arches
 
 Source: %qt_module-everywhere-src-%version.tar
 Source100: pako.min.js
 Source101: d3.min.js
 # FC
-Patch3:  qtwebengine-opensource-src-5.15.0-fix-extractcflag.patch
-Patch4:  qtwebengine-everywhere-src-5.10.0-system-nspr-prtime.patch
+Patch4:  qtwebengine-opensource-src-5.15.0-fix-extractcflag.patch
 Patch5:  qtwebengine-everywhere-src-5.15.5-no-icudtl-dat.patch
 Patch6:  qtwebengine-everywhere-src-5.10.1-no-sse2.patch
 Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
@@ -61,6 +60,8 @@ Patch43: disable-catapult.patch
 Patch44: python3.patch
 Patch45: chromium-python3.patch
 Patch46: python3.11.patch
+Patch47: system-nspr-prtime.patch
+Patch48: system-icu-utf.patch
 # ALT
 Patch101: alt-pepflashplayer.patch
 Patch102: alt-fix-shrank-by-one-character.patch
@@ -182,8 +183,7 @@ Requires: libqt5-core = %_qt5_version
 %setup -n %qt_module-everywhere-src-%version
 ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 #
-%patch3 -p1
-#patch4 -p1
+%patch4 -p1
 %patch5 -p1
 %if_enabled no_sse2
 %patch6 -p1
@@ -203,6 +203,8 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch44 -p1
 %patch45 -p1
 %patch46 -p1
+%patch47 -p1
+%patch48 -p1
 #
 %patch101 -p1
 %patch102 -p1
@@ -424,6 +426,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Apr 27 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt2
+- fix to build with new icu
+
 * Thu Mar 23 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt1
 - new version
 

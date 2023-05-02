@@ -36,8 +36,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.8
-Release: alt2
+Version: 5.15.9
+Release: alt1
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -862,6 +862,9 @@ make check -k ||:
 
 
 %changelog
+* Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt1
+- new version
+
 * Tue Feb 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt2
 - update fixes from kde/qt-5.15
 

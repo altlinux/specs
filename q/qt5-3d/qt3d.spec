@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: qt5-3d
-Version: 5.15.8
-Release: alt2
+Version: 5.15.9
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - Qt3D QML bindings and C++ APIs
@@ -226,6 +226,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt1
+- new version
+
 * Thu Jan 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt2
 - disable LTO
 
