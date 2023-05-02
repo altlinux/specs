@@ -1,8 +1,8 @@
-%def_disable static
+%define oname benchmark
 
-Name: libbenchmark
-Version: 1.5.6
-Release: alt2
+Name: lib%oname
+Version: 1.7.1
+Release: alt1
 
 Summary: A library to benchmark code snippets
 
@@ -13,7 +13,8 @@ Url: https://github.com/google/benchmark
 # Source-url: https://github.com/google/benchmark/archive/refs/tags/v%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: benchmark-%version.tar
+Source: %oname-%version.tar
+Provides: google-%name = %EVR
 
 Patch: benchmark-1.5.4-extbuild.patch
 Patch2000: libbenchmark-e2k.patch
@@ -22,7 +23,7 @@ BuildRequires(pre): rpm-macros-cmake
 
 # Automatically added by buildreq on Sun Jul 11 2021
 # optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgmock-devel libsasl2-3 libstdc++-devel python3-base sh4
-BuildRequires: cmake gcc-c++ libgtest-devel ctest
+BuildRequires: cmake gcc-c++ libgtest-devel ctest ninja-build
 
 %description
 A library to benchmark code snippets, similar to unit tests.
@@ -36,42 +37,39 @@ To run the benchmark, compile and link against the `benchmark` library
 be under the build directory you created.
 
 %package devel
-Summary: %summary; development environment
+Summary: %summary development environment
 Group: Development/C++
+Requires: lib%oname = %EVR
 
 %description devel
-%summary; development environment
-
-%package devel-static
-Summary: %summary (static)
-Group: Development/C++
-
-%description devel-static
-%summary (static)
+%summary development environment.
 
 %prep
-%setup -n benchmark-%version
-%patch -p1
+%setup -n %oname-%version
+#%%patch -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
 
 %build
-%cmake -DBUILD_SHARED_LIBS:BOOL=FALSE
-%cmake_build
-mv %_cmake__builddir/src/*.a .
-rm -rf %_cmake__builddir
-%cmake -DBUILD_SHARED_LIBS:BOOL=TRUE
+%cmake \
+  -G Ninja \
+  -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+  -DGIT_VERSION=%version \
+  -DBUILD_SHARED_LIBS:BOOL=ON \
+  -DBENCHMARK_ENABLE_TESTING:BOOL=ON \
+  -DBENCHMARK_USE_BUNDLED_GTEST:BOOL=OFF \
+  -DBENCHMARK_ENABLE_GTEST_TESTS:BOOL=ON \
+  -DBENCHMARK_ENABLE_INSTALL:BOOL=ON \
+  -DBENCHMARK_DOWNLOAD_DEPENDENCIES:BOOL=OFF
 %cmake_build
 
 %install
 %cmake_install
-%if_enabled static
-install *.a %buildroot/%_libdir
-%endif
+rm -rf %buildroot%_defaultdocdir
 
 %check
-%make_build -C %_cmake__builddir test
+ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process %_smp_mflags
 
 %files
 %doc *.md
@@ -84,12 +82,10 @@ install *.a %buildroot/%_libdir
 %_libdir/lib*.so
 %_includedir/*
 
-%if_enabled static
-%files devel-static
-%_libdir/lib*.a
-%endif
-
 %changelog
+* Tue May 02 2023 Alexey Shabalin <shaba@altlinux.org> 1.7.1-alt1
+- new version 1.7.1
+
 * Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt2
 - disable devel-static packing, cleanup spec
 
