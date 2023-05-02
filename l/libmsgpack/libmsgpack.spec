@@ -1,7 +1,7 @@
 %define oname msgpack
 Name: libmsgpack
 Version: 3.3.0
-Release: alt2
+Release: alt3
 
 Summary: Binary-based efficient object serialization library
 
@@ -50,7 +50,7 @@ Libraries and header files for %name
 subst "s|/lib|/%_lib|g" CMakeLists.txt
 
 %build
-%cmake_insource -DCMAKE_INSTALL_LIBDIR=%_lib -DBUILD_SHARED_LIBS=ON -DMSGPACK_CXX11=ON
+%cmake_insource -DCMAKE_INSTALL_LIBDIR=%_lib -DBUILD_SHARED_LIBS=ON -DMSGPACK_CXX17=ON 
 %make_build
 
 %check
@@ -72,6 +72,9 @@ export LD_LIBRARY_PATH=$(pwd)
 %_libdir/cmake/msgpack/
 
 %changelog
+* Tue May 02 2023 Alexey Shabalin <shaba@altlinux.org> 3.3.0-alt3
+- define CMAKE_CXX_STANDARD=17
+
 * Wed Sep 16 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.3.0-alt2
 - restored build on armh
 
