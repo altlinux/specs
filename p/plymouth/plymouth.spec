@@ -9,8 +9,8 @@
 %define _localstatedir %_var
 
 Name: plymouth
-Version: 0.9.5
-Release: alt9
+Version: 22.02.122
+Release: alt1.20221016
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -366,7 +366,7 @@ fi \
 
 
 %files -f %name.lang
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README.md
 %dir %_datadir/plymouth
 %dir %_datadir/plymouth/themes
 %dir %_libdir/plymouth/renderers
@@ -384,6 +384,7 @@ fi \
 %_libdir/plymouth/tribar.so
 %_libdir/plymouth/renderers/drm*
 %_libdir/plymouth/renderers/frame-buffer*
+%_libexecdir/plymouth/plymouthd-fd-escrow
 %_datadir/plymouth/default-boot-duration
 %_datadir/plymouth/default-shutdown-duration
 %_datadir/plymouth/default-install-duration
@@ -471,6 +472,14 @@ fi \
 %files system-theme
 
 %changelog
+* Fri Apr 28 2023 Anton Midyukov <antohami@altlinux.org> 1:22.02.122-alt1.20221016
+- snapshot 4bd41a355fa017afa4db86282b90eb67bbf9db59 (Closes: 44297)
+- Revert "Revert "drm: Remove explicit set_scan_out_buffer() from activate()""
+- src/main.c: set ignore_serial_consoles = true (Closes: 39326)
+- bgrt-alt: add bgrt-fallback.png
+- Revert "Fix daemon install ignoring configured runstatedir"
+- Revert "Use standard runstatedir vs custom flag"
+
 * Mon Feb 28 2022 Oleg Solovyov <mcpain@altlinux.org> 1:0.9.5-alt9
 - bgrt-alt: move text block further
 
