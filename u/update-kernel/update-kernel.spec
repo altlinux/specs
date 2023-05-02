@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.7
-Release: alt2
+Version: 1.8
+Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
@@ -56,6 +56,9 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue May 02 2023 Vitaly Chikunov <vt@altlinux.org> 1.8-alt1
+- Improve help text.
+
 * Sun Apr 30 2023 Vitaly Chikunov <vt@altlinux.org> 1.7-alt2
 - Spelling corrections.
 
