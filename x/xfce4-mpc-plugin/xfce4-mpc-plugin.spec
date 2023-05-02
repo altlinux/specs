@@ -1,25 +1,22 @@
 Name: xfce4-mpc-plugin
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: MPD Client Plugin
-License: %bsdstyle
+License: ISC
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://docs.xfce.org/panel-plugins/xfce4-mpc-plugin/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-mpc-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-ExcludeArch: aarch64
-
-BuildRequires(pre): rpm-build-licenses
-
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel >= 4.13.5 libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libmpd-devel
 
-Requires: xfce4-panel >= 4.8
+Requires: xfce4-panel
 
 %define _unpackaged_files_terminate_build 1
 
@@ -42,11 +39,18 @@ Xfce panel.
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS NEWS
+%doc README AUTHORS NEWS COPYING
 %_libdir/xfce4/panel/plugins/*
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Tue May 02 2023 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
+- Enabled build on aarch64.
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated Url tag.
+- Updated to 0.5.3.
+
 * Tue Aug 13 2019 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
 - Updated to 0.5.2.
 
