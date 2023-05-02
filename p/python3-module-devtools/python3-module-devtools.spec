@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Dev tools for python
 License: MIT
@@ -46,15 +46,19 @@ Python's missing debug print command and other development tools.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+# Ignore SQLAlchemy deprecation warnings until the package been updated.
+%pyproject_run_pytest -W ignore::sqlalchemy.exc.MovedIn20Warning
 
 %files
-%doc LICENSE README.md HISTORY.md
+%doc README.md HISTORY.md
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue May 02 2023 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt2
+- Temporary ignore SQLAlchemy's deprecation warning.
+- Don't package LICENSE file.
+
 * Sun Aug 07 2022 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
 - initial build for Sisyphus
 
