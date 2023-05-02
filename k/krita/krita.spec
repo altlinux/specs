@@ -38,13 +38,13 @@
 
 Name: krita
 Version: 5.1.5
-Release: alt2
+Release: alt3
 %K5init no_altplace
 
 Group: Graphics
 Summary: A creative sketching and painting application
 Url: http://krita.org/
-License: GPLv3
+License: BSD-2-Clause AND GPL-2.0-or-later AND LGPL-2.0-or-later AND LGPL-2.1-or-later AND GPL-3.0-or-later AND CC0-1.0 AND LGPL-2.0-only
 
 AutoReq: yes, nopython
 AutoProv: yes, nopython nopython3
@@ -86,7 +86,7 @@ BuildRequires: libheif-devel
 #BuildRequires: openexr-devel
 BuildRequires: libexiv2-devel liblcms2-devel
 #BuildRequires: libmypaint-devel
-#BuildRequires: xsimd-devel
+BuildRequires: xsimd-devel
 BuildRequires: kf5-karchive-devel kf5-kcrash-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kwindowsystem-devel
 
 %description
@@ -512,6 +512,9 @@ done
 %_libdir/libkritaexifcommon.so.*
 
 %changelog
+* Tue May 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.1.5-alt3
+- build with xsimd
+
 * Wed Apr 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.1.5-alt2
 - update build requries
 
