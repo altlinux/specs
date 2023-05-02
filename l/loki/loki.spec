@@ -2,8 +2,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: loki
-Version: 2.6.1
-Release: alt2
+Version: 2.8.1
+Release: alt1
 Summary: Loki: like Prometheus, but for logs
 License: Apache-2.0
 Group: Monitoring
@@ -27,7 +27,6 @@ system inspired by Prometheus.
 %package -n promtail
 Summary: Promtail is an agent which ships the contents of local logs to a Loki instance
 Group: Monitoring
-License: Apache-2.0
 Provides: %name-promtail = %EVR
 
 %description -n promtail
@@ -44,7 +43,6 @@ Currently, Promtail can tail logs from two sources: local log files and the syst
 %package docker-driver
 Summary: Loki Docker Logging Driver
 Group: Monitoring
-License: Apache-2.0
 
 %description docker-driver
 Docker logging driver plugins extends Docker's logging capabilities.
@@ -61,7 +59,8 @@ export GOPATH="$BUILDDIR:%go_path"
 
 %define buildpkg github.com/grafana/loki/pkg/util/build
 export CGO_ENABLED=0
-export GOFLAGS="-mod=vendor -buildmode=pie -tags=netgo"
+export GOFLAGS="-mod=vendor"
+export TAGS="netgo"
 export DATE=$(date -u '+%%Y-%%m-%%d')
 export GOLDFLAGS="-X %buildpkg.Version=%version \
                   -X %buildpkg.Revision=%release \
@@ -69,12 +68,14 @@ export GOLDFLAGS="-X %buildpkg.Version=%version \
                   -X %buildpkg.BuildUser=alt \
                   -X %buildpkg.BuildDate=$DATE"
 
-go build -ldflags="$GOLDFLAGS" ./cmd/loki
-go build -ldflags="$GOLDFLAGS" ./cmd/logcli
-go build -ldflags="$GOLDFLAGS" ./cmd/loki-canary
-go build -ldflags="$GOLDFLAGS" ./cmd/querytee
-CGO_ENABLED=1 go build -ldflags="$GOLDFLAGS" ./clients/cmd/promtail
-go build -ldflags="$GOLDFLAGS" -o %name-docker-driver ./clients/cmd/docker-driver
+go build "$GOFLAGS" -tags "$TAGS" -ldflags="$GOLDFLAGS"  ./cmd/logql-analyzer
+go build "$GOFLAGS" -tags "$TAGS" -ldflags="$GOLDFLAGS" ./cmd/loki
+go build "$GOFLAGS" -tags "$TAGS" -ldflags="$GOLDFLAGS" ./cmd/logcli
+go build "$GOFLAGS" -tags "$TAGS" -ldflags="$GOLDFLAGS" ./cmd/loki-canary
+go build "$GOFLAGS" -tags "$TAGS" -ldflags="$GOLDFLAGS" ./cmd/querytee
+go build "$GOFLAGS" -tags "$TAGS" -ldflags="$GOLDFLAGS" -o %name-docker-driver ./clients/cmd/docker-driver
+go generate -x -v ./clients/pkg/promtail/server/ui
+CGO_ENABLED=1 go build "$GOFLAGS" -tags "promtail_journal_enabled" -ldflags="$GOLDFLAGS" ./clients/cmd/promtail
 
 %install
 # Service files for Loki and promtail
@@ -89,6 +90,7 @@ install -Dm644 %SOURCE6 %buildroot%_sysconfdir/loki/promtail.yaml
 
 # Binaries
 install -dm755 %buildroot%_bindir
+install -Dm755 logql-analyzer %buildroot%_bindir
 install -Dm755 loki %buildroot%_bindir
 install -Dm755 loki-canary %buildroot%_bindir
 install -Dm755 promtail %buildroot%_bindir
@@ -122,6 +124,7 @@ useradd -r -N -g _promtail -G systemd-journal -c 'Promtail log collector' \
 
 %files
 %doc LICENSE README.md
+%_bindir/logql-analyzer
 %_bindir/loki
 %_bindir/logcli
 %_bindir/loki-canary
@@ -146,6 +149,9 @@ useradd -r -N -g _promtail -G systemd-journal -c 'Promtail log collector' \
 %doc clients/cmd/docker-driver/pipeline-example.yaml
 
 %changelog
+* Tue May 02 2023 Alexey Shabalin <shaba@altlinux.org> 2.8.1-alt1
+- New version 2.8.1.
+
 * Tue Aug 30 2022 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt2
 - update loki config (Fixes: ALT#43661)
 
