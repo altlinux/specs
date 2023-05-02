@@ -1,19 +1,28 @@
 %define oname Ming
 
+%def_without check
+
 Name: python3-module-%oname
-Version: 0.5.0
-Release: alt3
+Version: 0.13.0
+Release: alt1
 
 Summary: Bringing order to Mongo since 2009
 License: MIT
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/Ming/
-BuildArch: noarch
+Url: https://pypi.org/project/Ming/
+Vcs: https://github.com/TurboGears/Ming
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildArch: noarch
 
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pymongo
+BuildRequires: python3-module-pytz
+%endif
 
 %description
 Database mapping layer for MongoDB on Python. Includes schema
@@ -34,14 +43,18 @@ This package contains tests for Ming.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_unittest
 
 %files
-%doc PKG-INFO README
-%python3_sitelibdir/*
+%doc *.rst *.txt
+%python3_sitelibdir/ming
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
@@ -49,6 +62,9 @@ This package contains tests for Ming.
 
 
 %changelog
+* Mon Apr 24 2023 Anton Vyatkin <toni@altlinux.org> 0.13.0-alt1
+- New version 0.13.0.
+
 * Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.5.0-alt3
 - build for python2 disabled
 
