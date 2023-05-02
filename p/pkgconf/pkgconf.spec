@@ -9,7 +9,7 @@
 %endif
 
 Name: pkgconf
-Version: 1.9.4
+Version: 1.9.5
 Release: alt1
 
 Summary: Package compiler and linker metadata toolkit
@@ -90,6 +90,9 @@ mkdir -p %buildroot%_datadir/pkgconfig/personality.d
 
 
 %changelog
+* Wed May 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.9.5-alt1
+- 1.9.5
+
 * Sun Jan 22 2023 Yuri N. Sedunov <aris@altlinux.org> 1.9.4-alt1
 - 1.9.4
 
