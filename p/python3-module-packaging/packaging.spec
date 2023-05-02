@@ -4,27 +4,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 23.0
+Version: 23.1
 Release: alt1
-
 Summary: Core utilities for Python packages
-
 License: Apache-2.0 or BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/packaging/
 VCS: https://github.com/pypa/packaging
-
-Source: %name-%version.tar
-
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-# build backend and its deps
-BuildRequires: python3(flit_core)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pretend)
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -32,6 +29,11 @@ Core utilities for Python packages.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -48,6 +50,9 @@ Core utilities for Python packages.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 23.1-alt1
+- 23.0 -> 23.1.
+
 * Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 23.0-alt1
 - 21.3 -> 23.0.
 
