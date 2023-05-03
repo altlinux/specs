@@ -1,5 +1,5 @@
 Name: installer-feature-serial
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: serial console support
@@ -50,6 +50,11 @@ so that serial login is available.
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Wed May 03 2023 Anton Midyukov <antohami@altlinux.org> 0.6-alt1
+- postinstall.d/65-serial.sh: clear 'quiet' bootargs
+- postinstall.d/65-serial.sh: do'nt clear 'splash' bootargs,
+  add serial console for 'failsafe' mode also
+
 * Wed Oct 17 2018 Michael Shigorin <mike@altlinux.org> 0.5-alt1
 - rework stage3 into classic shape as well
   (to make sure systemd gets handled _if_ it's installed at all)
