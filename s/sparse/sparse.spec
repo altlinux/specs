@@ -5,7 +5,7 @@
 
 Name:		sparse
 Version:	0.6.4
-Release:	alt1
+Release:	alt2
 Summary: 	A semantic parser for C
 License:	MIT
 Group:		Development/C
@@ -58,6 +58,9 @@ Sparse is primarily used in the development and debugging of the Linux kernel.
 %_man1dir/*.1*
 
 %changelog
+* Wed May 03 2023 Vitaly Chikunov <vt@altlinux.org> 0.6.4-alt2
+- Fix buffer overrun warning from fortify.
+
 * Fri Sep 10 2021 Vitaly Chikunov <vt@altlinux.org> 0.6.4-alt1
 - Update to v0.6.4 (2021-09-06).
 
