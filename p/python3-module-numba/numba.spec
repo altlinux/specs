@@ -4,8 +4,8 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 0.56.4
-Release: alt1.1
+Version: 0.57.0
+Release: alt1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
@@ -48,7 +48,6 @@ sed -i "/omp parallel/s/),/)/" numba/np/ufunc/omppool.cpp
 %python3_install
 
 mv %buildroot%_bindir/numba %buildroot%_bindir/numba3
-mv %buildroot%_bindir/pycc %buildroot%_bindir/pycc3
 
 %check
 mkdir emtpytestdir
@@ -60,11 +59,13 @@ popd
 %files
 %doc CHANGE_LOG *.rst
 %_bindir/numba3
-%_bindir/pycc3
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed May 03 2023 Grigory Ustinov <grenka@altlinux.org> 0.57.0-alt1
+- Automatically updated to 0.57.0.
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.56.4-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
