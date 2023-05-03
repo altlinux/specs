@@ -3,7 +3,7 @@
 
 Name:		tini
 Version:	0.19.0
-Release:	alt1
+Release:	alt2
 Summary:	A tiny but valid init for containers
 
 Group:		Development/Other
@@ -11,6 +11,7 @@ License:	%mit
 URL:		https://github.com/krallin/tini
 
 Source0: %name-%version.tar
+Patch: tini-0.19.0-alt-fortify-source.patch
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-licenses rpm-build-golang
 BuildRequires: cmake
@@ -28,6 +29,7 @@ forwarding.
 
 %prep
 %setup -q
+%autopatch -p1
 
 %build
 cmake .
@@ -42,6 +44,9 @@ cp -a -- tini-static    %buildroot%_bindir/tini
 %_bindir/tini
 
 %changelog
+* Wed May 3 2023 Vladimir Didenko <cow@altlinux.org> 0.19.0-alt2
+- Fix build with FORTIFY_SOURCE=3
+
 * Fri May 29 2020 Vladimir Didenko <cow@altlinux.org> 0.19.0-alt1
 - New version
 

@@ -6,11 +6,11 @@
 %global repo            cli
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      f480fb1e374b16c8a1419e84f465f2562456145e
+%global commit      bc4487a59ea927322d96a0a0876dd6047f82e72d
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    23.0.4
+Version:    23.0.5
 Release: alt1
 Summary: Docker CLI
 License: Apache-2.0
@@ -98,6 +98,9 @@ install -d %{buildroot}%{_libexecdir}/docker/cli-plugins
 %dir %{_libexecdir}/docker/cli-plugins
 
 %changelog
+* Wed May 3 2023 Vladimir Didenko <cow@altlinux.org> 23.0.5-alt1
+- new release
+
 * Wed Apr 19 2023 Vladimir Didenko <cow@altlinux.org> 23.0.4-alt1
 - new release
 
