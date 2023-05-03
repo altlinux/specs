@@ -12,8 +12,8 @@
 %endif
 
 Name: openvswitch
-Version: 2.16.1
-Release: alt2
+Version: 2.17.6
+Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
 # All code is Apache-2.0 except
@@ -28,7 +28,6 @@ Source11: %name.init
 Source12: %name.tmpfiles
 
 Patch0001: 0001-execute-openvswitch-as-openvswitch-user.patch
-Patch0002: 0002-ovs-var_run-to-run.patch
 Patch0003: 0003-ovs-use-strongswan-for-ipsec.patch
 Patch0004: 0004-ovs-update-systemd-unit-for-ALT.patch
 Patch0005: 0005-ovs-fix-linking.patch
@@ -59,7 +58,7 @@ BuildRequires: libunwind-devel
 BuildRequires: libunbound-devel
 BuildRequires: glibc-kernheaders
 BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL python3-module-sphinx
-%{?_with_dpdk:BuildRequires: dpdk-devel >= 20.11 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
+%{?_with_dpdk:BuildRequires: dpdk-devel >= 21.11 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
 %{?_enable_afxdp:BuildRequires: libbpf-devel libelf-devel libnuma-devel}
 %define ksrcdir %_usrsrc/kernel/sources
 
@@ -149,7 +148,6 @@ Python3 bindings for the Open vSwitch database
 %prep
 %setup
 %patch0001 -p1
-%patch0002 -p1
 %patch0003 -p1
 %patch0004 -p1
 %patch0005 -p1
@@ -327,6 +325,7 @@ fi
 %_man1dir/ovsdb-server.*
 %_man1dir/ovsdb-tool.*
 %_man5dir/ovs-vswitchd.conf.db.*
+%_man5dir/ovsdb.local-config.*
 %_man5dir/ovsdb-server.*
 %_man5dir/ovsdb.*
 %_man7dir/ovs-fields.*
@@ -342,6 +341,7 @@ fi
 %_man8dir/ovs-ofctl.*
 %_man8dir/ovs-pki.*
 %dir %_datadir/%name
+%_datadir/%name/local-config.ovsschema
 %_datadir/%name/vswitch.ovsschema
 %dir %_datadir/%name/scripts
 %_datadir/%name/scripts/ovs-check-dead-ifs
@@ -424,11 +424,14 @@ fi
 %endif
 
 %changelog
+* Wed May 03 2023 Alexey Shabalin <shaba@altlinux.org> 2.17.6-alt1
+- 2.17.6 (Fixes: CVE-2021-3905, CVE-2023-1668, CVE-2022-4337, CVE-2022-4338)
+
 * Mon Nov 29 2021 Alexey Shabalin <shaba@altlinux.org> 2.16.1-alt2
 - Avoid autoreq on systemd-utils.
 
 * Tue Nov 23 2021 Alexey Shabalin <shaba@altlinux.org> 2.16.1-alt1
-- 2.16.1
+- 2.16.1 (Fixes: CVE-2022-0669, CVE-2021-36980)
 
 * Wed Oct 13 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.14.2-alt2
 - fixed build for Elbrus

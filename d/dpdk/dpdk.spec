@@ -10,7 +10,7 @@
 
 
 Name: dpdk
-Version: 20.11.3
+Version: 21.11.3
 Release: alt1
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
@@ -28,11 +28,11 @@ Patch0001: 0001-Do-not-redefine-strlcpy-and-strlcat.patch
 #
 ExclusiveArch: x86_64 %{ix86} aarch64 ppc64le
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson >= 0.49.2
 BuildRequires(pre): rpm-build-python3
 BuildRequires: glibc-kernheaders libpcap-devel zlib-devel libssl-devel
 BuildRequires: libnuma-devel libelf-devel libfdt-devel libjansson-devel
-BuildRequires: rdma-core-devel libmnl-devel
+BuildRequires: rdma-core-devel libmnl-devel python3(elftools)
 %{?_enable_afxdp:BuildRequires: libbpf-devel}
 %{?_enable_docs:BuildRequires: doxygen /usr/bin/sphinx-build python3-module-sphinx_rtd_theme}
 Requires: lib%name = %EVR
@@ -112,6 +112,7 @@ rm -f %buildroot%_libdir/*.a
 
 %files
 # BSD
+%_bindir/dpdk-dumpcap
 %_bindir/dpdk-testpmd
 %_bindir/dpdk-proc-info
 
@@ -150,6 +151,12 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed May 03 2023 Alexey Shabalin <shaba@altlinux.org> 21.11.3-alt1
+- Update to LTS release 21.11.3.
+- Fixes for the following security vulnerabilities:
+  + CVE-2022-28199 mlx5 driver error recovery handling vulnerability
+  + CVE-2022-2132 vhost: discard too small descriptor chains
+
 * Tue Nov 23 2021 Alexey Shabalin <shaba@altlinux.org> 20.11.3-alt1
 - Update to LTS release 20.11.3.
 

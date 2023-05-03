@@ -2,7 +2,7 @@
 %define rpmstate /run/openvswitch-rpm-state-
 
 Name: ovn
-Version: 21.03.0
+Version: 21.12.2
 Release: alt1
 
 Summary: Open Virtual Network support
@@ -330,6 +330,7 @@ fi
 %config(noreplace) %_logrotatedir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_bindir/ovn-appctl
+%_bindir/ovn_detrace*
 %_bindir/ovn-nbctl
 %_bindir/ovn-sbctl
 %_bindir/ovn-ic-nbctl
@@ -399,6 +400,9 @@ fi
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Wed May 03 2023 Alexey Shabalin <shaba@altlinux.org> 21.12.2-alt1
+- branch-21.12 (git dfb06bac)
+
 * Tue Nov 23 2021 Alexey Shabalin <shaba@altlinux.org> 21.03.0-alt1
 - branch-21.03 (git b65602b1)
 
