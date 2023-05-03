@@ -3,7 +3,7 @@
 
 Name: libqtxdg
 Version: 3.11.0
-Release: alt1
+Release: alt2
 
 Summary: Qt implementation of freedesktop.org xdg specs
 License: LGPL
@@ -12,10 +12,12 @@ Group: System/Libraries
 Url: https://lxqt.org
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-qt5
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: qt5-base-devel qt5-svg-devel libmagic-devel
 BuildRequires: lxqt-build-tools
 BuildRequires: libgio-devel
+Requires: libqt5-core = %_qt5_version
 
 %description
 %summary
@@ -56,6 +58,9 @@ sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
 %_datadir/cmake/*/
 
 %changelog
+* Wed May 03 2023 Anton Midyukov <antohami@altlinux.org> 3.11.0-alt2
+- Requires: libqt5-core = %%_qt5_version
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 3.11.0-alt1
 - New version 3.11.0.
 
