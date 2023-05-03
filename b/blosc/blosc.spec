@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: blosc
-Version: 1.21.1
+Version: 1.21.3
 Release: alt1
 Summary: Blosc: A blocking, shuffling and lossless compression library
 License: MIT
@@ -10,7 +10,6 @@ Url: https://www.blosc.org/
 
 # https://github.com/Blosc/c-blosc.git
 Source: %name-%version.tar
-Patch1: %name-1.15.1-alt-pkgconfigdir.patch
 
 BuildRequires: cmake gcc-c++ libsnappy-devel zlib-devel liblz4-devel libzstd-devel
 
@@ -51,7 +50,6 @@ This package contains development files of Blosc library.
 
 %prep
 %setup
-%patch1 -p1
 
 # remove bundled libraries
 rm -rf internal-complibs
@@ -83,6 +81,9 @@ rm -rf internal-complibs
 %_pkgconfigdir/blosc.pc
 
 %changelog
+* Fri Apr 21 2023 Oleg Obidin <nofex@altlinux.org> 1.21.3-alt1
+- Updated to upstream release version 1.21.3.
+
 * Fri Jul 22 2022 Egor Ignatov <egori@altlinux.org> 1.21.1-alt1
 - Updated to upstream release version 1.21.1.
 
