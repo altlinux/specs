@@ -10,7 +10,7 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.39.1
+Version: 0.40.0
 Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
@@ -67,6 +67,9 @@ export LLVM_CONFIG=%_bindir/llvm-config-%llvm_version
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed May 03 2023 Grigory Ustinov <grenka@altlinux.org> 0.40.0-alt1
+- Automatically updated to 0.40.0.
+
 * Fri Sep 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.39.1-alt1
 - Build new version.
 - Build with check.
