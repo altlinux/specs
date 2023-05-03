@@ -2,9 +2,9 @@
 %define _libexecdir /usr/libexec
 
 Name: netavark
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
-License: Apache-2.0
+License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
 Group: Development/Other
 Url: https://github.com/containers/%name
@@ -16,8 +16,8 @@ ExcludeArch: %arm %ix86
 #Recommends: aardvark-dns >= 1.0.3
 Provides: container-network-stack = 2
 
-BuildRequires(pre): rpm-macros-rust
-BuildRequires: rpm-build-rust
+BuildRequires(pre): rpm-macros-rust rpm-macros-systemd
+BuildRequires: rpm-build-rust rpm-build-systemd
 BuildRequires: go-md2man
 BuildRequires: /usr/bin/protoc
 BuildRequires: /proc
@@ -61,18 +61,29 @@ EOF
 %build
 %make_build
 
-cd docs
+pushd docs
 go-md2man -in %name.1.md -out %name.1
+popd
 
 %install
-%makeinstall_std PREFIX=%_prefix
+%makeinstall_std PREFIX=%_prefix SYSTEMDDIR=%_unitdir LIBEXECDIR=%_libexecdir
+
+%post
+%post_systemd_postponed %name-dhcp-proxy.service
+
+%preun
+%preun_systemd %name-dhcp-proxy.service
 
 %files
 %doc README.md
 %_libexecdir/podman/%name
 %_man1dir/%name.1*
+%_unitdir/*
 
 %changelog
+* Tue May 02 2023 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1
+- New version 1.6.0.
+
 * Mon Feb 27 2023 Alexey Shabalin <shaba@altlinux.org> 1.5.0-alt1
 - new version 1.5.0
 
