@@ -1,8 +1,6 @@
-%set_gcc_version 10
-
 Name: paintown
 Version: 3.6.0
-Release: alt1
+Release: alt2
 Summary: 2D Fighting Game
 License: GPL-2.0+
 Group: Games/Arcade
@@ -18,10 +16,17 @@ Patch0: paintown-noreturnnonvoid-fix.patch
 Patch1: paintown-find-freetype.patch
 
 Patch2: paintown-no-strict-aliasing.patch
+
+Patch3: Fix_E2K_build.patch
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: cmake
+%ifarch e2k
+BuildRequires: gcc-c++
+%else
+%set_gcc_version 10
 BuildRequires: gcc10-c++
+%endif
 BuildRequires: glibc-devel
 BuildRequires: liballegro5.2-devel
 BuildRequires: libogg-devel
@@ -63,6 +68,11 @@ This package contains the data files.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+
+%ifarch e2k
+%patch3 -p1
+%endif
+
 find data/ -type f -exec chmod 0644 {} \;
 
 %build
@@ -107,6 +117,9 @@ install -D -m0755 %SOURCE2 %buildroot%_bindir/%name
 %_datadir/%name-%version
 
 %changelog
+* Mon May 01 2023 Artyom Bystrov <arbars@altlinux.org> 3.6.0-alt2
+- add e2k support
+
 * Mon May 01 2023 Artyom Bystrov <arbars@altlinux.org> 3.6.0-alt1
 - initial build for ALT Sisyphus
 
