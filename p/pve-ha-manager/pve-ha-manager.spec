@@ -4,7 +4,7 @@
 Name: pve-ha-manager
 Summary: Proxmox VE HA Manager
 Version: 3.6.0
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -16,9 +16,10 @@ ExclusiveArch: x86_64 aarch64
 # from debian/control
 Conflicts: watchdog
 
-Requires: libpve-cluster-perl pve-cluster
+Requires: libpve-cluster-perl pve-container pve-cluster >= 3.0.17 pve-qemu-server >= 6.0.15
 
-BuildRequires: pve-access-control libpve-cluster-perl pve-common pve-cluster pve-doc-generator
+BuildRequires: pve-access-control libpve-cluster-perl pve-common pve-doc-generator
+BuildRequires: pve-cluster >= 3.0.17
 BuildRequires: libpve-rs-perl >= 0.7.3
 
 %description
@@ -70,6 +71,9 @@ install -m0644 debian/pve-ha-manager.default %buildroot%_sysconfdir/sysconfig/pv
 %_datadir/pve-ha-simulator
 
 %changelog
+* Wed May 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.6.0-alt2
+- add explicit require for pve-qemu-server
+
 * Mon Mar 20 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
