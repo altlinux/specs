@@ -9,7 +9,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt13
+Release: alt14
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -209,6 +209,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Tue May 02 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt14
+- interactive: don't use console for VT TTY's (ALT #41521)
+
 * Sun Apr 30 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt13
 - rebuilt with shellcheck 0.9.0
 
