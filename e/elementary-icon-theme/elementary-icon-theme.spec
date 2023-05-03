@@ -1,5 +1,5 @@
 %define _name elementaryicons
-%define ver_major 7.2
+%define ver_major 7.3
 %define rdn_name io.elementary.icons
 %def_disable palettes
 
@@ -50,6 +50,9 @@ and its desktop environment: Pantheon.
 %doc README*
 
 %changelog
+* Wed May 03 2023 Yuri N. Sedunov <aris@altlinux.org> 7.3.0-alt1
+- 7.3.0
+
 * Tue Feb 07 2023 Yuri N. Sedunov <aris@altlinux.org> 7.2.0-alt1
 - 7.2.0
 
