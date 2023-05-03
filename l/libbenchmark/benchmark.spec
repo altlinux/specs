@@ -2,7 +2,7 @@
 
 Name: lib%oname
 Version: 1.7.1
-Release: alt1
+Release: alt1.1
 
 Summary: A library to benchmark code snippets
 
@@ -61,7 +61,11 @@ Requires: lib%oname = %EVR
   -DBENCHMARK_USE_BUNDLED_GTEST:BOOL=OFF \
   -DBENCHMARK_ENABLE_GTEST_TESTS:BOOL=ON \
   -DBENCHMARK_ENABLE_INSTALL:BOOL=ON \
-  -DBENCHMARK_DOWNLOAD_DEPENDENCIES:BOOL=OFF
+  -DBENCHMARK_DOWNLOAD_DEPENDENCIES:BOOL=OFF \
+%ifarch %e2k
+  -DBENCHMARK_ENABLE_WERROR:BOOL=OFF \
+%endif
+  %nil
 %cmake_build
 
 %install
@@ -83,6 +87,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_includedir/*
 
 %changelog
+* Wed May 03 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.7.1-alt1.1
+- e2k: patch update, werror off
+
 * Tue May 02 2023 Alexey Shabalin <shaba@altlinux.org> 1.7.1-alt1
 - new version 1.7.1
 
