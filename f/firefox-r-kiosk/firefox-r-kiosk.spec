@@ -5,7 +5,7 @@
 
 Name: firefox-r-kiosk
 Version: 0.9.0.1
-Release: alt3
+Release: alt4
 
 Summary: Real Kiosk extension for Mozilla Firefox
 
@@ -19,7 +19,6 @@ ExcludeArch: armh
 
 BuildRequires(pre): rpm-build-firefox
 BuildRequires: unzip
-Requires: %firefox_name >= 2.0
 
 %description
 Real Kiosk is a Firefox extension that defaults to full screen,
@@ -57,6 +56,9 @@ if [ "$1" = 0 ]; then [ ! -d "%ciddir" ] || rm -rf "%ciddir"; fi
 %ciddir
 
 %changelog
+* Wed May 03 2023 Andrey Cherepanov <cas@altlinux.org> 0.9.0.1-alt4
+- Remove firefox requirement
+
 * Mon Jan 04 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.0.1-alt3
 - ExcludeArch: armh
 
