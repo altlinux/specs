@@ -5,7 +5,7 @@
 %def_disable bootstrap
 
 Name: python3-module-%oname
-Version: 7.4.2
+Version: 7.4.3
 Release: alt1
 Summary: A set of user interface tools designed to complement Traits
 Group: Development/Python3
@@ -150,6 +150,9 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed May 03 2023 Grigory Ustinov <grenka@altlinux.org> 7.4.3-alt1
+- Automatically updated to 7.4.3.
+
 * Mon Dec 19 2022 Anton Vyatkin <toni@altlinux.org> 7.4.2-alt1
 - new version 7.4.2
 
