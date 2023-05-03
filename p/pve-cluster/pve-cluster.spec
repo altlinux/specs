@@ -3,7 +3,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 7.3.3
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -18,6 +18,7 @@ Patch: %name-%version.patch
 
 Source3: %name.filetrigger
 
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires: pve-common pve-doc-generator libcheck-devel xmlto
 BuildRequires: pve-apiclient pve-access-control
 BuildRequires: pkgconfig(libcpg) pkgconfig(libcpg) pkgconfig(libcmap) pkgconfig(libquorum) pkgconfig(libqb) pkgconfig(glib-2.0) pkgconfig(fuse) pkgconfig(sqlite3) pkgconfig(librrd)
@@ -79,10 +80,10 @@ DAEMON_OPTS=""
 __EOF__
 
 %post
-%post_service %name
+%post_systemd_postponed %name
 
 %preun
-%preun_service %name
+%preun_systemd %name
 
 %pre
 %_sbindir/groupadd -r -f www-data 2>/dev/null ||:
@@ -128,6 +129,9 @@ fi
 %perl_vendor_privlib/PVE/Cluster/Setup.pm
 
 %changelog
+* Wed May 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.3-alt2
+- use %%preun_systemd/%%post_systemd_postponed
+
 * Mon Mar 20 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.3-alt1
 - 7.3-3
 

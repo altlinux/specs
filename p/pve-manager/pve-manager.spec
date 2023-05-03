@@ -7,7 +7,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 License: AGPL-3.0+ AND GPLv3 AND MIT
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -15,6 +15,8 @@ Vcs: git://git.proxmox.com/git/pve-manager.git
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64 aarch64
+
+BuildRequires(pre): rpm-macros-systemd
 
 Requires: cstream lzop zstd wget schedutils gdisk hdparm rsync pciutils
 Requires: perl-LWP-Protocol-https
@@ -85,18 +87,10 @@ rm -f  %buildroot%_man1dir/pvesubscription.1*
 rm -f  %buildroot%_man1dir/pveupgrade.1*
 
 %post
-%post_service pvedaemon
-%post_service pvestatd
-%post_service pveproxy
-%post_service spiceproxy
-%post_service pvescheduler
+%post_systemd_postponed pvedaemon pvestatd pveproxy spiceproxy pvescheduler
 
 %preun
-%preun_service pvedaemon
-%preun_service pveproxy
-%preun_service pvestatd
-%preun_service spiceproxy
-%preun_service pvescheduler
+%preun_systemd pvedaemon pveproxy pvestatd spiceproxy pvescheduler
 
 %files
 %_datadir/doc/%name
@@ -125,6 +119,9 @@ rm -f  %buildroot%_man1dir/pveupgrade.1*
 %_man8dir/*
 
 %changelog
+* Wed May 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt2
+- use %%preun_systemd/%%post_systemd_postponed
+
 * Fri Mar 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt1
 - 7.4-3
 

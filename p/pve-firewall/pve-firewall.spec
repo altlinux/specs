@@ -3,7 +3,7 @@
 Name: pve-firewall
 Summary: Proxmox VE Firewall
 Version: 4.3.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -17,6 +17,7 @@ ExclusiveArch: x86_64 aarch64
 
 Requires: ebtables ipset iptables iptables-ipv6 iproute2 
 
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires: pve-access-control libpve-cluster-perl pve-common pve-cluster pve-doc-generator
 BuildRequires: pkgconfig(libnetfilter_log) pkgconfig(libnetfilter_conntrack) pkgconfig(glib-2.0)
 BuildRequires: perl(IO/Zlib.pm)
@@ -48,11 +49,11 @@ __EOF__
 
 %post
 #%%post_service pve-firewall
-%post_service pvefw-logger
+%post_systemd_postponed pvefw-logger
 
 %preun
 #%%preun_service pve-firewall
-%preun_service pvefw-logger
+%preun_systemd pvefw-logger
 
 %files
 %_tmpfilesdir/%name.conf
@@ -71,6 +72,9 @@ __EOF__
 %_man8dir/*
 
 %changelog
+* Wed May 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.3.1-alt2
+- use %%preun_systemd/%%post_systemd_postponed
+
 * Mon Mar 20 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.3.1-alt1
 - 4.3-1
 

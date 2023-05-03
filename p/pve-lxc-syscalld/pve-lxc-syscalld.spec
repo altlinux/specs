@@ -4,7 +4,7 @@
 Name: pve-lxc-syscalld
 Summary: PVE LXC syscall daemon
 Version: 1.2.2.1
-Release: alt2
+Release: alt3
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -44,10 +44,10 @@ __EOF__
 
 %post
 %tmpfiles_create %_tmpfilesdir/%name.conf
-%post_service %name
+%post_systemd_postponed %name
 
 %preun
-%preun_service %name
+%preun_systemd %name
 
 %files
 %_unitdir/%name.service
@@ -55,6 +55,9 @@ __EOF__
 %_libexecdir/%name/%name
 
 %changelog
+* Wed May 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.2.2.1-alt3
+- use %%preun_systemd/%%post_systemd_postponed
+
 * Thu Dec 22 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.2.1-alt2
 - Add tmpfiles config for create /run/pve.
 - Delete RuntimeDirectory from service unit.

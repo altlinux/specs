@@ -3,8 +3,8 @@
 
 Name: pve-ha-manager
 Summary: Proxmox VE HA Manager
-Version: 3.6.0
-Release: alt2
+Version: 3.6.1
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -18,6 +18,7 @@ Conflicts: watchdog
 
 Requires: libpve-cluster-perl pve-container pve-cluster >= 3.0.17 pve-qemu-server >= 6.0.15
 
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires: pve-access-control libpve-cluster-perl pve-common pve-doc-generator
 BuildRequires: pve-cluster >= 3.0.17
 BuildRequires: libpve-rs-perl >= 0.7.3
@@ -46,12 +47,10 @@ install -m0644 debian/*.service %buildroot%_unitdir/
 install -m0644 debian/pve-ha-manager.default %buildroot%_sysconfdir/sysconfig/pve-ha-manager
 
 %post
-%post_service pve-ha-lrm
-%post_service pve-ha-crm
+%post_systemd_postponed pve-ha-lrm pve-ha-crm
 
 %preun
-%preun_service pve-ha-crm
-%preun_service pve-ha-lrm
+%preun_systemd pve-ha-crm pve-ha-lrm
 
 %files
 %config(noreplace) %_sysconfdir/sysconfig/pve-ha-manager
@@ -71,6 +70,10 @@ install -m0644 debian/pve-ha-manager.default %buildroot%_sysconfdir/sysconfig/pv
 %_datadir/pve-ha-simulator
 
 %changelog
+* Wed May 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.6.1-alt1
+- 3.6-1
+- use %%preun_systemd/%%post_systemd_postponed
+
 * Wed May 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.6.0-alt2
 - add explicit require for pve-qemu-server
 
