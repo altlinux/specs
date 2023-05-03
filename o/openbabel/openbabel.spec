@@ -3,7 +3,7 @@
 
 Name: openbabel
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 %define tag_ver %(echo %version|tr . -)
 
@@ -136,6 +136,9 @@ sed -i 's/dist\(-packages\)/site\1/' scripts/CMakeLists.txt
 %endif
 
 %changelog
+* Wed May 03 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt3
+- NMU: fixed FTBFS.
+
 * Wed Dec 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt2
 - updated to openbabel-3-1-1-73-gf3ed2a9a5
 
