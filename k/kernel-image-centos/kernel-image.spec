@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 303
+%define centos_release 307
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -61,12 +61,11 @@ Group: System/Kernel and hardware
 Url: https://gitlab.com/redhat/centos-stream/src/kernel/centos-stream-9
 
 Source0: %name.tar
-Patch0001: 0001-Fix-build-with-new-pahole-adjust-flags.patch
-Patch0002: 0002-fscache-Convert-fscache_set_page_dirty-to-fscache_di.patch
-Patch0003: 0003-9p-Convert-to-invalidate_folio.patch
-Patch0004: 0004-9p-Convert-from-launder_page-to-launder_folio.patch
-Patch0005: 0005-9p-Convert-to-release_folio.patch
-Patch0006: 0006-Add-sysctl-to-disable-idmapped-mounts.patch
+Patch0001: 0001-fscache-Convert-fscache_set_page_dirty-to-fscache_di.patch
+Patch0002: 0002-9p-Convert-to-invalidate_folio.patch
+Patch0003: 0003-9p-Convert-from-launder_page-to-launder_folio.patch
+Patch0004: 0004-9p-Convert-to-release_folio.patch
+Patch0005: 0005-Add-sysctl-to-disable-idmapped-mounts.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: x86_64 aarch64
@@ -639,6 +638,29 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed May 03 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.307-alt1.el9
+- Updated to kernel-5.14.0-307.el9:
+  + Add support for QoS Features
+  + clk: imx: add i.MX93 clk gate
+  + crypto: jitter - permanent and intermittent health errors
+  + ice: no busy waiting in GNSS thread and for SQ commands
+  + netfilter: netfilter: conntrack: unify established states for SCTP paths
+  + redhat: Rename configs/ark to configs/rhel
+  + tg3: driver update for RHEL-9.3.0
+
+* Wed Apr 26 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.304-alt1.el9
+- Updated to kernel-5.14.0-304.el9 (fixes: CVE-2023-1652):
+  + dm: discard IOs on striped or snap LVs can trigger data corruption
+  + interconnect: imx: driver updates
+  + net/sched: act_tunnel_key: add support for TUNNEL_DONT_FRAGMENT
+  + NFSD: fix use-after-free in nfsd4_ssc_setup_dul()
+  + NFSv4: Fix hangs when recovering open state after a server reboot
+  + perf/x86/intel: Add Cooper Lake stepping to isolation_ucodes[]
+  + rtc: bbnsm: Add the bbnsm rtc support
+  + sched/core: Fix arch_scale_freq_tick() on tickless systems
+  + scsi: ses: A few fixes to prevent from out of bounds accesses
+  + vmxnet3: move rss code block under eop descriptor
+
 * Mon Apr 24 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.303-alt1.el9
 - Updated to kernel-5.14.0-303.el9 (fixes: CVE-2023-26545):
   + arch/x86: Update to 5.16
