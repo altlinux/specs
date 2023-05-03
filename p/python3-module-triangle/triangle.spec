@@ -1,28 +1,27 @@
 %define oname triangle
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2017.04.29
-Release: alt2
+Version: 2022.02.02
+Release: alt1
 
 Summary: Python wrapper for libtriangle
 
-License: LGPL
-Group: Development/Python
-Url: http://dzhelil.info/triangle/
+License: LGPL-3.0
+Group: Development/Python3
+Url: https://rufat.be/triangle/
+Vcs: https://github.com/drufat/triangle.git
 
-# https://github.com/drufat/triangle.git
 Source: %name-%version.tar
-Patch1: %oname-alt-docs.patch
-Patch2: %oname-alt-reqs.patch
-
-#BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: libtriangle-devel
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-Cython libnumpy-py3-devel
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-notebook python3-module-numpy-testing
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 Python Triangle is a python wrapper around Jonathan Richard Shewchuk's
@@ -31,29 +30,26 @@ library.
 
 %prep
 %setup
-%patch1 -p1
-
-#prepare_sphinx3 .
-#ln -s ../objects.inv doc/
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%if_with python3
-python3 setup.py build_ext -i
-nosetests3 -v
-%endif
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -v tests
 
 %files
-%doc *.rst
+%doc *.rst LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 03 2023 Anton Vyatkin <toni@altlinux.org> 2022.02.02-alt1
+- New version 2022.02.02
+
 * Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2017.04.29-alt2
 - build python3 module
 
