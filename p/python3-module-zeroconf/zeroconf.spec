@@ -1,8 +1,8 @@
 Name: python3-module-zeroconf
-Version: 0.47.3
+Version: 0.60.0
 Release: alt1
 
-Summary: Pure Python Multicast DNS Service Discovery Library
+Summary: Python Multicast DNS Service Discovery Library
 License: LGPLv2
 Group: Development/Python
 Url: https://pypi.org/project/zeroconf/
@@ -13,6 +13,12 @@ BuildRequires: rpm-build-python3
 BuildRequires: python3(poetry-core)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(cython)
+
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-cov)
+BuildRequires: python3(pytest-asyncio)
+BuildRequires: python3(pytest_timeout)
+BuildRequires: python3(ifaddr)
 
 %description
 This is fork of pyzeroconf, Multicast DNS Service Discovery for Python,
@@ -28,11 +34,17 @@ modified by William McBrine (https://github.com/wmcbrine/pyzeroconf).
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest ||:
+
 %files
 %python3_sitelibdir/zeroconf
 %python3_sitelibdir/zeroconf-%version.dist-info
 
 %changelog
+* Wed May 03 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.60.0-alt1
+- 0.60.0 released
+
 * Mon Mar 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.47.3-alt1
 - 0.43.1 released
 
