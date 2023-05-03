@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.3.15
+Version: 0.3.16
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -100,6 +100,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Tue May 02 2023 Anton Midyukov <antohami@altlinux.org> 0.3.16-alt1
+- Fix vnc support when lightdm on videocardless computers (Closes: 46028)
+
 * Thu Feb 16 2023 Anton Midyukov <antohami@altlinux.org> 0.3.15-alt1
 - setup.service: wait for network-online.target to complete
 
