@@ -1,13 +1,14 @@
 Name: libgflags
 Summary: A commandline flags library that allows for distributed flags
 Version: 2.2.2
-Release: alt2
+Release: alt3
 Group: System/Libraries
 Url: http://gflags.github.io/gflags/
 License: BSD
 
 Source: v%version.tar
 Patch1: gflags-fix_pkgconfig.patch
+Patch2: gflags-2.2.2-alt-fix-install_prefix_rel2config_dir.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake ctest
@@ -30,6 +31,7 @@ files for developing applications that use the %name package.
 %prep
 %setup -n gflags-%version
 %patch1 -p1
+%patch2 -p2
 
 mv BUILD BUILD.txt
 
@@ -44,10 +46,6 @@ mv BUILD BUILD.txt
 
 %install
 %cmake_install
-
-# remove cmake files
-# they are broken, due to that can't build blender with this library on aarch64/ppc64le arches
-#rm -rf %buildroot%_libdir/cmake
 
 %check
 %ctest
@@ -65,6 +63,10 @@ mv BUILD BUILD.txt
 %_libdir/cmake/*
 
 %changelog
+* Wed May 03 2023 Egor Ignatov <egori@altlinux.org> 2.2.2-alt3
+- fix cmake files
+  + add gflags-2.2.2-alt-fix-install_prefix_rel2config_dir patch
+
 * Thu Apr 20 2023 Alexey Shabalin <shaba@altlinux.org> 2.2.2-alt2
 - package cmake files.
 - fix pkgconfig file.
