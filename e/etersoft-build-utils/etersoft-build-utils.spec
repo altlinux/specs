@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue May 02 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- gitask find: improve output dates
+- implement gitery support and git host detection
+- rpmgp: use gita for find packages in the repo
+- fix set_gear_host()
+
 * Mon May 01 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
 - gitask: improve description
 - myhsh: add -e for fast build after -l (lazy cleanup)
