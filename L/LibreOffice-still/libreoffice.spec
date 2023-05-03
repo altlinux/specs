@@ -1,10 +1,9 @@
 # Get Source0-3 from http://download.documentfoundation.org/libreoffice/src/$ver/
 # Get Source10 (with selected components) from https://dev-www.libreoffice.org/src/
-%def_without forky
 %def_without python
 %def_with parallelism
 %def_without fetch
-%def_without lto
+%def_enable lto
 %def_with dconf
 %def_with mdds
 %def_with orcus
@@ -12,7 +11,8 @@
 %def_without zxing
 
 # enable kde5 UI
-%def_enable kde5
+# /usr/src/RPM/BUILD/libreoffice-7.4.6.2/vcl/qt5/QtInstance.cxx:443:51: error: invalid initialization of reference of type 'const drawinglayer::primitive2d::Primitive2DReference&' {aka 'const rtl::Reference<drawinglayer::primitive2d::BasePrimitive2D>&'} from expression of type 'const com::sun::star::uno::Reference<com::sun::star::graphic::XPrimitive2D>'
+%def_disable kde5
 
 %ifarch mipsel
 %def_without java
@@ -27,14 +27,14 @@
 %def_disable mergelibs
 
 Name: LibreOffice-still
-%define hversion 7.3
-%define urelease 7.2
+%define hversion 7.4
+%define urelease 6.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -69,7 +69,6 @@ Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
 
 Source10: libreoffice-ext_sources.%version.tar
-Source100: forky.c
 Source200: key.gpg
 Source300: libreoffice.unused
 
@@ -82,21 +81,8 @@ Source401: libreoffice-icons-symbolic.tar
 Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
 Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-Patch4: FC-0001-fix-detecting-qrcodegen.patch
-Patch5: FC-0001-rhbz-1918152-fix-FTBFS.patch
-Patch6: FC-0001-Get-rid-of-apache-commons-logging.patch
-Patch7: FC-0001-Adapt-to-libstdc-Implement-LWG-1203-for-rvalue-iostr.patch
-Patch8: FC-0001-Adapt-to-hamcrest-2.2-3.fc35.noarch.rpm.patch
-Patch9: FC-0001-gtk3-workaround-missing-gdk_threads_enter-calls-in-e.patch
-Patch10: FC-0001-Replace-inet_ntoa-with-inet_ntop.patch
-Patch11: FC-0001-Simplify-construction-of-a-hardcoded-IPv4-address.patch
-Patch12: FC-0001-dtd-files-are-not-xml-files-and-shouldn-t-have-xml-h.patch
-Patch13: FC-0002-xmllint-Namespace-prefix-menu-on-menuseparator-is-no.patch
-Patch14: FC-0001-allow-system-firebird-4.patch
-Patch15: FC-0001-Remove-unused-DOCTYPE-from-odk-examples-xcu-file.patch
-Patch16: FC-0001-math.desktop-include-Spreadsheet-category.patch
-Patch17: FC-0001-add-missing-xmlns-loext-to-example_sl-SI.xml.patch
-Patch18: FC-0001-disable-libe-book-support.patch
+Patch4: FC-0001-Revert-tdf-101630-gdrive-support-w-oAuth-and-Drive-A.patch
+Patch5: FC-0001-disable-libe-book-support.patch
 
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
@@ -105,14 +91,22 @@ Patch403: alt-004-shortint.patch
 Patch404: alt-006-unversioned-desktop-files.patch
 Patch405: alt-008-mkdir-for-external-project.patch
 Patch406: alt-009-fix-appdata.patch
+Patch410: alt-005-svg-icons-1.patch
+Patch411: alt-006-svg-icons-2.patch
+Patch412: alt-007-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
 %add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
-%add_findprov_skiplist %_libdir/liblibreofficekitgtk.so
-%add_python3_path %_libdir/%name/sdk/examples/python/
+%add_findreq_skiplist %lodir/sdk/classes
+%add_findreq_skiplist %lodir/sdk/docs
+%add_findreq_skiplist %lodir/sdk/idl
+%add_findreq_skiplist %lodir/sdk/include
+%filter_from_requires /com[.]sun[.]/d
+%add_python3_req_skip pyuno strings
+
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
@@ -186,6 +180,8 @@ BuildRequires: libzxing-cpp-devel
 BuildRequires: libcuckoo-devel
 BuildRequires: libopenjpeg2.0-devel
 BuildRequires: libabseil-cpp-devel
+# 7.4
+BuildRequires: libwebp-devel libtiff-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -346,17 +342,15 @@ Provides additional %{langname} translations and resources for %name. \
 %{nil}
 
 %prep
-%if_with forky
-echo Using forky
-%else
 echo Direct build
-%endif
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
 
 ## FC apply patches
-%patch1 -p1
+#patch1 -p1                                                                                                                                                                                   
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+#patch5 -p1
 
 ## ALT apply patches
 %patch401 -p0
@@ -365,6 +359,9 @@ echo Direct build
 %patch404 -p1
 %patch405 -p1
 %patch406 -p1
+%patch410 -p1
+%patch411 -p1
+%patch412 -p1
 
 %patch500 -p0
 
@@ -392,8 +389,6 @@ sed -i 's/libodbc.so.1/libodbc.so.2/g' connectivity/source/drivers/odbc/OFunctio
 
 rm -fr %name-tnslations/git-hooks
 
-install -D %SOURCE100 forky.c
-
 # create shell wrappers
 for n in office writer impress calc base draw math qstart; do
 	oname=lo$n
@@ -417,16 +412,22 @@ sed -i '/# STAR_PROFILE_LOCKING_DISABLED/i\
 test -r %conffile && . %conffile ||:
 /# STAR_PROFILE_LOCKING_DISABLED/,/#.*JITC_PROCESSOR_TYPE_EXPORT/d' desktop/scripts/soffice.sh
 
+# Put Python3 shebang
+subst '1i#!/usr/bin/python3' odk/examples/python/toolpanel/toolpanel.py
+
 %build
 export CC=%_target_platform-gcc
 export CXX=%_target_platform-g++
 %ifarch mipsel
-export CFLAGS="-Os --param ggc-min-expand=20 --param ggc-min-heapsize=32768 -g0"
+export CFLAGS="-Os --param ggc-min-expand=20 --param ggc-min-heapsize=32768 -g1"
 export CXXFLAGS="$CFLAGS"
 %else
 export CFLAGS="-fPIC"
 export CXXFLAGS="$CFLAGS"
 %endif
+
+# XXX no "thin" LTO option in GCC!
+sed -i 's/-flto=thin/-flto=jobserver/g' solenv/gbuild/platform/com_GCC_defs.mk
 
 PARALLEL=$(nproc)
 %ifarch ppc64le
@@ -436,102 +437,84 @@ if [ "$PARALLEL" -gt 24 ] ; then
 fi
 %endif
 
+export ac_cv_prog_LO_CLANG_CXX=""
+export ac_cv_prog_LO_CLANG_CC=""
 ./autogen.sh \
-	--prefix=%_prefix \
-	--libdir=%_libdir \
-	--disable-lto \
+        --prefix=%_prefix \
+        --libdir=%_libdir \
+        %{subst_enable lto} \
         --with-vendor="ALT Linux Team" \
-        --without-system-poppler \
         %{?_without_mdds:--without-system-mdds } \
         %{?_without_orcus:--without-system-orcus } \
         %{?_without_zxing:--without-system-zxing } \
         %{subst_enable mergelibs} \
         --enable-odk \
-	--disable-firebird-sdbc \
-	--disable-coinmp \
+        --disable-firebird-sdbc \
+        --disable-coinmp \
         --enable-dbus \
         --enable-evolution2 \
         --enable-gio \
-	--enable-build-opensymbol \
-	--enable-avahi \
+        --enable-build-opensymbol \
+        --enable-avahi \
         %{subst_with java} \
         --without-fonts \
         --without-myspell-dicts \
         --without-doxygen \
-	\
+        --without-system-poppler \
+        --without-system-dragonbox \
+        --without-system-libfixmath \
+        \
         --with-external-dict-dir=%_datadir/myspell \
         --with-external-hyph-dir=%_datadir/hyphen \
         --with-external-thes-dir=%_datadir/mythes \
         --with-lang="en-US %with_lang" \
         --with-external-tar=`pwd`/ext_sources \
-	\
-	--enable-ext-nlpsolver \
-	--enable-ext-numbertext \
-	--enable-ext-wiki-publisher \
-	--enable-ext-ct2n \
-	--enable-ext-languagetool \
+        \
+        --enable-ext-nlpsolver \
+        --enable-ext-numbertext \
+        --enable-ext-wiki-publisher \
   \
-	--enable-release-build \
-	--with-help \
+        --enable-release-build \
+        --with-help \
   \
         %{subst_enable qt5} \
-	--enable-gtk3 \
-	--enable-cipher-openssl-backend \
+        --enable-gtk3 \
+        --enable-cipher-openssl-backend \
 %if_enabled kde5
         --enable-gtk3-kde5 \
 %endif
-%if_with lto
-  	--enable-lto \
-%endif
 %if_with parallelism
-	--with-parallelism="$PARALLEL" \
+        --with-parallelism="$PARALLEL" \
 %else   
         --without-parallelism \
 %endif
 %if_with python
-	--enable-python=internal \
+        --enable-python=internal \
 %endif
 %if_with dconf
-	--enable-dconf \
+        --enable-dconf \
 %endif
-	--enable-eot \
+        --enable-introspection \
+        --enable-cipher-openssl-backend \
+        --enable-eot \
+        --enable-formula-logger \
 %if_with fetch
-	--enable-fetch-external
+        --enable-fetch-external
 %else
-	--with-system-libs \
-	--disable-fetch-external
-%endif
-
-%if_with forky
-# Make forky
-gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so -ldl
+        --with-system-libs \
+        --disable-fetch-external
 %endif
 
 %make bootstrap
 
 %if_with parallelism
-export _JAVA_OPTIONS="-XX:ParallelGCThreads=2 $_JAVA_OPTIONS"
+export _JAVA_OPTIONS="-XX:ParallelGCThreads=4 $_JAVA_OPTIONS"
 %endif
 
-%if_with forky
-# TODO prefect forky_max tune
-echo Using forky
-export forky_divider=21
-export forky_max_procs=`awk '/^Max processes/{print int(5*$3/'$forky_divider')}' < /proc/self/limits`
-export forky_max_rss=6400000
-export forky_max_vsz=9600000
-export forky_verbose=1
-echo "max_procs $forky_max_procs / max_vsz $forky_max_vsz / max_rss $forky_max_rss" | tee $HOME/forky.log
-export LD_PRELOAD=`pwd`/forky.so
-
-%make build-nocheck || { tail -100 $HOME/forky.log; head -1 $HOME/forky.log; wc $HOME/forky.log; false; }
-test -r $HOME/forky.log && echo "Fork() was `wc -l $HOME/forky.log` times delayed" || :
-%else
-%make build-nocheck
-%endif
+%make build AR=/usr/bin/ar verbose=true
 
 # Generate typelib files
-## TODO use stuff generated here
+## TODO us
 export DESTDIR=../output
 export KDEMAINDIR=/usr
 export GNOMEDIR=/usr
@@ -716,6 +699,12 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sun Mar 26 2023 Andrey Cherepanov <cas@altlinux.org> 7.4.6.2-alt1
+- New version.
+
+* Thu Feb 02 2023 Andrey Cherepanov <cas@altlinux.org> 7.4.5.1-alt1
+- New version.
+
 * Tue Dec 06 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.7.2-alt2
 - Required spell dictionary for langpack (ALT #42242).
 

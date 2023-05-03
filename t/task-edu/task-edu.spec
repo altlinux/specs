@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.5.9
-Release: alt8
+Release: alt9
 License: GPL-3.0+
 URL:     https://www.altlinux.org/Education
 Group:   Education
@@ -404,7 +404,7 @@ Requires: kde5-printing
 Requires: kde5-scanning
 Requires: kde5-connect
 %ifnarch armh
-Requires: %{lo_name}-kde5
+#Requires: %{lo_name}-kde5
 %endif
 %ifnarch %e2k ppc64le
 Requires: nextcloud-client-kde5
@@ -558,6 +558,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed May 03 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt9
+- Temporary remove LibreOffice-still-kde5.
+
 * Thu Mar 30 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt8
 - Do not require qt-creator for i586 and armh.
 
