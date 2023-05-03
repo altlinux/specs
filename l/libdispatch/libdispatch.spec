@@ -2,7 +2,7 @@
 
 Name: libdispatch
 Version: 5.7.3
-Release: alt1
+Release: alt2
 
 Summary: Apple's Grand Central Dispatch library
 
@@ -31,8 +31,7 @@ BuildRequires: chrpath
 BuildRequires: ctest
 %endif
 
-# [armh]     clang: error: unable to execute command: Segmentation fault
-ExcludeArch: armh ppc64le
+ExcludeArch: ppc64le
 
 Provides:      libBlocksRuntime = %EVR
 Obsoletes:     libBlocksRuntime < 7.0.0
@@ -40,7 +39,9 @@ Obsoletes:     libBlocksRuntime < 7.0.0
 # due Block.h
 Conflicts: libgnustep-objc2-devel < 2.1-alt3
 
-#define optflags_lto -flto=thin
+%ifarch armh
+%define optflags_lto %nil
+%endif
 
 %description
 Grand Central Dispatch (GCD or libdispatch) provides
@@ -101,6 +102,9 @@ chrpath --delete %buildroot%_libdir/libdispatch.so
 %_includedir/os/
 
 %changelog
+* Fri Apr 28 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.7.3-alt2
+- rebuilt for arm
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 5.7.3-alt1
 - new version 5.7.3 (with rpmrb script)
 

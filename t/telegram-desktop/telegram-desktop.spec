@@ -19,7 +19,7 @@
 
 Name: telegram-desktop
 Version: 4.3.1
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -35,9 +35,8 @@ Patch2: telegram-desktop-set-native-window-frame.patch
 Patch5: telegram-desktop-fix-missed-cstdint.patch
 Patch6: telegram-desktop-disabled-icon-checkbox.patch
 
-# [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
-# aarch64: see remove_target_sources ARM neon in https://github.com/desktop-app/tg_owt/blob/master/cmake/libyuv.cmake
-ExcludeArch: armh ppc64le aarch64
+# lacks few build deps, still
+ExcludeArch: ppc64le
 
 # Check https://github.com/EasyCoding/tgbuild for patches
 
@@ -318,6 +317,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Fri Apr 28 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.3.1-alt2
+- rebuilt on arm arches
+
 * Wed Nov 23 2022 Vitaly Lipatov <lav@altlinux.ru> 4.3.1-alt1
 - new version 4.3.1 (with rpmrb script)
 - switched to glibmm-2.68

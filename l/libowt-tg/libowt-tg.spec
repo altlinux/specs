@@ -1,15 +1,6 @@
-# FIXME:
-# on aarch64 missed libs during linking:
-# ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021110214ascii_internal13kPropertyBitsE
-# ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021110220StartsWithIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_
-# ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021110215AsciiStrToLowerEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
-# ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021110216EqualsIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_
-# ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021110213base_internal18ThrowStdOutOfRangeEPKc
-%def_without internal_absl
-
 Name: libowt-tg
 Version: 4.3.0.7
-Release: alt1
+Release: alt2
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -30,9 +21,6 @@ Patch7: 0001-add-missed-cstdint.patch
 
 Patch2000: %name-e2k.patch
 
-# skip aarch64 (see errors in the top of the spec)
-ExcludeArch: armh ppc64le aarch64
-
 BuildRequires: libalsa-devel
 BuildRequires: libXtst-devel libXcomposite-devel libXdamage-devel libXrender-devel libXrandr-devel
 BuildRequires: libavformat-devel libswresample-devel libswscale-devel
@@ -42,9 +30,6 @@ BuildRequires: libgio-devel
 
 # instead of third party
 # supported: absl openh264 usrsctp vpx pipewire srtp yuv (used if detected)
-%if_without internal_absl
-BuildRequires: libabseil-cpp-devel >= 20211102.0
-%endif
 BuildRequires: libopenh264-devel
 #BuildRequires: libusrsctp-devel
 BuildRequires: libvpx-devel >= 1.10.0
@@ -118,10 +103,11 @@ rm -rfv src/base/android/
 # stop using direct path lib libyuv headers (TODO: move to the libyuv patch?)
 find -type f -name "*.cc" | xargs subst 's|third_party/libyuv/include/||'
 
+# not used, pulls in excessive deps
+sed -i '/absl\/strings\/cord.cc/d' cmake/libabsl.cmake
+
 %build
-%ifarch %ix86 x86_64 %arm
-export CFLAGS="$RPM_OPT_FLAGS -fPIC"
-%endif
+export CFLAGS="$RPM_OPT_FLAGS"
 %cmake_insource \
           -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DBUILD_SHARED_LIBS:BOOL=ON \
@@ -156,6 +142,9 @@ rm -rfv %buildroot%_includedir/tg_owt/third_party/{yasm,pffft,rnnoise}
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Thu Apr 27 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.3.0.7-alt2
+- rebuilt on all arches
+
 * Wed Jun 15 2022 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.7-alt1
 - new version (4.3.0.7) with rpmgs script
 - build from git 10d5f4bf77333ef6b43516f90d2ce13273255f41
