@@ -26,7 +26,7 @@
 %def_disable shell_access
 %def_disable realms
 %def_enable fpm
-%def_disable pcreposix
+%def_enable pcre2posix
 %def_disable cumulus
 %def_disable datacenter
 %def_disable protobuf
@@ -36,7 +36,7 @@
 %def_disable dp_dpdk
 
 Name: frr
-Version: 8.4.2
+Version: 8.5.1
 Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -65,7 +65,7 @@ BuildRequires: makeinfo
 %{?_enable_scripting:BuildRequires: liblua5.3-devel}
 %{?_enable_snmp:BuildRequires: libnet-snmp-devel}
 %{?_with_libpam:BuildRequires: libpam-devel}
-%{?_enable_pcreposix:BuildRequires: libpcre-devel}
+%{?_enable_pcre2posix:BuildRequires: libpcre2-devel}
 %{?_enable_config_rollbacks:BuildRequires: pkgconfig(sqlite3)}
 %{?_enable_grpc:BuildRequires: pkgconfig(grpc) >= 6.0.0 pkgconfig(grpc++) >= 1.16.1 pkgconfig(protobuf) >= 3.6.1 /usr/bin/protoc}
 %{?_enable_zeromq:BuildRequires: pkgconfig(libzmq) >= 4.0.0}
@@ -124,7 +124,7 @@ FRRouting is a fork of Quagga.
     %{?_enable_shell_access:--enable-shell-access} \
     %{subst_enable realms} \
     %{subst_enable fpm} \
-    %{subst_enable pcreposix} \
+    %{subst_enable pcre2posix} \
     %{subst_enable cumulus} \
     %{subst_enable datacenter} \
     %{subst_enable protobuf} \
@@ -156,8 +156,7 @@ install -p -D -m 644 %SOURCE1 %buildroot%_tmpfilesdir/%name.conf
 sed -e "s|@frr_statedir@|%frr_statedir|g" -i %buildroot%_tmpfilesdir/%name.conf
 install -p -D -m 644 tools/etc/frr/daemons %buildroot%_sysconfdir/%name/daemons
 install -p -D -m 644 tools/frr.service %buildroot%_unitdir/%name.service
-
-install -p -D -m 644 redhat/frr.logrotate %buildroot%_logrotatedir/%name
+install -p -D -m 644 tools/etc/logrotate.d/frr %buildroot%_logrotatedir/%name
 install -p -D -m 644 redhat/frr.pam %buildroot%_sysconfdir/pam.d/%name
 
 rm -f %buildroot%frr_daemondir/ssd
@@ -236,6 +235,9 @@ fi
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Wed May 03 2023 Alexey Shabalin <shaba@altlinux.org> 8.5.1-alt1
+- 8.5.1
+
 * Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 8.4.2-alt1
 - 8.4.2
 
