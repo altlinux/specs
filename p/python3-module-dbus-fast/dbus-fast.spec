@@ -1,5 +1,5 @@
 Name: python3-module-dbus-fast
-Version: 1.84.1
+Version: 1.85.0
 Release: alt1
 
 Summary: Python library for DBus
@@ -8,11 +8,11 @@ Group: Development/Python
 Url: https://pypi.org/project/sensor-state-data
 
 Source0: %name-%version-%release.tar
+Source1: pyproject_deps.json
 
-BuildRequires: rpm-build-python3
-BuildRequires: python3(poetry-core)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(cython)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+BuildRequires: python3(pytest)
 
 %description
 %summary
@@ -21,6 +21,7 @@ BuildRequires: python3(cython)
 %setup
 
 %build
+%pyproject_deps_resync_build
 %pyproject_build
 
 %install
@@ -31,6 +32,9 @@ BuildRequires: python3(cython)
 %python3_sitelibdir/dbus_fast-%version.dist-info
 
 %changelog
+* Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.85.0-alt1
+- 1.85.0 released
+
 * Mon Mar 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.84.1-alt1
 - 1.84.1 released
 
