@@ -1,6 +1,6 @@
 Name: zsh
-Version: 5.8.1
-Release: alt2
+Version: 5.9
+Release: alt1
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -10,17 +10,10 @@ Group: Shells
 Url: http://www.zsh.org
 Source: %name-%version.tar
 Patch: zsh-%version-%release.patch
-# present on master branch
-Patch1: 47867-promptinit-typo-RPOMPT-RPROMPT.patch
-# present on master branch
-Patch2: 47868-promptinit-Fix-prompt-cleanups.patch
-# present on master branch
-Patch3: 47918-completions-for-nsenter-and-unshare.patch
-# present on master branch
-Patch4: 47323-_rpmbuild-Complete-file-arguments-after-r-b-t.patch
 Patch5: alt-packaging-0001-compaudit-fix-zsh-executable-discovery-if-proc-missing.patch
 
 Patch101: alt-rpm-0001-_rpm-complete-q-lastchange.patch
+Patch102: alt-rpm-0002-_rpm-optionally-complete-rpm-ba-and-similar.patch
 
 Provides: zsh-doc = %epoch:%version
 Obsoletes: zsh-doc < %epoch:%version
@@ -30,7 +23,10 @@ Obsoletes: zsh-doc < %epoch:%version
 BuildRequires: libcap-devel libgdbm-devel libncursesw-devel libpcre-devel man yodl makeinfo
 
 # For make check
-BuildPreReq: /dev/pts
+BuildRequires(pre): /dev/pts
+# For the egrep progs in %%check.
+BuildRequires(pre): /proc
+BuildRequires: psmisc
 
 %description
 Zsh is a UNIX command interpreter (shell) usable as an interactive
@@ -43,12 +39,9 @@ mechanism, and a lots of other features.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch101 -p1
+%patch102 -p1
 rm config.guess config.sub
 
 %build
@@ -126,15 +119,26 @@ rm -f %buildroot%_datadir/zsh/Completion/Linux/_rpmbuild
 mkdir -p %_tmppath/progs
 cat >%_tmppath/progs/egrep <<EOF
 #!/bin/sh -e
+[ -d /proc/\$\$ ] && pstree -Upsa \$\$ >>%_tmppath/progs/log-egrep-calls
 exec grep -E "\$@"
 EOF
 chmod +x %_tmppath/progs/egrep
 cat >%_tmppath/progs/fgrep <<EOF
 #!/bin/sh -e
+[ -d /proc/\$\$ ] && pstree -Upsa \$\$ >>%_tmppath/progs/log-fgrep-calls
 exec grep -F "\$@"
 EOF
 chmod +x %_tmppath/progs/fgrep
 PATH="%_tmppath/progs:$PATH" make check
+
+if [ -r %_tmppath/progs/log-egrep-calls ]; then
+echo '-- `make check` has called egrep the following amount of times:'
+cat %_tmppath/progs/log-egrep-calls
+fi
+if [ -r %_tmppath/progs/log-fgrep-calls ]; then
+echo '-- `make check` has called fgrep the following amount of times:'
+cat %_tmppath/progs/log-fgrep-calls
+fi
 
 %files
 /bin/zsh
@@ -148,6 +152,11 @@ PATH="%_tmppath/progs:$PATH" make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Wed Apr 26 2023 Arseny Maslennikov <arseny@altlinux.org> 1:5.9-alt1
+- 5.8.1 -> 5.9.
+- New patch:
+  + _rpm: optionally complete `rpm -ba` and similar
+
 * Sat Jun 18 2022 Arseny Maslennikov <arseny@altlinux.org> 1:5.8.1-alt2
 - Fixed ftbfs (egrep/fgrep warnings in test suite).
 
