@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230418
+Version: 20230502
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,21 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu May 04 2023 Cronbuild Service <cronbuild@altlinux.org> 20230502-alt1
+- upstream changes (GIT 312c61f5):
+  + amdgpu: update DCN 3.1.6 DMCUB firmware (thx Alex Deucher)
+  + rtl_bt: Update RTL8852B BT USB firmware to 0xDBC6_B20F (thx Hilda Wu)
+  + rtl_bt: Update RTL8761B BT USB firmware to 0xDFC6_D922 (thx Hilda Wu)
+  + rtl_bt: Update RTL8761B BT UART firmware to 0x9DC6_D922 (thx Hilda Wu)
+  + rtl_nic: update firmware of USB devices (thx Hayes Wang)
+  + Update firmware file for Intel Bluetooth AX200 (thx Aniket Sahu)
+  + Update firmware file for Intel Bluetooth AX201 (thx Aniket Sahu)
+  + Update firmware file for Intel Bluetooth AX203 (thx Aniket Sahu)
+  + Update firmware file for Intel Bluetooth AX211 (thx Aniket Sahu)
+  + Update firmware file for Intel Bluetooth AX210 (thx Aniket Sahu)
+  + update firmware for MT7981 (thx Shayne Chen)
+  + qca: Update firmware files for BT chip WCN6750 (thx sampnimm)
+
 * Wed Apr 19 2023 Cronbuild Service <cronbuild@altlinux.org> 20230418-alt1
 - upstream changes (GIT 8451c2b1):
   + mt76xx: Move the old Mediatek WiFi firmware to mediatek (thx Peter Robinson)
