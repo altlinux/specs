@@ -1,5 +1,5 @@
 Name: python3-module-transmission-rpc
-Version: 3.4.0
+Version: 4.1.5
 Release: alt1
 
 Summary: Transmission JSON RPC wrapper
@@ -8,16 +8,18 @@ Group: Development/Python
 Url: https://pypi.org/project/transmission-rpc
 
 Source0: %name-%version-%release.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(poetry-core)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
 
 %build
 %pyproject_build
@@ -30,5 +32,8 @@ BuildRequires: python3(poetry-core)
 %python3_sitelibdir/transmission_rpc-%version.dist-info
 
 %changelog
+* Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.1.5-alt1
+- 4.1.5 released
+
 * Mon Jan 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.4.0-alt1
 - 3.4.0 released
