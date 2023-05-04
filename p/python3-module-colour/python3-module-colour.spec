@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.1.5
-Release: alt4
+Release: alt4.1
 
 Summary: Python module to convert and manipulate various color representations
 Group: Development/Python3
@@ -18,7 +18,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
-%{?_enable_check:BuildRequires: python3-module-nose python3-module-coverage}
+%{?_enable_check:BuildRequires: python3-module-pytest python3-module-coverage}
 
 %description
 This Python module defines several color formats that can be converted to
@@ -36,7 +36,7 @@ rm -r %pypi_name.egg-info
 %pyproject_install
 
 %check
-nosetests-3
+%pyproject_run_pytest --doctest-modules
 
 %files
 %python3_sitelibdir_noarch/%pypi_name.py
@@ -45,6 +45,9 @@ nosetests-3
 %doc README.rst LICENSE CHANGELOG.rst
 
 %changelog
+* Thu May 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt4.1
+- removed python3-module-nose from BR (ALT #46062)
+
 * Thu Jul 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt4
 - ported to %%pyproject* macros, fixed BR
 

@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.2.3
-Release: alt1
+Release: alt1.1
 
 Summary: Better dates & times for Python
 License: Apache-2.0
@@ -20,7 +20,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
-BuildRequires: python3-module-dateutil python3-module-nose
+BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-chai
 BuildRequires: python3-module-simplejson
 BuildRequires: python3-module-mock python3-module-dateparser >= 0.7.2
@@ -64,6 +64,9 @@ cp -fR docs/_build/html/* man/
 %{?_enable_docs: man/}
 
 %changelog
+* Thu May 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1.1
+- removed python3-module-nose from BR (ALT #46063)
+
 * Sun Sep 04 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - 1.2.3
 - ported to %%pyproject* macros

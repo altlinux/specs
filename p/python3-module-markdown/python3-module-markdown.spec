@@ -7,7 +7,7 @@
 
 Name: python3-module-%modname
 Version: 3.4.3
-Release: alt1
+Release: alt1.1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
 Group: Development/Python3
@@ -32,7 +32,7 @@ Requires: python3-module-importlib-metadata >= %metadata_ver
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3(wheel)
 BuildRequires: python3-module-yaml
-BuildRequires: python3-module-nose python3-module-coverage
+BuildRequires: python3-module-coverage
 BuildRequires: python3-module-Pygments
 BuildRequires: python3-module-importlib-metadata >= %metadata_ver
 %{?_enable_check:BuildRequires: python3(tox)}
@@ -76,6 +76,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Thu May 04 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1.1
+- removed python3-module-nose from BR (ALT #46065)
+
 * Thu Mar 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
 - 3.4.3
 - ported to %%pyproject* macros
