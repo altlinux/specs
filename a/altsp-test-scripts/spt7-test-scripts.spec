@@ -1,16 +1,16 @@
 Name: altsp-test-scripts
 Version: 1.1
-Release: alt4
+Release: alt5
 
-Summary: Test scripts for SPT7 distro
-License: GPL
+Summary: Test scripts for SP distros
+License: GPLv2+
 Group: System/Configuration/Other
 Source: %name-%version.tar
 Provides: spt7-test-scripts
 Obsoletes: spt7-test-scripts
 
 %description
-Test scripts for SPT7 distro
+Test scripts for SP distros
 
 %prep
 %setup
@@ -36,6 +36,9 @@ cp sysconfig-s_rm %buildroot/etc/sysconfig/s_rm
 /etc/sysconfig/*
 
 %changelog
+* Mon Apr 17 2023 Denis Medvedev <nbr@altlinux.org> 1.1-alt5
+- added script for a test of clearing of freed memory
+
 * Mon Jul 29 2019 Denis Medvedev <nbr@altlinux.org> 1.1-alt4
 - tests moved to /opt
 
