@@ -1,8 +1,6 @@
 Name: python3-module-uvicorn
-Version: 0.20.0
+Version: 0.22.0
 Release: alt1
-
-%def_with check
 
 Summary: An ASGI web server, for Python
 License: BSD-3-Clause
@@ -10,14 +8,12 @@ Group: Development/Python
 Url: https://pypi.org/project/uvicorn/
 
 Source0: %name-%version-%release.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(hatchling)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
-%if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-mock)
 BuildRequires: python3(click)
@@ -33,7 +29,7 @@ BuildRequires: python3(watchfiles)
 BuildRequires: python3(watchgod)
 BuildRequires: python3(httptools)
 BuildRequires: python3(dotenv)
-%endif
+BuildRequires: python3(a2wsgi)
 
 %description
 Uvicorn is an ASGI web server implementation for Python.
@@ -47,6 +43,7 @@ Uvicorn supports HTTP/1.1 and WebSockets.
 
 %prep
 %setup
+%pyproject_deps_resync_build
 
 %build
 %pyproject_build
@@ -55,8 +52,7 @@ Uvicorn supports HTTP/1.1 and WebSockets.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest tests
 
 %files
 %_bindir/uvicorn
@@ -64,6 +60,9 @@ Uvicorn supports HTTP/1.1 and WebSockets.
 %python3_sitelibdir/uvicorn-%version.dist-info
 
 %changelog
+* Wed May 03 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.22.0-alt1
+- 0.22.0 released
+
 * Wed Jan 25 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.20.0-alt1
 - 0.20.0 released
 
