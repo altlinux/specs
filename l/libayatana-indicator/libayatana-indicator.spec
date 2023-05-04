@@ -1,8 +1,9 @@
 %define sover 7
+%def_with gtk2
 
 Name: libayatana-indicator
 Version: 0.9.1
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator Display Objects
 License: GPLv3
@@ -14,38 +15,13 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 # https://github.com/AyatanaIndicators/%name/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): at-spi2-atk-devel
-BuildRequires(pre): bzlib-devel
-BuildRequires(pre): libXdmcp-devel
-BuildRequires(pre): libXcomposite-devel
-BuildRequires(pre): libXcursor-devel
-BuildRequires(pre): libXdamage-devel
-BuildRequires(pre): libXi-devel
-BuildRequires(pre): libXinerama-devel
-BuildRequires(pre): libXrandr-devel
-BuildRequires(pre): libXtst-devel
-BuildRequires(pre): libat-spi2-core-devel
-BuildRequires(pre): libblkid-devel
-BuildRequires(pre): libbrotli-devel
-BuildRequires(pre): libdatrie-devel
-BuildRequires(pre): libdbus-devel
-BuildRequires(pre): libepoxy-devel
-BuildRequires(pre): libexpat-devel
-BuildRequires(pre): libfribidi-devel
-BuildRequires(pre): libpcre-devel
-BuildRequires(pre): libpixman-devel
-BuildRequires(pre): libmount-devel
-BuildRequires(pre): libselinux-devel
-BuildRequires(pre): libthai-devel
-BuildRequires(pre): libtiff-devel
-BuildRequires(pre): libuuid-devel
-BuildRequires(pre): libxkbcommon-devel
-BuildRequires(pre): libwayland-cursor-devel
-BuildRequires(pre): libwayland-egl-devel
-
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: libayatana-ido3-devel
+
+%if_with gtk2
 BuildRequires: libgtk+2-devel
+%endif
 
 %description
 This library contains information to build indicators to go into
@@ -88,9 +64,11 @@ the indicator applet.
 %__mv %name-%version %name-%version-gtk3
 
 %build
+%if_with gtk2
 # Build with GTK2
 %cmake -DFLAVOUR_GTK2:BOOL=TRUE
 %cmake_build
+%endif
 
 # Build with GTK3
 pushd %name-%version-gtk3
@@ -99,12 +77,15 @@ pushd %name-%version-gtk3
 popd
 
 %install
+%if_with gtk2
 %cmake_install
+%endif
 
 pushd %name-%version-gtk3
 %cmake_install
 popd
 
+%if_with gtk2
 %files -n %name%sover
 %_libdir/%name.so.*
 
@@ -112,6 +93,7 @@ popd
 %_includedir/%name-0.4
 %_libdir/%name.so
 %_pkgconfigdir/ayatana-indicator-0.4.pc
+%endif
 
 %files -n %{name}3-%sover
 %_libdir/%{name}3.so.*
@@ -124,6 +106,9 @@ popd
 %_datadir/%name
 
 %changelog
+* Thu Mar 16 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt2
+- NMU: cleanup BR, add if_with for build with gtk2
+
 * Mon Mar 07 2022 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt1
 - Version 0.9.1
 

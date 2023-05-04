@@ -1,14 +1,14 @@
 %define sover 1
 
-%ifarch ppc64le riscv64 %mips32
-%def_without mono
-%else
+%if_feature gtk_sharp 2.99
 %def_with mono
+%else
+%def_without mono
 %endif
 
 Name: libayatana-appindicator
 Version: 0.5.91
-Release: alt1.1
+Release: alt2
 
 Summary: Ayatana application indicators library
 License: LGPLv2.1 AND LGPLv3
@@ -20,48 +20,23 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 # https://github.com/AyatanaIndicators/%name/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): at-spi2-atk-devel
-BuildRequires(pre): bzlib-devel
-BuildRequires(pre): libXdmcp-devel
-BuildRequires(pre): libXcomposite-devel
-BuildRequires(pre): libXcursor-devel
-BuildRequires(pre): libXdamage-devel
-BuildRequires(pre): libXi-devel
-BuildRequires(pre): libXinerama-devel
-BuildRequires(pre): libXrandr-devel
-BuildRequires(pre): libXtst-devel
-BuildRequires(pre): libat-spi2-core-devel
-BuildRequires(pre): libblkid-devel
-BuildRequires(pre): libbrotli-devel
-BuildRequires(pre): libdatrie-devel
-BuildRequires(pre): libdbus-devel
-BuildRequires(pre): libepoxy-devel
-BuildRequires(pre): libexpat-devel
-BuildRequires(pre): libffi-devel
-BuildRequires(pre): libfribidi-devel
-BuildRequires(pre): libpcre-devel
-BuildRequires(pre): libpixman-devel
-BuildRequires(pre): libmount-devel
-BuildRequires(pre): libselinux-devel
-BuildRequires(pre): libthai-devel
-BuildRequires(pre): libtiff-devel
-BuildRequires(pre): libuuid-devel
-BuildRequires(pre): libxkbcommon-devel
-BuildRequires(pre): libwayland-cursor-devel
-BuildRequires(pre): libwayland-egl-devel
+BuildRequires(pre): rpm-macros-features
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-gir
 
-%if_with mono
-BuildRequires: /proc
-%endif
 BuildRequires: cmake
+
 BuildRequires: libayatana-indicator3-devel
 BuildRequires: libdbusmenu-gtk3-devel
 BuildRequires: libgtk+3-gir-devel
+
 %if_with mono
+BuildRequires: /proc
 BuildRequires: libgtk-sharp3-devel
 BuildRequires: libgtk-sharp3-gapi
 BuildRequires: mono-devel
 %endif
+
 BuildRequires: vala-tools
 
 %description
@@ -174,6 +149,10 @@ This package provides Vala language bindings for %{name}3.
 %_vapidir/ayatana-appindicator3-0.1.deps
 
 %changelog
+* Thu Mar 16 2023 Vitaly Lipatov <lav@altlinux.ru> 0.5.91-alt2
+- NMU: use feature gtk_sharp checking from rpm-macros-features
+- NMU: clean BR, remove unneeded BR
+
 * Tue Jan 10 2023 Ivan A. Melnikov <iv@altlinux.org> 0.5.91-alt1.1
 - NMU: Build w/o mono on riscv64 and mipsel
 
