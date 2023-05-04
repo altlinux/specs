@@ -1,14 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: clickhouse-cpp
-Version: 1.2.2
-Release: alt2
+Version: 2.4.0
+Release: alt1
 Summary: ClickHouse C++ client library
 Group: System/Libraries
 License: Apache-2.0
 Url: https://github.com/artpaul/clickhouse-cpp
 
 # https://github.com/artpaul/clickhouse-cpp.git
+# Source-url: https://github.com/ClickHouse/clickhouse-cpp/archive/v%{version}.tar.gz
 Source: %name-%version.tar
 Source1: %name.watch
 
@@ -80,11 +81,12 @@ This package contains development files.
 rm -rf contrib/{cityhash,gtest,lz4}
 
 %build
-%cmake
+%cmake -DWITH_SYSTEM_CITYHASH=ON -DWITH_SYSTEM_LZ4=ON -DWITH_SYSTEM_CITYHASH=ON -DBUILD_SHARED_LIBS=ON
 %cmake_build
 
 %install
 %cmakeinstall_std
+rm -rf %buildroot%_includedir/clickhouse
 
 %files -n lib%name
 %doc LICENSE
@@ -97,6 +99,9 @@ rm -rf contrib/{cityhash,gtest,lz4}
 %_libdir/*.so
 
 %changelog
+* Fri Apr 28 2023 Pavel Vainerman <pv@altlinux.ru> 2.4.0-alt1
+- new version (2.4.0) with rpmgs script
+
 * Tue Apr 12 2022 Anton Farygin <rider@altlinux.ru> 1.2.2-alt2
 - libclickhouse-cpp-devel: add conflict with libabseil-cpp-devel (Closes: #42411)
 
