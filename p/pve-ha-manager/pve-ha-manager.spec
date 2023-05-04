@@ -4,7 +4,7 @@
 Name: pve-ha-manager
 Summary: Proxmox VE HA Manager
 Version: 3.6.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -70,6 +70,9 @@ install -m0644 debian/pve-ha-manager.default %buildroot%_sysconfdir/sysconfig/pv
 %_datadir/pve-ha-simulator
 
 %changelog
+* Thu May 04 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.6.1-alt2
+- add Restart=on-failure
+
 * Wed May 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.6.1-alt1
 - 3.6-1
 - use %%preun_systemd/%%post_systemd_postponed

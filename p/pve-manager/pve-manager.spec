@@ -7,7 +7,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt3
 License: AGPL-3.0+ AND GPLv3 AND MIT
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -119,6 +119,9 @@ rm -f  %buildroot%_man1dir/pveupgrade.1*
 %_man8dir/*
 
 %changelog
+* Thu May 04 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt3
+- add Restart=on-failure to several services
+
 * Wed May 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt2
 - use %%preun_systemd/%%post_systemd_postponed
 
