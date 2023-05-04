@@ -1,5 +1,5 @@
 Name: python3-module-bleak
-Version: 0.19.5
+Version: 0.20.2
 Release: alt1
 
 Summary: Bluetooth Low Energy platform Agnostic Klient
@@ -8,10 +8,15 @@ Group: Development/Python
 Url: https://pypi.org/project/bleak/
 
 Source0: %name-%version-%release.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(poetry-core)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-cov)
+BuildRequires: python3(pytest-asyncio)
+BuildRequires: python3(dbus_fast)
 
 %description
 Bleak is a GATT client software, capable of connecting to BLE devices
@@ -22,10 +27,14 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %setup
 
 %build
+%pyproject_deps_resync_build
 %pyproject_build
 
 %install
 %pyproject_install
+
+%check
+%pyproject_run_pytest tests
 
 # filter out non-linux backend's reqs
 %add_python3_req_skip CoreBluetooth Foundation libdispatch objc
@@ -43,6 +52,9 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %python3_sitelibdir/bleak-%version.dist-info
 
 %changelog
+* Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.20.2-alt1
+- 0.20.2 released
+
 * Mon Mar 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.19.5-alt1
 - 0.19.5 released
 
