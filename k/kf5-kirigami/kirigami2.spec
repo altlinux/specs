@@ -2,7 +2,7 @@
 
 Name: kf5-kirigami
 Version: 5.105.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: System/Libraries
@@ -90,6 +90,9 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %_K5lib/libKF5Kirigami2.so.*
 
 %changelog
+* Thu May 04 2023 Sergey V Turchin <zerg@altlinux.org> 5.105.0-alt2
+- fix russian translation
+
 * Mon Apr 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.105.0-alt1
 - new version
 
