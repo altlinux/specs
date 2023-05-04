@@ -5,8 +5,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-document-viewer
-Version: 1.26.0
-Release: alt2
+Version: 1.26.1
+Release: alt1
 Epoch: 1
 Summary: Document viewer
 License: GPLv2+ and LGPLv2+ and MIT
@@ -108,7 +108,7 @@ caja file manager.
 
 %prep
 %setup -q -n %rname-%version -a1
-#patch -p1
+%patch -p1
 
 %build
 %autoreconf
@@ -195,6 +195,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu May 04 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
+- 1.26.1
+
 * Thu Nov 24 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
 - updated translation
 
