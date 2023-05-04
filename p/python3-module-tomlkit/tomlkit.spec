@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.7
+Version: 0.11.8
 Release: alt1
 Summary: Style preserving TOML library
 License: MIT
@@ -56,6 +56,9 @@ documents from scratch using the provided helpers.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 04 2023 Stanislav Levin <slev@altlinux.org> 0.11.8-alt1
+- 0.11.7 -> 0.11.8.
+
 * Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 0.11.7-alt1
 - 0.11.6 -> 0.11.7.
 
