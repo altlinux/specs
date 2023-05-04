@@ -4,40 +4,26 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.1
-Release: alt2
+Version: 1.4.3
+Release: alt1
 
-Summary: Python tool to create HTML documentation from markdown sources
+Summary: Project documentation with Markdown
 License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/mkdocs/
-
+Vcs: https://github.com/mkdocs/mkdocs
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: fonts-font-awesome
-
-# build backend and its deps
-BuildRequires: python3(hatchling)
-
-# build MO from PO (similar to msgfmt)
-BuildRequires: python3(babel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires:
-BuildRequires: python3(click)
-BuildRequires: python3(jinja2)
-BuildRequires: python3(markdown)
-BuildRequires: python3(yaml)
-BuildRequires: python3(watchdog)
-BuildRequires: python3-module-ghp-import
-BuildRequires: python3(yaml_env_tag)
-BuildRequires: python3(packaging)
-BuildRequires: python3(mergedeep)
+%pyproject_builddeps_metadata
 %endif
+BuildRequires: fonts-font-awesome
 
 %description
 MkDocs is a fast, simple and downright gorgeous static site generator
@@ -48,6 +34,8 @@ configuration file.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -77,13 +65,8 @@ done
 [ "$fonts_bundled" != "yes" ] && exit 1
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    # see tool.hatch.envs.test.scripts.test
-    python -m unittest discover -p '*tests.py' mkdocs --top-level-directory .
-EOF
-%tox_check_pyproject
+# synced to pyproject.toml:tool.hatch.envs.test.scripts
+%pyproject_run_unittest discover -p '*tests.py' mkdocs --top-level-directory .
 
 %files
 %_bindir/mkdocs
@@ -91,6 +74,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 03 2023 Stanislav Levin <slev@altlinux.org> 1.4.3-alt1
+- 1.4.1 -> 1.4.3.
+
 * Fri Oct 21 2022 Stanislav Levin <slev@altlinux.org> 1.4.1-alt2
 - Fixed build without check.
 
