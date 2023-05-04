@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 Summary: Micro subset of unicode data files for linkify-it-py projects
 License: MIT
@@ -48,5 +48,8 @@ This is a Python port of uc.micro.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed May 03 2023 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1
+- 1.0.1 -> 1.0.2.
+
 * Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus.

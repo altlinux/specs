@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.0.2
 Release: alt1
 Summary: Links recognition library with FULL unicode support
 License: MIT
@@ -48,5 +48,8 @@ This is Python port of linkify-it.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed May 03 2023 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
+- 2.0.0 -> 2.0.2.
+
 * Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus.
