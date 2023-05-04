@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2.5.23
+Version: 2.5.24
 Release: alt1
 
 Summary: File identification library for Python
@@ -49,6 +49,9 @@ BuildRequires: python3-module-cffi
 %doc *.md
 
 %changelog
+* Fri May 05 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.24-alt1
+- Automatically updated to 2.5.24.
+
 * Wed Apr 26 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.23-alt1
 - Automatically updated to 2.5.23.
 
