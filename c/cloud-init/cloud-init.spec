@@ -1,8 +1,8 @@
 %def_enable check
 
 Name:    cloud-init
-Version: 22.3.4
-Release: alt3
+Version: 23.1.2
+Release: alt1
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -205,6 +205,9 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Wed May 03 2023 Mikhail Gordeev <obirvalger@altlinux.org> 23.1.2-alt1
+- 23.1.2
+
 * Thu Jan 12 2023 Mikhail Gordeev <obirvalger@altlinux.org> 22.3.4-alt3
 - Fix package installation error
 
