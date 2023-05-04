@@ -1,5 +1,5 @@
 Name: python3-module-chacha20poly1305-reuseable
-Version: 0.0.4
+Version: 0.2.5
 Release: alt1
 
 Summary: ChaCha20Poly1305 that is reuseable for asyncio
@@ -8,10 +8,12 @@ Group: Development/Python
 Url: https://pypi.org/project/chacha20poly1305-reuseable/
 
 Source0: %name-%version-%release.tar
+Source1: pyproject_deps.json
 
-BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(poetry-core)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-cov)
 
 %description
 %summary
@@ -20,16 +22,23 @@ BuildRequires: python3(poetry-core)
 %setup
 
 %build
+%pyproject_deps_resync_build
 %pyproject_build
 
 %install
 %pyproject_install
+
+%check
+%pyproject_run_pytest tests
 
 %files
 %python3_sitelibdir/chacha20poly1305_reuseable
 %python3_sitelibdir/chacha20poly1305_reuseable-%version.dist-info
 
 %changelog
+* Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.5-alt1
+- 0.2.5 released
+
 * Wed Nov 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.4-alt1
 - 0.0.4 released
 
