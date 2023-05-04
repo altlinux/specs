@@ -1,21 +1,19 @@
-%define  modulename httpx
-
-Name:    python3-module-%modulename
-Version: 0.23.0
-Release: alt2
+Name:    python3-module-httpx
+Version: 0.24.0
+Release: alt1
 
 Summary: A next generation HTTP client for Python
 License: BSD-3-Clause
-Group:   Development/Python3
+Group:   Development/Python
 URL:     https://www.python-httpx.org/
 
 # Source-url: https://github.com/encode/httpx/archive/%version.tar.gz
-Source:  %modulename-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+Source0: httpx-%version.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
 HTTPX is a fully featured HTTP client for Python 3,
@@ -28,20 +26,23 @@ so that you're able to properly review API changes between package updates.
 A 1.0 release is expected to be issued sometime around mid-2020.
 
 %prep
-%setup -n %modulename-%version
-sed -ri '/httpcore/ s/,<[^,"]+//p' setup.py
+%setup -n httpx-%version
 
 %build
-%python3_build
+%pyproject_deps_resync_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info/
+%python3_sitelibdir/httpx
+%python3_sitelibdir/httpx-%version.dist-info
 
 %changelog
+* Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.24.0-alt1
+- 0.24.0 released
+
 * Thu Jul 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.23.0-alt2
 - 0.23.0
 
