@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name caffeine
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define uuid %_name@patapon.info
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -56,6 +56,9 @@ cp -ar %uuid/locale %buildroot%_datadir/ && rm -f %buildroot/%_datadir/locale/*/
 %doc README.md
 
 %changelog
+* Thu May 04 2023 Yuri N. Sedunov <aris@altlinux.org> 48-alt1
+- 48
+
 * Thu Apr 20 2023 Yuri N. Sedunov <aris@altlinux.org> 47-alt1
 - 47
 
