@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 3
+%define _php_release_version 5
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -53,6 +53,7 @@ Patch18: php8-8.0-alt-tests-fix.patch
 Patch19: php7-7.4-XFAIL-openssl-tests-with-internet-requires.patch
 Patch20: php7-7.4-fix-run-openssl-tests-server.patch
 Patch21: php-8.2-alt-test-dh7787.patch
+Patch22: php-8.2-altlinux-mbstring-test.patch
 
 
 Patch70: php8.0-debian-Add-support-for-use-of-the-system-timezone-database.patch
@@ -180,6 +181,7 @@ in use by other PHP-related packages.
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 
 
 %patch70 -p1
@@ -469,6 +471,12 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Tue Apr 18 2023 Anton Farygin <rider@altlinux.ru> 8.2.5-alt1
+- 8.2.4 -> 8.2.5
+
+* Sat Mar 18 2023 Anton Farygin <rider@altlinux.ru> 8.2.4-alt1
+- 8.2.3 -> 8.2.4
+
 * Tue Feb 14 2023 Anton Farygin <rider@altlinux.ru> 8.2.3-alt1
 - 8.2.2 -> 8.2.3 (Fixes: CVE-2023-0567, CVE-2023-0568, CVE-2023-0662)
 
