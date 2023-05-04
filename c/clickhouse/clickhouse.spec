@@ -21,118 +21,142 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 22.8.13.20
+Version: 23.3.2.37
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
-Url: https://clickhouse.yandex/
-
-# https://github.com/ClickHouse/ClickHouse.git
-Source: %name-%version.tar
+Url: https://clickhouse.com
+VCS: https://github.com/ClickHouse/ClickHouse.git
+Source: %name-%version.tar.xz
 
 Source1: %name-%version-contrib-abseil-cpp.tar
 Source2: %name-%version-contrib-AMQP-CPP.tar
-Source3: %name-%version-contrib-arrow.tar
-Source4: %name-%version-contrib-arrow-cpp-submodules-parquet-testing.tar
-Source5: %name-%version-contrib-arrow-testing.tar
-Source6: %name-%version-contrib-avro.tar
-Source7: %name-%version-contrib-aws.tar
-Source8: %name-%version-contrib-aws-c-common.tar
-Source9: %name-%version-contrib-aws-c-event-stream.tar
-Source10: %name-%version-contrib-aws-checksums.tar
-Source11: %name-%version-contrib-azure.tar
-Source12: %name-%version-contrib-base64.tar
-Source13: %name-%version-contrib-boost.tar
-Source14: %name-%version-contrib-boringssl.tar
-Source15: %name-%version-contrib-brotli.tar
-Source16: %name-%version-contrib-brotli-research-esaxx.tar
-Source17: %name-%version-contrib-brotli-research-libdivsufsort.tar
-Source18: %name-%version-contrib-bzip2.tar
-Source19: %name-%version-contrib-capnproto.tar
-Source20: %name-%version-contrib-c-ares.tar
-Source21: %name-%version-contrib-cassandra.tar
-Source22: %name-%version-contrib-cctz.tar
-Source23: %name-%version-contrib-cld2.tar
-Source24: %name-%version-contrib-cppkafka.tar
-Source25: %name-%version-contrib-cppkafka-third_party-Catch2.tar
-Source26: %name-%version-contrib-croaring.tar
-Source27: %name-%version-contrib-curl.tar
-Source28: %name-%version-contrib-cyrus-sasl.tar
-Source29: %name-%version-contrib-datasketches-cpp.tar
-Source30: %name-%version-contrib-double-conversion.tar
-Source31: %name-%version-contrib-dragonbox.tar
-Source32: %name-%version-contrib-fast_float.tar
-Source33: %name-%version-contrib-fastops.tar
-Source34: %name-%version-contrib-flatbuffers.tar
-Source35: %name-%version-contrib-fmtlib.tar
-Source36: %name-%version-contrib-googletest.tar
-Source37: %name-%version-contrib-grpc.tar
-Source38: %name-%version-contrib-h3.tar
-Source39: %name-%version-contrib-hashidsxx.tar
-Source40: %name-%version-contrib-hive-metastore.tar
-Source41: %name-%version-contrib-icu.tar
-Source42: %name-%version-contrib-icudata.tar
-Source43: %name-%version-contrib-jemalloc.tar
-Source44: %name-%version-contrib-krb5.tar
-Source45: %name-%version-contrib-lemmagen-c.tar
-Source46: %name-%version-contrib-libcpuid.tar
-Source47: %name-%version-contrib-libcxx.tar
-Source48: %name-%version-contrib-libcxxabi.tar
-Source49: %name-%version-contrib-libgsasl.tar
-Source50: %name-%version-contrib-libhdfs3.tar
-Source51: %name-%version-contrib-libpq.tar
-Source52: %name-%version-contrib-libpqxx.tar
-Source53: %name-%version-contrib-libprotobuf-mutator.tar
-Source54: %name-%version-contrib-librdkafka.tar
-Source55: %name-%version-contrib-libstemmer_c.tar
-Source56: %name-%version-contrib-libunwind.tar
-Source57: %name-%version-contrib-libuv.tar
-Source58: %name-%version-contrib-libxml2.tar
-Source59: %name-%version-contrib-llvm.tar
-Source60: %name-%version-contrib-lz4.tar
-Source61: %name-%version-contrib-magic_enum.tar
-Source62: %name-%version-contrib-mariadb-connector-c.tar
-Source63: %name-%version-contrib-miniselect.tar
-Source64: %name-%version-contrib-minizip-ng.tar
-Source65: %name-%version-contrib-msgpack-c.tar
-Source66: %name-%version-contrib-msgpack-c-external-boost-predef.tar
-Source67: %name-%version-contrib-msgpack-c-external-boost-preprocessor.tar
-Source68: %name-%version-contrib-nanodbc.tar
-Source69: %name-%version-contrib-nats-io.tar
-Source70: %name-%version-contrib-nats-io-coveralls-cmake.tar
-Source71: %name-%version-contrib-nlp-data.tar
-Source72: %name-%version-contrib-NuRaft.tar
-Source73: %name-%version-contrib-openldap.tar
-Source74: %name-%version-contrib-orc.tar
-Source75: %name-%version-contrib-poco.tar
-Source76: %name-%version-contrib-protobuf.tar
-Source77: %name-%version-contrib-qpl.tar
-Source78: %name-%version-contrib-qpl-tools-third-party-google-test.tar
-Source79: %name-%version-contrib-rapidjson.tar
-Source80: %name-%version-contrib-rapidjson-thirdparty-gtest.tar
-Source81: %name-%version-contrib-re2.tar
-Source82: %name-%version-contrib-replxx.tar
-Source83: %name-%version-contrib-rocksdb.tar
-Source84: %name-%version-contrib-s2geometry.tar
-Source85: %name-%version-contrib-sentry-native.tar
-Source86: %name-%version-contrib-simdjson.tar
-Source87: %name-%version-contrib-snappy.tar
-Source88: %name-%version-contrib-snappy-third_party-benchmark.tar
-Source89: %name-%version-contrib-snappy-third_party-googletest.tar
-Source90: %name-%version-contrib-sparsehash-c11.tar
-Source91: %name-%version-contrib-sqlite-amalgamation.tar
-Source92: %name-%version-contrib-sysroot.tar
-Source93: %name-%version-contrib-thrift.tar
-Source94: %name-%version-contrib-unixodbc.tar
-Source95: %name-%version-contrib-vectorscan.tar
-Source96: %name-%version-contrib-wordnet-blast.tar
-Source97: %name-%version-contrib-wyhash.tar
-Source98: %name-%version-contrib-xz.tar
-Source99: %name-%version-contrib-yaml-cpp.tar
-Source100: %name-%version-contrib-zlib-ng.tar
-Source101: %name-%version-contrib-zstd.tar
-Source102: %name-%version-contrib-libdivide.tar
+Source3: %name-%version-contrib-annoy.tar
+Source4: %name-%version-contrib-arrow.tar
+Source5: %name-%version-contrib-arrow-cpp-submodules-parquet-testing.tar
+Source6: %name-%version-contrib-arrow-testing.tar
+Source7: %name-%version-contrib-avro.tar
+Source8: %name-%version-contrib-aws.tar.xz
+Source9: %name-%version-contrib-aws-c-auth.tar
+Source10: %name-%version-contrib-aws-c-cal.tar
+Source11: %name-%version-contrib-aws-c-common.tar
+Source12: %name-%version-contrib-aws-c-compression.tar
+Source13: %name-%version-contrib-aws-c-event-stream.tar
+Source14: %name-%version-contrib-aws-checksums.tar
+Source15: %name-%version-contrib-aws-c-http.tar
+Source16: %name-%version-contrib-aws-c-io.tar
+Source17: %name-%version-contrib-aws-c-mqtt.tar
+Source18: %name-%version-contrib-aws-crt-cpp.tar
+Source19: %name-%version-contrib-aws-c-s3.tar
+Source20: %name-%version-contrib-aws-c-sdkutils.tar
+Source21: %name-%version-contrib-aws-s2n-tls.tar
+Source22: %name-%version-contrib-aws-s2n-tls-tests-cbmc-aws-verification-model-for-libcrypto.tar
+Source23: %name-%version-contrib-azure.tar
+Source24: %name-%version-contrib-base64.tar
+Source25: %name-%version-contrib-boost.tar
+Source26: %name-%version-contrib-boringssl.tar
+Source27: %name-%version-contrib-brotli.tar
+Source28: %name-%version-contrib-brotli-research-esaxx.tar
+Source29: %name-%version-contrib-brotli-research-libdivsufsort.tar
+Source30: %name-%version-contrib-bzip2.tar
+Source31: %name-%version-contrib-capnproto.tar
+Source32: %name-%version-contrib-c-ares.tar
+Source33: %name-%version-contrib-cassandra.tar
+Source34: %name-%version-contrib-cctz.tar
+Source35: %name-%version-contrib-cld2.tar
+Source36: %name-%version-contrib-corrosion.tar
+Source37: %name-%version-contrib-cppkafka.tar
+Source38: %name-%version-contrib-cppkafka-third_party-Catch2.tar
+Source39: %name-%version-contrib-crc32-s390x.tar
+Source40: %name-%version-contrib-crc32-vpmsum.tar
+Source41: %name-%version-contrib-croaring.tar
+Source42: %name-%version-contrib-curl.tar
+Source43: %name-%version-contrib-cyrus-sasl.tar
+Source44: %name-%version-contrib-datasketches-cpp.tar
+Source45: %name-%version-contrib-double-conversion.tar
+Source46: %name-%version-contrib-dragonbox.tar
+Source47: %name-%version-contrib-fast_float.tar
+Source48: %name-%version-contrib-fastops.tar
+Source49: %name-%version-contrib-flatbuffers.tar
+Source50: %name-%version-contrib-fmtlib.tar
+Source51: %name-%version-contrib-google-benchmark.tar
+Source52: %name-%version-contrib-googletest.tar
+Source53: %name-%version-contrib-grpc.tar
+Source54: %name-%version-contrib-h3.tar
+Source55: %name-%version-contrib-hashidsxx.tar
+Source56: %name-%version-contrib-hive-metastore.tar
+Source57: %name-%version-contrib-icu.tar
+Source58: %name-%version-contrib-icudata.tar
+Source59: %name-%version-contrib-idxd-config.tar
+Source60: %name-%version-contrib-jemalloc.tar
+Source61: %name-%version-contrib-krb5.tar
+Source62: %name-%version-contrib-lemmagen-c.tar
+Source63: %name-%version-contrib-libcpuid.tar
+Source64: %name-%version-contrib-libdivide.tar
+Source65: %name-%version-contrib-libgsasl.tar
+Source66: %name-%version-contrib-libhdfs3.tar
+Source67: %name-%version-contrib-libpq.tar
+Source68: %name-%version-contrib-libpqxx.tar
+Source69: %name-%version-contrib-libprotobuf-mutator.tar
+Source70: %name-%version-contrib-librdkafka.tar
+Source71: %name-%version-contrib-libstemmer_c.tar
+Source72: %name-%version-contrib-libunwind.tar
+Source73: %name-%version-contrib-liburing.tar
+Source74: %name-%version-contrib-libuv.tar
+Source75: %name-%version-contrib-libxml2.tar
+Source76: %name-%version-contrib-llvm-project.tar.xz
+Source77: %name-%version-contrib-lz4.tar
+Source78: %name-%version-contrib-magic_enum.tar
+Source79: %name-%version-contrib-mariadb-connector-c.tar
+Source80: %name-%version-contrib-miniselect.tar
+Source81: %name-%version-contrib-minizip-ng.tar
+Source82: %name-%version-contrib-morton-nd.tar
+Source83: %name-%version-contrib-msgpack-c.tar
+Source84: %name-%version-contrib-msgpack-c-external-boost-predef.tar
+Source85: %name-%version-contrib-msgpack-c-external-boost-preprocessor.tar
+Source86: %name-%version-contrib-nanodbc.tar
+Source87: %name-%version-contrib-nats-io.tar
+Source88: %name-%version-contrib-nats-io-coveralls-cmake.tar
+Source89: %name-%version-contrib-nlp-data.tar
+Source90: %name-%version-contrib-NuRaft.tar
+Source91: %name-%version-contrib-openldap.tar
+Source92: %name-%version-contrib-openssl.tar
+Source93: %name-%version-contrib-openssl-gost-engine.tar
+Source94: %name-%version-contrib-openssl-gost-engine-libprov.tar
+Source95: %name-%version-contrib-openssl-krb5.tar
+Source96: %name-%version-contrib-openssl-pyca-cryptography.tar
+Source97: %name-%version-contrib-openssl-wycheproof.tar
+Source98: %name-%version-contrib-orc.tar
+Source99: %name-%version-contrib-protobuf.tar
+Source100: %name-%version-contrib-qpl.tar
+Source101: %name-%version-contrib-qpl-tools-third-party-benchmark.tar
+Source102: %name-%version-contrib-qpl-tools-third-party-google-test.tar
+Source103: %name-%version-contrib-rapidjson.tar
+Source104: %name-%version-contrib-rapidjson-thirdparty-gtest.tar
+Source105: %name-%version-contrib-re2.tar
+Source106: %name-%version-contrib-replxx.tar
+Source107: %name-%version-contrib-rocksdb.tar
+Source108: %name-%version-contrib-s2geometry.tar
+Source109: %name-%version-contrib-sentry-native.tar
+Source110: %name-%version-contrib-simdjson.tar
+Source111: %name-%version-contrib-snappy.tar
+Source112: %name-%version-contrib-snappy-third_party-benchmark.tar
+Source113: %name-%version-contrib-snappy-third_party-googletest.tar
+Source114: %name-%version-contrib-sparsehash-c11.tar
+Source115: %name-%version-contrib-sqlite-amalgamation.tar
+Source116: %name-%version-contrib-sysroot.tar
+Source117: %name-%version-contrib-thrift.tar
+Source118: %name-%version-contrib-ulid-c.tar
+Source119: %name-%version-contrib-unixodbc.tar
+Source120: %name-%version-contrib-vectorscan.tar
+Source121: %name-%version-contrib-wordnet-blast.tar
+Source122: %name-%version-contrib-wyhash.tar
+Source123: %name-%version-contrib-xxHash.tar
+Source124: %name-%version-contrib-xz.tar
+Source125: %name-%version-contrib-yaml-cpp.tar
+Source126: %name-%version-contrib-zlib-ng.tar
+Source127: %name-%version-contrib-zstd.tar
 
 
 Source1000: clickhouse.watch
@@ -142,7 +166,7 @@ Patch1: clickhouse-base64-ppc64le.patch
 Patch2: clickhouse-avro-gcc10-compat.patch
 Patch3: clickhouse-fastops-gcc-compat.patch
 Patch4: clickhouse-llvm-build.patch
-Patch5: clickhouse-22.3-use-system-toolchain.patch
+Patch5: clickhouse-23.3-use-system-toolchain.patch
 
 BuildRequires(pre): rpm-build-python3
 %if_with clang
@@ -154,6 +178,7 @@ BuildRequires: cmake libreadline-devel python3 gperf tzdata
 BuildRequires: rpm-macros-cmake rpm-macros-ninja-build ninja-build /proc
 BuildRequires: perl-JSON-XS libasan-devel-static
 BuildRequires: libstdc++-devel-static
+BuildRequires: yasm
 
 %add_python3_path %_datadir/clickhouse-test
 
@@ -212,7 +237,7 @@ Conflicts: clickhouse-lts-test
 ClickHouse tests
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31 -a32 -a33 -a34 -a35 -a36 -a37 -a38 -a39 -a40 -a41 -a42 -a43 -a44 -a45 -a46 -a47 -a48 -a49 -a50 -a51 -a52 -a53 -a54 -a55 -a56 -a57 -a58 -a59 -a60 -a61 -a62 -a63 -a64 -a65 -a66 -a67 -a68 -a69 -a70 -a71 -a72 -a73 -a74 -a75 -a76 -a77 -a78 -a79 -a80 -a81 -a82 -a83 -a84 -a85 -a86 -a87 -a88 -a89 -a90 -a91 -a92 -a93 -a94 -a95 -a96 -a97 -a98 -a99 -a100 -a101 -a 102
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31 -a32 -a33 -a34 -a35 -a36 -a37 -a38 -a39 -a40 -a41 -a42 -a43 -a44 -a45 -a46 -a47 -a48 -a49 -a50 -a51 -a52 -a53 -a54 -a55 -a56 -a57 -a58 -a59 -a60 -a61 -a62 -a63 -a64 -a65 -a66 -a67 -a68 -a69 -a70 -a71 -a72 -a73 -a74 -a75 -a76 -a77 -a78 -a79 -a80 -a81 -a82 -a83 -a84 -a85 -a86 -a87 -a88 -a89 -a90 -a91 -a92 -a93 -a94 -a95 -a96 -a97 -a98 -a99 -a100 -a101 -a102 -a103 -a104 -a105 -a106 -a107 -a108 -a109 -a110 -a111 -a112 -a113 -a114 -a115 -a116 -a117 -a118 -a119 -a120 -a121 -a122 -a123 -a124 -a125 -a126 -a127  
 
 %patch0 -p1
 
@@ -228,9 +253,9 @@ pushd contrib/fastops
 %patch3 -p1
 popd
 
-pushd contrib/llvm
-%patch4 -p1
-popd
+#pushd contrib/llvm
+#patch4 -p1
+#popd
 
 %patch5 -p1
 
@@ -271,6 +296,9 @@ export ALTWRAP_LLVM_VERSION="%llvm_version"
 	-DENABLE_CPUID:BOOL=OFF \
 	-DENABLE_FASTOPS:BOOL=OFF \
 	-DENABLE_HDFS:BOOL=OFF \
+%endif
+%ifarch aarch64
+	-DNO_ARMV81_OR_HIGHER=1 \
 %endif
 %if_with jemalloc
 	-DENABLE_JEMALLOC:BOOL=ON \
@@ -363,6 +391,12 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Wed May 03 2023 Anton Farygin <rider@altlinux.ru> 23.3.2.37-alt1
+- 22.8.17.17 -> 23.3.2.37
+
+* Wed Apr 26 2023 Anton Farygin <rider@altlinux.ru> 22.8.17.17-alt1
+- 22.8.13.20 -> 22.8.17.17
+
 * Wed Feb 01 2023 Anton Farygin <rider@altlinux.ru> 22.8.13.20-alt1
 - 22.8.12.45 -> 22.8.13.20
 
