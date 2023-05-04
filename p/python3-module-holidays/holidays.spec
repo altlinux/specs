@@ -1,5 +1,5 @@
 Name: python3-module-holidays
-Version: 0.16
+Version: 0.21.13
 Release: alt1
 
 Summary: Holidays calculator
@@ -10,7 +10,7 @@ Url: https://pypi.org/project/holidays/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
+BuildRequires: rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
@@ -33,6 +33,9 @@ a specific date is a holiday as fast and flexible as possible.
 %python3_sitelibdir/holidays-%version.dist-info
 
 %changelog
+* Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.21.13-alt1
+- 0.21.13 released
+
 * Mon Nov 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.16-alt1
 - 0.16 released
 
