@@ -1,5 +1,5 @@
 Name: python3-module-home-assistant-bluetooth
-Version: 1.9.2
+Version: 1.10.0
 Release: alt1
 
 Summary: Home Assistant Bluetooth Models and Helpers
@@ -8,11 +8,10 @@ Group: Development/Python
 Url: https://pypi.org/project/home-assistant-bluetooth/
 
 Source0: %name-%version-%release.tar
+Source1: pyproject_deps.json
 
-BuildRequires: rpm-build-python3
-BuildRequires: python3(poetry-core)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(cython)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
 %summary
@@ -21,6 +20,7 @@ BuildRequires: python3(cython)
 %setup
 
 %build
+%pyproject_deps_resync_build
 %pyproject_build
 
 %install
@@ -31,6 +31,9 @@ BuildRequires: python3(cython)
 %python3_sitelibdir/home_assistant_bluetooth-%version.dist-info
 
 %changelog
+* Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.10.0-alt1
+- 1.10.0 released
+
 * Mon Jan 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.9.2-alt1
 - 1.9.2 released
 
