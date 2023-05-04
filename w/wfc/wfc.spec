@@ -1,5 +1,5 @@
 Name: wfc
-Version: R2211
+Version: R2304
 Release: alt1
 
 Summary: Wire Format Compiler
@@ -43,6 +43,9 @@ make install PREFIX=%buildroot%_prefix
 %_man1dir/%{name}*
 
 %changelog
+* Thu May 04 2023 L.A. Kostis <lakostis@altlinux.ru> R2304-alt1
+- R2304.
+
 * Fri Mar 24 2023 L.A. Kostis <lakostis@altlinux.ru> R2211-alt1
 - Initial build for ALTLinux.
 
