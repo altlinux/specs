@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.27
+Version:	0.9.28
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -146,6 +146,10 @@ fi
 %files full
 
 %changelog
+* Fri May 05 2023 Anton Farygin <rider@altlinux.ru> 0.9.28-alt1
+- create-bond: down the network interface before adding to bonding
+  (fix for "Error: Device can not be enslaved while up.")
+
 * Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.27-alt1
 - openvswitch: separate operations for remove and create port
 
