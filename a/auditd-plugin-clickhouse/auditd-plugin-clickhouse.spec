@@ -8,7 +8,7 @@
 #    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20230217.1.2
+Version: 20230505.1.1
 Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
@@ -61,6 +61,14 @@ BUILD=%_cmake__builddir bats test-suite.bats
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Fri May 05 2023 Paul Wolneykien <manowar@altlinux.org> 20230505.1.1-alt1
+- Open syslog with a NULL identifier if Ident= is not specified.
+- Add a commented out default value for Ident=.
+- Implement the syslog logger (Method=syslog).
+- Add Method= logging option to explicitly specify the logging
+  method.
+- Log to stderr if Logfile= is empty.
+
 * Fri Feb 17 2023 Paul Wolneykien <manowar@altlinux.org> 20230217.1.2-alt1
 - Fix: Set the "fp" datatype to integer.
 - Disable writing JSON files by default.
