@@ -1,10 +1,11 @@
 %define  srcname mprpc
 
-#%%def_disable check
+# Check disabled because nose dep, which will be remove from repo
+%def_disable check
 
 Name:    python3-module-%srcname
 Version: 0.1.17
-Release: alt1
+Release: alt2
 
 Summary: Lightweight MessagePack RPC library
 License: ASL-2.0
@@ -22,7 +23,6 @@ BuildRequires: python3-module-Cython
 %else
 #BuildRequires: python3-module-pytest
 BuildRequires: python3-module-gevent
-BuildRequires: python3-module-nose
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-msgpack
 BuildRequires: python3-module-gsocketpool
@@ -60,5 +60,8 @@ rm %buildroot%python3_sitelibdir/mprpc/*.c
 %doc *.rst
 
 %changelog
+* Thu Apr 20 2023 Anton Vyatkin <toni@altlinux.org> 0.1.17-alt2
+- Disable check
+
 * Fri Sep 24 2021 Anton Midyukov <antohami@altlinux.org> 0.1.17-alt1
 - Initial build for Sisyphus
