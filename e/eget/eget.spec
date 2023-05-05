@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.3
+Version: 7.4
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,14 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Fri May 05 2023 Vitaly Lipatov <lav@altlinux.ru> 7.4-alt1
+- eget: add -H (--header) support
+- eget: fix for brave go-ipfs
+- eget: add support for UTF-8 filename in Content-disposition
+- eget: check filename in Content-Disposition in case insensivity
+- eget: fix github json handling (some servers return optimized nonformatted answer)
+- eget: use correct http download backend for ipfs via gateway
+
 * Sat Apr 22 2023 Vitaly Lipatov <lav@altlinux.ru> 7.3-alt1
 - eget: improve globbing symbol translation
 - eget: disable checking for magic CID if IPFS is used
