@@ -2,7 +2,7 @@
 
 Name:    python3-module-%oname
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: Generate block-diagram images from text
 
@@ -49,8 +49,12 @@ Enjoy documentation with blockdiag !
 %_bindir/%oname
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Apr 28 2023 Anton Vyatkin <toni@altlinux.org> 3.0.0-alt2
+- NMU: Don't pack tests.
+
 * Mon Apr 11 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 
