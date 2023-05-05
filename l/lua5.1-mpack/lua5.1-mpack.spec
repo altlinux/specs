@@ -9,7 +9,7 @@ Group: Development/Other
 BuildRequires:  lua5.1-devel
 
 Name:           lua5.1-mpack
-Version:        1.0.9
+Version:        1.0.10
 Release:        alt1
 
 License:        MIT
@@ -39,6 +39,9 @@ install -p -D -m 644 mpack.so %buildroot%{lua_libdir}/mpack.so
 %{lua_libdir}/mpack.so
 
 %changelog
+* Fri May 5 2023 Vladimir Didenko <cow@altlinux.ru> 1.0.10-alt1
+- new version
+
 * Wed Nov 3 2021 Vladimir Didenko <cow@altlinux.ru> 1.0.9-alt1
 - new version
 
