@@ -1,13 +1,14 @@
 %global _unpackaged_files_terminate_build 1
 %add_findreq_skiplist %perl_vendor_privlib/PVE/ExtMetric.pm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
+%add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
 %define ver_major 7.4
 %define ver_minor 3
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt3
+Release: alt4
 License: AGPL-3.0+ AND GPLv3 AND MIT
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -21,8 +22,9 @@ BuildRequires(pre): rpm-macros-systemd
 Requires: cstream lzop zstd wget schedutils gdisk hdparm rsync pciutils
 Requires: perl-LWP-Protocol-https
 Requires: pve-common >= 7.2.6 pve-guest-common >= 4.2.1
+Requires: pve-storage >= 7.2.12 pve-cluster >= 7.2.3
 Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-acme
-Requires: pve-cluster >= 7.2.3 pve-container >= 4.0.9 pve-firewall pve-ha-manager pve-qemu-server >= 7.2.8 pve-i18n >= 1.0.3 pve-docs
+Requires: pve-container >= 4.0.9 pve-firewall pve-ha-manager pve-qemu-server >= 7.2.8 pve-i18n >= 1.0.3 pve-docs
 Requires: proxmox-widget-toolkit >= 3.4.9 proxmox-mini-journalreader fonts-font-awesome javascript-extjs javascript-qrcodejs
 Requires: libproxmox-rs-perl >= 0.2.0 libpve-rs-perl >= 0.7.1
 
@@ -34,6 +36,7 @@ Source9: basealt_logo-128.png
 
 BuildRequires: pve-doc-generator >= 7.2.3 xmlto perl-Pod-Parser
 BuildRequires: pve-storage >= 7.2.12 pve-cluster >= 7.2.3
+BuildRequires: pve-common >= 7.2.6 pve-guest-common >= 4.2.1
 BuildRequires: libpve-cluster-perl >= 6.1.6 libpve-cluster-api-perl >= 7.0.5 pve-container pve-qemu-server >= 7.2.8
 BuildRequires: pve-acme pve-http-server >= 2.0.12 pve-access-control >= 7.0.2
 BuildRequires: proxmox-widget-toolkit >= 3.4.9
@@ -119,6 +122,9 @@ rm -f  %buildroot%_man1dir/pveupgrade.1*
 %_man8dir/*
 
 %changelog
+* Fri May 05 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt4
+- revert old commit, fix vzdump parsing in jobs.cfg
+
 * Thu May 04 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt3
 - add Restart=on-failure to several services
 
