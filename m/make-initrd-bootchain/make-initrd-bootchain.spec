@@ -9,7 +9,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt14
+Release: alt15
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -209,6 +209,11 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Fri May 05 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt15
+- interactive: introduce new IM_fatal() API call (ALT #44108)
+- switch to localdev boot method in any case
+- don't turn on lowmem mandatory for 'live' stage
+
 * Tue May 02 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt14
 - interactive: don't use console for VT TTY's (ALT #41521)
 
