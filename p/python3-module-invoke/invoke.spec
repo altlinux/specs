@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name invoke
 
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
 Version: 2.1.1
-Release: alt1
+Release: alt2
 Summary: Pythonic task execution
 License: BSD-2-Clause
 Group: Development/Python3
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: /dev/pts
-%add_pyproject_deps_check_filter alabaster codecov
+%add_pyproject_deps_check_filter alabaster types-
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %pyproject_builddeps -- vendored
@@ -75,6 +75,9 @@ find invoke/vendor/ \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 05 2023 Stanislav Levin <slev@altlinux.org> 2.1.1-alt2
+- Enabled testing.
+
 * Wed May 03 2023 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
 - 1.7.3 -> 2.1.1.
 

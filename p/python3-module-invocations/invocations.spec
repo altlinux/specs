@@ -3,11 +3,11 @@
 %define mod_name %pypi_name
 
 # disable for bootstrap (loop invocations <-> pytest-relaxed)
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
 Version: 3.1.0
-Release: alt1
+Release: alt2
 Summary: Common/best-practice Invoke tasks and collections
 License: BSD
 Group: Development/Python3
@@ -23,7 +23,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: /dev/pts
-%add_pyproject_deps_check_filter codecov
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -59,5 +58,8 @@ common best practices.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri May 05 2023 Stanislav Levin <slev@altlinux.org> 3.1.0-alt2
+- Enabled testing.
+
 * Wed May 03 2023 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
 - Initial build for Sisyphus.
