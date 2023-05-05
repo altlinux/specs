@@ -1,29 +1,32 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name invoke
 
-Name: python3-module-%pypi_name
-Version: 1.7.3
-Release: alt1
+%def_without check
 
-Summary: Simple Python task execution
+Name: python3-module-%pypi_name
+Version: 2.1.1
+Release: alt1
+Summary: Pythonic task execution
 License: BSD-2-Clause
 Group: Development/Python3
-Url: https://www.pyinvoke.org/
+Url: https://pypi.org/project/invoke/
+Vcs: https://github.com/pyinvoke/invoke
 BuildArch: noarch
-
-# Source-git: https://github.com/pyinvoke/invoke.git
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch1: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%py3_requires lexicon
-%py3_requires six
-%py3_requires yaml
+%pyproject_runtimedeps_metadata
+%pyproject_runtimedeps -- vendored
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+BuildRequires: /dev/pts
+%add_pyproject_deps_check_filter alabaster codecov
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%pyproject_builddeps -- vendored
+%endif
 
 %description
 Invoke is a Python (2.6+ and 3.2+) task execution tool & library,
@@ -34,17 +37,36 @@ feature set.
 %setup
 %autopatch -p1
 
+# gen vendored list for upstream
+set -o pipefail
+%__python3 - <<-'EOF' | sort -u > _vendor.txt
+import pkgutil
+for mod in pkgutil.iter_modules(["invoke/vendor"]):
+    if not mod.name.startswith("_") and mod.name != "fluidity":
+        print(mod.name)
+EOF
+
+%pyproject_deps_resync vendored pip_reqfile _vendor.txt
 # drop everything except fluidity (not packaged (unmaintained))
 find invoke/vendor/ \
     -mindepth 1 -maxdepth 1 \
     \( ! \( -name '__init__.py' -type f \) -a ! \( -name 'fluidity' -type d \) \) \
     -exec rm -rfv '{}' +
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
+%endif
+
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+
+%check
+%pyproject_run -- inv test
 
 %files
 %doc *.rst
@@ -53,6 +75,9 @@ find invoke/vendor/ \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 03 2023 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
+- 1.7.3 -> 2.1.1.
+
 * Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 1.7.3-alt1
 - 1.6.0 -> 1.7.3.
 

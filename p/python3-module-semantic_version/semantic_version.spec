@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name semantic_version
 
 %def_without bootstrap
@@ -5,23 +6,25 @@
 
 Name: python3-module-%pypi_name
 Version: 2.10.0
-Release: alt1
-
-Summary: A library implementing the 'SemVer' scheme.
-
-Group: Development/Python3
+Release: alt2
+Summary: A library implementing the 'SemVer' scheme
 License: BSD-2-Clause
-URL:  https://github.com/rbarrois/python-semanticversion
-
+Group: Development/Python3
+Url: https://pypi.org/project/semantic-version
+Vcs: https://github.com/rbarrois/python-semanticversion
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildArch:  noarch
-
-BuildRequires(pre): rpm-build-python3
-
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-Buildrequires: python3-module-django
-Buildrequires: python3-module-django-dbbackend-sqlite3
+%add_pyproject_deps_check_filter readme-renderer tox zest.releaser check-manifest
+%pyproject_builddeps_metadata_extra dev
+BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
 
 %description
@@ -30,29 +33,33 @@ It follows strictly the 2.0.0 version of the SemVer scheme.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with bootstrap
 rm -f %buildroot%python3_sitelibdir/%pypi_name/django_fields.py
 %endif
 
-# Delete tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
 %check
-%__python3 setup.py test
+# .github/workflows/test.yml => tox => make test
+%pyproject_run -- make test
 
 %files
 %doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/semantic_version/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Apr 27 2023 Stanislav Levin <slev@altlinux.org> 2.10.0-alt2
+- Modernized packaging.
+- Mapped PyPI name to distro's one.
+
 * Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt1
 - Automatically updated to 2.10.0.
 

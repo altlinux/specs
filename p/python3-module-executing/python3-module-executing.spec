@@ -1,27 +1,27 @@
 %define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
+%define pypi_name executing
+%define mod_name %pypi_name
 
-%define oname executing
+%def_with check
 
 Name: python3-module-executing
-Version: 0.8.2
+Version: 1.2.0
 Release: alt1
-Summary: Get information about what a Python frame is currently doing, particularly the AST node being executed
+Summary: Get the currently executing AST node of a frame, and other information
 License: MIT
 Group: Development/Python3
-Url: https://github.com/alexmojaki/executing
-
+Url: https://pypi.org/project/executing/
+Vcs: https://github.com/alexmojaki/executing
 BuildArch: noarch
-
-# https://github.com/alexmojaki/executing.git
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-setuptools_scm
-# test dependencies
-BuildRequires: python3(asttokens)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra tests
+%endif
 
 %description
 This mini-package lets you get information about
@@ -29,28 +29,27 @@ what a frame is currently doing, particularly the AST node being executed.
 
 %prep
 %setup
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python3_install
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-python3 setup.py test
+%pyproject_run_pytest -ra tests
 
 %files
-%doc LICENSE.txt
 %doc README.md
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py3*.egg-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 26 2023 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 0.8.2 -> 1.2.0.
+
 * Tue Jan 18 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.2-alt1
 - Initial build for ALT.

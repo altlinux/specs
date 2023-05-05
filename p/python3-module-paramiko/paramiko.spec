@@ -4,41 +4,30 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.12.0
+Version: 3.1.0
 Release: alt1
-
 Summary: SSH2 protocol for python
 License: LGPL-2.1
 Group: Development/Python3
 Url: http://www.paramiko.org/
 VCS: https://github.com/paramiko/paramiko.git
-
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# deps
-BuildRequires: python3(six)
-BuildRequires: python3(bcrypt)
-BuildRequires: python3(cryptography)
-BuildRequires: python3(nacl)
-
-# extras
-BuildRequires: python3(gssapi)
-BuildRequires: python3(pyasn1)
-BuildRequires: python3(invoke)
-
-BuildRequires: python3(k5test)
-BuildRequires: python3(mock)
+BuildRequires: /dev/pts
+%add_pyproject_deps_check_filter codespell alabaster codecov
+%pyproject_builddeps_metadata_extra invoke
+%pyproject_builddeps_metadata_extra gssapi
+%pyproject_builddeps_check
+# manually installed (.circleci/config.yml)
+BuildRequires: python3-module-k5test
 %endif
-
-BuildArch: noarch
 
 %description
 paramiko is a module for python that implements the SSH2 protocol for secure
@@ -48,6 +37,11 @@ entirely in python (no C or platform-dependent code).
 %prep
 %setup
 %patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -56,8 +50,7 @@ entirely in python (no C or platform-dependent code).
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run -- inv test
 
 %files
 %doc README.rst
@@ -65,6 +58,9 @@ entirely in python (no C or platform-dependent code).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
+- 2.12.0 -> 3.1.0.
+
 * Tue Nov 15 2022 Stanislav Levin <slev@altlinux.org> 2.12.0-alt1
 - 2.11.0 -> 2.12.0.
 
