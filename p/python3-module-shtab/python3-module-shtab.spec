@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.5.8
+Version: 1.6.1
 Release: alt1
 
 Summary: Automagic shell tab completion for Python CLI applications
@@ -48,5 +48,8 @@ sed -i 's/VERSION_UNKNOWN/%version/' setup.cfg
 %doc README.rst CONTRIBUTING.md LICENCE docs/index.md docs/use.md examples
 
 %changelog
+* Fri May 05 2023 Alexander Stepchenko <geochip@altlinux.org> 1.6.1-alt1
+- New version 1.6.1
+
 * Tue Nov 29 2022 Alexander Stepchenko <geochip@altlinux.org> 1.5.8-alt1
 - Initial build for ALT.
