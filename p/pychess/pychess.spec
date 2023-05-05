@@ -1,72 +1,78 @@
-%filter_from_requires /python2.*/d
-
-%define prever %nil
 
 Name: pychess
-Version: 0.12.4
-Release: alt3
+Version: 1.0.4
+Release: alt1
 
 Summary: Chess game for GNOME
 License: GPLv2
 Group: Games/Boards
 Url: https://github.com/pychess/pychess/
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+VCS: https://github.com/pychess/pychess.git
+Packager: Leonid Znamenok <respublica@altlinux.org>
 
 BuildArch: noarch
 
-# Source-url: https://github.com/pychess/pychess/releases/download/%version/pychess-%version.tar.gz
 Source: %name-%version.tar
+Patch0: hasher-fix_1.0.3.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: rpm-build-compat >= 1.2
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(sqlite3)
+BuildRequires: python3(pexpect)
+BuildRequires: python3(sqlalchemy)
+BuildRequires: python3(gi)
+BuildRequires: python3(cairo)
+BuildRequires: gobject-introspection-devel
+BuildRequires: librsvg-gir-devel
 
 # needed:
 Requires: gnome-icon-theme
 Requires: typelib(GtkSource) = 3.0
 
 %add_python3_req_skip gi.repository.GdkPixbuf
-%add_python3_req_skip pychess.Database
-%add_python3_req_skip pychess.Database.dbwalk
-%add_python3_req_skip pychess.Database.model
 
+%filter_from_requires /python2.*/d
+%filter_from_requires /typelib(WebKit)/d
 
 %description
 PyChess is a GTK+ chess game for Linux. It is designed to at the same time
 be easy to use, beautiful to look at, and provide advanced functions for
-advanced players.
+advanced players
 
 %prep
-%setup -n %name-%version%{?prever}
+%setup
+%patch0 -p1
 
 %build
-%python3_build
+PYTHONPATH=lib %__python3 pgn2ecodb.py
+PYTHONPATH=lib %__python3 create_theme_preview.py
+%pyproject_build
 
 %install
-# Fix line terminators
-%__subst 's/.$//g' AUTHORS
-%python3_install
-
-#change permissions
-chmod +x %buildroot%python3_sitelibdir/%name/Utils/Move.py
-chmod +x %buildroot%python3_sitelibdir/%name/Players/PyChess.py
-rm -rf %buildroot%_datadir/menu/
-
+%pyproject_install
 %find_lang %name
 
 %files -f %name.lang
-%doc README.md LICENSE AUTHORS
+%doc AUTHORS LICENSE README.md
+%python3_sitelibdir/%name/
+%python3_sitelibdir/*.dist-info/
 %_bindir/%name
 %_datadir/%name/
-%python3_sitelibdir/%name/
-%python3_sitelibdir/*.egg-info
 %_datadir/gtksourceview-3.0/language-specs/pgn.lang
-%_datadir/appdata/pychess.appdata.xml
+%_datadir/mime/packages/%name.xml
+%_datadir/metainfo/%name.metainfo.xml
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
-%_pixmapsdir/*
 %_man1dir/*
 
 %changelog
+* Mon Apr 17 2023 Leonid Znamenok <respublica@altlinux.org> 1.0.4-alt1
+- New version 1.0.4.
+- python3_build and python3_install replaced with pyproject_*
+- Changed building mechanism to build from upstream tag
+
 * Wed Mar 25 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.12.4-alt3
 - Porting to python3.
 
