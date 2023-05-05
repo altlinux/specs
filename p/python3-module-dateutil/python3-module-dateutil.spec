@@ -3,10 +3,11 @@
 %def_without check
 
 %define oname dateutil
+%define pypi_name python-dateutil
 
 Name: python3-module-%oname
 Version: 2.8.2
-Release: alt1
+Release: alt2
 
 Summary: Extensions to the standard datetime module
 
@@ -24,6 +25,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Patch1: %oname-2.7.3-alt-tests.patch
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 BuildRequires: tzdata
 
@@ -75,6 +78,9 @@ py.test3
 %python3_sitelibdir/dateutil
 
 %changelog
+* Thu May 04 2023 Stanislav Levin <slev@altlinux.org> 2.8.2-alt2
+- Mapped PyPI name to distro's one.
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.2-alt1
 - new version 2.8.2 (with rpmrb script)
 

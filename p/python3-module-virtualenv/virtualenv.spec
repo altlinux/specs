@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 20.20.0
+Version: 20.23.0
 Release: alt1
 Summary: Virtual Python Environment builder
 License: MIT
@@ -14,34 +14,19 @@ Url: https://pypi.org/project/virtualenv/
 VCS: https://github.com/pypa/virtualenv
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
 # system seed wheels
 Requires: python3-module-system-seed-wheels-wheels
-
 # relax deps for windows support,
 # note: don't remove them since some external packages may rely on these modules
 %add_findreq_skiplist %python3_sitelibdir/virtualenv/discovery/windows/*
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(hatch-vcs)
-BuildRequires: python3(hatchling)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires
-BuildRequires: python3(platformdirs)
-BuildRequires: python3(distlib)
-BuildRequires: python3(filelock)
-
-BuildRequires: python3(pip)
-BuildRequires: python3(flaky)
-BuildRequires: python3(packaging)
-BuildRequires: python3(pytest_freezegun)
-BuildRequires: python3(pytest_mock)
-BuildRequires: python3(pytest_randomly)
-BuildRequires: python3(pytest_timeout)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra test
 BuildRequires: python3-module-system-seed-wheels-wheels
 %endif
 
@@ -74,16 +59,9 @@ in newly created environment by invoking /your/dir/bin/python
 
 # remove all bundled seed wheels
 rm src/virtualenv/seed/wheels/embed/*.whl
-
-# if build from git source tree
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
-git init
-git config user.email author@example.com
-git config user.name author
-git add .
-git commit -m 'release'
-git tag '%version'
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -103,6 +81,9 @@ export PIP_FIND_LINKS=%system_wheels_path
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 04 2023 Stanislav Levin <slev@altlinux.org> 20.23.0-alt1
+- 20.20.0 -> 20.23.0.
+
 * Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 20.20.0-alt1
 - 20.19.0 -> 20.20.0.
 
