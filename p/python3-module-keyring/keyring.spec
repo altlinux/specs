@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 23.14.0
-Release: alt1
+Release: alt2
 
 Summary: Keyring provides an easy way to access the system keyring service
 
@@ -27,6 +27,9 @@ BuildRequires: python3-module-importlib-metadata
 BuildRequires: python3-module-secretstorage
 BuildRequires: python3-module-jaraco.classes
 %endif
+
+# ALT#46056
+Requires: python3-module-importlib_metadata
 
 %description
 The Python keyring lib provides an easy way to access the system
@@ -57,6 +60,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri May 05 2023 Grigory Ustinov <grenka@altlinux.org> 23.14.0-alt2
+- Add runtime dependency on importlib_metadata (Closes: #45056).
+
 * Sun Feb 26 2023 Grigory Ustinov <grenka@altlinux.org> 23.14.0-alt1
 - Build new version (Closes: #45387).
 
