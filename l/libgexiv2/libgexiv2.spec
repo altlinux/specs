@@ -3,12 +3,12 @@
 %define api_ver 0.10
 
 %def_enable gtk_doc
-%def_disable python2
 %def_enable vala
+%def_enable python3
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
@@ -20,10 +20,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson gcc-c++ libexiv2-devel libgio-devel gobject-introspection-devel
-BuildRequires:  python3-module-pygobject3-devel
+%{?_enable_python3:BuildRequires: python3-module-pygobject3-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
-%{?_enable_python2:BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-pygobject3-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 
 %description
@@ -71,16 +69,10 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the gexiv2 library.
 
-%package -n python-module-%_name
-Summary: Python bindings for at-spi
-Group: Development/Python
-
-%description -n python-module-%_name
-This package provides Python bindings for the gexiv2 library.
-
 %package -n python3-module-%_name
 Summary: Python3 bindings for at-spi
 Group: Development/Python3
+BuildArch: noarch
 
 %description -n python3-module-%_name
 This package provides Python3 bindings for the gexiv2 library.
@@ -93,15 +85,16 @@ This package provides Python3 bindings for the gexiv2 library.
 %meson \
 	-Dintrospection=true \
 	%{?_enable_vala:-Dvapi=true} \
-	%{?_enable_gtk_doc:-Dgtk_doc=true}
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_disable_python3:-Dpython3=false}
+%nil
 %meson_build
 
 %install
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%name.so.*
@@ -119,14 +112,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files gir-devel
 %_girdir/GExiv2-%api_ver.gir
 
-%if_enabled python2
-%files -n python-module-%_name
-%python_sitelibdir/gi/overrides/GExiv2.py*
-%endif
-
+%{?_enable_python3:
 %files -n python3-module-%_name
-%python3_sitelibdir/gi/overrides/GExiv2.py*
-%python3_sitelibdir/gi/overrides/__pycache__/GExiv2.cpython-*.pyc
+%python3_sitelibdir_noarch/gi/overrides/GExiv2.py*
+%python3_sitelibdir_noarch/gi/overrides/__pycache__/GExiv2.cpython-*.pyc}
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -134,6 +123,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat May 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt1
+- 0.14.1
+
 * Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
 - 0.14.0
 
