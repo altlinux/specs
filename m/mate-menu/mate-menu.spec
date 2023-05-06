@@ -1,6 +1,6 @@
 Name:    mate-menu
 Version: 22.04.2
-Release: alt4
+Release: alt5
 
 Summary: An Advanced Menu for the MATE Desktop
 # MIT is needed for keybinding.py
@@ -33,6 +33,7 @@ Patch3: alt-use-themed-app-list.patch
 Patch4: alt-set-start-button-gsettings.patch
 Patch5: alt-desktop-place-fix.patch
 Patch6: fix-version.patch
+Patch7: alt-category-without-icon.patch
 
 %description
 This is MATE Menu, a fork of MintMenu. An advanced menu for MATE.
@@ -62,6 +63,9 @@ Supports filtering, favorites, autosession, and many other features.
 %_man1dir/%name.1*
 
 %changelog
+* Sat May 06 2023 Andrey Cherepanov <cas@altlinux.org> 22.04.2-alt5
+- Fixed categories without icon.
+
 * Wed Mar 01 2023 Leontiy Volodin <lvol@altlinux.org> 22.04.2-alt4
 - Fixed startup settings menu (ALT #45435).
 
