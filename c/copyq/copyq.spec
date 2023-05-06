@@ -1,6 +1,6 @@
 Name: copyq
-Version: 6.4.0
-Release: alt1.1
+Version: 7.0.0
+Release: alt1
 
 Summary: CopyQ - Advanced clipboard manager
 
@@ -58,6 +58,9 @@ support for image formats, command line control and more.
 %_man1dir/%name.1.*
 
 %changelog
+* Sat May 06 2023 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt1
+- new version 7.0.0 (with rpmrb script)
+
 * Fri Mar 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1.1
 - NMU: build with Qt5 (closes: 45722)
 
