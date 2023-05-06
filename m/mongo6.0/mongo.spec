@@ -3,9 +3,9 @@
 %endif
 
 Name: mongo6.0
-Version: 6.0.5
-Release: alt3
-Summary: mongo client shell and tools
+Version: 6.0.6
+Release: alt1
+Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
 Url: https://www.mongodb.org
@@ -187,6 +187,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Fri May 05 2023 Alexei Takaseev <taf@altlinux.org> 6.0.6-alt1
+- 6.0.6
+- Fix 'mongo error: "_FORTIFY_SOURCE"'
+
 * Fri Apr 21 2023 Alexei Takaseev <taf@altlinux.org> 6.0.5-alt3
 - Use GCC 10
 - Fix path
