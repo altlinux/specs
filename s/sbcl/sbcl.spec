@@ -15,7 +15,7 @@
 
 Name: sbcl
 Summary: Steel Bank Common Lisp
-Version: 2.3.3
+Version: 2.3.4
 Release: alt1
 Group: Development/Lisp
 License: BSD
@@ -86,7 +86,7 @@ Patch2: sbcl-2.2.0-personality.patch
 Patch3: sbcl-2.2.0-optflags.patch
 Patch6: sbcl-0.9.5-verbose-build.patch
 Patch8: concurrency-tests-frlock.patch
-Patch9: sbcl-2.2.0-asm-sb-thread.patch
+Patch9: sbcl-2.3.4-asm-sb-thread.patch
 ## upstreamable patches
 Patch50: sbcl-2.0.4-generate_version.patch
 ## upstream patches
@@ -255,6 +255,9 @@ popd
 %_infodir/*.info*
 
 %changelog
+* Fri May 05 2023 Andrey Cherepanov <cas@altlinux.org> 2.3.4-alt1
+- 2.3.4
+
 * Fri Mar 31 2023 Andrey Cherepanov <cas@altlinux.org> 2.3.3-alt1
 - 2.3.3 (ALT #44041)
 - Moved to /usr/lib (ALT #38529).
