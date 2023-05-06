@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name blur-my-shell
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define uuid %_name@aunetx
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -72,6 +72,9 @@ popd
 %doc README.md
 
 %changelog
+* Sat May 06 2023 Yuri N. Sedunov <aris@altlinux.org> 46-alt1
+- 46
+
 * Sun Mar 26 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt1
 - first build for Sisyphus
 
