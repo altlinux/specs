@@ -1,5 +1,5 @@
 Name: makeself
-Version: 2.4.5
+Version: 2.5.0
 Release: alt1
 
 Summary: It's a small shell script that generates a self-extractable archive from a directory
@@ -34,12 +34,15 @@ install -D -m0755 makeself-header.sh %buildroot%_bindir/makeself-header.sh
 install -D -m0644 makeself.1 %buildroot%_man1dir/makeself.1
 
 %files
-%doc README.md makeself.lsm
+%doc README.md
 %_bindir/makeself.sh
 %_bindir/makeself-header.sh
 %_man1dir/*
 
 %changelog
+* Sat May 06 2023 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
+- new version 2.5.0 (with rpmrb script)
+
 * Fri Jul 16 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.5-alt1
 - new version 2.4.5 (with rpmrb script)
 
