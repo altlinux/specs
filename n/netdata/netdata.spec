@@ -9,11 +9,11 @@
 %def_without pyod
 
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 562101d64137a4c6b3310d4a2fed4a1da1bfce8d
+%define release_commit 0a999ffc0e9e9af046733387f21ba487bd5c90fe
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.37.1
+Version: 1.38.1
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -24,7 +24,7 @@ Url: http://netdata.firehol.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-git: https://github.com/firehol/netdata.git
+# Source-url: https://github.com/netdata/netdata/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 Source1: netdata.logrotate
@@ -300,6 +300,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Sat May 06 2023 Vitaly Lipatov <lav@altlinux.ru> 1.38.1-alt1
+- new version 1.38.1 (with rpmrb script)
+
 * Fri Jan 20 2023 Vitaly Lipatov <lav@altlinux.ru> 1.37.1-alt1
 - new version 1.37.1 (with rpmrb script)
 
