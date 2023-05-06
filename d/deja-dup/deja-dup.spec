@@ -1,6 +1,6 @@
 Name: deja-dup
 Version: 44.1
-Release: alt2
+Release: alt3
 
 Summary: Simple backup tool and frontend for duplicity
 
@@ -39,8 +39,7 @@ Requires: duplicity >= 1.2.2-alt2
 Requires: python3(gi)
 #Requires: python3-module-pygobject3 python3-module-pygobject3-pygtkcompat
 
-#Requires: python3-module-requests-oauthlib
-
+Requires: python3-module-pydrive2
 Requires: fuse-gvfs
 
 %description
@@ -94,6 +93,9 @@ desktop-file-validate %buildroot/%_sysconfdir/xdg/autostart/org.gnome.DejaDup.Mo
 #_datadir/help/*
 
 %changelog
+* Sat May 06 2023 Vitaly Lipatov <lav@altlinux.ru> 44.1-alt3
+- add requires: python3-module-pydrive2 (ALT bug 46081)
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 44.1-alt2
 - update build requires, build with gtk4
 - Requires: duplicity >= 1.2.2-alt2
