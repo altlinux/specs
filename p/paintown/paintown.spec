@@ -1,6 +1,6 @@
 Name: paintown
 Version: 3.6.0
-Release: alt2
+Release: alt2.1
 Summary: 2D Fighting Game
 License: GPL-2.0+
 Group: Games/Arcade
@@ -21,7 +21,7 @@ Patch3: Fix_E2K_build.patch
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: cmake
-%ifarch e2k
+%ifarch %e2k
 BuildRequires: gcc-c++
 %else
 %set_gcc_version 10
@@ -39,10 +39,6 @@ BuildRequires: python-dev
 BuildRequires: zlib-devel
 BuildRequires: libfreetype-devel
 BuildRequires: libSDL-devel
-%if 0%{?suse_version}
-BuildRequires: fdupes
-BuildRequires: update-desktop-files
-%endif
 Requires: %name-data = %version
 
 %description
@@ -69,7 +65,7 @@ This package contains the data files.
 %patch1 -p1
 %patch2 -p1
 
-%ifarch e2k
+%ifarch %e2k
 %patch3 -p1
 %endif
 
@@ -117,6 +113,9 @@ install -D -m0755 %SOURCE2 %buildroot%_bindir/%name
 %_datadir/%name-%version
 
 %changelog
+* Fri May 5 2023 Artyom Bystrov <arbars@altlinux.org> 3.6.0-alt2.1
+- fix macros of E2K arch
+
 * Mon May 01 2023 Artyom Bystrov <arbars@altlinux.org> 3.6.0-alt2
 - add e2k support
 
