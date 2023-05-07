@@ -34,7 +34,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        112.0.5615.165
+Version:        113.0.5672.63
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -89,6 +89,10 @@ Patch019: 0019-ALT-Use-system-libusb-libsecret-flatbuffers.patch
 Patch020: 0020-Use-yandex-search-as-default.patch
 Patch021: 0021-Support-VA-API-on-Linux-Ozone-Wayland.patch
 Patch022: 0022-GENTOO-EnumTable-crash.patch
+Patch023: 0023-IWYU-add-cstring-for-std-strlen-in-web_view_impl.cc.patch
+Patch024: 0024-ARCH-Add-missing-typename-to-download-bubble.patch
+Patch025: 0025-ARCH-Add-missing-header.patch
+Patch026: 0026-DEBIAN-lambda-bug-workaround.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -255,6 +259,7 @@ export PATH="$PWD/third_party/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
 
 FLAGS='-Wno-unknown-warning-option -Wno-deprecated-declarations'
+FLAGS+=' -DUSE_SYSTEM_MINIZIP'
 
 export CFLAGS="$FLAGS"
 export CXXFLAGS="$FLAGS"
@@ -508,6 +513,20 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed May 03 2023 Alexey Gladkov <legion@altlinux.ru> 113.0.5672.63-alt1
+- New version (113.0.5672.63).
+- Security fixes:
+  - CVE-2023-2459: Inappropriate implementation in Prompts.
+  - CVE-2023-2460: Insufficient validation of untrusted input in Extensions.
+  - CVE-2023-2461: Use after free in OS Inputs.
+  - CVE-2023-2462: Inappropriate implementation in Prompts.
+  - CVE-2023-2463: Inappropriate implementation in Full Screen Mode.
+  - CVE-2023-2464: Inappropriate implementation in PictureInPicture.
+  - CVE-2023-2465: Inappropriate implementation in CORS.
+  - CVE-2023-2466: Inappropriate implementation in Prompts.
+  - CVE-2023-2467: Inappropriate implementation in Prompts.
+  - CVE-2023-2468: Inappropriate implementation in PictureInPicture.
+
 * Thu Apr 20 2023 Alexey Gladkov <legion@altlinux.ru> 112.0.5615.165-alt1
 - New version (112.0.5615.165).
 - Security fixes:
