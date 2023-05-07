@@ -1,5 +1,5 @@
 Name: helmfile
-Version: 0.150.0
+Version: 0.153.1
 Release: alt1
 
 Summary: Deploy Kubernetes Helm Charts
@@ -60,5 +60,8 @@ install -m755 ${HOME}/go/bin/helmfile %buildroot/%_bindir/helmfile
 %_bindir/helmfile
 
 %changelog
+* Mon May 08 2023 Vitaly Lipatov <lav@altlinux.ru> 0.153.1-alt1
+- new version 0.153.1 (with rpmrb script)
+
 * Mon May 08 2023 Vitaly Lipatov <lav@altlinux.ru> 0.150.0-alt1
 - initial build for ALT Sisyphus (thanks, OpenSUSE!)
