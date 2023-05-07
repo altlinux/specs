@@ -1,6 +1,6 @@
 Name:    mate-menu
 Version: 22.04.2
-Release: alt5
+Release: alt6
 
 Summary: An Advanced Menu for the MATE Desktop
 # MIT is needed for keybinding.py
@@ -63,6 +63,9 @@ Supports filtering, favorites, autosession, and many other features.
 %_man1dir/%name.1*
 
 %changelog
+* Sun May 07 2023 Andrey Cherepanov <cas@altlinux.org> 22.04.2-alt6
+- Use applications-other icon for categories without icon.
+
 * Sat May 06 2023 Andrey Cherepanov <cas@altlinux.org> 22.04.2-alt5
 - Fixed categories without icon.
 
