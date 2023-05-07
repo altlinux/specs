@@ -1,29 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name asyncpg
 
+# tests require running PostgreSQL DBMS
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.26.0
+Version: 0.27.0
 Release: alt1
 
 Summary: A fast PostgreSQL Database Client Library for Python/asyncio
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/asyncpg
+Vcs: https://github.com/MagicStack/asyncpg
 
 Source0: %name-%version.tar
 Source1: submodules.tar
+Source2: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(cython)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(flake8)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -37,6 +38,12 @@ the PostgreSQL protocol may work, but are not being actively tested.
 
 %prep
 %setup -a1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_tox
+%endif
 
 %build
 %pyproject_build
@@ -45,9 +52,7 @@ the PostgreSQL protocol may work, but are not being actively tested.
 %pyproject_install
 
 %check
-# tests require running postgresql, so they are disables
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_unittest
 
 %files
 %doc README.rst LICENSE AUTHORS
@@ -55,6 +60,9 @@ the PostgreSQL protocol may work, but are not being actively tested.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat May 06 2023 Anton Zhukharev <ancieg@altlinux.org> 0.27.0-alt1
+- New version.
+
 * Sun Aug 07 2022 Anton Zhukharev <ancieg@altlinux.org> 0.26.0-alt1
 - initial build for Sisyphus
 

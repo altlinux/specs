@@ -5,27 +5,27 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.6.2
+Version: 0.7.0
 Release: alt1
 
 Summary: Async database support for Python
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/databases
+Vcs: https://github.com/encode/databases.git
+BuildArch: noarch
 
 Source0: %name-%version.tar
-Patch0: databases-0.6.2-alt-fix_breaking_changes_in_sqlalchemy_cursor.patch
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-BuildArch: noarch
 
 %description
 Databases gives you simple asyncio support for a range of databases.
@@ -38,7 +38,12 @@ such as Starlette, Sanic, Responder, Quart, aiohttp, Tornado, or FastAPI.
 
 %prep
 %setup
-%patch0 -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_tox
+%endif
 
 %build
 %pyproject_build
@@ -47,8 +52,7 @@ such as Starlette, Sanic, Responder, Quart, aiohttp, Tornado, or FastAPI.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %doc README.md LICENSE.md CHANGELOG.md
@@ -56,6 +60,9 @@ such as Starlette, Sanic, Responder, Quart, aiohttp, Tornado, or FastAPI.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat May 06 2023 Anton Zhukharev <ancieg@altlinux.org> 0.7.0-alt1
+- New version.
+
 * Tue Nov 15 2022 Anton Zhukharev <ancieg@altlinux.org> 0.6.2-alt1
 - 0.6.1 -> 0.6.2
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.1
-Release: alt2
+Release: alt3
 
 Summary: A flexible forms validation and rendering library for python web development
 
@@ -27,7 +27,7 @@ BuildRequires: python3-module-sphinx-issues
 BuildRequires: python3-module-sphinxcontrib-log-cabinet
 
 %if_with check
-BuildRequires: python3-module-email_validator
+BuildRequires: python3-module-email-validator
 %endif
 
 %description
@@ -87,6 +87,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Sat May 06 2023 Anton Zhukharev <ancieg@altlinux.org> 3.0.1-alt3
+- Fixed %%check BR.
+
 * Wed Jan 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
 - Built with pyproject macros.
 - Built with check.

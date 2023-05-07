@@ -5,7 +5,7 @@
 
 Name: python3-module-dns
 Version: 2.2.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: DNS toolkit
@@ -29,6 +29,9 @@ BuildRequires: pytest3
 
 # optional
 %add_python3_req_skip curio curio.socket
+
+%py3_provides %oname
+Provides: python3-module-%oname
 
 %description
 dnspython is a DNS toolkit for Python. It supports almost all
@@ -59,6 +62,9 @@ py.test3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 06 2023 Anton Zhukharev <ancieg@altlinux.org> 1:2.2.0-alt2
+- (NMU) Added missing provides.
+
 * Sat Feb 12 2022 Anton Midyukov <antohami@altlinux.org> 1:2.2.0-alt1
 - new version (2.2.0) with rpmgs script
 - enable check

@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-
+%define pypi_name python-jose
 %define oname jose
 
 Name: python3-module-%oname
 Version: 3.3.0
-Release: alt2
+Release: alt3
 Summary: JOSE implementation in Python
 Group: Development/Python3
 License: MIT
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 # Due to version of ecdsa 0.15, which is available in YUM repo already
 # https://github.com/mpdavis/python-jose/issues/176#issuecomment-642352816
 Patch1: %oname-fedora-disable-test_key_too_short.patch
+
+Provides: python3-module-%pypi_name
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-wheel
@@ -65,6 +67,9 @@ Documentation: https://python-jose.readthedocs.org/en/latest/
 %python3_sitelibdir/python_jose-%version.dist-info
 
 %changelog
+* Sat May 06 2023 Anton Zhukharev <ancieg@altlinux.org> 3.3.0-alt3
+- (NMU) Added missing provide.
+
 * Wed Dec 21 2022 Anton Farygin <rider@altlinux.ru> 3.3.0-alt2
 - built without python3-module-pytest-runner (closes: #44634)
 
