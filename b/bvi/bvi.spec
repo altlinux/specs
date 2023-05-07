@@ -1,5 +1,5 @@
 Name: bvi
-Version: 1.4.0
+Version: 1.4.2
 Release: alt1
 
 Summary: Display-oriented editor for binary files
@@ -40,5 +40,8 @@ sed -i "s@/usr/local/share/bmore.help@%_datadir/%name/bmore.help@" bmore.1
 %_man1dir/*.1*
 
 %changelog
+* Sun May 07 2023 Artem Kurashov <saahriktu@altlinux.org> 1.4.2-alt1
+- New 1.4.2 version
+
 * Fri May 05 2023 Artem Kurashov <saahriktu@altlinux.org> 1.4.0-alt1
 - Initial package
