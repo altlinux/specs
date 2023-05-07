@@ -1,6 +1,6 @@
 Name: texmaker
-Version: 5.1.3
-Release: alt2
+Version: 5.1.4
+Release: alt1
 
 Summary: free cross-platform LaTeX editor with a Qt interface
 License: GPLv2+
@@ -64,6 +64,9 @@ rm -fr hunspell singleapp
 
 
 %changelog
+* Sun May 07 2023 Ilya Mashkin <oddity@altlinux.ru> 5.1.4-alt1
+- 5.1.4
+
 * Sun May 01 2022 Ilya Mashkin <oddity@altlinux.ru> 5.1.3-alt2
 - Fix build on ppc64le and e2k
 
