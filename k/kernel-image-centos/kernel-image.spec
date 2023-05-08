@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 307
+%define centos_release 309
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -638,6 +638,24 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon May 08 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.309-alt1.el9
+- Updated to kernel-5.14.0-309.el9:
+  + ata: driver update
+  + e1000e: driver update for RHEL-9.3.0
+  + ipvlan: phase-1 backports for RHEL-9.3
+  + macvlan: Allow some packets to bypass broadcast queue
+  + net/other: phase-1 backports for RHEL-9.3
+  + net: tunnels: Backport upstream fixes to RHEL 9.
+  + redhat: configs: fix CONFIG_WERROR replace in build_configs
+  + redhat: Remove editconfig
+  + [RHEL-9.3.0] dmaengine updates
+  + [RHEL-9.3.0] IOMMU and DMA API Updates for 9.3
+  + RHEL9 consolidated CXL update from 6.2
+  + rtnetlink: advertise allmulti counter
+  + scsi: ses: a bugfix
+  + SCSI updates for 9.3
+  + sfc: update to 6.3
+
 * Wed May 03 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.307-alt1.el9
 - Updated to kernel-5.14.0-307.el9:
   + Add support for QoS Features
