@@ -1,9 +1,9 @@
 Name: minivmac
 Version: 36.04
-Release: alt1
+Release: alt1.1
 Group: Emulators
 Summary: MacPlus emulator
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 %e2k
 License: GPLv2
 Source: %name-%version.src.tgz
 # wget -r -np -nH --cut-dirs=1 http://www.gryphel.com/c/minivmac/index.html
@@ -48,6 +48,9 @@ install minivmac minivmacII %buildroot/%_bindir/
 %_bindir/*
 
 %changelog
+* Mon May 8 2023 Artyom Bystrov <arbars@altlinux.org> 36.04-alt1.1
+- add e2k macros in ExclusiveArch
+
 * Thu Feb 20 2020 Fr. Br. George <george@altlinux.ru> 36.04-alt1
 - Autobuild version bump to 36.04
 
