@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.9
+Version: 1.3.10
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Thu May 04 2023 Andrey Cherepanov <cas@altlinux.org> 1.3.10-alt1
+- proxy: appended attention about usage username and password (ALT #37186).
+
 * Mon Apr 17 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.9-alt1
 - Remove extra Unicode characters from the condition in which the check
  is made whether the "UNIMAP" variable is set, the same for "KEYTABLE".
