@@ -6,10 +6,9 @@
 %def_disable check
 %endif
 
-
 Name: %parent-%child
 Version: 0.1.5
-Release: alt15
+Release: alt16
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -209,6 +208,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Mon May 08 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt16
+- altboot: fixed timeout event on slow image loading (ALT #44107)
+
 * Fri May 05 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt15
 - interactive: introduce new IM_fatal() API call (ALT #44108)
 - switch to localdev boot method in any case
