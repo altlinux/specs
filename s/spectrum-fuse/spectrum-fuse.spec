@@ -2,7 +2,7 @@
 
 Name:          spectrum-fuse
 Version:       1.5.8
-Release:       alt0.2
+Release:       alt0.3
 Summary:       The Free Unix Spectrum Emulator
 License:       GPLv2
 Group:         Emulators
@@ -74,6 +74,8 @@ find %buildroot -name 'fuse.png' -type f | while read f; do nf=$(sed "s|fuse.png
 
 install -pm0644 %{SOURCE3} .
 
+chmod +x %buildroot%_bindir/%name
+
 %files
 %doc README.z88sdk
 %doc README AUTHORS COPYING ChangeLog THANKS
@@ -86,6 +88,9 @@ install -pm0644 %{SOURCE3} .
 %_iconsdir/hicolor/*/mimetypes/application-x-spectrum.png
 
 %changelog
+* Mon May 08 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.8-alt0.3
+- Set executable bit to program (ALT #38352).
+
 * Fri Oct 22 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.8-alt0.2
 - Fixed build for Elbrus.
 
