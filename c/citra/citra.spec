@@ -24,7 +24,7 @@
 
 Name: citra
 Version: 1769
-Release: alt1
+Release: alt1.1
 
 Summary: Nintendo 3DS emulator
 License: GPLv2
@@ -33,7 +33,7 @@ Group: Emulators
 Url: https://%name-emu.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64 ppc64le
+ExclusiveArch: x86_64 ppc64le %e2k
 
 # https://github.com/%name-emu/%name-nightly/archive/nightly-%version/%name-nightly-nightly-%version.tar.gz
 Source0: %name-nightly-nightly-%version.tar
@@ -180,6 +180,9 @@ ctest
 %_man6dir/%name-qt.6*
 
 %changelog
+* Mon May 8 2023 Artyom Bystrov <arbars@altlinux.org> 1769-alt1.1
+- Add E2K arch in ExclusiveArch
+
 * Fri Jun 10 2022 Nazarov Denis <nenderus@altlinux.org> 1769-alt1
 - Version Nightly 1769
 
