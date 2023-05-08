@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.1
+Version: 5.1.1
 Release: alt1
 
 Summary: Tool for managing your YubiKey configuration
@@ -12,27 +12,10 @@ License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/yubikey-manager/
 Vcs: https://github.com/Yubico/yubikey-manager
+BuildArch: noarch
 
 Source0: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(poetry-core)
-
-%if_with check
-BuildRequires: python3(unittest)
-BuildRequires: python3(fido2)
-BuildRequires: python3(click)
-BuildRequires: python3(makefun)
-BuildRequires: python3(OpenSSL)
-BuildRequires: python3(keyring)
-BuildRequires: python3(importlib-metadata)
-BuildRequires: python3(jaraco.classes)
-BuildRequires: python3(jeepney)
-BuildRequires: python3(secretstorage)
-BuildRequires: libpcsclite-devel
-%endif
-
-BuildArch: noarch
+Source1: %pyproject_deps_config_name
 
 Requires: ykpers
 Requires: libykpers-1
@@ -42,11 +25,26 @@ Provides: ykman
 
 %py3_provides %pypi_name
 
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%add_pyproject_deps_check_filter pyinstaller
+%pyproject_builddeps_metadata_extra main
+%pyproject_builddeps_check
+%endif
+
 %description
 Python 3.6 (or later) library for configuring a YubiKey.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
 %pyproject_build
@@ -57,7 +55,7 @@ Python 3.6 (or later) library for configuring a YubiKey.
 install -pD -m0644 man/ykman.1 %buildroot%_man1dir/ykman.1
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc COPYING NEWS
@@ -66,6 +64,9 @@ install -pD -m0644 man/ykman.1 %buildroot%_man1dir/ykman.1
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 08 2023 Anton Zhukharev <ancieg@altlinux.org> 5.1.1-alt1
+- New version.
+
 * Sun Mar 05 2023 Anton Zhukharev <ancieg@altlinux.org> 5.0.1-alt1
 - 4.0.9 -> 5.0.1.
 - Removed ykman subpackage.
