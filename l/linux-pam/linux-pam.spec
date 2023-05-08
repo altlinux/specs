@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -12,6 +12,7 @@ Url: https://github.com/linux-pam
 %def_enable nls
 %def_enable audit
 %def_enable selinux
+%def_enable lastlog
 
 # Linux-PAM name suffix
 %define _pam_name_suffix	0
@@ -46,7 +47,7 @@ BuildRequires: flex
 BuildRequires: libdb4-devel
 
 # Required for docs.
-BuildRequires: docbook-dtds docbook-style-xsl xsltproc w3m
+BuildRequires: docbook5-schemas docbook5-style-xsl xsltproc w3m
 
 # Required for audit support.
 %{?_enable_audit:BuildRequires: libaudit-devel}
@@ -174,6 +175,7 @@ find -type f \( -name .cvsignore -o -name \*~ -o -name \*.orig \) -delete
 	--disable-prelude \
 	--disable-unix \
 	--enable-Werror \
+	%{subst_enable lastlog} \
 	%{subst_enable selinux} \
 	%{subst_enable audit} \
 	%{subst_enable nls} \
@@ -265,7 +267,7 @@ mkdir -p %buildroot%docdir/html
 mv %buildroot%docdir/*.html %buildroot%docdir/html/
 install -pm644 alt/PAM-Policy.ALT AUTHORS NEWS Copyright %buildroot%docdir/
 find %buildroot%docdir/ -type f -size +4k \( -iname changelog -or -name \*.txt -or -name \*.ps \) -print0 |
-	xargs -r0 bzip2 -9f --
+	xargs -r0 xz -9f --
 
 # buildreq substitution rules
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
@@ -323,6 +325,7 @@ done
 %config(noreplace) %_secdir/limits.d
 %config(noreplace) %_secdir/namespace.*
 %config(noreplace) %_secdir/pam_env.conf
+%config(noreplace) %_secdir/pwhistory.conf
 %config(noreplace) %_sysconfdir/environment
 %_tmpfilesdir/faillock.conf
 %dir /var/run/faillock/
@@ -349,6 +352,9 @@ done
 %docdir/Linux-PAM*
 
 %changelog
+* Sun May 07 2023 Dmitry V. Levin <ldv@altlinux.org> 1.5.3-alt1
+- v1.5.2 -> v1.5.3.
+
 * Fri Sep 03 2021 Dmitry V. Levin <ldv@altlinux.org> 1.5.2-alt1
 - v1.5.1-67-g49e3ffcb -> v1.5.2.
 
