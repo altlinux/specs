@@ -5,7 +5,7 @@
 
 Name:     kernelshark
 Version:  2.2.0
-Release:  alt1
+Release:  alt2
 # Epoch incremented, because previously kernelshark is packaged from trace-cmd
 # spec which have much bigger version number (2.9.1).
 Epoch:    1
@@ -15,6 +15,7 @@ License:  GPL-2.0 and LGPL-2.1
 Group:    Development/Debug
 Url:      https://kernelshark.org/
 Vcs:      https://git.kernel.org/pub/scm/utils/trace-cmd/kernel-shark.git
+Requires: trace-cmd
 
 Source:   %name-%version.tar
 
@@ -22,7 +23,8 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: banner
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
-BuildRequires: fonts-ttf-freefont /usr/bin/fc-list
+BuildRequires: fontconfig
+BuildRequires: fonts-ttf-freefont
 BuildRequires: gcc-c++
 BuildRequires: libappstream-glib
 BuildRequires: libaudit-devel
@@ -79,6 +81,9 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/*.appdata.xml
 %_metainfodir/*.appdata.xml
 
 %changelog
+* Mon May 08 2023 Vitaly Chikunov <vt@altlinux.org> 1:2.2.0-alt2
+- Add dependence on trace-cmd (ALT#46075).
+
 * Thu Apr 27 2023 Alexey Shabalin <shaba@altlinux.org> 1:2.2.0-alt1
 - Updated to kernelshark-v2.2.0 (2023-01-21).
 

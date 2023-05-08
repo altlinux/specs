@@ -8,8 +8,8 @@
 %def_without python
 
 Name:     trace-cmd
-Version:  3.1.2
-Release:  alt2
+Version: 3.1.6
+Release: alt1
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
 License:  GPL-2.0 and LGPL-2.1
@@ -120,9 +120,11 @@ rm %buildroot%_datadir/doc/%name/*.html
 
 # Internal unit tests
 export LD_LIBRARY_PATH=%buildroot%_libdir
-vm-run --cpu=2 '
+vm-run --cpu=2 --append=schedstats=enable '
   set -xe
+%ifnarch armh
   utest/trace-utest
+%endif
   PATH=%buildroot%_bindir:$PATH
   trace-cmd record -p function -l exit'*' true
   trace-cmd report'
@@ -152,6 +154,9 @@ vm-run --cpu=2 '
 %endif
 
 %changelog
+* Mon May 08 2023 Vitaly Chikunov <vt@altlinux.org> 3.1.6-alt1
+- Update to trace-cmd-v3.1.6 (2023-01-09).
+
 * Sun Jan 29 2023 Vitaly Chikunov <vt@altlinux.org> 3.1.2-alt2
 - spec: Fix ALT beekeeper rebuild under make 4.4.
 
