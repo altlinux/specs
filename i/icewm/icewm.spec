@@ -4,7 +4,7 @@
 %def_with markdown
 
 Name: %realname
-Version: 3.3.3
+Version: 3.3.4
 Release: alt1
 Epoch:3
 
@@ -73,13 +73,6 @@ Extra themes that included to IceWM distribution
 %prep
 %setup
 %patch0 -p1
-%ifarch armh
-sed -i 's@-Wl,--as-needed @&-Wl,--allow-shlib-undefined@' src/CMakeLists.txt
-%endif
-%ifarch %e2k
-# somehow works with GCC, but it's bad code from any point of view
-sed -i 's/\? directory : "."/? (char*)directory : "."/' src/misc.cc
-%endif
 
 %build
 %cmake	-DPREFIX=%_prefix \
@@ -95,7 +88,7 @@ sed -i 's/\? directory : "."/? (char*)directory : "."/' src/misc.cc
 	-DCONFIG_DEFAULT_THEME="AltClearlooks/default.theme" \
 	-DCONFIG_DEFAULT_BACKGROUND="/usr/share/design/current/backgrounds/default.png" \
 	-DICEHELPIDX=%_icewmdocdir/ru/icewm.html \
-	-DUSE_DOC_LANG=ru
+	-DTRANSLANG=ru
 %cmake_build
 
 %install
@@ -154,6 +147,10 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Mon May 08 2023 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.3.4-alt1
+- 3.3.4
+- removed unneeded workarounds
+
 * Sun Apr 16 2023 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.3.3-alt1
 - 3.3.3
 - fixed many errors and typos in russian translations and
