@@ -1,5 +1,5 @@
 Name: memtest86+
-Version: 6.10
+Version: 6.20
 Release: alt1
 
 Summary: Memory test for x86 architecture
@@ -93,6 +93,9 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README.md
 
 %changelog
+* Mon May 08 2023 Anton Midyukov <antohami@altlinux.org> 6.20-alt1
+- new version (6.20) with rpmgs script
+
 * Sat Feb 04 2023 Anton Midyukov <antohami@altlinux.org> 6.10-alt1
 - new version (6.10) with rpmgs script
 
