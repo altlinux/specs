@@ -2,7 +2,7 @@
 
 Name: xpra
 Version: 4.4.4
-Release: alt2
+Release: alt3
 
 Summary: X Persistent Remote Applications
 License: GPLv2
@@ -91,6 +91,8 @@ Requires: python3-module-pyinotify python3-module-rencode python3-module-lz4 pyt
 
 Requires: libgtk+3-gir
 
+Requires: cert-sh-functions
+
 %ifarch %e2k
 %define py_flags --without-mdns --without-html5 --without-minify
 %else
@@ -140,6 +142,7 @@ mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 mkdir -p %buildroot%_udevrulesdir/
 mv -f %buildroot/usr/lib/udev/rules.d/71-xpra-virtual-pointer.rules %buildroot%_udevrulesdir/
 #install -m644 -D service/xpra.service %buildroot%_unitdir/%name.service
+mkdir -p %buildroot%_sysconfdir/%name/ssl/{certs,private}
 
 # TODO
 rm -v %buildroot/usr/lib/sysusers.d/xpra.conf
@@ -149,6 +152,11 @@ rm -rv %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 
 %pre
 %_sbindir/groupadd -r -f xpra &>/dev/null ||:
+
+%post
+# Create SSL certificate for xpra
+SSLDIR=%_sysconfdir/%name/ssl cert-sh generate xpra ||:
+ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 
 %files
 %dir %_sysconfdir/%name/
@@ -180,8 +188,13 @@ rm -rv %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 %_udevrulesdir/71-xpra-virtual-pointer.rules
 %_sysconfdir/dbus-1/system.d/xpra.conf
 %_sysconfdir/X11/xorg.conf.d/90-xpra-virtual.conf
+%dir %_sysconfdir/%name/ssl/certs
+%attr(0700, root, root) %dir %_sysconfdir/%name/ssl/private
 
 %changelog
+* Tue May 9 2023 Elena Mishina <lepata@altlinux.org> 4.4.4-alt3
+- Generate ssl cert and key to /etc/xpra/ssl dir (closes: #40223)
+
 * Sat Mar 25 2023 Andrey Cherepanov <cas@altlinux.org> 4.4.4-alt2
 - NMU: remove internal modules from requirements
 
