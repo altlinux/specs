@@ -25,6 +25,7 @@
 %define arm_arch armv7-a
 %define arm_fp_isa vfpv3-d16
 %define arm_fp_abi hard
+%define target_no_default_pie 1
 %endif
 
 %if "%target_arch" == "mipsel"
@@ -33,6 +34,7 @@
 %define target_ld_linux /lib/ld.so.1
 %define target_libdir lib
 %define target_has_gold 1
+%define target_no_default_pie 1
 %endif
 
 
@@ -62,7 +64,7 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20230312
+Version: 20230508
 Release: alt1
 Packager: Alexey Sheplyakov <asheplyakov@altlinux.org>
 Summary: GCC cross-toolchain for %target
@@ -71,20 +73,19 @@ Group: Development/C
 
 ExclusiveArch: x86_64
 
-%define gcc_version 13.0.0.20230312.gf23dc726875
+%define gcc_version 13.1.0
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
 %define binutils_version 2.40
 %define glibc_version 2.37
 %if "%target_arch" == "loongarch64"
-%define kernel_version 6.0
+%define kernel_version 6.1
 %else
 %define kernel_version 5.15
 %endif
 
-Source0: gcc-13-20230312.tar
+Source0: gcc-13.1.0.tar
 Source1: binutils-2.40.tar
 Source2: glibc-2.37.tar
-Source3: kernel-source-6.1.0.tar
 Source4: gmp-6.2.1.tar
 Source5: isl-0.24.tar
 Source6: mpc-1.2.1.tar
@@ -92,10 +93,11 @@ Source7: mpfr-4.1.0.tar
 
 Patch0: 0002_glibc_floatn_multiple_types_error.patch
 
-BuildPreReq: gcc-c++
-BuildPreReq: coreutils flex bison makeinfo perl-Pod-Parser findutils
+BuildRequires: gcc-c++
+BuildRequires: kernel-source-%kernel_version
+BuildRequires: coreutils flex bison makeinfo perl-Pod-Parser findutils
 # Linux' headers_install uses rsync
-BuildPreReq: rsync
+BuildRequires: rsync
 BuildRequires: /usr/bin/qemu-%target_qemu_arch-static
 BuildRequires: python3
 
@@ -168,7 +170,7 @@ mkdir -p -m755 linux binutils gcc glibc
 tar -x --strip-components=1 -f %SOURCE0 -C gcc
 tar -x --strip-components=1 -f %SOURCE1 -C binutils
 tar -x --strip-components=1 -f %SOURCE2 -C glibc
-tar -x --strip-components=1 -f %SOURCE3 -C linux
+find /usr/src/kernel/sources -type f -name 'kernel-source-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C linux
 
 mkdir -p -m755 gcc/gmp gcc/mpc gcc/mpfr gcc/isl
 tar -x --strip-components=1 -f %SOURCE4 -C gcc/gmp
@@ -288,6 +290,8 @@ cd ../obj_gcc_bootstrap
 	--with-arch=rv64gc \
 	--with-abi=lp64d \
 %endif
+	--enable-gnu-unique-object \
+	--enable-linker-build-id \
 	%nil
 
 %make_build all-gcc all-target-libgcc
@@ -334,6 +338,9 @@ export PATH="${stagedir}%prefix/bin:${save_PATH}"
 # gcc
 cd ../obj_gcc
 # XXX: avoid %%configure puts $target libraries in /usr/lib64
+env \
+	ac_cv_file__proc_self_exe=yes \
+	gcc_cv_libc_provides_ssp=yes \
 ../gcc/configure \
 	--target=%target \
 	--host=%{_configure_platform} \
@@ -365,8 +372,16 @@ cd ../obj_gcc
 	--with-arch=rv64gc \
 	--with-abi=lp64d \
 %endif
+	--enable-gnu-unique-object \
+	--enable-linker-build-id \
+%if 0%{?target_no_default_pie} == 0
+	--enable-default-pie \
+%endif
 	%nil
 
+env \
+	ac_cv_file__proc_self_exe=yes \
+	gcc_cv_libc_provides_ssp=yes \
 %make_build
 # XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
 %make_install install DESTDIR=${stagedir}
@@ -470,6 +485,11 @@ install -d -m 755 %buildroot%sysroot/usr/lib
 
 # remove bootstrap toolchain
 rm -rf %buildroot/stage1
+
+
+rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp.a
+rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp_nonshared.a
+rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp.so*
 
 # Leave alone $target libraries
 %add_verify_elf_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
@@ -634,8 +654,6 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %if 0%{?target_has_itm}
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libitm.a
 %endif
-%exclude %prefix/lib/gcc/%target/%gcc_branch/libssp.a
-%exclude %prefix/lib/gcc/%target/%gcc_branch/libssp_nonshared.a
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++.a
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++fs.a
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libsupc++.a
@@ -647,7 +665,6 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %if 0%{?target_has_itm}
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libitm.so*
 %endif
-%exclude %prefix/lib/gcc/%target/%gcc_branch/libssp.so*
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++.so*
 # binunitls
 %exclude %prefix/libexec/gcc/%target/bin/*
@@ -667,8 +684,6 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %if 0%{?target_has_itm}
 %prefix/lib/gcc/%target/%gcc_branch/libitm.a
 %endif
-%prefix/lib/gcc/%target/%gcc_branch/libssp.a
-%prefix/lib/gcc/%target/%gcc_branch/libssp_nonshared.a
 %prefix/lib/gcc/%target/%gcc_branch/libstdc++.a
 %prefix/lib/gcc/%target/%gcc_branch/libstdc++fs.a
 %prefix/lib/gcc/%target/%gcc_branch/libsupc++.a
@@ -681,7 +696,6 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %if 0%{?target_has_itm}
 %prefix/lib/gcc/%target/%gcc_branch/libitm.so*
 %endif
-%prefix/lib/gcc/%target/%gcc_branch/libssp.so*
 %prefix/lib/gcc/%target/%gcc_branch/libstdc++.so*
 
 %files -n cross-glibc-%target_arch
@@ -765,6 +779,12 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Mon May 08 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230508-alt1
+- GCC: updated to release 13.1.0
+- GCC: don't package libssp any more
+- GCC: enabled default-pie on 64-bit architectures
+- Use kernel-source package instead of shipping the kernel tarball in src.rpm
+
 * Fri Mar 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230312-alt1
 - glibc: updated to upstream release 2.37
 - GCC: updated to upstream snapshot 20230312
