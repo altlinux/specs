@@ -1,5 +1,5 @@
 Name: appinstall
-Version: 1.3.3
+Version: 1.4.0
 Release: alt1
 Summary: GUI frontend for install third-party applications
 
@@ -36,13 +36,17 @@ install -pD -m640 %name.pamd %buildroot%_sysconfdir/pam.d/%name
 install -pD -m640 %name.security %buildroot%_sysconfdir/security/console.apps/%name
 
 mkdir -p %buildroot%_datadir/%name
-cp -a %name.svg %name.ui *.qm %buildroot%_datadir/%name
+cp -a %name.svg %name.ui *.qm *.gif %buildroot%_datadir/%name
 install -Dpm 0644 %name.svg %buildroot%_pixmapsdir/%name.svg
 install -Dpm 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
+
+mkdir -p %buildroot%_sysconfdir/%name/allow.d
 
 %files
 %_bindir/%name
 %_sbindir/%name
+%dir %_sysconfdir/%name
+%dir %_sysconfdir/%name/allow.d
 %dir %_datadir/%name/
 %_datadir/%name/*
 %_pixmapsdir/%name.svg
@@ -51,6 +55,13 @@ install -Dpm 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Mon May 08 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
+- Show window immediately and display loading animation (ALT #43747)
+- Show only allowed applications from /etc/appinstall/allow.d (ALT #41900)
+- Change installed icon to QStyle.SP_ArrowDown
+- Get installed application list with new epm play parameter --short (ALT #42812, #42802)
+
+
 * Sun May 15 2022 Andrey Cherepanov <cas@altlinux.org> 1.3.3-alt1
 - Update localization for eepm-3.18.6.
 
