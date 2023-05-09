@@ -8,8 +8,8 @@ BuildRequires: gcc-c++ perl(Date/Format.pm)
 %global shortcommit %(c=%commit; echo ${c:0:7})
 
 Name: asio
-Version: 1.26.0
-Release: alt2
+Version: 1.28.0
+Release: alt1
 
 Summary: A cross-platform C++ library for network programming
 License: Boost Software License
@@ -70,6 +70,9 @@ echo "int main() {}" > src/examples/cpp14/executors/pipeline.cpp
 %_libdir/pkgconfig/asio.pc
 
 %changelog
+* Tue May 09 2023 Ilya Mashkin <oddity@altlinux.ru> 1.28.0-alt1
+- 1.28.0
+
 * Wed Jan 18 2023 Ilya Mashkin <oddity@altlinux.ru> 1.26.0-alt2
 - Fixed build for Elbrus
 
