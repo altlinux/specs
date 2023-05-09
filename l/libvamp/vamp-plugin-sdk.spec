@@ -2,7 +2,7 @@
 
 Name: libvamp
 Version: 2.10.0
-Release: alt1
+Release: alt2
 Summary: An API for audio analysis and feature extraction plugins
 
 License: BSD
@@ -13,6 +13,7 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 Source: https://code.soundsoftware.ac.uk/attachments/download/2588/vamp-plugin-sdk-%version.tar.gz
 Patch0: %name-2.9.0-libdir.patch
 Patch1: %name-2.9.0-examples-Makefile.patch
+Patch2: %name-2.10.0-no-static-libs.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libsndfile-devel
@@ -50,9 +51,10 @@ developing applications that use %name.
 touch examples/Makefile
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
-%__subst 's|/lib/vamp|/%_lib/vamp|g' src/vamp-hostsdk/PluginHostAdapter.cpp
-%__subst 's|/lib/|/%_lib/|g' src/vamp-hostsdk/PluginLoader.cpp
+subst 's|/lib/vamp|/%_lib/vamp|g' src/vamp-hostsdk/PluginHostAdapter.cpp
+subst 's|/lib/|/%_lib/|g' src/vamp-hostsdk/PluginLoader.cpp
 
 %build
 %configure
@@ -64,7 +66,6 @@ find . -name '*.pc.in' -exec sed -i 's|/lib|/%_lib|' {} ';'
 %makeinstall_std LIBDIR=%_libdir
 
 find %buildroot -name '*.la' -exec rm -f {} ';'
-rm -f %buildroot%_libdir/libvamp-*.a
 make clean -C examples
 
 %files
@@ -83,6 +84,9 @@ make clean -C examples
 # %_libdir/*.a
 
 %changelog
+* Tue May 09 2023 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt2
+- FTBFS: do not build static library.
+
 * Sat Jun 20 2020 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt1
 - New version.
 
