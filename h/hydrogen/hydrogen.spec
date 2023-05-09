@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hydrogen
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: Hydrogen Drum Machine
@@ -16,7 +16,7 @@ Patch0: %name-%version-%release.patch
 
 BuildRequires: ccmake ctest doxygen gcc-c++ graphviz ladspa_sdk libalsa-devel libarchive-devel libjack-devel liblo-devel liblrdf-devel
 BuildRequires: libportaudio2-devel libportmidi-devel librubberband-devel libsndfile-devel libtar-devel libpulseaudio-devel cppunit-devel
-BuildRequires: qt5-base-devel qt5-tools-devel qt5-xmlpatterns-devel zlib-devel
+BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel qt5-xmlpatterns-devel zlib-devel
 
 BuildRequires: desktop-file-utils
 
@@ -58,7 +58,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/org.hydrogenmusic.Hydrogen.desktop
 
 %files
-%doc -P AUTHORS ChangeLog README.txt
+%doc -P AUTHORS ChangeLog README.md
 %_bindir/*
 %_datadir/%name/
 %_libdir/*.so
@@ -71,6 +71,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude /usr/include/%name
 
 %changelog
+* Tue May 09 2023 Ivan A. Melnikov <iv@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Mar 24 2022 Ivan A. Melnikov <iv@altlinux.org> 1.1.1-alt1
 - 1.1.1
 - set VERSION_SUFFIX to %%release
