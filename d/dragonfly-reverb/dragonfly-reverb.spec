@@ -5,7 +5,7 @@
 %define _optlevel 3
 
 Name:     dragonfly-reverb
-Version:  3.2.8
+Version:  3.2.10
 Release:  alt1
 
 Summary:  A set of free reverb effects
@@ -104,6 +104,9 @@ find %buildroot%_libdir/lv2 -type f -exec chmod 644 '{}' ';'
 
 
 %changelog
+* Tue May 09 2023 Ivan A. Melnikov <iv@altlinux.org> 3.2.10-alt1
+- 3.2.10
+
 * Thu Dec 29 2022 Ivan A. Melnikov <iv@altlinux.org> 3.2.8-alt1
 - 3.2.8
 
