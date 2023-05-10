@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -129,6 +129,11 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Wed May 10 2023 Anton Midyukov <antohami@altlinux.org> 1.5.5-alt1
+- browser: use firefox-esr on i586 (firefox is not available)
+- install2: add lvm2, cryptsetup to use/install2/full
+- live.mk: add language selection menu to grub-net-install again
+
 * Mon Apr 17 2023 Anton Midyukov <antohami@altlinux.org> 1.5.4-alt1
 - e2k: fix scripts 20-e2k-boot
 - e2k: add live-install feature support
