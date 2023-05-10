@@ -7,6 +7,7 @@
 %define dirsuffix %nil
 
 %define nvidia_sover 1
+%define nvvm_sover 4
 %define nvidia_egl_wayland_libver 1.0.2
 %define libnvidia_egl_wayland libnvidia-egl-wayland%nvidia_egl_wayland_sover
 
@@ -18,7 +19,7 @@
 
 Name: nvidia_glx_libs
 Version: 525.105.17
-Release: alt1
+Release: alt2
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -83,6 +84,7 @@ nvidia CUDA debugger library
 Group: System/Libraries
 Summary: nvidia library
 Requires: ocl-icd
+Requires: libnvidia-nvvm
 %description -n libnvidia-opencl
 nvidia OpenCL library
 
@@ -104,6 +106,12 @@ nvidia library
 Group: System/Libraries
 Summary: nvidia library
 %description -n libnvidia-encode
+nvidia library
+
+%package -n libnvidia-nvvm
+Group: System/Libraries
+Summary: nvidia library
+%description -n libnvidia-nvvm
 nvidia library
 
 %package -n libnvidia-ngx
@@ -145,6 +153,7 @@ install -m 0644 %subd/libnvidia-ptxjitcompiler.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ml.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvcuvid.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-encode.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libnvidia-nvvm.so.%version %buildroot/%_libdir/
 %if "%_lib" != "lib"
 install -m 0644 %subd/libnvoptix.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ngx.so.%version %buildroot/%_libdir/
@@ -178,6 +187,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %files -n libnvidia-encode
 %_libdir/libnvidia-encode.so.%{nvidia_sover}
 %_libdir/libnvidia-encode.so.%version
+%files -n libnvidia-nvvm
+%_libdir/libnvidia-nvvm.so.%{nvvm_sover}
+%_libdir/libnvidia-nvvm.so.%version
 %if "%_lib" != "lib"
 %files -n nvidia-smi
 %_bindir/nvidia-smi
@@ -194,6 +206,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %endif
 
 %changelog
+* Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 525.105.17-alt2
+- package libnvidia-nvvm
+
 * Tue Apr 11 2023 Sergey V Turchin <zerg@altlinux.org> 525.105.17-alt1
 - new version
 - package libcudadebugger
