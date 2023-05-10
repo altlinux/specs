@@ -8,7 +8,7 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.22.0
+Version: 1.22.1
 Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
@@ -19,8 +19,7 @@ Source1: gradle-6.7-bin.zip
 BuildArch: noarch
 
 BuildRequires(pre): /proc rpm-build-java jpackage-utils
-# BuildRequires: java-1.8.0-openjdk-headless java-1.8.0-openjdk-devel
-BuildRequires: java-devel-default
+BuildRequires: java-11-openjdk-devel
 BuildRequires: python3
 BuildRequires: unzip
 #BuildRequires: gradle
@@ -69,7 +68,7 @@ mkdir -p %buildroot/var/lib/linstor
 %package common
 Summary: Common files shared between controller and satellite
 Group: System/Servers
-Requires: jre-headless
+Requires: java-11-openjdk-headless
 
 %description common
 Linstor shared components between linstor-controller and linstor-satellite
@@ -146,6 +145,10 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Wed May 10 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.22.1-alt1
+- 1.22.1
+- add Java 11 dependency, doesn't work with Java 17
+
 * Wed Apr 19 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.22.0-alt1
 - 1.22.0
 
