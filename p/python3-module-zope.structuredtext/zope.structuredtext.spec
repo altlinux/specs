@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.4
+Version: 5.0
 Release: alt1
 
 Summary: StructuredText parser
@@ -69,6 +69,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Wed May 10 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Mon Mar 20 2023 Anton Vyatkin <toni@altlinux.org> 4.4-alt1
 - New version 4.4.
 
