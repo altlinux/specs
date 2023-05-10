@@ -1,4 +1,3 @@
-#global __find_debuginfo_files %nil
 %global optflags_lto %nil
 %define _unpackaged_files_terminate_build 1
 %define rname qemu
@@ -9,7 +8,7 @@
 
 Name: pve-%rname
 Version: 7.2.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -26,6 +25,7 @@ Source5: qemu-kvm.sh
 # /etc/qemu/bridge.conf
 Source12: bridge.conf
 
+Patch: pve-qemu-7.2-vitastor.patch
 %set_verify_elf_method fhs=relaxed
 %add_verify_elf_skiplist %_datadir/%rname/*
 %add_findreq_skiplist %_datadir/%rname/*
@@ -48,6 +48,7 @@ BuildRequires: ipxe-roms-qemu seavgabios seabios edk2-ovmf edk2-aarch64 qboot
 #BuildRequires: librdmacm-devel libibverbs-devel libibumad-devel
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme ninja-build meson
 BuildRequires: libproxmox-backup-qemu-devel >= 1.3.0
+BuildRequires: libvitastor-devel
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -114,6 +115,8 @@ for p in `cat debian/patches/series`; do
     patch -p1 < debian/patches/$p
 done
 
+%patch -p1
+
 %build
 export CFLAGS="%optflags"
 # non-GNU configure
@@ -154,8 +157,9 @@ export CFLAGS="%optflags"
         --enable-numa \
         --enable-opengl \
         --enable-rbd \
+        --enable-vitastor \
         --enable-seccomp \
-	--enable-slirp \
+        --enable-slirp \
         --enable-spice \
         --enable-usb-redir \
         --enable-virglrenderer \
@@ -169,7 +173,6 @@ export CFLAGS="%optflags"
 %makeinstall_std
 
 %define docdir %_docdir/%name-%version
-#mv %buildroot%_docdir/qemu
 mkdir -p %buildroot%docdir
 install -m644 LICENSE MAINTAINERS %buildroot%docdir/
 rm -rf %buildroot%_docdir/qemu
@@ -185,8 +188,8 @@ rm -rf %buildroot%_iconsdir
 
 # TODO:
 # Install qemu-pr-helper service
-#install -m 0644 contrib/systemd/qemu-pr-helper.service %buildroot%_unitdir/qemu-pr-helper.service
-#install -m 0644 contrib/systemd/qemu-pr-helper.socket %buildroot%_unitdir/qemu-pr-helper.socket
+#install -m 0644 contrib/systemd/qemu-pr-helper.service %%buildroot%%_unitdir/qemu-pr-helper.service
+#install -m 0644 contrib/systemd/qemu-pr-helper.socket %%buildroot%%_unitdir/qemu-pr-helper.socket
 # Install rules to use the bridge helper with libvirt's virbr0
 install -D -m 0644 %SOURCE12 %buildroot%_sysconfdir/%name/bridge.conf
 
@@ -211,7 +214,7 @@ rm -f %buildroot%_datadir/%rname/slof.bin
 rm -f %buildroot%_datadir/%rname/u-boot*
 rm -f %buildroot%_datadir/%rname/palcode-clipper
 rm -f %buildroot%_datadir/%rname/opensbi*
-#rm -f %buildroot%_datadir/%rname/edk2-*
+#rm -f %%buildroot%%_datadir/%%rname/edk2-*
 rm -f %buildroot%_datadir/%rname/firmware/*
 rm -f %buildroot%_datadir/%rname/qemu-nsis.bmp
 rm -rf %buildroot%_includedir
@@ -282,8 +285,8 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %config(noreplace) %_sysconfdir/%name/bridge.conf
 # TODO:
 %_bindir/qemu-pr-helper
-#%_unitdir/qemu-pr-helper.service
-#%_unitdir/qemu-pr-helper.socket
+#%%_unitdir/qemu-pr-helper.service
+#%%_unitdir/qemu-pr-helper.socket
 %_libexecdir/vhost-user-gpu
 %_libexecdir/virtfs-proxy-helper
 %_man1dir/virtfs-proxy-helper.*
@@ -301,6 +304,9 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Wed May 10 2023 Alexey Shabalin <shaba@altlinux.org> 1:7.2.0-alt2
+- Add vitastor support (https://vitastor.io).
+
 * Fri Mar 17 2023 Alexey Shabalin <shaba@altlinux.org> 1:7.2.0-alt1
 - 7.2.0-8 (Fixes: CVE-2022-4172)
 - delete cpu-add-Kunpeng-920-cpu-support.patch
