@@ -1,7 +1,7 @@
 %define oname vcpkg-tool
 
 Name: vcpkg
-Version: 2022.10.17
+Version: 2023.04.07
 Release: alt1
 
 Summary: C++ Library Manager
@@ -15,9 +15,11 @@ Url: https://github.com/microsoft/vcpkg-tool
 Source: %name-%version.tar
 Source1: %name.sh
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: catch2-devel
-BuildRequires: libfmt-devel >= 8.1.1
+BuildRequires: libfmt-devel >= 9.1.0
 BuildRequires: cmake
+BuildRequires: cmrc >= 2.0.1
 BuildRequires: gcc-c++
 BuildRequires: ninja-build
 
@@ -33,7 +35,7 @@ or unset the VCPKG_DISABLE_METRICS environment variable.
 %prep
 %setup
 # https://github.com/microsoft/vcpkg-tool/pull/634
-subst 's|inline namespace v8|inline namespace v9|' include/vcpkg/base/fwd/format.h
+# subst 's|inline namespace v8|inline namespace v9|' include/vcpkg/base/fwd/format.h
 
 
 # Fixing line endings...
@@ -47,6 +49,8 @@ ln -svf %_includedir/catch2/ include/
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_TESTING:BOOL=OFF \
+    -DVCPKG_VERSION=%repotag \
+    -DVCPKG_BASE_VERSION=%repotag \
     -DVCPKG_DEVELOPMENT_WARNINGS:BOOL=OFF \
     -DVCPKG_WARNINGS_AS_ERRORS:BOOL=OFF \
     -DVCPKG_BUILD_TLS12_DOWNLOADER:BOOL=OFF \
@@ -54,6 +58,7 @@ ln -svf %_includedir/catch2/ include/
     -DVCPKG_EMBED_GIT_SHA:BOOL=OFF \
     -DVCPKG_BUILD_BENCHMARKING:BOOL=OFF \
     -DVCPKG_ADD_SOURCELINK:BOOL=OFF \
+    -DVCPKG_DEPENDENCY_CMAKERC:BOOL=ON \
     -DVCPKG_DEPENDENCY_EXTERNAL_FMT:BOOL=ON
 %cmake_build
 
@@ -70,6 +75,10 @@ install -D -m 0644 -p "%SOURCE1" "%buildroot%_sysconfdir/profile.d/%name.sh"
 %config(noreplace) %_sysconfdir/profile.d/%name.sh
 
 %changelog
+* Wed May 10 2023 Vitaly Lipatov <lav@altlinux.ru> 2023.04.07-alt1
+- new version 2023.04.07 (with rpmrb script)
+- add BR: cmrc
+
 * Thu Oct 27 2022 Vitaly Lipatov <lav@altlinux.ru> 2022.10.17-alt1
 - new version 2022.10.17 (with rpmrb script)
 
