@@ -1,11 +1,11 @@
-Name:       dragon
-Version:    1.1.1
-Release:    alt1
-License:    GPLv3
-Summary:    Simple drag-and-drop source/sink for X or Wayland
-URL:        https://github.com/mwh/dragon
-Source:     %name-%version.tar.gz
-Group:      System/X11
+Name: dragon
+Version: 1.2.0
+Release: alt1
+License: GPLv3
+Summary: Simple drag-and-drop source/sink for X or Wayland
+Url: https://github.com/mwh/dragon
+Source: %name-%version.tar.gz
+Group: System/X11
 
 # Automatically added by buildreq on Thu Jan 14 2021
 # optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libwayland-client libwayland-cursor libwayland-egl pkg-config python2-base sh4
@@ -32,6 +32,9 @@ install -D %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Wed May 10 2023 Fr. Br. George <george@altlinux.org> 1.2.0-alt1
+- Autobuild version bump to 1.2.0
+
 * Thu Jan 14 2021 Fr. Br. George <george@altlinux.ru> 1.1.1-alt1
 - Initial build for ALT
 
