@@ -5,7 +5,7 @@
 
 Name: libtraceevent
 Version: 1.7.2
-Release: alt1
+Release: alt2
 Summary: Library to parse raw trace event formats
 License: GPL-2.0-only and LGPL-2.1-only
 Group: System/Libraries
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 
 Conflicts: trace-cmd-libs < 2.9.6-alt1
 BuildRequires: asciidoc
+BuildRequires: source-highlight
 BuildRequires: xmlto
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: CUnit-devel
@@ -39,7 +40,8 @@ sed -i 's/,-rpath=\$\$ORIGIN//' scripts/utils.mk
 %build
 %define optflags_lto %nil
 %add_optflags %(getconf LFS_CFLAGS)
-%make_build CFLAGS="%optflags" prefix=%_prefix libdir=%_libdir V=1 all doc
+# Parallel build causing races on e2k.
+%make CFLAGS="%optflags" prefix=%_prefix libdir=%_libdir V=1 all doc
 
 %install
 %makeinstall_std prefix=%_prefix libdir=%_libdir htmldir=%_defaultdocdir/%name doc-install V=1
@@ -48,7 +50,7 @@ rm %buildroot%_libdir/libtraceevent.a
 rm -rf %buildroot%_defaultdocdir/%name
 
 %check
-%make_build test V=1
+%make test V=1
 utest/trace-utest
 
 %files
@@ -64,6 +66,10 @@ utest/trace-utest
 %_man3dir/*.3.*
 
 %changelog
+* Thu May 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.7.2-alt2
+- spec: Disable parallel build.
+- spec: Fix source-highlight warning when building doc.
+
 * Mon May 08 2023 Vitaly Chikunov <vt@altlinux.org> 1.7.2-alt1
 - Update to libtraceevent-1.7.2 (2023-03-27).
 
