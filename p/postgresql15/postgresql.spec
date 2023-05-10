@@ -9,8 +9,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     15
-%define postgresql_minor     2
-%define postgresql_altrel    3
+%define postgresql_minor     3
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -51,7 +51,7 @@ Conflicts: %prog_name > %EVR
 Conflicts: %{prog_name}15-1C
 
 BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python3-dev setproctitle-devel tcl-devel xsltproc zlib-devel
-BuildRequires: libselinux-devel libkrb5-devel
+BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel
 %if_without devel
 BuildRequires: postgresql-devel
 %endif
@@ -362,7 +362,9 @@ export CLANG=/usr/bin/clang-13
     --with-selinux \
     --with-libxslt \
     --with-gnu-ld \
-    --with-ossp-uuid
+    --with-ossp-uuid \
+    --with-lz4 \
+    --with-zstd
 
 %make_build pkglibdir=%_libdir/%PGSQL
 
@@ -945,6 +947,9 @@ fi
 %endif
 
 %changelog
+* Wed May 10 2023 Alexei Takaseev <taf@altlinux.org> 15.3-alt1
+- 15.3 (Fixes CVE-2023-2454, CVE-2023-2455)
+
 * Mon Mar 20 2023 Alexei Takaseev <taf@altlinux.org> 15.2-alt3
 - Delete noreplace for /etc/sysconfig/postgresql
 

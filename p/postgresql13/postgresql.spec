@@ -9,8 +9,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     13
-%define postgresql_minor     10
-%define postgresql_altrel    3
+%define postgresql_minor     11
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -930,6 +930,9 @@ fi
 %endif
 
 %changelog
+* Wed May 10 2023 Alexei Takaseev <taf@altlinux.org> 13.11-alt1
+- 13.11 (Fixes CVE-2023-2454, CVE-2023-2455)
+
 * Mon Mar 20 2023 Alexei Takaseev <taf@altlinux.org> 13.10-alt3
 - Delete noreplace for /etc/sysconfig/postgresql
 

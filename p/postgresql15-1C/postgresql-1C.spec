@@ -9,8 +9,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     15
-%define postgresql_minor     2
-%define postgresql_altrel    5
+%define postgresql_minor     3
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -953,6 +953,9 @@ fi
 %endif
 
 %changelog
+* Wed May 10 2023 Alexei Takaseev <taf@altlinux.org> 15.3-alt1
+- 15.3 (Fixes CVE-2023-2454, CVE-2023-2455)
+
 * Wed Apr 19 2023 Alexei Takaseev <taf@altlinux.org> 15.2-alt5
 - Add lost dbcopies_decoding.so
 
