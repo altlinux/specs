@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.3.1
-Release: alt1
+Release: alt2
 Summary: Python test framework
 License: MIT
 Group: Development/Python3
@@ -81,6 +81,9 @@ export TERM=xterm
 %_bindir/pytest-3
 
 %changelog
+* Wed May 10 2023 Stanislav Levin <slev@altlinux.org> 7.3.1-alt2
+- Fixed FTBFS (setuptools 67.5.0).
+
 * Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 7.3.1-alt1
 - 7.2.2 -> 7.3.1.
 
