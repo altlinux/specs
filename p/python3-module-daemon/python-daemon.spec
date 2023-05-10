@@ -1,35 +1,27 @@
 %define _unpackaged_files_terminate_build 1
-%define oname python-daemon
+%define pypi_name python-daemon
+%define mod_name daemon
 
-%def_without check
+%def_with check
 
-Name: python3-module-daemon
-Version: 2.3.0
+Name: python3-module-%mod_name
+Version: 3.0.1
 Release: alt1
-
 Summary: Library to implement a well-behaved Unix daemon process
-
-License: Apache-2.0 / GPLv3
+License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/python-daemon/
-
-# Source-url: %__pypi_url %oname
-Source: %name-%version.tar
-
+Vcs: https://pagure.io/python-daemon/
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-intro >= 2.2.5
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(docutils)
-BuildRequires: python3(twine)
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(lockfile)
-BuildRequires: python3(mock)
-BuildRequires: python3(testscenarios)
-BuildRequires: python3(coverage)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
 
 %description
 A well-behaved Unix daemon process is tricky to get right, but the required
@@ -39,24 +31,30 @@ instance as a context manager to enter a daemon state.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile pip-requirements/test.txt
+%endif
 
 %build
-%__python3 setup.py egg_info
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 test
+%pyproject_run_unittest
 
 %files
-%doc ChangeLog LICENSE.* README doc/*
-%python3_sitelibdir/daemon/
-%python3_sitelibdir/python_daemon-%version-py%_python3_version.egg-info/
-
+%doc ChangeLog README
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 10 2023 Stanislav Levin <slev@altlinux.org> 3.0.1-alt1
+- 2.3.0 -> 3.0.1.
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - new version 2.3.0 (with rpmrb script)
 - cleanup spec, switch to build from pypi release
