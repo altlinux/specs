@@ -1,5 +1,5 @@
 Name: 	  xbanish
-Version:  1.6
+Version:  1.8
 Release:  alt1
 
 Summary:  banish the mouse cursor when typing, show it again when the mouse moves
@@ -37,6 +37,9 @@ install -D -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Thu May 04 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.8-alt1
+- New version 1.8.
+
 * Mon Apr 06 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.6-alt1
 - new version 1.6
 
