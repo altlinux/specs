@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.21.3
+Version: 0.21.5
 Release: alt1
 
 Summary: Python Git Library
@@ -79,6 +79,9 @@ popd
 %python3_sitelibdir/*/contrib
 
 %changelog
+* Wed May 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.21.5-alt1
+- 0.21.5
+
 * Tue Mar 28 2023 Yuri N. Sedunov <aris@altlinux.org> 0.21.3-alt1
 - 0.21.3
 
