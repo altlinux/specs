@@ -1,5 +1,5 @@
 Name: mygui
-Version: 3.4.1
+Version: 3.4.2
 Release: alt1
 
 Summary: MyGUI is a graphical user interface library developed especialy for using with Ogre (http://www.ogre3d.org)
@@ -11,8 +11,6 @@ Url: http://mygui.info/
 
 Source0: %name-%version.tar
 Source1: %name.png
-Patch: MyGUI-3.4.1-opensuse-install-libCommon.patch
-Patch1: MyGUI-3.4.1-opensuse-fix-linking-with-Wl-no-undefined.patch
 
 # ogre isn't built on %%ix86
 ExcludeArch: %ix86
@@ -90,8 +88,6 @@ MyGUI api documentation
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
 sed -i 's|/usr/lib/OGRE/cmake/|%_libdir/OGRE/cmake/|' \
   CMake/Packages/FindOGRE_Old.cmake
 
@@ -273,6 +269,9 @@ sed -i 's|libdir=${prefix}/lib|libdir=${prefix}/%_lib|g' \
 %doc Docs/html/*
 
 %changelog
+* Wed May 10 2023 Leontiy Volodin <lvol@altlinux.org> 3.4.2-alt1
+- New version 3.4.2.
+
 * Tue Dec 27 2022 Leontiy Volodin <lvol@altlinux.org> 3.4.1-alt1
 - Version 3.4.1 (thanks opensuse for the patches)
 - Build for ALT Sisyphus again (needed for stuntrally)
