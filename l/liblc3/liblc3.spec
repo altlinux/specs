@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Low Complexity Communication Codec (LC3)
@@ -54,7 +54,7 @@ This package provides LC3 tools.
 %meson_install
 
 %check
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%name.so.*
@@ -72,6 +72,9 @@ This package provides LC3 tools.
 %endif
 
 %changelog
+* Mon May 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Sat Feb 18 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
