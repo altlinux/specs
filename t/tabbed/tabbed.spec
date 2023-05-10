@@ -1,6 +1,6 @@
 Name: tabbed
 Version: 0.7
-Release: alt1
+Release: alt2
 
 # http://git.altlinux.org/gears/t/tabbed.git
 Source: %name-%version.tar
@@ -53,6 +53,9 @@ make \
 %_man1dir/*
 
 %changelog
+* Wed May 10 2023 Fr. Br. George <george@altlinux.org> 0.7-alt2
+- Actualize README.ALT
+
 * Thu May 04 2023 Fr. Br. George <george@altlinux.org> 0.7-alt1
 - Version up
 - Update patchset
