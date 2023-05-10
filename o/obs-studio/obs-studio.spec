@@ -7,7 +7,7 @@
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 29.0.0
+Version: 29.1.0
 Release: alt1
 License: GPLv2+
 Group: Video
@@ -53,13 +53,13 @@ BuildRequires: pkgconfig(libpci)
 BuildRequires: pipewire-libs-devel
 BuildRequires: libdrm-devel
 BuildRequires: libmbedtls13-devel
+BuildRequires: libuuid-devel
+BuildRequires: libfdk-aac-devel
 %ifarch %luajit_arches
 BuildRequires: pkgconfig(luajit)
 %endif
 
-Requires: %name-base = %EVR
-Requires: %name-plugin-pulseaudio = %EVR
-#Requires: %name-plugin-jack = %EVR
+%add_python3_req_skip obspython
 
 Obsoletes: %name-plugin-frontend-tools <= 0.26.0
 Obsoletes: %name-plugin-image-source <= 0.26.0
@@ -75,27 +75,18 @@ Obsoletes: %name-plugin-rtmp-services <= 0.26.0
 Obsoletes: %name-plugin-freetype2 <= 0.26.0
 Obsoletes: %name-plugin-vlc-video <= 0.26.0
 Obsoletes: %name-plugin-x264 <= 0.26.0
+Obsoletes: %name-plugin-jack <= 29.1.0
+Obsoletes: %name-plugin-pulseaudio <= 29.1.0
+Obsoletes: %name-plugin-pipewire <= 29.1.0
+Obsoletes: %name-base <= 29.1.0
+
+Provides: %name-base = %EVR
 
 %description
 Free and open source software for video recording and live streaming.
 
 %description -l ru_RU.UTF-8
 Свободная программа для записи и трансляции видеопотока.
-
-%package base
-Summary: Free and open source software for video recording and live streaming
-Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Group: Video
-Requires: libobs = %EVR
-%add_python3_req_skip obspython
-
-%description base
-Free and open source software for video recording and live streaming.
-Base application without plugins. Some of the plugins are required to run.
-
-%description base -l ru_RU.UTF-8
-Свободная программа для записи и трансляции видеопотока.
-Базовое приложение без плагинов. Для запуска потребуются некоторые из плагинов.
 
 %package -n libobs
 Summary: Open Broadcaster Software Studio libraries
@@ -110,31 +101,7 @@ Group: Development/C
 Requires: libobs = %EVR
 
 %description -n libobs-devel
-Development files for %name
-
-%package plugin-jack
-Summary: JACK plugin for Open Broadcaster Software.
-Group: Video
-Requires: %name-base = %EVR
-
-%description plugin-jack
-JACK plugin for Open Broadcaster Software.
-
-%package plugin-pulseaudio
-Summary: PulseAudio plugin for Open Broadcaster Software.
-Group: Video
-Requires: %name-base = %EVR
-
-%description plugin-pulseaudio
-PulseAudio plugin for Open Broadcaster Software.
-
-%package plugin-pipewire
-Summary: pipewire plugin for Open Broadcaster Software.
-Group: Video
-Requires: %name-base = %EVR
-
-%description plugin-pipewire
-pipewire plugin for Open Broadcaster Software.
+Development files for %name.
 
 %prep
 %setup
@@ -145,16 +112,23 @@ touch plugins/obs-{browser,websocket}/CMakeLists.txt
 # replace OBS_MULTIARCH_SUFFIX by LIB_SUFFIX
 sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 
+# remove -Werror flag to mitigate FTBFS with ffmpeg 5.1
+sed -e 's|-Werror-implicit-function-declaration||g' -i cmake/Modules/CompilerConfig.cmake
+sed -e '/-Werror/d' -i cmake/Modules/CompilerConfig.cmake
+
 %build
 %cmake \
 	-DOBS_VERSION_OVERRIDE=%version \
 	-DUNIX_STRUCTURE=1 \
+	-DCMAKE_SKIP_RPATH=1 \
 	-DWITH_RTMPS=ON \
 	-DBUILD_BROWSER=OFF \
 	-DBUILD_VST=OFF \
 	-DENABLE_NEW_MPEGTS_OUTPUT=OFF \
 	-DENABLE_AJA=OFF \
-	-DENABLE_JACK=ON
+	-DENABLE_JACK=ON \
+	-DENABLE_LIBFDK=ON \
+	-DOpenGL_GL_PREFERENCE=GLVND
 
 %cmake_build
 
@@ -162,9 +136,6 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 %cmakeinstall_std
 
 %files
-%_datadir/metainfo/*
-
-%files base
 %doc COPYING README.rst
 %_bindir/*
 %_datadir/obs/*
@@ -173,12 +144,7 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 %_iconsdir/hicolor/*/apps/*.*
 %_libdir/obs-scripting/
 %_libdir/obs-plugins
-%exclude %_libdir/obs-plugins/linux-jack.so
-%exclude %_datadir/obs/obs-plugins/linux-jack/
-%exclude %_libdir/obs-plugins/linux-pulseaudio.so
-%exclude %_datadir/obs/obs-plugins/linux-pulseaudio/
-%exclude %_libdir/obs-plugins/linux-pipewire.so
-%exclude %_datadir/obs/obs-plugins/linux-pipewire/
+%_datadir/metainfo/*
 
 %files -n libobs
 %dir %_datadir/obs
@@ -194,19 +160,12 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 %_libdir/cmake/obs-frontend-api/
 %_libdir/pkgconfig/libobs.pc
 
-%files plugin-jack
-%_libdir/obs-plugins/linux-jack.so
-%_datadir/obs/obs-plugins/linux-jack/
-
-%files plugin-pulseaudio
-%_libdir/obs-plugins/linux-pulseaudio.so
-%_datadir/obs/obs-plugins/linux-pulseaudio/
-
-%files plugin-pipewire
-%_libdir/obs-plugins/linux-pipewire.so
-%_datadir/obs/obs-plugins/linux-pipewire/
-
 %changelog
+* Wed May 10 2023 Anton Midyukov <antohami@altlinux.org> 29.1.0-alt1
+- new version 29.1.0
+- include plugin packages and obs-studio-base in obs-studio package
+- ENABLE_LIBFDK=ON, OpenGL_GL_PREFERENCE=GLVND
+
 * Sun Jan 08 2023 Anton Midyukov <antohami@altlinux.org> 29.0.0-alt1
 - new version 29.0.0
 
