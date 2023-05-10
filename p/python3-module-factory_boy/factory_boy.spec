@@ -1,37 +1,33 @@
 %define _unpackaged_files_terminate_build 1
 %define oname factory_boy
+%define pypi_name factory-boy
+%define mod_name factory
 
 %def_with check
 
 Name: python3-module-%oname
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: A test fixtures replacement for Python
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/factory-boy/
+Vcs: https://github.com/FactoryBoy/factory_boy
 BuildArch: noarch
-
-# https://github.com/FactoryBoy/factory_boy.git
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
+%pyproject_runtimedeps_metadata
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(faker)
-
-BuildRequires: python3(django)
-BuildRequires: python3(sqlalchemy)
-BuildRequires: python3(django.db.backends.sqlite3)
-BuildRequires: python3(tox)
+%add_pyproject_deps_check_filter mongoengine
+%add_pyproject_deps_check_filter zest-releaser
+%pyproject_builddeps_metadata_extra dev
+BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
-
-# PEP503 name
-Provides: python3-module-factory-boy = %EVR
-%py3_provides factory-boy
 
 %description
 factory_boy is a fixtures replacement based on thoughtbot's
@@ -47,27 +43,30 @@ maintain fixtures with easy-to-use factories for complex object.
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
     $(find ./ -name '*.py')
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
 # mongoengine is not packaged in Sisyphus
 export SKIP_MONGOENGINE=1
-export TOX_TESTENV_PASSENV='SKIP_MONGOENGINE'
-tox.py3 --sitepackages -vvr -s false
+%pyproject_run_unittest
 
 %files
-%doc *.rst
-%python3_sitelibdir/factory/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 10 2023 Stanislav Levin <slev@altlinux.org> 3.2.1-alt2
+- Fixed FTBFS.
+- Modernized packaging.
+
 * Thu Feb 03 2022 Stanislav Levin <slev@altlinux.org> 3.2.1-alt1
 - 2.4.1 -> 3.2.1.
 
