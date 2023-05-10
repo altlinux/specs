@@ -4,35 +4,40 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.1
+Version: 3.4.0
 Release: alt1
 
 Summary: A tool (and pre-commit hook) to automatically upgrade syntax for newer versions of the language
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pyupgrade/
-
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(coverage)
-BuildRequires: python3(covdefaults)
-BuildRequires: python3(tokenize-rt)
-%endif
+Vcs: https://github.com/asottile/pyupgrade
 
 BuildArch: noarch
+
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
+%endif
 
 %build
 %pyproject_build
@@ -41,15 +46,18 @@ BuildArch: noarch
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
-%doc LICENSE README.md
+%doc README.md
 %_bindir/%pypi_name
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 10 2023 Anton Zhukharev <ancieg@altlinux.org> 3.4.0-alt1
+- New version.
+
 * Mon Feb 13 2023 Anton Zhukharev <ancieg@altlinux.org> 3.3.1-alt1
 - 3.2.2 -> 3.3.1
 
