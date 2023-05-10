@@ -1,7 +1,7 @@
 %def_with cppunit
 
 Name: xournalpp
-Version: 1.1.1
+Version: 1.1.3
 Release: alt1
 Summary: Handwriting note-taking software with PDF annotation support
 Group: Office
@@ -80,6 +80,9 @@ The %name-ui package contains a graphical user interface for  %name.
 %_datadir/%name/ui
 
 %changelog
+* Wed May 10 2023 Fr. Br. George <george@altlinux.org> 1.1.3-alt1
+- Autobuild version bump to 1.1.3
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1.1.1-alt1
 - Autobuild version bump to 1.1.1
 
