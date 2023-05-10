@@ -5,8 +5,8 @@
 %def_enable check
 
 Name: grilo
-Version: %ver_major.15
-Release: alt2
+Version: %ver_major.16
+Release: alt1
 
 Summary: Content discovery framework
 Group: Sound
@@ -154,6 +154,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Tue May 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1
+- 0.3.16
+
 * Tue Apr 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt2
 - rebuilt with libsoup-3.0
 
