@@ -1,11 +1,12 @@
 Name: TheButterflyEffect
 Version: 0.9.3.1
 Epoch: 1
-Release: alt1
+Release: alt2
 License: GPL
 Group: Games/Puzzles
 Summary: Combine mechanical elements to achieve a simple goal in the most complex way
 Source: v%version.tar.gz
+Patch1: alt-qt5.15.9.patch
 Url: https://github.com/the-butterfly-effect
 
 # Automatically added by buildreq on Mon Jan 23 2017
@@ -19,6 +20,7 @@ possible.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %cmake
@@ -36,6 +38,9 @@ possible.
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 1:0.9.3.1-alt2
+- Fix to build with new Qt
+
 * Mon Jan 23 2017 Fr. Br. George <george@altlinux.ru> 1:0.9.3.1-alt1
 - Upstream and versioning switched
 - Autobuild version bump to 0.9.3.1
