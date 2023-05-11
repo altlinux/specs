@@ -9,7 +9,7 @@ BuildRequires: gcc-c++ perl(Date/Format.pm)
 
 Name: asio
 Version: 1.28.0
-Release: alt1
+Release: alt2
 
 Summary: A cross-platform C++ library for network programming
 License: Boost Software License
@@ -49,8 +49,17 @@ modern C++ approach.
 
 %ifarch %e2k
 %add_optflags -Wno-unused-variable
-# lcc 1.25's EDG frontend can't handle such C++ code
+sed -i "s/AM_CXXFLAGS = /&-std=c++11 /" src/examples/cpp11/Makefile.in
+# EDG frontend can't handle such C++ code
+echo "" > src/examples/cpp11/type_erasure/sleep.cpp
+echo "" > src/examples/cpp11/type_erasure/stdin_line_reader.cpp
+echo "int main() {}" > src/examples/cpp11/type_erasure/main.cpp
+echo "int main() {}" > src/examples/cpp14/executors/priority_scheduler.cpp
 echo "int main() {}" > src/examples/cpp14/executors/pipeline.cpp
+echo "int main() {}" > src/examples/cpp14/executors/actor.cpp
+echo "int main() {}" > src/examples/cpp14/operations/composed_4.cpp
+echo "int main() {}" > src/examples/cpp14/operations/composed_7.cpp
+echo "int main() {}" > src/examples/cpp14/operations/composed_8.cpp
 %endif
 
 %build
@@ -70,6 +79,9 @@ echo "int main() {}" > src/examples/cpp14/executors/pipeline.cpp
 %_libdir/pkgconfig/asio.pc
 
 %changelog
+* Thu May 11 2023 Ilya Mashkin <oddity@altlinux.ru> 1.28.0-alt2
+- Fixed build for Elbrus (Thanks to Ilya Kurdyukov)
+
 * Tue May 09 2023 Ilya Mashkin <oddity@altlinux.ru> 1.28.0-alt1
 - 1.28.0
 
