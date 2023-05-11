@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 0.7
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -14,6 +14,7 @@ Url: https://invent.kde.org/libraries/kweathercore
 License: LGPL-2.0-or-later
 
 Source: %rname-%version.tar
+Patch1: alt-clear-country-name.patch
 
 # Automatically added by buildreq on Tue Apr 25 2023 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libgpg-error libp11-kit libqt5-core libqt5-network libqt5-positioning libsasl2-3 libssl-devel libstdc++-devel python-modules python2-base python3 python3-base python3-dev python3-module-paste qt5-base-devel rpm-build-file rpm-build-python3 sh4 tzdata
@@ -51,6 +52,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -76,5 +78,8 @@ KF5 library
 %_K5lib/libKF5KWeatherCore.so.*
 
 %changelog
+* Thu May 11 2023 Sergey V Turchin <zerg@altlinux.org> 0.7-alt2
+- clear country names
+
 * Tue Apr 25 2023 Sergey V Turchin <zerg@altlinux.org> 0.7-alt1
 - initial build
