@@ -7,7 +7,7 @@
 %endif
 
 Name: mixxx
-Version: 2.3.4
+Version: 2.3.5
 Release: alt1
 
 Summary: Free digital DJ software
@@ -104,6 +104,9 @@ chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compil
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Thu May 11 2023 Leontiy Volodin <lvol@altlinux.org> 2.3.5-alt1
+- New version 2.3.5.
+
 * Mon Mar 06 2023 Leontiy Volodin <lvol@altlinux.org> 2.3.4-alt1
 - Updated to upstream release version 2.3.4.
 
