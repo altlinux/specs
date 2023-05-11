@@ -2,7 +2,7 @@
 %def_with check
 
 Name: python3-module-atomicwrites
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Python Atomic file writes on POSIX
@@ -58,6 +58,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/atomicwrites-*.egg-info/
 
 %changelog
+* Thu May 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.1-alt1
+- 1.4.1
+
 * Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
