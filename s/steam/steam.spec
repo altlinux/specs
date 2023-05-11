@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.78
-Release: alt1
+Release: alt2
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -25,10 +25,12 @@ Requires: bash >= 4.4
 Requires: curl
 Requires: glibc-pthread >= 2.15
 Requires: glibc-nss >= 2.15
+Requires: libcurl
 Requires: libdbusmenu-gtk2
 Requires: libGL
 Requires: libnsl1
 Requires: libnss
+Requires: lsof
 Requires: sysctl-conf-userns
 Requires: xz
 
@@ -68,6 +70,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Thu May 11 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt2
+- Add missing requires (ALT #46110)
+
 * Wed May 10 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt1
 - Version 1.0.0.78
 
