@@ -1,5 +1,5 @@
 Name: libmodulemd
-Version: 2.14.0
+Version: 2.15.0
 Release: alt1
 
 Summary: C Library for manipulating module metadata files
@@ -70,5 +70,8 @@ Group: Development/Python3
 %python3_sitelibdir/gi/overrides/*
 
 %changelog
+* Thu May 11 2023 Andrey Cherepanov <cas@altlinux.org> 2.15.0-alt1
+- New version.
+
 * Sun Oct 30 2022 Andrey Cherepanov <cas@altlinux.org> 2.14.0-alt1
 - Initial build for Sisyphus
