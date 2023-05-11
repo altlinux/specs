@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 58.1
-Release: alt2
+Version: 59.0
+Release: alt1
 
 Summary: WeasyPrint converts web documents to PDF
 License: BSD-3-Clause
@@ -45,8 +45,7 @@ Source:  %name-%version.tar
 %pyproject_install
 
 %check
-# with pydyf version 0.6.0 pdf tests fail
-%pyproject_run_pytest -vra -k 'not test_pdf.py'
+%pyproject_run_pytest
 
 %files
 %python3_sitelibdir/%modulename
@@ -55,6 +54,9 @@ Source:  %name-%version.tar
 %doc README.rst LICENSE
 
 %changelog
+* Thu May 11 2023 Anton Vyatkin <toni@altlinux.org> 59.0-alt1
+- New version 59.0.
+
 * Wed May 10 2023 Anton Vyatkin <toni@altlinux.org> 58.1-alt2
 - Fix FTBFS
 
