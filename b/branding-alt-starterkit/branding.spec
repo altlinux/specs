@@ -15,7 +15,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Url: http://en.altlinux.org/starterkits
@@ -326,6 +326,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Thu May 11 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt3
+- os-release: add VERSION to PRETTY_NAME
+
 * Wed Apr 26 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt2
 - Don't save original /etc/*-release
 
