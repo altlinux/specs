@@ -1,5 +1,5 @@
 Name: appinstall
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Summary: GUI frontend for install third-party applications
 
@@ -12,6 +12,7 @@ Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): libpam-devel
 BuildRequires: gcc-c++
 BuildRequires: qt5-tools
@@ -26,21 +27,11 @@ GUI frontend for install third-party applications using epm play.
 %setup -q
 
 %build
-lrelease-qt5 %{name}_ru.ts
+export PATH=$PATH:%_qt5_bindir
+%make_build
 
 %install
-install -Dpm 0755 %name %buildroot%_sbindir/%name
-mkdir -p %buildroot%_bindir/
-ln -s %_libexecdir/consolehelper/helper %buildroot%_bindir/%name
-install -pD -m640 %name.pamd %buildroot%_sysconfdir/pam.d/%name
-install -pD -m640 %name.security %buildroot%_sysconfdir/security/console.apps/%name
-
-mkdir -p %buildroot%_datadir/%name
-cp -a %name.svg %name.ui *.qm *.gif %buildroot%_datadir/%name
-install -Dpm 0644 %name.svg %buildroot%_pixmapsdir/%name.svg
-install -Dpm 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
-
-mkdir -p %buildroot%_sysconfdir/%name/allow.d
+%makeinstall_std
 
 %files
 %_bindir/%name
@@ -55,6 +46,13 @@ mkdir -p %buildroot%_sysconfdir/%name/allow.d
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Thu May 11 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt1
+- Apply changes for processed item, not selected (ALT #41897).
+- Fix run from KDE menu (ALT #43747).
+- Store installed flag in Qt::UserRole instead of Qt::ToolTipRole.
+- Update translations for eepm-3.28.1.
+- Move all actions from spec file to Makefile.
+
 * Mon May 08 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
 - Show window immediately and display loading animation (ALT #43747)
 - Show only allowed applications from /etc/appinstall/allow.d (ALT #41900)
