@@ -1,5 +1,5 @@
 Name: giter
-Version: 1.19
+Version: 1.20
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -40,6 +40,9 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Thu May 11 2023 Vitaly Lipatov <lav@altlinux.ru> 1.20-alt1
+- gpush: use git.alt instead of gitery if there is no such remote as gitery
+
 * Tue May 02 2023 Vitaly Lipatov <lav@altlinux.ru> 1.19-alt1
 - giter: drop list package command (use gita find)
 - improve get_girar_host_from_ssh() to get support gitery
