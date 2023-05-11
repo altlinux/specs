@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.27
+%define kernel_sublevel	.28
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -141,8 +141,8 @@ these drivers are built separately from the kernel; they are available
 in separate packages (kernel-modules-*-%flavour).
 
 There are some other kernel variants in ALT systems:
-* std-def: standard longterm kernel without preemption;
-* un-def:  more modern then std-def and with preemption enabled.
+* std-def: latest longterm (LTS) kernel;
+* un-def:  latest stable kernel, usually higher version than std-def.
 
 %package -n kernel-image-domU-%flavour
 Summary: Uncompressed linux kernel for XEN domU boot 
@@ -598,6 +598,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu May 11 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.28-alt1
+- v6.1.28 (2023-05-11).
+- config-armh: Fix relocation out of range errors when loading modules.
+
 * Wed May 03 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.27-alt1
 - v6.1.27 (2023-05-01).
 
