@@ -6,7 +6,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -18,7 +18,10 @@ Provides: kf5-kwallet-pam = %EVR
 Obsoletes: kf5-kwallet-pam < %EVR
 
 Source: %rname-%version.tar
-Patch1: alt-allow-empty-password.patch
+# SuSE
+Patch1: 0004-Don-t-call-pam_sm_open_session-within-pam_sm_authent.patch
+# ALT
+Patch10: alt-allow-empty-password.patch
 
 # Automatically added by buildreq on Thu Aug 27 2015 (-bi)
 # optimized out: cmake-modules elfutils libgpg-error libgpg-error-devel libstdc++-devel python-base python3 python3-base ruby ruby-stdlibs
@@ -49,6 +52,8 @@ KDE5 PAM KWallet integration
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+#
+%patch10 -p1
 
 %build
 %K5build \
@@ -89,6 +94,9 @@ sed -i '/^ExecStart=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
 %_unitdir_user/*.service
 
 %changelog
+* Thu May 11 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt2
+- don't call pam_sm_open_session within pam_sm_authenticate
+
 * Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt1
 - new version
 
