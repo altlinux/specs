@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 	  buildnode-audit-rules
-Version:  0.1.3
+Version:  0.2.1
 Release:  alt1
 
 Summary:  Manage audit rules for logging package build processes
@@ -12,7 +12,7 @@ Url: 	  http://git.altlinux.org/people/nbr/packages/buildnode-audit-rules.git
 Source:   %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: libaudit-devel bats /proc help2man
+BuildRequires: bats /proc help2man
 
 %description
 Contains system startup scripts that manage special auditd(8) rules
@@ -45,6 +45,13 @@ auditctl(8). The resulting configuration is then verified.
 %_man1dir/%name.1.*
 
 %changelog
+* Thu May 11 2023 Paul Wolneykien <manowar@altlinux.org> 0.2.1-alt1
+- Fixed the rule deletion (expected/missing).
+
+* Thu May 11 2023 Paul Wolneykien <manowar@altlinux.org> 0.2.0-alt1
+- Only 'b32' and 'b64' are now supported for the ARCH_LIST conf param.
+- Speeding up rule insertion, checking and deletion.
+
 * Wed Feb 15 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt1
 - Fixed one more potential error when there is no "-F arch=..." in
   a rule.
