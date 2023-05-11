@@ -1,5 +1,5 @@
 Name: hass
-Version: 2023.3.3
+Version: 2023.5.2
 Release: alt1
 
 Summary: Home automation platform
@@ -8,21 +8,26 @@ Group: System/Servers
 Url: https://www.home-assistant.io/
 
 Source0: %name-%version-%release.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 BuildRequires: python3(atomicwrites)
 BuildRequires: python3(awesomeversion)
 BuildRequires: python3(black)
 BuildRequires: python3(ciso8601)
+BuildRequires: python3(dateutil)
+BuildRequires: python3(ifaddr)
 BuildRequires: python3(jinja2)
+BuildRequires: python3(jwt)
+BuildRequires: python3(lru)
+BuildRequires: python3(numpy)
 BuildRequires: python3(orjson)
 BuildRequires: python3(slugify)
 BuildRequires: python3(tqdm)
 BuildRequires: python3(typing_extensions)
+BuildRequires: python3(ulid_transform)
 BuildRequires: python3(voluptuous)
 BuildRequires: python3(voluptuous_serialize)
 BuildRequires: python3(yaml)
@@ -39,7 +44,7 @@ Requires: python3-module-text-unidecode >= 1.3
 Requires: python3-module-voluptuous >= 0.13.1
 Requires: python3-module-websocket-client >= 0.56.0
 Requires: python3-module-yaml >= 6.0
-Requires: python3-module-hass-frontend >= 20230110.0
+Requires: python3-module-hass-frontend >= 20230503.3
 
 %package -n python3-module-hass
 Summary: Home automation platform
@@ -71,6 +76,7 @@ tar x --wildcards --strip-components=1 --file %SOURCE0 '*/homeassistant/componen
 python3 -m script.translations develop --all
 
 %build
+%pyproject_deps_resync_build
 %pyproject_build
 
 %install
@@ -89,11 +95,8 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 	-c 'Home Assistant' -n _hass &> /dev/null ||:
 
 %set_python3_req_method strict
-%add_python3_req_skip custom_components
-# optional
 %add_python3_req_skip av
-%add_python3_req_skip colorlog colorlog.escape_codes
-# stdlib
+%add_python3_req_skip custom_components
 %add_python3_req_skip deque
 
 %files core -f core.files
@@ -109,6 +112,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Wed May 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.5.2-alt1
+- 2023.5.2 released
+
 * Fri Mar 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.3.3-alt1
 - 2023.3.3 released
 
