@@ -1,6 +1,6 @@
 Name: altsp-test-scripts
 Version: 1.1
-Release: alt5
+Release: alt6
 
 Summary: Test scripts for SP distros
 License: GPLv2+
@@ -26,6 +26,7 @@ install -pm755 scripts/* %buildroot%_bindir/
 install -pm755 src/test_access %buildroot%_bindir/
 install -pm755 src/test_clearmem %buildroot%_bindir/
 cp -a setup-tests/ %buildroot%_libexecdir/%name/
+cp -a manifest_kubernetes %buildroot/%_libexecdir/%name/
 cp -a tests/ %buildroot%_libexecdir/%name/
 mkdir -p %buildroot/etc/sysconfig
 cp sysconfig-s_rm %buildroot/etc/sysconfig/s_rm
@@ -36,6 +37,9 @@ cp sysconfig-s_rm %buildroot/etc/sysconfig/s_rm
 /etc/sysconfig/*
 
 %changelog
+* Thu May 11 2023 Denis Medvedev <nbr@altlinux.org> 1.1-alt6
+- added kubernetes test scripts
+
 * Mon Apr 17 2023 Denis Medvedev <nbr@altlinux.org> 1.1-alt5
 - added script for a test of clearing of freed memory
 
