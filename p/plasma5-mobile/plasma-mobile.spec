@@ -2,7 +2,7 @@
 %def_disable dialer
 
 Name: plasma5-mobile
-Version: 5.27.4
+Version: 5.27.5
 Release: alt1
 %K5init altplace no_appdata
 
@@ -108,6 +108,9 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 %_datadir/xsessions/plasma-mobile.desktop
 
 %changelog
+* Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt1
+- new version
+
 * Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt1
 - new version
 

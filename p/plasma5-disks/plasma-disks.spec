@@ -1,7 +1,7 @@
 %define rname plasma-disks
 
 Name: plasma5-disks
-Version: 5.27.4
+Version: 5.27.5
 Release: alt1
 %K5init altplace no_appdata
 
@@ -73,6 +73,9 @@ Requires: %name-common
 %_datadir/polkit-1/actions/*smart*.policy
 
 %changelog
+* Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt1
+- new version
+
 * Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt1
 - new version
 

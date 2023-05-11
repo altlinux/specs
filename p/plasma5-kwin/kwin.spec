@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: plasma5-%rname
-Version: 5.27.4
-Release: alt3
+Version: 5.27.5
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -207,6 +207,9 @@ done
 
 
 %changelog
+* Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt1
+- new version
+
 * Wed Apr 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt3
 - update to 5.27.4.1
 

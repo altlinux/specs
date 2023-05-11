@@ -4,8 +4,8 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: plasma5-%rname
-Version: 5.27.4
-Release: alt3
+Version: 5.27.5
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -158,6 +158,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K5bin/kinfocenter5-ansi2html.sh
 %_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
 
 %changelog
+* Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt1
+- new version
+
 * Fri Apr 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt3
 - optimize requires
 

@@ -19,8 +19,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.27.4
-Release: alt5
+Version: 5.27.5
+Release: alt1
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -34,8 +34,6 @@ Requires: %name-packagekit
 Source: %rname-%version.tar
 Source1: env-flatpak.sh
 Source2: env-snap.sh
-# upstream
-Patch0: fwupd-set-user-agent.patch
 # ALT
 Patch1: alt-offline-updates.patch
 Patch2: alt-skip-obsoleted-and-removed-from-upgrade.patch
@@ -176,7 +174,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 #%patch3 -p2 -b .upd-appstream
@@ -294,6 +291,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt1
+- new version
+
 * Tue Apr 25 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt5
 - fix view additional info on update
 - update russian translation

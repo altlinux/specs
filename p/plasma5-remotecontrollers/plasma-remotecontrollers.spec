@@ -4,7 +4,7 @@
 %def_disable xwiimote
 
 Name: plasma5-remotecontrollers
-Version: 5.27.4
+Version: 5.27.5
 Release: alt1
 %K5init altplace no_appdata
 
@@ -107,6 +107,9 @@ mv %buildroot/%_libdir/udev/rules.d/40-uinput.rules %buildroot/%_udevrulesdir/40
 %_K5dbus_iface/*remotecontrollers*
 
 %changelog
+* Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt1
+- new version
+
 * Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.4-alt1
 - new version
 
