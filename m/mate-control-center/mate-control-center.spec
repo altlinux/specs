@@ -1,6 +1,6 @@
 Name: mate-control-center
-Version: 1.26.0
-Release: alt4
+Version: 1.26.1
+Release: alt1
 Epoch: 2
 Summary: MATE Desktop control-center
 License: LGPLv2+ and GPLv2+
@@ -72,6 +72,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu May 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:1.26.1-alt1
+- 1.26.1
+
 * Tue Dec 13 2022 Valery Inozemtsev <shrek@altlinux.ru> 2:1.26.0-alt4
 - updated translation
 

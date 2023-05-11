@@ -2,8 +2,8 @@
 %define rname mate-session-manager
 
 Name: mate-session
-Version: 1.26.0
-Release: alt2
+Version: 1.26.1
+Release: alt1
 Epoch: 1
 Summary: MATE Desktop session manager
 License: GPLv2+
@@ -77,6 +77,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Thu May 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
+- 1.26.1
+
 * Wed Oct 26 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
 - merged p10 branch
 
