@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: %_name-core
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -30,7 +30,8 @@ Requires: dbus-tools-gui
 %define dbus_ver 1.5
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-xdg
-BuildRequires: meson >= %meson_ver libgio-devel >= %glib_ver libdbus-devel >= %dbus_ver
+BuildRequires: meson >= %meson_ver libgio-devel >= %glib_ver
+BuildRequires: /bin/dbus-daemon libdbus-devel >= %dbus_ver
 BuildRequires: libxml2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
@@ -248,6 +249,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Thu May 11 2023 Yuri N. Sedunov <aris@altlinux.org> 2.48.2-alt1
+- 2.48.2
+
 * Thu May 11 2023 Yuri N. Sedunov <aris@altlinux.org> 2.48.1-alt1
 - 2.48.1
 
