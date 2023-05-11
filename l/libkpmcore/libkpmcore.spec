@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 23.04.0
+Version: 23.04.1
 Release: alt1
 
 Summary: KDE Partition Manager core library
@@ -68,6 +68,9 @@ using %_name.
 
 
 %changelog
+* Thu May 11 2023 Yuri N. Sedunov <aris@altlinux.org> 23.04.1-alt1
+- 23.04.1
+
 * Thu Apr 20 2023 Yuri N. Sedunov <aris@altlinux.org> 23.04.0-alt1
 - 23.04.0
 
