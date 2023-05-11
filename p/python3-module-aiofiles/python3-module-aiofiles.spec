@@ -1,7 +1,7 @@
 %define  modulename aiofiles
 
 Name:    python3-module-%modulename
-Version: 22.1.0
+Version: 23.1.0
 Release: alt1
 
 Summary: File support for asyncio
@@ -37,6 +37,9 @@ BuildRequires: python3(poetry-core)
 %doc *.rst LICENSE
 
 %changelog
+* Thu May 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 23.1.0-alt1
+- 23.1.0
+
 * Wed Nov 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 22.1.0-alt1
 - 22.1.0
 
