@@ -1,5 +1,5 @@
 Name: inxi
-Version: 3.3.26
+Version: 3.3.27
 Release: alt1
 
 Summary: A full featured system information script
@@ -52,6 +52,9 @@ install -p -D -m 644 %name.1 %buildroot/%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Thu May 11 2023 Leontiy Volodin <lvol@altlinux.org> 3.3.27-alt1
+- New version
+
 * Tue Apr 04 2023 Leontiy Volodin <lvol@altlinux.org> 3.3.26-alt1
 - New version
 
