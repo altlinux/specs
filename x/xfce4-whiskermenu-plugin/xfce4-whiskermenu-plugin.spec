@@ -3,7 +3,7 @@
 
 Name: xfce4-whiskermenu-plugin
 Version: 2.7.3
-Release: alt1%git_date
+Release: alt2%git_date
 
 Summary: Alternate Xfce menu
 License: GPLv2+
@@ -13,6 +13,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-whiskermenu-plugin.git
 Source: %name-%version.tar
+Source1: alt_ru.po
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools gcc-c++ rpm-macros-cmake cmake
@@ -35,6 +36,13 @@ keeps a list of the last ten applications that you've launched from it.
 %setup
 %patch -p1
 
+# Merge our own and upstream Russian translations
+# (this translation for upstreams main git branch and
+# has some strings that don't exist in the stable-2.7 branch, so
+# upstreams takes precedence).
+msgcat --use-first -o merged_ru.po po/ru.po %SOURCE1
+mv -f merged_ru.po po/ru.po
+
 %build
 %cmake -DLIB_INSTALL_DIR=%_libdir
 %cmake_build
@@ -51,6 +59,9 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Thu May 11 2023 Mikhail Efremov <sem@altlinux.org> 2.7.3-alt2
+- Updated Russian translation.
+
 * Wed Apr 26 2023 Mikhail Efremov <sem@altlinux.org> 2.7.3-alt1
 - Updated to 2.7.3.
 
