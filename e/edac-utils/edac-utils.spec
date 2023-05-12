@@ -1,14 +1,16 @@
 Name: edac-utils
-Version: 0.16
-Release: alt3
+Version: 0.18
+Release: alt1
 
 Summary: Userspace helper for kernel EDAC drivers (ECC)
-Group: System/Kernel and hardware
-License: GPL
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
-Url: http://bluesmoke.sourceforge.net/
 
-Source: edac-utils-0.16.tar
+License: GPLv2
+Group: System/Kernel and hardware
+Url: https://github.com/grondo/edac-utils
+
+# Source-url: https://github.com/grondo/edac-utils/archive/refs/tags/%version.tar.gz
+Source: edac-utils-%version.tar
+
 BuildRequires: libsysfs-devel
 
 %description
@@ -62,6 +64,11 @@ mv %buildroot/etc/init.d/edac %buildroot/%_initdir
 %_includedir/edac.h
 
 %changelog
+* Thu May 11 2023 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1
+- new version 0.18 (with rpmrb script)
+- update Url, Source
+- cleanup spec
+
 * Wed Apr 15 2020 Nikita Ermakov <arei@altlinux.org> 0.16-alt3
 - Use autoreconf to update the configure script. This fixes riscv64
   build because old configure was configured with old libtool version
