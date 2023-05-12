@@ -1,14 +1,13 @@
-%define armips_commit 6719edebaae03330ee5441d9b28280672edf00d5
+%define armips_commit 7bd1ec93d4586985ba1ef420b43b5e620f68695e
 %define discord_rpc_commit 963aa9f3e5ce81a4682c6ca3d136cddda614db33
-%define glslang_commit dc11adde23c455a24e13dd54de9b4ede8bdd7db8
-%define miniupnp_commit 3a87be33e797ba947b2b2a5f8d087f6c3ff4d93e
-%define spirv_cross_commit 9acb9ec31f5a8ef80ea6b994bb77be787b08d3d1
-%define zstd_commit 096dccbc2d89a560db0b9892c53ea0c77eff20a1
+%define glslang_commit b34f619e1c85810dcb3c578107d2e48ba4ee2b37
+%define spirv_cross_commit 4212eef67ed0ca048cb726a6767185504e7695e5
+%define cpu_features_commit 75ec988188f62281efe7bf1d133338751369bb4c
 %define filesystem_commit 3f1c185ab414e764c694b8171d1c4d8c5c437517
 
 Name: ppsspp
-Version: 1.14.4
-Release: alt2
+Version: 1.15.3
+Release: alt1
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -29,8 +28,10 @@ Source2: discord-rpc-%discord_rpc_commit.tar
 Source3: glslang-%glslang_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Cross/archive/%spirv_cross_commit/SPIRV-Cross-%spirv_cross_commit.tar.gz
 Source4: SPIRV-Cross-%spirv_cross_commit.tar
+# https://github.com/google/cpu_features/archive/%cpu_features_commit/cpu_features-%cpu_features_commit.tar.gz
+Source5: cpu_features-%cpu_features_commit.tar
 # https://github.com/Kingcom/filesystem/archive/%filesystem_commit/filesystem-%filesystem_commit.tar.gz
-Source5: filesystem-%filesystem_commit.tar
+Source6: filesystem-%filesystem_commit.tar
 
 Patch0: %name-alt-ffmpeg.patch
 Patch1: %name-alt-git.patch
@@ -83,12 +84,13 @@ PPSSPP is a PSP emulator written in C++, and translates PSP CPU instructions dir
 This build using the Qt frontend.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6
 
 %__mv -Tf ../armips-%armips_commit ext/armips
 %__mv -Tf ../discord-rpc-%discord_rpc_commit ext/discord-rpc
 %__mv -Tf ../glslang-%glslang_commit ext/glslang
 %__mv -Tf ../SPIRV-Cross-%spirv_cross_commit ext/SPIRV-Cross
+%__mv -Tf ../cpu_features-%cpu_features_commit ext/cpu_features
 %__mv -Tf ../filesystem-%filesystem_commit ext/armips/ext/filesystem
 
 %patch0 -p1
@@ -172,6 +174,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Fri May 12 2023 Nazarov Denis <nenderus@altlinux.org> 1.15.3-alt1
+- Version 1.15.3
+
 * Mon Mar 27 2023 Nazarov Denis <nenderus@altlinux.org> 1.14.4-alt2
 - Build with system miniupnpc and zstd (ALT #45656)
 
