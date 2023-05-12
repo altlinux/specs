@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
-Release: alt2
+Version: 3.2.0
+Release: alt1
 Summary: Common/best-practice Invoke tasks and collections
 License: BSD
 Group: Development/Python3
@@ -50,7 +50,7 @@ common best practices.
 %pyproject_install
 
 %check
-%pyproject_run -- inv test
+%pyproject_run -- inv test -o=-Wignore
 
 %files
 %doc README.*
@@ -58,6 +58,9 @@ common best practices.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
+- 3.1.0 -> 3.2.0.
+
 * Fri May 05 2023 Stanislav Levin <slev@altlinux.org> 3.1.0-alt2
 - Enabled testing.
 
