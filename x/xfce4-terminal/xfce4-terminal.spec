@@ -1,6 +1,6 @@
 Name: xfce4-terminal
 Version: 1.0.4
-Release: alt1
+Release: alt2
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -10,7 +10,15 @@ Url: https://docs.xfce.org/apps/terminal/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 Vcs: https://gitlab.xfce.org/apps/xfce4-terminal.git
 Source: %name-%version.tar
+# ru.po from commit 13c25dca06f3cb9c1719ba40df32f2dbdc049071
+Source1: updated_ru.po
+# ru.po from upstream master
+Source2: master_ru.po
 Patch: %name-%version-%release.patch
+
+# Patch from upstream git.
+# Should be dropped when new version will be released.
+Patch1: Make-strings-translatable-Issue-222.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfconf-devel >= 4.16 libxfce4ui-gtk3-devel >= 4.16
@@ -37,9 +45,14 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 # Don't use git tag in version.
 %xfce4_drop_gitvtag terminal_version_tag configure.ac.in
+
+# Merge updated Russian translations
+msgcat --use-first -o merged_ru.po %SOURCE1 %SOURCE2
+mv -f merged_ru.po po/ru.po
 
 %build
 %xfce4reconf
@@ -62,6 +75,11 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %_desktopdir/*
 
 %changelog
+* Fri May 12 2023 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt2
+- Updated Russian translation.
+- Patch from upstream:
+    + Make strings translatable.
+
 * Sun May 22 2022 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt1
 - Updated to 1.0.4.
 
