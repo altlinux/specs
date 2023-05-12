@@ -1,11 +1,11 @@
 Name: squashfs-tools
-Version: 4.5.1
+Version: 4.6.1
 Release: alt1
 
 Summary: squashfs support
 License: GPLv2
 Group: System/Kernel and hardware
-Url: https://git.kernel.org/cgit/fs/squashfs/squashfs-tools.git/
+Url: https://github.com/plougher/squashfs-tools
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildRequires: zlib-devel liblzma-devel liblzo2-devel libzstd-devel
@@ -27,19 +27,41 @@ This package contains the utilities to (un)compress squashfs images.
 
 %build
 export CFLAGS="%optflags"
+pushd squashfs-tools
 %make_build XZ_SUPPORT=1 LZO_SUPPORT=1 ZSTD_SUPPORT=1 COMP_DEFAULT=xz
+popd
 
 %install
+pushd manpages
+install -pDm755 mksquashfs.1 %buildroot%_man1dir/mksquashfs.1
+install -pDm755 unsquashfs.1 %buildroot%_man1dir/unsquashfs.1
+install -pDm755 sqfstar.1 %buildroot%_man1dir/sqfstar.1
+install -pDm755 sqfscat.1 %buildroot%_man1dir/sqfscat.1
+popd
+
+pushd squashfs-tools
 install -pDm755 mksquashfs %buildroot/sbin/mksquashfs
 install -pDm755 unsquashfs %buildroot/%_bindir/unsquashfs
+install -pDm755 sqfstar %buildroot/%_bindir/sqfstar
+install -pDm755 sqfscat %buildroot/%_bindir/sqfscat
 ln -sf mksquashfs %buildroot/sbin/mkfs.squashfs
 ln -sf ../../sbin/mksquashfs %buildroot%_bindir/mksquashfs
+popd
 
 %files
+%doc README* CHANGES USAGE* ACTIONS-README
 /sbin/*
 %_bindir/*
+%_man1dir/*
 
 %changelog
+* Fri May 12 2023 Anton Midyukov <antohami@altlinux.org> 4.6.1-alt1
+- 4.6.1
+
+* Tue Mar 28 2023 Anton Midyukov <antohami@altlinux.org> 4.5.1-alt2
+- pack %_bindir/sqfstar, %_bindir/sqfscat, man pages
+- update URL
+
 * Thu Mar 24 2022 Anton Farygin <rider@altlinux.ru> 4.5.1-alt1
 - 4.5.1
 
