@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.51
+Version: 1.52
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -190,6 +190,9 @@ chmod a+twx /mnt
 # Allow user creation (for openssh)
 chmod a+r /etc/login.defs
 
+# Call filetrigger for the past kernels.
+find /boot | %_rpmlibdir/vm-run.filetrigger
+
 %pre checkinstall
 PS4=$'\n+ '
 set -ex
@@ -230,6 +233,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Thu May 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.52-alt1
+- Fix processing of pre-installed kernels.
+
 * Sat Mar 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.51-alt1
 - Add --ext4[=feature] option (auto-rootfs with no-bind, with fs feature).
 
