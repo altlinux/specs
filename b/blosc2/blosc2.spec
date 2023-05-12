@@ -5,7 +5,7 @@
 %endif
 
 Name:    blosc2
-Version: 2.8.0
+Version: 2.9.1
 Release: alt1
 
 Summary: A fast, compressed, persistent binary data store library for C
@@ -91,9 +91,14 @@ rm -rf internal-complibs
 %_includedir/blosc2/blosc2-stdio.h
 %_includedir/blosc2/filters-registry.h
 %_includedir/blosc2/codecs-registry.h
+%_includedir/blosc2/plugins-utils.h
+%_includedir/blosc2/tunes-registry.h
 %_pkgconfigdir/blosc2.pc
 
 %changelog
+* Fri May 12 2023 Anton Vyatkin <toni@altlinux.org> 2.9.1-alt1
+- New version 2.9.1.
+
 * Sun Mar 26 2023 Anton Vyatkin <toni@altlinux.org> 2.8.0-alt1
 - New version 2.8.0.
 
