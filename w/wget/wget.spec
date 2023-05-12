@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.21.3
-Release: alt6
+Release: alt7
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPL-3.0-or-later
@@ -169,6 +169,10 @@ fi
 %doc COPYING ChangeLog* AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Fri May 12 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.3-alt7
+- Update seccomp filter for aarch64 (ALT#46124).
+- Update seccomp filter regarding askpass.
+
 * Fri Apr 14 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.3-alt6
 - Fix build on older libseccomp.
 
