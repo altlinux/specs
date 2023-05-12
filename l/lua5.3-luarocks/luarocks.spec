@@ -4,7 +4,7 @@
 
 Name: lua5.3-luarocks
 Version: 2.4.2
-Release: alt7
+Release: alt8
 Summary: A deployment and management system for Lua modules
 License: MIT
 Group: Development/Tools
@@ -25,7 +25,7 @@ Source2: %oname-files.req.list
 BuildPreReq: rpm-macros-lua >= 1.4
 # Automatically added by buildreq on Wed Sep 20 2017
 # optimized out: lua5.3 python-base
-BuildRequires: lua-devel lua5.1 unzip wget
+BuildRequires: liblua5.3-devel lua5.1 unzip wget
 
 %description
 LuaRocks allows you to install Lua modules as self-contained
@@ -49,7 +49,7 @@ Requires: chrpath wget p7zip unzip zip
 Conflicts: %oname < %EVR
 Conflicts: lua5.3-luarocks < %EVR
 Conflicts: lua5.3-luarocks > %EVR
-Conflicts: %oname < %EVR
+Conflicts: %oname > %EVR
 Conflicts: rpm-macros-lua < 1.4
 
 %description -n lua5.1-luarocks
@@ -138,6 +138,10 @@ install -m644 %SOURCE2 %buildroot%_rpmlibdir/
 %doc COPYING README*
 
 %changelog
+* Fri May 12 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.4.2-alt8
+- luarocks.spec: edit conflicts for lua5.1-luarocks subpackage
+- replace lua-devel by liblua5.3-devel
+
 * Sat Jun 15 2019 Ildar Mulyukov <ildar@altlinux.ru> 2.4.2-alt7
 - improved %oname.filetrigger (closes: 36897)
 
