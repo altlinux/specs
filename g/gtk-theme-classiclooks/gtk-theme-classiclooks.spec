@@ -2,7 +2,7 @@
 
 Name: gtk-theme-classiclooks
 Version: 2.2.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: ClassicLooks is a Gtk2 & Gtk3 themes
 Group: Graphical desktop/XFce
@@ -10,6 +10,8 @@ Group: Graphical desktop/XFce
 License: GPLv2+
 URL: http://www.itgroup.ro/classiclooks
 Source: %name-%version.tar
+
+Patch0: fix-synaptic.patch
 
 BuildArch: noarch
 
@@ -68,6 +70,7 @@ Themes for Xfwm4 as part of the ClassicLooks theme.
 
 %prep
 %setup
+%patch0 -p1
 find -type f -executable -not -name "*.sh" -exec chmod -x '{}' \;
 
 %install
@@ -98,6 +101,9 @@ done
 %_datadir/themes/*/xfwm4/
 
 %changelog
+* Fri May 12 2023 Kirill Izmestev <felixz@altlinux.org> 1:2.2.0-alt2
+- Fixed package status icon alignment in Synaptic (closes: 44223)
+
 * Thu Sep 16 2021 Mikhail Efremov <sem@altlinux.org> 1:2.2.0-alt1
 - Fixed capitalization in description.
 - Updated to 2.2.0.
