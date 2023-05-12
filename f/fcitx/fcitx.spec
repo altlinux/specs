@@ -16,7 +16,7 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fon
 Name:			fcitx
 Summary:		An input method framework
 Version:		4.2.9.9
-Release:		alt1
+Release:		alt1.1
 License:		GPLv2+
 URL:			https://fcitx-im.org/wiki/Fcitx
 Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
@@ -25,7 +25,7 @@ BuildRequires:		gcc-c++
 BuildRequires:		libpango-devel libpango-gir-devel, libdbus-devel, opencc-devel
 BuildRequires:		wget, intltool, chrpath, sysconftool, opencc
 BuildRequires:		ctest cmake, libtool, doxygen icu-utils libicu-devel
-BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel, libicu71
+BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
 BuildRequires:		xorg-proto-devel, xorg-xtrans-devel
 BuildRequires:		gobject-introspection-devel, libxkbfile-devel
 BuildRequires:		libenchant-devel, iso-codes-devel icu-utils libicu-devel
@@ -315,6 +315,9 @@ EOF
 %endif
 
 %changelog
+* Fri May 12 2023 Ivan A. Melnikov <iv@altlinux.org> 4.2.9.9-alt1.1
+- NMU: Drop libicu71 from build requires
+
 * Tue Sep 27 2022 Ilya Mashkin <oddity@altlinux.ru> 4.2.9.9-alt1
 - 4.2.9.9
 - Fix FTBFS
