@@ -5,7 +5,7 @@
 
 Name: qemu-system-aarch64-core-bundle
 Summary: Native qemu-system-aarch64 binary bundle
-Version: 0
+Version: 1
 Release: alt1
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
 Group: Emulators
@@ -48,8 +48,8 @@ INTERP=$(readelf -W -l $BINARY |
         sed -ne 's,^[[:space:]]*\[Requesting program interpreter: \(/[^]]\+\)\]$,\1,p')
 
 mkdir -p $T
-cp -v -a $BINARY $INTERP kvm_ok $T/
-ldd $BINARY | cut -d' ' -f 3 | grep / | xargs -i -- cp -v -p {} $T/
+cp -v -L -p $BINARY $INTERP kvm_ok -t $T/
+ldd $BINARY | cut -d' ' -f 3 | grep / | xargs -i -- cp -v -L -p {} -t $T/
 
 mkdir -p %buildroot%_bindir
 %define wrapper %_bindir/qemu-system-aarch64-bundle
@@ -72,5 +72,8 @@ chmod a+x %buildroot%wrapper-kvm-ok
 %kvm_ok
 
 %changelog
+* Sat May 13 2023 Vitaly Chikunov <vt@altlinux.org> 1-alt1
+- Fix bundling symlinked interpreter (on p10).
+
 * Wed Dec 15 2021 Vitaly Chikunov <vt@altlinux.org> 0-alt1
 - Initial version.
