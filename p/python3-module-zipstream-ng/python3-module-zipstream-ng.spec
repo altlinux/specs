@@ -4,7 +4,7 @@
 %def_enable check
 
 Name:    python3-module-zipstream-ng
-Version: 1.3.4
+Version: 1.5.0
 Release: alt1
 
 Summary: A modern and easy to use streamable zip file generator.
@@ -60,6 +60,9 @@ EOF
 
 
 %changelog
+* Fri May 12 2023 Danil Shein <dshein@altlinux.org> 1.5.0-alt1
+- new version 1.5.0
+
 * Thu Sep 22 2022 Danil Shein <dshein@altlinux.org> 1.3.4-alt1
 - initial build for Sisyphus
 
