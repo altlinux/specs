@@ -8,7 +8,7 @@
 #    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20230505.1.1
+Version: 20230512.1.1
 Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
@@ -61,6 +61,9 @@ BUILD=%_cmake__builddir bats test-suite.bats
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Fri May 12 2023 Paul Wolneykien <manowar@altlinux.org> 20230512.1.1-alt1
+- Fix "LowCardinality(Nullable) is not supported" error.
+
 * Fri May 05 2023 Paul Wolneykien <manowar@altlinux.org> 20230505.1.1-alt1
 - Open syslog with a NULL identifier if Ident= is not specified.
 - Add a commented out default value for Ident=.
