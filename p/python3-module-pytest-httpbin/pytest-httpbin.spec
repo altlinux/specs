@@ -4,36 +4,23 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.2
-Release: alt2
-
+Version: 2.0.0
+Release: alt1
 Summary: Easily test your HTTP library against a local copy of httpbin
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/kevin1024/pytest-httpbin.git
 Url: https://pypi.org/project/pytest-httpbin
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-# runtime dependencies
-BuildRequires: python3(httpbin)
-BuildRequires: python3(six)
-
-BuildRequires: python3(pytest)
-%endif
-
+Vcs: https://github.com/kevin1024/pytest-httpbin
 BuildArch: noarch
-
-%py3_provides %pypi_name
-Provides: python3-module-pytest_httpbin = %EVR
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra test
+%endif
 
 %description
 httpbin is an amazing web service for testing HTTP libraries. It has several
@@ -49,6 +36,8 @@ fixture.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -57,8 +46,7 @@ fixture.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc README.md
@@ -66,6 +54,9 @@ fixture.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu May 11 2023 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
+- 1.0.2 -> 2.0.0.
+
 * Mon Sep 26 2022 Danil Shein <dshein@altlinux.org> 1.0.2-alt2
  - NMU: fix FTBFS due to Flask library version update
 
