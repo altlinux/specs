@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.4
+Version: 7.5
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,10 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Fri May 12 2023 Vitaly Lipatov <lav@altlinux.ru> 7.5-alt1
+- eget: allow download file from http://site/page/ URL (with latest slash)
+- eget: print about unknown options
+
 * Fri May 05 2023 Vitaly Lipatov <lav@altlinux.ru> 7.4-alt1
 - eget: add -H (--header) support
 - eget: fix for brave go-ipfs
