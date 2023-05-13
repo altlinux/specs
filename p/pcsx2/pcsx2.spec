@@ -2,9 +2,9 @@
 %define llvm_version 13.0
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20230416211526
+%define svn_rev 20230513071212
 
-%define libchdr_commit 5de1a59019815ccdbba0fe07c71b31406d023248
+%define libchdr_commit fec8ab94212cc65d9d9a62cb3da924f5830c04b0
 %define gtest_version 1.12.1
 %define libzip_commit bdc03ab23b703fcc516436d6ebcbfb6ac4484033
 %define zstd_version 1.5.2
@@ -13,7 +13,7 @@
 %define rcheevos_commit 31f8788fe0e694e99db7ce138d45a655c556fa96
 
 Name: pcsx2
-Version: 1.7.4395
+Version: 1.7.4500
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -63,6 +63,8 @@ Source6: glslang-%glslang_version.tar
 # https://github.com/RetroAchievements/rcheevos/archive/%rcheevos_commit/rcheevos-%rcheevos_commit.tar.gz
 Source7: rcheevos-%rcheevos_commit.tar
 
+Patch0: %name-libfmt10-alt.patch
+
 BuildRequires: clang%llvm_version
 BuildRequires: cmake
 BuildRequires: libGLU-devel
@@ -108,6 +110,7 @@ There is still lot of on going work to improve compatibility & speed.
 
 %prep
 %setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7
+%patch0 -p1
 
 %__mv -Tf ../libchdr-%libchdr_commit 3rdparty/libchdr/libchdr
 %__mv -Tf ../googletest-release-%gtest_version 3rdparty/gtest
@@ -163,6 +166,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %_iconsdir/hicolor/256x256/apps/PCSX2.png
 
 %changelog
+* Sat May 13 2023 Nazarov Denis <nenderus@altlinux.org> 1.7.4500-alt1
+- Version 1.7.4500
+
 * Mon Apr 17 2023 Nazarov Denis <nenderus@altlinux.org> 1.7.4395-alt1
 - Version 1.7.4395
 
