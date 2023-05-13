@@ -1,17 +1,14 @@
 Name: libortp
 Version: 1.0.2
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Real-time Transport Protocol Stack
 Url: http://www.linphone.org/eng/documentation/dev/ortp.html
 License: LGPL
-
-Packager: Alexei Takaseev <taf@altlinux.ru>
-
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-BuildRequires: doxygen glibc-devel libbctoolbox-devel gcc8
+BuildRequires: glibc-devel libbctoolbox-devel gcc8
 
 %description
 oRTP is a LGPL licensed C library implementing the RTP protocol
@@ -53,7 +50,8 @@ export CC="gcc-%{_gcc_version}"
 ./autogen.sh
 %configure \
     --disable-static \
-    --enable-shared
+    --enable-shared \
+    --disable-documentation
 %make_build CFLAGS="%optflags" CXXFLAGS="%optflags"
 
 %install
@@ -64,13 +62,16 @@ export CC="gcc-%{_gcc_version}"
 %_libdir/*.so.*
 
 %files devel
-%exclude %_docdir/ortp*
-%doc doc/html
+#%%exclude %%_docdir/ortp*
+#%%doc doc/html
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
 %_includedir/*
 
 %changelog
+* Sat May 13 2023 Alexei Takaseev <taf@altlinux.org> 1.0.2-alt4
+- Disable generation docs by doxygen
+
 * Thu Oct 24 2019 Alexei Takaseev <taf@altlinux.org> 1.0.2-alt3
 - Build with GCC 8
 
