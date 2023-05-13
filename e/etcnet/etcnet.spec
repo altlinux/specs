@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.28
+Version:	0.9.29
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -146,6 +146,9 @@ fi
 %files full
 
 %changelog
+* Fri May 12 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.29-alt1
+- Initial openconnect support added (see README.oconn).
+
 * Fri May 05 2023 Anton Farygin <rider@altlinux.ru> 0.9.28-alt1
 - create-bond: down the network interface before adding to bonding
   (fix for "Error: Device can not be enslaved while up.")
