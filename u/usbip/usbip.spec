@@ -1,4 +1,4 @@
-%define kernel_version   4.18
+%define kernel_version   5.10
 %define kernel_source /usr/src/kernel/sources/kernel-source-%kernel_version.tar
 %define source_dir tools/usb/usbip
 %define lname lib%name
@@ -6,8 +6,8 @@
 %def_disable static
 
 Name: usbip
-Version: 2.0.4
-Release: alt8
+Version: %kernel_version
+Release: alt1
 
 Summary: Utility for manage usbip devices
 
@@ -15,30 +15,71 @@ Group: System/Configuration/Networking
 License: GPLv2+
 Url: http://www.kernel.org
 
+# used sources from kernel-source package
 Source: %name-%version.tar
+
+# Systemd units from Fedora
+# TODO: maybe make a systemd user service for usbip, sth like usbip@.service?
+# https://wiki.archlinux.org/index.php/USB/IP#Client_setup
 
 Packager: Pavel Vainerman <pv@altlinux.org>
 
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires: libudev-devel
-
 BuildRequires: kernel-source-%kernel_version
 
-%description
-On a USB/IP  server, devices can be listed, bound, and unbound
-using this program. On a USB/IP client, devices exported by USB/IP
-servers can be listed, attached and detached.
+Obsoletes: %name-client < %EVR
+Provides:  %name-client = %EVR
 
-%package -n %{name}d
+
+%description
+The USB/IP Project aims to develop a general USB device sharing system
+over IP network. To share USB devices between computers with their full
+functionality, USB/IP encapsulates "USB requests" into IP packets and
+transmits them between computers. Original USB device drivers and
+applications can be also used for remote USB devices without any
+modification of them. A computer can use remote USB devices as if they
+were directly attached; for example, we can:
+  - USB storage devices: fdisk, mkfs, mount/umount, file operations,
+    play a DVD movie and record a DVD-R media.
+  - USB keyboards and USB mice: use with linux console and X Window
+    System.
+  - USB webcams and USB speakers: view webcam, capture image data and
+    play some music.
+  - USB printers, USB scanners, USB serial converters and USB Ethernet
+    interfaces: ok, use fine.
+
+%package server
 Summary: %name server daemon
 Group: System/Configuration/Networking
-Requires: %lname = %version-%release
+Requires: %lname = %EVR
+Obsoletes: %{name}d < %EVR
+Provides:  %{name}d = %EVR
 
-%description -n %{name}d
+%description server
+The USB/IP Project aims to develop a general USB device sharing system
+over IP network. To share USB devices between computers with their full
+functionality, USB/IP encapsulates "USB requests" into IP packets and
+transmits them between computers. Original USB device drivers and
+applications can be also used for remote USB devices without any
+modification of them. A computer can use remote USB devices as if they
+were directly attached; for example, we can:
+  - USB storage devices: fdisk, mkfs, mount/umount, file operations,
+    play a DVD movie and record a DVD-R media.
+  - USB keyboards and USB mice: use with linux console and X Window
+    System.
+  - USB webcams and USB speakers: view webcam, capture image data and
+    play some music.
+  - USB printers, USB scanners, USB serial converters and USB Ethernet
+    interfaces: ok, use fine.
+
 %{name} server daemon.
 
 %package -n %lname
 Summary: %name shared library
 Group: System/Libraries
+#Requires: %_datadir/hwdata
+Requires: hwdata
 
 %description -n %lname
 %name shared library.
@@ -58,14 +99,6 @@ Requires: %lname-devel = %version-%release
 %description -n %lname-devel-static
 %name static library.
 
-%package client
-Summary: %name conf files for client side
-Group: System/Configuration/Networking
-BuildArch: noarch
-
-%description client
-%name conf files for client side
-
 
 %prep
 %setup
@@ -77,7 +110,7 @@ rm -rf kernel-source-%kernel_version
  %__subst 's| -Werror||g' configure.ac
 ./autogen.sh
 %add_optflags -fcommon
-%configure %{subst_enable static} --with-usbids-dir=%_datadir/misc
+%configure %{subst_enable static} --with-usbids-dir=%_datadir/hwdata
 %make_build
 
 %install
@@ -87,38 +120,69 @@ mkdir -p %buildroot%_unitdir
 
 install -Dp -m644 usbipd %buildroot%_sysconfdir/sysconfig/%{name}d
 install -Dp -m644 usbipd.service %buildroot%_unitdir/%{name}d.service
-install -D -m0644 usbipd.modules.conf %buildroot%_sysconfdir/modules-load.d/usbipd.modules.conf
-install -D -m0644 usbip-client.modules.conf %buildroot%_sysconfdir/modules-load.d/usbip-client.modules.conf
+ln -s %{name}d.service %buildroot%_unitdir/%{name}-server.service
+install -Dp -m644 usbip-client.service %buildroot%_unitdir/%{name}-client.service
+
+# Make usbip be inside PATH on client, it does not require root
+mkdir -p %buildroot%_bindir
+ln -s ../sbin/usbip %buildroot%_bindir/usbip
+
+
+%post
+%systemd_post usbip-client.service
+
+%preun
+%systemd_preun usbip-client.service
+
+%postun
+%systemd_postun_with_restart usbip-client.service
+
+%post server
+%systemd_post usbipd.service
+
+%preun server
+%systemd_preun usbipd.service
+
+%postun server
+%systemd_postun_with_restart usbipd.service
+
 
 %files
-%_sbindir/%name
-%_man8dir/usbip.8*
 %doc README
+%_bindir/%name
+%_sbindir/%name
+%_unitdir/%{name}-client.service
+%_man8dir/usbip.8*
 
-%files client
-%_sysconfdir/modules-load.d/usbip-client.modules.conf
-
-%files -n %{name}d
+%files server
 %_sbindir/%{name}d
 %_sysconfdir/sysconfig/%{name}d
-%_sysconfdir/modules-load.d/usbipd.modules.conf
 %_unitdir/%{name}d.service
+%_unitdir/%{name}-server.service
 %doc README
 %_man8dir/usbipd.8*
 
 %files -n %lname
-%_libdir/*.so.*
+%_libdir/libusbip.so.*
 
 %files -n %lname-devel
 %_includedir/*
-%_libdir/*.so
+%_libdir/libusbip.so
 
 %if_enabled static
 %files -n %lname-devel-static
-%_libdir/*.a
+%_libdir/libusbip.a
 %endif
 
 %changelog
+* Sat May 13 2023 Vitaly Lipatov <lav@altlinux.ru> 5.10-alt1
+- build with sources from linux kernel 5.10 (ALT bug 40036)
+- cleanup spec, merge with Fedora's pieces
+- rename package usbipd to usbip-server
+- obsolete package usbip-client in favor to usbip
+- add post/preun service commands
+- remove modules-load.d/*.conf packing (see service files)
+
 * Sun Sep 05 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt8
 - disable build devel-static
 
