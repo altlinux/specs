@@ -4,22 +4,22 @@
 %set_verify_elf_method strict
 
 Name: llama.cpp
-Version: 20230419
+Version: 20230513
 Release: alt1
 Summary: Inference of LLaMA model in pure C/C++
 License: MIT
 Group: Sciences/Computer science
 Url: https://github.com/ggerganov/llama.cpp
 
-ExclusiveArch: aarch64 x86_64
+ExclusiveArch: aarch64 x86_64 %e2k
 Source: %name-%version.tar
 
 AutoReqProv: nopython3
 Requires: python3
 Requires: python3(argparse)
 Requires: python3(glob)
-Requires: python3(numpy)
 Requires: python3(os)
+Requires: python3(pip)
 Requires: python3(struct)
 
 BuildRequires(pre): rpm-macros-cmake
@@ -44,7 +44,7 @@ Note 2:
 
   For example, LLaMA downloaded via public torrent link is 220 GB.
 
-Overall this is all raw and experimental.
+Overall this is all raw and experimental, no warranty, no support.
 
 %prep
 %setup
@@ -83,5 +83,8 @@ install -p quantize   %buildroot%_bindir/llama-quantize
 %_datadir/%name
 
 %changelog
+* Sun May 14 2023 Vitaly Chikunov <vt@altlinux.org> 20230513-alt1
+- Build master-bda4d7c (2023-05-13).
+
 * Wed Apr 19 2023 Vitaly Chikunov <vt@altlinux.org> 20230419-alt1
 - Build master-6667401 (2023-04-19).
