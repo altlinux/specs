@@ -1,15 +1,20 @@
-Name:		beebeep
-Summary:	Secure Network Chat
-Version:	5.8.4
-Release:	alt1
-Group:		Networking/Chat
+Name: beebeep
+Version: 5.8.4
+Release: alt2
 
-Url:		http://sourceforge.net/projects/beebeep/
-Source0:	%name-code-%version.tar.bz2
-Source1:	%name.desktop
-License:	GPLv3+
+Summary: Secure Network Chat
+License: GPLv3+
+Group: Networking/Chat
 
-BuildRequires: /usr/bin/convert qt5-multimedia-devel qt5-tools-devel qt5-webkit-devel qt5-webview-devel qt5-x11extras-devel
+Url: http://sourceforge.net/projects/beebeep/
+Source0: %name-code-%version.tar.bz2
+Source1: %name.desktop
+
+BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires: /usr/bin/convert qt5-multimedia-devel qt5-tools-devel qt5-webkit-devel qt5-x11extras-devel
+%ifarch %qt5_qtwebengine_arches
+BuildRequires: qt5-webview-devel
+%endif
 
 %description
 BeeBEEP is a secure network chat. You can talk and send files with all your
@@ -51,6 +56,9 @@ convert -resize 16x16 src/images/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Sat May 13 2023 Michael Shigorin <mike@altlinux.org> 5.8.4-alt2
+- use rpm-macros-qt5-webengine
+
 * Sat May 08 2021 Motsyo Gennadi <drool@altlinux.ru> 5.8.4-alt1
 - 5.8.4
 
