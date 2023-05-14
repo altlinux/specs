@@ -7,7 +7,7 @@
 
 Name: opentoonz
 Version: 1.5.0
-Release: alt3
+Release: alt4
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -31,6 +31,7 @@ Patch2: %name-1.4.0-alt-data-location.patch
 Patch3: opensuse-0001-Fix-linker-errors-on-Linux.patch
 Patch4: opensuse-0001-Use-the-system-mypaint-brushes.patch
 Patch5: %name-1.5.0-alt-docs-sphinx-compat.patch
+Patch6: Fix-build-proccess.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-complete
@@ -88,8 +89,9 @@ This package contains documentation and samples for OpenToonz.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch6 -p1
 
-pushd additional/docs
+pushd %name-%version-docs
 %patch5 -p1
 popd
 
@@ -132,7 +134,7 @@ popd
 done
 
 # build opentoonz documentation
-pushd additional/docs
+pushd %name-%version-docs
 %make html
 popd
 
@@ -159,10 +161,13 @@ done
 %_datadir/metainfo/*.xml
 
 %files doc
-%doc additional/docs/build/html
-%doc additional/sample
+%doc %name-%version-docs/build/html
 
 %changelog
+* Sun May 14 2023 Artyom Bystrov <arbars@altlinux.org> 1.5.0-alt4
+- Fixed build
+- Reworked style of repo
+
 * Thu Feb 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt3
 - Fixed build.
 
