@@ -4,7 +4,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     podman
-Version:  4.4.4
+Version:  4.5.0
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -20,10 +20,10 @@ BuildRequires(pre): rpm-build-golang rpm-macros-systemd
 BuildRequires: golang go-md2man
 BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libgpg-error-devel libbtrfs-devel
 BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
-BuildRequires: libassuan-devel libsystemd-devel
+BuildRequires: libassuan-devel libsystemd-devel libsubid-devel
 BuildRequires: /proc
 
-Requires: conmon >= 2.0.16
+Requires: conmon >= 2.1.7
 Requires: iptables
 Requires: nftables
 Requires: containers-common
@@ -91,7 +91,7 @@ export GIT_COMMIT=%release
 pushd .gopath/src/%import_path
 #%%make test/version/version
 go build -o test/version/version ./test/version/
-%make_build PREFIX=%_prefix TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir MODULESLOADDIR=%_modulesloaddir
+%make_build PREFIX=%_prefix ETCDIR=%_sysconfdir TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir MODULESLOADDIR=%_modulesloaddir
 %make docs docker-docs
 popd
 
@@ -104,8 +104,8 @@ export RELEASE_NUMBER=%version
 export GIT_COMMIT=%release
 
 pushd .gopath/src/%import_path
-%make DESTDIR=%buildroot PREFIX=%_prefix TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir MODULESLOADDIR=%_modulesloaddir \
-    SYSTEMDGENERATORSDIR=%_systemdgeneratordir USERSYSTEMDGENERATORSDIR=%_systemdusergeneratordir \
+%make DESTDIR=%buildroot PREFIX=%_prefix ETCDIR=%_sysconfdir TMPFILESDIR=%_tmpfilesdir MODULESLOADDIR=%_modulesloaddir \
+    SYSTEMDDIR=%_unitdir SYSTEMDGENERATORSDIR=%_systemdgeneratordir USERSYSTEMDGENERATORSDIR=%_systemdusergeneratordir \
     install.bin \
     install.remote \
     install.modules-load \
@@ -153,6 +153,10 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Mon May 15 2023 Alexey Shabalin <shaba@altlinux.org> 4.5.0-alt1
+- New version 4.5.0.
+- Build with libsubid.
+
 * Fri Apr 07 2023 Alexey Shabalin <shaba@altlinux.org> 4.4.4-alt1
 - New version 4.4.4.
 
