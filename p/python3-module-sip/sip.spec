@@ -1,11 +1,9 @@
 %define oname sip
 %define pkg_version %(echo %version | sed 's/\\./,/g')
 
-%def_without py3qt5
-
 Name: python3-module-%oname
 Version: 4.19.19
-Release: alt6
+Release: alt7
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -29,22 +27,6 @@ Generates Python bindings for C++ class libraries from a set of class
 specification files.  Also includes a Python extension module needed by all
 generated bindings.
 
-%package -n python3-module-PyQt4-%oname
-Summary: Python 3 bindings generator for C++ class libraries for PyQt4
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-PyQt4-%oname
-Python 3 bindings generator for C++ class libraries for PyQt4
-
-%package -n python3-module-PyQt5-%oname
-Summary: Python 3 bindings generator for C++ class libraries for PyQt5
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-PyQt5-%oname
-Python 3 bindings generator for C++ class libraries for PyQt5
-
 %package -n python3-module-%oname-devel
 Requires: python3-module-%oname = %version-%release
 Summary: Header files for sip (Python 3)
@@ -52,15 +34,13 @@ Group: Development/Python3
 Requires: python3-devel
 
 %description -n python3-module-%oname-devel
-Header files for sip
+Header files for sip (Python 3).
 
 %prep
 %setup -n %oname-%version
 
 %build
-mkdir python3
-pushd python3
-python3 ../configure.py --debug -d %python3_sitelibdir
+python3 configure.py --debug -d %python3_sitelibdir
 sed -i \
 	's|^\(CPPFLAGS.*\)|\1 -g -I%__python3_includedir|' \
 	*/Makefile
@@ -68,30 +48,9 @@ sed -i \
 	's|lpython%__python3_version|l:%(basename %__libpython3)|' \
 	siplib/Makefile
 %make_build
-popd
-
-mkdir python3-PyQt4
-pushd python3-PyQt4
-python3 ../configure.py --debug -d %python3_sitelibdir \
-	--sip-module=PyQt4.sip
-%make_build
-popd
-
-%if_with py3qt5
-mkdir python3-PyQt5
-pushd python3-PyQt5
-python3 ../configure.py --debug -d %python3_sitelibdir \
-	--sip-module=PyQt5.sip
-%make_build
-popd
-%endif
 
 %install
-%makeinstall_std -C python3
-%makeinstall_std -C python3-PyQt4
-%if_with py3qt5
-%makeinstall_std -C python3-PyQt5
-%endif
+%makeinstall_std
 
 mv %buildroot%_bindir/sip %buildroot%_bindir/sip3
 sed -i 's|%_datadir/sip|%_datadir/sip3|' \
@@ -100,24 +59,12 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 	%buildroot%python3_sitelibdir/sipconfig.py
 
 %files
-%doc README NEWS LICENSE*
+%doc README NEWS
 %_bindir/sip3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pyi
 %exclude %python3_sitelibdir/sipconfig.*
 %exclude %python3_sitelibdir/sipdistutils.*
-%exclude %python3_sitelibdir/PyQt4*
-%if_with py3qt5
-%exclude %python3_sitelibdir/PyQt5*
-%endif
-
-%files -n python3-module-PyQt4-%oname
-%python3_sitelibdir/PyQt4*
-
-%if_with py3qt5
-%files -n python3-module-PyQt5-%oname
-%python3_sitelibdir/PyQt5*
-%endif
 
 %files -n python3-module-%oname-devel
 # Here, we just use the same path as in the build system:
@@ -128,6 +75,10 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 #doc doc/*
 
 %changelog
+* Sun May 14 2023 Anton Midyukov <antohami@altlinux.org> 4.19.19-alt7
+- disable python3-module-PyQt4-sip subpackage
+- cleanup spec
+
 * Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 4.19.19-alt6
 - build python3 module separately
 
