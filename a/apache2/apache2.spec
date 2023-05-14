@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.56
-Release: alt2
+Version: 2.4.57
+Release: alt1
 Epoch: 1
 
 License: %asl
@@ -1539,6 +1539,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Sun May 14 2023 Anton Farygin <rider@altlinux.ru> 1:2.4.57-alt1
+- 2.4.57
+
 * Wed Mar 22 2023 Alexey Shabalin <shaba@altlinux.org> 1:2.4.56-alt2
 - allow read for all /etc/sysconfig/httpd2
 
