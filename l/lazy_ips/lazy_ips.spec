@@ -1,7 +1,7 @@
 Name: lazy_ips
 Version: 20200706
-Release: alt1
-License: GPL 3
+Release: alt2
+License: GPL-3.0-or-later
 Group: Emulators
 Url: https://github.com/btimofeev/lazy_ips
 Packager: Artyom Bystrov <arbars@altlinux.org>
@@ -10,9 +10,9 @@ Source: %name-%version.tar.xz
 Source1: %name.png
 Summary: lazy_ips is an universal IPS patcher
 BuildArch: noarch
-Requires: python-module-pygtk
-Requires: python3
-AutoReqProv: no
+
+BuildRequires: rpm-build-python3 rpm-build-gir
+Requires: typelib(Gtk) = 3.0
 
 %description
 Universal IPS patcher.
@@ -21,22 +21,10 @@ Universal IPS patcher.
 %setup -n %name-%version
 
 %install
-mkdir -p %buildroot%_libexecdir/%name
+mkdir -p %buildroot%_bindir
+install -m 0755 %name.py %buildroot%_bindir/%name
 
-cp -arv $RPM_BUILD_DIR/%name-%version/* %buildroot%_libexecdir/%name/
-
-# launcher
-mkdir -p %buildroot%_bindir/
-cat > %buildroot%_bindir/%name << EOF
-#!/bin/sh
-cd %_libexecdir/%name/
-python3 %name.py
-cd /
-EOF
-
-chmod a+x %buildroot%_bindir/%name
-
-install -d -m 0755 %buildroot%_pixmapsdir
+mkdir -p %buildroot%_pixmapsdir
 install -m 0644 %SOURCE1 %buildroot%_pixmapsdir/%name.png
 
 mkdir -p %buildroot%_desktopdir
@@ -51,20 +39,22 @@ Name=Lazy_ips
 GenericName=Universal IPS patcher
 Comment=%summary
 StartupNotify=false
-Categories=X-MandrivaLinux-MoreApplications-Emulators;Emulator;
+Categories=Game;Emulator;
 EOF
 
-
-
-rm -rf $RPM_BUILD_DIR/%name-%version
-
 %files
+%doc README.md
 %_bindir/%name
-%_libexecdir/%name
 %_pixmapsdir/%name.png
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun May 14 2023 Anton Midyukov <antohami@altlinux.org> 20200706-alt2
+- NMU: fix Requires
+- NMU: fix License
+- NMU: fix Categories in destop file
+- NMU: cleanup spec
+
 * Wed Jan 4 2022  Artyom Bystrov <arbars@altlinux.org> 20200706-alt1
 - Import from PCLinuxOS srpm
 
