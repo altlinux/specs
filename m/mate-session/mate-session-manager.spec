@@ -3,7 +3,7 @@
 
 Name: mate-session
 Version: 1.26.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE Desktop session manager
 License: GPLv2+
@@ -77,6 +77,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Sun May 14 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
+- added patch to kick users after timeout
+
 * Thu May 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
 - 1.26.1
 
