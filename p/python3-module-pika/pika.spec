@@ -1,7 +1,7 @@
 %define oname pika
 
 Name: python3-module-%oname
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Pika is a pure-Python implementation of the AMQP 0-9-1 protocol.
@@ -70,6 +70,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html/*
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.2-alt1
+- Automatically updated to 1.3.2.
+
 * Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
 - Automatically updated to 1.3.1.
 
