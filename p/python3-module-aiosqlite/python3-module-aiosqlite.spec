@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.19.0
-Release: alt1
+Release: alt1.1
 
 Summary: asyncio bridge to the standard sqlite3 module
 License: MIT
@@ -20,12 +20,11 @@ Source1: %pyproject_deps_config_name
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
+BuildRequires: python3(sqlite3)
 
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
-
-BuildRequires: python3(sqlite3)
 BuildRequires: python3(pytest)
 %endif
 
@@ -65,6 +64,9 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon May 15 2023 Michael Shigorin <mike@altlinux.org> 0.19.0-alt1.1
+- fix build --without check
+
 * Sat May 06 2023 Anton Zhukharev <ancieg@altlinux.org> 0.19.0-alt1
 - New version.
 
