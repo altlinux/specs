@@ -4,8 +4,8 @@
 %def_disable fltk
 
 Name: pinentry
-Version: 1.1.0
-Release: alt7
+Version: 1.2.1
+Release: alt1
 
 Summary: Simple PIN or passphrase entry dialog
 License: GPLv2+
@@ -23,7 +23,7 @@ Source1: pinentry-wrapper
 Patch10: alt-mask-xprop.patch
 
 %if_enabled qt5
-BuildRequires: qt5-base-devel
+BuildRequires: qt5-base-devel kf5-kwayland-devel rpm-build-kf5
 %endif
 %if_enabled libfltk-devel
 BuildRequires: libfltk-devel
@@ -137,6 +137,7 @@ pushd tui
     --disable-pinentry-fltk \
     --disable-pinentry-gnome3 \
     --disable-pinentry-qt \
+    --disable-pinentry-qt5 \
     --disable-libsecret \
     %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
     #
@@ -169,7 +170,7 @@ pushd gui-qt4
     --disable-pinentry-gtk2 \
     --disable-pinentry-fltk \
     --disable-pinentry-gnome3 \
-    --enable-pinentry-qt \
+    --enable-pinentry-qt4 \
     --disable-pinentry-qt5 \
     --enable-pinentry-qt-clipboard \
     --enable-libsecret \
@@ -181,6 +182,7 @@ popd
 
 %if_enabled qt5
 pushd gui-qt5
+export KF5WAYLANDCLIENT_LIBS="`pkg-config  --libs KF5WaylandClient` -L%_K5link"
 %configure \
     --disable-rpath \
     --disable-pinentry-curses \
@@ -254,6 +256,9 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Mon May 15 2023 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1
+- new version
+
 * Mon Oct 17 2022 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt7
 - drop ubt macro
 
