@@ -4,10 +4,10 @@
 
 Name: gresistor3
 Version: 3.2.5
-Release: alt1
+Release: alt2
 Summary: Identification resistors are usually marked with colored bands
 License: LGPL
-Group: Development/Python3
+Group: Engineering
 Url: https://pypi.org/project/%pypi_name
 BuildArch: noarch
 Source: %src_name-%version.tar
@@ -62,5 +62,8 @@ rm %buildroot%_iconsdir/eu.stethewwolf.gresistor.png
 %_iconsdir/hicolor/*/apps/eu.stethewwolf.gresistor.png
 
 %changelog
+* Mon May 15 2023 Anton Midyukov <antohami@altlinux.org> 3.2.5-alt2
+- Fix Group
+
 * Sun May 14 2023 Anton Midyukov <antohami@altlinux.org> 3.2.5-alt1
 - initial build
