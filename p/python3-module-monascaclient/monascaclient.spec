@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.6.0
-Release: alt1.1
+Version: 2.7.0
+Release: alt1
 
 Summary: OpenStack Monasca API Client Library
 
@@ -24,8 +24,6 @@ BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-osc-lib >= 1.8.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-babel
-BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-prettytable >= 0.7.2
 BuildRequires: python3-module-yaml >= 3.12
 
@@ -35,6 +33,8 @@ BuildRequires: python3-module-bandit >= 1.1.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-stestr >= 1.0.0
+BuildRequires: python3-module-babel
+BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
 %endif
@@ -115,6 +115,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt1
+- Automatically updated to 2.7.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1.1
 - Moved on modern pyproject macros.
 

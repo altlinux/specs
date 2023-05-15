@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.1.0
-Release: alt1.1
+Version: 4.1.1
+Release: alt1
 
 Summary: OpenStack Oslo VMware library
 
@@ -124,6 +124,9 @@ install -pDm 644 man/oslovmware.1 %buildroot%_man1dir/oslovmware.1
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt1
+- Automatically updated to 4.1.1.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1.1
 - Moved on modern pyproject macros.
 

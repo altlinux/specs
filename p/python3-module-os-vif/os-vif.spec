@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.0
-Release: alt3.1
+Version: 3.1.1
+Release: alt1
 
 Summary: A library for plugging and unplugging virtual interfaces in OpenStack
 
@@ -21,7 +21,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-oslo.concurrency >= 3.20.0
 BuildRequires: python3-module-oslo.config >= 5.1.0
 BuildRequires: python3-module-oslo.log >= 3.30.0
@@ -29,7 +28,6 @@ BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.privsep >= 1.23.0
 BuildRequires: python3-module-oslo.versionedobjects >= 1.28.0
 BuildRequires: python3-module-ovsdbapp >= 0.12.1
-BuildRequires: python3-module-pyroute2 >= 0.5.2
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-debtcollector >= 1.19.0
 
@@ -37,8 +35,10 @@ BuildRequires: python3-module-debtcollector >= 1.19.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslotest >= 1.10.0
 BuildRequires: python3-module-openvswitch >= 2.9.2
-BuildRequires: python3-module-stestr >= 1.0.0
+BuildRequires: python3-module-stestr >= 3.1.0
 BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-netaddr >= 0.7.18
+BuildRequires: python3-module-pyroute2 >= 0.5.2
 %endif
 
 %if_with docs
@@ -126,6 +126,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Automatically updated to 3.1.1.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt3.1
 - Moved on modern pyproject macros.
 

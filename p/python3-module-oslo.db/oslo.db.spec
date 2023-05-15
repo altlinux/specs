@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 12.3.1
-Release: alt1.1
+Version: 13.0.0
+Release: alt1
 
 Summary: OpenStack Oslo Database library
 
@@ -45,8 +45,8 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-pifpaf >= 0.10.0
 BuildRequires: python3-module-psycopg2 >= 2.8.0
-BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-pymysql
+BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
@@ -124,6 +124,9 @@ install -pDm 644 man/oslodb.1 %buildroot%_man1dir/oslodb.1
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 13.0.0-alt1
+- Automatically updated to 13.0.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 12.3.1-alt1.1
 - Moved on modern pyproject macros.
 

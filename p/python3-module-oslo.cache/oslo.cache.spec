@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.3.0
-Release: alt1.1
+Version: 3.4.0
+Release: alt1
 
 Summary: Cache storage for OpenStack projects
 
@@ -120,6 +120,9 @@ install -pDm 644 man/oslocache.1 %buildroot%_man1dir/oslocache.1
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
+- Automatically updated to 3.4.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1.1
 - Moved on modern pyproject macros.
 

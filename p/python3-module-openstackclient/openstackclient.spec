@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.0.0
-Release: alt2.1
+Version: 6.2.0
+Release: alt1
 
 Summary: OpenStack Command-line Client
 
@@ -23,7 +23,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-cliff >= 3.5.0
 BuildRequires: python3-module-iso8601 >= 0.1.11
-BuildRequires: python3-module-openstacksdk >= 0.61.0
+BuildRequires: python3-module-openstacksdk >= 0.103.0
 BuildRequires: python3-module-osc-lib >= 2.3.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.utils >= 3.33.0
@@ -39,15 +39,15 @@ BuildRequires: python3-module-mock
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-os-client-config >= 1.28.0
 BuildRequires: python3-module-coverage >= 4.0
-BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-stestr >= 1.0.0
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-tempest >= 17.1.0
-BuildRequires: python3-module-osprofiler >= 1.4.0
 BuildRequires: python3-module-wrapt >= 1.7.0
 BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-osc-lib-tests
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-osprofiler >= 1.4.0
 %endif
 
 %if_with docs
@@ -129,6 +129,9 @@ install -pDm 644 man/openstack.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1
+- Automatically updated to 6.2.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt2.1
 - Moved on modern pyproject macros.
 

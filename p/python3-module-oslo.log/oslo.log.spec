@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.1.0
-Release: alt1.1
+Version: 5.2.0
+Release: alt1
 
 Summary: OpenStack Oslo Log library
 
@@ -41,7 +41,6 @@ BuildRequires: python3-module-coverage >= 4.5.1
 BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
-BuildRequires: python3-module-eventlet >= 0.30.1
 %endif
 
 %if_with docs
@@ -119,6 +118,9 @@ install -pDm 644 man/oslolog.1 %buildroot%_man1dir/oslolog.1
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
+- Automatically updated to 5.2.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1.1
 - Moved on modern pyproject macros.
 

@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.1.0
-Release: alt1.1
+Version: 4.4.0
+Release: alt1
 
 Summary: OpenStack Image Service Store Library
 
@@ -40,18 +40,18 @@ BuildRequires: python3-module-cinderclient >= 3.3.0
 BuildRequires: python3-module-os-brick >= 2.6.0
 BuildRequires: python3-module-oslo.privsep >= 1.23.0
 BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-retrying >= 1.3.3
 BuildRequires: python3-module-stestr >= 2.0.0
-BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-boto3 >= 1.9.199
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-ddt >= 1.4.4
+BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-httplib2 >= 0.9.1
 BuildRequires: python3-module-oslo.rootwrap >= 5.8.0
-BuildRequires: python3-module-os-service-types
 %endif
 
 %if_with docs
@@ -148,6 +148,9 @@ mv %buildroot/usr/etc/glance/rootwrap.d/glance_cinder_store.filters \
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
+- Automatically updated to 4.4.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1.1
 - Moved on modern pyproject macros.
 

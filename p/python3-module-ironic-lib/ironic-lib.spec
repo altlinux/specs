@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.4.0
-Release: alt1.1
+Version: 5.5.0
+Release: alt1
 
 Summary: OpenStack Ironic common library
 
@@ -119,6 +119,9 @@ mv %buildroot/usr/etc/ironic/rootwrap.d/*.filters %buildroot%_sysconfdir/%oname/
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 5.5.0-alt1
+- Automatically updated to 5.5.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 5.4.0-alt1.1
 - Moved on modern pyproject macros.
 

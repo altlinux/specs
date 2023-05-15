@@ -3,8 +3,8 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 3.5.0
-Release: alt1.1
+Version: 4.0.0
+Release: alt1
 
 Summary: RElease NOtes manager
 
@@ -26,10 +26,11 @@ BuildRequires: python3-module-yaml >= 3.10.0
 BuildRequires: python3-module-packaging >= 20.4
 
 %if_with check
-BuildRequires: python3-module-stestr
+BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-dulwich >= 0.15.0
-BuildRequires: gnupg
-BuildRequires: git-core
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-testtools >= 1.4.0
 %endif
 
 %if_with docs
@@ -109,6 +110,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1.1
 - Moved on modern pyproject macros.
 

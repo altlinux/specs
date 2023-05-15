@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.0.0
-Release: alt1.1
+Version: 5.2.0
+Release: alt1
 Epoch: 1
 
 Summary: Taskflow structured state management library
@@ -34,7 +34,6 @@ BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-tenacity >= 6.0.0
 BuildRequires: python3-module-cachetools >= 2.0.0
-BuildRequires: python3-module-pydot >= 1.2.4
 
 %if_with check
 BuildRequires: python3-module-kazoo >= 2.6.0
@@ -45,13 +44,14 @@ BuildRequires: python3-module-SQLAlchemy-Utils
 BuildRequires: python3-module-zake >= 0.1.6
 BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-sqlalchemy
-BuildRequires: python3-module-pymysql
-BuildRequires: python3-module-psycopg2 >= 2.8.0
-BuildRequires: python3-module-pydotplus >= 2.0.2
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-pydot >= 1.2.4
+BuildRequires: python3-module-pymysql
+BuildRequires: python3-module-psycopg2 >= 2.8.0
+BuildRequires: python3-module-pydotplus >= 2.0.2
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
@@ -129,6 +129,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 1:5.2.0-alt1
+- Automatically updated to 5.2.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 1:5.0.0-alt1.1
 - Moved on modern pyproject macros.
 
