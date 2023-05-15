@@ -3,7 +3,7 @@
 
 Name: openssl1.1
 Version: 1.1.1t
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -18,6 +18,7 @@ Source2: Makefile.certificate
 Source3: make-dummy-cert
 Source4: cc.sh
 
+Patch01: openssl-upstream-branch-updates.patch
 Patch03: openssl-alt-config.patch
 Patch04: openssl-alt-engines-path.patch
 Patch05: openssl-alt-e2k-makecontext.patch
@@ -219,6 +220,7 @@ on the command line.
 
 %prep
 %setup -n openssl-%version
+%patch01 -p1
 %patch03 -p1
 %patch04 -p1
 %patch05 -p2
@@ -278,6 +280,9 @@ ADD_ARGS=linux64-mips64
 %endif
 %ifarch riscv64 %e2k
 ADD_ARGS=linux-generic64
+%endif
+%ifarch loongarch64
+ADD_ARGS=linux64-loongarch64
 %endif
 
 if echo 'extern __uint128_t i;' |
@@ -467,6 +472,12 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Mon May 15 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1t-alt2
+- Updated from upstream OpenSSL_1_1_1-stable branch (fixes CVE-2023-0464,
+  CVE-2023-0465, CVE-2023-0466).
+- spec: Added support for loongarch64 architecture (ALT#45583)
+  (thx Alexey Sheplyakov).
+
 * Tue Feb 07 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1t-alt1
 - Updated to 1.1.1t (fixes CVE-2023-0286, CVE-2023-0215, CVE-2022-4450,
   CVE-2022-4304).
