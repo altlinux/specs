@@ -5,7 +5,7 @@ compatibility.
 
 Name: flatbuffers
 Version: 23.5.9
-Release: alt1
+Release: alt1.1
 
 Summary: Memory Efficient Serialization Library
 License: APL
@@ -51,6 +51,9 @@ This package contains python files for %name.
 %add_optflags -Wno-class-memaccess -Wno-stringop-overflow
 %ifarch %e2k
 sed -i 's,-Werror -Wextra -Werror=shadow,,' CMakeLists.txt
+# get rid of abstractions that break the compiler
+sed -i 's/int &...ExplicitArgumentBarrier,//;s/int &...,//' \
+	include/flatbuffers/flatbuffer_builder.h
 %endif
 
 %build
@@ -99,6 +102,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 15 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 23.5.9-alt1.1
+- Fixed build for Elbrus
+
 * Sun May 14 2023 Nazarov Denis <nenderus@altlinux.org> 23.5.9-alt1
 - 23.5.9 released
 
