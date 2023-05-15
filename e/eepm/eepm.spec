@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: eepm
-Version: 3.57.0
+Version: 3.57.1
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -63,8 +63,6 @@ a discussion about extra requirements.
 %make_install install DESTDIR=%buildroot \
 	datadir=%_datadir bindir=%_bindir mandir=%_mandir \
 	sysconfdir=%_sysconfdir version=%version-%release
-# temp. disable due possible side effects: https://bugzilla.altlinux.org/46146
-rm -v %buildroot%_sysconfdir/bash_completion.d/eepm
 
 %files
 %doc README.md TODO LICENSE
@@ -89,7 +87,7 @@ rm -v %buildroot%_sysconfdir/bash_completion.d/eepm
 %_man1dir/*
 %_datadir/%name/
 %_sysconfdir/bash_completion.d/serv
-#_sysconfdir/bash_completion.d/eepm
+%_sysconfdir/bash_completion.d/eepm
 
 %if "%_vendor" == "alt"
 %files repack
@@ -97,6 +95,12 @@ rm -v %buildroot%_sysconfdir/bash_completion.d/eepm
 
 
 %changelog
+* Mon May 15 2023 Vitaly Lipatov <lav@altlinux.ru> 3.57.1-alt1
+- epm-sh-functions: add more diag info about tmp, drop rmdir for removed tmp files
+- revert "disable bash completion for epm (see alt bug 46146)"
+- epm repack: restore fixing tarball files permissions
+- epm repack mobirise: add libjpeg8 require for newest versions
+
 * Mon May 15 2023 Vitaly Lipatov <lav@altlinux.ru> 3.57.0-alt1
 - disable bash completion for epm (see alt bug 46146)
 - epm play: add piktomir
