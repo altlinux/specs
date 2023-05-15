@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.6
+Version: 10.0.7
 Release: alt1
 
 Summary: IT and asset management software
@@ -12,7 +12,7 @@ URL: http://www.glpi-project.org
 Packager: Pavel Zilke <zidex at altlinux dot org>
 BuildArch: noarch
 
-Source0: http://www.glpi-project.org/IMG/gz/%name-%version.tar.gz
+Source0: https://github.com/glpi-project/glpi/releases/download/%version/%name-%version.tgz
 Source1: apache2.conf
 Source2: README.ALT
 Source3: UPGRADE.ALT
@@ -113,7 +113,12 @@ echo "If you upgrade from previous version (less than 9.5) then read /usr/share/
 
 %post apache2
 if [ "$1" = "1" ]; then
+  a2enmode rewrite
   a2ensite %name
+  %_initdir/httpd2 condreload
+fi
+if [ "$1" = "2" ]; then
+  a2enmode rewrite
   %_initdir/httpd2 condreload
 fi
 
@@ -188,6 +193,19 @@ fi
 %files php8.2
 
 %changelog
+* Sat May 13 2023 Pavel Zilke <zidex@altlinux.org> 10.0.7-alt1
+- New version 10.0.7
+- This release fixes several security issues that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2023-28849 : SQL injection and Stored XSS via inventory agent request
+ + CVE-2023-28632 : Account takeover by authenticated user
+ + CVE-2023-28838 : SQL injection through dynamic reports
+ + CVE-2023-28852 : Stored XSS through dashboard administration
+ + CVE-2023-28636 : Stored XSS on external links
+ + CVE-2023-28639 : Reflected XSS in search pages
+ + CVE-2023-28634 : Privilege Escalation from technician to super-admin
+ + CVE-2023-28633 : Blind Server-Side Request Forgery (SSRF) in RSS feeds
+
 * Tue Jan 24 2023 Pavel Zilke <zidex@altlinux.org> 10.0.6-alt1
 - New version 10.0.6
 - This release fixes several security issues that has been recently discovered. Update is recommended!
