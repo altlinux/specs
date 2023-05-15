@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Python Software for Convex Optimization
@@ -159,6 +159,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
+- Automatically updated to 1.3.1.
+
 * Mon May 23 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Automatically updated to 1.3.0.
 - Build with check.
