@@ -3,26 +3,25 @@
 %def_enable check
 
 Name:    python3-module-%modulename
-Version: 0.19.1
-Release: alt2
+Version: 0.20.1
+Release: alt1
 
 Summary: Simple Python interface for Graphviz
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/xflr6/graphviz
+URL:     https://pypi.org/project/graphviz/
+VCS:     https://github.com/xflr6/graphviz
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_enabled check
 # related https://bugzilla.altlinux.org/42311
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: graphviz
 
-BuildRequires: python3-module-mock
 BuildRequires: python3-module-pytest-mock
-
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-tox-no-deps
 %endif
 
 BuildArch: noarch
@@ -36,22 +35,25 @@ Patch0: %name-%version-%release.patch
 %setup
 %patch0 -p1
 
+sed -i '/^mock_use_standalone_module/d' setup.cfg
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps -v --develop
+%pyproject_run_pytest
 
 %files
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Mon May 15 2023 Anton Vyatkin <toni@altlinux.org> 0.20.1-alt1
+- New version 0.20.1 (Closes: #42049).
+
 * Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 0.19.1-alt2
 - Fixed FTBFS (workaround for libpango-1.50.5).
 
