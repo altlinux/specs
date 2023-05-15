@@ -8,7 +8,7 @@
 #    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20230512.1.1
+Version: 20230515.1.2
 Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
@@ -53,7 +53,7 @@ popd
 BUILD=%_cmake__builddir bats test-suite.bats
 
 %files
-%config(noreplace) %_datadir/%name/auditd-clickhouse-datatypes.json
+%_datadir/%name/auditd-clickhouse-datatypes.json
 %config(noreplace) %attr(600,root,root) %_sysconfdir/audit/auditd-clickhouse.conf
 %config(noreplace) %_sysconfdir/audit/plugins.d/auditd-plugin-clickhouse.conf
 %config(noreplace) %_sysconfdir/logrotate.d/auditd-plugin-clickhouse-logrotate.conf
@@ -61,6 +61,17 @@ BUILD=%_cmake__builddir bats test-suite.bats
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Mon May 15 2023 Paul Wolneykien <manowar@altlinux.org> 20230515.1.2-alt1
+- Fixed build on i586 and armh.
+
+* Mon May 15 2023 Paul Wolneykien <manowar@altlinux.org> 20230515.1.1-alt1
+- Store raw audit records if DatatypesDescriptionFile is not
+  specified.
+- Added ReadReportPeriod= option to report about amount of bytes
+  read within the specified number of seconds.
+- Fix: Always install new version of
+  /usr/share/auditd-plugin-clickhouse/auditd-clickhouse-datatypes.json.
+
 * Fri May 12 2023 Paul Wolneykien <manowar@altlinux.org> 20230512.1.1-alt1
 - Fix "LowCardinality(Nullable) is not supported" error.
 
