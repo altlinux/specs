@@ -1,5 +1,5 @@
 Name: mousepad
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Mousepad - A simple text editor for Xfce
@@ -13,8 +13,10 @@ Vcs: https://gitlab.xfce.org/apps/mousepad.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools >= 4.14.0
-BuildRequires: libgtk+3-devel intltool libgtksourceview4-devel
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools >= 4.18.0
+BuildRequires: libgtk+3-devel libgtksourceview4-devel
+# For xgettext to parse the `.policy` file
+BuildRequires: libpolkit-devel
 # For gspell plugin
 BuildRequires: libgspell-devel
 # For shortcuts plugin
@@ -39,9 +41,6 @@ Mousepad - простой текстовый редактор для Xfce осн
 %prep
 %setup
 %patch -p1
-
-# Don't use git tag in version.
-%xfce4_drop_gitvtag mousepad_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -76,6 +75,9 @@ Mousepad - простой текстовый редактор для Xfce осн
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Mon May 15 2023 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt1
+- Updated to 0.6.1.
+
 * Thu Feb 09 2023 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
 - Remove 'menu' and 'button' toolbar icon sizes (closes: #42387).
 - Updated to 0.6.0.
