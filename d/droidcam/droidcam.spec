@@ -1,7 +1,7 @@
 Name: droidcam
 Summary: DroidCam turns your mobile device into a webcam for your PC
 Version: 2.0.0
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Video
 Url: https://github.com/aramg/droidcam
@@ -9,7 +9,7 @@ Url: https://github.com/aramg/droidcam
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc libturbojpeg-devel libusbmuxd-devel libgtk+3-devel libappindicator-gtk3-devel libalsa-devel libspeex-devel libavutil-devel libswscale-devel
+BuildRequires: gcc libturbojpeg-devel libusbmuxd-devel libgtk+3-devel libayatana-appindicator3-devel libalsa-devel libspeex-devel libavutil-devel libswscale-devel
 
 %description
 DroidCam turns your mobile device into a webcam for your PC.
@@ -26,7 +26,7 @@ cli version of %name
 %patch -p1
 
 %build
-CFLAGS="%optflags" %make_build
+CFLAGS="%optflags" APPINDICATOR=ayatana-appindicator3-0.1 %make_build
 
 %install
 mkdir -p %buildroot{%_iconsdir,%_bindir,%_desktopdir}
@@ -55,6 +55,9 @@ EOF
 %_bindir/%name-cli
 
 %changelog
+* Mon May 15 2023 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt2
+- NMU: rebuild with libayatana-appindicator3
+
 * Wed May 10 2023 L.A. Kostis <lakostis@altlinux.ru> 2.0.0-alt1
 - 2.0.0.
 
