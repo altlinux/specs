@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-media
-Version: 1.26.0
+Version: 1.26.1
 Release: alt1
 Epoch: 1
 Summary: MATE media programs
@@ -50,6 +50,9 @@ including a volume control.
 %_man1dir/*.1*
 
 %changelog
+* Mon May 15 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
+- 1.26.1
+
 * Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
 - 1.26.0
 
