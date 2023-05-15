@@ -1,6 +1,6 @@
 Name: xfce4-taskmanager
 Version: 1.5.5
-Release: alt1
+Release: alt2
 
 Summary: Taskmanager for Xfce Desktop
 Summary(ru_RU.UTF-8): Системный монитор для Xfce
@@ -31,6 +31,8 @@ BuildRequires: libgtk+3-devel libcairo-devel libwnck3-devel
 mkdir m4/
 
 %build
+# Don't use git tag in version.
+%xfce4_drop_gitvtag taskmanager_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
@@ -49,6 +51,10 @@ mkdir m4/
 %_iconsdir/hicolor/*/*/*.*
 
 %changelog
+* Mon May 15 2023 Mikhail Efremov <sem@altlinux.org> 1.5.5-alt2
+- Patch from upstream:
+  + Fix process filter crash (closes: #46061).
+
 * Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 1.5.5-alt1
 - Updated to 1.5.5.
 
