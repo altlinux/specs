@@ -182,10 +182,10 @@
 %def_without modular_daemons
 
 Name: libvirt
-Version: 9.0.0
+Version: 9.3.0
 Release: alt1
 Summary: Library providing a simple API virtualization
-License: LGPLv2+
+License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
 Url: https://libvirt.org/
 Source0: %name-%version.tar
@@ -681,6 +681,9 @@ capabilities of recent versions of Linux (and other OSes).
 Summary: Additional client side utilities for QEMU
 Group: System/Libraries
 Requires: %name-libs = %EVR
+Requires: python3-module-libvirt >= 3.7.0
+Requires: python3-module-cryptography
+Requires: python3-module-lxml
 
 %description client-qemu
 The additional client binaries are used to interact
@@ -755,7 +758,7 @@ Includes virt-admin, the libvirt administartion utility.
 %prep
 %setup
 mkdir -p src/keycodemapdb
-tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
+tar -xf %SOURCE2 -C subprojects/keycodemapdb --strip-components 1
 
 %patch1 -p1
 
@@ -1395,6 +1398,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 9.3.0-alt1
+- 9.3.0
+
 * Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 9.0.0-alt1
 - 9.0.0
 
