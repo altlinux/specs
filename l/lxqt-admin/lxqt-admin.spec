@@ -3,16 +3,15 @@
 
 Name:     lxqt-admin
 Version:  1.3.0
-Release:  alt1
+Release:  alt2
 
 Summary:  LXQt system administration tool
 License:  LGPL-2.1
 Group:    Graphical desktop/Other
 Url:      https://github.com/lxqt/lxqt-admin
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
 Source:   %name-%version.tar
+Patch:    0001-Add-russian-translation-of-polkit-messages.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -28,6 +27,7 @@ BuildRequires: libpolkitqt5-qt5-devel
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake
@@ -44,6 +44,9 @@ BuildRequires: libpolkitqt5-qt5-devel
 %doc AUTHORS CHANGELOG *.md
 
 %changelog
+* Fri May 05 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt2
+- Add russian translation of polkit messages
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 
