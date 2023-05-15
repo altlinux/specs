@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 4.6.0
+Version: 4.7.0
 Release: alt1
 
 Summary: %descr
@@ -76,6 +76,9 @@ py.test-3 --ignore tests/database_test.py
 %endif
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 4.7.0-alt1
+- Automatically updated to 4.7.0.
+
 * Fri Jun 24 2022 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
 - Automatically updated to 4.6.0.
 - Build with check.
