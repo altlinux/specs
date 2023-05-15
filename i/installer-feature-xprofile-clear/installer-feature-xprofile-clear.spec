@@ -1,5 +1,5 @@
 Name: installer-feature-xprofile-clear
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Clear xprofile
@@ -28,8 +28,11 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon May 15 2023 Sergey V Turchin <zerg@altlinux.org> 0.4-alt1
+- fix fill .xprofile
+
 * Mon May 15 2023 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
-- don't do empty ~/.xprofile
+- don't do empty .xprofile
 
 * Fri Mar 25 2022 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
 - fix run to late
