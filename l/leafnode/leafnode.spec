@@ -1,9 +1,9 @@
 Name: leafnode
-Version: 1.11.12
-Release: alt1
+Version: 1.12.0
+Release: alt2
 
 Summary: a leafsite NNTP server
-License: Artistic
+License: MIT and LGPLv2.1+ and GPLv2
 Group: System/Servers
 
 Url: http://www.leafnode.org
@@ -15,15 +15,13 @@ Source4: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Summary(ru_RU.UTF-8): небольшой NNTP-сервер
-Summary(uk_UA.UTF-8): невеличкий NNTP-сервер
 
-# NOTE: buildreq would catch %%_sbindir/tcpd from and add tcp_wrappers :-/
-# So don't run that on this. -- mike
-
-BuildRequires: libpcre-devel
+BuildRequires: libpcre2-devel
 Conflicts: inn cyrus-imapd
 
-%define nntp_server news.talk.ru
+# news.talk.ru resolves but doesn't respond as of May 2023
+# (news.hiof.no from the original example doesn't even resolve by now)
+%define nntp_server ddt.demos.su
 %define leafgroup news
 %define leafuser news
 
@@ -38,12 +36,6 @@ Leafnode - небольшой NNTP-сервер для "домашних" нов
 постоянного соединения с Internet.  Он поддерживает подмножество NNTP
 и позволяет автоматически доставлять группы новостей и отправлять
 сообщения при помощи news-сервера провайдера.
-
-%description -l uk_UA.UTF-8
-Leafnode - невеличкий NNTP-сервер для "домашн╕х" новин за в╕дсутност╕
-пост╕йного з'╓днання з Internet.  В╕н п╕дтриму╓ п╕дмножину NNTP та
-дозволя╓ автоматично приймати групи новин та в╕дсилати листи за
-допомогою news-серверу провайдера.
 
 %prep
 %setup
@@ -67,13 +59,19 @@ install -pDm600 filters.example %buildroot%_sysconfdir/leafnode/filters
 install -pDm755 %SOURCE1 %buildroot%_sysconfdir/cron.daily/texpire
 install -pDm644 %SOURCE3 %buildroot%_sysconfdir/xinetd.d/%name
 
+install -d %buildroot%_unitdir
+install -pm644 leafnode*.{service,socket} %buildroot%_unitdir
+
 sed \
-	-e 's,news.hiof.no,%nntp_server,g' \
+	-e 's,news.example.org,%nntp_server,g' \
 	-e 's,^# maxfetch,maxfetch,g' \
 	-e 's,^# initialfetch,initialfetch,g' \
 	-e 's,^# allow_8bit_headers,allow_8bit_headers,g' \
 	< config.example \
 	> %buildroot%_sysconfdir/leafnode/config
+
+# tcpd got purged from sisyphus on 2018-10-13
+sed -i -e 's,%_sbindir/tcpd ,,' %buildroot%_unitdir/*.service
 
 %post
 # get hostname to config -- works for first time
@@ -108,12 +106,23 @@ chmod -R u=rwX,go=rX %_spooldir/news/
 %attr(755,root,root) %config(noreplace) %_sysconfdir/cron.daily/texpire
 %attr(640,root,%leafgroup) %config(noreplace) %_sysconfdir/%name/config
 %attr(640,root,%leafgroup) %config(noreplace) %_sysconfdir/%name/filters
+%attr(640,root,%leafgroup) %_sysconfdir/%name/*.example
 %attr(710,root,%leafgroup) %_sbindir/*
 %attr (775,root,%leafgroup) %_lockdir/news
 %attr (755,%leafuser,%leafgroup) %_spooldir/news
+%_unitdir/*
 %_bindir/*
 
 %changelog
+* Mon May 15 2023 Michael Shigorin <mike@altlinux.org> 1.12.0-alt2
+- fix build w/o tcp_wrappers (dropped from sisyphus)
+- fix License:
+- minor spec update/cleanup
+
+* Fri May 27 2022 Michael Shigorin <mike@altlinux.org> 1.12.0-alt1
+- new version (watch file uupdate)
+  + move to pcre2
+
 * Tue Mar 30 2021 Michael Shigorin <mike@altlinux.org> 1.11.12-alt1
 - new version (watch file uupdate)
 
