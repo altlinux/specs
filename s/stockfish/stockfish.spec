@@ -2,7 +2,7 @@
 
 Name: stockfish
 Version: 15.1
-Release: alt1
+Release: alt1.1
 Group: Games/Boards
 
 Summary: Powerful open source chess engine
@@ -43,6 +43,10 @@ test %nnuehash = "$(sha256sum %SOURCE1 | cut -c1-12)"
 %setup
 
 %patch0 -p1
+%ifarch %e2k
+# SSSE3 is available on e2k, but assembly is different
+sed -i '/#define USE_INLINE_ASM/d' src/nnue/layers/simd.h
+%endif
 
 cp %SOURCE10 ./
 cp %SOURCE1 ./src/
@@ -103,6 +107,9 @@ cp -p polyglot.ini %buildroot%_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/polyglot.ini
 
 %changelog
+* Mon May 15 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 15.1-alt1.1
+- Fixed build for Elbrus.
+
 * Mon Jan 16 2023 Leonid Znamenok <respublica@altlinux.org> 15.1-alt1
 - Rebuild for ALT Linux, thanks Fedora!
 - Build support for the e2k architecture has been added.
