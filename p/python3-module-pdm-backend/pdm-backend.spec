@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 
 Summary: The build backend used by PDM that supports latest packaging standards
@@ -41,8 +41,6 @@ Patch: %name-%version-alt.patch
 %endif
 
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires: /usr/bin/git
-
 %pyproject_builddeps_build
 
 %if_without vendored
@@ -83,17 +81,7 @@ sed -i \
     "$UNVENDORED_PATH"
 %endif
 
-# for pdm scm version
-# https://pdm.fming.dev/latest/pyproject/build/#dynamic-version-from-scm
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
-
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -112,6 +100,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon May 15 2023 Stanislav Levin <slev@altlinux.org> 2.0.7-alt1
+- 2.0.6 -> 2.0.7.
+
 * Tue Apr 18 2023 Stanislav Levin <slev@altlinux.org> 2.0.6-alt1
 - 2.0.5 -> 2.0.6.
 
