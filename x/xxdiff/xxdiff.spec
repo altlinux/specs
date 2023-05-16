@@ -4,10 +4,12 @@
 Summary: A graphical front end to the diff command
 Name: xxdiff
 Version: 5.1
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Development/Tools
 Source: %name-%version.tar.gz
+Patch0: 0001-Fix-name-of-qmake.patch
+
 Url: https://furius.ca/xxdiff/
 
 # Automatically added by buildreq on Fri Mar 10 2023
@@ -30,6 +32,7 @@ Buildarch: noarch
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 make -C src -f Makefile.bootstrap
@@ -60,5 +63,7 @@ install -D src/xxdiff.1 %buildroot%_man1dir/
 %exclude %_bindir/xx-svn-review
 
 %changelog
+* Tue May 16 2023 Artyom Bystrov <arbars@altlinux.org> 5.1-alt2
+- Fix FTBFS
 * Fri Mar 10 2023 Fr. Br. George <george@altlinux.ru> 5.1-alt1
 - Initial build for ALT
