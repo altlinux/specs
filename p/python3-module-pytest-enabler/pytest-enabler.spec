@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 Summary: Pytest plugin for configuration of another plugins
 License: MIT
@@ -13,24 +13,15 @@ Url: https://pypi.org/project/pytest-enabler/
 VCS: https://github.com/jaraco/pytest-enabler.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+%pyproject_runtimedeps_metadata
 %py3_provides %pypi_name
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# dependencies=
-BuildRequires: python3(toml)
-BuildRequires: python3(jaraco.context)
-BuildRequires: python3(jaraco.functools)
-
-BuildRequires: python3(pytest)
+%add_pyproject_deps_check_filter pytest-ruff types-
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -40,18 +31,9 @@ the settings if the plugin is not present.
 %prep
 %setup
 %autopatch -p1
-
-# if build from git source tree
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -60,7 +42,7 @@ fi
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -Wignore
 
 %files
 %doc README.rst
@@ -68,6 +50,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
+- 2.1.0 -> 2.1.1.
+
 * Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - 2.0.0 -> 2.1.0.
 
