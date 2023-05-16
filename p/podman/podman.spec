@@ -5,7 +5,7 @@
 
 Name:     podman
 Version:  4.5.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0
@@ -24,14 +24,11 @@ BuildRequires: libassuan-devel libsystemd-devel libsubid-devel
 BuildRequires: /proc
 
 Requires: conmon >= 2.1.7
-Requires: iptables
-Requires: nftables
-Requires: containers-common
+Requires: containers-common-extra
+%ifnarch %e2k %arm %ix86
+Requires: netavark >= 1.6.0
+%endif
 Requires: oci-runtime
-Requires: crun
-Requires: runc
-Requires: slirp4netns
-Requires: cni cni-plugins >= 0.8.6
 Requires: xz
 Requires: shadow-submap
 
@@ -42,10 +39,12 @@ Requires: shadow-submap
 Summary:  Emulate Docker CLI using podman
 Group:    System/Configuration/Other
 BuildArch: noarch
+Requires: %name = %EVR
 Conflicts: docker-ce
+Conflicts: docker-ee
 Conflicts: docker-engine
 Conflicts: docker-cli
-Requires: %name = %EVR
+Conflicts: moby-engine
 
 %description docker
 %summary.
@@ -153,6 +152,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 4.5.0-alt2
+- Update Requires.
+
 * Mon May 15 2023 Alexey Shabalin <shaba@altlinux.org> 4.5.0-alt1
 - New version 4.5.0.
 - Build with libsubid.
