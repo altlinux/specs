@@ -1,20 +1,27 @@
+%def_enable snapshot
+
 %define ver_major 3.40
 %define xdg_name org.gnome.accerciser
 
 Name: accerciser
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Interactive Python accessibility explorer
 Group: Accessibility
 License: BSD-3-Clause
 Url: https://wiki.gnome.org/Apps/Accerciser
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
 
 Requires: python3-module-%name = %version-%release
+Requires: at-spi2-core
 
 %add_python3_path %_datadir/%name
 %add_python3_req_skip gi.repository.GLib
@@ -25,6 +32,7 @@ BuildRequires: rpm-build-gnome /usr/bin/appstream-util
 BuildRequires: yelp-tools libgtk+3-devel python3-module-pygobject3-devel
 BuildRequires: desktop-file-utils libat-spi2-core-devel
 BuildRequires: python3-module-ipython
+%{?_enable_snapshot:BuildRequires: libappstream-glib-devel}
 
 %description
 An interactive Python accessibility explorer for the GNOME desktop.
@@ -35,10 +43,13 @@ technologies and automated test frameworks. Accerciser has a simple
 plugin framework which you can use to create custom views of
 accessibility information.
 
+Accerciser uses libwnck designed to work in X11 only.
+
 %package -n python3-module-%name
 Summary: Python module for accerciser
 Group: Development/Python3
 BuildArch: noarch
+Requires: typelib(Gtk) = 3.0 typelib(Wnck) = 3.0
 
 %description -n python3-module-%name
 An interactive Python accessibility explorer.
@@ -47,9 +58,11 @@ This package contains Python module for accerciser.
 
 %prep
 %setup
+%{?_enable_snapshot:ln -s README.md README}
 
 %build
-%configure
+NOCONFIGURE=1 ./autogen.sh
+%configure PYTHON=%__python3
 %make_build
 
 %install
@@ -76,6 +89,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %python3_sitelibdir/%name/
 
 %changelog
+* Tue May 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt2
+- updated to 3.40.0-21-g5447968
+- fixed dependencies
+
 * Fri Jul 29 2022 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
 - 3.40.0
 
