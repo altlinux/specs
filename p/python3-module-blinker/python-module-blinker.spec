@@ -1,27 +1,26 @@
-%define oname blinker
+%define pypi_name blinker
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
-Group: Development/Python3
-License: MIT
 Summary: Fast, simple object-to-object and broadcast signaling
+License: MIT
+Group: Development/Python3
 URL: https://pypi.org/project/blinker/
 VCS: https://github.com/pallets-eco/blinker
-
-Source: %name-%version.tar
-
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-typing_extensions
-BuildRequires: python3-module-pytest-asyncio
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -33,6 +32,11 @@ sent by any sender.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync check pip_reqfile requirements/tests.txt
+%endif
 
 %build
 %pyproject_build
@@ -41,14 +45,17 @@ sent by any sender.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc docs *.rst
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%{pyproject_distinfo %oname}
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon May 15 2023 Anton Vyatkin <toni@altlinux.org> 1.6.2-alt2
+- Modernized packaging.
+
 * Thu Apr 13 2023 Anton Vyatkin <toni@altlinux.org> 1.6.2-alt1
 - New version 1.6.2.
 
