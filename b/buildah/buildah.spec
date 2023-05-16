@@ -10,7 +10,7 @@
 
 Name: buildah
 Version: 1.30.0
-Release: alt1
+Release: alt2
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
 License: Apache-2.0
@@ -23,15 +23,18 @@ BuildRequires(pre): rpm-build-golang
 BuildRequires: go-md2man
 BuildRequires: libgpgme-devel
 BuildRequires: libdevmapper-devel
+BuildRequires: libostree-devel
 BuildRequires: libbtrfs-devel
 BuildRequires: libassuan-devel
 BuildRequires: libseccomp-devel
 BuildRequires: glib2-devel
-#BuildRequires: shadow-utils-subid-devel
-Requires: runc >= 1.0.0
-Requires: containers-common
-Requires: slirp4netns >= 0.3
+BuildRequires: libsubid-devel
+
 Requires: tzdata
+Requires: containers-common-extra
+%ifnarch %e2k %arm %ix86
+Requires: netavark >= 1.6.0
+%endif
 
 %description
 The buildah package provides a command line tool which can be used to
@@ -58,7 +61,7 @@ export GOMD2MAN=go-md2man
 
 %golang_prepare
 pushd .gopath/src/%import_path
-#%%golang_build cmd/%name
+#%%golang_build cmd/%%name
 %make all PREFIX=%_prefix
 popd
 
@@ -68,7 +71,7 @@ export GOPATH="%go_path"
 
 pushd .gopath/src/%import_path
 #%%golang_install
-# rm -rf -- %buildroot%_datadir
+# rm -rf -- %%buildroot%%_datadir
 %make DESTDIR=%buildroot PREFIX=%prefix install
 %make DESTDIR=%buildroot PREFIX=%prefix install.completions
 %make DESTDIR=%buildroot PREFIX=%prefix -C docs install
@@ -82,6 +85,10 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 1.30.0-alt2
+- Update Requires.
+- Build with libsubid and libostree.
+
 * Tue May 02 2023 Alexey Shabalin <shaba@altlinux.org> 1.30.0-alt1
 - New version 1.30.0.
 
