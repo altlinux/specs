@@ -1,8 +1,9 @@
+%define pypi_name setuptools-rust
 %define modname setuptools_rust
 
 Name: python3-module-%modname
 Version: 1.5.2
-Release: alt1
+Release: alt2
 
 Summary: Setuptools helpers for rust Python extensions.
 
@@ -14,7 +15,8 @@ Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
-
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 BuildRequires: python3-module-setuptools_scm python3-module-wheel
@@ -37,6 +39,9 @@ were written in C.
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Fri May 05 2023 Stanislav Levin <slev@altlinux.org> 1.5.2-alt2
+- Mapped PyPI name to distro's one.
+
 * Fri Oct 28 2022 Vladimir Didenko <cow@altlinux.org> 1.5.2-alt1
 - new version
 

@@ -4,25 +4,23 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.14.1
-Release: alt1.1
-
-Summary: Integrates the runtimes of Lua or LuaJIT2 into CPython
+Version: 2.0
+Release: alt1
+Summary: Python wrapper around Lua and LuaJIT
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/scoder/lupa.git
 Url: https://pypi.org/project/lupa/
-
+Vcs: https://github.com/scoder/lupa
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(Cython)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+BuildRequires: python3-module-cython
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 %ifarch ppc64le riscv64
 # luajit doesn't officially support ppc64le and riscv64
 BuildRequires: liblua-devel
@@ -42,32 +40,41 @@ coroutine support.
 # unbundle
 rm -r ./third-party/*
 
-%build
-%ifarch ppc64le riscv64
-%define build_lua_args --backend-config-settings='{"--build-option": ["--no-luajit"]}'
-%endif
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
-%pyproject_build %{?build_lua_args}
+%build
+%global build_lua_args "--no-bundle","--with-cython"
+%ifarch ppc64le riscv64
+%global build_lua_args %build_lua_args,"--no-luajit"
+%endif
+%global backend_args --backend-config-settings='{"--build-option": [%build_lua_args]}'
+
+%pyproject_build %backend_args
 
 %install
 %pyproject_install
 
 %check
-# override upstream config to avoid patching
-cat > tox.ini <<'EOF'
-[testenv]
-allowlist_externals = bash
-commands =
-    bash -c 'cd lupa/tests && python -m unittest {posargs:}'
-EOF
-%tox_check_pyproject
+# upstream relies on deprecated setuptools' test command
+# arch-dependent package and in-tree unittest tests
+%pyproject_run -- bash -s <<-'ENDUNITTEST'
+set -eu
+LUPA_VENV_PATH="$(python -I -c 'import lupa;print(lupa.__path__[0])')"
+ln -sfr ./lupa/tests "$LUPA_VENV_PATH/"
+cd lupa
+python3 -m unittest
+ENDUNITTEST
 
 %files
-%doc README.rst CHANGES.rst LICENSE.txt
+%doc README.rst CHANGES.rst
 %python3_sitelibdir/lupa/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 11 2023 Stanislav Levin <slev@altlinux.org> 2.0-alt1
+- 1.14.1 -> 2.0.
+
 * Fri Nov 18 2022 Ivan A. Melnikov <iv@altlinux.org> 1.14.1-alt1.1
 - fix build on riscv64
 

@@ -2,12 +2,10 @@
 %define pypi_name hypothesis
 %define mod_name %pypi_name
 
-%define exceptiongroup %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
-
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.68.1
+Version: 6.75.3
 Release: alt1
 
 Summary: A library for property based testing
@@ -21,44 +19,25 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: pytest.ini
+Source2: %pyproject_deps_config_name
+Source3: test.in
 Patch0: %name-%version-alt.patch
-
-%if %exceptiongroup
-%py3_requires exceptiongroup
-%endif
-
-BuildRequires(pre): rpm-build-python3
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
+%add_pyproject_deps_check_filter dpcontracts
+%pyproject_builddeps_metadata_extra all
+%pyproject_builddeps_check
+# needed by pexpect
 BuildRequires: /dev/pts
-
-# install_requires:
-BuildRequires: python3(attr)
-BuildRequires: python3(sortedcontainers)
-%if %exceptiongroup
-BuildRequires: python3(exceptiongroup)
+# filtered by default
+BuildRequires: python3-module-black
+# shipped in subpackage
+BuildRequires: python3-module-numpy-testing
+# not listed as tests' dependency
+BuildRequires: python3-module-fakeredis
 %endif
-
-# extras:
-BuildRequires: python3(lark)
-BuildRequires: python3(numpy)
-BuildRequires: python3(black)
-BuildRequires: python3(dateutil)
-BuildRequires: python3(libcst)
-BuildRequires: python3(pandas)
-BuildRequires: python3(pytz)
-BuildRequires: python3(redis)
-
-# tests
-BuildRequires: python3(fakeredis)
-BuildRequires: python3(numpy.testing)
-BuildRequires: python3(pexpect)
-BuildRequires: python3(pytest_xdist)
-%endif
-
 %add_python3_req_skip dpcontracts
 
 %description
@@ -71,6 +50,11 @@ in your code with less work.
 %setup
 cp %SOURCE1 ./
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile %SOURCE3
+%endif
 
 %build
 %pyproject_build
@@ -82,7 +66,7 @@ cp %SOURCE1 ./
 %pyproject_run_pytest -ra -nauto tests
 
 %files
-%doc LICENSE.txt README.rst
+%doc README.rst
 %_bindir/hypothesis
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
@@ -92,6 +76,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_ftz_detector.py
 
 %changelog
+* Mon May 15 2023 Stanislav Levin <slev@altlinux.org> 6.75.3-alt1
+- 6.68.1 -> 6.75.3.
+
 * Tue Feb 14 2023 Stanislav Levin <slev@altlinux.org> 6.68.1-alt1
 - 6.36.0 -> 6.68.1.
 

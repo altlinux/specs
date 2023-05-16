@@ -1,42 +1,35 @@
 %define _unpackaged_files_terminate_build 1
-%define oname transitions
+%define pypi_name transitions
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: A lightweight, object-oriented Python state machine implementation
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/transitions/
+Vcs: https://github.com/pytransitions/transitions
 BuildArch: noarch
-
-# https://github.com/pytransitions/transitions.git
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires:
-BuildRequires: python3(six)
-
-BuildRequires: graphviz
-# dot crashes without fonts
+%add_pyproject_deps_check_filter pytest-runner
+%pyproject_builddeps_metadata
+%pyproject_builddeps -- check_pipfile1 --exclude %pyproject_deps_check_filter
+%pyproject_builddeps -- check_pipfile2 --exclude %pyproject_deps_check_filter
+# dot's output is polluted with
+# Fontconfig error: Cannot load default config file: No such file: (null)
+# if /etc/fonts/fonts.conf is missing
+BuildRequires: fontconfig
+# still required for rendering
 BuildRequires: fonts-ttf-dejavu
-BuildRequires: python3(graphviz)
-BuildRequires: python3(pygraphviz)
-BuildRequires: python3(pycodestyle)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_xdist)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -45,6 +38,12 @@ Python.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync check_pipfile1 pip_reqfile requirements_test.txt
+%pyproject_deps_resync check_pipfile2 pip_reqfile requirements_diagrams.txt
+%endif
 
 %build
 %pyproject_build
@@ -53,16 +52,17 @@ Python.
 %pyproject_install
 
 %check
-# Unfortunately, some environment doesn't pass into tox (and I can't
-# determinate which elements exactly). Outside tox it works correctly.
-%__python3 -m pytest
+%pyproject_run_pytest -ra -Wignore tests
 
 %files
 %doc *.md
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%{pyproject_distinfo %oname}/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 0.9.0-alt2
+- Fixed FTBFS (pytest-xdist 3).
+
 * Mon Feb 13 2023 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
 - 0.8.11 -> 0.9.0.
 - use %%pyproject macros

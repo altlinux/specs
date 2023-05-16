@@ -1,28 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define modname libarchive-c
+%define pypi_name libarchive-c
+%define mod_name libarchive
 
-Name: python3-module-%modname
+%def_with check
+
+Name: python3-module-%pypi_name
 Version: 4.0
-Release: alt1
-
+Release: alt2
 Summary: Python interface to libarchive
-Group: Development/Python3
 License: CC0
-Url: https://github.com/Changaco/python-libarchive-c
-
+Group: Development/Python3
+Url: https://pypi.org/project/libarchive-c/
+Vcs: https://github.com/Changaco/python-libarchive-c
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch1: %name-%version-alt.patch
-
-BuildRequires: libarchive-devel
-BuildRequires: python3-devel
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-virtualenv
-BuildRequires: python3-module-six
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-xdist
-
 Requires: libarchive
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
+BuildRequires: libarchive-devel
 
 %description
 The libarchive library provides a flexible interface for reading and writing
@@ -35,28 +36,38 @@ dynamically load and access the C library.
 %prep
 %setup
 %patch1 -p1
-
-sed -i "s/@VERSION@/%version/" version.py
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install --install-lib %python3_sitelibdir
+%pyproject_install
+
+# pure Python package depends on libarchive
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
+%endif
 
 %check
-export LANG=en_US.UTF-8
-export PIP_INDEX_URL=http://host.invalid./
-
-export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -v
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc README.rst
-%doc LICENSE.md
-%python3_sitelibdir/libarchive*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 4.0-alt2
+- Modernized packaging.
+- Fixed FTBFS (pytest-xdist 3).
+
 * Thu Sep 15 2022 Slava Aseev <ptrnine@altlinux.org> 4.0-alt1
 - new version
 

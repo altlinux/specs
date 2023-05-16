@@ -1,45 +1,40 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name libcst
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.7
+Version: 0.4.9
 Release: alt1
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
 License: MIT and Python-2.0 and Apache-2.0
 Group: Development/Python3
-# Source-git: https://github.com/Instagram/LibCST.git
 Url: https://pypi.org/project/libcst/
-
+Vcs: https://github.com/Instagram/LibCST
 Source0: %name-%version.tar
-Source1: vendor.tar
+Source1: vendor_rust.tar
+Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_rust)
-
-BuildRequires: python3(setuptools_scm)
-
-# rust
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%add_pyproject_deps_check_filter fixit
+%add_pyproject_deps_check_filter hypothesmith
+%add_pyproject_deps_check_filter jupyter
+%add_pyproject_deps_check_filter prompt-toolkit
+%add_pyproject_deps_check_filter pyre-check
+%add_pyproject_deps_check_filter slotscheck
+%add_pyproject_deps_check_filter sphinx-rtd-theme
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
+# rust stuff
 BuildRequires: /proc
 BuildRequires: rust
 BuildRequires: rust-cargo
-
-%if_with check
-# install_requires=
-BuildRequires: python3(typing_extensions)
-BuildRequires: python3(typing_inspect)
-BuildRequires: python3(yaml)
-
-BuildRequires: /usr/bin/ufmt
-BuildRequires: python3(hypothesis)
-%endif
 
 %description
 LibCST parses Python source code as a CST tree that keeps all formatting
@@ -54,17 +49,12 @@ an AST.
 %prep
 %setup -a1
 %autopatch -p1
-
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
+%endif
 
 %build
 %pyproject_build
@@ -80,40 +70,24 @@ find %buildroot%python3_sitelibdir -type d -name tests | \
 # contains CodemodTest class which provides testing facility for Codemods
 
 %check
-# upstream run its test suite with deprecated `setup.py test` and supports
-# only in-tree tests. We run those tests within Python virtualenv and thereby,
-# libcst must be removed, otherwise unittest imports libcst from source
-# directory instead of installed one.
-rm -rf libcst
-
 # ufmt ignores files ignored by VCS and codegen tests fail
 sed -i 's/^\.tox\/$/# &/' .gitignore
 
-cat > tox.ini <<'EOF'
-[testenv]
-allowlist_externals =
-    /bin/bash
-setenv =
-    native: LIBCST_PARSER_TYPE = native
-    pure: LIBCST_PARSER_TYPE = pure
-    NO_PYRE = yes
-commands_pre =
-    # enforce installation of libcst being tested instead of system-wide one,
-    # pip rejects installation of a package if there is installed one having the
-    # same version
-    /bin/bash -c 'pip install --force-reinstall --no-deps "dist/$(cat dist/.wheeltracker)"'
-commands =
-    python -m unittest discover -v libcst
-EOF
-export TOXENV=py3-pure,py3-native
-%tox_check_pyproject
+export NO_PYRE=yes
+export LIBCST_PARSER_TYPE=native
+%pyproject_run -- bash -c 'cd %mod_name && python3 -m unittest'
+export LIBCST_PARSER_TYPE=pure
+%pyproject_run -- bash -c 'cd %mod_name && python3 -m unittest'
 
 %files
 %doc README.rst
-%python3_sitelibdir/libcst/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 05 2023 Stanislav Levin <slev@altlinux.org> 0.4.9-alt1
+- 0.4.7 -> 0.4.9.
+
 * Thu Sep 15 2022 Stanislav Levin <slev@altlinux.org> 0.4.7-alt1
 - 0.4.1 -> 0.4.7.
 

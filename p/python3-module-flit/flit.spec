@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.8.0
+Version: 3.9.0
 Release: alt1
 Summary: A simple packaging tool for simple packages
 License: BSD-3-Clause
@@ -16,20 +16,17 @@ VCS: https://github.com/pypa/flit
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+# flit and flit-core are built from the same repo
+%add_pyproject_deps_build_filter %pypi_name_core
+%pyproject_builddeps_build
 %if_with check
-# deps
-BuildRequires: python3(requests)
-BuildRequires: python3(docutils)
-BuildRequires: python3(tomli-w)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(testpath)
-BuildRequires: python3(responses)
-BuildRequires: python3(tomli)
+%add_pyproject_deps_check_filter %pypi_name_core
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -50,6 +47,12 @@ Distribution-building parts of Flit.
 %prep
 %setup
 %autopatch -p1
+export PYTHONPATH=$(pwd)/flit_core
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 # build PEP517 backend
@@ -71,10 +74,11 @@ popd
 rm -r %buildroot%python3_sitelibdir/flit_core/tests/
 
 %check
-%tox_check_pyproject
+# build backend is required in subprocesses
+export PYTHONPATH=$(pwd)/flit_core
+%pyproject_run_pytest -ra -Wignore
 
 %files
-%doc LICENSE
 %doc README.rst
 %_bindir/flit
 %python3_sitelibdir/flit/
@@ -85,6 +89,9 @@ rm -r %buildroot%python3_sitelibdir/flit_core/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_core}/
 
 %changelog
+* Mon May 15 2023 Stanislav Levin <slev@altlinux.org> 3.9.0-alt1
+- 3.8.0 -> 3.9.0.
+
 * Tue Nov 15 2022 Stanislav Levin <slev@altlinux.org> 3.8.0-alt1
 - 3.7.1 -> 3.8.0.
 

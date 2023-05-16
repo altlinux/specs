@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.20.3
+Version: 0.21.0
 Release: alt1
 
 Summary: Pytest support for asyncio
@@ -13,25 +13,15 @@ Group: Development/Python3
 Url: https://pypi.org/project/pytest-asyncio/
 VCS: https://github.com/pytest-dev/pytest-asyncio
 BuildArch: noarch
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
+%pyproject_runtimedeps_metadata
 %py3_provides %pypi_name
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(pytest)
-
-BuildRequires: python3(hypothesis)
-BuildRequires: python3(flaky)
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -43,16 +33,9 @@ python 3.5+.
 %prep
 %setup
 %autopatch -p1
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -61,7 +44,7 @@ fi
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra tests
+%pyproject_run_pytest -ra tests -Wignore
 
 %files
 %doc *.rst
@@ -69,6 +52,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 11 2023 Stanislav Levin <slev@altlinux.org> 0.21.0-alt1
+- 0.20.3 -> 0.21.0.
+
 * Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 0.20.3-alt1
 - 0.20.2 -> 0.20.3.
 

@@ -5,37 +5,24 @@
 
 Name: python3-module-%pypi_name
 Version: 4.5.2
-Release: alt2
-
+Release: alt3
 Summary: A Django plugin for py.test
-
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/pytest-django/
-
-# https://github.com/pytest-dev/pytest-django.git
+Vcs: https://github.com/pytest-dev/pytest-django
 BuildArch: noarch
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(pytest)
-
-BuildRequires: python3-module-django
+%add_pyproject_deps_check_filter django-configurations
+%pyproject_builddeps_metadata_extra testing
 BuildRequires: python3-module-django-dbbackend-sqlite3
-BuildRequires: python3(pytest-xdist)
 %endif
-
-%py3_provides %pypi_name
 
 # we have several versions of Django
 # so, we cannot rely on auto-requires
@@ -48,17 +35,9 @@ the pytest testing tool.
 %prep
 %setup
 %autopatch -p1
-
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -67,7 +46,9 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject
+# pytest_django_test package must be importable by Pytest's subprocesses
+export PYTHONPATH=$(pwd)
+%pyproject_run_pytest -ra -Wignore tests
 
 %files
 %doc AUTHORS *.rst
@@ -75,6 +56,10 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 4.5.2-alt3
+- Modernized packaging.
+- Fixed FTBFS (pytest-xdist 3).
+
 * Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 4.5.2-alt2
 - Fixed FTBFS (setuptools 64).
 

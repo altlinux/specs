@@ -1,5 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name poetry-core
+%define mod_name poetry/core
+%define vendor_path %mod_name/_vendor
 
 %def_with check
 
@@ -7,23 +9,9 @@
 # enable to bootstrap poetry-core
 %def_without vendored
 
-%define build_filter_python_deps() %(for mod in %{*}; do echo -n "/python3(${mod}\\(\\..*\\)\\?)/d;"; done; )
-%define python_deps() %(for mod in %{*}; do echo -n "python3(${mod}) "; done; )
-
-%define vendored_list \\\
-attr \\\
-attrs \\\
-packaging \\\
-jsonschema \\\
-lark \\\
-pyrsistent \\\
-tomlkit \\\
-typing_extensions \\\
-%nil
-
 Name: python3-module-%pypi_name
 Version: 1.5.2
-Release: alt1
+Release: alt2
 Summary: Poetry Core
 License: MIT
 Group: Development/Python3
@@ -31,48 +19,35 @@ Url: https://pypi.org/project/poetry-core
 VCS: https://github.com/python-poetry/poetry-core.git
 BuildArch: noarch
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
 # namespace root
 %py3_requires poetry
 %if_without vendored
-# unvendored packages that are not found as deps automatically
-%py3_requires jsonschema
-%py3_requires lark
+%pyproject_runtimedeps -- vendored
 %endif
+%pyproject_runtimedeps_metadata
 # PEP503 name
 %py3_provides %pypi_name
-
-%if_with vendored
-# drop deps on system packages which were bundled, poetry patches sys.path
-%filter_from_requires %build_filter_python_deps %vendored_list
-
-%add_findreq_skiplist %python3_sitelibdir/poetry/core/_vendor/*
-%add_findprov_skiplist %python3_sitelibdir/poetry/core/_vendor/*
-%endif
-
-BuildRequires(pre): rpm-build-python3
-
-# this is a build backend and it's built with self-hosted backend,
-# thereby, no external backend is required.
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_without vendored
-# unvendored packages
-BuildRequires: %python_deps %vendored_list
+%pyproject_builddeps -- vendored
 %endif
-
 %if_with check
+%add_pyproject_deps_check_filter types- vendoring
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 # required to build C extension, e.g. test_build_wheel_extended
 BuildRequires: gcc
-BuildRequires: python3-devel
+# required for tests/vcs/test_vcs.py
 BuildRequires: /usr/bin/git
+%endif
 
-# synced to poetry's dev group and tox' testenv deps
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_mock)
-BuildRequires: python3(build)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(virtualenv)
+%if_with vendored
+# self-contained deps
+%add_findreq_skiplist %python3_sitelibdir/%vendor_path/*
+%add_findprov_skiplist %python3_sitelibdir/%vendor_path/*
 %endif
 
 %description
@@ -83,22 +58,15 @@ PEP 517 compatible build frontends to build Poetry managed projects.
 %prep
 %setup
 %autopatch -p1
-
-# check if actual bundled modules list is synced to expected one
-set -o pipefail
-PYTHONPATH="$(pwd)" %__python3 - <<-'EOF' | sort -u > actual.pkg.list
-import pkgutil
-for mod in pkgutil.iter_modules(["./src/poetry/core/_vendor"]):
-    if not mod.name.startswith("_"):
-        print(mod.name)
-EOF
-
-echo "%vendored_list" | sed 's/[ ]*$//' | tr ' ' '\n' | sort -u > expected.pkg.list
-diff -y expected.pkg.list actual.pkg.list
-
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 %if_without vendored
+%pyproject_deps_resync vendored pip_reqfile src/%vendor_path/vendor.txt
 # unbundle packages
-rm -r ./src/poetry/core/_vendor/*
+rm -r ./src/%vendor_path/*
+%endif
+%if_with check
+%pyproject_deps_resync_check_poetry dev
 %endif
 
 %build
@@ -112,10 +80,13 @@ rm -r ./src/poetry/core/_vendor/*
 
 %files
 %doc README.md
-%python3_sitelibdir/poetry/core/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 1.5.2-alt2
+- Modernized packaging.
+
 * Wed Mar 29 2023 Stanislav Levin <slev@altlinux.org> 1.5.2-alt1
 - 1.5.1 -> 1.5.2 (closes: #43773).
 

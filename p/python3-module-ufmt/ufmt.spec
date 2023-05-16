@@ -1,40 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name ufmt
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
-Release: alt2
-
+Version: 2.1.0
+Release: alt1
 Summary: Safe, atomic formatting with black and usort
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/omnilib/ufmt.git
 Url: https://pypi.org/project/ufmt
-
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(flit_core)
-BuildRequires: python3(black)
-BuildRequires: python3(moreorless)
-BuildRequires: python3(tomlkit)
-BuildRequires: python3(trailrunner)
-BuildRequires: python3(usort)
-
-%if_with check
-# install_requires=
-BuildRequires: python3(click)
-BuildRequires: python3(typing_extensions)
-# marked as install_requires but is used only in tests
-BuildRequires: python3(libcst)
-%endif
-
+Vcs: https://github.com/omnilib/ufmt
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%add_pyproject_deps_check_filter attribution
+%pyproject_builddeps_metadata_extra dev
+# black is runtime dependency but it's filtered out by default
+BuildRequires: python3-module-black
+%endif
 
 %description
 %pypi_name is a safe, atomic code formatter for Python built on top of black and
@@ -54,6 +44,8 @@ Requires: %name
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -65,22 +57,20 @@ Requires: %name
 rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    python -m %pypi_name.tests -v
-EOF
-%tox_check_pyproject
+%pyproject_run -- python3 -m %mod_name.tests -v
 
 %files
 %doc README.md
-%python3_sitelibdir/ufmt/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files -n %pypi_name
 %_bindir/%pypi_name
 
 %changelog
+* Wed May 10 2023 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
+- 2.0.1 -> 2.1.0.
+
 * Wed Nov 16 2022 Michael Shigorin <mike@altlinux.org> 2.0.1-alt2
 - Fix BR: requisite for %%build, not just %%check.
 

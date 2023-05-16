@@ -1,37 +1,47 @@
-%define module_name redis
-%define oname redis-py
+%define _unpackaged_files_terminate_build 1
+%define pypi_name redis
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 3.4.1
-Release: alt2
-Group: Development/Python3
+Name: python3-module-redis-py
+Version: 4.5.5
+Release: alt1
+Summary: Python client for Redis database and key-value store
 License: MIT
-Summary: The Python interface to the Redis key-value store
-URL: http://github.com/andymccurdy/redis-py
-Packager: Vladimir Didenko <cow@altlinux.org>
-Source: %name-%version.tar
+Group: Development/Python3
+URL: https://pypi.org/project/redis/
+Vcs: https://github.com/redis/redis-py
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
-The Python interface to the Redis key-value store
+%summary.
 
 %prep
-%setup -n %name-%version
+%setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc CHANGES LICENSE README.rst
-%python3_sitelibdir/%module_name/
-%python3_sitelibdir/*.egg-*
+%doc CHANGES README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 10 2023 Stanislav Levin <slev@altlinux.org> 4.5.5-alt1
+- 3.4.1 -> 4.5.5.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 3.4.1-alt2
 - drop python2 support
 

@@ -1,32 +1,33 @@
 %define _unpackaged_files_terminate_build 1
-%define  modulename graphviz
-%def_enable check
+%define pypi_name graphviz
+%define mod_name %pypi_name
 
-Name:    python3-module-%modulename
+%def_with check
+
+Name: python3-module-%pypi_name
 Version: 0.20.1
-Release: alt1
-
+Release: alt2
 Summary: Simple Python interface for Graphviz
 License: MIT
-Group:   Development/Python3
-URL:     https://pypi.org/project/graphviz/
-VCS:     https://github.com/xflr6/graphviz
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-
-%if_enabled check
-# related https://bugzilla.altlinux.org/42311
-BuildRequires: fonts-ttf-dejavu
-BuildRequires: graphviz
-
-BuildRequires: python3-module-pytest-mock
-%endif
-
+Group: Development/Python3
+Url: https://pypi.org/project/graphviz/
+VCS: https://github.com/xflr6/graphviz
 BuildArch: noarch
-Source:  %name-%version.tar
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-%release.patch
+Requires: graphviz
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+BuildRequires: graphviz
+# dot's output is polluted with
+# Fontconfig error: Cannot load default config file: No such file: (null)
+# if /etc/fonts/fonts.conf is missing
+BuildRequires: fontconfig
+%pyproject_builddeps_metadata_extra test
+%endif
 
 %description
 %summary
@@ -34,8 +35,8 @@ Patch0: %name-%version-%release.patch
 %prep
 %setup
 %patch0 -p1
-
-sed -i '/^mock_use_standalone_module/d' setup.cfg
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -44,13 +45,16 @@ sed -i '/^mock_use_standalone_module/d' setup.cfg
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run -- python3 run-tests.py
 
 %files
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/%{pyproject_distinfo %modulename}
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 15 2023 Stanislav Levin <slev@altlinux.org> 0.20.1-alt2
+- Added missing runtime requirement (dot).
+
 * Mon May 15 2023 Anton Vyatkin <toni@altlinux.org> 0.20.1-alt1
 - New version 0.20.1 (Closes: #42049).
 

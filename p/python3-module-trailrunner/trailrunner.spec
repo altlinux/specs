@@ -4,27 +4,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.1
-Release: alt2
-
+Version: 1.4.0
+Release: alt1
 Summary: Run things on paths
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/omnilib/trailrunner.git
 Url: https://pypi.org/project/trailrunner
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(flit_core)
-
-# install_requires=
-BuildRequires: python3(pathspec)
-
+Vcs: https://github.com/omnilib/trailrunner
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%add_pyproject_deps_check_filter attribution
+%pyproject_builddeps_metadata_extra dev
+%endif
 
 %description
 trailrunner is a simple library for walking paths on the filesystem, and
@@ -37,6 +34,8 @@ predictable fashion with a minimal API.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -48,12 +47,7 @@ predictable fashion with a minimal API.
 rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    python -m %pypi_name.tests -v
-EOF
-%tox_check_pyproject
+%pyproject_run -- python3 -m %pypi_name.tests -v
 
 %files
 %doc README.md
@@ -61,6 +55,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 10 2023 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.2.1 -> 1.4.0.
+
 * Wed Nov 16 2022 Michael Shigorin <mike@altlinux.org> 1.2.1-alt2
 - BR: python3(pathspec) is requisite for %%build, not just %%check.
 

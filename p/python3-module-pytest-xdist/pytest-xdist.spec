@@ -1,94 +1,62 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-xdist
+%define pypi_name pytest-xdist
+%define mod_name xdist
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.5.0
+Name: python3-module-%pypi_name
+Version: 3.3.0
 Release: alt1
-
-Summary: pytest xdist plugin for distributed testing and loop-on-failing modes
+Summary: pytest xdist plugin for distributed testing, most importantly across multiple CPUs
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/pytest-dev/pytest-xdist.git
 Url: https://pypi.org/project/pytest-xdist/
-
+Vcs: https://github.com/pytest-dev/pytest-xdist
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3-module-setuptools_scm
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: /dev/pts
-# install_requires=
-BuildRequires: python3(execnet)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_forked)
-
-# optional
-BuildRequires: python3(psutil)
-BuildRequires: python3(pexpect)
-
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
+%pyproject_builddeps_metadata_extra testing
 %endif
 
-%py3_provides %oname
-%py3_provides pytest_xdist
-%py3_requires pytest-forked
-
-%define overview							 \
-The pytest-xdist plugin extends py.test with some unique test execution  \
-modes:                                                                   \
-									 \
-* test run parallelization: if you have multiple CPUs or hosts you can   \
-  use those for a combined test run. This allows to speed up development \
-  or to use special resources of remote machines.			 \
-* --boxed: (not available on Windows) run each test in a boxed		 \
-  subprocess to survive SEGFAULTS or otherwise dying processes		 \
-* --looponfail: run your tests repeatedly in a subprocess. After each	 \
-  run py.test waits until a file in your project changes and then	 \
-  re-runs the previously failing tests. This is repeated until all tests \
-  pass after which again a full run is performed.			 \
-* Multi-Platform coverage: you can specify different Python interpreters \
-  or different platforms and run tests in parallel on all of them.	 \
-									 \
-%nil
-
-BuildArch: noarch
-
 %description
-%overview
+The pytest-xdist plugin extends pytest with new test execution modes, the most
+used being distributing tests across multiple CPUs to speed up test execution:
+
+pytest -n auto
+
+With this call, pytest will spawn a number of workers processes equal to the
+number of available CPUs, and distribute the tests randomly across them.
 
 %prep
 %setup
 %patch -p1
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
-# its used as the primary source for the version number in which
-# case it will be a unparsed string
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr
+%pyproject_run_pytest -ra
 
 %files
-%doc CHANGELOG.rst LICENSE README.rst example
-%python3_sitelibdir/xdist/
-%python3_sitelibdir/pytest_xdist-%version-py%_python3_version.egg-info/
+%doc CHANGELOG.rst README.rst
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 15 2023 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
+- 2.5.0 -> 3.3.0.
+
 * Mon Feb 28 2022 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
 - 2.1.0 -> 2.5.0.
 
