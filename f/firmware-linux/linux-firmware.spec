@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230502
+Version: 20230515
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,20 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue May 16 2023 Cronbuild Service <cronbuild@altlinux.org> 20230515-alt1
+- upstream changes (GIT 51290942):
+  + cirrus: Add firmware and tuning files for HP G10 series laptops (thx Vitaly Rodionov)
+  + update firmware for mediatek bluetooth chip (MT7922) (thx Chris.Lu)
+  + WHENCE: Cleanup Realtek BT firmware provenance (thx Juerg Haefliger)
+  + update firmware for MT7922 WiFi device (thx Deren Wu)
+  + cnm: update chips&media wave521c firmware. (thx Nas Chung)
+  + cirrus: Add firmware and tuning files for Lenovo ThinkPad P1
+    Gen 6 (thx Vitaly Rodionov)
+  + check_whence: error on directory listed as File (thx Emil Velikov)
+  + check_whence: error on duplicate file entries (thx Emil Velikov)
+  + WHENCE: comment out duplicate MediaTek firmware (thx Emil Velikov)
+  + i915: Add GuC v70.6.6 for MTL (thx John Harrison)
+
 * Thu May 04 2023 Cronbuild Service <cronbuild@altlinux.org> 20230502-alt1
 - upstream changes (GIT 312c61f5):
   + amdgpu: update DCN 3.1.6 DMCUB firmware (thx Alex Deucher)
