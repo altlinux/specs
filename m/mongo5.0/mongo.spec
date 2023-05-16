@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo5.0
-Version: 5.0.17
-Release: alt2
+Version: 5.0.18
+Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
 Group: Development/Databases
@@ -199,6 +199,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue May 16 2023 Alexei Takaseev <taf@altlinux.org> 5.0.18-alt1
+- 5.0.18
+
 * Thu Apr 27 2023 Alexei Takaseev <taf@altlinux.org> 5.0.17-alt2
 - Remove unneeded Provides
 - Fix pack mongod as mongo
