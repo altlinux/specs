@@ -4,43 +4,51 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3
+Version: 4.2
 Release: alt1
-
-Summary: Automatically build manpage from argparse
+Summary: Build manual page from python's ArgumentParser object
 License: Apache-2.0
 Group: Development/Python3
-BuildArch: noarch
 Url: https://pypi.org/project/argparse-manpage/
-
-# Source-git: https://github.com/praiskup/argparse-manpage.git
+Vcs: https://github.com/praiskup/argparse-manpage
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 # proc is required for /dev/stdout (/dev/stdout -> /proc/self/fd/1)
 BuildRequires: /proc
-
-BuildRequires: python3(pytest)
+# pip is required for tests/test_examples.py
+BuildRequires: python3-module-pip
 %endif
 
 %description
-Generate manual page an automatic way from ArgumentParser object, so the
-manpage 1:1 corresponds to the automatically generated -help output. The
-manpage generator needs to known the location of the object, user can specify
-that by (a) the module name or corresponding python filename and (b) the
-object name or the function name which returns the object. There's a limited
-support for (deprecated) optparse objects, too.
+Avoid documenting your Python script arguments on two places! This is typically
+done in an argparse.ArgumentParser help configuration (help=, description=,
+etc.), and also in a manually crafted manual page.
+
+The good thing about an ArgumentParser objects is that it actually provides a
+traversable "tree-like" structure, with all the necessary info needed to
+automatically generate documentation, for example in a groff typesetting system
+(manual pages). And this is where this project can help.
+
+There are two supported ways to generate the manual, either script it using the
+installed command argparse-manpage, or via setup.py build automation (with a
+slight bonus of automatic manual page installation with setup.py install).
 
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile test-requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -51,17 +59,20 @@ support for (deprecated) optparse objects, too.
 mv %buildroot%_bindir/argparse-manpage{,.py3}
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore
 
 %files
-%doc LICENSE README.md
+%doc README.md
 %_man1dir/argparse-manpage.1.*
 %_bindir/argparse-manpage.py3
 %python3_sitelibdir/build_manpages/
+%python3_sitelibdir/argparse_manpage/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 4.2-alt1
+- 3 -> 4.2.
+
 * Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 3-alt1
 - 2.1 -> 3.
 
