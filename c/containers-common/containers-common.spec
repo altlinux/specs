@@ -15,8 +15,8 @@
 
 Epoch: 1
 Name: containers-common
-Version: 1
-Release: alt2
+Version: 2
+Release: alt1
 License: Apache-2.0
 Group: System/Configuration/Other
 BuildArch: noarch
@@ -45,12 +45,7 @@ Source24: %github_containers/common/%common_branch/docs/containerignore.5.md
 Source25: %github_containers/common/%common_branch/docs/links/.containerignore.5
 
 Provides: skopeo-containers = %EVR
-Requires: slirp4netns
-#Recommends: fuse-overlayfs
 # Requires: (container-selinux >= 2:2.162.1 if selinux-policy)
-Requires: oci-runtime
-Requires: container-network-stack
-#Recommends: netavark
 BuildRequires: go-md2man
 
 %description
@@ -60,6 +55,23 @@ tools ecosystem, such as Podman, Buildah and Skopeo.
 It is required because the most of configuration files and docs come from projects
 which are vendored into Podman, Buildah, Skopeo, etc. but they are not packaged
 separately.
+
+%package extra
+Summary: Extra dependencies for Podman and Buildah
+Group: System/Configuration/Other
+Requires: %name = %EVR
+Requires: container-network-stack
+Requires: oci-runtime
+Requires: crun
+# netavark build for not all arches
+#Requires: netavark >= 1.6.0
+Requires: slirp4netns
+Requires: iptables
+Requires: nftables
+
+%description extra
+This subpackage will handle dependencies common to Podman and Buildah which are
+not required by Skopeo.
 
 %prep
 cp %SOURCE1 .
@@ -95,8 +107,9 @@ cp man5/containerignore.5 man5/.containerignore.5
 
 %install
 # install config and policy files for registries
-install -dp %buildroot%_sysconfdir/containers/{certs.d,oci/hooks.d}
+install -dp %buildroot%_sysconfdir/containers/{certs.d,oci/hooks.d,systemd}
 install -dp %buildroot%_sharedstatedir/containers/sigstore
+install -dp %buildroot%_datadir/containers/systemd
 install -Dp -m0644 default.yaml -t %buildroot%_sysconfdir/containers/registries.d
 install -Dp -m0644 storage.conf -t %buildroot%_datadir/containers
 install -Dp -m0644 registries.conf -t %buildroot%_sysconfdir/containers
@@ -124,6 +137,7 @@ install -d -p -m 755 %buildroot/%_datadir/alt/secrets
 %dir %_sysconfdir/containers/oci/hooks.d
 %dir %_sysconfdir/containers/registries.conf.d
 %dir %_sysconfdir/containers/registries.d
+%dir %_sysconfdir/containers/systemd
 %config(noreplace) %_sysconfdir/containers/policy.json
 %config(noreplace) %_sysconfdir/containers/registries.conf
 %config(noreplace) %_sysconfdir/containers/registries.conf.d/000-shortnames.conf
@@ -136,7 +150,13 @@ install -d -p -m 755 %buildroot/%_datadir/alt/secrets
 %_datadir/containers
 %dir %_datadir/alt/secrets
 
+%files extra
+
 %changelog
+* Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 1:2-alt1
+- Update sources
+- Add containers-common-extra subpackage
+
 * Mon Aug 01 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1:1-alt2
 - Add ALT images to shortnames.conf
 
