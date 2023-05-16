@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.58.0
+Version: 1.58.2
 Release: alt1
 
 Summary: Typed interactions with the GitHub API v3
@@ -16,6 +16,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 BuildRequires(pre): rpm-build-python3
 
 Buildrequires: python3-module-setuptools
+Buildrequires: python3-module-setuptools_scm
 Buildrequires: python3-module-wheel
 
 %if_with check
@@ -40,9 +41,11 @@ and organizations in your Python applications.
 %setup
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
@@ -54,6 +57,9 @@ and organizations in your Python applications.
 %doc *.md
 
 %changelog
+* Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 1.58.2-alt1
+- Automatically updated to 1.58.2.
+
 * Mon Feb 20 2023 Grigory Ustinov <grenka@altlinux.org> 1.58.0-alt1
 - Automatically updated to 1.58.0.
 
