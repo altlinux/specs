@@ -1,6 +1,6 @@
 Name: blackbox
 Version: 0.76
-Release: alt2
+Release: alt3
 
 Summary: A Window Manager for the X Window System
 License: BSD-style
@@ -20,6 +20,7 @@ Source11: ru.po.fixed
 
 Patch0: blackbox-0.74-alt-link.patch
 Patch10: blackbox-0.70.1-alt-style.patch
+Patch11: 0001-Add-include-time.h.patch
 
 %define iconname blackbox-session
 %if "%iconname" == "%name"
@@ -57,6 +58,7 @@ of the utility class library for writing small applications.
 %prep
 %setup -q
 %patch0 -p1
+%patch11 -p1
 #patch10 -p0
 
 # %%{__global_ldflags} wrongly passed to pkgconfig file
@@ -145,6 +147,9 @@ EOF
 %_pkgconfigdir/libbt.pc
 
 %changelog
+* Tue May 16 2023 Artyom Bystrov <arbars@altlinux.org>  0.76-alt3
+- Fix build on modern Sisyphus base
+
 * Mon Nov 15 2021 Igor Vlasenko <viy@altlinux.org> 0.76-alt2
 - renamed pixmaps to blackbox-session:
   avoided FS conflict with tatham-puzzles (closes: #41351)
