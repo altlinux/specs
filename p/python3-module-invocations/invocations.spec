@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 Summary: Common/best-practice Invoke tasks and collections
 License: BSD
@@ -58,6 +58,9 @@ common best practices.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
+- 3.2.0 -> 3.3.0.
+
 * Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
 - 3.1.0 -> 3.2.0.
 

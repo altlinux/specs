@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.1
-Release: alt2
+Version: 2.1.2
+Release: alt1
 Summary: Pythonic task execution
 License: BSD-2-Clause
 Group: Development/Python3
@@ -69,12 +69,16 @@ find invoke/vendor/ \
 %pyproject_run -- inv test
 
 %files
-%doc *.rst
-%_bindir/*
+%doc README.*
+%_bindir/inv
+%_bindir/invoke
 %python3_sitelibdir/invoke/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 2.1.2-alt1
+- 2.1.1 -> 2.1.2.
+
 * Fri May 05 2023 Stanislav Levin <slev@altlinux.org> 2.1.1-alt2
 - Enabled testing.
 
