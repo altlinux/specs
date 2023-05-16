@@ -1,9 +1,9 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 10.0
-Release: alt1
+Release: alt2
 
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
 BuildRequires: alterator-officer
 Summary: Installer files for Cliff distro
@@ -15,7 +15,7 @@ Installer files for Cliff distro.
 
 %package common
 Summary: Cliff Installer common files
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
 
 %description common
@@ -24,7 +24,7 @@ Needed also for alterator-setup.
 
 %package stage2
 Summary: Installer stage2
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
 Provides: installer-%distro-stage2 = %name-%version
 Requires: installer-stage2
@@ -44,7 +44,7 @@ Cliff Installer stage2.
 
 %package stage3
 Summary: Installer stage3
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
 Provides: installer-%distro-stage3 = %name-%version
 Requires: installer-stage3
@@ -86,6 +86,9 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Fri Apr 14 2023 Denis Medvedev <nbr@altlinux.org> 10.0-alt2
+- changed how  mem initialization on free is turned on in boot cmdlines
+
 * Tue Nov 15 2022 Anton Midyukov <antohami@altlinux.org> 10.0-alt1
 - bump version
 - 90-remove-unused-officer-steps: fix for SP Release 10.x
