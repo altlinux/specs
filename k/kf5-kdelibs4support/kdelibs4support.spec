@@ -3,7 +3,7 @@
 %add_python3_path %_libdir/cmake
 
 Name: kf5-%rname
-Version: 5.105.0
+Version: 5.106.0
 Release: alt1
 %K5init altplace
 
@@ -130,6 +130,9 @@ rm -rf %buildroot/%_libdir/cmake/KF5KDELibs4Support/FindSIP.*
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Mon May 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.106.0-alt1
+- new version
+
 * Mon Apr 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.105.0-alt1
 - new version
 

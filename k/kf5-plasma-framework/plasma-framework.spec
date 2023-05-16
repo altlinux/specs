@@ -3,8 +3,8 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.105.0
-Release: alt2
+Version: 5.106.0
+Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -146,6 +146,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon May 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.106.0-alt1
+- new version
+
 * Fri Apr 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.105.0-alt2
 - E2K: added patch to fix build with lcc < 1.27.08
   (ilyakurdyukov@; rare lambda case, see mcst#7731)
