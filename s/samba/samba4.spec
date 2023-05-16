@@ -97,8 +97,8 @@
 %endif
 
 Name:    samba
-Version: 4.17.5
-Release: alt2
+Version: 4.17.7
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -219,7 +219,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.6.1
+%define ldb_version 2.6.2
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -2086,6 +2086,46 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Mar 29 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.7-alt1
+- Update to maintenance release of Samba 4.17 with update libldb to 2.6.2:
+  + ldb wildcard matching makes excessive allocations (Samba#15331).
+
+- Security fixes (Samba#15276, Samba#15270, Samba#15315, Samba#14810):
+  + CVE-2023-0225: An incomplete access check on dnsHostName allows authenticated
+                   but otherwise unprivileged users to delete this attribute from
+                   any object in the directory.
+                   https://www.samba.org/samba/security/CVE-2023-0225.html
+
+  + CVE-2023-0922: The Samba AD DC administration tool, when operating against a
+                   remote LDAP server, will by default send new or reset
+                   passwords over a signed-only connection.
+                   https://www.samba.org/samba/security/CVE-2023-0922.html
+
+  + CVE-2023-0614: The fix in 4.6.16, 4.7.9, 4.8.4 and 4.9.7 for CVE-2018-10919
+                   Confidential attribute disclosure via LDAP filters was
+                   insufficient and an attacker may be able to obtain
+                   confidential BitLocker recovery keys from a Samba AD DC.
+                   Installations with such secrets in their Samba AD should
+                   assume they have been obtained and need replacing.
+                   https://www.samba.org/samba/security/CVE-2023-0614.html
+
+  + CVE-2020-25720 Create Child permission should not allow full write to all
+                   attributes (additional changes).
+
+* Wed Mar 15 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.6-alt1
+- Update to maintenance release of Samba 4.17:
+  + streams_xattr is creating unexpected locks on folders (Samba#15314).
+  + Use of the Azure AD Connect cloud sync tool is now supported for password
+    hash synchronisation, allowing Samba AD Domains to synchronise passwords
+    with this popular cloud environment (Samba#10635).
+  + New samba-dcerpc architecture does not scale gracefully (Samba#15310).
+  + vfs_ceph incorrectly uses fsp_get_io_fd() instead of fsp_get_pathref_fd()
+    in close and fstat (Samba#15307).
+  + fd_load() function implicitly closes the fd where it should not (Samba#15311).
+- Revert not treat of missing include file as an error in handle_include().
+  This behavior differs between the source3 and source4 parts of Samba.
+  So, it should be the same and just not an error (Closes #44214).
+
 * Sat Mar 11 2023 Michael Shigorin <mike@altlinux.org> 4.17.5-alt2
 - Fix doc knob
 

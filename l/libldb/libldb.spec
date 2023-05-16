@@ -8,7 +8,7 @@
 %endif
 
 Name: libldb
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
@@ -185,6 +185,9 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Wed Mar 29 2023 Evgeny Sinelnikov <sin@altlinux.org> 2.6.2-alt1
+- Update to the 2.6.2 for samba-4.17.7 release
+
 * Sat Sep 17 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.6.1-alt1
 - Update to the 2.6.1 for samba-4.17.0 release
 
