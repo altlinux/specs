@@ -1,6 +1,7 @@
 
 Name: phpipam
-Version: 1.50.016
+Epoch: 1
+Version: 1.5.2
 Release: alt1
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
@@ -123,11 +124,14 @@ rm -rf %buildroot%webserver_webappsdir/%name/.github
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 1:1.5.2-alt1
+- 1.5.2 (Fixes: CVE-2023-0676, CVE-2023-0677, CVE-2023-0678, CVE-2023-1211, CVE-2023-1212).
+
 * Fri May 06 2022 Alexey Shabalin <shaba@altlinux.org> 1.50.016-alt1
-- 1.5.0 Release.
+- 1.5.0 (Fixes: CVE-2022-3845).
 
 * Wed Apr 13 2022 Alexey Shabalin <shaba@altlinux.org> 1.46.031-alt1
-- 1.4.6 Release.
+- 1.4.6 (Fixes: CVE-2022-1223, CVE-2022-1224, CVE-2022-1225).
 
 * Tue Jan 25 2022 Alexey Shabalin <shaba@altlinux.org> 1.45.031-alt1
 - 1.4.5 Release (Fixes: CVE-2020-7988).
