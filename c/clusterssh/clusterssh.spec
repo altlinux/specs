@@ -1,23 +1,22 @@
 Name: clusterssh
-Version: 3.28
-Release: alt2
+Version: 4.16
+Release: alt1
 
 Summary: Run commands on multiple servers over ssh
 Group: Networking/Remote access
 License: %gpl2plus
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
-
-Url: http://clusterssh.sourceforge.net/
-Source: clusterssh-%version.tar.gz
-
+Url: https://github.com/duncs/clusterssh
+Source: %name-%version.tar
 BuildRequires: rpm-build-licenses
 
-# make findrequires happy
-# BuildPreReq: perl-base, perl(Config/Simple.pm) >= 0:4.55, perl(Fcntl.pm)
 BuildPreReq: perl-base perl(Config/Simple.pm) perl(Fcntl.pm) perl-devel
 BuildPreReq: perl(File/Basename.pm), perl(File/Temp.pm), perl(FindBin.pm), perl(Getopt/Std.pm)
 BuildPreReq: perl(POSIX.pm), perl(Sys/Hostname.pm), perl(Term/Cap.pm), perl(Tk.pm) >= 0:800.022
 BuildPreReq: perl(Tk/Dialog.pm), perl(Tk/LabEntry.pm), perl-X11-Protocol
+BuildRequires: perl(Module/Build.pm), perl(Locale/Maketext.pm), perl(Exception/Class.pm)
+BuildRequires: perl(Try/Tiny.pm), perl(Net/Domain.pm), perl(X11/Protocol/WM.pm)
+
+BuildRequires: perl(Test/Trap.pm), perl(File/Which.pm), perl(Test/Differences.pm), perl(Readonly.pm)
 
 BuildArch: noarch
 BuildRequires: perl-Pod-Parser perl-Pod-Checker
@@ -34,32 +33,30 @@ an ssh connection.
 %setup -q
 
 %build
-%configure
-%make
+perl Build.PL installdirs=vendor
+./Build
+
+%check
+./Build test
 
 %install
-%makeinstall
+./Build install destdir=%{buildroot} create_packlist=0
 
-for i in crsh ctel; do
-	ln -sf %_bindir/cssh %buildroot%_bindir/$i
-done
-
-mkdir -p %buildroot%_datadir/applications
-install -pm 644 clusterssh.desktop %buildroot%_datadir/applications/
-
-for i in 24x24 32x32 48x48; do
-	mkdir -p %buildroot%_datadir/icons/hicolor/$i/apps/
-	install -p -m 644 %name-$i.png %buildroot%_datadir/icons/hicolor/$i/apps/%name.png
-done
+mkdir -p %buildroot/%_datadir/bash-completion/completions
+mv  %buildroot/%_bindir/clusterssh_bash_completion.dist \
+        %buildroot/%_datadir/bash-completion/completions/clusterssh
 
 %files
-%doc COPYING AUTHORS README NEWS THANKS ChangeLog
+%doc AUTHORS README THANKS Changes
 %_bindir/*
-%_man1dir/cssh.*
-%_datadir/icons/hicolor/*/apps/%name.png
-%_datadir/applications/%name.desktop
+%_man1dir/*.*
+%perl_vendor_privlib/*
+%_datadir/bash-completion/completions/*
 
 %changelog
+* Tue May 16 2023 Anton Farygin <rider@altlinux.ru> 4.16-alt1
+- 3.28 -> 4.16
+
 * Tue Nov 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.28-alt2
 - Added perl-podlators to Requires
 - Used rpm-build-licenses
