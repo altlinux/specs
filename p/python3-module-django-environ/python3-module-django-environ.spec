@@ -1,7 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname django-environ
+%define pypi_name django-environ
+
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.8.1
+Version: 0.10.0
 Release: alt1
 
 Summary: Django-environ allows you to utilize 12factor inspired environment variables to configure your Django application.
@@ -12,9 +16,15 @@ BuildArch: noarch
 
 # VCS:https://github.com/joke2k/django-environ
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata_extra testing
+%endif
 
 %description
 The idea of this package is to unify a lot of packages that make the same stuff:
@@ -26,24 +36,27 @@ setdefault method, to avoid to overwrite the real environ.
 
 %prep
 %setup
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 -m pytest tests
+%pyproject_run_pytest -vra tests
 
 %files
 %doc *.rst LICENSE.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/environ/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 
 %changelog
+* Mon May 15 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 0.10.0-alt1
+- New version v0.10.0
+
 * Thu Dec 02 2021 Dmitry Lyalyaev <fruktime@altlinux.org> 0.8.1-alt1
 - Initial build for ALT Linux
