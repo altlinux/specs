@@ -1,6 +1,6 @@
 Name: pdfpc
 Version: 4.6.0
-Release: alt1
+Release: alt2
 Summary: A GTK based presentation viewer application for GNU/Linux
 
 Group: Other
@@ -9,6 +9,7 @@ Url: https://github.com/pdfpc/pdfpc
 Source: %name-%version.tar
 
 Patch0: pdfpc-alt-gst-video-info-from-caps.patch
+Patch1: Create-Lists-of-nullable-types.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gst-plugins1.0-devel libgee0.8-devel libgtk+3-devel
@@ -30,6 +31,7 @@ which can be created using nearly any of today's presentation software.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %cmake \
@@ -51,6 +53,10 @@ which can be created using nearly any of today's presentation software.
 %_datadir/%name/css
 
 %changelog
+* Tue May 16 2023 Artyom Bystrov <arbars@altlinux.org> 4.6.0-alt2
+- FIX FTBFS
+  + add Create-Lists-of-nullable-types.patch (https://github.com/pdfpc/pdfpc/pull/687)
+
 * Fri Dec 23 2022 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
 - Automatically updated to 4.6.0.
 
