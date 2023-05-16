@@ -1,6 +1,6 @@
 Name: hardinfo
 Version: 0.6
-Release: alt0_0_git_3c42646
+Release: alt0_0_git_b3c1f91
 
 Epoch: 1
 Summary: A system profiler for Linux
@@ -72,6 +72,9 @@ desktop-file-install --vendor="" \
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue May 16 2023 Artyom Bystrov <arbars@altlinux.org> 1:0.6-alt0_0_git_b3c1f91
+- Update from git commit b3c1f91872c9658467b253f607ad5d10cc8073c7
+
 * Tue Feb 28 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.6-alt0_0_git_3c42646
 - Update from git commit 3c42646b196d4c5dc8466c4cdd1fb16538b7ff9a
 
