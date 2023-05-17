@@ -1,13 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname lmoments3
 
-# The frechet_l and frechet_r distributions were removed.
-# They were deprecated since SciPy 1.0
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.0.4
-Release: alt3
+Version: 1.0.5
+Release: alt1
 Summary: Estimate linear moments for statistical distribution functions
 License: GPLv3
 Group: Development/Python3
@@ -15,14 +13,14 @@ Url: https://pypi.org/project/lmoments3/
 
 # https://github.com/OpenHydrology/lmoments3.git
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildPreReq: python3(nose)
 BuildPreReq: python3(numpy)
 BuildPreReq: python3(numpy.testing)
 BuildPreReq: python3(scipy)
@@ -36,31 +34,30 @@ frequently used in Extreme Value Analyses.
 
 %prep
 %setup
-%patch -p1
 
-# workaround for versioneer
-grep -qsF ' export-subst' .gitattributes || exit 1
-vers_f="$(sed -n 's/ export-subst//p' .gitattributes)"
-if [ "$(grep -cF 'git_refnames = " (tag: v%version, upstream/master)"' $vers_f)" -eq 0 ]; then
-    grep -qs '^[ ]*git_refnames[ ]*=[ ]*""[ ]*$' "$vers_f" || exit 1
-    sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*""[ ]*$/\1git_refnames = " (tag: v%version, upstream\/master)"/' "$vers_f"
-fi
+sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-nosetests3 -v
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
-%doc CHANGELOG.txt *.rst docs/source/*.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%doc *.rst docs/source/*.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1
+- Automatically updated to 1.0.5.
+- Build with check.
+- Moved on modern pyproject macros.
+
 * Sat Apr 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt3
 - Fixed FTBFS by disabling tests, which use obsoleted api.
 
