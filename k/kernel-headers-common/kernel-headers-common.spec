@@ -1,11 +1,11 @@
 Name: kernel-headers-common
-Version: 1.2.8
+Version: 1.2.9
 Release: alt1
 
 Summary: Common header files for the Linux kernel
 License: GPL-2.0-only
 Group: Development/Kernel
-ExclusiveArch: %ix86 x86_64 %arm aarch64 %e2k %mips riscv64 ppc ppcle ppc64 ppc64le
+ExclusiveArch: %ix86 x86_64 %arm aarch64 %e2k %mips riscv64 ppc ppcle ppc64 ppc64le loongarch64
 
 Source0: adjust_kernel_headers
 Source1: adjust_kernel_headers.8
@@ -37,6 +37,9 @@ Source4: kheaders.filetrigger
 %endif
 %ifarch ppc ppcle ppc64 ppc64le
 %define base_arch powerpc
+%endif
+%ifarch loongarch64
+%define base_arch loongarch
 %endif
 
 %define _unpackaged_files_terminate_build 1
@@ -135,6 +138,9 @@ done
 %dir %_prefix/lib/kernel
 
 %changelog
+* Sat Apr 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2.9-alt1
+- Support loongarch64 architecture (closes: #46172).
+
 * Sat Jul 09 2022 Vitaly Chikunov <vt@altlinux.org> 1.2.8-alt1
 - Remove support for perl headers (ALT#43185).
 - Enable kheaders.service by default.
