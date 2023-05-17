@@ -1,6 +1,6 @@
 Name: rtcheck
 Version: 0.7.7
-Release: alt2
+Release: alt3
 
 License: GPL-2.0-only
 Summary: Test the running system for real-time capabilities
@@ -47,6 +47,9 @@ install -p -m 644 -D %name.service %buildroot%_unitdir/%name.service
 
 
 %changelog
+* Wed May 17 2023 Vitaly Chikunov <vt@altlinux.org> 0.7.7-alt3
+- Fix PREEMPT_RT detection.
+
 * Fri Mar 06 2020 Vitaly Chikunov <vt@altlinux.org> 0.7.7-alt2
 - rtcheck.service: Update limits.
 - Try to `ulimit -l unlimited` on each run.
