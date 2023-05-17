@@ -1,21 +1,22 @@
 %define oname appier_extras
 
 Name: python3-module-%oname
-Version: 0.19.4
-Release: alt2
+Version: 0.24.9
+Release: alt1
 
 Summary: Appier Framework Extra Elements
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/appier_extras/
+Url: https://pypi.python.org/pypi/appier_extras
 
-# Source-url: https://pypi.io/packages/source/a/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 Set of extra elements for Appier Framework infra-structure.
@@ -24,16 +25,21 @@ Set of extra elements for Appier Framework infra-structure.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 rm -rf %_bindir/markdown
 
 %files
-%python3_sitelibdir/*
+%doc *.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.24.9-alt1
+- Build new version.
+
 * Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 0.19.4-alt2
 - Rename package, spec cleanup.
 

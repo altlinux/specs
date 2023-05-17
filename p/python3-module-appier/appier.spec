@@ -2,8 +2,8 @@
 %define oname appier
 
 Name: python3-module-%oname
-Version: 1.18.25
-Release: alt2
+Version: 1.30.1
+Release: alt1
 
 Summary: Appier Framework
 
@@ -11,12 +11,13 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/appier/
 
-# Source-url: https://pypi.io/packages/source/a/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 Simple WSGI based framework for easy REST API creation. It aims at
@@ -39,20 +40,24 @@ This package contains tests for Appier Framework.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc PKG-INFO README.rst
-%python3_sitelibdir/*
+%doc LICENSE *.rst *.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/test
 
 %files tests
 %python3_sitelibdir/*/test
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.30.1-alt1
+- Build new version.
+
 * Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 1.18.25-alt2
 - Rename package, spec cleanup.
 
