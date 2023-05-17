@@ -1,5 +1,5 @@
 Name: texworks
-Version: 0.6.7
+Version: 0.6.8
 Release: alt1
 
 Summary: A simple IDE for authoring TeX documents
@@ -17,7 +17,7 @@ BuildRequires: qt5-declarative-devel zlib-devel
 
 Source0: %name-%version.tar
 Source1: texworks-alt-icons.tar
-Source2: TeXworks-manual-r1029.pdf
+Source2: TeXworks-manual-en.pdf
 
 Patch1: %name-0.6.7-desktop.patch
 
@@ -78,12 +78,15 @@ install -m 644 -D %SOURCE2 %buildroot/%_docdir/%name
 %_datadir/metainfo
 %_man1dir/*
 %_docdir/%name
-%exclude %_docdir/%name/TeXworks-manual-*.pdf
+%exclude %_docdir/%name/TeXworks-manual-en.pdf
 
 %files doc
-%_docdir/%name/TeXworks-manual-*.pdf
+%_docdir/%name/TeXworks-manual-en.pdf
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.8-alt1
+- Build new version.
+
 * Fri Jun 10 2022 Grigory Ustinov <grenka@altlinux.org> 0.6.7-alt1
 - Build new version.
 
