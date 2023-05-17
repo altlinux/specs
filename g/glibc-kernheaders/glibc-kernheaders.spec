@@ -3,7 +3,7 @@
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
 # git grep -Fh SPDX-License-Identifier: include/uapi arch/*/include/uapi |sort |uniq -c |sort -n
@@ -78,6 +78,9 @@ BuildRequires: %kernel_source = 1.0.0
 %endif
 %ifarch %mips
 %define base_arch mips
+%endif
+%ifarch loongarch64
+%define base_arch loongarch
 %endif
 %if 0%{!?base_arch}
 %{error:%_target_cpu is not supported}
@@ -299,6 +302,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Wed May 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.3-alt2
+- Support loongarch64 architecture (closes: #46175).
+
 * Sun Apr 23 2023 Dmitry V. Levin <ldv@altlinux.org> 6.3-alt1
 - v6.2 -> v6.3.
 
