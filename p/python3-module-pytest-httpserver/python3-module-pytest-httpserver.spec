@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-pytest-httpserver
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: HTTP server for pytest
@@ -15,6 +15,8 @@ Vcs: https://www.github.com/csernazs/pytest-httpserver.git
 Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
+
+Provides: python3-module-%pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-wheel python3-module-poetry-core >= 1.1
@@ -48,6 +50,9 @@ py.test3
 %doc CHANGES* README* LICENSE
 
 %changelog
+* Wed May 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
+- 1.0.7
+
 * Mon Sep 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
 - 1.0.6
 
