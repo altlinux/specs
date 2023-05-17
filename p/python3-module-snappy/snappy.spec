@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname snappy
+%define pypi_name python-snappy
 
 %def_with check
 
 Name: python3-module-%oname
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: Python library for the snappy compression library from Google
 
@@ -19,6 +20,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libsnappy-devel
 BuildRequires: python3-module-cffi
+
+%py3_provides %pypi_name
+Provides: python3-module-%pypi_name
 
 %description
 Python bindings for the snappy compression library from Google.
@@ -46,6 +50,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/python_%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun May 14 2023 Anton Zhukharev <ancieg@altlinux.org> 0.6.1-alt2
+- (NMU) Added missing provides.
+
 * Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt1
 - Automatically updated to 0.6.1.
 - Build with check.

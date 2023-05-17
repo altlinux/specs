@@ -1,18 +1,19 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name taskiq-dependencies
-%define mod_name taskiq_dependencies
+%define pypi_name taskiq-aio-pika
+%define mod_name taskiq_aio_pika
 
-%def_with check
+# tests require running aqmp broker
+%def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.2.3
+Version: 0.2.1
 Release: alt1
 
-Summary: FastAPI-like dependency injection implementation
+Summary: AMQP broker for taskiq
 License: Unlicense
 Group: Development/Python3
-Url: https://pypi.org/project/taskiq-dependencies
-Vcs: https://github.com/taskiq-python/taskiq.git
+Url: https://pypi.org/project/taskiq-aio-pika/
+Vcs: https://github.com/taskiq-python/taskiq-aio-pika
 
 BuildArch: noarch
 
@@ -35,11 +36,9 @@ BuildRequires(pre): rpm-build-pyproject
 %endif
 
 %description
-This project is used to add FastAPI-like dependency injection to
-projects.
+This lirary provides you with aio-pika broker for taskiq.
 
-This project is a part of the taskiq, but it doesn't have any
-dependencies, and you can easily integrate it in any project.
+%py3_provides %pypi_name
 
 %prep
 %setup
@@ -65,17 +64,6 @@ dependencies, and you can easily integrate it in any project.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Sat May 13 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.3-alt1
-- New version.
+* Sat May 13 2023 Anton Zhukharev <ancieg@altlinux.org> 0.2.1-alt1
+- Initial build for ALT Sisyphus.
 
-* Sun May 07 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.2-alt1
-- New version.
-
-* Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.2-alt2
-- Updated BR for %%check.
-
-* Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.2-alt1
-- New version.
-
-* Sat Dec 10 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt1
-- initial build for Sisyphus

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.4.3
 Release: alt1
 
 Summary: Distributed task queue with full async support 
@@ -13,25 +13,23 @@ Group: Development/Python3
 Url: https://pypi.org/project/taskiq
 Vcs: https://github.com/taskiq-python/taskiq.git
 
-Source: %name-%version.tar
+BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires: python3(poetry.core)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(pydantic)
-BuildRequires: python3(pycron)
-BuildRequires: python3(watchdog)
-BuildRequires: python3(importlib-metadata)
-BuildRequires: python3(taskiq-dependencies)
-BuildRequires: python3(gitignore-parser)
-BuildRequires: python3(mock)
-BuildRequires: python3(anyio)
+%set_pyproject_deps_check_filter types-
+%add_pyproject_deps_check_filter autoflake
+%add_pyproject_deps_check_filter wemake-python-styleguide
+%add_pyproject_deps_check_filter yesqa
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-BuildArch: noarch
 
 %description
 Taskiq is an asynchronous distributed task queue for python. This
@@ -43,6 +41,12 @@ understands all types correctly.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
 %pyproject_build
@@ -51,16 +55,25 @@ understands all types correctly.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
-%doc README.md LICENSE
+%doc README.md
 %_bindir/%pypi_name
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat May 13 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.3-alt1
+- New version.
+
+* Sun May 07 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.2-alt1
+- New version.
+
+* Fri May 05 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt2
+- Use rpm-build-pyproject macros.
+- Don't package MIT license file.
+
 * Mon Apr 10 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
 - New version.
 

@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 2.0.2
-Release: alt1
+Release: alt2
 Summary: Pure Python client for Apache Kafka
 License: Apache-2.0
 Group: Development/Python3
@@ -37,6 +37,7 @@ BuildRequires: python3(xxhash)
 %py3_requires six
 
 %py3_provides %pypi_name
+Provides: python3-module-%pypi_name
 
 %description
 This module provides low-level protocol support for Apache Kafka as well
@@ -77,6 +78,9 @@ chmod -x example.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun May 14 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.2-alt2
+- (NMU) Added missing provide.
+
 * Wed Oct 19 2022 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
 - 1.4.6 -> 2.0.2.
 
