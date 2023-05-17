@@ -1,10 +1,10 @@
 %define oname requests_toolbelt
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.9.1
-Release: alt2
+Version: 1.0.0
+Release: alt1
 Summary: A toolbelt of useful classes and functions to be used with python-module-requests
 License: Apache-2.0
 Group: Development/Python3
@@ -15,7 +15,14 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-requests
+
+%if_with check
+BuildRequires: python3-module-betamax
+BuildRequires: python3-module-trustme
+%endif
 
 %py3_provides %oname
 
@@ -30,21 +37,24 @@ but some idiosyncracies prevent effective or sane testing on that version.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=$PWD
-python3 setup.py test
-py.test3
+%tox_check_pyproject
 
 %files
 %doc *.rst docs/*.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Automatically updated to 1.0.0.
+- Build with check.
+
 * Tue Jul 13 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt2
 - Drop python2 support.
 
