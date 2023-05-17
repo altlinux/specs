@@ -9,7 +9,7 @@
 
 Name:     trace-cmd
 Version: 3.1.6
-Release: alt1
+Release: alt2
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
 License:  GPL-2.0 and LGPL-2.1
@@ -52,7 +52,8 @@ debugfs file system under the tracing directory.
 # version numbering. But we cannot set version for sub-package.
 Summary: trace-cmd libraries
 Group: System/Libraries
-Conflicts: trace-cmd-libs < 2.9.6-alt1
+Conflicts: trace-cmd-libs < %EVR
+Obsoletes: trace-cmd-libs < %EVR
 
 %description -n libtracecmd
 %summary.
@@ -70,7 +71,8 @@ Summary: Python plugin support for libtracecmd
 Group: Development/Python3
 Requires: libtracecmd = %EVR
 Provides: python3(tracecmd)
-Obsoletes: trace-cmd-python3 < 2.9.6-alt1
+Conflicts: trace-cmd-python3 < %EVR
+Obsoletes: trace-cmd-python3 < %EVR
 
 %description -n python3-module-tracecmd
 %summary.
@@ -154,6 +156,9 @@ vm-run --cpu=2 --append=schedstats=enable '
 %endif
 
 %changelog
+* Thu May 11 2023 Vitaly Chikunov <vt@altlinux.org> 3.1.6-alt2
+- spec: Add Obsoletes for trace-cmd-libs (RM#100703).
+
 * Mon May 08 2023 Vitaly Chikunov <vt@altlinux.org> 3.1.6-alt1
 - Update to trace-cmd-v3.1.6 (2023-01-09).
 
