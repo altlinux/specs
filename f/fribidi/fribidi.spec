@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: fribidi
-Version: 1.0.12
+Version: 1.0.13
 Release: alt1
 
 Summary: Bi-directional scripts support
@@ -68,8 +68,8 @@ programs which will use fribidi.
 
 %prep
 %setup
-# empty manpages in tarball
-rm -f doc/{c2man.stamp,%{name}_*.3}
+# empty manpages in 1.0.12 tarball
+#rm -f doc/{c2man.stamp,%{name}_*.3}
 
 %build
 %meson \
@@ -105,6 +105,9 @@ rm -f doc/{c2man.stamp,%{name}_*.3}
 %endif
 
 %changelog
+* Wed May 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.13-alt1
+- 1.0.13
+
 * Wed Apr 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.12-alt1
 - 1.0.12
 
