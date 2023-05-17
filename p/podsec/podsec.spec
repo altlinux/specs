@@ -2,11 +2,12 @@
 %define u7s_admin_grp u7s-admin
 %define kubernetes_grp kube
 %define _libexecdir %_prefix/libexec
-%define nagios_plugdir %_prefix/lib/nagios/plugins
+%define nagiosdir %_prefix/lib/nagios
+%define nagios_plugdir %nagiosdir/plugins
 %define u7s_admin_homedir %_localstatedir/%u7s_admin_usr
 
 Name: podsec
-Version: 0.9.28
+Version: 0.9.33
 Release: alt1
 
 Summary: Set of scripts for Podman Security
@@ -55,15 +56,14 @@ Requires: kubernetes-crio >= 1.26.3-alt2
 Requires: kubernetes-master >= 1.26.3-alt2
 Requires: kubernetes-node >= 1.26.3-alt2
 Requires: kubernetes-client >= 1.26.3-alt2
+Requires: cri-o >= 1.26.2
+Requires: cri-tools >= 1.22.0
 Requires: etcd >= 3.4.15
-Requires: flannel >= 0.13.0
-# Requires: flannel >= 0.19.2
+Requires: flannel >= 0.19.2
 Requires: cni-plugin-flannel >= 1.1.2
 Requires: rootlesskit >= 1.1.0
 Requires: slirp4netns >= 1.1.12
 Requires: crun >= 1.8.1
-Requires: cri-o >= 1.26.2
-Requires: cri-tools >= 1.22.0
 Requires: systemd-container
 %filter_from_requires /\/etc\/kubernetes\/kubelet/d
 
@@ -116,11 +116,17 @@ groupadd -r -f %u7s_admin_grp >/dev/null 2>&1 ||:
 useradd -r -m -g %u7s_admin_grp -d %u7s_admin_homedir -G %kubernetes_grp,systemd-journal,podman,fuse \
     -c 'usernet user account' %u7s_admin_usr >/dev/null 2>&1 ||:
 
-%post
-%post_systemd podsec-inotify-check-containers.service u7s.service
+%post inotify
+%post_systemd podsec-inotify-check-containers.service
 
-%preun
-%preun_systemd podsec-inotify-check-containers.service u7s.service
+%preun inotify
+%preun_systemd podsec-inotify-check-containers.service
+
+%post k8s
+%post_systemd  u7s.service
+
+%preun k8s
+%preun_systemd u7s.service
 
 %files
 %_bindir/podsec*
@@ -167,6 +173,16 @@ useradd -r -m -g %u7s_admin_grp -d %u7s_admin_homedir -G %kubernetes_grp,systemd
 %_unitdir/podsec-inotify-check-containers.service
 
 %changelog
+* Wed May 17 2023 Alexey Kostarev <kaf@altlinux.org> 0.9.33-alt1
+- 0.9.33
+
+
+* Tue May 16 2023 Alexey Kostarev <kaf@altlinux.org> 0.9.32-alt1
+- 0.9.32
+
+* Mon May 15 2023 Alexey Kostarev <kaf@altlinux.org> 0.9.30-alt1
+- 0.9.30
+
 * Sun May 14 2023 Alexey Kostarev <kaf@altlinux.org> 0.9.28-alt1
 - 0.9.28
 
