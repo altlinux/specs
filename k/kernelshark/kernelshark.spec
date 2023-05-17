@@ -5,7 +5,7 @@
 
 Name:     kernelshark
 Version:  2.2.0
-Release:  alt2
+Release:  alt3
 # Epoch incremented, because previously kernelshark is packaged from trace-cmd
 # spec which have much bigger version number (2.9.1).
 Epoch:    1
@@ -81,6 +81,10 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/*.appdata.xml
 %_metainfodir/*.appdata.xml
 
 %changelog
+* Thu May 11 2023 Vitaly Chikunov <vt@altlinux.org> 1:2.2.0-alt3
+- Fix 'QLocalSocket::connectToServer: Invalid name' on Capture (ALT#46083).
+- Fix segfault in libkshark-tepdata (ALT#46079).
+
 * Mon May 08 2023 Vitaly Chikunov <vt@altlinux.org> 1:2.2.0-alt2
 - Add dependence on trace-cmd (ALT#46075).
 
