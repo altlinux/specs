@@ -2,23 +2,23 @@
 %define oname gearbox
 
 Name: python3-module-%oname
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Toolkit born as a PasteScript replacement for the TurboGears2 web framework
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/gearbox/
+Url: https://pypi.python.org/pypi/gearbox
 
 # https://github.com/TurboGears/gearbox.git
-Source: %oname-%version.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cliff
 BuildRequires: python3-module-tempita
 BuildRequires: python3-module-PasteDeploy
@@ -35,23 +35,24 @@ TurboGears2 web framework, while still being backward compatible with
 the existing TurboGears projects.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
-%check
-python3 setup.py test
+%pyproject_install
 
 %files
+%_bindir/%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %doc *.rst
-%_bindir/*
-%python3_sitelibdir/*
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.2-alt1
+- Updated to 0.2.2.
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt1
 - Automatically updated to 0.2.1.
 
