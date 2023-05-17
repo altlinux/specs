@@ -13,8 +13,8 @@
 %define bacula_major 11
 
 Name: bacula%{bacula_major}
-Version: %{bacula_major}.0.5
-Release: alt4
+Version: %{bacula_major}.0.6
+Release: alt1
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -42,12 +42,13 @@ Source17: generic.xpm
 Patch1: %name-alt.patch
 Patch2: %name-gui-alt.patch
 Patch3: bacula-9.4.0-fedora-seg-fault.patch
+Patch4: bacula11-alt-fix-logrotate.patch
 Patch2000: %name-e2k.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libMySQL-devel postgresql-devel
 BuildRequires: libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel zlib-devel
-BuildRequires: liblz4-devel
+BuildRequires: liblz4-devel liblzo2-devel
 BuildRequires: dvd+rw-tools groff-base iputils bc
 
 %if_enabled bat
@@ -448,6 +449,8 @@ popd
 %ifarch %e2k
 %patch2000 -p2
 %endif
+
+%patch4 -p2
 
 mv ../%name-icons-%version icons
 
@@ -912,6 +915,13 @@ fi
 %endif
 
 %changelog
+* Wed May 17 2023 Alexei Takaseev <taf@altlinux.org> 11.0.6-alt1
+- 11.0.6
+- Fix path to logfile for logrotate (ALT#44709)
+
+* Mon May 15 2023 Alexei Takaseev <taf@altlinux.org> 11.0.5-alt4.1
+- Add BR liblzo2-devel (ALT#46151)
+
 * Wed Feb 09 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 11.0.5-alt4
 - Fixed build.
 
