@@ -1,5 +1,5 @@
 Name: rav1e
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: The fastest and safest AV1 encoder
@@ -67,6 +67,9 @@ cargo cinstall --destdir=%buildroot --includedir=%_includedir \
 %_pkgconfigdir/*pc
 
 %changelog
+* Wed May 17 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.6-alt1
+- 0.6.6 released
+
 * Wed May 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.5-alt1
 - 0.6.5 released
 
