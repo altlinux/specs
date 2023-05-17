@@ -8,8 +8,8 @@ language.
 %def_with docs
 
 Name: python3-module-%oname
-Version: 1.5.6
-Release: alt2
+Version: 1.5.7
+Release: alt1
 
 Summary: Python FTP server library
 Summary(ru_RU.UTF-8): Модуль Python FTP-сервера
@@ -21,14 +21,13 @@ Url: https://github.com/giampaolo/pyftpdlib
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
 %endif
-
-Conflicts: python-module-%oname < %EVR
-Obsoletes: python-module-%oname < %EVR
 
 BuildArch: noarch
 
@@ -86,7 +85,7 @@ ln -s ../objects.inv docs/
 %endif
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -96,7 +95,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 mkdir -p %buildroot%python3_sitelibdir/%oname
@@ -108,8 +107,8 @@ cp -fR docs/_build/man/* %buildroot%_man1dir
 %files
 %doc CREDITS LICENSE *.rst demo/
 %_bindir/*
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-info*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/%oname/test
 %if_with docs
 %_man1dir/*
@@ -129,6 +128,9 @@ cp -fR docs/_build/man/* %buildroot%_man1dir
 %endif
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.5.7-alt1
+- Automatically updated to 1.5.7.
+
 * Tue Aug 25 2020 Grigory Ustinov <grenka@altlinux.org> 1.5.6-alt2
 - Fix obsoletes tag.
 
