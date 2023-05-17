@@ -1,71 +1,73 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name sh
+%define mod_name %pypi_name
 
-%define oname sh
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.12.14
-Release: alt6
-Summary: Python subprocess interface
+Name: python3-module-%pypi_name
+Version: 2.0.4
+Release: alt1
+Summary: Python subprocess replacement
 License: MIT
-BuildArch: noarch
 Group: Development/Python3
 Url: https://pypi.org/project/sh/
-
-# https://github.com/amoffat/sh.git
+Vcs: https://github.com/amoffat/sh
+BuildArch: noarch
 Source: %name-%version.tar
-Patch1: pep-0538-test-fix.patch
-Patch2: 1.12.14-sh-alt-fix-test_piped_exceptionX.patch
-Patch3: 1.12.14-sh-alt-fix-test_general_signal.patch
-
-BuildRequires(pre): rpm-build-python3
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
+%add_pyproject_deps_check_filter coveralls
+%add_pyproject_deps_check_filter rstcheck
+%add_pyproject_deps_check_filter sphinx-rtd-theme
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 BuildRequires: /dev/pts
-BuildRequires: python3-module-coverage
-BuildRequires: python3(tox)
+BuildRequires: /proc
 %endif
 
 %description
-sh (previously pbs) is a full-fledged subprocess replacement for python
-2.6 - 3.2 that allows you to call any program as if it were a function:
+sh is a full-fledged subprocess replacement for Python that allows you to call
+any program as if it were a function:
 
   from sh import ifconfig
-  print ifconfig("eth0")
+  print(ifconfig("eth0"))
 
-sh is not a collection of system commands implemented in python.
+sh is not a collection of system commands implemented in Python.
+
+sh relies on various Unix system calls and only works on Unix-like operating
+systems - Linux, macOS, BSDs etc. Specifically, Windows is not supported.
 
 %prep
 %setup
-%autopatch -p1
-
-sed -i -e 's:==:>=:g' \
-	requirements*.txt
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} sh.py travis
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+export SH_TESTS_RUNNING=1
+%pyproject_run_unittest
 
 %files
-%doc *.md
-%python3_sitelibdir/sh.py
-%python3_sitelibdir/__pycache__/sh.cpython-*.py*
-%python3_sitelibdir/sh-%version-py*.egg-info/
+%doc README.*
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/__pycache__/%mod_name.*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 17 2023 Stanislav Levin <slev@altlinux.org> 2.0.4-alt1
+- 1.12.14 -> 2.0.4.
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 1.12.14-alt6
 - Built Python3 package from its ows src.
 
