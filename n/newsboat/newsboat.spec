@@ -1,9 +1,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
-# remove me in the next release
-%add_optflags -Wno-deprecated-declarations
 
 Name:	 newsboat
-Version: 2.30
+Version: 2.31
 Release: alt1
 
 Summary: an RSS/Atom feed reader for the text console
@@ -90,6 +88,9 @@ cargo test
 %_iconsdir/hicolor/scalable/apps/newsboat.svg
 
 %changelog
+* Wed May 17 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.31-alt1
+- Updated to r2.31.
+
 * Mon Dec 26 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.30-alt1
 - Updated to 2.30.
 
