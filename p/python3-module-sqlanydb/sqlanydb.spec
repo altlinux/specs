@@ -3,7 +3,7 @@
 %define oname sqlanydb
 
 Name: python3-module-%oname
-Version: 1.0.11
+Version: 1.0.13
 Release: alt1
 Epoch: 1
 License: Apache-2.0
@@ -38,6 +38,9 @@ This interface conforms to PEP 249.
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 1:1.0.13-alt1
+- Build new version.
+
 * Tue Oct 12 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.0.11-alt1
 - Build new version.
 
