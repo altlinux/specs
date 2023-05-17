@@ -15,7 +15,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 102.10.0
+Version: 102.11.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -507,6 +507,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Mon May 15 2023 Pavel Vasenkov <pav@altlinux.org> 102.11.0-alt1
+- New ESR version.
+- Security fixes
+  + CVE-2023-32205 Browser prompts could have been obscured by popups
+  + CVE-2023-32206 Crash in RLBox Expat driver
+  + CVE-2023-32207 Potential permissions request bypass via clickjacking
+  + CVE-2023-32211 Content process crash due to invalid wasm code
+  + CVE-2023-32212 Potential spoof due to obscured address bar
+  + CVE-2023-32213 Potential memory corruption in FileReader::DoReadData()
+  + CVE-2023-32214 Potential DoS via exposed protocol handlers
+  + CVE-2023-32215 Memory safety bugs fixed in Firefox 113 and Firefox ESR 102.11
+
 * Wed Apr 19 2023 Pavel Vasenkov <pav@altlinux.org> 102.10.0-alt1
 - New ESR version.
 - Security fixes
