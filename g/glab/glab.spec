@@ -5,7 +5,7 @@
 %def_with docs
 
 Name: glab
-Version: 1.26.0
+Version: 1.29.4
 Release: alt1
 
 Summary: A GitLab CLI tool bringing GitLab to your command line
@@ -54,6 +54,8 @@ export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 
 pushd .build/src/%import_path
+    export LDFLAGS="$LDFLAGS -X main.buildDate=$(date +%%Y-%%m-%%d)"
+    export LDFLAGS="$LDFLAGS -X main.version=%version"
     %golang_build cmd/glab
 popd
 
@@ -81,6 +83,9 @@ mv .man-pages/* %buildroot%_man1dir
 %_man1dir/*.1.xz
 
 %changelog
+* Wed May 17 2023 Anton Zhukharev <ancieg@altlinux.org> 1.29.4-alt1
+- New version.
+
 * Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.26.0-alt1
 - New version.
 
