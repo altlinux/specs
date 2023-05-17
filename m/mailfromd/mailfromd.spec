@@ -7,7 +7,7 @@
 
 Name: mailfromd
 
-%define baseversion 8.15
+%define baseversion 8.16
 
 %if %snapshot
 %define snapshotdate 20210215
@@ -341,6 +341,11 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Wed May 17 2023 Sergey Y. Afonin <asy@altlinux.org> 8.16-alt1
+- new version
+- fixed DNS name lengh check in SPF's check_host()
+  (mainstream commit 9bc018f26e5)
+
 * Tue Dec 20 2022 Sergey Y. Afonin <asy@altlinux.org> 8.15-alt1
 - new version
 - built with libnettle-devel (DKIM)
