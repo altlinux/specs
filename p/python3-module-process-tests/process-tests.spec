@@ -2,18 +2,20 @@
 %define oname process-tests
 
 Name: python3-module-%oname
-Version: 2.0.2
-Release: alt2
+Version: 2.1.2
+Release: alt1
 Summary: Tools for testing processes
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.org/project/process-tests/
+Url: https://pypi.org/project/process-tests
 
 # https://github.com/ionelmc/python-process-tests.git
-Source: https://files.pythonhosted.org/packages/5a/9b/c77450f9169597eef161963ae424e10813c398d603ccaf4d28f523f2bab4/%name-%version.tar.gz
+Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 Testcase classes and assertions for testing processes.
@@ -22,16 +24,21 @@ Testcase classes and assertions for testing processes.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc LICENSE *.rst
+%python3_sitelibdir/process_tests.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/process_tests-%version.dist-info
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.2-alt1
+- Build new version.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt2
 - Drop python2 support.
 
