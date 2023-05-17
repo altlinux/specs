@@ -1,20 +1,22 @@
 %define oname pyxattr
 
 Name: python3-module-%oname
-Version: 0.7.2
+Version: 0.8.1
 Release: alt1
 
 Summary: A python module for accessing filesystem Extended Attributes
 
 License: LGPLv2.1
 Group: Development/Python3
-Url: http://pyxattr.sourceforge.net/
+Url: https://pypi.org/project/pyxattr
 
 # https://github.com/iustin/pyxattr.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libattr-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 This is the pyxattr module, a Python extension module which gives access
@@ -25,16 +27,20 @@ operating systems.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc NEWS README.md
-%python3_sitelibdir/*
+%doc *.md
+%python3_sitelibdir/xattr.*.so
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
+- Automatically updated to 0.8.1.
+
 * Mon Nov 30 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.2-alt1
 - Automatically updated to 0.7.2.
 
