@@ -1,6 +1,6 @@
 Name: pavucontrol
 Version: 5.0
-Release: alt1
+Release: alt2
 
 Summary: PulseAudio Volume Control
 Group: Sound
@@ -8,8 +8,6 @@ License: GPLv2
 Url: http://pulseaudio.org
 
 Source: %name-%version.tar
-
-Requires: pulseaudio-daemon >= 1.0
 
 BuildRequires: gcc-c++ intltool libcanberra-gtk3-devel libgtkmm3-devel libjson-glib-devel libsigc++2-devel libpulseaudio-devel lynx
 
@@ -41,6 +39,9 @@ the volume of hardware devices and of each playback stream seperately.
 %doc README doc/README.html doc/style.css
 
 %changelog
+* Wed May 17 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0-alt2
+- drop pulseaudio-daemon req (closes: 46176)
+
 * Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0-alt1
 - 5.0 released
 
