@@ -2,18 +2,20 @@
 %define oname dicttoxml
 
 Name: python3-module-%oname
-Version: 1.7.4
-Release: alt2
+Version: 1.7.16
+Release: alt1
 Summary: Converts a Python dictionary or other native data type into a valid XML string
 License: GPLv2
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/dicttoxml/
+Url: https://pypi.python.org/pypi/dicttoxml
 
 # https://github.com/quandyfactory/dicttoxml.git
-Source0: https://pypi.python.org/packages/74/36/534db111db9e7610a41641a1f6669a964aacaf51858f466de264cc8dcdd9/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %py3_provides %oname
 
@@ -31,21 +33,26 @@ The root object passed into the dicttoxml method can be any of the
 supported data types.
 
 %prep
-%setup -n %{oname}-%{version}
+%setup
 
 rm -fR dist
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc *.markdown
-%python3_sitelibdir/*
+%doc *.md *.txt
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.16-alt1
+- Build new version.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.4-alt2
 - Drop python2 support.
 
