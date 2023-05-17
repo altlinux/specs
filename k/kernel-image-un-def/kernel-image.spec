@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.2
-%define kernel_sublevel	.15
+%define kernel_sublevel	.16
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -613,6 +613,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed May 17 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.2.16-alt1
+- v6.2.16 (2023-05-17).
+- rk3568-firefly-roc-pc.dts: fix bluetooth support.
+
 * Thu May 11 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.2.15-alt1
 - v6.2.15 (2023-05-11).
 - config-armh: Fix relocation out of range errors when loading modules.
