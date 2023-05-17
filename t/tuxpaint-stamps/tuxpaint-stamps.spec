@@ -1,5 +1,5 @@
 Name: tuxpaint-stamps
-Version: 2022.06.04
+Version: 2023.04.02
 Release: alt1
 
 Summary: This is a collection of 'rubber stamp' images for Tux Paint
@@ -56,6 +56,9 @@ rm -rf %buildroot%_datadir/tuxpaint/stamps/vehicles/emergency/firetruck.ogg
 %_datadir/tuxpaint/stamps/*
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 2023.04.02-alt1
+- Build new version.
+
 * Fri Jul 22 2022 Grigory Ustinov <grenka@altlinux.org> 2022.06.04-alt1
 - Build new version.
 

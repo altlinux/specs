@@ -1,5 +1,5 @@
 Name: tuxpaint
-Version: 0.9.28
+Version: 0.9.29
 Release: alt1
 
 Summary: A drawing program for young children
@@ -14,7 +14,7 @@ Source1: %name.desktop
 
 # The databases in [/usr/local/share/applications, /usr/share/applications] could not be updated.
 Patch0: desktop.patch
-Patch1: tuxpaint-0.23-e2k-fix_bad_elf_symbol.patch
+Patch1: tuxpaint-0.9.29-e2k-fix_bad_elf_symbol.patch
 
 BuildRequires: libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_gfx-devel
 BuildRequires: libSDL2_ttf-devel ImageMagick-tools xdg-utils
@@ -55,7 +55,7 @@ Development shared library for %name
 
 %prep
 %setup
-%patch0 -p0
+%patch0 -p2
 # we can do it not only on e2k
 %patch1 -p2
 
@@ -90,6 +90,9 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 rm -fv %buildroot%_datadir/doc/%name-%version/outdated/zh_tw/mkTuxpaintIM.py
 rm -fv %buildroot%_datadir/%name/fonts/locale/zh_tw_docs/maketuxfont.py
 
+# We dont need example library in docs
+rm -fv %buildroot%_datadir/doc/%name-%version/*/tp_magic_example.so
+
 %files -f %name.lang
 # bin files
 %_bindir/tuxpaint*
@@ -113,10 +116,12 @@ rm -fv %buildroot%_datadir/%name/fonts/locale/zh_tw_docs/maketuxfont.py
 %files devel
 %_bindir/tp-magic-config
 %_includedir/%name
-%_docdir/%name-devel-%version
 %_man1dir/tp-magic-config*
 
 %changelog
+* Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.29-alt1
+- Build new version.
+
 * Fri Jul 22 2022 Grigory Ustinov <grenka@altlinux.org> 0.9.28-alt1
 - Build new version.
 - Build with SDL2.
