@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.13
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -475,6 +475,10 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Thu May 18 2023 Mikhail Efremov <sem@altlinux.org> 1:4.13-alt5
+- libsubid: Link against libpam_userpass.
+- valid_field: Always reject control characters (fixes: CVE-2023-29383).
+
 * Thu May 04 2023 Nikolay Burykin <bne@altlinux.org> 1:4.13-alt4
 - Changed control scripts for newuidmap/newgidmap:
   + Replaced the SUID Bit with POSIX Capabilities in all the
