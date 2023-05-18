@@ -1,5 +1,5 @@
 %define kernel_base_version	6.2
-%define kernel_sublevel        .12
+%define kernel_sublevel        .16
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -258,6 +258,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Wed May 17 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.2.16-alt1
+- 6.2.16
+
 * Thu Apr 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.2.12-alt1
 - 6.2.12
 
