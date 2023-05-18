@@ -4,36 +4,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
-
 Summary: pytest plugin to test server connections locally
 License: MIT
 Group: Development/Python3
-VCS: https://github.com/pytest-dev/pytest-localserver.git
 Url: https://pypi.org/project/pytest-localserver
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
-%if_with check
-# deps
-BuildRequires: python3(werkzeug)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(requests)
-%endif
-
+VCS: https://github.com/pytest-dev/pytest-localserver.git
 BuildArch: noarch
-
-%py3_provides %pypi_name
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 %pypi_name is a plugin for the pytest testing framework which enables
@@ -42,17 +30,12 @@ you to test server connections locally.
 %prep
 %setup
 %autopatch -p1
-
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -61,7 +44,7 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc README.rst
@@ -69,5 +52,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu May 18 2023 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1
+- 0.7.0 -> 0.7.1.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus.
