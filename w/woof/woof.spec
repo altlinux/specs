@@ -1,5 +1,5 @@
 Name: woof
-Version: 10.5.1
+Version: 11.1.1
 Release: alt1
 Summary: continuation of Lee Killough's Doom source port MBF targeted at modern systems
 Group: Games/Arcade
@@ -41,7 +41,8 @@ cp -r ./%_arch-alt-linux/src/autoload %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
-* Mon Apr 24 2023 Artyom Bystrov <arbars@altlinux.org> 10.5.1-alt1
+
+* Thu May 18 2023 Artyom Bystrov <arbars@altlinux.org> 11.1.1-alt1
 - Update to new version
 
 * Sun Nov 13 2022 Artyom Bystrov <arbars@altlinux.org> 10.4.0-alt1
