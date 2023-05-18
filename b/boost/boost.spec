@@ -13,8 +13,15 @@
 
 %def_with strict_deps
 
+%def_disable bootstrap
+%if_enabled bootstrap
+%force_disable mpi
+%force_disable python
+%else
 # mpi
 %def_with mpi
+%def_with python
+%endif
 
 # long_double
 %ifarch %arm ppc64le
@@ -57,7 +64,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -86,8 +93,12 @@ Patch2000: boost-1.76-e2k-makecontext.patch
 
 # we use %%_python3_abiflags
 # we use %%requires_python_ABI, introduced in rpm-build-python3-0.1.9.3-alt1
+%if_with python
+# XXX: (pre) dependencies are installed anyway.
+# XXX: The only way around is to remove them manually :(
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.3-alt1
 BuildRequires: python3-devel libnumpy-py3-devel
+%endif
 
 %if_with mpi
 BuildRequires: %mpiimpl-devel
@@ -243,7 +254,9 @@ Requires: %name-mpi-devel = %EVR
 Requires: %name-msm-devel = %EVR
 Requires: %name-polygon-devel = %EVR
 Requires: %name-program_options-devel = %EVR
+%if_with python
 Requires: %name-python3-devel = %EVR
+%endif
 Requires: %name-signals-devel = %EVR
 Requires: %name-timer-devel = %EVR
 Requires: %name-units-devel = %EVR
@@ -663,7 +676,9 @@ Requires: %name-mpi-devel = %EVR
 Requires: %name-locale-devel = %EVR
 Requires: %name-log-devel = %EVR
 Requires: %name-program_options-devel = %EVR
+%if_with python
 Requires: %name-python3-devel = %EVR
+%endif
 Requires: %name-signals-devel = %EVR
 Requires: %name-timer-devel = %EVR
 Requires: %name-wave-devel = %EVR
@@ -1281,7 +1296,12 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 %if_without mpi
 	--without-mpi \
 %endif
-	python=%_python3_version
+%if_with python
+	python=%_python3_version \
+%else
+	--without-python \
+%endif
+	%nil
 
 
 %if_with boost_build
@@ -1330,7 +1350,11 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 %if_without mpi
 	--without-mpi \
 %endif
+%if_with python
 	python=%_python3_version \
+%else
+	--without-python \
+%endif
 	install
 
 # install mpi python3 module
@@ -1457,7 +1481,9 @@ rm -f %buildroot%_libdir/*.a || :
 %exclude %_includedir/%name/msm
 %exclude %_includedir/%name/polygon
 %exclude %_includedir/%name/program_options*
+%if_with python
 %exclude %_includedir/%name/python*
+%endif
 %exclude %_includedir/%name/signal*
 %exclude %_includedir/%name/wave*
 
@@ -1478,9 +1504,11 @@ rm -f %buildroot%_libdir/*.a || :
 %exclude %_libdir/*_graph_parallel*.so
 %endif
 %exclude %_libdir/*_program_options*.so
-%exclude %_libdir/*_python*.so
 %exclude %_libdir/*_wave*.so
+%if_with python
+%exclude %_libdir/*_python*.so
 %exclude %_libdir/*boost_numpy3*.so
+%endif
 %_libdir/cmake/*
 %if_with context
 %exclude %_libdir/cmake/boost_context-%version
@@ -1497,7 +1525,9 @@ rm -f %buildroot%_libdir/*.a || :
 %exclude %_libdir/cmake/boost_graph_parallel-%version
 %endif
 %exclude %_libdir/cmake/boost_program_options-%version
+%if_with python
 %exclude %_libdir/cmake/boost_python*-%version
+%endif
 %exclude %_libdir/cmake/boost_wave-%version
 
 %dir %boost_doc/
@@ -1579,6 +1609,7 @@ rm -f %buildroot%_libdir/*.a || :
 %_libdir/*_program_options*.so
 %_libdir/cmake/boost_program_options-%version
 
+%if_with python
 %files python-headers
 %_includedir/%name/python*
 %_libdir/cmake/boost_python*-%version
@@ -1586,6 +1617,7 @@ rm -f %buildroot%_libdir/*.a || :
 %files python3-devel
 %_libdir/*boost_python3*.so
 %_libdir/*boost_numpy3*.so
+%endif
 
 %files signals-devel
 %_includedir/%name/signal*
@@ -1698,11 +1730,13 @@ rm -f %buildroot%_libdir/*.a || :
 %files -n libboost_program_options%version
 %_libdir/*_program_options*.so.*
 
+%if_with python
 %files -n libboost_python3-%version
 %_libdir/*boost_python3*.so.*
 
 %files -n libboost_numpy3-%version
 %_libdir/*boost_numpy3*.so.*
+%endif
 
 %files -n libboost_random%version
 %_libdir/*_random*.so.*
@@ -1781,6 +1815,10 @@ done
 
 
 %changelog
+* Thu May 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.80.0-alt2
+- Added missing bits for LoongArch support (closes: #46181)
+- Added --enable=bootstrap knob for a simpler initial build (closes: #46182)
+
 * Fri Sep 09 2022 Ivan A. Melnikov <iv@altlinux.org> 1:1.80.0-alt1
 - Updated to upstream version 1.80.0
 
