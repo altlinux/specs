@@ -1,6 +1,6 @@
 # TODO: see spec from PLD with separate packages
 Name: global
-Version: 6.6.9
+Version: 6.6.10
 Release: alt1
 
 Summary: Source code tag system
@@ -11,16 +11,14 @@ Url: http://www.gnu.org/software/global
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://tamacom.com/global/global-%version.tar
+# Source-url: https://ftp.gnu.org/pub/gnu/global/global-%version.tar.gz
+Source: global-%version.tar
 
-#Patch: %name-%version-fix-DESTDIR.patch
-
-# Automatically added by buildreq on Tue Apr 17 2012
-# optimized out: emacs-base emacs-cedet-speedbar emacs-common emacs-ecb emacs23-cedet fontconfig libX11-locales libgdk-pixbuf libtinfo-devel libwayland-client libwayland-server
-BuildRequires: ctags glibc-devel libltdl7-devel libncurses-devel
+BuildRequires: rpm-build-python3
+BuildRequires: ctags libltdl7-devel libncurses-devel
+BuildRequires: libsqlite3-devel
 # explicitly added texinfo for info files
 BuildRequires: texinfo
-BuildRequires: rpm-build-python3
 
 %description
 GNU GLOBAL is a source code tag system that works the same way across
@@ -51,7 +49,10 @@ the Web.
 #patch -p2
 
 %build
-%configure --disable-static
+%configure --disable-static \
+    --with-python-interpreter=%__python3 \
+    --with-sqlite3 \
+    %nil
 %make_build
 
 %install
@@ -81,6 +82,11 @@ rm -f %buildroot%_libdir/gtags/*.la
 %_man1dir/gozilla*
 
 %changelog
+* Thu May 18 2023 Vitaly Lipatov <lav@altlinux.ru> 6.6.10-alt1
+- new version 6.6.10 (with rpmrb script)
+- build with sqlite3
+- set python interpreter
+
 * Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 6.6.9-alt1
 - new version 6.6.9 (with rpmrb script)
 
