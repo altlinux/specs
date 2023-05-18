@@ -13,7 +13,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.2.0.1
-Release: alt4
+Release: alt5
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -1134,6 +1134,10 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Thu May 18 2023 Alexey Shabalin <shaba@altlinux.org> 6.2.0.1-alt5
+- fix for qemu-img info 8.0.0
+- Revert "F #4231: reserve ephemeral ports in oned.conf (#4235)"
+
 * Mon Apr 17 2023 Alexey Shabalin <shaba@altlinux.org> 6.2.0.1-alt4
 - default disable fireedge endpoint in config
 - disable provisionactions
