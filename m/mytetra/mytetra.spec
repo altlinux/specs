@@ -1,12 +1,13 @@
 Name: mytetra
-Version: 1.42.2
-Release: alt2
+Version: 1.44.160
+Release: alt1
 
 Summary: Simple cross-platform manager for data collecting
 Summary(ru_RU.UTF-8): несложный кроссплатформенный менеджер накопления информации
 License: GPLv3
 Group: Office
 Url: http://webhamster.ru/site/page/index/articles/projectcode/105
+VCS: https://github.com/xintrea/mytetra_dev
 Packager: Malo Skryleve <malo@altlinux.org>
 
 Source: %name-%version.tar
@@ -34,29 +35,31 @@ MyTetra — предоставить естественный, интуитив�
 
 %prep
 %setup
+echo "QMAKE_CXXFLAGS = %optflags" >> %name.pro
+subst 's/^TARGET_OS=.*$/TARGET_OS=ANY_OS/' app/*.pro
+subst 's|/usr/local/bin|%_bindir|' app/*.pro
 
 %build
-sed 's,\(mytetra_binary.path=\).*,\1%_bindir,g' -i %name.pro
-sed 's,/usr/local/bin,%_bindir,g' -i %name.pro
-echo "QMAKE_CXXFLAGS = %optflags" >> %name.pro
 qmake-qt5 %name.pro
-
 %make_build
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot BINARY_INSTALL_PATH=%_bindir install
+%makeinstall_std TARGET_OS=ANY_OS INSTALL_ROOT=%buildroot BINARY_INSTALL_PATH=%_bindir install
 rm -f %buildroot/usr/share/icons/hicolor/scalable/apps/mytetra.svg
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=TextTools \
 	%buildroot%_desktopdir/mytetra.desktop
 
 %files
-%doc readme.txt
+%doc *.txt *.md
 %_bindir/*
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
 
 %changelog
+* Tue May 16 2023 Andrey Cherepanov <cas@altlinux.org> 1.44.160-alt1
+- New version.
+
 * Wed Jun 30 2021 Grigory Ustinov <grenka@altlinux.org> 1.42.2-alt2
 - Fixed BuildRequires.
 
