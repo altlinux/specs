@@ -1,8 +1,9 @@
-%define sover 10
+%define sover 9
 
 Name: libfmt
-Version: 10.0.0
-Release: alt1
+Version: 9.1.0
+Release: alt1.1
+Epoch: 1
 
 Summary: An open-source formatting library for C++
 License: BSD
@@ -64,6 +65,9 @@ make test
 %_libdir/libfmt.so
 
 %changelog
+* Thu May 18 2023 Nazarov Denis <nenderus@altlinux.org> 1:9.1.0-alt1.1
+- Rollback to version 9.0.1.
+
 * Wed May 10 2023 Nazarov Denis <nenderus@altlinux.org> 10.0.0-alt1
 - Updated to upstream version 10.0.0.
 
