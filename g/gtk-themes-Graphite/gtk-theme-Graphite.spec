@@ -1,8 +1,8 @@
 %define _wallpapersdir %_datadir/wallpapers
 
 Name:    gtk-themes-Graphite
-Version: 220902
-Release: alt2
+Version: 20230517
+Release: alt1
 
 Summary: Graphite - set of themes for XFCE, MATE, Gnome, Cinnamon desktop environment
 License: GPL-3.0
@@ -152,6 +152,9 @@ done
 %_wallpapersdir/Graphite/*.png
 
 %changelog
+* Thu May 18 2023 Artyom Bystrov <arbars@altlinux.org> 20230517-alt1
+- New version 20230517.
+
 * Mon Apr 10 2023 Artyom Bystrov <arbars@altlinux.org> 220902-alt2
 - Fix description and name of package.
 - Add new su
