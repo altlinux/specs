@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.18.2
-Release: alt2
+Version: 0.18.3
+Release: alt1
 Summary: Clean single-source support for Python 3 and 2
 License: MIT
 Group: Development/Python3
@@ -50,17 +50,17 @@ rm -r %buildroot%python3_sitelibdir/*/tests
 rm -r %buildroot%_bindir/*
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-export NO_INTERNET=YES
-export TOX_TESTENV_PASSENV='NO_INTERNET'
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%tox_create_default_config
+%tox_check
 
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.18.3-alt1
+- Automatically updated to 0.18.3.
+
 * Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 0.18.2-alt2
 - Drop python2 support.
 
