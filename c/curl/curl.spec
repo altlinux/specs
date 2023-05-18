@@ -19,8 +19,8 @@
 %endif
 
 Name: curl
-Version: 8.0.1
-Release: alt2
+Version: 8.1.0
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -42,14 +42,14 @@ BuildRequires: zlib-devel libzstd-devel libpsl-devel libldap-devel libbrotli-dev
 %{?_with_check:BuildRequires: libnghttp2-tools}
 %{?_with_check:BuildRequires: gnutls-utils}
 %{?_with_check:BuildRequires: /usr/bin/stunnel}
-%{?_with_check:BuildRequires: perl(Digest/SHA.pm) openssh-server openssh-clients}
-%{?_with_check:BuildRequires: apache2-devel apache2-mod_http2 apache2-mod_ssl caddy pytest3 python3-module-cryptography}
+%{?_with_check:BuildRequires: perl(Digest/SHA.pm) perl(Memoize.pm) openssh-server openssh-clients}
+%{?_with_check:BuildRequires: caddy pytest3 python3-module-cryptography}
 
 %{?_with_openssl:BuildRequires: libssl-devel}
 %{?_with_gnutls:BuildRequires: libgnutls-devel libnettle-devel}
 %{?_with_libssh2:BuildRequires: libssh2-devel}
 %{?_with_nghttp2:BuildRequires: libnghttp2-devel}
-%{?_with_ngtcp2:BuildRequires: libngtcp2-devel}
+%{?_with_ngtcp2:BuildRequires: libngtcp2-devel >= 0.15.0}
 %{?_with_nghttp3:BuildRequires: libnghttp3-devel}
 
 %package -n lib%name
@@ -192,6 +192,16 @@ popd
 %endif
 
 %changelog
+* Thu May 18 2023 Anton Farygin <rider@altlinux.ru> 8.1.0-alt1
+- 8.0.1 -> 8.1.0
+- descreased the number of tests: apache2-* was removed from BuildRequires to
+  avoid circular dependencies curl -> apache2-mods -> libcurl
+- Fixes:
+   * CVE-2023-28319 UAF in SSH sha256 fingerprint check
+   * CVE-2023-28320 siglongjmp race condition
+   * CVE-2023-28321 IDN wildcard match
+   * CVE-2023-28322 more POST-after-PUT confusion
+
 * Tue Mar 21 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.1-alt2
 - disable build static library
 - fix configure options

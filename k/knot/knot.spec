@@ -5,11 +5,11 @@
 %def_enable maxminddb
 %def_enable xdp
 %def_disable documentation
-%def_enable quic
+%def_disable quic
 
 Name: knot
 Version: 3.2.6
-Release: alt1
+Release: alt2
 Summary: High-performance authoritative DNS server
 Group: System/Servers
 License: GPL-3.0-or-later
@@ -203,6 +203,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Thu May 18 2023 Anton Farygin <rider@altlinux.ru> 3.2.6-alt2
+- disabled quic for building without unsupported libngtcp2-0.15.0
+
 * Mon Apr 17 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.6-alt1
 - New version 3.2.6.
 
