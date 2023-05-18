@@ -1,27 +1,33 @@
-%define oname pyenchant
+%define _unpackaged_files_terminate_build 1
+%define pypi_name pyenchant
+%define mod_name enchant
+
+%def_with check
 
 Name: python3-module-enchant
 Version: 3.2.2
-Release: alt1
-
-Summary: PyEnchant is a spellchecking library for Python
-
+Release: alt2
+Summary: Python bindings for the Enchant spellchecking system
 License: LGPLv2+
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pyenchant
-
+Url: https://pypi.org/project/pyenchant/
+Vcs: https://github.com/pyenchant/pyenchant/
 BuildArch: noarch
-
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-intro >= 2.1.3
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: libenchant-devel
+Source1: %pyproject_deps_config_name
 # used dynamically
 Requires: libenchant
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+BuildRequires: hunspell-en_US
+%endif
+BuildRequires: libenchant-devel
 
 %description
 PyEnchant combines all the functionality of the underlying Enchant
@@ -29,36 +35,33 @@ library with the flexibility of Python and a nice "Pythonic"
 object-oriented interface. It also aims to provide some higher-level
 functionality than is available in the C API.
 
-%if "@pyver@"==""
-%package gui
-Summary: PyEnchant GUI dialogs
-Group: Development/Python@pyver@
-%description gui
-PyEnchant GUI dialogs
-%endif
-
 %prep
 %setup
-sed -i '/use_setuptools/d' setup.py
-
-%build
-%python3_build
-
-%install
-%python3_install
-
-%files
-%python3_sitelibdir/enchant
-%python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/enchant/checker/*CheckerDialog*
-
-# TODO
-%if "@pyver@"==""
-%files gui
-%python3_sitelibdir/enchant/checker/*CheckerDialog*
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
 %endif
 
+%build
+%pyproject_build
+
+%install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -ra
+
+%files
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/%mod_name/checker/*CheckerDialog*
+
 %changelog
+* Fri Apr 28 2023 Stanislav Levin <slev@altlinux.org> 3.2.2-alt2
+- Modernized packaging.
+- Mapped PyPI name to distro's one.
+
 * Wed Mar 08 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.2-alt1
 - new version 3.2.2 (with rpmrb script)
 

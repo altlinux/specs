@@ -1,33 +1,30 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-shutil
+%define pypi_name pytest-shutil
+%define mod_name pytest_shutil
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 1.7.0
-Release: alt4
+Release: alt5
 Summary: A goodie-bag of unix shell and environment tools for py.test
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/pytest-shutil
+Url: https://pypi.org/project/pytest-shutil/
+Vcs: https://github.com/man-group/pytest-plugins
 BuildArch: noarch
-
-Source: %oname-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
+Source: %pypi_name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: pytest-shutil-Only-require-contextlib2-on-Python-2.patch
+Patch1: Replace-path.py-with-path.patch
+Patch2: use-stdlib-unittest.mock-on-python-3.patch
+Patch3: Fix-forcing-color-through-termcolor.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(contextlib2)
-BuildRequires: python3(execnet)
-BuildRequires: python3(mock)
-BuildRequires: python3(path)
-BuildRequires: python3(termcolor)
-BuildRequires: python3(tox)
+%pyproject_builddeps_metadata
 %endif
-
-%py3_requires contextlib2
-%py3_requires path
-%py3_requires termcolor
 
 %description
 This library is a goodie-bag of Unix shell and environment management tools for
@@ -35,39 +32,34 @@ automated tests. A summary of the available functions is below, look at the
 source for the full listing.
 
 %prep
-%setup -n %oname-%version
+%setup -n %pypi_name-%version
+%autopatch -p2
 
 # fix dependency
 sed -i -e 's:setuptools-git:setuptools:g' \
 	common_setup.py
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
 %build
-ptrn="'path.py',"
-{ grep -s -l "$ptrn" setup.py | xargs \
-    sed -i -e "s/\(^[[:space:]]*\)$ptrn[[:space:]]*$/\1'path',/"; } || exit 1
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} -m pytest {posargs:-vra}
-EOF
-# HOME env variable is used for testing
-export TOX_TESTENV_PASSENV='HOME'
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -vvr
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc CHANGES.md README.md
-%python3_sitelibdir/pytest_shutil/
-%python3_sitelibdir/pytest_shutil-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 1.7.0-alt5
+- Fixed FTBFS (termcolor 2.3.0).
+
 * Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 1.7.0-alt4
 - Added accidentally removed runtime requirements.
 

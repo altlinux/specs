@@ -4,32 +4,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.5
-Release: alt2
+Version: 0.9.7
+Release: alt1
 Summary: Plugin for py.test that shows failures and errors instantly and shows a progress bar
 License: BSD
 Group: Development/Python3
-BuildArch: noarch
 Url: https://pypi.org/project/pytest-sugar/
-
-# https://github.com/Frozenball/pytest-sugar.git
+Vcs: https://github.com/Teemu/pytest-sugar/
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3-module-packaging >= 14.1
-BuildRequires: python3-module-pytest >= 2.9
-BuildRequires: python3-module-termcolor >= 1.1.0
-BuildRequires: python3-module-pytest-xdist
-%endif
-
+%pyproject_runtimedeps_metadata
 %py3_provides %pypi_name
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 
 %description
 pytest-sugar is a plugin for py.test that changes the default look and
@@ -38,6 +30,8 @@ feel of py.test (e.g. progressbar, show tests that fail instantly).
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -46,16 +40,18 @@ feel of py.test (e.g. progressbar, show tests that fail instantly).
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject -- -vra test_sugar.py
+%pyproject_run_pytest -ra test_sugar.py
 
 %files
-%doc *.rst
+%doc README.md
 %python3_sitelibdir/pytest_sugar.py
 %python3_sitelibdir/__pycache__/pytest_sugar.*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 28 2023 Stanislav Levin <slev@altlinux.org> 0.9.7-alt1
+- 0.9.5 -> 0.9.7.
+
 * Mon Oct 17 2022 Stanislav Levin <slev@altlinux.org> 0.9.5-alt2
 - Fixed FTBFS (pip 22.3).
 

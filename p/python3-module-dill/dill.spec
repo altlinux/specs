@@ -1,27 +1,27 @@
-%def_disable check
+%define _unpackaged_files_terminate_build 1
+%define pypi_name dill
+%define mod_name %pypi_name
 
-%define oname dill
+%def_with check
 
-Name:           python3-module-%oname
-Version:        0.3.4
-Release:        alt1.1
-Summary:        Serialize all of Python
-Group:          Development/Python3
-License:        BSD
-URL:            https://github.com/uqfoundation/dill
-BuildArch:      noarch
-
-# https://github.com/uqfoundation/dill.git
+Name: python3-module-%pypi_name
+Version: 0.3.6
+Release: alt1
+Summary: Serialize all of Python
+License: BSD
+Group: Development/Python3
+Url: https://pypi.org/project/dill/
+Vcs: https://github.com/uqfoundation/dill
+BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-%if_disabled check
-%else
-BuildRequires: python3-module-pytest
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
 %endif
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%mod_name/tests/
 
 %description
 Dill extends python's 'pickle' module for serializing and de-serializing
@@ -31,28 +31,44 @@ includes some additional features. In addition to pickling python objects, dill
 provides the ability to save the state of an interpreter session in a single
 command.
 
+%package -n %name+graph
+Summary: %summary
+Group: Development/Python3
+Requires: %name
+%pyproject_runtimedeps_metadata -- --extra graph
+
+%description -n %name+graph
+Extra 'graph' for %pypi_name.
+
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-# Remove unpackges files
-rm -r %buildroot%_bindir
+%pyproject_install
+# don't ship tests
+rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 
 %check
-export PYTHONPATH=%buildroot/%python3_sitelibdir/
-py.test3 -v
+%pyproject_run -- python3 dill/tests/__main__.py
 
 %files
-%doc LICENSE README.md
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%doc README.md
+%_bindir/undill
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+
+%files -n %name+graph
+%_bindir/get_objgraph
 
 %changelog
+* Wed May 03 2023 Stanislav Levin <slev@altlinux.org> 0.3.6-alt1
+- 0.3.4 -> 0.3.6.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.3.4-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 

@@ -4,46 +4,34 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.30
+Version: 3.1.31
 Release: alt1
-
 Summary: GitPython is a python library used to interact with Git repositories
-
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/GitPython/
 VCS: https://github.com/gitpython-developers/GitPython
-
+BuildArch: noarch
 Source: %name-%version.tar
 Source1: git-history-tests.tar
+Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-# install_requires=
-BuildRequires: python3(gitdb)
-BuildRequires: python3(gitdb.test)
-BuildRequires: /usr/bin/git
-BuildRequires: /usr/sbin/git-daemon
-
-BuildRequires: /proc
-BuildRequires: python3(ddt)
-BuildRequires: python3(pytest)
-%endif
-
+%pyproject_runtimedeps_metadata
 Requires: /usr/bin/git
-
 # PyPI names
 Provides: python3-module-gitpython = %EVR
 %py3_provides GitPython
 %py3_provides gitpython
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+BuildRequires: /proc
+BuildRequires: /usr/bin/git
+BuildRequires: /usr/sbin/git-daemon
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+BuildRequires: python3-module-gitdb-tests
+%endif
 
 %description
 %pypi_name is a python library used to interact with git repositories,
@@ -61,6 +49,11 @@ data streaming.
 %prep
 %setup -a 1
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile test-requirements.txt
+%endif
 
 # unbundle
 rm -vr git/ext/*
@@ -102,6 +95,9 @@ export NO_SUBMODULES=YES
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Fri Apr 28 2023 Stanislav Levin <slev@altlinux.org> 3.1.31-alt1
+- 3.1.30 -> 3.1.31.
+
 * Fri Jan 20 2023 Stanislav Levin <slev@altlinux.org> 3.1.30-alt1
 - 3.1.29 -> 3.1.30.
 

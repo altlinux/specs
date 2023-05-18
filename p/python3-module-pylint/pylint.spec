@@ -1,82 +1,57 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pylint
-%define typing_extensions %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 10)))')
+%define pypi_name pylint
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.12.2
-Release: alt2
-
+Name: python3-module-%pypi_name
+Version: 2.17.4
+Release: alt1
 Summary: Python code static checker
 License: GPLv2+
 Group: Development/Python3
-# https://github.com/PyCQA/pylint.git
-Url: http://www.pylint.org/
-
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-%if_with check
-# install_requires=
-BuildRequires: python3(platformdirs)
-BuildRequires: python3(astroid)
-BuildRequires: python3(isort)
-BuildRequires: python3(mccabe)
-BuildRequires: python3(toml)
-%if %typing_extensions
-BuildRequires: python3(typing_extensions)
-%endif
-
-BuildRequires: python3(git)
-BuildRequires: python3(turtle)
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
-
-# extra tests deps
-BuildRequires: python3(enchant)
-BuildRequires: hunspell-en
-
-%endif
-
+Url: https://pypi.org/project/pylint/
+Vcs: https://github.com/pylint-dev/pylint
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
 Provides: pylint-py3 = %EVR
 Obsoletes: pylint-py3 < %EVR
-%py3_requires isort
-%py3_requires mccabe
-
-%if %typing_extensions
-# rebuild for new Python3.10 is required to get rid of old dependency
-%py3_requires typing_extensions
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%set_pyproject_deps_check_filter towncrier
+%pyproject_builddeps_metadata_extra testutils
+%pyproject_builddeps_metadata_extra spelling
+%pyproject_builddeps_check
+# PyEnchant's spelling dictionary
+BuildRequires: hunspell-en_US
 %endif
 
 %description
-Pylint is a Python source code analyzer which looks for programming
-errors, helps enforcing a coding standard and sniffs for some code
-smells (as defined in Martin Fowler's Refactoring book)
+Pylint is a static code analyser for Python 2 or 3. The latest version supports
+Python 3.7.2 and above.
 
-Pylint can be seen as another PyChecker since nearly all tests you
-can do with PyChecker can also be done with Pylint. However, Pylint
-offers some more features, like checking length of lines of code,
-checking if variable names are well-formed according to your coding
-standard, or checking if declared interfaces are truly implemented,
-and much more.
-
-Additionally, it is possible to write plugins to add your own checks.
+Pylint analyses your code without actually running it. It checks for errors,
+enforces a coding standard, looks for code smells, and can make suggestions
+about how the code could be refactored.
 
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements_test_min.txt
+%endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 # do not pack tests
 rm -r %buildroot%python3_sitelibdir/pylint/test*
 
@@ -86,21 +61,22 @@ for i in $(ls); do
 done
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr --no-deps -- \
-    -vra --ignore tests/benchmark/test_baseline_benchmarks.py
+%pyproject_run_pytest -ra -Wignore --benchmark-disable tests
 
 %files
-%doc ChangeLog README.rst
+%doc README.rst
 %_bindir/pylint.py3
 %_bindir/epylint.py3
 %_bindir/pyreverse.py3
 %_bindir/symilar.py3
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%_bindir/pylint-config.py3
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 2.17.4-alt1
+- 2.12.2 -> 2.17.4.
+
 * Wed Apr 06 2022 Stanislav Levin <slev@altlinux.org> 2.12.2-alt2
 - Fixed FTBFS (mccabe 0.7).
 

@@ -4,27 +4,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.32.0
+Version: 0.33.0
 Release: alt1
-
 Summary: A formatter for Python files
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/yapf/
-
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-vim
-
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(pytest)
-%endif
-
+Vcs: https://github.com/google/yapf
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-build-vim
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 Most of the current formatters for Python --- e.g., autopep8, and
@@ -56,6 +53,8 @@ Group: Editors
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -72,11 +71,10 @@ pushd plugins/vim
 popd
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore
 
 %files
-%doc LICENSE README.rst CHANGELOG
+%doc README.rst CHANGELOG
 %_bindir/yapf*
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
@@ -87,6 +85,9 @@ popd
 %vim_plugin_dir/*
 
 %changelog
+* Wed May 17 2023 Stanislav Levin <slev@altlinux.org> 0.33.0-alt1
+- 0.32.0 -> 0.33.0.
+
 * Sun Oct 02 2022 Anton Zhukharev <ancieg@altlinux.org> 0.32.0-alt1
 - initial build for Sisyphus
 

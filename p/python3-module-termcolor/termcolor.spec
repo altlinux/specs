@@ -1,41 +1,55 @@
-%define oname termcolor
+%define _unpackaged_files_terminate_build 1
+%define pypi_name termcolor
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 1.1.0
-Release: alt2.git20130510
-Summary: ANSII Color formatting for output in terminal
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 2.3.0
+Release: alt1
+Summary: ANSI color formatting for output in terminal
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/termcolor/
-
-# https://github.com/edmund-huber/termcolor.git
-Source: %name-%version.tar
+Vcs: https://github.com/termcolor/termcolor
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%py3_provides %oname
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra tests
+%endif
 
 %description
-ANSII Color formatting for output in terminal.
+%summary.
 
 %prep
 %setup
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 %oname.py
+export TERM=xterm
+%pyproject_run_pytest -ra
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc README.md
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 28 2023 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
+- 1.1.0 -> 2.3.0.
+
 * Wed Jul 14 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.0-alt2.git20130510
 - Build python3 module only
 

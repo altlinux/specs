@@ -1,48 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define oname astroid
-
-%define typing_extensions %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 10)))')
+%define pypi_name astroid
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.9.3
-Release: alt2
-
-Summary: Python Abstract Syntax Tree New Generation
+Name: python3-module-%pypi_name
+Version: 2.15.5
+Release: alt1
+Summary: An abstract syntax tree for Python with inference support
 License: LGPLv2.1+
 Group: Development/Python3
-# Source-git: https://github.com/PyCQA/astroid.git
 Url: https://pypi.org/project/astroid
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-%if_with check
-# install_requires=
-BuildRequires: python3(lazy_object_proxy)
-BuildRequires: python3(wrapt)
-%if %typing_extensions
-BuildRequires: python3(typing_extensions)
-%endif
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-
-# extra tests deps
-BuildRequires: python3(numpy)
-BuildRequires: python3(dateutil)
-
-%endif
-
+Vcs: https://github.com/pylint-dev/astroid
 BuildArch: noarch
-
-%if %typing_extensions
-# rebuild for new Python3.10 is required to get rid of old dependency
-%py3_requires typing_extensions
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+# tests/test_manager.py::IsolatedAstroidManagerTest::test_no_user_warning
+BuildRequires: python3-module-pip
 %endif
 
 %description
@@ -59,26 +40,32 @@ partial trees by inspecting living objects.
 %prep
 %setup
 %patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements_test_min.txt
+%endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 # used only in tests, but requires Pytest
-rm %buildroot%python3_sitelibdir/astroid/test_utils.py
+rm %buildroot%python3_sitelibdir/%mod_name/test_utils.py
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps -vvr -- tests -vra
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc ChangeLog README.rst
-%python3_sitelibdir/astroid/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 2.15.5-alt1
+- 2.9.3 -> 2.15.5.
+
 * Wed Mar 16 2022 Stanislav Levin <slev@altlinux.org> 2.9.3-alt2
 - Fixed FTBFS (wrapt 1.14.0).
 

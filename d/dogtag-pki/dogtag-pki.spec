@@ -2,6 +2,7 @@
 
 %def_with check
 %def_without javadoc
+%def_without pylint
 
 %define nss_default_db_type sql
 
@@ -22,7 +23,7 @@
 
 Name: dogtag-pki
 Version: 11.2.1
-Release: alt1
+Release: alt2
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
@@ -63,6 +64,8 @@ BuildRequires: dogtag-tomcatjss >= %tomcatjss_version
 BuildRequires: slf4j-jdk14
 BuildRequires: junit
 
+BuildRequires: python3-module-setuptools
+
 # build dependency to build man pages
 BuildRequires: go-md2man
 
@@ -77,11 +80,13 @@ BuildRequires: python3-module-flake8
 BuildRequires: python3-module-ldap
 BuildRequires: python3-module-lxml
 BuildRequires: python3-module-pyflakes
-BuildRequires: python3-module-pylint
 BuildRequires: python3-module-selinux
 BuildRequires: python3-module-tox
 BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(tox_no_deps)
+%if_with pylint
+BuildRequires: python3-module-pylint
+%endif
 %endif
 
 # mark upgrade code as Python3 code
@@ -449,7 +454,10 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 
 %check
 export PIP_NO_INDEX=YES
-export TOXENV=lint3,pep8py3,py%{python_version_nodots python3}
+export TOXENV=pep8py3,py%{python_version_nodots python3}
+%if_with pylint
+export TOXENV=$TOXENV,lint3
+%endif
 ln -sr ./tests/tox.ini ./
 tox.py3 --sitepackages -p auto -o -vvr --no-deps --console-scripts -s false
 %cmake_build -t test
@@ -729,6 +737,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 11.2.1-alt2
+- Disabled Pylint.
+
 * Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 11.2.1-alt1
 - 11.1.0 -> 11.2.1.
 

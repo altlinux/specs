@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 8.4.1
-Release: alt1
+Release: alt1.1
 
 Summary: pylama -- Code audit tool for python
 
@@ -14,6 +14,7 @@ Url: https://pypi.python.org/pypi/pylama/
 
 # https://github.com/klen/pylama.git
 Source: %name-%version.tar
+Patch: tests-Sync-pylint-s-no-else-return.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -50,6 +51,7 @@ pylama -- Code audit tool for python.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 export LC_ALL=en_US.UTF-8
@@ -74,6 +76,9 @@ py.test3 -v -k 'not test_quotes'
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 8.4.1-alt1.1
+- NMU: fixed FTBFS (Pylint 2.17).
+
 * Fri Aug 12 2022 Grigory Ustinov <grenka@altlinux.org> 8.4.1-alt1
 - Automatically updated to 8.4.1.
 

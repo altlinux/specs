@@ -1,43 +1,31 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-benchmark
+%define pypi_name pytest-benchmark
+%define mod_name pytest_benchmark
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.4.1
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 4.0.0
+Release: alt1
 Summary: pytest fixture for benchmarking code
 License: BSD-2-Clause
 Group: Development/Python3
-BuildArch: noarch
 Url: https://pypi.org/project/pytest-benchmark/
-
-# https://github.com/ionelmc/pytest-benchmark.git
+Vcs: https://github.com/ionelmc/pytest-benchmark
+BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(pytest)
-BuildRequires: python3(cpuinfo)
-
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
-
-BuildRequires: python3(aspectlib)
-BuildRequires: python3(elasticsearch)
-BuildRequires: python3(freezegun)
-BuildRequires: python3(pygal)
+# required for some tests
 BuildRequires: /usr/bin/git
+%add_pyproject_deps_check_filter hunter pygaljs
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-%py3_requires cpuinfo
-
-# PEP503 name
-%py3_provides %oname
 
 %description
 A pytest fixture for benchmarking code.
@@ -45,30 +33,36 @@ A pytest fixture for benchmarking code.
 %prep
 %setup
 %patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 pushd %buildroot%_bindir
 for i in $(ls); do
 	mv $i ${i}.py3
 done
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}-nocov
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc README.rst CHANGELOG.rst
 %_bindir/py.test-benchmark.py3
 %_bindir/pytest-benchmark.py3
-%python3_sitelibdir/pytest_benchmark/
-%python3_sitelibdir/pytest_benchmark-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 02 2023 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
+- 3.4.1 -> 4.0.0.
+
 * Tue Mar 01 2022 Stanislav Levin <slev@altlinux.org> 3.4.1-alt2
 - Fixed FTBFS (Pytest 7).
 

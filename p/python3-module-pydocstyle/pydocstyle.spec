@@ -1,30 +1,31 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name pydocstyle
+%define mod_name %pypi_name
 
-%define oname pydocstyle
+%def_with check
 
-Name: python3-module-%oname
-Version: 6.2.3
+Name: python3-module-%pypi_name
+Version: 6.3.0
 Release: alt1
 Summary: Python docstring style checker
 License: MIT
 Group: Development/Python3
+Url: https://pypi.org/project/pydocstyle/
+Vcs: https://github.com/PyCQA/pydocstyle
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/pydocstyle
-
-# https://github.com/PyCQA/pydocstyle.git
 Source: %name-%version.tar
-Patch1: %oname-6.1.1-alt-docs.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-poetry
-BuildRequires: python3-module-html5lib python3-module-mock python3-module-pytest
-BuildRequires: python3(configparser) python3(snowballstemmer) python3(six)
-# Documentation
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-alabaster python3-module-objects.inv python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
-
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
 # Conflicts due to binaries in /usr/bin
-Conflicts: python-module-%oname
+Conflicts: python-module-%pypi_name
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%add_pyproject_deps_check_filter types-
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 pydocstyle is a static analysis tool for checking
@@ -33,39 +34,16 @@ compliance with Python docstring conventions.
 pydocstyle supports most of PEP 257 out of the box,
 but it should not be considered a reference implementation.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-pydocstyle is a static analysis tool for checking
-compliance with Python docstring conventions.
-
-pydocstyle supports most of PEP 257 out of the box,
-but it should not be considered a reference implementation.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-pydocstyle is a static analysis tool for checking
-compliance with Python docstring conventions.
-
-pydocstyle supports most of PEP 257 out of the box,
-but it should not be considered a reference implementation.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-%patch1 -p1
-
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
+%autopatch -p1
+# upstream uses dev version for git tree
+sed -i 's/^version = "@VERSION@"$/version = "%version"/' pyproject.toml
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements/tests.txt
+%endif
 
 %build
 %pyproject_build
@@ -73,32 +51,21 @@ ln -s ../objects.inv docs/
 %install
 %pyproject_install
 
-%make -C docs pickle
-%make -C docs html
-
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-
 %check
-export LC_ALL=en_US.UTF-8
-# those tests are known to fail
-rm -f src/tests/test_integration.py
-PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
+%pyproject_run_pytest -ra -Wignore \
+    --ignore=src/tests/test_integration.py \
+    src/tests
 
 %files
-%doc LICENSE-MIT
 %doc README.rst
-%_bindir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
+%_bindir/pydocstyle
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 17 2023 Stanislav Levin <slev@altlinux.org> 6.3.0-alt1
+- 6.2.3 -> 6.3.0.
+
 * Tue Jan 31 2023 Ivan A. Melnikov <iv@altlinux.org> 6.2.3-alt1
 - Updated to upstream version 6.2.3.
 - Switch to %%pyproject_* macros.
