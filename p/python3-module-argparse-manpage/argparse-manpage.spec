@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.2
+Version: 4.3
 Release: alt1
 Summary: Build manual page from python's ArgumentParser object
 License: Apache-2.0
@@ -47,7 +47,7 @@ slight bonus of automatic manual page installation with setup.py install).
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile test-requirements.txt
+%pyproject_deps_resync_check_tox tox.ini testenv
 %endif
 
 %build
@@ -70,6 +70,9 @@ mv %buildroot%_bindir/argparse-manpage{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 18 2023 Stanislav Levin <slev@altlinux.org> 4.3-alt1
+- 4.2 -> 4.3.
+
 * Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 4.2-alt1
 - 3 -> 4.2.
 
