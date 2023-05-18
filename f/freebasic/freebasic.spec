@@ -1,32 +1,35 @@
-Name:		freebasic
-Version:	1.09.0
-Release:	alt2
+%define _unpackaged_files_terminate_build 1
+%def_without check
 
-Summary:	FreeBASIC language compiler
-License:	GPL-2.0+ and LGPL-2.0+ with exception and GFDL-1.1-or-later
-Group:		Education
+Name:	 freebasic
+Version: 1.10.0
+Release: alt1
+
+Summary: FreeBASIC language compiler
+License: GPL-2.0+ and LGPL-2.0+ with exception and GFDL-1.1-or-later
+Group: Education
 
 ExclusiveArch: %ix86 x86_64
 
-Source:		FreeBASIC-%version-source.tar
-Source1:	FB-manual-%version-html.zip
-URL: 		http://freebasic.net
-#VCS:           https://github.com/freebasic/fbc
+Source: FreeBASIC-%version-source.tar
+Source1: FB-manual-%version-html.zip
+URL: http://freebasic.net
+VCS: https://github.com/freebasic/fbc
 
-Provides:	FreeBASIC = %version-%release
+Provides: FreeBASIC = %version-%release
 
-BuildRequires:  freebasic
-BuildRequires:  gcc-c++
-BuildRequires:  libffi-devel
-BuildRequires:  libgpm-devel
-BuildRequires:  libGL-devel
-BuildRequires:  libncurses-devel
-BuildRequires:  libX11-devel
-BuildRequires:  libXext-devel
-BuildRequires:  libXpm-devel
-BuildRequires:  libXrandr-devel
-BuildRequires:  zlib-devel
-BuildRequires:  unzip
+BuildRequires: freebasic
+BuildRequires: gcc-c++
+BuildRequires: libffi-devel
+BuildRequires: libgpm-devel
+BuildRequires: libGL-devel
+BuildRequires: libncurses-devel
+BuildRequires: libX11-devel
+BuildRequires: libXext-devel
+BuildRequires: libXpm-devel
+BuildRequires: libXrandr-devel
+BuildRequires: zlib-devel
+BuildRequires: unzip
 
 Requires: gcc
 Requires: libtinfo-devel
@@ -62,7 +65,9 @@ mkdir -p %buildroot%_docdir/freebasic
 cp -a doc/html/* %buildroot%_docdir/freebasic
 
 %check
-#make -C tests log-tests FB_LANG=fb || /bin/true
+%if_with check
+make -C tests log-tests FB_LANG=fb || /bin/true
+%endif
 
 %files
 %doc *.txt
@@ -74,6 +79,9 @@ cp -a doc/html/* %buildroot%_docdir/freebasic
 %_man1dir/*
 
 %changelog
+* Thu May 18 2023 Andrey Cherepanov <cas@altlinux.org> 1.10.0-alt1
+- New version.
+
 * Tue Sep 27 2022 Andrey Cherepanov <cas@altlinux.org> 1.09.0-alt2
 - Added requirements of libtinfo-devel and libncurses-devel.
 
