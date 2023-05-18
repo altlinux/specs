@@ -1,7 +1,7 @@
 %define oname pycryptodome
 
 Name:     python3-module-%oname
-Version:  3.17.0
+Version:  3.18.0
 Release:  alt1
 
 Summary:  A self-contained cryptographic library for Python
@@ -70,6 +70,9 @@ python3 setup.py test
 %python3_sitelibdir/*/SelfTest
 
 %changelog
+* Thu May 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.18.0-alt1
+- Automatically updated to 3.18.0.
+
 * Tue Jan 31 2023 Grigory Ustinov <grenka@altlinux.org> 3.17.0-alt1
 - Automatically updated to 3.17.0.
 
