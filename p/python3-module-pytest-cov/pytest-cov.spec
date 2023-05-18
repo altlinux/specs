@@ -5,34 +5,25 @@
 
 Name: python3-module-%pypi_name
 Version: 4.0.0
-Release: alt1
-
+Release: alt2
 Summary: Pytest plugin for measuring coverage
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/pytest-dev/pytest-cov.git
 Url: https://pypi.org/project/pytest-cov/
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: /dev/shm
-BuildRequires: python3(coverage)
-BuildRequires: python3(fields)
-BuildRequires: python3(process_tests)
-BuildRequires: python3(pytest-xdist)
-%endif
-
+Vcs: https://github.com/pytest-dev/pytest-cov
 BuildArch: noarch
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
 %py3_provides %pypi_name
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%add_pyproject_deps_check_filter hunter
+%pyproject_builddeps_metadata_extra testing
+BuildRequires: python3-module-coverage
+%endif
 
 %description
 This plugin produces coverage reports. Compared to just using coverage run this
@@ -51,6 +42,9 @@ coverage.
 grep -qsF 'time.sleep(1)' tests/test_pytest_cov.py || exit 1
 sed -i 's/time\.sleep(1)/time.sleep(5)/g' tests/test_pytest_cov.py
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
 %build
 %pyproject_build
 
@@ -59,8 +53,7 @@ sed -i 's/time\.sleep(1)/time.sleep(5)/g' tests/test_pytest_cov.py
 
 %check
 export PYTHONPATH_PY3=%_libdir/python3/site-packages
-export TOX_TESTENV_PASSENV='PYTHONPATH_PY3'
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc README.rst CHANGELOG.rst
@@ -69,6 +62,9 @@ export TOX_TESTENV_PASSENV='PYTHONPATH_PY3'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 18 2023 Stanislav Levin <slev@altlinux.org> 4.0.0-alt2
+- Fixed FTBFS.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
 - 3.0.0 -> 4.0.0.
 
