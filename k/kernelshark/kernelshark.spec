@@ -5,16 +5,17 @@
 
 Name:     kernelshark
 Version:  2.2.0
-Release:  alt3
+Release:  alt4
 # Epoch incremented, because previously kernelshark is packaged from trace-cmd
 # spec which have much bigger version number (2.9.1).
 Epoch:    1
-
 Summary:  KernelShark is a front-end reader of tracing data
 License:  GPL-2.0 and LGPL-2.1
 Group:    Development/Debug
 Url:      https://kernelshark.org/
 Vcs:      https://git.kernel.org/pub/scm/utils/trace-cmd/kernel-shark.git
+
+Requires: fonts-ttf-freefont
 Requires: trace-cmd
 
 Source:   %name-%version.tar
@@ -81,6 +82,10 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/*.appdata.xml
 %_metainfodir/*.appdata.xml
 
 %changelog
+* Thu May 18 2023 Vitaly Chikunov <vt@altlinux.org> 1:2.2.0-alt4
+- Fix graphics display because of missing FreeSans.ttf (ALT#46184).
+- Fix capturing when directory name contains a space (ALT#46185).
+
 * Thu May 11 2023 Vitaly Chikunov <vt@altlinux.org> 1:2.2.0-alt3
 - Fix 'QLocalSocket::connectToServer: Invalid name' on Capture (ALT#46083).
 - Fix segfault in libkshark-tepdata (ALT#46079).
