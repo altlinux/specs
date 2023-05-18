@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.13
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -475,6 +475,12 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Thu May 04 2023 Nikolay Burykin <bne@altlinux.org> 1:4.13-alt4
+- Changed control scripts for newuidmap/newgidmap:
+  + Replaced the SUID Bit with POSIX Capabilities in all the
+    configuration mode.
+  + A new mode ("podmanonly") was added.
+
 * Tue Apr 25 2023 Mikhail Efremov <sem@altlinux.org> 1:4.13-alt3
 - Keep old login.defs when UID_MIN/GID_MIN changed.
 - Increase default UID_MIN/GID_MIN to 1000.
