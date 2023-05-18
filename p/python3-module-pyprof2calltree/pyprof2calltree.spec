@@ -1,7 +1,7 @@
 %define oname pyprof2calltree
 
 Name: python3-module-%oname
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 Summary: Help visualize profiling data from cProfile with kcachegrind
@@ -49,6 +49,9 @@ kdesdk package.
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu May 18 2023 Grigory Ustinov <grenka@altlinux.org> 1.4.5-alt1
+- Automatically updated to 1.4.5.
+
 * Thu Jun 02 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.4-alt1
 - Build new version.
 
