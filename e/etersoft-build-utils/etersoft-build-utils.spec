@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu May 18 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.3-alt1
+- sources.list: change to external repos
+
 * Thu May 11 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.2-alt1
 - fix get_release for gitery
 - gitask: add support from <branch> for add copy
