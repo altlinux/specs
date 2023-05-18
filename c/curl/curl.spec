@@ -5,7 +5,12 @@
 %def_disable static
 
 # QUIC protocol not supported in standart openssl, ngtcp2 build with gnutls for http3 support
+%if "%(rpmvercmp '%{get_version libgnutls30}' '3.7.9')" < "0"
+%def_disable http3
+%else
 %def_enable http3
+%endif
+
 %if_enabled http3
   %def_without openssl
   %def_with gnutls
@@ -20,7 +25,7 @@
 
 Name: curl
 Version: 8.1.0
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -32,7 +37,10 @@ Source: %url/download/%name-%version.tar
 Source1: %name.watch
 Patch0: curl-%version-alt.patch
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
+
+# check QUIC possibility
+BuildRequires: libgnutls30
 
 %{?_enable_static:BuildRequires: glibc-devel-static}
 BuildRequires: groff-base
@@ -192,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Thu May 18 2023 Anton Farygin <rider@altlinux.ru> 8.1.0-alt2
+- built with Gnutls only if QUIC is available
+
 * Thu May 18 2023 Anton Farygin <rider@altlinux.ru> 8.1.0-alt1
 - 8.0.1 -> 8.1.0
 - descreased the number of tests: apache2-* was removed from BuildRequires to
