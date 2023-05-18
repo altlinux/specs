@@ -1,7 +1,7 @@
 %define oname alsaaudio
 
 Name: python3-module-%oname
-Version: 0.9.2
+Version: 0.10.0
 Release: alt1
 
 Summary: Wrapper for accessing the ALSA API from Python
@@ -36,6 +36,9 @@ sequencer support is low on our priority list, but volunteers are welcome.
 %python3_sitelibdir/py%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu May 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
+- Automatically updated to 0.10.0.
+
 * Sat Sep 17 2022 Grigory Ustinov <grenka@altlinux.org> 0.9.2-alt1
 - Build new version.
 
