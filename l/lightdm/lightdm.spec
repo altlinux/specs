@@ -9,7 +9,7 @@
 
 Name: lightdm
 Version: 1.32.0
-Release: alt3
+Release: alt4
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -46,7 +46,6 @@ Patch26: %name-1.32.0-addrfix.patch
 
 Requires: dm-tool
 Requires: lightdm-greeter
-Requires: shadow-utils >= 1:4.13-alt3
 
 BuildRequires: gcc-c++ intltool
 BuildRequires: pkgconfig(glib-2.0) >= 2.30 pkgconfig(gio-2.0) >= 2.26  pkgconfig(gio-unix-2.0)  pkgconfig(xdmcp)  pkgconfig(xcb)
@@ -205,6 +204,9 @@ if [ $1 -eq 1 ] ; then
         SYSTEMCTL=/sbin/systemctl
         # Initial installation
         $SYSTEMCTL preset %name.service > /dev/null 2>&1 ||:
+        # Make the minimum UID the same as in /etc/login.defs
+        UID_MIN=$(awk '/^UID_MIN/ {print $2}' /etc/login.defs 2>/dev/null)
+        sed -i "s/^minimum-uid=.*/minimum-uid=$UID_MIN/" /etc/lightdm/users.conf
 fi
 
 %preun
@@ -286,6 +288,12 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Thu May 18 2023 Anton Midyukov <antohami@altlinux.org> 1.32.0-alt4
+- users.conf: set minimum-uid=$UID_MIN as in /etc/login.defs when first time
+  install lightdm package
+- Revert "[ALT] users.conf: set minimum-uid=1000"
+- Revert "Requires: shadow-utils >= 1:4.13-alt3"
+
 * Sat May 13 2023 Anton Midyukov <antohami@altlinux.org> 1.32.0-alt3
 - users.conf: fix hidden-shells, set minimum-uid=1000 (closes: 46122).
 - Requires: shadow-utils >= 1:4.13-alt3
