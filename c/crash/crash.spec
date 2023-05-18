@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,unresolved=normal
 
 Name:    crash
-Version: 8.0.2
+Version: 8.0.3
 Release: alt1
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
@@ -45,7 +45,7 @@ tar xvf crash-extensions/ptdump-*              -C extensions --strip-components=
 
 %build
 %add_optflags $(getconf LFS_CFLAGS)
-%make_build --output-sync=none RPMPKG=%version-%release CFLAGS="%optflags" CXXFLAGS="%optflags"
+%make_build --output-sync=none RPMPKG=%version-%release CFLAGS="%optflags" CXXFLAGS="%optflags" V=1
 # Build what builds. Does not support -j.
 %make -ki extensions
 
@@ -64,6 +64,9 @@ install -p -m0644 extensions/*.so %buildroot%_libdir/crash/extensions
 %_libdir/crash
 
 %changelog
+* Wed Apr 26 2023 Vitaly Chikunov <vt@altlinux.org> 8.0.3-alt1
+- Update to 8.0.3 (2023-04-26).
+
 * Sat Nov 19 2022 Vitaly Chikunov <vt@altlinux.org> 8.0.2-alt1
 - Update to 8.0.2 (2022-11-16).
 
