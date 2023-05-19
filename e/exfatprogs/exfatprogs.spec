@@ -1,7 +1,8 @@
 %define _sbindir /sbin
+%def_enable check
 
 Name: exfatprogs
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary:  Official utilities for exFAT file system
@@ -18,6 +19,7 @@ Provides: %_sbindir/dump.exfat %_sbindir/exfatlabel %_sbindir/fsck.exfat
 Provides: %_sbindir/mkfs.exfat %_sbindir/tune.exfat
 
 %{?_enable_check:BuildRequires: losetup}
+
 %description
 As new exfat filesystem is merged into linux-5.7 kernel, exfatprogs is
 created as an official userspace utilities that contain all of the standard
@@ -37,6 +39,9 @@ at the level of exfat utilities in windows.
 %install
 %makeinstall_std
 
+%check
+%make -k check VERBOSE=1
+
 %files
 %_sbindir/dump.exfat
 %_sbindir/exfatlabel
@@ -48,6 +53,9 @@ at the level of exfat utilities in windows.
 %doc NEWS README*
 
 %changelog
+* Fri May 19 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Tue Nov 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
