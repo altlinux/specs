@@ -2,7 +2,7 @@
 
 Name: udis86
 Version: 1.7.2
-Release: alt1
+Release: alt2
 
 Summary: Disassembler for x86 and x86-64
 License: BSD
@@ -10,6 +10,8 @@ Group: Development/Other
 
 URL: http://udis86.sourceforge.net/
 Source: http://download.sourceforge.net/udis86/%name-%version.tar.gz
+
+Patch0: udis86-1.7.2-pkgconfig.patch
 
 # Automatically added by buildreq on Wed Oct 06 2010
 BuildRequires: gcc-c++
@@ -31,7 +33,6 @@ Disassembler library for the x86 and x86-64 instruction set architectures.
 %package -n lib%{name}-devel
 Summary: Disassembler library for the x86 and x86-64, development files
 Group: Development/C
-BuildArch: noarch
 Requires: lib%{name}-devel-static = %version-%release
 
 %description -n lib%{name}-devel
@@ -47,8 +48,10 @@ Documentation for x86 and x86-64 disassembler.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
+%autoreconf
 %configure --with-python=%__python3
 %make_build
 
@@ -65,9 +68,13 @@ Documentation for x86 and x86-64 disassembler.
 %_libdir/*.a
 
 %files -n lib%{name}-devel
+%_pkgconfigdir/%name.pc
 %_includedir/*
 
 %changelog
+* Sun May 14 2023 Roman Alifanov <ximper@altlinux.org> 1.7.2-alt2
+- add pkgconfig and remove noarch for devel subpackage
+
 * Fri Nov 12 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.7.2-alt1
 - 1.7.2
 
