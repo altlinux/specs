@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: guestfs-tools
-Version: 1.48.2
+Version: 1.50.0
 Release: alt1
 
 Summary: Tools to access and modify virtual machine disk images
@@ -26,6 +26,7 @@ BuildRequires: libjansson-devel
 BuildRequires: libvirt-devel
 BuildRequires: libcrypt-devel
 BuildRequires: libncurses-devel
+BuildRequires: libosinfo-devel
 BuildRequires: ocaml-libguestfs-devel
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-gettext-devel
@@ -40,6 +41,7 @@ BuildRequires: /usr/bin/qemu-img
 BuildRequires: xorriso
 BuildRequires: perl-Sys-Guestfs
 BuildRequires: bash-completion
+BuildRequires: /proc
 
 %ifarch %ix86 x86_64 aarch64
 Requires: guestfs-data
@@ -120,6 +122,7 @@ rm -rf %buildroot%_mandir/{ja,uk}
 %_bindir/virt-customize
 %_bindir/virt-df
 %_bindir/virt-diff
+%_bindir/virt-drivers
 %_bindir/virt-edit
 %_bindir/virt-filesystems
 %_bindir/virt-format
@@ -141,6 +144,7 @@ rm -rf %buildroot%_mandir/{ja,uk}
 %_man1dir/virt-customize.1*
 %_man1dir/virt-df.1*
 %_man1dir/virt-diff.1*
+%_man1dir/virt-drivers.1*
 %_man1dir/virt-edit.1*
 %_man1dir/virt-filesystems.1*
 %_man1dir/virt-format.1*
@@ -168,6 +172,9 @@ rm -rf %buildroot%_mandir/{ja,uk}
 %_mandir/man1/virt-dib.1*
 
 %changelog
+* Mon Mar 20 2023 Egor Ignatov <egori@altlinux.org> 1.50.0-alt1
+- 1.48.2 -> 1.50.0
+
 * Mon Sep 05 2022 Egor Ignatov <egori@altlinux.org> 1.48.2-alt1
 - 1.48.0 -> 1.48.2
 

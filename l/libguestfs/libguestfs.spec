@@ -30,7 +30,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libguestfs
-Version: 1.48.6
+Version: 1.50.1
 Release: alt1
 
 Summary: Library for accessing and modifying virtual machine disk images
@@ -82,7 +82,7 @@ BuildRequires: libfuse-devel
 
 %if_enabled ocaml
 BuildRequires(pre): rpm-build-ocaml
-BuildRequires: ocaml ocaml-findlib ocaml-gettext-devel ocaml-ounit-devel ocaml-ocamldoc ocaml-ocamlbuild ocaml-hivex-devel
+BuildRequires: ocaml ocaml-findlib ocaml-gettext-devel ocaml-ounit-devel ocaml-ocamldoc ocaml-ocamlbuild ocaml-hivex-devel ocaml-augeas
 %endif
 
 %if_enabled python
@@ -557,6 +557,10 @@ fi
 %endif #erlang
 
 %changelog
+* Mon Mar 20 2023 Egor Ignatov <egori@altlinux.org> 1.50.1-alt1
+- 1.50.1
+- rediff libguestfs-1.46.0-alt-fixes-common.patch
+
 * Wed Nov 30 2022 Egor Ignatov <egori@altlinux.org> 1.48.6-alt1
 - 1.48.6
 - enable tests
