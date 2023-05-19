@@ -24,8 +24,8 @@
 %endif
 
 Name: bind
-Version: 9.16.38
-%define src_version 9.16.38
+Version: 9.16.41
+%define src_version 9.16.41
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -367,9 +367,6 @@ export ALT_NAMED_OPTIONS=' -t / '
 pushd bin/tests/system
 source ./conf.sh
 for testdir in $SUBDIRS; do
-    # skip due to https://gitlab.isc.org/isc-projects/bind9/-/issues/3665
-    [ "$testdir" = "dupsigs" ] && continue
-
     subns=$(find "$testdir" -maxdepth 1 -type d -name "ns[0-9]" | wc -l)
     if [ $subns -lt 2 ]; then
         runuser -u "$runas" -- sh run.sh "$testdir"
@@ -546,6 +543,9 @@ fi
 %endif
 
 %changelog
+* Thu May 18 2023 Stanislav Levin <slev@altlinux.org> 9.16.41-alt1
+- 9.16.38 -> 9.16.41.
+
 * Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 9.16.38-alt1
 - 9.16.37 -> 9.16.38.
 
