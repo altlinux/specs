@@ -16,8 +16,8 @@
 %define get_dep_ge() %(rpm -q --qf '%%{NAME} >= %%{EVR}' %1 2>/dev/null || echo '%1 >= unknown')
 
 Name: 389-ds-base
-Version: 2.2.4
-Release: alt2
+Version: 2.2.7
+Release: alt1
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -68,6 +68,7 @@ BuildRequires: python3(build_manpages)
 BuildRequires: python3(argcomplete)
 BuildRequires: python3(dateutil)
 BuildRequires: python3(ldap)
+BuildRequires: python3-module-cryptography
 
 BuildRequires: rsync
 
@@ -314,7 +315,7 @@ fi
 %preun_service %pkgname-snmp
 
 %files
-%doc LICENSE LICENSE.GPLv3+ LICENSE.openssl README.md
+%doc README.md
 %dir %_sysconfdir/%pkgname
 %dir %_sysconfdir/%pkgname/schema
 %config(noreplace)%_sysconfdir/%pkgname/schema/*.ldif
@@ -418,6 +419,9 @@ fi
 %endif
 
 %changelog
+* Thu May 18 2023 Stanislav Levin <slev@altlinux.org> 2.2.7-alt1
+- 2.2.4 -> 2.2.7.
+
 * Tue Feb 14 2023 Stanislav Levin <slev@altlinux.org> 2.2.4-alt2
 - Fixed FTBFS (setuptools 67).
 
