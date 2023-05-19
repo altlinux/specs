@@ -7,7 +7,7 @@
 %define u7s_admin_homedir %_localstatedir/%u7s_admin_usr
 
 Name: podsec
-Version: 0.9.34
+Version: 0.9.35
 Release: alt1
 
 Summary: Set of scripts for Podman Security
@@ -121,6 +121,7 @@ useradd -r -m -g %u7s_admin_grp -d %u7s_admin_homedir -G %kubernetes_grp,systemd
 
 %post inotify
 %post_systemd podsec-inotify-check-containers.service
+%post_systemd  podsec-inotify-check-kubeapi.service
 cd %_sysconfdir/podsec/crontabs/;
 rootcrontab="%_var/spool/cron/root"
 if [ ! -f $rootcrontab ]; then touch $rootcrontab; fi
@@ -135,6 +136,7 @@ chmod 600 $rootcrontab
 
 %preun inotify
 %preun_systemd podsec-inotify-check-containers.service
+%preun_systemd podsec-inotify-check-kubeapi.service
 
 %post k8s
 %post_systemd  u7s.service
@@ -175,6 +177,10 @@ chmod 600 $rootcrontab
 %_userunitdir/*
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %_sysconfdir/kubernetes/audit/
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %u7s_admin_homedir
+%dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %u7s_admin_homedir
+%dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %_localstatedir/podsec
+%dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %_localstatedir/podsec/u7s
+%dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %_localstatedir/podsec/u7s/etcd
 %config(noreplace) %attr(0640,%u7s_admin_usr,%u7s_admin_grp) %u7s_admin_homedir/.bashrc
 
 %files k8s-rbac
@@ -189,6 +195,9 @@ chmod 600 $rootcrontab
 %_sysconfdir/podsec/crontabs/*
 
 %changelog
+* Fri May 19 2023 Alexey Kostarev <kaf@altlinux.org> 0.9.35-alt1
+- 0.9.35
+
 * Thu May 18 2023 Alexey Kostarev <kaf@altlinux.org> 0.9.34-alt1
 - 0.9.34
 
