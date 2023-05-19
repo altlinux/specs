@@ -1,6 +1,6 @@
 Name: trinity
 Version: 1.9
-Release: alt5
+Release: alt6
 Summary: System call fuzz tester
 
 License: GPL-2.0
@@ -16,6 +16,7 @@ Patch1: %name-rm-definition.patch
 Patch2: %name-1.9-alt3.patch
 Patch3: %name-1.9-alt4.patch
 Patch4: %name-Fix_kvm.patch
+Patch5: %name-1.9-alt6-Fix_i810drm.patch
 
 BuildRequires: libpam-devel libpcap-devel libssl-devel libudev-devel
 %{?_with_systemd:BuildRequires: libsystemd-devel}
@@ -52,6 +53,7 @@ and fed to subsequent syscalls, sometimes with hilarious results.
 %setup
 %patch3 -p2
 %patch4 -p1
+%patch5 -p2
 
 %build
 %configure
@@ -70,6 +72,9 @@ install -Dm0755 scripts/* -t %buildroot%_libexecdir/%name
 %_libexecdir/%name/
 
 %changelog
+* Fri May 19 2023 Pavel Vasenkov <pav@altlinux.org> 1.9-alt6
+- Fix removing depricated i810 definations
+
 * Mon Feb 27 2023 Artyom Bystrov <arbars@altlinux.org> 1.9-alt5
 - Add patch to fix build
 
