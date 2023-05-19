@@ -4,36 +4,29 @@
 %def_with check
 
 Name: python3-module-Pygments
-Version: 2.14.0
+Version: 2.15.1
 Release: alt1
-
 Summary: Pygments is a syntax highlighting package written in Python
-
 License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pygments.org/
 VCS: https://github.com/pygments/pygments.git
-
 BuildArch: noarch
-
 Source: %name-%version.tar
-Source1: autobuild.watch
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(pytest)
-%endif
-
+%pyproject_runtimedeps_metadata
 # PEP503 normalized name
 Provides: python3-module-pygments = %EVR
 # PyPI well known name
 %py3_provides %pypi_name
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%add_pyproject_deps_check_filter wcag-contrast-ratio
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 It is a generic syntax highlighter for general use in all kinds of
@@ -48,6 +41,11 @@ to prettify source code. Highlights are:
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -70,6 +68,9 @@ rm -fv %buildroot%python3_sitelibdir/pygments/sphinxext.py
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Thu May 18 2023 Stanislav Levin <slev@altlinux.org> 2.15.1-alt1
+- 2.14.0 -> 2.15.1.
+
 * Tue Jan 24 2023 Stanislav Levin <slev@altlinux.org> 2.14.0-alt1
 - 2.13.0 -> 2.14.0.
 
