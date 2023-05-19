@@ -4,7 +4,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.11.5
-Release:       alt1
+Release:       alt2
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -16,7 +16,9 @@ Source:        %name-%version.tar
 Source1:       pyagentx-v%pyagentx_version.tar.gz
 Source2:       pcsd
 Source3:       known-hosts
+Source4:       pcsd.gemspec
 Patch:         compat.patch
+Patch1:        disable-ruby-build.patch
 
 %add_python3_req_skip pyagentx
 Requires:      python3-module-pcs = %version
@@ -24,19 +26,14 @@ Requires:      python3-module-snmp = %version
 Obsoletes:     pcs-pcsd < %EVR
 Provides:      pcs-pcsd = %EVR
 
-Requires: gem-rack
-Requires: gem-sinatra
-Requires: gem-rack-protection
-Requires: gem-thin
-Requires: gem-rake-compiler-dock
-Requires: gem-open4
-Requires: gem-backports
-Requires: gem-ethon
-Requires: gem-rspec
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: corosync fontconfig fonts-ttf-liberation
+BuildRequires: libpacemaker-devel
+BuildRequires: libsystemd-devel
+BuildRequires: wget
+BuildRequires: service
+BuildRequires: nss-utils
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-lxml
@@ -49,27 +46,8 @@ BuildRequires: python3-module-tornado >= 6.0.0
 BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-distro
 BuildRequires: python3-module-wheel
-BuildRequires: gem-backports
-BuildRequires: ruby-daemons
-BuildRequires: gem-ethon
-BuildRequires: gem-eventmachine
-BuildRequires: ruby-open4
-BuildRequires: gem-rack
-BuildRequires: gem-rack-protection
-BuildRequires: gem-rack-test
-BuildRequires: gem-sinatra
-BuildRequires: gem-tilt
-BuildRequires: gem-thin
-BuildRequires: gem-rexml
-BuildRequires: gem-webrick
-BuildRequires: gem-childprocess
-BuildRequires: gem-nio4r
-BuildRequires: gem-puma
-BuildRequires: libpacemaker-devel
-BuildRequires: libsystemd-devel
-BuildRequires: wget
-BuildRequires: service
-BuildRequires: nss-utils
+
+%ruby_alias_names pcsd,pcs
 
 %description
 Pacemaker/Corosync configuration system with remote access
@@ -101,34 +79,40 @@ agent (snmpd).
 
 %prep
 %setup
-%patch -p1
+%autopatch
 cp %SOURCE1 rpm
 mkdir -p pcs_bundled/src
 echo %version > .tarball-version
 echo %version > .version
+cp %SOURCE4 pcsd/
 
 %build
 %autoreconf
 export PATH=/sbin:$PATH
 %configure \
     --with-distro=fedora \
+    --localstatedir=%_var \
     --enable-local-build \
     --enable-use-local-cache-only \
     --enable-individual-bundling \
-    --localstatedir=%_var \
     PYTHON=%__python3 \
+    ENABLE_DOWNLOAD=false \
+    INSTALL_EMBEDDED_GEMS=false \
     SYSTEMCTL="/bin/systemctl"
 %make_build
+%ruby_build --join=bin:lib
+
 
 %install
 %makeinstall_std \
-     BUILD_GEMS=false \
+     LOCAL_BUILD=false \
+     ENABLE_DOWNLOAD=false \
      SYSTEMCTL_OVERRIDE=true \
      DEST_SYSTEMD_SYSTEM=%buildroot%systemd_unitdir \
      bashcompletiondir=%_sysconfdir/bash_completion.d
 
 install -Dm 0755 %SOURCE2 %buildroot%_initdir/pcsd
-install -Dm 0644 %SOURCE3 %buildroot%_localstatedir/pcsd/known-hosts
+install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/pcsd/known-hosts
 
 # Set correct python3 executable in shebang
 subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/pcs/pcs_bundled/packages/pyagentx/*.py
@@ -165,6 +149,7 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %dir %_libdir/pcs/pcs_bundled/packages/
 %_libdir/pcs/pcs_internal
 %_libdir/pcs/data
+%config(noreplace) %_sysconfdir/pcsd/known-hosts
 %config(noreplace) %_sysconfdir/pam.d/pcsd
 %config(noreplace) %_sysconfdir/sysconfig/pcsd
 %config(noreplace) %_logrotatedir/pcsd
@@ -172,7 +157,6 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %dir %_localstatedir/pcsd
 %systemd_unitdir/pcsd.service
 %systemd_unitdir/pcsd-ruby.service
-%_localstatedir/pcsd/known-hosts
 
 %files -n python3-module-pcs
 %python3_sitelibdir_noarch/*
@@ -186,6 +170,10 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Fri May 12 2023 Pavel Skrylev <majioa@altlinux.org> 1:0.11.5-alt2
+- fixed spec in ruby gem build deps
+- enable ruby build
+
 * Fri Mar 03 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.11.5-alt1
 - New version.
 
