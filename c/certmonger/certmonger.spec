@@ -5,17 +5,16 @@
 %def_with check
 
 Name: certmonger
-Version: 0.79.17
+Version: 0.79.18
 Release: alt1
 Summary: Certificate status monitor and PKI enrollment client
-
-Group: System/Base
 License: GPL-3.0-or-later
+Group: System/Base
 Url: https://pagure.io/certmonger
 VCS: https://pagure.io/certmonger
-
 Source0: %name-%version.tar
 Patch: %name-%version-alt.patch
+Requires: dbus
 
 BuildRequires: libcurl-devel
 BuildRequires: libdbus-devel
@@ -39,8 +38,6 @@ BuildRequires: nss-utils
 BuildRequires: openssl
 BuildRequires: python3(dbus)
 %endif
-
-Requires: dbus
 
 %description
 Certmonger is a service which is primarily concerned with getting your
@@ -126,10 +123,10 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 
 %files -f %name.lang
 %doc README.md STATUS doc/*.txt
-%config(noreplace) %_sysconfdir/dbus-1/system.d/certmonger.conf
+%config(noreplace) %_sysconfdir/dbus-1/system.d/org.fedorahosted.certmonger.conf
 %config(noreplace) %_sysconfdir/certmonger/certmonger.conf
 %attr(0644,root,root) %config(noreplace) %_tmpfilesdir/certmonger.conf
-%_datadir/dbus-1/services/certmonger.service
+%_datadir/dbus-1/services/org.fedorahosted.certmonger.service
 %_datadir/dbus-1/system-services/org.fedorahosted.certmonger.service
 %_unitdir/certmonger.service
 %dir %_sysconfdir/certmonger
@@ -159,6 +156,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Thu May 18 2023 Stanislav Levin <slev@altlinux.org> 0.79.18-alt1
+- 0.79.17 -> 0.79.18.
+
 * Thu Dec 01 2022 Stanislav Levin <slev@altlinux.org> 0.79.17-alt1
 - 0.79.16 -> 0.79.17.
 
