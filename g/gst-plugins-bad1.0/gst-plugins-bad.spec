@@ -37,7 +37,7 @@
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -95,7 +95,7 @@ BuildRequires: liborc-test-devel gstreamer1.0-utils
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_aom:BuildRequires: libaom-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
-%{?_enable_vulkan:BuildRequires: vulkan-devel}
+%{?_enable_vulkan:BuildRequires: vulkan-devel glslc}
 %{?_enable_rtmp:BuildRequires: librtmp-devel}
 %{?_enable_chromaprint:BuildRequires: libchromaprint-devel}
 # webrtc-audio-processing for webrtcdsp
@@ -171,6 +171,8 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_typelibdir/GstCuda-%api_ver.typelib
 %_typelibdir/CudaGst-%api_ver.typelib
 %_typelibdir/GstVa-%api_ver.typelib
+%_typelibdir/GstVulkan-%api_ver.typelib
+%_typelibdir/GstVulkanWayland-%api_ver.typelib
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
 %_datadir/gstreamer-%api_ver/presets/GstFreeverb.prs
 %_datadir/gstreamer-%api_ver/encoding-profiles/device/dvd.gep
@@ -201,6 +203,8 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_girdir/CudaGst-%api_ver.gir
 %_girdir/GstCuda-%api_ver.gir
 %_girdir/GstVa-%api_ver.gir
+%_girdir/GstVulkan-%api_ver.gir
+%_girdir/GstVulkanWayland-%api_ver.gir
 
 
 %if_enabled doc
@@ -210,6 +214,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Fri May 19 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.3-alt1
+- 1.22.3
+
 * Wed Apr 12 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt1
 - 1.22.2
 
