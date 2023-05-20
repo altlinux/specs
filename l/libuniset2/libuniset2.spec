@@ -27,7 +27,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.30.2
+Version: 2.31.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -69,7 +69,7 @@ BuildRequires: libpqxx-devel >= 7.6.0
 %endif
 
 %if_enabled clickhouse
-BuildRequires: libclickhouse-cpp-devel
+BuildRequires: libclickhouse-cpp-devel >= 2.4.0
 %endif
 
 %if_enabled rrd
@@ -512,6 +512,7 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 %_bindir/%oname-clickhouse-helper
 %_libdir/libUniSet2BackendClickHouse.so.*
 %_datadir/%oname/clickhouse/
+%dir %_datadir/%oname/clickhouse/init.d
 
 %files extension-clickhouse-devel
 %_pkgconfigdir/libUniSet2BackendClickHouse.pc
@@ -672,6 +673,19 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sat May 20 2023 Pavel Vainerman <pv@altlinux.ru> 2.31.1-alt1
+- (uwebsocket): supported "freeze/unfreeze"
+- (dbserver): cleanup code, use DBServer as Service
+- (clickhouse): timestamp,time_usec ->  DateTime64(nanosec,'UTC')
+- (mysql): secure fix
+- (pgsql): fixed SEGFAULT in "copy" function, cleanup "include"
+- (UNetReceiver): forceUpdate after entering Mode::mEnabled
+- (uniset2-clickhouse-admin): supported "init.d"
+- (lproc): fixed TNOT, added new elements SEL_R, RS, some refactoring
+- (iocontrol): supported "readonly" sensors, supported "frozen_value" by default
+- (opcua-server): init refactoring. Supported conf parameters (host, port, browseName, description)
+- (opcua): supported "filter-value-re" (filter-value as regexp)
+
 * Mon May 01 2023 Pavel Vainerman <pv@altlinux.ru> 2.30.2-alt1
 - (opcua): supported open62541pp-0.3.0
 - fixes for omniORB-4.3.0
