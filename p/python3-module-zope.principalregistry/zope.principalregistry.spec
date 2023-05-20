@@ -1,17 +1,28 @@
 %define oname zope.principalregistry
 
+%def_without check
+
 Name: python3-module-%oname
-Version: 4.0.0
-Release: alt4
+Version: 4.3
+Release: alt1
 
 Summary: Global principal registry component for Zope3
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.principalregistry/
+Url: https://pypi.org/project/zope.principalregistry/
+Vcs: https://github.com/zopefoundation/zope.principalregistry
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.authentication
+BuildRequires: python3-module-zope.password-tests
+BuildRequires: python3-module-zope.component-tests
+%endif
 
 %py3_requires zope zope.authentication zope.component zope.interface
 %py3_requires zope.password zope.security
@@ -47,6 +58,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
     %buildroot%python3_sitelibdir/
 %endif
 
+%check
+%tox_check
+
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/*
@@ -58,6 +72,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Thu May 18 2023 Anton Vyatkin <toni@altlinux.org> 4.3-alt1
+- New version 4.3.
+
 * Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.0.0-alt4
 - python2 disabled
 

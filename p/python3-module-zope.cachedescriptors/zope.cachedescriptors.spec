@@ -1,19 +1,25 @@
-%define oname zope.cachedescriptors
+%define pypi_name zope.cachedescriptors
 
-Name: python3-module-%oname
-Version: 4.3.1
-Release: alt2
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 5.0
+Release: alt1
 
 Summary: Method and property caching decorators
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.cachedescriptors/
+Url: https://pypi.org/project/zope.cachedescriptors/
+Vcs: https://github.com/zopefoundation/zope.cachedescriptors
 
-# Source-url: https://pypi.io/packages/source/z/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
 BuildRequires: python3-module-zope.testrunner
+%endif
 
 %py3_requires zope
 
@@ -30,7 +36,7 @@ persistent objects.
 %package tests
 Summary: Tests for zope.cachedescriptors
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 Cached descriptors cache their output. They take into account instance
@@ -47,10 +53,10 @@ This package contains tests for zope.cachedescriptors.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -59,11 +65,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%__python3 setup.py test -v
+%tox_check_pyproject
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/cachedescriptors/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/tests.*
@@ -74,6 +81,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.3.1-alt2
 - Build for python2 disabled.
 

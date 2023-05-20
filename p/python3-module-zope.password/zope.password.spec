@@ -4,29 +4,25 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.3.1
-Release: alt3
+Version: 4.4
+Release: alt1
 Summary: Password encoding and checking utilities
 License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.password/
+Vcs: https://github.com/zopefoundation/zope.password
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-virtualenv
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-bcrypt
-BuildRequires: python3-module-repoze.sphinx.autointerface
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.browser
-BuildRequires: python3-module-zope.component
 BuildRequires: python3-module-zope.component-tests
 BuildRequires: python3-module-zope.security
 %endif
@@ -55,30 +51,19 @@ This package contains tests for zope.password.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
+%pyproject_install
 
 %check
-# FIXME: this is a hack to invoke /usr/bin/coverage3 from python3-module-coverage
-# while tox.ini tries to invoke /usr/bin/coverage
-# Is coverage{3} needed during package buildtime unittesting at all?
-sed -i 's|coverage r|coverage3 r|g' tox.ini
-sed -i 's|zope-testrunner|zope-testrunner3|g' tox.ini
-sed -i 's|sphinx-build|py3_sphinx-build|g' tox.ini
-
-export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir:src
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
-%_bindir/*.py3
-%python3_sitelibdir/*
+%_bindir/*
+%python3_sitelibdir/zope/password/
+%python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
@@ -88,6 +73,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_no
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Sat May 20 2023 Anton Vyatkin <toni@altlinux.org> 4.4-alt1
+- New version 4.4.
+
 * Mon Jun 06 2022 Grigory Ustinov <grenka@altlinux.org> 4.3.1-alt3
 - Fix noarch crutch.
 - Fix license.

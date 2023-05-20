@@ -4,15 +4,15 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.4.0
+Version: 6.0
 Release: alt1
 
 Summary: Zope testrunner script
 
 License: ZPL-2.1
 Group: Development/Python3
-# Source-git: https://github.com/zopefoundation/zope.testrunner.git
 Url: https://pypi.org/project/zope.testrunner/
+Vcs: https://github.com/zopefoundation/zope.testrunner.git
 
 Source: %name-%version.tar
 
@@ -54,9 +54,7 @@ mv %buildroot{%python3_sitelibdir_noarch/*,%python3_sitelibdir}
 cp -al %buildroot%_bindir/zope-testrunner{,3}
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false --develop
+%tox_check
 
 %files
 %doc *.rst
@@ -69,6 +67,9 @@ tox.py3 --sitepackages -vvr -s false --develop
 %exclude %python3_sitelibdir/zope/testrunner/tests/
 
 %changelog
+* Thu May 18 2023 Anton Vyatkin <toni@altlinux.org> 6.0-alt1
+- New version 6.0.
+
 * Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 5.4.0-alt1
 - 5.3.0 -> 5.4.0.
 

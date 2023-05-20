@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.2
-Release: alt3
+Version: 4.3
+Release: alt1
 
 Summary: Pluggable object copying mechanism
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.copy
-#Git: https://github.com/zopefoundation/zope.copy.git
+Url: https://pypi.org/project/zope.copy/
+Vcs: https://github.com/zopefoundation/zope.copy.git
 
 Source: %name-%version.tar
 
@@ -73,6 +73,9 @@ zope-testrunner3 --test-path=src -vv
 %python3_sitelibdir/zope/copy/tests
 
 %changelog
+* Thu May 18 2023 Anton Vyatkin <toni@altlinux.org> 4.3-alt1
+- New version 4.3.
+
 * Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.2-alt3
 - NMU: remove python2 module build
 

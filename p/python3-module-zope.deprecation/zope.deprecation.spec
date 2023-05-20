@@ -1,39 +1,33 @@
-%define oname zope.deprecation
+%define pypi_name zope.deprecation
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Epoch: 1
-Version: 4.4.0
-Release: alt3
+Version: 5.0
+Release: alt1
 
-Summary: Zope 3 Deprecation Infrastructure (Python 3)
-License: ZPLv2.1
+Summary: Zope Deprecation Infrastructure
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.deprecation/
-#Git: https://github.com/zopefoundation/zope.deprecation.git
+Url: https://pypi.org/project/zope.deprecation/
+Vcs: https://github.com/zopefoundation/zope.deprecation.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.security
-BuildRequires: python3-module-sphinx-devel
 %endif
 
 %py3_requires zope
 
 %description
-When we started working on Zope 3.1, we noticed that the hardest part of
-the development process was to ensure backward-compatibility and
-correctly mark deprecated modules, classes, functions, methods and
-properties. This package provides a simple function called
-'deprecated(names, reason)' to deprecate the previously mentioned Python
-objects.
+This package provides a simple function called deprecated(names, reason)
+to mark deprecated modules, classes, functions, methods and properties.
 
 %package tests
 Summary: Tests for Zope 3 Deprecation Infrastructure (Python 3)
@@ -43,23 +37,20 @@ Requires: %name = %EVR
 %add_python3_req_skip deprecation
 
 %description tests
-When we started working on Zope 3.1, we noticed that the hardest part of
-the development process was to ensure backward-compatibility and
-correctly mark deprecated modules, classes, functions, methods and
-properties. This package provides a simple function called
-'deprecated(names, reason)' to deprecate the previously mentioned Python
-objects.
+This package provides a simple function called deprecated(names, reason)
+to mark deprecated modules, classes, functions, methods and properties.
 
-This package contains tests for Zope 3 Deprecation Infrastructure.
+This package contains tests for Zope Deprecation Infrastructure.
 
 %prep
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -67,25 +58,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-sed -i 's|coverage run [ -a]\{0,\}-m||g' tox.ini
-sed -i 's|coverage|#coverage|g' tox.ini
-sed -i 's|zope.testrunner |zope-testrunner3 |g' tox.ini
-# cancel docbuild tests
-sed -i 's|sphinx|#py3_sphinx|g' tox.ini
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
-sed -i '/setenv =$/a \
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/deprecation/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/__pycache__/tests.*
@@ -95,6 +73,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/__pycache__/tests.*
 
 %changelog
+* Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 1:5.0-alt1
+- New version 5.0.
+
 * Fri Jul 02 2021 Vitaly Lipatov <lav@altlinux.ru> 1:4.4.0-alt3
 - NMU: fix build
 

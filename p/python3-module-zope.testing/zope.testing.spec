@@ -5,22 +5,19 @@
 %def_enable light_version
 
 Name: python3-module-%oname
-Version: 4.9
+Version: 5.0.1
 Release: alt1
 Summary: Zope testing helpers
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.testing/
+Vcs: https://github.com/zopefoundation/zope.testing.git
 
-# https://github.com/zopefoundation/zope.testing.git
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(zope.testrunner)
 %endif
 
@@ -35,7 +32,6 @@ flexible test runner, and supports both doctest and unittest.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %python3_build
@@ -50,9 +46,8 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+sed -i "/sphinx-build -b doctest/d" tox.ini
+%tox_check
 
 %files
 %doc *.txt *.rst
@@ -61,6 +56,9 @@ tox.py3 --sitepackages --console-scripts -vvr -s false
 %exclude %python3_sitelibdir/*.pth
 
 %changelog
+* Thu May 18 2023 Anton Vyatkin <toni@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Fri Sep 17 2021 Stanislav Levin <slev@altlinux.org> 4.9-alt1
 - 4.4.0 -> 4.9.
 

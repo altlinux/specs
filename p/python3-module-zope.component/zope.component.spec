@@ -4,24 +4,22 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0.1
+Version: 6.0
 Release: alt1
 
-Summary: Zope Component Architecture (Python3)
+Summary: Zope Component Architecture
 License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.component
-#Git: https://github.com/zopefoundation/zope.component.git
+Vcs: https://github.com/zopefoundation/zope.component.git
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python3-module-tox
 BuildRequires: python3-module-persistent
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
@@ -56,7 +54,6 @@ This package contains tests for %oname
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %python3_build
@@ -70,20 +67,8 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
-# cancel docbuild tests
-sed -i 's|\.\[docs\]||g' tox.ini
-sed -i 's|\(.*\)sphinx-build|#\1 py3_sphinx-build|g' tox.ini
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
-sed -i '/setenv =$/a\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+sed -i '/sphinx-build -b doctest/d' tox.ini
+%tox_check
 
 %files
 %doc *.txt
@@ -97,6 +82,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 6.0-alt1
+- New version 6.0.
+
 * Wed Sep 22 2021 Nikolai Kostrigin <nickel@altlinux.org> 5.0.1-alt1
 - 4.6.2 -> 5.0.1
 

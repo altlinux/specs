@@ -1,17 +1,29 @@
-%define oname zope.componentvocabulary
+%define pypi_name zope.componentvocabulary
 
-Name: python3-module-%oname
-Version: 2.0.0
-Release: alt4
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 2.3.0
+Release: alt1
 
 Summary: Component vocabularies
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.componentvocabulary/
+Url: https://pypi.org/project/zope.componentvocabulary/
+Vcs: https://github.com/zopefoundation/zope.componentvocabulary
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-zope.configuration
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.security
+%endif
 
 %py3_requires zope zope.component zope.i18nmessageid zope.interface
 %py3_requires zope.schema zope.security
@@ -23,7 +35,7 @@ This package contains various vocabularies.
 %package tests
 Summary: Tests for zope.componentvocabulary
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py3_requires zope.component
 
 %description tests
@@ -33,10 +45,10 @@ This package contains tests for zope.componentvocabulary.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -44,9 +56,13 @@ mv %buildroot%python3_sitelibdir_noarch/* \
     %buildroot%python3_sitelibdir/
 %endif
 
+%check
+%pyproject_run -- zope-testrunner --test-path=src -vc
+
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/componentvocabulary/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
@@ -55,6 +71,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sat May 20 2023 Anton Vyatkin <toni@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt4
 - python2 disabled
 

@@ -1,22 +1,33 @@
-%define oname zope.schema
+%define pypi_name zope.schema
 
-%def_without check
+%def_with check
 
-Name: python3-module-%oname
-Version: 4.9.3
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 7.0.1
+Release: alt1
 
 Summary: zope.interface extension for defining data schemas
-License: ZPLv2.1
-Group: Development/Python
-Url: http://pypi.python.org/pypi/%oname/
-# https://github.com/zopefoundation/%oname.git
+License: ZPL-2.1
+Group: Development/Python3
+Url: https://pypi.org/project/zope.schema/
+Vcs: https://github.com/zopefoundation/zope.schema
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-repoze.sphinx.autointerface
+%if_with check
+BuildRequires: python3-module-zope.i18nmessageid
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.event
+%endif
+
+Requires: python3-module-zope.interface
+Requires: python3-module-zope.event
 
 %description
 This package is intended to be independently reusable in any Python
@@ -31,7 +42,7 @@ validation method. Besides you can optionally specify characteristics
 such as its value being read-only or not required.
 
 %package pickles
-Summary: Pickles for %oname
+Summary: Pickles for %pypi_name
 Group: Development/Python3
 
 %description pickles
@@ -46,12 +57,12 @@ title and a description. It can also constrain its value and provide a
 validation method. Besides you can optionally specify characteristics
 such as its value being read-only or not required.
 
-This package contains pickles for %oname
+This package contains pickles for %pypi_name
 
 %package tests
-Summary: Tests for %oname
+Summary: Tests for %pypi_name
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py3_requires zope.testing
 
 %description tests
@@ -66,7 +77,7 @@ title and a description. It can also constrain its value and provide a
 validation method. Besides you can optionally specify characteristics
 such as its value being read-only or not required.
 
-This package contains tests for %oname
+This package contains tests for %pypi_name
 
 %prep
 %setup
@@ -74,10 +85,10 @@ This package contains tests for %oname
 sed -i 's|sphinx-build|&-3|' docs/Makefile
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -87,26 +98,31 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %make -C docs pickle
 %make -C docs html
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%pypi_name
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%pypi_name/
 
 %check
-%__python3 setup.py test -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst docs/_build/html
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/schema/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
+%dir %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/*/pickle
 
 %files tests
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 7.0.1-alt1
+- New version 7.0.1.
+
 * Fri Apr 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.9.3-alt2
 - Build for python2 disabled.
 

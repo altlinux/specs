@@ -4,28 +4,24 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.5
+Version: 4.6
 Release: alt1
 
 Summary: Zope Exceptions
 License: ZPL-2.1
 Group: Development/Python3
-# Source-git: https://github.com/zopefoundation/zope.exceptions.git
 Url: https://pypi.org/project/zope.exceptions/
+Vcs: https://github.com/zopefoundation/zope.exceptions.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-# install_requires=
-BuildRequires: python3(pkg_resources)
 BuildRequires: python3(zope.interface)
-
 BuildRequires: python3(zope.testrunner)
-
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %py3_requires zope
@@ -39,10 +35,10 @@ packages.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -51,24 +47,19 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    zope-testrunner --test-path=src -vvc
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr --develop
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt
 %python3_sitelibdir/zope/exceptions/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/zope/exceptions/tests/
 
 %changelog
+* Sat May 20 2023 Anton Vyatkin <toni@altlinux.org> 4.6-alt1
+- New version 4.6.
+
 * Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 4.5-alt1
 - 4.4 -> 4.5.
 

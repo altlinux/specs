@@ -1,22 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname zope.contenttype
+%define pypi_name zope.contenttype
 
-Name: python3-module-%oname
-Version: 4.5.0
-Release: alt3
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 5.0
+Release: alt1
 
 Summary: Zope contenttype
-
 License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.contenttype/
+Url: https://pypi.org/project/zope.contenttype/
+Vcs: https://github.com/zopefoundation/zope.contenttype.git
 
-# https://github.com/zopefoundation/zope.contenttype.git
-Source0: https://pypi.python.org/packages/e0/56/25c9ea14b6632a9e90f96ecc88e10caf743e66a6365b06d6ff881e16af06/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
 BuildRequires: python3-module-zope.testrunner
+%endif
 
 %py3_requires zope
 
@@ -26,7 +31,7 @@ A utility module for content-type handling.
 %package tests
 Summary: Tests for zope.contenttype
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 A utility module for content-type handling.
@@ -34,13 +39,13 @@ A utility module for content-type handling.
 This package contains tests for zope.contenttype.
 
 %prep
-%setup -n %{oname}-%{version}
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -49,11 +54,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%__python3 setup.py test -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/contenttype/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
@@ -62,6 +68,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Wed Aug 17 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt3
 - Make package arch dependent back (Closes: #43521).
 

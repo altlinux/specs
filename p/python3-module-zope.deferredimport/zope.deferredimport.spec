@@ -3,24 +3,21 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.3.1
+Version: 4.4
 Release: alt1
 Summary: Allows you to perform imports names that will be resolved when used in the code
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.deferredimport/
-#Git: https://github.com/zopefoundation/zope.deferredimport.git
+Url: https://pypi.org/project/zope.deferredimport/
+Vcs: https://github.com/zopefoundation/zope.deferredimport.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-sphinx-devel
-BuildRequires: python3-module-repoze.sphinx.autointerface
 BuildRequires: python3-module-zope.proxy
 BuildRequires: python3-module-zope.testrunner
 %endif
@@ -63,10 +60,10 @@ Example files for %oname.
 mv src/zope/deferredimport/samples ./
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -77,24 +74,12 @@ install -d %buildroot%_docdir/%name
 cp -fR samples %buildroot%_docdir/%name
 
 %check
-sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
-# cancel docbuild tests
-sed -i 's|sphinx-build|#py3_sphinx-build|g' tox.ini
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
-
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/*
+%doc CHANGES.rst README.rst
+%python3_sitelibdir/zope/deferredimport/
+%python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/tests.*
@@ -107,6 +92,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %doc %_docdir/%name/samples
 
 %changelog
+* Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 4.4-alt1
+- New version 4.4.
+
 * Wed Dec 25 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.3.1-alt1
 - NMU: 4.3 -> 4.3.1
 - Remove python2 module build

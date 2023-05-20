@@ -4,28 +4,20 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.5.0
+Version: 5.0
 Release: alt1
 
 Summary: Definition of authentication basics for the Zope Framework
 License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.authentication/
-#Git: https://github.com/zopefoundation/zope.authentication.git
+Url: https://pypi.org/project/zope.authentication/
+Vcs: https://github.com/zopefoundation/zope.authentication.git
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-devel python3-module-setuptools
-
 %if_with check
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-virtualenv
-BuildRequires: python3-module-BTrees
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.browser
 BuildRequires: python3-module-zope.component
@@ -52,7 +44,6 @@ This package contains tests for zope.authentication.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %python3_build
@@ -66,15 +57,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-# FIXME: this is a hack to invoke /usr/bin/coverage3 from python3-module-coverage
-# while tox.ini tries to invoke /usr/bin/coverage
-# Is coverage{3} needed during package buildtime unittesting at all?
-sed -i 's|coverage r|coverage3 r|g' tox.ini
-
-# export PIP_INDEX_URL=http://host.invalid./
-
-export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir:src
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%tox_check
 
 %files
 %doc *.txt *.rst
@@ -86,6 +69,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_no
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Thu May 18 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Thu Sep 23 2021 Nikolai Kostrigin <nickel@altlinux.org> 4.5.0-alt1
 - 4.4.0 -> 4.5.0
 

@@ -4,17 +4,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.8.0
+Version: 5.0
 Release: alt1
 
 Summary: Zope Internationalization Support
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.i18n
-#Git: https://github.com/zopefoundation/zope.i18n.git
+Url: https://pypi.org/project/zope.i18n/
+Vcs: https://github.com/zopefoundation/zope.i18n.git
 
 Source: %name-%version.tar
-Patch0: %oname-fix-tests.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -61,7 +60,6 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch0 -p2
 
 %build
 %python3_build
@@ -94,6 +92,9 @@ zope-testrunner3 --test-path=src -vv
 %python3_sitelibdir/zope/i18n/locales/tests
 
 %changelog
+* Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Fri Sep 24 2021 Nikolai Kostrigin <nickel@altlinux.org> 4.8.0-alt1
 - 4.7.0 -> 4.8.0
 

@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.location
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 4.2
-Release: alt6
+Version: 4.3
+Release: alt1
 
 Summary: Zope Location
 License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.location/
-#Git: https://github.com/zopefoundation/zope.location.git
+Url: https://pypi.org/project/zope.location/
+Vcs: https://github.com/zopefoundation/zope.location.git
 
 Source: %name-%version.tar
 
@@ -74,6 +74,9 @@ zope-testrunner3 --test-path=src -vv
 %python3_sitelibdir/zope/location/tests
 
 %changelog
+* Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 4.3-alt1
+- New version 4.3.
+
 * Mon Nov 23 2020 Grigory Ustinov <grenka@altlinux.org> 4.2-alt6
 - Bootstrap for python3.9.
 

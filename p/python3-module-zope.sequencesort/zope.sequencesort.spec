@@ -1,33 +1,42 @@
-%define oname zope.sequencesort
+%define pypi_name zope.sequencesort
 
-Name: python3-module-%oname
-Version: 4.0.2
-Release: alt3
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 5.0
+Release: alt1
 
 Summary: Sequence Sorting
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.sequencesort/
+Url: https://pypi.org/project/zope.sequencesort/
+Vcs: https://github.com/zopefoundation/zope.sequencesort
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-zope.testrunner
+%endif
 
 %py3_requires zope
 
 
 %description
-This package provides a very advanced sequence sorting feature.
+This package provides support for sorting sequences based on multiple keys,
+including locale-based comparisons and per-key directions.
 
 %package tests
 Summary: Tests for zope.sequencesort
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py3_requires zope.testing
 
 %description tests
-This package provides a very advanced sequence sorting feature.
+This package provides support for sorting sequences based on multiple keys,
+including locale-based comparisons and per-key directions.
 
 This package contains tests for zope.sequencesort.
 
@@ -35,10 +44,10 @@ This package contains tests for zope.sequencesort.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -47,11 +56,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%__python3 setup.py test -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt
-%python3_sitelibdir/*
+%doc CHANGES.rst LICENSE.txt README.rst
+%python3_sitelibdir/zope/sequencesort/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
@@ -60,6 +70,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sat May 20 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version  5.0.
+
 * Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt3
 - Fixed BuildRequires.
 

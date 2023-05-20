@@ -4,25 +4,24 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.3
+Version: 3.0
 Release: alt1
 
-Summary: Shared Zope Toolkit browser components (Python3)
-License: ZPLv2.1
+Summary: Shared Zope Toolkit browser components
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.browser
-#Git: https://github.com/zopefoundation/zope.browser.git
+Url: https://pypi.org/project/zope.browser/
+Vcs: https://github.com/zopefoundation/zope.browser.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.interface
 %endif
 
 %py3_requires zope
@@ -31,7 +30,7 @@ BuildRequires: python3-module-zope.interface
 This package provides shared browser components for the Zope Toolkit.
 
 %package tests
-Summary: Tests for %oname (Python3)
+Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
 
@@ -42,10 +41,11 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -53,12 +53,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-export PYTHONPATH=src
-zope-testrunner3 --test-path=src -vv
+%pyproject_run -- zope-testrunner --test-path=src -vv
 
 %files
 %doc LICENSE.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/browser/
+%python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/zope/browser/tests.*
 %exclude %python3_sitelibdir/zope/browser/*/tests.*
@@ -68,6 +68,9 @@ zope-testrunner3 --test-path=src -vv
 %python3_sitelibdir/zope/browser/*/tests.*
 
 %changelog
+* Sat May 20 2023 Anton Vyatkin <toni@altlinux.org> 3.0-alt1
+- New version 3.0.
+
 * Thu Dec 19 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.3-alt1
 - NMU: 2.2.0 -> 2.3
 - Remove python2 module build
