@@ -1,21 +1,21 @@
 %define rname minizip
-%define sover 4
+%define sover 3
 
 %filter_from_provides /^pkgconfig(%rname)/d
 
-Name: %rname-ng
-Version: %sover.0.0
-Release: alt1
+Name: %rname-ng%sover
+Version: %sover.0.10
+Release: alt2
 
 Summary: Fork of the popular zip manipulation library found in the zlib distribution
 License: Zlib
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: https://github.com/zlib-ng/%name/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# https://github.com/zlib-ng/%name/archive/%version/%name-%version.tar.gz
-Source: %name-%version.tar
+# https://github.com/zlib-ng/%rname-ng/archive/%version/%rname-ng-%version.tar.gz
+Source: %rname-ng-%version.tar
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake >= 3.13
@@ -55,7 +55,7 @@ Features:
 
 %package -n lib%rname%sover
 Summary: Fork of the popular zip manipulation library found in the zlib distribution
-Group: System/Libraries
+Group: System/Legacy libraries
 
 %description -n lib%rname%sover
 Fork of the popular zip manipulation library found in the zlib distribution.
@@ -85,20 +85,8 @@ Features:
  * Recover the central directory if it is corrupt or missing.
  * Example minizip command line tool.
 
-%package -n lib%name-devel
-Summary: Development files for %name
-Group: Development/C
-Provides: libminizip2-devel = %EVR
-Provides: pkgconfig(%name) = %version
-Obsoletes: libminizip2-devel <= 2.10.2
-Conflicts: lib%rname-devel
-
-%description -n lib%name-devel
-The package contains libraries and header files for
-developing applications that use %name.
-
 %prep
-%setup
+%setup -n %rname-ng-%version
 
 %build
 %cmake \
@@ -109,20 +97,18 @@ developing applications that use %name.
 %install
 %cmakeinstall_std
 
+%__rm -rf %buildroot%_includedir
+%__rm -rf %buildroot%_libdir/cmake/%rname
+%__rm -rf %buildroot%_pkgconfigdir/%rname.pc
+%__rm -rf %buildroot%_libdir/lib%rname.so
+
 %files -n lib%rname%sover
 %doc LICENSE README.md
 %_libdir/lib%rname.so.*
 
-%files -n lib%name-devel
-%dir %_includedir/%rname
-%_includedir/%rname/*.h
-%_libdir/cmake/%{rname}*.cmake
-%_pkgconfigdir/%rname.pc
-%_libdir/lib%rname.so
-
 %changelog
-* Sat May 20 2023 Nazarov Denis <nenderus@altlinux.org> 4.0.0-alt1
-- Version 4.0.0
+* Sat May 20 2023 Nazarov Denis <nenderus@altlinux.org> 3.0.10-alt2
+- Build as legacy library
 
 * Mon Apr 10 2023 Nazarov Denis <nenderus@altlinux.org> 3.0.10-alt1
 - Version 3.0.10
