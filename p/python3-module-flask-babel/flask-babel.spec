@@ -5,7 +5,7 @@
 
 Name: python3-module-flask-babel
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
 Summary: Adds i18n/l10n support to Flask applications
 
@@ -23,6 +23,7 @@ BuildRequires: python3-module-babel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-flask
+BuildRequires: python3-module-pytz
 %endif
 
 %py3_provides flask_babel
@@ -48,6 +49,9 @@ library.
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 20 2023 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt2
+- add BR: python3-module-pytz for check
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Build new version.
 
