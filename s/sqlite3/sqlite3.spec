@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: sqlite3
-Version: 3.41.2
+Version: 3.42.0
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: ALT-Public-Domain
@@ -9,6 +9,7 @@ Group: Development/Databases
 URL: http://www.sqlite.org/
 
 Source0: sqlite-%version.tar
+Source1: sqlite3.watch
 
 Patch1: 0001-FEDORA-no-malloc-usable-size.patch
 Patch2: 0002-FEDORA-percentile-test.patch
@@ -197,6 +198,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Sat May 20 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.42.0-alt1
+- 3.42.0 (closes #45289)
+
 * Sat Apr 08 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.41.2-alt1
 - 3.41.2
 
