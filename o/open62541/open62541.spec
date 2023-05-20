@@ -4,7 +4,7 @@
 %define lname libopen62541
 
 Name: open62541
-Version: 1.3.5
+Version: 1.3.6
 Release: alt1
 
 Summary: open62541 is an open source and free implementation of OPC UA (OPC Unified Architecture) written in the common subset of the C99 and C++98 languages.
@@ -88,6 +88,9 @@ ctest -V
 
 
 %changelog
+* Sat May 20 2023 Pavel Vainerman <pv@altlinux.ru> 1.3.6-alt1
+- new version (1.3.6) with rpmgs script
+
 * Thu Apr 27 2023 Pavel Vainerman <pv@altlinux.ru> 1.3.5-alt1
 - new version (1.3.5) with rpmgs script
 - enabled multithread 

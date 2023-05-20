@@ -4,7 +4,7 @@
 %define lname libopen62541pp
 
 Name: open62541pp
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: open62541++ is a C++ wrapper built on top of the amazing open62541 OPC UA (OPC Unified Architecture) library.
@@ -14,12 +14,14 @@ Group: Development/C++
 Url: https://github.com/open62541pp/open62541pp
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
-BuildRequires: rpm-macros-cmake cmake gcc-c++ libopen62541-devel python2-base
+BuildRequires: rpm-macros-cmake cmake gcc-c++ python2-base
+BuildRequires: libopen62541-devel >= 1.3.6
 
 # Source-url: https://github.com/open62541pp/open62541pp/archive/v%{version}.tar.gz
 Source: %name-%version.tar
 Source1: %{name}.pc.in
 Patch0: CMakeLists.txt.patch
+Patch1: open62541.h.patch
 
 %description
 open62541++ is a C++ wrapper built on top of the amazing open62541 OPC UA (OPC Unified Architecture) library.
@@ -41,6 +43,7 @@ open62541++ is a C++ wrapper built on top of the amazing open62541 OPC UA (OPC U
 %prep
 %setup
 %patch0 -p 1
+%patch1 -p 1
 cp -p %{SOURCE1} .
 
 %build
@@ -63,6 +66,9 @@ cp -p %{SOURCE1} .
 
 
 %changelog
+* Sat May 20 2023 Pavel Vainerman <pv@altlinux.ru> 0.4.0-alt1
+- new version (0.4.0) with rpmgs script
+
 * Mon May 01 2023 Pavel Vainerman <pv@altlinux.ru> 0.3.0-alt1
 - new version (0.3.0) with rpmgs script
 
