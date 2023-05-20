@@ -1,5 +1,5 @@
 Name: winetricks
-Version: 20230212
+Version: 20230505
 Release: alt1
 
 Summary: Work around common problems in Wine
@@ -75,6 +75,12 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sat May 20 2023 Vitaly Lipatov <lav@altlinux.ru> 20230505-alt1
+- new version (20230505) with rpmgs script
+
+* Sat Mar 11 2023 Vitaly Lipatov <lav@altlinux.ru> 20230310-alt1
+- new version 20230310 (with rpmrb script)
+
 * Sun Feb 12 2023 Vitaly Lipatov <lav@altlinux.ru> 20230212-alt1
 - new version 20230212 (with rpmrb script)
 
