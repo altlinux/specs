@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define oname App-perlbrew
 Name: perl-App-perlbrew
-Version: 0.96
+Version: 0.97
 Release: alt1
 
 Summary: Manage perl installations in your $HOME
@@ -38,6 +38,9 @@ export SHELL
 %doc Changes README
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 0.97-alt1
+- automated CPAN update
+
 * Mon Aug 01 2022 Igor Vlasenko <viy@altlinux.org> 0.96-alt1
 - automated CPAN update
 
