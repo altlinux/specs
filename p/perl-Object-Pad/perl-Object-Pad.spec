@@ -4,12 +4,12 @@
 # bootstrap 
 #BuildRequires: perl(Future/AsyncAwait.pm) perl(Devel/MAT/Dumper.pm)
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Data/Dump.pm) perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Moo.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Refcount.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
+BuildRequires: perl(Data/Dump.pm) perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Moo.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Refcount.pm) perl(Test2/V0.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.78
+Version: 0.79
 Release: alt1
 Summary: a simple syntax for lexical slot-based objects
 Group: Development/Perl
@@ -43,6 +43,9 @@ rm -f "t/81async-method+dynamically.t"
 %perl_vendor_autolib/*
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 0.79-alt1
+- automated CPAN update
+
 * Mon Jan 16 2023 Igor Vlasenko <viy@altlinux.org> 0.78-alt1
 - automated CPAN update
 
