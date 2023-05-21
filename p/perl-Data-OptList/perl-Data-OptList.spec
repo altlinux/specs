@@ -18,7 +18,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm)
 %define _enable_test 1
 
 Name: perl-Data-OptList
-Version: 0.113
+Version: 0.114
 Release: alt1
 
 Summary: Data-OptList - Perl module
@@ -51,6 +51,9 @@ None.
 %perl_vendor_privlib/Data*
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 0.114-alt1
+- automated CPAN update
+
 * Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 0.113-alt1
 - automated CPAN update
 
