@@ -23,7 +23,7 @@
 
 
 Name: graphviz
-Version: 3.0.0
+Version: 8.0.5
 Release: alt1
 
 Summary: Graphs visualization tools
@@ -53,9 +53,8 @@ Requires: lib%name = %version-%release
 Provides: libdotneato = %version
 Obsoletes: libdotneato < %version
 
-# Automatically added by buildreq on Wed Apr 23 2014 (-bi)
-# optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config guile18 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXmu-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgtk+2-devel libltdl7-devel libpango-devel libpangox-compat libpangox-compat-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libstdc++-devel libwayland-client libwayland-server perl-devel pkg-config python-base rpm-build-tcl tcl tcl-devel tk xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libgd2-devel swig tk-devel xorg-cf-files libltdl-devel qpdf libgs-devel ghostscript cmake
+BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libgd2-devel swig tk-devel xorg-cf-files libltdl-devel qpdf libgs-devel ghostscript
+BuildRequires: libdevil-devel groff-ps
 
 %{?!_with_bootstrap:BuildRequires: ghostscript-utils libfreeglut-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel}
 %{?_enable_lua:BuildRequires: liblua5-devel}
@@ -141,12 +140,12 @@ Requires: %name = %version-%release
 %description perl
 This package makes %name functionality accessible from Perl
 
-%package python3
+%package -n python3-module-gv
 Summary: Python bindings to %name
 Group: Development/Python
 Requires: %name = %version-%release
 
-%description python3
+%description -n python3-module-gv
 This package makes %name functionality accessible from Python
 
 %package ruby
@@ -194,15 +193,13 @@ done
 #endif
 
 %build
-./autogen.sh NOCONFIG
-#./autogen.sh
 %add_optflags -DNDEBUG
-# altbug #34101
-sed -i 's,-Wall -ffast-math,-Wall,' configure*
 
 # skip internal libltdl
 rm -rf libltdl/ m4/ltdl.m4
-subst 's|^LT|dnl LT|' configure.ac
+subst 's|^LT_INIT(|dnl LT_INIT(|' configure.ac
+subst 's|^LT_CONF|dnl LT_CONF|' configure.ac
+subst 's|^LTDL|dnl LTDL|' configure.ac
 export LIBLTDL=-lltdl
 
 # http://lists.gnu.org/archive/html/libtool/2008-10/msg00010.html
@@ -233,8 +230,6 @@ export LIBLTDL=-lltdl
 #	%{subst_enable guile } \
 #make_build 
 
-#cmake 
-#cmake_build
 
 make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fno-strict-overflow %{?FFSTORE}" \
   CXXFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fno-strict-overflow %{?FFSTORE}"
@@ -243,16 +238,7 @@ make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fno-strict-ove
 %install
 
 %makeinstall_std DESTDIR=%{buildroot} \
-    docdir=%{buildroot}%{_docdir}/%{name}
-
-## avoid %%doc, install by hand
-mkdir -p %buildroot%_defaultdocdir
-mkdir -p %buildroot%_defaultdocdir/%name-%version
-mv doc/* %buildroot%_defaultdocdir/%name-%version
-#mv pdf/* %buildroot%_defaultdocdir/%name-%version
-##mv doc/*.html %buildroot%_defaultdocdir/%name-%version
-##mv %buildroot%gvdatadir/doc %buildroot%_defaultdocdir/%name-%version
-cp -a AUTHORS COPYING cpl1.0.txt ChangeLog NEWS %buildroot%_defaultdocdir/%name-%version
+    docdir=%{_docdir}/%{name}-%version
 
 # Remove metadata from generated PDFs
 pushd %buildroot%_defaultdocdir/%name-%version
@@ -268,20 +254,6 @@ done
 popd
 
 %if_enabled tcl
-##mkdir -p %buildroot%_tcldatadir/{%name,gd,tkspline}
-##cat <<EOF > %buildroot%_tcldatadir/gd/pkgIndex.tcl
-##package ifneeded Gdtclft %version "load [file join \$dir .. .. .. lib tcl libgdtclft.so.0] Gdtclft"
-##EOF
-##cat <<EOF > %buildroot%_tcldatadir/%name/pkgIndex.tcl
-##package ifneeded Tcldot %version "load [file join \$dir .. .. .. lib tcl libtcldot.so.0] Tcldot"
-##package ifneeded Tclpathplan %version "load [file join \$dir .. .. .. lib tcl libtclplan.so.0] Tclpathplan"
-##EOF
-##cat <<EOF > %buildroot%_tcldatadir/tkspline/pkgIndex.tcl
-##package ifneeded Tkspline %version "
-##	package require Tk 8.3
-##        load [file join \$dir .. .. .. lib tcl libtkspline.so.0] Tkspline"
-##EOF
-
 # argh, #21967
 if [ ! -d %buildroot%gvtcldir ]; then
 	mkdir -p "$(dirname %buildroot%gvtcldir)"
@@ -294,15 +266,17 @@ install -m0644 -D %SOURCE2 %buildroot%_desktopdir/graphviz-dot-x11-preview.deskt
 # created by %%_bindir/dot -c
 touch %buildroot%gvlibdir/config
 
-rm -f %buildroot%gvlibdir/*/lib*.la
-rm -f %buildroot%gvtcldir/lib*.la
-rm -f %buildroot%gvlibdir/libgvplugin_*.la
+find %buildroot/%_libexecdir -name \*.la -delete
+find %buildroot/%_libdir -name \*.la -delete
 rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
 
 # Dereference manual symlinks
 mv %buildroot%_man1dir/* %buildroot%_man3dir/
 cp -aL %buildroot%_man3dir/*.1 %buildroot%_man1dir/
 rm -f %buildroot%_man3dir/*.1
+
+# Removing useless python3-modules (their copies are under std-path)
+rm -rf %buildroot%gvlibdir/python3/
 
 %post
 [ ! -x %_bindir/dot ] || %_bindir/dot -c >&/dev/null
@@ -312,20 +286,12 @@ rm -f %buildroot%_man3dir/*.1
 %_desktopdir/*.desktop
 %dir %gvdatadir/
 %gvdatadir/gvpr
-%gvdatadir/lefty
 %if_without bootstrap
-#gvdatadir/gvedit
 %gvdatadir/smyrna
 %endif
 %ghost %gvlibdir/config
 %_man1dir/*
 %_man7dir/*
-#dir %_defaultdocdir/%name-%version/
-#_defaultdocdir/%name-%version/AUTHORS
-#_defaultdocdir/%name-%version/COPYING
-#_defaultdocdir/%name-%version/cpl1.0.txt
-#_defaultdocdir/%name-%version/ChangeLog
-#_defaultdocdir/%name-%version/NEWS
 
 %files -n lib%name
 %_libdir/lib*.so.*
@@ -342,26 +308,6 @@ rm -f %buildroot%_man3dir/*.1
 
 %files doc
 %_defaultdocdir/%name-%version/
-#_defaultdocdir/%name-%version/doc/*
-#exclude %_defaultdocdir/%name-%version/AUTHORS2
-#exclude %_defaultdocdir/%name-%version/COPYING2
-#exclude %_defaultdocdir/%name-%version/cpl1.0.txt
-#exclude %_defaultdocdir/%name-%version/ChangeLog
-#exclude %_defaultdocdir/%name-%version/NEWS
-#dir %gvdatadir/
-%exclude %gvdatadir/doc
-#dir %gvdatadir/doc
-#dir %gvdatadir/doc/html
-#dir %gvdatadir/doc/pdf
-#dir %gvdatadir/doc/html/info
-#dir %gvdatadir/doc/html/schema
-
-#dir %gvdatadir/doc/*
-#dir %gvdatadir/doc/html/*
-#dir %gvdatadir/doc/pdf/*
-#dir %gvdatadir/doc/html/info/*
-#dir %gvdatadir/doc/html/schema/*
-
 
 %{?!_with_bootstrap:%gvdatadir/examples}
 
@@ -392,10 +338,8 @@ rm -f %buildroot%_man3dir/*.1
 %gvdatadir/demo/modgraph.pl
 
 %if_enabled python3
-%files python3
-%gvlibdir/python3/
+%files -n python3-module-gv
 %python3_sitelibdir/*
-#gvdatadir/demo/modgraph.py
 %endif
 
 %if_enabled ruby
@@ -421,6 +365,12 @@ rm -f %buildroot%_man3dir/*.1
 # - enable/fix/test language bindings
 
 %changelog
+* Fri May 12 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 8.0.5-alt1
+- Updated to upstream 8.0.5
+- Spec cleanup
+- Removed modules from %%gvlibdir/python3/
+- Renamed graphviz-python3 to python3-module-gv
+
 * Sun Apr 03 2022 Ilya Mashkin <oddity@altlinux.ru> 3.0.0-alt1
 - 3.0.0
 - Temporariry disable guile subpackage
