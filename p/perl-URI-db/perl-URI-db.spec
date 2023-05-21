@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           perl-URI-db
-Version:        0.20
+Version:        0.21
 Release:        alt1
 Summary:        Perl support for database URIs
 License:        GPL+ or Artistic
@@ -40,6 +40,9 @@ The specification for their format is documented in README.md.
 %perl_vendorlib/URI*
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 0.21-alt1
+- automated CPAN update
+
 * Wed Jun 22 2022 Igor Vlasenko <viy@altlinux.org> 0.20-alt1
 - automated CPAN update
 
