@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist CPAN-Meta-Requirements
 Name: perl-%dist
-Version: 2.140
+Version: 2.142
 Release: alt1
 
 Summary: a set of version requirements for a CPAN dist
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/CPAN-Meta-Requirements-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ It can be built up by adding more and more constraints, and it will reduce
 them to the simplest representation.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -39,6 +39,9 @@ them to the simplest representation.
 %perl_vendor_privlib/CPAN
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 2.142-alt1
+- automated CPAN update
+
 * Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.140-alt1
 - automated CPAN update
 
