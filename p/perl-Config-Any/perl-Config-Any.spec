@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Config-Any
 Name: perl-Config-Any
-Version: 0.32
-Release: alt2.1
+Version: 0.33
+Release: alt1
 
 Summary: Load configuration from different file formats, transparently
 License: GPL or Artistic
@@ -35,6 +35,9 @@ configuration, Windows INI files, and even Perl code.
 %perl_vendor_privlib/Config*
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 0.33-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2.1
 - dropped deprecated BR: perl-Module-Install
 
