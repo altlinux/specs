@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build.pm) perl-podlators
@@ -8,14 +9,14 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 %define upstream_version 1.2018
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt2_3
+Version:    1.2019
+Release:    alt1
 
 Summary:    Adds CPAN Testers reporting to CPAN.pm
 License:    Apache License
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/CPAN/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/G/GA/GARU/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Archive/Tar.pm)
 BuildRequires: perl(CPAN.pm)
@@ -69,7 +70,7 @@ project. Full support for CPAN::Reporter is available in CPAN.pm as of
 version 1.92.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -82,11 +83,14 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml  README examples
+%doc Changes META.json META.yml README examples Todo
 %{perl_vendor_privlib}/*
 
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 1.2019-alt1
+- automated CPAN update
+
 * Wed Mar 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.2018-alt2_3
 - to Sisyphus as perl-CPAN dep
 
