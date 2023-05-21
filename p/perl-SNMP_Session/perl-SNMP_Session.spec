@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-SNMP_Session
-Version: 1.12
+Version: 1.15
 Release: alt1
 Summary: Native SNMP support for Perl 5
 
@@ -36,10 +37,14 @@ even to non-Unix systems.
 %perl_vendor_install
 
 %files
+%doc Artistic README README.SNMP_util
 %perl_vendor_privlib/S*
 %perl_vendor_privlib/B*
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 1.15-alt1
+- new version
+
 * Tue Jan 05 2010 Denis Smirnov <mithraen@altlinux.ru> 1.12-alt1
 - 1.12 (ALT #17841)
 
