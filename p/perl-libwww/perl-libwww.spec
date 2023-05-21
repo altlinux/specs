@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libwww-perl
 Name: perl-libwww
-Version: 6.68
+Version: 6.70
 Release: alt1
 
 Summary: WWW client/server library for Perl (aka LWP)
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SI/SIMBABQUE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ Obsoletes: %name-perl < %version
 
 # Automatically added by buildreq on Thu Jan 31 2013
 # optimized out: perl-Encode perl-HTTP-Date perl-HTTP-Message perl-LWP-MediaTypes perl-Pod-Escapes perl-Pod-Simple perl-URI perl-libnet perl-podlators
-BuildRequires: perl-Encode-Locale perl-File-Listing perl-HTML-Parser perl-HTTP-Cookies perl-HTTP-Daemon perl-HTTP-Negotiate perl-Net-HTTP perl-WWW-RobotRules perl-devel perl-podlators perl(Test/Fatal.pm) perl(Try/Tiny.pm) perl(Test/RequiresInternet.pm) perl(Data/Dump.pm) perl(Module/Metadata.pm) perl(CPAN/Meta/Requirements.pm)
+BuildRequires: perl-Encode-Locale perl-File-Listing perl-HTML-Parser perl-HTTP-Daemon perl-HTTP-Negotiate perl-Net-HTTP perl-WWW-RobotRules perl-devel perl-podlators perl(Test/Fatal.pm) perl(Try/Tiny.pm) perl(Test/RequiresInternet.pm) perl(Data/Dump.pm) perl(Module/Metadata.pm) perl(CPAN/Meta/Requirements.pm) perl(HTTP/CookieJar/LWP.pm) perl(Test/Needs.pm) perl(Module/Load.pm) perl(HTTP/Cookies.pm)
 
 %description
 The libwww-perl collection is a set of Perl modules which provides a
@@ -70,6 +70,9 @@ ln -snf lwp-request.1 %buildroot%_man1dir/POST.1
 %doc	%perl_vendor_privlib/lwp*.pod
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 6.70-alt1
+- automated CPAN update
+
 * Wed Mar 01 2023 Igor Vlasenko <viy@altlinux.org> 6.68-alt1
 - automated CPAN update
 
