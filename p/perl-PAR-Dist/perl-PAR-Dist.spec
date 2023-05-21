@@ -2,7 +2,7 @@
 %define module_name PAR-Dist
 
 Name: perl-%module_name
-Version: 0.51
+Version: 0.52
 Release: alt1
 
 Summary: %module_name module for perl
@@ -32,10 +32,13 @@ export PERL_TEST_POD=1
 %perl_vendor_install
 
 %files
-%doc Changes LICENSE README
+%doc Changes README
 %perl_vendor_privlib/PAR/
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 0.52-alt1
+- automated CPAN update
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
 - automated CPAN update
 
