@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Date-ICal
-Version: 2.680
+Version: 2.681
 Release: alt1
 
 Summary: Perl extension for ICalendar date objects
@@ -51,6 +51,9 @@ chmod a-x lib/Date/ICal.pm
 %perl_vendor_privlib/Date*
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 2.681-alt1
+- automated CPAN update
+
 * Tue Apr 04 2023 Igor Vlasenko <viy@altlinux.org> 2.680-alt1
 - automated CPAN update
 
