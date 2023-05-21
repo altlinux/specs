@@ -1,13 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Finance/Quote/TMX.pm) perl(Readonly.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 Epoch: 1
 %define dist Finance-Quote
 
 Name: perl-%dist
-Version: 1.54
-Release: alt1.1
+Version: 1.55
+Release: alt1
 
 Summary: Get stock and mutual fund quotes from various exchanges
 License: GPLv2+
@@ -38,7 +38,7 @@ greater flexibility and stability.
 %perl_vendor_install
 
 %files
-%doc Examples/ Documentation/ Changes Examples README README.md
+%doc Examples/ Documentation/ Changes Examples README
 %perl_vendor_privlib/Finance
 #%perl_vendor_privlib/GPATH
 #%perl_vendor_privlib/GRTAGS
@@ -46,6 +46,9 @@ greater flexibility and stability.
 
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 1:1.55-alt1
+- automated CPAN update
+
 * Thu Dec 29 2022 Igor Vlasenko <viy@altlinux.org> 1:1.54-alt1.1
 - automated CPAN update
 
