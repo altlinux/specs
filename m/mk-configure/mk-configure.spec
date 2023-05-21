@@ -2,7 +2,7 @@
 
 Name: mk-configure
 Version: 0.38.2
-Release: alt2
+Release: alt3
 
 Summary: Lightweight replacement for GNU autotools
 License: BSD-2-Clause and MIT and ISC
@@ -59,7 +59,6 @@ Set of RPM macros for packaging applications that use mk-configure.
 
 %prep
 %setup
-subst "s|USE_FORT.*||" examples/dictd/Makefile.inc
 
 %define env \
   unset MAKEFLAGS; \
@@ -124,6 +123,9 @@ bmake nodeps-cleandir-tests
 # - add %%config %%_sysconfdir/rpm/macros.mkcmake (extra source)
 
 %changelog
+* Sun May 21 2023 Aleksey Cheusov <cheusov@altlinux.org> 0.38.2-alt3
+- Fix USE_FORT mode on latest sisyphus with gcc-12.2.1
+
 * Wed May 03 2023 Vitaly Lipatov <lav@altlinux.ru> 0.38.2-alt2
 - disable USE_FORT for examples/dictd/Makefile.inc (we already have -D_FORTIFY_SOURCE in optflags)
 
