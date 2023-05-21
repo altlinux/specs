@@ -6,7 +6,7 @@ BuildRequires: perl(Cpanel/JSON/XS.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.004004
+Version: 1.004005
 Release: alt1
 Summary: use L<Cpanel::JSON::XS> with a fallback to L<JSON::PP>
 Group: Development/Perl
@@ -34,6 +34,9 @@ Requires: perl(Cpanel/JSON/XS.pm)
 %perl_vendor_privlib/J*
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 1.004005-alt1
+- automated CPAN update
+
 * Mon Sep 19 2022 Igor Vlasenko <viy@altlinux.org> 1.004004-alt1
 - automated CPAN update
 
