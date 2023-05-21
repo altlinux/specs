@@ -5,7 +5,7 @@ BuildRequires: perl-podlators
 %add_findreq_skiplist %perl_vendor_archlib/Devel/Cover/Collection.pm
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 1.39
+Version: 1.40
 Release: alt1
 
 Summary: Code coverage metrics for Perl
@@ -63,6 +63,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %_man1dir/*
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 1.40-alt1
+- automated CPAN update
+
 * Sat Apr 29 2023 Igor Vlasenko <viy@altlinux.org> 1.39-alt1
 - automated CPAN update
 
