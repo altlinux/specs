@@ -2,13 +2,13 @@
 %define module_name Commandable
 %set_perl_req_method relaxed
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Attribute/Storage.pm) perl(Convert/Color.pm) perl(Module/Build.pm) perl(Module/Pluggable/Object.pm) perl(String/Tagged.pm) perl(String/Tagged/Terminal.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Warnings.pm)
+BuildRequires: perl(Attribute/Storage.pm) perl(Convert/Color.pm) perl(Module/Build.pm) perl(Module/Pluggable/Object.pm) perl(String/Tagged.pm) perl(String/Tagged/Terminal.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test/Warnings.pm) perl(Test2/V0.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.09
-Release: alt1.1
+Version: 0.10
+Release: alt1
 Summary: utilities for commandline-based programs
 Group: Development/Perl
 License: perl
@@ -42,6 +42,9 @@ program.
 %perl_vendor_privlib/C*
 
 %changelog
+* Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 0.10-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.09-alt1.1
 - automated CPAN update
 
