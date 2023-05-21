@@ -9,11 +9,11 @@
 %def_without pyod
 
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 0a999ffc0e9e9af046733387f21ba487bd5c90fe
+%define release_commit 08b694591ef11d39f1f2353ce20a1640fbab9348
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.38.1
+Version: 1.39.1
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -34,7 +34,7 @@ BuildRequires: bash4
 BuildRequires: libuuid-devel libuv-devel libprotobuf-devel
 BuildRequires: libjudy-devel libcap-devel
 BuildRequires: liblz4-devel zlib-devel libssl-devel
-BuildRequires: libjson-c-devel
+BuildRequires: libjson-c-devel libyaml-devel
 
 %if_with prometeus
 # Prometheus remote write dependencies
@@ -216,7 +216,7 @@ install -m 755 -d %buildroot/var/lib/%name/registry/
 
 
 install -d %buildroot%_unitdir/
-install -m 644 -p system/netdata.service %buildroot%_unitdir/netdata.service
+install -m 644 -p system/systemd/netdata.service.v235 %buildroot%_unitdir/netdata.service
 
 rm -v %buildroot/usr/lib/netdata/install-service.sh
 rm -rv %buildroot%_libdir/netdata/system/
@@ -300,6 +300,10 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Sun May 21 2023 Vitaly Lipatov <lav@altlinux.ru> 1.39.1-alt1
+- new version 1.39.1 (with rpmrb script)
+- add BR: libyaml-devel
+
 * Sat May 06 2023 Vitaly Lipatov <lav@altlinux.ru> 1.38.1-alt1
 - new version 1.38.1 (with rpmrb script)
 
