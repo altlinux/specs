@@ -1,6 +1,6 @@
 Name: libglvnd
 Version: 1.6.0
-Release: alt1
+Release: alt2
 Epoch: 7
 Group: System/Libraries
 Summary: The GL Vendor-Neutral Dispatch library
@@ -13,7 +13,7 @@ Obsoletes: libGLdispatch < %epoch:%version-%release
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires: meson libXext-devel python-modules-compiler python-modules-distutils python-modules-xml xorg-glproto-devel
+BuildRequires: meson libXext-devel xorg-glproto-devel
 
 %description
 libglvnd is an implementation of the vendor-neutral dispatch layer for
@@ -120,6 +120,9 @@ rm -f %buildroot%_pkgconfigdir/glesv1*.pc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon May 22 2023 Valery Inozemtsev <shrek@altlinux.ru> 7:1.6.0-alt2
+- python -> python3 (closes: #46204)
+
 * Thu Dec 01 2022 Valery Inozemtsev <shrek@altlinux.ru> 7:1.6.0-alt1
 - 1.6.0
 
