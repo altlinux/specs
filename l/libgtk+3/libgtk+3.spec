@@ -23,7 +23,7 @@
 %def_disable check
 
 Name: libgtk+3
-Version: %ver_major.37
+Version: %ver_major.38
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -438,6 +438,9 @@ xvfb-run %__meson_test -v --print-errorlogs
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Mon May 22 2023 Yuri N. Sedunov <aris@altlinux.org> 3.24.38-alt1
+- 3.24.38
+
 * Fri Mar 03 2023 Yuri N. Sedunov <aris@altlinux.org> 3.24.37-alt1
 - 3.24.37
 
