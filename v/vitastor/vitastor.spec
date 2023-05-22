@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: vitastor
-Version: 0.8.9
+Version: 0.9.0
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -25,6 +25,13 @@ BuildRequires: libjerasure-devel
 # BuildRequires: libisa-l-devel
 BuildRequires: libgf-complete-devel
 BuildRequires: rdma-core-devel
+
+# For PVE
+%ifarch x86_64 aarch64
+BuildRequires(pre): rpm-build-perl
+BuildRequires: pve-storage
+%add_perl_lib_path %buildroot%perl_vendor_privlib
+%endif
 
 %description
 Vitastor is a small, simple and fast clustered block storage (storage for VM drives),
@@ -125,6 +132,17 @@ Requires: lib%name-blk = %EVR lib%name-client = %EVR
 This package contains libraries and headers needed to develop programs
 that use Vitastor SDS library.
 
+%package -n pve-storage-vitastor
+Group: System/Servers
+Summary: Vitastor Proxmox VE Plugin
+License: VNPL-1.1 OR GPL-2.0+
+Requires: /usr/bin/vitastor-cli
+Requires: /usr/bin/vitastor-nbd
+Requires: pve-manager pve-storage
+
+%description -n pve-storage-vitastor
+Vitastor Proxmox VE Plugin.
+
 %prep
 %setup
 %patch -p1
@@ -149,6 +167,11 @@ install -m 0644 mon/vitastor-mon.service %buildroot%_unitdir
 install -m 0644 mon/vitastor-osd@.service %buildroot%_unitdir
 install -m 0644 mon/90-vitastor.rules %buildroot%_udevrulesdir
 
+# Install PVE plugin
+%ifarch x86_64 aarch64
+install -D -m 0644 patches/VitastorPlugin.pm %buildroot%perl_vendor_privlib/PVE/Storage/Custom/VitastorPlugin.pm
+%endif
+
 %pre common
 groupadd -r -f %name 2>/dev/null ||:
 useradd  -r -g %name -s /sbin/nologin -c "Vitastor daemons" -M -d %_localstatedir/%name %name 2>/dev/null ||:
@@ -172,6 +195,14 @@ useradd  -r -g %name -s /sbin/nologin -c "Vitastor daemons" -M -d %_localstatedi
 #        systemctl --no-reload -q disable vitastor-osd@\*.service vitastor-osd.target ||:
 #        systemctl stop vitastor-osd@\*.service  vitastor-osd.target ||:
 #fi
+
+%post -n pve-storage-vitastor
+service pvedaemon condrestart ||:
+
+%postun -n pve-storage-vitastor
+if [ $1 = 0 ]; then
+    service pvedaemon condrestart ||:
+fi
 
 %files common
 %doc README.md README-ru.md VNPL-1.1.txt GPL-2.0.txt
@@ -214,7 +245,16 @@ useradd  -r -g %name -s /sbin/nologin -c "Vitastor daemons" -M -d %_localstatedi
 %_includedir/*
 %_pkgconfigdir/*.pc
 
+%ifarch x86_64 aarch64
+%files -n pve-storage-vitastor
+%perl_vendor_privlib/PVE/Storage/Custom/VitastorPlugin.pm
+%endif
+
 %changelog
+* Mon May 22 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt1
+- 0.9.0
+- add pve-storage-vitastor package
+
 * Sun May 14 2023 Alexey Shabalin <shaba@altlinux.org> 0.8.9-alt1
 - 0.8.9
 
