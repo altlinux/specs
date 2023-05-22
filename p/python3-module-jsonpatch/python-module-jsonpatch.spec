@@ -2,8 +2,8 @@
 %global github_name python-json-patch
 
 Name: python3-module-%pypi_name
-Version: 1.23
-Release: alt2
+Version: 1.32
+Release: alt1
 
 Summary: Applying JSON Patches in Python
 License: BSD
@@ -11,6 +11,7 @@ Group: Development/Python3
 Url: https://github.com/stefankoegl/%github_name
 BuildArch: noarch
 
+# Source0-url: https://github.com/stefankoegl/python-json-patch/archive/refs/tags/v%version.tar.gz
 Source0: %pypi_name-%version.tar
 
 BuildRequires(pre):  rpm-build-python3
@@ -35,11 +36,15 @@ export LC_ALL=en_US.UTF-8
 
 %files
 %doc README.md COPYING
-%_bindir/*
+%_bindir/jsondiff
+%_bindir/jsonpatch
 %python3_sitelibdir/*
 
 
 %changelog
+* Mon May 22 2023 Vitaly Lipatov <lav@altlinux.ru> 1.32-alt1
+- new version 1.32 (with rpmrb script)
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.23-alt2
 - Build for python2 disabled.
 
