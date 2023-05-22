@@ -10,7 +10,7 @@
 
 Name: plymouth
 Version: 22.02.122
-Release: alt1.20221016
+Release: alt2.20221016
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -472,6 +472,10 @@ fi \
 %files system-theme
 
 %changelog
+* Mon May 22 2023 Anton Midyukov <antohami@altlinux.org> 1:22.02.122-alt2.20221016
+- Revert "Revert "Revert "drm: Remove explicit set_scan_out_buffer() from
+  activate()"""
+
 * Fri Apr 28 2023 Anton Midyukov <antohami@altlinux.org> 1:22.02.122-alt1.20221016
 - snapshot 4bd41a355fa017afa4db86282b90eb67bbf9db59 (Closes: 44297)
 - Revert "Revert "drm: Remove explicit set_scan_out_buffer() from activate()""
