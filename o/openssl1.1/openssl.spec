@@ -3,7 +3,7 @@
 
 Name: openssl1.1
 Version: 1.1.1t
-Release: alt2
+Release: alt3
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -472,10 +472,16 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Mon May 22 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1t-alt3
+- Updated from upstream OpenSSL_1_1_1-stable branch (commit
+  OpenSSL_1_1_1t-22-g8ddacec114).
+- Fixed version 1.1.1u-dev -> 1.1.1t.
+
 * Mon May 15 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1t-alt2
-- Updated from upstream OpenSSL_1_1_1-stable branch (fixes CVE-2023-0464,
-  CVE-2023-0465, CVE-2023-0466).
-- spec: Added support for loongarch64 architecture (ALT#45583)
+- Updated from upstream OpenSSL_1_1_1-stable branch (commit
+  OpenSSL_1_1_1t-22-g8ddacec114) (fixes CVE-2023-0464, CVE-2023-0465,
+  CVE-2023-0466).
+- spec: added support for loongarch64 architecture (ALT#45583)
   (thx Alexey Sheplyakov).
 
 * Tue Feb 07 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1t-alt1
