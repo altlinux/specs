@@ -24,7 +24,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.8.14
+Version: 1.9.1
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -223,10 +223,8 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %if_enabled uefi
 %_man1dir/dbxtool.1*
 %endif
-%config(noreplace)%_sysconfdir/fwupd/daemon.conf
-%ifarch x86_64 %ix86
-%config(noreplace)%_sysconfdir/fwupd/thunderbolt.conf
-%endif
+%_man5dir/*
+%config(noreplace)%_sysconfdir/fwupd/fwupd.conf
 %dir %_libexecdir/fwupd
 %dir %_iconsdir/hicolor/scalable/apps
 %_libexecdir/fwupd/fwupd
@@ -287,16 +285,13 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 /lib/udev/rules.d/*.rules
 %dir %fwupd_pluginsdir
 %fwupd_pluginsdir/libfwupd*.so
-%config(noreplace)%_sysconfdir/fwupd/redfish.conf
 %if_enabled flashrom
 %fwupd_pluginsdir/libfu_plugin_flashrom.so
 %endif
 %if_enabled msr
 %_modulesloaddir/fwupd-msr.conf
-%config(noreplace)%_sysconfdir/fwupd/msr.conf
 %endif
 %if_enabled uefi
-%config(noreplace)%_sysconfdir/fwupd/uefi_capsule.conf
 %config(noreplace)%_sysconfdir/grub.d/35_fwupd
 %_datadir/fwupd/uefi-capsule-ux.tar.xz
 %endif
@@ -337,6 +332,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %endif
 
 %changelog
+* Fri May 19 2023 Egor Ignatov <egori@altlinux.org> 1.9.1-alt1
+- 1.8.14 -> 1.9.1
+
 * Fri Mar 31 2023 Egor Ignatov <egori@altlinux.org> 1.8.14-alt1
 - New version 1.8.14.
 
