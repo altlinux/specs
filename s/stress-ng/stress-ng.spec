@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.15.06
+Version: 0.15.08
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -92,7 +92,7 @@ sed -i '/STRESSORS/s/getrandom //g' debian/tests/lite-test
 sed -i '/STRESSORS/s/ cache / /g' debian/tests/lite-test
 
 banner lite-test
-time timeout 300 make lite-test
+time timeout 300 make lite-test V=1
 banner done
 
 %files
@@ -104,6 +104,12 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Mon May 22 2023 Vitaly Chikunov <vt@altlinux.org> 0.15.08-alt1
+- Update to V0.15.08 (2023-05-21).
+
+* Sat Apr 15 2023 Vitaly Chikunov <vt@altlinux.org> 0.15.07-alt1
+- Update to V0.15.07 (2023-04-13).
+
 * Fri Mar 17 2023 Vitaly Chikunov <vt@altlinux.org> 0.15.06-alt1
 - Update to V0.15.06 (2023-03-16).
 
