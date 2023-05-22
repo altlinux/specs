@@ -13,7 +13,7 @@
 Name: ossec-hids
 
 Version: 3.6.0
-Release: alt1
+Release: alt2
 
 Summary: OSSEC is a full platform to monitor and control your systems
 License: GPLv2
@@ -439,7 +439,9 @@ fi
 
         /bin/systemctl daemon-reload >/dev/null 2>&1 || :
 if [ ! -f %ossec_sysconf_dir/ossec-agent/etc/localtime ]; then
-	cp -fpL %_sysconfdir/localtime %ossec_sysconf_dir/ossec-agent/etc
+	if [ -f %_sysconfdir/localtime ]; then
+		cp -fpL %_sysconfdir/localtime %ossec_sysconf_dir/ossec-agent/etc
+	fi
 fi
 
 %post postgres
@@ -605,6 +607,9 @@ fi
 %_datadir/ossec/contrib/postgresql.schema
 
 %changelog
+* Sat May 20 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.6.0-alt2
+- Fixed testinstall
+
 * Sat Apr 17 2021 Egor Ignatov <egori@altlinux.org> 3.6.0-alt1
 - new version
 - fix build with gcc10

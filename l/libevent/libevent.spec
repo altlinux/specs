@@ -1,6 +1,6 @@
 Name: libevent
-Version: 2.1.8
-Release: alt3
+Version: 2.1.12
+Release: alt1
 
 Summary: Abstract asynchronous event notification library
 # arc4random.c is ISC, the rest is BSD-3-Clause.
@@ -19,10 +19,9 @@ Source2: Makefile.sample
 Patch: %name-%version-%release.patch
 
 # For event_rpcgen.py
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 
 BuildRequires: libssl-devel zlib-devel
-%{?!_without_check:%{?!_disable_check:BuildRequires: python-modules}}
 
 %package -n %libname
 Summary: Abstract asynchronous event notification library
@@ -123,6 +122,11 @@ install -p -m644 *.3 %buildroot%_man3dir/
 %endif
 
 %changelog
+* Thu May 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.1.12-alt1
+- 2.1.12
+- Use python3 to run python scripts (closes: #40742).
+- Fixed build with glibc 2.36 and newer (closes: #46191).
+
 * Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 2.1.8-alt3
 - Fixed FTBFS due to missing rpm-build-python
 
