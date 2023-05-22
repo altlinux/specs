@@ -1,6 +1,6 @@
 Name: sympa
 Version: 6.2.71
-Release: alt0.2.b1
+Release: alt0.3.b1
 
 %def_without authorcheck
 %define ngxconfdir %_sysconfdir/nginx/sites-available.d
@@ -129,6 +129,7 @@ BuildRequires: perl(HTML/FormatText.pm)
 BuildRequires: perl(HTML/Parser.pm)
 BuildRequires: perl(HTML/StripScripts/Parser.pm)
 BuildRequires: perl(HTML/TreeBuilder.pm)
+BuildRequires: perl(HTTP/Cookies.pm)
 BuildRequires: perl(HTTP/Request.pm)
 BuildRequires: perl(IO/Scalar.pm)
 BuildRequires: perl(IO/Socket/IP.pm)
@@ -776,6 +777,9 @@ fi
 %static_content
 
 %changelog
+* Mon May 22 2023 L.A. Kostis <lakostis@altlinux.ru> 6.2.71-alt0.3.b1
+- BR: added HTTP/Cookies.pm.
+
 * Thu Feb 09 2023 L.A. Kostis <lakostis@altlinux.ru> 6.2.71-alt0.2.b1
 - nginx: added param for vhosts setup.
 - .spec: fix typo in data_structure init.
