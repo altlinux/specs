@@ -3,15 +3,15 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.4.0
-Release: alt3
+Version: 5.0
+Release: alt1
 
-Summary: Zope Configuration Markup Language (ZCML) (Python 3)
-License: ZPL
+Summary: Zope Configuration Markup Language (ZCML)
+License: ZPL-2.1
 Group: Development/Python3
 
-Url: http://pypi.python.org/pypi/zope.configuration/
-#Git: https://github.com/zopefoundation/zope.configuration.git
+Url: https://pypi.org/project/zope.configuration
+Vcs: https://github.com/zopefoundation/zope.configuration.git
 
 Source: %name-%version.tar
 
@@ -19,15 +19,15 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-repoze.sphinx.autointerface
-BuildRequires: python3-module-coverage
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-zope.i18nmessageid
 BuildRequires: python3-module-zope.schema
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-coverage
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.schema
 BuildRequires: python3-module-manuel-tests
 BuildRequires: python3-module-manuel
 %endif
@@ -45,7 +45,7 @@ that express configuration choices. The intent is that the language be
 pluggable. An XML language is provided by default.
 
 %package tests
-Summary: Tests for Zope Configuration Markup Language (ZCML) (Python 3)
+Summary: Tests for Zope Configuration Markup Language (ZCML)
 Group: Development/Python3
 Requires: %name = %EVR
 %py3_requires zope.testing
@@ -86,10 +86,11 @@ This package contains pickles for Zope Configuration Markup Language
 ln -s ../objects.inv3 docs/
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -104,24 +105,27 @@ install -d %buildroot%python3_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-sed -i 's|sphinx-build|py3_sphinx-build|g' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst docs/_build/html
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/configuration/
+%python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/pickle
 %exclude %python3_sitelibdir/*/*/tests
 
 %files pickles
+%dir %python3_sitelibdir/%oname
 %python3_sitelibdir/*/pickle
 
 %files tests
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Mon May 22 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt3
 - Fixed BuildRequires.
 - Build with check again.
