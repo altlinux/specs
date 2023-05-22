@@ -52,7 +52,7 @@
 
 Name: ceph
 Version: 17.2.6
-Release: alt2
+Release: alt3
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -307,6 +307,9 @@ Group: Monitoring
 Requires: ceph-mgr = %EVR
 Requires: ceph-mgr-restful = %EVR
 Requires: ceph-grafana-dashboards = %EVR
+%if_with python3
+%py3_requires routes
+%endif
 AutoProv: no
 %description mgr-dashboard
 %summary.
@@ -324,7 +327,7 @@ Summary: InfluxDB module for Ceph Manager Daemon
 Group: Monitoring
 Requires: ceph-mgr = %EVR
 %if_with python3
-Requires: python3-module-influxdb
+%py3_requires influxdb
 %endif
 AutoProv: no
 %description mgr-influx
@@ -387,7 +390,7 @@ Group: System/Configuration/Other
 Requires: ceph-mgr = %EVR
 Requires: cephadm = %EVR
 Requires: openssh-clients
-Requires: python3-module-jinja2
+%py3_requires jinja2
 AutoProv: no
 %description mgr-cephadm
 ceph-mgr-cephadm is a ceph-mgr module for orchestration functions using
@@ -715,9 +718,9 @@ This package contains the Java libraries for the Ceph File System.
 %package -n cephfs-shell
 Summary: Interactive shell for Ceph file system
 Group: Shells
-Requires: python3-module-cmd2
-Requires: python3-module-colorama
-Requires: python3-module-cephfs
+%py3_requires cmd2
+%py3_requires colorama
+%py3_requires cephfs
 %description -n cephfs-shell
 This package contains an interactive tool that allows accessing a Ceph
 file system without mounting it by providing a nice pseudo-shell which
@@ -1814,6 +1817,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Mon May 22 2023 Alexey Shabalin <shaba@altlinux.org> 17.2.6-alt3
+- Add requires python3(routes) to ceph-mgr-dashboard package.
+
 * Tue May 02 2023 Alexey Shabalin <shaba@altlinux.org> 17.2.6-alt2
 - add requires ceph-volume to ceph package.
 

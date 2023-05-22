@@ -1,7 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 
 %def_enable flight
 %def_disable flight_sql
-%def_disable plasma
 %def_disable gandiva
 %def_disable mimalloc
 %def_disable s3
@@ -14,7 +14,7 @@
 %endif
 
 Name: arrow
-Version: 11.0.0
+Version: 12.0.0
 Release: alt1
 Summary: Apache Arrow is a data processing library for analysis
 Group: Development/C++
@@ -22,6 +22,7 @@ Group: Development/C++
 License: Apache-2.0
 Url: https://arrow.apache.org/
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 ExcludeArch: %arm
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-meson rpm-build-vala rpm-build-gir rpm-macros-python3
@@ -99,9 +100,28 @@ Requires: zlib-devel
 %description devel
 Libraries and header files for Apache Arrow C++.
 
+%package -n lib%name-acero
+Summary: C++ library to execute a query in streaming
+Group: System/Libraries
+Requires: lib%name = %EVR
+
+%description -n lib%name-acero
+This package contains the libraries for Apache Arrow Acero.
+
+%package -n lib%name-acero-devel
+Summary: Libraries and header files for Apache Arrow Acero
+Group: Development/C++
+Requires: lib%name-acero = %EVR
+Requires: %name-devel = %EVR
+
+%description -n lib%name-acero-devel
+Libraries and header files for Apache Arrow Acero.
+
 %package -n lib%name-dataset
 Summary: C++ library to read and write semantic datasets stored in different locations and formats
 Group: System/Libraries
+Requires: lib%name = %EVR
+Requires: lib%name-acero = %EVR
 
 %description -n lib%name-dataset
 This package contains the libraries for Apache Arrow dataset.
@@ -110,6 +130,7 @@ This package contains the libraries for Apache Arrow dataset.
 Summary: Libraries and header files for Apache Arrow dataset
 Group: Development/C++
 Requires: lib%name-dataset = %EVR
+Requires: lib%name-acero-devel = %EVR
 Requires: %name-devel = %EVR
 
 %description -n lib%name-dataset-devel
@@ -166,31 +187,6 @@ Requires: libgandiva = %EVR
 
 %description -n libgandiva-devel
 Libraries and header files for Gandiva.
-
-%package -n libplasma
-Summary: Runtime libraries for Plasma in-memory object store
-Group: System/Libraries
-Requires: lib%name = %EVR
-
-%description -n libplasma
-This package contains the libraries for Plasma in-memory object store.
-
-%package -n plasma-store-server
-Summary: Server for Plasma in-memory object store
-Group: Development/Other
-Requires: libplasma = %EVR
-
-%description -n plasma-store-server
-This package contains the server for Plasma in-memory object store.
-
-%package -n libplasma-devel
-Summary: Libraries and header files for Plasma in-memory object store
-Group: Development/C++
-Requires: %name-devel = %EVR
-Requires: libplasma = %EVR
-
-%description -n libplasma-devel
-Libraries and header files for Plasma in-memory object store.
 
 %package -n libparquet
 Summary: Runtime libraries for Apache Parquet C++
@@ -396,42 +392,6 @@ BuildArch: noarch
 %description -n gandiva-glib-doc
 Documentation for Gandiva GLib.
 
-%package -n libplasma-glib
-Summary: Runtime libraries for Plasma GLib
-Group: System/Libraries
-Requires: lib%name-glib = %EVR
-Requires: libplasma = %EVR
-
-%description -n libplasma-glib
-This package contains the libraries for Plasma GLib.
-
-%package -n libplasma-glib-gir
-Summary: GObject introspection data for Plasma GLib
-Group: System/Libraries
-Requires: libplasma-glib = %EVR
-
-%description -n libplasma-glib-gir
-GObject introspection data for Plasma GLib.
-
-%package -n libplasma-glib-devel
-Summary: Libraries and header files for Plasma GLib
-Group: Development/C
-Requires: lib%name-glib-devel = %EVR
-Requires: libplasma-glib = %EVR libplasma-glib-gir = %EVR
-Requires: libplasma-devel = %EVR
-Requires: gobject-introspection-devel
-
-%description -n libplasma-glib-devel
-Libraries and header files for Plasma GLib.
-
-%package -n plasma-glib-doc
-Summary: Documentation for Plasma GLib
-Group: Development/Documentation
-BuildArch: noarch
-
-%description -n plasma-glib-doc
-Documentation for Plasma GLib.
-
 %package -n libparquet-glib
 Summary: Runtime libraries for Apache Parquet GLib
 Group: System/Libraries
@@ -481,7 +441,6 @@ Summary: Python library for Apache Arrow
 Group: Development/Python3
 %py3_provides pyarrow._cuda
 %py3_provides pyarrow._orc
-%py3_provides pyarrow._plasma
 %py3_provides pyarrow._substrait
 
 %description -n python3-module-pyarrow
@@ -497,18 +456,19 @@ Development files for python3-pyarrow
 
 %prep
 %setup
+%patch -p1
 sed -r -i 's/(oldest-supported-)(numpy)/\2/' python/pyproject.toml
 
 %build
 pushd cpp
 %cmake \
+  -DCMAKE_CXX_STANDARD=17 \
   %{?_enable_flight:-DARROW_FLIGHT:BOOL=ON} \
   %{?_enable_flight_sql:-DARROW_FLIGHT_SQL:BOOL=ON} \
   %{?_enable_gandiva:-DARROW_GANDIVA:BOOL=ON} \
   %{?_enable_mimalloc:-DARROW_MIMALLOC:BOOL=ON} \
   %{?_enable_orc:-DARROW_ORC:BOOL=ON} \
   -DARROW_PARQUET:BOOL=ON \
-  %{?_enable_plasma:-DARROW_PLASMA:BOOL=ON} \
   -DARROW_PYTHON:BOOL=ON \
   %{?_enable_utils:-DARROW_BUILD_UTILITIES:BOOL=ON} \
   -DARROW_JEMALLOC:BOOL=OFF \
@@ -558,7 +518,6 @@ export \
   PYARROW_WITH_DATASET=1 \
   %{?_enable_flight:PYARROW_WITH_FLIGHT=1} \
   PYARROW_WITH_PARQUET=1 \
-  %{?_enable_plasma:PYARROW_WITH_PLASMA=1} \
   %{?_enable_orc:PYARROW_WITH_ORC=1} \
   PYARROW_WITH_PARQUET_ENCRYPTION=1 \
   %{?_enable_gandiva:PYARROW_WITH_GANDIVA=1} \
@@ -583,6 +542,8 @@ pushd cpp
 %cmake_install
 popd
 
+rm -rf %buildroot%_docdir/%name
+
 %files -n lib%name
 %_libdir/lib%name.so.*
 
@@ -590,6 +551,7 @@ popd
 %doc README.md
 %_includedir/arrow
 %exclude %_includedir/arrow/dataset
+%exclude %_includedir/arrow/acero
 %if_enabled flight
 %exclude %_includedir/arrow/flight
 %exclude %_includedir/arrow-flight-glib
@@ -614,6 +576,15 @@ popd
 %files tools
 %_bindir/arrow-*
 %endif
+
+%files -n lib%name-acero
+%_libdir/libarrow_acero.so.*
+
+%files -n lib%name-acero-devel
+%_includedir/arrow/acero
+%_libdir/cmake/ArrowAcero
+%_libdir/libarrow_acero.so
+%_pkgconfigdir/arrow-acero.pc
 
 %files -n lib%name-dataset
 %_libdir/libarrow_dataset.so.*
@@ -658,22 +629,6 @@ popd
 %_libdir/cmake/Gandiva
 %_libdir/libgandiva.so
 %_pkgconfigdir/gandiva.pc
-%endif
-
-%if_enabled plasma
-%files -n libplasma
-%_libdir/libplasma.so.*
-
-%if_enabled utils
-%files -n plasma-store-server
-%_bindir/plasma-store-server
-%endif
-
-%files -n libplasma-devel
-%_includedir/plasma
-%_libdir/cmake/Plasma
-%_libdir/libplasma.so
-%_pkgconfigdir/plasma*.pc
 %endif
 
 %files -n libparquet
@@ -781,24 +736,6 @@ popd
 %_datadir/gtk-doc/html/gandiva-glib
 %endif
 
-%if_enabled plasma
-%files -n libplasma-glib
-%_libdir/libplasma-glib.so.*
-
-%files -n libplasma-glib-gir
-%_typelibdir/Plasma-*.typelib
-
-%files -n libplasma-glib-devel
-%_girdir/Plasma-*gir
-%_vapidir/plasma-glib.*
-%_includedir/plasma-glib
-%_libdir/libplasma-glib.so
-%_pkgconfigdir/plasma-glib.pc
-
-%files -n plasma-glib-doc
-%_datadir/gtk-doc/html/plasma-glib
-%endif
-
 %files -n libparquet-glib
 %_libdir/libparquet-glib.so.*
 
@@ -816,8 +753,8 @@ popd
 %_datadir/gtk-doc/html/parquet-glib
 
 %files -n python3-module-pyarrow
-%_bindir/plasma_store
 %python3_sitelibdir/pyarrow
+%python3_sitelibdir/pyarrow-*.dist-info
 %exclude %python3_sitelibdir/pyarrow/lib_api.h
 %exclude %python3_sitelibdir/pyarrow/include
 
@@ -826,6 +763,9 @@ popd
 %python3_sitelibdir/pyarrow/include
 
 %changelog
+* Mon May 22 2023 Alexey Shabalin <shaba@altlinux.org> 12.0.0-alt1
+- 12.0.0.
+
 * Fri Apr 07 2023 Alexey Shabalin <shaba@altlinux.org> 11.0.0-alt1
 - Initial build.
 
