@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.118
+Version: 0.119
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -101,6 +101,10 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Mon May 22 2023 Vitaly Chikunov <vt@altlinux.org> 0.119-alt1
+- Fix fgrep warning.
+- kernel.req: Detect unmets between kernel modules.
+
 * Sun Nov 13 2022 Vitaly Chikunov <vt@altlinux.org> 0.118-alt1
 - Install safe-add-changelog (with safe-stamp-spec) tool(s) a safer version of
   add_changelog (and stamp_spec) which works with kernel-image.spec.
