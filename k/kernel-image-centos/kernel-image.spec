@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 309
+%define centos_release 316
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -638,6 +638,100 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon May 22 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.316-alt1.el9
+- Updated to kernel-5.14.0-316.el9 (fixes: CVE-2023-2248, CVE-2023-28466, CVE-2023-31436):
+  + Add Marvell CN10k DDR PMU driver Support
+  + arch/x86: Update to 5.17
+  + Backport register read/write tracing support
+  + Backport smem and socinfo patches for sa8775p
+  + Bonding: add option per-port priority
+  + Bonding: rebase to linux v6.3
+  + bpf, xdp: update to 6.2
+  + cacheinfo: Fix sleep in atomic context on PREEMPT_RT kernels
+  + cgroup/cpuset: Fix CLONE_INTO_CGROUP cpu affinity problem
+  + CNB: IPv6/GRO: generic helper to remove temporary HBH/jumbo header in driver
+  + CNB: net: add support for managed neighbor entries
+  + CNB: Update TC subsystem to upstream v6.3
+  + config: Enable WiFI on aarch64 architecture
+  + CVE-2023-28466: net: tls: fix possible race condition between do_tls_getsockopt_conf() and do_tls_setsockopt_conf()
+  + dm: sync with upstream 6.4
+  + Documentation: rtla: Correct command line example
+  + enable io_uring
+  + enic: driver update from v6.3
+  + hwrng: imx-rngc - driver updates
+  + i2c: imx-lpi2c: driver updates
+  + iavf driver update
+  + IPsec packet offload
+  + iRDMA: bug fixes
+  + iSCSI update to 6.3
+  + kernel.spec: skip kernel meta package when building without up
+  + KVM: aarch64: Rebase (first round towards v6.3)
+  + livepatch: selected fixes for rhel-9.3
+  + MDRAID - Update to the latest upstream
+  + Merge commit 'db7b42de90525a108c02796cbfbf63836088cabb' from documentation
+  + Merge remote-tracking branch 'stream9/merge-requests/2284' into bz2178699
+  + mmc: sdhci-esdhc-imx: driver updates
+  + mm/demotion: Memory tiers and demotion
+  + mm: hugetlbfs: return proper error when accessing a poisoned hugetlbfs file page from page cache
+  + mm: RHEL-9.3 HMM update
+  + net: core: stable backports for 9.3 phase 1
+  + net: mptcp: rebase to latest net-next
+  + net: sched: sch_qfq: prevent slab-out-of-bounds in qfq_activate_agg
+  + net: support ipv4 big tcp
+  + NFSD: Fix problem of COMMIT and NFS4ERR_DELAY in infinite loop
+  + NFSD: RHEL-only bug introduced in fix for COMMIT and NFS4ERR_DELAY loop
+  + PCI/PM: Extend D3hot delay for NVIDIA HDA controllers
+  + perf c2c: Add report option to show false sharing in adjacent cachelines
+  + perf/imx_ddr driver updates
+  + PM / devfreq: imx-bus: driver updates
+  + Provide linux kernel support for performing In-Field Scan (IFS)
+  + pwm: imx1: Implement .apply callback
+  + pwm: imx27: Simplify using devm_pwmchip_add()
+  + pwm: imx-tpm: Don't check the return code of pwmchip_remove()
+  + RDMA: Add support for Soft-RoCE driver
+  + redhat/configs: Enable Dell privacy drivers
+  + redhat/configs: Fix incorrect configs location and content
+  + [redhat] kernel.spec: create libperf subpackage
+  + remoteproc: imx_dsp_rproc: driver updates
+  + remoteproc: imx_rproc: driver updates
+  + Remove the unnecessary unicode character
+  + [s390]: [IBM 9.3 FEAT] DASD autoquiesce support
+  + [s390]: [IBM 9.3 FEAT] Support for List-Directed IPL and re-IPL from ECKD DASD - kernel part
+  + [s390]: [IBM 9.3 FEAT] Upgrade the QETH driver to latest from upstream, e.g. kernel 6.3
+  + [s390]: [IBM 9.3 FEAT] Upgrade the zFCP driver to latest from upstream, kernel 6.3
+  + [s390]: RHEL9.0 net/iucv: Fix size of interrupt data
+  + sched/debug: Put sched/domains files under the verbose flag
+  + Sched/psi: updates to v6.3-rc1
+  + sched/rt: Fix bad task migration for rt tasks
+  + Scheduler uclamp and asym updates to v6.3-rc1
+  + Scheduler updates for 9.3
+  + scsi: megaraid_sas: driver update
+  + scsi: mpt3sas: driver update
+  + sctp: backports from upstream
+  + sfc: correctly advertise tunneled IPv6 segmentation
+  + soc: imx: i.MX8M blk-ctrl driver updates
+  + softirq: Wake ktimers thread also in softirq.
+  + tcp: stable backport for 9.3 phase 1
+  + thermal/drivers/imx8mm_thermal: driver updates
+  + thermal/drivers/imx: Use generic thermal_zone_get_trip() function
+  + Update intel_idle to match upstream 6.3
+  + Update intel_pstate to upstream 6.3
+  + Update NFS/NFSD/SUNRPC/LOCKD to upstream v6.3
+  + Update Omni-Path Architecture (OPA) hfi1 kernel driver
+  + Updates for NUMA node distance table
+  + Updates for powerpc selftests
+  + Updates for powerpc VDSO
+  + Updates to reset RCU watchdogs after a LPM
+  + update turbostat to match upstream 6.3
+  + VFIO update to v6.3
+  + watchdog: imx2_wdg: driver updates
+  + wdat_wdt: avoid watchdog timeout during reboot
+  + x86: small memory clearing enhancements
+  + xfrm: add extack support
+  + xfrm: backport fixes from upstream
+  + xfs: don't use BMBT btree split workers for IO completion
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon May 08 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.309-alt1.el9
 - Updated to kernel-5.14.0-309.el9:
   + ata: driver update
