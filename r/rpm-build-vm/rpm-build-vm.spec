@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.52
+Version: 1.53
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -233,6 +233,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Mon May 22 2023 Vitaly Chikunov <vt@altlinux.org> 1.53-alt1
+- Prevent SIGTTOU when running rpmbuild in hsh-shell.
+
 * Thu May 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.52-alt1
 - Fix processing of pre-installed kernels.
 
