@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1 
+
 Name:    guake
-Version: 3.9.0
+Version: 3.10
 Release: alt1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
@@ -21,6 +23,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-pip
+BuildRequires: python3-module-wheel
 BuildRequires: libgio
 BuildRequires: desktop-file-utils
 BuildRequires: desktop-file-utils
@@ -41,10 +44,12 @@ just need to press a key to invoke him, and press again to hide.
 %patch2 -p1
 
 %build
+export PIP_NO_BUILD_ISOLATION=no
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %make_build
 
 %install
+export PIP_NO_BUILD_ISOLATION=no
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %makeinstall_std PREFIX=%_prefix
 install -Dm0644 guake/data/autostart-guake.desktop %buildroot%_sysconfdir/xdg/autostart/guake.desktop
@@ -58,13 +63,16 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_sysconfdir/xdg/autostart/guake.desktop
 %_datadir/%name
 %python3_sitelibdir/%name
-%python3_sitelibdir/guake*.egg-info
+%python3_sitelibdir/%name-%version.dist-info
 %_pixmapsdir/%name.png
 %_desktopdir/*.desktop
 %_datadir/glib-2.0/schemas/org.guake.gschema.xml
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon May 15 2023 Andrey Cherepanov <cas@altlinux.org> 3.10-alt1
+- New version.
+
 * Mon Jun 13 2022 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
 - New version.
 
