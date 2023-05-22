@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: isoinspector
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Tool that inspect ALT Linux distribution ISO using ALTRepo API
@@ -38,6 +38,9 @@ install -Dm0755 isoinspector %buildroot%_bindir/isoinspector
 %doc LICENSE README.* AUTHORS.txt
 
 %changelog
+* Mon May 22 2023 Danil Shein <dshein@altlinux.org> 0.1.2-alt1
+ - new version 0.1.2
+
 * Tue Sep 13 2022 Danil Shein <dshein@altlinux.org> 0.1.1-alt1
 - new version 0.1.1
 
