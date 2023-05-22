@@ -8,7 +8,7 @@
 
 Name:     scilab
 Version:  6.0.2
-Release:  alt4
+Release:  alt5
 Epoch:    1
 Summary:  A high-level language and system for numerical computations
 
@@ -115,7 +115,7 @@ BuildRequires: xml-commons-apis
 
 BuildRequires: libncurses-devel
 BuildRequires: libgomp-devel
-BuildRequires: libatlas-devel
+#BuildRequires: libatlas-devel
 BuildRequires: libpcre-devel
 BuildRequires: libcurl-devel
 BuildRequires: eigen3
@@ -206,7 +206,7 @@ aclocal
 	   --disable-static-system-lib \
            --enable-build-help
 
-%make
+%make_build || %make
 %if_with docs
 %make doc SCIVERBOSE=1
 %endif
@@ -238,6 +238,9 @@ tar xf %SOURCE2 -C %buildroot%_datadir/scilab/modules/helptools/jar/
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Mon May 22 2023 Vitaly Lipatov <lav@altlinux.ru> 1:6.0.2-alt5
+- NMU: fix build
+
 * Sat Jun 11 2022 Igor Vlasenko <viy@altlinux.org> 1:6.0.2-alt4
 - NMU: support for xml-commons-apis-1.4.01-alt3_35jpp11
 
