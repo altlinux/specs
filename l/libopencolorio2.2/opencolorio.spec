@@ -10,7 +10,7 @@
 
 Name:           lib%oname%soname
 Version:        2.2.1
-Release:        alt2
+Release:        alt3
 Summary:        Enables color transforms and image display across graphics apps
 
 License:        BSD-3-Clause
@@ -22,6 +22,7 @@ Source:         %name-%version.tar
 
 Patch1: opencolorio-alt-install.patch
 Patch2: opencolorio-alt-armh-multiple-definition.patch
+Patch3: opencolorio-alt-minizip-ng.patch
 
 # Utilities
 BuildRequires: cmake gcc-c++
@@ -90,6 +91,7 @@ Group:          Development/Python3
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %ifarch %e2k
 # ld: multiple definition of LoadLutFile
 sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
@@ -118,6 +120,7 @@ sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
 	-DOpenGL_GL_PREFERENCE=GLVND \
 %endif
 	-DCMAKE_CXX_STANDARD=14 \
+	-Dminizip-ng_INCLUDE_DIR=%_includedir/minizip \
 	%nil
 
 %cmake_build
@@ -178,6 +181,9 @@ popd
 %python3_sitelibdir/*.so
 
 %changelog
+* Mon May 22 2023 Nazarov Denis <nenderus@altlinux.org> 2.2.1-alt3
+- Add patch to compatibility minizip-ng 4
+
 * Tue Mar 14 2023 Sergey V Turchin <zerg@altlinux.org> 2.2.1-alt2
 - obsolete libopencolorio2.0-devel
 
