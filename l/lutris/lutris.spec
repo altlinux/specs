@@ -3,7 +3,7 @@
 %define appid net.lutris.Lutris
 
 Name: lutris
-Version: 0.5.12
+Version: 0.5.13
 Release: alt1
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
@@ -11,7 +11,7 @@ Group: Games/Other
 Url: https://lutris.net
 
 Source: https://lutris.net/releases/lutris_%version.tar.xz
-Patch: lutris-0.5.11-alt-python3-pixbuf-path.patch
+Patch: lutris-0.5.13-alt-python3-pixbuf-path.patch
 
 Provides: python3(lutris.util.ubisoft)
 Conflicts: lutris-standalone
@@ -42,9 +42,6 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 %prep
 %setup -n %name
 %patch -p1
-# hack for missing GdkPixbuf.InterpType.NEAREST in ALT
-sed -i 's|GdkPixbuf.InterpType.NEAREST|1|' \
-    lutris/gui/widgets/utils.py
 
 %build
 %if_enabled meson
@@ -77,6 +74,10 @@ chmod +x %buildroot%_datadir/lutris/bin/lutris-wrapper
 %_man1dir/%name.1.xz
 
 %changelog
+* Mon May 22 2023 Leontiy Volodin <lvol@altlinux.org> 0.5.13-alt1
+- New version 0.5.13.
+- Updated python3 patch.
+
 * Mon Dec 05 2022 Leontiy Volodin <lvol@altlinux.org> 0.5.12-alt1
 - New version (0.5.12).
 
