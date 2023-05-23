@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230515
+Version: 20230517
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,11 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon May 22 2023 Cronbuild Service <cronbuild@altlinux.org> 20230517-alt1
+- upstream changes (GIT 601c1813):
+  + rtlwifi: Add firmware v6.0 for RTL8192FU (thx Bitterblue Smith)
+  + rtlwifi: Update firmware for RTL8188EU to v28.0 (thx Bitterblue Smith)
+
 * Tue May 16 2023 Cronbuild Service <cronbuild@altlinux.org> 20230515-alt1
 - upstream changes (GIT 51290942):
   + cirrus: Add firmware and tuning files for HP G10 series laptops (thx Vitaly Rodionov)
