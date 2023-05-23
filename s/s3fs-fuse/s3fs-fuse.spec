@@ -1,5 +1,5 @@
 Name:     s3fs-fuse
-Version:  1.91
+Version:  1.92
 Release:  alt1
 
 Summary:  FUSE-based file system backed by Amazon S3
@@ -43,10 +43,13 @@ rsync backup to s3.
 
 %files
 %doc AUTHORS README.md ChangeLog
-%_bindir/*
+%_bindir/s3fs
 %_man1dir/*.1.xz
 
 %changelog
+* Tue May 23 2023 Grigory Ustinov <grenka@altlinux.org> 1.92-alt1
+- Automatically updated to 1.92.
+
 * Wed Mar 30 2022 Grigory Ustinov <grenka@altlinux.org> 1.91-alt1
 - Automatically updated to 1.91.
 
