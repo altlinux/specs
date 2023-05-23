@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 Summary: Relaxed test discovery/organization for pytest
 License: BSD-2-Clause
@@ -22,7 +22,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: /dev/pts
-%add_pyproject_deps_check_filter codecov
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -50,7 +49,7 @@ it with an underscore.
 %pyproject_install
 
 %check
-%pyproject_run -- inv test
+%pyproject_run -- inv test -o='-ra -Wignore'
 
 %files
 %doc README.rst
@@ -58,6 +57,9 @@ it with an underscore.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 23 2023 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
+- 2.0.0 -> 2.0.1.
+
 * Wed Apr 26 2023 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - 1.1.5 -> 2.0.0.
 
