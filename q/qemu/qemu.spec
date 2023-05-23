@@ -132,7 +132,7 @@
 
 Name: qemu
 Version: 8.0.0
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -161,6 +161,9 @@ Patch: qemu-alt.patch
 
 Requires: %name-system = %EVR
 Requires: %name-user = %EVR
+
+# for tests
+BuildRequires: /dev/kvm
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: meson >= 0.61.3
@@ -1314,6 +1317,9 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Tue May 23 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt3
+- Add BR: /dev/kvm for tests.
+
 * Fri Apr 28 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt2
 - Build with libpmem support.
 - Build with libblkio support.
