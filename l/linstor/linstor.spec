@@ -8,7 +8,7 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.22.1
+Version: 1.23.0
 Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
@@ -50,6 +50,7 @@ cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/Satellite %buildroo
 cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/linstor-config %buildroot%LS_PREFIX/bin
 cp -r %_builddir/%NAME_VERS/scripts/postinstall.sh %buildroot%LS_PREFIX/bin/controller.postinst.sh
 mkdir -p %buildroot%_unitdir
+sed -i '/\[Service\]/a Environment="JAVA_HOME=/usr/lib/jvm/jre-11-openjdk"' %_builddir/%NAME_VERS/scripts/linstor-*.service
 cp -r %_builddir/%NAME_VERS/scripts/linstor-controller.service %buildroot%_unitdir
 cp -r %_builddir/%NAME_VERS/scripts/linstor-satellite.service %buildroot%_unitdir
 mkdir -p %buildroot%FIREWALLD_SERVICES
@@ -145,6 +146,10 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Tue May 23 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.23.0-alt1
+- 1.23.0
+- add JAVA_HOME for Java 11
+
 * Wed May 10 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.22.1-alt1
 - 1.22.1
 - add Java 11 dependency, doesn't work with Java 17
