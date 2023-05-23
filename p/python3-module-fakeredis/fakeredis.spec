@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.12.1
+Version: 2.13.0
 Release: alt1
 Summary: Fake implementation of redis API for testing purposes
 License: BSD
@@ -59,6 +59,9 @@ redis.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 22 2023 Stanislav Levin <slev@altlinux.org> 2.13.0-alt1
+- 2.12.1 -> 2.13.0.
+
 * Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 2.12.1-alt1
 - 1.4.3 -> 2.12.1.
 
