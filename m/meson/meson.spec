@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.0
+%define ver_major 1.1
 %define libname mesonbuild
 %define pkgdocdir %_docdir/%name-%version
 
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: High productivity build system
@@ -49,7 +49,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: ninja-build python3-devel >= %python_ver python3-module-setuptools
 BuildRequires: python3-module-wheel
 %{?_with_polkit:BuildRequires: libpolkit-devel}
-%{?_enable_docs:BuildRequires: hotdoc}
+%{?_enable_docs:BuildRequires: hotdoc python3(strictyaml) python3(chevron)}
 %if_enabled check
 BuildRequires: gcc gcc-c++ gcc-fortran gcc-objc gcc-objc++
 BuildRequires: java-devel /proc
@@ -100,7 +100,7 @@ This package provides documentation for Meson build system.
 pushd docs
 mkdir build
 export PYTHONPATH=%buildroot%python3_sitelibdir
-../meson.py build
+../meson.py setup build
 ninja -C build
 popd}
 
@@ -137,6 +137,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Mon Apr 10 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Fri Feb 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
