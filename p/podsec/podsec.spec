@@ -7,7 +7,7 @@
 %define u7s_admin_homedir %_localstatedir/%u7s_admin_usr
 
 Name: podsec
-Version: 0.9.35
+Version: 0.9.38
 Release: alt1
 
 Summary: Set of scripts for Podman Security
@@ -34,6 +34,7 @@ Requires: findutils
 Requires: iproute2
 Requires: iptables
 Requires: openssh-server
+Requires: curl
 
 %description
 This package contains utilities for:
@@ -67,6 +68,7 @@ Requires: crun >= 1.8.1
 Requires: systemd-container
 %filter_from_requires /\/etc\/kubernetes\/kubelet/d
 
+
 %description k8s
 This package contains utilities for:
 - cluster node configurations
@@ -76,7 +78,6 @@ Summary: Set of scripts for Kubernetes RBAC
 Group: Development/Other
 Requires: kubernetes-client >= 1.26.3-alt2
 Requires: podsec >= %EVR
-Requires: curl
 
 
 %description k8s-rbac
@@ -99,6 +100,14 @@ Requires: vixie-cron
 A set of scripts for  security monitoring by crontabs or
 called from the nagios server side via check_ssh plugin
 to monitor and identify security threats
+
+%package dev
+Summary: Set of scripts for podsec developers
+Group: Development/Other
+Requires: podsec >= %EVR
+
+%description dev
+A set of scripts for developers
 
 %prep
 %setup
@@ -146,16 +155,18 @@ chmod 600 $rootcrontab
 
 %files
 %_bindir/podsec*
+%exclude %_bindir/podsec-save-oci
 %exclude %_bindir/podsec-u7s-*
 %exclude %_bindir/podsec-k8s-*
 %exclude %_bindir/podsec-inotify-*
 %_mandir/man?/podsec*
 %exclude %_mandir/man?/podsec-k8s-*
 %exclude %_mandir/man?/podsec-u7s-*
+%exclude %_mandir/man?/podsec-save-oci*
 %exclude %_mandir/man?/podsec-inotify-*
 %dir %_sysconfdir/podsec
 %dir %_libexecdir/podsec
-
+%dir %attr(0755,root,root) %_localstatedir/podsec
 
 %files k8s
 %dir %_sysconfdir/podsec/u7s
@@ -169,16 +180,16 @@ chmod 600 $rootcrontab
 %_bindir/podsec-k8s-*
 %_bindir/podsec-u7s-*
 %exclude %_bindir/podsec-k8s-rbac-*
+%exclude %_bindir/podsec-k8s-save-oci
 %_mandir/man?/podsec-k8s-*
+%exclude %_mandir/man?/podsec-k8s-save-oci*
 %_mandir/man?/podsec-u7s-*
 %exclude %_mandir/man?/podsec-k8s-rbac-*
-%_unitdir/*
-%exclude %_unitdir/podsec-inotify-check-containers.service
+%_unitdir/u7s.service
 %_userunitdir/*
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %_sysconfdir/kubernetes/audit/
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %u7s_admin_homedir
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %u7s_admin_homedir
-%dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %_localstatedir/podsec
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %_localstatedir/podsec/u7s
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %_localstatedir/podsec/u7s/etcd
 %config(noreplace) %attr(0640,%u7s_admin_usr,%u7s_admin_grp) %u7s_admin_homedir/.bashrc
@@ -191,10 +202,26 @@ chmod 600 $rootcrontab
 %nagios_plugdir/podsec-inotify-*
 %_bindir/podsec-inotify-*
 %_mandir/man?/podsec-inotify-*
-%_unitdir/podsec-inotify-check-containers.service
+%_unitdir/podsec-inotify-*
+%exclude %_unitdir/u7s.service
 %_sysconfdir/podsec/crontabs/*
 
+%files dev
+%_bindir/podsec-save-oci
+%_bindir/podsec-k8s-save-oci
+%_mandir/man?/podsec-k8s-save-oci*
+%_mandir/man?/podsec-save-oci*
+
 %changelog
+* Mon May 22 2023 Alexey Kostarev <kaf@altlinux.org> 0.9.38-alt1
+- 0.9.38
+
+* Mon May 22 2023 Alexey Kostarev <kaf@altlinux.org> 0.9.37-alt1
+- 0.9.37
+
+* Fri May 19 2023 Alexey Kostarev <kaf@altlinux.org> 0.9.36-alt1
+- 0.9.36
+
 * Fri May 19 2023 Alexey Kostarev <kaf@altlinux.org> 0.9.35-alt1
 - 0.9.35
 
