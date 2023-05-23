@@ -9,7 +9,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 67.7.2
+Version: 67.8.0
 Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -46,6 +46,7 @@ BuildRequires: /dev/shm
 # For the tests of the setuptools commands to do binary builds:
 BuildPreReq: python3-dev
 %add_pyproject_deps_check_filter pytest-perf
+%add_pyproject_deps_check_filter pytest-ruff
 %pyproject_builddeps_metadata_extra testing
 %endif
 
@@ -174,6 +175,9 @@ cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Mon May 22 2023 Stanislav Levin <slev@altlinux.org> 1:67.8.0-alt1
+- 67.7.2 -> 67.8.0.
+
 * Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 1:67.7.2-alt1
 - 67.4.0 -> 67.7.2.
 
