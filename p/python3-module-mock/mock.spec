@@ -1,30 +1,25 @@
 %define _unpackaged_files_terminate_build 1
-%define oname mock
+%define pypi_name mock
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-mock
-Version: 4.0.3
-Release: alt2
-
-Summary: A Python Mocking and Patching Library for Testing
-
-License: BSD
+Name: python3-module-%pypi_name
+Version: 5.0.2
+Release: alt1
+Summary: Rolling backport of unittest.mock for all Pythons
+License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/mock
-
-# Source-url: %__pypi_url %oname
-Source: %name-%version.tar
-Patch: mock-4.0.3-fix-tests-that-should-test-mock-but-were-testing-uni.patch
-
+Url: https://pypi.org/project/mock/
+Vcs: https://github.com/testing-cabal/mock
 BuildArch: noarch
-
-BuildRequires(pre):  rpm-build-intro >= 2.2.5
-BuildRequires(pre):  rpm-build-python3
-BuildRequires: python3-module-pbr python3-module-setuptools
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -40,25 +35,27 @@ compatible with Python 3.6 and up.
 
 %prep
 %setup
-%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
 %check
-export PYTHONPATH=$(pwd)
-py.test3 -vv
+%pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.rst LICENSE.txt
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%doc README.rst
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 22 2023 Stanislav Levin <slev@altlinux.org> 5.0.2-alt1
+- 4.0.3 -> 5.0.2.
+
 * Sat Mar 05 2022 Stanislav Levin <slev@altlinux.org> 4.0.3-alt2
 - Fixed FTBFS (Python 3.10).
 
