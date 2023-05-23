@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: 2.3.4
+Version: 2.4.0
 Release: alt1
 
 Summary: An Enchanting Spell Checking Program
@@ -94,6 +94,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Tue May 23 2023 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Mon Feb 20 2023 Yuri N. Sedunov <aris@altlinux.org> 2.3.4-alt1
 - 2.3.4
 
