@@ -8,7 +8,7 @@
 
 Name: devil
 Version: 1.7.8
-Release: alt4
+Release: alt5
 Summary: Cross-platform image loading and manipulation toolkit
 Group: System/Libraries
 License: LGPLv2+
@@ -20,6 +20,7 @@ Patch0: devil-1.7.8-alt-png_set_expand_gray.patch
 Patch1: devil-1.7.8-deb-CVE-2009-3994.patch
 Patch2: devil-deb-FTBFS-il.h.patch
 Patch3: devil-1.7.8-fedora-jasper2.patch
+Patch4: devil-1.7.8-alt-fix-missing-include.patch
 
 BuildRequires: gcc-c++ libSDL-devel liballegro-devel libjpeg-devel
 BuildRequires: liblcms-devel libmng-devel libpng-devel libtiff-devel zlib-devel
@@ -83,6 +84,7 @@ for a developer to learn and use. This package contains documentation
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -116,6 +118,9 @@ rm -rf %buildroot%_infodir/*
 %doc README Libraries.txt TODO CREDITS AUTHORS
 
 %changelog
+* Tue May 23 2023 Ivan A. Melnikov <iv@altlinux.org> 1.7.8-alt5
+- NMU: fix FTBFS
+
 * Mon Sep 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.8-alt4
 - Fixed build with LTO.
 
