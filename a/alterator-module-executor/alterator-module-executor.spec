@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -7,9 +7,10 @@ License: GPL-2
 Group: System/Configuration/Other
 
 BuildRequires: cmake gcc
-BuildRequires: libgio-devel libsystemd-devel alterator-manager-devel >= 0.1.3
+BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
+BuildRequires: alterator-manager-devel >= 0.1.4
 
-Requires: alterator-manager >= 0.1.3-alt1
+Requires: alterator-manager >= 0.1.4-alt1
 
 Source: %name-%version.tar
 
@@ -32,6 +33,11 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Mon May 22 2023 Ivan Savin <svn17@altlinux.org> 0.1.4-alt1
+- Add checking of user rights to execute methods using polkit.
+- Data from alterator-manager is now transferred not in a GHashTable, but in
+  a structure ManagerData.
+
 * Fri Apr 21 2023 Ivan Savin <svn17@altlinux.org> 0.1.3-alt1
 - Add limit on the number of threads for the method. How many method instances
   can be run at the same time.

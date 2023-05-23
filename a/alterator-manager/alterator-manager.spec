@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -9,7 +9,7 @@ License: GPL-2
 Group: System/Configuration/Other
 
 BuildRequires: cmake gcc
-BuildRequires: libgio-devel libsystemd-devel
+BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
 
 Source: %name-%version.tar
 
@@ -43,11 +43,22 @@ mkdir -p %buildroot%_datadir/alterator/backends
 %_unitdir/alterator-manager.service
 %dir %alterator_libexecdir
 %dir %_datadir/alterator/backends
+%doc docs/*
 
 %files devel
 %_includedir/alterator
 
 %changelog
+* Mon May 22 2023 Ivan Savin <svn17@altlinux.org> 0.1.4-alt1
+- Add checking of user rights to execute methods using polkit.
+- Data from alterator-manager is now transferred not in a GHashTable,
+  but in a structure ManagerData.
+- Add check for the correctness of the interface name in a backend file.
+- Add check for the correctness of the node name in a backend file.
+- Add automatic addition of prefix 'ru.basealt.alterator.' to the interface
+  name from a file.
+- Update docs/README-ru.md.
+
 * Fri Apr 21 2023 Ivan Savin <svn17@altlinux.org> 0.1.3-alt1
 - Add thread_limit option to manager section in backend file.
 - Update doc/README-ru.md.
