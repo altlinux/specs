@@ -1,25 +1,17 @@
-#============================================================================
-# Please do not edit!
-# Created by specgen utility from files in specs/ subdir
-#============================================================================
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.22.1
-Release: alt3
+Version: 1.24.0
+Release: alt1
 License: BSD
 Group: System/Servers
-BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel libkrb5-devel
+BuildRequires: libpcre2-devel libssl-devel perl-devel zlib-devel libkrb5-devel
 BuildRequires: libGeoIP-devel
-BuildRequires: libmaxminddb-devel
 BuildRequires: libgd2-devel
 BuildRequires: libpam-devel
 BuildRequires: libxml2-devel libxslt-devel
-%define pcre_version 4.5
 %def_with perl
 %def_with aio
 %def_with aio
-%def_with ipv6
-%def_without syslog
 %def_with image_filter
 %def_with xslt
 %def_without debug
@@ -42,10 +34,10 @@ Source11: mime.types
 Source12: nginx.filetrigger
 Source13: ngx_http_auth_pam_module.tar
 Source14: spnego-http-auth-nginx-module.tar
-Source15: nginx-geoip2-module.tar
 Source100: %name.watch
-Patch1: nginx-0.8-syslog.patch
-Packager: Denis Smirnov <mithraen@altlinux.ru>
+
+Patch0: cache-purge-fix-compatibility.patch
+
 Requires(pre): shadow-utils
 Requires(post): sed
 Provides: webserver
@@ -65,15 +57,6 @@ Requires: %name = %EVR
 
 %description geoip
 GeoIP module for nginx
-
-%package geoip2
-Summary: maxmind geoip2 module for nginx
-Group: System/Servers
-%def_with geoip2
-Requires: %name = %EVR
-
-%description geoip2
-maxmind geoip2 module for nginx
 
 %if_with image_filter
 %package image_filter
@@ -127,26 +110,16 @@ Fast HTTP server, extremely useful as an Apache frontend
 
 
 %prep
-%setup -a 7 -a 10 -a 13 -a 14 -a 15
-%if_with syslog
-%patch1 -p2
-%endif
+%setup -a 7 -a 10 -a 13 -a 14
 sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
 cp -f %SOURCE11 conf/mime.types
 
+pushd cache_purge
+%patch0 -p1
+popd
+
 %build
-%ifarch i686
-	CPU="-mtune=pentiumpro" \
-%else # pentium4 athlon
-	CPU="-mtune=%_arch" \
-%endif
-%ifarch i586
-	CPU="" \
-%endif
-%ifnarch %ix86
-	CPU="" \
-%endif # for x86_64 TODO for amd64/nocona
-CFLAGS="%optflags $CPU" ./configure \
+./configure \
 	--prefix=/ \
 	--conf-path=%nginx_etc/nginx.conf \
 	--sbin-path=%_sbindir \
@@ -161,16 +134,12 @@ CFLAGS="%optflags $CPU" ./configure \
 	--pid-path=%_var/run/nginx.pid \
 	--user=%nginx_user \
 	--group=%nginx_group \
-        --with-cc-opt="-I %_includedir/pcre/" \
 	--with-http_ssl_module \
 	--with-select_module    \
 	--with-poll_module      \
         --with-threads \
 %if_with aio
 	--with-file-aio		\
-%endif
-%if_with ipv6
-        --with-ipv6 \
 %endif
 	--with-http_ssl_module  \
 	--with-http_v2_module  \
@@ -184,9 +153,6 @@ CFLAGS="%optflags $CPU" ./configure \
 %endif
 %if_with geoip
 	--with-http_geoip_module=dynamic \
-%endif
-%if_with geoip2 # stream module depends on stream parameter below
-	--add-dynamic-module=nginx-geoip2-module \
 %endif
 %if_with spnego
 	--add-dynamic-module=spnego-http-auth-nginx-module \
@@ -222,12 +188,9 @@ CFLAGS="%optflags $CPU" ./configure \
 %if_with debug
 	--with-debug \
 %endif
-%if_with syslog
-	--with-syslog \
-%endif
 	--with-md5=%_libdir \
 	--with-sha1=%_libdir
-subst s!%buildroot!!g objs/*.h
+
 %make_build DESTDIR=%buildroot
 
 %install
@@ -339,12 +302,6 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %config(noreplace) %nginx_etc/modules-available.d/http_geoip.conf
 %modpath/ngx_http_geoip_module.so
 
-%files geoip2
-%config(noreplace) %nginx_etc/modules-available.d/http_geoip2.conf
-%config(noreplace) %nginx_etc/modules-available.d/stream_geoip2.conf
-%modpath/ngx_http_geoip2_module.so
-%modpath/ngx_stream_geoip2_module.so
-
 %if_with image_filter
 %files image_filter
 %config(noreplace) %nginx_etc/modules-available.d/http_image_filter.conf
@@ -372,8 +329,15 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
-* Mon Feb 13 2023 L.A. Kostis <lakostis@altlinux.ru> 1.22.1-alt3
-- added geoip2 module (updated to version 3.4).
+* Mon May 22 2023 Anton Farygin <rider@altlinux.ru> 1.24.0-alt1
+- 1.24.0
+- removed deprecated ipv6 configure flag
+- removed unused patches and options from specfile
+- built with libpcre2
+- cache_purge: fix compatibility with newest nginx
+- egrep was changed to grep -E in filetrigger to avoid warnings
+- updated spnego module
+- removed localhost listen from default config (fixed: #42313)
 
 * Thu Nov 03 2022 Arseny Maslennikov <arseny@altlinux.org> 1.22.1-alt2
 - NMU: Merge mime.types with upstream. (Closes: 38603)
