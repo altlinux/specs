@@ -24,7 +24,7 @@
 
 Name: graphviz
 Version: 8.0.5
-Release: alt1
+Release: alt2
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -54,11 +54,12 @@ Provides: libdotneato = %version
 Obsoletes: libdotneato < %version
 
 BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libgd2-devel swig tk-devel xorg-cf-files libltdl-devel qpdf libgs-devel ghostscript
-BuildRequires: libdevil-devel groff-ps
+BuildRequires: groff-ps
 
 %{?!_with_bootstrap:BuildRequires: ghostscript-utils libfreeglut-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel}
 %{?_enable_lua:BuildRequires: liblua5-devel}
 %{?_enable_guile:BuildRequires: guile22-devel}
+%{?_with_devil:BuildRequires: libdevil-devel}
 %if_enabled python3
 BuildRequires(pre): rpm-build-python3 python3-devel
 %add_python3_path %gvlibdir/python3/
@@ -365,6 +366,9 @@ rm -rf %buildroot%gvlibdir/python3/
 # - enable/fix/test language bindings
 
 %changelog
+* Tue May 23 2023 Michael Shigorin <mike@altlinux.org> 8.0.5-alt2
+- I don't need devil
+
 * Fri May 12 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 8.0.5-alt1
 - Updated to upstream 8.0.5
 - Spec cleanup
