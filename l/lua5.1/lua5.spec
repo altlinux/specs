@@ -7,7 +7,7 @@
 
 Name: lua5.1
 Version: 5.1.5
-Release: alt20
+Release: alt21
 
 Summary: Embeddable programming language
 License: MIT
@@ -46,6 +46,7 @@ Group: System/Libraries
 Provides: %_libdir/lua/5.1
 Provides: %_datadir/lua/5.1
 Provides: lua(abi) = %abi_version
+Provides: lua5.1(coroutine)
 Requires: lib%{name}-preinstall = %EVR
 Requires(pre): lib%{name}-preinstall = %EVR
 Conflicts: lua5.1-alt-compat < 1.0.1
@@ -279,6 +280,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Tue May 23 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt21
+- liblua5.1: provides lua5.1(coroutine) (closes: #46197).
+
 * Wed Jun 29 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt20
 - lualua5.1-devel: require rpm-build-lua.
 
