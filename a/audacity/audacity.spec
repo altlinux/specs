@@ -8,8 +8,8 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.1.3
-Release: alt1
+Version: 3.3.2
+Release: alt2
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -26,17 +26,11 @@ Source1: %name-%version-help-en.tar
 # XXX
 Source2: loffice-libcxx-wrapper.sh
 
-Patch0001: 0001-Add-keywords-to-desktop-file-fix-exec-command.patch
+Patch0001: 0001-Desktop-file-fix-exec-command.patch
 Patch0002: 0002-Use-home-directory-for-temp-dir-instead-of-var-tmp-t.patch
 Patch0003: 0003-Fix-building-with-system-sbsms.patch
 Patch0004: 0004-Force-GTK-3.0.patch
-# https://github.com/audacity/audacity/issues/2163
-Patch0005: 0005-Do-not-create-file-in-strange-place.patch
-
-# Patches needed to compile against wxWidgets 3.1.6.
-# Sent upstream in https://github.com/audacity/audacity/pull/2776
-Patch0006: wx316_bitmaps.patch
-Patch0007: wx316_customLanguages.patch
+Patch0005: 0005-Fix-lv2-external-gui.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -88,6 +82,7 @@ BuildRequires: pkgconfig(vamp-hostsdk)
 BuildRequires: pkgconfig(vorbis)
 BuildRequires: pkgconfig(vorbisenc)
 BuildRequires: pkgconfig(vorbisfile)
+BuildRequires: pkgconfig(wavpack)
 BuildRequires: pkgconfig(zlib)
 # %%autopatch macro appeared in 4.0.4-alt133
 BuildRequires: rpm-build >= 4.0.4-alt133
@@ -139,11 +134,6 @@ sed -i "/std::initializer_list/s/static//" src/prefs/GUIPrefs.cpp
 %endif
 
 %build
-# src/RevisionIdent.h is in src/.gitignore and may be missing,
-# what leads to build errors, but it's empty in release tarballs
-# https://github.com/audacity/audacity/issues/2163
-echo > src/RevisionIdent.h
-
 export ADD_LIBS="%add_libs"
 install -m0755 %SOURCE2 ./g++
 export CXX="$PWD/g++"
@@ -157,6 +147,7 @@ export CC="$(command -v gcc)"
   -Daudacity_lib_preference:STRING=system \
   -Daudacity_has_networking=no \
   -Daudacity_conan_enabled=Off \
+  -Daudacity_has_vst3=Off \
   -Daudacity_obey_system_dependencies=On \
   -Daudacity_use_ffmpeg:STRING=loaded \
   -Daudacity_use_libavcodec:STRING=system \
@@ -219,7 +210,7 @@ echo "$p" | grep -q libmp3lame
 #echo "$p" | grep -q libavcodec
 
 %files -f %name.lang
-%doc CHANGELOG.txt CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.txt README.md
+%doc CHANGELOG.txt CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.md
 %_bindir/audacity
 %_libdir/audacity
 %_mandir/man?/*
@@ -239,6 +230,14 @@ echo "$p" | grep -q libmp3lame
 %_datadir/%name/help
 
 %changelog
+* Wed May 24 2023 Ivan A. Melnikov <iv@altlinux.org> 3.3.2-alt2
+- fix load of lv2 external UIs with system libsuil
+- restore desktop file fix
+
+* Fri May 19 2023 Ivan A. Melnikov <iv@altlinux.org> 3.3.2-alt1
+- 3.3.2
+- build with wavpack and w/o vst3sdk
+
 * Mon Sep 19 2022 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt1
 - new version 3.1.3
 - build with wxGTK3.2
