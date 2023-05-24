@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro
 Version: 10.0
-Release: alt1
+Release: alt3
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -48,6 +48,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Wed May 24 2023 Denis Medvedev <nbr@altlinux.org> 10.0-alt3
+- bump version to allow c10f1 update
+
 * Wed Jul 21 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.0-alt1
 - Built for p10 branch.
 - Added [p10] key to vendor.list.
