@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 10.0.7
+Version: 10.1.1
 Release: alt1
 Summary: Install packages and run Python with them
 License: MIT
@@ -19,8 +19,8 @@ Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
+%add_pyproject_deps_check_filter pytest-ruff
 %pyproject_builddeps_metadata_extra testing
 %endif
 
@@ -42,7 +42,7 @@ interpreter run.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc README.rst
@@ -53,6 +53,9 @@ interpreter run.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 24 2023 Stanislav Levin <slev@altlinux.org> 10.1.1-alt1
+- 10.0.7 -> 10.1.1.
+
 * Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 10.0.7-alt1
 - 10.0.5 -> 10.0.7.
 
