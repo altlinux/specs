@@ -1,5 +1,5 @@
 Name: python3-module-maturin
-Version: 0.14.17
+Version: 1.0.0
 Release: alt1
 
 Summary: Rust within Python
@@ -9,14 +9,12 @@ Url: https://maturin.rs/
 
 Source0: %name-%version.tar
 Source1: crates.tar
+Source2: pyproject_deps.json
 
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: rust-cargo /proc
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(setuptools_rust)
-BuildRequires: python3(wheel)
-BuildRequires: python3(tomli)
 BuildRequires: pkgconfig(bzip2)
+%pyproject_builddeps_build
 
 Requires: python3(tomli)
 Provides: maturin = %version-%release
@@ -49,6 +47,9 @@ chmod +x %buildroot%_bindir/maturin
 %python3_sitelibdir/maturin-%version.dist-info
 
 %changelog
+* Wed May 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt1
+- 1.0.0 released
+
 * Fri Apr 14 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.14.17-alt1
 - 0.14.17 released
 
