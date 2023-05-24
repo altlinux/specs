@@ -1,10 +1,11 @@
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type
 %define _unpackaged_files_terminate_build 1
+%define git 04721e3
 
 Name: nvtop
 Version: 3.0.1
-Release: alt2
+Release: alt3.g%{git}
 
 Summary: (h)top like task monitor for AMD, Intel and Nvidia GPUs
 Group: Monitoring
@@ -14,6 +15,7 @@ Url: https://github.com/Syllo/nvtop
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libsystemd-devel libudev-devel libdrm-devel libncurses-devel
@@ -30,6 +32,7 @@ a htop familiar way.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %_cmake \
@@ -52,6 +55,11 @@ a htop familiar way.
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Wed May 24 2023 L.A. Kostis <lakostis@altlinux.ru> 3.0.1-alt3.g04721e3
+- Updated to GIT 04721e3:
+  + MSM/Adreno support
+  + fix AMD gpu tx/rx readings.
+
 * Thu May 04 2023 L.A. Kostis <lakostis@altlinux.ru> 3.0.1-alt2
 - Fix requires for nvidia.
 
