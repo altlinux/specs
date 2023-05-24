@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    auditd-plugin-clickhouse-lite
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 Summary: A lightweight plugin for auditd daemon to send audit data to a Clickhouse database
 Group:   Monitoring
@@ -47,6 +47,10 @@ BUILD=%_cmake__builddir bats test-suite.bats
 %config(noreplace) %_sysconfdir/logrotate.d/%name-logrotate.conf
 
 %changelog
+* Wed May 24 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.5-alt1
+- Check that the plugin copes normally with slow and very slow input.
+- Fix: Search for newline only in newly received data.
+
 * Tue May 23 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.4-alt1
 - Make writer throw errors when running with -e.
 
