@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.186
+Version: 4.0.4.188
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,13 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue May 23 2023 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.188-alt1
+- Set stdin to an empty stream for all build scripts.
+
+* Tue Mar 14 2023 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.187-alt1
+- systemd-services.req.files: handle user units and drop-in directories
+  correctly.
+
 * Wed Jan 25 2023 Alexey Shabalin <shaba@altlinux.org> 4.0.4.186-alt1
 - systemd-services.req.in: fixed autoreq for systemd units.
 
