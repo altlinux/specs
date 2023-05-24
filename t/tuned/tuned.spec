@@ -6,7 +6,7 @@
 
 Name: tuned
 Version: 2.16.0
-Release: alt1
+Release: alt2
 
 Summary: A dynamic adaptive system tuning daemon
 
@@ -129,7 +129,6 @@ Additional tuned profile(s) targeted to Atomic host and guest.
 Group: System/Configuration/Other
 Summary: Additional tuned profile(s) targeted to realtime
 Requires: %name = %EVR
-Requires: tuna
 
 %description profiles-realtime
 Additional tuned profile(s) targeted to realtime.
@@ -139,7 +138,6 @@ Group: System/Configuration/Other
 Summary: Additional tuned profile(s) targeted to Network Function Virtualization (NFV) guest
 Requires: %name = %EVR
 Requires: %name-profiles-realtime = %EVR
-Requires: tuna
 
 %description profiles-nfv-guest
 Additional tuned profile(s) targeted to Network Function Virtualization (NFV) guest.
@@ -149,7 +147,6 @@ Group: System/Configuration/Other
 Summary: Additional tuned profile(s) targeted to Network Function Virtualization (NFV) host
 Requires: %name = %EVR
 Requires: %name-profiles-realtime = %EVR
-Requires: tuna
 #Recommends: tuned-profiles-nfv-host-bin
 
 %description profiles-nfv-host
@@ -458,6 +455,9 @@ fi
 %_man7dir/tuned-profiles-postgresql.7*
 
 %changelog
+* Wed May 24 2023 Vitaly Chikunov <vt@altlinux.org> 2.16.0-alt2
+- profiles/realtime: Remove tuna(8) call and dependence.
+
 * Thu Jul 22 2021 Vitaly Chikunov <vt@altlinux.org> 2.16.0-alt1
 - Update to v2.16.0 (2021-07-21).
 
