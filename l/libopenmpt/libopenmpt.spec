@@ -1,5 +1,5 @@
 Name: libopenmpt
-Version: 0.6.3
+Version: 0.7.1
 Release: alt1
 License: BSD
 Group: System/Libraries
@@ -96,6 +96,9 @@ install -d %buildroot%_docdir/%name/examples
 
 
 %changelog
+* Wed May 24 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.1-alt1
+- new version
+
 * Wed Aug 04 2021 Artyom Bystrov <arbars@altlinux.org> 0.6.3-alt1
 - new version
 
