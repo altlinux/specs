@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: keyd
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: A key remapping daemon for linux.
@@ -32,8 +32,6 @@ using kernel level input primitives (evdev, uinput).
 %makeinstall_std
 
 install -Dm644 keyd.service -t %buildroot%_unitdir/
-install -Dm644 keyd.quirks %buildroot%_datadir/libinput/30-keyd.quirks
-
 
 %pre
 /usr/sbin/groupadd -r -f keyd ||:
@@ -42,12 +40,14 @@ install -Dm644 keyd.quirks %buildroot%_datadir/libinput/30-keyd.quirks
 %_bindir/keyd
 %_bindir/keyd-application-mapper
 %_datadir/keyd
-%_datadir/libinput/30-keyd.quirks
 %_unitdir/keyd.service
 %_defaultdocdir/keyd
 %_man1dir/*
 
 %changelog
+* Wed May 24 2023 Egor Ignatov <egori@altlinux.org> 2.4.3-alt1
+- new version 2.4.3
+
 * Tue Jul 26 2022 Egor Ignatov <egori@altlinux.org> 2.4.2-alt1
 - new version 2.4.2
 
