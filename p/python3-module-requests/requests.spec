@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pkgname
-Version: 2.29.0
+Version: 2.31.0
 Release: alt1
 
 Summary: HTTP library, written in Python, for human beings
@@ -50,7 +50,7 @@ rm -rf requests/cacert.pem
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra tests
+%pyproject_run_pytest -ra -Wignore tests
 
 %files
 %doc AUTHORS.rst HISTORY.md README.md
@@ -58,6 +58,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/%{pyproject_distinfo %pkgname}/
 
 %changelog
+* Tue May 23 2023 Stanislav Levin <slev@altlinux.org> 2.31.0-alt1
+- 2.29.0 -> 2.31.0 (fixes: CVE-2023-32681).
+
 * Fri Apr 28 2023 Stanislav Levin <slev@altlinux.org> 2.29.0-alt1
 - 2.28.2 -> 2.29.0.
 
