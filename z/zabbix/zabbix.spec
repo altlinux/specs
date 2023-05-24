@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		a90e18c0b6e
+%define svnrev		c81d82859a8
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 %endif
 
 Name: zabbix
-Version: 6.0.16
+Version: 6.0.17
 Release: alt1
 Epoch: 1
 
@@ -154,12 +154,6 @@ Group: Monitoring
 Requires: php-engine
 BuildArch: noarch
 
-%package phpfrontend-php7
-Summary: zabbix web frontend, edition for php7
-Group: Monitoring
-Requires: php7-gd2 php7-mysqli php7-pgsql php7-sockets php7-mbstring php7-dom php7-openssl
-BuildArch: noarch
-
 %package phpfrontend-php8.0
 Summary: zabbix web frontend, edition for php8.0
 Group: Monitoring
@@ -182,14 +176,6 @@ BuildArch: noarch
 Summary: %name-phpfrontend's apache2 config files
 Group: Monitoring
 Requires: %name-phpfrontend-engine = %epoch:%version-%release, apache2-base
-BuildArch: noarch
-
-%package phpfrontend-apache2-mod_php7
-Summary: Requirements for the use of apache2-mod_php7
-Group: Monitoring
-Requires: %name-phpfrontend-apache2
-Requires: apache2-httpd-prefork-like
-Requires: apache2-mod_php7
 BuildArch: noarch
 
 %package phpfrontend-apache2-mod_php8.0
@@ -320,10 +306,6 @@ Sudo entry for zabbix agent.
 %description phpfrontend-apache2
 zabbix's apache2 config files
 
-%description phpfrontend-apache2-mod_php7
-Contains requirements for the use of apache2-mod_php7
-in to zabbix phpfrontend
-
 %description phpfrontend-apache2-mod_php8.0
 Contains requirements for the use of apache2-mod_php8.0
 in to zabbix phpfrontend
@@ -338,9 +320,6 @@ in to zabbix phpfrontend
 
 %description phpfrontend-engine
 a php frontend for zabbix - core
-
-%description phpfrontend-php7
-zabbix web frontend, edition for php7
 
 %description phpfrontend-php8.0
 zabbix web frontend, edition for php8.0
@@ -758,7 +737,6 @@ fi
 %webserver_webappsdir/%name
 %doc add_new_language.sh make_mo.sh update_po.sh
 
-%files phpfrontend-php7
 %files phpfrontend-php8.0
 %files phpfrontend-php8.1
 %files phpfrontend-php8.2
@@ -766,7 +744,6 @@ fi
 %files phpfrontend-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
-%files phpfrontend-apache2-mod_php7
 %files phpfrontend-apache2-mod_php8.0
 %files phpfrontend-apache2-mod_php8.1
 %files phpfrontend-apache2-mod_php8.2
@@ -781,6 +758,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Apr 25 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.17-alt1
+- 6.0.17
+- Remove subpackages phpfrontend-php7 and phpfrontend-apache2-mod_php7
+
 * Tue Apr 18 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.16-alt1
 - 6.0.16
 
