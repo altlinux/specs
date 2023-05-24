@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: glances
-Version: 3.3.1.1
+Version: 3.4.0.3
 Release: alt1
 
 Summary: CLI curses based monitoring tool
@@ -68,6 +68,9 @@ Glances uses the PsUtil library to get information from your system.
 %python3_sitelibdir/Glances-%version.dist-info
 
 %changelog
+* Wed May 24 2023 Egor Ignatov <egori@altlinux.org> 3.4.0.3-alt1
+- new version 3.4.0.3
+
 * Fri Mar 03 2023 Egor Ignatov <egori@altlinux.org> 3.3.1.1-alt1
 - new version 3.3.1.1
 
