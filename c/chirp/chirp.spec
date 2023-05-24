@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: chirp
-Version: 20221229
+Version: 20230514
 Release: alt2
 Summary: A tool for programming two-way radio equipment
 
@@ -27,6 +27,12 @@ BuildRequires: python3(wheel)
 BuildRequires: python3(wx)
 BuildRequires: python3(yattag)
 
+# for Radio -> Query Source
+%py3_requires suds
+
+# for build translations
+BuildRequires: /proc
+
 %description
 Chirp is a tool for programming two-way radio equipment
 It provides a generic user interface to the programming
@@ -40,16 +46,53 @@ the hood.
 %build
 %pyproject_build
 
+# build translations
+pushd chirp/locale/
+make
+popd
+
 %install
 %pyproject_install
 
+# Desktop file
+mkdir -p %buildroot%_datadir/applications
+
+cat>%buildroot%_datadir/applications/%name.desktop<<EOF
+[Desktop Entry]
+Name=Chirp
+GenericName=chirp
+Exec=chirp
+Icon=chirp
+Terminal=false
+Type=Application
+Categories=AudioVideo;Audio;HamRadio;
+Comment=CHIRP Radio Programming Tool
+EOF
+
+# Icon
+mkdir -p %buildroot/%_iconsdir/hicolor/scalable/apps
+cp -f chirp/share/chirp.svg %buildroot/%_iconsdir/hicolor/scalable/apps/chirp.svg
+
+# Install translations
+mkdir %buildroot/%python3_sitelibdir/%name/locale
+cp -r chirp/locale/*/ %buildroot/%python3_sitelibdir/%name/locale/
+
 %files
-%doc COPYING
-%_bindir/chirp
+%doc README.md
+%_bindir/*
 %python3_sitelibdir/%name/
-%python3_sitelibdir/%{name}-0.dist-info/
+%python3_sitelibdir/%name-0.dist-info/
+%_datadir/applications/%name.desktop
+%_iconsdir/hicolor/scalable/apps/chirp.svg
 
 %changelog
+* Wed May 24 2023 Anton Midyukov <antohami@altlinux.org> 20230514-alt2
+- Add desktop file and icon
+- Add translations
+
+* Wed May 24 2023 Anton Midyukov <antohami@altlinux.org> 20230514-alt1
+- new snapshot
+
 * Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 20221229-alt2
 - Fixed FTBFS (setuptools 66).
 
