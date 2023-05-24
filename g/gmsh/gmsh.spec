@@ -1,7 +1,7 @@
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
 Version: 4.11.0
-Release: alt1
+Release: alt1.1
 Group: Sciences/Mathematics
 License: GPLv2
 URL: https://gmsh.info/
@@ -68,6 +68,11 @@ This package contains tutorial and example files for %name.
 %ifarch ppc64le
 %patch -p2
 %endif
+%ifarch %e2k
+# need to disable workarounds for GCC
+sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
+  contrib/eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h
+%endif
 
 %build
 # 1. Dynamic library and private API is needed for compiling getdb
@@ -112,6 +117,9 @@ rm -f %buildroot%_libdir/*.jl
 
 
 %changelog
+* Wed May 24 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.11.0-alt1.1
+- Fixed build for Elbrus
+
 * Mon Dec 12 2022 Vladislav Zavjalov <slazav@altlinux.org> 4.11.0-alt1
 - New version
 
