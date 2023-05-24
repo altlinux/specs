@@ -1,6 +1,6 @@
 Name: logrotate
 Version: 3.20.1
-Release: alt1
+Release: alt2
 
 Summary: Rotates, compresses, and mails system logs
 License: GPL-2.0-or-later
@@ -48,13 +48,14 @@ touch AUTHORS ChangeLog NEWS README
 
 %install
 %makeinstall_std
-mkdir -p %buildroot/etc/logrotate.d
+mkdir -p %buildroot{/etc/logrotate.d,%_unitdir}
 
 install -pD -m640 examples/logrotate.conf %buildroot/etc/logrotate.conf
 install -pD -m640 examples/btmp %buildroot/etc/logrotate.d/btmp
 install -pD -m640 examples/wtmp %buildroot/etc/logrotate.d/wtmp
 install -pD -m755 %_sourcedir/logrotate.cron %buildroot/etc/cron.daily/logrotate
 install -pD -m644 /dev/null %buildroot%_localstatedir/logrotate/status
+install -pD -m644 examples/logrotate.{service,timer} %buildroot%_unitdir/
 
 %check
 make test
@@ -62,6 +63,14 @@ make test
 %post
 if [ ! -s %_localstatedir/logrotate/status -a -s %_localstatedir/logrotate.status ]; then
 	mv -f %_localstatedir/logrotate.status %_localstatedir/logrotate/status
+fi
+if sd_booted; then
+%post_service logrotate.timer
+fi
+
+%preun
+if sd_booted; then
+%preun_service logrotate.timer
 fi
 
 %files
@@ -74,9 +83,13 @@ fi
 %attr(750,root,root) %dir /etc/logrotate.d
 %attr(700,root,root) %dir %_localstatedir/logrotate
 %attr(644,root,root) %verify(not size md5 mtime) %config(noreplace) %_localstatedir/logrotate/status
+%_unitdir/logrotate.*
 %doc ChangeLog.md
 
 %changelog
+* Wed May 24 2023 Alexey Shabalin <shaba@altlinux.org> 3.20.1-alt2
+- Add systemd service and timer to package.
+
 * Sat May 28 2022 Alexey Gladkov <legion@altlinux.ru> 3.20.1-alt1
 - New version (3.20.1).
 - Security fixes:
