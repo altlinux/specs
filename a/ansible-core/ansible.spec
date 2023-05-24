@@ -2,7 +2,7 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.14.5
+Version: 2.15.0
 Release: alt1
 
 Group:   System/Configuration/Other
@@ -10,7 +10,6 @@ License: GPL-3.0
 Source0: %rname-%version.tar
 Source1: apt_rpm.py
 Source2: apt_repo.py
-Patch0: 0001-ansible-galaxy-support-resolvelib-0.5.3-0.10.0-79399.patch
 
 Url: http://www.ansible.com
 
@@ -28,6 +27,7 @@ BuildRequires: python3-module-packaging
 BuildRequires: python3-module-docutils
 BuildRequires: python3-module-straight-plugin
 BuildRequires: python3-module-resolvelib
+BuildRequires: python3-module-wheel
 
 Requires: ca-certificates >= 2015.10.29
 %py3_requires yaml
@@ -55,24 +55,20 @@ are transferred to managed machines automatically.
 
 %prep
 %setup -n %rname-%version
-%patch0 -p1
+grep -Rl '^#!.*python$' * | xargs subst 's|^#!.*python$|#!%__python3|'
 cp %SOURCE1 lib/ansible/modules/apt_rpm.py
 cp %SOURCE2 lib/ansible/modules/apt_repo.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 mkdir -p %buildroot%_sysconfdir/%rname/
 cp examples/ansible.cfg %buildroot%_sysconfdir/%rname/
 touch %buildroot%_sysconfdir/%rname/hosts
-mkdir -p %buildroot/%_man1dir
-make PYTHON=python3 docs
-cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 
 # Fix shebangs
-grep -Rl '^#!.*python$' %buildroot | xargs subst 's|^#!.*python$|#!%__python3|'
 rm -f %buildroot%_bindir/ansible-test
 rm -rf %buildroot%python3_sitelibdir/ansible_test
 
@@ -81,10 +77,14 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %doc README.rst changelogs/CHANGELOG-v*.rst
 %_bindir/%{rname}*
 %config(noreplace) %_sysconfdir/%rname
-%_man1dir/%{rname}*
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Wed May 24 2023 Andrey Cherepanov <cas@altlinux.org> 2.15.0-alt1
+- New version.
+- Built using pyproject_* macroses.
+- Upstream removed man pages.
+
 * Fri Apr 28 2023 Andrey Cherepanov <cas@altlinux.org> 2.14.5-alt1
 - New version.
 
