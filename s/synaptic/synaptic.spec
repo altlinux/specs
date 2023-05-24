@@ -6,10 +6,12 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt28.2
+Release: alt29
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
 Group: System/Configuration/Packaging
+# common/rtagcoll{filter,builder}.cc list LGPL-2.1+,
+# but that doesn't change the overall license
 License: GPL-2.0+
 Url: http://www.nongnu.org/synaptic/
 
@@ -17,7 +19,6 @@ Url: http://www.nongnu.org/synaptic/
 Source: %name-%version.tar
 Source1: package-supported.png
 Source2: %name.conf
-Source3: %name-ru.po
 
 Patch1: %name-%version-alt.patch
 
@@ -58,7 +59,6 @@ Synaptic - это графическая оболочка для APT (Advanced P
 %patch1 -p1
 
 install -p -m644 %SOURCE1 pixmaps/hicolor/16x16/package-supported.png
-install -p -m644 %SOURCE3 po/ru.po
 
 # bootstrap russian help files
 gnome-doc-prepare --copy --force
@@ -110,6 +110,12 @@ install -p -m644 %SOURCE2 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Tue May 23 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.58-alt29
+- Enabled the dialog to show changelogs. (In ALT, they are in the index,
+  unlike in Debian, where they have to be downloaded separately.)
+  Find it in the top menu: "Package" -> "Download Changelog". (TODO/patches
+  are welcome: Place it along the package properties like dependencies.)
+
 * Mon Jun 13 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.58-alt28.2
 - NMU: added russian tranlation from gammaray_basealt.ru
 - Thanks gosts_87@ for creating bugs and trying to translate (ALT bug 42843)
@@ -611,5 +617,3 @@ install -p -m644 %SOURCE2 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 * Mon Jan 15 2001 Alfredo K. Kojima <kojima@conectiva.com.br>
 + raptor-0.2-1cl
 - release version 0.2 (first)
-
-
