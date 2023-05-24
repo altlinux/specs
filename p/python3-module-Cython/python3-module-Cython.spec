@@ -7,7 +7,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.29.34
+Version: 0.29.35
 Release: alt1
 
 Summary: C-extensions for Python 3
@@ -128,6 +128,9 @@ done
 %endif
 
 %changelog
+* Wed May 24 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.35-alt1
+- 0.29.35
+
 * Mon Apr 24 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.34-alt1
 - 0.29.34
 - provides python3-module-cython (ALT #45944)
