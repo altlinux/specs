@@ -1,9 +1,9 @@
 Name: cryptmount
-Version: 5.3.1
-Release: alt2
+Version: 6.2.0
+Release: alt1
 Group: File tools
 Packager: Pavel Isopenko <pauli@altlinux.org>
-License: GPL
+License: GPL-2.0
 Summary: Let ordinary users mount an encrypted file system
 Summary(ru_RU.UTF-8): Монтирование зашифрованной файловой системы с правами обычного пользователя
 Url: http://cryptmount.sourceforge.net
@@ -31,11 +31,11 @@ cryptmount - утилита для операционной системы GNU/L
 
 %prep
 %setup
-perl -pi.orig -e 's|^(\s*)chown(\s*root)|\1#chown\2|g;
-s|%_sysconfdir/init.d|%_initdir|g;
-' Makefile.am Makefile.in
 
 %build
+%__aclocal
+%autoreconf
+%__autoconf
 %configure --enable-delegation --enable-fsck
 %make_build
 
@@ -50,7 +50,7 @@ mv %buildroot%_sysconfdir/modules-load.d/cryptmount.conf %buildroot%_modulesload
 %find_lang --with-man --append --output=%name.lang cmtab
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING NEWS README* RELNOTES ToDo
+%doc AUTHORS ChangeLog COPYING README* RELNOTES
 %_mandir/man5/cmtab.5*
 %_mandir/man8/cryptmount*.8*
 
@@ -63,6 +63,10 @@ mv %buildroot%_sysconfdir/modules-load.d/cryptmount.conf %buildroot%_modulesload
 %attr(4711, root, root) %_bindir/cryptmount
 
 %changelog
+* Wed Apr 26 2023 Pavel Isopenko <pauli@altlinux.org> 6.2.0-alt1
+- new version 6.2.0
+- init script (ALT #37128)
+
 * Tue Aug 20 2019 Alexey Shabalin <shaba@altlinux.org> 5.3.1-alt2
 - fixed BR:
 - move config from /etc/modules-load.d to /lib/modules-load.d
