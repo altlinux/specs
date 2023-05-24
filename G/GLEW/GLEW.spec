@@ -3,7 +3,7 @@
 
 Name: GLEW
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: The OpenGL Extension Wrangler library
 License: BSD and MIT
@@ -14,7 +14,6 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: https://downloads.sourceforge.net/project/glew/glew/%version/glew-%version.tgz
 
-BuildRequires: gcc
 BuildRequires: libGLU-devel
 
 %description
@@ -75,7 +74,7 @@ sed -i '/LIB.STATIC.*DESTDIR/d' Makefile
 
 %build
 install -pm755 -- %_datadir/gnu-config/config.guess config/
-%make_build STRIP= CFLAGS.EXTRA='%optflags %optflags_shared' LDFLAGS.EXTRA= \
+%make_build SYSTEM=linux-egl STRIP= CFLAGS.EXTRA='%optflags %optflags_shared' LDFLAGS.EXTRA= \
 	glew.lib.shared \
 %if_enabled static
 	glew.lib.static \
@@ -104,6 +103,9 @@ install -pm755 -- %_datadir/gnu-config/config.guess config/
 %endif
 
 %changelog
+* Thu May 25 2023 Nazarov Denis <nenderus@altlinux.org> 2.2.0-alt2
+- Build with EGL support (ALT #46138)
+
 * Sun Jan 10 2021 Nazarov Denis <nenderus@altlinux.org> 2.2.0-alt1
 - Version 2.2.0
 
