@@ -3,7 +3,7 @@
 %define pkgname attrs
 
 Name: python3-module-%pkgname
-Version: 22.2.0
+Version: 23.1.0
 Release: alt1
 
 Summary: Python attributes without boilerplate
@@ -16,7 +16,12 @@ Source: %pkgname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(hatchling)
+BuildRequires: python3(hatch-fancy-pypi-readme)
+BuildRequires: python3(hatch-vcs)
+BuildRequires: git
 
 %description
 attrs is an MIT-licensed Python package with class decorators that ease the
@@ -26,18 +31,29 @@ chores of implementing the most common attribute-related object protocols.
 %setup -n %pkgname-%version
 
 %build
-%python3_build
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc CHANGELOG.md LICENSE README.md
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%newoname/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%newoname-%version.dist-info/
 
 %changelog
+* Thu May 25 2023 Vladimir Didenko <cow@altlinux.org> 23.1.0-alt1
+- New version
+
 * Tue Jan 10 2023 Vladimir Didenko <cow@altlinux.org> 22.2.0-alt1
 - New version
 
