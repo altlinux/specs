@@ -1,7 +1,7 @@
 %define pypi_name cinemagoer
 
 Name: python3-module-%pypi_name
-Version: 2022.11.22
+Version: 2023.05.01
 Release: alt1
 Summary: Retrieve and manage the data of the IMDb movie database
 Group: Development/Python
@@ -39,10 +39,13 @@ rm -rf %pypi_name.egg-info
 %_bindir/imdbpy
 %_bindir/*.py
 %python3_sitelibdir/imdb/
-%python3_sitelibdir/%pypi_name-%version-py*.egg-info
+%python3_sitelibdir/*.egg-info
 
 
 %changelog
+* Thu May 25 2023 Artyom Bystrov <arbars@altlinux.org> 2023.05.01-alt1
+- update to new version
+
 * Fri Nov 25 2022 Artyom Bystrov <arbars@altlinux.org> 2022.11.22-alt1
 - initial build for ALT Sisyphus
 
