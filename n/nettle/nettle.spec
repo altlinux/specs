@@ -6,8 +6,8 @@
 %set_verify_elf_method strict
 
 Name: nettle
-Version: 3.8.1
-Release: alt2
+Version: 3.9.0
+Release: alt1
 Summary: A low-level cryptographic library
 
 License: GPL-2.0-or-later or LGPL-3.0-or-later
@@ -109,6 +109,9 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %_infodir/*.*
 
 %changelog
+* Thu May 25 2023 Mikhail Efremov <sem@altlinux.org> 3.9.0-alt1
+- Updated to 3.9.0.
+
 * Tue Oct 11 2022 Vitaly Chikunov <vt@altlinux.org> 3.8.1-alt2
 - Enabled LFS on 32-bit systems.
 - Updated License tag.
