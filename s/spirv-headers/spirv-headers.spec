@@ -1,9 +1,9 @@
-%define git 1feaf44
+%define git 268a061
 
 Name: spirv-headers
 Version: 1.5.5
-# sdk-1.3.243
-Release: alt7.g%{git}
+# sdk-1.3.250
+Release: alt8.g%{git}
 Epoch: 2
 
 Summary: machine-readable files for the SPIR-V Registry
@@ -37,7 +37,7 @@ This repository contains machine-readable files for the SPIR-V Registry. This in
 %cmake_install
 
 %files
-%doc *.md example
+%doc *.md
 %dir %_includedir/spirv
 %dir %_datadir/cmake/SPIRV-Headers
 %_includedir/spirv/*
@@ -45,6 +45,10 @@ This repository contains machine-readable files for the SPIR-V Registry. This in
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu May 25 2023 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt8.g268a061
+- Updated to GIT 268a061 (for sdk-1.3.250).
+- Don't pack examples (moved to separate library).
+
 * Thu Mar 23 2023 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt7.g1feaf44
 - Updated to GIT 1feaf44 (for sdk-1.3.243).
 
