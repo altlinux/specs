@@ -7,7 +7,7 @@
 
 Name: papi
 Version: 6.0.0
-Release: alt6
+Release: alt7
 
 Summary: Performance Application Programming Interface
 
@@ -159,15 +159,15 @@ set +x
 # Only selected fast and reliable ctests.
 for i in \
 	attach2 attach3 attach_cpu attach_cpu_sys_validate attach_cpu_validate	\
-	attach_target attach_validate byte_profile calibrate case1 case2	\
-	clockres_pthreads cmpinfo code2name data_range describe			\
+	attach_target attach_validate byte_profile				\
+	clockres_pthreads cmpinfo code2name data_range				\
 	disable_component dmem_info earprofile eventname exec exec2		\
 	failed_events first fork fork2 forkexec forkexec2 forkexec3 forkexec4	\
-	get_event_component inherit johnmay2 locks_pthreads low-level		\
-	max_multiplex memory mendes-alt overflow overflow2 overflow_index	\
-	overflow_one_and_read overflow_single_event overflow_twoevents		\
-	p4_lst_ins profile profile_force_software profile_pthreads pthrtough	\
-	pthrtough2 remove_events reset reset_multiplex tenth version zero	\
+	get_event_component inherit locks_pthreads low-level			\
+	memory overflow overflow_index						\
+	overflow_one_and_read							\
+	p4_lst_ins pthrtough							\
+	pthrtough2 remove_events reset reset_multiplex version zero		\
 	zero_flip zero_fork zero_omp zero_pthreads zero_shmem zero_smp
 do
 	if ctests/$i >.out 2>&1; then
@@ -202,6 +202,9 @@ set -x
 %endif
 
 %changelog
+* Fri May 26 2023 Vitaly Chikunov <vt@altlinux.org> 6.0.0-alt7
+- Fix rebuild due to "Couldn't open hw_instructions".
+
 * Wed Jan 05 2022 Vitaly Chikunov <vt@altlinux.org> 6.0.0-alt6
 - Unbundle libpfm.
 - Update License tag.
