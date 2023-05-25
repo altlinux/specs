@@ -1,14 +1,14 @@
 %define module_name rtl8821cu
-%define git_rev 8c2226a
+%define git_rev e49409f
 
 Name: kernel-source-%module_name
-Version: 5.4.1
-Release: alt6.git%git_rev
+Version: 5.12.0.4
+Release: alt1.git%git_rev
 
 Summary: Realtek RTL8811CU/RTL8821CU USB wifi adapter driver
 Group: Development/Kernel
 License: GPL-2.0
-URL: https://github.com/brektrou/rtl8821CU
+URL: https://github.com/morrownr/8821cu-20210916
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 BuildArch: noarch
@@ -31,6 +31,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu May 25 2023 Andrey Cherepanov <cas@altlinux.org> 5.12.0.4-alt1.gite49409f
+- New version from https://github.com/morrownr/8821cu-20210916.
+
 * Fri Apr 22 2022 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt6.git8c2226a
 - Fixed build for kernel 5.17.
 
