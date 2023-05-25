@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro-gostcrypto
 Version: 10.0
-Release: alt1
+Release: alt3
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -48,6 +48,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Thu May 25 2023 Denis Medvedev <nbr@altlinux.org> 10.0-alt3
+- bump version to avoid neighbourhood check in c10f1
+
 * Wed Jul 28 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.0-alt1
 - Updated apt-conf-branch-gostcrypto for p10 branch.
 
