@@ -11,7 +11,7 @@
 %define rname kpipewire
 Name: plasma5-%rname
 Version: 5.27.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -20,6 +20,7 @@ Url: http://www.kde.org
 License: LGPL-2.0-only AND LGPL-3.0-only
 
 Source: %rname-%version.tar
+Patch1: alt-format-buffer.patch
 
 # Automatically added by buildreq on Mon Oct 31 2022 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libcairo-gobject libctf-nobfd0 libgdk-pixbuf libglvnd-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-waylandclient librabbitmq-c4 libsasl2-3 libssl-devel libstdc++-devel libwayland-client-devel libwayland-server libx265-199 perl pipewire-libs pkg-config python-modules python2-base python3 python3-base python3-dev python3-module-paste qt5-base-common qt5-base-devel qt5-declarative-devel rpm-build-file rpm-build-python3 rpm-build-qml rpm-macros-python sh4 tzdata wayland-devel
@@ -73,6 +74,7 @@ Requires: %name-common
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -111,6 +113,9 @@ Requires: %name-common
 %_K5lib/libKPipeWireDmaBuf.so.*
 
 %changelog
+* Thu May 25 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt2
+- increase buffer for pipewire format negotiation
+
 * Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt1
 - new version
 
