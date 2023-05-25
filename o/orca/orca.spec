@@ -1,9 +1,11 @@
+%def_disable snapshot
+
 %define ver_major 44
 %define beta %nil
 
 Name: orca
-Version: %ver_major.0
-Release: alt1.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
@@ -11,7 +13,11 @@ Group: Accessibility
 License: LGPL-2.1
 Url: http://wiki.gnome.org/Projects/Orca
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
 Source1: voiceman-server
 Source2: %name.watch
 Source3: orca-autostart.desktop
@@ -25,6 +31,8 @@ Requires: yelp
 #Requires: voiceman
 Requires: at-spi2-core
 Requires: speech-dispatcher-module-flite flite
+# speak russian
+Requires: espeak
 
 BuildArch: noarch
 
@@ -94,6 +102,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Thu May 25 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
+- 44.1
+
 * Thu Apr 27 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1.1
 - updated to ORCA_44_0-4-gc02c74ba0
 - fixed dependencies
