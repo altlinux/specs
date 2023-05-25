@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt225
+%define pkg_rel alt226
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -104,6 +104,8 @@ Patch3: buildfix_kernel_5.19.patch
 Patch4: buildfix_kernel_5.19_uvm.patch
 Patch5: buildfix_kernel_6.0.patch
 Patch6: buildfix_kernel_6.2.patch
+Patch7: buildfix_kernel_6.3.patch
+Patch8: buildfix_kernel_6.3_uvm.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -177,6 +179,10 @@ if [ -e nvidia-uvm/nvidia-uvm.Kbuild ] ; then
 fi
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+if [ -e nvidia-uvm/nvidia-uvm.Kbuild ] ; then
+%patch8 -p1
+fi
 rm -rf precompiled
 popd
 
@@ -364,6 +370,9 @@ fi
 %endif
 
 %changelog
+* Thu May 25 2023 Sergey V Turchin <zerg@altlinux.org> 390.157-alt226
+- add fix against 6.3 kernel
+
 * Wed Mar 29 2023 Sergey V Turchin <zerg@altlinux.org> 390.157-alt225
 - add fix against 6.2 kernel
 
