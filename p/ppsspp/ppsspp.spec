@@ -6,7 +6,7 @@
 %define filesystem_commit 3f1c185ab414e764c694b8171d1c4d8c5c437517
 
 Name: ppsspp
-Version: 1.15.3
+Version: 1.15.4
 Release: alt1
 
 Summary: PlayStation Portable Emulator
@@ -174,6 +174,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Thu May 25 2023 Nazarov Denis <nenderus@altlinux.org> 1.15.4-alt1
+- Version 1.15.4
+
 * Fri May 12 2023 Nazarov Denis <nenderus@altlinux.org> 1.15.3-alt1
 - Version 1.15.3
 
