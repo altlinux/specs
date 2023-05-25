@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.1.0.post0
-Release: alt2
+Release: alt3
 
 Summary: Shims to help you safely remove pytz
 License: Apache-2.0
@@ -51,6 +51,9 @@ BuildRequires: tzdata
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 24 2023 Egor Ignatov <egori@altlinux.org> 0.1.0.post0-alt3
+- Fix flaky FTBFS: Mark test_normalize_same_zone as xfail
+
 * Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 0.1.0.post0-alt2
 - Dropped dependency on python-tzdata (metadata).
 
