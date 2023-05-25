@@ -1,11 +1,11 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: itop
-Version: 2.6.3
+Version: 3.0.3
 Release: alt1
 
 Summary: IT Operations Portal
-License: AGPLv3
+License: AGPL-3.0
 Group: Networking/Other
 
 URL: http://www.combodo.com/-Overview-.html
@@ -33,15 +33,15 @@ Requires: %name = %version-%release, apache2
 %description apache2
 Apache 2.x web-server configuration for %name
 
-
-%package php7
-Summary: PHP7 dependencies for %name
+%package php8.0
+Summary: PHP8.0 dependencies for %name
 Group: Networking/Other
-Requires: %name = %version-%release, php7-mysqli, php7-ldap, php7-soap, php7-mcrypt, php7-xmlreader, php7-gd2, php7-zip
-                                        
-%description php7
-PHP5 dependencies for %name
+Requires: %name = %version-%release, 
+Requires: php8.0-mysqli, php8.0-ldap, php8.0-soap, php8.0-mcrypt, php8.0-xmlreader, php8.0-gd2, php8.0-zip, php8.0-openssl
+Requires: php8.0-mbstring, php8.0-fileinfo, php8.0-curl
 
+%description php8.0
+PHP8.0 dependencies for %name
 
 %prep
 %setup
@@ -76,7 +76,7 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %post apache2
 if [ "$1" = "1" ]; then
   a2ensite %name
-  %_initdir/httpd2 condreload
+#  %_initdir/httpd2 condreload
 fi
 
 %preun apache2
@@ -84,10 +84,10 @@ if [ "$1" = "0" ]; then
   a2dissite %name
 fi
 
-%postun apache2
-if [ "$1" = "0" ]; then
-  %_initdir/httpd2 condreload
-fi
+#%postun apache2
+#if [ "$1" = "0" ]; then
+#  %_initdir/httpd2 condreload
+#fi
 
 
 %files
@@ -104,22 +104,23 @@ fi
 %installdir/data
 %installdir/datamodels
 %installdir/dictionaries
-%installdir/documentation
 %installdir/extensions
 %installdir/images
 %installdir/js
 %installdir/lib
 %installdir/log
+%installdir/node_modules
 %installdir/pages
 %installdir/portal
 %installdir/setup
 %installdir/sources
 %installdir/synchro
+%installdir/templates
 %installdir/webservices
 %installdir/*.php
 %installdir/*.xml
 %installdir/*.config
-%doc LICENSE    
+%doc LICENSE
 %doc README
 %doc README.ALT
 
@@ -127,10 +128,38 @@ fi
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
-%files php7
-
+%files php8.0
 
 %changelog
+* Thu May 25 2023 Pavel Zilke <zidex@altlinux.org> 3.0.3-alt1
+- New version 3.0.3
+- Security fixes:
+ + CVE-2021-46743 : Firebase PHP-JWT key/algorithm type confusion
+ + CVE-2022-31403 : XSS vulnerability via /itop/pages/ajax.render.php
+ + CVE-2022-31402 : XSS vulnerability via /itop/webservices/export-v2.php
+- Added itop-php8.0
+- Deleted itop-php7
+
+* Wed Dec 08 2021 Pavel Zilke <zidex at altlinux dot org> 2.7.5-alt1
+- New version 2.7.5
++ Security fixes
+
+* Fri Jan 22 2021 Pavel Zilke <zidex at altlinux dot org> 2.7.3-alt1
+- New version 2.7.3
+- Regression fixes
+- Security fixes in intermediate versions:
++ CVE-2020-4079
++ CVE-2020-16842
++ CVE-2020-15218
++ CVE-2020-15219
++ CVE-2020-15221
++ CVE-2020-15220
++ CVE-2020-12781
++ CVE-2020-12780
++ CVE-2020-12779
++ CVE-2020-12778
++ CVE-2020-12777
+
 * Thu Apr 09 2020 Pavel Zilke <zidex at altlinux dot org> 2.6.3-alt1
 - New version 2.6.3
 - Security fixes:
