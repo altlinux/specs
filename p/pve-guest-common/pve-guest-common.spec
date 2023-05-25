@@ -4,7 +4,7 @@
 Name: pve-guest-common
 Summary: PVE common guest-related modules
 Version: 4.2.4
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
@@ -42,9 +42,13 @@ This package contains a common code base used by pve-container and qemu-server
 %makeinstall_std -C src
 
 %files
+%doc debian/copyright
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.2.4-alt2
+- add copyright file
+
 * Mon Mar 27 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.2.4-alt1
 - 4.2-4
 

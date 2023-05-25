@@ -2,7 +2,7 @@
 
 Name: proxmox-websocket-tunnel
 Version: 0.1.0
-Release: alt1
+Release: alt2
 Summary: Proxmox websocket tunneling helper
 License: AGPL-3.0+
 Group: Networking/Other
@@ -31,9 +31,13 @@ websocket connection.
 %rust_install
 
 %files
+%doc debian/copyright
 %_bindir/%name
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.1.0-alt2
+- add copyright file
+
 * Wed Mar 09 2022 Alexey Shabalin <shaba@altlinux.org> 0.1.0-alt1
 - Initial build.
 

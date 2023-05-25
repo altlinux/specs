@@ -4,8 +4,8 @@
 Name: pve-doc-generator
 Summary: Proxmox VE Documentation helpers
 Version: 7.4.2
-Release: alt1
-License: GPLv3
+Release: alt2
+License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
 Url: https://git.proxmox.com/
 Vcs: git://git.proxmox.com/git/pve-docs.git
@@ -43,10 +43,14 @@ cp asciidoc/*pve*.conf %buildroot%_datadir/pve-doc-generator/asciidoc/
 install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 
 %files
+%doc debian/copyright
 %_bindir/asciidoc-pve
 %_datadir/pve-doc-generator
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.2-alt2
+- add copyright file
+
 * Fri Mar 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.2-alt1
 - 7.4-2
 

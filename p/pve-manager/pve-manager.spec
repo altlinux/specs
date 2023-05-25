@@ -8,8 +8,8 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt4
-License: AGPL-3.0+ AND GPLv3 AND MIT
+Release: alt5
+License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
 Vcs: git://git.proxmox.com/git/pve-manager.git
@@ -96,6 +96,7 @@ rm -f  %buildroot%_man1dir/pveupgrade.1*
 %preun_systemd pvedaemon pveproxy pvestatd spiceproxy pvescheduler
 
 %files
+%doc debian/copyright
 %_datadir/doc/%name
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/vendor-completions/*
@@ -122,6 +123,9 @@ rm -f  %buildroot%_man1dir/pveupgrade.1*
 %_man8dir/*
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt5
+- add copyright file
+
 * Fri May 05 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt4
 - revert old commit, fix vzdump parsing in jobs.cfg
 

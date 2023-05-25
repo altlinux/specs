@@ -4,7 +4,7 @@
 Name: pve-container
 Summary: Proxmox VE Container management tool
 Version: 4.4.3
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -37,6 +37,7 @@ mv %buildroot/usr/lib/sysctl.d/10-pve-ct-inotify-limits.conf %buildroot%_sysctld
 %_sbindir/usermod --add-subuids 100000-165535 root ||:
 
 %files
+%doc debian/copyright
 %_sysctldir/10-pve-ct-inotify-limits.conf
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/vendor-completions/*
@@ -53,6 +54,9 @@ mv %buildroot/usr/lib/sysctl.d/10-pve-ct-inotify-limits.conf %buildroot%_sysctld
 %_man5dir/*
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.4.3-alt2
+- add copyright file
+
 * Mon Mar 20 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.4.3-alt1
 - 4.4-3
 

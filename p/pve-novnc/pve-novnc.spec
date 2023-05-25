@@ -3,9 +3,9 @@
 
 Name: pve-%sname
 Summary: HTML5 VNC client
-Version: 1.4.0
+Version: 1.4.0.1
 Release: alt1
-License: MPL-2.0
+License: Apache-2.0 and BSD-3-Clause and MPL-2.0
 Group: Networking/WWW
 Url: https://git.proxmox.com/
 
@@ -41,9 +41,13 @@ install -m0644 %sname/app.js %buildroot%_datadir/%pname/
 install -m0644 %sname/vnc.html %buildroot%_datadir/%pname/index.html.tpl
 
 %files
+%doc debian/copyright
 %_datadir/%pname
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.4.0.1-alt1
+- add copyright file
+
 * Fri Mar 10 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.4.0-alt1
 - 1.4.0-1
 

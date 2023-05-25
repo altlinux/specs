@@ -2,8 +2,8 @@
 
 Name: pve-firewall
 Summary: Proxmox VE Firewall
-Version: 4.3.1
-Release: alt2
+Version: 4.3.2
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -56,6 +56,7 @@ __EOF__
 %preun_systemd pvefw-logger
 
 %files
+%doc debian/copyright
 %_tmpfilesdir/%name.conf
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/vendor-completions/*
@@ -72,6 +73,10 @@ __EOF__
 %_man8dir/*
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.3.2-alt1
+- 4.3-2
+- add copyright file
+
 * Wed May 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.3.1-alt2
 - use %%preun_systemd/%%post_systemd_postponed
 

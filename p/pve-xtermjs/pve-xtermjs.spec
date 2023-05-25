@@ -2,7 +2,7 @@
 
 Name: pve-xtermjs
 Summary: HTML/JS Shell client
-Version: 4.16.0
+Version: 4.16.0.1
 Release: alt1
 License: AGPL-3.0+
 Group: Networking/WWW
@@ -38,10 +38,14 @@ mkdir -p %buildroot%_datadir/%name
 cp src/www/* %buildroot%_datadir/%name/
 
 %files
+%doc debian/copyright
 %_bindir/termproxy
 %_datadir/%name
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.16.0.1-alt1
+- add copyright file
+
 * Mon Mar 20 2023 Alexey Shabalin <shaba@altlinux.org> 4.16.0-alt1
 - 4.16.0-1
 

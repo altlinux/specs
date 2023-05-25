@@ -2,9 +2,9 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 7.3.4
+Version: 7.4.1
 Release: alt1
-License: GPLv3
+License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
@@ -67,10 +67,15 @@ make -C test check
 %endif
 
 %files
+%doc debian/copyright
 %_sbindir/pve-etcnet-to-network
 %perl_vendor_privlib/PVE
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.1-alt1
+- 7.4-1
+- add copyright file
+
 * Mon Mar 27 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.4-alt1
 - 7.3-4
 

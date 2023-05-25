@@ -1,8 +1,8 @@
 Name: pve-docs
 Summary: PVE Documentation
 Version: 7.4.2
-Release: alt1
-License: GPLv3
+Release: alt2
+License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
@@ -40,9 +40,13 @@ install -m644 images/*.svg %buildroot%_datadir/%name/images/
 install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screenshot/
 
 %files
+%doc debian/copyright
 %_datadir/%name
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.2-alt2
+- add copyright file
+
 * Fri Mar 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.2-alt1
 - 7.4-2
 

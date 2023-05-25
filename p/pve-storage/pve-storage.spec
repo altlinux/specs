@@ -3,7 +3,7 @@
 Name: pve-storage
 Summary: PVE storage management library
 Version: 7.4.2
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -48,6 +48,7 @@ rbd
 __EOF__
 
 %files
+%doc debian/copyright
 %config(noreplace) %_sysconfdir/modules-load.d/pve-storage.conf
 %_sbindir/pvesm
 %_udevrulesdir/*.rules
@@ -58,6 +59,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.2-alt2
+- add copyright file
+
 * Fri Mar 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.2-alt1
 - 7.4-2
 

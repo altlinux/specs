@@ -3,7 +3,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 7.3.3
-Release: alt2
+Release: alt3
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -95,6 +95,7 @@ if [ -L %_sysconfdir/cron.d/vzdump ]; then
 fi
 
 %files
+%doc debian/copyright
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %systemd_unitdir/%name.service
 %dir %_sysconfdir/network
@@ -129,6 +130,9 @@ fi
 %perl_vendor_privlib/PVE/Cluster/Setup.pm
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.3-alt3
+- add copyright file
+
 * Wed May 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.3-alt2
 - use %%preun_systemd/%%post_systemd_postponed
 

@@ -2,8 +2,8 @@
 
 Name: proxmox-mini-journalreader
 Summary: Minimal systemd Journal Reader
-Version: 1.3
-Release: alt2
+Version: 1.3.1
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -33,9 +33,13 @@ sed -i 's/-D_FORTIFY_SOURCE=2//' src/Makefile
 %makeinstall_std -C src
 
 %files
+%doc debian/copyright
 %_bindir/*
 
 %changelog
+* Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.3.1-alt1
+- add copyright file
+
 * Fri Apr 28 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.3-alt2
 - FTBS: fix for _FORTIFY_SOURCE.
 
