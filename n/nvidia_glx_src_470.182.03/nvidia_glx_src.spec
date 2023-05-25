@@ -24,7 +24,7 @@
 %define nv_version 470
 %define nv_release 182
 %define nv_minor   03
-%define pkg_rel alt242
+%define pkg_rel alt243
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -106,7 +106,8 @@ Patch2: alt-ignore-dma-remap.patch
 Patch4: kernel-5.11-aarch64.patch
 Patch5: kernel-5.13-aarch64.patch
 Patch6: kernel-6.0.patch
-Patch7: buildfix_kernel_6.2.patch
+Patch7: kernel-6.2.patch
+Patch8: kernel-6.3.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -174,6 +175,7 @@ pushd kernel
 %endif
 %patch6 -p1
 #patch7 -p1
+%patch8 -p1
 rm -rf precompiled
 %ifarch aarch64
 fgrep -rl MT_DEVICE_GRE | \
@@ -387,6 +389,9 @@ fi
 %endif
 
 %changelog
+* Thu May 25 2023 Sergey V Turchin <zerg@altlinux.org> 470.182.03-alt243
+- add fix against 6.3 kernel
+
 * Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 470.182.03-alt242
 - new version
 
