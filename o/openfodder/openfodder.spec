@@ -1,5 +1,5 @@
 Name: openfodder
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 Summary: An open source version of the Cannon Fodder engine, for modern operating systems
 Group: Games/Strategy
@@ -36,5 +36,8 @@ install -D -m0755 %SOURCE2 %buildroot%_bindir/%name
 %_libexecdir/%name/%name
 
 %changelog
+* Thu May 25 2023 Artyom Bystrov <arbars@altlinux.org> 1.7.0-alt1
+- update to new version
+
 * Tue Feb 18 2020 Artyom Bystrov <arbars@altlinux.org> 1.6.0-alt1
  - initial release
