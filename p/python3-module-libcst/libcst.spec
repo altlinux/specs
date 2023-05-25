@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.9
+Version: 0.4.10
 Release: alt1
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter pyre-check
 %add_pyproject_deps_check_filter slotscheck
 %add_pyproject_deps_check_filter sphinx-rtd-theme
-%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra dev
 %pyproject_builddeps_check
 %endif
 # rust stuff
@@ -52,9 +52,6 @@ an AST.
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
-%endif
 
 %build
 %pyproject_build
@@ -85,6 +82,9 @@ export LIBCST_PARSER_TYPE=pure
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 24 2023 Stanislav Levin <slev@altlinux.org> 0.4.10-alt1
+- 0.4.9 -> 0.4.10.
+
 * Fri May 05 2023 Stanislav Levin <slev@altlinux.org> 0.4.9-alt1
 - 0.4.7 -> 0.4.9.
 
