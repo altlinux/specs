@@ -1,25 +1,26 @@
 %define _unpackaged_files_terminate_build 1
-%define oname rjsmin
+%define pypi_name rjsmin
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.1.0
+Name: python3-module-%pypi_name
+Version: 1.2.1
 Release: alt1
 Summary: Javascript Minifier
 License: Apache-2.0
 Group: Development/Python3
-Url: http://opensource.perlig.de/rjsmin/
-
-# https://github.com/ndparker/rjsmin.git
+Url: https://pypi.org/project/rjsmin/
+Vcs: https://github.com/ndparker/rjsmin
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -28,36 +29,32 @@ rJSmin is a javascript minifier written in python.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+%endif
 
-%python3_build_debug
+%build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-sed -i -e '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' \
--e '/^setenv[ ]*=/a\
-    py3: _PYTEST_BIN=%_bindir\/py.test3' \
-test.ini
-
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vv -r -c test.ini
+%pyproject_run_pytest -ra -Wignore tests
 
 %files
 %doc README.md
-%python3_sitelibdir/_rjsmin.cpython-*.so
-%python3_sitelibdir/rjsmin.py
-%python3_sitelibdir/__pycache__/rjsmin.cpython-*.*
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/_%mod_name.cpython-*.so
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/__pycache__/%mod_name.cpython-*.*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 24 2023 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
+- 1.1.0 -> 1.2.1.
+
 * Thu Jul 02 2020 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 1.0.12 -> 1.1.0.
 
@@ -77,7 +74,7 @@ tox.py3 --sitepackages -vv -r -c test.ini
 * Mon Mar 28 2016 Denis Medvedev <nbr@altlinux.org> 1.0.10-alt3.git20141116
 - Python compilation for 3.5.
 
-* Thu Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.10-alt2.git20141116
+* Tue Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.10-alt2.git20141116
 - Documentation creation disabled
 
 * Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.10-alt1.git20141116
