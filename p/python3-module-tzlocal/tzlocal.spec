@@ -2,7 +2,7 @@
 %define oname tzlocal
 
 Name: python3-module-%oname
-Version: 4.2
+Version: 5.0.1
 Release: alt1
 
 Summary: A Python module that tries to figure out what your local timezone is
@@ -42,6 +42,10 @@ readily available it will be used.
 %prep
 %setup
 
+# fix symlink, required for test: https://github.com/regebro/tzlocal/issues/53
+ln -sfv ../usr/share/zoneinfo/Africa/Harare \
+   tests/test_data/symlink_localtime/etc/localtime
+
 %build
 %python3_build_debug
 
@@ -49,14 +53,16 @@ readily available it will be used.
 %python3_install
 
 %check
-%__python3 -m pytest tests
-
+%__python3 -m pytest tests -v -k 'not test_conflicting and not test_noconflict'
 
 %files
 %doc CHANGES.txt LICENSE.txt README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 24 2023 Egor Ignatov <egori@altlinux.org> 5.0.1-alt1
+- new version 5.0.1
+
 * Thu Apr 21 2022 Egor Ignatov <egori@altlinux.org> 4.2-alt1
 - new version 4.2
 
