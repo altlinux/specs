@@ -2,7 +2,7 @@
 
 Name: mstpd
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: STP/RSTP/PVST+/MSTP Spanning Tree Protocol Daemon
 License: GPLv2+
@@ -11,6 +11,7 @@ URL: https://github.com/mstpd/mstpd.git
 
 Source0: %name-%version.tar
 BuildRequires: rpm-build-python3
+Requires: bridge-utils
 
 %description
 This package provides a user-space daemon which replaces the STP handling that
@@ -56,5 +57,8 @@ rm -fr %buildroot%_libexecdir/mstpctl-utils/mstp_config_bridge
 %_libexecdir/mstpctl-utils
 
 %changelog
+* Wed May 24 2023 Oleg Obidin <nofex@altlinux.org> 0.1.0-alt2
+- Add requires bridge-utils (closes: 46237)
+
 * Thu Apr 13 2023 Oleg Obidin <nofex@altlinux.org> 0.1.0-alt1
 - First build for ALT
