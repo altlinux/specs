@@ -14,10 +14,9 @@
 # version-release
 
 %define nv_version 525
-%define nv_release 105
-%define nv_minor 17
-%define pkg_rel alt262
-%define set_gl_nvidia_ver 1.6.1
+%define nv_release 116
+%define nv_minor 04
+%define pkg_rel alt263
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -73,16 +72,18 @@ Version: %nv_version.%nv_release.%nv_minor
 %endif
 Release: %pkg_rel
 
-Source: set_gl_nvidia-%set_gl_nvidia_ver.tar
+Source: set_gl_nvidia.tar
 Source1: alternate-install-present
 Source2: nvidia-install-driver
 Source3: nvidia-clean-driver
 Source4: nvidia-prime-run
 Source10: nvidia-sleep.tar
 Source11: udev.rules
+Source12: device-create.tar
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libsysfs-devel
+BuildRequires: libpciaccess-devel libkmod-devel
 ExclusiveArch: %ix86 x86_64 aarch64
 
 
@@ -90,7 +91,7 @@ Group: %myGroup
 Summary: %mySummary
 Summary(ru_RU.UTF-8): %mySummaryRu
 Url: http://altlinux.ru/
-License: GPLv2
+License: GPL-2.0
 #
 Provides: %virtual_pkg_name = %version-%release
 Obsoletes: %virtual_pkg_name < %version-%release
@@ -122,11 +123,11 @@ This is common package for NVIDIA drivers.
 
 
 %prep
-%setup -T -c -n %name-%tbver%dirsuffix -a10
+%setup -T -c -n %name-%tbver%dirsuffix -a10 -a12
 cd %_builddir
 cd %name-%tbver%dirsuffix
 tar xvf %SOURCE0
-pushd set_gl_nvidia*
+pushd set_gl_nvidia/
 cp settings.h.in settings.h
 
 %define glvnd_scheme -1
@@ -164,8 +165,8 @@ popd
 
 %build
 %add_optflags -pedantic
-#make OPTFLAGS="%optflags -Wl,--hash-style=sysv" -C set_gl_nvidia*
-make OPTFLAGS="%optflags" LDFLAGS="-L%_libdir" -C set_gl_nvidia*
+make OPTFLAGS="%optflags" LDFLAGS="-L%_libdir" -C set_gl_nvidia
+make CFLAGS="%optflags $(pkg-config --cflags --libs pciaccess libkmod)" -C device-create
 echo "void ___some_unused_function_to_fill_sources___() {}" >nvidianull.c
 gcc %optflags -c nvidianull.c -o nvidianull.o
 #ld --hash-style=sysv --shared nvidianull.o -o libnvidianull.so
@@ -174,6 +175,7 @@ ld --shared nvidianull.o -o libnvidianull.so
 
 %install
 %__mkdir_p %buildroot/%module_local_dir
+%__mkdir_p %buildroot/sbin
 %__mkdir_p %buildroot/%_sbindir
 %__mkdir_p %buildroot/%tls_lib_dir
 %__mkdir_p %buildroot/%nv_lib_dir
@@ -203,9 +205,10 @@ install -m 0755 %SOURCE2 %buildroot/%_bindir/
 install -m 0755 %SOURCE3 %buildroot/%_bindir/
 install -m 0755 %SOURCE4 %buildroot/%_bindir/
 
-%__install -m 0755 set_gl_nvidia*/nvidia %buildroot/%xdrv_d/nvidia
+%__install -m 0755 set_gl_nvidia/nvidia %buildroot/%xdrv_d/nvidia
 #%__ln_s ../../../..%xdrv_d/nvidia %buildroot/%xdrv_d_old/nvidia
-%__install -m 0755 set_gl_nvidia*/nvidia_preset %buildroot/%xdrv_pre_d/nvidia
+%__install -m 0755 set_gl_nvidia/nvidia_preset %buildroot/%xdrv_pre_d/nvidia
+%__install -m 0755 device-create/ub-device-create %buildroot/sbin/ub-device-create
 %__install -m 0644 libnvidianull.so %buildroot/%x11_lib_dir/
 
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libvdpau_nvidia.so
@@ -336,6 +339,7 @@ fi
 %_bindir/nvidia-prime-run
 /usr/lib/nvidia/alternate-install-present
 #
+/sbin/ub-device-create
 %_bindir/nvidia-sleep.sh
 /lib/tmpfiles.d/nvidia-sleep.conf
 %_presetdir/??-nvidia-*.preset
@@ -344,6 +348,10 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Thu May 25 2023 Sergey V Turchin <zerg@altlinux.org> 525.116.04-alt263
+- new version
+- add ub-device-create utility
+
 * Tue Apr 11 2023 Sergey V Turchin <zerg@altlinux.org> 525.105.17-alt262
 - new version
 

@@ -18,8 +18,8 @@
 %endif
 
 Name: nvidia_glx_libs
-Version: 525.105.17
-Release: alt2
+Version: 525.116.04
+Release: alt1
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -206,6 +206,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %endif
 
 %changelog
+* Thu May 25 2023 Sergey V Turchin <zerg@altlinux.org> 525.116.04-alt1
+- new version
+
 * Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 525.105.17-alt2
 - package libnvidia-nvvm
 
