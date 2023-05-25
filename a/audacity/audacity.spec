@@ -9,7 +9,7 @@
 
 Name: audacity
 Version: 3.3.2
-Release: alt2
+Release: alt3
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -129,8 +129,11 @@ For the most up to date manual content, use the on-line manual.
 
 %ifarch %e2k
 # EDG frontend bug workaround
-sed -i "/struct alignas/{N;N;s/alignas(.*)//;s/{/{alignas(64)/}" src/AudioIO.h
 sed -i "/std::initializer_list/s/static//" src/prefs/GUIPrefs.cpp
+sed -i "s/.*\[ upstream, downstream \].*/\
+for (auto \&fix : mDecoratedSources) {\
+auto \&upstream = fix.upstream; auto \&downstream = fix.downstream;/" \
+  libraries/lib-sample-track/Mix.cpp
 %endif
 
 %build
@@ -230,6 +233,9 @@ echo "$p" | grep -q libmp3lame
 %_datadir/%name/help
 
 %changelog
+* Thu May 25 2023 Michael Shigorin <mike@altlinux.org> 3.3.2-alt3
+- E2K: update sed patch by ilyakurdyukov@ (mcst#8091)
+
 * Wed May 24 2023 Ivan A. Melnikov <iv@altlinux.org> 3.3.2-alt2
 - fix load of lv2 external UIs with system libsuil
 - restore desktop file fix
