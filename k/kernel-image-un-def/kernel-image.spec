@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1
-%define kernel_base_version	6.2
-%define kernel_sublevel	.16
+%define kernel_base_version	6.3
+%define kernel_sublevel	.4
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -172,20 +172,6 @@ for allowing direct access to graphics hardware in a safe and efficient
 manner.  It includes changes to the X server, to several client libraries,
 and to the kernel.  The first major use for the DRI is to create fast
 OpenGL implementations.
-
-These are modules for your ALT Linux system
-
-%package -n kernel-modules-drm-ancient-%flavour
-Summary: The Direct Rendering modules for ancient cards
-Group: System/Kernel and hardware
-Provides:  kernel-modules-drm-ancient-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-drm-ancient-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-drm-ancient-%kversion-%flavour-%krelease > %version-%release
-Requires(pre,post,postun): %name = %EVR
-
-%description -n kernel-modules-drm-ancient-%flavour
-The Direct Rendering Modules for ancient cards: mgag200.ko,
-sis.ko, tdfx.ko, savage.ko, r128.ko, mga.ko, via.ko
 
 These are modules for your ALT Linux system
 
@@ -540,11 +526,10 @@ check-pesign-helper
 %exclude %modules_dir/kernel/drivers/gpu/
 %exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko
 %exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko
-%ifarch %ix86 x86_64
-# thinkpad_acpi now depends on drm causing "kernel image shouldn't require
-# kernel modules" "sisyphus_check: check-kernel ERROR: kernel package
-# violation".
-%exclude %modules_dir/kernel/drivers/platform/x86/thinkpad_acpi.ko
+%ifarch armh aarch64
+# usb_f_uvc now depends on drm causing "kernel image shouldn't require
+# kernel modules" "sisyphus_check: check-kernel ERROR: kernel package.
+%exclude %modules_dir/kernel/drivers/usb/gadget/function/usb_f_uvc.ko
 %endif
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
@@ -579,30 +564,10 @@ check-pesign-helper
 %modules_dir/kernel/drivers/media/
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko
-%ifarch %ix86 x86_64
-%modules_dir/kernel/drivers/platform/x86/thinkpad_acpi.ko
+%ifarch armh aarch64
+%modules_dir/kernel/drivers/usb/gadget/function/usb_f_uvc.ko
 %endif
 %exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
-%exclude %modules_dir/kernel/drivers/gpu/drm/mgag200
-%ifnarch aarch64 armh
-%exclude %modules_dir/kernel/drivers/gpu/drm/sis
-%exclude %modules_dir/kernel/drivers/gpu/drm/savage
-%exclude %modules_dir/kernel/drivers/gpu/drm/tdfx
-%exclude %modules_dir/kernel/drivers/gpu/drm/r128
-%exclude %modules_dir/kernel/drivers/gpu/drm/mga
-%exclude %modules_dir/kernel/drivers/gpu/drm/via
-%endif
-
-%files -n kernel-modules-drm-ancient-%flavour
-%modules_dir/kernel/drivers/gpu/drm/mgag200
-%ifnarch aarch64 armh
-%modules_dir/kernel/drivers/gpu/drm/sis
-%modules_dir/kernel/drivers/gpu/drm/savage
-%modules_dir/kernel/drivers/gpu/drm/tdfx
-%modules_dir/kernel/drivers/gpu/drm/r128
-%modules_dir/kernel/drivers/gpu/drm/mga
-%modules_dir/kernel/drivers/gpu/drm/via
-%endif
 
 %files -n kernel-modules-drm-nouveau-%flavour
 %modules_dir/kernel/drivers/gpu/drm/nouveau
@@ -613,6 +578,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu May 25 2023 Vitaly Chikunov <vt@altlinux.org> 1:6.3.4-alt1
+- Rebase to v6.3.4 (2023-05-24).
+- Do not package kernel-modules-drm-ancient-un-def.
+- Move usb_f_uvc.ko into drm subpackage.
+- Add rk3568-firefly-roc-pc.dts from Armbian.
+
 * Wed May 17 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.2.16-alt1
 - v6.2.16 (2023-05-17).
 - rk3568-firefly-roc-pc.dts: fix bluetooth support.
