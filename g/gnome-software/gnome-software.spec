@@ -34,7 +34,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -188,6 +188,9 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Thu May 25 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
+- 44.2
+
 * Fri Apr 21 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 
