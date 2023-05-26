@@ -2,7 +2,7 @@
 
 Name: plasma5-welcome
 Version: 5.27.5
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -10,7 +10,12 @@ Summary: First start wizard for Plasma
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
+# PowerfulWhenNeeded
+Requires: kf5-knewstuff
+
 Source: %rname-%version.tar
+Patch1: alt-disable-pages.patch
+Patch2: alt-check-auth.patch
 
 # Automatically added by buildreq on Thu Apr 13 2023 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXmu-devel libXrender-devel libXt-devel libctf-nobfd0 libdbusmenu-qt52 libfreetype-devel libglvnd-devel libgpg-error libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickcontrols2 libqt5-svg libqt5-texttospeech libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxcbutil-keysyms libxkbcommon-devel perl pkg-config python-modules python2-base python3 python3-base python3-dev python3-module-paste qt5-base-devel qt5-declarative-devel rpm-build-file rpm-build-python3 rpm-build-qml sh4 tzdata xorg-proto-devel xorg-xf86miscproto-devel
@@ -50,9 +55,13 @@ Requires: %name-common = %version-%release
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
+%patch2 -p1
 
 %build
-%K5build
+# -DDISTRO_PAGE_PATH:PATH=/usr/share/plasma-welcome-extra-pages/ \
+%K5build \
+    #
 
 %install
 %K5install
@@ -66,6 +75,9 @@ Requires: %name-common = %version-%release
 %_K5start/*plasma-welcome*.desktop
 
 %changelog
+* Fri May 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt2
+- hide unauthorized pages
+
 * Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt1
 - new version
 
