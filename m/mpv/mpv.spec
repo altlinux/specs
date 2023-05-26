@@ -4,7 +4,7 @@
 
 Name: mpv
 Version: 0.35.1
-Release: alt1
+Release: alt3
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -24,13 +24,13 @@ BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-
 
 BuildRequires: libpulseaudio-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel libdvdnav-devel libbluray-devel libavfilter-devel
 
-BuildRequires: libsmbclient-devel libswresample-devel libxkbcommon-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel libjack-devel
+BuildRequires: libswresample-devel libxkbcommon-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel libjack-devel
 
 BuildRequires: libenca-devel libuchardet-devel libvulkan-devel libwayland-egl-devel libwayland-cursor-devel libwayland-client-devel wayland-protocols python3-base
 
 BuildRequires: libgbm-devel libplacebo-devel libSDL2-devel libavdevice-devel libXpresent-devel
 
-BuildRequires: libzimg-devel vapoursynth-devel libshaderc-devel nv-codec-headers pipewire-libs-devel
+BuildRequires: libzimg-devel vapoursynth-devel libshaderc-devel nv-codec-headers pipewire-libs-devel libsixel-devel
 
 BuildRequires: /usr/bin/rst2man
 
@@ -144,6 +144,12 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Fri May 26 2023 L.A. Kostis <lakostis@altlinux.ru> 0.35.1-alt3
+- BR: remove libsmb (smb support removed by upstream).
+
+* Wed Mar 29 2023 L.A. Kostis <lakostis@altlinux.ru> 0.35.1-alt2
+- added sixel support.
+
 * Thu Feb 09 2023 L.A. Kostis <lakostis@altlinux.ru> 0.35.1-alt1
 - 0.35.1.
 
