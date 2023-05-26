@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
 Summary: Delorean: Time Travel Made Easy
 License: MIT
@@ -25,8 +25,8 @@ BuildRequires: python3(mock)
 BuildRequires: python3(babel)
 BuildRequires: python3(humanize)
 BuildRequires: python3(tzlocal)
-BuildRequires: python3(tzdata)
 BuildRequires: python3(pytz)
+BuildRequires: python3(dateutil)
 %endif
 
 BuildArch: noarch
@@ -63,6 +63,9 @@ Pretty much make you a badass time traveller.
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Fri May 26 2023 Anton Vyatkin <toni@altlinux.org> 1.0.0-alt3
+- Fix FTBFS
+
 * Mon Apr 10 2023 Anton Vyatkin <toni@altlinux.org> 1.0.0-alt2
 - Fix BuildRequires
 
