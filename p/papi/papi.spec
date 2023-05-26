@@ -7,7 +7,7 @@
 
 Name: papi
 Version: 6.0.0
-Release: alt7
+Release: alt7.1
 
 Summary: Performance Application Programming Interface
 
@@ -93,9 +93,6 @@ This package contains documentation for PAPI.
 %patch6 -p1
 %ifarch %e2k
 %patch2000 -p2
-sed -ri "s|PAPILIB = (.*)/@LINKLIB@|& \\1/libpfm4/lib/libpfm.so.4|" \
-	src/components/Makefile_comp_tests.target.in \
-	src/{ctests,ftests,utils,validation_tests}/Makefile.target.in
 %endif
 rm -rf src/libpfm*
 
@@ -202,6 +199,9 @@ set -x
 %endif
 
 %changelog
+* Fri May 26 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.0.0-alt7.1
+- Fixed build for Elbrus.
+
 * Fri May 26 2023 Vitaly Chikunov <vt@altlinux.org> 6.0.0-alt7
 - Fix rebuild due to "Couldn't open hw_instructions".
 
