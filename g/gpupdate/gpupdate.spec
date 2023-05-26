@@ -31,7 +31,7 @@
 %add_python3_req_skip util.xml
 
 Name: gpupdate
-Version: 0.9.12.4
+Version: 0.9.12.5
 Release: alt1
 
 Summary: GPT applier
@@ -182,6 +182,10 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri May 26 2023 Valery Sinelnikov <greh@altlinux.org> 0.9.12.5-alt1
+- Fixed editing cache volume (DiskCacheSize) in Yandex browser (closes: 44621)
+- The access to caching files has been fixed
+
 * Sun Mar 19 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12.4-alt1
 - Fixed an implementation of replace action in folder applier
 - Improve file cache store() with copy in temporary file before saving
