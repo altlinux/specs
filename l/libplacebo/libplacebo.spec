@@ -2,7 +2,7 @@
 
 Name: libplacebo
 Version: 5.264.1
-Release: alt0.1
+Release: alt0.2
 Summary: libplacebo is essentially the core rendering algorithms and ideas of mpv turned into a library
 Group: System/Libraries
 License: LGPL-2.1+
@@ -11,7 +11,10 @@ Source0: %url/%name/archive/v%version/%name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: libshaderc-devel libvulkan-devel python3-module-jinja2 python3-module-glad2 liblcms2-devel gcc-c++ libunwind-devel libdovi-devel
+BuildRequires: libshaderc-devel libvulkan-devel python3-module-jinja2 python3-module-glad2 liblcms2-devel gcc-c++
+%ifnarch %e2k
+BuildRequires: libunwind-devel libdovi-devel
+%endif
 
 %description
 libplacebo is essentially the core rendering algorithms and ideas of mpv turned
@@ -53,6 +56,9 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri May 26 2023 Michael Shigorin <mike@altlinux.org> 5.264.1-alt0.2
+- E2K: avoid missing BRs
+
 * Fri May 26 2023 L.A. Kostis <lakostis@altlinux.ru> 5.264.1-alt0.1
 - v5.264.1.
 
