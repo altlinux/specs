@@ -6,7 +6,7 @@
 
 Name:    blosc2
 Version: 2.9.2
-Release: alt1
+Release: alt1.1
 
 Summary: A fast, compressed, persistent binary data store library for C
 License: BSD-3-Clause
@@ -56,6 +56,10 @@ This package contains development files of Blosc2 library.
 
 %prep
 %setup
+%ifarch %e2k
+# why is libdl used but not linked?
+sed -i '1i set(LIBS ${LIBS} "dl")' blosc/CMakeLists.txt
+%endif
 
 # remove bundled libraries
 rm -rf internal-complibs
@@ -96,6 +100,9 @@ rm -rf internal-complibs
 %_pkgconfigdir/blosc2.pc
 
 %changelog
+* Fri May 26 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.9.2-alt1.1
+- Fixed build for Elbrus.
+
 * Sun May 21 2023 Anton Vyatkin <toni@altlinux.org> 2.9.2-alt1
 - New version 2.9.2.
 
