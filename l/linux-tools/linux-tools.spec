@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.2
+%define kernel_base_version 6.3
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
@@ -388,7 +388,7 @@ make acpi
 	selftests \
 	tmon \
 	tracing \
-	vm \
+	mm \
 
 %make_build -C verification/rv
 
@@ -517,7 +517,7 @@ make %install_opts bootconfig_install
 make %install_opts freefall_install
 make %install_opts gpio_install
 make %install_opts iio_install
-make %install_opts vm_install
+make %install_opts mm_install
 make %install_opts tracing_install STRIP=true
 make -C verification/rv %install_opts install STRIP=true
 install -p -m755 cgroup/cgroup_event_listener	%buildroot%_bindir
@@ -537,6 +537,7 @@ mkdir -p %buildroot%_libexecdir/kselftests
 popd
 
 %add_debuginfo_skiplist %_prefix/libexec/perf-core/dlfilters/dlfilter-test-api-v0.so
+%filter_from_requires /intel_pstate_tracer/d
 
 %check
 banner check
@@ -718,6 +719,7 @@ fi
 %_libexecdir/kselftests
 
 %files -n rtla
+%_bindir/hwnoise
 %_bindir/osnoise
 %_bindir/rtla
 %_bindir/timerlat
@@ -734,6 +736,9 @@ fi
 %_man1dir/rv-*
 
 %changelog
+* Thu May 25 2023 Vitaly Chikunov <vt@altlinux.org> 6.3-alt1
+- Update to v6.3 (2023-04-23).
+
 * Mon Feb 27 2023 Vitaly Chikunov <vt@altlinux.org> 6.2-alt1
 - Update to v6.2 (2023-02-19).
 - Add runtime verification (rv) tool package.
