@@ -4,27 +4,22 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2.0
+Version: 5.3.0
 Release: alt1
-
 Summary: Extensible memoizing collections and decorators
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/cachetools
 VCS: https://github.com/tkem/cachetools
-
 BuildArch: noarch
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -34,6 +29,11 @@ decorator.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -42,16 +42,17 @@ decorator.
 %pyproject_install
 
 %check
-# override upstream's config (too much to patch)
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore
 
 %files
-%doc *.rst docs/*.rst
+%doc README.*
 %python3_sitelibdir/cachetools/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 25 2023 Stanislav Levin <slev@altlinux.org> 5.3.0-alt1
+- 5.2.0 -> 5.3.0.
+
 * Fri Dec 09 2022 Stanislav Levin <slev@altlinux.org> 5.2.0-alt1
 - 3.1.1 -> 5.2.0.
 
