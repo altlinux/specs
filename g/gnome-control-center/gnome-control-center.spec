@@ -15,7 +15,7 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -66,6 +66,10 @@ Requires: accountsservice >= %acc_ver
 #Requires: userpasswd
 Requires: gnome-online-accounts >= %goa_ver
 Requires: gnome-bluetooth%bt_api_ver
+# for VPN
+Requires: NetworkManager-openvpn-gtk4
+Requires: NetworkManager-pptp-gtk4
+Requires: NetworkManager-vpnc-gtk4
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
 BuildRequires: meson desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
@@ -184,6 +188,9 @@ you'll want to install this package.
 
 
 %changelog
+* Fri May 26 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
+- 44.2
+
 * Fri Apr 21 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 
