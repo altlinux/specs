@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: wget
-Version: 1.21.3
-Release: alt7
+Version: 1.21.4
+Release: alt1
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPL-3.0-or-later
@@ -131,7 +131,7 @@ find doc -type f -print0 |
 if [ ! -e .tarball-version ]; then
 	# Update from Git.
 	echo "%version-%release"> .tarball-version
-	./bootstrap --gnulib-srcdir=/usr/share/gnulib --no-git --skip-po --bootstrap-sync
+	./bootstrap --gnulib-srcdir=/usr/share/gnulib --no-git --skip-po --no-bootstrap-sync
 fi
 %ifarch %e2k
 # lcc-1.23.12: work around the lack of some builtins
@@ -169,6 +169,9 @@ fi
 %doc COPYING ChangeLog* AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Fri May 26 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.4-alt1
+- Update to v1.21.4 (2023-05-11).
+
 * Fri May 12 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.3-alt7
 - Update seccomp filter for aarch64 (ALT#46124).
 - Update seccomp filter regarding askpass.
