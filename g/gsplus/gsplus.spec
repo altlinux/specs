@@ -1,6 +1,6 @@
 Name: gsplus
 Version: 0.14
-Release: alt1
+Release: alt1.1
 
 Summary: Modern cross-platform Apple IIgs emulator and tools based on KEGS
 License: GPL-2.0
@@ -18,6 +18,10 @@ BuildRequires: gcc-c++ cmake re2c libSDL2-devel libSDL2_image-devel libfreetype-
 
 %prep
 %setup
+%ifarch %e2k
+# name collision with macros defined in ucontext.h
+sed -i "s/REG_/GSP&/" src/debug_shell.re2c
+%endif
 
 %build
 %cmake
@@ -60,5 +64,8 @@ done
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri May 26 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.14-alt1.1
+- Fixed build for Elbrus
+
 * Wed May 24 2023 Artyom Bystrov <arbars@altlinux.org> 0.14-alt1
 - Initial build for Sisyphus
