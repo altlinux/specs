@@ -1,13 +1,15 @@
 Name: cgreen
-Version: 1.0
-Release: alt3
+Version: 1.6.2
+Release: alt1
 
 Summary: Framework for unit testing, written in C
-License: LGPL-2.1+
+License: ISC
 Group: Development/C
 Url: http://www.lastcraft.com/cgreen.php
 
 Source0: %name-%version.tar
+
+BuildRequires: cmake rpm-macros-cmake gcc gcc-c++
 
 %define _unpackaged_files_terminate_build 1
 
@@ -29,26 +31,34 @@ http://git.altlinux.ru/people/voins/packages/?p=cgreen.git for list of changes
 %setup -q
 
 %build
-make
+%cmake
+%cmake_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT{%_includedir{,/cgreen},%_libdir}
-install -s -m644 libcgreen.so.0.1 $RPM_BUILD_ROOT%_libdir
-ln -s libcgreen.so.0.1 $RPM_BUILD_ROOT%_libdir/libcgreen.so.0
-ln -s libcgreen.so.0 $RPM_BUILD_ROOT%_libdir/libcgreen.so
-install -m644 cgreen/cgreen.h $RPM_BUILD_ROOT%_includedir
-install -m644 cgreen/assertions.h cgreen/constraint.h cgreen/memory.h \
-    cgreen/mocks.h cgreen/reporter.h cgreen/text_reporter.h cgreen/unit.h \
-    $RPM_BUILD_ROOT%_includedir/cgreen/
-
+%cmakeinstall_std
 
 %files
-%doc README VERSION documentation samples
+%doc README.md samples
+
+%_bindir/%name-runner
+%_bindir/%name-debug
+
 %_includedir/*
 %_libdir/*.so*
 
+%_libdir/cmake/%name/*.cmake
+
+%_man1dir/*
+%_man5dir/*
+
+%_datadir/bash-completion/completions/*
+
 
 %changelog
+* Tue May 09 2023 Vladimir Rubanov <august@altlinux.org> 1.6.2-alt1
+- Upgrade version to 1.6.2
+- Switch to standard packaging.
+
 * Tue Mar 30 2021 Mikhail Efremov <sem@altlinux.org> 1.0-alt3
 - Fix License tag.
 - Use _unpackaged_files_terminate_build.
@@ -59,4 +69,3 @@ install -m644 cgreen/assertions.h cgreen/constraint.h cgreen/memory.h \
 
 * Mon Jan 07 2008 Alexey Voinov <voins@altlinux.ru> 1.0-alt1
 - initial build
-

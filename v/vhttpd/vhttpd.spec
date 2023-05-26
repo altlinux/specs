@@ -1,5 +1,5 @@
 Name: vhttpd
-Version: 0.7.12
+Version: 0.7.13
 Release: alt1
 
 Summary: simple embedded web server
@@ -94,6 +94,9 @@ guile bindings for %name
 %guile_ccachedir/vhttpd.go
 
 %changelog
+* Thu May 25 2023 Vladimir Rubanov <august@altlinux.org> 0.7.13-alt1
+- Add support for cgreen 1.6.2.
+
 * Wed Nov 23 2022 Mikhail Efremov <sem@altlinux.org> 0.7.12-alt1
 - Fixed parallel build.
 
