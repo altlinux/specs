@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-virtual
-Version: 5.25.0
+Version: 5.27.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -261,14 +261,16 @@ Requires: kf5-filesystem
 %description -n kde5-display-manager-0-dummy
 %summary
 
-%package -n kde5-display-manager-4-lightdm
+%package -n kde5-display-manager-7-lightdm
 Group: Graphical desktop/KDE
 Summary:  LightDM Display Manager collective package
 Provides: kde5-display-manager = %EVR
 Provides: kde5-display-manager-lightdm = %EVR
 Requires: kf5-filesystem
 Requires: lightdm-kde-greeter dm-tool
-%description -n kde5-display-manager-4-lightdm
+Provides: kde5-display-manager-4-lightdm = %EVR
+Obsoletes: kde5-display-manager-4-lightdm < %EVR
+%description -n kde5-display-manager-7-lightdm
 %summary
 
 %package -n kde5-display-manager-5-sddm
@@ -316,10 +318,13 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 %files -n kde5-messenger-client-6-mix
 
 %files -n kde5-display-manager-0-dummy
-%files -n kde5-display-manager-4-lightdm
 %files -n kde5-display-manager-5-sddm
+%files -n kde5-display-manager-7-lightdm
 
 %changelog
+* Fri May 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt1
+- set lightdm by default
+
 * Thu Jan 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt1
 - add kde5-volume-control-pipewire
 
