@@ -20,8 +20,8 @@ Summary: A scripting language for games
 
 License: %license_main
 
-Version: 0.5.5
-Release: alt2
+Version: 0.5.6.1
+Release: alt1
 
 Group: System/Libraries
 Url: https://opensurge2d.org
@@ -84,7 +84,7 @@ using static linking.
 	-DWANT_SHARED=ON  \
 	-DWANT_STATIC=ON  \
 	-DWANT_EXECUTABLE=ON  \
-	./
+	-DCMAKE_BUILD_TYPE=Release
 %cmake_build
 
 %install
@@ -97,8 +97,7 @@ using static linking.
 %_bindir/%name
 %_pixmapsdir/%name.png
 %_datadir/metainfo/%name.appdata.xml
-%_libdir/lib%name.so.%version
-%_libdir/lib%name.so.%version.1
+%_libdir/lib%name.so.0.6.0
 
 %files devel
 %_includedir/%name.h
@@ -111,6 +110,12 @@ using static linking.
 %_pkgconfigdir/%name-static.pc
 
 %changelog
+* Fri May 26 2023 Artyom Bystrov <arbars@altlinux.org> 0.5.6.1-alt1
+- update to new version
+
+* Sat Sep 17 2022 Artyom Bystrov <arbars@altlinux.org> 0.5.6-alt1
+- update to new version
+
 * Fri Aug 27 2021 Artyom Bystrov <arbars@altlinux.org> 0.5.5-alt2
 - add link-time optimization
 - delete "Packager" tag

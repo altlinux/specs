@@ -1,7 +1,7 @@
 Name: opensurge
 Summary: 2D retro platformer inspired by Sonic games
 License: GPLv3
-Version: 0.6.0.2
+Version: 0.6.0.3
 Release: alt1
 
 Group: Games/Arcade
@@ -15,7 +15,7 @@ BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: libappstream-glib
-BuildRequires: surgescript-devel
+BuildRequires: surgescript-devel libphysfs-devel
 BuildRequires: fontconfig
 BuildRequires: ImageMagick-tools
 Requires: %name-data = %version-%release
@@ -52,7 +52,6 @@ Data files (graphics, music, sounds) required by Open Surge.
 %build
 %cmake \
 	-DCMAKE_BUILD_TYPE=Release  \
-	-DUSE_A5=ON  \
 	-DALLEGRO_STATIC=OFF  \
 	-DALLEGRO_MONOLITH=OFF  \
 	"-DGAME_BINDIR=%_bindir/" \
@@ -105,9 +104,11 @@ done
 %_datadir/%name/
 
 %changelog
+* Fri May 26 2023 Artyom Bystrov <arbars@altlinux.org> 0.6.0.3-alt1
+- update to new version
+
 * Sun Sep 18 2022 Artyom Bystrov <arbars@altlinux.org> 0.6.0.2-alt1
 - update to new version
 
 * Thu Aug 12 2021 Artyom Bystrov <arbars@altlinux.org> 0.5.2.1-alt1
 - initial build for ALT Sisyphus
-
