@@ -2,7 +2,7 @@
 
 Name: logiops
 Version: 0.3.2
-Release: alt1
+Release: alt1.1
 
 Summary: An unofficial userspace driver for HID++ Logitech devices
 License: GPL-3.0
@@ -26,6 +26,10 @@ This is an unofficial driver for Logitech mice and keyboard.
 
 %prep
 %setup -a1
+%ifarch %e2k
+# LCC can't decide between "unsigned int" and "const char *"
+sed -i "s/remove((int)/remove((unsigned)/" src/logid/config/types.h
+%endif
 
 %build
 %cmake
@@ -51,5 +55,8 @@ cp -r logid.cfg %buildroot%_sysconfdir/
 %_datadir/dbus-1/system.d/pizza.pixl.LogiOps.conf
 
 %changelog
+* Fri May 26 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.3.2-alt1.1
+- Fixed build for Elbrus
+
 * Wed Mar 30 2023 Obidin Oleg <nofex@altlinux.org> 0.3.2-alt1
 - First build for ALT
