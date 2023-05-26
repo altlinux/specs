@@ -3,7 +3,7 @@
 
 Name: libgbinder
 
-Version: 1.1.33
+Version: 1.1.34
 Release: alt0.1
 Summary: Binder client library
 License: BSD
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 %define libglibutil_version 1.0.52
 
-BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(glib-2.0) >= 2.32
 BuildRequires: pkgconfig(libglibutil) >= %libglibutil_version
 BuildRequires: pkgconfig
 BuildRequires: bison
@@ -86,5 +86,8 @@ make -C unit test
 %_bindir/binder-call
 
 %changelog
+* Fri May 26 2023 L.A. Kostis <lakostis@altlinux.ru> 1.1.34-alt0.1
+- 1.1.34.
+
 * Thu Mar 30 2023 L.A. Kostis <lakostis@altlinux.ru> 1.1.33-alt0.1
 - Initial build for ALTLinux.
