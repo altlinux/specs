@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 0.8.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: System/Libraries
@@ -94,6 +94,9 @@ This package contains the development files for %name.
 %_libdir/cmake/KF5KirigamiAddons/
 
 %changelog
+* Fri May 26 2023 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt2
+- update russian translation
+
 * Fri Apr 14 2023 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1
 - new version
 
