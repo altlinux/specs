@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.14.0
+Version: 1.14.1
 Release: alt1
 
 Summary: Installer common parts
@@ -106,6 +106,12 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri May 26 2023 Anton Midyukov <antohami@altlinux.org> 1.14.1-alt1
+- 71-copy-cmdline-parameters.sh: copy nomodeset *.modesetting
+  module_blacklist=*
+- 71-copy-cmdline-parameters.sh: do'nt copy cma=*
+- 71-copy-cmdline-parameters.sh: fix adding parameters with ','
+
 * Mon Apr 03 2023 Anton Midyukov <antohami@altlinux.org> 1.14.0-alt1
 - Add steps/remount.desktop
 - Add preinstall.d/05-copy-fstab
