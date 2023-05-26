@@ -1,49 +1,32 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%def_enable static
-
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
+%define sover 2
 Name: sysfsutils
-Version: 2.1.0
-Release: alt9
-
-%define lib_name libsysfs
-%define docdir %_docdir/%lib_name-%version
-
-Summary: Utility suite to enjoy sysfs
+Version: 2.1.1
+Release: alt1
+Summary: Utilities for interfacing with sysfs
 Group: System/Kernel and hardware
 License: GPL-2.0
 Url: http://linux-diag.sourceforge.net/Sysfsutils.html
-Packager: Alexey I. Froloff <raorn@altlinux.org>
-
-Requires: %lib_name = %version-%release
+Vcs: https://github.com/linux-ras/sysfsutils
+Requires: libsysfs%sover = %EVR
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
-Source1: sysfs.conf
-Source2: sysfs.init
-Source3: sysfs.service
-
-%package -n %lib_name
-Summary: Main library for %name
-License: LGPL-2.0
+%package -n libsysfs%sover
+Summary: Library for interfacing with sysfs
+License: LGPL-2.1-or-later
 Group: System/Libraries
+Obsoletes: libsysfs < %EVR
 
-%package -n %lib_name-devel
-Summary: Headers for developing programs that will use %lib_name
-License: LGPL-2.0
+%package -n libsysfs-devel
+Summary: Headers for developing programs that will use libsysfs
+License: LGPL-2.1-or-later
 Group: Development/C
-Requires: %lib_name = %version-%release
-
-%package -n %lib_name-devel-static
-Summary: Static library for developing programs that will use %lib_name
-License: LGPL-2.0
-Group: Development/C
-Requires: %lib_name-devel = %version-%release
-Obsoletes: %lib_name-static-devel < %EVR
+Requires: libsysfs%sover = %EVR
 
 %description
 This package's purpose is to provide a set of utilities for interfacing
@@ -53,78 +36,61 @@ interface, we've decided to provide a stable programming interface that
 will hopefully make it easier for applications to query system devices
 and their attributes.
 
-%description -n %lib_name
+%description -n libsysfs%sover
 This package contains the library needed to run programs dynamically
-linked with %lib_name.
+linked with libsysfs.
 
-%description -n %lib_name-devel
+%description -n libsysfs-devel
 This package contains the headers that programmers will need to develop
-applications which will use %lib_name.
-
-%description -n %lib_name-devel-static
-This package contains the static library that programmers will need to
-develop applications which will use %lib_name.
+applications which will use libsysfs.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
-%configure \
-	%{subst_enable static}
+%configure --disable-static
 %make_build
 
-%check
-%make_build -k check
-
 %install
-mkdir -p %buildroot{/%_lib,%docdir,%_sysconfdir,%_initdir,%_unitdir}
+mkdir -p %buildroot{/%_lib,%_sysconfdir,%_initdir,%_unitdir}
 
 %makeinstall_std
 
-v=`objdump -p %buildroot%_libdir/%lib_name.so |awk '/SONAME/ {print $2}'`
+v=`objdump -p %buildroot%_libdir/libsysfs.so |awk '/SONAME/ {print $2}'`
 [ -n "$v" ]
-mv -v %buildroot%_libdir/%lib_name.so.* %buildroot/%_lib
-ln -sf "../../%_lib/$v" %buildroot%_libdir/%lib_name.so
+mv -v %buildroot%_libdir/libsysfs.so.* %buildroot/%_lib
+ln -sf "../../%_lib/$v" %buildroot%_libdir/libsysfs.so
 
-install -p -m644 %_sourcedir/sysfs.conf %buildroot%_sysconfdir/sysfs.conf
-install -p -m755 %_sourcedir/sysfs.init %buildroot%_initdir/sysfs
-install -p -m644 %_sourcedir/sysfs.service %buildroot%_unitdir/sysfs.service
-
-install -p -m644 AUTHORS CREDITS ChangeLog NEWS TODO docs/*.txt %buildroot%docdir/
-bzip2 -9f %buildroot%docdir/{ChangeLog,*.txt}
-
-%post
-%post_service sysfs
-
-%preun
-%preun_service sysfs
+%check
+# Only compiles examples but does not run them.
+%make_build check
 
 %files
-%config(noreplace) %_sysconfdir/sysfs.conf
-%_initdir/sysfs
-%_unitdir/sysfs.service
+%doc COPYING cmd/GPL
 %_bindir/*
-%_man1dir/*
+%_man1dir/*.1*
 
-%files -n %lib_name
-/%_lib/%lib_name.so.*
-%dir %docdir
-%docdir/[A-Z]*
+%files -n libsysfs%sover
+%doc AUTHORS CREDITS lib/LGPL
+/%_lib/libsysfs.so.%sover
+/%_lib/libsysfs.so.%sover.*
 
-%files -n %lib_name-devel
-%_libdir/%lib_name.so
+%files -n libsysfs-devel
+%doc docs/*.txt TODO README
+%_libdir/libsysfs.so
 %_includedir/*
-%dir %docdir
-%docdir/[a-z]*
-
-%if_enabled static
-%files -n %lib_name-devel-static
-%_libdir/%lib_name.a
-%endif
+%_pkgconfigdir/libsysfs.pc
 
 %changelog
+* Fri May 26 2023 Vitaly Chikunov <vt@altlinux.org> 2.1.1-alt1
+- Update to v2.1.1-13-g085bba6 (2021-07-23).
+- Do not package libsysfs-devel-static.
+- Enabled LFS support.
+- Do not package (Debianish) sysfs sysv/systemd services.
+
 * Wed Oct 27 2021 Andrew A. Vasilyev <andy@altlinux.org> 2.1.0-alt9
 - FTBFS: build with LTO
 
