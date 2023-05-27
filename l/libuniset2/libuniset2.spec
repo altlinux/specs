@@ -27,7 +27,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.31.1
+Version: 2.31.2
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -673,6 +673,12 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sat May 27 2023 Pavel Vainerman <pv@altlinux.ru> 2.31.2-alt1
+- (clickhouse): rename:  _hash_id -> _hid
+- (clickhouse): use "./configure.xml" by default (--dict-gen)
+- (opcua-server): supported "namePrefix"
+- (opcua-servers): supported "limits" parameters
+
 * Sat May 20 2023 Pavel Vainerman <pv@altlinux.ru> 2.31.1-alt1
 - (uwebsocket): supported "freeze/unfreeze"
 - (dbserver): cleanup code, use DBServer as Service
