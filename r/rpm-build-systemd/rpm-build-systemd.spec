@@ -2,7 +2,7 @@
 
 Name: rpm-build-%oname
 Version: 5
-Release: alt3
+Release: alt4
 
 Summary: RPM helper macros to build packages with systemd support
 License: LGPL-2.1-or-later
@@ -35,6 +35,9 @@ install -D -m644 %SOURCE1 -p %buildroot%_rpmmacrosdir/%oname
 %_rpmmacrosdir/*
 
 %changelog
+* Thu May 25 2023 Alexey Gladkov <legion@altlinux.ru> 5-alt4
+- Hide systemd-specific utilities to avoid adding a dependency on systemd.
+
 * Mon Oct 18 2021 Alexey Shabalin <shaba@altlinux.org> 5-alt3
 - Fixed typo in bash script.
 
