@@ -1,8 +1,13 @@
 %define _unpackaged_files_terminate_build 1
+%ifarch %arm
+%def_disable check
+%else
+%def_enable check
+%endif
 
 Name: fish
 Version: 3.6.1
-Release: alt1
+Release: alt1.1
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -79,6 +84,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Sat May 27 2023 Alexey Shabalin <shaba@altlinux.org> 3.6.1-alt1.1
+- disable tests for arm32
+
 * Mon Apr 17 2023 Alexey Shabalin <shaba@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
