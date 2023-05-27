@@ -1,6 +1,6 @@
 Name: xmp
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: Extended Module Player for MOD/S3M/XM/IT/etc
 License: GPL-2.0+
@@ -40,5 +40,8 @@ Tracker (IT) files.
 %_man1dir/xmp.1*
 
 %changelog
+* Tue May 23 2023 Artem Kurashov <saahriktu@altlinux.org> 4.1.0-alt2
+- Fix Autoimports/Sisyphus versions conflict
+
 * Fri May 05 2023 Artem Kurashov <saahriktu@altlinux.org> 4.1.0-alt1
 - Initial package
