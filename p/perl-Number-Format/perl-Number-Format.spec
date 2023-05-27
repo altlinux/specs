@@ -2,7 +2,7 @@
 %define module Number-Format
 
 Name: perl-%module
-Version: 1.75
+Version: 1.76
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -12,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/authors/id/W/WR/WRW/Number-Format-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -29,7 +29,7 @@ and the thousands separator come from the locale information or can be specified
 by the user.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -38,9 +38,13 @@ by the user.
 %perl_vendor_install
 
 %files 
+%doc TODO CHANGES README
 %perl_vendor_privlib/Number*
 
 %changelog
+* Sat May 27 2023 Igor Vlasenko <viy@altlinux.org> 1.76-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.75-alt1
 - automated CPAN update
 
