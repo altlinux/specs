@@ -16,16 +16,16 @@ BuildRequires: gcc-c++ swig
 Summary:        A Commodore 64 music player and SID chip emulator library
 Name:           sidplay-libs
 Version:        2.1.1
-Release:        alt1_24
-Source:         http://prdownloads.sourceforge.net/sidplay2/%{name}-%version.tar.bz2
+Release:        alt1_27
+License:        GPLv2+
+Group:          System/Libraries
+URL:            https://sidplay2.sourceforge.net/
+Source:         https://prdownloads.sourceforge.net/sidplay2/%{name}-%version.tar.bz2
 Patch:		sidplay-libs-2.1.1-gcc4.3.patch
 #gw from xsidplay 2.0.3
 Patch1:		cia1.patch
 Patch2:		sidplay-libs-2.1.1-builders-dir.patch
 Patch3:         sidplay-libs-2.1.1-pkgconfig.patch
-License:        GPLv2+
-Group:          System/Libraries
-URL:            http://sidplay2.sourceforge.net/
 BuildRequires:  chrpath
 Source44: import.info
 Patch33: sidplay-libs-2.1.1-alt-gcc8.patch
@@ -109,6 +109,7 @@ for developing applications to use %libnamesu.
 %patch3 -p1
 %patch33 -p1
 
+
 %build
 for dir in . resid libsidutils libsidplay builders/resid-builder builders/hardsid-builder; do
   autoreconf -vfi -Iunix $dir
@@ -141,7 +142,9 @@ echo #multiarch_includes %buildroot%_includedir/sidplay/sidconfig.h
 
 
 %files -n %develname
+%dir %{_includedir}/sidplay
 %{_includedir}/sidplay/*.h
+%dir %{_includedir}/sidplay/builders
 %{_includedir}/sidplay/builders/*.h
 #multiarch %multiarch_includedir/sidplay/
 %{_libdir}/libsidplay2.so
@@ -162,6 +165,9 @@ echo #multiarch_includes %buildroot%_includedir/sidplay/sidconfig.h
 
 
 %changelog
+* Sat May 27 2023 Igor Vlasenko <viy@altlinux.org> 2.1.1-alt1_27
+- update by mgaimport
+
 * Thu Feb 14 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_24
 - fixed build
 
