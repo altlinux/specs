@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Encode.pm) perl(English.pm) perl(Exporter.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.38
+Version: 0.39
 Release: alt1
 Summary: Provide non blocking randomness
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/C*
 
 %changelog
+* Sat May 27 2023 Igor Vlasenko <viy@altlinux.org> 0.39-alt1
+- automated CPAN update
+
 * Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 0.38-alt1
 - automated CPAN update
 
