@@ -1,6 +1,6 @@
 %define module_name      i40e
 %define module_version   2.22.18
-%define module_release   alt1
+%define module_release   alt2
 
 %define flavour          std-def
 %define karch            x86_64 aarch64
@@ -52,7 +52,7 @@ popd
 %install
 install -Dp -m600 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 if [ ! -e "%_usrsrc/linux-%kversion-%flavour/include/linux/auxiliary_bus.h" ]; then
-        install -Dp -m600 src/auxiliary.ko %buildroot/%module_dir/auxiliary.ko
+        install -Dp -m600 src/intel_auxiliary.ko %buildroot/%module_dir/intel_auxiliary.ko
 fi
 
 %files
@@ -61,6 +61,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat May 27 2023 Anton Farygin <rider@altlinux.ru> 2.22.18-alt2
+- auxiliary.ko renamed to intel_auxiliary.ko in upstream (fix build for 5.10)
 
 * Wed Apr 26 2023 Alexey Shabalin <shaba@altlinux.org> 2.22.18-alt1
 - update to 2.22.18.
