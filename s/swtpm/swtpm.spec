@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: swtpm
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
 
 Summary: TPM Emulator
@@ -140,6 +140,7 @@ fi
 %doc README
 %_bindir/*
 %exclude %_bindir/swtpm
+%_man5dir/*
 %_man8dir/*
 %exclude %_man8dir/swtpm.8*
 %exclude %_man8dir/swtpm-create-tpmca.8*
@@ -156,8 +157,11 @@ fi
 %_datadir/swtpm/swtpm-create-tpmca
 
 %changelog
+* Sat May 27 2023 Alexey Shabalin <shaba@altlinux.org> 0.8.0-alt1
+- new version 0.8.0
+
 * Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 0.7.2-alt1
-- new version 0.7.2
+- new version 0.7.2 (Fixes: CVE-2022-23645)
 
 * Thu Dec 02 2021 Alexey Shabalin <shaba@altlinux.org> 0.7.0-alt1
 - new version 0.7.0
