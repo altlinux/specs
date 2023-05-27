@@ -10,7 +10,7 @@
 
 Name: buildah
 Version: 1.30.0
-Release: alt2
+Release: alt2.1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
 License: Apache-2.0
@@ -85,6 +85,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sat May 27 2023 Alexey Shabalin <shaba@altlinux.org> 1.30.0-alt2.1
+- Add info about CVE to changelog.
+
 * Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 1.30.0-alt2
 - Update Requires.
 - Build with libsubid and libostree.
@@ -108,7 +111,7 @@ popd
 - new version 1.26.1
 
 * Fri Apr 08 2022 Alexey Shabalin <shaba@altlinux.org> 1.25.1-alt1
-- new version 1.25.1
+- new version 1.25.1 (Fixes: CVE-2022-27651)
 
 * Fri Mar 25 2022 Alexey Shabalin <shaba@altlinux.org> 1.24.2-alt1
 - new version 1.24.2
