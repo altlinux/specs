@@ -6,7 +6,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    etcd
-Version: 3.5.8
+Version: 3.5.9
 Release: alt1
 Summary: A highly-available key value store for shared configuration
 Group:   System/Servers
@@ -100,6 +100,9 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Sat May 27 2023 Alexey Shabalin <shaba@altlinux.org> 3.5.9-alt1
+- 3.5.9 (Fixes: CVE-2023-32082).
+
 * Fri Apr 14 2023 Alexey Shabalin <shaba@altlinux.org> 3.5.8-alt1
 - 3.5.8 (Fixes: CVE-2021-28235).
 
