@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit 74040b457b50417b58eae7cb17c63428a0e2dd44
+%global commit 9d96b18df03f5978873705ac55959161f018fb48
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2023-03-24T21-41-23Z
-%define version 2023.03.24
+%global tag RELEASE.2023-05-18T00-05-36Z
+%define version 2023.05.18
 
 %global _unpackaged_files_terminate_build 1
 
@@ -96,26 +96,31 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Sat May 27 2023 Alexey Shabalin <shaba@altlinux.org> 2023.05.18-alt1
+- Update to RELEASE.2023-05-18T00-05-36Z
+
 * Mon Mar 27 2023 Alexey Shabalin <shaba@altlinux.org> 2023.03.24-alt1
 - Update to RELEASE.2023-03-24T21-41-23Z
+  (FIxes: CVE-2023-25812, CVE-2023-27589, CVE-2023-28432, CVE-2023-28433, CVE-2023-28434)
 
 * Wed Dec 21 2022 Alexey Shabalin <shaba@altlinux.org> 2022.12.07-alt1
 - Update to RELEASE.2022-12-07T00-56-37Z
+  (Fixes: CVE-2022-24842 CVE-2022-31028 CVE-2022-35919)
 
 * Thu Feb 03 2022 Alexey Shabalin <shaba@altlinux.org> 2022.02.01-alt1
-- Update to RELEASE.2022-02-01T18-00-14Z
+- Update to RELEASE.2022-02-01T18-00-14Z (Fixes: CVE-2021-43858)
 
 * Thu Nov 11 2021 Alexey Shabalin <shaba@altlinux.org> 2021.11.09-alt1
-- Update to RELEASE.2021-11-09T03-21-45Z
+- Update to RELEASE.2021-11-09T03-21-45Z (Fixes: CVE-2021-41137)
 
 * Fri Jun 25 2021 Alexey Shabalin <shaba@altlinux.org> 2021.06.17-alt1
 - Update to RELEASE.2021-06-17T00-10-46Z
 
 * Sat Mar 27 2021 Alexey Shabalin <shaba@altlinux.org> 2021.03.26-alt1
-- Update to RELEASE.2021-03-26T00-00-41Z
+- Update to RELEASE.2021-03-26T00-00-41Z (Fixes: CVE-2021-21362, CVE-2021-21390)
 
 * Mon Feb 08 2021 Alexey Shabalin <shaba@altlinux.org> 2021.02.07-alt1
-- Update to RELEASE.2021-02-07T01-31-02Z
+- Update to RELEASE.2021-02-07T01-31-02Z (Fixes: CVE-2021-21287)
 
 * Sun Oct 25 2020 Alexey Shabalin <shaba@altlinux.org> 2020.10.18-alt1
 - Update to RELEASE.2020-10-18T21-54-12Z
@@ -130,7 +135,7 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 - Update to RELEASE.2020-05-28T23-29-21Z
 
 * Wed Apr 29 2020 Alexey Shabalin <shaba@altlinux.org> 2020.04.28-alt1
-- Update to RELEASE.2020-04-28T23-56-56Z.
+- Update to RELEASE.2020-04-28T23-56-56Z (Fixes: CVE-2020-11012)
 
 * Tue Apr 28 2020 Alexey Shabalin <shaba@altlinux.org> 2020.04.23-alt1
 - Initial build.
