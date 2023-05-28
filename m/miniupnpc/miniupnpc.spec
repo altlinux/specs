@@ -1,7 +1,7 @@
 %define soversion 17
 
 Name: miniupnpc
-Version: 2.2.3
+Version: 2.3.3
 Release: alt1
 
 Summary: UPnP client library
@@ -13,8 +13,6 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # http://miniupnp.free.fr/files/%name-%version.tar.gz
 Source: %name-%version.tar
-
-Patch0: %name-alt-cmake.patch
 
 BuildRequires: cmake
 
@@ -38,9 +36,15 @@ Group: Development/C
 Contains libraries and header files for
 developing applications that use %name.
 
+%package tools
+Summary: Development tools for %name
+Group: Development/Tools
+
+%description tools
+Development tools for %name
+
 %prep
 %setup
-%patch0 -p2
 
 %build
 %cmake -DUPNPC_BUILD_STATIC:BOOL=FALSE
@@ -52,7 +56,7 @@ developing applications that use %name.
 %__install -Dp -m0644 man3/%name.3.xz %buildroot%_man3dir/%name.3.xz
 
 %files -n lib%name%soversion
-%doc Changelog.txt LICENSE README VERSION
+%doc README
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
@@ -61,9 +65,18 @@ developing applications that use %name.
 %dir %_libdir/cmake/%name
 %_libdir/cmake/%name/*.cmake
 %_libdir/lib%name.so
+%_pkgconfigdir/%name.pc
 %_man3dir/%name.3.*
 
+%files tools
+%_bindir/external-ip.sh
+%_bindir/listdevices
+%_bindir/upnpc-shared
+
 %changelog
+* Sun May 28 2023 Nazarov Denis <nenderus@altlinux.org> 2.3.3-alt1
+- New version 2.3.3.
+
 * Sat Mar 26 2022 Nazarov Denis <nenderus@altlinux.org> 2.2.3-alt1
 - Version 2.2.3
 
