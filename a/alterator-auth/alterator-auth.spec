@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.44.2
+Version: 0.44.3
 Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
@@ -174,6 +174,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Sat May 27 2023 Andrey Limachko <liannnix@altlinux.org> 0.44.3-alt1
+- Fix missing OS version for Sisyphus Regular builds
+
 * Sun May 07 2023 Andrey Cherepanov <cas@altlinux.org> 0.44.2-alt1
 - Pass OS name and version diring join to Active Directory (ALT #46071). Thanks Sergey Sysoev.
 
