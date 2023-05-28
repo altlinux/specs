@@ -8,7 +8,7 @@
 
 Name: btrfs-progs
 Version: 6.3
-Release: alt1
+Release: alt2
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -100,6 +100,8 @@ ln -s ../../sbin/btrfs %buildroot%_bindir/btrfs
 rm -f %buildroot/%{_lib}/libbtrfs.so
 rm -f %buildroot/%{_lib}/libbtrfsutil.so
 
+install -pD -m644 btrfs-completion %buildroot%_datadir/bash-completion/completions/btrfs
+
 %check
 # failed: setfattr -n user.foo -v bar1 /usr/src/RPM/BUILD/btrfs-progs-5.16/tests/mnt/acls/acls.1
 rm -rf tests/convert-tests/001-ext2-basic
@@ -127,6 +129,7 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 %_bindir/btrfs
 %_bindir/*
 %_udevrulesdir/*.rules
+%_datadir/bash-completion/completions/btrfs
 %_man8dir/*
 %_man5dir/*
 
@@ -139,6 +142,9 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 %_includedir/*
 
 %changelog
+* Sun May 28 2023 Anton Farygin <rider@altlinux.ru> 6.3-alt2
+- added bash completions
+
 * Wed May 03 2023 Anton Farygin <rider@altlinux.ru> 6.3-alt1
 - 6.3
 
