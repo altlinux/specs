@@ -1,22 +1,22 @@
 # git describe upstream/yuzu
-%define git_descr mainline-636-9297-g03545261806
+%define git_descr mainline-636-11217-g0cefbf95301
 
 %define inih_version r52
-%define cpp_httplib_commit 305a7abcb9b4e9e349843c6d563212e6c1bbbf21
-%define cubeb_commit 75d9d125ee655ef80f3bfcd97ae5a805931042b8
-%define dynarmic_version 6.2.3
-%define sirit_commit aa292d56650bc28f2b2d75973fab2e61d0136f9c
+%define cpp_httplib_commit 6d963fbe8d415399d65e94db7910bbd22fe3741c
+%define cubeb_commit 48689ae7a73caeb747953f9ed664dc71d2f918d8
+%define dynarmic_commit 7da378033a7764f955516f75194856d87bbcd7a5
+%define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
-%define xbyak_version 5.96
-%define vulkan_headers_version 1.3.213
+%define xbyak_version 6.68
+%define vulkan_headers_version 1.3.246
 %define enet_commit 39a72ab1990014eb399cee9d538fd529df99c6a0
 %define cpp_jwt_commit e12ef06218596b52d9b5d6e1639484866a8e7067
 %define sanitizers_cmake_commit aab6948fa863bc1cbe5d0850bc46b9ef02ed4c1a
-%define spirv_headers_commit a3fdfe81465d57efc97cfd28ac6c8190fb31a6c8
+%define spirv_headers_commit c214f6f2d1a7253bb0e9f195c2dc5b0659dc99ef
 
 Name: yuzu
-Version: 1139
-Release: alt1.1
+Version: 1448
+Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv2
@@ -35,8 +35,8 @@ Source1: inih-%inih_version.tar
 Source2: cpp-httplib-%cpp_httplib_commit.tar
 # https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
 Source3: cubeb-%cubeb_commit.tar
-# https://github.com/merryhime/dynarmic/archive/%dynarmic_version/dynarmic-%dynarmic_version.tar.gz
-Source4: dynarmic-%dynarmic_version.tar
+# https://github.com/merryhime/dynarmic/archive/%dynarmic_commit/dynarmic-%dynarmic_commit.tar.gz
+Source4: dynarmic-%dynarmic_commit.tar
 # https://github.com/ReinUsesLisp/sirit/archive/%sirit_commit/sirit-%sirit_commit.tar.gz
 Source5: sirit-%sirit_commit.tar
 # https://github.com/yuzu-emu/mbedtls/archive/%mbedtls_commit/mbedtls-%mbedtls_commit.tar.gz
@@ -54,7 +54,7 @@ Source11: sanitizers-cmake-%sanitizers_cmake_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_commit/SPIRV-Headers-%spirv_headers_commit.tar.gz
 Source12: SPIRV-Headers-%spirv_headers_commit.tar
 
-Patch0: %name-zstd.patch
+#Patch0: %name-zstd.patch
 
 BuildRequires: boost-asio-devel
 BuildRequires: boost-context-devel
@@ -91,12 +91,12 @@ BuildRequires: zlib-devel
 %prep
 %setup -n %name-mainline-mainline-0-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
 
-%patch0 -p1
+#%patch0 -p1
 
 %__mv -Tf ../inih-%inih_version externals/inih/inih
 %__mv -Tf ../cpp-httplib-%cpp_httplib_commit externals/cpp-httplib
 %__mv -Tf ../cubeb-%cubeb_commit externals/cubeb
-%__mv -Tf ../dynarmic-%dynarmic_version externals/dynarmic
+%__mv -Tf ../dynarmic-%dynarmic_commit externals/dynarmic
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
 %__mv -Tf ../xbyak-%xbyak_version externals/xbyak
@@ -144,6 +144,9 @@ src/common/scm_rev.cpp.in
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Sun May 28 2023 Nazarov Denis <nenderus@altlinux.org> 1448-alt1
+- Version 1448
+
 * Thu Apr 13 2023 Nazarov Denis <nenderus@altlinux.org> 1139-alt1.1
 - Add zstd patch
 
