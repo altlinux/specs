@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libsimdjson
-Version: 3.1.7
+Version: 3.1.8
 Release: alt1
 Summary: Parsing gigabytes of JSON per second
 License: Apache-2.0
@@ -68,5 +68,8 @@ c++ -Iinclude -L%_cmake__builddir -std=c++17 -Wl,-rpath,%_cmake__builddir -o lin
 %_pkgconfigdir/simdjson.pc
 
 %changelog
+* Sun May 28 2023 Vitaly Chikunov <vt@altlinux.org> 3.1.8-alt1
+- Update to v3.1.8 (2023-05-14).
+
 * Tue May 09 2023 Vitaly Chikunov <vt@altlinux.org> 3.1.7-alt1
 - First import v3.1.7 (2023-04-08).
