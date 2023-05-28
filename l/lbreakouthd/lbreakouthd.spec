@@ -1,5 +1,5 @@
 Name: lbreakouthd
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: Classic Breakout-Style Game
 License: GPLv2+
@@ -55,6 +55,9 @@ tar -xf %SOURCE1 -C %buildroot%_datadir/%name/levels
 %attr(664,games,games) %_localstatedir/games/%name.hscr
 
 %changelog
+* Sun May 28 2023 Ilya Mashkin <oddity@altlinux.ru> 1.1.3-alt1
+- 1.1.3
+
 * Tue Apr 04 2023 Ilya Mashkin <oddity@altlinux.ru> 1.1.2-alt1
 - 1.1.2
 
