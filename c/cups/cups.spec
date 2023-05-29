@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.4.2
-Release: alt2
+Release: alt3
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -86,6 +86,7 @@ Patch559: ALT-mime-pjl-pdf.patch
 Patch560: ALT-SE-ippcalls.patch
 
 # Upstream patches
+Patch600: UPSTREAM-scheduler-printers.c-Check-for-CMYK-as-well-fixes-42.patch
 
 ## Provides
 Provides: %name-ppd = %version %name-common = %version
@@ -217,6 +218,7 @@ services using the main CUPS library "libcups".
 
 # Upstream patches
 # https://github.com/OpenPrinting/cups/pull
+%patch600 -p1
 
 cp %SOURCE98 %SOURCE97 %SOURCE10 %SOURCE11 .
 cp %SOURCE21 scheduler/cups.sh.in
@@ -427,6 +429,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Fri May 19 2023 Andrey Cherepanov <cas@altlinux.org> 2.4.2-alt3
+- Upstream fix for https://github.com/OpenPrinting/cups/issues/421
+
 * Mon Apr 17 2023 Andrey Cherepanov <cas@altlinux.org> 2.4.2-alt2
 - NMU: build with --enable-gssapi
 
