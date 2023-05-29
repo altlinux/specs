@@ -45,7 +45,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Web browser engine
@@ -243,7 +243,7 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
-%patch -b .bwrap
+#%%patch -b .bwrap
 #%%patch1 -p1 -b .python3
 %ifarch aarch64
 #%%patch2 -b .arm64
@@ -302,7 +302,7 @@ export PYTHON=%__python3
 %if_disabled bubblewrap_sandbox
 -DENABLE_BUBBLEWRAP_SANDBOX=OFF \
 %else
--DBWRAP_BIN=%bwrap_bin \
+-DBWRAP_EXECUTABLE=%bwrap_bin \
 %endif
 %ifarch %arm
 -DENABLE_GLES2=ON \
@@ -386,6 +386,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Mon May 29 2023 Yuri N. Sedunov <aris@altlinux.org> 2.40.2-alt1
+- 2.40.2
+
 * Thu Apr 20 2023 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt1
 - 2.40.1
 
