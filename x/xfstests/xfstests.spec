@@ -4,13 +4,12 @@
 %set_verify_elf_method strict
 
 Name: xfstests
-Version: 2022.09.25
+Version: 2023.05.28
 Release: alt1
 Summary: XFS QA testsuite
 License: GPL-2.0-or-later
 Group: Development/Tools
 Url: https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git
-Vcs: https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git
 # Additional https://github.com/tytso/xfstests-bld
 
 # Autoreqs work for too long.
@@ -68,13 +67,16 @@ tests for userspace & kernelspace.
 %install
 %makeinstall_std V=1
 
+%global _customdocdir %_defaultdocdir/%name
+
 %files
-%doc README* LICENSES/* doc/*
+%doc README* MAINTAINERS LICENSES/* doc/*
 %_libexecdir/xfstests
 
-# It's v1.1.1 released at 2012-12-12 - ecdb4d61 ("xfstests: update version and changelog")
-# there just no approrpiate upstream tag.
 %changelog
+* Tue May 30 2023 Vitaly Chikunov <vt@altlinux.org> 2023.05.28-alt1
+- Update to v2023.05.28 (2023-05-28).
+
 * Sat Oct 08 2022 Vitaly Chikunov <vt@altlinux.org> 2022.09.25-alt1
 - Update to v2022.09.25 (2022-09-22).
 
