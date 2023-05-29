@@ -2,7 +2,7 @@
 
 Name: libfprint2
 Version: 1.94.5
-Release: alt1
+Release: alt3
 
 Summary: Tool kit for fingerprint scanner
 License: LGPLv2+
@@ -71,7 +71,6 @@ GObject introspection devel data for %name
 %meson -Ddrivers=all \
        -Dintrospection=true \
        -Dudev_rules=enabled \
-       -Dudev_rules_dir=%_sysconfdir/udev/rules.d/ \
        -Dgtk-examples=false \
        -Ddoc=true
 %meson_build
@@ -85,7 +84,7 @@ GObject introspection devel data for %name
 %files
 %doc COPYING INSTALL NEWS THANKS AUTHORS README.md
 %_libdir/*.so.*
-%_sysconfdir/udev/rules.d/70-libfprint-2.rules
+%_udevrulesdir/70-libfprint-2.rules
 
 %files gir
 %_libdir/girepository-1.0/*.typelib
@@ -101,6 +100,13 @@ GObject introspection devel data for %name
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue May 23 2023 Egor Ignatov <egori@altlinux.org> 1.94.5-alt3
+- add support for Goodix 27C6:60A4
+- backport fix for virtual-device-listener
+
+* Mon May 15 2023 Egor Ignatov <egori@altlinux.org> 1.94.5-alt2
+- move udev rule to /lib/udev/rules.d/
+
 * Tue Dec 06 2022 Egor Ignatov <egori@altlinux.org> 1.94.5-alt1
 - new version 1.94.5
 
