@@ -2,7 +2,7 @@
 %def_without check
 
 Name: writefreely
-Version: 0.13.1
+Version: 0.13.2
 Release: alt1
 Packager: Pavel Nakonechnyi <zorg@altlinux.org>
 
@@ -15,12 +15,9 @@ BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 BuildRequires: lessjs go-bindata sqlite
 
-# Source-url: https://github.com/writefreely/writefreely/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-# auto predownloaded node modules during update version with rpmgs from etersoft-build-utils
-# ask me about description using: lav@etersoft.ru
-Source1: %name-development-%version.tar
+Source1: vendor.tar
 
 Source2: %name.service
 Source3: %name.tmpfiles
@@ -91,7 +88,7 @@ install -pD -m0644 %SOURCE5 %buildroot%_sysconfdir/nginx/sites-available.d/%name
 
 %pre
 /usr/sbin/groupadd -r -f _writefreely 2>/dev/null ||:
-/usr/sbin/useradd -r -g _writefreely -d / -s /dev/null -n -c "WriteFreely" _writefreely >/dev/null 2>&1 ||:
+/usr/sbin/useradd -r -g _writefreely -d / -s /dev/null -N -c "WriteFreely" _writefreely >/dev/null 2>&1 ||:
 
 %post nginx
 # Generate SSL key
@@ -110,6 +107,16 @@ ssl_generate "writefreely"
 %files nginx
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
+%post
+%post_service writefreely
+
+%preun
+%preun_service writefreely
+
 %changelog
+* Mon May 29 2023 Pavel Nakonechnyi <zorg@altlinux.org> 0.13.2-alt1
+- version 0.13.2
+- update build process to handle vendoring manually
+
 * Mon Dec 13 2021 Pavel Nakonechnyi <zorg@altlinux.org> 0.13.1-alt1
 - initial build
