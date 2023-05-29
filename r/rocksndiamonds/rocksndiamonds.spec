@@ -1,6 +1,6 @@
 Name: rocksndiamonds
-Version: 4.3.2.1
-Release: alt2
+Version: 4.3.6.0
+Release: alt1
 
 Summary: A boulderdash like game
 License: GPL-2.0
@@ -84,6 +84,9 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_pkgdatadir
 
 %changelog
+* Mon May 29 2023 Artyom Bystrov <arbars@altlinux.org> 4.3.6.0-alt1
+- Update to new version
+
 * Thu Dec 08 2022 Artyom Bystrov <arbars@altlinux.org> 4.3.2.1-alt2
 - Fix build FTBFS (https://git.altlinux.org/beehive/logs/Sisyphus-x86_64/latest/error/rocksndiamonds-4.3.2.1-alt1)
 
