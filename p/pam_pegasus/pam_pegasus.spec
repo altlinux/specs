@@ -1,5 +1,5 @@
 Name: pam_pegasus
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Pluggable private /tmp space support for interactive sessions
@@ -16,7 +16,7 @@ service to provide per-user privately mounted /tmp directory
 as a part of PAM session management.
 
 The directory is being mounted with the following mount options:
--t tmpfs -o mode=0700,uid=UID,gid=GID,size=25%
+-t tmpfs -o mode=0700,uid=UID,gid=GID,size=64g
 
 This PAM module was implemented for use in pegasus systems, hence the name.
 
@@ -36,5 +36,8 @@ install -pDm644 %name.so %buildroot/%_lib/security/%name.so
 /%_lib/security/%name.so
 
 %changelog
+* Mon May 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2-alt1
+- Changed tmpfs size from 25% to 64g.
+
 * Fri Apr 15 2016 Dmitry V. Levin <ldv@altlinux.org> 0.1-alt1
 - Initial revision.
