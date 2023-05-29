@@ -1,6 +1,6 @@
 Name: libgc
-Version: 8.2.2
-Release: alt2
+Version: 8.2.4
+Release: alt1
 
 Summary: The Boehm-Demers-Weiser conservative garbage collector
 
@@ -106,6 +106,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %endif
 
 %changelog
+* Mon May 29 2023 Vitaly Lipatov <lav@altlinux.ru> 8.2.4-alt1
+- new version 8.2.4 (with rpmrb script)
+
 * Wed Sep 07 2022 Michael Shigorin <mike@altlinux.org> 8.2.2-alt2
 - E2K: drop patch2000 (upstream support in place)
 
