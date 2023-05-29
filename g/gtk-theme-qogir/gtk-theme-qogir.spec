@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 2023.02.27
+Version: 2023.05.24
 Release: alt1
 Epoch: 1
 Summary: Qogir GTK theme
@@ -35,6 +35,9 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 %_datadir/themes/Qogir*
 
 %changelog
+* Mon May 29 2023 Leontiy Volodin <lvol@altlinux.org> 1:2023.05.24-alt1
+- New version.
+
 * Thu Mar 09 2023 Leontiy Volodin <lvol@altlinux.org> 1:2023.02.27-alt1
 - New version.
 - Upstream:
