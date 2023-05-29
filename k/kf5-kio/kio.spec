@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.106.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -176,6 +176,9 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon May 29 2023 Sergey V Turchin <zerg@altlinux.org> 5.106.0-alt2
+- fix russian translation
+
 * Mon May 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.106.0-alt1
 - new version
 
