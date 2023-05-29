@@ -1,5 +1,7 @@
+%def_enable snapshot
+
 %define _libexecdir %_prefix/libexec
-%define ver_major 43
+%define ver_major 44
 %define xdg_name org.gnome.NautilusPreviewer
 %define api_ver 1.0
 %define gst_api_ver 1.0
@@ -10,7 +12,7 @@
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -18,26 +20,28 @@ Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: https://gitlab.gnome.org/GNOME/sushi
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define gst_ver 1.0
-%define clutter_ver 1.11.4
 %define webkit_api_ver 4.1
 %define webkit_ver 2.38
 
-Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-base%gst_api_ver gst-libav
 Requires: %lo_bin
 Requires: typelib(Gtk) = 3.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson %_bindir/appstream-util desktop-file-utils
 BuildRequires: libgtksourceview4-devel libgjs-devel libharfbuzz-devel
-BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel libclutter-gst3.0-devel
-BuildRequires: libevince-devel libepoxy-devel 
+BuildRequires: libevince-devel libepoxy-devel
 BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel
 %if_enabled introspection
-BuildRequires: libgtksourceview4-gir-devel libcogl-gir-devel libclutter-gir-devel libevince-gir-devel
+BuildRequires: libgtksourceview4-gir-devel libevince-gir-devel
 BuildRequires: libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
 %endif
 
@@ -55,7 +59,7 @@ Library for Sushi project.
 %package -n lib%name-devel
 Summary: Development files for Sushi library
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package contains libraries and header files for developing
@@ -64,7 +68,7 @@ applications that use Sushi library.
 %package -n lib%name-gir
 Summary: GObject introspection data for the Sushi library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the Sushi library.
@@ -73,8 +77,8 @@ GObject introspection data for the Sushi library.
 Summary: GObject introspection devel data for the Sushi library
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Sushi library.
@@ -107,6 +111,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Mon May 29 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
+- 44.2
+
 * Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 
