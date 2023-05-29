@@ -97,7 +97,7 @@
 %endif
 
 Name:    samba
-Version: 4.17.7
+Version: 4.17.8
 Release: alt1
 
 Group:   System/Servers
@@ -2086,6 +2086,34 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Sun May 21 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.8-alt1
+- Update to maintenance release of Samba 4.18:
+  + log flood: smbd_calculate_access_mask_fsp: Access denied: message level
+    should be lower (Samba#15302).
+  + Floating point exception (FPE) via cli_pull_send at
+    source3/libsmb/clireadwrite.c (Samba#15306).
+  + Reduce flapping of ridalloc test (Samba#15329).
+  + large_ldap test is unreliable (Samba#15351).
+  + New filename parser doesn't check veto files smb.conf parameter (Samba#15143).
+  + mdssvc may crash when initializing (Samba#15354).
+  + Large directory optimization broken for non-lcomp path elements (Samba#15313).
+  + streams_depot fails to create streams (Samba#15357).
+  + shadow_copy2 and streams_depot don't play well together (Samba#15358).
+  + wbinfo -u fails on ad dc with >1000 users (Samba#15366).
+  + winbindd idmap child contacts the domain controller without a
+    need (Samba#15317).
+  + idmap_autorid may fail to map sids of trusted domains for the first
+    time (Samba#15318).
+  + idmap_hash doesn't use ID_TYPE_BOTH for reverse mappings (Samba#15319).
+  + net ads search -P doesn't work against servers in other domains (Samba#15323).
+  + DS ACEs might be inherited to unrelated object classes (Samba#15338).
+  + Temporary smbXsrv_tcon_global.tdb can't be parsed (Samba#15353).
+  + Setting veto files = /.*/ break listing directories (Samba#15360).
+  + CVE-2020-25720 [SECURITY] Create Child permission should not
+    allow full write to all attributes (additional changes) (Samba#14810).
+  + Reduce flapping of ridalloc test (Samba#15329).
+  + dsgetdcname: assumes local system uses IPv4 (Samba#15325).
+
 * Wed Mar 29 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.7-alt1
 - Update to maintenance release of Samba 4.17 with update libldb to 2.6.2:
   + ldb wildcard matching makes excessive allocations (Samba#15331).
