@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/octave-config makeinfo texinfo
 %def_with _octave_arch
 %define octpkg dicom
 Name: octave-%octpkg
-Version: 0.4.1
-Release: alt2
+Version: 0.5.1
+Release: alt1
 Summary: dicom: file io for medical images and other data
 
 Group: Sciences/Mathematics
@@ -15,7 +15,7 @@ URL: http://octave.org/wiki/index.php?title=Dicom
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
-BuildRequires(pre): rpm-build-octave
+BuildRequires(pre): rpm-build-octave rpm-build-python3
 BuildRequires: octave-devel
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
@@ -53,6 +53,9 @@ autoreconf -fisv src/
 %endif
 
 %changelog
+* Mon May 29 2023 Artyom Bystrov <arbars@altlinux.org> 0.5.1-alt1
+- New version
+
 * Mon Apr 24 2023 Artyom Bystrov <arbars@altlinux.org> 0.4.1-alt2
 - fixed build proccess on e2k
 
