@@ -1,5 +1,5 @@
 Name: dav1d
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: AV1 cross-platform Decoder
@@ -66,6 +66,9 @@ Development files for dav1d, the AV1 cross-platform Decoder.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue May 30 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - new version 1.1.0 (with rpmrb script)
 
