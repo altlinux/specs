@@ -24,8 +24,8 @@
 %endif
 
 Name: curl
-Version: 8.1.0
-Release: alt2
+Version: 8.1.2
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -200,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Tue May 30 2023 Anton Farygin <rider@altlinux.ru> 8.1.2-alt1
+- 8.1.0 -> 8.1.2
+
 * Thu May 18 2023 Anton Farygin <rider@altlinux.ru> 8.1.0-alt2
 - built with Gnutls only if QUIC is available
 
