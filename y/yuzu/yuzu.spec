@@ -6,7 +6,7 @@
 
 Name: yuzu
 Version: 1452
-Release: alt1
+Release: alt2
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv2
@@ -15,7 +15,7 @@ Group: Emulators
 Url: https://%name-emu.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 BuildRequires(pre): libavfilter-devel
 
@@ -85,6 +85,7 @@ src/common/scm_rev.cpp.in
 	-DENABLE_QT_TRANSLATION:BOOL=TRUE \
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=FALSE \
 	-DYUZU_USE_EXTERNAL_VULKAN_HEADERS:BOOL=FALSE \
+	-DYUZU_ENABLE_LTO:BOOL=TRUE \
 	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
 	-GNinja \
 	-Wno-dev
@@ -92,10 +93,6 @@ src/common/scm_rev.cpp.in
 
 %install
 %cmake_install
-
-%__rm -rf %buildroot%_libdir
-%__rm -rf %buildroot%_includedir
-%__rm -rf %buildroot%_datadir/cmake
 
 %files
 %doc CONTRIBUTING.md README.md
@@ -108,6 +105,10 @@ src/common/scm_rev.cpp.in
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Tue May 30 2023 Nazarov Denis <nenderus@altlinux.org> 1452-alt2
+- Build on AArch64
+- Enable link-time optimization
+
 * Tue May 30 2023 Nazarov Denis <nenderus@altlinux.org> 1452-alt1
 - Version 1452
 
