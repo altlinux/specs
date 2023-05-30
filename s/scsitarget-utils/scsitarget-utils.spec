@@ -1,20 +1,19 @@
-
 %def_with rdma
 %def_with glfs
-%ifarch %ix86 %arm %mips32 ppc
-%def_without rbd
-%else
+%ifarch x86_64 aarch64 ppc64el
 %def_with rbd
+%else
+%def_without rbd
 %endif
 
 Name: scsitarget-utils
 Version: 1.0.83
-Release: alt1
+Release: alt2
 
 Summary: The SCSI target daemon and utility programs
-
-Group: System/Configuration/Hardware
 License: GPLv2
+Group: System/Configuration/Hardware
+
 URL: https://github.com/fujita/tgt
 Vcs: https://github.com/fujita/tgt.git
 
@@ -55,8 +54,8 @@ Provides: iscsitarget = 1.4.20.2-alt2.1
 Obsoletes: iscsitarget < 1.4.20.2-alt2.1
 
 %description
-The SCSI target package contains the daemon and tools to setup a SCSI
-targets. Currently, software iSCSI targets are supported.
+The SCSI target package contains the daemon and tools to setup
+a SCSI target. Software iSCSI targets are currently supported.
 
 %package rbd
 Summary: Support for the Ceph rbd backstore to scsi-target-utils
@@ -82,10 +81,16 @@ Adds support for the Gluster glfs backstore to scsi-target-utils.
 %patch3 -p1
 %patch4 -p1
 
+### FIXME: aarch64 ftbfs workaround with gcc12-12.2.1-alt2 (#322140)
+%ifarch aarch64
+#sed -i "s/(char \*)siginfo/siginfo/" usr/bs.c
+sed -i "s/-Werror/-Wno-error/" usr/Makefile
+%endif
+
 %build
-%__subst 's|-g -O2 -Wall|%optflags|' Makefile
+sed -i 's|-g -O2 -Wall|%optflags|' Makefile
 # to prevent race with mkdir() in xsltproc:
-%__mkdir -p doc/htmlpages
+mkdir -p doc/htmlpages
 %make_build \
 	%{?_with_rdma:ISCSI_RDMA=1} \
 	%{?_with_rbd:CEPH_RBD=1} \
@@ -162,6 +167,11 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %endif
 
 %changelog
+* Tue May 30 2023 Michael Shigorin <mike@altlinux.org> 1.0.83-alt2
+- fix rbd arch condition
+- minor spec cleanup
+- aarch64 ftbfs workaround (ilyakurdyukov@)
+
 * Mon Jul 18 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.0.83-alt1
 - 1.0.83
 - fix use-after-free bug
