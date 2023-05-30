@@ -1,19 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 0.4
 %def_enable gtk_doc
 
-%ifarch armh aarch64
-%def_disable check
-%else
 %def_enable check
-%endif
 
 %ifarch %valgrind_arches
 %def_enable valgrind
 %endif
 
 Name: orc
-Version: %ver_major.33
+Version: %ver_major.34
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -150,6 +146,10 @@ rm -f %buildroot/%_libdir/lib%name-test-%ver_major.a
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue May 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.34-alt1
+- 0.4.34
+- enabled %%check for all arches
+
 * Sun Nov 13 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.33-alt1
 - 0.4.33-6-g7841e2f
 
