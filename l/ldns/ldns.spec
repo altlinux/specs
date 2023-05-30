@@ -2,13 +2,13 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%def_with python3
+%def_without python3
 # dane_ta_usage requires openssl >= 1.1.0
 %def_with dane_ta_usage
 
 Name: ldns
 Version: 1.8.1
-Release: alt1
+Release: alt2
 License: BSD
 Url: http://www.nlnetlabs.nl/%name/
 Group: System/Libraries
@@ -162,6 +162,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Fri May 05 2023 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt2
+- Build without python support.
+
 * Thu Jan 13 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.1-alt1
 - Updated to upstream release version 1.8.1.
 
