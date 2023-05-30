@@ -69,7 +69,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.1
+Version: 10.1.900
 Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -396,13 +396,6 @@ cp -a slideshow/Slides*/  %buildroot/usr/share/install2/slideshow/
 ln -s Slides-en %buildroot/usr/share/install2/slideshow/Slides
 install -m0644 slideshow/slideshow.conf %buildroot/etc/alterator/
 
-#indexhtml
-%define _indexhtmldir %_defaultdocdir/indexhtml
-install -m644 components/indexhtml/*.html %buildroot%_defaultdocdir/indexhtml/
-mkdir -p %buildroot%_defaultdocdir/indexhtml/images
-install -m644 components/indexhtml/images/* %buildroot%_defaultdocdir/indexhtml/images/
-#install -m644 components/indexhtml.desktop %buildroot%_desktopdir/
-
 #menu
 mkdir -p %buildroot/usr/share/slinux-style/applications
 install -m644 menu/applications/* %buildroot/usr/share/slinux-style/applications/
@@ -534,9 +527,7 @@ fi
 
 %files indexhtml
 %ghost %indexhtmldir/index.html
-%indexhtmldir/index-*.html
-%indexhtmldir/index.css
-%indexhtmldir/images
+%indexhtmldir/*
 %_desktopdir/indexhtml.desktop
 
 %files menu
@@ -549,6 +540,15 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Tue May 30 2023 Mikhail Efremov <sem@altlinux.org> 10.1.900-alt1
+- os-release.in: Update HOME_URL.
+- menu: Fix helpers names.
+- menu: Fix indentations in 50-xfce-applications.menu.
+- xfce-settings: Drop fusion-icon from systray settings.
+- xfce-settings: Replace datetime plugin with clock plugin.
+- indexhtml: Update index.html page.
+- build: Drop unused file.
+
 * Thu Jun 23 2022 Mikhail Efremov <sem@altlinux.org> 10.1-alt1
 - backgrounds10,xfce-settings: Move default_SL10 symlink.
 - graphics: Add default.png and xdm.png in different sizes.
