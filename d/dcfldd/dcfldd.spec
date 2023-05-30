@@ -1,5 +1,5 @@
 Name: dcfldd
-Version: 1.7.1
+Version: 1.9.1
 Release: alt1
 
 Summary: enhanced version of dd for forensics and security
@@ -45,6 +45,9 @@ dcfldd has the following additional features:
 %_man1dir/*
 
 %changelog
+* Mon May 29 2023 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt1
+- new version (1.9.1) with rpmgs script
+
 * Sat Sep 11 2021 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt1
 - new version (1.7.1) with rpmgs script
 
