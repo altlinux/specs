@@ -9,8 +9,8 @@
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: A GNOME 3 application to access virtual systems
 Group: Emulators
@@ -123,6 +123,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Tue May 30 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
+- 44.2
+
 * Fri Mar 31 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 
