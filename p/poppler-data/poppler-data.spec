@@ -1,6 +1,6 @@
 
 Name: poppler-data
-Version: 0.4.11
+Version: 0.4.12
 Release: alt1
 
 Group: Publishing
@@ -44,6 +44,9 @@ rm -rf poppler-data.pc
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Tue May 30 2023 Sergey V Turchin <zerg@altlinux.org> 0.4.12-alt1
+- new version
+
 * Tue Nov 30 2021 Sergey V Turchin <zerg@altlinux.org> 0.4.11-alt1
 - new version
 
