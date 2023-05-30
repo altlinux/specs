@@ -1,6 +1,6 @@
 Name: python3-module-platformio
 Version: 6.1.7
-Release: alt1
+Release: alt2
 
 Summary: PlatformIO Core
 License: Apache-2.0
@@ -58,6 +58,9 @@ BuildRequires: python3(starlette)
 %python3_sitelibdir/platformio-%version.dist-info
 
 %changelog
+* Tue May 30 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.7-alt2
+- rebuilt with starlette version bump
+
 * Thu May 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.7-alt1
 - 6.1.7 released
 
