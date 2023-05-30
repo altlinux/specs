@@ -10,7 +10,7 @@
 
 Name: xscreensaver
 Version: 5.45
-Release: alt2
+Release: alt3
 
 Summary: A screen saver and locker for the X window system
 
@@ -53,6 +53,7 @@ BuildRequires: libXmu-devel libXpm-devel libXrandr-devel libXxf86misc-devel
 BuildRequires: libXxf86vm-devel libgle-devel libjpeg-devel
 BuildRequires: libpam-devel libxml2-devel xorg-cf-files
 BuildRequires: libgdk-pixbuf-xlib-devel libgtk+2-devel libsystemd-devel
+BuildRequires: xsltproc
 
 %description
 A modular screen saver and locker for the X Window System.
@@ -327,11 +328,14 @@ find %buildroot -name "*handsy*" -delete
 %files modules-gl -f xscreensaver-modules-gl
 %dir %xss_hack_dir
 
-%files -n desktop-screensaver-modules-xscreensaver
+%files -n desktop-screensaver-modules-xscreensaver -f xscreensaver-desktop-std
 
-%files -n desktop-screensaver-modules-xscreensaver-gl
+%files -n desktop-screensaver-modules-xscreensaver-gl -f xscreensaver-desktop-gl
 
 %changelog
+* Tue May 30 2023 Mikhail Efremov <sem@altlinux.org> 5.45-alt3
+- Fix desktop-screensaver-modules-xscreensaver* subpackages (closes: #45599).
+
 * Thu Apr 01 2021 Grigory Ustinov <grenka@altlinux.org> 5.45-alt2
 - Fix GPL license file path (Closes: #39505).
 
