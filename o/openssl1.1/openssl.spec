@@ -2,8 +2,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: openssl1.1
-Version: 1.1.1t
-Release: alt3
+Version: 1.1.1u
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -472,6 +472,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Tue May 30 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1u-alt1
+- Updated to 1.1.1u (fixes CVE-2023-2650).
+
 * Mon May 22 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1t-alt3
 - Updated from upstream OpenSSL_1_1_1-stable branch (commit
   OpenSSL_1_1_1t-22-g8ddacec114).
