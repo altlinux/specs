@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.8
+Version: 1.9
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -56,6 +56,10 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed May 31 2023 Vitaly Chikunov <vt@altlinux.org> 1.9-alt1
+- Improve '-r' handling.
+- Update update-kernel(8) man pages (ALT#43934).
+
 * Tue May 02 2023 Vitaly Chikunov <vt@altlinux.org> 1.8-alt1
 - Improve help text.
 
