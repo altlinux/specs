@@ -3,7 +3,7 @@
 %define guile_sitedir %(guile-config info sitedir)
 
 Name: shepherd
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: The GNU Shepherd
@@ -61,6 +61,9 @@ programming model.
 %_man8dir/reboot.*
 
 %changelog
+* Tue May 30 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.1-alt1
+- New version.
+
 * Fri May 26 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.0-alt1
 - Initial build for ALT Sisyphus.
 
