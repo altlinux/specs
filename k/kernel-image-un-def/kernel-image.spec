@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.3
-%define kernel_sublevel	.4
+%define kernel_sublevel	.5
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -578,6 +578,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue May 30 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.3.5-alt1
+- v6.3.5 (2023-05-30).
+
 * Thu May 25 2023 Vitaly Chikunov <vt@altlinux.org> 1:6.3.4-alt1
 - Rebase to v6.3.4 (2023-05-24).
 - Do not package kernel-modules-drm-ancient-un-def.
