@@ -1,6 +1,6 @@
 Name: deja-dup
-Version: 44.1
-Release: alt3
+Version: 44.2
+Release: alt1
 
 Summary: Simple backup tool and frontend for duplicity
 
@@ -93,6 +93,9 @@ desktop-file-validate %buildroot/%_sysconfdir/xdg/autostart/org.gnome.DejaDup.Mo
 #_datadir/help/*
 
 %changelog
+* Tue May 30 2023 Vitaly Lipatov <lav@altlinux.ru> 44.2-alt1
+- new version 44.2 (with rpmrb script)
+
 * Sat May 06 2023 Vitaly Lipatov <lav@altlinux.ru> 44.1-alt3
 - add requires: python3-module-pydrive2 (ALT bug 46081)
 
