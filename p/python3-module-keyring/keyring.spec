@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 23.14.0
-Release: alt2
+Release: alt3
 
 Summary: Keyring provides an easy way to access the system keyring service
 
@@ -42,12 +42,21 @@ that needs safe password storage.
 # Drop redundant shebang
 sed -i '1{\@^#!/usr/bin/env python@d}' keyring/cli.py
 
+# Don't use SETUPTOOLS_SCM_PRETEND_VERSION.
+# See: https://bugzilla.altlinux.org/46305
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
@@ -60,6 +69,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue May 30 2023 Anton Zhukharev <ancieg@altlinux.org> 23.14.0-alt3
+- Don't use SETUPTOOLS_SCM_PRETEND_VERSION (Closes: #46305).
+
 * Fri May 05 2023 Grigory Ustinov <grenka@altlinux.org> 23.14.0-alt2
 - Add runtime dependency on importlib_metadata (Closes: #45056).
 
