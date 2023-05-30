@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.2.5
+Version: 3.2.6
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue May 30 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.6-alt1
+- rpmgs: add support for git repo for Source-url (create tarball from the git url)
+- rpmgs: add source url to tarball commit message
+- gitask: add -u|--user USER
+
 * Tue May 23 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.5-alt1
 - rpmgs: use case insensitive search for Url
 - rpmgs: check VCS/url only for the first Source
