@@ -1,5 +1,5 @@
 Name: xfce4-screensaver
-Version: 4.18.1
+Version: 4.18.2
 Release: alt1
 
 Summary: Screen saver and locker for Xfce
@@ -15,7 +15,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildRequires(pre): rpm-build-xdg
 
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools >= 4.17.1
-BuildPreReq: libxfconf-devel libgarcon-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildPreReq: libxfconf-devel libgarcon-gtk3-devel libxfce4ui-gtk3-devel >= 4.18.4 libxfce4util-devel
 BuildRequires: glib2-devel libgtk+3-devel libgio-devel
 BuildRequires: libdbus-glib-devel libdbus-devel
 BuildRequires: libXScrnSaver-devel libxklavier-devel libXrandr-devel libGL-devel
@@ -75,6 +75,9 @@ and the Xfconf configuration backend.
 %_pixmapsdir/*.svg
 
 %changelog
+* Tue May 30 2023 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
+- 4.18.1 -> 4.18.2.
+
 * Mon Mar 27 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
 - 4.18.0 -> 4.18.1.
 
