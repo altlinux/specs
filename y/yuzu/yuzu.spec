@@ -1,21 +1,11 @@
 # git describe upstream/yuzu
 %define git_descr mainline-636-11217-g0cefbf95301
 
-%define inih_version r52
-%define cpp_httplib_commit 6d963fbe8d415399d65e94db7910bbd22fe3741c
-%define cubeb_commit 48689ae7a73caeb747953f9ed664dc71d2f918d8
-%define dynarmic_commit 7da378033a7764f955516f75194856d87bbcd7a5
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
-%define xbyak_version 6.68
-%define vulkan_headers_version 1.3.246
-%define enet_commit 39a72ab1990014eb399cee9d538fd529df99c6a0
-%define cpp_jwt_commit e12ef06218596b52d9b5d6e1639484866a8e7067
-%define sanitizers_cmake_commit aab6948fa863bc1cbe5d0850bc46b9ef02ed4c1a
-%define spirv_headers_commit c214f6f2d1a7253bb0e9f195c2dc5b0659dc99ef
 
 Name: yuzu
-Version: 1448
+Version: 1452
 Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
@@ -27,52 +17,34 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
+BuildRequires(pre): libavfilter-devel
+
 # https://github.com/%name-emu/%name-mainline/archive/mainline-0-%version/%name-mainline-mainline-0-%version.tar.gz
 Source0: %name-mainline-mainline-0-%version.tar
-# https://github.com/benhoyt/inih/archive/r52/inih-%inih_version.tar.gz
-Source1: inih-%inih_version.tar
-# https://github.com/yhirose/cpp-httplib/archive/%cpp_httplib_commit/cpp-httplib-%cpp_httplib_commit.tar.gz
-Source2: cpp-httplib-%cpp_httplib_commit.tar
-# https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
-Source3: cubeb-%cubeb_commit.tar
-# https://github.com/merryhime/dynarmic/archive/%dynarmic_commit/dynarmic-%dynarmic_commit.tar.gz
-Source4: dynarmic-%dynarmic_commit.tar
 # https://github.com/ReinUsesLisp/sirit/archive/%sirit_commit/sirit-%sirit_commit.tar.gz
-Source5: sirit-%sirit_commit.tar
+Source1: sirit-%sirit_commit.tar
 # https://github.com/yuzu-emu/mbedtls/archive/%mbedtls_commit/mbedtls-%mbedtls_commit.tar.gz
-Source6: mbedtls-%mbedtls_commit.tar
-# https://github.com/herumi/xbyak/archive/v%xbyak_version/xbyak-%xbyak_version.tar.gz
-Source7: xbyak-%xbyak_version.tar
-# https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
-Source8: Vulkan-Headers-%vulkan_headers_version.tar
-# https://github.com/lsalzman/enet/archive/%enet_commit/enet-%enet_commit.tar.gz
-Source9: enet-%enet_commit.tar 
-# https://github.com/arun11299/cpp-jwt/archive/%cpp_jwt_commit/cpp-jwt-%cpp_jwt_commit.tar.gz
-Source10: cpp-jwt-%cpp_jwt_commit.tar
-# https://github.com/arsenm/sanitizers-cmake/archive/%sanitizers_cmake_commit/sanitizers-cmake-%sanitizers_cmake_commit.tar.gz
-Source11: sanitizers-cmake-%sanitizers_cmake_commit.tar
-# https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_commit/SPIRV-Headers-%spirv_headers_commit.tar.gz
-Source12: SPIRV-Headers-%spirv_headers_commit.tar
+Source2: mbedtls-%mbedtls_commit.tar
 
-#Patch0: %name-zstd.patch
+Patch0: %name-cpp-jwt-version-alt.patch
 
 BuildRequires: boost-asio-devel
-BuildRequires: boost-context-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: catch2-devel
 BuildRequires: clang-tools
 BuildRequires: cmake
-BuildRequires: doxygen
 BuildRequires: glslang
-BuildRequires: graphviz
 BuildRequires: libSDL2-devel
-BuildRequires: libalsa-devel
 BuildRequires: libavcodec-devel
-BuildRequires: libfmt-devel
-BuildRequires: libjack-devel
+BuildRequires: libbrotli-devel
+BuildRequires: libcpp-httplib-devel
+BuildRequires: libcpp-jwt-devel
+BuildRequires: libcubeb-devel
+BuildRequires: libdynarmic-devel
+BuildRequires: libenet-devel
+BuildRequires: libinih-devel
 BuildRequires: liblz4-devel
 BuildRequires: libopus-devel
-BuildRequires: libspeexdsp-devel
 BuildRequires: libswscale-devel
 BuildRequires: libusb-devel
 BuildRequires: libzstd-devel
@@ -81,30 +53,20 @@ BuildRequires: nlohmann-json-devel
 BuildRequires: python-modules-encodings
 BuildRequires: python3-dev
 BuildRequires: python3-module-mpl_toolkits
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: spirv-headers
 BuildRequires: zlib-devel
 
 %description
 %name is an open source Nintendo Switch emulator/debugger.
 
 %prep
-%setup -n %name-mainline-mainline-0-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
+%setup -n %name-mainline-mainline-0-%version -b 1 -b 2
 
-#%patch0 -p1
+%patch0 -p1
 
-%__mv -Tf ../inih-%inih_version externals/inih/inih
-%__mv -Tf ../cpp-httplib-%cpp_httplib_commit externals/cpp-httplib
-%__mv -Tf ../cubeb-%cubeb_commit externals/cubeb
-%__mv -Tf ../dynarmic-%dynarmic_commit externals/dynarmic
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
-%__mv -Tf ../xbyak-%xbyak_version externals/xbyak
-%__mv -Tf ../Vulkan-Headers-%vulkan_headers_version externals/Vulkan-Headers
-%__mv -Tf ../enet-%enet_commit externals/enet
-%__mv -Tf ../cpp-jwt-%cpp_jwt_commit externals/cpp-jwt
-%__mv -Tf ../sanitizers-cmake-%sanitizers_cmake_commit externals/cubeb/cmake/sanitizers-cmake
-%__mv -Tf ../SPIRV-Headers-%spirv_headers_commit externals/sirit/externals/SPIRV-Headers
 
 # Enforce package versioning in GUI
 sed -i \
@@ -119,9 +81,11 @@ src/common/scm_rev.cpp.in
 %build
 %add_optflags -I%_includedir/libzip
 %cmake \
+	-DENABLE_QT6:BOOL=TRUE \
 	-DENABLE_QT_TRANSLATION:BOOL=TRUE \
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=FALSE \
-	-DYUZU_USE_BUNDLED_OPUS:BOOL=FALSE \
+	-DYUZU_USE_EXTERNAL_VULKAN_HEADERS:BOOL=FALSE \
+	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
 	-GNinja \
 	-Wno-dev
 %cmake_build
@@ -144,6 +108,9 @@ src/common/scm_rev.cpp.in
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Tue May 30 2023 Nazarov Denis <nenderus@altlinux.org> 1452-alt1
+- Version 1452
+
 * Sun May 28 2023 Nazarov Denis <nenderus@altlinux.org> 1448-alt1
 - Version 1448
 
