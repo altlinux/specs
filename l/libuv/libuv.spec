@@ -1,6 +1,6 @@
 %def_without asserts
 Name: libuv
-Version: 1.44.2
+Version: 1.45.0
 Release: alt1
 
 Summary: Evented I/O for NodeJS
@@ -12,7 +12,8 @@ Url: https://github.com/libuv/libuv
 # Source-url: https://github.com/libuv/libuv/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-Patch: libuv-fix-tests-ipv6.patch
+Patch1: libuv-fix-tests-ipv6.patch
+Patch2: libuv-fix-test-thread-affinity.patch
 
 BuildRequires: /proc
 BuildRequires: gcc-c++ openssl-devel zlib-devel
@@ -24,7 +25,7 @@ and libev on Unix systems. We intend to eventually contain all platform differen
 %package devel
 Summary: Devel package for libuv
 Group: Development/Other
-License: GPL
+License: MIT
 Requires: %name = %version-%release
 
 %description devel
@@ -32,7 +33,8 @@ libuv header and build tools.
 
 %prep
 %setup
-%patch -p2
+%patch1 -p2
+%patch2 -p2
 
 %build
 # due option hack in autogen.sh
@@ -64,6 +66,10 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Mon May 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.45.0-alt1
+- new version 1.45.0 (with rpmrb script)
+- fix license for devel subpackage
+
 * Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 1.44.2-alt1
 - new version 1.44.2 (with rpmrb script)
 
