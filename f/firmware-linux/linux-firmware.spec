@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230517
+Version: 20230523
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,48 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue May 30 2023 Cronbuild Service <cronbuild@altlinux.org> 20230523-alt1
+- upstream changes (GIT d11ae984):
+  + brcm: Add symlinks from Pine64 devices to AW-CM256SM.txt (thx Diederik de Haas)
+  + amdgpu: Update GC 11.0.1 and 11.0.4 (thx Mario Limonciello)
+  + rtw89: 8851b: add firmware v0.29.41.0 (thx Ping-Ke Shih)
+  + amdgpu: update yellow carp firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update navi14 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update navi12 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update vega20 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update vega12 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update navi10 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update vega10 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.11 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update GC 11.0.4 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update SDMA 6.0.1 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.4 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update GC 11.0.1 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update 13.0.8 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update GC 10.3.7 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update vangogh firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update VCN 4.0.4 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update SMU 13.0.7 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.7 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update GC 11.0.2 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update renoir firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update VCN 4.0.0 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update SMU 13.0.0 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.0 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update GC 11.0.0 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update green sardine firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update beige goby firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update dimgrey cavefish firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update arcturus firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update vcn 3.1.2 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update psp 13.0.5 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update GC 10.3.6 firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update navy flounder firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update sienna cichlid firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: update aldebaran firmware for amd.5.5 release (thx Alex Deucher)
+  + amdgpu: DMCUB updates for various AMDGPU asics (thx Aurabindo Pillai)
+  + ice: update ice DDP comms package to 1.3.40.0 (thx Shekhar Deb)
+
 * Mon May 22 2023 Cronbuild Service <cronbuild@altlinux.org> 20230517-alt1
 - upstream changes (GIT 601c1813):
   + rtlwifi: Add firmware v6.0 for RTL8192FU (thx Bitterblue Smith)
