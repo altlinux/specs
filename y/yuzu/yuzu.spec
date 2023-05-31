@@ -1,3 +1,6 @@
+%define optflags_lto -flto=thin
+%define llvm_version 15.0
+
 # git describe upstream/yuzu
 %define git_descr mainline-636-11217-g0cefbf95301
 
@@ -6,10 +9,10 @@
 
 Name: yuzu
 Version: 1452
-Release: alt2
+Release: alt3
 
 Summary: Nintendo Switch emulator/debugger
-License: GPLv2
+License: GPLv3+
 Group: Emulators
 
 Url: https://%name-emu.org/
@@ -28,9 +31,11 @@ Source2: mbedtls-%mbedtls_commit.tar
 
 Patch0: %name-cpp-jwt-version-alt.patch
 
+BuildRequires: /proc
 BuildRequires: boost-asio-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: catch2-devel
+BuildRequires: clang%llvm_version
 BuildRequires: clang-tools
 BuildRequires: cmake
 BuildRequires: glslang
@@ -48,6 +53,8 @@ BuildRequires: libopus-devel
 BuildRequires: libswscale-devel
 BuildRequires: libusb-devel
 BuildRequires: libzstd-devel
+BuildRequires: lld%llvm_version
+BuildRequires: llvm%llvm_version
 BuildRequires: ninja-build
 BuildRequires: nlohmann-json-devel
 BuildRequires: python-modules-encodings
@@ -79,8 +86,15 @@ src/common/scm_rev.cpp.in
 %__rm .gitmodules
 
 %build
-%add_optflags -I%_includedir/libzip
+export ALTWRAP_LLVM_VERSION=%llvm_version
+
 %cmake \
+	-DCMAKE_C_COMPILER:STRING=clang \
+	-DCMAKE_CXX_COMPILER:STRING=clang++ \
+	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
+	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
+	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
+	-DCMAKE_EXE_LINKER_FLAGS:STRING="-fuse-ld=lld" \
 	-DENABLE_QT6:BOOL=TRUE \
 	-DENABLE_QT_TRANSLATION:BOOL=TRUE \
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=FALSE \
@@ -105,6 +119,9 @@ src/common/scm_rev.cpp.in
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Wed May 31 2023 Nazarov Denis <nenderus@altlinux.org> 1452-alt3
+- Build with Clang
+
 * Tue May 30 2023 Nazarov Denis <nenderus@altlinux.org> 1452-alt2
 - Build on AArch64
 - Enable link-time optimization
