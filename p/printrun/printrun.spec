@@ -1,28 +1,27 @@
-Name:           printrun
-Version:        2.0.0
-Release:        alt0.1.rc5
-Epoch:		1
-Summary:        RepRap printer interface and tools
+Name:     printrun
+Version:  2.0.1
+Release:  alt1
+Epoch:    1
+Summary:  RepRap printer interface and tools
 
-License:        GPL-3.0+ and FSFAP
-Group:          Engineering
-URL:            https://github.com/kliment/Printrun
-Packager:       Andrey Cherepanov <cas@altlinux.org>
+License:  GPL-3.0+ and FSFAP
+Group:    Engineering
+URL:      https://github.com/kliment/Printrun
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source0:        %name-%version.tar
-Patch0:	        975.patch
+Source0: %name-%version.tar
 
 #BuildRequires:  Cython
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-Cython
-BuildRequires:  python3-module-Polygon
-BuildRequires:  python3-module-serial
-BuildRequires:  desktop-file-utils
-BuildRequires:  gettext
-Requires:       pronterface = %EVR
-Requires:       pronsole = %EVR
-Requires:       plater = %EVR
+BuildRequires: python3-devel
+BuildRequires: python3-module-Cython
+BuildRequires: python3-module-Polygon
+BuildRequires: python3-module-serial
+BuildRequires: desktop-file-utils
+BuildRequires: gettext
+Requires: pronterface = %EVR
+Requires: pronsole = %EVR
+Requires: plater = %EVR
 
 %description
 Printrun is a set of G-code sending applications for RepRap.
@@ -31,46 +30,46 @@ G-code sender), pronterface (featured G-code sender with graphical user
 interface), and a small collection of helpful scripts.
 This package installs whole Printrun.
 
-%package        common
-Group:          Engineering
-Summary:        Common files for Printrun
+%package common
+Summary: Common files for Printrun
+Group: Engineering
 
 %description    common
 Printrun is a set of G-code sending applications for RepRap.
 This package contains common files.
 
-%package     -n pronsole
-Summary:        CLI interface for RepRap
-Group:          Engineering
-Requires:       python3-module-serial
-Requires:       3dprinter-udev-rules
-Requires:       %{name}-common = %{version}-%{release}
-BuildArch:      noarch
+%package -n pronsole
+Summary: CLI interface for RepRap
+Group: Engineering
+Requires: python3-module-serial
+Requires: 3dprinter-udev-rules
+Requires: %{name}-common = %{version}-%{release}
+BuildArch: noarch
 
 %description -n pronsole
 Pronsole is a featured command line G-code sender.
 It controls the ReRap printer. It is a part of Printrun.
 
-%package     -n pronterface
-Summary:        GUI interface for RepRap
-Group:          Engineering
-Requires:       python3-module-wx
-Requires:       simarrange
-Requires:       pronsole = %{version}-%{release}
-Requires:       3dprinter-udev-rules
-BuildArch:      noarch
+%package -n pronterface
+Summary: GUI interface for RepRap
+Group: Engineering
+Requires: python3-module-wx
+Requires: simarrange
+Requires: pronsole = %{version}-%{release}
+Requires: 3dprinter-udev-rules
+BuildArch: noarch
 
 %description -n pronterface
 Pronterface is a featured G-code sender with graphical user interface.
 It controls the ReRap printer. It is a part of Printrun.
 
-%package     -n plater
-Summary:        RepRap STL plater
-Group:          Engineering
-Requires:       python3-module-wx
-Requires:       %{name}-common = %{version}-%{release}
-Requires:       simarrange
-BuildArch:      noarch
+%package -n plater
+Summary: RepRap STL plater
+Group: Engineering
+Requires: python3-module-wx
+Requires: %{name}-common = %{version}-%{release}
+Requires: simarrange
+BuildArch: noarch
 
 %description -n plater
 Plater is a GUI tool to prepare printing plate from STL files for ReRap.
@@ -78,7 +77,6 @@ It is a part of Printrun.
 
 %prep
 %setup -q
-%patch0 -p1
 # Remove unsupported module
 rm -f printrun/power/osx.py
 
@@ -107,12 +105,6 @@ cd -
 cd %buildroot%_desktopdir
 for file in $(ls) ; do sed -i "s/\(.*\).py/\1/" $file; done
 cd -
-
-# locales
-mkdir -p %buildroot%_datadir/locale
-cp -ar %buildroot%_datadir/pronterface/locale/* %buildroot%_datadir/locale
-rm -rf %buildroot%_datadir/pronterface/locale
-ln -s -f %_datadir/locale/ %buildroot%_datadir/pronterface/ # the app expects the locale folder in here
 
 %if_without prontserve
 rm -f %buildroot%_bindir/prontserve
@@ -162,6 +154,9 @@ mv %buildroot%_datadir/{metainfo,appdata}
 %_datadir/appdata/plater.appdata.xml
 
 %changelog
+* Thu May 25 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.0.1-alt1
+- New version.
+
 * Tue Apr 14 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.0.0-alt0.1.rc5
 - New version (ALT #38351).
 - Build with python3 and without skeinforge support.
