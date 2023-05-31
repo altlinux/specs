@@ -7,8 +7,8 @@
 %endif
 
 Name: btrfs-progs
-Version: 6.3
-Release: alt2
+Version: 6.3.1
+Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -142,6 +142,9 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 %_includedir/*
 
 %changelog
+* Wed May 31 2023 Anton Farygin <rider@altlinux.ru> 6.3.1-alt1
+- 6.3.1
+
 * Sun May 28 2023 Anton Farygin <rider@altlinux.ru> 6.3-alt2
 - added bash completions
 
