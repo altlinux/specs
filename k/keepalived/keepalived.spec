@@ -16,7 +16,7 @@
 %def_enable libnl
 
 Name: keepalived
-Version: 2.2.7
+Version: 2.2.8
 Release: alt1
 
 Summary: HA monitor built upon LVS, VRRP and services poller
@@ -122,6 +122,9 @@ done
 %doc doc/samples
 
 %changelog
+* Wed May 31 2023 Alexey Shabalin <shaba@altlinux.org> 2.2.8-alt1
+- 2.2.8
+
 * Fri Dec 02 2022 Alexey Shabalin <shaba@altlinux.org> 2.2.7-alt1
 - 2.2.7
 
