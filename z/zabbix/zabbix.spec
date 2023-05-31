@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		c81d82859a8
+%define svnrev		d2032721bc8
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 %endif
 
 Name: zabbix
-Version: 6.0.17
+Version: 6.0.18
 Release: alt1
 Epoch: 1
 
@@ -758,6 +758,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed May 31 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.18-alt1
+- 6.0.18
+
 * Tue Apr 25 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.17-alt1
 - 6.0.17
 - Remove subpackages phpfrontend-php7 and phpfrontend-apache2-mod_php7
