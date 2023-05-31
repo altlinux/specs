@@ -1,6 +1,6 @@
 Name: libx264
 Version: 164
-Release: alt1
+Release: alt1.1
 
 Summary: H.264 codec shared library
 License: GPLv2
@@ -8,6 +8,7 @@ Group: System/Libraries
 Url: http://www.videolan.org/x264.html
 
 Source: %name-%version-%release.tar
+Patch2000: %name-e2k-simd.patch
 
 BuildRequires: nasm
 
@@ -44,6 +45,9 @@ software.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %ifarch %ix86
@@ -74,6 +78,9 @@ export ASFLAGS=' '
 %_libdir/libx264.so
 
 %changelog
+* Tue May 30 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 164-alt1.1
+- SIMD patch for Elbrus
+
 * Thu Dec 01 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 164-alt1
 - API 164
 
