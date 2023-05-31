@@ -1,16 +1,16 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
 
 %define _name mahjongg
 %define xdg_name org.gnome.Mahjongg
 %define __name gnome-%_name
-%define ver_major 3.38
+%define ver_major 3.40
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Classic Chinese Tile Game
 Group: Games/Boards
@@ -25,14 +25,17 @@ Source: %__name-%version.tar
 
 Provides:  %__name = %version-%release
 
-%define glib_ver 2.40.0
-%define gtk_ver 3.12.0
+%define glib_ver 2.72.0
+%define gtk4_ver 4.5.0
+%define rsvg_ver 2.46
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: yelp-tools /usr/bin/appstream-util desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk4-devel >= %gtk4_ver libadwaita-devel
+BuildRequires: librsvg-devel >= %rsvg_ver
 
 %description
 Gnome Mahjongg, or Mahjongg for short, is a solitaire (one player)
@@ -40,12 +43,9 @@ version of the classic Eastern tile game, Mahjongg.
 
 %prep
 %setup -n %__name-%version
-sed -E -i "s/'(desktop|appdata)-file'\,//" data/meson.build
 
 %build
-%meson \
--Dcompile-schemas=disabled \
--Dupdate-icon-cache=disabled
+%meson
 %meson_build
 
 %install
@@ -57,11 +57,15 @@ sed -E -i "s/'(desktop|appdata)-file'\,//" data/meson.build
 %_desktopdir/%xdg_name.desktop
 %_datadir/%__name
 %_iconsdir/hicolor/*/*/%{xdg_name}*.*
-%_man6dir/%__name.*
+%_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
+%_man6dir/%__name.*
 
 %changelog
+* Wed May 31 2023 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0 (ported to GTK4/Libadwaita)
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt2
 - updated to 3.38.3-7-g2d161cc
 - fixed build with meson >= 0.61
