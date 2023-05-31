@@ -12,30 +12,30 @@
 # no tags
 %define zart_ver 34ebf6c
 # https://github.com/c-koi/gmic-qt
-%define gmic_qt_ver v.3.2.3-1-g5b312b3
+%define gmic_qt_ver v.3.2.5
 # https://github.com/dtschump/gmic-community.git
-%define gmic_comm_ver gmic-3.2.3-18-g4a865b4b
+%define gmic_comm_ver gmic-3.2.5
 
 Name: gmic
-Version: 3.2.4
+Version: 3.2.5
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
 License: CECILL-2.0 and GPL-3.0
 Group: Graphics
-Url: http://gmic.sourceforge.net/
+Url: https://gmic.eu
 
 %if_disabled snapshot
 Source: http://gmic.eu/files/source/%{name}_%version.tar.gz
 %else
-Vcs: https://github.com/dtschump/gmic.git
+Vcs: https://github.com/GreycLab/gmic.git
 Source: %name-%version.tar
 %endif
 Source1: zart-%zart_ver.tar
 Source2: gmic-qt-%gmic_qt_ver.tar
 Source3: gmic-community-%gmic_comm_ver.tar
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 BuildRequires: dos2unix
 BuildRequires: gcc-c++ imake libGraphicsMagick-c++-devel libImageMagick-devel libXext-devel libXrandr-devel
@@ -67,7 +67,7 @@ This package provides shared G'MIC library.
 %package -n lib%name-devel
 Summary: GREYC's Magic Image Converter Library (development package)
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 G'MIC (GREYC's Magic Image Converter) is an interpreter of image processing
@@ -79,8 +79,8 @@ This package provides development files for GREYC's Magic Image Converter Librar
 %package zart
 Summary: GREYC's image processing language demo
 Group: Graphics
-Provides: zart = %version-%release
-Requires: lib%name = %version-%release
+Provides: zart = %EVR
+Requires: lib%name = %EVR
 Requires: gst-libav
 
 %description zart
@@ -92,7 +92,7 @@ a GUI for G'MIC real-time manipulations on the output of a webcam.
 %package qt
 Summary: Qt-based frontend for G'MIC
 Group: Graphics
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description qt
 G'MIC-Qt is a versatile front-end to the image processing framework
@@ -207,6 +207,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Wed May 31 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2.5-alt1
+- 3.2.5
+
 * Fri Apr 28 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2.4-alt1
 - 3.2.4
 
