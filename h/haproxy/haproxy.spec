@@ -8,7 +8,7 @@
 
 Name: haproxy
 Version: 2.6.13
-Release: alt1
+Release: alt1.1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 License: GPLv2+
@@ -97,11 +97,14 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Sat May 27 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.13-alt1.1
+- add info about CVE to changelog
+
 * Tue May 02 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.13-alt1
 - 2.6.13
 
 * Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.11-alt1
-- 2.6.11
+- 2.6.11 (FIxes: CVE-2023-0836, CVE-2023-25725, CVE-2023-25950)
 
 * Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.8-alt2
 - revert: build iprange utils
@@ -116,7 +119,7 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 - 2.6.6
 
 * Fri Sep 16 2022 Alexey Shabalin <shaba@altlinux.org> 2.6.5-alt1
-- 2.6.5
+- 2.6.5 (Fixes: CVE-2021-40346)
 
 * Tue Apr 20 2021 Alexey Shabalin <shaba@altlinux.org> 2.3.9-alt1
 - 2.3.9
