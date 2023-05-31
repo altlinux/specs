@@ -1,6 +1,6 @@
 Name: wxMaxima
-Version: 23.05.0
-Release: alt1.1
+Version: 23.05.1
+Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL-2.0+
@@ -46,7 +46,7 @@ wxMaxima provides 2d formated display of maxima output.
 
 %prep
 %setup
-bzcat %SOURCE5 >locales/wxMaxima/ru.po
+#bzcat %SOURCE5 >locales/wxMaxima/ru.po
 #patch -p1
 %ifarch %e2k
 sed -i "/std::unique_ptr<T>() &&/{P;s/&&/\&/}" src/cells/CellList.h
@@ -83,6 +83,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_datadir/metainfo/*wxMaxima.appdata.xml
 
 %changelog
+* Wed May 31 2023 Andrey Cherepanov <cas@altlinux.org> 23.05.1-alt1
+- New version.
+
 * Fri May 19 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 23.05.0-alt1.1
 - Fixed build for Elbrus, removed obsolete fixes.
 
