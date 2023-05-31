@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.18.3
-Release: alt1
+Release: alt2
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -77,6 +77,9 @@ install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Wed May 31 2023 Mikhail Efremov <sem@altlinux.org> 4.18.3-alt2
+- Avoid xfce4-screensaver dependence.
+
 * Mon May 29 2023 Mikhail Efremov <sem@altlinux.org> 4.18.3-alt1
 - Updated to 4.18.3.
 
