@@ -9,7 +9,7 @@
 
 Name: knot
 Version: 3.2.6
-Release: alt2
+Release: alt3
 Summary: High-performance authoritative DNS server
 Group: System/Servers
 License: GPL-3.0-or-later
@@ -29,6 +29,7 @@ BuildRequires: pkgconfig(libedit)
 BuildRequires: pkgconfig(libcap-ng)
 BuildRequires: pkgconfig(libidn2)
 BuildRequires: pkgconfig(libnghttp2)
+BuildRequires: pkgconfig(libxdp)
 %{?_enable_maxminddb:BuildRequires: pkgconfig(libmaxminddb)}
 %{?_enable_xdp:BuildRequires: pkgconfig(libbpf) >= 0.0.6 pkgconfig(libmnl)}
 %{?_enable_quic:BuildRequires: pkgconfig(libngtcp2) >= 0.13.0 pkgconfig(gnutls) >= 3.7.2}
@@ -203,6 +204,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Tue May 30 2023 Alexey Gladkov <legion@altlinux.ru> 3.2.6-alt3
+- Add BuildRequires on libxdp to use with libbpf-1.x
+
 * Thu May 18 2023 Anton Farygin <rider@altlinux.ru> 3.2.6-alt2
 - disabled quic for building without unsupported libngtcp2-0.15.0
 

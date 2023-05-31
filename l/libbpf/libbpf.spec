@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: libbpf
-Version: 0.8.1
-Release: alt2
+Version: 1.2.0
+Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
 License: BSD-2-Clause or LGPL-2.1
@@ -50,6 +50,9 @@ cd src
 %_pkgconfigdir/libbpf.pc
 
 %changelog
+* Mon May 29 2023 Alexey Gladkov <legion@altlinux.ru> 1.2.0-alt1
+- Update to v1.2.0.
+
 * Wed Feb 15 2023 Vitaly Chikunov <vt@altlinux.org> 0.8.1-alt2
 - (Fixes: CVE-2022-3534, CVE-2022-3606).
 

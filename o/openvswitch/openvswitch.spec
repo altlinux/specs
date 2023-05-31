@@ -8,12 +8,14 @@
 %ifarch x86_64 %ix86 aarch64 ppc64le
 %def_with dpdk
 # afxdp build with numa, disable it for arm
-%def_enable afxdp
+# Disable until updating to version v3.1.0 where was added support for building
+# with libxdp and libbpf >= 0.7.
+%def_disable afxdp
 %endif
 
 Name: openvswitch
 Version: 2.17.6
-Release: alt1
+Release: alt2
 
 Summary: An open source, production quality, multilayer virtual switch
 # All code is Apache-2.0 except
@@ -424,6 +426,9 @@ fi
 %endif
 
 %changelog
+* Tue May 30 2023 Alexey Gladkov <legion@altlinux.ru> 2.17.6-alt2
+- Disable afxdp until update v3.1.0.
+
 * Wed May 03 2023 Alexey Shabalin <shaba@altlinux.org> 2.17.6-alt1
 - 2.17.6 (Fixes: CVE-2021-3905, CVE-2023-1668, CVE-2022-4337, CVE-2022-4338)
 
