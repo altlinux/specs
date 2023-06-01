@@ -1,8 +1,8 @@
 %define  modulename jaraco.functools
 
 Name:    python3-module-%modulename
-Version: 3.6.0
-Release: alt2
+Version: 3.7.0
+Release: alt1
 
 Summary: Additional functools in the spirit of stdlib's functools
 License: MIT
@@ -47,6 +47,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Tue May 30 2023 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
+- New version.
+
 * Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 3.6.0-alt2
 - Mapped PyPI name to distro's one.
 
