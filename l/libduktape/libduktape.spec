@@ -1,7 +1,7 @@
 %define oname duktape
 Name: libduktape
 Version: 2.6.0
-Release: alt1
+Release: alt2
 
 Summary: Embeddable Javascript engine library
 
@@ -53,6 +53,20 @@ This package contains a commandline duk interpreter.
 %make -f Makefile.sharedlibrary duk
 #make -f Makefile.cmdline
 
+cat > duktape.pc <<-EOF
+prefix=%prefix
+exec_prefix=%prefix
+libdir=%_libdir
+
+Name: %oname
+Description: embeddable javascript engine
+Version: %version
+
+Requires:
+Cflags:
+Libs: -l%oname
+EOF
+
 %install
 %makeinstall_std \
 	INSTALL_PREFIX="%prefix" \
@@ -62,6 +76,9 @@ This package contains a commandline duk interpreter.
 mkdir -p %buildroot%_bindir
 install -m 755 duk %buildroot%_bindir/duk
 
+mkdir -p %buildroot%_libdir/pkgconfig
+install -m 644 duktape.pc %buildroot%_libdir/pkgconfig
+
 %files
 %_libdir/libduktape.so.*
 
@@ -69,12 +86,16 @@ install -m 755 duk %buildroot%_bindir/duk
 %_includedir/duk_config.h
 %_includedir/duktape.h
 %_libdir/libduktape.so
+%_libdir/pkgconfig/duktape.pc
 
 %files -n %oname
 %doc AUTHORS.rst LICENSE.txt README.rst
 %_bindir/duk
 
 %changelog
+* Thu Jun 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.6.0-alt2
+- Added pkg-config data (closes:  #46355)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
 - new version 2.6.0 (with rpmrb script)
 
