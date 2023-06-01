@@ -5,7 +5,7 @@
 
 Name: %_name-glib
 Version: 1.28.4
-Release: alt1
+Release: alt2
 
 Summary: MBIM modem protocol helper library
 License: LGPLv2+
@@ -19,7 +19,6 @@ Patch: %_name-%version-%release.patch
 BuildRequires(pre): meson
 
 BuildRequires: glib2-devel libgio-devel
-BuildRequires: python-modules-json
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 BuildRequires: gtk-doc help2man bash-completion
 
@@ -129,6 +128,10 @@ This package contains development documentation for %name
 
 
 %changelog
+* Thu Jun 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.28.4-alt2
+- Dropped python2 from build dependencies since all python scripts are
+  compatible with python3, and meson uses python3 anyway (closes: #46356).
+
 * Wed Mar 01 2023 Mikhail Efremov <sem@altlinux.org> 1.28.4-alt1
 - Updated to 1.28.4.
 
