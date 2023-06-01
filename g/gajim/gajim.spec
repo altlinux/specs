@@ -5,7 +5,7 @@
 
 Name: gajim
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -25,7 +25,10 @@ Requires: python3 >= 3.10
 %filter_from_requires /^typelib(AppIndicator3)/d
 
 Requires: libgtk+3-gir libgtksourceview4-gir
+Requires: python3-module-nbxmpp >= 4.3.1
 Requires: typelib(AyatanaAppIndicator3)
+# gajim >= 1.8 has imcoropated OMEMO support
+Obsoletes: gajim-plugin-omemo <= 2.9.0-alt1 python3-module-gajim-omemo <= 2.9.0-alt1
 %py3_requires cssutils
 %py3_requires keyring
 %py3_requires precis_i18n
@@ -119,6 +122,10 @@ end
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Thu Jun 01 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.0-alt2
+- Obsoletes gajim-plugin-omemo and python3-module-gajim-omemo
+- Fix required version of python3-module-nbxmpp
+
 * Sun May 28 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 
