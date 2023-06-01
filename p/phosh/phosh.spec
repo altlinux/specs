@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.27
+%define ver_major 0.28
 %define beta %nil
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
@@ -31,7 +31,7 @@ Source: %name-%version%beta.tar
 Source1: %name.pam
 Source2: sm.puri.OSK0.desktop
 
-Requires: phoc >= 0.24
+Requires: phoc >= 0.28
 Requires: gnome-session
 Requires: iio-sensor-proxy
 Requires: fonts-ttf-google-lato
@@ -46,10 +46,11 @@ BuildRequires: libcallaudio-devel
 BuildRequires: libfeedback-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(gcr-3) >= 3.7.5
-BuildRequires: pkgconfig(gio-2.0) >= 2.58
+BuildRequires: pkgconfig(gio-2.0) >= 2.72
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.58
 BuildRequires: pkgconfig(glib-2.0) >= 2.70.0
 BuildRequires: pkgconfig(gnome-desktop-3.0) >= 3.26
+BuildRequires: pkgconfig(gsettings-desktop-schemas) >= 42
 BuildRequires: pkgconfig(gobject-2.0) >= 2.50.0
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.22
 BuildRequires: pkgconfig(gtk+-wayland-3.0) >= 3.22
@@ -165,6 +166,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Thu Jun 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.28.0-alt1
+- 0.28.0
+
 * Tue May 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.27.0-alt1
 - 0.27.0
 - restored default UID from 500 to 1000
