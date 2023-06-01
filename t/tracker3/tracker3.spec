@@ -25,7 +25,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -71,7 +71,7 @@ BuildRequires: libjson-glib-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_upower:BuildRequires: libupower-devel >= %upower_ver}
 %{?_enable_stemmer:BuildRequires: libstemmer-devel}
-%{?_enable_docs:BuildRequires: gi-docgen}
+%{?_enable_docs:BuildRequires: gi-docgen /usr/bin/dot /usr/bin/xmlto}
 %{?_enable_man:BuildRequires: asciidoc-a2x xsltproc}
 BuildRequires: vala-tools
 BuildRequires: sqlite3 libsqlite3-devel >= %sqlite_ver
@@ -146,6 +146,8 @@ the functionality of the installed Tracker.
 #fixed install_rpath for tracker, tracker-store binaries
 sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 
+sed -i 's|#!.*/bin/env python3|#!/usr/bin/python3|' docs/reference/libtracker-sparql/*.py
+
 %build
 %meson \
 	%{?_disable_soup3:-Dsoup='soup2'} \
@@ -213,6 +215,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 %endif
 
 %changelog
+* Thu Jun 01 2023 Yuri N. Sedunov <aris@altlinux.org> 3.5.3-alt1
+- 3.5.3
+
 * Tue Apr 25 2023 Yuri N. Sedunov <aris@altlinux.org> 3.5.1-alt1
 - 3.5.1
 
