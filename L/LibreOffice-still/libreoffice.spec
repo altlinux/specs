@@ -1,5 +1,6 @@
 # Get Source0-3 from http://download.documentfoundation.org/libreoffice/src/$ver/
 # Get Source10 (with selected components) from https://dev-www.libreoffice.org/src/
+# Security fixes from https://www.libreoffice.org/about-us/security/advisories/
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -28,7 +29,7 @@
 
 Name: LibreOffice-still
 %define hversion 7.4
-%define urelease 6.2
+%define urelease 7.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -699,6 +700,13 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed May 31 2023 Andrey Cherepanov <cas@altlinux.org> 7.4.7.2-alt1
+- New version (ALT #46320).
+- Security fixes:
+  + CVE-2023-2255 Remote documents loaded without prompt via IFrame
+  + CVE-2023-0950 Array Index UnderFlow in Calc Formula Parsing
+- Built with KDE5 support.
+
 * Sun Mar 26 2023 Andrey Cherepanov <cas@altlinux.org> 7.4.6.2-alt1
 - New version.
 
