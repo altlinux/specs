@@ -2,11 +2,11 @@ Summary: A binary delta generator
 Name: xdelta3
 Version: 3.1.0
 Epoch: 1
-Release: alt1
+Release: alt2
 Source0: http://xdelta.googlecode.com/files/%name-%version.tar
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ liblzma-devel
 Url: http://xdelta.org
-License: GPL
+License: GPLv2
 Group: File tools
 
 %description
@@ -35,6 +35,9 @@ after zlib, in addition to a command-line utility, use of the RFC3284
 %_man1dir/*.1*
 
 %changelog
+* Thu Jun 01 2023 Fr. Br. George <george@altlinux.org> 1:3.1.0-alt2
+- Build with liblzma-devel (fix Genshin Impact / Lutris issue)
+
 * Wed Nov 07 2018 Anton Farygin <rider@altlinux.ru> 1:3.1.0-alt1
 - 3.1.0
 
