@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.57
-Release: alt1
+Release: alt2
 Epoch: 1
 
 License: %asl
@@ -548,6 +548,7 @@ Requires(pre): %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
+Requires: %apache2_libaprutil_ldap_name >= %apache2_libaprutil_evr
 Provides: %name-mod_authnz_ldap = %EVR
 
 %description mod_ldap
@@ -1460,6 +1461,7 @@ exit 0
 
 %files mod_ldap
 %apache2_moduledir/mod_*ldap.so
+%config(noreplace) %apache2_mods_available/*ldap.load
 
 %files mod_cache_disk
 %apache2_moduledir/mod_cache_disk.so
@@ -1539,6 +1541,10 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Thu Jun 01 2023 Andrey Limachko <liannnix@altlinux.org> 1:2.4.57-alt2
+- Add missing a2enmod config for apache2-mod_ldap
+- Add missing libaprutil1-ldap requirement for apache2-mod_ldap
+
 * Sun May 14 2023 Anton Farygin <rider@altlinux.ru> 1:2.4.57-alt1
 - 2.4.57
 

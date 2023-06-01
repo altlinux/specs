@@ -7,7 +7,7 @@
 %def_enable apache_ru_compat
 
 Name: rpm-macros-%macrosname
-Version: 3.13.1
+Version: 3.14
 Release: alt1
 
 Summary: RPM macros to Apache2 Web server
@@ -75,6 +75,9 @@ find %buildroot%_rpmmacrosdir/ -type f -print0 \
 %_rpmmacrosdir/%macrosname-compat
 
 %changelog
+* Thu Jun 01 2023 Andrey Limachko <liannnix@altlinux.org> 3.14-alt1
+- Add macros for libaprutil1-ldap
+
 * Fri May 21 2021 Anton Farygin <rider@altlinux.ru> 3.13.1-alt1
 - returned back macro %post_apache2conf
 
