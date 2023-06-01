@@ -1,5 +1,5 @@
 Name: installer-feature-setup-plymouth
-Version: 0.5.9
+Version: 0.5.10
 Release: alt1
 
 Summary: Set up plymouth
@@ -26,6 +26,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Jun 01 2023 Anton Midyukov <antohami@altlinux.org> 0.5.10-alt1
+- 90-setup-plymouth2.sh: remove duplicate 'quiet', put it before splash
+- 90-setup-plymouth2.sh: add 'loglevel=3' after 'quiet'
+
 * Mon Nov 14 2022 Anton Midyukov <antohami@altlinux.org> 0.5.9-alt1
 - don't add vga=0x314, if not available drm_kms_helper
 
