@@ -83,7 +83,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 23.0
-%define ver_minor 3
+%define ver_minor 4
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -580,6 +580,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Jun 01 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.0.4-alt1
+- 23.0.4
+
 * Wed Apr 26 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.0.3-alt1
 - 23.0.3
 
