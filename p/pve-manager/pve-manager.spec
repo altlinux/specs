@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt5
+Release: alt6
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -25,8 +25,11 @@ Requires: pve-common >= 7.2.6 pve-guest-common >= 4.2.1
 Requires: pve-storage >= 7.2.12 pve-cluster >= 7.2.3
 Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-acme
 Requires: pve-container >= 4.0.9 pve-firewall pve-ha-manager pve-qemu-server >= 7.2.8 pve-i18n >= 1.0.3 pve-docs
-Requires: proxmox-widget-toolkit >= 3.4.9 proxmox-mini-journalreader fonts-font-awesome javascript-extjs javascript-qrcodejs
+Requires: proxmox-widget-toolkit >= 3.6.0 proxmox-mini-journalreader >= 1.3.1
+Requires: fonts-font-awesome javascript-extjs javascript-qrcodejs
 Requires: libproxmox-rs-perl >= 0.2.0 libpve-rs-perl >= 0.7.1
+Requires: perl-Net-SSLeay perl-Term-ReadLine-Gnu
+Requires: librados2-perl >= 1.3.1
 
 Source: %name-%version.tar
 
@@ -123,6 +126,9 @@ rm -f  %buildroot%_man1dir/pveupgrade.1*
 %_man8dir/*
 
 %changelog
+* Thu Jun 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt6
+- add more Requires, update required versions
+
 * Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt5
 - add copyright file
 

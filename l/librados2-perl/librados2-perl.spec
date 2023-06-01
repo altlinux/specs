@@ -1,7 +1,7 @@
 Name: librados2-perl
 Summary: Perl bindings for librados
-Version: 1.2.1
-Release: alt2
+Version: 1.3.1
+Release: alt1
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -19,6 +19,7 @@ This package contains librados perl binding used by PVE
 
 %prep
 %setup -q
+sed -i 's/ -D_FORTIFY_SOURCE=2//' Makefile
 
 %install
 %make DESTDIR=%buildroot install
@@ -28,6 +29,9 @@ This package contains librados perl binding used by PVE
 %perl_vendor_autolib/PVE
 
 %changelog
+* Thu Jun 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.3.1-alt1
+- 1.3-1
+
 * Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.1-alt2
 - Fixed FTBFS: update BR:
 
