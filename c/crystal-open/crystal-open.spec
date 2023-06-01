@@ -1,6 +1,6 @@
 Name: crystal-open
-Version: 2.130.1
-Release: alt4
+Version: 2.142
+Release: alt1
 Summary: Sketch Engine web interface
 License: GPLv3
 Group: Text tools
@@ -30,6 +30,9 @@ Sketch Engine web interface, open source version.
 %config(noreplace) %_var/www/crystal/config.js
 
 %changelog
+* Thu Jun 01 2023 Kirill Maslinsky <kirill@altlinux.org> 2.142-alt1
+- version 2.142
+
 * Thu Mar 30 2023 Kirill Maslinsky <kirill@altlinux.org> 2.130.1-alt4
 - bugfix in layered display
 
