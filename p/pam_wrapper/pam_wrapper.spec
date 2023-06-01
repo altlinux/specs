@@ -1,6 +1,6 @@
 Name: pam_wrapper
 Version: 1.1.4
-Release: alt1
+Release: alt2
 Summary: A tool to test PAM applications and PAM modules
 License: GPLv3+
 Url: http://cwrap.org/
@@ -124,6 +124,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %python3_sitelibdir/pypamtest.so
 
 %changelog
+* Mon May 29 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.1.4-alt2
+- Fix cmocka >= 1.1.6 find_package() in CONFIG mode.
+- Drop support for Python 2.
+
 * Mon Nov 01 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.1.4-alt1
 - new version 1.1.4
 

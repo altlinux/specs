@@ -1,6 +1,6 @@
 Name:           nss_wrapper
 Version:        1.1.15
-Release:        alt1
+Release:        alt2
 License:        BSD
 Group:          Development/Other
 Summary:        A wrapper for the user, group and hosts NSS API
@@ -8,6 +8,7 @@ Url:            https://cwrap.org/
 
 # git://git.samba.org/nss_wrapper.git
 Source0:        %{name}-%{version}.tar
+Patch0:         %name-%version-alt.patch
 
 BuildRequires:  cmake ctest
 BuildRequires:  libcmocka-devel
@@ -40,6 +41,7 @@ development/testing.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %cmake \
@@ -64,6 +66,9 @@ development/testing.
 %_mandir/man1/nss_wrapper.1*
 
 %changelog
+* Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.1.15-alt2
+- Fix cmocka >= 1.1.6 find_package()
+
 * Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.1.15-alt1
 - Fixed linking issue in tests
 - Fixed a memory leak in tests

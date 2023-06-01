@@ -2,7 +2,7 @@
 
 Name: uid_wrapper
 Version: 1.3.0
-Release: alt2
+Release: alt3
 
 Summary: A wrapper for privilege separation
 License: GPLv3+
@@ -12,6 +12,7 @@ Url: http://cwrap.org
 # Source-git: git://git.samba.org/uid_wrapper.git
 Source: %name-%version.tar
 Patch0: skip_test_syscall_swrap_for_arm.patch
+Patch1: uid_wrapper-cmocka-1.1.6.patch
 
 BuildRequires: cmake
 BuildRequires: ctest
@@ -34,6 +35,7 @@ development/testing.
 %prep
 %setup
 %patch0 -p2
+%patch1 -p1
 
 %build
 %cmake \
@@ -60,6 +62,9 @@ popd
 %_man1dir/uid_wrapper.1*
 
 %changelog
+* Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.3.0-alt3
+- Fix cmocka >= 1.1.6 find_package()
+
 * Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.3.0-alt2
 - Skip test_syscall_swrap for arm archicture
 

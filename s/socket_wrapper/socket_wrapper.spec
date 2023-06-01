@@ -1,6 +1,6 @@
 Name:           socket_wrapper
 Version:        1.4.0
-Release:        alt2
+Release:        alt3
 Group:          Development/Other
 License:        BSD
 Summary:        A library passing all socket communications through Unix sockets
@@ -96,6 +96,9 @@ popd
 %_libdir/cmake/%name/%{name}_noop-config*.cmake
 
 %changelog
+* Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.4.0-alt3
+- Fix cmocka >= 1.1.6 find_package()
+
 * Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.4.0-alt2
 - Skip test_syscall_swrap for arm archicture
 

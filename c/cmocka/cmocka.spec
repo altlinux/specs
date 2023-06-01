@@ -2,8 +2,8 @@
 %def_with doc
 
 Name: cmocka
-Version: 1.1.5
-Release: alt1
+Version: 1.1.7
+Release: alt2
 
 Summary: Lightweight library to simplify and generalize unit tests for C
 License: Apache-2.0
@@ -11,6 +11,7 @@ Group: Development/Tools
 
 Url: http://cmocka.org
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake ctest
@@ -91,6 +92,7 @@ framework.
 
 %prep
 %setup
+%patch -p1
 
 %build
 # This package uses -Wl,-wrap to wrap calls at link time.  This is incompatible
@@ -142,6 +144,18 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon May 29 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.1.7-alt2
+- CMake: Set CMOCKA_LIBRARIES in package config for backwards compatibility
+
+* Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.1.7-alt1
+- Added new assert macros to compare 2 double given an epsilon
+- Added meson build system
+- Added header with version to TAP13 output
+- Fixed TAP output for skipped tests
+- Fixed issue with fail_msg
+- CMake generated configs for find_package(cmocka)
+- Documentation improvements
+
 * Sat Nov 06 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.5-alt1
 - new version 1.1.5
 - Split out a cmocka-doc package.

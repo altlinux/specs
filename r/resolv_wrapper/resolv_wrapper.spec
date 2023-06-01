@@ -1,6 +1,6 @@
 Name:           resolv_wrapper
 Version:        1.1.8
-Release:        alt1
+Release:        alt2
 
 Summary:        A wrapper for dns name resolving or dns faking
 License:        BSD
@@ -61,6 +61,9 @@ popd
 %_man1dir/resolv_wrapper.1*
 
 %changelog
+* Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.1.8-alt2
+- Fix cmocka >= 1.1.6 find_package()
+
 * Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.1.8-alt1
 - Fix issues with glibc >= 2.34
 
