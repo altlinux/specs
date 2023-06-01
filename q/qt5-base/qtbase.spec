@@ -37,7 +37,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.9
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -81,6 +81,7 @@ Patch1010: alt-zonetab.patch
 Patch1011: alt-kernel-requires.patch
 Patch1012: alt-fix-paths.patch
 Patch1013: alt-QTBUG-88599.patch
+Patch1014: alt-loongarch64-support.patch
 
 # macros
 %define _qt5 %gname
@@ -94,6 +95,7 @@ Patch1013: alt-QTBUG-88599.patch
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires(pre): libharfbuzz-devel qt5-tools-common
 BuildRequires: gcc-c++ glibc-devel libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel
+BuildRequires: libdouble-conversion-devel
 BuildRequires: libproxy-devel libssl-devel libkrb5-devel
 %{?_enable_sctp:BuildRequires: liblksctp-devel}
 BuildRequires: libpcre2-devel libudev-devel libdrm-devel libgbm-devel zlib-devel libzstd-devel libgtk+3-devel
@@ -421,6 +423,7 @@ done
 %patch1011 -p1
 %patch1012 -p1
 %patch1013 -p1
+%patch1014 -p1
 bin/syncqt.pl -version %version
 
 # install optflags
@@ -501,6 +504,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -no-sse2 \
 %endif
     -no-reduce-relocations \
+    -system-doubleconversion \
     -opengl %opengl_type -egl -eglfs -kms \
     -xcb-native-painting \
     -system-sqlite \
@@ -862,6 +866,10 @@ make check -k ||:
 
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt2
+- build with system double-conversion
+- add LoongArch architecture support (thanks asheplyakov@alt) (closes: 46358)
+
 * Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt1
 - new version
 
