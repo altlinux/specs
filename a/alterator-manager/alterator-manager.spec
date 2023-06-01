@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -49,6 +49,11 @@ mkdir -p %buildroot%_datadir/alterator/backends
 %_includedir/alterator
 
 %changelog
+* Thu Jun 01 2023 Ivan Savin <svn17@altlinux.org> 0.1.5-alt1
+- Add the get_interfaces method to the ru.basealt.alterator.manager interface.
+- Add checking of user rights to execute methods using polkit in the default
+  interfaces.
+
 * Mon May 22 2023 Ivan Savin <svn17@altlinux.org> 0.1.4-alt1
 - Add checking of user rights to execute methods using polkit.
 - Data from alterator-manager is now transferred not in a GHashTable,
