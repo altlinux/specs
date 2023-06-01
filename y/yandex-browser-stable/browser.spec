@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 23.3.1.946
+Version: 23.5.1.659
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -204,6 +204,60 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+* Wed May 31 2023 yabro <yabro@altlinux.org> 23.5.1.659-alt1
+- Browser updated to 23.5.1.659
+  + High CVE-2023-2133: Out of bounds memory access in Service Worker API.
+  + High CVE-2023-2134: Out of bounds memory access in Service Worker API.
+  + High CVE-2023-2135: Use after free in DevTools.
+  + High CVE-2023-2136: Integer overflow in Skia.
+  + Medium CVE-2023-2137: Heap buffer overflow in sqlite.
+  + High CVE-2023-2033: Type Confusion in V8.
+  + High CVE-2023-1810: Heap buffer overflow in Visuals.
+  + High CVE-2023-1811: Use after free in Frames.
+  + Medium CVE-2023-1812: Out of bounds memory access in DOM Bindings.
+  + Medium CVE-2023-1813: Inappropriate implementation in Extensions.
+  + Medium CVE-2023-1814: Insufficient validation of untrusted input in Safe Browsing.
+  + Medium CVE-2023-1815: Use after free in Networking APIs.
+  + Medium CVE-2023-1816: Incorrect security UI in Picture In Picture.
+  + Medium CVE-2023-1817: Insufficient policy enforcement in Intents.
+  + Medium CVE-2023-1818: Use after free in Vulkan.
+  + Medium CVE-2023-1819: Out of bounds read in Accessibility.
+  + Medium CVE-2023-1820: Heap buffer overflow in Browser History.
+  + Low CVE-2023-1821: Inappropriate implementation in WebShare.
+  + Low CVE-2023-1822: Incorrect security UI in Navigation.
+  + Low CVE-2023-1823: Inappropriate implementation in FedCM.
+  + High CVE-2023-1528: Use after free in Passwords.
+  + High CVE-2023-1529: Out of bounds memory access in WebHID.
+  + High CVE-2023-1530: Use after free in PDF.
+  + High CVE-2023-1531: Use after free in ANGLE.
+  + High CVE-2023-1532: Out of bounds read in GPU Video.
+  + High CVE-2023-1533: Use after free in WebProtect.
+  + High CVE-2023-1534: Out of bounds read in ANGLE.
+  + High CVE-2023-1213: Use after free in Swiftshader.
+  + High CVE-2023-1214: Type Confusion in V8.
+  + High CVE-2023-1215: Type Confusion in CSS.
+  + High CVE-2023-1216: Use after free in DevTools.
+  + High CVE-2023-1217: Stack buffer overflow in Crash reporting.
+  + High CVE-2023-1218: Use after free in WebRTC.
+  + High CVE-2023-1219: Heap buffer overflow in Metrics.
+  + High CVE-2023-1220: Heap buffer overflow in UMA.
+  + Medium CVE-2023-1221: Insufficient policy enforcement in Extensions API.
+  + Medium CVE-2023-1222: Heap buffer overflow in Web Audio API.
+  + Medium CVE-2023-1223: Insufficient policy enforcement in Autofill.
+  + Medium CVE-2023-1224: Insufficient policy enforcement in Web Payments API.
+  + Medium CVE-2023-1225: Insufficient policy enforcement in Navigation.
+  + Medium CVE-2023-1226: Insufficient policy enforcement in Web Payments API.
+  + Medium CVE-2023-1227: Use after free in Core.
+  + Medium CVE-2023-1228: Insufficient policy enforcement in Intents.
+  + Medium CVE-2023-1229: Inappropriate implementation in Permission prompts.
+  + Medium CVE-2023-1230: Inappropriate implementation in WebApp Installs.
+  + Medium CVE-2023-1231: Inappropriate implementation in Autofill.
+  + Low CVE-2023-1232: Insufficient policy enforcement in Resource Timing.
+  + Low CVE-2023-1233: Insufficient policy enforcement in Resource Timing.
+  + Low CVE-2023-1234: Inappropriate implementation in Intents.
+  + Low CVE-2023-1235: Type Confusion in DevTools.
+  + Low CVE-2023-1236: Inappropriate implementation in Internals.
+
 * Tue Apr 25 2023 yabro <yabro@altlinux.org> 23.3.1.946-alt1
 - Browser updated to 23.3.1.946
   + Critical CVE-2023-2033: Type confusion in V8
