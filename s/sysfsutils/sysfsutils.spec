@@ -6,7 +6,7 @@
 %define sover 2
 Name: sysfsutils
 Version: 2.1.1
-Release: alt1
+Release: alt2
 Summary: Utilities for interfacing with sysfs
 Group: System/Kernel and hardware
 License: GPL-2.0
@@ -15,6 +15,13 @@ Vcs: https://github.com/linux-ras/sysfsutils
 Requires: libsysfs%sover = %EVR
 
 Source: %name-%version.tar
+Source1: sysfs.conf
+Source2: sysfs.init
+Source3: sysfs.service
+
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: systemd-analyze
+}}
 
 %package -n libsysfs%sover
 Summary: Library for interfacing with sysfs
@@ -64,12 +71,35 @@ v=`objdump -p %buildroot%_libdir/libsysfs.so |awk '/SONAME/ {print $2}'`
 mv -v %buildroot%_libdir/libsysfs.so.* %buildroot/%_lib
 ln -sf "../../%_lib/$v" %buildroot%_libdir/libsysfs.so
 
+install -p -m644 %_sourcedir/sysfs.conf %buildroot%_sysconfdir/sysfs.conf
+install -p -m755 %_sourcedir/sysfs.init %buildroot%_initdir/sysfs
+install -p -m644 %_sourcedir/sysfs.service %buildroot%_unitdir/sysfs.service
+install -d -m755 %buildroot%_sysconfdir/sysfs.d
+
 %check
+bash -n %buildroot%_initdir/sysfs
+
+# Following symlink needed to resolve 'ExecStart=/etc/init.d/sysfs' because
+# '%%_initdir' defined to '/etc/rc.d/init.d'
+ln -s rc.d/init.d %buildroot/etc/
+systemd-analyze verify --root=%buildroot %_unitdir/sysfs.service
+rm %buildroot/etc/init.d
+
 # Only compiles examples but does not run them.
 %make_build check
 
+%post
+%post_service sysfs
+
+%preun
+%preun_service sysfs
+
 %files
 %doc COPYING cmd/GPL
+%config(noreplace) %_sysconfdir/sysfs.conf
+%dir %_sysconfdir/sysfs.d
+%_initdir/sysfs
+%_unitdir/sysfs.service
 %_bindir/*
 %_man1dir/*.1*
 
@@ -85,6 +115,10 @@ ln -sf "../../%_lib/$v" %buildroot%_libdir/libsysfs.so
 %_pkgconfigdir/libsysfs.pc
 
 %changelog
+* Fri Jun 02 2023 Vitaly Chikunov <vt@altlinux.org> 2.1.1-alt2
+- Revert 'Do not package (Debianish) sysfs sysv/systemd services.'
+- Sync init script with Debian which adds support for '/etc/sysfs.d'.
+
 * Fri May 26 2023 Vitaly Chikunov <vt@altlinux.org> 2.1.1-alt1
 - Update to v2.1.1-13-g085bba6 (2021-07-23).
 - Do not package libsysfs-devel-static.
