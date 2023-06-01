@@ -12,7 +12,7 @@
 
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 2.1.5
+Version: 2.1.6
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
@@ -262,7 +262,6 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_unitdir/pacemaker.service
 %_logrotatedir/%name
 %_libexecdir/pacemaker/*
-%_sbindir/fence_legacy
 %_sbindir/fence_watchdog
 %_man7dir/*.7*
 %_man8dir/pacemakerd.*
@@ -330,7 +329,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %doc %_docdir/%name
 
 %files cts
-%python3_sitelibdir_noarch/cts
+%python3_sitelibdir_noarch/*
 %_datadir/pacemaker/tests
 %_libexecdir/pacemaker/cts-log-watcher
 %_libexecdir/pacemaker/cts-support
@@ -349,6 +348,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_datadir/pacemaker/base
 
 %changelog
+* Thu May 25 2023 Andrey Cherepanov <cas@altlinux.org> 2.1.6-alt1
+- New version.
+
 * Fri Dec 09 2022 Andrey Cherepanov <cas@altlinux.org> 2.1.5-alt1
 - New version.
 
