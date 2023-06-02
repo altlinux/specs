@@ -11,7 +11,7 @@
 %define rname kpipewire
 Name: plasma5-%rname
 Version: 5.27.5
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -47,6 +47,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: pipewire-libs-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -113,6 +114,9 @@ Requires: %name-common
 %_K5lib/libKPipeWireDmaBuf.so.*
 
 %changelog
+* Fri Jun 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt3
+- update requires
+
 * Thu May 25 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt2
 - increase buffer for pipewire format negotiation
 
