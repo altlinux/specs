@@ -6,7 +6,7 @@ ExclusiveArch: %ix86 x86_64
 
 Name:           kBuild
 Version:        %short_version.r%svn_revision
-Release:        alt2
+Release:        alt3
 License:        %gpl3plus
 Group:          Development/Other
 Summary:        A cross-platform build environment framework for complex tasks
@@ -18,7 +18,7 @@ Patch2:         kBuild-0.1.3-escape.patch
 Patch3:         kBuild-alt-compat.patch
 Patch4:         kBuild-use-bison.patch
 
-BuildRequires(pre): rpm-build-licenses rpm-build-ubt
+BuildRequires(pre): rpm-build-licenses
 BuildRequires:  cvs flex libacl-devel
 BuildRequires: perl-podlators
 
@@ -89,6 +89,9 @@ install -m 644 -D kmk.1 %buildroot%_man1dir/kmk.1
 %_datadir/%name
 
 %changelog
+* Fri Jun 02 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.9998.r3592-alt3
+- Removed use of rpm-build-ubt
+
 * Thu Jun 01 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.9998.r3592-alt2
 - Added to BuildRequires(pre): rpm-build-ubt
 
@@ -102,13 +105,13 @@ install -m 644 -D kmk.1 %buildroot%_man1dir/kmk.1
 * Mon Dec 03 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt4
 - Disable ubt macros due binary package identity changes
 
-* Wed Jul 11 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt3%ubt
+* Wed Jul 11 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt3
 - Exclusive build for x86 architectures only
 
-* Thu May 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt2%ubt
+* Thu May 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt2
 - Fixed kBuild svn revision output for kmk --version detect
 
-* Thu Mar 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt1%ubt
+* Thu Mar 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt1
 - Update to last unstable release from svn trunk (r3178) for VirtualBox-5.2.x
 
 * Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.9998.r2813-alt2
