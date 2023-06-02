@@ -19,7 +19,7 @@
 %define libakonadidatasetools libakonadidatasetools%sover
 
 Name: kde5-pim-addons
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -104,6 +104,7 @@ Requires: %name-common
 Summary: addon
 Group: Graphical desktop/KDE
 Requires: %name-common
+Requires: kde5-ktextaddons
 %description plugins
 %summary.
 
@@ -296,15 +297,15 @@ Requires: %name-common
 %files -n %libkmailquicktextpluginprivate
 %_K5lib/libkmailquicktextpluginprivate.so.%sover
 %_K5lib/libkmailquicktextpluginprivate.so.*
-%files -n %libkmaillanguagetool
-%_K5lib/libkmaillanguagetool.so.%sover
-%_K5lib/libkmaillanguagetool.so.*
-%files -n %libkmailgrammalecte
-%_K5lib/libkmailgrammalecte.so.%sover
-%_K5lib/libkmailgrammalecte.so.*
-%files -n %libgrammarcommon
-%_K5lib/libgrammarcommon.so.%sover
-%_K5lib/libgrammarcommon.so.*
+#%files -n %libkmaillanguagetool
+#%_K5lib/libkmaillanguagetool.so.%sover
+#%_K5lib/libkmaillanguagetool.so.*
+#%files -n %libkmailgrammalecte
+#%_K5lib/libkmailgrammalecte.so.%sover
+#%_K5lib/libkmailgrammalecte.so.*
+#%files -n %libgrammarcommon
+#%_K5lib/libgrammarcommon.so.%sover
+#%_K5lib/libgrammarcommon.so.*
 %files -n %libfolderconfiguresettings
 %_K5lib/libfolderconfiguresettings.so.%sover
 %_K5lib/libfolderconfiguresettings.so.*
@@ -323,6 +324,9 @@ Requires: %name-common
 
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

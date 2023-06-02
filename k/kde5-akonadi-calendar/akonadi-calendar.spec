@@ -1,7 +1,7 @@
 %define rname akonadi-calendar
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace
 
@@ -18,6 +18,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: boost-devel-headers libsasl2-devel
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kde5-akonadi-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel
 BuildRequires: kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel
 BuildRequires: kde5-akonadi-mime-devel kde5-akonadi-contacts-devel
@@ -80,15 +81,18 @@ KF5 library
 %_datadir/akonadi5/plugins/serializer/akonadi_serializer_kcalcore.desktop
 
 %files devel
-%_K5inc/AkonadiCalendar/
+%_includedir/KPim5/AkonadiCalendar/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5AkonadiCalendar/
+%_K5lib/cmake/K*5AkonadiCalendar/
 %_K5archdata/mkspecs/modules/qt_AkonadiCalendar.pri
 
 %files -n libkf5akonadicalendar
-%_K5lib/libKF5AkonadiCalendar.so.*
+%_K5lib/libKPim5AkonadiCalendar.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

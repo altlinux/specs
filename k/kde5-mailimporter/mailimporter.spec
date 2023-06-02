@@ -5,7 +5,7 @@
 %define libkf5mailimporterakonadi libkf5mailimporterakonadi%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -22,6 +22,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-tools-devel-static
 BuildRequires: boost-devel
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel
 BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel
@@ -81,20 +82,23 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/MailImporter*/
+%_includedir/KPim5/MailImporter*/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5MailImporter*/
+%_K5lib/cmake/K*5MailImporter*/
 %_K5archdata/mkspecs/modules/qt_MailImporter*.pri
 
 %files -n %libkf5mailimporter
-%_K5lib/libKF5MailImporter.so.%sover
-%_K5lib/libKF5MailImporter.so.*
+%_K5lib/libKPim5MailImporter.so.%sover
+%_K5lib/libKPim5MailImporter.so.*
 
 %files -n %libkf5mailimporterakonadi
-%_K5lib/libKF5MailImporterAkonadi.so.%sover
-%_K5lib/libKF5MailImporterAkonadi.so.*
+%_K5lib/libKPim5MailImporterAkonadi.so.%sover
+%_K5lib/libKPim5MailImporterAkonadi.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

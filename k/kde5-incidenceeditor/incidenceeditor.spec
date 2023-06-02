@@ -4,7 +4,7 @@
 %define libkf5incidenceeditor libkf5incidenceeditor%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -21,6 +21,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: boost-devel
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-calendarsupport-devel kde5-eventviews-devel kde5-kcalcore-devel kde5-kcalutils-devel
 BuildRequires: kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kldap-devel kde5-kmailtransport-devel
 BuildRequires: kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel 
@@ -75,16 +76,19 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/IncidenceEditor/
+%_includedir/KPim5/IncidenceEditor/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5IncidenceEditor/
+%_libdir/cmake/K*5IncidenceEditor/
 %_K5archdata/mkspecs/modules/qt_IncidenceEditor.pri
 
 %files -n %libkf5incidenceeditor
-%_K5lib/libKF5IncidenceEditor.so.%sover
-%_K5lib/libKF5IncidenceEditor.so.*
+%_K5lib/libKPim5IncidenceEditor.so.%sover
+%_K5lib/libKPim5IncidenceEditor.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

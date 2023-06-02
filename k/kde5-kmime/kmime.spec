@@ -1,7 +1,7 @@
 %define rname kmime
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace
 
@@ -18,6 +18,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: boost-devel-headers
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kf5-kcodecs-devel kf5-ki18n-devel
 
 %description
@@ -61,15 +62,18 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/KMime/
+%_includedir/KPim5/KMime/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5Mime/
+%_K5lib/cmake/K*5Mime/
 %_K5archdata/mkspecs/modules/qt_KMime.pri
 
 %files -n libkf5mime
-%_K5lib/libKF5Mime.so.*
+%_K5lib/libKPim5Mime.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkpimsmtp libkpimsmtp%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -65,18 +65,20 @@ Requires: %name-common = %version-%release
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%dir %_includedir/KPim/
-%_includedir/KPim/ksmtp_version.h
-%_includedir/KPim/KSMTP/
+%_includedir/KPim5/ksmtp_version.h
+%_includedir/KPim5/KSMTP/
 %_K5link/lib*.so
-%_K5lib/cmake/KPimSMTP/
+%_K5lib/cmake/K*SMTP/
 %_K5archdata/mkspecs/modules/qt_KSMTP.pri
 
 %files -n %libkpimsmtp
-%_K5lib/libKPimSMTP.so.*
-%_K5lib/libKPimSMTP.so.%sover
+%_K5lib/libKPim5SMTP.so.*
+%_K5lib/libKPim5SMTP.so.%sover
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

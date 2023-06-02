@@ -1,7 +1,7 @@
 %define rname akonadi-calendar-tools
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -20,6 +20,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: boost-devel
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-calendarsupport-devel kde5-kcalcore-devel
 BuildRequires: kde5-kcalutils-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kmime-devel kde5-kpimtextedit-devel
 BuildRequires: kde5-libkdepim-devel
@@ -46,6 +47,9 @@ Akonadi Calendar Tools.
 %_K5icon/*/*/apps/*alendar*.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkpimitinerary libkpimitinerary%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace
 
@@ -63,6 +63,7 @@ Obsoletes: libkpimitinerary < %EVR
 %build
 %K5build \
     -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
+    -DBUILD_TESTING:BOOl=ON \
     #
 
 %install
@@ -77,18 +78,21 @@ Obsoletes: libkpimitinerary < %EVR
 %_K5xdgmime/*itinerary*.xml
 
 %files devel
-%_K5inc/KPim/kitinerary_version.h
-%_K5inc/KPim/??tinerary/
+%_K5inc/KPim5/kitinerary_version.h
+%_K5inc/KPim5/??tinerary/
 %_K5link/lib*.so
-%_K5lib/cmake/KPimItinerary/
+%_K5lib/cmake/KPim*Itinerary/
 #%_K5archdata/mkspecs/modules/qt_kitinerary.pri
 
 %files -n %libkpimitinerary
 %_K5exec/kitinerary*
-%_K5lib/libKPimItinerary.so.%sover
-%_K5lib/libKPimItinerary.so.*
+%_K5lib/libKPim5Itinerary.so.%sover
+%_K5lib/libKPim5Itinerary.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

@@ -12,7 +12,7 @@
 %define libkf5ksieve libkf5ksieve%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -32,6 +32,7 @@ BuildRequires: extra-cmake-modules qt5-tools-devel-static
 BuildRequires: qt5-webengine-devel
 %endif
 BuildRequires: boost-devel libsasl2-devel
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel
 BuildRequires: kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-pimcommon-devel kf5-syntax-highlighting-devel
 BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
@@ -113,29 +114,32 @@ done
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/K*Sieve*/
+%_K5inc/KSieve/
+%_includedir/KPim5/K*Sieve*/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5LibKSieve*/
+%_libdir/cmake/K*5LibKSieve*/
 %_K5archdata/mkspecs/modules/qt_*Sieve*.pri
 
 %if_enabled qtwebengine
 %files -n %libkf5ksieveui
-%_K5lib/libKF5KSieveUi.so.%sover
-%_K5lib/libKF5KSieveUi.so.*
+%_K5lib/libKPim5KSieveUi.so.%sover
+%_K5lib/libKPim5KSieveUi.so.*
 %_K5data/sieve/
 %_K5data/knsrcfiles/*sieve*
 %endif
 
 %files -n %libkf5kmanagesieve
-%_K5lib/libKF5KManageSieve.so.%sover
-%_K5lib/libKF5KManageSieve.so.*
+%_K5lib/libKPim5KManageSieve.so.%sover
+%_K5lib/libKPim5KManageSieve.so.*
 %files -n %libkf5ksieve
-%_K5lib/libKF5KSieve.so.%sover
-%_K5lib/libKF5KSieve.so.*
-#%_K5plug/kf5/kio/sieve.so
+%_K5lib/libKPim5KSieve.so.%sover
+%_K5lib/libKPim5KSieve.so.*
 
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

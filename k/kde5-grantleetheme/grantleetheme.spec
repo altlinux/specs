@@ -4,7 +4,7 @@
 %define libkf5grantleetheme libkf5grantleetheme%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -14,7 +14,6 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Patch1: alt-fix-crash.patch
 
 # Automatically added by buildreq on Thu Apr 28 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ kf5-attica-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
@@ -55,7 +54,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
@@ -69,19 +67,22 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/GrantleeTheme/
+%_includedir/KPim5/GrantleeTheme/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5GrantleeTheme/
+%_K5lib/cmake/K*5GrantleeTheme/
 %_K5archdata/mkspecs/modules/qt_GrantleeTheme.pri
 
 %files -n %libkf5grantleetheme
-%_K5lib/libKF5GrantleeTheme.so.%sover
-%_K5lib/libKF5GrantleeTheme.so.*
+%_K5lib/libKPim5GrantleeTheme.so.%sover
+%_K5lib/libKPim5GrantleeTheme.so.*
 #%dir %_K5plug/grantlee/
 #%dir %_K5plug/grantlee/5.?/
 %_libdir/grantlee/5.?/*grantlee_*.so
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

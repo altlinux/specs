@@ -4,7 +4,7 @@
 %define libkf5mailcommon libkf5mailcommon%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -23,6 +23,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-tools-devel-static qt5-webengine-devel qt5-phonon-devel
 BuildRequires: libgpgme-devel libassuan-devel libldap-devel libsasl2-devel xsltproc
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kldap-devel
 BuildRequires: kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-mailimporter-devel
 BuildRequires: kde5-messagelib-devel kde5-pimcommon-devel kde5-libkleo-devel
@@ -76,17 +77,20 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5plug/designer/mailcommonwidgets.so
-%_K5inc/MailCommon/
+%_K5plug/designer/*mailcommon*.so
+%_includedir/KPim5/MailCommon/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5MailCommon/
+%_libdir/cmake/K*5MailCommon/
 %_K5archdata/mkspecs/modules/qt_MailCommon.pri
 
 %files -n %libkf5mailcommon
-%_K5lib/libKF5MailCommon.so.%sover
-%_K5lib/libKF5MailCommon.so.*
+%_K5lib/libKPim5MailCommon.so.%sover
+%_K5lib/libKPim5MailCommon.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname akonadi-contacts
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -74,16 +74,14 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-#%_K5inc/?konadi/?ontact/
-%_K5inc/*ontact*/
+%_includedir/KPim5/*ontact*/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5*Contact*/
+%_K5lib/cmake/K*5*Contact*/
 %_K5archdata/mkspecs/modules/qt_*Contact*.pri
 
 %files -n libkf5akonadicontact
-%_K5lib/libKF5AkonadiContact.so.*
+%_K5lib/libKPim5AkonadiContact.so.*
 %_K5plug/pim5/kcms/kaddressbook/*akonadicontact*.so
-#%_K5srv/*akonadicontact*.desktop
 #
 %_K5plug/akonadi_serializer_addressee.so
 %_datadir/akonadi5/plugins/serializer/akonadi_serializer_addressee.desktop
@@ -91,13 +89,16 @@ KF5 library
 %_datadir/akonadi5/contact/
 
 %files -n libkf5contacteditor
-%_K5lib/libKF5ContactEditor.so.*
+%_K5lib/libKPim5ContactEditor.so.*
 %_K5plug/pim5/akonadi/contacts/plugins/categorieseditwidgetplugin.so
 #
 %_K5plug/akonadi_serializer_contactgroup.so
 %_datadir/akonadi5/plugins/serializer/akonadi_serializer_contactgroup.desktop
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

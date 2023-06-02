@@ -1,7 +1,7 @@
 %define rname akonadi-search
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace
 
@@ -103,20 +103,23 @@ sed -i '/EnabledByDefault/s|true|false|' runner/plasma-krunner-pimcontacts.json.
 %_datadir/akonadi5/agents/*.desktop
 
 %files devel
-%_K5inc/AkonadiSearch/
+%_includedir/KPim5/AkonadiSearch/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5AkonadiSearch/
+%_K5lib/cmake/K*5AkonadiSearch/
 
 %files -n libkf5akonadisearchxapian
-%_K5lib/libKF5AkonadiSearchXapian.so.*
+%_K5lib/libKPim5AkonadiSearchXapian.so.*
 %files -n libkf5akonadisearchcore
-%_K5lib/libKF5AkonadiSearchCore.so.*
+%_K5lib/libKPim5AkonadiSearchCore.so.*
 %files -n libkf5akonadisearchpim
-%_K5lib/libKF5AkonadiSearchPIM.so.*
+%_K5lib/libKPim5AkonadiSearchPIM.so.*
 %files -n libkf5akonadisearchdebug
-%_K5lib/libKF5AkonadiSearchDebug.so.*
+%_K5lib/libKPim5AkonadiSearchDebug.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

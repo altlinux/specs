@@ -3,7 +3,7 @@
 %define libkaccounts libkaccounts%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace
 
@@ -20,6 +20,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel
 BuildRequires: accounts-qt5-devel signon-devel
+BuildRequires: qcoro5-devel
 #BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
@@ -91,12 +92,16 @@ mkdir -p %buildroot/%_K5plug/kaccounts/{ui,daemonplugins}
 %_K5lib/libkaccounts.so.%sover
 %_K5lib/libkaccounts.so.*
 %_K5plug/plasma/kcms/systemsettings/*kaccounts*.so
-%_K5plug/kf5/kded/kded_accounts.so
+%_K5xdgapp/*kaccounts*.desktop
+%_K5plug/kf5/kded/*accounts*.so
 %_K5plug/kaccounts/daemonplugins/*kaccounts*.so
 %_K5qml/org/kde/kaccounts/
 %_K5data/kpackage/kcms/kcm_kaccounts/
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

@@ -16,7 +16,7 @@
 %define libkf5webengineviewer libkf5webengineviewer%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -38,6 +38,7 @@ BuildRequires: qt5-webengine-devel
 %endif
 BuildRequires: grantlee5-devel libqca-qt5-devel
 BuildRequires: libgpgme-devel libassuan-devel libldap-devel libsasl2-devel
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kde5-akonadi-search-devel kde5-grantleetheme-devel kde5-kcalcore-devel kde5-kcontacts-devel
 BuildRequires: kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kldap-devel kde5-kmailtransport-devel kde5-kmbox-devel
 BuildRequires: kde5-kmime-devel kde5-kpimtextedit-devel kde5-libgravatar-devel kde5-libkdepim-devel kde5-libkleo-devel
@@ -163,43 +164,46 @@ mkdir -p %buildroot/%_K5plug/pim5
 %_K5data/*/
 
 %files devel
-%_K5inc/*
+%_includedir/KPim5/*
 %_K5link/lib*.so
 %_K5lib/cmake/*/
 %_K5archdata/mkspecs/modules/qt_*.pri
 
 %if_enabled qtwebengine
 %files -n %libkf5messagecomposer
-%_K5lib/libKF5MessageComposer.so.%sover
-%_K5lib/libKF5MessageComposer.so.*
+%_K5lib/libKPim5MessageComposer.so.%sover
+%_K5lib/libKPim5MessageComposer.so.*
 %files -n %libkf5webengineviewer
-%_K5lib/libKF5WebEngineViewer.so.%sover
-%_K5lib/libKF5WebEngineViewer.so.*
+%_K5lib/libKPim5WebEngineViewer.so.%sover
+%_K5lib/libKPim5WebEngineViewer.so.*
 %_K5cfg/*.kcfg
 %_K5notif/*.notifyrc
 %files -n %libkf5messageviewer
-%_K5lib/libKF5MessageViewer.so.%sover
-%_K5lib/libKF5MessageViewer.so.*
+%_K5lib/libKPim5MessageViewer.so.%sover
+%_K5lib/libKPim5MessageViewer.so.*
 %dir %_K5plug/pim5/messageviewer/
 %dir %_K5plug/pim5/messageviewer/headerstyle/
 %_K5plug/pim5/messageviewer/headerstyle/*.so
 %_K5plug/pim5/messageviewer/grantlee/
 %files -n %libkf5messageparser
-%_K5lib/libKF5TemplateParser.so.%sover
-%_K5lib/libKF5TemplateParser.so.*
+%_K5lib/libKPim5TemplateParser.so.%sover
+%_K5lib/libKPim5TemplateParser.so.*
 %endif
 
 %files -n %libkf5messagecore
-%_K5lib/libKF5MessageCore.so.%sover
-%_K5lib/libKF5MessageCore.so.*
+%_K5lib/libKPim5MessageCore.so.%sover
+%_K5lib/libKPim5MessageCore.so.*
 %files -n %libkf5messagelist
-%_K5lib/libKF5MessageList.so.%sover
-%_K5lib/libKF5MessageList.so.*
+%_K5lib/libKPim5MessageList.so.%sover
+%_K5lib/libKPim5MessageList.so.*
 %files -n %libkf5mimetreeparser
-%_K5lib/libKF5MimeTreeParser.so.%sover
-%_K5lib/libKF5MimeTreeParser.so.*
+%_K5lib/libKPim5MimeTreeParser.so.%sover
+%_K5lib/libKPim5MimeTreeParser.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

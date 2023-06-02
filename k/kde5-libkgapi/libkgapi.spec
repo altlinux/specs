@@ -8,10 +8,11 @@
 %define libkpimgapiblogger libkpimgapiblogger%sover
 %define libkpimgapimaps libkpimgapimaps%sover
 %define libkpimgapicontacts libkpimgapicontacts%sover
+%define libkpimgapipeople libkpimgapipeople%sover
 %define libkpimgapitasks libkpimgapitasks%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace
 
@@ -106,6 +107,13 @@ Requires: %name-common
 %description -n %libkpimgapicontacts
 KF5 library
 
+%package -n %libkpimgapipeople
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common
+%description -n %libkpimgapipeople
+KF5 library
+
 %package -n %libkpimgapitasks
 Group: System/Libraries
 Summary: KF5 library
@@ -119,8 +127,8 @@ KF5 library
 sed -i '1iadd_definitions(-std=gnu90)' src/saslplugin/CMakeLists.txt
 
 %build
+#    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
 %K5build \
-    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
     #
 
 %install
@@ -143,32 +151,36 @@ done
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/KPim/kgapi_version.h
-%_K5inc/KPim/KGAPI/
+%_includedir/KPim5/kgapi_version.h
+%_includedir/KPim5/KGAPI/
 %_K5link/lib*.so
-%_K5lib/cmake/KPimGAPI/
-#%_K5lib/cmake/KF5GAPI/
+%_K5lib/cmake/K*GAPI/
 %_K5archdata/mkspecs/modules/qt_KGAPI*.pri
 
 %files -n %libkpimgapidrive
-%_K5lib/libKPimGAPIDrive.so.*
+%_K5lib/libKPim5GAPIDrive.so.*
 %_libdir/sasl2*/*.so*
 %files -n %libkpimgapilatitude
-%_K5lib/libKPimGAPILatitude.so.*
+%_K5lib/libKPim5GAPILatitude.so.*
 %files -n %libkpimgapicore
-%_K5lib/libKPimGAPICore.so.*
+%_K5lib/libKPim5GAPICore.so.*
 %files -n %libkpimgapicalendar
-%_K5lib/libKPimGAPICalendar.so.*
+%_K5lib/libKPim5GAPICalendar.so.*
 %files -n %libkpimgapiblogger
-%_K5lib/libKPimGAPIBlogger.so.*
+%_K5lib/libKPim5GAPIBlogger.so.*
 %files -n %libkpimgapimaps
-%_K5lib/libKPimGAPIMaps.so.*
-%files -n %libkpimgapicontacts
-%_K5lib/libKPimGAPIContacts.so.*
+%_K5lib/libKPim5GAPIMaps.so.*
+#%files -n %libkpimgapicontacts
+#%_K5lib/libKPim5GAPIContacts.so.*
+%files -n %libkpimgapipeople
+%_K5lib/libKPim5GAPIPeople.so.*
 %files -n %libkpimgapitasks
-%_K5lib/libKPimGAPITasks.so.*
+%_K5lib/libKPim5GAPITasks.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

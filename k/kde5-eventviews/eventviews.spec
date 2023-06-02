@@ -4,7 +4,7 @@
 %define libkf5eventviews libkf5eventviews%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -20,6 +20,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kde5-akonadi-calendar-devel kde5-calendarsupport-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kdgantt2-devel kde5-kidentitymanagement-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-pimlibs-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel python-module-google python3-dev qt5-tools-devel-static rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-tools-devel
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-calendarsupport-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel
 BuildRequires: kde5-kidentitymanagement-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel
 BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
@@ -72,16 +73,19 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/EventViews/
+%_includedir/KPim5/EventViews/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5EventViews/
+%_libdir/cmake/K*5EventViews/
 %_K5archdata/mkspecs/modules/qt_EventViews.pri
 
 %files -n %libkf5eventviews
-%_K5lib/libKF5EventViews.so.%sover
-%_K5lib/libKF5EventViews.so.*
+%_K5lib/libKPim5EventViews.so.%sover
+%_K5lib/libKPim5EventViews.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

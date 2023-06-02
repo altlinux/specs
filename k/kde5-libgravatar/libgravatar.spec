@@ -4,7 +4,7 @@
 %define libkf5gravatar libkf5gravatar%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -21,6 +21,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules
 BuildRequires: libsasl2-devel boost-devel
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel
 BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel
@@ -71,16 +72,19 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/Gravatar/
+%_includedir/KPim5/Gravatar/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5Gravatar/
+%_K5lib/cmake/K*5Gravatar/
 %_K5archdata/mkspecs/modules/qt_Gravatar.pri
 
 %files -n %libkf5gravatar
-%_K5lib/libKF5Gravatar.so.%sover
-%_K5lib/libKF5Gravatar.so.*
+%_K5lib/libKPim5Gravatar.so.%sover
+%_K5lib/libKPim5Gravatar.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkpimpkpass libkpimpkpass%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace
 
@@ -68,15 +68,18 @@ Obsoletes: libkpimpkpass < %EVR
 #%_K5xdgmime/*.xml
 
 %files devel
-%_K5inc/KPim/KPkPass/
+%_K5inc/KPim5/KPkPass/
 %_K5link/lib*.so
-%_K5lib/cmake/KPimPkPass/
+%_K5lib/cmake/KPim*PkPass/
 
 %files -n %libkpimpkpass
-%_K5lib/libKPimPkPass.so.%sover
-%_K5lib/libKPimPkPass.so.*
+%_K5lib/libKPim5PkPass.so.%sover
+%_K5lib/libKPim5PkPass.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

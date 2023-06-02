@@ -1,7 +1,7 @@
 %define rname kaddressbook
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -72,7 +72,6 @@ Requires: %name-common
 
 %build
 %K5build \
-    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
     #
 
 %install
@@ -101,11 +100,10 @@ done
 #%_K5data/kontact/ksettingsdialog/*kaddressbook*
 
 %files devel
-%_K5inc/KPim/KAddressBookImportExport/
-%_K5inc/KPim/kaddressbookimportexport/
-%_K5inc/KPim/*.h
+%_includedir/KPim5/??ddress?ook?mport?xport/
+%_includedir/KPim5/*.h
 %_K5link/lib*.so
-%_K5lib/cmake/KPimAddressbookImportExport/
+%_K5lib/cmake/K*AddressbookImportExport/
 %_K5archdata/mkspecs/modules/qt_K*.pri
 
 %files -n %libkaddressbookprivate
@@ -113,10 +111,13 @@ done
 %_K5lib/libkaddressbookprivate.so.*
 
 %files -n %libkpimaddressbookimportexport
-%_K5lib/libKPimAddressbookImportExport.so.%sover
-%_K5lib/libKPimAddressbookImportExport.so.*
+%_K5lib/libKPim5AddressbookImportExport.so.%sover
+%_K5lib/libKPim5AddressbookImportExport.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

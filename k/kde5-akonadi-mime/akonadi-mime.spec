@@ -1,7 +1,7 @@
 %define rname akonadi-mime
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -66,17 +66,20 @@ KF5 library
 %_K5cfg/*.kcfg
 
 %files devel
-%_K5inc/AkonadiMime/
+%_includedir/KPim5/AkonadiMime/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5AkonadiMime/
+%_K5lib/cmake/K*5AkonadiMime/
 %_K5archdata/mkspecs/modules/qt_AkonadiMime.pri
 
 %files -n libkf5akonadimime
-%_K5lib/libKF5AkonadiMime.so.*
+%_K5lib/libKPim5AkonadiMime.so.*
 %_K5plug/akonadi_serializer_mail.so
 %_datadir/akonadi5/plugins/serializer/akonadi_serializer_mail.desktop
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

@@ -5,7 +5,7 @@
 %define libkf5libkdepimakonadi libkf5libkdepimakonadi%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -83,24 +83,21 @@ KF5 library
 
 %files devel
 %_K5plug/designer/*.so
-%_K5inc/Libkdepim/
+%_includedir/KPim5/Libkdepim/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5Libkdepim/
-%_K5lib/cmake/MailTransportDBusService/
+%_K5lib/cmake/K*5Libkdepim/
+%_K5lib/cmake/*MailTransportDBusService/
 %_K5archdata/mkspecs/modules/qt_Libkdepim*.pri
 %_K5dbus_iface/org.kde.*.service.xml
 
 %files -n %libkf5libkdepim
-%_K5lib/libKF5Libkdepim.so.%sover
-%_K5lib/libKF5Libkdepim.so.*
-#%_K5plug/kcm_ldap.so
-#%_K5srv/kcmldap.desktop
-
-#%files -n %libkf5libkdepimakonadi
-#%_K5lib/libKF5LibkdepimAkonadi.so.%sover
-#%_K5lib/libKF5LibkdepimAkonadi.so.*
+%_K5lib/libKPim5Libkdepim.so.%sover
+%_K5lib/libKPim5Libkdepim.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kcalutils
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace
 
@@ -18,6 +18,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: libical-devel grantlee5-devel
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kde5-kcalcore-devel kde5-kidentitymanagement-devel kde5-kpimtextedit-devel kf5-karchive-devel kf5-kauth-devel
 BuildRequires: kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel
@@ -69,17 +70,19 @@ KF5 library
 #%_K5data/kcalendar/
 
 %files devel
-#%_K5inc/kcalutils_version.h
-%_K5inc/KCalUtils/
+%_includedir/KPim5/KCalUtils/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5CalendarUtils/
+%_K5lib/cmake/K*5CalendarUtils/
 %_K5archdata/mkspecs/modules/qt_KCalUtils.pri
 
 %files -n libkf5calendarutils
 %_libdir/grantlee/5.?/kcalendar_grantlee_plugin.so
-%_K5lib/libKF5CalendarUtils.so.*
+%_K5lib/libKPim5CalendarUtils.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

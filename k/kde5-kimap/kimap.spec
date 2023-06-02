@@ -1,7 +1,7 @@
 %define rname kimap
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace
 
@@ -68,16 +68,18 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-#%_K5inc/kimap_version.h
-%_K5inc/KIMAP/
+%_includedir/KPim5/KIMAP/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5IMAP/
+%_K5lib/cmake/K*5IMAP/
 %_K5archdata/mkspecs/modules/qt_KIMAP.pri
 
 %files -n libkf5imap
-%_K5lib/libKF5IMAP.so.*
+%_K5lib/libKPim5IMAP.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

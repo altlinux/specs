@@ -1,7 +1,7 @@
 %define rname kmbox
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace
 
@@ -70,15 +70,18 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/KMbox/
+%_includedir/KPim5/KMbox/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5Mbox/
+%_K5lib/cmake/K*5Mbox/
 %_K5archdata/mkspecs/modules/qt_*Mbox.pri
 
 %files -n libkf5mbox
-%_K5lib/libKF5Mbox.so.*
+%_K5lib/libKPim5Mbox.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

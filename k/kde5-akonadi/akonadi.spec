@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace
 
@@ -168,6 +168,7 @@ KF5 library
 
 %build
 %K5build \
+    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
     -DMYSQLD_EXECUTABLE:FILEPATH=%_sbindir/mysqld \
     -DBUILD_TESTING=OFF \
     -DBUILD_TOOLS=%{?_enable_tools:ON}%{!?_enable_tools:OFF} \
@@ -257,38 +258,40 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 
 %files devel
 %_K5bin/asapcat
-%_K5plug/designer/akonadiwidgets.so
-#%_K5inc/akonadi_version.h
-%_K5inc/Akonadi*/
-#%_K5inc/akonadi/
+%_K5plug/designer/*akonadi*.so
+%_K5inc/KPim5/Akonadi*/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5Akonadi/
+%_K5lib/cmake/K*5Akonadi/
 %_K5dbus_iface/*.Akonadi.*.xml
 %_K5archdata/mkspecs/modules/qt_Akonadi*.pri
 %_datadir/akonadi5/*.xs*
 %_K5data/akonadi/*.xs*
 %_K5data/akonadi5/*.xs*
+%_K5data/kdevappwizard/templates/*akonadi*
 
 %files -n libkf5akonadiprivate
-%_K5lib/libKF5AkonadiPrivate.so.5
-%_K5lib/libKF5AkonadiPrivate.so.*
+%_K5lib/libKPim5AkonadiPrivate.so.5
+%_K5lib/libKPim5AkonadiPrivate.so.*
 %files -n libkf5akonadiagentbase
-%_K5lib/libKF5AkonadiAgentBase.so.5
-%_K5lib/libKF5AkonadiAgentBase.so.*
+%_K5lib/libKPim5AkonadiAgentBase.so.5
+%_K5lib/libKPim5AkonadiAgentBase.so.*
 %files -n libkf5akonadicore
-%_K5lib/libKF5AkonadiCore.so.5
-%_K5lib/libKF5AkonadiCore.so.*
+%_K5lib/libKPim5AkonadiCore.so.5
+%_K5lib/libKPim5AkonadiCore.so.*
 %files -n libkf5akonadiwidgets
-%_K5lib/libKF5AkonadiWidgets.so.5
-%_K5lib/libKF5AkonadiWidgets.so.*
+%_K5lib/libKPim5AkonadiWidgets.so.5
+%_K5lib/libKPim5AkonadiWidgets.so.*
 
 %if_enabled tools
 %files -n libkf5akonadixml
-%_K5lib/libKF5AkonadiXml.so.5
-%_K5lib/libKF5AkonadiXml.so.*
+%_K5lib/libKPim5AkonadiXml.so.5
+%_K5lib/libKPim5AkonadiXml.so.*
 %endif
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

@@ -6,7 +6,7 @@
 %define libkf5pimcommonautocorrection libkf5pimcommonautocorrection%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -24,6 +24,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-declarative-devel qt5-tools-devel-static
 BuildRequires: grantlee5-devel libsasl2-devel xsltproc
+BuildRequires: kde5-ktextaddons-devel
 BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kimap-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel
 BuildRequires: kde5-kldap-devel kde5-akonadi-search-devel kde5-grantleetheme-devel
 BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
@@ -48,6 +49,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: kde5-ktextaddons-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -91,7 +93,7 @@ KF5 library
 %files devel
 %_K5inc/PimCommon*/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5PimCommon*/
+%_K5lib/cmake/K*5PimCommon*/
 %_K5archdata/mkspecs/modules/qt_PimCommon*.pri
 %_K5plug/designer/*.so
 
@@ -101,11 +103,11 @@ KF5 library
 %files -n %libkf5pimcommonakonadi
 %_K5lib/libKF5PimCommonAkonadi.so.%sover
 %_K5lib/libKF5PimCommonAkonadi.so.*
-%files -n %libkf5pimcommonautocorrection
-%_K5lib/libKF5PimCommonAutoCorrection.so.%sover
-%_K5lib/libKF5PimCommonAutoCorrection.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

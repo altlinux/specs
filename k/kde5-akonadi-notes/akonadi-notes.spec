@@ -1,7 +1,7 @@
 %define rname akonadi-notes
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -60,15 +60,18 @@ KF5 library
 %doc LICENSES/* README.md
 
 %files devel
-%_K5inc/AkonadiNotes/
+%_includedir/KPim5/AkonadiNotes/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5AkonadiNotes/
+%_K5lib/cmake/K*5AkonadiNotes/
 %_K5archdata/mkspecs/modules/qt_AkonadiNotes.pri
 
 %files -n libkf5akonadinotes
-%_K5lib/libKF5AkonadiNotes.so.*
+%_K5lib/libKPim5AkonadiNotes.so.*
 
 %changelog
+* Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 
