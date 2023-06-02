@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5integration
-Version: 5.6.10
+Version: 5.6.11
 Release: alt1
 
 Summary: Qt platform theme integration plugins for DDE
@@ -82,6 +82,9 @@ make -j1
 %_datadir/mime/packages/image-dci.xml
 
 %changelog
+* Fri Jun 02 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.11-alt1
+- New version.
+
 * Tue Apr 18 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.10-alt1
 - New version.
 
