@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.6.9
+Version: 5.6.12
 Release: alt1
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 License: GPL-2.0+ and LGPL-3.0 and MIT
@@ -69,6 +69,9 @@ export PATH=%_qt5_bindir:$PATH
 %_qt5_plugindir/platforms/libdxcb.so
 
 %changelog
+* Fri Jun 02 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.12-alt1
+- New version.
+
 * Tue Apr 18 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.9-alt1
 - New version.
 
