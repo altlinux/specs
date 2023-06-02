@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt14
+Release: alt15
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -95,6 +95,10 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Fri May 26 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt15
+- Fixed the crash of "aptitude download" (with a large enough total
+  number of known packages, like in ALT Sisyphus).
+
 * Sat Apr  8 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt14
 - Fixed build by including a necessary header
   (an error that surfaced with gcc-12.2.1-alt1).
