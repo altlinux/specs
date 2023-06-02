@@ -3,7 +3,7 @@
 %define guile_sitedir %(guile-config info sitedir)
 
 Name: guile-fibers
-Version: 1.2.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Concurrent ML-like concurrency for Guile
@@ -13,7 +13,6 @@ Url: https://github.com/wingo/fibers
 Vcs: https://github.com/wingo/fibers
 
 Source0: %name-%version.tar
-Patch0: guile-fibers-alt-downgrade-autoreconf-version-requirement.patch
 
 BuildRequires(pre): /proc
 BuildRequires: guile-devel
@@ -25,7 +24,6 @@ Guile Scheme, in the tradition of Concurrent ML.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %autoreconf
@@ -49,6 +47,9 @@ Guile Scheme, in the tradition of Concurrent ML.
 %exclude %guile_extensiondir/fibers-epoll.la
 
 %changelog
+* Fri Jun 02 2023 Anton Zhukharev <ancieg@altlinux.org> 1.3.1-alt1
+- New version.
+
 * Fri May 26 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.0-alt1
 - Initial build for ALT Sisyphus.
 
