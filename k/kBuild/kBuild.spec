@@ -6,7 +6,7 @@ ExclusiveArch: %ix86 x86_64
 
 Name:           kBuild
 Version:        %short_version.r%svn_revision
-Release:        alt1
+Release:        alt2
 License:        %gpl3plus
 Group:          Development/Other
 Summary:        A cross-platform build environment framework for complex tasks
@@ -18,7 +18,7 @@ Patch2:         kBuild-0.1.3-escape.patch
 Patch3:         kBuild-alt-compat.patch
 Patch4:         kBuild-use-bison.patch
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-build-ubt
 BuildRequires:  cvs flex libacl-devel
 BuildRequires: perl-podlators
 
@@ -59,13 +59,11 @@ chmod a+x src/sed/configure
 
 %build
 %define bootstrap_mflags %_smp_mflags   \\\
-        TMP_QUOTE_SLASH='\\'            \\\
         CFLAGS="%optflags"              \\\
         KBUILD_SVN_REV=%svn_revision    \\\
         KBUILD_VERBOSE=1
 
 %define mflags %bootstrap_mflags        \\\
-        TMP_QUOTE_SLASH='\\'            \\\
         NIX_INSTALL_DIR=%_prefix        \\\
         BUILD_TYPE=release              \\\
         MY_INST_MODE=0644               \\\
@@ -91,6 +89,9 @@ install -m 644 -D kmk.1 %buildroot%_man1dir/kmk.1
 %_datadir/%name
 
 %changelog
+* Thu Jun 01 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.9998.r3592-alt2
+- Added to BuildRequires(pre): rpm-build-ubt
+
 * Mon Apr 24 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.9998.r3592-alt1
 - Update to last unstable release from svn trunk (r3592) with LIBSDL2 support
 
