@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt83
+Release: alt84
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -581,6 +581,18 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Fri Jun 02 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt84
+- Fixed the display of descriptions in aptitude and packagekit (by making
+  the format closer to Debian's):
+  + Fixed the display of the first line, which was not shown in packagekit.
+  + Fixed the regression (from 0.5.15lorg2-alt72) in the display of
+    all but the first lines (in aptitude and packagekit). (ALT#40826)
+  + This has also made packagekit show translated descriptions. (ALT#46251)
+  + As a result, there is a cosmetic regression in synaptic: extra blanks.
+- Increased the buf for reading to 32k for effectiveness in methods:
+  gzip (and other compression types), rsh, ftp.
+- Avoid compilation errors with GCC 13 (thx Alexey Sheplyakov). (ALT#46105)
+
 * Tue Feb 21 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt83
 - Made a bit nicer and more informative the new Debug::pkgMarkInstall messages,
   which were introduced in 0.5.15lorg2-alt81; renamed and mentioned there
