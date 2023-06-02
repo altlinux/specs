@@ -1,23 +1,24 @@
 %define optflags_lto %nil
 
-%define llvm_version 13.0
+%define llvm_version 15.0
 
-%define git_ver 14783
-%define git_commit 0178b20983aa6b9930d0b5fb69bd1837325ada02
+%define git_ver 15112
+%define git_commit 33558d14e539da95c13ba43b3ba5428b3d04c54a
 
 %define glslang_version sdk-1.3.224.1
-%define asmjit_commit 06d0badec53710a4f572cf5642881ce570c5d274
-%define hidapi_commit ecf1b62882c1b6ca1da445fa94ee8dae42cf5961
+%define asmjit_commit c59847629d3a19da4d10f0be4ac33b43fc4a100f
+%define hidapi_commit 8b43a97a9330f8b0035439ce9e255e4be202deca
 %define yaml_cpp_commit 0b67821f307e8c6bf0eba9b6d3250e3cf1441450
-%define llvm_commit 9b52b6c39ae9f0759fbce7dd0db4b3290d6ebc56
+%define llvm_project_version 16.0.1
 %define spirv_headers_version sdk-1.3.231.1
 %define spirv_tools_version 2022.4
 %define cubeb_commit 70b4e3db7822de4d534959885cda109d6edbee36
 %define soundtouch_commit 83cfba67b6af80bb9bfafc0b324718c4841f2991
-%define miniupnp_version miniupnpd_2_3_2
+%define miniupnp_version miniupnpd_2_3_3
+%define rtmidi_version 5.0.0
 
 Name: rpcs3
-Version: 0.0.27
+Version: 0.0.28
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -33,14 +34,14 @@ ExclusiveArch: x86_64 aarch64
 Source0: %name-%version.tar
 # https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
 Source1: glslang-%glslang_version.tar
-# https://github.com/asmjit/asmjit/archive/%asmjit_commit/asmjit-%asmjit_commit.tar.gz
+# https://github.com/RPCS3/asmjit/archive/%asmjit_commit/asmjit-%asmjit_commit.tar.gz
 Source2: asmjit-%asmjit_commit.tar
 # https://github.com/RPCS3/hidapi/archive/%hidapi_commit/hidapi-%hidapi_commit.tar.gz
 Source3: hidapi-%hidapi_commit.tar
 # https://github.com/RPCS3/yaml-cpp/archive/%yaml_cpp_commit/yaml-cpp-%yaml_cpp_commit.tar.gz
 Source4: yaml-cpp-%yaml_cpp_commit.tar
-# https://github.com/RPCS3/llvm-mirror/archive/%llvm_commit/llvm-mirror-%llvm_commit.tar.gz
-Source5: llvm-mirror-%llvm_commit.tar
+# https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-%llvm_project_version/llvm-project-llvmorg-%llvm_project_version.tar.gz
+Source5: llvm-project-llvmorg-%llvm_project_version.tar
 # https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_version/SPIRV-Headers-%spirv_headers_version.tar.gz
 Source6: SPIRV-Headers-%spirv_headers_version.tar
 # https://github.com/KhronosGroup/SPIRV-Tools/archive/v%spirv_tools_version/SPIRV-Tools-%spirv_tools_version.tar.gz
@@ -51,6 +52,8 @@ Source8: cubeb-%cubeb_commit.tar
 Source9: soundtouch-%soundtouch_commit.tar
 # https://github.com/miniupnp/miniupnp/archive/%miniupnp_version/miniupnp-%miniupnp_version.tar.gz
 Source10: miniupnp-%miniupnp_version.tar
+# https://github.com/thestk/rtmidi/archive/refs/tags/%rtmidi_version/rtmidi-%rtmidi_version.tar.gz
+Source11: rtmidi-%rtmidi_version.tar
 
 Patch0: %name-alt-git.patch
 Patch1: %name-alt-jit-events.patch
@@ -67,8 +70,10 @@ BuildRequires: pkgconfig(Qt5) >= 5.15.2
 BuildRequires: pkgconfig(Qt5Multimedia) >= 5.15.2
 BuildRequires: pkgconfig(Qt5MultimediaWidgets) >= 5.15.2
 BuildRequires: pkgconfig(Qt5Svg) >= 5.15.2
+BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(flatbuffers)
 BuildRequires: pkgconfig(glew)
+BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libcurl)
 BuildRequires: pkgconfig(libevdev)
@@ -86,6 +91,7 @@ BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(wolfssl)
+BuildRequires: lld%llvm_version
 BuildRequires: llvm%llvm_version
 BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
@@ -98,7 +104,7 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
 
 %patch0 -p1
 %patch1 -p1
@@ -107,12 +113,13 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
 %__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi/hidapi
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp/yaml-cpp
-%__mv -Tf ../llvm-mirror-%llvm_commit llvm
+%__mv -Tf ../llvm-project-llvmorg-%llvm_project_version 3rdparty/llvm/llvm
 %__mv -Tf ../SPIRV-Headers-%spirv_headers_version 3rdparty/SPIRV/SPIRV-Headers
 %__mv -Tf ../SPIRV-Tools-%spirv_tools_version 3rdparty/SPIRV/SPIRV-Tools
 %__mv -Tf ../cubeb-%cubeb_commit 3rdparty/cubeb/cubeb
 %__mv -Tf ../soundtouch-%soundtouch_commit 3rdparty/SoundTouch/soundtouch
 %__mv -Tf ../miniupnp-%miniupnp_version 3rdparty/miniupnp/miniupnp
+%__mv -Tf ../rtmidi-%rtmidi_version 3rdparty/rtmidi/rtmidi
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -148,6 +155,7 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 	-DUSE_SYSTEM_XXHASH:BOOL=TRUE \
 	-DUSE_SYSTEM_WOLFSSL:BOOL=TRUE \
 	-DUSE_SYSTEM_FAUDIO:BOOL=TRUE \
+	-DBUILD_LLVM:BOOL=TRUE \
 	-DLLVM_ENABLE_LLD:BOOL=TRUE \
 	-DPython3_EXECUTABLE="%__python3" \
 	-GNinja \
@@ -170,6 +178,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Sat Jun 03 2023 Nazarov Denis <nenderus@altlinux.org> 0.0.28-alt1
+- Version 0.0.28
+
 * Thu Mar 02 2023 Nazarov Denis <nenderus@altlinux.org> 0.0.27-alt1
 - Version 0.0.27
 
