@@ -1,6 +1,6 @@
 Name: sympa
-Version: 6.2.71
-Release: alt0.3.b1
+Version: 6.2.72
+Release: alt1
 
 %def_without authorcheck
 %define ngxconfdir %_sysconfdir/nginx/sites-available.d
@@ -29,8 +29,6 @@ Release: alt0.3.b1
 # Bundled Fonts
 %global unbundle_fontawesome       1
 %global unbundle_raleway           1
-#
-%global unbundle_foundation_icons  0
 
 # Not available ?
 %global unbundle_foundation        0
@@ -55,7 +53,6 @@ Release: alt0.3.b1
 # - fontawesome-fonts :      OFL
 # - fontawesome-fonts-web:   OFL and MIT
 # - impallari-raleway-fonts: OFL
-# - foundation-icons-fonts:  MIT
 # Possibly bundled javascripts are :
 # - js-html5shiv:            MIT or GPLv2
 # - javascript-jquery-jqplot:        MIT or GPLv2
@@ -67,7 +64,7 @@ Release: alt0.3.b1
 # - javascript-jquery-minicolors:    MIT
 %global licenses_bundled     %nil
 # MIT
-%if ! %unbundle_foundation_icons || ! %unbundle_foundation || ! %unbundle_jquery || ! %unbundle_jquery_migrate || ! %unbundle_jquery_minicolors || ! %unbundle_jquery_ui || ! %unbundle_respond
+%if ! %unbundle_foundation || ! %unbundle_jquery || ! %unbundle_jquery_migrate || ! %unbundle_jquery_minicolors || ! %unbundle_jquery_ui || ! %unbundle_respond
 %global licenses_bundled %licenses_bundled and MIT
 %endif
 # MIT or GPLv2
@@ -207,7 +204,7 @@ BuildRequires(pre): rpm-macros-webserver-common rpm-macros-apache2 rpm-macros-ja
 
 %add_perl_lib_path %_datadir/%name/lib
 %filter_from_provides /perl(Conf\.pm)/d
-%filter_from_requires /perl(Conf\.pm)/d;/\/usr\/share\/fonts\-font\-awesome.*/d;\/usr\/share\/javascript.*/d
+%filter_from_requires /perl(Conf\.pm)/d;/\/usr\/share\/fonts\-font\-awesome-web.*/d;\/usr\/share\/fonts\/otf\/impallari\-raleway\/.*/d;\/usr\/share\/javascript.*/d
 
 %description
 Sympa is scalable and highly customizable mailing list manager. It
@@ -307,22 +304,16 @@ Group: System/Servers
 Summary: Sympa static web content
 # Bundled fonts
 %if %unbundle_fontawesome
-BuildRequires: fonts-font-awesome >= 4.3.0
-Requires: fonts-font-awesome >= 4.3.0
+BuildRequires: fonts-font-awesome-web >= 6.4.0
+Requires: fonts-font-awesome-web >= 6.4.0
 %else
-Provides: bundled(fonts-font-awesome) = 4.3.0
+Provides: bundled(fonts-font-awesome-web) = 6.4.0
 %endif
 %if %unbundle_raleway
 BuildRequires: fonts-otf-impallari-raleway >= 3.0
 Requires: fonts-otf-impallari-raleway >= 3.0
 %else
 Provides: bundled(fonts-otf-impallari-raleway) = 3.0
-%endif
-%if %unbundle_foundation_icons
-BuildRequires: fonts-otf-foundation-icons >= 3.0
-Requires: fonts-otf-foundation-icons >= 3.0
-%else
-Provides: bundled(fonts-otf-foundation-icons) = 3.0
 %endif
 # Bundled javascript libs
 # foundation
@@ -435,22 +426,14 @@ pushd po/web_help; rm -f stamp-po; make; popd
 # Unbundle fonts from static_content/fonts
 # font-awesome
 %if %unbundle_fontawesome
-%unbundle_from_with %buildroot%static_content/fonts/font-awesome/fonts %_datadir/fonts-font-awesome/fonts
-%unbundle_from_with %buildroot%static_content/fonts/font-awesome/css %_datadir/fonts-font-awesome/css
+%unbundle_from_with %buildroot%static_content/fonts/font-awesome/webfonts %_datadir/fonts-font-awesome-web/webfonts
+%unbundle_from_with %buildroot%static_content/fonts/font-awesome/css %_datadir/fonts-font-awesome-web/css
 %endif
 
 # Raleway
 %if %unbundle_raleway
 rm -f %buildroot%static_content/fonts/Raleway/OFL.txt
 %unbundle_from_with %buildroot%static_content/fonts/Raleway %_datadir/fonts/otf/impallari-raleway
-%endif
-
-# foundation-icons
-%if %unbundle_foundation_icons
-rm -f %buildroot%_datadir/fonts/foundation-icons/preview.html
-rm -f %buildroot%_datadir/fonts/foundation-icons/foundation-icons.{eot,svg,woff}
-rm -rf %buildroot%_datadir/fonts/foundation-icons/svgs
-%unbundle_from_with %buildroot%static_content/fonts/foundation-icons %_datadir/fonts/foundation-icons
 %endif
 
 # Unbundle javascript libraries from static_content/js
@@ -777,6 +760,11 @@ fi
 %static_content
 
 %changelog
+* Fri Jun 02 2023 L.A. Kostis <lakostis@altlinux.ru> 6.2.72-alt1
+- 6.2.72.
+- BR: font-fonts-awesome->fonts-font-awesome-web.
+- remove foundation-icons (retired by upstream).
+
 * Mon May 22 2023 L.A. Kostis <lakostis@altlinux.ru> 6.2.71-alt0.3.b1
 - BR: added HTTP/Cookies.pm.
 
