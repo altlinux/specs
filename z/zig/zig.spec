@@ -5,7 +5,7 @@
 
 Name: zig
 Version: 0.10.1
-Release: alt1
+Release: alt2
 Summary: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
 # TODO: Zig lib is bundled with a lot of third party with other licenses.
 License: MIT
@@ -50,7 +50,9 @@ export CC=clang-%llvm_ver CXX=clang++-%llvm_ver LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DZIG_USE_LLVM_CONFIG=ON \
+	-DZIG_SHARED_LLVM=ON \
 	-DZIG_PREFER_CLANG_CPP_DYLIB=true \
+	-DZIG_TARGET_MCPU=baseline \
 	-DZIG_VERSION="%version"
 %cmake_build
 
@@ -59,12 +61,24 @@ export ZIG_VERBOSE_LINK=y ZIG_VERBOSE_CC=y
 %cmake_install
 chrpath -d %buildroot%_bindir/zig
 
+%check
+PATH=%buildroot%_bindir:$PATH
+zig version
+zig env
+zig run test/standalone/hello_world/hello.zig
+
+%define _customdocdir %_docdir/%name
+
 %files
-%doc LICENSE README.md
+%doc LICENSE README.md test/standalone/hello_world/hello.zig
 %_bindir/zig
 %_prefix/lib/zig
 
 %changelog
+* Sat Jun 03 2023 Vitaly Chikunov <vt@altlinux.org> 0.10.1-alt2
+- Add simple %%check section.
+- Fix crash on Intel x86-64 CPUs (ALT#46366).
+
 * Fri Jan 20 2023 Vitaly Chikunov <vt@altlinux.org> 0.10.1-alt1
 - Update to 0.10.1 (2023-01-17).
 
