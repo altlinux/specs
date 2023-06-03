@@ -1,8 +1,9 @@
 Name: dar
-Version: 2.7.8
+Version: 2.7.9
 Release: alt1
 
 Summary: Disk ARchive tool
+
 License: GPLv2+
 Group: File tools
 Url: http://dar.linux.free.fr/
@@ -11,11 +12,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%name-%version.tar
 
-# manually removed: glibc-devel-static libgnustep-corebase-devel libgtk+3-devel libpolkit-devel libstdc++-devel-static man python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs selinux-policy zlib-devel-static
-# Automatically added by buildreq on Tue Jan 03 2017
-# optimized out: glib2-devel glibc-devel-static gnustep-base-devel groff-base libgpg-error libgpg-error-devel libstdc++-devel perl python-base python-modules python3 python3-base xz zlib-devel
-BuildRequires: bzlib-devel doxygen gcc-c++ libattr-devel libcap-devel libe2fs-devel libgcrypt-devel libgpgme-devel liblzma-devel liblzo2-devel zlib-devel libcurl-devel librsync-devel
-
+BuildRequires: doxygen gcc-c++
+BuildRequires: libattr-devel libcap-devel libe2fs-devel libgcrypt-devel libgpgme-devel libcurl-devel librsync-devel
+BuildRequires: bzlib-devel liblzma-devel liblzo2-devel zlib-devel liblz4-devel libzstd-devel
+BuildRequires: libargon2-devel
 BuildRequires: perl-devel groff-base man
 
 Requires: lib%name = %EVR
@@ -96,6 +96,10 @@ export LD_LIBRARY_PATH+=`pwd`/src/libdar/.libs
 %_docdir/%name-%version/
 
 %changelog
+* Sun Jun 04 2023 Vitaly Lipatov <lav@altlinux.ru> 2.7.9-alt1
+- new version 2.7.9 (with rpmrb script) (ALT bug 46319)
+- add BR: liblz4-devel libzstd-devel libargon2-devel
+
 * Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 2.7.8-alt1
 - new version 2.7.8 (with rpmrb script)
 
