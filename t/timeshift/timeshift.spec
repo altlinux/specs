@@ -10,9 +10,9 @@
 %endif
 
 Name: timeshift
-Version: 22.11.1
+Version: 23.06.1
 Summary: System restore tool for Linux
-Release: alt4
+Release: alt1
 License: GPLv3
 Group: Archiving/Backup
 URL: https://github.com/linuxmint/timeshift
@@ -21,10 +21,15 @@ Source1: firsttime-snapshot.sh
 Patch1: alt-use-xvt.patch
 
 BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: cmake
+BuildRequires: meson
 BuildRequires: vala
-BuildRequires: libjson-glib-devel
 BuildRequires: libgee0.8-devel
+BuildRequires: libjson-glib-devel
 BuildRequires: libvte3-devel
+BuildRequires: libxapps-devel
+BuildRequires: help2man
 Requires: rsync
 
 %description
@@ -40,12 +45,11 @@ running or from Live CD/USB.
 %endif
 
 %build
-%make
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-rm -f %buildroot%_bindir/%name-uninstall
-
+%meson_install
 #firsttime script, start with zz, as it should be executed as late as possible
 install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snapshot.sh
 %find_lang %name
@@ -62,10 +66,14 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %_pixmapsdir/%name.png
 %_datadir/polkit-1/actions/in.teejeetech.pkexec.timeshift.policy
 %_sysconfdir/firsttime.d/zz-firsttime-snapshot.sh
-%exclude %_man1dir/%name.1.gz.xz
+%_man1dir/%name-gtk.1.xz
+%_man1dir/%name.1.xz
 %doc README.md
 
 %changelog
+* Sun Jun 04 2023 Alexander Makeenkov <amakeenk@altlinux.org> 23.06.1-alt1
+- Updated to version 23.06.1
+
 * Thu Mar 16 2023 Alexander Makeenkov <amakeenk@altlinux.org> 22.11.1-alt4
 - Use xvt instead x-terminal-emulator (closes: #45553)
 
