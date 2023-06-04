@@ -1,5 +1,5 @@
 Name: xl2tpd
-Version: 1.3.16
+Version: 1.3.17
 Release: alt1
 
 Summary: Layer 2 Tunnelling Protocol Daemon (RFC 2661)
@@ -77,6 +77,9 @@ fi
 %config(noreplace) %attr(0640,root,root) %_sysconfdir/%name/l2tp-secrets
 
 %changelog
+* Sun Jun 04 2023 Anton Farygin <rider@altlinux.ru> 1.3.17-alt1
+- 1.3.17
+
 * Tue Apr 20 2021 Anton Farygin <rider@altlinux.ru> 1.3.16-alt1
 - 1.3.16
 
