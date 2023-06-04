@@ -1,5 +1,5 @@
 Name:		apache2-mod_http2
-Version:	2.0.16
+Version:	2.0.18
 Release:	alt1
 Summary:	module implementing HTTP/2 for Apache 2
 Group:		System/Servers
@@ -43,6 +43,9 @@ echo "LoadModule proxy_http2_module modules/mod_proxy_http2.so" > %buildroot%apa
 %apache2_moduledir/mod_proxy_http2.so
 
 %changelog
+* Sun Jun 04 2023 Anton Farygin <rider@altlinux.ru> 2.0.18-alt1
+- 2.0.16 -> 2.0.18
+
 * Tue May 23 2023 Anton Farygin <rider@altlinux.ru> 2.0.16-alt1
 - 2.0.15 -> 2.0.16
 
