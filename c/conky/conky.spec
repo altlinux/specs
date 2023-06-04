@@ -39,7 +39,7 @@
 %def_enable xshape
 
 Name: conky
-Version: 1.18.1
+Version: 1.19.2
 Release: alt1
 
 Summary: lightweight graphical system monitor
@@ -169,7 +169,7 @@ mv %buildroot%vim_runtime_dir/syntax/conkyrc.vim{.j2,}
 rm %buildroot%_libdir/libtcp-portmon.a
 
 %files
-%doc AUTHORS COPYING LICENSE LICENSE.BSD README.md
+%doc AUTHORS COPYING LICENSE.md LICENSE.BSD README.md
 %doc conky-dotfiles.tar.bz2
 
 %_bindir/conky
@@ -191,6 +191,9 @@ rm %buildroot%_libdir/libtcp-portmon.a
 %vim_runtime_dir/syntax/conkyrc.vim
 
 %changelog
+* Sun Jun 04 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.2-alt1
+- Updated to 1.19.2.
+
 * Sat Feb 25 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1
 - Updated to 1.18.1.
 
