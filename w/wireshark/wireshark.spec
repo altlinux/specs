@@ -9,14 +9,14 @@
 %define _pluginsdir %_libdir/%name/plugins/4.0
 
 Name: wireshark
-Version: 4.0.5
+Version: 4.0.6
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
 License: GPLv2
 Url: http://www.wireshark.org/
-# VCS: https://gitlab.com/wireshark/wireshark.git
+VCS: https://gitlab.com/wireshark/wireshark.git
 Source: http://www.wireshark.org/download/src/%name-%version.tar
 Source2: %name.control
 Source3: %name.watch
@@ -226,6 +226,18 @@ _EOF_
 %_libdir/%name/cmake
 
 %changelog
+* Sun Jun 04 2023 Anton Farygin <rider@altlinux.ru> 4.0.6-alt1
+- 4.0.6
+- Fixes:
+     * wnpa-sec-2023-12 Candump log file parser crash. CVE-2023-2855.
+     * wnpa-sec-2023-13 BLF file parser crash. CVE-2023-2857.
+     * wnpa-sec-2023-14 GDSDB dissector infinite loop.
+     * wnpa-sec-2023-15 NetScaler file parser crash. CVE-2023-2858.
+     * wnpa-sec-2023-16 VMS TCPIPtrace file parser crash. CVE-2023-2856.
+     * wnpa-sec-2023-17 BLF file parser crash. CVE-2023-2854.
+     * wnpa-sec-2023-18 RTPS dissector crash. CVE-2023-0666.
+     * wnpa-sec-2023-19 IEEE C37.118 Synchrophasor dissector crash. CVE-2023-0668.
+
 * Thu May 04 2023 Anton Farygin <rider@altlinux.ru> 4.0.5-alt1
 - 4.0.5
 - Fixes:
