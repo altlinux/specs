@@ -1,8 +1,9 @@
 %def_with check
 %def_without badtests
+%def_with nimdoc
 Name: nim-lang
 Version: 1.6.12
-Release: alt1
+Release: alt3
 License: MIT
 Summary: A statically typed compiled systems programming language
 Source: nim-%version.tar
@@ -48,16 +49,15 @@ sh build.sh --parallel %__nprocs
 ./bin/nim c koch
 ./koch boot -d:release
 ./koch toolsNoExternal
+%if_with nimdoc
 ./koch docs
+%endif
 
 %install
 mkdir -p %buildroot%prefix
 sh ./install.sh %buildroot/usr
 install koch %buildroot/%_bindir
 install bin/* %buildroot/%_bindir/
-# TODO nimble
-##install -D dist/nimble/nimble.zsh-completion %buildroot%_datadir/zsh/site-functions/_nimble
-##install -D dist/nimble/nimble.zsh-completion %buildroot%_datadir/zsh/site-functions/_nimble
 install -D tools/nim.bash-completion %buildroot%_datadir/bash-completion/completions/nim
 install -D tools/nim.zsh-completion %buildroot%_datadir/zsh/site-functions/_nim
 
@@ -127,15 +127,23 @@ PATH=`pwd`/bin:$PATH ./koch tests --colors:off --megatest:off --nim:bin/nim c na
 
 %files
 %doc %_datadir/nim/doc
+%if_with nimdoc
 %doc doc/html
+%endif
 %_bindir/*
-%_localstatedir/nim/pkgs
+%_localstatedir/nimble/pkgs
 %prefix/lib/nim
 %_sysconfdir/nim
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Jun 05 2023 Fr. Br. George <george@altlinux.ru> 1.6.12-alt3
+- Fix nimble paths (again)
+
+* Sat Jun 03 2023 Fr. Br. George <george@altlinux.org> 1.6.12-alt2
+- Fix nimble paths
+
 * Sat Jun 03 2023 Fr. Br. George <george@altlinux.org> 1.6.12-alt1
 - Autobuild version bump to 1.6.12
 - Introduce check section (not all tests are passed though)
