@@ -2,7 +2,7 @@
 
 Name: libfprint2
 Version: 1.94.5
-Release: alt3
+Release: alt3.1
 
 Summary: Tool kit for fingerprint scanner
 License: LGPLv2+
@@ -79,7 +79,7 @@ GObject introspection devel data for %name
 %meson_install
 
 %check
-%meson_test
+%__meson_test -t 100
 
 %files
 %doc COPYING INSTALL NEWS THANKS AUTHORS README.md
@@ -100,6 +100,9 @@ GObject introspection devel data for %name
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Mon Jun 05 2023 Ivan A. Melnikov <iv@altlinux.org> 1.94.5-alt3.1
+- NMU: increase tests timeout to fix build on riscv64
+
 * Tue May 23 2023 Egor Ignatov <egori@altlinux.org> 1.94.5-alt3
 - add support for Goodix 27C6:60A4
 - backport fix for virtual-device-listener
