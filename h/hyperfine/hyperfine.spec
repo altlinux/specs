@@ -1,5 +1,5 @@
 Name:     hyperfine
-Version:  1.16.1
+Version:  1.17.0
 Release:  alt1
 
 Summary:  A command-line benchmarking tool
@@ -36,6 +36,12 @@ BuildRequires: /proc
 %doc *.md
 
 %changelog
+* Mon Jun 05 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.17.0-alt1
+- new version 1.17.0
+
+* Wed Apr 19 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.16.1-alt2
+- Try vendor using `cargo vendor-alt` from cargo-vendor-filterer package
+
 * Mon Apr 03 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.16.1-alt1
 - new version 1.16.1
 
