@@ -5,7 +5,7 @@
 
 Name: shadowsocks-rust
 Version: 1.15.3
-Release: alt1
+Release: alt2
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: MIT
 Group: Security/Networking
@@ -39,21 +39,19 @@ quiet = false
 root = "%buildroot%_prefix"
 
 [build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
+# Adding ""--cfg=rustix_use_libc"" to avoid: "error: could not find native static
+# library rustix_outline_x86" https://github.com/bytecodealliance/rustix/issues/574
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
 
 [profile.release]
 strip = false
 EOF
 
 %build
-# To avoid: "error: could not find native static library rustix_outline_x86"
-#   https://github.com/bytecodealliance/rustix/issues/574
-export RUSTFLAGS="--cfg=rustix_use_libc"
 cargo build %_smp_mflags --offline --release
 
 %install
 # To avoid: "the rustflags changed"
-export RUSTFLAGS="--cfg=rustix_use_libc"
 cargo install %_smp_mflags --offline --no-track --path .
 mkdir -p %buildroot%_unitdir %buildroot%_sysconfdir/%name
 install -m0644 .gear/%name.service %buildroot%_unitdir/%name-local.service
@@ -79,6 +77,9 @@ install -m0640 .gear/*.json %buildroot%_sysconfdir/%name
 %_bindir/ss*
 
 %changelog
+* Mon Jun 05 2023 Vitaly Chikunov <vt@altlinux.org> 1.15.3-alt2
+- Fix debuginfo missing Rust source files.
+
 * Tue Mar 28 2023 Vitaly Chikunov <vt@altlinux.org> 1.15.3-alt1
 - Update to v1.15.3 (2023-03-13).
 
