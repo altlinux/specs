@@ -15,7 +15,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -30,6 +30,7 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name.pam
 Source2: sm.puri.OSK0.desktop
+Patch1: %name-0.28.0-alt-tcb-check.patch
 
 Requires: phoc >= 0.28
 Requires: gnome-session
@@ -96,6 +97,7 @@ This package provides files needed to develop Phosh plugins.
 
 %prep
 %setup -n %name-%version%beta
+%patch1 -p2
 sed -i 's|\(User=\)1000|\1%dev_uid|' data/%name.service
 
 %build
@@ -122,8 +124,9 @@ desktop-file-install --dir %buildroot%_datadir/applications %SOURCE2
 xvfb-run %__meson_test
 
 %files -f %name.lang
+%config(noreplace) %_sysconfdir/pam.d/%name
 %_bindir/%name-session
-%_libexecdir/%name
+%attr(2711, root, chkpwd) %_libexecdir/%name
 %_libexecdir/%name-calendar-server
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
@@ -149,7 +152,6 @@ xvfb-run %__meson_test
 %_datadir/gnome-session/sessions/%name.session
 %_datadir/wayland-sessions/%name.desktop
 %_datadir/%name/
-%_sysconfdir/pam.d/%name
 %_unitdir/phosh.service
 %_userunitdir/gnome-session@%name.target.d/session.conf
 %_userunitdir/%rdn_name.service
@@ -166,6 +168,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Mon Jun 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.28.0-alt1.1
+- cas@: fixed lock screen authentication (ALT #46389)
+
 * Thu Jun 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.28.0-alt1
 - 0.28.0
 
