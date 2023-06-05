@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.14
+Version: 10.15
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -10,7 +10,6 @@ Url: http://altlinux.org/alterator
 Source: %name-%version.tar
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
-BuildArch: noarch
 BuildPreReq: alterator >= 4.10-alt5
 
 Requires: alterator >= 4.10-alt5
@@ -35,16 +34,31 @@ alterator module for system users administration
 
 %build
 %make_build
+%__cc alterator_users_helper.c -o alterator_users_helper %optflags %optflags_shared -pedantic
 
 %install
 %makeinstall
+install -d %buildroot%_bindir
+install -m 0755 alterator_users_helper %buildroot%_bindir
+
+%postun
+[ -d "%_cachedir/alterator/%name" ] && \
+	rm -rf "%_cachedir/alterator/%name" ||:
 
 %files
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*/
 %_alterator_backend3dir/*
+%_bindir/alterator_users_helper
 
 %changelog
+* Fri Jun 02 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.15-alt1
+- add utility to move avatars
+- backend: add setting and getting user avatar
+- add user avatar support to ui
+- add user avatar support for net version
+- add copy folder with avatars
+
 * Thu Dec 08 2022 Mikhail Efremov <sem@altlinux.org> 10.14-alt1
 - backend: Add group 'users' to default groups list.
 - backend: Use installer default groups with libnss-role.
