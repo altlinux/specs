@@ -1,4 +1,5 @@
 %define git %nil
+%define b_user bluealsa
 
 %def_enable aptx
 %def_enable aac
@@ -12,8 +13,8 @@
 %def_enable cli
 
 Name: bluez-alsa
-Version: 4.0.0
-Release: alt0.2
+Version: 4.1.0
+Release: alt1
 Epoch: 5
 Summary: BlueZ ALSA backend for Linux
 License: MIT
@@ -24,8 +25,8 @@ Packager: L.A. Kostis <lakostis@altlinux.ru>
 
 Source: %name-%version.tar
 
-Patch0: %name-4.0.0-alt-libfreeaptx.patch
-Patch1: 0001-Add-support-for-more-recent-spandsp-versions.patch
+Patch0: %name-%version-%release.patch
+Patch1: %name-4.0.0-alt-libfreeaptx.patch
 
 Provides: alsa-plugins-bluealsa = %EVR, bluealsa = %EVR
 
@@ -94,6 +95,8 @@ by pressing a key. To quit the program press the 'q' key, or use Ctrl-C.
 	%{?_enable_aptx:--with-libfreeaptx --enable-aptx --enable-aptx-hd} \
 	--with-alsaconfdir=%_datadir/alsa/alsa.conf.d \
 	--with-bash-completion \
+	--with-bluealsauser=%b_user \
+	--with-bluealsaaplayuser=%b_user \
 	--enable-systemd \
 	--enable-upower \
 	--enable-ofono \
@@ -103,15 +106,20 @@ by pressing a key. To quit the program press the 'q' key, or use Ctrl-C.
 	--enable-msbc \
 	--enable-faststream \
 	--enable-rfcomm \
-	--enable-hcitop
+	--enable-hcitop \
+	--localstatedir=/var
 
 %install
 %make DESTDIR=%buildroot install
+install -m0700 -d %buildroot%_localstatedir/%b_user
 
 %if_enabled test
 %check
 %make check
 %endif
+
+%pre
+/usr/sbin/useradd -r -n -g audio -M -s /dev/null -c %b_user %b_user >/dev/null 2>&1 ||:
 
 %files
 %doc README.md NEWS LICENSE AUTHORS
@@ -125,6 +133,7 @@ by pressing a key. To quit the program press the 'q' key, or use Ctrl-C.
 %exclude %_man1dir/hcitop.1*
 %_man7dir/*
 %_man8dir/*
+%dir %attr(0700,%b_user,root) %_localstatedir/%b_user
 
 %files -n hcitop
 %_bindir/hcitop
@@ -134,6 +143,15 @@ by pressing a key. To quit the program press the 'q' key, or use Ctrl-C.
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri May 26 2023 L.A. Kostis <lakostis@altlinux.ru> 5:4.1.0-alt1
+- 4.1.0.
+
+* Sat Jan 07 2023 L.A. Kostis <lakostis@altlinux.ru> 5:4.0.0-alt0.3.g871a208
+- GIT 871a208.
+
+* Wed Dec 14 2022 L.A. Kostis <lakostis@altlinux.ru> 5:4.0.0-alt0.3.g204c224
+- GIT 204c224.
+
 * Mon Nov 28 2022 L.A. Kostis <lakostis@altlinux.ru> 5:4.0.0-alt0.2
 - Enable hcitop.
 
