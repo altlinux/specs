@@ -4,7 +4,7 @@
 
 Name: shepherd
 Version: 0.10.1
-Release: alt2
+Release: alt3
 
 Summary: The GNU Shepherd
 License: GPL-3.0+
@@ -15,6 +15,7 @@ Vcs: git://git.savannah.gnu.org/shepherd.git
 Source0: %name-%version.tar
 
 Conflicts: sysvinit
+Conflicts: systemd-sysvinit
 
 BuildRequires(pre): /proc
 BuildRequires: guile-devel
@@ -63,6 +64,9 @@ programming model.
 %_man8dir/reboot.*
 
 %changelog
+* Mon Jun 05 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.1-alt3
+- Set conflict with systemd-sysvinit package.
+
 * Sun Jun 04 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.1-alt2
 - Set conflict with sysvinit package.
 
