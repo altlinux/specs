@@ -1,8 +1,10 @@
 %global _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,lint=relaxed
 
 Name:		fscrypt
-Version:	0.3.1.0.2.360467d
-Release:	alt2
+Version:	0.3.4
+Release:	alt1
 Summary:	A high-level tool for the management of Linux kernel filesystem encryption
 
 Group:		System/Kernel and hardware
@@ -12,7 +14,7 @@ URL:		https://github.com/google/fscrypt
 Source:     %name-%version.tar
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
 BuildRequires: libpam0-devel
 # older cgo versions can't handle LTO
 BuildRequires: golang >= 1.17
@@ -25,12 +27,16 @@ Fscrypt manages metadata, key generation, key wrapping, PAM integration, and
 provides a uniform interface for creating and modifying encrypted directories.
 
 %prep
-%setup -q
+%setup
+
+# Delete -trimpath from GO_FLAGS or else we'll miss .go sources from
+# debuginfo.
+sed -i '/-trimpath/d' Makefile
 
 %build
 %make_build \
     CFLAGS="%optflags" \
-    GO_FLAGS="-mod=vendor" \
+    GO_FLAGS="-mod=vendor -buildmode=pie -x" \
     GO_LINK_FLAGS="" \
     TAG_VERSION="v%version-%release"
 
@@ -54,6 +60,10 @@ vm-run --kvm=cond --sbin --user --udevd \
 %doc *.md
 
 %changelog
+* Mon Jun 05 2023 Vitaly Chikunov <vt@altlinux.org> 0.3.4-alt1
+- Update to v0.3.4 (2023-01-30). (Fixes: CVE-2022-25326, CVE-2022-25327,
+  CVE-2022-25328).
+
 * Fri Nov 11 2022 Vitaly Chikunov <vt@altlinux.org> 0.3.1.0.2.360467d-alt2
 - Unimportant update to simplify %%check.
 

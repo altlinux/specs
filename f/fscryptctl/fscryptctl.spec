@@ -1,4 +1,6 @@
 %global _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 # man build has heavy pandoc dependency
 %ifnarch %e2k
@@ -8,8 +10,8 @@
 %endif
 
 Name:		fscryptctl
-Version:	1.0.0
-Release:	alt4
+Version:	1.1.0
+Release:	alt1
 Summary:	A low-level tool for the management of Linux kernel filesystem encryption
 
 Group:		System/Kernel and hardware
@@ -36,9 +38,10 @@ encryption. Fscryptctl does *not* handle key generation, key stretching, key
 wrapping, or PAM integration.
 
 %prep
-%setup -q
+%setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %make_build \
     CFLAGS="%optflags" \
     %{?_disable_man:fscryptctl}
@@ -71,6 +74,9 @@ vm-run --kvm=cond --sbin --user make test-all
 %doc *.md
 
 %changelog
+* Mon Jun 05 2023 Vitaly Chikunov <vt@altlinux.org> 1.1.0-alt1
+- Update to v1.1.0 (2023-01-30).
+
 * Fri Nov 11 2022 Vitaly Chikunov <vt@altlinux.org> 1.0.0-alt4
 - Unimportant update to improve %%check.
 
