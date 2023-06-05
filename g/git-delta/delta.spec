@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: git-delta
-Version: 0.15.1
+Version: 0.16.5
 Release: alt1
 Summary: A syntax-highlighting pager for git, diff, and grep output
 Group: Development/Other
@@ -40,7 +40,7 @@ quiet = false
 root = "%buildroot%_prefix"
 
 [build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
 
 [profile.release]
 strip = false
@@ -50,23 +50,31 @@ EOF
 cargo build %_smp_mflags --offline --release
 
 %install
-cargo install %_smp_mflags --offline --no-track --path .
+install -Dp target/release/delta -t %buildroot%_bindir
 install -Dpm0644 etc/completion/completion.bash \
 		%buildroot%_datadir/bash-completion/completions/delta
 install -Dpm0644 etc/completion/completion.zsh \
 		%buildroot%_datadir/zsh/site-functions/_delta
+install -Dpm0644 etc/completion/completion.fish \
+		%buildroot%_datadir/fish/vendor_completions.d/delta.fish
 
 %check
 target/release/delta --version
 cargo test %_smp_mflags --release --no-fail-fast
 
+%define _customdocdir %_docdir/%name
+
 %files
-%doc LICENSE README.md
+%doc LICENSE *.md
 %_bindir/delta
 %_datadir/bash-completion/completions/delta
 %_datadir/zsh/site-functions/_delta
+%_datadir/fish/vendor_completions.d/delta.fish
 
 %changelog
+* Mon Jun 05 2023 Vitaly Chikunov <vt@altlinux.org> 0.16.5-alt1
+- Update to 0.16.5 (2023-06-03).
+
 * Mon Dec 19 2022 Vitaly Chikunov <vt@altlinux.org> 0.15.1-alt1
 - Update to 0.15.1 (2022-12-03).
 
