@@ -4,8 +4,8 @@
 
 Summary: ESMART PKCS#11 library
 Name: isbc-pkcs11
-Version: 4.9
-Release: alt2
+Version: 4.13
+Release: alt1
 License: Proprietary
 Url: https://esmart.ru/download/
 Group: System/Configuration/Hardware
@@ -74,6 +74,9 @@ install -D -m0755 files/%{arch_dir}/utils/PKIClientCli \
 %_bindir/*
 
 %changelog
+* Mon Jun 05 2023 Paul Wolneykien <manowar@altlinux.org> 4.13-alt1
+- Updated to v4.13.
+
 * Thu Mar 10 2022 Paul Wolneykien <manowar@altlinux.org> 4.9-alt2
 - Fixed patchelf.
 - Patching libraries against missing libpthread.so.0 as needed.
