@@ -1,5 +1,5 @@
 Name: xfce4-panel-profiles
-Version: 1.0.13
+Version: 1.0.14
 Release: alt1
 
 Summary: A simple application to manage Xfce panel layouts
@@ -53,6 +53,11 @@ export these panel layouts.
 %_man1dir/%name.*
 
 %changelog
+* Mon Jun 05 2023 Mikhail Efremov <sem@altlinux.org> 1.0.14-alt1
+- Dropped Simply Linux 9 profile.
+- Added Simply Linux 10 profile.
+- Updated to 1.0.14.
+
 * Wed Feb 24 2021 Mikhail Efremov <sem@altlinux.org> 1.0.13-alt1
 - Dropped workaround for libxfce4ui < 4.15.7.
 - Updated to 1.0.13.
