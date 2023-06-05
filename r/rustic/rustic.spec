@@ -1,5 +1,5 @@
 Name:    rustic
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 Summary: rustic - fast, encrypted, deduplicated backups powered by pure Rust
@@ -55,6 +55,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Mon Jun 05 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.4-alt1
+- new version 0.5.4
+
 * Tue May 02 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.3-alt1
 - new version 0.5.3
 
