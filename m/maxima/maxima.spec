@@ -34,8 +34,8 @@
 %define CVS_BUILD	0
 
 Name: maxima
-Version: 5.46.0
-%define maxima_version 5.46.0
+Version: 5.47.0
+%define maxima_version 5.47.0
 Release: alt1
 
 Summary: Maxima Computer Algebra System
@@ -599,6 +599,9 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %endif
 
 %changelog
+* Mon Jun 05 2023 Ilya Mashkin <oddity@altlinux.ru> 5.47.0-alt1
+- 5.47.0
+
 * Thu Apr 14 2022 Ilya Mashkin <oddity@altlinux.ru> 5.46.0-alt1
 - 5.46.0
 - Disable *-utf8 lang packages. Now there is only one package for each language.
