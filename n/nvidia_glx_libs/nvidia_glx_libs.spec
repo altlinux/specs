@@ -19,7 +19,7 @@
 
 Name: nvidia_glx_libs
 Version: 525.116.04
-Release: alt1
+Release: alt2
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -127,6 +127,13 @@ Summary: NVIDIA System Management Interface program
 nvidia-smi (also NVSMI) provides monitoring and management capabilities for each of
 NVIDIA's Tesla, Quadro, GRID and GeForce devices from Fermi and higher architecture families.
 
+%package -n nvidia-wine
+Group: System/Libraries
+Summary: NVIDIA DLLs for wine
+Requires: nvidia_glx_common
+%description -n nvidia-wine
+NVIDIA DLLs for wine.
+
 %prep
 %setup -T -c -n %tbname-%version%dirsuffix
 rm -rf %_builddir/%tbname-%version%dirsuffix
@@ -164,6 +171,11 @@ install -m 0755 nvidia-smi %buildroot/%_bindir/
 mkdir -p %buildroot/%_man1dir/
 install -m 0644 nvidia-smi.1.gz %buildroot/%_man1dir/
 %endif
+# install dlls
+%ifarch x86_64
+mkdir -p %buildroot/%_libdir/nvidia/wine/
+install -m 0755 *nvngx.dll %buildroot/%_libdir/nvidia/wine/
+%endif
 mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
 install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 
@@ -194,6 +206,10 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %files -n nvidia-smi
 %_bindir/nvidia-smi
 %_man1dir/nvidia-smi.1.*
+%ifarch x86_64
+%files -n nvidia-wine
+%_libdir/nvidia/wine/
+%endif
 %files -n libnvidia-ngx
 %_libdir/libnvidia-ngx.so.%{nvidia_sover}
 %_libdir/libnvidia-ngx.so.%version
@@ -206,6 +222,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %endif
 
 %changelog
+* Mon Jun 05 2023 Sergey V Turchin <zerg@altlinux.org> 525.116.04-alt2
+- make nvidia-wine package (closes: 46378)
+
 * Thu May 25 2023 Sergey V Turchin <zerg@altlinux.org> 525.116.04-alt1
 - new version
 
