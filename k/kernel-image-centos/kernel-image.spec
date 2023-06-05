@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 316
+%define centos_release 322
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -638,6 +638,67 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jun 05 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.322-alt1.el9
+- Updated to kernel-5.14.0-322.el9 (fixes: CVE-2022-3594, CVE-2023-0458, CVE-2023-1079, CVE-2023-2002, CVE-2023-2194, CVE-2023-2483, CVE-2023-32233):
+  + acpi-cpufreq: Skip initializtion if a cpufreq driver exists
+  + Add PINNED_HARD mode for realtime hrtimers
+  + ALSA: hda/realtek: Add quirk for ThinkPad P1 Gen 6
+  + arm64: dts: qcom: sa8775p: add the watchdog node
+  + autofs: fix wait name hash calculation in autofs_wait()
+  + Backport NFS fscache netfs conversion patches
+  + Backport SELinux/LSM/Netlabel patches up to kernel v6.3
+  + Backport USB support for sa8775p-ride
+  + block: do not reverse request order when flushing plug list
+  + bluetooth: Perform careful capability checks in hci_sock_ioctl()
+  + bonding: fix ns validation on backup slaves
+  + CNB: clk: Provide new devm_clk helpers for prepared and enabled clocks
+  + CNB: net: flow_offload: provision conntrack info in ct_metadata
+  + CNB: netlink: provide an ability to set default extack message
+  + cpufreq: intel_pstate: Enable HWP IO boost for all servers
+  + Enable EMAC3 for sa8540p-ride
+  + erspan: get the proto with the md version for collect_md
+  + gpio: imx-scu: add imx-scu GPIO driver
+  + HID: asus: fixes a use-after-free in asus_kbd_backlight_set()
+  + ice: Driver Update up to kernel v6.3
+  + ice: Remove LAG+SRIOV mutual exclusion
+  + Introduce Array Scan test to IFS
+  + ixgbe: driver update for RHEL 9.3
+  + kexec: Remove unnecessary arch hook
+  + Merge commit '4a04b9571eac8a3d14c77a0b8b81c1c589a7a764' from documentation
+  + Merge commit 'c6b15576e8bd8b55ff8aa34ebf793edc1d56aaf5' from documentation
+  + mm/memcg: Allow OOM eventfd notifications under PREEMPT_RT
+  + net: enable IPV6 SEG6
+  + netfilter: nf_tables: deactivate anonymous set from preparation phase
+  + net: qcom/emac: Fix use after free bug in emac_remove due to race condition
+  + nvme: do not let the user delete a ctrl before a complete initialization
+  + nvme: fix two discard related issues
+  + ovs: stable backports for 9.3 phase 1
+  + prlimit: do_prlimit needs to have a speculation check
+  + r8152: Rate limit overflow messages
+  + redhat/genlog.py: add support to list/process zstream Jira tickets
+  + [redhat] kernel.spec: fix libperf-debuginfo content
+  + RHEL-9.3 ISH intel sensor hub updates and fixes
+  + [RHEL9] i2c: xgene-slimpro: Fix out-of-bounds bug in xgene_slimpro_i2c_xfer()
+  + s390/kfence: fix page fault reporting
+  + scsi: fixe kernel panic on scsi_device's iorequest_cnt
+  + scsi: mpi3mr: driver update
+  + selftests/bpf: Do not use sign-file as testcase
+  + smartpqi updates
+  + SUNRPC: Fix encoding of accepted but unsuccessful RPC replies
+  + Support and fixes for nftables ingress/egress hook
+  + tipc: fix the mtu update in link mtu negotiation
+  + tools/power/x86/intel-speed-select: Add Emerald Rapid quirk
+  + update ACPI to match Linux v6.3
+  + Update RHEL9.3's USB/Thunderbolt to linux_v6.2
+  + Update soc/tegra related code to upstream v6.3
+  + Update the RHEL 9.3 inbox lpfc driver to 14.2.0.12
+  + virtiofs: sync to upstream v6.0
+  + vmxnet3: use gro callback when UPT is enabled
+  + Wireless core and drivers rebase to v6.3
+  + x86/fpu: update to v6.2
+  + x86/kprobes: Fix kprobes instruction boudary check with CONFIG_RETHUNK
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon May 22 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.316-alt1.el9
 - Updated to kernel-5.14.0-316.el9 (fixes: CVE-2023-2248, CVE-2023-28466, CVE-2023-31436):
   + Add Marvell CN10k DDR PMU driver Support
