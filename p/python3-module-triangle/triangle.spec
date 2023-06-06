@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2022.02.02
-Release: alt1
+Release: alt2
 
 Summary: Python wrapper for libtriangle
 
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-Cython
 %if_with check
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-pytest
@@ -30,6 +31,8 @@ library.
 
 %prep
 %setup
+# Force re-cythonize for python3.11
+cython3 triangle/core.pyx
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -47,6 +50,9 @@ py.test-3 -v tests
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 04 2023 Grigory Ustinov <grenka@altlinux.org> 2022.02.02-alt2
+- Fixed build with python3.11.
+
 * Wed May 03 2023 Anton Vyatkin <toni@altlinux.org> 2022.02.02-alt1
 - New version 2022.02.02
 

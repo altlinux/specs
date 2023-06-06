@@ -4,7 +4,7 @@
 
 Name: python3-module-efl
 Version: 1.26.0
-Release: alt1
+Release: alt2
 
 Summary: Python 3 bindings for EFL libraries
 Group: Development/Python3
@@ -34,6 +34,14 @@ with Python 3 programms.
 %prep
 %setup -n %_name-%version
 
+# Force cythonize
+rm -fv efl/eo/efl.eo.c efl/utils/deprecated.c efl/utils/conversions.c \
+efl/utils/logger.c efl/evas/efl.evas.c efl/ecore/efl.ecore.c \
+efl/ecore_input/efl.ecore_input.c efl/ecore_con/efl.ecore_con.c \
+efl/ecore_x/efl.ecore_x.c efl/ethumb/efl.ethumb.c efl/ethumb/efl.ethumb_client.c \
+efl/edje/efl.edje.c efl/edje_edit/efl.edje_edit.c efl/emotion/efl.emotion.c \
+efl/dbus_mainloop/efl.dbus_mainloop.c efl/elementary/__init__.c
+
 %build
 %ifarch %ix86
 %define _optlevel 1
@@ -54,6 +62,9 @@ with Python 3 programms.
 %exclude %python3_sitelibdir/efl/utils/setup.py*
 
 %changelog
+* Wed Mar 01 2023 Grigory Ustinov <grenka@altlinux.org> 1.26.0-alt2
+- Fixed build with python3.11.
+
 * Fri Mar 04 2022 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
 - 1.26.0
 

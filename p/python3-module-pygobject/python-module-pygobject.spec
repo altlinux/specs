@@ -5,7 +5,7 @@
 
 Name: python3-module-pygobject
 Version: %major.6
-Release: alt12
+Release: alt13
 Summary: Python 3 bindings for GObject
 
 License: LGPL
@@ -79,6 +79,9 @@ find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|'
 # Make python3.10 happy
 sed -i 's/ _PyUnicode_AsStringAndSize/ PyUnicode_AsUTF8AndSize/g' glib/pyglib-python-compat.h
 
+# Make python3.11 happy
+find . -type f -name '*.c' -exec sed -i -E 's/Py_TYPE\(([^)]*)\) = ([^;]*)/Py_SET_TYPE(\1, \2)/' '{}' +
+
 %build
 export PYTHON=python3
 %autoreconf
@@ -133,6 +136,9 @@ find %buildroot -type f -name '*.py' -exec 2to3 -w '{}' +
 %endif
 
 %changelog
+* Tue Dec 13 2022 Grigory Ustinov <grenka@altlinux.org> 2.28.6-alt13
+- Fixed build with python3.11.
+
 * Sun Jan 30 2022 Grigory Ustinov <grenka@altlinux.org> 2.28.6-alt12
 - Fixed build with python3.10.
 

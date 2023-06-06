@@ -1,9 +1,9 @@
 %define  oname traits
-%def_with doc
+%def_without doc
 
 Name:    python3-module-%oname
 Version: 6.4.1
-Release: alt1
+Release: alt2
 
 Summary: Observable typed attributes for Python classes
 
@@ -115,6 +115,9 @@ cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat May 20 2023 Grigory Ustinov <grenka@altlinux.org> 6.4.1-alt2
+- Build without docs.
+
 * Mon Dec 19 2022 Anton Vyatkin <toni@altlinux.org> 6.4.1-alt1
 - new version 6.4.1
 

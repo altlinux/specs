@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define oname sphinx
 
-%def_enable docs
-%def_enable check
+%def_disable docs
+%def_disable check
 
 %define sphinx3_dir %python3_sitelibdir_noarch/%oname
 
@@ -29,7 +29,7 @@ python3(packaging) \\\
 Name: python3-module-%oname
 Epoch: 1
 Version: 6.1.3
-Release: alt1
+Release: alt2
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -262,6 +262,9 @@ EOF
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Tue May 02 2023 Grigory Ustinov <grenka@altlinux.org> 1:6.1.3-alt2
+- Bootstrap for python3.11.
+
 * Sat Mar 25 2023 Fr. Br. George <george@altlinux.org> 1:6.1.3-alt1
 - Autobuild version bump to 6.1.3
 - Use pyproject build scheme

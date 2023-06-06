@@ -2,15 +2,22 @@
 # Conditionals and other variables controlling the build
 # ======================================================
 
+# This knob is added ONLY for maintainer's convenience. Should be ALWAYS on
+# in release version
+%def_with check
+
+# Turn on while every major update
+%def_with bootstrap
+
 %define _unpackaged_files_terminate_build 1
 
 # Below the same shorthands as in Redhat's spec are definied,
 # but mostly through ALT Sisyphus rpm-build-python3's macros
 # (to make the picture more clear and less error-prone).
 
-%global pybasever 3.10
+%global pybasever 3.11
 # pybasever without the dot:
-%global pyshortver 310
+%global pyshortver 311
 
 %global pyabi %nil
 
@@ -86,8 +93,8 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.8
-Release: alt1.1
+Version: %{pybasever}.0
+Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -105,7 +112,7 @@ BuildPreReq: liblzma-devel
 # For Bluetooth support
 # see https://bugzilla.redhat.com/show_bug.cgi?id=879720
 BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel
-BuildRequires: libffi-devel libncursesw-devel mpdecimal-devel
+BuildRequires: libffi-devel libncursesw-devel mpdecimal-devel libb2-devel
 BuildRequires: libssl-devel libreadline-devel libsqlite3-devel
 BuildRequires: zlib-devel libuuid-devel libnsl2-devel
 BuildRequires: desktop-file-utils autoconf-archive
@@ -201,13 +208,6 @@ Obsoletes: %name-libs < %EVR
 %py3_provides _frozen_importlib
 %py3_provides _frozen_importlib_external
 
-# Things which have become internal in 3.5
-# (we do not use %%py3_provides here, because the autoreqs generated
-# with this new version of python3 must not include these ones;
-# they are only needed to run non-recompiled modules):
-Provides: python3.3(time)
-Provides: python3.3(atexit)
-
 %filter_from_requires /^%name[[:space:]]/d
 %filter_from_requires /^\/usr\/bin\/%name/d
 
@@ -260,6 +260,7 @@ This package contains several tools included with Python 3
 %package module-gdb_libpython
 Summary: Helper for gdb and libpython
 Group: Development/Python3
+BuildArch: noarch
 Requires: gdb
 
 %allow_python3_import_path %_datadir/gdb/python
@@ -313,7 +314,7 @@ Requires: %name-modules-tkinter = %EVR
 Requires: %name-modules-curses = %EVR
 Requires: %name-modules-sqlite3 = %EVR
 Requires: %name-tools = %EVR
-%add_python3_req_skip test.test_warnings.data msvcrt _winapi
+%add_python3_req_skip test.test_warnings.data msvcrt _winapi winreg
 %add_python3_self_prov_path %buildroot%pylibdir/test/test_import/
 
 %description test
@@ -623,7 +624,6 @@ rm -v %buildroot%pylibdir/test/{,__pycache__/}test_msilib*.py*
 # Get rid of windows-related stuff
 %add_findreq_skiplist %pylibdir/distutils/*msvc*compiler*.py*
 %add_findprov_skiplist %pylibdir/distutils/*msvc*compiler*.py*
-rm -v %buildroot%pylibdir/distutils/command/{,__pycache__/}bdist_msi*.py*
 rm -v %buildroot%tool_dir/scripts/win_add2path.py
 
 # Get rid of crap
@@ -729,11 +729,17 @@ export LANG=C
 LD_LIBRARY_PATH="$(pwd)" $(pwd)/python -m test.pythoninfo
 
 # -l (--findleaks) is not compatible with -j
+# distutils.tests.test_bdist_rpm tests fail when bootstraping the Python
+# package: rpmbuild requires /usr/bin/pythonX.Y to be installed
 WITHIN_PYTHON_RPM_BUILD= \
 LD_LIBRARY_PATH="$(pwd)" \
 $(pwd)/python -m test.regrtest \
+%if_with bootstrap
+    -x test_distutils \
+%endif
     -x test_socket -x test_signal \
-    --verbose --timeout=1800 %_smp_mflags
+    -i test_freeze_simple_script \
+    -vwW --timeout=1800 %_smp_mflags
 
 %files
 %doc LICENSE README.rst
@@ -807,6 +813,7 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_struct.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testinternalcapi.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testmultiphase.cpython-%pyshortver%pyabi.so
+%dynload_dir/_typing.cpython-%pyshortver%pyabi.so
 %dynload_dir/_uuid.cpython-%pyshortver%pyabi.so
 %dynload_dir/_xxsubinterpreters.cpython-%pyshortver%pyabi.so
 %dynload_dir/_xxtestfuzz.cpython-%pyshortver%pyabi.so
@@ -835,6 +842,11 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/*.py
 %dir %pylibdir/__pycache__/
 %pylibdir/__pycache__/*%bytecode_suffixes
+
+%dir %pylibdir/__phello__/
+%dir %pylibdir/__phello__/__pycache__/
+%pylibdir/__phello__/*.py
+%pylibdir/__phello__/__pycache__/*%bytecode_suffixes
 
 %dir %pylibdir/asyncio/
 %dir %pylibdir/asyncio/__pycache__/
@@ -906,6 +918,11 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/importlib/metadata/*.py
 %pylibdir/importlib/metadata/__pycache__/*%bytecode_suffixes
 
+%dir %pylibdir/importlib/resources
+%dir %pylibdir/importlib/resources/__pycache__/
+%pylibdir/importlib/resources/*.py
+%pylibdir/importlib/resources/__pycache__/*%bytecode_suffixes
+
 %dir %pylibdir/json/
 %dir %pylibdir/json/__pycache__/
 %pylibdir/json/*.py
@@ -918,6 +935,16 @@ $(pwd)/python -m test.regrtest \
 %exclude %pylibdir/multiprocessing/popen_spawn_win32.py
 %exclude %pylibdir/multiprocessing/__pycache__/popen_spawn_win32%bytecode_suffixes
 %pylibdir/pydoc_data
+
+%dir %pylibdir/re/
+%dir %pylibdir/re/__pycache__/
+%pylibdir/re/*.py
+%pylibdir/re/__pycache__/*%bytecode_suffixes
+
+%dir %pylibdir/tomllib/
+%dir %pylibdir/tomllib/__pycache__/
+%pylibdir/tomllib/*.py
+%pylibdir/tomllib/__pycache__/*%bytecode_suffixes
 
 %exclude %pylibdir/turtle.py
 %exclude %pylibdir/__pycache__/turtle*%bytecode_suffixes
@@ -984,6 +1011,7 @@ $(pwd)/python -m test.regrtest \
 %_niconsdir/idle3.png
 %_liconsdir/idle3.png
 
+%dir %tool_dir
 %tool_dir
 %exclude %tool_dir/scripts/run_tests.py
 %doc %pylibdir/Doc
@@ -1024,7 +1052,6 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/ctypes/test
 %pylibdir/distutils/tests
 %lib2to3_tests
-%pylibdir/sqlite3/test
 %pylibdir/test
 %dynload_dir/_ctypes_test.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testbuffer.cpython-%pyshortver%pyabi.so
@@ -1037,6 +1064,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Sun Dec 18 2022 Grigory Ustinov <grenka@altlinux.org> 3.11.0-alt1
+- Updated to upstream version 3.11.0.
+
 * Sat Dec 17 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.10.8-alt1.1
 - Using "-fno-semantic-interposition" to speed up libpython.
 

@@ -6,7 +6,7 @@
 
 Name: python3-module-PySide2
 Version: 5.15.2
-Release: alt2.1
+Release: alt3
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python3
@@ -24,6 +24,8 @@ Patch11: py3.10-prep-Fix-a-very-old-refcounting-error-in-time_test.patch
 Patch12: py3.10-prep-Fix-parser.py-for-changed-typing-module.patch
 Patch13: py3.10-prep-reset-the-type-cache-after-feature-switching.patch
 
+# patch from https://src.fedoraproject.org/rpms/python-pyside2/pull-request/10#commit_list
+Patch14: python3.11.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-python3
@@ -89,7 +91,7 @@ Provides: python-pyside2-devel = %EVR
 %package -n pyside2-tools
 Summary: PySide2 tools for the Qt 5 framework
 Group: Development/Python3
- 
+
 %description -n pyside2-tools
 PySide2 provides Python bindings for the Qt5 cross-platform application
 and UI framework.
@@ -135,7 +137,7 @@ Group: Development/Python3
 Requires: shiboken2
 Requires: python3-module-shiboken2
 Provides: python3-shiboken2-devel = %EVR
- 
+
 %description -n python3-module-shiboken2-devel
 Shiboken is the Python binding generator that Qt for Python uses to create the
 PySide module, in other words, is the system we use to expose the Qt C++ API to
@@ -153,6 +155,7 @@ the previous versions (without the 2) refer to Qt 4.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 %build
 %ifarch %e2k
@@ -161,7 +164,7 @@ the previous versions (without the 2) refer to Qt 4.
 %endif
 export CXX=/usr/bin/clang++
 # CMAKE_CXX_FLAGS is already included -O%_optlevel, so CMAKE_CXX_FLAGS_RELEASE need -O2 removed
-%cmake -DUSE_PYTHON_VERSION=3 -DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG"
+%cmake -DUSE_PYTHON_VERSION=3 -DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 %cmake_build
 
 %install
@@ -198,13 +201,13 @@ done
 %files -n shiboken2
 %doc README.shiboken2-generator.md
 %_bindir/shiboken2
- 
+
 %files -n python3-module-shiboken2
 %doc README.shiboken2.md
 %_libdir/libshiboken2*.so.*
 %python3_sitelibdir/shiboken2/
 %python3_sitelibdir/shiboken2-*.egg-info/
- 
+
 %files -n python3-module-shiboken2-devel
 %doc README.shiboken2.md
 %_includedir/shiboken2/
@@ -215,6 +218,9 @@ done
 %python3_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Fri Dec 23 2022 Grigory Ustinov <grenka@altlinux.org> 5.15.2-alt3
+- Fixed build with python3.11.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 5.15.2-alt2.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 

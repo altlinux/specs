@@ -1,8 +1,10 @@
 %define origname Cheetah
 
+%def_without check
+
 Name: python3-module-%origname
 Version: 3.3.1
-Release: alt1
+Release: alt2
 
 Summary: Template engine and code-generator
 
@@ -61,6 +63,9 @@ This package contains tests for Cheetah.
 %exclude %python3_sitelibdir/Cheetah/Tests/Performance.py*
 
 %changelog
+* Mon Jan 09 2023 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt2
+- Bootstrap for python3.11.
+
 * Mon Dec 26 2022 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
 - Automatically updated to 3.3.1.
 - Build with check.

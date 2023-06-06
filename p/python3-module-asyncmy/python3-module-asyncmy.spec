@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.2.5
-Release: alt2
+Release: alt3
 
 Summary: A fast asyncio MySQL/MariaDB driver with replication protocol support
 License: Apache-2.0
@@ -25,6 +25,8 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-asyncio)
 %endif
+
+%add_python3_req_skip asyncmy.charset asyncmy.cursors
 
 %description
 asyncmy is a fast asyncio MySQL/MariaDB driver, which reuse most of pymysql
@@ -52,6 +54,9 @@ rm %buildroot%python3_sitelibdir/{README.md,CHANGELOG.md,LICENSE}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Mar 02 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.5-alt3
+- Fixed build with python3.11.
+
 * Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 0.2.5-alt2
 - NMU: Fixed FTBFS (poetry-core 1.1.0).
 

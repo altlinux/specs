@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%def_with check
+%def_without check
 
 Name: libtevent
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 Summary: The tevent library
 License: LGPLv3+
@@ -80,6 +80,10 @@ make test
 %python3_sitelibdir/__pycache__/tevent.*
 
 %changelog
+* Mon May 29 2023 Grigory Ustinov <grenka@altlinux.org> 0.14.0-alt1
+- Build new version for python3.11.
+- Build without check.
+
 * Sat Sep 17 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.13.0-alt1
 - New version for samba-4.17
 

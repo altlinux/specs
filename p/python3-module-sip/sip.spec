@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 4.19.19
-Release: alt7
+Release: alt8
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -16,6 +16,8 @@ URL: http://www.riverbankcomputing.com/software/sip/
 #Source-url: https://prdownloads.sourceforge.net/pyqt/sip/sip-%version/sip-%version.tar.gz
 # Source-url: https://www.riverbankcomputing.com/static/Downloads/sip/%version/sip-%version.tar.gz
 Source: %oname-%version.tar
+
+Patch: sip-4.19.25-pyframe_getback.patch
 
 %py3_provides %oname
 
@@ -38,6 +40,7 @@ Header files for sip (Python 3).
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 %build
 python3 configure.py --debug -d %python3_sitelibdir
@@ -75,6 +78,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 #doc doc/*
 
 %changelog
+* Sat May 20 2023 Grigory Ustinov <grenka@altlinux.org> 4.19.19-alt8
+- fixed build with python3.11
+
 * Sun May 14 2023 Anton Midyukov <antohami@altlinux.org> 4.19.19-alt7
 - disable python3-module-PyQt4-sip subpackage
 - cleanup spec

@@ -2,8 +2,8 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 2.0.2
-Release: alt3
+Version: 2.0.3
+Release: alt1
 Summary: Cython wrapper on Hunspell Dictionary
 
 License: MIT
@@ -62,6 +62,9 @@ py.test3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Wed Dec 21 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.3-alt1
+- Build new version for python3.11.
+
 * Fri Feb 04 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt3
 - Enabled check back.
 

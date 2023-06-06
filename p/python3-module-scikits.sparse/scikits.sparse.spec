@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.4.8
-Release: alt1
+Release: alt1.1
 
 Summary: Sparse matrix tools extending scipy.sparse, but with incompatible licenses
 License: BSD-2-Clause
@@ -26,6 +26,7 @@ BuildRequires: python3-module-sphinx
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-scipy
 %endif
 
 %description
@@ -105,6 +106,9 @@ py.test-3 -ra --pyargs sksparse
 
 
 %changelog
+* Thu Mar 09 2023 Grigory Ustinov <grenka@altlinux.org> 0.4.8-alt1.1
+- Fixed build dependencies.
+
 * Fri Mar 03 2023 Anton Vyatkin <toni@altlinux.org> 0.4.8-alt1
 - new version 0.4.8
 

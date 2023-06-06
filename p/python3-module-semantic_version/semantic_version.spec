@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name semantic_version
 
-%def_without bootstrap
-%def_with check
+%def_with bootstrap
+%def_without check
 
 Name: python3-module-%pypi_name
 Version: 2.10.0
-Release: alt2
+Release: alt3
 Summary: A library implementing the 'SemVer' scheme
 License: BSD-2-Clause
 Group: Development/Python3
@@ -56,6 +56,9 @@ rm -f %buildroot%python3_sitelibdir/%pypi_name/django_fields.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri May 05 2023 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt3
+- Bootstrap for python3.11.
+
 * Thu Apr 27 2023 Stanislav Levin <slev@altlinux.org> 2.10.0-alt2
 - Modernized packaging.
 - Mapped PyPI name to distro's one.

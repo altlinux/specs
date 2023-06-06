@@ -4,7 +4,7 @@
 
 Name: log4cplus
 Version: 2.0.7
-Release: alt1.1
+Release: alt1.2
 Summary: Logging library to C++
 License: Apache-2.0 or BSD-2-Clause
 Group: Development/C++
@@ -54,7 +54,6 @@ This package contains development files of log4cplus.
 %package -n lib%name-devel-docs
 Summary: Development documentation for logging library to C++
 Group: Development/Documentation
-BuildArch: noarch
 
 %description -n lib%name-devel-docs
 log4cplus is a simple to use C++ logging API providing thread-safe,
@@ -138,6 +137,9 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %python3_sitelibdir/%name
 
 %changelog
+* Tue Jun 06 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.7-alt1.2
+- Make docs arch dependent.
+
 * Tue Feb 15 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.7-alt1.1
 - Fixed build for Elbrus.
 

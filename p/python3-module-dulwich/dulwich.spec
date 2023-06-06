@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name dulwich
 
-%def_enable check
+%def_disable check
 
 Name: python3-module-%pypi_name
 Version: 0.21.5
-Release: alt1
+Release: alt2
 
 Summary: Python Git Library
 License: Apache-2.0 or GPL-2.0-or-later
@@ -79,6 +79,9 @@ popd
 %python3_sitelibdir/*/contrib
 
 %changelog
+* Thu May 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.21.5-alt2
+- Bootstrap for python3.11.
+
 * Wed May 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.21.5-alt1
 - 0.21.5
 

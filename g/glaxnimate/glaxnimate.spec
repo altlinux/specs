@@ -1,6 +1,6 @@
 Name: glaxnimate
 Version: 0.5.1
-Release: alt1
+Release: alt2
 Summary: A simple vector graphics animation program
 Group: Graphics
 Vendor: openmamba
@@ -10,6 +10,7 @@ Url: https://glaxnimate.mattbas.org/
 Source: https://gitlab.com/mattbas/glaxnimate.git/%version/glaxnimate-%version.tar.bz2
 Patch: glaxnimate-0.5.1-qt6.patch
 Patch1: glaxnimate-0.5.1-cmake-install-libdir.patch
+Patch2: glaxnimate-pybind11_fix_build.patch
 License: GPLv2
 
 BuildRequires: glibc-devel
@@ -40,6 +41,7 @@ A simple vector graphics animation program.
 %ifarch x86_64 aarch64
 %patch1 -p1
 %endif
+%patch2 -p1
 
 %build
 %cmake
@@ -59,6 +61,9 @@ A simple vector graphics animation program.
 %doc COPYING
 
 %changelog
+* Fri Mar 10 2023 Grigory Ustinov <grenka@altlinux.org> 0.5.1-alt2
+- Fixed build with python3.11.
+
 * Fri Mar 03 2023 Artyom Bystrov <arbars@altlinux.org> 0.5.1-alt1
 - initial build for ALT Sisyphus
 

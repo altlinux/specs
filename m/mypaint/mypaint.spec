@@ -2,7 +2,7 @@
 
 Name: mypaint
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: A simple paint program
 Group: Graphics
@@ -15,6 +15,9 @@ Source: https://github.com/%name/%name/releases/download/v%version/%name-%versio
 # VCS: https://github.com/mypaint/mypaint
 Source: %name-%version.tar
 %endif
+
+# https://github.com/mypaint/mypaint/pull/1193
+Patch: 032a155b72f2b021f66a994050d83f07342d04af.patch
 
 %define mypaintlib_ver 1.6
 
@@ -69,6 +72,7 @@ with mypaint brush library.
 
 %prep
 %setup
+%patch -p1
 # fix libdir
 subst "s|prefix, 'lib'|prefix, '%_lib'|" mypaint.py
 
@@ -92,6 +96,9 @@ subst "s|prefix, 'lib'|prefix, '%_lib'|" mypaint.py
 %doc README.md Changelog.md Licenses.md
 
 %changelog
+* Wed Dec 14 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt2
+- Fixed build with python3.11
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 

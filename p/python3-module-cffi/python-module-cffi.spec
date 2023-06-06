@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name cffi
 
-%def_with check
+%def_without check
 
 Name: python3-module-%pypi_name
 Version: 1.15.1
-Release: alt1
+Release: alt2
 
 Summary: Foreign Function Interface for Python calling C code
 
@@ -57,6 +57,9 @@ Foreign Function Interface for Python calling C code.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 24 2022 Grigory Ustinov <grenka@altlinux.org> 1.15.1-alt2
+- Bootstrap for python3.11.
+
 * Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 1.15.1-alt1
 - 1.15.0 -> 1.15.1.
 

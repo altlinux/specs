@@ -1,8 +1,8 @@
 %define oname pylibmc
 
 Name: python3-module-%oname
-Version: 1.5.2
-Release: alt2
+Version: 1.6.3
+Release: alt1
 Summary: Quick and small memcached client for Python
 License: BSD
 Group: Development/Python3
@@ -31,6 +31,9 @@ written in C.
 %python3_sitelibdir/*%{oname}*
 
 %changelog
+* Mon Dec 12 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.3-alt1
+- Updated for python3.11.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.2-alt2
 - Drop python2 support.
 

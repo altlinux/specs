@@ -1,4 +1,4 @@
-%def_with check
+%def_without check
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
@@ -15,7 +15,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.22.1
-Release: alt3
+Release: alt4
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
 Group: Development/Python3
@@ -52,6 +52,8 @@ BuildRequires: python3-module-Cython python3-module-packaging
 # See bug 35103
 %add_python3_req_skip setuptools.command.develop setuptools.command.egg_info
 %add_python3_req_skip code_generators.genapi code_generators.numpy_api genapi numpy._build_utils.apple_accelerate numpy_api
+# Python3.11 update has broken these imports
+%add_python3_req_skip __version__ distutils.msvc9compiler distutils.msvccompiler setup_common
 
 %add_findprov_skiplist %python3_sitelibdir/%oname/random/_examples/*
 %add_findreq_skiplist  %python3_sitelibdir/%oname/random/_examples/*
@@ -257,6 +259,9 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Wed Dec 14 2022 Grigory Ustinov <grenka@altlinux.org> 1:1.22.1-alt4
+- Bootstrap for python3.11.
+
 * Fri Feb 04 2022 Grigory Ustinov <grenka@altlinux.org> 1:1.22.1-alt3
 - Enable check back.
 

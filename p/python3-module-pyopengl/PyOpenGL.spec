@@ -3,7 +3,7 @@
 
 Name: python3-module-pyopengl
 Version: 3.1.6
-Release: alt1
+Release: alt2
 
 Summary: Metapackage including python modules for OpenGL library
 
@@ -62,6 +62,9 @@ operations for slow points in PyOpenGL 3.x.
 find tests -type f -name '*.py' -exec \
 	sed -i 's|#! %_bindir/env python|#!%_bindir/python3|' '{}' +
 
+# Force recythonize it please!
+find accelerate/src/ -name "*.c" | xargs rm -fv
+
 %build
 %python3_build
 pushd accelerate
@@ -90,6 +93,9 @@ popd
 %python3_sitelibdir/Py%{oname}_accelerate*.egg-info
 
 %changelog
+* Wed Dec 21 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.6-alt2
+- Fixed build with python3.11.
+
 * Wed Mar 30 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.6-alt1
 - Build new version.
 - Build OpenGL_accelerate from OpenGL git repo.

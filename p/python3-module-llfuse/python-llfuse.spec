@@ -1,7 +1,7 @@
 %define oname llfuse
 
 Name: python3-module-llfuse
-Version: 1.3.8
+Version: 1.4.2
 Release: alt1
 
 Summary: Python Bindings for the low-level FUSE API
@@ -48,6 +48,9 @@ find -name '*.py' | xargs sed -i '1s|^#!python|#!%__python3|'
 %python3_sitelibdir/*
 
 %changelog
+* Wed Dec 21 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
+- Update for python3.11.
+
 * Sun Nov 22 2020 Grigory Ustinov <grenka@altlinux.org> 1.3.8-alt1
 - Update for python3.9.
 

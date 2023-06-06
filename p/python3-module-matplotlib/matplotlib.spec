@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 3.7.0
-Release: alt1
+Release: alt2
 
 Summary: Matlab(TM) style python plotting package
 
@@ -40,7 +40,7 @@ BuildRequires: python3-module-pybind11
 Requires: python3-module-%oname-gtk3
 Requires: python3-module-mpl_toolkits = %EVR
 Requires: %name-data = %EVR
-%add_python3_req_skip builtins
+%add_python3_req_skip builtins fontTools
 
 %description
 matplotlib is a pure python 2D plotting library with a Matlab(TM)
@@ -338,6 +338,9 @@ done
 %_datadir/matplotlib/mpl-data
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt2
+- Bootstrap for python3.11.
+
 * Fri Feb 17 2023 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
 - Automatically updated to 3.7.0.
 

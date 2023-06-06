@@ -3,7 +3,7 @@
 %define oname greenlet
 
 Name: python3-module-%oname
-Version: 1.1.2
+Version: 2.0.1
 Release: alt1
 
 Summary: Lightweight in-process concurrent programming
@@ -69,6 +69,9 @@ Requires: %name = %EVR
 %_includedir/python%_python3_version%_python3_abiflags/greenlet
 
 %changelog
+* Mon Dec 12 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- Build new version.
+
 * Sat Jan 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1
 - Build new version.
 - Move include files to devel subpackage (Closes: #41567).

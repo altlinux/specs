@@ -3,12 +3,12 @@
 %ifarch armh
 %def_disable check
 %else
-%def_enable check
+%def_disable check
 %endif
 
 Name: python3-module-%pypi_name
 Version: 0.29.35
-Release: alt1
+Release: alt2
 
 Summary: C-extensions for Python 3
 Group: Development/Python3
@@ -128,6 +128,9 @@ done
 %endif
 
 %changelog
+* Thu May 25 2023 Grigory Ustinov <grenka@altlinux.org> 0.29.35-alt2
+- boostrap for python3.11
+
 * Wed May 24 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.35-alt1
 - 0.29.35
 

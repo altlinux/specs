@@ -25,11 +25,7 @@
 %else
 %def_without gdcm
 %endif
-%ifarch %{ix86} x86_64
-%def_with openni
-%else
 %def_without openni
-%endif
 #----------------------------------------------------------------------
 %define set_without() %{expand:%%force_without %{1}} %{expand:%%undefine _with_%{1}}
 
@@ -45,7 +41,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.5.5
-Release: alt2
+Release: alt3
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -349,6 +345,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfea
 %_datadir/%Name/quality
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 1:4.5.5-alt3
+- Build without openni.
+
 * Tue Jan 10 2023 Alexey Shabalin <shaba@altlinux.org> 1:4.5.5-alt2
 - The upstream fix https://github.com/opencv/opencv/pull/21614
   for build on power8

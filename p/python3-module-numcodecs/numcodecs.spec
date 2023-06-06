@@ -3,7 +3,7 @@
 %define oname numcodecs
 
 Name: python3-module-%oname
-Version: 0.9.0
+Version: 0.11.0
 Release: alt1
 Summary: A Python package providing buffer compression and transformation codecs for use in data storage and communication applications
 License: MIT
@@ -18,6 +18,10 @@ BuildRequires: python3-devel python3-module-setuptools_scm
 BuildRequires: libblosc-devel libzstd-devel liblz4-devel
 BuildRequires: pytest3
 BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-cpuinfo
+BuildRequires: python3-module-Cython
+BuildRequires: python3-module-entrypoints
+BuildRequires: python3-module-pytest-cov
 
 %description
 Numcodecs is a Python package providing buffer compression
@@ -57,7 +61,7 @@ pytest-3 -v numcodecs/tests
 popd &>/dev/null
 
 %files
-%doc LICENSE
+%doc LICENSE.txt
 %doc README.rst CODE_OF_CONDUCT.md
 %python3_sitelibdir/%oname-%version-*.egg-info
 %python3_sitelibdir/%oname
@@ -67,5 +71,8 @@ popd &>/dev/null
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sun Jan 15 2023 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
+- Automatically updated to 0.11.0.
+
 * Mon Aug 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0-alt1
 - Initial build for ALT.

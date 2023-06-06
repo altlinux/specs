@@ -31,7 +31,7 @@
 %def_with vnc
 %def_with vde
 %def_with libvpx
-%def_with python
+%def_without python
 %def_without vboxpci
 %def_with vboximg
 
@@ -66,7 +66,7 @@
 
 Name: virtualbox
 Version: 7.0.8
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -365,7 +365,9 @@ This package contains VirtualBox User Manual.
 %package sdk
 Summary: VirtualBox SDK
 Group: Development/Other
+%if_with python
 Requires: python3-module-vboxapi = %version-%release
+%endif
 
 %description sdk
 This package contains VirtualBox SDK.
@@ -558,7 +560,9 @@ cp -a \
 %endif
     *.so \
     *.fd \
+%if_with python
     *.py \
+%endif
     components/ \
 %if_with webservice
     vboxwebsrv \
@@ -841,7 +845,9 @@ mountpoint -q /dev || {
 %vboxdir/VirtualBox
 %exclude %vboxdir/sdk
 %exclude %vboxdir/xpidl
+%if_with python
 %exclude %vboxdir/VBoxPython*.so
+%endif
 %vboxdatadir/nls
 %_niconsdir/*.png
 %_miconsdir/*.png
@@ -954,6 +960,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Tue May 02 2023 Grigory Ustinov <grenka@altlinux.org> 7.0.8-alt2
+- Build without python
+
 * Wed Apr 19 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.8-alt1
 - Update to newest version 7.0.8 (Closes: 45732)
 

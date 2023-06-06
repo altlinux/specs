@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Fast, scalable & beautiful scientific visualisation
 
@@ -72,6 +72,9 @@ sed -i 's|sphinx.ext.pngmath|sphinx.ext.imgmath|' doc/conf.py
 
 sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
+# Force recythonize it please!
+rm -f glumpy/ext/sdf/_sdf.c
+
 %build
 %python3_build
 
@@ -99,6 +102,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc doc/_build/html examples
 
 %changelog
+* Wed Dec 21 2022 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt2
+- Fixed build with python3.11.
+
 * Sun Jun 05 2022 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
 - Automatically updated to 1.2.0.
 

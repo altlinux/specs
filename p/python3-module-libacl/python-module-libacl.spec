@@ -1,8 +1,8 @@
 %define oname libacl
 
 Name: python3-module-%oname
-Version: 0.5.3
-Release: alt2
+Version: 0.6.0
+Release: alt1
 
 Summary: POSIX.1e ACLs for python
 License: LGPLv2.1+
@@ -46,9 +46,12 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 %files
 %python3_sitelibdir/*
-%doc NEWS README doc/html
+%doc NEWS README.md doc/html
 
 %changelog
+* Mon Dec 12 2022 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
+- Build new version.
+
 * Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.3-alt2
 - Drop python2 support.
 

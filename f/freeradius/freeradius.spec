@@ -3,7 +3,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
 Version: 3.2.2
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -59,6 +59,11 @@ BuildRequires: libwbclient-devel samba-devel
 BuildRequires: chrpath
 # Server needs dicts and /etc/raddb to work:
 Requires: %name-common
+
+# armh: freeradius-debuginfo=3.2.2-alt1 preinstall failed:
+# <86>May  6 23:11:40 su[1247380]: pam_tcb(su:session): Session opened for radiusd by (uid=0)
+# hasher-privd: parent: work_limits_ok: time elapsed limit (600 seconds) exceeded
+ExcludeArch: armh
 
 %description
 The FreeRADIUS Server Project is a high performance and highly configurable
@@ -701,6 +706,9 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Mon May 08 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.2-alt2
+- ExcludeArch: armh.
+
 * Sun Mar 26 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.2-alt1
 - 3.2.2
 

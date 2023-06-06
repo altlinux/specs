@@ -5,7 +5,7 @@
 %define oname Enable
 Name: python3-module-%oname
 Version: 5.3.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Drawing and interaction packages
 
@@ -24,6 +24,7 @@ BuildRequires: libopenblas-devel liblapack-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-fonttools
 
 %if_with docs
 BuildRequires: python3-module-sphinx
@@ -132,6 +133,9 @@ cp -fR pickles %buildroot%python3_sitelibdir/enable/
 %endif
 
 %changelog
+* Sat Mar 04 2023 Grigory Ustinov <grenka@altlinux.org> 5.3.1-alt1.2
+- Fixed build dependencies.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 5.3.1-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 

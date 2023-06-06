@@ -2,12 +2,12 @@
 %define _unpackaged_files_terminate_build 1
 
 %define origname TwistedCore
-%define major 20.3
+%define major 22.10
 %define prefx3 python3-module-twisted
 
 Name: python3-module-twisted-core
 Version: %major.0
-Release: alt3
+Release: alt1
 
 Summary: An asynchronous networking framework written in Python
 
@@ -37,6 +37,8 @@ Requires: python3-module-OpenSSL
 %add_python3_req_skip win32process win32security win32con CFNetwork
 %add_python3_req_skip CoreFoundation
 %add_python3_req_skip win32com.shell
+
+BuildArch: noarch
 
 %description
 An extensible framework for Python programming, with special focus
@@ -164,7 +166,7 @@ a basic Mail Exchange calculator.
 %package -n %prefx3-web
 Summary: Twisted web server, programmable in Python 3
 Group: Development/Python3
-%add_python3_req_skip Tkinter
+%add_python3_req_skip Tkinter SOAPpy
 
 %description -n %prefx3-web
 Twisted is an event-based framework for internet applications.
@@ -275,7 +277,7 @@ Requires: python3-module-twisted-core = %EVR
 Provides: python3-module-twisted-core-test = %EVR
 Obsoletes: python3-module-twisted-core-test
 Conflicts: python-module-twisted-core-test
-%add_python3_req_skip idonotexist
+%add_python3_req_skip idonotexist cython_test_exception_raiser
 
 %description -n %prefx3-core-tests
 Unit tests for Twisted Core.
@@ -368,7 +370,6 @@ ln -s trial %buildroot%_bindir/trial-3
 %dir %python3_sitelibdir/twisted/python/
 %python3_sitelibdir/twisted/python/*.py*
 %python3_sitelibdir/twisted/python/__pycache__/
-%exclude %python3_sitelibdir/twisted/python/_setup.py
 
 
 %python3_sitelibdir/twisted/scripts/
@@ -381,6 +382,8 @@ ln -s trial %buildroot%_bindir/trial-3
 %python3_sitelibdir/twisted/spread/__pycache__/
 
 %python3_sitelibdir/twisted/tap/
+
+%python3_sitelibdir/twisted/py.typed
 
 
 %files -n %prefx3-core-doc
@@ -504,9 +507,11 @@ ln -s trial %buildroot%_bindir/trial-3
 %python3_sitelibdir/twisted/positioning/test
 %python3_sitelibdir/twisted/spread/test
 %python3_sitelibdir/twisted/logger/test
-%python3_sitelibdir/twisted/python/_setup.py
 
 %changelog
+* Tue Dec 20 2022 Grigory Ustinov <grenka@altlinux.org> 22.10.0-alt1
+- Build new version for python3.11.
+
 * Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 20.3.0-alt3
 - NMU: added trial-3 compat symlink
 

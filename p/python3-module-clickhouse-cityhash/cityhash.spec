@@ -3,7 +3,7 @@
 
 
 Name:       python3-module-%oname
-Version:    1.0.2.3
+Version:    1.0.2.4
 Release:    alt1
 
 License:    %mit
@@ -60,6 +60,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/clickhouse_cityhash/
 
 
 %changelog
+* Mon Dec 12 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.2.4-alt1
+- Build new version.
+
 * Thu Aug 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2.3-alt1
 - Initial build for Sisyphus
 

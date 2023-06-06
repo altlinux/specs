@@ -2,11 +2,11 @@
 %define pypi_name hypothesis
 %define mod_name %pypi_name
 
-%def_with check
+%def_without check
 
 Name: python3-module-%pypi_name
 Version: 6.75.3
-Release: alt1
+Release: alt2
 
 Summary: A library for property based testing
 
@@ -38,7 +38,7 @@ BuildRequires: python3-module-numpy-testing
 # not listed as tests' dependency
 BuildRequires: python3-module-fakeredis
 %endif
-%add_python3_req_skip dpcontracts
+%add_python3_req_skip dpcontracts pandas
 
 %description
 Hypothesis is an advanced testing library for Python. It lets you write tests
@@ -76,6 +76,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_ftz_detector.py
 
 %changelog
+* Sun May 21 2023 Grigory Ustinov <grenka@altlinux.org> 6.75.3-alt2
+- Bootstrap for python3.11.
+
 * Mon May 15 2023 Stanislav Levin <slev@altlinux.org> 6.75.3-alt1
 - 6.68.1 -> 6.75.3.
 

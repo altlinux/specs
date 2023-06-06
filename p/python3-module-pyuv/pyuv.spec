@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.4.0
-Release: alt3
+Release: alt4
 Summary: Python interface for libuv
 License: MIT
 Group: Development/Python3
@@ -12,7 +12,8 @@ Url: https://pypi.python.org/pypi/pyuv/
 # branch: v1.x
 Source: %name-%version.tar
 
-Patch: pyuv-python3.10.patch
+Patch0: pyuv-python3.10.patch
+Patch1: pyuv-python3.11.patch
 
 BuildRequires(pre): /dev/pts /proc
 BuildRequires(pre): rpm-build-python3
@@ -51,7 +52,8 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
@@ -83,6 +85,9 @@ python3 setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Mon Dec 12 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt4
+- Fixed build with python3.11.
+
 * Thu Jan 13 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt3
 - Fixed build with python3.10.
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-frozendict
 Version: 2.3.8
-Release: alt1
+Release: alt2
 
 Summary: An immutable dictionary
 
@@ -22,6 +22,8 @@ BuildRequires(pre): rpm-build-python3
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
+
+BuildArch: noarch
 
 %description
 frozendict is an immutable wrapper around dictionaries that implements
@@ -47,6 +49,9 @@ py.test-3 -v
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed May 03 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.8-alt2
+- Fixed build with python3.11.
+
 * Wed May 03 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.8-alt1
 - Automatically updated to 2.3.8.
 

@@ -3,12 +3,12 @@
 %define oname scikit-image
 
 %def_disable docs
-%def_enable check
+%def_disable check
 %def_with pythran
 
 Name: python3-module-%oname
 Version: 0.19.3
-Release: alt1
+Release: alt2
 Summary: Image processing routines for SciPy
 License: BSD-3-Clause and MIT
 Group: Development/Python3
@@ -153,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 21 2023 Grigory Ustinov <grenka@altlinux.org> 0.19.3-alt2
+- Disable check for python3.11.
+
 * Fri Feb 17 2023 Anton Farygin <rider@altlinux.ru> 0.19.3-alt1
 - 0.18.2 -> 0.19.3
 

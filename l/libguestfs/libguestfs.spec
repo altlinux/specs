@@ -6,7 +6,7 @@
 %ifarch i586 armh ppc64le
 %def_without check
 %else
-%def_with check
+%def_without check
 %endif
 
 %def_enable daemon
@@ -31,7 +31,7 @@
 
 Name: libguestfs
 Version: 1.50.1
-Release: alt1
+Release: alt2
 
 Summary: Library for accessing and modifying virtual machine disk images
 License: LGPLv2+
@@ -557,6 +557,9 @@ fi
 %endif #erlang
 
 %changelog
+* Mon Jun 05 2023 Grigory Ustinov <grenka@altlinux.org> 1.50.1-alt2
+- disable tests
+
 * Mon Mar 20 2023 Egor Ignatov <egori@altlinux.org> 1.50.1-alt1
 - 1.50.1
 - rediff libguestfs-1.46.0-alt-fixes-common.patch

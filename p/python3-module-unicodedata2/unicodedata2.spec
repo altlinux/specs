@@ -1,7 +1,7 @@
 %define oname unicodedata2
 
 Name: python3-module-%oname
-Version: 13.0.0.post2
+Version: 15.0.0
 Release: alt1
 
 Summary: Unicodedata backport for python 2 updated to the latest unicode version
@@ -11,8 +11,6 @@ Url: https://pypi.python.org/pypi/unicodedata2
 
 # https://github.com/mikekap/unicodedata2.git
 Source: %name-%version.tar
-
-Patch: unicodedata2-python3.10.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -24,7 +22,6 @@ backports support for named aliases and named sequences to python2.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -42,6 +39,9 @@ backports support for named aliases and named sequences to python2.
 
 
 %changelog
+* Mon Dec 12 2022 Grigory Ustinov <grenka@altlinux.org> 15.0.0-alt1
+- Build new version.
+
 * Wed Dec 15 2021 Grigory Ustinov <grenka@altlinux.org> 13.0.0.post2-alt1
 - Build new version.
 
