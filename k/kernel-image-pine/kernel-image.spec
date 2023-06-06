@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_need_version	6.2
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -417,6 +417,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jun 06 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt2
+- mm: export zap_page_range_single
+
 * Thu Jun 01 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt1
 - 6.2.14
 
