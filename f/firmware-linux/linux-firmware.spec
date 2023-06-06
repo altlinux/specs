@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230523
+Version: 20230531
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,11 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jun 06 2023 Cronbuild Service <cronbuild@altlinux.org> 20230531-alt1
+- upstream changes (GIT fc90c59b):
+  + qcom: apq8016: add Dragonboard 410c WiFi and modem firmware (thx Dmitry Baryshkov)
+  + cirrus: Add firmware for new Asus ROG Laptops (thx Stefan Binding)
+
 * Tue May 30 2023 Cronbuild Service <cronbuild@altlinux.org> 20230523-alt1
 - upstream changes (GIT d11ae984):
   + brcm: Add symlinks from Pine64 devices to AW-CM256SM.txt (thx Diederik de Haas)
