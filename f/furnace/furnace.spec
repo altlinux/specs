@@ -1,5 +1,5 @@
 Name: furnace
-Version: 0.5.8
+Version: 0.6pre5
 Release: alt1
 Summary: Chiptune tracker supporting many console soundchips
 License: GPL-3.0
@@ -89,6 +89,9 @@ done
 %_docdir/%name
 
 %changelog
+* Tue Jun 06 2023 Artyom Bystrov <arbars@altlinux.org> 0.6pre5-alt1
+- New version
+
 * Sun Jun 04 2023 Artyom Bystrov <arbars@altlinux.org> 0.5.8-alt1
 - initial build for ALT Sisyphus
 
