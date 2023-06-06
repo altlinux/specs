@@ -2,8 +2,8 @@
 %define pkgdocdir %_docdir/%name-%version
 
 Name: xmltooling
-Version: 3.2.1
-Release: alt1.1
+Version: 3.2.3
+Release: alt1
 
 Summary: OpenSAML XML Processing library
 
@@ -11,7 +11,7 @@ License: Apache-2.0
 Group: System/Libraries
 Url: https://wiki.shibboleth.net/confluence/display/OpenSAML/XMLTooling-C
 
-Source: http://shibboleth.net/downloads/c++-opensaml/%version/%name-%version.tar.gz
+Source: http://shibboleth.net/downloads/c++-opensaml/latest/%name-%version.tar.gz
 
 BuildRequires: gcc-c++ boost-devel-headers boost-devel liblog4shib-devel libxerces-c-devel >= 3.2 libxml-security-c-devel openssl-devel zlib-devel doxygen libcurl-devel
 
@@ -116,6 +116,9 @@ rm -f %buildroot/%_libdir/libxmltooling-lite.la
 %doc %pkgdocdir
 
 %changelog
+* Tue Jun 06 2023 Leontiy Volodin <lvol@altlinux.org> 3.2.3-alt1
+- New version 3.2.3.
+
 * Fri May 20 2022 Michael Shigorin <mike@altlinux.org> 3.2.1-alt1.1
 - E2K: lcc cpp related ftbfs workaround
 

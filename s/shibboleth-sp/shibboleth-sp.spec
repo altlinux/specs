@@ -1,13 +1,13 @@
-%define soname 10
-%define soname_lite 10
+%define soname 11
+%define soname_lite 11
 %define runuser shibd
 %define realname shibboleth
 %define pkgdocdir %_docdir/%realname
 %define _localstatedir %_var
 
 Name: shibboleth-sp
-Version: 3.3.0
-Release: alt1.1
+Version: 3.4.1
+Release: alt1
 
 Summary: Open source system for attribute-based Web SSO
 
@@ -167,6 +167,9 @@ EOF
 %doc %pkgdocdir/
 
 %changelog
+* Tue Jun 06 2023 Leontiy Volodin <lvol@altlinux.org> 3.4.1-alt1
+- New version 3.4.1.
+
 * Wed May 25 2022 Michael Shigorin <mike@altlinux.org> 3.3.0-alt1.1
 - spec: lousy boost test fixup; avoid using obsolete/internal macro
 
