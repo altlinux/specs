@@ -6,7 +6,7 @@
 %set_verify_elf_method strict
 
 Name: nettle
-Version: 3.9.0
+Version: 3.9.1
 Release: alt1
 Summary: A low-level cryptographic library
 
@@ -109,6 +109,9 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %_infodir/*.*
 
 %changelog
+* Tue Jun 06 2023 Mikhail Efremov <sem@altlinux.org> 3.9.1-alt1
+- Updated to 3.9.1.
+
 * Thu May 25 2023 Mikhail Efremov <sem@altlinux.org> 3.9.0-alt1
 - Updated to 3.9.0.
 
