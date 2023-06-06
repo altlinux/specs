@@ -1,12 +1,12 @@
 Name: x264
 Version: 164
-Release: alt1
+Release: alt1.1
 
 Summary: CLI H.264 encoder
 License: GPLv2
 Group: Video
-Url: http://www.videolan.org/x264.html
 
+Url: http://www.videolan.org/x264.html
 Source: %name-%version-%release.tar
 
 BuildRequires: nasm
@@ -18,8 +18,9 @@ Group: Video
 Summary: H.264 encoder utils
 
 %define desc \
-libx264 is a free library for encoding H264/AVC video streams. The code \
-is written from scratch.\
+libx264 is a free library for encoding H264/AVC video streams.\
+The code is written from scratch.\
+\
 Encoder features: \
 - CAVLC/CABAC \
 - Multi-references \
@@ -33,7 +34,8 @@ Encoder features: \
 - 8x8 and 4x4 adaptive spatial transform \
 - Lossless mode \
 - Custom quantization matrices \
-- Parallel encoding of multiple slices.
+- Parallel encoding of multiple slices.\
+
 
 %description %desc
 This package includes CLI based H.264 encoder.
@@ -48,11 +50,14 @@ This package includes %name encoder utils.
 %ifarch %ix86
 export ASFLAGS=' '
 %endif
+%ifarch %e2k
+%add_optflags -mno-sse
+%endif
 %configure --system-libx264
 %make_build %name
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 install -pm0755 tools/countquant_x264.pl %buildroot%_bindir
 
 %files
@@ -63,6 +68,10 @@ install -pm0755 tools/countquant_x264.pl %buildroot%_bindir
 %_bindir/countquant_x264.pl
 
 %changelog
+* Wed May 31 2023 Michael Shigorin <mike@altlinux.org> 164-alt1.1
+- E2K: fix build (ilyakurdyukov@)
+- minor spec cleanup
+
 * Fri Dec 02 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 164-alt1
 - API 164
 
