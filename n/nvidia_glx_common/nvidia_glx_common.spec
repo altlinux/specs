@@ -16,7 +16,7 @@
 %define nv_version 525
 %define nv_release 116
 %define nv_minor 04
-%define pkg_rel alt263
+%define pkg_rel alt264
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -348,6 +348,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Tue Jun 06 2023 Sergey V Turchin <zerg@altlinux.org> 525.116.04-alt264
+- don't force load additional nvidia kernel modules
+
 * Thu May 25 2023 Sergey V Turchin <zerg@altlinux.org> 525.116.04-alt263
 - new version
 - add ub-device-create utility
