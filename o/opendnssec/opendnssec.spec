@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _runtimedir /run
 %def_with check
+%def_without lint
 
 %define _pseudouser_user     _opendnssec
 %define _pseudouser_group    _opendnssec
@@ -8,7 +9,7 @@
 
 Name: opendnssec
 Version: 2.1.12
-Release: alt1
+Release: alt2
 
 Summary: DNSSEC key and zone management software
 License: BSD-2-Clause
@@ -41,11 +42,13 @@ Requires: softhsm >= 2.6.1-alt1
 BuildRequires: CUnit-devel
 BuildRequires: softhsm >= 2.6.1-alt1
 
+%if_with lint
 # alt migration script
 BuildRequires: python3(pylint)
 BuildRequires: python3(black)
 BuildRequires: python3(sqlite3)
 BuildRequires: python3(lxml)
+%endif
 %endif
 
 %description
@@ -92,9 +95,11 @@ mkdir -p %buildroot%_localstatedir/opendnssec/backup
 %check
 %make check
 
+%if_with lint
 # lint checks for alt migration script
 python3 -m pylint --rcfile=%SOURCE9 %SOURCE8
 python3 -m black -l 80 -v --check --diff %SOURCE8
+%endif
 
 %pre
 groupadd -r -f %_pseudouser_group ||:
@@ -158,6 +163,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Tue Jun 06 2023 Stanislav Levin <slev@altlinux.org> 2.1.12-alt2
+- Fixed FTBFS (sqlite3 3.41.0).
+
 * Wed Nov 16 2022 Stanislav Levin <slev@altlinux.org> 2.1.12-alt1
 - 2.1.10 -> 2.1.12.
 
