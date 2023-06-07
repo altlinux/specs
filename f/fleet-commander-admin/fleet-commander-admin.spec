@@ -8,7 +8,7 @@
 
 Name: fleet-commander-admin
 Version: 0.15.1
-Release: alt11
+Release: alt12
 
 Summary: Fleet Commander
 License: LGPLv2+ or MIT or BSD
@@ -165,6 +165,9 @@ export TESTS_LOGGER_TIMEOUT=10000
 %_datadir/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/{c73e87a7-b5a1-4b6f-b10b-0bd70241a64d}.xpi
 
 %changelog
+* Wed Jun 07 2023 Stanislav Levin <slev@altlinux.org> 0.15.1-alt12
+- Fixed FTBFS (pylint 2.17).
+
 * Mon Sep 26 2022 Stanislav Levin <slev@altlinux.org> 0.15.1-alt11
 - Fixed FTBFS (missing tests dependency on dbus-launch).
 
