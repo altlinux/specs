@@ -1,14 +1,14 @@
 %def_enable snapshot
 
-%define ver_major 0.6
+%define ver_major 0.8
 %define beta %nil
 %define pypi_name blueprintcompiler
 %def_disable docs
 %def_enable check
 
 Name: blueprint-compiler
-Version: %ver_major.0
-Release: alt1.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: A markup language for GTK user interface files
 Group: Development/GNOME and GTK+
@@ -26,7 +26,8 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
-%{?_enable_check:BuildRequires: python3-module-pygobject3}
+%{?_enable_check:BuildRequires: xvfb-run /bin/dbus-launch python3-module-pygobject3
+BuildRequires: fontconfig at-spi2-core typelib(Adw) = 1}
 
 %description
 %summary
@@ -46,7 +47,7 @@ See also https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/
 %find_lang %name
 
 %check
-%__meson_test -t 2
+xvfb-run %__meson_test -t 2
 
 %files -f %name.lang
 %_bindir/%name
@@ -55,6 +56,9 @@ See also https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/
 %doc NEWS* README*
 
 %changelog
+* Mon Jun 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- updated to v0.8.1-2-g93392e5
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1.1
 - increased tests timeout for some slower machines, e.g. most modern
   riscv64 boards (voropaevdmtr@)
