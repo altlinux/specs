@@ -1,8 +1,8 @@
 %define soname 7
 
 Name: primecount
-Version: 7.6
-Release: alt1.1
+Version: 7.8
+Release: alt1
 Summary: Count the number of primes
 License: BSD-2-Clause
 Group: Sciences/Mathematics
@@ -76,6 +76,9 @@ ctest
 %_pkgconfigdir/primecount.pc
 
 %changelog
+* Wed Jun 07 2023 Leontiy Volodin <lvol@altlinux.org> 7.8-alt1
+- New version 7.8.
+
 * Tue Dec 13 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.6-alt1.1
 - Fixed build for Elbrus.
 
