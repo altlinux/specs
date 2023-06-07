@@ -1,5 +1,5 @@
 Name:     vml
-Version:  0.1.8
+Version:  0.1.9
 Release:  alt1
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
@@ -57,6 +57,15 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Tue Jun 06 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.9-alt1
+- Fix updating images config
+- Fix creating ~ with rsync-to
+- Add clean command to prepare vm be used as image
+- Add check to rsync commands
+- Setup sudo for gui user
+- Update ubuntu and fedora images
+- Remove outdated images
+
 * Tue Oct 04 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.8-alt1
 - Fix vml show --all wrong state output
 - Fix version show
