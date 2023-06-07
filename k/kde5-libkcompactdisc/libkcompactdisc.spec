@@ -4,7 +4,7 @@
 %define libkf5compactdisc libkf5compactdisc%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -63,17 +63,18 @@ KF5 library
 %doc COPYING*
 
 %files devel
-%_K5inc/kcompactdisc_version.h
 %_K5inc/KCompactDisc/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5CompactDisc/
-#%_K5archdata/mkspecs/modules/qt_KCompactDisc.pri
 
 %files -n %libkf5compactdisc
 %_K5lib/libKF5CompactDisc.so.%sover
 %_K5lib/libKF5CompactDisc.so.*
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

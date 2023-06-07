@@ -10,14 +10,14 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 22.12.3
-Release: alt2
+Version: 23.04.1
+Release: alt1
 %K5init
 
 Group: File tools
 Summary: The file manager for KDE
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
 
 Requires: kf5-kio
 #Requires: kf5-kio-extras
@@ -26,13 +26,12 @@ Source: %rname-%version.tar
 Patch2: alt-def-general.patch
 Patch3: alt-def-toolbar.patch
 Patch4: alt-fix-unmounting-during-preview-generation.patch
-Patch5: alt-crash.patch
 
 # Automatically added by buildreq on Fri Apr 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libxapian-devel python-module-google qt5-phonon-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel qt5-x11extras-devel
 BuildRequires: libxapian-devel desktop-file-utils
 BuildRequires: packagekit-qt-devel
 BuildRequires: kf5-kfilemetadata-devel kf5-baloo-devel kde5-baloo-widgets-devel
@@ -82,8 +81,7 @@ KF5 library
 %setup -n %rname-%version
 %patch2 -p1
 %patch3 -p1
-%patch4 -p2
-%patch5 -p1
+#%patch4 -p2
 
 %build
 %K5build \
@@ -141,6 +139,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt2
 - add x-scheme-handler/smb mime handler
 
@@ -279,61 +280,61 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 * Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
-* Wed Aug 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt4%ubt
+* Wed Aug 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt4
 - update russian translation
 
-* Thu Aug 09 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt3%ubt
+* Thu Aug 09 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt3
 - update russian translation
 
-* Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
+* Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
 - update russian translation
 
-* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1
 - new version
 
-* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
-* Tue May 08 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt2%ubt
+* Tue May 08 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt2
 - update russian translation
 
-* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1
 - new version
 
-* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1
 - new version
 
-* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1
 - new version
 
-* Tue Aug 22 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt5%ubt
+* Tue Aug 22 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt5
 - revert to: F3 closes inactive panel
 
-* Tue Aug 22 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt4%ubt
+* Tue Aug 22 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt4
 - revert previous changes
 
-* Fri Aug 18 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt3%ubt
+* Fri Aug 18 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt3
 - add buttons closing left/right panel
 
-* Mon Jul 24 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt2%ubt
+* Mon Jul 24 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt2
 - Fix: crash after closing left panel + changing tab
 
-* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1
 - new version
 
-* Thu Jul 06 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.2-alt2%ubt
+* Thu Jul 06 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.2-alt2
 - F3 closes inactive panel
 
-* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1
 - new version
 
-* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1
 - new version
 
-* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
 - new version
 
 * Thu Nov 24 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1

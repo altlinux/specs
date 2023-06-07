@@ -2,8 +2,8 @@
 %define req_samba_pkgs samba,samba-common-tools,samba-client,samba-usershares
 
 Name: kde5-network-filesharing
-Version: 22.12.3
-Release: alt2
+Version: 23.04.1
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -28,6 +28,7 @@ Patch6: alt-share-under-domain-user.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel
 BuildRequires: packagekit-qt-devel
+BuildRequires: qcoro5-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kdoctools-devel
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel
@@ -70,6 +71,9 @@ rm -f po/ru/kfileshare.po.old
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Fri Apr 28 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt2
 - fix samba packages list to install for filesharing
 

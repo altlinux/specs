@@ -1,7 +1,7 @@
 %define rname kwalletmanager
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace no_appdata
 
@@ -69,7 +69,7 @@ cp -ar po/ru/docs/kwallet5 po/ru/docs/kwalletmanager5
 %_K5icon/*/*/apps/kwalletmanager2.*
 %_K5icon/*/*/actions/wallet-*.*
 %_K5libexecdir/kauth/kcm_kwallet_helper5
-%_K5plug/kcm_kwallet5.so
+%_K5plug/plasma/kcms/systemsettings_qwidgets/*kwallet*.so
 %_datadir/dbus-1/services/*kwallet*.service
 %_K5dbus_sys_srv/*kwallet*.service
 %_K5dbus/system.d/*kwallet*.conf
@@ -80,6 +80,9 @@ cp -ar po/ru/docs/kwallet5 po/ru/docs/kwalletmanager5
 
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

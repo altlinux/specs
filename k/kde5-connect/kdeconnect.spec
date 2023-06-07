@@ -1,13 +1,13 @@
 %define rname kdeconnect-kde
 
-%define sover 22
+%define sover 23
 %define libkdeconnectcore libkdeconnectcore%sover
 %define libkdeconnectpluginkcm libkdeconnectpluginkcm%sover
 %define libkdeconnectinterfaces libkdeconnectinterfaces%sover
 %define libkdeconnectsmshelper libkdeconnectsmshelper%sover
 
 Name: kde5-connect
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -20,7 +20,7 @@ Provides: %rname = %version
 Provides: kde-connect = %version kdeconnect-kde = %version
 Requires: libqt5-quickparticles
 Requires: /usr/bin/sshfs qca-qt5-ossl
-Requires: kf5-kirigami
+Requires: kf5-kirigami kf5-kirigami-addons
 # KF5PeopleVCard
 
 Source: %rname-%version.tar
@@ -42,6 +42,7 @@ BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjob
 BuildRequires: kf5-kservice-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
 BuildRequires: kf5-kdoctools-devel kf5-kirigami-devel kf5-kpeople-devel kf5-qqc2-desktop-style-devel
 BuildRequires: kf5-kpackage-devel
+BuildRequires: kf5-modemmanager-qt-devel ModemManager-devel
 BuildRequires: kde5-plasma-wayland-protocols
 
 %description
@@ -112,6 +113,15 @@ for d in %buildroot/%_K5doc/* ; do
 	&& cp -ar $d/kdeconnect-kde $d/kdeconnect \
 	||:
 done
+for f in \
+    %buildroot/%_datadir/deepin/dde-file-manager/oem-menuextensions/*connect*.desktop \
+    %buildroot/%_datadir/Thunar/sendto/kdeconnect-thunar.desktop \
+    %buildroot/%_datadir/contractor/kdeconnect.contract \
+    #
+do
+    sed -i 's|^Exec=|Exec=kde5 |' $f
+done
+
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -123,10 +133,10 @@ done
 %files
 %_K5bin/kdeconnect-*
 %_K5exec/kdeconnectd
-%_K5start/org.kde.kdeconnect.*.desktop
-%_K5xdgapp/org.kde.kdeconnect*.desktop
+%_K5start/*kdeconnect*.desktop
+%_K5xdgapp/*kdeconnect*.desktop
 %_K5plug/kf5/*/*kdeconnect*.so
-%_K5plug/*kdeconnect*.so
+%_K5plug/plasma/kcms/systemsettings_qwidgets/*kdeconnect*.so
 %_K5plug/kdeconnect/
 %_K5qml/org/kde/kdeconnect/
 %_K5dbus_srv/org.kde.kdeconnect.service
@@ -137,7 +147,11 @@ done
 %_K5data/kdeconnect/
 %_datadir/metainfo/*kdeconnect*.xml
 %_datadir/zsh/site-functions/_kdeconnect
+#
 %_datadir/deepin/dde-file-manager/oem-menuextensions/*connect*.desktop
+%_datadir/Thunar/sendto/kdeconnect-thunar.desktop
+%_datadir/contractor/kdeconnect.contract
+%_datadir/nautilus-python/extensions/kdeconnect-share.py
 
 %files -n %libkdeconnectcore
 %_K5lib/libkdeconnectcore.so.%sover
@@ -153,6 +167,9 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

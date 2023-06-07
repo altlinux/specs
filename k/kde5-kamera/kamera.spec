@@ -1,14 +1,14 @@
 %define rname kamera
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
 Summary: Digital cameras support for KDE
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
 
@@ -21,7 +21,7 @@ BuildRequires: libgphoto2-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel kf5-solid-devel
+BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-kcmutils-devel
 
 %description
 %summary.
@@ -61,13 +61,17 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5xdgapp/*amera*.desktop
 %_K5plug/plasma/kcms/systemsettings_qwidgets/*amera*.so
 %_K5plug/kf5/kio/*amera*.so
 %_K5data/solid/actions/*amera*.desktop
+%_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init
 
@@ -23,6 +23,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel
 BuildRequires: libexiv2-devel libjpeg-devel liblcms2-devel libpng-devel zlib-devel libtiff-devel
 #BuildRequires: libcfitsio-devel
+BuildRequires: wayland-protocols qt5-wayland-devel
 BuildRequires: kde5-libkdcraw-devel
 BuildRequires: kde5-kcolorpicker-devel kde5-kimageannotator-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel
@@ -112,6 +113,9 @@ rm -f po/ru/gwenview.po.tmp
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

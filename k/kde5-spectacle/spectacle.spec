@@ -5,7 +5,7 @@
 %define service_name app-org.kde.spectacle
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace no_appdata
 
@@ -24,14 +24,16 @@ Patch4: alt-def-capture-mode.patch
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcb-render-util libxcbutil-cursor libxcbutil-image libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 xml-common xml-utils
 #BuildRequires: extra-cmake-modules kde5-libkipi-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdoctools-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-solid-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-image-devel python-module-google python3-dev qt5-declarative-devel qt5-x11extras-devel ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-x11extras-devel qt5-svg-devel
+BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-x11extras-devel qt5-svg-devel qt5-quickcontrols2-devel
+BuildRequires: qt5-wayland-devel kde5-plasma-wayland-protocols
+BuildRequires: plasma5-kpipewire-devel
 BuildRequires: libxcbutil-cursor-devel libxcbutil-devel libxcbutil-image-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdoctools-devel
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
 BuildRequires: kf5-solid-devel kf5-knewstuff-devel kf5-kglobalaccel-devel kf5-kwayland-devel
-BuildRequires: kf5-purpose-devel
+BuildRequires: kf5-purpose-devel kf5-kirigami-devel
 BuildRequires: plasma5-libkscreen-devel
 BuildRequires: kde5-kcolorpicker-devel kde5-kimageannotator-devel
 
@@ -90,6 +92,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

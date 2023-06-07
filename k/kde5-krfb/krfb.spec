@@ -4,7 +4,7 @@
 %define libkrfbprivate libkrfbprivate%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace no_appdata
 
@@ -21,7 +21,8 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-base-devel-static qt5-x11extras-devel
 BuildRequires: libvncserver-devel libxcbutil-image-devel
-BuildRequires: pipewire-libs-devel libgbm-devel libepoxy-devel
+BuildRequires: pipewire-libs-devel plasma5-kpipewire-devel
+BuildRequires: libgbm-devel libepoxy-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdnssd-devel
 BuildRequires: kf5-kdoctools kf5-kdoctools-devel kf5-ki18n-devel kf5-knotifications-devel kf5-kwallet-devel
@@ -91,6 +92,9 @@ KF5 library
 %_K5lib/libkrfbprivate.so.*
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

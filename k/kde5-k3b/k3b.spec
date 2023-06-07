@@ -22,7 +22,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -147,6 +147,7 @@ fi
 
 %files -f %name.lang
 %doc LICENSES/* README.txt FAQ.txt PERMISSIONS.txt
+%_datadir/qlogging-categories5/*.*categories
 %config %_K5xdgconf/*k3b*
 %_K5bin/%rname
 %_K5plug/k3b_plugins/
@@ -183,6 +184,9 @@ fi
 %_K5inc/k3b*.h
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

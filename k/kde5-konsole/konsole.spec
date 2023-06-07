@@ -14,8 +14,8 @@
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: kde5-%rname
-Version: 22.12.3
-Release: alt2
+Version: 23.04.1
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -43,8 +43,9 @@ Patch16: alt-new-tab-button.patch
 # optimized out: alternatives cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdb4-devel libxkbfile-devel python-module-google qt5-script-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires: rpm-build-xdg
 BuildRequires: libalternatives-devel
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-script-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-script-devel qt5-multimedia-devel
 BuildRequires: libdb4-devel zlib-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
@@ -105,16 +106,18 @@ Requires: %name-common = %version-%release
 
 %build
 %K5build \
-%if_disabled obsolete_kde4
+%if_enabled obsolete_kde4
+    -DCONFIG_INSTALL_DIR:PATH=%_xdgconfigdir \
+    -DDATA_INSTALL_DIR=%_datadir \
+%else
+    -DCONFIG_INSTALL_DIR:PATH=%_K5xdgconf \
     -DDATA_INSTALL_DIR=%_K5data \
 %endif
     #
 
 %install
 %K5install
-%if_disabled obsolete_kde4
-%K5install_move data konsole khotkeys knsrcfiles kio kconf_update
-%endif
+%K5install_move data kglobalaccel kio knsrcfiles kconf_update
 
 # install profiles
 KONSOLE_DATA_DIR=%buildroot/%_K5data/konsole/
@@ -149,24 +152,23 @@ __EOF__
 %_K5plug/konsoleplugins/
 %_K5xdgapp/org.kde.konsole.desktop
 %if_enabled obsolete_kde4
+%config %_xdgconfigdir/*konsole*
 %_datadir/konsole/
-%_datadir/kio/servicemenus/konsolerun.desktop
-%_datadir/kconf_update/konsole_globalaccel.upd
 %else
-%_K5data/kio/servicemenus/konsolerun.desktop
+%config %_K5xdgconf/*konsole*
 %_K5data/konsole/
-%_K5conf_up/konsole_globalaccel.upd
 %endif
+%_K5conf_bin/*konsole*
+%_K5conf_up/*konsole*
+%_K5data/kio/servicemenus/konsolerun.desktop
+#
 %_K5srv/*.desktop
 %_K5srvtyp/*.desktop
 %_K5notif/*
-%if_enabled obsolete_kde4
-%_datadir/knsrcfiles/*konsole*
-%else
 %_K5data/knsrcfiles/*konsole*
-%endif
+%_K5data/kglobalaccel/*konsole*
 %if_enabled obsolete_kde4
-%_datadir/metainfo/org.kde.konsole*.*.xml
+%_datadir/metainfo/*konsole*
 %endif
 
 %files -n %libkonsoleprivate
@@ -178,6 +180,9 @@ __EOF__
 %_K5lib/libkonsoleapp.so.%sover
 
 %changelog
+* Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Thu Mar 16 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt2
 - provide x-terminal-emulator virtual package
 
