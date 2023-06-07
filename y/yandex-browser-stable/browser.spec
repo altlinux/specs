@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 23.5.1.659
+Version: 23.5.1.753
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -204,6 +204,9 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+* Wed Jun 7 2023 yabro <yabro@altlinux.org> 23.5.1.753-alt1
+- Browser updated to 23.5.1.753
+
 * Wed May 31 2023 yabro <yabro@altlinux.org> 23.5.1.659-alt1
 - Browser updated to 23.5.1.659
   + High CVE-2023-2133: Out of bounds memory access in Service Worker API.
