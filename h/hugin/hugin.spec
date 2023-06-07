@@ -5,10 +5,11 @@
 %def_enable hsi
 # lapack support disabled by default
 %def_disable lapack
+%def_enable epoxy
 
 Name: hugin
 Version: 2022.0.0
-Release: alt1
+Release: alt2
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
@@ -18,6 +19,8 @@ Url: https://hugin.sourceforge.net/
 #tarball: https://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source: %name-%version.tar
 Patch1: Add-translations-in-desktop-files.patch
+# https://sourceforge.net/p/hugin/hugin/ci/4a3fe139b64b06f95c80db9d24a1a5a35e7abb60/
+Patch10: hugin-2023-up-epoxy.patch
 
 %define boost_ver 1.54
 %define pano_ver 2.9.21
@@ -46,6 +49,7 @@ BuildRequires: python3-devel swig
 %add_python3_path %_datadir/%name/data/plugins*
 %endif
 %{?_enable_lapack:BuildRequires: liblapack-devel}
+%{?_enable_epoxy:BuildRequires: libepoxy-devel}
 BuildRequires: desktop-file-utils libappstream-glib-devel perl-podlators
 
 %description
@@ -55,6 +59,7 @@ panorama, stitch any series of overlapping pictures and much more.
 %prep
 %setup
 %patch1 -p2
+%patch10 -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -65,6 +70,7 @@ panorama, stitch any series of overlapping pictures and much more.
 	%{?_enable_gdk_x11:-DUSE_GDKBACKEND_X11:BOOL=ON} \
 	%{?_enable_hsi:-DBUILD_HSI:BOOL=ON} \
 	%{?_enable_lapack:-DENABLE_LAPACK:BOOL=ON} \
+	%{?_enable_epoxy:-DBUILD_WITH_EPOXY:BOOL=ON} \
 	-DPYTHON_EXECUTABLE=%__python3
 %cmake_build
 
@@ -98,6 +104,9 @@ done
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Wed Jun 07 2023 Yuri N. Sedunov <aris@altlinux.org> 2022.0.0-alt2
+- build with libepoxy instead of GLEW for OpenGL pointer management (ALT #45876)
+
 * Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2022.0.0-alt1
 - 2022.0.0
 - built with wxGTK-3.2
