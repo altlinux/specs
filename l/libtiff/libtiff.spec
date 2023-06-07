@@ -1,11 +1,13 @@
+%def_without jbig
+
 Name: libtiff
 Version: 4.4.0
-Release: alt3
+Release: alt4
 
 Summary: Library of functions for manipulating TIFF format image files
 License: BSD-style
 Group: System/Libraries
-Url: http://www.remotesensing.org/libtiff/
+Url: http://www.libtiff.org/
 
 # git://git.altlinux.org/gears/l/%name
 Source: %name-%version-%release.tar
@@ -13,8 +15,15 @@ Source: %name-%version-%release.tar
 %def_disable static
 %def_enable cxx
 
-BuildRequires: gcc-c++ libSM-devel libXi-devel libXmu-devel libfreeglut-devel libjbig-devel libjpeg-devel liblzma-devel libwebp-devel libzstd-devel zlib-devel
+BuildRequires: gcc-c++ libSM-devel libXi-devel libXmu-devel libfreeglut-devel libjpeg-devel liblzma-devel libwebp-devel libzstd-devel zlib-devel
 BuildRequires: libdeflate-devel
+
+%if_with jbig
+BuildRequires: libjbig-devel
+%else
+BuildConflicts: libjbig-devel
+%endif
+
 %description
 This package contains a library of functions for manipulating
 TIFF (Tagged Image File Format) image format files.  TIFF is a widely
@@ -176,6 +185,10 @@ xz -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Wed Jun 07 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.4.0-alt4
+- Built without libjbig support (closes: #46425).
+- spec: fixed url (closes: #43644).
+
 * Sun Mar 19 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.4.0-alt3
 - Built with exported TIFFSetCompressionScheme and _TIFFgetMode syms (are
   needed for tcl-img-1.4.14).
