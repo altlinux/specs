@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
 Summary: User session management for Flask
 License: MIT
@@ -16,10 +16,19 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-blinker
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_enabled check
 BuildRequires: python3-module-flask
-BuildRequires: python3-module-pytest
+BuildRequires: python3-module-blinker
 BuildRequires: python3-module-semantic_version
+BuildRequires: python3-module-asgiref
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-tox-no-deps
+BuildRequires: python3-module-tox-console-scripts
+BuildRequires: python3-module-coverage
+%endif
 
 
 %description
@@ -36,17 +45,13 @@ extension capable of loading users from their ID.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir/
-# disable warnings judged as errors during tests
-sed "s;    error;    default;" -i setup.cfg
-
-python3 -m pytest -vra ./tests
+%tox_check_pyproject -- -vra ./tests
 
 %files
 %doc CHANGES.md LICENSE README* docs/*.rst
@@ -54,6 +59,10 @@ python3 -m pytest -vra ./tests
 
 
 %changelog
+* Thu Jun 08 2023 Danil Shein <dshein@altlinux.org> 0.6.2-alt2
+- NMU: fix FTBFS due to tests failed
+  + migrate to pyproject macroses
+
 * Thu Sep 22 2022 Danil Shein <dshein@altlinux.org> 0.6.2-alt1
 - NMU: new version 0.6.2
   + compatible with Werkzeug 2.2 and Flask 2.2
