@@ -2,14 +2,14 @@
 %define oname certifi
 
 Name: python3-module-%oname
-Version: 2021.5.30
+Version: 2023.5.7
 Release: alt1
 Summary: Python package for providing Mozilla's CA Bundle
 License: MPL-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/certifi/
 
-Source0: https://files.pythonhosted.org/packages/6d/78/f8db8d57f520a54f0b8a438319c342c61c22759d8f9a1cd2e2180b5e5ea9/certifi-2021.5.30.tar.gz
+Source0: https://files.pythonhosted.org/packages/93/71/752f7a4dd4c20d6b12341ed1732368546bc0ca9866139fe812f6009d9ac7/certifi-2023.5.7.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -36,6 +36,9 @@ is derived from Mozilla Firefox's canonical set.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jun 08 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.5.7-alt1
+- 2023.5.7 released
+
 * Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.5.30-alt1
 - 2021.5.30 released
 
