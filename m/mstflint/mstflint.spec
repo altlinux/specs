@@ -7,7 +7,7 @@
 %def_enable openssl
 
 Name: mstflint
-Version: 4.23.0
+Version: 4.24.0
 Release: alt1
 
 Summary: Mellanox firmware burning application
@@ -78,6 +78,9 @@ rm -f  %buildroot%_libdir/*.a
 %_man1dir/*
 
 %changelog
+* Thu Jun 08 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.24.0-alt1
+- v4.24.0-1
+
 * Tue Mar 07 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.23.0-alt1
 - v4.23.0-1
 
