@@ -1,81 +1,75 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname pyproj
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.9.6
-Release: alt2
-Summary: Pyrex generated python interface to PROJ.4 library
+Version: 3.4.1
+Release: alt1
+Summary: Python interface to PROJ
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/pyproj/
+VCS: https://github.com/pyproj4/pyproj
 
-# https://github.com/jswhit/pyproj.git
-Source: %oname-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: time
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
-BuildRequires: /usr/bin/2to3
+BuildRequires: proj
+BuildRequires: proj-devel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-certifi
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-pandas
+BuildRequires: python3-module-xarray
+BuildRequires: python3-module-shapely
+%endif
 
 %description
-Pyrex generated python interface to PROJ.4 library
-
-Performs cartographic transformations and geodetic computations.
-
-The Proj class can convert from geographic (longitude,latitude) to
-native map projection (x,y) coordinates and vice versa, or from one map
-projection coordinate system directly to another.
-
-The Geod class can perform forward and inverse geodetic, or Great
-Circle, computations. The forward computation involves determining
-latitude, longitude and back azimuth of a terminus point given the
-latitude and longitude of an initial point, plus azimuth and distance.
-The inverse computation involves determining the forward and back
-azimuths and distance given the latitudes and longitudes of an initial
-and terminus point.
-
-Input coordinates can be given as python arrays, lists/tuples, scalars
-or numpy/Numeric/numarray arrays. Optimized for objects that support the
-Python buffer protocol (regular python and numpy array objects).
-
-%package tests
-Summary: Tests for pyrex generated python interface to PROJ.4 library
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description tests
-Pyrex generated python interface to PROJ.4 library
-
-Performs cartographic transformations and geodetic computations.
-
-This package contains tests for pyrex generated python interface to
-PROJ.4 library.
+Python interface to PROJ (cartographic projections and coordinate
+transformations library)
 
 %prep
 %setup
 
-find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+export PROJ_DIR="%_usr/"
+export PROJ_LIBDIR="%_libdir"
+export PROJ_INCDIR="%_includedir"
+%pyproject_build
 
 %install
-%python3_install
-install -d %buildroot%python3_sitelibdir/%oname/test
-install -p -m644 test/* %buildroot%python3_sitelibdir/%oname/test
-chmod +x %buildroot%python3_sitelibdir/%oname/data/test*
+%pyproject_install
+
+%check
+cd ..
+mkdir -p pyproj-test-folder
+cd pyproj-test-folder
+cp -r ../%name-%version/test .
+cp -r ../%name-%version/pytest.ini .
+
+PATH="%buildroot%_bindir:$PATH" \
+PYTHONPATH=%buildroot%python3_sitelibdir \
+py.test-3 -m "not network"
 
 %files
-%doc Changelog LICENSE* *.md docs
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test
-%exclude %python3_sitelibdir/%oname/data/test*
+%doc LICENSE* *.md docs
+%_bindir/%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
-%files tests
-%python3_sitelibdir/*/test
-%python3_sitelibdir/%oname/data/test*
 
 %changelog
+* Tue Feb 28 2023 Anton Vyatkin <toni@altlinux.org> 3.4.1-alt1
+- new version 3.4.1
+
 * Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 1.9.6-alt2
 - Drop python2 support.
 
