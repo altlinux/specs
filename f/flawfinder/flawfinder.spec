@@ -4,7 +4,7 @@
 
 Name: flawfinder
 Version: 2.0.19
-Release: alt1
+Release: alt2
 
 Summary: Examines C/C++ source code for security flaws
 License: GPLv2+
@@ -16,7 +16,9 @@ Source: http://www.dwheeler.com/%name/%name-%version.tar.gz
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: flex
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 Summary(ru_RU.UTF-8): Исследует исходный код на С/С++ на предмет ошибок в безопасности
 
@@ -40,16 +42,15 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %build
 %make_build
-%python3_build
+%pyproject_build
 %{?!_without_check:%{?!_disable_check:%make_build -k check ||:}}
 
 %install
-#makeinstall_std
-%python3_install
+%pyproject_install
 xz ChangeLog
 
 %files
-%python3_sitelibdir/%srcname-%version-py3.10.egg-info
+%python3_sitelibdir/%srcname-%version.dist-info/
 %python3_sitelibdir/__pycache__/%{srcname}*.pyc
 %python3_sitelibdir/%{srcname}.py
 %_bindir/%name
@@ -59,6 +60,10 @@ xz ChangeLog
 %{?!_without_check:%{?!_disable_check:%doc test/*.*}}
 
 %changelog
+* Thu Jun 08 2023 Danil Shein <dshein@altlinux.org> 2.0.19-alt2
+- fix FTBFS due to Python version upgrade
+  + migrate to pyproject macroses
+
 * Tue Mar 29 2022 Ilya Mashkin <oddity@altlinux.ru> 2.0.19-alt1
 - 2.0.19
 - Update License tag
