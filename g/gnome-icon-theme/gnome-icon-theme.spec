@@ -3,10 +3,10 @@
 
 Name: gnome-icon-theme
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A set of icons for GNOME 2 desktop
-License: LGPL
+License: LGPL-3.0
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
@@ -23,25 +23,23 @@ Provides: icon-theme-gnome = %version-%release
 Requires: icon-naming-utils >= %icon_naming_utils_ver
 
 # From configure.in
-BuildPreReq: intltool >= 0.40.0
-BuildPreReq: pkgconfig >= 0.19
-BuildPreReq: icon-naming-utils >= %icon_naming_utils_ver
+BuildRequires: intltool >= 0.40.0
+BuildRequires: pkgconfig >= 0.19
+BuildRequires: icon-naming-utils >= %icon_naming_utils_ver
 BuildRequires: gtk-update-icon-cache perl-XML-Parser
 
 %description
 The standard set of icons for Gnome.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
-ln -s gnome %buildroot%_iconsdir/default.gnome
-
+%makeinstall_std
 %find_lang %name
 
 %define conf_string gtk-icon-theme-name = \"gnome\"
@@ -75,11 +73,13 @@ fi
 %files -f %name.lang
 %dir %_iconsdir/gnome
 %_iconsdir/gnome/*
-%_iconsdir/default.gnome
 %_datadir/pkgconfig/*
 %doc AUTHORS README TODO
 
 %changelog
+* Thu Jun 08 2023 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1.1
+- removed obsolete default.gnome symlink (ALT #46439)
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
