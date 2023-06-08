@@ -1,9 +1,12 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define  srcname svglib
 
 #def_disable check
 
 Name:    python3-module-%srcname
-Version: 1.1.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Read SVG files and convert them to other formats
@@ -11,11 +14,10 @@ License: LGPL-3.0-or-later
 Group:   Development/Python3
 URL:     https://github.com/deeplook/svglib
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
-BuildRequires: python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_disabled check
 %else
@@ -29,6 +31,8 @@ BuildArch: noarch
 
 # Source-url: https://github.com/deeplook/svglib/archive/refs/tags/v%version.tar.gz
 Source: %srcname-%version.tar
+
+Patch: remove-test-required-internet.patch
 
 %description
 Svglib is a pure-Python library for reading SVG files and converting
@@ -57,19 +61,20 @@ This part %name.
 
 %prep
 %setup -n %srcname-%version
+%autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %check
-export PYTHONPATH=%buildroot/%python3_sitelibdir/
-py.test3 -v -k "not TestWikipediaFlags and not TestW3CSVG"
+%tox_check_pyproject
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%srcname
+%python3_sitelibdir/%srcname-%version.dist-info
 %doc *.rst *.txt
 
 %files -n svg2pdf
@@ -77,5 +82,8 @@ py.test3 -v -k "not TestWikipediaFlags and not TestW3CSVG"
 %_man1dir/*.1.*
 
 %changelog
+* Mon May 29 2023 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt1
+- new version (1.5.1) with rpmgs script
+
 * Fri Jul 30 2021 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus
