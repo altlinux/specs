@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.3.0
-Release: alt1
+Release: alt2
 Summary: Common/best-practice Invoke tasks and collections
 License: BSD
 Group: Development/Python3
@@ -25,6 +25,8 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: /dev/pts
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
+# excluded by default
+BuildRequires: python3-module-twine
 %endif
 
 %description
@@ -58,6 +60,9 @@ common best practices.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jun 08 2023 Stanislav Levin <slev@altlinux.org> 3.3.0-alt2
+- Fixed FTBFS (missing dependencies).
+
 * Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
 - 3.2.0 -> 3.3.0.
 
