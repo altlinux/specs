@@ -16,7 +16,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.11.0
-Release: alt2
+Release: alt2.1
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -34,8 +34,12 @@ Source: %name-%version.tar
 Patch17: mozjs78-armv7_disable_WASM_EMULATE_ARM_UNALIGNED_FP_ACCESS.patch
 # 0ad links with SharedArrayRawBufferRefs
 Patch20: mozjs78-0ad-FixSharedArray.patch
-# fix build with ptrthon-3.10 (backported from 91)
+# fix build with python-3.10 (backported from 91)
 Patch30: mozjs-78.11.0-mozbuild-util.patch
+# fix build with python-3.11
+# in python-3.11 open(), io.open(), codecs.open() and fileinput.FileInput no longer
+# accept 'U' (“universal newline”) in the file mode.
+Patch31: mozjs-78.11.0-alt-python-3.11.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /dev/shm /proc
@@ -92,6 +96,7 @@ interface to the JavaScript engine.
 
 %patch20 -p1 -b .0ad
 %patch30 -p1 -b .collection
+%patch31 -p1 -b .python-3.11
 
 %build
 mkdir _build
@@ -182,6 +187,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Thu Jun 08 2023 Yuri N. Sedunov <aris@altlinux.org> 78.11.0-alt2.1
+- fixed build with Python-3.11
+
 * Fri Mar 11 2022 Yuri N. Sedunov <aris@altlinux.org> 78.11.0-alt2
 - fixed build with Python-3.10
 
