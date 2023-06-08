@@ -1,23 +1,22 @@
-Name:           libserf
-Version:        1.3.9
-Release:        alt2
+Name:    libserf
+Version: 1.3.10
+Release: alt1
 
-Summary:        High-Performance Asynchronous HTTP Client Library
-License:        Apache-2.0
-URL:            http://serf.apache.org/
-Group:		System/Libraries
+Summary: High-Performance Asynchronous HTTP Client Library
+License: Apache-2.0
+URL:     http://serf.apache.org/
+Group:   System/Libraries
 
-Source0:        https://archive.apache.org/dist/serf/serf-%{version}.tar.bz2
-Patch1:         libserf-norpath.patch
-Patch2:		libserf-python3.patch
+Source0: https://archive.apache.org/dist/serf/serf-%{version}.tar.bz2
+Patch1: libserf-norpath.patch
 
-BuildRequires:  libapr1-devel
-BuildRequires:  libaprutil1-devel
-BuildRequires:  libkrb5-devel
-BuildRequires:  openssl-devel
-BuildRequires:  zlib-devel
-BuildRequires:  scons
-BuildRequires:  pkgconfig
+BuildRequires: libapr1-devel
+BuildRequires: libaprutil1-devel
+BuildRequires: libkrb5-devel
+BuildRequires: openssl-devel
+BuildRequires: zlib-devel
+BuildRequires: scons
+BuildRequires: pkgconfig
 
 %description
 The serf library is a C-based HTTP client library built upon the Apache
@@ -26,20 +25,19 @@ read/write communication asynchronously. Memory copies and
 transformations are kept to a minimum to provide high performance
 operation.
 
-%package        devel
-Summary:        Development files for %name
-Group:		Development/C
-Requires:       %name = %version-%release
-Requires:       libapr1-devel
+%package  devel
+Summary:  Development files for %name
+Group:    Development/C
+Requires: %name = %version-%release
+Requires: libapr1-devel
 
-%description    devel
+%description devel
 This package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
 %setup -qn serf-%version
 %patch1 -p1
-%patch2 -p1
 
 # Shared library versioning support in scons is worse than awful...
 # minimally, here fix the soname to match serf-1.2.x.  Minor version
@@ -74,6 +72,9 @@ rm -f %buildroot%_libdir/*{.la,.a}
 %_libdir/pkgconfig/serf*.pc
 
 %changelog
+* Thu Jun 08 2023 Andrey Cherepanov <cas@altlinux.org> 1.3.10-alt1
+- New version.
+
 * Sat Apr 04 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt2
 - Fix build.
 - Fix License tag according to SPDX.
