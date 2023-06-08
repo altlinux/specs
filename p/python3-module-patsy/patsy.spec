@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.3
-Release: alt1
+Release: alt2
 Summary: A Python package for describing statistical models and for building design matrices
 License: BSD-2-Clause and Python
 Group: Development/Python3
@@ -30,6 +30,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-six
 BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-scipy
 %endif
 
 %if_with docs
@@ -132,6 +133,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jun 08 2023 Anton Vyatkin <toni@altlinux.org> 0.5.3-alt2
+- Fix FTBFS
+
 * Fri Apr 28 2023 Anton Vyatkin <toni@altlinux.org> 0.5.3-alt1
 - New version 0.5.3.
 
