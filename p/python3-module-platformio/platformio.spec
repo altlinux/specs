@@ -1,6 +1,6 @@
 Name: python3-module-platformio
 Version: 6.1.7
-Release: alt2
+Release: alt3
 
 Summary: PlatformIO Core
 License: Apache-2.0
@@ -13,19 +13,21 @@ BuildArch: noarch
 BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+
 BuildRequires: python3(pytest)
-BuildRequires: python3(click)
-BuildRequires: python3(semantic_version)
-BuildRequires: python3(wsproto)
-BuildRequires: python3(bottle)
-BuildRequires: python3(ajsonrpc)
-BuildRequires: python3(elftools)
 BuildRequires: python3(aiofiles)
-BuildRequires: python3(tabulate)
-BuildRequires: python3(zeroconf)
+BuildRequires: python3(ajsonrpc)
+BuildRequires: python3(bottle)
+BuildRequires: python3(click)
+BuildRequires: python3(elftools)
 BuildRequires: python3(marshmallow)
-BuildRequires: python3(uvicorn)
+BuildRequires: python3(requests)
+BuildRequires: python3(semantic_version)
 BuildRequires: python3(starlette)
+BuildRequires: python3(tabulate)
+BuildRequires: python3(uvicorn)
+BuildRequires: python3(wsproto)
+BuildRequires: python3(zeroconf)
 
 %description
 %summary
@@ -58,6 +60,9 @@ BuildRequires: python3(starlette)
 %python3_sitelibdir/platformio-%version.dist-info
 
 %changelog
+* Thu Jun 08 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.7-alt3
+- build deps fixed
+
 * Tue May 30 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.7-alt2
 - rebuilt with starlette version bump
 
