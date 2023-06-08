@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.188
+Version: 4.0.4.189
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Thu Jun 08 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4.189-alt1
+- rpm-build: provided_symbols: switched to eu-readelf to fix missing provides
+  for symbols with peculiar bits that affect the output format of readelf from
+  the binutils package (ALT#46447).
+
 * Tue May 23 2023 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.188-alt1
 - Set stdin to an empty stream for all build scripts.
 
