@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.8.1
-Release: alt2
+Release: alt3
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -879,6 +879,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Wed Jun 07 2023 Sergey V Turchin <zerg@altlinux.org> 2.8.1-alt3
+- NMU: using forward_pass for pam_sss.so in system-auth-sss-only.pam
+
 * Fri Jan 27 2023 Stanislav Levin <slev@altlinux.org> 2.8.1-alt2
 - Backported fix for sssd#6505.
 
