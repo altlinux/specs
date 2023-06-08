@@ -4,37 +4,25 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 Summary: Mock out responses from the requests package
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/requests-mock/
-
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
+Vcs: https://github.com/jamielennox/requests-mock
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(pbr)
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# deps
-BuildRequires: python3(six)
-BuildRequires: python3(requests)
-
-BuildRequires: python3(stestr)
-BuildRequires: python3(pytest)
-BuildRequires: python3(purl)
-BuildRequires: python3(urllib3)
-BuildRequires: python3(testtools)
+%add_pyproject_deps_check_filter 'requests-futures$'
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-%py3_provides %pypi_name
 
 %description
 The requests-mock library at its core is simply a transport adapter that
@@ -51,16 +39,22 @@ whatever ways works best for your project.
 %prep
 %setup
 %autopatch -p1
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile test-requirements.txt
+%endif
 
 %build
-export PBR_VERSION=%version
 %pyproject_build
 
 %install
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run -- python -m testtools.run discover
+%pyproject_run_pytest -ra -Wignore tests/pytest
 
 %files
 %doc *.rst
@@ -68,6 +62,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 08 2023 Stanislav Levin <slev@altlinux.org> 1.11.0-alt1
+- 1.10.0 -> 1.11.0.
+
 * Mon Oct 03 2022 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1
 - 1.9.3 -> 1.10.0.
 
