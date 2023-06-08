@@ -1,5 +1,5 @@
 Name:    openpace
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Cryptographic library for EAC version 2
@@ -99,5 +99,8 @@ mv %buildroot%_bindir/{,%name-}example
 %_defaultdocdir/%name
 
 %changelog
+* Thu Jun 08 2023 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
+- New version.
+
 * Wed Nov 30 2022 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
 - Initial build for Sisyphus.
