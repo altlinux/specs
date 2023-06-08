@@ -1,58 +1,57 @@
 %define _unpackaged_files_terminate_build 1
 %define oname BTrees
 
-%def_without check
+%def_with check
 %def_with bootstrap
+%def_with docs
 
 Name: python3-module-%oname
-Version: 4.9.2
-Release: alt2
+Version: 5.0
+Release: alt1
 
 Summary: Scalable persistent object containers
 License: ZPL-2.1
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/BTrees
-#Git: https://github.com/zopefoundation/BTrees.git
+Url: https://pypi.org/project/BTrees/
+Vcs: https://github.com/zopefoundation/BTrees.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+%if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
-
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-repoze.sphinx.autointerface
 BuildRequires: python3-module-sphinx_rtd_theme
+%endif
+
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-persistent
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-persistent-devel
+BuildRequires: python3-dev
+
 %if_without bootstrap
 BuildRequires: python3-module-ZODB
 %endif
 
 %if_with check
-BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-transaction
 %if_without bootstrap
 BuildRequires: python3-module-ZODB-tests
 %endif
 %endif
 
-%py3_requires zope.interface
+%py3_requires zope.interface persistent
 
 %filter_from_requires /BTrees\.[BFILOQUfs]\{3\}Tree/d
 
-%define overview							   \
-BTrees: scalable persistent components.					   \
-									   \
-This package contains a set of persistent object containers built around   \
-a modified BTree data structure. The trees are optimized for use inside    \
-ZODB's "optimistic concurrency" paradigm, and include explicit		   \
-resolution of conflicts detected by that mechannism.			   \
-									   \
-%nil
+%description
+This package contains a set of persistent object containers built around
+a modified BTree data structure. The trees are optimized for use inside ZODB's
+"optimistic concurrency" paradigm, and include explicit resolution of
+conflicts detected by that mechanism.
 
-%description %overview
 %package tests
 Summary: Tests for %oname
 Group: Development/Python3
@@ -72,53 +71,45 @@ This package contains documentation for %oname.
 %prep
 %setup
 
+%if_with docs
 %prepare_sphinx3 .
 ln -s ../objects.inv3 docs/
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
+%if_with docs
 sed -i "s|SPHINXBUILD   = sphinx-build|SPHINXBUILD   = py3_sphinx-build|" docs/Makefile
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
+%endif
 
 %check
-# remove pyproject.toml as it interferes unittests execution
-rm ./pyproject.toml
-sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
-sed -i 's|sphinx-build|#py3_sphinx-build|g' tox.ini
-
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3\
-    \/bin\/cp {env:_DOCTEST_BIN:} \{envbindir\}\/py3_sphinx-build\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py3_sphinx-build' tox.ini
-
-sed -i '/setenv =$/a\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
-    py%{python_version_nodots python3}: _DOCTEST_BIN=%_bindir\/py3_sphinx-build' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%pyproject_run -- zope-testrunner --test-path=src -vv
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/*
+%doc LICENSE.txt *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/BTrees-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 
+%if_with docs
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Jun 07 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Fri Dec 24 2021 Grigory Ustinov <grenka@altlinux.org> 4.9.2-alt2
 - Build without check for python3.10.
 

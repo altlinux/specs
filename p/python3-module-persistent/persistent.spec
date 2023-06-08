@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.0
-Release: alt1
+Release: alt2
 
 Summary: Translucent persistent objects
 License: ZPL-2.1
@@ -55,6 +55,15 @@ This package contains a generic tests persistence implementation for
 Python. It forms the core protocol for making objects interact
 "transparently" with a database such as the ZODB.
 
+%package devel
+Summary: Development files for translucent persistent objects
+Group: Development/Python3
+Requires: %name = %EVR
+Requires: python3-dev
+
+%description devel
+This package contains the files needed for binding the persistent C module.
+
 %prep
 %setup
 
@@ -71,6 +80,9 @@ ln -s ../objects.inv3 docs/
 install -p -m644 src/persistent/_compat.h \
 	%buildroot%_includedir/python%_python3_version%_python3_abiflags/
 
+# Don't bother with development files
+rm %buildroot%python3_sitelibdir/%oname/*.c
+
 # Build documentation
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
@@ -81,11 +93,11 @@ rm -f docs/_build/html/.buildinfo
 %tox_check_pyproject
 
 %files
-%doc *.txt
-%_includedir/python%_python3_version%_python3_abiflags
+%doc *.txt README.rst CHANGES.rst
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/%oname/test*
+%exclude %python3_sitelibdir/%oname/*.h
 
 %files docs
 %doc docs/_build/html/*
@@ -93,7 +105,14 @@ rm -f docs/_build/html/.buildinfo
 %files tests
 %python3_sitelibdir/%oname/test*
 
+%files devel
+%_includedir/python%_python3_version%_python3_abiflags
+%python3_sitelibdir/%oname/*.h
+
 %changelog
+* Sun Jun 04 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt2
+- Package split, create devel package (Closes: #46375).
+
 * Fri Apr 14 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 
