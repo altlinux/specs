@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: A python refactoring library
@@ -15,28 +15,30 @@ Group: Development/Python3
 Url: https://pypi.org/project/rope/
 Vcs: https://github.com/python-rope/rope
 
-Source: %pypi_name-%version.tar
+BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+Source0: %pypi_name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_timeout)
-BuildRequires: python3(pytoolconfig)
-BuildRequires: python3(build)
+%add_pyproject_deps_check_filter pip-tools
+%pyproject_builddeps_metadata_extra dev
+%pyproject_builddeps_check
+BuildRequires: python3(appdirs)
 BuildRequires: python3(sqlite3)
 %endif
-
-BuildArch: noarch
 
 %description
 %summary
 
 %prep
 %setup -n %pypi_name-%version
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -45,7 +47,7 @@ BuildArch: noarch
 %pyproject_install
 
 %check
-%__python3 -m pytest .
+%pyproject_run_pytest -vra
 
 %files
 %doc COPYING README.rst CHANGELOG.md docs
@@ -53,6 +55,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jun 08 2023 Anton Zhukharev <ancieg@altlinux.org> 1.8.0-alt1
+- New version.
+
 * Tue Jan 17 2023 Anton Zhukharev <ancieg@altlinux.org> 1.7.0-alt1
 - 1.7.0
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.3
-Release: alt1
+Release: alt2
 Summary: Python Language Server for the Language Server Protocol
 License: MIT
 Group: Development/Python3
@@ -24,6 +24,7 @@ BuildRequires(pre): rpm-build-pyproject
 # needed but filtered out by default
 BuildRequires: python3-module-flake8
 BuildRequires: python3-module-pylint
+BuildRequires: python3-module-appdirs
 %endif
 
 %description
@@ -50,6 +51,9 @@ A Python 3.7+ implementation of the Language Server Protocol.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 08 2023 Anton Zhukharev <ancieg@altlinux.org> 1.7.3-alt2
+- Fix FTBFS.
+
 * Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 1.7.3-alt1
 - 1.7.1 -> 1.7.3.
 
