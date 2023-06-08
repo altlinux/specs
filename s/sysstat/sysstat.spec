@@ -4,7 +4,7 @@
 
 Name: sysstat
 Version: 12.7.2
-Release: alt1
+Release: alt2
 
 Summary: Performance monitoring tools for Linux
 License: GPL-2.0-or-later
@@ -182,6 +182,9 @@ fi
 %_desktopdir/isag.desktop
 
 %changelog
+* Thu Jun 08 2023 Vitaly Chikunov <vt@altlinux.org> 12.7.2-alt2
+- (Fixes: CVE-2023-33204).
+
 * Sun Jan 29 2023 Vitaly Chikunov <vt@altlinux.org> 12.7.2-alt1
 - Update to v12.7.2 (2023-01-29).
 
