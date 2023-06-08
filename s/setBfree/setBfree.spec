@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: setBfree
-Version: 0.8.11
-Release: alt2.gitbdb2cc6
+Version: 0.8.12
+Release: alt1
 Summary: A DSP Tonewheel Organ emulator
 
 License: GPLv2+ and GPLv3+ and ISC
@@ -108,6 +108,9 @@ install -Dm644 doc/*.1 %buildroot%_man1dir
 %_libdir/lv2/*
 
 %changelog
+* Wed Jun 07 2023 Ivan A. Melnikov <iv@altlinux.org> 0.8.12-alt1
+- 0.8.12
+
 * Fri Jul 09 2021 Ivan A. Melnikov <iv@altlinux.org> 0.8.11-alt2.gitbdb2cc6
 - install extra lv2 plugins
 - avoid stripping binaries
