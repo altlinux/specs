@@ -19,7 +19,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -43,7 +43,7 @@ BuildRequires: python3-devel python3-module-setuptools python3-module-six
 BuildRequires: gcc-c++ nasm
 BuildRequires: libreadline-devel zip unzip
 BuildRequires: libffi-devel libffi-devel-static
-BuildRequires: rust-cargo >= 1.54
+BuildRequires: rust-cargo >= 1.59
 BuildRequires: llvm
 BuildRequires: zlib-devel
 %{?_with_system_icu:BuildRequires: libicu-devel}
@@ -87,6 +87,9 @@ interface to the JavaScript engine.
 %setup -n mozjs-%version
 %patch16 -p2
 %patch20 -p1 -b .0ad
+# in python-3.11 open(), io.open(), codecs.open() and fileinput.FileInput no longer
+# accept 'U' (“universal newline”) in the file mode.
+sed -i 's|"rU"|"r"|' python/mozbuild/mozbuild/{preprocessor,util,action/process_define_files,backend/base}.py
 
 %build
 mkdir _build
@@ -175,6 +178,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Thu Jun 08 2023 Yuri N. Sedunov <aris@altlinux.org> 102.1.0-alt1.1
+- fixed build with python-3.11
+
 * Mon Aug 08 2022 Yuri N. Sedunov <aris@altlinux.org> 102.1.0-alt1
 - first build for Sisyphus
 
