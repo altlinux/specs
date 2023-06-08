@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.29.5
+Version: 1.29.6
 Release: alt1
 
 Summary: PostgreSQL interface library
@@ -60,6 +60,9 @@ py.test-3 -x test -k 'test_converters'
 
 
 %changelog
+* Thu Jun 08 2023 Anton Vyatkin <toni@altlinux.org> 1.29.6-alt1
+- New version 1.29.6.
+
 * Wed May 10 2023 Anton Vyatkin <toni@altlinux.org> 1.29.5-alt1
 - New version 1.29.5.
 
