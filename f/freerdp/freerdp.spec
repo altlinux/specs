@@ -8,7 +8,7 @@
 
 Name: freerdp
 Version: 2.10.0
-Release: alt1
+Release: alt2
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -73,6 +73,7 @@ BuildRequires: bzlib-devel
 BuildRequires: libuuid-devel
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
+BuildRequires: libpam-devel
 BuildRequires: libdbus-glib-devel
 %ifarch %e2k
 BuildRequires: chrpath
@@ -249,6 +250,11 @@ the RDP protocol.
     -DWITH_PCSC=ON \
     -DWITH_PULSE=ON \
     -DWITH_SERVER=ON \
+    -DWITH_SERVER_INTERFACE=ON \
+    -DWITH_SERVER_CHANNELS=ON \
+    -DWITH_SHADOW_X11=ON \
+    -DWITH_SHADOW_MAC=ON \
+    -DWITH_XTEST=ON \
     -DCHANNEL_URBDRC=ON \
     -DCHANNEL_URBDRC_CLIENT=ON \
     -DWITH_SHADOW_X11=ON \
@@ -262,7 +268,6 @@ the RDP protocol.
     -DWITH_XINERAMA=ON \
     -DWITH_XKBFILE=ON \
     -DWITH_XRENDER=ON \
-    -DWITH_XTEST=ON \
     -DWITH_XV=ON \
     -DWITH_ZLIB=ON \
 %ifarch x86_64 %e2k
@@ -310,7 +315,6 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 
 %files -n xfreerdp
 %_bindir/xfreerdp
-%_bindir/freerdp-proxy
 %_man1dir/xfreerdp*
 %_bindir/winpr-*
 %_man1dir/winpr-*
@@ -325,6 +329,7 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 %endif
 
 %files server
+%_bindir/freerdp-proxy
 %_bindir/freerdp-shadow-cli
 %_man1dir/freerdp-shadow-cli.*
 
@@ -370,6 +375,9 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Fri Jun 02 2023 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt2
+- Moved freerdp-proxy to freerdp-server.
+
 * Tue Mar 21 2023 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt1
 - New version (ALT #45580).
 
