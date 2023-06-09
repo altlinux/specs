@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.5
+Version: 1.5.6
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -129,6 +129,17 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Thu Jun 08 2023 Anton Midyukov <antohami@altlinux.org> 1.5.6-alt1
+- regular.mk: add btrfs support for jeos-full (Closes: 46212)
+- grub: add missing info messages about bootloading of kernel, initrd and other
+- stage2: save cpe from /etc/os-release to .disk/cpe (Closes: 46271)
+- reports: DEBUG must be enabled, CHECK must be disabled
+- reports.mk: allow read access to the report to everyone
+- plymouth: add kernel cmdline parameter 'loglevel=3' after 'quiet'
+- base+regular: add apt-https
+- plymouth: add feature plymouth to initrd.mk for rootfs
+- Add latests commits from zerg@ and cas@
+
 * Wed May 10 2023 Anton Midyukov <antohami@altlinux.org> 1.5.5-alt1
 - browser: use firefox-esr on i586 (firefox is not available)
 - install2: add lvm2, cryptsetup to use/install2/full
