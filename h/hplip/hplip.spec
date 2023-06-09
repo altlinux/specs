@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.23.3
+Version: 3.23.5
 Release: alt1
 Epoch:   1
 
@@ -1120,6 +1120,36 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Jun 09 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.23.5-alt1
+- New version.
+- Added support for the following new printers:
+  + HP Color LaserJet Enterprise 5700, 5700dn
+  + HP Color LaserJet Enterprise 6700, 6700dn
+  + HP Color LaserJet Enterprise 6701, 6701dn
+  + HP Color LaserJet Enterprise Flow MFP 5800zf
+  + HP Color LaserJet Enterprise Flow MFP 6800zf, 6800zfsw, 6800zfw+
+  + HP Color LaserJet Enterprise Flow MFP 6801zfw+
+  + HP Color LaserJet Enterprise Flow MFP X57945z
+  + HP Color LaserJet Enterprise Flow MFP X57945zs
+  + HP Color LaserJet Enterprise Flow MFP X67755zs, X67755z+
+  + HP Color LaserJet Enterprise Flow MFP X67765zs, X67765z+
+  + HP Color LaserJet Enterprise Flow MFP X677z
+  + HP Color LaserJet Enterprise Flow MFP X677zs, X677z+
+  + HP Color LaserJet Enterprise MFP 5800, 5800dn, 5800f
+  + HP Color LaserJet Enterprise MFP 6800, 6800dn
+  + HP Color LaserJet Enterprise MFP 6801, 6801zfsw
+  + HP Color LaserJet Enterprise MFP X57945
+  + HP Color LaserJet Enterprise MFP X57945dn
+  + HP Color LaserJet Enterprise MFP X677
+  + HP Color LaserJet Enterprise MFP X67755dn
+  + HP Color LaserJet Enterprise MFP X67765dn
+  + HP Color LaserJet Enterprise MFP X677dn
+  + HP Color LaserJet Enterprise MFP X677s
+  + HP Color LaserJet Enterprise X55745, X55745dn
+  + HP Color LaserJet Enterprise X654, X654dn
+  + HP Color LaserJet Enterprise X65455dn
+  + HP Color LaserJet Enterprise X65465dn
+
 * Wed Apr 05 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.23.3-alt1
 - New version.
 - Added support for the following new printers:
