@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 10.3.0
+Version: 10.4.0
 Release: alt1
 
 Summary: Installer common files
@@ -39,10 +39,7 @@ Requires: alterator-luks
 Requires: x-cursor-theme-jimmac
 #features
 Requires: installer-feature-autohostname-stage2
-Requires: installer-feature-desktop-disable-remote-stage2
-Requires: installer-feature-desktop-other-fs-stage2
 Requires: installer-feature-desktop-suspend-stage2
-Requires: installer-feature-local-clock
 Requires: installer-feature-samba-usershares-stage2
 Requires: installer-feature-slideshow
 Requires: installer-feature-xdg-user-dirs
@@ -111,6 +108,13 @@ Installer stage3
 %files stage3
 
 %changelog
+* Thu Jun 08 2023 Mikhail Efremov <sem@altlinux.org> 10.4.0-alt1
+- stage2: Drop installer-feature-local-clock.
+- preinstall: Drop 80-setup-user-groups hook.
+- stage2: Drop installer-feature-desktop-disable-remote-stage2.
+- stage2: Drop installer-feature-desktop-other-fs-stage2.
+- preinstall: Don't exit if failed to change background.
+
 * Thu Jun 23 2022 Mikhail Efremov <sem@altlinux.org> 10.3.0-alt1
 - preinstall: Add setup-backgrounds hook.
 - stage2: Requires: alterator-pkg -> installer-alterator-pkg.
