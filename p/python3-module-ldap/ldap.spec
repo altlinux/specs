@@ -6,36 +6,29 @@
 
 Name: python3-module-%mname
 Version: 3.4.3
-Release: alt1
-
-Summary: An object-oriented API to access LDAP directory servers from Python programs
+Release: alt2
+Summary: Python modules for implementing LDAP clients
 License: Python-style or MIT
 Group: Development/Python3
 Url: https://www.python-ldap.org
-# Source-git: https://github.com/python-ldap/python-ldap
-
+Vcs: https://github.com/python-ldap/python-ldap
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+Provides: python3-module-pyldap = %EVR
+Obsoletes: python3-module-pyldap < %EVR
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: libldap-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libssl-devel
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_builddeps_build
 %if_with check
+%pyproject_builddeps_metadata
 BuildRequires: openldap-servers
 BuildRequires: openldap-clients
-BuildRequires: python3(pyasn1)
-BuildRequires: python3(pyasn1_modules)
 %endif
-
-Provides: python3-module-pyldap = %EVR
-Obsoletes: python3-module-pyldap < %EVR
-
-%py3_provides %pypi_name
 
 %description
 python-ldap provides an object-oriented API to access LDAP
@@ -47,6 +40,8 @@ stuff (e.g. processing LDIF, LDAPURLs, LDAPv3 sub-schema, etc.).
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 # Fix python interpreter path in Demo directory
 grep -rl '^#!/usr/bin/env python' | \
@@ -61,12 +56,11 @@ grep -rl '^#!/usr/bin/env python' | \
 
 %check
 export BIN="$PATH:%_sbindir"
-export TOX_TESTENV_PASSENV=BIN
-%tox_check_pyproject
+%pyproject_run_unittest discover -v -s Tests -p 't_*'
 
 %files
 %doc LICENCE CHANGES README TODO Demo
-%exclude %python3_sitelibdir/slapdtest
+%python3_sitelibdir/slapdtest/
 %python3_sitelibdir/_ldap.cpython-*.so
 %python3_sitelibdir/ldap
 %python3_sitelibdir/ldapurl.py*
@@ -75,6 +69,9 @@ export TOX_TESTENV_PASSENV=BIN
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 09 2023 Stanislav Levin <slev@altlinux.org> 3.4.3-alt2
+- Shipped slapdtest package.
+
 * Tue Sep 20 2022 Stanislav Levin <slev@altlinux.org> 3.4.3-alt1
 - 3.4.2 -> 3.4.3.
 
