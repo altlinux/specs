@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.5
-Release: alt1
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -49,6 +49,9 @@ mkdir -p %buildroot%_datadir/alterator/backends
 %_includedir/alterator
 
 %changelog
+* Fri Jun 09 2023 Ivan Savin <svn17@altlinux.org> 0.1.5-alt2
+- Change defaults for polkit actions.
+
 * Thu Jun 01 2023 Ivan Savin <svn17@altlinux.org> 0.1.5-alt1
 - Add the get_interfaces method to the ru.basealt.alterator.manager interface.
 - Add checking of user rights to execute methods using polkit in the default
