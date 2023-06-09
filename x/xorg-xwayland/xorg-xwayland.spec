@@ -2,7 +2,7 @@
 %define _deffontdir catalogue:%_sysconfdir/X11/fontpath.d
 
 Name: xorg-xwayland
-Version: 23.1.1
+Version: 23.1.2
 Release: alt1
 Epoch: 2
 License: MIT
@@ -20,7 +20,7 @@ BuildRequires: meson egl-wayland-devel libEGL-devel libGL-devel libXaw-devel lib
 BuildRequires: libXrender-devel libXres-devel libXtst-devel libXv-devel libaudit-devel libdbus-devel libdmx-devel libdrm-devel libepoxy-devel
 BuildRequires: libgbm-devel libpciaccess-devel libpixman-devel libselinux-devel libssl-devel libtirpc-devel libudev-devel libwayland-client-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel libxkbfile-devel
-BuildRequires: libxcvt-devel libxshmfence-devel wayland-protocols xorg-xtrans-devel xorg-proto-devel libgcrypt-devel xkbcomp rendercheck 
+BuildRequires: libxcvt-devel libxshmfence-devel wayland-protocols xorg-xtrans-devel xorg-proto-devel libgcrypt-devel xkbcomp rendercheck
 
 %description
 Xwayland is an X server for running X clients under Wayland
@@ -60,6 +60,9 @@ necessary for developing Wayland compositors using Xwayland
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jun 09 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:23.1.2-alt1
+- 23.1.2
+
 * Wed Mar 29 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:23.1.1-alt1
 - 23.1.1
 
