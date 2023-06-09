@@ -1,5 +1,5 @@
 Name:    gcompris-qt
-Version: 3.2
+Version: 3.3
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
@@ -92,6 +92,9 @@ tar xf %SOURCE1
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Thu Jun 08 2023 Andrey Cherepanov <cas@altlinux.org> 3.3-alt1
+- New version.
+
 * Mon Apr 10 2023 Andrey Cherepanov <cas@altlinux.org> 3.2-alt1
 - New version.
 
