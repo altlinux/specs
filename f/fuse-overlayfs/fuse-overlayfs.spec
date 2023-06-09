@@ -1,13 +1,13 @@
-Summary: FUSE filesystem for containers.
+Summary: FUSE implementation for overlayfs.
 Name: fuse-overlayfs
 
-Version: 1.1.2.3.800011b
+Version: 1.10
 Release: alt1
 License: GPLv3+
 
 Group: System/Kernel and hardware
 
-URL: https://github.com/giuseppe/fuse-overlayfs
+URL: https://github.com/containers/fuse-overlayfs
 
 Source0: %name-%version.tar
 
@@ -42,5 +42,8 @@ echo fuse > %buildroot%_modulesloaddir/fuse-overlayfs.conf
 %_modulesloaddir/fuse-overlayfs.conf
 
 %changelog
+* Mon Feb 20 2023 Stepan Paksashvili <paksa@altlinux.org> 1.10-alt1
+- 1.10
+
 * Sat Jul 25 2020 Alexey Gladkov <legion@altlinux.ru> 1.1.2.3.800011b-alt1
 - First build for ALTLinux.
