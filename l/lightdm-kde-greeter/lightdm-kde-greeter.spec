@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.10
+Version: 0.4.11
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -20,11 +20,13 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: lightdm-devel
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-declarative-devel qt5-tools-devel qt5-tools-devel-static
+BuildRequires: qt5-quickcontrols2-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf5-kdeclarative-devel kf5-kiconthemes-devel kf5-plasma-framework-devel kf5-kconfig-devel kf5-ki18n-devel kf5-kauth-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcmutils-devel
 # deps of used stuff
 BuildRequires: kf5-kcoreaddons-devel kf5-kpackage-devel kf5-kservice-devel
+BuildRequires: kf5-networkmanager-qt-devel
 
 Requires: lightdm
 Requires: plasma5-workspace-qml
@@ -48,6 +50,9 @@ Provides: lightdm-greeter
 
 # plasma5-workspace-qml should provide
 %qml_add_req_skip org.kde.plasma.wallpapers.image
+
+# this package itself should provide
+%qml_add_req_skip ConnectionEnum
 
 %description
 This package provides a KDE-based LightDM greeter engine.
@@ -89,6 +94,11 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Wed Jun 07 2023 Anton Golubev <golubevan@altlinux.org> 0.4.11-alt1
+- add a widget to configure the network
+- write the name of the last logged in user in the input field
+  when clicking "log in as another user" (Closes: 46353)
+
 * Fri Apr 28 2023 Anton Golubev <golubevan@altlinux.org> 0.4.10-alt1
 - explicitly specify output names for screen scales
 
