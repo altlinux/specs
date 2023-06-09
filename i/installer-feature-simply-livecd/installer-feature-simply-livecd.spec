@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 10.2.0
+Version: 10.3.0
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -39,9 +39,9 @@ Requires: alterator-luks
 # in mkimage-profiles.
 # NOTE: installer-feature-online-repo replaced
 # by m-p use/live/repo feature.
-Requires: installer-feature-desktop-other-fs-stage2
 Requires: installer-feature-lightdm-stage3
 Requires: installer-feature-samba-usershares-stage2
+Requires: installer-feature-desktop-suspend-stage2
 Requires: installer-feature-sudo-enable-by-default-stage3
 
 %description
@@ -70,6 +70,12 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Thu Jun 08 2023 Mikhail Efremov <sem@altlinux.org> 10.3.0-alt1
+- livecd-preinstall: Drop 80-setup-user-groups hook.
+- Drop installer-feature-desktop-other-fs-stage2.
+- Use installer-feature-desktop-suspend-stage2 again (closes: #44474).
+- setup-backgrounds: Don't exit if failed to change background.
+
 * Thu Jun 23 2022 Mikhail Efremov <sem@altlinux.org> 10.2.0-alt1
 - livecd-preinstall: Add setup-backgrounds hook.
 
