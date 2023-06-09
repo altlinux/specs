@@ -1,4 +1,4 @@
-%define ver_major 1.1
+%define ver_major 1.2
 
 Name: wayland-utils
 Version: %ver_major.0
@@ -41,6 +41,9 @@ protocols supported by a Wayland compositor.
 %doc README.md
 
 %changelog
+* Fri Jun 09 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
