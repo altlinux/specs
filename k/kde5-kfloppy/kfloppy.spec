@@ -1,7 +1,7 @@
 %define rname kfloppy
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -42,6 +42,9 @@ Format a floppy disks.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Wed Jun 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

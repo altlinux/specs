@@ -30,7 +30,7 @@
 %define libqgroupwise libqgroupwise%sover
 
 Name: kde5-kopete
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -50,7 +50,7 @@ Source: %rname-%version.tar
 Patch100: alt-mobile.patch
 Patch101: alt-soversion.patch
 
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: rpm-macros-browser-plugins
 BuildRequires: gcc-c++ cmake extra-cmake-modules
 BuildRequires: boost-devel glib2-devel zlib-devel
@@ -329,6 +329,9 @@ fi
 %_K5dbus_iface/*
 
 %changelog
+* Wed Jun 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 
@@ -452,29 +455,29 @@ fi
 * Wed Dec 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt3
 - disable XMPP module (https://lists.altlinux.org/pipermail/devel/2018-November/205998.html)
 
-* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2%ubt
+* Fri Aug 31 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt2
 - fix build requires
 
-* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1
 - new version
 
-* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Mon Jun 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+* Mon Jun 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
-* Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.0-alt1%ubt
+* Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.0-alt1
 - new version
 
-* Mon Apr 09 2018 Sergey V Turchin <zerg@altlinux.org> 18.03.90-alt1%ubt
+* Mon Apr 09 2018 Sergey V Turchin <zerg@altlinux.org> 18.03.90-alt1
 - new beta
 
-* Fri Mar 30 2018 Sergey V Turchin <zerg@altlinux.org> 18.03.80-alt3%ubt
+* Fri Mar 30 2018 Sergey V Turchin <zerg@altlinux.org> 18.03.80-alt3
 - fix build requires
 
-* Fri Mar 30 2018 Igor Vlasenko <viy@altlinux.ru> 18.03.80-alt2%ubt
+* Fri Mar 30 2018 Igor Vlasenko <viy@altlinux.ru> 18.03.80-alt2
 - NMU: added Url
 
-* Tue Mar 27 2018 Sergey V Turchin <zerg@altlinux.org> 18.03.80-alt1%ubt
+* Tue Mar 27 2018 Sergey V Turchin <zerg@altlinux.org> 18.03.80-alt1
 - initial build

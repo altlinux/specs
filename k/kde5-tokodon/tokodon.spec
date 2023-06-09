@@ -1,7 +1,7 @@
 %define rname tokodon
 
 Name: kde5-%rname
-Version: 23.04.0
+Version: 23.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -69,5 +69,8 @@ Requires: %name-common = %version-%release
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Wed Jun 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Tue May 02 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.0-alt1
 - initial build

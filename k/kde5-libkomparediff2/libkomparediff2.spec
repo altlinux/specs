@@ -4,7 +4,7 @@
 %define libkomparediff2 libkomparediff2%sover
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace no_appdata
 
@@ -69,17 +69,18 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-#%_K5inc/libkomparediff2_version.h
-%_K5inc/libkomparediff2/
+%_K5inc/KompareDiff2/
 %_K5link/lib*.so
 %_K5lib/cmake/LibKompareDiff2/
-#%_K5archdata/mkspecs/modules/qt_libkomparediff2.pri
 
 %files -n %libkomparediff2
 %_K5lib/libkomparediff2.so.%sover
 %_K5lib/libkomparediff2.so.*
 
 %changelog
+* Wed Jun 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 

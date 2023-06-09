@@ -1,8 +1,8 @@
 %define rname kde-inotify-survey
 
 Name: kde5-inotify-survey
-Version: 23.04.0
-Release: alt3
+Version: 23.04.1
+Release: alt1
 %K5init altplace no_appdata man
 
 Group: Sound
@@ -52,6 +52,9 @@ Sporting a kded module to tell you when things are getting dicey and a CLI tool 
 %_datadir/polkit-1/actions/*inotify*.policy
 
 %changelog
+* Wed Jun 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.0-alt3
 - fix package name
 

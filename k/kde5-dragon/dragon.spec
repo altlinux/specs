@@ -1,7 +1,7 @@
 %define rname dragon
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.1
 Release: alt1
 %K5init altplace no_appdata
 
@@ -72,11 +72,12 @@ KF5 library
 %_K5icon/*/*/apps/*.*
 %_K5icon/*/*/actions/player-*.*
 %_K5srv/ServiceMenus/*.desktop
-%_K5srv/*.desktop
-#%_K5xmlgui/*/
 %_K5data/solid/actions/*.desktop
 
 %changelog
+* Wed Jun 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 
