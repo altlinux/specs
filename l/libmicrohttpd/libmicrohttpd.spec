@@ -1,5 +1,5 @@
 Name: libmicrohttpd
-Version: 0.9.76
+Version: 0.9.77
 Release: alt1
 
 Summary: Library providing compact API and implementation of an HTTP/1.1 webserver
@@ -26,8 +26,6 @@ This package contains the headers and libraries for libmicrohttpd development.
 
 %prep
 %setup
-# starting with curl-7.82.0 test fails with: curl_easy_perform failed: `Out of memory'
-sed -ri '/^\s+TEST_HTTPS_SNI/ s,=.+$,=,' src/testcurl/https/Makefile.am
 
 %build
 %autoreconf
@@ -55,6 +53,9 @@ sed -ri '/^\s+TEST_HTTPS_SNI/ s,=.+$,=,' src/testcurl/https/Makefile.am
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jun 09 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.77-alt1
+- 0.9.77 released
+
 * Wed Mar 29 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.76-alt1
 - 0.9.76 released (fixes: CVE-2023-27371)
 
