@@ -2,7 +2,7 @@
 
 Name: gitea-act
 Version: 0.1.6
-Release: alt1
+Release: alt2
 
 Summary: Act runner is a runner for Gitea based on Gitea fork of act.
 License: MIT
@@ -76,6 +76,9 @@ usermod -aG docker _%name
 %_bindir/%name
 
 %changelog
+* Thu Jun 08 2023 Stepan Paksashvili <paksa@altlinux.org> 0.1.6-alt2
+- Update readme
+
 * Thu May 04 2023 Stepan Paksashvili <paksa@altlinux.org> 0.1.6-alt1
 - 0.1.6
 
