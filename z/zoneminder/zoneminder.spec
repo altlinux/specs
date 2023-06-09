@@ -7,7 +7,7 @@ ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.36.33
-Release: alt1
+Release: alt1.1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -87,6 +87,7 @@ EOF
 %ifarch %e2k
 # unsupported as of lcc 1.25.15
 sed -i 's,-Wconditionally-supported,,' cmake/compiler/gcc/settings.cmake
+sed -i "s/srcN\[\]/srcN[0]/" src/zm_rtp_ctrl.h
 %endif
 
 %build
@@ -172,6 +173,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Fri Jun 09 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.36.33-alt1.1
+- fixed build for Elbrus
+
 * Sun Jun 04 2023 Anton Farygin <rider@altlinux.ru> 1.36.33-alt1
 - 1.36.33
 
