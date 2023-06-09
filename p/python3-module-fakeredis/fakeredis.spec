@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.13.0
+Version: 2.14.1
 Release: alt1
 Summary: Fake implementation of redis API for testing purposes
 License: BSD
@@ -21,7 +21,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %add_pyproject_deps_check_filter tox-docker
-%add_pyproject_deps_check_filter types-
 %pyproject_builddeps_metadata_extra lua
 %pyproject_builddeps_metadata_extra json
 %pyproject_builddeps_check
@@ -59,6 +58,9 @@ redis.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 09 2023 Stanislav Levin <slev@altlinux.org> 2.14.1-alt1
+- 2.13.0 -> 2.14.1.
+
 * Mon May 22 2023 Stanislav Levin <slev@altlinux.org> 2.13.0-alt1
 - 2.12.1 -> 2.13.0.
 
