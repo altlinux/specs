@@ -7,8 +7,8 @@
 %endif
 
 Name: libayatana-appindicator
-Version: 0.5.91
-Release: alt2
+Version: 0.5.92
+Release: alt1
 
 Summary: Ayatana application indicators library
 License: LGPLv2.1 AND LGPLv3
@@ -149,6 +149,9 @@ This package provides Vala language bindings for %{name}3.
 %_vapidir/ayatana-appindicator3-0.1.deps
 
 %changelog
+* Sun Jun 11 2023 Nazarov Denis <nenderus@altlinux.org> 0.5.92-alt1
+- New version 0.5.92.
+
 * Thu Mar 16 2023 Vitaly Lipatov <lav@altlinux.ru> 0.5.91-alt2
 - NMU: use feature gtk_sharp checking from rpm-macros-features
 - NMU: clean BR, remove unneeded BR
