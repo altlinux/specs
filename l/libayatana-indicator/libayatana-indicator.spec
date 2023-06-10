@@ -2,8 +2,8 @@
 %def_with gtk2
 
 Name: libayatana-indicator
-Version: 0.9.1
-Release: alt2
+Version: 0.9.3
+Release: alt1
 
 Summary: Ayatana Indicator Display Objects
 License: GPLv3
@@ -106,6 +106,9 @@ popd
 %_datadir/%name
 
 %changelog
+* Sun Jun 11 2023 Nazarov Denis <nenderus@altlinux.org> 0.9.3-alt1
+- New version 0.9.3.
+
 * Thu Mar 16 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt2
 - NMU: cleanup BR, add if_with for build with gtk2
 
