@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -108,6 +108,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Jun 10 2023 Yuri N. Sedunov <aris@altlinux.org> 1.76.1-alt1
+- 1.76.1
+
 * Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 1.76.0-alt1
 - 1.76.0
 

@@ -5,33 +5,32 @@
 %def_enable introspection
 %def_enable vala
 # gusb-self-test failed in hasher
-# libgusb:ERROR:../gusb/gusb-self-test.c:83:gusb_context_func: assertion failed (array->len > 0): (0 > 0)
 %def_disable check
 
 Name: libgusb
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: GLib wrapper around libusb1
 Group: System/Libraries
-License: LGPL-2.1+
+License: LGPL-2.1-or-later
 Url: https://gitorious.org/gusb/
 
 Vcs: https://github.com/hughsie/libgusb.git
 #Source: https://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
 Source: https://github.com/hughsie/libgusb/archive/%version/%name-%version.tar.gz
 
-Requires: usbids
+Requires: hwdata
 
 BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson libgio-devel >= 2.44 libusb-devel >= 1.0.22
-BuildRequires: libjson-glib-devel
+BuildRequires: libjson-glib-devel >= 1.1.1
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libjson-glib-gir-devel}
 %{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_vala:
 BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
-%{?_enable_tests:BuildRequires: libumockdev-devel usbids}
+%{?_enable_tests:BuildRequires: libumockdev-devel hwdata}
 
 %description
 GUsb is a GObject wrapper for libusb that makes it easy to do
@@ -80,18 +79,18 @@ applications that use GUsb library.
 
 %build
 %meson \
-	-Dusb_ids=%_datadir/misc/usb.ids \
         %{?_disable_docs:-Ddocs=false} \
         %{?_disable_tests:-Dtests=false} \
 	%{?_disable_introspection:-Dintrospection=false} \
         %{?_disable_vala:-Dvapi=false}
+%nil
 %meson_build
 
 %install
 %meson_install
 
 %check
-%__meson_test -v --print-errorlogs
+%__meson_test -v
 
 %files
 %_libdir/%name.so.*
@@ -118,6 +117,10 @@ applications that use GUsb library.
 %endif
 
 %changelog
+* Sat Jun 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.6-alt1
+- 0.4.6
+- dependencies: usbids -> hwdata
+
 * Thu Feb 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.5-alt1
 - 0.4.5
 

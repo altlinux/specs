@@ -1,16 +1,16 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.Polari
-%define mozjs_ver 91
+%define mozjs_ver 102
 
 Name: polari
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Internet Relay Chat client for GNOME
-License: GPLv2+
+License: GPL-2.0 and LGPL-2.0
 Group: Networking/Chat
 Url: https://wiki.gnome.org/Apps/Polari
 
@@ -92,6 +92,10 @@ with GNOME 3 Desktop.
 
 
 %changelog
+* Sat Jun 10 2023 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt2
+- updated to 43.0-6-g4f13674f
+- fixed BR
+
 * Sun Oct 09 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 
