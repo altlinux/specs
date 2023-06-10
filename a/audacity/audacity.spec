@@ -8,8 +8,8 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.3.2
-Release: alt3
+Version: 3.3.3
+Release: alt1
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -233,6 +233,9 @@ echo "$p" | grep -q libmp3lame
 %_datadir/%name/help
 
 %changelog
+* Fri Jun 09 2023 Ivan A. Melnikov <iv@altlinux.org> 3.3.3-alt1
+- 3.3.3
+
 * Thu May 25 2023 Michael Shigorin <mike@altlinux.org> 3.3.2-alt3
 - E2K: update sed patch by ilyakurdyukov@ (mcst#8091)
 
