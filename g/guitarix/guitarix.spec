@@ -5,13 +5,18 @@
 
 Name: guitarix
 Version: 0.44.1
-Release: alt1
+Release: alt2
 Summary: Mono amplifier to JACK
 Group: Sound
 License: GPL-2.0-or-later
 Url: https://sourceforge.net/projects/guitarix
 # Source-url: https://sourceforge.net/projects/guitarix/files/guitarix/guitarix2-%version.tar.xz/download
 Source: %name-%version.tar
+
+# Upstream patches
+Patch: guitarix-cstdint-include.patch
+Patch1: guitarix-mismatched-delete.patch
+Patch2: guitarix-python-3.11-ftbfs.patch
 
 BuildRequires: gcc-c++
 BuildRequires: faust-devel
@@ -94,6 +99,7 @@ guitarix, but can also be used by any other ladspa host.
 
 %prep
 %setup
+%autopatch -p1
 
 # fix shebang
 find . -type f -print0 |
@@ -111,7 +117,7 @@ rm -fr src/zita-convolver src/zita-resampler
 
 %build
 ./waf -vv configure --prefix=%prefix --libdir=%_libdir \
-      --cxxflags="-fomit-frame-pointer \
+      --cxxflags-release="-DNDEBUG -fomit-frame-pointer \
       -ffinite-math-only -fno-math-errno -fno-signed-zeros -fstrength-reduce \
 %ifarch %ix86 x86_64
       -msse \
@@ -125,8 +131,7 @@ rm -fr src/zita-convolver src/zita-resampler
 %endif
       --shared-lib \
       --ladspa --ladspadir=%_libdir/ladspa \
-      --lv2dir=%_libdir/lv2 \
-      --cxxflags-release="%optflags -DNDEBUG"
+      --lv2dir=%_libdir/lv2
 
 ./waf -vv build %{?_smp_mflags}
 
@@ -161,6 +166,9 @@ rm -rf %buildroot%_libdir/libgxw*.so
 %_libdir/lv2/*
 
 %changelog
+* Fri Jun 09 2023 Anton Midyukov <antohami@altlinux.org> 0.44.1-alt2
+- Add upstream patches for python 3.11 and gcc13 support
+
 * Sat May 07 2022 Anton Midyukov <antohami@altlinux.org> 0.44.1-alt1
 - new version (0.44.1) with rpmgs script
 
