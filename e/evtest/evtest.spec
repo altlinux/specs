@@ -1,6 +1,6 @@
 Name: evtest
-Version: 1.34
-Release: alt2
+Version: 1.35
+Release: alt1
 
 Summary: Input device event monitor and query tool
 License: GPLv2+
@@ -9,7 +9,7 @@ Group: Other
 Url: http://cgit.freedesktop.org/%name/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: http://cgit.freedesktop.org/%name/snapshot/%name-%version.tar.gz
+Source: https://gitlab.freedesktop.org/libevdev/%name/-/archive/%name-%version/%name-%name-%version.tar
 
 BuildRequires: asciidoc
 BuildRequires: time
@@ -43,7 +43,7 @@ this information it can be determined whether a bug may be a kernel or an
 X.Org issue.
 
 %prep
-%setup
+%setup -n %name-%name-%version
 
 %build
 %autoreconf
@@ -54,11 +54,14 @@ X.Org issue.
 %makeinstall_std
 
 %files
-%doc COPYING INSTALL README
+%doc COPYING INSTALL README.md
 %_bindir/%name
 %_man1dir/%name.1*
 
 %changelog
+* Sat Jun 10 2023 Nazarov Denis <nenderus@altlinux.org> 1.35-alt1
+- New version 1.35.
+
 * Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.34-alt2
 - Requires fixed.
 
