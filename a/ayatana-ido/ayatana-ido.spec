@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: ayatana-ido
-Version: 0.9.1
+Version: 0.10.0
 Release: alt1
 
 Summary: Ayatana Indicator Display Objects
@@ -125,9 +125,12 @@ This package provides Vala language bindings for %{name}3.
 %_girdir/AyatanaIdo3-0.4.gir
 
 %files -n %{name}3-vala
-%_vapidir/AyatanaIdo3-0.4.vapi
+%_vapidir/lib%{name}3-0.4.vapi
 
 %changelog
+* Sat Jun 10 2023 Nazarov Denis <nenderus@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Mon Mar 07 2022 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt1
 - Version 0.9.1
 
