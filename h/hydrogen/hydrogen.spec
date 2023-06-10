@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hydrogen
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Hydrogen Drum Machine
@@ -71,6 +71,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude /usr/include/%name
 
 %changelog
+* Sat Jun 10 2023 Ivan A. Melnikov <iv@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Tue May 09 2023 Ivan A. Melnikov <iv@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
