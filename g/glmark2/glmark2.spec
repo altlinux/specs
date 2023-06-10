@@ -2,7 +2,7 @@
 
 Name:		glmark2
 Version:	2021.12
-Release:	alt3
+Release:	alt4
 
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark
 Url:		https://github.com/glmark2/glmark2
@@ -148,6 +148,9 @@ export CXXFLAGS="${CFLAGS}"
 %_datadir/%name
 
 %changelog
+* Sat Jun 10 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2021.12-alt4
+- Fixed python3.11 fallout
+
 * Thu Mar 30 2023 Anton Midyukov <antohami@altlinux.org> 2021.12-alt3
 - require libGLES for es2* subpackages (closes: #45706)
 
