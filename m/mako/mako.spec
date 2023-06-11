@@ -1,5 +1,5 @@
 Name:       mako
-Version:    1.7.1
+Version:    1.8.0
 Release:    alt1
 Summary:    Lightweight Wayland notification daemon
 Group:      Graphical desktop/Other
@@ -52,6 +52,9 @@ the layer-shell protocol.
 %_man5dir/mako.*
 
 %changelog
+* Sun Jun 11 2023 Alexey Gladkov <legion@altlinux.ru> 1.8.0-alt1
+- New version (1.8).
+
 * Wed Jul 06 2022 Alexey Gladkov <legion@altlinux.ru> 1.7.1-alt1
 - New version (1.7.1).
 
