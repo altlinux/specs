@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 113.0
+Version: 114.0.1
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -13,16 +13,14 @@ Source0: firefox-source.tar
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
 Patch002: 0002-FEDORA-build-arm.patch
-Patch003: 0003-ALT-Fix-aarch64-build.patch
-Patch004: 0004-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch005: 0005-use-floats-for-audio-on-arm-too.patch
-Patch006: 0006-bmo-847568-Support-system-harfbuzz.patch
-Patch007: 0007-bmo-847568-Support-system-graphite2.patch
-Patch008: 0008-bmo-1559213-Support-system-av1.patch
-Patch009: 0009-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch010: 0010-ALT-fix-double_t-redefinition.patch
-Patch011: 0011-build-Disable-Werror.patch
-Patch012: 0012-WAYLAND-call-wl_display_roundtrip-early.patch
+Patch003: 0003-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch004: 0004-use-floats-for-audio-on-arm-too.patch
+Patch005: 0005-bmo-847568-Support-system-harfbuzz.patch
+Patch006: 0006-bmo-847568-Support-system-graphite2.patch
+Patch007: 0007-bmo-1559213-Support-system-av1.patch
+Patch008: 0008-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch009: 0009-ALT-fix-double_t-redefinition.patch
+Patch010: 0010-build-Disable-Werror.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -422,6 +420,14 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sun Jun 11 2023 Alexey Gladkov <legion@altlinux.ru> 114.0.1-alt1
+- New release (114.0.1).
+- Security fixes:
+  + CVE-2023-34414: Click-jacking certificate exceptions through rendering lag
+  + CVE-2023-34415: Site-isolation bypass on sites that allow open redirects to data: urls
+  + CVE-2023-34416: Memory safety bugs fixed in Firefox 114 and Firefox ESR 102.12
+  + CVE-2023-34417: Memory safety bugs fixed in Firefox 114
+
 * Tue May 09 2023 Alexey Gladkov <legion@altlinux.ru> 113.0-alt1
 - New release (113.0).
 - Security fixes:
