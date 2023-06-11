@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: liburing
-Version: 2.3
-Release: alt3
+Version: 2.4
+Release: alt1
 
 Summary: The io_uring library
 License: (GPL-2.0-only AND LGPL-2.1-or-later) OR MIT
@@ -44,19 +44,18 @@ for the Linux-native io_uring.
 
 %build
 %add_optflags %(getconf LFS_CFLAGS) -ffat-lto-objects
-# homegrown one
 ./configure \
 	--prefix=%_prefix \
 	--includedir=%_includedir \
 	--libdir=%_libdir \
 	--libdevdir=%_libdir \
 	--mandir=%_mandir \
-	#
+	%nil
 %make_build --no-print-directory CFLAGS="%optflags" V=1
 
 %install
 %makeinstall_std V=1
-rm %buildroot%_libdir/liburing.a
+rm %buildroot%_libdir/liburing*.a
 # Reuse probe test as a tool to test that io_uring is available.
 install -Dp test/probe.t %buildroot%_bindir/io_uring_ok
 
@@ -94,20 +93,24 @@ TEST_EXCLUDE="
 
 %files
 %_bindir/io_uring_ok
-%_libdir/liburing.so.*
-%doc COPYING
+%_libdir/liburing*.so.*
+%doc LICENSE
 
 %files devel
-%doc README LICENSE COPYING.GPL SECURITY.md CHANGELOG examples/*.c
-%exclude %_docdir/%name/COPYING
+%doc README COPYING COPYING.GPL SECURITY.md CHANGELOG examples/*.c
+%exclude %_docdir/%name/LICENSE
 %_includedir/*
-%_libdir/%name.so
-%_pkgconfigdir/%name.pc
+%_libdir/%{name}*.so
+%_pkgconfigdir/%{name}*.pc
 %_man2dir/*
 %_man3dir/*
 %_man7dir/*
 
 %changelog
+* Sun Jun 11 2023 Vitaly Chikunov <vt@altlinux.org> 2.4-alt1
+- Update to liburing-2.4-0-gb4ee310 (2023-06-09).
+- FFI support.
+
 * Thu Apr 27 2023 Michael Shigorin <mike@altlinux.org> 2.3-alt3
 - E2K: fix build (ilyakurdyukov@).
 
@@ -147,6 +150,3 @@ TEST_EXCLUDE="
 
 * Mon May 06 2019 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - built for sisyphus (based on upstream spec with cleanups)
-
-* Tue Jan 8 2019 Jens Axboe <axboe@kernel.dk> - 0.1
-- Initial version
