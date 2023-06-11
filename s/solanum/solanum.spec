@@ -1,12 +1,12 @@
 %def_enable snapshot
 %define _name solanum
-%define ver_major 3.0
+%define ver_major 4.0
 %define xdg_name org.gnome.Solanum
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Pomodoro timer for GNOME Desktop
@@ -19,7 +19,7 @@ Source: %_name-%version.tar
 Source1: %_name-%version-cargo.tar
 
 # build failed for 32-bit
-ExcludeArch: %ix86 armh
+#ExcludeArch: %ix86 armh
 
 %define gtk_ver 4.0.0
 %define adwaita_ver 1.0.0
@@ -29,9 +29,10 @@ ExcludeArch: %ix86 armh
 Requires: gst-plugins-base%gst_api_ver >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson rust-cargo /usr/bin/appstream-util desktop-file-utils
+BuildRequires: meson rust-cargo blueprint-compiler
+BuildRequires: /usr/bin/appstream-util desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
-BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver typelib(Adw) = 1
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-base-%gst_api_ver) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-player-%gst_api_ver) >= %gst_ver
@@ -68,6 +69,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Jun 11 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Wed Jan 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - first build for Sisyphus (v3.0.1-30-ge5c5d88)
 

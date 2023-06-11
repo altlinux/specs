@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: libopenraw
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 Summary: Decode camera RAW files
@@ -21,7 +21,7 @@ Source: https://libopenraw.freedesktop.org/download/libopenraw-%version.tar.bz2
 Vcs: https://gitlab.freedesktop.org/libopenraw/libopenraw.git
 Source: %name-%version.tar
 %endif
-%{?_disable_bootstrap:Source1: %name-%version-mp4.tar}
+#%{?_disable_bootstrap:Source1: %name-%version-mp4.tar}
 
 BuildRequires: autoconf-archive boost-devel gcc-c++ libcurl-devel libgio-devel
 BuildRequires: libjpeg-devel libxml2-devel
@@ -63,7 +63,8 @@ The %name-gnome-devel package contains libraries and header files for developing
 applications that use %name-gnome.
 
 %prep
-%setup %{?_disable_bootstrap:-a1}
+%setup
+# %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 pushd lib/mp4
 cargo vendor -s Cargo.toml -s mp4parse/Cargo.toml -s mp4parse_capi/Cargo.toml
@@ -116,6 +117,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Jun 11 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
+- 0.3.6
+
 * Sun Apr 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
 - 0.3.5
 
