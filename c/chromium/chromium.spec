@@ -34,7 +34,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        113.0.5672.63
+Version:        114.0.5735.90
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -75,24 +75,23 @@ Patch005: 0005-ALT-Use-rpath-link-and-absolute-rpath.patch
 Patch006: 0006-ALT-allow-to-override-clang-through-env-variables.patch
 Patch007: 0007-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch008: 0008-FEDORA-bootstrap-with-python3.patch
-Patch009: 0009-sql-make-VirtualCursor-standard-layout-type.patch
-Patch010: 0010-ALT-use-system-zlib.patch
-Patch011: 0011-ALT-use-system-libdrm-library.patch
-Patch012: 0012-GENTOO-Fix-gtk4-build.patch
-Patch013: 0013-DEBIAN-allow-building-against-system-libraries-even-.patch
-Patch014: 0014-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
-Patch015: 0015-DEBIAN-use-system-opus-library-instead-of-embedded.patch
-Patch016: 0016-DEBIAN-build-using-system-openjpeg.patch
-Patch017: 0017-DEBIAN-use-system-jpeg-library.patch
-Patch018: 0018-DEBIAN-use-system-libevent-library.patch
-Patch019: 0019-ALT-Use-system-libusb-libsecret-flatbuffers.patch
-Patch020: 0020-Use-yandex-search-as-default.patch
-Patch021: 0021-Support-VA-API-on-Linux-Ozone-Wayland.patch
-Patch022: 0022-GENTOO-EnumTable-crash.patch
-Patch023: 0023-IWYU-add-cstring-for-std-strlen-in-web_view_impl.cc.patch
-Patch024: 0024-ARCH-Add-missing-typename-to-download-bubble.patch
-Patch025: 0025-ARCH-Add-missing-header.patch
-Patch026: 0026-DEBIAN-lambda-bug-workaround.patch
+Patch009: 0009-ALT-use-system-zlib.patch
+Patch010: 0010-ALT-use-system-libdrm-library.patch
+Patch011: 0011-GENTOO-Fix-gtk4-build.patch
+Patch012: 0012-DEBIAN-allow-building-against-system-libraries-even-.patch
+Patch013: 0013-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
+Patch014: 0014-DEBIAN-use-system-opus-library-instead-of-embedded.patch
+Patch015: 0015-DEBIAN-build-using-system-openjpeg.patch
+Patch016: 0016-DEBIAN-use-system-jpeg-library.patch
+Patch017: 0017-DEBIAN-use-system-libevent-library.patch
+Patch018: 0018-ALT-Use-system-libusb-libsecret-flatbuffers.patch
+Patch019: 0019-Use-yandex-search-as-default.patch
+Patch020: 0020-GENTOO-EnumTable-crash.patch
+Patch021: 0021-ARCH-Add-missing-typename-to-download-bubble.patch
+Patch022: 0022-ARCH-Add-missing-header.patch
+Patch023: 0023-ALT-Do-not-hardcode-flatbuffer-version.patch
+Patch024: 0024-DEBIAN-lambda-bug-workaround.patch
+Patch025: 0025-ALT-Ignore-unknown-option-llvm15.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -152,6 +151,7 @@ BuildRequires:  pkgconfig(lcms2)
 BuildRequires:  pkgconfig(libbrotlidec)
 BuildRequires:  pkgconfig(libcurl)
 BuildRequires:  pkgconfig(libdrm)
+BuildRequires:  pkgconfig(libevdev)
 BuildRequires:  pkgconfig(libevent)
 BuildRequires:  pkgconfig(libffi)
 BuildRequires:  pkgconfig(libjpeg)
@@ -298,7 +298,6 @@ gn_arg+=( enable_hangout_services_extension=true )
 gn_arg+=( treat_warnings_as_errors=false )
 gn_arg+=( fatal_linker_warnings=false )
 gn_arg+=( system_libdir=\"%_lib\" )
-gn_arg+=( enable_js_type_check=false )
 
 # toolkit
 gn_arg+=( use_qt=false )
@@ -513,6 +512,23 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Jun 03 2023 Alexey Gladkov <legion@altlinux.ru> 114.0.5735.90-alt1
+- New version (114.0.5735.90).
+- Security fixes:
+  - CVE-2023-2929: Out of bounds write in Swiftshader.
+  - CVE-2023-2930: Use after free in Extensions.
+  - CVE-2023-2931: Use after free in PDF.
+  - CVE-2023-2932: Use after free in PDF.
+  - CVE-2023-2933: Use after free in PDF.
+  - CVE-2023-2934: Out of bounds memory access in Mojo.
+  - CVE-2023-2935: Type Confusion in V8.
+  - CVE-2023-2936: Type Confusion in V8.
+  - CVE-2023-2937: Inappropriate implementation in Picture In Picture.
+  - CVE-2023-2938: Inappropriate implementation in Picture In Picture.
+  - CVE-2023-2939: Insufficient data validation in Installer.
+  - CVE-2023-2940: Inappropriate implementation in Downloads.
+  - CVE-2023-2941: Inappropriate implementation in Extensions API.
+
 * Wed May 03 2023 Alexey Gladkov <legion@altlinux.ru> 113.0.5672.63-alt1
 - New version (113.0.5672.63).
 - Security fixes:
