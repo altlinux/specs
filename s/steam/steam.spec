@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.78
-Release: alt3
+Release: alt4
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -11,8 +11,10 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: %ix86
 
-Source0: http://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
+Source0: https://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
 Source1: %{name}_install_agreement.txt
+Source2: 10-%name-nm.rules
+Source3: %name.watch
 
 Patch0: %name-apt-alt.patch
 Patch1: %name-desktop-alt.patch
@@ -55,6 +57,7 @@ savegame and screenshot functionality, and many social features.
 %__install -Dp -m0644 subprojects/%name-devices/60-%name-input.rules %buildroot%_udevrulesdir/60-%name-input.rules
 %__install -Dp -m0644 subprojects/%name-devices/60-%name-vr.rules %buildroot%_udevrulesdir/60-%name-vr.rules
 %__install -Dp -m0644 %SOURCE1 %buildroot%_defaultdocdir/%name/%{name}_install_agreement.txt
+%__install -Dp -m0666 %SOURCE2 %buildroot%_sysconfdir/polkit-1/rules.d/10-%name-nm.rules
 
 %files
 %_bindir/%name
@@ -69,8 +72,12 @@ savegame and screenshot functionality, and many social features.
 %_pixmapsdir/%{name}*.png
 %config %_udevrulesdir/60-%name-input.rules
 %config %_udevrulesdir/60-%name-vr.rules
+%config %_sysconfdir/polkit-1/rules.d/10-%name-nm.rules
 
 %changelog 
+* Mon Jun 12 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt4
+- Prevent prompts Network Manager without admin permissions (ALT #46456)
+
 * Tue May 23 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt3
 - Add libnm require (ALT# 45872)
 
