@@ -6,23 +6,26 @@
 
 Name: python3-module-%oname
 Version: 1.12.4
-Release: alt1
+Release: alt2
 
 Summary: Manuel lets you mix and match traditional doctests with custom test syntax
 License: Apache-2.0
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/manuel/
-
+Url: https://pypi.org/project/manuel/
 VCS: https://github.com/benji-york/manuel
+
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-six
 BuildRequires: python3-module-zope
 BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -42,18 +45,18 @@ This package contains tests for Manuel.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+%pyproject_run_pytest src/manuel/tests.py
 
 %files
 %doc *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/%oname/test*
 
 %files tests
@@ -61,6 +64,9 @@ python3 setup.py test
 %doc *.rst
 
 %changelog
+* Sun Jun 11 2023 Anton Vyatkin <toni@altlinux.org> 1.12.4-alt2
+- Fix FTBFS
+
 * Mon Feb 20 2023 Anton Vyatkin <toni@altlinux.org> 1.12.4-alt1
 - new version 1.12.4
 
