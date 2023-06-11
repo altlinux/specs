@@ -1,7 +1,7 @@
 %define oname sphinx_rtd_theme
 
 Name: python3-module-%oname
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1
 
 Summary: ReadTheDocs.org theme for Sphinx
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 This is a prototype mobile-friendly sphinx_ theme I made for
@@ -27,17 +29,20 @@ your project outside of that site.
 %setup
 
 %build
-export CI=":"
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Jun 11 2023 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt1
+- Automatically updated to 1.2.2.
+
 * Wed Feb 08 2023 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
 - Automatically updated to 1.2.0.
 
