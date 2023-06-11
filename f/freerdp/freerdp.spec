@@ -8,7 +8,7 @@
 
 Name: freerdp
 Version: 2.10.0
-Release: alt2
+Release: alt3
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -17,6 +17,7 @@ URL: http://www.freerdp.com
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: %name-alt-pam-check.patch
 Patch2000: %name-e2k.patch
 
 Requires: xfreerdp = %EVR
@@ -203,6 +204,7 @@ the RDP protocol.
 
 %prep
 %setup
+%patch0 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -330,7 +332,7 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 
 %files server
 %_bindir/freerdp-proxy
-%_bindir/freerdp-shadow-cli
+%attr(2711, root, chkpwd) %_bindir/freerdp-shadow-cli
 %_man1dir/freerdp-shadow-cli.*
 
 %files -n lib%name
@@ -375,6 +377,9 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Fri Jun 09 2023 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt3
+- Used PAM for authenticate freerdp-shadow-cli (ALT #46465).
+
 * Fri Jun 02 2023 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt2
 - Moved freerdp-proxy to freerdp-server.
 
