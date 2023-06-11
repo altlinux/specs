@@ -1,7 +1,7 @@
 %define  oname sphinx-pytest
 
 Name:    python3-module-%oname
-Version: 0.0.5
+Version: 0.1.1
 Release: alt1
 
 Summary: Helpful pytest fixtures for sphinx extensions
@@ -51,5 +51,8 @@ after transforms, etc.
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Sun Jun 11 2023 Grigory Ustinov <grenka@altlinux.org> 0.1.1-alt1
+- Automatically updated to 0.1.1.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 0.0.5-alt1
 - Initial build for Sisyphus.
