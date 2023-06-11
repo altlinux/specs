@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: liboqs
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT and BSD-3-Clause and Apache-2.0 and ALT-Public-Domain and CC0-1.0
@@ -117,11 +117,15 @@ timeout 222 %ninja_build -C build run_tests
 %_includedir/oqs
 %_libdir/cmake/liboqs
 %_libdir/liboqs.so
+%_pkgconfigdir/liboqs.pc
 
 %files tests
 %_bindir/oqs-*
 
 %changelog
+* Sun Jun 11 2023 Vitaly Chikunov <vt@altlinux.org> 0.8.0-alt1
+- Update to 0.8.0 (2023-06-07).
+
 * Mon Aug 22 2022 Vitaly Chikunov <vt@altlinux.org> 0.7.2-alt1
 - Updated to 0.7.2 (2022-08-21).
 - Re-enable HQC KEM since it's passed into fourth NIST PQC round. Note that
