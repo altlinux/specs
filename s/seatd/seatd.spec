@@ -1,6 +1,6 @@
 Name: seatd
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: Minimal seat management daemon and universal library
 License: MIT
 Url: https://github.com/kennylevinsen/seatd
@@ -10,6 +10,8 @@ Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.runner
 Source3: %name.sysconfig
+
+Patch0001: 0001-Use-same-group-in-sysv-and-systemd-service.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -46,6 +48,7 @@ Header and Library files for doing development for lib%soname.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson -Dlibseat-builtin=enabled
@@ -85,6 +88,9 @@ install -m644 -pD contrib/systemd/seatd.service %buildroot%_unitdir/%name.servic
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jun 11 2023 Alexey Gladkov <legion@altlinux.ru> 0.7.0-alt2
+- Use same group in sysv and systemd service.
+
 * Fri Jul 22 2022 Alexey Gladkov <legion@altlinux.ru> 0.7.0-alt1
 - New release (0.7.0).
 
