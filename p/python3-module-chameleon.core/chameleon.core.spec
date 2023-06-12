@@ -2,14 +2,14 @@
 %def_with check
 
 Name: python3-module-%oname.core
-Version: 3.10.2
+Version: 4.0.0
 Release: alt1
 
 Summary: Chameleon Template Compiler
 License: BSD
 Group: Development/Python3
 Url: http://chameleon.repoze.org/
-# https://github.com/malthe/chameleon.git
+# https://github.com/malthe/chameleon
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -89,6 +89,9 @@ cp -fR _build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc _build/html/*
 
 %changelog
+* Mon Jun 12 2023 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+
 * Mon Dec 19 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.2-alt1
 - Automatically updated to 3.10.2.
 - Build with check.
