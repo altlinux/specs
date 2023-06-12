@@ -1,22 +1,23 @@
 %define rname pyscard
 
 Name:       python3-module-%rname
-Version:    2.0.5
+Version:    2.0.7
 Release:    alt1
 
 Summary:    A framework for building smart card aware applications in Python
-License:    LGPLv2+ and Python and CC-BY-SA
+License:    LGPLv2+ and Python and CC-BY-SA-3.0
 Group:      Development/Python3
 URL:        https://sourceforge.net/projects/pyscard/
-Packager:   Andrey Cherepanov <cas@altlinux.org>
 
 Source0:    %rname-%version.tar
+
+Patch:      %rname-%version-Pyro5.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
-BuildRequires:  python3-module-Pyro4
+BuildRequires:  python3-module-Pyro5
 BuildRequires:  libpcsclite-devel
 BuildRequires:  swig >= 1.3.31
 
@@ -30,11 +31,7 @@ the PCSC API Python wrapper module.
 
 %prep
 %setup -q -n %rname-%version
-
-# license file is CRLF terminated -- prevent a rpmlint warning
-subst 's/\r//' LICENSE
-# Adapt to use Pyro4
-subst 's/Pyro\./Pyro4./g' smartcard/pyro/PyroReader.py
+%autopatch -p1
 
 # fix import of bsddb
 sed -i 's|_bsddb|bsddb3._pybsddb|' smartcard/CardNames.py
@@ -45,16 +42,20 @@ sed -i 's|from bsddb import|from bsddb3 import|' smartcard/CardNames.py
 
 %install
 %pyproject_install
-# chmod 755 %buildroot%python3_sitelibdir/smartcard/scard/_scard.so
 
 %files
-%doc README.md LICENSE
+%doc README.md
 %doc smartcard/doc/*
 %doc smartcard/Examples
-%python3_sitelibdir/*
-
+%python3_sitelibdir/smartcard
+%python3_sitelibdir/%rname-%version.dist-info
 
 %changelog
+* Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 2.0.7-alt1
+- New version.
+- migrate to Pyro5
+- fix license tag (CC-BY-SA -> CC-BY-SA-3.0)
+
 * Sat Feb 25 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.5-alt1
 - 1.9.9 -> 2.0.5 (closes: #44926).
 - Modernize building.
