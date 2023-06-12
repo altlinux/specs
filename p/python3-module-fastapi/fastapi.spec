@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.96.1
+Version: 0.97.0
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %add_pyproject_deps_check_filter ruff types-
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata
 %pyproject_builddeps_check
 
 # BuildRequires: python3(multipart)
@@ -62,6 +62,9 @@ The key features are:
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-tests.txt
+%endif
 
 %build
 %pyproject_build
@@ -85,6 +88,9 @@ sed -i "/def test_create_read()/i@pytest.mark.skip(reason='workaround')" \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 12 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.97.0-alt1
+- 0.96.1 -> 0.97.0
+
 * Sun Jun 11 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.96.1-alt1
 - 0.96.0 -> 0.96.1
 
