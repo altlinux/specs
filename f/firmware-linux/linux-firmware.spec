@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230531
+Version: 20230607
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,18 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Jun 12 2023 Cronbuild Service <cronbuild@altlinux.org> 20230607-alt1
+- upstream changes (GIT 1cd1c871):
+  + rtl_bt: Update RTL8852A BT USB firmware to 0xDAC7_480D (thx Hilda Wu)
+  + rtl_bt: Update RTL8852C BT USB firmware to 0x040D_7225 (thx Hilda Wu)
+  + amdgpu: DMCUB updates for various AMDGPU asics (thx Stylon Wang)
+  + update firmware for MT7922 WiFi device (thx Deren Wu)
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+  + update firmware for mediatek bluetooth chip (MT7922) (thx Chris.Lu)
+  + update firmware for mediatek bluetooth chip (MT7921) (thx Chris.Lu)
+  + i915: Add HuC v8.5.0 for MTL (thx Daniele Ceraolo Spurio)
+  + mediatek: Update mt8195 SCP firmware to support hevc (thx Yunfei Dong)
+
 * Tue Jun 06 2023 Cronbuild Service <cronbuild@altlinux.org> 20230531-alt1
 - upstream changes (GIT fc90c59b):
   + qcom: apq8016: add Dragonboard 410c WiFi and modem firmware (thx Dmitry Baryshkov)
