@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 9.0.4
+Version: 10.0.1
 Release: alt1
 
 Summary: A port of node.js's EventEmitter to python
@@ -50,11 +50,14 @@ EventEmitter that comes with node.js.
 %tox_check_pyproject
 
 %files
-%doc *.rst
+%doc LICENSE *.md
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Jun 12 2023 Grigory Ustinov <grenka@altlinux.org> 10.0.1-alt1
+- Automatically updated to 10.0.1.
+
 * Mon Sep 19 2022 Grigory Ustinov <grenka@altlinux.org> 9.0.4-alt1
 - Automatically updated to 9.0.4 (Closes: #44638).
 
