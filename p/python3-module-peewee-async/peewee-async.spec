@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Asynchronous interface for peewee ORM powered by asyncio
@@ -51,6 +51,9 @@ python3 setup.py test
 %python3_sitelibdir/__pycache__
 
 %changelog
+* Mon Jun 12 2023 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
+- Automatically updated to 0.8.1.
+
 * Fri Jul 15 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.0-alt1
 - Automatically updated to 0.8.0.
 
