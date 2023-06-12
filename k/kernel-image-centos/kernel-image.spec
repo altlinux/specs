@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 322
+%define centos_release 325
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -638,6 +638,34 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jun 12 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.325-alt1.el9
+- Updated to kernel-5.14.0-325.el9 (fixes: CVE-2023-1637, CVE-2023-2124):
+  + CNB: bridge and switchdev update to v6.3
+  + CNB: netlink: add support for bulk delete / flush operations
+  + CNB: rtnetlink: add extack support in fdb del handlers
+  + Merge commit '9b28b5a3bb6c252886f0486a3ae6afde17218dc6' from documentation
+  + UFS enablement for sa8775p-ride
+  + Update amd_pstate to upstream 6.3
+  + XFS: sync to upstream v6.0
+  + [s390] : [IBM 9.3 FEAT] Upgrade the SMC driver to latest from upstream, e.g. kernel 6.3
+  + arm64: dts: updates
+  + atlantic: driver update to v6.3
+  + blk-mq: don't submit passthrough request via scheduler
+  + bonding: fix send_peer_notif overflow
+  + cifs: update to approx 6.2
+  + device-dax: Fix duplicate 'hmem' device registration
+  + drivers: perf: Add LLC-TAD perf counter support
+  + kernel: save/restore speculative MSRs during S3 suspend/resume [rhel-9]
+  + netfilter: handle ipv6 jumbo packets properly for bridge ovs and tc
+  + nfsd: make a copy of struct iattr before calling notify_change
+  + platform/x86/intel/ifs: Annotate work queue on stack so object debug does not complain
+  + redhat/configs: turn off IMX93 ADC Driver
+  + redhat/configs: turn on I3C drivers
+  + sfc: Fix module EEPROM reporting for QSFP modules
+  + tpm: Backport upstream fixes
+  + xfs: verify buffer contents when we skip log replay
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Jun 05 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.322-alt1.el9
 - Updated to kernel-5.14.0-322.el9 (fixes: CVE-2022-3594, CVE-2023-0458, CVE-2023-1079, CVE-2023-2002, CVE-2023-2194, CVE-2023-2483, CVE-2023-32233):
   + acpi-cpufreq: Skip initializtion if a cpufreq driver exists
