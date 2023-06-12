@@ -9,7 +9,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 5.2.4
-Release: alt4
+Release: alt5
 
 Group: Development/Python3
 License: BSD-3-Clause
@@ -22,6 +22,9 @@ Source: %name-%version.tar
 Patch0: kombu-5.2.4-tests-deps.patch
 # Patches from Debian
 Patch11: 0001-Remove-image-from-remote-donation-site-privacy-issue.patch
+
+# https://github.com/celery/kombu/issues/1653
+Patch21: kombu-Pyro5-support.patch
 
 # librabbitmq is not packaged (yet?)
 %filter_from_requires /python3(librabbitmq\(\..*\)\?)/d
@@ -38,7 +41,22 @@ BuildRequires: python3(vine)
 
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytz)
-BuildRequires: python3(Pyro4)
+BuildRequires: python3(msgpack)
+BuildRequires: python3(yaml)
+BuildRequires: python3(boto3)
+BuildRequires: python3(pymongo)
+BuildRequires: python3(zstandard)
+BuildRequires: python3(brotli)
+BuildRequires: python3(kazoo)
+BuildRequires: python3(pycurl)
+BuildRequires: python3(consul)
+BuildRequires: python3(Pyro5)
+
+# failed tests
+#BuildRequires: python3(librabbitmq)
+#BuildRequires: python3(etcd)
+#BuildRequires: python3(redis)
+#BuildRequires: python3(sqlalchemy)
 %endif
 
 %if_with doc
@@ -107,6 +125,10 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 1:5.2.4-alt5
+- migrate to Pyro5
+- enable more tests
+
 * Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 1:5.2.4-alt4
 - Fixed FTBFS (setuptools 66).
 
