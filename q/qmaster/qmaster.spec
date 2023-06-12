@@ -1,13 +1,11 @@
 Name:     qmaster
-Version:  0.2.3
-Release:  alt4
+Version:  1.0.0
+Release:  alt1
 
 Summary:  Modbus network emulator
-License:  GPL-2.0
+License:  GPL-2.0-or-later
 Group:    Engineering
 Url:      https://github.com/maisvendoo/qmaster
-
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source:   %name-%version.tar
 
@@ -47,6 +45,10 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
+- New version 1.0.0.
+- Fix License tag
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt4
 - NMU: remove rpm-build-ubt from BR:
 
