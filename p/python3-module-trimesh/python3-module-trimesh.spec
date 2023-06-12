@@ -5,7 +5,7 @@
 %endif
 
 Name:    python3-module-%modulename
-Version: 3.17.1
+Version: 3.22.0
 Release: alt1
 
 Summary: Python library for loading and using triangular meshes.
@@ -93,6 +93,9 @@ pytest3 -v -k "not ( DAETest and test_material_round ) and \
 %doc *.md
 
 %changelog
+* Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 3.22.0-alt1
+- new version (3.22.0) with rpmgs script
+
 * Tue Jan 10 2023 Anton Midyukov <antohami@altlinux.org> 3.17.1-alt1
 - new version (3.17.1) with rpmgs script
 
