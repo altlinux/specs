@@ -1,9 +1,8 @@
-# needed more buildrequires
 %def_disable check
 
 Name: python3-module-vispy
-Version: 0.6.6
-Release: alt2
+Version: 0.13.0
+Release: alt1
 Summary: Interactive visualization in Python 3
 License: BSD-3-Clause
 Group: Development/Python3
@@ -14,13 +13,13 @@ Source: vispy-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
 BuildRequires: libnumpy-py3-devel
 
 %if_disabled check
 %else
+BuildRequires: pytest3
 BuildRequires: python3-module-sdl2
 #BuildRequires: python3-module-glfw
 BuildRequires: python3-module-imageio
@@ -34,7 +33,7 @@ BuildRequires: fontconfig
 #BuildRequires: python3-module-cassowary
 BuildRequires: python3-module-decorator
 BuildRequires: python3-module-freetype
-#BuildRequires: python3-module-husl
+BuildRequires: python3-module-hsluv
 #BuildRequires: python3-module-pypng
 BuildRequires: python3-module-six
 %endif
@@ -44,9 +43,7 @@ Vispy is an interactive 2D/3D data visualization library. It leverages Graphics
 Processing Units through the OpenGL library to display large datasets.
 
 %prep
-%setup -q -n vispy-%version
-#rm -rf vispy/ext/_bundled
-sed -i -e '/^#!\//, 1d' vispy/glsl/build-spatial-filters.py vispy/util/transforms.py vispy/visuals/collections/util.py
+%setup -n vispy-%version
 
 %build
 export CFLAGS="%optflags -fno-strict-aliasing"
@@ -55,39 +52,23 @@ export CFLAGS="%optflags -fno-strict-aliasing"
 %install
 %pyproject_install
 
-# remove jupyter
-rm -r %buildroot%_prefix%_sysconfdir/jupyter
-rm -r %buildroot%_datadir/jupyter
-
-# remove tests
-rm -r %buildroot%python3_sitelibdir/vispy/app/backends/tests
-rm -r %buildroot%python3_sitelibdir/vispy/app/tests
-rm -r %buildroot%python3_sitelibdir/vispy/color/tests
-rm -r %buildroot%python3_sitelibdir/vispy/geometry/tests
-rm -r %buildroot%python3_sitelibdir/vispy/gloo/gl/tests
-rm -r %buildroot%python3_sitelibdir/vispy/gloo/tests
-rm -r %buildroot%python3_sitelibdir/vispy/io/tests
-rm -r %buildroot%python3_sitelibdir/vispy/plot/tests
-rm -r %buildroot%python3_sitelibdir/vispy/scene/cameras/tests
-rm -r %buildroot%python3_sitelibdir/vispy/scene/tests
-rm -r %buildroot%python3_sitelibdir/vispy/util/dpi/tests
-rm -r %buildroot%python3_sitelibdir/vispy/util/fonts/tests
-rm -r %buildroot%python3_sitelibdir/vispy/util/tests
-rm -r %buildroot%python3_sitelibdir/vispy/visuals/graphs/tests
-rm -r %buildroot%python3_sitelibdir/vispy/visuals/shaders/tests
-rm -r %buildroot%python3_sitelibdir/vispy/visuals/tests
-rm -r %buildroot%python3_sitelibdir/vispy/visuals/transforms/tests
-rm -r %buildroot%python3_sitelibdir/vispy/testing
+# fix version
+mv %buildroot/%python3_sitelibdir/vispy-{0.0.0,%version}.dist-info
+sed -i 's/^Version: .*/Version: %version/' %buildroot/%python3_sitelibdir/vispy-%version.dist-info/METADATA
 
 %check
 export PYTHONPATH=%buildroot/%python3_sitelibdir/
-py.test3
+pytest3 -v
 
 %files
-%doc README.rst
-%python3_sitelibdir/*
+%doc *.rst *.md
+%python3_sitelibdir/vispy
+%python3_sitelibdir/vispy-%version.dist-info
 
 %changelog
+* Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
+- new version (0.13.0) with rpmgs script
+
 * Sun Aug 14 2022 Anton Midyukov <antohami@altlinux.org> 0.6.6-alt2
 - Migration to PEP517
 - Update Source-url
