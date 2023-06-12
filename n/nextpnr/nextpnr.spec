@@ -5,7 +5,7 @@
 %def_enable OPENMP
 
 Name:     nextpnr
-Version:  0.5
+Version:  0.6
 Release:  alt1
 
 Summary:  portable FPGA place and route tool
@@ -65,6 +65,9 @@ route tool.
 %doc *.md docs/*
 
 %changelog
+* Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 0.6-alt1
+- new version (0.6) with rpmgs script
+
 * Sat Jan 14 2023 Anton Midyukov <antohami@altlinux.org> 0.5-alt1
 - new version (0.5) with rpmgs script
 
