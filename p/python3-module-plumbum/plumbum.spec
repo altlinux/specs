@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: Plumbum: shell combinators library
@@ -131,6 +131,9 @@ cp -fR experiments %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Jun 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.8.2-alt1
+- Automatically updated to 1.8.2.
+
 * Thu Jan 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt1
 - Automatically updated to 1.8.1.
 
