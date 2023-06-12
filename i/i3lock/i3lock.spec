@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: i3lock
-Version: 2.13
+Version: 2.14.1
 Release: alt1
 
 Summary: improved screen locker (for X-session)
@@ -11,7 +11,9 @@ Group: Graphical desktop/Other
 URL: http://i3wm.org/i3lock/
 Source: %name-%version.tar
 Patch0: i3lock-pam-fixes.patch
+Patch1: i3lock-2.14.1-dump_password.patch
 
+BuildRequires(pre): meson
 BuildRequires: libev-devel, libxcbutil-image-devel, libxcbutil-devel, libxcbutil-xrm-devel, libxkbcommon-x11-devel, libcairo-devel, libpam0-devel
 
 %description
@@ -31,16 +33,14 @@ i3lock - это простой блокировщик экрана, наприм
 %prep
 %setup
 %patch0 -p1
-%autoreconf
+%patch1 -p1
 
 %build
-%configure  --sysconfdir=%_sysconfdir --disable-sanitizers
-
-%make_build -C *-alt-linux-gnu*
+%meson
+%meson_build
 
 %install
-%make install -C *-alt-linux-gnu* DESTDIR=%buildroot
-
+%meson_install
 
 %files
 %_man1dir/i3lock.*
@@ -49,5 +49,9 @@ i3lock - это простой блокировщик экрана, наприм
 %_sysconfdir/pam.d/*
 
 %changelog
+* Fri Mar 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 2.14.1-alt1
+- Updated to 2.14.1
+- Patched password output in debug mode.
+
 * Thu Jun 02 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.13-alt1
 - Initial release for Sisyphus.
