@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.12.12
+Version: 0.13.1
 Release: alt1
 
 Summary: CacheControl is a port of the caching algorithms in httplib2
@@ -24,7 +24,7 @@ Source: %pypi_name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(wheel) python3(setuptools)
+BuildRequires: python3(wheel) python3(flit_core)
 
 %{?_enable_check:BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_cov)
@@ -35,7 +35,7 @@ BuildRequires: python3(msgpack)
 BuildRequires: python3(mock)
 BuildRequires: python3(redis)
 BuildRequires: python3(filelock)
-BuildRequires: python3(cherrypy)}
+BuildRequires: python3-module-cherrypy >= 18.8.0}
 
 %description
 CacheControl is a port of the caching algorithms in "httplib2" for use with
@@ -56,10 +56,16 @@ CacheControl is a port of the caching algorithms in "httplib2" for use with
 %files
 %_bindir/doesitcache
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%modname-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc README*
 
 %changelog
+* Thu Jun 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
+- 0.13.1
+
+* Mon Jun 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Mon Sep 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.12.12-alt1
 - first build for Sisyphus
 
