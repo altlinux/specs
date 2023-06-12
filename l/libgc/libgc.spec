@@ -1,6 +1,6 @@
 Name: libgc
 Version: 8.2.4
-Release: alt1
+Release: alt2
 
 Summary: The Boehm-Demers-Weiser conservative garbage collector
 
@@ -9,13 +9,7 @@ Group: System/Libraries
 Url: http://www.hboehm.info/gc/
 
 # Source-url: https://github.com/ivmai/bdwgc/releases/download/v%version/gc-%version.tar.gz
-Source: gc-%version.tar
-
-Patch: gc-aarch64.patch
-# https://github.com/ivmai/bdwgc/issues/87
-Patch1: libgc-7.6.0-upstream-c++.patch
-# https://github.com/ivmai/bdwgc/pull/318
-Patch2: gc-riscv64.patch
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: libatomic_ops-devel-static
@@ -52,10 +46,7 @@ Requires: %name-devel = %version-%release
 This package contains static libgc library.
 
 %prep
-%setup -n gc-%version
-#patch -p1
-#patch1 -p1
-#patch2 -p1
+%setup
 
 %build
 # see bugzilla.redhat.com/689877
@@ -106,6 +97,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %endif
 
 %changelog
+* Sun Jun 04 2023 Vitaly Lipatov <lav@altlinux.ru> 8.2.4-alt2
+- drop obsoleted patchs
+- change tarball name
+
 * Mon May 29 2023 Vitaly Lipatov <lav@altlinux.ru> 8.2.4-alt1
 - new version 8.2.4 (with rpmrb script)
 
