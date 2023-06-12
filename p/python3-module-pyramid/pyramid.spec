@@ -3,7 +3,7 @@
 %def_without bootstrap
 
 Name:           python3-module-%oname
-Version:        2.0
+Version:        2.0.1
 Release:        alt1
 Summary:        The Pyramid web application framework, a Pylons project
 Group:          Development/Python3
@@ -14,13 +14,18 @@ BuildArch:      noarch
 # https://github.com/Pylons/pyramid.git
 Source: %name-%version.tar
 
+Patch: %name-%version.patch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools python3(chameleon) python3(mako) python3(repoze.lru)
+BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3(chameleon) python3(mako) python3(repoze.lru)
 BuildRequires: python3(venusian) python3(webtest) python3(zope.deprecation)
 BuildRequires: python3(docutils) python3(hupper) python3(paste.deploy)
 BuildRequires: python3(plaster) python3(plaster_pastedeploy) python3(sphinx)
 BuildRequires: python3(translationstring) python3(zope.component) python3(zope.configuration)
 BuildRequires: python3(zope.interface) python3(webob)
+BuildRequires: pytest3
 
 %py3_requires paste.deploy plaster_pastedeploy
 
@@ -40,18 +45,19 @@ fun, more predictable, and more productive.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+export PYTHONPATH="${PWD}/_stub:%buildroot%python3_sitelibdir"
+pytest3 tests
 
 %files
-%doc README.rst LICENSE.txt
+%doc README.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%{oname}-%{version}*.egg-info
+%python3_sitelibdir/%{oname}-%{version}*.dist-info
 %_bindir/pdistreport
 %_bindir/prequest
 %_bindir/proutes
@@ -61,6 +67,10 @@ python3 setup.py test
 %_bindir/pviews
 
 %changelog
+* Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
+- new version 2.0.1
+- fix run tests
+
 * Sun Jan 30 2022 Anton Midyukov <antohami@altlinux.org> 2.0-alt1
 - new version 2.0
 - build python3 module only
