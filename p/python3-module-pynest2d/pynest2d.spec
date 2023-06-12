@@ -3,7 +3,7 @@
 
 Name:     python3-module-pynest2d
 Version:  4.8
-Release:  alt2
+Release:  alt3
 
 Summary:  Python bindings for libnest2d
 License:  LGPL-3.0
@@ -29,6 +29,13 @@ BuildRequires: python3-dev
 BuildRequires: libnest2d-devel
 BuildRequires: python3-module-sip-devel
 BuildRequires: boost-geometry-devel
+%ifarch %e2k
+# there is a bug in GCC that ignores some non-existent includes
+# no other compiler has this bug
+# this package needs "quadmath.h" to build if
+# _GLIBCXX_USE_FLOAT128 from <cstddef> is defined
+BuildRequires: libquadmath-devel
+%endif
 
 %description
 %summary
@@ -55,6 +62,9 @@ sed -i 's/find_program(SIP_EXECUTABLE sip/find_program(SIP_EXECUTABLE sip3/' \
 %python3_sitelibdir/pynest2d.so
 
 %changelog
+* Mon Jun 12 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.8-alt3
+- Fixed build for Elbrus.
+
 * Mon Feb 01 2021 Grigory Ustinov <grenka@altlinux.org> 4.8-alt2
 - Fixed FTBFS.
 
