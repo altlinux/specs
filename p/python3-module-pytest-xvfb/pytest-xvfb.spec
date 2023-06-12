@@ -6,7 +6,7 @@
 %define srcname pytest-xvfb
 
 Name: python3-module-%srcname
-Version: 2.0.0
+Version: 3.0.0
 Release: alt1
 Summary: A pytest plugin to run Xvfb for tests
 
@@ -17,12 +17,15 @@ URL: https://github.com/The-Compiler/pytest-xvfb
 Source: %srcname-%version.tar
 BuildArch: noarch
 
-BuildRequires: python3-devel
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-dev
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_disabled check
 %else
-BuildRequires: python3-module-pytest
+BuildRequires: pytest3
 BuildRequires: python3-module-pyvirtualdisplay
 BuildRequires: xauth
 BuildRequires: xvfb-run
@@ -46,21 +49,24 @@ locally.
 rm tests/test_xvfb_windows.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot/%python3_sitelibdir/
-py.test3 -v
+pytest3 -v
 
 %files
 %doc CHANGELOG.rst README.rst
 %python3_sitelibdir/pytest_xvfb.py
 %python3_sitelibdir/__pycache__/pytest_xvfb.*
-%python3_sitelibdir/pytest_xvfb-*.egg-info/
+%python3_sitelibdir/pytest_xvfb-%version.dist-info/
 
 %changelog
+* Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
+- new version (3.0.0) with rpmgs script
+
 * Sun Mar 06 2022 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - initial build

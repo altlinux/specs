@@ -7,7 +7,7 @@
 %define modulename pyvirtualdisplay
 
 Name: python3-module-%modulename
-Version: 2.2
+Version: 3.0
 Release: alt1
 Summary: Python wrapper for Xvfb, Xephyr and Xvnc
 Group: Development/Python3
@@ -17,15 +17,17 @@ URL: https://github.com/ponty/PyVirtualDisplay
 Source: %pypi_name-%version.tar
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_disabled check
 %else
 BuildRequires: python3-module-easyprocess
 BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-psutil
-BuildRequires: python3-module-pytest
+BuildRequires: pytest3
 BuildRequires: xmessage
 BuildRequires: xorg-xephyr
 BuildRequires: xorg-xvfb 
@@ -43,20 +45,23 @@ rm tests/test_race.py
 rm tests/test_xvnc.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot/%python3_sitelibdir/
-py.test3 -v
+pytest3 -v
 
 %files
 %doc README.md
-%python3_sitelibdir/%pypi_name-%version-py*.egg-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %python3_sitelibdir/%modulename/
 
 %changelog
+* Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 3.0-alt1
+- new version (3.0) with rpmgs script
+
 * Sun Mar 06 2022 Anton Midyukov <antohami@altlinux.org> 2.2-alt1
 - initial build
