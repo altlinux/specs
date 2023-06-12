@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.14.0
+Version: 1.15.0
 Release: alt1
 
 Summary: JSON-RPC transport realisation
@@ -17,6 +17,8 @@ Patch0: port-on-new-django.patch
 BuildArch: noarch
 
 BuildRequires(Pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
@@ -49,14 +51,13 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3
+%pyproject_run_pytest
 
 %files
 %doc README.rst LICENSE.txt
@@ -68,6 +69,9 @@ py.test-3
 
 
 %changelog
+* Mon Jun 12 2023 Anton Vyatkin <toni@altlinux.org> 1.15.0-alt1
+- Version updated to 1.15.0.
+
 * Thu Mar 30 2023 Anton Vyatkin <toni@altlinux.org> 1.14.0-alt1
 - Version updated to 1.14.0.
 
