@@ -1,6 +1,7 @@
 Name: libportmidi
-Version: 217
-Release: alt3
+Version: 2.0.4
+Release: alt1
+Epoch: 1
 
 Summary: Platform Independent Library for MIDI I/O
 
@@ -8,13 +9,11 @@ License: MIT
 Group: Sound
 Url: http://portmedia.sourceforge.net/portmidi/
 
-Packager: Egor Glukhov <kaman@altlinux.org>
-
-# Source-url: http://prdownloads.sourceforge.net/portmedia/portmidi-src-%{version}.zip
+# Source-url: https://github.com/PortMidi/portmidi/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildPreReq: cmake
-BuildRequires: gcc-c++ libalsa-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ libalsa-devel
 
 %description
 PortMidi is a library for software developers. It supports real-time
@@ -23,7 +22,7 @@ input and output of MIDI data using a system-independent interface.
 %package devel
 Summary: Development files for PortMidi
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Development files for PortMidi.
@@ -57,19 +56,23 @@ done
 %install
 %makeinstall_std
 
-# Why don't they install this header file?
-install -pm 644 pm_common/pmutil.h %{buildroot}%{_includedir}/
-rm -f %buildroot%_libdir/libportmidi_s.a
-rm -f %buildroot%_libdir/libpmjni.so
-
 %files
 %_libdir/libportmidi.so.*
 
 %files devel
-%_includedir/*
+%doc README.md README.txt license.txt
+%_includedir/portmidi.h
+%_includedir/porttime.h
+%_includedir/pmutil.h
+%_libdir/cmake/PortMidi/
+%_pkgconfigdir/portmidi.pc
 %_libdir/libportmidi.so
 
 %changelog
+* Mon Jun 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1:2.0.4-alt1
+- new version (2.0.4) with rpmgs script (ALT bug 41760)
+- upstream changed version order, set epoch: 1
+
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 217-alt3
 - build from 217 official tarball
 - add patches from Fedora project

@@ -3,7 +3,7 @@
 
 Name: musescore
 Version: %mversion.2
-Release: alt1
+Release: alt2
 
 Summary: Music notation and composition software
 
@@ -13,6 +13,8 @@ Url: https://musescore.org
 
 # https://github.com/musescore/MuseScore
 Source: %name-%version.tar
+
+ExcludeArch: ppc64le
 
 BuildPreReq: chrpath rpm-build-xdg
 
@@ -93,6 +95,9 @@ chrpath -d %buildroot%_bindir/mscore
 %_iconsdir/hicolor/48x48/apps/mscore.png
 
 %changelog
+* Mon Jun 12 2023 Vitaly Lipatov <lav@altlinux.ru> 3.6.2-alt2
+- exclude build on ppc64le (due missed qt5-webengine-devel)
+
 * Tue Apr 06 2021 Grigory Ustinov <grenka@altlinux.org> 3.6.2-alt1
 - Build new version.
 
