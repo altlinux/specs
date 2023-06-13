@@ -1,7 +1,7 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 5.6.8
+Version: 5.8.1
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -90,6 +90,7 @@ Requires: cinnamon-freedesktop-menu
 Requires: gvfs gvfs-backends gvfs-utils
 # Char map - required by cinnamon keyboard applet
 Requires: gucharmap
+Requires: xdg-desktop-portal-xapp
 
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
@@ -185,6 +186,7 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %exclude %_xdgmenusdir/cinnamon-applications.menu
 %exclude %_datadir/xsessions/*.desktop
 %exclude %_datadir/cinnamon-session/sessions/*.session
+%exclude %_girdir/*
 %_datadir/cinnamon/
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
 %_datadir/dbus-1/services/org.Cinnamon.Melange.service
@@ -205,6 +207,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Thu Jun 8 2023 Vladimir Didenko <cow@altlinux.org> 5.8.1-alt1
+- 5.8.1
+
 * Mon Mar 20 2023 Vladimir Didenko <cow@altlinux.org> 5.6.8-alt1
 - 5.6.8
 

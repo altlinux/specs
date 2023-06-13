@@ -1,4 +1,4 @@
-%define ver_major 5.6
+%define ver_major 5.8
 %define _name cjs
 %define api_ver 1.0
 
@@ -27,7 +27,7 @@ BuildRequires: gcc-c++ libcairo-devel
 BuildRequires: glib2-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libdbus-glib-devel libreadline-devel libcairo-gobject-devel
 BuildRequires: gnome-common
-BuildRequires: libmozjs78-devel
+BuildRequires: libmozjs102-devel
 BuildRequires: meson
 BuildRequires: pkgconfig(sysprof-capture-4) valgrind
 %{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools dbus-tools-gui
@@ -75,9 +75,6 @@ xvfb-run %meson_test
 %dir %_libdir/%_name/
 %dir %_libdir/%_name/girepository-1.0
 %_libdir/%_name/girepository-1.0/CjsPrivate-%api_ver.typelib
-%exclude %_libexecdir/installed-tests/%_name
-%exclude %_datadir/installed-tests/%_name/
-%exclude %_datadir/glib-2.0/schemas/org.cinnamon.CjsTest.gschema.xml
 %doc COPYING NEWS README.md
 
 %files devel
@@ -90,6 +87,9 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Thu Jun 8 2023 Vladimir Didenko <cow@altlinux.org> 5.8.0-alt1
+- 5.8.0
+
 * Fri Nov 18 2022 Vladimir Didenko <cow@altlinux.org> 5.6.0-alt1
 - 5.6.0
 

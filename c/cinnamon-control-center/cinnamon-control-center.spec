@@ -1,4 +1,4 @@
-%define ver_major 5.6
+%define ver_major 5.8
 %define api_ver 1.0
 
 %def_disable debug
@@ -149,6 +149,9 @@ you'll want to install this package.
 
 
 %changelog
+* Thu Jun 8 2023 Vladimir Didenko <cow@altlinux.org> 5.8.1-alt1
+- 5.8.1
+
 * Tue Jan 10 2023 Vladimir Didenko <cow@altlinux.org> 5.6.1-alt1
 - 5.6.1
 

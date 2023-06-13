@@ -2,7 +2,7 @@
 %define _localstatedir %_var/lib
 
 Name: slick-greeter
-Version: 1.6.1
+Version: 1.8.1
 Release: alt1
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
@@ -32,6 +32,7 @@ BuildRequires: pkgconfig(pixman-1)
 BuildRequires: lightdm-devel lightdm-gir-devel
 BuildRequires: vala
 BuildRequires: libcanberra-vala
+BuildRequires: libxapps-devel libxapps-gir-devel
 
 %description
 A cross-distro LightDM greeter based on unity-greeter.
@@ -71,6 +72,7 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_altdir/%name
 %_sbindir/%name
 %{_bindir}/%name-check-hidpi
+%{_bindir}/%name-enable-tap-to-click
 # We use /etc/X11/xinit/fixkeyboard script instead
 %exclude %{_bindir}/%name-set-keyboard-layout
 %_datadir/%name
@@ -83,6 +85,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %{_mandir}/man8/slick-greeter.8.*
 
 %changelog
+* Fri Jun 9 2023 Vladimir Didenko <cow@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Tue Jan 10 2023 Vladimir Didenko <cow@altlinux.org> 1.6.1-alt1
 - 1.6.1
 

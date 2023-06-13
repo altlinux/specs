@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.8
+%define ver_major 3.0
 %define gst_api_ver 1.0
 %def_enable debug
 %def_enable exiv2
@@ -10,7 +10,7 @@
 %def_disable libopenraw
 
 Name: pix
-Version: %ver_major.9
+Version: %ver_major.1
 Release: alt1
 
 Summary: An image viewer and browser utility.
@@ -53,6 +53,8 @@ BuildRequires: libwebkit2gtk-devel >= %webkit_ver libchamplain-devel >= %champla
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
 %{?_enable_web_albums:BuildRequires: bison flex}
 %{?_enabled_libchamplain:BuildRequires: libchamplain-devel >= %champlain_ver}
+BuildPreReq: meson
+BuildRequires: pkgconfig(xapp)
 
 %if_enabled exiv2
 BuildPreReq: libexiv2-devel >= %exiv2_ver gcc-c++
@@ -99,24 +101,11 @@ This package contains headers needed to build extensions for pix.
 %setup
 
 %build
-%autoreconf
-%configure \
-    --enable-jpeg \
-    --enable-tiff \
-    %{subst_enable exiv2} \
-    %{subst_enable debug} \
-    %{subst_enable libbrasero} \
-    %{subst_enable libchamplain} \
-    %{subst_enable libopenraw} \
-    --disable-static \
-    --disable-schemas-compile \
-    --enable-libopenraw \
-    --with-smclient=xsmp
-
-%make_build
+%meson
+%meson_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -124,7 +113,6 @@ This package contains headers needed to build extensions for pix.
 %_bindir/*
 %dir %_libdir/pix/extensions
 %_libdir/pix/extensions/*
-%exclude %_libdir/%name/extensions/*.la
 
 %files data  -f %name.lang
 %_datadir/locale/sr@Latn/LC_MESSAGES/pix.mo
@@ -136,11 +124,14 @@ This package contains headers needed to build extensions for pix.
 %doc AUTHORS NEWS README.md
 
 %files devel
-%_includedir/pix-%ver_major/
+%_includedir/%name/
 %_datadir/aclocal/pix.m4
-%_libdir/pkgconfig/*
+%_libdir/pkgconfig/%name.pc
 
 %changelog
+* Fri Jun 9 2023 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Tue Jan 10 2023 Vladimir Didenko <cow@altlinux.org> 2.8.9-alt1
 - 2.8.9
 

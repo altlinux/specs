@@ -1,9 +1,9 @@
-%define ver_major 5.6
+%define ver_major 5.8
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1.git84cf44a
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -123,6 +123,9 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Tue Jun 13 2023 Vladimir Didenko <cow@altlinux.org> 5.8.0-alt1.git84cf44a
+- 5.8.0-1-g84cf44a
+
 * Fri Feb 10 2023 Stanislav Levin <slev@altlinux.org> 5.6.3-alt2
 - Filtered Python's self-provides (related #45231).
 

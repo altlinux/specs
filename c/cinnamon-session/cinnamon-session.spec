@@ -1,4 +1,4 @@
-%define ver_major 5.6
+%define ver_major 5.8
 %define _libexecdirname libexec
 %define _libexecdir %_prefix/%_libexecdirname
 %define _name cinnamon
@@ -120,6 +120,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Jun 8 2023 Vladimir Didenko <cow@altlinux.org> 5.8.0-alt1
+- 5.8.0
+
 * Fri Nov 18 2022 Vladimir Didenko <cow@altlinux.org> 5.6.0-alt1
 - 5.6.0
 

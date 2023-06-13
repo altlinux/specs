@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: xreader
-Version: 3.6.2
+Version: 3.8.1
 Release: alt1
 
 Summary: A document viewer
@@ -145,6 +145,12 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Fri Jun 9 2023 Vladimir Didenko <cow@altlinux.org> 3.8.1-alt1
+- New version
+
+* Mon Mar 20 2023 Vladimir Didenko <cow@altlinux.org> 3.6.3-alt1
+- New version
+
 * Tue Jan 10 2023 Vladimir Didenko <cow@altlinux.org> 3.6.2-alt1
 - New version
 

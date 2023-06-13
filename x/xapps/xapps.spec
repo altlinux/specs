@@ -3,8 +3,8 @@
 %define libxappsdir /usr/lib/xapps
 
 Name: xapps
-Version: 2.4.3
-Release: alt1
+Version: 2.6.0
+Release: alt1.gitfb385bb
 
 Summary: Libraries and common resources for XApps
 License: %gpl3only
@@ -119,6 +119,14 @@ Group: Graphical desktop/GNOME
 %description -n xapp-sn-watcher
 XApp Status Notifier Watcher
 
+%package -n xapp-gpu-offload
+Summary: XApp GPU offload utility
+Group: Graphical desktop/GNOME
+Requires: switcheroo-control
+
+%description -n xapp-gpu-offload
+XApp GPU offload utility
+
 %package -n mate-xapp-status-applet
 Summary: XAppStatusIcon applet for mate panel
 Group: Graphical desktop/GNOME
@@ -193,8 +201,11 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 
 %files -n xapp-sn-watcher
 %_sysconfdir/xdg/autostart/xapp-sn-watcher.desktop
-%_prefix/lib/xapps/sn-watcher/xapp-sn-watcher
+%_libdir/xapps/xapp-sn-watcher
 %_datadir/dbus-1/services/org.x.StatusNotifierWatcher.service
+
+%files -n xapp-gpu-offload
+%_bindir/xapp-gpu-offload
 
 %files -n mate-xapp-status-applet
 %libxappsdir/mate-xapp-status-applet.py
@@ -202,6 +213,9 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
 %changelog
+* Thu Jun 8 2023 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1.gitfb385bb
+- 2.6.0-4-gfb385bb
+
 * Mon May 22 2023 Vladimir Didenko <cow@altlinux.org> 2.4.3-alt1
 - 2.4.3 (closes: #46179)
 
