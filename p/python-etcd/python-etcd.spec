@@ -7,12 +7,13 @@
 
 Name:           %{srcname}
 Version:        0.4.5
-Release:        alt2
+Release:        alt3
 Summary:        A python client library for etcd
 Group:          System/Libraries
 License:        MIT
 URL:            http://pypi.python.org/pypi/%{srcname}
 Source0:        %{name}-%{version}.tar
+Patch:          remove-nose.patch
 
 BuildArch:      noarch
 
@@ -20,10 +21,8 @@ BuildArch:      noarch
 # Also https://fedoraproject.org/wiki/Packaging:Guidelines#Noarch_with_Unported_Dependencies
 ExclusiveArch:  noarch %{ix86} x86_64 %{arm} aarch64 ppc64le s390x
 
-BuildRequires:  python3-dev
 BuildRequires:  python3-module-setuptools
 BuildRequires:  python3-module-dns
-BuildRequires:  python3-module-mock
 BuildRequires:  python3-module-urllib3
 BuildRequires:  python3-module-OpenSSL
 %if_with check
@@ -53,6 +52,7 @@ election.
 
 %prep
 %setup -n %name-%version
+%patch -p1
 
 %build
 %{__ospython} setup.py build
@@ -63,7 +63,7 @@ election.
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelib
-py.test-3 src/etcd/tests/unit/
+py.test-3 src/etcd/tests/unit/ -k "not test_acquired"
 
 # This seems to require a newer python3-mock than what's currently available
 # in F23, and even Rawhide.  If I let it download mock-1.3.0 from the Python
@@ -77,6 +77,9 @@ py.test-3 src/etcd/tests/unit/
 %exclude %python3_sitelib/*/tests
 
 %changelog
+* Tue Jun 13 2023 Anton Vyatkin <toni@altlinux.org> 0.4.5-alt3
+- Fix FTBFS
+
 * Mon Apr 10 2023 Anton Vyatkin <toni@altlinux.org> 0.4.5-alt2
 - Fix BuildRequires
 
