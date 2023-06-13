@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 7.4.1
+Version: 7.4.2
 Release: alt1
 
 Summary: Python implementation of SAML2
@@ -14,7 +14,8 @@ URL:     https://github.com/IdentityPython/pysaml2
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-poetry
 
 %if_with check
@@ -62,6 +63,9 @@ that allow you to use it with other frameworks.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jun 13 2023 Grigory Ustinov <grenka@altlinux.org> 7.4.2-alt1
+- Automatically updated to 7.4.2.
+
 * Sun Feb 26 2023 Grigory Ustinov <grenka@altlinux.org> 7.4.1-alt1
 - Automatically updated to 7.4.1.
 
