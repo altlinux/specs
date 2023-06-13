@@ -8,7 +8,7 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 23.04.1
+Version: 23.04.2
 Release: alt1
 %K5init altplace
 
@@ -42,6 +42,7 @@ BuildRequires: libexiv2-devel
 %endif
 BuildRequires: libjpeg-devel libmtp-devel libopenslp-devel libsmbclient-devel libssh-devel openexr-devel
 BuildRequires: libtirpc-devel
+BuildRequires: libimobiledevice-devel
 BuildRequires: gperf libtag-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kactivities-devel
@@ -146,6 +147,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Fri Jun 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
+- new version
+
 * Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
 - new version
 

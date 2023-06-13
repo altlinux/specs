@@ -16,7 +16,7 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 23.04.1
+Version: 23.04.2
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
@@ -214,6 +214,9 @@ fi
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Fri Jun 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
+- new version
+
 * Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
 - new version
 
