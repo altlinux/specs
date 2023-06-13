@@ -5,7 +5,7 @@
 
 Name: qt6-tools
 Version: 6.4.2
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -24,6 +24,7 @@ Requires: %name-common = %EVR
 
 Source: %qt_module-everywhere-src-%version.tar
 Patch1: alt-run-qttools-with-qt6-suffix.patch
+Patch2: alt-clang16.patch
 
 Source20: assistant.desktop
 Source21: designer.desktop
@@ -149,6 +150,7 @@ Requires: libqt6-core = %_qt6_version
 %prep
 %setup -n %qt_module-everywhere-src-%version
 #%patch1 -p1
+%patch2 -p1
 
 %build
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
@@ -321,6 +323,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Tue Jun 13 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
+- fixed compilation error with clang 16 (thanks asheplyakov@alt) (closes: 46478)
+
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 
