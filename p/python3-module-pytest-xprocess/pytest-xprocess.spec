@@ -1,10 +1,10 @@
-%define  srcname pytest-xprocess
+%define srcname pytest-xprocess
+%define modulename xprocess
 
-# needed /proc/1/stat
-%def_disable check
+#%%def_disable check
 
 Name:    python3-module-%srcname
-Version: 0.17.1
+Version: 0.22.2
 Release: alt1
 
 Summary: Pytest plugin to manage external processes across test runs
@@ -13,22 +13,24 @@ Group:   Development/Python3
 URL:     https://github.com/pytest-dev/pytest-xprocess
 # URL:   https://pypi.org/project/pytest-xprocess
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
+BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3(py)
 
 %if_disabled check
 %else
 BuildRequires: /proc
-BuildRequires: python3-module-pytest
+BuildRequires: pytest3
 BuildRequires: python3-module-psutil
 %endif
 
 BuildArch: noarch
 
+# Source-url: %__pypi_url %srcname
 Source: %srcname-%version.tar
 
 %description
@@ -41,25 +43,28 @@ line...
 
 %prep
 %setup -n %srcname-%version
+
 # Remove bundled egg-info
-rm -rf *.egg-info
-# Remove executable bit from README
-chmod -x README.rst
+rm -r *.egg-info
 
 %build
-%python3_build
+%pyproject_build
+
+%install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot/%python3_sitelibdir/
-py.test3 -v
-
-%install
-%python3_install
+pytest3 -v
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/pytest_%modulename-%version.dist-info
 %doc *.md
 
 %changelog
+* Tue Jun 13 2023 Anton Midyukov <antohami@altlinux.org> 0.22.2-alt1
+- new version (0.22.2) with rpmgs script
+
 * Thu Jul 29 2021 Anton Midyukov <antohami@altlinux.org> 0.17.1-alt1
 - Initial build for Sisyphus
