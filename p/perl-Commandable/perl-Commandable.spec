@@ -7,7 +7,7 @@ BuildRequires: perl(Attribute/Storage.pm) perl(Convert/Color.pm) perl(Module/Bui
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.10
+Version: 0.11
 Release: alt1
 Summary: utilities for commandline-based programs
 Group: Development/Perl
@@ -42,6 +42,9 @@ program.
 %perl_vendor_privlib/C*
 
 %changelog
+* Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 0.11-alt1
+- automated CPAN update
+
 * Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 0.10-alt1
 - automated CPAN update
 
