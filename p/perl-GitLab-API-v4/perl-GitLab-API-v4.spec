@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Const/Fast.pm) perl(Exporter.pm) perl(ExtUtils
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.26
+Version: 0.27
 Release: alt1
 Summary: A complete GitLab API v4 client.
 Group: Development/Perl
@@ -50,6 +50,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 0.27-alt1
+- automated CPAN update
+
 * Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
