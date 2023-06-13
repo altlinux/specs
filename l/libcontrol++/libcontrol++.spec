@@ -1,6 +1,6 @@
 Name: libcontrol++
-Version: 0.29.0
-Release: alt2
+Version: 0.29.1
+Release: alt1
 
 Summary: control++ common classes and functions library
 License: GPLv3
@@ -56,6 +56,9 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Jun 13 2023 Alexey Appolonov <alexey@altlinux.org> 0.29.1-alt1
+- Fixed method "WriteExcludedPaths" of class "TGroupOfFilesMode".
+
 * Wed Jun 15 2022 Alexey Appolonov <alexey@altlinux.org> 0.29.0-alt2
 - Fixed build (was broken by the GCC update to version 12).
 

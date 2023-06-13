@@ -6,7 +6,7 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.21.0
+Version: 0.21.1
 Release: alt1
 
 Summary: System configuration tool
@@ -113,6 +113,9 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Jun 13 2023 Alexey Appolonov <alexey@altlinux.org> 0.21.1-alt1
+- Corrected error message.
+
 * Wed Oct 27 2021 Alexey Appolonov <alexey@altlinux.org> 0.21.0-alt1
 - Improved user interface (not backward compatible);
 - Build with new version of libcontrol++;
