@@ -3,7 +3,7 @@
 
 Name: qt6-3d
 Version: 6.4.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - Qt3D QML bindings and C++ APIs
@@ -13,6 +13,7 @@ License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later)
 Requires: qt6-imageformats
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch1: alt-gcc13.patch
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: cmake qt6-base-devel qt6-declarative-devel qt6-shadertools-devel qt6-multimedia-devel
@@ -152,6 +153,8 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%patch1 -p1
+
 cat >>src/plugins/renderers/rhi/CMakeLists.txt <<__EOF__
 find_package(Qt6 COMPONENTS ShaderTools)
 __EOF__
@@ -231,6 +234,9 @@ __EOF__
 #%_qt6_examplesdir/*
 
 %changelog
+* Tue Jun 13 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
+- fixed build with GCC 13 (thanks asheplyakov@alt) (closes: 46479)
+
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 
