@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 6.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Tools to supplement packaging Python releases
 License: MIT
@@ -15,6 +15,8 @@ BuildRequires: python3-dev python3-module-setuptools_scm
 BuildArch: noarch
 
 %py3_provides %modulename
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %modulename} = %EVR
 
 # Source-url: https://github.com/jaraco/jaraco.itertools/archive/4.4.2.tar.gz
 Source: %name-%version.tar
@@ -44,6 +46,9 @@ rm -f %buildroot%python3_sitelibdir/jaraco/__init__*
 %python3_sitelibdir/%modulename-*.egg-info/
 
 %changelog
+* Fri Jun 09 2023 Stanislav Levin <slev@altlinux.org> 6.3.0-alt1.1
+- Mapped PyPI name to distro's one.
+
 * Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 6.3.0-alt1
 - new version 6.3.0 (with rpmrb script)
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.15.0
-Release: alt1
+Release: alt2
 
 Summary: A pathlib-compatible Zipfile object wrapper
 
@@ -17,21 +17,13 @@ VCS: https://github.com/jaraco/zipp.git
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(jaraco.itertools)
-BuildRequires: python3(jaraco.functools)
-BuildRequires: python3(more_itertools)
-BuildRequires: python3(big-O)
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -40,16 +32,9 @@ A pathlib-compatible Zipfile object wrapper.
 %prep
 %setup
 %autopatch -p1
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -66,6 +51,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 09 2023 Stanislav Levin <slev@altlinux.org> 3.15.0-alt2
+- Modernized packaging.
+
 * Mon Feb 27 2023 Stanislav Levin <slev@altlinux.org> 3.15.0-alt1
 - 3.14.0 -> 3.15.0.
 

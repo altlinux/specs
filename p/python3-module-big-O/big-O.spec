@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.2
+Version: 0.11.0
 Release: alt1
 Summary: Empirical estimation of time complexity from execution time
 License: BSD-3-Clause
@@ -14,20 +14,19 @@ Url: https://pypi.org/project/big-O
 VCS: https://github.com/pberkes/big_O.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-# PyPI wellknown name
-%py3_provides %pypi_name
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(numpy)
-BuildRequires: python3(numpy.testing)
+%pyproject_builddeps_metadata
+# tests deps are installed directly by pip
+BuildRequires: python3-module-pytest
+# tests are packaged separately
+BuildRequires: python3-module-numpy-testing
 %endif
 
 %description
@@ -38,6 +37,8 @@ inputs of increasing size.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -46,7 +47,7 @@ inputs of increasing size.
 %pyproject_install
 
 %check
-%pyproject_run_unittest
+%pyproject_run_pytest -ra -Wignore big_o/test
 
 %files
 %doc README.rst
@@ -55,5 +56,8 @@ inputs of increasing size.
 %exclude %python3_sitelibdir/%mod_name/test/
 
 %changelog
+* Fri Jun 09 2023 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1
+- 0.10.2 -> 0.11.0.
+
 * Mon Feb 27 2023 Stanislav Levin <slev@altlinux.org> 0.10.2-alt1
 - Initial build for Sisyphus.
