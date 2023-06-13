@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+Epoch: 1
 ## does not work, sed below does not help
 ##define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MPrima::Const'
 ##sed -i -e '/use Prima /d' Prima/Const.pm
@@ -61,8 +62,8 @@ BuildRequires: /usr/bin/xvfb-run libheif-devel perl(AnyEvent.pm) perl(AnyEvent/S
 %{bcond_without perl_Prima_enables_wepb}
 
 Name:           perl-Prima
-Version:        1.68002
-Release:        alt1
+Version:        1.69
+Release:        alt1.1
 Summary:        Perl graphic toolkit
 # Copying:              BSD text
 # examples/tiger.eps:   AGPLv3+   (bundled from GhostScript? CPAN RT#122271)
@@ -310,6 +311,9 @@ unset DISPLAY XDG_SESSION_TYPE
 %{_libexecdir}/%{name}
 
 %changelog
+* Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 1:1.69-alt1.1
+- automated CPAN update
+
 * Thu Mar 02 2023 Igor Vlasenko <viy@altlinux.org> 1.68002-alt1
 - automated CPAN update
 
