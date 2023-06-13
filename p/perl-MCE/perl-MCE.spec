@@ -11,7 +11,7 @@ BuildRequires: perl(Carp.pm) perl(DBD/SQLite.pm) perl(DBI.pm) perl(Exporter.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.884
+Version: 1.887
 Release: alt1
 Summary: Many-Core Engine for Perl. Provides parallel processing capabilities.
 Group: Development/Perl
@@ -51,6 +51,9 @@ scripts for %module_name
 #%_bindir/*
 
 %changelog
+* Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 1.887-alt1
+- automated CPAN update
+
 * Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 1.884-alt1
 - automated CPAN update
 
