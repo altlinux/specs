@@ -2,12 +2,12 @@
 %define module_name Syntax-Keyword-Match
 #BuildRequires: perl(Future/AsyncAwait.pm)
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(XS/Parse/Infix/Builder.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm)
+BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(Test2/V0.pm) perl(XS/Parse/Infix/Builder.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.10
+Version: 0.11
 Release: alt1
 Summary: a C<match/case> syntax for perl
 Group: Development/Perl
@@ -43,6 +43,9 @@ experimental. No API or compatbility guarantees are made at this time.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 0.11-alt1
+- automated CPAN update
+
 * Thu Dec 29 2022 Igor Vlasenko <viy@altlinux.org> 0.10-alt1
 - automated CPAN update
 
