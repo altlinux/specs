@@ -1,20 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Syntax-Keyword-MultiSub
 #BuildRequires: perl(Future/AsyncAwait.pm)
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
+BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test2/V0.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.02
-Release: alt2
+Version: 0.03
+Release: alt1
 Summary: multiple dispatch on subroutines
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 
 %description
 This module provides a new keyword, `multi', to put before subroutine
@@ -42,11 +42,14 @@ rm -f t/01multi.t
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README
+%doc Changes README
 %perl_vendor_archlib/S*
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 0.03-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.02-alt2
 - to Sisyphus as Future-AsyncAwait dependency
 
