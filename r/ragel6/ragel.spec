@@ -2,7 +2,7 @@
 
 Name: ragel6
 Version: 6.10
-Release: alt2
+Release: alt2.1
 
 Summary: Ragel State Machine Compiler
 Group: Development/Other
@@ -28,6 +28,7 @@ regular language syntax.
 Summary: Vim syntax for Ragel
 Group: Editors
 PreReq: vim-common
+Conflicts: vim-plugin-ragel-syntax
 
 %description -n vim-plugin-ragel6-syntax
 Vim syntax for Ragel.
@@ -66,6 +67,9 @@ EOF
 %vim_ftdetect_dir/ragel.vim
 
 %changelog
+* Tue Jun 13 2023 Pavel Skrylev <majioa@altlinux.org> 6.10-alt2.1
+- fixed conflict between ragel and ragel6
+
 * Mon Jul 04 2022 Pavel Skrylev <majioa@altlinux.org> 6.10-alt2
 - rebuilt as ragel6 to keep backward compatibility for some gem extensions
 
