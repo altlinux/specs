@@ -1,12 +1,12 @@
-%define tarver 1.9.0-27
+%define tarver 1.9.0-49
 %define mainver %( echo %tarver | sed 's/-.*//' )
 %define soname  0
 
 %def_with cocoa
 
 Name: giac
-Version: 1.9.0.27
-Release: alt1.1
+Version: 1.9.0.49
+Release: alt1
 
 Summary: Computer algebra system
 
@@ -222,6 +222,9 @@ rm %buildroot%_docdir/giac/Makefile.am
 %_docdir/giac/*/
 
 %changelog
+* Tue Jun 13 2023 Leontiy Volodin <lvol@altlinux.org> 1.9.0.49-alt1
+- New version.
+
 * Thu Nov 03 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.9.0.27-alt1.1
 - E2K: Fortran excluded from BuildRequires
 
