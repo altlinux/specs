@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Pythonic interface to netCDF4 via h5py
@@ -17,7 +17,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-h5py python3-module-netCDF4
+BuildRequires: python3-module-h5py
+BuildRequires: python3-module-netCDF4
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
@@ -57,8 +58,10 @@ tested for compatibility with other netCDF4 interfaces.
 %doc *.rst
 %python3_sitelibdir/*
 
-
 %changelog
+* Tue Jun 13 2023 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
+- Automatically updated to 1.2.0.
+
 * Tue Nov 29 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Automatically updated to 1.1.0.
 
