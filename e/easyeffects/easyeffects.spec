@@ -4,7 +4,7 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 7.0.4
+Version: 7.0.5
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -30,7 +30,6 @@ Source: %name-%version.tar
 %define lsp_ver 1.1.24
 
 Requires: pipewire >= %pw_ver dconf
-Requires: ladspa-rubberband
 Requires: ladspa-zam-plugins
 Requires: calf-plugins >= %calf_ver
 %ifarch %ix86 x86_64 aarch64 %e2k
@@ -53,7 +52,7 @@ BuildRequires: libebur128-devel
 BuildRequires: pkgconfig(speexdsp)
 BuildRequires: pkgconfig(rnnoise)
 BuildRequires: pkgconfig(speex)
-BuildRequires: pkgconfig(rubberband)
+BuildRequires: pkgconfig(soundtouch)
 BuildRequires: zita-convolver-devel
 BuildRequires: libdbus-devel
 BuildRequires: libtbb-devel
@@ -91,6 +90,9 @@ mkdir -p %buildroot%_sysconfdir/EasyEffects
 %doc README* CHANGELOG.*
 
 %changelog
+* Tue Jun 13 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.5-alt1
+- 7.0.5
+
 * Tue May 02 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.4-alt1
 - 7.0.4
 
