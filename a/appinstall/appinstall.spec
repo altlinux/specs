@@ -1,5 +1,5 @@
 Name: appinstall
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Summary: GUI frontend for install third-party applications
 
@@ -46,6 +46,9 @@ export PATH=$PATH:%_qt5_bindir
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Tue Jun 13 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
+- Used /dev/null as stdin for prevent epm hang (thanks Mikhail Tergoev) (ALT #43747).
+
 * Thu May 11 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt1
 - Apply changes for processed item, not selected (ALT #41897).
 - Fix run from KDE menu (ALT #43747).
