@@ -32,7 +32,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.4.2
-Release: alt2
+Release: alt3
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -56,6 +56,7 @@ Patch1002: alt-ca-certificates-path.patch
 Patch1003: alt-decrease-iconloader-fallback-depth.patch
 Patch1004: alt-kernel-requires.patch
 Patch1005: e2k-qt-6.patch
+Patch3500: alt-loongarch64.patch
 
 # macros
 %define _qt6 %gname
@@ -370,6 +371,7 @@ OpenGL widgets library for the Qt%major toolkit
 %ifarch %e2k
 %patch1005 -p1
 %endif
+%patch3500 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -808,6 +810,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Jun 13 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt3
+- fixed compilation on LoongArch (thanks asheplyakov@alt) (closes: 46477)
+
 * Thu Apr 13 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
 - fix to build docs
 
