@@ -1,7 +1,7 @@
 %define rname akonadi-mime
 
 Name: kde5-%rname
-Version: 23.04.1
+Version: 23.04.2
 Release: alt1
 %K5init
 
@@ -77,6 +77,9 @@ KF5 library
 %_datadir/akonadi5/plugins/serializer/akonadi_serializer_mail.desktop
 
 %changelog
+* Fri Jun 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
+- new version
+
 * Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
 - new version
 

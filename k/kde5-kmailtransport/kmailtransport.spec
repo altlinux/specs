@@ -1,7 +1,7 @@
 %define rname kmailtransport
 
 Name: kde5-%rname
-Version: 23.04.1
+Version: 23.04.2
 Release: alt1
 %K5init altplace
 
@@ -94,6 +94,9 @@ KF5 library
 %_K5lib/libKPim5MailTransportAkonadi.so.*
 
 %changelog
+* Fri Jun 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
+- new version
+
 * Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
 - new version
 

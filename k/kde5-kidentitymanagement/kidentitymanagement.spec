@@ -1,7 +1,7 @@
 %define rname kidentitymanagement
 
 Name: kde5-%rname
-Version: 23.04.1
+Version: 23.04.2
 Release: alt1
 %K5init altplace
 
@@ -41,6 +41,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: kde5-ktextaddons-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -87,6 +88,9 @@ KF5 library
 %_K5lib/libKPim5IdentityManagementWidgets.so.*
 
 %changelog
+* Fri Jun 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
+- new version
+
 * Fri May 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
 - new version
 
