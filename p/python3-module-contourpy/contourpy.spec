@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.0.7
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: Python library for calculating contours in 2D quadrilateral grids
 
@@ -21,12 +21,15 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pybind11
+BuildRequires: python3-module-mesonpy
+BuildRequires: meson
 BuildRequires: gcc-c++
 
 %if_with check
 BuildRequires: python3-module-numpy-tests
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-matplotlib
+BuildRequires: python3-module-wurlitzer
 %endif
 
 # Optional dependency, that not ready for sisyphus
@@ -60,6 +63,9 @@ contouring algorithms without having to include Matplotlib as a dependency.
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Tue Jun 13 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Automatically updated to 1.1.0.
+
 * Wed Mar 01 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.7-alt2
 - Fixed build requires.
 
