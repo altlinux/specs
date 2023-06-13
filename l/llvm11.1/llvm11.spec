@@ -6,8 +6,8 @@
 %filter_from_requires /python[0-9.]\+(optrecord)/d
 
 %global v_major 11
-%global v_majmin %v_major.0
-%global v_full %v_majmin.1
+%global v_majmin %v_major.1
+%global v_full %v_majmin.0
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -43,8 +43,8 @@
 %define lldb_arches x86_64 %arm
 
 %def_disable tests
-%ifarch x86_64 aarch64
-%def_without clang
+%ifarch x86_64
+%def_with clang
 %else
 %def_without clang
 %endif
@@ -53,7 +53,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt6
+Release: alt1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -149,6 +149,7 @@ native programs that use the LLVM infrastructure.
 %package libs
 Group: Development/C
 Summary: LLVM shared libraries
+Obsoletes: llvm%{v_major}.0-libs
 %requires_filesystem
 
 %description libs
@@ -315,6 +316,7 @@ project, such as the Clang expression parser and the LLVM disassembler.
 %package -n lib%lldb_name
 Summary: Shared library for LLDB
 Group: Development/Debuggers
+Obsoletes: liblldb%{v_major}.0
 %requires_filesystem
 
 %description -n lib%lldb_name
@@ -828,6 +830,11 @@ ninja -C BUILD check-all || :
 %doc %llvm_docdir/lldb
 
 %changelog
+* Thu Jun 08 2023 L.A. Kostis <lakostis@altlinux.ru> 11.1.0-alt1
+- Updated to 11.1.0.
+- Fix duplicate provides.
+- .spec: restore x86_64 build with clang.
+
 * Thu Jan 05 2023 L.A. Kostis <lakostis@altlinux.ru> 11.0.1-alt6
 - .spec: fix lldb symlinks.
 
