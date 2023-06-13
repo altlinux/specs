@@ -3,12 +3,12 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.0.1
+Version: 4.1.0
 Release: alt1
 
 Summary: Fixtures, reusable state for writing clean tests and more
 
-License: Apache-2.0 or BSD-3.0
+License: Apache-2.0 or BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/fixtures
 
@@ -52,6 +52,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jun 13 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
+- Automatically updated to 4.1.0.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
 - Build new version.
 - Build with check.
