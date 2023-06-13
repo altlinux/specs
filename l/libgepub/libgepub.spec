@@ -6,7 +6,7 @@
 %def_disable gtk_doc
 
 Name: libgepub
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Simple library to read epub files using glib
@@ -78,7 +78,7 @@ This package contains development documentation for %name
 %meson_install
 
 %check
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%name-%api_ver.so.*
@@ -103,6 +103,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Tue Jun 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Thu Sep 01 2022 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0 (ported to libsoup-3.0/webkit2gtk-4.1)
 

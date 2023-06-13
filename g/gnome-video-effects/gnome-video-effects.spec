@@ -1,10 +1,10 @@
-%def_enable snapshot
-%define ver_major 0.5
+%def_disable snapshot
+%define ver_major 0.6
 %define gst_api_ver 1.0
 
 Name: gnome-video-effects
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: A collection of GStreamer video effects
 License: GPLv2
@@ -58,6 +58,9 @@ This package provides .pc file needed to build apllications using %name.
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Tue Jun 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt2
 - updated to 0.5.0-13-gdd9ae10
 
