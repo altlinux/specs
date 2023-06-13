@@ -24,7 +24,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -332,6 +332,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %endif
 
 %changelog
+* Tue Jun 13 2023 Egor Ignatov <egori@altlinux.org> 1.9.2-alt1
+- 1.9.1 -> 1.9.2
+
 * Fri May 19 2023 Egor Ignatov <egori@altlinux.org> 1.9.1-alt1
 - 1.8.14 -> 1.9.1
 
