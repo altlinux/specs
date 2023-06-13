@@ -1,18 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-SNMP_Session
-Version: 1.15
+Version: 1.16
 Release: alt1
 Summary: Native SNMP support for Perl 5
 
-License: GPL
+License: perl
 Group: Development/Perl
 URL: http://www.switch.ch/misc/leinen/snmp/perl
-Packager: Maxim Bodyansky <maximbo@altlinux.ru>
 BuildArch: noarch
 
 Source0: %name-%version.tar.bz2
 
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Net/SNMP.pm)
 
 
 %description
@@ -27,6 +26,18 @@ Perl, so you don't have to compile any C modules. It uses the
 Perl 5 Socket.pm module and should therefore be very portable, 
 even to non-Unix systems.
 
+%package  -n perl-Net_SNMP_util
+Summary: Net_SNMP_util -- SNMP utilities using Net::SNMP
+Group: Development/Perl
+
+%description -n perl-Net_SNMP_util
+The Net_SNMP_util module implements SNMP utilities using the Net::SNMP module.
+It implements snmpget, snmpgetnext, snmpwalk, snmpset, snmptrap, and
+snmpgetbulk.  The Net_SNMP_util module assumes that the user has a basic
+understanding of the Simple Network Management Protocol and related network
+management concepts.
+
+
 %prep
 %setup -q
 
@@ -37,11 +48,17 @@ even to non-Unix systems.
 %perl_vendor_install
 
 %files
-%doc Artistic README README.SNMP_util
+%doc Artistic README README.SNMP_util ChangeLog changes.html
 %perl_vendor_privlib/S*
 %perl_vendor_privlib/B*
 
+%files -n perl-Net_SNMP_util
+%perl_vendor_privlib/Net_SNMP_util.pm
+
 %changelog
+* Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 1.16-alt1
+- new version
+
 * Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 1.15-alt1
 - new version
 
