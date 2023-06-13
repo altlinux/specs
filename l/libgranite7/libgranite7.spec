@@ -4,7 +4,7 @@
 
 %define _name granite
 %define rdn_name io.elementary.%_name-%api_ver_major
-%define ver_major 7.2
+%define ver_major 7.3
 %define api_ver_major 7
 %define api_ver 7.0
 %define sover 7
@@ -32,7 +32,8 @@ Source: %_name-%version.tar
 Requires: elementary-icon-theme >= %ver_major
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson vala-tools >= %vala_ver libgio-devel >= %glib_ver
+BuildRequires: meson sassc
+BuildRequires: vala-tools >= %vala_ver libgio-devel >= %glib_ver
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
 BuildRequires: libgee0.8-devel gobject-introspection-devel
 BuildRequires: libgtk4-gir-devel libgee0.8-gir-devel
@@ -105,7 +106,7 @@ GObject introspection devel data for the Granite library.
 %files -f %_name-%api_ver_major.lang
 %_libdir/*.so.%{sover}*
 %_iconsdir/hicolor/*/*/*.svg
-%_datadir/metainfo/%_name-%api_ver_major.appdata.xml
+%_datadir/metainfo/%_name-%api_ver_major.metainfo.xml
 %doc README*
 
 %files devel
@@ -127,6 +128,9 @@ GObject introspection devel data for the Granite library.
 
 
 %changelog
+* Tue Jun 13 2023 Yuri N. Sedunov <aris@altlinux.org> 7.3.0-alt1
+- 7.3.0
+
 * Tue Feb 28 2023 Yuri N. Sedunov <aris@altlinux.org> 7.2.0-alt1
 - 7.2.0
 
