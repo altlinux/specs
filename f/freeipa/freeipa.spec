@@ -51,8 +51,8 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.9.11
-Release: alt2
+Version: 4.9.12
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -155,6 +155,7 @@ BuildRequires: python3(pysss)
 BuildRequires: python3(pytest_sourceorder)
 BuildRequires: python3-module-lib389 >= %ds_version
 BuildRequires: python3(qrcode)
+BuildRequires: python3-module-openssl
 # python3(samba) has multiple providers
 BuildRequires: python3-module-samba
 %endif
@@ -453,6 +454,7 @@ Requires: python3-module-qrcode
 Requires: python3-module-requests
 Requires: python3-module-sss-murmur
 Requires: python3-module-yubico
+Requires: python3-module-openssl
 %py3_provides ipaplatform
 %py3_provides ipaplatform.constants
 %py3_provides ipaplatform.osinfo
@@ -748,10 +750,8 @@ if [ $1 -gt 1 ] ; then
     test -f '/var/lib/ipa-client/sysrestore/sysrestore.index' && restore=$(wc -l '/var/lib/ipa-client/sysrestore/sysrestore.index' | awk '{print $1}') ||:
 
     if [ -f '/etc/sssd/sssd.conf' -a $restore -ge 2 ]; then
-        if ! grep -E -q '/var/lib/sss/pubconf/krb5.include.d/' /etc/krb5.conf  2>/dev/null ; then
-            echo "includedir /var/lib/sss/pubconf/krb5.include.d/" > /etc/krb5.conf.ipanew
-            cat /etc/krb5.conf >> /etc/krb5.conf.ipanew
-            mv -Z /etc/krb5.conf.ipanew /etc/krb5.conf
+        if grep -E -q '/var/lib/sss/pubconf/krb5.include.d/' /etc/krb5.conf  2>/dev/null ; then
+            sed -i '\;includedir /var/lib/sss/pubconf/krb5.include.d;d' /etc/krb5.conf
         fi
     fi
 
@@ -1092,6 +1092,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Tue May 23 2023 Stanislav Levin <slev@altlinux.org> 4.9.12-alt1
+- 4.9.11 -> 4.9.12.
+
 * Fri Mar 31 2023 Stanislav Levin <slev@altlinux.org> 4.9.11-alt2
 - Added support for cryptography 40.0.
 
