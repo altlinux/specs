@@ -2,7 +2,7 @@
 %define  srcname u-msgpack-python
 
 Name:    python3-module-%modulename
-Version: 2.7.1
+Version: 2.8.0
 Release: alt1
 
 Summary: A portable, lightweight MessagePack serializer and deserializer
@@ -10,10 +10,11 @@ License: MIT
 Group:   Development/Python3
 URL:     https://github.com/vsergeev/u-msgpack-python
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-dev
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+BuildRequires: pytest3
 
 BuildArch: noarch
 
@@ -31,17 +32,22 @@ timestamp types.
 %setup -n %srcname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+pytest3 -v
 
 %files
-%python3_sitelibdir/%modulename.py*
-%python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/u_msgpack_python-%version.dist-info
 
 %changelog
+* Tue Jun 13 2023 Anton Midyukov <antohami@altlinux.org> 2.8.0-alt1
+- New version 2.8.0.
+
 * Wed May 19 2021 Anton Midyukov <antohami@altlinux.org> 2.7.1-alt1
 - new version 2.7.1
 
