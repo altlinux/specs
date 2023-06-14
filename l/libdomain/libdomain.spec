@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libdomain
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: Libdomain library provides ability to manipulate LDAP entries.
@@ -70,6 +70,14 @@ install -v -p -m 644 -D %_builddir/%name-%version/src/*.h %buildroot%_includedir
 %_bindir/*
 
 %changelog
+* Thu Jun 14 2023 Vladimir Rubanov <august@altlinux.org> 0.7.0-alt1
+- Implemented:
+  + Implement test stubs for TLS, timeout testing.
+  + Implement tests for user addition to and removal from group.
+  + Implement test stubs for blocking and unblocking users.
+  + Implement tests for reconnection testing.
+  + Implement test stub for anonmous connection.
+
 * Thu Jun 08 2023 Vladimir Rubanov <august@altlinux.org> 0.6.0-alt1
 - Implemented:
   + Add more tests for users, groups and OUs.
