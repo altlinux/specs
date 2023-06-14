@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 
 Summary: Parameterized testing with any Python test framework
@@ -20,6 +20,8 @@ Patch: remove_nose.patch
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -35,21 +37,24 @@ BuildArch: noarch
 %patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test-3 -v parameterized/test.py
 
 %files
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
 %doc *.rst
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Wed Jun 14 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt1
+- Automatically updated to 0.9.0.
+
 * Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
 - Build new version.
 - Build without nose.
