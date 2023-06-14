@@ -4,8 +4,8 @@
 %define libiris_ksirk libiris_ksirk%iris_ksirk_sover
 
 Name: kde5-%rname
-Version: 22.12.3
-Release: alt2
+Version: 23.04.2
+Release: alt1
 %K5init no_appdata
 
 Group: Games/Strategy
@@ -87,6 +87,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libiris_ksirk.so.*
 
 %changelog
+* Wed Jun 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
+- new version
+
 * Mon Apr 17 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt2
 - fix configuration dialog help button
 
