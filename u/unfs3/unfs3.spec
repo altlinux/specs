@@ -1,26 +1,19 @@
 Name: unfs3
-Version: 0.9.22
-Release: alt6
+Version: 0.10.0
+Release: alt1
 
 Summary: UNFS3 user-space NFSv3 server
 License: BSD-3-Clause
 Group: System/Servers
 
-Url: http://unfs3.sourceforge.net
-Source0: %name-%version.tar.gz
-Source1: unfs3.init
-Source2: unfs3.monit
-Source100: unfs3.watch
+Url: https://github.com/unfs3/unfs3
+Source0: %name-%version.tar
+Source1: unfs3.service
 
-# https://abf.io/import/unfs3/raw/rosa2019.1/unfs3-0.9.22-tirpc.patch
-Patch: unfs3-0.9.22-tirpc.patch
-
-Packager: Michael Shigorin <mike@altlinux.org>
-
-# Automatically added by buildreq on Tue Dec 04 2007
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires: flex libtirpc-devel
 
-Requires: monit-base
+Requires: rpcbind
 Conflicts: nfs-server nfs-server-userland
 
 %description
@@ -32,34 +25,35 @@ and removable media.
 
 %prep
 %setup
-%patch -p1
 
 %build
-%add_optflags `pkg-config --cflags libtirpc`
-%add_optflags -fcommon
-%configure --enable-cluster
+%autoreconf
+# Alas cluster is badly broken and won't even compile
+%configure
 %make
 
 %install
 %makeinstall
-install -pDm755 %SOURCE1 %buildroot%_initdir/nfs
-install -pDm644 %SOURCE2 %buildroot%_sysconfdir/monitrc.d/%name.auto
+mkdir -p -m755 %buildroot%_unitdir
+install -p -m 0644 %SOURCE1 %buildroot%_unitdir
 
 %files
-%doc CREDITS README README.nfsroot LICENSE NEWS contrib doc
+%doc CREDITS README.md README.nfsroot LICENSE NEWS contrib doc
 %_sbindir/unfsd
 %_man7dir/*
 %_man8dir/*
-%_initdir/*
-%_sysconfdir/monitrc.d/%name.auto
 
 %post
-%post_service nfs
+%post_service unfs3
 
 %preun
-%preun_service nfs
+%preun_service unfs3
 
 %changelog
+* Wed Jun 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.10.0-alt1
+- 0.10.0
+- Ensure TCP socket is always listened (closes: #40213)
+
 * Tue Apr 20 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.22-alt6
 - Fixed FTBFS with libtirpc and -fcommon.
 
