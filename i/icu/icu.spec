@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define real_ver_major 73
-%define real_ver_minor 1
+%define real_ver_minor 2
 %define real_ver %{real_ver_major}.%{real_ver_minor}
 
 %def_without doc
@@ -11,7 +11,7 @@
 
 Name: icu
 Version: %(echo %real_ver_major | sed -e 's|\(.\)|\1.|').%real_ver_minor
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: International Components for Unicode
@@ -29,8 +29,6 @@ Patch: icu-6.3.1-alt-e2k.patch
 # https://github.com/unicode-org/icu/pull/1715
 # https://github.com/unicode-org/icu/commit/29f1188d191a7a75ac7ffa4bfa390f625da39c53.patch
 Patch1: icu-69.1-Fix_undefined_behaviour_in_ComplexUnitsConverter.patch
-
-Patch10: icu-73.1-up-Uchar.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: autoconf-archive gcc-c++ libstdc++-devel python3-base
@@ -92,7 +90,6 @@ support. This package contains sample code for ICU.
 %add_optflags -finput-charset=utf8
 %endif
 %patch1 -p2
-%patch10 -p2
 
 sed -ri '/^LDFLAGSICUDT=/ s,-nodefaultlibs -nostdlib,,' source/config/mh-linux
 
@@ -143,6 +140,9 @@ cd source
 %_datadir/icu/samples
 
 %changelog
+* Wed Jun 14 2023 Yuri N. Sedunov <aris@altlinux.org> 1:7.3.2-alt1
+- 73.2
+
 * Thu Apr 27 2023 Yuri N. Sedunov <aris@altlinux.org> 1:7.3.1-alt2
 - applied upstream fix:
   "ICU-22356 Use ConstChar16Ptr to safely cast from UChar* to char16_t*."
