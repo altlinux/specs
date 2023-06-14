@@ -2,7 +2,7 @@
 
 Name: yajl
 Version: 2.1.0
-Release: alt2
+Release: alt3
 
 Summary: Yet Another JSON Library
 Group: Development/C
@@ -66,6 +66,9 @@ rm -f %buildroot%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 14 2023 Alexander Danilov <admsasha@altlinux.org> 2.1.0-alt3
+- fixes CVE-2023-33460.
+
 * Tue Oct 26 2021 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt2
 - Fix build.
 
