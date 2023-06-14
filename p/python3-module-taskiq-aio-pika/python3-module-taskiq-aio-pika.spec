@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.2.1
+Version: 0.4.0
 Release: alt1
 
 Summary: AMQP broker for taskiq
@@ -64,6 +64,9 @@ This lirary provides you with aio-pika broker for taskiq.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jun 14 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
+- New version.
+
 * Sat May 13 2023 Anton Zhukharev <ancieg@altlinux.org> 0.2.1-alt1
 - Initial build for ALT Sisyphus.
 

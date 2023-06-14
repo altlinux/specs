@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: NATS broker for taskiq
@@ -61,6 +61,9 @@ Taskiq-nats is a plugin for taskiq that adds NATS broker.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jun 14 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.0-alt1
+- New version.
+
 * Sat May 13 2023 Anton Zhukharev <ancieg@altlinux.org> 0.2.0-alt1
 - Initial build for ALT Sisyphus.
 
