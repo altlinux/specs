@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.69.0
+Version: 1.70.0
 Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.68.0
+%define r_ver 1.69.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -454,6 +454,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Tue Jun 13 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.70.0-alt1
+- New version (1.70.0).
+
 * Sat Apr 22 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.69.0-alt1
 - New version (1.69.0).
 - Obsolete rust-analysis.
