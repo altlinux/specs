@@ -1,10 +1,10 @@
 %define rname kdsoap
-%define sover 1
+%define sover 2
 %define libkdsoap libkdsoap%sover
 %define libkdsoap_server libkdsoap-server%sover
 
 Name: kde5-%rname
-Version: 1.10.0
+Version: 2.1.1
 Release: alt1
 %K5init altplace
 
@@ -95,6 +95,9 @@ mv %buildroot/%_datadir/mkspecs/features/* %buildroot/%_K5archdata/mkspecs/featu
 %_K5archdata/mkspecs/modules/*oap*.pri
 
 %changelog
+* Tue Jun 13 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
+- new version
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 1.10.0-alt1
 - new version
 
