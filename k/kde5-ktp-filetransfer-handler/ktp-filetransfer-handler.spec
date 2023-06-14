@@ -1,7 +1,7 @@
 %define rname ktp-filetransfer-handler
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.2
 Release: alt1
 %K5init altplace
 
@@ -79,6 +79,9 @@ KF5 library
 #%_K5lib/libktp-filetransfer-handler.so.*
 
 %changelog
+* Tue Jun 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 
