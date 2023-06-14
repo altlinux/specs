@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 Summary: Objects and routines pertaining to date and time (tempora)
 License: MIT
@@ -13,23 +13,14 @@ Url: https://pypi.org/project/tempora/
 VCS: https://github.com/jaraco/tempora
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires:
-BuildRequires: python3(pytz)
-BuildRequires: python3(jaraco.functools)
-
-BuildRequires: python3(freezegun)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_freezegun)
+%add_pyproject_deps_check_filter 'backports-unittest-mock$'
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -38,17 +29,9 @@ Objects and routines pertaining to date and time (tempora).
 %prep
 %setup
 %autopatch -p1
-
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -65,6 +48,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 13 2023 Stanislav Levin <slev@altlinux.org> 5.3.0-alt1
+- 5.2.1 -> 5.3.0.
+
 * Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 5.2.1-alt1
 - 5.0.2 -> 5.2.1.
 
