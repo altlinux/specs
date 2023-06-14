@@ -11,7 +11,7 @@
 %endif
 
 Name: kde5-%rname
-Version: 22.12.3
+Version: 23.04.2
 Release: alt1
 %K5init no_appdata
 
@@ -129,7 +129,6 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5plug/kf5/krunner/*marble*.so
 %_K5data/marble/
 %_K5data/plasma/*/org.kde.plasma.*world*/
-%_K5data/knsrcfiles/*marble*.knsrc
 %_K5lib/marble/
 %_K5qml/org/kde/marble/
 %_K5srv/*.desktop
@@ -139,8 +138,7 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5xmlgui/marble/
 
 %files devel
-#%_K5plug/designer/lib*.so
-#%_K5inc/marble_version.h
+#%_K5plug/designer/*.so
 #%_K5inc/astro/
 %_K5inc/marble/
 %_K5link/lib*.so
@@ -152,6 +150,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Tue Jun 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
+- new version
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 
