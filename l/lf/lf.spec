@@ -1,5 +1,5 @@
 %global import_path github.com/gokcehan/lf
-%define lf_ver 28
+%define lf_ver 30
 Name:     lf
 Version:  r%lf_ver
 Release:  alt1
@@ -47,6 +47,12 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Fri May 26 2023 Ilya Demyanov <turbid@altlinux.org> r30-alt1
+- New upstream version r30
+
+* Wed May 03 2023 Ilya Demyanov <turbid@altlinux.org> r29-alt1
+- New upstream version r29
+
 * Thu Feb 02 2023 Ilya Demyanov <turbid@altlinux.org> r28-alt1
 - New upstream version r28
 
