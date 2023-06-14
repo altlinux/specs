@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 0.11.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Video
@@ -103,6 +103,9 @@ KF5 library
 #%_K5lib/libharuna.so.*
 
 %changelog
+* Wed Jun 14 2023 Sergey V Turchin <zerg@altlinux.org> 0.11.1-alt2
+- update russian translation
+
 * Wed May 31 2023 Sergey V Turchin <zerg@altlinux.org> 0.11.1-alt1
 - new version
 
