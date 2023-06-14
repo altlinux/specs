@@ -8,7 +8,7 @@
 
 %global v_major 16
 %global v_majmin %v_major.0
-%global v_full %v_majmin.4
+%global v_full %v_majmin.5
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -37,6 +37,12 @@
 AutoReq: nopython
 AutoProv: nopython
 
+%ifarch x86_64
+%def_with mold
+%else
+%def_without mold
+%endif
+
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %ifarch %ix86 %arm mipsel
 %define optflags_debug -g0
@@ -46,6 +52,9 @@ AutoProv: nopython
 %endif
 
 # LTO-related flags are set by CMake.
+# LTO causes LLVM to break badly on %%ix86 see
+# https://github.com/llvm/llvm-project/issues/57740
+# will enable it conditionally per platform
 %global optflags_lto %nil
 
 %define hwasan_symbolize_arches x86_64 aarch64
@@ -56,9 +65,8 @@ AutoProv: nopython
 %endif
 
 %def_disable tests
-# aarch64 compilation takes 5hrs with clang
-# disable for now
-%ifarch x86_64
+# disable clang on aarch64 due very long compile time
+%ifarch x86_64 ppc64le
 %def_with clang
 %else
 %def_without clang
@@ -80,7 +88,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.5
+Release: alt2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -98,6 +106,8 @@ Patch6: clang-12-alt-mips-use-fpxx-by-default.patch
 Patch7: clang-alt-aarch64-dynamic-linker-path.patch
 Patch8: clang-tools-extra-alt-gcc-0001-clangd-satisfy-ALT-gcc-s-Werror-return-type.patch
 Patch10: llvm-10-alt-python3.patch
+# FIXME! need to rebuild clang15 with it first!
+Patch11: RH-0010-PATCH-clang-Produce-DWARF4-by-default.patch
 # TODO: upstream this
 # Patch11: hwasan_symbolize-python3.patch
 Patch12: llvm-12-alt-mips-pcrel-personality.patch
@@ -105,6 +115,7 @@ Patch13: llvm-12-debian-mips-force-nomadd4.patch
 Patch14: llvm-10-alt-riscv64-config-guess.patch
 Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch18: lld-compact-unwind-encoding.h.patch
+Patch19: llvm-alt-cmake-build-with-install-rpath.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -137,6 +148,9 @@ BuildRequires: python3-devel
 BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
 %else
 BuildRequires: gcc-c++
+%endif
+%if_with mold
+BuildRequires: mold
 %endif
 
 %define requires_filesystem Requires: %name-filesystem = %EVR
@@ -610,13 +624,14 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch7 -p1 -b .alt-aarch64-dynamic-linker
 %patch8 -p1
 %patch10 -p1
-#patch11 -p1
+%patch11 -p1 -b .clang-DWARF4
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
 #patch15 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1 -b .llvm-cmake-build-with-install-rpath
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -632,8 +647,8 @@ export NPROCS="%__nprocs"
 if [ "$NPROCS" -gt 64 ]; then
 	export NPROCS=64
 fi
-%define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %define builddir %_cmake__builddir
+%define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake -G Ninja -S llvm \
 	-DPACKAGE_VENDOR="%vendor" \
 %if_with clang
@@ -643,7 +658,9 @@ fi
 %endif
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX=%llvm_prefix \
+	%_cmake_skip_rpath \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+	-DCMAKE_BUILD_RPATH:STRING='' \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DLLVM_ENABLE_PROJECTS="$PROJECTS" \
 	-DLLVM_TARGETS_TO_BUILD="all" \
@@ -666,13 +683,14 @@ fi
 	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
 	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
 	-DLLVM_ENABLE_LTO=Thin \
+	%if_with mold
+	-DLLVM_USE_LINKER=mold \
+	-DCMAKE_CXX_LINK_FLAGS="-Wl,--thinlto-jobs=all" \
+	%else
 	-DLLVM_ENABLE_LLD:BOOL=ON \
-	%else
-	%ifarch mipsel
-	-DLLVM_ENABLE_LTO=Off \
-	%else
-	-DLLVM_ENABLE_LTO=Off \
 	%endif
+	%else
+	-DLLVM_ENABLE_LTO=Off \
 	%ifnarch riscv64
 	-DLLVM_USE_LINKER=gold \
 	%endif
@@ -1142,8 +1160,6 @@ ninja -C %builddir check-all || :
 
 %files -n python3-module-%lldb_name
 %llvm_python3_sitelibdir/lldb
-# Hope this file will not be needed anywhere else.
-#%%llvm_python3_sitelibdir/six.py
 %endif
 
 %files -n lib%mlir_name
@@ -1198,6 +1214,18 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Sat Jun 10 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt2
+- x86_64: use mold instead of lld.
+- aarch64: compile w/ gcc again (still 5hrs to compile w/ clang).
+- disable LTO if compiling w/ gcc (as upstream issue 57740).
+
+* Thu Jun 08 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt1
+- 16.0.5.
+- cmake: use install rpath instead of build rpath to make
+  verify-elf happy.
+- clang: use DWARF4 by default (patch from RH).
+- spec: try to compile ppc64/aarch64 w/ clang again.
+
 * Tue May 30 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.4-alt0.5
 - trying to fix armh build.
 

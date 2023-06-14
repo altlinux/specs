@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%global _llvm_version 13.0
+%global _llvm_version 15.0
 
 Name: llvm-common
-Version: 13.0.0
+Version: 15.0.0
 Release: alt1
 
 Summary: Common directories, symlinks and tool selection for LLVM
@@ -142,6 +142,33 @@ Provides: llvm-common-liblldb-devel = %EVR
 Requires: liblldb%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
 
+%package -n libmlir-devel
+Summary: Provides libmlir-devel
+License: Apache-2.0 with LLVM-exception
+Group: Development/C
+BuildArch: noarch
+Provides: llvm-common-libmlir-devel = %EVR
+Requires: libmlir%_llvm_version-devel
+Requires(pre,postun): %name = %version-%release
+
+%package -n mlir-tools
+Summary: Various mlir-based tools
+License: Apache-2.0 with LLVM-exception
+Group: Development/C
+BuildArch: noarch
+Provides: llvm-common-mlir-tools = %EVR
+Requires: mlir%_llvm_version-tools
+Requires(pre,postun): %name = %version-%release
+
+%package -n libpolly-devel
+Summary: Provides libpolly-devel
+License: Apache-2.0 with LLVM-exception
+Group: Development/C
+BuildArch: noarch
+Provides: llvm-common-libpolly-devel = %EVR
+Requires: libpolly%_llvm_version-devel
+Requires(pre,postun): %name = %version-%release
+
 %description -n rpm-macros-%name
 This package contains RPM macros related to LLVM packaging.
 
@@ -186,6 +213,15 @@ This package contains common symlinks to wrap LLDB.
 
 %description -n liblldb-devel
 This package pulls in liblldbXXX-devel.
+
+%description -n libmlir-devel
+This package pulls in libmlirXXX-devel.
+
+%description -n mlir-tools
+This package contains common symlinks to wrap MLIR bundled tools.
+
+%description -n libpolly-devel
+This package pulls in libpollyXXX-devel.
 
 %prep
 %setup -cT
@@ -332,6 +368,7 @@ install -p -m755 llvm-alt-tool-wrapper %buildroot%_bindir/
 %install_tool_link mlir-linalg-ods-yaml-gen
 %install_tool_link mlir-lsp-server
 %install_tool_link mlir-opt
+%install_tool_link mlir-pdll-lsp-server
 %install_tool_link mlir-reduce
 %install_tool_link mlir-tblgen
 %install_tool_link mlir-translate
@@ -346,6 +383,7 @@ install -p -m755 llvm-alt-tool-wrapper %buildroot%_bindir/
 %install_tool_link scan-build-py
 %install_tool_link scan-view
 %install_tool_link split-file
+%install_tool_link tblgen-lsp-server
 %install_tool_link verify-uselistorder
 %install_tool_link wasm-ld
 %install_tool_link yaml2obj
@@ -384,6 +422,9 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 # llvm-common-lld
 %exclude %_bindir/*lld*
 %exclude %_bindir/wasm-ld*
+# llvm-common-mlir-tools
+%exclude %_bindir/mlir-*
+%exclude %_bindir/tblgen-lsp-server
 
 %files -n llvm-devel
 %_bindir/llvm-config
@@ -428,6 +469,21 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %_bindir/lldb-server
 %_bindir/lldb-vscode
 
+%files -n libmlir-devel
+
+%files -n mlir-tools
+%_bindir/mlir-cpu-runner
+%_bindir/mlir-linalg-ods-yaml-gen
+%_bindir/mlir-lsp-server
+%_bindir/mlir-opt
+%_bindir/mlir-pdll-lsp-server
+%_bindir/mlir-reduce
+%_bindir/mlir-tblgen
+%_bindir/mlir-translate
+%_bindir/tblgen-lsp-server
+
+%files -n libpolly-devel
+
 %package checkinstall
 Summary: Installing me immediately runs the test for llvm-alt-tool-wrapper
 Group: Development/C
@@ -450,6 +506,10 @@ clang-cpp --version
 llc --version
 
 %changelog
+* Thu Jun 08 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.0-alt1
+- Made LLVM 15 default.
+- Added libmlir-devel, mlir-tools, libpolly-devel packages.
+
 * Sun Apr 10 2022 Arseny Maslennikov <arseny@altlinux.org> 13.0.0-alt1
 - Made LLVM 13 the default.
 

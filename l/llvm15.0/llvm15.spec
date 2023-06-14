@@ -8,7 +8,7 @@
 
 %global v_major 15
 %global v_majmin %v_major.0
-%global v_full %v_majmin.6
+%global v_full %v_majmin.7
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -78,7 +78,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt1.1
+Release: alt1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -106,6 +106,8 @@ Patch18: lld-compact-unwind-encoding.h.patch
 # ROCm needs this
 Patch19: llvm-D132140.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
+# use DWARF4 by default
+Patch200: clang-produce-DWARF4-by-default.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -621,6 +623,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch19 -p1
 
 %patch101 -p1
+%patch200 -p1
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -1186,6 +1189,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Thu Jun 08 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt1
+- 15.0.7.
+- clang: produce DWARF4 by default (backport RH patch from llvm16.x).
+
 * Tue Jan 03 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.6-alt1.1
 - llvm/AMDGPU: Added __builtin_amdgcn_s_sendmsg_rtn (D132140).
 

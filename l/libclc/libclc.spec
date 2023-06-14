@@ -1,5 +1,14 @@
+# libclc itself can be built by any LLVM but newer is preferred
+# cause it contains better optimisations and improvements
+%define llvm_version 16.0
+%ifarch armh
+%def_without clangpp
+%else
+%def_with clangpp
+%endif
+
 Name: libclc
-Version: 13.0.1
+Version: 16.0.5
 Release: alt1
 Summary: An open source implementation of the OpenCL 1.1 library requirements
 License: BSD
@@ -7,10 +16,18 @@ Group: System/Libraries
 URL: https://libclc.llvm.org
 
 Source: https://github.com/llvm/llvm-project/releases/tag/llvmorg-%version/%name-%version.src.tar.xz
-Patch: libclc-spirv-path.patch
+Patch: libclc-llvm-spirv-path.patch
 
-BuildPreReq: /proc
-BuildRequires: cmake gcc-c++ python3 clang libstdc++-devel llvm-devel lld spirv-llvm-translator-tools
+BuildRequires(pre): cmake /proc
+BuildRequires: clang%{llvm_version}
+BuildRequires: python3 libstdc++-devel mlir%{llvm_version}-tools llvm%{llvm_version}-devel llvm-spirv >= %{llvm_version}.0
+# clang++ segfaults on armh :(
+%if_without clangpp
+BuildRequires: gcc-c++
+%endif
+
+# clc code is IR code
+BuildArch: noarch
 
 %description
 libclc is an open source, BSD licensed implementation of the library
@@ -49,11 +66,18 @@ developing applications that use %name
 
 %prep
 %setup -q -n %name-%version.src
-%patch -p0
+%patch -p2
 
 %build
-export CFLAGS=" -D__extern_always_inline=inline"
-%cmake -DCMAKE_INSTALL_DATADIR:PATH=%_lib
+export ALTWRAP_LLVM_VERSION=%{llvm_version}
+%cmake \
+	-DCMAKE_C_COMPILER=clang \
+	%if_without clangpp
+	-DCMAKE_C_COMPILER=gcc \
+	-DCMAKE_CXX_COMPILER=c++
+	%else
+	-DCMAKE_CXX_COMPILER=clang++
+	%endif
 
 %cmake_build
 
@@ -62,13 +86,20 @@ export CFLAGS=" -D__extern_always_inline=inline"
 
 %files
 %doc LICENSE.TXT README.TXT CREDITS.TXT
-%_libdir/clc
+%_datadir/clc
 
 %files devel
 %_includedir/clc
-%_pkgconfigdir/*.pc
+%_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Jun 12 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt1
+- 16.0.5.
+- armh:  use gcc as CXX (clang++ segfaults).
+- Made it noarch as clc code is IR code.
+- Built with llvm16 for better code optimisation.
+- .spec: cleanup.
+
 * Wed Nov 09 2022 Valery Inozemtsev <shrek@altlinux.ru> 13.0.1-alt1
 - 13.0.1
 
