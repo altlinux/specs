@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: JPEG XL image format reference implementation
@@ -110,6 +110,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Jun 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
+- 0.8.2
+
 * Sat Feb 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1
 
