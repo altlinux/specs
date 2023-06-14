@@ -64,7 +64,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -132,10 +132,13 @@ Boost.
 %package devel-headers
 Summary: Boost libraries header files
 Group: Development/C++
-BuildArch: noarch
 AutoReq: yes, nocpp
 
 Requires: %name-devel = %EVR
+%ifnarch aarch64 %arm
+# cf. http://gcc.gnu.org/bugzilla/show_bug.cgi?id=80753
+Requires: libquadmath-devel
+%endif
 
 %description devel-headers
 The Boost web site provides free peer-reviewed portable C++ source
@@ -1815,6 +1818,9 @@ done
 
 
 %changelog
+* Mon Jun 12 2023 Michael Shigorin <mike@altlinux.org> 1:1.80.0-alt3
+- boost-devel-headers R: libquadmath-devel sans ARM (see also gcc#80753)
+
 * Thu May 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.80.0-alt2
 - Added missing bits for LoongArch support (closes: #46181)
 - Added --enable=bootstrap knob for a simpler initial build (closes: #46182)
