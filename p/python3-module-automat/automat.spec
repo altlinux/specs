@@ -5,43 +5,26 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 20.2.0
-Release: alt3
-
+Version: 22.10.0
+Release: alt1
 Summary: Self-service finite-state machines for the programmer on the go
-
-Url: https://pypi.org/project/Automat/
 License: MIT
 Group: Development/Python3
-
-# Source-url: https://github.com/glyph/automat
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
+Url: https://pypi.org/project/Automat/
+Vcs: https://github.com/glyph/Automat
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools-scm)
-
-%if_with check
-# deps
-BuildRequires: python3(six)
-BuildRequires: python3(attrs)
-
-# extra
-BuildRequires: python3(graphviz)
-BuildRequires: python3(twisted)
-BuildRequires: /usr/bin/dot
-
-BuildRequires: python3(pytest)
-%endif
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 %py3_provides %pypi_name
 Provides: python3-module-%pypi_name = %EVR
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra visualize
+%pyproject_builddeps_check
+%endif
 
 %description
 Automat is a library for concise, idiomatic Python expression of finite-state
@@ -51,9 +34,8 @@ automata (particularly deterministic finite-state transducers).
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%py3_requires graphviz
-%py3_requires twisted
-Requires: /usr/bin/dot
+%pyproject_runtimedeps_metadata -- --extra visualize
+Provides: %name+visualize = %EVR
 
 %description visualize
 Extra 'visualize' for %pypi_name.
@@ -61,17 +43,12 @@ Extra 'visualize' for %pypi_name.
 %prep
 %setup
 %autopatch -p1
-
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -79,10 +56,10 @@ fi
 %install
 %pyproject_install
 
-rm -rf %buildroot%python3_sitelibdir/automat/_test/
+rm -r %buildroot%python3_sitelibdir/automat/_test/
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -ra -Wignore automat/_test
 
 %files
 %python3_sitelibdir/%mod_name/
@@ -96,6 +73,9 @@ rm -rf %buildroot%python3_sitelibdir/automat/_test/
 %python3_sitelibdir/%mod_name/__pycache__/_visualize.*
 
 %changelog
+* Tue Jun 13 2023 Stanislav Levin <slev@altlinux.org> 22.10.0-alt1
+- 20.2.0 -> 22.10.0
+
 * Thu Sep 22 2022 Stanislav Levin <slev@altlinux.org> 20.2.0-alt3
 - Modernized packaging.
 - Dropped dependency on unmaintained m2r.

@@ -1,13 +1,13 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define origname TwistedCore
+%define pypi_name Twisted
 %define major 22.10
 %define prefx3 python3-module-twisted
 
 Name: python3-module-twisted-core
 Version: %major.0
-Release: alt1
+Release: alt1.1
 
 Summary: An asynchronous networking framework written in Python
 
@@ -27,6 +27,8 @@ BuildRequires: python3-module-zope.interface python3-module-incremental
 Requires: %prefx3-logger = %EVR
 Obsoletes: %prefx3-lore <= %EVR
 Provides: %prefx3-lore = %EVR
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 #py3_provides lore
 Requires: python3-module-OpenSSL
 #Requires: python3-module-autobahn
@@ -509,6 +511,9 @@ ln -s trial %buildroot%_bindir/trial-3
 %python3_sitelibdir/twisted/logger/test
 
 %changelog
+* Tue Jun 13 2023 Stanislav Levin <slev@altlinux.org> 22.10.0-alt1.1
+- NMU: mapped PyPI name to distro's one.
+
 * Tue Dec 20 2022 Grigory Ustinov <grenka@altlinux.org> 22.10.0-alt1
 - Build new version for python3.11.
 
