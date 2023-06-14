@@ -4,7 +4,7 @@
 %define libfalkonprivate libfalkonprivate%sover
 
 Name: kde5-%rname
-Version: 23.04.0
+Version: 23.04.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -77,6 +77,9 @@ __EOF__
 %_K5notif/*angelfish*
 
 %changelog
+* Wed Jun 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
+- new version
+
 * Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.0-alt1
 - new version
 
