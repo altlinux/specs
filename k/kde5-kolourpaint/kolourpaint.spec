@@ -4,7 +4,7 @@
 %define libkolourpaint libkolourpaint_lgpl%sover
 
 Name: kde5-%rname
-Version: 23.04.1
+Version: 23.04.2
 Release: alt1
 %K5init no_appdata
 
@@ -83,6 +83,9 @@ KF5 library
 %_K5lib/libkolourpaint_lgpl.so.*
 
 %changelog
+* Fri Jun 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
+- new version
+
 * Wed Jun 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kde-inotify-survey
 
 Name: kde5-inotify-survey
-Version: 23.04.1
+Version: 23.04.2
 Release: alt1
 %K5init altplace no_appdata man
 
@@ -52,6 +52,9 @@ Sporting a kded module to tell you when things are getting dicey and a CLI tool 
 %_datadir/polkit-1/actions/*inotify*.policy
 
 %changelog
+* Fri Jun 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
+- new version
+
 * Wed Jun 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
 - new version
 
