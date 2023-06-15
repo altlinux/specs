@@ -3,32 +3,24 @@
 
 %def_with check
 
-%define pypi_version 1.1
-
 Name: python3-module-%pypi_name
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
-Summary: JWCrypto is an implementation of the Javascript Object Signing and Encryption (JOSE) Web Standards
-
-Group: Development/Python3
+Summary: Implementation of JOSE Web standards
 License: LGPL-3
-Url: https://github.com/latchset/jwcrypto
-
+Group: Development/Python3
+Url: https://pypi.org/project/jwcrypto/
+Vcs: https://github.com/latchset/jwcrypto
 BuildArch: noarch
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires
-BuildRequires: python3(cryptography)
-BuildRequires: python3(deprecated)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -44,6 +36,11 @@ RFC 7520 - Examples of Protecting Content Using JSON Object Signing and
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -52,17 +49,20 @@ RFC 7520 - Examples of Protecting Content Using JSON Object Signing and
 %pyproject_install
 
 #do not pack docs and tests
-rm -rfv %buildroot%_defaultdocdir/jwcrypto/
-rm -rfv %buildroot%python3_sitelibdir/jwcrypto/tests*
+rm -rv %buildroot%_defaultdocdir/jwcrypto/
+rm -rv %buildroot%python3_sitelibdir/jwcrypto/tests*
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %python3_sitelibdir/jwcrypto/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 09 2023 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
+- 1.4.2 -> 1.5.0.
+
 * Tue Sep 27 2022 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1
 - 1.1.0 -> 1.4.2.
 
