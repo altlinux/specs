@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.5.0
+Version: 3.6.0
 Release: alt1
 Summary: Python interface to PROJ
 License: MIT
@@ -69,6 +69,9 @@ and not test_transform_tuple_nad83_to_nad27"
 
 
 %changelog
+* Thu Jun 15 2023 Anton Vyatkin <toni@altlinux.org> 3.6.0-alt1
+- New version 3.6.0.
+
 * Sun Jun 11 2023 Anton Vyatkin <toni@altlinux.org> 3.5.0-alt1
 - New version 3.5.0.
 
