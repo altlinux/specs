@@ -1,10 +1,10 @@
 %define oname apipkg
 
-%def_without check
+%def_with check
 
 Name:           python3-module-%oname
 Version:        3.0.1
-Release:        alt1
+Release:        alt2
 
 Summary:        A Python namespace control and lazy-import mechanism
 
@@ -42,13 +42,16 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
-%tox_check -k 'not test_get_distribution_version'
+%tox_check_pyproject -k'not test_get_distribution_version'
 
 %files
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.dist-info*
 
 %changelog
+* Thu Jun 15 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
+- Build with check.
+
 * Fri Dec 02 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Build new version.
 - Bootstrap without check.
