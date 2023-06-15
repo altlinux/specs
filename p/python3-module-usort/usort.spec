@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 Summary: A small, safe import sorter
 License: MIT
@@ -63,6 +63,9 @@ Requires: %name
 %_bindir/%pypi_name
 
 %changelog
+* Tue Jun 13 2023 Stanislav Levin <slev@altlinux.org> 1.0.7-alt1
+- 1.0.6 -> 1.0.7.
+
 * Wed May 10 2023 Stanislav Levin <slev@altlinux.org> 1.0.6-alt1
 - 1.0.5 -> 1.0.6.
 
