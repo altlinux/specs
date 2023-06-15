@@ -29,9 +29,10 @@
 %add_python3_req_skip util.util
 %add_python3_req_skip util.windows
 %add_python3_req_skip util.xml
+%add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.9.12.5
+Version: 0.9.12.6
 Release: alt1
 
 Summary: GPT applier
@@ -182,6 +183,13 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Wed Jun 14 2023 Valery Sinelnikov <greh@altlinux.org> 0.9.12.6-alt1
+- Added support for dictionaries as policy values for
+  yandex_browser_applier and chromium_applier
+- Extended functionality of ConfigObj to save comments ';'
+- Added support for SQLAlchemy2 in storage
+- Added 'cifsacl' option to mount templates
+
 * Fri May 26 2023 Valery Sinelnikov <greh@altlinux.org> 0.9.12.5-alt1
 - Fixed editing cache volume (DiskCacheSize) in Yandex browser (closes: 44621)
 - The access to caching files has been fixed
