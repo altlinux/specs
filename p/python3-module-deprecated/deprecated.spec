@@ -5,35 +5,24 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 1.2.13
+Version: 1.2.14
 Release: alt1
-
 Summary: Decorators to deprecate old python classes, functions or methods
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/tantale/deprecated.git
 Url: https://pypi.org/project/Deprecated/
-
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-# install_requires
-BuildRequires: python3(wrapt)
-
-BuildRequires: python3(pytest)
-%endif
-
+Vcs: https://github.com/tantale/deprecated
 BuildArch: noarch
-
-# PyPI's name begins with capital letter
-%py3_provides Deprecated
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%add_pyproject_deps_check_filter 'bump2version$'
+%pyproject_builddeps_metadata_extra dev
+%endif
 
 %description
 Python @deprecated decorator to deprecate old python classes, functions or
@@ -42,6 +31,8 @@ methods.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -50,7 +41,7 @@ methods.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra tests
 
 %files
 %doc README.md CHANGELOG.rst
@@ -58,6 +49,9 @@ methods.
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Jun 14 2023 Stanislav Levin <slev@altlinux.org> 1.2.14-alt1
+- 1.2.13 -> 1.2.14.
+
 * Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 1.2.13-alt1
 - 1.2.12 -> 1.2.13.
 
