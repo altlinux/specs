@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name metronome
-%define ver_major 1.2
+%define ver_major 1.3
 %define rdn_name com.adrienplazas.Metronome
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Metronome for GNOME Desktop
@@ -68,6 +68,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Thu Jun 15 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Tue Jun 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
