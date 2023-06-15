@@ -3,8 +3,8 @@
 %define libxappsdir /usr/lib/xapps
 
 Name: xapps
-Version: 2.6.0
-Release: alt1.gitfb385bb
+Version: 2.6.1
+Release: alt1
 
 Summary: Libraries and common resources for XApps
 License: %gpl3only
@@ -213,6 +213,9 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
 %changelog
+* Thu Jun 15 2023 Vladimir Didenko <cow@altlinux.org> 2.6.1-alt1
+- 2.6.1
+
 * Thu Jun 8 2023 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1.gitfb385bb
 - 2.6.0-4-gfb385bb
 
