@@ -3,7 +3,7 @@
 %define proxy_user backup
 
 Name: proxmox-backup
-Version: 2.4.1.1
+Version: 2.4.2.1
 Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
@@ -140,6 +140,7 @@ usermod -a -G tape %proxy_user ||:
 %preun_systemd %name.service %name-proxy.service %name-daily-update.timer
 
 %files server
+%doc debian/copyright
 %dir %attr(0700,%proxy_user,%proxy_user) %_sysconfdir/%name
 %ghost %_sysconfdir/%name/*
 %config(noreplace) %_sysconfdir/pam.d/proxmox-backup-auth
@@ -178,6 +179,7 @@ usermod -a -G tape %proxy_user ||:
 %_man5dir/*.5*
 
 %files client
+%doc debian/copyright
 %_bindir/pxar
 %_bindir/proxmox-backup-client
 %_datadir/zsh/vendor-completions/_pxar
@@ -200,6 +202,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Fri Jun 09 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:2.4.2.1-alt1
+- 2.4.2-1
+
 * Tue Apr 04 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:2.4.1.1-alt1
 - 2.4.1-1
 - remove Updates and Repositories from Server Administration
