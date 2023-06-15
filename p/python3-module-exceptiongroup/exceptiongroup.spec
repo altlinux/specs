@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.1
-Release: alt2
+Release: alt3
 Summary: Backport of PEP 654 (exception groups)
 License: MIT
 Group: Development/Python3
@@ -49,6 +49,9 @@ Backport of PEP 654 (exception groups)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jun 15 2023 Stanislav Levin <slev@altlinux.org> 1.1.1-alt3
+- Fixed FTBFS (Python 3.11.0).
+
 * Mon May 15 2023 Stanislav Levin <slev@altlinux.org> 1.1.1-alt2
 - Rebuilt with flit-core 3.9.0.
 
