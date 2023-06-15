@@ -1,6 +1,6 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.271
-%define module_release alt14
+%define module_release alt15
 
 %define flavour		std-def
 %define karch x86_64
@@ -34,7 +34,6 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
-Requires: %{module_name}-kernel-conf = %version
 ExclusiveArch: %karch
 
 Patch: %{module_name}-centos9.patch
@@ -76,6 +75,10 @@ make -C %_usrsrc/linux-%kversion-%flavour INSTALL_MOD_PATH=%buildroot INSTALL_MO
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Jun 15 2023 Anton Farygin <rider@altlinux.ru> 6.30.223.271-alt15
+- remove %name-kernel-conf requires to avoid conflicting configuration with
+  old bcmwl modules (closes: #45082)
 
 * Wed Apr 05 2023 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt14
 - Remove conflicting configuration (closes #45082).
