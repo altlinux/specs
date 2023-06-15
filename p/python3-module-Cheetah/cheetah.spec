@@ -1,19 +1,19 @@
-%define origname Cheetah
+%define pypi_name Cheetah
 
-%def_without check
+%def_with check
 
-Name: python3-module-%origname
+Name: python3-module-%pypi_name
 Version: 3.3.1
-Release: alt2
+Release: alt3
 
 Summary: Template engine and code-generator
 
 License: MIT
 Group: Development/Python3
-URL: http://cheetahtemplate.org/
+URL: https://pypi.org/project/Cheetah3
+VCS: https://github.com/CheetahTemplate3/cheetah3
 
-# https://github.com/CheetahTemplate3/cheetah3
-Source: Cheetah-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -29,7 +29,7 @@ form emails and even Python code.
 %package tests
 Summary: Tests for Cheetah, template engine and code-generator
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 Cheetah is an open source template engine and code generation tool, written
@@ -41,7 +41,7 @@ form emails and even Python code.
 This package contains tests for Cheetah.
 
 %prep
-%setup -n Cheetah-%version
+%setup
 
 %build
 %pyproject_build
@@ -53,16 +53,23 @@ This package contains tests for Cheetah.
 %tox_check_pyproject
 
 %files
-%doc *.rst
-%_bindir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/Cheetah/Tests
+%doc LICENSE *.rst
+%_bindir/cheetah
+%_bindir/cheetah-analyze
+%_bindir/cheetah-compile
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/CT3-%version.dist-info
+%exclude %python3_sitelibdir/%pypi_name/Tests
 
 %files tests
-%python3_sitelibdir/Cheetah/Tests
-%exclude %python3_sitelibdir/Cheetah/Tests/Performance.py*
+%python3_sitelibdir/%pypi_name/Tests
+%exclude %python3_sitelibdir/%pypi_name/Tests/Performance.py*
 
 %changelog
+* Thu Jun 15 2023 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt3
+- Build with check.
+- Spec refactored.
+
 * Mon Jan 09 2023 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt2
 - Bootstrap for python3.11.
 
