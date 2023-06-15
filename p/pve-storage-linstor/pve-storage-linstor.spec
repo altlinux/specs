@@ -1,6 +1,6 @@
 
 Name: pve-storage-linstor
-Version: 7.0.0
+Version: 7.0.1
 Release: alt1
 
 Summary: LINSTOR Proxmox Plugin
@@ -20,8 +20,9 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: pve-storage
 BuildRequires: perl-JSON-XS
 BuildRequires: perl(REST/Client.pm)
-Requires: linstor-controller pve-manager
-# Requires: linstor-satellite >= 1.21.1
+Requires: pve-manager
+Requires: linstor-controller >= 1.23.0
+# Requires: linstor-satellite >= 1.23.0
 
 %add_perl_lib_path %buildroot%perl_vendor_privlib
 
@@ -58,6 +59,9 @@ fi
 %_cachedir/linstor-proxmox/
 
 %changelog
+* Thu Jun 15 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.0.1-alt1
+- 7.0.1 (fix performance regression introduced with 7.0.0)
+
 * Wed Apr 19 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.0.0-alt1
 - 7.0.0
 
