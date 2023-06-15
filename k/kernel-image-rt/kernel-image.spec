@@ -1,7 +1,7 @@
 Name: kernel-image-rt
 %define kernel_base_version	6.1
-%define kernel_sublevel	.28
-%define kernel_rt_release rt10
+%define kernel_sublevel	.33
+%define kernel_rt_release	rt11
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -505,7 +505,7 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %check
 banner check
 # Boot-test and check for Real-Time properties.
-timeout 300 vm-run --kvm=force rtcheck -v
+timeout 300 vm-run --tcg --mem=1G --cpu=1 --qemu="-rtc clock=vm -icount 0,sleep=on" rtcheck -v
 # Longer LTP tests only if there is KVM (which is present on all main arches).
 if ! timeout 999 vm-run --kvm=cond \
         "/sbin/sysctl kernel.printk=8;
@@ -605,6 +605,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jun 15 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.33-alt1.rt11
+- v6.1.33-rt11 (2023-06-12).
+
 * Tue May 16 2023 Vitaly Chikunov <vt@altlinux.org> 6.1.28-alt1.rt10
 - Rebase onto v6.1.28-rt10 (2023-05-15) with std-def configs.
 
