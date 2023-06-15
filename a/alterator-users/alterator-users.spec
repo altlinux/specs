@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.15
+Version: 10.16
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -52,6 +52,11 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Wed Jun 14 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.16-alt1
+- fix saving the avatar in the user's root dir
+- add an avatar setting to the "pixmap" of the button
+- view the image the full resolution by clicking on the button with the avatar
+
 * Fri Jun 02 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.15-alt1
 - add utility to move avatars
 - backend: add setting and getting user avatar
