@@ -2,27 +2,40 @@
 
 %define oname ipykernel
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 6.2.0
-Release: alt2
+Version: 6.23.1
+Release: alt1
+
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://ipython.readthedocs.io/en/stable/
+Url: https://pypi.org/project/ipykernel/
+VCS: https://github.com/ipython/ipykernel.git
+
+Source: %name-%version.tar
 
 BuildArch: noarch
 
-# https://github.com/ipython/ipykernel.git
-Source: %name-%version.tar
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-jupyter_client
+%if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3(IPython)
-BuildRequires: python3(IPython.testing.tests)
-BuildRequires: python3(flaky)
-BuildRequires: python3(numpy.testing)
-BuildRequires: python3(nest_asyncio)
+BuildRequires: python3-module-comm
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-ipython
+BuildRequires: python3-module-flaky
+BuildRequires: python3-module-nest-asyncio
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-zmq
+BuildRequires: python3-module-traitlets
+BuildRequires: python3-module-tornado
+BuildRequires: /proc
+BuildRequires: /dev/pts
+%endif
 
 %add_python3_req_skip gtk
 
@@ -41,16 +54,20 @@ This package contains tests for %oname.
 
 %prep
 %setup
+sed -i 's/--color=yes//' pyproject.toml
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-rm -fR build
-PYTHONPATH=$(pwd) py.test3 -vv
+export LC_ALL=en_US.UTF-8
+%pyproject_run_pytest -v --ignore ipykernel/tests/test_pickleutil.py -k "\
+not test_do_apply \
+and not test_shutdown_subprocesses \
+and not test_embed_kernel_func"
 
 %files
 %doc *.md examples
@@ -58,7 +75,7 @@ PYTHONPATH=$(pwd) py.test3 -vv
 %python3_sitelibdir/ipykernel_launcher.py
 %python3_sitelibdir/__pycache__/ipykernel_launcher.*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/*/tests
 
@@ -67,6 +84,15 @@ PYTHONPATH=$(pwd) py.test3 -vv
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Fri Jun 09 2023 Anton Vyatkin <toni@altlinux.org> 6.23.1-alt1
+- New version 6.23.1.
+
+* Fri Mar 10 2023 Anton Vyatkin <toni@altlinux.org> 6.21.3-alt1
+- New version 6.21.3.
+
+* Fri Mar 10 2023 Anton Vyatkin <toni@altlinux.org> 6.21.2-alt1
+- new version 6.21.2
+
 * Thu Oct 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt2
 - Updated build dependencies.
 
