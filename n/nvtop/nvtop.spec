@@ -1,11 +1,11 @@
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type
 %define _unpackaged_files_terminate_build 1
-%define git 04721e3
+%define git %nil
 
 Name: nvtop
-Version: 3.0.1
-Release: alt3.g%{git}
+Version: 3.0.2
+Release: alt1
 
 Summary: (h)top like task monitor for AMD, Intel and Nvidia GPUs
 Group: Monitoring
@@ -55,6 +55,9 @@ a htop familiar way.
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Thu Jun 15 2023 L.A. Kostis <lakostis@altlinux.ru> 3.0.2-alt1
+- 3.0.2.
+
 * Wed May 24 2023 L.A. Kostis <lakostis@altlinux.ru> 3.0.1-alt3.g04721e3
 - Updated to GIT 04721e3:
   + MSM/Adreno support
