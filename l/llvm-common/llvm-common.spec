@@ -4,7 +4,7 @@
 
 Name: llvm-common
 Version: 15.0.0
-Release: alt1
+Release: alt2
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -52,7 +52,7 @@ Summary: Common symlinks and development files for LLVM utilities
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
 Provides: llvm-common-devel = %EVR
-Requires: llvm%_llvm_version-devel
+Requires: llvm%_llvm_version-devel, mlir%_llvm_version-tools
 Requires(pre,postun): %name = %version-%release
 Conflicts: llvm7.0-devel
 
@@ -506,6 +506,9 @@ clang-cpp --version
 llc --version
 
 %changelog
+* Thu Jun 15 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.0-alt2
+- llvm-devel: added deps to mlir-tools (due tblgen-lsp-server).
+
 * Thu Jun 08 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.0-alt1
 - Made LLVM 15 default.
 - Added libmlir-devel, mlir-tools, libpolly-devel packages.

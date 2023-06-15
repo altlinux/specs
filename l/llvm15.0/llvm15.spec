@@ -56,7 +56,8 @@ AutoProv: nopython
 %endif
 
 %def_disable tests
-%ifarch x86_64 aarch64
+# disable clang on aarch64 due very long compile time
+%ifarch x86_64 ppc64
 %def_with clang
 %else
 %def_without clang
@@ -78,7 +79,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt1
+Release: alt2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1189,6 +1190,9 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Mon Jun 12 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt2
+- aarch64: compile w/ gcc again (still 5hrs to compile w/ clang).
+
 * Thu Jun 08 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt1
 - 15.0.7.
 - clang: produce DWARF4 by default (backport RH patch from llvm16.x).

@@ -1,8 +1,8 @@
-%define llvm_ver 15.0
+%define llvm_ver 16.0
 %define optflags_lto %nil
 
 Name: rocm-device-libs
-Version: 5.4.1
+Version: 5.5.1
 Release: alt0.1
 License: NCSA
 Summary: AMD specific device-side language runtime libraries
@@ -45,9 +45,14 @@ export ALTWRAP_LLVM_VERSION=%{llvm_ver}
 
 %files
 %doc LICENSE.TXT README.md
+%dir %_datadir/amdgcn
 %_datadir/amdgcn/bitcode
 %_datadir/cmake/AMDDeviceLibs
 
 %changelog
+* Thu May 25 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.1
+- rocm-5.5.1.
+- llvm15->llvm16.
+
 * Mon Jan 02 2023 L.A. Kostis <lakostis@altlinux.ru> 5.4.1-alt0.1
 - First build for ALTLinux.
