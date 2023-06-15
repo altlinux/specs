@@ -22,12 +22,11 @@
 
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
-Version: 4.3.0.0
+Version: 4.4.0.0
 Release: alt1
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name-limits.conf
@@ -144,7 +143,6 @@ pushd host
         %_cmake_skip_rpath \
         -DENABLE_GPSD=ON \
         -DENABLE_E300=ON \
-        -DENABLE_PYTHON3=ON \
         -DENABLE_PYTHON_API=ON
 %cmake_build
 popd
@@ -156,7 +154,7 @@ popd
 
 %check
 pushd host
-%cmake_build --target test ||:
+%cmake_build --target test || :
 popd
 
 %install
@@ -248,6 +246,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Thu Jun 15 2023 Anton Midyukov <antohami@altlinux.org> 4.4.0.0-alt1
+- New version 4.4.0.0.
+
 * Sat Jan 28 2023 Anton Midyukov <antohami@altlinux.org> 4.3.0.0-alt1
 - new version 4.3.0.0
 - disable -march=native on ppc64le to fix build

@@ -7,7 +7,7 @@
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.10.5.1
+Version: 3.10.6.0
 Release: alt1
 Summary: Software defined radio framework
 License: GPLv2+
@@ -114,7 +114,7 @@ GNU Radio Headers.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 %cmake \
@@ -131,9 +131,6 @@ GNU Radio Headers.
 %install
 %cmakeinstall_std
 
-# Remove extraneous desktop/icon/mime files
-rm -r %buildroot%_datadir/%name/grc/freedesktop
-
 # remove verify_elf problem files
 rm %buildroot%_datadir/%name/examples/audio/dial_tone
 rm %buildroot%_datadir/%name/examples/qt-gui/display_qt
@@ -147,14 +144,28 @@ find %buildroot%_datadir/ -name '*.grc' | xargs \
 find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 	-e 's:/usr/bin/env python$:%__python3:'
 
+# desktop file
+desktop-file-install --dir=%buildroot%_datadir/applications \
+  grc/scripts/freedesktop/gnuradio-grc.desktop
+# mime
+install -Dp grc/scripts/freedesktop/gnuradio-grc.xml \
+  %buildroot%_datadir/mime/packages/gnuradio-grc.xml
+# metainfo
+install -Dp grc/scripts/freedesktop/org.gnuradio.grc.metainfo.xml \
+  %buildroot%_datadir/metainfo/org.gnuradio.grc.metainfo.xml
+# icons
+for i in 16 24 32 48 64 128 256; do
+  install -Dp grc/scripts/freedesktop/grc-icon-${i}.png \
+    %buildroot%_datadir/icons/hicolor/${i}x${i}/apps/gnuradio-grc.png
+done
+
 %files
 %_bindir/*
 %_sysconfdir/%name
-%_iconsdir/hicolor/*/apps/*
-%_desktopdir/*.desktop
+%_iconsdir/hicolor/*/apps/gnuradio-grc.png
+%_desktopdir/gnuradio-grc.desktop
 %_datadir/mime/packages/*
 %_libdir/*.so.*
-%_libexec/%name
 %_datadir/%name
 %_docdir/%name-%version
 %python3_sitelibdir/%name
@@ -180,6 +191,9 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jun 15 2023 Anton Midyukov <antohami@altlinux.org> 3.10.6.0-alt1
+- New version 3.10.6.0.
+
 * Fri Feb 24 2023 Anton Midyukov <antohami@altlinux.org> 3.10.5.1-alt1
 - new version 3.10.5.1
 
