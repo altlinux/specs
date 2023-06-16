@@ -1,8 +1,8 @@
 %define optflags_lto %nil
 
 Name: attract
-Version: 2.6.2
-Release: alt2
+Version: 2.7.0
+Release: alt1
 
 Summary: Arcade-like front-end for emulators
 Summary(ru_RU.UTF-8): Оболочка в стиле аркадных автоматов для эмуляторов
@@ -21,7 +21,7 @@ BuildRequires: libSFML-devel
 BuildRequires: libXinerama-devel
 BuildRequires: libarchive-devel
 BuildRequires: libavformat-devel
-BuildRequires: libavresample-devel
+BuildRequires: libavresample-devel libswresample-devel
 BuildRequires: libcurl-devel
 BuildRequires: libexpat-devel
 BuildRequires: libjpeg-devel
@@ -74,6 +74,9 @@ install -Dm644 util/linux/attract-mode.desktop         %buildroot%_desktopdir/%n
 %_iconsdir/hicolor/*/apps/%name.xpm
 
 %changelog
+* Tue Jun 13 2023 Artyom Bystrov <arbars@altlinux.org> 2.7.0-alt1
+- New version
+
 * Fri Sep 16 2022 Artyom Bystrov <arbars@altlinux.org> 2.6.2-alt2
 - Fixing desktop icons
 
