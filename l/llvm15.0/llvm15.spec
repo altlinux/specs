@@ -79,7 +79,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt2
+Release: alt3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -579,6 +579,7 @@ This package contains header files for the Polly optimizer.
 %package -n lib%polly_name-doc
 Summary: Documentation for Polly
 Group: Development/C
+BuildArch: noarch
 %requires_filesystem
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
@@ -974,6 +975,7 @@ EOExecutableList
 # in a different package.
 sed -i '
 /APPEND _IMPORT_CHECK_TARGETS \(mlir-\|MLIR\)/ {s|^|#|}
+/APPEND _IMPORT_CHECK_TARGETS \(tblgen-lsp-server\)/ {s|^|#|}
 /APPEND _IMPORT_CHECK_TARGETS \(Polly\)/ {s|^|#|}
 /APPEND _IMPORT_CHECK_TARGETS \(llvm-omp-device-info\|omptarget\)/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/llvm/LLVMExports-*.cmake
@@ -1190,6 +1192,11 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Fri Jun 16 2023 Arseny Maslennikov <arseny@altlinux.org> 15.0.7-alt3
+- libpolly-doc: Marked as noarch.
+- Dropped tblgen-lsp-server from LLVMExports target check. That program is
+  located in a different subproject.
+
 * Mon Jun 12 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt2
 - aarch64: compile w/ gcc again (still 5hrs to compile w/ clang).
 
