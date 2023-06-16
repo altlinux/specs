@@ -1,6 +1,6 @@
 Name: alsa-ucm-conf
 Version: 1.2.8
-Release: alt6
+Release: alt7
 
 Summary: Advanced Linux Sound Architecture (ALSA) Use Case Manager data
 License: BSD-3-Clause
@@ -10,6 +10,7 @@ Url: http://www.alsa-project.org
 Source: %name-%version.tar
 
 Patch1: 0001-ucm.conf-turn-on-support-for-V2Module-and-V2Name-by-.patch
+Patch2: 0002-ucm2-add-pinephone-pro-support.patch
 Patch8: 0008-tegra-Add-UCM-for-RT5631-based-ASUS-Transformers.patch
 Patch9: 0009-tegra-Add-UCM-for-WM8903-based-ASUS-Transformers.patch
 Patch10: 0010-rt5631-add-headset-support.patch
@@ -30,6 +31,7 @@ in a standalone repository.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
@@ -49,6 +51,9 @@ cp -at %buildroot%alsadata -- ucm*
 %doc LICENSE
 
 %changelog
+* Fri Jun 16 2023 Andrew Savchenko <bircoph@altlinux.org> 1.2.8-alt7
+- Add rk3399s (pinephone pro) configs
+
 * Fri Jun 02 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.2.8-alt6
 - ucm.conf: turn on support for V2Module and V2Name by default
 
