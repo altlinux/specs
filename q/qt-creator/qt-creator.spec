@@ -1,7 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
+# for llvm built with clang we should use lld due thinLTO bitcode
+# in static libs
+# otherwise use bfd/gold linker
+%ifnarch x86_64
+%def_without lld
+%global optflags_lto %optflags_lto -ffat-lto-objects
+%else
+%def_with lld
+%global optflags_lto %nil
+%endif
+
 %def_with ClangCodeModel
-%define llvm_version 14.0
 %define qt_version 6.2.4
 
 %ifarch %not_qt6_qtwebengine_arches
@@ -15,7 +25,7 @@
 
 Name:    qt-creator
 Version: 10.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -56,13 +66,14 @@ BuildRequires: qt6-shadertools-devel >= %qt_version
 BuildRequires: qt6-quicktimeline qt6-quicktimeline-devel >= %qt_version
 BuildRequires: kf5-syntax-highlighting-devel
 %if_with ClangCodeModel
-BuildRequires: clang%llvm_version
-BuildRequires: clang%llvm_version-devel
-BuildRequires: clang%llvm_version-tools
-BuildRequires: clangd%llvm_version
-BuildRequires: lld%llvm_version
-BuildRequires: llvm%llvm_version-devel
-BuildRequires: llvm%llvm_version-tools
+BuildRequires: clang
+BuildRequires: clang-devel
+BuildRequires: clang-tools
+BuildRequires: clangd
+%if_with lld
+BuildRequires: lld /proc
+%endif
+BuildRequires: llvm-devel
 %endif
 BuildRequires: libsystemd-devel
 BuildRequires: elfutils-devel
@@ -75,7 +86,6 @@ BuildRequires: libxml2-devel
 # Missing build requirements
 #BuildRequires: litehtml-devel
 BuildRequires: libffi-devel
-BuildRequires: mlir%llvm_version-tools
 BuildRequires: xml-utils
 BuildRequires: python3-module-lxml
 BuildRequires: python3-module-beautifulsoup4
@@ -154,10 +164,8 @@ subst 's@#!.*python[23]\?@#!%__python3@' `find . -name \*.py` \
 	src/libs/qt-breakpad/qtbreakpadsymbols
 
 %build
-%global optflags_lto %optflags_lto -ffat-lto-objects
 export QTDIR=%_qt6_prefix
 export PATH="%{_qt6_bindir}:$PATH"
-export ALTWRAP_LLVM_VERSION="%llvm_version"
 %ifarch %e2k
 # fool sqlite into building with lcc
 sed -i 's,^QMAKE_CFLAGS_WARN_ON.*$,& -D__INTEL_COMPILER,' src/libs/3rdparty/sqlite/sqlite.pri
@@ -174,8 +182,8 @@ export LLVM_INSTALL_DIR="%_prefix"
     -Djournald=ON \
     -DBUILD_DEVELOPER_DOCS=OFF \
     -DCMAKE_INSTALL_LIBDIR=%_lib \
-    -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS -Wl,-rpath,%_libdir/qtcreator -Wl,-rpath,%_libdir/qtcreator/plugins" \
-    -DCMAKE_SHARED_LINKER_FLAGS="$LDFLAGS -Wl,-rpath,%_libdir/qtcreator -Wl,-rpath,%_libdir/qtcreator/plugins"
+    -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS %{?_with_lld:-fuse-ld=lld -Wl,--build-id=sha1} -Wl,-rpath,%_libdir/qtcreator -Wl,-rpath,%_libdir/qtcreator/plugins" \
+    -DCMAKE_SHARED_LINKER_FLAGS="$LDFLAGS %{?_with_lld:-fuse-ld=lld -Wl,--build-id=sha1} -Wl,-rpath,%_libdir/qtcreator -Wl,-rpath,%_libdir/qtcreator/plugins"
 
 %ninja_build -C "%_cmake__builddir"
 %ninja_build -C "%_cmake__builddir" qch_docs
@@ -208,6 +216,13 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Fri Jun 16 2023 L.A. Kostis <lakostis@altlinux.ru> 10.0.1-alt1.1
+- NMU:
+  - Rebuild with llvm15.0.
+  - .spec: cleanup llvm/clang requires.
+  - use lld as linker in case if llvm built by clang (as gold doesn't know how
+    to deal with ThinLTO bitcode).
+
 * Mon May 15 2023 Andrey Cherepanov <cas@altlinux.org> 10.0.1-alt1
 - New version.
 
