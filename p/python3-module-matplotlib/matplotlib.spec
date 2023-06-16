@@ -2,12 +2,13 @@
 
 %define oname matplotlib
 
+%def_with gtk4
 %def_with qt5
 %def_with wx
 
 Name: python3-module-%oname
 Version: 3.7.0
-Release: alt2
+Release: alt3
 
 Summary: Matlab(TM) style python plotting package
 
@@ -273,6 +274,7 @@ done
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3agg.*.py*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3cairo.*.py*
 
+%if_with gtk4
 %files gtk4
 %doc README.md
 %python3_sitelibdir/matplotlib/backends/backend_gtk4.py*
@@ -281,6 +283,7 @@ done
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk4.*.py*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk4agg.*.py*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk4cairo.*.py*
+%endif
 
 %files tk
 %doc README.md
@@ -338,6 +341,9 @@ done
 %_datadir/matplotlib/mpl-data
 
 %changelog
+* Fri Jun 16 2023 Michael Shigorin <mike@altlinux.org> 3.7.0-alt3
+- Introduced gtk4 knob (on by default).
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt2
 - Bootstrap for python3.11.
 
