@@ -1,7 +1,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
 Version:	3.90.0
-Release:	alt1
+Release:	alt2
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -15,6 +15,7 @@ Source6:	system-pkcs11.txt
 
 Patch0001: 0001-Disable-test-dbtest-r-w-in-a-readonly-directory.patch
 Patch0002: 0002-ALT-Disable-flaky-tests.patch
+Patch0003: 0003-FEDORA-Fix-add-condition-for-architecture-specific-a.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  chrpath zlib-devel libsqlite3-devel
@@ -261,6 +262,9 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Fri Jun 16 2023 Alexey Gladkov <legion@altlinux.ru> 3.90.0-alt2
+- Fix unconditional use of adcxq causes SIGILL with nss-3.90.
+
 * Mon Jun 12 2023 Alexey Gladkov <legion@altlinux.ru> 3.90.0-alt1
 - New version (3.90).
 - Certificate Authority Changes:
