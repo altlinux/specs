@@ -1,9 +1,10 @@
 %define oname OpenGL
+%define pypi_name PyOpenGL
 %define modulename python3-module-%oname
 
 Name: python3-module-pyopengl
 Version: 3.1.6
-Release: alt2
+Release: alt2.1
 
 Summary: Metapackage including python modules for OpenGL library
 
@@ -33,6 +34,8 @@ BuildArch: noarch
 %add_python3_req_skip OpenGL.raw.DISABLED._types
 %add_python3_req_skip OpenGL.raw.GLSC2
 %add_python3_req_skip OpenGL.raw.GLSC2._types
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 %description -n %modulename
 OpenGL bindings for Python including support for GL extensions,
@@ -93,6 +96,9 @@ popd
 %python3_sitelibdir/Py%{oname}_accelerate*.egg-info
 
 %changelog
+* Wed Jun 14 2023 Stanislav Levin <slev@altlinux.org> 3.1.6-alt2.1
+- NMU: mapped PyPI name to distro's one.
+
 * Wed Dec 21 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.6-alt2
 - Fixed build with python3.11.
 

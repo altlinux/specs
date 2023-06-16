@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 
 # openblas does not build with LTO
 %global optflags_lto %nil
@@ -22,17 +23,19 @@
 
 
 Name: openblas
-Version: 0.3.19
-Release: alt1.2
+Version: 0.3.23
+Release: alt1
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
 Group: Sciences/Mathematics
 Url: https://github.com/xianyi/OpenBLAS
-
-# http://github.com/xianyi/OpenBLAS
+Vcs: https://github.com/xianyi/OpenBLAS
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
+%ifarch %e2k
 Patch2000: %name-e2k.patch
+%endif
 
 BuildRequires: gcc-fortran
 %ifarch ppc64le
@@ -96,9 +99,7 @@ This package contains development files of OpenBLAS.
 
 %prep
 %setup
-%ifarch %e2k
-%patch2000 -p1
-%endif
+%autopatch -p1
 
 %build
 FLAGS="%optflags %optflags_shared"
@@ -126,10 +127,11 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 	%{nil}
 
 %install
-%make_install OPENBLAS_LIBRARY_DIR=%buildroot%_libdir \
-	      OPENBLAS_INCLUDE_DIR=%buildroot%_includedir/openblas \
-	      install
-sed -i 's,%buildroot,,' %buildroot%_pkgconfigdir/openblas.pc
+%makeinstall_std \
+    PREFIX=%_prefix \
+    OPENBLAS_LIBRARY_DIR=%_libdir \
+    OPENBLAS_INCLUDE_DIR=%_includedir/openblas \
+    %nil
 
 %check
 %make_build tests \
@@ -148,10 +150,15 @@ sed -i 's,%buildroot,,' %buildroot%_pkgconfigdir/openblas.pc
 %exclude %_libdir/*-r*.so
 %_libdir/*.so
 %_pkgconfigdir/openblas.pc
-%_libdir/cmake/%name/
 %_includedir/openblas
+%dir %_libdir/cmake/%name
+%_libdir/cmake/%name/*.cmake
+%exclude %_libdir/*.a
 
 %changelog
+* Wed Jun 14 2023 Stanislav Levin <slev@altlinux.org> 0.3.23-alt1
+- 0.3.19 -> 0.3.23.
+
 * Mon Apr 17 2023 Michael Shigorin <mike@altlinux.org> 0.3.19-alt1.2
 - spec fixes mentioned by slazav@ back in 2019
 - added cmake files

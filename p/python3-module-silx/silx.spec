@@ -4,44 +4,35 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
+Version: 1.1.2
 Release: alt1
 Summary: Software library for X-Ray data analysis
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/silx/
-
-# https://github.com/silx-kit/silx.git
+Vcs: https://github.com/silx-kit/silx
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ libgomp-devel
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+# manually manage extra dependencies with metadata
+AutoReq: yes, nopython3
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: gcc-c++
+BuildRequires: libgomp-devel
 BuildRequires: python3-devel
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(Cython)
 BuildRequires: libnumpy-py3-devel
-
+%pyproject_builddeps_build
 %if_with check
-# runtime dependencies
-BuildRequires: python3(h5py)
-BuildRequires: python3(fabio)
-BuildRequires: python3(numpy)
-# unbundled
-BuildRequires: python3(scipy.spatial)
-
-BuildRequires: python3(PyQt5)
-BuildRequires: python3(OpenGL)
-BuildRequires: python3(numpy.testing)
+%add_pyproject_deps_check_filter 'hdf5plugin$'
+%add_pyproject_deps_check_filter 'pyopencl$'
+%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra full
+# unbundled scipy.spatial
+BuildRequires: python3-module-scipy
+# tests are subpackaged
+BuildRequires: python3-module-numpy-testing
 %endif
-
-%add_python3_req_skip pyopencl pyopencl.array pyopencl.elementwise pyopencl.scan pyopencl.tools
-%add_python3_req_skip PySide.QtCore PySide.QtGui
-%py3_requires scipy.spatial
-%py3_requires PyQt5 OpenGL
-%py3_requires matplotlib.backends.backend_qt5agg
 
 %description
 The silx project aims at providing a collection of Python packages
@@ -49,6 +40,17 @@ to support the development of data assessment,
 reduction and analysis applications at synchrotron radiation facilities.
 It aims at providing reading/writing different file formats,
 data reduction routines and a set of Qt widgets to browse and visualize data.
+
+%package -n %name+full
+Summary: %summary
+Group: Development/Python3
+Requires: %name
+%add_pyproject_deps_runtime_filter 'hdf5plugin$'
+%add_pyproject_deps_runtime_filter 'pyopencl$'
+%pyproject_runtimedeps_metadata -- --extra full
+
+%description -n %name+full
+Extra 'full' for %pypi_name.
 
 %package tests
 Summary: Tests for %pypi_name
@@ -80,6 +82,9 @@ This package contains examples for %pypi_name.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 # remove some third-party bundled stuff
 rm -r src/silx/third_party/_local
@@ -91,12 +96,7 @@ rm -r src/silx/third_party/_local
 %pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    python run_tests.py --installed -vra
-EOF
-%tox_check_pyproject
+%pyproject_run -- python run_tests.py --installed -ra -Wignore --low-mem
 
 %files
 %doc CHANGELOG.rst README.rst
@@ -120,6 +120,8 @@ EOF
 %exclude %python3_sitelibdir/silx/*/*/conftest.py
 %exclude %python3_sitelibdir/silx/*/*/__pycache__/conftest.*
 
+%files -n %name+full
+
 %files tests
 %python3_sitelibdir/silx/test
 %python3_sitelibdir/silx/*/test
@@ -141,6 +143,9 @@ EOF
 %python3_sitelibdir/silx/examples
 
 %changelog
+* Wed Jun 14 2023 Stanislav Levin <slev@altlinux.org> 1.1.2-alt1
+- 1.0.0 -> 1.1.2.
+
 * Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - 0.14.0 -> 1.0.0.
 
