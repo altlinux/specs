@@ -7,7 +7,7 @@
 
 Name: control++
 Version: 0.21.1
-Release: alt1
+Release: alt2
 
 Summary: System configuration tool
 License: GPLv3
@@ -22,6 +22,7 @@ Source: %{name}-%{version}.tar
 BuildRequires: gcc-c++
 BuildRequires: rpm-build-python3
 BuildRequires: libcontrol++-devel >= %{libcontrolppver}
+BuildRequires: python3-module-ax
 
 Requires: libcontrol++
 
@@ -67,6 +68,9 @@ Tests and test data for %{name}.
 %build
 %make_build
 
+%check
+%{buildroot}%{testsdir}/run --targets all --mode check
+
 %install
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_defaultdocdir}/%{name}
@@ -87,7 +91,7 @@ cp readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 cp -r tests/* %{buildroot}%{testsdir}
 
 %post -n %{name}-checkinstall
-%{testsdir}/run --targets all
+%{testsdir}/run --targets all --mode checkinstall
 
 %files
 %{_bindir}/%{name}
@@ -113,6 +117,9 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Sat Jun 17 2023 Alexey Appolonov <alexey@altlinux.org> 0.21.1-alt2
+- Tests run at build time.
+
 * Tue Jun 13 2023 Alexey Appolonov <alexey@altlinux.org> 0.21.1-alt1
 - Corrected error message.
 
