@@ -2,7 +2,7 @@
 
 Name: installer-distro-%distro
 Version: 10.1.0
-Release: alt1
+Release: alt2
 
 Summary: Installer configuration (Server V)
 License: GPLv2
@@ -51,7 +51,6 @@ Requires: alterator-net-bond alterator-net-bridge
 Requires: alterator-net-general
 Requires: installer-stage3
 Requires: installer-feature-create-vmbr-stage3
-Requires: installer-feature-sudo-enable-by-default-stage3
 Requires: installer-feature-online-repo
 Requires: installer-feature-nfs-server-stage3
 Requires: installer-feature-powerbutton-stage3
@@ -79,6 +78,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Fri Jun 16 2023 Andrew A. Vasilyev <andy@altlinux.org> 10.1.0-alt2
+- drop installer-feature-sudo-enable-by-default-stage3
+
 * Wed Apr 12 2023 Andrew A. Vasilyev <andy@altlinux.org> 10.1.0-alt1
 - move initinstall.d/05-vm-profile to separate package volumes-profile-alt-server-v
 
