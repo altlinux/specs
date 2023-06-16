@@ -2,8 +2,8 @@
 %def_without pam
 
 Name: moodle
-Version: 3.11.8
-Release: alt2
+Version: 3.11.15
+Release: alt1
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -247,6 +247,15 @@ install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 %endif
 
 %changelog
+* Fri Jun 16 2023 Andrey Cherepanov <cas@altlinux.org> 3.11.15-alt1
+- New version.
+- Security fixes: CVE-2023-30944, CVE-2023-1402, CVE-2023-28336,
+  CVE-2023-28333, CVE-2023-28332, CVE-2023-28331, CVE-2023-28330,
+  CVE-2023-28329, CVE-2023-23923, CVE-2023-23921, CVE-2022-45152,
+  CVE-2022-45151, CVE-2022-45150, CVE-2022-45149, CVE-2021-23414,
+  CVE-2022-40208, CVE-2022-40316, CVE-2022-40315, CVE-2022-40314,
+  CVE-2022-40313, CVE-2022-2986, CVE-2022-0323
+
 * Thu Sep 01 2022 Andrey Cherepanov <cas@altlinux.org> 3.11.8-alt2
 - Disable mod_php7 if it is enabled.
 
