@@ -1,6 +1,6 @@
 Name: rars
 Version: 1.5.20220215
-Release: alt1
+Release: alt2
 
 Summary: RISC-V Assembler and Runtime Simulator
 
@@ -15,6 +15,7 @@ Patch: %name-%version.patch
 BuildRequires: java-devel-default ImageMagick-tools
 BuildArch: noarch
 Obsoletes: %name-javadoc
+Requires: java
 
 %description
 RARS, the RISC-V Assembler, Simulator, and Runtime, will assemble and
@@ -61,6 +62,9 @@ done
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Fri Jun 16 2023 Anton Midyukov <antohami@altlinux.org> 1.5.20220215-alt2
+- add 'Requires: java'
+
 * Tue Feb 15 2022 Fr. Br. George <george@altlinux.ru> 1.5.20220215-alt1
 - Update co continous branch
 
