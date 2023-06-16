@@ -1,5 +1,5 @@
 Name:       rivalcfg
-Version:    4.8.0
+Version:    4.9.0
 Release:    alt1
 
 Summary:    Configure SteelSeries Rival gaming mice
@@ -44,6 +44,9 @@ from rivalcfg import __main__
 __main__.main()
 EOF
 
+%post
+%name --update-udev ||:
+
 %files -f INSTALLED_FILES
 %doc README* LICENSE* CHANGELOG.* doc/{env,faq}.rst
 %dir %python3_sitelibdir_noarch/%name
@@ -53,6 +56,9 @@ EOF
 
 
 %changelog
+* Fri Jun 16 2023 L.A. Kostis <lakostis@altlinux.ru> 4.9.0-alt1
+- 4.9.0.
+
 * Wed Jan 18 2023 L.A. Kostis <lakostis@altlinux.ru> 4.8.0-alt1
 - 4.8.0.
 
