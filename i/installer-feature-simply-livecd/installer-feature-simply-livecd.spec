@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 10.3.0
+Version: 10.4.0
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -42,7 +42,6 @@ Requires: alterator-luks
 Requires: installer-feature-lightdm-stage3
 Requires: installer-feature-samba-usershares-stage2
 Requires: installer-feature-desktop-suspend-stage2
-Requires: installer-feature-sudo-enable-by-default-stage3
 
 %description
 LiveCD install hooks for Simply Linux.
@@ -70,6 +69,9 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Fri Jun 16 2023 Mikhail Efremov <sem@altlinux.org> 10.4.0-alt1
+- Drop installer-feature-sudo-enable-by-default-stage3.
+
 * Thu Jun 08 2023 Mikhail Efremov <sem@altlinux.org> 10.3.0-alt1
 - livecd-preinstall: Drop 80-setup-user-groups hook.
 - Drop installer-feature-desktop-other-fs-stage2.

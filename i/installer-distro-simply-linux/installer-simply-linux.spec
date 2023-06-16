@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 10.4.0
+Version: 10.5.0
 Release: alt1
 
 Summary: Installer common files
@@ -75,7 +75,6 @@ Requires: alterator-luks
 Requires: installer-feature-bell-off-stage3
 Requires: installer-feature-lightdm-stage3
 Requires: installer-feature-repo-add
-Requires: installer-feature-sudo-enable-by-default-stage3
 
 Provides: installer-lite-stage3
 Provides: installer-simply-linux-stage3
@@ -108,6 +107,9 @@ Installer stage3
 %files stage3
 
 %changelog
+* Fri Jun 16 2023 Mikhail Efremov <sem@altlinux.org> 10.5.0-alt1
+- stage3: Drop installer-feature-sudo-enable-by-default-stage3.
+
 * Thu Jun 08 2023 Mikhail Efremov <sem@altlinux.org> 10.4.0-alt1
 - stage2: Drop installer-feature-local-clock.
 - preinstall: Drop 80-setup-user-groups hook.
