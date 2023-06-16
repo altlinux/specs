@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt10
+Release: alt11
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -188,6 +188,8 @@ sed -i -e 's,"$(DESTDIR)"/etc/apache2/vhosts.d,"$(DESTDIR)"%_sysconfdir/httpd2/c
 sed -i -e 's,/etc/apache2/vhosts.d,%_sysconfdir/httpd2/conf/sites-available,g' etc/apache2/vhosts.d/*
 sed -i -e 's,/etc/apache2/ssl.crt,%_sysconfdir/pki/tls/certs,g' etc/apache2/vhosts.d/*
 sed -i -e 's,/etc/apache2/ssl.key,%_sysconfdir/pki/tls/private,g' etc/apache2/vhosts.d/*
+sed -i -e 's,<IfDefine SSL>,<IfDefine ssl_module>,g' container/webui/openqa-ssl.conf
+sed -i -e 's,<IfDefine SSL>,<IfDefine ssl_module>,g' etc/apache2/vhosts.d/openqa-ssl.conf.template
 sed -i -e 's,/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/openqa.conf,/sbin/systemd-tmpfiles --create /lib/tmpfiles.d/openqa.conf,g' systemd/systemd-openqa-generator
 #These services and files are not used.
 rm -rf systemd/openqa-vde_switch.service
@@ -466,6 +468,9 @@ fi
 %files single-instance
 
 %changelog
+* Thu Jun 01 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt11
+- update to current version
+
 * Wed Apr 05 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt10
 - update to current version
 
