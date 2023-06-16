@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define php_version 8.0
+%define php_version 8.1
 
 Name: nextcloud
-Version: 26.0.0
+Version: 27.0.0
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -39,6 +39,7 @@ Requires: php%php_version-intl
 Requires: php%php_version-memcached
 Requires: php%php_version-gmp
 Requires: php%php_version-imagick
+Requires: php%php_version-exif
 
 Source0: %name-%version.tar
 Source1: %name.watch
@@ -71,6 +72,7 @@ Apache 2.x web-server default configuration for %name.
 Summary: nginx web-server default configuration for %name
 Group: Networking/WWW
 Requires: %name = %EVR nginx
+Requires: php%php_version-fpm-fcgi
 Requires(post): cert-sh-functions
 
 %description nginx
@@ -101,6 +103,7 @@ ln -s %_localstatedir/%name %buildroot%installdir/data
 install -pD -m0644 apache2/default.conf %buildroot%_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 # Install nginx
+subst 's/php[0-9.]\+-fpm/php%php_version-fpm/g' nginx/default.conf
 install -pD -m0644 nginx/default.conf %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
 
 # Remove distribution
@@ -134,7 +137,7 @@ ssl_generate "nextcloud"
 %dir %installdir
 %installdir/3rdparty
 %dir %attr(0775,root,_webserver) %installdir/apps
-%installdir/apps/*
+%attr(0775,root,_webserver) %installdir/apps/*
 %installdir/core
 %installdir/dist
 %installdir/lib
@@ -162,6 +165,13 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Fri Jun 16 2023 Andrey Cherepanov <cas@altlinux.org> 27.0.0-alt1
+- New version.
+- Used PHP 8.1.
+- nexcloud-nginx supported php8.1-fpm-fcgi.
+- Added recommended exif module.
+- Fixed permissions for apps directories.
+
 * Mon Mar 27 2023 Andrey Cherepanov <cas@altlinux.org> 26.0.0-alt1
 - New version.
 
