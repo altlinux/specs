@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 1.23.0
+Version: 1.23.1
 Release: alt1
 
 Summary: Type hints (PEP 484) support for the Sphinx autodoc extension
@@ -16,15 +16,16 @@ Vcs: https://github.com/tox-dev/sphinx-autodoc-typehints.git
 Source: https://pypi.io/packages/source/s/%modname/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
+Provides: python3-module-%pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm python3-module-wheel python3(hatchling) python3(hatch-vcs)
 %{?_enable_check:BuildRequires: python3-module-tox
-BuildRequires: python3-module-sphinx python3-module-snowballstemmer >= 2.0
+BuildRequires: python3-module-sphinx-tests python3-module-snowballstemmer >= 2.0
 BuildRequires: python3-module-diff-cover
-BuildRequires: python3-module-pytest python3-module-sphobjinv
+BuildRequires: python3-module-pytest-cov python3-module-sphobjinv
 BuildRequires: python3-module-coverage python3-module-covdefaults
-BuildRequires: python3-module-diff-cover python3-module-twine}
+BuildRequires: python3-module-twine python3-module-nptyping}
 
 %description
 This Sphinx extension allows to use Python 3 annotations for
@@ -50,6 +51,9 @@ functions.
 
 
 %changelog
+* Fri Jun 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.23.1-alt1
+- 1.23.1
+
 * Thu Apr 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1
 - 1.23.0
 
