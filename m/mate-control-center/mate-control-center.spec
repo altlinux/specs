@@ -1,6 +1,6 @@
 Name: mate-control-center
 Version: 1.26.1
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: MATE Desktop control-center
 License: LGPLv2+ and GPLv2+
@@ -16,7 +16,8 @@ Requires: gsettings-desktop-schemas mate-settings-daemon gnome-keyring
 
 BuildRequires: mate-common libSM-devel libXScrnSaver-devel libXcursor-devel libXi-devel libXxf86misc-devel libcanberra-gtk3-devel
 BuildRequires: libdconf-devel mate-desktop-devel libmatekbd-devel librsvg-devel libxml2-devel mate-menus-devel mate-settings-daemon-devel
-BuildRequires: mate-window-manager-devel yelp-tools desktop-file-utils libpolkit-devel libaccountsservice-devel libappindicator-gtk3-devel
+BuildRequires: mate-window-manager-devel yelp-tools desktop-file-utils libpolkit-devel libaccountsservice-devel
+BuildRequires: libayatana-appindicator3-devel
 
 %description
 MATE Control Center configures system settings such as themes,
@@ -72,6 +73,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 14 2023 Anton Midyukov <antohami@altlinux.org> 2:1.26.1-alt2
+- NMU: rebuild with libayatana-appindicator3
+
 * Thu May 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:1.26.1-alt1
 - 1.26.1
 
