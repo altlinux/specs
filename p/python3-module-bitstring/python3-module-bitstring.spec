@@ -1,18 +1,22 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define  modulename bitstring
 
 Name:    python3-module-%modulename
-Version: 3.1.5
-Release: alt3
+Version: 3.1.9
+Release: alt1
 
 Summary: A Python module to help you manage your bits
 License: MIT
 Group:   Development/Python3
 URL:     https://github.com/scott-griffiths/bitstring
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-dev
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 BuildArch: noarch
 
@@ -32,17 +36,21 @@ and navigated in, similar to a file or stream.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/%modulename.py*
 %python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Fri Jun 16 2023 Anton Midyukov <antohami@altlinux.org> 3.1.9-alt1
+- new version
+- Migration to PEP517
+
 * Mon May 24 2021 Anton Midyukov <antohami@altlinux.org> 3.1.5-alt3
 - fix changelog
 
