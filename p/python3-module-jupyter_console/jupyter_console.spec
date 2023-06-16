@@ -1,46 +1,47 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname jupyter_console
 
 %def_with docs
-%def_disable check
+
+%def_with check
 
 Name: python3-module-%oname
-Version: 6.2.0
-Release: alt3
+Version: 6.6.3
+Release: alt1
+
 Summary: Jupyter Terminal Console
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/jupyter-console/
+Vcs: https://github.com/jupyter/jupyter_console.git
 
 BuildArch: noarch
 
-# https://github.com/jupyter/jupyter_console.git
-Source: %oname-%version.tar
-
-Patch1: %oname-%version-alt-docs.patch
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: /dev/pts
+BuildRequires: python3-module-hatchling
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-zmq
+BuildRequires: python3-module-flaky
+BuildRequires: python3-module-traitlets-tests
+BuildRequires: python3-module-ipython
+BuildRequires: python3-module-ipykernel
+BuildRequires: python3-module-jupyter_core
+BuildRequires: python3-module-jupyter_client
+BuildRequires: python3-module-pexpect
+BuildRequires: python3-module-prompt_toolkit
+BuildRequires: python3-module-Pygments
+%endif
+
 %if_with docs
 BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-sphinxcontrib_github_alt
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
-BuildRequires: python3-module-vine >= 1.3.0
-BuildRequires: python3-module-jupyter_client ipython3
-BuildRequires: python3-module-ipykernel python3-module-mock
-BuildRequires: python3-module-pexpect
-BuildRequires: python3-module-coverage python3-module-traitlets-tests
-BuildRequires: python3(IPython)
-BuildRequires: python3(IPython.testing.tests)
-BuildRequires: python3-module-ipython_genutils-tests
-BuildRequires: python3(pathlib2) python3(PIL)
 
 %py3_provides %oname
-%py3_requires jupyter_client IPython ipykernel
-
-%add_python3_req_skip nose
 
 %description
 A terminal-based console frontend for Jupter kernels. This code is based
@@ -58,17 +59,16 @@ on the single-process IPython terminal.
 This package contains tests for %oname.
 
 %prep
-%setup -n %oname-%version
-%patch1 -p1
+%setup
 
 sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
     $(find ./ -type f \( -name '*.py' -o -name 'jupyter-console' \))
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 export PYTHONPATH=$PWD
@@ -76,7 +76,7 @@ export PYTHONPATH=$PWD
 %endif
 
 %check
-JUPYTER_CONSOLE_TEST=yes nosetests3 -vv --with-coverage --cover-package=%oname %oname
+%pyproject_run_pytest -v
 
 %files
 %doc *.md
@@ -85,13 +85,16 @@ JUPYTER_CONSOLE_TEST=yes nosetests3 -vv --with-coverage --cover-package=%oname %
 %endif
 %_bindir/*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/%oname/tests
 
 %files tests
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Jun 14 2023 Anton Vyatkin <toni@altlinux.org> 6.6.3-alt1
+- New version 6.6.3
+
 * Thu Apr 20 2023 Anton Vyatkin <toni@altlinux.org> 6.2.0-alt3
 - Fix BuildRequires
 

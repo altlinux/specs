@@ -5,133 +5,62 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.3.4
+Version: 8.2.0
 Release: alt1
 Summary: Jupyter protocol implementation and client libraries
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/jupyter-client/
+Vcs: https://github.com/jupyter/jupyter_client/
 
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: jupyter-client-fix787-kernelwarningsfilter.patch
 
-BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-ipython_genutils-tests python3-module-notebook python3-module-pbr
-BuildRequires: python3-module-zmq-tests python3-module-pytest
-BuildRequires: python3-module-sphinx_rtd_theme python3-module-pathlib2
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
-BuildRequires: python3(sphinxcontrib_github_alt)
-BuildRequires: python3(IPython)
-BuildRequires: python3(IPython.testing.tests)
-BuildRequires: python3(async_generator)
-BuildRequires: python3(nest_asyncio)
-BuildRequires: python3(myst_parser)
-BuildRequires: python3(entrypoints)
-BuildRequires: python3-module-flit
-BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-hatchling
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-jupyter
 BuildRequires: python3-module-pytest-timeout
+BuildRequires: openssh-clients
+BuildRequires: iproute2
+%endif
 
 %py3_provides %oname
-%py3_requires traitlets jupyter_core zmq
 
 %description
-jupyter_client contains the reference implementation of the [Jupyter
-protocol][]. It also provides client and kernel management APIs for
-working with kernels.
+jupyter_client contains the reference implementation of the Jupyter protocol.
+It also provides client and kernel management APIs for working with kernels.
 
 It also provides the jupyter kernelspec entrypoint for installing
 kernelspecs for use with Jupyter frontends.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-jupyter_client contains the reference implementation of the [Jupyter
-protocol][]. It also provides client and kernel management APIs for
-working with kernels.
-
-It also provides the jupyter kernelspec entrypoint for installing
-kernelspecs for use with Jupyter frontends.
-
-This package contains tests for %oname.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-jupyter_client contains the reference implementation of the [Jupyter
-protocol][]. It also provides client and kernel management APIs for
-working with kernels.
-
-It also provides the jupyter kernelspec entrypoint for installing
-kernelspecs for use with Jupyter frontends.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-jupyter_client contains the reference implementation of the [Jupyter
-protocol][]. It also provides client and kernel management APIs for
-working with kernels.
-
-It also provides the jupyter kernelspec entrypoint for installing
-kernelspecs for use with Jupyter frontends.
-
-This package contains documentation for %oname.
 
 %prep
 %setup
-%patch -p1
-
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
+sed -i '/--color=yes/d' pyproject.toml
 
 %build
-%__python3 -m flit build --format wheel
+%pyproject_build
 
 %install
-pip3 install -I dist/%oname-%version-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
+%pyproject_install
 
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs pickle
-%make -C docs html
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-
-%if_enabled check
 %check
-rm -fR build
-export PYTHONPATH=$PWD
-py.test3 -vv
-%endif
+sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
+%pyproject_run_pytest -k 'not test_input_request'
 
 %files
 %doc *.md
 %_bindir/*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
-%exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/pickle
 
-%files tests
-%python3_sitelibdir/%oname/tests
-
-%files pickles
-%python3_sitelibdir/%oname/pickle
-
-%files docs
-%doc docs/_build/html/*
 
 %changelog
+* Fri Jun 02 2023 Anton Vyatkin <toni@altlinux.org> 8.2.0-alt1
+- New version 8.2.0.
+
 * Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 7.3.4-alt1
 - Automatically updated to 7.3.4.
 
