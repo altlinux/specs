@@ -1,42 +1,31 @@
 %define _unpackaged_files_terminate_build 1
-%define oname testtools
+%define pypi_name testtools
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.5.0
-Release: alt2
-
+Name: python3-module-%pypi_name
+Version: 2.6.0
+Release: alt1
 Summary: Extensions to the Python standard library's unit testing framework
-
-Group: Development/Python3
 License: MIT
+Group: Development/Python3
 Url: https://pypi.org/project/testtools/
-
-# Source-url: https://github.com/testing-cabal/testtools
-Source: %name-%version.tar
-
-Patch0: testtools-2.5.0-Add-support-for-Python-3.10.patch
-
+Vcs: https://github.com/testing-cabal/testtools
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pbr
-
-%if_with check
-# install_requires=
-BuildRequires: python3(extras)
-BuildRequires: python3(fixtures)
-
-BuildRequires: python3(testscenarios)
-BuildRequires: python3(testresources)
-BuildRequires: python3(twisted.trial)
-
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-%endif
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
 %add_python3_req_skip twisted
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra twisted
+# tests are subpackaged
+BuildRequires: python3-module-twisted-core-tests
+%endif
 
 %description
 testtools is a set of extensions to the Python standard library's unit
@@ -47,28 +36,28 @@ sources.
 %prep
 %setup
 %autopatch -p1
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-export PBR_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export PBR_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-export PBR_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps -vvr -s false --develop
+%pyproject_run -- python -m testtools.run testtools.tests.test_suite
 
 %files
 %doc LICENSE NEWS README*
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 15 2023 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
+- 2.5.0 -> 2.6.0.
+
 * Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 2.5.0-alt2
 - Fixed FTBFS (Python 3.10).
 
