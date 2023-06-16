@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Jun 16 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt3
+- update to ALT Kworkstation 10.2RC1
+
 * Thu Jun 01 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt2
 - update to ALT Kworkstation 10.2beta3
 - system-management: add userpasswd, alt-customize-branding
