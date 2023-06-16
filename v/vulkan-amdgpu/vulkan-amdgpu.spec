@@ -4,10 +4,9 @@
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %define optflags_debug -g1
 # As ubuntu
-%define llvm_ver 13.0
 %define gcc_ver 9
 
-%define _vk_api_version 1.3.250
+%define _vk_api_version 1.3.252
 
 %def_with clang
 %def_with wayland
@@ -23,18 +22,18 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2023.Q2.2
-Release: alt1
+Version: 2023.Q2.3
+Release: alt2
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
 Group: System/X11
 
-ExclusiveArch: x86_64 %ix86
+ExclusiveArch: x86_64
 
 Requires: vulkan-filesystem
 
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake /proc
 BuildRequires: cmake ninja-build python3-devel curl libxcb-devel libssl-devel llvm-devel
 BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel glslang libdxcompiler-devel
 %if_with wayland
@@ -42,7 +41,7 @@ BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel lib
 BuildRequires: libffi-devel
 %endif
 %if_with clang
-BuildRequires: clang%{llvm_ver} lld%{llvm_ver} llvm%{llvm_ver}-devel gcc-c++ libstdc++-devel
+BuildRequires: clang mold llvm-devel gcc-c++ libstdc++-devel
 %else
 BuildRequires: gcc%{gcc_ver}-c++ libstdc++%{gcc_ver}-devel
 %endif
@@ -79,7 +78,6 @@ rm -rf %_builddir/llpc/imported/llvm-dialects && ln -s %_builddir/llvm-dialects 
 # build amdvlk.so
 # according https://github.com/GPUOpen-Drivers/AMDVLK#build-driver-and-generate-json-files
 %if_with clang
-export ALTWRAP_LLVM_VERSION=%{llvm_ver} \
 %cmake \
 	-DXGL_USE_CLANG=ON \
 %else	
@@ -92,10 +90,11 @@ export GCC_VERSION=%{gcc_ver} \
 %if_with shader_cache
 	-DLLPC_ENABLE_SHADER_CACHE=1 \
 %endif
-%ifarch %ix86
-	-DVKI_RAY_TRACING=OFF \
-%endif
 	-DCMAKE_BUILD_TYPE=Release \
+%if_with clang
+	-DLLVM_USE_LINKER=mold \
+	-DCMAKE_CXX_LINK_FLAGS="-fuse-ld=mold -Wl,--thinlto-jobs=all" \
+%endif
         -DXGL_METROHASH_PATH=%_builddir/metrohash \
         -DXGL_CWPACK_PATH=%_builddir/cwpack \
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
@@ -123,6 +122,22 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Fri Jun 16 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q2.3-alt2
+- Disable 32-bit (again).
+- Use mold for linking.
+
+* Fri Jun 16 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q2.3-alt1
+- switch to llvm15.
+- enable gpurt back on 32-bit (fingers crossed).
+- 2023-6-15 update:
+  + icd: bump vulkan version
+  + llvm-dialects: Updated to e7464fe63735
+  + llvm-project: Updated to 02394516f587
+  + gpurt: Updated to a1103572dfcc
+  + llpc: Updated to f44e737f5e13
+  + pal: Updated to f01505f7fe4b
+  + xgl: Updated to 6288905587fa
+
 * Thu May 25 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q2.2-alt1
 - 2023-5-22 update:
   + icd: bump vulkan version
