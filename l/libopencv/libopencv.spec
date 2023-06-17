@@ -37,11 +37,11 @@
 
 %define bname opencv
 %define Name OpenCV
-%define sover 4.5
+%define sover 4.7
 Name: lib%bname
 Epoch: 1
-Version: 4.5.5
-Release: alt3
+Version: 4.7.0
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -51,17 +51,9 @@ URL: https://opencv.org
 Source: %bname-%version.tar
 # https://github.com/opencv/opencv_contrib.git
 Source1: %bname-contrib-%version.tar
-# https://github.com/opencv/opencv_3rdparty.git
-# Exact commits are mentioned in following files from contrib repo:
-# modules/xfeatures2d/cmake/download_vgg.cmake
-# modules/xfeatures2d/cmake/download_boostdesc.cmake
-Source2: %bname-xfeatures2d-boostdesc-%version.tar
-Source3: %bname-xfeatures2d-vgg-%version.tar
 
-Patch1: %name-%version-alt-python-paths.patch
-Patch2: %name-%version-alt-linking.patch
-Patch3: %name-%version-alt-build.patch
-Patch4: https://github.com/opencv/opencv/commit/8d88bb06b230b5c4b5bca78d84102f5d1adf48cf.patch
+Patch1: %name-4.5.5-alt-python-paths.patch
+Patch2: %name-4.5.5-alt-build.patch
 
 Patch2000: %name-e2k-simd.patch
 
@@ -243,22 +235,16 @@ improving Python bindings to %Name.
 This package contains %Name examples.
 
 %prep
-%setup -b 1 -b 2 -b 3
+%setup -b 1
 %patch1 -p1
 pushd ../%bname-contrib-%version >/dev/null
-%patch2 -p1
 popd >/dev/null
-%patch3 -p1
-%patch4 -p1
+%patch2 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
 
 rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
-
-mkdir -pv %_cmake__builddir/downloads/xfeatures2d
-cp %_builddir/%bname-xfeatures2d-boostdesc-%version/* %_cmake__builddir/downloads/xfeatures2d/
-cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfeatures2d/
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -345,6 +331,10 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfea
 %_datadir/%Name/quality
 
 %changelog
+* Fri Jun 16 2023 Roman Alifanov <ximper@altlinux.org> 1:4.7.0-alt1
+- NMU: new version 4.7.0
+- NMU: remove features2d
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 1:4.5.5-alt3
 - Build without openni.
 
