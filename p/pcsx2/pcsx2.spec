@@ -1,19 +1,18 @@
 %define optflags_lto -flto=thin
-%define llvm_version 13.0
+%define llvm_version 16.0
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
 %define svn_rev 20230513071212
 
 %define libchdr_commit fec8ab94212cc65d9d9a62cb3da924f5830c04b0
 %define gtest_version 1.12.1
-%define libzip_commit bdc03ab23b703fcc516436d6ebcbfb6ac4484033
 %define zstd_version 1.5.2
 %define vulkan_headers_version 1.3.226
 %define glslang_version 11.7.1
 %define rcheevos_commit 31f8788fe0e694e99db7ce138d45a655c556fa96
 
 Name: pcsx2
-Version: 1.7.4500
+Version: 1.7.4587
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -52,18 +51,14 @@ Source0: %name-%version.tar
 Source1: libchdr-%libchdr_commit.tar
 # https://github.com/google/googletest/archive/release-%gtest_version/googletest-release-%gtest_version.tar.gz
 Source2: googletest-release-%gtest_version.tar
-# https://github.com/nih-at/libzip/archive/%libzip_commit/libzip-%libzip_commit.tar.gz
-Source3: libzip-%libzip_commit.tar
 # https://github.com/facebook/zstd/archive/v%zstd_version/zstd-%zstd_version.tar.gz
-Source4: zstd-%zstd_version.tar
+Source3: zstd-%zstd_version.tar
 # https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
-Source5: Vulkan-Headers-%vulkan_headers_version.tar
+Source4: Vulkan-Headers-%vulkan_headers_version.tar
 # https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
-Source6: glslang-%glslang_version.tar
+Source5: glslang-%glslang_version.tar
 # https://github.com/RetroAchievements/rcheevos/archive/%rcheevos_commit/rcheevos-%rcheevos_commit.tar.gz
-Source7: rcheevos-%rcheevos_commit.tar
-
-Patch0: %name-libfmt10-alt.patch
+Source6: rcheevos-%rcheevos_commit.tar
 
 BuildRequires: clang%llvm_version
 BuildRequires: cmake
@@ -109,12 +104,10 @@ PCSX2 is an emulator for the playstation 2 video game console. It is written mos
 There is still lot of on going work to improve compatibility & speed.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7
-%patch0 -p1
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6
 
 %__mv -Tf ../libchdr-%libchdr_commit 3rdparty/libchdr/libchdr
 %__mv -Tf ../googletest-release-%gtest_version 3rdparty/gtest
-%__mv -Tf ../libzip-%libzip_commit 3rdparty/libzip/libzip
 %__mv -Tf ../zstd-%zstd_version 3rdparty/zstd/zstd
 %__mv -Tf ../Vulkan-Headers-%vulkan_headers_version 3rdparty/vulkan-headers
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
@@ -135,11 +128,8 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 	-DCMAKE_BUILD_PO:BOOL=TRUE \
 	-DDISABLE_ADVANCE_SIMD:BOOL=TRUE \
 	-DDISABLE_BUILD_DATE:BOOL=TRUE \
-	-DDISABLE_PCSX2_WRAPPER:BOOL=TRUE \
-	-DPACKAGE_MODE:BOOL=TRUE \
-	-DXDG_STD:BOOL=TRUE \
+	-DUSE_SYSTEM_RYML:BOOL=TRUE \
 	-DLTO_PCSX2_CORE:BOOL=TRUE \
-	-DSDL2_API:BOOL=TRUE \
 	-GNinja \
 	-Wno-dev
 
@@ -166,6 +156,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %_iconsdir/hicolor/256x256/apps/PCSX2.png
 
 %changelog
+* Sat Jun 17 2023 Nazarov Denis <nenderus@altlinux.org> 1.7.4587-alt1
+- Version 1.7.4587
+
 * Sat May 13 2023 Nazarov Denis <nenderus@altlinux.org> 1.7.4500-alt1
 - Version 1.7.4500
 
