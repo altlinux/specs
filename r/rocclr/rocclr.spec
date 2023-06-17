@@ -1,14 +1,8 @@
 %define llvm_ver 16.0
 %define build_type RelWithDebInfo
 %define builddir %_cmake__builddir
-# ppc64le: mold doesn't know about R_PPC64_REL32 relocation
-# dunno about other arches too
-%ifnarch x86_64 aarch64
-%def_without mold
-%else
 %def_with mold
-%endif
-%define _cmake %cmake -G Ninja -S . -Wno-dev -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ %{?_with_mold:-DCMAKE_EXE_LINKER_FLAGS='-fuse-ld=mold'} -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_STRIP:STRING=""
+%define _cmake %cmake -G Ninja -S . -Wno-dev -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ %{?_with_mold:-DCMAKE_EXE_LINKER_FLAGS='-fuse-ld=mold' -DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=mold'} -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_STRIP:STRING=""
 %define _ninja_build ninja -vvv -j %__nprocs -C %builddir
 %define optflags_lto %nil
 %define bits 64
@@ -18,7 +12,7 @@
 
 Name: rocclr
 Version: 5.5.1
-Release: alt0.2
+Release: alt0.3
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
 # FIXME! migrate to https://github.com/ROCm-Developer-Tools/clr
@@ -169,6 +163,9 @@ mv %buildroot%_libdir/cmake/hip/FindHIP %buildroot%_datadir/cmake/hip
 %endif
 
 %changelog
+* Sat Jun 17 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.3
+- ppc64le: use mold for linking.
+
 * Wed Jun 14 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.2
 - Added HIP packages (disabled by default).
 - Use ninja build and mold for linking.
