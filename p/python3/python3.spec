@@ -7,7 +7,7 @@
 %def_with check
 
 # Turn on while every major update
-%def_with bootstrap
+%def_without bootstrap
 
 %define _unpackaged_files_terminate_build 1
 
@@ -70,7 +70,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %global py_SOVERSION 1.0
 
 # some arches don't have valgrind so we need to disable its support on them
-%ifnarch s390 riscv64 %e2k
+%ifnarch s390 riscv64 loongarch64 %e2k
 %def_with valgrind
 %else
 %def_without valgrind
@@ -92,8 +92,10 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_without gl
 %endif
 
+%def_with desktop_file
+
 Name: python3
-Version: %{pybasever}.0
+Version: %{pybasever}.4
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -114,14 +116,19 @@ BuildPreReq: liblzma-devel
 BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel
 BuildRequires: libffi-devel libncursesw-devel mpdecimal-devel libb2-devel
 BuildRequires: libssl-devel libreadline-devel libsqlite3-devel
-BuildRequires: zlib-devel libuuid-devel libnsl2-devel
-BuildRequires: desktop-file-utils autoconf-archive
+BuildRequires: autoconf-archive
+BuildRequires: zlib-devel libuuid-devel
+# LoongArch glibc has never had the legacy nis/yp thing
+%ifnarch loongarch64
+BuildRequires: libnsl2-devel
+%endif
 %{?_with_bluez:BuildPreReq: libbluez-devel}
 %{?_with_x11:BuildRequires: libX11-devel}
 %{?_with_tk:BuildRequires: tcl-devel tk-devel}
 %{?_with_gl:BuildRequires: libGL-devel}
 %{?_with_gdbm:BuildRequires: gdbm-devel}
 %{?_with_valgrind:BuildRequires: valgrind-devel}
+%{?_with_desktop_file:BuildRequires: desktop-file-utils}
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts /proc}}
 
 # Fix find-requires
@@ -169,6 +176,8 @@ Patch1011: python3-ignore-env-trust-security.patch
 
 # Replaces absolute import with relative ones.
 Patch1012: python3-lib2to3-import.patch
+
+Patch1013: python3-LoongArch64-support.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -365,6 +374,7 @@ done
 %patch1011 -p2
 
 %patch1012 -p2
+%patch1013 -p2
 
 %ifarch %e2k
 # add e2k arch
@@ -386,8 +396,7 @@ sed -i "s/^.*def test_stack_overflow(/    @unittest.skipIf(True, 'hangs')\n&/" L
 # compiler. This improves Python performance on Elbrus by about 10%.
 # See ALT40278 for a detailed explanation.
 sed -i "/#if USE_COMPUTED_GOTOS/{s|^|#undef USE_COMPUTED_GOTOS\n#define USE_COMPUTED_GOTOS 0\n|;:a;n;ba}" Python/ceval.c
-sed -i "/_unknown_opcode:/{n;n;s|$|Py_UNREACHABLE();\n#include \"opcode_unknown.h\"|}" Python/ceval.c
-awk '/_unknown_opcode/{print "case " NR-2 ":"}' Python/opcode_targets.h > Python/opcode_unknown.h
+sed -i "s|^ *EXTRA_CASES|default:Py_UNREACHABLE();&|" Python/ceval.c
 %endif
 
 # remove test_winreg() function
@@ -631,6 +640,16 @@ rm -v -r %buildroot%pylibdir/ctypes/macholib/fetch_macholib
 rm -v %buildroot%tool_dir/scripts/md5sum.py
 rm -v %buildroot%tool_dir/scripts/parseentities.py
 
+%if_without tk
+# Most files from modules-tkinter subpackage
+rm -rv %buildroot%pylibdir/idlelib
+rm -rv %buildroot%pylibdir/tkinter
+rm -v  %buildroot%dynload_dir/_tkinter.cpython-%pyshortver%pyabi.so
+rm -v  %buildroot%pylibdir/turtle.py
+rm -v  %buildroot%pylibdir/test/test_turtle.py
+rm -rv %buildroot%pylibdir/turtledemo
+%endif
+
 # Remove sphinxext (temporary)
 rm -v -r %buildroot%pylibdir/Doc/tools/{extensions,static,templates}
 rm -v %buildroot%pylibdir/Doc/tools/susp-ignored.csv
@@ -690,7 +709,9 @@ rm -v %buildroot/%pylibdir/LICENSE.txt
 install -D -m 0644 Lib/idlelib/Icons/idle_16.png %buildroot%_datadir/icons/hicolor/16x16/apps/idle3.png
 install -D -m 0644 Lib/idlelib/Icons/idle_32.png %buildroot%_datadir/icons/hicolor/32x32/apps/idle3.png
 install -D -m 0644 Lib/idlelib/Icons/idle_48.png %buildroot%_datadir/icons/hicolor/48x48/apps/idle3.png
+%if_with desktop_file
 desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE10
+%endif
 
 # We want to have clean bindir
 rm -rf %buildroot%_bindir/__pycache__
@@ -811,6 +832,7 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_ssl.cpython-%pyshortver%pyabi.so
 %dynload_dir/_statistics.cpython-%pyshortver%pyabi.so
 %dynload_dir/_struct.cpython-%pyshortver%pyabi.so
+%dynload_dir/_testclinic.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testinternalcapi.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testmultiphase.cpython-%pyshortver%pyabi.so
 %dynload_dir/_typing.cpython-%pyshortver%pyabi.so
@@ -946,8 +968,10 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/tomllib/*.py
 %pylibdir/tomllib/__pycache__/*%bytecode_suffixes
 
+%if_with tk
 %exclude %pylibdir/turtle.py
 %exclude %pylibdir/__pycache__/turtle*%bytecode_suffixes
+%endif
 
 %dir %pylibdir/unittest/
 %dir %pylibdir/unittest/__pycache__/
@@ -1006,7 +1030,9 @@ $(pwd)/python -m test.regrtest \
 %_bindir/2to3-%pybasever
 %_bindir/idle*
 %_bindir/pathfix.py
+%if_with desktop_file
 %_desktopdir/idle3.desktop
+%endif
 %_miconsdir/idle3.png
 %_niconsdir/idle3.png
 %_liconsdir/idle3.png
@@ -1047,7 +1073,6 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_curses.cpython-%pyshortver%pyabi.so
 %dynload_dir/_curses_panel.cpython-%pyshortver%pyabi.so
 
-%if_with tk
 %files test
 %pylibdir/ctypes/test
 %pylibdir/distutils/tests
@@ -1057,13 +1082,20 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_testbuffer.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testcapi.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testimportmultiple.cpython-%pyshortver%pyabi.so
+%if_with tk
 %pylibdir/idlelib/idle_test
 %pylibdir/tkinter/test
+%endif
 %pylibdir/unittest/test
 %tool_dir/scripts/run_tests.py
-%endif
 
 %changelog
+* Fri Jun 09 2023 Grigory Ustinov <grenka@altlinux.org> 3.11.4-alt1
+- Updated to upstream version 3.11.4.
+- Fixed build on Elbrus (thx to ilyakurdyukov@).
+- Added support for LoongArch64 (thx to asheplyakov@) (Closes: #46170).
+- Simplified the initial build (thx to asheplyakov@) (Closes: #46171).
+
 * Sun Dec 18 2022 Grigory Ustinov <grenka@altlinux.org> 3.11.0-alt1
 - Updated to upstream version 3.11.0.
 
