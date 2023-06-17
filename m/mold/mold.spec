@@ -7,7 +7,7 @@
 %define _libexecdir %prefix/libexec
 
 Name: mold
-Version: 1.11.0
+Version: 1.11.0.gitebd780e
 Release: alt1
 
 Summary: A Modern Linker
@@ -70,6 +70,9 @@ rm -rfv %buildroot%_docdir/mold
 %_man1dir/*mold.1.*
 
 %changelog
+* Sat Jun 17 2023 Anton Zhukharev <ancieg@altlinux.org> 1.11.0.gitebd780e-alt1
+- Added R_PPC64_REL32 support (ALT 46562).
+
 * Fri Jun 02 2023 Anton Zhukharev <ancieg@altlinux.org> 1.11.0-alt1
 - Initial build for ALT Sisyphus.
 
