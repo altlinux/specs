@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 1.23.1
+Version: 1.23.2
 Release: alt1
 
 Summary: Type hints (PEP 484) support for the Sphinx autodoc extension
@@ -20,7 +20,7 @@ Provides: python3-module-%pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm python3-module-wheel python3(hatchling) python3(hatch-vcs)
-%{?_enable_check:BuildRequires: python3-module-tox
+%{?_enable_check:BuildRequires: python3-module-tox >= 4.2
 BuildRequires: python3-module-sphinx-tests python3-module-snowballstemmer >= 2.0
 BuildRequires: python3-module-diff-cover
 BuildRequires: python3-module-pytest-cov python3-module-sphobjinv
@@ -51,6 +51,9 @@ functions.
 
 
 %changelog
+* Sat Jun 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.23.2-alt1
+- 1.23.2
+
 * Fri Jun 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.23.1-alt1
 - 1.23.1
 
