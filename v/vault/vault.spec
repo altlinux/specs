@@ -5,7 +5,7 @@
 
 Name:    vault
 Version: 1.13.3
-Release: alt1
+Release: alt2
 
 Summary: A tool for secrets management, encryption as a service, and privileged access management
 License: MPL-2.0
@@ -76,5 +76,8 @@ setcap -q cap_ipc_lock+ep %_bindir/%name 2>/dev/null ||:
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sat Jun 17 2023 Nikolay Burykin <bne@altlinux.org> 1.13.3-alt2
+- Fix repocop warning init-condrestart
+
 * Wed Jun 14 2023 Nikolay Burykin <bne@altlinux.org> 1.13.3-alt1
 - Initial build for Sisyphus
