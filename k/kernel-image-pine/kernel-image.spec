@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt2
+Release: alt3
 epoch:1
 %define kernel_need_version	6.2
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -235,7 +235,9 @@ install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
 make modules_install INSTALL_MOD_PATH=%buildroot
 
-make dtbs_install INSTALL_DTBS_PATH=%buildroot/lib/devicetree/$KernelVer
+make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
+mkdir -p %buildroot/lib/devicetree
+ln -s /boot/devicetree/$KernelVer %buildroot/lib/devicetree/$KernelVer
 
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
 install -d %buildroot%kbuild_dir
@@ -391,6 +393,7 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
 /boot/config-%kversion-%flavour-%krelease
+/boot/devicetree/%kversion-%flavour-%krelease
 %dir %modules_dir/
 %defattr(0600,root,root,0700)
 %modules_dir/*
@@ -417,6 +420,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sun Jun 18 2023 Anton Midyukov <antohami@altlinux.org> 1:6.2.14-alt3
+- Replace devicetree to /boot
+
 * Tue Jun 06 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt2
 - mm: export zap_page_range_single
 
