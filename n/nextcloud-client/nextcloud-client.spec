@@ -1,6 +1,6 @@
 Name: nextcloud-client
-Version: 3.0.1
-Release: alt3
+Version: 3.8.2
+Release: alt1
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
@@ -21,6 +21,7 @@ Patch2: alt-confdir.patch
 Patch3: alt-static-libs.patch
 Patch4: %name-2.3.3-alt-fix-help-url.patch
 Patch5: alt-move-deleted-to-trash.patch
+Patch6: alt-fix-fortify-source.patch
 
 BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: kde-common-devel rpm-build-kf5
@@ -28,6 +29,7 @@ BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-
 BuildRequires: libqt5-webenginewidgets qt5-webengine-devel libgio-devel glib2-devel qt5-svg-devel
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: qt5-quickcontrols2-devel
+BuildRequires: qt5-websockets-devel kf5-karchive-devel inkscape
 
 %description
 The Nextcloud Desktop Client is a tool to synchronize files from Nextcloud Server with your computer.
@@ -41,6 +43,7 @@ KDE5 %name integration
 
 %prep
 %setup
+%patch6 -p1
 
 %build
 %add_optflags %optflags_shared
@@ -58,34 +61,36 @@ KDE5 %name integration
 mkdir -p %buildroot/%_desktopdir
 desktop-file-install \
     --dir=%buildroot/%_desktopdir %SOURCE2
-cd %buildroot/%_libdir
-ln -s nextcloud/libocsync.so.%version libocsync.so.0; cd ../..
-%find_lang --with-qt --output=%name.lang client
+#cd %buildroot/%_libdir
+#ln -s nextcloud/libocsync.so.%version libocsync.so.0; cd ../..
+%find_lang --with-qt --with-man client
 
-%files -f %buildroot/%name.lang
+%files -f client.lang
 %doc README.md
 %dir %_datadir/nextcloud
 %dir %_datadir/nextcloud/i18n
 %dir %_sysconfdir/Nextcloud
-%dir %_libdir/nextcloud
 %config(noreplace) %_sysconfdir/Nextcloud/sync-exclude.lst
 %_bindir/nextcloud
 %_bindir/nextcloudcmd
-%_libdir/lib*sync.*
-%_libdir/nextcloud/*
-%_desktopdir/%name.desktop
+%_libdir/*nextcloud*.*
+%_desktopdir/*.desktop
+%_datadir/mime/packages/nextcloud.xml
 %_datadir/nautilus-python/extensions/
 %_datadir/caja-python/extensions/
+%_datadir/nemo-python/extensions/
 %_iconsdir/hicolor/*/apps/Nextcloud.*
 %_iconsdir/hicolor/*/apps/Nextcloud_*.*
 
 %files kde5
-%_K5lib/libnextclouddolphinpluginhelper.so
 %_K5plug/kf5/overlayicon/
-%_K5plug/*nextcloud*.so
-%_K5srv/*nextcloud*.desktop
+%_K5plug/kf5/kfileitemaction/
+#%_K5srv/*nextcloud*.desktop
 
 %changelog
+* Thu Jun 08 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.8.2-alt1
+- new version
+
 * Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt3
 - using not_qt5_qtwebengine_arches macro
 
