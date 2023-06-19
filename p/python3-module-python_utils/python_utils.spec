@@ -1,37 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define oname python_utils
+%define pypi_name python-utils
+%define mod_name python_utils
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.1.0
+Name: python3-module-%mod_name
+Version: 3.6.1
 Release: alt1
-
 Summary: A module with some convenient utilities not included with the standard Python install
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/python-utils/
-
+Url: https://pypi.org/project/python-utils/
+Vcs: https://github.com/WoLpH/python-utils
 BuildArch: noarch
-
-# https://github.com/WoLpH/python-utils.git
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+Provides: python3-module-%pypi_name = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires:
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_asyncio)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
+%pyproject_builddeps_metadata_extra tests
 %endif
-
-Provides: python3-module-python-utils = %EVR
-%py3_provides python-utils
 
 %description
 Python Utils is a collection of small Python functions and classes which
@@ -42,24 +34,27 @@ extending it.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false --develop
+%pyproject_run_pytest -ra -o=addopts=-Wignore
 
 %files
-%doc *.rst
-%python3_sitelibdir/python_utils/
-%python3_sitelibdir/python_utils-%version-py%_python3_version.egg-info/
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Mon Jun 19 2023 Stanislav Levin <slev@altlinux.org> 3.6.1-alt1
+- 3.1.0 -> 3.6.1.
+
 * Fri Mar 11 2022 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
 - 2.5.6 -> 3.1.0.
 
