@@ -1,8 +1,8 @@
 %define  modulename pyinstaller-hooks-contrib
 
 Name:    python3-module-%modulename
-Version: 2022.13
-Release: alt2
+Version: 2023.3
+Release: alt1
 
 Summary: Community maintained hooks for PyInstaller
 License: Apache-2.0 and GPL-2.0
@@ -42,6 +42,9 @@ rm -rf %buildroot%python3_sitelibdir/_pyinstaller_hooks_contrib/tests
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Jun 19 2023 Andrey Cherepanov <cas@altlinux.org> 2023.3-alt1
+- New version.
+
 * Fri Jan 20 2023 Andrey Cherepanov <cas@altlinux.org> 2022.13-alt2
 - Removed autorequires nltk module.
 
