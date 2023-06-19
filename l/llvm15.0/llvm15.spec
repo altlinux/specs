@@ -57,7 +57,7 @@ AutoProv: nopython
 
 %def_disable tests
 # disable clang on aarch64 due very long compile time
-%ifarch x86_64 ppc64
+%ifarch x86_64 ppc64le
 %def_with clang
 %else
 %def_without clang
@@ -79,7 +79,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt3
+Release: alt4
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -107,6 +107,7 @@ Patch18: lld-compact-unwind-encoding.h.patch
 # ROCm needs this
 Patch19: llvm-D132140.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
+Patch102: clang-15-alt-rocm-device-libs-path.patch
 # use DWARF4 by default
 Patch200: clang-produce-DWARF4-by-default.patch
 
@@ -625,6 +626,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch19 -p1
 
 %patch101 -p1
+%patch102 -p1 -b .clang-rocm-device-libs-path
 %patch200 -p1
 
 # LLVM 12 and onward deprecate Python 2:
@@ -1192,6 +1194,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Mon Jun 19 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt4
+- ppc64le: fix macro and build with clang.
+- clang: extend rocm device libs lookup path.
+
 * Fri Jun 16 2023 Arseny Maslennikov <arseny@altlinux.org> 15.0.7-alt3
 - libpolly-doc: Marked as noarch.
 - Dropped tblgen-lsp-server from LLVMExports target check. That program is
