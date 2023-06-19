@@ -1,14 +1,14 @@
 %def_disable snapshot
-%def_without doc
+%def_with doc
 %def_enable check
 
 %define modname cairo
 %define oname py%modname
-%define ver_major 1.23
+%define ver_major 1.24
 
 Name: python3-module-%oname
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: Pycairo is a set of Python bindings for the cairo vector graphics library
 Group: Development/Python3
@@ -28,7 +28,7 @@ BuildRequires: meson libcairo-devel >= 1.15.10 python3-devel
 %{?_with_bootstrap:BuildRequires: python3-module-Pygments}
 %{?_with_doc:
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: texlive-latex-base python3-module-sphinx-devel python3-module-sphinx_rtd_theme}
+BuildRequires: texlive-latex-base python3-module-sphinx-devel >= 6.1.3 python3-module-sphinx_rtd_theme}
 %{?_enable_check:BuildRequires: python3-module-pytest}
 
 %description
@@ -150,6 +150,10 @@ rm -fR %python3_sitelibdir/%oname/pickle
 %endif
 
 %changelog
+* Mon Jun 19 2023 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+- enabled doc build again
+
 * Thu Apr 27 2023 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1.1
 - disabled broken docs build
 
