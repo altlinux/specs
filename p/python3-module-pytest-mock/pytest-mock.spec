@@ -4,35 +4,26 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.10.0
+Version: 3.11.1
 Release: alt1
-
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
 Group: Development/Python3
-# https://github.com/pytest-dev/pytest-mock.git
 Url: https://pypi.org/project/pytest-mock/
-
+Vcs: https://github.com/pytest-dev/pytest-mock/
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
+%pyproject_runtimedeps_metadata
+%py3_provides %pypi_name
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(pytest)
-
-BuildRequires: python3(pytest-asyncio)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
-%py3_provides %pypi_name
-
-BuildArch: noarch
 %description
 Thin-wrapper around the mock package for easier use with py.test
 
@@ -43,16 +34,12 @@ to worry about undoing patches at the end of a test
 %prep
 %setup
 %patch -p1
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -61,7 +48,7 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore tests
 
 %files
 %doc CHANGELOG.rst README.rst
@@ -69,6 +56,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 16 2023 Stanislav Levin <slev@altlinux.org> 3.11.1-alt1
+- 3.10.0 -> 3.11.1.
+
 * Thu Oct 06 2022 Stanislav Levin <slev@altlinux.org> 3.10.0-alt1
 - 3.9.0 -> 3.10.0.
 
