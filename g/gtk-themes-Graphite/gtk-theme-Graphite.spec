@@ -2,7 +2,7 @@
 
 Name:    gtk-themes-Graphite
 Version: 20230517
-Release: alt1
+Release: alt2
 
 Summary: Graphite - set of themes for XFCE, MATE, Gnome, Cinnamon desktop environment
 License: GPL-3.0
@@ -135,6 +135,12 @@ Group: Graphics
 %description -n wallpapers-Graphite
 Set of wallpapers for Graphite GTK theme
 
+%package -n grub-theme-Graphite
+Summary: Graphite theme for GRUB menu
+Group: Graphics
+%description -n grub-theme-Graphite
+Graphite theme for GRUB menu
+
 %prep
 %setup
 
@@ -152,6 +158,9 @@ done
 %_wallpapersdir/Graphite/*.png
 
 %changelog
+* Mon Jun 19 2023 Artyom Bystrov <arbars@altlinux.org> 20230517-alt2
+- Add wallpapers with ALT Linux Community logo
+
 * Thu May 18 2023 Artyom Bystrov <arbars@altlinux.org> 20230517-alt1
 - New version 20230517.
 
