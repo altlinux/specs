@@ -19,7 +19,7 @@
 
 Name: telegram-desktop
 Version: 4.3.1
-Release: alt2
+Release: alt3
 
 Summary: Telegram Desktop messaging app
 
@@ -112,7 +112,7 @@ BuildRequires: pkgconfig(xcb-screensaver)
 
 %if_with gtk3
 # GTK 3.0 integration
-BuildRequires: libgtk+3-devel libappindicator-gtk3-devel libglibmm2.68-devel
+BuildRequires: libgtk+3-devel libglibmm2.68-devel
 %endif
 
 BuildRequires: libopus-devel
@@ -317,6 +317,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Wed Jun 14 2023 Anton Midyukov <antohami@altlinux.org> 4.3.1-alt3
+- NMU: rebuild without unused appindicator-gtk3
+
 * Fri Apr 28 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.3.1-alt2
 - rebuilt on arm arches
 
