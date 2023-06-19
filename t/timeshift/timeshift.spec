@@ -12,7 +12,7 @@
 Name: timeshift
 Version: 23.06.2
 Summary: System restore tool for Linux
-Release: alt2
+Release: alt3
 License: GPLv3
 Group: Archiving/Backup
 URL: https://github.com/linuxmint/timeshift
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 Source1: firsttime-snapshot.sh
 Patch1: alt-use-xvt.patch
 Patch2: alt-fix-41711.patch
+Patch3: alt-fix-41055.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-meson
@@ -45,6 +46,7 @@ running or from Live CD/USB.
 %patch1 -p1
 %endif
 %patch2 -p1
+%patch3 -p1
 
 %build
 %meson
@@ -73,6 +75,9 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %doc README.md
 
 %changelog
+* Mon Jun 19 2023 Alexander Makeenkov <amakeenk@altlinux.org> 23.06.2-alt3
+- Fixed opening of browse snapshots window (closes: #41055).
+
 * Thu Jun 15 2023 Alexander Makeenkov <amakeenk@altlinux.org> 23.06.2-alt2
 - Fixed system users detection (closes: #41711)
 
