@@ -1,24 +1,31 @@
+# define suffix for easy backporing bird-2.x to stable branches as bird2 package
+# for build as bird - use gear.specsubst.suffix %nil
+# for build as bird2 - use gear.specsubst.suffix 2
+# gear-create-tag -s suffix=%nil or gear-create-tag -s suffix=2
+%define _suffix %nil
 %define _localstatedir %_var
+%define protocols all
 
-Name: bird
-Version: 1.6.8
-Release: alt3
+Name: bird%_suffix
+Version: 2.13
+Release: alt2
 Summary: BIRD Internet Routing Daemon
 
 Group: Networking/Other
 License: GPLv2
 URL: http://bird.network.cz
 
-# Cloned from git://git.nic.cz/bird.git
+VCS: https://gitlab.nic.cz/labs/bird
 Source: %name-%version.tar
-Source1: %name.init
-Source2: %name.service
-Source3: %{name}6.init
-Source4: %{name}6.service
+Source1: bird.init
+Source2: bird.service
 
-Patch: %name-%version-alt.patch
-
-Packager: Vladimir Lettiev <crux@altlinux.ru>
+%if 0%_suffix != 0
+Conflicts: bird
+%else
+Obsoletes: bird2 < %EVR
+Provides: bird2 = %EVR
+%endif
 
 BuildRequires: libreadline-devel libncurses-devel flex glibc-kernheaders OpenSP linuxdoc-tools
 
@@ -48,51 +55,41 @@ BIRD has been developed at the Faculty of Math and Physics, Charles
 University, Prague, Czech Republic as a student project. It can be
 freely distributed under the terms of the GNU General Public License.
 
-%package -n bird6
-Group: Networking/Other
-Summary: BIRD Internet Routing Daemon, ipv6 enabled
-Requires: %name = %version-%release
-%description -n bird6
-%summary
-
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
-%define _configure_script ../configure
+%configure  --with-runtimedir=/run/bird \
+	    --sysconfdir=%_sysconfdir/bird \
+	    --with-protocols=%protocols \
+	    #
+%make_build all
 
-# gcc detects overflow in strncpy at proto/rip/auth.c:134
-# but it's false alarm, relax gcc
-export CFLAGS="%optflags -D_FORTIFY_SOURCE=1"
-
-mkdir build-bird6
-pushd build-bird6
-%configure --enable-ipv6 --with-protocols=all
-%make_build
-popd
-
-mkdir build-bird4
-pushd build-bird4
-%configure --with-protocols=all
-%make_build
-popd
-
-pushd doc
-    make prog.sgml
-    ./sgml2html prog.sgml
-    ./sgml2html bird.sgml
-popd
 
 %install
-%makeinstall -C build-bird6
-%makeinstall -C build-bird4
+%makeinstall_std
+install -d %buildroot%_localstatedir/lib/bird %buildroot%_tmpfilesdir  %buildroot%_sysconfdir/bird/bird.d
+install -pD -m755 %SOURCE1 %buildroot%_initdir/bird
+install -pD -m644 %SOURCE2 %buildroot%_unitdir/bird.service
 
-install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
-install -pD -m644 %SOURCE2 %buildroot%_unitdir/%name.service
-install -pD -m755 %SOURCE3 %buildroot%_initdir/%{name}6
-install -pD -m644 %SOURCE4 %buildroot%_unitdir/%{name}6.service
+# create temporary directory
+mkdir -p %buildroot%_tmpfilesdir
+cat > %buildroot%_tmpfilesdir/bird.conf << _EOF_
+d /run/bird 0750 _bird _bird -
+_EOF_
+
+# add bird.d configuration directory
+cat >> %buildroot%_sysconfdir/bird/bird.conf << _EOF_
+include "/etc/bird/bird.d/*.conf";
+_EOF_
+
+%check
+make test
+
+%pre
+%_sbindir/groupadd -r -f _bird 2> /dev/null ||:
+%_sbindir/useradd -r -n -g _bird -d /var/lib/bird -s /dev/null -c "BIRD Routing Daemon System User" _bird 2> /dev/null ||:
 
 %post
 %post_service bird
@@ -100,36 +97,31 @@ install -pD -m644 %SOURCE4 %buildroot%_unitdir/%{name}6.service
 %preun
 %preun_service bird
 
-%post -n bird6
-%post_service bird6
-
-%preun -n bird6
-%preun_service bird6
-
 %files
-%_initdir/%name
-%_unitdir/%name.service
-%config(noreplace) %_sysconfdir/%name.conf
-%_sbindir/%name
-%_sbindir/%{name}c
-%_sbindir/%{name}cl
-%doc NEWS README doc/*.html
-
-%files -n bird6
-%_initdir/%{name}6
-%_unitdir/%{name}6.service
-%config(noreplace) %_sysconfdir/%{name}6.conf
-%_sbindir/%{name}6
-%_sbindir/%{name}c6
-%_sbindir/%{name}cl6
+%doc NEWS README doc/bird.conf.example*
+%_initdir/bird
+%_unitdir/bird.service
+%dir %_sysconfdir/bird
+%dir %_sysconfdir/bird/bird.d
+%config(noreplace) %_sysconfdir/bird/bird.conf
+%_tmpfilesdir/bird.conf
+%dir %attr(0750,_bird,_bird) %_localstatedir/lib/bird
+%_sbindir/bird
+%_sbindir/birdc
+%_sbindir/birdcl
 
 %changelog
-* Mon Mar 01 2021 Anton Farygin <rider@altlinux.org> 1.6.8-alt3
-- added patch from upstream to fix compilation with GCC 10
-- fixed information about license of the package according to SPDX
+* Sat Jun 17 2023 Anton Farygin <rider@altlinux.ru> 2.13-alt2
+- 2.0.7-> 2.13
+- set package name "bird" for sisyphus and bird2 for branches with bird-1.6.8
+  and add correct "obsoletes/provides/conflicts" between bird and bird2 packages
+- moved bird.conf to /etc/bird/bird.conf
+- added /etc/bird/bird.d configuration directory
+- run under unprivileged _bird user and group
+- enabled tests
 
-* Fri Jun 26 2020 Slava Aseev <ptrnine@altlinux.org> 1.6.8-alt2
-- fixed bad header length test in OSPF (adapted from bird2)
+* Sat Feb 27 2021 Anton Farygin <rider@altlinux.org> 2.0.7-alt1
+- 2.0.7
 
 * Thu Jun 11 2020 Anton Farygin <rider@altlinux.ru> 1.6.8-alt1
 - 1.6.8
