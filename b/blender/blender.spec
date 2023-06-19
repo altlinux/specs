@@ -10,11 +10,20 @@
 %def_without embree
 %endif
 
+%ifarch x86_64 ppc64le
+%def_with lld
+# lld doesn't know about gcc lto=auto flags
+# and gcc doesn't know what to do with lto=thin
+%define optflags_lto %nil
+%else
+%def_without lld
+%endif
+
 %def_with jemalloc
 
 Name: blender
 Version: 3.4.1
-Release: alt2.1
+Release: alt2.4
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -44,7 +53,7 @@ Patch27: blender-2.90.0-alt-embree-components.patch
 Patch28: blender-3.0.0-alt-doc.patch
 Patch29: blender-2.90-alt-non-x86_64-linking.patch
 Patch30: blender-2.93.0-suse-reproducible.patch
-
+Patch40: blender-alt-fix-clang-linking.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -72,7 +81,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: openjpeg-tools2.0
 BuildRequires: alembic-devel
 BuildRequires: openvdb-devel libblosc-devel
-BuildRequires: llvm-devel clang-devel clang-devel-static
+BuildRequires: llvm-devel clang-devel
 BuildRequires: libgomp-devel
 BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: libharu-devel
@@ -94,6 +103,10 @@ BuildRequires: libjemalloc-devel
 %if_with docs
 BuildRequires: /usr/bin/doxygen
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink python3-module-sphinx_rtd_theme
+%endif
+
+%if_with lld
+BuildRequires: lld
 %endif
 
 %add_python3_path %_datadir/%name/scripts
@@ -180,6 +193,7 @@ This package contains documentation for Blender.
 %patch28 -p1
 %patch29 -p1
 %patch30 -p1
+%patch40 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -258,6 +272,12 @@ fi
 	-DWITH_ASSERT_ABORT:BOOL=OFF \
 	-DWITH_LINKER_GOLD:BOOL=OFF \
 	-DWITH_OPENSUBDIV:BOOL=ON \
+%if_with lld
+	-DWITH_LINKER_LLD:BOOL=ON \
+	-DCMAKE_EXE_LINKER_FLAGS:STRING="-Wl,--build-id=sha1" \
+	-DCMAKE_SHARED_LINKER_FLAGS:STRING="-Wl,--build-id=sha1" \
+	-DCMAKE_MODULE_LINKER_FLAGS:STRING="-Wl,--build-id=sha1" \
+%endif
 	-DOPENEXR_INCLUDE_DIRS=%_includedir/OpenEXR \
 	%nil
 
@@ -292,6 +312,18 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Sun Jun 18 2023 L.A. Kostis <lakostis@altlinux.ru> 3.4.1-alt2.4
+- ppc64le: use lld for linking.
+
+* Sun Jun 18 2023 L.A. Kostis <lakostis@altlinux.ru> 3.4.1-alt2.3
+- fix unresolved symbols with gold linker.
+
+* Fri Jun 16 2023 L.A. Kostis <lakostis@altlinux.ru> 3.4.1-alt2.2
+- NMU:
+  - remove deps to clang static libs.
+  - x86_64: use lld for linking.
+  - ldd: use sha1 for build-id (default fast is too short for rpm).
+
 * Wed Mar 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.1-alt2.1
 - Fixed build for Elbrus.
 

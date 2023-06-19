@@ -1,12 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
 
 %define soname 1.12
 
+%define optflags_lto %nil
+
+%ifnarch x86_64 ppc64le
+%def_without lld
+%set_verify_elf_method strict
+%else
+%def_with lld
+# eu-list complains about lld
+%set_verify_elf_method relaxed
+%endif
+
 Name: openshadinglanguage
-Version: 1.12.8.0
-Release: alt2
+Version: 1.12.12.0
+Release: alt0.1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
 License: BSD-3-Clause
@@ -32,6 +42,9 @@ BuildRequires: python3 pybind11-devel libnumpy-py3-devel
 BuildRequires: qt5-base-devel
 BuildRequires: zlib-devel
 BuildRequires: partio-devel
+%if_with lld
+BuildRequires: lld
+%endif
 
 %define oiio_major_minor_ver %(rpm -q --queryformat='%%{VERSION}' libopenimageio-devel | cut -d . -f 1-2)
 
@@ -128,6 +141,9 @@ Open Shading Language (OSL) python3 module.
 	-DOSL_BUILD_MATERIALX:BOOL=ON \
 	-DOSL_SHADER_INSTALL_DIR:PATH=%_datadir/%name/shaders/ \
 	-DSTOP_ON_WARNING:BOOL=OFF \
+%if_with lld
+	-DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld -Wl,--build-id=sha1' \
+%endif
 	%nil
 
 %cmake_build
@@ -173,6 +189,13 @@ mv %buildroot%_libdir/osl.imageio.so %buildroot%_libdir/OpenImageIO-%{oiio_major
 %python3_sitelibdir/*.so
 
 %changelog
+* Sun Jun 18 2023 L.A. Kostis <lakostis@altlinux.ru> 1.12.12.0-alt0.1
+- Updated to upstream version v1.12.12.0.
+- Disable LTO (causes problems with build).
+
+* Sun Jun 18 2023 L.A. Kostis <lakostis@altlinux.ru> 1.12.8.0-alt2.1
+- Use lld for linking with llvm libs built with clang.
+
 * Mon Mar 20 2023 Alexander Burmatov <thatman@altlinux.org> 1.12.8.0-alt2
 - Fix build requires.
 
