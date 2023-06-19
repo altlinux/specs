@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.78
-Release: alt4
+Release: alt5
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -16,10 +16,9 @@ Source1: %{name}_install_agreement.txt
 Source2: 10-%name-nm.rules
 Source3: %name.watch
 
-Patch0: %name-apt-alt.patch
-Patch1: %name-desktop-alt.patch
-Patch2: %name-xvt-alt.patch
-Patch3: %name-libgl-drivers-path.patch
+Patch0: %name-desktop-alt.patch
+Patch1: %name-xvt-alt.patch
+Patch2: %name-libgl-drivers-path.patch
 
 BuildRequires(Pre): rpm-build-python3
 
@@ -35,6 +34,7 @@ Requires: libnsl1
 Requires: libnss
 Requires: lsof
 Requires: sysctl-conf-userns
+Requires: xdg-desktop-portal-gtk
 Requires: xz
 
 %add_python3_path %_libexecdir/%name/%{name}_launcher
@@ -49,7 +49,6 @@ savegame and screenshot functionality, and many social features.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %install
 %makeinstall_std
@@ -75,6 +74,9 @@ savegame and screenshot functionality, and many social features.
 %config %_sysconfdir/polkit-1/rules.d/10-%name-nm.rules
 
 %changelog 
+* Mon Jun 19 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt5
+- Add require for select another storage in GNOME/MATE (ALT #46580)
+
 * Mon Jun 12 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt4
 - Prevent prompts Network Manager without admin permissions (ALT #46456)
 
