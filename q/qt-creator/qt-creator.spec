@@ -24,8 +24,8 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 10.0.1
-Release: alt1.1
+Version: 10.0.2
+Release: alt1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -197,6 +197,9 @@ install -Dpm0644 %_cmake__builddir/share/doc/qtcreator/qtcreator.qch %buildroot%
 # Remove Windows cdb debugger support to prevent unmet python2.7(cdbext)
 rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 
+# Add correct pkgname to appdata.xml file
+subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metainfo/*.xml
+
 %files
 
 %files core
@@ -216,6 +219,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Sun Jun 18 2023 Andrey Cherepanov <cas@altlinux.org> 10.0.2-alt1
+- New version.
+
 * Fri Jun 16 2023 L.A. Kostis <lakostis@altlinux.ru> 10.0.1-alt1.1
 - NMU:
   - Rebuild with llvm15.0.
