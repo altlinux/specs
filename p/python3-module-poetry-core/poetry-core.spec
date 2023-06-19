@@ -10,8 +10,8 @@
 %def_without vendored
 
 Name: python3-module-%pypi_name
-Version: 1.5.2
-Release: alt2
+Version: 1.6.1
+Release: alt1
 Summary: Poetry Core
 License: MIT
 Group: Development/Python3
@@ -35,13 +35,15 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps -- vendored
 %endif
 %if_with check
-%add_pyproject_deps_check_filter types- vendoring
+%add_pyproject_deps_check_filter vendoring
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 # required to build C extension, e.g. test_build_wheel_extended
 BuildRequires: gcc
 # required for tests/vcs/test_vcs.py
 BuildRequires: /usr/bin/git
+# pulled indirectly by tox
+BuildRequires: python3-module-virtualenv
 %endif
 
 %if_with vendored
@@ -66,7 +68,7 @@ PEP 517 compatible build frontends to build Poetry managed projects.
 rm -r ./src/%vendor_path/*
 %endif
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_poetry test
 %endif
 
 %build
@@ -84,6 +86,9 @@ rm -r ./src/%vendor_path/*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 19 2023 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1
+- 1.5.2 -> 1.6.1.
+
 * Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 1.5.2-alt2
 - Modernized packaging.
 
