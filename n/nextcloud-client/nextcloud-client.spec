@@ -1,5 +1,5 @@
 Name: nextcloud-client
-Version: 3.8.2
+Version: 3.9.0
 Release: alt1
 
 Group: Networking/File transfer
@@ -30,6 +30,8 @@ BuildRequires: libqt5-webenginewidgets qt5-webengine-devel libgio-devel glib2-de
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: qt5-quickcontrols2-devel
 BuildRequires: qt5-websockets-devel kf5-karchive-devel inkscape
+
+Requires: qt5-graphicaleffects
 
 %description
 The Nextcloud Desktop Client is a tool to synchronize files from Nextcloud Server with your computer.
@@ -88,6 +90,10 @@ desktop-file-install \
 #%_K5srv/*nextcloud*.desktop
 
 %changelog
+* Mon Jun 19 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.9.0-alt1
+- new version
+- fixed showing main window (ALT#42096)
+
 * Thu Jun 08 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.8.2-alt1
 - new version
 
