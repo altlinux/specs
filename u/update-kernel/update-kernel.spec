@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.9
+Version: 1.10
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -56,6 +56,9 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Jun 19 2023 Vitaly Chikunov <vt@altlinux.org> 1.10-alt1
+- Add '-u' to run 'apt-get update' automatically.
+
 * Wed May 31 2023 Vitaly Chikunov <vt@altlinux.org> 1.9-alt1
 - Improve '-r' handling.
 - Update update-kernel(8) man pages (ALT#43934).
