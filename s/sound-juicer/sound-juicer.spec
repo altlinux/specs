@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.38
+%define ver_major 3.40
 %define gst_api_ver 1.0
 %define xdg_name org.gnome.SoundJuicer
 
 Name: sound-juicer
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: Clean and lean CD ripper
 Group: Sound
@@ -80,6 +80,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name/
 
 %changelog
+* Mon Jun 19 2023 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Sun Mar 13 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt3
 - updated to 3.38.0-27-g9f97ca1f (fixed build with meson-0.61)
 
