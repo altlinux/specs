@@ -5,9 +5,9 @@
 
 %def_with check
 
-Name:           %{srcname}
+Name:           python3-module-%modname
 Version:        0.4.5
-Release:        alt3
+Release:        alt4
 Summary:        A python client library for etcd
 Group:          System/Libraries
 License:        MIT
@@ -28,6 +28,11 @@ BuildRequires:  python3-module-OpenSSL
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
+Requires:       python3-module-dns
+Requires:       python3-module-urllib3
+Obsoletes:      python3-module-python-etcd
+Provides:       python3-module-python-etcd
+%{?python_provide:%python_provide python3-etcd}
 
 %description
 Client library for interacting with an etcd service, providing Python
@@ -35,23 +40,8 @@ access to the full etcd REST API.  Includes authentication, accessing
 and manipulating shared content, managing cluster members, and leader
 election.
 
-%package -n python3-module-%{modname}
-Summary:        %summary
-Group:          System/Libraries
-Requires:       python3-module-dns
-Requires:       python3-module-urllib3
-Obsoletes:      python3-module-python-etcd
-Provides:       python3-module-python-etcd
-%{?python_provide:%python_provide python3-etcd}
-
-%description -n python3-module-%{modname}
-Client library for interacting with an etcd service, providing Python
-access to the full etcd REST API.  Includes authentication, accessing
-and manipulating shared content, managing cluster members, and leader
-election.
-
 %prep
-%setup -n %name-%version
+%setup
 %patch -p1
 
 %build
@@ -70,13 +60,16 @@ py.test-3 src/etcd/tests/unit/ -k "not test_acquired"
 # Package Index (pypi) then tests pass.
 #%%{__python3} setup.py test
 
-%files -n python3-module-%{modname}
+%files
 %doc README.rst
 %doc LICENSE.txt
 %{python3_sitelib}/*
 %exclude %python3_sitelib/*/tests
 
 %changelog
+* Fri Jun 16 2023 Ilfat Aminov <aminov@altlinux.org> 0.4.5-alt4
+- Rename src to python3-module-etcd
+
 * Tue Jun 13 2023 Anton Vyatkin <toni@altlinux.org> 0.4.5-alt3
 - Fix FTBFS
 
