@@ -13,8 +13,8 @@
 
 # vim:set ft=spec:
 Name: swig
-Version: 4.0.2
-Release: alt4
+Version: 4.1.1
+Release: alt1
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -25,25 +25,20 @@ Url: https://github.com/swig/swig
 # Source-url: https://github.com/swig/swig/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-# Upstream patches
-Patch10: swig-4.0.2-Fix-overload_simple_cast-test-with-Python-3.10.patch
-
-# Fedora patches
-Patch20: swig-4.0.2-gcc-12-warning-fix-in-test-case.patch
 %def_enable testsuite
 
-%{?_with_boost:BuildPreReq: boost-devel}
-%{?_with_caml:BuildPreReq: ocaml-findlib}
-%{?_with_doc:BuildPreReq: yodl tidy htmldoc}
-%{?_with_java:BuildPreReq: java-devel}
-%{?_with_lua:BuildPreReq: liblua5-devel lua5}
-%{?_with_perl5:BuildPreReq: perl-devel libpcre-devel}
-%{?_with_python:BuildPreReq: python-devel}
-%{?_with_python3:BuildPreReq: rpm-build-python3 python3-devel python-tools-2to3}
-%{?_with_R:BuildPreReq: R-devel}
-%{?_with_ruby:BuildPreReq: libruby-devel ruby ruby-module-etc}
-%{?_with_scheme:BuildPreReq: chicken guile22-devel}
-%{?_with_tcl:BuildPreReq: tcl-devel}
+%{?_with_boost:BuildRequires: boost-devel}
+%{?_with_caml:BuildRequires: ocaml-findlib}
+%{?_with_doc:BuildRequires: yodl tidy htmldoc}
+%{?_with_java:BuildRequires: java-devel}
+%{?_with_lua:BuildRequires: liblua5-devel lua5}
+%{?_with_perl5:BuildRequires: perl-devel libpcre2-devel}
+%{?_with_python:BuildRequires: python-devel}
+%{?_with_python3:BuildRequires: rpm-build-python3 python3-devel python-tools-2to3}
+%{?_with_R:BuildRequires: R-devel}
+%{?_with_ruby:BuildRequires: libruby-devel ruby ruby-module-etc}
+%{?_with_scheme:BuildRequires: chicken guile22-devel}
+%{?_with_tcl:BuildRequires: tcl-devel}
 
 BuildRequires: gcc-c++
 BuildRequires: libXt-devel imake xorg-cf-files
@@ -239,6 +234,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Fri Jun 16 2023 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt1
+- new version (4.1.1) with rpmgs script
+
 * Sun Jun 19 2022 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt4
 - fix build examples with gcc12
 
