@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: unicode
-Version: 2.7
+Version: 2.9
 Release: alt1
 
 Summary: display unicode character properties
@@ -14,7 +14,6 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-
 %description
 unicode is a simple command line utility that displays
 properties for a given unicode character, or searches
@@ -22,6 +21,8 @@ unicode database for a given name.
 
 %prep
 %setup
+
+sed -i 's/2.8/%version/' setup.py
 
 %build
 %python3_build
@@ -35,8 +36,10 @@ unicode database for a given name.
 %_bindir/paracode
 %python3_sitelibdir/%name-%version-*
 
-
 %changelog
+* Mon Jun 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.9-alt1
+- Build new version (Closes: #46493).
+
 * Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.7-alt1
 - Version updated to 2.7
 - porting on python3
