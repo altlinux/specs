@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.78
-Release: alt5
+Release: alt6
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -34,7 +34,6 @@ Requires: libnsl1
 Requires: libnss
 Requires: lsof
 Requires: sysctl-conf-userns
-Requires: xdg-desktop-portal-gtk
 Requires: xz
 
 %add_python3_path %_libexecdir/%name/%{name}_launcher
@@ -74,6 +73,9 @@ savegame and screenshot functionality, and many social features.
 %config %_sysconfdir/polkit-1/rules.d/10-%name-nm.rules
 
 %changelog 
+* Tue Jun 20 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt6
+- Remove require xdg-desktop-portal-gtk
+
 * Mon Jun 19 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt5
 - Add require for select another storage in GNOME/MATE (ALT #46580)
 
