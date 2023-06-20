@@ -2,7 +2,7 @@
 
 Name:    gtk-themes-Graphite
 Version: 20230517
-Release: alt2
+Release: alt2.1
 
 Summary: Graphite - set of themes for XFCE, MATE, Gnome, Cinnamon desktop environment
 License: GPL-3.0
@@ -135,12 +135,6 @@ Group: Graphics
 %description -n wallpapers-Graphite
 Set of wallpapers for Graphite GTK theme
 
-%package -n grub-theme-Graphite
-Summary: Graphite theme for GRUB menu
-Group: Graphics
-%description -n grub-theme-Graphite
-Graphite theme for GRUB menu
-
 %prep
 %setup
 
@@ -150,7 +144,7 @@ mkdir -p %buildroot%_datadir/themes/Graphite
 mkdir -p %buildroot%_wallpapersdir/Graphite
 ./install.sh -t all -d %buildroot%_datadir/themes
 
-for wallpaper in %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE7 %SOURCE8 %SOURCE9 wallpaper/Graphite-nord/wave-Light-nord.png wallpaper/Graphite-nord/wave-Dark-nord.png wallpaper/Graphite/wave-Dark.png wallpaper/Graphite/wave-Light.png; do
+for wallpaper in %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE7 %SOURCE8 %SOURCE9  %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 wallpaper/Graphite-nord/wave-Light-nord.png wallpaper/Graphite-nord/wave-Dark-nord.png wallpaper/Graphite/wave-Dark.png wallpaper/Graphite/wave-Light.png; do
 install -m 0644 $wallpaper %buildroot%_wallpapersdir/Graphite
 done
 
@@ -158,6 +152,9 @@ done
 %_wallpapersdir/Graphite/*.png
 
 %changelog
+* Mon Jun 19 2023 Artyom Bystrov <arbars@altlinux.org> 20230517-alt2.1
+- Minor spec clearing
+
 * Mon Jun 19 2023 Artyom Bystrov <arbars@altlinux.org> 20230517-alt2
 - Add wallpapers with ALT Linux Community logo
 
