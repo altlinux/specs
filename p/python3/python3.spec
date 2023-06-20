@@ -70,7 +70,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %global py_SOVERSION 1.0
 
 # some arches don't have valgrind so we need to disable its support on them
-%ifnarch s390 riscv64 loongarch64 %e2k
+%ifarch %valgrind_arches
 %def_with valgrind
 %else
 %def_without valgrind
@@ -96,7 +96,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3
 Version: %{pybasever}.4
-Release: alt1
+Release: alt2
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -110,6 +110,8 @@ Url: http://www.python.org/
 # %%__libpython3 macro is defined and used for the verify_elf trick
 # since 0.1.9.3.
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.3
+# for %%valgrind_arches macro
+BuildRequires(pre): rpm-macros-valgrind
 BuildPreReq: liblzma-devel
 # For Bluetooth support
 # see https://bugzilla.redhat.com/show_bug.cgi?id=879720
@@ -117,11 +119,7 @@ BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel
 BuildRequires: libffi-devel libncursesw-devel mpdecimal-devel libb2-devel
 BuildRequires: libssl-devel libreadline-devel libsqlite3-devel
 BuildRequires: autoconf-archive
-BuildRequires: zlib-devel libuuid-devel
-# LoongArch glibc has never had the legacy nis/yp thing
-%ifnarch loongarch64
-BuildRequires: libnsl2-devel
-%endif
+BuildRequires: zlib-devel libuuid-devel libnsl2-devel
 %{?_with_bluez:BuildPreReq: libbluez-devel}
 %{?_with_x11:BuildRequires: libX11-devel}
 %{?_with_tk:BuildRequires: tcl-devel tk-devel}
@@ -1090,6 +1088,12 @@ $(pwd)/python -m test.regrtest \
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Tue Jun 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.11.4-alt2
+- Changed spec:
+  - build with libnsl2-devel for all architectures.
+  - utilize the valgrind_arches macro from the rpm-macros-valgrind package
+  instead of using a homegrown list of supported architectures.
+
 * Fri Jun 09 2023 Grigory Ustinov <grenka@altlinux.org> 3.11.4-alt1
 - Updated to upstream version 3.11.4.
 - Fixed build on Elbrus (thx to ilyakurdyukov@).
