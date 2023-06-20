@@ -162,8 +162,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.4.3
-Release:	alt2
+Version:	4.4.4
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -896,6 +896,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Tue Jun 20 2023 Anton Farygin <rider@altlinux.ru> 2:4.4.4-alt1
+- 4.4.3 -> 4.4.4 (Fixes: CVE-2022-3964, CVE-2022-3341, CVE-2022-3109)
+
 * Sat Jan 28 2023 Anton Farygin <rider@altlinux.ru> 2:4.4.3-alt2
 - fixed build on arm/aarch64 and glibc-kernheaders < 6.0 (thx for sbolshakov)
 
