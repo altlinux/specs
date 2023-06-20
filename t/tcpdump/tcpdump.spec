@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: tcpdump
-Version: 4.9.3
-Release: alt2
+Version: 4.99.4
+Release: alt1
 Epoch: 1
 
 Summary: A network traffic monitoring tool
@@ -11,7 +13,7 @@ Url: http://www.tcpdump.org
 # git://git.altlinux.org/gears/t/tcpdump
 Source: %name-%version-%release.tar
 
-Requires: /var/resolv, libpcap0.8 >= 2:1.9.0
+Requires: /var/resolv, libpcap0.8 >= 2:1.10.0
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: sharutils}}
@@ -29,6 +31,13 @@ headers, or just the ones that match particular criteria.
 
 %build
 %add_optflags -fno-strict-aliasing
+%ifarch %ix86
+# Since our baseline for i586 does not support SSE, FP calculations can flap
+# uncontrollably, leading to test failures intermittent between builds. We
+# mitigate this with a cflag. There generally are other options:
+# https://lists.xapian.org/pipermail/xapian-devel/2022-October/003403.html
+%add_optflags -ffloat-store
+%endif
 %autoreconf
 %configure --without-smi --with-crypto \
 	--with-user=tcpdump --with-chroot=/var/resolv
@@ -47,12 +56,15 @@ install -pm755 *.awk %buildroot%_datadir/%name/
 /usr/sbin/useradd -r -g tcpdump -d /dev/null -s /dev/null -N tcpdump >/dev/null 2>&1 ||:
 
 %files
-%_sbindir/*
+%_bindir/*
 %_datadir/%name
 %_mandir/man?/*
-%doc CHANGES CREDITS LICENSE README
+%doc CHANGES CREDITS LICENSE README.md
 
 %changelog
+* Wed Jun 07 2023 Arseny Maslennikov <arseny@altlinux.org> 1:4.99.4-alt1
+- 4.9.3 -> 4.99.4.
+
 * Fri Sep 18 2020 Nikita Ermakov <arei@altlinux.org> 1:4.9.3-alt2
 - Use -N option with useradd instead of compat -n option.
 
