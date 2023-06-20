@@ -88,7 +88,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt2
+Release: alt3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -116,6 +116,7 @@ Patch14: llvm-10-alt-riscv64-config-guess.patch
 Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch18: lld-compact-unwind-encoding.h.patch
 Patch19: llvm-alt-cmake-build-with-install-rpath.patch
+Patch20: clang-16-alt-rocm-device-libs-path.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -589,6 +590,7 @@ This package contains header files for the Polly optimizer.
 %package -n lib%polly_name-doc
 Summary: Documentation for Polly
 Group: Development/C
+BuildArch: noarch
 %requires_filesystem
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
@@ -632,6 +634,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1 -b .llvm-cmake-build-with-install-rpath
+%patch20 -p1 -b .clang-rocm-device-path
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -995,6 +998,7 @@ EOExecutableList
 # in a different package.
 sed -i '
 /APPEND _IMPORT_CHECK_TARGETS \(mlir-\|MLIR\)/ {s|^|#|}
+/APPEND _IMPORT_CHECK_TARGETS \(tblgen-lsp-server\)/ {s|^|#|}
 /APPEND _IMPORT_CHECK_TARGETS \(Polly\)/ {s|^|#|}
 /APPEND _IMPORT_CHECK_TARGETS \(llvm-omp-device-info\|omptarget\)/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/llvm/LLVMExports-*.cmake
@@ -1214,6 +1218,13 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Tue Jun 20 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt3
+- Sync changes from llvm15.0:
+  + clang: extend rocm device libs lookup path.
+  + libpolly-doc: Marked as noarch (by arseny@).
+  + Dropped tblgen-lsp-server from LLVMExports target check. That program is
+    located in a different subproject (by arseny@).
+
 * Sat Jun 10 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt2
 - x86_64: use mold instead of lld.
 - aarch64: compile w/ gcc again (still 5hrs to compile w/ clang).
