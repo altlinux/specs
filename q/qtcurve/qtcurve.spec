@@ -1,10 +1,10 @@
 %def_disable qt4
 %def_enable qt5
-%define git_rev 7d856c17
+%define git_rev 4e56a76a
 
 Name:    qtcurve
-Version: 1.9.0
-Release: alt1.git%git_rev.1
+Version: 1.9.1
+Release: alt1.git%git_rev
 Epoch:   2
 
 Summary: A set of widget styles for GTK+ and Qt widget toolkits
@@ -17,11 +17,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch1: qtcurve-1.8.18-no_env.patch
 Patch2: maint.patch
-Patch3: qtcurve-1.9.0-build_testing.patch
-Patch4: qtcurve-1.9.0-gcc9.patch
-Patch5: qtcurve-1.9.0-libreoffice-crashfix.patch
-Patch6: qtcurve-1.9.0-no-X-buildfix.patch
-Patch7: qtcurve-1.9.0-qt-5.15.patch
 
 BuildRequires(pre): kde-common-devel rpm-macros-qt3 rpm-macros-qt4 cmake
 BuildRequires(pre): rpm-build-ninja
@@ -114,11 +109,6 @@ This is a set of widget styles for KF5
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
 
 %build
 %cmake  -GNinja \
@@ -137,7 +127,9 @@ rm -f %buildroot%_datadir/kxmlgui5/QtCurve/QtCurveui.rc
 mkdir -p %buildroot%_K5data/kstyle/themes/
 mv %buildroot%_datadir/kstyle/themes/qtcurve.themerc %buildroot%_K5data/kstyle/themes/
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 
 %files libs
 %doc AUTHORS Bugs.md README.md TODO.md ChangeLog.md COPYING
@@ -163,6 +155,9 @@ mv %buildroot%_datadir/kstyle/themes/qtcurve.themerc %buildroot%_K5data/kstyle/t
 %endif
 
 %changelog
+* Mon Jun 19 2023 Andrey Cherepanov <cas@altlinux.org> 2:1.9.1-alt1.git4e56a76a
+- New version.
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 2:1.9.0-alt1.git7d856c17.1
 - NMU: spec: adapted to new cmake macros.
 
