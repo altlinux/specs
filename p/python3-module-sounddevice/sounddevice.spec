@@ -1,5 +1,5 @@
 Name: python3-module-sounddevice
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: Python PortAudio bindings
@@ -36,5 +36,8 @@ convenience functions to play and record NumPy_ arrays containing audio signals
 %python3_sitelibdir/sounddevice-%version.dist-info
 
 %changelog
+* Tue Jun 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.6-alt1
+- 0.4.6 released
+
 * Fri Jan 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.5-alt1
 - 0.4.5 released
