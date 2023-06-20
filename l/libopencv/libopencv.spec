@@ -41,7 +41,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.7.0
-Release: alt1
+Release: alt1.1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -331,6 +331,9 @@ rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protob
 %_datadir/%Name/quality
 
 %changelog
+* Tue Jun 20 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:4.7.0-alt1.1
+- E2K patch update
+
 * Fri Jun 16 2023 Roman Alifanov <ximper@altlinux.org> 1:4.7.0-alt1
 - NMU: new version 4.7.0
 - NMU: remove features2d
