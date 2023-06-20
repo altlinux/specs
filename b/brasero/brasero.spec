@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.12
 %define brasero_api_ver 3
@@ -19,7 +19,7 @@
 
 Name: brasero
 Version: %ver_major.3
-Release: alt2
+Release: alt3
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -41,7 +41,7 @@ Requires: lib%name = %version-%release
 %define isofs_ver 1.4.9
 
 Requires: dconf
-%{?_enable_search:Requires: tracker-miners3}
+%{?_enable_search:Requires: tracker3 tracker-miners3}
 Requires: dvd+rw-tools
 Requires: cdrkit
 Requires: mkisofs
@@ -243,6 +243,10 @@ GObject introspection devel data for the Brasero
 %{?_enable_nautilus:%exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la}
 
 %changelog
+* Tue Jun 20 2023 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt3
+- 3.12.3-23-gcf5b28ab (updated translations)
+- explicitly required tracker3 (ALT #46470)
+
 * Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt2
 - disabled Nautilus support
 
