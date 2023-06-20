@@ -1,4 +1,4 @@
-%define ver_major 0.101
+%define ver_major 0.102
 %define libname libmsi
 %define api_ver 1.0
 
@@ -18,7 +18,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gcab_ver 0.2
 %define vala_ver 0.16
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: libgcab-devel >= %gcab_ver
 BuildRequires: libgio-devel libgsf-devel
 BuildRequires: gobject-introspection-devel
@@ -83,8 +84,7 @@ This package provides GObject introspection devel data for the %libname.
 %find_lang %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/msibuild
@@ -115,6 +115,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/Libmsi-%api_ver.gir
 
 %changelog
+* Tue Jun 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.102-alt1
+- 0.102
+
 * Tue Feb 02 2021 Yuri N. Sedunov <aris@altlinux.org> 0.101-alt1
 - 0.101 (ported to Meson build system)
 
