@@ -24,7 +24,7 @@
 
 Name: openblas
 Version: 0.3.23
-Release: alt1
+Release: alt1.1
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -33,9 +33,6 @@ Url: https://github.com/xianyi/OpenBLAS
 Vcs: https://github.com/xianyi/OpenBLAS
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
-%ifarch %e2k
-Patch2000: %name-e2k.patch
-%endif
 
 BuildRequires: gcc-fortran
 %ifarch ppc64le
@@ -156,6 +153,9 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 %exclude %_libdir/*.a
 
 %changelog
+* Tue Jun 20 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.3.23-alt1.1
+- e2k patch disabled (got to upstream)
+
 * Wed Jun 14 2023 Stanislav Levin <slev@altlinux.org> 0.3.23-alt1
 - 0.3.19 -> 0.3.23.
 
