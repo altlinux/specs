@@ -1,7 +1,7 @@
 Name: netcat
 %define datestamp 20100725
 Version: 4.0.%datestamp
-Release: alt2
+Release: alt3
 
 Summary: Reads and writes data across network connections using TCP or UDP
 License: BSD
@@ -15,7 +15,6 @@ Packager: Dmitry V. Levin <ldv@altlinux.org>
 #  Note: replace double percents in date arguments above by single percent sign.
 Source: %name-%datestamp.tar
 Patch1: netcat-4.0.20100725-owl-alt-linux.patch
-Patch2: netcat-4.0.20100725-owl-ipv4-default.patch
 Patch3: netcat-4.0.20100725-owl-alt-fixes.patch
 Patch4: netcat-4.0.20100725-alt-usage.patch
 Patch5: netcat-4.0.20100725-alt-bsdsockopts.patch
@@ -49,7 +48,6 @@ OpenBSD utility with improvements from Openwall project.
 %setup -q -c
 cd src
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -79,6 +77,9 @@ ln -s netcat.1 %buildroot%_man1dir/nc.1
 %_mandir/man?/*
 
 %changelog
+* Mon Apr 24 2023 Arseny Maslennikov <arseny@altlinux.org> 4.0.20100725-alt3
+- Dropped owl-ipv4-default.patch, which makes little sense today.
+
 * Fri Jul 16 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.20100725-alt2
 - Fixed lfs=strict build on 32-bit systems.
 - Enabled debuginfo.
