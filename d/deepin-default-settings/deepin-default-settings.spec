@@ -1,7 +1,7 @@
 %define repo default-settings
 
 Name: deepin-default-settings
-Version: 2022.10.19
+Version: 2023.05.12
 Release: alt1
 Summary: deepin-default-settings
 License: GPL-3.0
@@ -66,6 +66,9 @@ rm -f %buildroot%_desktopdir/mimeapps.list
 %_datadir/music/bensound-sunny.mp3
 
 %changelog
+* Tue Jun 20 2023 Leontiy Volodin <lvol@altlinux.org> 2023.05.12-alt1
+- New version 2023.05.12.
+
 * Wed Mar 22 2023 Leontiy Volodin <lvol@altlinux.org> 2022.10.19-alt1
 - New version (2022.10.19).
 
