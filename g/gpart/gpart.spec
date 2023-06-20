@@ -1,16 +1,18 @@
+%def_enable snapshot
 %define _sbindir /sbin
 
 Name: gpart
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: Hard disk partition table reconstruction
 Group: System/Configuration/Hardware
-License: GPL
+License: GPL-2.0
 Url: https://github.com/baruch/%name/
-Packager: Michael Shigorin <mike@altlinux.org>
 
-Source: %url/archive/%version.tar.gz#/%name-%version.tar.gz
+Vcs: https://github.com/baruch/gpart.git
+#Source: %url/archive/%version.tar.gz#/%name-%version.tar.gz
+Source: %url/archive/%version.tar.gz#/%name-%version.tar
 Patch: %name-0.3-alt-lfs.patch
 
 Requires: common-licenses
@@ -49,6 +51,7 @@ BeOS FS, SGI XFS.
 %patch
 
 %build
+sed -i 's|0.2.3-dev|%version|' configure.ac
 %autoreconf
 %configure
 %make_build
@@ -64,6 +67,11 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc --no-dereference COPYING
 
 %changelog
+* Thu Jun 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3-alt2
+- updated to 0.3-17-gb507b6d
+- fixed License tag, added Vcs tag
+- fixed version output
+
 * Tue Aug 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3-alt1
 - 0.3 (new url)
 
