@@ -1,5 +1,5 @@
 Name: python3-module-subsonic-connector
-Version: 0.1.9
+Version: 0.1.16
 Release: alt1
 
 Summary: SubSonic Connector
@@ -31,6 +31,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/subsonic_connector-%version.dist-info
 
 %changelog
+* Tue Jun 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1.16-alt1
+- 0.1.16 released
+
 * Mon Apr 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1.9-alt1
 - 0.1.9 released
 
