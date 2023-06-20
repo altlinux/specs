@@ -1,13 +1,11 @@
 Name: cargo-expand
-Version:  1.0.40
+Version:  1.0.53
 Release:  alt1
 
 Summary:  Subcommand to show result of macro expansion
 License:  Apache-2.0 and MIT
 Group:    Development/Tools
 Url:      https://github.com/dtolnay/cargo-expand
-
-Packager: Alexander Burmatov <thatman@altlinux.org>
 
 Source:   %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -37,5 +35,8 @@ Allows you to inspect the code that macros expand to.
 %doc LICENSE-APACHE LICENSE-MIT README.md
 
 %changelog
+* Mon Jun 19 2023 Alexander Burmatov <thatman@altlinux.org> 1.0.53-alt1
+- Update to version 1.0.53.
+
 * Tue Mar 07 2023 Alexander Burmatov <thatman@altlinux.org> 1.0.40-alt1
-- Initial build for Sisyphus
+- Initial build for Sisyphus.
