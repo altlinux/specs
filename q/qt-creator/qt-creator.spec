@@ -3,7 +3,7 @@
 # for llvm built with clang we should use lld due thinLTO bitcode
 # in static libs
 # otherwise use bfd/gold linker
-%ifnarch x86_64
+%ifnarch x86_64 ppc64le
 %def_without lld
 %global optflags_lto %optflags_lto -ffat-lto-objects
 %else
@@ -25,7 +25,7 @@
 
 Name:    qt-creator
 Version: 10.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -182,7 +182,7 @@ export LLVM_INSTALL_DIR="%_prefix"
     -Djournald=ON \
     -DBUILD_DEVELOPER_DOCS=OFF \
     -DCMAKE_INSTALL_LIBDIR=%_lib \
-    -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS %{?_with_lld:-fuse-ld=lld -Wl,--build-id=sha1} -Wl,-rpath,%_libdir/qtcreator -Wl,-rpath,%_libdir/qtcreator/plugins" \
+    -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS -Wl,-rpath,%_libdir/qtcreator -Wl,-rpath,%_libdir/qtcreator/plugins" \
     -DCMAKE_SHARED_LINKER_FLAGS="$LDFLAGS %{?_with_lld:-fuse-ld=lld -Wl,--build-id=sha1} -Wl,-rpath,%_libdir/qtcreator -Wl,-rpath,%_libdir/qtcreator/plugins"
 
 %ninja_build -C "%_cmake__builddir"
@@ -219,6 +219,11 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_datadir/qtcreator/*
 
 %changelog
+* Tue Jun 20 2023 L.A. Kostis <lakostis@altlinux.ru> 10.0.2-alt1.1
+- NMU:
+  - still use gold as linker for exe (cause problems on ppc64le).
+  - ppc64le: use lld as linker.
+
 * Sun Jun 18 2023 Andrey Cherepanov <cas@altlinux.org> 10.0.2-alt1
 - New version.
 
