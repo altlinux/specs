@@ -5,7 +5,7 @@
 
 Name: liboqs
 Version: 0.8.0
-Release: alt1
+Release: alt2
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT and BSD-3-Clause and Apache-2.0 and ALT-Public-Domain and CC0-1.0
 Group: System/Libraries
@@ -33,10 +33,9 @@ applications quantum-safe cryptography to facilitate deployment and
 testing in real world contexts.
 
 Supported key encapsulation mechanisms (KEMs): BIKE, Classic McEliece,
-  FrodoKEM, HQC, CRYSTALS-Kyber, NTRU, NTRU-Prime, SABER.
+  FrodoKEM, HQC, CRYSTALS-Kyber, NTRU-Prime.
 
-Supported signature schemes: CRYSTALS-Dilithium, Falcon, Picnic, Rainbow,
-  SPHINCS+.
+Supported signature schemes: CRYSTALS-Dilithium, Falcon, SPHINCS+.
 
 Warning: WE DO NOT CURRENTLY RECOMMEND RELYING ON THIS LIBRARY IN A
 PRODUCTION ENVIRONMENT OR TO PROTECT ANY SENSITIVE DATA. This library is
@@ -123,6 +122,9 @@ timeout 222 %ninja_build -C build run_tests
 %_bindir/oqs-*
 
 %changelog
+* Mon Jun 12 2023 Vitaly Chikunov <vt@altlinux.org> 0.8.0-alt2
+- spec: Update %%description to reflect remaining algorithms list.
+
 * Sun Jun 11 2023 Vitaly Chikunov <vt@altlinux.org> 0.8.0-alt1
 - Update to 0.8.0 (2023-06-07).
 
