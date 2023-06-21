@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 23.5.1.753
+Version: 23.5.1.793
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -204,6 +204,13 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+* Wed Jun 21 2023 yabro <yabro@altlinux.org> 23.5.1.793-alt1
+- Browser updated to 23.5.1.793
+  + Critical CVE-2023-3214: Use after free in Autofill payments
+  + High CVE-2023-3215: Use after free in WebRTC
+  + High CVE-2023-3216: Type Confusion in V8
+  + High CVE-2023-3217: Use after free in WebXR
+
 * Wed Jun 7 2023 yabro <yabro@altlinux.org> 23.5.1.753-alt1
 - Browser updated to 23.5.1.753
 
