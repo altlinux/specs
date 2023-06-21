@@ -13,7 +13,7 @@
 
 Name: spdk
 Version: 23.01.1
-Release: alt1
+Release: alt2
 
 Summary: Storage Performance Development Kit
 
@@ -58,7 +58,7 @@ BuildRequires: llvm%llvm_ver.0-devel
 BuildRequires: gcc%gcc_ver-c++
 %endif
 BuildRequires: libstdc++%gcc_ver-devel
-BuildRequires: glibc-devel rpm-build-python3 libuuid-devel libssl-devel libaio-devel libncurses-devel libisal-devel
+BuildRequires: glibc-devel rpm-build-python3 libuuid-devel libssl-devel libaio-devel libncurses-devel libisal-devel libdbus-devel
 BuildRequires: rdma-core-devel libbpf-devel libelf-devel zlib-devel libpcap-devel libjansson-devel
 BuildRequires: libzstd-devel
 # BuildPreReq: libpmem-devel rdma-core-devel libiscsi-devel liburing-devel librbd-devel libpmem-devel
@@ -270,6 +270,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Jun 21 2023 Leontiy Volodin <lvol@altlinux.org> 23.01.1-alt2
+- Fixed FTBFS.
+
 * Tue May 02 2023 Leontiy Volodin <lvol@altlinux.org> 23.01.1-alt1
 - New version 23.01.1.
 
