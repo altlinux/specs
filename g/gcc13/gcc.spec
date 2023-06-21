@@ -1,8 +1,8 @@
-%define gcc_branch 12
+%define gcc_branch 13
 
 Name: gcc%gcc_branch
-Version: 12.2.1
-Release: alt4
+Version: 13.1.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +17,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20230424
+%define snapshot 20230613
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -49,7 +49,7 @@ Url: https://gcc.gnu.org/
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
 %define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le mipsel riscv64
-%define libhwasan_arches	aarch64
+%define libhwasan_arches	x86_64 aarch64
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le
 %define liblsan_arches		x86_64 aarch64 ppc64le
@@ -64,6 +64,11 @@ Url: https://gcc.gnu.org/
 %ifarch %go_arches
 %def_with go
 %endif
+# gccrs can't compile the standard libraries yet and requires annoying
+# -frust-incomplete-and-experimental-compiler-do-not-use option to compile
+# anything.
+# See https://gcc.gnu.org/git/?p=gcc.git;a=commit;f=configure.ac;h=54a1630b4abadb8f4b207ebf4baf5c8a6b5adb9a
+%def_disable rust
 %ifarch %libasan_arches
 %def_with libsanitizer
 %endif
@@ -104,7 +109,7 @@ Url: https://gcc.gnu.org/
 # this gcc is expected to be installable at stage 2.
 # NB: compat and precompat are mutually exclusive.
 %def_disable precompat
-%def_enable compat
+%def_disable compat
 
 # For some architectures we do not want multilib support.
 %ifarch riscv64
@@ -591,18 +596,18 @@ in order to explicitly use the GNU C++ compiler version %version.
 ####################################################################
 # D Runtime
 
-%package -n libgdruntime3
+%package -n libgdruntime4
 Summary: D runtime
 Group: System/Libraries
 
-%description -n libgdruntime3
+%description -n libgdruntime4
 This package contains DRuntime shared library which is the
 low-level runtime library backing the D programming language.
 
 %package -n libgdruntime%gcc_branch-devel
 Summary: Development files for DRuntime library
 Group: Development/Other
-Requires: libgdruntime3 = %EVR
+Requires: libgdruntime4 = %EVR
 
 %description -n libgdruntime%gcc_branch-devel
 This package contains development files for DRuntime library.
@@ -610,24 +615,24 @@ This package contains development files for DRuntime library.
 %package -n libgdruntime%gcc_branch-devel-static
 Summary: Static DRuntime library
 Group: Development/Other
-Requires: libgdruntime3 = %EVR
+Requires: libgdruntime4 = %EVR
 Requires: libgdruntime%gcc_branch-devel = %EVR
 
 %description -n libgdruntime%gcc_branch-devel-static
 This package contains static DRuntime library.
 
-%package -n libgphobos3
+%package -n libgphobos4
 Summary: D runtime
 Group: System/Libraries
 
-%description -n libgphobos3
+%description -n libgphobos4
 This packages contains the standard library for the D Programming
 Language which is needed to run D dynamically linked programs.
 
 %package -n libgphobos%gcc_branch-devel
 Summary: Development files for DRuntime library
 Group: Development/Other
-Requires: libgphobos3 = %EVR
+Requires: libgphobos4 = %EVR
 
 %description -n libgphobos%gcc_branch-devel
 This package contains development files for DRuntime library.
@@ -805,8 +810,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of libquadmath_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc11-fortran-doc gcc10-fortran-doc gcc9-fortran-doc gcc8-fortran-doc gcc7-fortran-doc
-Obsoletes: gcc11-fortran-doc gcc10-fortran-doc gcc9-fortran-doc gcc8-fortran-doc gcc7-fortran-doc
+Conflicts: gcc12-fortran-doc gcc11-fortran-doc gcc10-fortran-doc gcc9-fortran-doc gcc8-fortran-doc gcc7-fortran-doc
+Obsoletes: gcc12-fortran-doc gcc11-fortran-doc gcc10-fortran-doc gcc9-fortran-doc gcc8-fortran-doc gcc7-fortran-doc
 
 %description fortran-doc
 This package contains documentation for the GNU Fortran Compiler
@@ -855,7 +860,7 @@ package includes the static libraries needed for Ada 95 development.
 %package gnat
 Summary: The GNU Ada Compiler
 Group: Development/Other
-Obsoletes: gcc11-gnat gcc10-gnat gcc9-gnat gcc8-gnat gcc7-gnat gcc6-gnat gcc5-gnat gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
+Obsoletes: gcc12-gnat gcc11-gnat gcc10-gnat gcc9-gnat gcc8-gnat gcc7-gnat gcc6-gnat gcc5-gnat gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
 Requires(pre): gcc-gnat-common
 Requires: %name = %EVR
 Requires: libgnat%gcc_branch-devel = %EVR
@@ -878,8 +883,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of gnat_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc11-gnat-doc gcc10-gnat-doc gcc9-gnat-doc gcc8-gnat-doc gcc7-gnat-doc
-Obsoletes: gcc11-gnat-doc gcc10-gnat-doc gcc9-gnat-doc gcc8-gnat-doc gcc7-gnat-doc
+Conflicts: gcc12-gnat-doc gcc11-gnat-doc gcc10-gnat-doc gcc9-gnat-doc gcc8-gnat-doc gcc7-gnat-doc
+Obsoletes: gcc12-gnat-doc gcc11-gnat-doc gcc10-gnat-doc gcc9-gnat-doc gcc8-gnat-doc gcc7-gnat-doc
 
 %description gnat-doc
 This package contains documentation for the GNU Ada Compiler
@@ -888,12 +893,12 @@ version %version.
 ####################################################################
 # Go Libraries
 
-%package -n libgo21
+%package -n libgo22
 Summary: Go runtime libraries
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libgo21
+%description -n libgo22
 This package contains the shared libraries required to run programs
 compiled with the GNU Go compiler if they are compiled to use
 shared libraries.
@@ -902,7 +907,7 @@ shared libraries.
 Summary: Header files and libraries for Go development
 Group: Development/Other
 Requires(pre): gcc-common >= 1.4.7
-Requires: libgo21 %REQ %EVR
+Requires: libgo22 %REQ %EVR
 
 %description -n libgo%gcc_branch-devel
 This package includes the include files and libraries needed for
@@ -944,12 +949,29 @@ Group: Development/Other
 # This is not a noarch subpackage because of go_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc11-go-doc gcc10-go-doc gcc9-go-doc gcc8-go-doc gcc7-go-doc
-Obsoletes: gcc11-go-doc gcc10-go-doc gcc9-go-doc gcc8-go-doc gcc7-go-doc
+Conflicts: gcc12-go-doc gcc11-go-doc gcc10-go-doc gcc9-go-doc gcc8-go-doc gcc7-go-doc
+Obsoletes: gcc12-go-doc gcc11-go-doc gcc10-go-doc gcc9-go-doc gcc8-go-doc gcc7-go-doc
 
 %description go-doc
 This package contains documentation for the GNU compiler version %version
 for the Go programming language.
+
+####################################################################
+# The GNU compiler for the Go programming language
+%package rust
+Summary: The GNU compiler for the Rust programming language
+Group: Development/Other
+Requires(pre): gcc-rust-common
+Requires: %name = %EVR
+
+%description rust
+This package provides support for compiling Rust
+programs with the GNU Compiler Collection.
+
+If you have multiple versions of the GNU Compiler Collection
+installed on your system, you may want to execute
+gccrs%psuffix in order to explicitly use the GNU Rust compiler version
+%version.
 
 ####################################################################
 # GCC sources
@@ -1000,7 +1022,8 @@ Conflicts: gcc8-doc
 Conflicts: gcc9-doc
 Conflicts: gcc10-doc
 Conflicts: gcc11-doc
-Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc gcc4.9-doc gcc5-doc gcc6-doc gcc7-doc gcc8-doc gcc9-doc gcc10-doc gcc11-doc
+Conflicts: gcc12-doc
+Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc gcc4.9-doc gcc5-doc gcc6-doc gcc7-doc gcc8-doc gcc9-doc gcc10-doc gcc11-doc gcc12-doc
 
 %description doc
 This package contains documentation for the GNU Compiler Collection
@@ -1063,6 +1086,8 @@ sed -i "s|\\(^INCLUDE_PATH[[:space:]]\\+=\\)[[:space:]]*$|\\1 $PWD/%buildtarget/
 %build
 libtoolize --copy --install --force
 install -pm644 %_datadir/libtool/aclocal/*.m4 .
+
+%autoreconf
 
 # Regenerate configure scripts.
 for f in */aclocal.m4; do
@@ -1205,7 +1230,7 @@ CONFIGURE_OPTS="\
 	--with-build-config=bootstrap-lto \
 	--enable-link-serialization=1 \
 %endif
-	--enable-languages="c,c++%{?_with_fortran:,fortran}%{?_with_objc:,objc,obj-c++}%{?_with_ada:,ada}%{?_with_go:,go}%{?_enable_d:,d},lto" \
+	--enable-languages="c,c++%{?_with_fortran:,fortran}%{?_with_objc:,objc,obj-c++}%{?_with_ada:,ada}%{?_with_go:,go}%{?_enable_d:,d}%{?_enable_rust:,rust},lto" \
 	--enable-plugin \
 	%{?_with_objc:%{?_enable_objc_gc:--enable-objc-gc}} \
 	#
@@ -1360,6 +1385,8 @@ pushd %buildroot%_bindir
 	  %{?_with_fortran:gfortran} \
 	  %{?_with_ada:gnat %ada_binaries} \
 	  %{?_with_go:gccgo} \
+	  %{?_enable_d:gdc} \
+	  %{?_enable_rust:gccrs} \
 	  ; do
 		[ -f "%gcc_target_platform-$n%psuffix" ] ||
 			mv -v "$n%psuffix" "%gcc_target_platform-$n%psuffix"
@@ -1411,10 +1438,6 @@ mv %buildroot%_libdir/libgfortran.spec %buildroot%gcc_target_libdir/
 %if_with libsanitizer
 mv %buildroot%_libdir/libsanitizer.spec %buildroot%gcc_target_libdir/
 %endif
-
-# Package fixed *limits.h
-mv %buildroot%gcc_target_libdir/include{-fixed,}/limits.h
-mv %buildroot%gcc_target_libdir/include{-fixed,}/syslimits.h
 
 # Remove precompiled headers.
 rm -rf %buildroot%_includedir/c++/*/*/*/*.gch
@@ -1484,6 +1507,8 @@ for n in \
     %{?_with_ada:gcc-gnat libgnat libgnat-devel libgnat-devel-static} \
     %{?_with_objc:gcc-objc libobjc-devel libobjc-devel-static gcc-objc++} \
     %{?_with_go:gcc-go libgo-devel libgo-devel-static} \
+    %{?_enable_d:gcc-gdc} \
+    %{?_enable_rust:gcc-rust} \
     %{?_with_jit:libgccjit-devel} \
     gcc-gdb-plugin \
     ; do
@@ -1639,6 +1664,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %ifarch %libhwasan_arches
 %gcc_target_libdir/include/sanitizer/hwasan_interface.h
 %gcc_target_libdir/libhwasan.so
+%gcc_target_libdir/libhwasan_preinit.o
 %endif
 %ifarch %libitm_arches
 %gcc_target_libdir/libitm.so
@@ -1871,6 +1897,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %config %_sysconfdir/buildreqs/packages/substitute.d/libstdc++%gcc_branch-devel-static
 %dir %gcc_target_libdir/
 %gcc_target_libdir/libstdc++.a
+%gcc_target_libdir/libstdc++exp.a
 %gcc_target_libdir/libstdc++fs.a
 
 %files c++
@@ -1888,8 +1915,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif
 
 %if_enabled d
-%files -n libgphobos3
-%_libdir/libgphobos.so.3*
+%files -n libgphobos4
+%_libdir/libgphobos.so.4*
 
 %files -n libgphobos%gcc_branch-devel
 %gcc_target_libdir/include/d
@@ -1899,8 +1926,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n libgphobos%gcc_branch-devel-static
 %gcc_target_libdir/libgphobos.a
 
-%files -n libgdruntime3
-%_libdir/libgdruntime.so.3*
+%files -n libgdruntime4
+%_libdir/libgdruntime.so.4*
 
 %files -n libgdruntime%gcc_branch-devel
 %gcc_target_libdir/libgdruntime.so
@@ -1909,6 +1936,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/libgdruntime.a
 
 %files gdc
+%config %_sysconfdir/buildreqs/packages/substitute.d/%name-gdc
 %_bindir/gdc%psuffix
 %_bindir/%gcc_target_platform-gdc%psuffix
 %_man1dir/gdc%psuffix.*
@@ -2037,8 +2065,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files go-doc
 %_infodir/gccgo.info*
 
-%files -n libgo21
-%_libdir/libgo.so.21*
+%files -n libgo22
+%_libdir/libgo.so.22*
 
 %files -n libgo%gcc_branch-devel
 %dir %gcc_doc_dir/
@@ -2054,6 +2082,14 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgo%gcc_branch-devel-static
 %gcc_target_libdir/libgo.a
 %endif #with_go
+
+%if_enabled rust
+%files rust
+%config %_sysconfdir/buildreqs/packages/substitute.d/%name-rust
+%_bindir/gccrs%psuffix
+%_bindir/%gcc_target_platform-gccrs%psuffix
+%gcc_target_libdir/rust1
+%endif #with_rust
 
 %if_with jit
 %files -n libgccjit0
@@ -2100,11 +2136,13 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
-* Tue Jun 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 12.2.1-alt4
-- Rebuilt in gcc13 compatibility mode.
-
-* Tue Jun 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 12.2.1-alt3
-- Rebuilt in precompat mode to prepare for gcc13 build.
+* Tue Jun 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.1.1-alt1
+- Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-13-branch
+  commit 75b6adf0fdb4d09b64cddfdce59a030f69071fc5;
+  + releases/gcc-13 (snapshot 20230613)
+  commit r13-7440-gb69596f7cc52481fe25b893a5dd45f9a8d6e6aef.
+- Synced with Fedora gcc 13.1.1-3 and Debian gcc-13 ?.
 
 * Tue Apr 25 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 12.2.1-alt2
 - Updated to git://gcc.gnu.org/git/gcc.git:

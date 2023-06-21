@@ -1,13 +1,13 @@
 %set_compress_method none
 
-%define gcc_branch 12
+%define gcc_branch 13
 %define psuffix -%gcc_branch
 
 %define d_arches		%ix86 x86_64 %arm aarch64 %mips s390x riscv64
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
 %define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le
-%define libhwasan_arches	aarch64
+%define libhwasan_arches	x86_64 aarch64
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le
 %define liblsan_arches		x86_64 aarch64 ppc64le
@@ -347,6 +347,9 @@ ln_bin \
 %endif
 
 %changelog
+* Tue Jun 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13-alt1
+- Changed the default compiler to gcc13.
+
 * Tue May 10 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 12-alt1
 - Changed the default compiler to gcc12.
 
