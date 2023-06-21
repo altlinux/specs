@@ -3,10 +3,10 @@
 %define oname docutils
 %def_enable check
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.18.1
-Release: alt2
+Version: 0.20.1
+Release: alt1
 Name: python3-module-%oname
-License: public domain, Python, BSD, GPL (see COPYING.txt)
+License: PDDL and Python and BSD and GPLv3
 Group: Development/Python3
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ python3 test/alltests.py
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jun 21 2023 Fr. Br. George <george@altlinux.org> 0.20.1-alt1
+- 0.20.1
+
 * Fri Apr 15 2022 Anton Farygin <rider@altlinux.ru> 0.18.1-alt2
 - added conflict with python-module-docutils (Closes: #42461)
 
