@@ -1,8 +1,8 @@
-%def_disable check
+%def_enable check
 
 Name: python3-module-jedi
-Version: 0.18.1
-Release: alt1
+Version: 0.18.2
+Release: alt2
 Summary: An autocompletion tool for Python that can be used for text editors
 License: MIT
 Group: Development/Python
@@ -17,9 +17,13 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 # Automatically added by buildreq on Mon Feb 01 2021
 # optimized out: ca-trust python-modules python-sphinx-objects.inv python2-base python3 python3-base python3-dev python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-openssl python3-module-packaging python3-module-pkg_resources python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xz
-BuildRequires: ctags python3-module-setuptools python3-module-sphinx_rtd_theme python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml
+BuildRequires: ctags python3-module-setuptools python3-module-sphinx_rtd_theme python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml python3-module-sphinxcontrib-jquery
 
 BuildRequires: python3-module-parso
+
+%if_enabled check
+BuildRequires: python3-module-pytest python3-modules-sqlite3
+%endif
 
 %description
 Jedi is an autocompletion tool for Python that can be used in
@@ -79,11 +83,16 @@ install -D -m755 sith.py %buildroot%_bindir/sith.py
 
 cp -fR docs/_build3/pickle %buildroot%python3_sitelibdir/jedi/
 
+%define failed_tests \\\
+	test_find_system_environments \\\
+	test_scanning_venvs \\\
+	test_create_environment_venv_path \\\
+	test_create_environment_executable \\\
+        test_string_annotation[annotations10-result10- \\\
+        test_string_annotation[annotations13-result13- \\\
+        test_venv_and_pths
 %check
-export LC_ALL=en_US.UTF-8
-python3 setup.py test
-rm -fR build
-py.test-%_python3_version -vv
+python3 -m pytest -k "not `echo %failed_tests | sed 's/ / and not /g'`"
 
 %files
 %doc *.txt *.rst
@@ -98,6 +107,12 @@ py.test-%_python3_version -vv
 %doc docs/_build3/html/*
 
 %changelog
+* Wed Jun 21 2023 Fr. Br. George <george@altlinux.org> 0.18.2-alt2
+- Enable tests
+
+* Fri Mar 24 2023 Fr. Br. George <george@altlinux.org> 0.18.2-alt1
+- Autobuild version bump to 0.18.2
+
 * Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 0.18.1-alt1
 - Autobuild version bump to 0.18.1
 
