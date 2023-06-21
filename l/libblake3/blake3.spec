@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libblake3
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 Summary: The official C implementations of the BLAKE3 cryptographic hash function
 License: Apache-2.0 or CC0-1.0
@@ -15,7 +15,9 @@ Vcs: https://github.com/BLAKE3-team/BLAKE3
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: banner
+BuildRequires: cmake
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3 /proc}}
 
 %description
@@ -40,7 +42,7 @@ Requires: %name = %EVR
 %summary
 
 %package checkinstall
-Summary: Checkinstall for %name-devel
+Summary: CI for %name-devel
 Group: Development/Other
 BuildArch: noarch
 Requires(pre): %name-devel = %EVR
@@ -53,15 +55,17 @@ Requires(pre): gcc
 %setup
 sed -i 's/"blake3.h"/<blake3.h>/' c/example.c
 ln -s Makefile.altlinux c/GNUmakefile
+# aarch64 does not support `-mfpu=neon` flag, armh should not have it.
+sed -i '/blake3_neon.c.*BLAKE3_CFLAGS_NEON/d' c/CMakeLists.txt
 
 %build
-%define _optlevel 3
-%add_optflags -Wextra -Wa,--noexecstack
-CFLAGS="%optflags" \
-%make_build -C c
+cd c
+%cmake -DBUILD_SHARED_LIBS=ON
+%cmake_build
 
 %install
-%makeinstall_std -C c
+cd c
+%cmake_install
 
 %check
 cd c
@@ -74,9 +78,9 @@ set -o pipefail
 make check 2>&1 | tail
 
 %pre checkinstall
-set -ex
+set -exo pipefail
 cd /tmp
-gcc -o example %_defaultdocdir/%name-devel-%version/example.c -lblake3
+gcc `pkg-config --cflags libblake3` -o example %_defaultdocdir/%name-devel-%version/example.c `pkg-config --libs libblake3`
 ./example < /dev/null | grep af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262
 rm example
 
@@ -88,10 +92,16 @@ rm example
 %doc c/README.md c/example.c CONTRIBUTING.md blake3.pdf
 %_includedir/blake3.h
 %_libdir/libblake3.so
+%_libdir/cmake/blake3
+%_pkgconfigdir/%name.pc
 
 %files checkinstall
 
 %changelog
+* Sun Jun 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.4.0-alt1
+- Update to 1.4.0 (2023-06-08).
+- spec: Switch to CMake when building.
+
 * Mon Feb 14 2022 Vitaly Chikunov <vt@altlinux.org> 1.3.1-alt1
 - Updated to 1.3.1 (2022-02-14).
 
