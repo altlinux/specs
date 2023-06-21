@@ -8,7 +8,7 @@
 
 Name: xdg-desktop-portal
 Version: 1.16.0
-Release: alt1
+Release: alt1.1
 
 Summary: Portal frontend service to Flatpak
 Group: Graphical desktop/GNOME
@@ -30,7 +30,7 @@ Source: %name-%version.tar
 %define fuse3_ver 3.10.0
 
 Requires: dbus
-Requires: flatpak >= 1.6.0
+#Requires: flatpak >= 1.6.0
 Requires: /usr/bin/fusermount
 Requires: pipewire
 Requires: geoclue2 >= %geoclue_ver
@@ -125,6 +125,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Wed Jun 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1.1
+- removed flatpak dependency (https://bugzilla.altlinux.org/46580)
+
 * Tue Dec 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0 (ported to Meson build system)
 - new -tests subpackage
