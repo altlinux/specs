@@ -3,17 +3,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.6.3
+Version: 0.7.0
 Release: alt1
 
 Summary: Utility that helps with local TCP ports managment
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/port-for/
-BuildArch: noarch
+URL: https://pypi.org/project/port-for
+VCS: https://github.com/kmike/port-for
 
-# https://github.com/kmike/port-for.git
 Source: %name-%version.tar
 Patch1: %oname-0.6.2-alt-build.patch
 
@@ -25,6 +24,8 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-cov
 %endif
+
+BuildArch: noarch
 
 %description
 port-for is a command-line utility and a python library that helps with
@@ -52,6 +53,9 @@ It can find an unused TCP localhost port and remember the association.
 %python3_sitelibdir/%{pyproject_distinfo port_for}
 
 %changelog
+* Wed Jun 21 2023 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1
+- Automatically updated to 0.7.0.
+
 * Mon Feb 13 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt1
 - Automatically updated to 0.6.3.
 
