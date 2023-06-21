@@ -2,7 +2,7 @@
 %add_findprov_lib_path %_libdir/torcs/lib
 
 Name: speed-dreams
-Version: 2.2.3
+Version: 2.3.0
 Release: alt1
 Summary: Car motorsport simulation
 License: GPL-2.0-or-later
@@ -161,5 +161,8 @@ ln -sr %buildroot%_libdir/games/speed-dreams-2/lib/libtgfdata.so %buildroot%_lib
 %_includedir/%name-2/
 
 %changelog
+* Wed Jun 21 2023 Artyom Bystrov <arbars@altlinux.org> 2.3.0-alt1
+- Update to new version
+
 * Tue Feb 08 2022 Artyom Bystrov <arbars@altlinux.org> 2.2.3-alt1
 - initial build for ALT Sisyphus
