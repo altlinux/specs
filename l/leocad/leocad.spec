@@ -1,15 +1,14 @@
 Summary: Visual brick construction tool for kids
 Summary (ru_RU.UTF-8): Детский конструктор, использующий блоки с шипами
 Name: leocad
-Version: 21.06
-Release: alt2
+Version: 23.03
+Release: alt1
 
 License: GPL-2.0
 Url: http://www.leocad.org
 # Source-url: https://github.com/leozide/leocad/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 Group: Games/Puzzles
-Packager: Fr. Br. George <george@altlinux.ru>
 
 Source1: %name.desktop
 
@@ -65,6 +64,9 @@ echo '#include "lc_global.h"' > build/release/.obj/leocad
 %_xdgmimedir/packages/*
 
 %changelog
+* Wed Jun 21 2023 Fr. Br. George <george@altlinux.org> 23.03-alt1
+- Autobuild version bump to 23.03
+
 * Thu Jul 08 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 21.06-alt2
 - fixed Elbrus build
 
