@@ -2,7 +2,7 @@
 %define rev %nil
 
 Name: lib%_name
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: TNEF Stream Parser Library
@@ -71,6 +71,9 @@ popd
 
 
 %changelog
+* Wed Jun 21 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
+- 2.1.2
+
 * Tue Apr 18 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - 2.1.1
 
