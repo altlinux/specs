@@ -3,7 +3,7 @@
 %define  modulename treq
 Name:    python3-module-%modulename
 Version: 22.2.0
-Release: alt1
+Release: alt2
 
 Summary: Python requests like API built on top of Twisted's HTTP client
 License: MIT
@@ -14,10 +14,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-incremental
 %if_disabled check
 %else
 #BuildRequires: pytest3
-BuildRequires: python3-module-incremental
 BuildRequires: python3(twisted)
 BuildRequires: python3(twisted.trial)
 BuildRequires: python3(twisted.web)
@@ -62,6 +62,9 @@ trial treq || exit 1
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Wed Jun 21 2023 Grigory Ustinov <grenka@altlinux.org> 22.2.0-alt2
+- Fixed dependencies for building without check.
+
 * Tue Jun 13 2023 Anton Midyukov <antohami@altlinux.org> 22.2.0-alt1
 - new version
 
