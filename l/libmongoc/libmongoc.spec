@@ -1,7 +1,7 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.23.5
+Version: 1.24.0
 Release: alt1
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
@@ -65,7 +65,6 @@ sed -i 's|sphinx-build|sphinx-build-3|' build/cmake/FindSphinx.cmake
     %_cmake_skip_rpath \
     -DBUILD_VERSION=%version \
     -DENABLE_STATIC:STRING=OFF \
-    -DENABLE_BSON:STRING=ON \
     -DENABLE_MONGOC:BOOL=ON \
     -DENABLE_SHM_COUNTERS:BOOL=ON \
     -DENABLE_SSL:STRING=OPENSSL \
@@ -135,6 +134,9 @@ exit $ret
 
 
 %changelog
+* Wed Jun 21 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Thu Jun 08 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.23.5-alt1
 - 1.23.5
 
