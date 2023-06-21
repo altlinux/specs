@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 4.2
+%define ver_major 4.4
 %define beta %nil
 %define rdn_name org.darktable.darktable
 
@@ -17,8 +17,8 @@
 %def_enable lensfun
 
 Name: darktable
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -32,7 +32,7 @@ Patch: darktable-3.0.0-is_supported_platform.patch
 # See https://bugzilla.altlinux.org/38215
 # based on https://bugzilla.altlinux.org/attachment.cgi?id=8682&action=edit
 # by Pavel Nakonechnyi
-Patch1: darktable-4.0.0-alt-disable-use-of-gcc-graphite.patch
+Patch1: darktable-4.4.0-alt-disable-use-of-gcc-graphite.patch
 
 ExcludeArch: %ix86 armh
 
@@ -145,6 +145,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Wed Jun 21 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Sat Mar 11 2023 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1.1
 - rebuilt with openexr-3.1.5
 
