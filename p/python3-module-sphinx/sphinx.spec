@@ -28,8 +28,8 @@ python3(packaging) \\\
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 6.1.3
-Release: alt2
+Version: 7.0.1
+Release: alt1
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -262,6 +262,9 @@ EOF
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Wed Jun 21 2023 Fr. Br. George <george@altlinux.org> 1:7.0.1-alt1
+- Autobuild version bump to 7.0.1
+
 * Tue May 02 2023 Grigory Ustinov <grenka@altlinux.org> 1:6.1.3-alt2
 - Bootstrap for python3.11.
 
