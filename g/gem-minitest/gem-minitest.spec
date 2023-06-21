@@ -1,7 +1,8 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname minitest
 
 Name:          gem-minitest
-Version:       5.16.3
+Version:       5.18.1
 Release:       alt1
 Summary:       Minitest provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking
 License:       MIT
@@ -14,15 +15,17 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_with check
-BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
-BuildRequires: gem(hoe) >= 3.23 gem(hoe) < 4
+BuildRequires: gem(rdoc) >= 4.0
+BuildRequires: gem(hoe) >= 3.23
+BuildConflicts: gem(rdoc) >= 7
+BuildConflicts: gem(hoe) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Obsoletes:     ruby-minitest < %EVR
 Provides:      ruby-minitest = %EVR
-Provides:      gem(minitest) = 5.16.3
+Provides:      gem(minitest) = 5.18.1
 
 
 %description
@@ -54,14 +57,14 @@ all of your regular OO practices like extract-method refactorings still apply.
 
 
 %package       -n gem-minitest-doc
-Version:       5.16.3
+Version:       5.18.1
 Release:       alt1
 Summary:       Minitest provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета minitest
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(minitest) = 5.16.3
+Requires:      gem(minitest) = 5.18.1
 
 %description   -n gem-minitest-doc
 Minitest provides a complete suite of testing facilities supporting TDD, BDD,
@@ -98,16 +101,18 @@ all of your regular OO practices like extract-method refactorings still apply.
 
 
 %package       -n gem-minitest-devel
-Version:       5.16.3
+Version:       5.18.1
 Release:       alt1
 Summary:       Minitest provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета minitest
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(minitest) = 5.16.3
-Requires:      gem(rdoc) >= 4.0 gem(rdoc) < 7
-Requires:      gem(hoe) >= 3.23 gem(hoe) < 4
+Requires:      gem(minitest) = 5.18.1
+Requires:      gem(rdoc) >= 4.0
+Requires:      gem(hoe) >= 3.23
+Conflicts:     gem(rdoc) >= 7
+Conflicts:     gem(hoe) >= 4
 
 %description   -n gem-minitest-devel
 Minitest provides a complete suite of testing facilities supporting TDD, BDD,
@@ -169,6 +174,9 @@ all of your regular OO practices like extract-method refactorings still apply.
 
 
 %changelog
+* Wed Jun 21 2023 Pavel Skrylev <majioa@altlinux.org> 5.18.1-alt1
+- ^ 5.16.3 -> 5.18.1
+
 * Wed Oct 05 2022 Pavel Skrylev <majioa@altlinux.org> 5.16.3-alt1
 - ^ 5.15.0 -> 5.16.3
 
