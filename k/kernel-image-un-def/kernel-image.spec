@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.3
-%define kernel_sublevel	.8
+%define kernel_sublevel	.9
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -368,6 +368,9 @@ mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
 install -d %buildroot%kbuild_dir
 cp -a include %buildroot%kbuild_dir/include
 cp -a arch/%arch_dir/include %buildroot%kbuild_dir/arch/%arch_dir
+# Delete CONFIG_ files and stray .cmds
+find %buildroot%kbuild_dir/include/config -name '[0-9A-Z]*' -delete
+find %buildroot%kbuild_dir -name '*.cmd' -delete
 
 # drivers-headers install
 install -d %buildroot%kbuild_dir/drivers/scsi
@@ -578,6 +581,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Jun 21 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.3.9-alt1
+- v6.3.9 (2023-06-21).
+
 * Wed Jun 14 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.3.8-alt1
 - v6.3.8 (2023-06-14).
 
