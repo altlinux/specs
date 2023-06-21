@@ -6,7 +6,7 @@
 
 Name: bear
 Version: 3.0.19
-Release: alt1.git67d5a34
+Release: alt1.git67d5a34.1
 
 Summary: Tool that generates a compilation database for clang tooling
 
@@ -35,6 +35,7 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libfmt-devel
 BuildRequires: libspdlog-devel
 BuildRequires: nlohmann-json-devel
+BuildRequires: libgtest-devel libgmock-devel
 
 %description
 Build ear records the CLI flags passed to compilers for each translation unit
@@ -68,6 +69,9 @@ done
 %doc COPYING README.md
 
 %changelog
+* Wed Jun 21 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0.19-alt1.git67d5a34.1
+- Fixed build for Elbrus (GTest is required but not specified)
+
 * Tue Jul 19 2022 Vladimir Didenko <cow@altlinux.org> 3.0.19-alt1.git67d5a34
 - Update to the latest master to fix build with libfmt 9.0
 
