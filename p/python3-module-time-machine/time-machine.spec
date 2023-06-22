@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 Summary: Travel through time in your tests
 License: MIT
@@ -51,5 +51,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jun 20 2023 Stanislav Levin <slev@altlinux.org> 2.10.0-alt1
+- 2.9.0 -> 2.10.0.
+
 * Thu May 04 2023 Stanislav Levin <slev@altlinux.org> 2.9.0-alt1
 - Initial build for Sisyphus.

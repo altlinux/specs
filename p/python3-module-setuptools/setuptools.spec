@@ -9,7 +9,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 67.8.0
+Version: 68.0.0
 Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -175,6 +175,9 @@ cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Tue Jun 20 2023 Stanislav Levin <slev@altlinux.org> 1:68.0.0-alt1
+- 67.8.0 -> 68.0.0.
+
 * Mon May 22 2023 Stanislav Levin <slev@altlinux.org> 1:67.8.0-alt1
 - 67.7.2 -> 67.8.0.
 

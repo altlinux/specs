@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.6
+Version: 0.4.8
 Release: alt1
 Summary: Pytest plugin providing a fixture interface for spulec/freezegun
 License: MIT
@@ -48,5 +48,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jun 21 2023 Stanislav Levin <slev@altlinux.org> 0.4.8-alt1
+- 0.4.6 -> 0.4.8.
+
 * Tue Jun 13 2023 Stanislav Levin <slev@altlinux.org> 0.4.6-alt1
 - Initial build for Sisyphus.

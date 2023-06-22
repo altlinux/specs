@@ -4,9 +4,9 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.5.0
+Version: 3.6.0
 Release: alt1
-Summary: Cross platform hidden file detection
+Summary: Miscellaneous path functions
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/jaraco.path/
@@ -15,8 +15,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-%py3_provides %pypi_name
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
@@ -29,7 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 %endif
 
 %description
-%pypi_name provides cross platform hidden file detection.
+%pypi_name provides miscellaneous path functions.
 
 %prep
 %setup
@@ -45,7 +43,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc README.rst
@@ -54,6 +52,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue Jun 20 2023 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1
+- 3.5.0 -> 3.6.0.
+
 * Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
 - 3.4.1 -> 3.5.0.
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.6.0
+Version: 6.7.0
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
@@ -15,7 +15,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
 %pyproject_runtimedeps_metadata
 
 # PyPI name(dash, underscore)
@@ -24,7 +23,6 @@ Provides: python3-module-importlib_metadata = %EVR
 Obsoletes: python3-module-importlib_metadata <= 1.5.0-alt1
 
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires: /usr/bin/git
 %pyproject_builddeps_build
 
 %if_with check
@@ -67,6 +65,9 @@ CPython.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 20 2023 Stanislav Levin <slev@altlinux.org> 6.7.0-alt1
+- 6.6.0 -> 6.7.0.
+
 * Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 6.6.0-alt1
 - 6.5.0 -> 6.6.0.
 
