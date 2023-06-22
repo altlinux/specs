@@ -2,16 +2,16 @@
 %define oname jupyter_console
 
 %def_with docs
-
 %def_with check
 
 Name: python3-module-%oname
 Version: 6.6.3
-Release: alt1
+Release: alt2
 
 Summary: Jupyter Terminal Console
 License: BSD-3-Clause
 Group: Development/Python3
+
 Url: https://pypi.org/project/jupyter-console/
 Vcs: https://github.com/jupyter/jupyter_console.git
 
@@ -21,15 +21,15 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-traitlets-tests
+BuildRequires: python3-module-jupyter_core
+BuildRequires: python3-module-jupyter_client
+BuildRequires: python3-module-ipython
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-zmq
 BuildRequires: python3-module-flaky
-BuildRequires: python3-module-traitlets-tests
-BuildRequires: python3-module-ipython
 BuildRequires: python3-module-ipykernel
-BuildRequires: python3-module-jupyter_core
-BuildRequires: python3-module-jupyter_client
 BuildRequires: python3-module-pexpect
 BuildRequires: python3-module-prompt_toolkit
 BuildRequires: python3-module-Pygments
@@ -92,6 +92,9 @@ export PYTHONPATH=$PWD
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Jun 22 2023 Michael Shigorin <mike@altlinux.org> 6.6.3-alt2
+- fix build --without check
+
 * Wed Jun 14 2023 Anton Vyatkin <toni@altlinux.org> 6.6.3-alt1
 - New version 6.6.3
 
