@@ -33,7 +33,7 @@
 
 Name:   	claws-mail
 Version:	4.1.1
-Release: 	alt1
+Release: 	alt2
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	GPLv3+
@@ -859,6 +859,14 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Thu Jun 22 2023 Mikhail Efremov <sem@altlinux.org> 4.1.1-alt2
+- Patches from upstream:
+  + po/ru.po: fix "text" translation;
+  + po/ru.po: fix "Grey" translation;
+  + fix bug 4658, 'Headers unfolded incorrectly in message view';
+  + fix bug 4670, 'To/CC incorrectly escaped with a trailing backslash';
+  + fix bug 4648, 'fails to build with gcc 13'.
+
 * Wed Oct 26 2022 Mikhail Efremov <sem@altlinux.org> 4.1.1-alt1
 - textviewer.sh: Replaced egrep with grep -E.
 - Updated to 4.1.1.
