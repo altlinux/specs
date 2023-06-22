@@ -14,7 +14,7 @@
 # vim:set ft=spec:
 Name: swig
 Version: 4.1.1
-Release: alt1
+Release: alt5
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -25,7 +25,19 @@ Url: https://github.com/swig/swig
 # Source-url: https://github.com/swig/swig/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
+# Upstream patch
+# https://github.com/swig/swig/commit/784dfc917e99429bdbb70fb9dd80c16dfeb73659
+Patch: 0001-CCache-Do-not-rely-on-C89-only-features-in-configure.patch
+
+# Revert https://github.com/swig/swig/commit/5755f399a2e6bd5203eb925a8d525501fec628ab
+Patch1: revert-Eliminate-some-temporary-buffers.patch
+
+# ALT commit 310d524062b544c538977c5e33548889fbb85926
+Patch2: 0001-guile-first-arg-to-scm_error-should-be-symbol-not-st.patch 
+
+%ifnarch %ix86
 %def_enable testsuite
+%endif
 
 %{?_with_boost:BuildRequires: boost-devel}
 %{?_with_caml:BuildRequires: ocaml-findlib}
@@ -234,6 +246,19 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Wed Jun 21 2023 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt5
+- disable testsuite on ix86 (fix FTBFS with gcc13)
+
+* Wed Jun 21 2023 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt4
+- add patch for guile22 from swig 1:3.0.12-alt2
+
+* Wed Jun 21 2023 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt3
+- revert commit "Eliminate some temporary buffers" (fix build guile-evms)
+
+* Tue Jun 20 2023 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt2
+- add upstream patch:
+  + CCache: Do not rely on C89-only features in configure.ac
+
 * Fri Jun 16 2023 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt1
 - new version (4.1.1) with rpmgs script
 
