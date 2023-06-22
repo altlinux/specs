@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2022g
+Version: 2023c
 Release: alt1
 
 Summary: Timezone data
@@ -47,7 +47,8 @@ case "$(rpm --eval %%_priority_distbranch)" in
 	*) ZFLAGS= ;;
 esac
 %make_install install_default DESTDIR=%buildroot \
-	MANTXTS= TZDATA_TEXT= VERSION=%version ZFLAGS="$ZFLAGS"
+	MANTXTS= TZDATA_TEXT= ZONETABLES=zone1970.tab \
+	VERSION=%version ZFLAGS="$ZFLAGS"
 mv %buildroot%_datadir/zoneinfo{-leaps,/right}
 rm %buildroot%_datadir/zoneinfo-posix
 mkdir %buildroot%_datadir/zoneinfo/posix
@@ -100,6 +101,11 @@ diff -u expected output || {
 %srcdir/
 
 %changelog
+* Tue Mar 28 2023 Dmitry V. Levin <ldv@altlinux.org> 2023c-alt1
+- 2022g -> 2023c.
+- Stopped packaging zone.tab; it was intended as a backward-compatibility aid
+  for older programs, new programs should use zone1970.tab.
+
 * Tue Nov 29 2022 Dmitry V. Levin <ldv@altlinux.org> 2022g-alt1
 - 2022f -> 2022g.
 
