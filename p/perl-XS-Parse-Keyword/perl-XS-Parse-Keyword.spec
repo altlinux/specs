@@ -2,12 +2,12 @@
 %set_perl_req_method relaxed
 %define module_name XS-Parse-Keyword
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/CBuilder.pm) perl(ExtUtils/CChecker.pm) perl(ExtUtils/ParseXS.pm) perl(Module/Build.pm) perl(Test/More.pm)
+BuildRequires: perl(ExtUtils/CBuilder.pm) perl(ExtUtils/CChecker.pm) perl(ExtUtils/ParseXS.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(Test2/V0.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.33
+Version: 0.34
 Release: alt1
 Summary: XS functions to assist in parsing keyword syntax
 Group: Development/Perl
@@ -43,6 +43,9 @@ changes or at least a rebuild of any module that depends on it.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jun 22 2023 Igor Vlasenko <viy@altlinux.org> 0.34-alt1
+- automated CPAN update
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.33-alt1
 - automated CPAN update
 
