@@ -2,7 +2,7 @@
 
 Name: drbd9
 Version: 9.2.4
-Release: alt1
+Release: alt2
 %define githash e5fab26ef31120f166b1b599d8a8ac965a68d8ae
 
 Summary: The Linux kernel code for DRBD9.
@@ -17,9 +17,11 @@ Source1: %name-headers-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-def kernel-headers-modules-un-def kernel-headers-modules-ovz-el7
+%if_with check
 BuildRequires: coccinelle >= 1.0.8
 BuildRequires: libelf-devel
+BuildRequires: kernel-headers-modules-std-def kernel-headers-modules-un-def kernel-headers-modules-ovz-el7
+%endif
 
 %description
 DRBD, developed by LINBIT, is a software that allows RAID 1 functionality over
@@ -62,6 +64,9 @@ make -C drbd KDIR=/lib/modules/*-un-def-*/build -k
 %doc README.md COPYING
 
 %changelog
+* Thu Jun 22 2023 Andrew A. Vasilyev <andy@altlinux.org> 9.2.4-alt2
+- do not BR: kernel headers without check
+
 * Mon Jun 05 2023 Andrew A. Vasilyev <andy@altlinux.org> 9.2.4-alt1
 - 9.2.4
 
