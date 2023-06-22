@@ -1,4 +1,4 @@
-%define ver_major 5.6
+%define ver_major 5.8
 %define api_ver 3.0
 
 Name: cinnamon-menus
@@ -22,8 +22,8 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: meson
 
 %description
-This package should not be in a repository. If you see this, please file
-a bug to http://bugzilla.altlinux.org against cinnamon-menus component.
+cinnamon-menus contains the libcinnamon-menu library and the
+layout configuration files for the Cinnamon menu.
 
 %package -n lib%name
 Summary: Desktop Menu Library for Cinnamon
@@ -103,6 +103,10 @@ GObject introspection devel data for the Cinnamon Desktop Menu Library
 
 
 %changelog
+* Thu Jun 22 2023 Vladimir Didenko <cow@altlinux.org> 5.8.0-alt1
+- 5.6.0
+- update package description (closes: #46614)
+
 * Fri Nov 18 2022 Vladimir Didenko <cow@altlinux.org> 5.6.0-alt1
 - 5.6.0
 
