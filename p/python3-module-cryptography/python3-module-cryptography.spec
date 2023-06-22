@@ -1,9 +1,12 @@
 %define oname cryptography
 
+# See - https://github.com/pyca/cryptography/issues/9023
+%define optflags_lto %nil
+
 %def_disable test
 
 Name: python3-module-%oname
-Version: 40.0.2
+Version: 41.0.1
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers
@@ -86,6 +89,9 @@ py.test3
 %python3_sitelibdir/%oname-%version.dist-info/*
 
 %changelog
+* Thu Jun 22 2023 Vladimir Didenko <cow@altlinux.ru> 41.0.1-alt1
+- new version
+
 * Thu Apr 20 2023 Vladimir Didenko <cow@altlinux.ru> 40.0.2-alt1
 - new version
 
