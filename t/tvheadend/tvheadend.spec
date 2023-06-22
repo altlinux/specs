@@ -1,6 +1,6 @@
 Name: tvheadend
 Version: 4.2.8
-Release: alt3
+Release: alt4
 
 Summary: Tvheadend TV streaming server
 License: GPLv3
@@ -31,7 +31,7 @@ CFLAGS="%optflags -fcommon -Wno-format-truncation" PYTHON=%__python \
 sh configure --bindir=%_sbindir --libdir=%_libdir \
 	     --mandir=%_mandir --datadir=%_datadir \
 	     --enable-libav --disable-ffmpeg_static
-make
+make CFLAGS_NO_WERROR=yes
 
 %install
 %make_install prefix=%_prefix DESTDIR=%buildroot install
@@ -72,6 +72,9 @@ f=%_sysconfdir/tvheadend/superuser
 %dir %attr(0770,root,_hts) %_localstatedir/tvheadend
 
 %changelog
+* Thu Jun 22 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.8-alt4
+- rebuilt with gcc13
+
 * Mon Jan 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.8-alt3
 - fix build with gcc10
 
