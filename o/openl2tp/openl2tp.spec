@@ -1,6 +1,6 @@
 Name: openl2tp
 Version: 1.8
-Release: alt9
+Release: alt10
 
 Summary: L2TP (RFC2661) server/client
 License: GPLv2
@@ -39,6 +39,7 @@ or applications that use the OpenL2TP APIs.
 %setup
 %patch0 -p1
 %patch2 -p1
+sed -i 's,-Werror ,,' Makefile
 
 %build
 %add_optflags -Wno-strict-aliasing -Wno-unused-but-set-variable
@@ -86,6 +87,9 @@ cp -f etc/sysconfig/openl2tpd %buildroot%_sysconfdir/sysconfig/openl2tpd
 %{_libdir}/openl2tp/event_sock.h
 
 %changelog
+* Thu Jun 22 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8-alt10
+- rebuilt with gcc13
+
 * Thu Jun 02 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8-alt9
 - fix build with gcc12
 
