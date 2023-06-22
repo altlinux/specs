@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name h5py
+%define mod_name %pypi_name
 
 # disable tests on 32bit architectures
 %ifnarch %ix86 armh
@@ -7,162 +9,90 @@
 %def_without check
 %endif
 
-%def_without docs
-
 %define descr \
-HDF5 for Python (h5py) is a general-purpose Python interface to the \
-Hierarchical Data Format library, version 5. HDF5 is a versatile, mature \
-scientific software library designed for the fast, flexible storage of \
-enormous amounts of data. \
-\
-From a Python programmer's perspective, HDF5 provides a robust way to \
-store data, organized by name in a tree-like fashion. You can create \
-datasets (arrays on disk) hundreds of gigabytes in size, and perform \
-random-access I/O on desired sections. Datasets are organized in a \
-filesystem-like hierarchy using containers called "groups", and accessed \
-using the tradional POSIX /path/to/resource syntax. \
-\
-H5py provides a simple, robust read/write interface to HDF5 data from \
-Python. Existing Python and Numpy concepts are used for the interface; \
-for example, datasets on disk are represented by a proxy class that \
-supports slicing, and has dtype and shape attributes. HDF5 groups are \
-presented using a dictionary metaphor, indexed by name.
+The h5py package provides both a high- and low-level interface to the HDF5 \
+library from Python. The low-level interface is intended to be a complete \
+wrapping of the HDF5 API, while the high-level component supports access to HDF5 \
+files, datasets and groups using established Python and NumPy concepts.
 
-Name:       h5py
-Version:    3.2.1
-Release:    alt3
-
-Summary:    Python interface to the Hierarchical Data Format library, version 5
-License:    MIT
-Group:      Development/Python3
-Url:        http://www.h5py.org/
-
-#           https://github.com/h5py/h5py.git
-Source:     %name-%version.tar
-
-Patch1:     %name-alt-doc.patch
-Patch2:     %name-alt-build.patch
-
+Name: %pypi_name
+Version: 3.9.0
+Release: alt1
+Summary: Read and write HDF5 files from Python
+License: BSD-3-Clause
+Group: Development/Python3
+Url: http://www.h5py.org/
+Vcs: https://github.com/h5py/h5py
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+# custom ipython completer for ipython session
+%filter_from_requires /python3(IPython\(\..*\)\?)/d
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 BuildRequires: libhdf5-devel
-BuildRequires: libsz2-devel
-BuildRequires: libblosc2-devel
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: libnumpy-py3-devel
-BuildRequires: python3-module-Cython
-BuildRequires: python3-module-mpi4py-devel
-BuildRequires: python3-module-pkgconfig
-BuildRequires: python3-module-sphinx-devel
+BuildRequires: liblzf-devel
 %if_with check
-BuildRequires: python3-module-numpy-testing
-BuildRequires: python3(pytest_mpi)
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-mpi
 %endif
 
 %description
 %descr
 
 %package -n python3-module-%name
-Summary: Python interface to the Hierarchical Data Format library, version 5
+Summary: %summary
 Group: Development/Python3
 %add_python3_req_skip Tkinter
 
 %description -n python3-module-%name
 %descr
 
-%if_with docs
-%package -n python3-module-%name-doc
-Summary: Documentation for Python interface to the HDF5
-Group: Development/Documentation
-BuildArch: noarch
-
-%description -n python3-module-%name-doc
-%descr
-
-This package contains development documentation for H5PY.
-
-%package -n python3-module-%name-pickles
-Summary: Pickles for Python interface to the HDF5
-Group: Development/Python3
-
-%description -n python3-module-%name-pickles
-%descr
-
-This package contains pickles for H5PY.
-%endif
-
 %package -n python3-module-%name-tests
-Summary: Tests for Python interface to the HDF5
+Summary: Tests for %name
 Group: Development/Python3
 Requires: python3-module-%name = %EVR
 
 %description -n python3-module-%name-tests
-%descr
-
-This package contains tests for H5PY.
+This package contains tests for %name.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-
-%if_with docs
-sed -i 's|@PYVER@|%_python3_version|g' docs/Makefile
-%endif
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %add_optflags -fno-strict-aliasing
-
-%__python3 api_gen.py
-%python3_build_debug
+# build against system lzf library
+export H5PY_SYSTEM_LZF=1
+%pyproject_build
 
 %install
-%python3_install
-
-%if_with docs
-export PYTHONPATH=%buildroot%python3_sitelibdir
-pushd docs
-%make html
-%make pickle
-popd
-%make -C docs_api html
-
-install -d %buildroot%_docdir/%name
-cp -fR docs/_build/html %buildroot%_docdir/%name/html
-cp -fR docs_api/_build/html %buildroot%_docdir/%name/api
-cp -fR lzf %buildroot%_docdir/%name/
-
-# pickles
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%name/
-%endif
-
-install -d %buildroot%python3_sitelibdir/%name/examples
-install -p -m644 examples/* %buildroot%python3_sitelibdir/%name/examples
-touch %buildroot%python3_sitelibdir/%name/examples/__init__.py
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run -- bash -s <<-'ENDTESTS'
+set -eu
+mkdir empty
+cd empty
+python -m pytest -ra -Wignore --pyargs %pypi_name
+ENDTESTS
 
 %files -n python3-module-%name
-%doc licenses *.rst
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/%name/examples
-%if_with docs
-%exclude %python3_sitelibdir/%name/pickle
-
-%files -n python3-module-%name-doc
-%_docdir/%name
-
-%files -n python3-module-%name-pickles
-%dir %python3_sitelibdir/%name
-%python3_sitelibdir/%name/pickle
-%endif
 
 %files -n python3-module-%name-tests
 %python3_sitelibdir/*/tests
-%python3_sitelibdir/%name/examples
 
 %changelog
+* Wed Jun 21 2023 Stanislav Levin <slev@altlinux.org> 3.9.0-alt1
+- 3.2.1 -> 3.9.0.
+
 * Fri Feb 03 2023 Anton Vyatkin <toni@altlinux.org> 3.2.1-alt3
 - Fixed BuildRequires.
 
