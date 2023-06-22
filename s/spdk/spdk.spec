@@ -3,7 +3,7 @@
 %define dpdk_build_path "dpdk/build"
 %define dpdk_path "dpdk"
 %define llvm_ver 15
-%define gcc_ver 12
+%define gcc_ver 13
 
 %def_disable dpdk_internal
 %def_disable static
@@ -13,7 +13,7 @@
 
 Name: spdk
 Version: 23.01.1
-Release: alt2
+Release: alt3
 
 Summary: Storage Performance Development Kit
 
@@ -270,6 +270,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu Jun 22 2023 Leontiy Volodin <lvol@altlinux.org> 23.01.1-alt3
+- Rebuilt with new libstdc++-devel.
+
 * Wed Jun 21 2023 Leontiy Volodin <lvol@altlinux.org> 23.01.1-alt2
 - Fixed FTBFS.
 
