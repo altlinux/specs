@@ -1,4 +1,4 @@
-# 7.5.1.1
+# 7.5.4.2
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -22,7 +22,7 @@
 
 Name: LibreOffice
 %define hversion 7.5
-%define urelease 1.1
+%define urelease 4.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -35,13 +35,9 @@ Group: Office
 URL: http://www.libreoffice.org
 
 Requires: %name-integrated = %EVR
-Requires: %name-common = %EVR
-Requires: %name-extensions = %EVR
-%if_with java
-Requires: libreoffice-languagetool
-%endif
+Requires: %name-langpack-en_US
+Requires: %name-langpack-ru
 
-Provides: %name-full = %EVR
 Provides: libreoffice = %EVR
 Obsoletes: libreoffice < 3.99
 Obsoletes: %name-full < %EVR
@@ -138,6 +134,17 @@ office suites.
 
 This package provides maximum possible installation of %name along winth
 other office packages, except of language packs and GNOME/KDE bindings.
+
+%package full
+Summary: LibreOffice.org with extensions
+Group: Office
+Requires: %name
+%if_with java
+Requires: %name-extensions = %EVR
+Requires: libreoffice-languagetool
+%endif
+%description full
+%summary
 
 %package common
 Summary: Basic installation of %name
@@ -255,9 +262,10 @@ Summary: PostgrSQL connector for LibreOffice
 
 # TODO redefine %%lang adding corr langpack
 # define macro for quick langpack description
-%define langpack(l:n:mhs:o:v:) \
+%define langpack(l:n:mhH:s:o:v:) \
 %define lang %{-l:%{-l*}}%{!-l:%{error:Language code not defined}} \
 %define lng %{-s:%{-s*}}%{!-s:%{lang}} \
+%define hunlng %{-H:%{-H*}}%{!-H:%{lng}} \
 %define pkgname langpack-%{lang} \
 %define langname %{-n:%{-n*}}%{!-n:%{error:Language name not defined}} \
 \
@@ -265,6 +273,7 @@ Summary: PostgrSQL connector for LibreOffice
 Summary: %{langname} language pack for %name \
 Group:  Office \
 Requires: %uname = %EVR \
+Requires: hunspell-%hunlng \
 %{-m:Requires: mythes-%lng} \
 %{-h:Requires: hyphen-%lng} \
 %{-o:Obsoletes: %{name}-langpack-%{-o*} < %{-v*}} \
@@ -542,7 +551,20 @@ ln -s --relative %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_li
 mkdir -p %buildroot%_includedir/LibreOfficeKit
 install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 
+%langpack -m -h -l en_US -s en  -n English
+%langpack -m -h -l ru -H ru-aot -n Russian
+%langpack    -h -l be           -n Belorussian
+%langpack -m -h -l de           -n German
+%langpack -m -h -l fr           -n French
+%langpack -m -h -l uk           -n Ukrainian
+%langpack -m -h -l pt_BR -s pt  -n Brazilian Portuguese -o pt-BR -v 7.4.2.1-alt1
+%langpack -m -h -l es           -n Espanian
+%langpack       -l kk           -n Kazakh
+%langpack    -h -l tt           -n Tatar
+
 %files
+
+%files full
 
 %files sdk -f files.sdk
 
@@ -579,17 +601,6 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %files extensions
 %lodir/share/extensions/*
 
-%langpack -m -h -l en_US -s en -n English
-%langpack -m -h -l ru          -n Russian
-%langpack    -h -l be          -n Belorussian
-%langpack -m -h -l de          -n German
-%langpack -m -h -l fr          -n French
-%langpack -m -h -l uk          -n Ukrainian
-%langpack -m -h -l pt_BR -s pt -n Brazilian Portuguese -o pt-BR -v 7.4.2.1-alt1
-%langpack -m -h -l es          -n Espanian
-%langpack       -l kk          -n Kazakh
-%langpack    -h -l tt          -n Tatar
-
 %files -n libreofficekit
 %_typelibdir/LOKDocView-*.typelib
 %lodir/program/liblibreofficekitgtk.so
@@ -601,6 +612,10 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Jun 08 2023 Fr. Br. George <george@altlinux.ru> 7.5.4.2-alt1
+- Update to 7.5.4.2
+- Separate -full package (with extensions and languagetool)
+
 * Fri Feb 17 2023 Fr. Br. George <george@altlinux.ru> 7.5.1.1-alt1
 - Update to 7.5.1.1
 
