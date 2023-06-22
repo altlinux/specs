@@ -10,7 +10,7 @@
 
 Name: grub
 Version: 2.06
-Release: alt10
+Release: alt11
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -237,6 +237,12 @@ Provides: grub2 = %EVR
 Provides: grub = %EVR
 %endif
 
+%package efi-checkinstall
+Summary: Verify EFI-stub signature
+Group: System/Kernel and hardware
+Requires: %name-efi = %EVR
+Requires(post): rpm-pesign-checkinstall
+
 %define desc_generic \
 GNU GRUB is a multiboot boot loader. It was derived from GRUB. It is an \
 attempt to produce a boot loader for IBM PC-compatible machines that \
@@ -275,6 +281,11 @@ Please note that the official build is signed; this shouldn't
 intervene in any way but rather provides means to cope with
 UEFI SecureBoot (better described as Restricted Boot) firmware
 when one can't disable it easily, doesn't want to, or needs not to.
+
+%description efi-checkinstall
+%desc_generic
+
+This package enables EFI signature verification.
 
 %prep
 %setup -b 5
@@ -593,6 +604,8 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sbindir/grub-efi-autoupdate
 %_libdir/grub/%grubefiarch
 %_rpmlibdir/%name-efi.filetrigger
+
+%files efi-checkinstall
 %endif
 
 %ifarch %ix86 x86_64 ppc64le
@@ -626,6 +639,11 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Fri Mar 24 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt11
+- os-alt patch: change GRUB_VMLINUZ_SYMLINKS default behavior to yes (closes: #44406)
+- Introduced the grub-efi-checkinstall subpackage for automatic EFI
+  signature verification (glebfm@)
+
 * Tue Mar 14 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt10
 - grub2-sysconfig: change default option to GRUB_VMLINUZ_SYMLINKS=yes (closes: #44406)
 - add upstream-0061-net-ip-Do-IP-fragment-maths-safely patch (fixes: CVE-2022-28733)
