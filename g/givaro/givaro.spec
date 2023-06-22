@@ -9,7 +9,7 @@
 
 Name: givaro
 Version: 4.2.0
-Release: alt2
+Release: alt3
 Summary: C++ library for arithmetic and algebraic computations
 
 License: CECILL-B
@@ -25,6 +25,8 @@ Patch: %name-mem-leak.patch
 Patch1: %name-26932_recintvsflint_longlong.patch
 # Debian's patch
 Patch2: givaro-makefile.patch
+# Upstream patch
+Patch3: 0001-Add-missing-include-cstdint-for-uint64_t.patch
 
 BuildRequires: doxygen
 BuildRequires: gcc-c++
@@ -77,6 +79,7 @@ The static libraries for using %name for development.
 # %%patch -p1
 # %%patch1 -p1
 # %%patch2 -p1
+%patch3 -p1
 
 # Regenerate configure after monkeying with configure.ac
 %autoreconf
@@ -138,6 +141,9 @@ make check
 %endif
 
 %changelog
+* Thu Jun 22 2023 Leontiy Volodin <lvol@altlinux.org> 4.2.0-alt3
+- Fixed build with gcc13.
+
 * Tue Jul 19 2022 Leontiy Volodin <lvol@altlinux.org> 4.2.0-alt2
 - Fixed build with new linbox.
 
