@@ -1,6 +1,6 @@
 Name: libwaylandpp
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: C++ bindings for Wayland
 License: BSD-2-Clause
@@ -36,6 +36,7 @@ This package contains development part of waylandpp
 
 %install
 %cmakeinstall_std
+find %buildroot%_libdir -xtype f '(' -name '*extra*' -o -name '*unstable*' ')' -delete
 
 %set_verify_elf_method relaxed
 
@@ -51,6 +52,9 @@ This package contains development part of waylandpp
 %_datadir/waylandpp
 
 %changelog
+* Thu Jun 22 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt2
+- rebuilt with gcc13
+
 * Wed May 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt1
 - 1.0.0 released
 

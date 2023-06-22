@@ -1,6 +1,6 @@
 Name: kodi-addon-inputstream-ffmpegdirect
 Version: 20.5.0
-Release: alt1
+Release: alt2
 
 Summary: FFmpeg stream addon for Kodi
 License: GPLv2
@@ -11,7 +11,7 @@ AutoReqProv: yes, nopython
 
 Source: %name-%version.tar
 
-BuildRequires: cmake gcc-c++ kodi-devel libcec-platform-devel
+BuildRequires: cmake gcc-c++ kodi-devel
 BuildRequires: libavcodec-devel libavfilter-devel libavformat-devel
 BuildRequires: libavutil-devel libswscale-devel libswresample-devel
 BuildRequires: libpostproc-devel bzlib-devel zlib-devel
@@ -23,18 +23,20 @@ BuildRequires: libpostproc-devel bzlib-devel zlib-devel
 %setup
 
 %build
-cmake . -DCMAKE_CXX_FLAGS='%optflags' \
-	-DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_libdir/kodi/addons/*
 %_datadir/kodi/addons/*
 
 %changelog
+* Thu Jun 22 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.5.0-alt2
+- rebuilt with gcc13
+
 * Thu Nov 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.5.0-alt1
 - 20.5.0 released
 

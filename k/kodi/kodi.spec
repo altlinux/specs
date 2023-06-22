@@ -1,6 +1,6 @@
 Name: kodi
 Version: 20.1
-Release: alt2
+Release: alt3
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -12,10 +12,9 @@ Requires: kodi-data = %version-%release
 Requires: kodi-x11 = %version-%release
 
 Source0: %name-%version-%release.tar
-Source1: flatbuffers-2.0.0.tar.gz
 
 BuildRequires: cmake gcc-c++
-BuildRequires: libcrossguid-devel libgif-devel liblzo2-devel
+BuildRequires: libcrossguid-devel libflatbuffers-devel libgif-devel liblzo2-devel
 BuildRequires: libunistring-devel libidn2-devel libEGL-devel
 BuildRequires: java-devel /proc swig
 BuildRequires: pkgconfig(RapidJSON)
@@ -135,7 +134,6 @@ This package contains X11-specific part of Kodi.
 %define __nprocs 8
 %define docdir %_defaultdocdir/%name
 %define cdefs -DGIT_VERSION=%release -DCORE_PLATFORM_NAME="x11 wayland gbm"
-%global cdefs %cdefs -DENABLE_INTERNAL_FLATBUFFERS=TRUE
 %ifarch armh aarch64
 %define platdefs -DAPP_RENDER_SYSTEM=gles
 %else
@@ -194,6 +192,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Thu Jun 22 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.1-alt3
+- 20.1-Nexus-75-g9a44d078a3
+
 * Wed May 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.1-alt2
 - rebuilt with internal flatbuffers
 
