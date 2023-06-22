@@ -1,7 +1,7 @@
 %define oname service_identity
 
 Name: python3-module-%oname
-Version: 21.1.0
+Version: 23.1.0
 Release: alt1
 
 Summary: Service identity verification for pyOpenSSL (Python 3)
@@ -18,7 +18,12 @@ Provides: python3-module-service-identity = %version-%release
 Obsoletes: python3-module-service-identity <= 18.1.0
 
 BuildPreReq: rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(hatchling)
+BuildRequires: python3(hatch-fancy-pypi-readme)
+BuildRequires: python3(hatch-vcs)
+BuildRequires: git
 
 %description
 Use this package if you use pyOpenSSL and don't want to be MITMed.
@@ -31,16 +36,28 @@ other relevant RFCs too.
 %setup -n %oname-%version
 
 %build
-%python3_build
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Thu Jun 22 2023 Vladimir Didenko <cow@altlinux.org> 23.1.0-alt1
+- new version
+
 * Thu May 27 2021 Vladimir Didenko <cow@altlinux.org> 21.1.0-alt1
 - build python3 version as a standalone version
 - rename package to python3-module-service_identity
