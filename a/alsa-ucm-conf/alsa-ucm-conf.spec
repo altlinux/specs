@@ -1,6 +1,6 @@
 Name: alsa-ucm-conf
 Version: 1.2.8
-Release: alt7
+Release: alt8
 
 Summary: Advanced Linux Sound Architecture (ALSA) Use Case Manager data
 License: BSD-3-Clause
@@ -17,6 +17,7 @@ Patch10: 0010-rt5631-add-headset-support.patch
 Patch11: 0011-wm8903-replace-amic-control-element.patch
 Patch12: 0012-ucm2-sof-essx8336-HiFi_fix_disdevall_and_EN_headset.patch
 Patch13: 0013-ucm2-sof-essx8336-add-inv-headset-detect-near-DMic.patch
+Patch14: 0014-sof-essx8336-update-strategy-and-add-support-for-es8.patch
 Patch20: 0020-amd-acp3x-essx8336-add-support-for-a-new-driver.patch
 
 BuildArch: noarch
@@ -38,6 +39,7 @@ in a standalone repository.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 %patch20 -p1
 
 %build
@@ -51,6 +53,9 @@ cp -at %buildroot%alsadata -- ucm*
 %doc LICENSE
 
 %changelog
+* Mon Jun 19 2023 Vasiliy Kovalev <kovalev@altlinux.org> 1.2.8-alt8
+- sof-essx8336: update strategy and add support for es8326 codec
+
 * Fri Jun 16 2023 Andrew Savchenko <bircoph@altlinux.org> 1.2.8-alt7
 - Add rk3399s (pinephone pro) configs
 
