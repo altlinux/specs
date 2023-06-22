@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: cldr-emoji-annotation
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 # Annotation files are in Unicode license
@@ -96,6 +96,9 @@ done
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Jun 22 2023 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
+- 43.1
+
 * Sat Apr 15 2023 Yuri N. Sedunov <aris@altlinux.org> 43-alt1
 - 43
 
