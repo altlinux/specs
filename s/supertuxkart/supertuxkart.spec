@@ -2,16 +2,20 @@
 
 Name: supertuxkart
 Version: 1.4
-Release: alt1
+Release: alt2
+
+Summary: SuperTuxKart is a kart racing game
 
 License: GPL-2.0-or-later and GPL-3.0-or-later and CC-BY-SA-3.0
-Url: http://supertuxkart.sourceforge.net
-Summary: SuperTuxKart is a kart racing game
 Group: Games/Arcade
+Url: http://supertuxkart.sourceforge.net
+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # https://github.com/supertuxkart/stk-code
 Source: %name-%version-src.tar.gz
+Patch0: 0001-Add-missing-includes-to-fix-the-build-with-gcc-13.patch
+Patch1: 0001-gcc13-fixes.patch
 
 BuildRequires(pre): rpm-build-ninja
 # for aarch64 support
@@ -29,6 +33,7 @@ SuperTuxCart is a kart racing game
 
 %prep
 %setup -n %name-%version
+%autopatch -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
     data/po/update_po_authors.py \
@@ -95,6 +100,9 @@ rm -f %buildroot%_includedir/wiiuse.h
 %_iconsdir/hicolor/1024x1024/apps/*
 
 %changelog
+* Thu Jun 22 2023 Leontiy Volodin <lvol@altlinux.org> 1.4-alt2
+- Fixed build on gcc13.
+
 * Tue Nov 01 2022 Leontiy Volodin <lvol@altlinux.org> 1.4-alt1
 - New version (1.4).
 
