@@ -1,5 +1,5 @@
 Name: west
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Zephyr RTOS Project meta-tool
@@ -34,6 +34,9 @@ add additional features to west.
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Thu Jun 22 2023 Vladimir Didenko <cow@altlinux.org> 1.1.0-alt1
+- New version
+
 * Mon Mar 13 2023 Vladimir Didenko <cow@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
 
