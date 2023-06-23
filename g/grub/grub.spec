@@ -8,9 +8,11 @@
 # LTO crashes that fragile house of cards, so should be disabled.
 %global optflags_lto %nil
 
+%global gnulib_version 9f48fb992a3d7e96610c4ce8be969cff2d61a01b
+
 Name: grub
 Version: 2.06
-Release: alt11
+Release: alt12
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -22,6 +24,8 @@ ExclusiveArch: %ix86 x86_64 aarch64 ppc64le riscv64
 
 Source0: %name-%version.tar
 Source1: grub2-sysconfig
+
+Source2: gnulib-%version.tar
 
 Source3: 39_memtest
 Source4: grub.filetrigger
@@ -154,7 +158,6 @@ BuildRequires: liblzma-devel help2man zlib-devel
 BuildRequires: libdevmapper-devel
 BuildRequires: texinfo
 BuildRequires: libfuse-devel
-BuildRequires: gnulib
 
 # fonts: choose one
 
@@ -288,7 +291,8 @@ when one can't disable it easily, doesn't want to, or needs not to.
 This package enables EFI signature verification.
 
 %prep
-%setup -b 5
+%setup -b 2 -b 5
+
 %patch0 -p2
 %patch1 -p1
 %patch2 -p2
@@ -390,8 +394,11 @@ sed -i "s/PYTHON:=python/PYTHON:=python3/" autogen.sh
 cat %SOURCE15 > sbat.csv
 echo "grub.altlinux,%alt_gen_number,ALT Linux,grub,%version-%release,http://git.altlinux.org/gears/g/grub.git" >> sbat.csv
 
+# Check gnulib version
+grep '^GNULIB_REVISION=%gnulib_version$' bootstrap.conf || exit 1
+
 %build
-./bootstrap --no-git --gnulib-srcdir=%_datadir/gnulib
+./bootstrap --no-git --gnulib-srcdir=../gnulib-%version
 ./autogen.sh
 build_grub() {
 	local dir="$1"; shift
@@ -639,6 +646,10 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Fri Jun 23 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt12
+- switch to the vendored gnulib of the required version
+  + this makes it easier to port grub to other branches
+
 * Fri Mar 24 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt11
 - os-alt patch: change GRUB_VMLINUZ_SYMLINKS default behavior to yes (closes: #44406)
 - Introduced the grub-efi-checkinstall subpackage for automatic EFI
