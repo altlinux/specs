@@ -1,13 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define mod_name setuptools_scm
 %define pypi_name setuptools-scm
-%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 %def_with check
 
 Name: python3-module-%mod_name
 Version: 7.1.0
-Release: alt1
+Release: alt2
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
@@ -15,39 +14,19 @@ Url: https://pypi.org/project/setuptools-scm/
 VCS: https://github.com/pypa/setuptools_scm/
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch1: %name-%version-alt.patch
-
+%pyproject_runtimedeps_metadata
 Requires: git-core mercurial
-%py3_requires packaging
-%py3_requires setuptools
-%if %tomli
-%py3_requires tomli
-%endif
-
 %py3_provides %pypi_name
+# mapping from PyPI name
 Provides: python3-module-%pypi_name = %EVR
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(typing_extensions)
-BuildRequires: python3(packaging)
-
-BuildRequires: git-core
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires
-BuildRequires: python3(packaging)
-BuildRequires: python3(setuptools)
-%if %tomli
-BuildRequires: python3(tomli)
-%endif
-
-BuildRequires: mercurial
-BuildRequires: python3(pytest)
-BuildRequires: python3(virtualenv)
+%pyproject_builddeps_metadata_extra toml
+%pyproject_builddeps_metadata_extra test
+BuildRequires: git-core mercurial
 %endif
 
 %description
@@ -63,16 +42,9 @@ It falls back to PKG-INFO/.hg_archival.txt when necessary.
 %prep
 %setup
 %patch1 -p1
-
-# if build from git source tree
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
-git init
-git config user.email author@example.com
-git config user.name author
-git add .
-git commit -m 'release'
-git tag '%version'
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -81,14 +53,18 @@ git tag '%version'
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -ra -Wignore
 
 %files
-%doc *.rst
+%doc README.*
 %python3_sitelibdir/setuptools_scm/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 22 2023 Stanislav Levin <slev@altlinux.org> 7.1.0-alt2
+- Fixed FTBFS (setuptools 68.0.0).
+- Modernized packaging.
+
 * Fri Jan 27 2023 Stanislav Levin <slev@altlinux.org> 7.1.0-alt1
 - 7.0.5 -> 7.1.0.
 
