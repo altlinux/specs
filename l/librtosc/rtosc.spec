@@ -1,5 +1,5 @@
 Name: librtosc
-Version: 0.2.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Realtime safe OSC Messaging
@@ -43,5 +43,8 @@ this package contains development part of librtosc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jun 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.1-alt1
+- 0.3.1 released
+
 * Wed Dec 01 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.0-alt1
 - v0.2.0-51-g75a5893

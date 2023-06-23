@@ -1,6 +1,6 @@
 Name: zynaddsubfx
 Version: 3.0.6
-Release: alt2
+Release: alt3
 
 Summary: %name is a open source software synthesizer
 License: GPLv2+
@@ -36,6 +36,8 @@ interesting sounds that you'll boost to an amazing universe of sounds.
 
 %prep
 %setup -a1 -a2 -a3
+sed -i '/^#include <string>/ a#include <cstdint>' \
+    src/Misc/Bank.h src/Nio/Engine.h
 
 %build
 %cmake -DGuiModule=zest -DDefaultOutput=jack -DPluginLibDir=%_lib
@@ -57,6 +59,9 @@ interesting sounds that you'll boost to an amazing universe of sounds.
 %_pixmapsdir/zynaddsubfx.*
 
 %changelog
+* Fri Jun 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.6-alt3
+- rebuilt with gcc13
+
 * Tue Feb 01 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.6-alt2
 - 3.0.6 released
 
