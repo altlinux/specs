@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.29.7
+Version: 1.29.8
 Release: alt1
 
 Summary: PostgreSQL interface library
@@ -50,8 +50,7 @@ sed -i '9a version = "%version"' pyproject.toml
 
 # Most of tests need access to database
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -x test -k 'test_converters'
+%pyproject_run_pytest -v -k 'test_converters'
 
 %files
 %doc README.rst LICENSE
@@ -60,6 +59,9 @@ py.test-3 -x test -k 'test_converters'
 
 
 %changelog
+* Fri Jun 23 2023 Anton Vyatkin <toni@altlinux.org> 1.29.8-alt1
+- New version 1.29.8.
+
 * Sat Jun 17 2023 Anton Vyatkin <toni@altlinux.org> 1.29.7-alt1
 - New version 1.29.7.
 
