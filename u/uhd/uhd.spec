@@ -23,7 +23,7 @@
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
 Version: 4.4.0.0
-Release: alt1
+Release: alt2
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -40,6 +40,7 @@ ExcludeArch: %ix86 %arm
 
 Patch: uhd-4.3.0.0-python3-fix.patch
 Patch1: disable-uhd_image_downloader_test.patch
+Patch2: uhd-4.4.0.0-gcc13.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: ctest cmake
@@ -246,6 +247,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Fri Jun 23 2023 Anton Midyukov <antohami@altlinux.org> 4.4.0.0-alt2
+- fix build with gcc13
+
 * Thu Jun 15 2023 Anton Midyukov <antohami@altlinux.org> 4.4.0.0-alt1
 - New version 4.4.0.0.
 
