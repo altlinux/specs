@@ -1,5 +1,5 @@
 Name: passwdqc
-Version: 2.0.2.0.4.a866
+Version: 2.0.3
 Release: alt1
 
 Summary: A passphrase strength checking and policy enforcement toolset
@@ -7,7 +7,7 @@ License: LGPLv2+
 Group: System/Base
 Url: https://www.openwall.com/passwdqc/
 
-# http://www.openwall.com/passwdqc/%name-%version.tar.gz
+# https://git.altlinux.org/gears/p/passwdqc.git
 Source: %name-%version-%release.tar
 
 # due to PAM policy.
@@ -164,6 +164,18 @@ install -pD -m755 passwdqc.control \
 %_man1dir/*
 
 %changelog
+* Fri Jun 23 2023 Dmitry V. Levin <ldv@altlinux.org> 2.0.3-alt1
+- Merged with 2.0.3-owl1:
+  + wordset_4k: Move "enroll" to the multiple spellings list (by Solar Designer)
+  + Don't #include <endian.h> on macOS (by Solar Designer)
+  + pwqfilter: Allow --pre-hashed after --hash* (by Solar Designer)
+  + Add pkg-config file (by Egor Ignatov)
+  + Makefile: add Cygwin support (by Chad Dougherty)
+  + Remove non-existent symbols from the linker version script
+  to fix -Wl,--no-undefined-version (by Fangrui Song)
+  + pam_passwdqc: extend enforce=users to support chpasswd PAM service
+  in addition to traditionally supported passwd
+
 * Fri Aug 13 2021 Dmitry V. Levin <ldv@altlinux.org> 2.0.2.0.4.a866-alt1
 - Added pkg-config file (by Egor Ignatov).
 
