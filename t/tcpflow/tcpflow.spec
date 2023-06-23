@@ -1,6 +1,6 @@
 Name: tcpflow
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: Network traffic recorder
 License: GPLv3
@@ -38,6 +38,7 @@ See control(8) for details.
 
 %prep
 %setup
+sed -i '/^#include <string>/ a#include <cstdint>' src/netviz/plot_view.h
 
 %build
 %autoreconf
@@ -65,6 +66,9 @@ i/usr/sbin/groupadd -r -f netadmin ||:
 %config %_controldir/%name
 
 %changelog
+* Fri Jun 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.1-alt2
+- rebuilt with gcc13
+
 * Thu May 12 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.1-alt1
 - 1.6.1 released
 
