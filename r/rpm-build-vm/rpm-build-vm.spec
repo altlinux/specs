@@ -4,12 +4,14 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.53
+Version: 1.54
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
 Group: Development/Other
+Url: https://www.altlinux.org/Hasher/vm-run
+Vcs: https://github.com/vt-alt/vm-run
 
 Source: %name-%version.tar
 
@@ -214,11 +216,13 @@ timeout 300 vm-run --mem=max free -g
 timeout 300 vm-run --mem=256 --cpu=max lscpu
 df -h /tmp
 timeout 300 vm-run --tmp=max df -h /tmp
+rm /tmp/vm-tmpfs.qcow2
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
 rmdir /mnt/0
 rm /usr/src/ext4.0.img
 ! timeout --preserve-status 300 vm-run --verbose exit 1
 timeout 300 vm-run --rootfs --verbose df
+rm /tmp/vm-ext4.img
 timeout 300 vm-run --hvc --no-quiet 'dmesg -r | grep Unknown'
 timeout 300 vm-run --tcg --mem='' --cpu=1 cat /proc/cpuinfo
 # Clean up without '-f' ensures these files existed.
@@ -233,6 +237,10 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Thu Jun 22 2023 Vitaly Chikunov <vt@altlinux.org> 1.54-alt1
+- Add experimental '--stdout' option.
+- spec: checkinstall: Delete test disk images.
+
 * Mon May 22 2023 Vitaly Chikunov <vt@altlinux.org> 1.53-alt1
 - Prevent SIGTTOU when running rpmbuild in hsh-shell.
 
