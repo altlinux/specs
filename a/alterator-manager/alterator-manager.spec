@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.5
-Release: alt2
+Version: 0.1.6
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -36,11 +36,14 @@ Headers for developing alterator-manager modules.
 %cmakeinstall_std
 mkdir -p %buildroot%alterator_libexecdir
 mkdir -p %buildroot%_datadir/alterator/backends
+mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
+      %buildroot%_prefix/lib/systemd/user/alterator-manager.service
 
 %files
 %_sbindir/%name
 %_datadir/dbus-1/system.d/ru.basealt.alterator_manager.conf
 %_unitdir/alterator-manager.service
+%_prefix/lib/systemd/user/alterator-manager.service
 %dir %alterator_libexecdir
 %dir %_datadir/alterator/backends
 %doc docs/*
@@ -49,6 +52,10 @@ mkdir -p %buildroot%_datadir/alterator/backends
 %_includedir/alterator
 
 %changelog
+* Fri Jun 23 2023 Ivan Savin <svn17@altlinux.org> 0.1.6-alt1
+- Add the ability to run the alterator-manager in user mode (systemctl --user).
+- Update docs/README-ru.md.
+
 * Fri Jun 09 2023 Ivan Savin <svn17@altlinux.org> 0.1.5-alt2
 - Change defaults for polkit actions.
 
