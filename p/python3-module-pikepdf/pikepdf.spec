@@ -6,13 +6,16 @@
 
 Name: python3-module-pikepdf
 Version: 6.2.1
-Release: alt2
+Release: alt3
+
 License: MPL-2.0
-Url: https://github.com/pikepdf/pikepdf
 Summary: A Python library for reading and writing PDF files
 Group: Development/Python
+
+Url: https://github.com/pikepdf/pikepdf
 Source: pikepdf-%version.tar
 Patch: pikepdf-jbig2dec.patch
+
 Requires: libpoppler-gir
 
 BuildRequires: gcc-c++ libqpdf-devel jbig2dec
@@ -24,6 +27,7 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools-scm)
 BuildRequires: python3(pybind11)
+BuildRequires: python3(lxml)
 
 %if_with docs
 BuildRequires: ctags python3-module-sphinx-issues python3-module-sphinx_design python3-module-sphinx_rtd_theme python3-module-sphinxcontrib python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml python3-module-Pillow
@@ -32,7 +36,6 @@ BuildRequires: ctags python3-module-sphinx-issues python3-module-sphinx_design p
 %if_with check
 # deps
 BuildRequires: python3(PIL)
-BuildRequires: python3(lxml)
 BuildRequires: python3(packaging)
 
 BuildRequires: python3(pytest)
@@ -91,6 +94,9 @@ PYTHONPATH="%buildroot%python3_sitelibdir" make SPHINXBUILD=sphinx-build-3 \
 %python3_sitelibdir/%{pyproject_distinfo pikepdf}/
 
 %changelog
+* Fri Jun 23 2023 Michael Shigorin <mike@altlinux.org> 6.2.1-alt3
+- Fix build --without check
+
 * Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 6.2.1-alt2
 - Fixed FTBFS (flit_core 3.7.1).
 
