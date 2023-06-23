@@ -1,29 +1,30 @@
 %define _unpackaged_files_terminate_build 1
-%define oname hamcrest
+%define pypi_name PyHamcrest
+%define mod_name hamcrest
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.0.2
-Release: alt2
-
+Name: python3-module-%mod_name
+Version: 2.0.4
+Release: alt1
 Summary: Hamcrest framework for matcher objects
 License: BSD
 Group: Development/Python3
-
 Url: https://pypi.org/project/PyHamcrest/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-# https://github.com/hamcrest/PyHamcrest.git
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+Vcs: https://github.com/hamcrest/PyHamcrest
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(mock)
-BuildRequires: python3(numpy)
-BuildRequires: python3(tox)
+%add_pyproject_deps_check_filter 'pytest-mypy-plugins$'
+%pyproject_builddeps_metadata_extra tests
+%pyproject_builddeps_metadata_extra tests-numpy
 %endif
 
 %description
@@ -36,31 +37,28 @@ commonly used.
 %prep
 %setup
 %autopatch -p1
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -vvr
+%pyproject_run_pytest -ra -Wignore
 
 %files
-%doc *.txt *.rst examples
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 23 2023 Stanislav Levin <slev@altlinux.org> 2.0.4-alt1
+- 2.0.2 -> 2.0.4.
+
 * Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 2.0.2-alt2
 - Fixed FTBFS(Pytest 6).
 
