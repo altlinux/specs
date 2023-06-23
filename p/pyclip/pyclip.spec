@@ -3,7 +3,7 @@
 
 Name: %pypi_name
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: Cross-platform Clipboard module for Python with binary support
 Group: Development/Python
 
@@ -12,6 +12,9 @@ Url: https://github.com/spyoungtech/pyclip
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildArch: noarch
+
+# https://bugzilla.altlinux.org/46639
+Requires: xclip
 
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools python3-module-wheel
@@ -43,6 +46,9 @@ Cross-platform clipboard utilities supporting both binary and text data.
 %python3_sitelibdir/%{pypi_name}-%version.dist-info/
 
 %changelog
+* Fri Jun 23 2023 L.A. Kostis <lakostis@altlinux.ru> 0.7.0-alt2
+- Added dependency to xclip (closes #46639).
+
 * Sat Apr 01 2023 L.A. Kostis <lakostis@altlinux.ru> 0.7.0-alt1
 - Initial build for ALTLinux.
 
