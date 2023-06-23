@@ -2,23 +2,22 @@
 %define oname parted
 
 Name: python3-module-%oname
-Version: 3.12.0
+Version: 3.13.0
 Release: alt1
 
 Summary: Python bindings for libparted
 
 Group: Development/Python3
-License: GPLv2-or-later
-URL: https://github.com/rhinstaller/pyparted
+License: GPL-2.0-or-later
+URL: https://pypi.org/project/pyparted
+VCS: https://github.com/dcantrell/pyparted
 
-# https://github.com/rhinstaller/pyparted.git
 Source: %name-%version.tar
 
 Provides: %_upstream
 
 BuildRequires: libparted-devel
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 
 %description
 pyparted is a set of native Python bindings for libparted.  libparted is the
@@ -42,12 +41,15 @@ you want to, but it's really just meant for the larger parted module.
 %python3_install
 
 %files
-%doc AUTHORS NEWS README TODO
+%doc AUTHORS NEWS README.md TODO
 %python3_sitelibdir/parted
 %python3_sitelibdir/*.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Jun 23 2023 Grigory Ustinov <grenka@altlinux.org> 3.13.0-alt1
+- Automatically updated to 3.13.0.
+
 * Tue May 24 2022 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1
 - Automatically updated to 3.12.0.
 
