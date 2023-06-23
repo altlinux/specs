@@ -3,13 +3,11 @@
 %set_verify_elf_method strict
 
 Name: sysstat
-Version: 12.7.2
-Release: alt2
-
+Version: 12.7.4
+Release: alt1
 Summary: Performance monitoring tools for Linux
 License: GPL-2.0-or-later
 Group: Monitoring
-
 URL: http://sebastien.godard.pagesperso-orange.fr/
 Vcs: https://github.com/sysstat/sysstat.git
 Source: %name-%version.tar
@@ -50,9 +48,8 @@ historize performance and activity data:
 Summary: Interactive System Activity Graph
 License: GPL-2.0-or-later
 Group: Monitoring
-Requires: %name = %EVR
-
 BuildArch: noarch
+Requires: %name = %EVR
 
 %description isag
 isag is a command that enables you to plot data stored in a daily data file
@@ -182,6 +179,9 @@ fi
 %_desktopdir/isag.desktop
 
 %changelog
+* Thu Jun 22 2023 Vitaly Chikunov <vt@altlinux.org> 12.7.4-alt1
+- Update to v12.7.4 (2023-06-18).
+
 * Thu Jun 08 2023 Vitaly Chikunov <vt@altlinux.org> 12.7.2-alt2
 - (Fixes: CVE-2023-33204).
 
