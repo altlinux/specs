@@ -5,7 +5,7 @@
 
 Name: sbsigntools
 Version: 0.9.5
-Release: alt1
+Release: alt2
 Summary: Signing utility for UEFI secure boot
 License: GPL-3.0-or-later
 Url: https://git.kernel.org/pub/scm/linux/kernel/git/jejb/sbsigntools.git
@@ -30,6 +30,7 @@ Tools to add signatures to EFI binaries and drivers.
 %setup
 
 %build
+%define optflags_lto %nil
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure
@@ -52,6 +53,9 @@ Tools to add signatures to EFI binaries and drivers.
 %_man1dir/*.1*
 
 %changelog
+* Thu Jun 22 2023 Vitaly Chikunov <vt@altlinux.org> 0.9.5-alt2
+- Disable LTO build to fix gcc-13 false positive error.
+
 * Tue Mar 21 2023 Vitaly Chikunov <vt@altlinux.org> 0.9.5-alt1
 - Update to v0.9.5 (2023-03-19).
 
