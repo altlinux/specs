@@ -11,7 +11,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt2
+Release:       alt2.1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -28,7 +28,6 @@ Patch1:        use_system_dirs.patch
 Patch2:        block_install_gems.patch
 Patch3:        single_instantiating.patch
 Patch4:        support_multiple_gem_trees.patch
-BuildRequires(pre): rpm-build-ruby >= 1:1.0.0-alt1
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /usr/bin/setup.rb
 BuildRequires: doxygen
@@ -46,17 +45,16 @@ BuildRequires: valgrind-devel
 %endif
 BuildRequires: gcc-c++
 %{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %_version}
-BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
-BuildRequires: gem(rspec) >= 3.8 gem(rspec) < 4
-%ruby_use_gem_dependency rake >= 13.0.5,rake < 14
-%ruby_use_gem_dependency rspec >= 3.8.0,rspec < 4
+%if_with check
+BuildRequires: gem(bundler) >= 0
+BuildRequires: gem(rake-compiler) >= 0
+BuildRequires: gem(benchmark_driver) >= 0
+BuildRequires: gem(test-unit) >= 3.3.5
+BuildRequires: gem(rake) >= 12.3.3
+%endif
 
 # Ruby built using LTO cannot rebuild itself because of segfaults
 %define optflags_lto %nil
-%add_findreq_skiplist %ruby_gemslibdir/**/*
-%add_findreq_skiplist %libdir/*
-%add_findprov_skiplist %ruby_gemslibdir/**/*
-%add_findprov_skiplist %libdir/*
 Requires:      %lname = %_version-%release
 Requires:      ruby-stdlibs = %_version-%release
 Requires:      gem irb erb ri rdoc rake bundle
@@ -110,6 +108,11 @@ Requires:      libyaml-devel
 %ifarch %valgrind_arches
 Requires:      valgrind-devel
 %endif
+Requires:      gem(bundler) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(rake-compiler) >= 0
+Requires:      gem(benchmark_driver) >= 0
+Requires:      gem(test-unit) >= 3.3.5
 
 %description   -n %lname-devel
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -150,11 +153,76 @@ Requires:      gem(test-unit) >= 3.3.4
 Requires:      gem(xmlrpc) >= 0.3.0
 Provides:      %name-libs = %_version-%release
 Provides:      %name-racc-runtime = %_version
-Provides:      ruby(thread)
-%mobsolete     English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
-%mobsolete     erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
-%mobsolete     optparse patterns pty readline rexml rss sdbm shell socket stringio
-%mobsolete     strscan syslog tracer uri wait webrick xmlrpc yaml zlib
+Provides:      gem(ipaddr) = 1.2.4
+Provides:      gem(fcntl) = 1.0.1
+Provides:      gem(stringio) = 3.0.1
+Provides:      gem(strscan) = 3.0.1
+Provides:      gem(bundler) = 2.3.7
+Provides:      gem(english) = 0.7.1
+Provides:      gem(abbrev) = 0.1.0
+Provides:      gem(base64) = 0.1.1
+Provides:      gem(erb) = 2.2.3
+Provides:      gem(fileutils) = 1.6.0
+Provides:      gem(find) = 0.1.1
+Provides:      gem(mutex_m) = 0.1.1
+Provides:      gem(open-uri) = 0.2.0
+Provides:      gem(pp) = 0.3.0
+Provides:      gem(prettyprint) = 0.1.1
+Provides:      gem(readline) = 0.0.3
+Provides:      gem(resolv-replace) = 0.1.0
+Provides:      gem(resolv) = 0.2.1
+Provides:      gem(ruby2_keywords) = 0.0.5
+Provides:      gem(securerandom) = 0.1.1
+Provides:      gem(shellwords) = 0.1.0
+Provides:      gem(tempfile) = 0.1.2
+Provides:      gem(time) = 0.2.0
+Provides:      gem(tmpdir) = 0.1.2
+Provides:      gem(tsort) = 0.1.0
+Provides:      gem(un) = 0.2.0
+Provides:      gem(etc) = 1.3.0
+Provides:      gem(nkf) = 0.1.1
+Provides:      gem(cgi) = 0.3.1
+Provides:      gem(csv) = 3.2.2
+Provides:      gem(drb) = 2.1.0
+Provides:      gem(irb) = 1.4.1
+Provides:      gem(net-protocol) = 0.1.2
+Provides:      gem(set) = 1.0.2
+Provides:      gem(uri) = 0.11.0
+Provides:      gem(date) = 3.2.2
+Provides:      gem(json) = 2.6.1
+Provides:      gem(zlib) = 2.1.1
+Provides:      gem(racc) = 1.6.0
+Provides:      gem(rdoc) = 6.4.0
+Provides:      gem(yaml) = 0.2.0
+Provides:      gem(psych) = 4.0.3
+Provides:      gem(open3) = 0.1.1
+Provides:      gem(rinda) = 0.1.1
+Provides:      gem(digest) = 3.1.0
+Provides:      gem(fiddle) = 1.1.0
+Provides:      gem(syslog) = 0.1.0
+Provides:      gem(logger) = 1.5.0
+Provides:      gem(pstore) = 0.1.1
+Provides:      gem(reline) = 0.3.0
+Provides:      gem(io-wait) = 0.2.1
+Provides:      gem(openssl) = 3.0.0
+Provides:      gem(ostruct) = 0.5.2
+Provides:      gem(timeout) = 0.2.0
+Provides:      gem(weakref) = 0.1.1
+Provides:      gem(pathname) = 0.2.0
+Provides:      gem(readline-ext) = 0.1.4
+Provides:      gem(win32ole) = 1.8.8
+Provides:      gem(delegate) = 0.2.0
+Provides:      gem(net-http) = 0.2.0
+Provides:      gem(observer) = 0.1.1
+Provides:      gem(optparse) = 0.2.0
+Provides:      gem(singleton) = 0.1.1
+Provides:      gem(bigdecimal) = 3.1.1
+Provides:      gem(io-console) = 0.5.11
+Provides:      gem(getoptlong) = 0.1.1
+Provides:      gem(io-nonblock) = 0.1.0
+Provides:      gem(forwardable) = 1.3.2
+Provides:      gem(did_you_mean) = 1.6.1
+Provides:      gem(error_highlight) = 0.3.0
 
 %description   -n %name-stdlibs
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -234,7 +302,7 @@ on different arches.
 %package       -n gem
 Epoch:         2
 Version:       3.3.7
-Release:       alt2
+Release:       alt2.1
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -252,7 +320,7 @@ Ruby gem executable and framework.
 %package       -n rpm-macros-ruby
 Epoch:         1
 Version:       1.1.0
-Release:       alt2
+Release:       alt2.1
 Summary:       rpm macros for Ruby packages
 Group:         Development/Ruby
 
@@ -363,8 +431,8 @@ popd
 %endif #_with_bootstrap
 
 %make_build
-%__setup_rb config --prefixes=ruby,gem --use-gem-dependencies="$RPM_RUBY_USE_GEM_DEPENDENCY_LIST" --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib --use=stdlibs --alias=psych,bar,yaml,webrick,uri,tracer,timeout,singleton,rss,rexml,readline,prime,mutex_m,ipaddr,fileutils,rdoc,racc,pstore,ostruct,open3,observer,net-smtp,net-pop,matrix,logger,irb,getoptlong,forwardable,did_you_mean,delegate,csv,cgi,bundler,benchmark,zlib,strscan,stringio,sdbm,readline-ext,openssl,json,io-console,gdbm,fiddle,fcntl,etc,dbm,date,bigdecimal,reline --ignore-path-tokens=templates,sample,spec
-%__setup_rb document
+setup.rb config --prefixes=ruby,gem --use-gem-dependencies="$RPM_RUBY_USE_GEM_DEPENDENCY_LIST" --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib --use=stdlibs --alias=psych,bar,yaml,webrick,uri,tracer,timeout,singleton,rss,rexml,readline,prime,mutex_m,ipaddr,fileutils,rdoc,racc,pstore,ostruct,open3,observer,net-smtp,net-pop,matrix,logger,irb,getoptlong,forwardable,did_you_mean,delegate,csv,cgi,bundler,benchmark,zlib,strscan,stringio,sdbm,readline-ext,openssl,json,io-console,gdbm,fiddle,fcntl,etc,dbm,date,bigdecimal,reline --ignore-path-tokens=templates,sample,spec
+setup.rb document
 
 %install
 %makeinstall_std
@@ -395,7 +463,7 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%_version-miniruby/
 
 find %buildroot%libdir
 %__ruby -e "p $:.grep(/-linux/)"
-%ruby_install
+setup.rb install --install_prefix=%buildroot --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST"
 # TODO keep gem specs conly for default folder with gems
 mv %buildroot%libdir/gemie/specifications/default %buildroot%libdir/specifications
 rm -rf %buildroot%libdir/gemie/{gems,specifications}/*
@@ -419,7 +487,7 @@ install -D -p -m 0644 %SOURCE4 %buildroot%_rpmmacrosdir/ruby.env
 
 %check
 %make_build test
-%ruby_test
+setup.rb test
 
 %files
 %doc %dir %_docdir/%name-%ruby_version
@@ -484,6 +552,9 @@ install -D -p -m 0644 %SOURCE4 %buildroot%_rpmmacrosdir/ruby.env
 
 
 %changelog
+* Mon Jun 19 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.2-alt2.1
+- - removed rpm-build-ruby build dependency (closes #46576)
+
 * Fri Jan 20 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.2-alt2
 - ! removed unnecessary alias from macros
 
