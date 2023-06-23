@@ -3,7 +3,7 @@
 
 Name: camotics
 Version: 1.2.1
-Release: alt2.20191008
+Release: alt3.20191008
 
 Summary: Open-Source Simulation and Computer Aided Machining - A 3-axis CNC GCode simulator
 
@@ -18,6 +18,7 @@ Source2: camotics.xml
 Source3: CAMotics.appdata.xml
 Patch: 0001-Revert-Updates-to-use-newer-v8.patch
 Patch1: 0002-do-not-check-conf.TryCompile-for-dxflib.patch
+Patch2: camotics-1.2.1-fix-build-with-gcc13.patch
 
 # libv8-3.14-devel cannot be compiled for aarch64, ppc64le
 ExclusiveArch: %ix86 x86_64
@@ -83,6 +84,7 @@ pushd cbang
 %patch -p1
 popd
 %patch1 -p1
+%patch2 -p1
 
 for file in $(grep -Rl --include=SConscript -- '-Werror' src/ 2>/dev/null); do
   sed -i "s/\.replace('-Werror', '')/\nflags = re.sub(r'-Werro([^\\\s]+|r)', '', flags)/" $file
@@ -159,6 +161,9 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/metainfo/*.appdata.xm
 %_datadir/%name
 
 %changelog
+* Fri Jun 23 2023 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt3.20191008
+- fix build with gcc13
+
 * Mon Oct 21 2019 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt2.20191008
 - fix directory: 's|_datadir/appdata|_datadir/metainfo|g'
 
