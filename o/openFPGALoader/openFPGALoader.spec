@@ -5,7 +5,7 @@
 
 Name:     openFPGALoader
 Version:  0.10.0
-Release:  alt1
+Release:  alt2.20230612
 
 Summary:  Universal utility for programming FPGA
 License:  Apache-2.0
@@ -15,6 +15,8 @@ Url:      https://github.com/trabucayre/openFPGALoader
 Source:   %name-%version.tar
 # ALT patches
 Patch:    0001-doc-Makefile-fix-build-with-python3-module-sphinx.patch
+
+ExcludeArch: %arm
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -80,6 +82,10 @@ install -pm644 doc/_build/man/openFPGALoader.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Thu Jun 22 2023 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt2.20230612
+- new snapshot
+- ExcludeArch: %%arm
+
 * Sat Jan 14 2023 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
 - new version 0.10.0
 
