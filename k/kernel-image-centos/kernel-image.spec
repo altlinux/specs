@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 325
+%define centos_release 331
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -638,6 +638,77 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Jun 23 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.331-alt1.el9
+- Updated to kernel-5.14.0-331.el9 (fixes: CVE-2023-1989, CVE-2023-2235):
+  + Backport support for sa8775p reboot mode driver
+  + Backports for sa8775p : I2C, GPUCC, QMP
+  + Block: two misc fixes
+  + Bluetooth: btsdio: fix use after free bug in btsdio_remove due to race condition
+  + Bring amd-pmc up-to-date with upstream 6.3
+  + CNB: net: adopt u64_stats_t & remove obsolete u64_stats_fetch_*_irq() functions
+  + Compile s390x KVM selftests with -march=z10 and fix problem with async teardown
+  + Create rv package
+  + EDAC: add support for Emerald Rapids
+  + Fix problems fetching TBT3 DROM from AMD USB4 routers
+  + Proactively backport generic kernel-core fixes from upstream
+  + RDMA/irdma: Report the correct link speed
+  + Revert "cpuidle, intel_idle: Fix CPUIDLE_FLAG_IRQ_ENABLE *again*"
+  + Revert "softirq: Let ksoftirqd do its job"
+  + Update Octeontx2 networking drivers to RHEL 9.3
+  + Update UFS to 6.3
+  + Update intel-speed-select driver and tool
+  + [RHEL-9] backport timerlat auto analysis
+  + [s390] : RHEL9.3 - Additional non-IBM QETH fixes for RHEL 9.3
+  + [s390]: RHEL9.0 - PCI: s390: Fix use-after-free of PCI resources on re-configure
+  + [s390]: RHEL9.0 - s390/dasd: Use correct lock while counting channel queue length
+  + [s390]: [IBM 9.3 FEAT] Support for new IBM Z Hardware (IBM z16) - Reset DAT-Protection facility support
+  + arm64: dts: qcom: sa8540p-ride: Specify ethernet phy OUI
+  + backport vsock patches for RHEL-9.3
+  + block: two block layer core fixes and one null_blk fix
+  + bnxt_en: driver update for RHEL 9.3
+  + can: flexcan: add auto stop mode for IMX93
+  + config: wifi: enable RTL8852 card
+  + crypto: jitter - correct health test during initialization
+  + drivers/rtc: Rebase to upstream Linux v6.3-rc7
+  + e1000e: Disable TSO on i219-LM card to increase speed
+  + epoll: use refcount to reduce ep_mutex contention
+  + fanotify: Allow user space to pass back additional audit info
+  + fs: don't audit the capability check in simple_xattr_list()
+  + hwmon: (coretemp) avoid RDMSR interrupts to isolated CPUs
+  + ice: make writes to /dev/gnssX synchronous
+  + ixgbevf: driver update for RHEL 9.3
+  + kernel.spec: Fix UKI naming to comply with BLS
+  + kernel.spec: package unstripped test_progs-no_alu32
+  + lockd: fix races that can result in stuck filelocks
+  + loop: LOOP_CONFIGURE: send uevents for partitions
+  + lpfc update for rhel-9.3
+  + net: Remove spurious warning in sk_stream_kill_queues()
+  + net: sync skb free reasons
+  + netfilter: 9.3 backports from upstream
+  + netfilter: conntrack: fix possible bug_on with enable_hooks=1
+  + netfilter: ip6t_rpfilter: Fix regression with VRF interfaces
+  + objtool updates for 9.3
+  + osnoise: backport options file required to rtla hwnoise
+  + perf: Fix check before add_event_to_groups() in perf_group_detach()
+  + perf: Sync with upstream v6.2
+  + phy: freescale: imx8m-pcie: driver updates
+  + platform/x86: ISST: Remove 8 socket limit
+  + qcom: scm: backport latest changes
+  + qede: fix interrupt coalescing configuration
+  + rbd: avoid fast-diff corruption in snapshot-based mirroring
+  + redhat/configs: turn on lpuart serial port support Driver
+  + redhat: don't enforce WERROR for out of tree modules
+  + regulator: update to 6.4-rc5
+  + rtnetlink: a couple of fixes in linkmsg validation
+  + selinux: Implement mptcp_add_subflow hook
+  + stmmac: fix changing mac address
+  + thermal subsystem rebase up to v6.3
+  + vfio/pci: demote hiding ecap messages to debug level
+  + virtio-net: fix for skb_over_panic inside big mode
+  + x86/cpu: Add Xeon Emerald Rapids to list of CPUs that support PPIN
+  + x86/mm: Avoid incomplete Global INVLPG flushes
+  + x86/show_trace_log_lvl: Ensure stack pointer is aligned, again
+
 * Mon Jun 12 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.325-alt1.el9
 - Updated to kernel-5.14.0-325.el9 (fixes: CVE-2023-1637, CVE-2023-2124):
   + CNB: bridge and switchdev update to v6.3
