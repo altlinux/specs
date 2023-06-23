@@ -1,6 +1,6 @@
 Name: radiotray-ng
 Version: 0.2.8
-Release: alt1
+Release: alt2
 Summary: Internet radio player
 
 License: GPLv3+
@@ -129,6 +129,9 @@ desktop-file-validate %buildroot%_desktopdir/rtng-bookmark-editor.desktop
 %_datadir/%name
 
 %changelog
+* Fri Jun 23 2023 Anton Midyukov <antohami@altlinux.org> 0.2.8-alt2
+- Add upstream commit for fix build with gcc13
+
 * Wed Apr 19 2023 Anton Midyukov <antohami@altlinux.org> 0.2.8-alt1
 - new version 0.2.8
 - build with libayatana-appindicator3
