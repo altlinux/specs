@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name tepl
-%define ver_major 6.4
+%define ver_major 6.5
 %define api_ver 6
 
 %def_enable gtk_doc
@@ -12,7 +12,7 @@
 %def_disable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GTK+ Text Editor Framework
@@ -31,16 +31,19 @@ Source: %_name-%version.tar
 %define glib_ver 2.64
 %define gtk_doc_ver 1.0
 %define gtk_ver 3.22
-%define gtksource_ver 4.0
+%define gtksource_ver 299.0.3
 %define amtk_ver 5.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
-BuildRequires: meson >= %meson_ver glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgtksourceview4-devel >= %gtksource_ver
+BuildRequires: meson >= %meson_ver glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: libgedit-gtksourceview-devel >= %gtksource_ver
 BuildRequires: libxml2-devel libuchardet-devel gtk-doc >= %gtk_doc_ver
 BuildRequires: pkgconfig(amtk-5) >= %amtk_ver
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
 BuildRequires: vala-tools
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7 libgtk+3-gir-devel libgtksourceview4-gir-devel libamtk-gir-devel}
+BuildRequires: pkgconfig(sysprof-capture-4)
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7 libgtk+3-gir-devel
+BuildRequires: libgedit-gtksourceview-gir-devel libamtk-gir-devel}
 
 %description
 Tepl is a library that eases the development of GtkSourceView-based
@@ -50,7 +53,7 @@ line".
 %package devel
 Summary: Development environment for Tepl
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains the necessary components to develop for Tepl,
@@ -72,7 +75,7 @@ This package contains development documentation for Tepl.
 %package gir
 Summary: GObject introspection data for the Tepl library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Tepl library
@@ -81,8 +84,8 @@ GObject introspection data for the Tepl library
 Summary: GObject introspection devel data for the Tepl library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-devel = %version-%release
-Requires: %name-gir = %version-%release
+Requires: %name-devel = %EVR
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Tepl library
@@ -90,7 +93,7 @@ GObject introspection devel data for the Tepl library
 %package tests
 Summary: Tests for the Tepl library
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -145,6 +148,9 @@ the functionality of the installed Tepl library.
 
 
 %changelog
+* Fri Jun 23 2023 Yuri N. Sedunov <aris@altlinux.org> 6.5.1-alt1
+- 6.5.1
+
 * Mon Jan 02 2023 Yuri N. Sedunov <aris@altlinux.org> 6.4.0-alt1
 - 6.4.0
 

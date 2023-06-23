@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %def_enable python
 # removed since 3.36
@@ -9,7 +9,7 @@
 %add_python3_path %gedit_pluginsdir
 
 Name: gedit-plugins
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Plugins for GEdit
@@ -25,8 +25,8 @@ Source: %name-%version.tar
 
 %define glib_ver 2.40.0
 %define gtk_ver 3.24
-%define gtksourceview_ver 4.8.4
-%define gedit_ver 44.0
+%define gtksourceview_ver 299.0.3
+%define gedit_ver 45.0
 %define peas_ver 1.14.1
 %define git2_ver 0.0.12
 %define vte_ver 0.38
@@ -40,7 +40,7 @@ BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-gnome
 BuildRequires: meson gnome-common libappstream-glib-devel
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
+BuildRequires: libgedit-gtksourceview-devel >= %gtksourceview_ver
 BuildRequires: gedit-devel >= %gedit_ver
 BuildRequires: libpeas-devel >= %peas_ver
 BuildRequires: yelp-tools
@@ -88,6 +88,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 
 
 %changelog
+* Fri Jun 23 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Fri Jan 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 
