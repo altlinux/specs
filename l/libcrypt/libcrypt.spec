@@ -1,5 +1,5 @@
 Name: libcrypt
-Version: 4.4.23
+Version: 4.4.35
 Release: alt1
 
 Summary: Modern password hashing library
@@ -85,6 +85,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_man3dir/*.3*
 
 %changelog
+* Tue Jun 06 2023 Dmitry V. Levin <ldv@altlinux.org> 4.4.35-alt1
+- v4.4.23 -> v4.4.35.
+
 * Sun Jun 20 2021 Dmitry V. Levin <ldv@altlinux.org> 4.4.23-alt1
 - v4.4.17 -> v4.4.23.
 
