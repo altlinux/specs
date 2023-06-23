@@ -1,5 +1,5 @@
 Name: clitest
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Command Line Tester
@@ -37,5 +37,8 @@ install -D -m755 -p clitest %buildroot%_bindir/clitest
 %_bindir/clitest
 
 %changelog
+* Fri Jun 23 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Mon Oct 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 0.4.0-alt1
 - Initial build for ALT
