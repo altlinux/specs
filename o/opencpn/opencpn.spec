@@ -3,8 +3,8 @@
 %def_disable	build_test
 
 Name: opencpn
-Version: 5.7.1
-Release: alt0.2
+Version: 5.8.2
+Release: alt1
 Summary: A free and open source software for marine navigation
 
 Group: Other
@@ -23,6 +23,8 @@ BuildRequires: bzlib-devel cmake gcc-c++ libGLU-devel libXScrnSaver-devel libXco
 BuildRequires: lsb-release libflac-devel libogg-devel libvorbis-devel libopus-devel
 
 BuildRequires: libwxGTK3.2-devel libgtk+3-devel
+BuildRequires: libGLEW-devel
+BuildRequires: rapidjson-devel
 
 BuildRequires: libcairo-devel libdrm-devel libtiff-devel libmount-devel libblkid-devel
 BuildRequires: libselinux-devel libxkbcommon-devel libwayland-cursor-devel libwayland-egl-devel
@@ -113,7 +115,8 @@ rm -rf %buildroot/%_pkgconfigdir
 
 %files data -f %name.lang
 %doc data/doc/*
-%_man1dir/opencpn.*
+%_man1dir/opencpn.1.*
+%_man1dir/opencpn-cmd.1.*
 
 %_datadir/metainfo/opencpn.appdata.xml
 
@@ -150,12 +153,16 @@ rm -rf %buildroot/%_pkgconfigdir
 %_datadir/%name/COPYING.lgplv2
 %_datadir/%name/COPYING.lgplv3
 %_datadir/%name/CoC-909_2013-InlandECDIS_20170308s.pdf
+%_datadir/%name/CoC-1973_2018-InlandECDIS_20220912.pdf
 %_datadir/%name/LICENSING
 %_datadir/%name/LINUX_DEVICES.md
 %_datadir/%name/authors.html
 %_datadir/%name/license.html
 
 %changelog
+* Fri Jun 23 2023 Anton Midyukov <antohami@altlinux.org> 5.8.2-alt1
+- new version 5.8.2
+
 * Sun Oct 30 2022 Sergey Y. Afonin <asy@altlinux.org> 5.7.1-alt0.2
 - changes in spec file:
   + removed build time switch for switching gtk+2/gtk+3
