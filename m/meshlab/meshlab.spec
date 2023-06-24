@@ -2,7 +2,7 @@
 
 Name: meshlab
 Version: 2021.10
-Release: alt1.1
+Release: alt2
 
 Summary: A system for processing and editing unstructured 3D triangular meshes
 License: GPLv2+ and BSD and Public Domain
@@ -21,6 +21,9 @@ Source1: vcglib-%vcglibver.tar
 
 Patch0: meshlab-2021.07-MESHLAB_LIB_INSTALL_DIR-fix.patch
 Patch1: meshlab-2021.07-system-levmar.patch
+Patch2: meshlab-2022.02-e57-gcc13.patch 
+
+Requires: flexiblas-netlib
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -68,6 +71,7 @@ these kinds of meshes.
 %setup -a1
 %patch0 -p1 -b .MESHLAB_LIB_INSTALL_DIR-fix
 %patch1 -p1 -b .system-levmar
+%patch2 -p1 -b .e57-gcc13
 %ifarch %e2k
 %define num_threads_fix() \
 	sed -i "/num_threads( %1 )/{s/ %1 /nthreads/;s/.*/int nthreads=%1; (void)nthreads;\\n&/}" \\\
@@ -152,6 +156,10 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Jun 24 2023 Anton Midyukov <antohami@altlinux.org> 2021.10-alt2
+- fix build with gcc13
+-  add 'Requires: flexiblas-netlib'
+
 * Wed May 04 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2021.10-alt1.1
 - fixed build for Elbrus
 
