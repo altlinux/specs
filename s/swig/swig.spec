@@ -14,7 +14,7 @@
 # vim:set ft=spec:
 Name: swig
 Version: 4.1.1
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -48,7 +48,7 @@ Patch2: 0001-guile-first-arg-to-scm_error-should-be-symbol-not-st.patch
 %{?_with_python:BuildRequires: python-devel}
 %{?_with_python3:BuildRequires: rpm-build-python3 python3-devel python-tools-2to3}
 %{?_with_R:BuildRequires: R-devel}
-%{?_with_ruby:BuildRequires: libruby-devel ruby ruby-module-etc}
+%{?_with_ruby:BuildRequires: libruby-devel ruby}
 %{?_with_scheme:BuildRequires: chicken guile22-devel}
 %{?_with_tcl:BuildRequires: tcl-devel}
 
@@ -246,6 +246,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Sat Jun 24 2023 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt6
+- update buildrequires
+
 * Wed Jun 21 2023 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt5
 - disable testsuite on ix86 (fix FTBFS with gcc13)
 
