@@ -3,7 +3,7 @@
 
 Name: widelands
 Version: 1.1
-Release: alt1.1
+Release: alt2.20230624
 Epoch: 1
 
 Summary: Open source realtime-strategy game
@@ -79,6 +79,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml
 %_datadir/%name
 
 %changelog
+* Sat Jun 24 2023 Anton Midyukov <antohami@altlinux.org> 1:1.1-alt2.20230624
+- new snapshot
+
 * Tue Apr 25 2023 Michael Shigorin <mike@altlinux.org> 1:1.1-alt1.1
 - E2K: avoid lcc-unsupported option (mcst#7644)
 - minor spec cleanup
