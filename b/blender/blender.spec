@@ -23,7 +23,7 @@
 
 Name: blender
 Version: 3.4.1
-Release: alt2.4
+Release: alt2.6
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -54,6 +54,7 @@ Patch28: blender-3.0.0-alt-doc.patch
 Patch29: blender-2.90-alt-non-x86_64-linking.patch
 Patch30: blender-2.93.0-suse-reproducible.patch
 Patch40: blender-alt-fix-clang-linking.patch
+Patch41: blender-3.4.1-gcc-13-fix.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -91,6 +92,9 @@ BuildRequires: openshadinglanguage-devel
 BuildRequires: opensubdiv-devel
 BuildRequires: libzstd-devel
 BuildRequires: libepoxy-devel
+%ifarch x86_64
+BuildRequires: openimagedenoise-devel
+%endif
 
 %if_with embree
 BuildRequires: embree-devel
@@ -194,6 +198,7 @@ This package contains documentation for Blender.
 %patch29 -p1
 %patch30 -p1
 %patch40 -p1
+%patch41 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -312,6 +317,12 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Thu Jun 22 2023 L.A. Kostis <lakostis@altlinux.ru> 3.4.1-alt2.6
+- cycles: apply fix to build with gcc-13 (tnx to glebfm@).
+
+* Wed Jun 21 2023 L.A. Kostis <lakostis@altlinux.ru> 3.4.1-alt2.5
+- x86_64: build with openimagedenoise.
+
 * Sun Jun 18 2023 L.A. Kostis <lakostis@altlinux.ru> 3.4.1-alt2.4
 - ppc64le: use lld for linking.
 

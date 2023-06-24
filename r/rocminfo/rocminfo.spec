@@ -1,6 +1,6 @@
 Name: rocminfo
-Version: 5.4.1
-Release: alt0.2
+Version: 5.5.1
+Release: alt0.1
 License: NCSA
 Summary: ROCm Application for Reporting System Info
 Url: https://github.com/RadeonOpenCompute/rocminfo
@@ -37,6 +37,9 @@ subst '/.*{ROCMINFO_CXX_FLAGS} -m64)/d' CMakeLists.txt
 %_bindir/*
 
 %changelog
+* Sun May 28 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.1
+- rocm-5.5.1.
+
 * Thu Jan 05 2023 L.A. Kostis <lakostis@altlinux.ru> 5.4.1-alt0.2
 - Add ExclusiveArch.
 - Fix build on aarch64.

@@ -8,11 +8,11 @@
 %define bits 64
 # HIP requires some components which are not built
 # yet to ALT (cuda as example)
-%def_without HIP
+%def_with HIP
 
 Name: rocclr
 Version: 5.5.1
-Release: alt0.3
+Release: alt0.5
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
 # FIXME! migrate to https://github.com/ROCm-Developer-Tools/clr
@@ -26,10 +26,17 @@ Source1: opencl.tar
 Source2: hipamd.tar
 # https://github.com/ROCm-Developer-Tools/HIP.git
 Source3: hip.tar
+# sane defaults for HIP
+Source4: hip.sh
+
+Patch0: hipcc-alt-paths.patch
+Patch1: hipamd-alt-bitcode-path.patch
+Patch2: rocclr-gcc-13-fixes.patch
+Patch3: opencl-gcc-13-fixes.patch
 
 BuildRequires(pre): cmake /proc ninja-build
 BuildRequires: llvm%{llvm_ver}-devel clang%{llvm_ver}-devel clang%{llvm_ver}-tools mlir%{llvm_ver}-tools
-BuildRequires: zlib-devel libstdc++-devel rocm-cmake rocm-comgr-devel hsa-rocr-devel
+BuildRequires: zlib-devel libstdc++-devel rocm-cmake = %version rocm-comgr-devel = %version hsa-rocr-devel = %version
 BuildRequires: libX11-devel libnuma-devel libGL-devel
 %if_with mold
 BuildRequires: mold
@@ -62,9 +69,10 @@ ROCm OpenCL Compatible Runtime:
 Summary: HIP:Heterogenous-computing Interface for Portability
 Group: Development/Other
 # as hip scripts are noarch
-BuildArch: noarch
 # perl scripts rely on runtime envs
 AutoReq: yes, noperl
+Requires: clang%{llvm_ver} clang%{llvm_ver}-tools clang%{llvm_ver}-libs-support llvm%{llvm_ver} lld%{llvm_ver} glibc-devel gcc
+Requires: rocm-device-libs = %version rocminfo = %version hip-runtime-amd = %EVR
 
 %description -n hip-devel
 HIP: Heterogenous-computing Interface for Portability development libraries and
@@ -81,7 +89,6 @@ HIP development sample code and cookbook
 %package -n hip-runtime-amd
 Summary: HIP implementation specifically for AMD platform.
 Group: Development/Other
-Requires: hip-devel = %EVR
 
 %description -n hip-runtime-amd
 HIP is a C++ Runtime API and Kernel Language that allows developers to create
@@ -91,6 +98,10 @@ This package provides the HIP implementation specifically for AMD platform.
 
 %prep
 %setup -n %name-%version -a1 -a2 -a3
+%patch0 -p1 -b .hipcc-alt-paths
+%patch1 -p1 -b .hipamd-bitcode-paths
+%patch2 -p1 -b .rocclr-gcc13-fixes
+%patch3 -p1 -b .opencl-gcc13-fixes
 
 %build
 export ALTWRAP_LLVM_VERSION=%{llvm_ver}
@@ -132,6 +143,9 @@ pushd hipamd
 mkdir -p %buildroot%_datadir/cmake/hip
 mv %buildroot%_libdir/cmake/hip/FindHIP.cmake %buildroot%_datadir/cmake/hip/
 mv %buildroot%_libdir/cmake/hip/FindHIP %buildroot%_datadir/cmake/hip
+
+mkdir -p %buildroot%_sysconfdir/profile.d
+install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
 %endif
 
 %files -n rocm-opencl-runtime
@@ -143,7 +157,9 @@ mv %buildroot%_libdir/cmake/hip/FindHIP %buildroot%_datadir/cmake/hip
 %if_with HIP
 %files -n hip-devel
 %doc hip/README.md hip/RELEASE.md hip/LICENSE.txt
+%_sysconfdir/profile.d/hip.sh
 %_bindir/*
+%_bindir/.hipVersion
 %exclude %_bindir/rocm-clinfo
 %_includedir/hip
 %_includedir/hip_prof_str.h
@@ -154,15 +170,28 @@ mv %buildroot%_libdir/cmake/hip/FindHIP %buildroot%_datadir/cmake/hip
 %_libdir/cmake/hip
 %_libdir/cmake/hip-lang
 %_libdir/cmake/hiprtc
-%_libdir/libamdhip%{bits}*.so.*
-%_libdir/libhiprtc-builtins*.so.*
-%_libdir/libhiprtc*.so.*
+%_libdir/libamdhip%{bits}*.so*
+%_libdir/libhiprtc-builtins*.so*
+%_libdir/libhiprtc*.so*
 
 %files -n hip-devel-samples
 %_datadir/hip/samples
 %endif
 
 %changelog
+* Wed Jun 21 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.5
+- hipamd: update bitcode search paths.
+- hipamd: fix symlinks.
+- rocclr: apply fixes for gcc-13.
+- opencl: apply fixes for gcc-13.
+- hip-devel: fix unmet requires.
+
+* Mon Jun 19 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.4
+- Enable HIP again:
+  + hip-devel: update dependencies.
+  + hipcc.pl: update search paths and options.
+  + hip: setup env.
+
 * Sat Jun 17 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.3
 - ppc64le: use mold for linking.
 

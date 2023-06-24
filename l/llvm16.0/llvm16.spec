@@ -8,7 +8,7 @@
 
 %global v_major 16
 %global v_majmin %v_major.0
-%global v_full %v_majmin.5
+%global v_full %v_majmin.6
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -88,14 +88,14 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt3
+Release: alt1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
 Url: http://llvm.org
 # Source-URL: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/llvm-project-%tarversion.src.tar.xz
-Source: llvm-project.tar
+Source: llvm-project-%{v_major}.tar
 Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-alt-triple.patch
 Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
@@ -614,7 +614,7 @@ This package contains documentation for the Polly optimizer.
 # for pkg in compiler-rt; do
    # mv $pkg-%tarversion.src projects/$pkg
 # done
-%setup -n llvm-project
+%setup -n llvm-project-%{v_major}
 %patch -p1 -b .alt-i586-fallback
 %patch1 -p1 -b .alt-triple
 %patch2 -p1
@@ -1218,6 +1218,11 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Wed Jun 21 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt1
+- 16.0.6.
+- clang: fix rocm search path patch.
+- use versioned sources to fix debuginfo path intersections.
+
 * Tue Jun 20 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt3
 - Sync changes from llvm15.0:
   + clang: extend rocm device libs lookup path.
