@@ -2,8 +2,8 @@
 %define libname libsfizz1
 
 Name:     sfizz
-Version:  1.2.0
-Release:  alt1.git77fbfa50
+Version:  1.2.1
+Release:  alt1
 
 Summary:  SFZ parser and synthesizer
 License:  BSD-2-Clause
@@ -14,38 +14,14 @@ Url:      https://sfz.tools/sfizz/
 ExcludeArch: %arm ppc64le
 
 
-Source: %name-git77fbfa50.tar
+Source: %name-%version.tar
+Source1:  sub-merge.sources.txt
+Source2:  sub-merge.unpack.sh
 
-# https://github.com/abseil/abseil-cpp.git
-Source1000: abseil-cpp-215105818dfde3174fe799600bb0f3cae233d0bf.tar
-# https://github.com/steinbergmedia/vst3_base.git
-Source1001: vst3_base-985fe019276ee03c2751a1736ba3b390678e29f2.tar
-# https://github.com/steinbergmedia/vst3_pluginterfaces.git
-Source1002: vst3_pluginterfaces-93cef1afb7061e488625045ba5a82abaa83d27fe.tar
-# https://github.com/steinbergmedia/vst3_public_sdk.git
-Source1003: vst3_public_sdk-9589800ed94573354bc29de45eec5744523fbfcb.tar
-# https://github.com/sfztools/vstgui.git
-Source1004: vstgui-7ea1407dd48e13c533bea575d8539fd8d5a28493.tar
-# https://github.com/mackron/dr_libs.git
-Source1005: dr_libs-cac1785cee4abb455817b43d5dee33b49d61be2f.tar
-# https://github.com/dr-soft/miniaudio.git
-Source1006: miniaudio-d1a166c83ab445b1c14bc83d37c84e18d172e5f5.tar
-# https://github.com/sfztools/stb_vorbis.git
-Source1007: stb_vorbis-fc0bd698b26888da0a632da33f4c49b90763e69b.tar
-# https://github.com/sfztools/libaiff.git
-Source1008: libaiff-78864a4a2e769e426be8cfd78ae7f5f72e236c33.tar
-# https://github.com/sfztools/sfzt_auwrapper.git
-Source1009: sfzt_auwrapper-014311ae45b86571e1ae3aaa03ebbd7db8b3a32e.tar
-# https://github.com/gulrak/filesystem.git
-Source1010: filesystem-614bbe87b80435d87ab8791564370e0c1d13627d.tar
-# https://github.com/simd-everywhere/simde.git
-Source1011: simde-98075d0593f539762125dbb215d95e782a6ae344.tar
-# https://github.com/nemequ/munit.git
-Source1012: munit-da8f73412998e4f1adf1100dc187533a51af77fd.tar
+# import sub-merge sources here
+%(cat %SOURCE1)
 
-
-Patch1: sfizz-1.2.0-alt-tests-build-fix.patch
-
+Patch1: sfizz-1.2.1-upstream-fix-deftools-build.patch
 
 BuildRequires: cmake ctest gcc-c++
 # BuildRequires: libabseil-cpp-devel
@@ -145,23 +121,9 @@ needed for developing applications that use libsfizz.
 
 %prep
 %setup -n %name
+sh '%SOURCE2'
 
-tar -xf %SOURCE1000 -C 'external/abseil-cpp' --strip-components 1
-tar -xf %SOURCE1001 -C 'plugins/vst/external/VST_SDK/VST3_SDK/base' --strip-components 1
-tar -xf %SOURCE1002 -C 'plugins/vst/external/VST_SDK/VST3_SDK/pluginterfaces' --strip-components 1
-tar -xf %SOURCE1003 -C 'plugins/vst/external/VST_SDK/VST3_SDK/public.sdk' --strip-components 1
-tar -xf %SOURCE1004 -C 'plugins/editor/external/vstgui4' --strip-components 1
-tar -xf %SOURCE1005 -C 'external/st_audiofile/thirdparty/dr_libs' --strip-components 1
-tar -xf %SOURCE1006 -C 'external/st_audiofile/thirdparty/dr_libs/tests/external/miniaudio' --strip-components 1
-tar -xf %SOURCE1007 -C 'external/st_audiofile/thirdparty/stb_vorbis' --strip-components 1
-tar -xf %SOURCE1008 -C 'external/st_audiofile/thirdparty/libaiff' --strip-components 1
-tar -xf %SOURCE1009 -C 'plugins/vst/external/sfzt_auwrapper' --strip-components 1
-tar -xf %SOURCE1010 -C 'external/filesystem' --strip-components 1
-tar -xf %SOURCE1011 -C 'external/simde' --strip-components 1
-tar -xf %SOURCE1012 -C 'external/simde/test/munit' --strip-components 1
-
-
-%patch1 -p0
+%autopatch -p1
 
 %build
 # TODO: -DSFIZZ_USE_SYSTEM_ABSEIL=ON -- currently this way it does not build
@@ -205,6 +167,9 @@ done
 
 
 %changelog
+* Wed May 10 2023 Ivan A. Melnikov <iv@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Fri Jul 01 2022 Ivan A. Melnikov <iv@altlinux.org> 1.2.0-alt1.git77fbfa50
 - 1.2.0
 - build from the develop branch snapshot
