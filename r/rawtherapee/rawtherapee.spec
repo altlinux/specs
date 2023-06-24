@@ -9,7 +9,7 @@
 
 Name: rawtherapee
 Version: 5.9%{?_enable_snapshot:.%git_distance}
-Release: alt1
+Release: alt1.1
 
 Summary: THe Experimental RAw Photo Editor
 License: GPLv3+
@@ -24,6 +24,7 @@ Source: rawtherapee-%version.tar
 #Source: %url/shared/source/%name-%version.tar.xz
 Source: https://github.com/Beep6581/RawTherapee/releases/download/%version/%name-%version.tar.xz
 %endif
+Patch1: rawtherapee-5.9-alt-gcc-13.patch
 
 %define gtk_ver 3.22.24
 %define tiff_ver 4.0.4
@@ -57,6 +58,8 @@ This package provides noarch data needed for Raw Therapee to work.
 
 %prep
 %setup
+%patch1 -p1
+
 # Do not install useless rtstart:
 subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
 
@@ -87,6 +90,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Jun 24 2023 Yuri N. Sedunov <aris@altlinux.org> 5.9-alt1.1
+- fixed build with gcc-13
+
 * Mon Nov 28 2022 Yuri N. Sedunov <aris@altlinux.org> 5.9-alt1
 - 5.9
 
