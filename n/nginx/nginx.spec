@@ -1,7 +1,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.24.0
-Release: alt1
+Release: alt2
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre2-devel libssl-devel perl-devel zlib-devel libkrb5-devel
@@ -329,6 +329,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 1.24.0-alt2
+- updated pam module to 1.5.5
+
 * Mon May 22 2023 Anton Farygin <rider@altlinux.ru> 1.24.0-alt1
 - 1.24.0
 - removed deprecated ipv6 configure flag
