@@ -1,5 +1,5 @@
 Name: slade
-Version: 3.2.2
+Version: 3.2.4
 Release: alt1
 
 Summary: SLADE3 Doom editor
@@ -87,16 +87,17 @@ install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
 done
 
 %files
-%dir %_iconsdir/hicolor/64x64
-%dir %_iconsdir/hicolor/64x64/apps
-%dir %_iconsdir/hicolor/128x128
-%dir %_iconsdir/hicolor/128x128/apps
+%_iconsdir/hicolor/*/apps/%name.png
 %doc README.md LICENSE
 %_bindir/%name
 %_datadir/slade3/
 %_desktopdir/%name.desktop
+%_datadir/metainfo/net.mancubus.SLADE.metainfo.xml
 
 %changelog
+* Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 3.2.4-alt1
+- Update to new version
+
 * Mon Apr 24 2023 Artyom Bystrov <arbars@altlinux.org> 3.2.2-alt1
 - Update to new version
 

@@ -2,7 +2,7 @@
 
 Name: gzdoom
 Version: 4.10.0
-Release: alt1
+Release: alt2
 
 Summary: Enhanced Doom engine
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
@@ -94,18 +94,22 @@ done
 #icons
 
 #fm_banks
-%_datadir/%name/fm_banks/
+%_gamesdatadir/doom/fm_banks/
 
 %doc docs/{console,rh-log,skins}.*
 
 %_bindir/%name
 %_docdir/%name/
-%_datadir/doom
+%_datadir/%name/*
+%_datadir/doom/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
-%_datadir/%name/soundfonts/%name.sf2
+%_gamesdatadir/doom/soundfonts/*
 
 %changelog
+* Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 4.10.0-alt2
+- Fix build on GCC13
+
 * Tue Jan 31 2023 Artyom Bystrov <arbars@altlinux.org> 4.10.0-alt1
 - Update to new version
 
