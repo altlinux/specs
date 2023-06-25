@@ -11,7 +11,7 @@
 
 Name:    python3-module-%oname
 Version: 0.40.0
-Release: alt1
+Release: alt1.1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
@@ -22,7 +22,7 @@ URL:     https://pypi.org/project/llvmlite
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: clang%{llvm_version}.0 llvm%{llvm_version}.0-devel libstdc++-devel lld%{llvm_version}.0
+BuildRequires: clang%{llvm_version}.1 llvm%{llvm_version}.1-devel libstdc++-devel lld%{llvm_version}.1
 
 Source:  %name-%version.tar
 
@@ -67,6 +67,10 @@ export LLVM_CONFIG=%_bindir/llvm-config-%llvm_version
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun Jun 25 2023 L.A. Kostis <lakostis@altlinux.ru> 0.40.0-alt1.1
+- Fix FTBFS:
+  + llvm11.0->llvm11.1.
+
 * Wed May 03 2023 Grigory Ustinov <grenka@altlinux.org> 0.40.0-alt1
 - Automatically updated to 0.40.0.
 
