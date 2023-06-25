@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: PsyDoom
-Version: 1.0.1
+Version: 1.1.1
 Release: alt1
 
 Summary: Port Doom from PSOne to PC
@@ -65,6 +65,8 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 1.1.1-alt1
+- Update to new version
 
 * Sun Nov 20 2022 Artyom Bystrov <arbars@altlinux.org> 1.0.1-alt1
 - initial build for ALT Sisyphus

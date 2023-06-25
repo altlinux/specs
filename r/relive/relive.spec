@@ -1,6 +1,6 @@
 Name: relive
 Version: 1.0.4587
-Release: alt1
+Release: alt2
 Summary: An Open-Source Engine Replacement for Oddworld: Abe's Oddysee and Oddworld: Abe's Exoddus
 Group: Games/Arcade
 License: MIT
@@ -63,6 +63,11 @@ install -D -m0755 %SOURCE3 %buildroot%_bindir/%name-ae
 %_desktopdir/*.desktop
 %_pixmapsdir/%name.png
 %_datadir/%name
+
 %changelog
+* Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 1.0.4587-alt2
+- Update sources
+- Fix build on GCC13
+
 * Tue Jul 6 2022 Artyom Bystrov <arbars@altlinux.org> 1.0.4587-alt1
  - initial release

@@ -1,6 +1,6 @@
 Name:     bstone
 Version:  1.2.12
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Unofficial source port for Blake Stone series
 License:  GPL2
@@ -59,5 +59,8 @@ install -Dm0755 %_cmake__builddir/src/bstone %buildroot%_bindir/bstone
 %_bindir/%name
 
 %changelog
+* Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 1.2.12-alt1.1
+- Update patch for fixing headers
+
 * Fri Dec 09 2022 Artyom Bystrov <arbars@altlinux.org> 1.2.12-alt1
 - Initial build for Sisyphus
