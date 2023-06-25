@@ -1,5 +1,5 @@
 Name: mfgtools
-Version: 1.5.21
+Version: 1.5.109
 Release: alt1
 
 Summary: Freescale/NXP I.MX Chip image deploy tools
@@ -90,6 +90,9 @@ EOT
 %_udevrulesdir/*
 
 %changelog
+* Sun Jun 25 2023 Pavel Nakonechnyi <zorg@altlinux.org> 1.5.109-alt1
+- updated to 1.5.109
+
 * Sun Apr 09 2023 Pavel Nakonechnyi <zorg@altlinux.org> 1.5.21-alt1
 - updated to 1.5.21
 
