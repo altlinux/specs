@@ -25,7 +25,7 @@
 
 Name: curl
 Version: 8.1.2
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -200,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 8.1.2-alt2
+- built with ngtcp 0.16 and nghttp3 (apply patches from upstream git)
+
 * Tue May 30 2023 Anton Farygin <rider@altlinux.ru> 8.1.2-alt1
 - 8.1.0 -> 8.1.2
 

@@ -1,7 +1,9 @@
 %global _unpackaged_files_terminate_build 1
+%define ngtcpsoname 13
+%define ngtcp2_crypto_gnutls 5
 
 Name: ngtcp2
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 Summary: An implementation of the RFC9000 QUIC protocol
 
@@ -10,7 +12,6 @@ Group: System/Libraries
 Url: https://github.com/ngtcp2/ngtcp2
 Vcs: https://github.com/ngtcp2/ngtcp2.git
 Source: %name-%version.tar
-#Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ CUnit-devel
 # need openssl-quic branch
@@ -22,17 +23,26 @@ BuildRequires: libev-devel
 %description
 %summary.
 
-%package -n lib%name
+%package -n lib%name.%ngtcpsoname
 Summary: An implementation of the RFC9000 QUIC protocol
 Group: System/Libraries
+Requires: lib%{name}_crypto_gnutls%{ngtcp2_crypto_gnutls} = %EVR
 
-%description -n lib%name
+%description -n lib%name.%ngtcpsoname
+%summary.
+
+%package -n lib%{name}_crypto_gnutls%{ngtcp2_crypto_gnutls}
+Summary: %name GnuTLS crypto library
+Group: System/Libraries
+
+%description -n lib%{name}_crypto_gnutls%{ngtcp2_crypto_gnutls}
 %summary.
 
 %package -n lib%name-devel
 Summary: Files needed for building applications with libngtcp2
 Group: Development/C
-Requires: lib%name = %EVR
+Requires: lib%name.%ngtcpsoname = %EVR
+Requires: lib%{name}_crypto_gnutls%{ngtcp2_crypto_gnutls} = %EVR
 
 %description -n lib%name-devel
 The libngtcp2-devel package includes libraries and header files needed
@@ -54,8 +64,13 @@ rm -rf %buildroot%_defaultdocdir/%name
 %make_build check
 
 
-%files -n lib%name
-%_libdir/*.so.*
+%files -n lib%name.%ngtcpsoname
+%_libdir/lib%{name}.so.%{ngtcpsoname}.*
+%_libdir/lib%{name}.so.%{ngtcpsoname}
+
+%files -n lib%{name}_crypto_gnutls%{ngtcp2_crypto_gnutls}
+%_libdir/lib%{name}_crypto_gnutls.so.%{ngtcp2_crypto_gnutls}*
+
 %doc README.rst
 
 %files -n lib%name-devel
@@ -64,6 +79,10 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_libdir/*.so
 
 %changelog
+* Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
+- 0.15.0 -> 0.16.0
+- The library package was renamed in accordance with the Shared Libs Policy.
+
 * Thu May 18 2023 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
 - 0.13.1 -> 0.15.0
 
