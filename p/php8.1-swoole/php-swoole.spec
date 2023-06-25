@@ -1,6 +1,6 @@
 %define		php_extension	swoole
 %define 	real_name	swoole
-%define		real_version	4.8.12
+%define		real_version	4.8.13
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%real_version
@@ -8,16 +8,12 @@ Release:	alt1.%_php_release_version
 
 Summary:	Coroutine-based concurrency library for PHP
 
-License:	%asl 2.0
+License:	Apache-2.0
 Group:		System/Servers
 URL:		https://pecl.php.net/package/swoole
-#URL:		https://github.com/swoole/swoole-src
+VCS:		https://github.com/swoole/swoole-src
 #URL:		https://www.swoole.com/coding
-
-Packager:	Nikolay A. Fetisov <naf@altlinux.org>
-
 Source0:	%real_name-%real_version.tar
-Patch0:		%real_name-%real_version.patch
 
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
@@ -27,7 +23,7 @@ BuildRequires(pre): rpm-build-php8.1-version
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: php-devel = %php_version
 
-BuildRequires: boost-devel-headers gcc-c++ glibc-devel-static libbrotli-devel libcurl-devel libpcre-devel libssl-devel valgrind-devel zlib-devel
+BuildRequires: boost-devel-headers gcc-c++ libbrotli-devel libcurl-devel libpcre-devel libssl-devel zlib-devel
 
 # Using symbols from php-sockets:
 Requires: php%_php_suffix-sockets
@@ -58,7 +54,6 @@ Swoole main features are includes:
 
 %prep
 %setup -c
-%patch0 -p1
 
 
 %build
@@ -104,6 +99,11 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%version-%release
+
+* Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 4.8.13-alt1
+- 4.8.13
+- fix License according SPDX
+- cleanup buildrequires
 
 * Tue Jan 12 2023 Nikolay A. Fetisov <naf@altlinux.org> 4.8.12-alt1
 - New version
