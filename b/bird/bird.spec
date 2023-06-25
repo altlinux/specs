@@ -7,8 +7,8 @@
 %define protocols all
 
 Name: bird%_suffix
-Version: 2.13
-Release: alt2
+Version: 2.13.1
+Release: alt1
 Summary: BIRD Internet Routing Daemon
 
 Group: Networking/Other
@@ -111,6 +111,9 @@ make test
 %_sbindir/birdcl
 
 %changelog
+* Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 2.13.1-alt1
+- 2.13 -> 2.13.1
+
 * Sat Jun 17 2023 Anton Farygin <rider@altlinux.ru> 2.13-alt2
 - 2.0.7-> 2.13
 - set package name "bird" for sisyphus and bird2 for branches with bird-1.6.8
