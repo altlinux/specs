@@ -2,18 +2,19 @@
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 %define version 2.7.0
-%define release alt1
+%define release alt2
 
 Summary: Advanced Mesa DRI Configurator
 Name: %name
 Version: %version
 Release: %release
-Source0: %name-%version.tar
-Patch: %name-%version-%release.patch
 License: GPL-3
 Group: System/Configuration/Hardware
 Url: https://gitlab.freedesktop.org/mesa/adriconf/
 Packager: L.A. Kostis <lakostis@altlinux.org>
+
+Source0: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): cmake
 
@@ -27,7 +28,7 @@ standard drirc file used by the Mesa drivers.
 
 %prep
 %setup -q
-%patch -p2
+%patch -p1
 
 %build
 %_cmake \
@@ -50,6 +51,9 @@ install -m644 flatpak/org.freedesktop.%name.metainfo.xml %buildroot%{_datadir}/m
 %_iconsdir/*.png
 
 %changelog
+* Sun Jun 25 2023 L.A. Kostis <lakostis@altlinux.ru> 2.7.0-alt2
+- Apply fix to compile with gcc-13.
+
 * Sun Apr 16 2023 L.A. Kostis <lakostis@altlinux.ru> 2.7.0-alt1
 - 2.7.0.
 
