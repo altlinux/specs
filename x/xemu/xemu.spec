@@ -1,5 +1,5 @@
 Name:     xemu
-Version:  0.7.71
+Version:  0.7.96
 Release:  alt1
 
 Summary:  Original Xbox Emulator for Windows, macOS, and Linux (Active Development)
@@ -52,5 +52,8 @@ install -vDm644 -t %buildroot%_desktopdir  ui/xemu.desktop
 %doc README.md LICENSE
 
 %changelog
+* Mon Jun 26 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.96-alt1
+- Update to new version
+
 * Fri Dec 16 2022 Artyom Bystrov <arbars@altlinux.org> 0.7.71-alt1
 - Initial build for Sisyphus
