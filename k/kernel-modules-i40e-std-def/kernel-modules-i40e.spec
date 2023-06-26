@@ -1,6 +1,6 @@
 %define module_name      i40e
-%define module_version   2.22.18
-%define module_release   alt2
+%define module_version   2.22.20
+%define module_release   alt1
 
 %define flavour          std-def
 %define karch            x86_64 aarch64
@@ -61,6 +61,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Jun 26 2023 Anton Farygin <rider@altlinux.ru> 2.22.20-alt1
+- 2.22.20
 
 * Sat May 27 2023 Anton Farygin <rider@altlinux.ru> 2.22.18-alt2
 - auxiliary.ko renamed to intel_auxiliary.ko in upstream (fix build for 5.10)

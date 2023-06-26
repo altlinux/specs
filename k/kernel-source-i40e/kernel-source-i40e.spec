@@ -1,5 +1,5 @@
 %define module_name i40e
-%define module_version 2.22.18
+%define module_version 2.22.20
 
 %define module_source %module_name.tar
 
@@ -33,6 +33,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Mon Jun 26 2023 Anton Farygin <rider@altlinux.ru> 2.22.20-alt1
+- 2.22.20
+
 * Wed Apr 26 2023 Alexey Shabalin <shaba@altlinux.org> 2.22.18-alt1
 - 2.22.18.
 
