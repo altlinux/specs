@@ -1,6 +1,6 @@
 Name:    glpi-agent
-Version: 1.4
-Release: alt2
+Version: 1.5
+Release: alt1
 
 Summary: GLPI Agent
 License: GPL-2.0
@@ -45,6 +45,8 @@ BuildRequires: perl-Text-Template
 BuildRequires: perl-UNIVERSAL-require
 BuildRequires: perl-XML-TreePP
 BuildRequires: perl-XML-XPath
+BuildRequires: perl-HTTP-Cookies
+BuildRequires: perl-XML-LibXML
 
 %description
 The GLPI Agent is a generic management agent. It can perform a certain number
@@ -125,6 +127,7 @@ find %buildroot -name .packlist -delete
 %config(noreplace) %_sysconfdir/%name/server-test-plugin.cfg
 %config(noreplace) %_sysconfdir/%name/ssl-server-plugin.cfg
 %config(noreplace) %_sysconfdir/%name/toolbox-plugin.cfg
+%config(noreplace) %_sysconfdir/%name/basic-authentication-server-plugin.cfg
 %_bindir/*
 %_datadir/%name
 %_sysconfdir/cron.hourly/%name
@@ -133,6 +136,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Sat Jun 24 2023 Andrey Cherepanov <cas@altlinux.org> 1.5-alt1
+- New version.
+
 * Mon Feb 06 2023 Andrey Cherepanov <cas@altlinux.org> 1.4-alt2
 - Removed autorequirements of perl(setup.pm).
 
