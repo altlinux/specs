@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: libtraceevent
-Version: 1.7.2
-Release: alt2
+Version: 1.7.3
+Release: alt1
 Summary: Library to parse raw trace event formats
 License: GPL-2.0-only and LGPL-2.1-only
 Group: System/Libraries
@@ -66,6 +66,9 @@ utest/trace-utest
 %_man3dir/*.3.*
 
 %changelog
+* Mon Jun 26 2023 Vitaly Chikunov <vt@altlinux.org> 1.7.3-alt1
+- Update to libtraceevent-1.7.3 (2023-06-07).
+
 * Thu May 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.7.2-alt2
 - spec: Disable parallel build.
 - spec: Fix source-highlight warning when building doc.

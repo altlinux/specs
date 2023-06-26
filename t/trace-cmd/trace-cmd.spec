@@ -8,8 +8,8 @@
 %def_without python
 
 Name:     trace-cmd
-Version: 3.1.6
-Release: alt2
+Version: 3.2
+Release: alt1
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
 License:  GPL-2.0 and LGPL-2.1
@@ -117,7 +117,7 @@ rm %buildroot%_datadir/doc/%name/*.html
 
 %check
 # Basic tests
-%buildroot%_bindir/trace-cmd | grep version.%version..%version-%release
+%buildroot%_bindir/trace-cmd | grep 'version.%version.*(%version-%release'
 %buildroot%_bindir/trace-cmd options
 
 # Internal unit tests
@@ -156,6 +156,9 @@ vm-run --cpu=2 --append=schedstats=enable '
 %endif
 
 %changelog
+* Mon Jun 26 2023 Vitaly Chikunov <vt@altlinux.org> 3.2-alt1
+- Update to trace-cmd-v3.2 (2023-06-07).
+
 * Thu May 11 2023 Vitaly Chikunov <vt@altlinux.org> 3.1.6-alt2
 - spec: Add Obsoletes for trace-cmd-libs (RM#100703).
 

@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name:     kernelshark
-Version:  2.2.0
-Release:  alt4
+Version: 2.2.1
+Release: alt1
 # Epoch incremented, because previously kernelshark is packaged from trace-cmd
 # spec which have much bigger version number (2.9.1).
 Epoch:    1
@@ -82,6 +82,9 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/*.appdata.xml
 %_metainfodir/*.appdata.xml
 
 %changelog
+* Mon Jun 26 2023 Vitaly Chikunov <vt@altlinux.org> 1:2.2.1-alt1
+- Update to kernelshark-v2.2.1 (2023-06-07).
+
 * Thu May 18 2023 Vitaly Chikunov <vt@altlinux.org> 1:2.2.0-alt4
 - Fix graphics display because of missing FreeSans.ttf (ALT#46184).
 - Fix capturing when directory name contains a space (ALT#46185).
