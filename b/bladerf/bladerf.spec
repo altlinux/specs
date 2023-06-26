@@ -4,14 +4,14 @@
 %define bladerf_group bladerf
 %define use_syslog 1
 Name: bladerf
-Version: 2021.03
+Version: 2.5.0
 Release: alt1
+Epoch: 1
 Summary: SDR radio receiver
 License: GPL-2.0-only
 Group: Communications
 Url: http://nuand.com/
 # Url: https://github.com/Nuand/bladeRF.git
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Source1: ad9361.tar
@@ -26,8 +26,8 @@ BuildRequires: help2man
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(udev)
 
-Provides: lib%name = %version-%release
-Provides: %name-udev = %version-%release
+Provides: lib%name = %EVR
+Provides: %name-udev = %EVR
 
 %description
 The software for bladeRF USB 3.0 Superspeed Software Defined Radio.
@@ -35,7 +35,7 @@ The software for bladeRF USB 3.0 Superspeed Software Defined Radio.
 %package -n lib%name-devel
 Summary: Development files for libbladeRF
 Group: Development/Other
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Libraries and header files for developing applications that want to make
@@ -85,6 +85,9 @@ getent group %bladerf_group >/dev/null || groupadd -r %bladerf_group
 %_pkgconfigdir/libbladeRF.pc
 
 %changelog
+* Mon Jun 26 2023 Anton Midyukov <antohami@altlinux.org> 1:2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Jun 28 2021 Anton Midyukov <antohami@altlinux.org> 2021.03-alt1
 - new version 2021.03
 
