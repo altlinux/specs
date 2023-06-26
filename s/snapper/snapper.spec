@@ -1,10 +1,10 @@
 # systemd units for snapper
 %define snapper_svcs snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
 
-%define soname 6
+%define soname 7
 
 Name: snapper
-Version: 0.10.4
+Version: 0.10.5
 Group: System/Base
 Release: alt1
 Summary: Tool for filesystem snapshot management
@@ -106,6 +106,7 @@ autoreconf -vfi
   --disable-ext4 \
   --disable-zypp \
   --enable-selinux \
+  --with-pam-security=%_pam_modules_dir \
   %nil
 %make_build
 
@@ -140,6 +141,7 @@ make check
 %config(noreplace) %_sysconfdir/logrotate.d/snapper
 %_unitdir/%{name}*
 %_datadir/bash-completion/completions/snapper
+%_datadir/zsh/site-functions/_snapper
 %_datadir/dbus-1/system.d/org.opensuse.Snapper.conf
 %_datadir/dbus-1/system-services/org.opensuse.Snapper.service
 %_mandir/man8/%name.8*
@@ -174,10 +176,14 @@ make check
 %_includedir/%name/
 
 %files -n pam_snapper
-%_libdir/security/pam_snapper.so
+%_pam_modules_dir/*
 %prefix/lib/pam_snapper/
 %_mandir/man8/pam_snapper.8*
 
 %changelog
+* Mon Jun 26 2023 Anton Farygin <rider@altlinux.ru> 0.10.5-alt1
+- 0.10.5
+- fix pam module path (closes: #46653)
+
 * Sat Jun 03 2023 Anton Farygin <rider@altlinux.ru> 0.10.4-alt1
 - first build for ALT, based on specfile from Fedora project
