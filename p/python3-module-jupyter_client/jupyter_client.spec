@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.2.0
+Version: 8.3.0
 Release: alt1
 Summary: Jupyter protocol implementation and client libraries
 License: BSD-3-Clause
@@ -20,6 +20,8 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
 %if_with check
+BuildRequires: python3-module-ipykernel
+BuildRequires: python3-module-ipython
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-jupyter
 BuildRequires: python3-module-pytest-timeout
@@ -58,6 +60,9 @@ sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
 
 
 %changelog
+* Mon Jun 26 2023 Anton Vyatkin <toni@altlinux.org> 8.3.0-alt1
+- New version 8.3.0 (Closes: #44225).
+
 * Fri Jun 02 2023 Anton Vyatkin <toni@altlinux.org> 8.2.0-alt1
 - New version 8.2.0.
 
