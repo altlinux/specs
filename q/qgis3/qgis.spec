@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 8.2.1
+%define grass_version 8.3.0
 %def_enable grass
 %def_enable python
 %def_enable devel
@@ -8,7 +9,7 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.30.3
+Version: 3.32.0
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -74,6 +75,7 @@ BuildRequires: python3-module-sip6
 BuildRequires: python3-module-OWSLib
 %endif
 BuildRequires: qt5-base-devel
+BuildRequires: qt5-3d-devel
 BuildRequires: qt5-location-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-svg-devel
@@ -96,6 +98,8 @@ BuildRequires: libnetcdf-devel
 BuildRequires: libxml2-devel
 BuildRequires: /proc
 BuildRequires: libzstd-devel
+BuildRequires: libpdal-devel
+BuildRequires: pdal
 
 #Requires: libqt4-sql-sqlite
 Requires: qca-qt5-ossl
@@ -294,6 +298,7 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %_libdir/lib%{rname}_core.so.*
 %_libdir/lib%{rname}_gui.so.*
 %_libdir/lib%{rname}_native.so.*
+%_libdir/lib%{rname}_3d.so.*
 %_libdir/%rname
 %_bindir/%rname
 %_bindir/%{rname}_process
@@ -356,6 +361,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Sat Jun 24 2023 Andrey Cherepanov <cas@altlinux.org> 3.32.0-alt1
+- New version.
+
 * Sat May 27 2023 Andrey Cherepanov <cas@altlinux.org> 3.30.3-alt1
 - New version.
 

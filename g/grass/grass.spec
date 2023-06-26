@@ -1,9 +1,9 @@
-%define shortver 82
-%define libver 8.2
+%define shortver 83
+%define libver 8.3
 
 Name:    grass
-Version: 8.2.1
-Release: alt1.1
+Version: 8.3.0
+Release: alt1
 
 %def_with mysql
 %def_with postgres
@@ -131,8 +131,8 @@ This package contains development headers for GRASS.
 rm lib/gis/lz4{.h,.c}
 %patch0 -p2
 %patch1 -p2
-%patch2 -p2
-%patch3 -p2
+%patch2 -p1
+%patch3 -p1
 %ifarch %e2k
 sed -i "s|GOMP_parallel_start|__omp_parallel_start|;s|-lgomp|-fopenmp|" configure
 sed -i '/--cpp/s/$(CC)/clang/' python/libgrass_interface_generator/Makefile
@@ -320,6 +320,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Mon Jun 26 2023 Andrey Cherepanov <cas@altlinux.org> 8.3.0-alt1
+- New version.
+
 * Wed Mar 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.2.1-alt1.1
 - Fixed build for Elbrus.
 
