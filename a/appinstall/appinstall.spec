@@ -1,5 +1,5 @@
 Name: appinstall
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 Summary: GUI frontend for install third-party applications
 
@@ -24,6 +24,12 @@ Requires: eepm
 GUI frontend for install third-party applications using epm play.
 
 %prep
+# For translators:
+# 1. Install eepm
+# 2. make make LUPDATE=lupdate-qt5 LRELEASE=lrelease-qt5 update_translations all clean
+# 3. subst '/oldsource/d' *.ts
+# 4. Translate appinstall_ru.ts in kde5-lokalize
+# 5. Commit strings.cpp and *.ts
 %setup -q
 
 %build
@@ -46,6 +52,9 @@ export PATH=$PATH:%_qt5_bindir
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Mon Jun 26 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.3-alt1
+- Update Russian translation for eepm-3.57.7 (ALT #46564).
+
 * Tue Jun 13 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
 - Used /dev/null as stdin for prevent epm hang (thanks Mikhail Tergoev) (ALT #43747).
 
