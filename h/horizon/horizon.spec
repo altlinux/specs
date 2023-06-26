@@ -1,9 +1,9 @@
 Name: horizon
-Version: 2.2.0
-Release: alt2
+Version: 2.5.0
+Release: alt1
 
 Summary: Horizon is a free EDA package
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Engineering
 Url: https://github.com/horizon-eda/horizon
 
@@ -23,6 +23,9 @@ BuildRequires: libcurl-devel
 BuildRequires: libglm-devel
 BuildRequires: boost-devel-headers
 BuildRequires: opencascade-devel
+BuildRequires: libsigc++2-devel
+BuildRequires: libarchive-devel
+BuildRequires: libspnav-devel
 
 %description
 %summary
@@ -32,7 +35,11 @@ BuildRequires: opencascade-devel
 %autopatch -p1
 
 %build
-#configure
+%add_optflags -I%_includedir/glibmm-2.4 -I%_libdir/glibmm-2.4/include
+%add_optflags -I%_includedir/glib-2.0 -I%_libdir/glib-2.0/include
+%add_optflags -I%_includedir/sigc++-2.0
+%add_optflags -I%_includedir/glm
+export CXXFLAGS='%optflags' 
 %make_build
 
 %install
@@ -46,6 +53,9 @@ BuildRequires: opencascade-devel
 %doc *.md
 
 %changelog
+* Mon Jun 26 2023 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- new version 2.5.0
+
 * Mon Jun 26 2023 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt2
 - fix build with gcc13
 - cleanup Packager
