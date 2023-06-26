@@ -1,5 +1,5 @@
 Name: bluefish
-Version: 2.2.13
+Version: 2.2.14
 Release: alt1
 
 Summary: A GTK3 web development application for experienced users
@@ -10,15 +10,15 @@ Url: http://bluefish.openoffice.nl
 License: GPL-3.0-or-later
 Group: Editors
 
-Source: %name-%version.tar
 # Source-url: https://sourceforge.net/projects/bluefish/files/bluefish/%version/bluefish-%version.tar.gz/download
+Source: %name-%version.tar
 
 # Russian translation
 Source1: ru.po
 Source2: plugin_about-ru.po
 Source3: plugin_htmlbar-ru.po
 
-# Fedora patchs
+# Fedora patches
 # Avoid potential aliasing issues in zencoding plugin
 Patch0: bluefish-2.2.13-strict-aliasing.patch
 
@@ -111,6 +111,9 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Mon Jun 26 2023 Anton Midyukov <antohami@altlinux.org> 2:2.2.14-alt1
+- new version (2.2.14) with rpmgs script
+
 * Sun Apr 23 2023 Anton Midyukov <antohami@altlinux.org> 2:2.2.13-alt1
 - new version 2.2.13
 - update strict-aliasing.patch
