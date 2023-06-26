@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define appdir  %_datadir/gambas3
 %ifarch %e2k ppc64le
 %def_disable qtwebengine
@@ -15,226 +17,229 @@ Provides:  gambas3-%{*} = %EVR \
 Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
-Name:		gambas
-Version:	3.17.3
-Release:	alt1
+Name:    gambas
+Version: 3.18.3
+Release: alt1
 
-Summary:	IDE based on a basic interpreter with object extensions
-Group:		Development/Tools
-License:	GPL-2.0+
+Summary: IDE based on a basic interpreter with object extensions
+License: GPL-2.0+
+Group:   Development/Tools
+URL:     http://gambas.sourceforge.net/
 
-URL:		http://gambas.sourceforge.net/
-Source0:	%name-%version.tar
-Source1:	%name.desktop
+Source0: %name-%version.tar
+Source1: %name.desktop
 
 # Unable to build gb.form
 ExcludeArch: armh
 
-BuildRequires:	rpm-build-xdg
-BuildRequires:	autoconf
-BuildRequires:	automake
-BuildRequires:	bzlib-devel
-BuildRequires:	fonts-ttf-dejavu
-BuildRequires:	gettext
-BuildRequires:  gcc-c++
-BuildRequires:	glibc-devel
-BuildRequires:  gstreamer1.0-devel	
-BuildRequires:  gst-plugins1.0-devel	
-BuildRequires:	imlib2-devel
-BuildRequires:  libalure-devel >= 1.2
-BuildRequires:	libcairo-devel
-BuildRequires:	libcurl-devel
-BuildRequires:	libdbus-devel
-BuildRequires:	libffi-devel
+BuildRequires: rpm-build-xdg
+BuildRequires: autoconf
+BuildRequires: automake
+BuildRequires: bzlib-devel
+BuildRequires: fonts-ttf-dejavu
+BuildRequires: gettext
+BuildRequires: gcc-c++
+BuildRequires: glibc-devel
+BuildRequires: gstreamer1.0-devel
+BuildRequires: gst-plugins1.0-devel
+BuildRequires: imlib2-devel
+BuildRequires: libalure-devel >= 1.2
+BuildRequires: libcairo-devel
+BuildRequires: libcurl-devel
+BuildRequires: libdbus-devel
+BuildRequires: libffi-devel
 %if_enabled opengl
-BuildRequires:	libGL-devel
-BuildRequires:	libGLU-devel
+BuildRequires: libGL-devel
+BuildRequires: libGLU-devel
 %endif
-BuildRequires:	libglew-devel
-BuildRequires:	libgmime3.0-devel
-BuildRequires:  libgmp-devel
-BuildRequires:	libgnome-keyring-devel
-BuildRequires:	libgsl-devel
-BuildRequires:	libgtk+2-devel
-BuildRequires:	libgtk+3-devel
-BuildRequires:	libgtkglext-devel
-BuildRequires:	libICE-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	libltdl-devel
-BuildRequires:	libmysqlclient-devel
-BuildRequires:	libopenal-devel
-BuildRequires:	libpcre-devel
-BuildRequires:	libpng-devel
-BuildRequires:	libpoppler-devel
-#BuildRequires:	libqt4-webkit-devel
-BuildRequires:	librsvg-devel
-BuildRequires:	libSDL-devel
-BuildRequires:	libSDL_image-devel
-BuildRequires:	libSDL_mixer-devel
-BuildRequires:	libSDL_ttf-devel
-BuildRequires:	libSDL2-devel
-BuildRequires:	libSDL2_image-devel
-BuildRequires:	libSDL2_mixer-devel
-BuildRequires:	libSDL2_ttf-devel
-BuildRequires:	libsqlite3-devel
-BuildRequires:	libssl-devel
-BuildRequires:	libtool
-BuildRequires:	libunixODBC-devel
-BuildRequires:	libv4l-devel
-BuildRequires:	libXcursor-devel
-BuildRequires:	libXft-devel
-BuildRequires:	libxml2-devel
-BuildRequires:	libxslt-devel
-BuildRequires:	libXtst-devel
+BuildRequires: libglew-devel
+BuildRequires: libgmime3.0-devel
+BuildRequires: libgmp-devel
+BuildRequires: libgnome-keyring-devel
+BuildRequires: libgsl-devel
+BuildRequires: libgtk+2-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: libgtkglext-devel
+BuildRequires: libICE-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libltdl-devel
+BuildRequires: libmysqlclient-devel
+BuildRequires: libopenal-devel
+BuildRequires: libpcre-devel
+BuildRequires: libpng-devel
+BuildRequires: libpoppler-devel
+#BuildRequires: libqt4-webkit-devel
+BuildRequires: librsvg-devel
+BuildRequires: libSDL-devel
+BuildRequires: libSDL_image-devel
+BuildRequires: libSDL_mixer-devel
+BuildRequires: libSDL_ttf-devel
+BuildRequires: libSDL2-devel
+BuildRequires: libSDL2_image-devel
+BuildRequires: libSDL2_mixer-devel
+BuildRequires: libSDL2_ttf-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libssl-devel
+BuildRequires: libtool
+BuildRequires: libunixODBC-devel
+BuildRequires: libv4l-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXft-devel
+BuildRequires: libxml2-devel
+BuildRequires: libxslt-devel
+BuildRequires: libXtst-devel
 %if_with jit
-#BuildRequires:	llvm-devel
+#BuildRequires: llvm-devel
 %endif
-BuildRequires:	pkg-config
-BuildRequires:	postgresql-devel
-#BuildRequires:	qt4-devel
-BuildRequires:  qt5-base-devel
-BuildRequires:  qt5-svg-devel
-BuildRequires:  qt5-x11extras-devel
+BuildRequires: pkg-config
+BuildRequires: postgresql-devel
+#BuildRequires: qt4-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-x11extras-devel
 %if_enabled qtwebkit
-BuildRequires:  qt5-webkit-devel
+BuildRequires: qt5-webkit-devel
 %endif
 %if_enabled qtwebengine
-BuildRequires:  qt5-webengine-devel
+BuildRequires: qt5-webengine-devel
 %endif
-BuildRequires:	xdg-utils
-BuildRequires:	zlib-devel
+BuildRequires: xdg-utils
+BuildRequires: zlib-devel
 
-BuildRequires:  dumb-devel
-BuildRequires:  libmodplug-devel
-BuildRequires:  libmpg123-devel
-BuildRequires:  libfluidsynth-devel
-BuildRequires:  libncurses-devel
-BuildRequires:  libzstd-devel
-BuildRequires:  libwebkit2gtk-devel
-BuildRequires:  libpoppler-cpp-devel
-BuildRequires:  libpoppler-glib-devel
+BuildRequires: dumb-devel
+BuildRequires: libmodplug-devel
+BuildRequires: libmpg123-devel
+BuildRequires: libfluidsynth-devel
+BuildRequires: libncurses-devel
+BuildRequires: libzstd-devel
+BuildRequires: libwebkit2gtk-devel
+BuildRequires: libpoppler-cpp-devel
+BuildRequires: libpoppler-glib-devel
 
-Patch1:		%name-2.99.1-nolintl.patch
-Patch2:		%name-2.99.1-noliconv.patch
+Patch1: %name-2.99.1-nolintl.patch
+Patch2: %name-2.99.1-noliconv.patch
 # Use libv4l1
-Patch4:		%name-3.12.0-use-libv4l1.patch
-Patch5:		%name-3.11.4-alt-libpoppler-bool-type-fix.patch
-Patch6:		%name-3.11.4-alt-postgre-bool-type-fix.patch
-Patch7:		%name-alt-mysql8-bool-type-fix.patch
-Patch8:    	gambas3-3.13.0-poppler-0.73.0.patch
-Patch9:	        gambas3-3.14.1-gst1.patch
+Patch4: %name-3.12.0-use-libv4l1.patch
+Patch5: %name-3.11.4-alt-libpoppler-bool-type-fix.patch
+Patch6: %name-3.11.4-alt-postgre-bool-type-fix.patch
+Patch7: %name-alt-mysql8-bool-type-fix.patch
+Patch8: gambas3-3.13.0-poppler-0.73.0.patch
+Patch9: gambas3-3.14.1-gst1.patch
+Patch10: gambas-alt-poppler23.0.patch
 
-Provides:       gambas3 = %EVR
-Obsoletes:      gambas3 < %EVR
-Provides:       %name-full = %version-%release
-Obsoletes:      %name-full < %version-%release
-Provides:       %name-examples = %version-%release
-Obsoletes:      %name-examples < %version-%release
+Provides:  gambas3 = %EVR
+Obsoletes: gambas3 < %EVR
+Provides:  %name-full = %version-%release
+Obsoletes: %name-full < %version-%release
+Provides:  %name-examples = %version-%release
+Obsoletes: %name-examples < %version-%release
 %prov3 examples
 %prov3 full
 
-Requires:      %name-runtime = %version-%release
-Requires:      %name-ide = %version-%release
+Requires: %name-runtime = %version-%release
+Requires: %name-ide = %version-%release
 # From http://gambasdoc.org/help/howto/package#t1
 # It depends on "All gambas components."
-Requires:      %name-gb-args = %version-%release
-Requires:      %name-gb-cairo = %version-%release
-Requires:      %name-gb-chart = %version-%release
-Requires:      %name-gb-clipper = %version-%release
-Requires:      %name-gb-complex = %version-%release
-Requires:      %name-gb-compress = %version-%release
-Requires:      %name-gb-crypt = %version-%release
-Requires:      %name-gb-data = %version-%release
-Requires:      %name-gb-db-form = %version-%release
-Requires:      %name-gb-db-mysql = %version-%release
-Requires:      %name-gb-db-odbc = %version-%release
-Requires:      %name-gb-db-postgresql = %version-%release
-Requires:      %name-gb-db-sqlite3 = %version-%release
-Requires:      %name-gb-dbus = %version-%release
-Requires:      %name-gb-db = %version-%release
-Requires:      %name-gb-desktop-gnome = %version-%release
-Requires:      %name-gb-desktop = %version-%release
-Requires:      %name-gb-eval-highlight = %version-%release
-Requires:      %name-gb-form-dialog = %version-%release
-Requires:      %name-gb-form-mdi = %version-%release
-Requires:      %name-gb-form-stock = %version-%release
-Requires:      %name-gb-form = %version-%release
-Requires:      %name-gb-gmp = %version-%release
-Requires:      %name-gb-gsl = %version-%release
-Requires:      %name-gb-gtk = %version-%release
-Requires:      %name-gb-gtk-opengl = %version-%release
-Requires:      %name-gb-gtk3 = %version-%release
-Requires:      %name-gb-gtk3-wayland = %version-%release
-Requires:      %name-gb-gtk3-webview = %version-%release
-Requires:      %name-gb-gtk3-x11 = %version-%release
-Requires:      %name-gb-gui = %version-%release
-Requires:      %name-gb-httpd = %version-%release
-Requires:      %name-gb-image = %version-%release
-Requires:      %name-gb-image-effect = %version-%release
-Requires:      %name-gb-image-imlib = %version-%release
-Requires:      %name-gb-image-io = %version-%release
-Requires:      %name-gb-inotify = %version-%release
+Requires: %name-gb-args = %version-%release
+Requires: %name-gb-cairo = %version-%release
+Requires: %name-gb-chart = %version-%release
+Requires: %name-gb-clipper = %version-%release
+Requires: %name-gb-complex = %version-%release
+Requires: %name-gb-compress = %version-%release
+Requires: %name-gb-crypt = %version-%release
+Requires: %name-gb-data = %version-%release
+Requires: %name-gb-db-form = %version-%release
+Requires: %name-gb-db-mysql = %version-%release
+Requires: %name-gb-db-odbc = %version-%release
+Requires: %name-gb-db-postgresql = %version-%release
+Requires: %name-gb-db-sqlite3 = %version-%release
+Requires: %name-gb-dbus = %version-%release
+Requires: %name-gb-db = %version-%release
+Requires: %name-gb-desktop-gnome = %version-%release
+Requires: %name-gb-desktop = %version-%release
+Requires: %name-gb-eval-highlight = %version-%release
+Requires: %name-gb-form-dialog = %version-%release
+Requires: %name-gb-form-mdi = %version-%release
+Requires: %name-gb-form-stock = %version-%release
+Requires: %name-gb-form = %version-%release
+Requires: %name-gb-gmp = %version-%release
+Requires: %name-gb-gsl = %version-%release
+Requires: %name-gb-gtk = %version-%release
+Requires: %name-gb-gtk-opengl = %version-%release
+Requires: %name-gb-gtk3 = %version-%release
+Requires: %name-gb-gtk3-wayland = %version-%release
+Requires: %name-gb-gtk3-webview = %version-%release
+Requires: %name-gb-gtk3-x11 = %version-%release
+Requires: %name-gb-gui = %version-%release
+Requires: %name-gb-httpd = %version-%release
+Requires: %name-gb-image = %version-%release
+Requires: %name-gb-image-effect = %version-%release
+Requires: %name-gb-image-imlib = %version-%release
+Requires: %name-gb-image-io = %version-%release
+Requires: %name-gb-inotify = %version-%release
 %if_with jit
-Requires:      %name-gb-jit = %version-%release
+Requires: %name-gb-jit = %version-%release
 %endif
-Requires:      %name-gb-logging = %version-%release
-Requires:      %name-gb-map = %version-%release
-Requires:      %name-gb-markdown = %version-%release
-Requires:      %name-gb-media = %version-%release
-Requires:      %name-gb-memcached = %version-%release
-Requires:      %name-gb-mime = %version-%release
-Requires:      %name-gb-ncurses = %version-%release
-Requires:      %name-gb-net-curl = %version-%release
-Requires:      %name-gb-net-pop3 = %version-%release
-Requires:      %name-gb-net-smtp = %version-%release
-Requires:      %name-gb-net = %version-%release
-Requires:      %name-gb-openal = %version-%release
+Requires: %name-gb-logging = %version-%release
+Requires: %name-gb-map = %version-%release
+Requires: %name-gb-markdown = %version-%release
+Requires: %name-gb-media = %version-%release
+Requires: %name-gb-memcached = %version-%release
+Requires: %name-gb-mime = %version-%release
+Requires: %name-gb-ncurses = %version-%release
+Requires: %name-gb-net-curl = %version-%release
+Requires: %name-gb-net-pop3 = %version-%release
+Requires: %name-gb-net-smtp = %version-%release
+Requires: %name-gb-net = %version-%release
+Requires: %name-gb-openal = %version-%release
 %if_enabled opengl
-Requires:      %name-gb-opengl = %version-%release
-Requires:      %name-gb-opengl-glu = %version-%release
-Requires:      %name-gb-opengl-glsl = %version-%release
-Requires:      %name-gb-opengl-sge = %version-%release
-Requires:      %name-gb-gtk3-opengl = %version-%release
+Requires: %name-gb-opengl = %version-%release
+Requires: %name-gb-opengl-glu = %version-%release
+Requires: %name-gb-opengl-glsl = %version-%release
+Requires: %name-gb-opengl-sge = %version-%release
+Requires: %name-gb-gtk3-opengl = %version-%release
 %endif
-Requires:      %name-gb-openssl = %version-%release
-Requires:      %name-gb-option = %version-%release
-Requires:      %name-gb-pcre = %version-%release
-Requires:      %name-gb-pdf = %version-%release
-#Requires:      %name-gb-qt4 = %version-%release
-#Requires:      %name-gb-qt4-ext = %version-%release
-#Requires:      %name-gb-qt4-webkit = %version-%release
-#Requires:      %name-gb-qt4-opengl = %version-%release
-Requires:      %name-gb-report = %version-%release
-Requires:      %name-gb-report2 = %version-%release
-Requires:      %name-gb-scanner = %version-%release
-Requires:      %name-gb-sdl = %version-%release
-Requires:      %name-gb-sdl-sound = %version-%release
-Requires:      %name-gb-sdl2 = %version-%release
-Requires:      %name-gb-sdl2-audio = %version-%release
-Requires:      %name-gb-settings = %version-%release
-Requires:      %name-gb-signal = %version-%release
-Requires:      %name-gb-util = %version-%release
-Requires:      %name-gb-util-web = %version-%release
-Requires:      %name-gb-v4l = %version-%release
-Requires:      %name-gb-vb = %version-%release
-Requires:      %name-gb-xml = %version-%release
-Requires:      %name-gb-xml-html = %version-%release
-Requires:      %name-gb-xml-libxml = %version-%release
-Requires:      %name-gb-xml-rpc = %version-%release
-Requires:      %name-gb-xml-xslt = %version-%release
-Requires:      %name-gb-web = %version-%release
+Requires: %name-gb-openssl = %version-%release
+Requires: %name-gb-option = %version-%release
+Requires: %name-gb-pcre = %version-%release
+Requires: %name-gb-pdf = %version-%release
+#Requires: %name-gb-qt4 = %version-%release
+#Requires: %name-gb-qt4-ext = %version-%release
+#Requires: %name-gb-qt4-webkit = %version-%release
+#Requires: %name-gb-qt4-opengl = %version-%release
+Requires: %name-gb-report = %version-%release
+Requires: %name-gb-report2 = %version-%release
+Requires: %name-gb-scanner = %version-%release
+Requires: %name-gb-sdl = %version-%release
+Requires: %name-gb-sdl-sound = %version-%release
+Requires: %name-gb-sdl2 = %version-%release
+Requires: %name-gb-sdl2-audio = %version-%release
+Requires: %name-gb-settings = %version-%release
+Requires: %name-gb-signal = %version-%release
+Requires: %name-gb-util = %version-%release
+Requires: %name-gb-util-web = %version-%release
+Requires: %name-gb-v4l = %version-%release
+Requires: %name-gb-vb = %version-%release
+Requires: %name-gb-xml = %version-%release
+Requires: %name-gb-xml-html = %version-%release
+Requires: %name-gb-xml-libxml = %version-%release
+Requires: %name-gb-xml-rpc = %version-%release
+Requires: %name-gb-xml-xslt = %version-%release
+Requires: %name-gb-web = %version-%release
 # New components
-Requires:      %name-gb-form-editor = %version-%release
-Requires:      %name-gb-qt5 = %version-%release
-Requires:      %name-gb-qt5-opengl = %version-%release
-Requires:      %name-gb-qt5-webkit = %version-%release
-Requires:      %name-gb-qt5-ext = %version-%release
-Requires:      %name-gb-form-terminal = %version-%release
-Requires:      %name-gb-term = %version-%release
-Requires:      %name-gb-test = %version-%release
-Requires:      %name-gb-form-print = %version-%release
-Requires:      %name-gb-poppler = %version-%release
-Requires:      %name-gb-form-htmlview = %version-%release
+Requires: %name-gb-form-editor = %version-%release
+Requires: %name-gb-qt5 = %version-%release
+Requires: %name-gb-qt5-opengl = %version-%release
+Requires: %name-gb-qt5-webkit = %version-%release
+Requires: %name-gb-qt5-ext = %version-%release
+Requires: %name-gb-form-terminal = %version-%release
+Requires: %name-gb-term = %version-%release
+Requires: %name-gb-test = %version-%release
+Requires: %name-gb-form-print = %version-%release
+Requires: %name-gb-poppler = %version-%release
+Requires: %name-gb-form-htmlview = %version-%release
+Requires: %name-gb-hash = %version-%release
+Requires: %name-gb-geom = %version-%release
 
 %description
 Gambas3 is a free development environment based on a Basic interpreter
@@ -283,44 +288,48 @@ License:	GPLv2+
 Provides:	%name = %version-%release
 %prov3 ide
 
-Requires:	tar, gzip, rpm-build, gettext
-Requires:	%name-runtime = %version-%release
-Requires:	%name-devel = %version-%release
-Requires:	%name-gb-args = %version-%release
-Requires:	%name-gb-clipper = %version-%release
-Requires:	%name-gb-db = %version-%release
-Requires:	%name-gb-db-form = %version-%release
-Requires:	%name-gb-desktop = %version-%release
-Requires:	%name-gb-eval-highlight = %version-%release
-Requires:	%name-gb-form = %version-%release
-Requires:	%name-gb-form-dialog = %version-%release
-Requires:       %name-gb-form-editor = %version-%release
-Requires:	%name-gb-form-mdi = %version-%release
-Requires:	%name-gb-form-stock = %version-%release
-Requires:	%name-gb-form-terminal = %version-%release
-#Requires:	%name-gb-gtk3 = %version-%release
-#Requires:	%name-gb-gtk3-x11 = %version-%release
-#Requires:	%name-gb-gtk3-webview = %version-%release
-Requires:	%name-gb-gui = %version-%release
-Requires:	%name-gb-image = %version-%release
-Requires:	%name-gb-image-effect = %version-%release
-Requires:	%name-gb-markdown = %version-%release
-Requires:	%name-gb-qt5 = %version-%release
-Requires:	%name-gb-qt5-x11 = %version-%release
-Requires:	%name-gb-qt5-webkit = %version-%release
-Requires:	%name-gb-qt5-webview = %version-%release
-Requires:	%name-gb-settings = %version-%release
-Requires:	%name-gb-signal = %version-%release
-Requires:       %name-gb-util = %version-%release
-Requires:	%name-gb-net = %version-%release
-Requires:	%name-gb-net-curl = %version-%release
+Requires: tar, gzip, rpm-build, gettext
+Requires: %name-runtime = %version-%release
+Requires: %name-devel = %version-%release
+Requires: %name-gb-args = %version-%release
+Requires: %name-gb-clipper = %version-%release
+Requires: %name-gb-db = %version-%release
+Requires: %name-gb-db-form = %version-%release
+Requires: %name-gb-desktop = %version-%release
+Requires: %name-gb-inotify = %version-%release
+Requires: %name-gb-eval-highlight = %version-%release
+Requires: %name-gb-form = %version-%release
+Requires: %name-gb-form-dialog = %version-%release
+Requires: %name-gb-form-editor = %version-%release
+Requires: %name-gb-form-mdi = %version-%release
+Requires: %name-gb-form-stock = %version-%release
+Requires: %name-gb-form-terminal = %version-%release
+#Requires: %name-gb-gtk3 = %version-%release
+#Requires: %name-gb-gtk3-x11 = %version-%release
+#Requires: %name-gb-gtk3-webview = %version-%release
+Requires: %name-gb-gui = %version-%release
+Requires: %name-gb-image = %version-%release
+Requires: %name-gb-image-effect = %version-%release
+Requires: %name-gb-markdown = %version-%release
+Requires: %name-gb-qt5 = %version-%release
+Requires: %name-gb-qt5-x11 = %version-%release
+Requires: %name-gb-qt5-webkit = %version-%release
+Requires: %name-gb-qt5-webview = %version-%release
+Requires: %name-gb-settings = %version-%release
+Requires: %name-gb-signal = %version-%release
+Requires: %name-gb-util = %version-%release
+Requires: %name-gb-net = %version-%release
+Requires: %name-gb-net-curl = %version-%release
 %if_with jit
-Requires:	%name-gb-jit = %version-%release
+Requires: %name-gb-jit = %version-%release
 %endif
-Requires:       %name-gb-term = %version-%release
-Requires:       %name-gb-test = %version-%release
-Requires:	%name-gb-form-print = %version-%release
-Requires:	%name-gb-form-htmlview = %version-%release
+Requires: %name-gb-term = %version-%release
+Requires: %name-gb-test = %version-%release
+Requires: %name-gb-form-print = %version-%release
+Requires: %name-gb-form-htmlview = %version-%release
+Requires: %name-gb-pcre = %version-%release
+Requires: %name-gb-util-web = %version-%release
+Requires: %name-gb-geom = %version-%release
 
 %description ide
 This package includes the complete Gambas3 Development Environment
@@ -1232,6 +1241,22 @@ Requires: %name-runtime = %version-%release
 %description gb-form-htmlview
 %summary.
 
+%package gb-hash
+Summary: Gambas3 component package for gb.hash
+Group: Development/Tools
+Requires: %name-runtime = %version-%release
+
+%description gb-hash
+%summary.
+
+%package gb-geom
+Summary: Gambas3 component package for gb.geom
+Group: Development/Tools
+Requires: %name-runtime = %version-%release
+
+%description gb-geom
+%summary.
+
 %prep
 %setup -q
 %patch1 -p1
@@ -1242,6 +1267,7 @@ Requires: %name-runtime = %version-%release
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 %ifarch %e2k
 find . -name 'gambas.h' -exec sed -i "/ifndef NO_GAMBAS_CASE_REPLACEMENT/a #ifdef __cplusplus\n#include <bits/locale_facets.h>\n#endif" {} \;
 %endif
@@ -1343,12 +1369,11 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %_libdir/gambas3/gb.component
 %_libdir/gambas3/gb.debug.*
 %_libdir/gambas3/gb.draw.*
-%_libdir/gambas3/gb.geom.*
 %_libdir/gambas3/gb.eval.component
 %_libdir/gambas3/gb.eval.so*
 %_libdir/gambas3/gb.eval.la
-#_bindir/gbh3
-#_bindir/gbh3.gambas
+%_bindir/gbh3
+%_bindir/gbh3.gambas
 %_bindir/gbr3
 %_bindir/gbx3
 %_datadir/pixmaps/gambas3.png
@@ -1880,7 +1905,33 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.form.htmlview.info
 %appdir/info/gb.form.htmlview.list
 
+%files gb-hash
+%_libdir/gambas3/gb.hash.component
+%_libdir/gambas3/gb.hash.so*
+%_libdir/gambas3/gb.hash.la
+%appdir/info/gb.hash.info
+%appdir/info/gb.hash.list
+
+%files gb-geom
+%_libdir/gambas3/gb.geom.*
+%appdir/info/gb.geom.info
+%appdir/info/gb.geom.list
+
 %changelog
+* Mon Jun 26 2023 Andrey Cherepanov <cas@altlinux.org> 3.18.3-alt1
+- New version.
+
+* Sun Apr 23 2023 Andrey Cherepanov <cas@altlinux.org> 3.18.2-alt1
+- New version.
+
+* Mon Apr 10 2023 Andrey Cherepanov <cas@altlinux.org> 3.18.1-alt1
+- New version.
+
+* Thu Jan 12 2023 Andrey Cherepanov <cas@altlinux.org> 3.18.0-alt1
+- New version.
+- New components gambas-gb-hash and gambas-gb-geom.
+- Added all needed requirements for gambas-ide.
+
 * Sat Jul 23 2022 Andrey Cherepanov <cas@altlinux.org> 3.17.3-alt1
 - New version.
 - Do not build for armh.
