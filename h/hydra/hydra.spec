@@ -1,5 +1,5 @@
 Name: hydra
-Version: 9.4
+Version: 9.5
 Release: alt1
 
 Summary: A very fast network logon cracker which support many different services
@@ -89,7 +89,6 @@ PW-Inspector считывает пароли и отображает соответствующие требованиям
 %setup -qn thc-hydra-%{version}
 
 #patch0 -p1
-
 #patch1 -p0
 #patch2 -p0
 
@@ -101,7 +100,6 @@ chmod -x *.csv hydra-gtk/src/*.c hydra-gtk/src/*.h
 %build
 #set_automake_version 1.10
 #set_autoconf_version 2.5
-
 #export CC=gcc-4.3 CXX=g++-4.3
 %configure
 %make
@@ -159,6 +157,9 @@ install -pD -m644 pw-inspector.1.bz2 %buildroot%_man1dir/pw-inspector.1.bz2
 %_man1dir/pw-inspector*
 
 %changelog
+* Tue Jun 27 2023 Ilya Mashkin <oddity@altlinux.ru> 9.5-alt1
+- 9.5
+
 * Fri Sep 09 2022 Ilya Mashkin <oddity@altlinux.ru> 9.4-alt1
 - 9.4
 
