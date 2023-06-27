@@ -2,7 +2,7 @@
 
 Name: clickhouse-cpp
 Version: 2.4.0
-Release: alt1
+Release: alt2
 Summary: ClickHouse C++ client library
 Group: System/Libraries
 License: Apache-2.0
@@ -95,10 +95,12 @@ rm -rf %buildroot%_includedir/clickhouse
 
 %files -n lib%name-devel
 %_includedir/%name
-%_includedir/absl
 %_libdir/*.so
 
 %changelog
+* Tue Jun 27 2023 Pavel Vainerman <pv@altlinux.ru> 2.4.0-alt2
+- headers of the libabseail are packed together with clickhouse (Closes: #42411)
+
 * Fri Apr 28 2023 Pavel Vainerman <pv@altlinux.ru> 2.4.0-alt1
 - new version (2.4.0) with rpmgs script
 
