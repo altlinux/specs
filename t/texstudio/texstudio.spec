@@ -1,13 +1,13 @@
 Group: Publishing
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libqt4-devel pkgconfig(lcms2) pkgconfig(libopenjp2) pkgconfig(libtiff-4) qt5-phonon-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel pkgconfig(lcms2) pkgconfig(libopenjp2) pkgconfig(libtiff-4) qt5-phonon-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define fontpkgname texstudio
 Name:           texstudio
 Version:        4.5.2
-Release:        alt1
+Release:        alt2
 
 Summary:        A feature-rich editor for LaTeX documents
 # texstudio binary: GPLv3 due to static linkage of bundled qcodeedit
@@ -134,6 +134,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %doc utilities/AUTHORS utilities/COPYING utilities/manual/CHANGELOG.txt
 
 %changelog
+* Tue Jun 27 2023 Anton Midyukov <antohami@altlinux.org> 4.5.2-alt2
+- NMU: fix buildrequires
+
 * Sun Apr 16 2023 Ilya Mashkin <oddity@altlinux.ru> 4.5.2-alt1
 - 4.5.2
 
