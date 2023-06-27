@@ -3,7 +3,7 @@
 %define oname udsactor
 
 Name: openuds-actor
-Version: 3.5.0
+Version: 3.6.0
 Release: alt1
 Summary: Actor for Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause
@@ -15,10 +15,10 @@ Source1: %oname.init
 Source2: %oname.service
 Source3: %oname.logrotate
 Source4: %oname.cfg
-#Patch: %name-%version.patch
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-xdg rpm-build-python3
+Requires: realmd
 
 %description
 This package provides the required components
@@ -26,7 +26,6 @@ to allow this machine to work on an environment managed by UDS Broker.
 
 %prep
 %setup
-#%patch -p1
 
 sed -i 's|#!/usr/bin/env python3|#!/usr/bin/python3|' \
     $(find . -name '*.py')
@@ -67,6 +66,9 @@ install -p -D -m 600 %SOURCE4 %buildroot%_sysconfdir/%oname/%oname.cfg
 %_datadir/polkit-1/actions/org.openuds.pkexec.UDSActorConfig.policy
 
 %changelog
+* Thu May 25 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt1
+- v3.6 snapshot 2c61de63781fa8072c5cfb8d8602ec6605969ea6
+
 * Mon Aug 22 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt1
 - v3.5 snapshot 83394f0d34daf18722923be8d57b35627b330121
 

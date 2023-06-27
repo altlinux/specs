@@ -2,31 +2,23 @@
 %add_python3_path %_datadir/openuds/tunnel
 
 Name: openuds-tunnel
-Version: 3.5.0
-Release: alt3
+Version: 3.6.0
+Release: alt1
 Summary: Clientless remote desktop gateway
-License: Apache-2.0
+License: BSD-3-Clause and MIT
 Group: Networking/Remote access
 Url: https://github.com/dkmstr/openuds
 BuildArch: noarch
 
 Source: tunnel-server.tar
 Source2: guacamole-auth-uds-2.5.0.jar
-# Source2: guacamole-auth-uds.tar
-Source6: openuds-tunnel.service
-
-#BuildRequires(pre): rpm-build-java
-#BuildRequires: /proc
-#BuildRequires: java-devel
-#BuildRequires: maven-local maven
-#BuildRequires: maven-plugin-plugin maven-resources-plugin maven-compiler-plugin maven-dependency-plugin
-#BuildRequires: google-guice
-#BuildRequires: tomcat
+Source3: openuds-tunnel.service
 
 BuildRequires(pre): rpm-build-python3
 
 Requires: guacamole-auth-openuds
 Requires: cert-sh-functions
+Requires: python3-module-uvloop
 Obsoletes: pam_uds
 Obsoletes: libnss_uds
 
@@ -58,11 +50,9 @@ Obsoletes: openuds-guacamole-tunnel
 OpenUDS Integration Extension for Apache Guacamole.
 
 %prep
-#%%setup -c -a 2
 %setup -c
 
 %build
-#mvn -o package
 
 %install
 mkdir -p %buildroot%_datadir/openuds/tunnel
@@ -72,7 +62,7 @@ cp udstunnel.py %buildroot%_datadir/openuds/tunnel/
 mkdir -p %buildroot%_sysconfdir/%name/ssl/{certs,private}
 install -p -D -m 644 udstunnel.conf %buildroot%_sysconfdir/%name/udstunnel.conf
 # systemd unit
-install -p -D -m 644 %SOURCE6 %buildroot%_unitdir/openuds-tunnel.service
+install -p -D -m 644 %SOURCE3 %buildroot%_unitdir/openuds-tunnel.service
 
 # guacamole-auth-openuds
 mkdir -p %buildroot{%_datadir,%_sysconfdir}/guacamole/extensions
@@ -117,6 +107,9 @@ fi
 %_datadir/guacamole/extensions/guacamole-auth-uds-2.5.0.jar
 
 %changelog
+* Thu May 25 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Dec 20 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt3
 - Changed path /share -> /var/lib/guacd/share for drive-path and recording-path (ALT #43543)
 

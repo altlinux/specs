@@ -10,8 +10,8 @@
 %filter_from_provides /^python3(server\.wsgi)/d
 
 Name: openuds-server
-Version: 3.5.0
-Release: alt6
+Version: 3.6.0
+Release: alt1
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -28,7 +28,6 @@ Source15: openuds-taskmanager.service
 Source16: openuds-web.service
 Source17: openuds-web.socket
 
-#Patch: %name-%version.patch
 BuildRequires(pre): rpm-macros-systemd
 Requires: python3-module-django >= 2.2
 Requires: python3-module-django-dbbackend-mysql >= 2.2
@@ -79,7 +78,6 @@ Requires: cert-sh-functions
 
 %prep
 %setup
-#%patch -p1
 
 sed -i 's|#!/usr/bin/env python3|#!/usr/bin/python3|' \
     $(find . -name '*.py')
@@ -158,6 +156,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Thu May 25 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt1
+- v3.6 snapshot f0587ad1d8f3729e27c96ff7a18df04f4f2b2095
+
 * Wed Feb 08 2023 Alexander Burmatov <thatman@altlinux.org> 3.5.0-alt6
 - Add checkbox to enable SSL connection for SPICE (ALT #43646)
 

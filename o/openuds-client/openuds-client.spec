@@ -2,7 +2,7 @@
 %allow_python3_import_path %_libexecdir/UDSClient
 
 Name: openuds-client
-Version: 3.5.0
+Version: 3.6.0
 Release: alt1
 Summary: Client for Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause
@@ -11,7 +11,6 @@ URL: https://github.com/dkmstr/openuds
 Provides: udsclient = %EVR
 
 Source0: %name-%version.tar
-#Patch: %name-%version.patch
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-xdg rpm-build-python3
@@ -27,7 +26,6 @@ to allow connection to services offered by UDS Broker.
 
 %prep
 %setup
-#%patch -p1
 
 sed -i 's|#!/usr/bin/env python3|#!/usr/bin/python3|' \
     $(find . -name '*.py')
@@ -42,6 +40,9 @@ popd
 %_desktopdir/UDSClient.desktop
 
 %changelog
+* Thu May 25 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt1
+- v3.6 snapshot 0363ac3a6acc31582f2f70c0801250f976518e44
+
 * Mon Aug 22 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt1
 - v3.5 snapshot 83394f0d34daf18722923be8d57b35627b330121
 
