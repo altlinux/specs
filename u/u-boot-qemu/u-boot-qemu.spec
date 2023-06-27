@@ -2,7 +2,7 @@
 
 Name: u-boot-qemu
 Version: 2023.04
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -74,6 +74,9 @@ install -pm0644 -D u-boot.bin %buildroot%_datadir/u-boot/%qemu/u-boot.bin
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jun 27 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.04-alt2
+- fix relative path boot (closes: 46669)
+
 * Tue Apr 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.04-alt1
 - 2023.04 released
 
