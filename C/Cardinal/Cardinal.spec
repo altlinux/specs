@@ -3,7 +3,7 @@
 
 Name:     Cardinal
 Version:  23.02
-Release:  alt1
+Release:  alt2
 
 Summary:  Virtual modular synthesizer plugin
 License:  GPL-3.0-or-later
@@ -23,6 +23,7 @@ Source2: sub-merge.unpack.sh
 Patch1:   Cardinal-22.07-alt-lv2-in-lib64.patch
 Patch2:   Cardinal-22.11-rebeltech-fix-compilation.patch
 Patch3:   Cardinal-22.12-alt-more-system-libs.patch
+Patch4:   Cardinal-23.02-alt-fix-build-with-gcc13.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: pkgconfig(alsa)
@@ -161,6 +162,9 @@ install -m 644 docs/*.md docs/*.png %buildroot%_datadir/doc/cardinal/docs/
 %doc %_datadir/doc/cardinal
 
 %changelog
+* Mon Jun 26 2023 Ivan A. Melnikov <iv@altlinux.org> 23.02-alt2
+- Backport upstream fixes for building with gcc13
+
 * Tue Feb 28 2023 Ivan A. Melnikov <iv@altlinux.org> 23.02-alt1
 - 23.02
 
