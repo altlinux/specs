@@ -1,5 +1,5 @@
 Name: hasher-priv
-Version: 2.0.9
+Version: 2.0.10
 Release: alt1
 
 Summary: A privileged helper for the hasher project
@@ -77,6 +77,11 @@ fi
 %doc DESIGN
 
 %changelog
+* Wed Jun 28 2023 Arseny Maslennikov <arseny@altlinux.org> 2.0.10-alt1
+- hasher-useradd: Fixed implementation of "--system".
+- Made hasher-useradd auto-enable hasher-privd if users were added.
+- hasher-useradd: Replaced gpasswd(8) with usermod(8).
+
 * Tue Jan 10 2023 Dmitry V. Levin <ldv@altlinux.org> 2.0.9-alt1
 - Fixed wlimit_time_elapsed support introduced in 0.6-alt1.
 
