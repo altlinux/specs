@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -38,7 +38,7 @@
 
 Name: pipewire
 Version: %ver_major.72
-Release: alt1
+Release: alt1.1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -327,6 +327,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Wed Jun 28 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.72-alt1.1
+- updated to 0.3.72-11-gb160a7201
+
 * Mon Jun 26 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.72-alt1
 - 0.3.72
 
