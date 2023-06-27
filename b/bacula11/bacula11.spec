@@ -14,7 +14,7 @@
 
 Name: bacula%{bacula_major}
 Version: %{bacula_major}.0.6
-Release: alt1
+Release: alt2
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -632,6 +632,12 @@ install -p -m644 %SOURCE16 %buildroot%_sysconfdir/logrotate.d/baculum-apache2
 %find_lang baculum-api baculum-web --output baculum.lang
 %endif
 
+mkdir -p %buildroot%_rpmlibdir
+echo "#!/bin/sh" >> %buildroot%_rpmlibdir/%{name}.filetrigger
+echo "LC_ALL=C grep -Eqs '^/usr/sbin/bacula-dir|^/usr/lib(64)?/libbaccats' || exit 0" >> %buildroot%_rpmlibdir/%{name}.filetrigger
+echo "/sbin/service bacula-dir condrestart ||:" >> %buildroot%_rpmlibdir/%{name}.filetrigger
+chmod 755 %buildroot%_rpmlibdir/%{name}.filetrigger
+
 # remove unpackaged files
 rm -f %buildroot%_libdir/libbaccats.so
 rm -fr %buildroot%_sysconfdir/baculum/Config-api-lighttpd
@@ -670,15 +676,6 @@ if [ ! -s %_localstatedir/bacula/bacula.db ]; then
     %_datadir/bacula/scripts/make_sqlite3_tables
     chown bacula.bacula %_localstatedir/bacula/bacula.db
 fi
-
-%post director-mysql
-%post_service bacula-dir
-
-%post director-postgresql
-%post_service bacula-dir
-
-%preun director-sqlite3
-%preun_service bacula-dir
 
 %preun director-mysql
 %preun_service bacula-dir
@@ -832,6 +829,7 @@ fi
 %_datadir/bacula/scripts/make_catalog_backup.pl
 %_datadir/bacula/scripts/update_bacula_tables
 %_datadir/bacula/scripts/query.sql
+%_rpmlibdir/*
 
 %files director-mysql
 %_altdir/bacula-dir.mysql
@@ -915,6 +913,9 @@ fi
 %endif
 
 %changelog
+* Tue Jun 27 2023 Alexei Takaseev <taf@altlinux.org> 11.0.6-alt2
+- Remove %%post_service for bacula-dir service fix race condition on update
+
 * Wed May 17 2023 Alexei Takaseev <taf@altlinux.org> 11.0.6-alt1
 - 11.0.6
 - Fix path to logfile for logrotate (ALT#44709)
