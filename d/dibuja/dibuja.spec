@@ -1,28 +1,38 @@
-%define ver_major 0.21
+%define ver_major 0.24
 %define gegl_ver_major 0.4
 
+%def_with gtk3
+
 Name: dibuja
-Version: %ver_major.12
+Version: %ver_major.0
 Release: alt1
 
-Summary: Gtk based basic paint program
-License: GPLv3
+Summary: Gtk-based basic paint program
+License: GPL-3.0-or-later
 Group: Graphics
 Url: https://launchpad.net/%name
 
 Source: %url/trunk/%version/+download/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ libgtk+2-devel libgegl-devel >= %gegl_ver_major
-BuildRequires: libexiv2-devel
+BuildRequires: gcc-c++ libgegl-devel >= %gegl_ver_major
+BuildRequires: libgexiv2-devel
+%if_with gtk3
+BuildRequires: libgtk+3-devel
+%else
+BuildRequires: libgtk+2-devel
+%endif
 
 %description
-Dibuja is a program for quick small editing and drawing.
+Dibuja is a simple to use paint program like classic MS Paint or
+Paintbrush for Mac but for Linux.
 
 %prep
 %setup
 
 %build
-%configure
+%configure \
+    %{subst_with gtk3}
+%nil
 %make_build
 
 %install
@@ -43,6 +53,10 @@ Dibuja is a program for quick small editing and drawing.
 
 
 %changelog
+* Tue Jun 27 2023 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
+- 0.24.0
+- built with GTK3
+
 * Fri Jan 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.21.12-alt1
 - 0.21.12
 
