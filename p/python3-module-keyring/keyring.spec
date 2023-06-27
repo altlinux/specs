@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 23.14.0
-Release: alt3
+Release: alt3.1
 
 Summary: Keyring provides an easy way to access the system keyring service
 
@@ -21,6 +21,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-toml
 
 %if_with check
 BuildRequires: python3-module-importlib-metadata
@@ -69,6 +70,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Jun 27 2023 Michael Shigorin <mike@altlinux.org> 23.14.0-alt3.1
+- fix build --without check (thx grenka@ again)
+
 * Tue May 30 2023 Anton Zhukharev <ancieg@altlinux.org> 23.14.0-alt3
 - Don't use SETUPTOOLS_SCM_PRETEND_VERSION (Closes: #46305).
 
