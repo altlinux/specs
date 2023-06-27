@@ -2,11 +2,11 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: libX11-devel libqt4-devel libxcb-devel pkgconfig(xkbcommon)
+BuildRequires: libX11-devel libxcb-devel pkgconfig(xkbcommon)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 1
+%define autorelease 2
 
 %global __provides_exclude_from ^%{_libdir}/(fcitx5|qt5)/.*\\.so$
 
@@ -156,6 +156,9 @@ Development files for %{name}
 %{_libdir}/libFcitx5Qt5DBusAddons.so.*.*
 
 %changelog
+* Tue Jun 27 2023 Anton Midyukov <antohami@altlinux.org> 5.0.15-alt1_2
+- NMU: fix buildrequires
+
 * Wed Sep 28 2022 Igor Vlasenko <viy@altlinux.org> 5.0.15-alt1_1
 - new version
 
