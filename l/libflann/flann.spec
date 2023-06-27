@@ -13,8 +13,8 @@ Group: Development/C
 %global soversion 1.9
 
 Name:           libflann
-Version:        1.9.1
-Release:        alt1_5
+Version:        1.9.2
+Release:        alt1
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 License:        BSD
@@ -24,11 +24,11 @@ Source0:        https://www.github.com/mariusmuja/%{oldname}/archive/%{version}/
 # Prevent the buildsysem from running setup.py, and use system-installed libflann.so
 # Not submitted upstream
 Patch0:         flann-1.9.1-fixpyflann.patch
-# Add a file to shared library targets
-Patch2:         flann-1.8.4-srcfile.patch
+Patch1:         flann-1.9.2-alt-cmake-dir.patch
 BuildRequires:  gcc-c++
 BuildRequires:  ctest cmake
 BuildRequires:  zlib-devel
+BuildRequires:  liblz4-devel
 
 BuildRequires:  hdf5-tools libhdf5-devel
 BuildRequires:  libgtest-devel
@@ -80,13 +80,13 @@ Python 3 bindings for flann
 %prep
 %setup -n %{oldname}-%{version} 
 %patch0 -p0 -b .fixpyflann
-%patch2 -p0 -b .srcfile
+%patch1 -p1
 
 # Fix library install directory
 sed -i 's/"lib"/"%{_lib}"/' cmake/flann_utils.cmake
 
 %build
-%{fedora_v2_cmake} -DBUILD_MATLAB_BINDINGS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON_BINDINGS=ON 
+%{fedora_v2_cmake} -DBUILD_MATLAB_BINDINGS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON_BINDINGS=TRUE
 %fedora_v2_cmake_build
 %fedora_v2_cmake_build %{!?rhel:--target} doc
 
@@ -117,6 +117,7 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 
 %files devel
 %{_libdir}/*.so
+%{_libdir}/cmake/*
 %{_libdir}/pkgconfig/*
 %{_includedir}/flann
 
@@ -128,6 +129,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python3_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Tue Jun 27 2023 Andrey Cherepanov <cas@altlinux.org> 1.9.2-alt1
+- NMU: new version
+
 * Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 1.9.1-alt1_5
 - fixed build with LTO
 
