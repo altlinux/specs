@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 331
+%define centos_release 332
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -638,6 +638,19 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jun 27 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.332-alt1.el9
+- Updated to kernel-5.14.0-332.el9:
+  + Enable the amd-pstate-ut driver for testing
+  + Improve the error messages in the case where the MP2 driver fails to load
+  + Merge commit 'b8bb931ba6cb48e877961f4744cd498226b79d30' from documentation
+  + Qualcomm SPI updates for sa8775p
+  + Update k10temp driver
+  + [RHEL-9] backport rtla hwnoise
+  + locking/rwbase: Mitigate indefinite writer starvation.
+  + perf: Sync with upstream v6.3
+  + scsi: scsi_transport_fc: Add an additional flag to fc_host_fpin_rcv()
+  + Various changes and improvements that are poorly described in merge.
+
 * Fri Jun 23 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.331-alt1.el9
 - Updated to kernel-5.14.0-331.el9 (fixes: CVE-2023-1989, CVE-2023-2235):
   + Backport support for sa8775p reboot mode driver
