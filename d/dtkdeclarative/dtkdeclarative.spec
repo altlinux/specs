@@ -1,9 +1,9 @@
 %define soname 5
 
-%def_disable clang
+%def_enable clang
 
 Name: dtkdeclarative
-Version: 5.6.8
+Version: 5.6.12
 Release: alt1
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
@@ -12,7 +12,6 @@ Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dtkdeclarative
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtkdeclarative-5.6.8-alt-fix-underlinked-libraries.patch
 
 ExcludeArch: armh
 
@@ -104,7 +103,6 @@ QtCreator Data files for %name.
 
 %prep
 %setup
-%patch -p1
 # Fix broken configs.
 sed -i '/libdir=/s/${prefix}//; /includedir=/s/${prefix}//' \
   misc/dtkdeclarative.pc.in
@@ -121,7 +119,6 @@ export CXX="clang++"
 export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
-export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %endif
 
@@ -167,6 +164,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_datadir/qtcreator/templates/wizards/projects/qml-app-template/
 
 %changelog
+* Tue Jun 27 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.12-alt1
+- New version 5.6.12.
+- Fixed FTBFS on i586.
+
 * Wed Feb 22 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.8-alt1
 - New version (5.6.8).
 - Built using cmake instead qmake (by upstream).
