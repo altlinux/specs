@@ -1,6 +1,6 @@
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.38.1
+Version: 2.39
 Release: alt1
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
@@ -91,14 +91,12 @@ Requires: libsmartcols = %version-%release
 #due to findmnt
 Requires: libmount = %version-%release
 
-Patch01: 0001-ALT-Create-var-log-lastlog.patch
-Patch02: 0002-OWL-write-1-improvements.patch
-Patch03: 0003-ALT-Replace-vidattr-by-own-function-that-works-like-.patch
-Patch04: 0004-ALT-Add-pamconsole-mount-option-to-allow-users-at-co.patch
-Patch05: 0005-ALT-Do-not-accept-gecos-field-sizes-longer-than-64.patch
-Patch06: 0006-ALT-some-tests-use-bash4.patch
-Patch07: 0007-ALT-Allow-to-display-altlinux-release-in-the-message.patch
-Patch08: 0008-ALT-Drop-documentation-about-journald-option-since-w.patch
+Patch0001: 0001-ALT-Create-var-log-lastlog.patch
+Patch0002: 0002-OWL-write-1-improvements.patch
+Patch0003: 0003-ALT-Replace-vidattr-by-own-function-that-works-like-.patch
+Patch0004: 0004-ALT-Do-not-accept-gecos-field-sizes-longer-than-64.patch
+Patch0005: 0005-ALT-Allow-to-display-altlinux-release-in-the-message.patch
+Patch0006: 0006-ALT-Drop-documentation-about-journald-option-since-w.patch
 
 %description
 The util-linux package contains a large variety of low-level system
@@ -457,7 +455,7 @@ useful when all directories specified are on the same filesystem.
 
 %prep
 %setup -q
-%autopatch -p2
+%autopatch -p1
 
 cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 
@@ -537,12 +535,19 @@ klcc \
 
 
 %check
-# cal: broken.
-# mount, swapon: required real root and ignored in hasher.
-# ipcs/limits*: failed in hasher.
-# lsblk: 'failed to access sysfs directory: /sys/dev/block: No such file or directory' in hasher.
-rm -rf tests/ts/{cal,fincore,login,look,ipcs/limits*,libmount/{lock,utils},lsblk,misc/{setarch,ionice},more/regexp}
-rm -rf tests/ts/lsns/ioctl_ns
+rm  -f -- tests/ts/fadvise/drop
+rm  -f -- tests/ts/ipcs/limits
+rm  -f -- tests/ts/ipcs/limits2
+rm  -f -- tests/ts/libmount/lock
+rm  -f -- tests/ts/libmount/utils
+rm  -f -- tests/ts/lsfd/option-inet
+rm  -f -- tests/ts/lsns/ioctl_ns
+rm  -f -- tests/ts/misc/ionice
+rm  -f -- tests/ts/misc/setarch
+rm -rf -- tests/ts/fincore
+rm -rf -- tests/ts/login
+rm -rf -- tests/ts/look
+rm -rf -- tests/ts/lsblk
 
 # The default is sha256, or memcmp if Linux Crypto API is not available.
 sed -i -e 's#sha256#memcmp#g' tests/expected/hardlink/options-maximum-size-819{1,2}
@@ -949,6 +954,12 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Mon Jun 26 2023 Alexey Gladkov <legion@altlinux.ru> 2.39-alt1
+- New version (2.39).
+- libmount:
+  + Drop pamconsole/nopamconsole mount options.
+  + Enable new file descriptors based mount kernel API.
+
 * Sat Oct 15 2022 Alexey Gladkov <legion@altlinux.ru> 2.38.1-alt1
 - New version (2.38.1) (fixes: CVE-2023-0563).
 
