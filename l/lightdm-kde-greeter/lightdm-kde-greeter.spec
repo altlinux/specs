@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.11
+Version: 0.4.12
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -71,7 +71,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE5.
 
 %find_lang --with-kde %name
 %find_lang --with-kde --append --output=%name.lang kcm_lightdm
-%find_lang --with-kde --append --output=%name.lang lightdm_theme_classic
+%find_lang --with-kde --append --output=%name.lang greeter
 %find_lang --with-kde --append --output=%name.lang lightdm_theme_userbar
 
 # Add alternatives for xgreeters
@@ -94,6 +94,18 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Mon Jun 26 2023 Anton Golubev <golubevan@altlinux.org> 0.4.12-alt1
+- fix focus loss when typing PSK from virt. keyboard (Closes: 46499)
+- activate new connection automatically (Closes: 46518)
+- show hint for private connection (Closes: 46502)
+- add a password re-entry dialog (Closes: 46514)
+- handle deferred autologin (Closes: 46530)
+- show error messages more correctly (Closes: 46525)
+- fix letters creeping over the keyboard icon (Closes: 46500)
+- show displayName in user's icon label (Closes: 46524)
+- remove "classic" theme (Closes: 46533, 46534)
+- use extra config file (Closes: 46606)
+
 * Wed Jun 07 2023 Anton Golubev <golubevan@altlinux.org> 0.4.11-alt1
 - add a widget to configure the network
 - write the name of the last logged in user in the input field
