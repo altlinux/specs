@@ -2,10 +2,10 @@
 
 Name: libclucene-core
 Version: 2.3.3.4
-Release: alt6
+Release: alt7
 
 Summary: CLucene is a C++ port of Lucene.
-License: LGPL / Apache2
+License: LGPL-2.1-only or Apache-2.0
 Group: System/Libraries
 
 Url: http://clucene.sf.net
@@ -15,6 +15,7 @@ Patch1: clucene-core-2.3.3.4-install_contribs_lib.patch
 Patch2: clucene-core-2.3.3.4-pkgconfig.patch
 # SuSE
 Patch11: clucene-kill-ext-includes.diff
+Patch12: clucene-core-2.3.3.4-opensuse-gcc12-header-files.patch
 # ALT
 Patch21: %rname-%version-alt-build.patch
 
@@ -67,6 +68,7 @@ as it is written in C++.
 %patch1 -p1
 %patch2 -p1
 %patch11 -p1
+%patch12 -p1
 %patch21 -p2
 
 %build
@@ -103,6 +105,10 @@ make -C BUILD*
 #%_libdir/lib*.a
 
 %changelog
+* Wed Jun 28 2023 Dmitriy Khanzhin <jinn@altlinux.org> 2.3.3.4-alt7
+- fixed build with gcc-12
+- fixed License
+
 * Fri May 28 2021 Michael Shigorin <mike@altlinux.org> 2.3.3.4-alt6
 - E2K: ftbfs workaround
 
