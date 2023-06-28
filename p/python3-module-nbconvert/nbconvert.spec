@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 7.2.9
+Version: 7.6.0
 Release: alt1
 
 Summary: Converting Jupyter Notebooks
@@ -32,7 +32,10 @@ BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-jinja2 python3-module-traitlets-tests python3-module-hatchling
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-traitlets-tests
+BuildRequires: python3-module-beautifulsoup4
 %if_with doc
 BuildRequires: python3-module-html5lib python3(pandocfilters)
 BuildRequires: python3(sphinx_rtd_theme) python3(nbsphinx) python3(pandocfilters)
@@ -52,17 +55,20 @@ BuildRequires: /usr/bin/xvfb-run
 BuildRequires: python3-module-PyQtWebEngine
 BuildRequires: /usr/bin/pandoc
 BuildRequires: /usr/bin/xelatex
+BuildRequires: /usr/bin/inkscape
 BuildRequires: python3(pandocfilters)
 BuildRequires: python3(defusedxml)
 BuildRequires: python3(jupyterlab_pygments)
 BuildRequires: python3(nest_asyncio)
+BuildRequires: python3-module-ipykernel
+BuildRequires: python3-module-ipywidgets
 %endif
 
 %py3_provides %oname
 
 # from setup.py
 %py3_use mistune >= 2.0.3
-%py3_use mistune < 3
+%py3_use mistune < 4
 %py3_use jinja2 >= 2.4
 # TODO: py3_use pygments >= 2.4.1
 %py3_use Pygments >= 2.4.1
@@ -146,32 +152,26 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %check
-cat >tox.ini << __EOF__
-[testenv]
-commands =
-    xvfb-run pytest {posargs:-vra}
-__EOF__
-# test_execute_multiple_notebooks, test_execute_widgets_from_nbconvert, test_filename_accent_pdf, test_filename_spaces,
-# test_linked_images, test_pdf, test_export - no unicode-data, see alt bug #44679 
-# other tests require orphaned pyppeteer
-%tox_check_pyproject -- \
-    -k "\
-    not test_execute_multiple_notebooks and \
-    not test_execute_widgets_from_nbconvert and \
-    not test_filename_accent_pdf and \
-    not test_filename_spaces and \
-    not test_linked_images and \
-    not test_pdf and \
-    not test_export and \
-    not test_webpdf_without_chromium and \
-    not test_webpdf_with_chromium and \
-    not test_no_input and \
-    not test_basic_execution and \
-    not test_mixed_markdown_execution and \
-    not test_populate_language_info and \
-    not test_preprocess_cell and \
-    not test_convert_full_qualified_name and \
-    not test_post_processor"
+export JUPYTER_PATH=%buildroot%_datadir/jupyter
+
+# test_filename_accent_pdf, test_filename_spaces, test_linked_images, test_pdf,
+# test_export - no unicode-data, see alt bug #44679
+# some tests need pandoc, version must be at least 2.14.2 but less then 4.0.0
+
+%pyproject_run -- xvfb-run pytest -v -m 'not network' --color=no -k "\
+not test_export and \
+not test_pdf and \
+not test_linked_images and \
+not test_filename_accent_pdf and \
+not test_filename_spaces and \
+not test_convert_full_qualified_name and \
+not test_post_processor and \
+not test_very_long_cells and \
+not test_markdown2latex and \
+not test_markdown2rst and \
+not test_empty_code_cell and \
+not test_convert_explicitly_relative_paths and \
+not test_pandoc_extra_args"
 
 %files
 %doc *.md
@@ -192,6 +192,9 @@ __EOF__
 %endif
 
 %changelog
+* Wed Jun 28 2023 Anton Vyatkin <toni@altlinux.org> 7.6.0-alt1
+- New version 7.6.0.
+
 * Sat Feb 04 2023 Anton Farygin <rider@altlinux.ru> 7.2.9-alt1
 - 7.2.6 -> 7.2.9
 
