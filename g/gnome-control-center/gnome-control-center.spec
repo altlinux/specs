@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define optflags_lto %nil
 
 %define _libexecdir %_prefix/libexec
@@ -13,10 +13,11 @@
 %def_with snap
 %def_with malcontent
 %def_enable doc
+%def_enable check
 
 Name: gnome-control-center
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -104,6 +105,7 @@ BuildRequires: libudisks2-devel
 BuildRequires: libgudev-devel >= %gudev_ver libgsound-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libepoxy-devel
+%{?_enable_check:BuildRequires: xvfb-run python3(dbusmock)}
 
 %description
 GNOME (the GNU Network Object Model Environment) is an attractive and
@@ -137,6 +139,8 @@ you'll want to install this package.
 
 %prep
 %setup -n %name-%version%beta
+# define TZ_DATA_FILE "/usr/share/zoneinfo/zone.tab"
+sed -i 's|zone\.tab|zone1970.tab|' panels/datetime/tz.h
 
 %build
 %meson \
@@ -149,6 +153,9 @@ you'll want to install this package.
 %install
 %meson_install
 %find_lang --with-gnome --output=%name.lang %name-%api_ver %name-%api_ver-timezones %_name
+
+%check
+xvfb-run %__meson_test
 
 %files
 %_bindir/%name
@@ -188,6 +195,11 @@ you'll want to install this package.
 
 
 %changelog
+* Tue Jun 27 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt2
+- 44.2-13-g8e7079697 (updated translations)
+- panels/datetime/tz.h: switched TZ_DATA_FILE to zone1970.tab
+- enabled %%check
+
 * Fri May 26 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
 - 44.2
 
