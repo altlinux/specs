@@ -2,13 +2,14 @@
 
 Name: xournalpp
 Version: 1.1.3
-Release: alt1
+Release: alt2
 Summary: Handwriting note-taking software with PDF annotation support
 Group: Office
 
 License: GPLv2+
 Url: https://github.com/%name/%name
 Source: %name-%version.tar.gz
+Patch: xournalpp-gcc13.patch
 Requires: %name-plugins = %version-%release
 Requires: %name-ui = %version-%release
 
@@ -38,6 +39,7 @@ The %name-ui package contains a graphical user interface for  %name.
 
 %prep
 %setup
+%patch -p0
 
 %build
 %if_with cppunit
@@ -80,6 +82,9 @@ The %name-ui package contains a graphical user interface for  %name.
 %_datadir/%name/ui
 
 %changelog
+* Wed Jun 28 2023 Fr. Br. George <george@altlinux.org> 1.1.3-alt2
+- Fix gcc13 build
+
 * Wed May 10 2023 Fr. Br. George <george@altlinux.org> 1.1.3-alt1
 - Autobuild version bump to 1.1.3
 
