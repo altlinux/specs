@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		d2032721bc8
+%define svnrev		998f8649378
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 %endif
 
 Name: zabbix
-Version: 6.0.18
+Version: 6.0.19
 Release: alt1
 Epoch: 1
 
@@ -158,24 +158,27 @@ BuildArch: noarch
 Summary: zabbix web frontend, edition for php8.0
 Group: Monitoring
 Requires: php8.0-gd php8.0-libs php8.0-mbstring php8.0-mysqli php8.0-openssl php8.0-pgsql php8.0-sockets
+Requires: zabbix-phpfrontend-engine = %EVR
 BuildArch: noarch
 
 %package phpfrontend-php8.1
 Summary: zabbix web frontend, edition for php8.1
 Group: Monitoring
 Requires: php8.1-gd php8.1-libs php8.1-mbstring php8.1-mysqli php8.1-openssl php8.1-pgsql php8.1-sockets
+Requires: zabbix-phpfrontend-engine = %EVR
 BuildArch: noarch
 
 %package phpfrontend-php8.2
 Summary: zabbix web frontend, edition for php8.2
 Group: Monitoring
 Requires: php8.2-gd php8.2-libs php8.2-mbstring php8.2-mysqli php8.2-openssl php8.2-pgsql php8.2-sockets
+Requires: zabbix-phpfrontend-engine = %EVR
 BuildArch: noarch
 
 %package phpfrontend-apache2
 Summary: %name-phpfrontend's apache2 config files
 Group: Monitoring
-Requires: %name-phpfrontend-engine = %epoch:%version-%release, apache2-base
+Requires: apache2-base
 BuildArch: noarch
 
 %package phpfrontend-apache2-mod_php8.0
@@ -758,6 +761,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Jun 28 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.19-alt1
+- 6.0.19
+- Add Requires: zabbix-phpfrontend-engine to phpfrontend-php* subpackages (ALT #46487)
+
 * Wed May 31 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.18-alt1
 - 6.0.18
 
