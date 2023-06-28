@@ -1,5 +1,5 @@
 Name: swayfx
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: A Beautiful Sway Fork
@@ -83,5 +83,8 @@ mkdir -p %buildroot/%_sysconfdir/%name/config.d
 %_datadir/backgrounds/sway/*
 
 %changelog
+* Tue Jun 27 2023 Roman Alifanov <ximper@altlinux.org> 0.3.1-alt1
+- new version 0.3.1 (with rpmrb script)
+
 * Mon May 22 2023 Roman Alifanov <ximper@altlinux.org> 0.3-alt1
 - Initial build for Sisyphus
