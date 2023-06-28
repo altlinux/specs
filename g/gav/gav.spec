@@ -1,23 +1,20 @@
-Summary: GPL rendition of old Arcade Volleyball game
 Name: gav
-Version: 0.8.0
-Release: alt4.qa3
-URL: http://gav.sourceforge.net
+Version: 0.9.0
+Release: alt1
+
+Summary: GPL rendition of old Arcade Volleyball game
+
+License: GPLv2
+Group: Games/Sports
+URL: https://gav.sourceforge.net
+
 Source: %name-%version.tar.gz
-Patch: %name.patch
-Patch1: %name-%version-fix.patch
-Patch2: %name-%version-desktop.patch
-Patch3: %name-%version-gcc4.patch
-License: GPL
-Group: Games/Sports 
+Patch:  %name-%version-fix-menu-alignment.patch
 
-Summary(ru_RU.KOI8-R): Аркадный волейбол
-
-# due to .desktop
-Requires: /usr/bin/sound_wrapper
+Summary(ru_RU.UTF-8): п░я─п╨п╟п╢п╫я▀п╧ п╡п╬п╩п╣п╧п╠п╬п╩
 
 # Automatically added by buildreq on Mon Mar 06 2006
-BuildRequires: esound gcc-c++ libSDL-devel libSDL_image-devel libSDL_net-devel libstdc++-devel 
+BuildRequires: esound gcc-c++ libSDL-devel libSDL_image-devel libSDL_net-devel libstdc++-devel
 
 %description
 An SDL-based rendition of an old favorite CGA game featuring
@@ -25,42 +22,47 @@ two characters playing a volleyball-like game. This "revamped"
 version is supposed to support theming, multiplayer games,
 different input devices and networking.
 
-%description -l ru_RU.KOI8-R
-SDL версия старой популярной CGA игры, в которой двое играют
-в некое подобие волейбола. Текущая версия поддерживает скины,
-сетевую игру, различные устройства управления.
-
+%description -l ru_RU.UTF-8
+SDL п╡п╣я─я│п╦я▐ я│я┌п╟я─п╬п╧ п©п╬п©я┐п╩я▐я─п╫п╬п╧ CGA п╦пЁя─я▀, п╡ п╨п╬я┌п╬я─п╬п╧ п╢п╡п╬п╣ п╦пЁя─п╟я▌я┌
+п╡ п╫п╣п╨п╬п╣ п©п╬п╢п╬п╠п╦п╣ п╡п╬п╩п╣п╧п╠п╬п╩п╟. п╒п╣п╨я┐я┴п╟я▐ п╡п╣я─я│п╦я▐ п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌ я│п╨п╦п╫я▀,
+я│п╣я┌п╣п╡я┐я▌ п╦пЁя─я┐, я─п╟п╥п╩п╦я┤п╫я▀п╣ я┐я│я┌я─п╬п╧я│я┌п╡п╟ я┐п©я─п╟п╡п╩п╣п╫п╦я▐.
 
 %prep
-%setup -q
-%patch -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p0
+%setup
+%patch -p2
+sed -i 's|share/games|share|' Makefile* Theme.h
+sed -i '1i #include <cstring>' aarg.h
 
 %build
 make depend
 %make
 
 %install
-%__mkdir_p %buildroot{%_gamesbindir,%_gamesdatadir}
-%makeinstall ROOT=%buildroot
+install -Dm0755 %name %buildroot%_bindir/%name
 
-# Icon
-%__install -p -m644 -D package/%name.png  %buildroot%_miconsdir/%name.png
+mkdir -p %buildroot%_datadir/%name/themes
+cp -a themes %buildroot%_datadir/%name
 
-# desktop-file
-%__install -p -m644 -D package/%name.desktop  %buildroot%_desktopdir/%name.desktop
+mkdir -p %buildroot%_datadir/%name/sounds
+cp -a sounds %buildroot%_datadir/%name
 
+install -p -m644 -D package/%name.png  %buildroot%_miconsdir/%name.png
+install -p -m644 -D package/%name.desktop  %buildroot%_desktopdir/%name.desktop
 
 %files
-%_gamesbindir/*
-%_gamesdatadir/*
+%doc LICENSE README CHANGELOG
+%_bindir/%name
+%_datadir/%name
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
-%doc README CHANGELOG 
 
 %changelog
+* Wed Jun 28 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt1
+- Built new version (Closes: #46686).
+- Fixed menu alignment.
+- Added sounds.
+- Added themes.
+
 * Wed Feb 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt4.qa3
 - NMU: fixed build with gcc-8.
 
