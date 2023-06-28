@@ -1,6 +1,6 @@
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.39
+Version: 2.39.1
 Release: alt1
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
@@ -954,6 +954,10 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Wed Jun 28 2023 Alexey Gladkov <legion@altlinux.ru> 2.39.1-alt1
+- New version (2.39.1).
+- libmount: (optlist) correctly detect ro status (ALT#46679).
+
 * Mon Jun 26 2023 Alexey Gladkov <legion@altlinux.ru> 2.39-alt1
 - New version (2.39).
 - libmount:
