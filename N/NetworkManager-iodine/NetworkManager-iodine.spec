@@ -2,7 +2,7 @@
 %define nm_applet_version 1.1.90
 %define nm_applet_name NetworkManager-applet-gtk
 #define git_hash %nil
-%define git_hash .g61bff05
+%define git_hash .gd0e5d85
 
 %define _unpackaged_files_terminate_build 1
 
@@ -14,7 +14,7 @@
 
 Name: NetworkManager-iodine
 Version: 1.2.1
-Release: alt2%git_hash
+Release: alt3%git_hash
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for iodine
@@ -81,6 +81,9 @@ NetworkManager panel applet.
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Jun 28 2023 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt3.gd0e5d85
+- Upstream git snapshot (added Russian and Georgian translations).
+
 * Thu May 12 2022 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt2.g61bff05
 - Don't package libnm-iodine-properties.so.
 - Disabled warnings on e2k.
