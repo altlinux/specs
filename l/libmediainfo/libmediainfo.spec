@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 23.04
+Version: 23.06
 Release: alt1
 
 Group: System/Libraries
@@ -17,7 +17,7 @@ BuildRequires: id3lib-devel
 BuildRequires: libflac-devel
 BuildRequires: libmatroska-devel
 BuildRequires: libfaad-devel
-BuildRequires: libzen-devel >= 0.4.40
+BuildRequires: libzen-devel >= 0.4.41
 BuildRequires: libcurl-devel
 BuildRequires: libmms-devel
 BuildRequires: libtinyxml2-devel
@@ -85,6 +85,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Wed Jun 28 2023 Yuri N. Sedunov <aris@altlinux.org> 23.06-alt1
+- 23.06
+
 * Thu Apr 27 2023 Yuri N. Sedunov <aris@altlinux.org> 23.04-alt1
 - 23.04
 
