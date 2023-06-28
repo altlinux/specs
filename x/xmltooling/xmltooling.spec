@@ -2,7 +2,7 @@
 %define pkgdocdir %_docdir/%name-%version
 
 Name: xmltooling
-Version: 3.2.3
+Version: 3.2.4
 Release: alt1
 
 Summary: OpenSAML XML Processing library
@@ -116,6 +116,9 @@ rm -f %buildroot/%_libdir/libxmltooling-lite.la
 %doc %pkgdocdir
 
 %changelog
+* Wed Jun 28 2023 Leontiy Volodin <lvol@altlinux.org> 3.2.4-alt1
+- New version 3.2.4.
+
 * Tue Jun 06 2023 Leontiy Volodin <lvol@altlinux.org> 3.2.3-alt1
 - New version 3.2.3.
 
