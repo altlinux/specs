@@ -4,19 +4,20 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.3
+Version: 5.0
 Release: alt1
 
 Summary: zExceptions contains common exceptions used in Zope
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zExceptions/
-
-Source0: https://files.pythonhosted.org/packages/48/24/dcde412a61b9c30289a07a0357d5583074254f70aa7521c426e19be5579c/%oname-%version.tar.gz
-
+Url: https://pypi.org/project/zExceptions
+Vcs: https://github.com/zopefoundation/zExceptions
 BuildArch: noarch
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-zope.interface
 BuildRequires: python3-module-zope.publisher
@@ -39,21 +40,21 @@ exceptions as used in Zope.
 This package contains tests for zExceptions.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_check
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
+%doc README.*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/%oname/tests
 
 %files tests
@@ -61,6 +62,9 @@ This package contains tests for zExceptions.
 
 
 %changelog
+* Wed Jun 28 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Mon Mar 06 2023 Anton Vyatkin <toni@altlinux.org> 4.3-alt1
 - new version 4.3
 
