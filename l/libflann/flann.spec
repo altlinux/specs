@@ -14,7 +14,7 @@ Group: Development/C
 
 Name:           libflann
 Version:        1.9.2
-Release:        alt1
+Release:        alt2
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 License:        BSD
@@ -81,6 +81,10 @@ Python 3 bindings for flann
 %setup -n %{oldname}-%{version} 
 %patch0 -p0 -b .fixpyflann
 %patch1 -p1
+%ifarch %e2k
+sed -i "/num_threads(params\.cores)/{s/params\.cores/nthreads/;s/^/int nthreads=params.cores;\n/}" \
+	src/cpp/flann/algorithms/{nn,lsh}_index.h
+%endif
 
 # Fix library install directory
 sed -i 's/"lib"/"%{_lib}"/' cmake/flann_utils.cmake
@@ -129,6 +133,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python3_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Wed Jun 28 2023 Michael Shigorin <mike@altlinux.org> 1.9.2-alt2
+- E2K: lcc 1.26 ftbfs workaround (ilyakurdyukov@)
+
 * Tue Jun 27 2023 Andrey Cherepanov <cas@altlinux.org> 1.9.2-alt1
 - NMU: new version
 
