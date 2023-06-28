@@ -1,62 +1,51 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname notebook
 
-#%def_disable check
-%def_without bootstrap
-
+%def_with check
 %def_without doc
 
 Name: python3-module-%oname
-Version: 6.4.12
-Release: alt2
+Version: 6.5.4
+Release: alt1
 Summary: Jupyter Interactive Notebook
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/notebook/
-
-# Source-url: %__pypi_url %oname
+Url: https://pypi.org/project/notebook
+BuildArch: noarch
 Source: %name-%version.tar
 
-BuildArch: noarch
-
-BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
-
-%if_with doc
-BuildRequires: pandoc
-%endif
-
-BuildRequires: python3-devel >= 3.5
 BuildRequires: python3-module-setuptools
-%if_with bootstrap
-BuildRequires: python3-module-ipython_genutils-tests
-%endif
-BuildRequires: python3-module-traitlets-tests
-%if_with bootstrap
-%py3_use nbconvert
-%py3_use ipykernel
-%endif
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-requests
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-jupyter-packaging
+BuildRequires: python3-module-nbclassic
+
+%if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-coverage
-%{?!_without_check:%{?!_disable_check:BuildRequires: python3(pandocfilters) }}
+BuildRequires: python3-module-testpath
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-traitlets-tests
+
+BuildRequires: python3-module-send2trash
+BuildRequires: python3-module-nbconvert
+BuildRequires: python3-module-nbformat
+BuildRequires: python3-module-nest-asyncio
+BuildRequires: python3-module-tornado
+BuildRequires: python3-module-traitlets
+BuildRequires: python3-module-jupyter_client
+BuildRequires: python3-module-ipykernel
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-argon2-cffi
+BuildRequires: python3-module-terminado
+BuildRequires: python3-module-nbclassic
+BuildRequires: python3-module-requests-unixsocket
+BuildRequires: /dev/pts
+%endif
+
 %if_with doc
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3(nbsphinx) python3-module-sphinx_rtd_theme
 %endif
-
-%py3_use zmq >= 17
-%py3_use argon2-cffi
-%py3_use jinja2
-%py3_use tornado >= 5.0
-%py3_use ipython_genutils
-%py3_use traitlets >= 4.2.1
-%py3_use jupyter_core >= 4.6.1
-%py3_use jupyter_client >= 5.3.4
-%py3_use terminado >= 0.8.3
-%py3_use nbformat
 
 Conflicts: python-module-%oname
 
@@ -96,9 +85,10 @@ interactive computing.
 
 This package contains documentation for %oname.
 
-
 %prep
 %setup
+# remove selenium tests
+rm -rf notebook/tests/selenium
 
 %if_with doc
 %prepare_sphinx3 docs
@@ -106,10 +96,10 @@ ln -s ../objects.inv ../python3/docs/source/
 %endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with doc
 export PYTHONPATH=$PWD
@@ -118,10 +108,16 @@ export PYTHONPATH=$PWD
 cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
-%if_with bootstrap
 %check
-py.test-3 -v
-%endif
+export LANG=en_US.UTF-8
+# trash tests doesn't seem to work
+%pyproject_run_pytest -v -k "\
+not test_kernels_api \
+and not test_checkpoints_follow_file \
+and not test_delete \
+and not test_delete_dirs \
+and not test_delete_non_empty_dir \
+and not test_list_formats"
 
 %files
 %doc *.md
@@ -132,7 +128,7 @@ py.test-3 -v
 %_desktopdir/jupyter-notebook.desktop
 %_iconsdir/hicolor/scalable/apps/notebook.svg
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/*/*/tests
@@ -154,6 +150,9 @@ py.test-3 -v
 %endif
 
 %changelog
+* Tue Jun 13 2023 Anton Vyatkin <toni@altlinux.org> 6.5.4-alt1
+- New version 6.5.4
+
 * Tue Apr 18 2023 Anton Vyatkin <toni@altlinux.org> 6.4.12-alt2
 - Fix BuildRequires
 
