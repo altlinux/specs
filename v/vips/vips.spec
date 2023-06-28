@@ -3,7 +3,7 @@
 %def_disable static
 
 Name: vips
-Version: 8.11.3
+Version: 8.14.2
 Release: alt1
 
 Summary: Large image processing library
@@ -16,16 +16,54 @@ Url: https://libvips.github.io/libvips/
 Source0: %name-%version.tar
 Source100: vips.watch
 
-BuildRequires: rpm-build-python3
-BuildRequires: libxml2-devel libexpat-devel
-BuildRequires: gcc-c++ libImageMagick-devel libcfitsio-devel libexif-devel libfftw3-devel
-BuildRequires: liblcms2-devel libmatio-devel liborc-devel libpango-devel openexr-devel
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel libgif-devel libimagequant-devel
-BuildRequires: libwebp-devel libopenslide-devel librsvg-devel libpoppler-glib-devel libheif-devel
+# TODO: ImageMagick replaced by GraphicsMagick
+# Patch: vips-8.14.2-alt-IM-replace-by-GM.patch
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
+BuildRequires: doxygen
+BuildRequires: gettext-tools
+BuildRequires: perl-devel
+BuildRequires: swig
+BuildRequires: gcc-c++
+BuildRequires: graphviz
+BuildRequires: openexr-devel >= 1.2.2
+BuildRequires: libImageMagick-devel
+# BuildRequires: pkgconfig(GraphicsMagick)
+BuildRequires: pkgconfig(matio)
+BuildRequires: pkgconfig(cairo) >= 1.2
+BuildRequires: pkgconfig(cfitsio)
+BuildRequires: pkgconfig(expat)
+BuildRequires: pkgconfig(fftw3)
+BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(glib-2.0) >= 2.62
+BuildRequires: pkgconfig(lcms2)
+BuildRequires: pkgconfig(fftw3) >= 0.6
+BuildRequires: pkgconfig(libheif) >= 1.7.0
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libopenjp2) >= 2.4
+BuildRequires: pkgconfig(libpng) >= 1.2.9
+BuildRequires: pkgconfig(libtiff-4) >= 4.0.10
+BuildRequires: pkgconfig(libwebp) >= 0.6.0
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(matio)
+BuildRequires: pkgconfig(orc-0.4) >= 0.4.11
+BuildRequires: pkgconfig(pangoft2)
+BuildRequires: pkgconfig(python3)
+BuildRequires: pkgconfig(pygobject-3.0) >= 3.13.0
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(libgsf-1) >= 1.14.31
+BuildRequires: pkgconfig(openslide) >= 3.4.0
+BuildRequires: pkgconfig(poppler-glib) >= 0.16.0
+BuildRequires: pkgconfig(librsvg-2.0) >= 2.46.0
+BuildRequires: pkgconfig(pango)
+%ifarch x86_64 aarch64
+BuildRequires: libimagequant-devel
+BuildRequires: pkgconfig(libjxl)
+%endif
 
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
-
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
 %define majorver %(echo %version |cut -d. -f1,2)
 
@@ -92,28 +130,35 @@ GObject introspection devel data for VIPS.
 
 %prep
 %setup
-%__subst "s|/usr/bin/python$|%__python3|" tools/vipsprofile
-# Avoid setting RPATH to /usr/lib64 on 64-bit builds
-# The DIE_RPATH_DIE trick breaks the build wrt gobject-introspection
-#sed -i 's|sys_lib_dlsearch_path_spec="|sys_lib_dlsearch_path_spec="/%{_lib} %{_libdir} |' configure
+
+# TODO: ImageMagick replaced by GraphicsMagick
+# patch0 -p1
+
+%__subst "s|%_bindir/python$|%__python3|" tools/vipsprofile
 
 %build
-gtkdocize --copy --docdir doc --flavour no-tmpl
-glib-gettextize --force --copy
-%autoreconf
-%configure %{subst_enable static} \
-           %{subst_enable introspection} \
-           %{?_enable_gtk_doc --enable-gtk-doc}
-%make_build
+%meson \
+	%if_disabled introspection
+	-Dintrospection=false \
+	%endif
+	-Ddoxygen=true \
+	-Dgtk_doc=true \
+	-Dmagick-module=enabled \
+	-Dmagick=enabled
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
+
 %find_lang vips%majorver
 find %buildroot \( -name '*.la' -o -name '*.a' \) -exec rm -f {} ';'
 # remove unneeded wrapper
 rm -fv %buildroot%_bindir/vips%majorver
+rm -v %buildroot%_docdir/vips-doc/html/*.map
+rm -v %buildroot%_docdir/vips-doc/html/*.dot
 
-%files -f vips%{majorver}.lang
+%files -f vips%majorver.lang
 %_bindir/*
 %_man1dir/*
 #_docdir/vips
@@ -131,6 +176,7 @@ rm -fv %buildroot%_bindir/vips%majorver
 %if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
+%_docdir/vips-doc/html/*
 %endif
 
 %if_enabled static
@@ -147,10 +193,15 @@ rm -fv %buildroot%_bindir/vips%majorver
 %endif
 
 # TODO:
-# - OpenSlide, v4l
+# - v4l
 # - package python bindings
 
 %changelog
+* Wed Jun 28 2023 Mikhail Tergoev <fidel@altlinux.org> 8.14.2-alt1
+- new version 8.14.2 (with rpmgs script)
+- move to meson build
+- enable build with libjxl
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 8.11.3-alt1
 - new version 8.11.3 (with rpmrb script)
 
