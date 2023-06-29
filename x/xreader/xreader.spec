@@ -7,7 +7,7 @@
 
 Name: xreader
 Version: 3.8.1
-Release: alt1
+Release: alt2
 
 Summary: A document viewer
 Group: Office
@@ -40,6 +40,7 @@ BuildRequires: libSM-devel libICE-devel libXi-devel
 BuildRequires: libxapps-devel
 BuildRequires: libwebkit2gtk-devel
 BuildRequires: mathjax
+BuildRequires: gtk-doc
 
 %if_enabled introspection
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
@@ -95,7 +96,8 @@ GObject introspection devel data for the Xreader library
   -Dt1lib=true \
   -Dpixbuf=true \
   -Dcomics=true \
-  -Dintrospection=true
+  -Dintrospection=true \
+  -Dhelp_files=true
 %meson_build
 
 %install
@@ -145,6 +147,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Thu Jun 29 2023 Vladimir Didenko <cow@altlinux.org> 3.8.1-alt2
+- Build with help files (closes: #46700)
+
 * Fri Jun 9 2023 Vladimir Didenko <cow@altlinux.org> 3.8.1-alt1
 - New version
 
