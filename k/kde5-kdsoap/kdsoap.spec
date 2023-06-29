@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 2.1.1
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -64,6 +64,10 @@ This package contains the development files for %name.
 %setup -qn %rname-%version
 #%patch1 -p1
 
+%ifarch %e2k
+sed -i "/-Wl,--fatal-warnings/d" cmake/KDAB/modules/KDCompilerFlags.cmake
+%endif
+
 %build
 %K5build \
     -DCMAKE_INSTALL_INCLUDEDIR=%_K5inc \
@@ -95,6 +99,9 @@ mv %buildroot/%_datadir/mkspecs/features/* %buildroot/%_K5archdata/mkspecs/featu
 %_K5archdata/mkspecs/modules/*oap*.pri
 
 %changelog
+* Thu Jun 29 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt3
+- E2K: lcc < 1.28 ftbfs workaround (ilyakurdyukov@; see also mcst#3675)
+
 * Thu Jun 29 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt2
 - relax requires
 
