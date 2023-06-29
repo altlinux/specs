@@ -1,5 +1,5 @@
 Name:     system-monitoring-center 
-Version:  1.43.2
+Version:  1.43.6
 Release:  alt1
 
 Summary:  Multi-featured system monitor
@@ -10,6 +10,9 @@ Url:      https://github.com/hakandundar34coding/system-monitoring-center
 BuildArch: noarch
 Source: %name-%version.tar
 
+Patch1: system-monitoring-center-1.43.6-fix-typos-alt.patch
+Patch2: system-monitoring-center-1.43.6-uid500-alt.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 
@@ -18,6 +21,8 @@ BuildRequires: python3-devel python3-module-setuptools
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 
 %build
 %python3_build
@@ -36,5 +41,10 @@ BuildRequires: python3-devel python3-module-setuptools
 %_desktopdir/*
 
 %changelog
+* Thu Jun 29 2023 Roman Alifanov <ximper@altlinux.org> 1.43.6-alt1
+- new version 1.43.6 (with rpmrb script)
+- fix typos in .desktop file (ALT bug 46167)
+- fix uid (ALT bug 46164)
+
 * Mon May 01 2023 Roman Alifanov <ximper@altlinux.org> 1.43.2-alt1
 - Initial build for Sisyphus
