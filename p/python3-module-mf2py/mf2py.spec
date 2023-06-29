@@ -1,19 +1,21 @@
 %define oname mf2py
 
 Name: python3-module-%oname
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Python Microformats2 parser
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/mf2py/
+Url: https://pypi.org/project/mf2py
 VCS: https://github.com/microformats/mf2py
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %py3_provides %oname
 
@@ -29,18 +31,21 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc AUTHORS *.md doc/source/*.rst
+%doc README.*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 
 %changelog
+* Thu Jun 29 2023 Anton Vyatkin <toni@altlinux.org> 1.1.3-alt1
+- New version 1.1.3
+
 * Thu Mar 09 2023 Anton Vyatkin <toni@altlinux.org> 1.1.2-alt1
 - new version 1.1.2
 
