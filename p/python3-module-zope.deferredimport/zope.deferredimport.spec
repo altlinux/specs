@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.4
+Version: 5.0
 Release: alt1
 Summary: Allows you to perform imports names that will be resolved when used in the code
 License: ZPL-2.1
@@ -92,6 +92,9 @@ cp -fR samples %buildroot%_docdir/%name
 %doc %_docdir/%name/samples
 
 %changelog
+* Thu Jun 29 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 4.4-alt1
 - New version 4.4.
 
