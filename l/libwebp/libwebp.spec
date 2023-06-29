@@ -11,7 +11,7 @@
 %define soversion 7
 
 Name: libwebp
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Library and tools for the WebP graphics format
@@ -145,6 +145,9 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Thu Jun 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1 (fixed CVE-2023-1999)
+
 * Sun Jan 15 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
