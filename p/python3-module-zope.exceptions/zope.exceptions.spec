@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.6
+Version: 5.0
 Release: alt1
 
 Summary: Zope Exceptions
@@ -15,6 +15,7 @@ Vcs: https://github.com/zopefoundation/zope.exceptions.git
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -39,6 +40,7 @@ packages.
 
 %install
 %pyproject_install
+%python3_prune
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -54,9 +56,11 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/zope/exceptions/
 %python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/zope/exceptions/tests/
 
 %changelog
+* Thu Jun 29 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Sat May 20 2023 Anton Vyatkin <toni@altlinux.org> 4.6-alt1
 - New version 4.6.
 
