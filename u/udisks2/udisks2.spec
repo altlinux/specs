@@ -13,21 +13,13 @@
 # so this option should never be enabled
 %def_disable fhs_media
 %def_enable lvm2
-%def_enable lvmcache
 %def_disable iscsi
 %def_enable btrfs
-%def_enable zram
 %def_disable lsm
-%def_enable bcache
-%ifarch %ix86
-%def_disable vdo
-%else
-%def_disable vdo
-%endif
 
 Name: %{_name}2
-Version: 2.9.4
-Release: alt1.1
+Version: 2.10.0
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -43,22 +35,24 @@ Source1: %name.control
 
 Obsoletes: %_name
 
-%define glib_ver 2.50
-%define gi_ver 1.30.0
+%define glib_ver 2.68
+%define gi_ver 1.30.1
 %define polkit_ver 0.102
 %define udev_ver 165
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
-%define blockdev_ver 2.25
+%define blockdev_ver 3.0
 %define libmount_ver 2.30
 
 Requires(pre): control
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: /lib/udev/rules.d
 Requires: polkit
 Requires: /usr/sbin/cryptsetup
 Requires: dbus >= %dbus_ver dbus-tools-gui
-Requires: mdadm ntfsprogs parted gdisk dosfstools xfsprogs
+# required dosfstools with compatibility symlinks
+Requires: dosfstools >= 4.2-alt2
+Requires: mdadm ntfsprogs parted gdisk xfsprogs nvme
 %{?_enable_acl:Requires: acl}
 
 Requires: libblockdev-fs
@@ -67,6 +61,7 @@ Requires: libblockdev-loop
 Requires: libblockdev-mdraid
 Requires: libblockdev-part
 Requires: libblockdev-swap
+Requires: libblockdev-nvme
 
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
@@ -75,17 +70,16 @@ BuildRequires: libudev-devel libgudev-devel >= %udev_ver
 BuildRequires: pkgconfig(systemd) libmount-devel >= %libmount_ver
 BuildRequires: libblockdev-devel >= %blockdev_ver libblockdev-loop-devel
 BuildRequires: libblockdev-mdraid-devel libblockdev-fs-devel libblockdev-crypto-devel
-BuildRequires: libblockdev-kbd-devel libblockdev-part-devel
+BuildRequires: libblockdev-part-devel libblockdev-swap-devel libblockdev-nvme-devel
 BuildRequires: libuuid-devel
+BuildRequires: libblkid-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_acl:BuildRequires: libacl-devel}
 %{?_enable_lvm2:BuildRequires: libdevmapper-devel liblvm2-devel libblockdev-lvm-devel}
 %{?_enable_iscsi:BuildRequires: iscsi-initiator-utils-devel}
 %{?_enable_btrfs:BuildRequires: libblockdev-btrfs-devel}
-%{?_enable_zram:BuildRequires: libblockdev-kbd-devel libblockdev-swap-devel}
 %{?_enable_lsm:BuildRequires: libstoragemgmt-devel libconfig-devel}
-%{?_enable_vdo:BuildRequires: libblockdev-vdo-devel}
 
 %description
 The udisks project provides a daemon, tools and libraries to access
@@ -105,7 +99,7 @@ access to the udisks daemon.
 %package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package contains the development files for the library lib%name.
@@ -113,7 +107,7 @@ This package contains the development files for the library lib%name.
 %package -n lib%name-gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the %name library.
@@ -122,8 +116,8 @@ GObject introspection data for the %name library.
 Summary: GObject introspection devel data for the %name library
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the %name library
@@ -140,34 +134,16 @@ This package contains development documentation for lib%name.
 %package module-lvm2
 Summary: UDisks module for LVM2
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: libblockdev-lvm
 
 %description module-lvm2
 This package contains UDisks module for LVM2 configuration.
 
-%package module-zram
-Summary: UDisks module for Zram
-Group: System/Servers
-Requires: %name = %version-%release
-Requires: libblockdev-kbd
-
-%description module-zram
-This package contains UDisks module for Zram configuration.
-
-%package module-bcache
-Summary: UDisks module for Bcache
-Group: System/Servers
-Requires: %name = %version-%release
-Requires: libblockdev-kbd
-
-%description module-bcache
-This package contains UDisks module for Bcache configuration.
-
 %package module-btrfs
 Summary: UDisks module for BTRFS
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: libblockdev-btrfs
 
 %description module-btrfs
@@ -176,7 +152,7 @@ This package contains UDisks module for BTRFS configuration.
 %package module-lsm
 Summary: UDisks module for LSM
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: libstoragemgmt
 
 %description module-lsm
@@ -185,27 +161,16 @@ This package contains UDisks module for LibStorageMgmt configuration.
 %package module-iscsi
 Summary: UDisks module for iSCSI
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: iscsi-initiator-utils
 
 %description module-iscsi
 This package contains UDisks module for iSCSI configuration.
 
-%package module-vdo
-Summary: UDisks module for VDO
-Group: System/Servers
-Requires: %name = %version-%release
-Requires: libblockdev-vdo
-
-%description module-vdo
-This package contains UDisks module for VDO management.
-
 
 %prep
 %setup -n %_name-%version
-sed -i 's/mkfs\.vfat/mkfs.fat/
-        s/fsck\.vfat/fsck.fat/
-        s/dosfslabel/fatlabel/' src/udiskslinuxfsinfo.c src/tests/dbus-tests/*.py
+
 %build
 %autoreconf
 %configure --disable-static \
@@ -213,13 +178,9 @@ sed -i 's/mkfs\.vfat/mkfs.fat/
 	%{subst_enable acl} \
 	%{?_enable_fhs_media:--enable-fhs-media} \
 	%{subst_enable lvm2} \
-	%{subst_enable lvmcache} \
 	%{subst_enable iscsi} \
 	%{subst_enable btrfs} \
-	%{subst_enable zram} \
 	%{subst_enable lsm} \
-	%{subst_enable bcache} \
-	%{subst_enable vdo}
 %nil
 %make_build
 
@@ -266,6 +227,7 @@ fi
 %_datadir/dbus-1/system.d/org.freedesktop.UDisks2.conf
 %_datadir/dbus-1/system-services/org.freedesktop.UDisks2.service
 %_datadir/bash-completion/completions/udisksctl
+%_datadir/zsh/site-functions/_udisks2
 %_man1dir/*
 %_man5dir/%name.conf.5.*
 %_man8dir/*
@@ -284,10 +246,8 @@ fi
 %_libdir/lib%name.so
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
-%_pkgconfigdir/%name-bcache.pc
 %_pkgconfigdir/%name-btrfs.pc
 %_pkgconfigdir/%name-lvm2.pc
-%_pkgconfigdir/%name-zram.pc
 
 %if_enabled gtk_doc
 %files -n lib%name-devel-doc
@@ -308,20 +268,6 @@ fi
 %_datadir/polkit-1/actions/org.freedesktop.UDisks2.lvm2.policy
 %endif
 
-%if_enabled zram
-%files module-zram
-%_libdir/%name/modules/lib%{name}_zram.so
-%_datadir/polkit-1/actions/org.freedesktop.UDisks2.zram.policy
-%_unitdir/udisks2-zram-setup@.service
-%_udevrulesdir/90-udisks2-zram.rules
-%endif
-
-%if_enabled bcache
-%files module-bcache
-%_libdir/%name/modules/lib%{name}_bcache.so
-%_datadir/polkit-1/actions/org.freedesktop.UDisks2.bcache.policy
-%endif
-
 %if_enabled btrfs
 %files module-btrfs
 %_libdir/%name/modules/lib%{name}_btrfs.so
@@ -340,15 +286,12 @@ fi
 %_datadir/polkit-1/actions/org.freedesktop.UDisks2.iscsi.policy
 %endif
 
-%if_enabled vdo
-%files module-vdo
-%_libdir/%name/modules/lib%{name}_vdo.so
-%_datadir/polkit-1/actions/org.freedesktop.UDisks2.vdo.policy
-%endif
-
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Thu Jun 29 2023 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Wed Mar 22 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.4-alt1.1
 - moved 99-alt-udisks2-media-mount-point.rules to %%_udevrulesdir
 

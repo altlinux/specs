@@ -1,17 +1,9 @@
 %def_disable snapshot
 
 %define _name blockdev
-%define ver_major 2.28
+%define ver_major 3.0
 %define rev 1
 
-%ifnarch %ix86 x86_64
-%def_without vdo
-%else
-%def_without vdo
-%endif
-
-%def_without python2
-%def_without dmraid
 %def_with tools
 %def_enable check
 
@@ -25,16 +17,14 @@ License: LGPLv2+
 Url: https://github.com/storaged-project/%name
 
 %if_disabled snapshot
-#VCS: https://github.com/rhinstaller/libblockdev.git
+Vcs: https://github.com/rhinstaller/libblockdev.git
 Source: %url/releases/download/%ver_major-%rev/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
 
-BuildRequires(pre): rpm-build-python3
-%{?_with_python2:BuildRequires(pre): rpm-build-python}
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel
-%{?_with_python2:BuildRequires: python-devel}
 BuildRequires: gtk-doc
 BuildRequires: libgio-devel gobject-introspection-devel
 BuildRequires: libcryptsetup-devel libdevmapper-devel
@@ -43,12 +33,14 @@ BuildRequires: libvolume_key-devel >= 0.3.9
 BuildRequires: libnss-devel
 BuildRequires: libkmod-devel
 BuildRequires: libparted-devel
+BuildRequires: libfdisk-devel
+BuildRequires: libkeyutils-devel
+BuildRequires: libe2fs-devel
 BuildRequires: libblkid-devel
 BuildRequires: libbytesize-devel
 BuildRequires: libuuid-devel
 BuildRequires: libndctl-devel
-%{?_with_dmraid:BuildRequires: dmraid-devel}
-%{?_with_vdo:BuildRequires: libyaml-devel}
+BuildRequires: libnvme-devel
 %{?_enable_check:BuildRequires: python3-module-pylint python3-module-pygobject3}
 
 %ifarch s390 s390x
@@ -67,25 +59,16 @@ no information about VGs when creating an LV).
 %package devel
 Summary: Development files for libblockdev
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains header files and pkg-config files needed for development
 with the libblockdev library.
 
-%package -n python-module-blockdev
-Summary: Python2 gobject-introspection bindings for libblockdev
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description -n python-module-blockdev
-This package contains enhancements to the gobject-introspection bindings
-for libblockdev in Python2.
-
 %package -n python3-module-blockdev
 Summary: Python3 gobject-introspection bindings for libblockdev
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n python3-module-blockdev
 This package contains enhancements to the gobject-introspection bindings for
@@ -102,7 +85,7 @@ libblockdev library and its plugins.
 %package utils-devel
 Summary: Development files for libblockdev-utils
 Group: Development/C
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 
 %description utils-devel
 This package contains header files and pkg-config files needed for development
@@ -111,7 +94,7 @@ with the libblockdev-utils library.
 %package btrfs
 Summary: The BTRFS plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 Requires: btrfs-progs
 
 %description btrfs
@@ -121,8 +104,8 @@ providing the BTRFS-related functionality.
 %package btrfs-devel
 Summary: Development files for the libblockdev-btrfs plugin/library
 Group: Development/C
-Requires: %name-btrfs = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-btrfs = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description btrfs-devel
 This package contains header files and pkg-config files needed for development
@@ -139,7 +122,7 @@ providing the functionality related to encrypted devices (LUKS).
 %package crypto-devel
 Group: Development/C
 Summary: Development files for the libblockdev-crypto plugin/library
-Requires: %name-crypto = %version-%release
+Requires: %name-crypto = %EVR
 
 %description crypto-devel
 This package contains header files and pkg-config files needed for development
@@ -148,9 +131,8 @@ with the libblockdev-crypto plugin/library.
 %package dm
 Summary: The Device Mapper plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 Requires: dmsetup
-%{?_with_dmraid:Requires: dmraid}
 
 %description dm
 The libblockdev library plugin (and in the same time a standalone library)
@@ -159,8 +141,8 @@ providing the functionality related to Device Mapper.
 %package dm-devel
 Summary: Development files for the libblockdev-dm plugin/library
 Group: Development/C
-Requires: %name-dm = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-dm = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description dm-devel
 This package contains header files and pkg-config files needed for development
@@ -169,7 +151,7 @@ with the libblockdev-dm plugin/library.
 %package fs
 Summary: The FS plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 
 %description fs
 The libblockdev library plugin (and in the same time a standalone library)
@@ -178,38 +160,37 @@ providing the functionality related to operations with file systems.
 %package fs-devel
 Summary: Development files for the libblockdev-fs plugin/library
 Group: Development/C
-Requires: %name-fs = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-fs = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description fs-devel
 This package contains header files and pkg-config files needed for development
 with the libblockdev-fs plugin/library.
 
-%package kbd
-Summary: The KBD plugin for the libblockdev library
+%package nvme
+Summary: The NVME plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
-Requires: bcache-status bcache-tools
+Requires: %name-utils = %EVR
+Requires: nvme
 
-%description kbd
-The libblockdev library plugin (and in the same time a standalone library)
-providing the functionality related to kernel block devices (namely zRAM and
-Bcache).
+%description nvme
+The libblockdev library plugin (and in the same time a standalone
+library) providing the functionality related to NVME devices.
 
-%package kbd-devel
-Summary: Development files for the libblockdev-kbd plugin/library
+%package nvme-devel
+Summary: Development files for the libblockdev-nvme plugin/library
 Group: Development/C
-Requires: %name-kbd = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-nvme = %EVR
+Requires: %name-utils-devel = %EVR
 
-%description kbd-devel
+%description nvme-devel
 This package contains header files and pkg-config files needed for development
-with the libblockdev-kbd plugin/library.
+with the libblockdev-nvme plugin/library.
 
 %package loop
 Summary: The loop plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 Requires: agetty cfdisk coreutils eject fdisk getopt hwclock login look losetup
 Requires: lsblk mount msulogin schedutils setarch sfdisk su sysvinit-utils util-linux
 
@@ -220,8 +201,8 @@ providing the functionality related to loop devices.
 %package loop-devel
 Summary: Development files for the libblockdev-loop plugin/library
 Group: Development/C
-Requires: %name-loop = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-loop = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description loop-devel
 This package contains header files and pkg-config files needed for development
@@ -230,7 +211,7 @@ with the libblockdev-loop plugin/library.
 %package lvm
 Summary: The LVM plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 Requires: lvm2
 
 %description lvm
@@ -240,8 +221,8 @@ providing the LVM-related functionality.
 %package lvm-devel
 Summary: Development files for the libblockdev-lvm plugin/library
 Group: Development/C
-Requires: %name-lvm = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-lvm = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description lvm-devel
 This package contains header files and pkg-config files needed for development
@@ -250,7 +231,7 @@ with the libblockdev-lvm plugin/library.
 %package lvm-dbus
 Summary: The LVM plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 Requires: lvm2
 
 %description lvm-dbus
@@ -260,8 +241,8 @@ providing the LVM-related functionality utilizing the LVM DBus API.
 %package lvm-dbus-devel
 Summary: Development files for the libblockdev-lvm-dbus plugin/library
 Group: Development/C
-Requires: %name-lvm-dbus = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-lvm-dbus = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description lvm-dbus-devel
 This package contains header files and pkg-config files needed for development
@@ -270,7 +251,7 @@ with the libblockdev-lvm-dbus plugin/library.
 %package mdraid
 Summary: The MD RAID plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 Requires: mdadm
 
 %description mdraid
@@ -280,8 +261,8 @@ providing the functionality related to MD RAID.
 %package mdraid-devel
 Summary: Development files for the libblockdev-mdraid plugin/library
 Group: Development/C
-Requires: %name-mdraid = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-mdraid = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description mdraid-devel
 This package contains header files and pkg-config files needed for development
@@ -290,7 +271,7 @@ with the libblockdev-mdraid plugin/library.
 %package mpath
 Summary: The multipath plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 Requires: multipath-tools
 
 %description mpath
@@ -300,8 +281,8 @@ providing the functionality related to multipath devices.
 %package mpath-devel
 Summary: Development files for the libblockdev-mpath plugin/library
 Group: Development/C
-Requires: %name-mpath = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-mpath = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description mpath-devel
 This package contains header files and pkg-config files needed for development
@@ -310,7 +291,7 @@ with the libblockdev-mpath plugin/library.
 %package part
 Summary: The partitioning plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 Requires: cgdisk fixparts gdisk
 
 %description part
@@ -320,8 +301,8 @@ providing the functionality related to partitioning.
 %package part-devel
 Summary: Development files for the libblockdev-part plugin/library
 Group: Development/C
-Requires: %name-part = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-part = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description part-devel
 This package contains header files and pkg-config files needed for development
@@ -330,7 +311,7 @@ with the libblockdev-part plugin/library.
 %package swap
 Summary: The swap plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 Requires: agetty cfdisk coreutils eject fdisk getopt hwclock login look losetup lsblk
 Requires: mount msulogin schedutils setarch sfdisk su sysvinit-utils util-linux
 
@@ -341,8 +322,8 @@ providing the functionality related to swap devices.
 %package swap-devel
 Summary: Development files for the libblockdev-swap plugin/library
 Group: Development/C
-Requires: %name-swap = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-swap = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description swap-devel
 This package contains header files and pkg-config files needed for development
@@ -351,7 +332,7 @@ with the libblockdev-swap plugin/library.
 %package nvdimm
 Summary: The ndctl plugin for the libblockdev library
 Group: System/Libraries
-Requires: %name-utils = %version-%release
+Requires: %name-utils = %EVR
 Requires: ndctl daxctl
 
 %description nvdimm
@@ -361,8 +342,8 @@ providing the functionality related to NVDIMM devices.
 %package nvdimm-devel
 Summary: Development files for the libblockdev-nvdimm plugin/library
 Group: Development/C
-Requires: %name-nvdimm = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-nvdimm = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description nvdimm-devel
 This package contains header files and pkg-config files needed for development
@@ -380,53 +361,31 @@ providing the functionality related to s390 devices.
 %package s390-devel
 Summary: Development files for the libblockdev-s390 plugin/library
 Group: Development/C
-Requires: %name-s390 = %version-%release
-Requires: %name-utils-devel = %version-%release
+Requires: %name-s390 = %EVR
+Requires: %name-utils-devel = %EVR
 
 %description s390-devel
 This package contains header files and pkg-config files needed for development
 with the libblockdev-s390 plugin/library.
 
-%package vdo
-Summary: The vdo plugin for the libblockdev library
-Group: System/Libraries
-Requires: %name-utils >= %version-%release
-# https://github.com/dm-vdo/vdo
-# https://github.com/dm-vdo/kvdo
-Requires: vdo kmod-kvdo
-
-%description vdo
-The libblockdev library plugin providing the functionality related to VDO devices.
-
-%package vdo-devel
-Summary: Development files for the libblockdev-vdo plugin/library
-Group: Development/C
-Requires: %name-vdo = %version-%release
-Requires: %name-utils-devel = %version-%release
-
-%description vdo-devel
-This package contains header files and pkg-config files needed for development
-with the libblockdev-vdo plugin/library.
-
 %package plugins
 Summary: Meta-package that pulls all the libblockdev plugins as dependencies
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-btrfs = %version-%release
-Requires: %name-crypto = %version-%release
-Requires: %name-dm = %version-%release
-Requires: %name-fs = %version-%release
-Requires: %name-kbd = %version-%release
-Requires: %name-loop = %version-%release
-Requires: %name-lvm = %version-%release
-Requires: %name-mdraid = %version-%release
-Requires: %name-mpath = %version-%release
-Requires: %name-part = %version-%release
-Requires: %name-swap = %version-%release
-Requires: %name-nvdimm = %version-%release
-%{?_with_vdo:Requires: %name-vdo = %version-%release}
+Requires: %name-btrfs = %EVR
+Requires: %name-crypto = %EVR
+Requires: %name-dm = %EVR
+Requires: %name-fs = %EVR
+Requires: %name-loop = %EVR
+Requires: %name-lvm = %EVR
+Requires: %name-mdraid = %EVR
+Requires: %name-mpath = %EVR
+Requires: %name-part = %EVR
+Requires: %name-swap = %EVR
+Requires: %name-nvdimm = %EVR
+Requires: %name-nvme = %EVR
 %ifarch s390 s390x
-Requires: %name-s390 = %version-%release
+Requires: %name-s390 = %EVR
 %endif
 
 %description plugins
@@ -435,7 +394,7 @@ A meta-package that pulls all the libblockdev plugins as dependencies.
 %package tools
 Summary: Tools from libblockdev package
 Group: System/Kernel and hardware
-Requires: %name-lvm = %version-%release
+Requires: %name-lvm = %EVR
 
 %description tools
 This package contains cli libblockdev tools.
@@ -443,20 +402,14 @@ vm-cache-stats -- for displaying stats for LVM cache devices.
 
 %prep
 %setup -n %name-%version
-sed -i 's/mkfs\.vfat/mkfs.fat/g
-	s/fsck\.vfat/fsck.fat/g' src/lib/plugin_apis/fs.* src/plugins/fs/generic.c \
-	src/plugins/fs/vfat.c tests/fs_test.py
-
 sed -i 's/\(pylint\)-3/\1.py3/' Makefile.*
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-	%{subst_with vdo} \
-	%{subst_with dmraid} \
-	%{subst_with tools} \
-	%{subst_with python2}
+    %{subst_with tools}
+%nil
 %make_build
 
 %install
@@ -470,7 +423,7 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %_libdir/libblockdev.so.*
 %_typelibdir/BlockDev*.typelib
 %config %_sysconfdir/libblockdev/conf.d/00-default.cfg
-%doc *.rst LICENSE
+%doc *.md LICENSE
 
 %files devel
 %_libdir/libblockdev.so
@@ -482,12 +435,6 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %_pkgconfigdir/blockdev.pc
 %_datadir/gtk-doc/html/libblockdev
 %_girdir/BlockDev*.gir
-%doc features.rst specs.rst
-
-%if_with python2
-%files -n python-module-blockdev
-%python_sitelibdir/gi/overrides/*
-%endif
 
 %files -n python3-module-blockdev
 %python3_sitelibdir/gi/overrides/BlockDev*
@@ -504,6 +451,7 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %_includedir/blockdev/exec.h
 %_includedir/blockdev/module.h
 %_includedir/blockdev/dbus.h
+%_includedir/blockdev/logging.h
 %_pkgconfigdir/blockdev-utils.pc
 
 %files btrfs
@@ -539,13 +487,13 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %_includedir/blockdev/fs.h
 %_includedir/blockdev/fs/
 
-%files kbd
-%_libdir/libbd_kbd.so.*
+%files nvme
+%_libdir/libbd_nvme.so.*
 
-%files kbd-devel
-%_libdir/libbd_kbd.so
+%files nvme-devel
+%_libdir/libbd_nvme.so
 %dir %_includedir/blockdev
-%_includedir/blockdev/kbd.h
+%_includedir/blockdev/nvme.h
 
 %files loop
 %_libdir/libbd_loop.so.*
@@ -590,11 +538,11 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 %files part
 %_libdir/libbd_part.so.*
-%_libdir/libbd_part_err.so.*
+#%_libdir/libbd_part_err.so.*
 
 %files part-devel
 %_libdir/libbd_part.so
-%_libdir/libbd_part_err.so
+#%_libdir/libbd_part_err.so
 %dir %_includedir/blockdev
 %_includedir/blockdev/part.h
 
@@ -614,7 +562,6 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %dir %_includedir/blockdev
 %_includedir/blockdev/nvdimm.h
 
-
 %ifarch s390 s390x
 %files s390
 %_libdir/libbd_s390.so.*
@@ -625,24 +572,18 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %_includedir/blockdev/s390.h
 %endif
 
-%if_with vdo
-%files vdo
-%_libdir/libbd_vdo.so.*
-
-%files vdo-devel
-%_libdir/libbd_vdo.so
-%dir %_includedir/blockdev
-%_includedir/blockdev/vdo.h
-%endif
-
 %files plugins
 
 %if_with tools
 %files tools
 %_bindir/lvm-cache-stats
+%_bindir/vfat-resize
 %endif
 
 %changelog
+* Thu Jun 29 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
+- 3.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.28-alt1
 - 2.28
 
