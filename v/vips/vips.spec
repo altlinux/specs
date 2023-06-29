@@ -4,7 +4,7 @@
 
 Name: vips
 Version: 8.14.2
-Release: alt1
+Release: alt2
 
 Summary: Large image processing library
 
@@ -55,7 +55,7 @@ BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(libgsf-1) >= 1.14.31
 BuildRequires: pkgconfig(openslide) >= 3.4.0
 BuildRequires: pkgconfig(poppler-glib) >= 0.16.0
-BuildRequires: pkgconfig(librsvg-2.0) >= 2.46.0
+BuildRequires: pkgconfig(librsvg-2.0) >= 2.40.3
 BuildRequires: pkgconfig(pango)
 %ifarch x86_64 aarch64
 BuildRequires: libimagequant-devel
@@ -155,8 +155,8 @@ GObject introspection devel data for VIPS.
 find %buildroot \( -name '*.la' -o -name '*.a' \) -exec rm -f {} ';'
 # remove unneeded wrapper
 rm -fv %buildroot%_bindir/vips%majorver
+rm -fv %buildroot%_docdir/vips-doc/html/*.dot
 rm -v %buildroot%_docdir/vips-doc/html/*.map
-rm -v %buildroot%_docdir/vips-doc/html/*.dot
 
 %files -f vips%majorver.lang
 %_bindir/*
@@ -197,6 +197,9 @@ rm -v %buildroot%_docdir/vips-doc/html/*.dot
 # - package python bindings
 
 %changelog
+* Thu Jun 29 2023 Michael Shigorin <mike@altlinux.org> 8.14.2-alt2
+- fix broken versioned BR:
+
 * Wed Jun 28 2023 Mikhail Tergoev <fidel@altlinux.org> 8.14.2-alt1
 - new version 8.14.2 (with rpmgs script)
 - move to meson build
