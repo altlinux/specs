@@ -6,7 +6,7 @@
 
 Name: rocm-comgr
 Version: 5.5.1
-Release: alt0.2
+Release: alt0.3
 License: NCSA
 Summary: AMD Code Object Manager (Comgr)
 Url: https://github.com/RadeonOpenCompute/ROCm-CompilerSupport
@@ -23,14 +23,13 @@ Patch3: 0003-llvm-move-to-inverted-OPT_mrelax_relocations_no.patch
 Patch4: 0004-llvm-merge-Move-to-Expected-on-SubtargetFeatures.patch
 Patch5: 0005-Remove-h-option-from-comgr-objdump.patch
 Patch6: 0006-Replacing-deprecated-llvm-None-with-std-nullopt.patch
+# device libs path
+Patch7: rocm-alt-device-libs-path.patch
 
 BuildRequires(pre): cmake
 BuildRequires: llvm%{llvm_ver}-devel clang%{llvm_ver}-devel clang%{llvm_ver}-tools
 BuildRequires: mlir%{llvm_ver}-tools lld%{llvm_ver}-devel
 BuildRequires: zlib-devel libstdc++-devel rocm-cmake rocm-device-libs ncurses-devel
-%ifarch %ix86
-BuildRequires: gcc-c++
-%endif
 
 # clang segfaults on armh
 # doesn't compile on ix86
@@ -86,6 +85,10 @@ pushd %{bdir}
 %_libdir/cmake/amd_comgr
 
 %changelog
+* Thu Jun 29 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.3
+- Fix amd device libs path.
+- Rebuild with llvm-16.0.6.
+
 * Thu Jun 15 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.2
 - Disable 32-bit build.
 

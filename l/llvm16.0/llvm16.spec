@@ -37,11 +37,9 @@
 AutoReq: nopython
 AutoProv: nopython
 
-%ifarch x86_64
-%def_with mold
-%else
+# mold needs additional ldflags
+# which pollute llvm-config --ldflags output
 %def_without mold
-%endif
 
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %ifarch %ix86 %arm mipsel
@@ -88,7 +86,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt1
+Release: alt2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -106,7 +104,6 @@ Patch6: clang-12-alt-mips-use-fpxx-by-default.patch
 Patch7: clang-alt-aarch64-dynamic-linker-path.patch
 Patch8: clang-tools-extra-alt-gcc-0001-clangd-satisfy-ALT-gcc-s-Werror-return-type.patch
 Patch10: llvm-10-alt-python3.patch
-# FIXME! need to rebuild clang15 with it first!
 Patch11: RH-0010-PATCH-clang-Produce-DWARF4-by-default.patch
 # TODO: upstream this
 # Patch11: hwasan_symbolize-python3.patch
@@ -1218,6 +1215,12 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Thu Jun 29 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt2
+- x86_64: link with lld again (as mold needs non-standard ldflags which pollute
+  llvm-config output).
+- clang: update alt-triple patch (which should fix ROCM path detection in
+  AMDGPU driver).
+
 * Wed Jun 21 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt1
 - 16.0.6.
 - clang: fix rocm search path patch.
