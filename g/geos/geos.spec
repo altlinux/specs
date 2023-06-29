@@ -6,7 +6,7 @@
 %def_without tests
 
 Name: geos
-Version: 3.11.2
+Version: 3.12.0
 Release: alt1
 
 Summary: Geometry Engine - Open Source
@@ -204,6 +204,9 @@ rm -f %buildroot%python3_sitelibdir/geos/*.la
 %endif
 
 %changelog
+* Thu Jun 29 2023 Andrey Cherepanov <cas@altlinux.org> 3.12.0-alt1
+- New version.
+
 * Sat Mar 18 2023 Andrey Cherepanov <cas@altlinux.org> 3.11.2-alt1
 - New version.
 
