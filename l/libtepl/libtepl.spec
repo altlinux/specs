@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name tepl
-%define ver_major 6.5
+%define ver_major 6.6
 %define api_ver 6
 
 %def_enable gtk_doc
@@ -12,7 +12,7 @@
 %def_disable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+ Text Editor Framework
@@ -148,6 +148,9 @@ the functionality of the installed Tepl library.
 
 
 %changelog
+* Thu Jun 29 2023 Yuri N. Sedunov <aris@altlinux.org> 6.6.0-alt1
+- 6.6.0
+
 * Fri Jun 23 2023 Yuri N. Sedunov <aris@altlinux.org> 6.5.1-alt1
 - 6.5.1
 
