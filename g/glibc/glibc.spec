@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.35.0.234.3f63f9dfe1
+Version: 2.37.0.22.3593050c27
 Release: alt1
 Epoch: 6
 
@@ -112,8 +112,8 @@ PreReq: setup
 PreReq: %name-preinstall >= %EVR
 Conflicts: %name < %EVR
 Conflicts: glibc-core-archopt
-Conflicts: openssh-server < 7.9p1-alt2
-Conflicts: openssh-server-gostcrypto < 7.9p1-alt4.gost
+Conflicts: openssh-server < 8.6p1-alt4
+Conflicts: openssh-server-gostcrypto < 8.6p1-alt4.gost
 Provides: linuxthreads, ldconfig
 Obsoletes: linuxthreads, ldconfig
 # The dynamic linker supports DT_GNU_HASH
@@ -573,10 +573,6 @@ export test-xfail-tst-clock2=yes
 export test-xfail-tst-rwlock9=yes
 export test-xfail-tst-rwlock18=yes
 %endif
-%ifarch ppc64le
-export test-xfail-test-ibm128-y1=yes
-export test-xfail-tst-pkey=yes
-%endif
 
 include Makefile
 @@@
@@ -587,7 +583,7 @@ make %PARALLELMFLAGS -C %buildtarget -f xfail.mk -k check fast-check=yes LDFLAGS
   grep '^FAIL:' %buildtarget/tests.sum | cut -d" " -f2- |
     xargs -i head -v -n -0 %buildtarget/{}.test-result %buildtarget/{}.out ||:
 # architectures we care for enough to fail here
-%ifarch %ix86 x86_64 aarch64 ppc64le
+%ifarch %ix86 x86_64 aarch64
   exit $rc
 %endif
 }
@@ -786,6 +782,13 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Thu Jun 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.37.0.22.3593050c27-alt1
+- Updated to glibc-2.37-22-g3593050c27.
+- Removed ppc64le architecture from the list of architectures we consider
+  important enough to abort the build in case of test suite failures.
+- Added conflicts for openssh-server packages versions that lack support for
+  this libc in their seccomp filters.
+
 * Tue Mar 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.35.0.234.3f63f9dfe1-alt1
 - Updated to glibc-2.35-234-g3f63f9dfe1.
 
