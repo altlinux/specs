@@ -2,7 +2,7 @@
 
 Name: nautilus-image-converter
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: An extension for Nautilus to rotate and resize images
 Group: Graphical desktop/GNOME
@@ -30,8 +30,9 @@ in current location.
 
 %install
 %meson_install
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc AUTHORS ChangeLog NEWS COPYING
 %_libdir/nautilus/extensions-4/libnautilus-image-converter.so
 %dir %_datadir/nautilus-image-converter
@@ -39,6 +40,9 @@ in current location.
 %_datadir/nautilus-image-converter/nautilus-image-rotate.ui
 
 %changelog
+* Tue Jun 27 2023 Roman Alifanov <ximper@altlinux.org> 0.4.0-alt2
+- Added localization file search.
+
 * Thu Jan 05 2023 Roman Alifanov <ximper@altlinux.org> 0.4.0-alt1
 - changed upstream
 - updated to 0.4.0
