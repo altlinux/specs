@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 2.1.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -41,14 +41,14 @@ Common %name files
 %package -n %libkdsoap
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkdsoap
 %name library
 
 %package -n %libkdsoap_server
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkdsoap_server
 %name library
 
@@ -95,6 +95,9 @@ mv %buildroot/%_datadir/mkspecs/features/* %buildroot/%_K5archdata/mkspecs/featu
 %_K5archdata/mkspecs/modules/*oap*.pri
 
 %changelog
+* Thu Jun 29 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt2
+- relax requires
+
 * Tue Jun 13 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
 - new version
 
