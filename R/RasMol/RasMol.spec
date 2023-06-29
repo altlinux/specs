@@ -4,10 +4,10 @@
 
 Name: RasMol
 Version: %series.%patchlevel
-Release: alt5
+Release: alt7
 
 Summary: Molecular Graphics Visualisation Tool
-License: GPL-like
+License: GPLv2+
 Group: Sciences/Chemistry
 
 Url: http://www.openrasmol.org
@@ -21,6 +21,9 @@ Source6: rasmol.desktop
 Patch: RasMol-2.7.5-gentoo-bundled-lib.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
+# imake-related ftbfs
+ExcludeArch: ppc64le
+
 Summary(ru_RU.UTF-8): Инструмент для визуализации молекулярных структур
 Summary(uk_UA.UTF-8): Інструмент для візуалізації молекулярних структур
 
@@ -28,13 +31,13 @@ Summary(uk_UA.UTF-8): Інструмент для візуалізації мо�
 # optimized out: CBFlib CQRlib CVector CVector-devel NearTree libX11-devel libXext-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: libCBFlib-devel libCQRlib-devel libNearTree-devel imake libXi-devel xorg-cf-files
 
-%ifnarch %e2k
+#ifnarch %e2k
 # lcc has f2c (and no libgfortran at all)
 BuildRequires: libgfortran-devel
-%endif
+#endif
 
 Provides: rasmol = %version-%release
-Requires: fonts-bitmap-75dpi xdpyinfo
+Requires: fonts-bitmap-75dpi fonts-bitmap-cyr_rfx-cp1251-75dpi xdpyinfo
 
 %description
 RasMol is a molecular graphics program intended for the visualisation of
@@ -116,6 +119,14 @@ install -pDm644 %SOURCE6 %buildroot%_desktopdir/%name.desktop
 # - consider adding rasmol-gtk
 
 %changelog
+* Thu Jun 29 2023 Michael Shigorin <mike@altlinux.org> 2.7.5.2-alt7
+- skip ppc64le (imake-related ftbfs)
+
+* Wed Sep 16 2020 Michael Shigorin <mike@altlinux.org> 2.7.5.2-alt6
+- R: fonts-bitmap-cyr_rfx-cp1251-75dpi (closes: #38938)
+- E2K: reenabled fortran
+- clarified License: for current version
+
 * Sun Jun 16 2019 Michael Shigorin <mike@altlinux.org> 2.7.5.2-alt5
 - E2K: avoid explicit -lgfortran (f2c)
 - spec converted to UTF-8
