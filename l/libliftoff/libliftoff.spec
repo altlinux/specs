@@ -3,17 +3,20 @@
 %set_verify_elf_method strict
 
 Name: libliftoff
-Version: 0.2.0
+Version: 0.4.1
 Release: alt1
+
 Summary: Lightweight KMS plane library
+
 Group: System/Libraries
 License: MIT
 Url: https://gitlab.freedesktop.org/emersion/libliftoff
 
-# https://gitlab.freedesktop.org/emersion/libliftoff.git
-Source: %name-%version.tar
+# Source0-url: https://gitlab.freedesktop.org/emersion/libliftoff.git
+Source0: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: libdrm-devel
 
 %description
@@ -38,7 +41,6 @@ This package contains development files for libliftoff.
 
 %build
 %meson
-
 %meson_build -v
 
 %install
@@ -54,6 +56,13 @@ This package contains development files for libliftoff.
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%check
+%meson_test
+
 %changelog
+* Thu May 25 2023 Mikhail Tergoev <fidel@altlinux.org> 0.4.1-alt1
+- update spec to new build 0.4.1 (with rpmrb script)
+- enabled meson test
+
 * Tue Feb 22 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt1
 - Initial build for ALT.
