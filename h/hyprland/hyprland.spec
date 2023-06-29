@@ -2,7 +2,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.25.0
+Version: 0.26.0
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -14,6 +14,7 @@ Url: https://github.com/hyprwm/Hyprland
 ExcludeArch: i586 armh
 Patch0: hyprland-0.25.0-native-udis86.patch
 
+# Source-url: https://github.com/hyprwm/Hyprland/releases/download/v%version/source-v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
@@ -98,5 +99,8 @@ rm -rf %buildroot%_pkgconfigdir/wlroots.pc
 %_datadir/hyprland-protocols/
 
 %changelog
+* Thu Jun 29 2023 Roman Alifanov <ximper@altlinux.org> 0.26.0-alt1
+- new version 0.26.0 (with rpmrb script)
+
 * Fri May 12 2023 Roman Alifanov <ximper@altlinux.org> 0.25.0-alt1
 - Initial build for Sisyphus
