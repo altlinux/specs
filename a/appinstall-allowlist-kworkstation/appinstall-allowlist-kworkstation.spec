@@ -1,7 +1,7 @@
 %define allow_dir %_sysconfdir/appinstall/allow.d/
 
 Name: appinstall-allowlist-kworkstation
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Group: System/Configuration/Other
@@ -31,5 +31,8 @@ install -m 0644 %SOURCE0 %buildroot/%allow_dir/
 %config(noreplace) %allow_dir/*
 
 %changelog
+* Thu Jun 29 2023 Sergey V Turchin <zerg at altlinux dot org> 1.0.1-alt1
+- add r7-office
+
 * Wed May 10 2023 Sergey V Turchin <zerg at altlinux dot org> 1.0.0-alt1
 - initial build
