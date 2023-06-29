@@ -1,7 +1,7 @@
 %define oname openssh
 Name: openssh-gostcrypto
 Version: 8.6p1
-Release: alt2.gost
+Release: alt4.gost
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-clause and Beerware
@@ -333,6 +333,17 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Thu Jun 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt4.gost
+- Updated -gostcrypto version.
+
+* Thu Jun 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt4
+- Backported upstream patches for seccomp filter, allowing gettid(2) and
+  writev(2) syscalls.
+
+* Tue Feb 01 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt3
+- Fix ssh-keygen(1) output of keys containing CR byte (thanks to
+  Dmitry Belyavskiy for the patch; see mindrot#3283 and mindrot#3385).
+
 * Mon Sep 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt2.gost
 - Updated -gostcrypto version.
 
