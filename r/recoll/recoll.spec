@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.34.7
+Version: 1.35.0
 Release: alt1
 
 Summary: A personal full text search package
@@ -184,6 +184,9 @@ sed -i "s|#!/usr/bin/env python3|#!%__python3|" \
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Thu Jun 29 2023 Michael Shigorin <mike@altlinux.org> 1.35.0-alt1
+- new version (watch file uupdate)
+
 * Wed May 17 2023 Michael Shigorin <mike@altlinux.org> 1.34.7-alt1
 - new version (watch file uupdate)
 
