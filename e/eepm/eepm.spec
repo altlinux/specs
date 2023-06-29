@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: eepm
-Version: 3.57.7
+Version: 3.57.8
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -21,7 +21,9 @@ Obsoletes: epm
 Provides: epm = %EVR
 
 # FIXHERE: Replace with target platform package manager
-Requires: apt rpm apt-scripts update-kernel
+Requires: apt rpm
+# apt-scripts missed on ALT SP 8, update-kernel is extra in containers
+#Requires: apt-scripts update-kernel
 # TODO: don't use at all
 Requires: apt-repo
 
@@ -96,6 +98,16 @@ a discussion about extra requirements.
 
 
 %changelog
+* Tue Jun 27 2023 Vitaly Lipatov <lav@altlinux.ru> 3.57.8-alt1
+- epm list --available: fix for yum
+- epm play steam: don't use deb if package can be installed from the repo
+- epm play netbeans: fix install latest version (ALT bug 46505)
+- epm play netbeans: change download url to support any released version, not latest only
+- epm: fix description for epm sf
+- epm repack anydesk: add all needed packages to requires
+- generic-appimage: fix file permissions
+- eepm.spec: drop update-kernel, apt-scripts from requires
+
 * Wed Jun 07 2023 Vitaly Lipatov <lav@altlinux.ru> 3.57.7-alt1
 - epm repack: add_requires: for ALT only
 - epm repack audiorelay: disable AutoReq, add manual requires
