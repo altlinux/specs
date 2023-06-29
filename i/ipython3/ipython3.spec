@@ -5,10 +5,11 @@
 %define oname ipython
 
 %def_with doc
+%def_with check
 
 Name: ipython3
-Version: 8.0.1
-Release: alt1.1
+Version: 8.14.0
+Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -27,6 +28,16 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(prompt_toolkit)
 BuildRequires: python3(backcall)
 BuildRequires: python3(stack_data)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-asyncio)
+BuildRequires: python3(testpath)
+BuildRequires: /dev/pts
+BuildRequires: git
+%endif
 
 %if_with doc
 BuildRequires(pre): rpm-macros-sphinx3
@@ -34,6 +45,7 @@ BuildRequires: python3-module-sphinx-devel python3-module-matplotlib-sphinxext
 BuildRequires: python3(sphinx_rtd_theme) graphviz
 BuildRequires: python3(traitlets) python3(pexpect) python3(pickleshare) python3(ipykernel) python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3(black) python3(jedi)
+BuildRequires: /proc
 %endif
 
 %add_python3_req_skip __main__
@@ -117,11 +129,11 @@ ln -s ../objects.inv docs/source/
 
 %build
 export LANG="en_US.UTF-8"
-%python3_build
+%pyproject_build
 
 %install
 export LANG="en_US.UTF-8"
-%python3_install
+%pyproject_install
 
 %if_with doc
 install -d %buildroot%_docdir/%name
@@ -131,6 +143,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
 cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
+
+%check
+%pyproject_run_pytest -v
 
 %files
 %doc COPYING.rst LICENSE
@@ -144,7 +159,7 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 
 %files -n python3-module-%oname
 %python3_sitelibdir/IPython
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 # everything except for skipdoctest.py from IPython/testing is packaged into tests package
 %exclude %python3_sitelibdir/IPython/testing/plugin
 %exclude %python3_sitelibdir/IPython/testing/__init__.py
@@ -189,6 +204,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Tue Jun 27 2023 Anton Vyatkin <toni@altlinux.org> 8.14.0-alt1
+- New version 8.14.0.
+
 * Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 8.0.1-alt1.1
 - NMU: Fixed BuildRequires.
 

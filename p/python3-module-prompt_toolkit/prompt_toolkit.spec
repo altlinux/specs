@@ -3,7 +3,7 @@
 %define oname prompt_toolkit
 
 Name: python3-module-%oname
-Version: 3.0.29
+Version: 3.0.38
 Release: alt1
 Summary: Library for building powerful interactive command lines in Python
 License: BSD-3-Clause
@@ -89,6 +89,9 @@ py.test3
 %doc examples docs/_build/html
 
 %changelog
+* Tue Jun 27 2023 Anton Vyatkin <toni@altlinux.org> 3.0.38-alt1
+- Updated to upstream release 3.0.38
+
 * Wed Apr 13 2022 Fr. Br. George <george@altlinux.org> 3.0.29-alt1
 - Updated to upstream release 3.0.29
 
