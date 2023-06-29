@@ -58,7 +58,7 @@
 
 %def_disable smack
 %def_enable seccomp
-%def_disable ima
+%def_enable ima
 %def_enable selinux
 %def_disable apparmor
 
@@ -92,11 +92,11 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 252
+%define ver_major 253
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.7
+Version: %ver_major.5
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -122,7 +122,6 @@ Source24: var-run.mount
 Source25: 98-default-mac-none.link
 Source27: altlinux-first_time.service
 Source30: 49-coredump-disable.conf
-Source31: 60-raw.rules
 # ALTLinux's default preset policy
 Source34: 85-display-manager.preset
 Source35: 90-default.preset
@@ -151,12 +150,16 @@ Source80: systemd-user.filetrigger
 
 Source81: systemd-modules-load-shared.alternatives
 Source82: systemd-modules-load-standalone.alternatives
-Source83: systemd-sysctl-shared.alternatives
-Source84: systemd-sysctl-standalone.alternatives
-Source85: systemd-sysusers-shared.alternatives
-Source86: systemd-sysusers-standalone.alternatives
-Source87: systemd-tmpfiles-shared.alternatives
-Source88: systemd-tmpfiles-standalone.alternatives
+Source83: systemd-repart-shared.alternatives
+Source84: systemd-repart-standalone.alternatives
+Source85: systemd-shutdown-shared.alternatives
+Source86: systemd-shutdown-standalone.alternatives
+Source87: systemd-sysctl-shared.alternatives
+Source88: systemd-sysctl-standalone.alternatives
+Source89: systemd-sysusers-shared.alternatives
+Source90: systemd-sysusers-standalone.alternatives
+Source91: systemd-tmpfiles-shared.alternatives
+Source92: systemd-tmpfiles-standalone.alternatives
 
 Patch1: %name-%version.patch
 
@@ -537,6 +540,18 @@ Summary: systemd-boot and bootctl utils
 %description boot-efi
 systemd-boot and bootctl utils.
 
+%package ukify
+Group: System/Kernel and hardware
+Summary: Tool to build Unified Kernel Images
+Requires: %name = %EVR
+#BuildArch: noarch
+%py3_requires pefile PIL zstd
+
+%description ukify
+This package provides ukify, a script that combines a kernel image, an initrd,
+with a command line, and possibly PCR measurements and other metadata, into a
+Unified Kernel Image (UKI).
+
 %package coredump
 Group: System/Servers
 Summary: systemd-coredump and coredumpctl utils
@@ -625,6 +640,8 @@ They can be useful to test systemd internals.
 Group: System/Configuration/Boot and Init
 Summary: Standalone systemd utils
 Provides: %name-modules-load-standalone = %EVR
+Provides: %name-repart-standalone = %EVR
+Provides: %name-shutdown-standalone = %EVR
 Provides: %name-sysctl-standalone = %EVR
 Provides: %name-sysusers-standalone = %EVR
 Provides: %name-tmpfiles-standalone = %EVR
@@ -643,6 +660,8 @@ Conflicts: systemd
 %description utils-standalone
 This package contains standalone utils from systemd:
  - systemd-modules-load.standalone
+ - systemd-repart.standalone
+ - systemd-shutdown.standalone
  - systemd-sysctl.standalone
  - systemd-sysusers.standalone
  - systemd-tmpfiles.standalone
@@ -725,8 +744,6 @@ Conflicts: startup < 0.9.9.14
         -Dtelinit-path=/sbin/telinit \
         -Dnologin-path=/sbin/nologin \
         -Dcompat-mutable-uid-boundaries=true \
-        -Dsystem-uid-max=499 \
-        -Dsystem-gid-max=499 \
         -Dadm-gid=4 \
         -Daudio-gid=81 \
         -Dcdrom-gid=22 \
@@ -793,6 +810,9 @@ Conflicts: startup < 0.9.9.14
         %{?_enable_apparmor:-Dapparmor=true} \
         %{?_enable_utmp:-Dutmp=true} \
         %{?_disable_kill_user_processes:-Ddefault-kill-user-processes=false} \
+        -Dfirst-boot-full-preset=true \
+        -Ddefault-timeout-sec=45 \
+        -Ddefault-user-timeout-sec=45 \
         -Doomd=true \
         -Dsysupdate=false \
         -Dstatus-unit-format-default=combined \
@@ -807,12 +827,13 @@ Conflicts: startup < 0.9.9.14
         -Db_lto=false \
 %endif
         -Db_pie=true \
+        -Db_ndebug=false \
         -Dman=true \
         -Dcreate-log-dirs=false \
         -Durlify=false \
         -Dtests=unsafe \
         -Dinstall-tests=true \
-        -Dversion-tag=v%version-%release \
+        -Dversion-tag=%version-%release \
         -Dcertificate-root=/etc/pki/tls \
         -Ddocdir=%_defaultdocdir/%name-%version
 
@@ -874,7 +895,7 @@ find %buildroot \( -name '*.la' \) -exec rm {} \;
 mkdir -p %buildroot/{sbin,bin}
 ln -r -s %buildroot%_systemd_dir/systemd %buildroot/sbin/systemd
 
-ln -r -s %buildroot%_systemd_dir/systemd-{binfmt,modules-load,sysctl} %buildroot/sbin/
+ln -r -s %buildroot%_systemd_dir/systemd-{binfmt,modules-load,shutdown,sysctl} %buildroot/sbin/
 # for compatibility with older systemd pkgs which expected it at /sbin/:
 ln -r -s %buildroot/bin/systemctl %buildroot/sbin/
 ln -r -s %buildroot/bin/systemctl %buildroot%_bindir/
@@ -944,6 +965,10 @@ touch %buildroot%_sysconfdir/vconsole.conf
 touch %buildroot%_sysconfdir/locale.conf
 touch %buildroot%_sysconfdir/machine-info
 
+# Make sure the system.conf drop-in dirs exist
+mkdir -p %buildroot{%_systemd_dir,%_sysconfdir/systemd}/system.conf.d
+mkdir -p %buildroot{%prefix%_systemd_dir,%_sysconfdir/systemd}/user.conf.d
+
 # Make sure the shutdown/sleep drop-in dirs exist
 mkdir -p %buildroot%_systemd_dir/system-shutdown
 mkdir -p %buildroot%_systemd_dir/system-sleep
@@ -1007,17 +1032,21 @@ install -pD -m755 %SOURCE79 %buildroot%_rpmlibdir/systemd-modules-load.filetrigg
 install -pD -m755 %SOURCE80 %buildroot%_rpmlibdir/systemd-user.filetrigger
 
 # alternatives
-for f in systemd-modules-load systemd-sysusers systemd-sysctl systemd-tmpfiles; do
+for f in systemd-modules-load systemd-repart systemd-shutdown systemd-sysctl systemd-sysusers systemd-tmpfiles; do
         mv %buildroot/sbin/$f %buildroot/sbin/$f.shared
 done
 install -pD -m644 %SOURCE81 %buildroot/%_altdir/systemd-modules-load-shared
 install -pD -m644 %SOURCE82 %buildroot/%_altdir/systemd-modules-load-standalone
-install -pD -m644 %SOURCE83 %buildroot/%_altdir/systemd-sysctl-shared
-install -pD -m644 %SOURCE84 %buildroot/%_altdir/systemd-sysctl-standalone
-install -pD -m644 %SOURCE85 %buildroot/%_altdir/systemd-sysusers-shared
-install -pD -m644 %SOURCE86 %buildroot/%_altdir/systemd-sysusers-standalone
-install -pD -m644 %SOURCE87 %buildroot/%_altdir/systemd-tmpfiles-shared
-install -pD -m644 %SOURCE88 %buildroot/%_altdir/systemd-tmpfiles-standalone
+install -pD -m644 %SOURCE83 %buildroot/%_altdir/systemd-repart-shared
+install -pD -m644 %SOURCE84 %buildroot/%_altdir/systemd-repart-standalone
+install -pD -m644 %SOURCE85 %buildroot/%_altdir/systemd-shutdown-shared
+install -pD -m644 %SOURCE86 %buildroot/%_altdir/systemd-shutdown-standalone
+install -pD -m644 %SOURCE87 %buildroot/%_altdir/systemd-sysctl-shared
+install -pD -m644 %SOURCE88 %buildroot/%_altdir/systemd-sysctl-standalone
+install -pD -m644 %SOURCE89 %buildroot/%_altdir/systemd-sysusers-shared
+install -pD -m644 %SOURCE90 %buildroot/%_altdir/systemd-sysusers-standalone
+install -pD -m644 %SOURCE91 %buildroot/%_altdir/systemd-tmpfiles-shared
+install -pD -m644 %SOURCE92 %buildroot/%_altdir/systemd-tmpfiles-standalone
 
 cat >>%buildroot%_sysctldir/50-mmap-min-addr.conf <<EOF
 # Indicates the amount of address space which a user process will be
@@ -1078,8 +1107,6 @@ touch %buildroot%_sysconfdir/udev/hwdb.bin
 
 
 echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
-
-install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1378974
 install -D -m644 -t %buildroot%_unitdir/systemd-udev-trigger.service.d/ %SOURCE10
@@ -1482,7 +1509,9 @@ fi
 
 %files -f %name.lang
 %dir %_sysconfdir/systemd/system
+%dir %_sysconfdir/systemd/system.conf.d
 %dir %_sysconfdir/systemd/user
+%dir %_sysconfdir/systemd/user.conf.d
 
 %_sysconfdir/profile.d/systemd.sh
 
@@ -1490,6 +1519,7 @@ fi
 %_tmpfilesdir/systemd.conf
 %_tmpfilesdir/journal-nocow.conf
 %_tmpfilesdir/provision.conf
+%_tmpfilesdir/credstore.conf
 
 %_xdgconfigdir/%name
 %_x11sysconfdir/xinit.d/50-systemd-user.sh
@@ -1505,8 +1535,10 @@ fi
 %dir /%_lib/systemd
 /%_lib/systemd/libsystemd-core-%ver_major.so
 /%_lib/systemd/libsystemd-shared-%ver_major.so
- 
+
 %dir %_systemd_dir
+%dir %_systemd_dir/system.conf.d
+
 %_modprobedir/README
 %_sysctldir/README
 %_sysusersdir/README
@@ -1548,6 +1580,15 @@ fi
 %_altdir/systemd-modules-load-shared
 %_mandir/*/*modules-load*
 
+/sbin/systemd-repart.shared
+%_altdir/systemd-repart-shared
+%_mandir/*/*repart*
+
+%_systemd_dir/systemd-shutdown
+/sbin/systemd-shutdown.shared
+%_altdir/systemd-shutdown-shared
+%_man8dir/systemd-shutdown*
+
 %_systemd_dir/systemd-sysctl
 /sbin/systemd-sysctl.shared
 %_altdir/systemd-sysctl-shared
@@ -1577,7 +1618,6 @@ fi
 %ghost %config(noreplace) %_sysconfdir/vconsole.conf
 %ghost %config(noreplace) %_sysconfdir/locale.conf
 
-
 /sbin/systemd
 /sbin/systemd-ask-password
 /bin/systemd-inhibit
@@ -1605,7 +1645,6 @@ fi
 %_bindir/systemd-mount
 %_bindir/systemd-umount
 %_bindir/systemd-path
-/bin/systemd-repart
 /bin/systemd-run
 /bin/loginctl
 %_systemd_dir/systemd-logind
@@ -1629,7 +1668,7 @@ fi
 %_bindir/systemd-stdio-bridge
 %_man1dir/systemd-stdio-bridge*
 %_systemd_dir/systemd
-%_systemd_dir/systemd-ac-power
+%_bindir/systemd-ac-power
 %_systemd_dir/systemd-cgroups-agent
 %if_enabled libcryptsetup
 %_systemd_dir/systemd-cryptsetup
@@ -1653,7 +1692,6 @@ fi
 %_systemd_dir/systemd-remount-fs
 %_systemd_dir/systemd-reply-password
 %_systemd_dir/systemd-rfkill
-%_systemd_dir/systemd-shutdown
 %_systemd_dir/systemd-sleep
 %_systemd_dir/systemd-socket-proxyd
 %_systemd_dir/systemd-update-done
@@ -1675,6 +1713,9 @@ fi
 /%_lib/cryptsetup/libcryptsetup-token-systemd-tpm2.so
 %_man1dir/systemd-measure*
 %_man8dir/systemd-pcrphase*
+%if_enabled gnu_efi
+%_man8dir/systemd-pcrfs*
+%endif
 %endif
 
 %dir %_env_dir
@@ -1708,8 +1749,8 @@ fi
 %exclude %_unitdir/systemd-journal-upload*
 %endif
 %if_enabled efi
-%exclude %_unitdir/systemd-boot-system-token.service
-%exclude %_unitdir/*/systemd-boot-system-token.service
+%exclude %_unitdir/systemd-boot-random-seed.service
+%exclude %_unitdir/*/systemd-boot-random-seed.service
 %exclude %_unitdir/systemd-bless-boot.service
 %exclude %_unitdir/systemd-boot-update.service
 %endif
@@ -1740,6 +1781,7 @@ fi
 %exclude %_unitdir/systemd-portabled.service
 
 %_man1dir/busctl.*
+%_man1dir/systemd-ac-power.*
 %_mandir/*/systemd-ask-password*
 %_man1dir/systemd-cat.*
 %_man1dir/systemd-cgls.*
@@ -1764,7 +1806,6 @@ fi
 %_man5dir/*system.conf*
 %_man5dir/*systemd1*
 %_man5dir/*user*
-%_man5dir/repart.d.*
 %_man5dir/systemd.automount*
 %_man5dir/systemd.exec*
 %_man5dir/systemd.kill*
@@ -1808,7 +1849,6 @@ fi
 %_man8dir/systemd-random-seed*
 %_man8dir/systemd-rc-local-generator*
 %_man8dir/rc-local.service*
-%_man8dir/systemd-repart*
 %_man8dir/systemd-remount*
 %_man8dir/systemd-rfkill*
 %_man8dir/systemd-run-generator*
@@ -1820,7 +1860,6 @@ fi
 %_man8dir/systemd-update-done*
 %_man8dir/systemd-halt*
 %_man8dir/systemd-reboot*
-%_man8dir/systemd-shutdown*
 %_man8dir/systemd-poweroff*
 %_man8dir/systemd-volatile-root*
 %_man8dir/systemd-xdg-autostart-generator*
@@ -1844,7 +1883,7 @@ fi
 %_env_gen_dir
 %if_enabled efi
 %exclude %_gen_dir/systemd-bless-boot-generator
-%if_enabled gnuefi
+%if_enabled gnu_efi
 %exclude %_prefix%_systemd_dir/boot
 %endif
 %endif
@@ -2213,8 +2252,8 @@ fi
 %_bindir/bootctl
 %_systemd_dir/systemd-bless-boot
 %_gen_dir/systemd-bless-boot-generator
-%_unitdir/systemd-boot-system-token.service
-%_unitdir/sysinit.target.wants/systemd-boot-system-token.service
+%_unitdir/systemd-boot-random-seed.service
+%_unitdir/sysinit.target.wants/systemd-boot-random-seed.service
 %_unitdir/systemd-bless-boot.service
 %_unitdir/systemd-boot-update.service
 %_man1dir/bootctl.*
@@ -2224,11 +2263,19 @@ fi
 %_man8dir/systemd-bless*
 %_man8dir/systemd-boot*
 %exclude %_man8dir/systemd-boot-check*
-%if_enabled gnuefi
+%if_enabled gnu_efi
 %dir %_prefix%_systemd_dir/boot
 %dir %_prefix%_systemd_dir/boot/efi
 %_prefix%_systemd_dir/boot/efi/*
+
+
 %endif
+%endif
+
+%if_enabled gnu_efi
+%files ukify
+%_systemd_dir/ukify
+%_man1dir/ukify.*
 %endif
 
 %if_enabled coredump
@@ -2265,16 +2312,22 @@ fi
 
 %if_enabled standalone_binaries
 %files utils-standalone
+/sbin/systemd-modules-load.standalone
+%_altdir/systemd-modules-load-standalone
+
+/sbin/systemd-repart.standalone
+%_altdir/systemd-repart-standalone
+
+/sbin/systemd-shutdown.standalone
+%_altdir/systemd-shutdown-standalone
+
+/sbin/systemd-sysctl.standalone
+%_altdir/systemd-sysctl-standalone
+
 %if_enabled sysusers
 /sbin/systemd-sysusers.standalone
 %_altdir/systemd-sysusers-standalone
 %endif #sysuser
-
-/sbin/systemd-modules-load.standalone
-%_altdir/systemd-modules-load-standalone
-
-/sbin/systemd-sysctl.standalone
-%_altdir/systemd-sysctl-standalone
 
 /sbin/systemd-tmpfiles.standalone
 %_altdir/systemd-tmpfiles-standalone
@@ -2314,7 +2367,6 @@ fi
 %dir %_sysconfdir/udev/hwdb.d
 %config(noreplace) %_sysconfdir/udev/*.conf
 %ghost %_sysconfdir/udev/hwdb.bin
-%config(noreplace) %_sysconfdir/udev/rules.d/*
 %config(noreplace) %_sysconfdir/scsi_id.config
 %_initdir/udev*
 %_unitdir/*udev*
@@ -2345,6 +2397,21 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Jun 01 2023 Alexey Shabalin <shaba@altlinux.org> 1:253.5-alt1
+- 253.5
+- Enabled IMA support.
+- Set first-boot-full-preset=true.
+- Decreased default-timeout-sec and default-user-timeout-sec to 45.
+- Set system-uid-max and system-gid-max to 999.
+- Add ukify package.
+- Add dirs to systemd package:
+  + /etc/systemd/system.conf.d
+  + /lib/systemd/system.conf.d
+  + /etc/systemd/user.conf.d
+  + /usr/lib/systemd/user.conf.d
+- Drop udev 60-raw.rules.
+- Add systemd-repart and systemd-shutdown to standalone utils package.
+
 * Mon Mar 06 2023 Alexey Shabalin <shaba@altlinux.org> 1:252.7-alt1
 - 252.7
 
