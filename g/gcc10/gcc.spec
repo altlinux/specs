@@ -1,8 +1,8 @@
 %define gcc_branch 10
 
 Name: gcc%gcc_branch
-Version: 10.3.1
-Release: alt6
+Version: 10.4.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +17,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20210703
+%define snapshot 20230629
 
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
@@ -2168,6 +2168,12 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Fri Jun 30 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.4.1-alt1
+- Updated to upstream branch from git://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-10-branch
+  commit r10-11479-g5b803d14e04cce2aaae7c135a3d7ab46a0656370 (fixes FTBFs with
+  glibc 2.36+).
+
 * Thu Sep 23 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.1-alt6
 - Fixed FTBFS by using gcc 10 for build.
 - Rebuilt without LTO flags.
