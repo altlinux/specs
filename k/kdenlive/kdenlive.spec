@@ -4,7 +4,7 @@
 
 Name: kdenlive
 Version: 22.12.3
-Release: alt2
+Release: alt3
 %K5init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -103,6 +103,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Fri Jun 30 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt3
+- fix russian translation (closes: 46570)
+
 * Tue Apr 18 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt2
 - require kde5-kio-extras (closes: 45888)
 - require kcm and kirigami qml modules (closes: 45890)
