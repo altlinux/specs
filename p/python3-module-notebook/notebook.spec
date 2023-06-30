@@ -6,13 +6,15 @@
 
 Name: python3-module-%oname
 Version: 6.5.4
-Release: alt1
+Release: alt2
 Summary: Jupyter Interactive Notebook
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/notebook
 BuildArch: noarch
 Source: %name-%version.tar
+
+Requires: python3-module-nest-asyncio
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -150,6 +152,9 @@ and not test_list_formats"
 %endif
 
 %changelog
+* Fri Jun 30 2023 Anton Vyatkin <toni@altlinux.org> 6.5.4-alt2
+- Add missing requires.
+
 * Tue Jun 13 2023 Anton Vyatkin <toni@altlinux.org> 6.5.4-alt1
 - New version 6.5.4
 
