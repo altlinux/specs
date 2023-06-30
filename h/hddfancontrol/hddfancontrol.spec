@@ -2,7 +2,7 @@
 %define oname hddfancontrol
 
 Name: hddfancontrol
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Control system fan speed by monitoring hard drive temperature
@@ -72,6 +72,9 @@ cp -a systemd/hddfancontrol.conf %buildroot%_sysconfdir/
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Jun 30 2023 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
+- new version 1.5.1 (with rpmrb script)
+
 * Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - new version 1.5.0 (with rpmrb script)
 
