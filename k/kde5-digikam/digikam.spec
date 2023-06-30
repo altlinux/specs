@@ -26,11 +26,11 @@
 %define rname digikam
 %define label digiKam
 Name: kde5-%rname
-%define ver_major 7
-%define ver_minor 10
+%define ver_major 8
+%define ver_minor 0
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
-Release: alt2
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 %define sover %version
@@ -63,7 +63,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt libopencv-devel
 # optimized out: boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ glib2-devel glibc-devel-static gtk-update-icon-cache kde5-akonadi-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdb4-devel libdbusmenu-qt52 libdc1394-22 libgdk-pixbuf libgpg-error libgphoto2-6 libgphoto2_port-12 libgst-plugins1.0 libical-devel libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpangox-compat libpng-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libraw1394-11 libstdc++-devel libwayland-client libwayland-server libxcbutil-keysyms libxkbfile-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-gir rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: doxygen eigen3 extra-cmake-modules flex git-core graphviz kde4-marble-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-libkipi-devel kde5-libksane-devel kde5-pimlibs-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel python-module-google python3-dev qt4-dbus qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel rpm-build-ruby sqlite3 zlib-devel-static
 BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
-BuildRequires: qt5-multimedia-devel qt5-x11extras-devel qt5-xmlpatterns-devel
+BuildRequires: qt5-multimedia-devel qt5-x11extras-devel qt5-xmlpatterns-devel qt5-networkauth-devel
 %if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
 %else
@@ -72,7 +72,8 @@ BuildRequires: qt5-webkit-devel
 BuildRequires: libx265-devel libheif-devel
 BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjpeg-devel libpng-devel
 %{?_enable_jasper:BuildRequires: libjasper-devel}
-BuildRequires: libqtav-devel libde265-devel
+BuildRequires: libavcodec-devel libavfilter-devel libavformat-devel libavdevice-devel libavutil-devel
+BuildRequires: libswscale-devel libpostproc-devel libavresample-devel libswresample-devel
 BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
 BuildRequires: libImageMagick-devel
@@ -194,6 +195,11 @@ install -m 0644 %SOURCE6 ./
 sed -i '/DIGIKAM_MAJOR_VERSION/s|@VERMAJOR@|%ver_major|' CMakeLists.txt
 sed -i '/DIGIKAM_MINOR_VERSION/s|@VERMINOR@|%ver_minor|' CMakeLists.txt
 sed -i '/DIGIKAM_PATCH_VERSION/s|@VERPATCH@|%ver_bugfix|' CMakeLists.txt
+cat >>CMakeLists.txt <<__EOF__
+    find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS DocTools)
+    ECM_OPTIONAL_ADD_SUBDIRECTORY(doc)
+    ECM_OPTIONAL_ADD_SUBDIRECTORY(doc-translated)
+__EOF__
 # change double to qreal for casting on arm
 #find -type f -name \*.cpp | \
 #while read f ; do
@@ -303,6 +309,7 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5data/%rname/*
 %_K5data/showfoto/*
 %endif
+%_K5icon/hicolor/*/apps/avplayer.*
 %_K5icon/hicolor/*/apps/%rname.*
 %_K5icon/hicolor/*/apps/dk-*.*
 %_K5icon/hicolor/*/apps/showfoto.*
@@ -330,6 +337,9 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Fri Jun 30 2023 Sergey V Turchin <zerg@altlinux.org> 8.0.0-alt1
+- new version
+
 * Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 7.10.0-alt2
 - update russian translation
 
