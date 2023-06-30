@@ -2,7 +2,7 @@
 
 Name:    gz-transport
 Version: 11.4.0
-Release: alt1
+Release: alt2
 
 Summary: Transport library for component communication based on publication/subscription and service calls
 License: Apache-2.0
@@ -61,6 +61,7 @@ Group: Development/C++
 %doc AUTHORS README.md
 %_libexecdir/ruby/*
 %_libdir/lib*.so.*
+%_libdir/lib*.so
 %_prefix/libexec/gz/transport*/ign-transport-*
 %_datadir/gz/gz1.completion.d/*.sh
 %_datadir/ignition/*.yaml
@@ -68,11 +69,13 @@ Group: Development/C++
 
 %files -n lib%{name}-devel
 %_includedir/ignition/transport*
-%_libdir/lib*.so
 %_libdir/cmake/ignition-transport*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 11.4.0-alt2
+- Moved .so files to main package.
+
 * Mon Jun 19 2023 Andrey Cherepanov <cas@altlinux.org> 11.4.0-alt1
 - New version.
 

@@ -2,7 +2,7 @@
 
 Name:    gz-msgs
 Version: 8.7.0
-Release: alt1
+Release: alt2
 
 Summary: Messages for Gazebo robot simulation
 License: Apache-2.0
@@ -56,16 +56,19 @@ ln -s /usr/include/google proto/google
 %doc AUTHORS README.md
 %_libexecdir/ruby/*
 %_libdir/lib*.so.*
+%_libdir/lib*.so
 %_datadir/gz/gz1.completion.d/*.sh
 %_datadir/ignition/*.yaml
 
 %files -n lib%{name}-devel
 %_includedir/ignition/msgs*
-%_libdir/lib*.so
 %_libdir/cmake/ignition-msgs*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 8.7.0-alt2
+- Moved .so files to main package.
+
 * Mon Jun 19 2023 Andrey Cherepanov <cas@altlinux.org> 8.7.0-alt1
 - New version.
 

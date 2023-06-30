@@ -2,7 +2,7 @@
 
 Name:    gz-gui
 Version: 6.8.0
-Release: alt1
+Release: alt2
 
 Summary: Builds on top of Qt to provide widgets which are useful when developing robotics applications, such as a 3D view, plots, dashboard, etc, and can be used together in a convenient unified interface
 License: Apache-2.0
@@ -39,6 +39,8 @@ can be used together in a convenient unified interface.
 %package -n lib%name
 Summary: Library of %name
 Group: System/Libraries
+Requires: qt5-quickcontrols
+Requires: qt5-quickcontrols2
 
 %description -n lib%name
 %summary
@@ -67,16 +69,20 @@ cp %buildroot%_libdir/ign-gui-6/plugins/{libGridConfig.so,libGrid3D.so}
 %doc AUTHORS README.md
 %_libexecdir/ruby/*
 %_libdir/lib*.so.*
+%_libdir/lib*.so
 %_libdir/ign-gui-6/plugins
 %_datadir/ignition/gui*.yaml
 %_datadir/gz/gz1.completion.d/gui*.bash_completion.sh
 
 %files -n lib%{name}-devel
 %_includedir/ignition/*
-%_libdir/lib*.so
 %_libdir/cmake/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 6.8.0-alt2
+- Moved .so files to main package.
+- Added requirenments of qt5-quickcontrols and qt5-quickcontrols2.
+
 * Mon Jun 19 2023 Andrey Cherepanov <cas@altlinux.org> 6.8.0-alt1
 - Initial build for Sisyphus.

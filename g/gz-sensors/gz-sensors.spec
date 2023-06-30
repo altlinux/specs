@@ -2,7 +2,7 @@
 
 Name:    gz-sensors
 Version: 6.7.0
-Release: alt1
+Release: alt2
 
 Summary: Provides numerous sensor models designed to generate realistic data from simulation environments
 License: Apache-2.0
@@ -59,13 +59,16 @@ Group: Development/C++
 %files -n lib%name
 %doc AUTHORS README.md
 %_libdir/lib*.so.*
+%_libdir/lib*.so
 
 %files -n lib%{name}-devel
 %_includedir/ignition/sensors*
-%_libdir/lib*.so
 %_libdir/cmake/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 6.7.0-alt2
+- Moved .so files to main package.
+
 * Sat May 27 2023 Andrey Cherepanov <cas@altlinux.org> 6.7.0-alt1
 - Initial build for Sisyphus.

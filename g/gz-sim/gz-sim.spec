@@ -3,7 +3,7 @@
 
 Name:    gz-sim
 Version: 6.14.0
-Release: alt1
+Release: alt2
 
 Summary: Open source robotics simulator. The latest version of Gazebo.
 License: Apache-2.0
@@ -14,7 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
-ExcludeArch: %ix86
+ExcludeArch: %ix86 armh
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -72,7 +72,8 @@ BuildRequires: libstdc++-devel-static
 BuildRequires: ronn
 BuildRequires: xsltproc
 BuildRequires: libgraphviz-devel
-BuildRequires: doxygen
+BuildRequires: libdart-devel
+BuildRequires: libfmt-devel
 
 # Requires to ign
 Requires: gz-tools
@@ -97,6 +98,9 @@ Group: Development/C++
 %summary
 %prep
 %setup
+# Use ogre instead of ogre2 by default
+subst 's/OGRE2/OGRE/' `grep -Rl OGRE2 *`
+subst 's/ogre2/ogre/' `grep -Rl ogre2 *`
 
 %build
 %add_optflags -I%_includedir/bullet
@@ -118,6 +122,7 @@ install -Dpm 0644 "%_cmake__builddir"/ignition-gazebo%ver.svg %buildroot%_pixmap
 %files -n lib%name
 %_libexecdir/ruby/*
 %_libdir/lib*.so.*
+%_libdir/lib*.so
 %_libdir/ign-gazebo-%ver/plugins
 %_libdir/python/ignition
 %_libdir/python/*.so
@@ -127,10 +132,14 @@ install -Dpm 0644 "%_cmake__builddir"/ignition-gazebo%ver.svg %buildroot%_pixmap
 
 %files -n lib%{name}-devel
 %_includedir/ignition/*
-%_libdir/lib*.so
 %_libdir/cmake/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 6.14.0-alt2
+- Moved .so files to main library package.
+- Built with DART.
+- Used ogre instead of ogre2 by default.
+
 * Mon Jun 19 2023 Andrey Cherepanov <cas@altlinux.org> 6.14.0-alt1
 - Initial build for Sisyphus.

@@ -2,7 +2,7 @@
 
 Name:    gz-rendering
 Version: 6.6.0
-Release: alt1
+Release: alt2
 
 Summary: C++ library designed to provide an abstraction for different rendering engines. It offers unified APIs for creating 3D graphics applications
 License: Apache-2.0
@@ -12,6 +12,7 @@ Url:     https://github.com/gazebosim/gz-rendering
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: 0001-Fix-missing-header-in-latest-gcc-build-853.patch
 
 ExcludeArch: %ix86
 
@@ -48,9 +49,11 @@ Group: Development/C++
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-%cmake -GNinja -Wno-dev
+%cmake -GNinja -Wno-dev \
+       -DBUILD_TESTING=OFF
 %ninja_build -C "%_cmake__builddir"
 
 %install
@@ -59,14 +62,20 @@ Group: Development/C++
 %files -n lib%name
 %doc AUTHORS README.md
 %_libdir/lib*.so.*
-%_datadir/ignition/ignition-rendering*/media/materials/textures/com.png
+%_libdir/lib*.so
+#_libdir/ign-rendering-*
+%_datadir/ignition/ignition-rendering*
 
 %files -n lib%{name}-devel
 %_includedir/ignition/rendering*
-%_libdir/lib*.so
 %_libdir/cmake/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Jun 28 2023 Andrey Cherepanov <cas@altlinux.org> 6.6.0-alt2
+- Moved .so files to main package.
+- FTBFS: fixed build with GCC 13.x.
+- Disabled test build.
+
 * Sat May 27 2023 Andrey Cherepanov <cas@altlinux.org> 6.6.0-alt1
 - Initial build for Sisyphus.

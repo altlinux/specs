@@ -2,7 +2,7 @@
 
 Name:    gz-common
 Version: 4.6.2
-Release: alt1
+Release: alt2
 
 Summary: Gazebo Common : AV, Graphics, Events, and much more
 License: Apache-2.0
@@ -13,6 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: gz-common-alt-fix-build.patch
+Patch1: gz-common-alt-gcc13.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -59,6 +60,7 @@ Group: Development/C++
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %cmake
@@ -74,14 +76,17 @@ Group: Development/C++
 
 %files -n lib%name
 %_libdir/lib*.so.*
+%_libdir/lib*.so
 
 %files -n lib%{name}-devel
 %_includedir/ignition/common*
-%_libdir/lib*.so
 %_libdir/cmake/ignition-common*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 4.6.2-alt2
+- Moved .so files to main package.
+
 * Fri May 26 2023 Andrey Cherepanov <cas@altlinux.org> 4.6.2-alt1
 - New version.
 

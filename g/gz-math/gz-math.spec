@@ -2,7 +2,7 @@
 
 Name:    gz-math
 Version: 6.14.0
-Release: alt1
+Release: alt2
 
 Summary: General purpose math library for robot applications
 License: Apache-2.0
@@ -66,10 +66,10 @@ Group: Development/Python3
 %files -n lib%name
 %doc AUTHORS README.md
 %_libdir/lib*.so.*
+%_libdir/lib*.so
 
 %files -n lib%{name}-devel
 %_includedir/ignition/math6
-%_libdir/lib*.so
 %_libdir/cmake/ignition-math6*
 %_libdir/pkgconfig/*.pc
 
@@ -77,5 +77,8 @@ Group: Development/Python3
 %_libdir/python/ignition/*.so
 
 %changelog
+* Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 6.14.0-alt2
+- Moved .so files to main package.
+
 * Thu May 18 2023 Andrey Cherepanov <cas@altlinux.org> 6.14.0-alt1
 - Initial build for Sisyphus.
