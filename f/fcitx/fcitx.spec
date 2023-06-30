@@ -16,7 +16,7 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fon
 Name:			fcitx
 Summary:		An input method framework
 Version:		4.2.9.9
-Release:		alt1.1
+Release:		alt1.2
 License:		GPLv2+
 URL:			https://fcitx-im.org/wiki/Fcitx
 Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
@@ -25,7 +25,7 @@ BuildRequires:		gcc-c++
 BuildRequires:		libpango-devel libpango-gir-devel, libdbus-devel, opencc-devel
 BuildRequires:		wget, intltool, chrpath, sysconftool, opencc
 BuildRequires:		ctest cmake, libtool, doxygen icu-utils libicu-devel
-BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
+BuildRequires:		gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
 BuildRequires:		xorg-proto-devel, xorg-xtrans-devel
 BuildRequires:		gobject-introspection-devel, libxkbfile-devel
 BuildRequires:		libenchant-devel, iso-codes-devel icu-utils libicu-devel
@@ -109,15 +109,6 @@ Requires:		imsettings-gnome
 %description gtk3
 This package contains Fcitx IM module for gtk3.
 
-%package qt4
-Group: System/Libraries
-Summary:		Fcitx IM module for qt4
-Requires:		%{name} = %{version}-%{release}
-Requires:		%{name}-libs = %{version}-%{release}
-
-%description qt4
-This package contains Fcitx IM module for qt4.
-
 %package pinyin
 Group: System/Libraries
 Summary:		Pinyin Engine for Fcitx
@@ -160,7 +151,7 @@ This package contains table engine for Fcitx.
 sed -i '1s,env bash,env bash4,' data/script/fcitx-diagnose.sh
 
 %build
-%{fedora_v2_cmake} -DENABLE_GTK3_IM_MODULE=On -DENABLE_QT_IM_MODULE=On -DENABLE_OPENCC=On -DENABLE_LUA=On -DENABLE_GIR=On -DENABLE_XDGAUTOSTART=Off
+%{fedora_v2_cmake} -DENABLE_GTK3_IM_MODULE=On -DENABLE_QT=Off -DENABLE_QT_IM_MODULE=Off -DENABLE_OPENCC=On -DENABLE_LUA=On -DENABLE_GIR=On -DENABLE_XDGAUTOSTART=Off
 %fedora_v2_cmake_build 
 
 %install
@@ -309,12 +300,11 @@ EOF
 %files gtk3
 %{_libdir}/gtk-3.0/%{gtk3_binary_version}/immodules/im-fcitx.so
 
-%ifnarch riscv64
-%files qt4
-%{_libdir}/qt4/plugins/inputmethods/qtim-fcitx.so
-%endif
-
 %changelog
+* Tue Jun 27 2023 Anton Midyukov <antohami@altlinux.org> 4.2.9.9-alt1.2
+- NMU: build without qt4
+- NMU: fix buildrequires
+
 * Fri May 12 2023 Ivan A. Melnikov <iv@altlinux.org> 4.2.9.9-alt1.1
 - NMU: Drop libicu71 from build requires
 
