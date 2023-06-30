@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define optflags_lto %nil
 
 %define _libexecdir %_prefix/libexec
@@ -16,8 +16,8 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.2
-Release: alt2%beta
+Version: %ver_major.3
+Release: alt1%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -195,6 +195,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Fri Jun 30 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
+- 44.3
+
 * Tue Jun 27 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt2
 - 44.2-13-g8e7079697 (updated translations)
 - panels/datetime/tz.h: switched TZ_DATA_FILE to zone1970.tab
