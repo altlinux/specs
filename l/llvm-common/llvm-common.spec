@@ -4,7 +4,7 @@
 
 Name: llvm-common
 Version: 15.0.0
-Release: alt2
+Release: alt3
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -15,6 +15,7 @@ Source: llvm-alt-tool-wrapper.c
 Source1: alt-packaging-wrap-cmake-script
 Source2: alt-packaging-produce-rpm-macros-llvm-common
 Source3: llvm-common.env
+Source4: tests-%version.tar
 
 # We want to have these obsoletions to win apt's generic provider selection
 # against pre-wrapped llvm packages.
@@ -31,6 +32,9 @@ Obsoletes: llvm-devel-static  <= 11.0.0-alt1
 Obsoletes: llvm-doc           <= 11.0.0-alt1
 
 %define _libexecdir /usr/libexec
+
+# The check-install test suite location.
+%global _CI_tests_execdir %_usrsrc/%name-checkinstall-tests
 
 %package -n rpm-macros-%name
 Summary: Default LLVM major branch and relevant RPM macros
@@ -245,11 +249,18 @@ build_with()
 # in case of errors in the previous build of this package).
 # Fall back to gcc to facilitate bootstrap builds.
 %global __clang_versioned %_prefix/lib/llvm-%_llvm_version/bin/clang
+%global __lld_versioned %_prefix/lib/llvm-%_llvm_version/bin/lld
 for cc in %__clang_versioned %_prefix/lib/llvm-*/bin/clang %__cc; do
 	build_with "$cc" && break
 done
 
 %install
+mkdir -p %buildroot%_CI_tests_execdir
+tar -xf %SOURCE4 &&
+	rmdir %buildroot%_CI_tests_execdir &&
+	mv tests-%version %buildroot%_CI_tests_execdir
+printf "DEFAULT_LLVM_VERSION=%%s\n" "%_llvm_version" > %buildroot%_CI_tests_execdir/definitions.sh
+
 mkdir -p %buildroot%_bindir/
 install -p -m755 llvm-alt-tool-wrapper %buildroot%_bindir/
 
@@ -484,28 +495,43 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 
 %files -n libpolly-devel
 
+%package tooltests-checkinstall
+Summary: Tests to be run as part of checkinstall
+Group: Development/Other
+BuildArch: noarch
+
+%description tooltests-checkinstall
+This package contains the test suite for installed llvm-alt-tool-wrapper and
+sanity checks for default llvm.
+
+%files tooltests-checkinstall
+%_CI_tests_execdir
+
 %package checkinstall
 Summary: Installing me immediately runs the test for llvm-alt-tool-wrapper
 Group: Development/C
 BuildArch: noarch
 Requires(pre,postun): %name = %EVR
-# An error in llvm-alt-tool-wrapper can already be caught as an UNMET dependency.
-Requires(pre,postun): %__clang_versioned
+# An error in the packaging of default llvm version
+# can already be caught as an UNMET dependency.
+Requires(pre,postun): %__clang_versioned %__lld_versioned
+Requires(pre,postun): %name-tooltests-checkinstall = %EVR
 
 %description checkinstall
-By installing this package, you immediately run the test
+By installing this package, you immediately run the test suite
 for llvm-alt-tool-wrapper.
 
 %files checkinstall
 
 %pre checkinstall
-%{?_llvm_version:export ALTWRAP_LLVM_VERSION=%_llvm_version}
-llvm-config --version
-clang --version
-clang-cpp --version
-llc --version
+for i in %_CI_tests_execdir/[0-9]*; do
+	"$i"
+done
 
 %changelog
+* Fri Jun 30 2023 Arseny Maslennikov <arseny@altlinux.org> 15.0.0-alt3
+- Added a checkinstall test for C toolchain. (Closes: 42473)
+
 * Thu Jun 15 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.0-alt2
 - llvm-devel: added deps to mlir-tools (due tblgen-lsp-server).
 
