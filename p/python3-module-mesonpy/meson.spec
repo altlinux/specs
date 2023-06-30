@@ -3,13 +3,14 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.13.1
+Version: 0.13.2
 Release: alt1
 
 Summary: Meson PEP 517 Python build backend
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/mesonbuild/meson-python
+URL:     https://pypi.org/project/meson-python
+vCS:     https://github.com/mesonbuild/meson-python
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -59,5 +60,8 @@ for more details.
 %python3_sitelibdir/%{pyproject_distinfo meson_python}
 
 %changelog
+* Fri Jun 30 2023 Grigory Ustinov <grenka@altlinux.org> 0.13.2-alt1
+- Automatically updated to 0.13.2.
+
 * Tue Jun 13 2023 Grigory Ustinov <grenka@altlinux.org> 0.13.1-alt1
 - Initial build for Sisyphus.
