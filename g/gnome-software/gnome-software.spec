@@ -31,10 +31,11 @@
 %def_enable sysprof
 %endif
 %def_enable tests
+# no /etc/mishine-id in hasher
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -93,7 +94,7 @@ BuildRequires: pkgconfig(sysprof-capture-4)
 %{?_enable_rpm_ostree:BuildRequires: libostree-devel >= %ostree_ver}
 %{?_enable_rpm:BuildRequires: librpm-devel}
 %{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
-%{?_enable_check:BuildRequires: gcab}
+%{?_enable_check:BuildRequires: dbus /etc/machine-id python3(dbusmock) gcab epiphany fwupd packagekit flatpak}
 
 %description
 GNOME Software is a software center for GNOME.
@@ -188,6 +189,9 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Jun 30 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
+- 44.3
+
 * Thu May 25 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
 - 44.2
 
