@@ -1,6 +1,6 @@
 Name: duplicity
-Version: 1.2.2
-Release: alt2
+Version: 1.2.3
+Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
 
@@ -72,6 +72,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%name-*.egg-info
 
 %changelog
+* Fri Jun 30 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.3-alt1
+- new version 1.2.3 (with rpmrb script)
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt2
 - change Source URL to get release tarball (fix issue with duplicity version)
 - add check for version
