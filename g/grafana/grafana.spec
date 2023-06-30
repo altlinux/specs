@@ -5,7 +5,7 @@
 %def_enable prebuilded_frontend
 
 Name:		grafana
-Version:	9.3.4
+Version:	9.5.5
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -16,18 +16,20 @@ URL:		https://grafana.com
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-Source100: %name-server.sysconfig
-#Source101: %%name.logrotate
-Source102: %name-server.init
-Source103: %name-server.service
-Source104: %name.tmpfiles
-
+Source11: %name-cli
+Source12: %name-server
+Source13: %name-server.sysconfig
+#Source14: %%name.logrotate
+Source15: %name-server.init
+Source16: %name-server.service
+Source17: %name.tmpfiles
 
 #ExclusiveArch: %%go_arches
 # on ppc64le error:
 # error Command failed with signal "SIGXCPU"
 ExclusiveArch: %ix86 x86_64 %arm aarch64 mipsel riscv64
 BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
+BuildRequires: golang >= 1.19
 %if_disabled prebuilded_frontend
 BuildRequires: npm
 BuildRequires: node >= 14 node-devel node-gyp
@@ -90,21 +92,23 @@ node .yarn/releases/yarn-3.2.0.cjs run build
 node .yarn/releases/yarn-3.2.0.cjs run plugins:build-bundled
 %endif
 
+# generate code from .cue files
+go generate ./pkg/plugins/plugindef
+go generate ./kinds/gen.go
+go generate ./public/app/plugins/gen.go
+go generate ./pkg/kindsys/report.go
+
+# generate go files
 wire gen -tags oss ./pkg/server ./pkg/cmd/grafana-cli/runner
 
 #GO111MODULE=off CGO_ENABLED=1 go run build.go build
 #%%golang_build pkg/cmd/*
-CGO_ENABLED=1 go install -ldflags " -s -w  \
-    -X main.version=$VERSION \
-    -X main.commit=$COMMIT \
-    -X main.buildBranch=$BRANCH \
-    " -a ./pkg/cmd/grafana-server
 
 CGO_ENABLED=1 go install -ldflags " -s -w  \
     -X main.version=$VERSION \
     -X main.commit=$COMMIT \
     -X main.buildBranch=$BRANCH \
-    " -a ./pkg/cmd/grafana-cli
+    " -a ./pkg/cmd/grafana
 
 popd
 
@@ -129,6 +133,10 @@ rm -f -- %buildroot%_bindir/slow_proxy
 #TODO: package alert_webhook_listener
 rm -f -- %buildroot%_bindir/alert_webhook_listener
 
+# Install wrappers
+install -p -m 755 %SOURCE11 %buildroot%_bindir/%name-cli
+install -p -m 755 %SOURCE12 %buildroot%_bindir/%name-server
+
 # Install config files
 install -p -D -m 640 conf/sample.ini %buildroot%_sysconfdir/%name/%name.ini
 install -p -D -m 640 conf/ldap.toml %buildroot%_sysconfdir/%name/ldap.toml
@@ -136,6 +144,9 @@ mkdir -p %buildroot%_sysconfdir/%name/provisioning/{dashboards,datasources,notif
 install -p -D -m 640 conf/provisioning/dashboards/sample.yaml %buildroot%_sysconfdir/%name/provisioning/dashboards/sample.yaml
 install -p -D -m 640 conf/provisioning/datasources/sample.yaml %buildroot%_sysconfdir/%name/provisioning/datasources/sample.yaml
 install -p -D -m 640 conf/provisioning/notifiers/sample.yaml %buildroot%_sysconfdir/%name/provisioning/notifiers/sample.yaml
+install -p -D -m 640 conf/provisioning/plugins/sample.yaml %buildroot%_sysconfdir/%name/provisioning/plugins/sample.yaml
+install -p -D -m 640 conf/provisioning/access-control/sample.yaml %buildroot%_sysconfdir/%name/provisioning/access-control/sample.yaml
+install -p -D -m 640 conf/provisioning/alerting/sample.yaml %buildroot%_sysconfdir/%name/provisioning/alerting/sample.yaml
 
 # Setup directories
 install -d -m 755 %buildroot%_logdir/%name
@@ -144,14 +155,14 @@ install -d -m 755 %buildroot%_sharedstatedir/%name/plugins
 # Install pid directory
 install -d -m 775 %buildroot%_runtimedir/%name
 # Install sysconfig
-install -p -D -m 644 %SOURCE100 %buildroot%_sysconfdir/sysconfig/%name-server
+install -p -D -m 644 %SOURCE13 %buildroot%_sysconfdir/sysconfig/%name-server
 # Install logrotate
-#install -p -D -m 644 %%SOURCE101 %%buildroot%%_logrotatedir/%%name
+#install -p -D -m 644 %%SOURCE14 %%buildroot%%_logrotatedir/%%name
 # Install sysv init scripts
-install -p -D -m 755 %SOURCE102 %buildroot%_initdir/%name-server
+install -p -D -m 755 %SOURCE15 %buildroot%_initdir/%name-server
 # Install systemd unit services
-install -p -D -m 644 %SOURCE103 %buildroot%_unitdir/%name-server.service
-install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
+install -p -D -m 644 %SOURCE16 %buildroot%_unitdir/%name-server.service
+install -p -D -m 644 %SOURCE17 %buildroot%_tmpfilesdir/%name.conf
 
 %pre
 %_sbindir/groupadd -r -f %name 2>/dev/null ||:
@@ -180,6 +191,7 @@ fi
 
 %files
 %doc CHANGELOG.md LICENSE README.md
+%_bindir/%name
 %_bindir/%name-cli
 %_bindir/%name-server
 %config(noreplace) %_sysconfdir/sysconfig/%name-server
@@ -191,6 +203,9 @@ fi
 %dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/dashboards
 %dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/datasources
 %dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/notifiers
+%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/access-control
+%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/alerting
+%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/plugins
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.ini
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/ldap.toml
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/provisioning/*/*.yaml
@@ -201,6 +216,20 @@ fi
 %_datadir/%name
 
 %changelog
+* Thu Jun 29 2023 Alexey Shabalin <shaba@altlinux.org> 9.5.5-alt1
+- 9.5.5
+- Switch from separate server & cli to a unified grafana binary
+- Add wrapper scripts for grafana-cli and grafana-server
+- Fixes:
+  + CVE-2023-0507
+  + CVE-2023-0594
+  + CVE-2023-1387
+  + CVE-2023-1410
+  + CVE-2023-2183
+  + CVE-2023-2801
+  + CVE-2023-22462
+  + CVE-2023-28119
+
 * Wed Jan 25 2023 Alexey Shabalin <shaba@altlinux.org> 9.3.4-alt1
 - 9.3.4
 
