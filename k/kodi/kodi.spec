@@ -1,6 +1,6 @@
 Name: kodi
-Version: 20.1
-Release: alt3
+Version: 20.2
+Release: alt1
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -192,6 +192,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Fri Jun 30 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.2-alt1
+- 20.2-Nexus released
+
 * Thu Jun 22 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.1-alt3
 - 20.1-Nexus-75-g9a44d078a3
 
