@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.78
-Release: alt6
+Release: alt7
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -13,7 +13,7 @@ ExclusiveArch: %ix86
 
 Source0: https://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
 Source1: %{name}_install_agreement.txt
-Source2: 10-%name-nm.rules
+Source2: %name-nm.rules
 Source3: %name.watch
 
 Patch0: %name-desktop-alt.patch
@@ -55,7 +55,7 @@ savegame and screenshot functionality, and many social features.
 %__install -Dp -m0644 subprojects/%name-devices/60-%name-input.rules %buildroot%_udevrulesdir/60-%name-input.rules
 %__install -Dp -m0644 subprojects/%name-devices/60-%name-vr.rules %buildroot%_udevrulesdir/60-%name-vr.rules
 %__install -Dp -m0644 %SOURCE1 %buildroot%_defaultdocdir/%name/%{name}_install_agreement.txt
-%__install -Dp -m0666 %SOURCE2 %buildroot%_sysconfdir/polkit-1/rules.d/10-%name-nm.rules
+%__install -Dp -m0644 %SOURCE2 %buildroot%_datadir/polkit-1/rules.d/%name-nm.rules
 
 %files
 %_bindir/%name
@@ -70,9 +70,12 @@ savegame and screenshot functionality, and many social features.
 %_pixmapsdir/%{name}*.png
 %config %_udevrulesdir/60-%name-input.rules
 %config %_udevrulesdir/60-%name-vr.rules
-%config %_sysconfdir/polkit-1/rules.d/10-%name-nm.rules
+%config %_datadir/polkit-1/rules.d/%name-nm.rules
 
 %changelog 
+* Fri Jun 30 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt7
+- Prevent prompts Network Manager without admin permissions only for %name (ALT #46456)
+
 * Tue Jun 20 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt6
 - Remove require xdg-desktop-portal-gtk
 
