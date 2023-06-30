@@ -2,7 +2,7 @@
 
 Name: cvise
 Version: 2.8.0
-Release: alt1
+Release: alt2
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -16,21 +16,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildRequires: astyle
+
 BuildRequires: clang-devel
 # https://bugzilla.altlinux.org/show_bug.cgi?id=39734
-
-%ifarch %e2k
 BuildRequires: llvm-devel-static clang-devel-static
-%else
-# rpm-build-info gives _distro_version
-%if %_vendor == "alt" && %_distro_version == "Sisyphus"
-BuildRequires: clang11.0-tools clangd11.0
-%endif
-# FIXME
-BuildRequires: llvm-devel >= 10
-BuildRequires: llvm-devel-static >= 10
-BuildRequires: clang-devel-static >= 10
-%endif
 
 BuildRequires: cmake
 BuildRequires: flex
@@ -53,6 +42,7 @@ BuildRequires: python3(pytest)
 %endif
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-intro >= 2.1.5
 
 # use no more than system_memory/3000 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
@@ -113,6 +103,9 @@ py.test3 -vra .
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Fri Jun 30 2023 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt2
+- fix build: drop clang 11 BR
+
 * Sat May 06 2023 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt1
 - new version 2.8.0 (with rpmrb script)
 
