@@ -1,7 +1,7 @@
 %def_enable translation
 
 Name: nvidia-settings
-Version: 525.105.17
+Version: 535.54.03
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -22,7 +22,6 @@ Patch1: xlibs.patch
 Patch2: cflags.patch
 Patch3: alt-ui-modules-dir.patch
 Patch4: add-error-popup.patch
-Patch5: alt-link-wayland.patch
 Patch100: nvidia-settings-440.59-alt-integrate-translation.patch
 
 # Automatically added by buildreq on Mon May 13 2013 (-bi)
@@ -64,7 +63,6 @@ Development files for %name
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
-%patch5 -p1
 %if_enabled translation
 mkdir -p po/msg
 #%patch100 -p1
@@ -131,6 +129,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Fri Jun 30 2023 Sergey V Turchin <zerg@altlinux.org> 535.54.03-alt1
+- new version
+
 * Tue Apr 11 2023 Sergey V Turchin <zerg@altlinux.org> 525.105.17-alt1
 - new version
 

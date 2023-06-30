@@ -18,8 +18,8 @@
 %endif
 
 Name: nvidia_glx_libs
-Version: 525.116.04
-Release: alt2
+Version: 535.54.03
+Release: alt1
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -120,6 +120,18 @@ Summary: nvidia library
 %description -n libnvidia-ngx
 nvidia library
 
+%package -n libnvidia-fbc
+Group: System/Libraries
+Summary: nvidia library
+%description -n libnvidia-fbc
+nvidia library
+
+%package -n libnvidia-api
+Group: System/Libraries
+Summary: nvidia library
+%description -n libnvidia-api
+nvidia library
+
 %package -n nvidia-smi
 Group: System/Libraries
 Summary: NVIDIA System Management Interface program
@@ -161,10 +173,15 @@ install -m 0644 %subd/libnvidia-ml.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvcuvid.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-encode.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-nvvm.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libnvidia-fbc.so.%version %buildroot/%_libdir/
 %if "%_lib" != "lib"
 install -m 0644 %subd/libnvoptix.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ngx.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libcudadebugger.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libnvidia-api.so.%nvidia_sover %buildroot/%_libdir/libnvidia-api.so.%version
+# install data
+mkdir -p %buildroot/%_datadir/nvidia/
+install -m 0644 %subd/nvoptix.bin %buildroot/%_datadir/nvidia/
 # install programs
 mkdir -p %buildroot/%_bindir/
 install -m 0755 nvidia-smi %buildroot/%_bindir/
@@ -173,8 +190,8 @@ install -m 0644 nvidia-smi.1.gz %buildroot/%_man1dir/
 %endif
 # install dlls
 %ifarch x86_64
-mkdir -p %buildroot/%_libdir/nvidia/wine/
-install -m 0755 *nvngx.dll %buildroot/%_libdir/nvidia/wine/
+#mkdir -p %buildroot/%_libdir/nvidia/wine/
+#install -m 0755 *nvngx.dll %buildroot/%_libdir/nvidia/wine/
 %endif
 mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
 install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
@@ -202,13 +219,16 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %files -n libnvidia-nvvm
 %_libdir/libnvidia-nvvm.so.%{nvvm_sover}
 %_libdir/libnvidia-nvvm.so.%version
+%files -n libnvidia-fbc
+%_libdir/libnvidia-fbc.so.%{nvidia_sover}
+%_libdir/libnvidia-fbc.so.%version
 %if "%_lib" != "lib"
 %files -n nvidia-smi
 %_bindir/nvidia-smi
 %_man1dir/nvidia-smi.1.*
 %ifarch x86_64
-%files -n nvidia-wine
-%_libdir/nvidia/wine/
+#%files -n nvidia-wine
+#%_libdir/nvidia/wine/
 %endif
 %files -n libnvidia-ngx
 %_libdir/libnvidia-ngx.so.%{nvidia_sover}
@@ -216,12 +236,22 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %files -n libnvoptix
 %_libdir/libnvoptix.so.%{nvidia_sover}
 %_libdir/libnvoptix.so.%version
+%_datadir/nvidia/nvoptix.bin
 %files -n libcudadebugger
 %_libdir/libcudadebugger.so.%{nvidia_sover}
 %_libdir/libcudadebugger.so.%version
+%files -n libnvidia-api
+%_libdir/libnvidia-api.so.%{nvidia_sover}
+%_libdir/libnvidia-api.so.%version
 %endif
 
 %changelog
+* Thu Jun 29 2023 Sergey V Turchin <zerg@altlinux.org> 535.54.03-alt1
+- new version
+
+* Thu Jun 29 2023 Sergey V Turchin <zerg@altlinux.org> 525.116.04-alt3
+- don't package wine dlls
+
 * Mon Jun 05 2023 Sergey V Turchin <zerg@altlinux.org> 525.116.04-alt2
 - make nvidia-wine package (closes: 46378)
 
