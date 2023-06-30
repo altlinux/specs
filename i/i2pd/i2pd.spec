@@ -2,8 +2,8 @@
 %define _i2pd_root %_sharedstatedir/%name
 
 Name: i2pd
-Version: 2.47.0
-Release: alt2
+Version: 2.48.0
+Release: alt1
 
 Summary: Full C++ implementation of I2P router
 
@@ -119,6 +119,9 @@ mkdir -p %buildroot%_logdir/%name/
 %dir %_logdir/%name/
 
 %changelog
+* Fri Jun 30 2023 Vitaly Lipatov <lav@altlinux.ru> 2.48.0-alt1
+- new version 2.48.0 (with rpmrb script)
+
 * Sat Apr 08 2023 Vitaly Lipatov <lav@altlinux.ru> 2.47.0-alt2
 - don't pack /var/log/i2pd/i2pd.log
 
