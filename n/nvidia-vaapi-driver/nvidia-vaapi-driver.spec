@@ -1,8 +1,8 @@
-%define git 2f1b8e7
+%define git %nil
 
 Name: nvidia-vaapi-driver
-Version: 0.0.9
-Release: alt1.g%{git}
+Version: 0.0.10
+Release: alt1
 
 Summary: VA-API implementation that uses NVDEC as a backend
 License: MIT/X11
@@ -47,6 +47,9 @@ parameter nvidia-drm.modeset=1
 %_libdir/dri/nvidia_drv_video.so
 
 %changelog
+* Fri Jun 30 2023 L.A. Kostis <lakostis@altlinux.ru> 0.0.10-alt1
+- 0.0.10.
+
 * Sun Mar 12 2023 L.A. Kostis <lakostis@altlinux.ru> 0.0.9-alt1.g2f1b8e7
 - v0.0.9-5-g2f1b8e7.
 - BR: added libdrm-devel.
