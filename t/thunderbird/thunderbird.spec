@@ -14,7 +14,7 @@
 
 Name: 	 thunderbird
 Version: 102.12.0
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -53,6 +53,8 @@ Patch40: Properly-launch-applications-set-in-HOME-.mailcap.patch
 Patch41: fix-function-nsMsgComposeAndSend-to-respect-Replo.patch
 Patch42: fix-packed_simd_2.patch
 Patch43: set-def-event_sizeof_time_t.patch
+Patch44: fix-unstable-name-collisions.patch
+Patch45: fix-build-failure-with-GCC-13.patch
 
 ExcludeArch: armh
 
@@ -267,6 +269,8 @@ tar -xf %SOURCE6
 %patch40 -p1
 # %patch42 -p2
 %patch43 -p2
+%patch44 -p2
+%patch45 -p2
 
 #echo %version > mail/config/version.txt
 
@@ -298,6 +302,10 @@ chmod +x /tmp/node-stdout-nonblocking-wrapper
 echo 'export NODEJS="/tmp/node-stdout-nonblocking-wrapper"' >> .mozconfig
 
 sed -i -e '\,hyphenation/,d' comm/mail/installer/removed-files.in
+
+# Begin change checksum for rust checksum file
+sed -i 's|73114a5c28472e77082ad259113ffafb418ed602c1741f26da3e10278b0bf93e|a88d6cc10ec1322b53a8f4c782b5133135ace0fdfcf03d1624b768788e17be0f|' ./third_party/rust/mp4parse/.cargo-checksum.json
+# Finish change checksum for rust checksum file
 
 %build
 %define optflags_lto %nil
@@ -579,6 +587,10 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Tue Jun 27 2023 Pavel Vasenkov <pav@altlinux.org> 102.12.0-alt2
+- Fixes: Unstable name collisions
+         Build failure with GCC 13
+
 * Wed Jun 14 2023 Pavel Vasenkov <pav@altlinux.org> 102.12.0-alt1
 - New version.
 - Security fixes:
