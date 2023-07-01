@@ -2,15 +2,13 @@
 
 Name: kbd
 Epoch: 0
-Version: 2.4.0
-Release: alt2
+Version: 2.6.1
+Release: alt1
 
 Group: Terminals
 Summary: Tools for managing the Linux console
 License: GPL-2.0
-Url: http://kbd-project.org
-
-Packager: Alexey Gladkov <legion@altlinux.ru>
+Url: https://kbd-project.org
 
 ExclusiveOS: Linux
 ExcludeArch: s390 s390x
@@ -420,6 +418,9 @@ done
 %_man1dir/vlock.*
 
 %changelog
+* Sat Jul 01 2023 Alexey Gladkov <legion@altlinux.ru> 0:2.6.1-alt1
+- New release version (2.6.1).
+
 * Mon Apr 12 2021 Alexey Gladkov <legion@altlinux.ru> 0:2.4.0-alt2
 - Add systemd unit file for consolesaver (ALT#30155).
 
