@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.98.0
+Version: 0.99.0
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -88,6 +88,9 @@ sed -i "/def test_create_read()/i@pytest.mark.skip(reason='workaround')" \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Jul 01 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.99.0-alt1
+- 0.98.0 -> 0.99.0
+
 * Thu Jun 29 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.98.0-alt1
 - 0.97.0 -> 0.98.0
 
