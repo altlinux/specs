@@ -1,6 +1,6 @@
 Name:    gz-tools
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Command line tools for the Gazebo libraries
 License: Apache-2.0
@@ -42,12 +42,15 @@ Group: Development/C++
 %_bindir/ign
 %_datadir/bash-completion/completions/ign
 %_datadir/gz/gz1.completion
+%_libdir/lib*.so
 
 %files devel
 %_libdir/cmake/ignition-tools
-%_libdir/lib*.so
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt2
+- Moved .so files to main package.
+
 * Wed May 17 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus.
