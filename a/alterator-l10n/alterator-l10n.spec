@@ -1,6 +1,6 @@
 Name: alterator-l10n
-Version: 2.9.130
-Release: alt2
+Version: 2.9.131
+Release: alt1
 
 Summary: translations for all alterator modules
 License: GPL
@@ -120,6 +120,9 @@ make check
 %lang(da) %_datadir/alterator/help/da_DK/*.html
 
 %changelog
+* Wed Jun 28 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 2.9.131-alt1
+- alterator-users: update russian translation
+
 * Wed May 31 2023 Oleg Solovyov <mcpain@altlinux.org> 2.9.130-alt2
 - merge 2.9.124-alt1.p10.1 from p10
 
