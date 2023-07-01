@@ -1,5 +1,5 @@
 Name: acl
-Version: 2.3.1
+Version: 2.3.1.0.20.d265
 Release: alt1
 
 Summary: ACL manipulation utilities
@@ -53,6 +53,10 @@ linked programs which make use of POSIX access control lists.
 %setup
 
 %build
+# acl is not yet compatible with -D_FORTIFY_SOURCE=3, see
+# https://savannah.nongnu.org/bugs/index.php?62519
+%add_optflags -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
+
 ./autogen.sh
 %configure %{subst_enable static}
 %make_build V=1
@@ -101,6 +105,10 @@ mv %buildroot%_bindir/chacl %buildroot/bin/
 %endif
 
 %changelog
+* Sat Jul 01 2023 Dmitry V. Levin <ldv@altlinux.org> 2.3.1.0.20.d265-alt1
+- v2.3.1 -> v2.3.1-20-gd26507b.
+- Built with -D_FORTIFY_SOURCE=2.
+
 * Tue Mar 16 2021 Dmitry V. Levin <ldv@altlinux.org> 2.3.1-alt1
 - v2.2.53 -> v2.3.1.
 
