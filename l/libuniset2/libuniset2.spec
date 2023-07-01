@@ -27,7 +27,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.31.2
+Version: 2.31.3
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -652,7 +652,10 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 %_includedir/%oname/extensions/*.*
 %if_enabled opentsdb
 %exclude %_includedir/%oname/extensions/BackendOpenTSDB.h
+%endif
+%if_enabled clickhouse
 %exclude %_includedir/%oname/extensions/BackendClickHouse.h
+%endif
 %_libdir/libUniSet2Extensions.so
 %_libdir/libUniSet2MB*.so
 %_libdir/libUniSet2RT*.so
@@ -668,11 +671,26 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 
 #%_pkgconfigdir/libUniSet2*.pc
 %exclude %_pkgconfigdir/libUniSet2.pc
-%endif
 
 # history of current unpublished changes
 
 %changelog
+* Sun Jul 02 2023 Pavel Vainerman <pv@altlinux.ru> 2.31.3-alt1
+- (build): used local catch2 (header-only)
+- (OPCUAExchange): add flag "default-exchange-mode"
+- fix libuniset2.spec
+- (opcuaserver): supported "prop-prefix"
+- (uwebsocket): supported "pong timeout. Default: 5 sec
+- (uniset-codegen): fixed "main", use make_object<>
+- (uniset-codegen): fixed "--no-ask" encoding
+- (uniset-codegen): update help
+- (uwebsocket): fixed "pong" (empty payload)
+- (uniset-codegen): update "skel"
+- (uwebsocket): add some logs
+- (debuglog): fixed compile error (type)
+- (iocontroller): terminate after registration error
+- (ci/cd): fixed "libclickhouse" check
+
 * Sat May 27 2023 Pavel Vainerman <pv@altlinux.ru> 2.31.2-alt1
 - (clickhouse): rename:  _hash_id -> _hid
 - (clickhouse): use "./configure.xml" by default (--dict-gen)
