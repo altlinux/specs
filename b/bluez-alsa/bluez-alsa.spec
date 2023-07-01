@@ -13,7 +13,7 @@
 %def_enable cli
 
 Name: bluez-alsa
-Version: 4.1.0
+Version: 4.1.1
 Release: alt1
 Epoch: 5
 Summary: BlueZ ALSA backend for Linux
@@ -143,6 +143,9 @@ install -m0700 -d %buildroot%_localstatedir/%b_user
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sat Jul 01 2023 L.A. Kostis <lakostis@altlinux.ru> 5:4.1.1-alt1
+- 4.1.1.
+
 * Fri May 26 2023 L.A. Kostis <lakostis@altlinux.ru> 5:4.1.0-alt1
 - 4.1.0.
 
