@@ -28,7 +28,7 @@
 
 Name: libuniset2
 Version: 2.31.3
-Release: alt1
+Release: alt2
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -675,6 +675,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sun Jul 02 2023 Pavel Vainerman <pv@altlinux.ru> 2.31.3-alt2
+- fixed lib version
+
 * Sun Jul 02 2023 Pavel Vainerman <pv@altlinux.ru> 2.31.3-alt1
 - (build): used local catch2 (header-only)
 - (OPCUAExchange): add flag "default-exchange-mode"
