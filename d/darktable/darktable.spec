@@ -17,7 +17,7 @@
 %def_enable lensfun
 
 Name: darktable
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -145,6 +145,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Sat Jul 01 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.1-alt1
+- 4.4.1
+
 * Wed Jun 21 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
 - 4.4.0
 
