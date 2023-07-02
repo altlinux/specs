@@ -4,7 +4,7 @@
 
 Name: mdbtools
 Version: 1.0.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Utilities for use M$ Access databases under Linux
 Group: Databases
@@ -16,6 +16,7 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-0.9.3-fc-mdb-sql-compile-fix.patch
 
 Requires: lib%name = %EVR
 
@@ -64,6 +65,7 @@ statically linked with MDB Tools.
 
 %prep
 %setup
+%patch -p1
 # always use system GLIB:
 sed -i 's|\(Cflags:.*\)$|\1 -DHAVE_GLIB=1|' *.pc.in
 
@@ -105,6 +107,9 @@ sed -i 's|\(Cflags:.*\)$|\1 -DHAVE_GLIB=1|' *.pc.in
 %endif
 
 %changelog
+* Sun Jul 02 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1.2
+- fixed build with gcc-13 (fc patch)
+
 * Fri Jan 14 2022 Michael Shigorin <mike@altlinux.org> 1.0.0-alt1.1
 - E2K: lcc 1.25 ftbfs workaround
 
