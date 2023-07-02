@@ -1,9 +1,12 @@
 %define glslang_commit 6d41bb9c557c5a0eec61ffba1f775dc5f717a8f7
 %define spirv_cross_commit 4e2fdb25671c742a9fbe93a6034eb1542244c7e
+%define optflags_lto %nil
+
+%set_gcc_version 12
 
 Name: snes9x
 Version: 1.62.3
-Release: alt1
+Release: alt1.1
 
 Summary: Super Nintendo Entertainment System emulator
 License: Distributable
@@ -46,7 +49,7 @@ BuildRequires(pre): libxkbcommon-devel
 BuildRequires(pre): libwayland-cursor-devel
 
 BuildRequires: cmake
-BuildRequires: gcc-c++
+BuildRequires: gcc12-c++
 BuildRequires: libSDL2-devel
 BuildRequires: libSM-devel
 BuildRequires: libXinerama-devel
@@ -136,6 +139,9 @@ popd
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sun Jul 02 2023 Nazarov Denis <nenderus@altlinux.org> 1.62.3-alt1.1
+- Fix FTBFS
+
 * Fri Mar 31 2023 Nazarov Denis <nenderus@altlinux.org> 1.62.3-alt1
 - Version 1.62.3
 
