@@ -1,6 +1,6 @@
 Name: cvs
 Version: 1.11.23
-Release: alt8
+Release: alt9
 
 Summary: A version control system
 License: GPLv2+
@@ -52,6 +52,9 @@ Patch39: cvs-1.11.23-alt-format.patch
 Patch40: cvs-1.11.23-alt-testsuite-fixes.patch
 Patch41: cvs-1.11.23-alt-testsuite-sleep.patch
 Patch42: cvs-1.11.23-up-texinfo-39166.patch
+Patch43: cvs-1.11.23-alt-history.patch
+Patch44: cvs-1.11.23-alt-md5.patch
+Patch45: cvs-1.11.23-fc-c99.patch
 
 Requires: mktemp >= 1:1.3.1, vitmp
 BuildRequires: makeinfo
@@ -157,6 +160,9 @@ unset r
 %patch40 -p1
 %patch41 -p1
 %patch42 -p1
+%patch43 -p1
+%patch44 -p1
+%patch45 -p1
 
 find -type f \( -size 0 -o -name \*~ -o -name \*.orig -o -name .cvsignore \) -delete
 sed -i 's|${TMPDIR}/cvs-serv|${TMPDIR:-/tmp}/cvs-serv|g' src/sanity.sh
@@ -252,6 +258,9 @@ install -pm644 \
 %_datadir/cvs
 
 %changelog
+* Sat Jul 01 2023 Dmitry V. Levin <ldv@altlinux.org> 1.11.23-alt9
+- cvs history: fixed potential heap write out of bounds.
+
 * Sun Jul 31 2022 Dmitry V. Levin <ldv@altlinux.org> 1.11.23-alt8
 - Replaced "egrep" with "grep -E", "fgrep" with "grep -F".
 
