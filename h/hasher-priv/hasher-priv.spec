@@ -1,5 +1,5 @@
 Name: hasher-priv
-Version: 2.0.10
+Version: 2.0.11
 Release: alt1
 
 Summary: A privileged helper for the hasher project
@@ -77,6 +77,9 @@ fi
 %doc DESIGN
 
 %changelog
+* Wed Jun 28 2023 Arseny Maslennikov <arseny@altlinux.org> 2.0.11-alt1
+- hasher-useradd: Fixed service auto-enable on sysvinit.
+
 * Wed Jun 28 2023 Arseny Maslennikov <arseny@altlinux.org> 2.0.10-alt1
 - hasher-useradd: Fixed implementation of "--system".
 - Made hasher-useradd auto-enable hasher-privd if users were added.
