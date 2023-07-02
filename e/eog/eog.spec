@@ -12,7 +12,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Eye Of Gnome
@@ -31,6 +31,7 @@ Obsoletes: %oldname < 2.14.2-alt1
 
 %add_python3_path %_libdir/%name/plugins
 
+%define glib_ver 2.74
 %define peas_ver 0.7.4
 %define portal_ver 0.5
 %define handy_ver 1.5
@@ -40,6 +41,7 @@ Obsoletes: %oldname < 2.14.2-alt1
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: meson python3-devel yelp-tools libappstream-glib-devel
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= 3.22
 BuildRequires: libgio-devel >= 2.54
 BuildRequires: libgnome-desktop3-devel >= 3.0
@@ -177,6 +179,9 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Sat Jul 01 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
+- 44.3
+
 * Sun May 28 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
 - 44.2
 
