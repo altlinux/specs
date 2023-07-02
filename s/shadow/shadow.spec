@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.13
-Release: alt6
+Release: alt7
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -475,6 +475,9 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Wed Jun 21 2023 Nikolay Burykin <bne@altlinux.org> 1:4.13-alt7
+- newuidmap/newgidmap: Added cap_dac_read_search to all modes (ALT #46462).
+
 * Thu May 25 2023 Nikolay Burykin <bne@altlinux.org> 1:4.13-alt6
 - newuidmap/newgidmap: Added check for podmanonly mode (ALT #46220).
 
