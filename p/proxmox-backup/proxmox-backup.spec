@@ -4,7 +4,7 @@
 
 Name: proxmox-backup
 Version: 2.4.2.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -202,6 +202,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Sun Jul 02 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:2.4.2.1-alt2
+- qemu_helper: increase restore VM RAM size, 192M is too few for ALT
+
 * Fri Jun 09 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:2.4.2.1-alt1
 - 2.4.2-1
 
