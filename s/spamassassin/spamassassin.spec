@@ -4,8 +4,8 @@
 %def_enable ssl
 
 Name: spamassassin
-Version: 3.4.6
-Release: alt2
+Version: 4.0.0
+Release: alt1
 
 Summary: Spam filter for email written in perl
 License: Apache-2.0
@@ -74,9 +74,6 @@ Requires: %name-version = %version-%release
 # Not autodetected by rpm, needed for spamc/spamd SSL communication:
 Requires: perl-IO-Socket-SSL
 
-# Use of Storable module removed in 3.1.0!
-# Requires: perl-Storable
-
 Requires(pre): shadow-utils
 Requires(post): %post_service
 Requires(preun): %preun_service
@@ -143,7 +140,7 @@ subpackages versions with.
 
 %prep
 %setup -q -n Mail-SpamAssassin-%{version}
-%patch10 -p1
+%patch10 -p2
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -226,6 +223,7 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 %_bindir/sa-compile
 %_bindir/sa-learn
 %_bindir/sa-update
+
 %config(noreplace) %_sysconfdir/cron.d/sa-update
 %_man1dir/spamassassin*
 %_man1dir/sa-compile*
@@ -264,6 +262,9 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Tue Jun 27 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.0-alt1
+- 4.0.0.
+
 * Wed Nov 02 2022 L.A. Kostis <lakostis@altlinux.ru> 3.4.6-alt2
 - Rebuild with libssl (closes #41733).
 
