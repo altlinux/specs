@@ -17,7 +17,7 @@
 
 Name: gnome-settings-daemon
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A program that manages general GNOME settings
 License: GPL-2.0
@@ -81,7 +81,7 @@ BuildRequires: libXext-devel libXfixes-devel >= %xfixes_ver
 BuildRequires: libXrandr-devel xorg-proto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsvg-devel
-BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel
+BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: libgweather4.0-devel >= %gweather_ver pkgconfig(geocode-glib-2.0) >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
 BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel pkgconfig(gcr-4)
 %{?_enable_check:BuildRequires: /proc dbus gnome-color-manager}
@@ -191,6 +191,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Sun Jul 02 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1.1
+- fixed BR
+
 * Tue Apr 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 
