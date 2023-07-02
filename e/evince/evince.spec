@@ -19,7 +19,7 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: A document viewer
@@ -49,7 +49,7 @@ Requires: dconf
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libpoppler-glib-devel >= %poppler_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: gcc-c++ gnome-common libappstream-glib-devel yelp-tools
+BuildRequires: gcc-c++ gnome-common /usr/bin/appstream-util yelp-tools
 BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel
 BuildRequires: libspectre-devel >= %spectre_ver libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel
@@ -228,6 +228,9 @@ using Evince library.
 
 
 %changelog
+* Sat Jul 01 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
+- 44.3
+
 * Sat Jun 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
 - 44.2
 
