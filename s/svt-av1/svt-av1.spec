@@ -1,5 +1,5 @@
 Name: svt-av1
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Scalable Video Technology for AV1 Encoder
@@ -140,6 +140,9 @@ popd
 %_libdir/gstreamer-1.0/libgstsvtav1enc.so
 
 %changelog
+* Fri Jun 30 2023 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- new version 1.6.0 (with rpmrb script)
+
 * Tue May 02 2023 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - new version 1.5.0 (with rpmrb script)
 
