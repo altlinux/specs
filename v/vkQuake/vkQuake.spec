@@ -1,5 +1,5 @@
 Name: vkQuake
-Version: 1.22.3
+Version: 1.30.1
 Release: alt1
 
 Summary: Quake I engine
@@ -46,7 +46,8 @@ install -pm644 readme.md %buildroot%docdir/
 %docdir/readme.md
 
 %changelog
+* Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 1.30.1-alt1
+- Update to new version
+
 * Sat Jan 21 2023 Andrey Bergman <vkni@altlinux.org> 1.22.3-alt1
 - Initial release for Sisyphus
-
-
