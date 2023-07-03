@@ -11,8 +11,8 @@
 
 
 Name: rdma-core
-Version: 44.0
-Release: alt2
+Version: 46.0
+Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -27,7 +27,7 @@ Patch: %name-%version.patch
 Patch2000: %name-e2k.patch
 
 BuildRequires: binutils
-BuildRequires: cmake >= 2.8.11 rpm-macros-cmake
+BuildRequires: cmake >= 3.18.1 rpm-macros-cmake
 BuildRequires: ninja-build rpm-macros-ninja-build
 BuildRequires: libudev-devel
 BuildRequires: pkgconfig(libnl-3.0)
@@ -267,7 +267,6 @@ sed -i '/rdma_man_get_prebuilt(/a execute_process(COMMAND "echo" " " OUTPUT_FILE
 
 mkdir -p %buildroot%_sysconfdir/rdma
 
-mkdir -p %buildroot%_sysconfdir/udev/rules.d
 mkdir -p %buildroot%_libexecdir
 mkdir -p %buildroot%_udevrulesdir
 mkdir -p %buildroot%sysmodprobedir
@@ -293,7 +292,6 @@ install -D -m0644 ibacm_opts.cfg %buildroot%_sysconfdir/rdma/
 cp -r kernel-headers/rdma %buildroot%_includedir/
 
 rm -f %buildroot%_sbindir/srp_daemon.sh
-mv %buildroot%_docdir/%name-%version/70-persistent-ipoib.rules %buildroot%_sysconfdir/udev/rules.d/70-persistent-ipoib.rules
 
 %post -n ibacm
 %post_service ibacm
@@ -318,6 +316,7 @@ mv %buildroot%_docdir/%name-%version/70-persistent-ipoib.rules %buildroot%_sysco
 %docdir/rxe.md
 %docdir/udev.md
 %docdir/tag_matching.md
+%docdir/70-persistent-ipoib.rules
 %if_enabled dma_coherent
 %config(noreplace) %_sysconfdir/rdma/mlx4.conf
 %config(noreplace) %_sysconfdir/modprobe.d/mlx4.conf
@@ -329,7 +328,6 @@ mv %buildroot%_docdir/%name-%version/70-persistent-ipoib.rules %buildroot%_sysco
 %config(noreplace) %_sysconfdir/rdma/modules/opa.conf
 %config(noreplace) %_sysconfdir/rdma/modules/rdma.conf
 %config(noreplace) %_sysconfdir/rdma/modules/roce.conf
-%config(noreplace) %_sysconfdir/udev/rules.d/*
 %config(noreplace) %_sysconfdir/modprobe.d/truescale.conf
 %_unitdir/rdma-hw.target
 %_unitdir/rdma-load-modules@.service
@@ -376,7 +374,6 @@ mv %buildroot%_docdir/%name-%version/70-persistent-ipoib.rules %buildroot%_sysco
 %dir %_sysconfdir/libibverbs.d
 %dir %_libdir/libibverbs
 %_libdir/libibverbs*.so.*
-%_libdir/libibverbs/*.so
 %_libdir/libibverbs/*.so
 %if_enabled dma_coherent
 %_libdir/libefa.so.*
@@ -589,6 +586,9 @@ mv %buildroot%_docdir/%name-%version/70-persistent-ipoib.rules %buildroot%_sysco
 %docdir/ibsrpdm.md
 
 %changelog
+* Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 46.0-alt1
+- new version 46.0
+
 * Thu Mar 09 2023 Ivan A. Melnikov <iv@altlinux.org> 44.0-alt2
 - enable dma_coherent on riscv64
 
