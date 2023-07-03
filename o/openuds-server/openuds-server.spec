@@ -11,7 +11,7 @@
 
 Name: openuds-server
 Version: 3.6.0
-Release: alt2
+Release: alt3
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -156,6 +156,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Fri Jun 30 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt3
+- Revert 4.0 changes.
+
 * Wed Jun 28 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt2
 - Use min TLS version 1.3.
 
