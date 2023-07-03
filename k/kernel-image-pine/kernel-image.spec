@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt3
+Release: alt4
 epoch:1
 %define kernel_need_version	6.2
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -304,6 +304,8 @@ KbuildFiles="
 	scripts/depmod.sh
 	scripts/gcc-plugins/*.so
 	scripts/ld-version.sh
+	scripts/pahole-flags.sh
+	scripts/check-local-export
 	tools/objtool/objtool
 
 	.config
@@ -420,6 +422,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jul 03 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt4
+- kernel-headers-modules: add scripts/pahole-flags.sh scripts/check-local-export
+
 * Sun Jun 18 2023 Anton Midyukov <antohami@altlinux.org> 1:6.2.14-alt3
 - Replace devicetree to /boot
 
