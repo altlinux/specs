@@ -6,13 +6,15 @@
 
 Name: kde5-%rname
 Version: 23.04.2
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Sound
 Summary: Simple Sound Editor
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: lame
 
 Source: %rname-%version.tar
 Patch2: alt-opus-pkgconvig-wrong-version.patch
@@ -105,6 +107,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkwavegui.so.*
 
 %changelog
+* Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt2
+- require lame
+
 * Fri Jun 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
 - new version
 
