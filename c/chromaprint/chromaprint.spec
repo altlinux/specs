@@ -2,8 +2,8 @@
 %define libchromaprint libchromaprint%sover
 
 Name: chromaprint
-Version: 1.5.0
-Release: alt2
+Version: 1.5.1
+Release: alt1
 Summary: Library implementing the AcoustID fingerprinting
 
 Group: Sound
@@ -18,7 +18,7 @@ Patch2: chromaprint-1.1-alt-libav10.patch
 # optimized out: boost-devel cmake-modules elfutils libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libstdc++-devel pkg-config python-base
 #BuildRequires: boost-devel-headers cmake gcc-c++ libavdevice-devel libavformat-devel libfftw3-devel libswscale-devel libtag-devel
 BuildRequires: boost-devel cmake gcc-c++ libfftw3-devel libtag-devel
-BuildRequires: cmake kde-common-devel
+BuildRequires: cmake rpm-build-kf5
 #BuildRequires: libavdevice-devel libavformat-devel libswscale-devel
 
 
@@ -56,13 +56,26 @@ applications which will use %name.
 #%patch2 -p1
 
 %build
-%Kbuild \
+%K5build \
     -DBUILD_TOOLS=OFF \
     -DBUILD_EXAMPLES=OFF \
     -DBUILD_TESTS=OFF
 
 %install
-%Kinstall
+%K5install
+
+ls -1 %buildroot/%_libdir/lib*.so.* 2>/dev/null | \
+while read p
+do
+	[ -z `readlink $p` ] || continue
+	[ -f "$p" ] || continue
+	l=`basename "$p"| sed 's|\.so\..*$|.so|'`
+	f=`basename "$p"`
+	shortname=`echo `
+	ln -s "$f" "%buildroot/%_libdir/$l"
+done
+rm -rf %buildroot/%_K5link ||:
+
 #mkdir -p %buildroot/%_bindir
 #[ -x %buildroot/%_bindir/fpcollect ] || install -m 0755 BUILD*/tools/fpcollect  %buildroot/%_bindir/
 
@@ -80,6 +93,9 @@ applications which will use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt1
+- new version
+
 * Wed Sep 29 2021 Sergey V Turchin <zerg@altlinux.org> 1.5.0-alt2
 - build without ffmpeg
 
