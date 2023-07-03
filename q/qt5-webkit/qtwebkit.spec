@@ -8,7 +8,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt24
+Release: alt25
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -25,6 +25,8 @@ Patch7: qtwebkit-5.212.0_pre20200309-icu-68.patch
 Patch10: alt-flags.patch
 # Elbrus
 Patch2000: qtwebkit-e2k.patch
+# LoongArch
+Patch3500: qtwebkit-loongarch64.patch
 
 # Automatically added by buildreq on Mon Sep 30 2013 (-bi)
 # optimized out: elfutils fontconfig glib2-devel glibc-devel-static gstreamer-devel libGL-devel libX11-devel libXfixes-devel libfreetype-devel libgst-plugins libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-encodings python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs xorg-compositeproto-devel xorg-fixesproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
@@ -106,6 +108,9 @@ Requires: libqt5-core = %_qt5_version
 %patch10 -p1
 %ifarch %e2k
 %patch2000 -p1
+%endif
+%ifnarch %e2k
+%patch3500 -p1
 %endif
 syncqt.pl-qt5 Source -version %version
 
@@ -222,6 +227,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt25
+- support LoongArch architecture (lp64d ABI) (thanks asheplyakov@alt) (closes: #46582)
+
 * Fri Oct 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt24
 - build without LTO enabled
 
