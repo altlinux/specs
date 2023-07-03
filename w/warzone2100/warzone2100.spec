@@ -4,7 +4,7 @@
 
 Name: warzone2100
 Version: 4.2.6
-Release: alt1
+Release: alt2
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
 License: GPLv2+ and CC-BY-SA-3.0
 Group: Games/Strategy
@@ -42,6 +42,7 @@ Source1000: %name.watch
 
 Patch1: %name-alt-unbundle-libs.patch
 Patch2: %name-alt-dont-install-portable-marker.patch
+Patch3: 0001-Fix-build-on-GCC13.patch
 
 BuildRequires: /proc
 BuildRequires: qt5-base-devel qt5-3d-devel qt5-script-devel qt5-x11extras-devel openssl-devel
@@ -83,6 +84,7 @@ Game data for warzone2100.
 %setup -a1 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 install -m644 %SOURCE2 build_tools/autorevision.cache
 
@@ -126,6 +128,9 @@ rm -rf %buildroot%_iconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 4.2.6-alt2
+- Fix build on GCC13
+
 * Fri Mar 04 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.6-alt1
 - Updated to upstream version 4.2.6.
 
