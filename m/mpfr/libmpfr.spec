@@ -1,6 +1,6 @@
 Name: mpfr
-Version: 4.2.0
-Release: alt2
+Version: 4.2.0.p9
+Release: alt1
 
 Summary: Multiple Precision Floating-Point library
 License: LGPL-3.0-or-later
@@ -114,6 +114,12 @@ make check-exported-symbols
 %endif
 
 %changelog
+* Mon Jul 03 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.0.p9-alt1
+- Updated to version 4.2.0.p9, which includes the original 4.2.0 release with
+  additional upstream patches applied: tsprintf-thousands, ui_pow_ui-overflow,
+  multibyte-decimal_point, rec_sqrt-zivloop, reldiff, tests-reuse, pow_general,
+  compound, printf_large_prec_for_g.
+
 * Thu Jun 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.0-alt2
 - Backported the upstream commit 5172494c0 to fix the tsprintf test regresstion
   with glibc 2.37.
