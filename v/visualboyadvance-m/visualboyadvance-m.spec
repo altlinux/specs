@@ -2,7 +2,7 @@
 
 Name: visualboyadvance-m
 Version: 2.1.5
-Release: alt3
+Release: alt4
 
 Summary: Game Boy Advance Emulator
 License: GPLv2
@@ -124,6 +124,9 @@ export NPROCS=1
 
 
 %changelog
+* Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 2.1.5-alt4
+- Fix build on GCC13
+
 * Sun Dec 18 2022 Ilya Mashkin <oddity@altlinux.ru> 2.1.5-alt3
 - ExcludeArch: armh i586
 
