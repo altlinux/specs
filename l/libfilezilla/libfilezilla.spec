@@ -2,7 +2,7 @@
 
 Name: libfilezilla
 Version: 0.31.1
-Release: alt1
+Release: alt1.1
 Summary: Small and modern C++ library
 License: GPLv2+
 Group: System/Libraries
@@ -81,6 +81,9 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 0.31.1-alt1.1
+- Fix build on GCC13
+
 * Wed Aug 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.31.1-alt1
 - Updated to upstream version 0.31.1.
 
