@@ -1,6 +1,6 @@
 Name: jdupes
 Version: 1.21.3
-Release: alt1
+Release: alt2
 
 Summary: A powerful duplicate file finder and an enhanced fork of 'fdupes'
 
@@ -28,7 +28,8 @@ between the two programs. For example, the -I switch in jdupes means
 %setup
 
 %build
-%make_build
+%add_optflags -DENABLE_DEDUPE=1
+%make_build CFLAGS_EXTRA="%optflags"
 
 %install
 %makeinstall PREFIX=%buildroot%prefix MAN_BASE_DIR=%buildroot%_mandir CFLAGS_EXTRA="%optflags" install
@@ -43,6 +44,9 @@ between the two programs. For example, the -I switch in jdupes means
 %_man1dir/*
 
 %changelog
+* Tue Jun 27 2023 Ildar Mulyukov <ildar@altlinux.ru> 1.21.3-alt2
+- ENABLE_DEDUPE
+
 * Sat Feb 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1.21.3-alt1
 - new version 1.21.3 (with rpmrb script)
 
