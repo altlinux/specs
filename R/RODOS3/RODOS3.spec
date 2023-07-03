@@ -1,7 +1,7 @@
 Name: RODOS3
 
 Version: 1.3
-Release: alt2
+Release: alt3
 
 Summary: Control tool for RODOS-3 controllers
 Summary(ru_RU.UTF-8): Инструмент управления для контроллеров RODOS-3
@@ -41,6 +41,9 @@ install -D -m0644 %_sourcedir/udev.rules %buildroot%_udevrulesdir/40-%name.rules
 %attr(4711, root, root) %_bindir/%name
 
 %changelog
+* Mon Jul 03 2023 Pavel Isopenko <pauli@altlinux.org> 1.3-alt3
+- usb.h: #include <stdint.h>
+
 * Wed Apr 26 2023 Pavel Isopenko <pauli@altlinux.org> 1.3-alt2
 - change Url
 
