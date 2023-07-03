@@ -1,19 +1,16 @@
-%def_without gnome
-%def_with gnome3
+%define _unpackaged_files_terminate_build 1
+
+%def_with curl
+%def_with gnome
 %def_with kde
-%def_with networkmanager
-%def_without mozjs
-%def_without webkit
-%def_with webkit3
-%def_without dotnet
-%def_without python2
-%def_with python3
-%define _libexecdir %_prefix/libexec
+%def_with env
+%def_with sysconfig
+%def_with duktape
 
 Name: libproxy
-Version: 0.4.18
+Version: 0.5.2
 Release: alt1
-Summary: A library handling all the details of proxy configuration
+Summary: A library that provides automatic proxy configuration management
 
 Group: System/Libraries
 License:  GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -22,38 +19,40 @@ Vcs: https://github.com/libproxy/libproxy.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake ctest gcc-c++ zlib-devel
-BuildRequires: pkgconfig(libpcre)
-%{?_with_python2:BuildRequires: python-devel}
-%{?_with_python3:BuildRequires: python3-devel}
-# gnome
-%{?_with_gnome:BuildRequires: pkgconfig(gconf-2.0) pkgconfig(gobject-2.0)}
-# gnome3
-%{?_with_gnome3:BuildRequires: pkgconfig(gio-2.0) >= 2.26 pkgconfig(gobject-2.0)}
-# kde4
-%{?_with_kde:BuildRequires: /usr/bin/kreadconfig5}
-# libmozjs
-%{?_with_mozjs:BuildRequires: pkgconfig(mozjs-68)}
-# webkit (gtk)
-%{?_with_webkit:BuildRequires: pkgconfig(webkit-1.0)}
-%{?_with_webkit3:BuildRequires: pkgconfig(javascriptcoregtk-4.0)}
-# NetworkManager
-%{?_with_networkmanager:BuildRequires: pkgconfig(libnm) pkgconfig(dbus-1)}
-# dotnet
-%{?_with_dotnet:BuildRequires: mono-devel >= 2.0.0 /proc rpm-build-mono mono-mcs}
+BuildRequires(pre): rpm-macros-meson 
+BuildRequires: meson >= 0.59.0 rpm-build-vala vala-tools rpm-build-gir gir(Gio) = 2.0
+BuildRequires: pkgconfig(glib-2.0) >= 2.71.3 pkgconfig(gio-2.0) >= 2.71.3
+BuildRequires: gi-docgen
+%{?_with_curl:BuildRequires: pkgconfig(libcurl)}
+%{?_with_gnome:BuildRequires: pkgconfig(gsettings-desktop-schemas)}
+%{?_with_duktape:BuildRequires: pkgconfig(duktape)}
 
-%define modilesdir %_libdir/%name/%version/modules/
+Provides: %name-gnome = %EVR
+Obsoletes: %name-gnome < 0.5.0
+Provides: %name-gnome3 = %EVR
+Obsoletes: %name-gnome3 < 0.5.0
+Provides: %name-kde = %EVR
+Obsoletes: %name-kde < 0.5.0
+Provides: %name-kde4 = %EVR
+Obsoletes: %name-kde4 < 0.5.0
+Provides: %name-mozjs = %EVR
+Obsoletes: %name-mozjs < 0.5.0
+Provides: %name-webkit = %EVR
+Obsoletes: %name-webkit < 0.5.0
+Provides: %name-networkmanager = %EVR
+Obsoletes: %name-networkmanager < 0.5.0
+
 %description
-libproxy offers the following features:
+libproxy is a library that provides automatic proxy configuration management.
 
-    * extremely small core footprint (< 35K)
-    * no external dependencies within libproxy core
-      (libproxy plugins may have dependencies)
-    * only 3 functions in the stable external API
-    * dynamic adjustment to changing network topology
-    * a standard way of dealing with proxy settings across all scenarios
-    * a sublime sense of joy and accomplishment
+libproxy offers the following features:
+- support for all major platforms: Windows, Mac and Linux/UNIX
+- extremely small core footprint
+- minimal dependencies within libproxy core
+- only 4 functions in the stable-ish external API
+- dynamic adjustment to changing network topology
+- a standard way of dealing with proxy settings across all scenarios
+- a sublime sense of joy and accomplishment
 
 %package tools
 Summary: A sample & test application to test what libproxy will reply
@@ -64,91 +63,13 @@ Requires: %name = %version-%release
 A simple application that will use libproxy to give the results you can expect from.
 other applications. Great to debug what would happen.
 
-%package -n python-module-%name
-Summary: Python bindings for %name
-Group: Development/Python
-BuildArch: noarch
-Requires: %name = %version-%release
-
-%description -n python-module-%name
-Allows for the usage of libproxy from python applications
-
-%package -n python3-module-%name
-Summary: Python3 bindings for %name
-Group: Development/Python3
-BuildArch: noarch
-Requires: %name = %version-%release
-
-%description -n python3-module-%name
-Allows for the usage of libproxy from python3 applications
-
-%package gnome
-Summary: Libproxy module for gnome configuration
+%package gir
+Summary: GObject introspection data for the %name library
 Group: System/Libraries
 Requires: %name = %version-%release
 
-%description gnome
-A module to extend libproxy with capabilities to query gnome/gconf about the proxy settings
-
-%package gnome3
-Summary: Libproxy module for gnome3 configuration
-Group: System/Libraries
-Requires: %name = %version-%release
-
-%description gnome3
-A module to extend libproxy with capabilities to query gnome/gsettings about the proxy settings
-
-%package kde
-Summary: Libproxy module for kde configuration
-Group: System/Libraries
-Requires: %name = %version-%release
-#Requires: /usr/bin/kreadconfig5
-Provides: %name-kde4 = %version-%release
-Obsoletes: %name-kde4 < %version-%release
-
-%description kde
-A module to extend libproxy with capabilities to query KDE4 about proxy settings
-
-%package mozjs
-Summary: Libproxy module to support wpad/pac parsing via Mozilla JavaScript Engine
-Group: System/Libraries
-Requires: %name = %version-%release
-
-%description mozjs
-A module to extend libproxy with capabilities to pass addresses to a WPAD/PAC Script
-to have it parse for the correct proxy. PAC requires JavaScript Engine in the back.
-
-%package webkit
-Summary: Libproxy module to support webkit
-Group: System/Libraries
-Requires: %name = %version-%release
-
-%description webkit
-The %name-webkit package contains the %name plugin for
-WebKit.
-
-%package networkmanager
-Summary: Libproxy module for networkmanager configuration
-Group: System/Libraries
-
-%description networkmanager
-A module to extend libproxy with capabilities to query NetworkManager about proxy settings
-
-%package sharp
-Summary:  Mono bindings for %name
-Group: Development/Other
-Requires: %name = %version-%release
-
-%description sharp
-Allows for the usage of libproxy from mono applications
-
-%package sharp-devel
-Summary:  Mono bindings for %name
-Group: Development/Other
-Requires: %name-sharp = %version-%release
-
-%description sharp-devel
-Development files for %name-sharp-devel
+%description gir
+GObject introspection data for the %name library.
 
 %package devel
 Summary: Development files for %name
@@ -159,111 +80,64 @@ Requires: %name = %version-%release
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%package devel-doc
+Summary: Development docs package for %name libraries
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name < %version
+
+%description devel-doc
+Development docs package for %name libraries.
+
 %prep
 %setup -q
 %patch -p1
 
 %build
-%cmake \
-	-DBIPR=OFF \
-	-DLIBEXEC_INSTALL_DIR=%_libexecdir \
-	-DMODULE_INSTALL_DIR=%modilesdir \
-%if_without mozjs
-	-DWITH_MOZJS=OFF \
-%endif
-%if_without gnome
-	-DWITH_GNOME2=OFF \
-%endif
-%if_without python2
-	-DWITH_PYTHON2=OFF \
-%endif
-%if_without python3
-	-DWITH_PYTHON3=OFF \
-%endif
-	-DWITH_WEBKIT3=ON \
-	-DWITH_PERL=OFF
+%meson \
+    %{?_without_curl:-Dcurl=false} \
+    %{?_without_gnome:-Dconfig-gnome=false} \
+    %{?_without_kde:-Dconfig-kde=false} \
+    %{?_without_env:-Dconfig-env=false} \
+    %{?_without_sysconfig:-Dconfig-sysconfig=false} \
+    %{?_without_duktape:-Dpacrunner-duktape=false} \
+    -Dconfig-windows=false \
+    -Dconfig-osx=false
 
-%cmake_build
+%meson_build
 
 %install
-%cmake_install
-
-#In case all modules are disabled
-mkdir -p %buildroot%modilesdir
+%meson_install
 
 %check
-%cmake_build -t test
+%meson_test
 
 %files
+%doc README.md
 %_libdir/*.so.*
-%dir %_libdir/%name
-%dir %_libdir/%name/%version
-%dir %modilesdir
-
-%doc AUTHORS README
+%_libdir/%name
 
 %files tools
 %_bindir/proxy
+%_man8dir/proxy.*
 
-%if_with python2
-%files -n python-module-%name
-%python_sitelibdir_noarch/*
-%endif
-
-%if_with python3
-%files -n python3-module-%name
-%python3_sitelibdir_noarch/*
-%endif
-
-%if_with gnome
-%files gnome
-%modilesdir/config_gnome.so
-%_usr/libexec/pxgconf
-%endif
-
-%if_with gnome3
-%files gnome3
-%modilesdir/config_gnome3.so
-%_usr/libexec/pxgsettings
-%endif
-
-%if_with kde
-%files kde
-%modilesdir/config_kde.so
-%endif
-
-%if_with mozjs
-%files mozjs
-%modilesdir/pacrunner_mozjs.so
-%endif
-
-%if_with webkit3
-%files webkit
-%modilesdir/pacrunner_webkit.so
-%endif
-
-%if_with networkmanager
-%files networkmanager
-%modilesdir/network_networkmanager.so
-%endif
-
-%if_with dotnet
-%files sharp
-%_monodir/%name-sharp
-%_monogacdir/*
-%exclude %_libdir/%name/%version/libproxy-sharp.dll
-
-%files sharp-devel
-%_pkgconfigdir/libproxy-sharp-1.0.pc
-%endif
+%files gir
+%_typelibdir/*.typelib
 
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/libproxy-1.0.pc
-%_datadir/cmake/Modules/Findlibproxy.cmake
+%_pkgconfigdir/*.pc
+%_girdir/*.gir
+%_vapidir/libproxy-1.0.*
+
+%files devel-doc
+%_defaultdocdir/libproxy-1.0
 
 %changelog
+* Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 0.5.2-alt1
+- 0.5.2
+
 * Thu Sep 29 2022 Alexey Shabalin <shaba@altlinux.org> 0.4.18-alt1
 - 0.4.18
 
