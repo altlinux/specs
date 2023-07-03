@@ -2,21 +2,28 @@
 
 %define oname ipywidgets
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 7.6.3
+Version: 8.0.6
 Release: alt1
 Summary: Interactive Widgets for the Jupyter Notebook
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/jupyter-widgets/ipywidgets
-
+Url: https://pypi.org/project/ipywidgets
+Vcs: https://github.com/jupyter-widgets/ipywidgets.git
 BuildArch: noarch
-
-# https://github.com/jupyter-widgets/ipywidgets.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-traitlets
+BuildRequires: python3-module-traitlets-tests
+BuildRequires: python3-module-ipython
+%endif
 
 %description
 ipywidgets, also known as jupyter-widgets or simply widgets,
@@ -53,15 +60,20 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python3_build
+cd python/ipywidgets/
+%pyproject_build
 
 %install
-%python3_install
+cd python/ipywidgets/
+%pyproject_install
+
+%check
+cd python/ipywidgets/
+%pyproject_run_pytest -v
 
 %files
-%doc LICENSE
-%doc README.md CONTRIBUTING.md
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%doc README.md CONTRIBUTING.md LICENSE
+%python3_sitelibdir/%oname-%version.dist-info
 %python3_sitelibdir/%oname
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/widgets/tests
@@ -71,5 +83,8 @@ This package contains tests for %oname.
 %python3_sitelibdir/%oname/widgets/tests
 
 %changelog
+* Mon Jul 03 2023 Anton Vyatkin <toni@altlinux.org> 8.0.6-alt1
+- New version 8.0.6.
+
 * Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.6.3-alt1
 - Initial build for ALT.
