@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 23.04.2
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -26,7 +26,7 @@ Patch4: alt-def-capture-mode.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-x11extras-devel qt5-svg-devel qt5-quickcontrols2-devel
 BuildRequires: qt5-wayland-devel kde5-plasma-wayland-protocols
-BuildRequires: plasma5-kpipewire-devel
+BuildRequires: pipewire-libs-devel plasma5-kpipewire-devel
 BuildRequires: libxcbutil-cursor-devel libxcbutil-devel libxcbutil-image-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdoctools-devel
@@ -92,6 +92,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt2
+- update build requires
+
 * Fri Jun 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
 - new version
 
