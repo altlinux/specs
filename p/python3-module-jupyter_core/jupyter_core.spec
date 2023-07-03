@@ -2,27 +2,26 @@
 
 %define oname jupyter_core
 
-%def_enable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 5.2.0
+Version: 5.3.1
 Release: alt1
 Summary: Jupyter core package
 License: BSD-3-Clause
 Group: Development/Python3
-BuildArch: noarch
 Url: https://pypi.org/project/jupyter-core
-
-# https://github.com/jupyter/jupyter_core.git
+Vcs: https://github.com/jupyter/jupyter_core.git
+BuildArch: noarch
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: rpm-build-python3 python3-module-hatchling
-BuildRequires: python3-module-zope python3-module-pytest python3(traitlets.config) python3(mock)
-BuildRequires: python3(ipython_genutils.testing)
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-platformdirs
-BuildRequires: python3(sphinxcontrib_github_alt)
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-traitlets
+%endif
 
 %description
 Jupyter core package. A base package on which Jupyter projects rely.
@@ -40,9 +39,6 @@ This package contains tests for %oname.
 %prep
 %setup
 
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-
 %build
 %pyproject_build
 
@@ -50,17 +46,8 @@ ln -s ../objects.inv docs/
 %pyproject_install
 
 %check
-rm -fR build
 export LC_ALL=en_US.UTF-8
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test3 -vv \
-    --deselect "jupyter_core/tests/test_command.py::test_not_on_path" \
-    --deselect "jupyter_core/tests/test_command.py::test_path_priority" \
-    --deselect "jupyter_core/tests/test_command.py::test_argv0" \
-    --deselect "jupyter_core/tests/test_paths.py::test_jupyter_path_prefer_env" \
-    --deselect "jupyter_core/tests/test_paths.py::test_jupyter_path_user_site" \
-    --deselect "jupyter_core/tests/test_paths.py::test_jupyter_path_no_user_site" \
-;
+%pyproject_run_pytest -v
 
 %files
 %doc *.md
@@ -75,6 +62,9 @@ py.test3 -vv \
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Jul 03 2023 Anton Vyatkin <toni@altlinux.org> 5.3.1-alt1
+- New version 5.3.1.
+
 * Sat Feb 04 2023 Anton Farygin <rider@altlinux.ru> 5.2.0-alt1
 - 5.1.0 -> 5.2.0
 
