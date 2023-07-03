@@ -9,7 +9,7 @@
 %define libusbguard libusbguard%sover
 
 Name: usbguard
-Version: 1.0.0
+Version: 1.1.2
 Release: alt1
 
 Group: System/Servers
@@ -25,6 +25,7 @@ Requires: %name-common = %EVR
 
 Source0: %name-%version.tar
 Source1: usbguard-daemon.conf
+Patch1: usbguard-gcc13.patch
 
 # Automatically added by buildreq on Fri Aug 04 2017 (-bi)
 # optimized out: elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libcap-ng libdbus-devel libdbus-glib libgpg-error libgpg-error-devel libqt4-devel libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libstdc++-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-common qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-utils xz
@@ -99,6 +100,7 @@ a D-Bus interface to the USBGuard daemon component.
 
 %prep
 %setup
+%patch1 -p1
 mv .gear/ThirdParty/* src/ThirdParty/
 %autoreconf
 
@@ -183,6 +185,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %endif
 
 %changelog
+* Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 1.1.2-alt1
+- new version
+
 * Thu Sep 30 2021 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt1
 - new version
 
