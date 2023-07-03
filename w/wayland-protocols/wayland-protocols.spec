@@ -1,4 +1,4 @@
-%define ver_major 1.31
+%define ver_major 1.32
 
 %if "%__gcc_version_major" < "11"
 %ifarch ppc64le
@@ -52,6 +52,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README.md
 
 %changelog
+* Mon Jul 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.32-alt1
+- 1.32
+
 * Tue Nov 29 2022 Yuri N. Sedunov <aris@altlinux.org> 1.31-alt1
 - 1.31
 
