@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt4
+Release: alt5
 epoch:1
 %define kernel_need_version	6.2
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -281,6 +281,7 @@ KbuildFiles="
 	scripts/makelst
 	scripts/Makefile.*
 	scripts/Makefile
+	scripts/modules-check.sh
 	scripts/Kbuild.include
 	scripts/kallsyms
 	scripts/genksyms/genksyms
@@ -422,6 +423,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jul 03 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt5
+- kernel-headers-modules: add scripts/modules-check.sh
+
 * Mon Jul 03 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt4
 - kernel-headers-modules: add scripts/pahole-flags.sh scripts/check-local-export
 
