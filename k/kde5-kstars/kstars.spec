@@ -4,10 +4,10 @@
 %define optflags_lto %nil
 
 Name: kde5-%rname
-Version: 3.6.1
-Release: alt2
+Version: 3.6.5
+Release: alt1
 Epoch: 1
-%K5init
+%K5init no_altplace appdata
 
 Group: Education
 Summary: Desktop Planetarium
@@ -15,6 +15,11 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later AND GPL-3.0-or-later
 
 ExcludeArch: armh
+
+Provides: kde4edu-kstars = %EVR
+Obsoletes: kde4edu-kstars < %EVR
+Provides: kdeedu-kstars = %EVR
+Obsoletes: kdeedu-kstars < %EVR
 
 %if_enabled indi
 Requires: indi
@@ -31,7 +36,7 @@ BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel qt5-mult
 BuildRequires: qt5-datavis3d-devel
 BuildRequires: libsecret-devel libqtkeychain-qt5-devel
 BuildRequires: eigen3 libGLU-devel zlib-devel
-BuildRequires: libcfitsio-devel wcslib-devel libraw-devel
+BuildRequires: libcfitsio-devel wcslib-devel libraw-devel libgsl-devel
 %if_enabled indi
 BuildRequires: libindi-devel
 %endif
@@ -58,19 +63,18 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 
 %install
 %K5install
-%K5install_move data kstars sounds
+#K5install_move data kstars sounds
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc LICENSES/*
-#%config(noreplace) %_K5xdgconf/kstars.knsrc
 %_K5bin/kstars
-%_K5data/kstars/
+#%_K5data/kstars/
+%_datadir/kstars/
 %_K5icon/*/*/apps/kstars.*
-#%_K5icon/*/*/actions/kstars_*.*
-%_K5snd/KDE-KStars-*.*
+#%_K5snd/KDE-KStars-*.*
+%_datadir/sounds/KDE-KStars-*.*
 %_K5xdgapp/org.kde.kstars.desktop
-#%_K5xmlgui/kstars/
 %_K5notif/kstars.notifyrc
 # kauth
 #%_K5libexecdir/kauth/kauth_kstars_helper
@@ -78,8 +82,14 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 #%_K5dbus_sys_srv/*kstars*.service
 #%_datadir/polkit-1/actions/*kstars*.policy
 %_K5cfg/kstars.kcfg
+%_datadir/metainfo/*kstars*
 
 %changelog
+* Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 1:3.6.5-alt1
+- new version
+- update code from stable-3.6.5 branch
+- moved to standart place
+
 * Wed Nov 16 2022 Sergey V Turchin <zerg@altlinux.org> 1:3.6.1-alt2
 - update code from stable-3.6.1 branch
 
