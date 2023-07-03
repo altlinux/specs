@@ -1,6 +1,6 @@
 Name: astromenace
 Version: 1.4.1
-Release: alt1
+Release: alt2
 Summary: Hardcore 3D space shooter with spaceship upgrade possibilities
 Summary(ru_RU.UTF-8): Хардкорный космический 3D шутер с возможностью апгрейда корабля
 %define cname AstroMenace
@@ -112,6 +112,9 @@ install -D %_cmake__builddir/gamedata.vfs %buildroot%_gamesdatadir/%name/gamedat
 %_gamesdatadir/%name/*
 
 %changelog
+* Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 1.4.1-alt2
+- Fix build on GCC13
+
 * Fri Oct 15 2021 Fr. Br. George <george@altlinux.ru> 1.4.1-alt1
 - Autobuild version bump to 1.4.1
 
