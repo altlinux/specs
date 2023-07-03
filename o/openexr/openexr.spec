@@ -2,7 +2,7 @@
 %define libsover 30
 Name: openexr
 Version: 3.1.5
-Release: alt2.1
+Release: alt2.2
 
 %define _cmake__builddir BUILD
 %define common %name%libsover-common
@@ -146,6 +146,9 @@ make -C BUILD install DESTDIR=%buildroot CMAKE_MODULE_PATH=%_includedir/Imath
 %_libdir/libOpenEXRUtil*.so.%libsover.*
 
 %changelog
+* Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 3.1.5-alt2.2
+- Fix build on GCC13
+
 * Thu Mar 16 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.1.5-alt2.1
 - Fixed build for Elbrus
 
