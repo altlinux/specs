@@ -4,7 +4,7 @@
 %define _pkgdocdir %_docdir/%name
 
 Name: pdns
-Version: 4.7.3
+Version: 4.8.0
 Release: alt1
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
@@ -156,6 +156,8 @@ export PDNS_TEST_NO_IPV6=1
 %configure \
 	--sysconfdir=%_sysconfdir/%name \
 	--disable-static \
+	--enable-fortify-source=auto \
+    --enable-lto=auto \
 	--disable-dependency-tracking \
 	--disable-silent-rules \
 	--with-modules='' \
@@ -334,6 +336,9 @@ fi
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Thu Jan 12 2023 Alexey Shabalin <shaba@altlinux.org> 4.7.3-alt1
 - 4.7.3
 
