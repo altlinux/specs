@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: vitastor
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -251,6 +251,9 @@ fi
 %endif
 
 %changelog
+* Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.3-alt1
+- 0.9.3
+
 * Fri Jun 30 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.2-alt1
 - 0.9.2
 
