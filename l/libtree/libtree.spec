@@ -2,7 +2,7 @@
 
 Name: libtree
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: C++ lib that helps to work with tree-like data structures
 License: GPLv3
@@ -14,7 +14,7 @@ Packager: Alexey Appolonov <alexey@altlinux.org>
 Source: %{name}-%{version}.tar
 
 BuildRequires: gcc-c++
-BuildRequires: libxml++2-devel
+BuildRequires: libxml++3-devel
 BuildRequires: jsoncpp-devel >= 1.8.4
 
 %description
@@ -29,7 +29,7 @@ Group: Development/Other
 Requires: %{name}
 BuildArch: noarch
 
-Requires: libxml++2-devel
+Requires: libxml++3-devel
 Requires: jsoncpp-devel >= 1.8.4
 
 %description -n %{name}-devel
@@ -102,6 +102,9 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Jun 22 2023 Alexey Appolonov <alexey@altlinux.org> 0.9.0-alt2
+- libxml++3 is used insted of libxml++2.
+
 * Sat Nov 05 2022 Alexey Appolonov <alexey@altlinux.org> 0.9.0-alt1
 - Empty node names are allowed;
 - Empty branch drafts are allowed;
