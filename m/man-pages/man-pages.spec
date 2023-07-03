@@ -1,10 +1,10 @@
 Name: man-pages
-Version: 5.13
+Version: 6.04
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
 Summary(ru_RU.UTF8): Руководства пользователя Linux Documentation Project
-License: distributable
+License: BSD-2-Clause and BSD-3-Clause and BSD-4-Clause-UC and GPL-1.0-or-later and GPL-2.0-only and GPL-2.0-or-later and Linux-man-pages-copyleft and MIT
 Group: Documentation
 Url: http://www.kernel.org/doc/man-pages/
 
@@ -81,20 +81,23 @@ rm man3/crypt{,_r}.3
 %install
 mkdir -p %buildroot%_datadir/%name
 %makeinstall_std prefix=%_prefix
-install -pm644 scripts/* %buildroot%_datadir/%name/
-
-# strip COLOPHON section
-find %buildroot%_mandir -type f -print0 |
-	xargs -r0 sh scripts/remove_COLOPHON.sh
+for s in scripts/*; do
+	[ ! -d "$s" ] || continue
+	install -pm644 "$s" %buildroot%_datadir/%name/
+done
 
 %files
-%doc README* *.Announce *.lsm
-%_mandir/man?/*
+%doc README* lsm
+%_mandir/man*/*
 
 %files utils
 %_datadir/%name/
 
 %changelog
+* Thu Jun 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.04-alt1
+- 5.13 -> 6.04.
+- Fixed License: tag.
+
 * Fri Aug 27 2021 Dmitry V. Levin <ldv@altlinux.org> 5.13-alt1
 - 5.12 -> 5.13.
 
