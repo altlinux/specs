@@ -5,7 +5,7 @@
 
 Name: vkBasalt
 Version: 0.3.2.9
-Release: alt1
+Release: alt2
 Summary: Vulkan post processing layer
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 # The entire source code is zlib except:
@@ -69,6 +69,9 @@ install -Dpm 0644 config/%name.conf -t %buildroot%_sysconfdir/
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 0.3.2.9-alt2
+- Fix build on GCC13
+
 * Sat Mar 18 2023 Ilya Mashkin <oddity@altlinux.ru> 0.3.2.9-alt1
 - 0.3.2.9
 
