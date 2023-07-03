@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable embedded_cryptopp
+%def_disable embedded_cryptopp
 
 Name: urbackup-client
-Version: 2.5.22
+Version: 2.5.24
 Release: alt1
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
@@ -11,6 +11,8 @@ Url: http://www.urbackup.org/
 Source: %name-%version.tar.gz
 Source2: %name-snapshot.cfg
 Patch1: urbackup-client-fix-link-sqlite3.patch
+Patch2: md5-bytes.patch
+Patch3: uintptr_t.patch
 
 BuildRequires: gcc-c++
 BuildRequires: zlib-devel
@@ -32,10 +34,13 @@ on either Windows or Linux servers.
 %prep
 %setup -n %name-%version.0
 %patch1 -p1
+%patch2 -p0
+%patch3 -p1
 
 sed -i "s@/usr/local/sbin/urbackupclientbackend@%_sbindir/urbackupclientbackend@g" urbackupclientbackend-redhat.service
 sed -i 's,armhf,armh,' cryptoplugin/src/configure.ac
 sed -i 's,gnueabihf,gnueabi,' cryptoplugin/src/configure.ac
+sed -i '/\#include \"cryptopp_inc.h\"/a #include "assert.h"' cryptoplugin/AESGCMDecryption.h
 
 %build
 export SUID_CFLAGS=-fPIE
@@ -103,6 +108,10 @@ touch %buildroot%_logdir/urbackupclient.log
 %ghost %_logdir/urbackupclient.log
 
 %changelog
+* Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 2.5.24-alt1
+- 2.5.24
+- build with system cryptopp
+
 * Tue Jan 10 2023 Alexey Shabalin <shaba@altlinux.org> 2.5.22-alt1
 - 2.5.22
 

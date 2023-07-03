@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable embedded_cryptopp
+%def_disable embedded_cryptopp
 
 Name: urbackup-server
-Version: 2.5.27
+Version: 2.5.31
 Release: alt1
 
 Summary: Efficient Client-Server backup system for Linux and Windows
@@ -12,6 +12,8 @@ Group: Archiving/Backup
 Url: http://www.urbackup.org/
 Source: %name-%version.tar.gz
 Patch1: urbackup-server-fix-link-sqlite3.patch
+Patch2: md5-bytes.patch
+Patch3: uintptr_t.patch
 Patch4: urbackup-server-2.5.27-no-update.patch
 
 %ifnarch %e2k
@@ -46,12 +48,15 @@ Common directories and user for urbackup server and client
 %prep
 %setup -n %name-%version
 %patch1 -p1
+%patch2 -p0
+%patch3 -p1
 %patch4 -p1
 
 sed -i "s@/var/urbackup@%_localstatedir/urbackup@g" docs/urbackupsrv.1
 sed -i "s@/etc/default/urbackupsrv@%_sysconfdir/sysconfig/%name@g" %name.service
 sed -i 's,armhf,armhf|armh|armv7l,' cryptoplugin/src/configure.ac
 sed -i 's,gnueabihf,gnueabi,' cryptoplugin/src/configure.ac
+sed -i '/\#include \"cryptopp_inc.h\"/a #include "assert.h"' cryptoplugin/AESGCMDecryption.h
 
 %ifnarch x86_64
 # Does not build with PIC by default on x86, see
@@ -120,6 +125,10 @@ useradd -g urbackup -c 'UrBackup pseudo user' \
 %dir %attr(0755,urbackup,urbackup) %_localstatedir/urbackup
 
 %changelog
+* Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 2.5.31-alt1
+- 2.5.31
+- build with system cryptopp
+
 * Tue Jan 10 2023 Alexey Shabalin <shaba@altlinux.org> 2.5.27-alt1
 - 2.5.27
 
