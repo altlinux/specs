@@ -2,7 +2,7 @@
 
 Name: pingus
 Version: 0.7.6
-Release: alt3
+Release: alt4
 
 Summary: A free Lemmings clone
 Summary(ru_RU.UTF8): Свободный клон Lemmings
@@ -110,6 +110,8 @@ rm -f %buildroot%_datadir/%name/po/update-po.sh
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.6-alt4
+- Fix build on GCC13
 * Tue Dec 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.6-alt3
 - Rebuilt with boost-1.71.0 using cmake.
 - Spec cleanup.
