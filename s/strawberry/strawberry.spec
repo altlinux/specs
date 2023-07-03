@@ -2,7 +2,7 @@
 %def_disable qt5
 
 Name: strawberry
-Version: 1.0.17
+Version: 1.0.18
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -64,8 +64,7 @@ Features:
 
 %prep
 %setup
-
-mv 3rdparty/singleapplication/LICENSE 3rdparty/singleapplication/LICENSE-singleapplication
+mv 3rdparty/kdsingleapplication/LICENSE 3rdparty/kdsingleapplication/LICENSE-kdsingleapplication
 mv 3rdparty/SPMediaKeyTap/LICENSE 3rdparty/SPMediaKeyTap/LICENSE-SPMediaKeyTap
 
 %build
@@ -101,7 +100,7 @@ desktop-file-validate %buildroot%_desktopdir/org.strawberrymusicplayer.strawberr
 appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberrymusicplayer.strawberry.appdata.xml
 
 %files
-%doc COPYING 3rdparty/singleapplication/LICENSE-singleapplication 3rdparty/SPMediaKeyTap/LICENSE-SPMediaKeyTap
+%doc COPYING 3rdparty/kdsingleapplication/LICENSE-kdsingleapplication 3rdparty/SPMediaKeyTap/LICENSE-SPMediaKeyTap
 %doc Changelog
 %_bindir/strawberry
 %_bindir/strawberry-tagreader
@@ -112,6 +111,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Jul 03 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.18-alt1
+- New version 1.0.18.
+
 * Thu Mar 30 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.17-alt1
 - New version 1.0.17.
 
