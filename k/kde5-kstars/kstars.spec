@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 3.6.5
-Release: alt1.1
+Release: alt2
 Epoch: 1
 %K5init no_altplace appdata
 
@@ -55,7 +55,9 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 
 %prep
 %setup -n %rname-%version
-%ifarch %e2k
+%define glibc_ver %{get_version glibc-core}
+%_K5if_ver_lt %glibc_ver 2.34
+# libpthread.so was removed from glibc-2.34
 # ld: ../lib/libKStarsLib.a(supernovaecomponent.cpp.o): undefined reference to symbol 'pthread_create@@GLIBC_2.1'
 # must be from QtConcurrent::run()
 sed -i '1i string(APPEND CMAKE_EXE_LINKER_FLAGS " -lpthread")' CMakeLists.txt
@@ -90,6 +92,9 @@ sed -i '1i string(APPEND CMAKE_EXE_LINKER_FLAGS " -lpthread")' CMakeLists.txt
 %_datadir/metainfo/*kstars*
 
 %changelog
+* Tue Jul 04 2023 Sergey V Turchin <zerg@altlinux.org> 1:3.6.5-alt2
+- allow to build with glibc < 2.34
+
 * Tue Jul 04 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:3.6.5-alt1.1
 - fixed build for Elbrus
 
