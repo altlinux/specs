@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.131
+Version: 2.9.132
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -120,6 +120,9 @@ make check
 %lang(da) %_datadir/alterator/help/da_DK/*.html
 
 %changelog
+* Tue Jul 04 2023 Andrey Cherepanov <cas@altlinux.org> 2.9.132-alt1
+- Update tzdata from tzdata-2023c
+
 * Wed Jun 28 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 2.9.131-alt1
 - alterator-users: update russian translation
 
