@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt5
+Release: alt6
 epoch:1
 %define kernel_need_version	6.2
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -423,6 +423,10 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jul 04 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt6
+- ANDROID_BINDER_DEVICES: enabled anbox
+- revert mm: export zap_page_range_single
+
 * Mon Jul 03 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt5
 - kernel-headers-modules: add scripts/modules-check.sh
 
