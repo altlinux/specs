@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 	 tellico
-Version: 3.5
+Version: 3.5.1
 Release: alt1
 
 Summary: A collection manager for KDE
@@ -94,6 +94,9 @@ find %buildroot -type f -print0 |
 %_datadir/knsrcfiles/tellico-*.knsrc
 
 %changelog
+* Tue Jul 04 2023 Andrey Cherepanov <cas@altlinux.org> 3.5.1-alt1
+- New version.
+
 * Tue May 16 2023 Andrey Cherepanov <cas@altlinux.org> 3.5-alt1
 - New version.
 
