@@ -23,7 +23,7 @@
 
 Name: wesnoth%wessuffix
 Version: 1.16.7
-Release: alt1
+Release: alt2
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -32,6 +32,7 @@ Url: http://www.wesnoth.org
 VCS: git+https://github.com/wesnoth/wesnoth.git
 Source0: wesnoth-%version.tar
 Patch1: wesnoth-1.13.8-sdl2.02-alt-hack.patch
+Patch2: 0001-Fix-build-on-GCC13.patch
 
 Requires: %name-data = %EVR
 
@@ -176,6 +177,7 @@ This package contains python3 interface to Battle for Wesnoth.
 %prep
 %setup -n wesnoth-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %define _optlevel 3
@@ -411,6 +413,9 @@ mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%_datadir/%name/data/t
 %endif
 
 %changelog
+* Tue Jul  4 2023 Artyom Bystrov <arbars@altlinux.org> 1.16.7-alt2
+- Fix build on GCC13
+
 * Mon Jan 16 2023 Igor Vlasenko <viy@altlinux.org> 1.16.7-alt1
 - new version
 
