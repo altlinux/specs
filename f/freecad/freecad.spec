@@ -14,7 +14,7 @@
 
 Name:    freecad
 Version: 0.20.2
-Release: alt2
+Release: alt3
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -32,6 +32,7 @@ Patch1: %name-remove-3rdParty.patch
 Patch2: freecad-0.19.2-alt-boost-link.patch
 Patch3: freecad-alt-fix-icon-name-in-menu.patch
 Patch4: freecad-alt-remove-unused-header.patch
+Patch5: 0001-libE57Format-fix-compile-using-gcc13.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -151,6 +152,7 @@ rm -rf src/3rdParty
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
 # because "error: cpio archive too big"
@@ -249,6 +251,9 @@ rm -f %buildroot%_includedir/E57Format/*.h
 %ldir/doc
 
 %changelog
+* Tue Jul 04 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.20.2-alt3
+- FTBFS: fixed build with GCC 13.x.
+
 * Tue Jan 03 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.20.2-alt2
 - Rebuilt with opencascade-7.7.0.
 
