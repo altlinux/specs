@@ -2,19 +2,20 @@
 
 %define oname prompt_toolkit
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 3.0.38
+Version: 3.0.39
 Release: alt1
 Summary: Library for building powerful interactive command lines in Python
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/prompt-toolkit/python-prompt-toolkit
+Url: https://pypi.org/project/prompt-toolkit
+Vcs: https://github.com/prompt-toolkit/python-prompt-toolkit
 
 BuildArch: noarch
 
-# https://github.com/jonathanslenders/python-prompt-toolkit.git
 Source: %name-%version.tar
-
 Patch1: %oname-alt-docs.patch
 
 %add_findreq_skiplist %python3_sitelibdir/%oname/eventloop/win32.py
@@ -22,11 +23,17 @@ Patch1: %oname-alt-docs.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-wcwidth
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-alabaster
+BuildRequires: python3-module-docutils
+BuildRequires: python3-module-objects.inv
+%if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-html5lib python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
-BuildRequires: python3-module-alabaster python3-module-docutils python3-module-objects.inv
+BuildRequires: python3-module-wcwidth
+%endif
 
 %description
 prompt_toolkit is a library for building powerful interactive command
@@ -61,10 +68,10 @@ This package contains documentation for %oname.
 ln -s ../objects.inv docs/
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
@@ -72,23 +79,25 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test3
+%pyproject_run_pytest -v
 
 %files
-%doc LICENSE
-%doc CHANGELOG *.rst
+%doc CHANGELOG *.rst LICENSE
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/%oname/pickle
 
 %files pickles
+%dir %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname/pickle
 
 %files docs
 %doc examples docs/_build/html
 
 %changelog
+* Tue Jul 04 2023 Anton Vyatkin <toni@altlinux.org> 3.0.39-alt1
+- New version 3.0.39.
+
 * Tue Jun 27 2023 Anton Vyatkin <toni@altlinux.org> 3.0.38-alt1
 - Updated to upstream release 3.0.38
 
