@@ -6,7 +6,7 @@
 
 Name: vtk
 Version: %ver.0
-Release: alt1.1
+Release: alt1.2
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -47,6 +47,7 @@ Patch8: %name-%version-alt-PoissonReconstruction-build.patch
 
 Patch9: %name-%version-alt-SplineDrivenImageSlicer-install-headers.patch
 
+Patch10: 0001-Fix-build-on-GCC13.patch
 Requires: lib%name%ver = %EVR
 
 BuildRequires(pre): rpm-build-python3
@@ -273,6 +274,7 @@ pushd Remote/SplineDrivenImageSlicer
 %patch9 -p1
 popd
 
+%patch10 -p1
 # remove bundled libraries
 for x in constantly expat freetype gl2ps hdf5 hyperlink incremental jpeg jsoncpp libharu libxml2 lz4 netcdf oggtheora png tiff Twisted txaio zlib ZopeInterface ; do
 	rm -rf ThirdParty/${x}/vtk${x}
@@ -411,6 +413,9 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %endif
 
 %changelog
+* Tue Jul  4 2023 Artyom Bystrov <arbars@altlinux.org> 9.1.0-alt1.2
+- Fix build on GCC13
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 9.1.0-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
