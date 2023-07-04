@@ -12,8 +12,8 @@
 %def_enable clang
 
 Name: spdk
-Version: 23.01.1
-Release: alt3
+Version: 23.05
+Release: alt1
 
 Summary: Storage Performance Development Kit
 
@@ -26,7 +26,9 @@ ExcludeArch: i586 ppc64le armh
 Source: spdk-%version.tar.gz
 Patch: spdk-21.10-alt-scripts-syntax.patch
 Patch1: spdk-21.10-alt-scripts-startup.patch
-Patch2: spdk-23.01-alpinelinux-use-system-isal.patch
+Patch2: spdk-23.05-alpinelinux-use-system-isal.patch
+Patch3: spdk-23.05-alpinelinux-remove-stupid.patch
+Patch4: spdk-23.05-alpinelinux-backtrace.patch
 
 # This is a minimal set of requirements needed for SPDK apps to run when built with
 # default configuration. These are also predetermined by rpmbuild. Extra requirements
@@ -51,13 +53,13 @@ Requires: systemd-utils
 BuildPreReq: libfuse3-devel
 %if_enabled clang
 #BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: clang-devel
+BuildRequires: lld-devel
+BuildRequires: llvm-devel
 %else
-BuildRequires: gcc%gcc_ver-c++
+BuildRequires: gcc-c++
 %endif
-BuildRequires: libstdc++%gcc_ver-devel
+BuildRequires: libstdc++-devel
 BuildRequires: glibc-devel rpm-build-python3 libuuid-devel libssl-devel libaio-devel libncurses-devel libisal-devel libdbus-devel
 BuildRequires: rdma-core-devel libbpf-devel libelf-devel zlib-devel libpcap-devel libjansson-devel
 BuildRequires: libzstd-devel
@@ -110,6 +112,8 @@ SPDK devel libraries
 %patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 sed -i 's|__bitwise__|__bitwise|' include/linux/virtio_types.h
 
@@ -135,17 +139,23 @@ sed -i 's|/usr/local/bin/|%_prefix/libexec/spdk/bin/|' \
 
 # Remove illegal absolute entry from RPATH.
 sed -i '/-Wl,-rpath=$(DESTDIR)\/$(libdir)/d' \
-	mk/spdk.common.mk
+  mk/spdk.common.mk
+sed -i 's| -Wl,-rpath=$(DPDK_LIB_DIR)||' \
+  lib/env_dpdk/env.mk
+sed -i 's|-rpath=$(SPDK_LIB_DIR),||' \
+  test/external_code/hello_world/Makefile
+sed -i 's|-rpath=$(SPDK_LIB_DIR)||' \
+  test/external_code/nvme/Makefile
 
 %build
 %if_enabled clang
 %define optflags_lto %nil
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %else
-export CC=gcc-%gcc_ver
-export CXX=g++-%gcc_ver
+export CC=gcc
+export CXX=g++
 %endif
 export CONFIG_DPDK_LIB_DIR=%_libdir
 export CONFIG_DPDK_INC_DIR=%_includedir/dpdk
@@ -270,6 +280,10 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Jul 04 2023 Leontiy Volodin <lvol@altlinux.org> 23.05-alt1
+- New version 23.05.
+- Built with system isa-l (thanks alpinelinux for the patch).
+
 * Thu Jun 22 2023 Leontiy Volodin <lvol@altlinux.org> 23.01.1-alt3
 - Rebuilt with new libstdc++-devel.
 
