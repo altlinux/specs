@@ -1,6 +1,6 @@
 Name:    libdnf
 Version: 0.60.0
-Release: alt2
+Release: alt3
 
 Summary: Package management library.
 License: LGPL-2.1
@@ -10,6 +10,7 @@ Url:     https://github.com/rpm-software-management/libdnf
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: libdnf-alt-gcc13.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -59,6 +60,7 @@ Python3 bindings for the hawkey library.
 
 %prep
 %setup
+%patch0 -p1
 %ifarch %e2k
 # workaround for EDG frontend
 find libdnf tests -name '*.cpp' | xargs sed -i "\
@@ -133,6 +135,9 @@ rm -rf %buildroot%python3_sitelibdir/hawkey/test/
 %_man3dir/hawkey.3*
 
 %changelog
+* Tue Jul 04 2023 Andrey Cherepanov <cas@altlinux.org> 0.60.0-alt3
+- FTBFS: fixed build with GCC 13.x.
+
 * Thu Nov 17 2022 Michael Shigorin <mike@altlinux.org> 0.60.0-alt2
 - Fixes for Elbrus build (ilyakurdyukov@).
 
