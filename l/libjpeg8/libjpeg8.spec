@@ -1,5 +1,5 @@
 Name: libjpeg8
-Version: 2.1.5.1
+Version: 3.0.0
 Release: alt1
 Summary: The MMX/SSE accelerated JPEG compression/decompression library
 License: IJG and BSD-3-Clause and Zlib
@@ -51,6 +51,11 @@ rm -rf %buildroot%_libdir/cmake/libjpeg-turbo/*.cmake
 %_libdir/libjpeg.so.8*
 
 %changelog
+* Tue Jul 04 2023 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt1
+- New version (3.0.0).
+- Fixes:
+  + CVE-2023-2804 Various segfaults and buffer overruns
+
 * Thu Feb 09 2023 Leontiy Volodin <lvol@altlinux.org> 2.1.5.1-alt1
 - New version (2.1.5.1) with rpmgs script.
 
