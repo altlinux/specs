@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.28
+%define ver_major 0.29
 %define beta %nil
 %define rdn_name sm.puri.Phoc
 
@@ -86,6 +86,9 @@ xvfb-run %__meson_test
 %doc README.md NEWS
 
 %changelog
+* Tue Jul 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1
+- 0.29.0
+
 * Wed May 31 2023 Yuri N. Sedunov <aris@altlinux.org> 0.28.0-alt1
 - updated to v0.28.0-1-gf707185
 
