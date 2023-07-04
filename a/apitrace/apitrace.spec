@@ -1,6 +1,6 @@
 Name: apitrace
-Version: 10.0
-Release: alt2
+Version: 11.1
+Release: alt1
 
 Summary: Tools for tracing OpenGL
 
@@ -8,43 +8,32 @@ License: MIT
 Group: Graphics
 Url: http://apitrace.github.io/
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: https://github.com/apitrace/apitrace/archive/%version/apitrace-%version.tar
+# Source-url: https://github.com/apitrace/apitrace/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
 Source1: qapitrace.desktop
 Source2: qapitrace.appdata.xml
 
-# Unbundle gtest
-Patch: apitrace-7.1_gtest.patch
-Patch1: apitrace-unbundle-brotli.patch
-Patch2: apitrace-gcc10.patch
-Patch3: apitrace-10.0-fix-glibc-2.34.patch
+# fix building with CMakeLists.txt from subdirectory
+Patch1: apitrace-11.1-disabled-check-subdirectory.patch
 
 # internal
 %add_python3_req_skip highlight
 
-BuildRequires: cmake ctest rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake ctest
 BuildRequires: libpng-devel libbrotli-devel
 BuildRequires: libsnappy-devel
 BuildRequires: desktop-file-utils
 #BuildRequires: libappstream-glib
 BuildRequires: libgtest-devel
 BuildRequires: libdwarf-devel libprocps-devel
+BuildRequires: libbacktrace-devel
 
 # for gui tools
 BuildRequires: libX11-devel
 BuildRequires: qt5-base-devel
 
 BuildRequires(pre): rpm-build-python3
-
-#Requires: %name-libs = %version-%release
-# scripts/snapdiff.py
-#Requires: python-module-pillow
-
-# See http://fedoraproject.org/wiki/Packaging:No_Bundled_Libraries#Packages_granted_exceptions
-#Provides: bundled(md5-plumb)
-# See https://fedorahosted.org/fpc/ticket/429
-#Provides: bundled(libbacktrace)
 
 %description
 apitrace consists of a set of tools to:
@@ -71,15 +60,13 @@ This package contains qapitrace, the Graphical frontend for apitrace.
 
 %prep
 %setup
-%patch1 -p1
-#patch2 -p1
 # fix WRAPPER_DIR
 %__subst "s|dpkg-architecture|no-dpkg-architecture|" CMakeLists.txt
-%patch3 -p1
+%patch1 -p1
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1507659
-# Remove bundled libraries, except khronos headers and libbacktrace
-rm -rf `ls -1d thirdparty/* | grep -Ev "(khronos|md5|libbacktrace|crc32c)"`
+# Remove bundled libraries, except khronos headers, md5, crc32c and CMakeLists.txt file
+rm -rf `ls -1d thirdparty/* | grep -Ev "(khronos|md5|crc32c|CMakeLists.txt)"`
 
 # Fix spurious-executable-perm
 chmod -x retrace/glretrace_main.cpp
@@ -109,20 +96,14 @@ install -Dpm 0644 %SOURCE2 %buildroot%_datadir/appdata/qapitrace.appdata.xml
 %check
 make check
 
-#post gui
-#_bindir/update-desktop-database &> /dev/null || :
-
-#postun gui
-#_bindir/update-desktop-database &> /dev/null || :
-
 %files
 %doc LICENSE
 %doc README.markdown docs/*
 %_bindir/apitrace
 %_bindir/eglretrace
 %_bindir/glretrace
+%_bindir/gltrim
 
-#files -n lib%name
 %_libdir/%name/
 
 %files gui
@@ -131,6 +112,10 @@ make check
 %_datadir/appdata/qapitrace.appdata.xml
 
 %changelog
+* Mon Jul 03 2023 Mikhail Tergoev <fidel@altlinux.org> 11.1-alt1
+- new version 11.1 (with rpmgs script)
+- fix building with CMakeLists.txt from subdirectory
+
 * Tue Oct 05 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.0-alt2
 - Fixed build with glibc 2.32.
 
