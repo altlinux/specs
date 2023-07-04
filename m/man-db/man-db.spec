@@ -1,7 +1,7 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
-Version: 2.10.2
-Release: alt1.1
+Version: 2.11.2
+Release: alt1
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPL-2.0-or-later and GPL-3.0-or-later
@@ -155,6 +155,9 @@ rm -rf -- %cache/*
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Mon Jul 03 2023 Alexey Gladkov <legion@altlinux.ru> 2.11.2-alt1
+- New version (2.11.2).
+
 * Thu Sep 01 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.10.2-alt1.1
 - Replaced e2k patch with sed, because ifarch around patch declaraion doesn't keep the patch in the srpm.
 
