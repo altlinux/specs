@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 3.6.5
-Release: alt1
+Release: alt1.1
 Epoch: 1
 %K5init no_altplace appdata
 
@@ -55,6 +55,11 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 
 %prep
 %setup -n %rname-%version
+%ifarch %e2k
+# ld: ../lib/libKStarsLib.a(supernovaecomponent.cpp.o): undefined reference to symbol 'pthread_create@@GLIBC_2.1'
+# must be from QtConcurrent::run()
+sed -i '1i string(APPEND CMAKE_EXE_LINKER_FLAGS " -lpthread")' CMakeLists.txt
+%endif
 
 %build
 %K5build \
@@ -85,6 +90,9 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %_datadir/metainfo/*kstars*
 
 %changelog
+* Tue Jul 04 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:3.6.5-alt1.1
+- fixed build for Elbrus
+
 * Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 1:3.6.5-alt1
 - new version
 - update code from stable-3.6.5 branch
