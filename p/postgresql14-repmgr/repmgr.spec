@@ -3,8 +3,8 @@
 %def_with jit
 
 Name: postgresql%pg_ver-%prog_name
-Version: 5.3.3
-Release: alt2
+Version: 5.4.1
+Release: alt1
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
 License: GPL-3.0
@@ -26,7 +26,8 @@ Provides: %prog_name = %EVR
 Obsoletes: %prog_name < %EVR
 
 BuildRequires: flex
-BuildRequires: libssl-devel
+BuildRequires: libssl-devel libselinux-devel liblz4-devel libxslt-devel libpam-devel
+BuildRequires: libkrb5-devel libcurl-devel libjson-c-devel
 BuildRequires: libecpg-devel-static libpq5-devel-static postgresql%pg_ver-server-devel
 # for build doc
 BuildRequires: docbook-dtds docbook-style-xsl
@@ -100,6 +101,9 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc doc/html
 
 %changelog
+* Tue Jul 04 2023 Alexei Takaseev <taf@altlinux.org> 5.4.1-alt1
+- 5.4.1
+
 * Tue Nov 22 2022 Alexei Takaseev <taf@altlinux.org> 5.3.3-alt2
 - Join repmgr and postgresqlXY-repmgr subpackages to one
   postgresqlXY-repmgr
