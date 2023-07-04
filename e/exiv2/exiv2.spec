@@ -17,7 +17,7 @@
 
 Name: exiv2
 Version: 0.27.7
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Command line tool to access EXIF data in image files
 License: GPL-2.0-or-later
@@ -69,6 +69,7 @@ exiv2 library.
 %cmake \
 	-DEXIV2_ENABLE_NLS:BOOL=ON \
 	-DEXIV2_BUILD_SAMPLES:BOOL=OFF \
+	-DEXIV2_ENABLE_BMFF:BOOL=ON \
 	%{?_enable_video:-DEXIV2_ENABLE_VIDEO:BOOL=ON} \
 	%{?_enable_webready:-DEXIV2_ENABLE_WEBREADY:BOOL=ON} \
 	%{?_enable_ssh:-DEXIV2_ENABLE_SSH:BOOL=ON} \
@@ -101,6 +102,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Jul 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.27.7-alt1.1
+- enabled BMFF support (ALT #46748)
+
 * Tue May 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.27.7-alt1
 - 0.27.7
 
