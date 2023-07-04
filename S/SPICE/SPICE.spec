@@ -7,8 +7,8 @@
 %def_disable tests
 
 Name: SPICE
-Version: 0.15.1
-Release: alt2
+Version: 0.15.2
+Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -19,8 +19,6 @@ Source: %name-%version.tar
 Source2: spice-common.tar
 Source3: spice-common-recorder.tar
 #Patch1: fix-alt.patch
-
-Patch0001: 0001-sound-Fix-pointer-arithmetic-in-snd_record_handle_write.patch
 
 BuildRequires: gcc-c++
 BuildRequires(pre): meson >= 0.49.0
@@ -75,7 +73,6 @@ tar -xf %SOURCE3 -C subprojects/spice-common/common/recorder
 # version in .tarball-version file
 echo "%version" > .tarball-version
 #%%patch1 -p1
-%patch0001 -p1
 
 %build
 %meson \
@@ -99,6 +96,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Tue Jul 04 2023 Alexey Shabalin <shaba@altlinux.org> 0.15.2-alt1
+- 0.15.2
+
 * Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 0.15.1-alt2
 - add patch from master:
   + sound: Fix pointer arithmetic in snd_record_handle_write()
