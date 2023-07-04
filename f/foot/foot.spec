@@ -1,6 +1,6 @@
 Name: foot
 Version: 1.14.0
-Release: alt1
+Release: alt2
 
 Summary: A fast, lightweight and minimalistic Wayland terminal emulator
 License: MIT
@@ -28,6 +28,7 @@ BuildRequires: pkgconfig(libutf8proc)
 %setup
 
 %build
+%add_optflags -Wno-switch
 %meson -Dterminfo=disabled
 %meson_build
 
@@ -49,6 +50,9 @@ BuildRequires: pkgconfig(libutf8proc)
 %_mandir/*/*
 
 %changelog
+* Tue Jul 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.14.0-alt2
+- fix build with recent wayland proto
+
 * Tue Apr 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.14.0-alt1
 - 1.14.0 released
 
