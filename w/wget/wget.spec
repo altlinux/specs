@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.21.4
-Release: alt1
+Release: alt2
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPL-3.0-or-later
@@ -22,7 +22,6 @@ BuildRequires: gperf
 BuildRequires: libcap-devel
 BuildRequires: libcares-devel
 BuildRequires: libidn2-devel
-BuildRequires: libproxy-devel
 BuildRequires: libseccomp-devel
 BuildRequires: libssl-devel
 BuildRequires: libunistring-devel
@@ -169,6 +168,9 @@ fi
 %doc COPYING ChangeLog* AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Tue Jul 04 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.4-alt2
+- Remove libproxy support (ALT#45799).
+
 * Fri May 26 2023 Vitaly Chikunov <vt@altlinux.org> 1.21.4-alt1
 - Update to v1.21.4 (2023-05-11).
 
