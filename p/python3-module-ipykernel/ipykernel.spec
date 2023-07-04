@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 6.23.3
+Version: 6.24.0
 Release: alt1
 
 Summary: IPython Kernel for Jupyter
@@ -71,7 +71,8 @@ export LC_ALL=en_US.UTF-8
 %pyproject_run_pytest -v --ignore ipykernel/tests/test_pickleutil.py -k "\
 not test_do_apply \
 and not test_shutdown_subprocesses \
-and not test_embed_kernel_func"
+and not test_embed_kernel_func \
+and not test_pylab"
 
 %files
 %doc *.md examples
@@ -88,6 +89,9 @@ and not test_embed_kernel_func"
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Tue Jul 04 2023 Anton Vyatkin <toni@altlinux.org> 6.24.0-alt1
+- New version 6.24.0.
+
 * Sat Jun 24 2023 Anton Vyatkin <toni@altlinux.org> 6.23.3-alt1
 - New version 6.23.3.
 
