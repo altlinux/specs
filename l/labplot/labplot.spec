@@ -1,13 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: labplot
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 Summary: Function and Data Plotter
 License: GPL-2.0+
 Group: Sciences/Other
 Url: https://labplot.kde.org/
 %K5init no_altplace
+
+Conflicts: labplot1.6
+Requires: ImageMagick-tools gsl pstoedit
 
 # https://invent.kde.org/education/labplot
 Source: %name-%version.tar
@@ -26,9 +29,6 @@ BuildRequires: libgsl-devel libhdf5-devel libnetcdf-devel
 BuildRequires: libxkbfile-devel xorg-xf86vidmodeproto-devel
 BuildRequires: qt5-serialport-devel
 BuildRequires: kf5-syntax-highlighting-devel
-
-Conflicts: labplot1.6
-Requires: ImageMagick-tools gsl pstoedit
 
 %description
 This is a program for plotting of functions and data manipulation.
@@ -50,11 +50,13 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %build
 %K5build \
     -DENABLE_READSTAT:BOOL=OFF \
+    -DENABLE_VECTOR_BLF:BOOL=OFF \
+    -DENABLE_REPRODUCIBLE:BOOL=ON \
     #
 
 %install
 %K5install
-%find_lang %name --with-kde
+%find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc AUTHORS README.md LICENSES/* ChangeLog
@@ -69,6 +71,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Jul 04 2023 Sergey V Turchin <zerg@altlinux.org> 2.10.0-alt1
+- new veresion
+
 * Wed Jun 08 2022 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt1
 - new veresion
 
