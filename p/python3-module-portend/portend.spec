@@ -1,43 +1,59 @@
 %define  modulename portend
 
+%def_with check
+
 Name:    python3-module-%modulename
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: Use portend to monitor TCP ports for bound or unbound states
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/jaraco/portend
+URL:     https://pypi.org/project/portend
+VCS:     https://github.com/jaraco/portend
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-tempora
+%endif
 
 BuildArch: noarch
 
 Source:  %name-%version.tar
 
 %description
-Use portend to monitor TCP ports for bound or unbound states.
+%summary.
 
 %prep
 %setup
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
-%python3_sitelibdir/%{modulename}*
-%python3_sitelibdir/__pycache__/%{modulename}*.pyc
+%python3_sitelibdir/%modulename.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Tue Jul 04 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Automatically updated to 3.2.0.
+- Build with check.
+
 * Thu May 26 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - Automatically updated to 3.1.0.
 
