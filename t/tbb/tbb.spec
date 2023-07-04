@@ -4,7 +4,7 @@
 
 Name: tbb
 Version: 2021.5.0
-Release: alt1
+Release: alt2
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
@@ -25,6 +25,9 @@ Patch1000: tbb-2021.5-upstream-i586-fix.patch
 
 # Elbrus support
 Patch2000: tbb-e2k.patch
+
+#Fix for building on GCC13
+Patch5: 0001-Fix-build-on-GCC13.patch
 
 Requires: lib%name = %EVR
 
@@ -105,6 +108,7 @@ This package contains python3 module for Threading Building Blocks.
 %prep
 %setup
 %patch4 -p1
+%patch5 -p1
 %patch1000 -p1
 %ifarch %e2k
 %patch2000 -p1
@@ -164,6 +168,9 @@ rm -f %buildroot%_defaultdocdir/TBB/README.md
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Tue Jul  4 2023 Artyom Bystrov <arbars@altlinux.org> 2021.5.0-alt2
+- Fix build on GCC13
+
 * Tue Jan 25 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2021.5.0-alt1
 - Updated to upstream version 2021.5.0.
 
