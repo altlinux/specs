@@ -2,7 +2,7 @@
 
 Name: kumir2
 Version: 2.1.0
-Release: alt10.git42b99b78.1
+Release: alt11.git4cba2673
 
 Summary: New version of Kumir - simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Новая версия системы Кумир - простого учебного языка программирования и среды разработки
@@ -10,7 +10,7 @@ Summary(ru_RU.UTF-8): Новая версия системы Кумир - про
 License: GPL-2.0
 Group: Education
 URL:  https://www.niisi.ru/kumir/
-#VCS: https://github.com/a-a-maly/kumir2/
+VCS: https://github.com/a-a-maly/kumir2/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): cmake rpm-build-python3
@@ -24,11 +24,12 @@ BuildRequires: qt5-tools
 BuildRequires: python3 >= 3.2
 BuildRequires: git-core
 BuildRequires: boost-devel
+BuildRequires: bzlib-devel
 
 Source: %name-%version.tar
 Patch1: kumir2-alt-fix-LIB_BASENAME.patch
 Patch2: port-to-python3.patch
-Patch3: kumir2-alt-qt5.15.patch
+Patch3: 0001-Fixed-build-with-GCC-13.x.patch
 
 %description
 Implementation of Kumir programming language, designed by academician
@@ -73,18 +74,18 @@ rm -rf src/3rdparty/boost*
 
 %build
 export PATH=%_qt5_bindir:$PATH
-%cmake  -GNinja \
+%cmake  -GNinja -Wno-dev\
 	-DUSE_QT=5 \
 	-DLIB_BASENAME=%_lib \
 	-DPROVIDED_VERSION_INFO=TRUE \
-	-DGIT_HASH=4aa5e175 \
-	-DGIT_TIMESTAMP=20200922 \
-	-DGIT_TAG=2.1.0-rc10 \
+	-DGIT_HASH=4cba2673 \
+	-DGIT_TIMESTAMP=20230427 \
+	-DGIT_TAG=2.1.0-rc11 \
 	-DGIT_BRANCH=master
-%cmake_build
+%ninja_build -C "%_cmake__builddir"
 
 %install
-%cmake_install
+%ninja_install -C "%_cmake__builddir"
 
 %files
 %_bindir/*
@@ -104,6 +105,9 @@ export PATH=%_qt5_bindir:$PATH
 %endif
 
 %changelog
+* Tue Jul 04 2023 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt11.git4cba2673
+- New snapshot.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.1.0-alt10.git42b99b78.1
 - NMU: spec: adapted to new cmake macros.
 
