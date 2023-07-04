@@ -5,8 +5,8 @@
 %def_with gtk
 
 Name: spice-vdagent
-Version: 0.21.0
-Release: alt3
+Version: 0.22.1
+Release: alt1
 Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Source2: spice-vdagentd.init-alt
 Patch: %name-%version.patch
 
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.50
 %{?_with_gtk:BuildRequires: pkgconfig(gtk+-3.0) >= 3.22}
 BuildRequires: pkgconfig(xfixes) pkgconfig(xrandr) >= 1.3 pkgconfig(xinerama) pkgconfig(x11)
@@ -73,9 +74,11 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 
 %post
 %post_service spice-vdagentd
+%systemd_user_post spice-vdagent.service
 
 %preun
 %preun_service spice-vdagentd
+%systemd_user_preun spice-vdagent.service
 
 %files
 %doc COPYING CHANGELOG.md README.md
@@ -83,6 +86,7 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 /lib/tmpfiles.d/spice-vdagentd.conf
 %_initddir/spice-vdagentd
 %_unitdir/*
+%_userunitdir/*
 %_bindir/spice-vdagent
 %_sbindir/spice-vdagentd
 %_sysconfdir/xdg/autostart/spice-vdagent*.desktop
@@ -91,6 +95,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 %_man1dir/*
 
 %changelog
+* Tue Jul 04 2023 Alexey Shabalin <shaba@altlinux.org> 1:0.22.1-alt1
+- 0.22.1
+
 * Mon Sep 26 2022 Slava Aseev <ptrnine@altlinux.org> 1:0.21.0-alt3
 - fix autostart in KDE Plasma (attempt number 2)
 
