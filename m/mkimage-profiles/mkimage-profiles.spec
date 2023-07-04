@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.6
+Version: 1.5.7
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -129,6 +129,21 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jul 03 2023 Anton Midyukov <antohami@altlinux.org> 1.5.7-alt1
+- phone.mk: many changes, add waydroid support
+- sound: use wireplumber for pipewire on branch also
+- tar2fs: create /boot partition with ext4, if extlinux.conf and '/' is not ext4
+- tar2fs, build-vm: add VM_BOOTSIZE for change size /boot partition
+- stage2: add f2fs support to 50-stage2-fs kernel modules list
+- x11: reduce gnome3
+- rename targets *-gnome3 -> *-gnome
+- remove eepm, aptitude from regular-*
+- workstation-cloud: Add missing repo feature (thanks obirvalger@)
+- QUICKSTART: add link to online documentation
+- l10n: fix setup language without alterator-sysconfig
+- tty: cleanup quiet from cmdline (extlinux, grub)
+- install2: remove target use/install2/cleanup/crypto
+
 * Thu Jun 08 2023 Anton Midyukov <antohami@altlinux.org> 1.5.6-alt1
 - regular.mk: add btrfs support for jeos-full (Closes: 46212)
 - grub: add missing info messages about bootloading of kernel, initrd and other
