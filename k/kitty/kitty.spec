@@ -3,7 +3,7 @@
 
 Name: kitty
 Version: 0.28.1
-Release: alt2
+Release: alt3
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -138,6 +138,7 @@ find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%__python3|g'  \
 sed -i -e "s/-D_FORTIFY_SOURCE=2/-D_FORTIFY_SOURCE=3/" setup.py
 
 %build
+%add_optflags -Wno-switch
 export CFLAGS="${CFLAGS:-%optflags}"
 export CGO_ENABLED=0
 python3 setup.py linux-package \
@@ -190,6 +191,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_libexecdir/kitty/shell-integration
 
 %changelog
+* Tue Jul 04 2023 Egor Ignatov <egori@altlinux.org> 0.28.1-alt3
+- FTBFS: fix build with new wayland-protocols
+
 * Fri Apr 28 2023 Egor Ignatov <egori@altlinux.org> 0.28.1-alt2
 - FTBFS: fix build with new gcc defaults
 
