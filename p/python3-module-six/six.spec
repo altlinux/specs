@@ -2,32 +2,37 @@
 %define oname six
 
 %def_with check
+%def_with docs
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.16.0
-Release: alt1
+Release: alt2
 
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 
 BuildArch: noarch
-Url: http://pypi.python.org/pypi/six
+URL: https://pypi.org/project/six
+VCS: https://github.com/benjaminp/six
 
-# Url: https://github.com/benjaminp/six
 Source: %name-%version.tar
 Source2: move.list
 
 %define move_list %(echo `cat %{SOURCE2}`)
 
-%py_provides %move_list
+%py3_provides %move_list
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
-# for test suite
 %if_with check
 BuildRequires: python3-modules-tkinter
-BuildRequires: python3-module-tox
+%endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx
 %endif
 
 %description
@@ -37,37 +42,31 @@ with the goal of writing Python code that is compatible on both Python
 versions. See the documentation for more information on what is
 provided.
 
-%package -n python3-module-%oname
-Summary: Python 2 and 3 compatibility utilities
-Group: Development/Python3
-%py3_provides %move_list
-
-%description -n python3-module-%oname
-Six is a Python 2 and 3 compatibility library. It provides utility
-functions for smoothing over the differences between the Python versions
-with the goal of writing Python code that is compatible on both Python
-versions. See the documentation for more information on what is
-provided.
-
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
+%pyproject_build
 
-pushd ../python3
-%python3_build
-popd
+%if_with docs
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 documentation html
+# generate man page
+sphinx-build-3 -b man documentation man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
-%python_install
+%pyproject_install
 
-pushd ../python3
-%python3_install
-popd
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
+%check
 # check actual state of things regarding to provides
 set -o pipefail
 PYTHONPATH="$(pwd)" python3 -c "import six;assert six.__version__==\"%version\";modules=six._importer.known_modules.keys();print(*modules, sep='\n')" | sort > move.actual.list
@@ -75,23 +74,23 @@ set +o pipefail
 cat %SOURCE2 | sort > move.expected.list
 diff -y move.expected.list move.actual.list
 
-%check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_check_pyproject
 
 %files
-%doc README.rst documentation/index.rst
-%python_sitelibdir/six.py*
-%python_sitelibdir/%oname-%version-py%_python_version.egg-info/
-
-%files -n python3-module-%oname
-%doc README.rst documentation/index.rst
+%doc README.rst LICENSE CHANGES
+%if_with docs
+%doc html
+%_man1dir/%oname.1.xz
+%endif
 %python3_sitelibdir/six.py
-%python3_sitelibdir/__pycache__/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jul 04 2023 Grigory Ustinov <grenka@altlinux.org> 1.16.0-alt2
+- Build without python2 support (Closes: #42229).
+- Build with docs.
+
 * Fri Aug 20 2021 Stanislav Levin <slev@altlinux.org> 1.16.0-alt1
 - 1.15.0 -> 1.16.0 (closes: #40787).
 
