@@ -1,6 +1,6 @@
 Name:     fusioninventory-agent
 Version:  2.6
-Release:  alt2
+Release:  alt3
 
 Summary:  FusionInventory Agent
 License:  GPL-2.0+
@@ -23,6 +23,7 @@ BuildArch: noarch
 %set_findreq_skiplist %_bindir/%name
 
 BuildRequires: perl-File-Copy-Recursive
+BuildRequires: perl-HTTP-Cookies
 BuildRequires: perl-HTTP-Proxy
 BuildRequires: perl-HTTP-Server-Simple
 BuildRequires: perl-HTTP-Server-Simple-Authen
@@ -124,6 +125,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Tue Jul 04 2023 Andrey Cherepanov <cas@altlinux.org> 2.6-alt3
+- FTBFS: added perl-HTTP-Cookies.
+
 * Mon Sep 06 2021 Andrey Cherepanov <cas@altlinux.org> 2.6-alt2
 - FTBFS: add perl-UNIVERSAL-require.
 
