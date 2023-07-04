@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 332
+%define centos_release 334
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -638,6 +638,29 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jul 03 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.334-alt1.el9
+- Updated to kernel-5.14.0-334.el9:
+  + ACPI: processor idle: avoid call to raw_local_irq_disable() from acpi_safe_halt()
+  + KVM: Rebase KVM common and x86 to upstream 6.3
+  + NFS/NFSD/SUNRPC fixes rollup for RHEL 9.3
+  + Revert "Disable idmapped mounts"
+  + docs: admin-guide: Add information about intel_pstate active mode
+  + net: stmmac: propagate feature flags to vlan
+  + nfsd: move init of percpu reply_cache_stats counters back to nfsd_init_net
+  + platform/x86: intel-uncore-freq: add Emerald Rapids support
+
+* Thu Jun 29 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.333-alt1.el9
+- Updated to kernel-5.14.0-333.el9:
+  + DRM backport 9.3 from v6.3
+  + PCI: hv: fix crash/hang Issues due to fast VF add/remove events
+  + Proactively Backport MM fixes for el9.3
+  + RDMA: Add support for MANA_INFINIBAND driver
+  + arm64: Update nvidia tegra-related devicetree files
+  + bpf, xdp: update to 6.3
+  + mm/memcg: Free percpu stats memory of dying memcg's
+  + redhat: include the information about builtin symbols into kernel-uki-virt package too
+  + redhat: rpminspect: update config
+
 * Tue Jun 27 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.332-alt1.el9
 - Updated to kernel-5.14.0-332.el9:
   + Enable the amd-pstate-ut driver for testing
