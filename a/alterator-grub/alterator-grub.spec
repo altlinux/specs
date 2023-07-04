@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -53,6 +53,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Tue Jul 04 2023 Sergey V Turchin <zerg@altlinux.org> 0.21-alt1
+- don't use combobox to avoid additional X11 popup window that is difficult to manage
+
 * Mon Feb 20 2023 Anton Midyukov <antohami@altlinux.org> 0.20-alt1
 - grub-disk: fix wrong indent
 
