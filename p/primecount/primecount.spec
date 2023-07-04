@@ -1,9 +1,11 @@
 %define soname 7
 
 Name: primecount
-Version: 7.8
+Version: 7.9
 Release: alt1
+
 Summary: Count the number of primes
+
 License: BSD-2-Clause
 Group: Sciences/Mathematics
 Url: https://github.com/kimwalisch/primecount
@@ -76,6 +78,9 @@ ctest
 %_pkgconfigdir/primecount.pc
 
 %changelog
+* Tue Jul 04 2023 Leontiy Volodin <lvol@altlinux.org> 7.9-alt1
+- New version 7.9.
+
 * Wed Jun 07 2023 Leontiy Volodin <lvol@altlinux.org> 7.8-alt1
 - New version 7.8.
 
