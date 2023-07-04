@@ -11,10 +11,11 @@
 %define flavour %brand-%theme
 %define distro_name Regular
 %define branding_data_dir %_datadir/branding-data-current
+%define altbranch %_priority_distbranch
 
 Name: branding-%flavour
-Version: 20220110
-Release: alt3
+Version: 20230704
+Release: alt1
 
 Url: http://en.altlinux.org
 
@@ -29,8 +30,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 BuildRequires: fribidi
 
 %define Theme Sisyphus
-%define status unstable
-%define status_en unstable
+%define status %nil
+%define status_en %nil
 
 # argh
 %define design_graphics_abi_epoch 0
@@ -77,6 +78,7 @@ Provides: plymouth-theme-%theme plymouth(system-theme)
 BuildArch: noarch
 Requires: plymouth-plugin-script
 Requires: plymouth
+Requires: plymouth-theme-bgrt-alt
 %branding_add_conflicts %flavour bootsplash
 
 %description bootsplash
@@ -195,7 +197,7 @@ XFCE settings for %Brand %version %Theme
 
 %build
 autoconf
-THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME='%distro_name' CODENAME=%codename URL='%url' ./configure
+THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME='%distro_name' CODENAME=%codename URL='%url' BRANCH='%altbranch' ./configure
 LC_ALL=en_US.UTF-8 make
 
 %install
@@ -220,29 +222,11 @@ __EOF__
 
 #release
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
-{
-	echo -n "%distribution"
-	[ "%status_en" = "unstable" ] || echo -n " %version"	# FIXME: kludgery :-/
-	[ -n "%Theme" ] && echo -n " %Theme"
-	[ -n "%status_en" ] && {
-		[ "%status_en" = "unstable" ] \
-		&& echo -n " (unstable)" \
-		|| echo -n " %status_en"
-	}
-	[ -n "%codename" ] && echo -n " (%codename)"
-	echo
-} >%buildroot%_sysconfdir/altlinux-release
+echo "%Brand %distro_name %Theme" >%buildroot%_sysconfdir/altlinux-release
 for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
-install -pD -m644 components/systemd/os-release %buildroot%_sysconfdir/os-release
-
-# save release
-mkdir -p %buildroot/%branding_data_dir/release/
-cp -ar %buildroot/%_sysconfdir/altlinux-release %buildroot/%branding_data_dir/release/altlinux-release
-cp -ar %buildroot/%_sysconfdir/os-release %buildroot/%branding_data_dir/release/os-release
-mkdir -p %buildroot/%prefix/lib/
-cp -ar %buildroot/%_sysconfdir/os-release %buildroot/%prefix/lib/os-release
+install -pD -m644 components/systemd/os-release %buildroot/%prefix/lib/os-release
 
 #notes
 pushd notes
@@ -287,7 +271,7 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 
 #bootsplash
 %post bootsplash
-subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
+subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 
 %files alterator
 %config %_altdir/*.rcc
@@ -299,18 +283,11 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_datadir/design
 
 %files bootsplash
-%_datadir/plymouth/themes/%theme/*
+#_datadir/plymouth/themes/%theme/*
 
 %files release
-%ghost %config(noreplace) %_sysconfdir/os-release
-%_sysconfdir/altlinux-release
-%config(noreplace) %_sysconfdir/fedora-release
-%config(noreplace) %_sysconfdir/redhat-release
-%config(noreplace) %_sysconfdir/system-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
-%dir %branding_data_dir/
-%dir %branding_data_dir/release/
-%branding_data_dir/release/*-release
+%_sysconfdir/*-release
 %prefix/lib/os-release
 
 %files notes
@@ -337,6 +314,15 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Tue Jul 04 2023 Anton Midyukov <antohami@altlinux.org> 20230704-alt1
+- os-release: add BUILD_ID
+- os-release: add ALT_BRANCH_ID
+- set empty status
+- Add graphics/icons/system-logo.png for plymouth theme 'bgrt-alt'
+- bootsplash: set theme bgrt-alt
+- branding.spec: Don't save original /etc/*-release
+- branding.spec: fix /etc/altlinux-release
+
 * Mon Oct 17 2022 Anton Midyukov <antohami@altlinux.org> 20220110-alt3
 - disable slideshow subpackage
 
