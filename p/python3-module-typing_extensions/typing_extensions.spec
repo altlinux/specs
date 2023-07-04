@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 4.6.3
+Version: 4.7.1
 Release: alt1
 Summary: Python Typing Extensions
 Group: Development/Python3
@@ -68,6 +68,9 @@ tox.py3 --sitepackages -vvr -s false
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Tue Jul 04 2023 Grigory Ustinov <grenka@altlinux.org> 4.7.1-alt1
+- Automatically updated to 4.7.1.
+
 * Sun Jun 11 2023 Grigory Ustinov <grenka@altlinux.org> 4.6.3-alt1
 - Automatically updated to 4.6.3.
 
