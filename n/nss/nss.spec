@@ -1,7 +1,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
 Version:	3.90.0
-Release:	alt2
+Release:	alt2.1
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -104,6 +104,9 @@ Netscape Network Security Services Utilities
 %setup -q
 cd nss
 %autopatch -p1
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' coreconf/{Werror.mk,werror.py}
+%endif
 
 %build
 mkdir -p bin
@@ -262,6 +265,9 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Mon Jul 03 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.90.0-alt2.1
+- Fixed build for Elbrus.
+
 * Fri Jun 16 2023 Alexey Gladkov <legion@altlinux.ru> 3.90.0-alt2
 - Fix unconditional use of adcxq causes SIGILL with nss-3.90.
 
