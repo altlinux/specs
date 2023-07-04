@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.58.2
+Version: 1.59.0
 Release: alt1
 
 Summary: Typed interactions with the GitHub API v3
@@ -57,6 +57,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %doc *.md
 
 %changelog
+* Tue Jul 04 2023 Grigory Ustinov <grenka@altlinux.org> 1.59.0-alt1
+- Automatically updated to 1.59.0.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 1.58.2-alt1
 - Automatically updated to 1.58.2.
 
