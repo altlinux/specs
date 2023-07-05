@@ -1,20 +1,24 @@
 Name: catfish
-Version: 4.16.0
+Version: 4.16.4
 Release: alt1
 Summary: A handy file search tool
 
 Group: File tools
 License: GPLv2+
-Url: http://www.twotoasts.de/index.php/catfish/
+Url: https://gitlab.xfce.org/apps/catfish
+# Source-url: https://gitlab.xfce.org/apps/catfish/-/archive/catfish-%version/catfish-catfish-%version.tar.gz
 Source: %name-%version.tar.gz
 BuildArch: noarch
-Patch: catfish-1.4.16-ALT-searchODF.patch
+Patch: catfish-%version-ALT-searchODF.patch
 
 ##BuildRequires: intltool python-module-PyXML python-module-distutils-extra python-module-pexpect python-module-zeitgeist2.0 python3-dev
 # Automatically added by buildreq on Mon Jun 10 2019
 # optimized out: at-spi2-atk fontconfig gobject-introspection gobject-introspection-x11 libat-spi2-core libatk-gir libcairo-gobject libgdk-pixbuf libgdk-pixbuf-gir libgpg-error libgtk+3-gir libpango-gir libwayland-client libwayland-cursor libwayland-egl perl perl-Encode perl-XML-Parser perl-parent python-base python-modules python3 python3-base python3-module-dbus python3-module-ptyprocess python3-module-pygobject3 sh4
 BuildRequires: intltool python3-dev python3-module-distutils-extra python3-module-pexpect python3-module-zeitgeist2.0
+BuildRequires: python3-module-pygobject3
 BuildRequires: rpm-build-gir
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 # search engine
 Requires: %_bindir/locate
@@ -47,13 +51,13 @@ Supplemental Python3 module for catfish, a handy file search tool
 %patch -p2
 
 %build
-%python3_build
+%pyproject_build
 
 %install
 # XXX upstream cant' handle this :)
 install -D build/share/applications/*.desktop %buildroot/%_desktopdir/org.xfce.Catfish.desktop
 
-%python3_install
+%pyproject_install
 
 cp -a build/mo %buildroot%_datadir/locale
 rm -rf %buildroot%_defaultdocdir/%name
@@ -71,9 +75,16 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_man1dir/*
 
 %files -n python3-module-catfish
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/%name
+%python3_sitelibdir_noarch/%{name}_lib
+%python3_sitelibdir_noarch/%name-%version.dist-info
 
 %changelog
+* Mon Jun 19 2023 Anton Midyukov <antohami@altlinux.org> 4.16.4-alt1
+- Updated to upstream version 4.16.4
+- Fix Url
+- Migration to PEP517
+
 * Wed Jun 09 2021 Anton Midyukov <antohami@altlinux.org> 4.16.0-alt1
 - Updated to upstream version 4.16.0 (Closes: #29433 #39757)
 
