@@ -7,7 +7,7 @@
 %define libssh libssh
 
 Name: libssh
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 
 Group: System/Libraries
@@ -112,6 +112,10 @@ install -m644 %SOURCE4 %buildroot%_sysconfdir/libssh/libssh_server.config
 %_libdir/*.so
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt1
+- new version
+- security (fixes: CVE-2023-1667 CVE-2023-2283)
+
 * Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt1
 - new version
 - security (fixes: CVE-2021-3634)
