@@ -10,7 +10,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: p11-kit
-Version: 0.24.1
+Version: 0.25.0
 Release: alt1
 
 Summary: Utilities for PKCS#11 modules
@@ -225,6 +225,10 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Wed Jul 05 2023 Mikhail Efremov <sem@altlinux.org> 0.25.0-alt1
+- Fixed build with --as-needed.
+- 0.25.0.
+
 * Tue Jan 18 2022 Mikhail Efremov <sem@altlinux.org> 0.24.1-alt1
 - Add libtasn1-utils to BR.
 - Use _unpackaged_files_terminate_build.
