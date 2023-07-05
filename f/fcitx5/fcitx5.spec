@@ -15,7 +15,7 @@ BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr
 
 Name:           fcitx5
 Version:        5.0.19
-Release:        alt3_%autorelease
+Release:        alt4_%autorelease
 Summary:        Next generation of fcitx
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5
@@ -178,6 +178,9 @@ EOF
 %config %{_sysconfdir}/profile.d/fcitx5.sh
 
 %changelog
+* Wed Jul  5 2023 Artyom Bystrov <arbars@altlinux.org> 5.0.19-alt4_0
+- Fix build on GCC13
+
 * Tue Sep 20 2022 Igor Vlasenko <viy@altlinux.org> 5.0.19-alt3_0
 - bootstrap; moved cmake provides
 
