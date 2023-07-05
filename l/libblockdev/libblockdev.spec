@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name blockdev
-%define ver_major 3.0
+%define ver_major 3
 %define rev 1
 
 %def_with tools
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: A library for low-level manipulation with block devices
@@ -18,7 +18,7 @@ Url: https://github.com/storaged-project/%name
 
 %if_disabled snapshot
 Vcs: https://github.com/rhinstaller/libblockdev.git
-Source: %url/releases/download/%ver_major-%rev/%name-%version.tar.gz
+Source: %url/releases/download/%version-%rev/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -422,7 +422,7 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %files
 %_libdir/libblockdev.so.*
 %_typelibdir/BlockDev*.typelib
-%config %_sysconfdir/libblockdev/conf.d/00-default.cfg
+%config %_sysconfdir/libblockdev/%ver_major/conf.d/00-default.cfg
 %doc *.md LICENSE
 
 %files devel
@@ -513,7 +513,7 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 %files lvm-dbus
 %_libdir/libbd_lvm-dbus.so.*
-%config %_sysconfdir/libblockdev/conf.d/10-lvm-dbus.cfg
+%config %_sysconfdir/libblockdev/%ver_major/conf.d/10-lvm-dbus.cfg
 
 %files lvm-dbus-devel
 %_libdir/libbd_lvm-dbus.so
@@ -538,11 +538,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 %files part
 %_libdir/libbd_part.so.*
-#%_libdir/libbd_part_err.so.*
 
 %files part-devel
 %_libdir/libbd_part.so
-#%_libdir/libbd_part_err.so
 %dir %_includedir/blockdev
 %_includedir/blockdev/part.h
 
@@ -581,6 +579,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %endif
 
 %changelog
+* Wed Jul 05 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Thu Jun 29 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
 - 3.0
 
