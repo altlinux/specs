@@ -11,7 +11,7 @@
 
 Name: clr
 Version: 5.6.0
-Release: alt0.1
+Release: alt0.2
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
 Url: https://github.com/ROCm-Developer-Tools/clr
@@ -66,7 +66,7 @@ Group: Development/Other
 # as hip scripts are noarch
 # perl scripts rely on runtime envs
 AutoReq: yes, noperl
-Requires: clang-rocm clang-rocm-tools clang-rocm-libs-support llvm-rocm lld-rocm glibc-devel gcc
+Requires: clang-rocm = %version clang-rocm-tools = %version clang-rocm-libs-support = %version llvm-rocm = %version lld-rocm = %version glibc-devel gcc
 Requires: rocm-device-libs = %version rocminfo = %version hip-runtime-amd = %EVR
 
 %description -n hip-devel
@@ -99,6 +99,7 @@ export ALTWRAP_LLVM_VERSION=rocm
     -DCLR_BUILD_OCL=ON \
     -DBUILD_ICD:BOOL=TRUE \
 %if_with HIP
+    -DHIP_OFFICIAL_BUILD=ON \
     -DCLR_BUILD_HIP=ON \
     -DHIPCC_BIN_DIR=%_builddir/%name-%version/hipcc/bin \
     -DHIP_COMMON_DIR=%_builddir/%name-%version/hip \
@@ -153,6 +154,11 @@ install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
 %endif
 
 %changelog
+* Wed Jul 05 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.2
+- hip.sh: use clang-rocm.
+- hip: compile as official build.
+- .spec: strict -rocm requires.
+
 * Tue Jul 04 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.1
 - rocclr->clr.
 - rocm-5.6.0.

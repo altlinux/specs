@@ -5,7 +5,7 @@
 
 Name: rocm-comgr
 Version: 5.6.0
-Release: alt0.2
+Release: alt0.3
 License: NCSA
 Summary: AMD Code Object Manager (Comgr)
 Url: https://github.com/RadeonOpenCompute/ROCm-CompilerSupport
@@ -17,10 +17,12 @@ Source: %name-%version.tar
 Patch0: %name-llvm-static.patch
 # device libs path
 Patch1: rocm-alt-device-libs-path.patch
+# use llvm-rocm commands
+Patch2: rocm-comgr-use-llvm-rocm.patch
 
 BuildRequires(pre): cmake
-BuildRequires: llvm-rocm-devel clang-devel clang-rocm-devel clang-rocm-tools lld-devel lld-rocm-devel
-BuildRequires: zlib-devel libstdc++-devel rocm-cmake rocm-device-libs ncurses-devel
+BuildRequires: llvm-rocm-devel = %version clang-rocm-devel = %version clang-rocm-tools = %version lld-rocm-devel = %version
+BuildRequires: zlib-devel libstdc++-devel rocm-cmake = %version rocm-device-libs = %version ncurses-devel
 
 # clang segfaults on armh
 # doesn't compile on ix86
@@ -35,7 +37,7 @@ objects.
 Summary: AMD Code Object Manager (Comgr) library
 Group: System/Libraries
 Provides: libamd_comgr = %EVR
-Requires: clang-rocm-libs-support
+Requires: clang-rocm-libs-support = %version, lld-rocm = %version
 
 %description -n libamd_comgr%{soname}
 The Comgr library provides APIs for compiling and inspecting AMDGPU code
@@ -78,6 +80,10 @@ pushd %{bdir}
 %_libdir/cmake/amd_comgr
 
 %changelog
+* Wed Jul 05 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.3
+- Invoke llvm-rocm command explicitly.
+- .spec: cleanup deps/requires.
+
 * Mon Jul 03 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.2
 - Use llvm-rocm.
 - Built x86_64 only.

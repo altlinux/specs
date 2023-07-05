@@ -1,14 +1,14 @@
 %define soname 1
 %define llvm_ver 16.0
 
-%def_without llvm-rocm
+%def_with llvm-rocm
 
 # LTO causes segfaults (
 %define optflags_lto %nil
 
 Name: rocr-runtime
 Version: 5.6.0
-Release: alt0.3
+Release: alt0.4
 License: MIT
 Summary: HSA Runtime API and runtime for ROCm
 Url: https://github.com/RadeonOpenCompute/ROCR-Runtime
@@ -81,6 +81,9 @@ pushd src
 %_libdir/cmake/hsa-runtime64
 
 %changelog
+* Wed Jul 05 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.4
+- Rebuild with llvm-rocm.
+
 * Tue Jul 04 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.3
 - Added bootstrap knob.
 - Limit build to x86_64 only due strict requirement to cpuid.h.
