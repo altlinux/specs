@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: accountsservice
-Version: 23.11.69
+Version: 23.13.9
 Release: alt1
 Summary: D-Bus interfaces for querying and manipulating user account information
 
@@ -82,7 +82,8 @@ GObject introspection devel data for the accountsservice library
 %build
 %meson \
     -Dadmin_group=wheel \
-    -Dminimum_uid=500 \
+    -Dextra_admin_groups="adm,netadmin" \
+    -Ddefault_user_groups="audio,video,camera,scanner,cdrom,cdwriter,fuse,users,usershares,uucp,xgrp" \
     -Dsystemdsystemunitdir=%_unitdir
 %meson_build
 
@@ -124,6 +125,12 @@ GObject introspection devel data for the accountsservice library
 %_girdir/*.gir
 
 %changelog
+* Wed Jul 05 2023 Alexey Shabalin <shaba@altlinux.org> 23.13.9-alt1
+- 23.13.9
+- set minimum_uid=1000
+- add extra_admin_groups="adm,netadmin"
+- add patch for default_user_groups="audio,video,camera,scanner,cdrom,cdwriter,fuse,users,usershares,uucp,xgrp"
+
 * Thu Mar 23 2023 Alexey Shabalin <shaba@altlinux.org> 23.11.69-alt1
 - 23.11.69
 
