@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: c-ares
-Version: 1.19.0
-Release: alt2
+Version: 1.19.1
+Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
 License: MIT
@@ -69,6 +69,9 @@ compile applications or shared objects that use c-ares.
 %_man3dir/*
 
 %changelog
+* Wed Jul 05 2023 Alexey Shabalin <shaba@altlinux.org> 1.19.1-alt1
+- 1.19.1 (Fixes: CVE-2023-31124, CVE-2023-31130, CVE-2023-31147, CVE-2023-32067)
+
 * Mon Apr 10 2023 Alexey Shabalin <shaba@altlinux.org> 1.19.0-alt2
 - switch to build with cmake
 - backport patch for fix memory leak in ares_send
