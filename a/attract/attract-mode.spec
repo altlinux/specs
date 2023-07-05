@@ -2,7 +2,7 @@
 
 Name: attract
 Version: 2.7.0
-Release: alt1
+Release: alt2
 
 Summary: Arcade-like front-end for emulators
 Summary(ru_RU.UTF-8): Оболочка в стиле аркадных автоматов для эмуляторов
@@ -48,10 +48,10 @@ Mac OS X и Windows.
 %setup -n %name-%version
 
 %build
-%make_build OPTIMISE="%optflags"
+%make_build OPTIMISE="%optflags" prefix=%_prefix
 
 %install
-%makeinstall
+%makeinstall_std prefix=%_prefix
 
 # install menu icons
 for N in 16 32 48 64 128;
@@ -74,6 +74,9 @@ install -Dm644 util/linux/attract-mode.desktop         %buildroot%_desktopdir/%n
 %_iconsdir/hicolor/*/apps/%name.xpm
 
 %changelog
+* Tue Jul  4 2023 Artyom Bystrov <arbars@altlinux.org> 2.7.0-alt2
+- Fix content installation (layouts and languages)
+
 * Tue Jun 13 2023 Artyom Bystrov <arbars@altlinux.org> 2.7.0-alt1
 - New version
 
