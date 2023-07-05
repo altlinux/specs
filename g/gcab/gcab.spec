@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 1.5
+%define ver_major 1.6
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -19,7 +19,7 @@ Group: File tools
 License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/msitools
 
-Vcs: git://git.gnome.org/gcab
+Vcs: https://gitlab.gnome.org/GNOME/gcab
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
@@ -147,6 +147,9 @@ the functionality of the installed M$ Cabinet archive library.
 %endif
 
 %changelog
+* Wed Jul 05 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
+- 1.6
+
 * Fri Aug 05 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
 - v1.5-1-gad0baea
 
