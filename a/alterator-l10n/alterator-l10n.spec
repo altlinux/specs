@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.132
+Version: 2.9.133
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -120,6 +120,9 @@ make check
 %lang(da) %_datadir/alterator/help/da_DK/*.html
 
 %changelog
+* Wed Jul 05 2023 Andrey Cherepanov <cas@altlinux.org> 2.9.133-alt1
+- Fix Russian translation of timezones
+
 * Tue Jul 04 2023 Andrey Cherepanov <cas@altlinux.org> 2.9.132-alt1
 - Update tzdata from tzdata-2023c
 
