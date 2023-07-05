@@ -8,8 +8,8 @@
 %define systemdsessionunitdir %_prefix/lib/systemd/user
 
 Name: dbus
-Version: 1.14.6
-Release: alt2
+Version: 1.14.8
+Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -225,6 +225,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Wed Jul 05 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.14.8-alt1
+- 1.14.8 (Fixes: CVE-2023-34969) (closes: #46767)
+
 * Thu May 18 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.14.6-alt2
 - reverts commit b5a09fb, which returns abstract socet (closes: #45542)
 
