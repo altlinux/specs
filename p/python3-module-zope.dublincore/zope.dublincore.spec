@@ -4,17 +4,20 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 4.3.0
+Version: 5.0
 Release: alt1
 
 Summary: Zope Dublin Core implementation
 License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.dublincore/
+Url: https://pypi.org/project/zope.dublincore
+Vcs: https://github.com/zopefoundation/zope.dublincore
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-persistent
 BuildRequires: python3-module-pytz
@@ -23,13 +26,9 @@ BuildRequires: python3-module-zope.datetime
 BuildRequires: python3-module-zope.lifecycleevent
 BuildRequires: python3-module-zope.security
 BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.publisher
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-repoze
-BuildRequires: python3-module-repoze.sphinx
-BuildRequires: python3-module-repoze.sphinx.autointerface
 %endif
 
 %description
@@ -51,10 +50,10 @@ This package contains tests for zope.dublincore.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -63,12 +62,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%tox_check
+%pyproject_run -- zope-testrunner --test-path=src -v
 
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/zope/dublincore
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/zope/dublincore/tests
 %exclude %python3_sitelibdir/zope/dublincore/browser/tests
@@ -79,6 +78,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Wed Jul 05 2023 Anton Vyatkin <toni@altlinux.org> 1:5.0-alt1
+- New version 5.0.
+
 * Tue Mar 07 2023 Anton Vyatkin <toni@altlinux.org> 1:4.3.0-alt1
 - new version 4.3.0
 
