@@ -14,7 +14,7 @@
 
 Name: bacula%{bacula_major}
 Version: %{bacula_major}.0.6
-Release: alt2
+Release: alt3
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -689,6 +689,11 @@ fi
 %preun storage
 %preun_service bacula-sd
 
+%post -n baculum%{bacula_major}-apache2
+# Clear old cache
+rm -rf %_cachedir/baculum/assets/*
+rm -rf %_cachedir/baculum/runtime/*
+
 %files common
 %attr (1770,root,bacula) %_localstatedir/bacula
 %attr (0775,root,bacula) %dir %_var/run/bacula
@@ -913,6 +918,10 @@ fi
 %endif
 
 %changelog
+* Wed Jul 05 2023 Alexei Takaseev <taf@altlinux.org> 11.0.6-alt3
+- Fix use old cache data from %_cachedir/baculum/assets and
+  %_cachedir/baculum/runtime after update.
+
 * Tue Jun 27 2023 Alexei Takaseev <taf@altlinux.org> 11.0.6-alt2
 - Remove %%post_service for bacula-dir service fix race condition on update
 
