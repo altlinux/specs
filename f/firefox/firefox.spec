@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 114.0.1
+Version: 115.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -108,6 +108,7 @@ BuildRequires: pkgconfig(zlib)
 BuildRequires: /dev/shm
 
 BuildRequires: python3-base
+BuildRequires: python3(click)
 BuildRequires: python3(curses)
 BuildRequires: python3(hamcrest)
 BuildRequires: python3(pip)
@@ -211,6 +212,7 @@ find toolkit/components/uniffi-js -type f |
 
 rm -rf -- obj-x86_64-pc-linux-gnu
 rm -rf -- third_party/python/setuptools/setuptools*
+rm -rf -- third_party/python/click/click*
 
 
 %build
@@ -219,24 +221,29 @@ rm -rf -- third_party/python/setuptools/setuptools*
 export MOZ_BUILD_APP=browser
 export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < .rpm/firefox-l10n.txt)"
 
-MOZ_OPT_FLAGS="-pipe -O2 -g0"
+MOZ_OPT_FLAGS=()
+
+MOZ_OPT_FLAGS+=( -pipe -O2 -g0 )
 %ifarch armh
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -march=armv7-a -mthumb"
+MOZ_OPT_FLAGS+=( -march=armv7-a -mthumb )
 %endif
 
 # PIE, full relro
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -DPIC -fPIC -Wl,-z,relro -Wl,-z,now"
+MOZ_OPT_FLAGS+=( -DPIC -fPIC -Wl,-z,relro -Wl,-z,now )
 
 # Add fake RPATH
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -Wl,-rpath,/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+MOZ_OPT_FLAGS+=( "-Wl,-rpath,$rpath" )
+
+MOZ_OPT_FLAGS+=( -Wno-unused-command-line-argument )
 
 # If MOZ_DEBUG_FLAGS is empty, firefox's build will default it to "-g" which
 # overrides the -g0 from line above and breaks building on s390
 # (OOM when linking, rhbz#1238225)
 export MOZ_DEBUG_FLAGS=" "
 
-export CFLAGS="$MOZ_OPT_FLAGS"
-export CXXFLAGS="$MOZ_OPT_FLAGS"
+export CFLAGS="${MOZ_OPT_FLAGS[*]}"
+export CXXFLAGS="${MOZ_OPT_FLAGS[*]}"
 
 export MOZ_PARALLEL_BUILD=%build_parallel_jobs
 export CC="clang"
@@ -420,6 +427,26 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Jul 04 2023 Alexey Gladkov <legion@altlinux.ru> 115.0-alt1
+- New release (115.0).
+- Security fixes:
+  + CVE-2023-3482: Block all cookies bypass for localstorage
+  + CVE-2023-37201: Use-after-free in WebRTC certificate generation
+  + CVE-2023-37202: Potential use-after-free from compartment mismatch in SpiderMonkey
+  + CVE-2023-37203: Drag and Drop API may provide access to local system files
+  + CVE-2023-37204: Fullscreen notification obscured via option element
+  + CVE-2023-37205: URL spoofing in address bar using RTL characters
+  + CVE-2023-37206: Insufficient validation of symlinks in the FileSystem API
+  + CVE-2023-37207: Fullscreen notification obscured
+  + CVE-2023-37208: Lack of warning when opening Diagcab files
+  + CVE-2023-37209: Use-after-free in `NotifyOnHistoryReload`
+  + CVE-2023-37210: Full-screen mode exit prevention
+  + CVE-2023-37211: Memory safety bugs fixed in Firefox 115, Firefox ESR 102.13, and Thunderbird 102.13
+  + CVE-2023-37212: Memory safety bugs fixed in Firefox 115
+
+* Thu Jun 15 2023 Alexey Gladkov <legion@altlinux.ru> 114.0.1-alt2
+- Disabled libproxy support due to regressions.
+
 * Sun Jun 11 2023 Alexey Gladkov <legion@altlinux.ru> 114.0.1-alt1
 - New release (114.0.1).
 - Security fixes:
