@@ -54,7 +54,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: 5.6.0
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure with ROCm additions
 
 Group: Development/C
@@ -328,7 +328,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 
 %build
-PROJECTS="clang;lld"
+PROJECTS="clang;compiler-rt;lld"
 export NPROCS="%__nprocs"
 if [ "$NPROCS" -gt 64 ]; then
 	export NPROCS=64
@@ -652,6 +652,9 @@ ninja -C %builddir check-all || :
 %llvm_libdir/liblld*.a
 
 %changelog
+* Wed Jul 05 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.2
+- Enable compiler-rt.
+
 * Mon Jul 03 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.1
 - Initial build as separate toolchain for ROCm applications.
 
