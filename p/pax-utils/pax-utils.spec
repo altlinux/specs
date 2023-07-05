@@ -2,7 +2,7 @@
 
 Name: pax-utils
 Version: 1.3.7
-Release: alt1
+Release: alt2
 
 Summary: ELF utils that can check files for security relevant properties
 License: GPL-2.0
@@ -61,5 +61,8 @@ sed -i -e 's|/usr/bin/env python|/usr/bin/python3|' lddtree.py
 %_man1dir/*
 
 %changelog
+* Wed Jul 05 2023 Egor Ignatov <egori@altlinux.org> 1.3.7-alt2
+- pspax: seccomp allow socket() and connect() syscalls (closes: #46775)
+
 * Mon Jun 05 2023 Egor Ignatov <egori@altlinux.org> 1.3.7-alt1
 - First build for ALT
