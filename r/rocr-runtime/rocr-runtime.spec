@@ -1,12 +1,14 @@
-%define llvm_ver 16.0
 %define soname 1
+%define llvm_ver 16.0
+
+%def_without llvm-rocm
 
 # LTO causes segfaults (
 %define optflags_lto %nil
 
 Name: rocr-runtime
-Version: 5.5.1
-Release: alt0.2
+Version: 5.6.0
+Release: alt0.3
 License: MIT
 Summary: HSA Runtime API and runtime for ROCm
 Url: https://github.com/RadeonOpenCompute/ROCR-Runtime
@@ -18,12 +20,15 @@ Patch0: rocr-image-bitcode-path.patch
 Patch1: rocr-runtime-4.3.0_no-aqlprofiler.patch
 
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++ libelf-devel libdrm-devel hsakmt-rocm-devel rocm-device-libs xxd
-BuildRequires: clang%{llvm_ver}-devel llvm%{llvm_ver}-devel mlir%{llvm_ver}-tools lld%{llvm_ver}
+BuildRequires: gcc-c++ libelf-devel libdrm-devel hsakmt-rocm-devel = %version rocm-device-libs = %version xxd
+%if_with llvm-rocm
+BuildRequires: clang-rocm-devel = %version llvm-rocm-devel = %version lld-rocm = %version
+%else
+BuildRequires: clang%{llvm_ver}-devel llvm%{llvm_ver}-devel lld%{llvm_ver}
+%endif
 
-# exclude armh
-# doesn't compile on ix86
-ExclusiveArch: x86_64 aarch64 ppc64le
+# only x86_64 due cpuid.h requirement
+ExclusiveArch: x86_64
 
 %description
 AMD's implementation of the core HSA Runtime API's.
@@ -49,7 +54,11 @@ HSA Runtime API and runtime for ROCm development headers and library.
 %patch1 -p0
 
 %build
+%if_with llvm-rocm
+export ALTWRAP_LLVM_VERSION=rocm
+%else
 export ALTWRAP_LLVM_VERSION=%{llvm_ver}
+%endif
 pushd src
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -72,6 +81,16 @@ pushd src
 %_libdir/cmake/hsa-runtime64
 
 %changelog
+* Tue Jul 04 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.3
+- Added bootstrap knob.
+- Limit build to x86_64 only due strict requirement to cpuid.h.
+
+* Tue Jul 04 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.2
+- Rebuild with llvm-rocm.
+
+* Mon Jul 03 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.1
+- rocm-5.6.0.
+
 * Thu Jun 15 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.2
 - Disable 32-bit completely.
 

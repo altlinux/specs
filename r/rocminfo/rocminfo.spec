@@ -1,5 +1,5 @@
 Name: rocminfo
-Version: 5.5.1
+Version: 5.6.0
 Release: alt0.1
 License: NCSA
 Summary: ROCm Application for Reporting System Info
@@ -13,7 +13,7 @@ BuildRequires: gcc-c++ hsa-rocr-devel python3-devel
 Requires: pciutils
 
 # hsa-rocr is 64-bit only
-ExclusiveArch: x86_64 aarch64 ppc64le
+ExclusiveArch: x86_64
 
 %description
 ROCm Application for Reporting System Info.
@@ -37,6 +37,10 @@ subst '/.*{ROCMINFO_CXX_FLAGS} -m64)/d' CMakeLists.txt
 %_bindir/*
 
 %changelog
+* Tue Jul 04 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.1
+- Rebuild for rocm-5.6.0.
+- Built x86_64 only (due hsa-rocr).
+
 * Sun May 28 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.1
 - rocm-5.5.1.
 

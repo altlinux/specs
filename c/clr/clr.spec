@@ -1,4 +1,3 @@
-%define llvm_ver 16.0
 %define build_type RelWithDebInfo
 %define builddir %_cmake__builddir
 %def_with mold
@@ -10,44 +9,40 @@
 # yet to ALT (cuda as example)
 %def_with HIP
 
-Name: rocclr
-Version: 5.5.1
-Release: alt0.5
+Name: clr
+Version: 5.6.0
+Release: alt0.1
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
-# FIXME! migrate to https://github.com/ROCm-Developer-Tools/clr
-Url: https://github.com/ROCm-Developer-Tools/ROCclr
+Url: https://github.com/ROCm-Developer-Tools/clr
 Group: System/Libraries
 
 Source0: %name-%version.tar
-# https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime.git
-Source1: opencl.tar
-# https://github.com/ROCm-Developer-Tools/hipamd.git
-Source2: hipamd.tar
 # https://github.com/ROCm-Developer-Tools/HIP.git
-Source3: hip.tar
+Source1: hip.tar
+# https://github.com/ROCm-Developer-Tools/HIPCC.git
+Source2: hipcc.tar
 # sane defaults for HIP
 Source4: hip.sh
 
 Patch0: hipcc-alt-paths.patch
-Patch1: hipamd-alt-bitcode-path.patch
-Patch2: rocclr-gcc-13-fixes.patch
-Patch3: opencl-gcc-13-fixes.patch
+Patch1: rocclr-gcc-13-fixes.patch
+Patch2: opencl-gcc-13-fixes.patch
 
 BuildRequires(pre): cmake /proc ninja-build
-BuildRequires: llvm%{llvm_ver}-devel clang%{llvm_ver}-devel clang%{llvm_ver}-tools mlir%{llvm_ver}-tools
+BuildRequires: llvm-rocm-devel = %version clang-rocm-devel = %version clang-rocm-tools = %version
 BuildRequires: zlib-devel libstdc++-devel rocm-cmake = %version rocm-comgr-devel = %version hsa-rocr-devel = %version
 BuildRequires: libX11-devel libnuma-devel libGL-devel
 %if_with mold
 BuildRequires: mold
 %else
-BuildRequires: lld%{llvm_ver}
+BuildRequires: lld-rocm
 %endif
 %if_with HIP
 BuildRequires: python3-module-CppHeaderParser
 %endif
 
-ExclusiveArch: x86_64 aarch64 ppc64le
+ExclusiveArch: x86_64
 
 %description
 ROCclr is a virtual device interface that compute runtimes interact with to
@@ -71,20 +66,12 @@ Group: Development/Other
 # as hip scripts are noarch
 # perl scripts rely on runtime envs
 AutoReq: yes, noperl
-Requires: clang%{llvm_ver} clang%{llvm_ver}-tools clang%{llvm_ver}-libs-support llvm%{llvm_ver} lld%{llvm_ver} glibc-devel gcc
+Requires: clang-rocm clang-rocm-tools clang-rocm-libs-support llvm-rocm lld-rocm glibc-devel gcc
 Requires: rocm-device-libs = %version rocminfo = %version hip-runtime-amd = %EVR
 
 %description -n hip-devel
 HIP: Heterogenous-computing Interface for Portability development libraries and
 headers.
-
-%package -n hip-devel-samples
-Summary: HIP development sample code and cookbook
-Group: Documentation
-BuildArch: noarch
-
-%description -n hip-devel-samples
-HIP development sample code and cookbook
 
 %package -n hip-runtime-amd
 Summary: HIP implementation specifically for AMD platform.
@@ -97,48 +84,38 @@ portable applications for AMD and NVIDIA GPUs from single source code.
 This package provides the HIP implementation specifically for AMD platform.
 
 %prep
-%setup -n %name-%version -a1 -a2 -a3
+%setup -n %name-%version -a1 -a2
 %patch0 -p1 -b .hipcc-alt-paths
-%patch1 -p1 -b .hipamd-bitcode-paths
-%patch2 -p1 -b .rocclr-gcc13-fixes
-%patch3 -p1 -b .opencl-gcc13-fixes
+%patch1 -p1 -b .rocclr-gcc13-fixes
+%patch2 -p1 -b .opencl-gcc13-fixes
 
 %build
-export ALTWRAP_LLVM_VERSION=%{llvm_ver}
-%_cmake
-%_ninja_build
-pushd opencl
+export ALTWRAP_LLVM_VERSION=rocm
 %_cmake \
     -DUSE_COMGR_LIBRARY=ON \
     -DCMAKE_INSTALL_LIBDIR=%_lib \
     -DFILE_REORG_BACKWARD_COMPATIBILITY=OFF \
-    -DCMAKE_PREFIX_PATH="../../"
-%_ninja_build
+    -DCMAKE_PREFIX_PATH="../../" \
+    -DCLR_BUILD_OCL=ON \
+    -DBUILD_ICD:BOOL=TRUE \
 %if_with HIP
-popd
-pushd hipamd
-%_cmake \
+    -DCLR_BUILD_HIP=ON \
+    -DHIPCC_BIN_DIR=%_builddir/%name-%version/hipcc/bin \
     -DHIP_COMMON_DIR=%_builddir/%name-%version/hip \
-    -DAMD_OPENCL_PATH=../opencl \
-    -DROCCLR_PATH=../../ \
     -DCMAKE_MODULE_PATH=%_libdir/cmake \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
-    -DHIP_PLATFORM=amd
-%_ninja_build
+    -DHIP_PLATFORM=amd \
 %endif
+    %nil
+%_ninja_build
 
 %install
-pushd opencl
 %cmake_install
-install -pD -m644 config/amdocl%{bits}.icd %buildroot%_sysconfdir/OpenCL/vendors/amdocl%{bits}.icd
+install -pD -m644 opencl/config/amdocl%{bits}.icd %buildroot%_sysconfdir/OpenCL/vendors/amdocl%{bits}.icd
 # rocm clinfo expose more information than third-party clinfo
 mv %buildroot%_bindir/clinfo %buildroot%_bindir/rocm-clinfo
 
 %if_with HIP
-popd
-pushd hipamd
-%cmake_install
-
 # hip cmake scripts are noarch
 mkdir -p %buildroot%_datadir/cmake/hip
 mv %buildroot%_libdir/cmake/hip/FindHIP.cmake %buildroot%_datadir/cmake/hip/
@@ -173,12 +150,15 @@ install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
 %_libdir/libamdhip%{bits}*.so*
 %_libdir/libhiprtc-builtins*.so*
 %_libdir/libhiprtc*.so*
-
-%files -n hip-devel-samples
-%_datadir/hip/samples
 %endif
 
 %changelog
+* Tue Jul 04 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.1
+- rocclr->clr.
+- rocm-5.6.0.
+- Rebuild with llvm-rocm.
+- built x86_64 only.
+
 * Wed Jun 21 2023 L.A. Kostis <lakostis@altlinux.ru> 5.5.1-alt0.5
 - hipamd: update bitcode search paths.
 - hipamd: fix symlinks.
