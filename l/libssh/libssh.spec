@@ -7,7 +7,7 @@
 %define libssh libssh
 
 Name: libssh
-Version: 0.9.7
+Version: 0.10.5
 Release: alt1
 
 Group: System/Libraries
@@ -19,7 +19,6 @@ License: LGPLv2.1+
 Source: http://www.libssh.org/files/%name-%version.tar.gz
 Source3: libssh_client.config
 Source4: libssh_server.config
-Patch1: fix-path-for-ALT.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -74,7 +73,10 @@ This package contains the development files for %name.
 
 %prep
 %setup -q
-%patch1 -p2
+find ./ -type f \( -name *.c -or -name *.h \) | \
+while read f; do
+    sed -i -E '/^#define[[:space:]]+KEYS_FOLDER[[:space:]]+"\/etc\/ssh\/"/s/\/etc\/ssh\//\/etc\/openssh/' "$f"
+done
 
 %build
 %cmake \
@@ -112,6 +114,9 @@ install -m644 %SOURCE4 %buildroot%_sysconfdir/libssh/libssh_server.config
 %_libdir/*.so
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 0.10.5-alt1
+- new version
+
 * Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt1
 - new version
 - security (fixes: CVE-2023-1667 CVE-2023-2283)
