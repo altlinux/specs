@@ -4,8 +4,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     podman
-Version:  4.5.0
-Release:  alt2
+Version:  4.5.1
+Release:  alt1
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0
@@ -152,6 +152,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Wed Jul 05 2023 Alexey Shabalin <shaba@altlinux.org> 4.5.1-alt1
+- New version 4.5.1.
+
 * Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 4.5.0-alt2
 - Update Requires.
 
