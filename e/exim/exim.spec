@@ -1,6 +1,6 @@
 Name: exim
-Version: 4.94.2
-Release: alt2
+Version: 4.96
+Release: alt1
 Summary: Exim MTA
 Group: Networking/Mail
 License: GPLv2+
@@ -14,7 +14,7 @@ Provides: smtpdaemon smtpd MTA MailTransferAgent
 Provides: %name-light
 Provides: %name-bin
 
-BuildRequires: pkg-config perl libdb4-devel libpcre-devel libssl-devel
+BuildRequires: pkg-config perl libdb4-devel libpcre2-devel libssl-devel
 BuildRequires: libldap-devel
 BuildRequires: libmariadb-devel
 BuildRequires: libsqlite3-devel
@@ -234,6 +234,10 @@ test -s mail-server.key || exim-mkcert
 %doc Readme.pod vmail-dovecot.txt
 
 %changelog
+* Mon Jul 03 2023 Gremlin from Kremlin <gremlin@altlinux.org> 4.96-alt1
+- update to 4.96 (#46381)
+- build with libpcre2
+
 * Fri Jun 03 2022 Gremlin from Kremlin <gremlin@altlinux.org> 4.94.2-alt2
 - add LDAP support (#42927)
 
