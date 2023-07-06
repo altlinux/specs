@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20220418
+Version: 20230701
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -48,6 +48,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Sat Jul 01 2023 Anton Midyukov <antohami@altlinux.org> 20230701-alt1
+- init.c: mount and overmount /run
+
 * Mon Apr 18 2022 Anton Midyukov <antohami@altlinux.org> 20220418-alt1
 - mount.c: fix mount option for exfat
 
