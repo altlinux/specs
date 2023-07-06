@@ -1,6 +1,6 @@
 Name:		xmr-stak
 Version:	2.10.8
-Release:	alt1
+Release:	alt2
 Summary:	XMR-Stak - Cryptonight Mining Software
 Url:		https://github.com/fireice-uk/xmr-stak
 Group:		Office
@@ -44,6 +44,9 @@ install -Dp -m 0755 ./bin/%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Thu Jul  6 2023 Artyom Bystrov <arbars@altlinux.org> 2.10.8-alt2
+- Fix build on GCC13
+
 * Wed Apr 21 2021 Slava Aseev <ptrnine@altlinux.org> 2.10.8-alt1
 - 2.10.8
 - fix build with libmicrohttpd-0.9.71
