@@ -1,7 +1,7 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gudev
-%define ver_major 237
+%define ver_major 238
 %define api_ver 1.0
 
 %def_disable static
@@ -24,10 +24,11 @@ Url: https://wiki.gnome.org/Projects/%name
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
-Source: %_name-%version.tar
+Vcs: https://gitlab.gnome.org/GNOME/libgudev.git
+Source: %name-%version.tar
 %endif
 
-%define udev_ver 199
+%define udev_ver 251
 %define glib_ver 2.38
 # https://github.com/martinpitt/umockdev/issues/69
 %define umockdev_ver 0.11.2
@@ -102,8 +103,7 @@ GObject introspection devel data for %name.
 %find_lang %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
@@ -131,6 +131,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Jul 06 2023 Yuri N. Sedunov <aris@altlinux.org> 1:238-alt1
+- 238
+
 * Sun Aug 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1:237-alt1
 - 237
 
