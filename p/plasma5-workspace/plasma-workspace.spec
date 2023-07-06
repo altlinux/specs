@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.27.5
-Release: alt2
+Version: 5.27.6
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -553,6 +553,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.6-alt1
+- new version
+
 * Mon Jun 05 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.5-alt2
 - fix weather search
 

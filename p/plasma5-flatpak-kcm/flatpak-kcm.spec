@@ -1,7 +1,7 @@
 %define rname flatpak-kcm
 
 Name: plasma5-%rname
-Version: 5.27.5
+Version: 5.27.6
 Release: alt1
 %K5init altplace
 
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-svg-devel qt5-declarative-devel
 BuildRequires: libflatpak-devel
-BuildRequires: kf5-kcmutils-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kpackage-devel
+BuildRequires: kf5-kitemmodels-devel kf5-kcmutils-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kpackage-devel
 
 %description
 The KCM allows changing what permissions have been granted to installed Flatpak applications.
@@ -68,6 +68,9 @@ Requires: %name-common = %version-%release
 %_K5data/kpackage/kcms/kcm_flatpak/
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.6-alt1
+- new version
+
 * Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt1
 - new version
 

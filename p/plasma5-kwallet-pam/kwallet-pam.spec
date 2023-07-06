@@ -5,8 +5,8 @@
 %define rname kwallet-pam
 
 Name: plasma5-%rname
-Version: 5.27.5
-Release: alt2
+Version: 5.27.6
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -94,6 +94,9 @@ sed -i '/^ExecStart=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
 %_unitdir_user/*.service
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.6-alt1
+- new version
+
 * Thu May 11 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt2
 - don't call pam_sm_open_session within pam_sm_authenticate
 

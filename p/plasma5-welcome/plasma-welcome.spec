@@ -1,8 +1,8 @@
 %define rname plasma-welcome
 
 Name: plasma5-welcome
-Version: 5.27.5
-Release: alt2
+Version: 5.27.6
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -75,6 +75,9 @@ Requires: %name-common = %version-%release
 %_K5start/*plasma-welcome*.desktop
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.6-alt1
+- new version
+
 * Fri May 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt2
 - hide unauthorized pages
 

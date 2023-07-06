@@ -5,8 +5,8 @@
 %add_findreq_skiplist %_K5exec/kdeeject
 
 Name: plasma5-%rname
-Version: 5.27.5
-Release: alt2
+Version: 5.27.6
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -90,6 +90,9 @@ KF5 library
 %_K5xdgapp/*.desktop
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.6-alt1
+- new version
+
 * Tue May 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt2
 - add fix for kinfo
 

@@ -2,7 +2,7 @@
 %def_disable scim
 
 Name: plasma5-desktop
-Version: 5.27.5
+Version: 5.27.6
 Release: alt1
 %K5init altplace no_appdata
 
@@ -250,6 +250,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.6-alt1
+- new version
+
 * Wed May 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt1
 - new version
 

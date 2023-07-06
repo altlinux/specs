@@ -10,8 +10,8 @@
 
 %define rname kpipewire
 Name: plasma5-%rname
-Version: 5.27.5
-Release: alt3
+Version: 5.27.6
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -114,6 +114,9 @@ Requires: %name-common
 %_K5lib/libKPipeWireDmaBuf.so.*
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.6-alt1
+- new version
+
 * Fri Jun 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt3
 - update requires
 

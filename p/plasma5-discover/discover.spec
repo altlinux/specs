@@ -19,8 +19,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.27.5
-Release: alt2
+Version: 5.27.6
+Release: alt1
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -291,6 +291,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.6-alt1
+- new version
+
 * Tue Jun 13 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.5-alt2
 - add fix for fwupd backend: don't refresh directory-type remotes on setup
 
