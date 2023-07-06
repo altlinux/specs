@@ -3,7 +3,7 @@
 
 Name: xdm
 Version: 1.1.13
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: X Display Manager with support for XDMCP, host chooser
 License: MIT/X11
@@ -25,7 +25,7 @@ Provides: %xf86-%name = 4.4 %xorg-%name = %epoch:%version-%release
 # Automatically added by buildreq on Thu Mar 28 2019
 # optimized out: fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXau-devel libXmu-devel libXrender-devel libXt-devel libcrypt-devel libfreetype-devel perl pkg-config python-base sh4 xorg-proto-devel
 BuildRequires: libXaw-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libpam-devel
-BuildRequires: xorg-util-macros
+BuildRequires: xorg-util-macros libbsd-devel 
 
 %description
 Xdm  manages a collection of X displays, which may be on the local host
@@ -80,6 +80,9 @@ ln -snf ../../..%_localstatedir/xdm %buildroot%_sysconfdir/X11/xdm/authdir
 %_man8dir/*
 
 %changelog
+* Thu Jul  6 2023 Artyom Bystrov <arbars@altlinux.org> 2:1.1.13-alt2
+- Fix build
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 2:1.1.13-alt1
 - Autobuild version bump to 1.1.13
 
