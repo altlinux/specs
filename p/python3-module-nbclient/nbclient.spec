@@ -1,12 +1,13 @@
-%def_without check
 %define _unpackaged_files_terminate_build 1
 
 %define oname nbclient
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
-Summary: A client library for executing notebooks. Formally nbconvert's ExecutePreprocessor.
+Summary: A client library for executing notebooks. Formally nbconvert's ExecutePreprocessor
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/nbclient/
@@ -16,7 +17,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
 BuildRequires: python3-module-hatchling
 BuildRequires: python3(jupyter_client)
 BuildRequires: python3(nbformat)
@@ -27,6 +27,9 @@ BuildRequires: python3(nest_asyncio)
 BuildRequires: python3(xmltodict)
 BuildRequires: python3(nbconvert)
 BuildRequires: python3(ipywidgets)
+BuildRequires: python3(flaky)
+BuildRequires: python3(pytest_asyncio)
+BuildRequires: /proc
 %endif
 
 %description
@@ -55,8 +58,8 @@ This package contains tests for %oname
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test3 -vv
+# test_many_parallel_notebooks randomly fail
+%pyproject_run_pytest -v --color=no -k 'not test_many_parallel_notebooks'
 
 %files
 %doc LICENSE
@@ -70,6 +73,9 @@ py.test3 -vv
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Jul 06 2023 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Mon Dec 05 2022 Anton Farygin <rider@altlinux.ru> 0.7.2-alt1
 - 0.5.4 -> 0.7.2
 - tests was disabled due to reqursive dependencies with nbconvert (bootstrap)
