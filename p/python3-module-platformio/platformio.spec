@@ -1,6 +1,6 @@
 Name: python3-module-platformio
-Version: 6.1.7
-Release: alt3
+Version: 6.1.8
+Release: alt1
 
 Summary: PlatformIO Core
 License: Apache-2.0
@@ -10,7 +10,7 @@ Url: https://platformio.org/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
+BuildRequires: rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
@@ -60,6 +60,9 @@ BuildRequires: python3(zeroconf)
 %python3_sitelibdir/platformio-%version.dist-info
 
 %changelog
+* Thu Jul 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.8-alt1
+- 6.1.8 released
+
 * Thu Jun 08 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.7-alt3
 - build deps fixed
 

@@ -1,7 +1,7 @@
 %define  modulename starlette
 
 Name:    python3-module-%modulename
-Version: 0.27.0
+Version: 0.28.0
 Release: alt1
 
 Summary: The little ASGI framework that shines
@@ -15,7 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/encode/starlette/archive/%version.tar.gz
 Source:  %modulename-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(hatchling)
@@ -55,6 +55,9 @@ Zero hard dependencies.
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Thu Jul 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.28.0-alt1
+- 0.28.0
+
 * Fri May 19 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.27.0-alt1
 - new version (0.27.0) with rpmgs script
 
