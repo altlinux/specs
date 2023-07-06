@@ -1,7 +1,7 @@
 %define rname modemmanager-qt
 
 Name: kf5-%rname
-Version: 5.106.0
+Version: 5.107.0
 Release: alt1
 %K5init altplace
 
@@ -34,6 +34,7 @@ Group: Development/KDE and QT
 Summary: Development files for %name
 Provides: kf5-libmm-qt-devel = %version-%release
 Obsoletes: kf5-libmm-qt-devel < %version-%release
+Requires: ModemManager-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -71,6 +72,9 @@ KF5 library
 %_K5lib/libKF5ModemManagerQt.so.*
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.107.0-alt1
+- new version
+
 * Mon May 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.106.0-alt1
 - new version
 

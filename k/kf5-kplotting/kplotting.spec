@@ -1,7 +1,7 @@
 %define rname kplotting
 
 Name: kf5-%rname
-Version: 5.106.0
+Version: 5.107.0
 Release: alt1
 %K5init altplace
 
@@ -69,6 +69,9 @@ KF5 library
 %_K5lib/libKF5Plotting.so.*
 
 %changelog
+* Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.107.0-alt1
+- new version
+
 * Mon May 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.106.0-alt1
 - new version
 
