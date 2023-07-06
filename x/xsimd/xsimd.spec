@@ -1,5 +1,5 @@
 Name: xsimd
-Version: 10.0.0
+Version: 11.1.0
 Release: alt1
 Summary: C++ wrappers for SIMD intrinsics
 Group: Development/C++
@@ -64,6 +64,9 @@ Provides: %name-static = %version-%release
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Jul 06 2023 Anton Farygin <rider@altlinux.ru> 11.1.0-alt1
+- 10.0.0 -> 11.1.0
+
 * Sat Feb 04 2023 Anton Farygin <rider@altlinux.ru> 10.0.0-alt1
 - 9.0.1 -> 10.0.0
 
