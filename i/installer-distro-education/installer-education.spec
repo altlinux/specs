@@ -1,6 +1,6 @@
 Name:    installer-distro-education
 Version: 10.0
-Release: alt3
+Release: alt4
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -71,7 +71,6 @@ Requires: installer-feature-online-repo
 %ifnarch %e2k
 Requires: installer-feature-repo-add
 %endif
-Requires: installer-feature-resolver-bind-stage3
 Requires: installer-feature-lightdm-stage3
 Requires: installer-feature-bell-off-stage3
 
@@ -114,6 +113,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Thu Jul 06 2023 Andrey Cherepanov <cas@altlinux.org> 10.0-alt4
+- Remove installer-feature-resolver-bind-stage3 due to dmsmasq and bind problems.
+
 * Mon Aug 15 2022 Andrey Cherepanov <cas@altlinux.org> 10.0-alt3
 - Removed requirement of obsoleted installer-feature-efi-stage3.
 
