@@ -7,14 +7,14 @@
 %def_disable debug
 
 %if_enabled webgui
-%global php_version php7
+%global php_version php8.1
 %endif
 
-%define bacula_major 11
+%define bacula_major 13
 
 Name: bacula%{bacula_major}
-Version: %{bacula_major}.0.6
-Release: alt3
+Version: %{bacula_major}.0.3
+Release: alt2
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -39,11 +39,11 @@ Source15: %name-gui-%version.tar
 Source16: baculum-apache2.logrotate
 # Image taken from Fedora's bacula package
 Source17: generic.xpm
-Patch1: %name-alt.patch
-Patch2: %name-gui-alt.patch
+Patch1: bacula13-alt.patch
+Patch2: bacula11-gui-alt.patch
 Patch3: bacula-9.4.0-fedora-seg-fault.patch
 Patch4: bacula11-alt-fix-logrotate.patch
-Patch2000: %name-e2k.patch
+Patch2000: bacula11-e2k.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libMySQL-devel postgresql-devel
@@ -72,51 +72,53 @@ Requires: %name-console = %EVR
 Requires: %name-dir = %EVR
 
 Conflicts: bacula9
+Conflicts: bacula11
 
 %package client
 Summary: Network based backup program (client only)
 Group: Archiving/Backup
 Provides: %name-fd = %EVR
 Conflicts: bacula-client
-Conflicts: bacula7-client
 Conflicts: bacula9-client
+Conflicts: bacula11-client
 Requires: %name-common = %EVR
 
 %package storage
 Summary: Network based backup program (storage only)
 Group: Archiving/Backup
 Conflicts: bacula-storage
-Conflicts: bacula7-storage
 Conflicts: bacula9-storage
+Conflicts: bacula11-storage
 Requires: %name-common = %EVR
 
 %package console
 Summary: Network based backup program (console only)
 Group: Archiving/Backup
 Conflicts: bacula-console
-Conflicts: bacula7-console
 Conflicts: bacula9-console
+Conflicts: bacula11-console
 Requires: %name-common = %EVR
 
 %package bat
 Summary: Network based backup program (Qt5 Bacula Administration Tool)
 Group: Archiving/Backup
 Conflicts: bacula-bat
-Conflicts: bacula7-bat
 Conflicts: bacula9-bat
+Conflicts: bacula11-bat
 
 %package traymonitor
 Summary: Bacula system tray monitor
 Group: Archiving/Backup
 Conflicts: bacula9-traymonitor
+Conflicts: bacula11-traymonitor
 
 %package director-common
 Summary: Network based backup program (director common)
 Group: Archiving/Backup
 Requires: %name-common = %EVR
 Conflicts: bacula-director-common
-Conflicts: bacula7-director-common
 Conflicts: bacula9-director-common
+Conflicts: bacula11-director-common
 
 %package director-mysql
 Summary: Network based backup program (MySQL director only)
@@ -126,8 +128,8 @@ Provides: %name-director = %EVR
 Obsoletes: %name-director < %EVR
 Provides: %name-dir = %EVR
 Conflicts: bacula-director-mysql
-Conflicts: bacula7-director-mysql
 Conflicts: bacula9-director-mysql
+Conflicts: bacula11-director-mysql
 
 %package director-sqlite3
 Summary: Network based backup program (SQLITE3 director only)
@@ -136,8 +138,8 @@ Requires(pre): sqlite3
 Requires(pre): %name-director-common = %EVR
 Provides: %name-dir = %EVR
 Conflicts: bacula-director-sqlite3
-Conflicts: bacula7-director-sqlite3
 Conflicts: bacula9-director-sqlite3
+Conflicts: bacula11-director-sqlite3
 
 %package director-postgresql
 Summary: Network based backup program (PostgreSQL director only)
@@ -146,16 +148,16 @@ Requires(pre): %name-director-common = %EVR
 Requires: postgresql
 Provides: %name-dir = %EVR
 Conflicts: bacula-director-postgresql
-Conflicts: bacula7-director-postgresql
 Conflicts: bacula9-director-postgresql
+Conflicts: bacula11-director-postgresql
 
 %package common
 Summary: Network based backup program (common files)
 Group: Archiving/Backup
 Requires(pre): passwdqc-utils
 Conflicts: bacula-common
-Conflicts: bacula7-common
 Conflicts: bacula9-common
+Conflicts: bacula11-common
 
 %package debug
 Summary: Network based backup program (debug files)
@@ -163,15 +165,15 @@ Group: Archiving/Backup
 Requires: %name-common = %EVR
 BuildArch: noarch
 Conflicts: bacula-debug
-Conflicts: bacula7-debug
 Conflicts: bacula9-debug
+Conflicts: bacula11-debug
 
 %package nagios
 Summary: The check_bacula plugin for nagios
 Group: Archiving/Backup
 Conflicts: bacula-nagios
-Conflicts: bacula7-nagios
 Conflicts: bacula9-nagios
+Conflicts: bacula11-nagios
 
 %package -n baculum%{bacula_major}-common
 Summary: The baculum web interface for bacula.
@@ -186,6 +188,7 @@ Requires: %{php_version}-curl
 Requires: %{php_version}-ldap
 Requires: %{php_version}-mbstring
 Conflicts: baculum9-common
+Conflicts: baculum11-common
 
 %package -n baculum%{bacula_major}-tools
 Summary: Bacula tools required for baculum web interface.
@@ -193,6 +196,7 @@ Group: Archiving/Backup
 Requires: %name = %EVR
 Requires: %name-console = %EVR
 Conflicts: baculum9-tools
+Conflicts: baculum11-tools
 
 %package -n baculum%{bacula_major}-mysql
 Summary: The baculum web interface for bacula.
@@ -204,6 +208,7 @@ Requires: %name-director-mysql = %EVR
 Requires: %{php_version}-pdo_mysql
 Requires: %{php_version}-mysqlnd
 Conflicts: baculum9-mysql
+Conflicts: baculum11-mysql
 
 %package -n baculum%{bacula_major}-sqlite3
 Summary: The baculum web interface for bacula.
@@ -214,6 +219,7 @@ Requires: baculum%{bacula_major}-common = %EVR
 Requires: %name-director-sqlite3 = %EVR
 Requires: %{php_version}-pdo_sqlite
 Conflicts: baculum9-sqlite3
+Conflicts: baculum11-sqlite3
 
 %package -n baculum%{bacula_major}-postgresql
 Summary: The baculum web interface for bacula.
@@ -224,6 +230,7 @@ Requires: baculum%{bacula_major}-common = %EVR
 Requires: %name-director-postgresql = %EVR
 Requires: %{php_version}-pdo_pgsql
 Conflicts: baculum9-postgresql
+Conflicts: baculum11-postgresql
 
 %package -n baculum%{bacula_major}-apache2
 Summary: The baculum web interface for bacula.
@@ -232,6 +239,7 @@ BuildArch: noarch
 Requires: baculum%{bacula_major} = %EVR
 Requires: apache2-mod_%{php_version}
 Conflicts: baculum9-apache2
+Conflicts: baculum11-apache2
 
 %description
 Bacula is a set of computer programs that permits the system
@@ -436,7 +444,7 @@ functions such as:
 %setup -T -D -b 15
 %endif
 
-%patch1 -p2
+%patch1 -p1
 
 %if_enabled webgui
 pushd ../%name-gui-%version/baculum
@@ -918,9 +926,14 @@ rm -rf %_cachedir/baculum/runtime/*
 %endif
 
 %changelog
-* Wed Jul 05 2023 Alexei Takaseev <taf@altlinux.org> 11.0.6-alt3
+* Wed Jul 05 2023 Alexei Takaseev <taf@altlinux.org> 13.0.3-alt2
 - Fix use old cache data from %_cachedir/baculum/assets and
   %_cachedir/baculum/runtime after update.
+- Added conflicts to bacula11 packages.
+- Remove conflicts to bacula7 packages.
+
+* Tue Jul 04 2023 Alexei Takaseev <taf@altlinux.org> 13.0.3-alt1
+- 13.0.3
 
 * Tue Jun 27 2023 Alexei Takaseev <taf@altlinux.org> 11.0.6-alt2
 - Remove %%post_service for bacula-dir service fix race condition on update
