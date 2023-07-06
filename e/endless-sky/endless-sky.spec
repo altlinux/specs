@@ -1,5 +1,5 @@
 Name: endless-sky
-Version: 0.10.0
+Version: 0.10.2
 Release: alt1
 
 Summary: Space exploration and combat game
@@ -9,6 +9,7 @@ Group: Games/Strategy
 Url: https://endless-sky.github.io/
 VCS: https://github.com/endless-sky/endless-sky
 Source: %name-%version.tar
+Source2: %name.watch
 
 ExclusiveArch: x86_64
 
@@ -60,7 +61,7 @@ rm -rv %buildroot/usr/share/doc/%name
 %find_lang %name
 
 %files -f %name.lang
-%doc CONTRIBUTING.md README.md changelog
+%doc README.md changelog
 
 %_bindir/%name
 %_iconsdir/hicolor/16x16/apps/%name.png
@@ -80,7 +81,21 @@ rm -rv %buildroot/usr/share/doc/%name
 %_datadir/games/endless-sky/
 
 %changelog
+* Thu Jun 29 2023 Alexey Shemyakin <alexeys@altlinux.org> 0.10.2-alt1
+- New version 0.10.2. This is a stable release, focused on fixing bugs 
+  and making some other small improvements.
+
+- Some of those improvements are:
+    + More customisation options for rings drawn through interfaces.
+    + A new personality that will prevent ships from ever cloaking.
+    + Various new spaceport news items and civilian ship hails.
+
+- Some notable bug fixes include:
+    + Various missions and spaceport news items will no longer appear at inappropriate locations.
+    + Fixed some instances of ships ceasing to act and drifting forever inappropriately.
+    + Fixed a problem with out of system escorts not landing to refuel when an appropriate planet is available.
+
 * Mon May 29 2023 Alexey Shemyakin <alexeys@altlinux.org> 0.10.0-alt1
-- initial build for ALT
+- Initial build for ALT.
 
 
