@@ -1,7 +1,7 @@
 %define binutils_sourcedir /usr/src/binutils-source
 
 Name: binutils
-Version: 2.38
+Version: 2.40
 Release: alt1
 Epoch: 1
 
@@ -17,7 +17,7 @@ Source: binutils-%version-%release.tar
 %def_with debuginfod
 
 # List of architectures worthy to care about test results.
-%define check_arches x86_64 %ix86 ppc64le
+%define check_arches x86_64 %ix86 ppc64le aarch64
 %def_with check
 
 Conflicts: libbfd
@@ -33,6 +33,10 @@ BuildRequires: libdebuginfod-devel
 
 %package -n libctf-nobfd0
 Summary: Compact C Type Format library (no BFD dependency)
+Group: System/Libraries
+
+%package -n libsframe0
+Summary: This package includes the libsframe shared library
 Group: System/Libraries
 
 %package devel
@@ -64,6 +68,11 @@ Binutils is a collection of binary utilities, including:
 %description -n libctf-nobfd0
 This package includes the libctf-nobfd shared library.  The Compact C Type
 Format (CTF) is a way of representing information about a binary program.
+
+%description -n libsframe0
+This package includes the libsframe0 shared library.  SFrame stands for
+Simple Frame format.  SFrame format keeps track of the minimal necessary
+information needed for generating stack traces.
 
 %description devel
 This package contains include files, dynamic and static libraries needed
@@ -99,6 +108,7 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 	--enable-shared \
 	--with-pic \
 	--disable-werror \
+	--disable-gprofng \
 	--enable-plugins \
 	--with-bugurl=http://bugzilla.altlinux.org/ \
 	--enable-gold=yes --enable-ld=default \
@@ -109,6 +119,9 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 %endif
 	--enable-relro \
 	--enable-textrel-check=warning \
+	--enable-warn-rwx-segments \
+	--enable-warn-execstack \
+	--disable-default-execstack \
 	--enable-deterministic-archives \
 	$ADDITIONAL_TARGETS
 
@@ -119,6 +132,9 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 
 # Remove static libctf libraries.
 rm %buildroot%_libdir/libctf*.a
+
+# Remove static libsframe library.
+rm %buildroot%_libdir/libsframe*.a
 
 # Install ld.default and ld wrapper.
 ln -snf ld.bfd %buildroot%_bindir/ld.default
@@ -225,6 +241,12 @@ XFAIL_TESTS=
 %endif
     #
 
+# gold linker is currently unsupported.
+# see https://sourceware.org/bugzilla/show_bug.cgi?id=19041
+%make_build -k check CC="$PWD/alt/gcc.sh" CXX="$PWD/alt/g++.sh" \
+	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS" \
+	check-gold ||:
+
 %files -f files.lst
 %_bindir/*
 %_prefix/lib/ldscripts/
@@ -241,12 +263,16 @@ XFAIL_TESTS=
 %files -n libctf-nobfd0
 %_libdir/libctf-nobfd.so.0*
 
+%files -n libsframe0
+%_libdir/libsframe.so.0*
+
 %files devel
 %_libdir/*.a
 %_libdir/libbfd.so
 %_libdir/libopcodes.so
 %_libdir/libctf-nobfd.so
 %_libdir/libctf.so
+%_libdir/libsframe.so
 %_includedir/bfd/
 %_includedir/*.h
 %_infodir/bfd.info*
@@ -255,6 +281,9 @@ XFAIL_TESTS=
 %binutils_sourcedir
 
 %changelog
+* Tue Jul 04 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.40-alt1
+- Updated to 2.40 20230624.
+
 * Mon Aug 01 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.38-alt1
 - Updated to 2.38 20220708.
 
