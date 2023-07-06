@@ -8,7 +8,7 @@
 
 Name: bird%_suffix
 Version: 2.13.1
-Release: alt1
+Release: alt2
 Summary: BIRD Internet Routing Daemon
 
 Group: Networking/Other
@@ -111,6 +111,11 @@ make test
 %_sbindir/birdcl
 
 %changelog
+* Thu Jul 06 2023 Sergey Y. Afonin <asy@altlinux.org> 2.13.1-alt2
+- init.d/bird:
+  + fixed typo in stop()
+  + added test of configuration before restart and reload
+
 * Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 2.13.1-alt1
 - 2.13 -> 2.13.1
 
