@@ -1,6 +1,6 @@
 Name:		xmrig
 Version:	6.16.4
-Release:	alt1
+Release:	alt2
 Summary:	RandomX, CryptoNight, AstroBWT and Argon2 miner
 Url:		https://github.com/xmrig/xmrig
 Group:		Office
@@ -13,7 +13,7 @@ Patch2:		%name-6.8.1-maes_armh.diff
 
 BuildRequires:	cmake gcc-c++ libmicrohttpd-devel libssl-devel-static libstdc++-devel-static libuv-devel libkrb5-devel zlib-devel libcpuid-devel libhwloc-devel >= 2.5
 
-ExcludeArch:	ppc64le armh
+ExcludeArch:	ppc64le armh aarch64
 
 %description
 XMRig is a high performance, open source, cross platform RandomX, KawPow, CryptoNight
@@ -52,6 +52,9 @@ install -Dp -m 0755 ./%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Thu Jul  6 2023 Artyom Bystrov <arbars@altlinux.org> 6.16.4-alt2
+- Fix build on GCC13
+
 * Sun Feb 13 2022 Motsyo Gennadi <drool@altlinux.ru> 6.16.4-alt1
 - 6.16.4
 
