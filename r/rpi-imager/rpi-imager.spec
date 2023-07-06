@@ -1,6 +1,6 @@
 Name:           rpi-imager
 Version:        1.7.3
-Release:        alt1
+Release:        alt2
 Summary:        Raspberry Pi Imaging Utility
 Group:          System/Configuration/Other
 
@@ -41,6 +41,9 @@ operating systems to an SD card ready to use with your Raspberry Pi.
 
 
 %changelog
+* Wed Jul  5 2023 Artyom Bystrov <arbars@altlinux.org> 1.7.3-alt2
+- Fix build on GCC13
+
 * Wed Jan 11 2023 Dmitry Terekhin <jqt4@altlinux.org> 1.7.3-alt1
 - Update to new release 1.7.3
 
