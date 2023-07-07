@@ -1,16 +1,10 @@
-%define llvm_ver 15
-%ifarch %e2k
-%define gcc_ver %nil
-%else
-%define gcc_ver 12
-%endif
 %define soname 3
 
 %def_disable clang
 
 Name: igraph
-Version: 0.10.4
-Release: alt2.1
+Version: 0.10.5
+Release: alt1
 
 Summary: Library for creating and manipulating graphs
 License: GPL-2.0+
@@ -21,13 +15,13 @@ Source: https://github.com/igraph/igraph/releases/download/%version/igraph-%vers
 
 %if_enabled clang
 #BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
-BuildRequires: libstdc++%gcc_ver-devel
+BuildRequires: clang-devel
+BuildRequires: lld-devel
+BuildRequires: llvm-devel
+BuildRequires: libstdc++-devel
 %else
-BuildRequires: gcc%gcc_ver-c++
-BuildRequires: libgomp%gcc_ver-devel
+BuildRequires: gcc-c++
+BuildRequires: libgomp-devel
 %endif
 BuildRequires: cmake rpm-build-ninja
 BuildRequires: libxml2-devel
@@ -89,14 +83,12 @@ sed -i 's|set(PACKAGE_VERSION "NOTFOUND")|set(PACKAGE_VERSION "%version")|' \
 
 %build
 %if_enabled clang
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %else
-%if 0%gcc_ver
-export CC=gcc-%gcc_ver
-export CXX=g++-%gcc_ver
-%endif
+export CC=gcc
+export CXX=g++
 %endif
 %ifarch %e2k
 export LDFLAGS="$LDFLAGS -fopenmp"
@@ -140,6 +132,9 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Fri Jul 07 2023 Leontiy Volodin <lvol@altlinux.org> 0.10.5-alt1
+- New version 0.10.5.
+
 * Sat Apr 15 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.10.4-alt2.1
 - E2K: fixed underlinked libigraph.so
 
