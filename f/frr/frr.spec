@@ -36,7 +36,7 @@
 %def_disable dp_dpdk
 
 Name: frr
-Version: 8.5.1
+Version: 8.5.2
 Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -235,6 +235,9 @@ fi
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 8.5.2-alt1
+- 8.5.2
+
 * Wed May 03 2023 Alexey Shabalin <shaba@altlinux.org> 8.5.1-alt1
 - 8.5.1
 
