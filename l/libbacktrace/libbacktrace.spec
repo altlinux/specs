@@ -1,9 +1,9 @@
 %def_disable static
-%define git ad106d5
+%define git cdb64b6
 
 Name: libbacktrace
 Version: 1.0
-Release: alt0.2.g%{git}
+Release: alt0.3.g%{git}
 Summary: Library of Direct Hardware Access
 License: BSD
 Group: Development/C
@@ -53,11 +53,18 @@ Static library of %name.
 
 %install
 mkdir -p %buildroot{%_includedir,%_libdir}
-install -p -m644 backtrace.h %buildroot%_includedir/
+install -p -m644 {backtrace.h,backtrace-supported.h} %buildroot%_includedir/
 cp -a .libs/*.so* %buildroot%_libdir/
 %if_enabled static
 install -p -m644 .libs/*.a %buildroot%_libdir/
 %endif
+
+# tests rely on DWARF5 which we don't support yet
+# FAIL: b2test_buildid
+# objcopy --only-keep-debug btest btest_gnudebuglink.debug
+# objcopy: btest: file format not recognized
+#%%check
+#make check
 
 %files
 %_libdir/*.so.*
@@ -73,6 +80,10 @@ install -p -m644 .libs/*.a %buildroot%_libdir/
 %endif
 
 %changelog
+* Fri Jul 07 2023 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt0.3.gcdb64b6
+- Updated to GIT cdb64b6.
+- Include backtrace-supported.h (closes #46699).
+
 * Mon Jan 23 2023 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt0.2.gad106d5
 - Updated to GIT ad106d5.
 - Enable zstd support.
