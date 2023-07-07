@@ -1,6 +1,6 @@
 Name: dlm
 Version: 4.2.0
-Release: alt1
+Release: alt2
 
 Summary: dlm control daemon and tool
 License: GPLv2 and GPLv2+ and LGPLv2+
@@ -95,6 +95,9 @@ touch %buildroot%_sysconfdir/dlm/dlm.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jul  7 2023 Artyom Bystrov <arbars@altlinux.org> 4.2.0-alt2
+- Fix build  (no file linux/dlm_netlink.h)
+
 * Wed Oct 12 2022 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
 - New version.
 
