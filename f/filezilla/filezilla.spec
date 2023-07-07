@@ -3,20 +3,28 @@
 %define oname FileZilla
 
 Name: filezilla
-Version: 3.55.1
+Version: 3.64.0
 Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
 
 Group: Networking/File transfer
 License: GPL
 Url: https://filezilla-project.org/
-# Repacked https://download.filezilla-project.org/client/%{oname}_%{version}_src.tar.bz2
+# Source-url: https://download.filezilla-project.org/client/%{oname}_%{version}_src.tar.xz
 Source: %oname-%version.tar
 
 Patch1: %name-%version-alt-system-pugixml.patch
-Patch2: %name-%version-alt-ternary-operator-types-mismatch.patch
+Patch2: filezilla-3.64.0-i586-FTBFS.patch
 
-BuildRequires: gcc-c++ libdbus-devel libfilezilla-devel libgtk+3-devel libnettle-devel libpugixml-devel libsqlite3-devel libwxGTK3.0-devel xdg-utils
+BuildRequires: gcc-c++
+BuildRequires: libdbus-devel
+BuildRequires: libfilezilla-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: libnettle-devel
+BuildRequires: libpugixml-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libwxGTK3.2-devel
+BuildRequires: xdg-utils
 
 %description
 FileZilla is a fast and reliable FTP client and server with lots
@@ -42,7 +50,6 @@ of useful features and an intuitive interface
 %find_lang %name
 
 %files -f %name.lang
-%doc COPYING
 %doc AUTHORS ChangeLog NEWS README
 %_bindir/*
 %_libdir/*.so
@@ -56,6 +63,10 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Fri Jul 07 2023 Anton Midyukov <antohami@altlinux.org> 3.64.0-alt1
+- new version (3.64.0) with rpmgs script
+- build with wxGTK3.2
+
 * Wed Aug 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.55.1-alt1
 - Updated to upstream version 3.55.1.
 

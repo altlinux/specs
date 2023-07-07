@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfilezilla
-Version: 0.31.1
-Release: alt1.1
+Version: 0.42.2
+Release: alt1
 Summary: Small and modern C++ library
 License: GPLv2+
 Group: System/Libraries
 Url: https://lib.filezilla-project.org/
 
-# Repacked https://download.filezilla-project.org/libfilezilla/%name-%version.tar.bz2
+# Source-url: https://download.filezilla-project.org/libfilezilla/%name-%version.tar.xz
 Source: %name-%version.tar
 
 BuildRequires: cppunit-devel doxygen gcc-c++ graphviz libnettle-devel
@@ -81,6 +81,9 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Jul 07 2023 Anton Midyukov <antohami@altlinux.org> 0.42.2-alt1
+- new version (0.42.2) with rpmgs script
+
 * Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 0.31.1-alt1.1
 - Fix build on GCC13
 
