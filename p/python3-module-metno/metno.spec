@@ -1,5 +1,5 @@
 Name: python3-module-metno
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Python library to talk to the met.no api
@@ -10,7 +10,9 @@ Url: https://pypi.org/project/PyMetno/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-pyproject
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 %summary
@@ -19,17 +21,20 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc LICENSE README.*
 %python3_sitelibdir/metno
-%python3_sitelibdir/PyMetno-%version-*-info
+%python3_sitelibdir/PyMetno-%version.dist-info
 
 %changelog
+* Fri Jul 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.0-alt1
+- 0.10.0 released
+
 * Wed Feb 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt1
 - 0.9.0 released
 
