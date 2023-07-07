@@ -3,7 +3,7 @@
 
 Name: ovn
 Version: 21.12.2
-Release: alt1
+Release: alt2
 
 Summary: Open Virtual Network support
 License: Apache-2.0 AND LGPL-2.1-only AND SISSL
@@ -400,6 +400,9 @@ fi
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 21.12.2-alt2
+- branch-21.12 (git 72925923)
+
 * Wed May 03 2023 Alexey Shabalin <shaba@altlinux.org> 21.12.2-alt1
 - branch-21.12 (git dfb06bac)
 

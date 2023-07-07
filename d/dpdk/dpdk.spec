@@ -10,7 +10,7 @@
 
 
 Name: dpdk
-Version: 21.11.3
+Version: 21.11.4
 Release: alt1
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
@@ -151,6 +151,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 21.11.4-alt1
+-  Update to LTS release 21.11.4.
+
 * Wed May 03 2023 Alexey Shabalin <shaba@altlinux.org> 21.11.3-alt1
 - Update to LTS release 21.11.3.
 - Fixes for the following security vulnerabilities:

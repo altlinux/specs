@@ -14,8 +14,8 @@
 %endif
 
 Name: openvswitch
-Version: 2.17.6
-Release: alt2
+Version: 2.17.7
+Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
 # All code is Apache-2.0 except
@@ -426,6 +426,9 @@ fi
 %endif
 
 %changelog
+* Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 2.17.7-alt1
+- 2.17.7
+
 * Tue May 30 2023 Alexey Gladkov <legion@altlinux.ru> 2.17.6-alt2
 - Disable afxdp until update v3.1.0.
 
