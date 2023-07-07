@@ -1,6 +1,6 @@
 Name:    mate-menu
 Version: 22.04.2
-Release: alt6
+Release: alt7
 
 Summary: An Advanced Menu for the MATE Desktop
 # MIT is needed for keybinding.py
@@ -34,6 +34,7 @@ Patch4: alt-set-start-button-gsettings.patch
 Patch5: alt-desktop-place-fix.patch
 Patch6: fix-version.patch
 Patch7: alt-category-without-icon.patch
+Patch8: alt-set-menubutton-tooltip-as-label.patch
 
 %description
 This is MATE Menu, a fork of MintMenu. An advanced menu for MATE.
@@ -63,6 +64,9 @@ Supports filtering, favorites, autosession, and many other features.
 %_man1dir/%name.1*
 
 %changelog
+* Fri Jul 07 2023 Andrey Cherepanov <cas@altlinux.org> 22.04.2-alt7
+- Set menubutton tooltip as its label.
+
 * Sun May 07 2023 Andrey Cherepanov <cas@altlinux.org> 22.04.2-alt6
 - Use applications-other icon for categories without icon.
 
