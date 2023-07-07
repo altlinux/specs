@@ -1,7 +1,7 @@
 %define _localstatedir %_var
 
 Name: pdns-recursor
-Version: 4.8.4
+Version: 4.9.0
 Release: alt1
 Summary: Modern, advanced and high performance recursing/non authoritative name server
 License: GPL-2.0
@@ -109,6 +109,9 @@ exit 0
 %dir %attr(0755,pdns-recursor,pdns-recursor) %_sharedstatedir/%name/udr
 
 %changelog
+* Fri Jul 07 2023 Andrey Cherepanov <cas@altlinux.org> 4.9.0-alt1
+- New version.
+
 * Fri May 05 2023 Andrey Cherepanov <cas@altlinux.org> 4.8.4-alt1
 - New version initially built in Sisyphus.
 
