@@ -2,7 +2,7 @@
 
 Name:          gem-foreman-default-hostgroup
 Version:       6.0.0.2
-Release:       alt0.2
+Release:       alt0.3
 Summary:       A plugin to set the default hostgroup when hosts are created
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -29,7 +29,7 @@ without a Hostgroup set.
 
 %package       -n gem-foreman-default-hostgroup-doc
 Version:       6.0.0.2
-Release:       alt0.2
+Release:       alt0.3
 Summary:       A plugin to set the default hostgroup when hosts are created documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_default_hostgroup
 Group:         Development/Documentation
@@ -50,7 +50,7 @@ without a Hostgroup set.
 
 %prep
 %setup
-%autopatch -p1
+%autopatch
 
 %build
 %ruby_build
@@ -72,6 +72,9 @@ without a Hostgroup set.
 
 
 %changelog
+* Wed Jul 05 2023 Pavel Skrylev <majioa@altlinux.org> 6.0.0.2-alt0.3
+- ! fixed patch
+
 * Tue Apr 04 2023 Pavel Skrylev <majioa@altlinux.org> 6.0.0.2-alt0.2
 - ^ 6.0.0[1] -> 6.0.0[2] with patch
 

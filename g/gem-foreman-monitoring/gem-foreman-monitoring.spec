@@ -2,7 +2,7 @@
 
 Name:          gem-foreman-monitoring
 Version:       2.1.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Foreman plugin for monitoring system integration
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -37,7 +37,7 @@ Foreman plugin for monitoring system integration.
 
 %package       -n gem-foreman-monitoring-doc
 Version:       2.1.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Foreman plugin for monitoring system integration documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_monitoring
 Group:         Development/Documentation
@@ -54,7 +54,7 @@ Foreman plugin for monitoring system integration documentation files.
 
 %package       -n gem-foreman-monitoring-devel
 Version:       2.1.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Foreman plugin for monitoring system integration development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_monitoring
 Group:         Development/Ruby
@@ -101,6 +101,9 @@ Foreman plugin for monitoring system integration development package.
 
 
 %changelog
+* Wed Jul 05 2023 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt2
+- ! fixed patch for proper defaults
+
 * Tue Apr 04 2023 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1.1
 - ! patch to allow proper migrating
 
