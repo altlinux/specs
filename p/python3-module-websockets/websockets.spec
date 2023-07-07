@@ -1,5 +1,5 @@
 Name: python3-module-websockets
-Version: 11.0.2
+Version: 11.0.3
 Release: alt1
 
 Summary: Python WebSocket library
@@ -33,6 +33,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/websockets-%version.dist-info
 
 %changelog
+* Fri Jul 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 11.0.3-alt1
+- 11.0.3 released
+
 * Wed May 03 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 11.0.2-alt1
 - 11.0.2 released
 
