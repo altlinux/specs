@@ -13,7 +13,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -73,7 +73,8 @@ Requires: libgnomekbd
 # network.js requires
 Requires: gnome-control-center
 # since 3.16
-Requires: polari
+# 
+#Requires: polari
 # for OSK
 Requires: ibus ibus-gtk3
 # for zipped extensions
@@ -284,8 +285,12 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Fri Jul 07 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
+- 44.3
+
 * Sat Jun 03 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
 - 44.2
+- bonus: polari-free build
 
 * Tue Apr 25 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
