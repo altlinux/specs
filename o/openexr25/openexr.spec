@@ -2,7 +2,7 @@
 %define libsover 25
 Name: openexr25
 Version: 2.5.6
-Release: alt5
+Release: alt6
 
 %define _cmake__builddir BUILD
 %define libilmimf libilmimf%libsover
@@ -76,6 +76,9 @@ rm -fr %buildroot%_defaultdocdir/%rname/
 %_libdir/libIlmImfUtil-*.so.%libsover.*
 
 %changelog
+* Fri Jul  7 2023 Artyom Bystrov <arbars@altlinux.org> 2.5.6-alt6
+- Fix build on GCC13
+
 * Fri Feb 03 2023 Alexander Burmatov <thatman@altlinux.org> 2.5.6-alt5
 - create compatibility package
 
