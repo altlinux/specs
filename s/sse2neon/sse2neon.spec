@@ -2,9 +2,17 @@
 %define git 2eede2
 %define optflags_lto %nil
 
+%global _description \
+sse2neon is a translator of Intel SSE (Streaming SIMD Extensions) intrinsics to \
+Arm NEON, shortening the time needed to get an Arm working program that then \
+can be used to extract profiles and to identify hot paths in the code. The \
+header file sse2neon.h contains several of the functions provided by Intel \
+intrinsic headers such as <xmmintrin.h>, only implemented with NEON-based \
+counterparts to produce the exact semantics of the intrinsics.
+
 Name:    sse2neon
 Version: 1.6.0
-Release: alt1.g%{git}
+Release: alt2.g%{git}
 Summary: A translator from Intel SSE intrinsics to Arm/Aarch64 NEON implementation
 Group:   Development/C++
 License: MIT
@@ -15,29 +23,13 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: clang libstdc++-devel
 
-# running on armh gives a error:
-# Makefile:39: *** Unsupported architecture.  Stop.
-ExclusiveArch: aarch64
-
-%description
-sse2neon is a translator of Intel SSE (Streaming SIMD Extensions) intrinsics to
-Arm NEON, shortening the time needed to get an Arm working program that then
-can be used to extract profiles and to identify hot paths in the code. The
-header file sse2neon.h contains several of the functions provided by Intel
-intrinsic headers such as <xmmintrin.h>, only implemented with NEON-based
-counterparts to produce the exact semantics of the intrinsics.
+ExclusiveArch: %arm aarch64
+%description %_description
 
 %package devel
 Summary:   translator from Intel SSE intrinsics to Arm/Aarch64 NEON implementation
 Group:   Development/C++
-
-%description devel
-sse2neon is a translator of Intel SSE (Streaming SIMD Extensions) intrinsics to
-Arm NEON, shortening the time needed to get an Arm working program that then
-can be used to extract profiles and to identify hot paths in the code. The
-header file sse2neon.h contains several of the functions provided by Intel
-intrinsic headers such as <xmmintrin.h>, only implemented with NEON-based
-counterparts to produce the exact semantics of the intrinsics.
+%description devel %_description
 
 %prep
 %setup
@@ -73,5 +65,8 @@ make check ||:
 %_includedir/*
 
 %changelog
+* Fri Jul 07 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6.0-alt2.g2eede2
+- fix armh detection.
+
 * Fri Jul 07 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6.0-alt1.g2eede2
 - initial build for ALTLinux.
