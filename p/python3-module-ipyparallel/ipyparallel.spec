@@ -1,66 +1,65 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname ipyparallel
 
-%def_disable check
+%def_with check
 %def_without bootstrap
 
 Name: python3-module-%oname
-Version: 6.3.0
-Release: alt4
+Version: 8.6.1
+Release: alt1
 Summary: Interactive Parallel Computing with IPython
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://ipyparallel.readthedocs.io/
-
+Vcs: https://github.com/ipython/ipyparallel.git
 BuildArch: noarch
-
-# https://github.com/ipython/ipyparallel.git
 Source: %name-%version.tar
 
-Patch1: %oname-alt-docs.patch
+Requires: python3-module-tqdm
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-pytest
+BuildRequires: python3-module-hatchling
 
-%if_without bootstrap
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-alabaster python3-module-html5lib python3-module-zope
-BuildRequires: python3-module-notebook python3-module-objects.inv
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
-BuildRequires: python3(IPython)
-BuildRequires: python3(IPython.testing.tests)
-%else
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-entrypoints
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-ipykernel
+BuildRequires: python3-module-ipython
+BuildRequires: python3-module-ipython-tests
+BuildRequires: python3-module-testpath
+BuildRequires: python3-module-tornado
+BuildRequires: python3-module-ipykernel
+BuildRequires: python3-module-zmq
+BuildRequires: python3-module-tqdm
+BuildRequires: python3-module-decorator
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-jupyter_client
+BuildRequires: python3-module-numpy-testing
+BuildRequires: /proc
+%endif
+
+%if_with bootstrap
 %add_python3_req_skip IPython
 %add_python3_req_skip IPython.core
 %add_python3_req_skip IPython.core.application
-%add_python3_req_skip IPython.core.crashhandler
-%add_python3_req_skip IPython.core.display
 %add_python3_req_skip IPython.core.error
 %add_python3_req_skip IPython.core.magic
 %add_python3_req_skip IPython.core.profiledir
+%add_python3_req_skip IPython.display
 %add_python3_req_skip IPython.paths
 %add_python3_req_skip IPython.utils.capture
 %add_python3_req_skip IPython.utils.coloransi
 %add_python3_req_skip IPython.utils.path
-%add_python3_req_skip IPython.utils.process
-%add_python3_req_skip IPython.utils.sysinfo
 %add_python3_req_skip IPython.utils.text
 %add_python3_req_skip ipykernel
+%add_python3_req_skip ipykernel.comm
 %add_python3_req_skip ipykernel.ipkernel
 %add_python3_req_skip ipykernel.jsonutil
 %add_python3_req_skip ipykernel.kernelapp
 %add_python3_req_skip ipykernel.zmqshell
-%add_python3_req_skip notebook.base.handlers
-%add_python3_req_skip notebook.nbextensions
 %add_python3_req_skip notebook.services.config
-%add_python3_req_skip notebook.utils
-%endif
-
-%if_enabled check
-BuildRequires: /usr/bin/iptest3
 %endif
 
 %description
@@ -76,55 +75,22 @@ Use multiple instances of IPython in parallel, interactively.
 
 This package contains tests for %oname.
 
-%if_without bootstrap
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Use multiple instances of IPython in parallel, interactively.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Use multiple instances of IPython in parallel, interactively.
-
-This package contains documentation for %oname.
-%endif
-
 %prep
 %setup
-%patch1 -p1
-
-%if_without bootstrap
-%prepare_sphinx3 docs
-ln -s ../objects.inv docs/source/
-%endif
 
 %build
-%python3_build_debug
+export IPP_DISABLE_JS=1
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # fix installation directory
 mv %buildroot%_prefix%_sysconfdir %buildroot%_sysconfdir
 
-%if_without bootstrap
-export PYTHONPATH=$PWD
-%make -C docs pickle
-%make -C docs html
-cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
-
 %check
-export PYTHONPATH=$PWD
-iptest3 --coverage xml ipyparallel.tests
+export TMPDIR=/tmp
+%pyproject_run_pytest -v --color=no
 
 %files
 %doc *.md
@@ -132,24 +98,16 @@ iptest3 --coverage xml ipyparallel.tests
 %_sysconfdir/jupyter
 %_datadir/jupyter
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/%oname/tests
-%if_without bootstrap
-%exclude %python3_sitelibdir/%oname/pickle
-%endif
 
 %files tests
 %python3_sitelibdir/%oname/tests
 
-%if_without bootstrap
-%files pickles
-%python3_sitelibdir/%oname/pickle
-
-%files docs
-%doc examples docs/build/html
-%endif
-
 %changelog
+* Mon Jun 12 2023 Anton Vyatkin <toni@altlinux.org> 8.6.1-alt1
+- New version 8.6.1.
+
 * Thu Apr 27 2023 Anton Vyatkin <toni@altlinux.org> 6.3.0-alt4
 - Fix BuildRequires
 

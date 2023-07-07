@@ -9,7 +9,7 @@
 
 Name: ipython3
 Version: 8.14.0
-Release: alt1
+Release: alt2
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -52,6 +52,7 @@ BuildRequires: /proc
 %add_python3_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted
 %add_python3_req_skip msvcrt wx gtk compiler OpenGL oct2py rpy2
 %add_python3_req_skip System clr
+%add_python3_req_skip ipyparallel.apps.daemonize
 
 Requires: python3-module-%oname = %EVR
 
@@ -204,6 +205,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Fri Jul 07 2023 Anton Vyatkin <toni@altlinux.org> 8.14.0-alt2
+- Fix unmet deps.
+
 * Tue Jun 27 2023 Anton Vyatkin <toni@altlinux.org> 8.14.0-alt1
 - New version 8.14.0.
 
