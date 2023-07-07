@@ -1,5 +1,5 @@
 Name: python3-module-onvif-zeep-async
-Version: 1.3.1
+Version: 3.1.9
 Release: alt1
 
 Summary: ONVIF Client Implementation in Python 3
@@ -31,6 +31,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/onvif_zeep_async-%version.dist-info
 
 %changelog
+* Fri Jul 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.9-alt1
+- 3.1.9 released
+
 * Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.1-alt1
 - 1.3.1 released
 
