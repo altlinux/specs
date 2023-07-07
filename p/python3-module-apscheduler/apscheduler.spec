@@ -1,5 +1,5 @@
 Name: python3-module-apscheduler
-Version: 3.9.1
+Version: 3.10.1
 Release: alt1
 
 Summary: In-process task scheduler with Cron-like capabilities
@@ -10,7 +10,10 @@ Url: https://pypi.org/project/APScheduler/
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools python3(setuptools_scm)
+BuildRequires: rpm-build-pyproject
+BuildRequires: python3(setuptools)
+BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(wheel)
 
 %description
 Advanced Python Scheduler (APScheduler) is a Python library that lets
@@ -35,17 +38,20 @@ scheduler process.
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/apscheduler
-%python3_sitelibdir/APScheduler-%version-*-info
+%python3_sitelibdir/APScheduler-%version.dist-info
 
 %changelog
+* Fri Jul 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.10.1-alt1
+- 3.10.1 released
+
 * Wed May 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.9.1-alt1
 - 3.9.1 released
 
