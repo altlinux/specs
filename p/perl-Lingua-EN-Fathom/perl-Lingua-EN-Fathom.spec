@@ -6,7 +6,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Lingua/EN/Syllable.pm) perl(Modu
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.23
+Version: 1.24
 Release: alt1
 Summary: Measure readability of English text
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/L*
 
 %changelog
+* Sat Jul 08 2023 Igor Vlasenko <viy@altlinux.org> 1.24-alt1
+- automated CPAN update
+
 * Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 1.23-alt1
 - automated CPAN update
 
