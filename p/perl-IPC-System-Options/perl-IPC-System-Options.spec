@@ -6,7 +6,7 @@ BuildRequires: perl(Capture/Tiny.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.340
+Version: 0.341
 Release: alt1
 Summary: Perl's system() and backtick/qx replacement/wrapper, with options
 Group: Development/Perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/I*
 
 %changelog
+* Sat Jul 08 2023 Igor Vlasenko <viy@altlinux.org> 0.341-alt1
+- automated CPAN update
+
 * Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 0.340-alt1
 - automated CPAN update
 
