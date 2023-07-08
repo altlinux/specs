@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Statistics-Descriptive
 Name: perl-%dist
-Version: 3.0800
+Version: 3.0801
 Release: alt1
 
 Summary: Basic descriptive statistical functions
@@ -33,6 +33,9 @@ This Perl module provides basic functions used in descriptive statistics.
 %perl_vendor_privlib/Statistics
 
 %changelog
+* Sat Jul 08 2023 Igor Vlasenko <viy@altlinux.org> 3.0801-alt1
+- automated CPAN update
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 3.0800-alt1
 - automated CPAN update
 
