@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define api_ver 3.0
 
@@ -15,11 +15,11 @@
 %endif
 %def_enable docs
 %def_with cxx
-%def_without system_tzdata
+%def_with system_tzdata
 
 Name: libical
 Version: 3.0.16
-Release: alt1
+Release: alt2
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -133,6 +133,8 @@ library.
 
 %prep
 %setup
+#src/libical/icaltz-util.h:#define ZONES_TAB_SYSTEM_FILENAME "zone.tab"
+sed -i 's|zone.tab|zone1970.tab|' src/libical/icaltz-util.h
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -209,6 +211,12 @@ library.
 
 
 %changelog
+* Sun Jul 09 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.16-alt2
+- updated to v3.0.16-18-gcdfdaa02
+- built with system tzdata (2023c-alt1)
+- src/libical/icaltz-util.h:
+  switched ZONES_TAB_SYSTEM_FILENAME to zone1970.tab
+
 * Tue Oct 18 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.16-alt1
 - 3.0.16
 
