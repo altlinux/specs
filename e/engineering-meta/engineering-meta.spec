@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p10
-Release: alt6
+Release: alt7
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -82,9 +82,9 @@ Summary(ru_RU.UTF-8): Метапакет для установки прилож�
 Group: Engineering
 
 # Open SCADA system
-Requires: openscada-Model.AGLKS
-Requires: openscada-Model.Boiler
-Requires: openscada-docRU
+#Requires: openscada-Model.AGLKS
+#Requires: openscada-Model.Boiler
+#Requires: openscada-docRU
 
 # UniSet - library for building distributed industrial control systems
 Requires: libuniset2-utils
@@ -201,6 +201,9 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Sat Jul 08 2023 Anton Midyukov <antohami@altlinux.org> p10-alt7
+- APCS: do'nt require openscada
+
 * Tue Jan 31 2023 Anton Midyukov <antohami@altlinux.org> p10-alt6
 - CNC: add bCNC
 - EDA: add simulide
