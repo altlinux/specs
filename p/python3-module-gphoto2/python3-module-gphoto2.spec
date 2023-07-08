@@ -1,20 +1,20 @@
-%define modname gphoto2
+%define pypi_name gphoto2
 
-Name: python3-module-%modname
-Version: 2.3.4
+Name: python3-module-%pypi_name
+Version: 2.3.5
 Release: alt1
 
 Summary: Python bindings to GPhoto libraries
 Group: Development/Python3
 License: GPL-3.0
-Url: http://pypi.python.org/pypi/%modname
+Url: https://pypi.python.org/pypi/%pypi_name
 
-Source: http://pypi.io/packages/source/g/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/g/%pypi_name/%pypi_name-%version.tar.gz
 
-%define gphoto_ver 2.5.0
+%define gphoto_ver 2.5.10
 BuildRequires: libgphoto2-devel >= %gphoto_ver swig
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3(wheel) python3(setuptools)
 
 %description
 python-gphoto2 is a comprehensive Python3 interface (or binding) to
@@ -23,21 +23,24 @@ interface code. This gives direct access to nearly all the libgphoto2_
 functions, but sometimes in a rather un-Pythonic manner.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir/%modname/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc README.rst
 
 
 %changelog
+* Sat Jul 08 2023 Yuri N. Sedunov <aris@altlinux.org> 2.3.5-alt1
+- 2.3.5
+
 * Wed Jul 06 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3.4-alt1
 - 2.3.4
 
