@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Test/NoWarnings.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 Name: perl-GD
-Version: 2.77
+Version: 2.78
 Release: alt1
 Epoch: 1
 
@@ -59,6 +62,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 #%perl_vendor_archlib/qd.pl
 
 %changelog
+* Sat Jul 08 2023 Igor Vlasenko <viy@altlinux.org> 1:2.78-alt1
+- automated CPAN update
+
 * Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 1:2.77-alt1
 - automated CPAN update
 
