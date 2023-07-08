@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    conserver
-Version: 8.2.2
-Release: alt2
+Version: 8.2.7
+Release: alt1
 
 Summary:  Serial console server daemon/client
 License: BSD-3-Clause
@@ -13,10 +13,7 @@ URL:     http://www.conserver.com/
 Source:  %{name}-%{version}.tar
 Source1: conserver.init
 Source2: conserver.service
-
-Patch:  certificate-auth.patch
 Patch1: conserver-no-exampledir.patch
-Patch2: conserver-gssapi.patch
 
 BuildRequires: libssl-devel
 BuildRequires: libpam-devel
@@ -38,20 +35,13 @@ This is the client package needed to interact with a Conserver daemon.
 
 %prep
 %setup
-%patch -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
-
-# define the name of the machine on which the main conserver
-# daemon will be running if you don't want to use the default
-# hostname (console)
-%define master console
-
 %autoreconf
+ln -s package/config.sub
+ln -s package/config.guess
 %configure \
-	--with-master=%{master} \
 	--with-ipv6 \
 	--with-openssl \
 	--with-pam \
@@ -96,7 +86,7 @@ fi
 %preun_service conserver
 
 %files
-%doc CHANGES FAQ INSTALL README conserver.cf
+%doc CHANGES FAQ INSTALL README.md conserver.cf
 %config(noreplace) %{_sysconfdir}/conserver.cf
 %config(noreplace) %{_sysconfdir}/conserver.passwd
 %_initdir/*
@@ -111,6 +101,9 @@ fi
 %_man1dir/console.1*
 
 %changelog
+* Sat Jul 08 2023 Anton Farygin <rider@altlinux.ru> 8.2.7-alt1
+- 8.2.2 -> 8.2.7
+
 * Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 8.2.2-alt2
 - NMU: Fix license.
 
