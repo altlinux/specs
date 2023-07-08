@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Getopt-Euclid
 Name: perl-%dist
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: Executable Uniform Command-Line Interface Descriptions
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/F/FA/FANGLY/Getopt-Euclid-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BIGPRESH/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ argument parser. This ensures that your program's documented interface and
 its actual interface always agree.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +35,9 @@ its actual interface always agree.
 %perl_vendor_privlib/Getopt
 
 %changelog
+* Sat Jul 08 2023 Igor Vlasenko <viy@altlinux.org> 0.4.6-alt1
+- automated CPAN update
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt1
 - automated CPAN update
 
