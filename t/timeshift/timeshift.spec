@@ -10,9 +10,9 @@
 %endif
 
 Name: timeshift
-Version: 23.06.2
+Version: 23.07.1
 Summary: System restore tool for Linux
-Release: alt3
+Release: alt1
 License: GPLv3
 Group: Archiving/Backup
 URL: https://github.com/linuxmint/timeshift
@@ -75,6 +75,9 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %doc README.md
 
 %changelog
+* Sun Jul 09 2023 Alexander Makeenkov <amakeenk@altlinux.org> 23.07.1-alt1
+- Updated to version 23.07.1.
+
 * Mon Jun 19 2023 Alexander Makeenkov <amakeenk@altlinux.org> 23.06.2-alt3
 - Fixed opening of browse snapshots window (closes: #41055).
 
