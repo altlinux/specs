@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Metrics-Any
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(List/Util.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm)
+BuildRequires: perl(List/Util.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test2/V0.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.09
-Release: alt1.1
+Version: 0.10
+Release: alt1
 Summary: abstract collection of monitoring metrics
 Group: Development/Perl
 License: perl
@@ -52,6 +52,9 @@ required to perform that reporting).
 %perl_vendor_privlib/M*
 
 %changelog
+* Sat Jul 08 2023 Igor Vlasenko <viy@altlinux.org> 0.10-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.09-alt1.1
 - automated CPAN update
 
