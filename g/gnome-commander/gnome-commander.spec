@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: gnome-commander
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -83,12 +83,14 @@ rm -f %buildroot%_libdir/libgcmd.a
 %_man1dir/*
 %doc AUTHORS NEWS README* TODO doc/*.txt
 
-%exclude %_includedir/%name/
 %exclude %_datadir/%name/internal_viewer_hacking.txt
 %exclude %_datadir/%name/keys.txt
 
 
 %changelog
+* Sat Jul 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
+- 1.16.1
+
 * Mon Jan 23 2023 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0 (ported to Meson build system)
 
