@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Tiny
 Name: perl-%dist
-Version: 0.084
+Version: 0.086
 Release: alt1
 
 Summary: A small, simple, correct HTTP/1.1 client
@@ -35,6 +35,9 @@ LWP::UserAgent.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Sat Jul 08 2023 Igor Vlasenko <viy@altlinux.org> 0.086-alt1
+- automated CPAN update
+
 * Thu Jun 22 2023 Igor Vlasenko <viy@altlinux.org> 0.084-alt1
 - automated CPAN update
 
