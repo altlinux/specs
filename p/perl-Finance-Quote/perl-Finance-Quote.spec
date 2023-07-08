@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Finance/Quote/TMX.pm) perl(Readonly.pm)
+BuildRequires: perl(Finance/Quote/IndiaMutual.pm) perl(Finance/Quote/TMX.pm) perl(IO/String.pm) perl(Readonly.pm)
 # END SourceDeps(oneline)
 Epoch: 1
 %define dist Finance-Quote
 
 Name: perl-%dist
-Version: 1.56
+Version: 1.57
 Release: alt1
 
 Summary: Get stock and mutual fund quotes from various exchanges
@@ -46,6 +46,9 @@ greater flexibility and stability.
 
 
 %changelog
+* Sat Jul 08 2023 Igor Vlasenko <viy@altlinux.org> 1:1.57-alt1
+- automated CPAN update
+
 * Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 1:1.56-alt1
 - automated CPAN update
 
