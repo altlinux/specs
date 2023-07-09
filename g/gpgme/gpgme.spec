@@ -17,7 +17,7 @@
 %add_python_req_skip _gpgme
 
 Name: gpgme
-Version: 1.20.0
+Version: 1.21.0
 Release: alt1
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
@@ -237,6 +237,9 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Sun Jul 09 2023 Cronbuild Service <cronbuild@altlinux.org> 1.21.0-alt1
+- New version 1.21.0.
+
 * Wed Apr 26 2023 Paul Wolneykien <manowar@altlinux.org> 1.20.0-alt1
 - Drop the https://dev.gnupg.org/D546 patch (merged upstream).
 - New version 1.20.0.
