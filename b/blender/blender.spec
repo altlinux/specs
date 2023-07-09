@@ -10,6 +10,20 @@
 %def_without embree
 %endif
 
+%ifarch x86_64
+%def_with hip
+%def_with hiprt
+%else
+%def_without hip
+%def_without hiprt
+%endif
+
+%ifarch x86_64 aarch64
+%def_with openpgl
+%else
+%def_without openpgl
+%endif
+
 %ifarch x86_64 ppc64le
 %def_with lld
 # lld doesn't know about gcc lto=auto flags
@@ -22,8 +36,8 @@
 %def_with jemalloc
 
 Name: blender
-Version: 3.4.1
-Release: alt2.6
+Version: 3.6.0
+Release: alt3
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -39,30 +53,31 @@ Source: %name-%version.tar
 # git submodules
 # before updating submodules via script don't forget
 # to update relative submodule paths into absolute ones
-Source1: %name-%version-release-datafiles-locale.tar
-Source2: %name-%version-release-scripts-addons_contrib.tar
-Source3: %name-%version-release-scripts-addons.tar
-Source4: %name-%version-source-tools.tar
+Source1: %name-%version-release-scripts-addons_contrib.tar
+Source2: %name-%version-release-scripts-addons.tar
 
 Patch21: blender-2.66-alt-pcre.patch
 Patch22: blender-2.77-alt-enable-localization.patch
-Patch24: blender-2.92-alt-include-deduplication-check-skip.patch
-Patch25: blender-2.80-alt-use-system-glog.patch
-Patch26: blender-2.83.1-alt-remove-python2-dependency.patch
-Patch27: blender-2.90.0-alt-embree-components.patch
-Patch28: blender-3.0.0-alt-doc.patch
-Patch29: blender-2.90-alt-non-x86_64-linking.patch
-Patch30: blender-2.93.0-suse-reproducible.patch
-Patch40: blender-alt-fix-clang-linking.patch
-Patch41: blender-3.4.1-gcc-13-fix.patch
+Patch23: blender-2.92-alt-include-deduplication-check-skip.patch
+Patch24: blender-2.80-alt-use-system-glog.patch
+# TODO not sure we need this patch
+Patch25: blender-2.90.0-alt-embree-components.patch
+Patch26: blender-3.0.0-alt-doc.patch
+Patch27: blender-2.90-alt-non-x86_64-linking.patch
+Patch28: blender-2.93.0-suse-reproducible.patch
+Patch29: blender-alt-fix-clang-linking.patch
+Patch30: blender-3.4.1-gcc-13-fix.patch
+Patch31: blender-3.6.0-alt-remove-python2-dependency.patch
+Patch32: blender-3.6.0-alt-hiprt-enable.patch
 
+# FIXME! e2k patch is outdated
 Patch2000: blender-e2k-support.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel
 BuildRequires: cmake gcc-c++
 BuildRequires: libGLEW-devel libXi-devel
-BuildRequires: libavdevice-devel libavformat-devel
+BuildRequires: libavdevice-devel libavformat-devel libavfilter-devel libswresample-devel
 BuildRequires: libfftw3-devel libjack-devel libopenal-devel libsndfile-devel
 BuildRequires: libjpeg-devel pkgconfig(libopenjp2) libpng-devel libtiff-devel libpcre-devel libswscale-devel libxml2-devel
 BuildRequires: liblzo2-devel
@@ -92,8 +107,13 @@ BuildRequires: openshadinglanguage-devel
 BuildRequires: opensubdiv-devel
 BuildRequires: libzstd-devel
 BuildRequires: libepoxy-devel
+BuildRequires: libwayland-egl-devel wayland-protocols libwayland-cursor-devel libxkbcommon-devel libdecor-devel
+BuildRequires: libvulkan-devel
 %ifarch x86_64
 BuildRequires: openimagedenoise-devel
+%endif
+%ifarch aarch64
+BuildRequires: sse2neon-devel
 %endif
 
 %if_with embree
@@ -111,6 +131,18 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink 
 
 %if_with lld
 BuildRequires: lld
+%endif
+
+%if_with hip
+BuildRequires: hip-devel
+%endif
+
+%if_with hiprt
+BuildRequires: hiprt-devel
+%endif
+
+%if_with openpgl
+BuildRequires: openpgl-devel
 %endif
 
 %add_python3_path %_datadir/%name/scripts
@@ -185,20 +217,37 @@ This package contains documentation for Blender.
 
 Данный пакет содержит документацию для Blender.
 
+%if_with hip
+%package cycles-hip-kernels
+Summary: Cycles precompiled binaries for HIP
+Group: System/Libraries
+Requires: %name = %EVR, hip-runtime-amd
+%if_with hiprt
+Requires: libhiprt
+%endif
+
+%description cycles-hip-kernels
+Precompiled GPU binaries for GPU accelerated rendering with Cycles on various
+graphics cards.
+
+This package contains binaries for AMD GPUs to use with HIP.
+%endif
+
 %prep
-%setup -a1 -a2 -a3 -a4
+%setup -a1 -a2
 
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
 %patch24 -p1
-%patch25 -p1
+#%%patch25 -p1
 %patch26 -p1
 %patch27 -p1
 %patch28 -p1
 %patch29 -p1
 %patch30 -p1
-%patch40 -p1
-%patch41 -p1
+%patch31 -p1
+%patch32 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -230,12 +279,18 @@ if [ %__nprocs -gt 48 ] ; then
 	export NPROCS=48
 fi
 %endif
-
 %cmake \
 %ifnarch %{ix86} x86_64
 	-DWITH_RAYOPTIMIZATION=OFF \
 	-DWITH_CPU_SSE=OFF \
-%endif
+%endif #arch
+%if_with hip
+	-DWITH_CYCLES_HIP_BINARIES:BOOL=ON \
+%endif #hip
+%if_with hiprt
+	-DHIPRT_ROOT_DIR=/usr \
+	-DWITH_CYCLES_DEVICE_HIPRT:BOOL=ON \
+%endif #hiprt
 	-DBUILD_SHARED_LIBS=OFF \
 	-DWITH_ALEMBIC:BOOL=ON \
 	-DWITH_FFTW3=ON \
@@ -307,9 +362,23 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_datadir/%name/
+%if_with hip
+%exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_gfx*.fatbin
+%endif
+%if_with hiprt
+%exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_rt_gfx.*
+%endif
 %_datadir/metainfo/*.appdata.xml
 %_defaultdocdir/%name/
 %_man1dir/*.1*
+
+%if_with hip
+%files cycles-hip-kernels
+%_datadir/%name/*/scripts/addons/cycles/lib/kernel_gfx*.fatbin
+%if_with hiprt
+%_datadir/%name/*/scripts/addons/cycles/lib/kernel_rt_gfx.*
+%endif
+%endif
 
 %if_with docs
 %files doc
@@ -317,6 +386,21 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Sat Jul 08 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt3
+- x86_64: Added experimental HIP RT support.
+- Build with vulkan.
+
+* Thu Jul 06 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt2
+- aarch64 and x86_64: Build with openpgl.
+- aarch64: build with sse2neon.
+- x86_64: pack HIP kernels as separate package.
+- Rebuild w/ updated TBB.
+
+* Wed Jul 05 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt1
+- Update to 3.6.0:
+  - drop e2k support (patch outdated).
+  + enable HIP kernels compilation.
+
 * Thu Jun 22 2023 L.A. Kostis <lakostis@altlinux.ru> 3.4.1-alt2.6
 - cycles: apply fix to build with gcc-13 (tnx to glebfm@).
 

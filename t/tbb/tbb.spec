@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: tbb
-Version: 2021.5.0
-Release: alt2
+Version: 2021.9.0
+Release: alt1
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
@@ -109,7 +109,7 @@ This package contains python3 module for Threading Building Blocks.
 %setup
 %patch4 -p1
 %patch5 -p1
-%patch1000 -p1
+#%%patch1000 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -168,6 +168,9 @@ rm -f %buildroot%_defaultdocdir/TBB/README.md
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Thu Jul 06 2023 L.A. Kostis <lakostis@altlinux.ru> 2021.9.0-alt1
+- Updated to upstream version 2021.9.0.
+
 * Tue Jul  4 2023 Artyom Bystrov <arbars@altlinux.org> 2021.5.0-alt2
 - Fix build on GCC13
 

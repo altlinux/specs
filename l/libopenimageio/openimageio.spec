@@ -11,7 +11,7 @@
 
 Name:           lib%oname
 Version:        2.3.21.0
-Release:        alt2.1
+Release:        alt3
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -27,6 +27,8 @@ Source0:        %name-%version.tar
 Source2: %oname.watch
 
 Patch1: %oname-alt-armh-disable-neon.patch
+# https://github.com/OpenImageIO/oiio/pull/3485
+Patch2: 3485.patch
 Patch2000: %oname-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -139,6 +141,7 @@ Development files for package %name
 %ifarch armh
 %patch1 -p1
 %endif
+%patch2 -p1
 %ifarch %e2k
 %patch2000 -p1
 # simplifies the patch
@@ -228,6 +231,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Thu Jul 06 2023 L.A. Kostis <lakostis@altlinux.ru> 2.3.21.0-alt3
+- NMU: apply fix in unordered_map_concurrent (upstream PR #3485).
+
 * Thu Mar 23 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.3.21.0-alt2.1
 - Patch for Elbrus.
 
