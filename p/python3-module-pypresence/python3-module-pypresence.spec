@@ -1,16 +1,15 @@
 %define modname pypresence
 
 Name: python3-module-%modname
-Version: 4.2.1
-Release: alt1.gite305409
+Version: 4.3.0
+Release: alt1
 
 Summary: Discord RPC and Rich Presence wrapper library
 
-License: BSD-3-Clause and MIT
+License: MIT
 Group: Development/Python3
 Url: https://qwertyquerty.github.io/pypresence/html/index.html
 # https://github.com/qwertyquerty/pypresence
-# e305409a628e1966cc08bffaffd644bd39a360c7
 
 Source: %url/archive/%version/%modname-%version.tar.gz
 
@@ -37,6 +36,9 @@ sed -i 's|description-file|description_file|' setup.cfg
 %python3_sitelibdir_noarch/%{modname}*
 
 %changelog
+* Mon Jul 10 2023 Leontiy Volodin <lvol@altlinux.org> 4.3.0-alt1
+- New version 4.3.0.
+
 * Mon Dec 06 2021 Leontiy Volodin <lvol@altlinux.org> 4.2.1-alt1.gite305409
 - Initial build for ALT Sisyphus.
 
