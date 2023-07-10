@@ -2,7 +2,7 @@
 %global import_path code.gitea.io/tea
 
 Name: gitea-tea
-Version: 0.9.0
+Version: 0.9.2
 Release: alt1
 Summary: command line tool to interact with Gitea
 
@@ -53,6 +53,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Mon Jul 10 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.2-alt1
+- New version 0.9.2.
+
 * Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt1
 - 0.9.0
 
