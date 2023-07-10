@@ -2,8 +2,8 @@
 %define ver_major 1.0
 
 Name: xdg-desktop-portal-xapp
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Xapp Desktop Portal
 License: LGPL-2.1-or-later
@@ -11,14 +11,13 @@ Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/xdg-desktop-portal-xapp/
 
 Source: %name-%version.tar
-Patch: %name-1.0.1-alt-non-cinnamon.patch
 
 %define xdg_desktop_portal_ver 1.15.0
 
 Requires: xdg-desktop-portal-gtk >= 1.14
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
-BuildRequires: meson libgtk4-devel pkgconfig(libadwaita-1)
+BuildRequires: meson
 BuildRequires: pkgconfig(xdg-desktop-portal) >= %xdg_desktop_portal_ver
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libxapps-devel
@@ -29,7 +28,6 @@ and various pieces of Cinnamon/MATE/Xfce4 infrastructure.
 
 %prep
 %setup -n %name-%version
-%autopatch -p1
 
 %build
 %meson
@@ -49,6 +47,9 @@ and various pieces of Cinnamon/MATE/Xfce4 infrastructure.
 
 
 %changelog
+* Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 1.0.3-alt1
+- new version
+
 * Mon Jun 19 2023 Vladimir Didenko <cow@altlinux.org> 1.0.1-alt2
 - fix long start of GTK apps in non-Cinnamon DEs (closes: #46571)
 

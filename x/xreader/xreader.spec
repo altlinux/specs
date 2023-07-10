@@ -6,8 +6,8 @@
 %def_enable introspection
 
 Name: xreader
-Version: 3.8.1
-Release: alt2
+Version: 3.8.2
+Release: alt1
 
 Summary: A document viewer
 Group: Office
@@ -147,6 +147,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 3.8.2-alt1
+- New version
+
 * Thu Jun 29 2023 Vladimir Didenko <cow@altlinux.org> 3.8.1-alt2
 - Build with help files (closes: #46700)
 

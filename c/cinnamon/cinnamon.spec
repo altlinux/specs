@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 5.8.2
-Release: alt1
+Version: 5.8.4
+Release: alt1.git69727ba
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -207,6 +207,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 5.8.4-alt1.git69727ba
+- 5.8.4-2-g69727ba9b
+
 * Thu Jun 15 2023 Vladimir Didenko <cow@altlinux.org> 5.8.2-alt1
 - 5.8.2
 
