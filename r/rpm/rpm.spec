@@ -24,7 +24,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt37
+Release: alt38
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -576,6 +576,10 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Wed Jul 05 2023 Andrey Limachko <liannnix@altlinux.org> 4.13.0.1-alt38
+- Add support for loongarch64 (thx zhangwenlong)
+- Fix canonical loongarch64 and e2k arch numbers conflict
+
 * Mon May 22 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt37
 - Backported upstream commits to mitigate a glibc bug related to
   -D_FORTIFY_SOURCE=3 instrumentation.

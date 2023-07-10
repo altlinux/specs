@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt84
+Release: alt85
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -581,6 +581,9 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Wed Jul 05 2023 Andrey Limachko <liannnix@altlinux.org> 0.5.15lorg2-alt85
+- Added loongarch64 to archtable (thx Alexey Sheplyakov)
+
 * Fri Jun 02 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt84
 - Fixed the display of descriptions in aptitude and packagekit (by making
   the format closer to Debian's):
