@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: lzdoom
-Version: 3.88
+Version: 3.88b
 Release: alt1
 
 Summary: Enhanced Doom engine - version for old systems
@@ -10,6 +10,9 @@ License: GPLv3
 Group: Games/Arcade
 
 Url: http://zdoom.org
+
+# build is broken by target specific option mismatch
+ExcludeArch: %ix86
 
 Source: %name-%version.tar
 Source1: ico_%name.png
@@ -81,9 +84,14 @@ done
 %_docdir/%name
 %_datadir/doom
 %_desktopdir/%name.desktop
+%_gamesdatadir/doom/fm_banks/*
+%_gamesdatadir/doom/soundfonts/lzdoom.sf2
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 3.88b-alt1
+- update to new version
+
 * Wed Dec 15 2021 Artyom Bystrov <arbars@altlinux.org> 3.88-alt1
 - Update to new version
 
