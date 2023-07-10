@@ -4,7 +4,7 @@
 
 %def_with docs
 
-%ifarch x86_64 %e2k
+%ifarch aarch64 x86_64 %e2k
 %def_with embree
 %else
 %def_without embree
@@ -37,7 +37,7 @@
 
 Name: blender
 Version: 3.6.0
-Release: alt3
+Release: alt4
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -280,10 +280,6 @@ if [ %__nprocs -gt 48 ] ; then
 fi
 %endif
 %cmake \
-%ifnarch %{ix86} x86_64
-	-DWITH_RAYOPTIMIZATION=OFF \
-	-DWITH_CPU_SSE=OFF \
-%endif #arch
 %if_with hip
 	-DWITH_CYCLES_HIP_BINARIES:BOOL=ON \
 %endif #hip
@@ -386,6 +382,10 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Sun Jul 09 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt4
+- aarch64: enable embree.
+- .spec: cleanup obsoleted build options.
+
 * Sat Jul 08 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt3
 - x86_64: Added experimental HIP RT support.
 - Build with vulkan.

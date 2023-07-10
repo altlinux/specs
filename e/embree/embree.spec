@@ -1,19 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define build_type RelWithDebInfo
 %set_verify_elf_method strict
 
 %ifnarch %e2k
-%def_without ispc
+%def_with ispc
 %else
 # no ispc on e2k
 %def_without ispc
 %endif
 
-%define libsuffix 3
-%define soname 3
+%define libsuffix 4
+%define soname 4
 
 Name: embree
-Version: 3.13.3
+Version: 4.1.0
 Release: alt1
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
@@ -44,7 +45,7 @@ BuildRequires: pkgconfig(OpenImageIO)
 BuildRequires: pkgconfig(tbb)
 
 # https://github.com/embree/embree/issues/186
-ExclusiveArch: x86_64 %e2k
+ExclusiveArch: aarch64 x86_64 %e2k
 
 %description
 A collection of high-performance ray tracing kernels intended to graphics 
@@ -75,15 +76,17 @@ applications that use %{name}.
 
 %build
 # limit parallel build
-if [ %__nprocs -gt 4 ] ; then
-	export NPROCS=4
-fi
+#if [ %__nprocs -gt 4 ] ; then
+#	export NPROCS=4
+#fi
 
 %ifarch %e2k
 %add_optflags -Wno-reduced-alignment -Wno-sign-compare -mno-avx
 %endif
 
 %cmake \
+	-DCMAKE_BUILD_TYPE=%build_type \
+	-DCMAKE_STRIP:STRING="" \
 	-DEMBREE_IGNORE_CMAKE_CXX_FLAGS=OFF \
 	-DEMBREE_TUTORIALS=OFF \
 	-DEMBREE_COMPACT_POLYS=ON \
@@ -100,12 +103,12 @@ fi
 
 # Remove unpackaged files
 rm -rf %buildroot%_docdir/%{name}%{libsuffix}
+rm -f %buildroot%prefix/%{name}-vars.*
 
 %files -n lib%{name}%{libsuffix}-%soname
 %doc LICENSE.txt
 %doc README.md CHANGELOG.md readme.pdf third-party-programs-TBB.txt third-party-programs.txt
 %_libdir/lib%{name}%{libsuffix}.so.%{soname}
-%_libdir/lib%{name}%{libsuffix}.so.%{soname}.*
 
 %files devel
 %_libdir/lib%{name}%{libsuffix}.so
@@ -114,6 +117,11 @@ rm -rf %buildroot%_docdir/%{name}%{libsuffix}
 %_man3dir/*
 
 %changelog
+* Sun Jul 09 2023 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt1
+- Updated to upstream release 4.1.0.
+- enable back ispc support.
+- aarch64: enable build.
+
 * Mon Feb 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.3-alt1
 - Updated to upstream version 3.13.3.
 
