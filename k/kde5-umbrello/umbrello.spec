@@ -8,7 +8,7 @@
 
 Name: kde5-%rname
 Version: 23.04.2
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -20,6 +20,7 @@ AutoProv: yes noshell nopython nopython2 nopython3 noperl noruby noqml notcl nom
 
 Source: %rname-%version.tar
 Patch1: alt-no-webkit.patch
+Patch2: alt-app-desktop.patch
 
 # Automatically added by buildreq on Thu Jan 14 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxml2-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils
@@ -51,6 +52,7 @@ standard language.
 #%if_enabled qtwebengine
 #%patch1 -p1
 #%endif
+%patch2 -p1
 
 # disable unittests
 sed -i 's|\(.*add_subdirectory.*unittests.*\)|#\1|' CMakeLists.txt
@@ -79,6 +81,9 @@ sed -i '/^#!\/usr\/bin\/env/s|python|%__python3|' umbrello/headings/heading.py
 
 
 %changelog
+* Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt2
+- fix desktop-file (closes: 46810)
+
 * Fri Jun 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
 - new version
 
