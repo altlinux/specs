@@ -97,7 +97,7 @@
 %endif
 
 Name:    samba
-Version: 4.17.8
+Version: 4.17.9
 Release: alt1
 
 Group:   System/Servers
@@ -237,6 +237,8 @@ Samba is the standard Windows interoperability suite of programs for Linux and U
 Summary: Samba ADMX policy templates
 Group: System/Configuration/Other
 BuildArch: noarch
+
+BuildRequires: admx-lint
 
 %description -n admx-samba
 admx-samba provides ADMX policy templates for Samba project.
@@ -1168,6 +1170,16 @@ install -m755 script/traffic_replay %buildroot%_bindir/traffic_replay
 # Compatiblity symlink for admx policy templates
 #ln -s ../PolicyDefinitions %buildroot%_datadir/samba/admx
 
+# Prepare to validation admx policy templates
+for file in %buildroot%_datadir/PolicyDefinitions/*.admx %buildroot%_datadir/PolicyDefinitions/*-*/*.adml; do
+    grep -q "^\(<policyDefinitions\|<policyDefinitionResources\) .*xmlns:xsd=" "$file" ||
+        sed -i 's/^\(<policyDefinitions\|<policyDefinitionResources\)/\1 xmlns:xsd="http:\/\/www.w3.org\/2001\/XMLSchema"/' "$file"
+    grep -q "^\(<policyDefinitions\|<policyDefinitionResources\) .*xmlns:xsi=" "$file" ||
+        sed -i 's/^\(<policyDefinitions\|<policyDefinitionResources\)/\1 xmlns:xsi="http:\/\/www.w3.org\/2001\/XMLSchema-instance"/' "$file"
+    grep -q "^\(<policyDefinitions\|<policyDefinitionResources\) .*xmlns=" "$file" ||
+        sed -i 's/^\(<policyDefinitions\|<policyDefinitionResources\)/\1 xmlns="http:\/\/schemas.microsoft.com\/GroupPolicy\/2006\/07\/PolicyDefinitions"/' "$file"
+done
+
 # Provide compatiblity with __init__ function for samba.gp.* classes
 touch %buildroot%python3_sitelibdir/samba/gp/__init__.py
 touch %buildroot%python3_sitelibdir/samba/gp/util/__init__.py
@@ -1175,8 +1187,15 @@ touch %buildroot%python3_sitelibdir/samba/gp/util/__init__.py
 %find_lang pam_winbind
 %find_lang net
 
-%if_with testsuite
 %check
+for file in \
+            %buildroot%_datadir/PolicyDefinitions/*.admx \
+            %buildroot%_datadir/PolicyDefinitions/*/*.adml
+do
+    admx-lint --input_file "$file"
+done
+
+%if_with testsuite
 TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %endif
 
@@ -2086,6 +2105,20 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Jul 10 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.9-alt1
+- Update to maintenance release of Samba 4.18:
+  + smbd_scavenger crashes when service smbd is stopped (Samba#15275).
+  + vfs_fruit might cause a failing open for delete (Samba#15378).
+  + named crashes on DLZ zone update (Samba#14030).
+  + winbind recurses into itself via rpcd_lsad (Samba#15361).
+  + cli_list loops 100% CPU against pre-lanman2 servers (Samba#15382).
+  + smbclient leaks fds with showacls (Samba#15391).
+  + aes256 smb3 encryption algorithms are not allowed in
+    smb3_sid_parse() (Samba#15374).
+  + winbindd gets stuck on NT_STATUS_RPC_SEC_PKG_ERROR (Samba#15413).
+  + smbget memory leak if failed to download files recursively (Samba#15403).
+- Add check with admx-lint for group policy templates validation.
+
 * Sun May 21 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.8-alt1
 - Update to maintenance release of Samba 4.18:
   + log flood: smbd_calculate_access_mask_fsp: Access denied: message level
