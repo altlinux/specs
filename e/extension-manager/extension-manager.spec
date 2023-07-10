@@ -1,6 +1,6 @@
 Name: extension-manager
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: A utility for browsing and installing GNOME Shell Extensions
 License: GPL-3.0
@@ -36,7 +36,6 @@ With Extension Manager you can:
 
 %prep
 %setup
-sed -i '/#include <backtrace-supported.h>/d' src/exm-backtrace.c
 
 %build
 %meson
@@ -55,5 +54,8 @@ sed -i '/#include <backtrace-supported.h>/d' src/exm-backtrace.c
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Jul 10 2023 Roman Alifanov <ximper@altlinux.org> 0.4.2-alt2
+- build without removing backtrace-supported.h
+
 * Mon Jun 26 2023 Roman Alifanov <ximper@altlinux.org> 0.4.2-alt1
 - Initial build for Sisyphus.
