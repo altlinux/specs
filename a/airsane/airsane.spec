@@ -2,7 +2,7 @@
 
 Name: airsane
 Version: 0.3.4
-Release: alt1
+Release: alt2
 Summary: A SANE WebScan frontend that supports Apple's AirScan protocol.
 License: GPLv3
 Group: Graphics
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 Patch1: %name-0.3.4-alt-strerror-fix.patch
 Patch2: %name-0.3.4-alt-mPort-fix.patch
+Patch3: %name-0.3.4-alt-fix-GCC13-build.patch
 
 BuildRequires: ccmake
 BuildRequires: gcc-c++
@@ -44,6 +45,7 @@ for you. You may be interested in phpSANE instead.
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # fix build with our libpng
 sed -i 's|libpng\/png\.h|png.h|' imageformats/pngencoder.cpp
@@ -80,6 +82,9 @@ mv %buildroot/%_sysconfdir/%name/*.png %buildroot/%_iconsdir/hicolor/512x512/app
 %_iconsdir/hicolor/512x512/apps/*.png
 
 %changelog
+* Mon Jul 10 2023 Artyom Bystrov <arbars@altlinux.org> 0.3.4-alt2
+- Fix build on GCC13
+
 * Mon Jul 4 2022 Vasiliy Kovalev <kovalev@altlinux.org> 0.3.4-alt1
 - Updated to 0.3.4
 - Add patches
