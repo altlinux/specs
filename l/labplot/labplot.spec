@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: labplot
-Version: 2.10.0
+Version: 2.10.1
 Release: alt1
 Summary: Function and Data Plotter
 License: GPL-2.0+
@@ -71,6 +71,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 2.10.1-alt1
+- new veresion
+
 * Tue Jul 04 2023 Sergey V Turchin <zerg@altlinux.org> 2.10.0-alt1
 - new veresion
 
