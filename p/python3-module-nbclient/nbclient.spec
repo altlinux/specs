@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 0.8.0
-Release: alt1
+Release: alt2
 Summary: A client library for executing notebooks. Formally nbconvert's ExecutePreprocessor
 License: BSD-3-Clause
 Group: Development/Python3
@@ -30,6 +30,7 @@ BuildRequires: python3(ipywidgets)
 BuildRequires: python3(flaky)
 BuildRequires: python3(pytest_asyncio)
 BuildRequires: /proc
+BuildRequires: python3(ipykernel)
 %endif
 
 %description
@@ -73,6 +74,9 @@ This package contains tests for %oname
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Jul 10 2023 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt2
+- FTBFS: fix BuildRequires.
+
 * Thu Jul 06 2023 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt1
 - New version 0.8.0.
 
