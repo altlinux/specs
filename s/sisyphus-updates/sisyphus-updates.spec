@@ -1,5 +1,5 @@
 Name:		sisyphus-updates
-Version:	0.2
+Version:	0.3
 Release:	alt1
 
 Summary:	Simple system updater
@@ -32,6 +32,9 @@ install -dpm 755 %buildroot%_localstatedir/%name
 %_localstatedir/%name
 
 %changelog
+* Mon Jul 10 2023 Andrey Cherepanov <cas@altlinux.org> 0.3-alt1
+- Removed -e flag from shebang to prevent stop from unreachable sources.
+
 * Tue Apr 04 2023 Andrey Cherepanov <cas@altlinux.org> 0.2-alt1
 - Added arepo source line if it exists for repository (ALT #31605).
 
