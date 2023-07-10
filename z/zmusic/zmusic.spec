@@ -1,13 +1,13 @@
 Name:           zmusic
-Version:        1.1.2
-Release:        alt1.1
+Version:        1.1.12
+Release:        alt1
 Summary:        ZDoom component library for music handling
 License:        GPL-3.0 and LGPL-v2.1
 Group:          Sound
 URL:            https://zdoom.org/
 
 Source:         %name-%version.tar
-BuildRequires: cmake gcc-c++ rpm-macros-cmake zlib-devel 
+BuildRequires: cmake gcc-c++ rpm-macros-cmake zlib-devel glib2-devel
 BuildRequires: libopenal1-devel libsndfile-devel libmpg123-devel libalsa-devel libfluidsynth-devel
 Requires: timidity
 Requires: timidity-eawpats
@@ -78,6 +78,9 @@ export CXXFLAGS="%optflags -msse -msse2"
 %_libdir/libzmusiclite.*
 
 %changelog
+* Mon Jul 10 2023 Artyom Bystrov <arbars@altlinux.org> 1.1.12-alt1
+- New version 1.1.12.
+
 * Fri May 28 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1.1
 - rebuilt against libfluidsynth.so.3
 
