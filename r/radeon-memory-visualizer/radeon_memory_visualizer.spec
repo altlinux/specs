@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: radeon-memory-visualizer
-Version: 1.6
+Version: 1.6.1
 Release: alt0.1
 License: MIT
 Summary: Software tool to analyze video memory usage on AMD Radeon GPUs
@@ -66,6 +66,10 @@ install -m644 License.txt %buildroot%_datadir/rmv/
 %_datadir/rmv/*
 
 %changelog
+* Mon Jul 10 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6.1-alt0.1
+- 1.6.1.
+- Added fixes to external libs to compile with gcc-13.
+
 * Sat Apr 29 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6-alt0.1
 - 1.6.
 
