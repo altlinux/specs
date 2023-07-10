@@ -7,11 +7,12 @@
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
+%def_disable gupnp
 %def_disable check
 
 Name: %_name%api_ver
 Version: 0.2.9.1
-Release: alt0.3
+Release: alt0.4
 
 Summary: A audio/video conferencing framework (0.2)
 Group: System/Libraries
@@ -38,12 +39,13 @@ Requires: lib%name = %version-%release
 Requires: gst-plugins-nice%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: gtk-doc
 BuildRequires: libgio-devel >= %glib_ver libnice-devel >= %nice_ver
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
-BuildRequires: libgupnp-igd-devel gtk-doc
+%{?_enable_gupnp:BuildRequires: libgupnp-igd-devel}
 BuildRequires: python3-dev python3-module-gst%gst_api_ver python3-module-pygobject3-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgstreamer%gst_api_ver-gir-devel}
-%{?_enable_check:BuildRequires: libgupnp%gupnp_api_ver-devel}
+%{?_enable_check:BuildRequires: %{?_enable_gupnp:libgupnp%gupnp_api_ver-devel}}
 
 %description
 The Farstream (formerly Farsight) is a collection of GStreamer modules
@@ -113,6 +115,7 @@ This package provides development documentation for the Farstream library.
 %configure \
 	--disable-static \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	%{subst_enable gupnp} \
 	PYTHON=%__python3
 %nil
 #SMP-incomaptible build
@@ -161,6 +164,9 @@ This package provides development documentation for the Farstream library.
 
 
 %changelog
+* Mon Jul 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.9.1-alt0.4
+- disabled gupnp support
+
 * Sat Oct 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.9.1-alt0.3
 - fixed build with GCC11
 

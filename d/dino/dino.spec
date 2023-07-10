@@ -3,7 +3,7 @@
 %define rdn_name im.dino.Dino
 
 Name: dino
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Modern Jabber/XMPP client
@@ -17,6 +17,7 @@ Source: https://github.com/%name/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
+%define soup3_ver 3.4
 %define gst_api_ver 1.0
 %define webrtc_ver 0.2
 %define qrencode_ver 4.0
@@ -26,10 +27,10 @@ Requires: lib%name = %EVR
 Requires: gst-plugins-good%gst_api_ver
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ vala-tools libgtk4-devel
+BuildRequires: cmake gcc-c++ ninja-build vala-tools
 BuildRequires: libgtk4-devel pkgconfig(libadwaita-1)
-BuildRequires: libgee0.8-devel libsoup3.0-devel libidn2-devel
-BuildRequires: libicu-devel pkgconfig(libqrencode) >= %qrencode_ver 
+BuildRequires: libgee0.8-devel libsoup3.0-devel >= %soup3_ver libidn2-devel
+BuildRequires: libicu-devel pkgconfig(libqrencode) >= %qrencode_ver
 BuildRequires: gst-plugins%gst_api_ver-devel libnice-devel
 BuildRequires: pkgconfig(webrtc-audio-processing) >= %webrtc_ver
 BuildRequires: libgcrypt-devel libgpgme-devel libgnutls-devel
@@ -62,9 +63,11 @@ This package provides libraries and headers needed to develop Dino plugins.
 %setup -n %name-%version
 
 %build
-%cmake
-# SMP-incompatible build
-%cmake_build -j1
+%cmake \
+    -GNinja \
+    -DSOUP_VERSION=3
+%nil
+%cmake_build
 
 %install
 %cmake_install
@@ -108,6 +111,11 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_datadir/vala/vapi/xmpp-vala.vapi
 
 %changelog
+* Mon Jul 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
+- 0.4.3
+- enabled libsoup-3.0 support
+- enabled SMP build with Ninja
+
 * Thu Mar 23 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 

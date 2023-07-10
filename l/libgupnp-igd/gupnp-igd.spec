@@ -1,17 +1,17 @@
 %def_disable snapshot
 
 %define _name gupnp-igd
-%define ver_major 1.2
-%define api_ver 1.0
-%define gupnp_api_ver 1.2
+%define ver_major 1.6
+%define api_ver 1.6
+%define gupnp_api_ver 1.6
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
-%def_disable check
+%def_enable check
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1.2
+Release: alt1
 
 Summary: A library to handle UPnP IGD port mapping
 Group: System/Libraries
@@ -24,11 +24,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-%define gupnp_ver 1.2.1
-%define glib_ver 2.38
+%define gupnp_ver 1.6.0
+%define glib_ver 2.70
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: libgupnp%gupnp_api_ver-devel >= %gupnp_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson libgupnp%gupnp_api_ver-devel >= %gupnp_ver
 BuildRequires: glib2-devel >= %glib_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgupnp%gupnp_api_ver-gir-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
@@ -99,17 +99,16 @@ GObject introspection devel data for the gUPnP-IGD library
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
 %__meson_test -v -t 2
 
 %files
-%_libdir/*.so.*
+%_libdir/%name-%api_ver.so.*
 %doc AUTHORS README NEWS
 
 %files devel
-%_includedir/*
+%_includedir/%_name-%api_ver/
 %_libdir/*.so
-%_pkgconfigdir/*
+%_pkgconfigdir/%_name-%api_ver.pc
 
 %{?_enable_gtk_doc:%files devel-doc
 %_datadir/gtk-doc/html/*}
@@ -124,6 +123,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Apr 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0 (ported to GUPnP-1.6)
+- enabled %%check again
+
 * Wed Jun 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1.2
 - disabled %%check until
   https://gitlab.gnome.org/GNOME/gupnp/-/issues/12 will be fixed

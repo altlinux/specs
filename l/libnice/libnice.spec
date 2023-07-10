@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _name nice
 %define ver_major 0.1
 %define api_ver %ver_major
@@ -10,14 +11,18 @@
 
 Name: libnice
 Version: %ver_major.21
-Release: alt1
+Release: alt2
 
 Summary: Connectivity Establishment standard (ICE) library
 Group: System/Libraries
 License: LGPL-2.0-or-later and MPL-1.1
-Url: http://nice.freedesktop.org
+Url: https://nice.freedesktop.org
 
-Source: http://nice.freedesktop.org/releases/%name-%version.tar.gz
+%if_disabled snapshot
+Source: https://nice.freedesktop.org/releases/%name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.54
 %define gi_ver 1.30
@@ -163,6 +168,10 @@ for Gstreamer (1.0 API version)
 
 
 %changelog
+* Mon Jul 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.21-alt2
+- updated to 0.1.21-9-g4b63250
+- rebuilt against libgupnp-igd-1.6
+
 * Mon Jan 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.21-alt1
 - 0.1.21
 
