@@ -6,12 +6,12 @@
 %def_with monitor
 
 Name: thermald
-Version: 2.4.9
+Version: 2.5.3
 Release: alt1
 
 Summary: Thermal daemon for IA
 
-License: GPLv2+
+License: GPL-3.0-or-later
 Group: System/Kernel and hardware
 
 Url: https://github.com/intel/thermal_daemon
@@ -188,6 +188,10 @@ exit 0
 %endif
 
 %changelog
+* Mon Jul 10 2023 Anton Midyukov <antohami@altlinux.org> 2.5.3-alt1
+- new version 2.5.3
+- Update License tag (GPLv2+ -> GPL-3.0-or-later)
+
 * Mon Apr 25 2022 Anton Midyukov <antohami@altlinux.org> 2.4.9-alt1
 - new version 2.4.9
 
