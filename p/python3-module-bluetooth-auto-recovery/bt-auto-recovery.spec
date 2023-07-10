@@ -1,5 +1,5 @@
 Name: python3-module-bluetooth-auto-recovery
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 
 Summary: Recover bluetooth adapters that are in an stuck state
@@ -40,6 +40,9 @@ BuildRequires: python3(usb_devices)
 %python3_sitelibdir/bluetooth_auto_recovery-%version.dist-info
 
 %changelog
+* Mon Jul 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
+- 1.2.0 released
+
 * Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.2-alt1
 - 1.1.2 released
 
