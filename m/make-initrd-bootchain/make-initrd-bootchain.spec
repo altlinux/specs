@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt16
+Release: alt17
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -208,6 +208,13 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Mon Jul 10 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt17
+- altboot: use TMPFS when ramdisk_size not set (ALT #42966)
+- altboot: introduce new 'type:iso' sub-argument (ALT #42967)
+- doc: expand the test suite by cases without ramdisk_size=
+- core: pack optional config file /etc/sysconfig/bootchain
+- interactive: pack optional file /etc/dialogrc.error
+
 * Mon May 08 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt16
 - altboot: fixed timeout event on slow image loading (ALT #44107)
 
