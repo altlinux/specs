@@ -2,23 +2,20 @@
 %def_with check
 
 Name: kitty
-Version: 0.28.1
-Release: alt3
+Version: 0.29.0
+Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
 Group: Terminals
+VCS: https://github.com/kovidgoyal/kitty
 Url: https://sw.kovidgoyal.net/kitty/
 
 Requires: %name-terminfo = %EVR
 Requires: %name-shell-integration = %EVR
 
-# VCS: https://github.com/kovidgoyal/kitty
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
-
-# 0.25.0: shebang.req failed
-%add_findreq_skiplist %_libexecdir/%name/shell-integration/ssh/askpass.py
 
 # 0.27.0: unmet /usr/pkg/bin/tic
 %add_findreq_skiplist %_libexecdir/%name/shell-integration/ssh/bootstrap-utils.sh
@@ -191,6 +188,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_libexecdir/kitty/shell-integration
 
 %changelog
+* Mon Jul 10 2023 Egor Ignatov <egori@altlinux.org> 0.29.0-alt1
+- new version 0.29.0
+
 * Tue Jul 04 2023 Egor Ignatov <egori@altlinux.org> 0.28.1-alt3
 - FTBFS: fix build with new wayland-protocols
 
