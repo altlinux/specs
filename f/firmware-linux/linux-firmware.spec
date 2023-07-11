@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230607
+Version: 20230705
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,36 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jul 11 2023 Cronbuild Service <cronbuild@altlinux.org> 20230705-alt1
+- upstream changes (GIT d3f66064):
+  + Partially revert "amdgpu: DMCUB updates for DCN 3.1.4 and 3.1.5" (thx Hamza Mahfooz)
+  + update firmware for mediatek bluetooth chip (MT7922) (thx Chris Lu)
+  + update firmware for MT7922 WiFi device (thx Deren Wu)
+  + Update firmware file for Intel Bluetooth AX203 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth AX211 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth AX210 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth AX200 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth AX201 (thx Lokendra Singh)
+  + check_whence: Check link targets are valid (thx Adam Sampson)
+  + iwlwifi: add new FWs from core80-39 release (thx Gregory Greenman)
+  + iwlwifi: update cc/Qu/QuZ firmwares for core80-39 release (thx Gregory Greenman)
+  + qcom: Add Audio firmware for SC8280XP X13s (thx Srinivas Kandagatla)
+  + Makefile, copy-firmware: support xz/zstd compressed firmware (thx Emil Velikov)
+  + copy-firmware: silence the last shellcheck warnings (thx Emil Velikov)
+  + copy-firmware: drop obsolete backticks, quote (thx Emil Velikov)
+  + copy-firmware: tweak sed invocation (thx Emil Velikov)
+  + copy-firmware: quote deskdir and dirname (thx Emil Velikov)
+  + check_whence: error if symlinks are in-tree (thx Emil Velikov)
+  + check_whence: error if File: is actually a link (thx Emil Velikov)
+  + check_whence: strip quotation marks (thx Emil Velikov)
+  + wilc1000: update WILC1000 firmware to v16.0 (thx Ajay Singh)
+  + ice: update ice DDP wireless_edge package to 1.3.10.0 (thx Shekhar Deb)
+  + amdgpu: DMCUB updates for DCN 3.1.4 and 3.1.5 (thx Rodrigo Siqueira)
+  + amdgpu: update DMCUB to v0.0.172.0 for various AMDGPU ASICs (thx Hamza Mahfooz)
+  + qcom: Update the microcode files for Adreno a630 GPUs. (thx Dmitry Baryshkov)
+  + qcom: sdm845: rename the modem firmware (thx Dmitry Baryshkov)
+  + qcom: sdm845: update remoteproc firmware (thx Dmitry Baryshkov)
+
 * Mon Jun 12 2023 Cronbuild Service <cronbuild@altlinux.org> 20230607-alt1
 - upstream changes (GIT 1cd1c871):
   + rtl_bt: Update RTL8852A BT USB firmware to 0xDAC7_480D (thx Hilda Wu)
