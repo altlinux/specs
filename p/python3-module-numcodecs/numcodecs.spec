@@ -1,76 +1,77 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name numcodecs
+%define mod_name %pypi_name
 
-%define oname numcodecs
+%def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 0.11.0
-Release: alt1
-Summary: A Python package providing buffer compression and transformation codecs for use in data storage and communication applications
+Release: alt2
+Summary: Buffer compression and transformation codecs for use
 License: MIT
 Group: Development/Python3
-Url: https://github.com/zarr-developers/numcodecs
-
-# https://github.com/zarr-developers/numcodecs.git
+Url: https://pypi.org/project/numcodecs/
+Vcs: https://github.com/zarr-developers/numcodecs
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools_scm
-BuildRequires: libblosc-devel libzstd-devel liblz4-devel
-BuildRequires: pytest3
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+BuildRequires: libblosc-devel
+BuildRequires: libzstd-devel
+BuildRequires: liblz4-devel
+%if_with check
+%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra msgpack
 BuildRequires: python3-module-numpy-testing
-BuildRequires: python3-module-cpuinfo
-BuildRequires: python3-module-Cython
-BuildRequires: python3-module-entrypoints
-BuildRequires: python3-module-pytest-cov
+%endif
 
 %description
 Numcodecs is a Python package providing buffer compression
 and transformation codecs for use in data storage and communication applications.
 
 %package tests
-Summary: Tests for %oname
+Summary: Tests for %pypi_name
 Group: Development/Python3
 
 %description tests
 Numcodecs is a Python package providing buffer compression
 and transformation codecs for use in data storage and communication applications.
 
-This package contains tests for %oname.
+This package contains tests for %pypi_name.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python3_install
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PYTHONDONTWRITEBYTECODE=1
-export PYTEST_ADDOPTS='-p no:cacheprovider'
-
-pushd build/lib.linux-* &>/dev/null
-export PYTHONPATH="$(pwd)"
-pytest-3 -v numcodecs/tests
-popd &>/dev/null
+%pyproject_run -- \
+    pytest --import-mode append -ra -o=addopts=-Wignore --pyargs %mod_name
 
 %files
-%doc LICENSE.txt
-%doc README.rst CODE_OF_CONDUCT.md
-%python3_sitelibdir/%oname-%version-*.egg-info
-%python3_sitelibdir/%oname
-%exclude %python3_sitelibdir/%oname/tests
+%doc README.rst
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/%mod_name/tests/
 
 %files tests
-%python3_sitelibdir/%oname/tests
+%python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Fri Jun 23 2023 Stanislav Levin <slev@altlinux.org> 0.11.0-alt2
+- Added compatibility with numpy 1.25.0.
+- Modernized packaging.
+
 * Sun Jan 15 2023 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
 - Automatically updated to 0.11.0.
 
