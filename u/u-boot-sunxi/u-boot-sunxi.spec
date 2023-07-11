@@ -1,6 +1,6 @@
 Name: u-boot-sunxi
-Version: 2023.04
-Release: alt2
+Version: 2023.07
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -67,6 +67,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.07-alt1
+- 2023.07 released
+
 * Wed Apr 26 2023 Dmitry Terekhin <jqt4@altlinux.org> 2023.04-alt2
 - Add RBS Repka Pi 3 board
 

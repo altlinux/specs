@@ -1,5 +1,5 @@
 Name: atf-meson
-Version: 2.8
+Version: 2.9
 Release: alt1
 
 Summary: ARM Trusted Firmware
@@ -34,6 +34,9 @@ cp -a out/* %buildroot%_datadir/atf/
 %_datadir/atf/*
 
 %changelog
+* Thu Jun 29 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.9-alt1
+- 2.9 released
+
 * Mon Nov 28 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.8-alt1
 - 2.8 released
 

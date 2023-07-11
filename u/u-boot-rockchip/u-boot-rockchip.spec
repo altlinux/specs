@@ -1,5 +1,5 @@
 Name: u-boot-rockchip
-Version: 2023.04
+Version: 2023.07
 Release: alt1
 
 Summary: Das U-Boot
@@ -62,6 +62,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.07-alt1
+- 2023.07 released
+
 * Tue Apr 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.04-alt1
 - 2023.04 released
 
