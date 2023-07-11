@@ -1,14 +1,12 @@
-%define allowed_arch armh aarch64 %ix86 x86_64 mips mipsel mips64 mips64el riscv32 riscv64 ppc64
-
 Name: u-boot-qemu
-Version: 2023.04
-Release: alt2
+Version: 2023.07
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
 Group: System/Kernel and hardware
 
-ExclusiveArch: %allowed_arch
+ExclusiveArch: armh aarch64 %ix86 x86_64 mips mipsel mips64 mips64el riscv32 riscv64 ppc64
 
 Source: %name-%version-%release.tar
 
@@ -74,6 +72,9 @@ install -pm0644 -D u-boot.bin %buildroot%_datadir/u-boot/%qemu/u-boot.bin
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.07-alt1
+- 2023.07 released
+
 * Tue Jun 27 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.04-alt2
 - fix relative path boot (closes: 46669)
 
