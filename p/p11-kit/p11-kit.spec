@@ -10,8 +10,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: p11-kit
-Version: 0.25.0
-Release: alt1
+Version: 0.24.1
+Release: alt2
+Epoch: 1
 
 Summary: Utilities for PKCS#11 modules
 Group: Security/Networking
@@ -225,6 +226,9 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Mon Jul 10 2023 Mikhail Efremov <sem@altlinux.org> 1:0.24.1-alt2
+- Rollbak to 0.24.1: gcr/gcr4 tests fails with 0.25.0.
+
 * Wed Jul 05 2023 Mikhail Efremov <sem@altlinux.org> 0.25.0-alt1
 - Fixed build with --as-needed.
 - 0.25.0.
