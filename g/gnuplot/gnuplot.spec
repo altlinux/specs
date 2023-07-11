@@ -3,7 +3,7 @@
 
 Name: gnuplot
 Epoch: 1
-Version: 5.4.6
+Version: 5.4.8
 Release: alt1
 
 Summary: A program for plotting mathematical expressions and data
@@ -275,6 +275,9 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Tue Jul 11 2023 Grigory Ustinov <grenka@altlinux.org> 1:5.4.8-alt1
+- Updated to 5.4.8.
+
 * Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 1:5.4.6-alt1
 - Updated to 5.4.6 (Closes: #46096).
 
