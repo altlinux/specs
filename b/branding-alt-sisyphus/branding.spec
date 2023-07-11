@@ -14,7 +14,7 @@
 %define altbranch %_priority_distbranch
 
 Name: branding-%flavour
-Version: 20230704
+Version: 20230711
 Release: alt1
 
 Url: http://en.altlinux.org
@@ -314,6 +314,12 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Tue Jul 11 2023 Anton Midyukov <antohami@altlinux.org> 20230711-alt1
+- Clean @STATUS@ from index.html, notes, license
+- indexhtml, notes: fix name to "ALT Regular Sisyphus"
+- indexhtml: Year auto-substitution
+- indexhtml: make footer text readable
+
 * Tue Jul 04 2023 Anton Midyukov <antohami@altlinux.org> 20230704-alt1
 - os-release: add BUILD_ID
 - os-release: add ALT_BRANCH_ID
