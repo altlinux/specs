@@ -41,7 +41,7 @@ Version:        2.17.2102.102.1
 # upstream don't tag release, build git snapshot here
 # git snaoshot should have s snapshot date will be taken care
 # of by forgemeta after importing to dist-git
-Release:        alt1_%autorelease
+Release:        alt2_%autorelease
 Summary:        A wrapper of mozc for fcitx5
 # fcitx5-mozc is a fork of mozc, difference can be seen at 
 # https://github.com/google/mozc/compare/master...fcitx:fcitx
@@ -81,6 +81,7 @@ Source2:        http://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zi
 
 # add -v to ninja command, to make verbose output during building
 Patch0:         mozc-build-verbosely.patch
+Patch1:		0001-Fix-build-on-GCC13.patch
 
 BuildRequires:  python3-devel
 BuildRequires:  gettext gettext-tools 
@@ -116,6 +117,7 @@ A wrapper of mozc for fcitx5.
 %prep
 %setup -q -n mozc -a 1 -a 2
 %patch0 -p1
+%patch1 -p1
 (cd src/data/dictionary_oss;
 PYTHONPATH="${PYTHONPATH}:../../" python3 ../../dictionary/gen_zip_code_seed.py --zip_code=../../../KEN_ALL.CSV --jigyosyo=../../../JIGYOSYO.CSV >> dictionary09.txt;
 )
@@ -168,6 +170,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/org.fcitx.Fcitx5.Addon.Mozc.metainfo.xml
 
 %changelog
+* Tue Jul 11 2023 Artyom Bystrov <arbars@altlinux.org> 2.17.2102.102.1-alt2_20
+- Fix build on GCC13
+
 * Fri Sep 16 2022 Igor Vlasenko <viy@altlinux.org> 2.17.2102.102.1-alt1_20
 - new version
 
