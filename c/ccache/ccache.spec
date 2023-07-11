@@ -2,7 +2,7 @@
 
 Name: ccache
 Version: 4.6
-Release: alt2
+Release: alt3
 
 Summary: Compiler cache
 License: GPLv3+
@@ -12,6 +12,7 @@ Url: http://ccache.dev/
 # Source-git: https://github.com/ccache/ccache.git
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+Patch1: 0001-Fix-build-on-GCC13.patch
 
 BuildRequires: asciidoctor
 BuildRequires: cmake
@@ -29,6 +30,7 @@ in a 5 to 10 times speedup in common compilations.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
@@ -60,6 +62,9 @@ EOF
 %prefix/lib/rpm/ccache.filetrigger
 
 %changelog
+* Tue Jul 11 2023 Artyom Bystrov <arbars@altlinux.org> 4.6-alt3
+- Fix build on GCC13
+
 * Sat Apr 22 2023 Vitaly Lipatov <lav@altlinux.ru> 4.6-alt2
 - ccache.filetrigger: replace egrep with grep -E
 
