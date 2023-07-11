@@ -2,8 +2,9 @@
 %def_disable static
 
 Name: inih
-Version: r56
+Version: 57
 Release: alt1
+Epoch: 1
 
 Summary: Simple .INI file parser in C, good for embedded systems 
 License: BSD
@@ -12,7 +13,8 @@ Group: System/Libraries
 Url: https://github.com/benhoyt/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# %url/archive/%version/%name-r%version.tar.gz
+Source: %name-r%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: meson
@@ -52,7 +54,7 @@ Static libraries for INI Not Invented Here
 %endif
 
 %prep
-%setup
+%setup -n %name-r%version
 
 %build
 %meson -Ddefault_library=shared -Ddistro_install=true -Dwith_INIReader=true
@@ -86,6 +88,12 @@ Static libraries for INI Not Invented Here
 %endif
 
 %changelog
+* Tue Jul 11 2023 Nazarov Denis <nenderus@altlinux.org> 1:57-alt1
+- New version 57.
+
+* Tue Jul 11 2023 Nazarov Denis <nenderus@altlinux.org> 1:56-alt1
+- Swith to digit version
+
 * Wed Jul 13 2022 Nazarov Denis <nenderus@altlinux.org> r56-alt1
 - Version r56
 
