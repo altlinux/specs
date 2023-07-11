@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -52,6 +52,10 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %_includedir/alterator
 
 %changelog
+* Tue Jul 11 2023 Ivan Savin <svn17@altlinux.org> 0.1.7-alt1
+- Add the ability to validate interfaces by template.
+- Update docs/README-ru.md.
+
 * Fri Jun 23 2023 Ivan Savin <svn17@altlinux.org> 0.1.6-alt1
 - Add the ability to run the alterator-manager in user mode (systemctl --user).
 - Update docs/README-ru.md.
