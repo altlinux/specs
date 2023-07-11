@@ -24,7 +24,7 @@
 %define nv_version 470
 %define nv_release 199
 %define nv_minor   02
-%define pkg_rel alt244
+%define pkg_rel alt245
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -128,6 +128,9 @@ Sources for %{bin_pkg_name}_%{version} package
 Requires(pre): %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
 %ifnarch aarch64
+Requires: firmware-%module_name-%module_version = %version
+%endif
+%ifnarch aarch64
 Provides: libnvidia-compiler = %EVR
 Obsoletes: libnvidia-compiler < %EVR
 %endif
@@ -151,6 +154,18 @@ License: %myLicense
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 %description -n kernel-source-%module_name-%module_version
 %module_name modules sources for Linux kernel
+
+%package -n firmware-%module_name-%module_version
+Group: Development/Kernel
+Summary: Firmware for NVIDIA video devices.
+License: %myLicense
+Requires: %{bin_pkg_name}_common >= %version
+Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+%description -n firmware-%module_name-%module_version
+This package provides the firmware to drive the GSP.
+The GPU System Processor (GSP) was first introduced in the Turing
+architecture and supports accelerating tasks traditionally performed
+by the driver on the CPU.
 
 %prep
 %setup -T -c -n %tbname-%tbver%dirsuffix
@@ -308,6 +323,12 @@ tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
     %buildroot%_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 %endif
 
+# install firmware
+%ifnarch aarch64
+mkdir -p %buildroot/lib/firmware/nvidia/
+install firmware/gsp*.bin %buildroot/lib/firmware/nvidia/
+%endif
+
 # install scripts
 mkdir -p %buildroot/%_bindir
 install -m 0755 nvidia-bug-report.sh %buildroot/%_bindir/nvidia-bug-report-%version.sh
@@ -381,12 +402,20 @@ fi
 %_datadir/vulkan/implicit_layer.d/%{version}_nvidia_layers.json
 %_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
 
+%ifnarch aarch64
+%files -n firmware-%module_name-%module_version
+/lib/firmware/nvidia/gsp*.bin
+%endif
+
 %if_enabled kernelsource
 %files -n kernel-source-%module_name-%module_version
 %_usrsrc/*
 %endif
 
 %changelog
+* Tue Jul 11 2023 Sergey V Turchin <zerg@altlinux.org> 470.199.02-alt245
+- package firmware
+
 * Thu Jun 29 2023 Sergey V Turchin <zerg@altlinux.org> 470.199.02-alt244
 - new version
 
