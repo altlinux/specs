@@ -1,5 +1,5 @@
 Name: u-boot-meson
-Version: 2023.04
+Version: 2023.07
 Release: alt1
 
 Summary: Das U-Boot
@@ -10,7 +10,7 @@ ExclusiveArch: aarch64
 
 Source: %name-%version-%release.tar
 
-BuildRequires: bc dtc >= 1.4 flex libssl-devel
+BuildRequires: bc ccache dtc >= 1.7 flex libssl-devel
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -22,12 +22,12 @@ This package supports various AMLogic Meson family boards.
 %setup
 
 %build
+export DTC=%_bindir/dtc
 boards=$(grep -lr ARCH_MESON configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 for board in $boards; do
-	mkdir build
-	%make_build O=build ${board}_defconfig all
-	install -pm0644 -D build/u-boot.bin out/${board}/u-boot.bin
-	rm -rf build
+	O=build/${board}
+	%make_build HOSTCC='ccache gcc' CC='ccache gcc' O=${O} ${board}_defconfig all
+	install -pm0644 -D ${O}/u-boot.bin out/${board}/u-boot.bin
 done
 
 %install
@@ -40,6 +40,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.07-alt1
+- 2023.07 released
+
 * Tue Apr 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.04-alt1
 - 2023.04 released
 
