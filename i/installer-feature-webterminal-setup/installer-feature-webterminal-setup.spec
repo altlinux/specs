@@ -1,5 +1,5 @@
 Name: installer-feature-webterminal-setup
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Setup WEB-Terminal after install
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Jul 11 2023 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt1
+- fix setup default lightdm session
+
 * Tue May 30 2023 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
 - setup lightdm
 
