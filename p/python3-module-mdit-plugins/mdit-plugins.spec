@@ -2,32 +2,43 @@
 
 %define oname mdit-plugins
 %define mname mdit_py_plugins
+%define pypi_name mdit-py-plugins
+
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.3.5
+Version: 0.4.0
 Release: alt1
 Summary: Collection of core plugins for markdown-it-py 
 License: MIT
 Group: Development/Python3
 Url: https://mdit-py-plugins.readthedocs.io/
+Vcs: https://github.com/executablebooks/mdit-py-plugins
 
 BuildArch: noarch
 
-# https://github.com/executablebooks/mdit-py-plugins
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit
-BuildRequires: /usr/bin/py.test3
-BuildRequires: python3(markdown_it)
-BuildRequires: python3-module-pytest-regressions
-BuildRequires: python3-module-pytest-datadir
+Provides: python3-module-%pypi_name
+
+BuildRequires(pre): rpm-build-pyproject
+
+%pyproject_runtimedeps_metadata
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra linkify
+%endif
 
 %description
 Collection of core plugins for markdown-it-py.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -36,26 +47,18 @@ Collection of core plugins for markdown-it-py.
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test3 -vv \
-	--deselect=tests/test_amsmath.py::test_plugin_parse \
-	--deselect=tests/test_colon_fence.py::test_plugin_parse \
-	--deselect=tests/test_container.py::test_plugin_parse \
-	--deselect=tests/test_container.py::test_no_new_line_issue \
-	--deselect=tests/test_deflist.py::test_plugin_parse \
-	--deselect=tests/test_dollarmath.py::test_plugin_parse \
-	--deselect=tests/test_substitution.py::test_tokens \
-	--deselect=tests/test_tasklists.py::test_plugin_parse \
-	--deselect=tests/test_texmath.py::test_plugin_parse \
-	%nil
+%tox_check_pyproject
+%pyproject_run_pytest -ra tests
 
 %files
-%doc LICENSE
 %doc README.md
-%python3_sitelibdir/%mname
-%python3_sitelibdir/%mname-%version.dist-info
+%python3_sitelibdir/%mname/
+%python3_sitelibdir/%{pyproject_distinfo %mname}
 
 %changelog
+* Tue Jul 11 2023 Andrey Limachko <liannnix@altlinux.org> 0.4.0-alt1
+- 0.3.5 -> 0.4.0
+
 * Fri Mar 03 2023 Grigory Ustinov <grenka@altlinux.org> 0.3.5-alt1
 - Automatically updated to 0.3.5.
 
