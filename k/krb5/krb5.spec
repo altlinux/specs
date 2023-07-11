@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: krb5
-Version: 1.21
+Version: 1.21.1
 Release: alt1
 
 %if_without bootstrap
@@ -517,6 +517,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Tue Jul 11 2023 Ivan A. Melnikov <iv@altlinux.org> 1.21.1-alt1
+- 1.21.1 (Fixes: CVE-2023-36054)
+
 * Tue Jun 06 2023 Ivan A. Melnikov <iv@altlinux.org> 1.21-alt1
 - 1.21
 
