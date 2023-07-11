@@ -2,34 +2,46 @@
 
 %define oname qtconsole
 
+%def_with check
+%def_with docs
+
 Name: python3-module-%oname
-Version: 5.2.2
-Release: alt2
+Version: 5.4.3
+Release: alt1
 Summary: Jupyter Qt console
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/qtconsole/
+Vcs: https://github.com/jupyter/qtconsole
 
 BuildArch: noarch
 
-# https://github.com/jupyter/qtconsole
 Source: %name-%version.tar
+
+Requires: python3-module-PyQt5
 
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with docs
+BuildRequires: python3-module-qtpy
 BuildRequires: python3-module-PyQt5
-BuildRequires: python3(qtpy)
-BuildRequires: python3-module-ipython_genutils-tests
-BuildRequires: python3(IPython)
-BuildRequires: python3(IPython.testing.tests)
-BuildRequires: python3-module-traitlets-tests
+BuildRequires: python3-module-traitlets
+BuildRequires: python3-module-ipython
+BuildRequires: python3-module-ipython_genutils
 BuildRequires: python3(sphinx_rtd_theme)
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
-BuildRequires: python3(flaky)
-BuildRequires: /usr/bin/py.test3
+%endif
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-qt
-BuildRequires: xvfb-run
-BuildRequires: python3(nest_asyncio)
+BuildRequires: python3-module-pytest-xvfb
+BuildRequires: python3-module-flaky
+BuildRequires: python3-module-ipykernel
+BuildRequires: python3-module-traitlets-tests
+BuildRequires: /usr/bin/xvfb-run
+%endif
 
 %py3_provides %oname
 %py3_requires traitlets jupyter_core jupyter_client pygments ipykernel
@@ -50,36 +62,58 @@ This package contains tests for %oname.
 %prep
 %setup
 
+%if_with docs
 %prepare_sphinx3 docs
 ln -s ../objects.inv docs/source/
+%endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
+# Install icon
+mkdir -p %buildroot%_datadir/icons/hicolor/scalable/apps
+cp qtconsole/resources/icon/JupyterConsole.svg \
+   %buildroot%_datadir/icons/hicolor/scalable/apps/JupyterQtConsole.svg
+
+# TODO
+# Modify and install .desktop file
+# sed -i "s/^Icon=.*$/Icon=JupyterQtConsole.svg/" examples/jupyter-qtconsole.desktop
+# mkdir -p %buildroot%_desktopdir
+# cp examples/jupyter-qtconsole.desktop %buildroot%_desktopdir/
+
+%if_with docs
 export PYTHONPATH=$PWD
 %make -C docs html
+%endif
 
 %check
-export PYTHONPATH=$PWD
-# from openSUSE:
-# test skips: https://github.com/jupyter/qtconsole/issues/443
-# now with test_input too. But does not seem to happen on the build server, only locally.
-xvfb-run py.test3 -vv -ra -k "not (test_00 and (test_scroll or test_debug or test_input))"
+# all tests pass, but strange AttributeError happens
+# https://github.com/jupyter/qtconsole/issues/582
+%pyproject_run -- xvfb-run -s '-nolisten local' pytest -v qtconsole \
+--ignore qtconsole/tests/test_inprocess_kernel.py
 
 %files
-%doc *.md docs/build/html
+%doc README.* LICENSE
+%if_with docs
+%doc docs/build/html
+%endif
 %_bindir/*
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %python3_sitelibdir/%oname/
+%dir %_datadir/icons/hicolor/scalable/apps
+%_datadir/icons/hicolor/scalable/apps/JupyterQtConsole.svg
 %exclude %python3_sitelibdir/%oname/tests
 
 %files tests
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Jul 10 2023 Anton Vyatkin <toni@altlinux.org> 5.4.3-alt1
+- New version 5.4.3.
+
 * Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 5.2.2-alt2
 - Fixed BuildRequires.
 

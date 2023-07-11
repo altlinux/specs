@@ -2,37 +2,40 @@
 
 %define oname qtpy
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.10.0
+Version: 2.3.1
 Release: alt1
-Summary: Provides an uniform layer to support PyQt5, PySide2, PyQt4 and PySide with a single codebase
+Summary: Provides an uniform layer to support PyQt5, PySide2, PyQt6, PySide6 with a single codebase
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/QtPy/
+Vcs: https://github.com/spyder-ide/qtpy.git
 
 BuildArch: noarch
 
-# https://github.com/spyder-ide/qtpy.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-# test dependencies
-BuildRequires: /usr/bin/py.test3
-BuildRequires: python3-module-PySide2
-BuildRequires: python3(mock)
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
 BuildRequires: xvfb-run
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-qt
+BuildRequires: python3-module-PyQt5
+%endif
 
 %description
-QtPy is a small abstraction layer that lets you write applications
-using a single API call to either PyQt or PySide.
+QtPy is a small abstraction layer that lets you write applications using
+a single API call to either PyQt or PySide.
 
-It provides support for PyQt5, PyQt4, PySide2 and PySide
-using the Qt5 layout
+It provides support for PyQt5, PyQt6, PySide6, PySide2 using the Qt5 layout
 (where the QtGui module has been split into QtGui and QtWidgets).
 
-Basically, you can write your code as if you were using PySide2
-but import Qt modules from qtpy instead of PySide2 (or PyQt5)
+Basically, you can write your code as if you were using PyQt or PySide directly,
+but import Qt modules from qtpy instead of PyQt5, PySide2, PyQt6 or PySide6.
 
 %package tests
 Summary: Tests for %oname
@@ -56,18 +59,21 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-xvfb-run py.test3 -vv
+sed -i 's/--cov=qtpy --cov-report=term-missing//' pytest.ini
+sed -i 's/--color=yes//' pytest.ini
+%pyproject_run -- xvfb-run pytest qtpy -k 'not test_qttexttospeech'
 
 %files
 %doc LICENSE.txt
 %doc AUTHORS.md CHANGELOG.md README.md
-%python3_sitelibdir/QtPy-%version-py*.egg-info
+%_bindir/%oname
+%python3_sitelibdir/QtPy-%version.dist-info
 %python3_sitelibdir/%oname
 %exclude %python3_sitelibdir/%oname/tests
 
@@ -75,6 +81,9 @@ xvfb-run py.test3 -vv
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Jul 11 2023 Anton Vyatkin <toni@altlinux.org> 2.3.1-alt1
+- New version 2.3.1.
+
 * Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.0-alt1
 - Updated to upstream version 1.10.0.
 
