@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -38,7 +38,7 @@
 
 Name: pipewire
 Version: %ver_major.73
-Release: alt1
+Release: alt2
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -327,6 +327,11 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Tue Jul 11 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.73-alt2
+- updated to 0.3.73-17-g17bc9d520 (also fixed:
+  "Audio randomly cuts out for no reason"
+  (https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/3316))
+
 * Thu Jul 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.73-alt1
 - 0.3.73
 
