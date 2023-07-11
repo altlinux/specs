@@ -25,7 +25,7 @@
 %define nv_version 535
 %define nv_release 54
 %define nv_minor   03
-%define pkg_rel alt251
+%define pkg_rel alt252
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -130,7 +130,7 @@ Requires(post): x11presetdrv
 %Nif_ver_gteq %gbm_ver 21.2
 Requires: libnvidia-egl-gbm >= 0
 %endif
-Requires: firmware-%module_name-%module_version = %version
+Requires: firmware-%module_name-%version = %version
 #
 Group: %myGroup
 Summary: %mySummary
@@ -152,13 +152,13 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 %description -n kernel-source-%module_name-%module_version
 %module_name modules sources for Linux kernel
 
-%package -n firmware-%module_name-%module_version
+%package -n firmware-%module_name-%version
 Group: Development/Kernel
 Summary: Firmware for NVIDIA video devices.
 License: %myLicense
 Requires: %{bin_pkg_name}_common >= %version
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
-%description -n firmware-%module_name-%module_version
+%description -n firmware-%module_name-%version
 This package provides the firmware to drive the GSP.
 The GPU System Processor (GSP) was first introduced in the Turing
 architecture and supports accelerating tasks traditionally performed
@@ -328,8 +328,8 @@ tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
 %endif
 
 # install firmware
-mkdir -p %buildroot/lib/firmware/nvidia/
-install firmware/gsp*.bin %buildroot/lib/firmware/nvidia/
+mkdir -p %buildroot/lib/firmware/nvidia/%version/
+install firmware/gsp*.bin %buildroot/lib/firmware/nvidia/%version/
 
 # install scripts
 mkdir -p %buildroot/%_bindir
@@ -413,8 +413,8 @@ fi
 %_datadir/vulkan/implicit_layer.d/%{version}_nvidia_layers.json
 %_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
 
-%files -n firmware-%module_name-%module_version
-/lib/firmware/nvidia/gsp*.bin
+%files -n firmware-%module_name-%version
+/lib/firmware/nvidia/%version/gsp*.bin
 
 %if_enabled kernelsource
 %files -n kernel-source-%module_name-%module_version
@@ -422,6 +422,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 11 2023 Sergey V Turchin <zerg@altlinux.org> 535.54.03-alt252
+- fix firmware path
+
 * Tue Jul 11 2023 Sergey V Turchin <zerg@altlinux.org> 535.54.03-alt251
 - package firmware
 
