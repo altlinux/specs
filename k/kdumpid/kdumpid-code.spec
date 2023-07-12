@@ -4,13 +4,13 @@
 %set_verify_elf_method strict
 
 Name: kdumpid
-Version: 1.3
+Version: 1.5
 Release: alt1
 Summary: Identify any kernel core dump file
 License: GPL-2.0-or-later
 Group: Development/Kernel
 Url: https://kdumpid.sourceforge.io/
-Vcs: https://git.code.sf.net/p/kdumpid/code
+Vcs: https://github.com/ptesarik/kdumpid
 
 Source: %name-%version.tar
 BuildRequires: binutils-devel
@@ -51,5 +51,8 @@ vm-run --kvm=cond ./kdumpid -v /proc/kcore
 %_man1dir/*.1*
 
 %changelog
+* Thu Jul 13 2023 Vitaly Chikunov <vt@altlinux.org> 1.5-alt1
+- Update to v1.5 (2023-06-29).
+
 * Tue Nov 22 2022 Vitaly Chikunov <vt@altlinux.org> 1.3-alt1
 - First import v1.3-3-gbeb8ea6 (2022-08-16).
