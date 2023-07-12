@@ -1,6 +1,6 @@
 Name: sayonara
 Version: 1.8.0
-Release: alt1_1.beta1.13
+Release: alt1_2.beta1.100
 
 Summary: A lightweight Qt Audio player
 License: GPLv3+
@@ -65,11 +65,17 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml
 %_bindir/*
 %_man1dir/*
 %_desktopdir/*.desktop
-%_datadir/metainfo/*
-%_datadir/%name
+%_datadir/metainfo/com.sayonara-player.Sayonara.appdata.xml
+%dir %_datadir/%name
+%dir %_datadir/%name/translations
+%dir %_datadir/%name/translations/icons
+%_datadir/%name/translations/icons/*.png
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Jul 13 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.8.0-alt1_2.beta1.100
+- Update to recent upstream/master
+
 * Tue Nov 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.8.0-alt1_1.beta1.13
 - Update to recent upstream/master
 
