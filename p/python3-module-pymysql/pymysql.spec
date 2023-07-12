@@ -2,7 +2,7 @@
 %define modulename pymysql
 
 Name: python3-module-%modulename
-Version: 1.0.3
+Version: 1.1.0
 Release: alt1
 
 Summary: This pure Python MySQL client provides a DB-API to a MySQL database.
@@ -39,6 +39,9 @@ talking directly to the server via the binary client/server protocol.
 %python3_sitelibdir/PyMySQL-%version.dist-info
 
 %changelog
+* Wed Jul 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Automatically updated to 1.1.0.
+
 * Tue Mar 28 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt1
 - Automatically updated to 1.0.3.
 
