@@ -1,7 +1,7 @@
 %define rname breeze-icons
 
 Name: kf5-%rname
-Version: 5.107.0
+Version: 5.108.0
 Release: alt1
 %K5init no_altplace
 
@@ -9,8 +9,6 @@ Group: Graphical desktop/KDE
 Summary: Breeze icons theme
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
-
-BuildArch: noarch
 
 Source: %rname-%version.tar
 Patch1: alt-icons-defaults.patch
@@ -28,9 +26,16 @@ BuildRequires: icon-naming-utils xml-utils
 %package -n icon-theme-breeze
 Summary: Breeze icons theme
 Group: Graphics
+BuildArch: noarch
 Provides: kde4-icon-theme = %version-%release
 %description -n icon-theme-breeze
 %summary
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package files for developing applications that use %name.
 
 
 %prep
@@ -118,7 +123,13 @@ done
 %doc COPYING*
 %_iconsdir/breeze*/
 
+%files devel
+%_libdir/cmake/KF5BreezeIcons/
+
 %changelog
+* Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.108.0-alt1
+- new version
+
 * Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.107.0-alt1
 - new version
 

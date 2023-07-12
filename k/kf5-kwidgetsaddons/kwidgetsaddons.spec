@@ -5,7 +5,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.107.0
+Version: 5.108.0
 Release: alt1
 %K5init altplace
 
@@ -16,7 +16,6 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-actionmenu-btn.patch
-Patch2: fix-duplicate-entry.patch
 
 # Automatically added by buildreq on Fri Dec 26 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools qt5-tools-devel ruby ruby-stdlibs
@@ -77,7 +76,6 @@ Sip files for python3-module-%rname
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p2
 
 %build
 %K5build
@@ -113,6 +111,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.108.0-alt1
+- new version
+
 * Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.107.0-alt1
 - new version
 
