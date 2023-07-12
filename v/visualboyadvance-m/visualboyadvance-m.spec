@@ -1,8 +1,8 @@
 %global shortname vbam
 
 Name: visualboyadvance-m
-Version: 2.1.5
-Release: alt4
+Version: 2.1.6
+Release: alt1
 
 Summary: Game Boy Advance Emulator
 License: GPLv2
@@ -91,7 +91,8 @@ export NPROCS=1
 
 %files -f wx%{shortname}.lang
 %_bindir/%name
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.metainfo.xml
+#_datadir/appdata/%name.appdata.xml
 %_datadir/applications/%name.desktop
 %_datadir/icons/hicolor/128x128/apps/%name.png
 %_datadir/icons/hicolor/16x16/apps/%name.png
@@ -105,7 +106,7 @@ export NPROCS=1
 %_datadir/icons/hicolor/scalable/apps/%name.svg
 %_datadir/locale/cs/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/de/LC_MESSAGES/wxvbam.mo
-#_datadir/locale/en/LC_MESSAGES/wxvbam.mo
+%_datadir/locale/en_US/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/es/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/fr/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/gl/LC_MESSAGES/wxvbam.mo
@@ -113,17 +114,20 @@ export NPROCS=1
 %_datadir/locale/nb/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/nl/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/pt_BR/LC_MESSAGES/wxvbam.mo
-%_datadir/locale/ru/LC_MESSAGES/wxvbam.mo
+%_datadir/locale/ru_RU/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/tr/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/zh_TW/LC_MESSAGES/wxvbam.mo
 %_mandir/man6/visualboyadvance-m.6.xz
 %_datadir/vbam/vba-over.ini
 %config(noreplace) %{_sysconfdir}/%{shortname}.cfg
-%{_mandir}/man6/%{shortname}.*
+%{_man6dir}/%{shortname}.*
 %{_bindir}/%{shortname}
 
 
 %changelog
+* Wed Jul 12 2023 Ilya Mashkin <oddity@altlinux.ru> 2.1.6-alt1
+- 2.1.6
+
 * Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 2.1.5-alt4
 - Fix build on GCC13
 
