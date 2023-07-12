@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -486,6 +486,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Jul 12 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt4
+- update indexhtml URLs
+
 * Wed Jun 14 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt3
 - update slideshow images
 
