@@ -2,7 +2,7 @@
 
 Name: phpldapadmin
 Version: 1.2.6.6
-Release: alt1
+Release: alt2
 
 Summary: Handle the adminstration of LDAP server over the web
 Summary(ru_RU.UTF8): Управление LDAP сервером через web
@@ -13,7 +13,7 @@ Url: http://phpldapadmin.sourceforge.net
 Source: %name-%version.tar.gz
 Patch0: %name-convert_to_ascii.patch
 
-Requires: apache2-mod_php7 php7-ldap
+Requires: apache2-mod_php8.1 php8.1-ldap
 
 BuildArch: noarch
 
@@ -87,6 +87,9 @@ install -m644  %name.conf %buildroot%apache2_sites_available
 %doc INSTALL.md README.md LICENSE
 
 %changelog
+* Wed Jul 12 2023 Nikita Obukhov <nickf@altlinux.ru> 1.2.6.6-alt2
+- Change requires from php7 to php8.1
+
 * Wed Apr 26 2023 Andrey Cherepanov <cas@altlinux.org> 1.2.6.6-alt1
 - New version.
 
