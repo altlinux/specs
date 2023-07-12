@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Zope Exceptions
@@ -52,12 +52,15 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt
+%doc *.txt README.*
 %python3_sitelibdir/zope/exceptions/
 %python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 
 %changelog
+* Wed Jul 12 2023 Anton Vyatkin <toni@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Thu Jun 29 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 
