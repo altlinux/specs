@@ -5,8 +5,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: kubernetes
-Version: 1.26.3
-Release: alt2
+Version: 1.26.6
+Release: alt1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -148,8 +148,8 @@ export KUBE_GIT_TREE_STATE="clean"
 export KUBE_GIT_VERSION="v%version"
 
 # Fixes https://github.com/golang/go/issues/58425
-%ifarch armh
-export GOEXPERIMENT=nounified
+%ifarch %arm
+export CGO_ENABLED=0
 %endif
 
 %golang_prepare
@@ -343,12 +343,18 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Wed Jul 12 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.6-alt1
+- 1.26.3. -> 1.26.6 (Fixes: CVE-2023-2727, CVE-2023-2728).
+- Closes ALT#46869.
+- Fix build on %%arm architectures.
+- Add CVE fixes information.
+
 * Thu Apr 27 2023 Alexey Shabalin <shaba@altlinux.org> 1.26.3-alt2
 - Allow write to config dir /etc/kubernetes for kube group
 - Allow write to home dir /var/lib/kubernetes for kube group
 
 * Fri Mar 24 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.3-alt1
-- 1.26.3 (Fixes: CVE-2022-3172, CVE-2022-3162, CVE-2022-3294)
+- 1.26.3 (Fixes: CVE-2022-3172, CVE-2022-3162, CVE-2022-3294, CVE-2021-25743)
 
 * Fri Mar 17 2023 Alexander Stepchenko <geochip@altlinux.org> 1.24.11-alt1
 - 1.24.11
