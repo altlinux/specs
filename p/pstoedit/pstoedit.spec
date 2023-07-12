@@ -1,7 +1,7 @@
 %def_without static
 
 Name: pstoedit
-Version: 3.78
+Version: 4.00
 Release: alt1
 
 Summary: converts Postscript(TM) and PDF files to other vector graphic formats
@@ -26,6 +26,7 @@ Patch14: pstoedit-3.45-elif.patch
 
 # Fix cflags of the pkg-config file
 Patch15:         pstoedit-pkglibdir.patch
+Patch16:         pstoedit-fix-gcc12.patch
 
 
 Requires: lib%name = %version-%release
@@ -111,6 +112,7 @@ Static libraries for developing pstoedit addons
 #patch13 -p1 -b .asy
 #patch14 -p1 -b .elif
 %patch15 -p1
+%patch16 -p1
 
 %__chmod 644 doc/*
 %__chmod 644 examples/*
@@ -165,6 +167,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Wed Jul 12 2023 Ilya Mashkin <oddity@altlinux.ru> 4.00-alt1
+- 4.00
+
 * Wed Nov 24 2021 Ilya Mashkin <oddity@altlinux.ru> 3.78-alt1
 - 3.78
 
