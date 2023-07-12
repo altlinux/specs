@@ -36,8 +36,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.9
-Release: alt2
+Version: 5.15.10
+Release: alt1
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -866,6 +866,9 @@ make check -k ||:
 
 
 %changelog
+* Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt1
+- new version
+
 * Thu Jun 01 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt2
 - build with system double-conversion
 - add LoongArch architecture support (thanks asheplyakov@alt) (closes: 46358)

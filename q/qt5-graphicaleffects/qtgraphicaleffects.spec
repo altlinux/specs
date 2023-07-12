@@ -2,7 +2,7 @@
 %global qt_module qtgraphicaleffects
 
 Name: qt5-graphicaleffects
-Version: 5.15.9
+Version: 5.15.10
 Release: alt1
 
 Group: System/Libraries
@@ -73,6 +73,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt1
+- new version
+
 * Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt1
 - new version
 

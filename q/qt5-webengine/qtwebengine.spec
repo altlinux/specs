@@ -29,8 +29,8 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.15.13
-Release: alt2
+Version: 5.15.14
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -426,6 +426,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.14-alt1
+- new version
+
 * Thu Apr 27 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt2
 - fix to build with new icu
 

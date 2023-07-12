@@ -4,7 +4,7 @@
 %define optflags_lto %nil
 
 Name: qt5-script
-Version: 5.15.9
+Version: 5.15.10
 Release: alt1
 
 Group: System/Libraries
@@ -13,6 +13,7 @@ Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch1: alt-loongarch64.patch
 
 BuildRequires(pre): rpm-build-ubt rpm-macros-qt5 qt5-tools
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel
@@ -61,6 +62,7 @@ Requires: libqt5-core = %_qt5_version
 
 %prep
 %setup -qn %qt_module-everywhere-src-%version
+%patch1 -p1
 sed -i -E 's|MODULE_VERSION[[:space:]]+.*$|MODULE_VERSION = %version|' .qmake.conf
 syncqt.pl-qt5 -version %version
 
@@ -103,6 +105,10 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt1
+- new version
+- support LoongArch architecture (lp64d ABI) (thanks asheplyakov@alt) (closes: #46803)
+
 * Wed Apr 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt1
 - new version
 
