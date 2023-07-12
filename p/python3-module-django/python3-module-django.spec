@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: 3.2.19
+Version: 3.2.20
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD
@@ -181,6 +181,11 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Wed Jul 12 2023 Anton Farygin <rider@altlinux.ru> 3.2.20-alt1
+- New version 3.2.19.
+- Fixes for the following security vulnerabilities:
+  + CVE-2023-36053: Potential regular expression denial of service vulnerability in EmailValidator/URLValidator
+
 * Sat May 27 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.19-alt1
 - New version 3.2.19.
 - Fixes for the following security vulnerabilities:
