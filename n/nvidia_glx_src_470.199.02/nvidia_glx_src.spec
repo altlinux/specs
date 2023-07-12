@@ -24,7 +24,7 @@
 %define nv_version 470
 %define nv_release 199
 %define nv_minor   02
-%define pkg_rel alt245
+%define pkg_rel alt246
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -128,7 +128,7 @@ Sources for %{bin_pkg_name}_%{version} package
 Requires(pre): %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
 %ifnarch aarch64
-Requires: firmware-%module_name-%module_version = %version
+Requires: firmware-%module_name-%version = %version
 %endif
 %ifnarch aarch64
 Provides: libnvidia-compiler = %EVR
@@ -155,13 +155,13 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 %description -n kernel-source-%module_name-%module_version
 %module_name modules sources for Linux kernel
 
-%package -n firmware-%module_name-%module_version
+%package -n firmware-%module_name-%version
 Group: Development/Kernel
 Summary: Firmware for NVIDIA video devices.
 License: %myLicense
 Requires: %{bin_pkg_name}_common >= %version
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
-%description -n firmware-%module_name-%module_version
+%description -n firmware-%module_name-%version
 This package provides the firmware to drive the GSP.
 The GPU System Processor (GSP) was first introduced in the Turing
 architecture and supports accelerating tasks traditionally performed
@@ -325,8 +325,8 @@ tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
 
 # install firmware
 %ifnarch aarch64
-mkdir -p %buildroot/lib/firmware/nvidia/
-install firmware/gsp*.bin %buildroot/lib/firmware/nvidia/
+mkdir -p %buildroot/lib/firmware/nvidia/%version/
+install firmware/gsp*.bin %buildroot/lib/firmware/nvidia/%version/
 %endif
 
 # install scripts
@@ -403,8 +403,8 @@ fi
 %_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
 
 %ifnarch aarch64
-%files -n firmware-%module_name-%module_version
-/lib/firmware/nvidia/gsp*.bin
+%files -n firmware-%module_name-%version
+/lib/firmware/nvidia/%version/gsp*.bin
 %endif
 
 %if_enabled kernelsource
@@ -413,6 +413,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 11 2023 Sergey V Turchin <zerg@altlinux.org> 470.199.02-alt246
+- fix firmware path
+
 * Tue Jul 11 2023 Sergey V Turchin <zerg@altlinux.org> 470.199.02-alt245
 - package firmware
 
