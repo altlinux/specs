@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/4.0
 
 Name: wireshark
-Version: 4.0.6
+Version: 4.0.7
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -226,6 +226,12 @@ _EOF_
 %_libdir/%name/cmake
 
 %changelog
+* Thu Jul 13 2023 Anton Farygin <rider@altlinux.ru> 4.0.7-alt1
+- 4.0.7
+- Fixes:
+     * wnpa-sec-2023-22. iSCSI dissector crash.
+     * wnpa-sec-2023-21. Kafka dissector crash.
+
 * Sun Jun 04 2023 Anton Farygin <rider@altlinux.ru> 4.0.6-alt1
 - 4.0.6
 - Fixes:
