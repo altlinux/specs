@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -57,6 +57,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Jul 13 2023 Sergey V Turchin <zerg@altlinux.org> 3.1.1-alt1
+- small decrease minimum package groups list height
+
 * Wed Apr 05 2023 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
 - pkg-init: mount virtual filesystems with mount_chroot fuction from
   install2-remount-functions
