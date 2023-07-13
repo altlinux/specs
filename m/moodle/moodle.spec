@@ -3,7 +3,7 @@
 
 Name: moodle
 Version: 3.11.15
-Release: alt1
+Release: alt2
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -209,9 +209,6 @@ tar xvf %SOURCE30 -C %buildroot%moodle_langdir
 cd %buildroot%moodle_langdir
 for ar in *.zip;do unzip "$ar" >/dev/null && rm -f "$ar";done
 
-# Remove vendor subdirectories
-find %buildroot -name vendor | xargs rm -rf
-
 # Install cron scripts
 install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 
@@ -247,6 +244,9 @@ install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 %endif
 
 %changelog
+* Thu Jul 13 2023 Andrey Cherepanov <cas@altlinux.org> 3.11.15-alt2
+- Return vendor subdirectories.
+
 * Fri Jun 16 2023 Andrey Cherepanov <cas@altlinux.org> 3.11.15-alt1
 - New version.
 - Security fixes: CVE-2023-30944, CVE-2023-1402, CVE-2023-28336,
