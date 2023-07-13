@@ -4,8 +4,8 @@
 %define ngxconfdir %_sysconfdir/nginx/sites-available.d
 
 Name: observium-ce
-Version: 20.9
-Release: alt0.2
+Version: 23.1
+Release: alt0.1
 Summary: Low-maintenance auto-discovering network monitoring platform
 License: QPL
 Group: Monitoring
@@ -16,17 +16,17 @@ Buildarch: noarch
 Source0: http://www.observium.org/observium-community-latest.tar
 Source1: observium-nginx.conf.in
 Source2: observium.cron.in
-Patch0: %name-%version-alt-python3-migration.patch
-Patch1: %name-%version-alt-config.patch
+Patch0: %name-23.1-alt-python3-migration.patch
+Patch1: %name-20.9-alt-config.patch
 
-BuildRequires: rpm-build-python3 perl-RRD perl-Pod-Usage perl-SNMP-Extension-PassPersist perl-Digest-SHA
+BuildRequires: rpm-build-python3 perl-RRD perl-DBI perl-Pod-Usage perl-SNMP-Extension-PassPersist perl-Digest-SHA
 
 %package core
 Summary: Observium core files and web content
 Group: Monitoring
 
-Requires: php7 php7-opcache php7-mysqli php7-gd2
-Requires: php7-mcrypt pear-core vixie-cron rrd-utils
+Requires: php8.1 php8.1-opcache php8.1-mysqli php8.1-gd2
+Requires: php8.1-mcrypt pear-core vixie-cron rrd-utils
 Requires: net-snmp-clients fping python3-module-pymysql
 Requires: whois ipmitool graphviz ImageMagick-tools
 
@@ -124,6 +124,11 @@ cat config.php.default > %buildroot%_sysconfdir/%name/config.php
 %ngxconfdir/%name.conf
 
 %changelog
+* Thu Jul 13 2023 L.A. Kostis <lakostis@altlinux.ru> 23.1-alt0.1
+- Updated to v23.1 CE (closes #46907).
+- php7->php8.1.
+- Update BR (added perl-DBI).
+
 * Thu Sep 16 2021 L.A. Kostis <lakostis@altlinux.ru> 20.9-alt0.2
 - .spec: optimize requires.
 
