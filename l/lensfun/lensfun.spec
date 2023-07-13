@@ -13,10 +13,15 @@
 %def_enable lenstool
 %def_enable python
 %def_enable tests
+%define __isa_bits %(s="%_lib"; s=${s#lib}; echo "${s:-32}")
+%if "%__isa_bits" == "64"
 %def_enable check
+%else
+%def_disable check
+%endif
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Tools and library to rectifying the defects introduced by your photographic equipment.
@@ -155,6 +160,9 @@ popd
 %_datadir/%name/version_%api_ver/
 
 %changelog
+* Thu Jul 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
+- 0.3.4
+
 * Tue Feb 21 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - stable 0.3.3 from new srpm
 - new lensfun-data subpackage
