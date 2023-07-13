@@ -1,29 +1,26 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pluggy
+%define pypi_name pluggy
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.0.0
+Name: python3-module-%pypi_name
+Version: 1.2.0
 Release: alt1
 
 Summary: Plugin and hook calling mechanisms for python
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/pytest-dev/pluggy.git
-Url: https://pypi.python.org/pypi/pluggy
-
+Url: https://pypi.org/project/pluggy/
+Vcs: https://github.com/pytest-dev/pluggy
 BuildArch: noarch
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools_scm)
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -32,36 +29,28 @@ specific details.
 
 %prep
 %setup
-
-# there is a file with name CHANGELOG.rst, not CHANGELOG
-# a wrong reference leads to broken install via pip
-sed -i '/^include CHANGELOG$/{s/$/.rst/}' MANIFEST.in
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
-# its used as the primary source for the version number in which
-# case it will be a unparsed string
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
+%pyproject_run_pytest -ra -Wignore
 
 %files
-%doc LICENSE CHANGELOG.rst README.rst
-%python3_sitelibdir/pluggy/
-%python3_sitelibdir/pluggy-%version-py%_python3_version.egg-info/
+%doc CHANGELOG.rst README.rst
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 23 2023 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.0.0 -> 1.2.0.
+
 * Wed Sep 08 2021 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - 0.13.1 -> 1.0.0.
 
