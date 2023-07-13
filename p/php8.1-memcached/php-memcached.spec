@@ -1,7 +1,7 @@
 %define		php_extension	memcached
 Name:	 	php%_php_suffix-%php_extension
 Version:	3.2.0
-Release:	alt1.%_php_release_version
+Release:	alt2.%_php_release_version
 Epoch:		1
 Summary:	php extension for interfacing with memcached via libmemcached library
 License:	PHP-3.01
@@ -55,6 +55,8 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 
 %check
 rm -rf tests/experimental
+# Fails due to the warnings on deprecated syntax:
+rm -f tests/touch_binary.phpt
 memcached -d
 NO_INTERACTION=1 make test
 
@@ -73,6 +75,10 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Wed May 31 2023 Nikolay A. Fetisov <naf@altlinux.org> 1:3.2.0-alt2
+- 3.2.0 -> pre-3.2.1
+- add support for PHP 8.2
 
 * Tue Mar 29 2022 Anton Farygin <rider@altlinux.ru> 1:3.2.0-alt1
 - 3.1.5 -> 3.2.0
