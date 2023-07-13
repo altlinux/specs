@@ -4,10 +4,10 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.9.8
+Version: 1.10.0
 Release: alt1
 
-Summary: Useful miscellaneous modules used by Logilab projects
+Summary: Collection of low-level Python packages and modules used by Logilab projects
 License: LGPLv2.1+
 Group: Development/Python3
 Url: https://pypi.org/project/logilab-common
@@ -15,7 +15,7 @@ Url: https://pypi.org/project/logilab-common
 BuildArch: noarch
 
 Source: %oname-%version.tar
-Patch0: alt-urllib2-fix.patch
+Patch0: logilab-%version-alt-urllib2.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -64,6 +64,9 @@ designed to ease:
 %exclude %python3_sitelibdir/*-nspkg.pth
 
 %changelog
+* Thu Jul 13 2023 Anton Vyatkin <toni@altlinux.org> 1.10.0-alt1
+- new version 1.10.0
+
 * Wed Mar 08 2023 Anton Vyatkin <toni@altlinux.org> 1.9.8-alt1
 - new version 1.9.8
 
