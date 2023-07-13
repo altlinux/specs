@@ -1,5 +1,5 @@
 Name: mesa-demos
-Version: 8.4.0
+Version: 9.0.0
 Release: alt1
 Epoch: 5
 Summary: Miscellaneous Mesa GL utilities
@@ -8,9 +8,10 @@ Group: Development/Other
 Url: http://www.mesa3d.org
 
 Source: %name-%version.tar
-#Patch: %name-%version.patch
+Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libGLES-devel libGLEW-devel libGLUT-devel libXext-devel libdrm-devel libgbm-devel libfreetype-devel libwayland-egl-devel
+BuildRequires: meson gcc-c++ glslang-devel libGLES-devel libGLEW-devel libGLUT-devel libOSMesa-devel libcairo-devel libdecor-devel
+BuildRequires: libdrm-devel libgbm-devel libvulkan-devel libwayland-egl-devel libxkbcommon-x11-devel pkgconfig(wayland-protocols)
 
 %description
 This package provides several basic GL utilities built by Mesa
@@ -37,15 +38,14 @@ framerate information to stdout
 
 %prep
 %setup -q
+%patch -p1
 
 %build
-%autoreconf
-%configure
-
-%make_build
+%meson
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 %files
 %exclude %_bindir/line
@@ -61,6 +61,9 @@ framerate information to stdout
 %_bindir/glxgears
 
 %changelog
+* Wed Jul 12 2023 Valery Inozemtsev <shrek@altlinux.ru> 5:9.0.0-alt1
+- 9.0.0
+
 * Tue Jul 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 5:8.4.0-alt1
 - initial release
 
