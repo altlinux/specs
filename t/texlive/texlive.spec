@@ -75,13 +75,16 @@ BuildRequires: /usr/bin/hg
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt3_3
+Release:	alt4_3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
 Source0:	ftp://tug.org/historic/systems/texlive/%{relYear}/%{name}-%{mga_tl_timestamp}-source.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/%{relYear}/%{name}-%{mga_tl_timestamp}-source.tar.xz.sha512
+
+%set_gcc_version 12
+BuildRequires: gcc12-c++
 
 %if %{enable_xdvik}
 Requires:	ghostscript-module-X
@@ -430,6 +433,8 @@ rm -rf libs/luajit
 %build
 %add_optflags -fpermissive
 export CXXFLAGS="%{optflags} -std=c++14"
+export CC=%__cc
+export CXX=%__cxx
 
 #for dvisvgm system libs patches
 autoreconf -vfi texk/dvisvgm
@@ -685,6 +690,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Tue Jul 11 2023 Mikhail Tergoev <fidel@altlinux.org> 2021-alt4_3
+- NMU: fixed build (force compiling with gcc-12)
+
 * Wed Jun 22 2022 Igor Vlasenko <viy@altlinux.org> 2021-alt3_3
 - fixed build
 
