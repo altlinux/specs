@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt17
+Release: alt18
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -208,6 +208,11 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Wed Jul 12 2023 Anton Midyukov <antohami@altlinux.org> 0.1.5-alt18
+- bootchain-altboot: do'nt unset STAGENAME
+- Display distribution independent dialogs
+- bootchain-core: Pack config 'bootchain' from $(BOOTCHAIN_PATH)
+
 * Mon Jul 10 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt17
 - altboot: use TMPFS when ramdisk_size not set (ALT #42966)
 - altboot: introduce new 'type:iso' sub-argument (ALT #42967)
