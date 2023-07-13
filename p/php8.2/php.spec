@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 7
+%define _php_release_version 8
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -471,6 +471,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Wed Jul 12 2023 Anton Farygin <rider@altlinux.ru> 8.2.8-alt1
+- 8.2.7 -> 8.2.8
+
 * Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 8.2.7-alt1
 - 8.2.6 -> 8.2.7 (Fixes: CVE-2023-3247)
 
