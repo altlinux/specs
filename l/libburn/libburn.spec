@@ -1,16 +1,13 @@
 Name: libburn
-Version: 1.5.4
+Version: 1.5.6
 Release: alt1
 
 Summary: CD/DVD-R/RW disc reading/writing library
 License: %gpl2plus
 Group: System/Libraries
-Url: https://dev.lovelyhq.com/libburnia/web/wikis/home
+Url: https://dev.lovelyhq.com/libburnia/libburn.git
 
-#VCS: https://dev.lovelyhq.com/libburnia/libburn.git
 Source: %name-%version.tar
-
-Packager: Anton V. Boyrahinov <boyarsh@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -104,6 +101,11 @@ runs, though.
 %_man1dir/*
 
 %changelog
+* Thu Jul 13 2023 Anton Midyukov <antohami@altlinux.org> 1.5.6-alt1
+- 1.5.6
+- update Url
+- clean Packager
+
 * Thu Mar 25 2021 Anton Farygin <rider@altlinux.org> 1.5.4-alt1
 - 1.5.4
 
