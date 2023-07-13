@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.3
+%define kernel_base_version 6.4
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
@@ -301,6 +301,10 @@ sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selft
 sed -i 's/-s\b/-g/' testing/selftests/arm64/abi/Makefile testing/selftests/arm64/fp/Makefile
 sed -i '/ln -s/s/-s $(DESTDIR)/-s /' tracing/rtla/Makefile
 
+# Hardcoreshly override this test.
+echo 'int main(){return 0;}' > build/feature/test-disassembler-four-args.c
+find -name Makefile | xargs sed -i 's/-lopcodes/& -lsframe/'
+
 %build
 %define optflags_lto %nil
 banner build
@@ -537,6 +541,7 @@ mkdir -p %buildroot%_libexecdir/kselftests
 popd
 
 %add_debuginfo_skiplist %_prefix/libexec/perf-core/dlfilters/dlfilter-test-api-v0.so
+%add_debuginfo_skiplist %_libexecdir/kselftests/sgx/test_encl.elf
 %filter_from_requires /intel_pstate_tracer/d
 
 %check
@@ -736,6 +741,9 @@ fi
 %_man1dir/rv-*
 
 %changelog
+* Thu Jul 13 2023 Vitaly Chikunov <vt@altlinux.org> 6.4-alt1
+- Update to v6.4 (2023-06-25).
+
 * Thu May 25 2023 Vitaly Chikunov <vt@altlinux.org> 6.3-alt1
 - Update to v6.3 (2023-04-23).
 
