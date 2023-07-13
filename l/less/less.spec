@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: less
-Version: 608
+Version: 633
 Release: alt1
 
 Summary: A text file browser similar to more, but better
@@ -97,6 +97,11 @@ ln -s lesspipe.1 %buildroot%_man1dir/lessfile.1
 %doc NEWS.bz2 *.html
 
 %changelog
+* Thu Jul 13 2023 Alexey Gladkov <legion@altlinux.ru> 633-alt1
+- New version (633).
+- Security fixes:
+  + CVE-2022-46663: less -R filtering bypass.
+
 * Wed Sep 07 2022 Alexey Gladkov <legion@altlinux.ru> 608-alt1
 - New version (608).
 
