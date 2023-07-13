@@ -1,13 +1,13 @@
 Name: installer-feature-bootloader-grub
 Version: 0.1.0
-Release: alt3
+Release: alt4
 
-Summary: Installer bootlader step for stage 3 (alterator-grub)
+Summary: Installer bootloader step for stage 3 (alterator-grub)
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Url: http://www.altlinux.org/Installer/beans
 
-ExclusiveArch: %ix86 x86_64 aarch64 ppc64le riscv64
+ExcludeArch: %arm
 
 Requires: alterator-grub
 
@@ -18,6 +18,10 @@ to explicitly not install the alterator-grub package.
 %files
 
 %changelog
+* Thu Jul 13 2023 Anton Midyukov <antohami@altlinux.org> 0.1.0-alt4
+- ExcludeArch: %%arm
+- fix typo in summary (Closes: 46901)
+
 * Wed May 24 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt3
 - Bump the release in order to allow other versions in branches.
 
