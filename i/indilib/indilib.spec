@@ -3,7 +3,7 @@
 
 Name: %{shortname}lib
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 %define _unpackaged_files_terminate_build 1
 # This package tries to mix and match PIE and PIC which is wrong and will
@@ -150,6 +150,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' |
 %_libdir/*.a
 
 %changelog
+* Thu Jul 13 2023 Artyom Bystrov <arbars@altlinux.org> 1.9.0-alt2
+- Fix build on GCC13
+
 * Tue Oct 26 2021 Igor Vlasenko <viy@altlinux.org> 1.9.0-alt1
 - picked up from the dead for autoimports dependencies
 - new version 1.9.0
