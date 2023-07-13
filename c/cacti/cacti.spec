@@ -1,6 +1,6 @@
-
+%define phpversion php8.0
 Name: cacti
-Version: 1.2.18
+Version: 1.2.24
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -14,6 +14,7 @@ License: GPLv2+
 Group: Monitoring
 
 URL: http://www.cacti.net/
+VCS: https://github.com/Cacti/cacti
 Source: %name-%version.tar
 Source2: %name-readme.alt
 Source3: %name.logrotate
@@ -35,7 +36,7 @@ Conflicts: cacti-plugin-ssl < %version-%release
 
 
 Requires: webserver webserver-common rrd-utils net-snmp net-snmp-utils
-Requires: php7-snmp php7-sockets php7-pdo php7-pdo_mysql php7-mbstring php7-openssl php7-gd2 php7-gmp
+Requires: %phpversion %phpversion-snmp %phpversion-sockets %phpversion-pdo %phpversion-pdo_mysql %phpversion-mbstring %phpversion-openssl %phpversion-gd2 %phpversion-gmp
 
 BuildRequires(pre): rpm-macros-webserver-common
 BuildArch: noarch
@@ -163,6 +164,12 @@ fi
 %cactidir/install
 
 %changelog
+* Thu Jul 13 2023 Anton Farygin <rider@altlinux.ru> 1.2.24-alt1
+- 1.2.24
+- Fixes:
+  + CVE-2022-46169 Unauthenticated Command Injection
+- switched to php8.0 by default
+
 * Sat Jul 17 2021 Alexey Shabalin <shaba@altlinux.org> 1.2.18-alt1
 - 1.2.18
 - Fixes:
