@@ -14,7 +14,7 @@
 
 Name: gnome-shell
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -62,6 +62,8 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define webkit_api_ver 4.1
 
 Requires: %name-data = %version-%release
+# to avoid circular dependency
+%filter_from_requires /\/usr\/bin\/%name/d
 Requires: mutter-gnome >= %mutter_ver libmutter-gir >= %mutter_ver
 Requires: gnome-session >= %session_ver
 Requires: dconf at-spi2-core gnome-icon-theme gnome-icon-theme-symbolic
@@ -79,7 +81,7 @@ Requires: gnome-control-center
 Requires: ibus ibus-gtk3
 # for zipped extensions
 Requires: unzip
-# synce 3.38 
+# synce 3.38
 Requires: malcontent >= %malcontent_ver
 Requires: pipewire
 Requires: xdg-desktop-portal-gnome
@@ -285,6 +287,10 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Thu Jul 13 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1.1
+- filtered from requires /usr/bin/gnome-shell to avoid circular
+  dependencies (ALT#46895)
+
 * Fri Jul 07 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
 - 44.3
 

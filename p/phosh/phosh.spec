@@ -15,7 +15,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -33,6 +33,8 @@ Source2: sm.puri.OSK0.desktop
 Patch1: %name-0.28.0-alt-tcb-check.patch
 
 Requires: phoc >= 0.28
+Requires: gnome-shell-data
+Requires: mutter-gnome
 Requires: gnome-session
 Requires: iio-sensor-proxy
 Requires: fonts-ttf-google-lato
@@ -168,6 +170,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Thu Jul 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1.1
+- required gnome-shell-data & mutter-gnome (ALT#46896)
+
 * Thu Jul 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1
 - 0.29.0
 
