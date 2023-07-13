@@ -1,8 +1,8 @@
-
+%define phpversion 8.0
 Name: phpipam
 Epoch: 1
 Version: 1.5.2
-Release: alt1
+Release: alt2
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
 License: GPLv3
@@ -20,12 +20,12 @@ Source11: %name-apache.conf
 # Patch: %%name-%%version-%%release.patch
 
 Provides: %name-php = %EVR
-Provides: %name-php7 = %EVR
+Provides: %name-php%phpversion = %EVR
 Obsoletes: %name-php7 < %EVR
 Conflicts: %name-php5
 BuildArch: noarch
 Requires: webserver-common
-Requires: php7-gmp php7-ldap php7-sockets php7-openssl php7-pdo php7-pdo_mysql php7-pcntl php7-mbstring php7-mcrypt php7-snmp php7-gd2 pear-core
+Requires: php%phpversion-gmp php%phpversion-ldap php%phpversion-sockets php%phpversion-openssl php%phpversion-pdo php%phpversion-pdo_mysql php%phpversion-pcntl php%phpversion-mbstring php%phpversion-mcrypt php%phpversion-snmp php%phpversion-gd2 pear-core
 
 BuildRequires(pre): rpm-macros-webserver-common rpm-macros-apache2
 
@@ -124,6 +124,9 @@ rm -rf %buildroot%webserver_webappsdir/%name/.github
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Thu Jul 13 2023 Anton Farygin <rider@altlinux.ru> 1:1.5.2-alt2
+- Built with php8.0.
+
 * Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 1:1.5.2-alt1
 - 1.5.2 (Fixes: CVE-2023-0676, CVE-2023-0677, CVE-2023-0678, CVE-2023-1211, CVE-2023-1212).
 
