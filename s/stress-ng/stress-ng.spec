@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.16.01
+Version: 0.16.02
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -25,11 +25,13 @@ BuildRequires: libattr-devel
 BuildRequires: libbsd-devel
 BuildRequires: libcap-devel
 BuildRequires: libgcrypt-devel
+BuildRequires: libgmp-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libjudy-devel
 BuildRequires: libkeyutils-devel
 BuildRequires: libkmod-devel
 BuildRequires: liblksctp-devel
+BuildRequires: libmpfr-devel
 BuildRequires: libseccomp-devel
 BuildRequires: libxxhash-devel
 BuildRequires: zlib-devel
@@ -45,7 +47,7 @@ ways. It was designed to exercise various physical subsystems
 of a computer as well as the various operating system kernel
 interfaces. Stress-ng features:
 
-  * 290+ stress tests
+  * 300+ stress tests
   * 80+ CPU specific stress tests that exercise floating point, integer,
     bit manipulation and control flow
   * 20+ virtual memory stress tests
@@ -58,6 +60,18 @@ interfaces. Stress-ng features:
     with gcc, clang, icc, tcc and pcc.
   * tested on alpha, armel, armhf, arm64, hppa, i386, m68k, mips32, mips64,
     power32, ppc64el, risc-v, sh4, s390x, sparc64, x86-64
+
+stress-ng was originally intended to make a machine work hard and trip
+hardware issues such as thermal overruns as well as operating system
+bugs that only occur when a system is being thrashed hard. Use stress-ng
+with caution as some of the tests can make a system run hot on poorly
+designed hardware and also can cause excessive system thrashing which
+may be difficult to stop.
+
+stress-ng can also measure test throughput rates; this can be useful to
+observe performance changes across different operating system releases
+or types of hardware. However, it has never been intended to be used as
+a precise benchmark test suite, so do NOT use it in this manner.
 
 %prep
 %setup
@@ -85,7 +99,7 @@ install -pD debian/tests/fast-test-all %buildroot%_datadir/stress-ng/fast-test-a
 install -pD debian/tests/lite-test     %buildroot%_datadir/stress-ng/lite-test
 
 %check
-# getrandom test does not work in sborotschnitza:
+# getrandom test does not work in Girar:
 #   getrandom using flags GRND_INSECURE failed, errno=22 (Invalid argument)
 sed -i '/STRESSORS/s/getrandom //g' debian/tests/lite-test
 # Cache test for a long time hanging ALT beekeeper for a unknown reason.
@@ -104,6 +118,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Fri Jul 14 2023 Vitaly Chikunov <vt@altlinux.org> 0.16.02-alt1
+- Update to V0.16.02 (2023-07-13).
+
 * Thu Jul 13 2023 Vitaly Chikunov <vt@altlinux.org> 0.16.01-alt1
 - Update to V0.16.01 (2023-07-11).
 
