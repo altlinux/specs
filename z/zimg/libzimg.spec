@@ -2,7 +2,7 @@
 %define gname zimg
 
 Name: zimg
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: Scaling, color space conversion, and dithering library
@@ -79,6 +79,9 @@ rm -fr %buildroot%_docdir/%gname
 %_pkgconfigdir/%gname.pc
 
 %changelog
+* Thu Jul 13 2023 Leontiy Volodin <lvol@altlinux.org> 3.0.5-alt1
+- New version 3.0.5.
+
 * Mon Apr 25 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.4-alt1
 - New version (3.0.4).
 
