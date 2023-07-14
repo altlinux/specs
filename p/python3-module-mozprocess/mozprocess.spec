@@ -2,7 +2,7 @@
 %define oname mozprocess
 
 Name: python3-module-%oname
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Mozilla-authored process handling
@@ -15,6 +15,8 @@ Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 Mozilla-authored process handling.
@@ -23,18 +25,21 @@ Mozilla-authored process handling.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc PKG-INFO
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 
 %changelog
+* Fri Jul 14 2023 Anton Vyatkin <toni@altlinux.org> 1.3.1-alt1
+- new version 1.3.1
+
 * Fri Mar 10 2023 Anton Vyatkin <toni@altlinux.org> 1.3.0-alt1
 - new version 1.3.0
 
