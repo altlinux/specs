@@ -5,7 +5,7 @@
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.7.8
+Version: 2.8.1
 Release: alt1
 
 Group: Video
@@ -55,7 +55,7 @@ BuildRequires: libdca-devel libfaad-devel libjack-devel liblame-devel libtwolame
 BuildRequires: liblzma-devel liblzo2-devel libsqlite3-devel libfreetype-devel fontconfig-devel libfribidi-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel
 BuildRequires: libvdpau-devel libva-devel libXv-devel libXvMC-devel
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 aarch64
 BuildRequires: nv-codec-headers
 %endif
 %if_enabled xvba
@@ -66,7 +66,7 @@ BuildRequires: libass-devel liba52-devel libmad-devel libmp4v2-devel
 BuildRequires: libxml2-devel libxvid-devel
 BuildRequires: perl-podlators perl-IO-Compress texi2html
 BuildRequires: qt5-base-devel qt5-script-devel qt5-tools
-BuildRequires: xml-utils xsltproc yasm kde-common-devel libalsa-devel zlib-devel
+BuildRequires: xml-utils xsltproc yasm libalsa-devel zlib-devel
 
 %description
 Avidemux is a graphical tool to edit AVI. It allows you to multiplex and
@@ -198,17 +198,19 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %_libdir/libADM6*.so.*
 %_libdir/libADM_*.so
 %_libdir/ADM_plugins?/
-#%_datadir/ADM_scripts
 %dir %_datadir/avidemux6
 %dir %_datadir/avidemux6/*/
 %dir %_datadir/avidemux6/*/*
-#%_datadir/avidemux6/help
 %_iconsdir/hicolor/*/apps/org.avidemux.Avidemux.*
+%_datadir/metainfo/*videmux*.xml
 
 # devel
 %exclude %_includedir/avidemux
 
 %changelog
+* Thu Jul 13 2023 Sergey V Turchin <zerg@altlinux.org> 2.8.1-alt1
+- new version
+
 * Tue Jun 08 2021 Sergey V Turchin <zerg@altlinux.org> 2.7.8-alt1
 - new version (closes: 40181)
 
