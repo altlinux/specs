@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.17
+Version: 10.18
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -52,6 +52,9 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Fri Jul 14 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.18-alt1
+- Remove an empty field if the user did not select an avatar
+
 * Fri Jun 30 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.17-alt1
 - set UID when writting an avatar in the user's dir
 - add check for image type and symlink nesting
