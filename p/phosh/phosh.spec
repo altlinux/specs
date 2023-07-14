@@ -15,7 +15,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt1.2%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -31,6 +31,8 @@ Source: %name-%version%beta.tar
 Source1: %name.pam
 Source2: sm.puri.OSK0.desktop
 Patch1: %name-0.28.0-alt-tcb-check.patch
+# https://bugzilla.altlinux.org/46930
+Patch2: %name-0.29.0-alt-service.patch
 
 Requires: phoc >= 0.28
 Requires: gnome-shell-data
@@ -100,6 +102,7 @@ This package provides files needed to develop Phosh plugins.
 %prep
 %setup -n %name-%version%beta
 %patch1 -p2
+%patch2 -p1 -b .alt
 sed -i 's|\(User=\)1000|\1%dev_uid|' data/%name.service
 
 %build
@@ -170,6 +173,10 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Fri Jul 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1.2
+- data/phosh.service: removed "Environment=LANG=C.UTF-8",
+  switched TTYPath/UtmpIdentifier from tty7 to tty1 (ALT#46930)
+
 * Thu Jul 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1.1
 - required gnome-shell-data & mutter-gnome (ALT#46896)
 
