@@ -4,7 +4,7 @@
 %define bname iscsi
 
 Name: open-%bname
-Version: 2.1.8
+Version: 2.1.9
 License: GPL-2.0-or-later
 Release: alt1
 Summary: Utils to operate with %Name
@@ -135,6 +135,10 @@ fi
 %_man3dir/*
 
 %changelog
+* Fri Jul 14 2023 Anton Farygin <rider@altlinux.ru> 2.1.9-alt1
+- 2.1.9
+- fix build for p10
+
 * Sat Nov 12 2022 Alexey Shabalin <shaba@altlinux.org> 2.1.8-alt1
 - 2.1.8
 
@@ -152,6 +156,10 @@ fi
 
 * Sun Apr 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.1.4-alt1
 - 2.1.4
+- Fixes:
+    + CVE-2020-17437 check for TCP urgent pointer past end of frame
+    + CVE-2020-13988 check for u8 overflow when processing TCP options
+    + CVE-2020-13987 check for header length underflow during checksum calculation
 
 * Fri Dec 21 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.877-alt1.git73652184
 - master snapshot 7365218437ecf8c03860e34c002c76871abf9943
