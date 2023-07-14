@@ -3,7 +3,7 @@
 
 Name: sudo
 Version: 1.9.14p1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -109,6 +109,8 @@ configure_options='
 --with-sssd
 --with-selinux
 --with-linux-audit
+--disable-shared-libutil
+--enable-static-sudoers
 %{subst_enable python}
 --docdir=%_datadir/doc/%name-%version
 --with-plugindir=%_libdir/sudo
@@ -255,6 +257,10 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Fri Jul 14 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.14p1-alt2
+- Disable build of shared libutil.
+- Enable build with static sudoers.
+
 * Thu Jul 13 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.14p1-alt1
 - Sudo now requires a C compiler that conforms to ISO C99 or higher to build.
 - Fixed a bug where if the "intercept" or "log_subcmds" sudoers option was
