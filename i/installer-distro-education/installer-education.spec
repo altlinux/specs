@@ -1,6 +1,6 @@
 Name:    installer-distro-education
 Version: 10.0
-Release: alt4
+Release: alt5
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -113,6 +113,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Fri Jul 14 2023 Andrey Cherepanov <cas@altlinux.org> 10.0-alt5
+- Do not enable bind service.
+
 * Thu Jul 06 2023 Andrey Cherepanov <cas@altlinux.org> 10.0-alt4
 - Remove installer-feature-resolver-bind-stage3 due to dmsmasq and bind problems.
 
