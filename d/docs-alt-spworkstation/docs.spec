@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.0
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Fri Jul 14 2023 Artem Zolochevskiy <azol@altlinux.org> 8.0-alt4
+- fix typo, closes 37032
+
 * Tue Jan 15 2019 Elena Mishina <lepata@altlinux.org> 8.0-alt3
 - fix typo
 - update screenshots
