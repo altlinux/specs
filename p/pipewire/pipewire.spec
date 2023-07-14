@@ -38,7 +38,7 @@
 
 Name: pipewire
 Version: %ver_major.74
-Release: alt1
+Release: alt1.1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -144,10 +144,13 @@ This package contains command line utilities for the PipeWire media server.
 
 %prep
 %setup -a1
-mv media-session-%ms_ver subprojects/media-session
+%ifarch %e2k
+# no attribute cleanup in C++ mode, but it's only used in C sources
+sed -i '1i #ifndef __cplusplus' spa/include/spa/utils/cleanup.h
+echo -e "\n#endif" >> spa/include/spa/utils/cleanup.h
+%endif
 
-#echo -e "SHORT_NAMES = YES\nDIRECTORY_GRAPH = NO\n" >> doc/Doxyfile.in
-#%%patch
+mv media-session-%ms_ver subprojects/media-session
 
 %build
 export LIB=%_lib
@@ -327,6 +330,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Fri Jul 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.74-alt1.1
+- ilyakurdyukov@: fixed build for %%e2k
+
 * Wed Jul 12 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.74-alt1
 - 0.3.74
 
