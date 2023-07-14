@@ -3,8 +3,8 @@
 %define lname     libmosquitto
 
 Name: mosquitto
-Version: 1.6.15
-Release: alt2
+Version: 2.0.15
+Release: alt1
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
 
@@ -22,8 +22,10 @@ Source3: %name.conf
 
 # Automatically added by buildreq on Mon Feb 01 2016
 # optimized out: libcom_err-devel libkrb5-devel libstdc++-devel
-BuildRequires: gcc-c++ libcares-devel libssl-devel libuuid-devel docbook-style-xsl xsltproc libwebsockets-devel
+BuildRequires: gcc-c++ libcares-devel libssl-devel libuuid-devel docbook-style-xsl xsltproc libwebsockets-devel libcjson-devel
 Requires: %lname = %version-%release
+
+%set_verify_elf_method unresolved=relaxed
 
 %description
 The Mosquitto project has been created to provide a light weight, open-source
@@ -107,6 +109,9 @@ install -pDm644 service/systemd/%name.service.simple \
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Jul 07 2023 Pavel Vainerman <pv@altlinux.ru> 2.0.15-alt1
+- new version (2.0.15) with rpmgs script
+
 * Thu Sep 15 2022 Nikolay Burykin <bne@altlinux.org> 1.6.15-alt2
 - fix license to EPL-2.0 and EPL-1.0
 - add simple systemd service
