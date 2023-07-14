@@ -2,7 +2,7 @@
 
 Name: phoronix-test-suite
 Version: 10.8.0
-Release: alt1
+Release: alt2
 Summary: An Automated, Open-Source Testing Framework
 Summary(ru_RU.UTF8): Автоматизированная среда тестирования с открытым исходным кодом
 License: GPLv3+
@@ -18,15 +18,15 @@ BuildRequires: desktop-file-utils
 BuildRequires: systemd
 BuildRequires: libappstream-glib
 
-Requires: php7
-Requires: php7-xml
-Requires: php7-json
-Requires: php7-openssl
-Requires: php7-gd
-Requires: php7-pdo_sqlite
-Requires: php7-posix
-Requires: php7-curl
-Requires: php7-sockets
+Requires: php8.1
+Requires: php8.1-xml
+Requires: php8.1-json
+Requires: php8.1-openssl
+Requires: php8.1-gd
+Requires: php8.1-pdo_sqlite
+Requires: php8.1-posix
+Requires: php8.1-curl
+Requires: php8.1-sockets
 Requires: hicolor-icon-theme
 
 %add_findreq_skiplist %_datadir/phoronix-test-suite/ob-cache/test-profiles/*
@@ -82,6 +82,9 @@ rm -rv %buildroot%_datadir/phoronix-test-suite/pts-core/static/sample-pts-client
 %_unitdir/phoronix-result-server.service
 
 %changelog
+* Fri Jul 14 2023 Nikita Obukhov <nickf@altlinux.ru> 10.8.0-alt2
+- Change requires from php7 to php8.1
+
 * Thu Dec 30 2021 Vitaly Lipatov <lav@altlinux.ru> 10.8.0-alt1
 - new version 10.8.0
 - drop unneeded requires
