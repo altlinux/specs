@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 334
+%define centos_release 337
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -509,7 +509,9 @@ filter()
 		num="${arg%%%%:*}"
 		echo >> ".scanmod-$num" "${arg#*:}"
 	done
-	/usr/sbin/initrd-scanmod -k "$KernelVer" -b "%buildroot" .scanmod-* |
+	for f in .scanmod-*; do
+		/usr/sbin/initrd-scanmod -k "$KernelVer" -b "%buildroot" "$f"
+	done |
 		sed -r -e 's#^.*(/lib/modules/)#\1#' |
 		sort -u
 }
@@ -524,10 +526,13 @@ filter \
 # Generate kernel-modules-alsa-flavour
 filter \
 	0:"filename .*/kernel/sound/.*" \
-	1:"symbol ^snd_(register|card|ac97|soc|hda|seq|timer|intel)" \
+	1:"filename .*/kernel/drivers/soundwire/.*" \
+	2:"symbol ^snd_(register|card|ac97|soc|hda|seq|timer|intel)" \
+	3:"symbol ^sdw_(read|write|nread|nwrite)_" \
 	> kernel-modules-alsa.files
 
 # Generate kernel-modules-media-flavour
+# 1:"symbol ^media_(create|device|devnode|request)_"
 filter \
 	0:"filename .*/drivers/media/.*" \
 	> kernel-modules-media.list
@@ -638,6 +643,36 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Jul 12 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.337-alt1.el9
+- Updated to kernel-5.14.0-337.el9:
+  + ALSA - update drivers for 9.3
+  + ALSA: hda: Add NVIDIA codec IDs a3 through a7 to patch table
+  + Allow to enroll custom IMA keys
+  + Merge commit '8ba3d007f0f6681e59877369bbb9b8435edb27af' from documentation
+  + Misc tracing backports for rtla [rhel-9]
+  + RHEL for Edge ARM enable/support Bluetooth
+  + Revert "RDMA/core: Refactor rdma_bind_addr"
+  + Revert "RDMA/umem: remove FOLL_FORCE usage"
+  + Support sub-NUMA clustering on UV
+  + [s390]: [IBM 9.3 FEAT] Support for List-Directed dump from ECKD DASD - kernel part
+  + cdc-ether & r8152 update
+  + ceph: backport mainline changes up to v6.4 for RHEL 9.3
+  + cpufreq: intel_pstate: Fix scaling for hybrid-capable systems with disabled E-cores
+  + fuse: allow non-extending parallel direct writes on the same file
+  + ipvlan: fix bound dev checking for IPv6 l3s mode
+  + irq_work: use kasan_record_aux_stack_noalloc() record callstack
+  + net: core: stable backport form upstream for 9.3 phase 2
+  + net: improve skb hash stability when net.core.txrehash=0
+  + nvme-core: fix memory leaks exposed through blktests
+  + nvme-tcp: fence TCP socket on receive error
+  + selftests: 9.2 P3 backports from upstream
+  + tcp: stable backport for 9.3 phase 2
+  + udp: stable backport for 9.3 phase 2
+  + vhost_vdpa: backport bug fix for vdpa device
+  + x86/MCE/AMD: Clear DFR errors found in THR handler
+  + xfs-dax: sync to upstream v6.0
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Jul 03 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.334-alt1.el9
 - Updated to kernel-5.14.0-334.el9:
   + ACPI: processor idle: avoid call to raw_local_irq_disable() from acpi_safe_halt()
