@@ -2,7 +2,7 @@
 %def_enable python
 
 Name: sudo
-Version: 1.9.13p3
+Version: 1.9.14p1
 Release: alt1
 Epoch: 1
 
@@ -213,7 +213,6 @@ fi
 %attr(600,root,root) %config(noreplace) %_sysconfdir/pam.d/sudo
 %_bindir/sudoedit
 %dir %_libdir/sudo
-%_libdir/*.so.*
 %_libdir/sudo/sesh
 %_libdir/sudo/*.so*
 %if_enabled python
@@ -256,6 +255,43 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Thu Jul 13 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.14p1-alt1
+- Sudo now requires a C compiler that conforms to ISO C99 or higher to build.
+- Fixed a bug where if the "intercept" or "log_subcmds" sudoers option was
+  enabled and a sub-command was run where the first entry of the argument
+  vector didn't match the command being run.
+- The "intercept_verify" sudoers option is now only applied when the "intercept"
+  option is set in sudoers. Previously, it was also applied when "log_subcmds"
+  was enabled.
+- The sudoers plugin now canonicalizes command path names before matchin.
+- Improved command matching when a chroot is specified in sudoers.
+- The visudo utility now displays a warning when it ignores a file in an
+  include dir such as /etc/sudoers.d.
+- When running a command in a pseudo-terminal, sudo will initialize the terminal
+  settings even if it is the background process.
+- Fixed a bug where only the first two digits of the TSID field being was logged.
+- The "log_pty" sudoers option is now enabled by default. To restore the historic
+  behavior where a command is run in the user's terminal, add "Defaults !use_pty"
+  to the sudoers file.
+- Sudo's "-b" option now works when the command is run in a pseudo-terminal.
+- When disabling core dumps, sudo now only modifies the soft limit and leaves
+  the hard limit as-is. This avoids problems on Linux when sudo does not have
+  CAP_SYS_RESOURCE, which may be the case when run inside a container.
+- Sudo configuration file paths have been converted to colon-separated lists of
+  paths. This makes it possible to have configuration files on a read-only file
+  system while still allowing for local modifications in a different (writable)
+  directory.
+- Fixed a long-standing bug where a sudoers rule without an explicit runas list
+  allowed the user to run a command as root and any group instead of just one of
+  the groups that root is a member of.
+- Fixed a bug where a sudoers rule with an explicit runas list allowed a user to
+  run sudo commands as themselves.
+- Fixed a bug that prevented the user from specifying a group on the command line
+  via "sudo -g" if the rule's Runas_Spec contained a Runas_Alias.
+- Fixed regressions in sudo 1.9.13:
+ + Fixed a bug that resulted in a missing " ; " separator between environment
+   variables and the command in log entries.
+
 * Mon Apr 17 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.13p3-alt1
 - Update to latest stable release with regressions.
 - Fixed a bug that could cause sudo to hang when running a command
