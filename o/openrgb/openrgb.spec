@@ -1,6 +1,6 @@
 Name: openrgb
-Version: 0.8
-Release: alt2
+Version: 0.9
+Release: alt1
 
 Summary: Open source RGB lighting control that doesn't depend on manufacturer software
 
@@ -59,6 +59,9 @@ mv %buildroot%_libexecdir/udev/rules.d/60-openrgb.rules %buildroot/%_udevrulesdi
 %_iconsdir/hicolor/128x128/apps/OpenRGB.png
 
 %changelog
+* Fri Jul 14 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
+- new version 0.9 (with rpmrb script)
+
 * Sat May 20 2023 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt2
 - build for Sisyphus
 
