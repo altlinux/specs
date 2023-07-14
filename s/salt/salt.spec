@@ -2,8 +2,8 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3005.1
-Release: alt4
+Version: 3006.1
+Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -22,8 +22,7 @@ Source5: salt-minion.init
 Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
-Patch2: salt-fix-importlib-metadata-5.0.patch
-Patch3: salt-3005.1-version.patch
+Patch2: salt-release-version.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -101,12 +100,11 @@ with XMLRPC or even a Websocket API.
 %prep
 %setup
 %patch1 -p1
-%if "%(rpmvercmp '%{get_version python3-module-importlib-metadata}' '5.0.0')" > "0"
 %patch2 -p1
-%endif
-%patch3 -p1
+# Current Salt version from sources
+echo -n '%version' > salt/_version.txt
 # Remove local copy documentation mention
-subst 's| file:///usr/share/doc/salt/html/contents.html||' pkg/*.service
+subst 's| file:///usr/share/doc/salt/html/contents.html||' pkg/common/*.service
 
 %build
 %pyproject_build
@@ -138,11 +136,11 @@ install -D -m 755 %SOURCE5 %buildroot%_initdir/salt-minion
 install -D -m 755 %SOURCE3 %buildroot%_initdir/salt-api
 
 mkdir -p %buildroot%_unitdir
-install -p -m 0644 pkg/salt-master.service %buildroot%_unitdir/
-install -p -m 0644 pkg/salt-syndic.service %buildroot%_unitdir/
-install -p -m 0644 pkg/salt-minion.service %buildroot%_unitdir/
-install -p -m 0644 pkg/salt-api.service %buildroot%_unitdir/
-install -p -m 0644 pkg/salt-proxy@.service %buildroot%_unitdir/
+install -p -m 0644 pkg/common/salt-master.service %buildroot%_unitdir/
+install -p -m 0644 pkg/common/salt-syndic.service %buildroot%_unitdir/
+install -p -m 0644 pkg/common/salt-minion.service %buildroot%_unitdir/
+install -p -m 0644 pkg/common/salt-api.service %buildroot%_unitdir/
+install -p -m 0644 pkg/common/salt-proxy@.service %buildroot%_unitdir/
 
 mkdir -p %buildroot%_sysconfdir/salt/
 install -p -m 0640 conf/minion %buildroot%_sysconfdir/salt/minion
@@ -157,7 +155,7 @@ echo "ARG=''" >  %buildroot%_sysconfdir/sysconfig/salt-syndic
 echo "ARG=''" >  %buildroot%_sysconfdir/sysconfig/salt-minion
 echo "ARG=''" >  %buildroot%_sysconfdir/sysconfig/salt-api
 
-install -D -m 0644 pkg/salt.bash %buildroot%_sysconfdir/bash_completion.d/salt
+install -D -m 0644 pkg/common/salt.bash %buildroot%_sysconfdir/bash_completion.d/salt
 
 install -D -m 0644 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/salt-master
 install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
@@ -212,13 +210,14 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_unitdir/salt-master.service
 %_unitdir/salt-syndic.service
 %_bindir/salt
-%_bindir/salt-master
-%_bindir/salt-syndic
 %_bindir/salt-cloud
 %_bindir/salt-cp
 %_bindir/salt-key
+%_bindir/salt-master
+%_bindir/salt-pip
 %_bindir/salt-run
 %_bindir/salt-ssh
+%_bindir/salt-syndic
 %_bindir/spm
 %_man1dir/salt.1.*
 %_man1dir/salt-master.1.*
@@ -256,6 +255,12 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Thu Jun 15 2023 Andrey Cherepanov <cas@altlinux.org> 3006.1-alt1
+- New version.
+
+* Tue Apr 25 2023 Andrey Cherepanov <cas@altlinux.org> 3006.0-alt1
+- New version.
+
 * Tue Apr 11 2023 Anton Vyatkin <toni@altlinux.org> 3005.1-alt4
 - Fix BuildRequires
 
