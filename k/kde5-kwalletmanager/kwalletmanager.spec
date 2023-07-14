@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.04.2
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-launch-config.patch
 
 # Automatically added by buildreq on Thu Aug 06 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs xml-common xml-utils
@@ -52,6 +53,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 cp -ar po/ru/docs/kwallet5 po/ru/docs/kwalletmanager5
 
 %build
@@ -80,6 +82,9 @@ cp -ar po/ru/docs/kwallet5 po/ru/docs/kwalletmanager5
 
 
 %changelog
+* Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt2
+- fix to start configurator (closes: 46934)
+
 * Fri Jun 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
 - new version
 
