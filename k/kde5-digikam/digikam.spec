@@ -27,7 +27,7 @@
 %define label digiKam
 Name: kde5-%rname
 %define ver_major 8
-%define ver_minor 0
+%define ver_minor 1
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
 Release: alt1
@@ -337,6 +337,9 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 8.1.0-alt1
+- new version
+
 * Fri Jun 30 2023 Sergey V Turchin <zerg@altlinux.org> 8.0.0-alt1
 - new version
 
