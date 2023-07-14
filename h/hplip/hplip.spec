@@ -29,7 +29,7 @@
 
 Name:    hplip
 Version: 3.23.5
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -845,6 +845,9 @@ rm -f %buildroot%_desktopdir/hp-uiscan.desktop
 rm -f %buildroot%_bindir/hp-systray
 install -Dm0755 %{SOURCE10} %buildroot%_bindir/hp-systray
 
+# warning: Print Quality Diagnostic Utility support is deprecated. Feature can be used as is. Fixes or updates will not be provided
+rm -f %buildroot%_bindir/hp-pqdiag
+
 %pre
 # TODO: drop it somewhere after p7 release
 # no more services
@@ -1039,7 +1042,6 @@ fi
 # garbage
 %{_bindir}/hp-doctor
 %{_bindir}/hp-logcapture
-%{_bindir}/hp-pqdiag
 %{_datadir}/hplip/doctor.py*
 %{_datadir}/hplip/logcapture.py*
 %{_datadir}/hplip/pqdiag.py*
@@ -1120,6 +1122,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Jul 14 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.23.5-alt2
+- Removed deprecated hp-pqdiag.
+
 * Fri Jun 09 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.23.5-alt1
 - New version.
 - Added support for the following new printers:
