@@ -1,13 +1,15 @@
 %define rname ytmusicapi
 
 Name: python3-module-%rname
-Version: 0.24.1
+Version: 1.1.1
 Release: alt1
 
 Group: Development/Python3
 Summary: YouTube Music Unofficial API
 Url: https://github.com/sigma67/%rname
 License: MIT
+
+BuildArch: noarch
 
 %add_python3_req_skip ytmusicapi.parsers
 
@@ -52,5 +54,8 @@ rm -rf %buildroot/%python3_sitelibdir_noarch/%{pyproject_distinfo %rname} ||:
 %_datadir/%rname/
 
 %changelog
+* Thu Jul 13 2023 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1
+- new version
+
 * Mon Apr 24 2023 Sergey V Turchin <zerg@altlinux.org> 0.24.1-alt1
 - initial build
