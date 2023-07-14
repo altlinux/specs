@@ -14,7 +14,7 @@ Group: System/Libraries
 
 Name:       libsratom
 Version:    0.6.6
-Release:    alt1_1
+Release:    alt2_1
 Summary:    A C library for serializing LV2 plugins
 
 License:    MIT
@@ -22,6 +22,8 @@ URL:        http://drobilla.net/software/%{oldname}/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 # Patch from upstream
 Patch0:     %{oldname}-remove-deprecated-doxygen.patch
+# Avoid bogus test failure
+Patch1: 0001-Fixed-sratom_test-false-negative.patch
 
 BuildRequires:  python3
 BuildRequires:  doxygen
@@ -58,6 +60,7 @@ This package contains the headers and development libraries for %{oldname}.
 %prep
 %setup -n %{oldname}-%{version} -q
 %patch0 -p1
+%patch1 -p1
 
 
 # for packagers sake, build the tests with debug symbols
@@ -99,6 +102,9 @@ install -pm 644 COPYING NEWS README.md %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/*
 
 %changelog
+* Fri Jul 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.6.6-alt2_1
+- Avoid spurious test failure
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt1_1
 - update to new release by fcimport
 
