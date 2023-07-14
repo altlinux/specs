@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,13 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu Jul 13 2023 Artem Zolochevskiy <azol@altlinux.org> 10.2-alt2
+- fix typo in booting section: closes #46888
+- fix Audacity import menu entry name: closes 46865
+- fix type in Audacious section: closes #46861
+- fix chromium app name: closes #46859
+- fix thunar context menu eject entry: #46828
+
 * Tue Jun 27 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt1
 - update to beta version of Simply Linux 10.2
 - closes bug: #43411
