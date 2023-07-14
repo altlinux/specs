@@ -1,5 +1,5 @@
 Name:     girar-utils
-Version:  1.5.12
+Version:  1.5.13
 Release:  alt1
 
 Summary:  git.alt client utilities
@@ -12,6 +12,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildPreReq: gear, help2man
+
+Requires: python3(json)
 
 %description
 This package contains client utilities for git.alt.
@@ -30,6 +32,9 @@ This package contains client utilities for git.alt.
 %_mandir/man?/*
 
 %changelog
+* Wed Jul 12 2023 Aleksei Kalinin <kaa@altlinux.org> 1.5.13-alt1
+- girar-show: fix to use actual python3 version
+
 * Thu Jan 28 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.12-alt1
 - girar-show: show task content built for x86_64 instead of i586
 
