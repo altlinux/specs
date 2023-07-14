@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 Summary: JupyterLab computational environment
 License: BSD-3-Clause
@@ -104,5 +104,8 @@ and not test_build"
 %python3_sitelibdir/%pypi_name/pytest_plugin.py
 
 %changelog
+* Fri Jul 14 2023 Anton Vyatkin <toni@altlinux.org> 4.0.3-alt1
+- new version 4.0.3
+
 * Mon Jun 12 2023 Anton Vyatkin <toni@altlinux.org> 4.0.2-alt1
 - Initial build for Sisyphus
