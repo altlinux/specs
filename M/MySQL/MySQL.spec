@@ -16,7 +16,7 @@
 
 Name: MySQL
 Version: 8.0.30
-Release: alt1.1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -63,6 +63,7 @@ Patch5: mysql-8.0.12-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-8.0.27-alt-mysql_config-libs.patch
 Patch9: mysql-8.0.29-alt-disable-run-libmysql_api_test.patch
+Patch10: mysql-8.0.30-alt-upstream-gcc13.patch
 
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
@@ -388,6 +389,7 @@ Python module for MySQL Shell
 %patch5 -p1
 %patch7 -p1
 %patch9 -p1
+%patch10 -p1
 
 # Patch Boost
 pushd boost/boost_1_77_0
@@ -919,6 +921,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri Jul 14 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.0.30-alt2
+- NMU: backported upstream commits to fix FTBFS with gcc13 (thx Tor Didriksen).
+
 * Sat Sep 03 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.0.30-alt1.1
 - update alt-e2k patch: 8.0.28 -> 8.0.30
 
