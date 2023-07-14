@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.21
+Version: 0.22
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -53,6 +53,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 0.22-alt1
+- rearrange UI
+
 * Tue Jul 04 2023 Sergey V Turchin <zerg@altlinux.org> 0.21-alt1
 - don't use combobox to avoid additional X11 popup window that is difficult to manage
 
