@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt5
+Release: alt6
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Jul 14 2023 Artem Zolochevskiy <azol@altlinux.org> 10.1-alt6
+- fix typo (Closes 45284)
+
 * Thu Jan 26 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt5
 - update documentation PVE
 - fixed PVE (ALT 45021, 45023, 45024, 45025, 45027, 45028)
