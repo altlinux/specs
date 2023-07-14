@@ -6,7 +6,7 @@
 
 Name: libbotan
 Version: 2.19.1
-Release: alt2.1
+Release: alt2.2
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -110,6 +110,9 @@ LD_LIBRARY_PATH=. ./botan-test
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Fri Jul 14 2023 Artyom Bystrov <arbars@altlinux.org> 2.19.1-alt2.2
+- Fix build on GCC13
+
 * Wed Aug 31 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.19.1-alt2.1
 - e2k patch update
 
