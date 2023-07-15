@@ -1,14 +1,15 @@
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
-Version: 4.11.0
-Release: alt1.1
+Version: 4.11.1
+Release: alt1
 Group: Sciences/Mathematics
 License: GPLv2
 URL: https://gmsh.info/
 
 Source: %name-%version.tar
 Source1: %name.watch
-Patch: eigen_mma.patch
+Patch1: 0001-include-missing-cstdint.patch
+Patch2: eigen_mma.patch
 
 Requires: lib%name = %EVR
 
@@ -65,8 +66,9 @@ This package contains tutorial and example files for %name.
 
 %prep
 %setup
+%patch1 -p2
 %ifarch ppc64le
-%patch -p2
+%patch2 -p2
 %endif
 %ifarch %e2k
 # need to disable workarounds for GCC
@@ -117,6 +119,10 @@ rm -f %buildroot%_libdir/*.jl
 
 
 %changelog
+* Sat Jul 15 2023 Vladislav Zavjalov <slazav@altlinux.org> 4.11.1-alt1
+- New version
+- patch: include missing cstdint (fix for gcc13)
+
 * Wed May 24 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.11.0-alt1.1
 - Fixed build for Elbrus
 
