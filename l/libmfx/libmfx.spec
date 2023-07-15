@@ -3,7 +3,7 @@
 %define sover 1
 Name: libmfx
 Version: 22.5.4
-Release: alt1
+Release: alt2
 
 Summary: The Intel Media SDK
 
@@ -90,5 +90,8 @@ the Intel Media SDK.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jul 14 2023 Artyom Bystrov <arbars@altlinux.org> 22.5.4-alt2
+- Fix build on GCC13
+
 * Fri Mar 03 2023 Vitaly Lipatov <lav@altlinux.ru> 22.5.4-alt1
 - initial build for ALT Sisyphus
