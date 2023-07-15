@@ -7,7 +7,7 @@
 %define u7s_admin_homedir %_localstatedir/%u7s_admin_usr
 
 Name: podsec
-Version: 1.0.2
+Version: 1.0.5
 Release: alt1
 
 Summary: Set of scripts for Podman Security
@@ -105,6 +105,7 @@ to monitor and identify security threats
 Summary: Set of scripts for podsec developers
 Group: Development/Other
 Requires: podsec >= %EVR
+Requires: podsec-k8s >= %EVR
 
 %description dev
 A set of scripts for developers
@@ -213,8 +214,21 @@ chmod 600 $rootcrontab
 %_mandir/man?/podsec-save-oci*
 
 %changelog
+* Sat Jul 15 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
+* Mon Jun 19 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.4-alt1
+- 1.0.4
+
+
+* Fri May 26 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Fri May 26 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.2-alt1
 - 1.0.2
+
+* Fri May 26 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.1-alt1
+- 1.0.1
 
 * Wed May 24 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.0-alt1
 - 1.0.0
