@@ -28,7 +28,7 @@
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt1
+Release: alt2
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -42,6 +42,7 @@ Source3: %name.rules
 Source4: %name-desktop.tmpfile
 Source5: %toolsdaemon.pam
 Source6: %name-%vgauthdaemon.tmpfile
+Source90: 90-vmware-guest-tools.rules
 Source99: 99-vmware-scsi-udev.rules
 
 Patch100: add-altlinux-open-vm-tools.patch
@@ -187,6 +188,7 @@ install -p -m 755 -D %SOURCE2 %buildroot%_initdir/%toolsdaemon
 install -p -m 755 -D %SOURCE12 %buildroot%_initdir/%vgauthdaemon
 # udev rules
 install -p -m 644 -D %SOURCE3 %buildroot%_udevrulesdir/98-%name.rules
+install -p -m 644 -D %SOURCE90 %buildroot%_udevrulesdir/90-vmware-guest-tools.rules
 # install fixed udev rules
 install -p -m 644 -D %SOURCE99 %buildroot%_udevrulesdir/99-vmware-scsi-udev.rules
 # tmpfiles
@@ -204,10 +206,11 @@ mkdir -p %buildroot%_runtimedir/vmware
 # Setup mount point for Shared Folders
 if [ -f %_bindir/vmware-checkvm -a                     \
      -f %_bindir/vmhgfs-fuse ] &&                      \
-   %_bindir/vmware-checkvm &> /dev/null &&             \
-   %_bindir/vmware-checkvm -p | grep -q Workstation && \
-   %_bindir/vmhgfs-fuse -e &> /dev/null; then
-   mkdir -p /mnt/hgfs
+    %_bindir/systemd-detect-virt | grep -iq VMware &&   \
+    %_bindir/vmware-checkvm &> /dev/null &&             \
+    %_bindir/vmware-checkvm -p | grep -q Workstation && \
+    %_bindir/vmhgfs-fuse -e &> /dev/null; then
+    mkdir -p /mnt/hgfs
 fi
 
 %post_service %vgauthdaemon
@@ -217,17 +220,22 @@ fi
 %preun_service %toolsdaemon
 %preun_service %vgauthdaemon
 # Tell VMware that open-vm-tools is being uninstalled
-if [ "$1" = "0" -a                      \
-     -e %_bindir/vmware-checkvm -a    \
-     -e %_bindir/vmware-rpctool ] &&  \
+if [ "$1" = "0" -a                                      \
+    -f %_bindir/vmware-checkvm ] &&                     \
+    %_bindir/systemd-detect-virt | grep -iq VMware &&   \
      %_bindir/vmware-checkvm &> /dev/null; then
-		%_bindir/vmware-rpctool 'tools.set.version 0' &> /dev/null || /bin/true
 
-		if [ -d /mnt/hgfs ] &&   \
-		    %{_bindir}/vmware-checkvm -p | grep -q Workstation; then
-		    umount /mnt/hgfs &> /dev/null || /bin/true
-		    rmdir /mnt/hgfs &> /dev/null || /bin/true
-		fi
+   # Tell VMware that open-vm-tools is being uninstalled
+   if [ -f %_bindir/vmware-rpctool ]; then
+      %_bindir/vmware-rpctool 'tools.set.version 0' &> /dev/null || true
+   fi
+
+   # Teardown mount point for Shared Folders
+   if [ -d /mnt/hgfs ] &&                               \
+      %_bindir/vmware-checkvm -p | grep -q Workstation; then
+      umount /mnt/hgfs &> /dev/null || /bin/true
+      rmdir /mnt/hgfs &> /dev/null || /bin/true
+   fi
 fi
 
 %files
@@ -316,6 +324,11 @@ fi
 
 
 %changelog
+* Sat Jul 15 2023 Alexey Shabalin <shaba@altlinux.org> 12.2.5-alt2
+- add udev rule for autostart vmtoolsd.service
+- update pam config
+- run vgauthd together with vmtoolsd
+
 * Wed Jun 14 2023 Andrew A. Vasilyev <andy@altlinux.org> 12.2.5-alt1
 - 12.2.5 (CVE-2023-20867)
 
