@@ -1,28 +1,37 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%def_with gtk
 
 Name: kvmtool
 Version: 3.18.0
-Release: alt5.git.e17d182a
+Release: alt6
 Summary: Linux Native KVM Tool
-License: GPLv2+
+License: GPL-2.0
 Group: Emulators
-Url: https://git.kernel.org/cgit/linux/kernel/git/will/kvmtool.git/
+Url: https://git.kernel.org/cgit/linux/kernel/git/will/kvmtool.git
 Source: %name-%version.tar
 
-# suse patches
-Patch11: nonexec-stack.patch
+# Do not build on architectures where kvmtool definitely does not work.
+#   armh:    Error: '/dev/kvm' KVM driver not available.
+#   ppc64le: Warning: Host CPU unsupported by kvmtool
+ExcludeArch: armh
 
-# rkt patches
-Patch21: do_synchronous_writes.patch
-Patch22: p9-chown-files-and-dirs-upon-creation.patch
-Patch23: quiet-booting.patch
-Patch24: terminal_late_fix.patch
-
-
+BuildRequires: binutils-devel
 BuildRequires: glibc-devel-static
 BuildRequires: libaio-devel
-BuildRequires: pkgconfig(zlib)
 BuildRequires: libfdt-devel
 BuildRequires: libvncserver-devel
+BuildRequires: zlib-devel
+%if_with gtk
+BuildRequires: libgtk+3-devel
+BuildRequires: libSDL-devel
+%endif
+%{?!_without_check:%{?!_disable_check:
+BuildRequires(pre): rpm-build-vm
+}}
 
 %description
 kvmtool is a lightweight tool for hosting KVM guests. As a pure virtualization
@@ -31,23 +40,43 @@ running 32-bit guests on those 64-bit architectures that allow this.
 
 %prep
 %setup
-%patch11 -p1
-%patch21 -p1
-%patch22 -p1
-#patch23 -p1
-%patch24 -p1
 
 %build
 %make_build V=1 prefix=%prefix
 
 %install
-%makeinstall_std prefix=%prefix
+%makeinstall_std V=1 prefix=%prefix
+install -D Documentation/kvmtool.1 %buildroot%_man1dir/lkvm.1
+
+%ifnarch ppc64le
+# Should be workable on ppc64 but ain't: hangs without console output on
+# KVM-HV, fails with `KVM_RUN failed: Device or resource busy` on KVM-PR.
+
+%check
+./lkvm setup test
+ln -s /boot/vmlinuz-*-alt* bzImage
+vm-initrd initrd.img --modules='9pnet_virtio 9p virtio_pci'
+uuidgen > uuid
+# `sleep 1` because power off sometimes eats program output.
+# x86 cannot handle a lot of memory causing "Fatal: Failed to read initrd" error
+# on girar due to EFAULT, but all can handle around 1G.
+timeout 60 \
+./lkvm sandbox -m 1024 -i initrd.img -d test -n mode=none -- bash -xc "cat /host/$PWD/uuid; sleep 1" |& tee boot.log
+grep -f uuid boot.log
+%endif
 
 %files
+%define _customdocdir %_docdir/%name
+%doc README COPYING CREDITS* Documentation/*.txt
 %_bindir/lkvm
-%doc README COPYING
+%_man1dir/lkvm.1*
 
 %changelog
+* Sat Jul 15 2023 Vitaly Chikunov <vt@altlinux.org> 3.18.0-alt6
+- Update to git commit bd4ba57 (2023-07-07).
+- spec: Update packaging (add GTK, SDL, sframe, and man page).
+- spec: Add simple %%check section.
+
 * Mon Jan 23 2023 Alexey Shabalin <shaba@altlinux.org> 3.18.0-alt5.git.e17d182a
 - update to upstream master (e17d182ad3f797f01947fc234d95c96c050c534b)
 
@@ -64,5 +93,3 @@ running 32-bit guests on those 64-bit architectures that allow this.
 
 * Thu Feb 08 2018 Alexey Shabalin <shaba@altlinux.ru> 3.18.0-alt1.git.a508ea
 - Initial build
-
-
