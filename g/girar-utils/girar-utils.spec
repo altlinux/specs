@@ -1,5 +1,5 @@
 Name:     girar-utils
-Version:  1.5.13
+Version:  1.5.14
 Release:  alt1
 
 Summary:  git.alt client utilities
@@ -32,6 +32,9 @@ This package contains client utilities for git.alt.
 %_mandir/man?/*
 
 %changelog
+* Sat Jul 15 2023 Vitaly Lipatov <lav@altlinux.ru> 1.5.14-alt1
+- s/egrep/grep -E/
+
 * Wed Jul 12 2023 Aleksei Kalinin <kaa@altlinux.org> 1.5.13-alt1
 - girar-show: fix to use actual python3 version
 
