@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.5
+Version: 1.0
 Release: alt1
 
 Summary: Provides maildir like access to files
@@ -16,6 +16,8 @@ Vcs: https://github.com/gocept/gocept.filestore
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-zope.deferredimport
 BuildRequires: python3-module-zope.testrunner
@@ -43,23 +45,23 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-%tox_check
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt README.md
 %dir %python3_sitelibdir/%mname
 %python3_sitelibdir/%mname/*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/%mname/*/tests.*
 %exclude %python3_sitelibdir/*.pth
 
@@ -68,6 +70,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 
 %changelog
+* Sat Jul 15 2023 Anton Vyatkin <toni@altlinux.org> 1.0-alt1
+- New version 1.0.
+
 * Wed Mar 29 2023 Anton Vyatkin <toni@altlinux.org> 0.5-alt1
 - New version 0.5.
 
