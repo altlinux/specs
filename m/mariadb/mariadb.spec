@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 10.6.11
-Release: alt1
+Release: alt1.qa1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -111,6 +111,7 @@ Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mariadb-10.1.8-alt-client.patch
 #Patch5: mariadb-10.0.21-alt-load_defaults.patch
 Patch7: mariadb-10.3.8-alt-config-libs.patch
+Patch8: mariadb-10.6.11-alt-upstream-gcc13.patch
 
 # Patches specific for this mysql package
 Patch30: mariadb-errno.patch
@@ -121,6 +122,7 @@ Patch33: mariadb-covscan-signexpr.patch
 
 Patch101: rocksdb-6.8.0-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
+Patch103: rocksdb-alt-upstream-gcc13.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -424,6 +426,8 @@ tar -xf %SOURCE106 -C storage/maria/libmarias3
 %patch4 -p1
 #%%patch5 -p1
 %patch7 -p1
+%patch8 -p1
+
 %patch30 -p1
 #%%patch31 -p1
 %patch32 -p1
@@ -432,6 +436,7 @@ tar -xf %SOURCE106 -C storage/maria/libmarias3
 
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
 #%%patch102 -p1
+%patch103 -p1 -d ./storage/rocksdb/rocksdb
 
 %ifarch %e2k
 %patch2000 -p1
@@ -1036,6 +1041,10 @@ fi
 %endif
 
 %changelog
+* Fri Jul 14 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.6.11-alt1.qa1
+- NMU: backported upstream commits to fix FTBFS with gcc13 (thx Khem Raj and
+  Heiko Becker).
+
 * Fri Dec 02 2022 Alexey Shabalin <shaba@altlinux.org> 10.6.11-alt1
 - 10.6.11
 

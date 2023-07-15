@@ -2,20 +2,18 @@
 
 Name: libwebsockets
 Version: 4.3.2
-Release: alt1
+Release: alt2
 
 Summary: A lightweight C library for Websockets
 
-# base64-decode.c and ssl-http2.c is under MIT license with FPC exception.
-# sha1-hollerbach is under BSD
-# https://fedorahosted.org/fpc/ticket/546
-# Test suite is licensed as Public domain (CC-zero)
-License: LGPLv2 and Public Domain and BSD and MIT and zlib
+License: MIT and Apache-2.0 and BSD-3-Clause and Zlib and CC0
 Group: Development/C
 Url: http://libwebsockets.org
 
 # Source-url: https://github.com/warmcat/libwebsockets/archive/v%version.tar.gz#/%name-%version.tar.gz
 Source: %name-%version.tar
+
+Patch: libwebsockets-4.3.2-alt-upstream-gcc13.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -54,6 +52,7 @@ This package contains the tests for %name applications.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
@@ -100,6 +99,10 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_datadir/%name-test-server/
 
 %changelog
+* Fri Jul 14 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.3.2-alt2
+- NMU: backported upstream commit to fix FTBFS with gcc13 (thx Andy Green).
+- Fixed License: tag.
+
 * Mon Jun 27 2022 Dmitry Lyalyaev <fruktime@altlinux.org> 4.3.2-alt1
 - new version 4.3.2
 

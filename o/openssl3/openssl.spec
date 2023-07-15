@@ -1,66 +1,23 @@
+%def_enable tsget
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%def_disable compat
-%def_disable tsget
-%def_disable devel
-%def_disable utils
-
-Name: openssl1.1
-Version: 1.1.1u
-Release: alt2
+Name: openssl3
+Version: 3.1.1
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
-License: OpenSSL
+License: Apache-2.0
 Group: System/Base
 Url: http://www.openssl.org
 
-# Repacked https://openssl.org/source/openssl-%version.tar.gz
-Source: openssl-%version.tar
+# http://git.altlinux.org/gears/o/openssl3.git
+Source: openssl-%version-%release.tar
 
-Source1: openssl-config
-Source2: Makefile.certificate
-Source3: make-dummy-cert
-Source4: cc.sh
-
-Patch01: openssl-upstream-branch-updates.patch
-Patch03: openssl-alt-config.patch
-Patch04: openssl-alt-engines-path.patch
-Patch05: openssl-alt-e2k-makecontext.patch
-Patch06: openssl-alt-config-sync-with-openssl-3.patch
-Patch07: openssl-alt-ignore-providers-module-configuration.patch
-
-# Patches from Fedora
-# Build changes
-Patch101: openssl-rh-build.patch
-# Patch102: openssl-rh-defaults.patch (different config)
-Patch103: openssl-rh-no-html.patch
-# Patch104: openssl-rh-man-rename.patch (not needed)
-# Bug fixes
-Patch121: openssl-rh-issuer-hash.patch
-# Functionality changes
-# Patch131: openssl-rh-conf-paths.patch (changes config)
-Patch132: openssl-rh-version-add-engines.patch
-Patch133: openssl-rh-apps-dgst.patch
-# Patch136: openssl-rh-no-brainpool.patch (why disable it?)
-# Patch137: openssl-rh-ec-curves.patch (breaks tests; we have no reason to disable this curves, right?)
-Patch138: openssl-rh-no-weak-verify.patch
-Patch140: openssl-rh-disable-ssl3.patch
-Patch141: openssl-rh-system-cipherlist.patch
-# Patch142: openssl-rh-fips.patch (not needed)
-# Patch143: openssl-rh-ignore-bound.patch (not sure)
-# Patch144: openssl-rh-version-override.patch (not needed; FIPS)
-Patch145: openssl-rh-weak-ciphers.patch
-# Patch146: openssl-rh-seclevel.patch (not needed; FIPS)
-# Patch148: openssl-rh-fips-post-rand.patch (not needed)
-# Patch149: openssl-rh-evp-kdf.patch (new functionality; not sure)
-# Patch150: openssl-rh-ssh-kdf.patch (new functionality; not sure)
-# Backported fixes including security fixes
-
-%define shlib_soversion 1.1
+%define shlib_soversion 3
 %define openssldir /var/lib/ssl
 %define old_openssldir %_libdir/ssl
 
-BuildRequires: /usr/bin/pod2man bc zlib-devel perl-PathTools
+BuildRequires: /usr/bin/pod2man bc zlib-devel perl-PathTools perl-IPC-Cmd
 %if_enabled tsget
 BuildRequires: perl-WWW-Curl
 %endif
@@ -69,10 +26,10 @@ BuildRequires: perl-WWW-Curl
 
 %package -n libcrypto%shlib_soversion
 Summary: OpenSSL libcrypto shared library
-Group: System/Legacy libraries
+Group: System/Libraries
 Provides: libcrypto = %version-%release
 # due to openssl.cnf
-Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 <= 1.0.2q-alt1
+Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 <= 1.0.2q-alt1, libcrypto1.1 <= 1.1.1u-alt1
 # due to openssldir migration
 Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
@@ -81,7 +38,7 @@ Requires: ca-certificates
 
 %package -n libssl%shlib_soversion
 Summary: OpenSSL libssl shared library
-Group: System/Legacy libraries
+Group: System/Libraries
 Provides: libssl = %version
 Requires: libcrypto%shlib_soversion = %version-%release
 
@@ -119,12 +76,17 @@ BuildArch: noarch
 
 %package -n openssl-engines
 Summary: OpenSSL ENGINE interface modules
-Group: System/Legacy libraries
+Group: System/Libraries
+Requires: libssl%shlib_soversion = %version-%release
+
+%package -n openssl-providers
+Summary: OpenSSL provider interface modules
+Group: System/Libraries
 Requires: libssl%shlib_soversion = %version-%release
 
 %package -n tsget
 Summary: Time Stamping HTTP/HTTPS client
-Group: Security/Networking 
+Group: Security/Networking
 BuildArch: noarch
 Requires: libssl%shlib_soversion = %version-%release
 
@@ -200,20 +162,21 @@ a "standard" and an "engine" version.  In development for 0.9.7, the
 ENGINE code has been merged into the main branch and is present in
 the standard releases from 0.9.7 forwards.
 
-There are currently following built-in ENGINE implementations:
-- 4758cca: IBM 4758 CCA hardware support;
-- aep: Aep hardware support;
-- atalla: Atalla hardware support;
-- chil: CHIL hardware support;
-- cswift: CryptoSwift hardware support;
-- gost: GOST (Russian cryptography standard) implementation;
-- nuron: Nuron hardware support;
-- padlock: VIA PadLock ACE support;
-- sureware: SureWare hardware support;
-- ubsec: UBSEC hardware support.
-
 In addition, dynamic binding to external ENGINE implementations is
 provided by a special ENGINE called "dynamic".
+
+%description -n openssl-providers
+The OpenSSL toolkit provides support for secure communications between
+machines. OpenSSL includes a certificate management tool and shared
+libraries which provide various cryptographic algorithms and
+protocols.
+
+Providers are containers for algorithm implementations. Whenever a
+cryptographic algorithm is used via the high level APIs a provider is selected.
+It is that provider implementation that actually does the required work. There
+are five providers distributed with OpenSSL. In the future we expect third
+parties to distribute their own providers which can be added to OpenSSL
+dynamically.
 
 %description -n tsget
 The tsget command can be used for sending a time stamp request, as
@@ -225,37 +188,7 @@ without closing the TCP connection if more than one requests are specified
 on the command line.
 
 %prep
-%setup -n openssl-%version
-%patch01 -p1
-%patch03 -p1
-%patch04 -p1
-%patch05 -p2
-%patch06 -p1
-%patch07 -p1
-
-%patch101 -p1
-#%%patch102 -p1 (different config)
-%patch103 -p1
-#%%patch104 -p1 (not needed)
-%patch121 -p1
-#%%patch131 -p1 (changes config)
-%patch132 -p1
-%patch133 -p1
-#%%patch136 -p1 (why disable it?)
-#%%patch137 -p1 (breaks tests; we have no reason to disable this curves, right?)
-%patch138 -p1
-%patch140 -p1
-%patch141 -p1
-#%%patch142 -p1 (not needed)
-#%%patch143 -p1 (not sure)
-#%%patch144 -p1 (not needed; FIPS)
-%patch145 -p1
-#%%patch146 -p1 (not needed; FIPS)
-#%%patch148 -p1 (not needed)
-#%%patch149 -p1 (new functionality; not sure)
-#%%patch150 -p1 (new functionality; not sure)
-
-find -type f -name \*.orig -delete
+%setup -n openssl-%version-%release
 # Skip afalg test.
 # This test fails when af_alg moudle is loaded, but with no aes_cbc support.
 rm test/recipes/30-test_afalg.t
@@ -286,7 +219,10 @@ ADD_ARGS=linux-mips32
 %ifarch mips64 mips64el
 ADD_ARGS=linux64-mips64
 %endif
-%ifarch riscv64 %e2k
+%ifarch riscv64
+ADD_ARGS=linux64-riscv64
+%endif
+%ifarch %e2k
 ADD_ARGS=linux-generic64
 %endif
 %ifarch loongarch64
@@ -330,7 +266,7 @@ touch -r libssl.so.%shlib_soversion libssl-stamp
 %install
 # The make_install macro doesn't work here.
 make install \
-	CC=%_sourcedir/cc.sh \
+	CC="$PWD"/alt/cc.sh \
 	DESTDIR=%buildroot \
 	MANDIR=%_mandir
 
@@ -348,7 +284,7 @@ grep -qw libssl openssl.libs
 grep -qw libcrypto openssl.libs
 
 # Install openssl-config script.
-install -pDm755 %_sourcedir/openssl-config %buildroot%_bindir/openssl-config
+install -pDm755 alt/openssl-config %buildroot%_bindir/openssl-config
 subst -p 's,%%version,%version,g;s,%%openssldir,%openssldir,g' \
 	%buildroot%_bindir/openssl-config
 
@@ -365,31 +301,14 @@ mkdir -p %buildroot%_sysconfdir/openssl
 mv %buildroot%openssldir/openssl.cnf %buildroot%_sysconfdir/openssl/
 ln -s -r %buildroot%_sysconfdir/openssl/openssl.cnf %buildroot%openssldir/
 
-# Rename some man pages, fix references.
-for f in passwd.1 config.5; do
-	name="${f%%.*}"
-	sect="${f##*.}"
-	NAME=`printf %%s "$name" |tr '[:lower:]' '[:upper:]'`
-	sed -i "s/\\<$NAME $sect\\>/SSL&/" %buildroot%_mandir/man"$sect/$f"
-	mv -v %buildroot%_mandir/man"$sect"/{,ssl}"$f"
-	find %buildroot%_mandir -type f -print0 |
-		xargs -r0 grep -FZl "\\fI$name\\fR\\|($sect)" -- |
-		xargs -r0 subst -p "s/\\\\fI$name\\\\fR\\\\|($sect)/\\\\fIssl$name\\\\fR\\\\|($sect)/" --
-	find %buildroot%_mandir -type l |while read link; do
-		[ "$(readlink -n "$link")" = "$f" ] || continue
-		ln -sfv "ssl$f" "$link"
-	done
-done
-# ln -s sslconfig.5 %buildroot%_mandir/man5/openssl.cnf.5
-
 # Make backwards-compatibility symlink to ssleay.
 ln -snf openssl %buildroot%_bindir/ssleay
 
 # Install a makefile for generating keys and self-signed certs,
 # and a script for generating them on the fly.
-install -pDm644 %_sourcedir/Makefile.certificate \
+install -pDm644 alt/Makefile.certificate \
 	%buildroot%openssldir/certs/Makefile
-install -pDm644 %_sourcedir/make-dummy-cert \
+install -pDm644 alt/make-dummy-cert \
 	%buildroot%openssldir/certs/make-dummy-cert
 
 ln -s -r %buildroot%_datadir/ca-certificates/ca-bundle.crt \
@@ -409,7 +328,7 @@ rm %buildroot%openssldir/ct_log_list.cnf.dist
 
 %define docdir %_docdir/openssl-%version
 mkdir -p %buildroot%docdir
-install -pm644 CHANGES* LICENSE NEWS README* \
+install -pm644 CHANGES* LICENSE.txt NEWS.md README* \
 	%buildroot%docdir/
 bzip2 -9 %buildroot%docdir/CHANGES*
 cp -a demos doc %buildroot%docdir/
@@ -425,15 +344,19 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 	OPENSSL_SYSTEM_CIPHERS_OVERRIDE=%buildroot%_sysconfdir/openssl/cipher-list.conf \
 	make test V=1
 
-%define _unpackaged_files_terminate_build 0
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %files -n libcrypto%shlib_soversion
 /%_lib/libcrypto*
 %config(noreplace) %_sysconfdir/openssl/openssl.cnf
 %dir %_sysconfdir/openssl/
 %dir %openssldir
+%dir %openssldir/certs
+%dir %attr(700,root,root) %openssldir/private
 %openssldir/*.cnf
 %openssldir/*.pem
+%dir %_libdir/openssl
 %dir %docdir
 %docdir/[A-Z]*
 
@@ -442,7 +365,6 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %dir %_sysconfdir/openssl/
 /%_lib/libssl*
 
-%if_enabled devel
 %files -n libssl-devel
 %_bindir/openssl-config
 %_libdir/*.so
@@ -451,19 +373,14 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 
 %files -n libssl-devel-static
 %_libdir/*.a
-%endif
 
-%if_enabled utils
 %files -n openssl
 %_bindir/*
-%dir %openssldir
-%openssldir/misc
-%openssldir/certs
-%dir %attr(700,root,root) %openssldir/private
+%openssldir/misc/*
+%openssldir/certs/*
 %_mandir/man[157]/*
 %if_enabled tsget
 %exclude %_man1dir/tsget.*
-%exclude %_man1dir/openssl-tsget.*
 %endif
 
 %files -n openssl-doc
@@ -472,20 +389,23 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %_man3dir/*
 
 %files -n openssl-engines
-%_libdir/openssl
-%endif
+%_libdir/openssl/engines-%shlib_soversion
+
+%files -n openssl-providers
+%_libdir/ossl-modules
 
 %if_enabled tsget
 %files -n tsget
 %_sbindir/tsget
 %_sbindir/tsget.pl
 %_man1dir/tsget.*
-%_man1dir/openssl-tsget.*
 %endif
 
 %changelog
-* Fri Jul 07 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1u-alt2
-- Rebuilt as openssl 3 compat package.
+* Thu Jul 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.1-alt1
+- Updated to 3.1.1.
+- Relocated the directories /var/lib/ssl/certs and /var/lib/ssl/private from
+  the openssl subpackage to the libcrypto3 subpackage.
 
 * Tue May 30 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1u-alt1
 - Updated to 1.1.1u (fixes CVE-2023-2650).
