@@ -4,7 +4,7 @@
 %define lname libopen62541pp
 
 Name: open62541pp
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: open62541++ is a C++ wrapper built on top of the amazing open62541 OPC UA (OPC Unified Architecture) library.
@@ -47,7 +47,7 @@ open62541++ is a C++ wrapper built on top of the amazing open62541 OPC UA (OPC U
 cp -p %{SOURCE1} .
 
 %build
-%cmake -DBUILD_SHARED_LIBS=ON -DUAPP_INTERNAL_OPEN62541=OFF
+%cmake -DBUILD_SHARED_LIBS=ON -DUAPP_INTERNAL_OPEN62541=OFF -DUAPP_BUILD_DOCUMENTATION=OFF
 %cmake_build
 
 %install
@@ -66,8 +66,12 @@ cp -p %{SOURCE1} .
 
 
 %changelog
+* Sun Jul 16 2023 Pavel Vainerman <pv@altlinux.ru> 0.5.0-alt1
+- new version (0.5.0) with rpmgs script
+
 * Sat May 20 2023 Pavel Vainerman <pv@altlinux.ru> 0.4.0-alt1
 - new version (0.4.0) with rpmgs script
+- packaged docs
 
 * Mon May 01 2023 Pavel Vainerman <pv@altlinux.ru> 0.3.0-alt1
 - new version (0.3.0) with rpmgs script
