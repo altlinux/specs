@@ -6,7 +6,7 @@
 
 Name:		rr
 Version:	5.6.0
-Release:	alt2
+Release:	alt3
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
 License:	MIT and BSD and Apache-2.0
@@ -47,7 +47,8 @@ rr currently requires either:
 
 %build
 # %%define optflags_lto %nil
-# %%add_optflags -Wno-error=maybe-uninitialized
+# Workarounds for 5.6.0:
+%add_optflags -Wno-error=redundant-move -Wno-error=maybe-uninitialized -Wno-error=dangling-reference
 %cmake -Ddisable32bit=ON -DBUILD_TESTS=OFF
 %cmake_build
 
@@ -71,6 +72,9 @@ rm -rf %buildroot%_datadir/rr/src
 %_libdir/rr
 
 %changelog
+* Sun Jul 16 2023 Vitaly Chikunov <vt@altlinux.org> 5.6.0-alt3
+- Workaround ALT beekeeper rebuild failures (gcc13).
+
 * Sat Nov 05 2022 Vitaly Chikunov <vt@altlinux.org> 5.6.0-alt2
 - Fix rebuild after kernel headers update in v6.0.
 
