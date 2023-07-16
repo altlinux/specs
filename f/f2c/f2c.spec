@@ -1,10 +1,8 @@
-%set_verify_elf_method unresolved=relaxed
-
 %define somver 0
 %define sover %somver.0.0
 Name: f2c
 Version: 20200916
-Release: alt1
+Release: alt2
 Summary: F2c converts Fortran 77 source code to C/C++ source code
 License: %bsdstyle
 Group: Development/C
@@ -13,6 +11,7 @@ BuildRequires(pre): unzip rpm-build-licenses
 Patch: f2c-ALT-build.patch
 Patch1: f2c-ALT-MIPS.patch
 Patch2: f2c-ALT-RISC-V.patch
+Patch3: f2c-ALT-make-MAIN__-weak.patch
 
 Source: http://www.netlib.org/f2c/libf2c.zip
 Source2: http://www.netlib.org/f2c/fc
@@ -95,6 +94,8 @@ This package contains development documentation for f2c.
 %patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+
 install -p -m644 %SOURCE6 ./
 sed -i '19s|(LIBDIR)|%buildroot%_libdir|' makefile
 
@@ -133,6 +134,14 @@ bzip2 src/changes
 %_docdir/%name
 
 %changelog
+* Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 20200916-alt2
+- NMU:
+  - Added a patch to convert the reference to the MAIN__ symbol into a
+  weak reference.
+  - Removed %%set_verify_elf_method unresolved=relaxed, which was used to
+  tolerate the presence of an unresolved MAIN__ symbol in the libf2c-ng
+  library.
+
 * Thu Oct 14 2021 Ivan A. Melnikov <iv@altlinux.org> 20200916-alt1
 - Version 20200916
 - fix build on riscv64
