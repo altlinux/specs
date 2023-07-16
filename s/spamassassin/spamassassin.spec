@@ -5,7 +5,7 @@
 
 Name: spamassassin
 Version: 4.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Spam filter for email written in perl
 License: Apache-2.0
@@ -23,6 +23,10 @@ Patch10: spamassassin-deb-10_change_config_paths.patch
 Patch11: spamassassin-deb-20_edit_spamc_pod.patch
 Patch12: spamassassin-deb-55_disable_nagios_epm.patch
 Patch13: spamassassin-deb-90_pod_cleanup.patch
+
+# upstream fixes
+# Bug 8140 - sa-update uses deprecated method rdatastr
+Patch20: spamassassin-bug-8140-sa-update.patch
 
 %def_without test
 # normal method nukes on errors :(
@@ -144,6 +148,7 @@ subpackages versions with.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch20 -p1
 
 %build
 cp -f spamc/spamc.pod spamc/spamc
@@ -262,6 +267,11 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Sun Jul 16 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.0-alt1.1
+- Apply fixes from upstream:
+  + sa-update: Bug 8140 - sa-update uses deprecated method rdatastr.
+- Rebuild with libssl3.
+
 * Tue Jun 27 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.0-alt1
 - 4.0.0.
 
