@@ -7,7 +7,7 @@
 
 Name: kvmtool
 Version: 3.18.0
-Release: alt6
+Release: alt7
 Summary: Linux Native KVM Tool
 License: GPL-2.0
 Group: Emulators
@@ -72,6 +72,11 @@ grep -f uuid boot.log
 %_man1dir/lkvm.1*
 
 %changelog
+* Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.18.0-alt7
+- Reverted the workaround introduced in the previous release related to linking
+  with bfd.a and libsframe, as the bug has been fixed in the binutils-devel
+  2.40-alt2 release.
+
 * Sat Jul 15 2023 Vitaly Chikunov <vt@altlinux.org> 3.18.0-alt6
 - Update to git commit bd4ba57 (2023-07-07).
 - spec: Update packaging (add GTK, SDL, sframe, and man page).

@@ -5,7 +5,7 @@
 
 Name: honggfuzz
 Version: 2.5
-Release: alt2
+Release: alt3
 Summary: Security oriented software fuzzer
 License: Apache-2.0
 Group: Development/Tools
@@ -31,7 +31,6 @@ based on code coverage (SW and HW based).
 
 %prep
 %setup
-sed -i 's/-lbfd/& -lsframe/' Makefile
 
 %build
 %define optflags_lto %nil
@@ -71,6 +70,10 @@ hfuzz-gcc test.c -o t2 -fsanitize=address
 %docdir
 
 %changelog
+* Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.5-alt3
+- Reverted the workaround introduced in the previous change, as long as the bug
+  has been fixed in the binutils-devel 2.40-alt2 release.
+
 * Sun Jul 16 2023 Vitaly Chikunov <vt@altlinux.org> 2.5-alt2
 - Fix rebuild with binutils-devel-2.40-alt1.
 

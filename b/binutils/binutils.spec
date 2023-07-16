@@ -2,7 +2,7 @@
 
 Name: binutils
 Version: 2.40
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -175,7 +175,7 @@ cat >%buildroot%_libdir/libbfd.so <<EOF
 $OUTPUT_FORMAT
 
 /* The -lz and -ldl dependencies are unexpected by legacy build scripts.  */
-INPUT ( %_libdir/libbfd.a -liberty -ldl -lz )
+INPUT ( %_libdir/libbfd.a AS_NEEDED( -lsframe -liberty -ldl -lz ) )
 EOF
 
 cat >%buildroot%_libdir/libopcodes.so <<EOF
@@ -281,6 +281,10 @@ XFAIL_TESTS=
 %binutils_sourcedir
 
 %changelog
+* Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.40-alt2
+- Added linking with libsframe library to the %%_libdir/libbfd.so
+  linker script.
+
 * Tue Jul 04 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.40-alt1
 - Updated to 2.40 20230624.
 

@@ -13,7 +13,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -300,10 +300,6 @@ sed -i 's/-std=gnu99/& -g/' testing/selftests/vDSO/Makefile
 sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selftests/rseq/Makefile
 sed -i 's/-s\b/-g/' testing/selftests/arm64/abi/Makefile testing/selftests/arm64/fp/Makefile
 sed -i '/ln -s/s/-s $(DESTDIR)/-s /' tracing/rtla/Makefile
-
-# Hardcoreshly override this test.
-echo 'int main(){return 0;}' > build/feature/test-disassembler-four-args.c
-find -name Makefile | xargs sed -i 's/-lopcodes/& -lsframe/'
 
 %build
 %define optflags_lto %nil
@@ -741,6 +737,11 @@ fi
 %_man1dir/rv-*
 
 %changelog
+* Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.4-alt2
+- Removed the workaround introduced in the previous release related to linking
+  with bfd.a and libsframe, as the bug has been fixed in the binutils-devel
+  2.40-alt2 release.
+
 * Thu Jul 13 2023 Vitaly Chikunov <vt@altlinux.org> 6.4-alt1
 - Update to v6.4 (2023-06-25).
 
