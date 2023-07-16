@@ -11,7 +11,7 @@
 
 Name: clr
 Version: 5.6.0
-Release: alt0.3
+Release: alt0.4
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
 Url: https://github.com/ROCm-Developer-Tools/clr
@@ -29,6 +29,10 @@ Patch0: hipcc-alt-paths.patch
 Patch1: rocclr-gcc-13-fixes.patch
 Patch2: opencl-gcc-13-fixes.patch
 Patch3: hipcc-alt-hardcore-llvm-rocm.patch
+# patches from developer branch
+Patch100: 0001-SWDEV-1-Fix-incorrect-SGPR-usage-in-VGPR-calculation.patch
+Patch101: 0001-SWDEV-389477-Check-D2D-is-intra-device.patch
+Patch102: 0001-SWDEV-398047-Disable-arena-for-XNACK.patch
 
 BuildRequires(pre): cmake /proc ninja-build
 BuildRequires: llvm-rocm-devel = %version clang-rocm-devel = %version clang-rocm-tools = %version
@@ -86,10 +90,7 @@ This package provides the HIP implementation specifically for AMD platform.
 
 %prep
 %setup -n %name-%version -a1 -a2
-%patch0 -p1 -b .hipcc-alt-paths
-%patch1 -p1 -b .rocclr-gcc13-fixes
-%patch2 -p1 -b .opencl-gcc13-fixes
-%patch3 -p1 -b .hipcc-alt-hardcore-llvm-rocm
+%autopatch -p1
 
 %build
 export ALTWRAP_LLVM_VERSION=rocm
@@ -156,6 +157,12 @@ install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
 %endif
 
 %changelog
+* Fri Jul 14 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.4
+- Apply patches from developer branch:
+  + 0001-SWDEV-1-Fix-incorrect-SGPR-usage-in-VGPR-calculation.patch
+  + 0001-SWDEV-389477-Check-D2D-is-intra-device.patch
+  + 0001-SWDEV-398047-Disable-arena-for-XNACK.patch
+
 * Thu Jul 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.3
 - hipcc: always use llvm-rocm.
 
