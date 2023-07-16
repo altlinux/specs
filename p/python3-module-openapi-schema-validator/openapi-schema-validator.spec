@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.1
+Version: 0.6.0
 Release: alt1
 
 Summary: OpenAPI schema validation
@@ -24,11 +24,10 @@ BuildRequires: python3(poetry-core)
 
 %if_with check
 # direct runtime dependencies
-BuildRequires: python3(attrs)
 BuildRequires: python3(jsonschema)
+BuildRequires: python3(jsonschema_specifications)
+BuildRequires: python3(rfc3339_validator)
 
-# extra
-BuildRequires: python3(isodate)
 
 BuildRequires: python3(pytest)
 %endif
@@ -56,7 +55,7 @@ Openapi-schema-validator is a Python library that validates schema against:
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -k 'not test_validate_does_not_mutate_schema_adding_nullable_key'
 
 %files
 %doc README.rst
@@ -64,6 +63,9 @@ Openapi-schema-validator is a Python library that validates schema against:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 14 2023 Anton Vyatkin <toni@altlinux.org> 0.6.0-alt1
+- New version 0.6.0.
+
 * Wed Jan 25 2023 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
 - 0.4.0 -> 0.4.1.
 

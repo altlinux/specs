@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.17.2
+Version: 0.18.0
 Release: alt1
 Summary: Client-side and server-side support for the OpenAPI Specification v3
 License: BSD-3-Clause
@@ -51,5 +51,8 @@ sed -i '/--cov/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Wed Jul 12 2023 Anton Vyatkin <toni@altlinux.org> 0.18.0-alt1
+- New version 0.18.0.
+
 * Mon Jun 19 2023 Anton Vyatkin <toni@altlinux.org> 0.17.2-alt1
 - Initial build for Sisyphus

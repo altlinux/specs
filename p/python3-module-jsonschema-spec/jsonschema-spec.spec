@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.2
+Version: 0.2.3
 Release: alt1
 
 Summary: JSONSchema Spec with object-oriented paths
@@ -26,6 +26,8 @@ BuildRequires: python3(poetry-core)
 BuildRequires: python3(pathable)
 BuildRequires: python3(yaml)
 BuildRequires: python3(jsonschema)
+BuildRequires: python3(referencing)
+BuildRequires: python3(responses)
 
 BuildRequires: python3(pytest)
 %endif
@@ -57,5 +59,8 @@ JSONSchema Spec with object-oriented paths.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 12 2023 Anton Vyatkin <toni@altlinux.org> 0.2.3-alt1
+- New version 0.2.3.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 0.1.2-alt1
 - Initial build for Sisyphus.
