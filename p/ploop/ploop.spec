@@ -3,7 +3,7 @@
 
 Name: ploop
 Version: 7.0.277
-Release: alt1
+Release: alt2
 Group: System/Base
 License: GPLv2
 Summary: Ploop tools
@@ -58,6 +58,7 @@ python3-module-%name contains Python bindings for %name.
 
 %build
 export PYTHON=%__python3
+%add_optflags -Wno-error=deprecated-declarations
 %make_build LIBDIR=%_libdir PLOOP_LOG_FILE=%_logdir/%name.log DEBUG=no all
 
 %install
@@ -99,6 +100,9 @@ rm -f %buildroot%_libdir/libploop.a
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jul 16 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.0.277-alt2
+- FTBFS: ignore "'MD5' is deprecated: Since OpenSSL 3.0"
+
 * Thu Nov 24 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.277-alt1
 - 7.0.277
 
