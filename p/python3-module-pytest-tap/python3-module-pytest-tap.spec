@@ -1,7 +1,8 @@
 %define modname pytest-tap
+%define pypi_name pytest_tap
 
 Name: python3-module-%modname
-Version: 3.3
+Version: 3.4
 Release: alt1
 
 Summary: Test Anything Protocol (TAP) reporting plugin for pytest
@@ -9,13 +10,14 @@ Group: Development/Python3
 License: BSD-2-Clause
 Url: http://pypi.python.org/pypi/%modname
 
-# VCS: https://github.com/python-tap/pytest-tap
+Vcs: https://github.com/python-tap/pytest-tap.git
 Source: http://pypi.io/packages/source/p/%modname/%modname-%version.tar.gz
 
 BuildArch: noarch
+%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute python3-module-babel
+BuildRequires: python3(wheel) python3(setuptools)
 
 %description
 %modname is a reporting plugin for pytest that outputs Test Anything
@@ -26,17 +28,20 @@ data in a standard way.
 %setup -n %modname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir_noarch/pytest_tap/
-%python3_sitelibdir_noarch/*.egg-info
+%python3_sitelibdir_noarch/%pypi_name/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc README* LICENSE
 
 %changelog
+* Sun Jul 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
+- 3.4
+
 * Wed Oct 27 2021 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1
 - 3.3
 
