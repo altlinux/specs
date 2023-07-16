@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      2.0
+Version:      2.1
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -56,6 +56,20 @@ export SKIP_IMG_DIFFS=1
 %_datadir/xfig/Libraries/*
 
 %changelog
+* Sat Jul 15 2023 Vladislav Zavjalov <slazav@altlinux.org> 2.1-alt1
+- Vector maps: fix osm, xfig, and vmap interfaces, add gpx interface.
+  New options: wpt_pref, update_type, update_types, label_names, osm_ids, osm_tags, crop_labels.
+  Rename options: update_tag, update_type, update_types -> replace_*.
+  Use system configuration files from /usr/share/mapsoft2/ by default.
+  ifdef/ifndef/else/endif/define/define_if_undef commands in configuration files.
+- Update vector map scripts and configuration (vmap_data/scrpts/, vmap_data/)
+- ms2view: dialog for editing track point.
+- geom: fis line_filter_v1 and line_rectcrop functions.
+- Makefile: fix install rules (remove existing dirs).
+- Fix for gcc13, include missing cstdint.
+- Fix for proj >=9.2.1.
+- Update documentation, examples and man pages.
+
 * Sat Dec 03 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.0-alt1
 This is a major update with many incompatable and not very
 well tested changes, mostly in vector map system.
