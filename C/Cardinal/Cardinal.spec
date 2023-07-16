@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     Cardinal
-Version:  23.02
-Release:  alt2
+Version:  23.07
+Release:  alt1
 
 Summary:  Virtual modular synthesizer plugin
 License:  GPL-3.0-or-later
@@ -23,7 +23,6 @@ Source2: sub-merge.unpack.sh
 Patch1:   Cardinal-22.07-alt-lv2-in-lib64.patch
 Patch2:   Cardinal-22.11-rebeltech-fix-compilation.patch
 Patch3:   Cardinal-22.12-alt-more-system-libs.patch
-Patch4:   Cardinal-23.02-alt-fix-build-with-gcc13.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: pkgconfig(alsa)
@@ -129,20 +128,20 @@ sed -i '/^TARGETS/ s/vst[23]\|clap//g' src/Makefile.cardinal.mk
 %install
 # standalone
 install -Dm755 bin/Cardinal %buildroot%_bindir/Cardinal
+install -Dm755 bin/CardinalNative %buildroot%_bindir/CardinalNative
 
 # resources
 install -d %buildroot%_datadir/cardinal/
 cp -rL bin/Cardinal.lv2/resources/* %buildroot%_datadir/cardinal/
 
 # lv2
-for plugin in Cardinal CardinalFX CardinalSynth; do
+for plugin in Cardinal CardinalFX CardinalSynth CardinalMini; do
     src="bin/$plugin.lv2"
     dst="%buildroot%_libdir/lv2/$plugin.lv2"
 
     install -d "$dst"
     install -m644 "$src"/*.so "$dst"
     install -m644 "$src"/*.ttl "$dst"
-    ln -sr %buildroot%_datadir/cardinal/ "$dst"/resources
 done
 
 # docs
@@ -162,6 +161,9 @@ install -m 644 docs/*.md docs/*.png %buildroot%_datadir/doc/cardinal/docs/
 %doc %_datadir/doc/cardinal
 
 %changelog
+* Sat Jul 15 2023 Ivan A. Melnikov <iv@altlinux.org> 23.07-alt1
+- 23.07
+
 * Mon Jun 26 2023 Ivan A. Melnikov <iv@altlinux.org> 23.02-alt2
 - Backport upstream fixes for building with gcc13
 
