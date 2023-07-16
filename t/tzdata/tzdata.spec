@@ -1,6 +1,6 @@
 Name: tzdata
 Version: 2023c
-Release: alt1
+Release: alt2
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -47,7 +47,7 @@ case "$(rpm --eval %%_priority_distbranch)" in
 	*) ZFLAGS= ;;
 esac
 %make_install install_default DESTDIR=%buildroot \
-	MANTXTS= TZDATA_TEXT= ZONETABLES=zone1970.tab \
+	MANTXTS= ZONETABLES=zone1970.tab \
 	VERSION=%version ZFLAGS="$ZFLAGS"
 mv %buildroot%_datadir/zoneinfo{-leaps,/right}
 rm %buildroot%_datadir/zoneinfo-posix
@@ -101,6 +101,10 @@ diff -u expected output || {
 %srcdir/
 
 %changelog
+* Sat Jul 15 2023 Dmitry V. Levin <ldv@altlinux.org> 2023c-alt2
+- Reintroduced tzdata.zi and leapseconds text data files
+  that were removed earlier in 2017c-alt2 (closes: #46949).
+
 * Tue Mar 28 2023 Dmitry V. Levin <ldv@altlinux.org> 2023c-alt1
 - 2022g -> 2023c.
 - Stopped packaging zone.tab; it was intended as a backward-compatibility aid
