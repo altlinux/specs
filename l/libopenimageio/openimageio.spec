@@ -7,15 +7,15 @@
 # TODO: build and run tests
 
 %define oname openimageio
-%define soname 2.3
+%define soname 2.4
 
 Name:           lib%oname
-Version:        2.3.21.0
-Release:        alt3
+Version:        2.4.13.0
+Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
-License:        BSD-3-Clause
+License:        BSD-3-Clause and Apache-2.0
 URL:            https://sites.google.com/site/openimageio/home
 
 # https://github.com/OpenImageIO/oiio.git
@@ -27,15 +27,13 @@ Source0:        %name-%version.tar
 Source2: %oname.watch
 
 Patch1: %oname-alt-armh-disable-neon.patch
-# https://github.com/OpenImageIO/oiio/pull/3485
-Patch2: 3485.patch
 Patch2000: %oname-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
 BuildRequires:  cmake gcc-c++
 BuildRequires:  txt2man
-BuildRequires:  qt5-base-devel
+BuildRequires:  qt6-base-devel
 BuildRequires:  boost-devel boost-python3-devel boost-filesystem-devel boost-asio-devel
 BuildRequires:  libGLEW-devel
 BuildRequires:  openexr-devel imath-devel
@@ -125,9 +123,9 @@ with any formats for which plugins are available).
 Summary:        Documentation for %oname
 Group:          Development/Other
 Requires:       lib%oname%soname = %EVR
+%ifnarch armh
 Requires:       python3-module-%oname = %EVR
 Requires:       %oname-utils = %EVR
-%ifnarch armh
 Requires:       %oname-iv = %EVR
 %endif
 Requires:       libopencv-devel
@@ -141,7 +139,6 @@ Development files for package %name
 %ifarch armh
 %patch1 -p1
 %endif
-%patch2 -p1
 %ifarch %e2k
 %patch2000 -p1
 # simplifies the patch
@@ -156,10 +153,6 @@ rm -fr src/include/OpenImageIO/detail/pugixml/
 #rm -rf ../oiio-images && mkdir ../oiio-images && pushd ../oiio-images
 #tar --strip-components=1 -xzf #{SOURCE1}
 
-%ifarch armh
-sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
-%endif
-
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 
@@ -173,7 +166,6 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 %cmake \
 	-DINCLUDE_INSTALL_DIR:PATH=%_includedir/%oname \
 	-DPYTHON_VERSION=%_python3_version \
-	-DBUILD_DOCS:BOOL=TRUE \
 	-DINSTALL_DOCS:BOOL=FALSE \
 	-DINSTALL_FONTS:BOOL=FALSE \
 	-DUSE_EXTERNAL_PUGIXML:BOOL=TRUE \
@@ -186,6 +178,12 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 	-DPLUGIN_SEARCH_PATH=%_libdir/OpenImageIO-%soname \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DOIIO_USING_IMATH=3 \
+%ifarch armh
+	-DBUILD_OIIOUTIL_ONLY:BOOL=TRUE \
+	-DBUILD_DOCS:BOOL=FALSE \
+%else
+	-DBUILD_DOCS:BOOL=TRUE \
+%endif
 	%nil
 
 %cmake_build
@@ -193,20 +191,23 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 %install
 %cmake_install
 
+%ifnarch armh
 # Move man pages to the right directory
 mkdir -p %buildroot%_man1dir
 cp -a %_cmake__builddir/src/doc/*.1 %buildroot%_man1dir
+%endif
 
 mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 
 %files -n lib%oname%soname
 %doc CHANGES.md README.md
 %doc LICENSE.md THIRD-PARTY.md
-%_libdir/libOpenImageIO.so.%{soname}
-%_libdir/libOpenImageIO.so.%{soname}.*
 %_libdir/libOpenImageIO_Util.so.%{soname}
 %_libdir/libOpenImageIO_Util.so.%{soname}.*
 %_libdir/OpenImageIO-%soname
+%ifnarch armh
+%_libdir/libOpenImageIO.so.%{soname}
+%_libdir/libOpenImageIO.so.%{soname}.*
 
 %files -n python3-module-%oname
 %python3_sitelibdir/OpenImageIO
@@ -214,7 +215,6 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %files -n %oname-utils
 %_bindir/*
 %_man1dir/*.1*
-%ifnarch armh
 %exclude %_bindir/iv
 %exclude %_man1dir/iv.1*
 
@@ -224,13 +224,20 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %endif
 
 %files devel
+%ifnarch armh
 %_libdir/libOpenImageIO.so
+%endif
 %_libdir/libOpenImageIO_Util.so
 %_includedir/*
 %_libdir/pkgconfig/OpenImageIO.pc
 %_libdir/cmake/*
 
 %changelog
+* Thu Jul 13 2023 L.A. Kostis <lakostis@altlinux.ru> 2.4.13.0-alt1
+- Updated to upstream version 2.4.13.0.
+- qt5->qt6.
+- armh: provide only _Util library.
+
 * Thu Jul 06 2023 L.A. Kostis <lakostis@altlinux.ru> 2.3.21.0-alt3
 - NMU: apply fix in unordered_map_concurrent (upstream PR #3485).
 
