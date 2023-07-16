@@ -7,7 +7,7 @@
 
 Name: openssl1.1
 Version: 1.1.1u
-Release: alt2
+Release: alt3
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -72,7 +72,7 @@ Summary: OpenSSL libcrypto shared library
 Group: System/Legacy libraries
 Provides: libcrypto = %version-%release
 # due to openssl.cnf
-Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 <= 1.0.2q-alt1
+Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 <= 1.0.2r-alt3
 # due to openssldir migration
 Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
@@ -484,6 +484,10 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1u-alt3
+- libcrypto1.1: updated the version of the conflict with libcrypto10 package
+  (1.0.2q-alt1 -> 1.0.2r-alt3).
+
 * Fri Jul 07 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1u-alt2
 - Rebuilt as openssl 3 compat package.
 

@@ -3,7 +3,7 @@
 
 Name: openssl3
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: Apache-2.0
@@ -29,7 +29,7 @@ Summary: OpenSSL libcrypto shared library
 Group: System/Libraries
 Provides: libcrypto = %version-%release
 # due to openssl.cnf
-Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 <= 1.0.2q-alt1, libcrypto1.1 <= 1.1.1u-alt1
+Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 <= 1.0.2r-alt3, libcrypto1.1 <= 1.1.1u-alt1
 # due to openssldir migration
 Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
@@ -376,7 +376,7 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 
 %files -n openssl
 %_bindir/*
-%openssldir/misc/*
+%openssldir/misc
 %openssldir/certs/*
 %_mandir/man[157]/*
 %if_enabled tsget
@@ -402,6 +402,11 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.1-alt2
+- openssl: packaged /var/lib/ssl/misc directory.
+- libcrypto3: updated the version of the conflict with libcrypto10 package
+  (1.0.2q-alt1 -> 1.0.2r-alt3).
+
 * Thu Jul 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.1-alt1
 - Updated to 3.1.1.
 - Relocated the directories /var/lib/ssl/certs and /var/lib/ssl/private from
