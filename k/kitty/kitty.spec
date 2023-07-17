@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.29.0
+Version: 0.29.1
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -106,7 +106,7 @@ Group: System/Configuration/Other
 BuildArch: noarch
 
 %description terminfo
-Cross-platform, fast, feature-rich, GPU based terminal
+%summary.
 
 The terminfo file for kitty
 
@@ -116,7 +116,7 @@ Group: System/Configuration/Other
 BuildArch: noarch
 
 %description shell-integration
-Cross-platform, fast, feature-rich, GPU based terminal
+%summary.
 
 Shell-integration files for kitty
 
@@ -188,6 +188,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_libexecdir/kitty/shell-integration
 
 %changelog
+* Mon Jul 17 2023 Egor Ignatov <egori@altlinux.org> 0.29.1-alt1
+- new version 0.29.1
+
 * Mon Jul 10 2023 Egor Ignatov <egori@altlinux.org> 0.29.0-alt1
 - new version 0.29.0
 
