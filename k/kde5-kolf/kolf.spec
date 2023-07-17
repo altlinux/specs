@@ -4,7 +4,7 @@
 %define libkolfprivate libkolfprivate%sover
 
 Name: kde5-%rname
-Version: 23.04.2
+Version: 23.04.3
 Release: alt1
 %K5init no_appdata
 
@@ -71,6 +71,9 @@ Requires: %name-common = %version-%release
 %_K5xmlgui/kolf/
 
 %changelog
+* Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
+- new version
+
 * Wed Jun 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
 - new version
 
