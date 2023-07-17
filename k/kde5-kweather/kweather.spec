@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.04.3
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -71,6 +71,9 @@ Requires: %name-common
 %_K5data/plasma/plasmoids/*kweather*/
 
 %changelog
+* Mon Jul 17 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt2
+- when search show subdivision if possible (closes: 46940)
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 
