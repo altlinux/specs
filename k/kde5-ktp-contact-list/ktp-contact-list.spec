@@ -1,7 +1,7 @@
 %define rname ktp-contact-list
 
 Name: kde5-%rname
-Version: 23.04.2
+Version: 23.04.3
 Release: alt1
 %K5init altplace
 
@@ -84,6 +84,9 @@ sed -i 's|^Exec=.*|Exec=%_K5bin/ktp-contactlist|' %buildroot/%_K5dbus_srv/org.kd
 #%_K5lib/libktp-contact-list.so.*
 
 %changelog
+* Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
+- new version
+
 * Tue Jun 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
 - new version
 
