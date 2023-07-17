@@ -3,7 +3,7 @@
 %define libpackagekitqt5 libpackagekitqt5_%sover
 
 Name: packagekit-qt
-Version: 1.0.2
+Version: 1.1.1
 Release: alt1
 
 Group: System/Libraries
@@ -13,6 +13,8 @@ Url: http://www.packagekit.org/
 
 # https://github.com/hughsie/PackageKit-Qt
 Source: PackageKit-Qt-%version.tar
+# SuSE
+Patch1: 0001-Fix-PackageKit-not-emitting-network-state-changed-signal.patch
 
 # Automatically added by buildreq on Thu Aug 02 2018 (-bi)
 # optimized out: cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libqt5-core libqt5-dbus libstdc++-devel packagekit perl pkg-config python-base python-modules python3 python3-base qt5-base-common rpm-build-python3 ruby ruby-stdlibs
@@ -40,6 +42,7 @@ Provides: PackageKit-Qt5-devel = %version-%release
 
 %prep
 %setup -qn PackageKit-Qt-%version
+%patch1 -p1
 
 %build
 %ifarch %e2k
@@ -67,6 +70,9 @@ Provides: PackageKit-Qt5-devel = %version-%release
 %_libdir/cmake/packagekitqt5/
 
 %changelog
+* Mon Jul 17 2023 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1
+- new version
+
 * Wed Dec 29 2021 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt1
 - new version
 
