@@ -1,7 +1,7 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.24.1
+Version: 1.24.2
 Release: alt1
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
@@ -11,10 +11,10 @@ Vcs: https://github.com/mongodb/mongo-c-driver.git
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
-BuildRequires: cmake >= 3.1
+BuildRequires: cmake >= 3.15
 BuildRequires: python3-module-sphinx
 BuildRequires: libssl-devel libsasl2-devel libicu-devel
-BuildRequires: zlib-devel libsnappy-devel
+BuildRequires: zlib-devel libsnappy-devel libzstd-devel
 BuildRequires: sphinx
 BuildRequires(pre): rpm-macros-cmake
 
@@ -74,6 +74,9 @@ sed -i 's|sphinx-build|sphinx-build-3|' build/cmake/FindSphinx.cmake
     -DENABLE_MONGODB_AWS_AUTH:STRING=ON \
     -DENABLE_CRYPTO_SYSTEM_PROFILE:BOOL=ON \
     -DENABLE_MAN_PAGES:BOOL=ON \
+    -DENABLE_ZLIB:STRING=SYSTEM \
+    -DENABLE_ZSTD:STRING=ON \
+    -DENABLE_SNAPPY:STRING=ON \
     %{?_disable_tests:-DENABLE_TESTS:BOOL=OFF} \
     -DENABLE_UNINSTALL:BOOL=OFF \
     -DENABLE_EXAMPLES:BOOL=OFF
@@ -134,6 +137,9 @@ exit $ret
 
 
 %changelog
+* Mon Jul 17 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.24.2-alt1
+- 1.24.2
+
 * Thu Jun 22 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.24.1-alt1
 - 1.24.1
 
