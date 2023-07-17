@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 0.57.0
+Version: 0.57.1
 Release: alt1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
@@ -63,6 +63,9 @@ popd
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Jul 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.57.1-alt1
+- Automatically updated to 0.57.1.
+
 * Wed May 03 2023 Grigory Ustinov <grenka@altlinux.org> 0.57.0-alt1
 - Automatically updated to 0.57.0.
 
