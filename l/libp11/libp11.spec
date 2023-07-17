@@ -4,12 +4,12 @@
 %def_with check
 
 Name: libp11
-Version: 0.4.11
+Version: 0.4.12
 Release: alt1
 
 Summary: Library for using PKCS#11 modules
 Group: System/Libraries
-License: LGPLv2.1
+License: LGPL-2.1-or-later
 
 Url: https://github.com/OpenSC/libp11/wiki
 Source: %name-%version.tar
@@ -104,6 +104,12 @@ rm -r %buildroot%_docdir/%name
 %_includedir/*
 
 %changelog
+* Mon Jul 17 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.12-alt1
+- 0.4.11 -> 0.4.12.
+- Backported upstream commits to add support for openssl 3.1 (thx Doug Engert,
+  Michal Trojnara, Dominique Leuenberger, and Mike Gilbert).
+- Fixed License: tag (LGPLv2.1 -> LGPL-2.1-or-later).
+
 * Tue Aug 24 2021 Stanislav Levin <slev@altlinux.org> 0.4.11-alt1
 - 0.4.10 -> 0.4.11.
 

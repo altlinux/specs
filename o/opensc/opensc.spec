@@ -2,7 +2,7 @@
 
 Name: opensc
 Version: 0.23.0
-Release: alt1
+Release: alt2
 
 Group: System/Configuration/Hardware
 Summary: OpenSC library - for accessing SmartCard devices using PC/SC Lite
@@ -14,6 +14,7 @@ Requires: lib%name = %version-%release
 Source: %name-%version.tar
 
 Patch: opensc-gcc11.patch
+Patch1: opensc-upstream-backport-tool-openssl3.patch
 
 BuildRequires: db2latex-xsl
 BuildRequires: docbook-dtds
@@ -80,6 +81,7 @@ OpenSC module for PAM.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -140,6 +142,9 @@ rm -f %buildroot%_datadir/doc/opensc/opensc.conf
 %endif
 
 %changelog
+* Mon Jul 17 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.23.0-alt2
+- Backported upstream commits to fix import of private keys (thx Jakub Jelen).
+
 * Wed Nov 30 2022 Andrey Cherepanov <cas@altlinux.org> 0.23.0-alt1
 - New version.
 - Built with libeac and pcsc-lite.
