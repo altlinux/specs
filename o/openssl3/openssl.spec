@@ -3,7 +3,7 @@
 
 Name: openssl3
 Version: 3.1.1
-Release: alt2
+Release: alt3
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: Apache-2.0
@@ -28,6 +28,8 @@ BuildRequires: perl-WWW-Curl
 Summary: OpenSSL libcrypto shared library
 Group: System/Libraries
 Provides: libcrypto = %version-%release
+Provides: openssl-providers = %EVR
+Obsoletes: openssl-providers < %EVR
 # due to openssl.cnf
 Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 <= 1.0.2r-alt3, libcrypto1.1 <= 1.1.1u-alt1
 # due to openssldir migration
@@ -76,11 +78,6 @@ BuildArch: noarch
 
 %package -n openssl-engines
 Summary: OpenSSL ENGINE interface modules
-Group: System/Libraries
-Requires: libssl%shlib_soversion = %version-%release
-
-%package -n openssl-providers
-Summary: OpenSSL provider interface modules
 Group: System/Libraries
 Requires: libssl%shlib_soversion = %version-%release
 
@@ -164,19 +161,6 @@ the standard releases from 0.9.7 forwards.
 
 In addition, dynamic binding to external ENGINE implementations is
 provided by a special ENGINE called "dynamic".
-
-%description -n openssl-providers
-The OpenSSL toolkit provides support for secure communications between
-machines. OpenSSL includes a certificate management tool and shared
-libraries which provide various cryptographic algorithms and
-protocols.
-
-Providers are containers for algorithm implementations. Whenever a
-cryptographic algorithm is used via the high level APIs a provider is selected.
-It is that provider implementation that actually does the required work. There
-are five providers distributed with OpenSSL. In the future we expect third
-parties to distribute their own providers which can be added to OpenSSL
-dynamically.
 
 %description -n tsget
 The tsget command can be used for sending a time stamp request, as
@@ -349,6 +333,7 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 
 %files -n libcrypto%shlib_soversion
 /%_lib/libcrypto*
+%_libdir/ossl-modules
 %config(noreplace) %_sysconfdir/openssl/openssl.cnf
 %dir %_sysconfdir/openssl/
 %dir %openssldir
@@ -391,9 +376,6 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %files -n openssl-engines
 %_libdir/openssl/engines-%shlib_soversion
 
-%files -n openssl-providers
-%_libdir/ossl-modules
-
 %if_enabled tsget
 %files -n tsget
 %_sbindir/tsget
@@ -402,6 +384,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Mon Jul 17 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.1-alt3
+- Merged the openssl-providers subpackage into the libcrypto3 subpackage.
+
 * Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.1-alt2
 - openssl: packaged /var/lib/ssl/misc directory.
 - libcrypto3: updated the version of the conflict with libcrypto10 package
