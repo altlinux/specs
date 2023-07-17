@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geoipupdate
-Version: 5.1.1
+Version: 6.0.0
 Release: alt1
 
 Summary: GeoIP update client code
@@ -29,7 +29,7 @@ export IMPORT_PATH="github.com/maxmind/geoipupdate"
 export GOPATH="%go_path"
 export GOFLAGS="-mod=vendor"
 %golang_prepare
-%golang_build cmd/%name
+%golang_build cmd/geoipupdate
 rm -rf $BUILDDIR/src
 
 %install
@@ -39,9 +39,12 @@ export GOPATH="%go_path"
 
 %files
 %doc README.md
-%_bindir/%name
+%_bindir/geoipupdate
 
 %changelog
+* Mon Jul 17 2023 Egor Ignatov <egori@altlinux.org> 6.0.0-alt1
+- new version 6.0.0
+
 * Wed May 24 2023 Egor Ignatov <egori@altlinux.org> 5.1.1-alt1
 - new version 5.1.1
 
