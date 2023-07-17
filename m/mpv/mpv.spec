@@ -4,7 +4,7 @@
 
 Name: mpv
 Version: 0.35.1
-Release: alt3
+Release: alt4
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -144,6 +144,18 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Mon Jul 17 2023 L.A. Kostis <lakostis@altlinux.ru> 0.35.1-alt4
+- Apply fixes for libplacebo v6.265+ compatibility:
+  + vo_gpu_next: compatibility with libplacebo v6.265
+  + vo_gpu_next: compatibility with PL_API_VER >= 254
+  + hwdec_cuda: drop support for PL_HANDLE_WIN32_KMT
+  + hwdec_cuda: remove usage of deprecated libplacebo sync API
+- Apply some fixes from master:
+  + vo_gpu_next: don't flush cache on OSD update
+  + demux/demux_lavf: avoid leaking AVFormatContext during demux_open_lavf
+  + ffmpeg: update to handle deprecation of `av_init_packet`
+  + demux: replace deprecated usage of stack allocated AVPackets
+
 * Fri May 26 2023 L.A. Kostis <lakostis@altlinux.ru> 0.35.1-alt3
 - BR: remove libsmb (smb support removed by upstream).
 
