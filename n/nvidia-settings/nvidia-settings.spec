@@ -2,7 +2,7 @@
 
 Name: nvidia-settings
 Version: 535.54.03
-Release: alt1
+Release: alt2
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -77,8 +77,8 @@ sed -i -E 's|LIBDIR[[:space:]]+=[[:space:]].*|LIBDIR = $(DESTDIR)$(PREFIX)/%_lib
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %add_optflags %optflags_shared
-%make_build PREFIX=%prefix CFLAGS="%optflags" NV_VERBOSE=1 -C src/libXNVCtrl
-%make_build PREFIX=%prefix LOCAL_CFLAGS="%optflags" NV_VERBOSE=1
+%make_build PREFIX=%prefix CFLAGS="%optflags"       NV_VERBOSE=1 DEBUG=1 NV_KEEP_UNSTRIPPED_BINARIES=1 -C src/libXNVCtrl
+%make_build PREFIX=%prefix LOCAL_CFLAGS="%optflags" NV_VERBOSE=1 DEBUG=1 NV_KEEP_UNSTRIPPED_BINARIES=1
 
 
 %install
@@ -129,6 +129,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Mon Jul 17 2023 Sergey V Turchin <zerg@altlinux.org> 535.54.03-alt2
+- fix to build debuginfo
+
 * Fri Jun 30 2023 Sergey V Turchin <zerg@altlinux.org> 535.54.03-alt1
 - new version
 
