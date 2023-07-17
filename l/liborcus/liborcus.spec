@@ -6,7 +6,7 @@
 %def_with python
 Name: liborcus
 Version: 0.17.2
-Release: alt1
+Release: alt2
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
@@ -103,6 +103,9 @@ ln -s %name-%libver.pc %buildroot%_pkgconfigdir/%name.pc
 %endif
 
 %changelog
+* Mon Jul 17 2023 Artyom Bystrov <arbars@altlinux.org> 0.17.2-alt2
+- Fix build on GCC13
+
 * Thu Jan 13 2022 Fr. Br. George <george@altlinux.ru> 0.17.2-alt1
 - Autobuild version bump to 0.17.2
 - Enable python module
