@@ -1,8 +1,8 @@
 %define rname kwalletmanager
 
 Name: kde5-%rname
-Version: 23.04.2
-Release: alt2
+Version: 23.04.3
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -82,6 +82,9 @@ cp -ar po/ru/docs/kwallet5 po/ru/docs/kwalletmanager5
 
 
 %changelog
+* Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt2
 - fix to start configurator (closes: 46934)
 

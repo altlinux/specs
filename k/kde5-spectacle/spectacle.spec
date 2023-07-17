@@ -5,8 +5,8 @@
 %define service_name app-org.kde.spectacle
 
 Name: kde5-%rname
-Version: 23.04.2
-Release: alt2
+Version: 23.04.3
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -92,6 +92,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
+- new version
+
 * Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt2
 - update build requires
 
