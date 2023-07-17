@@ -2,7 +2,7 @@
 
 Name: libolm
 Version: 3.2.6
-Release: alt1
+Release: alt2
 
 Summary: An implementation of the Double Ratchet cryptographic ratchet
 
@@ -11,6 +11,7 @@ License: Apache v2.0
 Url: https://gitlab.matrix.org/matrix-org/olm.git
 
 Source: %name-%version.tar
+Patch0: 0001-Fix-build-on-GCC13.patch
 
 BuildRequires: cmake ctest gcc-c++
 
@@ -35,6 +36,7 @@ applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake
@@ -59,6 +61,9 @@ applications that use %name.
 %_pkgconfigdir/olm.pc
 
 %changelog
+* Mon Jul 17 2023 Artyom Bystrov <arbars@altlinux.org> 3.2.6-alt2
+- Fix build on GCC13
+
 * Tue Nov 16 2021 Paul Wolneykien <manowar@altlinux.org> 3.2.6-alt1
 - new version 3.2.6
 
