@@ -5,8 +5,8 @@
 %define libkwave libkwave%sover
 
 Name: kde5-%rname
-Version: 23.04.2
-Release: alt2
+Version: 23.04.3
+Release: alt1
 %K5init no_appdata
 
 Group: Sound
@@ -107,6 +107,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkwavegui.so.*
 
 %changelog
+* Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
+- new version
+
 * Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt2
 - require lame
 
