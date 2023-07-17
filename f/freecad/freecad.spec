@@ -14,7 +14,7 @@
 
 Name:    freecad
 Version: 0.20.2
-Release: alt3
+Release: alt3.1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -60,7 +60,7 @@ BuildRequires: python3-module-PySide2-devel
 BuildRequires: python3-module-shiboken2-devel
 %define qmake %qmake_qt5
 %define qtbindir %_qt5_bindir
-BuildRequires: python3-devel swig gcc-fortran libf2c-ng-devel chrpath
+BuildRequires: python3-devel swig gcc-fortran chrpath
 BuildRequires: boost-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-geometry-devel
@@ -251,6 +251,9 @@ rm -f %buildroot%_includedir/E57Format/*.h
 %ldir/doc
 
 %changelog
+* Sun Jul 16 2023 Ivan A. Melnikov <iv@altlinux.org> 1:0.20.2-alt3.1
+- NMU: drop obsolete BR on libf2c-ng-devel.
+
 * Tue Jul 04 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.20.2-alt3
 - FTBFS: fixed build with GCC 13.x.
 

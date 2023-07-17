@@ -1,6 +1,6 @@
 Name: qrupdate
 Version: 1.1.2
-Release: alt4
+Release: alt4.1
 
 Summary: Library for fast updating of QR and Cholesky decompositions
 License: GPLv3+
@@ -10,7 +10,7 @@ Url: http://sourceforge.net/projects/qrupdate/
 Source: %name-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildRequires: gcc-fortran f2c
+BuildRequires: gcc-fortran
 BuildRequires: liblapack-devel
 
 %description
@@ -58,6 +58,9 @@ sed -i 's/^BLAS/#&/' Makeconf*
 %_libdir/*.so
 
 %changelog
+* Sun Jul 16 2023 Ivan A. Melnikov <iv@altlinux.org> 1.1.2-alt4.1
+- NMU: drop obsolete BR on f2c
+
 * Thu May 09 2019 Michael Shigorin <mike@altlinux.org> 1.1.2-alt4
 - Restrict use of blas to X86 (only required for tests)
 

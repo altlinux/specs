@@ -12,7 +12,7 @@ BuildRequires: perl(Module/Compile.pm) perl(PadWalker.pm) perl(Prima/Application
 # plug-ins
 %add_findreq_skiplist */PDL/Demos/*
 %add_findreq_skiplist */PDL/Graphics/*
-BuildRequires: libjpeg-devel libf2c-ng-devel
+BuildRequires: libjpeg-devel
 BuildRequires: gcc-c++
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -38,7 +38,7 @@ BuildRequires: gcc-c++
 
 Name:           perl-PDL
 Version:        2.084
-Release:        alt1
+Release:        alt1.1
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
@@ -300,6 +300,9 @@ make test
 %{_libexecdir}/%{name}
 
 %changelog
+* Sun Jul 16 2023 Ivan A. Melnikov <iv@altlinux.org> 2.084-alt1.1
+- NMU: drop obsolete BR on libf2c-ng-devel
+
 * Sat May 27 2023 Igor Vlasenko <viy@altlinux.org> 2.084-alt1
 - automated CPAN update
 
