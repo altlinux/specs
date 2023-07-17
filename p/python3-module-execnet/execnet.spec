@@ -12,7 +12,7 @@ a minimal and fast API targetting the following uses: \
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.9.0
+Version: 2.0.2
 Release: alt1
 
 Summary: Rapid multi-Python deployment
@@ -44,6 +44,8 @@ BuildRequires(pre): rpm-macros-sphinx3 rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-apipkg
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
 
 %if_with check
 BuildRequires: python3-module-tox
@@ -53,73 +55,33 @@ BuildRequires: python3-module-pytest-timeout
 %description
 %descr
 
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-
-%description docs
-%descr
-
-This package contains documentation for %oname.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-%descr
-
-This package contains pickles for %oname.
-
 %prep
 %setup
 %patch -p1
-
-%prepare_sphinx3 .
-ln -s ../objects.inv doc/
 
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
 # its used as the primary source for the version number in which
 # case it will be a unparsed string
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
-
-export PYTHONPATH=$PWD
-%make SPHINXBUILD="sphinx-build-3" -C doc pickle
-%make SPHINXBUILD="sphinx-build-3" -C doc html
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
-
-mkdir -p %buildroot%python3_sitelibdir/%oname
-cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
-export PIP_NO_INDEX=YES
-TOXENV=py%{python_version_nodots python3} tox.py3 --sitepackages -rv
+%tox_check_pyproject
 
 %files
-%doc CHANGELOG.rst *.txt
+%doc LICENSE *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info*
-%exclude %python3_sitelibdir/*/pickle
-
-%files docs
-%doc doc/_build/html/*
-
-%files pickles
-%python3_sitelibdir/*/pickle
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jul 17 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
+- Automatically updated to 2.0.2.
+
 * Fri Jul 09 2021 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
 - Automatically updated to 1.9.0.
 
