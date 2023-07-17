@@ -8,7 +8,7 @@
 
 Name: bpython3
 Version: 0.24
-Release: alt1
+Release: alt2
 
 Summary: Fancy curses interface to the Python 3 interactive interpreter
 
@@ -113,8 +113,8 @@ python3 setup.py test
 %_datadir/metainfo/*
 %_datadir/applications/*
 %_pixmapsdir/%name.png
-%_man1dir/*
-%_man5dir/*
+#%%_man1dir/*
+#%%_man5dir/*
 
 %if_without urwid
 %exclude %_bindir/%{name}-urwid
@@ -144,6 +144,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Mon Jul 17 2023 Artyom Bystrov <arbars@altlinux.org> 0.24-alt2
+- Disable man pages
+
 * Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 0.24-alt1
 - new version 0.24 (with rpmrb script)
 
