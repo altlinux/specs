@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: A Jupyter Server Extension Providing Support for Terminals
 License: BSD-3-Clause
@@ -46,7 +46,7 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/*.json \
    %buildroot%_sysconfdir/jupyter/jupyter_server_config.d
 
 %check
-%pyproject_run_pytest -v -W ignore::ImportWarning
+%pyproject_run_pytest -v -W ignore::ImportWarning -W ignore::DeprecationWarning
 
 %files
 %doc README.*
@@ -57,5 +57,8 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/*.json \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 17 2023 Anton Vyatkin <toni@altlinux.org> 0.4.4-alt2
+- Fix FTBFS.
+
 * Wed Jun 14 2023 Anton Vyatkin <toni@altlinux.org> 0.4.4-alt1
 - Initial build for Sisyphus
