@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.23.0
-Release: alt1
+Release: alt2
 Summary: A set of server components for JupyterLab and JupyterLab like applications
 License: BSD-3-Clause
 Group: Development/Python3
@@ -47,7 +47,7 @@ sed -i 's/--color=yes//' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v -W ignore::ImportWarning -k "\
+%pyproject_run_pytest -v -W ignore::ImportWarning -W ignore::DeprecationWarning -k "\
 not test_translation_api.py \
 and not test_listings_api.py \
 and not test_settings_api.py \
@@ -61,5 +61,8 @@ and not test_page_config"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Jul 17 2023 Anton Vyatkin <toni@altlinux.org> 2.23.0-alt2
+- Fix FTBFS.
+
 * Fri Jun 16 2023 Anton Vyatkin <toni@altlinux.org> 2.23.0-alt1
 - Initial build for Sisyphus
