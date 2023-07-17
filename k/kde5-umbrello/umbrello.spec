@@ -7,8 +7,8 @@
 #%endif
 
 Name: kde5-%rname
-Version: 23.04.2
-Release: alt2
+Version: 23.04.3
+Release: alt1
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -81,6 +81,9 @@ sed -i '/^#!\/usr\/bin\/env/s|python|%__python3|' umbrello/headings/heading.py
 
 
 %changelog
+* Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
+- new version
+
 * Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt2
 - fix desktop-file (closes: 46810)
 
