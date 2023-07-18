@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,33 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Mon Jul 17 2023 Valery Sinelnikov <greh@altlinux.org> 0.13.0-alt1
+- PDC-Emulator check option is added. If option is enabled, GPT-related
+  moves like policy editing/creation/deletion will be prevented under
+  non-PDC-Emulator DC connection.
+- Fixed group policy link order value in organizational unit's
+  results widget: order was sorted as string number earlier.
+  It is sorted as a number now.
+- Organizational unit's inherited policies are added to corresponing
+  tab in organizational unit's result widget. Also inherited policies
+  list is added to organizational unit's properties group tab.
+- Enforce and disable checkable actions are added to policy link item
+  context menu (group policy objects).
+- Fixed organizational unit and user rename ok buttons availability
+  with spaces only.
+- Crashing after drag and drop attempt in organizational unit's results
+  widget is fixed: drag and drop is disabled.
+- User and group general tab read-only widgets are added as results
+  widgets for corresponding group and user items.
+- creationTime attribute's value display/edit fixed.
+- Time span attribute value display fixed. Also time span attribute
+  edit is added.forceLogoff and lockOutObservationWindow attributes
+  are added as time span.
+- Attribute userAccountControl, msDs-Supported and systemFlags values
+  are displayed as hexadecimal.
+- Fixed group policy link appearing after an unauthorized creation
+  attempt.
+
 * Wed Mar 22 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.12.0-alt1
 - Indents at selected OU's widget with policies list are minimized.
 - Ellipsis for too long names in description bar is added. Label is located to
