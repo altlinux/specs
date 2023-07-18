@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt18
+Release: alt19
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -208,6 +208,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Tue Jul 18 2023 Anton Midyukov <antohami@altlinux.org> 0.1.5-alt19
+- bootchain/copyfile: fix unbound variable
+
 * Wed Jul 12 2023 Anton Midyukov <antohami@altlinux.org> 0.1.5-alt18
 - bootchain-altboot: do'nt unset STAGENAME
 - Display distribution independent dialogs
