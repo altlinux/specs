@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 337
+%define centos_release 340
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -643,6 +643,42 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jul 18 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.340-alt1.el9
+- Updated to kernel-5.14.0-340.el9 (fixes: CVE-2023-3161):
+  + Add PMT support for MTL-P
+  + Backport kernel audit enhancements and fixes up to upstream v6.4
+  + KVM/ARM rebase (2nd round)
+  + KVM: SVM: Add IA32_FLUSH_CMD guest support
+  + KVM: x86: too many kworkers created during VM boot
+  + MLX5 driver upgrade - kernel v6.2
+  + NFSv4.1: freeze the session table upon receiving NFS4ERR_BADSESSION
+  + Team: 9.3 P2 backports from upstream
+  + arm64: kaslr: don't pretend KASLR is enabled if offset < MIN_KIMG_ALIGN
+  + blk-mq: fix NULL dereference on q->elevator in blk_mq_elv_switch_none
+  + bnxt_en: Add auxiliary driver support
+  + bonding: do not assume skb mac_header is set
+  + cifs: sync to upstream 6.3
+  + crypto: ccp - Update CCP drivers upto v6.4
+  + dm: fix outstanding device-mapper bugs submitted to upstream
+  + drm/ast: Fix ARM compatibility
+  + fbcon: Check font dimension limits
+  + fuse: fix deadlock between atomic O_TRUNC and page invalidation
+  + igbvf: Driver Update
+  + igc: Driver Update
+  + interconnect: qcom: update to kernel v6.3
+  + kernel/rh_messages.c: Another gcc12 warning on redundant NULL test
+  + net: xfrm: backport fixes from upstream
+  + netfilter: snat: evict closing tcp entries on reply tuple collision
+  + nfs: don't report STATX_BTIME in ->getattr
+  + redhat/Makefile: Fix RHJOBS grep warning
+  + sched/fair: Don't balance task to its current running CPU
+  + scsi: hyper-v: storvsc: driver update for RHEL-9.3
+  + sctp: backports from upstream, 2nd phase
+  + sfc: use budget for TX completions
+  + soc/tegra: fuse: Remove nvmem root only access
+  + virt/sev-guest: Make the driver auto-load
+  + x86/bugs: Workaround for incorrectly set X86_BUG_RETBLEED under VMware
+
 * Wed Jul 12 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.337-alt1.el9
 - Updated to kernel-5.14.0-337.el9:
   + ALSA - update drivers for 9.3
