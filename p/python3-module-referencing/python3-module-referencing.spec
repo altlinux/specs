@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.29.1
+Version: 0.30.0
 Release: alt1
 
 Summary: Cross-specification JSON referencing (JSON Schema, OpenAPI, and the one you just made up!)
@@ -53,7 +53,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -v referencing/tests/
 
 %files
 %doc README.* COPYING
@@ -65,5 +65,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Jul 18 2023 Anton Vyatkin <toni@altlinux.org> 0.30.0-alt1
+- new version 0.30.0
+
 * Wed Jul 12 2023 Anton Vyatkin <toni@altlinux.org> 0.29.1-alt1
 - Initial build for Sisyphus
