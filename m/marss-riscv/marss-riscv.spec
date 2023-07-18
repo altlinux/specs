@@ -1,6 +1,6 @@
 Name: marss-riscv
 Version: 4.1a
-Release: alt1
+Release: alt2
 
 Summary: Open source simulator for the RISC-V ISA built upon TinyEMU
 
@@ -84,6 +84,9 @@ chrpath -d %buildroot/%_bindir/*
 %doc *.md
 
 %changelog
+* Tue Jul 18 2023 Artyom Bystrov <arbars@altlinux.org> 4.1a-alt2
+- Fix build on GCC13
+
 * Wed Jan 19 2022 Fr. Br. George <george@altlinux.ru> 4.1a-alt1
 - Autobuild version bump to 4.1a
 
