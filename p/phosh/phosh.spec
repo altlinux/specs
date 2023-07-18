@@ -15,7 +15,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1.2%beta
+Release: alt1.3%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -33,7 +33,13 @@ Source2: sm.puri.OSK0.desktop
 Patch1: %name-0.28.0-alt-tcb-check.patch
 # https://bugzilla.altlinux.org/46930
 Patch2: %name-0.29.0-alt-service.patch
+# https://bugzilla.altlinux.org/46978
+Patch3: %name-0.29.0-alt-service-dm.patch
 
+Requires: %name-data = %EVR
+# to avoid circular dependency
+%filter_from_requires /\/usr\/bin\/%name-session/d
+%filter_from_requires /\/usr\/libexec\/%name/d
 Requires: phoc >= 0.28
 Requires: gnome-shell-data
 Requires: mutter-gnome
@@ -91,6 +97,14 @@ protocol. It currently supports
 * a homebutton that toggles a simple favorites menu
 * status icons for battery, wwan and wifi
 
+%package data
+Summary: Arch independent files for Phosh
+Group: Graphical desktop/GNOME
+BuildArch: noarch
+
+%description data
+This package provides noarch data needed for Phosh to work.
+
 %package devel
 Summary: Development files for Phosh
 Group: Development/C
@@ -103,6 +117,7 @@ This package provides files needed to develop Phosh plugins.
 %setup -n %name-%version%beta
 %patch1 -p2
 %patch2 -p1 -b .alt
+%patch3 -p1 -b .alt-dm
 sed -i 's|\(User=\)1000|\1%dev_uid|' data/%name.service
 
 %build
@@ -146,7 +161,9 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/lib%name-plugin-emergency-info.so
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-ticket-box.so
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-emergency-info.so
+%doc NEWS README.md
 
+%files data
 %_desktopdir/%rdn_name.desktop
 %_desktopdir/sm.puri.OSK0.desktop
 %_datadir/glib-2.0/schemas/sm.puri.phosh.gschema.xml
@@ -165,7 +182,6 @@ xvfb-run %__meson_test
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %{?_enable_man:%_man1dir/%name.1*
 %_man1dir/%name-session.1*}
-%doc NEWS README.md
 
 %files devel
 %_includedir/%name/
@@ -173,6 +189,11 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Tue Jul 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1.3
+- split noarch data to separate subpackage
+- data/phosh.service: added "Alias=display-manager.service" to prevent
+  starting prefdm (ALT #46978)
+
 * Fri Jul 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1.2
 - data/phosh.service: removed "Environment=LANG=C.UTF-8",
   switched TTYPath/UtmpIdentifier from tty7 to tty1 (ALT#46930)
