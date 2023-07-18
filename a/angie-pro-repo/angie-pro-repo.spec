@@ -12,7 +12,7 @@
 %endif
 
 Name: angie-pro-repo
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: Link to the Angie PRO repository and GPG-key
@@ -45,6 +45,11 @@ GPG key.
 %setup
 
 %build
+%if "%altbranch" == "c9f2"
+echo "rpm [angie] %angie_pro_repos/8/ %_arch main" \
+	> etc/apt/sources.list.d/angie-pro.list
+chmod 0644 etc/apt/sources.list.d/angie-pro.list
+%endif
 %if "%altbranch" == "p10"
 echo "rpm [angie] %angie_pro_repos/10/ %_arch main" \
 	> etc/apt/sources.list.d/angie-pro.list
@@ -70,6 +75,9 @@ echo "/usr/lib/alt-gpgkeys/pubring.gpg" |
 /usr/lib/rpm/angie-repo.filetrigger
 
 %changelog
+* Tue Jul 18 2023 Leonid Krivoshein <klark@altlinux.org> 1.0.5-alt1
+- Added support for ALT 8 SP and c9f2 repository.
+
 * Tue Apr 25 2023 Leonid Krivoshein <klark@altlinux.org> 1.0.4-alt1
 - Added virtual dependency on apt-conf.
 
