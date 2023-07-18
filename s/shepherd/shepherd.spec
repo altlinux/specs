@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define guile_sitedir %(guile-config info sitedir)
+%define bash_completionsdir %_datadir/bash-completion/completions
 
 Name: shepherd
-Version: 0.10.1
-Release: alt3
+Version: 0.10.2
+Release: alt1
 
 Summary: The GNU Shepherd
 License: GPL-3.0+
@@ -38,7 +39,8 @@ programming model.
 
 %build
 %autoreconf
-%configure
+%configure \
+    --with-bash-completion-dir=%bash_completionsdir
 %make_build
 
 %install
@@ -62,8 +64,13 @@ programming model.
 %_man1dir/shepherd.*
 %_man8dir/halt.*
 %_man8dir/reboot.*
+%bash_completionsdir/herd
 
 %changelog
+* Tue Jul 18 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.2-alt1
+- Updated to 0.10.2.
+- Packaged bash completions.
+
 * Mon Jun 05 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.1-alt3
 - Set conflict with systemd-sysvinit package.
 
