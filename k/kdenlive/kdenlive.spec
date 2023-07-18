@@ -3,8 +3,8 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 22.12.3
-Release: alt3
+Version: 23.04.3
+Release: alt1
 %K5init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -20,6 +20,8 @@ AutoProv: yes, nopython nopython3
 %add_python3_req_skip opentimelineio
 %add_python3_req_skip srt
 %add_python3_req_skip vosk
+%add_python3_req_skip torch
+%add_python3_req_skip whisper
 Requires: mlt-utils >= %current_ver_mlt frei0r-plugins
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
 Requires: icon-theme-breeze kde5-runtime kde5-kio-extras
@@ -87,12 +89,11 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %files -f %name.lang
 %doc AUTHORS LICENSES/*
 %_K5bin/*
-%_K5plug/mltpreview.so
+%_K5plug/kf5/thumbcreator/*mlt*.so
 %_K5xdgapp/*.desktop
 %_datadir/%name
 %_K5cfg/*kdenlive*
 %_iconsdir/*/*/*/*.*
-%_K5srv/*.desktop
 %_K5notif/*rc
 %_K5xmlgui/kdenlive/
 %_K5xdgmime/*.xml
@@ -103,6 +104,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Tue Jul 18 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
+- new version
+
 * Fri Jun 30 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt3
 - fix russian translation (closes: 46570)
 
