@@ -7,7 +7,7 @@
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Group: Publishing
 Summary: A program for printing sheet music
 License: GPLv3+ with Font-exception-2.0 and GFDL-1.3 and MIT and OFL-1.1
@@ -128,6 +128,9 @@ rm -f %buildroot%_infodir/lilypond* %buildroot%_infodir/music*
 %vim_runtime_dir/syntax/*
 
 %changelog
+* Tue Jul 18 2023 Artyom Bystrov <arbars@altlinux.org> 2.22.1-alt2
+- Fix build on GCC13
+
 * Tue Aug 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.22.1-alt1
 - Updated to stable upstream version 2.22.1.
 
