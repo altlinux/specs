@@ -1,5 +1,5 @@
 Name: weechat
-Version: 3.8
+Version: 4.0.2
 Release: alt1
 
 Summary: fast, light & extensible IRC client
@@ -16,7 +16,8 @@ URL: http://www.weechat.org/
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Thu Oct 20 2011
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
 BuildRequires: asciidoctor
 BuildRequires: libaspell-devel
 BuildRequires: lua-devel
@@ -91,17 +92,16 @@ This package contains tcl plugin for weechat.
 find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\1 -avoid-version,' --
 
 %build
-./autogen.sh
-
-%configure \
-	--disable-ruby \
-	--with-debug \
-	--enable-man
-
-%make_build
+%cmake \
+	-DENABLE_GUILE=OFF \
+	-DENABLE_PHP=OFF \
+	-DENABLE_RUBY=OFF \
+	-DLIBDIR=%_libdir \
+	-DENABLE_MAN=ON
+%cmake_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%cmake_install
 
 rm -rf -- \
 	%buildroot/%_includedir \
@@ -151,6 +151,9 @@ find %buildroot -name '*.a' -delete
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Tue Jul 18 2023 Alexey Gladkov <legion@altlinux.ru> 4.0.2-alt1
+- New version (4.0.2)
+
 * Fri Jan 20 2023 Alexey Gladkov <legion@altlinux.ru> 3.8-alt1
 - New version (3.8)
 
