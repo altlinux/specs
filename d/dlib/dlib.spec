@@ -2,21 +2,21 @@
 %define soname 19
 
 Name: dlib
-Version: 19.24
-Release: alt2
+Version: 19.24.2
+Release: alt1
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
 Group: Engineering
 Url: http://dlib.net
 
 Source: https://github.com/davisking/%repo/archive/%version/%repo-%version.tar.gz
-Patch: 0001-Fix-build-on-ppc64mips64-2689.patch
-Patch1: 0001-Fix-build-with-pybind11.patch
 # Built from VCS.
 # git merge -s ours tag --allow-unrelated-histories
 
 BuildRequires: gcc-c++ cmake rpm-build-python3 python3-module-setuptools python3-module-wheel
 BuildRequires: liblapack-devel libX11-devel libpng-devel zlib-devel libjpeg-devel libwebp-devel pybind11-devel python3-module-pybind11
+BuildRequires: libopenblas-devel libavdevice-devel libavfilter-devel libavformat-devel libavcodec-devel libswresample-devel libswscale-devel libavutil-devel
+BuildRequires: libpostproc-devel libavresample-devel
 
 %description
 Dlib is a general purpose cross-platform C++ library
@@ -47,8 +47,6 @@ This package provides python module for %name.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
-%patch1 -p1
 rm -rf dlib/external
 sed -i 's|add_subdirectory(../../dlib/external/pybind11 pybind11_build)|find_package(pybind11 CONFIG)|' \
   tools/python/CMakeLists.txt
@@ -58,6 +56,7 @@ sed -i 's|add_subdirectory(../../dlib/external/pybind11 pybind11_build)|find_pac
   -DLIB_IN_PROJECT_BUILD=false \
   -DLIB_USE_CUDA=false \
   -DBUILD_SHARED_LIBS=true \
+  -DBLAS_LIBRARIES=%_libdir/libopenblas.so \
 #
 %cmake_build
 %ifnarch ppc64le
@@ -86,6 +85,11 @@ sed -i 's|add_subdirectory(../../dlib/external/pybind11 pybind11_build)|find_pac
 %endif
 
 %changelog
+* Tue Jul 18 2023 Leontiy Volodin <lvol@altlinux.org> 19.24.2-alt1
+- New version 19.24.2.
+- Spec:
+  + Added BuildRequires.
+
 * Mon Dec 12 2022 Leontiy Volodin <lvol@altlinux.org> 19.24-alt2
 - Built with system pybind11 instead built-in.
 
