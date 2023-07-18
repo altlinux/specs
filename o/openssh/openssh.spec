@@ -1,9 +1,9 @@
 Name: openssh
-Version: 8.6p1
-Release: alt4
+Version: 9.3p1
+Release: alt1
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
-License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-clause and Beerware
+License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
 Group: Networking/Remote access
 Url: http://www.openssh.com/portable.html
 # git://git.altlinux.org/gears/o/openssh.git
@@ -55,7 +55,7 @@ Requires: %name-clients = %version-%release
 %package server
 Summary: OpenSSH Secure Shell protocol daemon
 Group: System/Servers
-PreReq: %name-server-control = %version-%release
+Requires(pre,post): %name-server-control = %version-%release
 Requires: %_chrootdir, syslogd-daemon
 Obsoletes: ssh-server
 # Because of /etc/syslog.d/ feature.
@@ -352,6 +352,12 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Mon Jul 17 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3p1-alt1
+- Updated to 9.3p1.
+- Changed the ssh-agent -u patch to return exit code 1 instead of 255 on error
+  (ALT#45029).
+- openssh-server: replaced deprecated PreReq: tag with Requires(pre,post).
+
 * Thu Jun 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt4
 - Backported upstream patches for seccomp filter, allowing gettid(2) and
   writev(2) syscalls.
