@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 7.6.0
+Version: 7.7.1
 Release: alt1
 
 Summary: Converting Jupyter Notebooks
@@ -62,6 +62,7 @@ BuildRequires: python3(jupyterlab_pygments)
 BuildRequires: python3(nest_asyncio)
 BuildRequires: python3-module-ipykernel
 BuildRequires: python3-module-ipywidgets
+BuildRequires: python3-module-flaky
 %endif
 
 %py3_provides %oname
@@ -192,6 +193,9 @@ not test_pandoc_extra_args"
 %endif
 
 %changelog
+* Tue Jul 18 2023 Anton Vyatkin <toni@altlinux.org> 7.7.1-alt1
+- New version 7.7.1.
+
 * Wed Jun 28 2023 Anton Vyatkin <toni@altlinux.org> 7.6.0-alt1
 - New version 7.6.0.
 
