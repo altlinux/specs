@@ -1,12 +1,12 @@
 Name: patchelf
-Version: 0.17.2
+Version: 0.18.0
 Release: alt1
 Summary: A utility for patching ELF binaries
 
 Group: Development/Tools
 License: GPLv3+
 Url: https://github.com/NixOS/patchelf
-# repacked https://github.com/NixOS/patchelf/releases/download/%version/patchelf-%version.tar.bz2
+# repacked https://github.com/NixOS/patchelf/releases/download/%version/patchelf-%version.tar.gz
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Mon Nov 07 2016
@@ -39,12 +39,20 @@ make check
 # standard way in the docs section below
 rm -rf %buildroot/usr/share/doc/%name
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %files
 %doc COPYING README.md
 %_bindir/patchelf
 %_mandir/man1/patchelf.1*
+%_datadir/zsh/site-functions/_patchelf
 
 %changelog
+* Tue Jul 18 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.18.0-alt1
+- Updated to 0.18.0.
+
 * Mon Apr 17 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.17.2-alt1
 - Updated to 0.17.2.
 
