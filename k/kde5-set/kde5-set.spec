@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 22.12.1
+Version: 23.04.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -71,6 +71,7 @@ Requires: gtk3-theme-breeze
 Requires: gtk2-theme-breeze
 Requires: kf5-qqc2-desktop-style
 Requires: kde5-plasma-applet-places-widget
+Requires: plasma5-oxygen-sounds
 Requires: plasma5-kde-gtk-config plasma5-bluedevil plasma5-kscreen plasma5-ksshaskpass
 Requires: plasma5-khotkeys plasma5-kinfocenter plasma5-addons plasma5-browser-integration
 Requires: plasma5-disks
@@ -93,7 +94,6 @@ Requires: kde5-messenger-client
 Requires: plasma5-oxygen
 Requires: icon-theme-oxygen
 Requires: plasma5-workspace-wallpapers
-Requires: plasma5-oxygen-sounds
 Requires: plasma5-kwrited
 Requires: plasma5-user-manager kde5-ksystemlog
 Requires: kde5-krdc
@@ -228,6 +228,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Wed Jul 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.1-alt1
+- install plasma5-oxygen-sounds by default
+
 * Fri Apr 14 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - don't require kde5-kdebugsettings for all
 
