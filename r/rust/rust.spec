@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.70.0
+Version: 1.71.0
 Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.69.0
+%define r_ver 1.70.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -15,11 +15,13 @@ Source: %name-%version.tar
 
 Patch0001: 0001-ALT-Disable-lint-tests.patch
 Patch0002: 0002-ALT-gdb-Fix-libdir.patch
+Patch0003: 0003-Revert-Fix-x-test-lint-docs-when-download-rustc-is-e.patch
+Patch0004: 0004-Revert-fix-bug-etc-bash_complettion-src-etc-.-to-avo.patch
 
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
-%global llvm_version 15.0
+%global llvm_version 16.0
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -355,6 +357,9 @@ find %buildroot/%rustlibdir -maxdepth 1 -type f -delete
 # We don't actually need to ship any of those python scripts in rust-src anyway.
 find %buildroot/%rustlibdir/src -type f -name '*.py' -delete
 
+# Remove old binaries
+find %buildroot/%_bindir -type f -name '*.old' -delete
+
 # Drop compiled python
 find %buildroot/%rustlibdir/etc -type f -name '*.pyc' -delete
 %add_python3_path %rustlibdir/etc
@@ -454,6 +459,12 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Fri Jul 14 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.71.0-alt1
+- New version (1.71.0).
+
+* Wed Jun 14 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.70.0-alt2
+- Use llvm16.0.
+
 * Tue Jun 13 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.70.0-alt1
 - New version (1.70.0).
 
