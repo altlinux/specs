@@ -6,6 +6,13 @@
 %{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
 %define ubt_id %__ubt_branch_id
 
+%define glvnd_scheme -1
+%Nif_ver_lt %ubt_id M90
+%define glvnd_scheme 0
+%else
+%define glvnd_scheme 1
+%endif
+
 %define virtual_pkg_name NVIDIA_GLX
 %define bin_pkg_name     nvidia_glx
 %define module_name    nvidia
@@ -14,9 +21,9 @@
 # version-release
 
 %define nv_version 535
-%define nv_release 54
-%define nv_minor 03
-%define pkg_rel alt265
+%define nv_release 86
+%define nv_minor 05
+%define pkg_rel alt266
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -100,7 +107,9 @@ Conflicts: xorg-x11-mesagl <= 6.8.2-alt7
 Requires(pre): libGL
 Requires: libGL
 Requires: apt-scripts-nvidia
+%Nif_ver_lt %glvnd_scheme 1
 Requires: /usr/bin/xsetup-monitor
+%endif
 Requires(post): x11presetdrv
 # old
 Conflicts: nvidia_glx_100.14.19-100.14.19 <= alt40
@@ -130,12 +139,6 @@ tar xvf %SOURCE0
 pushd set_gl_nvidia/
 cp settings.h.in settings.h
 
-%define glvnd_scheme -1
-%Nif_ver_gteq %ubt_id M90
-%define glvnd_scheme 1
-%else
-%define glvnd_scheme 0
-%endif
 sed -i "s|@GLVND_SCHEME@|%glvnd_scheme|" settings.h
 
 sed -i "s|@DEFAULT_VERSION@|%version|" settings.h
@@ -196,6 +199,7 @@ ld --shared nvidianull.o -o libnvidianull.so
 %__mkdir_p %buildroot/%_datadir/nvidia
 %__mkdir_p %buildroot/%x11_lib_dir/vdpau
 %__mkdir_p %buildroot/%x11_lib_dir/gbm
+#%__mkdir_p %buildroot/lib/firmware/nvidia
 
 # prompt user to don't use nvidia-installer
 mkdir -p %buildroot/usr/lib/nvidia/
@@ -292,6 +296,7 @@ fi
 
 %files
 %dir %module_local_dir
+#%dir /lib/firmware/nvidia/
 %dir %_datadir/nvidia/
 %_datadir/make-initrd/features/nvidia/
 %ghost %_bindir/nvidia-bug-report.sh
@@ -348,6 +353,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Wed Jul 19 2023 Sergey V Turchin <zerg@altlinux.org> 535.86.05-alt266
+- new version
+
 * Thu Jun 29 2023 Sergey V Turchin <zerg@altlinux.org> 535.54.03-alt265
 - new version
 
