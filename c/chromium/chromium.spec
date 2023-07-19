@@ -11,7 +11,7 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%global llvm_version 15.0
+%global llvm_version 16.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
@@ -34,7 +34,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        114.0.5735.90
+Version:        114.0.5735.198
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -92,6 +92,10 @@ Patch022: 0022-ARCH-Add-missing-header.patch
 Patch023: 0023-ALT-Do-not-hardcode-flatbuffer-version.patch
 Patch024: 0024-DEBIAN-lambda-bug-workaround.patch
 Patch025: 0025-ALT-Ignore-unknown-option-llvm15.patch
+Patch026: 0026-tflite-add-stdint.h-for-int-types-in-internal-Spectr.patch
+Patch027: 0027-IWYU-add-cstdio-for-snprintf-in-vk_mem_alloc.h.patch
+Patch028: 0028-fixing-import-in-maldoca-ole-header.h.patch
+Patch029: 0029-aarch64-Add-missing-cstdint-header.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -512,6 +516,18 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Jul 18 2023 Alexey Gladkov <legion@altlinux.ru> 114.0.5735.198-alt1
+- New version (114.0.5735.198).
+- Use LLVM16.
+- Security fixes:
+  - CVE-2023-3214: Use after free in Autofill payments.
+  - CVE-2023-3215: Use after free in WebRTC.
+  - CVE-2023-3216: Type Confusion in V8.
+  - CVE-2023-3217: Use after free in WebXR.
+  - CVE-2023-3420: Type Confusion in V8.
+  - CVE-2023-3421: Use after free in Media.
+  - CVE-2023-3422: Use after free in Guest View.
+
 * Sat Jun 03 2023 Alexey Gladkov <legion@altlinux.ru> 114.0.5735.90-alt1
 - New version (114.0.5735.90).
 - Security fixes:
