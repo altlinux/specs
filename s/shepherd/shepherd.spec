@@ -5,7 +5,7 @@
 
 Name: shepherd
 Version: 0.10.2
-Release: alt1
+Release: alt2
 
 Summary: The GNU Shepherd
 License: GPL-3.0+
@@ -15,6 +15,7 @@ Vcs: git://git.savannah.gnu.org/shepherd.git
 
 Source0: %name-%version.tar
 
+Requires: guile-fibers
 Conflicts: sysvinit
 Conflicts: systemd-sysvinit
 
@@ -67,6 +68,9 @@ programming model.
 %bash_completionsdir/herd
 
 %changelog
+* Wed Jul 19 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.2-alt2
+- Added guile-fibers requirement.
+
 * Tue Jul 18 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.2-alt1
 - Updated to 0.10.2.
 - Packaged bash completions.
