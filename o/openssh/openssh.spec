@@ -1,5 +1,5 @@
 Name: openssh
-Version: 9.3p1
+Version: 9.3p2
 Release: alt1
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
@@ -352,6 +352,9 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Wed Jul 19 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3p2-alt1
+- Updated to 9.3p2.
+
 * Mon Jul 17 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3p1-alt1
 - Updated to 9.3p1.
 - Changed the ssh-agent -u patch to return exit code 1 instead of 255 on error
