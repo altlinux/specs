@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2023.06.1
+Version: 2023.07.1
 Release: alt1
 
 Summary: Support files exposing JSON from the JSON Schema specifications to Python
@@ -60,5 +60,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%mod_name-*.dist-info
 
 %changelog
+* Wed Jul 19 2023 Anton Vyatkin <toni@altlinux.org> 2023.07.1-alt1
+- New version 2023.07.1.
+
 * Fri Jul 14 2023 Anton Vyatkin <toni@altlinux.org> 2023.06.1-alt1
 - Initial build for Sisyphus
