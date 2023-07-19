@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.49.3
+Version: 0.50.0
 Release: alt1
 
 Summary: Entity / relation schema
@@ -22,6 +22,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-logilab-common
 BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-importlib-metadata
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -41,7 +42,7 @@ readable/writable from/to various formats.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -v
 
 %files
 %doc README.rst COPYING
@@ -51,6 +52,9 @@ readable/writable from/to various formats.
 
 
 %changelog
+* Wed Jul 19 2023 Anton Vyatkin <toni@altlinux.org> 0.50.0-alt1
+- new version 0.50.0
+
 * Wed Mar 22 2023 Anton Vyatkin <toni@altlinux.org> 0.49.3-alt1
 - new version 0.49.3
 
