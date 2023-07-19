@@ -1,5 +1,5 @@
 Name: libbabl
-Version: 0.1.102
+Version: 0.1.106
 Release: alt1
 Summary: babl is a dynamic, any to any, pixel format translation library
 License: %lgpl3only
@@ -11,7 +11,7 @@ Source: babl-%version.tar
 Patch: babl-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses meson
-BuildRequires: gobject-introspection-devel liblcms2-devel librsvg-utils w3m inkscape ruby ruby-module-date-time vala-tools
+BuildRequires: gobject-introspection-devel liblcms2-devel librsvg-utils w3m inkscape ruby vala-tools
 
 %description
 babl is a dynamic, any to any, pixel format translation library.
@@ -80,6 +80,9 @@ sed "s|@BABL_GIT_VERSION@|%version|" git-version.h.in > git-version.h
 %_vapidir/babl-*.vapi
 
 %changelog
+* Wed Jul 19 2023 Valery Inozemtsev <shrek@altlinux.ru> 0.1.106-alt1
+- 0.1.106
+
 * Mon Mar 06 2023 Valery Inozemtsev <shrek@altlinux.ru> 0.1.102-alt1
 - 0.1.102
 
