@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
+%define git %nil
 
 %def_with docs
 
@@ -36,8 +37,8 @@
 %def_with jemalloc
 
 Name: blender
-Version: 3.6.0
-Release: alt4
+Version: 3.6.1
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -359,6 +360,7 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_datadir/%name/
 %if_with hip
+%exclude %dir %_datadir/%name/*/scripts/addons/cycles/lib
 %exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_gfx*.fatbin
 %endif
 %if_with hiprt
@@ -370,6 +372,7 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 
 %if_with hip
 %files cycles-hip-kernels
+%dir %_datadir/%name/*/scripts/addons/cycles/lib
 %_datadir/%name/*/scripts/addons/cycles/lib/kernel_gfx*.fatbin
 %if_with hiprt
 %_datadir/%name/*/scripts/addons/cycles/lib/kernel_rt_gfx.*
@@ -382,6 +385,13 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Wed Jul 19 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.1-alt1
+- Update to 3.6.1.
+
+* Thu Jul 13 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt5.gfc44305e720
+- v3.6.0-55-gfc44305e720.
+- Fix unowned dir for cycles kernels.
+
 * Sun Jul 09 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt4
 - aarch64: enable embree.
 - .spec: cleanup obsoleted build options.
