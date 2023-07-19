@@ -1,9 +1,9 @@
 Name:		focuswriter
-Version:	1.8.4
+Version:	1.8.5
 Release:	alt1
 Summary:	FocusWriter is a fullscreen, distraction-free word processor
 License:	GPLv3
-Packager:	Motsyo Gennadi <drool@altlinux.ru>
+Packager:	Ilya Mashkin <oddity@altlinux.ru>
 Group:		Text tools
 Url:		http://gottcode.org/focuswriter/
 Source0:	http://gottcode.org/focuswriter/%name-%version.tar.bz2
@@ -47,6 +47,9 @@ rm -f %buildroot%_pixmapsdir/*.xpm
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Jul 19 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8.5-alt1
+- 1.8.5
+
 * Thu Jan 12 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8.4-alt1
 - 1.8.4
 
