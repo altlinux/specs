@@ -2,22 +2,27 @@
 
 Name: xmlto
 Version: 0.0.28
-Release: alt2
+Release: alt3
 
 Summary: A tool for converting XML files to various formats.
-Group: Publishing
-License: %gpl2plus
-Url: https://fedorahosted.org/%name/
 
-# VCS: http://svn.fedorahosted.org/svn/xmlto/
-Source: https://fedorahosted.org/releases/x/m/%name/%name-%version.tar.gz
+Group: Publishing
+License: GPLv2+
+Url: https://pagure.io/xmlto/
+
+# Source-url: https://releases.pagure.org/xmlto/xmlto-%version.tar.bz2
+Source: %name-%version.tar
+
+Patch0: xmlto-c99-1.patch
+Patch1: xmlto-c99-2.patch
 
 Requires: docbook-style-xsl >= 1.56
 %{!?_with_tex_subpkg:Requires: passivetex >= 20040310}
-Requires: docbook-dtds libpaper xml-utils xsltproc
+Requires: docbook-dtds xml-utils xsltproc
+Requires: /usr/bin/paperconf
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: libpaper docbook-dtds docbook-style-xsl flex xsltproc
+BuildRequires: docbook-dtds docbook-style-xsl flex xsltproc
+BuildRequires: /usr/bin/paperconf
 
 %description
 This is a package for converting XML files to various formats using XSL
@@ -29,7 +34,7 @@ Group: Publishing
 Summary: A set of %name backends with TeX requirements
 BuildArch: noarch
 Requires: passivetex
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tex
 This subpackage contains %name backend scripts which do require
@@ -38,6 +43,8 @@ PassiveTeX/TeX for functionality.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -53,9 +60,10 @@ bzip2 --keep --best --force ChangeLog
 
 %files
 %doc AUTHORS ChangeLog.* FAQ NEWS THANKS
-%_bindir/*
+%_bindir/xmlif
+%_bindir/xmlto
 %_man1dir/*
-%_datadir/%name
+%_datadir/%name/
 %if_with tex_subpkg
 %exclude %_datadir/%name/format/fo/dvi
 %exclude %_datadir/%name/format/fo/ps
@@ -69,6 +77,11 @@ bzip2 --keep --best --force ChangeLog
 
 
 %changelog
+* Wed Jul 19 2023 Vitaly Lipatov <lav@altlinux.ru> 0.0.28-alt3
+- cleanup spec, update URL
+- replace libpaper requirement with /usr/bin/paperconf
+- add Fedora's patches for C99 warnings
+
 * Fri Feb 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.28-alt2
 - NMU: prepared for new texlive
 
