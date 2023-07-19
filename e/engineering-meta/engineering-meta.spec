@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p10
-Release: alt7
+Release: alt8
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -117,9 +117,10 @@ Summary: Metapackage for install CAM Applications
 Summary(ru_RU.UTF-8): Метапакет для установки CAM приложений
 Group: Engineering
 
-%ifarch %ix86 x86_64
-Requires: camotics
-%endif
+#ifarch %ix86 x86_64
+# new version 1.3.0 camotics required nodejs-v8 for build
+#Requires: camotics
+#endif
 Requires: pycam
 Requires: flatcam
 %ifnarch %ix86 %arm
@@ -201,6 +202,9 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Wed Jul 19 2023 Anton Midyukov <antohami@altlinux.org> p10-alt8
+- CAM: do'nt require camotics
+
 * Sat Jul 08 2023 Anton Midyukov <antohami@altlinux.org> p10-alt7
 - APCS: do'nt require openscada
 
