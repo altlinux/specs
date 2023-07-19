@@ -1,6 +1,6 @@
 Name: x2gobroker
 Version: 0.0.4.1
-Release: alt16
+Release: alt17
 Summary: X2Go Session Broker
 License: AGPLv3+
 Group: Communications
@@ -17,11 +17,12 @@ Patch5: alt-include-loadfactors.patch
 Patch6: alt-fix-tests.patch
 Patch7: alt-%name-daemon-user.patch
 Patch8: alt-disable-2to3.patch
+Patch9: alt-remove-nose.patch
 
 BuildRequires: python3-module-setuptools
 BuildRequires: perl-File-Which
 # For tests
-BuildRequires: python3-module-PasteScript python3-module-netaddr python3-module-nose2 python3-module-paramiko python3-module-tornado
+BuildRequires: python3-module-PasteScript python3-module-netaddr python3-module-paramiko python3-module-tornado
 Requires(pre): x2gobroker-common = %EVR
 Requires:  python3-module-x2gobroker = %EVR
 Requires:  shadow-utils
@@ -263,6 +264,7 @@ installed on your to-be-managed X2Go servers.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 echo "Files where we will be patching libexecedir:"
@@ -421,6 +423,9 @@ touch ~/.ssh/id_rsa
 %_man8dir/x2gobroker-pubkeyauthorizer.8*
 
 %changelog
+* Wed Jul 19 2023 Oleg Solovyov <mcpain@altlinux.org> 0.0.4.1-alt17
+- remove nose from dependencies
+
 * Wed Jul 19 2023 Oleg Solovyov <mcpain@altlinux.org> 0.0.4.1-alt16
 - replace nose by nose2
 
