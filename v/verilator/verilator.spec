@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: verilator
-Version: 5.002
+Version: 5.012
 Release: alt1
 Summary: A fast and free Verilog HDL simulator
 
@@ -16,7 +16,7 @@ ExcludeArch: armh
 
 BuildRequires: flex gcc-c++
 BuildRequires: rpm-build-python3
-BuildRequires: perl-podlators tex(dehypht.tex)
+BuildRequires: perl-podlators tex(dehypht.tex) help2man
 BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: gdb /proc
@@ -67,6 +67,9 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Wed Jul 19 2023 Egor Ignatov <egori@altlinux.org> 5.012-alt1
+- new version 5.012
+
 * Sun Oct 30 2022 Egor Ignatov <egori@altlinux.org> 5.002-alt1
 - new version 5.002
 
