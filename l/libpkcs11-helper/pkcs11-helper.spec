@@ -8,8 +8,8 @@
 %def_disable mbedtls
 
 Name: lib%_name
-Version: 1.25.1
-Release: alt7
+Version: 1.29.0
+Release: alt1
 Summary: A library for using PKCS#11 providers
 
 Group: Development/Other
@@ -96,6 +96,9 @@ rm -f %buildroot%_libdir/*.la
 %_man8dir/*.8*
 
 %changelog
+* Tue Jul 18 2023 Paul Wolneykien <manowar@altlinux.org> 1.29.0-alt1
+- New version 1.29.0.
+
 * Wed Oct 16 2019 Paul Wolneykien <manowar@altlinux.org> 1.25.1-alt7
 - Added support for GOST 2012 VKO.
 - Don't diversify the resulting GOST key.
