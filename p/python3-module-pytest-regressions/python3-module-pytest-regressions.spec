@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.4.2
-Release: alt1
+Release: alt2
 Summary: Pytest plugin for regression testing
 License: MIT
 Group: Development/Python3
@@ -44,7 +44,7 @@ Fixtures to write regression tests.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra tests
+%pyproject_run_pytest -ra tests -Wignore
 
 %files
 %doc README.rst
@@ -52,6 +52,9 @@ Fixtures to write regression tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 17 2023 Stanislav Levin <slev@altlinux.org> 2.4.2-alt2
+- Fixed FTBFS (numpy 1.25.0).
+
 * Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 2.4.2-alt1
 - 2.4.1 -> 2.4.2.
 

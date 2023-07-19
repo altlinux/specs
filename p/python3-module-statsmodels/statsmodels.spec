@@ -1,108 +1,76 @@
 %define _unpackaged_files_terminate_build 1
 
-%define mname scikits
-%define rname statsmodels
-%define oname %mname.%rname
+%define pypi_name statsmodels
+%define mod_name %pypi_name
 
-%def_disable check
+%def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
+Version: 0.14.0
+Release: alt1
 Epoch: 1
-Version: 0.11.1
-Release: alt2.1
-Summary: Statistical computations and models for use with SciPy
+Summary: Statistical computations and models for Python
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/statsmodels/
-
-# https://github.com/statsmodels/statsmodels.git
+Vcs: https://github.com/statsmodels/statsmodels
 Source: %name-%version.tar
-
-Patch1: %oname-alt-build.patch
-Patch2: %oname-alt-check.patch
-Patch3: %oname-alt-skipped-tests.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: libnumpy-py3-devel python3-devel
-BuildRequires: python3-module-Cython
-BuildRequires: python3-module-scipy
-
-%if_enabled check
-BuildRequires: python3-module-tox
-BuildRequires: python3(patsy) python3(pandas) python3(pandas.util.testing)
-BuildRequires: python3(joblib) python3(pytest-xdist)
-%endif
-
-%py3_provides %oname
-%py3_requires numpy scipy pandas patsy matplotlib cvxopt
-%py3_requires statsmodels.stats.multitest
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
 %add_python3_req_skip models
+# rename scikits.statsmodels => statsmodels
+Provides: python3-module-scikits.statsmodels = %EVR
+Obsoletes: python3-module-scikits.statsmodels <= 0.11.1-alt2.1
+
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra develop
+# compat.pandas => pandas.testing
+BuildRequires: python3-module-pandas-tests
+%endif
 
 %description
 Statsmodels is a Python package that provides a complement to scipy for
 statistical computations including descriptive statistics and estimation
 and inference for statistical models.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-%add_python3_req_skip rpy
-%add_python3_req_skip yapf.yapflib.yapf_api
-
-%description tests
-Statsmodels is a Python package that provides a complement to scipy for
-statistical computations including descriptive statistics and estimation
-and inference for statistical models.
-
-This package contains tests for %oname.
-
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-
-# fix version info
-sed -i \
-	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
-	%rname/_version.py
+%autopatch -p1
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug -j${NPROCS:-%__nprocs}
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %ifnarch armh
 %check
 # quite a few tests fail on armh. disable it for now
-export PIP_NO_INDEX=YES
-export PIP_NO_BUILD_ISOLATION=no
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
 %endif
+%pyproject_run -- bash -s <<-'ENDUNITTEST'
+set -eu
+mkdir empty
+cd empty
+python3 -c 'import statsmodels; statsmodels.test(["--skip-examples", "--only-smoke", "--skip-slow", "-n", "auto"], exit=True)'
+ENDUNITTEST
 
 %files
 %doc LICENSE.txt
-%doc *.md *.rst README_l1.txt
-%python3_sitelibdir/%rname
-%python3_sitelibdir/%rname-%version-*.egg-info
-%exclude %python3_sitelibdir/%rname/*/*/*/example*
-%exclude %python3_sitelibdir/%rname/*/*/example*
-%exclude %python3_sitelibdir/%rname/*/*/*/test*
-%exclude %python3_sitelibdir/%rname/*/*/test*
-%exclude %python3_sitelibdir/%rname/*/test*
-
-%files tests
-%python3_sitelibdir/%rname/*/*/*/example*
-%python3_sitelibdir/%rname/*/*/example*
-%python3_sitelibdir/%rname/*/*/*/test*
-%python3_sitelibdir/%rname/*/*/test*
-%python3_sitelibdir/%rname/*/test*
+%doc README*.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 14 2023 Stanislav Levin <slev@altlinux.org> 1:0.14.0-alt1
+- 0.11.1 -> 0.14.0.
+
 * Wed Mar 24 2021 Ivan A. Melnikov <iv@altlinux.org> 1:0.11.1-alt2.1
 - Enable parallel build.
 

@@ -1,4 +1,4 @@
-%def_without check
+%def_with check
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
@@ -10,97 +10,93 @@
 # LTO causes errors, disable it
 %global optflags_lto %nil
 
-%define oname numpy
+%define pypi_name numpy
+%define oname %pypi_name
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.22.1
-Release: alt4
-Summary: NumPy: array processing for numbers, strings, records, and objects
+Version: 1.25.1
+Release: alt1
+Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://www.numpy.org/
-
-# VCS: https://github.com/numpy/numpy.git
+VCS: https://github.com/numpy/numpy.git
 Source: %name-%version.tar
-Source2: site.cfg
 Source3: svml.tar
-
+Source4: x86-simd-sort.tar
+Source1: %pyproject_deps_config_name
 Patch: numpy-1.20.2-Remove-strict-dependency-on-testing-package.patch
 Patch1: numpy-1.21.1-alt-use-system-fallocate-declaration.patch
-Patch2: numpy-1.21.1-alt-recfunctions-use-warnings-instead-of-suppress_warnings.patch
 Patch4: numpy-1.21.4-alt-use-sleep-in-auxv-test.patch
-Patch5: numpy-1.22.1-alt-Revert-MAINT-Raise-RuntimeError-if-setuptools-versio.patch
-Patch6: numpy-1.22.1-Migrate-distutils.LooseVersion-to-packaging.version.patch
-
 # E2K patchset with MCST numbering scheme
 %ifarch %e2k
 Patch1001: 0001-arch_e2k_define.patch
 Patch1002: 0002-bug92804.patch
 Patch1003: 0003-lcc-1.24-compat.patch
 %endif
-
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: /proc
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: gcc-c++ gcc-fortran liblapack-devel swig
-BuildRequires: python3-module-Cython python3-module-packaging
-%{?_with_check:BuildRequires: python3-module-pytest python3-module-hypothesis}
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+# some tests want /proc/meminfo
+BuildRequires: /proc
+%endif
 
-# https://bugzilla.altlinux.org/show_bug.cgi?id=18379
-%add_python3_req_skip Scons setuptools distutils nose number code_generators
-# See bug 35103
-%add_python3_req_skip setuptools.command.develop setuptools.command.egg_info
-%add_python3_req_skip code_generators.genapi code_generators.numpy_api genapi numpy._build_utils.apple_accelerate numpy_api
-# Python3.11 update has broken these imports
-%add_python3_req_skip __version__ distutils.msvc9compiler distutils.msvccompiler setup_common
+# numpy provides the hook for PyInstaller via entry_points mechanism
+# PyInstaller will call this hook
+# see https://github.com/numpy/numpy/issues/17184
+%filter_from_requires /python3(PyInstaller\(\..*\)\?)/d
+
+# numpy.distutils is deprecated and will be removed with Python 3.12
+# https://numpy.org/doc/stable/reference/distutils.html
+# https://numpy.org/doc/stable/reference/distutils_status_migration.html#distutils-status-migration
+# https://bugzilla.altlinux.org/35103
+%filter_from_requires /python3(distutils\(\..*\)\?)/d
+%filter_from_requires /python3(setuptools\(\..*\)\?)/d
+
+# code_generators is only available in source tree and is not
+# shipped, but we ship code that may use it, for example, numpy.core.cversions
+%filter_from_requires /python3(code_generators\(\..*\)\?)/d
+# sys.path is prepended with code_generators path
+%add_python3_req_skip genapi
+%add_python3_req_skip numpy_api
 
 %add_findprov_skiplist %python3_sitelibdir/%oname/random/_examples/*
 %add_findreq_skiplist  %python3_sitelibdir/%oname/random/_examples/*
 
+# core.setup_common is imported from core.setup
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/core/
+# f2py.setup: from __version__ import version
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/f2py/
+
 Conflicts: python-module-numpy < 1:1.15.4-alt6
 
 %description
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
-There are also basic facilities for discrete fourier transform,
-basic linear algebra and random number generation.
+NumPy is the fundamental package for scientific computing in Python. It is a
+Python library that provides a multidimensional array object, various derived
+objects (such as masked arrays and matrices), and an assortment of routines for
+fast operations on arrays, including mathematical, logical, shape manipulation,
+sorting, selecting, I/O, discrete Fourier transforms, basic linear algebra,
+basic statistical operations, random simulation and much more.
 
 %package testing
 Summary: Testing part of NumPy (Python 3)
 Group: Development/Python3
 Requires: %name = %EVR
-%add_python3_req_skip setuptools
 
 %description testing
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
 This package contains testing part of NumPy.
 
 %package tests
 Summary: Tests for NumPy (Python 3)
 Group: Development/Python3
 Requires: %name = %EVR
-%add_python3_req_skip core scipy
 
 %description tests
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
 This package contains tests NumPy.
 
 %package -n lib%oname-py3-devel
@@ -110,38 +106,11 @@ Requires: %name = %EVR
 Requires: python3-devel
 
 %description -n lib%oname-py3-devel
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
 This package contains development files of NumPy.
 
-%package pickles
-Summary: Pickles for NumPy
-Group: Development/Python3
-
-%description pickles
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
-This package contains pickles for NumPy.
-
 %prep
-%setup -a 3
+%setup -a 3 -a4
 %autopatch -p1
-
-install -m644 %SOURCE2 .
-sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
-sed -i 's|@PYVER@|%_python3_version|g' site.cfg doc/Makefile
-sed -i 's|@PYSUFF@|3|' site.cfg
-sed -i 's|@BLAS@|openblas|' site.cfg
 
 # headers
 sed -i 's|^prefix.*|prefix=%python3_sitelibdir/%oname/core|' \
@@ -154,75 +123,49 @@ sed -i \
 	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
 	%oname/_version.py
 
-%build
-INCS="-I%_includedir/suitesparse -I$PWD/numpy/core/include/numpy"
-INCS="$INCS -I$PWD/numpy/core/include -I%buildroot%_includedir/python%_python3_version/%oname"
-INCS="$INCS -I%buildroot%_includedir"
-DEFS="-DHAVE_FREXPF -DHAVE_FREXPL -DHAVE_FREXP -DHAVE_LDEXP -DHAVE_LDEXPL"
-DEFS="$DEFS -DHAVE_EXPM1 -DHAVE_LOG1P -DHAVE_LDEXPF"
-DEFS="$DEFS -UNPY_CPU_AMD64 -UNPY_CPU_X86"
-%add_optflags -fno-strict-aliasing $DEFS $INCS %optflags_shared
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile test_requirements.txt
+%endif
 
-%python3_build_debug --fcompiler=gnu95
+%build
+%add_optflags -fno-strict-aliasing
+%pyproject_build
 
 %check
-# point to correct (existing) include dir for tests
-ln -sf %buildroot%_includedir/python%_python3_version/%oname \
-	%buildroot%python3_sitelibdir/%oname/core/include/
-
-# avoid double build
-export PYTHONPATH=%buildroot%python3_sitelibdir
-python3 runtests.py --no-build -v %{?relax_tests:||:}
-
-# restore back link
-ln -sf %_includedir/python%_python3_version/%oname \
-	%buildroot%python3_sitelibdir/%oname/core/include/
+# no-build to avoid double build
+%pyproject_run -- python3 runtests.py --no-build -v -- -ra -o=addopts=-Wignore %{?relax_tests:||:}
 
 %install
-INCS="-I%_includedir/suitesparse -I$PWD/numpy/core/include/numpy"
-INCS="$INCS -I$PWD/numpy/core/include -I%buildroot%_includedir/python%_python3_version/%oname"
-INCS="$INCS -I%buildroot%_includedir"
-DEFS="-DHAVE_FREXPF -DHAVE_FREXPL -DHAVE_FREXP -DHAVE_LDEXP -DHAVE_LDEXPL"
-DEFS="$DEFS -DHAVE_EXPM1 -DHAVE_LOG1P -DHAVE_LDEXPF"
-DEFS="$DEFS -UNPY_CPU_AMD64 -UNPY_CPU_X86"
-DEFS="$DEFS -DNPY_ENABLE_SEPARATE_COMPILATION"
-%add_optflags -fno-strict-aliasing $DEFS $INCS %optflags_shared
-
-%python3_build_install
-
-# private headers
+%pyproject_install
 
 install -d %buildroot%_includedir/python%_python3_version
 mv %buildroot%python3_sitelibdir/%oname/core/include/%oname \
 	%buildroot%_includedir/python%_python3_version/%oname
 
-install -d %buildroot%python3_sitelibdir/%oname/core/include
 ln -s %_includedir/python%_python3_version/%oname \
 	%buildroot%python3_sitelibdir/%oname/core/include/
-cp build/src.*/%oname/core/include/%oname/{*.h,*.c} \
-	%buildroot%_includedir/python%_python3_version/%oname/
-install -d %buildroot%python3_sitelibdir/%oname/core/lib/npy-pkg-config
-cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
-	%buildroot%python3_sitelibdir/%oname/core/lib/npy-pkg-config/
 
 %files
-%doc LICENSE.txt
-%doc README.md THANKS.txt
+%doc README.md
 %_bindir/f2py*
 %python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/%oname/conftest.py
 %exclude %python3_sitelibdir/%oname/_pytesttester.py
 %exclude %python3_sitelibdir/%oname/_pytesttester.pyi
 %exclude %python3_sitelibdir/%oname/__pycache__/conftest.*
 %exclude %python3_sitelibdir/%oname/__pycache__/_pytesttester.*
-%exclude %python3_sitelibdir/%oname/f2py/f2py_testing.py
-%exclude %python3_sitelibdir/%oname/f2py/__pycache__/f2py_testing.*
 %exclude %python3_sitelibdir/%oname/ma/timer_comparison.py
 %exclude %python3_sitelibdir/%oname/ma/__pycache__/timer_comparison.*
 %exclude %python3_sitelibdir/%oname/testing
 %exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/*/test*
-%exclude %python3_sitelibdir/%oname/*/*/test*
+%exclude %python3_sitelibdir/%oname/*/tests/
+%exclude %python3_sitelibdir/%oname/*/test_*
+%exclude %python3_sitelibdir/%oname/*/testutils.py
+%exclude %python3_sitelibdir/%oname/*/__pycache__/test_*.*
+%exclude %python3_sitelibdir/%oname/*/__pycache__/testutils.*
 %exclude %python3_sitelibdir/%oname/f2py/src/fortranobject.h
 %exclude %python3_sitelibdir/%oname/core/lib/npy-pkg-config
 %exclude %python3_sitelibdir/%oname/doc
@@ -231,7 +174,6 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %exclude %python3_sitelibdir/%oname/f2py/src
 %exclude %python3_sitelibdir/%oname/core/lib/libnpymath.a
 %exclude %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
-%python3_sitelibdir/%oname-%version-*.egg-info
 
 %files testing
 %python3_sitelibdir/%oname/testing
@@ -242,23 +184,38 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/__pycache__/_pytesttester.*
 
 %files tests
-%python3_sitelibdir/%oname/tests
-%python3_sitelibdir/%oname/*/test*
-%python3_sitelibdir/%oname/*/*/test*
-%exclude %python3_sitelibdir/%oname/testing/tests
-%python3_sitelibdir/%oname/f2py/tests/src/array_from_pyobj
+%python3_sitelibdir/%oname/tests/
+%python3_sitelibdir/%oname/typing/tests/
+%python3_sitelibdir/%oname/random/tests/
+%python3_sitelibdir/%oname/polynomial/tests/
+%python3_sitelibdir/%oname/matrixlib/tests/
+%python3_sitelibdir/%oname/ma/tests/
+%python3_sitelibdir/%oname/linalg/tests/
+%python3_sitelibdir/%oname/lib/tests/
+%python3_sitelibdir/%oname/fft/tests/
+%python3_sitelibdir/%oname/f2py/tests/
+%python3_sitelibdir/%oname/distutils/tests/
+%python3_sitelibdir/%oname/core/tests/
+%python3_sitelibdir/%oname/compat/tests/
+%python3_sitelibdir/%oname/array_api/tests/
+%python3_sitelibdir/%oname/ma/testutils.py
+%python3_sitelibdir/%oname/ma/__pycache__/testutils.*
+%python3_sitelibdir/%oname/_pyinstaller/test_pyinstaller.py
+%python3_sitelibdir/%oname/_pyinstaller/__pycache__/test_pyinstaller.*
 
 %files -n lib%oname-py3-devel
 %_includedir/python%_python3_version/%oname
 %python3_sitelibdir/%oname/core/include
 %python3_sitelibdir/%oname/distutils/mingw
-%exclude %python3_sitelibdir/%oname/distutils/tests
 %python3_sitelibdir/%oname/f2py/src
 %python3_sitelibdir/%oname/core/lib/npy-pkg-config
 %python3_sitelibdir/%oname/core/lib/libnpymath.a
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Mon Jul 17 2023 Stanislav Levin <slev@altlinux.org> 1:1.25.1-alt1
+- 1.22.1 -> 1.25.1.
+
 * Wed Dec 14 2022 Grigory Ustinov <grenka@altlinux.org> 1:1.22.1-alt4
 - Bootstrap for python3.11.
 
