@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: Library with GTK4 widget to display maps
@@ -147,6 +147,9 @@ xvfb-run -s -noreset %__meson_test -v
 %endif
 
 %changelog
+* Wed Jul 19 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Sun Jul 09 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
