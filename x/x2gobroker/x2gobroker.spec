@@ -1,6 +1,6 @@
 Name: x2gobroker
 Version: 0.0.4.1
-Release: alt15
+Release: alt16
 Summary: X2Go Session Broker
 License: AGPLv3+
 Group: Communications
@@ -21,7 +21,7 @@ Patch8: alt-disable-2to3.patch
 BuildRequires: python3-module-setuptools
 BuildRequires: perl-File-Which
 # For tests
-BuildRequires: python3-module-PasteScript python3-module-netaddr python3-module-nose python3-module-paramiko python3-module-tornado
+BuildRequires: python3-module-PasteScript python3-module-netaddr python3-module-nose2 python3-module-paramiko python3-module-tornado
 Requires(pre): x2gobroker-common = %EVR
 Requires:  python3-module-x2gobroker = %EVR
 Requires:  shadow-utils
@@ -421,6 +421,9 @@ touch ~/.ssh/id_rsa
 %_man8dir/x2gobroker-pubkeyauthorizer.8*
 
 %changelog
+* Wed Jul 19 2023 Oleg Solovyov <mcpain@altlinux.org> 0.0.4.1-alt16
+- replace nose by nose2
+
 * Tue Sep 28 2021 Oleg Solovyov <mcpain@altlinux.org> 0.0.4.1-alt15
 - fix build
 
