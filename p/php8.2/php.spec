@@ -20,7 +20,7 @@
 Summary: The PHP scripting language
 Name:	 php%_php_suffix
 Version: %_php_major.%_php_minor.%_php_release_version
-Release: alt1
+Release: alt2
 
 License: PHP-3.01
 Group:	 Development/Other
@@ -44,7 +44,7 @@ Patch9: php-8.0-no-static-program.patch
 Patch10: php-set-session-save-path.patch
 Patch11: php7-7.1.10-alt-lsattr.patch
 Patch12: php-7.4-save-ldlibs.patch
-Patch13: php5-5.5.9-phar-phppath.patch
+Patch13: php-8.2-phar-phppath.patch
 Patch14: php-mysqlnd-socket.patch
 Patch15: php-7.2.14-alt-zend-signal-visibility.patch
 Patch16: php-7.2-alt-phar-manfile-suffix.patch
@@ -471,6 +471,11 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Sat Jul 15 2023 Anton Farygin <rider@altlinux.ru> 8.2.8-alt2
+- updated phar-phppath patch against the race in phar.phar generator
+  when hasher running under the audit subsystem
+- updated debian patch to use timezone from the system
+
 * Wed Jul 12 2023 Anton Farygin <rider@altlinux.ru> 8.2.8-alt1
 - 8.2.7 -> 8.2.8
 
