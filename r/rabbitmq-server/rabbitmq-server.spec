@@ -4,12 +4,14 @@
 %add_findreq_skiplist */ocf/resource.d/rabbitmq/*
 
 Name: rabbitmq-server
-Version: 3.12.0
+Version: 3.12.2
 Release: alt1
+
 Summary: The RabbitMQ server
 License: MPL-1.1
 BuildArch: noarch
 Group: System/Servers
+
 Source: %name-%version.tar
 Source1: rabbitmq-server.init
 Source3: rabbitmq-server.logrotate
@@ -63,6 +65,10 @@ popd
 pushd deps/amqp10_common
 %patch301 -p1
 popd
+
+# 3.12.2: Fix build basing on post-release patch
+# See: https://github.com/rabbitmq/rabbitmq-server/pull/8875
+sed -i -e '/--check-formatted/d' deps/rabbitmq_cli/mix.exs
 
 %build
 
@@ -154,6 +160,9 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Jul 18 2023 Egor Ignatov <egori@altlinux.org> 3.12.2-alt1
+- 3.12.2
+
 * Sun Jun 04 2023 Egor Ignatov <egori@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
