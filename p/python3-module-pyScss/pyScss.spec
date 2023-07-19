@@ -1,32 +1,32 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname pyScss
+%define pypi_name pyScss
+%define norm_name pyscss
+%define mod_name %norm_name
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 1.4.0
-Release: alt2
+Release: alt3
 Summary: pyScss is a compiler for the Sass language
 License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/pyScss
-
-# https://github.com/Kronuz/pyScss
+Vcs: https://github.com/Kronuz/pyScss
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch1: %name-%version-alt.patch
-
+%pyproject_runtimedeps_metadata
+Requires: python3-module-pillow
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: libpcre-devel
-BuildRequires(pre): rpm-build-python3
-
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(PIL)
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-pillow
+BuildRequires: python3-module-pytest
 %endif
-
-%py3_provides %oname
-%py3_requires PIL
 
 %description
 pyScss is a compiler for the Sass language, a superset of CSS3 that adds
@@ -35,6 +35,8 @@ programming capabilities and some other syntactic sugar.
 %prep
 %setup
 %patch1 -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 # fix shebangs
 grep -sm1 -rl \
@@ -43,10 +45,10 @@ xargs sed -s -e '1 s/^#!\/usr\/bin\/env python.*$/#!\/usr\/bin\/python3/'
 
 %build
 %add_optflags -I%_includedir/pcre -fno-strict-aliasing
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 install -p -m644 scss/grammar/*.g \
 	%buildroot%python3_sitelibdir/scss/grammar/
 
@@ -57,24 +59,12 @@ done
 popd
 
 %check
-sed -i '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py3: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vv -r
+%pyproject_run_pytest -ra -Wignore
 
 %files
-%doc DESCRIPTION *.rst
+%doc README.*
 %_bindir/less2scss.py3
 %_bindir/pyscss.py3
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 %dir %python3_sitelibdir/scss
 %python3_sitelibdir/scss/*.py
 %python3_sitelibdir/scss/__pycache__/
@@ -84,8 +74,13 @@ tox.py3 --sitepackages -vv -r
 %python3_sitelibdir/scss/grammar/_scanner.*.so
 %python3_sitelibdir/scss/grammar/__pycache__/
 %python3_sitelibdir/scss/extension/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue Jul 18 2023 Stanislav Levin <slev@altlinux.org> 1.4.0-alt3
+- Modernized packaging.
+- Fixed FTBFS (pytest 7.4.0).
+
 * Sat Feb 04 2023 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt2
 - Fixed build with python3.11.
 
