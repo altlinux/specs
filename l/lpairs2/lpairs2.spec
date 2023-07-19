@@ -1,7 +1,7 @@
 
 Summary: Classical memory game with cards
 Name: lpairs2
-Version: 2.2
+Version: 2.2.1
 Release: alt1
 Url: http://lgames.sourceforge.io/LPairs
 Source0: https://sourceforge.net/projects/lgames/files/%name/%name-%version.tar.gz
@@ -48,6 +48,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications \
 %_iconsdir/%name.png
 
 %changelog
+* Wed Jul 19 2023 Ilya Mashkin <oddity@altlinux.ru> 2.2.1-alt1
+- 2.2.1
+
 * Fri Oct 14 2022 Ilya Mashkin <oddity@altlinux.ru> 2.2-alt1
 - 2.2
 
