@@ -1,8 +1,8 @@
-%global nnuehash ad9b42354671
+%global nnuehash 5af11540bbfe
 
 Name: stockfish
-Version: 15.1
-Release: alt1.1
+Version: 16
+Release: alt1
 Group: Games/Boards
 
 Summary: Powerful open source chess engine
@@ -24,7 +24,7 @@ Source10: https://raw.githubusercontent.com/frankkopp/FrankyUCIChessEngine/maste
 Source20: https://raw.githubusercontent.com/spinkham/stockfish/master/polyglot.ini
 
 # Patch removes check for the existence of curl or wget in the makefile
-Patch0: wget-fix_15.1.patch
+Patch0: stockfish-16-alt-remove-nnue-downloading-makefile.patch
 
 BuildRequires: gcc-c++
 BuildRequires: make
@@ -107,6 +107,9 @@ cp -p polyglot.ini %buildroot%_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/polyglot.ini
 
 %changelog
+* Wed Jul 19 2023 Leonid Znamenok <respublica@altlinux.org> 16-alt1
+- New version
+
 * Mon May 15 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 15.1-alt1.1
 - Fixed build for Elbrus.
 
