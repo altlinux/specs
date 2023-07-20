@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.38
+%define kernel_sublevel	.39
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -276,6 +276,7 @@ Verify EFI-stub signature.
 rm -rf kernel-source-%kernel_base_version
 tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
+%define _default_patch_flags -s
 %autopatch -p1
 
 # this file should be usable both with make and sh (for broken modules
@@ -601,6 +602,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Jul 19 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.39-alt1
+- v6.1.39 (2023-07-19).
+
 * Thu Jul 06 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.38-alt1
 - v6.1.38 (2023-07-05).
 
