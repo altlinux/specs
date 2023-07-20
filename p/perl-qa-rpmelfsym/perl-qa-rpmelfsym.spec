@@ -1,6 +1,6 @@
 %define dist qa-rpmelfsym
 Name: perl-%dist
-Version: 0.12.3
+Version: 0.12.4
 Release: alt1
 
 Summary: Faster rpmelfsym(1) and bad_elf_symbols implementation
@@ -13,8 +13,12 @@ Source: %dist-%version.tar
 # rpmelfsym.pm uses nm(1)
 Requires: binutils
 
-# Automatically added by buildreq on Mon Oct 10 2011 (-bi)
-BuildRequires: perl-File-LibMagic perl-devel perl-qa-cache
+# for eu-elfclassify(1)
+Requires: elfutils >= 0.177
+
+# Automatically added by buildreq on Fri Jul 14 2023 (-bi)
+# optimized out: debugedit elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libctf-nobfd0 libgpg-error perl perl-CPAN-Meta-Requirements rpm-build-file sh4
+BuildRequires: perl-devel perl-parent perl-qa-cache
 
 %description
 %summary.
@@ -37,6 +41,11 @@ rm %buildroot%perl_vendor_archlib/qa/*.pl
 %perl_vendor_autolib/qa*
 
 %changelog
+* Thu Jul 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12.4-alt1
+- Updated the code to utilize the eu-elfclassify(1) utility instead of the
+  libmagic library in order to determine whether the file is a loadable ELF
+  object.
+
 * Tue Jul 13 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12.3-alt1
 - Added support of binutils >= 2.35.2.
 - Changed rpmelfsym.pm to skip virtualbox ELF shared objects with unclear
