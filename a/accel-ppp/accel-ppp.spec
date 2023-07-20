@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.12.0
-Release: alt6
+Release: alt7
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 License: GPLv2
@@ -104,6 +104,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Jul 20 2023 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt7
+- ipoe,vlan_mon: add support for kernels 6.3+ and 6.4+
+
 * Wed Mar 01 2023 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt6
 - update upstream to git:cc8f2bada5635768d425e2fa2bafb095acda8ca9
 - Add native .service
