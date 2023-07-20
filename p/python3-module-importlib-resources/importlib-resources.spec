@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.12.0
+Version: 6.0.0
 Release: alt1
 Summary: Read resources from Python packages
 License: Apache-2.0
@@ -13,21 +13,16 @@ Url: https://pypi.org/project/importlib-resources
 VCS: https://github.com/python/importlib_resources.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-%py3_provides %pypi_name
+%pyproject_runtimedeps_metadata
 Provides: python3-module-importlib_resources = %EVR
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools-scm)
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(test)
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata_extra testing
+# internal Python tests
+BuildRequires: python3-test
 %endif
 
 %description
@@ -42,17 +37,9 @@ semantics.
 %prep
 %setup
 %autopatch -p1
-
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -72,6 +59,9 @@ rm -r %buildroot%python3_sitelibdir/importlib_resources/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
+- 5.12.0 -> 6.0.0.
+
 * Tue Feb 21 2023 Stanislav Levin <slev@altlinux.org> 5.12.0-alt1
 - 5.10.2 -> 5.12.0.
 
