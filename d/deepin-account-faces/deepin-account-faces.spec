@@ -1,7 +1,7 @@
 %global repo dde-account-faces
 
 Name: deepin-account-faces
-Version: 1.0.13
+Version: 1.0.14
 Release: alt1
 Summary: Account faces for Linux Deepin
 License: GPL-3.0+
@@ -27,6 +27,9 @@ Account faces for Linux Deepin
 %_sharedstatedir/AccountsService/icons/*
 
 %changelog
+* Thu Jul 20 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.14-alt1
+- New version (1.0.14).
+
 * Thu Apr 06 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.13-alt1
 - New version (1.0.13) with rpmgs script.
 
