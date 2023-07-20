@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 7.7.1
+Version: 7.7.2
 Release: alt1
 
 Summary: Converting Jupyter Notebooks
@@ -18,10 +18,10 @@ Summary: Converting Jupyter Notebooks
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/nbconvert
+VCS: https://github.com/jupyter/nbconvert.git
 
 BuildArch: noarch
 
-VCS: https://github.com/jupyter/nbconvert.git
 Source: %name-%version.tar
 Source1: classic-5.4.0-style.css
 Source2: lab-3.1.11-index.css
@@ -30,12 +30,9 @@ Source4: lab-3.1.11-theme-dark.css
 
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
 
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-hatchling
-BuildRequires: python3-module-jinja2
-BuildRequires: python3-module-traitlets-tests
-BuildRequires: python3-module-beautifulsoup4
 %if_with doc
 BuildRequires: python3-module-html5lib python3(pandocfilters)
 BuildRequires: python3(sphinx_rtd_theme) python3(nbsphinx) python3(pandocfilters)
@@ -43,17 +40,12 @@ BuildRequires: texlive texlive-dist
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
-BuildRequires: python3(IPython)
-BuildRequires: python3(IPython.testing.tests)
-BuildRequires: python3-module-ipython_genutils-tests python3-module-notebook
-BuildRequires: python3-module-pathlib2 python3(entrypoints) python3(bleach)
 
 %if_with check
 BuildRequires: python3-module-PyQt5
 BuildRequires: python3-module-pytest-qt
 BuildRequires: /usr/bin/xvfb-run
 BuildRequires: python3-module-PyQtWebEngine
-BuildRequires: /usr/bin/pandoc
 BuildRequires: /usr/bin/xelatex
 BuildRequires: /usr/bin/inkscape
 BuildRequires: python3(pandocfilters)
@@ -63,26 +55,26 @@ BuildRequires: python3(nest_asyncio)
 BuildRequires: python3-module-ipykernel
 BuildRequires: python3-module-ipywidgets
 BuildRequires: python3-module-flaky
+BuildRequires: python3-module-traitlets-tests
 %endif
 
 %py3_provides %oname
 
-# from setup.py
+# from pyproject.toml
+%py3_use beautifulsoup4
 %py3_use mistune >= 2.0.3
 %py3_use mistune < 4
-%py3_use jinja2 >= 2.4
-# TODO: py3_use pygments >= 2.4.1
+%py3_use jinja2 >= 3.0
 %py3_use Pygments >= 2.4.1
 %py3_use jupyterlab_pygments
 %py3_use traitlets >= 5.0
-%py3_use jupyter_core
-%py3_use nbformat >= 5.7.3
-%py3_use entrypoints >= 0.2.2
+%py3_use jupyter_core >= 4.7
+%py3_use nbformat >= 5.7
 %py3_use bleach
 %py3_use pandocfilters >= 1.4.1
-%py3_use testpath
 %py3_use defusedxml
-%py3_use nbclient >= 0.7.0
+%py3_use nbclient >= 0.5.0
+%py3_use tinycss2
 
 %description
 Jupyter nbconvert converts notebooks to various other formats via Jinja
@@ -159,20 +151,18 @@ export JUPYTER_PATH=%buildroot%_datadir/jupyter
 # test_export - no unicode-data, see alt bug #44679
 # some tests need pandoc, version must be at least 2.14.2 but less then 4.0.0
 
-%pyproject_run -- xvfb-run pytest -v -m 'not network' --color=no -k "\
-not test_export and \
-not test_pdf and \
-not test_linked_images and \
-not test_filename_accent_pdf and \
-not test_filename_spaces and \
-not test_convert_full_qualified_name and \
-not test_post_processor and \
-not test_very_long_cells and \
-not test_markdown2latex and \
-not test_markdown2rst and \
-not test_empty_code_cell and \
-not test_convert_explicitly_relative_paths and \
-not test_pandoc_extra_args"
+%pyproject_run -- xvfb-run pytest -v -m 'not network' --color=no \
+--deselect=nbconvert/exporters/tests/test_pdf.py::TestPDF::test_export \
+--deselect=nbconvert/exporters/tests/test_pdf.py::TestPDF::test_texinputs \
+--deselect=nbconvert/exporters/tests/test_qtpdf.py::TestQtPDFExporter::test_export \
+--deselect=nbconvert/exporters/tests/test_qtpng.py::TestQtPNGExporter::test_export \
+--deselect=nbconvert/exporters/tests/test_asciidoc.py::TestASCIIDocExporter::test_export \
+--deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_convert_full_qualified_name \
+--deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_filename_accent_pdf \
+--deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_filename_spaces \
+--deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_linked_images \
+--deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_pdf \
+--deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_post_processor \
 
 %files
 %doc *.md
@@ -193,6 +183,9 @@ not test_pandoc_extra_args"
 %endif
 
 %changelog
+* Thu Jul 20 2023 Anton Vyatkin <toni@altlinux.org> 7.7.2-alt1
+- New version 7.7.2 (Closes: #44215).
+
 * Tue Jul 18 2023 Anton Vyatkin <toni@altlinux.org> 7.7.1-alt1
 - New version 7.7.1.
 
