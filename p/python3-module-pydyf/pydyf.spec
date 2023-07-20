@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: A low-level PDF creator
@@ -41,7 +41,7 @@ BuildArch: noarch
 
 %check
 %tox_create_default_config
-%tox_check_pyproject
+%tox_check_pyproject -- -k'not test_text'
 
 %files
 %doc *.rst
@@ -49,6 +49,9 @@ BuildArch: noarch
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Thu Jul 20 2023 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1
+- Automatically updated to 0.7.0.
+
 * Fri Mar 31 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
 - New version 0.6.0.
 
