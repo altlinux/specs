@@ -1,12 +1,13 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+%def_disable examples
 
 %add_optflags -D_FILE_OFFSET_BITS=64
 
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/latex java-devel-default libcurl-devel libqt4-devel rpm-build-java rpm-build-perl zlib-devel
+BuildRequires: /usr/bin/latex java-devel-default libcurl-devel qt5-base-devel qt5-tools rpm-build-java rpm-build-perl zlib-devel
 # castxml is only used with GDCM_WRAP_CSHARP=ON but it's OFF
 #BuildRequires: /usr/bin/castxml
 # END SourceDeps(oneline)
@@ -29,14 +30,16 @@ BuildRequires: /usr/bin/git
 %endif
 
 Name:       gdcm
-Version:    3.0.12
-Release:    alt3
+Version:    3.0.21
+Release:    alt1
 Summary:    Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:    BSD
 URL:        http://gdcm.sourceforge.net/wiki/index.php/Main_Page
 # Use github release
-Source0:    https://github.com/malaterre/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
-Source1:    http://downloads.sourceforge.net/project/gdcm/gdcmData/gdcmData/gdcmData.tar.gz
+# https://github.com/malaterre/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0:    %{name}-%{version}.tar
+# http://downloads.sourceforge.net/project/gdcm/gdcmData/gdcmData/gdcmData.tar.gz
+Source1:    gdcmData.tar
 
 Patch1: 0001-3.0.1-Use-copyright.patch
 # Fix for 1687233
@@ -176,9 +179,7 @@ rm -rf Utilities/wxWidgets
 #rm -rf Utilities/gdcmmd5
 
 %build
-%ifarch %e2k
 %add_optflags -std=c++17
-%endif
 %{fedora_v2_cmake}  .. \
     -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DGDCM_INSTALL_PACKAGE_DIR=%{_libdir}/cmake/%{name} \
@@ -188,7 +189,8 @@ rm -rf Utilities/wxWidgets
     -DGDCM_INSTALL_LIB_DIR=%{_libdir} \
     -DGDCM_BUILD_TESTING:BOOL=ON \
     -DGDCM_DATA_ROOT=../gdcmData/ \
-    -DGDCM_BUILD_EXAMPLES:BOOL=OFF \
+    -DGDCM_BUILD_EXAMPLES:BOOL=%{?_enable_examples:ON}%{!?_enable_examples:OFF} \
+    -DBUILD_EXAMPLES:BOOL=%{?_enable_examples:ON}%{!?_enable_examples:OFF} \
     -DGDCM_DOCUMENTATION:BOOL=OFF \
     -DGDCM_WRAP_PYTHON:BOOL=ON \
     -DPYTHON_EXECUTABLE=%{__python3} \
@@ -228,6 +230,11 @@ cp -rv ./Examples/* $RPM_BUILD_ROOT/%{_datadir}/%{name}/Examples/
 # Remove manuals for non-buildable executables (gdcm2vtk and gdcm2pnm)
 rm -f %buildroot%_mandir/man1/gdcm2{vtk,pnm}.1*
 
+%if_disabled examples
+rm -rf %buildroot/%{_datadir}/%{name}/Examples/ ||:
+%endif
+
+
 %if %{with tests}
 %check
 # Making the tests informative only for now. Several failing tests (27/228):
@@ -239,25 +246,25 @@ make test -C %{__cmake_builddir} || exit 0
 %doc AUTHORS README.md
 %doc --no-dereference Copyright.txt README.Copyright.txt
 %{_libdir}/libgdcmCommon.so.3.0
-%{_libdir}/libgdcmCommon.so.3.0.12
+%{_libdir}/libgdcmCommon.so.3.0.*
 %{_libdir}/libgdcmDICT.so.3.0
-%{_libdir}/libgdcmDICT.so.3.0.12
+%{_libdir}/libgdcmDICT.so.3.0.*
 %{_libdir}/libgdcmDSED.so.3.0
-%{_libdir}/libgdcmDSED.so.3.0.12
+%{_libdir}/libgdcmDSED.so.3.0.*
 %{_libdir}/libgdcmIOD.so.3.0
-%{_libdir}/libgdcmIOD.so.3.0.12
+%{_libdir}/libgdcmIOD.so.3.0.*
 %{_libdir}/libgdcmMEXD.so.3.0
-%{_libdir}/libgdcmMEXD.so.3.0.12
+%{_libdir}/libgdcmMEXD.so.3.0.*
 %{_libdir}/libgdcmMSFF.so.3.0
-%{_libdir}/libgdcmMSFF.so.3.0.12
+%{_libdir}/libgdcmMSFF.so.3.0.*
 %{_libdir}/libgdcmjpeg12.so.3.0
-%{_libdir}/libgdcmjpeg12.so.3.0.12
+%{_libdir}/libgdcmjpeg12.so.3.0.*
 %{_libdir}/libgdcmjpeg16.so.3.0
-%{_libdir}/libgdcmjpeg16.so.3.0.12
+%{_libdir}/libgdcmjpeg16.so.3.0.*
 %{_libdir}/libgdcmjpeg8.so.3.0
-%{_libdir}/libgdcmjpeg8.so.3.0.12
+%{_libdir}/libgdcmjpeg8.so.3.0.*
 %{_libdir}/libgdcmmd5.so.3.0
-%{_libdir}/libgdcmmd5.so.3.0.12
+%{_libdir}/libgdcmmd5.so.3.0.*
 %{_libdir}/libsocketxx.so.1.2
 %{_libdir}/libsocketxx.so.1.2.0
 %dir %{_datadir}/%{name}
@@ -270,6 +277,7 @@ make test -C %{__cmake_builddir} || exit 0
 
 %files applications
 %{_bindir}/gdcmanon
+%{_bindir}/gdcmclean
 %{_bindir}/gdcmconv
 %{_bindir}/gdcmdiff
 %{_bindir}/gdcmdump
@@ -300,7 +308,7 @@ make test -C %{__cmake_builddir} || exit 0
 %{_libdir}/libsocketxx.so
 %{_libdir}/cmake/%{name}/
 
-%if 0
+%if_enabled examples
 %files examples
 %{_datadir}/%{name}/Examples/
 %endif
@@ -311,6 +319,11 @@ make test -C %{__cmake_builddir} || exit 0
 %{python3_sitelibdir}/__pycache__/%{name}*
 
 %changelog
+* Thu Jul 20 2023 Sergey V Turchin <zerg@altlinux.org> 3.0.21-alt1
+- new version
+- don't build with Qt4
+- fix compile with gcc-10
+
 * Fri Apr 14 2023 Michael Shigorin <mike@altlinux.org> 3.0.12-alt3
 - E2K: fix build (ilyakurdyukov@)
 
