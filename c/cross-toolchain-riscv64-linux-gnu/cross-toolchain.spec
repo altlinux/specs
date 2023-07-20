@@ -6,6 +6,7 @@
 %define target_arch riscv64
 # %%define target_arch mips64el
 # %%define target_arch loongarch64
+# %%define target_arch mipsisa64r6el
 
 %if "%target_arch" == "aarch64"
 %define target_kernel arm64
@@ -27,6 +28,7 @@
 %define arm_arch armv7-a
 %define arm_fp_isa vfpv3-d16
 %define arm_fp_abi hard
+%define target_userspace gnueabihf
 %endif
 
 %if "%target_arch" == "mipsel"
@@ -45,11 +47,20 @@
 %define target_has_gold 1
 %endif
 
+%if "%target_arch" == "mipsisa64r6el"
+%define target_kernel mips
+%define target_qemu_arch mips64el
+%define target_ld_linux /lib64/ld-linux-mipsn8.so.1
+%define target_libdir lib64
+%define target_userspace gnuabi64
+%endif
+
 %if "%target_arch" == "riscv64"
 %define target_kernel riscv
 %define target_qemu_arch riscv64
 %define target_ld_linux /lib64/ld-linux-riscv64-lp64d.so.1
 %define target_libdir lib64
+%define target_has_itm 1
 %endif
 
 %if "%target_arch" == "loongarch64"
@@ -60,18 +71,18 @@
 %define target_has_itm 1
 %endif
 
-%if "%target_arch" != "arm"
-%define target %target_arch-linux-gnu
-%else
-%define target %target_arch-linux-gnueabihf
+%if "%{?target_userspace}" == ""
+%define target_userspace gnu
 %endif
+
+%define target %target_arch-linux-%target_userspace
 %define sysroot %prefix/lib/%target/sys-root
 
 # don't strip debuginfo from binaries for other platform, it does not work
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20230206
+Version: 20230719
 Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
@@ -79,11 +90,11 @@ Group: Development/C
 
 ExclusiveArch: x86_64
 
-%define gcc_version 12.1.1
+%define gcc_version 13.1.1
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
-%define binutils_version 2.38
-%define glibc_version 2.35.0.6.491f2e
-%define kernel_version 6.0
+%define binutils_version 2.40
+%define glibc_version 2.37.0.22.3593050c27
+%define kernel_version 6.4
 
 BuildPreReq: gcc-c++
 BuildPreReq: libmpc-devel libmpfr-devel libgmp-devel zlib-devel
@@ -94,9 +105,9 @@ BuildPreReq: kernel-source-%kernel_version
 BuildRequires: /usr/bin/qemu-%target_qemu_arch-static
 BuildRequires: python3
 
-Source0: gcc-12.1.1-20220518-alt0.0.2.rv64.tar
-Source1: binutils-2.38-alt0.1.rv64.tar
-Source2: glibc-2.35.0.6.491f2e-alt0.2.rv64.tar
+Source0: gcc-13.1.1-alt0.2.rv64.tar
+Source1: binutils-2.40-alt0.2.rv64.tar
+Source2: glibc-2.37.0.22.3593050c27-alt1.tar
 
 %description
 GCC cross-toolchain for %target
@@ -181,7 +192,11 @@ mkdir -p obj_glibc
 mkdir -p -m755 stage%prefix/bin
 mkdir -p -m755 stage1%prefix/bin
 save_PATH="$PATH"
-export PATH=`pwd`/stage1%prefix/bin:$PATH
+if [ -d "/usr/lib/ccache" ]; then
+	export PATH=`pwd`/stage1%prefix/bin:/usr/lib/ccache:$PATH
+else
+	export PATH=`pwd`/stage1%prefix/bin:$PATH
+fi
 stagedir=`pwd`/stage
 stage1dir=`pwd`/stage1
 
@@ -280,11 +295,18 @@ cd ../obj_gcc_bootstrap
 	--with-madd4=no \
 	--with-fix-loongson3-llsc=yes \
 %endif
+%if "%target_arch" == "mipsisa64r6el"
+	--with-arch-64=mips64r6 \
+	--with-abi=64 \
+	--with-float=hard \
+	--with-nan=2008 \
+%endif
 %if "%target_arch" == "riscv64"
 	--with-arch=rv64gc \
 	--with-abi=lp64d \
 %endif
 	--enable-default-pie \
+	--enable-gnu-unique-object \
 	--enable-linker-build-id \
 	%nil
 
@@ -332,6 +354,9 @@ export PATH="${stagedir}%prefix/bin:${save_PATH}"
 # gcc
 cd ../obj_gcc
 # XXX: avoid %%configure puts $target libraries in /usr/lib64
+env \
+	ac_cv_file__proc_self_exe=yes \
+	gcc_cv_libc_provides_ssp=yes \
 ../gcc/configure \
 	--target=%target \
 	--host=%{_configure_platform} \
@@ -367,14 +392,24 @@ cd ../obj_gcc
         --with-madd4=no \
         --with-fix-loongson3-llsc=yes \
 %endif
+%if "%target_arch" == "mipsisa64r6el"
+	--with-arch-64=mips64r6 \
+	--with-abi=64 \
+	--with-float=hard \
+	--with-nan=2008 \
+%endif
 %if "%target_arch" == "riscv64"
 	--with-arch=rv64gc \
 	--with-abi=lp64d \
 %endif
 	--enable-default-pie \
+	--enable-gnu-unique-object \
 	--enable-linker-build-id \
 	%nil
 
+env \
+	ac_cv_file__proc_self_exe=yes \
+	gcc_cv_libc_provides_ssp=yes \
 %make_build
 # XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
 %make_install install DESTDIR=${stagedir}
@@ -479,6 +514,11 @@ install -d -m 755 %buildroot%sysroot/usr/lib
 # remove bootstrap toolchain
 rm -rf %buildroot/stage1
 
+
+rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp.a
+rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp_nonshared.a
+rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp.so*
+
 # Leave alone $target libraries
 %add_verify_elf_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
 %add_findreq_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
@@ -571,7 +611,7 @@ address_of_message: .word message
 EOF
 %endif
 
-%if "%target_arch" == "mipsel" || "%target_arch" == "mips64el"
+%if "%target_arch" == "mipsel" || "%target_arch" == "mips64el" || "%target_arch" == "mipsisa64r6el"
 cat > bye.S <<EOF
 #include <sys/syscall.h>
 .text
@@ -642,8 +682,6 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %if 0%{?target_has_itm}
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libitm.a
 %endif
-%exclude %prefix/lib/gcc/%target/%gcc_branch/libssp.a
-%exclude %prefix/lib/gcc/%target/%gcc_branch/libssp_nonshared.a
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++.a
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++fs.a
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libsupc++.a
@@ -655,7 +693,6 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %if 0%{?target_has_itm}
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libitm.so*
 %endif
-%exclude %prefix/lib/gcc/%target/%gcc_branch/libssp.so*
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++.so*
 # binunitls
 %exclude %prefix/libexec/gcc/%target/bin/*
@@ -675,8 +712,6 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %if 0%{?target_has_itm}
 %prefix/lib/gcc/%target/%gcc_branch/libitm.a
 %endif
-%prefix/lib/gcc/%target/%gcc_branch/libssp.a
-%prefix/lib/gcc/%target/%gcc_branch/libssp_nonshared.a
 %prefix/lib/gcc/%target/%gcc_branch/libstdc++.a
 %prefix/lib/gcc/%target/%gcc_branch/libstdc++fs.a
 %prefix/lib/gcc/%target/%gcc_branch/libsupc++.a
@@ -689,7 +724,6 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %if 0%{?target_has_itm}
 %prefix/lib/gcc/%target/%gcc_branch/libitm.so*
 %endif
-%prefix/lib/gcc/%target/%gcc_branch/libssp.so*
 %prefix/lib/gcc/%target/%gcc_branch/libstdc++.so*
 
 %files -n cross-glibc-%target_arch
@@ -773,6 +807,20 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Wed Jul 19 2023 Ivan A. Melnikov <iv@altlinux.org> 20230719-alt1
+- Sync sources with sisyphus_riscv64:
+  + binutils 2.40-alt0.2.rv64
+  + gcc 2.40-alt0.2.rv64
+  + glibc 2.37.0.22.3593050c27-alt1
+- Switch to kernel-source 6.4
+
+* Thu Jun 15 2023 Ivan A. Melnikov <iv@altlinux.org> 20230615-alt1
+- gcc: Don't package libssp any more (asheplyakov@)
+- Explicitly enable gnu-unique-object
+
+* Wed Jun 14 2023 Ivan A. Melnikov <iv@altlinux.org> 20230613-alt1
+- Build mipsisa64r6el-linux-gnuabi64 toolchain
+
 * Mon Feb 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230206-alt1
 - Moved GCC target libraries to a noarch subpackage to avoid spurious
   'bad ELF symbols' errors.
