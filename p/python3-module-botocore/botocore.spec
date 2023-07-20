@@ -4,52 +4,30 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.27.90
+Version: 1.31.5
 Release: alt1
-
 Summary: The low-level, core functionality of boto 3
-
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/botocore/
-
+Vcs: https://github.com/boto/botocore
 BuildArch: noarch
-
-# Source-git: https://github.com/boto/botocore.git
 Source: %name-%version.tar
 Source1: debundler.py.in
+Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+%pyproject_runtimedeps -- vendored
+%filter_from_requires /python3(botocore\.vendored\..*)/d
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
 # required for test_resource_leaks
 BuildRequires: /proc
-
-# install_requires=
-BuildRequires: python3(jmespath)
-BuildRequires: python3(dateutil)
-BuildRequires: python3(urllib3)
-
-# unbundled
-BuildRequires: python3(requests)
-BuildRequires: python3(six)
-
-BuildRequires: python3(jsonschema)
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+%pyproject_builddeps -- vendored
+%pyproject_builddeps_check
 %endif
-
-%py3_provides %pypi_name
-
-# vendored
-%py3_requires six
-%py3_requires requests
-
-%filter_from_requires /python3(botocore\.vendored\..*)/d
 
 %description
 A low-level interface to a growing number of Amazon Web Services. The
@@ -62,6 +40,17 @@ botocore package is the foundation for AWS-CLI.
 rm botocore/cacert.pem
 
 VENDORED_PATH='botocore/vendored'
+# gen vendored list for upstream (assume package/module name is the same as
+# project name)
+set -o pipefail
+%__python3 - <<-EOF | sort -u > _vendor.txt
+import pkgutil
+for mod in pkgutil.iter_modules(["$VENDORED_PATH"]):
+    if not mod.name.startswith("_"):
+        print(mod.name)
+EOF
+%pyproject_deps_resync vendored pip_reqfile _vendor.txt
+
 UNVENDORED_PATH="$VENDORED_PATH/__init__.py"
 rm -r "$VENDORED_PATH"
 mkdir "$VENDORED_PATH"
@@ -71,6 +60,12 @@ sed -i \
     -e 's/@VENDORED_FAKE_PACKAGES@/{"requests.packages"}/' \
     "$UNVENDORED_PATH"
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
+%endif
+
 %build
 %pyproject_build
 
@@ -78,15 +73,17 @@ sed -i \
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run -- python scripts/ci/run-tests --with-xdist
 
 %files
-%doc LICENSE.txt
-%doc *.rst
+%doc README.*
 %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 1.31.5-alt1
+- 1.27.90 -> 1.31.5.
+
 * Fri Oct 14 2022 Stanislav Levin <slev@altlinux.org> 1.27.90-alt1
 - 1.27.57 -> 1.27.90.
 

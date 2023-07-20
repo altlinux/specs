@@ -1,119 +1,74 @@
-%define oname urllib3
-%def_disable check
-%def_without docs
+%define _unpackaged_files_terminate_build 1
+%define pypi_name urllib3
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 1.26.14
-Release: alt2
+# tests suite is very unstable (freezes or crashes) on arches different from
+# x86_64
+%if %_arch == x86_64
+%def_with check
+%else
+%def_without check
+%endif
 
+Name: python3-module-%pypi_name
+Version: 2.0.3
+Release: alt1
 Epoch: 2
-
-Summary: Library with thread-safe connection pooling, file post support, sanity friendly etc
+Summary: HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
 Group: Development/Python3
-
-Url: https://github.com/shazow/urllib3/
-
-# make all imports of things in packages try system copies first
-Patch: %name-%version.patch
-
-# https://github.com/shazow/urllib3.git
-Source: %oname-%version.tar
+Url: https://pypi.org/project/urllib3/
+Vcs: https://github.com/urllib3/urllib3
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-six
-BuildRequires: python3-module-mock
-#Requires: python3-module-ndg-httpsclient
-Requires: python3-module-six ca-certificates
-%if_with docs
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%add_pyproject_deps_check_filter memray
+%add_pyproject_deps_check_filter pytest-memray
+%add_pyproject_deps_check_filter towncrier
+%add_pyproject_deps_check_filter brotli
+%pyproject_builddeps_metadata_extra socks
+%pyproject_builddeps_metadata_extra brotli
+%pyproject_builddeps_metadata_extra zstd
+%pyproject_builddeps_check
 %endif
 
 %description
-Python HTTP library with thread-safe connection pooling, file post
-support, sanity friendly, and more.
-
-%package tests
-Summary: Tests for urllib3
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Python HTTP library with thread-safe connection pooling, file post
-support, sanity friendly, and more.
-
-This package contains tests for urllib3.
-
-%if_with docs
-%package pickles
-Summary: Pickles for urllib3
-Group: Development/Python3
-
-%description pickles
-Python HTTP library with thread-safe connection pooling, file post
-support, sanity friendly, and more.
-
-This package contains pickles for urllib3.
-
-%package docs
-Summary: Documentation for urllib3
-Group: Development/Documentation
-
-%description docs
-Python HTTP library with thread-safe connection pooling, file post
-support, sanity friendly, and more.
-
-This package contains documentation for urllib3.
-%endif
+urllib3 is a powerful, user-friendly HTTP client for Python.
 
 %prep
-%setup -n %oname-%version
-#rm -rf urllib3/packages/
+%setup
 %patch -p1
-
-%if_with docs
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
 %endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-# drop deprecated ntlm support
-rm -fv %buildroot%python3_sitelibdir/%oname/contrib/ntlmpool.py
-
-%if_with docs
-export PYTHONPATH=%buildroot%python3_sitelibdir
-pushd docs
-%make SPHINXBUILD="sphinx-build-3" html
-%make SPHINXBUILD="sphinx-build-3" pickle
-popd
-
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
+%pyproject_install
 
 %check
-py.test-3
+# to adjust timeouts: test.LONG_TIMEOUT
+export CI=yes
+%pyproject_run_pytest -ra
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/*
-%if_with docs
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
-%endif
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 2:2.0.3-alt1
+- 1.26.14 -> 2.0.3.
+
 * Tue Apr 11 2023 Anton Vyatkin <toni@altlinux.org> 2:1.26.14-alt2
 - Fix BuildRequires
 

@@ -4,35 +4,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.22.0
+Version: 0.23.1
 Release: alt1
-
 Summary: A utility library for mocking out the requests Python library
-
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/responses/
 VCS: https://github.com/getsentry/responses.git
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%add_pyproject_deps_runtime_filter types-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# deps
-BuildRequires: python3(requests)
-BuildRequires: python3(toml)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-asyncio)
-BuildRequires: python3(pytest_httpserver)
+%add_pyproject_deps_check_filter types-
+%pyproject_builddeps_metadata_extra tests
 %endif
 
 %description
@@ -41,6 +30,8 @@ A utility library for mocking out the `requests` Python library.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -51,14 +42,17 @@ A utility library for mocking out the `requests` Python library.
 rm -r %buildroot%python3_sitelibdir/responses/tests/
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore
 
 %files
-%doc *.rst
+%doc README.*
 %python3_sitelibdir/responses/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 22 2023 Stanislav Levin <slev@altlinux.org> 0.23.1-alt1
+- 0.22.0 -> 0.23.1.
+
 * Wed Oct 12 2022 Stanislav Levin <slev@altlinux.org> 0.22.0-alt1
 - 0.21.0 -> 0.22.0.
 

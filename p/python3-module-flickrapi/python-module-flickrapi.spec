@@ -1,25 +1,21 @@
-%define oname flickrapi
+%define _unpackaged_files_terminate_build 1
+%define pypi_name flickrapi
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 2.4.0
-Release: alt2
+Release: alt3
 
 Summary: The official Python interface to the Flickr API
 License: Python
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/flickrapi/
+Url: https://pypi.org/project/flickrapi/
+Vcs: https://github.com/sybrenstuvel/flickrapi/
 BuildArch: noarch
-
-Source: %oname-%version.tar
-Patch0: fix_deps_in_setup.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-docutils
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-requests-oauthlib
-BuildRequires: python3-module-requests_toolbelt
-BuildRequires: python3-module-sphinx
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
 The easiest to use, most complete, and most actively developed Python
@@ -28,32 +24,27 @@ non-authorized access, uploading and replacing photos, and all Flickr
 API functions.
 
 %prep
-%setup -n flickrapi-%version
-%patch0 -p0
-
-sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
+%setup
+%pyproject_deps_resync_build
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build
-
-export PYTHONPATH=$PWD
-%make -C doc html
-mkdir man
-cp -fR doc/_build/html/* man/
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc *.txt man/
-%python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
-
+%doc LICENSE.txt
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 20 2023 Stanislav Levin <slev@altlinux.org> 2.4.0-alt3
+- Fixed FTBFS (missing build dependency on six).
+
 * Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.4.0-alt2
 - build for python2 disabled
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.16
-Release: alt1
+Release: alt1.1
 
 Summary: Filesystem abstraction layer
 
@@ -35,6 +35,7 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-recommonmark
+BuildRequires: python3-module-six
 %endif
 
 %if_with check
@@ -43,6 +44,7 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-appdirs
 BuildRequires: python3-module-pyftpdlib-tests
 BuildRequires: python3-module-parameterized
+BuildRequires: python3-module-six
 %endif
 
 %description
@@ -122,6 +124,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Thu Jul 20 2023 Stanislav Levin <slev@altlinux.org> 2.4.16-alt1.1
+- NMU: fixed FTBFS (missing build dependency on six).
+
 * Thu May 05 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.16-alt1
 - Automatically updated to 2.4.16.
 

@@ -4,41 +4,27 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.24.90
+Version: 1.28.5
 Release: alt1
-
 Summary: The AWS SDK for Python
-
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/boto3/
-
+Vcs: https://github.com/boto/boto3
 BuildArch: noarch
-
-# Source-git: https://github.com/boto/boto3.git
 Source: %name-%version.tar
-
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
 # this version includes debundler
 Requires: python3-module-botocore >= 1.27.42-alt1
-
 # botocore.vendored doesn't provide subpackages
 %filter_from_requires /python3(botocore\.vendored\..*)/d
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(botocore)
-BuildRequires: python3(jmespath)
-BuildRequires: python3(s3transfer)
-
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -53,6 +39,11 @@ pull requests on this repository. Thanks!
 %prep
 %setup
 %autopatch1 -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
+%endif
 
 %build
 %pyproject_build
@@ -61,15 +52,17 @@ pull requests on this repository. Thanks!
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run -- python scripts/ci/run-tests
 
 %files
-%doc LICENSE
-%doc *.rst
+%doc README.*
 %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 1.28.5-alt1
+- 1.24.90 -> 1.28.5.
+
 * Fri Oct 14 2022 Stanislav Levin <slev@altlinux.org> 1.24.90-alt1
 - 1.24.42 -> 1.24.90.
 

@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname s3transfer
+%define pypi_name s3transfer
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.6.0
+Name: python3-module-%pypi_name
+Version: 0.6.1
 Release: alt1
 
 Summary: An Amazon S3 Transfer Manager
@@ -12,65 +13,58 @@ Summary: An Amazon S3 Transfer Manager
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/s3transfer/
-
+Vcs: https://github.com/boto/s3transfer
 BuildArch: noarch
-
-# Source-git: https://github.com/boto/s3transfer.git
 Source: %name-%version.tar
-
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-%if_with check
-# install_requires=
-BuildRequires: python3(botocore)
-
-# deps on packages bundled by botocore
-BuildRequires: python3(requests)
-BuildRequires: python3(six)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-%endif
-
+%pyproject_runtimedeps_metadata
 # awscrt is extra stuff required by `s3transfer[crt]` => `botocore[crt]`
 # awscrt is not packaged yet
 %filter_from_requires /python3(awscrt\(\..*\)\?)/d
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
-%oname is a Python library for managing Amazon S3 transfers.
+%pypi_name is a Python library for managing Amazon S3 transfers.
 
 Note.
 This project is not currently GA. If you are planning to use this code in
 production, make sure to lock to a minor version as interfaces may break from
-minor version to minor version.  For a basic, stable interface of %oname,
+minor version to minor version.  For a basic, stable interface of %pypi_name,
 try the interfaces exposed in boto3.
 
 %prep
 %setup
 %autopatch1 -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
+%endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false --develop
+%pyproject_run -- python scripts/ci/run-tests
 
 %files
-%doc *.rst
-%doc LICENSE.txt
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 29 2023 Stanislav Levin <slev@altlinux.org> 0.6.1-alt1
+- 0.6.0 -> 0.6.1.
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
 - new version 0.6.0
 

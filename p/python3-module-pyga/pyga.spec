@@ -1,25 +1,27 @@
-%define oname pyga
+%define _unpackaged_files_terminate_build 1
+
+%define pypi_name pyga
+%define mod_name %pypi_name
+
 %def_disable check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 2.6.2
-Release: alt3
+Release: alt4
 
 Summary: Server side implemenation of Google Analytics in Python
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pyga/
+Url: https://pypi.org/project/pyga/
+Vcs: https://github.com/kra3/py-ga-mob
 BuildArch: noarch
-
-# https://github.com/kra3/py-ga-mob.git
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
-
-%py3_provides %oname
-
+Source1: %pyproject_deps_config_name
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps -- prereq
+%pyproject_builddeps_build
 
 %description
 pyga is an iplementation of Google Analytics in Python; so that it can
@@ -27,63 +29,32 @@ be used at server side. This project only helps you with Data Collection
 part of Google Analytics. ie., You can consider this as a replacement
 for ga.js at client side.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-pyga is an iplementation of Google Analytics in Python; so that it can
-be used at server side. This project only helps you with Data Collection
-part of Google Analytics. ie., You can consider this as a replacement
-for ga.js at client side.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-pyga is an iplementation of Google Analytics in Python; so that it can
-be used at server side. This project only helps you with Data Collection
-part of Google Analytics. ie., You can consider this as a replacement
-for ga.js at client side.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
+# pep517 hooks fail due to missing six
+%pyproject_deps_resync prereq pip_reqfile requirements.txt
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-%make -C doc pickle
-mkdir -p build/docs
-%make -C doc html
-
-cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname
+%pyproject_install
 
 %check
 %__python3 setup.py test
 
 %files
 %doc *.rst RELEASES
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/tests
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc doc/_build/html/*
-
 
 %changelog
+* Thu Jul 20 2023 Stanislav Levin <slev@altlinux.org> 2.6.2-alt4
+- Fixed FTBFS (missing build dependency on six).
+
 * Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt3
 - Fixed BuildRequires.
 

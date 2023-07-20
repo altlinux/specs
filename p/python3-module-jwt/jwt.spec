@@ -1,42 +1,62 @@
 %define _unpackaged_files_terminate_build 1
-%define oname jwt
+%define pypi_name PyJWT
+%define mod_name jwt
 
-Name: python3-module-%oname
-Version: 2.6.0
+%def_with check
+
+Name: python3-module-%mod_name
+Version: 2.8.0
 Release: alt1
 Summary: JSON Web Token implementation in Python
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/PyJWT/
-
-# https://github.com/progrium/pyjwt.gi
-Source0: https://files.pythonhosted.org/packages/75/65/db64904a7f23e12dbf0565b53de01db04d848a497c6c9b87e102f74c9304/PyJWT-2.6.0.tar.gz
+Url: https://pypi.org/project/PyJWT/
+Vcs: https://github.com/jpadilla/pyjwt
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+Conflicts: python-module-%mod_name
+Obsoletes: python-module-%mod_name
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra tests
+%pyproject_builddeps_metadata_extra crypto
+%endif
 
 BuildRequires(pre): rpm-build-python3
 
-Conflicts: python-module-%oname
-Obsoletes: python-module-%oname
-
 %description
-A Python implementation of JSON Web Token draft 01.
+A Python implementation of RFC 7519.
 
 %prep
-%setup -n PyJWT-%{version}
+%setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-export LC_ALL=en_US.UTF-8
-%python3_build
+%pyproject_build
 
 %install
-export LC_ALL=en_US.UTF-8
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -ra -Wignore
 
 %files
-%doc AUTHORS* *.md
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 2.8.0-alt1
+- 2.6.0 -> 2.8.0.
+
 * Tue Jan 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6.0-alt1
 - 2.6.0 released
 

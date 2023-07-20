@@ -8,56 +8,32 @@
 %def_without full_testsuite
 
 Name: python3-module-%pypi_name
-Version: 4.0.5
+Version: 4.1.13
 Release: alt1
 
 Summary: A library that allows your python tests to easily mock out the boto library
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/moto/
-
+Vcs: https://github.com/getmoto/moto
 BuildArch: noarch
-
-# https://github.com/spulec/moto.git
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(boto3)
-BuildRequires: python3(botocore)
-BuildRequires: python3(cryptography)
-BuildRequires: python3(requests)
-BuildRequires: python3(xmltodict)
-BuildRequires: python3(werkzeug)
-BuildRequires: python3(pytz)
-BuildRequires: python3(dateutil)
-BuildRequires: python3(responses)
-BuildRequires: python3(jinja2)
-BuildRequires: python3(flask)
-BuildRequires: python3(flask_cors)
-
-# extra
-BuildRequires: python3(sure)
-BuildRequires: python3(freezegun)
-BuildRequires: python3(jose)
-BuildRequires: python3(aws_xray_sdk)
-BuildRequires: python3(yaml)
-BuildRequires: python3(jsondiff)
-BuildRequires: python3(docker)
-BuildRequires: python3(openapi-spec-validator)
-
-BuildRequires: python3(pytest)
+%add_pyproject_deps_check_filter pytest-ordering
+%add_pyproject_deps_check_filter surer
+%add_pyproject_deps_check_filter cfn-lint
+%add_pyproject_deps_check_filter py-partiql-parser
+%add_pyproject_deps_check_filter sshpubkeys
+%pyproject_builddeps_metadata_extra all
+%pyproject_builddeps_metadata_extra server
+%pyproject_builddeps_check
+BuildRequires: python3-module-sure
 %endif
-
-# not detected external dep
-%py3_requires responses
 
 %description
 Moto is a library that allows your python tests to easily mock out the
@@ -66,6 +42,11 @@ boto library.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-tests.txt
+%endif
 
 %build
 %pyproject_build
@@ -74,28 +55,24 @@ boto library.
 %pyproject_install
 
 %check
-%tox_create_default_config
-export NO_DOCKERD=YES
-export TOX_TESTENV_PASSENV='NO_INTERNET NO_DOCKERD'
+export TESTS_SKIP_REQUIRES_DOCKER=YES
 %if_with full_testsuite
 export TESTS=tests
 %else
 export TESTS=tests/test_core
 %endif
-# test_batch_jobs requires internet
-%tox_check_pyproject -- \
-    -vra $TESTS \
-    -m 'not network' \
-    --ignore tests/test_batch/test_batch_jobs.py
+%pyproject_run_pytest $TESTS -m 'not network' -ra -Wignore
 
 %files
-%doc LICENSE
-%doc *.md
+%doc README.*
 %_bindir/moto_server
 %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 4.1.13-alt1
+- 4.0.5 -> 4.1.13.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 4.0.5-alt1
 - 3.1.16 -> 4.0.5.
 

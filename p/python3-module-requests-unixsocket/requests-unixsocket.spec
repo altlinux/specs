@@ -5,51 +5,42 @@
 
 Name: python3-module-%pypi_name
 Version: 0.3.0
-Release: alt1
-
+Release: alt2
 Summary: Use requests to talk HTTP via a UNIX domain socket
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/requests-unixsocket/
-
+Vcs: https://github.com/msabramo/requests-unixsocket
 BuildArch: noarch
-
-# https://github.com/msabramo/requests-unixsocket.git
 Source: %name-%version.tar
-
-BuildRequires: git-core
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pbr
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# deps
-BuildRequires: python3-module-requests
-
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-waitress
+%add_pyproject_deps_check_filter pep8
+%add_pyproject_deps_check_filter pytest-pep8
+%add_pyproject_deps_check_filter pytest-cache
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-%py3_provides %pypi_name
 
 %description
 Use requests to talk HTTP via a UNIX domain socket.
 
 %prep
 %setup
-
-git config --global user.email "real at altlinux.org"
-git config --global user.name "REAL"
-git init-db
-git add . -A
-git commit -a -m "%version"
-git tag %version -m "%version"
-
+%autopatch -p1
 find ./ -type f -name '*.py' -exec \
 	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
+
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile test-requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -62,7 +53,7 @@ rm %buildroot%python3_sitelibdir/requests_unixsocket/testutils.py
 rm -r %buildroot%python3_sitelibdir/requests_unixsocket/tests/
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore requests_unixsocket/tests
 
 %files
 %doc *.rst
@@ -70,6 +61,10 @@ rm -r %buildroot%python3_sitelibdir/requests_unixsocket/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 26 2023 Stanislav Levin <slev@altlinux.org> 0.3.0-alt2
+- Added compatibility to urllib3 2.0.
+- Modernized packaging.
+
 * Mon Oct 03 2022 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
 - 0.1.5 -> 0.3.0.
 

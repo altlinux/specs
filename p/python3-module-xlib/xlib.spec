@@ -1,11 +1,12 @@
 %define oname xlib
+%define pypi_name python-xlib
 
 # There is no display in hasher
 %def_without check
 
 Name: python3-module-%oname
 Version: 0.33
-Release: alt1
+Release: alt1.1
 
 Summary: Python X Library
 
@@ -14,6 +15,8 @@ License: LGPLv2.1
 Url: https://github.com/python-xlib/python-xlib
 
 Source: %name-%version.tar
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 BuildRequires: /usr/bin/texi2html
 BuildRequires(pre): rpm-build-python3
@@ -70,6 +73,9 @@ py.test3 -vv
 %doc examples doc/html/*.html
 
 %changelog
+* Thu Jul 20 2023 Stanislav Levin <slev@altlinux.org> 0.33-alt1.1
+- NMU: mapped PyPI name to distro's one.
+
 * Mon Dec 26 2022 Grigory Ustinov <grenka@altlinux.org> 0.33-alt1
 - Automatically updated to 0.33.
 
