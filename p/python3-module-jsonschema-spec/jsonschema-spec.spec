@@ -5,13 +5,13 @@
 
 Name: python3-module-%pypi_name
 Version: 0.2.3
-Release: alt1
+Release: alt2
 
 Summary: JSONSchema Spec with object-oriented paths
 License: Apache-2.0
 Group: Development/Python3
-# Source-git: https://github.com/p1c2u/jsonschema-spec.git
 Url: https://pypi.org/project/jsonschema-spec
+Vcs: https://github.com/p1c2u/jsonschema-spec.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -50,8 +50,7 @@ JSONSchema Spec with object-oriented paths.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -v
 
 %files
 %doc README.rst
@@ -59,6 +58,9 @@ JSONSchema Spec with object-oriented paths.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jul 20 2023 Anton Vyatkin <toni@altlinux.org> 0.2.3-alt2
+- Fix FTBFS (migrate from tox to pyproject_installer).
+
 * Wed Jul 12 2023 Anton Vyatkin <toni@altlinux.org> 0.2.3-alt1
 - New version 0.2.3.
 
