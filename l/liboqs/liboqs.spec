@@ -5,7 +5,7 @@
 
 Name: liboqs
 Version: 0.8.0
-Release: alt2
+Release: alt3
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT and BSD-3-Clause and Apache-2.0 and ALT-Public-Domain and CC0-1.0
 Group: System/Libraries
@@ -68,10 +68,6 @@ sed -i '/CMAKE_SYSTEM_PROCESSOR.*armhf/s/")/|armv8l&/' CMakeLists.txt
 %build
 %define optflags_lto %nil
 %add_optflags %(getconf LFS_CFLAGS) -Wa,--noexecstack
-%ifarch armh
-# Workaround to https://github.com/open-quantum-safe/liboqs/issues/1288
-%add_optflags -fno-ipa-modref -fno-ipa-pure-const
-%endif
 # CMake options https://github.com/open-quantum-safe/liboqs/wiki/Customizing-liboqs
 # -DOQS_ENABLE_TEST_CONSTANT_TIME=ON -- does not pass.
 %cmake -B build \
@@ -122,6 +118,9 @@ timeout 222 %ninja_build -C build run_tests
 %_bindir/oqs-*
 
 %changelog
+* Thu Jul 20 2023 Vitaly Chikunov <vt@altlinux.org> 0.8.0-alt3
+- spec: Remove obsolete armh build workaround that isn't suitable for GCC10.
+
 * Mon Jun 12 2023 Vitaly Chikunov <vt@altlinux.org> 0.8.0-alt2
 - spec: Update %%description to reflect remaining algorithms list.
 
