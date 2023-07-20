@@ -27,8 +27,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.31.3
-Release: alt2
+Version: 2.32.1
+Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -675,6 +675,20 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Thu Jul 20 2023 Pavel Vainerman <pv@altlinux.ru> 2.32.1-alt1
+- (codegen): fixed Makefile.am
+- (codegen): update "skel" (template)
+- (timers): added "interval_msec" to TimerMessage, added tests for LT_Object
+- (workflows): added "ccache"
+- (workflows): cleanup caches
+- (workflows): codeql-analysis
+- fixed "lib version"
+- (OPCUAServer): add OPCUA folders structure. tests
+- (OPCUAServer): add method node. tests
+- (ModbusMaster): fix VTypes constructors arguments, add pollfactor=65535 "send on change" mode.
+- update libUniSet2.include
+- (MBConfig): add throw exception after configuration error
+
 * Sun Jul 02 2023 Pavel Vainerman <pv@altlinux.ru> 2.31.3-alt2
 - fixed lib version
 
