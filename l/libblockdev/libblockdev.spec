@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0.1
+Version: %ver_major.0.2
 Release: alt1
 
 Summary: A library for low-level manipulation with block devices
@@ -17,13 +17,14 @@ License: LGPLv2+
 Url: https://github.com/storaged-project/%name
 
 %if_disabled snapshot
-Vcs: https://github.com/rhinstaller/libblockdev.git
+Vcs: https://github.com/storaged-project/libblockdev.git
 Source: %url/releases/download/%version-%rev/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: autoconf-archive
 BuildRequires: python3-devel
 BuildRequires: gtk-doc
 BuildRequires: libgio-devel gobject-introspection-devel
@@ -152,6 +153,8 @@ with the libblockdev-dm plugin/library.
 Summary: The FS plugin for the libblockdev library
 Group: System/Libraries
 Requires: %name-utils = %EVR
+# ntfsinfo used for bd_fs_ntfs_get_info()
+Requires: ntfs-3g
 
 %description fs
 The libblockdev library plugin (and in the same time a standalone library)
@@ -579,6 +582,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %endif
 
 %changelog
+* Thu Jul 20 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
+- 3.0.2
+
 * Wed Jul 05 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
