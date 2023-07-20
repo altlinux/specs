@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: A pure python, thread-safe, minimalistic and pythonic RabbitMQ client library
 License: BSD-3-Clause
@@ -19,10 +19,12 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-pamqp
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-mock
+BuildRequires: python3-module-pamqp
 %endif
 
 %description
@@ -65,10 +67,10 @@ This package contains documentation for %oname.
 sed -i 's|sphinx-build|&-3|' docs/Makefile
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %make -C docs pickle
 %make -C docs html
@@ -76,13 +78,12 @@ sed -i 's|sphinx-build|&-3|' docs/Makefile
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3
+%pyproject_run_pytest -v
 
 %files
 %doc *.rst examples
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
@@ -93,6 +94,9 @@ py.test-3
 %doc docs/_build/html/*
 
 %changelog
+* Thu Jul 20 2023 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt2
+- Fix FTBFS (migrate to new pamqp v3.x)
+
 * Thu Mar 30 2023 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt1
 - New version 2.0.1.
 
