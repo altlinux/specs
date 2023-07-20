@@ -15,7 +15,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2.2202
+Version: 6.2.2303
 Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
@@ -27,6 +27,7 @@ Source: %name-%version.tar
 Source1: netgen.png
 Source2: netgen.desktop
 Source3: netgen-parallel.desktop
+Source4: submodules.tar
 
 # Rename shared libaries (the original names are often way too generic), add library version
 Patch2: netgen-6.2-alt-libs-rename-and-versions.patch
@@ -42,11 +43,9 @@ Patch6: netgen-6.2-alt-unbundle-togl.patch
 Patch7: 0007-Add-missing-USE_JPEG-propagation.patch
 # Add missing -ldl
 Patch8: 0008-Add-missing-ldl.patch
-# Use system pybind11
-Patch10: netgen-6.2-alt-unbundle-pybind11.patch
-Patch11: netgen-alt-fix-return-type.patch
+Patch9: netgen-alt-nglib-link-public-libraries.patch
 Patch12: netgen-alt-fix-build-i586.patch
-Patch13: netgen-alt-return-type.patch
+Patch13: netgen-alt-build-shared-togl.patch
 
 BuildRequires(pre): rpm-build-tcl
 BuildRequires(pre): rpm-build-python3
@@ -56,6 +55,7 @@ BuildRequires(pre): ccmake
 BuildRequires: clang
 %endif
 BuildRequires: gcc-c++
+BuildRequires: python3-devel
 BuildRequires: opencascade-devel
 BuildRequires: tk-devel
 BuildRequires: libXmu-devel
@@ -64,7 +64,6 @@ BuildRequires: libjpeg-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: pybind11-devel
-BuildRequires: python3-devel
 BuildRequires: zlib-devel
 BuildRequires: desktop-file-utils
 %if_with openmpi
@@ -187,9 +186,9 @@ This package contains Python bindings of NETGEN.
 
 %endif
 
-
 %prep
 %setup
+tar xf %SOURCE4
 
 #%%patch2 -p1
 %patch3 -p1
@@ -197,13 +196,13 @@ This package contains Python bindings of NETGEN.
 #%%patch5 -p1
 %if_with shared_togl
 %patch6 -p1
+%else
+%patch13 -p1
 %endif
 %patch7 -p1
 #%%patch8 -p1
-%patch10 -p1
-%patch11 -p1
+%patch9 -p1
 %patch12 -p1
-%patch13 -p1
 %ifarch %e2k
 sed -i "/data{_mm/{s|{|(|;s|}|)|}" libsrc/core/simd_{sse,avx}.hpp
 sed -i "s|defined(__FMA__) && !defined(__AVX512F__)|& \&\& !defined(__e2k__)|" libsrc/core/simd_avx.hpp
@@ -272,6 +271,7 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
     -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=FALSE \
     -DCMAKE_INSTALL_RPATH="%_tcllibdir" \
     -DNETGEN_PYTHON_RPATH="%_libdir" \
+    -DPREFER_SYSTEM_PYBIND11=ON \
     -DUSE_NATIVE_ARCH=OFF \
     -DUSE_GUI=ON \
     -DUSE_PYTHON=ON \
@@ -404,6 +404,21 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Sat Jul 01 2023 Andrey Cherepanov <cas@altlinux.org> 6.2.2303-alt1
+- New version.
+
+* Thu Mar 09 2023 Andrey Cherepanov <cas@altlinux.org> 6.2.2302-alt1
+- New version.
+
+* Thu Jan 12 2023 Andrey Cherepanov <cas@altlinux.org> 6.2.2301-alt1
+- New version.
+
+* Sun Aug 21 2022 Andrey Cherepanov <cas@altlinux.org> 6.2.2204-alt1
+- New version.
+
+* Tue Jul 19 2022 Andrey Cherepanov <cas@altlinux.org> 6.2.2203-alt1
+- New version.
+
 * Fri Apr 15 2022 Andrey Cherepanov <cas@altlinux.org> 6.2.2202-alt1
 - New version.
 

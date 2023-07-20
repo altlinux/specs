@@ -4,7 +4,7 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2.2202
+Version: 6.2.2304
 Release: alt1
 Summary: NGSolve Finite Element Library
 License: LGPL-2.1
@@ -104,7 +104,7 @@ This package contains development documentation for NGSolve.
 echo -n v%version > version.txt
 
 %build
-%add_optflags -fno-strict-aliasing -Wno-sign-compare -Wno-maybe-uninitialized -Wno-literal-suffix
+%add_optflags -fno-strict-aliasing -Wno-sign-compare -Wno-maybe-uninitialized -Wno-literal-suffix -Wno-error=return-type
 
 %cmake \
 	-DNGSOLVE_INSTALL_DIR_CMAKE=%_prefix \
@@ -156,6 +156,9 @@ doxygen
 %python3_sitelibdir/%name
 
 %changelog
+* Wed Jul 12 2023 Andrey Cherepanov <cas@altlinux.org> 6.2.2304-alt1
+- NMU: new version for netgen 6.2.2303
+
 * Sat Jul 23 2022 Andrey Cherepanov <cas@altlinux.org> 6.2.2202-alt1
 - NMU: New version for opencascade 7.6
 
