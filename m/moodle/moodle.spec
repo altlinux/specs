@@ -3,7 +3,7 @@
 
 Name: moodle
 Version: 3.11.15
-Release: alt2
+Release: alt3
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -73,6 +73,7 @@ Requires: php-engine
 Requires: php%php_version-curl
 Requires: php%php_version-dom
 Requires: php%php_version-fileinfo
+Requires: php%php_version-fpm-fcgi
 Requires: php%php_version-gd2
 Requires: php%php_version-intl
 Requires: php%php_version-ldap
@@ -227,7 +228,10 @@ install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 %if_with pam
 %exclude %moodle_authdir/pam/
 %endif
-%dir %attr(2770,root,%webserver_group) %moodle_datadir/
+%dir %attr(2770,root,%webserver_group) %moodle_datadir
+%dir %attr(775,root,%webserver_group) %moodle_moddir
+%dir %attr(775,root,%webserver_group) %moodle_themedir
+%dir %attr(775,root,%webserver_group) %moodle_enroldir
 
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
@@ -244,6 +248,10 @@ install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 %endif
 
 %changelog
+* Fri Jul 21 2023 Andrey Cherepanov <cas@altlinux.org> 3.11.15-alt3
+- Require PHP module fpm-fcgi.
+- Fix write permission for mod, theme and enroll directories.
+
 * Thu Jul 13 2023 Andrey Cherepanov <cas@altlinux.org> 3.11.15-alt2
 - Return vendor subdirectories.
 
