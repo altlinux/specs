@@ -4,26 +4,29 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.0
+Version: 1.1.0
 Release: alt1
 
 Summary: A fast, extensible and spec-compliant Markdown parser in pure Python
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/mistletoe/
-
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(pytest)
-%endif
+Vcs: https://github.com/miyuchina/mistletoe
 
 BuildArch: noarch
+
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+BuildRequires: python3-module-parameterized
+%endif
 
 %description
 mistletoe is a Markdown parser in pure Python, designed to be fast,
@@ -39,6 +42,8 @@ Remember to spell mistletoe in lowercase!
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -47,8 +52,7 @@ Remember to spell mistletoe in lowercase!
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_unittest
 
 %files
 %doc LICENSE README.md
@@ -57,6 +61,9 @@ Remember to spell mistletoe in lowercase!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 21 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.0-alt1
+- Updated to 1.1.0.
+
 * Thu Sep 29 2022 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
 - initial build for Sisyphus
 
