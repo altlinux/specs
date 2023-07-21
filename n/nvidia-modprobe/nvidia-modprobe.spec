@@ -1,5 +1,5 @@
 Name: nvidia-modprobe
-Version: 525.105.17
+Version: 535.86.05
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -35,11 +35,15 @@ make install NV_VERBOSE=1 OUTPUTDIR=BUILD STRIP_CMD=true NV_KEEP_UNSTRIPPED_BINA
 
 %files
 %doc COPYING
-%attr(4710,root,wheel) %_bindir/%name
+%_bindir/%name
 %_man1dir/%name.*
 
 
 %changelog
+* Fri Jul 21 2023 Sergey V Turchin <zerg@altlinux.org> 535.86.05-alt1
+- new version
+- remove SUID (closes: 43826)
+
 * Tue Apr 11 2023 Sergey V Turchin <zerg@altlinux.org> 525.105.17-alt1
 - new version
 
