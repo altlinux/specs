@@ -15,7 +15,7 @@
 %endif
 
 Name: courier-imap
-Version: 5.2.2
+Version: 5.2.4
 Release: alt1%rev
 
 Summary: IMAP/POP3 server with Maildir support
@@ -49,7 +49,7 @@ Patch9: %name-4.17.2-alt-config.patch
 BuildPreReq: libcourier-authlib-devel >= 0.71.0
 
 # Automatically added by buildreq on Sun Apr 27 2008
-BuildRequires: gcc-c++ libdb4-devel libkrb5-devel libpcre2-devel libssl-devel openssl libpam-devel pam-config libidn2-devel
+BuildRequires: gcc-c++ libdb4-devel libkrb5-devel libpcre2-devel libssl-devel openssl libpam-devel pam-config libidn2-devel >= 2.0.5
 BuildRequires: courier-unicode-devel >= 2.1
 %{?_enable_check:BuildRequires: valgrind}
 
@@ -248,6 +248,10 @@ done
 %ghost %attr(0600,courier,courier) %courier_localstatedir/couriersslpop3cache
 
 %changelog
+* Thu Jul 20 2023 L.A. Kostis <lakostis@altlinux.ru> 5.2.4-alt1
+- 5.2.4.
+- BR: libidn2 strict version requires.
+
 * Mon Feb 20 2023 L.A. Kostis <lakostis@altlinux.ru> 5.2.2-alt1
 - 5.2.2.
 - BR: libidn->libidn2.
