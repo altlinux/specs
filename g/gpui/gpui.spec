@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.31
+Version: 0.2.32
 Release: alt1
 
 Summary: Group policy editor
@@ -112,6 +112,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Fri Jul 21 2023 Vladimir Rubanov <august@altlinux.org> 0.2.32-alt1
+- 0.2.32-alt1
+- Features:
+  + Implement support of platforms in filter dialog.
+
 * Wed Jul 19 2023 Vladimir Rubanov <august@altlinux.org> 0.2.31-alt1
 - 0.2.31-alt1
 - Fixes:
