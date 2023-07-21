@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      2.1
+Version:      2.2
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -56,6 +56,9 @@ export SKIP_IMG_DIFFS=1
 %_datadir/xfig/Libraries/*
 
 %changelog
+* Fri Jul 21 2023 Vladislav Zavjalov <slazav@altlinux.org> 2.2-alt1
+- Fix hangs and crashes in downloader (thanks to Ilya Kurdyukov)
+
 * Sat Jul 15 2023 Vladislav Zavjalov <slazav@altlinux.org> 2.1-alt1
 - Vector maps: fix osm, xfig, and vmap interfaces, add gpx interface.
   New options: wpt_pref, update_type, update_types, label_names, osm_ids, osm_tags, crop_labels.
