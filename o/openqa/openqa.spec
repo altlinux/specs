@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt11
+Release: alt12
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -125,6 +125,30 @@ server which is expected to be reverse-proxied by a public-facing http
 server (rather than being accessed directly). The config snippets in
 this package help you configure openQA to be reverse proxied by httpd.
 
+
+%package single-instance-nginx
+Summary:        Convenience package for a single-instance setup using nginx proxy
+Group:          Development/Tools
+Requires:       %name-local-db
+Requires:       %name-worker
+Requires:       nginx
+Obsoletes: openqa < 4.3-7
+
+%description single-instance-nginx
+Use this package to setup a local instance with all services provided together.
+
+
+%package nginx
+Summary:        openQA nginx integration
+Group:          Development/Tools
+Requires:       nginx
+Obsoletes: openqa < 4.3-7
+
+%description nginx
+This package contains nginx configuration for the openQA
+automated testing framework.
+
+
 %package client
 Summary: Client tools for remote openQA management
 Group: Development/Tools
@@ -191,6 +215,9 @@ sed -i -e 's,/etc/apache2/ssl.key,%_sysconfdir/pki/tls/private,g' etc/apache2/vh
 sed -i -e 's,<IfDefine SSL>,<IfDefine ssl_module>,g' container/webui/openqa-ssl.conf
 sed -i -e 's,<IfDefine SSL>,<IfDefine ssl_module>,g' etc/apache2/vhosts.d/openqa-ssl.conf.template
 sed -i -e 's,/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/openqa.conf,/sbin/systemd-tmpfiles --create /lib/tmpfiles.d/openqa.conf,g' systemd/systemd-openqa-generator
+#nginx
+sed -i -e 's,"$(DESTDIR)"/etc/nginx/vhosts.d,"$(DESTDIR)"%_sysconfdir/nginx/sites-available.d,g' Makefile
+sed -i -e 's,vhosts.d/,sites-available.d/,g' etc/nginx/vhosts.d/openqa.conf.template
 #These services and files are not used.
 rm -rf systemd/openqa-vde_switch.service
 rm -rf systemd/openqa-slirpvde.service
@@ -432,6 +459,13 @@ fi
 %config %_sysconfdir/httpd2/conf/sites-available/openqa-common.inc
 %config %_sysconfdir/httpd2/conf/sites-available/openqa-ssl.conf.template
 
+%files nginx
+%doc COPYING
+# nginx vhost
+%config %_sysconfdir/nginx/sites-available.d/openqa.conf.template
+%config(noreplace) %_sysconfdir/nginx/sites-available.d/openqa-locations.inc
+%config(noreplace) %_sysconfdir/nginx/sites-available.d/openqa-upstreams.inc
+
 %files client
 %_datadir/openqa/script/client
 %_datadir/openqa/script/clone_job.pl
@@ -467,7 +501,12 @@ fi
 
 %files single-instance
 
+%files single-instance-nginx
+
 %changelog
+* Wed Jul 19 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt12
+- update to current version
+
 * Thu Jun 01 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt11
 - update to current version
 
