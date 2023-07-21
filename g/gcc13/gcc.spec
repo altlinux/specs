@@ -1,8 +1,10 @@
+%set_autoconf_version 2.60
+
 %define gcc_branch 13
 
 Name: gcc%gcc_branch
 Version: 13.1.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20230613
+%define snapshot 20230721
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -2136,13 +2138,24 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Fri Jul 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.1.1-alt2
+- Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-13-branch
+  commit 0d7019741b037c7e9c4e57d6de3bce6bb2ed8026;
+  + releases/gcc-13 (snapshot 20230721)
+  commit r13-7598-g3e95997a8dc905f0ac3a4243fb9dbf18dc70853b.
+- Added %%set_autoconf_version 2.60 to workaround FTBFS caused by an upcoming
+  change of the default autoconf version to 2.71.
+- Applied a proposed fix for the tree-optimization/110315 bug (thx Aldy
+  Hernandez and Andrew Macleod).
+
 * Tue Jun 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.1.1-alt1
 - Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
   + vendors/redhat/heads/gcc-13-branch
   commit 75b6adf0fdb4d09b64cddfdce59a030f69071fc5;
   + releases/gcc-13 (snapshot 20230613)
   commit r13-7440-gb69596f7cc52481fe25b893a5dd45f9a8d6e6aef.
-- Synced with Fedora gcc 13.1.1-3 and Debian gcc-13 ?.
+- Synced with Fedora gcc 13.1.1-3 and Debian gcc-13 13.1.0-3.
 
 * Tue Apr 25 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 12.2.1-alt2
 - Updated to git://gcc.gnu.org/git/gcc.git:
