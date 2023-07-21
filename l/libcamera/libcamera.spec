@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: libcamera
-Version: 0.0.5
-Release: alt1.1
+Version: 0.1.0
+Release: alt2
 Epoch: 1
 
 Summary: A complex camera support library for Linux
@@ -39,7 +39,7 @@ BuildRequires: python3(yaml)
 BuildRequires: python3(ply)
 %{?_enable_test:BuildRequires: pkgconfig(gtest)}
 
-%package -n gst-plugins-libcamera1.0
+%package -n gst-plugins-%{name}1.0
 Summary: A complex camera support library for Linux
 Group: System/Libraries
 
@@ -54,7 +54,7 @@ Group: Development/C
 %description
 An open source camera stack and framework for Linux, Android, and ChromeOS.
 
-%description -n gst-plugins-libcamera1.0
+%description -n gst-plugins-%{name}1.0
 An open source camera stack and framework for Linux, Android, and ChromeOS.
 This package contains libcamera gstreamer plugin.
 
@@ -78,13 +78,13 @@ sed -i "s|\"caps\", caps|\"caps\", (GstCaps*)caps|" src/gstreamer/gstlibcamerapr
 %endif
 
 %ifarch armh
-%define platdefs simple,raspberrypi,uvcvideo
+%define platdefs auto
 %endif
 %ifarch aarch64
-%define platdefs simple,raspberrypi,rkisp1,uvcvideo
+%define platdefs auto
 %endif
 %ifarch %ix86 x86_64
-%define platdefs ipu3,uvcvideo
+%define platdefs auto
 %endif
 %ifnarch armh aarch64 %ix86 x86_64
 %define platdefs uvcvideo
@@ -110,38 +110,46 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %files
 %_bindir/cam
 %{?_enable_test:%_bindir/lc-compliance
-%_libexecdir/libcamera/vimc_ipa_proxy}
+%_libexecdir/%name/vimc_ipa_proxy}
 %_bindir/libcamerify
 %ifarch %ix86 x86_64
-%_libexecdir/libcamera/ipu3_ipa_proxy
+%_libexecdir/%name/ipu3_ipa_proxy
 %endif
 %ifarch aarch64
-%_libexecdir/libcamera/raspberrypi_ipa_proxy
-%_libexecdir/libcamera/rkisp1_ipa_proxy
+%_libexecdir/%name/raspberrypi_ipa_proxy
+%_libexecdir/%name/rkisp1_ipa_proxy
 %endif
 %ifarch armh
-%_libexecdir/libcamera/raspberrypi_ipa_proxy
+%_libexecdir/%name/raspberrypi_ipa_proxy
+%_libexecdir/%name/rkisp1_ipa_proxy
 %endif
-%_libdir/libcamera
-%_libdir/libcamera-base.so.*
-%_libdir/libcamera.so.*
-%_libdir/v4l2-compat.so
-%_datadir/libcamera
+%_libdir/%name
+%_libdir/%name-base.so.*
+%_libdir/%name.so.*
+# moved to libexecdir since 0.1.0
+%_libexecdir/%name/v4l2-compat.so
+%_datadir/%name/
 
-%files -n gst-plugins-libcamera1.0
+%files -n gst-plugins-%{name}1.0
 %_libdir/gstreamer-1.0/*
 
 %files -n qcam
 %_bindir/qcam
 
 %files devel
-%_includedir/libcamera
-%_libdir/libcamera-base.so
-%_libdir/libcamera.so
-%_pkgconfigdir/libcamera-base.pc
-%_pkgconfigdir/libcamera.pc
+%_includedir/%name
+%_libdir/%name-base.so
+%_libdir/%name.so
+%_pkgconfigdir/%name-base.pc
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Jul 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.1.0-alt2
+- set 'pipelines' to 'auto' for %%ix86, x86_64, aarch64 and armh
+
+* Thu Jul 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.1.0-alt1
+- 0.1.0
+
 * Tue May 02 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.0.5-alt1.1
 - 0.0.5
 
