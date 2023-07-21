@@ -3,14 +3,14 @@
 %def_with check
 
 Name: python3-module-pyrogram
-Version: 2.0.49
+Version: 2.0.106
 Release: alt1
 
 Summary: Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots
 License: GPL-3.0 and LGPL-3.0
 Group: Development/Python3
 
-#VCS: https://github.com/pyrogram/pyrogram
+VCS: https://github.com/pyrogram/pyrogram
 Url: https://pyrogram.org/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -68,6 +68,9 @@ python3 -m pytest tests
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Thu Jul 20 2023 Egor Ignatov <egori@altlinux.org> 2.0.106-alt1
+- new version 2.0.106
+
 * Mon Sep 05 2022 Egor Ignatov <egori@altlinux.org> 2.0.49-alt1
 - new version 2.0.49
 
