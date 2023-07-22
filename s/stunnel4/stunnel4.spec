@@ -5,7 +5,7 @@
 
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 5.69
+Version: 5.70
 Release: alt1
 License: GPLv2+
 Group: Networking/Other
@@ -169,6 +169,10 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sat Jul 22 2023 L.A. Kostis <lakostis@altlinux.ru> 5.70-alt1
+- New version (5.70).
+- Rebuild with openssl3.
+
 * Mon Mar 27 2023 L.A. Kostis <lakostis@altlinux.ru> 5.69-alt1
 - New version (5.69).
 
@@ -221,5 +225,3 @@ make check
 
 * Wed Jan 20 2010 Pavlov Konstantin <thresh@altlinux.ru> 4.29-alt1
 - Initial build for ALT Linux.
-
-
