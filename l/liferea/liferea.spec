@@ -1,7 +1,7 @@
 %define rdn_name net.sourceforge.liferea
 
 Name: liferea
-Version: 1.14.5
+Version: 1.15.0
 Release: alt1
 
 Summary: A RSS News Reader for GNOME
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires: dconf gnome-icon-theme
+Requires: typelib(Gtk) = 3.0 libpeas-python3-loader
 
 %add_python3_path %_libdir/%name/plugins
 
@@ -30,7 +31,7 @@ BuildRequires: pkgconfig(fribidi)
 BuildRequires: pkgconfig(pango) >= 1.4.0
 BuildRequires: pkgconfig(libxml-2.0) >= 2.6.27 pkgconfig(libxslt) >= 1.1.19
 BuildRequires: pkgconfig(sqlite3) >= 3.7.0
-BuildRequires: pkgconfig(libsoup-2.4) >= 2.42 pkgconfig(webkit2gtk-4.0) pkgconfig(json-glib-1.0) pkgconfig(webkit2gtk-web-extension-4.0)
+BuildRequires: pkgconfig(libsoup-3.0) >= 3.2 pkgconfig(webkit2gtk-4.1) pkgconfig(json-glib-1.0) pkgconfig(webkit2gtk-web-extension-4.1)
 BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 3.0
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
 BuildRequires: pkgconfig(libpeas-1.0) >= 1.0.0 pkgconfig(libpeas-gtk-1.0) >= 1.0.0
@@ -46,7 +47,7 @@ Its GUI is similar to a desktop mail/newsclient, with an embedded graphical brow
 %package plugins-gnome-keyring
 Summary: GNOME Keyring Support for the %name
 Group: Networking/News
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-gnome-keyring
 Allow Liferea to use GNOME keyring as password store
@@ -54,7 +55,7 @@ Allow Liferea to use GNOME keyring as password store
 %package plugins-media-player
 Summary: Play music and videos directly from Liferea
 Group: Networking/News
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-media-player
 Play music and videos directly from Liferea
@@ -104,8 +105,6 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/libnotify.*
 %_libdir/%name/plugins/plugin-installer.*
 %_libdir/%name/plugins/__pycache__/plugin-installer.*
-%_libdir/%name/plugins/pane.*
-%_libdir/%name/plugins/__pycache__/pane.*
 %_libdir/%name/plugins/trayicon.*
 %_libdir/%name/plugins/__pycache__/trayicon.*
 %_libdir/%name/plugins/add-bookmark-site*
@@ -120,6 +119,13 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/media-player.*
 
 %changelog
+* Sat Jul 22 2023 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
+- updated to v1.15.0-51-g3acb5bc16 (ported to libsoup-3.0/webkitgtk-4.1,
+  fixed CVE-2023-1350)
+
+* Thu May 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.5-alt2
+- explicitly required typelib(Gtk) = 3.0 libpeas-python3-loader
+
 * Tue Apr 11 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.5-alt1
 - updated to v1.14.5-3-g201ac9fed
 
