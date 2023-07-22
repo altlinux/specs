@@ -1,38 +1,44 @@
-%def_enable gfio
-%def_enable numa
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %def_enable gfapi
+%def_enable gfio
+%def_enable http
+%def_enable libiscsi
+%def_enable numa
 %def_enable rdmacm
 %ifarch %ix86 %arm %mips32 ppc
 %def_disable rbd
 %else
 %def_enable rbd
 %endif
-%def_enable http
 
 Name: fio
-Version: 3.27
+Version: 3.35
 Release: alt1
-
 Summary: IO testing tool
-License: GPLv2
+License: GPL-2.0
 Group: System/Kernel and hardware
-
-Url: http://git.kernel.dk/?p=fio.git;a=summary
-Source0: %name-%version.tar
-Patch: %name-%version-%release.patch
-
-BuildRequires: libaio-devel zlib-devel
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx
-
-%{?_enable_gfio:BuildRequires: libgtk+2-devel}
-%{?_enable_numa:BuildRequires: libnuma-devel }
-%{?_enable_rbd:BuildRequires: ceph-devel}
-%{?_enable_gfapi:BuildRequires: libglusterfs-devel}
-%{?_enable_rdmacm:BuildRequires: librdmacm-devel}
-%{?_enable_http:BuildRequires: libcurl-devel libssl-devel}
+Url: https://git.kernel.dk/cgit/fio/
 
 Conflicts: python3-module-fiona
+
+Source0: %name-%version.tar
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libaio-devel
+BuildRequires: libblkio-devel
+BuildRequires: zlib-devel
+%{?_enable_gfapi:BuildRequires: libglusterfs-devel}
+%{?_enable_gfio:BuildRequires: libgtk+2-devel}
+%{?_enable_http:BuildRequires: libcurl-devel libssl-devel}
+%{?_enable_libiscsi:BuildRequires: libiscsi-devel}
+%{?_enable_numa:BuildRequires: libnuma-devel }
+%{?_enable_rbd:BuildRequires: ceph-devel}
+%{?_enable_rdmacm:BuildRequires: librdmacm-devel}
+%ifarch x86_64 aarch64 ppc64le
+BuildRequires: libpmem-devel
+%endif
 
 %description
 fio is a tool that will spawn a number of threads or processes doing a
@@ -42,18 +48,18 @@ otherwise parameters given to them overriding that setting is given.
 The typical use of fio is to write a job file matching the io load
 one wants to simulate.
 
-
 %package tools
 Summary: Analyze tools for %name
 Group: System/Kernel and hardware
 Requires: %name = %version-%release
 
 %description tools
-fio2gnuplot - analyze a set of fio's log files to turn them into a set of graphical traces using gnuplot tool.
+fio2gnuplot - analyze a set of fio's log files to turn them into a set of
+  graphical traces using gnuplot tool.
 fio_generate_plots - Generate plots for Flexible I/O Tester
 
 %package -n gfio
-Summary: Gtk frontend for %name
+Summary: GTK frontend for %name
 Group: System/Kernel and hardware
 Requires: %name = %version-%release
 
@@ -65,29 +71,29 @@ otherwise parameters given to them overriding that setting is given.
 The typical use of fio is to write a job file matching the io load
 one wants to simulate.
 
-This package conteon gtk frontend for %name
-
+This package contains GTK frontend for %name.
 
 %prep
 %setup
-%patch -p1
-find tools -type f | xargs subst "s|/usr/bin/python2.7|%__python3|"
 
 %build
 ./configure \
 	--prefix=%_prefix \
 	--disable-optimizations \
 	%{subst_enable gfio} \
+	%{subst_enable libiscsi} \
 	--extra-cflags="%optflags"
-
-%make_build V=1 EXTFLAGS="%optflags"
-%make_build -C doc html SPHINXBUILD=sphinx-build-3
+%make_build V=1
 
 %install
-%make_install DESTDIR=%buildroot install prefix=%_prefix mandir=%_mandir
+%makeinstall_std mandir=%_mandir
+
+%check
+%make test
+./fio -i
 
 %files
-%doc HOWTO README REPORTING-BUGS examples doc/output/html
+%doc HOWTO* README* REPORTING-BUGS examples
 %_bindir/genfio
 %_bindir/%name
 %_man1dir/%name.1.*
@@ -105,6 +111,11 @@ find tools -type f | xargs subst "s|/usr/bin/python2.7|%__python3|"
 %_bindir/gfio
 
 %changelog
+* Thu Jul 20 2023 Vitaly Chikunov <vt@altlinux.org> 3.35-alt1
+- Update to fio-3.35 (2023-05-23).
+- Do not package html docs (there are .rst docs already).
+- Add libblkio, libiscsi, and pmem/dev-dax engines.
+
 * Tue Aug 31 2021 Vitaly Lipatov <lav@altlinux.ru> 3.27-alt1
 - new version 3.27
 - add upstream fix: remove raw device support
