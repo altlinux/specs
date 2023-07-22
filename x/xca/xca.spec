@@ -2,7 +2,7 @@
 
 Name: xca
 Version: 2.4.0
-Release: alt1
+Release: alt2
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
 Group: Security/Networking
@@ -12,6 +12,8 @@ Url: https://hohnstaedt.de/xca/
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+Patch1: Adaptions-to-stay-OpenSSL-3.0-compatible.patch
 
 BuildRequires: qt5-base-devel qt5-tools-devel
 BuildRequires: libltdl-devel openssl-devel linuxdoc-tools rpm-build-xdg OpenSP groff-base
@@ -28,6 +30,7 @@ presented.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 ./bootstrap
@@ -60,6 +63,9 @@ mkdir -p %buildroot{%_bindir,%_datadir/xca,%_desktopdir,%_man1dir}
 %_datadir/bash-completion/completions/xca
 
 %changelog
+* Sat Jul 22 2023 Pavel Nakonechnyi <zorg@altlinux.ru> 2.4.0-alt2
+- add temporary OpenSSL3 support from xca-240-ossl3 branch
+
 * Sun May 09 2021 Pavel Nakonechnyi <zorg@altlinux.ru> 2.4.0-alt1
 - update to 2.4.0 release
 
