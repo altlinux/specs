@@ -1,6 +1,6 @@
 Name: nvme
 Version: 2.5
-Release: alt1
+Release: alt1.1
 Summary: NVM-Express user space tooling for Linux
 License: GPL-2.0+
 Group: System/Configuration/Hardware
@@ -35,6 +35,10 @@ Zsh completion for %name.
 
 %prep
 %setup
+%ifarch %e2k
+# plugins/solidigm/solidigm-telemetry/nlog.c:87: undefined reference to `log2' 
+sed -i "s/'-ldl'/[&,'-lm']/" meson.build
+%endif
 
 %build
 %meson \
@@ -70,6 +74,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Sat Jul 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.5-alt1.1
+- Fixed build for Elbrus.
+
 * Thu Jul 20 2023 L.A. Kostis <lakostis@altlinux.ru> 2.5-alt1
 - 2.5.
 
