@@ -2,7 +2,7 @@
 
 Name: verilator
 Version: 5.012
-Release: alt1
+Release: alt1.1
 Summary: A fast and free Verilog HDL simulator
 
 Group: Engineering
@@ -39,6 +39,9 @@ simulators. This package contains documentation and examples.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i "s/__armel__/__e2k__/" include/verilatedos.h
+%endif
 
 %build
 autoconf
@@ -67,6 +70,9 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Sat Jul 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.012-alt1.1
+- fixed build for Elbrus
+
 * Wed Jul 19 2023 Egor Ignatov <egori@altlinux.org> 5.012-alt1
 - new version 5.012
 
