@@ -1,7 +1,7 @@
 %define dist ph
 Name: perl-%dist
-Version: 0.11.1
-Release: alt2
+Version: 0.11.2
+Release: alt1
 
 Summary: Perl *.ph files
 License: GPL or Artistic
@@ -41,6 +41,9 @@ sed -i 's,-dD,-dM,' h2ph.pl
 %perl_vendor_archlib/sys/*.ph
 
 %changelog
+* Sat Jul 22 2023 Anton Farygin <rider@altlinux.ru> 0.11.2-alt1
+- added linux/sockios.h for ioctl.ph to fix the lost SIOC* in 0.11.1-alt1
+
 * Sun Apr 14 2019 Michael Shigorin <mike@altlinux.org> 0.11.1-alt2
 - E2K: avoid -dD (lcc's cpp lacks that one)
 
