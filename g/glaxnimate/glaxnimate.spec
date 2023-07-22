@@ -1,9 +1,8 @@
 %define _metadir %_datadir/metainfo
-%set_gcc_version 12
 
 Name: glaxnimate
 Version: 0.5.3
-Release: alt1
+Release: alt2
 Summary: A simple vector graphics animation program
 Group: Graphics
 Vendor: openmamba
@@ -12,16 +11,12 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 Url: https://glaxnimate.mattbas.org/
 Source: https://gitlab.com/mattbas/glaxnimate.git/%version/glaxnimate-%version.tar.bz2
 Patch: glaxnimate-0.5.1-qt6.patch
-Patch1: glaxnimate-0.5.1-cmake-install-libdir.patch
-Patch2: glaxnimate-pybind11_fix_build.patch
-License: GPLv2
+License: BSD-2-Clause and CC-BY-SA-4.0 and CC0-1.0 and GPL-3.0-or-later and Unicode-TOU
 
-BuildRequires: glibc-devel gcc12-c++
 BuildRequires: libarchive-devel
 BuildRequires: libavcodec-devel
 BuildRequires: libavformat-devel
 BuildRequires: libavutil-devel
-BuildRequires: libgcc
 BuildRequires: libglvnd-devel
 BuildRequires: libpotrace-devel
 BuildRequires: python3-dev
@@ -40,14 +35,14 @@ A simple vector graphics animation program.
 
 %prep
 %setup
-
 %patch0 -p1
 
 %build
 %cmake 
+%cmake_build
 %make_build translations -C %_cmake__builddir
-%install
 
+%install
 %cmakeinstall_std
 
 %files
@@ -62,6 +57,14 @@ A simple vector graphics animation program.
 %doc *.md
 
 %changelog
+* Fri Jul 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.3-alt2
+- Fixed the package License: tag (GPLv2 -> BSD-2-Clause and CC-BY-SA-4.0 and
+  CC0-1.0 and GPL-3.0 and Unicode-TOU).
+- Switched to the default gcc version (from gcc 12 to gcc 13).
+- Moved the build process from the %%install section to the %%build
+  section.
+- Removed unused patches.
+
 * Sat Jun 10 2023 Artyom Bystrov <arbars@altlinux.org> 0.5.3-alt1
 - update to new version
 
