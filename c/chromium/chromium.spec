@@ -34,7 +34,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        114.0.5735.198
+Version:        115.0.5790.102
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -87,15 +87,10 @@ Patch017: 0017-DEBIAN-use-system-libevent-library.patch
 Patch018: 0018-ALT-Use-system-libusb-libsecret-flatbuffers.patch
 Patch019: 0019-Use-yandex-search-as-default.patch
 Patch020: 0020-GENTOO-EnumTable-crash.patch
-Patch021: 0021-ARCH-Add-missing-typename-to-download-bubble.patch
-Patch022: 0022-ARCH-Add-missing-header.patch
-Patch023: 0023-ALT-Do-not-hardcode-flatbuffer-version.patch
-Patch024: 0024-DEBIAN-lambda-bug-workaround.patch
-Patch025: 0025-ALT-Ignore-unknown-option-llvm15.patch
-Patch026: 0026-tflite-add-stdint.h-for-int-types-in-internal-Spectr.patch
-Patch027: 0027-IWYU-add-cstdio-for-snprintf-in-vk_mem_alloc.h.patch
-Patch028: 0028-fixing-import-in-maldoca-ole-header.h.patch
-Patch029: 0029-aarch64-Add-missing-cstdint-header.patch
+Patch021: 0021-ARCH-Add-missing-header.patch
+Patch022: 0022-ALT-Do-not-hardcode-flatbuffer-version.patch
+Patch023: 0023-DEBIAN-lambda-bug-workaround.patch
+Patch024: 0024-Add-missing-headers.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -227,6 +222,7 @@ sed -i \
 	-e 's/"-ffile-compilation-dir=."//g' \
 	-e 's/"-no-canonical-prefixes"//g' \
 	-e 's/"-no-opaque-pointers",//g' \
+	-e 's/"-Wl,-mllvm,-disable-auto-upgrade-debug-info"//g' \
 	build/config/compiler/BUILD.gn
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
@@ -296,12 +292,14 @@ gn_arg+=( use_bundled_weston=false )
 gn_arg+=( use_xkbcommon=true )
 gn_arg+=( use_icf=false )
 gn_arg+=( enable_linux_installer=false )
+gn_arg+=( enable_rust=false )
 gn_arg+=( optimize_webui=false )
 gn_arg+=( link_pulseaudio=true )
 gn_arg+=( enable_hangout_services_extension=true )
 gn_arg+=( treat_warnings_as_errors=false )
 gn_arg+=( fatal_linker_warnings=false )
 gn_arg+=( system_libdir=\"%_lib\" )
+gn_arg+=( enable_nocompile_tests=false )
 
 # toolkit
 gn_arg+=( use_qt=false )
@@ -516,6 +514,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Jul 21 2023 Alexey Gladkov <legion@altlinux.ru> 115.0.5790.102-alt1
+- New version (115.0.5790.102).
+
 * Tue Jul 18 2023 Alexey Gladkov <legion@altlinux.ru> 114.0.5735.198-alt1
 - New version (114.0.5735.198).
 - Use LLVM16.
