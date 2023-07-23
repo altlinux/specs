@@ -17,7 +17,7 @@
 %def_enable lensfun
 
 Name: darktable
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -48,6 +48,7 @@ ExcludeArch: %ix86 armh
 %define libraw_ver 0.21.0
 %define libavif_ver 0.9.1
 %define libheif_ver 1.12.0
+%define openexr_ver 3.0
 %define lua_ver_major 5.4
 
 Requires: iso-codes >= %iso_codes_ver
@@ -64,7 +65,7 @@ BuildRequires: libexiv2-devel >= %exiv2_ver libflickcurl-devel libsecret-devel
 BuildRequires: libgphoto2-devel libjpeg-devel liblcms2-devel
 BuildRequires: liblensfun%lensfun_api_ver-devel >= %lensfun_ver
 BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel
-BuildRequires: openexr-devel python3-module-imath
+BuildRequires: openexr-devel >= %openexr_ver python3-module-imath
 BuildRequires: libxkbcommon-x11-devel lsb-release
 BuildRequires: libjson-glib-devel libsoup-devel libpixman-devel libexpat-devel
 BuildRequires: libcolord-gtk-devel libudev-devel
@@ -145,6 +146,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Sun Jul 23 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt1
+- 4.4.2
+
 * Sat Jul 01 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.1-alt1
 - 4.4.1
 
