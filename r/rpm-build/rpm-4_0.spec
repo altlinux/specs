@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.189
+Version: 4.0.4.190
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,14 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sun Jul 23 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4.190-alt1
+- Added the new %%_runstatedir macro as an alias to %%_runtimedir (ALT#46988).
+- Modified the behavior of the %%configure macro (ALT#46988):
+  + to pass the --runstatedir option when it is supported by the configure
+  script;
+  + to disable detection and passing of the --runstatedir if the
+  %%_configure_use_runstatedir macro is undefined.
+
 * Thu Jun 08 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4.189-alt1
 - rpm-build: provided_symbols: switched to eu-readelf to fix missing provides
   for symbols with peculiar bits that affect the output format of readelf from

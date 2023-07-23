@@ -1,9 +1,9 @@
 %set_compress_method none
-%define autoconf_version 2.60
+%define autoconf_version 2.71
 
 Name: autoconf-defaults
-Version: 2.69
-Release: alt5
+Version: 2.71
+Release: alt1
 Epoch: 2
 
 Summary: %vendor setup for the GNU Autoconf
@@ -66,6 +66,9 @@ done
 %_man1dir/ifnames.1.xz
 
 %changelog
+* Fri Jul 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.71-alt1
+- Changed the default autoconf version to 2.71.
+
 * Sun Dec 20 2020 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt5
 - Moved config.guess.1 and config.sub.1 to gnu-config.
 
