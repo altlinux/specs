@@ -24,8 +24,8 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 10.0.2
-Release: alt1.1
+Version: 11.0.0
+Release: alt1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -219,6 +219,9 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_datadir/qtcreator/*
 
 %changelog
+* Fri Jul 21 2023 Andrey Cherepanov <cas@altlinux.org> 11.0.0-alt1
+- New version.
+
 * Tue Jun 20 2023 L.A. Kostis <lakostis@altlinux.ru> 10.0.2-alt1.1
 - NMU:
   - still use gold as linker for exe (cause problems on ppc64le).
