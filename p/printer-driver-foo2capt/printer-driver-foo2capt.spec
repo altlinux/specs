@@ -2,7 +2,7 @@
 Name: printer-driver-foo2capt
 
 Version: 0.1.4.2
-Release: alt1.git_0_8ecc3cd 
+Release: alt1.git_1_8ecc3cd 
 
 Source: %name-%version.tar
 
@@ -57,17 +57,17 @@ Captdriver - это альтернативный драйвер для лазе�
 %make_build
 
 %install
-install -d %buildroot%_libexecdir/cups/filter
-install -d %buildroot%_datadir/ppd/foo2capt
-
-install -m0755 src/rastertocapt %buildroot%_libexecdir/cups/filter/
-install -m644 *.ppd %buildroot%_datadir/ppd/foo2capt/
+install -Dm0755 -t  %buildroot%_libexecdir/cups/filter/ src/rastertocapt
+install -Dm644  -t %buildroot%_datadir/cups/model/foo2capt/ *.ppd
 
 %files
-%_datadir/ppd/foo2capt/*.ppd
+%_datadir/cups/model/foo2capt/
 %_libexecdir/cups/filter/rastertocapt
 
 %changelog
+* Sat Jul 22 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.1.4.2-alt1.git_1_8ecc3cd
+- Fix ppd driver location
+
 * Thu Jul 06 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.1.4.2-alt1.git_0_8ecc3cd
 - Update Version
 
