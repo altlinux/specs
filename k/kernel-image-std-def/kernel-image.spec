@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.39
+%define kernel_sublevel	.40
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -602,6 +602,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Jul 23 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.40-alt1
+- v6.1.40 (2023-07-23).
+
 * Wed Jul 19 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.39-alt1
 - v6.1.39 (2023-07-19).
 
