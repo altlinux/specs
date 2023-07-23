@@ -1,13 +1,13 @@
 %def_enable snapshot
 
-%define ver_major 0.8
+%define ver_major 0.10
 %define beta %nil
 %define pypi_name blueprintcompiler
 %def_disable docs
 %def_enable check
 
 Name: blueprint-compiler
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A markup language for GTK user interface files
@@ -56,6 +56,9 @@ xvfb-run %__meson_test -t 2
 %doc NEWS* README*
 
 %changelog
+* Sat Jul 22 2023 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Mon Jun 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - updated to v0.8.1-2-g93392e5
 
