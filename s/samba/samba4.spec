@@ -97,7 +97,7 @@
 %endif
 
 Name:    samba
-Version: 4.17.9
+Version: 4.17.10
 Release: alt1
 
 Group:   System/Servers
@@ -2105,8 +2105,38 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Sun Jul 23 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.10-alt1
+- Update to maintenance release of Samba 4.17:
+  + Secure channel faulty since Windows 10/11 update 07/2023 (KB5028166).
+
+- Security fixes (Samba#15418):
+  + CVE-2022-2127:  When winbind is used for NTLM authentication, a maliciously
+                    crafted request can trigger an out-of-bounds read in winbind
+                    and possibly crash it.
+                    https://www.samba.org/samba/security/CVE-2022-2127.html
+
+  + CVE-2023-3347:  SMB2 packet signing is not enforced if an admin configured
+                    "server signing = required" or for SMB2 connections to Domain
+                    Controllers where SMB2 packet signing is mandatory.
+                    https://www.samba.org/samba/security/CVE-2023-3347.html
+
+  + CVE-2023-34966: An infinite loop bug in Samba's mdssvc RPC service for
+                    Spotlight can be triggered by an unauthenticated attacker by
+                    issuing a malformed RPC request.
+                    https://www.samba.org/samba/security/CVE-2023-34966.html
+
+  + CVE-2023-34967: Missing type validation in Samba's mdssvc RPC service for
+                    Spotlight can be used by an unauthenticated attacker to
+                    trigger a process crash in a shared RPC mdssvc worker process.
+                    https://www.samba.org/samba/security/CVE-2023-34967.html
+
+  + CVE-2023-34968: As part of the Spotlight protocol Samba discloses the server-
+                    side absolute path of shares and files and directories in
+                    search results.
+                    https://www.samba.org/samba/security/CVE-2023-34968.html
+
 * Mon Jul 10 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.9-alt1
-- Update to maintenance release of Samba 4.18:
+- Update to maintenance release of Samba 4.17:
   + smbd_scavenger crashes when service smbd is stopped (Samba#15275).
   + vfs_fruit might cause a failing open for delete (Samba#15378).
   + named crashes on DLZ zone update (Samba#14030).
@@ -2120,7 +2150,7 @@ control role-sambashare enabled
 - Add check with admx-lint for group policy templates validation.
 
 * Sun May 21 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.8-alt1
-- Update to maintenance release of Samba 4.18:
+- Update to maintenance release of Samba 4.17:
   + log flood: smbd_calculate_access_mask_fsp: Access denied: message level
     should be lower (Samba#15302).
   + Floating point exception (FPE) via cli_pull_send at
