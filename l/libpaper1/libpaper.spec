@@ -1,14 +1,14 @@
 %define soname 1
-%def_without devel
+%def_disable devel
 
 Name: libpaper%soname
 Version: 1.1.28
-Release: alt2
+Release: alt3
 
 Summary: Library and tools for handling papersize
 
-License: GPL
-Group: System/Libraries
+License: GPL-2.0-only
+Group: System/Legacy libraries
 Url: http://packages.qa.debian.org/libp/libpaper.html
 
 # Source-url: http://deb.debian.org/debian/pool/main/libp/libpaper/libpaper_%version.tar.gz
@@ -30,11 +30,27 @@ really basic functions (obtaining the system paper name and getting
 the height and width of a given kond of paper) that applications can
 immediately integrate.
 
-%if_with devel
+%package -n libpaper
+Summary: Library for handling papersize
+Group: System/Legacy libraries
+Provides: libpaper1 = %EVR
+Obsoletes: libpaper1 = %EVR
+
+%description -n libpaper
+The paper library and accompanying files are intended to provide a simple
+way for applications to take actions based on a system- or user-specified
+paper size.  This release is quite minimal, its purpose being to provide
+really basic functions (obtaining the system paper name and getting
+the height and width of a given kond of paper) that applications can
+immediately integrate.
+
+This package contains the libpaper.so.1 library.
+
+%if_enabled devel
 %package devel
 Summary: Header files for %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: libpaper = %EVR
 
 %description devel
 Header files for %name library.
@@ -66,7 +82,7 @@ for i in cs da de es fr gl hu it ja nl pt_BR sv tr uk vi; do
 done
 %find_lang %name
 
-%if_without devel
+%if_disabled devel
 rm -rv %buildroot%_libdir/libpaper.so
 rm -rv %buildroot%_includedir/paper.h
 rm -rv %buildroot%_man3dir/
@@ -76,7 +92,7 @@ rm -rv %buildroot%_man3dir/
 rm -v %buildroot%_bindir/paperconf
 rm -v %buildroot%_sbindir/paperconfig
 
-%files -f %name.lang
+%files -n libpaper -f %name.lang
 %doc README
 %config(noreplace) %_sysconfdir/papersize
 %dir %_sysconfdir/libpaper.d
@@ -85,7 +101,7 @@ rm -v %buildroot%_sbindir/paperconfig
 %_man5dir/*
 %_man8dir/*
 
-%if_with devel
+%if_enabled devel
 %files devel
 %_libdir/libpaper.so
 %_includedir/paper.h
@@ -93,6 +109,15 @@ rm -v %buildroot%_sbindir/paperconfig
 %endif
 
 %changelog
+* Mon Jul 24 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.28-alt3
+- NMU:
+  - Reverted the libpaper1 package name to libpaper to prevent an unnecessary
+    relocation of the libpaper.so.1 soname provider.
+  - libpaper: added Provides: libpaper1 and Obsoletes: libpaper1 because
+    it has already been uploaded into the Sisyphus repository.
+  - Fixed the License: tag (GPL -> GPL-2.0-only).
+  - Fixed libpaper Group: tag (System/Libraries -> System/Legacy libraries).
+
 * Wed Jul 19 2023 Mikhail Tergoev <fidel@altlinux.org> 1.1.28-alt2
 - build as libpaper1
 - drop devel package, paperconf and paperconfig

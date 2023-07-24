@@ -1,9 +1,8 @@
-%set_verify_elf_method rpath=relaxed
 %define soname 2
 
 Name: libpaper
 Version: 2.1.1
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: Library and tools for handling papersize
@@ -25,28 +24,26 @@ The paper library and accompanying files are intended to provide a simple
 way for applications to take actions based on a system- or user-specified
 paper size.  This release is quite minimal, its purpose being to provide
 really basic functions (obtaining the system paper name and getting
-the height and width of a given kond of paper) that applications can
+the height and width of a given kind of paper) that applications can
 immediately integrate.
 
 %package -n %name%soname
 Summary: Library and tools for handling papersize
 Group: System/Libraries
-
-Provides: libpaper = %version-%release
-Obsoletes: libpaper <= 1.1.28
+Conflicts: libpaper < 1.1.28-alt3
 
 %description -n %name%soname
 The paper library and accompanying files are intended to provide a simple
 way for applications to take actions based on a system- or user-specified
 paper size.  This release is quite minimal, its purpose being to provide
 really basic functions (obtaining the system paper name and getting
-the height and width of a given kond of paper) that applications can
+the height and width of a given kind of paper) that applications can
 immediately integrate.
 
 %package -n paper
 Summary: Query paper size database and retrieve the preferred size
 Group: Text tools
-Requires: %name%soname = %version-%release
+Requires: %name%soname = %EVR
 
 %description -n paper
 This package enables users to indicate their preferred paper size, provides
@@ -57,7 +54,7 @@ size catalogs, which can be can also be used directly (see paperspecs(5)).
 %package -n libpaper-devel
 Summary: Header files for %name
 Group: Development/Other
-Requires: %name%soname = %version-%release
+Requires: %name%soname = %EVR
 
 %description -n libpaper-devel
 This package contains headers and libraries that programmers will need
@@ -68,12 +65,17 @@ to develop applications which use libpaper.
 %setup
 
 %build
+%autoreconf
 %configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
 %find_lang libpaper
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %files -n libpaper%soname
 %_docdir/libpaper/
@@ -93,6 +95,21 @@ to develop applications which use libpaper.
 %_libdir/libpaper.so
 
 %changelog
+* Mon Jul 24 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.1.1-alt2
+- NMU:
+  - Removed unused patches.
+  - Added a call to the %%autoreconf macro to prevent the generation of rpaths
+    in the ELF files.
+  - libpaper2: removed the 'Obsoletes: libpaper' tag because these packages
+    provide completely different sonames, allowing them to be installed
+    simultaneously.
+  - libpaper2: removed the 'Provides: libpaper' because it doesn't make any
+    sense either.
+  - libpaper2: added 'Conflicts: libpaper < 1.1.28-alt3' due to conflicting
+    versions of the /usr/bin/paperconf utility.
+  - Enabled strict mode for the verify-elf check.
+  - Enabled rpm-build checks for unpackaged files and stripped files.
+
 * Mon Jul 10 2023 Mikhail Tergoev <fidel@altlinux.org> 2:2.1.1-alt1
 - new version 2.1.1 (with rpmgs script)
 - build as libpaper2
