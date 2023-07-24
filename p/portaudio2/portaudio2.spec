@@ -1,20 +1,20 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name portaudio
 %def_enable docs
 
 Name: %{_name}2
 Version: 19
-Release: alt7
+Release: alt8
 
 Summary: PortAudio is a free, cross platform, open-source, audio I/O library
-License: BSD
+License: MIT
 Group: System/Libraries
 Url: http://www.portaudio.com/
 
 %if_disabled snapshot
-Source: http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz
+Source: http://files.portaudio.com/archives/pa_stable_v190700_20210406.tgz
 %else
-#VCS: https://git.assembla.com/portaudio.git
+Vcs: https://github.com/PortAudio/portaudio.git
 Source: %_name-%version.tar
 %endif
 
@@ -87,6 +87,8 @@ sed -i '/^Libs:/s/ @/\nLibs.private: @/
 
 %build
 %autoreconf
+# and do it one more time for ac-2.71
+%autoreconf
 %configure --disable-static --enable-cxx
 %make_build lib/libportaudio.la
 %make_build
@@ -99,14 +101,17 @@ sed -i '/^Libs:/s/ @/\nLibs.private: @/
 %_libdir/*.so.*
 
 %files -n lib%name-devel
-%doc README.txt
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%doc README.txt
+%doc README.md
 %{?_enable_docs:%doc doc/html}
 
 %changelog
+* Mon Jul 24 2023 Yuri N. Sedunov <aris@altlinux.org> 19-alt8
+- updated to pa_stable_v190700_20210406
+- fixed build with autoconf-2.71
+
 * Sat Jun 09 2018 Yuri N. Sedunov <aris@altlinux.org> 19-alt7
 - updated to pa_stable_v190600_20161030-10-g8dc6d59
 - add documentation to devel subpackage
