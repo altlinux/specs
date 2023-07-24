@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.1.4
 Release: alt1
 
 Summary: The build backend used by PDM that supports latest packaging standards
@@ -28,8 +28,6 @@ Patch: %name-%version-alt.patch
 %if_without vendored
 %pyproject_runtimedeps -- vendored
 %endif
-
-%py3_provides %pypi_name
 
 # self-dependencies
 %filter_from_requires /python3(pdm\.backend\._vendor\..*)/d
@@ -100,6 +98,9 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 21 2023 Stanislav Levin <slev@altlinux.org> 2.1.4-alt1
+- 2.1.0 -> 2.1.4.
+
 * Tue Jun 13 2023 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - 2.0.7 -> 2.1.0.
 

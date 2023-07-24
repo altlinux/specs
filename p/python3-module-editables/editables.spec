@@ -4,29 +4,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3
+Version: 0.4
 Release: alt1
-
 Summary: Editable installations
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/pfmoore/editables.git
 Url: https://pypi.org/project/editables
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(pytest)
-%endif
-
+Vcs: https://github.com/pfmoore/editables
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 A Python library for creating "editable wheels".
@@ -38,6 +33,11 @@ Python, without needing a reinstall.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -46,9 +46,7 @@ Python, without needing a reinstall.
 %pyproject_install
 
 %check
-# override upstream's tox configuration (requires too many fixes)
-%tox_create_default_config
-%tox_check_pyproject -- -vra tests
+%pyproject_run_pytest -ra -Wignore tests
 
 %files
 %doc README.md
@@ -56,6 +54,9 @@ Python, without needing a reinstall.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 21 2023 Stanislav Levin <slev@altlinux.org> 0.4-alt1
+- 0.3 -> 0.4.
+
 * Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 0.3-alt1
 - 0.2 -> 0.3.
 
