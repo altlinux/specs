@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.17.1
+Version: 2.18.0
 Release: alt1
 Summary: Fast JSON schema validator for Python
 License: BSD-3-Clause
@@ -59,6 +59,9 @@ Fast JSON schema validator for Python
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 24 2023 Stanislav Levin <slev@altlinux.org> 2.18.0-alt1
+- 2.17.1 -> 2.18.0.
+
 * Mon May 22 2023 Stanislav Levin <slev@altlinux.org> 2.17.1-alt1
 - 2.16.3 -> 2.17.1.
 
