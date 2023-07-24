@@ -14,7 +14,7 @@
 
 Name: bacula%{bacula_major}
 Version: %{bacula_major}.0.3
-Release: alt3
+Release: alt4
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -467,7 +467,7 @@ rm -f src/lib/lz4.{c,h}
 
 %build
 export MTX=%_sbindir/mtx
-export AUTOCONF_VERSION=2.60
+%set_autoconf_version 2.60
 
 # Regenerate configure
 pushd autoconf
@@ -927,6 +927,9 @@ rm -rf %_cachedir/baculum/runtime/*
 %endif
 
 %changelog
+* Mon Jul 24 2023 Alexei Takaseev <taf@altlinux.org> 13.0.3-alt4
+- Use %%set_autoconf_version macro
+
 * Mon Jul 24 2023 Alexei Takaseev <taf@altlinux.org> 13.0.3-alt3
 - Use autoconf_2.60
 
