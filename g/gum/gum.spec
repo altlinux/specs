@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: gum
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 Summary: A tool for glamorous shell scripts
 License: MIT
@@ -12,8 +12,10 @@ Group: Terminals
 Url: https://github.com/charmbracelet/gum
 
 Source: %name-%version.tar
-
 BuildRequires: golang
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: banner
+}}
 
 %description
 %summary.
@@ -36,8 +38,9 @@ install -Dpm644 gum.fish %buildroot%_datadir/fish/vendor_completions.d/gum.fish
 install -Dpm644 gum.zsh  %buildroot%_datadir/zsh/site-functions/_gum
 
 %check
+./gum -v | grep -x 'gum version %version'
 # They run `go test -v -cover -timeout=30s ./...` but there's "no test files".
-./gum style --border double --padding "2 4" --width 50 --align center "$(./gum -v)"
+./gum style --border double --padding "2 4" --width 50 --align center "$(banner alt)"
 
 %files
 %doc LICENSE README.md examples
@@ -48,6 +51,9 @@ install -Dpm644 gum.zsh  %buildroot%_datadir/zsh/site-functions/_gum
 %_datadir/zsh/site-functions/_gum
 
 %changelog
+* Tue Jul 25 2023 Vitaly Chikunov <vt@altlinux.org> 0.11.0-alt1
+- Update to v0.11.0 (2023-07-20).
+
 * Tue Mar 28 2023 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt1
 - Update to v0.10.0 (2023-03-27).
 
