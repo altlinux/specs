@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with check
+
 %define guile_sitedir %(guile-config info sitedir)
 %define bash_completionsdir %_datadir/bash-completion/completions
 
 Name: shepherd
 Version: 0.10.2
-Release: alt2
+Release: alt3
 
 Summary: The GNU Shepherd
 License: GPL-3.0+
@@ -14,16 +16,20 @@ Url: https://www.gnu.org/software/shepherd/
 Vcs: git://git.savannah.gnu.org/shepherd.git
 
 Source0: %name-%version.tar
+Patch0: %name-%version-alt-fix-runstatedir.patch
 
 Requires: guile-fibers
 Conflicts: sysvinit
 Conflicts: systemd-sysvinit
 
-BuildRequires(pre): /proc
 BuildRequires: guile-devel
 BuildRequires: guile-fibers
 BuildRequires: help2man
 BuildRequires: texinfo
+
+%if_with check
+BuildRequires(pre): /proc
+%endif
 
 %description
 The GNU Shepherd is a service manager written in Guile that looks after
@@ -37,6 +43,7 @@ programming model.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -68,6 +75,9 @@ programming model.
 %bash_completionsdir/herd
 
 %changelog
+* Mon Jul 24 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.2-alt3
+- Added %%runstatedir as /var/run/shepherd (for socket).
+
 * Wed Jul 19 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.2-alt2
 - Added guile-fibers requirement.
 
