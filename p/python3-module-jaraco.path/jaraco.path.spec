@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jaraco.path
+%define ns_name jaraco
+%define mod_name path
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.6.0
+Version: 3.7.0
 Release: alt1
 Summary: Miscellaneous path functions
 License: MIT
@@ -47,11 +49,16 @@ BuildRequires(pre): rpm-build-pyproject
 
 %files
 %doc README.rst
-%python3_sitelibdir/jaraco/__pycache__/path.cpython-*.py*
-%python3_sitelibdir/jaraco/path.py
+%dir %python3_sitelibdir/%ns_name/
+%python3_sitelibdir/%ns_name/__pycache__/
+%python3_sitelibdir/%ns_name/__pycache__/%mod_name.*
+%python3_sitelibdir/%ns_name/%mod_name.py
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Fri Jul 21 2023 Stanislav Levin <slev@altlinux.org> 3.7.0-alt1
+- 3.6.0 -> 3.7.0.
+
 * Tue Jun 20 2023 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1
 - 3.5.0 -> 3.6.0.
 
