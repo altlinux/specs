@@ -11,8 +11,8 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
-Release: alt2
+Version: 1.4.1
+Release: alt1
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
 Group: Development/Python3
@@ -31,6 +31,8 @@ BuildRequires: /proc
 BuildRequires: gcc-c++
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
+# required for mypy/test/testpep561.py
+BuildRequires: python3-module-hatchling
 %endif
 # Needed to generate the man pages
 BuildRequires: help2man
@@ -128,6 +130,9 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %endif
 
 %changelog
+* Fri Jul 21 2023 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1
+- 1.3.0 -> 1.4.1.
+
 * Thu Jun 15 2023 Stanislav Levin <slev@altlinux.org> 1.3.0-alt2
 - Fixed FTBFS (typing-extensions 4.6.3).
 
