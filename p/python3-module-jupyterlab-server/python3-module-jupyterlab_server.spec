@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.23.0
-Release: alt2
+Version: 2.24.0
+Release: alt1
 Summary: A set of server components for JupyterLab and JupyterLab like applications
 License: BSD-3-Clause
 Group: Development/Python3
@@ -61,6 +61,9 @@ and not test_page_config"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Jul 24 2023 Anton Vyatkin <toni@altlinux.org> 2.24.0-alt1
+- New version 2.24.0.
+
 * Mon Jul 17 2023 Anton Vyatkin <toni@altlinux.org> 2.23.0-alt2
 - Fix FTBFS.
 
