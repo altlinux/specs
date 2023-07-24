@@ -6,7 +6,7 @@
 %def_with perl5
 #def_with python
 %def_with python3
-%def_with R
+#def_with R
 %def_with ruby
 %def_with scheme
 %def_with tcl
@@ -14,7 +14,7 @@
 # vim:set ft=spec:
 Name: swig
 Version: 4.1.1
-Release: alt6
+Release: alt7
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -246,6 +246,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Mon Jul 24 2023 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt7
+- rebuild without R
+
 * Sat Jun 24 2023 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt6
 - update buildrequires
 
