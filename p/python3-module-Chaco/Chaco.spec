@@ -1,23 +1,25 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name chaco
-%define mod_name %pypi_name
+
+# can't start tests
+%def_without check
 
 Name: python3-module-Chaco
-Version: 5.1.1
-Release: alt2
+Version: 6.0.0
+Release: alt1
 
 Summary: Interactive 2-Dimensional Plotting
-License: BSD and GPLv2
+
+License: BSD-3-Clause and GPLv2
 Group: Development/Python3
-URL: http://docs.enthought.com/chaco/
+URL: https://pypi.org/project/chaco
 VCS: https://github.com/enthought/chaco
+
 Source: %name-%version.tar
 
 # well-known PyPI name
 Provides: python3-module-%pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
-# build backend and its deps
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(cython)
@@ -46,14 +48,17 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %files
 %doc CHANGES.txt
-%python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/%mod_name/example*
-%exclude %python3_sitelibdir/%mod_name/tests/
-%exclude %python3_sitelibdir/%mod_name/*/tests/
-%exclude %python3_sitelibdir/%mod_name/*/*/tests/
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%exclude %python3_sitelibdir/%pypi_name/example*
+%exclude %python3_sitelibdir/%pypi_name/tests
+%exclude %python3_sitelibdir/%pypi_name/*/tests
+%exclude %python3_sitelibdir/%pypi_name/*/*/tests
 
 %changelog
+* Mon Jul 24 2023 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
+- Automatically updated to 6.0.0.
+
 * Mon Feb 27 2023 Stanislav Levin <slev@altlinux.org> 5.1.1-alt2
 - Fixed FTBFS (setuptools 67.3.0).
 
