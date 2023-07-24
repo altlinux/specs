@@ -1,10 +1,10 @@
 Name: libspectre
-Version: 0.2.9
+Version: 0.2.12
 Release: alt1
 Group: System/Libraries
 Summary: A PostScript rendering library
 License: GPLv2+
-Url: http://www.freedesktop.org/wiki/Software/libspectre
+Url: http://libspectre.freedesktop.org/
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -32,8 +32,8 @@ developing applications that use %name.
 %build
 %autoreconf
 %configure \
-    --disable-static \
-    #
+    --disable-static
+
 %make_build
 
 %install
@@ -49,6 +49,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 24 2023 Valery Inozemtsev <shrek@altlinux.ru> 0.2.12-alt1
+- 0.2.12
+
 * Mon Nov 16 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.9-alt1
 - Updated to 0.2.9.
 
