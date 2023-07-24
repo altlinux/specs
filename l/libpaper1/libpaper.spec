@@ -1,21 +1,23 @@
-%set_verify_elf_method rpath=relaxed
-%define soname 2
+%define soname 1
+%def_without devel
 
-Name: libpaper
-Version: 2.1.1
-Release: alt1
-Epoch: 2
+Name: libpaper%soname
+Version: 1.1.28
+Release: alt2
 
 Summary: Library and tools for handling papersize
 
-License: LGPL-3.0-or-later
+License: GPL
 Group: System/Libraries
-Url: https://github.com/rrthomas/libpaper
+Url: http://packages.qa.debian.org/libp/libpaper.html
 
-# Source-url: https://github.com/rrthomas/libpaper/releases/download/v%version/libpaper-%version.tar.gz
+# Source-url: http://deb.debian.org/debian/pool/main/libp/libpaper/libpaper_%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake
+# Fedora's patches:
+Patch1: libpaper-covscan.patch
+Patch2: libpaper-file-leak.patch
+Patch3: libpaper-useglibcfallback.patch
 
 # Automatically added by buildreq on Sun Jan 08 2006
 BuildRequires: gcc-c++ libstdc++-devel
@@ -28,74 +30,72 @@ really basic functions (obtaining the system paper name and getting
 the height and width of a given kond of paper) that applications can
 immediately integrate.
 
-%package -n %name%soname
-Summary: Library and tools for handling papersize
-Group: System/Libraries
-
-Provides: libpaper = %version-%release
-Obsoletes: libpaper <= 1.1.28
-
-%description -n %name%soname
-The paper library and accompanying files are intended to provide a simple
-way for applications to take actions based on a system- or user-specified
-paper size.  This release is quite minimal, its purpose being to provide
-really basic functions (obtaining the system paper name and getting
-the height and width of a given kond of paper) that applications can
-immediately integrate.
-
-%package -n paper
-Summary: Query paper size database and retrieve the preferred size
-Group: Text tools
-Requires: %name%soname = %version-%release
-
-%description -n paper
-This package enables users to indicate their preferred paper size, provides
-the paper(1) utility to find the user's preferred default paper size and give
-information about known sizes, and specifies system-wide and per-user paper
-size catalogs, which can be can also be used directly (see paperspecs(5)).
-
-%package -n libpaper-devel
+%if_with devel
+%package devel
 Summary: Header files for %name
 Group: Development/Other
-Requires: %name%soname = %version-%release
+Requires: %name = %version-%release
 
-%description -n libpaper-devel
-This package contains headers and libraries that programmers will need
-to develop applications which use libpaper.
-
+%description devel
+Header files for %name library.
+%endif
 
 %prep
 %setup
+#patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
+%autoreconf
 %configure --disable-static
+# Disable rpath
+#sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+#sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %make_build
 
 %install
 %makeinstall_std
-%find_lang libpaper
+rm %buildroot%_libdir/*.la
+mkdir -p %buildroot%_sysconfdir
+echo '# Simply write the paper name. See papersize(5) for possible values' > %buildroot%_sysconfdir/papersize
+mkdir -p %buildroot%_sysconfdir/libpaper.d
+for i in cs da de es fr gl hu it ja nl pt_BR sv tr uk vi; do
+    mkdir -p %buildroot%_datadir/locale/$i/LC_MESSAGES/;
+    msgfmt debian/po/$i.po -o %buildroot%_datadir/locale/$i/LC_MESSAGES/%name.mo;
+done
+%find_lang %name
 
-%files -n libpaper%soname
-%_docdir/libpaper/
-%_docdir/libpaper/README
+%if_without devel
+rm -rv %buildroot%_libdir/libpaper.so
+rm -rv %buildroot%_includedir/paper.h
+rm -rv %buildroot%_man3dir/
+%endif
+
+# drop files (conflict with libpaper2)
+rm -v %buildroot%_bindir/paperconf
+rm -v %buildroot%_sbindir/paperconfig
+
+%files -f %name.lang
+%doc README
+%config(noreplace) %_sysconfdir/papersize
+%dir %_sysconfdir/libpaper.d
 %_libdir/libpaper.so.*
-%_bindir/paperconf
-
-
-%files -n paper
-%_bindir/paper
-%_sysconfdir/paperspecs
 %_man1dir/*
 %_man5dir/*
+%_man8dir/*
 
-%files -n libpaper-devel
-%_includedir/paper.h
+%if_with devel
+%files devel
 %_libdir/libpaper.so
+%_includedir/paper.h
+%_man3dir/*
+%endif
 
 %changelog
-* Mon Jul 10 2023 Mikhail Tergoev <fidel@altlinux.org> 2:2.1.1-alt1
-- new version 2.1.1 (with rpmgs script)
-- build as libpaper2
+* Wed Jul 19 2023 Mikhail Tergoev <fidel@altlinux.org> 1.1.28-alt2
+- build as libpaper1
+- drop devel package, paperconf and paperconfig
 
 * Sat Oct 03 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.28-alt1
 - new version 1.1.28 (with rpmrb script)

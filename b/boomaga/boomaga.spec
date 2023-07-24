@@ -1,6 +1,6 @@
 Name: boomaga
 Version: 3.0.0
-Release: alt1.1
+Release: alt1.2
 Group: System/Configuration/Printing
 License: GPLv2 and LGPLv2+
 
@@ -18,7 +18,7 @@ Requires(pre): cups-filters
 Requires(pre): foomatic-db
 Requires: libsnappy
 Requires(preun): cups-common
-Requires(post): libpaper
+Requires(post): /usr/bin/paperconf
 
 %description
 Boomaga (BOOklet MAnager) is a virtual printer for viewing a document
@@ -89,6 +89,9 @@ lpadmin -x "Boomaga" || :
 %_datadir/%name/translations/*.qm
 
 %changelog
+* Wed Jul 19 2023 Mikhail Tergoev <fidel@altlinux.org> 3.0.0-alt1.2
+- NMU: replacement BR libpaper to /usr/bin/paperconf
+
 * Sun May 31 2020 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1.1
 - FTBFS: fix build by strictly set DEF_CUPS_BACKEND_DIR (see ALT bug 38564)
 
