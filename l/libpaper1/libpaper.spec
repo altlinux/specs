@@ -3,7 +3,7 @@
 
 Name: libpaper%soname
 Version: 1.1.28
-Release: alt3
+Release: alt4
 
 Summary: Library and tools for handling papersize
 
@@ -34,7 +34,7 @@ immediately integrate.
 Summary: Library for handling papersize
 Group: System/Legacy libraries
 Provides: libpaper1 = %EVR
-Obsoletes: libpaper1 = %EVR
+Obsoletes: libpaper1 < %EVR
 
 %description -n libpaper
 The paper library and accompanying files are intended to provide a simple
@@ -109,6 +109,10 @@ rm -v %buildroot%_sbindir/paperconfig
 %endif
 
 %changelog
+* Mon Jul 24 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.28-alt4
+- NMU: libpaper: fixed the 'Obsoletes: libpaper1' tag introduced in the
+  previous release to cover all possible versions of libpaper1.
+
 * Mon Jul 24 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.28-alt3
 - NMU:
   - Reverted the libpaper1 package name to libpaper to prevent an unnecessary
