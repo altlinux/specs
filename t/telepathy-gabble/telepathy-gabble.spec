@@ -1,9 +1,11 @@
 %define _libexecdir %_prefix/libexec
+%define ac_ver 2.60
+
 %def_disable check
 
 Name: telepathy-gabble
 Version: 0.18.4
-Release: alt3
+Release: alt4
 
 Summary: Jabber/XMPP connection manager
 License: LGPL-2.1 and MIT
@@ -23,9 +25,12 @@ Requires: ca-certificates
 Requires: typelib(Gtk) = 3.0
 Requires: typelib(GtkSource) = 3.0
 
+%define ac_ver 2.60
+%set_autoconf_version %ac_ver
+BuildRequires: autoconf_%{ac_ver}
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildPreReq: libtelepathy-glib-devel >= %telepathy_glib_ver
-BuildPreReq: libgio-devel >= %glib_ver
+BuildRequires: libtelepathy-glib-devel >= %telepathy_glib_ver
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libdbus-devel libdbus-glib-devel libxml2-devel libnice-devel
 BuildRequires: libsoup-devel xsltproc libsqlite3-devel libgnutls-devel libgcrypt-devel gtk-doc
 BuildRequires: python3-module-twisted-words python3-module-xmpp
@@ -82,6 +87,9 @@ with Jabber/XMPP servers, including Google Talk.
 %exclude %_libdir/telepathy/gabble-0/*/*.la
 
 %changelog
+* Mon Jul 24 2023 Yuri N. Sedunov <aris@altlinux.org> 0.18.4-alt4
+- rebuilt with autoconf-2.60
+
 * Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 0.18.4-alt3
 - more python3 fixes from fedora
 
