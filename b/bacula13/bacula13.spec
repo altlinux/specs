@@ -14,7 +14,7 @@
 
 Name: bacula%{bacula_major}
 Version: %{bacula_major}.0.3
-Release: alt2
+Release: alt3
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -45,7 +45,7 @@ Patch3: bacula-9.4.0-fedora-seg-fault.patch
 Patch4: bacula11-alt-fix-logrotate.patch
 Patch2000: bacula11-e2k.patch
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ autoconf_2.60
 BuildRequires: libMySQL-devel postgresql-devel
 BuildRequires: libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel zlib-devel
 BuildRequires: liblz4-devel liblzo2-devel
@@ -467,6 +467,7 @@ rm -f src/lib/lz4.{c,h}
 
 %build
 export MTX=%_sbindir/mtx
+export AUTOCONF_VERSION=2.60
 
 # Regenerate configure
 pushd autoconf
@@ -926,6 +927,9 @@ rm -rf %_cachedir/baculum/runtime/*
 %endif
 
 %changelog
+* Mon Jul 24 2023 Alexei Takaseev <taf@altlinux.org> 13.0.3-alt3
+- Use autoconf_2.60
+
 * Wed Jul 05 2023 Alexei Takaseev <taf@altlinux.org> 13.0.3-alt2
 - Fix use old cache data from %_cachedir/baculum/assets and
   %_cachedir/baculum/runtime after update.
