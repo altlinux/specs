@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230705
+Version: 20230714
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,27 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Jul 24 2023 Cronbuild Service <cronbuild@altlinux.org> 20230714-alt1
+- upstream changes (GIT 59fbffa9):
+  + amdgpu: update VCN 4.0.0 firmware (thx Alex Deucher)
+  + amdgpu: add initial SMU 13.0.10 firmware (thx Alex Deucher)
+  + amdgpu: add initial SDMA 6.0.3 firmware (thx Alex Deucher)
+  + amdgpu: add initial PSP 13.0.10 firmware (thx Alex Deucher)
+  + amdgpu: add initial GC 11.0.3 firmware (thx Alex Deucher)
+  + Update AMD fam17h cpu microcode (thx John Allen)
+  + Update AMD cpu microcode (thx John Allen)
+  + amdgpu: update green sardine VCN firmware (thx Alex Deucher)
+  + amdgpu: update renoir VCN firmware (thx Alex Deucher)
+  + amdgpu: update raven VCN firmware (thx Alex Deucher)
+  + amdgpu: update raven2 VCN firmware (thx Alex Deucher)
+  + amdgpu: update Picasso VCN firmware (thx Alex Deucher)
+  + amdgpu: update DMCUB to v0.0.175.0 for various AMDGPU ASICs (thx Alan Liu)
+  + wfx: update to firmware 3.16.1 (thx J?r?me Pouiller)
+  + mediatek: Update mt8195 SCP firmware to support 10bit mode (thx Yunfei Dong)
+  + i915: update DG2 GuC to v70.8.0 (thx Daniele Ceraolo Spurio)
+  + i915: update to GuC 70.8.0 and HuC 8.5.1 for MTL (thx Daniele Ceraolo Spurio)
+  + cirrus: Add CS35L41 firmware for ASUS ROG 2023 Models (thx Stefan Binding)
+
 * Tue Jul 11 2023 Cronbuild Service <cronbuild@altlinux.org> 20230705-alt1
 - upstream changes (GIT d3f66064):
   + Partially revert "amdgpu: DMCUB updates for DCN 3.1.4 and 3.1.5" (thx Hamza Mahfooz)
