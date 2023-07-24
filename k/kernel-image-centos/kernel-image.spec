@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 340
+%define centos_release 344
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -643,6 +643,63 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jul 24 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.344-alt1.el9
+- Updated to kernel-5.14.0-344.el9 (fixes: CVE-2023-3212):
+  + ALSA: Add audio support for Dell SKU 0BDA and 0B34
+  + IPv6: 9.3 P2 backports from upstream
+  + MLX4 driver upgrade - kernel v6.3
+  + Merge commit '9db75894fd7f696bbfe39887bb50e6782c0d073c' from documentation
+  + Merge remote-tracking branch 'origin/merge-requests/2571' into arm9.3.1
+  + Monitor lost after replug WD19TBS to SUT port wiith VGA/DVI to type-C dongle
+  + Revert "wifi: mark the support for WiFi on aarch64 architecture as tech preview"
+  + SEV-SNP Guest Support Updates
+  + Update RHEL9.3 USB And Thunderbolt to linux_v6.3
+  + Update drivers/power in order to support Arm SystemReady IR platforms
+  + [RHEL for Edge] enable SERIAL_TEGRA UART
+  + amd-pstate: take select fixes
+  + arm64: rebase arm core code to upstream v6.3
+  + backport the JOBCTL_TRACED changes to reconcile CONFIG_PREEMPT_RT with ptrace
+  + cgroup: Update cgroup code base to v6.2
+  + cgroup: cgroup-v1: do not exclude cgrp_dfl_root
+  + clk: imx: updates
+  + drivers/perf: update arm PMU drivers to upstream v6.3
+  + drivers: net: can: Add updates to ensure drivers/net/can fully supports SystemReady IR
+  + dt-bindings: can: fsl,flexcan: add imx93 compatible
+  + dt-bindings: gpio: Remove FSI domain ports on Tegra234
+  + ext4: allow concurrent unaligned dio overwrites
+  + gfs2: Don't deref jdesc in evict
+  + igb: Driver Update
+  + input/hid subsystem rebase to v6.3
+  + kernfs: switch global kernfs_rwsem lock to per-fs lock
+  + mptcp: phase-2 backports for RHEL-9.3
+  + net/other: phase-2 backports for RHEL-9.3
+  + net/sched: phase-2 backports for RHEL-9.3
+  + net: backport macsec fixes from upstream
+  + net: openvswitch: add support for l4 symmetric hashing
+  + net: openvswitch: fix upcall counter access before allocation
+  + net: tunnels: Backport upstream fixes to RHEL 9.
+  + netfilter: backport fixes from upstream
+  + netfilter: conntrack: allow insertion clash of gre protocol
+  + nvme-pci: clamp max_hw_sectors based on DMA optimized limitation
+  + nvme-pci: fix DMA direction of unmapping integrity data
+  + pinctrl: amd: update to upstream
+  + redhat/configs: enable CONFIG_MEDIA_SUPPORT for RHEL on aarch64
+  + redhat/configs: turn on i.MX8MP interconnect driver
+  + redhat: make libperf-devel require libperf %{version}-%{release}
+  + scsi: sd: Add "probe_type" module parameter to allow synchronous probing
+  + seccomp: Move copy_seccomp() to no failure path.
+  + sfc: fix XDP queues mode with legacy IRQ
+  + soc/tegra: pmc: Support software wake-up for SPE, PMIC and MGBE
+  + soc: imx: gpcv2: driver updates
+  + tipc: backports from upstream, 2nd phase
+  + tls: backport fixes from upstream
+  + update drivers/base to Linux v6.3
+  + writeback: fix dereferencing NULL mapping->host on writeback_page_template
+  + wwan: enable iosm driver
+  + x86/retbleed: Call depth tracking mitigation
+  + xfs-dax: followup to xfs-dax sync to v6.0
+  + Various changes and improvements that are poorly described in merge.
+
 * Tue Jul 18 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.340-alt1.el9
 - Updated to kernel-5.14.0-340.el9 (fixes: CVE-2023-3161):
   + Add PMT support for MTL-P
