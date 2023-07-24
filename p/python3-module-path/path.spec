@@ -4,36 +4,26 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 16.6.0
+Version: 16.7.1
 Release: alt1
-
 Summary: A module wrapper for os.path
 License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/path/
 VCS: https://github.com/jaraco/path
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
-%if_with check
-BuildRequires: python3(appdirs)
-BuildRequires: python3(packaging)
-BuildRequires: python3(pytest)
-%endif
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 %py3_provides %pypi_name
 Provides: python3-module-path.py = %EVR
 Obsoletes: python3-module-path.py < %EVR
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra testing
+%endif
 
 %description
 path implements a path objects as first-class entities, allowing
@@ -42,16 +32,9 @@ common operations on files to be invoked on those path objects directly.
 %prep
 %setup
 %patch -p1
-
-# if build from git source tree
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
-git init
-git config user.email author@example.com
-git config user.name author
-git add .
-git commit -m 'release'
-git tag '%version'
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -60,7 +43,7 @@ git tag '%version'
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc *.rst
@@ -68,6 +51,9 @@ git tag '%version'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 21 2023 Stanislav Levin <slev@altlinux.org> 16.7.1-alt1
+- 16.6.0 -> 16.7.1.
+
 * Thu Dec 01 2022 Stanislav Levin <slev@altlinux.org> 16.6.0-alt1
 - 16.5.0 -> 16.6.0.
 
