@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.10
+Version: 1.11
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -56,6 +56,10 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Jul 24 2023 Vitaly Chikunov <vt@altlinux.org> 1.11-alt1
+- Fix incorrect apt database oldness message when apt-conf-tmp-cache is used
+  (ALT#46987).
+
 * Mon Jun 19 2023 Vitaly Chikunov <vt@altlinux.org> 1.10-alt1
 - Add '-u' to run 'apt-get update' automatically.
 
