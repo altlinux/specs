@@ -1,28 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 %define oname elementpath
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 4.1.2
+Version: 4.1.4
 Release: alt1
 
 Summary: XPath 1.0 and 2.0 selectors for Python's ElementTree XML data
+
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/elementpath/
+URL: https://pypi.org/project/elementpath
+VCS: https://github.com/sissaschool/elementpath
 
-BuildArch: noarch
-
-# Source-git: https://github.com/sissaschool/elementpath
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3(lxml)
-BuildRequires: python3(tox)
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-lxml
 %endif
+
+BuildArch: noarch
 
 %description
 %oname provides XPath 1.0 and 2.0 selectors for Python's ElementTree XML data
@@ -32,28 +35,26 @@ library.
 %prep
 %setup
 
-# break circle dependencies during testing
-# note: xmlschema requires elementpath for testing too
-grep -qsF 'xmlschema' tox.ini || exit 1
-sed -i '/xmlschema/d' tox.ini
-
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-LANG=en_US.utf8 tox.py3 --sitepackages -vr -p auto -o
+# test_validate_json_to_xml and test_validate_analyzed_string needs xmlschema
+%pyproject_run_pytest -k"not test_validate_json_to_xml and \
+                         not test_validate_analyzed_string"
 
 %files
 %doc LICENSE README.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jul 24 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.4-alt1
+- Automatically updated to 4.1.4.
+
 * Sat Apr 29 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.2-alt1
 - Automatically updated to 4.1.2.
 
