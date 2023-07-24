@@ -19,7 +19,7 @@
 
 Name: %{_name}2
 Version: 2.10.0
-Release: alt1
+Release: alt2
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -32,6 +32,7 @@ Source: https://github.com/storaged-project/%_name/releases/download/%_name-%ver
 Source: %_name-%version.tar
 %endif
 Source1: %name.control
+Patch10: udisks-2.10.0-up-empty_loop_devices.patch
 
 Obsoletes: %_name
 
@@ -170,6 +171,7 @@ This package contains UDisks module for iSCSI configuration.
 
 %prep
 %setup -n %_name-%version
+%patch10 -p1
 
 %build
 %autoreconf
@@ -289,6 +291,10 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Mon Jul 24 2023 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt2
+- applied upstream fix:
+  "udiskslinuxloop: Avoid warnings on empty loop devices"
+
 * Thu Jun 29 2023 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
 - 2.10.0
 
