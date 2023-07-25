@@ -1,13 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define pypi_name Markdown
 %define modname markdown
+%define ver_major 3.4
 
 %def_enable check
 
 Name: python3-module-%modname
-Version: 3.4.3
-Release: alt1.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
 Group: Development/Python3
@@ -74,8 +75,12 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %_bindir/%{modname}_py3
 %python3_sitelibdir/%modname/
 %python3_sitelibdir/%pypi_name-%version.dist-info
+%doc README* docs/change_log/release-%ver_major.*
 
 %changelog
+* Tue Jul 25 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
+- 3.4.4
+
 * Thu May 04 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1.1
 - removed python3-module-nose from BR (ALT #46065)
 
