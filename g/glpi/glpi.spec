@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.7
+Version: 10.0.9
 Release: alt1
 
 Summary: IT and asset management software
@@ -37,24 +37,13 @@ Requires: %name = %version-%release, apache2
 %description apache2
 Apache 2.x web-server configuration for %name
 
-%package php7
-Summary: PHP7 dependencies for %name
-Group: Networking/Other
-Requires: %name = %version-%release
-Requires: php7 >= 7.4
-Requires: php7-curl, php7-fileinfo, php7-gd2, php7-json, php7-mbstring, php7-mysqlnd-mysqli, php7-session, php7-zlib, php7-simplexml, php7-xml, php7-intl
-Requires: php7-apcu, php7-bz2, php7-exif, php7-ldap, php7-opcache, php7-openssl, php7-sodium, php7-xmlrpc, php7-zip
-
-%description php7
-PHP7 dependencies for %name
-
 %package php8.0
 Summary: PHP8.0 dependencies for %name
 Group: Networking/Other
 Requires: %name = %version-%release
 Requires: php8.0
-Requires: php8.0-curl, php8.0-fileinfo, php8.0-gd2, php8.0-json, php8.0-mbstring, php8.0-mysqlnd-mysqli, php8.0-session, php8.0-zlib, php8.0-simplexml, php8.0-xml, php8.0-intl
-Requires: php8.0-apcu, php8.0-bz2, php8.0-exif, php8.0-ldap, php8.0-opcache, php8.0-openssl, php8.0-sodium, php8.0-xmlrpc, php8.0-zip
+Requires: php8.0-curl, php8.0-fileinfo, php8.0-gd2, php8.0-json, php8.0-mbstring, php8.0-mysqlnd-mysqli, php8.0-session, php8.0-zlib, php8.0-intl
+Requires: php8.0-bz2, php8.0-exif, php8.0-ldap, php8.0-opcache, php8.0-openssl, php8.0-sodium, php8.0-xmlreader, php8.0-zip
 
 %description php8.0
 php8.0 dependencies for %name
@@ -64,8 +53,8 @@ Summary: PHP8.1 dependencies for %name
 Group: Networking/Other
 Requires: %name = %version-%release
 Requires: php8.1
-Requires: php8.1-curl, php8.1-fileinfo, php8.1-gd2, php8.1-json, php8.1-mbstring, php8.1-mysqlnd-mysqli, php8.1-session, php8.1-zlib, php8.1-simplexml, php8.1-xml, php8.1-intl
-Requires: php8.1-apcu, php8.1-bz2, php8.1-exif, php8.1-ldap, php8.1-opcache, php8.1-openssl, php8.1-sodium, php8.1-zip
+Requires: php8.1-curl, php8.1-fileinfo, php8.1-gd2, php8.1-json, php8.1-mbstring, php8.1-mysqlnd-mysqli, php8.1-session, php8.1-zlib, php8.1-intl
+Requires: php8.1-bz2, php8.1-exif, php8.1-ldap, php8.1-opcache, php8.1-openssl, php8.1-sodium, php8.0-xmlreader, php8.1-zip
 
 %description php8.1
 php8.1 dependencies for %name
@@ -75,8 +64,8 @@ Summary: PHP8.2 dependencies for %name
 Group: Networking/Other
 Requires: %name = %version-%release
 Requires: php8.2
-Requires: php8.2-curl, php8.2-fileinfo, php8.2-gd2, php8.2-json, php8.2-mbstring, php8.2-mysqlnd-mysqli, php8.2-session, php8.2-zlib, php8.2-simplexml, php8.2-xml, php8.2-intl
-Requires: php8.2-apcu, php8.2-bz2, php8.2-exif, php8.2-ldap, php8.2-opcache, php8.2-openssl, php8.2-sodium, php8.2-zip
+Requires: php8.2-curl, php8.2-fileinfo, php8.2-gd2, php8.2-json, php8.2-mbstring, php8.2-mysqlnd-mysqli, php8.2-session, php8.2-zlib, php8.2-intl
+Requires: php8.2-bz2, php8.2-exif, php8.2-ldap, php8.2-opcache, php8.2-openssl, php8.2-sodium, php8.0-xmlreader, php8.2-zip
 
 %description php8.2
 php8.2 dependencies for %name
@@ -184,8 +173,6 @@ fi
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
-%files php7
-
 %files php8.0
 
 %files php8.1
@@ -193,6 +180,25 @@ fi
 %files php8.2
 
 %changelog
+* Thu Jul 13 2023 Pavel Zilke <zidex@altlinux.org> 10.0.9-alt1
+- New version 10.0.9
+- This release fixes several security issues that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2023-37278 : SQL injection in dashboard administration
+- Deleted glpi-php7
+
+* Thu Jul 13 2023 Pavel Zilke <zidex@altlinux.org> 10.0.8-alt1
+- New version 10.0.8
+- This release fixes several security issues that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2023-35924 : SQL injection via inventory agent request
+ + CVE-2023-36808 : SQL injection through Computer Virtual Machine information
+ + CVE-2023-35939 : Unauthorized access to Dashboard data
+ + CVE-2023-35940 : Unauthenticated access to Dashboard data
+ + CVE-2023-34244 : Reflected XSS in search pages
+ + CVE-2023-34107 : Unauthorized access to knowledge base items
+ + CVE-2023-34106 : Unauthorized access to user data
+
 * Sat May 13 2023 Pavel Zilke <zidex@altlinux.org> 10.0.7-alt1
 - New version 10.0.7
 - This release fixes several security issues that has been recently discovered. Update is recommended!
