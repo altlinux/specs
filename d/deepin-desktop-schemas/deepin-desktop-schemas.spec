@@ -1,28 +1,24 @@
 Name: deepin-desktop-schemas
-Version: 6.0.2
+Version: 6.0.3
 Release: alt1
+
 Summary: GSettings deepin desktop-wide schemas
+
 License: GPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-desktop-schemas
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Source1: vendor.tar
 Patch: deepin-desktop-schemas-5.9.16-default-value-for-timeout-lockscreen.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: python3
-BuildRequires: glib2
-BuildRequires: libgio
-BuildRequires: golang-deepin-api-devel
+Requires: gnome-backgrounds icon-theme-deepin gtk-theme-deepin dconf gsettings-desktop-schemas
 # Requires: deepin-sound-theme
-Requires: gnome-backgrounds
-Requires: icon-theme-deepin
-Requires: gtk-theme-deepin
-Requires(post): dconf gsettings-desktop-schemas
-Requires(postun): dconf gsettings-desktop-schemas
+
+BuildRequires(pre): rpm-build-golang
+BuildRequires: python3 glib2 libgio
 
 %description
 %summary.
@@ -31,18 +27,19 @@ Requires(postun): dconf gsettings-desktop-schemas
 %setup
 %patch -p1
 
-sed -i 's|adwaita-lock.jpg|adwaita-night.jpg|' \
+sed -i 's|adwaita-lock.jpg|adwaita-l.webp|' \
     schemas/wrap/com.deepin.wrap.gnome.desktop.screensaver.gschema.xml
-# sed -i 's|python|python3|' Makefile tools/overrides.py
-sed -i 's|uos-browser|chromium-browser|' \
-    overrides/common/*/*.override \
-    schemas/com.deepin.dde.dock.gschema.xml
 # fix network checker url
 sed -i "s|'http://detect.uniontech.com', 'http://detectportal.deepin.com'|'https://en.altlinux.org'|" \
     schemas/com.deepin.dde.network-utils.gschema.xml
+# Unpacked vendor/ into the source (used .gear/tags).
+tar -xf %SOURCE1
+# Fix paths in golang submodules.
+sed -i 's|/usr/share/locale/locale.alias|%_datadir/X11/locale/locale.alias|' \
+    vendor/github.com/linuxdeepin/go-lib/locale/locale.go
 
 %build
-export GOPATH="%go_path/src/github.com/linuxdeepin/dde-api/vendor:%go_path"
+export GOPATH="$PWD/vendor:%go_path"
 export SYSTYPE=Desktop
 %make_build ARCH=%_arch
 
@@ -51,22 +48,9 @@ export SYSTYPE=Desktop
 cp -a \
     %buildroot%_datadir/deepin-desktop-schemas/server-override \
     %buildroot%_datadir/glib-2.0/schemas/91_deepin_product.gschema.override
-
-# force change the value of the "Lock screen after" variable
-mkdir -p %buildroot%_sysconfdir/dconf/profile
-
-cat > %buildroot%_sysconfdir/dconf/profile/user <<EOF
-user-db:user
-system-db:local
-EOF
-
-mkdir -p %buildroot%_sysconfdir/dconf/db/local.d
-
-cat > %buildroot%_sysconfdir/dconf/db/local.d/01-deepin-disable-timeout-lockscreen <<EOF
-[com/deepin/dde/power]
-line-power-lock-delay=0
-battery-lock-delay=0
-EOF
+# Remove unneeded schemas.
+rm -rf %buildroot%_datadir/deepin-app-store/
+rm -rf %buildroot%_datadir/deepin-appstore/
 
 %check
 make test
@@ -78,16 +62,17 @@ dconf update
 dconf update
 
 %files
-%doc README.md
-%doc LICENSE
+%doc README.md LICENSE
 %_datadir/glib-2.0/schemas/*
 %_datadir/%name/
-%exclude %_datadir/deepin-app-store/
-%exclude %_datadir/deepin-appstore/
-%_sysconfdir/dconf/profile/user
-%_sysconfdir/dconf/db/local.d/01-deepin-disable-timeout-lockscreen
 
 %changelog
+* Tue Jul 25 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.3-alt1
+- New version 6.0.3.
+- NMU:
+  + Used independent golang submodules instead deepin-api.
+  + Cleanup spec.
+
 * Mon Feb 06 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.2-alt1
 - New version (6.0.2).
 
