@@ -2,7 +2,7 @@
 %define		_rc	rc8
 Name:		aMule
 Version:	2.3.3
-Release:	alt3
+Release:	alt4
 
 Summary:	aMule - eMule client.
 License:	GPL
@@ -16,7 +16,7 @@ Source:		%_name-%version.tar.gz
 Conflicts:	xmule
 
 # Automatically added by buildreq on Mon Jun 16 2008
-BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK3.0-devel xorg-cf-files
+BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK3.0-devel xorg-cf-files autoconf_2.60
 BuildRequires: libcryptopp-devel >= 6
 BuildRequires: libupnp-devel binutils-devel libcurl-devel libtool bison libexpat-devel
 
@@ -40,6 +40,7 @@ for multiplatform support.
 %build
 #set_gcc_version 4.9
 ##export CC=gcc-4.9 CXX=g++-4.9
+export AUTOCONF_VERSION=2.60
 export CXXFLAGS="%{optflags} -std=c++14"
 
 ./autogen.sh
@@ -77,6 +78,9 @@ export CXXFLAGS="%{optflags} -std=c++14"
 %dir %_docdir/amule
 
 %changelog
+* Tue Jul 25 2023 Artyom Bystrov <arbars@altlinux.org> 2.3.3-alt4
+- Use autoconf_2.60
+
 * Tue Apr 26 2022 Anton Midyukov <antohami@altlinux.org> 2.3.3-alt3
 - build with stable wxGTK3.0
 
