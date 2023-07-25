@@ -2,28 +2,18 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.28.17
-Release: alt1
+Version: 2.0
+Release: alt0.rc2
 
 Summary: OpenPrinting CUPS filters and backends
-# For a breakdown of the licensing, see COPYING file
-# GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
-#                   imagetopdf, pstopdf, texttopdf
-#         backends: parallel, serial
-# GPLv2+:  filters: textonly, texttops, imagetops
-# GPLv3:   filters: bannertopdf
-# MIT:     filters: pdftoijs, pdftoopvp, pdftopdf, pdftoraster
 License: GPLv2 and GPLv2+ and GPLv3 and MIT
 Group: System/Servers
 
 Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_standard_print_job_format
 Source0: http://www.openprinting.org/download/cups-filters/cups-filters-%version.tar
 Source1: %name.watch
-Source2: cups-browsed.init
 Source3: default-testpage.pdf
 Patch0: %name-alt.patch
-Patch1: %name-braille-indexv4-path.patch
-Patch2: %name-pjl-as-ps.patch
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
 Obsoletes: ghostscript-cups
@@ -32,50 +22,14 @@ Obsoletes: foomatic-filters
 Provides: foomatic-filters
 Conflicts: foomatic-filters
 
-BuildRequires: cups-devel
-BuildRequires: libexif-devel
-BuildRequires: libdbus-devel
-BuildRequires: libldap-devel
-# pdftopdf
-BuildRequires: libqpdf-devel >= 8.1.0
-# pdftops
-BuildRequires: poppler-utils
-# pdftoijs, pdftoopvp, pdftoraster
-BuildRequires: libpoppler-devel libpoppler-cpp-devel
-BuildRequires: libjpeg-devel
-BuildRequires: libpng-devel
-BuildRequires: libtiff-devel
-BuildRequires: gcc-c++
-BuildRequires: zlib-devel
-BuildRequires: libijs-devel
-BuildRequires: glib2-devel
-BuildRequires: libgs-devel
-BuildRequires: libfreetype-devel
-BuildRequires: fontconfig-devel
-BuildRequires: liblcms2-devel
-BuildRequires: libgio-devel
-BuildRequires: libavahi-devel libavahi-glib-devel
-# for tests
-BuildRequires: fonts-ttf-dejavu
-
-# Make sure we get postscriptdriver tags.
-BuildRequires: python3-module-cups
-
 Requires: poppler-utils
 Requires: /usr/bin/gs
 
-%package libs
-Summary: OpenPrinting CUPS filters and backends - cupsfilters and fontembed libraries
-Group: System/Libraries
-# LGPLv2: libcupsfilters
-# MIT:    libfontembed
-License: LGPLv2 and MIT
-
-%package devel
-Summary: OpenPrinting CUPS filters and backends - development environment
-Group: Development/C
-License: LGPLv2 and MIT
-Requires: cups-filters-libs = %version-%release
+BuildRequires: libgtk+3-devel
+BuildRequires: libppd-devel
+BuildRequires: libavahi-devel
+Provides: cups-backend-serial = %EVR
+Obsoletes: cups-backend-serial = %EVR
 
 %description
 Contains backends, filters, and other software that was
@@ -84,45 +38,21 @@ Apple Inc. In addition it contains additional filters developed
 independently of Apple, especially filters for the PDF-centric printing
 workflow introduced by OpenPrinting.
 
-%description libs
-This package provides cupsfilters and fontembed libraries.
-
-%description devel
-This is the development package for OpenPrinting CUPS filters and backends.
-
-
-%package -n cups-backend-serial
-Epoch: 1
-Summary: serial backend for cups
-License: GPLv2
-Group: System/Servers
-
-%description -n cups-backend-serial
-serial backend for cups
 
 %prep
 %setup
 %patch0 -p2
-%patch1 -p2
-%patch2 -p2
 
 %build
 ./autogen.sh
 
-# --with-pdftops=pdftops - use Poppler instead of Ghostscript (see README)
 %configure --disable-static \
-           --disable-silent-rules \
+	   --disable-silent-rules \
+	   --disable-rpath \
 	   --disable-mutool \
-	   --without-php \
-	   --with-rcdir=no \
 	   --enable-driverless \
-	   --enable-pclm \
-	   --enable-auto-setup-driverless-only \
-	   --with-gs-path=/usr/bin/gs \
-	   --enable-dbus \
-	   --with-test-font-path=/usr/share/fonts/ttf/dejavu/DejaVuSans.ttf \
-	   --with-pdftops=hybrid
-
+           --enable-universal-cups-filter \
+	   #
 %make
 
 %check
@@ -130,67 +60,45 @@ make check
 
 %install
 %make install DESTDIR=%buildroot
-install -D -m 755 %SOURCE2 %buildroot/%_initdir/cups-browsed
-mkdir -p %buildroot/%_unitdir/
-install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
-ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
+ln -sf ../lib/cups/filter/universal %buildroot/%_bindir/foomatic-rip
 rm -rf %buildroot%_docdir/%name
+mkdir -p %buildroot/%_datadir/cups/data/
 install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 
 
 %files
-%doc README AUTHORS NEWS
-%config(noreplace) %_sysconfdir/cups/cups-browsed.conf
-%config(noreplace) %_initdir/cups-browsed
+%doc README.md AUTHORS NEWS
 %attr(0755,root,root) %_cups_serverbin/filter/*
 %attr(0755,root,root) %_cups_serverbin/driver/*
 %attr(0755,root,root) %_cups_serverbin/backend/parallel
 %attr(0755,root,root) %_cups_serverbin/backend/beh
-%attr(0755,root,root) %_cups_serverbin/backend/implicitclass
 %attr(0755,root,root) %_cups_serverbin/backend/driverless
 %attr(0755,root,root) %_cups_serverbin/backend/driverless-fax
-%attr(0755,root,root) %_cups_serverbin/backend/cups-brf
-%_datadir/cups/banners
-%_datadir/cups/charsets
-%_datadir/cups/braille
+%attr(0700,root,root) %_cups_serverbin/backend/serial
 %_datadir/cups/data/*
-%_datadir/cups/ppdc/*
 %_datadir/cups/drv/cupsfilters.drv
-%_datadir/cups/drv/generic-brf.drv
-%_datadir/cups/drv/generic-ubrl.drv
-%_datadir/cups/drv/indexv3.drv
-%_datadir/cups/drv/indexv4.drv
-%_datadir/cups/mime/braille.types
-%_datadir/cups/mime/braille.convs
 %_datadir/cups/mime/cupsfilters.types
 %_datadir/cups/mime/cupsfilters.convs
-%_datadir/cups/mime/cupsfilters-poppler.convs
-%_datadir/cups/mime/cupsfilters-ghostscript.convs
+%_datadir/cups/mime/cupsfilters-universal-postscript.convs
+%_datadir/cups/mime/cupsfilters-universal.convs
+%_datadir/ppdc/escp.h
+%_datadir/ppdc/pcl.h
 %_datadir/ppd/cupsfilters
 %_bindir/foomatic-rip
 %_bindir/driverless
 %_bindir/driverless-fax
-%_sbindir/cups-browsed
 %_datadir/man/man*/*
-%_unitdir/*
-
-%files -n cups-backend-serial
-%attr(0700,root,root) %_prefix/lib/cups/backend/serial
-
-%files libs
-%doc COPYING fontembed/README
-%attr(0755,root,root) %_libdir/libcupsfilters.so.*
-%attr(0755,root,root) %_libdir/libfontembed.so.*
-
-%files devel
-%_includedir/cupsfilters
-%_includedir/fontembed
-%_libdir/pkgconfig/libcupsfilters.pc
-%_libdir/pkgconfig/libfontembed.pc
-%_libdir/libcupsfilters.so
-%_libdir/libfontembed.so
 
 %changelog
+* Mon Jul 24 2023 Anton Farygin <rider@altlinux.ru> 2.0-alt0.rc2
+- update to 2.0rc2
+
+* Mon Jun 19 2023 Anton Farygin <rider@altlinux.ru> 2.0-alt0.rc1
+- 2.0rc1
+- fix remote code execution in beh backend (Fixes: CVE-2023-24805)
+- include cups-backend-serial into main package
+- removed devel and libs subpackages (split by upstream)
+
 * Mon Feb 27 2023 Anton Farygin <rider@altlinux.ru> 1.28.17-alt1
 - 1.28.17
 
