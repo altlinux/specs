@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Perl-PrereqScanner
 
 Name: perl-Perl-PrereqScanner
-Version: 1.025
+Version: 1.100
 Release: alt1
 
 Summary: a tool to scan Perl code for its prerequisites
@@ -20,9 +20,9 @@ AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
 
-# Automatically added by buildreq on Sun Jul 11 2021
-# optimized out: perl perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Class-Load perl-Clone perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Encode perl-Eval-Closure perl-IO-String perl-JSON-PP perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-PPI perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-clean perl-parent perl-podlators python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4
-BuildRequires: perl-CPAN-Meta perl-Getopt-Long-Descriptive perl-Module-Path perl-Moose perl-PPI-XS perl-String-RewritePrefix perl-namespace-autoclean
+# Automatically added by buildreq on Tue Jul 25 2023
+# optimized out: libgpg-error perl perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Clone perl-Data-OptList perl-Encode perl-Exporter-Tiny perl-Getopt-Long-Descriptive perl-JSON-PP perl-Module-Implementation perl-Module-Runtime perl-Moo perl-PPI perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-Role-Tiny perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Quote perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-clean perl-parent perl-podlators python-modules python2-base python3-base sh4
+BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Module-Path perl-PPI-XS perl-Ref-Util-XS perl-String-RewritePrefix perl-Type-Tiny perl-namespace-autoclean
 
 BuildRequires: perl-podlators
 
@@ -51,6 +51,9 @@ The extraction may not be perfect but tries to do its best.
 %_man1dir/scan*
 
 %changelog
+* Tue Jul 25 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.100-alt1
+- New version
+
 * Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.025-alt1
 - New version
 
