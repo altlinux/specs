@@ -11,7 +11,7 @@
 
 Name: asterisk
 Version: 17.5.1
-Release: alt2.1
+Release: alt2.2
 
 Summary: Open source PBX
 License: GPLv2
@@ -21,7 +21,7 @@ Url: https://www.asterisk.org/
 Provides: asterisk-base = %version-%release
 Obsoletes: asterisk-base
 
-BuildRequires: curl gcc-c++
+BuildRequires: curl gcc-c++ autoconf_2.60
 BuildRequires: libedit-devel libncurses-devel libuuid-devel libjansson-devel
 BuildRequires: libsqlite3-devel libxml2-devel liburiparser-devel libxslt-devel
 BuildRequires: libpopt-devel libspandsp-devel libfftw3-devel
@@ -122,6 +122,7 @@ sed -i "s/_FORTIFY_SOURCE=2/_FORTIFY_SOURCE=0/" configure{,.ac}
 %endif
 
 %build
+export AUTOCONF_VERSION=2.60
 export EXTERNALS_CACHE_DIR=$(pwd)/.gear
 sh bootstrap.sh
 %configure \
@@ -307,6 +308,9 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Tue Jul 25 2023 Artyom Bystrov <arbars@altlinux.org> 17.5.1-alt2.2
+- Use working version of autoconf
+
 * Thu Jan 27 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 17.5.1-alt2.1
 - fixed build for Elbrus
 
