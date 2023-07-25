@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4
+Version: 0.5
 Release: alt1
 Summary: Editable installations
 License: MIT
@@ -54,6 +54,9 @@ Python, without needing a reinstall.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 25 2023 Stanislav Levin <slev@altlinux.org> 0.5-alt1
+- 0.4 -> 0.5.
+
 * Fri Jul 21 2023 Stanislav Levin <slev@altlinux.org> 0.4-alt1
 - 0.3 -> 0.4.
 
