@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with boost_build
 %def_with devel_static
@@ -48,7 +48,7 @@
 %add_findreq_skiplist  %_datadir/b2/src/tools/doxproc.py
 
 %define ver_maj 1
-%define ver_min 82
+%define ver_min 80
 %define ver_rel 0
 
 %define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
@@ -61,10 +61,10 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 
-Name: boost
+Name: boost%namesuff
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt4
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -74,10 +74,10 @@ Url: https://www.boost.org
 Source: boost-%version.tar
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1190039
-Patch65: boost-1.82.0-fedora-build-optflags.patch
+Patch65: boost-1.80.0-fedora-build-optflags.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1318383
-Patch82: boost-1.82.0-fedora-no-rpath.patch
+Patch82: boost-1.66.0-fedora-no-rpath.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1541035
 Patch83: boost-1.73.0-fedora-b2-build-flags.patch
@@ -85,8 +85,8 @@ Patch83: boost-1.73.0-fedora-b2-build-flags.patch
 # https://lists.boost.org/Archives/boost/2020/04/248812.php
 Patch88: boost-1.73.0-fedora-cmakedir.patch
 
-# https://github.com/boostorg/phoenix/issues/111
-Patch89: boost-1.81.0-upstream-phoenix-fix-uargN.patch
+# https://github.com/boostorg/unordered/issues/139
+Patch89: boost-1.80.0-upstream-unordered-valid-after-move.patch
 
 Patch1000: boost-1.63.0-alt-python-paths.patch
 Patch2000: boost-1.76-e2k-makecontext.patch
@@ -134,8 +134,12 @@ Boost.
 Summary: Boost libraries header files
 Group: Development/C++
 AutoReq: yes, nocpp
-BuildArch: noarch
+
 Requires: %name-devel = %EVR
+%ifnarch aarch64 %arm
+# cf. http://gcc.gnu.org/bugzilla/show_bug.cgi?id=80753
+Requires: libquadmath-devel
+%endif
 
 %description devel-headers
 The Boost web site provides free peer-reviewed portable C++ source
@@ -170,7 +174,6 @@ Requires: libboost_system%version = %EVR
 Requires: libboost_test%version = %EVR
 Requires: libboost_timer%version = %EVR
 Requires: libboost_thread%version = %EVR
-Requires: libboost_url%version = %EVR
 
 Provides: boost-atomic-devel = %EVR
 Obsoletes: boost-atomic-devel < %EVR
@@ -209,13 +212,6 @@ Obsoletes: %name-units-devel < %EVR
 
 Provides: %name-process-devel = %EVR
 Obsoletes: %name-process-devel < %EVR
-
-# See: http://gcc.gnu.org/bugzilla/show_bug.cgi?id=80753
-# Architectures: %%e2k + %%libquadmath_arches
-# from https://git.altlinux.org/gears/g/gcc-defaults.git?a=blob;f=gcc-defaults.spec
-%ifarch %ix86 x86_64 ppc64le %e2k
-Requires: libquadmath-devel
-%endif
 
 
 %description devel
@@ -1212,14 +1208,6 @@ Requires: libboost_thread%version = %EVR
 %description -n libboost_type_erasure%version
 The Boost TypeErasure Library.
 
-%package -n libboost_url%version
-Summary: Boost.TypeErasure Library
-Group: Development/C++
-Provides: boost-url = %EVR
-
-%description -n libboost_url%version
-The Boost URL Library.
-
 %if_with mpi
 %if_with devel
 %package -n python3-module-boost-mpi
@@ -1799,9 +1787,6 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %files -n libboost_type_erasure%version
 %_libdir/*_type_erasure*.so.*
 
-%files -n libboost_url%version
-%_libdir/*_url*.so.*
-
 %if_with mpi
 %if_with devel
 %files -n python3-module-boost-mpi
@@ -1842,15 +1827,9 @@ done
 
 
 %changelog
-* Sat Jul 22 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.82.0-alt2
-- Add patch from upstream github to fix linker errors
-  related to boost::phoenix::placeholders::uargN
-
-* Fri Jul 21 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.82.0-alt1
-- Updated to upstream version 1.82.0
-
-* Fri Jul 21 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.81.0-alt3
-- sync with sisyphus
+* Tue Jul 25 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.80.0-alt4
+- rebuild as compat package without development files
+- apply build fix for mipsel
 
 * Mon Jun 12 2023 Michael Shigorin <mike@altlinux.org> 1:1.80.0-alt3
 - boost-devel-headers R: libquadmath-devel sans ARM (see also gcc#80753)
@@ -1858,9 +1837,6 @@ done
 * Thu May 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.80.0-alt2
 - Added missing bits for LoongArch support (closes: #46181)
 - Added --enable=bootstrap knob for a simpler initial build (closes: #46182)
-
-* Thu Dec 15 2022 Ivan A. Melnikov <iv@altlinux.org> 1:1.81.0-alt1
-- Updated to upstream version 1.81.0
 
 * Fri Sep 09 2022 Ivan A. Melnikov <iv@altlinux.org> 1:1.80.0-alt1
 - Updated to upstream version 1.80.0

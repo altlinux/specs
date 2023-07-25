@@ -52,7 +52,7 @@
 
 Name: ceph
 Version: 17.2.6
-Release: alt3
+Release: alt3.1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1817,6 +1817,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Mon Jul 24 2023 Ivan A. Melnikov <iv@altlinux.org> 17.2.6-alt3.1
+- NMU: fix build with boost 1.82.0.
+
 * Mon May 22 2023 Alexey Shabalin <shaba@altlinux.org> 17.2.6-alt3
 - Add requires python3(routes) to ceph-mgr-dashboard package.
 
