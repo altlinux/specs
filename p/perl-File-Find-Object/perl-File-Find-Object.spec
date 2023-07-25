@@ -3,7 +3,7 @@
 %define real_name File-Find-Object
 
 Name: perl-File-Find-Object
-Version: 0.3.7
+Version: 0.3.8
 Serial: 1
 Release: alt1
 
@@ -52,6 +52,9 @@ the next() function, but setting a callback is still possible.
 %perl_vendor_privlib/File/Find/Object*
 
 %changelog
+* Tue Jul 25 2023 Nikolay A. Fetisov <naf@altlinux.org> 1:0.3.8-alt1
+- New version
+
 * Fri Jan 13 2023 Nikolay A. Fetisov <naf@altlinux.org> 1:0.3.7-alt1
 - New version
 
