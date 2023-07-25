@@ -1,6 +1,6 @@
 Name: qpdfview
-Version: 0.4.18
-Release: alt3
+Version: 0.5
+Release: alt1
 Summary: Tabbed PDF viewer using the poppler library
 License: GPL-2.0-or-later
 Group: Office
@@ -8,8 +8,9 @@ Url: https://launchpad.net/qpdfview
 
 Source: %name-%version.tar
 Patch: qpdfview-0.4.18-fix-build-with-qt5-5.15.patch
+Patch1: qpdfview-desktop.patch
 
-BuildRequires: qt5-tools-devel
+BuildRequires: qt5-tools
 BuildRequires: pkgconfig(poppler-qt5)
 BuildRequires: pkgconfig(Qt5DBus)
 BuildRequires: pkgconfig(Qt5Gui)
@@ -19,6 +20,7 @@ BuildRequires: pkgconfig(ddjvuapi)
 BuildRequires: pkgconfig(libspectre)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: cups-devel
+BuildRequires: desktop-file-utils
 
 Requires: qt5-sql-sqlite
 
@@ -27,7 +29,7 @@ qpdfview is a tabbed PDF viewer using the poppler library.
 
 %prep
 %setup
-%patch -p2
+%autopatch -p2
 
 %build
 lrelease-qt5 qpdfview.pro
@@ -52,16 +54,22 @@ ln -s %_iconsdir/hicolor/scalable/apps/%name.svg \
 %doc CHANGES CONTRIBUTORS README TODO
 %_bindir/*
 %_man1dir/*
-%_desktopdir/*
+%_desktopdir/%name.desktop
 %_datadir/%name
 %_liconsdir/*
 %_miconsdir/*
 %_niconsdir/*
 %_libexecdir/%name
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Tue Jul 25 2023 Anton Midyukov <antohami@altlinux.org> 0.5-alt1
+- new version (0.5) with rpmgs script
+
+* Tue Jul 25 2023 Anton Midyukov <antohami@altlinux.org> 0.4.18-alt4
+- add russian translation to desktop file
+
 * Sat Aug 15 2020 Anton Midyukov <antohami@altlinux.org> 0.4.18-alt3
 - Fix build with qt5 5.15
 - Fix License Tag
