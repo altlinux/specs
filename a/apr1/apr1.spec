@@ -4,7 +4,7 @@
 
 Name: apr%aprver
 Version: 1.7.0
-Release: alt2
+Release: alt3
 
 Summary: Apache Portable Runtime
 Group: System/Libraries
@@ -21,7 +21,7 @@ BuildPreReq: rpm-build-licenses
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
 # Automatically added by buildreq on Wed Sep 03 2008
-BuildRequires: gcc-c++ glibc-devel-static libuuid-devel python-modules
+BuildRequires: gcc-c++ glibc-devel-static libuuid-devel python-modules autoconf_2.60
 
 %package -n lib%name
 Summary: Apache Portable Runtime shared library
@@ -73,6 +73,7 @@ This package contains APR static library.
 %setup -n apr-%version
 
 %build
+export AUTOCONF_VERSION=2.60
 LIBTOOL_M4=%_datadir/libtool/aclocal/libtool.m4 ./buildconf
 %configure \
 	--prefix=%prefix \
@@ -123,6 +124,9 @@ make check
 %endif
 
 %changelog
+* Tue Jul 25 2023 Artyom Bystrov <arbars@altlinux.org> 1.7.0-alt3
+- Use working version of autoconf
+
 * Thu Sep 12 2019 Ivan A. Melnikov <iv@altlinux.org> 1.7.0-alt2
 - disable nonportable atomics on mipsel
   (see https://bz.apache.org/bugzilla/show_bug.cgi?id=63566)
