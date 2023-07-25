@@ -1,8 +1,8 @@
 %def_without docs
 
 Name: libcairo
-Version: 1.16.0
-Release: alt2
+Version: 1.17.8
+Release: alt1
 Epoch: 1
 Summary: Multi-platform 2D graphics library
 License: LGPL
@@ -14,7 +14,7 @@ Patch: cairo-%version-%release.patch
 
 BuildRequires: fontconfig-devel ghostscript-classic glib2-devel gtk-doc libGL-devel libXrender-devel
 BuildRequires: libfreetype-devel libpixman-devel libpng-devel librsvg-devel libudev-devel zlib-devel
-BuildRequires: libEGL-devel libGLES-devel libXext-devel
+BuildRequires: libEGL-devel libGLES-devel libXext-devel meson gcc-c++
 
 %description
 Cairo is a vector graphics library with cross-device output support
@@ -61,37 +61,28 @@ This package contains tools for working with the cairo graphics library.
 %patch -p1
 
 %build
-%autoreconf
-%configure \
-	--enable-xlib \
-	--enable-xcb \
-	--enable-ps \
-	--enable-pdf \
-	--enable-svg \
-	--enable-tee \
-	--disable-xml \
-	--disable-silent-rules \
+%meson \
+	-Dfreetype=enabled \
+	-Dfontconfig=enabled \
+	-Dglib=enabled \
+	-Dxlib=enabled \
+	-Dxcb=enabled \
+	-Dtee=enabled \
+	-Dsymbol-lookup=disabled \
+	-Dspectre=disabled \
 %if_with docs
-	--enable-gtk-doc \
+	-Dgtk_doc=true \
 %endif
-	--disable-static \
-	--localstatedir=%_var
-%make_build
-%if_with docs
-%make doc
-%endif
+	-Dtests=disabled \
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
-
-#%check
-#%make -k test
+%meson_install
 
 %files
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README.md
 %_libdir/%name.so.*
 %_libdir/%name-script-interpreter.so.*
-%_bindir/cairo-sphinx
 
 %files devel
 %_includedir/cairo
@@ -113,10 +104,14 @@ This package contains tools for working with the cairo graphics library.
 %_pkgconfigdir/cairo-gobject.pc
 
 %files tools
+%_bindir/cairo-sphinx
 %_bindir/cairo-trace
 %_libdir/cairo
 
 %changelog
+* Sun Jul 02 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.17.8-alt1
+- 1.17.8
+
 * Thu Dec 22 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.16.0-alt2
 - cherry pick upstream fixes for CVE-2018-19876, CVE-2020-35492
 
