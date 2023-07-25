@@ -11,7 +11,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 Epoch: 2
 Summary: HTTP library with thread-safe connection pooling, file post, and more
@@ -66,6 +66,9 @@ export CI=yes
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 24 2023 Stanislav Levin <slev@altlinux.org> 2:2.0.4-alt1
+- 2.0.3 -> 2.0.4.
+
 * Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 2:2.0.3-alt1
 - 1.26.14 -> 2.0.3.
 
