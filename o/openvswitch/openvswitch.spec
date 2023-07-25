@@ -1,8 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_disable check
-%def_without ksrc
-%def_without xenserver
 %def_with debugtools
 # According to the "ExclusiveArch:" from the dpdk.
 %ifarch x86_64 %ix86 aarch64 ppc64le
@@ -10,11 +8,11 @@
 # afxdp build with numa, disable it for arm
 # Disable until updating to version v3.1.0 where was added support for building
 # with libxdp and libbpf >= 0.7.
-%def_disable afxdp
+%def_enable afxdp
 %endif
 
 Name: openvswitch
-Version: 2.17.7
+Version: 3.1.2
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -59,10 +57,9 @@ BuildRequires: libunwind-devel
 %endif
 BuildRequires: libunbound-devel
 BuildRequires: glibc-kernheaders
-BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL python3-module-sphinx
-%{?_with_dpdk:BuildRequires: dpdk-devel >= 21.11 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
-%{?_enable_afxdp:BuildRequires: libbpf-devel libelf-devel libnuma-devel}
-%define ksrcdir %_usrsrc/kernel/sources
+BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL python3-module-sphinx python3-module-netaddr python3-module-pyparsing
+%{?_with_dpdk:BuildRequires: dpdk-devel >= 22.11 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
+%{?_enable_afxdp:BuildRequires: libbpf-devel >= 0.7 libxdp-devel libelf-devel libnuma-devel}
 
 %description
 Open vSwitch is a production quality, multilayer virtual switch
@@ -160,18 +157,6 @@ Python3 bindings for the Open vSwitch database
 sed -i "s/__has_extension(c_atomic)/0/" lib/ovs-atomic.h
 %endif
 
-%if_with ksrc
-# it's not datapath/linux due to shared configure script; thx led@
-pushd ..
-mkdir kernel-source-%name-%version
-cp -al  %name-%version/{config.h.in,configure,Makefile.in} \
-	%name-%version/{build-aux,datapath,include,tests} \
-	kernel-source-%name-%version/
-tar cf kernel-source-%name-%version.tar kernel-source-%name-%version
-rm -r kernel-source-%name-%version
-popd
-%endif
-
 %build
 export PYTHON3=%__python3
 %autoreconf
@@ -195,11 +180,6 @@ make rhel/usr_lib_systemd_system_ovs-vswitchd.service
 %install
 export PYTHON3=%__python3
 %makeinstall_std
-
-%if_with ksrc
-mkdir -p %buildroot%ksrcdir
-install -pm0644 ../kernel-source-%name-%version.tar %buildroot%ksrcdir/
-%endif
 
 install -dm0755 %buildroot%_sysconfdir/%name
 install -pDm0755 %SOURCE11 %buildroot%_initdir/%name
@@ -227,29 +207,6 @@ install -p -D -m 0755 \
         %buildroot%_datadir/%name/scripts/ovs-systemd-reload
 
 install -pDm644 %SOURCE12 %buildroot%_tmpfilesdir/%name.conf
-
-# FIXME
-%if_with xenserver
-install -pDm755 xenserver/etc_init.d_openvswitch-xapi-update \
-         %buildroot%_initdir/openvswitch-xapi-update
-install -pDm755 xenserver/etc_xapi.d_plugins_openvswitch-cfg-update \
-         %buildroot%_sysconfdir/xapi.d/plugins/openvswitch-cfg-update
-install -pDm755 xenserver/opt_xensource_libexec_interface-reconfigure \
-             %buildroot%_datadir/%name/scripts/interface-reconfigure
-install -pDm644 xenserver/opt_xensource_libexec_InterfaceReconfigure.py \
-             %buildroot%_datadir/%name/scripts/InterfaceReconfigure.py
-install -pDm644 xenserver/opt_xensource_libexec_InterfaceReconfigureBridge.py \
-             %buildroot%_datadir/%name/scripts/InterfaceReconfigureBridge.py
-install -pDm644 xenserver/opt_xensource_libexec_InterfaceReconfigureVswitch.py \
-             %buildroot%_datadir/%name/scripts/InterfaceReconfigureVswitch.py
-install -pDm755 xenserver/etc_xensource_scripts_vif \
-             %buildroot%_datadir/%name/scripts/vif
-install -pDm644 xenserver/usr_share_openvswitch_scripts_sysconfig.template \
-         %buildroot%_datadir/%name/scripts/sysconfig.template
-install -pDm644 \
-        xenserver/usr_lib_xsconsole_plugins-base_XSFeatureVSwitch.py \
-               %buildroot%_libdir/xsconsole/plugins-base/XSFeatureVSwitch.py
-%endif
 
 install -d -m 0755 %buildroot%python3_sitelibdir_noarch
 cp -a %buildroot%_datadir/%name/python/ovstest %buildroot%python3_sitelibdir_noarch
@@ -375,6 +332,8 @@ fi
 %_bindir/ovs-l3ping
 %_datadir/%name/scripts/ovs-bugtool*
 %_datadir/%name/bugtool-plugins
+# TODO: add this scripts
+%exclude %_datadir/%name/scripts/usdt
 %_man8dir/ovs-bugtool.*
 %_man8dir/ovs-dpctl-top.*
 %_man1dir/ovs-pcap.*
@@ -420,12 +379,12 @@ fi
 %python3_sitelibdir/ovs
 %python3_sitelibdir/ovs-*.egg-info
 
-%if_with ksrc
-%files -n kernel-source-%name
-%ksrcdir/*
-%endif
-
 %changelog
+* Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 3.1.2-alt1
+- 3.1.2.
+- Cleanup spec (remove kernel souce package, xenserver support).
+- Enable afxdp.
+
 * Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 2.17.7-alt1
 - 2.17.7
 

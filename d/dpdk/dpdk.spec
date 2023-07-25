@@ -10,7 +10,7 @@
 
 
 Name: dpdk
-Version: 21.11.4
+Version: 22.11.2
 Release: alt1
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
@@ -26,9 +26,9 @@ Patch0001: 0001-Do-not-redefine-strlcpy-and-strlcat.patch
 # other techniques, carefully crafted assembly instructions.  As such it
 # needs extensive work to port it to other architectures.
 #
-ExclusiveArch: x86_64 %{ix86} aarch64 ppc64le
+ExclusiveArch: x86_64 %{ix86} aarch64 ppc64le riscv64
 
-BuildRequires(pre): meson >= 0.49.2
+BuildRequires(pre): meson >= 0.53.2
 BuildRequires(pre): rpm-build-python3
 BuildRequires: glibc-kernheaders libpcap-devel zlib-devel libssl-devel
 BuildRequires: libnuma-devel libelf-devel libfdt-devel libjansson-devel
@@ -151,8 +151,11 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 22.11.2-alt1
+- Update to LTS release 22.11.2.
+
 * Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 21.11.4-alt1
--  Update to LTS release 21.11.4.
+- Update to LTS release 21.11.4.
 
 * Wed May 03 2023 Alexey Shabalin <shaba@altlinux.org> 21.11.3-alt1
 - Update to LTS release 21.11.3.

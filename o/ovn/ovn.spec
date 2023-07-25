@@ -2,8 +2,8 @@
 %define rpmstate /run/openvswitch-rpm-state-
 
 Name: ovn
-Version: 21.12.2
-Release: alt2
+Version: 23.06.0
+Release: alt1
 
 Summary: Open Virtual Network support
 License: Apache-2.0 AND LGPL-2.1-only AND SISSL
@@ -177,15 +177,15 @@ done
 
 install -pDm644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 
-#install -d %buildroot%_prefix/lib/firewalld/services
-#install -p -m 0644 rhel/usr_lib_firewalld_services_ovn-central-firewall-service.xml \
-#        %buildroot%_prefix/lib/firewalld/services/ovn-central-firewall-service.xml
-#install -p -m 0644 rhel/usr_lib_firewalld_services_ovn-host-firewall-service.xml \
-#        %buildroot%_prefix/lib/firewalld/services/ovn-host-firewall-service.xml
+install -d %buildroot%_prefix/lib/firewalld/services
+install -p -m 0644 rhel/usr_lib_firewalld_services_ovn-central-firewall-service.xml \
+        %buildroot%_prefix/lib/firewalld/services/ovn-central-firewall-service.xml
+install -p -m 0644 rhel/usr_lib_firewalld_services_ovn-host-firewall-service.xml \
+        %buildroot%_prefix/lib/firewalld/services/ovn-host-firewall-service.xml
 
-#install -d -m 0755 %buildroot%_prefix/lib/ocf/resource.d/ovn
-#ln -s %_datadir/ovn/scripts/ovndb-servers.ocf \
-#      %buildroot%_prefix/lib/ocf/resource.d/ovn/ovndb-servers
+install -d -m 0755 %buildroot%_prefix/lib/ocf/resource.d/ovn
+ln -s %_datadir/ovn/scripts/ovndb-servers.ocf \
+      %buildroot%_prefix/lib/ocf/resource.d/ovn/ovndb-servers
 
 %pre central
 # Save the "enabled" state across the transition of
@@ -342,6 +342,7 @@ fi
 %_datadir/%name/scripts/ovn-ctl
 %_datadir/%name/scripts/ovn-lib
 %_datadir/%name/scripts/ovndb-servers.ocf
+%_prefix/lib/ocf/resource.d/ovn
 %_man8dir/ovn-appctl.*
 %_man1dir/ovn-detrace.*
 %_man8dir/ovn-ctl.*
@@ -382,13 +383,13 @@ fi
 %_unitdir/ovn-northd.service
 %_unitdir/ovn-ic.service
 %_unitdir/ovn-ic-db.service
-#%%_prefix/lib/firewalld/services/ovn-central-firewall-service.xml
+%_prefix/lib/firewalld/services/ovn-central-firewall-service.xml
 
 %files host
 %_bindir/ovn-controller
 %_man8dir/ovn-controller.*
 %_unitdir/ovn-controller.service
-#%%_prefix/lib/firewalld/services/ovn-host-firewall-service.xml
+%_prefix/lib/firewalld/services/ovn-host-firewall-service.xml
 
 %files vtep
 %_bindir/ovn-controller-vtep
@@ -400,6 +401,12 @@ fi
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Wed Jul 12 2023 Alexey Shabalin <shaba@altlinux.org> 23.06.0-alt1
+- 23.06.0
+
+* Mon Jul 10 2023 Alexey Shabalin <shaba@altlinux.org> 22.03.2-alt1
+- LTS branch-22.03 (git 725292fd)
+
 * Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 21.12.2-alt2
 - branch-21.12 (git 72925923)
 
