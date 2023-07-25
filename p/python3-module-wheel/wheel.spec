@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.40.0
+Version: 0.41.0
 Release: alt1
 Summary: A built-package format for Python3
 License: MIT
@@ -93,6 +93,9 @@ install -m0644 -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Mon Jul 24 2023 Stanislav Levin <slev@altlinux.org> 0.41.0-alt1
+- 0.40.0 -> 0.41.0.
+
 * Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 0.40.0-alt1
 - 0.38.4 -> 0.40.0.
 
