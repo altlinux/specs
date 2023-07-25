@@ -1,6 +1,6 @@
 Name: CGenius
 Version: 2.6.3.1
-Release: alt1.git.11.gb3efc3da2.1
+Release: alt2.git.11.gb3efc3da2.1
 
 Summary: the clone of Commander Keen
 License: GPL2
@@ -99,6 +99,9 @@ cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 %_gamesdatadir/commandergenius/global/snd
 
 %changelog
+* Tue Jul 25 2023 Artyom Bystrov <arbars@altlinux.org> 2.6.3.1-alt2.git.11.gb3efc3da2.1
+- Fix build on GCC13
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.6.3.1-alt1.git.11.gb3efc3da2.1
 - NMU: spec: adapted to new cmake macros.
 
