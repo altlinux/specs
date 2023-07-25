@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 10.1.1
+Version: 12.1.0
 Release: alt1
 Summary: Install packages and run Python with them
 License: MIT
@@ -15,7 +15,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# manually manage extras dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -53,6 +54,9 @@ interpreter run.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 24 2023 Stanislav Levin <slev@altlinux.org> 12.1.0-alt1
+- 10.1.1 -> 12.1.0.
+
 * Wed May 24 2023 Stanislav Levin <slev@altlinux.org> 10.1.1-alt1
 - 10.0.7 -> 10.1.1.
 
