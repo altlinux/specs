@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
@@ -18,7 +18,7 @@ Url: https://wiki.gnome.org/Projects/gexiv2
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires(pre): rpm-macros-meson %{?_enable_python3:rpm-build-python3}
 BuildRequires: meson gcc-c++ libexiv2-devel libgio-devel gobject-introspection-devel
 %{?_enable_python3:BuildRequires: python3-module-pygobject3-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
@@ -123,6 +123,9 @@ This package provides Python3 bindings for the gexiv2 library.
 %endif
 
 %changelog
+* Tue Jul 25 2023 Yuri N. Sedunov <aris@altlinux.org> 0.14.2-alt1
+- 0.14.2
+
 * Sat May 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt1
 - 0.14.1
 
