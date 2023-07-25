@@ -3,7 +3,7 @@
 %define real_name Perl-MinimumVersion-Fast
 
 Name: perl-Perl-MinimumVersion-Fast
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: find a minimum required version of perl for Perl code
@@ -48,8 +48,12 @@ implementation of Perl::MinimumVersion.
 %perl_vendor_privlib/Perl/MinimumVersion/Fast*
 
 %_bindir/perlver-fast
+%_man1dir/perlver-fast*
 
 %changelog
+* Tue Jul 25 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.20-alt1
+- New version
+
 * Tue May 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.19-alt1
 - New version
 
