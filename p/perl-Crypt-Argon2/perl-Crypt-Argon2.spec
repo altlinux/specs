@@ -5,12 +5,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Crypt-Argon2
-Version: 0.012
-Release: alt2
+Version: 0.019
+Release: alt1
 
 Summary: Perl interface to the Argon2 key derivation functions
 
-License: %perl_license
+License: %asl
 Group: Development/Perl
 
 URL: https://metacpan.org/release/Crypt-Argon2
@@ -50,6 +50,13 @@ argon2-calibrate can be used.
 %perl_vendor_archlib/Crypt/Argon2*
 %perl_vendor_autolib/Crypt/Argon2*
 
+%_bindir/argon2-calibrate
+%_man1dir/argon2-calibrate*
+
 %changelog
+* Tue Jul 25 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.019-alt1
+- New version
+- Upstream had switched to Apache Public License 2.0
+
 * Sun Jan 15 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.012-alt2
 - Initial build for ALT Linux Sisyphus
