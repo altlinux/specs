@@ -1,19 +1,16 @@
 Name: gputils
-Version: 1.3.0
+Version: 1.5.2
 Release: alt1
 
 Summary: Development utilities for Microchip (TM) PIC (TM) microcontrollers
 
-License: GPL
+License: GPLv2
 Group: Development/Other
 Url: http://gputils.sourceforge.net
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: http://prdownloads.sf.net/gputils/%name-%version.tar
 
-# Automatically added by buildreq on Mon Jan 17 2005
-BuildRequires: flex hostinfo
+BuildRequires: flex
 
 %description
 This is a collection of development tools for Microchip (TM) PIC (TM)
@@ -37,11 +34,13 @@ an up-to-date list of what gputils can do.
 %files
 %_bindir/*
 %_man1dir/*
-#%_mandir/fr/man1/*
 %_datadir/%name/
 %doc AUTHORS ChangeLog NEWS README doc/gputils.pdf doc/gputils.ps
 
 %changelog
+* Mon Jul 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.2-alt1
+- 1.5.2 released
+
 * Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - new version 1.3.0 (with rpmrb script)
 

@@ -1,5 +1,5 @@
 Name: sdcc
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 Epoch: 1
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
 BuildRequires: rpm-build-python3
-BuildRequires: flex gcc-c++ boost-devel gputils /usr/bin/makeinfo
+BuildRequires: flex gcc-c++ boost-devel gputils >= 1.5.2
 BuildRequires: zlib-devel
 
 Requires: %name-common = %EVR
@@ -29,7 +29,7 @@ the Microchip PIC16 and PIC18 targets. It can be retargeted for other
 microprocessors.
 
 %package common
-License: GPL, LGPL
+License: GPLv2 LGPLv2
 Group:   Development/C
 Summary: Libraries and Header Files for the SDCC C compiler
 
@@ -58,9 +58,15 @@ Rabbit 2000/3000, Rabbit 3000A). Work is in progress on supporting
 the Microchip PIC16 and PIC18 targets. It can be retargeted for other
 microprocessors.
 
+%global _configure_detect_runstatedir %nil
+
 %prep
 %setup
 %patch1 -p1
+find support -type f |xargs grep -l 'env python' |\
+	xargs sed -ri '/^#!\/usr\/bin\/env python$/ s,env python,python3,'
+sed -ri '/^extern char \*(copying|warranty)/ s,char ,const char ,' \
+	sim/ucsim/globals.h
 
 %build
 %configure \
@@ -68,15 +74,18 @@ microprocessors.
 	--enable-werror=no \
 	%nil
 
+%make_build sdcc-sdbinutils
 %make_build
 
 %install
 %makeinstall_std STRIP=:
+rm -vf %buildroot%_man1dir/serialview*
 
 %brp_strip_none %_datadir/sdcc/*
 
 %files 
 %_bindir/*
+%_libexecdir/sdcc
 %_man1dir/ucsim.1*
 
 %files common
@@ -86,6 +95,9 @@ microprocessors.
 %_docdir/%name-%version
 
 %changelog
+* Tue Jul 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:4.3.0-alt1
+- 4.3.0
+
 * Wed Apr 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:4.2.0-alt1
 - 4.2.0
 
