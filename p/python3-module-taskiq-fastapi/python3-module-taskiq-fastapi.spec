@@ -3,7 +3,7 @@
 %define mod_name taskiq_fastapi
 
 Name: python3-module-%pypi_name
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: FastAPI integration for taskiq
@@ -38,11 +38,14 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %files
-%doc README.md
+%doc LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 25 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.0-alt1
+- Updated to 0.3.0.
+
 * Wed Jun 14 2023 Anton Zhukharev <ancieg@altlinux.org> 0.2.0-alt1
 - New version.
 

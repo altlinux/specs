@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.4
+Version: 0.8.6
 Release: alt1
 
 Summary: Distributed task queue with full async support 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/taskiq
-Vcs: https://github.com/taskiq-python/taskiq.git
+Url: https://pypi.org/project/taskiq/
+Vcs: https://github.com/taskiq-python/taskiq
 
 BuildArch: noarch
 
@@ -58,12 +58,15 @@ understands all types correctly.
 %pyproject_run_pytest
 
 %files
-%doc README.md
+%doc LICENSE README.md
 %_bindir/%pypi_name
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 25 2023 Anton Zhukharev <ancieg@altlinux.org> 0.8.6-alt1
+- Updated to 0.8.6.
+
 * Thu Jul 20 2023 Anton Zhukharev <ancieg@altlinux.org> 0.8.4-alt1
 - Updated to 0.8.4.
 
