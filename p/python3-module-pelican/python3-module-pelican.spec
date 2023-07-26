@@ -1,100 +1,112 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name pelican
 
-%def_without bootstrap
-%def_with standalone_feedgenerator
+%def_with docs
+%def_with check
 
-%define full_desc \
-Pelican is a static site generator, written in Python_.\
-\
-* Write your weblog entries directly with your editor of choice (vim!)\
-  in reStructuredText_ or Markdown_\
-* Includes a simple CLI tool to ...
-
-%define short_desc A tool to generate a static blog from reStructuredText or Markdown input files
-
-# Tests are bit unstable due comparing html attributes via diff
-%def_without tests
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-Name: python3-module-%{pypi_name}
-Version: 4.6.0
-Release: alt7
-Summary: %{short_desc}
+Name: python3-module-%pypi_name
+Version: 4.8.0
+Release: alt1
+Summary: Static site generator that supports Markdown and reST syntax
+License: AGPL-3.0
 Group: Development/Python3
-
-License: AGPLv3
 Url: http://getpelican.com/
-# https://github.com/getpelican/%{pypi_name}/archive/%{version}.tar.gz#/%{pypi_name}-%{version}.tar.gz
-Source: %{pypi_name}-%{version}.tar
-Patch1: %{name}-4.6.0-alt-cannot-import-Markup-from-jinja2.patch
-
+Vcs: https://github.com/getpelican/pelican
 BuildArch: noarch
+Source: %pypi_name-%version.tar
 
-BuildRequires: python3-devel
-BuildRequires: python3-module-blinker
-BuildRequires: python3-module-dateutil
-BuildRequires: python3-module-markupsafe
+Requires: python3-module-beautifulsoup4
+Requires: python3-module-markdown
+Requires: python3-module-unidecode
+Requires: python3-module-blinker
+Requires: python3-module-jinja2
+Requires: python3-module-Pygments
+Requires: python3-module-docutils
+Requires: python3-module-feedgenerator
+Requires: python3-module-pytz
+Requires: python3-module-rich
+Requires: python3-module-dateutil
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with docs
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-rich
+BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-pytz
+BuildRequires: python3-module-blinker
+BuildRequires: python3-module-feedgenerator
+%endif
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-rich
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-blinker
+BuildRequires: python3-module-feedgenerator
+BuildRequires: python3-module-docutils
 BuildRequires: python3-module-unidecode
-BuildRequires: python3-module-mock
-%if_without bootstrap
-BuildRequires: python3-module-%{pypi_name}
+BuildRequires: python3-module-typogrify
+BuildRequires: /usr/bin/git
+BuildRequires: python3-module-beautifulsoup4
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-markdown
+BuildRequires: python3-module-pytest-xdist
 %endif
 
-Obsoletes: python-module-%{pypi_name}
-Conflicts: python-module-%{pypi_name}
+Obsoletes: python-module-%pypi_name
+Conflicts: python-module-%pypi_name
+
+%add_python3_req_skip pelican.plugins
 
 %description
-%{full_desc}
+Pelican is a static site generator, written in Python.
+- Compose content in Markdown or reStructuredText using your editor of choice
+- Simple command-line tool (re)generates HTML, CSS, and JS from your source content
+- Easy to interface with version control systems and web hooks
+- Completely static output is simple to host anywhere
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-%package -n %{pypi_name}
-Summary: %{short_desc}
+%package -n %pypi_name
+Summary: %summary
 Group: Publishing
-
-Requires: python3-module-%{pypi_name}
-%if_with standalone_feedgenerator
-Requires: python3-module-feedgenerator
-%endif
+Requires: %name = %EVR
 Requires: python3-module-markdown
 Requires: python3-module-unidecode
 Requires: python3-module-beautifulsoup4
 
-%description -n %{pypi_name}
-%{full_desc}
+%description -n %pypi_name
+Pelican is a static site generator, written in Python.
+- Compose content in Markdown or reStructuredText using your editor of choice
+- Simple command-line tool (re)generates HTML, CSS, and JS from your source content
+- Easy to interface with version control systems and web hooks
+- Completely static output is simple to host anywhere
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+%package tests
+Summary: Tests for %name
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+Pelican is a static site generator, written in Python.
+- Compose content in Markdown or reStructuredText using your editor of choice
+- Simple command-line tool (re)generates HTML, CSS, and JS from your source content
+- Easy to interface with version control systems and web hooks
+- Completely static output is simple to host anywhere
+
+This package contains tests for %pypi_name.
 
 %prep
-%setup -n %{pypi_name}-%{version}
-%patch1 -p1
-# Remove bundled egg-info
-rm -rf %{pypi_name}.egg-info
-
-# Remove bagpath #!/usr/bin/env from files
-sed -i '1d' %{pypi_name}/tools/%{pypi_name}_import.py
-sed -i '1d' %{pypi_name}/tools/%{pypi_name}_quickstart.py
-sed -i '1d' %{pypi_name}/tools/%{pypi_name}_themes.py
-sed -i '1d' %{pypi_name}/tools/templates/pelicanconf.py.jinja2
-sed -i '1d' %{pypi_name}/tools/templates/publishconf.py.jinja2
-
-# Substitute feedgenerator with it's original django
-%if_without standalone_feedgenerator
-sed -i 's|feedgenerator|django.utils.feedgenerator|' %{pypi_name}/writers.py
-sed -i "s|'feedgenerator >= 1.9', ||" setup.py
-%endif
-
-# Calm down the rpm-build-python3 utility
-touch %{pypi_name}/plugins/__init__.py
+%setup -n %pypi_name-%version
 
 %build
-%{python3_build}
+%pyproject_build
 
-# Build docs (can't be exec without python3-module-%{pypi_name} itself!)
-%if_without bootstrap
+%if_with docs
+sed -i "s|'pelican-doc':  ('https://docs.getpelican.com/%%s/', '')|'pelican-doc':  ('https://docs.getpelican.com/%%s/', '%%s')|" docs/conf.py
+# Build docs (can't be exec without python3-module-pelican itself!)
+export PYTHONPATH=$PWD
 sphinx-build-3 docs html
 # Remove leftovers from sphinxbuild
 rm html/_static/theme-basic.zip
@@ -102,30 +114,38 @@ rm -rf html/_downloads/* html/.doctrees html/.buildinfo
 %endif
 
 %install
-%{python3_install}
+%pyproject_install
 
 %check
-%if_with tests
-nosetests-3 -sv --with-coverage --cover-package=%{pypi_name} %{pypi_name}
-%endif
+sed -i "/addopts/d" tox.ini
+%pyproject_run_pytest -v -W ignore::DeprecationWarning -k "\
+not test_basic_generation_works \
+and not test_custom_generation_works \
+and not test_custom_locale_generation_works"
 
 %files
-%if_without bootstrap
+%if_with docs
 %doc html
 %endif
 %doc README.rst LICENSE
-%_bindir/%{pypi_name}
-%_bindir/%{pypi_name}-import
-%_bindir/%{pypi_name}-quickstart
-%_bindir/%{pypi_name}-themes
-%{python3_sitelibdir_noarch}/%{pypi_name}
-%{python3_sitelibdir_noarch}/%{pypi_name}-%{version}-py*.*.egg-info
+%_bindir/%pypi_name
+%_bindir/pelican-import
+%_bindir/pelican-plugins
+%_bindir/pelican-quickstart
+%_bindir/pelican-themes
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%exclude %python3_sitelibdir/%pypi_name/tests
 
-%files -n %{pypi_name}
+%files tests
+%python3_sitelibdir/%pypi_name/tests
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+%files -n %pypi_name
 
 %changelog
+* Tue Jul 25 2023 Anton Vyatkin <toni@altlinux.org> 4.8.0-alt1
+- New version 4.8.0.
+
 * Mon Apr 17 2023 Anton Vyatkin <toni@altlinux.org> 4.6.0-alt7
 - Fix BuildRequires.
 
