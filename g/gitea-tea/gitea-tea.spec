@@ -3,7 +3,7 @@
 
 Name: gitea-tea
 Version: 0.9.2
-Release: alt1
+Release: alt2
 Summary: command line tool to interact with Gitea
 
 License: MIT
@@ -46,13 +46,21 @@ export LDFLAGS="-X main.Version=$VERSION"
 export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
 
+install -Dpm644 contrib/autocomplete.sh %buildroot%_datadir/bash-completion/completions/tea
+install -Dpm644 contrib/autocomplete.zsh %buildroot%_datadir/zsh/site-functions/_tea
+
 %golang_install
 
 %files
 %doc *.md
 %_bindir/*
+%_datadir/bash-completion/completions/tea
+%_datadir/zsh/site-functions/_tea
 
 %changelog
+* Tue Jul 25 2023 Alexander Burmatov <thatman@altlinux.org> 0.9.2-alt2
+- Remove autocomplete command.
+
 * Mon Jul 10 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.2-alt1
 - New version 0.9.2.
 
