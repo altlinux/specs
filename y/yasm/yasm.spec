@@ -1,6 +1,6 @@
 Name: yasm
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Rewrite of the NASM assembler under the "new" BSD License
 License: BSD
@@ -34,8 +34,7 @@ This package contains static development files for YASM.
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %autoreconf
 %configure
-
-%make
+%make_build
 
 %install
 %make_install DESTDIR="%buildroot" install
@@ -59,6 +58,9 @@ make check
 %_libdir/*.a
 
 %changelog
+* Wed Jul 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt2
+- fix build with recent autoconf
+
 * Tue Sep 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt1
 - 1.3.0 release
 
