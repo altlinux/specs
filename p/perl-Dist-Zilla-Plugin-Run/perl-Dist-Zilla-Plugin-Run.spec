@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-Run
 
 Name: perl-Dist-Zilla-Plugin-Run
-Version: 0.048
-Release: alt3
+Version: 0.049
+Release: alt1
 
 Summary: Perl module to run commands at specific phases of Dist::Zilla
 
@@ -43,6 +43,9 @@ commands and code at specific phases of Dist::Zilla.
 %perl_vendor_privlib/Dist/Zilla/Plugin/Run*
 
 %changelog
+* Wed Jul 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.049-alt1
+- New version
+
 * Tue Sep 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.048-alt3
 - update BuildRequires with buildreq
 
