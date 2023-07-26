@@ -3,8 +3,8 @@
 %define proxy_user backup
 
 Name: proxmox-backup
-Version: 2.4.2.1
-Release: alt2
+Version: 2.4.3.1
+Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -123,6 +123,7 @@ ln -s system-auth %buildroot%_sysconfdir/pam.d/proxmox-backup-auth
 
 # Cleanup
 rm -f %buildroot%_libexecdir/%name/%name-banner
+rm -f %buildroot%_man1dir/pbs2to3.1*
 
 %pre file-restore
 groupadd -r -g 37 -f %proxy_user > /dev/null 2>&1 ||:
@@ -202,6 +203,10 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Mon Jul 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:2.4.3.1-alt1
+- 2.4.3-1
+- proxmox-restore-daemon: disk - added processing if the device node exists
+
 * Sun Jul 02 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:2.4.2.1-alt2
 - qemu_helper: increase restore VM RAM size, 192M is too few for ALT
 
