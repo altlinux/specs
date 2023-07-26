@@ -1,8 +1,6 @@
-%define modulename emonoda
-
 Name: emonoda
 Version: 2.1.36
-Release: alt2
+Release: alt3
 
 Summary: The set of tools to organize and management of your torrents
 
@@ -15,20 +13,16 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/mdevaev/emonoda/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+Patch: 57712274c38a2a696463d3e5c6f8cadd3c9e7e63.patch
 
 Provides: rtfetch
 Obsoletes: rtfetch
 
-# manually removed: python3-module-pycairo python3-module-pygobject3 python3-module-zmq pythonium python3-module-Cython0.18 libdb4-devel mailcap 
-# manually removed:  ruby ruby-stdlibs
-# Automatically added by buildreq on Sun Jul 19 2015
-# optimized out: python3 python3-base python3-module-greenlet python3-module-pycparser 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-chardet python3-module-setuptools
+BuildRequires: python3-module-Cython
 
-BuildRequires: python3-dev python3-module-Cython 
-
-# do not require by findreq...
+# missed by findreq...
 Requires: python3-module-yaml
 
 %description
@@ -36,6 +30,7 @@ The set of tools to organize and management of your torrents.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -56,10 +51,14 @@ The set of tools to organize and management of your torrents.
 %_bindir/emhook-rtorrent-manage-trackers
 %_bindir/emhook-transmission-redownload
 
-%python3_sitelibdir/%modulename/
+%python3_sitelibdir/%name/
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 2.1.36-alt3
+- cleanup spec
+- add patch against setuptools 68.0.0
+
 * Wed Apr 12 2023 Anton Vyatkin <toni@altlinux.org> 2.1.36-alt2
 - Fix BuildRequires
 
