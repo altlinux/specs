@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla
 
 Name: perl-Dist-Zilla
-Version: 6.029
-Release: alt1.1
+Version: 6.030
+Release: alt1
 
 Summary: scary tools for building CPAN distributions
 
@@ -81,6 +81,9 @@ rm -f --  t/plugins/filefinders.t
 
 
 %changelog
+* Wed Jul 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 6.030-alt1
+- New version
+
 * Wed Dec 14 2022 Ivan A. Melnikov <iv@altlinux.org> 6.029-alt1.1
 - NMU: re-run buildreq to get rid of recursive
   build dependencies, again.
