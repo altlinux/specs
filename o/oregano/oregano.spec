@@ -1,6 +1,6 @@
 Name: oregano
 Version: 0.84.43
-Release: alt1
+Release: alt2
 
 Summary: A GUI to simulate electronic circuit
 
@@ -16,7 +16,8 @@ Source: %name-%version.tar
 Patch: oregano-0.70-sfmt.patch
 Patch1: oregano-0.70-linkage.patch
 
-BuildRequires: groff-base intltool libgoocanvas2-devel libgtksourceview3-devel libxml2-devel perl-Encode-JP python3
+BuildRequires: groff-base intltool libgoocanvas2-devel libgtksourceview3-devel libxml2-devel perl-Encode-JP
+BuildRequires: waf python3
 
 
 %description
@@ -29,13 +30,14 @@ Recommended: gnucap ngspice
 
 %prep
 %setup
-./waf distclean || true
+rm -v ./waf
+waf distclean || true
 
 %build
-CFLAGS="%optflags" ./waf -v configure --destdir="%buildroot" --prefix="%prefix" --sysconfdir="%_sysconfdir" build
+CFLAGS="%optflags" waf -v configure --destdir="%buildroot" --prefix="%prefix" --sysconfdir="%_sysconfdir" build
 
 %install
-./waf install --destdir="%buildroot" --prefix="%prefix" --sysconfdir="%_sysconfdir"
+waf install --destdir="%buildroot" --prefix="%prefix" --sysconfdir="%_sysconfdir"
 rm -f %buildroot%_bindir/microtests/
 #rm -rfv %buildroot%_datadir/glib-2.0/schemas/
 
@@ -54,6 +56,9 @@ rm -f %buildroot%_bindir/microtests/
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 0.84.43-alt2
+- build with external waf
+
 * Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 0.84.43-alt1
 - new version 0.84.43 (with rpmrb script)
 
