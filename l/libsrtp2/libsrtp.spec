@@ -1,6 +1,6 @@
 Name: libsrtp2
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: Secure RTP library
 License: BSD-3-Clause
@@ -32,6 +32,7 @@ This package contains the headers and libraries for libsrtp development.
 %setup
 
 %build
+touch ar-lib
 %autoreconf
 %configure
 %make_build shared_library
@@ -50,6 +51,9 @@ This package contains the headers and libraries for libsrtp development.
 %_pkgconfigdir/libsrtp2.pc
 
 %changelog
+* Wed Jul 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.0-alt2
+- fix build with recent autoconf
+
 * Fri Feb 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.0-alt1
 - 2.5.0 released
 
