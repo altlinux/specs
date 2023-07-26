@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 6.24.0
+Version: 6.25.0
 Release: alt1
 
 Summary: IPython Kernel for Jupyter
@@ -39,6 +39,7 @@ BuildRequires: python3-module-traitlets
 BuildRequires: python3-module-tornado
 BuildRequires: /proc
 BuildRequires: /dev/pts
+BuildRequires: python3-module-ipyparallel
 %endif
 
 %add_python3_req_skip gtk
@@ -67,12 +68,7 @@ sed -i 's/--color=yes//' pyproject.toml
 %pyproject_install
 
 %check
-export LC_ALL=en_US.UTF-8
-%pyproject_run_pytest -v --ignore ipykernel/tests/test_pickleutil.py -k "\
-not test_do_apply \
-and not test_shutdown_subprocesses \
-and not test_embed_kernel_func \
-and not test_pylab"
+%pyproject_run_pytest -v -W ignore::DeprecationWarning
 
 %files
 %doc *.md examples
@@ -89,6 +85,9 @@ and not test_pylab"
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Wed Jul 26 2023 Anton Vyatkin <toni@altlinux.org> 6.25.0-alt1
+- New version 6.25.0.
+
 * Tue Jul 04 2023 Anton Vyatkin <toni@altlinux.org> 6.24.0-alt1
 - New version 6.24.0.
 
