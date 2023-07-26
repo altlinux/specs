@@ -1,6 +1,6 @@
 Name: xfce4-volumed-pulse
-Version: 0.2.3
-Release: alt2
+Version: 0.2.4
+Release: alt1
 
 Summary: Daemon to add additional functionality to the volume keys of the keyboard (for pulseaudio)
 License: GPLv3+
@@ -49,6 +49,9 @@ Fork of Xfce4-Volumed to use PulseAudio.
 %_bindir/%name
 
 %changelog
+* Wed Jul 26 2023 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
+- Updated to 0.2.4.
+
 * Wed Nov 02 2022 Mikhail Efremov <sem@altlinux.org> 0.2.3-alt2
 - Fixed build with xfce4-dev-tools >= 4.17.1.
 - Added Vcs tag.
