@@ -1,8 +1,10 @@
+%set_autoconf_version 2.60
+
 %define gcc_branch 12
 
 Name: gcc%gcc_branch
-Version: 12.2.1
-Release: alt4
+Version: 12.3.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20230424
+%define snapshot 20230721
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -2100,6 +2102,15 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Wed Jul 26 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 12.3.1-alt1
+- Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-12-branch commit
+  ee1368149014a803a1835e029794a922f6c132f6;
+  + releases/gcc-12 (snapshot 20230721)
+  commit r12-9783-gf7ecd7ee5120b3b43f2facf7a862882f286f1e54.
+- Added %%set_autoconf_version 2.60 to workaround FTBFS caused by a change
+  of the default autoconf version to 2.71.
+
 * Tue Jun 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 12.2.1-alt4
 - Rebuilt in gcc13 compatibility mode.
 
