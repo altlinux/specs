@@ -1,6 +1,6 @@
 # TODO: --enable-bd-xlator
 
-%define major 8.4
+%define major 8.6
 %define somajor 8
 #define _localstatedir /var
 %def_enable epoll
@@ -13,11 +13,11 @@
 # rdma package
 %def_enable ibverbs
 # build devel subpackages
-%def_enable devel
+%def_disable devel
 
 Name: glusterfs8
 Version: %major
-Release: alt2
+Release: alt1
 
 Summary: Cluster File System
 
@@ -255,6 +255,7 @@ Group: Development/Other
 Requires: lib%name-api = %EVR
 Requires: lib%name-devel = %EVR
 Provides: libglusterfs-api-devel = %EVR
+Requires: libacl-devel
 Conflicts: libglusterfs3-api-devel
 Conflicts: libglusterfs6-api-devel
 Conflicts: libglusterfs7-api-devel
@@ -539,6 +540,12 @@ rm -f %buildroot%_libdir/libglusterd.so
 install -p -m 0744 -D extras/command-completion/gluster.bash \
     %buildroot%_sysconfdir/bash_completion.d/gluster
 
+%if_disabled devel
+rm -rf %buildroot%_pkgconfigdir/glusterfs-api.pc
+rm -rf %buildroot%_pkgconfigdir/libgfchangelog.pc
+rm -rf %buildroot%_libdir/{libgfapi.so,libgfchangelog.so,libgfrpc.so,libgfxdr.so,libglusterfs.so}
+rm -rf %buildroot%_includedir/glusterfs/
+%endif
 
 %post server
 %post_service glusterd
@@ -557,10 +564,12 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 %glusterlibdir/rpc-transport/socket.so
 %glusterlibdir/auth/
 %glusterlibdir/xlator/
+%dir %glusterlibdir/xlator/mount/
 %exclude %glusterlibdir/xlator/mount/api.so
 %exclude %glusterlibdir/xlator/mount/fuse*
 %exclude %glusterlibdir/xlator/features/thin-arbiter.so
 %_libexecdir/glusterfs/glusterfind/
+%dir %_libexecdir/glusterfs/scripts/
 %_libexecdir/glusterfs/scripts/get-gfid.sh
 %_sbindir/gfind_missing_files
 %_libexecdir/glusterfs/gfind_missing_files/
@@ -581,21 +590,21 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 %files georeplication
 %dir %_libexecdir/glusterfs/
 %_libexecdir/glusterfs/gsyncd
-%dir %_libexecdir/glusterfs/python/
 %_libexecdir/glusterfs/gverify.sh
 %_libexecdir/glusterfs/peer_add_secret_pub
 %_libexecdir/glusterfs/peer_gsec_create
-%_libexecdir/glusterfs/python/syncdaemon/
+%_libexecdir/glusterfs/peer_georep-sshkey.py
+%_libexecdir/glusterfs/peer_mountbroker
+%_libexecdir/glusterfs/peer_mountbroker.py
 %_libexecdir/glusterfs/set_geo_rep_pem_keys.sh
+%dir %_libexecdir/glusterfs/python/
+%_libexecdir/glusterfs/python/syncdaemon/
 %dir %_libexecdir/glusterfs/scripts/
 %_libexecdir/glusterfs/scripts/slave-upgrade.sh
 %_libexecdir/glusterfs/scripts/gsync-upgrade.sh
 %_libexecdir/glusterfs/scripts/generate-gfid-file.sh
 %_libexecdir/glusterfs/scripts/schedule_georep.py
 %_libexecdir/glusterfs/scripts/gsync-sync-gfid
-%_libexecdir/glusterfs/peer_georep-sshkey.py
-%_libexecdir/glusterfs/peer_mountbroker
-%_libexecdir/glusterfs/peer_mountbroker.py
 %_sbindir/gluster-georep-sshkey
 %_sbindir/gluster-mountbroker
 #config(noreplace) %_logrotatedir/glusterfs-georep
@@ -748,6 +757,12 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 #files checkinstall
 
 %changelog
+* Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 8.6-alt1
+- new version 8.6 (with rpmrb script)
+- disable devel subpackage
+- pack /usr/lib/glusterfs/scripts dir in the main package
+- pack _libdir/glusterfs/8.6/xlator/mount dir in the main package
+
 * Sat Oct 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.4-alt2
 - added patch for Elbrus
 
