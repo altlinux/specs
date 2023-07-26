@@ -3,7 +3,7 @@
 
 Name: apcupsd
 Version: 3.14.14
-Release: alt1
+Release: alt2
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: Power management software for APC UPS hardware
@@ -30,7 +30,7 @@ Patch10: apcupsd-3.14.4-hal_policy-Makefile.patch
 
 BuildRequires: rpm-build-licenses
 
-BuildRequires: gcc-c++ imake makedepend gzip-utils hostinfo libncurses-devel libtinfo-devel libX11-devel libusb-compat-devel
+BuildRequires: gcc-c++ imake makedepend gzip-utils hostinfo libncurses-devel libtinfo-devel libX11-devel libusb-compat-devel autoconf_2.60
 
 %description -n %name
 UPS power management under Linux for APCC Products. It allows your
@@ -86,6 +86,7 @@ tar xzf %{SOURCE1}
 
 %build
 
+export AUTOCONF_VERSION=2.60
 export ac_cv_path_MAIL=/bin/mail
 export ac_cv_path_ETAGS=/usr/bin/ctags
 export ac_cv_path_CTAGS=/usr/bin/ctags
@@ -183,6 +184,9 @@ gzip ChangeLog
 %endif
 
 %changelog
+* Tue Jul 25 2023 Artyom Bystrov <arbars@altlinux.org> 3.14.14-alt2
+- Use autoconf_2.60
+
 * Sun Jul 10 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.14.14-alt1
 - New version
 
