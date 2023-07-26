@@ -7,11 +7,11 @@
 %global servicename     docker
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      4ffc61430bbe6d3d405bdf357b766bf303ff3cc5
+%global commit      a61e2b4c9c5f7c241aeb37f389b4444aee26bea4
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 24.0.4
+Version: 24.0.5
 Release: alt1
 Summary: The open-source application container engine
 License: Apache-2.0
@@ -148,6 +148,9 @@ exit 0
 %_udevrulesdir/80-docker.rules
 
 %changelog
+* Wed Jul 26 2023 Vladimir Didenko <cow@altlinux.org> 24.0.5-alt1
+- 24.0.5
+
 * Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 24.0.4-alt1
 - 24.0.4
 
