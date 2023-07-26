@@ -1,6 +1,6 @@
 Name: libnatspec
 Version: 0.3.1
-Release: alt2
+Release: alt3
 
 Summary: Library for national and language-specific issues
 
@@ -95,6 +95,10 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Sat Jul 22 2023 Kirill Izmestev <felixz@altlinux.ru> 0.3.1-alt3
+- Add Mari locale support
+- Add Komi locale support
+
 * Sat Oct 24 2015 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt2
 - update version and add comment about automate it
 - add p7zip patch from https://github.com/buzztaiki/pkgbuild-p7zip-natspec/
