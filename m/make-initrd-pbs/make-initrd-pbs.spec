@@ -2,10 +2,10 @@
 %define child pbs
 
 Name: %parent-%child
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
-Summary: This feature is needed to create a file recovery image used by proxmox
+Summary: This feature is needed to create a file recovery image used by Proxmox backup client
 License: GPL-3.0
 Group: System/Base
 ExclusiveArch: x86_64 aarch64
@@ -32,5 +32,8 @@ cp -r pbs %buildroot%_datadir/%parent/features
 %_datadir/%parent/features/pbs
 
 %changelog
+* Wed Jul 26 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.1-alt1
+- v1.0.0 -> v1.0.1 
+
 * Fri Jul 21 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.0-alt1
 - Initial build for ALT
