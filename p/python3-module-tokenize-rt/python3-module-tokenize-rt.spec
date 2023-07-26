@@ -4,30 +4,30 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 
 Summary: A wrapper around the stdlib `tokenize` which roundtrips 
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/tokenize-rt/
-
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(coverage)
-BuildRequires: python3(covdefaults)
-%endif
+Vcs: https://github.com/asottile/tokenize-rt
 
 BuildArch: noarch
 
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
 %py3_provides %pypi_name
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 The stdlib tokenize module does not properly roundtrip. This wrapper
@@ -40,6 +40,12 @@ the python tokenization.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
+%endif
 
 %build
 %pyproject_build
@@ -48,7 +54,7 @@ the python tokenization.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %doc LICENSE README.md
@@ -57,6 +63,9 @@ the python tokenization.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 26 2023 Anton Zhukharev <ancieg@altlinux.org> 5.1.0-alt1
+- Updated to 5.1.0.
+
 * Mon Feb 13 2023 Anton Zhukharev <ancieg@altlinux.org> 5.0.0-alt1
 - 4.2.1 -> 5.5.0
 
