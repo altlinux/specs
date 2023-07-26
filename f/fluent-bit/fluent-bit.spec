@@ -2,28 +2,25 @@
 %def_disable check
 
 Name: fluent-bit
-Version: 2.1.7
+Version: 2.1.8
 Release: alt1
+
 Summary: Fast data collector for Linux
+
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Group: Monitoring
 Url: https://github.com/fluent/fluent-bit
 
 Source: %name-%version.tar
-# Remove -Werror in mbedtls build. Not upstream
-Patch: 0001-mbedtls-disable-Werror-in-prod-build.patch
 # Fix up some install paths in CMake. Not upstream
 Patch1: 0002-CMake-fix-up-install-paths.patch
 # Add -fPIC to jemalloc build. Not upstream
 Patch2: 0003-jemalloc-add-fPIC-to-CFLAGS.patch
 
-%if_enabled check
-BuildRequires: ctest
-%endif
-# libudev-devel BR is needed for systemd input plugin
-BuildRequires: libudev-devel
-BuildRequires: gcc-c++ binutils
+ExcludeArch: armh ppc64le
+
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ binutils
 BuildRequires: cmake
 BuildRequires: flex
 BuildRequires: bison
@@ -35,10 +32,13 @@ BuildRequires: libyaml-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libcares-devel
 BuildRequires: libedit-devel
+# libudev-devel BR is needed for systemd input plugin
+BuildRequires: libudev-devel
+%if_enabled check
+BuildRequires: ctest
+%endif
 # temporarily in-source (by upstream)
 # BuildRequires: libsqlite3-devel
-
-ExcludeArch: armh ppc64le
 
 %description
 Fluent Bit is a fast Log Processor and Forwarder.
@@ -51,7 +51,6 @@ data manipulation and analytics using SQL queries.
 
 %prep
 %setup
-#patch -p1
 %patch1 -p1
 %patch2 -p1
 sed -i 's|c-ares|cares|' \
@@ -113,6 +112,12 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Wed Jul 26 2023 Leontiy Volodin <lvol@altlinux.org> 2.1.8-alt1
+- New version.
+- NMU:
+  + Cleanup spec.
+  + Removed obsoleted patch.
+
 * Fri Jul 14 2023 Leontiy Volodin <lvol@altlinux.org> 2.1.7-alt1
 - New version.
 
