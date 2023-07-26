@@ -5,8 +5,9 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: catch2
-Version: 3.3.2
+Version: 2.13.10
 Release: alt1
+Epoch: 2
 
 Summary: C++ Unit Test framework ("all in one header")
 
@@ -16,10 +17,11 @@ Url: https://github.com/catchorg/Catch2
 
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
-BuildRequires: rpm-macros-cmake cmake gcc-c++
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
 
 # run tests
-BuildRequires: ctest python-modules
+BuildRequires: ctest python3
 
 # Source-url: https://github.com/catchorg/Catch2/archive/v%{version}.tar.gz
 Source: %name-%version.tar
@@ -59,15 +61,20 @@ ctest -V
 
 %files devel
 %doc %_docdir/Catch2/
-%_includedir/%name
-%_libdir/libCatch2*.a
+%dir %_includedir/catch2/
+%_includedir/catch2/*.hpp
+#%_libdir/libCatch2WithMain.a
 %_datadir/Catch2/
 %_datadir/cmake/Catch2/
-%_datadir/pkgconfig/catch2*.pc
+%_datadir/pkgconfig/catch2.pc
 
 %changelog
-* Sun May 28 2023 Nazarov Denis <nenderus@altlinux.org> 3.3.2-alt1
-- new version (3.3.2) with rpmgs script
+* Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 2:2.13.10-alt1
+- new version 2.13.10 (with rpmrb script)
+
+* Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 2:2.13.7-alt2
+- revert to major version 2, cleanup spec
+- set Epoch: 2
 
 * Sat Oct 16 2021 Pavel Vainerman <pv@altlinux.ru> 2.13.7-alt1
 - new version (2.13.7) with rpmgs script
