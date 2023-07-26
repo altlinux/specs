@@ -4,7 +4,7 @@
 
 Name: egl-wayland
 Version: 1.1.12
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Group: System/Libraries
@@ -15,6 +15,9 @@ License: MIT
 Source0: %name-%version.tar
 Source1: 10_nvidia_wayland.json
 Source2: 15_nvidia_gbm.json
+# upstream
+Patch0: 1.1.12_master.patch
+# ALT
 Patch1: alt-ftbfs.patch
 Patch2: alt-wlEglInitializeSurfaceExport.patch
 
@@ -44,6 +47,7 @@ Wayland EGL External Platform library development package
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %autoreconf
@@ -75,6 +79,9 @@ install -pDm644 %SOURCE2 \
 %_datadir/wayland-eglstream/
 
 %changelog
+* Wed Jul 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:1.1.12-alt2
+- add upstream fixes
+
 * Wed Jul 19 2023 Sergey V Turchin <zerg@altlinux.org> 1:1.1.12-alt1
 - new version
 
