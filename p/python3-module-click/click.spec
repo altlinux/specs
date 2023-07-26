@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.1.3
-Release: alt2
+Version: 8.1.6
+Release: alt1
 Summary: Composable command line interface toolkit
 License: BSD-3-Clause
 Group: Development/Python
@@ -59,6 +59,9 @@ rm src/click/_winconsole.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 24 2023 Stanislav Levin <slev@altlinux.org> 8.1.6-alt1
+- 8.1.3 -> 8.1.6.
+
 * Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 8.1.3-alt2
 - Fixed FTBFS (pytest 7.3.1).
 
