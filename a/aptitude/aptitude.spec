@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt15
+Release: alt16
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -95,6 +95,10 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Tue Jul 25 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt16
+- Untied from the details of an interface in libapt by re-using a class from
+  libapt (>= 0.5.15lorg2-alt86). (The dep was due to us reimplementing it.)
+
 * Fri May 26 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt15
 - Fixed the crash of "aptitude download" (with a large enough total
   number of known packages, like in ALT Sisyphus).

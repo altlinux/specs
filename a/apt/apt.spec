@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt85
+Release: alt86
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -48,6 +48,12 @@ URL: http://apt-rpm.org
 # git replace --graft apt-rpm@gitlab/MERGED-0.5.4.9 Debian/0.5.4.9-MERGED-into-apt-rpm apt-rpm@gitlab/MERGED-0.5.4.9^
 #
 # The parent with the richer history is 1st for git blame --first-parent -w.
+#
+# Grafting the most recent merge of Debian into apt-rpm:
+#
+# git replace --graft c5f4905b15ac022e6b18cf8acf59a4961210f3f9 725581a78ed5b222f7290321917199fb7fbc4c79 c5f4905b15ac022e6b18cf8acf59a4961210f3f9^
+# git tag Debian/0.5.15 725581a78ed5b222f7290321917199fb7fbc4c79
+# git tag apt-rpm@gitlab/MERGED-0.5.15 c5f4905b15ac022e6b18cf8acf59a4961210f3f9
 #
 # Enhanced apt-rpm history
 # ------------------------
@@ -581,6 +587,13 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Mon Jul 24 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt86
+- To make future API changes easier, extended a class so that it is suitable
+  for aptitude and to untie aptitude and libapt. (Aptitude depended on its
+  details, because it reimplemented it.) (Picked from Debian apt 0.6.42.4.)
+- Dropped a compat API, which could have still been relied on by libapt clients
+  not aware of the support (since 0.5.15lorg2-alt73) for multiple hash types.
+
 * Wed Jul 05 2023 Andrey Limachko <liannnix@altlinux.org> 0.5.15lorg2-alt85
 - Added loongarch64 to archtable (thx Alexey Sheplyakov)
 
