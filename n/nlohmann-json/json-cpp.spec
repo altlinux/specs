@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nlohmann-json
-Version: 3.10.4
-Release: alt1.1
+Version: 3.11.2
+Release: alt1
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
 
@@ -12,9 +12,14 @@ Url: https://github.com/nlohmann/json
 
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
-# Source: https://github.com/nlohmann/json/releases/download/v%{version}/json.hpp
+# Source0-url: https://github.com/nlohmann/json/archive/refs/tags/v%version.tar.gz
 Source0: %name-%version.tar
-Source1: json_test_data-2.0.0.tar
+# Source1-url: https://github.com/nlohmann/json_test_data/archive/refs/tags/v3.1.0.tar.gz
+Source1: json_test_data.tar
+
+# fix build with gcc 13
+Patch1: a49829bd984c0282be18fcec070df0c31bf77dd5.patch
+Patch2: a5b09d50b786638ed9deb09ef13860a3cb64eb6b.patch
 
 BuildRequires: cmake ctest gcc-c++
 
@@ -28,6 +33,7 @@ Our class had these design goals:
 %package devel
 Summary: JSON for Modern C++ (c++11) ("single header file")
 Group: Development/C++
+BuildArch: noarch
 Provides: json-cpp
 Obsoletes: json-cpp
 
@@ -42,13 +48,15 @@ This package contains the single header C++ file and CMake dependency files.
 
 %prep
 %setup -a1
-rm -rf test/cmake_fetch_content
+%autopatch -p1
+#rm -rf test/cmake_fetch_content
 %ifarch %e2k
 # fixes an internal error in EDG frontend
 sed -i "/String& decomposition = String.*;/{s/;/{};/;s/=/);Result(bool x):Result(x,/}" \
     test/thirdparty/doctest/doctest.h
 %endif
-sed -i -e '/add_subdirectory(cmake_fetch_content)/ d' test/CMakeLists.txt
+sed -i -e '/add_subdirectory(cmake_fetch_content)/ d' tests/CMakeLists.txt
+sed -i -e '/add_subdirectory(cmake_fetch_content2)/ d' tests/CMakeLists.txt
 
 %build
 %cmake \
@@ -63,15 +71,22 @@ sed -i -e '/add_subdirectory(cmake_fetch_content)/ d' test/CMakeLists.txt
 %cmake_install
 
 %check
-ln -sf ../json_test_data-2.0.0 %_cmake__builddir/json_test_data
+ln -sf ../json_test_data %_cmake__builddir/json_test_data
 %cmake_build --target test
 
 %files devel
 %_includedir/nlohmann
-%_libdir/cmake/nlohmann_json
-%_pkgconfigdir/nlohmann_json.pc
+%_datadir/cmake/nlohmann_json
+# https://bugzilla.altlinux.org/7917
+%_datadir/pkgconfig/nlohmann_json.pc
+#_pkgconfigdir/nlohmann_json.pc
 
 %changelog
+* Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 3.11.2-alt1
+- new version 3.11.2 (with rpmrb script)
+- switch to build from source tarballs with upstream urls
+- pack nlohmann-json-devel as noarch
+
 * Fri Dec 10 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.10.4-alt1.1
 - Fixed build for Elbrus.
 
