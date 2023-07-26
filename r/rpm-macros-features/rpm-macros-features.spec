@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -54,6 +54,10 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
+- add ctest, cmake, wayland, clickhouse, kernel
+- add opencv 4.7.0
+
 * Thu Mar 16 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - sisyphus: step dotnet version to 7.0
 - add mono and gtk_sharp features
