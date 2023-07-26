@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-PromptIfStale
 
 Name: perl-Dist-Zilla-Plugin-PromptIfStale
-Version: 0.057
-Release: alt1.1
+Version: 0.058
+Release: alt1
 
 Summary: Dist::Zilla module to check at build/release time
 
@@ -51,6 +51,9 @@ is found.
 %perl_vendor_privlib/Dist/Zilla/*
 
 %changelog
+* Wed Jul 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.058-alt1
+- New version
+
 * Thu Dec 15 2022 Ivan A. Melnikov <iv@altlinux.org> 0.057-alt1.1
 - NMU: Rerun buildreq to get rid of recursive build dependencies
 
