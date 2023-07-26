@@ -1,6 +1,6 @@
 Name: libnatspec
-Version: 0.3.1
-Release: alt3
+Version: 0.3.2
+Release: alt1
 
 Summary: Library for national and language-specific issues
 
@@ -95,6 +95,9 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 0.3.2-alt1
+- update doc files
+
 * Sat Jul 22 2023 Kirill Izmestev <felixz@altlinux.ru> 0.3.1-alt3
 - Add Mari locale support
 - Add Komi locale support
