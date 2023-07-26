@@ -1,8 +1,8 @@
 %define  modulename openshift
 
 Name:    python3-module-%modulename
-Version:  0.13.1
-Release:  alt2
+Version:  0.13.2
+Release:  alt1
 
 Summary:  OpenShift python client
 License:  Apache-2.0
@@ -16,7 +16,9 @@ Packager: Andrew A. Vasilyev <andy@altlinux.org>
 Source:   %modulename-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-flake8 pytest3 python3-module-openshift
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3-module-flake8 pytest3 python3-module-openshift
 
 %description
 Python client for the Kubernetes and OpenShift APIs.
@@ -31,10 +33,10 @@ rm -f test/unit/test_diff.py
 sed -i -e 's/ test-integration$//' Makefile
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 rm -rf %buildroot/usr/requirements.txt
 
 %check
@@ -45,6 +47,10 @@ make test PYTHON=%__python3
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jul 26 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.13.2-alt1
+- 0.13.2
+- move on modern pyproject macros
+
 * Tue Oct 04 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.13.1-alt2
 - fix FTBFS
 
