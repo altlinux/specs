@@ -7,10 +7,11 @@
 %def_enable man
 %def_enable bash_completion
 %def_enable vala
+%def_enable check
 
 Name: dconf
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A simple configuration system
 Group: System/Servers
@@ -35,6 +36,7 @@ BuildRequires: libgio-devel >= 2.44.0 libdbus-devel
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_man:BuildRequires: xsltproc}
 %{?_enable_bash_completion:BuildRequires: pkgconfig(bash-completion)}
+%{?_enable_check:BuildRequires: /proc dbus}
 
 %description
 dconf is a low-level configuration system. Its main purpose is to
@@ -120,12 +122,19 @@ This package provides Vala language bindings  for the dconf library
 
 %install
 %meson_install
-mkdir -p %buildroot{%_datadir,%_sysconfdir}/%name/{profile,db}
+mkdir -p %buildroot{%_datadir,%_sysconfdir}/%name/{profile,db/local.d/locks}
+cat << _EOF_ > %buildroot%_sysconfdir/%name/profile/user
+user-db:user
+system-db:local
+_EOF_
 
 # rpm posttrans filetrigger
 install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.filetrigger
 
 %find_lang %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/dconf
@@ -136,7 +145,10 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_rpmlibdir/update-dconf-database.filetrigger
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/profile
+%config %_sysconfdir/%name/profile/user
 %dir %_sysconfdir/%name/db
+%dir %_sysconfdir/%name/db/local.d
+%dir %_sysconfdir/%name/db/local.d/locks
 %dir %_datadir/%name
 %dir %_datadir/%name/profile
 %dir %_datadir/%name/db
@@ -176,6 +188,14 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %endif
 
 %changelog
+* Wed Jul 26 2023 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt2
+- packaged /etc/dconf/profile/user as described in:
+  https://help.gnome.org/admin/system-admin-guide/stable/dconf-profiles.html.en
+  (ALT #47036)
+  and /etc/dconf/db/local.d/locks directory as described in
+  https://help.gnome.org/admin/system-admin-guide/stable/dconf-lockdown.html.en
+- enabled %%check
+
 * Sat Mar 13 2021 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt1
 - 0.40.0
 
