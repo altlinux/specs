@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.5.1
-Release:       alt4
+Release:       alt5
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -18,6 +18,7 @@ Source5:       foreman.tmpfiles
 Source6:       foreman.service
 Source7:       settings.yml
 Source8:       foreman.conf
+Source9:       foreman.po
 Source10:      public.tar
 Source11:      foreman-jobs.service
 Source12:      foreman-jobs.sysconfig
@@ -342,7 +343,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.5.1
-Release:       alt4
+Release:       alt5
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -369,6 +370,7 @@ foundation.
 %setup
 %setup -a 10
 %autopatch -p1
+install -Dm0755 %SOURCE9 ./locale/ru/foreman.po
 
 %build
 %ruby_build
@@ -507,6 +509,10 @@ railsctl cleanup %name
 
 
 %changelog
+* Wed Jul 26 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt5
+- + updated russion translation po
+- + patch allowing set default value as a parameter for setting model instance
+
 * Mon Apr 10 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt4
 - * allowed to direct proxy pass in nginx conf with forwarding the https params
 - - crop out embedded node method/resource in favor of foreman-pupper gem's one
