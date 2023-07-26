@@ -1,6 +1,6 @@
 %define oname userspace-rcu
 Name: libuserspace-rcu
-Version: 0.13.2
+Version: 0.14.0
 Release: alt1
 
 Summary: RCU (read-copy-update) implementation in user space
@@ -18,6 +18,8 @@ Patch: userspace-rcu-aarch64.patch
 Patch2000: userspace-rcu-e2k.patch
 
 BuildRequires: autoconf automake libtool
+# A compiler with support for C++11 language features is required.
+BuildRequires: gcc-c++
 
 # need for test
 BuildRequires: perl-devel
@@ -95,6 +97,10 @@ make check
 %_pkgconfigdir/liburcu*.pc
 
 %changelog
+* Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 0.14.0-alt1
+- new version 0.14.0 (with rpmrb script)
+- add BR: gcc-c++
+
 * Sat Sep 10 2022 Vitaly Lipatov <lav@altlinux.ru> 0.13.2-alt1
 - new version 0.13.2 (with rpmrb script)
 
