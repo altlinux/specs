@@ -82,7 +82,7 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20230719
+Version: 20230726
 Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
@@ -105,7 +105,7 @@ BuildPreReq: kernel-source-%kernel_version
 BuildRequires: /usr/bin/qemu-%target_qemu_arch-static
 BuildRequires: python3
 
-Source0: gcc-13.1.1-alt0.2.rv64.tar
+Source0: gcc-13.1.1-alt0.3.rv64.tar
 Source1: binutils-2.40-alt0.2.rv64.tar
 Source2: glibc-2.37.0.22.3593050c27-alt1.tar
 
@@ -807,6 +807,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Wed Jul 26 2023 Ivan A. Melnikov <iv@altlinux.org> 20230726-alt1
+- Sync gcc sources with sisyphus_riscv64 (gcc 13.1.1-alt0.3.rv64)
+
 * Wed Jul 19 2023 Ivan A. Melnikov <iv@altlinux.org> 20230719-alt1
 - Sync sources with sisyphus_riscv64:
   + binutils 2.40-alt0.2.rv64
