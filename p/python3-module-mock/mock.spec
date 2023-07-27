@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.2
+Version: 5.1.0
 Release: alt1
 Summary: Rolling backport of unittest.mock for all Pythons
 License: BSD-2-Clause
@@ -53,6 +53,9 @@ compatible with Python 3.6 and up.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 26 2023 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
+- 5.0.2 -> 5.1.0.
+
 * Mon May 22 2023 Stanislav Levin <slev@altlinux.org> 5.0.2-alt1
 - 4.0.3 -> 5.0.2.
 
