@@ -1,7 +1,7 @@
 # TODO: --enable-bd-xlator
 
-%define major 9.6
-%define somajor 9
+%define major 10.4
+%define somajor 10
 #define _localstatedir /var
 %def_enable epoll
 %def_enable fusermount
@@ -13,11 +13,19 @@
 # rdma package
 %def_enable ibverbs
 # build devel subpackages
-%def_disable devel
+%def_enable devel
 
-Name: glusterfs9
+# https://github.com/gluster/glusterfs/issues/2979
+# disable tcmalloc on non-x86
+%ifarch x86_64
+%def_with tcmalloc
+%else
+%def_without tcmalloc
+%endif
+
+Name: glusterfs10
 Version: %major
-Release: alt2
+Release: alt1
 
 Summary: Cluster File System
 
@@ -66,6 +74,8 @@ AutoProv: no
 
 %define glusterlibdir %_libdir/glusterfs/%version
 
+ExcludeArch: armh
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
 
@@ -73,6 +83,7 @@ BuildRequires: python3-dev
 
 BuildRequires: flex libacl-devel libaio-devel libdb4-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel
 BuildRequires: libssl-devel libcurl-devel zlib-devel
+BuildRequires: libgperftools-devel
 %ifnarch %e2k
 BuildRequires: liburing-devel
 %endif
@@ -81,6 +92,7 @@ BuildRequires: libtirpc-devel
 BuildRequires: /usr/bin/rpcgen
 BuildRequires: libcmocka-devel
 BuildRequires: systemd
+BuildRequires: openssl
 BuildRequires: libuserspace-rcu-devel >= 0.9.1
 
 %{?_enable_ibverbs:BuildRequires: rdma-core-devel}
@@ -90,6 +102,7 @@ Conflicts: glusterfs3
 Conflicts: glusterfs6
 Conflicts: glusterfs7
 Conflicts: glusterfs8
+Conflicts: glusterfs9
 
 # TODO: cli
 Requires: libglusterd%somajor = %EVR
@@ -107,8 +120,8 @@ This package includes the glusterfs binary, the glusterfsd daemon and the
 gluster command line, libglusterfs and glusterfs translator modules common to
 both GlusterFS server and client framework.
 
-Update glusterfs8 to glusterfs9:
-$ epm prescription glusterfs9
+Update glusterfs9 to glusterfs10:
+$ epm prescription glusterfs10
 
 %package checkinstall
 Summary: Checkinstall for %name
@@ -128,6 +141,7 @@ Conflicts: glusterfs3
 Conflicts: glusterfs6
 Conflicts: glusterfs7
 Conflicts: glusterfs8-cli
+Conflicts: glusterfs9-cli
 
 %description cli
 GlusterFS is a distributed file-system capable of scaling to several
@@ -151,6 +165,7 @@ Conflicts: glusterfs3-ganesha
 Conflicts: glusterfs6-ganesha
 Conflicts: glusterfs7-ganesha
 Conflicts: glusterfs8-ganesha
+Conflicts: glusterfs9-ganesha
 AutoReq: yes,noshell
 
 %description ganesha
@@ -177,6 +192,7 @@ Conflicts: glusterfs3-geo-replication
 Conflicts: glusterfs6-geo-replication
 Conflicts: glusterfs7-geo-replication
 Conflicts: glusterfs8-geo-replication
+Conflicts: glusterfs9-geo-replication
 AutoProv: no
 
 %description georeplication
@@ -200,6 +216,7 @@ Conflicts: glusterfs3-thin-arbiter
 Conflicts: glusterfs6-thin-arbiter
 Conflicts: glusterfs7-thin-arbiter
 Conflicts: glusterfs8-thin-arbiter
+Conflicts: glusterfs9-thin-arbiter
 
 %description thin-arbiter
 This package provides a tie-breaker functionality to GlusterFS
@@ -219,6 +236,7 @@ Conflicts: glusterfs3-client
 Conflicts: glusterfs6-client
 Conflicts: glusterfs7-client
 Conflicts: glusterfs8-client
+Conflicts: glusterfs9-client
 
 %description client
 GlusterFS is a clustered file-system capable of scaling to several
@@ -272,6 +290,7 @@ Conflicts: libglusterfs3-api-devel
 Conflicts: libglusterfs6-api-devel
 Conflicts: libglusterfs7-api-devel
 Conflicts: libglusterfs8-api-devel
+Conflicts: libglusterfs9-api-devel
 
 %description -n lib%name-api-devel
 GlusterFS is a distributed file-system capable of scaling to several
@@ -294,6 +313,7 @@ Conflicts: glusterfs3-server
 Conflicts: glusterfs6-server
 Conflicts: glusterfs7-server
 Conflicts: glusterfs8-server
+Conflicts: glusterfs9-server
 
 %description server
 GlusterFS is a clustered file-system capable of scaling to several
@@ -309,7 +329,8 @@ This package provides the glusterfs server daemon.
 %package gfevents
 Summary: GlusterFS Events
 Group: System/Servers
-BuildArch: noarch
+# misses -server on excluded armh
+#BuildArch: noarch
 Requires: %name-server = %EVR
 %add_python3_req_skip gluster
 Requires: python3-module-%name = %EVR
@@ -319,6 +340,7 @@ Conflicts: glusterfs3-events
 Conflicts: glusterfs6-events
 Conflicts: glusterfs7-events
 Conflicts: glusterfs8-events
+Conflicts: glusterfs9-events
 AutoProv: no
 
 %description gfevents
@@ -335,6 +357,7 @@ Conflicts: glusterfs3-vim
 Conflicts: glusterfs6-vim
 Conflicts: glusterfs7-vim
 Conflicts: glusterfs8-vim
+Conflicts: glusterfs9-vim
 
 %description vim
 GlusterFS is a clustered file-system capable of scaling to several
@@ -357,6 +380,7 @@ Conflicts: libglusterfs3-devel
 Conflicts: libglusterfs6-devel
 Conflicts: libglusterfs7-devel
 Conflicts: libglusterfs8-devel
+Conflicts: libglusterfs9-devel
 
 %description -n lib%name-devel
 GlusterFS is a clustered file-system capable of scaling to several
@@ -378,6 +402,7 @@ Conflicts: python3-module-glusterfs3
 Conflicts: python3-module-glusterfs6
 Conflicts: python3-module-glusterfs7
 Conflicts: python3-module-glusterfs8
+Conflicts: python3-module-glusterfs9
 AutoProv: no
 
 %description -n python3-module-%name
@@ -409,6 +434,7 @@ Conflicts: glusterfs3-resource-agents
 Conflicts: glusterfs6-resource-agents
 Conflicts: glusterfs7-resource-agents
 Conflicts: glusterfs8-resource-agents
+Conflicts: glusterfs9-resource-agents
 
 %description resource-agents
 GlusterFS is a distributed file-system capable of scaling to several
@@ -449,6 +475,7 @@ export PYTHON=%__python3
   %{subst_enable fusermount} \
   %{subst_enable georeplication} \
   %{subst_with ocf} \
+  %{subst_with tcmalloc} \
 %ifarch %e2k
   --disable-linux-io_uring \
 %endif
@@ -623,7 +650,7 @@ rm -rf %buildroot%_includedir/glusterfs/
 %dir %_libexecdir/glusterfs/python/
 %_libexecdir/glusterfs/python/syncdaemon/
 %dir %_libexecdir/glusterfs/scripts/
-%_libexecdir/glusterfs/scripts/slave-upgrade.sh
+%_libexecdir/glusterfs/scripts/secondary-upgrade.sh
 %_libexecdir/glusterfs/scripts/gsync-upgrade.sh
 %_libexecdir/glusterfs/scripts/generate-gfid-file.sh
 %_libexecdir/glusterfs/scripts/schedule_georep.py
@@ -778,8 +805,12 @@ rm -rf %buildroot%_includedir/glusterfs/
 #files checkinstall
 
 %changelog
-* Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 9.6-alt2
-- enable devel subpackage
+* Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 10.4-alt1
+- new major release 10
+- add BR: libgperftools-devel (but disable tcmalloc on non-x86)
+- add BR: openssl
+- ExcludeArch: armhf (32 bit is not supported by upstream)
+- build gfevents as arch package (due excluded armh)
 
 * Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 9.6-alt1
 - new version 9.6 (with rpmrb script) (ALT bug 45768)
