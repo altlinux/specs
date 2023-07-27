@@ -11,7 +11,7 @@
 
 Name: openuds-server
 Version: 3.6.0
-Release: alt5
+Release: alt6
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -156,6 +156,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Thu Jul 27 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt6
+- Disable linux actor installers from download page.
+
 * Mon Jul 24 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt5
 - Fixing the cipher for LDAP.
 
