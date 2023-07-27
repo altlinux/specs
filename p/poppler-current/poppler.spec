@@ -37,7 +37,7 @@
 %define somajor_qt6 3
 %define somajor_glib 8
 %define major 23
-%define minor 01
+%define minor 02
 %define bugfix 0
 
 %if_disabled compat
@@ -81,10 +81,7 @@ Url: http://poppler.freedesktop.org/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Source: %rname-%version.tar
-Source1: MacroPushRequiredVars.cmake
-Patch1: 0001-Revert-Remove-the-Qt4-frontend.patch
 Patch10: alt-e2k.patch
-Patch11: alt-poppler-0.86-qt4.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
@@ -321,11 +318,7 @@ statically linked libpoppler-based software
 
 %prep
 %setup -n %rname-%version
-#%patch1 -p1
 %patch10 -p1
-#%patch11 -p1
-
-install -m 0644 %SOURCE1 cmake/modules/
 
 %build
 %if_enabled qt4
@@ -461,6 +454,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Thu Jul 27 2023 Sergey V Turchin <zerg@altlinux.org> 23.02.0-alt1
+- new version
+
 * Fri Jan 20 2023 Sergey V Turchin <zerg@altlinux.org> 23.01.0-alt1
 - new version
 
