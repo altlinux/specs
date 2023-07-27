@@ -96,7 +96,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.5
+Version: %ver_major.7
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -2397,6 +2397,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Jul 27 2023 Alexey Shabalin <shaba@altlinux.org> 1:253.7-alt1
+- 253.7
+
 * Thu Jun 01 2023 Alexey Shabalin <shaba@altlinux.org> 1:253.5-alt1
 - 253.5
 - Enabled IMA support.
