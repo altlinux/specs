@@ -1,10 +1,10 @@
 # TODO: fix nuget to operate offline
 %def_with prebuild
 
-%define _dotnet_corerelease 6.0*
+%define _dotnet_corerelease 7.0*
 
 Name: powershell
-Version: 7.3.1
+Version: 7.3.6
 Release: alt1
 
 Summary: PowerShell for every system!
@@ -29,10 +29,10 @@ BuildRequires(pre): rpm-macros-dotnet >= 6.0
 AutoReq:yes,nonodejs,nonodejs_native,nomono,nomonolib,nopython,nomingw32,nomingw64,noshebang
 AutoProv: no
 
-Requires: dotnet-6.0
+Requires: dotnet-7.0
 
 BuildRequires: cmake gcc-c++
-BuildRequires: dotnet-sdk-6.0
+BuildRequires: dotnet-sdk-7.0
 
 
 # >= 1.2.100035
@@ -103,13 +103,13 @@ dotnet publish --configuration Linux "src/powershell-unix/" --output bin --runti
 %if_with prebuild
 mkdir -p %buildroot%_libdir/%name/
 cp -a %name-prebuild/* %buildroot%_libdir/%name/
-rm -rfv %buildroot%_libdir/%name/runtimes/{linux-,win,osx,freebsd}*
-rm -fv %buildroot%_libdir/%name/{libcrypto.so.1.0.0,libssl.so.1.0.0}
+rm -rv %buildroot%_libdir/%name/runtimes/{linux-,win,osx,freebsd,illumos,ios,solaris,tvos}*
+#rm -v %buildroot%_libdir/%name/{libcrypto.so.1.0.0,libssl.so.1.0.0}
 mkdir -p %buildroot%_libdir/%name/runtimes/%_dotnet_rid/native/
 # hack to use latest runtime
 #__subst "s|2.0.0-preview1-002111-00|%_dotnet_corerelease|g" %buildroot%_libdir/%name/powershell.runtimeconfig.json
 #cp -f %_libdir/libpsl-native.so %buildroot%_libdir/%name/
-rm -f %buildroot%_libdir/%name/DELETE_ME_TO_DISABLE_CONSOLEHOST_TELEMETRY
+#rm -v %buildroot%_libdir/%name/DELETE_ME_TO_DISABLE_CONSOLEHOST_TELEMETRY
 
 # replace binary pwsh
 #mkdir -p %buildroot%_libdir/%name/
@@ -140,7 +140,7 @@ cp -a %_dotnet_coreapp/libSystem.IO.Ports.Native.so %buildroot%_libdir/%name/run
 %endif
 
 mkdir -p %buildroot%_man1dir/
-cp %SOURCE2 %buildroot%_man1dir/
+cp -v %SOURCE2 %buildroot%_man1dir/
 
 mkdir -p %buildroot%_bindir/
 ln -s %_libdir/%name/pwsh %buildroot%_bindir/pwsh
@@ -154,6 +154,10 @@ ln -s pwsh %buildroot%_bindir/%name
 %doc docs/*
 
 %changelog
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 7.3.6-alt1
+- new version 7.3.6 (with rpmrb script)
+- build with .NET 7
+
 * Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 7.3.1-alt1
 - new version 7.3.1 (with rpmrb script)
 
