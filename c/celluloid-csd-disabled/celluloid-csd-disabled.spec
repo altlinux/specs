@@ -1,26 +1,19 @@
 Name: celluloid-csd-disabled
-Version: 0.1
+Version: 0.2
 Release: alt1
 Summary: Disable client-side decorations and dark-theme for celluloid
 License: GPL
 Group: Graphical desktop/Other
+Url: https://www.altlinux.org/Dconf
 
 BuildArch: noarch
 
-Requires(post): dconf
-Requires(postun): dconf
+Requires: dconf-profile
 
 %description
 %summary
 
 %install
-mkdir -p %buildroot%_sysconfdir/dconf/profile
-
-cat > %buildroot%_sysconfdir/dconf/profile/user <<EOF
-user-db:user
-system-db:local
-EOF
-
 mkdir -p %buildroot%_sysconfdir/dconf/db/local.d
 
 cat > %buildroot%_sysconfdir/dconf/db/local.d/01-celluloid-csd-disabled <<EOF
@@ -29,16 +22,15 @@ csd-enable=false
 dark-theme-enable=false
 EOF
 
-%post
-dconf update
-
-%postun
-dconf update
-
 %files
-%_sysconfdir/dconf/profile/user
 %_sysconfdir/dconf/db/local.d/01-celluloid-csd-disabled
 
 %changelog
+* Wed Jul 26 2023 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
+- do not pack /etc/dconf/profile/user, because it is now provided
+  by dconf-profile
+- do not run dconf-update, because dconf-profile contain filetrigger
+- add Url
+
 * Mon Dec 23 2019 Dmitry Terekhin <jqt4@altlinux.org> 0.1-alt1
 - Initial build for ALT
