@@ -18,7 +18,7 @@
 
 Name: ocaml-%libname
 Version: 0.24.0
-Release: alt1
+Release: alt1.1
 Summary: Base library and tools for ppx rewriters.
 License: MIT
 Group: Development/ML
@@ -74,6 +74,9 @@ rm -rf %buildroot%_bindir
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jul 27 2023 Ivan A. Melnikov <iv@altlinux.org> 0.24.0-alt1.1
+- NMU: replace deprecated egrep with grep -E in tests to fix FTBFS
+
 * Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.24.0-alt1
 - 0.24.0
 
