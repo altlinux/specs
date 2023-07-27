@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.35.0
+Version: 2.37.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -9,7 +9,13 @@ Url: https://github.com/osboot/make-initrd
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
+%define _unpackaged_files_terminate_build 1
+%add_verify_elf_skiplist %_libdir/initrd/*
+%add_findreq_skiplist %_libdir/initrd/*
+%add_debuginfo_skiplist %_libdir/initrd/*
+
 %def_with iscsi
+%def_without bootloader
 
 BuildRequires: autoconf
 BuildRequires: udev
@@ -25,9 +31,7 @@ BuildRequires: libelf-devel
 BuildRequires: libtirpc-devel
 
 # bootloader feature
-BuildRequires: libiniparser-devel
-BuildRequires: libnewt-devel
-BuildRequires: libslang2-devel
+%{?_with_bootloader:BuildRequires: libiniparser-devel libnewt-devel libslang2-devel}
 
 Provides: make-initrd(crc32c) = 1
 
@@ -235,6 +239,7 @@ AutoReq: noshell, noshebang
 Extra Boot Config (XBC) support for %name.
 
 
+%if_with bootloader
 %package boot
 Summary: Bootloader feature for %name
 Group: System/Base
@@ -244,6 +249,7 @@ AutoReq: noshell, noshebang
 
 %description boot
 Make-initrd bootloader feature.
+%endif
 
 
 %package zfs
@@ -283,16 +289,16 @@ Make-initrd guestfs feature.
 %configure \
 	--libexecdir=%_libexecdir \
 	--with-bootdir=/boot \
-	--with-runtimedir=/lib/initrd \
+	--with-runtimedir=%_libdir/initrd \
 	--with-kbddir=/lib/kbd \
 	--with-imagename='initrd-$(KERNEL)$(IMAGE_SUFFIX).img' \
-	--with-feature-bootloader \
 	--with-busybox \
 	--with-libelf \
 	--with-zlib \
 	--with-bzip2 \
 	--with-lzma \
 	--with-zstd \
+	%{?_with_bootloader:--with-feature-bootloader} \
 	#
 make
 
@@ -320,7 +326,7 @@ fi
 %_sbindir/*
 %_datadir/%name
 %_man1dir/*
-/lib/initrd
+%_libdir/initrd
 %exclude %_datadir/%name/features/devmapper
 %exclude %_datadir/%name/features/lvm
 %exclude %_datadir/%name/features/luks
@@ -330,15 +336,15 @@ fi
 %exclude %_datadir/%name/features/mdadm
 %exclude %_datadir/%name/features/ucode
 %exclude %_datadir/%name/guess/ucode
-%exclude %_datadir/%name/features/iscsi
 %exclude %_datadir/%name/features/kickstart
 %exclude %_datadir/%name/guess/smart-card
 %exclude %_datadir/%name/features/sshfsroot
 %exclude %_datadir/%name/features/smart-card
-%exclude %_datadir/%name/features/bootloader
 %exclude %_datadir/%name/features/bootconfig
 %exclude %_datadir/%name/features/zfs
 %exclude %_datadir/%name/features/guestfs
+%{?_with_iscsi:%exclude %_datadir/%name/features/iscsi}
+%{?_with_bootloader:%exclude %_datadir/%name/features/bootloader}
 %doc Documentation/*.md
 
 %files devmapper
@@ -387,9 +393,11 @@ fi
 %files bootconfig
 %_datadir/%name/features/bootconfig
 
+%if_with bootloader
 %files boot
 %_libexecdir/%name/features/bootloader
 %_datadir/%name/features/bootloader
+%endif
 
 %files zfs
 %_datadir/%name/features/zfs
@@ -399,6 +407,39 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
 
 %changelog
+* Mon Jul 24 2023 Alexey Gladkov <legion@altlinux.ru> 2.37.0-alt1
+- New version (2.37.0).
+- Runtime:
+  + Reduce few timeouts.
+  + Get rid of localdev polling.
+  + Convert rootdelay to service.
+  + Drop extender scripts.
+  + Drop live-mode.
+- Feature zfs:
+  + Replace extender script by service.
+
+* Mon Jul 03 2023 Alexey Gladkov <legion@altlinux.ru> 2.36.0-alt1
+- New version (2.36.0).
+- Disable boot subpackage.
+- Move /lib/initrd to %%_libdir/initrd.
+- Runtime:
+  + Reimplement ueventd, replace polld by uevent queue.
+  + Create a shared libinitramfs library with shared code.
+  + Use flock-based locking.
+  + Rewrite console locking.
+  + Add /dev to fstab and mount it as other filesystems.
+  + Do not fail if required mountpoint does not exist.
+- New feature:
+  + Add debug-procacct. The feature is designed to debug the boot process inside
+    the initramfs.
+- Feature mdadm:
+  + Boot from IMSM.
+  + Put mdmon if external metadata detected.
+- Feature system-glibc:
+  + Do not hardcode min_uid/min_gid values.
+- Utilities:
+  + udev-rules: Add more udev rule checks.
+
 * Thu Mar 02 2023 Alexey Gladkov <legion@altlinux.ru> 2.35.0-alt1
 - New version (2.35.0).
 - Guess subsystem:
