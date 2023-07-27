@@ -1,6 +1,6 @@
 # TODO: build from sources
 %define _unpackaged_files_terminate_build 1
-%def_disable netstandart
+%def_enable netstandart
 %def_enable dotnet_host
 
 %define _dotnet_major 6.0
@@ -18,7 +18,7 @@
 
 Name: dotnet-sdk-%_dotnet_major
 Version: 6.0.114%preview
-Release: alt1
+Release: alt2
 
 Summary: SDK for the .NET
 
@@ -76,6 +76,8 @@ Summary: NETStandard.Library.Ref 2.1
 AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
 
+Requires: dotnet-common >= 6.0.1
+
 Conflicts: %name <= %EVR
 
 %description -n netstandard-targeting-pack-2.1
@@ -92,6 +94,8 @@ Summary: .NET 6 targeting pack
 Group: Development/Other
 AutoReq: no
 AutoProv: no
+
+Requires: dotnet-common >= 6.0.1
 
 %description -n dotnet-targeting-pack-%_dotnet_major
 SDK for the .NET runtime and libraries.
@@ -142,13 +146,15 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 
 %if_enabled netstandart
 %files -n netstandard-targeting-pack-2.1
-%dir %_dotnetdir/
-%dir %_dotnetdir/packs/
 %dir %_dotnetdir/packs/NETStandard.Library.Ref/
 %_dotnetdir/packs/NETStandard.Library.Ref/%_dotnet_netstandartrelease/
 %endif
 
 %changelog
+* Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 6.0.114-alt2
+- build netstandard-targeting-pack-2.1 from this package
+- add dotnet-common require to netstandard-targeting-pack-2.1 and dotnet-targeting-pack-6.0
+
 * Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 6.0.114-alt1
 - .NET SDK 6.0.114
 
