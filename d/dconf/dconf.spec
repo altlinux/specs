@@ -11,7 +11,7 @@
 
 Name: dconf
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: A simple configuration system
 Group: System/Servers
@@ -27,10 +27,11 @@ Source1: update-dconf-database.filetrigger
 
 Provides: %_rpmlibdir/update-dconf-database.filetrigger
 
-Requires: lib%name = %version-%release dbus
+Requires: lib%name = %EVR dbus
+Requires: %name-profile
 
-BuildRequires(pre): meson pkgconfig(systemd)
-BuildRequires: libgio-devel >= 2.44.0 libdbus-devel
+BuildRequires(pre): rpm-macros-meson pkgconfig(systemd)
+BuildRequires: meson libgio-devel >= 2.44.0 libdbus-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.18.0}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
@@ -57,7 +58,7 @@ This package provides shared library required for dconf to work
 %package -n lib%name-devel
 Summary: Development files for dconf library
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 dconf is a low-level configuration system. Its main purpose is to
@@ -83,29 +84,29 @@ This package contains development documentation for dconf library.
 %package -n lib%name-gir
 Summary: GObject introspection data for the dconf library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
-GObject introspection data for the dconf library
+GObject introspection data for the dconf library.
 
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the dconf library
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
-GObject introspection devel data for the dconf library
+GObject introspection devel data for the dconf library.
 
 %package -n lib%name-vala
 Summary: Vala language bindings for the dconf library
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-vala
-This package provides Vala language bindings  for the dconf library
+This package provides Vala language bindings for the dconf library.
 
 %define _libexecdir %_prefix/libexec
 
@@ -123,10 +124,6 @@ This package provides Vala language bindings  for the dconf library
 %install
 %meson_install
 mkdir -p %buildroot{%_datadir,%_sysconfdir}/%name/{profile,db/local.d/locks}
-cat << _EOF_ > %buildroot%_sysconfdir/%name/profile/user
-user-db:user
-system-db:local
-_EOF_
 
 # rpm posttrans filetrigger
 install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.filetrigger
@@ -145,7 +142,6 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_rpmlibdir/update-dconf-database.filetrigger
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/profile
-%config %_sysconfdir/%name/profile/user
 %dir %_sysconfdir/%name/db
 %dir %_sysconfdir/%name/db/local.d
 %dir %_sysconfdir/%name/db/local.d/locks
@@ -188,6 +184,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %endif
 
 %changelog
+* Thu Jul 27 2023 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt3
+- removed /etc/dconf/profile/user provided by new dconf-profile package (ALT #47036)
+
 * Wed Jul 26 2023 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt2
 - packaged /etc/dconf/profile/user as described in:
   https://help.gnome.org/admin/system-admin-guide/stable/dconf-profiles.html.en
