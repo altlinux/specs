@@ -4,7 +4,7 @@
 
 Name: udev-android
 Version: 20230614
-Release: alt1
+Release: alt1.1
 
 Summary: Udev rules for adb and fastboot
 
@@ -23,7 +23,7 @@ without root access to the host machine.
 %prep
 %setup
 # ALT 43795
-sed -e '/04da/s/^/#\ /' 51-android.rules
+sed -i -e '/04da/s/^/#\ /' 51-android.rules
 
 %install
 mkdir -p %buildroot%_udevrulesdir
@@ -37,6 +37,9 @@ install -p -m644 51-android.rules %buildroot%_udevrulesdir
 %_udevrulesdir/51-android.rules
 
 %changelog
+* Thu Jul 27 2023 Grigory Ustinov <grenka@altlinux.org> 20230614-alt1.1
+- Fix sed flag.
+
 * Thu Jul 27 2023 Grigory Ustinov <grenka@altlinux.org> 20230614-alt1
 - Automatically updated to 20230614.
 
