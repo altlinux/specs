@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name lark
 %define mod_name %pypi_name
+%define extra_name interegular
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.5
+Version: 1.1.7
 Release: alt1
 Summary: A modern parsing library
 License: MIT
@@ -17,8 +18,7 @@ Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
-# pyinstaller's hook
-%filter_from_requires /python3(PyInstaller\(\..*\)\?)/d
+AutoReq: yes, nopython3
 # file conflict on site-packages/lark/
 Provides: python3-module-lark-parser = %EVR
 Obsoletes: python3-module-lark-parser <= 0.11.3-alt1
@@ -34,6 +34,14 @@ BuildRequires(pre): rpm-build-pyproject
 Lark is a modern general-purpose parsing library for Python.
 With Lark, you can parse any context-free grammar, efficiently, with very little
 code.
+
+%package -n %name+%extra_name
+Summary: %summary
+Group: Development/Python3
+Requires: %name
+%pyproject_runtimedeps_metadata -- --extra %extra_name
+%description -n %name+%extra_name
+Extra '%extra_name' for %pypi_name.
 
 %prep
 %setup
@@ -58,6 +66,11 @@ code.
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
+%files -n %name+%extra_name
+
 %changelog
+* Mon Jul 24 2023 Stanislav Levin <slev@altlinux.org> 1.1.7-alt1
+- 1.1.5 -> 1.1.7.
+
 * Fri May 05 2023 Stanislav Levin <slev@altlinux.org> 1.1.5-alt1
 - Initial build for Sisyphus.
