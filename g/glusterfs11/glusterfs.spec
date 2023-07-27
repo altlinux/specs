@@ -1,7 +1,7 @@
 # TODO: --enable-bd-xlator
 
-%define major 10.4
-%define somajor 10
+%define major 11.0
+%define somajor 11
 #define _localstatedir /var
 %def_enable epoll
 %def_enable fusermount
@@ -13,7 +13,7 @@
 # rdma package
 %def_enable ibverbs
 # build devel subpackages
-%def_disable devel
+%def_enable devel
 
 # https://github.com/gluster/glusterfs/issues/2979
 # disable tcmalloc on non-x86
@@ -23,9 +23,9 @@
 %def_without tcmalloc
 %endif
 
-Name: glusterfs10
+Name: glusterfs11
 Version: %major
-Release: alt2
+Release: alt1
 
 Summary: Cluster File System
 
@@ -103,9 +103,8 @@ Conflicts: glusterfs6
 Conflicts: glusterfs7
 Conflicts: glusterfs8
 Conflicts: glusterfs9
+Conflicts: glusterfs10
 
-# TODO: cli
-Requires: libglusterd%somajor = %EVR
 
 %description
 GlusterFS is a clustered file-system capable of scaling to several
@@ -120,8 +119,8 @@ This package includes the glusterfs binary, the glusterfsd daemon and the
 gluster command line, libglusterfs and glusterfs translator modules common to
 both GlusterFS server and client framework.
 
-Update glusterfs9 to glusterfs10:
-$ epm prescription glusterfs10
+Update glusterfs10 to glusterfs11:
+$ epm prescription glusterfs11
 
 %package checkinstall
 Summary: Checkinstall for %name
@@ -136,12 +135,12 @@ Run checkinstall tests for %name.
 Summary: GlusterFS CLI
 Group: System/Base
 Requires: lib%name = %EVR
-Requires: libglusterd%somajor = %EVR
 Conflicts: glusterfs3
 Conflicts: glusterfs6
 Conflicts: glusterfs7
 Conflicts: glusterfs8-cli
 Conflicts: glusterfs9-cli
+Conflicts: glusterfs10-cli
 
 %description cli
 GlusterFS is a distributed file-system capable of scaling to several
@@ -166,6 +165,7 @@ Conflicts: glusterfs6-ganesha
 Conflicts: glusterfs7-ganesha
 Conflicts: glusterfs8-ganesha
 Conflicts: glusterfs9-ganesha
+Conflicts: glusterfs10-ganesha
 AutoReq: yes,noshell
 
 %description ganesha
@@ -193,6 +193,7 @@ Conflicts: glusterfs6-geo-replication
 Conflicts: glusterfs7-geo-replication
 Conflicts: glusterfs8-geo-replication
 Conflicts: glusterfs9-geo-replication
+Conflicts: glusterfs10-geo-replication
 AutoProv: no
 
 %description georeplication
@@ -217,6 +218,7 @@ Conflicts: glusterfs6-thin-arbiter
 Conflicts: glusterfs7-thin-arbiter
 Conflicts: glusterfs8-thin-arbiter
 Conflicts: glusterfs9-thin-arbiter
+Conflicts: glusterfs10-thin-arbiter
 
 %description thin-arbiter
 This package provides a tie-breaker functionality to GlusterFS
@@ -237,6 +239,7 @@ Conflicts: glusterfs6-client
 Conflicts: glusterfs7-client
 Conflicts: glusterfs8-client
 Conflicts: glusterfs9-client
+Conflicts: glusterfs10-client
 
 %description client
 GlusterFS is a clustered file-system capable of scaling to several
@@ -249,20 +252,6 @@ is in user space and easily manageable.
 
 This package provides support to FUSE based clients.
 
-%package -n libglusterd%somajor
-Summary:          GlusterFS libglusterd library
-Group: System/Base
-Requires:         lib%name = %EVR
-
-%description -n libglusterd%somajor
-GlusterFS is a distributed file-system capable of scaling to several
-petabytes. It aggregates various storage bricks over TCP/IP interconnect
-into one large parallel network filesystem. GlusterFS is one of the
-most sophisticated file systems in terms of features and extensibility.
-It borrows a powerful concept called Translators from GNU Hurd kernel.
-Much of the code in GlusterFS is in user space and easily manageable.
-
-This package provides the libglusterd library
 
 %package -n lib%name-api
 Summary: GlusterFS api library
@@ -291,6 +280,7 @@ Conflicts: libglusterfs6-api-devel
 Conflicts: libglusterfs7-api-devel
 Conflicts: libglusterfs8-api-devel
 Conflicts: libglusterfs9-api-devel
+Conflicts: libglusterfs10-api-devel
 
 %description -n lib%name-api-devel
 GlusterFS is a distributed file-system capable of scaling to several
@@ -314,6 +304,7 @@ Conflicts: glusterfs6-server
 Conflicts: glusterfs7-server
 Conflicts: glusterfs8-server
 Conflicts: glusterfs9-server
+Conflicts: glusterfs10-server
 
 %description server
 GlusterFS is a clustered file-system capable of scaling to several
@@ -341,6 +332,7 @@ Conflicts: glusterfs6-events
 Conflicts: glusterfs7-events
 Conflicts: glusterfs8-events
 Conflicts: glusterfs9-events
+Conflicts: glusterfs10-events
 AutoProv: no
 
 %description gfevents
@@ -358,6 +350,7 @@ Conflicts: glusterfs6-vim
 Conflicts: glusterfs7-vim
 Conflicts: glusterfs8-vim
 Conflicts: glusterfs9-vim
+Conflicts: glusterfs10-vim
 
 %description vim
 GlusterFS is a clustered file-system capable of scaling to several
@@ -381,6 +374,7 @@ Conflicts: libglusterfs6-devel
 Conflicts: libglusterfs7-devel
 Conflicts: libglusterfs8-devel
 Conflicts: libglusterfs9-devel
+Conflicts: libglusterfs10-devel
 
 %description -n lib%name-devel
 GlusterFS is a clustered file-system capable of scaling to several
@@ -403,6 +397,7 @@ Conflicts: python3-module-glusterfs6
 Conflicts: python3-module-glusterfs7
 Conflicts: python3-module-glusterfs8
 Conflicts: python3-module-glusterfs9
+Conflicts: python3-module-glusterfs10
 AutoProv: no
 
 %description -n python3-module-%name
@@ -435,6 +430,7 @@ Conflicts: glusterfs6-resource-agents
 Conflicts: glusterfs7-resource-agents
 Conflicts: glusterfs8-resource-agents
 Conflicts: glusterfs9-resource-agents
+Conflicts: glusterfs10-resource-agents
 
 %description resource-agents
 GlusterFS is a distributed file-system capable of scaling to several
@@ -583,13 +579,6 @@ rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/delete/pre/S10selinux-del-fco
 # remove cloudsync-plugins
 rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.so}
 
-# never used?
-rm -f %buildroot%_libdir/libglusterd.so
-
-## Install bash completion for cli
-install -p -m 0744 -D extras/command-completion/gluster.bash \
-    %buildroot%_sysconfdir/bash_completion.d/gluster
-
 %if_disabled devel
 rm -rf %buildroot%_pkgconfigdir/glusterfs-api.pc
 rm -rf %buildroot%_pkgconfigdir/libgfchangelog.pc
@@ -726,7 +715,7 @@ rm -rf %buildroot%_includedir/glusterfs/
 %files cli
 %_sbindir/gluster
 %_man8dir/gluster.8*
-%_sysconfdir/bash_completion.d/gluster
+%_sysconfdir/bash_completion.d/gluster.bash
 
 %if_with ganesha
 %files ganesha
@@ -771,9 +760,6 @@ rm -rf %buildroot%_includedir/glusterfs/
 %_pkgconfigdir/libgfchangelog.pc
 %endif
 
-%files -n libglusterd%somajor
-%_libdir/libglusterd.so.*
-
 %files -n lib%name
 # until we got -common subpackage
 %dir %_libdir/glusterfs/
@@ -805,8 +791,9 @@ rm -rf %buildroot%_includedir/glusterfs/
 #files checkinstall
 
 %changelog
-* Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 10.4-alt2
-- disable devel subpackage
+* Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 11.0-alt1
+- new major release 11
+- removed libglusterd subpackage (no more libglusterd.so.x)
 
 * Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 10.4-alt1
 - new major release 10
