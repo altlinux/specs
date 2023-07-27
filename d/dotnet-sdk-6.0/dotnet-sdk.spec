@@ -4,25 +4,26 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.14
+%define _dotnet_corerelease 6.0.20
 %define _dotnet_sdkmanifestsrelease 6.0.100
-%define _dotnet_sdkrelease 6.0.114
-%define _dotnet_templatesrelease 6.0.14
-%define _dotnet_coreapprefrelease 6.0.14
+%define _dotnet_sdkrelease 6.0.120
+%define _dotnet_templatesrelease 6.0.20
+%define _dotnet_coreapprefrelease 6.0.20
 %define _dotnet_netstandartrelease 2.1.0
 %define preview %nil
-%define _dotnet_coreshortrelease 6.0.14%preview
-%define _dotnet_sdkshortrelease 6.0.114%preview
+%define _dotnet_coreshortrelease 6.0.20%preview
+%define _dotnet_sdkshortrelease 6.0.120%preview
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 6.0.114%preview
+Version: 6.0.120%preview
 Release: alt2
 
 Summary: SDK for the .NET
 
 License: MIT
+Url: https://github.com/dotnet/sdk
 Group: Development/Other
 
 Source: %name-%version.tar
@@ -151,6 +152,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 6.0.120-alt2
+- .NET SDK 6.0.120
+
 * Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 6.0.114-alt2
 - build netstandard-targeting-pack-2.1 from this package
 - add dotnet-common require to netstandard-targeting-pack-2.1 and dotnet-targeting-pack-6.0
