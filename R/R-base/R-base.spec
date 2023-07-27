@@ -1,6 +1,6 @@
 Name: R-base
-Version: 4.1.3
-Release: alt2
+Version: 4.2.2
+Release: alt1
 
 Summary: A language for data analysis and graphics
 License: GPLv2
@@ -11,9 +11,12 @@ URL: http://www.r-project.org
 Source: R-%version.tar
 Patch: R-%version-%release.patch
 Patch1: R-base-4.1.3-alt-fix-build-libcurl8.patch
+ExcludeArch: i586
 
-# Automatically added by buildreq on Thu Mar 03 2011
-BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre2-devel libpng-devel libreadline-devel libtiff-devel texlive-collection-latex texlive-dist tk-devel zlib-devel makeinfo texi2dvi libcurl-devel libcairo-devel libtre-devel rpm-build-java java-devel-default
+# Automatically added by buildreq on Thu Jan 19 2023
+# optimized out: alt-os-release fontconfig ghostscript-classic glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel libcairo-devel libgfortran-devel libgpg-error libharfbuzz-devel libicu-devel libopenblas-devel libpng-devel libquadmath-devel libsasl2-3 libstdc++-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config python3 python3-base sh4 tcl-devel tex-common texlive texlive-collection-basic texlive-dist tzdata xorg-proto-devel zlib-devel
+BuildRequires: bzlib-devel gcc-c++ gcc-fortran ghostscript-common java-headless libXmu-devel libcurl-devel libgomp-devel libjpeg-devel liblapack-devel liblzma-devel libpango-devel libpcre2-devel libreadline-devel libtiff-devel libtre-devel makeinfo texi2dvi tk-devel tex-common texlive texlive-collection-basic texlive-dist
+
 BuildRequires: libopenblas-devel
 
 BuildPreReq: liblapack-devel libicu-devel libgomp-devel
@@ -120,11 +123,7 @@ ln -snfv `relative %_bindir/libtool %Rhome/bin/libtool` %buildroot%Rhome/bin/lib
 rm -fv %buildroot%_infodir/dir*
 
 %check
-%ifarch ppc64le
 export TZ="UTC"
-%else
-export TZ=""
-%endif
 make check
 
 %files 
@@ -221,7 +220,6 @@ make check
 Summary: Meta-package that installs all components of R Statitical Environment
 Group: Development/Other
 Requires: R-devel = %version-%release R-tcltk = %version-%release R-doc-html = %version-%release gcc-c++ gcc-fortran liblapack-devel make
-BuildArch: noarch
 
 %description -n R-full
 Meta-package that installs all components of R Statitical Environment
@@ -291,7 +289,6 @@ Summary: HTML manuals for the R Statistical Environment
 Group: Sciences/Mathematics
 Requires: R-base = %version-%release
 Requires: xdg-utils
-BuildArch: noarch
 
 %description -n R-doc-html
 R is `GNU S' - A language and environment for statistical computing
@@ -315,7 +312,6 @@ classification, clustering, ...).
 Summary: PDF manuals for the R Statistical Environment
 Group: Sciences/Mathematics
 Conflicts: R-base > %version, R-base < %version
-BuildArch: noarch
 Requires: xdg-utils
 
 %description -n R-doc-pdf
@@ -335,7 +331,6 @@ classification, clustering, ...).
 Summary: Info manuals for the R Statistical Environment
 Group: Sciences/Mathematics
 Conflicts: R-base > %version, R-base < %version
-BuildArch: noarch
 
 %description -n R-doc-info
 R is `GNU S' - A language and environment for statistical computing
@@ -349,6 +344,10 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Thu Jul 27 2023 Leontiy Volodin <lvol@altlinux.org> 4.2.2-alt1
+- Version 4.2.2 (by @kirill) (closes #45320)
+- i586 support dropped upstream (by @kirill)
+
 * Wed Jul 26 2023 Leontiy Volodin <lvol@altlinux.org> 4.1.3-alt2
 - fix build with libcurl8
 
