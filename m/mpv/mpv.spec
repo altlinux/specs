@@ -3,8 +3,8 @@
 %endif
 
 Name: mpv
-Version: 0.35.1
-Release: alt4
+Version: 0.36.0
+Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -18,6 +18,7 @@ Packager: %packager
 
 # for %%luajit_arches macro
 BuildRequires(pre): rpm-macros-luajit
+BuildRequires(pre): meson ninja-build
 
 # Automatically added by buildreq on Fri Feb 14 2014
 BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel zlib-devel libva-devel
@@ -35,7 +36,7 @@ BuildRequires: libzimg-devel vapoursynth-devel libshaderc-devel nv-codec-headers
 BuildRequires: /usr/bin/rst2man
 
 %if_enabled lua
-BuildRequires: liblua5.3-devel libluajit-devel
+BuildRequires: liblua5.1-devel libluajit-devel
 %endif
 
 Summary(ru_RU.UTF-8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
@@ -88,30 +89,29 @@ This package contains %name shared library
 %setup -n %name-%version
 %patch -p1
 
-ls
-chmod ugo+rx waf
-./waf configure --bindir=%_bindir --mandir=%_mandir --datadir=%_datadir --libdir=%_libdir --includedir=%_includedir --prefix= \
---enable-pulse \
---enable-xv \
---enable-vaapi \
---enable-alsa \
---enable-gl-x11 \
-%{subst_enable lua} \
---enable-libbluray \
---enable-dvdnav \
---enable-libmpv-shared \
---enable-jack \
---enable-vulkan \
---enable-sdl2 \
---enable-vapoursynth \
---enable-pipewire \
-#
-
 %build
-./waf build %_smp_mflags
+%meson \
+	-D pulse=enabled \
+	-D xv=enabled \
+	-D vaapi=enabled \
+	-D alsa=enabled \
+	-D gl-x11=enabled \
+%if_enabled lua
+	-D lua=enabled \
+%endif
+	-D libbluray=enabled \
+	-D dvdnav=enabled \
+	-D libmpv=true \
+	-D jack=enabled \
+	-D vulkan=enabled \
+	-D sdl2=enabled \
+	-D vapoursynth=enabled \
+	-D pipewire=enabled
+
+%meson_build -v
 
 %install
-./waf install --destdir=%buildroot
+%meson_install
 
 rm -rfv %buildroot/share/
 rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
@@ -144,6 +144,17 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Thu Jul 27 2023 L.A. Kostis <lakostis@altlinux.ru> 0.36.0-alt1
+- 0.36.0.
+- switch to meson.
+- Apply fixes from master branch:
+  + player/video: check for track and decoder existence
+  + video_writer: fix gamma for YUV screenshots
+  + encode_lavc: fix leak of codecpar
+  + zimg: fix abort on subsampled input with odd heights
+  + msg: print MSGL_WARN and higher error messages to stderr
+  + wayland: restore xkb_keysym_to_utf8 handling
+
 * Mon Jul 17 2023 L.A. Kostis <lakostis@altlinux.ru> 0.35.1-alt4
 - Apply fixes for libplacebo v6.265+ compatibility:
   + vo_gpu_next: compatibility with libplacebo v6.265
