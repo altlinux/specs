@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %set_verify_elf_method unresolved=strict
 %def_disable bootstrap
 %if_disabled bootstrap
@@ -10,8 +11,8 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 3.23.2
-Release: alt3
+Version: 3.27.1
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -19,13 +20,11 @@ License: BSD
 Group: Development/Tools
 Url: http://cmake.org/
 
-Packager: L.A. Kostis <lakostis@altlinux.org>
-
-# Source-git: https://gitlab.kitware.com/cmake/cmake.git
+# Source-url: https://gitlab.kitware.com/cmake/cmake/-/archive/v%version/cmake-v%version.tar.bz2
 Source: %name-%version.tar
+
 Source1: %name.macros
 Source2: CMakeCache.txt
-Patch: %name-%version-%release.patch
 Patch1: alt-fallback-modules-dir.patch
 Patch2: 696d16ae6c5214e314cfc7cb809c2e574bcff651.patch
 
@@ -34,10 +33,16 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 %endif
 BuildRequires(pre): rpm-build-xdg
-BuildRequires: bzlib-devel gcc-c++ libarchive-devel >= 2.8.4
-BuildRequires: libcurl-devel libexpat-devel libncurses-devel libxml2-devel
-BuildRequires: liblzma-devel jsoncpp-devel doxygen graphviz zlib-devel
-BuildRequires: librhash-devel libuv-devel
+BuildRequires: gcc-c++
+BuildRequires: zlib-devel liblzma-devel bzlib-devel 
+BuildRequires: libarchive-devel >= 3.3.3
+BuildRequires: libcurl-devel
+BuildRequires: libexpat-devel libxml2-devel
+BuildRequires: libncurses-devel
+BuildRequires: jsoncpp-devel >= 1.6.0
+BuildRequires: doxygen graphviz zlib-devel
+BuildRequires: librhash-devel
+BuildRequires: libuv-devel >= 1.28.0
 BuildRequires: shared-mime-info rpm-build-vim
 
 %{?_enable_docs:BuildRequires: python3-module-sphinx-sphinx-build-symlink}
@@ -51,10 +56,8 @@ Provides: cpack = %version-%release
 Requires: %name-modules = %version-%release
 Requires: rpm-macros-%name = %version-%release
 
-%define _unpackaged_files_terminate_build 1
 
 %add_findreq_skiplist %_datadir/%name/Templates/cygwin-package.sh.in
-
 
 %description
 CMake is used to control the software compilation process using
@@ -151,20 +154,22 @@ Set of RPM macros for packaging applications that use cmake.
 
 %prep
 %setup
-%patch -p1
 %patch1 -p1
 %ifarch %e2k
 # "Could NOT find OpenMP_C (missing: OpenMP_omp_LIBRARY OpenMP_pthread_LIBRARY)"
 # cmake tries to scan the OpenMP example for libraries, which breaks the build
 sed -i 's/if(CMAKE_${LANG}_VERBOSE_FLAG)/if(false) # &/' Modules/FindOpenMP.cmake
-# -O3 is our recommended optlevel as of lcc 1.25 (see rpm-build)
-sed -i 's/ -O2/ -O%_optlevel/g' Modules/Compiler/{LCC,GNU}*
 %endif
 
+# use %_optlevel for any compiler
+sed -i 's/ -O[23]/ -O%_optlevel/g' Modules/Compiler/*.cmake
+
+# TODO: Source/cm_get_date.c:11:10: fatal error: ../Utilities/cmlibarchive/libarchive/archive_getdate.c:
+# cmlibarchive
 # remove bundled sources
-rm -rf cmake/Utilities/{cmbzip2,cmbzip2,cmcurl,cmexpat,cmlibarchive,cmliblzma,cmlibrhash,cmlibuv,cmnghttp2,cmvssetup,cmzlib,cmzstd}/
+rm -rv Utilities/{cmbzip2,cmcurl,cmexpat,cmliblzma,cmlibrhash,cmlibuv,cmnghttp2,cmvssetup,cmzlib,cmzstd}/
 %if_disabled jsoncpp_bootstrap
-rm -rf cmake/Utilities/cmjsoncpp/
+rm -rv Utilities/cmjsoncpp/
 %endif
 
 %build
@@ -198,7 +203,9 @@ export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/f
 popd
 %else
 # without bootstrap
-%cmake -DCMAKE_USE_SYSTEM_LIBRARIES=ON \
+%cmake \
+    -DCMAKE_USE_SYSTEM_LIBRARY_CPPDAP=OFF \
+    -DCMAKE_USE_SYSTEM_LIBRARIES=ON \
     -DCMAKE_DATA_DIR=share/%name \
     -DCMAKE_DOC_DIR=share/doc/%name-%version \
     -DCMAKE_MAN_DIR=share/man \
@@ -224,7 +231,7 @@ subst 's|	bin/cmake|	$(CMAKE_COMMAND)|' Makefile
 popd
 
 # TODO: fix in the sources
-mv %buildroot/usr/lib %buildroot%_libdir || :
+#mv %buildroot/usr/lib %buildroot%_libdir || :
 
 %if_enabled jsoncpp_bootstrap
 cp build/Utilities/cmjsoncpp/libcmjsoncpp.so %buildroot%_libdir/
@@ -247,8 +254,10 @@ rm -vf %buildroot/usr/share/emacs/site-lisp/cmake-mode.el
 # drop dump requires
 rm -rfv %buildroot/%prefix/share/%name/Modules/Platform/AIX/
 
-install -p  build/Source/kwsys/libcmsys.so  %buildroot%_libdir/libcmsys.so
-install -p  build/Source/kwsys/libcmsys_c.so  %buildroot%_libdir/libcmsys_c.so
+#install -p  build/Source/kwsys/libcmsys.so  %buildroot%_libdir/libcmsys.so
+#install -p  build/Source/kwsys/libcmsys_c.so  %buildroot%_libdir/libcmsys_c.so
+
+mkdir -p %buildroot%_libdir/cmake/
 
 %check
 %if_with check
@@ -266,10 +275,11 @@ popd
 %files
 %_bindir/cmake
 %_bindir/cpack
-%_libdir/libCMakeLib.so
-%_libdir/libCPackLib.so
-%_libdir/libcmsys.so
-%_libdir/libcmsys_c.so
+#_libdir/libCMakeLib.so
+#_libdir/libCPackLib.so
+#_libdir/libcmsys.so
+#_libdir/libcmsys_c.so
+%dir %_libdir/cmake/
 %_datadir/%name/
 %_aclocaldir/*
 %if_enabled docs
@@ -301,7 +311,7 @@ popd
 
 %files -n ctest
 %_bindir/ctest
-%_libdir/libCTestLib.so
+#_libdir/libCTestLib.so
 %if_enabled docs
 %_man1dir/ctest.*
 %endif
@@ -325,6 +335,7 @@ popd
 #_docdir/%name-%version/cpack*
 #_docdir/%name-%version/ctest.*
 %_docdir/%name-%version/html
+%_docdir/%name-%version/cmcppdap/
 %endif
 
 
@@ -342,6 +353,10 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 3.27.1-alt1
+- build 3.27.1 release, cleanup spec
+- switch to build from a tarball
+
 * Wed Apr 19 2023 Alexey Shabalin <shaba@altlinux.org> 3.23.2-alt3
 - add ctest macro (ALT#45833)
 
