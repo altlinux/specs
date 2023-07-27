@@ -1,7 +1,7 @@
 %define oname h2
 
 Name: python3-module-h2
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 
 Summary: HTTP/2 State-Machine based protocol implementation
@@ -12,7 +12,9 @@ Url: https://github.com/python-hyper/hyper-h2
 
 # Source-url: https://github.com/python-hyper/hyper-h2/archive/v%version.tar.gz
 Source: %name-%version.tar
-Patch1: 0646279dab694a89562846c810202ce2c0b49be3.patch
+
+# https://github.com/python-hyper/h2/issues/1268
+Patch1: eabe727282e7a7aa3254773292f86cf341bdc597.patch
 
 BuildArch: noarch
 
@@ -56,6 +58,10 @@ PYTHONPATH=$(pwd)/build/lib py.test3
 %python3_sitelibdir/h2*.egg-info/
 
 %changelog
+* Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
+- new version 4.1.0 (with rpmrb script)
+- add patch against python 3.11 changes in Enum's str
+
 * Tue Apr 20 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
 - new version 4.0.0 (with rpmrb script)
 
