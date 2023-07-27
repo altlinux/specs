@@ -2,11 +2,11 @@
 %def_disable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.0-preview.1.23110.8
+%define _dotnet_corerelease 8.0.0-preview.6.23329.7
 # used for build
-%define _dotnet_sdkrelease 8.0.100-preview.1.23115.2
-%define preview .preview.1.23115.2
-%define _dotnet_sdkshortrelease 8.0.100.preview.1.23115.2
+%define _dotnet_sdkrelease 8.0.100-preview.6.23330.14
+%define preview .preview.6.23330.14
+%define _dotnet_sdkshortrelease 8.0.100%preview
 
 %define commithash %version-%release
 
@@ -383,6 +383,9 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.preview.6.23330.14-alt1
+- .NET 8.0.0 preview 6
+
 * Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.preview.1.23115.2-alt1
-- .NET 8.0.0 preview
+- .NET 8.0.0 preview 1
 - initial build for ALT Sisyphus

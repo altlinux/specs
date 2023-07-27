@@ -4,13 +4,13 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.0-preview.1.23110.8
-%define _dotnet_sdkmanifestsrelease 8.0.100-preview.1
-%define _dotnet_sdkrelease 8.0.100-preview.1.23115.2
-%define _dotnet_templatesrelease 8.0.0-preview.1.23112.2
-%define _dotnet_coreapprefrelease 8.0.0-preview.1.23110.8
+%define _dotnet_corerelease 8.0.0-preview.6.23329.7
+%define _dotnet_sdkmanifestsrelease 8.0.100-preview.6
+%define _dotnet_sdkrelease 8.0.100-preview.6.23330.14
+%define _dotnet_templatesrelease 8.0.0-preview.6.23329.11
+%define _dotnet_coreapprefrelease 8.0.0-preview.6.23329.7
 %define _dotnet_netstandartrelease 2.1.0
-%define preview .preview.1.23115.2
+%define preview .preview.6.23330.14
 %define _dotnet_coreshortrelease 8.0.0%preview
 %define _dotnet_sdkshortrelease 8.0.100%preview
 
@@ -117,6 +117,9 @@ cp -a %bootstrapdir/packs/NETStandard.Library.Ref/ %buildroot%_dotnetdir/packs/
 mkdir -p %buildroot%_dotnetdir/templates/%_dotnet_templatesrelease/
 cp -a %bootstrapdir/templates/%_dotnet_templatesrelease/* %buildroot%_dotnetdir/templates/%_dotnet_templatesrelease/
 
+mkdir -p %buildroot%_dotnetdir/sdk-manifests/8.0.100-preview.3/
+cp -a %bootstrapdir/sdk-manifests/8.0.100-preview.3/* %buildroot%_dotnetdir/sdk-manifests/8.0.100-preview.3/
+
 mkdir -p %buildroot%_dotnetdir/sdk-manifests/%_dotnet_sdkmanifestsrelease/
 cp -a %bootstrapdir/sdk-manifests/%_dotnet_sdkmanifestsrelease/* %buildroot%_dotnetdir/sdk-manifests/%_dotnet_sdkmanifestsrelease/
 
@@ -135,6 +138,7 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %_dotnetdir/templates/%_dotnet_templatesrelease/*.nupkg
 
 %dir %_dotnetdir/sdk-manifests/
+%_dotnetdir/sdk-manifests/8.0.100-preview.3/
 %_dotnet_sdkmanifests/
 
 %files -n dotnet-targeting-pack-%_dotnet_major
@@ -149,6 +153,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 8.0.100.preview.6.23330.14-alt1
+- .NET SDK 8.0.0 preview 6
+
 * Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 8.0.100.preview.1.23115.2-alt1
-- .NET SDK 8.0.0 preview
+- .NET SDK 8.0.0 preview 1
 - initial build for ALT Sisyphus

@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.0-preview.1.23110.8
-%define _dotnet_aspnetcorerelease 8.0.0-preview.1.23112.2
-%define _dotnet_aspnetcoreapprefrelease 8.0.0-preview.1.23112.2
-%define preview .preview.1.23115.2
+%define _dotnet_corerelease 8.0.0-preview.6.23329.7
+%define _dotnet_aspnetcorerelease 8.0.0-preview.6.23329.11
+%define _dotnet_aspnetcoreapprefrelease 8.0.0-preview.6.23329.11
+%define preview .preview.6.23330.14
 %define _dotnet_coreshortrelease 8.0.0%preview
 
 # FIXME: build from sources
@@ -130,6 +130,9 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.preview.6.23330.14-alt1
+- ASP.NET 8.0.0 preview 6
+
 * Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.preview.1.23115.2-alt1
-- ASP.NET 8.0.0 preview
+- ASP.NET 8.0.0 preview 1
 - initial release for ALT Sisyphus
