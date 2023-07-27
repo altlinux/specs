@@ -4,20 +4,20 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 7.0
-%define _dotnet_corerelease 7.0.3
+%define _dotnet_corerelease 7.0.9
 %define _dotnet_sdkmanifestsrelease 7.0.100
-%define _dotnet_sdkrelease 7.0.103
-%define _dotnet_templatesrelease 7.0.3
-%define _dotnet_coreapprefrelease 7.0.3
+%define _dotnet_sdkrelease 7.0.109
+%define _dotnet_templatesrelease 7.0.9
+%define _dotnet_coreapprefrelease 7.0.9
 %define _dotnet_netstandartrelease 2.1.0
 %define preview %nil
-%define _dotnet_coreshortrelease 7.0.3%preview
-%define _dotnet_sdkshortrelease 7.0.103%preview
+%define _dotnet_coreshortrelease 7.0.9%preview
+%define _dotnet_sdkshortrelease 7.0.109%preview
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 7.0.103%preview
+Version: 7.0.109%preview
 Release: alt1
 
 Summary: SDK for the .NET
@@ -149,6 +149,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 7.0.109-alt1
+- .NET SDK 7.0.109
+
 * Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 7.0.103-alt1
 - .NET SDK 7.0.103
 
