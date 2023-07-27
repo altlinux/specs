@@ -9,7 +9,7 @@
 
 Name: yuzu
 Version: 1452
-Release: alt3
+Release: alt3.1
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
@@ -34,7 +34,7 @@ Patch0: %name-cpp-jwt-version-alt.patch
 BuildRequires: /proc
 BuildRequires: boost-asio-devel
 BuildRequires: boost-filesystem-devel
-BuildRequires: catch2-devel
+BuildRequires: catch-devel
 BuildRequires: clang%llvm_version
 BuildRequires: clang-tools
 BuildRequires: cmake
@@ -119,6 +119,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Thu Jul 27 2023 Nazarov Denis <nenderus@altlinux.org> 1452-alt3.1
+- Fix FTBFS
+
 * Wed May 31 2023 Nazarov Denis <nenderus@altlinux.org> 1452-alt3
 - Build with Clang
 

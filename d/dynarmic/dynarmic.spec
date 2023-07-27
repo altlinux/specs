@@ -1,7 +1,7 @@
-%define sover 6
+%define sover 6.5
 
 Name: dynarmic
-Version: 6.4.8
+Version: 6.5.0
 Release: alt1
 
 Summary: A dynamic recompiler for ARM.
@@ -17,7 +17,7 @@ ExclusiveArch: x86_64 aarch64
 Source: %name-%version.tar
 
 BuildRequires: boost-devel
-BuildRequires: catch2-devel
+BuildRequires: catch-devel
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libmcl-devel
@@ -64,5 +64,8 @@ Header files for lib%name
 %_includedir/%name
 
 %changelog
+* Thu Jul 27 2023 Nazarov Denis <nenderus@altlinux.org> 6.5.0-alt1
+- New version 6.5.0.
+
 * Tue May 30 2023 Nazarov Denis <nenderus@altlinux.org> 6.4.8-alt1
 - Initial build for ALT Linux
