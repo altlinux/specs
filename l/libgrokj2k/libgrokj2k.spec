@@ -1,9 +1,10 @@
 # TODO: enable tests (they forget pack tests in the tarball)
 %define oname grok
+%set_gcc_version 12
 
 Name: libgrokj2k
 Version: 9.5.0
-Release: alt1
+Release: alt2
 
 Summary: World's Leading Open Source JPEG 2000 Codec
 License: AGPL-3.0
@@ -21,7 +22,7 @@ BuildRequires: zlib-devel libpng-devel libtiff-devel liblcms2-devel libjpeg-deve
 # don't checked by cmake??
 BuildRequires: libwebp-devel libzstd-devel liblzma-devel libjbig-devel libdeflate-devel
 
-BuildRequires: cmake gcc-c++
+BuildRequires: cmake gcc12-c++
 BuildRequires(pre): rpm-macros-cmake
 
 %description
@@ -91,6 +92,9 @@ sed -i 's|set(CMAKE_CXX_STANDARD 20)|string(APPEND CMAKE_CXX_FLAGS " -std=gnu++2
 %_pkgconfigdir/*
 
 %changelog
+* Thu Jul 27 2023 Artyom Bystrov <arbars@altlinux.org> 9.5.0-alt2
+- Add handle to fix build
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 9.5.0-alt1
 - new version 9.5.0 (with rpmrb script)
 - add BR: libdeflate-devel
