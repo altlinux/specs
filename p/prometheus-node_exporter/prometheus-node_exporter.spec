@@ -5,7 +5,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 1.5.0
+Version: 1.6.1
 Release: alt1
 Summary: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
 
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Source2: %name.sysconfig
 Source3: %name.init
 Source4: %name.service
+Source5: %name.socket
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -59,6 +60,7 @@ mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_sysconfdir/sysconfig}
 install -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0755 %SOURCE3 %buildroot%_initdir/%name
 install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
+install -m0644 %SOURCE4 %buildroot%_unitdir/%name.socket
 install -Dpm0644 example-rules.yml %buildroot%_datadir/prometheus/node-exporter/example-rules.yml
 mkdir -p %buildroot%_sharedstatedir/prometheus/node-exporter
 ln -r -s %buildroot%_bindir/%oname %buildroot%_bindir/%name
@@ -79,7 +81,7 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\nprometheus-node-exporter \\- The Pr
 %files
 %doc LICENSE README.md docs/* example-rules.yml
 %_bindir/*
-%_unitdir/%name.service
+%_unitdir/%name.*
 %_initdir/%name
 %_man1dir/*.1*
 %_datadir/prometheus/node-exporter/example-rules.yml
@@ -87,6 +89,9 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\nprometheus-node-exporter \\- The Pr
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu Jul 27 2023 Alexey Shabalin <shaba@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Thu Dec 08 2022 Alexey Shabalin <shaba@altlinux.org> 1.5.0-alt1
 - 1.5.0 (Fixes: CVE-2022-46146)
 
