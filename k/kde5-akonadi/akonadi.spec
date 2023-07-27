@@ -4,7 +4,7 @@
 
 Name: kde5-%rname
 Version: 23.04.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Databases
@@ -22,6 +22,7 @@ Patch3: alt-mysqlcheck-detached.patch
 Patch4: alt-own-mysql-install-db.patch
 Patch5: alt-find-resources.patch
 Patch6: alt-find-mysql-global-conf.patch
+Patch7: alt-upgrade-before-check.patch
 
 # Automatically added by buildreq on Mon Apr 25 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxml2-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs shared-mime-info xml-utils
@@ -165,6 +166,7 @@ KF5 library
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %K5build \
@@ -289,6 +291,9 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %endif
 
 %changelog
+* Thu Jul 27 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt2
+- run mysql_upgrade before mysqlcheck
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 
