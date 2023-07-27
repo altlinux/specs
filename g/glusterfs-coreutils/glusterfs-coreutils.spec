@@ -1,5 +1,5 @@
 Name: glusterfs-coreutils
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Core Utilities for the Gluster Distributed File System
@@ -68,6 +68,9 @@ gnulib-tool --import human
 %_man1dir/gfrmdir.1.xz
 
 %changelog
+* Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 0.3.2-alt1
+- new version 0.3.2 (with rpmrb script)
+
 * Sun Jan 19 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
 - new version (0.3.1) with rpmgs script
 - switch to build from tarball
