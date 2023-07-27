@@ -1,6 +1,6 @@
 Name: purple-whatsapp
 Version: 0.9.0
-Release: alt1.2
+Release: alt1.3
 
 Summary: WhatsApp protocol implementation for libpurple (Pidgin)
 License: GPLv2+
@@ -42,6 +42,9 @@ make -j1
 %_pixmapsdir/pidgin/protocols/*/whatsapp.png
 
 %changelog
+* Thu Jul 27 2023 Artyom Bystrov <arbars@altlinux.org> 0.9.0-alt1.3
+- Fix build on GCC13
+
 * Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1.2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 
