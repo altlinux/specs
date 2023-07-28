@@ -5,7 +5,7 @@
 %define apiname %realname%suff
 
 Name: %realname%dialect
-Version: 1.16.3
+Version: 1.16.5
 Release: alt1
 
 %define mydatadir %_datadir/%apiname
@@ -104,6 +104,11 @@ chmod -R u+rwX t
 %docdir/
 
 %changelog
+* Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.16.5-alt1
+- v1.16.3 -> v1.16.5.
+- Backported testsuite fixes from the master branch (thx Frederic Berat,
+  Karl Berry).
+
 * Thu Nov 19 2020 Dmitry V. Levin <ldv@altlinux.org> 1.16.3-alt1
 - v1.16.2-24-gc8f8c3d5f -> v1.16.3.
 
