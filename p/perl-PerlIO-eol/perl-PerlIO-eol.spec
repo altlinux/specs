@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist PerlIO-eol
 Name: perl-%dist
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: PerlIO layer for normalizing line endings
@@ -32,6 +32,9 @@ line ending. It works for both input and output handles.
 %perl_vendor_autolib/PerlIO
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.19-alt1
+- automated CPAN update
+
 * Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 0.18-alt1
 - automated CPAN update
 
