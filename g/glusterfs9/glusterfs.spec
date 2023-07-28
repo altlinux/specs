@@ -17,7 +17,7 @@
 
 Name: glusterfs9
 Version: %major
-Release: alt2
+Release: alt3
 
 Summary: Cluster File System
 
@@ -778,8 +778,11 @@ rm -rf %buildroot%_includedir/glusterfs/
 #files checkinstall
 
 %changelog
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 9.6-alt3
+- fix previous changelog's entry: disable build the devel subpackage
+
 * Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 9.6-alt2
-- enable devel subpackage
+- disable devel subpackage
 
 * Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 9.6-alt1
 - new version 9.6 (with rpmrb script) (ALT bug 45768)
