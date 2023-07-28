@@ -6,7 +6,7 @@ BuildRequires: perl(CACertOrg/CA.pm) perl(Config.pm) perl(ConfigReader/Simple.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.128
+Version: 2.131
 Release: alt1
 Summary: Automate Perl distribution releases
 Group: Development/Perl
@@ -45,6 +45,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 2.131-alt1
+- automated CPAN update
+
 * Mon Mar 15 2021 Igor Vlasenko <viy@altlinux.org> 2.128-alt1
 - automated CPAN update
 
