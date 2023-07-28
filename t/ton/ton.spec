@@ -1,7 +1,7 @@
 %define userrldp _rldp-http-proxy
 
 Name: ton
-Version: 2023.03
+Version: 2023.06
 Release: alt1
 
 Summary: TON - The Open Network tools
@@ -16,7 +16,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # [arhm] /usr/src/RPM/BUILD/ton-2022.12/third-party/rocksdb/utilities/transactions/lock/range/range_tree/lib/locktree/../portability/toku_time.h:141:2: error: #error No timer implementation for this platform
 ExclusiveArch: x86_64 aarch64
 
-# Source-url: https://github.com/ton-blockchain/ton/archive/refs/tags/v2022.12.tar.gz
+# Source-url: https://github.com/ton-blockchain/ton/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 # Source1-url: https://ton.org/global-config.json
@@ -34,6 +34,8 @@ Source4: %name-crc32c-%version.tar
 # Source5-url: https://github.com/facebook/rocksdb/archive/refs/tags/v6.27.3.tar.gz
 Source5: %name-rocksdb-%version.tar
 
+Patch1: 0001-Fix-error-control-reaches-end-of-non-void-function.patch
+
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake >= 3.17
 BuildRequires: gcc-c++
@@ -44,6 +46,9 @@ BuildRequires: zlib-devel libssl-devel
 
 # for storage-daemon
 BuildRequires: libblas-devel libgsl-devel
+
+# for blockchain-explorer
+BuildRequires: libmicrohttpd-devel
 
 # Unusable -DTON_USE_ROCKSDB=OFF
 # due
@@ -132,6 +137,7 @@ storage-daemon-cli
 
 %prep
 %setup -a4 -a5
+%patch1 -p1
 
 %build
 %cmake -DTON_USE_ROCKSDB=ON -DTON_USE_ABSEIL=OFF
@@ -196,6 +202,14 @@ install -m0755 storage/storage-daemon/storage-daemon-cli %buildroot%_bindir/
 
 
 %changelog
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 2023.06-alt1
+- new version 2023.06 (with rpmrb script)
+- add BuildRequires: libmicrohttpd-devel
+- applied fix for build embedded rocksdb with gcc13
+
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 2023.03-alt2
+- real build 2023.03 (fix Source URL)
+
 * Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 2023.03-alt1
 - new version 2023.03 (with rpmrb script)
 
