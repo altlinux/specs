@@ -2,12 +2,13 @@
 
 Name: libpaper
 Version: 2.1.1
-Release: alt2
+Release: alt3
 Epoch: 2
 
 Summary: Library and tools for handling papersize
 
-License: LGPL-3.0-or-later
+# This is the license for the source package:
+License: LGPL-2.1-or-later AND ALT-Public-Domain AND GPL-3.0-or-later AND GPL-2.0-only
 Group: System/Libraries
 Url: https://github.com/rrthomas/libpaper
 
@@ -29,8 +30,10 @@ immediately integrate.
 
 %package -n %name%soname
 Summary: Library and tools for handling papersize
+# The library is licensed under LGPL-2.1-or-later, and the paperspecs file is
+# in the public domain.
+License: LGPL-2.1-or-later AND ALT-Public-Domain
 Group: System/Libraries
-Conflicts: libpaper < 1.1.28-alt3
 
 %description -n %name%soname
 The paper library and accompanying files are intended to provide a simple
@@ -42,8 +45,13 @@ immediately integrate.
 
 %package -n paper
 Summary: Query paper size database and retrieve the preferred size
+# The paper utility is licensed under GPL-3.0-or-later, and the paperconf is
+# licensed under GPL-2.0-only.
+License: GPL-3.0-or-later AND GPL-2.0-only
 Group: Text tools
 Requires: %name%soname = %EVR
+# due to /usr/bin/paperconf
+Conflicts: libpaper < 1.1.28-alt3
 
 %description -n paper
 This package enables users to indicate their preferred paper size, provides
@@ -51,15 +59,19 @@ the paper(1) utility to find the user's preferred default paper size and give
 information about known sizes, and specifies system-wide and per-user paper
 size catalogs, which can be can also be used directly (see paperspecs(5)).
 
+The paper utility is licensed under GPL-3.0-or-later, and the paperconf utility
+is licensed under GPL-2.0-only.
+
 %package -n libpaper-devel
 Summary: Header files for %name
+# The library is licensed under LGPL-2.1-or-later.
+License: LGPL-2.1-or-later
 Group: Development/Other
 Requires: %name%soname = %EVR
 
 %description -n libpaper-devel
 This package contains headers and libraries that programmers will need
 to develop applications which use libpaper.
-
 
 %prep
 %setup
@@ -81,20 +93,27 @@ to develop applications which use libpaper.
 %_docdir/libpaper/
 %_docdir/libpaper/README
 %_libdir/libpaper.so.*
-%_bindir/paperconf
-
+%_sysconfdir/paperspecs
+%_man5dir/paperspecs.5*
 
 %files -n paper
 %_bindir/paper
-%_sysconfdir/paperspecs
-%_man1dir/*
-%_man5dir/*
+%_bindir/paperconf
+%_man1dir/paper.1*
 
 %files -n libpaper-devel
 %_includedir/paper.h
 %_libdir/libpaper.so
 
 %changelog
+* Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.1.1-alt3
+- NMU:
+  - Moved the /etc/paperspecs data file from paper subpackage to the libpaper2
+    subpackage.
+  - Moved the paperconf utility from the libpaper2 subpackage to the paper
+    subpackage.
+  - Changed the package licenses according to the upstream README file.
+
 * Mon Jul 24 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.1.1-alt2
 - NMU:
   - Removed unused patches.
