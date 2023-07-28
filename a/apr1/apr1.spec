@@ -4,7 +4,7 @@
 
 Name: apr%aprver
 Version: 1.7.0
-Release: alt3
+Release: alt4
 
 Summary: Apache Portable Runtime
 Group: System/Libraries
@@ -14,6 +14,8 @@ Url: http://apr.apache.org/
 #Source: http://archive.apache.org/dist/apr/apr-%version.tar.gz
 Source: apr-%version.tar
 
+Patch: apr-1.7.0-upstream-fix-build-autoconf-2.70.patch
+
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
 
@@ -21,7 +23,7 @@ BuildPreReq: rpm-build-licenses
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
 # Automatically added by buildreq on Wed Sep 03 2008
-BuildRequires: gcc-c++ glibc-devel-static libuuid-devel python-modules autoconf_2.60
+BuildRequires: gcc-c++ glibc-devel-static libuuid-devel python-modules
 
 %package -n lib%name
 Summary: Apache Portable Runtime shared library
@@ -71,9 +73,9 @@ This package contains APR static library.
 
 %prep
 %setup -n apr-%version
+%patch -p1
 
 %build
-export AUTOCONF_VERSION=2.60
 LIBTOOL_M4=%_datadir/libtool/aclocal/libtool.m4 ./buildconf
 %configure \
 	--prefix=%prefix \
@@ -124,6 +126,10 @@ make check
 %endif
 
 %changelog
+* Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.0-alt4
+- Backported upstream commit to fix build with autoconf 2.70+ (thx Yann Ylavic
+  and Sergei Trofimovich).
+
 * Tue Jul 25 2023 Artyom Bystrov <arbars@altlinux.org> 1.7.0-alt3
 - Use working version of autoconf
 
