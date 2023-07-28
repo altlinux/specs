@@ -2,11 +2,11 @@
 
 Name: libmcrypt
 Version: 2.5.8
-Release: alt2
+Release: alt3
 
 Summary: Encryption/decryption library
 
-License: LGPL
+License: LGPLv2
 Group: System/Libraries
 Url: http://mcrypt.sourceforge.net/
 
@@ -19,12 +19,13 @@ Patch1: libmcrypt-2.5.1-dlopen.patch
 Patch2: libmcrypt-2.5.1-symbols.patch
 Patch3: libmcrypt-2.5.1-extra.patch
 Patch4: libmcrypt-2.5.7-automake.patch
+Patch5: libmcrypt-2.5.8-nolibltdl.patch
 
 Source1: mcrypt_symb.c
 
 # Automatically added by buildreq on Sat May 19 2012
 # optimized out: libstdc++-devel
-BuildRequires: gcc-c++ glibc-devel-static
+BuildRequires: gcc-c++ glibc-devel
 
 %package devel
 Summary: Development environment for %name
@@ -56,7 +57,7 @@ This package contains static libraries.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#patch4
+%patch5 -p1
 
 %__subst 's,libmcrypt_la_LIBADD = @EXTRA_OBJECTS@,,' lib/Makefile.am
 
@@ -65,11 +66,14 @@ This package contains static libraries.
 )
 
 # only invalid libtool.m4 inclusion
-rm -f acinclude.m4
-#rm -rf libltdl/
+rm -v acinclude.m4
+rm -rv libltdl/
+
+# autoreconf-default: warning: autoconf input should be named 'configure.ac', not 'configure.in'
+mv -v configure.in configure.ac
 
 %build
-%autoreconf 
+%autoreconf
 # Since 2.5.4 libmcrypt does not use dynamic loading for the modules by default
 %configure %{subst_enable static} --disable-ltdl \
            --disable-libtool-lock --disable-dynamic-loading
@@ -114,6 +118,11 @@ done
 # TODO: remove strange hacking for build & install
 
 %changelog
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt3
+- fix build with new autoconf 2.71 (remove libltdl)
+- BR: s/glibc-devel-static/glibc-devel
+- fix license name
+
 * Sat Sep 04 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt2
 - cleanup spec, disable devel-static packing
 
