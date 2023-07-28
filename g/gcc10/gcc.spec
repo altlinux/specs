@@ -1,7 +1,9 @@
+%set_autoconf_version 2.60
+
 %define gcc_branch 10
 
 Name: gcc%gcc_branch
-Version: 10.4.1
+Version: 10.5.0
 Release: alt1
 
 Summary: GNU Compiler Collection
@@ -2168,10 +2170,19 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.5.0-alt1
+- Updated to 10.5.0.
+- Updated to git://gcc.gnu.org/git/gcc.git branch releases/gcc-10
+  (snapshot 20230707) commit
+  r10-11492-gd04fe5541c53cb16d1ca5c80da044b4c7633dbc6 = releases/gcc-10.5.0.
+- Added %%set_autoconf_version 2.60 to workaround FTBFS caused by a change
+  of the default autoconf version to 2.71.
+
+
 * Fri Jun 30 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.4.1-alt1
 - Updated to upstream branch from git://gcc.gnu.org/git/gcc.git:
   + vendors/redhat/heads/gcc-10-branch
-  commit r10-11479-g5b803d14e04cce2aaae7c135a3d7ab46a0656370 (fixes FTBFs with
+  commit r10-11479-g5b803d14e04cce2aaae7c135a3d7ab46a0656370 (fixes FTBFS with
   glibc 2.36+).
 
 * Thu Sep 23 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.1-alt6
