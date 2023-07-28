@@ -1,8 +1,9 @@
 %define modname wheezy.template
+%define pypi_name %modname
 %def_disable check
 
 Name: python3-module-%modname
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: %modname is a lightweight template library
@@ -14,7 +15,7 @@ Vcs: https://github.com/akornatskyy/wheezy.template.git
 Source: https://pypi.io/packages/source/w/%modname/%modname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-Cython
+BuildRequires: python3(wheel) python3(setuptools) python3-module-Cython
 
 %description
 %modname is a python package written in pure Python code. It is a
@@ -39,13 +40,13 @@ rendering performance: ultimate speed and context preprocessor features.
 %setup -n %modname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-tox.py3
+%tox_check
 
 %files
 %_bindir/*
@@ -53,6 +54,9 @@ tox.py3
 %doc README*
 
 %changelog
+* Fri Jul 28 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Tue Apr 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
 - 3.1.0
 
