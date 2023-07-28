@@ -1,17 +1,16 @@
-%define module_version 1.06
+%define _unpackaged_files_terminate_build 1
 %define module_name SMS-Send
 
-%define _unpackaged_files_terminate_build 1
 
 Name:       perl-%module_name
-Version:    %module_version
-Release:    alt4
+Version:    1.07
+Release:    alt1
 
 Summary:    Driver-based API for sending SMS messages
 License:    %perl_license
 Group:      Development/Perl
 Url:        %CPAN %module_name
-Source0:    %module_name-%module_version.tar.gz
+Source0:    http://www.cpan.org/authors/id/E/ET/ETHER/%{module_name}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,7 +32,7 @@ or physical SMS hardware. It could be a free or paid. The details shouldn't
 matter.
 
 %prep
-%setup -q -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -45,10 +44,13 @@ matter.
 %perl_vendor_install
 
 %files
-%doc README LICENSE META.yml Changes
+%doc README META.yml Changes CONTRIBUTING
 %perl_vendor_privlib/*
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 1.07-alt1
+- automated CPAN update
+
 * Thu Apr 07 2016 Sergey Y. Afonin <asy@altlinux.ru> 1.06-alt4
 - imported from autoimports
 - spec's cleanups
