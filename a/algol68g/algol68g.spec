@@ -1,5 +1,5 @@
 Name: algol68g
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 Summary: Algol 68 interpreter
 License: GPL
@@ -26,11 +26,6 @@ can optionally be compiled.
 
 %prep
 %setup
-%ifarch %e2k
-# bug in configure.ac, reported to upstream
-# because this test requires nested and inline functions, not just inline ones
-sed -i 's/\[\], \[inline void skip (void) {;}\]/[static inline void skip (void) {;}], []/' configure.ac
-%endif
 
 %build
 autoconf
@@ -52,6 +47,9 @@ install -pm644 ChangeLog %buildroot%_docdir/
 %_docdir/*
 
 %changelog
+* Fri Jul 28 2023 Andrey Bergman <vkni@altlinux.org> 3.2.1-alt1
+- Version update
+
 * Mon Jul 10 2023 Andrey Bergman <vkni@altlinux.org> 3.2.0-alt1
 - Version update
 
