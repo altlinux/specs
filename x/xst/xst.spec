@@ -1,5 +1,5 @@
 Name: xst
-Version: 0.8.5
+Version: 0.9.0
 Release: alt1
 
 Packager: %packager
@@ -59,6 +59,9 @@ cp st.info %buildroot/%docdir/
 %docdir/*
 
 %changelog
+* Fri Jul 28 2023 Andrey Bergman <vkni@altlinux.org> 0.9.0-alt1
+- Update to version 0.9.0
+
 * Sun May 22 2022 Andrey Bergman <vkni@altlinux.org> 0.8.5-alt1
 - Update to version 0.8.5
 
