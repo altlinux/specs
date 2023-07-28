@@ -3,7 +3,7 @@ BuildRequires: fonts-ttf-liberation
 %define dist Padre
 Name: perl-Padre
 Version: 1.00
-Release: alt7.dac1134
+Release: alt8.dac1134
 
 
 Summary: Padre - Perl Application Development and Refactoring Environment
@@ -11,6 +11,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %dist
+VCS: git+https://github.com/PadreIDE/Padre.git
 Source: %name-%version.tar
 
 %add_findreq_skiplist */Padre/Wx/About.pm
@@ -18,7 +19,7 @@ Source: %name-%version.tar
 %add_findreq_skiplist */auto/share/dist/Padre/*
 
 BuildArch: noarch
-BuildRequires: perl-Parse-Functions perl-unicore perl-HTML-Parser perl-pod perl-Text-FindIndent perl-List-MoreUtils perl-Test-NoWarnings perl-File-HomeDir perl-Test-Script perl-Parse-ErrorString-Perl perl-YAML-Tiny perl-threads perl-Class-Adapter perl-Wx perl-Class-Unload perl-Pod-POM perl-File-Find-Rule perldoc perl-Class-XSAccessor perl-PPI perl-File-Remove perl-Probe-Perl perl-Devel-Refactor perl-devel perl-Encode perl-Parse-ExuberantCTags perl-Debug-Client perl-Text-Balanced perl-Format-Human-Bytes perl-ack perl-File-Copy-Recursive perl-Pod-Abstract perl-ORLite perl-Term-ReadLine-Gnu perl-Module-Refresh perl-Test-Exception perl-Pod-Simple perl-File-ShareDir perl-IO-String perl-Module-Starter perl-Module-CoreList perl-Params-Util perl-Devel-Dumpvar perl-DBD-SQLite perl-File-Next perl-Text-Diff perl-File-Which perl-IO-stringy perl-Wx-Perl-ProcessStream perl-Template-Tiny perl-DBI perl-Capture-Tiny perl-URI perl-PPIx-EditorTools perl-Locale-Msgfmt perl-Alien-wxWidgets perl-App-cpanminus perl-Readonly-XS perl-PPIx-Regexp perl-JSON-XS perl-Test-MockObject perl-IPC-Run perl-Module-Manifest perl-POD2-Base perl-File-Slurp perl-Wx-Scintilla perl-ORLite-Migrate perl-App-cpanminus perl-CGI perl-Test-Warn perl-Text-Patch
+BuildRequires: perl-Parse-Functions perl-unicore perl-HTML-Parser perl-pod perl-Text-FindIndent perl-List-MoreUtils perl-Test-NoWarnings perl-File-HomeDir perl-Test-Script perl-Parse-ErrorString-Perl perl-YAML-Tiny perl-threads perl-Class-Adapter perl-Wx perl-Class-Unload perl-Pod-POM perl-File-Find-Rule perldoc perl-Class-XSAccessor perl-PPI perl-File-Remove perl-Probe-Perl perl-Devel-Refactor perl-devel perl-Encode perl-Parse-ExuberantCTags perl-Debug-Client perl-Text-Balanced perl-Format-Human-Bytes perl-ack perl-File-Copy-Recursive perl-Pod-Abstract perl-ORLite perl-Term-ReadLine-Gnu perl-Module-Refresh perl-Test-Exception perl-Pod-Simple perl-File-ShareDir perl-IO-String perl-Module-Starter perl-Module-CoreList perl-Params-Util perl-Devel-Dumpvar perl-DBD-SQLite perl-File-Next perl-Text-Diff perl-File-Which perl-IO-stringy perl-Wx-Perl-ProcessStream perl-Template-Tiny perl-DBI perl-Capture-Tiny perl-URI perl-PPIx-EditorTools perl-Locale-Msgfmt perl-Alien-wxWidgets perl-App-cpanminus perl-Readonly-XS perl-PPIx-Regexp perl-JSON-XS perl-Test-MockObject perl-IPC-Run perl-Module-Manifest perl-POD2-Base perl-File-Slurp perl-Wx-Scintilla perl-ORLite-Migrate perl-App-cpanminus perl-CGI perl-Test-Warn perl-Text-Patch perl(HTTP/Cookies.pm)
 BuildRequires: xvfb-run /usr/bin/convert
 
 Requires: perl-unicore perl-POD2-Base
@@ -70,6 +71,9 @@ EOF
 %doc Changes README* Artistic COPYING
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 1.00-alt8.dac1134
+- added VCS: tag
+
 * Mon Apr 04 2022 Igor Vlasenko <viy@altlinux.org> 1.00-alt7.dac1134
 - fixed build
 
