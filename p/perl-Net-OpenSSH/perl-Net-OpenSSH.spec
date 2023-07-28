@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Net-OpenSSH
-Version: 0.83
+Version: 0.84
 Release: alt1
 
 Summary: Net::OpenSSH - Perl SSH client package implemented on top of OpenSSH
@@ -34,6 +34,9 @@ BuildRequires: openssh-clients perl-devel perl(Moo.pm)
 %doc Changes README
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.84-alt1
+- new version
+
 * Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 0.83-alt1
 - new version
 
