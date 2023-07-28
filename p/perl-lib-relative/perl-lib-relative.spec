@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           perl-lib-relative
-Version:        1.001
+Version:        1.002
 Release:        alt1
 Summary:        Add paths relative to the current file to @INC
 License:        Artistic-2.0
@@ -31,6 +31,9 @@ it to @INC.
 %perl_vendorlib/* 
  
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 1.002-alt1
+- automated CPAN update
+
 * Wed Jun 22 2022 Igor Vlasenko <viy@altlinux.org> 1.001-alt1
 - automated CPAN update
 
