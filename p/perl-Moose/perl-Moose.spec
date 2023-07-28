@@ -5,7 +5,7 @@ BuildRequires: perl(Test/Needs.pm)
 %def_without bootstrap
 %define dist Moose
 Name: perl-%dist
-Version: 2.2203
+Version: 2.2206
 Release: alt1
 
 Summary: A postmodern object system for Perl 5
@@ -67,6 +67,9 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 2.2206-alt1
+- automated CPAN update
+
 * Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 2.2203-alt1
 - automated CPAN update
 
