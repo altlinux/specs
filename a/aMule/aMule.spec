@@ -2,10 +2,10 @@
 %define		_rc	rc8
 Name:		aMule
 Version:	2.3.3
-Release:	alt4
+Release:	alt5
 
 Summary:	aMule - eMule client.
-License:	GPL
+License:	GPL-2.0-or-later
 Group: 		Networking/File transfer
 
 Url:		http://www.amule.org
@@ -15,32 +15,33 @@ Source:		%_name-%version.tar.gz
 
 Conflicts:	xmule
 
+Patch: amule-2.3.3-upstream-allow-autoconf_2.70.patch
+
 # Automatically added by buildreq on Mon Jun 16 2008
-BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK3.0-devel xorg-cf-files autoconf_2.60
+BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK3.0-devel xorg-cf-files
 BuildRequires: libcryptopp-devel >= 6
 BuildRequires: libupnp-devel binutils-devel libcurl-devel libtool bison libexpat-devel
 
 #BuildRequires: rpm-build-compat >= 0.95
 
 %description
-The "all-platform eMule", it is a eMule-like client for ed2k network, 
-supporting Linux, *BSD platforms, Solaris, *MacOSX and *Win32 (*soon). 
-It was forked from xMule project back in September 2003 (not related 
-to it anymore, except little bits of old code), to drive it to a brand 
-new direction and quality. Uses wxWidgets (formerly known as wxWindows) 
+The "all-platform eMule", it is a eMule-like client for ed2k network,
+supporting Linux, *BSD platforms, Solaris, *MacOSX and *Win32 (*soon).
+It was forked from xMule project back in September 2003 (not related
+to it anymore, except little bits of old code), to drive it to a brand
+new direction and quality. Uses wxWidgets (formerly known as wxWindows)
 for multiplatform support.
 
 %prep
 %setup -q -n %_name-%version
+%patch -p1
+
 %__subst "s,aMuleConv(wxT(\"iso8859-1\")),aMuleConv(wxLocale::GetSystemEncodingName())," src/utils/aLinkCreator/src/alcc.h
 %__subst "s,aMuleConv(wxT(\"iso8859-1\")),aMuleConv(wxLocale::GetSystemEncodingName())," src/utils/aLinkCreator/src/ed2khash.cpp
 %__subst "s,#include <wx/strconv\.h>,#include <wx/strconv\.h>\n#include <wx/intl\.h>," src/utils/aLinkCreator/src/alcc.h
 %__subst "s,#include <wx/strconv\.h>,#include <wx/strconv\.h>\n#include <wx/intl\.h>," src/utils/aLinkCreator/src/ed2khash.cpp
 
 %build
-#set_gcc_version 4.9
-##export CC=gcc-4.9 CXX=g++-4.9
-export AUTOCONF_VERSION=2.60
 export CXXFLAGS="%{optflags} -std=c++14"
 
 ./autogen.sh
@@ -78,6 +79,11 @@ export CXXFLAGS="%{optflags} -std=c++14"
 %dir %_docdir/amule
 
 %changelog
+* Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3.3-alt5
+- Backported an upstream patch to allow reconfiguration with autoconf 2.70+
+  (thx Pablo Barciela).
+- Fixed the License: tag (GPL -> GPL-2.0-or-later).
+
 * Tue Jul 25 2023 Artyom Bystrov <arbars@altlinux.org> 2.3.3-alt4
 - Use autoconf_2.60
 
@@ -146,7 +152,7 @@ export CXXFLAGS="%{optflags} -std=c++14"
 - Build for ALT Linux 5.0
 
 * Mon May 18 2009 Ilya Mashkin <oddity@altlinux.ru> 2.2.5-alt1
-- 2.2.5 
+- 2.2.5
 - fixed CVE-2009-1440 (Closes: #19829)
 
 * Sat May 02 2009 Ilya Mashkin <oddity@altlinux.ru> 2.2.4-alt1
@@ -160,7 +166,7 @@ export CXXFLAGS="%{optflags} -std=c++14"
 -  #11851 fix. 10x to php-coder@.
 
 * Tue Jul 31 2007 Alex Gorbachenko (agent_007) <algor@altlinux.ru> 2.1.3-alt1
-- 2.1.3. wxGTK2u 2.6.x build. 
+- 2.1.3. wxGTK2u 2.6.x build.
 
 * Thu Aug 31 2006 Alex Gorbachenko (agent_007) <algor@altlinux.ru> 2.1.2-alt1.1
 -  rebuild with wxGTK 2.7.0 testing.
