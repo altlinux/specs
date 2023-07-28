@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.7
+Version: 1.5.8
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -129,6 +129,26 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Jul 28 2023 Anton Midyukov <antohami@altlinux.org> 1.5.8-alt1
+- base+rescue: Add mdmon for IMSM (thanks jqt4)
+- initrd-bootchain: update for new make-initrd-bootchain
+- initrd-bootchain: save more reproducible command in mkinitrd
+- initrd-propagator: save more reproducible command in mkinitrd
+- grub: clean 'showopts' from boot args
+- remove rescue+backup package list
+- remove desktop+lxqt+extra package list
+- mixin.mk: clean extra package from cinnamon
+- cleanup: fix conditions in 90-cleanup-live-pkgs
+- x11: remove lightdm-qt-greeter, lightdm-lxqt-greeter
+- x11: add  use/x11/lightdm/autologin (lightdm-autologin-greeter)
+- deflogin: set default session for lightdm autologin-session
+- tar2fs: install grub-efi to EFI/altlinux also (--no-nvram) (See: 41959)
+- tar2fs: install grub-pc for x86_64 with UEFI
+- Initial loongarch64 support
+- stage2: add kernel/fs/smb path to 50-stage2-net-cifs (Closes: 46980)
+- set GLOBAL_HSH_PROC=1 in lib/profile.mk
+- phone.mk: many changes
+
 * Mon Jul 03 2023 Anton Midyukov <antohami@altlinux.org> 1.5.7-alt1
 - phone.mk: many changes, add waydroid support
 - sound: use wireplumber for pipewire on branch also
