@@ -24,7 +24,7 @@
 
 Name: openblas
 Version: 0.3.23
-Release: alt1.1
+Release: alt1.2
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -128,6 +128,7 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
     PREFIX=%_prefix \
     OPENBLAS_LIBRARY_DIR=%_libdir \
     OPENBLAS_INCLUDE_DIR=%_includedir/openblas \
+    %{?oblas_target:TARGET=%oblas_target} \
     %nil
 
 %check
@@ -153,6 +154,10 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 %exclude %_libdir/*.a
 
 %changelog
+* Fri Jul 28 2023 Ivan A. Melnikov <iv@altlinux.org> 0.3.23-alt1.2
+- NMU: spec: fix FTBFS on riscv64 by passing TARGET
+  to make install if TARGET is specified
+
 * Tue Jun 20 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.3.23-alt1.1
 - e2k patch disabled (got to upstream)
 
