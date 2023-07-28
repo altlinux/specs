@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soundconverter
-Version: 4.0.3
+Version: 4.0.4
 Release: alt1
 
 Summary: A simple sound converter application for GNOME
@@ -18,6 +18,8 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: intltool
 BuildRequires: python3-devel
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3-module-pygobject3
 BuildRequires: python3-module-distutils-extra
 BuildRequires: gir(Gst) = 1.0
@@ -25,6 +27,7 @@ BuildRequires: desktop-file-utils
 Requires: gst-plugins-ugly1.0
 Requires: gst-plugins-good1.0
 Requires: gst-plugins-base1.0
+Requires: typelib(Gtk) = 3.0
 
 %description
 A simple sound converter application for the GNOME environment.
@@ -35,10 +38,10 @@ It reads and writes anything the GStreamer library can.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Audio \
@@ -60,7 +63,7 @@ rm -r %buildroot%_datadir/doc/%name
 %doc AUTHORS README.md
 %_bindir/%name
 %python3_sitelibdir/%name
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%name-%version.dist-info
 %_datadir/%name
 %_datadir/metainfo/%name.appdata.xml
 %_datadir/glib-2.0/schemas/*
@@ -69,6 +72,11 @@ rm -r %buildroot%_datadir/doc/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Fri Jul 28 2023 Anton Midyukov <antohami@altlinux.org> 4.0.4-alt1
+- New version 4.0.4
+- Migration to PEP517
+- Requires: typelib(Gtk) = 3.0
+
 * Sun Nov 07 2021 Anton Midyukov <antohami@altlinux.org> 4.0.3-alt1
 - New version 4.0.3
 
