@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.08
+Version: 1.09
 Release: alt1
 Summary: color palette creation tool
 Group: Development/Perl
@@ -37,6 +37,9 @@ palette you desire quickly and with no additional dependencies.
 %perl_vendor_privlib/G*
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 1.09-alt1
+- automated CPAN update
+
 * Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 1.08-alt1
 - automated CPAN update
 
