@@ -1,10 +1,12 @@
+%def_disable check
+
 %define realname autoconf
 %define dialect _2.71
 %define suff -2.71
 
 Name: %realname%dialect
 Version: 2.71
-Release: alt1
+Release: alt2
 
 Summary: A GNU tool for automatically configuring source code
 License: GPLv2+
@@ -105,6 +107,16 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.71-alt2
+- Reintroduced the fix for the AC_PROG_CXXCPP macro, which addresses the issue
+  where the absence of the C++ preprocessor was considered fatal.  This fix was
+  initially introduced in the autoconf release 2.59-alt2 but was lost in the
+  2.71-alt1 release.
+- Backported upstream commits related to (thx Paul Eggert):
+  - Porting AC_LANG_CALL(C) macro to C++ (thx Paul Eggert);
+  - Porting to compilers that moan about K&R func declarations
+    (thx Paul Eggert and Zack Weinberg).
+
 * Fri Jul 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.71-alt1
 - Updated to v2.71 (ALT#42349).
 
