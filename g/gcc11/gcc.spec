@@ -1,7 +1,9 @@
+%set_autoconf_version 2.60
+
 %define gcc_branch 11
 
 Name: gcc%gcc_branch
-Version: 11.3.1
+Version: 11.4.1
 Release: alt1
 
 Summary: GNU Compiler Collection
@@ -17,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20230112
+%define snapshot 20230721
 
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
@@ -2216,6 +2218,16 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.4.1-alt1
+- Updated to 11.4.1.
+- Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-11-branch
+  commit 2c7f17ca0b642790d74cca6c798196e9053a4bcf;
+  + releases/gcc-11 (snapshot 20230721)
+  commit r11-10919-g471f1a33919e1775fe58a7fcbe88c93d6c2fffc5.
+- Added %%set_autoconf_version 2.60 to workaround FTBFS caused by a change
+  of the default autoconf version to 2.71.
+
 * Mon Jan 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.3.1-alt1
 - Updated to 11.3.1.
 - Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
