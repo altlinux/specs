@@ -1,12 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Filter-signatures
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Filter/Simple.pm) perl(Pod/Markdown.pm) perl(Test/More.pm) perl(Text/Balanced.pm) perl(feature.pm) perl(warnings.pm) perl(warnings/register.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.17
+Version: 0.19
 Release: alt1
 Summary: very simplicistic signatures for Perl < 5.20
 Group: Development/Perl
@@ -40,6 +40,9 @@ use Filter::signatures;
 %perl_vendor_privlib/F*
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.19-alt1
+- automated CPAN update
+
 * Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
