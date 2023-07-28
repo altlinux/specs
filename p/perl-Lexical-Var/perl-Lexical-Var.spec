@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,14 +7,12 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Lexical-Var
-Version:        0.009
-Release:        alt3_21
+Version:        0.010
+Release:        alt1
 Summary:        Static variables without name space pollution
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Lexical-Var
-Source0:        https://cpan.metacpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-Var-%{version}.tar.gz
-# Update code to work with Perl 5.21.x (CPAN RT#101058)
-Patch0:         Lexical-Var-0.009-Fix-RT-101058.patch
+Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-Var-%{version}.tar.gz
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -43,7 +42,6 @@ infrastructure for modules that manage name spaces.
 
 %prep
 %setup -q -n Lexical-Var-%{version}
-%patch0 -p1
 
 %build
 perl Build.PL --installdirs=vendor --optimize="$RPM_OPT_FLAGS"
@@ -63,6 +61,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -delete
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.010-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.009-alt3_21
 - update to new release by fcimport
 
