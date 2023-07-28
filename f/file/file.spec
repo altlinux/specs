@@ -4,9 +4,8 @@
 %set_verify_elf_method strict
 
 Name: file
-Version: 5.44
-Release: alt3
-
+Version: 5.45
+Release: alt1
 Summary: File type guesser
 License: BSD-2-Clause
 Group: File tools
@@ -15,7 +14,6 @@ Url: http://www.darwinsys.com/file/
 Vcs: https://github.com/file/file
 
 Source: %name-%version.tar
-
 BuildRequires: bzlib-devel
 BuildRequires: libcap-devel
 BuildRequires: liblzma-devel
@@ -32,7 +30,7 @@ BuildRequires: strace
 The file command is "a file type guesser", that is, a command-line tool that
 tells you in words what kind of data a file contains. Unlike most GUI systems,
 command-line UNIX systems - with this program leading the charge - don't rely
-on filename extentions to tell you the type of a file, but look at the file's
+on filename extensions to tell you the type of a file, but look at the file's
 actual contents. This is, of course, more reliable, but requires a bit of I/O.
 
 %package -n libmagic
@@ -132,6 +130,10 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Fri Jul 28 2023 Vitaly Chikunov <vt@altlinux.org> 5.45-alt1
+- Update to FILE5_45 (2023-07-27).
+- Clean up non-ALT entries from %%changelog.
+
 * Mon Apr 17 2023 Vitaly Chikunov <vt@altlinux.org> 5.44-alt3
 - Fix build on older libseccomp.
 
@@ -370,83 +372,3 @@ make check
 
 * Wed Aug  8 2000 Dmitry V. Levin <ldv@fandra.org> 3.32-ipl1mdk
 - RE adaptions.
-
-* Mon Aug 07 2000 Thierry Vignaud <tvignaud@mandrakesoft.com> 3.32-1mdk
-- new release
-
-* Sun Jul 23 2000 Geoffrey Lee <snailtalk@mandrakesoft.com> 3.31-3mdk
-- BM
-
-* Mon Jul 10 2000 Thierry Vignaud <tvignaud@mandrakesoft.com> 3.31-2mdk
-- remove old commented commands.
-- Stefan van der Eijk <s.vandereijk@chello.nl> did :
-	- makeinstall macro
-	- macroszifications
-
-* Mon May 15 2000 DindinX <odin@mandrakesoft.com> 3.31-1mdk
-- new version 3.31
-- removed all unnecessary patches
-
-* Tue Apr 11 2000 Geoffrey Lee <snailtalk@linux-mandrake.com> 3.30-1mdk
-- new version 3.30
-- fix license to BSD
-
-* Thu Mar 23 2000 DindinX <odin@mandrakesoft.com> 3.28-2mdk
-- Specs updates, new Group
-
-* Sun Oct 31 1999 Axalon Bloodstone <axalon@linux-mandrake.com>
-- enable SMP build/check
-- 3.28 :
-	- Remove strip/realmedia patch (is there)
-	- Remove sparc patch (perl does better, not need updateing)
-
-* Wed Oct 20 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
-- Merge with redhat changes.
-- identify ELF stripped files correctly (r).
-- use SPARC (not sparc) consistently throughout (r).
-- add entries for MS Office files (r).
-
-* Tue Aug 17 1999 Axalon Bloodstone <axalon@linux-mandrake.com>
-- Redhat merge:
-	- Thu Aug 12 1999 Jeff Johnson <jbj@redhat.com>
-	- diddle magic so that *.tfm files are identified correctly.
-
-* Thu Jul 15 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
-- Reinserting po translations from MDK5.3.
-- Bzip2 patch.
-- 3.27.
-- Removing unused stuff.
-
-* Mon Apr 12 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
-- Add patch for realmedia support.
-
-* Sat Apr 10 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
-- Mandrake adaptions
-- bzip2 man/info pages
-- add de locale
-
-* Fri Nov 27 1998 Jakub Jelinek <jj@ultra.linux.cz>
-- add SPARC V9 magic.
-
-* Tue Nov 10 1998 Jeff Johnson <jbj@redhat.com>
-- update to 3.26.
-
-* Mon Aug 24 1998 Jeff Johnson <jbj@redhat.com>
-- update to 3.25.
-- detect gimp XCF versions.
-
-* Thu May 07 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Wed Apr 08 1998 Erik Troan <ewt@redhat.com>
-- updated to 3.24
-- buildrooted
-
-* Mon Jun 02 1997 Erik Troan <ewt@redhat.com>
-- built against glibc
-
-* Mon Mar 31 1997 Erik Troan <ewt@redhat.com>
-- Fixed problems caused by 64 bit time_t.
-
-* Thu Mar 06 1997 Michael K. Johnson <johnsonm@redhat.com>
-- Improved recognition of Linux kernel images.
