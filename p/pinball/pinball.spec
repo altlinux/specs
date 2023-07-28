@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install cppunit-devel imake libSDL-devel li
 
 Name:           pinball
 Version:        0.3.4
-Release:        alt1_14
+Release:        alt2_13
 Summary:        Emilia 3D Pinball Game
 # core license is GPLv2+
 # gnu table licenses are (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA
@@ -18,7 +18,7 @@ Summary:        Emilia 3D Pinball Game
 License: GPL-2.0-or-later AND FSFAP AND LGPL-2.0-or-later AND GPL-3.0-or-later AND CC-BY-SA
 URL:            http://pinball.sourceforge.net
 Source0:        https://github.com/sergiomb2/pinball/archive/%{version}/%{name}-%{version}.tar.gz
-BuildRequires:  gcc-c++ autoconf_2.60
+BuildRequires:  gcc-c++
 BuildRequires:  libXt-devel
 BuildRequires:  libfreeglut-devel
 BuildRequires:  libSDL_image-devel
@@ -52,13 +52,11 @@ May be used in pinball-pinedit.
 
 %prep
 %setup -q
-export AUTOCONF_VERSION=2.60
 sed -i 's/Exec=pinball/Exec=pinball-wrapper/' pinball.desktop
-./bootstrap
 
 
 %build
-
+./bootstrap
 %configure --disable-static
 %make_build
 
@@ -107,6 +105,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.4-alt2_13
+- Reverted the modifications introduced in the previous release.
+
 * Tue Jul 25 2023 Artyom Bystrov <arbars@altlinux.org> 0.3.4-alt1_14
 - Use autoconf 2.60
 
