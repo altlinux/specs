@@ -6,7 +6,7 @@
 
 Name: %realname%dialect
 Version: 1.10.3
-Release: alt5
+Release: alt6
 Epoch: 1
 
 %define mydatadir %_datadir/%apiname
@@ -73,7 +73,9 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 	%buildroot%docdir/
 
 %check
-%make_build -k check
+# --output-sync=none disables the '-O' option passed by rpm-build
+# through the MAKEFLAGS environment variable with.
+%make_build -k check --output-sync=none
 
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
@@ -85,6 +87,13 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 %docdir/
 
 %changelog
+* Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.10.3-alt6
+- Resolved issues related to compatibility with autoconf >= 2.70:
+  - Backported upstream fix (thanks to Zack Weinberg).
+  - Implemented testsuite fixes related to ansi2knr.
+- %%check: added the --output-sync=none argument to the make(1) utility call to
+  prevent the test suite log from being spewed after all tests have completed.
+
 * Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.10.3-alt5
 - Dropped alternatives in favour of automake-defaults setup.
 
