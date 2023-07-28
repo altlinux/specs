@@ -75,16 +75,13 @@ BuildRequires: /usr/bin/hg
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt4_3
+Release:	alt5_3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
 Source0:	ftp://tug.org/historic/systems/texlive/%{relYear}/%{name}-%{mga_tl_timestamp}-source.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/%{relYear}/%{name}-%{mga_tl_timestamp}-source.tar.xz.sha512
-
-%set_gcc_version 12
-BuildRequires: gcc12-c++
 
 %if %{enable_xdvik}
 Requires:	ghostscript-module-X
@@ -224,6 +221,9 @@ Provides: texlive-collection-binextra = %{tl_version}
 Patch35: texlive-2018-e2k-luatex.patch
 # Poppler patches
 #Patch101: 0001-try-to-adapt-to-poppler-0.58.patch
+
+# fixed build with gcc-13
+Patch36: texlive-20210325-alt-gcc13.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -422,6 +422,7 @@ perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
 %patch33 -p0
 %patch34 -p1
 %patch35 -p2
+%patch36 -p1
 
 %if ! %{enable_luajittex}
 # even if building luajit is disabled, build scripts still call
@@ -433,8 +434,6 @@ rm -rf libs/luajit
 %build
 %add_optflags -fpermissive
 export CXXFLAGS="%{optflags} -std=c++14"
-export CC=%__cc
-export CXX=%__cxx
 
 #for dvisvgm system libs patches
 autoreconf -vfi texk/dvisvgm
@@ -690,6 +689,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Thu Jul 27 2023 Mikhail Tergoev <fidel@altlinux.org> 2021-alt5_3
+- NMU: fixed build with gcc-13 (ALT bug 46864)
+
 * Tue Jul 11 2023 Mikhail Tergoev <fidel@altlinux.org> 2021-alt4_3
 - NMU: fixed build (force compiling with gcc-12)
 
