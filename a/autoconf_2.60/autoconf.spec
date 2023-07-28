@@ -4,7 +4,7 @@
 
 Name: %realname%dialect
 Version: 2.69
-Release: alt10
+Release: alt11
 Epoch: 2
 
 Summary: A GNU tool for automatically configuring source code
@@ -49,6 +49,7 @@ their use.
 
 %prep
 %setup -n %srcname
+cp alt/ChangeLog ChangeLog
 find -type f -print0 |
 	xargs -r0 fgrep -lZ @RPM_AUTOCONF_SUFFIX@ -- |
 	xargs -r0 sed -i s,@RPM_AUTOCONF_SUFFIX@,%suff, --
@@ -106,6 +107,9 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.69-alt11
+- Fixed the definition of the RELEASE_YEAR variable.
+
 * Wed Aug 25 2021 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt10
 - Reverted the change that introduced --runstatedir option.
   It caused build regressions in a few packages,
