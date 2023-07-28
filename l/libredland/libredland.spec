@@ -9,7 +9,7 @@
 
 Name: libredland
 Version: 1.0.17
-Release: alt4
+Release: alt5
 
 Summary: Redland - a library that provides a high-level interface for RDF
 
@@ -72,6 +72,7 @@ rm -rv libltdl/
 
 %build
 %autoreconf
+%autoreconf libltdl
 # symlink to file
 sed -i ';' libltdl/config-h.in
 %configure \
@@ -117,6 +118,9 @@ sed -i ';' libltdl/config-h.in
 %_gtkdocdir/redland/
 
 %changelog
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.17-alt5
+- add %autoreconf libltdl
+
 * Wed Dec 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.17-alt4
 - fix build
 
