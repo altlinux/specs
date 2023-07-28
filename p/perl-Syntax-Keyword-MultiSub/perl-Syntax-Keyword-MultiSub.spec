@@ -7,7 +7,7 @@ BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Test/Fatal.
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.03
+Version: 0.04
 Release: alt1
 Summary: multiple dispatch on subroutines
 Group: Development/Perl
@@ -47,6 +47,9 @@ rm -f t/01multi.t
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.04-alt1
+- automated CPAN update
+
 * Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 0.03-alt1
 - automated CPAN update
 
