@@ -4,7 +4,7 @@
 %def_without check
 
 Name:       python3-module-%oname
-Version:    15.0.6.1
+Version:    16.0.6
 Release:    alt1
 
 Summary:    Libclang python bindings
@@ -39,6 +39,9 @@ up the LLVM environment.
 %python3_sitelibdir/lib%oname-%version-*.egg-info
 
 %changelog
+* Fri Jul 28 2023 Anton Vyatkin <toni@altlinux.org> 16.0.6-alt1
+- New version 16.0.6.
+
 * Fri Mar 17 2023 Anton Vyatkin <toni@altlinux.org> 15.0.6.1-alt1
 - New version 15.0.6.1
 
