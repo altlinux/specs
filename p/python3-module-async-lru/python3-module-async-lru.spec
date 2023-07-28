@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 
 Summary: Simple LRU cache for asyncio
@@ -43,6 +43,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %mname}
 
 %changelog
+* Fri Jul 28 2023 Andrey Cherepanov <cas@altlinux.org> 2.0.4-alt1
+- New version.
+
 * Sat Jul 08 2023 Andrey Cherepanov <cas@altlinux.org> 2.0.3-alt1
 - New version.
 
