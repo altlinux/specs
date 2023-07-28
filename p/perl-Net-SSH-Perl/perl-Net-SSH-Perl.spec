@@ -24,14 +24,14 @@
 
 Summary: Perl client interface to SSH
 Name: perl-%dist
-Version: 2.14
-Release: alt1.2
+Version: 2.141
+Release: alt1
 License: %perl_license
 Group: Development/Perl
 #URL: %CPAN %dist
 URL: http://github.com/lkinley/%dist
 
-Source0: http://www.cpan.org/authors/id/S/SC/SCHWIGON/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module}-%{version}.tar.gz
 
 #BuildArch: noarch
 
@@ -56,7 +56,7 @@ echo "3" | perl Makefile.PL INSTALLDIRS="vendor" PREFIX="%buildroot%_prefix"
 %perl_vendor_install
 
 %files
-%doc Changes README ToDo LICENSE
+%doc Changes README ToDo LICENSE_ARTISTIC LICENSE_GNU
 %defattr(-, root, root, 0755)
 %doc Changes README
 #dir %perl_vendor_privlib/Net/
@@ -69,6 +69,9 @@ echo "3" | perl Makefile.PL INSTALLDIRS="vendor" PREFIX="%buildroot%_prefix"
 
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 2.141-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1.2
 - rebuild with new perl 5.28.1
 
