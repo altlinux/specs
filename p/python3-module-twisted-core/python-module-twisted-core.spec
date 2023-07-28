@@ -7,7 +7,7 @@
 
 Name: python3-module-twisted-core
 Version: %major.0
-Release: alt1.1
+Release: alt2
 
 Summary: An asynchronous networking framework written in Python
 
@@ -344,6 +344,7 @@ ln -s trial %buildroot%_bindir/trial-3
 %python3_sitelibdir/twisted/internet/
 %exclude %python3_sitelibdir/twisted/internet/testing.py
 %exclude %python3_sitelibdir/twisted/internet/test
+%exclude %python3_sitelibdir/twisted/internet/gireactor.py
 %exclude %python3_sitelibdir/twisted/internet/wxreactor.py
 %exclude %python3_sitelibdir/twisted/internet/__pycache__/wxreactor.*
 %exclude %python3_sitelibdir/twisted/internet/wxsupport.py
@@ -395,6 +396,9 @@ ln -s trial %buildroot%_bindir/trial-3
 #python3_sitelibdir/twisted/internet/pyuisupport.py*
 #python3_sitelibdir/twisted/internet/gtk2reactor.py*
 #python3_sitelibdir/twisted/internet/glib2reactor.py*
+
+%files -n %prefx3-core-gui-gnome
+%python3_sitelibdir/twisted/internet/gireactor.py
 
 %files -n %prefx3-core-gui-wx
 %python3_sitelibdir/twisted/internet/wxreactor.py
@@ -511,6 +515,9 @@ ln -s trial %buildroot%_bindir/trial-3
 %python3_sitelibdir/twisted/logger/test
 
 %changelog
+* Fri Jul 28 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 22.10.0-alt2
+- exclude excessive gnome deps from core
+
 * Tue Jun 13 2023 Stanislav Levin <slev@altlinux.org> 22.10.0-alt1.1
 - NMU: mapped PyPI name to distro's one.
 
