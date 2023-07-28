@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 2.15
 %define module_name Test-Kit
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Import/Into.pm) perl(Module/Runtime.pm) perl(Scalar/Util.pm) perl(Sub/Delete.pm) perl(Test/Builder.pm) perl(Test/CPAN/Changes.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warn.pm) perl(parent.pm) perl(Hook/LexWrap.pm)
@@ -7,21 +6,21 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Import/Into.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.15
-Release: alt2
+Version: 2.16
+Release: alt1
 Summary: Build custom test packages with only the features you want.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/K/KA/KAORU/Test-Kit-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KA/KAORU/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes
+%doc README Changes
 %perl_vendor_privlib/T*
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 2.16-alt1
+- automated CPAN update
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 2.15-alt2
 - fixed build with new perl 5.26
 
