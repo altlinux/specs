@@ -1,14 +1,14 @@
-%set_perl_req_method relaxed
 %define _unpackaged_files_terminate_build 1
+%set_perl_req_method relaxed
 %define module_name Syntax-Keyword-Defer
 #BuildRequires: perl(Future/AsyncAwait.pm)
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Syntax/Keyword/Try.pm) perl(Test/More.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm)
+BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Syntax/Keyword/Try.pm) perl(Test/More.pm) perl(Test2/V0.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.08
+Version: 0.09
 Release: alt1
 Summary: add C<defer> block syntax to perl
 Group: Development/Perl
@@ -42,6 +42,9 @@ other languages, and this module.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.08-alt1
 - automated CPAN update
 
