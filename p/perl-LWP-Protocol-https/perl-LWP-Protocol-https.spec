@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist LWP-Protocol-https
 Name: perl-%dist
-Version: 6.10
+Version: 6.11
 Release: alt1
 
 Summary: Provide https support for LWP::UserAgent
@@ -10,7 +10,6 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
-Patch: LWP-Protocol-https-6.09-alt-ca.patch
 
 Requires: /usr/share/ca-certificates/ca-bundle.crt
 Conflicts: perl-libwww < 6.02
@@ -28,7 +27,6 @@ to access sites using HTTP over SSL/TLS.
 
 %prep
 %setup -q -n %{dist}-%{version}
-%patch -p1
 
 %ifdef __BTE
 # disable online tests
@@ -46,6 +44,9 @@ to access sites using HTTP over SSL/TLS.
 %perl_vendor_privlib/LWP
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 6.11-alt1
+- automated CPAN update
+
 * Fri Dec 25 2020 Igor Vlasenko <viy@altlinux.ru> 6.10-alt1
 - automated CPAN update
 
