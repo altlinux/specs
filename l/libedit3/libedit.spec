@@ -1,6 +1,5 @@
 %define vrs	3.1
-%define tstamp 	20191231
-#def_enable Werror
+%define tstamp 	20221030
 
 Name: libedit3
 Version: %vrs.%tstamp
@@ -77,6 +76,9 @@ cd -
 %_man3dir/*
 
 %changelog
+* Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.20221030-alt1
+- Updated to 20221030-3.1.
+
 * Sun Dec 06 2020 Dmitry V. Levin <ldv@altlinux.org> 3.1.20191231-alt1
 - 20190324-3.1 -> 20191231-3.1.
 - libedit-devel: removed libedit.a.
