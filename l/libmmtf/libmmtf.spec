@@ -1,12 +1,12 @@
 %def_without doc
 
 Name: libmmtf
-Version: 1.0.0
-Release: alt3
+Version: 1.1.0
+Release: alt1
 
 Summary: The pure C++ implementation of the MMTF API, decoder and encoder
 
-License: MIT/X11
+License: MIT
 Group: System/Libraries
 Url: https://github.com/rcsb/mmtf-cpp/
 
@@ -21,14 +21,13 @@ ExcludeArch: armh
 BuildRequires: doxygen
 %endif
 
-#BuildRequires(pre): 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
-BuildRequires: libmsgpack-devel >= 2.1.5
+
+BuildRequires: msgpack-cxx-devel
 
 BuildRequires: ctest catch2-devel
 BuildRequires: mmtf_spec >= 1.0
-
-%add_optflags -I%_includedir/catch2
 
 %description
 The pure C++ implementation of the MMTF API, decoder and encoder.
@@ -43,15 +42,17 @@ Header files for the %name library.
 
 %prep
 %setup
-# Catch have no lib
-%__subst "s|Catch ||" tests/CMakeLists.txt
+%__subst "s|.*INTERFACE msgpackc.*||" CMakeLists.txt
+%__subst "s|Catch msgpackc | |" tests/CMakeLists.txt
+%__subst 's|#include "catch.hpp"|#include <catch2/catch.hpp>|' tests/mmtf_tests.cpp
 # fix working dir for tests
-%__subst "s| COMMAND mmtf_tests|/tests COMMAND mmtf_tests|" tests/CMakeLists.txt
+#__subst "s| COMMAND mmtf_tests|/tests COMMAND mmtf_tests|" tests/CMakeLists.txt
 # use specs from package mmtf_spec
-rm -rfv mmtf_spec && ln -sv %_datadir/mmtf_spec mmtf_spec
+rm -rfv submodules/mmtf_spec && ln -sv %_datadir/mmtf_spec submodules/mmtf_spec
 
 %build
-%cmake_insource -DBUILD_TESTS:BOOL=ON
+%cmake_insource \
+    -DBUILD_TESTS:BOOL=ON
 %make_build
 
 %if_with doc
@@ -62,7 +63,10 @@ doxygen
 %makeinstall_std
 
 %check
-make test
+#make test
+cd tests
+./mmtf_tests
+./multi_cpp_test
 
 %files devel
 %doc README.md
@@ -74,6 +78,11 @@ make test
 %_includedir/mmtf.hpp
 
 %changelog
+* Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+- fix build with catch2-devel
+- build with msgpack-cxx-devel
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3
 - switch to catch2
 
