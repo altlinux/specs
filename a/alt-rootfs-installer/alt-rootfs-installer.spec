@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.5.8
+Version: 0.5.9
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -41,8 +41,12 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Thu Jul 27 2023 Anton Midyukov <antohami@altlinux.org> 0.5.9-alt1
+- alt-rootfs-installer: set serial console for grub also, cleanup quiet
+- Update list of supported boards for u-boot 2023.07
+
 * Tue May 23 2023 Anton Midyukov <antohami@altlinux.org> 0.5.8-alt1
--  Add RBS Repka Pi 3 board support (thanks jqt4)
+- Add RBS Repka Pi 3 board support (thanks jqt4)
 
 * Sat Feb 18 2023 Anton Midyukov <antohami@altlinux.org> 0.5.7-alt1
 - Add Orangepi 4 support (Closes: 45187)
