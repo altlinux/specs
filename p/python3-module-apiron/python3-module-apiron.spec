@@ -2,7 +2,7 @@
 %define modname apiron
 Name: python3-module-%modname
 Version: 5.1.0
-Release: alt1
+Release: alt1.1
 Summary: Apiron helps you cook a tasty client for RESTful APIs
 License: MIT
 Group: Development/Python3
@@ -10,7 +10,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: https://github.com/ithaka/apiron
 Source: https://files.pythonhosted.org/packages/source/a/apiron/%modname-%version.tar.gz
 
-BuildRequires: rpm-build-python3 python3-module-setuptools rpm-macros-python3 pyproject-build  python3-module-build python3-module-urllib3 python3-module-yieldfrom.urllib3
+BuildRequires: rpm-build-python3 python3-module-setuptools rpm-macros-python3 pyproject-build  python3-module-build python3-module-urllib3
 BuildRequires:  python3-module-requests >= 2.11.1
 Requires:       python3-module-requests >= 2.11.1
 BuildArch: noarch
@@ -37,6 +37,9 @@ apiron provides declarative, structured configuration of services and endpoints 
 %python3_sitelibdir/%modname-%version-py?.??.egg-info/
 
 %changelog
+* Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1.1
+- NMU: fixed build dependencies.
+
 * Fri May 06 2022 Ilya Mashkin <oddity@altlinux.ru> 5.1.0-alt1
 - Build for Sisyphus
 
