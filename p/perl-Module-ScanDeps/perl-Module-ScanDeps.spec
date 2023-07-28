@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-ScanDeps
 Name: perl-%dist
-Version: 1.31
+Version: 1.32
 Release: alt1
 
 Summary: Recursively scan Perl programs for dependencies
-License: GPL or Artistic
+License: GPLv2+ or Artistic-2.0
 Group: Development/Perl
 
 URL: %CPAN %dist
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/R/RS/RSCHUPP/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-Module-Build perl-Module-Pluggable perl-Term-Cap perl-Test-Pod perl-parent perl-threads perl-unicore perl(Test/Requires.pm)
+BuildRequires: perl-Module-Build perl-Module-Pluggable perl-Term-Cap perl-Test-Pod perl-parent perl-threads perl-unicore perl(Test/Requires.pm) perl(Net/FTP.pm)
 
 %description
 An application of Module::ScanDeps is to generate executables from
@@ -38,6 +38,9 @@ such projects, PAR and App::Packer.
 %perl_vendor_privlib/Module
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 1.32-alt1
+- automated CPAN update
+
 * Mon Oct 11 2021 Igor Vlasenko <viy@altlinux.org> 1.31-alt1
 - automated CPAN update
 
