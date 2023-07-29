@@ -8,12 +8,12 @@
 
 %def_without devel
 %def_with vanilla
-%define gecko_version 2.47.3
+%define gecko_version 2.47.4
 %define mono_version 7.4.0
 %define winetricks_version 20220617
 
 %define basemajor 8.x
-%define major 8.3
+%define major 8.6
 %define rel %nil
 %define conflictbase wine
 
@@ -38,6 +38,8 @@
 %if_feature vulkan
 %def_with vulkan
 %endif
+
+%def_without wayland
 
 # use rpm-macros-features
 
@@ -215,6 +217,9 @@ BuildRequires: libunwind-devel
 %endif
 BuildRequires: libnetapi-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
+
+# for winscard (libpcsclite.so here)
+BuildRequires: libpcsclite-devel
 
 # can be missed on old systems
 BuildRequires: libOSMesa-devel
@@ -463,6 +468,15 @@ export CC=clang
 export CROSSCC=clang
 %endif
 
+# disable fortify as it can breaks wine
+# http://bugs.winehq.org/show_bug.cgi?id=24606
+%remove_optflags -fcf-protection
+%remove_optflags -fstack-protector-strong
+%remove_optflags -fstack-clash-protection
+# drop default FORTIFY_SOURCE here to mute warning when overrides with _FORTIFY_SOURCE=0 (wine disable it)
+%remove_optflags -D_FORTIFY_SOURCE=2
+%remove_optflags -Wp,-D_FORTIFY_SOURCE=2
+
 
 %configure --with-x \
 %if_with build64
@@ -475,9 +489,9 @@ export CROSSCC=clang
 	--without-capi \
 	%{subst_with opencl} \
 	%{subst_with pcap} \
-	%{subst_with unwind} \
 	%{subst_with mingw} \
 	%{subst_with vulkan} \
+	%{subst_with wayland} \
 	--bindir=%winebindir \
 	%nil
 
@@ -633,6 +647,9 @@ fi
 %libwinedir/%winesodir/msv1_0.so
 %libwinedir/%winesodir/win32u.so
 %libwinedir/%winesodir/winex11.so
+%if_with wayland
+%libwinedir/%winesodir/winewayland.so
+%endif
 %libwinedir/%winesodir/ws2_32.so
 %if_with opencl
 %libwinedir/%winesodir/opencl.so
@@ -649,7 +666,9 @@ fi
 %endif
 %libwinedir/%winesodir/winebus.so
 %libwinedir/%winesodir/wineusb.so
+#libwinedir/%winesodir/wineps.so
 %libwinedir/%winesodir/localspl.so
+%libwinedir/%winesodir/winscard.so
 
 %if_without mingw
 %{?_without_vanilla:%libwinedir/%winesodir/windows.networking.connectivity.so}
@@ -816,6 +835,12 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.6-alt1
+- new version 8.6 (with rpmrb script)
+- add BuildRequires: libpcsclite-devel
+- disable fortify as it can breaks wine
+- set strict require wine-gecko 2.47.4
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.3-alt1
 - new version 8.3 (with rpmrb script)
 - add BuildRequires: libOSMesa-devel
