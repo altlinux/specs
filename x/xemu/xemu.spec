@@ -1,5 +1,5 @@
 Name:     xemu
-Version:  0.7.96
+Version:  0.7.109
 Release:  alt1
 
 Summary:  Original Xbox Emulator for Windows, macOS, and Linux (Active Development)
@@ -16,6 +16,8 @@ BuildRequires: gcc-c++ libgtk+3-devel libsamplerate-devel libSDL2-devel glib2-de
 
 ExcludeArch: %ix86 armh
 
+%set_autoconf_version 2.60
+
 %description
 Original Xbox Emulator for Windows, macOS, and Linux (Active Development).
 
@@ -29,7 +31,6 @@ Attention! BIOS and Boot firmware are not included!
   ./configure \
     --audio-drv-list="sdl" \
     --disable-debug-info \
-    --enable-slirp=system \
     --extra-cflags="-DXBOX=1" \
     --target-list=i386-softmmu \
     --with-git-submodules=ignore
@@ -52,6 +53,9 @@ install -vDm644 -t %buildroot%_desktopdir  ui/xemu.desktop
 %doc README.md LICENSE
 
 %changelog
+* Sat Jul 29 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.109-alt1
+- Update to new version
+
 * Mon Jun 26 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.96-alt1
 - Update to new version
 
