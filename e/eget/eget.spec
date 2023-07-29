@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.6
+Version: 7.7
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,12 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 7.7-alt1
+- eget: put PROGNAME set to init_eget func
+- eget: add hack for construct full url from related Location
+- eget: add is_abs_path and use it
+- eget: add have_end_slash and use it
+
 * Sun Jul 02 2023 Vitaly Lipatov <lav@altlinux.ru> 7.6-alt1
 - README.md: add commend about install with eepm
 - eget: add --get-ipfs-cid to help, fix for case when IPFS is disabled (no accessible gateway)
