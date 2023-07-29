@@ -3,7 +3,7 @@
 
 Name: gamemode
 Version: 1.7
-Release: alt1
+Release: alt1.1
 
 Summary: Optimise Linux system performance on demand 
 License: BSD
@@ -18,7 +18,7 @@ Requires: lib%name%soversion = %EVR
 
 BuildRequires: cmake
 BuildRequires: libdbus-devel
-BuildRequires: libinih-devel >= r53
+BuildRequires: libinih-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libsystemd-devel
 BuildRequires: meson
@@ -53,6 +53,7 @@ Development files for GameMode
 %setup
 
 %build
+%add_optflags -Wno-error=implicit-function-declaration
 %meson
 %meson_build
 
@@ -91,6 +92,9 @@ Development files for GameMode
 %_libdir/lib%{name}auto.so
 
 %changelog
+* Sat Jul 29 2023 Nazarov Denis <nenderus@altlinux.org> 1.7-alt1.1
+- Fix FTBFS
+
 * Fri Aug 05 2022 Nazarov Denis <nenderus@altlinux.org> 1.7-alt1
 - Version (ALT #43455)
 
