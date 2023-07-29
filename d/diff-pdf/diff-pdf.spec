@@ -1,6 +1,6 @@
 Name: diff-pdf
-Version: 0.5
-Release: alt2
+Version: 0.5.1
+Release: alt1
 
 Summary: A simple tool for visually comparing two PDF files
 
@@ -38,6 +38,9 @@ automake --add-missing --copy --foreign
 %_bindir/%name
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 0.5.1-alt1
+- new version 0.5.1 (with rpmrb script)
+
 * Fri Jul 08 2022 Anton Midyukov <antohami@altlinux.org> 0.5-alt2
 - Rebuilt with wxGTK3.2
 
