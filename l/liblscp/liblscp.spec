@@ -1,25 +1,28 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: /usr/bin/doxygen
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name liblscp
 %define major       6
 %define libname     lib%{oname}%{major}
 %define develname   lib%{oname}-devel
+%define docname     %name-docs
 
 %define oname       lscp
 
 Name:          liblscp
 Summary:       LinuxSampler Control Protocol (LSCP) wrapper library
-Version:       0.9.8
-Release:       alt1_1
+Version:       0.9.10
+Release:       alt1_3
 License:       LGPLv2
 Group:         System/Libraries
-URL:           https://www.linuxsampler.org/
+URL:           http://www.linuxsampler.org/
 Source0:       https://sourceforge.net/projects/qsampler/files/liblscp/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires: ccmake cmake ctest
+BuildRequires: doxygen
 Source44: import.info
 
 %description
@@ -45,16 +48,32 @@ Group:          Development/Other
 Summary:        Libraries for %name
 Requires:       %libname = %{version}-%{release}
 Provides:       %{name}-devel = %{version}-%{release}
+Provides:       %{oname}-devel = %{version}-%{release}
 
 %description -n %develname
 Development libraries from %oname.
 
 %files -n %develname
-%doc --no-dereference LICENSE  
+%doc --no-dereference LICENSE
 %dir %{_includedir}/lscp
 %{_includedir}/lscp/*.h
 %{_libdir}/liblscp.so
 %{_libdir}/pkgconfig/lscp.pc
+
+#------------------------------------------------------------------
+
+%package -n     %docname
+Group:          Development/Other
+Summary:        Docs for %name
+BuildArch:      noarch
+Provides:       %{oname}-docs = %{version}-%{release}
+
+%description -n %docname
+Docs for %oname.
+
+%files -n %docname
+%dir %{_docdir}/%{name}
+%{_docdir}/%{name}/html
 
 #--------------------------------------------------------------------
 
@@ -71,10 +90,11 @@ Development libraries from %oname.
 %install
 %mageia_cmake_install
 
-find %{buildroot} -name "*.la" -delete
-
 
 %changelog
+* Sat Jul 29 2023 Igor Vlasenko <viy@altlinux.org> 0.9.10-alt1_3
+- update by mgaimport
+
 * Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 0.9.8-alt1_1
 - update by mgaimport
 
