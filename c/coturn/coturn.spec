@@ -1,15 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 %define coturn_user	_coturn
 %define coturn_group	_coturn
 %define coturn_sharedir %_datadir/%name
 %define coturn_examplesdir %_datadir/%name/examples
 
-%define unpackaged_files_terminate_build 1
-
 # A workaround for libturnclient.a.
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name:		coturn
-Version:	4.5.2
+Version:	4.6.2
 Release:	alt1
 Summary:	Coturn TURN Server
 
@@ -163,6 +163,9 @@ install -D -m644 altlinux/coturn-tmpfiles.conf \
 		%{buildroot}%{_tmpfilesdir}/%name.conf
 mkdir -p %{buildroot}/run/%name
 
+# Remove a dangling symlink packaged in upstream tree.
+rm -f %buildroot/%coturn_examplesdir/etc/cacert.pem
+
 %pre
 %{_sbindir}/groupadd -r %coturn_group 2> /dev/null || :
 %{_sbindir}/useradd -r -g %coturn_group -s /bin/false -c "coturn server daemon" \
@@ -205,6 +208,7 @@ mkdir -p %{buildroot}/run/%name
 %coturn_sharedir/testsqldbsetup.sql
 %dir %coturn_examplesdir
 %dir %coturn_examplesdir/etc
+%coturn_examplesdir/etc/coturn.service
 %coturn_examplesdir/etc/turn_server_cert.pem
 %coturn_examplesdir/etc/turn_server_pkey.pem
 %coturn_examplesdir/etc/turnserver.conf
@@ -303,6 +307,9 @@ mkdir -p %{buildroot}/run/%name
 %{_includedir}/turn/client/TurnMsgLib.h
 
 %changelog
+* Sat Jul 29 2023 Arseny Maslennikov <arseny@altlinux.org> 4.6.2-alt1
+- 4.5.2 -> 4.6.2.
+
 * Tue Aug 31 2021 Arseny Maslennikov <arseny@altlinux.org> 4.5.2-alt1
 - 4.5.1.1 -> 4.5.2.
 
