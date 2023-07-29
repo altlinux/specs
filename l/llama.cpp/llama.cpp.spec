@@ -4,14 +4,14 @@
 %set_verify_elf_method strict
 
 Name: llama.cpp
-Version: 20230513
+Version: 20230728
 Release: alt1
 Summary: Inference of LLaMA model in pure C/C++
 License: MIT
 Group: Sciences/Computer science
 Url: https://github.com/ggerganov/llama.cpp
 
-ExclusiveArch: aarch64 x86_64 %e2k
+ExclusiveArch: aarch64 x86_64
 Source: %name-%version.tar
 
 AutoReqProv: nopython3
@@ -29,18 +29,32 @@ BuildRequires: gcc-c++
 
 %description
 Plain C/C++ implementation (of inference of LLaMA model) without
-dependencies. AVX2 support for x86 architectures. Mixed F16 / F32
-precision. 4-bit quantization support. Runs on the CPU.
+dependencies. AVX, AVX2 and AVX512 support for x86 architectures.
+Mixed F16/F32 precision. 4-bit, 5-bit and 8-bit integer quantization
+support. Runs on the CPU. Supported models:
 
-Note 1: You will need to:
+    LLaMA
+    LLaMA 2
+    Alpaca
+    GPT4All
+    Chinese LLaMA / Alpaca
+    Vigogne (French)
+    Vicuna
+    Koala
+    OpenBuddy (Multilingual)
+    Pygmalion 7B / Metharme 7B
+    WizardLM
+    Baichuan-7B and its derivations (such as baichuan-7b-sft)
+
+NOTE 1: You will need to:
 
   pip3 install -r /usr/share/llama.cpp/requirements.txt
 
 for data format conversion scripts to work.
 
-Note 2:
+NOTE 2:
   MODELS ARE NOT PROVIDED. You need to download them from original
-  sites and place them into local model/ directory.
+  sites and place them into "./models" directory.
 
   For example, LLaMA downloaded via public torrent link is 220 GB.
 
@@ -67,10 +81,8 @@ mkdir -p %buildroot%_datadir/%name/examples
 cp -p examples/*.sh -t %buildroot%_datadir/%name/examples
 
 cd %_cmake__builddir/bin
-install -p main       %buildroot%_bindir/llama-main
-install -p embedding  %buildroot%_bindir/llama-embedding
-install -p perplexity %buildroot%_bindir/llama-perplexity
-install -p quantize   %buildroot%_bindir/llama-quantize
+find -maxdepth 1 -type f -executable -printf '%f\0' |
+	xargs -0ti -n1 install -p {} %buildroot%_bindir/llama-{}
 
 %define _customdocdir %_docdir/%name
 
@@ -78,11 +90,14 @@ install -p quantize   %buildroot%_bindir/llama-quantize
 %cmake_build --target test
 
 %files
-%doc LICENSE README.md
+%doc LICENSE README.md SHA256SUMS docs
 %_bindir/llama-*
 %_datadir/%name
 
 %changelog
+* Sun Jul 30 2023 Vitaly Chikunov <vt@altlinux.org> 20230728-alt1
+- Update to master-8a88e58 (2023-07-28).
+
 * Sun May 14 2023 Vitaly Chikunov <vt@altlinux.org> 20230513-alt1
 - Build master-bda4d7c (2023-05-13).
 
