@@ -2,7 +2,7 @@
 
 Name: wine-mono-7.4.0
 Version: 7.4.0
-Release: alt2
+Release: alt3
 
 Summary: Windows build of Mono to run .NET applications via Wine
 
@@ -33,15 +33,18 @@ Framework. Wine can use a Windows build of Mono to run .NET applications.
 %__subst 's|^print \(.*\)|print (\1)|' lib/mono/lldb/mono.py
 
 %install
-mkdir -p %buildroot%winemonodir/%name-%version/
-cp -a * %buildroot%winemonodir/%name-%version/
+mkdir -p %buildroot%winemonodir/%name/
+cp -a * %buildroot%winemonodir/%name/
 
 %files
 %dir %_datadir/wine/
 %dir %winemonodir/
-%winemonodir/%name-%version/
+%winemonodir/%name/
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 7.4.0-alt3
+- fix wine-mono dir name
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 7.4.0-alt2
 - build with package name wine-mono-7.4.0
 
