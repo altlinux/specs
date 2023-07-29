@@ -8,12 +8,12 @@
 
 %def_with devel
 %def_without vanilla
-%define gecko_version 2.47.3
+%define gecko_version 2.47.4
 %define mono_version 7.4.0
 %define winetricks_version 20220617
 
 %define basemajor 8.x
-%define major 8.2
+%define major 8.6
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -24,9 +24,6 @@
 
 # build ping subpackage
 %def_with set_cap_net_raw
-
-# build libwine.so.1 for compatibility
-%def_with libwine
 
 %if_feature llvm 11.0
 # build real PE libraries (.dll, not .dll.so), via clang
@@ -46,6 +43,8 @@
 %if_feature vulkan
 %def_with vulkan
 %endif
+
+%def_without wayland
 
 # use rpm-macros-features
 
@@ -225,6 +224,9 @@ BuildRequires: libunwind-devel
 BuildRequires: libnetapi-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
 
+# for winscard (libpcsclite.so here)
+BuildRequires: libpcsclite-devel
+
 # can be missed on old systems
 BuildRequires: libOSMesa-devel
 
@@ -271,7 +273,6 @@ BuildRequires: desktop-file-utils
 Requires: glibc-pthread glibc-nss
 
 Requires: wine-gecko = %gecko_version
-Conflicts: wine-mono < %mono_version
 
 # For menu/MIME subsystem
 Requires: desktop-file-utils
@@ -405,23 +406,6 @@ Also you can control in manually:
 $ wine-cap_net_raw [on|off]
 
 
-%if_with libwine
-%package -n lib%name
-Summary: Compatibility library for Wine
-Group: System/Libraries
-Conflicts: lib%conflictbase
-
-
-%description -n lib%name
-This package contains the library needed to run programs dynamically
-linked with Wine.
-
-%description -n lib%name -l ru_RU.UTF-8
-Этот пакет состоит из библиотек, которые реализуют Windows API.
-
-%endif
-
-
 %package devel-tools
 Summary: Development tools for %name-devel
 Group: Development/C
@@ -490,6 +474,15 @@ export CC=clang
 export CROSSCC=clang
 %endif
 
+# disable fortify as it can breaks wine
+# http://bugs.winehq.org/show_bug.cgi?id=24606
+%remove_optflags -fcf-protection
+%remove_optflags -fstack-protector-strong
+%remove_optflags -fstack-clash-protection
+# drop default FORTIFY_SOURCE here to mute warning when overrides with _FORTIFY_SOURCE=0 (wine disable it)
+%remove_optflags -D_FORTIFY_SOURCE=2
+%remove_optflags -Wp,-D_FORTIFY_SOURCE=2
+
 
 %configure --with-x \
 %if_with build64
@@ -502,9 +495,9 @@ export CROSSCC=clang
 	--without-capi \
 	%{subst_with opencl} \
 	%{subst_with pcap} \
-	%{subst_with unwind} \
 	%{subst_with mingw} \
 	%{subst_with vulkan} \
+	%{subst_with wayland} \
 	--bindir=%winebindir \
 	%nil
 
@@ -518,13 +511,6 @@ export CROSSCC=clang
 # clean permissions (via find to hide file list)
 find %buildroot%libwinedir/%winesodir -type f | xargs chmod 0644
 find %buildroot%libwinedir/%winepedir -type f | xargs chmod 0644
-
-%if_with libwine
-# keep in libdir for compatibility
-mv -v %buildroot%libwinedir/%winesodir/libwine.so.1* %buildroot%libdir
-%else
-rm -v %buildroot%libwinedir/%winesodir/libwine.so.1*
-%endif
 
 # hack for lib.req: ERROR: /tmp/.private/lav/wine-etersoft-buildroot/usr/lib64/wine/x86_64-unix/ws2_32.so: library ntdll.so not found
 %if "%_vendor" == "alt"
@@ -667,6 +653,9 @@ fi
 %libwinedir/%winesodir/msv1_0.so
 %libwinedir/%winesodir/win32u.so
 %libwinedir/%winesodir/winex11.so
+%if_with wayland
+%libwinedir/%winesodir/winewayland.so
+%endif
 %libwinedir/%winesodir/ws2_32.so
 %if_with opencl
 %libwinedir/%winesodir/opencl.so
@@ -683,7 +672,9 @@ fi
 %endif
 %libwinedir/%winesodir/winebus.so
 %libwinedir/%winesodir/wineusb.so
+#libwinedir/%winesodir/wineps.so
 %libwinedir/%winesodir/localspl.so
+%libwinedir/%winesodir/winscard.so
 
 %if_without mingw
 %{?_without_vanilla:%libwinedir/%winesodir/windows.networking.connectivity.so}
@@ -842,13 +833,6 @@ fi
 %_man1dir/winecpp.*
 %_man1dir/winemaker.*
 
-%if_with libwine
-%files -n lib%name
-%doc LICENSE AUTHORS
-# for compatibility only
-%libdir/libwine.so.1
-%libdir/libwine.so.1.0
-%endif
 
 %files devel
 %if_with mingw
@@ -857,6 +841,11 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.6.1-alt1
+- new version 8.6.1 (with rpmrb script)
+- add BuildRequires: libpcsclite-devel
+- set strict require wine-gecko 2.47.4
+
 * Thu Mar 09 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.2.1-alt1
 - new version 8.2 (with rpmrb script)
 - upgrade libpcap require to 1.10.3 (due pcap_init())
