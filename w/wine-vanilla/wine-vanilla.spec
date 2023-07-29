@@ -13,7 +13,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 8.x
-%define major 8.2
+%define major 8.3
 %define rel %nil
 %define conflictbase wine
 
@@ -215,7 +215,9 @@ BuildRequires: libunwind-devel
 %endif
 BuildRequires: libnetapi-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
-# TODO: osmesa
+
+# can be missed on old systems
+BuildRequires: libOSMesa-devel
 
 %if_with vulkan
 BuildRequires: libvulkan-devel
@@ -260,7 +262,6 @@ BuildRequires: desktop-file-utils
 Requires: glibc-pthread glibc-nss
 
 Requires: wine-gecko = %gecko_version
-Conflicts: wine-mono < %mono_version
 
 # For menu/MIME subsystem
 Requires: desktop-file-utils
@@ -490,13 +491,6 @@ export CROSSCC=clang
 # clean permissions (via find to hide file list)
 find %buildroot%libwinedir/%winesodir -type f | xargs chmod 0644
 find %buildroot%libwinedir/%winepedir -type f | xargs chmod 0644
-
-%if_with libwine
-# keep in libdir for compatibility
-mv -v %buildroot%libwinedir/%winesodir/libwine.so.1* %buildroot%libdir
-%else
-rm -v %buildroot%libwinedir/%winesodir/libwine.so.1*
-%endif
 
 # hack for lib.req: ERROR: /tmp/.private/lav/wine-etersoft-buildroot/usr/lib64/wine/x86_64-unix/ws2_32.so: library ntdll.so not found
 %if "%_vendor" == "alt"
@@ -822,6 +816,10 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.3-alt1
+- new version 8.3 (with rpmrb script)
+- add BuildRequires: libOSMesa-devel
+
 * Thu Mar 09 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.2-alt1
 - new version 8.2 (with rpmrb script)
 - upgrade libpcap require to 1.10.3 (due pcap_init())
