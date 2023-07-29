@@ -1,4 +1,4 @@
-%define major 1.2
+%define major 1.3
 
 # pack shared libinkscape library
 %def_with shared
@@ -11,8 +11,8 @@
 %def_with graphicsmagick
 
 Name: inkscape
-Version: %major.2
-Release: alt2
+Version: %major
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -42,9 +42,9 @@ BuildRequires: libstdc++8-devel-static
 %endif
 
 BuildRequires: cmake gcc-c++ intltool
-BuildRequires: boost-devel-headers boost-filesystem-devel
+BuildRequires: boost-devel-headers boost-filesystem-devel boost-asio-devel
 BuildRequires: libgc-devel libgsl-devel libpopt-devel libxslt-devel zlib-devel libsoup-devel libaspell-devel libdbus-devel libgspell-devel libreadline-devel
-BuildRequires: lib2geom-devel >= 1.2.2
+BuildRequires: lib2geom-devel >= 1:1.3
 
 # Checking for modules 'gtkmm-3.0>=3.24;gdkmm-3.0>=3.24;gtk+-3.0>=3.24;gdk-3.0>=3.24'
 BuildRequires: pkgconfig(gtkmm-3.0) >= 3.24
@@ -64,8 +64,10 @@ BuildRequires: libGraphicsMagick-c++-devel
 BuildRequires: libImageMagick-devel
 %endif
 BuildRequires: libgomp-devel
+BuildRequires: libepoxy-devel
 BuildRequires: libdouble-conversion-devel
 BuildRequires: perl-podlators
+BuildRequires: libgtksourceview4-devel
 
 %add_python3_lib_path %_datadir/%name/extensions
 
@@ -203,11 +205,11 @@ subst "s|/usr/bin/env python$|%__python3|" %buildroot%_datadir/%name/extensions/
 subst "s|/usr/bin/env python$|%__python3|" %buildroot%_datadir/%name/extensions/*/*.py
 subst "s|/usr/bin/env python$|%__python3|" %buildroot%_datadir/%name/extensions/*/*/*.py
 subst "s|/usr/bin/env python$|%__python3|" %buildroot%_datadir/%name/extensions/*/*/*/*.py
-
-
+subst "s|/usr/bin/env python$|%__python3|" %buildroot%_datadir/%name/extensions/*/*/*/*/*.py
 
 # remove tests
 rm -rv %buildroot%_datadir/%name/extensions/inkex/tester/
+rm -v %buildroot%_datadir/%name/extensions/other/extension-xaml/inkxaml/tester.py
 
 %find_lang %name
 
@@ -242,6 +244,7 @@ true
 %files -n lib%name
 %dir %_libdir/inkscape/
 %_libdir/inkscape/libinkscape_base.so
+%_libdir/inkscape/libinkscape_base.so.*
 %endif
 
 %files tutorial
@@ -251,6 +254,10 @@ true
 %files checkinstall
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
+- new version 1.3 (with rpmrb script)
+- add BuildRequires: libepoxy-devel libgtksourceview4-devel
+
 * Tue Mar 28 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt2
 - add BuildRequires: libstdc++8-devel-static for gcc8
 
