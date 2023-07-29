@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: fossology-nomos
-Version: 4.2.0
-Release: alt3
+Version: 4.3.0
+Release: alt1
 Summary: Nomos detects licenses and copyrights in a file
 License: GPL-2.0-or-later
 Group: Development/Other
@@ -22,46 +22,44 @@ BuildRequires: libjson-c-devel
 %description
 %summary.
 
+This is only handy standalone nomos agent CLI, excluding other parts of full
+FOSSology open source license compliance software system and toolkit.
+
 %prep
 %setup
 
-sed -i 's/egrep/grep -E/g' $(grep -rl egrep src/nomos/agent)
-sed -i 's/fgrep/grep -F/g' $(grep -rl fgrep src/nomos/agent)
-
-# Unhide building steps.
-sed -i '/(MAKE).* -s /s/ -s / /g' $(grep -rl '\$(MAKE).* -s ' --include=Makefile'*' )
-
-# Skip linking what is not needed for nomossa - libfossology with postgresql
-# interface.
-sed -i '/FO_LDFLAGS/s/-lfossology//' Makefile.conf
-sed -i '/FO_LDFLAGS/s/-lpq//' Makefile.conf
-# Without PG this creates empty `-I' option which consumes next option (where
-# is by the luck glib-2.0 include dir).
-sed -i '/FO_CFLAGS/s/-I\$(PG_INCLUDEDIR)//' Makefile.conf
-
 %build
-make -C src/nomos/agent -f Makefile.sa all \
-       VERSION=%version COMMIT_HASH=%release
+%add_optflags %(getconf LFS_CFLAGS)
+make -C src/nomos/agent -f Makefile.nomossa.altlinux \
+       CFLAGS='%optflags -DVERSION_S=\"%version\" -DCOMMIT_HASH_S=\"%release\"'
 
 %install
 install -Dm0755 -p src/nomos/agent/nomossa %buildroot%_bindir/nomossa
 
 %check
 PATH=%buildroot%_bindir:$PATH
+nomossa -V | grep '%version.*%release'
 cp -a LICENSE /tmp
 pushd /tmp
   date > no_lice
-  time nomossa LICENSE | grep ' GPL-2\.0,LGPL-2\.1$'
-  time nomossa no_lice | grep ' No_license_found$'
+  time nomossa LICENSE | grep -xF 'File LICENSE contains license(s) GPL-2.0-only,LGPL-2.1-only'
+  time nomossa no_lice | grep -xF 'File no_lice contains license(s) No_license_found'
 popd
 # Crash test.
 nomossa -d .gear
+nomossa -d LICENSES
 
 %files
 %doc README.md LICENSE src/nomos/agent/README src/nomos/agent/Notes
 %_bindir/nomossa
 
 %changelog
+* Sun Jul 16 2023 Vitaly Chikunov <vt@altlinux.org> 4.3.0-alt1
+- Update to 4.3.0 (2023-06-28).
+- Note that upstream did controversial change of some GPL license shortnames,
+  like GPL-2.0 => GPL-2.0-only, LGPL-2.1+ => LGPL-2.1-or-later.
+- Do not basename(3) filenames when printing licenses.
+
 * Mon Nov 14 2022 Vitaly Chikunov <vt@altlinux.org> 4.2.0-alt3
 - spec: Remove needless BR on postgresql-devel and php.
 
