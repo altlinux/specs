@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Devel/StackTrace.pm) perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(Devel/StackTrace.pm) perl(Devel/StackTrace/Extract.pm) perl(ExtUtils/MakeMaker.pm)
 # END SourceDeps(oneline)
 Name: perl-Log-Any
-Version: 1.715
+Version: 1.716
 Release: alt1
 
 Summary: Log::Any - bringing loggers and listeners together
@@ -44,6 +44,9 @@ The application, in turn, may choose one or more logging mechanisms via Log::Any
 %perl_vendor_privlib/Log/Any*
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 1.716-alt1
+- automated CPAN update
+
 * Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 1.715-alt1
 - automated CPAN update
 
