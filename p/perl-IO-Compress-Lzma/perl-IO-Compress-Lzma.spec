@@ -2,7 +2,7 @@
 %define module_name IO-Compress-Lzma
 
 Name: perl-%module_name
-Version: 2.204
+Version: 2.206
 Release: alt1
 Summary: Write lzma files/buffers
 Group: Development/Perl
@@ -36,6 +36,9 @@ IO::Uncompress::UnLzma.
 %perl_vendor_privlib/I*
 
 %changelog
+* Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 2.206-alt1
+- automated CPAN update
+
 * Sun Feb 12 2023 Igor Vlasenko <viy@altlinux.org> 2.204-alt1
 - automated CPAN update
 
