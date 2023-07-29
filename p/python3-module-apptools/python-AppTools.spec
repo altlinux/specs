@@ -7,8 +7,8 @@
 %define oname apptools
 
 Name:           python3-module-%oname
-Version:        5.1.0
-Release:        alt2
+Version:        5.2.1
+Release:        alt1
 
 Summary:        Enthough Tool Suite Application Tools
 
@@ -105,7 +105,7 @@ This package contains documentation for AppTools.
 
 %prep
 %setup
-%patch1 -p2
+#patch1 -p2
 
 %if_with doc
 %prepare_sphinx3 docs/source
@@ -151,6 +151,9 @@ xvfb-run py.test3
 
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 5.2.1-alt1
+- new version 5.2.1 (with rpmrb script)
+
 * Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.0-alt2
 - Fixed runtime dependencies.
 
