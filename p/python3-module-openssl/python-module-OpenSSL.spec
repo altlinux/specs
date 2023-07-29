@@ -4,8 +4,8 @@
 %def_without doc_package
 
 Name: python3-module-openssl
-Version: 23.1.1
-Release: alt2
+Version: 23.2.0
+Release: alt1
 
 Summary: Python wrapper module around the OpenSSL library
 Summary(ru_RU.UTF-8): Модуль-обвязка библиотеки OpenSSL для python
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 23.2.0-alt1
+- new version 23.2.0 (with rpmrb script)
+
 * Thu Apr 27 2023 Stanislav Levin <slev@altlinux.org> 23.1.1-alt2
 - Mapped PyPI name to distro's one.
 
