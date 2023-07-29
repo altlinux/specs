@@ -8,7 +8,7 @@
 Name: mumble
 %define build_number 287
 Version: 1.4.287
-Release: alt1
+Release: alt2
 
 Summary: Low latency encrypted VoIP client
 
@@ -28,6 +28,7 @@ Source1: altlinux.tar
 Source4: themes.tar.xz
 
 #Patch: %name-%version-%release.patch
+Patch1: upstream-0001-BUILD-crypto-Migrate-to-OpenSSL-3.0-compatible-API.patch
 Patch2: upstream-0002-CHANGE-client-Drop-support-for-all-legacy-codecs.patch
 #Patch1: link-mumble-with-lGL.patch
 #Patch2: link-overlay-with-lGL.patch
@@ -110,6 +111,7 @@ the game to control Mumble.
 #patch -p1
 #patch1 -p1
 #patch2 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -217,6 +219,9 @@ mkdir -p %buildroot%_logdir/murmur
 %_bindir/%name-overlay
 
 %changelog
+* Wed Jul 19 2023 Arseny Maslennikov <arseny@altlinux.org> 1.4.287-alt2
+- Backported f4cea62ed95e ("Migrate to OpenSSL 3.0-compatible API") from master.
+
 * Thu Jan 19 2023 Arseny Maslennikov <arseny@altlinux.org> 1.4.287-alt1
 - 1.3.2 -> 1.4.287.
 - Backported 4d05018c2e4f ("Drop support for all legacy codecs") from master.
