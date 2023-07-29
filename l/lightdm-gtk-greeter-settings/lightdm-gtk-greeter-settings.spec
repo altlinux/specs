@@ -1,6 +1,6 @@
 Name:    lightdm-gtk-greeter-settings
 Version: 1.2.2
-Release: alt1
+Release: alt2.git4a367ec
 
 Summary: A small dialog to make it easier for users to modify the settings of lightdm-gtk-greeter.
 License: GPL-3.0
@@ -14,6 +14,8 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-distutils-extra
 BuildRequires: python3-module-pygobject3
 BuildRequires: intltool
+
+Requires: typelib(Gtk) = 3.0
 
 BuildArch: noarch
 
@@ -40,7 +42,7 @@ rm -f %buildroot%_defaultdocdir/%name/*
 %find_lang %name
 
 %files -f %name.lang
-%doc README NEWS
+%doc README.md NEWS
 %_bindir/%{name}*
 %_desktopdir/%name.desktop
 %python3_sitelibdir/lightdm_gtk_greeter_settings
@@ -49,5 +51,9 @@ rm -f %buildroot%_defaultdocdir/%name/*
 %_datadir/polkit-1/actions/com.ubuntu.pkexec.lightdm-gtk-greeter-settings.policy
 
 %changelog
+* Sat Jul 29 2023 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt2.git4a367ec
+- New snapshot.
+- Added requirements of typelib(Gtk) = 3.0.
+
 * Wed Feb 03 2021 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1
 - Initial build for Sisyphus
