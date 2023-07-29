@@ -1,15 +1,15 @@
 %define abiversion 2
-# only included for backwards compatibility, gui now in its own project, see ChangeLog
-%def_without qt
+%define somask %{abiversion}*
 
 Name:    unixODBC
-Version: 2.3.7
+Version: 2.3.11
 Release: alt1
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
+
+License: LGPLv2
 Group: Databases
-License: LGPL
 Url: http://www.unixODBC.org
 
 Requires: lib%name%abiversion = %version-%release
@@ -17,7 +17,8 @@ Provides: MyODBC = %version-%release
 Provides:  unixodbc = %version-%release
 Obsoletes: unixodbc < %version-%release
 
-Source0: http://www.unixodbc.org/%name-%version.tar.gz
+# Source0-url: http://www.unixodbc.org/%name-%version.tar.gz
+Source0: %name-%version.tar
 
 Source1: %name-odbcinst.ini
 Source2: %name-DataManager.desktop
@@ -30,7 +31,6 @@ Patch5: %name-remove-rpath-to-libdir.patch
 Patch11: keep-typedefs.patch
 Patch12: so-version-bump.patch
 
-%{?_with_qt:BuildRequires(pre): qt4-devel}
 BuildRequires: flex gcc-c++ libltdl7-devel libreadline-devel
 BuildRequires: chrpath
 
@@ -97,7 +97,7 @@ unixODBC представляет из себя полную специфика�
 использованием ODBC
 
 %prep
-%setup -q
+%setup
 %patch4 -p1
 %patch5 -p2
 %patch11 -p1
@@ -119,12 +119,7 @@ rm libltdl/config-h.in
 cp %_datadir/libtool/libltdl/config-h.in libltdl/config-h.in
 
 %build
-%if_with qt
-export QTDIR=%_qt4dir
-%endif
-aclocal
-automake --add-missing
-autoconf
+autoreconf -vfi
 
 # unixODBC 2.2.14 is not aliasing-safe
 CFLAGS="%{optflags} -fno-strict-aliasing"
@@ -133,21 +128,17 @@ export CFLAGS CXXFLAGS
 
 %configure \
 	--with-gnu-ld \
-	:	--enable-threads \
+	--enable-threads \
 	--enable-drivers \
 	--enable-driverc \
 	--enable-ltdllib \
-%if_with qt
-	--enable-gui \
-	--with-qt-libraries=%_qt4dir/lib \
-%endif
 	--disable-static
 %make_build
 
 %install
 %makeinstall_std
 
-# Remove standard libdir from exacutables and library RPATH
+# Remove standard libdir from executables and library RPATH
 chrpath -d %buildroot%_bindir/* %buildroot%_libdir/libodbccr.so*
 
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/odbcinst.ini
@@ -168,10 +159,14 @@ find doc -name Makefile\* -delete
 %doc %_man7dir/*
 
 %files -n lib%name%abiversion
-%_libdir/lib*.so.*
+%_libdir/libnn.so.%somask
+%_libdir/libodbc.so.%somask
+%_libdir/libodbccr.so.%somask
+%_libdir/libodbcinst.so.%somask
+%_libdir/libodbcpsql.so.%somask
+%_libdir/libtemplate.so.%somask
+
 %_libdir/libodbcpsql.so
-%_libdir/libodbcpsqlS.so
-%_libdir/libodbcmyS.so
 
 %files -n lib%name-devel-compat
 %_libdir/libodbc.so
@@ -179,17 +174,35 @@ find doc -name Makefile\* -delete
 
 %files -n lib%name-devel
 %doc ChangeLog doc/ProgrammerManual doc/lst
-%_includedir/*
+%dir %_includedir/unixODBC/
+%_includedir/unixODBC/config.h
+%_includedir/unixODBC/unixodbc_conf.h
+%_includedir/unixodbc.h
+%_includedir/autotest.h
+%_includedir/odbcinst.h
+%_includedir/odbcinstext.h
+%_includedir/sql.h
+%_includedir/sqlext.h
+%_includedir/sqlspi.h
+%_includedir/sqltypes.h
+%_includedir/sqlucode.h
+%_includedir/uodbc_extras.h
+%_includedir/uodbc_stats.h
 %_bindir/odbc_config
-%_libdir/lib*.so
-%exclude %_libdir/libodbc.so
-%exclude %_libdir/libodbcinst.so
-%exclude %_libdir/libodbcpsql.so
-%exclude %_libdir/libodbcpsqlS.so
-%exclude %_libdir/libodbcmyS.so
-%_pkgconfigdir/*.pc
+%_libdir/libnn.so
+%_libdir/libodbccr.so
+%_libdir/libtemplate.so
+%_pkgconfigdir/odbc.pc
+%_pkgconfigdir/odbccr.pc
+%_pkgconfigdir/odbcinst.pc
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 2.3.11-alt1
+- new version 2.3.11 (with rpmrb script)
+
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 2.3.7-alt2
+- cleanup spec
+
 * Tue Apr 23 2019 Andrey Cherepanov <cas@altlinux.org> 2.3.7-alt1
 - New version (ALT #36597).
 
