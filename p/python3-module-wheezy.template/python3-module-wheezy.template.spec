@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: %modname is a lightweight template library
@@ -54,6 +54,9 @@ rendering performance: ultimate speed and context preprocessor features.
 %doc README*
 
 %changelog
+* Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Fri Jul 28 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
