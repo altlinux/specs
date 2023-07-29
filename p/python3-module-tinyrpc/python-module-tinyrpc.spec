@@ -1,7 +1,7 @@
 %define oname tinyrpc
 
 Name: python3-module-%oname
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 
 Summary: Modular RPC library
@@ -50,6 +50,9 @@ rm -rfv %oname.egg-info
 %python3_sitelibdir/*
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.7-alt1
+- new version 1.1.7 (with rpmrb script)
+
 * Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.6-alt1
 - new version 1.1.6 (with rpmrb script)
 
