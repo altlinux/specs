@@ -13,7 +13,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 8.x
-%define major 8.1
+%define major 8.2
 %define rel %nil
 %define conflictbase wine
 
@@ -45,7 +45,7 @@
 %def_with opencl
 %endif
 
-%if_feature pcap 1.2.1
+%if_feature pcap 1.10.3
 %def_with pcap
 %else
 %def_without pcap
@@ -87,6 +87,7 @@ Source6: %name-%version-bin-scripts.tar
 #Source10: %name-patches-%version.tar
 
 Patch1: 0011-build-fake-binary-makes-autoreq-happy.patch
+Patch2: 0102-fix-build-on-32-bit-systems-with-llvm-https-bugs.win.patch
 
 AutoReq: yes, noperl, nomingw32
 
@@ -98,6 +99,13 @@ ExclusiveArch: %ix86 x86_64 aarch64
 # clang-12: error: unsupported argument 'auto' to option 'flto='
 %define optflags_lto -flto=thin
 %endif
+
+# minimalize memory using
+%ifarch %ix86 armh
+%define optflags_debug -g0
+%define optflags_lto %nil
+%endif
+
 
 # disable LTO: link error in particular, and unverified in general
 #x86_64-alt-linux-gcc -m64 -o loader/wine64-preloader loader/preloader.o loader/preloader_mac.o -static -nostartfiles -nodefaultlibs \
@@ -151,7 +159,6 @@ ExclusiveArch: %ix86 x86_64 aarch64
     %add_verify_elf_skiplist %_bindir/*
     %add_verify_elf_skiplist %winebindir/*
 %endif
-
 
 # TODO: remove it for mingw build (when there will no any dll.so files)
 %add_verify_elf_skiplist %libwinedir/%winesodir/*.*.so
@@ -442,6 +449,7 @@ develop programs using %name.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 # Apply local patches
 #name-patches/patchapply.sh
 
@@ -814,6 +822,12 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Thu Mar 09 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.2-alt1
+- new version 8.2 (with rpmrb script)
+- upgrade libpcap require to 1.10.3 (due pcap_init())
+- use -g0 for 32 bit systems (minimize memory)
+- fix build on 32 bit systems with llvm
+
 * Thu Mar 09 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.1-alt1
 - new version 8.1 (with rpmrb script)
 
