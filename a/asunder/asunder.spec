@@ -1,5 +1,5 @@
 Name: asunder
-Version: 3.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Audio CD ripper and encoder for Linux
@@ -37,7 +37,7 @@ Features:
 %setup
 %patch
 %patch1
-sed -i 's|AC_CHECK_INCLUDES_DEFAULT|AC_INCLUDES_DEFAULT|' configure.in
+#sed -i 's|AC_CHECK_INCLUDES_DEFAULT|AC_INCLUDES_DEFAULT|' configure.in
 [ ! -d m4 ] && mkdir m4
 
 %build
@@ -63,6 +63,9 @@ cp %buildroot%_pixmapsdir/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Sun Jul 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
 - 3.0
 
