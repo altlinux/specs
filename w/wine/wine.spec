@@ -13,7 +13,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 8.x
-%define major 8.1
+%define major 8.2
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -47,17 +47,13 @@
 %def_with vulkan
 %endif
 
-# TODO
-# [00:01:19] In file included from dlls/opencl/pe_wrappers.c:22:
-# [00:01:19] dlls/opencl/opencl_types.h:3:23: error: expected ';' after top level declarator
-# [00:01:19] typedef int32_t cl_int DECLSPEC_ALIGN(4);
-%if_with mingw
+# use rpm-macros-features
+
+%if_feature opencl
 %def_with opencl
-%else
-%def_without opencl
 %endif
 
-%if_feature pcap 1.2.1
+%if_feature pcap 1.10.3
 %def_with pcap
 %else
 %def_without pcap
@@ -75,7 +71,7 @@
 %endif
 
 Name: wine
-Version: %major
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -112,6 +108,13 @@ ExclusiveArch: %ix86 x86_64 aarch64
 # clang-12: error: unsupported argument 'auto' to option 'flto='
 %define optflags_lto -flto=thin
 %endif
+
+# minimalize memory using
+%ifarch %ix86 armh
+%define optflags_debug -g0
+%define optflags_lto %nil
+%endif
+
 
 # disable LTO: link error in particular, and unverified in general
 #x86_64-alt-linux-gcc -m64 -o loader/wine64-preloader loader/preloader.o loader/preloader_mac.o -static -nostartfiles -nodefaultlibs \
@@ -165,7 +168,6 @@ ExclusiveArch: %ix86 x86_64 aarch64
     %add_verify_elf_skiplist %_bindir/*
     %add_verify_elf_skiplist %winebindir/*
 %endif
-
 
 # TODO: remove it for mingw build (when there will no any dll.so files)
 %add_verify_elf_skiplist %libwinedir/%winesodir/*.*.so
@@ -222,7 +224,9 @@ BuildRequires: libunwind-devel
 %endif
 BuildRequires: libnetapi-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
-# TODO: osmesa
+
+# can be missed on old systems
+BuildRequires: libOSMesa-devel
 
 %if_with vulkan
 BuildRequires: libvulkan-devel
@@ -469,7 +473,7 @@ develop programs using %name.
 %prep
 %setup -a 1 -a 10
 # Apply wine-staging patches
-%name-staging/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch
+%name-staging/staging/patchinstall.py DESTDIR=$(pwd) --all --backend=patch
 
 # disable rpath using for executable
 #__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
@@ -853,6 +857,14 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Thu Mar 09 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.2.1-alt1
+- new version 8.2 (with rpmrb script)
+- upgrade libpcap require to 1.10.3 (due pcap_init())
+- add BuildRequires: libOSMesa-devel
+- update patches to staging wine-8.2
+  + fix build on 32 bit systems with llvm (https://bugs.winehq.org/show_bug.cgi?id=54889)
+  + msv1_0: disable annoying message about missed ntlm_auth
+
 * Thu Mar 09 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.1-alt1
 - new version 8.1 (with rpmrb script)
 
