@@ -8,12 +8,12 @@
 %def_without nfacct
 %def_without pyod
 
-# Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 08b694591ef11d39f1f2353ce20a1640fbab9348
+# Please, update here commit id for the release
+%define release_commit 2c305f3bac39a5e404f988921f1587fa67dd12b5
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.39.1
+Version: 1.41.0
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -166,6 +166,7 @@ done
 	--with-zlib \
 	--with-math \
 	--enable-jsonc \
+	--disable-h2o \
 	%{subst_enable cloud} \
 	%{?with_nfacct:--enable-plugin-nfacct} \
 	--with-user=netdata \
@@ -300,6 +301,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.41.0-alt1
+- new version 1.41.0 (with rpmrb script)
+
 * Sun May 21 2023 Vitaly Lipatov <lav@altlinux.ru> 1.39.1-alt1
 - new version 1.39.1 (with rpmrb script)
 - add BR: libyaml-devel
