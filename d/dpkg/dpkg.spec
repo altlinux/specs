@@ -2,7 +2,7 @@
 %def_without extbuild
 
 Name: dpkg
-Version: 1.21.21
+Version: 1.21.22
 Release: alt1
 
 Summary: Package maintenance system for Debian Linux
@@ -113,6 +113,9 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.21.22-alt1
+- new version 1.21.22 (with rpmrb script)
+
 * Fri Apr 28 2023 Vitaly Lipatov <lav@altlinux.ru> 1.21.21-alt1
 - new version 1.21.21 (with rpmrb script)
 - add BR: liblzma-devel libmd-devel libzstd-devel
