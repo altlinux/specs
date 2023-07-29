@@ -40,7 +40,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.18.0.10
+%define version 11.0.19.0.7
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -297,9 +297,9 @@ BuildRequires: /proc rpm-build-java
 %global origin          openjdk
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
-%global securityver 18
+%global securityver 19
 %global minorver    0
-%global buildver    10
+%global buildver    7
 %global rpmrelease  1
 %global dist		jpp11
 #%%global tagsuffix      ""
@@ -443,7 +443,7 @@ URL:      http://openjdk.java.net/
 # to regenerate source0 (jdk) run update_package.sh
 # update_package.sh contains hard-coded repos, revisions, tags, and projects to regenerate the source archives
 #Source0: jdk-updates-jdk%{majorver}u-jdk-%{newjavaver}+%{buildver}%{?tagsuffix:-%{tagsuffix}}-4curve.tar.xz
-Source0: openjdk-jdk%{majorver}u-jdk-%{majorver}.%{minorver}.%{securityver}+%{buildver}%{?tagsuffix:-%{tagsuffix}}-4curve.tar.xz
+Source0: openjdk-jdk%{majorver}u-jdk-%{majorver}.%{minorver}.%{securityver}+%{buildver}%{?tagsuffix:-%{tagsuffix}}.tar.xz
 
 # Use 'icedtea_sync.sh' to update the following
 # They are based on code contained in the IcedTea project (3.x).
@@ -1778,6 +1778,17 @@ fi
 %endif
 
 %changelog
+* Sat Jul 29 2023 Andrey Cherepanov <cas@altlinux.org> 0:11.0.19.0.7-alt1_1jpp11
+- New version.
+- Security fixes
+  + CVE-2023-21930
+  + CVE-2023-21937
+  + CVE-2023-21938
+  + CVE-2023-21939
+  + CVE-2023-21954
+  + CVE-2023-21967
+  + CVE-2023-21968
+
 * Wed Feb 08 2023 Andrey Cherepanov <cas@altlinux.org> 0:11.0.18.0.10-alt1_1jpp11
 - New version.
 - Security fixes
