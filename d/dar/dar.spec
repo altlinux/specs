@@ -1,5 +1,5 @@
 Name: dar
-Version: 2.7.9
+Version: 2.7.10
 Release: alt1
 
 Summary: Disk ARchive tool
@@ -96,6 +96,9 @@ export LD_LIBRARY_PATH+=`pwd`/src/libdar/.libs
 %_docdir/%name-%version/
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 2.7.10-alt1
+- new version 2.7.10 (with rpmrb script)
+
 * Sun Jun 04 2023 Vitaly Lipatov <lav@altlinux.ru> 2.7.9-alt1
 - new version 2.7.9 (with rpmrb script) (ALT bug 46319)
 - add BR: liblz4-devel libzstd-devel libargon2-devel
