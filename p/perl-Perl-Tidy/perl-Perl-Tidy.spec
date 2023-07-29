@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Perl-Tidy
 Name: perl-%dist
-Version: 20230309
+Version: 20230701
 Release: alt1
 
 Summary: Parses and beautifies perl source
-License: GPL
+License: GPLv2+
 Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/S/SH/SHANCOCK/%{dist}-%{version}.tar.gz
-Patch: perl-Perl-Tidy-20230309-alt-deps.patch
+Patch: perl-Perl-Tidy-20230701-alt-deps.patch
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ write scripts in html format.
 %_man1dir/*
 
 %changelog
+* Sat Jul 29 2023 Igor Vlasenko <viy@altlinux.org> 20230701-alt1
+- automated CPAN update
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 20230309-alt1
 - automated CPAN update
 
