@@ -2,7 +2,7 @@
 %define targetdir %_libdir/powershell/runtimes/%_dotnet_rid/native
 
 Name: libpsl-native
-Version: 7.2.0
+Version: 7.3.2
 Release: alt1
 
 Summary: PowerShell Native library
@@ -66,6 +66,9 @@ LANG=en_US.utf8 LD_LIBRARY_PATH=$(pwd)/../powershell-unix/ ctest --verbose || tr
 %targetdir/libpsl-native.so
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 7.3.2-alt1
+- new version 7.3.2 (with rpmrb script)
+
 * Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 7.2.0-alt1
 - new version 7.2.0 (with rpmrb script)
 - fix build with GTest
