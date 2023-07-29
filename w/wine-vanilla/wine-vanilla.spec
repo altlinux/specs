@@ -9,11 +9,11 @@
 %def_without devel
 %def_with vanilla
 %define gecko_version 2.47.4
-%define mono_version 7.4.0
-%define winetricks_version 20220617
+%define mono_version 8.0.0
+%define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.6
+%define major 8.9
 %define rel %nil
 %define conflictbase wine
 
@@ -666,7 +666,7 @@ fi
 %endif
 %libwinedir/%winesodir/winebus.so
 %libwinedir/%winesodir/wineusb.so
-#libwinedir/%winesodir/wineps.so
+%libwinedir/%winesodir/wineps.so
 %libwinedir/%winesodir/localspl.so
 %libwinedir/%winesodir/winscard.so
 
@@ -835,6 +835,11 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.9-alt1
+- new version 8.9 (with rpmrb script)
+- set strict require wine-mono 8.0.0
+- require winetricks 20230505
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.6-alt1
 - new version 8.6 (with rpmrb script)
 - add BuildRequires: libpcsclite-devel
