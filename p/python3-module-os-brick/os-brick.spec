@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.2.0
-Release: alt1.1
+Version: 6.3.0
+Release: alt1
 
 Summary: OpenStack Cinder brick library for managing local volume attaches
 
@@ -19,6 +19,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 5.8.0
 BuildRequires: python3-module-oslo.concurrency >= 5.0.0
@@ -35,7 +36,7 @@ BuildRequires: python3-module-requests >= 2.25.1
 BuildRequires: python3-module-tenacity >= 6.3.1
 
 %if_with check
-BuildRequires: python3-module-hacking >= 4.1.0
+BuildRequires: python3-module-hacking >= 5.0.0
 BuildRequires: python3-module-coverage >= 5.5
 BuildRequires: python3-module-ddt >= 1.4.1
 BuildRequires: python3-module-testtools >= 2.4.0
@@ -45,7 +46,7 @@ BuildRequires: python3-module-castellan >= 3.10.0
 BuildRequires: python3-module-doc8 >= 0.8.1
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-bandit >= 1.7.0
-BuildRequires: python3-module-mypy >= 0.982
+BuildRequires: python3-module-mypy >= 1.1.1
 BuildRequires: python3-module-castellan-tests
 BuildRequires: python3-module-oslotest >= 4.5.0
 BuildRequires: python3-module-testscenarios >= 0.5.0
@@ -132,6 +133,9 @@ mv %buildroot/usr/etc/os-brick/rootwrap.d/*.filters %buildroot%_sysconfdir/%onam
 %endif
 
 %changelog
+* Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.0-alt1
+- Automatically updated to 6.3.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1.1
 - Moved on modern pyproject macros.
 

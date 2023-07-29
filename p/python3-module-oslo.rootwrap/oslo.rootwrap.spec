@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.3.1
-Release: alt2.1
+Version: 7.0.1
+Release: alt1
 
 Summary: OpenStack Oslo Rootwrap
 
@@ -25,18 +25,18 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 
 %if_with check
+BuildRequires(pre): schedutils
+BuildRequires(pre): iproute2
 BuildRequires: python3-module-mock >= 2.0.0
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
-BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-bandit >= 1.6.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
-BuildRequires: schedutils
-BuildRequires: iproute2
 BuildRequires: /proc
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -96,7 +96,10 @@ install -pDm 644 man/oslorootwrap.1 %buildroot%_man1dir/oslorootwrap.1
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%__python3 -m stestr run
+# Functional tests with Eventlet involve monkeypatching, so force them to be
+# run in a separate process
+%__python3 -m stestr run --exclude-regex tests.test_functional_eventlet
+TEST_EVENTLET=1 %__python3 -m stestr run tests.test_functional_eventlet
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
@@ -116,6 +119,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 7.0.1-alt1
+- Automatically updated to 7.0.1.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.1-alt2.1
 - Moved on modern pyproject macros.
 

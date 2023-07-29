@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 18.1.0
-Release: alt2.1
+Version: 18.3.0
+Release: alt1
 
 Summary: Client library for OpenStack Compute API
 
@@ -22,7 +22,6 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-keystoneauth1 >= 3.5.0
-BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
@@ -30,6 +29,7 @@ BuildRequires: python3-module-prettytable >= 0.7.2
 BuildRequires: python3-module-stevedore >= 2.0.1
 
 %if_with check
+BuildRequires(pre): openssl
 BuildRequires: python3-module-keystoneclient >= 3.8.0
 BuildRequires: python3-module-cinderclient >= 3.3.0
 BuildRequires: python3-module-glanceclient >= 2.8.0
@@ -40,12 +40,12 @@ BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-openstacksdk >= 0.11.2
-BuildRequires: python3-module-osprofiler >= 1.4.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-tempest >= 17.1.0
-BuildRequires: openssl
+BuildRequires: python3-module-iso8601 >= 0.1.11
+BuildRequires: python3-module-osprofiler >= 1.4.0
 %endif
 
 %if_with docs
@@ -129,6 +129,9 @@ install -pDm 644 tools/nova.bash_completion \
 %endif
 
 %changelog
+* Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 18.3.0-alt1
+- Automatically updated to 18.3.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 18.1.0-alt2.1
 - Moved on modern pyproject macros.
 

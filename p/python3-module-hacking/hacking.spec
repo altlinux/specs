@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.0
-Release: alt2
+Version: 6.0.1
+Release: alt1
 
 Summary: OpenStack Hacking Guideline Enforcement
 License: Apache-2.0
@@ -41,6 +41,7 @@ Style Guidlines.
 %prep
 %setup
 %autopatch -p1
+sed -i -e '/flake8/d' requirements.txt
 
 %build
 # https://docs.openstack.org/pbr/latest/user/packagers.html#versioning
@@ -64,6 +65,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt1
+- Automatically updated to 6.0.1.
+
 * Mon Oct 03 2022 Stanislav Levin <slev@altlinux.org> 4.1.0-alt2
 - Fixed FTBFS (Flake8 5.0).
 - Modernized packaging.

@@ -1,9 +1,9 @@
 %define oname os-vif
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.1.1
+Version: 3.2.0
 Release: alt1
 
 Summary: A library for plugging and unplugging virtual interfaces in OpenStack
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/os-vif
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+
+Patch: os-vif_allow_external_import.patch
 
 BuildArch: noarch
 
@@ -39,6 +41,8 @@ BuildRequires: python3-module-stestr >= 3.1.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-pyroute2 >= 0.5.2
+BuildRequires: python3-module-futurist >= 1.2.0
+BuildRequires: python3-module-tzdata >= 2022.4
 %endif
 
 %if_with docs
@@ -72,6 +76,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p2
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -99,7 +104,7 @@ install -pDm 644 man/os_vif.1 %buildroot%_man1dir/%oname.1
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%__python3 -m stestr run
+%__python3 -m stestr run --exclude-regex ".tests.functional"
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
@@ -126,6 +131,10 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Automatically updated to 3.2.0.
+- Build with check.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
 - Automatically updated to 3.1.1.
 
