@@ -3,7 +3,7 @@
 %define beta %nil
 
 Name: xdg-desktop-portal-gnome
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME Desktop Portal
@@ -50,6 +50,9 @@ to provide various portal features.
 
 
 %changelog
+* Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
+- 44.2
+
 * Fri Apr 21 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 
