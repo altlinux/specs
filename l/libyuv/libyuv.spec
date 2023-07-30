@@ -4,10 +4,12 @@
 %def_enable clang
 %endif
 
+%define upstream_git c60ac40
+
 # check version in include/libyuv/version.h
 Name: libyuv
-Version: 0.0.1805
-Release: alt1.1
+Version: 0.0.1874
+Release: alt1
 
 Summary: YUV conversion and scaling functionality library
 
@@ -15,8 +17,9 @@ License: BSD
 Group: Development/C
 Url: http://code.google.com/p/libyuv/
 
-# Source-url: https://chromium.googlesource.com/libyuv/libyuv/+archive/ad890067f661dc747a975bc55ba3767fe30d4452.tar.gz
+# Source-url: https://chromium.googlesource.com/libyuv/libyuv/+archive/%upstream_git.tar.gz
 Source: %name-%version.tar
+
 Patch0: libyuv-alt-buildfix.patch
 
 %if_enabled clang
@@ -24,6 +27,9 @@ BuildRequires: clang
 %else
 BuildRequires: gcc-c++
 %endif
+
+BuildRequires(pre): rpm-macros-cmake
+
 BuildRequires: cmake libstdc++-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libgtest-devel
@@ -67,13 +73,13 @@ export CC=clang
 export CXX=clang++
 %endif
 %cmake \
-    -DENABLE_TEST=1 \
+    -DUNIT_TEST=1 \
     -DCMAKE_SKIP_BUILD_RPATH=1
 %cmake_build
 
 %install
 %cmake_install
-rm -rfv %buildroot/usr/lib/libyuv.a
+rm -rv %buildroot/usr/lib/libyuv.a
 
 %check
 $(echo */libyuv_unittest)
@@ -84,6 +90,7 @@ $(echo */libyuv_unittest)
 
 %files tools
 %_bindir/yuvconvert
+#_bindir/yuvconstants
 
 %files devel
 %_includedir/%name/
@@ -92,6 +99,9 @@ $(echo */libyuv_unittest)
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sun Jul 30 2023 Vitaly Lipatov <lav@altlinux.ru> 0.0.1874-alt1
+- new version 1874 from git c60ac40
+
 * Sun Jan 02 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.0.1805-alt1.1
 - fixed build for Elbrus
 
