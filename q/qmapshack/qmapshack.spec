@@ -1,16 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qmapshack
-Version: 1.16.0
+Version: 1.17.0
 Release: alt1
 Summary: GPS mapping and management tool
 Group: Sciences/Geosciences
 
-License: GPLv3+ and BSD
-Url: https://bitbucket.org/maproom/qmapshack/wiki/Home
+License: GPL-3.0-or-later and BSD
+Url: https://github.com/Maproom/qmapshack/wiki
 # Repacked https://github.com/Maproom/qmapshack/archive/V_%version/qmapshack-%version.tar.gz
 Source: qmapshack-%version.tar
-Patch0: FindPROJ4.patch
 Patch1: qmapshack-1.14.1-alt-fix-HTML_INSTALL_DIR.patch
 
 #Recommends: routino
@@ -18,9 +17,9 @@ Patch1: qmapshack-1.14.1-alt-fix-HTML_INSTALL_DIR.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-qt5-webengine
-# Automatically added by buildreq on Sun Apr 12 2020
-# optimized out: cmake-modules fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libcairo-gobject libcrypt-devel libgdk-pixbuf libglvnd-devel libgpg-error libhdf5-8-seq libnetcdf11-seq libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-xml libquazip-qt5 libsasl2-3 libstdc++-devel libunixODBC-devel libx265-176 pkg-config python2-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-tools-devel qt5-webchannel-devel routino-data sh4 zlib-devel
-BuildRequires: cmake libalglib-devel libgdal-devel libjpeg-devel libproj-devel libquazip-qt5-devel libroutino-devel qt5-tools-devel-static qt5-webengine-devel
+# Automatically added by buildreq on Sun Jul 30 2023
+# optimized out: cmake-modules freexl gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libcairo-gobject libcrypt-devel libcurl-devel libdouble-conversion3 libgdk-pixbuf libglvnd-devel libgpg-error libhdf5-103 libhdf5-hl-100 libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-xml libquazip1-qt5_1.0.0 librabbitmq-c4 libsasl2-3 libssl-devel libstdc++-devel libudev-devel libunixODBC-devel libx265-199 libxerces-c ocl-icd pkg-config python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel routino-data sh4 zlib-devel
+BuildRequires: cmake libalglib-devel libgdal-devel libjpeg-devel libproj-devel libroutino-devel libtiff-devel qt5-tools-devel qt5-webengine-devel quazip-qt5-devel
 
 ExclusiveArch: %qt5_qtwebengine_arches
 
@@ -47,7 +46,6 @@ QMapShack.
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -80,8 +78,11 @@ QMapShack.
 %_mandir/man1/qmt_*.*
 
 %changelog
+* Sun Jul 30 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.17.0-alt1
+- Updated to 1.17.0.
+
 * Tue Nov 16 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.16.0-alt1
-- Updated to 1.16.0.
+- Updated to 1.16.0 (ALT#44114).
 
 * Sat Mar 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.15.2-alt1
 - Updated to 1.15.2.
