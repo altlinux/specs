@@ -13,9 +13,9 @@
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.9
+%define major 8.13
 %define rel %nil
-%define stagingrel .1
+%define stagingrel %nil
 # the packages will conflict with that
 %define conflictbase wine-vanilla
 
@@ -70,7 +70,7 @@
 %endif
 
 Name: wine
-Version: %major.2
+Version: %major
 Release: alt1
 Epoch: 1
 
@@ -838,9 +838,15 @@ fi
 %if_with mingw
 %libwinedir/%winepedir/lib*.a
 %endif
+# fix for makefiles: Don't build native import libraries for PE-only build.
+%ifarch %{ix86} x86_64
 %libwinedir/%winesodir/lib*.a
+%endif
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.13-alt1
+- new version 8.13 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.9.2-alt1
 - new version (8.9.2) with rpmgs script
 - update wine staging patches to 8.9.1
