@@ -3,8 +3,8 @@
 %define gcc_branch 13
 
 Name: gcc%gcc_branch
-Version: 13.1.1
-Release: alt2
+Version: 13.2.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -19,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20230721
+%define snapshot 20230729
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -2138,6 +2138,14 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Sat Jul 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.1-alt1
+- Updated to 13.2.1.
+- Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-13-branch
+  commit 8a3e2d71f2a0309540e68c79dadd66a06ca3da73;
+  + releases/gcc-13 (snapshot 20230729)
+  commit r13-7638-g446bf8fc9ddae92248adf53e7f7734c111a1176a.
+
 * Fri Jul 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.1.1-alt2
 - Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
   + vendors/redhat/heads/gcc-13-branch
