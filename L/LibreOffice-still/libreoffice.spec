@@ -35,7 +35,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -97,6 +97,8 @@ Patch411: alt-006-svg-icons-2.patch
 Patch412: alt-007-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
+
+Patch600: 001-fix-build-with-Boost-1.81.0.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -365,6 +367,8 @@ echo Direct build
 %patch412 -p1
 
 %patch500 -p0
+
+%patch600 -p1
 
 # TODO move officebeans to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -700,6 +704,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sun Jul 30 2023 Andrey Cherepanov <cas@altlinux.org> 7.4.7.2-alt2
+- Fixed build with Boost 1.82.
+
 * Wed May 31 2023 Andrey Cherepanov <cas@altlinux.org> 7.4.7.2-alt1
 - New version (ALT #46320).
 - Security fixes:
