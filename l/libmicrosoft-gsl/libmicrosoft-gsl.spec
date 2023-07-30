@@ -1,5 +1,5 @@
 Name: libmicrosoft-gsl
-Version: 3.1.0
+Version: 4.0.0
 Release: alt1
 Epoch: 1
 
@@ -19,6 +19,8 @@ BuildRequires: gcc-c++ cmake
 #ctest catch2-devel >= 2.11.0-alt2
 BuildRequires: libgtest-devel
 %endif
+
+BuildRequires(pre): rpm-macros-cmake
 
 %description
 The Guideline Support Library (GSL) contains functions and types that are suggested
@@ -69,6 +71,9 @@ make test
 /usr/share/cmake/Microsoft.GSL/
 
 %changelog
+* Sun Jul 30 2023 Vitaly Lipatov <lav@altlinux.ru> 1:4.0.0-alt1
+- new version 4.0.0 (with rpmrb script)
+
 * Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1:3.1.0-alt1
 - new version (3.1.0) with rpmgs script
 
