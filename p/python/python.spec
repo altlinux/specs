@@ -8,7 +8,7 @@
 Name: %real_name
 
 Version: 2.7.18
-Release: alt10
+Release: alt11
 
 %define package_name		%real_name
 %define weight			1001
@@ -134,6 +134,8 @@ Patch112: python-2.7-fc-cve-2021-4189.patch
 Patch113: python-2.7-fc-cve-2022-0391.patch
 Patch114: python-2.7-fc-expat-2-4-5.patch
 Patch115: python-2.7.18-fc-cve-2015-20107.patch
+Patch116: python-2.7.18-fedora-openssl-3-compat.patch
+Patch117: python-2.7.18-alt-openssl-3.1-compat.patch
 
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
@@ -773,6 +775,8 @@ install -p -m644 %SOURCE12 -t Lib/distutils/command
 %patch113 -p1
 %patch114 -p1
 %patch115 -p1
+%patch116 -p1
+%patch117 -p1
 
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
@@ -1223,6 +1227,9 @@ rm %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Sun Jul 30 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.18-alt11
+- Added support for openssl 3.1 (thx Christian Heimes).
+
 * Fri Jun 17 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt10
 - Secutiry update (fixed: CVE-2015-20107).
 - Fixed Url field.
