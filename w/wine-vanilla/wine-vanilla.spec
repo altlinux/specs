@@ -13,7 +13,7 @@
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.9
+%define major 8.13
 %define rel %nil
 %define conflictbase wine
 
@@ -832,9 +832,15 @@ fi
 %if_with mingw
 %libwinedir/%winepedir/lib*.a
 %endif
+# fix for makefiles: Don't build native import libraries for PE-only build.
+%ifarch %{ix86} x86_64
 %libwinedir/%winesodir/lib*.a
+%endif
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.13-alt1
+- new version 8.13 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.9-alt1
 - new version 8.9 (with rpmrb script)
 - set strict require wine-mono 8.0.0
