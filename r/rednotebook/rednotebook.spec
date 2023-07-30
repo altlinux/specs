@@ -1,6 +1,6 @@
 Name: rednotebook
 Version: 2.29.6
-Release: alt1
+Release: alt2
 
 Summary: A desktop diary
 
@@ -16,9 +16,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-module-yieldfrom
 
-Requires: python3-module-yaml
+Requires: python3-module-yaml >= 3.10
 #Requires: typelib(Gtk)
 Requires: libgtk+3-gir
 # Requires: typelib(GtkSource)
@@ -53,6 +52,9 @@ and does so in style.
 %python3_sitelibdir/%{name}*.egg-info
 
 %changelog
+* Sun Jul 30 2023 Vitaly Lipatov <lav@altlinux.ru> 2.29.6-alt2
+- drop unused BR: python3-module-yieldfrom
+
 * Wed Jun 07 2023 Vitaly Lipatov <lav@altlinux.ru> 2.29.6-alt1
 - new version 2.29.6 (with rpmrb script)
 
