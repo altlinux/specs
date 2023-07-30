@@ -5,7 +5,7 @@
 %define acme_version %version
 
 Name: certbot
-Version: 1.32.0
+Version: 2.6.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -16,7 +16,6 @@ Url: https://certbot.eff.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# #Source-url: https://pypi.python.org/packages/source/l/%name/%name-%version.tar.gz
 # Source-url: https://github.com/certbot/certbot/archive/v%version.tar.gz
 Source: %name-%version.tar
 
@@ -41,14 +40,12 @@ Requires: python3-module-future
 %py3_use acme >= %acme_version
 %py3_use configargparse >= 0.9.3
 %py3_use configobj >= 5.0.6
-%py3_use cryptography >= 2.1.4
+%py3_use cryptography >= 3.2.1
 %py3_use distro >= 1.0.1
-%py3_use josepy >= 1.9.0
+%py3_use josepy >= 1.13.0
 %py3_use parsedatetime >= 2.4
-%py3_use rfc3339
-%py3_use pytz
-%py3_use zope.component
-%py3_use zope.interface
+%py3_use pyrfc3339
+%py3_use pytz >= 2019.3
 
 
 Provides: letsencrypt = %version
@@ -196,11 +193,12 @@ ln -s %name %buildroot%_bindir/letsencrypt
 install -Dp -m644 certbot/docs/_build/man/certbot.1 %buildroot/%_man1dir/certbot.1
 install -Dp -m644 certbot/docs/_build/man/certbot.7 %buildroot/%_man7dir/certbot.7
 
-rm -rfv %buildroot%certbotdir/certbot*/tests/
-rm -rfv %buildroot%certbotdir/certbot/*/*_test*
-rm -rfv %buildroot%certbotdir/certbot/*_test*
-rm -rfv %buildroot%certbotdir/*/*_test*
-rm -rfv %buildroot%certbotdir/certbot/certbot_compatibility_test/
+rm -rv %buildroot%certbotdir/certbot*/_internal/tests/
+rm -rv %buildroot%certbotdir/certbot*/tests/
+rm -rv %buildroot%certbotdir/certbot/*/*_test*
+#rm -rv %buildroot%certbotdir/certbot/*_test*
+#rm -rv %buildroot%certbotdir/certbot/certbot_compatibility_test/
+
 
 #  it is better do not require argparse on python >= 2.7.
 #__subst "s|^argparse$||" %buildroot%python_sitelibdir/%name-%{version}*.egg-info/requires.txt
@@ -264,6 +262,12 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
+- new version 2.6.0 (with rpmrb script)
+
+* Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1 (with rpmrb script)
+
 * Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 1.32.0-alt1
 - new version 1.32.0 (with rpmrb script)
 
