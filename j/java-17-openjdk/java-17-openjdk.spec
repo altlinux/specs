@@ -270,9 +270,9 @@
 # New Version-String scheme-style defines
 %global featurever 17
 %global interimver 0
-%global updatever 6
+%global updatever 7
 %global patchver 0
-%global buildver 10
+%global buildver 7
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -300,7 +300,7 @@
 # This means 11.0.9.0+11 would have had a priority of 11000911 as before
 # A 11.0.9.1+1 would have had a priority of 11000921 (20 * 1 + 1), thus ensuring it is bigger than 11.0.9.0+11
 # TODO hardcoded
-%global priority 17000610
+%global priority 17000707
 %global newjavaver %{featurever}.%{interimver}.%{updatever}.%{patchver}
 %global javaver %{featurever}
 
@@ -2018,6 +2018,17 @@ fi
 %endif
 
 %changelog
+* Sat Jul 29 2023 Andrey Cherepanov <cas@altlinux.org> 0:17.0.7.0.7-alt1
+- New version.
+- Security fixes:
+  + CVE-2023-21930
+  + CVE-2023-21937
+  + CVE-2023-21938
+  + CVE-2023-21939
+  + CVE-2023-21954
+  + CVE-2023-21967
+  + CVE-2023-21968
+
 * Wed Feb 08 2023 Andrey Cherepanov <cas@altlinux.org> 0:17.0.6.0.10-alt1
 - New version.
 - Security fixes:
