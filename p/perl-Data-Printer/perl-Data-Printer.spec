@@ -6,7 +6,7 @@ BuildRequires: perl(B.pm) perl(B/Deparse.pm) perl(Capture/Tiny.pm) perl(Carp.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.001000
+Version: 1.001001
 Release: alt1
 Summary: colored pretty-print of Perl data structures and objects
 Group: Development/Perl
@@ -101,6 +101,9 @@ if it makes things easier to read:
 %perl_vendor_privlib/D*
 
 %changelog
+* Sun Jul 30 2023 Igor Vlasenko <viy@altlinux.org> 1.001001-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.001000-alt1
 - automated CPAN update
 
