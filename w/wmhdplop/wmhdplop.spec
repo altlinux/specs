@@ -1,6 +1,6 @@
 Name: wmhdplop
 Version: 0.9.9
-Release: alt9
+Release: alt10
 
 Summary: Cute hard drive monitoring applet
 License: GPL-2.0
@@ -9,8 +9,6 @@ Group: Graphical desktop/Window Maker
 Url: http://hules.free.fr/wmhdplop
 Source0: %url/%name-%version.tar.gz
 Source1: wmhdplop.menu
-#Source2: wmhdplop+hddtemp.desktop
-Source3: wmhdplop.1
 Patch0: wmhdplop-0.9.9-alt-font-path-fix.patch
 Patch1: wmhdplop-0.9.9-alt-makefile.patch
 Patch2: wmhdplop-0.9.9-alt-configure.patch
@@ -18,16 +16,18 @@ Patch3: wmhdplop-0.9.9-fix-for-glibc2.30.patch
 # https://www.mail-archive.com/wmaker-dev@lists.windowmaker.org/msg06830.html
 Patch4: wmhdplop-0.9.9-alt-nvme.patch
 Patch5: wmhdplop-0.9.9-alt-cflags.patch
+Patch6: wmhdplop-0.9.9-alt-disk-by-id.patch
+Patch7: wmhdplop-0.9.9-alt-imlib2.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Dec 06 2008
 BuildRequires: gkrellm-devel imake imlib2-devel libSM-devel libXext-devel xorg-cf-files
+# for man pages
+BuildRequires: help2man
 
 # fonts shuffle should hopefully settle down
 Requires: fonts-ttf-vera >= 1.10-alt3
 #Recommends: hddtemp
-
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %description
 wmhdplop is yet another dockapp for WindowMaker, or any
@@ -71,20 +71,23 @@ Try to launch openoffice and enjoy the wmhdplop show!
 %patch3 -p2
 %patch4 -p2
 %patch5 -p2
-# imlib2-config is broken
-sed -e 's,imlib2-config,pkg-config imlib2,g' -i configure.ac
+%patch6 -p2
+%patch7 -p2
 
 %build
 %autoreconf
-RPM_OPT_FLAGS="%optflags_shared" \
 %configure
 %make
+help2man -n %name -N -s 1 ./%{name} > %name.1
 
 %install
 %makeinstall
 install -pD -m644 %SOURCE1 %buildroot%_menudir/%name
-#install -pD -m644 %%SOURCE2 %buildroot%_desktopdir/%name+hddtemp.desktop
-install -pD -m644 %SOURCE3 %buildroot%_man1dir/%name.1
+install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
+
+# remove unneeded plugins leftovers and make LTO checks happy
+rm -f %buildroot%_libdir/gkrellm2/plugins/gkhdplop.a
+rm -f %buildroot%_libdir/gkrellm2/plugins/gkhdplop.la
 
 %files
 %doc README NEWS AUTHORS
@@ -96,11 +99,15 @@ install -pD -m644 %SOURCE3 %buildroot%_man1dir/%name.1
 %_libdir/gkrellm2/plugins/gkhdplop.so
 
 %changelog
-* Sun Jan 16 2022 Michael Shigorin <mike@altlinux.org> 0.9.9-alt9
-- fix imlib2-config related ftbfs (thx bidulock for AUR fix)
+* Fri Jul 28 2023 L.A. Kostis <lakostis@altlinux.ru> 0.9.9-alt10
+- Bump release (to replace version from mike@).
 
-* Sat Sep 11 2021 Michael Shigorin <mike@altlinux.org> 0.9.9-alt8
-- fix LTO ftbfs
+* Fri Jul 28 2023 L.A. Kostis <lakostis@altlinux.ru> 0.9.9-alt9
+- Added support for /dev/disk/by-id links.
+- configure: use pkgconfig for imlib2.
+
+* Fri Jul 16 2021 L.A. Kostis <lakostis@altlinux.ru> 0.9.9-alt8
+- Use help2man for manual page.
 
 * Wed Jul 14 2021 L.A. Kostis <lakostis@altlinux.ru> 0.9.9-alt7
 - add NVME support.
