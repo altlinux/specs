@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: libabseil-cpp
-Version: 20230125.2
+Version: 20230125.3
 Release: alt1
 
 Summary: C++ Common Libraries
@@ -25,7 +25,8 @@ BuildRequires: gcc-c++
 BuildRequires: /proc
 
 %if_enabled check
-BuildRequires: libgtest-devel libgmock-devel ctest
+BuildRequires: libgtest-devel >= 1.13.0
+BuildRequires: libgmock-devel ctest
 %endif
 
 # https://bugzilla.altlinux.org/42411
@@ -103,6 +104,10 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jul 30 2023 Vitaly Lipatov <lav@altlinux.ru> 20230125.3-alt1
+- Abseil LTS branch, Jan 2023, Patch 3
+- required libgtest-devel >= 1.13.0
+
 * Mon Apr 10 2023 Alexey Shabalin <shaba@altlinux.org> 20230125.2-alt1
 - 20230125.2
 - switched build from static to shared libs
