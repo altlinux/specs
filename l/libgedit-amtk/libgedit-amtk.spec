@@ -1,91 +1,96 @@
 %def_disable snapshot
 
-%define ver_major 299.0
-%define api_ver 300
+%define ver_major 5.8
+%define api_ver 5
 
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable check
 
-Name: libgedit-gtksourceview
-Version: %ver_major.4
+Name: libgedit-amtk
+Version: %ver_major.0
 Release: alt1
 
-Summary: Gedit Technology - Source code editing widget
-License: LGPL-2.1-or-later
+Summary: Gedit Technology - Actions, Menus and Toolbars Kit for GTK applications
+License: LGPL-3.0-or-later
 Group: System/Libraries
-Url: https://github.com/gedit-technology/libgedit-gtksourceview
+Url: https://github.com/gedit-technology/libgedit-amtk
 
 %if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/gedit-technology/libgedit-gtksourceview.git
+Vcs: https://github.com/gedit-technology/libgedit-amtk.git
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 3.20
-%define libxml2_ver 2.6.0
+#Obsoletes: libamtk < 5.8.0-alt1
+#Provides: libamtk = %EVR
+
+%define gtk_ver 3.22
 
 BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libxml2-devel >= %libxml2_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_check:BuildRequires: xvfb-run xmllint
 BuildRequires: fonts-ttf-roboto fonts-ttf-google-noto-sans-vf}
 
 %description
-libgedit-gtksourceview is part of
-[Gedit Technology](https://gedit-technology.net/).
+libgedit-amtk is part of [Gedit Technology](https://gedit-technology.net/).
 
-libgedit-gtksourceview is a library that extends GtkTextView, the
-standard GTK widget for multiline text editing. This library adds support
-for syntax highlighting, undo/redo, file loading and saving, search and
-replace, a completion system, printing, displaying line numbers, and
-other features typical of a source code editor.
+Amtk is the acronym for "Actions, Menus and Toolbars Kit". It is a basic
+GtkUIManager replacement based on GAction. It is suitable for both a
+traditional UI or a modern UI with a GtkHeaderBar.
 
-This package contains shared GtkSourceView library.
+This package contains shared Amtk library.
 
 %package devel
 Summary: Files to compile applications that use %name
 Group: Development/C
+#Obsoletes: libamtk-devel < 5.8.0-alt1
+#Provides: libamtk-devel = %EVR
 Requires: %name = %EVR
 
 %description devel
 This package contains the files required to develop applications against
-the GtkSourceView library.
+the Amtk library.
 
 %package devel-doc
 Summary: Development documentation for %name
 Group: Development/Documentation
 Conflicts: %name < %EVR
 BuildArch: noarch
+#Obsoletes: libamtk-devel-doc < 5.8.0-alt1
+#Provides: libamtk-devel-doc = %EVR
 
 %description devel-doc
-libgedit-gtksourceview is part of
-[Gedit Technology](https://gedit-technology.net/).
+libgedit-amtk is part of [Gedit Technology](https://gedit-technology.net/).
 
-libgedit-gtksourceview is a library that extends GtkTextView, the
-standard GTK widget for multiline text editing. This library adds support
-for syntax highlighting, undo/redo, file loading and saving, search and
-replace, a completion system, printing, displaying line numbers, and
-other features typical of a source code editor.
+Amtk is the acronym for "Actions, Menus and Toolbars Kit". It is a basic
+GtkUIManager replacement based on GAction. It is suitable for both a
+traditional UI or a modern UI with a GtkHeaderBar.
 
 This package provides development documentation for %name.
 
 %package gir
-Summary: GObject introspection data for the GtkSourceView library
+Summary: GObject introspection data for the Amtk library
 Group: System/Libraries
 Requires: %name = %EVR
+Conflicts: libamtk-gir
+#Obsoletes: libamtk-gir < 5.8.0-alt1
+#Provides: libamtk-gir = %EVR
 
 %description gir
 GObject introspection data for the %name library
 
 %package gir-devel
-Summary: GObject introspection devel data for the GtkSourceView library
+Summary: GObject introspection devel data for the Amtk library
 Group: Development/Other
 BuildArch: noarch
+Conflicts: libamtk-gir-devel
+#Obsoletes: libamtk-gir-devel < 5.8.0-alt1
+#Provides: libamtk-gir-devel = %EVR
 Requires: %name-gir = %EVR
 Requires: %name-devel = %EVR
 
@@ -122,7 +127,6 @@ xvfb-run %__meson_test
 
 %files -f %name-%api_ver.lang
 %_libdir/%name-%api_ver.so.*
-%_datadir/%name-%api_ver/
 %doc NEWS README*
 
 %files devel
@@ -133,7 +137,6 @@ xvfb-run %__meson_test
 %_vapidir/%name-%api_ver.deps
 %_vapidir/%name-%api_ver.vapi
 %endif
-%doc HACKING
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -142,10 +145,10 @@ xvfb-run %__meson_test
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GtkSource-%api_ver.typelib
+%_typelibdir/Amtk-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GtkSource-%api_ver.gir
+%_girdir/Amtk-%api_ver.gir
 %endif
 
 %if_enabled installed_tests
@@ -155,10 +158,7 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
-* Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 299.0.4-alt1
-- 299.0.4
-
-* Fri Jun 23 2023 Yuri N. Sedunov <aris@altlinux.org> 299.0.3-alt1
+* Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 5.8.0-alt1
 - first build for Sisyphus
 
 

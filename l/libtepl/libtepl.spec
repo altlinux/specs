@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name tepl
-%define ver_major 6.6
+%define ver_major 6.8
 %define api_ver 6
 
 %def_enable gtk_doc
@@ -31,19 +31,19 @@ Source: %_name-%version.tar
 %define glib_ver 2.64
 %define gtk_doc_ver 1.0
 %define gtk_ver 3.22
-%define gtksource_ver 299.0.3
-%define amtk_ver 5.0
+%define gtksource_ver 299.0.4
+%define amtk_ver 5.8.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson >= %meson_ver glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgedit-gtksourceview-devel >= %gtksource_ver
 BuildRequires: libxml2-devel libuchardet-devel gtk-doc >= %gtk_doc_ver
-BuildRequires: pkgconfig(amtk-5) >= %amtk_ver
+BuildRequires: pkgconfig(libgedit-amtk-5) >= %amtk_ver
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
 BuildRequires: vala-tools
 BuildRequires: pkgconfig(sysprof-capture-4)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7 libgtk+3-gir-devel
-BuildRequires: libgedit-gtksourceview-gir-devel libamtk-gir-devel}
+BuildRequires: libgedit-gtksourceview-gir-devel libgedit-amtk-gir-devel}
 
 %description
 Tepl is a library that eases the development of GtkSourceView-based
@@ -76,6 +76,7 @@ This package contains development documentation for Tepl.
 Summary: GObject introspection data for the Tepl library
 Group: System/Libraries
 Requires: %name = %EVR
+Requires: libgedit-amtk-gir
 
 %description gir
 GObject introspection data for the Tepl library
@@ -86,6 +87,7 @@ Group: Development/Other
 BuildArch: noarch
 Requires: %name-devel = %EVR
 Requires: %name-gir = %EVR
+Requires: libgedit-amtk-gir-devel
 
 %description gir-devel
 GObject introspection devel data for the Tepl library
@@ -148,6 +150,9 @@ the functionality of the installed Tepl library.
 
 
 %changelog
+* Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 6.8.0-alt1
+- 6.8.0
+
 * Thu Jun 29 2023 Yuri N. Sedunov <aris@altlinux.org> 6.6.0-alt1
 - 6.6.0
 

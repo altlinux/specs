@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %def_enable python
 # removed since 3.36
@@ -25,8 +25,8 @@ Source: %name-%version.tar
 
 %define glib_ver 2.40.0
 %define gtk_ver 3.24
-%define gtksourceview_ver 299.0.3
-%define gedit_ver 45.0
+%define gtksourceview_ver 299.0.4
+%define gedit_ver 46.0
 %define peas_ver 1.14.1
 %define git2_ver 0.0.12
 %define vte_ver 0.38
@@ -88,6 +88,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 
 
 %changelog
+* Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Fri Jun 23 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 

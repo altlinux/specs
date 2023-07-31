@@ -3,9 +3,9 @@
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
-%define lib_ver 45
+%define lib_ver 46
 %define api_ver 3.0
 %def_enable plugins
 %def_enable introspection
@@ -37,8 +37,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 %define glib_ver 2.44.0
 %define gtk_ver 3.24.0
-%define tepl_ver 6.5.1
-%define gtksourceview_ver 299.0.3
+%define tepl_ver 6.8.0
+%define gtksourceview_ver 299.0.4
 %define peas_ver 1.14.1
 %define gspell_ver 1.0.0
 %define soup_ver 2.60.0
@@ -212,6 +212,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Fri Jun 23 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 

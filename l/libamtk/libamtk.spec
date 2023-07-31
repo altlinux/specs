@@ -6,12 +6,12 @@
 
 %def_disable static
 %def_enable gtk_doc
-%def_enable introspection
+%def_disable introspection
 %def_disable check
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Actions, Menus and Toolbars Kit for GTK+3 applications
 License: GPL-3.0-or-later
@@ -38,7 +38,7 @@ traditional UI or a modern UI with a GtkHeaderBar.
 %package devel
 Summary: Development environment for Amtk
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains the necessary components to develop with Amtk
@@ -60,7 +60,7 @@ This package contains development documentation for Amtk.
 %package devel-static
 Summary: Stuff for developing with Amtk
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains the necessary components to develop statically
@@ -69,7 +69,7 @@ linked software for Amtk.
 %package gir
 Summary: GObject introspection data for the Amtk library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Amtk library.
@@ -78,8 +78,8 @@ GObject introspection data for the Amtk library.
 Summary: GObject introspection devel data for the Amtk
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-devel = %version-%release
-Requires: %name-gir = %version-%release
+Requires: %name-devel = %EVR
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Amtk library.
@@ -90,7 +90,7 @@ GObject introspection devel data for the Amtk library.
 %build
 %meson 	\
     %{?_disable_gtk_doc:-Dgtk_doc=false} \
-    %{?_disable_introspection:-Dintrospection=false}
+    %{?_disable_introspection:-Dgobject_introspection=false}
 %nil
 %meson_build
 
@@ -129,6 +129,9 @@ GObject introspection devel data for the Amtk library.
 %endif
 
 %changelog
+* Mon Jul 31 2023 Yuri N. Sedunov <aris@altlinux.org> 5.6.1-alt2
+- disabled introspection to avoid duplicate provides with libgedit-amtk
+
 * Thu Nov 17 2022 Yuri N. Sedunov <aris@altlinux.org> 5.6.1-alt1
 - 5.6.1 (reversed soname)
 
