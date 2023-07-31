@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.29.8
+Version: 1.30.1
 Release: alt1
 
 Summary: PostgreSQL interface library
@@ -59,6 +59,9 @@ sed -i '9a version = "%version"' pyproject.toml
 
 
 %changelog
+* Mon Jul 31 2023 Anton Vyatkin <toni@altlinux.org> 1.30.1-alt1
+- New version 1.30.1.
+
 * Fri Jun 23 2023 Anton Vyatkin <toni@altlinux.org> 1.29.8-alt1
 - New version 1.29.8.
 
