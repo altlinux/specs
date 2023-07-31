@@ -2,19 +2,20 @@
 %define oname mozinfo
 
 Name: python3-module-%oname
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: Library to get system information for use in Mozilla testing
-License: MPL
+License: MPL-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/mozinfo/
 BuildArch: noarch
 
 Source: %oname-%version.tar
-Patch0: fix-detect-dist.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 Requires: python3-module-six
 
@@ -25,22 +26,24 @@ Library to get system information for use in Mozilla testing.
 
 %prep
 %setup -q -n %{oname}-%{version}
-%patch0 -p2
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc PKG-INFO
 %_bindir/%oname
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 
 %changelog
+* Mon Jul 31 2023 Anton Vyatkin <toni@altlinux.org> 1.2.3-alt1
+- new version 1.2.3
+
 * Wed Mar 01 2023 Anton Vyatkin <toni@altlinux.org> 1.2.2-alt1
 - new version 1.2.2
 
