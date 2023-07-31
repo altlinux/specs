@@ -1,8 +1,8 @@
 %define git %nil
 
 Name: ell
-Version: 0.53
-Release: alt1.1
+Version: 0.57
+Release: alt1
 Summary: Embedded Linux library
 Group: System/Libraries
 License: LGPLv2+
@@ -58,6 +58,9 @@ Headers for developing against libell.
 %_pkgconfigdir/ell.pc
 
 %changelog
+* Mon Jul 31 2023 L.A. Kostis <lakostis@altlinux.ru> 0.57-alt1
+- 0.57.
+
 * Fri Oct 21 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.53-alt1.1
 - removed patch for Elbrus (no longer needed)
 
