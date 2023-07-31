@@ -1,23 +1,23 @@
 Name: pgagent
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 
 Summary: Job scheduler for PostgreSQL which may be managed using pgAdmin
 
 License: BSD
 Group: Databases
-Url: http://www.postgresql.org/ftp/pgadmin3/release/pgagent/
+Url: https://www.pgadmin.org/docs/pgadmin4/development/pgagent.html
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 %define REL %(echo "%version" | sed -e "s|\\.|_|g")
 
-# Source-url: https://github.com/postgres/pgagent/archive/REL-%REL.tar.gz
+# Source-url: https://github.com/pgadmin-org/pgagent/archive/refs/tags/pgagent-%version.tar.gz
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Wed Sep 29 2021
-# optimized out: boost-devel boost-devel-headers cmake cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libsasl2-3 libstdc++-devel python3 python3-base python3-module-paste python3-module-repoze sh4 sssd-client tzdata
-BuildRequires: boost-asio-devel boost-filesystem-devel cmake gcc-c++ libssl-devel postgresql-devel
+BuildRequires: cmake gcc-c++
+BuildRequires: libssl-devel postgresql-devel
+BuildRequires: boost-asio-devel boost-filesystem-devel boost-locale-devel
 
 %description
 pgAgent is a job scheduler for PostgreSQL which may be managed using
@@ -30,7 +30,7 @@ From pgAdmin v1.9 onwards, pgAgent is shipped as a separate application.
 %build
 cmake \
 	-DCMAKE_INSTALL_PREFIX:PATH='%prefix' \
-	-DCMAKE_BUILD_TYPE:STRING=Release \
+	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
 	-DCMAKE_STRIP:FILEPATH='/bin/echo' \
@@ -56,6 +56,10 @@ rm -f %buildroot/usr/{LICENSE,README}
 %_datadir/pgsql
 
 %changelog
+* Mon Jul 31 2023 Vitaly Lipatov <lav@altlinux.ru> 4.2.2-alt1
+- new version 4.2.2 (with rpmrb script)
+- update URL, Source, update BR
+
 * Wed Sep 29 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.1-alt1
 - new version 4.2.1 (with rpmrb script)
 - update buildreqs
