@@ -4,7 +4,7 @@
 %def_with python
 
 Name: ledger
-Version: 3.2.1
+Version: 3.3.2
 Release: alt1
 
 Summary: Ledger is a highly flexible, double-entry accounting system
@@ -105,7 +105,7 @@ This package contains emacs libraries to ease use of ledger.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 
 %build
 %cmake -DUSE_PYTHON=yes
@@ -138,6 +138,9 @@ This package contains emacs libraries to ease use of ledger.
 #%_emacslispdir/*
 
 %changelog
+* Mon Jul 31 2023 Vitaly Lipatov <lav@altlinux.ru> 3.3.2-alt1
+- new version 3.3.2 (with rpmrb script)
+
 * Fri Aug 13 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
 - new version 3.2.1 (with rpmrb script)
 - fix build with boost-1.76
