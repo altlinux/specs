@@ -5,7 +5,7 @@
 
 Name:     openFPGALoader
 Version:  0.10.0
-Release:  alt2.20230612
+Release:  alt3.20230612
 
 Summary:  Universal utility for programming FPGA
 License:  Apache-2.0
@@ -46,6 +46,9 @@ Group:   Documentation
 %setup
 %autopatch -p1
 
+# fix unavailable GROUP "plugdev"
+sed -i 's/GROUP="plugdev"/GROUP="uucp"/g' 99-openfpgaloader.rules
+
 %build
 # fix build with gcc12
 %add_optflags -Wno-narrowing
@@ -82,6 +85,10 @@ install -pm644 doc/_build/man/openFPGALoader.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Mon Jul 31 2023 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt3.20230612
+- replace unavailable GROUP "plugdev" with "uucp" in udev rule
+  99-openfpgaloader.rules
+
 * Thu Jun 22 2023 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt2.20230612
 - new snapshot
 - ExcludeArch: %%arm
