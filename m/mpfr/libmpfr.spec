@@ -1,5 +1,5 @@
 Name: mpfr
-Version: 4.2.0.p9
+Version: 4.2.0.p12
 Release: alt1
 
 Summary: Multiple Precision Floating-Point library
@@ -114,6 +114,10 @@ make check-exported-symbols
 %endif
 
 %changelog
+* Mon Jul 31 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.0.p12-alt1
+- Updated to version 4.2.0.p12, which includes additional upstream patches
+  applied: gcc-pr106155-workaround, inp_str-nullchar, strtofr-nullchar.
+
 * Mon Jul 03 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.0.p9-alt1
 - Updated to version 4.2.0.p9, which includes the original 4.2.0 release with
   additional upstream patches applied: tsprintf-thousands, ui_pow_ui-overflow,
