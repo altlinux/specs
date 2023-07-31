@@ -1,10 +1,10 @@
 Name: nmap
-Version: 7.80
-Release: alt2
+Version: 7.94
+Release: alt1
 Epoch: 20020501
 
 Summary: Network exploration tool and security scanner
-License: GPLv2
+License: NPSL-0.95
 Group: Monitoring
 Url: http://nmap.org/
 
@@ -18,14 +18,19 @@ Source2: zenmap.security
 %def_with ncat
 %def_with ndiff
 %def_with nping
-%def_without zenmap
+%def_with zenmap
 
 Requires: chrooted-resolv
 BuildRequires: gcc-c++, libcap-devel
 BuildRequires: libpcap-devel >= 2:0.8, libpcre-devel, libssl-devel, libssh2-devel, zlib-devel
-%{?_with_liblua:BuildRequires: liblua5.3-devel}
+# nmap/configure.ac:836:    # We need Lua 5.4 exactly
+%{?_with_liblua:BuildRequires: liblua5.4-devel}
 %{?_with_ndiff:BuildRequires: python3-devel}
-%{?_with_zenmap:BuildRequires: libpam-devel python-devel}
+%{?_with_zenmap:BuildRequires: libpam-devel python3-devel}
+
+# Nmap Lua scripts are self-contained;
+# they do not rely on any external Lua modules.
+AutoReq: nolua
 
 %description
 Nmap is an utility for network exploration or security auditing.
@@ -40,7 +45,7 @@ and more.
 Summary: The GTK+ frontend for Nmap
 Group: Monitoring
 BuildArch: noarch
-%_python_set_noarch
+%_python3_set_noarch
 Requires: %name = %EVR
 
 %description -n zenmap
@@ -49,7 +54,7 @@ This package includes zenmap, a GTK+ frontend for Nmap.
 %prep
 %setup -n %srcname
 rm -r liblua libpcap libpcre libssh2 libz
-bzip2 -9 CHANGELOG
+gzip -9 CHANGELOG
 
 %build
 for d in . nping; do
@@ -59,6 +64,8 @@ for d in . nping; do
 	autoconf
 	popd
 done
+
+%add_optflags -D_FILE_OFFSET_BITS=64
 
 export ac_cv_header_libiberty_h=no
 export ac_cv_dnet_linux_procfs=yes
@@ -94,6 +101,7 @@ rm %buildroot%_bindir/{nmapfe,uninstall_zenmap,xnmap}
 rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %endif
 
+%set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
@@ -112,14 +120,14 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %if_with ndiff
 %_bindir/ndiff
 %_man1dir/ndiff.*
-%python3_sitelibdir_noarch/ndiff.py
-%python3_sitelibdir_noarch/__pycache__/ndiff*
+%python3_sitelibdir/ndiff.py
+%python3_sitelibdir/__pycache__/ndiff*
 %endif
 %if_with nping
 %_bindir/nping
 %_man1dir/nping.*
 %endif
-%doc COPYING* CHANGELOG.bz2 docs/{README,nmap*.txt}
+%doc LICENSE CHANGELOG.gz docs/{README,nmap*.txt}
 
 %if_with zenmap
 %files -n zenmap -f zenmap.lang
@@ -130,10 +138,19 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %_man1dir/zenmap.*
 %_liconsdir/*
 %_desktopdir/zenmap*.desktop
-%python_sitelibdir/*
+%python3_sitelibdir/radialnet
+%python3_sitelibdir/zenmapCore
+%python3_sitelibdir/zenmapGUI
+%python3_sitelibdir/zenmap-%{version}-*.egg-info
 %endif
 
 %changelog
+* Mon Jul 31 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 20020501:7.94-alt1
+- Updated to 7.94.
+- Reenabled zenmap as it now supports Python 3.
+- Enabled Large File Support.
+- Updated the License: tag (GPLv2 -> NPSL-0.95).
+
 * Sat Oct 30 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 20020501:7.80-alt2
 - Switched to use python3 due to python2 EOL (ALT#38271) (thx Vitaly Lipatov):
   + disabled zenmap build;
