@@ -1,5 +1,5 @@
 Name:    git-crypt
-Version: 0.6.0.11.g1c905fa
+Version: 0.7.0
 Release: alt1
 
 Summary: Transparent file encryption in git
@@ -27,9 +27,10 @@ down your entire repository.
 %setup -q
 
 %build
+export CXXFLAGS="%{optflags} -DOPENSSL_API_COMPAT=0x30000000L"
 %make_build \
 	PREFIX=%_prefix \
-	ENABLE_MAN=yes
+	ENABLE_MAN=yes \
 
 %install
 %makeinstall_std \
@@ -41,6 +42,10 @@ down your entire repository.
 %_man1dir/*
 
 %changelog
+* Mon Jul 31 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.0-alt1
+- Update to new version
+- Fix FTBFS
+
 * Mon Jan 17 2022 Alexey Gladkov <legion@altlinux.ru> 0.6.0.11.g1c905fa-alt1
 - Upstream snapshot.
 - Build with OpenSSL.
