@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.0
-Release: alt0.8.20230413
+Release: alt0.9.20230413
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -151,6 +151,9 @@ sed -i 's,sparc64|,&e2k|,' src/m4/ax_boost_base.m4
 
 find . -name '*.py' -exec dos2unix "{}" \;
 
+# fix unavailable GROUP "plugdev"
+sed -i 's/GROUP="plugdev"/GROUP="uucp"/g' debian/extras/lib/udev/rules.d/*
+
 %build
 pushd src
 ./autogen.sh
@@ -240,6 +243,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Mon Jul 31 2023 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.9.20230413
+- replace unavailable GROUP "plugdev" with "uucp" in udev rules
+
 * Sun Apr 30 2023 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.8.20230413
 - clear '_FORTIFY_SOURCE=2' compiler flag
   (fix FTBFS with gcc 12.2.1-alt2: -D_FORTIFY_SOURCE=3)
