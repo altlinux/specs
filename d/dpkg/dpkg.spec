@@ -3,7 +3,7 @@
 
 Name: dpkg
 Version: 1.21.22
-Release: alt1
+Release: alt2
 
 Summary: Package maintenance system for Debian Linux
 
@@ -24,6 +24,8 @@ Patch: dpkg-ALT-e2k-cputable.patch
 BuildRequires: perl-podlators perl-Storable perl-TimeDate perl-File-FcntlLock perl-parent perl-Time-Piece
 
 BuildRequires: zlib-devel liblzma-devel libmd-devel libzstd-devel
+
+Requires: perl-Digest-SHA
 
 %description
 This is dpkg, Debian's package maintenance system.
@@ -113,6 +115,9 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.21.22-alt2
+- add Requires: perl-Digest-SHA (ALT bug 46636)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.21.22-alt1
 - new version 1.21.22 (with rpmrb script)
 
