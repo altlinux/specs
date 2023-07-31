@@ -1,6 +1,6 @@
 Name: nvidia-modprobe
 Version: 535.86.05
-Release: alt1
+Release: alt2
 
 Group: System/Configuration/Hardware
 Summary: Helper to load kernel module and create device files
@@ -35,11 +35,14 @@ make install NV_VERBOSE=1 OUTPUTDIR=BUILD STRIP_CMD=true NV_KEEP_UNSTRIPPED_BINA
 
 %files
 %doc COPYING
-%_bindir/%name
+%attr(4711,root,root) %_bindir/%name
 %_man1dir/%name.*
 
 
 %changelog
+* Mon Jul 31 2023 Sergey V Turchin <zerg@altlinux.org> 535.86.05-alt2
+- allow force permissions for all users
+
 * Fri Jul 21 2023 Sergey V Turchin <zerg@altlinux.org> 535.86.05-alt1
 - new version
 - remove SUID (closes: 43826)
