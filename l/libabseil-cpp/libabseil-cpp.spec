@@ -1,12 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
+%define soversion 2301.0.0
+
+# about -DCMAKE_CXX_STANDARD=17 see https://github.com/desktop-app/tg_owt/pull/55#discussion_r599718405
+# from tg_owt: HINT: System abseil should be built with -DCMAKE_CXX_STANDARD=20
+%define cxx_standard 17
+
 # Can't be build with packaged GTest: https://github.com/abseil/abseil-cpp/issues/1102
 # And these tests are very long
 %def_enable check
 
 Name: libabseil-cpp
 Version: 20230125.3
-Release: alt1
+Release: alt2
 
 Summary: C++ Common Libraries
 
@@ -47,6 +53,16 @@ Abseil is not meant to be a competitor to the standard library; we've just
 found that many of these utilities serve a purpose within our code base,
 and we now want to provide those resources to the C++ community as a whole.
 
+
+%package testing
+Summary:        Libraries needed for running tests on the installed %name
+Requires:       %name = %EVR
+Group: Development/C++
+
+%description testing
+%{summary}.
+
+
 %package devel
 Summary: Development files for %name
 #Requires: %name = %EVR
@@ -66,15 +82,15 @@ sed -i "/static_assert(value.empty()/{N;d}" absl/strings/internal/string_constan
 
 %build
 %add_optflags -fPIC
-# about -DCMAKE_CXX_STANDARD=17 see https://github.com/desktop-app/tg_owt/pull/55#discussion_r599718405
 %cmake \
     -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
     -DBUILD_SHARED_LIBS:BOOL=ON \
-    -DCMAKE_CXX_STANDARD:STRING=17 \
+    -DCMAKE_CXX_STANDARD:STRING=%cxx_standard \
     -DABSL_ENABLE_INSTALL:BOOL=ON \
     -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
 %if_enabled check
     -DABSL_BUILD_TESTING:BOOL=ON \
+    -DABSL_BUILD_TEST_HELPERS:BOOL=ON \
     -DABSL_USE_EXTERNAL_GOOGLETEST:BOOL=ON \
     -DABSL_FIND_GOOGLETEST:BOOL=ON \
 %endif
@@ -92,7 +108,115 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %endif
 
 %files
-%_libdir/libabsl_*.so.*
+%doc LICENSE
+%doc FAQ.md README.md UPGRADES.md
+%_libdir/libabsl_bad_any_cast_impl.so.%soversion
+%_libdir/libabsl_bad_optional_access.so.%soversion
+%_libdir/libabsl_bad_variant_access.so.%soversion
+%_libdir/libabsl_base.so.%soversion
+%_libdir/libabsl_city.so.%soversion
+%_libdir/libabsl_civil_time.so.%soversion
+%_libdir/libabsl_cord.so.%soversion
+%_libdir/libabsl_cord_internal.so.%soversion
+%_libdir/libabsl_cordz_functions.so.%soversion
+%_libdir/libabsl_cordz_handle.so.%soversion
+%_libdir/libabsl_cordz_info.so.%soversion
+%_libdir/libabsl_cordz_sample_token.so.%soversion
+%_libdir/libabsl_crc32c.so.%soversion
+%_libdir/libabsl_crc_cord_state.so.%soversion
+%_libdir/libabsl_crc_cpu_detect.so.%soversion
+%_libdir/libabsl_crc_internal.so.%soversion
+%_libdir/libabsl_debugging_internal.so.%soversion
+%_libdir/libabsl_demangle_internal.so.%soversion
+%_libdir/libabsl_die_if_null.so.%soversion
+%_libdir/libabsl_examine_stack.so.%soversion
+%_libdir/libabsl_exponential_biased.so.%soversion
+%_libdir/libabsl_failure_signal_handler.so.%soversion
+%_libdir/libabsl_flags.so.%soversion
+%_libdir/libabsl_flags_commandlineflag.so.%soversion
+%_libdir/libabsl_flags_commandlineflag_internal.so.%soversion
+%_libdir/libabsl_flags_config.so.%soversion
+%_libdir/libabsl_flags_internal.so.%soversion
+%_libdir/libabsl_flags_marshalling.so.%soversion
+%_libdir/libabsl_flags_parse.so.%soversion
+%_libdir/libabsl_flags_private_handle_accessor.so.%soversion
+%_libdir/libabsl_flags_program_name.so.%soversion
+%_libdir/libabsl_flags_reflection.so.%soversion
+%_libdir/libabsl_flags_usage.so.%soversion
+%_libdir/libabsl_flags_usage_internal.so.%soversion
+%_libdir/libabsl_graphcycles_internal.so.%soversion
+%_libdir/libabsl_hash.so.%soversion
+%_libdir/libabsl_hashtablez_sampler.so.%soversion
+%_libdir/libabsl_int128.so.%soversion
+%_libdir/libabsl_leak_check.so.%soversion
+%_libdir/libabsl_log_entry.so.%soversion
+%_libdir/libabsl_log_flags.so.%soversion
+%_libdir/libabsl_log_globals.so.%soversion
+%_libdir/libabsl_log_initialize.so.%soversion
+%_libdir/libabsl_log_internal_check_op.so.%soversion
+%_libdir/libabsl_log_internal_conditions.so.%soversion
+%_libdir/libabsl_log_internal_format.so.%soversion
+%_libdir/libabsl_log_internal_globals.so.%soversion
+%_libdir/libabsl_log_internal_log_sink_set.so.%soversion
+%_libdir/libabsl_log_internal_message.so.%soversion
+%_libdir/libabsl_log_internal_nullguard.so.%soversion
+%_libdir/libabsl_log_internal_proto.so.%soversion
+%_libdir/libabsl_log_severity.so.%soversion
+%_libdir/libabsl_log_sink.so.%soversion
+%_libdir/libabsl_low_level_hash.so.%soversion
+%_libdir/libabsl_malloc_internal.so.%soversion
+%_libdir/libabsl_periodic_sampler.so.%soversion
+%_libdir/libabsl_random_distributions.so.%soversion
+%_libdir/libabsl_random_internal_distribution_test_util.so.%soversion
+%_libdir/libabsl_random_internal_platform.so.%soversion
+%_libdir/libabsl_random_internal_pool_urbg.so.%soversion
+%_libdir/libabsl_random_internal_randen.so.%soversion
+%_libdir/libabsl_random_internal_randen_hwaes.so.%soversion
+%_libdir/libabsl_random_internal_randen_hwaes_impl.so.%soversion
+%_libdir/libabsl_random_internal_randen_slow.so.%soversion
+%_libdir/libabsl_random_internal_seed_material.so.%soversion
+%_libdir/libabsl_random_seed_gen_exception.so.%soversion
+%_libdir/libabsl_random_seed_sequences.so.%soversion
+%_libdir/libabsl_raw_hash_set.so.%soversion
+%_libdir/libabsl_raw_logging_internal.so.%soversion
+%_libdir/libabsl_scoped_set_env.so.%soversion
+%_libdir/libabsl_spinlock_wait.so.%soversion
+%_libdir/libabsl_stacktrace.so.%soversion
+%_libdir/libabsl_status.so.%soversion
+%_libdir/libabsl_statusor.so.%soversion
+%_libdir/libabsl_str_format_internal.so.%soversion
+%_libdir/libabsl_strerror.so.%soversion
+%_libdir/libabsl_strings.so.%soversion
+%_libdir/libabsl_strings_internal.so.%soversion
+%_libdir/libabsl_symbolize.so.%soversion
+%_libdir/libabsl_synchronization.so.%soversion
+%_libdir/libabsl_throw_delegate.so.%soversion
+%_libdir/libabsl_time.so.%soversion
+%_libdir/libabsl_time_zone.so.%soversion
+
+%files testing
+# TESTONLY libraries (that are actually installed):
+# absl/base/CMakeLists.txt
+%_libdir/libabsl_exception_safety_testing.so.%soversion
+%_libdir/libabsl_atomic_hook_test_helper.so.%soversion
+%_libdir/libabsl_spinlock_test_common.so.%soversion
+# absl/container/CMakeLists.txt
+%_libdir/libabsl_test_instance_tracker.so.%soversion
+%_libdir/libabsl_hash_generator_testing.so.%soversion
+# absl/debugging/CMakeLists.txt
+%_libdir/libabsl_stack_consumption.so.%soversion
+# absl/log/CMakeLists.txt
+%_libdir/libabsl_log_internal_test_actions.so.%soversion
+%_libdir/libabsl_log_internal_test_helpers.so.%soversion
+%_libdir/libabsl_log_internal_test_matchers.so.%soversion
+%_libdir/libabsl_scoped_mock_log.so.%soversion
+# absl/strings/CMakeLists.txt
+%_libdir/libabsl_pow10_helper.so.%soversion
+# absl/synchronization/CMakeLists.txt
+%_libdir/libabsl_per_thread_sem_test_common.so.%soversion
+# absl/time/CMakeLists.txt
+%_libdir/libabsl_time_internal_test_util.so.%soversion
+
 
 %files devel
 %doc LICENSE
@@ -104,6 +228,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 31 2023 Vitaly Lipatov <lav@altlinux.ru> 20230125.3-alt2
+- move test only libs to subpackage testing
+
 * Sun Jul 30 2023 Vitaly Lipatov <lav@altlinux.ru> 20230125.3-alt1
 - Abseil LTS branch, Jan 2023, Patch 3
 - required libgtest-devel >= 1.13.0
