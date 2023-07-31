@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20230214
+%define orig_timestamp 20230512
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 20
+Version: 21
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,58 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Mon Jul 31 2023 L.A. Kostis <lakostis@altlinux.ru> 2:21-alt1.20230512
+- Sync with Debian 3.20230512.1:
+  + New upstream microcode datafile 20230512
+    + Includes fixes or mitigations for an undisclosed security issue
+    + New microcodes:
+      sig 0x000906a4, pf_mask 0x40, 2022-10-12, rev 0x0004, size 115712
+      sig 0x000b06e0, pf_mask 0x01, 2022-12-19, rev 0x0010, size 134144
+    + Updated microcodes:
+      sig 0x00050653, pf_mask 0x97, 2022-12-21, rev 0x1000171, size 36864
+      sig 0x00050654, pf_mask 0xb7, 2022-12-21, rev 0x2006f05, size 44032
+      sig 0x00050656, pf_mask 0xbf, 2022-12-21, rev 0x4003501, size 37888
+      sig 0x00050657, pf_mask 0xbf, 2022-12-21, rev 0x5003501, size 37888
+      sig 0x0005065b, pf_mask 0xbf, 2022-12-21, rev 0x7002601, size 29696
+      sig 0x000606a6, pf_mask 0x87, 2022-12-28, rev 0xd000390, size 296960
+      sig 0x000706e5, pf_mask 0x80, 2022-12-25, rev 0x00ba, size 113664
+      sig 0x000806a1, pf_mask 0x10, 2023-01-13, rev 0x0033, size 34816
+      sig 0x000806c1, pf_mask 0x80, 2022-12-28, rev 0x00aa, size 110592
+      sig 0x000806c2, pf_mask 0xc2, 2022-12-28, rev 0x002a, size 97280
+      sig 0x000806d1, pf_mask 0xc2, 2022-12-28, rev 0x0044, size 102400
+      sig 0x000806e9, pf_mask 0xc0, 2022-12-26, rev 0x00f2, size 105472
+      sig 0x000806e9, pf_mask 0x10, 2023-01-02, rev 0x00f2, size 105472
+      sig 0x000806ea, pf_mask 0xc0, 2022-12-26, rev 0x00f2, size 105472
+      sig 0x000806eb, pf_mask 0xd0, 2022-12-26, rev 0x00f2, size 105472
+      sig 0x000806ec, pf_mask 0x94, 2022-12-26, rev 0x00f6, size 105472
+      sig 0x000806f8, pf_mask 0x87, 2023-03-13, rev 0x2b000461, size 564224
+      sig 0x000806f7, pf_mask 0x87, 2023-03-13, rev 0x2b000461
+      sig 0x000806f6, pf_mask 0x87, 2023-03-13, rev 0x2b000461
+      sig 0x000806f5, pf_mask 0x87, 2023-03-13, rev 0x2b000461
+      sig 0x000806f4, pf_mask 0x87, 2023-03-13, rev 0x2b000461
+      sig 0x000806f8, pf_mask 0x10, 2023-02-14, rev 0x2c0001d1, size 595968
+      sig 0x000806f6, pf_mask 0x10, 2023-02-14, rev 0x2c0001d1
+      sig 0x000806f5, pf_mask 0x10, 2023-02-14, rev 0x2c0001d1
+      sig 0x000806f4, pf_mask 0x10, 2023-02-14, rev 0x2c0001d1
+      sig 0x000906a3, pf_mask 0x80, 2023-02-14, rev 0x042a, size 218112
+      sig 0x000906a4, pf_mask 0x80, 2023-02-14, rev 0x042a
+      sig 0x000906e9, pf_mask 0x2a, 2022-12-26, rev 0x00f2, size 108544
+      sig 0x000906ea, pf_mask 0x22, 2023-01-12, rev 0x00f2, size 104448
+      sig 0x000906eb, pf_mask 0x02, 2022-12-26, rev 0x00f2, size 105472
+      sig 0x000906ec, pf_mask 0x22, 2023-01-12, rev 0x00f2, size 104448
+      sig 0x000906ed, pf_mask 0x22, 2023-02-05, rev 0x00f8, size 104448
+      sig 0x000a0652, pf_mask 0x20, 2022-12-27, rev 0x00f6, size 96256
+      sig 0x000a0653, pf_mask 0x22, 2023-01-01, rev 0x00f6, size 97280
+      sig 0x000a0655, pf_mask 0x22, 2022-12-26, rev 0x00f6, size 96256
+      sig 0x000a0660, pf_mask 0x80, 2022-12-26, rev 0x00f6, size 97280
+      sig 0x000a0661, pf_mask 0x80, 2022-12-26, rev 0x00f6, size 96256
+      sig 0x000a0671, pf_mask 0x02, 2022-12-25, rev 0x0058, size 103424
+      sig 0x000b0671, pf_mask 0x32, 2023-02-06, rev 0x0113, size 207872
+      sig 0x000b06a2, pf_mask 0xc0, 2023-02-22, rev 0x4112, size 212992
+      sig 0x000b06a3, pf_mask 0xc0, 2023-02-22, rev 0x4112
+  + source: update symlinks to reflect id of the latest release, 20230512
+
+
 * Fri Feb 17 2023 L.A. Kostis <lakostis@altlinux.ru> 2:20-alt1.20230214
 - Updated to upstream microcode datafile 20230214:
   + Security updates for INTEL-SA-00767 INTEL-SA-00738 INTEL-SA-00700
