@@ -17,7 +17,7 @@
 
 # https://github.com/gluster/glusterfs/issues/2979
 # disable tcmalloc on non-x86
-%ifarch x86_64
+%ifarch aarch64 x86_64
 %def_with tcmalloc
 %else
 %def_without tcmalloc
@@ -25,7 +25,7 @@
 
 Name: glusterfs11
 Version: %major
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -95,6 +95,7 @@ BuildRequires: systemd
 BuildRequires: openssl
 BuildRequires: libuserspace-rcu-devel >= 0.9.1
 
+%{?_with_tcmalloc:BuildRequires: libgperftools-devel}
 %{?_enable_ibverbs:BuildRequires: rdma-core-devel}
 
 Provides: glusterfs = %EVR
@@ -791,6 +792,10 @@ rm -rf %buildroot%_includedir/glusterfs/
 #files checkinstall
 
 %changelog
+* Mon Jul 31 2023 Vitaly Lipatov <lav@altlinux.ru> 11.0-alt2
+- restore missed BR: libgperftools-devel
+- use tcmalloc on aarch64 too
+
 * Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 11.0-alt1
 - new major release 11
 - removed libglusterd subpackage (no more libglusterd.so.x)
