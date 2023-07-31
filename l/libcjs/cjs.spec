@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Javascript Bindings for Cinnamon
 Group: System/Libraries
@@ -22,14 +22,23 @@ Patch: %_name-%version-%release.patch
 
 %define glib_ver 2.33.14
 %define gi_ver 1.33.14
+%ifarch %valgrind_arches
+%def_with valgrind
+%else
+%def_without valgrind
+%endif
 
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: gcc-c++ libcairo-devel
 BuildRequires: glib2-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libdbus-glib-devel libreadline-devel libcairo-gobject-devel
 BuildRequires: gnome-common
 BuildRequires: libmozjs102-devel
 BuildRequires: meson
-BuildRequires: pkgconfig(sysprof-capture-4) valgrind
+BuildRequires: pkgconfig(sysprof-capture-4)
+%if_with valgrind
+BuildRequires: valgrind
+%endif
 %{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools dbus-tools-gui
 BuildRequires: typelib(Clutter) typelib(Gtk) = 3.0}
 
@@ -82,11 +91,16 @@ xvfb-run %meson_test
 %_libdir/*.so
 %_libdir/pkgconfig/%_name-%api_ver.pc
 %_datadir/cjs-1.0/lsan
+%if_with valgrind
 %_datadir/cjs-1.0/valgrind
+%endif
 
 %doc examples/*
 
 %changelog
+* Mon Jul 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.8.0-alt1.1
+- spec: added --without=valgrind knob. Fixes build on LoongArch.
+
 * Thu Jun 8 2023 Vladimir Didenko <cow@altlinux.org> 5.8.0-alt1
 - 5.8.0
 
