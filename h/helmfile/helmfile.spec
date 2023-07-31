@@ -1,5 +1,5 @@
 Name: helmfile
-Version: 0.154.0
+Version: 0.155.1
 Release: alt1
 
 Summary: Deploy Kubernetes Helm Charts
@@ -60,6 +60,9 @@ install -m755 ${HOME}/go/bin/helmfile %buildroot/%_bindir/helmfile
 %_bindir/helmfile
 
 %changelog
+* Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 0.155.1-alt1
+- new version 0.155.1 (with rpmrb script)
+
 * Tue May 30 2023 Vitaly Lipatov <lav@altlinux.ru> 0.154.0-alt1
 - new version 0.154.0 (with rpmrb script)
 
