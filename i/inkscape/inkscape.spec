@@ -12,7 +12,7 @@
 
 Name: inkscape
 Version: %major
-Release: alt1
+Release: alt1.1
 
 Summary: A Vector Drawing Application
 
@@ -167,7 +167,13 @@ namespace Geom { struct Curve { };
 	auto Curve_typeinfo_ptr = &typeid(Curve); }
 EOF
 # LCC cannot work with expressions inside openmp pragmas
-sed -i "s|limit > OPENMP_THRESHOLD|limit_gt_thr|;s|limit = w \\* h|&, limit_gt_thr = limit > OPENMP_THRESHOLD|" src/display/{cairo-templates.h,nr-filter-morphology.cpp}
+sed -i -E "/^[[:space:]]*#pragma omp .* (num_threads|if)\(/{s/#/for(long &/;\
+s/(#.*num_threads\()([^()]*(\(\))*)\)/_xxxn=\\2,\\1_xxxn)/;\
+s/(#.*if\()([^()]*)\)/_xxxi=\\2,\\1_xxxi)/;\
+s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" \
+	src/display/{cairo-templates.h,nr-filter-morphology.cpp}
+sed -i 's/~*FontFactory();/public:&/' src/libnrtype/font-factory.h
+sed -i 's/~*PatternManager();/public:&private:/' src/pattern-manager.h
 %endif
 rm -rv src/3rdparty/2geom/
 
@@ -254,6 +260,9 @@ true
 %files checkinstall
 
 %changelog
+* Mon Jul 31 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.3-alt1.1
+- e2k: build fix
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
 - new version 1.3 (with rpmrb script)
 - add BuildRequires: libepoxy-devel libgtksourceview4-devel
