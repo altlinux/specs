@@ -1,8 +1,14 @@
 %define oname dotenv
+%define pypi_name python-dotenv
 
-Name: python3-module-%oname
+%def_without check
+
+Name: python3-module-%pypi_name
 Version: 1.0.0
-Release: alt1
+Release: alt2
+
+Provides: python3-module-%oname = %EVR
+Obsoletes: python3-module-%oname < 1.0.0-alt2
 
 Summary: Reads the key-value pair from .env file and adds them to environment variable.
 
@@ -11,14 +17,20 @@ Group: Development/Python
 Url: https://github.com/theskumar/python-dotenv
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 BuildArch: noarch
 
-AutoReqProv: nopython
-%define __python %nil
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): /dev/pts
+BuildRequires(pre): /proc
+%pyproject_builddeps_build
+%pyproject_runtimedeps_metadata
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+%if_with check
+BuildRequires: python3(IPython)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 Reads the key-value pair from .env file and adds them to environment
@@ -27,6 +39,11 @@ and in production using 12-factor principles.
 
 %prep
 %setup -n %name-%version
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 # We don't support IPython for now (requires additional dependencies)
@@ -36,12 +53,21 @@ rm -f src/dotenv/ipython.py
 %install
 %pyproject_install
 
+%check
+# tests/test_docs.py:
+# do not execute tests for docs
+%pyproject_run_pytest -vra --deselect='tests/test_docs.py'
+
 %files
 %_bindir/%oname
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/python_%oname-%version.dist-info/*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 31 2023 Vladimir Didenko <cow@altlinux.org> 1.0.0-alt2
+- rename package to use PyPI name
+- incorporate changes from Alexander Shashkin (dutyrok@)
+
 * Mon Mar 20 2023 Vladimir Didenko <cow@altlinux.org> 1.0.0-alt1
 - new version
 
