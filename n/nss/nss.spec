@@ -1,7 +1,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.90.0
-Release:	alt2.1
+Version:	3.92.0
+Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -15,7 +15,6 @@ Source6:	system-pkcs11.txt
 
 Patch0001: 0001-Disable-test-dbtest-r-w-in-a-readonly-directory.patch
 Patch0002: 0002-ALT-Disable-flaky-tests.patch
-Patch0003: 0003-FEDORA-Fix-add-condition-for-architecture-specific-a.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  chrpath zlib-devel libsqlite3-devel
@@ -265,6 +264,26 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Mon Jul 31 2023 Alexey Gladkov <legion@altlinux.ru> 3.92.0-alt1
+- New version (3.92).
+- Certificate Authority Changes:
+  + Add CN=Atos TrustedRoot Root CA ECC G2 2020
+  + Add CN=Atos TrustedRoot Root CA RSA G2 2020
+  + Add CN=LAWtrust Root CA2 (4096)
+  + Add CN=SSL.com Client ECC Root CA 2022
+  + Add CN=SSL.com Client RSA Root CA 2022
+  + Add CN=SSL.com TLS ECC Root CA 2022
+  + Add CN=SSL.com TLS RSA Root CA 2022
+  + Add CN=Sectigo Public Email Protection Root E46
+  + Add CN=Sectigo Public Email Protection Root R46
+  + Add CN=Sectigo Public Server Authentication Root E46
+  + Add CN=Sectigo Public Server Authentication Root R46
+  + Remove CN=Chambers of Commerce Root,OU=http://www.chambersign.org
+  + Remove CN=E-Tugra Certification Authority,OU=E-Tugra Sertifikasyon Merkezi
+  + Remove CN=E-Tugra Global Root CA ECC v3,OU=E-Tugra Trust Center
+  + Remove CN=E-Tugra Global Root CA RSA v3,OU=E-Tugra Trust Center
+  + Remove CN=Hongkong Post Root CA 1
+
 * Mon Jul 03 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.90.0-alt2.1
 - Fixed build for Elbrus.
 
