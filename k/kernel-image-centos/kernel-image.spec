@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 344
+%define centos_release 347
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -643,6 +643,38 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jul 31 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.347-alt1.el9
+- Updated to kernel-5.14.0-347.el9 (fixes: CVE-2023-3090, CVE-2023-31248, CVE-2023-35001, CVE-2023-35788):
+  + Backport afs and rxrpc fixes
+  + Enable STUSB160X driver for rhel on aarch64
+  + Fix ACPI brightness adjustment on Dell laptops
+  + Merge commit '573a82531128e2dd563c427eb8bcb27c006df382' from documentation
+  + PM/devfreq: governor: Add a private governor_data for governor
+  + Updates for powerpc hcall
+  + Updates for powerpc mmap lock
+  + [RHEL for Edge] updates for drivers/gpio fully supports SystemReady IR
+  + ceph: fix use-after-free bug for inodes when flushing capsnaps
+  + clk: imx8m: driver updates
+  + ext4: Fix files not being shown in nfs exports after creation
+  + i2c: imx: driver updates
+  + iavf: bug fixes July 2023
+  + ice: bug fixes July 2023
+  + iio: adc: add imx93 adc support
+  + ipvlan:Fix out-of-bounds caused by unclear skb->cb
+  + irqchip/imx driver updates
+  + libceph: harden msgr2.1 frame segment length checks
+  + net/sched: flower: fix possible OOB write in fl_set_geneve_opt()
+  + netfilter: nf_tables: do not ignore genmask when looking up chain by id
+  + netfilter: nf_tables: prevent OOB access in nft_byteorder_eval
+  + redhat/configs: Enable CONFIG_TCG_VTPM_PROXY
+  + redhat/configs: disable CONFIG_USB_DWC2 and CONFIG_USB_DWC3 on x86
+  + s390x KVM fixes from kernel v6.2 up to v6.5-rc1
+  + selftests/ftrace: Stop tracing while reading the trace file by default
+  + update drivers/cpuidle to match v6.3
+  + wwan: enable Qualcomm driver
+  + wwan: enable t7xx driver
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Jul 24 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.344-alt1.el9
 - Updated to kernel-5.14.0-344.el9 (fixes: CVE-2023-3212):
   + ALSA: Add audio support for Dell SKU 0BDA and 0B34
