@@ -1,5 +1,5 @@
 Name:     suite3270
-Version:  4.0ga14
+Version:  4.2ga10
 Release:  alt1
 
 Summary:  Terminal emulation 3270
@@ -54,6 +54,9 @@ find . -name html -type d -exec cp -ar {} %buildroot/%_docdir/%name-%version/ \;
 %_docdir/%name-%version/
 
 %changelog
+* Mon Jul 31 2023 Denis Medvedev <nbr@altlinux.org> 4.2ga10-alt1
+- new version
+
 * Sat Mar 06 2021 Denis Medvedev <nbr@altlinux.org> 4.0ga14-alt1
 - new version
 
