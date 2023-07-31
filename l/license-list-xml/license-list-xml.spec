@@ -1,6 +1,6 @@
 Name: license-list-xml
 Version: 3.21
-Release: alt1
+Release: alt2
 
 Summary: Contains the various common licenses used in the %distribution
 License: CC0-1.0
@@ -88,6 +88,10 @@ cp -dp src/exceptions/*.xml %buildroot%_datadir/%name/exceptions/
 %_licensedir-exception
 
 %changelog
+* Tue Aug 01 2023 Alexey Gladkov <legion@altlinux.ru> 3.21-alt2
+- Add:
+  + Nmap Public Source License (ALT-NPSL-0.95) (ALT#47085)
+
 * Mon Jun 19 2023 Alexey Gladkov <legion@altlinux.ru> 3.21-alt1
 - New release (3.21).
 
