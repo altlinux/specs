@@ -1,8 +1,8 @@
 %define pname node-sass
 
 Name: node-sass
-Version: 7.0.0
-Release: alt2
+Version: 9.0.0
+Release: alt1
 
 Summary: Node.js bindings to libsass
 
@@ -16,15 +16,14 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
-
 Source2: %name-production-%version.tar
 
 #BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 1.9.18
 
-BuildRequires: rpm-build-nodejs node
 BuildRequires(pre): rpm-macros-nodejs
+BuildRequires: rpm-build-nodejs node
 
 BuildRequires: libsass-devel
 
@@ -78,6 +77,9 @@ cp -a vendor %buildroot/%nodejs_sitelib/%pname/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 9.0.0-alt1
+- new version 9.0.0 (with rpmrb script)
+
 * Thu Mar 31 2022 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt2
 - update node_modules, fix build
 

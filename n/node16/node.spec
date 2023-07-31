@@ -1,57 +1,40 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 18.17
-
-%define nodejs_soversion 108
-%define nodejs_abi %nodejs_soversion
-
-# there are both 6 and 7 provided (https://github.com/nodejs/node/pull/35199), see napi using
-%define napi 7
-
-# TODO: really we have no configure option to build with shared libv8
-# V8 presently breaks ABI at least every x.y release while never bumping SONAME,
-# so we need to be more explicit until spot fixes that
-%define v8_version 10.2
-%def_without systemv8
-
-
 # check deps/npm/package.json for it
-%define npm_version 9.6.7
+%define npmver 8.19.2
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
 # check deps/corepack/package.json
-%define corepackver 0.18.0
+%define corepackver 0.10.0
 %def_without corepack
 
-# check deps/zlib/zlib.h
-%define zlib_version 1.2.13
+%define major 16.20
 
-# check deps/cares/include/ares_version.h
-%define c_ares_version 1.19.1
+#we need ABI virtual provides where SONAMEs aren't enough/not present so deps
+#break when binary compatibility is broken
+%global nodejs_abi 16
+%define nodejs_pkg_major 16
 
-# check deps/llhttp/include/llhttp.h
-%define llhttp_version 6.0.11
-# to use internal llhttp
-%def_without systemhttpparser
+# there are both 6 and 7 provided (https://github.com/nodejs/node/pull/35199), see napi using
+%global napi 7
 
-# check: openssl 3.0 inside (TODO: QUIC support, FIPS support)
-#define openssl_version 1.1.1s
-%define openssl_version 3.0.8
+# TODO: really we have no configure option to build with shared libv8
+# V8 presently breaks ABI at least every x.y release while never bumping SONAME,
+# so we need to be more explicit until spot fixes that
+%global v8_abi 8.4
+%def_without systemv8
+
+
+%define openssl_version 1.1.1q
 %def_with systemssl
 
-# check deps/uv/include/uv/version.h
-%define libuv_version 1.44.2
+%global libuv_abi 1.43.0-alt1
 %def_with systemuv
 
-# check deps/nghttp2/lib/includes/nghttp2/nghttp2ver.h
-%define libnghttp2_version 1.51.0
-%def_with systemnghttp2
-
 # see deps/v8/src/objects/intl-objects.h for V8_MINIMUM_ICU_VERSION
-# check tools/icu/current_ver.dep
-%define libicu_abi 7.2
+%global libicu_abi 6.5
 # see rpm-macros-features
 %if_feature icu %libicu_abi
 %def_with systemicu
@@ -67,11 +50,12 @@
 %define optflags_debug -g0
 %endif
 
-# need OpenSSL + QUIC build from https://github.com/quictls/openssl/tree/OpenSSL_1_1_1t+quic
-%define libngtcp2_version 0.8.1
-%define libnghttp3_version 0.7.0
-%def_without systemngtcp2
 
+%global libnghttp2_abi 1.41.0
+%def_with systemnghttp2
+
+# to use internal llhttp
+%def_without systemhttpparser
 
 %def_disable check
 
@@ -79,8 +63,10 @@
 # https://github.com/nodejs/abi-stable-node
 %def_with nodejs_abi
 
-Name: node
-Version: %major.0
+%define oversion %version
+
+Name: node%{nodejs_pkg_major}
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -96,22 +82,19 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 Source7: nodejs_native.req.files
 
-Patch1: node18-system-openssl.patch
-
 BuildRequires(pre): rpm-macros-nodejs
 BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires(pre): rpm-macros-features
 
-BuildRequires: python3-devel gcc-c++
-BuildRequires: zlib-devel >= %zlib_version
-BuildRequires: libbrotli-devel
+BuildRequires: python3-devel gcc-c++ 
+BuildRequires: zlib-devel libbrotli-devel
 
-BuildRequires: gyp >= 0.14.0
+BuildRequires: gyp >= 0.10.0
 BuildRequires: python3-module-simplejson
 
 %if_with systemv8
 %define libv8_package libv8-nodejs
-BuildRequires: %libv8_package-devel >= %v8_version-devel
+BuildRequires: %libv8_package-devel >= %v8_abi-devel
 %endif
 
 %if_with systemssl
@@ -121,7 +104,7 @@ Requires: openssl >= %openssl_version
 %endif
 
 %if_with systemuv
-BuildRequires: libuv-devel >= %libuv_version
+BuildRequires: libuv-devel >= %libuv_abi
 %endif
 
 %if_with systemicu
@@ -129,51 +112,36 @@ BuildRequires: libicu-devel >= %libicu_abi
 %endif
 
 %if_with systemnghttp2
-BuildRequires: libnghttp2-devel >= %libnghttp2_version
-%endif
-
-%if_with systemngtcp2
-BuildRequires: libngtcp2-devel >= %libngtcp2_version
-BuildRequires: libnghttp3-devel >= %libnghttp3_version
+BuildRequires: libnghttp2-devel >= %libnghttp2_abi
 %endif
 
 %if_with systemhttpparser
 BuildRequires: libhttp-parser-devel >= 2.9.2-alt2
 %endif
 
-BuildRequires: libcares-devel >= %c_ares_version
+BuildRequires: libcares-devel >= 1.19.1
 
 BuildRequires: curl
 
 %if_without npm
-Requires: npm >= %npm_version
+Requires: npm >= %npmver
 %endif
 
-# this corresponds to the "engine" requirement in package.json
 Provides: nodejs(engine) = %version
-
 Provides: nodejs = %version-%release
 Provides: node.js = %version-%release
 Obsoletes: nodejs < %version-%release
 Obsoletes: node.js < %version-%release
 
-Provides: nodejs(abi) = %nodejs_abi
-Provides: nodejs(abi%major) = %nodejs_abi
+Provides: nodejs(abi) = %{nodejs_abi}
+Provides: nodejs(v8-abi) = %{v8_abi}
+Provides: nodejs(napi) = 6
+Provides: nodejs(napi) = %{napi}
 
-Provides: nodejs(v8-abi) = %v8_version
+Provides: bundled(llhttp) = 2.1.4
+Provides: bundled(uvwasi) = 0.0.11
 
-#Provides: nodejs(napi) = 6
-#Provides: nodejs(napi) = %{napi}
-
-Provides: bundled(llhttp) = %llhttp_version
-Provides: bundled(uvwasi) = 0.0.18
-
-# Node.js is closely tied to the version of v8 that is used with it. It makes
-# sense to use the bundled version because upstream consistently breaks ABI
-# even in point releases. Node.js upstream has now removed the ability to build
-# against a shared system version entirely.
-# See https://github.com/nodejs/node/commit/d726a177ed59c37cf5306983ed00ecd858cfbbef
-Provides: bundled(v8) = %v8_version
+Conflicts: node
 
 # /usr/bin/ld.default: failed to set dynamic section sizes: memory exhausted
 %ifarch %ix86
@@ -196,20 +164,22 @@ Group:          Development/Other
 License:        MIT license
 # arch depended info in .gypi
 #BuildArch:      noarch
-Provides:	nodejs-devel = %EVR
+Conflicts: node-devel
+Provides:	nodejs-devel = %version-%release
 Requires:	%name = %EVR
 Requires:       gcc-c++ zlib-devel libbrotli-devel libcares-devel
 %if_with systemv8
-Requires:	%libv8_package-devel >= %v8_version
+Requires:	%libv8_package-devel >= %{v8_abi}
 %endif
 %if_with systemssl
 Requires:	openssl-devel >= %openssl_version
 %endif
 %if_with systemuv
-Requires: libuv-devel >= %libuv_version
+Requires: libuv-devel >= %libuv_abi
 %else
 Conflicts:      libuv-devel
 %endif
+
 
 %description devel
 Node.js header and build tools
@@ -218,7 +188,7 @@ Node.js header and build tools
 %package doc
 Summary: Documentation files
 Group: Development/Other
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 BuildArch: noarch
 
@@ -228,7 +198,7 @@ Documentation files for %name.
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38130
 %if_with npm
 %package -n npm
-Version:	%npm_version
+Version:	%npmver
 Group:		Development/Tools
 Summary:	A package manager for node
 License:	MIT License
@@ -237,7 +207,7 @@ BuildArch:	noarch
 AutoReq:	yes,nopython
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38130
 #%if_with nodejs_abi
-Requires:	nodejs(abi) = %nodejs_abi
+Requires:	nodejs(abi) = %{nodejs_abi}
 #%endif
 
 %description -n npm
@@ -254,7 +224,7 @@ Requires:	node
 BuildArch:	noarch
 AutoReq:	yes,nopython
 #%if_with nodejs_abi
-Requires:	nodejs(abi) = %nodejs_abi
+Requires:	nodejs(abi) = %{nodejs_abi}
 #%endif
 
 %description corepack
@@ -271,52 +241,40 @@ As a result, Corepack doesn't have any effect at all on the way you use npm.
 
 %prep
 %setup
-%patch1 -p1
 
 %if_with systemv8
 # hack against https://bugzilla.altlinux.org/show_bug.cgi?id=32573#c3
 cp -a deps/v8/include/libplatform src
-rm -rv deps/v8/
+rm -rf deps/v8/
 %endif
 
 %if_with systemicu
-rm -rv deps/icu-small/
+rm -rf deps/icu-small/
 %endif
 
 %if_with systemuv
-rm -rv deps/uv/
+rm -rf deps/uv/
 %__subst "s|deps/uv/uv.gyp ||" Makefile
 %__subst "s|.*../uv/uv.gyp:libuv.*||" deps/uvwasi/uvwasi.gyp
 %endif
 
 %if_with systemnghttp2
-rm -rv deps/nghttp2/
-%endif
-
-%if_with systemngtcp2
-rm -rv deps/ngtcp2/
-%endif
-
-%if_with systemssl
-rm -rv deps/openssl
+rm -rf deps/nghttp2/
 %endif
 
 # disable external libs
 # TODO:
 # deps/gtest
-rm -rv tools/gyp
-rm -rv deps/zlib deps/cares deps/brotli
+rm -rf tools/gyp
+rm -rf deps/zlib deps/openssl deps/cares deps/brotli
 # make no sense for a first build
 %__subst "s|deps/zlib/zlib.gyp||" Makefile
-
-#rm -rv deps/v8/third_party/jinja2
-#rm -rv tools/inspector_protocol/jinja2
 
 
 %if_without npm
 #true
 # don't use: keep internal npm (used for doc build)
-rm -rv deps/npm/
+rm -rf deps/npm/
 ln -s %_libexecdir/node_modules/npm deps/npm
 %endif
 
@@ -353,8 +311,6 @@ export PYTHONPATH=$(pwd)/tools/v8_gypfiles
     --shared-openssl \
     --shared-openssl-includes=%_includedir \
 %endif
-    --openssl-use-def-ca-store \
-    --openssl-conf=%{_sysconfdir}/openssl/openssl.cnf \
 %if_without npm
     --without-npm \
 %endif
@@ -366,10 +322,6 @@ export PYTHONPATH=$(pwd)/tools/v8_gypfiles
 %endif
 %if_with systemnghttp2
     --shared-nghttp2 \
-%endif
-%if_with systemngtcp2
-    --shared-ngtcp2 \
-    --shared-nghttp3 \
 %endif
 %if_with systemv8
     --without-bundled-v8 \
@@ -411,7 +363,7 @@ install -Dpm0755 %{SOURCE7} %buildroot%_rpmlibdir/nodejs_native.req.files
 cat << EOF > %buildroot%_rpmlibdir/nodejs_native.req
 #!/bin/sh
 echo 'nodejs(abi) = %nodejs_abi'
-#echo 'nodejs(v8-abi) = %v8_version'
+echo 'nodejs(v8-abi) = %v8_abi'
 EOF
 chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 %endif
@@ -434,7 +386,7 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 #ln -s node_modules %buildroot%_prefix/lib/node
 
 %files
-%doc CHANGELOG.md LICENSE README.md
+%doc AUTHORS CHANGELOG.md LICENSE README.md
 %_bindir/node
 %dir %nodejs_sitelib
 #_prefix/lib/node
@@ -462,9 +414,6 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %_includedir/node/config.gypi
 %_includedir/node/libplatform/
 %_includedir/node/cppgc/
-%if_without systemssl
-%_includedir/node/openssl/
-%endif
 # deps/http_parser
 #_includedir/node/nameser.h
 #_datadir/node/common.gypi
@@ -488,29 +437,21 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
-* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 18.17.0-alt1
-- new version 18.17.0 (with rpmrb script)
-- set npm >= 9.6.7
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 16.20.1-alt1
+- new version 16.20.1 (with rpmrb script)
+- set npm >= 8.19.4
+- set c-ares >= 1.19.1
+- set openssl >= 1.1.1s
+- CVE-2023-23918: Node.js Permissions policies can be bypassed via process.mainModule (High)
+- CVE-2023-23919: Node.js OpenSSL error handling issues in nodejs crypto library (Medium)
+- CVE-2023-23920: Node.js insecure loading of ICU data through ICU_DATA environment variable (Low)
+- CVE-2023-23936: Fetch API in Node.js did not protect against CRLF injection in host headers (Medium)
+- CVE-2023-24807: Regular Expression Denial of Service in Headers in Node.js fetch API (Low)
 - CVE-2023-30581: mainModule.__proto__ Bypass Experimental Policy Mechanism (High)
 - CVE-2023-30585: Privilege escalation via Malicious Registry Key manipulation during Node.js installer repair process (Medium)
 - CVE-2023-30588: Process interuption due to invalid Public Key information in x509 certificates (Medium)
 - CVE-2023-30589: HTTP Request Smuggling via Empty headers separated by CR (Medium)
 - CVE-2023-30590: DiffieHellman does not generate keys after setting a private key (Medium)
-
-* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 18.15.0-alt1
-- new LTS version 18.15.0
-- build with OpenSSL 3, ngtcp2, nghttp3
-- set npm >= 9.5.0, libuv >= 1.44.2, libicu >= 7.2, libnghttp2 >= 1.51.0
-
-* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 16.19.1-alt1
-- new version 16.19.1 (with rpmrb script)
-- CVE-2023-23918: Node.js Permissions policies can be bypassed via process.mainModule (High)
-- CVE-2023-23919: Node.js OpenSSL error handling issues in nodejs crypto library (Medium)
-- CVE-2023-23920: Node.js insecure loading of ICU data through ICU\_DATA environment variable (Low)
-- CVE-2023-23936: Fetch API in Node.js did not protect against CRLF injection in host headers (Medium)
-- CVE-2023-24807: Regular Expression Denial of Service in Headers in Node.js fetch API (Low)
-- set openssl >= 1.1.1s
-- set npm >= 8.19.3
 
 * Wed Nov 23 2022 Vitaly Lipatov <lav@altlinux.ru> 16.18.1-alt1
 - new version 16.18.1 (with rpmrb script)

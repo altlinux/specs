@@ -1,5 +1,5 @@
 Name: gyp
-Version: 0.10.1
+Version: 0.15.0
 Release: alt1
 
 Summary: A fork of the GYP build system for use in the Node.js projects
@@ -14,8 +14,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-devel >= 3.6
+BuildRequires: python3-module-setuptools python3-module-wheel
+#BuildRequires: python3-devel >= 3.6
 
 # it is a command, but a module
 AutoProv:no
@@ -33,10 +33,10 @@ differences.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 rm -v %buildroot/%python3_sitelibdir/%name/*_test.py
 rm -v %buildroot/%python3_sitelibdir/%name/generator/*_test.py
 
@@ -44,9 +44,15 @@ rm -v %buildroot/%python3_sitelibdir/%name/generator/*_test.py
 %doc AUTHORS LICENSE README.md
 %_bindir/%name
 %python3_sitelibdir/%name
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*.dist-info
 
 %changelog
+* Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 0.15.0-alt1
+- new version 0.15.0 (with rpmrb script)
+
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 0.14.1-alt1
+- new version 0.14.1 (with rpmrb script)
+
 * Mon Jan 24 2022 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt1
 - new version 0.10.1 (with rpmrb script)
 

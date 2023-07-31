@@ -1,5 +1,5 @@
 Name: npm
-Version: 8.19.3
+Version: 9.6.7
 Release: alt1
 
 Summary: A package manager for node
@@ -26,8 +26,10 @@ BuildRequires(pre): rpm-macros-nodejs
 BuildArch:	noarch
 
 # we do not need any module provides here
-AutoProv: yes,nonodejs
-AutoReq: yes,nonodejs
+AutoProv: no
+AutoReq: no
+
+Requires: bash
 
 %description
 npm is a package manager for node. You can use it to install and publish your
@@ -85,6 +87,13 @@ done
 %nodejs_sitelib/%name/
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 9.6.7-alt1
+- new version 9.6.7 (with rpmrb script)
+- disable AutoReq/AutoProv, add Requires: bash
+
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 9.5.0-alt1
+- new version 9.5.0 (with rpmrb script)
+
 * Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 8.19.3-alt1
 - new version 8.19.3 (with rpmrb script)
 
