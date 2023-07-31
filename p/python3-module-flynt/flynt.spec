@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Summary: CLI tool to convert a python project's %-formatted strings to f-strings
 License: MIT
@@ -49,5 +49,8 @@ from old "%-formatted" and .format(...) strings into Python 3.6+'s "f-strings".
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 31 2023 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
+- 1.0.0 -> 1.0.1.
+
 * Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
  - Initial build for Sisyphus.
