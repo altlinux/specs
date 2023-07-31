@@ -2,8 +2,8 @@
 
 %define llvm_version 16.0
 
-%define git_ver 15112
-%define git_commit 33558d14e539da95c13ba43b3ba5428b3d04c54a
+%define git_ver 15419
+%define git_commit 6cd5a7eab960608cc38652c7d9f7900d52b122da
 
 %define glslang_version sdk-1.3.224.1
 %define asmjit_commit c59847629d3a19da4d10f0be4ac33b43fc4a100f
@@ -17,8 +17,8 @@
 %define rtmidi_version 5.0.0
 
 Name: rpcs3
-Version: 0.0.28
-Release: alt2
+Version: 0.0.29
+Release: alt1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -63,10 +63,10 @@ BuildRequires: graphviz
 BuildRequires: mlir%llvm_version-tools
 BuildRequires: ninja-build
 BuildRequires: pkgconfig(FAudio)
-BuildRequires: pkgconfig(Qt5) >= 5.15.2
-BuildRequires: pkgconfig(Qt5Multimedia) >= 5.15.2
-BuildRequires: pkgconfig(Qt5MultimediaWidgets) >= 5.15.2
-BuildRequires: pkgconfig(Qt5Svg) >= 5.15.2
+BuildRequires: pkgconfig(Qt6) >= 6.4.0
+BuildRequires: pkgconfig(Qt6Multimedia) >= 6.4.0
+BuildRequires: pkgconfig(Qt6MultimediaWidgets) >= 6.4.0
+BuildRequires: pkgconfig(Qt6Svg) >= 6.4.0
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(flatbuffers)
 BuildRequires: pkgconfig(glew)
@@ -84,6 +84,7 @@ BuildRequires: pkgconfig(openal)
 BuildRequires: pkgconfig(pugixml)
 BuildRequires: pkgconfig(python3)
 BuildRequires: pkgconfig(sdl2)
+BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-server)
@@ -93,6 +94,8 @@ BuildRequires: llvm%llvm_version-devel
 BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
 BuildRequires: python3-module-yaml
+BuildRequires: qt6-multimedia >= 6.4.0
+BuildRequires: qt6-svg >= 6.4.0
 
 BuildPreReq: pkgconfig(libswresample)
 BuildPreReq: python3-module-Pygments
@@ -151,8 +154,6 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 	-DUSE_SYSTEM_WOLFSSL:BOOL=TRUE \
 	-DUSE_SYSTEM_FAUDIO:BOOL=TRUE \
 	-DLLVM_DIR:PATH=%_libexecdir/llvm-%llvm_version/%_lib/cmake/llvm \
-	-DLLVM_ENABLE_LLD:BOOL=TRUE \
-	-DPython3_EXECUTABLE="%__python3" \
 	-GNinja \
 	-Wno-dev
 
@@ -173,6 +174,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Mon Jul 31 2023 Nazarov Denis <nenderus@altlinux.org> 0.0.29-alt1
+- Version 0.0.29
+
 * Mon Jun 05 2023 Nazarov Denis <nenderus@altlinux.org> 0.0.28-alt2
 - Build with system LLVM
 
