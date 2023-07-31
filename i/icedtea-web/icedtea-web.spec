@@ -22,7 +22,7 @@
 
 Name: icedtea-web
 Version: 2.0.0.alpha26
-Release: alt1_jpp11
+Release: alt2_jpp11
 
 Summary: Additional Java components for OpenJDK - Java Web Start implementation
 Group: Networking/WWW
@@ -83,8 +83,6 @@ Provides: %preffered_jre-javaws = %javaver
 Provides: mozilla-plugin-java-1.8.0-openjdk
 Obsoletes: mozilla-plugin-java-1.7.0-openjdk
 Obsoletes: mozilla-plugin-java-1.8.0-openjdk
-
-Requires: libnsl1
 
 # Post requires alternatives to install tool alternatives.
 # jnlp protocols support
@@ -245,6 +243,9 @@ EOF
 %_altdir/%name-javaws
 
 %changelog
+* Mon Jul 31 2023 Andrey Limachko <liannnix@altlinux.org> 2.0.0.alpha26-alt2_jpp11
+- Removed libnsl1 requirement
+
 * Fri Apr 28 2023 Andrey Limachko <liannnix@altlinux.org> 2.0.0.alpha26-alt1_jpp11
 - Changed package repository structure
 - Patches moved to git commits
