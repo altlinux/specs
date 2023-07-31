@@ -1,17 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
 
-%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+# gcc is broken for these architectures.
+# See: https://github.com/rui314/mold/issues/358
+%ifarch %ix86 %arm
+%def_without check
+%else
+%def_with check
+%endif
+
+%def_without third_party
+%def_with lto
+%def_with strict
 
 %define _libexecdir %prefix/libexec
 
 Name: mold
-Version: 1.11.0.gitebd780e
-Release: alt1
+Version: 2.0.0
+Release: alt1.git9fe3d75
 
 Summary: A Modern Linker
-License: AGPL-3.0
+License: MIT
 Group: Development/Tools
 Url: https://github.com/rui314/mold
 Vcs: https://github.com/rui314/mold
@@ -19,15 +28,23 @@ Vcs: https://github.com/rui314/mold
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires(pre): /proc
 BuildRequires: cmake
 BuildRequires: gcc-c++
+BuildRequires: libstdc++-devel
 BuildRequires: libssl-devel
 BuildRequires: libzstd-devel
 BuildRequires: zlib-devel
+
+%if_without third_party
 BuildRequires: libmimalloc-devel
 BuildRequires: tbb-devel
 BuildRequires: libxxhash-devel
+%endif
+
+%if_with check
+BuildRequires(pre): /proc
+BuildRequires: ctest
+%endif
 
 %description
 mold is a faster drop-in replacement for existing Unix linkers.
@@ -39,28 +56,45 @@ particularly in rapid debug-edit-rebuild cycles.
 %prep
 %setup
 
-# remove vendored libraries
-rm -rfv third-party/{mimalloc,tbb,xxhash,zlib,zstd}
+# Sse system zstd and zlib always.
+rm -rfv third-party/{zlib,zstd}
 
-# use system xxhash
+%if_without third_party
+rm -rfv third-party/{mimalloc,tbb,xxhash}
+# Use system xxhash.
 sed -i "/xxhash.h/s/.*/#include <xxhash.h>/" common/common.h
+%endif
 
 %build
+%if_with strict
+%set_verify_elf_method strict
+%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+%endif
+
 %cmake \
         -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%if_with lto
 	-DMOLD_LTO=ON \
+%endif
+%if_without third_party
 	-DMOLD_USE_MIMALLOC=ON \
 	-DMOLD_USE_SYSTEM_MIMALLOC=ON \
 	-DMOLD_USE_SYSTEM_TBB=ON \
+%endif
+%if_with check
 	-DBUILD_TESTING=ON \
+%endif
 	%nil
 %cmake_build
 
 %install
 %cmake_install
 
-# remove wrong installed license file
+# Remove wrong-installed license file.
 rm -rfv %buildroot%_docdir/mold
+
+%check
+%ctest
 
 %files
 %doc LICENSE
@@ -70,6 +104,10 @@ rm -rfv %buildroot%_docdir/mold
 %_man1dir/*mold.1.*
 
 %changelog
+* Mon Jul 31 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.0-alt1.git9fe3d75
+- Updated to 2.0.0.
+- Distributed under MIT license.
+
 * Sat Jun 17 2023 Anton Zhukharev <ancieg@altlinux.org> 1.11.0.gitebd780e-alt1
 - Added R_PPC64_REL32 support (ALT 46562).
 
