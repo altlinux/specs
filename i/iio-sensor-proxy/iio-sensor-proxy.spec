@@ -9,10 +9,10 @@
 # 1/1 iio-sensor-proxy-integration-test OK 17.21s
 # but fail in girar for all architectures
 # [x86_64] 1/1 iio-sensor-proxy-integration-test TIMEOUT 60.11s
-%def_disable check
+%def_enable check
 
 Name: iio-sensor-proxy
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: IIO sensors to input device proxy
@@ -79,14 +79,16 @@ Developer documentation for %name.
 %meson_install
 
 %check
-dbus-run-session %__meson_test -t 2
+# see tests/integration-test.py
+export LC_ALL=fr_FR.UTF-8
+dbus-run-session %__meson_test -t 4
 
 %files
 %_libexecdir/%name
 %_bindir/monitor-sensor
 %_unitdir/%name.service
 %_udevrulesdir/80-%name.rules
-%_sysconfdir/dbus-1/system.d/%rdn_name.conf
+%_datadir/dbus-1/system.d/%rdn_name.conf
 %_datadir/polkit-1/actions/%rdn_name.policy
 %doc README.md NEWS
 
@@ -97,6 +99,9 @@ dbus-run-session %__meson_test -t 2
 
 
 %changelog
+* Wed Jul 26 2023 Yuri N. Sedunov <aris@altlinux.org> 3.5-alt1
+- 3.5
+
 * Sun Jul 17 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
 - 3.4
 
