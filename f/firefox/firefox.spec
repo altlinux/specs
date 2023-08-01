@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 115.0.2
+Version: 116.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -35,7 +35,7 @@ Patch010: 0010-build-Disable-Werror.patch
 %define nss_version   3.86
 %define rust_version  1.65.0
 %define cargo_version 1.65.0
-%define llvm_version  15.0
+%define llvm_version  16.0
 
 ExcludeArch: %{ix86} ppc64le
 
@@ -427,6 +427,25 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Aug 01 2023 Alexey Gladkov <legion@altlinux.ru> 116.0-alt1
+- New release (116.0).
+- Sync desktop-file with fedora.
+- Security fixes:
+  + MFSA-RESERVE-2023-0001: Offscreen Canvas could have bypassed cross-origin restrictions
+  + MFSA-RESERVE-2023-0002: Incorrect value used during WASM compilation
+  + MFSA-RESERVE-2023-0003: Potential permissions request bypass via clickjacking
+  + MFSA-RESERVE-2023-0004: Crash in DOMParser due to out-of-memory conditions
+  + MFSA-RESERVE-2023-0005: Fix potential race conditions when releasing platform objects
+  + MFSA-RESERVE-2023-0006: Stack buffer overflow in StorageManager
+  + MFSA-RESERVE-2023-0007: Full screen notification obscured by file open dialog
+  + MFSA-RESERVE-2023-0008: File deletion and privilege escalation through Firefox uninstaller
+  + MFSA-RESERVE-2023-0009: Full screen notification obscured by external program
+  + MFSA-RESERVE-2023-0010: Lack of warning when opening appref-ms files
+  + MFSA-RESERVE-2023-0011: Cookie jar overflow caused unexpected cookie jar state
+  + MFSA-RESERVE-2023-0012: Memory safety bugs fixed in Firefox 116, Firefox ESR 115.1, Firefox ESR 102.14, Thunderbird 115.1, and Thunderbird 102.14
+  + MFSA-RESERVE-2023-0013: Memory safety bugs fixed in Firefox 116, Firefox ESR 115.1, and Thunderbird 115.1
+  + MFSA-RESERVE-2023-0014: Memory safety bugs fixed in Firefox 116
+
 * Mon Jul 31 2023 Alexey Gladkov <legion@altlinux.ru> 115.0.2-alt1
 - New release (115.0.2).
 - Security fixes:
