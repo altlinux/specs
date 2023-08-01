@@ -1,15 +1,13 @@
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %_var
 %define major 5.4
 %define libname libhyperscan%major
 %define develname libhyperscan-devel
 
-# builds are broken with LTO - disable for for now
+# objcopy: redefining symbols does not work on LTO-compiled object files
 %define optflags_lto %nil
 
 Name: hyperscan
-Version: %major.0
-Release: alt2
+Version: %major.2
+Release: alt1
 
 Summary: High-performance regular expression matching library
 
@@ -22,23 +20,21 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/01org/%name/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-Patch: hyperscan-fix-missed-symbols.patch
 
-BuildRequires: boost-complete
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++
 BuildRequires: cmake ctest
+BuildRequires: boost-devel
 BuildRequires: pkgconfig(libpcre)
-BuildRequires: pkgconfig(python2)
 BuildRequires: ragel
 BuildRequires: pkgconfig(sqlite3) >= 3.0
 BuildRequires: libpcap-devel
-BuildRequires: %_bindir/doxygen %_bindir/sphinx-build gcc-c++
-# python-devel rpm-build-python
+BuildRequires: %_bindir/doxygen %_bindir/sphinx-build
 
 Requires: pcretest
 
 #package requires SSE support and fails to build on non x86_64 archs
 ExclusiveArch: x86_64
-Source44: import.info
 
 %description
 Hyperscan is a high-performance multiple regex matching library. It
@@ -71,10 +67,10 @@ needed for developing Hyperscan applications.
 
 %prep
 %setup
-%patch -p1
 
 %build
-%cmake -DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_STATIC_AND_SHARED:BOOL=OFF
+%cmake -DBUILD_SHARED_LIBS:BOOL=ON \
+       -DBUILD_STATIC_AND_SHARED:BOOL=OFF
 %cmake_build
 
 %install
@@ -84,7 +80,8 @@ needed for developing Hyperscan applications.
 %doc %_docdir/%name
 %doc COPYING
 %doc LICENSE
-%_libdir/*.so.*
+%_libdir/*.so.5
+%_libdir/*.so.%version
 
 %files -n %develname
 %_libdir/*.so
@@ -92,6 +89,9 @@ needed for developing Hyperscan applications.
 %_includedir/hs/
 
 %changelog
+* Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 5.4.2-alt1
+- new version 5.4.2 (with rpmrb script)
+
 * Wed Sep 08 2021 Vitaly Lipatov <lav@altlinux.ru> 5.4.0-alt2
 - disable LTO for now
 
