@@ -1,5 +1,5 @@
 Name:    librepo
-Version: 1.15.1
+Version: 1.15.2
 Release: alt1
 
 Summary: A library providing C and Python (libcURL like) API for downloading packages and linux repository metadata in rpm-md format
@@ -21,6 +21,7 @@ BuildRequires: libgpgme-devel
 BuildRequires: libssl-devel
 BuildRequires: libxml2-devel
 BuildRequires: python3-dev
+BuildRequires: doxygen
 
 %description
 %{summary}.
@@ -43,7 +44,8 @@ Group: Development/Python3
 %setup
 
 %build
-%cmake -DWITH_ZCHUNK=OFF
+%cmake -Wno-dev \
+       -DWITH_ZCHUNK=OFF
 %cmake_build
 
 %install
@@ -62,6 +64,9 @@ Group: Development/Python3
 %python3_sitelibdir/%name
 
 %changelog
+* Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 1.15.2-alt1
+- New version.
+
 * Sun Dec 11 2022 Andrey Cherepanov <cas@altlinux.org> 1.15.1-alt1
 - New version.
 
