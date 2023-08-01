@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.32
+Version: 0.4.33
 Release: alt2
 
 Summary: Alterator module for volume management
@@ -37,6 +37,10 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Thu Jul 13 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.33-alt2
+- rewrite details module
+- imsm: allow volumes to be partitioned
+
 * Thu Apr 06 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.32-alt2
 - evms: ext2 plugin was renamed
 

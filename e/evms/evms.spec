@@ -5,7 +5,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt65
+Release: alt67
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -174,6 +174,17 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Thu Jul 13 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt67
+- discover partitions/regions recursively
+- imsm changes:
+  + allow partitions on IMSM volumes
+  + fix RAID1 detection
+
+* Thu Apr 27 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt66
+- imsm changes:
+  + IO: zero-fill buffer if NULL given
+  + implement dummy delete, can_delete
+
 * Thu Apr 06 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt65
 - ext2 plugin: rename to Ext4
 
