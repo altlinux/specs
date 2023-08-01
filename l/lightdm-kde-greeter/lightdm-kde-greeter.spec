@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.12
+Version: 0.4.13
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -85,7 +85,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_datadir/dbus-1/system.d/org.kde.kcontrol.kcmlightdm.conf
 %_K5libexecdir/kauth/kcmlightdmhelper
 %_K5libexecdir/lightdm-kde-greeter-rootimage
+%_K5libexecdir/lightdm-kde-greeter-wifikeeper
 %_K5dbus_sys_srv/org.kde.kcontrol.kcmlightdm.service
+%_libexecdir/systemd/user/lightdm-kde-greeter-wifikeeper.service
 %_datadir/lightdm-kde-greeter/
 %_K5xdgapp/kcm_lightdm.desktop
 %_K5plug/plasma/kcms/systemsettings/kcm_lightdm.so
@@ -94,6 +96,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Tue Aug 01 2023 Anton Golubev <golubevan@altlinux.org> 0.4.13-alt1
+- add basic wireless 802.1x support
+- add a service to prolong wifi connection
+
 * Mon Jun 26 2023 Anton Golubev <golubevan@altlinux.org> 0.4.12-alt1
 - fix focus loss when typing PSK from virt. keyboard (Closes: 46499)
 - activate new connection automatically (Closes: 46518)
