@@ -7,7 +7,7 @@
 
 Name: qt5-tools
 Version: 5.15.10
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -99,7 +99,7 @@ This package contains documentation for Qt5 %qt_module
 Group: Text tools
 Summary: Documentation browser for Qt5
 Requires: %name-common
-Requires: %name = %EVR
+Requires: %name
 %description -n qt5-assistant
 %summary.
 
@@ -107,7 +107,8 @@ Requires: %name = %EVR
 Group: Development/KDE and QT
 Summary: Designer for the Qt5
 Requires: %name-common
-Requires: %name = %EVR
+Requires: %name
+Requires: qt5-base-devel
 Provides: qt5-linguist = %EVR
 %description -n qt5-designer
 %summary.
@@ -364,6 +365,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Tue Aug 01 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt2
+- update requires (closes: 47087)
+
 * Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt1
 - new version
 
