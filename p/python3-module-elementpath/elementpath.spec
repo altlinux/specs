@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.1.4
+Version: 4.1.5
 Release: alt1
 
 Summary: XPath 1.0 and 2.0 selectors for Python's ElementTree XML data
@@ -52,6 +52,9 @@ library.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Aug 01 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.5-alt1
+- Automatically updated to 4.1.5.
+
 * Mon Jul 24 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.4-alt1
 - Automatically updated to 4.1.4.
 
