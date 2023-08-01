@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -57,6 +57,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Aug 01 2023 Sergey V Turchin <zerg@altlinux.org> 3.1.2-alt1
+- rearrange groups UI
+
 * Thu Jul 13 2023 Sergey V Turchin <zerg@altlinux.org> 3.1.1-alt1
 - small decrease minimum package groups list height
 
