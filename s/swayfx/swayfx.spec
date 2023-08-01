@@ -1,5 +1,5 @@
 Name: swayfx
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: A Beautiful Sway Fork
@@ -73,6 +73,7 @@ mkdir -p %buildroot/%_sysconfdir/%name/config.d
 %_man5dir/*
 %_man7dir/*
 %_datadir/wayland-sessions/sway.desktop
+%dir %_sysconfdir/sway
 
 %_datadir/bash-completion/completions/sway*
 %_datadir/fish/vendor_completions.d/sway*.fish
@@ -83,6 +84,10 @@ mkdir -p %buildroot/%_sysconfdir/%name/config.d
 %_datadir/backgrounds/sway/*
 
 %changelog
+* Tue Aug 01 2023 Roman Alifanov <ximper@altlinux.org> 0.3.2-alt1
+- new version 0.3.2 (with rpmrb script)
+- add unowned /etc/sway dir to %files
+
 * Tue Jun 27 2023 Roman Alifanov <ximper@altlinux.org> 0.3.1-alt1
 - new version 0.3.1 (with rpmrb script)
 
