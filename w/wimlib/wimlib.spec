@@ -1,7 +1,7 @@
 %define libname libwim
 
 Name: wimlib
-Version: 1.13.6
+Version: 1.14.1
 Release: alt1
 
 Summary: Library to extract, create, modify, and mount WIM files
@@ -13,7 +13,8 @@ Source: https://wimlib.net/downloads/wimlib-%version.tar
 
 
 BuildRequires: patchelf
-BuildRequires: libattr-devel libfuse-devel libntfs-3g-devel libssl-devel libxml2-devel
+BuildRequires: libattr-devel libntfs-3g-devel libssl-devel libxml2-devel
+BuildRequires: libfuse3-devel
 
 %description
 wimlib is a C library for creating, extracting, modifying, and mounting
@@ -77,7 +78,7 @@ patchelf --remove-rpath %buildroot%_bindir/wim*
 make check
 
 %files -n %libname
-%doc README NEWS
+%doc README.md NEWS.md
 %_libdir/libwim.so.*
 
 %files -n wimtools
@@ -91,6 +92,10 @@ make check
 %_pkgconfigdir/wimlib.pc
 
 %changelog
+* Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.14.1-alt1
+- new version 1.14.1 (with rpmrb script)
+- BR: libfuse3-devel
+
 * Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 1.13.6-alt1
 - new version 1.13.6 (with rpmrb script)
 
