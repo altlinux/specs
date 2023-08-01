@@ -1,5 +1,5 @@
 Name: safeeyes
-Version: 2.1.5
+Version: 2.1.6
 Release: alt1
 
 Summary: Tool for reminding the user to take breaks
@@ -34,12 +34,15 @@ at the computer in an effort to alleviate eye strain (asthenopia).
 %files
 %doc README.md
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
 %python3_sitelibdir/%name/
 %python3_sitelibdir/%name-%version-py*.egg-info
 
 %changelog
+* Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
+- new version 2.1.6 (with rpmrb script)
+
 * Thu Mar 09 2023 Vitaly Lipatov <lav@altlinux.ru> 2.1.5-alt1
 - new version 2.1.5 (with rpmrb script)
 
