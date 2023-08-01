@@ -3,23 +3,22 @@
 %define oname txaio
 
 Name: python3-module-%oname
-Version: 18.8.1
-Release: alt3.1
+Version: 23.1.1
+Release: alt1
 
 Summary: Compatibility API between asyncio/Twisted/Trollius
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/txaio/
+URL: https://pypi.org/project/txaio
+VCS: https://github.com/crossbario/txaio
 
 BuildArch: noarch
 
-# https://github.com/tavendo/txaio.git
 Source: %name-%version.tar
-Patch1: %oname-18.7.1-alt-docs.patch
-Patch2: python-txaio-skip-packaging-tests.patch
-Patch3: txaio-18.8.1-make-pytest-happy.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-twisted-core
 BuildRequires: python3-module-pytest
@@ -76,17 +75,14 @@ This package contains pickles for %oname.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p0
-%patch3 -p1
 
 sed -i 's|sphinx-build|&-3|' docs/Makefile
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 cp -fR test/ %buildroot%python3_sitelibdir/%oname/
 
@@ -95,9 +91,7 @@ cp -fR test/ %buildroot%python3_sitelibdir/%oname/
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-%__python3 setup.py test -v
-export PYTHONPATH=$PWD
-py.test3 test/ -vv
+%tox_check_pyproject
 
 %files
 %doc *.rst examples/ docs/_build/html
@@ -112,6 +106,9 @@ py.test3 test/ -vv
 %python3_sitelibdir/*/pickle
 
 %changelog
+* Tue Aug 01 2023 Grigory Ustinov <grenka@altlinux.org> 23.1.1-alt1
+- Automatically updated to 23.1.1.
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 18.8.1-alt3.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
