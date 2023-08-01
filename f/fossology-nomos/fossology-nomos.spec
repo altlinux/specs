@@ -5,7 +5,7 @@
 
 Name: fossology-nomos
 Version: 4.3.0
-Release: alt1
+Release: alt2
 Summary: Nomos detects licenses and copyrights in a file
 License: GPL-2.0-or-later
 Group: Development/Other
@@ -54,6 +54,9 @@ nomossa -d LICENSES
 %_bindir/nomossa
 
 %changelog
+* Wed Aug 02 2023 Vitaly Chikunov <vt@altlinux.org> 4.3.0-alt2
+- In directory mode (-d) do not print 'No_license_found' messages.
+
 * Sun Jul 16 2023 Vitaly Chikunov <vt@altlinux.org> 4.3.0-alt1
 - Update to 4.3.0 (2023-06-28).
 - Note that upstream did controversial change of some GPL license shortnames,
