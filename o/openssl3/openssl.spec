@@ -2,8 +2,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: openssl3
-Version: 3.1.1
-Release: alt3
+Version: 3.1.2
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: Apache-2.0
@@ -31,7 +31,7 @@ Provides: libcrypto = %version-%release
 Provides: openssl-providers = %EVR
 Obsoletes: openssl-providers < %EVR
 # due to openssl.cnf
-Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 <= 1.0.2r-alt3, libcrypto1.1 <= 1.1.1u-alt1
+Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 < 1.0.3, libcrypto1.1 <= 1.1.1u-alt1
 # due to openssldir migration
 Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
@@ -384,6 +384,13 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Tue Aug 01 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.2-alt1
+- Updated to 3.1.2.
+- libcrypto3: updated the version of the conflict with the libcrypto10 package
+  (from "< 1.0.2r-alt3" to "< 1.0.3"), to match all possible versions of
+  OpenSSL 1.0.2, as long as the synchronization of the openssl.cnf
+  configuration file is not planned for this older version.
+
 * Mon Jul 17 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.1-alt3
 - Merged the openssl-providers subpackage into the libcrypto3 subpackage.
 
