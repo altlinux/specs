@@ -1,5 +1,5 @@
 Name: xfce4-clipman-plugin
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 
 Summary: Clipboard history plugin for the Xfce panel
@@ -74,6 +74,9 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Tue Aug 01 2023 Mikhail Efremov <sem@altlinux.org> 1.6.4-alt1
+- Updated to 1.6.4.
+
 * Tue Mar 21 2023 Mikhail Efremov <sem@altlinux.org> 1.6.3-alt1
 - Updated to 1.6.3.
 
