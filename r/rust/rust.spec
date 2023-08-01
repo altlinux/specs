@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
 Version: 1.71.0
-Release: alt1
+Release: alt2
 Summary: The Rust Programming Language
 
 %define r_ver 1.70.0
@@ -161,19 +161,16 @@ Requires: rust-cargo = %epoch:%version-%release
 %description -n rustfmt
 A tool for formatting Rust code according to style guidelines.
 
-%package -n rls
-Summary: Rust Language Server for IDE integration
+%package -n rust-analyzer
+Summary: A Rust compiler front-end for IDEs
 Group: Development/Tools
 Requires: %name = %epoch:%version-%release
-Provides: rust-analyzer = %epoch:%version-%release
+Obsoletes: rls <= 1:1.71.0-alt1
 
-%description -n rls
-The Rust Language Server provides a server that runs in the background,
-providing IDEs, editors, and other tools with information about Rust programs.
-It supports functionality such as 'goto definition', symbol search,
-reformatting, and code completion, and enables renaming and refactorings.
-
-RLS is being deprecated in favor of rust-analyzer.
+%description -n rust-analyzer
+rust-analyzer is a modular compiler frontend for the Rust language. It
+is a part of a larger rls-2.0 effort to create excellent IDE support
+for Rust.
 
 %package -n clippy
 Summary: Lints to catch common mistakes and improve your Rust code
@@ -446,7 +443,7 @@ rm -rf %rustdir
 %_bindir/cargo-fmt
 %doc src/tools/rustfmt/{README.md,CHANGELOG.md,Configurations.md,LICENSE-APACHE,LICENSE-MIT}
 
-%files -n rls
+%files -n rust-analyzer
 %_bindir/rust-analyzer
 %doc src/tools/rust-analyzer/{README.md,LICENSE-APACHE,LICENSE-MIT}
 
@@ -459,6 +456,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Mon Jul 31 2023 Egor Ignatov <egori@altlinux.org> 1:1.71.0-alt2
+- Obsolete rls and rename subpackage to rust-analyzer.
+
 * Fri Jul 14 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.71.0-alt1
 - New version (1.71.0).
 
