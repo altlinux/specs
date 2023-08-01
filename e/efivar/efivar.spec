@@ -1,6 +1,6 @@
 Name: efivar
-Version: 37
-Release: alt5
+Version: 38
+Release: alt1
 Summary: Tools to manage UEFI variables
 License: LGPLv2.1
 Group: System/Kernel and hardware
@@ -37,7 +37,7 @@ development headers required to use libefivar.
 %patch0 -p1
 
 %build
-make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS -flto -flto-partition=none" LDFLAGS="$RPM_LD_FLAGS -flto -flto-partition=none"
+make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS" MANDOC="/bin/true"
 
 %install
 %makeinstall
@@ -45,6 +45,7 @@ make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS -flto -flto-partitio
 %files
 %doc README.md COPYING
 %_bindir/efivar
+%_bindir/efisecdb
 %_mandir/man1/*
 
 %files -n lib%name-devel
@@ -57,6 +58,9 @@ make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS -flto -flto-partitio
 %_libdir/*.so.*
 
 %changelog
+* Sat Jul 08 2023 Anton Farygin <rider@altlinux.ru> 38-alt1
+- 37 -> 38
+
 * Sat Feb 27 2021 Anton Farygin <rider@altlinux.org> 37-alt5
 - added -flto-partition=none to CFLAGS to fix build with gcc-10
   upstream bug https://github.com/rhboot/efivar/issues/156

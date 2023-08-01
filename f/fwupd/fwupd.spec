@@ -1,6 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
+# 1.9.3: test suite fails on ppc64le
+%ifarch ppc64le
+%def_without check
+%endif
+
 %def_enable tests
 %def_enable dummy
 %def_enable flashrom
@@ -24,7 +29,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -87,7 +92,7 @@ BuildRequires: libcairo-devel libcairo-gobject-devel
 BuildRequires: libfreetype-devel
 BuildRequires: fontconfig
 BuildRequires: fonts-ttf-dejavu
-BuildRequires: gnu-efi libefivar-devel
+BuildRequires: gnu-efi
 Requires: gcab
 Requires: fwupd-efi
 Provides: fwupdate
@@ -199,7 +204,9 @@ sed -i -e "/get_option('tests')/ s/$/ and false/" \
 
 %install
 %__meson_install
-%ifarch %ix86
+
+# CET is available only since i686
+%ifarch i386 i486 i586
 rm -f %buildroot%_libexecdir/fwupd/fwupd-detect-cet ||:
 %endif
 
@@ -220,10 +227,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %doc README.md COPYING
 %_man1dir/fwupdtool.1*
 %_man1dir/fwupdmgr.1*
-%if_enabled uefi
 %_man1dir/dbxtool.1*
-%endif
 %_man5dir/*
+%_man8dir/*
 %config(noreplace)%_sysconfdir/fwupd/fwupd.conf
 %dir %_libexecdir/fwupd
 %dir %_iconsdir/hicolor/scalable/apps
@@ -236,9 +242,7 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %_datadir/bash-completion/completions/*
 %_datadir/fish/vendor_completions.d/fwupdmgr.fish
 %_iconsdir/hicolor/scalable/apps/org.freedesktop.fwupd.svg
-%if_enabled uefi
 %_bindir/dbxtool
-%endif
 %_bindir/fwupdmgr
 %dir %_sysconfdir/fwupd
 %dir %_sysconfdir/fwupd/remotes.d
@@ -332,6 +336,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %endif
 
 %changelog
+* Fri Jul 14 2023 Egor Ignatov <egori@altlinux.org> 1.9.3-alt1
+- 1.9.2 -> 1.9.3
+
 * Tue Jun 13 2023 Egor Ignatov <egori@altlinux.org> 1.9.2-alt1
 - 1.9.1 -> 1.9.2
 

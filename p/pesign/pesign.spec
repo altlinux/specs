@@ -1,22 +1,27 @@
 %define _unpackaged_files_terminate_build 1
+
+# build without man pages: no mandoc in Sisyphus
+%def_without man
+
 Name: pesign
-Version: 113
-Release: alt3
+Version: 116
+Release: alt1
 
 Summary: Signing tool for PE-COFF binaries
 License: GPLv3
 Group: Development/Other
 
-Url: https://github.com/vathpela/pesign
-# git://git.altlinux.org/gears/p/pesign.git
+Url: https://github.com/rhboot/pesign
 Source: %name-%version-%release.tar
-Patch1: pesign-fix-build-with-nss3.44.patch
-Patch2: pesign-113-upstream-pesigcheck-remove-superfluous-type-settings.patch
 
 BuildRequires: libnss-devel
 BuildRequires: libpopt-devel
 BuildRequires: libefivar-devel
 BuildRequires: libuuid-devel
+
+%if_with man
+#BuildRequires: mandoc
+%endif
 
 %description
 This package contains the pesign utility for signing UEFI binaries
@@ -24,9 +29,22 @@ as well as other associated tools.
 
 %prep
 %setup -n %name-%version-%release
-%patch1 -p1
-%patch2 -p1
+
 sed -i '/^libexecdir/s/)libexec/)lib/' Make.defaults
+
+%if_without man
+# disable mandoc
+sed -i 's/mandoc/true/' Make.rules
+%endif
+
+# fix error: "_FORTIFY_SOURCE" redefined
+sed -i -e 's/-D_FORTIFY_SOURCE=2/-D_FORTIFY_SOURCE=3/' Make.defaults
+
+# fcf-protection works for i686 processor or newer
+%ifarch i386 i486 i586
+sed -i -e '/-fcf-protection/ s/full/none/' Make.defaults
+%endif
+
 %ifarch %e2k
 # lcc 1.23.20 doesn't do that
 sed -i 's,-fshort-wchar,,g' Make.defaults util/Makefile
@@ -44,6 +62,7 @@ mv %buildroot%_rpmmacrosdir/{macros.,}pesign
 	TMPFILES_DIR=%_tmpfilesdir \
 	#
 
+mkdir -pv %buildroot%_runtimedir/pesign/socketdir/
 mksock -m666 %buildroot%_runtimedir/pesign/socketdir/socket
 touch %buildroot%_runtimedir/pesign.pid
 
@@ -67,19 +86,24 @@ if [ $1 = 1 -a -d /.host -a -d /.in -a -d /.out ]; then
 fi
 
 %files
-%doc README COPYING
+%doc README.md COPYING
 %_bindir/pesign
 %_bindir/pesign-client
+%_bindir/pesum
 %_bindir/efikeygen
 %_bindir/authvar
-%_bindir/efisiglist
 %_bindir/pesigcheck
+%dir %_libexecdir/pesign
 %_libexecdir/pesign/pesign-authorize
+%_libexecdir/pesign/pesign-rpmbuild-helper
+%dir %_sysconfdir/pesign
 %config(noreplace) %_sysconfdir/popt.d/pesign.popt
 %config(noreplace) %_sysconfdir/pesign/groups
 %config(noreplace) %_sysconfdir/pesign/users
 %_rpmmacrosdir/pesign
+%if_with man
 %_mandir/man?/*
+%endif
 %_tmpfilesdir/pesign.conf
 %_initdir/pesign
 %_unitdir/pesign.service
@@ -89,6 +113,11 @@ fi
 %ghost %_runtimedir/pesign.pid
 
 %changelog
+* Thu Jul 13 2023 Egor Ignatov <egori@altlinux.org> 116-alt1
+- new version 116 (Fixes: CVE-2022-3560)
+  + rebase ALT commits
+  + remove obsolete patches
+
 * Tue Jan 19 2021 Nikolai Kostrigin <nickel@altlinux.org> 113-alt3
 - Fix FTBFS with gcc10
   + add upstream-pesigcheck-remove-superfluous-type-settings patch

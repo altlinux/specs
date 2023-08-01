@@ -1,18 +1,15 @@
 Name: efibootmgr
-Version: 17
-Release: alt2
+Version: 18
+Release: alt1
 
 Summary: EFI Boot Manager
 Group: System/Kernel and hardware
 License: GPLv2+
 URL: https://github.com/rhboot/efibootmgr
-
 ExclusiveArch: %ix86 x86_64 aarch64 riscv64
-#git https://github.com/rhboot/efibootmgr
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildRequires: libpci-devel zlib-devel libefivar-devel libpopt-devel
-BuildRequires(pre): rpm-build-ubt
 
 %description
 efibootmgr displays and allows the user to edit the Intel Extensible
@@ -25,10 +22,10 @@ http://developer.intel.com/technology/efi/efi.htm and http://uefi.org/.
 %patch0 -p1
 
 %build
-%make_build EXTRA_CFLAGS="%optflags" EFIDIR='altlinux'
+%make_build CFLAGS='%{optflags}'  LDFLAGS="$RPM_LD_FLAGS" EFIDIR='altlinux'
 
 %install
-%makeinstall EFIDIR='altlinux'
+%makeinstall_std EFIDIR='altlinux'
 
 %files
 %doc AUTHORS README
@@ -36,6 +33,9 @@ http://developer.intel.com/technology/efi/efi.htm and http://uefi.org/.
 %_man8dir/*.*
 
 %changelog
+* Sat Jul 08 2023 Anton Farygin <rider@altlinux.ru> 18-alt1
+- 17 -> 18
+
 * Mon Mar 15 2021 Nikita Ermakov <arei@altlinux.org> 17-alt2
 - add riscv64 to ExclusiveArch list
 
