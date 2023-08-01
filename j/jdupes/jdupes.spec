@@ -1,6 +1,6 @@
 Name: jdupes
-Version: 1.21.3
-Release: alt2
+Version: 1.26.1
+Release: alt1
 
 Summary: A powerful duplicate file finder and an enhanced fork of 'fdupes'
 
@@ -12,6 +12,8 @@ Url: https://github.com/jbruchon/jdupes
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
+
+BuildRequires: libjodycode-devel
 
 %description
 jdupes is a program for identifying and taking actions upon duplicate
@@ -32,18 +34,22 @@ between the two programs. For example, the -I switch in jdupes means
 %make_build CFLAGS_EXTRA="%optflags"
 
 %install
-%makeinstall PREFIX=%buildroot%prefix MAN_BASE_DIR=%buildroot%_mandir CFLAGS_EXTRA="%optflags" install
+%makeinstall_std PREFIX=%prefix MAN_BASE_DIR=%_mandir
 
 %check
 ./jdupes testdir
 ./jdupes -r testdir
 
 %files
-%doc CHANGES README.md
+%doc CHANGES.txt README.md
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.26.1-alt1
+- new version 1.26.1 (with rpmrb script)
+- add BR: libjodycode-devel
+
 * Tue Jun 27 2023 Ildar Mulyukov <ildar@altlinux.ru> 1.21.3-alt2
 - ENABLE_DEDUPE
 
