@@ -4,7 +4,7 @@
 Name: python3-module-qbrz
 Epoch: 1
 Version: 0.4.1
-Release: alt3.bzr20220414
+Release: alt4.bzr20220414
 
 Summary: A simple Qt cross-platform frontend for some of Bazaar commands
 License: GPLv2+
@@ -20,7 +20,7 @@ Source: qbrz-%version.tar
 Provides: qbrz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-PyQt5 python3-module-setuptools python3-module-yieldfrom
+BuildRequires: python3-module-PyQt5 python3-module-setuptools
 
 %description
 The purpose of this plugin is to provide a graphical user
@@ -71,6 +71,9 @@ This package contains tools and test suites for testing qbrz plugin.
 %python3_sitelibdir/breezy/plugins/qbrz/lib/tests
 
 %changelog
+* Tue Aug 01 2023 Anatoly Kitaikin <cetus@altlinux.org> 1:0.4.1-alt4.bzr20220414
+- fix build
+
 * Mon May 30 2022 Anatoly Kitaykin <cetus@altlinux.org> 1:0.4.1-alt3.bzr20220414
 - update from launchpad.net
 
