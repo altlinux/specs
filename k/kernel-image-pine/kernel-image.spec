@@ -1,12 +1,12 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt6
+Release: alt1
 epoch:1
-%define kernel_need_version	6.2
+%define kernel_need_version	6.4
 # Used when kernel-source-x.y does not currently exist in repository.
-%define kernel_base_version	6.2
-%define kernel_sublevel .14
+%define kernel_base_version	6.4
+%define kernel_sublevel .7
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -423,6 +423,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jul 31 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.4.7-alt1
+- 6.4.7
+
 * Tue Jul 04 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt6
 - ANDROID_BINDER_DEVICES: enabled anbox
 - revert mm: export zap_page_range_single
