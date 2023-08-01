@@ -4,40 +4,43 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.15.0
+Version: 1.15.1
 Release: alt1
 
 Summary: Dynamically create python functions with a proper signature
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/smarie/python-makefun
-
-Source0: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(setuptools-scm)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(pytest)
-%endif
+Url: https://pypi.org/project/makefun/
+Vcs: https://github.com/smarie/python-makefun
 
 BuildArch: noarch
+
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_build_filter pytest-runner
+%pyproject_builddeps_build
+
+%if_with check
+%add_pyproject_deps_check_filter nox
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 Small library to dynamically create python functions.
 
 %prep
 %setup
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_pipreqfile noxfile-requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -46,8 +49,7 @@ fi
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %doc LICENSE README.md docs
@@ -55,6 +57,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Aug 01 2023 Anton Zhukharev <ancieg@altlinux.org> 1.15.1-alt1
+- Updated to 1.15.1.
+
 * Wed Sep 28 2022 Anton Zhukharev <ancieg@altlinux.org> 1.15.0-alt1
 - 1.14.0 -> 1.15.0
 - clean up spec
