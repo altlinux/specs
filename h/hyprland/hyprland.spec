@@ -2,7 +2,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.26.0
+Version: 0.27.2
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -99,6 +99,9 @@ rm -rf %buildroot%_pkgconfigdir/wlroots.pc
 %_datadir/hyprland-protocols/
 
 %changelog
+* Tue Aug 01 2023 Roman Alifanov <ximper@altlinux.org> 0.27.2-alt1
+- new version 0.27.2 (with rpmrb script)
+
 * Thu Jun 29 2023 Roman Alifanov <ximper@altlinux.org> 0.26.0-alt1
 - new version 0.26.0 (with rpmrb script)
 
