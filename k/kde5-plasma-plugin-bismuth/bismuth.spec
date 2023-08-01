@@ -1,6 +1,6 @@
 Name: kde5-plasma-plugin-bismuth
 Version: 3.1.4
-Release: alt1
+Release: alt2
 
 Summary: KDE Plasma extension that lets you tile your windows automatically
 
@@ -12,8 +12,9 @@ Group: Graphical desktop/KDE
 Url: https://bismuth-forge.github.io/bismuth
 
 Source: https://github.com/Bismuth-Forge/bismuth/archive/%version/bismuth-%version.tar.gz
-
-ExcludeArch: armh ppc64le
+Patch1: bismuth-3.1.4-pull-458-swap-windows-when-focus-on-window0.patch
+Patch2: bismuth-3.1.4-pull-480-fix-ignore-dialog.patch
+Patch3: bismuth-3.1.4-pull-490-fix-windowid-is-undefined-in-wayland.patch
 
 BuildPreReq: rpm-build-kf5
 BuildRequires: cmake extra-cmake-modules esbuild
@@ -28,6 +29,7 @@ them via keyboard, just like in classical tiling window managers
 
 %prep
 %setup -n bismuth-%version
+%autopatch -p1
 
 %build
 %K5build \
@@ -65,6 +67,10 @@ them via keyboard, just like in classical tiling window managers
 %_datadir/qlogging-categories5/bismuth.categories
 
 %changelog
+* Tue Aug 01 2023 Leontiy Volodin <lvol@altlinux.org> 3.1.4-alt2
+- Applied fixes by project community.
+- Enabled multiarch build.
+
 * Mon Sep 26 2022 Leontiy Volodin <lvol@altlinux.org> 3.1.4-alt1
 - New version (3.1.4).
 - Upstream:
