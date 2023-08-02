@@ -67,7 +67,7 @@
 
 Name: node%{nodejs_pkg_major}
 Version: %major.1
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for V8 Javascript
 
@@ -128,10 +128,11 @@ Requires: npm >= %npmver
 %endif
 
 Provides: nodejs(engine) = %version
-Provides: nodejs = %version-%release
-Provides: node.js = %version-%release
-Obsoletes: nodejs < %version-%release
-Obsoletes: node.js < %version-%release
+# https://bugzilla.altlinux.org/47092
+#Provides: nodejs = %version-%release
+#Provides: node.js = %version-%release
+#Obsoletes: nodejs < %version-%release
+#Obsoletes: node.js < %version-%release
 
 Provides: nodejs(abi) = %{nodejs_abi}
 Provides: nodejs(v8-abi) = %{v8_abi}
@@ -437,6 +438,9 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Wed Aug 02 2023 Vitaly Lipatov <lav@altlinux.ru> 16.20.1-alt2
+- remove Provides/Obsoletes: nodejs (ALT bug 47092)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 16.20.1-alt1
 - new version 16.20.1 (with rpmrb script)
 - set npm >= 8.19.4
