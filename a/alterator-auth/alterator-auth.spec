@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.44.3
+Version: 0.44.4
 Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
@@ -174,6 +174,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 0.44.4-alt1
+- Fix join with passwords beginning from - symbol
+
 * Sat May 27 2023 Andrey Limachko <liannnix@altlinux.org> 0.44.3-alt1
 - Fix missing OS version for Sisyphus Regular builds
 
