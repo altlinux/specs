@@ -1,50 +1,36 @@
 %define _unpackaged_files_terminate_build 1
-%define oname BTrees
+%define pypi_name BTrees
+%define oname %pypi_name
+
+%define dynamic_mods %(echo `cat %{SOURCE2} 2>/dev/null || echo unknown`)
 
 %def_with check
-%def_with bootstrap
-%def_with docs
 
 Name: python3-module-%oname
 Version: 5.0
-Release: alt1
+Release: alt2
 
 Summary: Scalable persistent object containers
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/BTrees/
 Vcs: https://github.com/zopefoundation/BTrees.git
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-%if_with docs
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx-devel
-BuildRequires: python3-module-repoze.sphinx.autointerface
-BuildRequires: python3-module-sphinx_rtd_theme
-%endif
-
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+Source1: %pyproject_deps_config_name
+Source2: dynamic_mods.list
+%pyproject_runtimedeps_metadata
+# dynamic names
+%add_python3_req_skip %dynamic_mods
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+%py3_provides %dynamic_mods
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-module-persistent-devel
-BuildRequires: python3-dev
-
-%if_without bootstrap
-BuildRequires: python3-module-ZODB
-%endif
-
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-transaction
-%if_without bootstrap
-BuildRequires: python3-module-ZODB-tests
+%pyproject_builddeps_metadata_extra test
 %endif
-%endif
-
-%py3_requires zope.interface persistent
-
-%filter_from_requires /BTrees\.[BFILOQUfs]\{3\}Tree/d
 
 %description
 This package contains a set of persistent object containers built around
@@ -60,34 +46,38 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-This package contains documentation for %oname.
-
 %prep
 %setup
-
-%if_with docs
-%prepare_sphinx3 .
-ln -s ../objects.inv3 docs/
-%endif
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %add_optflags -fno-strict-aliasing
 %pyproject_build
 
+# make sure we provide actual names
+# these names are generated at runtime, see src/BTrees/__init__.py for details
+%pyproject_run -- python - <<-'ENDRUN'
+from pathlib import Path
+import BTrees
+
+Path("mods.actual.list").write_text(
+    "\n".join(sorted([f'BTrees.{n}BTree' for n in BTrees._FAMILIES])) + "\n",
+    encoding="utf-8",
+)
+ENDRUN
+
+sort %SOURCE2 > mods.expected.list
+diff -y mods.expected.list mods.actual.list || {
+    echo 'Update expected list of mods: %SOURCE2' ;
+    exit 1 ;
+}
+
 %install
 %pyproject_install
 
-%if_with docs
-sed -i "s|SPHINXBUILD   = sphinx-build|SPHINXBUILD   = py3_sphinx-build|" docs/Makefile
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs html
-%endif
+# don't ship sources for C extensions
+rm %buildroot%python3_sitelibdir/%pypi_name/*.{h,c}
 
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vv
@@ -98,15 +88,13 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/BTrees-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 
-%if_with docs
-%files docs
-%doc docs/_build/html/*
-%endif
-
 %files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Jul 31 2023 Stanislav Levin <slev@altlinux.org> 5.0-alt2
+- Mapped PyPI name to distro's one.
+
 * Wed Jun 07 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 

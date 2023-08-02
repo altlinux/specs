@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name zope.schema
 
 %def_with check
 
 Name: python3-module-%pypi_name
 Version: 7.0.1
-Release: alt1
+Release: alt2
 
 Summary: zope.interface extension for defining data schemas
 License: ZPL-2.1
@@ -13,21 +14,19 @@ Url: https://pypi.org/project/zope.schema/
 Vcs: https://github.com/zopefoundation/zope.schema
 
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-repoze.sphinx.autointerface
+Source1: %pyproject_deps_config_name
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.i18nmessageid
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.event
+%pyproject_builddeps_metadata_extra test
 %endif
-
-Requires: python3-module-zope.interface
-Requires: python3-module-zope.event
 
 %description
 This package is intended to be independently reusable in any Python
@@ -40,24 +39,6 @@ attribute of a python object. But a Field provides space for at least a
 title and a description. It can also constrain its value and provide a
 validation method. Besides you can optionally specify characteristics
 such as its value being read-only or not required.
-
-%package pickles
-Summary: Pickles for %pypi_name
-Group: Development/Python3
-
-%description pickles
-This package is intended to be independently reusable in any Python
-project. It is maintained by the Zope Toolkit project.
-
-Schemas extend the notion of interfaces to detailed descriptions of
-Attributes (but not methods). Every schema is an interface and specifies
-the public fields of an object. A field roughly corresponds to an
-attribute of a python object. But a Field provides space for at least a
-title and a description. It can also constrain its value and provide a
-validation method. Besides you can optionally specify characteristics
-such as its value being read-only or not required.
-
-This package contains pickles for %pypi_name
 
 %package tests
 Summary: Tests for %pypi_name
@@ -81,8 +62,8 @@ This package contains tests for %pypi_name
 
 %prep
 %setup
-
-sed -i 's|sphinx-build|&-3|' docs/Makefile
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -96,30 +77,23 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
 
-%make -C docs pickle
-%make -C docs html
-install -d %buildroot%python3_sitelibdir/%pypi_name
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%pypi_name/
-
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst docs/_build/html
+%doc *.txt *.rst
 %python3_sitelibdir/zope/schema/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%dir %python3_sitelibdir/%pypi_name
-%python3_sitelibdir/*/pickle
 
 %files tests
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Mon Jul 31 2023 Stanislav Levin <slev@altlinux.org> 7.0.1-alt2
+- Mapped PyPI name to distro's one.
+
 * Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 7.0.1-alt1
 - New version 7.0.1.
 

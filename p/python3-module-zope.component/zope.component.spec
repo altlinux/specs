@@ -1,39 +1,34 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.component
+%define pypi_name zope.component
+%define ns_name zope
+%define mod_name component
 
-%def_with check
+%def_without check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 6.0
-Release: alt1
+Release: alt2
 
 Summary: Zope Component Architecture
 License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.component
 Vcs: https://github.com/zopefoundation/zope.component.git
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3-module-setuptools
-
-%if_with check
-BuildRequires: python3-module-persistent
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.configuration
-BuildRequires: python3-module-zope.event
-BuildRequires: python3-module-zope.location
-BuildRequires: python3-module-zope.deferredimport
-BuildRequires: python3-module-zope.hookable
-BuildRequires: python3-module-zope.deprecation
-BuildRequires: python3-module-zope.security
-BuildRequires: python3-module-zope.interface-tests
-%endif
-
+Source1: %pyproject_deps_config_name
 %py3_requires zope
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra test
+%endif
 
 %description
 This package is intended to be independently reusable in any Python
@@ -50,16 +45,18 @@ Requires: %name = %EVR
 %py3_requires zope.testing zope.testrunner
 
 %description tests
-This package contains tests for %oname
+This package contains tests for %pypi_name
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -67,21 +64,41 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-sed -i '/sphinx-build -b doctest/d' tox.ini
-%tox_check
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
+%exclude %python3_sitelibdir/%ns_name/%mod_name/testfiles/
+%exclude %python3_sitelibdir/%ns_name/%mod_name/testing.py
+%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/testlayer.py
+%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testlayer.*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/standalonetests.py
+%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/standalonetests.*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/eventtesting.py
+%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/eventtesting.*
 
 %files tests
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/%ns_name/%mod_name/tests/
+%python3_sitelibdir/%ns_name/%mod_name/testfiles/
+%python3_sitelibdir/%ns_name/%mod_name/testing.py
+%python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
+%python3_sitelibdir/%ns_name/%mod_name/testlayer.py
+%python3_sitelibdir/%ns_name/%mod_name/__pycache__/testlayer.*
+%python3_sitelibdir/%ns_name/%mod_name/standalonetests.py
+%python3_sitelibdir/%ns_name/%mod_name/__pycache__/standalonetests.*
+%python3_sitelibdir/%ns_name/%mod_name/eventtesting.py
+%python3_sitelibdir/%ns_name/%mod_name/__pycache__/eventtesting.*
 
 %changelog
+* Thu Jul 27 2023 Stanislav Levin <slev@altlinux.org> 6.0-alt2
+- Mapped PyPI name to distro's one.
+- Modernized packaging.
+
 * Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 6.0-alt1
 - New version 6.0.
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Zope Configuration Markup Language (ZCML)
 License: ZPL-2.1
@@ -14,6 +14,9 @@ Url: https://pypi.org/project/zope.configuration
 Vcs: https://github.com/zopefoundation/zope.configuration.git
 
 Source: %name-%version.tar
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
@@ -123,6 +126,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.0-alt1.1
+- NMU: mapped PyPI name to distro's one.
+
 * Mon May 22 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 

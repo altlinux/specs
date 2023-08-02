@@ -1,62 +1,36 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.security
+%define pypi_name zope.security
+%define ns_name zope
+%define mod_name security
 
-%def_without check
-%def_without docs
+%def_with check
 
-Name: python3-module-%oname
-Version: 5.1.1
-Release: alt2.1
+Name: python3-module-%pypi_name
+Version: 6.1
+Release: alt1
 Summary: Zope Security Framework
 License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.security/
-#Git: https://github.com/zopefoundation/zope.security.git
-
+Url: https://pypi.org/project/zope.security/
+Vcs: https://github.com/zopefoundation/zope.security
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-zope.proxy
-%if_with docs
-BuildRequires: python3-module-sphinx-devel
-BuildRequires: python3-module-repoze.sphinx.autointerface
-%endif
-BuildRequires: python3-module-zope.schema
-BuildRequires: python3-module-zope.location
-BuildRequires: time
-
+Source1: %pyproject_deps_config_name
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+# zope/proxy/proxy.h
+BuildRequires: python3-module-zope.proxy-devel
 %if_with check
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-virtualenv
-BuildRequires: python3-module-BTrees
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.testrunner
+%pyproject_builddeps_metadata_extra test
 BuildRequires: python3-module-zope.component-tests
 %endif
-
-%py3_requires zope.i18nmessageid
-%py3_requires zope.component zope.interface zope.location zope.proxy
-%py3_requires zope.schema zope.configuration
 
 %description
 The Security framework provides a generic mechanism to implement
 security policies on Python objects.
-
-%package examples
-Summary: Examples for Zope Security Framework
-Group: Development/Python3
-Requires: %name = %EVR
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/zope/security/examples/sandbox.py
-
-%description examples
-The Security framework provides a generic mechanism to implement
-security policies on Python objects.
-
-This package contains examples for Zope Security Framework.
 
 %package tests
 Summary: Tests for Zope Security Framework
@@ -70,97 +44,41 @@ security policies on Python objects.
 
 This package contains tests for Zope Security Framework.
 
-%package pickles
-Summary: Pickles for Zope Security Framework
-Group: Development/Python3
-
-%description pickles
-The Security framework provides a generic mechanism to implement
-security policies on Python objects.
-
-This package contains pickles for Zope Security Framework.
-
-%package docs
-Summary: Documentation for Zope Security Framework
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-The Security framework provides a generic mechanism to implement
-security policies on Python objects.
-
-This package contains documentation for Zope Security Framework.
-
 %prep
 %setup
-
-%if_with docs
-%prepare_sphinx3 .
-ln -s ../objects.inv3 docs/
-%endif
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-install -p -m644 src/zope/security/*.zcml \
-	%buildroot%python3_sitelibdir/zope/security/
-
-%if_with docs
-export PYTHONPATH=$PWD/src
-sed -i "s|SPHINXBUILD   = sphinx-build|SPHINXBUILD   = py3_sphinx-build|" docs/Makefile
-%make -C docs pickle
-%make -C docs html
-
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
+%pyproject_install
 
 %check
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
-sed -i '/setenv =$/a\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3' tox.ini
-
-sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
-# cancel docbuild tests
-sed -i 's|sphinx-build|#py3_sphinx-build|g' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%pyproject_run -- zope-testrunner --test-path=src
 
 %files
 %doc *.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test*
-%exclude %python3_sitelibdir/*/*/examples
-%if_with docs
-%exclude %python3_sitelibdir/*/pickle
-%endif
-
-%files examples
-%python3_sitelibdir/*/*/examples
+%exclude %python3_sitelibdir/%ns_name/%mod_name/examples/
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
+%exclude %python3_sitelibdir/%ns_name/%mod_name/testing.py
+%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %files tests
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/*/test*
-
-%if_with docs
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
-%endif
+%python3_sitelibdir/%ns_name/%mod_name/tests/
+%python3_sitelibdir/%ns_name/%mod_name/testing.py
+%python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
 
 %changelog
+* Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 6.1-alt1
+- 5.1.1 -> 6.1.
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 5.1.1-alt2.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 

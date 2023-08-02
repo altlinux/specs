@@ -10,7 +10,7 @@ of the 'zope.i18n' package.
 
 Name: python3-module-%oname
 Version: 5.0.1
-Release: alt3
+Release: alt3.1
 
 Summary: Message Identifiers for internationalization
 Group: Development/Python3
@@ -19,6 +19,9 @@ License: ZPL-2.1
 # Source-git https://github.com/zopefoundation/zope.i18nmessageid.git
 Url: http://pypi.python.org/pypi/zope.i18nmessageid
 Source: %name-%version.tar
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 BuildRequires(pre): rpm-build-python3
 %if_with docs
@@ -112,6 +115,9 @@ python3 setup.py test -v
 %python3_sitelibdir/zope/i18nmessageid/tests.*
 
 %changelog
+* Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.0.1-alt3.1
+- NMU: mapped PyPI name to distro's one.
+
 * Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt3
 - Bootstrap for python3.10.
 

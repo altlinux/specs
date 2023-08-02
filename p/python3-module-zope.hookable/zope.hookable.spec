@@ -11,7 +11,7 @@ function, including those that imported it, will see the change.
 
 Name: python3-module-%oname
 Version: 5.0.1
-Release: alt2
+Release: alt2.1
 
 Summary: Hookable object support
 Group: Development/Python3
@@ -19,6 +19,9 @@ Group: Development/Python3
 License: ZPL-2.1
 Url: http://pypi.python.org/pypi/zope.hookable/
 Source: %name-%version.tar
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
@@ -92,6 +95,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/*/pickle
 
 %changelog
+* Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.0.1-alt2.1
+- NMU: mapped PyPI name to distro's one.
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt2
 - Drop specsubst scheme.
 

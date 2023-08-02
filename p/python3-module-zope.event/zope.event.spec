@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Very basic event publishing system
 License: ZPL-2.1
@@ -13,6 +13,9 @@ Url: https://pypi.org/project/zope.event/
 Vcs: https://github.com/zopefoundation/zope.event
 
 Source: %name-%version.tar
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -77,6 +80,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*/*/tests*
 
 %changelog
+* Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.0-alt1.1
+- NMU: mapped PyPI name to distro's one.
+
 * Sat Jun 24 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 

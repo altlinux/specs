@@ -1,32 +1,33 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.proxy
+%define pypi_name zope.proxy
+%define ns_name zope
+%define mod_name proxy
 
 %def_without check
 
-Name: python3-module-%oname
-Version: 4.3.5
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 5.0.0
+Release: alt1
 Summary: Generic Transparent Proxies
-License: ZPL
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.proxy/
-#Git: https://github.com/zopefoundation/zope.proxy.git
-
+Url: https://pypi.org/project/zope.proxy/
+Vcs: http://github.com/zopefoundation/zope.proxy
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-
+Source1: %pyproject_deps_config_name
+%py3_requires zope
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-repoze.sphinx.autointerface
-BuildRequires: python3-module-zope.security
+%pyproject_builddeps_metadata_extra test
 %endif
-
-%py3_requires zope zope.interface
 
 %description
 Proxies are special objects which serve as mostly-transparent wrappers
@@ -47,45 +48,51 @@ checking, location brokering, etc.) for which the proxy is responsible.
 
 This package contains tests for Generic Transparent Proxies.
 
+%package devel
+Summary: Development files for %pypi_name
+Group: Development/Python3
+Requires: %name
+
+%description devel
+This package contains development files for %pypi_name.
+
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
-sed -i 's|sphinx-build|py3_sphinx-build|g' tox.ini
-
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
-    py%{python_version_nodots python3}: _DOCTEST_BIN=%_bindir\/py3_sphinx-build\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3\
-    \/bin\/cp {env:_DOCTEST_BIN:} \{envbindir\}\/py3_sphinx-build\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py3_sphinx-build' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%pyproject_run -- zope.testrunner --test-path=src
 
 %files
-%doc *.txt *.rst docs/*.rst
-%_includedir/python3*
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
+%exclude %_includedir/python3*/%pypi_name/
+%exclude %python3_sitelibdir/%ns_name/%mod_name/*.h
+%exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %files tests
 %python3_sitelibdir/*/*/tests
 
+%files devel
+%_includedir/python3*/%pypi_name/
+%python3_sitelibdir/%ns_name/%mod_name/*.h
+%python3_sitelibdir/%ns_name/%mod_name/*.c
+
 %changelog
+* Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
+- 4.3.5 -> 5.0.0.
+
 * Mon Nov 23 2020 Grigory Ustinov <grenka@altlinux.org> 4.3.5-alt2
 - Bootstrap for python3.9.
 

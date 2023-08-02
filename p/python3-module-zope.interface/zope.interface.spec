@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 5.4.0
-Release: alt2
+Release: alt2.1
 
 Summary: Zope interfaces package
 License: ZPL-2.1
@@ -15,6 +15,9 @@ Group: Development/Python3
 Url: http://www.python.org/pypi/zope.interface
 
 Source: %name-%version.tar
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 BuildRequires(pre): rpm-build-python3
 %if_with docs
@@ -110,6 +113,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 %python3_sitelibdir/zope/interface/common/tests
 
 %changelog
+* Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.4.0-alt2.1
+- NMU: mapped PyPI name to distro's one.
+
 * Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 5.4.0-alt2
 - Bootstrap for python3.10.
 

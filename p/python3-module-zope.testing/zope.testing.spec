@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.testing
+%define pypi_name zope.testing
+%define ns_name zope
+%define mod_name testing
 
 %def_with check
-%def_enable light_version
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 5.0.1
-Release: alt1
+Release: alt2
 Summary: Zope testing helpers
 License: ZPL-2.1
 Group: Development/Python3
@@ -14,16 +15,18 @@ Url: https://pypi.org/project/zope.testing/
 Vcs: https://github.com/zopefoundation/zope.testing.git
 
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
+Source1: %pyproject_deps_config_name
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(zope.testrunner)
-%endif
-
-%py3_requires zope.exceptions zope.interface
-%if_disabled light_version
-%py3_requires zope.testrunner
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -32,12 +35,14 @@ flexible test runner, and supports both doctest and unittest.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -46,16 +51,24 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-sed -i "/sphinx-build -b doctest/d" tox.ini
-%tox_check
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/zope/testing/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
+# don't ship tests
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests.py
+%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
+# don't ship docs
+%exclude %python3_sitelibdir/%ns_name/%mod_name/*.txt
 
 %changelog
+* Mon Jul 31 2023 Stanislav Levin <slev@altlinux.org> 5.0.1-alt2
+- Mapped PyPI name to distro's one.
+- Modernized packaging.
+
 * Thu May 18 2023 Anton Vyatkin <toni@altlinux.org> 5.0.1-alt1
 - New version 5.0.1.
 

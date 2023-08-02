@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.0.4
+Version: 7.1.0
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
@@ -11,27 +11,17 @@ License: MIT
 Group:   Development/Python3
 URL: https://pypi.org/project/testfixtures
 VCS: https://github.com/Simplistix/testfixtures
-
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(sybil)
-BuildRequires: python3(django)
-BuildRequires: python3(django.db.backends.sqlite3)
-BuildRequires: python3(zope.component)
-BuildRequires: python3(twisted.trial)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_django)
-%endif
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-django-dbbackend-sqlite3
+BuildRequires: python3-module-twisted-core-tests
+%endif
 
 %description
 TestFixtures is a collection of helpers and mock objects that are useful
@@ -39,6 +29,8 @@ when writing unit tests or doc tests.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -50,13 +42,7 @@ when writing unit tests or doc tests.
 rm -r %buildroot%python3_sitelibdir/testfixtures/tests/
 
 %check
-# tox_create_default_config don't work due to flat layout
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    python -m pytest -vra {posargs:testfixtures/tests}
-EOF
-%tox_check_pyproject
+%pyproject_run_pytest -ra testfixtures/tests/
 
 %files
 %doc README.rst
@@ -64,6 +50,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 27 2023 Stanislav Levin <slev@altlinux.org> 7.1.0-alt1
+- 7.0.4 -> 7.1.0.
+
 * Tue Dec 06 2022 Stanislav Levin <slev@altlinux.org> 7.0.4-alt1
 - 6.18.5 -> 7.0.4.
 

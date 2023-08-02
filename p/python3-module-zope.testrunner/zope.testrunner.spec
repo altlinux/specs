@@ -5,8 +5,7 @@
 
 Name: python3-module-%oname
 Version: 6.0
-Release: alt1
-
+Release: alt2
 Summary: Zope testrunner script
 
 License: ZPL-2.1
@@ -15,6 +14,9 @@ Url: https://pypi.org/project/zope.testrunner/
 Vcs: https://github.com/zopefoundation/zope.testrunner.git
 
 Source: %name-%version.tar
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 BuildRequires(pre): rpm-build-python3
 
@@ -67,6 +69,9 @@ cp -al %buildroot%_bindir/zope-testrunner{,3}
 %exclude %python3_sitelibdir/zope/testrunner/tests/
 
 %changelog
+* Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 6.0-alt2
+- Mapped PyPI name to distro's one.
+
 * Thu May 18 2023 Anton Vyatkin <toni@altlinux.org> 6.0-alt1
 - New version 6.0.
 
