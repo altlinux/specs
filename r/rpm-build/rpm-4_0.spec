@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.190
+Version: 4.0.4.191
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Wed Aug 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.0.4.191-alt1
+- Support LoongArch architecture (lp64d ABI) (closes: #45769).
+
 * Sun Jul 23 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4.190-alt1
 - Added the new %%_runstatedir macro as an alias to %%_runtimedir (ALT#46988).
 - Modified the behavior of the %%configure macro (ALT#46988):
