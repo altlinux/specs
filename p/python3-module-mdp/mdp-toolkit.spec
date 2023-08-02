@@ -7,8 +7,12 @@
 %def_without check
 %endif
 
+%define release_tag 3.6
+%define commit_num .15
+%define commit_id .g64f14eee
+
 Name: python3-module-%oname
-Version: 3.6
+Version: %release_tag.0%commit_num%commit_id
 Release: alt1
 
 Summary: Modular toolkit for Data Processing
@@ -95,7 +99,7 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 %files
 %python3_sitelibdir/bimdp
 %python3_sitelibdir/%oname
-%python3_sitelibdir/MDP-%version-*.egg-info
+%python3_sitelibdir/MDP-%release_tag-*.egg-info
 %exclude %python3_sitelibdir/%oname/test
 %exclude %python3_sitelibdir/bimdp/test
 
@@ -105,10 +109,13 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 
 %files doc
 %doc *.pdf CHANGES CHECKLIST COPYRIGHT
-%doc README TODO
+%doc README.md TODO
 
 
 %changelog
+* Sun Jul 30 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.6.0.15.g64f14eee-alt1
+- NMU: updated to MDP 3.6-15-g64f14eee
+
 * Mon Mar 13 2023 Anton Vyatkin <toni@altlinux.org> 3.6-alt1
 - New version 3.6
 
