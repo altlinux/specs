@@ -1,7 +1,7 @@
 %define rname kmenuedit
 
 Name: plasma5-%rname
-Version: 5.27.6
+Version: 5.27.7
 Release: alt1
 %K5init altplace no_appdata
 
@@ -84,6 +84,9 @@ KF5 library
 %_K5icon/*/*/apps/kmenuedit.*
 
 %changelog
+* Tue Aug 01 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.7-alt1
+- new version
+
 * Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.6-alt1
 - new version
 
