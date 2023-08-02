@@ -1,34 +1,38 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname nbformat
+%define pypi_name nbformat
 
-Name: python3-module-%oname
-Version: 5.9.1
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 5.9.2
 Release: alt1
 Summary: The Jupyter Notebook format
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/jupyter/nbformat
+Url: https://pypi.org/project/nbformat
+Vcs: https://github.com/jupyter/nbformat
 
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch0: nbformat-build-test.patch
 
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
-BuildRequires: python3-dev
-BuildRequires: python3-module-pytest python3(testpath)
-BuildRequires: python3-module-jsonschema python3-module-jupyter_core
-BuildRequires: python3-modules-sqlite3
-BuildRequires: python3(fastjsonschema)
-BuildRequires: python3-module-sphinx-devel
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-hatch-nodejs-version
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-testpath
 BuildRequires: python3-module-pep440
+BuildRequires: python3-module-traitlets
+BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-fastjsonschema
+BuildRequires: python3-module-jupyter_core
+BuildRequires: python3-modules-sqlite3
+%endif
 
-%py3_provides %oname
-%py3_requires ipython_genutils traitlets jsonschema jupyter_core sqlite3
+%py3_provides %pypi_name
+%py3_requires traitlets jsonschema fastjsonschema jupyter_core
 
 %description
 This package contains the base implementation of the Jupyter Notebook
@@ -36,18 +40,10 @@ format, and Python APIs for working with notebooks.
 
 %prep
 %setup
-%patch0 -p1
-
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
 
 # Remove useless test dependencies
 sed -i '/"pre-commit",/d' pyproject.toml
 sed -i '/"check-manifest",/d' pyproject.toml
-
-# Set version statically
-# {VERSION} is a part of Patch0
-sed -i "s/{VERSION}/%{version}/" pyproject.toml
 
 %build
 %pyproject_build
@@ -56,15 +52,18 @@ sed -i "s/{VERSION}/%{version}/" pyproject.toml
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -v --color=no
 
 %files
-%doc *.md
-%_bindir/*
-%python3_sitelibdir/*
+%doc README.*
+%_bindir/jupyter-trust
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Aug 02 2023 Anton Vyatkin <toni@altlinux.org> 5.9.2-alt1
+- New version 5.9.2.
+
 * Wed Jul 12 2023 Anton Vyatkin <toni@altlinux.org> 5.9.1-alt1
 - New version 5.9.1.
 
