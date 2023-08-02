@@ -5,7 +5,7 @@
 
 Name: iperf3
 Version: 3.14
-Release: alt1
+Release: alt2
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
 License: BSD-3-Clause and MIT
@@ -18,6 +18,7 @@ Source2: iperf3.init
 Source3: iperf3.service
 
 Patch0: iperf3-3.10-idle-tcp-DoS.patch
+Patch1: iperf3-3.14-issue1554.patch
 
 Requires: lib%name-%abiversion = %version-%release
 
@@ -63,6 +64,7 @@ This package contains development files of iperf3
 %setup -q -n %native-%version
 
 %patch0 -p1
+%patch1 -p1
 
 %build
 
@@ -116,6 +118,9 @@ chrpath -d %buildroot/%_bindir/iperf3
 %_libdir/lib%native.so
 
 %changelog
+* Wed Aug 02 2023 Sergey Y. Afonin <asy@altlinux.org> 3.14-alt2
+- Added patch for issue #1554 (ALT #47017)
+
 * Tue Jul 18 2023 Sergey Y. Afonin <asy@altlinux.org> 3.14-alt1
 - New version (ALT #46964, security fix)
 
