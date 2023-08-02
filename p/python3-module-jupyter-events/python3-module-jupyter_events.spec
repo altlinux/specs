@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.3
+Version: 0.7.0
 Release: alt1
 Summary: Configurable event system for Jupyter applications and extensions
 License: BSD-3-Clause
@@ -27,6 +27,7 @@ BuildRequires: python3-module-rich
 BuildRequires: python3-module-click
 BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-pyaml
+BuildRequires: python3-module-rfc3339-validator
 %endif
 
 %description
@@ -46,7 +47,7 @@ sed -i 's/--color=yes//' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v -k 'not test_emit_badschema_format and not test_bad_validations'
+%pyproject_run_pytest -v -k 'not test_bad_validations'
 
 %files
 %doc README.*
@@ -55,5 +56,8 @@ sed -i 's/--color=yes//' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Wed Aug 02 2023 Anton Vyatkin <toni@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Tue Jun 13 2023 Anton Vyatkin <toni@altlinux.org> 0.6.3-alt1
 - Initial build for Sisyphus
