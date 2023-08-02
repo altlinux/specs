@@ -4,30 +4,33 @@
 
 Name:    python3-module-%oname
 Version: 0.9.1
-Release: alt1
+Release: alt2
 
 Summary: Python SPNEGO authentication library
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/jborean93/pyspnego
+URL:     https://pypi.org/project/pyspnego
+VCS:     https://github.com/jborean93/pyspnego
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
+BuildArch: noarch
+
+Source:  %name-%version.tar
+
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-cryptography
 BuildRequires: python3-module-pytest-mock
 %endif
 
 # This is stuff for windows OS
 %add_python3_req_skip spnego._sspi_raw.sspi
-
-BuildArch: noarch
-
-Source:  %name-%version.tar
 
 %description
 Python SPNEGO Library to handle SPNEGO (Negotiate, NTLM, Kerberos)
@@ -38,22 +41,24 @@ decode raw NTLM/SPNEGO/Kerberos tokens into a human readable format.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v
+%tox_check_pyproject
 
 %files
-%doc *.md
+%doc LICENSE *.md
 %_bindir/pyspnego-parse
 %python3_sitelibdir/%oname
-%python3_sitelibdir/py%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/py%oname-%version.dist-info
 
 %changelog
+* Wed Aug 02 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt2
+- Moved on modern pyproject macros.
+
 * Wed Jun 14 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt1
 - Automatically updated to 0.9.1.
 
