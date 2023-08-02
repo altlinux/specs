@@ -7,7 +7,7 @@
 
 Name: libowt-tg
 Version: 4.3.0.10
-Release: alt5
+Release: alt6
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -101,8 +101,6 @@ Summary: Open WebRTC Toolkit library and header files
 Group: Development/C++
 %if_disabled static
 Requires: %name = %EVR
-%else
-Obsoletes: %name < %EVR
 %endif
 Requires: libjpeg-devel libopus-devel
 Requires: libvpx-devel
@@ -185,6 +183,9 @@ rm -rv %buildroot%_includedir/tg_owt/third_party/{yasm,pffft,rnnoise}
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Wed Aug 02 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.10-alt6
+- remove Obsoletes: %name from devel subpackage (ALT bug 47099)
+
 * Wed Aug 02 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.10-alt5
 - new version (4.3.0.10) with rpmgs script
 - build from git a45d8b8f0a99bd0e5118dda1dc4a8b7b3ad5dcfd
