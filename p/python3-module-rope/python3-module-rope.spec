@@ -1,12 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name rope
 
-# unfortunately, 1 test is broken,
-# see https://github.com/python-rope/rope/issues/478
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: A python refactoring library
@@ -28,8 +26,8 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter pip-tools
 %pyproject_builddeps_metadata_extra dev
 %pyproject_builddeps_check
-BuildRequires: python3(appdirs)
-BuildRequires: python3(sqlite3)
+BuildRequires: python3-module-appdirs
+BuildRequires: python3-modules-sqlite3
 %endif
 
 %description
@@ -47,7 +45,9 @@ BuildRequires: python3(sqlite3)
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+# unfortunately, 1 test is broken,
+# see https://github.com/python-rope/rope/issues/478
+%pyproject_run_pytest -vra -k 'not test_search_submodule'
 
 %files
 %doc COPYING README.rst CHANGELOG.md docs
@@ -55,6 +55,9 @@ BuildRequires: python3(sqlite3)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Aug 02 2023 Anton Zhukharev <ancieg@altlinux.org> 1.9.0-alt1
+- Updated to 1.9.0.
+
 * Thu Jun 08 2023 Anton Zhukharev <ancieg@altlinux.org> 1.8.0-alt1
 - New version.
 
