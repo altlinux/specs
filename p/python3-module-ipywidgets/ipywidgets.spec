@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.0.7
-Release: alt2
+Version: 8.1.0
+Release: alt1
 Summary: Interactive Widgets for the Jupyter Notebook
 License: BSD-3-Clause
 Group: Development/Python3
@@ -85,6 +85,9 @@ cd python/ipywidgets/
 %python3_sitelibdir/%oname/widgets/tests
 
 %changelog
+* Wed Aug 02 2023 Anton Vyatkin <toni@altlinux.org> 8.1.0-alt1
+- New version 8.1.0.
+
 * Mon Jul 10 2023 Anton Vyatkin <toni@altlinux.org> 8.0.7-alt2
 - FTBFS: fix BuildRequires.
 
