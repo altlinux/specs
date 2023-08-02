@@ -1,48 +1,47 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pypi-json
+%define mod_name pypi_json
 
 # tests require the Internet connection
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: PyPI JSON API client library
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pypi-json/
-
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(whey)
-
-%if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_cov)
-BuildRequires: python3(pytest_timeout)
-BuildRequires: python3(pytest-datadir)
-BuildRequires: python3(coverage)
-BuildRequires: python3(coverage-pyver-pragma)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox-envlist)
-BuildRequires: python3(coincidence)
-BuildRequires: python3(packaging)
-BuildRequires: python3(apeye)
-BuildRequires: python3(betamax)
-%endif
+Vcs: https://github.com/repo-helper/pypi-json
 
 BuildArch: noarch
 
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
 %py3_provides %pypi_name
 
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
+
 %description
-%summary
+%summary.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -51,14 +50,17 @@ BuildArch: noarch
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %doc LICENSE README.rst
-%python3_sitelibdir/pypi_json/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 02 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
+- Updated to 0.4.0.
+
 * Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 0.3.0-alt1
 - initial build for Sisyphus
 
