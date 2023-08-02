@@ -1,6 +1,6 @@
 Name: libdrm
 Version: 2.4.115
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
 License: GPL
@@ -29,6 +29,14 @@ Group: Development/C
 %name-devel contains the libraries and header files needed to
 develop programs which make use of %name
 
+%package utils
+Summary: Direct Rendering Manager utilities
+Group: System/X11
+
+%description utils
+Utility programs for the kernel DRM interface.
+Will void your warranty.
+
 %prep
 %setup -q
 %patch -p1
@@ -36,6 +44,7 @@ develop programs which make use of %name
 %build
 %meson \
 	-Dudev=true \
+	-Dinstall-test-programs=true \
 %ifarch armh aarch64
 	-Detnaviv=enabled \
 	-Dexynos=enabled \
@@ -61,7 +70,14 @@ develop programs which make use of %name
 %_man3dir/*.3*
 %_man7dir/*.7*
 
+%files utils
+%_bindir/*
+
 %changelog
+* Wed Aug 02 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.115-alt2
+- cherry pick upstream commit "amdgpu: add marketing names from amd-5.4.3 (22.40.3)" (closes: #46421)
+- add test apps to libdrm-utils package (closes: #45719)
+
 * Mon Feb 27 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.115-alt1
 - 2.4.115
 
