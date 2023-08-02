@@ -1,47 +1,46 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name deprecation-alias
+%define mod_name deprecation_alias
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.1
-Release: alt2
+Version: 0.3.2
+Release: alt1
 
 Summary: A wrapper around 'deprecation' providing support for deprecated aliases
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/deprecation-alias/
-
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_cov)
-BuildRequires: python3(pytest_timeout)
-BuildRequires: python3(pytest-datadir)
-BuildRequires: python3(coverage)
-BuildRequires: python3(coverage-pyver-pragma)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox-envlist)
-BuildRequires: python3(coincidence)
-BuildRequires: python3(deprecation)
-BuildRequires: python3(packaging)
-%endif
+Vcs: https://github.com/domdfcoding/deprecation-alias
 
 BuildArch: noarch
 
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
 %py3_provides %pypi_name
 
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
+
 %description
-%summary
+%summary.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -50,14 +49,17 @@ BuildArch: noarch
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %doc LICENSE README.rst
-%python3_sitelibdir/deprecation_alias/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 21 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.2-alt1
+- Updated to 0.3.2.
+
 * Fri Sep 30 2022 Anton Zhukharev <ancieg@altlinux.org> 0.3.1-alt2
 - enable tests
 
