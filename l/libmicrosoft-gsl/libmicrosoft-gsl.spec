@@ -1,6 +1,6 @@
 Name: libmicrosoft-gsl
 Version: 4.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Guidelines Support Library
@@ -13,6 +13,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/microsoft/GSL/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547
+Patch: 09938e870420b69a01f55c755207c871bc20b4e5.patch
+
+BuildArch: noarch
 
 BuildRequires: gcc-c++ cmake
 %if_with test
@@ -49,6 +54,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch -p1
 # adopt to external catch2
 #__subst "s|\(add_custom_target(catch)\)|\1\nfind_package(Catch2)|" tests/CMakeLists.txt
 #__subst "s|catch/|catch2/|" tests/*.cpp
@@ -71,6 +77,11 @@ make test
 /usr/share/cmake/Microsoft.GSL/
 
 %changelog
+* Wed Aug 02 2023 Vitaly Lipatov <lav@altlinux.ru> 1:4.0.0-alt2
+- add workaround for std::variant bug in libstdc++
+  see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547
+- build as noarch
+
 * Sun Jul 30 2023 Vitaly Lipatov <lav@altlinux.ru> 1:4.0.0-alt1
 - new version 4.0.0 (with rpmrb script)
 

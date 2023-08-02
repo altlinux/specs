@@ -1,6 +1,13 @@
+%def_enable internal_absl
+
+# Dynamic build is not supported by upstream
+%def_enable static
+
+%def_disable pipewire
+
 Name: libowt-tg
-Version: 4.3.0.7
-Release: alt2
+Version: 4.3.0.10
+Release: alt5
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -11,15 +18,20 @@ Url: https://github.com/desktop-app/tg_owt
 # Source-url: https://github.com/desktop-app/tg_owt/archive/master.zip
 Source: %name-%version.tar
 
-# Source1-url: https://github.com/google/crc32c/archive/refs/heads/main.zip
-Source1: %name-crc32c-%version.tar
+# Source1-url: https://github.com/cisco/libsrtp/archive/refs/tags/v2.5.0.tar.gz
+Source1: %name-libsrtp-%version.tar
 
-Patch4: 0001-disable-dcsctp_transport.patch
-Patch5: 0001-support-build-with-system-libsrtp.patch
-Patch6: 0001-support-build-with-system-libyuv.patch
-Patch7: 0001-add-missed-cstdint.patch
+# Source2-url: https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.3.tar.gz
+Source2: %name-abseil-cpp-%version.tar
+
+Patch1: 0011-cmake-external.cmake-add-link_libyuv-function.patch
+Patch2: 0012-cmake-libwebrtcbuild.cmake-add-tg_owt-libyuv-only-if.patch
+Patch3: 0013-CMakeLists.txt-use-external-libyuv.patch
+Patch4: 0014-CMakeLists.txt-don-t-include-cmake-rules-for-externa.patch
 
 Patch2000: %name-e2k.patch
+
+BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: libalsa-devel
 BuildRequires: libXtst-devel libXcomposite-devel libXdamage-devel libXrender-devel libXrandr-devel
@@ -28,17 +40,18 @@ BuildRequires: libdb4-devel libjpeg-devel libopus-devel libpulseaudio-devel libs
 BuildRequires: libprotobuf-devel protobuf-compiler
 BuildRequires: libgio-devel
 
-# instead of third party
-# supported: absl openh264 usrsctp vpx pipewire srtp yuv (used if detected)
+%if_disabled internal_absl
+BuildRequires: libabseil-cpp-devel >= 20211102.0
+%endif
 BuildRequires: libopenh264-devel
 #BuildRequires: libusrsctp-devel
 BuildRequires: libvpx-devel >= 1.10.0
+%if_enabled pipewire
 BuildRequires: pipewire-libs-devel
-# TODO: upgrade embedded 2.1.0 (build errors with 2.2.0)
-# libsrtp: This project uses private APIs.
-# https://github.com/desktop-app/tg_owt/pull/55
-#BuildRequires: libsrtp2-devel >= 2.2.0
-BuildRequires: libyuv-devel >= 0.0.1805
+%endif
+#BuildRequires: libsrtp2-devel >= 2.5.0
+BuildRequires: libyuv-devel >= 0.0.1874
+BuildRequires: libcrc32c-devel
 
 # TODO remove epoxy
 BuildRequires: libgbm-devel libdrm-devel libepoxy-devel
@@ -52,11 +65,22 @@ BuildRequires: libffi-devel
 
 BuildRequires: gcc-c++ cmake ninja-build
 
-#add_optflags -D_FILE_OFFSET_BITS=64
 # TODO: enable logging and debugging
 #add_optflags -DRTC_DISABLE_LOGGING=1
 
+%if_disabled static
 %add_optflags -fPIC
+%endif
+
+#if_enabled static
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+#endif
+%global optflags_lto -ffat-lto-objects
+%add_optflags -ffat-lto-objects
+
+# https://github.com/desktop-app/tg_owt/issues/106
+# NDEBUG or DCHECK_ALWAYS_ON enable RTC_DCHECK_ON
+%add_optflags -DNDEBUG
 
 %ifarch %ix86
 %add_optflags -msse2 -mfpmath=sse
@@ -75,10 +99,15 @@ WebRTC implements the W3C's proposal for video conferencing on the web.
 %package devel
 Summary: Open WebRTC Toolkit library and header files
 Group: Development/C++
+%if_disabled static
 Requires: %name = %EVR
+%else
+Obsoletes: %name < %EVR
+%endif
 Requires: libjpeg-devel libopus-devel
 Requires: libvpx-devel
 Requires: libyuv-devel
+#Requires: libsrtp2-devel
 
 
 %description devel
@@ -86,39 +115,47 @@ Requires: libyuv-devel
 develop programs which make use of %name.
 
 %prep
-%setup -a1
-#patch4 -p2
-%patch5 -p2
-%patch6 -p2
-%patch7 -p2
+%setup -a1 -a2
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
+%patch4 -p2
 %ifarch %e2k
 %patch2000 -p2
 %endif
 
 # TODO (used in cmake checks):
-#rm -rv src/third_party/{openh264,pipewire,usrsctp}
-#rm -v cmake/{libopenh264,libusrsctp}.cmake
+rm -rv src/third_party/openh264
+rm -rv src/third_party/libyuv
+rm -rv src/third_party/crc32c
+rm -v cmake/libopenh264.cmake
+rm -v cmake/libyuv.cmake
+rm -v cmake/libcrc32c.cmake
 rm -rfv src/base/android/
 
 # stop using direct path lib libyuv headers (TODO: move to the libyuv patch?)
 find -type f -name "*.cc" | xargs subst 's|third_party/libyuv/include/||'
+# stop using embedded srtp2
+#find -type f -name "*.h" | xargs subst 's|third_party/libsrtp/crypto/include/|srtp2/|'
+#find -type f -name "*.h" | xargs subst 's|third_party/libsrtp/include/|srtp2/|'
+#find -type f -name "*.cc" | xargs subst 's|third_party/libsrtp/include/|srtp2/|'
 
 # not used, pulls in excessive deps
 sed -i '/absl\/strings\/cord.cc/d' cmake/libabsl.cmake
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS"
 %cmake_insource \
           -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-          -DBUILD_SHARED_LIBS:BOOL=ON \
+          -DBUILD_SHARED_LIBS:BOOL=OFF \
           -DTG_OWT_PACKAGED_BUILD:BOOL=ON \
           -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
           -DTG_OWT_USE_PROTOBUF:BOOL=ON \
+%if_enabled pipewire
           -DTG_OWT_USE_PIPEWIRE:BOOL=ON \
-%ifarch %ix86
-          -DCMAKE_CXX_FLAGS="-fpic" \
+%else
+          -DTG_OWT_USE_PIPEWIRE:BOOL=OFF \
 %endif
-          ../..
+          %nil
 %make_build VERBOSE=1
 
 %install
@@ -126,22 +163,38 @@ export CFLAGS="$RPM_OPT_FLAGS"
 rm -rv %buildroot%_includedir/tg_owt/sdk/{objc,android}/
 rm -rv %buildroot%_includedir/tg_owt/modules/audio_device/android
 
-%if_without internal_absl
-rm -rfv %buildroot%_includedir/tg_owt/third_party/abseil-cpp/
+%if_disabled internal_absl
+rm -rv %buildroot%_includedir/tg_owt/third_party/abseil-cpp/
 %endif
 
-rm -rfv %buildroot%_includedir/tg_owt/third_party/{openh264,libvpx,pipewire,srtp,libyuv}
-rm -rfv %buildroot%_includedir/tg_owt/third_party/{yasm,pffft,rnnoise}
+rm -rv %buildroot%_includedir/tg_owt/third_party/libvpx
+rm -rv %buildroot%_includedir/tg_owt/third_party/{yasm,pffft,rnnoise}
 
+%if_disabled static
 %files
 %_libdir/libtg_owt.so.*
+%endif
 
 %files devel
 %_includedir/tg_owt/
+%if_disabled static
 %_libdir/libtg_owt.so
+%else
+%_libdir/libtg_owt.a
+%endif
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Wed Aug 02 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.10-alt5
+- new version (4.3.0.10) with rpmgs script
+- build from git a45d8b8f0a99bd0e5118dda1dc4a8b7b3ad5dcfd
+- build without pipewire support (possible crash source)
+- build static only lib
+- drop out embedded crc32c
+- pack third party libsrtp2, abseil-cpp 
+- build with embedded abseil-cpp
+- build with -DNDEBUG
+
 * Thu Apr 27 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.3.0.7-alt2
 - rebuilt on all arches
 

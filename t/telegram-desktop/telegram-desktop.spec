@@ -1,25 +1,31 @@
 # TODO: build external, json11 separately
-
-# other variant: Debug
-%define buildmode Release
+# Check https://github.com/EasyCoding/tgbuild for patches
 
 %define ffmpeg_version 3.4
 # require
-%define tg_qt5_version 5.15.2
-%define tg_qt6_version 6.2.4
+%define tg_qt5_version 5.15.10
+# upstream uses 6.5.2
+#define tg_qt6_version 6.5.2
+%define tg_qt6_version 6.4.2
+
+# AppID for Basealt build
+# got from https://core.telegram.org/api/obtaining_api_id
+%define apiid 182015
+%define apihash bb6c3f8fffd8fe6804fc5131a08e1c44
 
 # TODO: def_with clang
-%def_with gtk3
-%def_without qt6
+%def_with qt6
 %def_without wayland
 %def_with x11
 %def_with rlottie
+%def_with gsl
+%def_without ninja
 %def_without ffmpeg_static
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 4.3.1
-Release: alt3
+Version: 4.8.4
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -34,15 +40,19 @@ Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
 Patch5: telegram-desktop-fix-missed-cstdint.patch
 Patch6: telegram-desktop-disabled-icon-checkbox.patch
+Patch7: telegram-desktop-fix-build-with-make.patch
 
 # lacks few build deps, still
+# [ppc64le] E: Couldn't find package libdispatch-devel
+# [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
 ExcludeArch: ppc64le
-
-# Check https://github.com/EasyCoding/tgbuild for patches
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-compat >= 2.1.5
 BuildRequires(pre): rpm-build-intro >= 2.1.5
+%if_with ninja
+BuildRequires(pre): rpm-macros-ninja-build
+%endif
 
 # use no more than system_memory/3000 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
 %_tune_parallel_build_by_procsize 3000
@@ -53,7 +63,11 @@ BuildRequires(pre): rpm-build-intro >= 2.1.5
 %define optflags_lto %nil
 %endif
 
-BuildRequires: gcc-c++ libstdc++-devel python3
+BuildRequires: gcc-c++ libstdc++-devel
+# for -lstdc++fs
+BuildRequires: libstdc++%__gcc_version-devel-static
+
+BuildRequires: python3
 
 # cmake 3.16 as in CMakeLists.txt
 BuildRequires: cmake >= 3.16
@@ -62,7 +76,8 @@ BuildRequires: extra-cmake-modules
 %if_with qt6
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires: qt6-base-devel >= %tg_qt6_version
-BuildRequires: qt6-svg-devel
+BuildRequires: qt6-svg-devel qt6-svg
+BuildRequires: qt6-charts-devel qt6-charts
 BuildRequires: qt6-5compat-devel
 %{?_with_wayland:BuildRequires: qt6-wayland-devel}
 %else
@@ -98,8 +113,10 @@ BuildRequires: libzip-devel
 BuildRequires: zlib-devel >= 1.2.8
 BuildRequires: libxxhash-devel
 BuildRequires: liblz4-devel
+BuildRequires: libcrc32c-devel
+BuildRequires: libfmt-devel
 
-BuildRequires: libminizip-devel libpcre-devel libexpat-devel libssl-devel bison
+BuildRequires: libminizip-devel libpcre2-devel libexpat-devel libssl-devel libselinux-devel bison
 
 %if_with x11
 #BuildRequires: libxcbutil-keysyms-devel
@@ -109,62 +126,83 @@ BuildRequires: pkgconfig(xcb-record)
 BuildRequires: pkgconfig(xcb-screensaver)
 %endif
 
-
-%if_with gtk3
-# GTK 3.0 integration
-BuildRequires: libgtk+3-devel libglibmm2.68-devel
-%endif
+#BuildRequires: libgtk+3-devel
+BuildRequires: libglibmm2.68-devel >= 2.76
+BuildRequires: gobject-introspection-devel
 
 BuildRequires: libopus-devel
-
 # TODO:
 # libdee-devel
 
-BuildRequires: libopenal-devel >= 1.22.2
+#BuildRequires: libopenal-devel >= 1.22.2
+# p10
+BuildRequires: libopenal-devel >= 1.21.1
 # libportaudio2-devel libxcb-devel
 # used by qt imageformats: libwebp-devel
 BuildRequires: libva-devel libdrm-devel
 
 # Telegram fork of OWT
-BuildRequires: libowt-tg-devel >= 4.3.0.7
+BuildRequires: libowt-tg-devel >= 4.3.0.10
 BuildRequires: librnnoise-devel
 #BuildRequires: libvpx-devel
 BuildRequires: libjpeg-devel
-#BuildRequires: libopenh264-devel
+
+# No rule to make target '/usr/lib64/libopenh264.so', needed by 'telegram-desktop'
+BuildRequires: libopenh264-devel
+
+# No rule to make target '/usr/lib64/libXcomposite.so', needed by 'telegram-desktop'
+BuildRequires: libXcomposite-devel
+
+# No rule to make target '/usr/lib64/libXdamage.so', needed by 'telegram-desktop'
+BuildRequires: libXdamage-devel
+BuildRequires: libXrandr-devel libXext-devel libXfixes-devel libXrender-devel libXtst-devel
+
 
 #see hack below (used directly in Telegram/ThirdParty/tgcalls/tgcalls/desktop_capturer/DesktopCaptureSourceHelper.cpp)
 BuildRequires: libyuv-devel
 
 # Just to disable noise like Package 'libffi', required by 'gobject-2.0', not found
 BuildRequires: libffi-devel libmount-devel libXdmcp-devel libblkid-devel
+BuildRequires: bzlib-devel libbrotli-devel gstreamer1.0-devel
 
+BuildRequires: boost-program_options-devel
 
 # uses forked version, tag e0ea6af518345c4a46195c4951e023e621a9eb8f
 BuildRequires: librlottie-devel >= 0.1.1
 BuildRequires: libqrcodegen-cpp-devel
 
 # C++ sugar
-BuildRequires: libmicrosoft-gsl-devel >= 1:3.0.1
+%if_with gsl
+BuildRequires: libmicrosoft-gsl-devel >= 1:4.0.0-alt2
+%endif
+
 # https://github.com/telegramdesktop/tdesktop/issues/8471
 #BuildRequires: libvariant-devel
 BuildRequires: libexpected-devel
 BuildRequires: librange-v3-devel >= 0.11.0
 BuildRequires: libdispatch-devel
 
-# unused since 3.5.0
-#BuildRequires: libdbusmenu-qt5-devel
+# for bundled cldr3
+BuildRequires: libprotobuf-devel libprotobuf-lite-devel protobuf-compiler
 
 # need for /usr/lib64/cmake/Qt5XkbCommonSupport/Qt5XkbCommonSupportConfig.cmake
 BuildRequires: libxkbcommon-devel
 
+%if_with ninja
+BuildRequires: ninja-build
+%endif
+
 # FIXME: libva need only for linking, extra deps?
 
+Provides: telegram = %version-%release
 Provides: tdesktop = %version-%release
 Obsoletes: tdesktop
+
 
 %if_with ffmpeg_static
 BuildRequires: libffmpeg-devel-static >= %ffmpeg_version
 %else
+BuildRequires: libavfilter-devel >= %ffmpeg_version
 BuildRequires: libavcodec-devel >= %ffmpeg_version
 BuildRequires: libavformat-devel >= %ffmpeg_version
 BuildRequires: libavutil-devel >= %ffmpeg_version
@@ -179,10 +217,16 @@ Requires: dbus
 #Requires: fonts-ttf-open-sans
 
 # some problems with t_assert
-%add_optflags -fpermissive
+%add_optflags -fpermissive -DNDEBUG
 
 # disable some warnings
 %add_optflags -Wno-strict-aliasing -Wno-unused-variable -Wno-sign-compare -Wno-switch
+
+%add_optflags -fstack-protector-all -fstack-clash-protection -D_GLIBCXX_ASSERTIONS
+%ifarch x86_64
+%add_optflags -fcf-protection
+%endif
+
 
 %description
 Telegram is a messaging app with a focus on speed and security, it's super-fast, simple and free.
@@ -204,20 +248,25 @@ or business messaging needs.
 %if_without qt6
 %patch6 -p2
 %endif
+%patch7 -p2
 
-#__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
+%if_without gsl
+test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
+%endif
 
 # See https://github.com/desktop-app/tg_owt/pull/82
 # TODO: there are incorrect using and linking libyuv
 subst 's|third_party/libyuv/include/libyuv.h|libyuv.h|' Telegram/ThirdParty/tgcalls/tgcalls/desktop_capturer/*.cpp
 # TODO: ld: lib_webview/liblib_webview.a(webview_linux_webkit_gtk.cpp.o): undefined reference to symbol 'dlclose@@GLIBC_2.2.5
 # TODO: ld: /tmp/.private/lav/ccfxvz2E.ltrans115.ltrans.o: неопределённая ссылка на символ «ARGBScale»
-subst "s|\(desktop-app::external_rnnoise\)|\1 -lyuv|" Telegram/cmake/lib_tgcalls.cmake
+#subst "s|\(desktop-app::external_rnnoise\)|\1 -lyuv|" Telegram/cmake/lib_tgcalls.cmake
 
 # Unbundling libraries...
 # TODO: minizip
 for i in \
+%if_with gsl
 	Telegram/ThirdParty/GSL \
+%endif
 	Telegram/ThirdParty/QR \
 	Telegram/ThirdParty/expected \
 	Telegram/ThirdParty/jemalloc \
@@ -229,7 +278,9 @@ for i in \
 	Telegram/ThirdParty/nimf \
 	Telegram/ThirdParty/range-v3 \
 	Telegram/ThirdParty/xxHash \
+%if_with rlottie
 	Telegram/ThirdParty/rlottie \
+%endif
 	Telegram/ThirdParty/libtgvoip \
 	Telegram/ThirdParty/tgcalls/tgcalls/legacy \
 	%nil ; do
@@ -250,20 +301,25 @@ export CC=clang
 # due precompiled headers
 export CCACHE_SLOPPINESS=pch_defines,time_macros
 
+# CMAKE_BUILD_TYPE should always be Release due to some hardcoded checks.
+#    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 
-# AppID for Basealt build
-# got from https://core.telegram.org/api/obtaining_api_id
-%cmake_insource -DDESKTOP_APP_USE_PACKAGED=ON \
-    -DTDESKTOP_API_ID=182015 \
-    -DTDESKTOP_API_HASH=bb6c3f8fffd8fe6804fc5131a08e1c44 \
+%cmake_insource \
+%if_with ninja
+    -G Ninja \
+%endif
+    -DDESKTOP_APP_USE_PACKAGED=ON \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DTDESKTOP_API_ID=%apiid \
+    -DTDESKTOP_API_HASH=%apihash \
     -DDESKTOP_APP_USE_PACKAGED:BOOL=ON \
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=ON \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
 %if_with qt6
-    -DDESKTOP_APP_QT6:BOOL=ON \
+    -DQT_VERSION_MAJOR=6 \
 %else
-    -DDESKTOP_APP_QT6:BOOL=OFF \
+    -DQT_VERSION_MAJOR=5 \
 %endif
 %if_without jemalloc
     -DDESKTOP_APP_DISABLE_JEMALLOC=ON \
@@ -287,10 +343,18 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 %endif
     %nil
 
+%if_with ninja
+%ninja_build
+%else
 %make_build VERBOSE=1
+%endif
 
 %install
+%if_with ninja
+%ninja_install
+%else
 %makeinstall_std
+%endif
 # XDG files
 #install -m644 -D lib/xdg/tg.protocol %buildroot%_Kservices/tg.protocol
 
@@ -303,9 +367,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %_bindir/telegramdesktop
 %_bindir/Telegram
 %_bindir/telegram
-%_desktopdir/telegramdesktop.desktop
-#_Kservices/tg.protocol
-%_datadir/metainfo/telegramdesktop.metainfo.xml
+%_desktopdir/*.desktop
+#%_datadir/dbus-1/services/*.service
+%_datadir/metainfo/*.metainfo.xml
 %_iconsdir/hicolor/16x16/apps/telegram.png
 %_iconsdir/hicolor/32x32/apps/telegram.png
 %_iconsdir/hicolor/48x48/apps/telegram.png
@@ -317,6 +381,14 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 4.8.4-alt1
+- new version (4.8.4) with rpmgs script
+- add Provides: telegram
+- switch to build with Qt6
+- needs glibmm 2.76
+- switch to libpcre2-devel
+- add BR: libselinux-devel
+
 * Wed Jun 14 2023 Anton Midyukov <antohami@altlinux.org> 4.3.1-alt3
 - NMU: rebuild without unused appindicator-gtk3
 
