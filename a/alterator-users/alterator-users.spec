@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.18
+Version: 10.19
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -52,6 +52,10 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Mon Jul 31 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.19-alt1
+- Fix the display of the avatar for a user who previously had an avatar
+set when the window is reopened
+
 * Fri Jul 14 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.18-alt1
 - Remove an empty field if the user did not select an avatar
 
