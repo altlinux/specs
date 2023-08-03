@@ -3,8 +3,8 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.1.1
-Release: alt1.1
+Version: 2.1.2
+Release: alt1
 
 Summary: Python library of web-related functions
 Group: Development/Python3
@@ -13,7 +13,6 @@ Url: https://pypi.python.org/pypi/%pypi_name
 Vcs: https://github.com/scrapy/w3lib.git
 
 Source: https://pypi.io/packages/source/w/%pypi_name/%pypi_name-%version.tar.gz
-Patch10: w3lib-2.1.1-up-python-3.11.patch
 
 BuildArch: noarch
 
@@ -37,7 +36,6 @@ extract arguments from urls
 
 %prep
 %setup -n %pypi_name-%version
-%patch10 -p1
 
 %build
 %pyproject_build
@@ -54,6 +52,9 @@ extract arguments from urls
 %doc README*
 
 %changelog
+* Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
+- 2.1.2
+
 * Thu Jun 22 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1.1
 - fixed tests with Python 3.11.4
 
