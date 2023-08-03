@@ -1,5 +1,8 @@
 # TODO: use system sqlite
 
+# about versioning:
+# https://github.com/tdlib/td/issues/2215
+
 %def_disable static
 # Enable or disable clang compiler...
 %ifarch %e2k
@@ -9,8 +12,8 @@
 %endif
 
 Name: tdlib
-Version: 1.8.0
-Release: alt1.1
+Version: 1.8.14
+Release: alt1
 
 Summary: Cross-platform library for building Telegram clients
 
@@ -20,9 +23,8 @@ Url: https://github.com/tdlib/td
 
 ExcludeArch: %ix86
 
-# Source-url: %url/archive/v%version.tar.gz#/%name-%version.tar.gz
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
+#Source-url: %url/archive/v%version.tar.gz#/%name-%version.tar.gz
+# Source-url: https://github.com/tdlib/td/commit/8517026415e75a8eec567774072cbbbbb52376c1
 Source: %name-%version.tar
 
 Patch: %name-system-crypto.patch
@@ -127,6 +129,9 @@ rm -fv %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Aug 02 2023 Vitaly Lipatov <lav@altlinux.ru> 1.8.14-alt1
+- new version (1.8.14) with rpmgs script
+
 * Sun Mar 19 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.8.0-alt1.1
 - e2k: build without clang
 
