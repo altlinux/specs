@@ -1,5 +1,5 @@
 Name: afuse
-Version: 0.4.1
+Version: 0.5.0
 Release: alt1
 Summary: Automounting file system implemented in user-space
 License: GPLv2
@@ -38,6 +38,9 @@ complete a mount such as asking for a password.
 
 
 %changelog
+* Thu Aug  3 2023 Artyom Bystrov <arbars@altlinux.org> 0.5.0-alt1
+- Update to new version
+
 * Mon Sep 02 2013 Led <led@altlinux.ru> 0.4.1-alt1
 - 0.4.1
 - fixed License
