@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  1
-%define _php_release_version 21
+%define _php_release_version 22
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -44,7 +44,7 @@ Patch9: php-8.0-no-static-program.patch
 Patch10: php-set-session-save-path.patch
 Patch11: php7-7.1.10-alt-lsattr.patch
 Patch12: php-7.4-save-ldlibs.patch
-Patch13: php5-5.5.9-phar-phppath.patch
+Patch13: php-8.2-phar-phppath.patch
 Patch14: php-mysqlnd-socket.patch
 Patch15: php-7.2.14-alt-zend-signal-visibility.patch
 Patch16: php-7.2-alt-phar-manfile-suffix.patch
@@ -463,6 +463,12 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Wed Aug 02 2023 Anton Farygin <rider@altlinux.ru> 8.1.22-alt1
+- 8.1.21 -> 8.1.22
+- updated phar-phppath patch against the race in phar.phar generator
+  when hasher running under the audit subsystem
+- updated debian patch to use timezone from the system
+
 * Wed Jul 12 2023 Anton Farygin <rider@altlinux.ru> 8.1.21-alt1
 - 8.1.20 -> 8.1.21
 
