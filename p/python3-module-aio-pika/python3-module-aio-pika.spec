@@ -2,11 +2,11 @@
 %define pypi_name aio-pika
 %define mod_name aio_pika
 
-# tests are broken
+# tests require running broker service
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 9.0.5
+Version: 9.2.0
 Release: alt1
 
 Summary: AMQP 0.9 client designed for asyncio and humans
@@ -32,7 +32,6 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter nox
 %add_pyproject_deps_check_filter pytest-rst
 %add_pyproject_deps_check_filter sphinx-autobuild
-%add_pyproject_deps_check_filter types-
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -76,6 +75,9 @@ Features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 03 2023 Anton Zhukharev <ancieg@altlinux.org> 9.2.0-alt1
+- Updated to 9.2.0.
+
 * Thu May 11 2023 Anton Zhukharev <ancieg@altlinux.org> 9.0.5-alt1
 - Initial build for ALT Sisyphus.
 

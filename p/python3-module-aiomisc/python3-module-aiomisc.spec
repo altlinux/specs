@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name aiomisc
 
-# build aiomisc-pytest first
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 17.2
+Version: 17.3.21
 Release: alt1
 
 Summary: Miscellaneous utils for asyncio
@@ -30,7 +29,6 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter pytest-rst
 %add_pyproject_deps_check_filter sphinx-autobuild
 %add_pyproject_deps_check_filter sphinx-intl
-%add_pyproject_deps_check_filter types-
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -83,11 +81,14 @@ sed -i '/^__version__/s/= .*$/= "%version"/' aiomisc/version.py
 %pyproject_run_pytest -vra
 
 %files
-%doc README.rst CHANGELOG.md
+%doc COPYING README.rst CHANGELOG.md
 %python3_sitelibdir/%{pypi_name}*/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 03 2023 Anton Zhukharev <ancieg@altlinux.org> 17.3.21-alt1
+- Updated to 17.3.21.
+
 * Thu May 11 2023 Anton Zhukharev <ancieg@altlinux.org> 17.2-alt1
 - Initial build for ALT Sisyphus.
 
