@@ -4,33 +4,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.2
+Version: 1.3.2
 Release: alt1
-
 Summary: Ordered YAML loader and dumper for PyYAML
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/yamlloader
 VCS: https://github.com/Phynix/yamlloader.git
-
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-# install_requires:
-BuildRequires: python3(yaml)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(hypothesis)
-%endif
-
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-hypothesis
+%endif
 
 %description
 This module provides loaders and dumpers for PyYAML. Currently, an OrderedDict
@@ -42,6 +33,8 @@ preservation of insertion order is a language feature of regular dicts.).
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -50,8 +43,7 @@ preservation of insertion order is a language feature of regular dicts.).
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_unittest discover
 
 %files
 %doc README.rst
@@ -59,6 +51,9 @@ preservation of insertion order is a language feature of regular dicts.).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 03 2023 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1
+- 1.2.2 -> 1.3.2.
+
 * Mon Dec 05 2022 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
 - 1.1.0 -> 1.2.2.
 
