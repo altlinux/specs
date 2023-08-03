@@ -64,7 +64,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -1253,6 +1253,9 @@ cat >> boost/config/user.hpp << EOF
 #define BOOST_USE_UCONTEXT
 #endif
 EOF
+sed -i 's/BOOST_GCC >= 70000/0/' boost/assert/source_location.hpp
+# "expression not folded to a constant due to excessive constexpr function call complexity"
+sed -i 's/static constexpr/static const/' boost/url/detail/impl/replacement_field_rule.ipp
 %endif
 
 cat >> ./tools/build/src/user-config.jam << EOF
@@ -1842,6 +1845,9 @@ done
 
 
 %changelog
+* Thu Aug 03 2023 Michael Shigorin <mike@altlinux.org> 1:1.82.0-alt3
+- E2K: lcc 1.26 ftbfs workaround (ilyakurdyukov@)
+
 * Sat Jul 22 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.82.0-alt2
 - Add patch from upstream github to fix linker errors
   related to boost::phoenix::placeholders::uargN
