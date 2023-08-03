@@ -1,8 +1,8 @@
-%define up_name	DisplayCAL
+%define up_name DisplayCAL
 
 Name: displaycal
 Version: 3.9.11
-Release: alt1
+Release: alt2
 
 Summary: A graphical user interface for the Argyll CMS display calibration utilities
 
@@ -14,33 +14,23 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/eoyilmaz/displaycal-py3/releases/download/%version/DisplayCAL-%version.tar.gz
 Source: %name-%version.tar
+
 Patch1: displaycal-3.9.11-udev-dir.patch
 Patch2: displaycal-skip-update-check.patch
 Patch3: displaycal-3.9.8-fix-autostart-location.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 
-#BuildRequires: python3dist(setuptools-scm)
-#BuildRequires: python3dist(setuptools-scm[toml])
-#BuildRequires: python3dist(wheel)
-#BuildRequires: python3dist(pip)
-#BuildRequires: python3dist(wxpython)
 BuildRequires: pkgconfig(xxf86vm)
 BuildRequires: pkgconfig(xext)
 BuildRequires: pkgconfig(xinerama)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(python3)
 BuildRequires: xdg-user-dirs
-#BuildRequires: locales-fr
 
 Requires: argyllcms
-#Requires: python3dist(setuptools)
-#Requires: python3dist(pygobject)
-#Requires: python3dist(numpy)
-#Requires: python3dist(wxpython)
-#Requires: python3dist(send2trash)
-#Requires: python3dist(distro)
 
 Provides: %up_name = %version-%release
 Provides: dispcalGUI = %version-%release
@@ -79,11 +69,9 @@ ln -s ./lib64 DisplayCAL/lib32
 %endif
 
 %build
-#export LC_ALL=fr_FR.UTF-8
 %pyproject_build
 
 %install
-#export LC_ALL=fr_FR.UTF-8
 %pyproject_install
 mkdir -p %buildroot%_sysconfdir/xdg/autostart/
 mv -v %buildroot%_datadir/DisplayCAL/z-displaycal-apply-profiles.desktop %buildroot%_sysconfdir/xdg/autostart/
@@ -103,6 +91,9 @@ mv -v %buildroot%_datadir/DisplayCAL/z-displaycal-apply-profiles.desktop %buildr
 
 
 %changelog
+* Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 3.9.11-alt2
+- cleanup spec
+
 * Mon Jun 12 2023 Vitaly Lipatov <lav@altlinux.ru> 3.9.11-alt1
 - new version 3.9.11 (with rpmrb script)
 
