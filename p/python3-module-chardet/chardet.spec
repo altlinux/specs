@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 Epoch: 1
 
@@ -14,18 +14,15 @@ Group: Development/Python3
 
 Url: https://pypi.org/project/chardet/
 VCS: https://github.com/chardet/chardet
-Source: %name-%version.tar
-
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -33,6 +30,8 @@ Character encoding auto-detection in Python.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -41,8 +40,7 @@ Character encoding auto-detection in Python.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %_bindir/chardetect
@@ -50,6 +48,9 @@ Character encoding auto-detection in Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 02 2023 Stanislav Levin <slev@altlinux.org> 1:5.2.0-alt1
+- 5.1.0 -> 5.2.0.
+
 * Fri Dec 09 2022 Stanislav Levin <slev@altlinux.org> 1:5.1.0-alt1
 - 3.0.4 -> 5.1.0.
 
