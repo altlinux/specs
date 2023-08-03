@@ -5,7 +5,7 @@
 %define lxduser lxd
 
 Name:		lxd
-Version:	4.22
+Version:	5.16
 Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
@@ -41,7 +41,7 @@ Requires:	ebtables
 Requires:	dnsmasq
 Requires:	attr
 
-BuildRequires: golang >= 1.16
+BuildRequires: golang >= 1.18
 BuildRequires: libcap-devel
 BuildRequires: libuv-devel
 
@@ -88,7 +88,7 @@ pushd .build/src/%import_path
 #go install -v -tags "libsqlite3" ./...
 export CGO_LDFLAGS_ALLOW="(-Wl,-wrap,pthread_create)|(-Wl,-z,now)"
 TAGS="libsqlite3" %golang_build lxc fuidshift lxd-benchmark lxc-to-lxd lxd/db lxd
-CGO_ENABLED=0 TAGS="netgo" %golang_build lxd-p2c
+CGO_ENABLED=0 TAGS="netgo" %golang_build lxd-migrate
 CGO_ENABLED=0 TAGS="agent,netgo" %golang_build lxd-agent
 
 #%golang_build lxd lxc fuidshift lxd-benchmark lxd-p2c lxc-to-lxd lxd/db
@@ -189,6 +189,9 @@ fi
 %exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Thu Aug 03 2023 Alexey Shabalin <shaba@altlinux.org> 5.16-alt1
+- 5.16
+
 * Wed Jan 26 2022 Alexey Shabalin <shaba@altlinux.org> 4.22-alt1
 - new version 4.22.
 

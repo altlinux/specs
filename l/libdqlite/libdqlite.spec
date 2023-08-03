@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libdqlite
-Version: 1.9.1
+Version: 1.15.1
 Release: alt1
 Summary: Library for distributed SQLite database
 License: Apache-2.0
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires: libuv-devel
-BuildRequires: libraft-devel
+BuildRequires: libraft-devel >= 0.17.1
 BuildRequires: libsqlite3-devel
 
 %description
@@ -53,6 +53,9 @@ of peers, using the Raft algorithm.
 %_pkgconfigdir/dqlite.pc
 
 %changelog
+* Thu Aug 03 2023 Alexey Shabalin <shaba@altlinux.org> 1.15.1-alt1
+- new version 1.15.1
+
 * Wed Jan 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt1
 - new version 1.9.1
 
