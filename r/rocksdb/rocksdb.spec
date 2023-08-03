@@ -15,7 +15,7 @@
 %def_disable static
 
 Name: rocksdb
-Version: 7.9.2
+Version: 7.9.3
 Release: alt1
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
@@ -145,6 +145,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu Aug 03 2023 Alexey Shabalin <shaba@altlinux.org> 7.9.3-alt1
+- 7.9.3
+
 * Thu Apr 13 2023 Alexey Shabalin <shaba@altlinux.org> 7.9.2-alt1
 - 7.9.2
 - build for all arches
