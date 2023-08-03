@@ -1,8 +1,8 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name code
 %define rdn_name io.elementary.%_name
-%define ver_major 7.0
+%define ver_major 7.1
 
 Name: scratch-text-editor
 Version: %ver_major.0
@@ -113,6 +113,7 @@ This package provides Vala language bindings for the scratch text editor.
 %_datadir/gtksourceview-%gtksourceview_api_ver/styles/*
 %_datadir/polkit-1/actions/%rdn_name.policy
 %_iconsdir/hicolor/*/*/%rdn_name.*
+%_man1dir/%rdn_name.1*
 %_datadir/metainfo/%rdn_name.metainfo.xml
 
 %files devel
@@ -125,6 +126,9 @@ This package provides Vala language bindings for the scratch text editor.
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 7.1.0-alt1
+- updated to 7.1.0-7-gc2fb99006
+
 * Tue Feb 07 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.0-alt1
 - 7.0.0
 
