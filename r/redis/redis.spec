@@ -1,6 +1,6 @@
 Name: redis
 Version: 6.2.8
-Release: alt1
+Release: alt2
 
 Summary: Redis is an advanced key-value store
 
@@ -31,7 +31,7 @@ BuildPreReq: tcl >= 8.5
 
 # Automatically added by buildreq on Sun Aug 04 2019
 # optimized out: gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4 tcl tk
-BuildRequires: gcc-c++ git-core tcl-devel xsltproc
+BuildRequires: gcc-c++ git-core tcl-devel xsltproc libssl-devel
 
 %description
 Redis is an advanced key-value store. It is similar to memcached but
@@ -75,7 +75,7 @@ USE_MALLOC=
 USE_MALLOC="MALLOC=libc"
 %endif
 
-%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}" $USE_MALLOC
+%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}" $USE_MALLOC BUILD_TLS=yes
 
 %ifndef __BTE
     # make check needs network
@@ -171,6 +171,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Thu Aug 03 2023 Andrey Cherepanov <cas@altlinux.org> 6.2.8-alt2
+- Added SSL/TLS support
+
 * Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 6.2.8-alt1
 - New version
 - Security fixes:
