@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.29
+%define ver_major 0.30
 %define beta %nil
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
@@ -15,7 +15,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1.3%beta
+Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -47,7 +47,8 @@ Requires: gnome-session
 Requires: iio-sensor-proxy
 Requires: fonts-ttf-google-lato
 
-Requires: squeekboard
+# squeekboard provides osk-wayland
+Requires: /usr/bin/osk-wayland
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson
@@ -189,6 +190,10 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
+- 0.30.0
+- required /usr/bin/osk-wayland
+
 * Tue Jul 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1.3
 - split noarch data to separate subpackage
 - data/phosh.service: added "Alias=display-manager.service" to prevent

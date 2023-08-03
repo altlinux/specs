@@ -1,13 +1,19 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.29
+%define ver_major 0.30
+%define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
 
 %define dev_uid 500
+%define wlroots_ver 0.16.2
+%define gmobile_ver f4d4e57
 
+# since 0.30 system 0.16 may be used but patched version required
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
+%def_enable gtk_doc
+%def_enable man
 %def_disable check
 
 Name: phoc
@@ -25,13 +31,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Vcs: https://gitlab.gnome.org/World/Phosh/phoc.git
 Source: %name-%version%beta.tar
 %endif
+Source1: gmobile-%gmobile_ver.tar
+%{?_enable_embed_wlroots:Source2: wlroots-%wlroots_ver.tar}
 
 %define gnome_desktop_ver 43
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson
-BuildRequires: pkgconfig(gio-2.0) >= 2.50.0
-BuildRequires: pkgconfig(glib-2.0) >= 2.50.0
+BuildRequires: pkgconfig(gio-2.0) >= 2.66
+BuildRequires: pkgconfig(glib-2.0) >= 2.66
 BuildRequires: pkgconfig(gnome-desktop-3.0) >= %gnome_desktop_ver
 BuildRequires: pkgconfig(gobject-2.0) >= 2.50.0
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
@@ -40,30 +48,53 @@ BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(glesv2)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-protocols) >= 1.15
 BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(xcb-icccm)
 
-%{?_disable_embed_wlroots:BuildRequires: pkgconfig(wlroots) >= 0.15}
+%{?_disable_embed_wlroots:BuildRequires: pkgconfig(wlroots) >= 0.16}
 %{?_enable_embed_wlroots:BuildRequires: libgbm-devel libseat1-devel
-BuildRequires: pkgconfig(xcb-renderutil) pkgconfig(xcb-icccm)
+BuildRequires: pkgconfig(xcb-renderutil)
+BuildRequires: pkgconfig(hwdata)
 #BuildRequires: pkgconfig(xcb-errors)
 BuildRequires: xorg-xwayland-devel libglvnd-devel libvulkan-devel}
-%{?_enable_check:BuildRequires: xvfb-run mutter-gnome}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen pkgconfig(gobject-introspection-1.0)}
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
+%{?_enable_check:BuildRequires: libgtest-devel xvfb-run mutter-gnome /usr/bin/Xwayland}
 
 %description
 Phoc is a wlroots based mobile devices compositor. Phoc is pronounced
 like the English word fog.
 
+%package devel-doc
+Summary: Development documentation for Phoc
+Group: Development/Documentation
+Conflicts: %name < %version-%release
+BuildArch: noarch
+
+%description devel-doc
+This package provides development documentation for Phoc wayland
+compositor.
+
 %prep
-%setup -n %name-%version%beta
+%setup -n %name-%version%beta -a1 %{?_enable_embed_wlroots:-a2}
+mv gmobile-%gmobile_ver subprojects/gmobile
+%{?_enable_embed_wlroots:mv wlroots-%wlroots_ver subprojects/wlroots
+pushd subprojects/wlroots
+patch -p1 < ../packagefiles/wlroots/0001-Revert-layer-shell-error-on-0-dimension-without-anch.patch
+popd}
 
 %build
-%meson %{?_disable_embed-wlroots:-Dembed-wlroots=disabled} \
+%meson \
+    %{?_disable_embed_wlroots:-Dembed-wlroots=disabled} \
     %{?_enable_embed_wlroots:--default-library=static} \
-    -Ddev-uid=%dev_uid
+    -Ddev-uid=%dev_uid \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_enable_man:-Dman=true}
 %nil
 %meson_build
 
@@ -76,16 +107,25 @@ rm %buildroot%_libdir/libwlroots.a
 rm %buildroot%_pkgconfigdir/wlroots.pc}
 
 %check
-xvfb-run %__meson_test
+WLR_RENDERER=pixman xvfb-run %__meson_test
 
 %files
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/sm.puri.phoc.gschema.xml
 %_iconsdir/hicolor/symbolic/apps/%rdn_name.svg
+%{?_enable_man:%_man1dir/%name.1*}
 %doc README.md NEWS
 
+%files devel-doc
+%_datadir/doc/%name-%api_ver/
+
 %changelog
+* Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
+- 0.30.0 (ported to wlroots-0.16)
+- built with patched wlroots-0.16.2
+- enabled man and docs builds, new devel-doc subpackage
+
 * Tue Jul 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1
 - 0.29.0
 
