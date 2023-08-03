@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
-Version: 1.71.0
-Release: alt2
+Version: 1.71.1
+Release: alt1
 Summary: The Rust Programming Language
 
 %define r_ver 1.70.0
@@ -15,8 +15,7 @@ Source: %name-%version.tar
 
 Patch0001: 0001-ALT-Disable-lint-tests.patch
 Patch0002: 0002-ALT-gdb-Fix-libdir.patch
-Patch0003: 0003-Revert-Fix-x-test-lint-docs-when-download-rustc-is-e.patch
-Patch0004: 0004-Revert-fix-bug-etc-bash_complettion-src-etc-.-to-avo.patch
+Patch0003: 0003-Fix-version-check.patch
 
 %def_without bootstrap
 %def_without bundled_llvm
@@ -161,13 +160,13 @@ Requires: rust-cargo = %epoch:%version-%release
 %description -n rustfmt
 A tool for formatting Rust code according to style guidelines.
 
-%package -n rust-analyzer
+%package analyzer
 Summary: A Rust compiler front-end for IDEs
 Group: Development/Tools
 Requires: %name = %epoch:%version-%release
 Obsoletes: rls <= 1:1.71.0-alt1
 
-%description -n rust-analyzer
+%description analyzer
 rust-analyzer is a modular compiler frontend for the Rust language. It
 is a part of a larger rls-2.0 effort to create excellent IDE support
 for Rust.
@@ -443,7 +442,7 @@ rm -rf %rustdir
 %_bindir/cargo-fmt
 %doc src/tools/rustfmt/{README.md,CHANGELOG.md,Configurations.md,LICENSE-APACHE,LICENSE-MIT}
 
-%files -n rust-analyzer
+%files analyzer
 %_bindir/rust-analyzer
 %doc src/tools/rust-analyzer/{README.md,LICENSE-APACHE,LICENSE-MIT}
 
@@ -456,6 +455,11 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Thu Aug 03 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.71.1-alt1
+- New version (1.71.1).
+- Security fixes:
+  + CVE-2023-38497: Cargo does not respect umask when extracting packages
+
 * Mon Jul 31 2023 Egor Ignatov <egori@altlinux.org> 1:1.71.0-alt2
 - Obsolete rls and rename subpackage to rust-analyzer.
 
