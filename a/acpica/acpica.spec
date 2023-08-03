@@ -1,6 +1,6 @@
 
 Name: acpica
-Version: 20220331
+Version: 20230628
 Release: alt1
 Summary: ACPICA tools for the development and debug of ACPI tables
 
@@ -31,7 +31,6 @@ Patch102: int-format.patch
 Patch103: f23-harden.patch
 Patch104: template.patch
 Patch105: arm7hl.patch
-Patch106: simple-64bit.patch
 Patch107: mips-be-fix.patch
 Patch108: cve-2017-13693.patch
 Patch109: cve-2017-13694.patch
@@ -147,7 +146,7 @@ CWARNINGFLAGS="\
 OPT_CFLAGS="%optflags $CWARNINGFLAGS"
 export OPT_CFLAGS
 
-%make HOST=_LINUX
+%make HOST=_LINUX NOFORTIFY=TRUE
 
 %install
 # Install the binaries
@@ -174,6 +173,9 @@ cd tests
 %_man1dir/*
 
 %changelog
+* Thu Aug 03 2023 Alexey Shabalin <shaba@altlinux.org> 20230628-alt1
+- 20230628
+
 * Mon Aug 08 2022 Alexey Shabalin <shaba@altlinux.org> 20220331-alt1
 - 20220331
 
