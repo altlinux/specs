@@ -36,14 +36,15 @@
 %def_enable libiscsi
 %ifarch %ix86 %arm %mips32 ppc riscv64
 %def_disable rbd
+%def_disable glusterfs
 %else
 %def_enable rbd
+%def_enable glusterfs
 %endif
 %def_enable vitastor
 %def_enable libnfs
 %def_enable zstd
 %def_enable seccomp
-%def_enable glusterfs
 %def_enable gtk
 %def_enable gtk_clipboard
 %def_enable gnutls
@@ -131,8 +132,8 @@
 # }}}
 
 Name: qemu
-Version: 8.0.0
-Release: alt3
+Version: 8.0.3
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1317,6 +1318,10 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Fri Jul 28 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.3-alt1
+- 8.0.3 (Fixes: CVE-2023-3301, CVE-2023-2861, CVE-2023-0330)
+- Disabled support glusterfs for 32-bit arches and riscv64.
+
 * Tue May 23 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt3
 - Add BR: /dev/kvm for tests.
 
@@ -1325,7 +1330,7 @@ popd
 - Build with libblkio support.
 
 * Mon Apr 24 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt1
-- 8.0.0
+- 8.0.0 (Fixes: CVE-2022-1050, CVE-2021-20203)
 - Add vitastor support (https://vitastor.io).
 - Drop udev rules and control for /dev/kvm.
 
