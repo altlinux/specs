@@ -25,8 +25,8 @@
 %define design_graphics_abi_bugfix 0
 
 Name: branding-%flavour
-Version: 10.1
-Release: alt8
+Version: 10.2
+Release: alt1
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -478,6 +478,11 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Mon Jul 31 2023 Andrey Cherepanov <cas@altlinux.org> 10.2-alt1
+- New version.
+- Generated well-formed desktop files for hidden menu items.
+- Updated Russian license text.
+
 * Wed Jan 18 2023 Andrey Cherepanov <cas@altlinux.org> 10.1-alt8
 - Fixed missing chromium for panel icon (ALT #44938).
 
