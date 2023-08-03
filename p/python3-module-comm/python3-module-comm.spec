@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 Summary: Python Comm implementation for the Jupyter kernel protocol
 License: BSD-3-Clause
@@ -41,7 +41,7 @@ CommManager that can be used.
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -v --color=no
 
 %files
 %doc *.md LICENSE
@@ -49,6 +49,9 @@ CommManager that can be used.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 03 2023 Anton Vyatkin <toni@altlinux.org> 0.1.4-alt1
+- New version 0.1.4.
+
 * Fri Jun 09 2023 Anton Vyatkin <toni@altlinux.org> 0.1.3-alt1
 - New version 0.1.3
 
