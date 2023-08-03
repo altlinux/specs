@@ -7,7 +7,7 @@
 %def_disable ipod
 
 Name: exaile
-Version: 4.1.2
+Version: 4.1.3
 Release: alt1
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
@@ -32,9 +32,8 @@ BuildRequires(pre): rpm-build-python3
 # https://pypi.org/project/spydaap/
 %filter_from_requires /spydaap/d
 
-# explicitly required gtk+3
 Requires: typelib(Gtk) = 3.0
-Requires: typelib(WebKit2) = 4.0
+Requires: typelib(WebKit2) = 4.1
 Requires: dbus dconf
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
@@ -62,7 +61,7 @@ For more information see http://exaile.readthedocs.io/
 %package plugin-ipod
 Group: Sound
 Summary: Ipod plugin for exaile
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-ipod
 %summary
@@ -70,7 +69,7 @@ Requires: %name = %version-%release
 %package plugin-exfalso
 Group: Sound
 Summary: Ex Falso tag editor for exaile
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugin-exfalso
 %summary
@@ -105,9 +104,10 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %_liconsdir/%name.png
 %_niconsdir/%name.png
 %_miconsdir/%name.png
-%_pixmapsdir/%name.png
+%_iconsdir/hicolor/*/apps/*.*
 %_man1dir/%name.*
 %_datadir/bash-completion/completions/%name
+%_datadir/fish/vendor_completions.d/exaile.fish
 %doc README.md
 
 %if_enabled ipod
@@ -121,6 +121,9 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %endif
 
 %changelog
+* Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 4.1.3-alt1
+- 4.1.3
+
 * Wed Aug 10 2022 Yuri N. Sedunov <aris@altlinux.org> 4.1.2-alt1
 - 4.1.2
 
