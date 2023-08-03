@@ -3,7 +3,7 @@
 
 Name: vitastor
 Version: 0.9.6
-Release: alt1
+Release: alt2
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
 
@@ -151,9 +151,9 @@ tar -xf %SOURCE3 -C json11
 
 %build
 %cmake \
-	-DCMAKE_VERBOSE_MAKEFILE=ON \
-	-DWITH_QEMU=OFF \
-	-DWITH_FIO=OFF
+        -DCMAKE_VERBOSE_MAKEFILE=ON \
+        -DWITH_QEMU=OFF \
+        -DWITH_FIO=OFF
 %cmake_build
 
 %install
@@ -172,15 +172,22 @@ install -m 0644 mon/90-vitastor.rules %buildroot%_udevrulesdir
 install -D -m 0644 patches/VitastorPlugin.pm %buildroot%perl_vendor_privlib/PVE/Storage/Custom/VitastorPlugin.pm
 %endif
 
+# Cleanup
+rm -f %buildroot%_libexecdir/%name/mon/90-vitastor.rules
+rm -f %buildroot%_libexecdir/%name/mon/make-etcd
+rm -f %buildroot%_libexecdir/%name/mon/vitastor-mon.service
+rm -f %buildroot%_libexecdir/%name/mon/vitastor-osd@.service
+rm -f %buildroot%_libexecdir/%name/mon/vitastor.target
+
 %pre common
 groupadd -r -f %name 2>/dev/null ||:
 useradd  -r -g %name -s /sbin/nologin -c "Vitastor daemons" -M -d %_localstatedir/%name %name 2>/dev/null ||:
 
-#%post mon
-#%post_service vitastor-mon
+%post mon
+%post_service vitastor-mon
 
-#%preun mon
-#%preun_service vitastor-mon
+%preun mon
+%preun_service vitastor-mon
 
 #%post osd
 #systemctl daemon-reload ||:
@@ -251,6 +258,10 @@ fi
 %endif
 
 %changelog
+* Thu Aug 03 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.6-alt2
+- cleanup files in mon package
+- enable post and preun service for vitastor-mon
+
 * Mon Jul 31 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.6-alt1
 - 0.9.6
 
