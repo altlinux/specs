@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 
 Summary: Project documentation with Markdown
@@ -74,6 +74,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 03 2023 Stanislav Levin <slev@altlinux.org> 1.5.2-alt1
+- 1.5.1 -> 1.5.2.
+
 * Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 1.5.1-alt1
 - 1.5.0 -> 1.5.1.
 
