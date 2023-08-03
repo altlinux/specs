@@ -1,6 +1,6 @@
 Name:    gz-plugin
-Version: 1.4.0
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary: Cross-platform C++ library for dynamically loading plugins
 License: Apache-2.0
@@ -18,6 +18,7 @@ BuildRequires: gz-cmake
 BuildRequires: libprotobuf-devel
 BuildRequires: libtinyxml2-devel
 BuildRequires: libstdc++-devel-static
+BuildRequires: libgz-utils-devel >= 2.0.0
 
 %description
 Library for registering plugin libraries and dynamically loading them at
@@ -53,15 +54,19 @@ Group: Development/C++
 %_libexecdir/ruby/*
 %_libdir/lib*.so.*
 %_libdir/lib*.so
-%_datadir/gz/gz1.completion.d/*.sh
-%_datadir/ignition/*.yaml
+%_datadir/gz/gz*.completion.d/*.sh
+%_datadir/gz/*.yaml
+%_prefix/libexec/gz/plugin*/gz-plugin
 
 %files -n lib%{name}-devel
-%_includedir/ignition/plugin1
-%_libdir/cmake/ignition-plugin*
+%_includedir/gz/plugin*
+%_libdir/cmake/gz-plugin*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- New version.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt2
 - Moved .so files to main package.
 

@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1                                                                           
-%define ver 6
+%define ver 7
 
 Name:    gz-sim
-Version: 6.14.0
-Release: alt2
+Version: 7.5.0
+Release: alt1
 
 Summary: Open source robotics simulator. The latest version of Gazebo.
 License: Apache-2.0
@@ -45,13 +45,15 @@ BuildRequires: libpostproc-devel
 BuildRequires: protobuf-compiler
 BuildRequires: tinyxml-devel
 BuildRequires: libtar-devel
+
+BuildRequires: gz-cmake
 BuildRequires: libsdformat-devel
-BuildRequires: libgz-msgs-devel >= 8.0.0
-BuildRequires: libgz-transport-devel >= 11.0.0
+BuildRequires: libgz-msgs-devel
+BuildRequires: libgz-transport-devel
 BuildRequires: libgz-common-devel
-BuildRequires: libgz-fuel-tools-devel >= 7.0.0
+BuildRequires: libgz-fuel-tools-devel
 BuildRequires: libgz-plugin-devel
-BuildRequires: libgz-sensors-devel >= 6.0.0
+BuildRequires: libgz-sensors-devel
 BuildRequires: libgz-gui-devel
 BuildRequires: libgz-physics-devel
 BuildRequires: gz-tools-devel
@@ -75,8 +77,8 @@ BuildRequires: libgraphviz-devel
 BuildRequires: libdart-devel
 BuildRequires: libfmt-devel
 
-# Requires to ign
-Requires: gz-tools
+# Requires to gz
+Requires: gz-tools >= 2.0.0
 Requires: libgz-sim = %EVR
 
 %description
@@ -110,12 +112,12 @@ subst 's/ogre2/ogre/' `grep -Rl ogre2 *`
 
 %install
 %ninja_install -C "%_cmake__builddir"
-install -Dpm 0644 "%_cmake__builddir"/ignition-gazebo%ver.desktop %buildroot%_desktopdir/ignition-gazebo%ver.desktop
-install -Dpm 0644 "%_cmake__builddir"/ignition-gazebo%ver.svg %buildroot%_pixmapsdir/ignition-gazebo%ver.svg
+install -Dpm 0644 "%_cmake__builddir"/gz-sim%ver.desktop %buildroot%_desktopdir/gz-sim%ver.desktop
+install -Dpm 0644 "%_cmake__builddir"/gz-logo%ver.svg %buildroot%_pixmapsdir/gz-logo%ver.svg
 
 %files
 %doc AUTHORS README.md
-%_datadir/ignition/ignition-gazebo%ver
+%_datadir/gz/gz-sim%ver
 %_desktopdir/*.desktop
 %_pixmapsdir/*.svg
 
@@ -123,19 +125,21 @@ install -Dpm 0644 "%_cmake__builddir"/ignition-gazebo%ver.svg %buildroot%_pixmap
 %_libexecdir/ruby/*
 %_libdir/lib*.so.*
 %_libdir/lib*.so
-%_libdir/ign-gazebo-%ver/plugins
-%_libdir/python/ignition
-%_libdir/python/*.so
-%_datadir/ignition/model*.yaml
-%_datadir/gz/gz1.completion.d/*.bash_completion.sh
-%_datadir/ignition/*.yaml
+%_libdir/gz-sim-%ver/plugins
+%_libdir/python/gz
+%_datadir/gz/model*.yaml
+%_datadir/gz/gz2.completion.d/*.bash_completion.sh
+%_datadir/gz/*.yaml
 
 %files -n lib%{name}-devel
-%_includedir/ignition/*
+%_includedir/gz/*
 %_libdir/cmake/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.0-alt1
+- New version.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 6.14.0-alt2
 - Moved .so files to main library package.
 - Built with DART.

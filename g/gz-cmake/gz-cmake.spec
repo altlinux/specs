@@ -1,5 +1,5 @@
 Name:    gz-cmake
-Version: 2.16.0
+Version: 3.3.0
 Release: alt1
 
 Summary: A set of CMake modules that are used by the C++-based Gazebo projects
@@ -10,24 +10,22 @@ Url:     https://github.com/gazebosim/gz-cmake
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
-Patch0: gz-cmake-alt-fix-version-in-ignition-component.pc.in.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 
 %description
-ignition-cmake provides a set of cmake modules that are used by the C++-based
-ignition projects. These modules help to control the quality and consistency of
-the ignition projects' build systems.
+gz-cmake provides a set of cmake modules that are used by the C++-based Gazebo
+projects. These modules help to control the quality and consistency of the
+Gazebo projects' build systems.
 
-These modules are tailored to the ignition projects, so their use for
-non-ignition projects might be limited, but they may serve as a useful
-reference for setting up a modern cmake build system using good practices.
+These modules are tailored to the Gazebo projects, so their use for non-Gazebo
+projects might be limited, but they may serve as a useful reference for setting
+up a modern cmake build system using good practices.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %cmake
@@ -35,15 +33,18 @@ reference for setting up a modern cmake build system using good practices.
 
 %install
 %cmake_install
-subst 's|^#!.*$|#!%__python3|' %buildroot%_datadir/ignition/ignition-cmake2/*/*.py
+subst 's|^#!.*$|#!%__python3|' `find %buildroot%_datadir/gz/gz-cmake* -name \*.py`
 
 %files
 %doc README.md
-%_includedir/ignition/cmake2
-%_datadir/cmake/ignition-cmake2
+%_includedir/gz/cmake*
+%_datadir/cmake/gz-cmake*
 %_libdir/pkgconfig/*.pc
-%_datadir/ignition
+%_datadir/gz
 
 %changelog
+* Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
+- New version.
+
 * Thu May 18 2023 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt1
 - Initial build for Sisyphus.

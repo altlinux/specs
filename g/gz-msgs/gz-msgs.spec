@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-msgs
-Version: 8.7.0
-Release: alt2
+Version: 9.4.0
+Release: alt1
 
 Summary: Messages for Gazebo robot simulation
 License: Apache-2.0
@@ -58,14 +58,17 @@ ln -s /usr/include/google proto/google
 %_libdir/lib*.so.*
 %_libdir/lib*.so
 %_datadir/gz/gz1.completion.d/*.sh
-%_datadir/ignition/*.yaml
+%_datadir/gz/*.yaml
 
 %files -n lib%{name}-devel
-%_includedir/ignition/msgs*
-%_libdir/cmake/ignition-msgs*
+%_includedir/gz/msgs*
+%_libdir/cmake/gz-msgs*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 9.4.0-alt1
+- New version.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 8.7.0-alt2
 - Moved .so files to main package.
 

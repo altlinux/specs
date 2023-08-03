@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-physics
-Version: 5.3.1
-Release: alt2
+Version: 6.4.0
+Release: alt1
 
 Summary: Abstract physics interface designed to support simulation and rapid development of robot applications
 License: Apache-2.0
@@ -30,6 +30,10 @@ BuildRequires: libdart-devel
 BuildRequires: liburdfdom-devel
 BuildRequires: libfmt-devel
 BuildRequires: libode-devel
+BuildRequires: zlib-devel
+BuildRequires: libminizip-devel
+BuildRequires: libstbi-devel
+BuildRequires: libpoly2tri-devel
 
 %description
 %summary
@@ -55,28 +59,32 @@ Group: Development/C++
 %add_optflags -I%_includedir/bullet
 %cmake -GNinja -Wno-dev
 %ninja_build -C "%_cmake__builddir"
-cp -a %_cmake__builddir/fake/install/%_lib/ign-physics-*/engine-plugins/libignition-physics-*-plugin.so %_cmake__builddir
+cp -a %_cmake__builddir/fake/install/%_lib/gz-physics-*/engine-plugins/libgz-physics-*-plugin.so %_cmake__builddir
 cp -a %_cmake__builddir/fake/install/%_lib/*.so* %_cmake__builddir
 
 %install
 %ninja_install -C "%_cmake__builddir"
 rm -f %buildroot%_libdir/*-plugin.so*
+rm -f %buildroot%_prefix/libexec/gz/physics*/COMMON_TEST*
 # undefined symbol: _ZN18btStaticPlaneShapeC1ERK9btVector3f
-rm -rf %buildroot%_libdir/ign-physics-*/engine-plugins/libignition-physics*-bullet-plugin.so*
-rm -f %buildroot%_libdir/pkgconfig/ignition-physics*-bullet-plugin.pc
+rm -f %buildroot%_libdir/gz-physics-*/engine-plugins/libgz-physics*-bullet-*plugin.so*
+rm -f %buildroot%_libdir/pkgconfig/gz-physics*-bullet-*plugin.pc
 
 %files -n lib%name
 %doc AUTHORS README.md
 %_libdir/lib*.so.*
 %_libdir/lib*.so
-%_libdir/ign-physics-*
+%_libdir/gz-physics-*
 
 %files -n lib%{name}-devel
-%_includedir/ignition/*
+%_includedir/gz/*
 %_libdir/cmake/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 6.4.0-alt1
+- New version.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 5.3.1-alt2
 - Moved .so files to main package.
 - Built with DART.

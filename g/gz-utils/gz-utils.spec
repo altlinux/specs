@@ -1,6 +1,6 @@
 Name:    gz-utils
-Version: 1.5.1
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary: Classes and functions for robot applications
 License: Apache-2.0
@@ -50,11 +50,14 @@ Group: Development/C++
 %_libdir/lib*.so
 
 %files -n lib%{name}-devel
-%_includedir/ignition/utils1
+%_includedir/gz/utils*
 %_libdir/cmake/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- New version.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt2
 - Moved .so files to main package.
 

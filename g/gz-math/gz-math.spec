@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-math
-Version: 6.14.0
-Release: alt2
+Version: 7.2.0
+Release: alt1
 
 Summary: General purpose math library for robot applications
 License: Apache-2.0
@@ -17,6 +17,7 @@ BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: gz-cmake
+BuildRequires: libgz-utils-devel >= 2.0.0
 BuildRequires: eigen3
 BuildRequires: swig
 BuildRequires: python3-dev
@@ -69,14 +70,17 @@ Group: Development/Python3
 %_libdir/lib*.so
 
 %files -n lib%{name}-devel
-%_includedir/ignition/math6
-%_libdir/cmake/ignition-math6*
+%_includedir/gz/math*
+%_libdir/cmake/gz-math*
 %_libdir/pkgconfig/*.pc
 
 %files -n python3-module-%name
-%_libdir/python/ignition/*.so
+%_libdir/python/gz/*.so
 
 %changelog
+* Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 7.2.0-alt1
+- New version.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 6.14.0-alt2
 - Moved .so files to main package.
 

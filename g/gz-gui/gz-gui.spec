@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-gui
-Version: 6.8.0
-Release: alt2
+Version: 7.2.0
+Release: alt1
 
 Summary: Builds on top of Qt to provide widgets which are useful when developing robotics applications, such as a 3D view, plots, dashboard, etc, and can be used together in a convenient unified interface
 License: Apache-2.0
@@ -62,24 +62,27 @@ Group: Development/C++
 %install
 %ninja_install -C "%_cmake__builddir"
 # Replace libGrid3D.so by libGridConfig.so without RPATH
-rm -f %buildroot%_libdir/ign-gui-6/plugins/libGrid3D.so
-cp %buildroot%_libdir/ign-gui-6/plugins/{libGridConfig.so,libGrid3D.so}
+rm -f %buildroot%_libdir/gz-gui-7/plugins/libGrid3D.so
+cp %buildroot%_libdir/gz-gui-7/plugins/{libGridConfig.so,libGrid3D.so}
 
 %files -n lib%name
 %doc AUTHORS README.md
 %_libexecdir/ruby/*
 %_libdir/lib*.so.*
 %_libdir/lib*.so
-%_libdir/ign-gui-6/plugins
-%_datadir/ignition/gui*.yaml
-%_datadir/gz/gz1.completion.d/gui*.bash_completion.sh
+%_libdir/gz-gui-*/plugins
+%_datadir/gz/gui*.yaml
+%_datadir/gz/gz2.completion.d/gui*.bash_completion.sh
 
 %files -n lib%{name}-devel
-%_includedir/ignition/*
+%_includedir/gz/*
 %_libdir/cmake/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 7.2.0-alt1
+- New version.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 6.8.0-alt2
 - Moved .so files to main package.
 - Added requirenments of qt5-quickcontrols and qt5-quickcontrols2.

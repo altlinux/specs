@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1                                                                           
 
 Name:    gz-rendering
-Version: 6.6.0
-Release: alt2
+Version: 7.4.0
+Release: alt1
 
 Summary: C++ library designed to provide an abstraction for different rendering engines. It offers unified APIs for creating 3D graphics applications
 License: Apache-2.0
@@ -64,14 +64,17 @@ Group: Development/C++
 %_libdir/lib*.so.*
 %_libdir/lib*.so
 #_libdir/ign-rendering-*
-%_datadir/ignition/ignition-rendering*
+%_datadir/gz/gz-rendering*
 
 %files -n lib%{name}-devel
-%_includedir/ignition/rendering*
+%_includedir/gz/rendering*
 %_libdir/cmake/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 7.4.0-alt1
+- New version.
+
 * Wed Jun 28 2023 Andrey Cherepanov <cas@altlinux.org> 6.6.0-alt2
 - Moved .so files to main package.
 - FTBFS: fixed build with GCC 13.x.

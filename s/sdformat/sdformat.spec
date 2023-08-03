@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    sdformat
-Version: 12.7.1
+Version: 13.5.0
 Release: alt1
 
 Summary: Simulation Description Format (SDFormat) parser and description files
@@ -64,16 +64,19 @@ Group: Development/C++
 %_libexecdir/ruby/*
 %_libdir/lib*.so.*
 %_datadir/sdformat*
-%_datadir/gz/gz1.completion.d/*.sh
-%_datadir/ignition/*.yaml
+%_datadir/gz/gz2.completion.d/*.sh
+%_datadir/gz/*.yaml
 
 %files -n lib%{name}-devel
-%_includedir/ignition/%{name}*
+%_includedir/gz/%{name}*
 %_libdir/lib*.so
 %_libdir/cmake/sdformat*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 13.5.0-alt1
+- New version.
+
 * Mon Jun 19 2023 Andrey Cherepanov <cas@altlinux.org> 12.7.1-alt1
 - New version.
 

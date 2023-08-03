@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-fuel-tools
-Version: 7.2.2
-Release: alt2
+Version: 8.0.2
+Release: alt1
 
 Summary: A client library and command line tools for interacting with Gazebo Fuel servers
 License: Apache-2.0
@@ -60,15 +60,18 @@ Group: Development/C++
 %_libexecdir/ruby/*
 %_libdir/lib*.so.*
 %_libdir/lib*.so
-%_datadir/ignition/*.yaml
-%_datadir/ignition/fuel_tools*
+%_datadir/gz/*.yaml
+%_datadir/gz/fuel_tools*
 
 %files -n lib%{name}-devel
-%_includedir/ignition/fuel_tools*
-%_libdir/cmake/ignition-fuel_tools*
+%_includedir/gz/fuel_tools*
+%_libdir/cmake/gz-fuel_tools*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 8.0.2-alt1
+- New version.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 7.2.2-alt2
 - Moved .so files to main package.
 

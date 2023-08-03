@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-sensors
-Version: 6.7.0
-Release: alt2
+Version: 7.2.0
+Release: alt1
 
 Summary: Provides numerous sensor models designed to generate realistic data from simulation environments
 License: Apache-2.0
@@ -62,11 +62,14 @@ Group: Development/C++
 %_libdir/lib*.so
 
 %files -n lib%{name}-devel
-%_includedir/ignition/sensors*
+%_includedir/gz/sensors*
 %_libdir/cmake/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 7.2.0-alt1
+- New version.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 6.7.0-alt2
 - Moved .so files to main package.
 

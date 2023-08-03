@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-common
-Version: 4.6.2
-Release: alt2
+Version: 5.4.0
+Release: alt1
 
 Summary: Gazebo Common : AV, Graphics, Events, and much more
 License: Apache-2.0
@@ -14,6 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch0: gz-common-alt-fix-build.patch
 Patch1: gz-common-alt-gcc13.patch
+Patch2: gz-common-alt-gdal-without-version.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -36,6 +37,13 @@ BuildRequires: libgts-devel
 BuildRequires: libpostproc-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libfreeimage-devel
+BuildRequires: libstdc++-devel-static
+#TODO: error build
+BuildRequires: libgdal-devel
+BuildRequires: libassimp-devel
+BuildRequires: libminizip-devel
+BuildRequires: libstbi-devel
+BuildRequires: libpoly2tri-devel
 
 %description
 An audio-visual library supports processing audio and video files, a graphics
@@ -61,29 +69,35 @@ Group: Development/C++
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
-%cmake
-%cmake_build
+%cmake -GNinja -Wno-dev
+#cmake_build
+%ninja_build -C "%_cmake__builddir"
 
 %install
-%cmake_install
+#cmake_install
+%ninja_install -C "%_cmake__builddir"
 
 %files
 %doc AUTHORS README.md
-%_prefix/libexec/ignition/ignition-common*/ign_remotery_vis
-%_datadir/ignition/ignition-common*
+%_prefix/libexec/gz/gz-common*/gz_remotery_vis
+%_datadir/gz/gz-common*
 
 %files -n lib%name
 %_libdir/lib*.so.*
 %_libdir/lib*.so
 
 %files -n lib%{name}-devel
-%_includedir/ignition/common*
-%_libdir/cmake/ignition-common*
+%_includedir/gz/common*
+%_libdir/cmake/gz-common*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt1
+- New version.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 4.6.2-alt2
 - Moved .so files to main package.
 
