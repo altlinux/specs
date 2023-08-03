@@ -39,7 +39,7 @@
 
 Name: efl
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -235,6 +235,8 @@ developing applications that use Elementary libraries.
 %patch1 -p1
 %ifarch %e2k
 %patch2000 -p1
+# SIGILL workaround
+sed -i "/package_c_args,/a '-O2'," src/bin/edje/epp/meson.build
 %endif
 
 # fix path to soffice.bin
@@ -437,6 +439,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.26.3-alt1.1
+- E2K: lcc 1.26 ftbfs workaround by ilyakurdyukov@
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.26.3-alt1
 - 1.26.3
 
