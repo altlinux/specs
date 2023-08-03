@@ -16,6 +16,7 @@
 %def_enable bluez5dun
 %def_enable vala
 %def_enable nmcloudsetup
+%def_enable ifcfg
 %ifnarch %e2k %mips
 %def_enable ovs
 %else
@@ -58,7 +59,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.42.8
+Version: 1.43.90
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -75,6 +76,7 @@ Source8: 80-etcnet-iface-scripts
 Source9: NetworkManager-prestart
 Source10: nm-dispatcher-sh-functions
 Source11: NetworkManager.init
+Source12: ifcfg-rh-plugin.conf
 Patch: %name-%version-%release.patch
 
 # For tests
@@ -233,6 +235,20 @@ NetworkManager in cloud setups. Currently only EC2 is supported.
 This tool is still experimental.
 %endif
 
+%if_enabled ifcfg
+%package ifcfg-rh
+License: GPLv2+
+Summary: NetworkManager settings plugin for Red Hat ifcfg files
+Group: System/Configuration/Networking
+Requires: %_name = %version-%release
+%endif
+
+%description ifcfg-rh
+This package contains NetworkManager settings plugin for integration with
+standard Red Hat ifcfg files.
+This package exists for configuring VMs only and shouldn't be installed in
+the regular ALT systems.
+
 %package wifi
 License: GPLv2+
 Summary: Wifi plugin for NetworkManager
@@ -363,7 +379,12 @@ export LDFLAGS=-pie
 	--with-polkit-agent-helper-1=/usr/libexec/polkit-1/polkit-agent-helper-1 \
 	--enable-modify-system=no \
 	--enable-etcnet-alt \
+%if_enabled ifcfg
+	--enable-ifcfg-rh \
+%else
 	--disable-ifcfg-rh \
+%endif
+	--with-config-migrate-ifcfg-rh-default=no \
 	--disable-ifupdown \
 	--with-config-plugins-default='etcnet-alt' \
 	--with-modem-manager-1 \
@@ -461,6 +482,10 @@ mv %buildroot%_defaultdocdir/%name-%version/examples/conf.d/31-mac-addr-change.c
 # Install 00-server.conf
 install -Dm0644 contrib/fedora/rpm/00-server.conf %buildroot%nmlibdir/conf.d/00-server.conf
 
+%if_enabled ifcfg
+install -Dm0644 %SOURCE12 %buildroot%_sysconfdir/NetworkManager/conf.d/40-ifcfg-rh-plugin.conf
+%endif
+
 %check
 make check
 
@@ -526,7 +551,7 @@ fi
 %dir %nmlibdir/
 %dir %nmlibdir/VPN/
 %dir %nmplugindir/
-%nmplugindir/libnm-settings-plugin-*.so
+%nmplugindir/libnm-settings-plugin-etcnet-alt.so
 %_libexecdir/NetworkManager/nm-*
 %exclude %_libexecdir/NetworkManager/nm-cloud-setup
 %_sbindir/*
@@ -564,6 +589,11 @@ fi
 %exclude %_man1dir/nmtui*
 %if_enabled ovs
 %exclude %_man7dir/nm-openvswitch.*
+%endif
+
+%if_enabled ifcfg
+%exclude %_datadir/dbus-1/system.d/nm-ifcfg-rh.conf
+%exclude %_man5dir/nm-settings-ifcfg-rh.*
 %endif
 
 %files config-server
@@ -609,6 +639,15 @@ fi
 %dispatcherdir/no-wait.d/90-nm-cloud-setup.sh
 %endif
 
+%if_enabled ifcfg
+%files ifcfg-rh
+%config %_sysconfdir/NetworkManager/conf.d/40-ifcfg-rh-plugin.conf
+%_datadir/dbus-1/system.d/nm-ifcfg-rh.conf
+%nmplugindir/libnm-settings-plugin-ifcfg-rh.so
+%_man5dir/nm-settings-ifcfg-rh.*
+%endif
+
+
 %files ppp
 %_libdir/pppd/%ppp_version/nm-pppd-plugin.so
 %nmplugindir/libnm-ppp-plugin.so
@@ -639,6 +678,12 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Aug 02 2023 Mikhail Efremov <sem@altlinux.org> 1.43.90-alt1
+- ifcfg-rh-plugin.conf: Enabled migrate-ifcfg-rh.
+- Disabled config-migrate-ifcfg-rh by default.
+- Enabled ifcfg-rh plugin.
+- Updated to 1.43.90 (1.44-rc1).
+
 * Wed Jun 28 2023 Mikhail Efremov <sem@altlinux.org> 1.42.8-alt1
 - Updated to 1.42.8.
 
