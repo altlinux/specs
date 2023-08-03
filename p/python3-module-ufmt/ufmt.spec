@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 Summary: Safe, atomic formatting with black and usort
 License: MIT
@@ -68,6 +68,9 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 %_bindir/%pypi_name
 
 %changelog
+* Wed Aug 02 2023 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.1.0 -> 2.2.0.
+
 * Wed May 10 2023 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - 2.0.1 -> 2.1.0.
 
