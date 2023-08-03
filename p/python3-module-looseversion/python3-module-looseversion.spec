@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: A backwards/forwards-compatible fork of distutils.version.LooseVersion
 License: Python-2.0
@@ -15,7 +15,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
-BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatchling python3-module-tomli
 
 BuildArch: noarch
 
@@ -42,6 +42,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 03 2023 Michael Shigorin <mike@altlinux.org> 1.2.0-alt2
+- Fix build --without check.
+
 * Thu Jun 15 2023 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - New version.
 
