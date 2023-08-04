@@ -8,7 +8,7 @@
 
 Name: calligra
 Version: 3.2.1
-Release: alt5
+Release: alt6
 Epoch: 0
 %K5init no_altplace
 %define libname lib%name
@@ -221,6 +221,22 @@ Requires: %name-common = %EVR
 #
 %patch103 -p1
 
+# fix docs names
+for subd in po/*/docs/{sheets,stage} ; do
+    base_subd=`basename $subd`
+    dir_subd=`dirname $subd`
+    case "$base_subd" in
+	sheets)
+	    mv $subd $dir_subd/calligrasheets
+	    ;;
+	stage)
+	    mv $subd $dir_subd/calligrastage
+	    ;;
+	*)
+	    ;;
+    esac
+done
+
 %build
 %K5build \
     -DCALLIGRA_SHOULD_BUILD_PRODUCTS=ALL \
@@ -247,6 +263,7 @@ done
 %files common -f %name.lang
 %dir %_K5srv/ServiceMenus/calligra/
 %doc AUTHORS README
+%_K5xdgapp/calligra.desktop
 
 %files devel
 %_K5bin/cstester
@@ -453,6 +470,9 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Fri Aug 04 2023 Sergey V Turchin <zerg@altlinux.org> 0:3.2.1-alt6
+- fix to show translated docs
+
 * Thu Feb 02 2023 Sergey V Turchin <zerg@altlinux.org> 0:3.2.1-alt5
 - add fix for new poppler
 
