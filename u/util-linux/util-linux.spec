@@ -1,7 +1,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.39.1
-Release: alt1
+Release: alt2
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
 URL: https://kernel.org/pub/linux/utils/util-linux/
@@ -25,6 +25,11 @@ URL: https://kernel.org/pub/linux/utils/util-linux/
 %def_enable line
 %def_disable mountpoint
 %def_disable eject
+%ifarch armh %e2k loongarch64
+%def_without klibc
+%else
+%def_with klibc
+%endif
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -48,7 +53,7 @@ BuildRequires: libcap-ng-devel
 %{?_enable_login:BuildRequires: libpam-devel}
 %{?_enable_runuser:BuildRequires: libpam-devel}
 
-%ifnarch armh %e2k
+%if_with klibc
 BuildRequires: klibc-devel
 %endif
 
@@ -522,13 +527,12 @@ automake --add-missing --force-missing
 %endif
 
 # build nologin
-%ifarch armh %e2k
-%__cc -static \
-	-Wall -Wextra -Werror nologin.c -o nologin
-%else
+%if_with klibc
 klcc \
-	-Wall -Wextra -Werror nologin.c -o nologin
+%else
+%__cc -static \
 %endif
+	-Wall -Wextra -Werror nologin.c -o nologin
 
 %__cc %optflags clock_unsynced.c -o clock_unsynced
 %__cc %optflags pause.c -o pause
@@ -954,6 +958,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Thu Aug 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.39.1-alt2
+- Fixed build on LoongArch (closes: #47108).
+
 * Wed Jun 28 2023 Alexey Gladkov <legion@altlinux.ru> 2.39.1-alt1
 - New version (2.39.1).
 - libmount: (optlist) correctly detect ro status (ALT#46679).
