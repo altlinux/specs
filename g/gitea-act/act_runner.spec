@@ -1,8 +1,8 @@
 %global import_path gitea.com/gitea/act_runner
 
 Name: gitea-act
-Version: 0.1.6
-Release: alt2
+Version: 0.2.4
+Release: alt1
 
 Summary: Act runner is a runner for Gitea based on Gitea fork of act.
 License: MIT
@@ -62,20 +62,24 @@ useradd -r -g _%name -s /dev/null -c "gitea-act services" -M -d %_sharedstatedir
 usermod -aG docker _%name
 
 %post
-%systemd_post %name.service
+%post_systemd %name.service
 
 %preun
-%systemd_preun %name.service
+%preun_systemd %name.service
 
 %files
 %doc README.md LICENSE altlinux/altREADME.md
-%_unitdir/%name.service
 %attr(0770,root,_%name) %dir %_sysconfdir/%name
 %attr(0640,root,_%name) %config(noreplace) %_sysconfdir/%name/config.yaml
 %attr(0770,root,_%name) %dir %_sharedstatedir/%name
 %_bindir/%name
+%_unitdir/%name.service
 
 %changelog
+* Fri Aug 04 2023 Alexey Shabalin <shaba@altlinux.org> 0.2.4-alt1
+- 0.2.4
+- Fixed post and preun macros.
+
 * Thu Jun 08 2023 Stepan Paksashvili <paksa@altlinux.org> 0.1.6-alt2
 - Update readme
 
