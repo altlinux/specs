@@ -5,8 +5,8 @@
 %def_disable static
 
 Name: mbedtls
-Version: 3.4.0
-Release: alt1.1
+Version: 3.4.1
+Release: alt1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
@@ -145,6 +145,9 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Fri Aug 04 2023 Nazarov Denis <nenderus@altlinux.org> 3.4.1-alt1
+- New version 3.4.1.
+
 * Thu Mar 30 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.0-alt1.1
 - Fixed build for Elbrus
 
