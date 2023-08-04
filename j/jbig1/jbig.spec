@@ -1,72 +1,51 @@
-Name: jbig
+Name: jbig1
 Version: 2.1
 Release: alt2
 
+# API change in version 1.6: jbg_enc_options(): parameter l0 changed type
+# API change in version 1.5: struct jbg_enc_state: new member yd1
+%define sover 1.6
+
 Summary: JBIG-KIT lossless image compression library
+License: GPL
+Group: System/Legacy libraries
 
-License: GPLv2+
-Group: Graphics
 Url: http://www.cl.cam.ac.uk/~mgk25/jbigkit/
+Source: jbigkit-%version.tar
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# Source-url: http://www.cl.cam.ac.uk/~mgk25/download/jbigkit-%version.tar.gz
-Source: %name-%version.tar
-
-Patch: jbigkit-2.1-shlib.patch
-Patch1: jbigkit-2.0-warnings.patch
-Patch2: jbigkit-ldflags.patch
-# patch for coverity issues - backported from upstream
-Patch3: jbigkit-covscan.patch
-
-%define sover %version
-
-%package -n libjbig%sover
+%package -n libjbig
 Summary: JBIG-KIT lossless image compression library (shared library)
-Group: System/Libraries
+Group: System/Legacy libraries
 
 %package -n libjbig-devel
 Summary: JBIG-KIT lossless image compression library (header files)
 Group: Development/C
-Requires: libjbig%sover = %EVR
+Requires: libjbig = %version-%release
 
 %package -n libjbig-devel-static
 Summary: JBIG-KIT lossless image compression library (static library)
 Group: Development/C
-Requires: libjbig-devel = %EVR
+Requires: libjbig-devel = %version-%release
 
 %package utils
 Summary: JBIG-KIT lossless image compression utilities
 Group: Graphics
-Requires: libjbig%sover = %EVR
+Requires: libjbig = %version-%release
 Provides: jbigkit = %version
 Obsoletes: jbigkit <= %version
 
 %description
-JBIG-KIT provides a portable library of compression and decompression
-functions with a documented interface that you can include very easily
-into your image or document processing software. In addition, JBIG-KIT
-provides ready-to-use compression and decompression programs with a
-simple command line interface (similar to the converters found in netpbm).
+JBIG is a highly effective lossless compression algorithm for bi-level
+images (one bit per pixel), which is particularly suitable for scanned
+document pages.
 
-JBIG-KIT implements the specification:
-    ISO/IEC 11544:1993 and ITU-T Recommendation T.82(1993):
-     Information technology - Coded representation of picture and audio
-     information - Progressive bi-level image compression.
+%description -n libjbig
+JBIG is a highly effective lossless compression algorithm for bi-level
+images (one bit per pixel), which is particularly suitable for scanned
+document pages.
 
-which is commonly referred to as the "JBIG1 standard"
-
-%description -n libjbig%sover
-JBIG-KIT provides a portable library of compression and decompression
-functions with a documented interface that you can include very easily
-into your image or document processing software. In addition, JBIG-KIT
-provides ready-to-use compression and decompression programs with a
-simple command line interface (similar to the converters found in netpbm).
-
-JBIG-KIT implements the specification:
-    ISO/IEC 11544:1993 and ITU-T Recommendation T.82(1993):
-     Information technology - Coded representation of picture and audio
-     information - Progressive bi-level image compression.
-
-which is commonly referred to as the "JBIG1 standard"
+This package is required for libjbig-based programs.
 
 %description -n libjbig-devel
 JBIG is a highly effective lossless compression algorithm for bi-level
@@ -89,15 +68,18 @@ images (one bit per pixel), which is particularly suitable for scanned
 document pages.
 
 %prep
-%setup
-%patch0 -p1 -b .shlib
-%patch1 -p1 -b .warnings
-# jbigkit: Partial Fedora build flags injection (bug #1548546)
-%patch2 -p1 -b .ldflags
-# covscan issues - backported from upstream
-%patch3 -p1 -b .covscan
+%setup -n jbigkit
 
 %build
+# First, build shared library.
+pushd libjbig
+%make_build libjbig.a CFLAGS='%optflags %optflags_shared'
+gcc -shared -o libjbig.so.%sover -Wl,-soname=libjbig.so.%sover `ar t libjbig.a`
+ln -snf libjbig.so.%sover libjbig.so
+make clean
+popd
+
+# Second, build all the rest.
 %make_build CCFLAGS='%optflags'
 
 LD_LIBRARY_PATH=$PWD/libjbig make test
@@ -106,15 +88,8 @@ LD_LIBRARY_PATH=$PWD/libjbig make test
 mkdir -p %buildroot{%_bindir,%_libdir,%_includedir,%_man1dir}
 install -p -m755 pbmtools/{jbgtopbm,pbmtojbg} %buildroot%_bindir/
 install -p -m644 pbmtools/*.1 %buildroot%_man1dir/
-install -p -m0644 libjbig/jbig.h %buildroot%_includedir
-install -p -m0644 libjbig/jbig85.h %buildroot%_includedir
-install -p -m0644 libjbig/jbig_ar.h %buildroot%_includedir
-
-install -p -m0755 libjbig/libjbig.so.%version %buildroot%_libdir
-install -p -m0755 libjbig/libjbig85.so.%version %buildroot%_libdir
-ln -sf libjbig.so.%version %buildroot%_libdir/libjbig.so
-ln -sf libjbig85.so.%version %buildroot%_libdir/libjbig85.so
-
+install -p -m644 libjbig/jbig{,_ar}.h %buildroot%_includedir/
+cp -a libjbig/libjbig.so* %buildroot%_libdir/
 %if_enabled static
 cp -a libjbig/libjbig.a %buildroot%_libdir/
 %endif
@@ -129,38 +104,13 @@ cp -a INSTALL %buildroot%pkgdocdir/README
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %make -k test
 
-%files -n libjbig%sover
+%files -n libjbig
 %_libdir/libjbig.so.%sover
-%_libdir/libjbig85.so.%sover
-%dir %pkgdocdir
-%pkgdocdir/ANNOUNCE
-%pkgdocdir/CHANGES
-%pkgdocdir/README
 
-%files -n libjbig-devel
-%_libdir/libjbig.so
-%_libdir/libjbig85.so
-%_includedir/jbig*.h
-%dir %pkgdocdir
-#pkgdocdir/jbig.txt
-
-%if_enabled static
-%files -n libjbig-devel-static
-%_libdir/libjbig.a
-%endif
-
-%files utils
-%_bindir/jbgtopbm
-%_bindir/pbmtojbg
-%_man1dir/jbgtopbm.*
-%_man1dir/pbmtojbg.*
 
 %changelog
 * Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt2
-- cleanup spec, applied patches from Fedora
-- use real soname libjbig.so.2.1
-- add soname libjbig85.so.2.1
-- build lib package as libjbig2.1
+- build legacy libjbig (has incorrect soname libbig.so.1.6)
 
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1
 - Version 2.1
