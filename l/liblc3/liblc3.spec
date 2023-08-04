@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Low Complexity Communication Codec (LC3)
@@ -72,6 +72,9 @@ This package provides LC3 tools.
 %endif
 
 %changelog
+* Fri Aug 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
+- 1.0.4
+
 * Mon May 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
