@@ -1,7 +1,7 @@
 %global provider org.rncbc.qpwgraph
 
 Name: qpwgraph
-Version: 0.4.4
+Version: 0.5.1
 Release: alt1
 
 Summary: PipeWire Graph Qt GUI Interface
@@ -24,6 +24,7 @@ BuildRequires: libappstream-glib
 
 Requires: hicolor-icon-theme
 Requires: shared-mime-info
+Requires: qt6-svg
 
 %description
 qpwgraph is a graph manager dedicated to PipeWire, using the Qt C++ framework,
@@ -54,5 +55,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%provider.met
 desktop-file-validate %buildroot%_desktopdir/*.desktop
 
 %changelog
+* Fri Aug 04 2023 Mikhail Tergoev <fidel@altlinux.org> 0.5.1-alt1
+- new version (0.5.1) with rpmgs script
+- added requires qt6-svg for fix tray icon (ALT bug 47121)
+
 * Thu Jun 29 2023 Mikhail Tergoev <fidel@altlinux.org> 0.4.4-alt1
 - initial build for ALT Sisyphus
