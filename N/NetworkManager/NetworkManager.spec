@@ -60,7 +60,7 @@
 
 Name: NetworkManager
 Version: 1.43.90
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -241,13 +241,13 @@ License: GPLv2+
 Summary: NetworkManager settings plugin for Red Hat ifcfg files
 Group: System/Configuration/Networking
 Requires: %_name = %version-%release
-%endif
 
 %description ifcfg-rh
 This package contains NetworkManager settings plugin for integration with
 standard Red Hat ifcfg files.
 This package exists for configuring VMs only and shouldn't be installed in
 the regular ALT systems.
+%endif
 
 %package wifi
 License: GPLv2+
@@ -546,6 +546,9 @@ fi
 %doc %_man5dir/*.*
 %doc %_man7dir/*.*
 %doc %_man8dir/*.*
+%if_enabled nmcloudsetup
+%exclude %_man8dir/nm-cloud-setup.*
+%endif
 %doc %_defaultdocdir/%name-%version/
 %dir %_libdir/NetworkManager/
 %dir %nmlibdir/
@@ -553,7 +556,9 @@ fi
 %dir %nmplugindir/
 %nmplugindir/libnm-settings-plugin-etcnet-alt.so
 %_libexecdir/NetworkManager/nm-*
+%if_enabled nmcloudsetup
 %exclude %_libexecdir/NetworkManager/nm-cloud-setup
+%endif
 %_sbindir/*
 %_datadir/dbus-1/system.d/*.conf
 %config(noreplace) %_sysconfdir/NetworkManager/%name.conf
@@ -578,8 +583,11 @@ fi
 %{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
 %{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
 %{?_enable_systemd:/lib/systemd/system/nm-priv-helper.service}
+%if_enabled nmcloudsetup
 %exclude %dispatcherdir/90-nm-cloud-setup.sh
 %exclude %dispatcherdir/no-wait.d/90-nm-cloud-setup.sh
+%exclude %dispatcherdir/pre-up.d/90-nm-cloud-setup.sh
+%endif
 %_usr/lib/firewalld/zones/*.xml
 
 %if_enabled ovs
@@ -637,6 +645,8 @@ fi
 %{?_enable_systemd:/lib/systemd/system/nm-cloud-setup.timer}
 %dispatcherdir/90-nm-cloud-setup.sh
 %dispatcherdir/no-wait.d/90-nm-cloud-setup.sh
+%dispatcherdir/pre-up.d/90-nm-cloud-setup.sh
+%_man8dir/nm-cloud-setup.*
 %endif
 
 %if_enabled ifcfg
@@ -678,6 +688,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Aug 04 2023 Mikhail Efremov <sem@altlinux.org> 1.43.90-alt2
+- Fixed nm-cloud-setup packaging (closes: #47118).
+- Fixed build without ifcfg-rh.
+
 * Wed Aug 02 2023 Mikhail Efremov <sem@altlinux.org> 1.43.90-alt1
 - ifcfg-rh-plugin.conf: Enabled migrate-ifcfg-rh.
 - Disabled config-migrate-ifcfg-rh by default.
