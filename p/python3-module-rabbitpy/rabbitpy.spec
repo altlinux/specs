@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.1
-Release: alt2
+Release: alt3
 
 Summary: A pure python, thread-safe, minimalistic and pythonic RabbitMQ client library
 License: BSD-3-Clause
@@ -21,10 +21,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-pamqp
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-mock
-BuildRequires: python3-module-pamqp
 %endif
 
 %description
@@ -94,6 +94,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Fri Aug 04 2023 Michael Shigorin <mike@altlinux.org> 2.0.1-alt3
+- Fix build --without check
+
 * Thu Jul 20 2023 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt2
 - Fix FTBFS (migrate to new pamqp v3.x)
 
