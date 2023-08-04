@@ -5,8 +5,8 @@
 %define optflags_lto %{nil}
 
 Name: bear
-Version: 3.0.19
-Release: alt1.git67d5a34.1
+Version: 3.1.2
+Release: alt1
 
 Summary: Tool that generates a compilation database for clang tooling
 
@@ -69,6 +69,9 @@ done
 %doc COPYING README.md
 
 %changelog
+* Fri Aug 4 2023 Vladimir Didenko <cow@altlinux.org> 3.1.2-alt1
+- New version
+
 * Wed Jun 21 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0.19-alt1.git67d5a34.1
 - Fixed build for Elbrus (GTest is required but not specified)
 
