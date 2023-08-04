@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.99.1
-Release: alt1
+Release: alt2
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
 License: MIT
@@ -17,22 +17,15 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch0: fastapi-0.95.1-alt-email_tests.patch
-Patch1: fastapi-0.95.1-alt-fix-databases-tests-connections.patch
+Patch0: fastapi-0.95.1-alt-fix-databases-tests-connections.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-%add_pyproject_deps_check_filter ruff types-
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
-
-# BuildRequires: python3(multipart)
-# FastAPI based on Starlette, which requires 'python-multipart' exactly.
-# See https://bugzilla.altlinux.org/43483 for more information.
-BuildRequires: python3(python-multipart)
 %endif
 
 %description
@@ -73,21 +66,31 @@ The key features are:
 %pyproject_install
 
 %check
+# test_async_sql_databases/test_tutorial001.py::test_create_read:
 # Due to too new sqlalchemy databases' sqlite backend is broken.
 # Temporary skip this test.
-sed -i "1iimport pytest" \
-	tests/test_tutorial/test_async_sql_databases/test_tutorial001.py
-sed -i "/def test_create_read()/i@pytest.mark.skip(reason='workaround')" \
-	tests/test_tutorial/test_async_sql_databases/test_tutorial001.py
-# Ignore SQLAlchemy deprecation warnings until the package been updated.
-%pyproject_run_pytest -vra -W ignore::sqlalchemy.exc.MovedIn20Warning
+#
+# tests/test_dependency_normal_exceptions.py::test_dependency_gets_exception:
+# fastapi requires starlette < 0.28, but we have one == 0.28 in sisyphus now.
+# Upstream has decided to change behavior in package for updating to new
+# starlette.
+# See https://github.com/tiangolo/fastapi/pull/9636#discussion_r1224626560.
+# Temporary skip this test.
+%pyproject_run_pytest -vra -Wignore \
+    --deselect='tests/test_tutorial/test_async_sql_databases/test_tutorial001.py::test_create_read' \
+    --deselect='tests/test_dependency_normal_exceptions.py::test_dependency_gets_exception' \
+    tests
 
 %files
-%doc README.* CONTRIBUTING.md SECURITY.md
+%doc README.*
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jul 27 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.99.1-alt2
+- Skipped a dependency_gets_exception test to fix FTBFS
+- Stopped packaging of useless files
+
 * Mon Jul 03 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.99.1-alt1
 - 0.99.0 -> 0.99.1
 
