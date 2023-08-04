@@ -1,17 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,lint=relaxed
+
 Name: klibc
-Version: 2.0.9
+Version: 2.0.13
 Release: alt1
 Summary: A minimal libc subset for use with initramfs
-License: BSD/GPL
+License: BSD-3-Clause and BSD-4-Clause-UC and GPL-2.0-only and MIT-0
 Group: System/Libraries
-URL: http://www.zytor.com/mailman/listinfo/%name
-# git://git.kernel.org/pub/scm/libs/klibc/klibc
+Url: https://git.kernel.org/pub/scm/libs/klibc/klibc.git
+
 Source0: %name-%version.tar
-Source1: %name-find-provides
-Source2: %name-find-requires
 
 # due to %%base_arch
-BuildPreReq: rpm-build-kernel
+BuildRequires(pre): rpm-build-kernel
 
 # Some architectures do not match arch naming in kernel.
 %ifarch riscv64
@@ -27,38 +29,55 @@ BuildPreReq: rpm-build-kernel
 
 # Use special scripts to find dependencies on klibc-*.so (default RPM scripts
 # do not pick up these dependencies).
-%global __find_provides %_builddir/%name-%version/%name-find-provides %__find_provides
-%global __find_requires %_builddir/%name-%version/%name-find-requires %__find_requires
+%global __find_provides %_builddir/%name-%version/.gear/%name-find-provides %__find_provides
+%global __find_requires %_builddir/%name-%version/.gear/%name-find-requires %__find_requires
 
 %description
-%name is intended to be a minimalistic libc subset for use with initramfs.
-It is deliberately written for small size, minimal entanglement, and portability,
-not speed.
+klibc is intended to be a minimalistic libc subset for use with initramfs.
+It is deliberately written for small size, minimal entanglement, and
+portability, not speed.
 
+%package -n libklibc
+Summary: Shared library for klibc
+Group: System/Libraries
+Obsoletes: klibc < 2.0.13
+
+%description -n libklibc
+%summary.
 
 %package devel
 Summary: Libraries and tools needed to compile applications against klibc
 Group: Development/C
-Requires: %name = %version-%release
+Provides: libklibc-devel = %EVR
+Provides: libklibc-devel-static = %EVR
+Provides: klcc = %EVR
+Requires: libklibc = %EVR
 AutoReq: nocpp
-Provides: klcc = %version-%release
-Provides: %name-devel-static = %version-%release
 
 %description devel
-This package contains the link libraries, header files, and gcc wrapper scripts
-needed to compile applications against klibc.
-
+This package contains the link libraries, header files, and gcc wrapper
+scripts needed to compile applications against klibc.
 
 %package utils
 Summary: Small utilities built with klibc
 Group: System/Kernel and hardware
-Requires: %name = %version-%release
 
 %description utils
-This package contains a collection of programs that are linked against klibc.
-These duplicate some of the functionality of a regular Linux toolset, but are
-typically much smaller than their full-function counterparts. They are intended
-for inclusion in initramfs images and embedded systems.
+This package contains a collection of programs that are linked against
+klibc. These duplicate some of the functionality of a regular Linux
+toolset, but are typically much smaller than their full-function
+counterparts. They are intended for inclusion in initramfs images
+and embedded systems.
+
+%package checkinstall
+Summary: CI test package for klibc-devel
+Group: Development/Other
+BuildArch: noarch
+Requires(pre): klibc-devel = %EVR
+Requires(pre): gcc
+
+%description checkinstall
+%summary.
 
 %prep
 %setup
@@ -67,9 +86,6 @@ install -d -m 0755 usr/include/scsi
 for f in %_includedir/scsi/*; do
 	sed '/^#[[:blank:]]*include/s|features.h|sys/stat.h|' "$f" > usr/include/scsi/$(basename "$f")
 done
-
-install -p -m 0755 %{S:1} ./%name-find-provides
-install -p -m 0755 %{S:2} ./%name-find-requires
 
 cat > defconfig <<__EOF__
 CONFIG_KLIBC=y
@@ -82,64 +98,77 @@ CONFIG_REGPARM=y
 # ARM options
 CONFIG_AEABI=y
 # CONFIG_KLIBC_THUMB is not set
+CONFIG_DEBUG_INFO=y
 __EOF__
+
+UAPIHDRS=$(readlink -ev %_includedir/linux/../..)
+# Set global build options.
+cat <<-EOF > KLIBC_MAKEFLAGS
+	KLIBCARCH=%base_arch
+	KLIBCKERNELSRC=$UAPIHDRS
+%ifarch armh
+	CPU_ARCH=armv7-a+fp
+	CPU_TUNE=cortex-a8
+%endif
+	bindir=%_bindir
+	mandir=%_mandir
+	prefix=%prefix
+	INSTALLDIR=%klibcdir
+	INSTALLROOT=%buildroot
+	SHLIBDIR=/%_lib
+	V=1
+EOF
+%define KLIBC_MAKEFLAGS $(cat KLIBC_MAKEFLAGS)
 
 %build
 %define optflags_debug %nil
-%make_build \
-	KLIBCARCH=%base_arch prefix=%prefix bindir=%_bindir \
-	KLIBCKERNELSRC=$(readlink -ev %_includedir/linux/../..) \
-	SHLIBDIR=/%_lib \
-	INSTALLDIR=%klibcdir mandir=%_mandir INSTALLROOT=%buildroot \
-	V=1
-
+%make_build %KLIBC_MAKEFLAGS
 
 %install
-%make_install \
-	KLIBCARCH=%base_arch prefix=%prefix bindir=%_bindir \
-	KLIBCKERNELSRC=$(readlink -ev %_includedir/linux/../..) \
-	SHLIBDIR=/%_lib \
-	INSTALLDIR=%klibcdir mandir=%_mandir INSTALLROOT=%buildroot \
-	install
+%make_install %KLIBC_MAKEFLAGS install
 rm -f %buildroot%klibcdir/include/Kbuild
 
-install -p -m 0755 %name-find-requires %buildroot%klibcdir/
+install -p -m 0755 .gear/%name-find-requires %buildroot%klibcdir/
 
 # Install the docs
 install -d -m 0755 %buildroot{%bindocdir,%libdocdir}
 install -p -m 0644 README usr/%name/{,arch/}README.%{name}* %buildroot%libdocdir/
-for f in usr/{gzip/{COPYING,README},kinit{,/ipconfig}/README*}; do
-	install -p -m 0644 $f %buildroot%bindocdir/$(basename $f).$(basename $(dirname $f))
+for f in usr/{gzip/{COPYING,README},kinit{,/ipconfig}/README*,dash/README*}; do
+	s=$(basename $(dirname $f))
+	install -p -m 0644 $f %buildroot%bindocdir/$(basename -s.$s $f).$s
 done
 
-Symlinks()
-{
-	local src=$1 dir=$2
-	shift 2
-	while [ -n "$1" ]; do
-		ln -sf $src %buildroot$dir/$1
-		shift
-	done
-}
+# klibc does not use the dynamic symbol table for dynamic linking so
+# klibc-*.so is just interpreter, but GCC needs normal library with symtab.
+%brp_strip_debug %klibcdir/lib/libc.so
 
-Symlinks gzip %klibcdir/bin gunzip zcat
-for d in %klibcdir/bin; do
-	Symlinks halt $d poweroff reboot
-done
+# Unused duplicate of /lib/klibc-SOHASH.so
+rm %buildroot%klibcdir/lib/klibc-*.so
 
-# This file must have normal symbols - they are used for linking
-# (klibc does not use the dynamic symbol table).
-strip -g %buildroot%klibcdir/lib/libc.so
-%ifdef brp_strip_none
-%brp_strip_none %klibcdir/lib/libc.so
-%else
-%add_strip_skiplist %klibcdir/lib/libc.so
-%endif
+mkdir tests
+cp -a usr/klibc/tests/*.c -t tests
 
+%check
+# Compile tests.
+%make_build %KLIBC_MAKEFLAGS test
+ls -l usr/klibc/tests/hello*
+usr/klibc/tests/hello
+! ldd usr/klibc/tests/hello
+# 'shared' does not have NEEDED libs but it have interpreter.
+ldd usr/klibc/tests/hello.shared ||:
+readelf -l usr/klibc/tests/hello.shared | grep 'interpreter:.*klibc-.*.so'
 
-%files
+%pre checkinstall
+set -efuxo pipefail
+cd /tmp
+klcc %_docdir/klibc-devel-%version/tests/hello.c -static
+./a.out
+klcc %_docdir/klibc-devel-%version/tests/hello.c -shared
+./a.out
+rm a.out
+
+%files -n libklibc
 /%_lib/%name-*.so
-
 
 %files devel
 %klibcdir
@@ -148,14 +177,23 @@ strip -g %buildroot%klibcdir/lib/libc.so
 %_bindir/klcc
 %_man1dir/*
 %doc %libdocdir
-
+%doc tests
 
 %files utils
 %dir %klibcdir
 %klibcdir/bin
 %doc %bindocdir
 
+%files checkinstall
+
 %changelog
+* Fri Aug 04 2023 Vitaly Chikunov <vt@altlinux.org> 2.0.13-alt1
+- Update to klibc-2.0.13 (2023-07-27) syncing code with upstream.
+- %%changelog cleanup to remove non-ALT (non-packaging related) entries.
+- Enable debuginfo.
+- Add %%check section and checkinstall package with simple tests.
+- Provide libklibc[-devel] instead of klibc[-devel].
+
 * Fri May 14 2021 Nikita Ermakov <arei@altlinux.org> 2.0.9-alt1
 - Update to 2.0.9.
 
@@ -314,12 +352,3 @@ strip -g %buildroot%klibcdir/lib/libc.so
   installed under /lib/mkinitrd to make them available even without /usr.
 - Add md_run utility to handle old-style RAID startup separate from kinit.
 - umount: Add -l option for lazy unmount.
-
-* Tue Mar 1 2005 H. Peter Anvin <hpa@zytor.com>
-- New "make install" scheme, klcc
-
-* Tue Jul 6 2004 H. Peter Anvin <hpa@zytor.com>
-- Update to use kernel-source RPM for the kernel symlink.
-
-* Sat Nov 29 2003 Bryan O'Sullivan <bos@serpentine.com> -
-- Initial build.
