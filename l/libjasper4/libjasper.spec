@@ -1,15 +1,13 @@
-%define abiversion 7
-
-Name: libjasper
-Version: 4.0.0
-Release: alt1
+Name: libjasper4
+Version: 2.0.33
+Release: alt3
 
 Summary: Implementation of the codec specified in the JPEG-2000 Part-1 standard
 Summary(ru_RU.UTF8): Реализация кодеков по спецификации стандарта JPEG-2000, часть I
 
 License: Modified BSD
-Group: System/Libraries
-Url: https://github.com/jasper-software/jasper
+Group: System/Legacy libraries
+Url: http://www.ece.uvic.ca/~mdadams/jasper/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -22,26 +20,16 @@ BuildRequires: libjpeg-devel
 BuildRequires: libGL-devel libXext-devel libXi-devel libXmu-devel libglut-devel
 
 %description
-JasPer is a collection of software (i.e., a library and application programs) for the coding
+JasPer is a collection
+of software (i.e., a library and application programs) for the coding
 and manipulation of images.  This software can handle image data in a
 variety of formats.  One such format supported by JasPer is the JPEG-2000
 format defined in ISO/IEC 15444-1:2000.
-
-%package -n %name%abiversion
-Summary: Implementation of the codec specified in the JPEG-2000 Part-1 standard
-Group: System/Libraries
-
-%description -n %name%abiversion
-JasPer is a collection of software (i.e., a library and application programs) for the coding
-and manipulation of images.  This software can handle image data in a
-variety of formats.  One such format supported by JasPer is the JPEG-2000
-format defined in ISO/IEC 15444-1:2000.
-
 
 %package devel
 Summary: Include Files for %name
 Group: Development/C
-Requires: %name%abiversion = %EVR
+Requires: %name = %version
 
 %description devel
 Libraries/include files for development with %name.
@@ -49,6 +37,7 @@ Libraries/include files for development with %name.
 %package devel-doc
 Summary: Documentation for %name
 Group: Development/C
+Requires: %name-devel-doc = %version-%release
 BuildArch: noarch
 
 %description devel-doc
@@ -57,7 +46,7 @@ Documentation for development with %name.
 %package -n jasper
 Summary: JasPer utilities
 Group: Graphics
-Requires: %name%abiversion = %EVR
+Requires: %name = %version-%release
 
 %description -n jasper
 JasPer is a collection
@@ -69,7 +58,7 @@ code stream format defined in ISO/IEC 15444-1:2000.
 %prep
 %setup
 # fix bug with glut detection
-#subst "s|.*GLUT_glut_LIBRARY.*||" build/cmake/modules/JasOpenGL.cmake
+subst "s|.*GLUT_glut_LIBRARY.*||" build/cmake/modules/JasOpenGL.cmake
 
 %build
 # TODO: -DJAS_ENABLE_HIDDEN=true
@@ -80,11 +69,12 @@ code stream format defined in ISO/IEC 15444-1:2000.
 %install
 %cmakeinstall_std
 
-%files -n %name%abiversion
-%doc README.md LICENSE.txt
-%_libdir/libjasper.so.%abiversion
-%_libdir/libjasper.so.%abiversion.0.0
+%files
+%doc README LICENSE
+%_libdir/lib*.so.4
+%_libdir/lib*.so.4.0.0
 
+%if 0
 %files -n jasper
 %_bindir/imgcmp
 %_bindir/imginfo
@@ -99,12 +89,11 @@ code stream format defined in ISO/IEC 15444-1:2000.
 
 %files devel-doc
 %doc %_docdir/JasPer/
+%endif
 
 %changelog
-* Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
-- new version 4.0.0 (with rpmrb script)
-- CVE-2022-2963, CVE-2022-40755
-- build libjasper7 lib package
+* Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 2.0.33-alt3
+- build as libjasper4
 
 * Tue Dec 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.33-alt2
 - fix build with unbuggy cmake
