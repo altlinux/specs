@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 1.1
+Version: 20230804
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -54,6 +54,10 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 20230804-alt1
+- switch to date stamp release
+- update features' versions, add gcc, glibc, glib2, glibmm
+
 * Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
 - add ctest, cmake, wayland, clickhouse, kernel
 - add opencv 4.7.0
