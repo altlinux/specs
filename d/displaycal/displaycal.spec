@@ -2,7 +2,7 @@
 
 Name: displaycal
 Version: 3.9.11
-Release: alt2
+Release: alt3
 
 Summary: A graphical user interface for the Argyll CMS display calibration utilities
 
@@ -31,6 +31,8 @@ BuildRequires: pkgconfig(python3)
 BuildRequires: xdg-user-dirs
 
 Requires: argyllcms
+
+AutoProv: no
 
 Provides: %up_name = %version-%release
 Provides: dispcalGUI = %version-%release
@@ -77,10 +79,10 @@ mkdir -p %buildroot%_sysconfdir/xdg/autostart/
 mv -v %buildroot%_datadir/DisplayCAL/z-displaycal-apply-profiles.desktop %buildroot%_sysconfdir/xdg/autostart/
 
 %files
-%docdir %_docdir/%up_name-%version/
-%doc %_docdir/%up_name-%version/*
+%_docdir/%up_name-%version/
 %_sysconfdir/xdg/autostart/z-displaycal-apply-profiles.desktop
-%_bindir/*
+%_bindir/%name
+%_bindir/%name-*
 %_datadir/%up_name/
 %_iconsdir/hicolor/*/apps/%{name}*.png
 %_desktopdir/*.desktop
@@ -91,6 +93,9 @@ mv -v %buildroot%_datadir/DisplayCAL/z-displaycal-apply-profiles.desktop %buildr
 
 
 %changelog
+* Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 3.9.11-alt3
+- AutoProv: no
+
 * Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 3.9.11-alt2
 - cleanup spec
 
