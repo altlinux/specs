@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.3
+Version: 4.0.4
 Release: alt1
 Summary: JupyterLab computational environment
 License: BSD-3-Clause
@@ -25,6 +25,9 @@ BuildRequires: python3-module-pytest-jupyter
 BuildRequires: python3-module-jupyterlab-server
 BuildRequires: python3-module-notebook-shim
 BuildRequires: python3-module-async-lru
+BuildRequires: python3-module-pytest-console-scripts
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-requests-cache
 %endif
 
 %description
@@ -81,7 +84,10 @@ and not test_list_extension \
 and not test_enable_extension \
 and not test_disable_extension \
 and not test_link \
-and not test_build"
+and not test_build \
+and not test_unlink_package \
+and not test_get_registry \
+and not test_yarn_config"
 
 %files
 %doc README.*
@@ -104,6 +110,9 @@ and not test_build"
 %python3_sitelibdir/%pypi_name/pytest_plugin.py
 
 %changelog
+* Fri Aug 04 2023 Anton Vyatkin <toni@altlinux.org> 4.0.4-alt1
+- new version 4.0.4
+
 * Fri Jul 14 2023 Anton Vyatkin <toni@altlinux.org> 4.0.3-alt1
 - new version 4.0.3
 
