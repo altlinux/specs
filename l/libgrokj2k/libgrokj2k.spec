@@ -1,10 +1,9 @@
 # TODO: enable tests (they forget pack tests in the tarball)
 %define oname grok
-%set_gcc_version 12
 
 Name: libgrokj2k
-Version: 9.5.0
-Release: alt2
+Version: 10.0.8
+Release: alt1
 
 Summary: World's Leading Open Source JPEG 2000 Codec
 License: AGPL-3.0
@@ -17,13 +16,12 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/GrokImageCompression/grok/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: perl-base perl-devel perl-Image-ExifTool
 BuildRequires: zlib-devel libpng-devel libtiff-devel liblcms2-devel libjpeg-devel
-# don't checked by cmake??
-BuildRequires: libwebp-devel libzstd-devel liblzma-devel libjbig-devel libdeflate-devel
+BuildRequires: libwebp-devel libzstd-devel liblzma-devel libdeflate-devel
 
-BuildRequires: cmake gcc12-c++
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
 
 %description
 World's Leading Open Source JPEG 2000 Codec:
@@ -64,10 +62,18 @@ sed -i 's|set(CMAKE_CXX_STANDARD 20)|string(APPEND CMAKE_CXX_FLAGS " -std=gnu++2
 %add_optflags -DNO_WARN_X86_INTRINSICS
 %endif
 
+rm -rv thirdparty/liblcms2
+rm -rf thirdparty/libpng
+rm -rf thirdparty/libtiff
+rm -rf thirdparty/libz
+
 %build
 %cmake_insource \
         -DBUILD_STATIC_LIBS=OFF \
-        -DGRK_USE_LIBJPEG=ON \
+        -DGRK_BUILD_LIBPNG=OFF \
+        -DGRK_BUILD_LIBTIFF=OFF \
+        -DGRK_BUILD_LCMS2=OFF \
+        -DGRK_BUILD_JPEG=OFF \
         -DHWY_SYSTEM_GTEST=ON \
         -DBUILD_TESTING=OFF \
         %nil
@@ -78,7 +84,10 @@ sed -i 's|set(CMAKE_CXX_STANDARD 20)|string(APPEND CMAKE_CXX_FLAGS " -std=gnu++2
 
 %files
 %doc README.md
-%_libdir/lib*.so.*
+%_libdir/%name.so.1
+%_libdir/%name.so.%version
+%_libdir/%{name}codec.so.1
+%_libdir/%{name}codec.so.%version
 
 %files -n grokj2k-tools
 %_bindir/grk_compress
@@ -86,12 +95,18 @@ sed -i 's|set(CMAKE_CXX_STANDARD 20)|string(APPEND CMAKE_CXX_FLAGS " -std=gnu++2
 %_bindir/grk_dump
 
 %files devel
-%_libdir/lib*.so
-%_includedir/*/
-%_libdir/cmake/*/
-%_pkgconfigdir/*
+%_libdir/%name.so
+%_libdir/%{name}codec.so
+%_includedir/grok-*/
+%_libdir/cmake/grok-*/
+%_pkgconfigdir/libgrokj2k.pc
+%_pkgconfigdir/libgrokj2kcodec.pc
 
 %changelog
+* Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 10.0.8-alt1
+- new version 10.0.8 (with rpmrb script)
+- return to build with default gcc
+
 * Thu Jul 27 2023 Artyom Bystrov <arbars@altlinux.org> 9.5.0-alt2
 - Add handle to fix build
 
