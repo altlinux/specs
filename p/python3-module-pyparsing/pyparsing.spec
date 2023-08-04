@@ -1,30 +1,27 @@
 %define _unpackaged_files_terminate_build 1
+
+%define pypi_name pyparsing
+%define mod_name %pypi_name
+
 %def_with check
 
-Name: python3-module-pyparsing
-Version: 3.0.9
-Release: alt2
-
+Name: python3-module-%pypi_name
+Version: 3.1.1
+Release: alt1
 Summary: Python parsing module
-
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pyparsing
-
-Source: pyparsing-%version.tar
-Patch0: 0001-ALT-tests-Skip-coverage.patch
-
+Vcs: https://github.com/pyparsing/pyparsing
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(flit_core)
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# optional deps:
-BuildRequires: python3-module-railroad-diagrams
-BuildRequires: python3(jinja2)
+%pyproject_builddeps_metadata_extra diagrams
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -34,8 +31,12 @@ regular expressions.  The parsing module provides a library of classes
 that client code uses to construct the grammar directly in Python code.
 
 %prep
-%setup -n pyparsing-%version
-%autopatch -p2
+%setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -44,14 +45,17 @@ that client code uses to construct the grammar directly in Python code.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore tests
 
 %files
 %doc CHANGES README.rst
-%python3_sitelibdir/pyparsing/
-%python3_sitelibdir/%{pyproject_distinfo pyparsing}/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 01 2023 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1
+- 3.0.9 -> 3.1.1.
+
 * Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 3.0.9-alt2
 - Fixed FTBFS (flit_core 3.7.1).
 
