@@ -2,8 +2,8 @@
 # $Id: Par,v 1.1 2003/06/18 22:07:36 raorn Exp $
 
 %define name Par
-%define ver  1.52
-%define tarver 152
+%define ver  1.53
+%define tarver 153
 %define rel  alt1
 
 Name: %name
@@ -13,7 +13,8 @@ Release: %rel.qa1
 Summary: Filter for reformatting paragraphs
 License: distributable
 Group: Text tools
-URL: http://www.cs.berkeley.edu/~amc/Par
+#OLD_URL: http://www.cs.berkeley.edu/~amc/Par
+URL: http://www.nicemice.net/par/
 
 Source:	%url/%name%tarver.tar.gz
 
@@ -44,6 +45,9 @@ examples).
 %_man1dir/*
 
 %changelog
+* Fri Aug  4 2023 Artyom Bystrov <arbars@altlinux.org> 1.53-alt1.qa1
+- Update to new version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.52-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
