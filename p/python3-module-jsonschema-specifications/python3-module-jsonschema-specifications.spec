@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2023.07.1
-Release: alt1
+Release: alt2
 
 Summary: Support files exposing JSON from the JSON Schema specifications to Python
 License: MIT
@@ -28,6 +28,10 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_check
 BuildRequires: python3(pytest)
 %endif
+
+# jsonschema_specifications/schemas/vocabularies/draft*/core files are removed in auto mode
+# see, bao#45008
+%set_cleanup_method skip
 
 %description
 JSON support files from the JSON Schema Specifications
@@ -60,6 +64,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%mod_name-*.dist-info
 
 %changelog
+* Fri Aug 04 2023 Anton Vyatkin <toni@altlinux.org> 2023.07.1-alt2
+- Shipped required core files.
+
 * Wed Jul 19 2023 Anton Vyatkin <toni@altlinux.org> 2023.07.1-alt1
 - New version 2023.07.1.
 

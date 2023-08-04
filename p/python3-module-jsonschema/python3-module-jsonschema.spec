@@ -1,38 +1,40 @@
-%define oname jsonschema
+%define pypi_name jsonschema
 
-Name:		python3-module-%oname
-Version:	4.18.4
+%def_with check
+
+Name:		python3-module-%pypi_name
+Version:	4.18.6
 Release:	alt1
 
 Summary:	An implementation of JSON Schema validation for Python
 
 License:	MIT
 Group:		Development/Python3
-URL:		http://pypi.python.org/pypi/jsonschema/
+URL:		https://pypi.org/project/jsonschema
 
-
-# Source-url: %__pypi_url %oname
 Source0:	%name-%version.tar
 
 BuildArch:	noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-setuptools_scm
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-hatchling python3-module-hatch-fancy-pypi-readme python3-module-hatch-vcs
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-fancy-pypi-readme
+BuildRequires: python3-module-hatch-vcs
+%if_with check
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-jsonschema-specifications
+BuildRequires: python3-module-referencing
+BuildRequires: python3-module-rpds-py
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pip
+%endif
 
 # https://bugzilla.altlinux.org/38673
 Conflicts: python-module-jsonschema < 2.6.0-alt3
 
-# jsonschema/schemas/vocabularies/draft*/core files are removed in auto mode
-# see, bao#45008
-%set_cleanup_method skip
-
 %description
-jsonschema is JSON Schema validator currently based on
-http://tools.ietf.org/html/draft-zyp-json-schema-03
+jsonschema is an implementation of the JSON Schema specification for Python.
 
 %prep
 %setup
@@ -50,14 +52,23 @@ fi
 
 %install
 %pyproject_install
-rm -rfv %buildroot%python3_sitelibdir/%oname/benchmarks/
+rm -rfv %buildroot%python3_sitelibdir/%pypi_name/benchmarks/
+rm -rfv %buildroot%python3_sitelibdir/%pypi_name/tests/
+
+%check
+export JSON_SCHEMA_TEST_SUITE=$PWD/json
+%pyproject_run_pytest -v jsonschema
 
 %files
 %doc *.rst COPYING
-%_bindir/*
-%python3_sitelibdir/*
+%_bindir/%pypi_name
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 03 2023 Anton Vyatkin <toni@altlinux.org> 4.18.6-alt1
+- new version 4.18.6
+
 * Tue Jul 18 2023 Anton Vyatkin <toni@altlinux.org> 4.18.4-alt1
 - new version 4.18.4
 
