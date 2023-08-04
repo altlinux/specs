@@ -1,0 +1,67 @@
+%def_disable snapshot
+%define _name Paper-Clip
+%define binary_name pdf-metadata-editor
+%define ver_major 3
+%define rdn_name io.github.diegoivan.pdf_metadata_editor
+
+# broken matadata
+%def_disable check
+
+Name: paper-clip
+Version: %ver_major.2
+Release: alt1
+
+Summary: PDF metadata editor for GNOME
+License: GPL-3.0-or-later
+Group: Graphical desktop/GNOME
+Url: https://github.com/Diego-Ivan/Paper-Clip
+
+%if_disabled snapshot
+Source: %url/archive/v%version/%_name-%version.tar.gz
+%else
+Vcs: https://github.com/Diego-Ivan/Paper-Clip.git
+Source: %name-%version.tar
+%endif
+
+%define gtk_ver 4.10
+%define adwaita_ver 1.2
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools
+BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: pkgconfig(gtk4) >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(poppler-glib)
+BuildRequires: pkgconfig(libportal-gtk4)
+
+%description
+%summary
+
+%prep
+%setup -n %_name-%version
+
+%build
+%meson
+%meson_build
+
+%install
+%meson_install
+%find_lang %binary_name
+
+%check
+%__meson_test
+
+%files -f %binary_name.lang
+%_bindir/%binary_name
+%_desktopdir/%rdn_name.desktop
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
+%_datadir/appdata/%rdn_name.appdata.xml
+%doc README*
+
+
+%changelog
+* Fri Aug 04 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
+- first build for Sisyphus
+
+

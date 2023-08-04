@@ -6,7 +6,7 @@
 
 Name: nautilus-python
 Version: %ver_major
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Python bindings for Nautilus
 Group: Development/Python3
@@ -44,8 +44,8 @@ This package provides Python bindings for the Nautilus extension library.
 Summary: Development files for %name
 Group: Development/Python3
 BuildArch: noarch
-Requires: %name = %version-%release
-Provides: python-module-nautilus-devel = %version-%release
+Requires: %name = %EVR
+Provides: python-module-nautilus-devel = %EVR
 Obsoletes: python-module-nautilus-devel
 
 %description devel
@@ -56,7 +56,7 @@ Summary: Development documentation for %name
 Group: Development/Python3
 BuildArch: noarch
 Conflicts: %name-devel < %version
-Provides: python-module-nautilus-devel-doc = %version-%release
+Provides: python-module-nautilus-devel-doc = %EVR
 Obsoletes: python-module-nautilus-devel-doc
 
 %description devel-doc
@@ -73,11 +73,12 @@ Development documentation for %name.
 
 %install
 %meson_install
-mkdir -p %buildroot%_datadir/nautilus-python/extensions
+mkdir -p %buildroot%_datadir/nautilus-python/extensions/__pycache__
 
 %files
 %nautilus_extdir/lib%name.so
 %dir %_datadir/nautilus-python/extensions
+%dir %_datadir/nautilus-python/extensions/__pycache__
 
 %files devel
 %_pkgconfigdir/%name.pc
@@ -91,6 +92,9 @@ mkdir -p %buildroot%_datadir/nautilus-python/extensions
 %exclude %_docdir/%name
 
 %changelog
+* Fri Aug 04 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1.1
+- packaged /usr/share/nautilus-python/extensions/__pycache__ (ALT# 47116)
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1
 - 4.0
 
