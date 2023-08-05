@@ -1,15 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 
+%define phpbase php8.1
+
 Name: phoronix-test-suite
-Version: 10.8.0
-Release: alt2
+Version: 10.8.4
+Release: alt1
+
 Summary: An Automated, Open-Source Testing Framework
 Summary(ru_RU.UTF8): Автоматизированная среда тестирования с открытым исходным кодом
+
 License: GPLv3+
 Group: Other
+URL: https://phoronix-test-suite.com
 
-URL: https://%name.com/
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 
 BuildArch: noarch
 
@@ -18,15 +22,15 @@ BuildRequires: desktop-file-utils
 BuildRequires: systemd
 BuildRequires: libappstream-glib
 
-Requires: php8.1
-Requires: php8.1-xml
-Requires: php8.1-json
-Requires: php8.1-openssl
-Requires: php8.1-gd
-Requires: php8.1-pdo_sqlite
-Requires: php8.1-posix
-Requires: php8.1-curl
-Requires: php8.1-sockets
+Requires: %phpbase
+Requires: %phpbase-xml
+Requires: %phpbase-json
+Requires: %phpbase-openssl
+Requires: %phpbase-gd
+Requires: %phpbase-pdo_sqlite
+Requires: %phpbase-posix
+Requires: %phpbase-curl
+Requires: %phpbase-sockets
 Requires: hicolor-icon-theme
 
 %add_findreq_skiplist %_datadir/phoronix-test-suite/ob-cache/test-profiles/*
@@ -82,6 +86,9 @@ rm -rv %buildroot%_datadir/phoronix-test-suite/pts-core/static/sample-pts-client
 %_unitdir/phoronix-result-server.service
 
 %changelog
+* Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 10.8.4-alt1
+- New version 10.8.4.
+
 * Fri Jul 14 2023 Nikita Obukhov <nickf@altlinux.ru> 10.8.0-alt2
 - Change requires from php7 to php8.1
 
