@@ -2,13 +2,13 @@
 
 Name: gnofract4d
 Version: 4.3
-Release: alt1
+Release: alt2
 
 Summary: Gnofract 4D is a Gnome-based program to draw fractals
 
 License: GPLv2
 Group: Sciences/Mathematics
-Url: http://gnofract4d.sourceforge.net/
+Url: https://github.com/fract4d/gnofract4d
 
 # Source-git: https://github.com/edyoung/gnofract4d.git
 Source: %name-%version.tar
@@ -16,19 +16,14 @@ Source: %name-%version.tar
 # This *really* requires gcc at runtime!
 Requires: gcc
 
-# Typical environment for GNOME program
-#Requires(post): GConf2
-#Requires(post,postun): scrollkeeper
-#Requires(post,postun): desktop-file-utils
-#BuildPreReq: GConf2
-#BuildPreReq: desktop-file-utils 
-
-#add_python_req_skip fract4d _lsprof cProfile fractutils frm_docbook kid
 %add_python3_req_skip frm_docbook
 
 BuildRequires(pre): rpm-build-python3
+
 BuildRequires: gcc-c++ libGConf-devel libjpeg-devel libpng-devel
 BuildRequires: python3-devel
+
+AutoProv: no
 
 %description
 Gnofract 4D is a Gnome-based program to draw fractals. What sets it apart from
@@ -67,6 +62,10 @@ rm -rf %buildroot/usr/share/doc/gnofract4d
 %_desktopdir/*
 
 %changelog
+* Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3-alt2
+- update URL, cleanup spec
+- set AutoProv: no (as for any program)
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 4.3-alt1
 - new version 4.3 (with rpmrb script)
 
