@@ -1,7 +1,7 @@
 %define cldrdir %_datadir/unicode/cldr
 
 Name: cldr
-Version: 40
+Version: 43
 Release: alt1
 
 Summary: Unicode Common Locale Data Repository
@@ -143,6 +143,9 @@ cp -a specs/* %buildroot%_docdir/cldr/
 %files
 
 %changelog
+* Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 43-alt1
+- new version 43 (with rpmrb script)
+
 * Sun Mar 20 2022 Vitaly Lipatov <lav@altlinux.ru> 40-alt1
 - new version 40 (with rpmrb script)
 
