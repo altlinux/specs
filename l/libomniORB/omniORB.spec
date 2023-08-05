@@ -2,11 +2,11 @@
 
 Name:    libomniORB
 Version: 4.3.0
-Release: alt2
+Release: alt3
 
 Summary: ORB from AT&T (core libraries)
 
-License: LGPL
+License: LGPLv2
 Group:   Networking/Remote access
 URL:     http://omniorb.sourceforge.net/
 
@@ -121,10 +121,7 @@ for the omniORB package (COS module).
 %patch0 -p 1
 %patch1 -p 0
 
-subst "s|AM_PATH_PYTHON|AM_PATH_PYTHON(3.3)|" configure.ac
-
 %build
-%autoreconf
 %configure \
 	%{subst_enable static} \
 	--disable-thread-tracing \
@@ -135,14 +132,9 @@ subst "s|AM_PATH_PYTHON|AM_PATH_PYTHON(3.3)|" configure.ac
 # use python3 only
 find . -type f -name '*.py' -print0 | xargs -0 %__subst 's|env python|env python3|g'
 
-# FIXME: %make_build
-%make EnableZIOP=1
+%make_build EnableZIOP=1
 
 %install
-# hasher workaround
-unset target ||:
-# end
-
 %makeinstall_std EnableZIOP=1
 
 # altlinux specific
@@ -223,6 +215,9 @@ install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/omninames
 %endif
 
 %changelog
+* Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt3
+- fix build with new python, cleanup spec, enable SMP build
+
 * Mon May 01 2023 Pavel Vainerman <pv@altlinux.ru> 4.3.0-alt2
 - fixed default config
 
