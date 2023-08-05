@@ -1,12 +1,12 @@
-# TODO: 
+# TODO:
 # GIF: wait for giflib >=5.2.1
 # https://bugzilla.altlinux.org/36576
-# SVG: libresvg
+# SVG: libresvg (not now)
 
-%define pre -pre19
+%define pre -rc3
 Name: libsail
 Version: 0.9.0
-Release: alt1
+Release: alt2.rc3
 
 Summary: Squirrel Abstract Image Library
 
@@ -17,9 +17,11 @@ Url: https://github.com/HappySeaFox/sail
 # Source-url: https://github.com/HappySeaFox/sail/archive/refs/tags/v%version%pre.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ cmake
+BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: libpng-devel libtiff-devel libjpeg-devel zlib-devel libwebp-devel libjasper-devel
+BuildRequires: gcc-c++ cmake
+#BuildRequires: libgif-devel
+BuildRequires: libpng-devel libtiff-devel libjpeg-devel libwebp-devel libjasper-devel libavif-devel
 
 %description
 Squirrel Abstract Image Library
@@ -65,5 +67,9 @@ mv %buildroot/usr/lib/cmake %buildroot%_libdir/
 %_includedir/sail/
 
 %changelog
+* Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt2.rc3
+- update to 0.9.0-rc3
+- add BR: libavif-devel
+
 * Mon Jan 03 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
 - initial build for ALT Sisyphus
