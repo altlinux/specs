@@ -1,11 +1,11 @@
 Name: python3-module-matrix-common
-Version: 1.1.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Common utilities for Synapse, Sydent and Sygnal
 
 Url: https://github.com/matrix-org/matrix-python-common
-License: ASL 2.0
+License: Apache-2.0
 Group: Development/Python3
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-base python3-module-setuptools
+BuildRequires: python3-base python3-module-setuptools python3-module-wheel
 
 %description
 Common utilities for Synapse, Sydent and Sygnal.
@@ -29,16 +29,19 @@ setuptools.setup()
 EOF
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.md
 %python3_sitelibdir/*
 
 %changelog
+* Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+
 * Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - initial build for ALT Sisyphus
 

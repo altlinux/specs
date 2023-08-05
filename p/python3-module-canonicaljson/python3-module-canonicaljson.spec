@@ -2,13 +2,13 @@
 
 %define modulename canonicaljson
 Name: python3-module-canonicaljson
-Version: 1.6.2
+Version: 2.0.0
 Release: alt1
 
 Summary: Canonical JSONs
 
 Url: https://github.com/matrix-org/python-canonicaljson
-License: ASL 2.0
+License: Apache-2.0
 Group: Development/Python3
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -19,7 +19,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires:  python3-module-setuptools  python3-module-wheel
 
 # non detectable
 Requires: python3(simplejson)
@@ -39,16 +39,19 @@ Features:
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- new version 2.0.0 (with rpmrb script)
+
 * Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
 - new version 1.6.2 (with rpmrb script)
 

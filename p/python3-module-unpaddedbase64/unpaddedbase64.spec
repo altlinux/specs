@@ -4,7 +4,7 @@
 
 Name: python3-module-%modulename
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Encode and decode Base64 without "=" padding
 
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -31,15 +32,12 @@ choose to use Base64 without the "=" padding.
 
 %prep
 %setup
-# https://bugzilla.altlinux.org/show_bug.cgi?id=39907
-[ -e setup.py ] && rm -f ./setup.py
-echo 'import setuptools; setuptools.setup()' > setup.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -50,6 +48,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/*
 
 %changelog
+* Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt2
+- switch to build with pyproject
+
 * Tue May 31 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
 - Build new version.
 - Build with check.
