@@ -1,10 +1,11 @@
 %def_enable openvz
 %def_enable unicode
 %def_enable taskstats
+%def_enable sensors
 
 Name: htop
 Version: 3.2.2
-Release: alt1
+Release: alt2
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPLv2+
@@ -18,6 +19,7 @@ Patch: htop-3.0.5-alt-colorscheme.patch
 BuildRequires: libncursesw-devel
 BuildRequires: python3
 BuildRequires: /proc
+BuildRequires: libsensors3-devel 
 %{?!_with_bootstrap:BuildRequires: ImageMagick-tools}
 
 %define rman1dir %_mandir/ru/man1
@@ -57,7 +59,8 @@ htop использует для работы с экраном библиоте
 %configure -C \
 	%{subst_enable openvz} \
 	%{subst_enable unicode} \
-	%{subst_enable taskstats}
+	%{subst_enable taskstats} \
+	%{subst_enable sensors}
 %make_build
 
 %install
@@ -83,6 +86,9 @@ rm -r %buildroot%_pixmapsdir/
 %_datadir/icons/hicolor/scalable/apps/%{name}.svg
 
 %changelog
+* Sat Aug  5 2023 Artyom Bystrov <arbars@altlinux.org> 3.2.2-alt2
+- Enable showing temperature of CPU (powered by libsensors)
+
 * Sun Feb 05 2023 Ilya Mashkin <oddity@altlinux.ru> 3.2.2-alt1
 - 3.2.2
 
