@@ -1,12 +1,13 @@
 Name: motion
-Version: 4.3.2
-Release: alt2
+Version: 4.5.1
+Release: alt1
 
 Summary: %name - Detect motion using a video4linux device
-License: GPL
+License: GPLv2
 Group: Video
 
 Url: https://motion-project.github.io
+# Source0-url: https://github.com/Motion-Project/motion/archive/refs/tags/release-%version.tar.gz
 Source0: %name-%version.tar
 Patch3: motion-4.1.1-alt-mysql8-transition.patch
 
@@ -23,12 +24,14 @@ It will make snapshots if motion is detected.
 
 %prep
 %setup
-%patch3 -p0
+#patch3 -p0
 
 sed -i 's|<postgresql[/]libpq-fe.h>|<pgsql/libpq-fe.h>|' src/%name.h
 sed -i 's|\(if [\\(]cnt->conf\.mysql_db && sqltype[\)]\)|//\1|' src/event.c
 sed -i 's|\(put_mysql[\(]&cnt->conf, cnt->database, filename, tm, sqltype[\)]\)|//\1|' src/event.c
 sed -i 's|\(^.*c->quality\).*|//\1|' src/ffmpeg.c
+# libwebpmux.so: undefined reference to symbol 'WebPMemoryWriterInit'
+sed -i 's|libwebpmux|libwebpmux libwebp|' configure.ac
 
 %build
 %ifarch %e2k
@@ -61,6 +64,10 @@ install -pDm0644 data/%name.service %buildroot/%_unitdir/%name.service
 %_man1dir/*
 
 %changelog
+* Sun Aug 06 2023 Vitaly Lipatov <lav@altlinux.ru> 4.5.1-alt1
+- NMU: new version 4.5.1 (with rpmrb script)
+- fix linking with libwebp
+
 * Tue Sep 28 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.3.2-alt2
 - Add noreplace to global config files (closes: 41020)
 
