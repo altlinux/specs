@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Calendar-Simple
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Calendar-Simple - Perl module
@@ -52,6 +52,9 @@ rm -f %buildroot%_bindir/pcal
 %perl_vendor_privlib/Calendar/
 
 %changelog
+* Sat Aug 05 2023 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1
+- automated CPAN update
+
 * Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 2.0.2-alt1
 - automated CPAN update
 
