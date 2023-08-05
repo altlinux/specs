@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 2.10.2
+Version: 2.11.1
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -26,6 +26,9 @@ BuildRequires: docbook-style-xsl libpcre-devel xsltproc
 BuildRequires: libtinyxml2-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-cmake
+
+# cppcheck-suppress missingReturn, we do the same here
+%add_optflags -Wno-error=return-type
 
 %add_python3_req_skip cppcheckdata misra_9 cppcheck
 
@@ -67,15 +70,14 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.c' -o -name '*.h' |
 %endif
 
 # Make sure bundled tinyxml2 is not used
-#rm -r externals/tinyxml2
-
-
+rm -rv externals/tinyxml2
 
 %build
 %cmake \
 	-G'Unix Makefiles' \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DUSE_MATCHCOMPILER:BOOL=ON \
+	-DUSE_BUNDLED_TINYXML2=OFF \
 	-DHAVE_RULES:BOOL=ON \
 	-DBUILD_GUI:BOOL=ON \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
@@ -125,6 +127,11 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 2.11.1-alt1
+- NMU: new version 2.11.1 (with rpmrb script)
+- really build with external libtinyxml2
+- build with -Wno-error=return-type
+
 * Sun Mar 12 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2.10.2-alt1
 - New Version
 
@@ -132,10 +139,10 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 - New Version
 
 * Mon Jan 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2.9.3-alt1
-- Vesion 2.9.3
+- Version 2.9.3
 
 * Sat Oct 01 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2.9.0-alt1
-- Vesion 2.9
+- Version 2.9
 
 * Mon Aug 01 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2.8.2-alt1
 - Version 2.8.2
