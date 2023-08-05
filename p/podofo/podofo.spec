@@ -1,6 +1,6 @@
 %define major 0.9
 Name: podofo
-Version: %major.7
+Version: %major.8
 Release: alt1
 
 Summary: PDF manipulation library and tools
@@ -79,6 +79,10 @@ mkdir test/TokenizerTest/objects
 %_libdir/*.so
 
 %changelog
+* Fri Dec 09 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.8-alt1
+- new version 0.9.8 (with rpmrb script)
+- CVE-2021-30469, CVE-2021-30470, CVE-2021-30471, CVE-2021-30472
+
 * Mon Apr 19 2021 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
 - new version 0.9.7 (with rpmrb script)
 
