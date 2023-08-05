@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name App-Packager
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(PAR.pm) perl(Test/More.pm) perl(parent.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.430.1
-Release: alt2
+Version: 1.440
+Release: alt1
 Summary: Abstraction for Packagers
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/J/JV/JV/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JV/JV/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -45,6 +45,9 @@ For example:
 %perl_vendor_privlib/A*
 
 %changelog
+* Sat Aug 05 2023 Igor Vlasenko <viy@altlinux.org> 1.440-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Ilya Mashkin <oddity@altlinux.ru> 1.430.1-alt2
 - Build for Sisyphus
 
