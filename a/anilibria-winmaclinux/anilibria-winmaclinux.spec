@@ -1,5 +1,5 @@
 Name: anilibria-winmaclinux
-Version: 1.2.5
+Version: 1.2.8
 Release: alt1
 
 Summary: AniLibria online video player for desktop platforms
@@ -21,8 +21,7 @@ Requires: libqt5-svg
 Source: %name-%version.tar
 
 Patch: %name-1.2.4-alt-config.patch
-Patch1: %name-1.2.1-alt-window_alignment.patch
-Patch2: %name-1.2.4-alt-fix_prefix.patch
+Patch1: %name-1.2.4-alt-fix_prefix.patch
 
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-multimedia-devel
@@ -32,6 +31,7 @@ BuildRequires: qt5-graphicaleffects
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-websockets-devel
 BuildRequires: qt5-declarative-devel
+BuildRequires: qt5-quickcontrols2-devel
 BuildRequires: gstreamer1.0-devel
 
 BuildRequires(pre): rpm-macros-qt5 
@@ -67,6 +67,9 @@ popd
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Fri Aug 04 2023 Roman Alifanov <ximper@altlinux.org> 1.2.8-alt1
+- new version (1.2.8) with rpmgs script (ALT Bug #45956)
+
 * Wed Apr 19 2023 Evgeny Chuck <koi@altlinux.org> 1.2.5-alt1
 - new version (1.2.5) with rpmgs script (Closes: 45781)
 
