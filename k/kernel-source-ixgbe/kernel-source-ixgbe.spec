@@ -1,5 +1,5 @@
 %define module_name ixgbe
-%define module_version 5.18.13
+%define module_version 5.19.6
 
 %define module_source %module_name.tar
 
@@ -33,6 +33,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Sat Aug 05 2023 Alexei Takaseev <taf@altlinux.org> 5.19.6-alt1
+- 5.19.6
+
 * Thu Jul 27 2023 Alexei Takaseev <taf@altlinux.org> 5.18.13-alt1
 - 5.18.13
 

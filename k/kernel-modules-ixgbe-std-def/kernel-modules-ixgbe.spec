@@ -1,6 +1,6 @@
 %define module_name             ixgbe
-%define module_version          5.18.13
-%define module_release          alt2
+%define module_version          5.19.6
+%define module_release          alt1
 
 %define flavour std-def
 %define karch x86_64 aarch64 ppc64le
@@ -81,6 +81,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Aug 05 2023 Alexei Takaseev <taf@altlinux.org> 5.19.6-alt1
+- 5.19.6
 
 * Fri Aug 04 2023 Alexei Takaseev <taf@altlinux.org> 5.18.13-alt2
 - Fix build with kernel >= 6.1.43
