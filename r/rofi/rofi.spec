@@ -1,6 +1,6 @@
 
 Name: rofi
-Version: 1.6.1
+Version: 1.7.5
 Release: alt1
 Summary: A window switcher, run dialog and dmenu replacement
 License: MIT
@@ -13,20 +13,15 @@ Source: https://github.com/DaveDavenport/%name/releases/download/%version/%name-
 #Patch: 0001-Replace-x-terminal-emulator-with-xdg-terminal.patch
 Patch: 0002-Workaround-for-ALT-flex-changes-ALT-35141.patch
 
-# Automatically added by buildreq on Mon Sep 21 2015
-# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libXft-devel libXrender-devel libfreetype-devel pkg-config python3-base xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: python3-module-zope ruby ruby-stdlibs
-BuildRequires: autoconf
-BuildRequires: automake
 BuildRequires: libX11-devel
 BuildRequires: libXft-devel
 BuildRequires: libXinerama-devel
-BuildRequires: make
 BuildRequires: libpango-devel
 BuildRequires: libxcb-devel
 BuildRequires: libxcbutil-devel
 BuildRequires: libxcbutil-xrm-devel
 BuildRequires: libxcbutil-icccm-devel
+BuildRequires: libxcbutil-cursor-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libstartup-notification-devel
@@ -71,12 +66,18 @@ Requires: %name
 %_man1dir/%name-*
 %_man5dir/%name-*
 %_datadir/%name/themes/*
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/apps/rofi.svg
 
 %files devel
 %_includedir/%name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
+- new version 1.7.5 (with rpmrb script)
+- add BR: libxcbutil-cursor-devel, cleanup spec
+
 * Mon Jun 21 2021 Ivan A. Melnikov <iv@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
