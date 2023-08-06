@@ -3,7 +3,7 @@
 
 Name: perl-CGI-SSI
 Version: 0.92
-Release: alt2
+Release: alt3
 
 Summary: Perl module for using SSI from CGI scripts
 
@@ -22,9 +22,9 @@ Patch1: %real_name-0.92-debian-tests_tmpname.patch
 BuildRequires(pre): rpm-build-licenses
 
 
-# Automatically added by buildreq on Thu Oct 18 2012
-# optimized out: perl-HTTP-Cookies perl-HTTP-Date perl-HTTP-Message perl-URI
-BuildRequires: perl-HTML-SimpleParse perl-TimeDate perl-devel perl-libwww
+# Automatically added by buildreq on Sun Aug 06 2023
+# optimized out: libgpg-error perl perl-CPAN-Meta-Requirements perl-Clone perl-Encode perl-HTTP-Date perl-HTTP-Message perl-JSON-PP perl-Module-Load perl-Parse-CPAN-Meta perl-Try-Tiny perl-URI perl-parent python-modules python2-base python3-base sh4
+BuildRequires: perl-CPAN-Meta perl-HTML-SimpleParse perl-HTTP-Cookies perl-TimeDate perl-devel perl-libwww
 
 %description
 Perl module CGI::SSI is meant to be used as an easy way to filter
@@ -51,6 +51,9 @@ make some SSI directives impossible to imitate from a CGI script.
 %perl_vendor_privlib/CGI
 
 %changelog
+* Sun Aug 06 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.92-alt3
+- Update BuildRequires
+
 * Sat Dec 12 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.92-alt2
 - Fix tests
 
