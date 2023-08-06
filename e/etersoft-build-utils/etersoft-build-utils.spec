@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.2.6
+Version: 3.2.7
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -22,8 +22,8 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 #BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: giter >= 1.10
-Requires: eepm >= 2.1.0
+Requires: giter >= 1.20
+Requires: eepm >= 3.0
 Requires: erc >= 0.9.2
 Requires: estrlist >= 0.2
 
@@ -69,6 +69,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sun Aug 06 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.7-alt1
+- rpmcs: don't add packager field
+- rpmgs: refactored source downloading
+- rpmgs: allow /commit in Source-url with git
+- rpmgs: add Cargo.lock in subdirs
+
 * Tue May 30 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.6-alt1
 - rpmgs: add support for git repo for Source-url (create tarball from the git url)
 - rpmgs: add source url to tarball commit message
