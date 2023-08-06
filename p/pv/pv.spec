@@ -1,7 +1,7 @@
 # Spec file for pv - Pipe Viewer 
 
 Name: pv
-Version: 1.6.20
+Version: 1.7.0
 Release: alt1
 
 Summary: Pipe Viewer
@@ -53,13 +53,16 @@ make dep
 %find_lang %name
 
 %files -f %name.lang
-%doc doc/NEWS doc/TODO
+%doc doc/NEWS.md doc/TODO.md doc/ACKNOWLEDGEMENTS.md
 %doc --no-dereference doc/COPYING
 
 %_bindir/%name
 %_man1dir/%name.*
 
 %changelog
+* Sun Aug 06 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.7.0-alt1
+- New version
+
 * Wed Oct 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.6.20-alt1
 - New version
 
