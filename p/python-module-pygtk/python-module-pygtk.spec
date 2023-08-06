@@ -5,7 +5,7 @@
 %define major 2.24
 Name: python-module-pygtk
 Version: %major.0
-Release: alt9
+Release: alt10
 
 Summary: Python bindings for the GTK+ widget set
 
@@ -123,6 +123,7 @@ This package contains PyGTK doc
 mkdir -p %buildroot%_includedir/python%__python_version
 mv %buildroot%_includedir/pygtk-2.0 %buildroot%_includedir/python%__python_version/pygtk
 subst "s|\${includedir}/pygtk-2.0|\${includedir}/python%__python_version/pygtk|g" %buildroot/%_pkgconfigdir/*.pc
+subst "s|\${PYTHON_EXEC_PREFIX}|%_prefix|g" %buildroot/%_pkgconfigdir/*.pc
 
 # something broken if gobject still here
 test -f %buildroot%python_sitelibdir/gtk-2.0/gobject.so && exit 1
@@ -152,6 +153,9 @@ test -f %buildroot%python_sitelibdir/gtk-2.0/gobject.so && exit 1
 %_datadir/gtk-doc/html/pygtk/
 
 %changelog
+* Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 2.24.0-alt10
+- replace PYTHON_EXEC_PREFIX with %_prefix in .pc file
+
 * Sun Nov 15 2020 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt9
 - -devel: do not requires pkgconfig(pygobject-2.0)
 - fixed License tag
