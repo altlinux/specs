@@ -1,9 +1,9 @@
 Name: ddd
-Version: 3.3.12
-Release: alt4
+Version: 3.4.0
+Release: alt1
 
 Summary: Graphical debugger front-end for GDB, DBX, Ladebug, JDB, Perl, Python
-License: GPL
+License: GPLv2+
 Group: Development/Other
 
 Url: http://www.gnu.org/software/%name/
@@ -18,12 +18,13 @@ Patch3: ddd-buildcompare.patch
 Patch4: ddd-wrong-memcpy.patch
 Patch5: ddd-3.3.12-alt-e2k-lcc.patch
 Patch6: ddd-3.3.12-make_gcc_happy.patch
+Patch7: ddd-3.3.12-debuginfo.patch
 
 Requires: gdb
 Obsoletes: ddd-static, ddd-semistatic, ddd-dynamic
 
 # Added by buildreq2 on Чтв Окт 05 2006
-BuildRequires: flex gcc-c++ libX11-devel libXext-devel libXi-devel libXaw-devel libXp-devel libreadline-devel libtinfo-devel openmotif-devel
+BuildRequires: flex gcc-c++ libX11-devel libXext-devel libXi-devel libXaw-devel libXp-devel libreadline-devel libtinfo-devel openmotif-devel texinfo
 
 BuildRequires: makeinfo
 
@@ -64,39 +65,40 @@ This packages contains PostScript documentation for DDD.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p0
+#patch1 -p1
+#patch2 -p1
+#patch3 -p1
+#patch4 -p1
+#patch5 -p1
+#patch6 -p0
+%patch7  -p1
 
 install -pm644 %SOURCE3 doc/
-rm -f doc/html/%name.html ddd/*.info*
+#rm -f doc/html/%name.html ddd/*.info*
 touch ddd/ddd.info.txt
 find -type f -name \*.orig -print -delete
 
 %build
-%set_automake_version 1.10
-#set_autoconf_version 2.5
-
+#set_automake_version 1.10
+##set_autoconf_version 2.5
+autoreconf -fi
 # Fix build via precaching configure variables.
-export \
-	ac_cv_func_alloca=yes \
-	ac_cv_lib_dnet=no \
-	ac_cv_lib_dnet_dnet_ntoa=no \
-	ac_cv_lib_dnet_stub_dnet_ntoa=no \
-	ac_cv_header_elf_h=no \
-	ac_cv_header_libelf_h=no \
-	ac_cv_header_sys_elf_h=no \
-	ac_cv_lib_elf_elf_version=no \
-	ice_cv_external_templates=no \
-	ice_cv_have_named_return_values=no \
-	ac_cv_path_RSH=ssh \
-	ac_cv_prog_DEBUGGER=gdb \
-	ac_cv_prog_LPR=lpr \
-	ac_cv_prog_XTERM=xvt \
-	#
+#export \
+#	ac_cv_func_alloca=yes \
+#	ac_cv_lib_dnet=no \
+#	ac_cv_lib_dnet_dnet_ntoa=no \
+#	ac_cv_lib_dnet_stub_dnet_ntoa=no \
+#	ac_cv_header_elf_h=no \
+#	ac_cv_header_libelf_h=no \
+#	ac_cv_header_sys_elf_h=no \
+#	ac_cv_lib_elf_elf_version=no \
+#	ice_cv_external_templates=no \
+#	ice_cv_have_named_return_values=no \
+#	ac_cv_path_RSH=ssh \
+#	ac_cv_prog_DEBUGGER=gdb \
+#	ac_cv_prog_LPR=lpr \
+#	ac_cv_prog_XTERM=xvt \
+#	#
 
 # Fix tinfo support.
 find -type f -name configure -print0 |
@@ -114,7 +116,7 @@ int main (void){ puts ("%packager"); return 0; }
 __EOF__
 
 %make_build LIBREADLINE=-lreadline
-bzip2 -9fk doc/*.ps
+#bzip2 -9fk doc/*.ps
 
 %install
 mkdir -p $RPM_BUILD_ROOT%_libdir
@@ -128,7 +130,7 @@ rmdir $RPM_BUILD_ROOT%_datadir/%name-%version/%name
 %define docdir %_docdir/%name-%version
 rm -rf $RPM_BUILD_ROOT%docdir
 mkdir -p $RPM_BUILD_ROOT%docdir
-cp -a AUTHORS NEWS PROBLEMS TIPS TODO doc/*.ps.* doc/html \
+cp -a AUTHORS NEWS TIPS doc/*.ps.* doc/html \
 	$RPM_BUILD_ROOT%docdir/
 
 # The manpage installed contains a reference to a logo .eps file in the
@@ -155,6 +157,10 @@ sed -i -e '/^\.PSPIC/d' %buildroot/%_man1dir/ddd.1
 %docdir/html
 
 %changelog
+* Sun Aug 06 2023 Ilya Mashkin <oddity@altlinux.ru> 3.4.0-alt1
+- 3.4.0
+- Update License tag to GPLv2+
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 3.3.12-alt4
 - Fixed FTBFS.
 
