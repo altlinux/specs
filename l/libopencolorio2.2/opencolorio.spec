@@ -10,7 +10,7 @@
 
 Name:           lib%oname%soname
 Version:        2.2.1
-Release:        alt3
+Release:        alt3.1
 Summary:        Enables color transforms and image display across graphics apps
 
 License:        BSD-3-Clause
@@ -48,7 +48,7 @@ BuildRequires: libyaml-cpp-devel
 BuildRequires: boost-devel
 BuildRequires: libimath29-devel
 BuildRequires: python3-module-imath
-BuildRequires: libminizip-ng-devel
+BuildRequires: libminizip-ng-compat-devel
 
 # Test dependencies
 BuildRequires: ctest
@@ -181,6 +181,9 @@ popd
 %python3_sitelibdir/*.so
 
 %changelog
+* Sun Aug 06 2023 Nazarov Denis <nenderus@altlinux.org> 2.2.1-alt3.1
+- Fix FTBFS
+
 * Mon May 22 2023 Nazarov Denis <nenderus@altlinux.org> 2.2.1-alt3
 - Add patch to compatibility minizip-ng 4
 
