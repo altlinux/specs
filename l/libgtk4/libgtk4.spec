@@ -33,7 +33,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -70,6 +70,7 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define rsvg_ver 2.52.0
 
 Requires: gtk4-update-icon-cache = %EVR
+Requires: at-spi2-core
 Requires: icon-theme-adwaita
 Requires: iso-codes
 Requires: librsvg >= %rsvg_ver
@@ -236,7 +237,7 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_sysprof:-Dsysprof=enabled} \
     %{?_disable_tests:-Dbuild-tests=false} \
     %{?_enable_install_tests:-Dinstall-tests=true} \
-    %{?_disable_vulkan:-Dvulkan=disabled} \
+    %{?_enable_vulkan:-Dvulkan=enabled} \
     %{?_disable_gstreamer:-Dmedia-gstreamer=disabled} \
     %{?_enable_ffmpeg:-Dmedia-ffmpeg=enabled}
 %nil
@@ -399,6 +400,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sat Aug 05 2023 Yuri N. Sedunov <aris@altlinux.org> 4.10.5-alt1
+- 4.10.5
+
 * Mon Jun 05 2023 Yuri N. Sedunov <aris@altlinux.org> 4.10.4-alt1
 - 4.10.4
 

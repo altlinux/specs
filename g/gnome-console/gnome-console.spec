@@ -10,7 +10,7 @@
 %def_without nautilus
 
 Name: gnome-console
-Version: %ver_major.0
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: GNOME Console
@@ -85,6 +85,9 @@ Nautilus file manager.
 %endif
 
 %changelog
+* Sun Aug 06 2023 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1
+- 44.4
+
 * Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 
