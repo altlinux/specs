@@ -2,20 +2,21 @@
 
 Name: hashlink
 Version: 1.11
-Release: alt2
+Release: alt3
 
-Summary:HashLink is a virtual machine for Haxe
+Summary: HashLink is a virtual machine for Haxe
 License: MIT
 Group: Development/Other
 
 Url: https://hashlink.haxe.org/
 Source: %name-%version.tar
 
-BuildPreReq: cmake rpm-macros-cmake
+ExcludeArch: armh
 
-# Automatically added by buildreq on Mon May 18 2020
-# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libogg-devel libsasl2-3 pkg-config python-modules python2-base python3 python3-base python3-dev sh4 zlib-devel
-BuildRequires: cmake libGLU-devel libSDL2-devel libdb4-devel libpng-devel libssl-devel libturbojpeg-devel libuv-devel libvorbis-devel python3-module-mpl_toolkits python3-module-yieldfrom zlib-devel-static
+BuildRequires(pre): rpm-macros-cmake
+
+BuildRequires: cmake libGLU-devel libSDL2-devel libdb4-devel
+BuildRequires: libpng-devel libssl-devel libturbojpeg-devel libuv-devel libvorbis-devel zlib-devel
 
 # for sdl.hdll and gl* symbols
 %set_verify_elf_method unresolved=relaxed
@@ -61,6 +62,9 @@ install -m644 src/hlc_main.c %buildroot%_includedir/hlc_main.c
 %_includedir/hlc_main.c
 
 %changelog
+* Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt3
+- NMU: cleanup BR, disable build on armh (JIT does not support ARM processors)
+
 * Mon May 18 2020 Denis Smirnov <mithraen@altlinux.ru> 1.11-alt2
 - add /usr/include/hlc_main.c for HL/C support
 
