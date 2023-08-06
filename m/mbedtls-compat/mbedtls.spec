@@ -6,7 +6,7 @@
 
 Name: %pkgname-compat
 Version: 2.28.4
-Release: alt1
+Release: alt1.1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
@@ -90,6 +90,8 @@ that use mbed TLS
 %ifarch %e2k
 # unsupported as of lcc 1.25.17
 sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
+sed -i 's/-Werror/-Wno-error/' CMakeLists.txt
+%add_optflags -mno-aes
 %endif
 
 %build
@@ -137,6 +139,9 @@ sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
 %endif
 
 %changelog
+* Sun Aug 06 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.28.4-alt1.1
+- Fixed build for Elbrus
+
 * Fri Aug 04 2023 Nazarov Denis <nenderus@altlinux.org> 2.28.4-alt1
 - Version 2.28.4
 
