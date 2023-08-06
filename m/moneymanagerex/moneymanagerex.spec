@@ -1,6 +1,6 @@
 Name: moneymanagerex
-Version: 1.6.3
-Release: alt3
+Version: 1.6.4
+Release: alt1
 
 Summary: Simple to use financial management software
 License: GPLv2
@@ -8,12 +8,8 @@ Group: Office
 
 URL: http://www.moneymanagerex.org/
 
-# Note: pack submodules to .gear/@name@-postsubmodules (as in .gear/rules)
-
-## Source-url: https://github.com/moneymanagerex/moneymanagerex/archive/v%version.tar.gz
-# Source-git: https://github.com/moneymanagerex/moneymanagerex.git
+# Source-url: https://github.com/moneymanagerex/moneymanagerex/tree/v%version
 Source: %name-%version.tar
-Patch: fix_compile_flag.patch
 
 ExcludeArch: %arm %ix86
 
@@ -25,7 +21,7 @@ BuildRequires: git-core
 BuildRequires: libcurl-devel
 BuildRequires: lsb-release
 BuildRequires: gcc-c++ libdb4-devel
-BuildRequires: libwxGTK3.2-devel
+BuildRequires: libwxGTK3.2-devel libwxsqlite3-devel
 BuildRequires: rapidjson
 BuildRequires: liblua-devel
 
@@ -42,9 +38,12 @@ and user friendliness - something one can use everyday.
 
 %prep
 %setup
-%ifnarch x86_64
-%patch -p1
-%endif
+%__subst 's|aarch64|aarch64 ppc64le|' 3rd/CMakeLists.txt
+rm -rv 3rd/{rapidjson,lua,/wxsqlite3}
+
+# fix for using external libwxsqlite3
+%__subst 's|set(WXSQLITE3_HAVE_CODEC .*CACHE INTERNAL .*Have symbol.*|set(WXSQLITE3_HAVE_CODEC ON)|' 3rd/CMakeLists.txt
+echo '#include <sqlite3.h>' >src/sqlite3mc_amalgamation.h
 
 %build
 %cmake
@@ -58,13 +57,22 @@ and user friendliness - something one can use everyday.
 %files -f %name.lang
 %doc README.TXT README.md
 %_bindir/mmex
-%_desktopdir/mmex.desktop
+%_desktopdir/*.desktop
 #_man1dir/*
-%_iconsdir/hicolor/scalable/apps/mmex.svg
+%_iconsdir/hicolor/scalable/apps/*.svg
+/usr/share/metainfo/org.moneymanagerex.MMEX.metainfo.xml
+/usr/share/mime/packages/org.moneymanagerex.MMEX.mime.xml
 %_docdir/mmex/
 %_datadir/mmex/
 
 %changelog
+* Sun Aug 06 2023 Vitaly Lipatov <lav@altlinux.ru> 1.6.4-alt1
+- new version 1.6.4 (with rpmrb script)
+
+* Sun Aug 06 2023 Vitaly Lipatov <lav@altlinux.ru> 1.6.3-alt4
+- get sources via Source-url
+- enable build with external libwxsqlite3-devel
+
 * Sat Mar 18 2023 Anton Midyukov <antohami@altlinux.org> 1.6.3-alt3
 - fix BuildRequires (liblua5.4-devel -> liblua-devel)
 
