@@ -36,7 +36,7 @@
 Name: maxima
 Version: 5.47.0
 %define maxima_version 5.47.0
-Release: alt1
+Release: alt2
 
 Summary: Maxima Computer Algebra System
 License: GPLv2
@@ -599,6 +599,9 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %endif
 
 %changelog
+* Sun Aug 06 2023 Ilya Mashkin <oddity@altlinux.ru> 5.47.0-alt2
+- Fix missing docs (Closes: #47053)
+
 * Mon Jun 05 2023 Ilya Mashkin <oddity@altlinux.ru> 5.47.0-alt1
 - 5.47.0
 
