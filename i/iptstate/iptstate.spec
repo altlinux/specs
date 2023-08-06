@@ -1,5 +1,5 @@
 Name: iptstate
-Version: 2.2.6
+Version: 2.2.7
 Release: alt1
 
 Summary: Display iptables state table information in a "top"-like interface
@@ -32,6 +32,9 @@ make PREFIX="%buildroot/usr" install
 %_man8dir/*
 
 %changelog
+* Sun Aug 06 2023 Vitaly Lipatov <lav@altlinux.ru> 2.2.7-alt1
+- new version 2.2.7 (with rpmrb script)
+
 * Sun Dec 25 2016 Vitaly Lipatov <lav@altlinux.ru> 2.2.6-alt1
 - new version 2.2.6 (with rpmrb script)
 
