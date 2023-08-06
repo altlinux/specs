@@ -3,7 +3,7 @@
 
 Name: libgrokj2k
 Version: 10.0.8
-Release: alt1
+Release: alt1.1
 
 Summary: World's Leading Open Source JPEG 2000 Codec
 License: AGPL-3.0
@@ -55,7 +55,10 @@ Compress and decompress tools for grokj2k:
 %prep
 %setup
 %ifarch %e2k
-sed -i 's|set(CMAKE_CXX_STANDARD 20)|string(APPEND CMAKE_CXX_FLAGS " -std=gnu++2a")|' src/{bin,lib}/jp2/CMakeLists.txt
+sed -i 's|set(CMAKE_CXX_STANDARD 20)|string(APPEND CMAKE_CXX_FLAGS " -std=gnu++2a")|' CMakeLists.txt
+sed -i 's|CMAKE_CXX_COMPILER_VERSION|12.0|' CMakeLists.txt
+# spdlog uses a very old libfmt
+sed -i 's|defined(__cpp_nontype_template_args)|0|' src/include/spdlog/fmt/bundled/core.h
 %add_optflags -mno-sse
 %endif
 %ifarch ppc64le
@@ -103,6 +106,9 @@ rm -rf thirdparty/libz
 %_pkgconfigdir/libgrokj2kcodec.pc
 
 %changelog
+* Sun Aug 06 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 10.0.8-alt1.1
+- fixed build for Elbrus
+
 * Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 10.0.8-alt1
 - new version 10.0.8 (with rpmrb script)
 - return to build with default gcc
