@@ -8,12 +8,12 @@
 
 %def_without devel
 %def_without vanilla
-%define gecko_version 2.47.3
-%define mono_version 7.4.0
-%define winetricks_version 20220617
+%define gecko_version 2.47.4
+%define mono_version 8.0.0
+%define winetricks_version 20230505
 
-%define basemajor 7.x
-%define major 8.0
+%define basemajor 8.x
+%define major 8.13
 %define rel %nil
 %define conflictbase wine-vanilla
 
@@ -39,13 +39,15 @@
 %def_with vulkan
 %endif
 
+%def_without wayland
+
 # use rpm-macros-features
 
 %if_feature opencl
 %def_with opencl
 %endif
 
-%if_feature pcap 1.2.1
+%if_feature pcap 1.10.3
 %def_with pcap
 %else
 %def_without pcap
@@ -64,7 +66,7 @@
 
 Name: wine-tkg
 Version: %major
-Release: alt1.rc2
+Release: alt1
 Epoch: 1
 
 Summary: Wine TKG - environment for running Windows applications
@@ -75,7 +77,7 @@ Url: https://github.com/Kron4ek/wine-tkg
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/Kron4ek/wine-tkg/archive/refs/heads/master.zip
+# Source-url: https://github.com/Kron4ek/wine-tkg/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 Source3: %name-%version-desktop.tar
@@ -87,6 +89,7 @@ Source6: %name-%version-bin-scripts.tar
 #Source10: %name-patches-%version.tar
 
 Patch1: 0011-build-fake-binary-makes-autoreq-happy.patch
+Patch2: 0102-fix-build-on-32-bit-systems-with-llvm-https-bugs.win.patch
 
 AutoReq: yes, noperl, nomingw32
 
@@ -98,6 +101,13 @@ ExclusiveArch: %ix86 x86_64 aarch64
 # clang-12: error: unsupported argument 'auto' to option 'flto='
 %define optflags_lto -flto=thin
 %endif
+
+# minimalize memory using
+%ifarch %ix86 armh
+%define optflags_debug -g0
+%define optflags_lto %nil
+%endif
+
 
 # disable LTO: link error in particular, and unverified in general
 #x86_64-alt-linux-gcc -m64 -o loader/wine64-preloader loader/preloader.o loader/preloader_mac.o -static -nostartfiles -nodefaultlibs \
@@ -151,7 +161,6 @@ ExclusiveArch: %ix86 x86_64 aarch64
     %add_verify_elf_skiplist %_bindir/*
     %add_verify_elf_skiplist %winebindir/*
 %endif
-
 
 # TODO: remove it for mingw build (when there will no any dll.so files)
 %add_verify_elf_skiplist %libwinedir/%winesodir/*.*.so
@@ -208,7 +217,12 @@ BuildRequires: libunwind-devel
 %endif
 BuildRequires: libnetapi-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
-# TODO: osmesa
+
+# for winscard (libpcsclite.so here)
+BuildRequires: libpcsclite-devel
+
+# can be missed on old systems
+BuildRequires: libOSMesa-devel
 
 %if_with vulkan
 BuildRequires: libvulkan-devel
@@ -253,7 +267,6 @@ BuildRequires: desktop-file-utils
 Requires: glibc-pthread glibc-nss
 
 Requires: wine-gecko = %gecko_version
-Conflicts: wine-mono < %mono_version
 
 # For menu/MIME subsystem
 Requires: desktop-file-utils
@@ -399,7 +412,7 @@ Requires: %name-devel = %EVR
 Conflicts: %conflictbase-devel-tools
 Conflicts: lib%conflictbase-devel
 Conflicts: lib%name-devel < %version
-%if_without devel
+%if_with devel
 Provides: libwine-devel = %EVR
 %endif
 # we don't need provide anything
@@ -443,6 +456,7 @@ develop programs using %name.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 # Apply local patches
 #name-patches/patchapply.sh
 
@@ -454,6 +468,15 @@ export CC=clang
 %if_with mingw
 export CROSSCC=clang
 %endif
+
+# disable fortify as it can breaks wine
+# http://bugs.winehq.org/show_bug.cgi?id=24606
+%remove_optflags -fcf-protection
+%remove_optflags -fstack-protector-strong
+%remove_optflags -fstack-clash-protection
+# drop default FORTIFY_SOURCE here to mute warning when overrides with _FORTIFY_SOURCE=0 (wine disable it)
+%remove_optflags -D_FORTIFY_SOURCE=2
+%remove_optflags -Wp,-D_FORTIFY_SOURCE=2
 
 
 %configure --with-x \
@@ -467,9 +490,9 @@ export CROSSCC=clang
 	--without-capi \
 	%{subst_with opencl} \
 	%{subst_with pcap} \
-	%{subst_with unwind} \
 	%{subst_with mingw} \
 	%{subst_with vulkan} \
+	%{subst_with wayland} \
 	--bindir=%winebindir \
 	%nil
 
@@ -483,13 +506,6 @@ export CROSSCC=clang
 # clean permissions (via find to hide file list)
 find %buildroot%libwinedir/%winesodir -type f | xargs chmod 0644
 find %buildroot%libwinedir/%winepedir -type f | xargs chmod 0644
-
-%if_with libwine
-# keep in libdir for compatibility
-mv -v %buildroot%libwinedir/%winesodir/libwine.so.1* %buildroot%libdir
-%else
-rm -v %buildroot%libwinedir/%winesodir/libwine.so.1*
-%endif
 
 # hack for lib.req: ERROR: /tmp/.private/lav/wine-etersoft-buildroot/usr/lib64/wine/x86_64-unix/ws2_32.so: library ntdll.so not found
 %if "%_vendor" == "alt"
@@ -632,6 +648,9 @@ fi
 %libwinedir/%winesodir/msv1_0.so
 %libwinedir/%winesodir/win32u.so
 %libwinedir/%winesodir/winex11.so
+%if_with wayland
+%libwinedir/%winesodir/winewayland.so
+%endif
 %libwinedir/%winesodir/ws2_32.so
 %if_with opencl
 %libwinedir/%winesodir/opencl.so
@@ -648,7 +667,9 @@ fi
 %endif
 %libwinedir/%winesodir/winebus.so
 %libwinedir/%winesodir/wineusb.so
+%libwinedir/%winesodir/wineps.so
 %libwinedir/%winesodir/localspl.so
+%libwinedir/%winesodir/winscard.so
 
 %if_without mingw
 %{?_without_vanilla:%libwinedir/%winesodir/windows.networking.connectivity.so}
@@ -812,9 +833,15 @@ fi
 %if_with mingw
 %libwinedir/%winepedir/lib*.a
 %endif
+# fix for makefiles: Don't build native import libraries for PE-only build.
+%ifarch %{ix86} x86_64
 %libwinedir/%winesodir/lib*.a
+%endif
 
 %changelog
+* Sun Aug 06 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.13-alt1
+- update to 8.13
+
 * Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 1:8.0-alt1.rc2
 - new version (8.0-rc2) with rpmgs script
 - don't provide libwine-devel
