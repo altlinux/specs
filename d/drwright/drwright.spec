@@ -1,17 +1,18 @@
 Name: drwright
 Version: 3.5
-Release: alt1.27.gfa0bade
+Release: alt2.27.gfa0bade
 License: GPL2
 Group: Graphical desktop/GNOME
-Url: https://wiki.gnome.org/Projects/drwright
+Url: https://wiki.gnome.org/Attic/drwright
 Summary: A program that reminds you to take wrist breaks
-# git://git.gnome.org/drwright
+# https://gitlab.gnome.org/Archive/drwright.git
 Source: %name-%version.tar
 
+# Automatically added by buildreq on Mon Aug 07 2023 (-bi)
+# optimized out: at-spi2-atk debugedit elfutils fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config gtk-builder-convert libX11-devel libXext-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk3 libctf-nobfd0 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+3-devel libharfbuzz-devel libjson-glib libpango-devel libwayland-client libwayland-cursor libwayland-egl perl perl-Encode perl-XML-Parser perl-parent pkg-config python3 python3-base rpm-build-file sh4 shared-mime-info termutils xml-common xml-utils xorg-proto-devel
+BuildRequires: desktop-file-utils gnome-common intltool libXScrnSaver-devel libcanberra-gtk3-devel libnotify-devel
+
 BuildRequires: gnome-settings-daemon-devel
-# Automatically added by buildreq on Mon Oct 02 2017 (-bi)
-# optimized out: at-spi2-atk elfutils fontconfig glib2-devel gnu-config gtk-builder-convert libX11-devel libXext-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+3-devel libpango-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl perl-Encode perl-XML-Parser pkg-config python-base python-modules python-modules-encodings python-modules-xml python3 python3-base rpm-build-python3 shared-mime-info termutils xml-common xml-utils xorg-scrnsaverproto-devel xorg-xproto-devel
-BuildRequires: desktop-file-utils gnome-common intltool libXScrnSaver-devel libcanberra-gtk3-devel libnotify-devel python3-module-yieldfrom time
 
 %description
 WARNING: no GUI for settings except dconf-editor! (key
@@ -45,14 +46,23 @@ Features
 
 %install
 %makeinstall_std
+mkdir -p %buildroot%_sysconfdir/xdg/autostart/
+desktop-file-install --dir %buildroot%_desktopdir \
+	--remove-key=OnlyShowIn \
+	--set-key=Exec \
+	--set-value=%_libexecdir/%name/gnome-typing-monitor \
+	src/gnome-typing-break-panel.desktop
+desktop-file-install --dir %buildroot%_sysconfdir/xdg/autostart/ \
+	--remove-key=X-GNOME-Settings-Panel \
+	--set-key=NoDisplay \
+	--set-value=true \
+	%buildroot%_desktopdir/gnome-typing-break-panel.desktop
 
 %find_lang %name --with-gnome
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Application \
-	%buildroot%_desktopdir/gnome-typing-break-panel.desktop
 
 %files -f %name.lang
 %doc AUTHORS NEWS
+%_sysconfdir/xdg/autostart/*.desktop
 %_libexecdir/%name/
 %_datadir/glib-2.0/schemas/*
 %_iconsdir/hicolor/*/apps/*
@@ -60,6 +70,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/locale/sr@Latn/LC_MESSAGES/drwright.mo
 
 %changelog
+* Mon Aug 07 2023 Ildar Mulyukov <ildar@altlinux.ru> 3.5-alt2.27.gfa0bade
+- tweaked desktop file
+- fixed buildreq
+
 * Sun Oct 01 2017 Ildar Mulyukov <ildar@altlinux.ru> 3.5-alt1.27.gfa0bade
 - new version
 - tear off the gnome-settings-daemon and gnome-control-center plugins
