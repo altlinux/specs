@@ -1,16 +1,21 @@
 Name: nlopt
-Version: 2.4.2
+Version: 2.7.1
 Release: alt1
+
 Summary: Library for nonlinear optimization
-License: MIT, LGPL
+
+License: MIT and LGPLv2
 Group: Sciences/Mathematics
-Url: http://ab-initio.mit.edu/wiki/index.php/NLopt
+Url: https://github.com/stevengj/nlopt
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# Source-url: https://github.com/stevengj/nlopt/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildPreReq: gcc-c++ gcc-fortran python-devel
-BuildPreReq: libnumpy-devel libhdf5-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ gcc-fortran python3-devel
+BuildRequires: libnumpy-py3-devel swig
 
 %description
 NLopt is a free/open-source library for nonlinear optimization,
@@ -46,7 +51,6 @@ This package contains shared libraries of NLopt (C++ interface).
 Summary: Development files of NLopt
 Group: Development/C++
 Requires: lib%name = %version-%release
-Requires: lib%name-cxx = %version-%release
 
 %description -n lib%name-devel
 NLopt is a free/open-source library for nonlinear optimization,
@@ -69,12 +73,12 @@ other algorithms.
 
 This package contains tests for NLopt.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python wrapper for NLopt 
 Group: Development/Python
 Requires: lib%name = %version-%release
 
-%description -n python-module-%name
+%description -n python3-module-%name
 NLopt is a free/open-source library for nonlinear optimization,
 providing a common interface for a number of different free optimization
 routines available online as well as original implementations of various
@@ -98,88 +102,43 @@ This package contains development documentation for NLopt.
 %prep
 %setup
 
-%autoreconf
-mkdir .cxx
-cp -fR * .cxx/
-
 %build
-%add_optflags -fno-strict-aliasing $(pkg-config hdf5 --cflags)
-for i in c cxx; do
-	if [ "$i" = "cxx" ]; then
-		pushd .cxx
-	fi
-	sed -i 's|get_python_lib(0|get_python_lib(1|' configure
-	%configure \
-		--enable-shared=yes \
-		--enable-static=no \
-		--with-$i \
-		--without-guile \
-		--without-octave \
-		--without-matlab
-	%make_build
-	if [ "$i" = "cxx" ]; then
-		make install DESTDIR=$PWD/_
-		popd
-	fi
-done
+%cmake \
+    -DNLOPT_OCTAVE=OFF \
+    -DNLOPT_MATLAB=OFF \
+    -DNLOPT_GUILE=OFF \
+    %nil
+%cmake_build
 
 %install
-%makeinstall_std
-
-cp -P .cxx/_%_libdir/*.so* %buildroot%_libdir/
-
-install -d %buildroot%_docdir/%name
-for i in auglag bobyqa cdirect cobyla crs isres mlsl mma neldermead \
-	newuoa praxis slsqp
-do
-	pushd $i
-		for j in README*; do
-			install -p -m644 $j %buildroot%_docdir/%name/$i.$j
-		done
-	popd
-done
-pushd direct
-	for i in README AUTHORS COPYING *.pdf; do
-		install -p -m644 $i %buildroot%_docdir/%name/direct.$i
-	done
-popd
-for i in luksan stogo; do
-	pushd $i
-	for j in COPYRIGHT README *.pdf; do
-		install -p -m644 $j %buildroot%_docdir/%name/$i.$j
-	done
-	popd
-done
-
-install -d %buildroot%_bindir
-install -m755 test/.libs/* %buildroot%_bindir/
+%cmakeinstall_std
 
 %files -n lib%name
-%doc AUTHORS ChangeLog COPYING NEWS README TODO
+%doc AUTHORS ChangeLog COPYING NEWS.md README.md TODO
 %_libdir/*.so.*
-%exclude %_libdir/*_cxx.so.*
-
-%files -n lib%name-cxx
-%_libdir/*_cxx.so.*
 
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
+%_libdir/cmake/nlopt/
 %_man3dir/*
 
-%files tests
-%doc test/*.c* test/*.h
-%_bindir/*
+#%files tests
+#%doc test/*.c* test/*.h
+#%_bindir/*
 
 %files docs
-%_docdir/%name
+%doc doc/docs
 
-%files -n python-module-%name
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.la
+%files -n python3-module-%name
+%python3_sitelibdir/*
 
 %changelog
+* Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
+- new version 2.7.1, switched to cmake build, rewrote spec
+- no more separate libnlopt_cxx library (libnlopt-cxx subpackage)
+
 * Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1
 - Version 2.4.2
 
