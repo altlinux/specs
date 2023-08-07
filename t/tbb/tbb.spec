@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: tbb
-Version: 2021.9.0
+Version: 2021.10.0
 Release: alt1
 Summary: Threading Building Blocks
 License: Apache-2.0
@@ -168,6 +168,9 @@ rm -f %buildroot%_defaultdocdir/TBB/README.md
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Wed Jul 26 2023 L.A. Kostis <lakostis@altlinux.ru> 2021.10.0-alt1
+- Updated to upstream version 2021.10.0.
+
 * Thu Jul 06 2023 L.A. Kostis <lakostis@altlinux.ru> 2021.9.0-alt1
 - Updated to upstream version 2021.9.0.
 
