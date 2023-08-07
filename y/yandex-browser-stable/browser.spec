@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 23.5.1.793
+Version: 23.7.1.1216
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -25,7 +25,7 @@ Buildrequires: libpango, libX11, libXcomposite, libXdamage, libXext, libXfixes
 Buildrequires: libXrandr, libxcb, libxkbcommon
 Buildrequires: libwayland-client
 Buildrequires: libqt5-core, libqt5-widgets, libqt5-gui
-Requires: ca-certificates, gst-libav, gst-plugins-bad, gst-plugins-base, gst-plugins-good, gstreamer, xdg-utils, fonts-ttf-google-noto-emoji-color
+Requires: ca-certificates, ffmpeg-plugin-browser, gst-libav, gst-plugins-bad, gst-plugins-base, gst-plugins-good, gstreamer, xdg-utils, fonts-ttf-google-noto-emoji-color
 Requires(post): %{_sbindir}/update-alternatives
 Requires(preun): %{_sbindir}/update-alternatives
 
@@ -176,6 +176,7 @@ store_partner_data() {
     store_partner_file "" "initial_preferences"
     store_partner_file "" "master_preferences"
     store_partner_file "Extensions" "external_extensions.json"
+    store_partner_files "resources" "clids*.xml"
     store_partner_files "resources" "tablo*"
     store_partner_files "resources" "*.png"
     store_partner_files "resources" "*.svg"
@@ -204,6 +205,43 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+* Mon Aug 7 2023 yabro <yabro@altlinux.org> 23.7.1.1216-alt1
+- Browser updated to 23.7.1.1216
+  + Critical CVE-2023-2721: Use after free in Navigation.
+  + High CVE-2023-2722: Use after free in Autofill UI.
+  + High CVE-2023-2723: Use after free in DevTools.
+  + High CVE-2023-2724: Type Confusion in V8.
+  + High CVE-2023-2725: Use after free in Guest View.
+  + High CVE-2023-2929: Out of bounds write in Swiftshader.
+  + High CVE-2023-2930: Use after free in Extensions.
+  + High CVE-2023-2931: Use after free in PDF.
+  + High CVE-2023-2932: Use after free in PDF.
+  + High CVE-2023-2933: Use after free in PDF.
+  + High CVE-2023-2934: Out of bounds memory access in Mojo.
+  + High CVE-2023-2935: Type Confusion in V8.
+  + High CVE-2023-2936: Type Confusion in V8.
+  + High CVE-2023-3079: Type Confusion in V8.
+  + High CVE-2023-3420: Type Confusion in V8.
+  + High CVE-2023-3421: Use after free in Media.
+  + High CVE-2023-3422: Use after free in Guest View.
+  + High CVE-2023-3598: Out of bounds read and write in ANGLE.
+  + Medium CVE-2023-2459: Inappropriate implementation in Prompts.
+  + Medium CVE-2023-2460: Insufficient validation of untrusted input in Extensions.
+  + Medium CVE-2023-2461: Use after free in OS Inputs.
+  + Medium CVE-2023-2462: Inappropriate implementation in Prompts.
+  + Medium CVE-2023-2463: Inappropriate implementation in Full Screen Mode.
+  + Medium CVE-2023-2464: Inappropriate implementation in PictureInPicture.
+  + Medium CVE-2023-2465: Inappropriate implementation in CORS.
+  + Medium CVE-2023-2726: Inappropriate implementation in WebApp Installs.
+  + Medium CVE-2023-2937: Inappropriate implementation in Picture In Picture.
+  + Medium CVE-2023-2938: Inappropriate implementation in Picture In Picture.
+  + Medium CVE-2023-2939: Insufficient data validation in Installer.
+  + Medium CVE-2023-2940: Inappropriate implementation in Downloads.
+  + Low CVE-2023-2466: Inappropriate implementation in Prompts.
+  + Low CVE-2023-2467: Inappropriate implementation in Prompts.
+  + Low CVE-2023-2468: Inappropriate implementation in PictureInPicture.
+  + Low CVE-2023-2941: Inappropriate implementation in Extensions API.
+
 * Wed Jun 21 2023 yabro <yabro@altlinux.org> 23.5.1.793-alt1
 - Browser updated to 23.5.1.793
   + Critical CVE-2023-3214: Use after free in Autofill payments
