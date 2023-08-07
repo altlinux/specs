@@ -8,7 +8,7 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Terminal
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.52
 %define gtk_ver 3.24
-%define vte_ver 0.72.1
+%define vte_ver 0.72.2
 
 Provides: xvt
 Provides: x-terminal-emulator
@@ -109,6 +109,9 @@ EOF
 %endif
 
 %changelog
+* Sun Aug 06 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.2-alt1
+- 3.48.2
+
 * Sun Apr 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.1-alt1
 - 3.48.1
 
