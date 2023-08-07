@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.3.1
+Version: 7.4.0
 Release: alt1
 
 Summary: A decorator to automatically detect mismatch when overriding a method
@@ -44,5 +44,8 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Aug 07 2023 Anton Vyatkin <toni@altlinux.org> 7.4.0-alt1
+- New version 7.4.0.
+
 * Wed Jun 14 2023 Anton Vyatkin <toni@altlinux.org> 7.3.1-alt1
 - Initial build for Sisyphus
