@@ -1,6 +1,6 @@
 Name: libxlsxwriter
 Version: 1.1.4
-Release: alt1
+Release: alt2
 Summary: A C library for creating Excel XLSX files
 Group: Development/C
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -33,6 +33,8 @@ developing applications that use %name.
 %prep
 %setup -n %name-RELEASE_%version
 
+%__subst 's|ZLIB REQUIRED "1.0"|ZLIB|' CMakeLists.txt
+
 # Delete bundled minizip
 rm -rf third_party/minizip
 rm -f include/xlsxwriter/third_party/zip.h
@@ -56,6 +58,9 @@ rm -f include/xlsxwriter/third_party/zip.h
 %_libdir/pkgconfig/xlsxwriter.pc
 
 %changelog
+* Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt2
+- NMU: fix zlib find via cmake
+
 * Fri Jan 07 2022 Ilya Mashkin <oddity@altlinux.ru> 1.1.4-alt1
 - Build for Sisyphus
 
