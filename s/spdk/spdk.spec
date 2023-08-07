@@ -2,18 +2,15 @@
 
 %define dpdk_build_path "dpdk/build"
 %define dpdk_path "dpdk"
-%define llvm_ver 15
-%define gcc_ver 13
 
 %def_disable dpdk_internal
 %def_disable static
 %def_disable tests
-# configure file is not a GNU autoconf script
-%def_enable clang
+%def_disable clang
 
 Name: spdk
 Version: 23.05
-Release: alt1
+Release: alt2
 
 Summary: Storage Performance Development Kit
 
@@ -45,7 +42,7 @@ Patch4: spdk-23.05-alpinelinux-backtrace.patch
 #Requires: zlib
 
 %add_python3_req_skip common spdk.rpc spdk.rpc.client spdk.rpc.helpers spdk.sma spdk.sma.proto.nvmf_tcp_pb2 spdk.sma.proto.nvmf_tcp_pb2_grpc spdk.sma.proto.sma_pb2 spdk.sma.proto.sma_pb2_grpc spdk.spdkcli
-%filter_from_requires /apt*/d
+%filter_from_requires /\%_prefix\/libexec\/spdk\/scripts\/pkgdep/d
 # %%filter_from_requires /bpftrace/d
 
 Requires: systemd-utils
@@ -70,7 +67,7 @@ BuildPreReq: libarchive-devel libbsd-devel libjansson-devel libpcap-devel
 BuildPreReq: doxygen python3-module-sphinx-sphinx-build-symlink
 BuildRequires: meson rpm-build-ninja python3-module-elftools
 %else
-BuildRequires: dpdk-devel
+BuildRequires: dpdk-devel libdpdk
 %endif
 %if_enabled tests
 BuildRequires: CUnit-devel
@@ -137,11 +134,29 @@ sed -i 's|/usr/local/bin/|%_prefix/libexec/spdk/bin/|' \
   docker/build_base/post-install \
   docker/traffic-generator/init
 
+# Use system isa-l.
+sed -i 's|-L$(ISAL_DIR)/.libs -lisal|-L%_libdir -lisal|' \
+  lib/util/Makefile \
+  lib/accel/Makefile \
+  dpdkbuild/Makefile \
+  mk/spdk.common.mk
+sed -i 's|-I$(ISAL_DIR)/..|-I%_includedir/isa-l|' \
+  mk/spdk.common.mk
+
+# Use system isa-l_crypto.
+sed -i 's|-L$(ISAL_CRYPTO_DIR)/.libs -lisal_crypto|-L%_libdir -lisal_crypto|' \
+  lib/accel/Makefile \
+  mk/spdk.common.mk
+sed -i 's|-I$(ISAL_CRYPTO_DIR)/..|%_includedir/isa-l_crypto|' \
+  mk/spdk.common.mk
+
 # Remove illegal absolute entry from RPATH.
 sed -i '/-Wl,-rpath=$(DESTDIR)\/$(libdir)/d' \
   mk/spdk.common.mk
+%if_disabled dpdk_internal
 sed -i 's| -Wl,-rpath=$(DPDK_LIB_DIR)||' \
   lib/env_dpdk/env.mk
+%endif
 sed -i 's|-rpath=$(SPDK_LIB_DIR),||' \
   test/external_code/hello_world/Makefile
 sed -i 's|-rpath=$(SPDK_LIB_DIR)||' \
@@ -163,7 +178,6 @@ export DPDK_ABS_DIR=%_prefix
 export DPDK_INC_DIR=%_includedir/dpdk
 export DPDK_LIB_DIR=%_libdir
 export SPDK_ROOT_DIR=$PWD
-/usr/bin/ld -v
 %_configure_script \
 	--prefix=%prefix \
 %if_disabled clang
@@ -181,7 +195,7 @@ export SPDK_ROOT_DIR=$PWD
 %if_disabled clang
 	--enable-lto \
 %else
-  --disable-lto \
+	--disable-lto \
 %endif
 	--with-shared \
 %endif
@@ -280,6 +294,10 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon Aug 07 2023 Leontiy Volodin <lvol@altlinux.org> 23.05-alt2
+- Fixed links with some system libraries.
+- Removed unneeded requires for pkgdep scripts (ALT #47071).
+
 * Tue Jul 04 2023 Leontiy Volodin <lvol@altlinux.org> 23.05-alt1
 - New version 23.05.
 - Built with system isa-l (thanks alpinelinux for the patch).
