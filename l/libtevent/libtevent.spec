@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%def_without check
+%def_with check
 
 Name: libtevent
 Version: 0.14.0
-Release: alt1
+Release: alt2
 Summary: The tevent library
 License: LGPLv3+
 Group: System/Libraries
@@ -64,7 +64,9 @@ Python3 bindings for libtevent
 rm -f %buildroot%_libdir/*.a
 
 %check
-make test
+# XXX: tests use FD 0, and various input redirections can break
+# their assumptions. Let's make sure the input is predictable.
+make test < /dev/null
 
 %files
 %_libdir/libtevent.so.*
@@ -80,6 +82,9 @@ make test
 %python3_sitelibdir/__pycache__/tevent.*
 
 %changelog
+* Mon Aug 07 2023 Ivan A. Melnikov <iv@altlinux.org> 0.14.0-alt2
+- NMU: fix and re-enable checks
+
 * Mon May 29 2023 Grigory Ustinov <grenka@altlinux.org> 0.14.0-alt1
 - Build new version for python3.11.
 - Build without check.
