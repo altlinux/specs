@@ -27,7 +27,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.21.12
-Release: alt2
+Release: alt3
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -44,8 +44,7 @@ Patch: %oname-%version.patch
 
 Obsoletes: libprotobuf <= 2.0.0-alt1
 
-# Automatically added by buildreq on Wed Nov 19 2008
-BuildRequires: gcc-c++ libnumpy-devel zlib-devel
+BuildRequires: gcc-c++ zlib-devel
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -428,6 +427,9 @@ popd
 
 
 %changelog
+* Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 3.21.12-alt3
+- drop unused BR: libnumpy-devel
+
 * Thu Feb 16 2023 Alexey Shabalin <shaba@altlinux.org> 3.21.12-alt2
 - fixed build with python 3.11
 
