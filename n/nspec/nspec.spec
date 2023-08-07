@@ -1,6 +1,6 @@
 Name: nspec
 Version: 16.5888
-Release: alt2
+Release: alt3
 Summary: Nspec Universal SPM & Spectroscopy Software - Nano Scan Technologies Ltd.
 Summary(ru_RU.UTF-8): Nspec - универсальная программа для СЗМ и спектроскопии для приборов фирмы НСТ
 License: BSD 4-clause, 2008-2020, Nano Scan Technologies Ltd.
@@ -18,7 +18,7 @@ BuildRequires(pre): rpm-macros-qt5
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libgtkglext-devel libpango-devel libpangox-compat libpangox-compat-devel libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-script libqt5-widgets libstdc++-devel libusb-compat pkg-config python-base python-modules python3 python3-base python3-module-yieldfrom qt5-base-devel zlib-devel
 ## QT5 deps
 ##BuildRequires: bzlib-devel kf5-kimageformats libgwyddion-devel libqt5-svg libusb-compat-devel libusb-devel qt5-declarative-devel qt5-imageformats qt5-script-devel ruby ruby-stdlibs
-BuildRequires: kf5-kimageformats libdb4-devel libgwyddion-devel libqt5-svg libusb-compat-devel libusb-devel python3-module-mpl_toolkits python3-module-yieldfrom qt5-connectivity-devel 
+BuildRequires: kf5-kimageformats libdb4-devel libgwyddion-devel libqt5-svg libusb-compat-devel libusb-devel python3-module-mpl_toolkits qt5-connectivity-devel 
 BuildRequires: qt5-imageformats qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-script-devel qt5-sensors-devel qt5-serialbus-devel qt5-x11extras-devel
 
 
@@ -121,6 +121,9 @@ cp gwy_proxy/gcc_make/nst_proxy.so %buildroot/%_libdir/gwyddion/modules
 %_libdir/nspec/*
 
 %changelog
+* Mon Aug 07 2023 Alexei Mezin <alexvm@altlinux.org> 16.5888-alt3
+- Remove python3-module-yieldfrom from build deps
+
 * Sun Mar 26 2023 Alexei Mezin <alexvm@altlinux.org> 16.5888-alt2
 - Move udev rules to /lib/udev/rules.d/ (ALT policy)
 
