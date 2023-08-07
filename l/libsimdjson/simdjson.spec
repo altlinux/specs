@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libsimdjson
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 Summary: Parsing gigabytes of JSON per second
 License: Apache-2.0
@@ -44,17 +44,10 @@ Requires: %name = %EVR
 %cmake_install
 
 %check
-# Test from CI scripts.
-cat > tmp.cpp <<EOF
-#include <simdjson.h>
-int main(int argc, char **argv)
-{
-    simdjson::dom::parser parser;
-    simdjson::dom::element tweets = parser.load(argv[1]);
-}
-EOF
-c++ -Iinclude -L%_cmake__builddir -std=c++17 -Wl,-rpath,%_cmake__builddir -o linkandrun tmp.cpp -lsimdjson
-./linkandrun jsonexamples/twitter.json
+export LD_LIBRARY_PATH=$PWD/%_cmake__builddir
+c++ -Iinclude examples/quickstart/quickstart.cpp -L%_cmake__builddir -lsimdjson
+cd jsonexamples
+../a.out
 
 %files
 %doc LICENSE
@@ -68,6 +61,9 @@ c++ -Iinclude -L%_cmake__builddir -std=c++17 -Wl,-rpath,%_cmake__builddir -o lin
 %_pkgconfigdir/simdjson.pc
 
 %changelog
+* Mon Aug 07 2023 Vitaly Chikunov <vt@altlinux.org> 3.2.2-alt1
+- Update to v3.2.2 (2023-08-02).
+
 * Sun Jul 09 2023 Vitaly Chikunov <vt@altlinux.org> 3.2.1-alt1
 - Update to v3.2.1 (2023-07-06).
 
