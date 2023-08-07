@@ -1,24 +1,22 @@
-%def_enable snapshot
-%def_enable numpy
+%def_disable numpy
 %def_disable docs
 
 %define major 2.24
 Name: python-module-pygtk
 Version: %major.0
-Release: alt10
+Release: alt11
 
 Summary: Python bindings for the GTK+ widget set
 
 Group: Development/Python
 License: LGPL-2.1
 Url: http://www.pygtk.org/
+
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-%if_enabled snapshot
+# Source-url: http://ftp.gnome.org/pub/GNOME/sources/pygtk/%major/pygtk-%version.tar.bz2
 Source: pygtk-%version.tar
-%else
-Source: http://ftp.gnome.org/pub/GNOME/sources/pygtk/%major/pygtk-%version.tar.bz2
-%endif
+
 Patch: pygtk-2.14.0-alt-configure.patch
 Patch1: pygtk-2.24.0-alt-pango-1.44.7.patch
 
@@ -40,14 +38,17 @@ Requires: python-module-pycairo >= %pycairo_ver
 %{?_enable_numpy:Requires:python-module-numpy python-module-numpy-addons}
 
 BuildRequires(pre): rpm-build-compat rpm-build-python
-BuildRequires: gtk-doc python-devel gnome-common
+BuildRequires: python-devel gnome-common
 BuildRequires: python-module-pygobject-devel >= %pygobject_ver
 BuildRequires: python-module-pycairo-devel >= %pycairo_ver
 BuildRequires: libgtk+2-devel >= %gtk_ver
 BuildRequires: libglade-devel >= %glade_ver
 %{?_enable_numpy:BuildRequires: libnumpy-devel}
+%if_enabled docs
+BuildRequires: gtk-doc
 # style.css from this package required to build documentation
 BuildRequires: python-module-pygobject-devel-doc
+%endif
 
 %description
 PyGTK is an extension module for python that gives you access to the GTK+
@@ -114,7 +115,6 @@ This package contains PyGTK doc
 %configure --disable-static \
 	%{subst_enable numpy} \
 	%{subst_enable docs} \
-	%{?_enable_snapshot:--enable-docs}
 %nil
 %make_build
 
@@ -149,10 +149,16 @@ test -f %buildroot%python_sitelibdir/gtk-2.0/gobject.so && exit 1
 %_pkgconfigdir/pygtk*.pc
 %_datadir/%modulename/
 
+%if_enabled docs
 %files doc
 %_datadir/gtk-doc/html/pygtk/
+%endif
 
 %changelog
+* Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 2.24.0-alt11
+- disable build doc subpackage
+- disable numpy (it is optional)
+
 * Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 2.24.0-alt10
 - replace PYTHON_EXEC_PREFIX with %_prefix in .pc file
 
