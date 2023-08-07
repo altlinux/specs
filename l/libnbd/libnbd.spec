@@ -6,7 +6,7 @@
 %define sover 0
 
 Name: libnbd
-Version: 1.17.2
+Version: 1.17.3
 Release: alt1
 Summary: NBD client library in userspace
 License: LGPL-2.1-or-later
@@ -79,5 +79,8 @@ hardlink -v %buildroot
 %_man3dir/*.3*
 
 %changelog
+* Mon Aug 07 2023 Vitaly Chikunov <vt@altlinux.org> 1.17.3-alt1
+- Update to v1.17.3 (2023-08-04).
+
 * Sun Jul 23 2023 Vitaly Chikunov <vt@altlinux.org> 1.17.2-alt1
 - First import v1.17.2 (2023-07-14).
