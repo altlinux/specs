@@ -1,7 +1,9 @@
-%define ver_major 10
-%define api_ver %ver_major
+%define ver_major 12.0
+%define api_ver_major 12
+%define api_ver %api_ver_major
 %define clientsdir %_libdir/%name/clients
-%define soname 0
+%define soname 1
+%define exec_soname 0
 
 # Weston backend: DRM/KMS
 %def_enable backend_drm
@@ -24,6 +26,9 @@
 # Weston backend: X11 (nested)
 %def_enable backend_x11
 
+# VNC remote screensharing
+%def_enable backend_vnc
+
 # Weston backend: fbdev (deprecated)
 %def_disable deprecated_backend_fbdev
 
@@ -34,8 +39,14 @@
 # Weston renderer: EGL / OpenGL ES 2.x
 %def_enable renderer_gl
 
-# Weston launcher for systems without logind (deprecated)
-%def_enable deprecated_weston_launch
+# Weston launcher for systems without logind (removed since 11.0.0)
+%def_disable deprecated_weston_launch
+
+# Compositor: support systemd-logind D-Bus protocol (deprecated since 12.0.0)
+%def_disable launcher_logind
+
+# Compositor: support libseat (enabled by default)
+%def_enable launcher_libseat
 
 # Xwayland: support for X11 clients inside Weston
 %def_enable xwayland
@@ -67,20 +78,17 @@
 # Compositor color management: lcms
 %def_enable color_management_lcms
 
-# Compositor color management: colord (requires lcms)
-%def_enable color_management_colord
+# Compositor color management: static (deprecated)
+%def_disable deprected_color_management_static
 
-# Compositor: support systemd-logind D-Bus protocol
-%def_enable launcher_logind
+# Compositor color management: colord (deprecated since 11.0.0)
+%def_disable deprecated_color_management_colord
 
 # JPEG loading support
 %def_enable image_jpeg
 
 # WebP loading support
 %def_enable image_webp
-
-# Compositor color management: Little CMS
-%def_enable color_management_lcms
 
 # List of accessory clients to build and install
 # choices: [ 'calibrator', 'debug', 'info', 'terminal', 'touch-calibrator' ],
@@ -112,18 +120,20 @@
 %def_disable check
 
 Name: weston
-Version: %ver_major.0.2
+Version: %ver_major.2
 Release: alt1
 
 Summary: Reference compositor for Wayland
 Group: Graphical desktop/Other
-License: BSD and CC-BY-SA
+License: MIT
 Url: http://wayland.freedesktop.org/
 
 Vcs: https://gitlab.freedesktop.org/wayland/weston.git
+#Source: https://gitlab.freedesktop.org/wayland/weston/-/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
+#Source1: %name.ini
 Patch: %name-%version-%release.patch
-Patch2: weston-9.0.0-alt-launch-group.patch
+#Patch2: weston-9.0.0-alt-launch-group.patch
 
 Requires: lib%name = %EVR
 Requires: xkeyboard-config
@@ -132,13 +142,16 @@ Requires: xorg-dri-swrast
 %define pw_api_ver 0.3
 %define pw_ver 0.3
 %define gst_api_ver 1.0
+%define mesa_ver 21.1.1
 
 BuildRequires(pre): meson
 BuildRequires(pre): rpm-build-xdg
 %{?_enable_systemd:BuildRequires(pre): rpm-build-systemd}
+%{?_enable_launcher_libseat:BuildRequires: pkgconfig(libseat)}
 BuildRequires: libGLES-devel libglvnd-devel
 BuildRequires: libdrm-devel
-BuildRequires: libgbm-devel
+BuildRequires: libgbm-devel >= %mesa_ver
+BuildRequires: libdisplay-info-devel
 BuildRequires: libva-devel
 BuildRequires: libwayland-client-devel
 BuildRequires: libwayland-cursor-devel
@@ -155,12 +168,12 @@ BuildRequires: libdbus-devel
 BuildRequires: libpam0-devel
 %{?_enable_image_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_image_webp:BuildRequires: libwebp-devel}
-%{?_enable_color_management_colord:BuildRequires: libcolord-devel}
+%{?_enable_deprecated_color_management_colord:BuildRequires: libcolord-devel}
 %{?_enable_color_management_lcms:BuildRequires: liblcms2-devel}
 %{?_enable_xwayland:
 BuildRequires: xorg-xwayland-devel
 BuildRequires: pkgconfig(xcb) pkgconfig(xcb-composite)
-BuildRequires: pkgconfig(xcb-shape) pkgconfig(xcb-xfixes)
+BuildRequires: pkgconfig(xcb-shape) pkgconfig(xcb-xfixes) pkgconfig(xcb-cursor)
 BuildRequires: pkgconfig(xcursor) pkgconfig(cairo-xcb)}
 %{?_enable_backend_rdp:BuildRequires: libfreerdp-devel}
 %{?_enable_backend_x11:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-xkb)}
@@ -170,6 +183,7 @@ BuildRequires: pkgconfig(gstreamer-%gst_api_ver) pkgconfig(gstreamer-allocators-
 BuildRequires: pkgconfig(gstreamer-app-%gst_api_ver) pkgconfig(gstreamer-video-%gst_api_ver)}
 %{?_enable_test_junit_xml:BuildRequires: libxml2-devel}
 %{?_enable_check:BuildRequires: xkeyboard-config /%_bindir/Xwayland}
+%{?_enable_backend_vnc:BuildRequires: libaml-devel libneatvnc-devel}
 
 %description
 Weston is the reference wayland compositor that can run on KMS, under X11
@@ -219,13 +233,15 @@ Header files for doing development with the weston.
 	--libexecdir=%clientsdir \
 	%{?_disable_backend_x11:-Dbackend-x11=false} \
 	%{?_disable_backend_rdp:-Dbackend-rdp=false} \
+	%{?_disable_backend_vnc:-Dbackend-vnc=false} \
 	%{?_disable_xwayland:-Dxwayland=false} \
 	%{?_disable_remoting:-Dremoting=false} \
 	%{?_disable_shell_ivi:-Dshell-ivi=false} \
 	%{?_disable_pipewire:-Dpipewire=false} \
 	%{?_disable_test_junit_xml:-Dtest-junit-xml=false} \
 	%{?_enable_deprecated_backend_fbdev:-Ddeprecated-backend-fbdev=true} \
-	%{?_disable_color_management_lcms:-Dcolor-management-lcms=false}
+	%{?_enable_deprecated_color_management_static:-Ddeprecated-color-management-static=true} \
+	%{?_disable_launcher_libseat:-Dlauncher-libseat=false}
 %nil
 %meson_build -v
 
@@ -236,20 +252,21 @@ sed \
 	-e 's,@clientsdir@,%clientsdir,g' \
 	.gear/%name.ini > %buildroot/%_xdgconfigdir/%name/%name.ini
 
-ln -sf %name/libexec_%{name}.so.0 \
-%buildroot%_libdir/libexec_%{name}.so.0
+ln -sf %name/libexec_%{name}.so.%exec_soname \
+%buildroot%_libdir/libexec_%{name}.so.%exec_soname
 
 %check
 %__meson_test
 
 %files
 %dir %_xdgconfigdir/%name
+%{?_enable_backend_vnc:%_sysconfdir/pam.d/%name-remote-access}
 %config(noreplace) %_xdgconfigdir/%name/%name.ini
 %_bindir/*
 %{?_enable_deprecated_weston_launch:%attr (4710,root,xgrp) %_bindir/weston-launch}
 %dir %_libdir/%name
 %{?_enable_color_management_colord:%_libdir/%name/cms-colord.so}
-%{?_enable_color_management_lcms:%_libdir/%name/cms-static.so}
+%{?_enable_deprecated_color_management_static:%_libdir/%name/cms-static.so}
 %{?_enable_shell_desktop:%_libdir/%name/desktop-shell.so}
 %{?_enable_shell_fullscreen:%_libdir/%name/fullscreen-shell.so}
 %{?_enable_shell_ivi:
@@ -284,7 +301,7 @@ ln -sf %name/libexec_%{name}.so.0 \
 %{?_enable_pipewire:%_libdir/lib%name-%api_ver/pipewire-plugin.so}
 %_libdir/%name/libexec_weston.so.*
 #  symlink
-%_libdir/libexec_%{name}.so.%soname
+%_libdir/libexec_%{name}.so.%exec_soname
 # backends
 %_libdir/lib%name-%api_ver/drm-backend.so
 %{?_enable_deprecated_backend_fbdev:%_libdir/lib%name-%api_ver/fbdev-backend.so}
@@ -293,6 +310,8 @@ ln -sf %name/libexec_%{name}.so.0 \
 %{?_enable_backend_wayland:%_libdir/lib%name-%api_ver/wayland-backend.so}
 %{?_enable_backend_x11:%_libdir/lib%name-%api_ver/x11-backend.so}
 %{?_enable_color_management_lcms:%_libdir/lib%name-%api_ver/color-lcms.so}
+%{?_enable_pipewire:%_libdir/lib%name-%api_ver/pipewire-backend.so}
+%{?_enable_backend_vnc:%_libdir/lib%name-%api_ver/vnc-backend.so}
 
 %files -n lib%name-devel
 %_includedir/lib%name-%api_ver/
@@ -305,6 +324,18 @@ ln -sf %name/libexec_%{name}.so.0 \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Sun Aug 06 2023 Yuri N. Sedunov <aris@altlinux.org> 12.0.2-alt1
+- 12.0.2
+
+* Fri May 26 2023 Yuri N. Sedunov <aris@altlinux.org> 12.0.1-alt1
+- 12.0.1
+
+* Thu May 18 2023 Yuri N. Sedunov <aris@altlinux.org> 12.0.0-alt1
+- 12.0.0
+
+* Wed Dec 14 2022 Yuri N. Sedunov <aris@altlinux.org> 11.0.1-alt1
+- 11.0.1
+
 * Tue Jul 26 2022 Yuri N. Sedunov <aris@altlinux.org> 10.0.2-alt1
 - 10.0.2
 
