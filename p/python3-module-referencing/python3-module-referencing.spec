@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.30.1
+Version: 0.30.2
 Release: alt1
 
 Summary: Cross-specification JSON referencing (JSON Schema, OpenAPI, and the one you just made up!)
@@ -65,6 +65,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Aug 07 2023 Anton Vyatkin <toni@altlinux.org> 0.30.2-alt1
+- new version 0.30.2
+
 * Fri Aug 04 2023 Anton Vyatkin <toni@altlinux.org> 0.30.1-alt1
 - new version 0.30.1
 
