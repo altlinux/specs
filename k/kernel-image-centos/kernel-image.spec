@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 347
+%define centos_release 350
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -643,6 +643,38 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Aug 07 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.350-alt1.el9
+- Updated to kernel-5.14.0-350.el9 (fixes: CVE-2023-1998, CVE-2023-20593, CVE-2023-3141, CVE-2023-3268):
+  + ACPI: Avoid breaking S3 wakeup due to might_sleep()
+  + Interrupted internal reads from gfs2 cause the gfs_fsck_stress test to fail.
+  + Merge commit 'b404d59080284fb93d4a49e5109b790084b15212' from documentation
+  + PCI: hv: Enable PCI pass-thru devices in Confidential VMs
+  + Revert "NFSv4: Retry LOCK on OLD_STATEID during delegation return"
+  + Revert "cgroup: cgroup-v1: do not exclude cgrp_dfl_root"
+  + Tunnel: fix gre/geneve tos inheriting issues
+  + Updates for powerpc ibmvnic reset
+  + bpf, xdp: backports from upstream (phase 2)
+  + fs: dlm: plock fixes
+  + i2c: tegra: Fix PEC support for SMBUS block read
+  + i2c: tegra: Set ACPI node as primary fwnode
+  + memstick: r592: Fix UAF bug in r592_remove due to race condition
+  + mlxsw: Update mlxsw driver to the upstream 6.3
+  + perf: arm_cspmu: fixes
+  + redhat/configs: enable TEGRA186_GPC_DMA driver
+  + relayfs: fix out-of-bounds access in relay_file_read
+  + s390x: Implement IBK insertion in the UV Device Driver
+  + sa8775p-ride: backport ethernet support
+  + sched/core: Provide sched_rtmutex() and expose sched work helpers
+  + scsi: storvsc: Handle SRB status value 0x30
+  + selinux: make labeled NFS work when mounted before policy load
+  + tools/power/x86/intel-speed-select: Support more than 8 sockets.
+  + tracing: bpf: use struct trace_entry in struct syscall_tp_t
+  + vmstat: skip periodic vmstat update for isolated CPUs
+  + x86/cpu/amd: Zenbleed kernel workaround (CVE-2023-20593)
+  + x86/speculation: Allow enabling STIBP with legacy IBRS
+  + xfs: block reservation too large for minleft allocation
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Jul 31 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.347-alt1.el9
 - Updated to kernel-5.14.0-347.el9 (fixes: CVE-2023-3090, CVE-2023-31248, CVE-2023-35001, CVE-2023-35788):
   + Backport afs and rxrpc fixes
