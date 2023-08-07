@@ -3,7 +3,7 @@
 
 Name:     lxqt-admin
 Version:  1.3.0
-Release:  alt2
+Release:  alt3
 
 Summary:  LXQt system administration tool
 License:  LGPL-2.1
@@ -40,10 +40,13 @@ BuildRequires: libpolkitqt5-qt5-devel
 %_bindir/*
 %_desktopdir/*
 %_datadir/lxqt/translations/*
-%_datadir/polkit-1/actions/
+%_datadir/polkit-1/actions/*
 %doc AUTHORS CHANGELOG *.md
 
 %changelog
+* Mon Aug 07 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt3
+- do not pack %%_datadir/polkit-1/actions/, pack only its contents
+
 * Fri May 05 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt2
 - Add russian translation of polkit messages
 
