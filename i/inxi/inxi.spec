@@ -1,6 +1,6 @@
 Name: inxi
 Version: 3.3.28
-Release: alt1
+Release: alt2
 
 Summary: A full featured system information script
 Summary(ru): Скрипт вывода полной информации об оборудовании и системе
@@ -8,6 +8,7 @@ Summary(ru): Скрипт вывода полной информации об о
 License: GPL-3.0-or-later
 Group: Monitoring
 URL: https://smxi.org
+Vcs: https://github.com/smxi/inxi
 # Source-url: https://github.com/smxi/inxi/archive/%version/%name-%version-1.tar.gz
 Source: %name-%version.tar.gz
 
@@ -15,6 +16,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
+Requires: /usr/bin/perl
 Requires: net-tools
 Requires: pciutils
 Requires: procps
@@ -35,23 +37,36 @@ Inxi позволяет выводить различную информацию
 оборудовании и о работе системы.
 
 %prep
-%setup -q
-chmod -x %name.changelog
-#Disable update option
-sed -i "s/B_ALLOW_UPDATE='true'/B_ALLOW_UPDATE='false'/" inxi
-
-%build
+%setup
+# Disable 'update' with inxi.conf method (suggested by upstream). This will
+# tell user:
+#   Error 20: Option: U has been disabled by the inxi distribution maintainer.
+cat > %name.conf <<-EOF
+	# Updates are disabled because this is a system package.
+	ALLOW_UPDATE=false
+EOF
+sed -i '1s|/usr/bin/env perl|%__perl|' %name
 
 %install
 install -p -D -m 755 %name %buildroot/%_bindir/%name
 install -p -D -m 644 %name.1 %buildroot/%_man1dir/%name.1
+install -p -D -m 644 %name.conf %buildroot%_sysconfdir/%name.conf
+
+%check
+perl -c inxi
+./inxi -V
 
 %files
-%doc %name.changelog
+%doc %name.changelog README.txt LICENSE.txt
+%config(noreplace) %_sysconfdir/%name.conf
 %_bindir/%name
 %_man1dir/%name.1*
 
 %changelog
+* Mon Aug 07 2023 Vitaly Chikunov <vt@altlinux.org> 3.3.28-alt2
+- Disable out of repo updates and install '/etc/inxi.conf'.
+- spec: Add VCS tag and other minor improvements.
+
 * Wed Jul 12 2023 Leontiy Volodin <lvol@altlinux.org> 3.3.28-alt1
 - New version
 
