@@ -158,7 +158,7 @@
 %endif
 
 Name:		ffmpeg-plugin-browser
-Version:	108
+Version:	114
 Release:	alt1
 
 Summary:	FFmpeg built specifically for codec support in special browser
@@ -764,6 +764,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Mon Aug 07 2023 Sergey V Turchin <zerg@altlinux.org> 114-alt1
+- new version
+
 * Thu Mar 23 2023 Sergey V Turchin <zerg@altlinux.org> 108-alt1
 - new version
 
