@@ -86,7 +86,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt2
+Release: alt3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -114,6 +114,8 @@ Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch18: lld-compact-unwind-encoding.h.patch
 Patch19: llvm-alt-cmake-build-with-install-rpath.patch
 Patch20: clang-16-alt-rocm-device-libs-path.patch
+Patch21: 0001-lld-Pass-random.randint-stop-parameter-as-int.patch
+Patch22: clang-D142199.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -130,7 +132,7 @@ BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
-BuildRequires: python3-module-recommonmark zip zlib-devel binutils-devel ninja-build
+BuildRequires: python3-module-myst-parser zip zlib-devel binutils-devel ninja-build
 %if_with lldb_contrib
 BuildRequires: pkgconfig(libedit)
 BuildRequires: pkgconfig(ncursesw)
@@ -632,6 +634,8 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch18 -p1
 %patch19 -p1 -b .llvm-cmake-build-with-install-rpath
 %patch20 -p1 -b .clang-rocm-device-path
+%patch21 -p1
+%patch22 -p1 -b .recommonmark
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -1215,6 +1219,11 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Mon Aug 07 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt3
+- Added patches:
+  + lld: added python 3.12+ compatibility patch.
+  + clang: switch from recommonmark to myst_parser.
+
 * Thu Jun 29 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt2
 - x86_64: link with lld again (as mold needs non-standard ldflags which pollute
   llvm-config output).
