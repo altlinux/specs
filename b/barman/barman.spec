@@ -1,5 +1,5 @@
 Name: barman
-Version: 3.6.0
+Version: 3.7.0
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
@@ -97,6 +97,7 @@ touch %buildroot/var/log/barman/barman.log
 %_bindir/%name
 %_man1dir/%name.1.xz
 %_man5dir/%name.5.xz
+%dir %_sysconfdir/barman/
 %config(noreplace) %_sysconfdir/barman/%name.conf
 %config(noreplace) %_sysconfdir/cron.d/%name
 %config(noreplace) %_logrotatedir/%name
@@ -143,6 +144,10 @@ getent passwd barman >/dev/null || \
 exit 0
 
 %changelog
+* Mon Aug 07 2023 Leontiy Volodin <lvol@altlinux.org> 3.7.0-alt1
+- New version 3.7.0.
+- Packed unowned files.
+
 * Fri Jun 16 2023 Leontiy Volodin <lvol@altlinux.org> 3.6.0-alt1
 - New version 3.6.0.
 
