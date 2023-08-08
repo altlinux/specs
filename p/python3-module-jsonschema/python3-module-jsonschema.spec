@@ -2,21 +2,19 @@
 
 %def_with check
 
-Name:		python3-module-%pypi_name
-Version:	4.18.6
-Release:	alt1
+Name: python3-module-%pypi_name
+Version: 4.19.0
+Release: alt1
 
-Summary:	An implementation of JSON Schema validation for Python
+Summary: An implementation of JSON Schema validation for Python
 
-License:	MIT
-Group:		Development/Python3
-URL:		https://pypi.org/project/jsonschema
+License: MIT
+Group: Development/Python3
+URL: https://pypi.org/project/jsonschema
+VCS: https://github.com/python-jsonschema/jsonschema
+BuildArch: noarch
+Source0: %name-%version.tar
 
-Source0:	%name-%version.tar
-
-BuildArch:	noarch
-
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-hatch-fancy-pypi-readme
@@ -66,6 +64,9 @@ export JSON_SCHEMA_TEST_SUITE=$PWD/json
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Aug 08 2023 Anton Vyatkin <toni@altlinux.org> 4.19.0-alt1
+- New version 4.19.0.
+
 * Thu Aug 03 2023 Anton Vyatkin <toni@altlinux.org> 4.18.6-alt1
 - new version 4.18.6
 
