@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
+Version: 3.3.1
 Release: alt1
 Summary: SSH2 protocol for python
 License: LGPL-2.1
@@ -58,6 +58,9 @@ entirely in python (no C or platform-dependent code).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 07 2023 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
+- 3.1.0 -> 3.3.1.
+
 * Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
 - 2.12.0 -> 3.1.0.
 

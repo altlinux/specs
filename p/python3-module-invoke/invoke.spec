@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.3
+Version: 2.2.0
 Release: alt1
 Summary: Pythonic task execution
 License: BSD-2-Clause
@@ -76,6 +76,9 @@ find invoke/vendor/ \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 07 2023 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.1.3 -> 2.2.0.
+
 * Thu Jun 15 2023 Stanislav Levin <slev@altlinux.org> 2.1.3-alt1
 - 2.1.2 -> 2.1.3.
 
