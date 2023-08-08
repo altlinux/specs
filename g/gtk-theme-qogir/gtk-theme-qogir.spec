@@ -1,20 +1,19 @@
 Name: gtk-theme-qogir
 Version: 2023.05.24
-Release: alt1
+Release: alt1.1
 Epoch: 1
+
 Summary: Qogir GTK theme
 
-Group: Graphical desktop/GNOME
 License: GPL-3.0-only
+Group: Graphical desktop/GNOME
 Url: https://github.com/vinceliuice/Qogir-theme
 
 Source: %name-%version.tar.gz
 
 BuildArch: noarch
-Packager: Leontiy Volodin <lvol@altlinux.org>
+
 BuildRequires: sassc
-#BuildRequires: libgtk+3-devel libgtk+2-devel
-#Requires: libgtk-engine-murrine
 
 %description
 A flat theme with transparent elements for GTK 3, GTK 2 and Gnome-Shell.
@@ -31,10 +30,13 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 
 %files
 %doc AUTHORS COPYING HACKING README.md
-%dir %_datadir/themes
 %_datadir/themes/Qogir*
 
 %changelog
+* Tue Aug 08 2023 Leontiy Volodin <lvol@altlinux.org> 1:2023.05.24-alt1.1
+- Excluded unappropriate dirs from the package.
+- Cleanup the spec.
+
 * Mon May 29 2023 Leontiy Volodin <lvol@altlinux.org> 1:2023.05.24-alt1
 - New version.
 
