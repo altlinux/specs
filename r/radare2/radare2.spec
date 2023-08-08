@@ -1,14 +1,14 @@
 Summary: A reverse engineering framework
 Name: radare2
 Version: 5.5.4
-Release: alt1
+Release: alt2
 License: LGPL-3.0-or-later
 Group: Development/Tools
 Url: http://radare.org/
 Source: %name-%version.tar
 Packager: Nikita Ermakov <arei@altlinux.org>
 
-BuildRequires: libzip-devel zlib-devel libmagic-devel git-core libnss-mdns python3-module-yieldfrom java-devel-default jna python-devel capstone-devel libxxhash-devel liblz4-devel meson openssl-devel libuv-devel libtree-sitter-devel
+BuildRequires: libzip-devel zlib-devel libmagic-devel capstone-devel libxxhash-devel liblz4-devel meson openssl-devel libuv-devel libtree-sitter-devel
 
 # bundled sdb ./shlr/sdb/README.md
 # bundled js0n ./shlr/sdb/src/json/README
@@ -69,6 +69,9 @@ cp -r libr/include/heap/r_jemalloc %buildroot/%_includedir/
 %_datadir/zsh
 
 %changelog
+* Tue Aug 08 2023 Vitaly Lipatov <lav@altlinux.ru> 5.5.4-alt2
+- NMU: remove unneeded BRs
+
 * Sun Jan 02 2022 Nikita Ermakov <arei@altlinux.org> 5.5.4-alt1
 - Update to 5.5.4
 
