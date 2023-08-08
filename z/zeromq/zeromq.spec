@@ -7,7 +7,7 @@
 
 Name: zeromq
 Version: 4.3.4
-Release: alt2
+Release: alt3
 
 Summary: a software library that lets you quickly design and implement a fast message-based application
 Group: System/Libraries
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 # Fix building with gcc12
 Patch0: 176d72cc9b3bdcc416fd11dbc82e7b386dda32b7.patch
 Patch1: 92b2c38a2c51a1942a380c7ee08147f7b1ca6845.patch
+# Fix ftbfs with gcc13
+Patch3: 438d5d88392baffa6c2c5e0737d9de19d6686f0d.patch
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
@@ -70,6 +72,7 @@ This package contains 0mq library headers
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -104,6 +107,9 @@ This package contains 0mq library headers
 %_man7dir/zmq_*7*
 
 %changelog
+* Tue Aug 08 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.3.4-alt3
+- NMU: fixed FTBFS with gcc13.
+
 * Wed Aug 17 2022 Grigory Ustinov <grenka@altlinux.org> 4.3.4-alt2
 - Fixed FTBFS with gcc12.
 
