@@ -7,7 +7,7 @@
 Summary: Capstone disassembly/disassembler framework
 Name: capstone
 Version: 4.0.2
-Release: alt3
+Release: alt4
 License: BSD-3-Clause
 Group: Development/Tools
 Url: http://capstone-engine.org/
@@ -23,7 +23,6 @@ BuildRequires(pre): rpm-macros-python3
 BuildRequires: java-devel-default
 BuildRequires: jna
 BuildRequires: /proc
-BuildRequires: python3-module-yieldfrom
 BuildRequires: python-devel
 BuildRequires: rpm-build-python3
 
@@ -135,6 +134,9 @@ cstool -d x64 90
 %_javadir/*.jar
 
 %changelog
+* Tue Aug 08 2023 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt4
+- NMU: remove unused BR: python3-module-yieldfrom
+
 * Wed Aug 10 2022 Vitaly Chikunov <vt@altlinux.org> 4.0.2-alt3
 - Update spec, package cstool, create separate libcapstone package, fix
   packaging shared library in -devel, do not package python2 module.
