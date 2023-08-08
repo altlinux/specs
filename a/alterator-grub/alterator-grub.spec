@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -24,7 +24,7 @@ BuildRequires: libdevmapper-devel
 %ifarch %ix86 x86_64
 Requires: grub-pc > 2.00-alt20
 %endif
-%ifarch aarch64 x86_64
+%ifarch aarch64 x86_64 riscv64 loongarch64
 Requires: grub-efi >= 2.00-alt12
 %endif
 %ifarch ppc64le
@@ -53,6 +53,10 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Thu Aug 03 2023 Anton Midyukov <antohami@altlinux.org> 0.23-alt1
+- merge "efiremovable" and "efinonvram" as "efinonvram"
+- add requires grub-efi for riscv64, loongarch64
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 0.22-alt1
 - rearrange UI
 
