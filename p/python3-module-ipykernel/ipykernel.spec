@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 6.25.0
+Version: 6.25.1
 Release: alt1
 
 Summary: IPython Kernel for Jupyter
@@ -85,6 +85,9 @@ sed -i 's/--color=yes//' pyproject.toml
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Tue Aug 08 2023 Anton Vyatkin <toni@altlinux.org> 6.25.1-alt1
+- New version 6.25.1.
+
 * Wed Jul 26 2023 Anton Vyatkin <toni@altlinux.org> 6.25.0-alt1
 - New version 6.25.0.
 
