@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel
 #global extra_version -2
 
 Name:           cdogs-sdl
-Version:        1.4.0
+Version:        1.5.0
 Release:        alt1
 Summary:        C-Dogs is an arcade shoot-em-up
 # The game-engine is GPLv2+
@@ -88,6 +88,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Aug  8 2023 Artyom Bystrov <arbars@altlinux.org> 1.5.0-alt1
+- update to new version
+
 * Mon Dec 05 2022 Artyom Bystrov <arbars@altlinux.org> 1.4.0-alt1
 - update to new version;
 - add patch for fix data path (thanks survolog@ from rosalab)
