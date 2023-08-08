@@ -1,12 +1,14 @@
 %define wwwdir %_datadir/%name
+%define phpver 8.1
 
 Summary: A syslog data viewer for the web
 Name: LogAnalyzer
-Version: 4.1.11
+Version: 4.1.13
 Release: alt1
 License: GPLv3+
 Group: Monitoring
 Url: http://loganalyzer.adiscon.com/
+VCS: https://github.com/rsyslog/loganalyzer.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 BuildArch: noarch
@@ -26,25 +28,24 @@ syslog, windows event log and many other event sources.
 Group: Networking/WWW
 BuildArch: noarch
 Summary: apache2 configs for %name
-Requires: %name = %version-%release
-Requires: %name-php
+Requires: %name = %EVR
+Requires: %name-php%phpver
 Requires: apache2-httpd-prefork-like php-engine
 
 %description apache2
 %summary
 
-%package php7
+%package php%phpver
 Group: Networking/WWW
 BuildArch: noarch
-Summary: php7 virtual package  for %name
+Summary: php virtual package  for %name
 Provides: %name-php
-Requires: %name = %version-%release
-Requires: php7-mysqli
-Requires: php7-ldap php7-pdo php7-mbstring
-Requires: php7-gd2
-#Requires: php7-jpgraph
+Requires: %name = %EVR
+Requires: php%phpver-mysqli
+Requires: php%phpver-ldap php%phpver-pdo php%phpver-mbstring
+Requires: php%phpver-gd2
 
-%description php7
+%description php%phpver
 %summary
 
 %prep
@@ -81,9 +82,13 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
 
-%files php7
+%files php%phpver
 
 %changelog
+* Tue Aug 08 2023 Anton Farygin <rider@altlinux.ru> 4.1.13-alt1
+- update to 4.1.13
+- use php 8.1 as default php for LogAnalyzer
+
 * Tue Dec 15 2020 Alexey Shabalin <shaba@altlinux.org> 4.1.11-alt1
 - new version 4.1.11
 
