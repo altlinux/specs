@@ -4,7 +4,7 @@
 
 Name: openorienteering-mapper
 Version: 0.9.5
-Release: alt3
+Release: alt4
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -27,6 +27,7 @@ BuildRequires: qt5-sql-sqlite3
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-serialport-devel
 BuildRequires: sqlite3
+BuildRequires: libtiff-devel
 %if_with check
 BuildRequires: ctest
 %endif
@@ -90,6 +91,10 @@ cmake --build %_cmake__builddir/test -j%__nprocs
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Aug 08 2023 Nikolai Kostrigin <nickel@altlinux.org> 0.9.5-alt4
+- Fix FTBFS
+  + spec: add libtiff-devel to BR:
+
 * Mon Oct 31 2022 Nikolai Kostrigin <nickel@altlinux.org> 0.9.5-alt3
 - Fix build failure due to proj-datumgrid removal from Sisyphus
   + spec: remove proj-datumgrid from BR:
