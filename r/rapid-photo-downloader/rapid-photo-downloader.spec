@@ -1,6 +1,6 @@
 Name: rapid-photo-downloader
 Version: 0.9.34
-Release: alt1.1
+Release: alt2
 
 %define xdg_name net.damonlynch.rapid_photo_downloader
 
@@ -13,9 +13,7 @@ Source: http://launchpad.net/rapid/pyqt/%version/+download/%name-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-gir rpm-build-python3
-BuildRequires: intltool perl-podlators
-BuildRequires: python3-devel python3-module-setuptools
+%add_typelib_req_skiplist typelib(Unity)
 
 %if "%(rpmvercmp '%{get_version python3}' '3.6.0')" <= "0"
 Requires: python3-module-typing >= 3.6.4
@@ -27,13 +25,16 @@ Requires: python3-module-easygui >= 0.98.1
 Requires: python3-module-pymediainfo >= 2.2.0
 Requires: python3-module-pyprind
 Requires: python3-module-colorlog
+Requires: python3-module-pyxdg
 Requires: gphoto2 exiv2 perl-Image-ExifTool >= 10.87
 Requires: gst-plugins-good1.0 gst-libav
 # since 0.9.27
 Requires: showinfilemanager >= 1.1.2
 Requires: libimobiledevice ifuse fuse
 
-%add_typelib_req_skiplist typelib(Unity)
+BuildRequires(pre): rpm-build-gir rpm-build-python3
+BuildRequires: intltool perl-podlators
+BuildRequires: python3-devel python3(wheel) python3(setuptools)
 
 %description
 Rapid Photo Downloader imports photos and videos from cameras, phones,
@@ -48,10 +49,10 @@ sed -i "s|'share\/solid\/actions'|'share/apps/solid/actions'|
         s|\(>=3.6\)\.\*|\1|" setup.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 # install translations
 mkdir -p %buildroot%_datadir/locale
 cp -r build/mo/* %buildroot%_datadir/locale
@@ -61,12 +62,17 @@ cp -r build/mo/* %buildroot%_datadir/locale
 %_bindir/%name
 %python3_sitelibdir/*
 %_desktopdir/%xdg_name.desktop
+%_iconsdir/hicolor/*/*/*
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %_man1dir/%name.1.*
 %_datadir/solid/actions/%xdg_name.desktop
 %doc README* RELEASE_NOTES* CHANGES*
 
 %changelog
+* Tue Aug 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.9.34-alt2
+- ported to %%pyproject macros
+- python3-module-pyxdg required (ALT #47151)
+
 * Sat Apr 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.9.34-alt1.1
 - fixed build with newer setuptools
 
