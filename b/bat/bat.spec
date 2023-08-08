@@ -1,6 +1,6 @@
 Name: bat
 Version: 0.23.0
-Release: alt1
+Release: alt2
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
 Group: File tools
@@ -10,6 +10,7 @@ Source: %name-%version.tar
 BuildRequires: rust-cargo
 Conflicts: bacula9-bat
 Conflicts: bacula11-bat
+Conflicts: bacula13-bat
 
 %description
 A cat(1) clone which supports syntax highlighting for a large number of
@@ -51,6 +52,9 @@ cargo test -- --skip no_args_doesnt_break
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Tue Aug 08 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.23.0-alt2
+- Added conflict with bacula13-bat package.
+
 * Sat Mar 25 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.23.0-alt1
 - Updated to version 0.23.0
 - Enabled tests
