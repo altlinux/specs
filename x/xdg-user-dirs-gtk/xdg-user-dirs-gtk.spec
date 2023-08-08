@@ -1,6 +1,6 @@
 Name: xdg-user-dirs-gtk
-Version: 0.10
-Release: alt3
+Version: 0.11
+Release: alt1
 Summary: Gnome integration of special directories
 Group: Graphical desktop/GNOME
 License: GPL-2.0-or-later
@@ -33,14 +33,21 @@ export CFLAGS='-Wno-error=deprecated-declarations'
 %install
 %makeinstall_std
 
+mv %buildroot%_sysconfdir/xdg/autostart/user-dirs-update-gtk.desktop \
+   %buildroot%_sysconfdir/xdg/autostart/%name.desktop
+
 %find_lang %name
 
 %files -f %name.lang
 %doc NEWS AUTHORS README ChangeLog COPYING
-%_sysconfdir/xdg/autostart/user-dirs-update-gtk.desktop
+%_sysconfdir/xdg/autostart/%name.desktop
 %_bindir/*
 
 %changelog
+* Tue Aug 08 2023 Anton Midyukov <antohami@altlinux.org> 0.11-alt1
+- New version 0.11
+- rename user-dirs-update-gtk.desktop -> %name.desktop
+
 * Mon Apr 13 2020 Ivan A. Melnikov <iv@altlinux.org> 0.10-alt3
 - fix build with -Werror=cast-align on %%mips32
 
