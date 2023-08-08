@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2022.11.19
+Version: 2023.8.3
 Release: alt1
 Summary: Oldest NumPy that supports a given Python version and platform
 License: BSD-2-Clause
@@ -67,5 +67,8 @@ duplicate the same list manually in all packages requiring it.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Aug 07 2023 Stanislav Levin <slev@altlinux.org> 2023.8.3-alt1
+- 2022.11.19 -> 2023.8.3.
+
 * Wed Jun 21 2023 Stanislav Levin <slev@altlinux.org> 2022.11.19-alt1
 - Initial build for Sisyphus.
