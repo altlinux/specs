@@ -3,14 +3,15 @@
 
 %def_enable man
 %def_enable check
+%def_enable installed_tests
 
 Name: xdg-dbus-proxy
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: D-Bus connections proxy
 Group: System/Kernel and hardware
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Url: https://github.com/flatpak/%name
 
 Source: %name-%version.tar
@@ -26,12 +27,23 @@ BuildRequires: meson libgio-devel > 2.40
 of the flatpak project, but it has been broken out as a standalone module
 to facilitate using it in other contexts.
 
+%package tests
+Summary: Tests for the %name package
+Group: Development/Other
+Requires: %name = %EVR
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed %name package.
+
 %prep
 %setup
 %patch -p1
 
 %build
-%meson %{?_disable_man:-Dman=disabled}
+%meson %{?_disable_man:-Dman=disabled} \
+    %{?_enable_installed_tests:-Dinstalled_tests=true}
+%nil
 %meson_build
 
 %install
@@ -45,8 +57,17 @@ to facilitate using it in other contexts.
 %{?_enable_man:%_man1dir/%name.1.*}
 %doc README.md NEWS
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%name/
+%_datadir/installed-tests/%name/
+%endif
 
 %changelog
+* Tue Aug 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt1
+- 0.1.5
+- new -tests subpackage
+
 * Thu May 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.4-alt1
 - 0.1.4 (ported to Meson build system)
 
