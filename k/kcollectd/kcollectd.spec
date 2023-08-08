@@ -4,7 +4,7 @@
 
 Name: kcollectd
 Version: 0.12.0
-Release: alt1
+Release: alt2
 
 Summary: collectd graphing frontend for KDE
 License: %gpl3plus
@@ -68,6 +68,9 @@ ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 
 
 %changelog
+* Tue Aug 08 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.12.0-alt2
+- Fix desktop file
+
 * Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.12.0-alt1
 - New version
 
