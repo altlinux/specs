@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.28.0
-Release: alt1
+Release: alt2
 
 Summary: The little ASGI framework that shines
 
@@ -19,6 +19,10 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(hatchling)
+
+# See ALT#43483
+%filter_from_requires /python(multipart.*)/d
+Requires: python3(python-multipart)
 
 BuildArch: noarch
 
@@ -55,6 +59,9 @@ Zero hard dependencies.
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Tue Aug 08 2023 Grigory Ustinov <grenka@altlinux.org> 0.28.0-alt2
+- Fixed dependency on wrong multipart module.
+
 * Thu Jul 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.28.0-alt1
 - 0.28.0
 
