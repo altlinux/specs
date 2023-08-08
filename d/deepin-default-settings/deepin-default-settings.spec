@@ -1,23 +1,25 @@
 %define repo default-settings
 
 Name: deepin-default-settings
-Version: 2023.05.12
+Version: 2023.08.07
 Release: alt1
-Summary: deepin-default-settings
+
+Summary: Default settings for DDE
+
 License: GPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/default-settings
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.xz
 
 BuildArch: noarch
 
-BuildRequires: rpm-build-python3
 #Requires: icon-theme-deepin
 
+BuildRequires: rpm-build-python3
+
 %description
-deepin-default-settings
+This package provides default settings for DDE.
 
 %prep
 %setup -n %repo-%version
@@ -29,11 +31,15 @@ subst 's|/usr/bin/env python3|%__python3|' dde-first-run
 
 mkdir -p %buildroot%_binfmtdir/
 mv -f %buildroot/etc/binfmt.d/wine.conf %buildroot%_binfmtdir/wine.conf
-cp -r skel %buildroot/%_sysconfdir/
+cp -r skel %buildroot%_sysconfdir/
 # conflicts with xorg-drv-libinput
 rm -f %buildroot%_sysconfdir/X11/xorg.conf.d/40-libinput.conf
 # conflicts with altlinux-mime-defaults
 rm -f %buildroot%_desktopdir/mimeapps.list
+# conflicts with xdg-user-dirs
+rm -f %buildroot%_sysconfdir/skel/.config/user-dirs.dirs
+# no longer matches the XDG_MUSIC_DIR
+rm -f %buildroot%_sysconfdir/skel/Music/bensound-sunny.mp3
 
 %files
 %doc CHANGELOG.md LICENSE
@@ -47,12 +53,10 @@ rm -f %buildroot%_desktopdir/mimeapps.list
 %_sysconfdir/lscolor-256color
 %config(noreplace) %_sysconfdir/modprobe.d/*.conf
 %_sysconfdir/skel/.config/Trolltech.conf
-%_sysconfdir/skel/.config/user-dirs.dirs
 %_sysconfdir/skel/.config/SogouPY/sogouEnv.ini
 %_sysconfdir/skel/.config/autostart/dde-first-run.desktop
 %_sysconfdir/skel/.config/deepin/qt-theme.ini
 %_sysconfdir/skel/.icons/default/index.theme
-%_sysconfdir/skel/Music/bensound-sunny.mp3
 %_sysconfdir/sudoers.d/01_always_set_sudoers_home
 %_udevrulesdir/99-deepin.rules
 %dir %_desktopdir/deepin/
@@ -66,6 +70,11 @@ rm -f %buildroot%_desktopdir/mimeapps.list
 %_datadir/music/bensound-sunny.mp3
 
 %changelog
+* Tue Aug 08 2023 Leontiy Volodin <lvol@altlinux.org> 2023.08.07-alt1
+- New version 2023.08.07.
+- Fixed xdg-user-dirs (ALT #47131).
+- Cleanup spec.
+
 * Tue Jun 20 2023 Leontiy Volodin <lvol@altlinux.org> 2023.05.12-alt1
 - New version 2023.05.12.
 
