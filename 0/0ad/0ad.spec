@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.26
-Release: alt0_3_alpha
+Release: alt0_4_alpha
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -25,6 +25,7 @@ Patch1: 0ad-mozjs78-PrepareZoneForGC.patch
 Patch2: 0ad-0.0.25-fonts.patch
 # Patch4: 0ad-0.0.26-ppc64le.patch
 Patch5: 0ad-0.0.25-i586.patch
+Patch6: 0ad-fix-build-with-gcc13.patch
 
 # disabled i586 build to unblock wxGTK3.0 rebuild; please remove later
 # ExcludeArch: %ix86
@@ -42,7 +43,7 @@ BuildRequires: libjpeg-devel libpng-devel libvorbis-devel libfreetype-devel
 BuildRequires: libopenal-devel libGL-devel libSDL2-devel libwxGTK3.0-devel libXcursor-devel
 BuildRequires: libcurl-devel libxml2-devel libnspr-devel libicu-devel zlib-devel
 BuildRequires: libenet-devel libminiupnpc-devel libgloox-devel libsodium-devel
-BuildRequires: python3-dev python3-module-jsonlib
+BuildRequires: python3-dev
 BuildRequires: libmozjs78-devel libfmt-devel boost-lockfree-devel
 BuildRequires: libblitz-devel
 
@@ -76,6 +77,7 @@ educational celebration of game development and ancient history.
 %patch2 -p1
 
 %patch5 -p1
+%patch6 -p1
 
 # update shebangs from python to python3
 find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
@@ -139,6 +141,11 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Tue Aug 08 2023 Ivan A. Melnikov <iv@altlinux.org> 1:0.0.26-alt0_4_alpha
+- NMU: Fix FTBFS
+  + drop python3-module-jsonlib from BR
+  + add upstream patch to fix build with gcc13
+
 * Mon Sep 26 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_3_alpha
 - Version 0.0.26-alpha
 
