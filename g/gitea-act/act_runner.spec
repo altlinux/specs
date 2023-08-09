@@ -1,7 +1,7 @@
 %global import_path gitea.com/gitea/act_runner
 
 Name: gitea-act
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 
 Summary: Act runner is a runner for Gitea based on Gitea fork of act.
@@ -76,6 +76,9 @@ usermod -aG docker _%name
 %_unitdir/%name.service
 
 %changelog
+* Wed Aug 09 2023 Alexey Shabalin <shaba@altlinux.org> 0.2.5-alt1
+- 0.2.5
+
 * Fri Aug 04 2023 Alexey Shabalin <shaba@altlinux.org> 0.2.4-alt1
 - 0.2.4
 - Fixed post and preun macros.
