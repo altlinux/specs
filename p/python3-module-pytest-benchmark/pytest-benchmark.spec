@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.0.0
-Release: alt1
+Release: alt2
 Summary: pytest fixture for benchmarking code
 License: BSD-2-Clause
 Group: Development/Python3
@@ -60,6 +60,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 09 2023 Stanislav Levin <slev@altlinux.org> 4.0.0-alt2
+- Fixed FTBFS (Python 3.11).
+
 * Tue May 02 2023 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
 - 3.4.1 -> 4.0.0.
 
