@@ -1,8 +1,8 @@
 %define testsdir %{_localstatedir}/%{name}/tests
 
 Name: libtree
-Version: 0.9.0
-Release: alt2
+Version: 0.9.1
+Release: alt1
 
 Summary: C++ lib that helps to work with tree-like data structures
 License: GPLv3
@@ -102,6 +102,9 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Mon Jul 03 2023 Alexey Appolonov <alexey@altlinux.org> 0.9.1-alt1
+- Additional checks that serve to prevent critical errors.
+
 * Thu Jun 22 2023 Alexey Appolonov <alexey@altlinux.org> 0.9.0-alt2
 - libxml++3 is used insted of libxml++2.
 
