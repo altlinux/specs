@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define pypi_name zope.componentvocabulary
 
 %def_with check
 
 Name: python3-module-%pypi_name
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: Component vocabularies
 License: ZPL-2.1
@@ -13,21 +15,22 @@ Url: https://pypi.org/project/zope.componentvocabulary/
 Vcs: https://github.com/zopefoundation/zope.componentvocabulary
 
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+Source1: %pyproject_deps_config_name
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+# namespace root
+%py3_requires zope
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.configuration
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.testrunner
+%pyproject_builddeps_metadata_extra test
 BuildRequires: python3-module-zope.component-tests
-BuildRequires: python3-module-zope.security
 %endif
-
-%py3_requires zope zope.component zope.i18nmessageid zope.interface
-%py3_requires zope.schema zope.security
-
 
 %description
 This package contains various vocabularies.
@@ -43,6 +46,8 @@ This package contains tests for zope.componentvocabulary.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -71,6 +76,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Tue Aug 08 2023 Stanislav Levin <slev@altlinux.org> 2.3.0-alt2
+- Fixed FTBFS (missing build dependency on six).
+
 * Sat May 20 2023 Anton Vyatkin <toni@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 

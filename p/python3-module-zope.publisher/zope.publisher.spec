@@ -1,56 +1,37 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.publisher
+%define pypi_name zope.publisher
+%define ns_name zope
+%define mod_name publisher
 
 %def_with check
 
-Name: python3-module-%oname
-Epoch: 1
-Version: 6.0.1
+Name: python3-module-%pypi_name
+Version: 6.1.0
 Release: alt1
-
-Summary: The Zope publisher publishes Python objects on the web (Python3)
-License: ZPLv2.1
+Epoch: 1
+Summary: The Zope publisher publishes Python objects on the web
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.publisher
-#Git: https://github.com/zopefoundation/zope.publisher.git
-
+Url: https://pypi.org/project/zope.publisher/
+Vcs: https://github.com/zopefoundation/zope.publisher
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
+# this projects depends on pkg_resources that is subpackaged in ALTLinux
+%add_pyproject_deps_runtime_filter setuptools
+Requires: python3-module-pkg_resources
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.browser
-BuildRequires: python3-module-zope.component
-BuildRequires: python3-module-zope.component-tests
-BuildRequires: python3-module-zope.contenttype
-BuildRequires: python3-module-zope.i18n
-BuildRequires: python3-module-zope.interface-tests
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.security
+%pyproject_builddeps_metadata_extra test
 BuildRequires: python3-module-zope.security-tests
-BuildRequires: python3-module-zope.deferredimport
-BuildRequires: python3-module-zope.hookable
-BuildRequires: python3-module-zope.deprecation
-BuildRequires: python3-module-zope.event
-BuildRequires: python3-module-multipart
+BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.interface-tests
 %endif
-
-%py3_requires zope.browser
-%py3_requires zope.component
-%py3_requires zope.configuration
-%py3_requires zope.contenttype
-%py3_requires zope.event
-%py3_requires zope.exceptions
-%py3_requires zope.i18n
-%py3_requires zope.interface
-%py3_requires zope.location
-%py3_requires zope.proxy
-%py3_requires zope.security
-%py3_requires zope.deferredimport
-%py3_requires zope.hookable
-%py3_requires zope.deprecation
 
 %description
 zope.publisher allows you to publish Python objects on the web. It has
@@ -70,17 +51,19 @@ Requires: python3-module-zope.component-tests
 Requires: python3-module-zope.interface-tests
 
 %description tests
-This package contains tests for %oname.
+This package contains tests for %pypi_name.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -88,21 +71,26 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-export PYTHONPATH=src
-zope-testrunner3 --test-path=src -vv
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
+%exclude %python3_sitelibdir/%ns_name/%mod_name/testing.py
+%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
 
 %files tests
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/%ns_name/%mod_name/tests/
+%python3_sitelibdir/%ns_name/%mod_name/testing.py
+%python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
 
 %changelog
+* Tue Aug 08 2023 Stanislav Levin <slev@altlinux.org> 1:6.1.0-alt1
+- 6.0.1 -> 6.1.0.
+
 * Wed May 26 2021 Grigory Ustinov <grenka@altlinux.org> 1:6.0.1-alt1
 - Automatically updated to 6.0.1.
 

@@ -1,120 +1,86 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.i18nmessageid
+
+%define pypi_name zope.i18nmessageid
+%define ns_name zope
+%define mod_name i18nmessageid
+
 %define descr \
 This package provides facilities for *declaring* messages within \
 program source text;  translation of the messages is the responsiblity \
 of the 'zope.i18n' package.
 
-%def_without check
-%def_without docs
+%def_with check
 
-Name: python3-module-%oname
-Version: 5.0.1
-Release: alt3.1
-
+Name: python3-module-%pypi_name
+Version: 6.0.1
+Release: alt1
 Summary: Message Identifiers for internationalization
-Group: Development/Python3
-
 License: ZPL-2.1
-# Source-git https://github.com/zopefoundation/zope.i18nmessageid.git
-Url: http://pypi.python.org/pypi/zope.i18nmessageid
+Group: Development/Python3
+Url: https://pypi.org/project/zope.i18nmessageid/
+Vcs: https://github.com/zopefoundation/zope.i18nmessageid
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
-Provides: python3-module-%{pep503_name %oname} = %EVR
-
-BuildRequires(pre): rpm-build-python3
-%if_with docs
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx
-%endif
-
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testing python3-module-zope.testrunner
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
 %descr
 
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-
-%description docs
-%descr
-
-This package contains documentation for %oname.
-
-%package pickles
-Summary: Pickles for Zope Configuration Markup Language (ZCML)
-Group: Development/Python3
-
-%description pickles
-%descr
-
-This package contains pickles for %oname.
-
 %package tests
-Summary: Tests for %oname
+Summary: Tests for %pypi_name
 Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
 %descr
 
-This package contains tests for %oname.
+This package contains tests for %pypi_name.
 
 %prep
 %setup
-
-%if_with docs
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-%endif
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build
-
-%if_with docs
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
-%make SPHINXBUILD="sphinx-build-3" -C docs html
-%endif
+%pyproject_build
 
 %install
-%python3_install
-
-%if_with docs
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
+%pyproject_install
 
 %check
-# coverage is the extra dep
-grep -qs "^[[:space:]]*'coverage',[[:space:]]*$" setup.py || exit 1
-sed -i "/^[[:space:]]*'coverage',[[:space:]]*$/d" setup.py
-
-export PYTHONPATH=src
-python3 setup.py test -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/zope/i18nmessageid/tests.*
-%if_with docs
-%exclude %python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html
-
-%files pickles
-%python3_sitelibdir/*/pickle
-%endif
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests.py
+%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
+# strip devel files
+%exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %files tests
-%python3_sitelibdir/zope/i18nmessageid/tests.*
+%python3_sitelibdir/%ns_name/%mod_name/tests.py
+%python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Fri Aug 04 2023 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
+- 5.0.1 -> 6.0.1.
+- Modernized packaging.
+
 * Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.0.1-alt3.1
 - NMU: mapped PyPI name to distro's one.
 

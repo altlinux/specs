@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.0.1
-Release: alt1
+Release: alt2
 
 Summary: Zope Exceptions
 License: ZPL-2.1
@@ -14,6 +14,9 @@ Url: https://pypi.org/project/zope.exceptions/
 Vcs: https://github.com/zopefoundation/zope.exceptions.git
 
 Source: %name-%version.tar
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
@@ -58,6 +61,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %exclude %python3_sitelibdir/*.pth
 
 %changelog
+* Thu Aug 03 2023 Stanislav Levin <slev@altlinux.org> 5.0.1-alt2
+- Mapped PyPI name to distro's one.
+
 * Wed Jul 12 2023 Anton Vyatkin <toni@altlinux.org> 5.0.1-alt1
 - New version 5.0.1.
 

@@ -1,43 +1,33 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.i18n
 
-%def_with check
+%define pypi_name zope.i18n
+%define ns_name zope
+%define mod_name i18n
 
-Name: python3-module-%oname
+%def_without check
+
+Name: python3-module-%pypi_name
 Version: 5.0
-Release: alt1
-
+Release: alt2
 Summary: Zope Internationalization Support
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.i18n/
 Vcs: https://github.com/zopefoundation/zope.i18n.git
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3-module-setuptools
-
+Source1: %pyproject_deps_config_name
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-gettext
-BuildRequires: python3-module-pytz
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.component
-BuildRequires: python3-module-zope.component-tests
-BuildRequires: python3-module-zope.i18nmessageid
-BuildRequires: python3-module-zope.schema
-BuildRequires: python3-module-zope.deprecation
-BuildRequires: python3-module-zope.publisher
+%pyproject_builddeps_metadata_extra test
 %endif
-
-%py3_requires zope.deprecation
-%py3_requires zope.schema
-%py3_requires zope.i18nmessageid
-%py3_requires zope.component
-%py3_requires zope.deferredimport
-%py3_requires zope.hookable
 
 %description
 This package implements several APIs related to internationalization and
@@ -56,16 +46,18 @@ Requires: python3-module-zope.component-tests
 %py3_requires zope.testrunner
 
 %description tests
-This package contains tests for %oname.
+This package contains tests for %pypi_name.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -73,25 +65,29 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-export PYTHONPATH=src
-zope-testrunner3 --test-path=src -vv
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/zope/i18n/testing.*
-%exclude %python3_sitelibdir/zope/i18n/*/testing.*
-%exclude %python3_sitelibdir/zope/i18n/tests
-%exclude %python3_sitelibdir/zope/i18n/locales/tests
+%exclude %python3_sitelibdir/%ns_name/%mod_name/testing.*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/*/testing.*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests
+%exclude %python3_sitelibdir/%ns_name/%mod_name/locales/tests
 
 %files tests
-%python3_sitelibdir/zope/i18n/testing.*
-%python3_sitelibdir/zope/i18n/*/testing.*
-%python3_sitelibdir/zope/i18n/tests
-%python3_sitelibdir/zope/i18n/locales/tests
+%python3_sitelibdir/%ns_name/%mod_name/testing.*
+%python3_sitelibdir/%ns_name/%mod_name/*/testing.*
+%python3_sitelibdir/%ns_name/%mod_name/tests
+%python3_sitelibdir/%ns_name/%mod_name/locales/tests
 
 %changelog
+* Tue Aug 08 2023 Stanislav Levin <slev@altlinux.org> 5.0-alt2
+- Mapped PyPI name to distro's one.
+- Modernized packaging.
+
 * Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 

@@ -1,52 +1,50 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.testrunner
+%define pypi_name zope.testrunner
+%define ns_name zope
+%define mod_name testrunner
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 6.0
-Release: alt2
+Release: alt3
 Summary: Zope testrunner script
-
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.testrunner/
 Vcs: https://github.com/zopefoundation/zope.testrunner.git
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%py3_requires zope
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
-Provides: python3-module-%{pep503_name %oname} = %EVR
-
-BuildRequires(pre): rpm-build-python3
-
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+Conflicts: python-module-%pypi_name
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(six)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(zope.exceptions)
-BuildRequires: python3(zope.interface)
-
-BuildRequires: python3(zope.testing)
-
-BuildRequires: python3(tox)
+%pyproject_builddeps_metadata_extra test
 %endif
-
-Conflicts: python-module-%oname
-
-%py3_requires zope
 
 %description
 This package provides a flexible test runner with layer support.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -56,19 +54,21 @@ mv %buildroot{%python3_sitelibdir_noarch/*,%python3_sitelibdir}
 cp -al %buildroot%_bindir/zope-testrunner{,3}
 
 %check
-%tox_check
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.rst
 %_bindir/zope-testrunner
 %_bindir/zope-testrunner3
-%python3_sitelibdir/zope/testrunner/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
-%python3_sitelibdir/%oname-%version-py%_python3_version-nspkg.pth
-
-%exclude %python3_sitelibdir/zope/testrunner/tests/
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Thu Aug 03 2023 Stanislav Levin <slev@altlinux.org> 6.0-alt3
+- Modernized packaging.
+
 * Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 6.0-alt2
 - Mapped PyPI name to distro's one.
 

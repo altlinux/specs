@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.1
-Release: alt1
+Release: alt2
 Summary: Zope Security Framework
 License: ZPL-2.1
 Group: Development/Python3
@@ -19,6 +19,9 @@ Source1: %pyproject_deps_config_name
 # separately at python3-module-zope
 %add_pyproject_deps_runtime_filter setuptools
 %pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 # zope/proxy/proxy.h
@@ -76,6 +79,9 @@ This package contains tests for Zope Security Framework.
 %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
 
 %changelog
+* Tue Aug 08 2023 Stanislav Levin <slev@altlinux.org> 6.1-alt2
+- Mapped PyPI name to distro's one.
+
 * Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 6.1-alt1
 - 5.1.1 -> 6.1.
 

@@ -1,4 +1,11 @@
-%define oname zope.hookable
+%define _unpackaged_files_terminate_build 1
+
+%define pypi_name zope.hookable
+%define ns_name zope
+%define mod_name hookable
+
+%def_with check
+
 %define descr \
 Support the efficient creation of hookable objects, which are callable \
 objects that are meant to be replaced by other callables, at least \
@@ -9,45 +16,32 @@ it hookable. Later, someone can modify what it does by calling its \
 sethook method and changing its implementation.  All users of the \
 function, including those that imported it, will see the change.
 
-Name: python3-module-%oname
-Version: 5.0.1
-Release: alt2.1
-
+Name: python3-module-%pypi_name
+Version: 5.4
+Release: alt1
 Summary: Hookable object support
-Group: Development/Python3
-
 License: ZPL-2.1
-Url: http://pypi.python.org/pypi/zope.hookable/
+Group: Development/Python3
+Url: https://pypi.org/project/zope.hookable/
+Vcs: http://github.com/zopefoundation/zope.hookable
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%py3_requires zope
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
-Provides: python3-module-%{pep503_name %oname} = %EVR
-
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx
-
-%py3_requires zope
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra test
+%endif
 
 %description
 %descr
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-
-%description docs
-%descr
-
-This package contains documentation for %oname.
-
-%package pickles
-Summary: Pickles for zope.hookable
-Group: Development/Python
-
-%description pickles
-%descr
-
-This package contains pickles for zope.hookable.
 
 %package tests
 Summary: Tests for zope.hookable
@@ -62,39 +56,36 @@ This package contains tests for zope.hookable.
 
 %prep
 %setup
-
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
-
-export PYTHONPATH=$PWD/src
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
-%make SPHINXBUILD="sphinx-build-3" -C docs html
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+# strip devel files
+rm %buildroot%python3_sitelibdir/%ns_name/%mod_name/*.c
+
+%check
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
 %exclude %python3_sitelibdir/*/*/tests
-%exclude %python3_sitelibdir/*/pickle
 
 %files tests
 %python3_sitelibdir/*/*/tests
 
-%files docs
-%doc docs/_build/html/*
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
 %changelog
+* Thu Aug 03 2023 Stanislav Levin <slev@altlinux.org> 5.4-alt1
+- 5.0.1 -> 5.4.
+- Modernized packaging.
+
 * Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.0.1-alt2.1
 - NMU: mapped PyPI name to distro's one.
 

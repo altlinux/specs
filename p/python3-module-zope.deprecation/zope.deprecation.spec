@@ -5,7 +5,7 @@
 Name: python3-module-%pypi_name
 Epoch: 1
 Version: 5.0
-Release: alt1
+Release: alt2
 
 Summary: Zope Deprecation Infrastructure
 License: ZPL-2.1
@@ -14,6 +14,9 @@ Url: https://pypi.org/project/zope.deprecation/
 Vcs: https://github.com/zopefoundation/zope.deprecation.git
 
 Source: %name-%version.tar
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -73,6 +76,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*/*/__pycache__/tests.*
 
 %changelog
+* Tue Aug 08 2023 Stanislav Levin <slev@altlinux.org> 1:5.0-alt2
+- Mapped PyPI name to distro's one.
+
 * Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 1:5.0-alt1
 - New version 5.0.
 

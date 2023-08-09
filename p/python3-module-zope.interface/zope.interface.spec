@@ -1,31 +1,30 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.interface
+%define pypi_name zope.interface
+%define ns_name zope
+%define mod_name interface
 
 %def_without check
-%def_without docs
 
-Name: python3-module-%oname
-Version: 5.4.0
-Release: alt2.1
+Name: python3-module-%pypi_name
+Version: 6.0
+Release: alt1
 
 Summary: Zope interfaces package
 License: ZPL-2.1
 Group: Development/Python3
-# Source-git https://github.com/zopefoundation/zope.interface.git
-Url: http://www.python.org/pypi/zope.interface
-
+Url: https://pypi.org/project/zope.interface/
+Vcs: https://github.com/zopefoundation/zope.interface
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
-Provides: python3-module-%{pep503_name %oname} = %EVR
-
-BuildRequires(pre): rpm-build-python3
-%if_with docs
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-repoze.sphinx.autointerface
-%endif
-
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.event
@@ -34,56 +33,29 @@ BuildRequires: python3-module-zope.testing
 %endif
 
 %description
-This is a separate distribution of the %oname package used in
+This is a separate distribution of the %pypi_name package used in
 Zope 3, along with the packages it depends on.
 
 %package tests
-Summary: Tests for %oname
+Summary: Tests for %pypi_name
 Group: Development/Python3
 Requires: %name = %EVR
 %py3_requires zope.event
 
 %description tests
-This package contains tests for %oname.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-This package contains documentation for %oname.
+This package contains tests for %pypi_name.
 
 %prep
 %setup
-
-%if_with docs
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-%endif
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-%if_with docs
-export PYTHONPATH=$PWD/src
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
-%make SPHINXBUILD="sphinx-build-3" -C docs html
-
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
+%pyproject_install
 
 %check
 export PIP_INDEX_URL=http://host.invalid./
@@ -94,25 +66,22 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/zope/interface/tests
-%exclude %python3_sitelibdir/zope/interface/common/tests
-%if_with docs
-%exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
-%endif
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
+%exclude %python3_sitelibdir/%ns_name/%mod_name/common/tests/
+%exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %files tests
-%python3_sitelibdir/zope/interface/tests
-%python3_sitelibdir/zope/interface/common/tests
+%python3_sitelibdir/%ns_name/%mod_name/tests/
+%python3_sitelibdir/%ns_name/%mod_name/common/tests/
 
 %changelog
+* Fri Aug 04 2023 Stanislav Levin <slev@altlinux.org> 6.0-alt1
+- 5.4.0 -> 6.0.
+- Modernized packaging.
+
 * Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.4.0-alt2.1
 - NMU: mapped PyPI name to distro's one.
 
