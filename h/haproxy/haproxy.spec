@@ -7,8 +7,8 @@
 %def_enable lua
 
 Name: haproxy
-Version: 2.6.13
-Release: alt1.1
+Version: 2.8.2
+Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 License: GPLv2+
@@ -45,7 +45,10 @@ risking the system's stability.
 %setup
 
 %build
-%make_build V=1 IGNOREGIT=1 CPU="generic" TARGET="linux-glibc" USE_OPENSSL=1 USE_PCRE2=1 USE_SLZ=1 %{?_enable_lua:USE_LUA=1} \
+export VERDATE="$(date '+%%+4Y/%%m/%%d')"
+export VERSION="%version"
+export SUBVERS="-%release"
+%make_build V=1 CPU="generic" TARGET="linux-glibc" USE_OPENSSL=1 USE_PCRE2=1 USE_SLZ=1 %{?_enable_lua:USE_LUA=1} \
 %ifarch mipsel
     USE_LIBATOMIC=1 \
 %endif
@@ -97,6 +100,9 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Wed Aug 09 2023 Alexey Shabalin <shaba@altlinux.org> 2.8.2-alt1
+- 2.8.2
+
 * Sat May 27 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.13-alt1.1
 - add info about CVE to changelog
 
