@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.4
+Version: 2.1.5
 Release: alt1
 
 Summary: The build backend used by PDM that supports latest packaging standards
@@ -47,12 +47,10 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %pyproject_builddeps_metadata
-
-# installed directly via pip
-BuildRequires: python3(pytest)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(editables)
-BuildRequires: python3-devel
+# not packaged yet
+%add_pyproject_deps_check_filter vendoring
+%pyproject_builddeps -- pdm_test --exclude %pyproject_deps_check_filter
+%pyproject_builddeps -- pdm_dev --exclude %pyproject_deps_check_filter
 %endif
 
 %description
@@ -82,6 +80,10 @@ sed -i \
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync pdm_test pdm test
+%pyproject_deps_resync pdm_dev pdm dev
+%endif
 
 %build
 %pyproject_build
@@ -98,6 +100,9 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Aug 09 2023 Stanislav Levin <slev@altlinux.org> 2.1.5-alt1
+- 2.1.4 -> 2.1.5.
+
 * Fri Jul 21 2023 Stanislav Levin <slev@altlinux.org> 2.1.4-alt1
 - 2.1.0 -> 2.1.4.
 
