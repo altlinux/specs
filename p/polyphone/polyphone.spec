@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     polyphone
-Version:  2.3.0
+Version:  2.3.1
 Release:  alt1
 
 Summary:  A soundfont editor for quickly designing musical instruments
@@ -76,6 +76,9 @@ rm -rf %buildroot%_mandir/fr
 %doc %_docdir/%name
 
 %changelog
+* Wed Aug 09 2023 Ivan A. Melnikov <iv@altlinux.org> 2.3.1-alt1
+- 2.3.1
+
 * Mon Mar 14 2022 Ivan A. Melnikov <iv@altlinux.org> 2.3.0-alt1
 - 2.3.0
 - add Rissian translation
