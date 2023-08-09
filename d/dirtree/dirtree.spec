@@ -3,7 +3,7 @@
 %define real_name tree
 
 Name:    dirtree
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: a recursive directory listing command
@@ -64,6 +64,9 @@ install -D -m 644 doc/%{real_name}.1  %buildroot%_man1dir/%{name}.1
 %_man1dir/%{name}.*
 
 %changelog
+* Wed Aug 09 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.1.1-alt1
+- New version
+
 * Sun Jan 15 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.1.0-alt1
 - New version
 
