@@ -12,7 +12,7 @@
 %define default_luks_format LUKS2
 
 Name: cryptsetup
-Version: 2.4.3
+Version: 2.6.1
 Release: alt1
 
 Summary: Utility to setup a encrypted disks with LUKS support
@@ -40,6 +40,7 @@ BuildRequires: libsystemd-devel
 BuildRequires: libblkid-devel
 BuildRequires: libssh-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
+BuildRequires: /usr/bin/asciidoctor
 
 %if "%default_crypto_backend" == "gcrypt"
 # Need support for fixed gcrypt PBKDF2 and fixed Whirlpool hash.
@@ -211,7 +212,7 @@ rm -rf %buildroot/%_lib/%name/*.la
 
 %files -f %name.lang
 %doc docs/*
-%doc AUTHORS FAQ README.md
+%doc AUTHORS FAQ.md README.md
 %doc --no-dereference COPYING COPYING.LGPL
 %doc README.ALT.utf-8
 %_root_sbindir/*
@@ -244,6 +245,9 @@ rm -rf %buildroot/%_lib/%name/*.la
 %_root_sbindir/cryptsetup-ssh
 
 %changelog
+* Wed Aug 09 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt1
+- 2.6.1.
+
 * Mon Jan 17 2022 Alexey Shabalin <shaba@altlinux.org> 2.4.3-alt1
 - 2.4.3 (Fixes: CVE-2021-4122).
 
