@@ -1,16 +1,16 @@
 %define oname dotenv
 %define pypi_name python-dotenv
 
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
 Provides: python3-module-%oname = %EVR
 Obsoletes: python3-module-%oname < 1.0.0-alt2
 
-Summary: Reads the key-value pair from .env file and adds them to environment variable.
+Summary: Reads the key-value pair from .env file and adds them to environment variable
 
 License: BSD-3-Clause
 Group: Development/Python
@@ -21,13 +21,12 @@ Source1: %pyproject_deps_config_name
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires(pre): /dev/pts
-BuildRequires(pre): /proc
 %pyproject_builddeps_build
 %pyproject_runtimedeps_metadata
 
 %if_with check
-BuildRequires: python3(IPython)
+BuildRequires: /dev/pts
+BuildRequires: /proc
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -64,6 +63,9 @@ rm -f src/dotenv/ipython.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Aug 09 2023 Alexandr Shashkin <dutyrok@altlinux.org> 1.0.0-alt3
+- enabled the tests
+
 * Mon Jul 31 2023 Vladimir Didenko <cow@altlinux.org> 1.0.0-alt2
 - rename package to use PyPI name
 - incorporate changes from Alexander Shashkin (dutyrok@)
