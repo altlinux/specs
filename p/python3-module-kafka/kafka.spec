@@ -6,31 +6,25 @@
 
 Name: python3-module-%mod_name
 Version: 2.0.2
-Release: alt2
+Release: alt3
 Summary: Pure Python client for Apache Kafka
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/kafka-python/
 VCS: https://github.com/dpkp/kafka-python.git
-
+BuildArch: noarch
 Source: %name-%version.tar
 Source1: debundler.py.in
+Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(crc32c)
-BuildRequires: python3(lz4)
-BuildRequires: python3(mock)
-BuildRequires: python3(pytest-mock)
-BuildRequires: python3(snappy)
-BuildRequires: python3(xxhash)
+%add_pyproject_deps_check_filter docker-py
+%add_pyproject_deps_check_filter sphinx
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %filter_from_requires /python3(kafka\.vendor\..*)/d
@@ -48,6 +42,12 @@ and Snappy compression is also supported for message sets.
 %prep
 %setup
 %patch -p1
+
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
+%endif
 
 VENDORED_PATH='kafka/vendor'
 UNVENDORED_PATH="$VENDORED_PATH/__init__.py"
@@ -70,7 +70,7 @@ sed -i '1{/#!/d}' example.py
 chmod -x example.py
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc *.md example.py
@@ -78,6 +78,9 @@ chmod -x example.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 09 2023 Stanislav Levin <slev@altlinux.org> 2.0.2-alt3
+- Fixed FTBFS (Python 3.11).
+
 * Sun May 14 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.2-alt2
 - (NMU) Added missing provide.
 
