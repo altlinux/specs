@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 Summary: Python subprocess replacement
 License: MIT
@@ -54,9 +54,12 @@ systems - Linux, macOS, BSDs etc. Specifically, Windows is not supported.
 %install
 %pyproject_install
 
+# don't ship files in the root of sitepackages
+rm %buildroot%python3_sitelibdir/*.{md,txt}
+
 %check
 export SH_TESTS_RUNNING=1
-%pyproject_run_unittest
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc README.*
@@ -65,6 +68,9 @@ export SH_TESTS_RUNNING=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 09 2023 Stanislav Levin <slev@altlinux.org> 2.0.5-alt1
+- 2.0.4 -> 2.0.5.
+
 * Wed May 17 2023 Stanislav Levin <slev@altlinux.org> 2.0.4-alt1
 - 1.12.14 -> 2.0.4.
 
