@@ -16,7 +16,7 @@ BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 
 Name:    fontpackages
 Version: 1.44
-Release: alt7_24
+Release: alt8_24
 Summary: Common directory and macro definitions used by font packages
 
 # Mostly means the scriptlets inserted via this package do not change the
@@ -32,7 +32,7 @@ BuildArch: noarch
 BuildRequires: rpm-build-perl
 Source44: import.info
 Patch33: macros.fonts.diff
-
+Conflicts: rpm-build-fedora-compat-fonts
 
 %description
 This package contains the basic directory layout, spec templates, rpm macros
@@ -158,6 +158,9 @@ mv %buildroot%_rpmmacrosdir/macros.fonts  %buildroot%_rpmmacrosdir/%name
 %{ftcgtemplatedir}/*txt
 
 %changelog
+* Wed Aug 09 2023 Igor Vlasenko <viy@altlinux.org> 1.44-alt8_24
+- added Conflicts: rpm-build-fedora-compat-fonts (closes: #47132)
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 1.44-alt7_24
 - restored as compat package
 
