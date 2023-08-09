@@ -11,8 +11,8 @@
 %define frame_border   navy
 
 Name: WindowMaker
-Version: 0.95.9
-Release: alt3
+Version: 0.96.0
+Release: alt1
 Packager: %packager
 
 Summary: A window manager for the X Window System
@@ -167,7 +167,7 @@ Utility for root window image setting
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1 -R
-%patch3 -p1 -R
+#%%patch3 -p1 -R
 
 sed -i 's,/usr/lib/GNUstep,%gnustepdir,g' \
 	altlinux/etc/X11/WindowMaker/WMWindowAttributes
@@ -311,6 +311,9 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Mon Aug 07 2023 Andrey Bergman <vkni@altlinux.org> 0.96.0-alt1
+- Update to version 0.96.0
+
 * Tue Jan 17 2023 Michael Shigorin <mike@altlinux.org> 0.95.9-alt3
 - Url: changed back to canonical one (thx @lolgentoo)
 

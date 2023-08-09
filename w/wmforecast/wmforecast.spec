@@ -1,6 +1,6 @@
 Name: wmforecast
-Version: 0.11
-Release: alt1.1
+Version: 1.9.0
+Release: alt1
 
 Summary: weather dockapp for Window Maker using the Yahoo Weather API
 License: GPLv3+, CC-BY-SA-3.0 (icons)
@@ -14,7 +14,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Thu Feb 11 2016 (-bi)
 # optimized out: elfutils fontconfig libX11-devel libwraster-devel pkg-config python-base xorg-xproto-devel xz
-BuildRequires: libWINGs-devel libcurl-devel libxml2-devel
+BuildRequires: libWINGs-devel libcurl-devel libxml2-devel libgweather4.0-devel
 
 BuildRequires: help2man
 
@@ -41,7 +41,7 @@ sed -i  's/Sunnyvale, CA/Moscow, Russia/' %name.1*
 %makeinstall_std
 
 %files
-%doc AUTHORS README ChangeLog NEWS
+%doc AUTHORS README.md NEWS.md
 %_man1dir/*
 %_bindir/*
 %_datadir/%name/
@@ -50,6 +50,9 @@ sed -i  's/Sunnyvale, CA/Moscow, Russia/' %name.1*
 %_iconsdir/*/*/*/*.svg
 
 %changelog
+* Tue Aug 08 2023 Andrey Bergman <vkni@altlinux.org> 1.9.0-alt1
+- Update to version 1.9.0
+
 * Mon Mar 13 2017 Andrey Bergman <vkni@altlinux.org> 0.11-alt1.1
 - Updated release for rebuild.
 
