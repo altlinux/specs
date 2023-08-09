@@ -1,13 +1,13 @@
 # spec file for package ripasso
 #
 
-# Not usable yet - 20210706
+# Not usable yet - 20230808
 %def_without  gtk
-# Not even buildable yet - 202010706
+# Not even buildable yet - 20230808
 %def_without  qml
 
 Name: ripasso
-Version: 0.6.0
+Version: 0.6.5
 Release: alt1
 
 Summary: a simple password manager written in Rust
@@ -65,7 +65,7 @@ install -Dm664 -- %SOURCE2 .cargo/config
 export CARGO_HOME=`pwd`/cargo
 cargo build --release --offline
 
-for d in cursive %{?_with_gtk:gkt} %{?_with_qml:qml}; do
+for d in cursive %{?_with_gtk:gtk} %{?_with_qml:qml}; do
    pushd $d
      cargo build --release --offline
    popd
@@ -74,7 +74,7 @@ done
 %install
 # Binary files:
 mkdir -p -- %buildroot%_bindir
-for d in cursive %{?_with_gtk:gkt} %{?_with_qml:qml}; do
+for d in cursive %{?_with_gtk:gtk} %{?_with_qml:qml}; do
    cp -a -- target/release/ripasso-$d %buildroot%_bindir/
 done
 
@@ -99,6 +99,9 @@ cp -a -- target/translations/*  %buildroot%_datadir/%name/
 
 
 %changelog
+* Tue Aug 08 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.6.5-alt1
+- New version
+
 * Sat Dec 10 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.6.0-alt1
 - New version
 
