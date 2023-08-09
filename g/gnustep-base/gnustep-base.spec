@@ -4,9 +4,13 @@
 %def_without objc2
 %def_with doc
 
+# Apparently, modern autoconf does not support
+# setting AC_CONFIG_AUX_DIR dynamically
+%set_autoconf_version 2.60
+
 Name: gnustep-base
 Version: 1.29.0
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -29,7 +33,7 @@ BuildRequires: libgnustep-objc2-devel
 %endif
 BuildRequires: pkgconfig libssl-devel
 BuildRequires: libxml2-devel libxslt-devel zlib-devel libffi-devel mount
-BuildRequires: libffcall-devel libgmp-devel libbfd-devel libgcrypt-devel
+BuildRequires: libgmp-devel libbfd-devel libgcrypt-devel
 BuildRequires: libicu-devel /proc
 %if_with doc
 BuildRequires: texinfo texi2html texlive-latex-base gnustep-make-doc
@@ -93,7 +97,7 @@ export OBJCFLAGS="$OBJCFLAGS -D__GNU_LIBOBJC__=1"
 	--libexecdir=%_libdir \
 	--enable-pass-arguments
 
-%make \
+%make_build \
 %if_with build_debug
 	messages=yes \
 	debug=yes \
@@ -176,6 +180,12 @@ fi
 %endif
  
 %changelog
+* Wed Aug 09 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.29.0-alt1.1
+- NMU: fix FTBFS plus minor cleanups:
+  + pin autoconf to 2.60
+  + drop unused libffcall from BR
+  + enable parrallel build
+
 * Tue Jan 10 2023 Andrey Cherepanov <cas@altlinux.org> 1:1.29.0-alt1
 - New version.
 
