@@ -1,13 +1,14 @@
 %def_disable snapshot
 %define _name cloudproviders
 %define ver_major 0.3
+%define api_ver %ver_major
 
 %def_enable gtk_doc
 %def_enable check
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library for integration of cloud storage providers
@@ -23,7 +24,8 @@ Source: %name-%version.tar
 
 %define glib_ver 2.52
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel vala-tools
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
@@ -36,7 +38,7 @@ services.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 %name is a library for desktop integration of cloud storage providers.
@@ -47,7 +49,7 @@ applications that use %name.
 %package gir
 Summary: GObject introspection data for %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for %_name library
@@ -56,7 +58,8 @@ GObject introspection data for %_name library
 Summary: GObject introspection devel data for %name
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-devel = %EVR
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %_name library
@@ -75,7 +78,7 @@ This package contains development documentation for %name.
 %package tests
 Summary: Tests for %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -94,7 +97,7 @@ the functionality of the installed %_name library.
 %meson_install
 
 %check
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%name.so.*
@@ -107,10 +110,10 @@ the functionality of the installed %_name library.
 %_vapidir/%_name.*
 
 %files gir
-%_typelibdir/CloudProviders-%ver_major.typelib
+%_typelibdir/CloudProviders-%api_ver.typelib
 
 %files gir-devel
-%_girdir/CloudProviders-%ver_major.gir
+%_girdir/CloudProviders-%api_ver.gir
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -119,14 +122,17 @@ the functionality of the installed %_name library.
 
 %if_enabled installed_tests
 %files tests
-%_bindir/testcloudprovidersclient
-%_bindir/testcloudprovidersserver
+%_bindir/test%{_name}client
+%_bindir/test%{_name}server
 %dir %_datadir/cloud-providers
 %_datadir/cloud-providers/org.freedesktop.CloudProviders.ServerExample.ini
 %_datadir/dbus-1/services/org.freedesktop.CloudProviders.ServerExample.service
 %endif
 
 %changelog
+* Wed Aug 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Mon Jun 08 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
