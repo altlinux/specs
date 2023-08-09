@@ -1,6 +1,6 @@
 Name: hunspell
 Summary: Hunspell is a spell checker and morphological analyzer
-Version: 1.7.0
+Version: 1.7.2
 Release: alt1
 License: LGPL
 Group: Text tools
@@ -89,6 +89,9 @@ mkdir -p %buildroot%_datadir/myspell
 %_bindir/wordlist2hunspell
 
 %changelog
+* Wed Aug 09 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.7.2-alt1
+- 1.7.2
+
 * Tue Nov 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.7.0-alt1
 - 1.7.0
 
