@@ -1,6 +1,6 @@
-Name: libmarble
-Version: 42
-Release: alt1.git6dcc6fe
+Name: libmarblepq
+Version: 2.0.0
+Release: alt1.gitf240b2e
 
 Summary: A collection of useful functions and reusable GTK widgets.
 License: GPL-3.0
@@ -21,41 +21,41 @@ BuildRequires: gobject-introspection-devel
 A collection of useful functions and reusable GTK widgets.
 
 %package devel
-Summary: Development libraries and header files for Marble
+Summary: Development libraries and header files for MarblePQ
 Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
 This package package includes the libraries and header files
-for the Marble library.
+for the MarblePQ library.
 
 %package gir
-Summary: GObject introspection data for the Marble library
+Summary: GObject introspection data for the MarblePQ library
 Group: System/Libraries
 Requires: %name = %version-%release
 
 %description gir
-GObject introspection data for the Marble library.
+GObject introspection data for the MarblePQ library.
 
 %package gir-devel
-Summary: GObject introspection devel data for the Marble library
+Summary: GObject introspection devel data for the MarblePQ library
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-devel = %version-%release
 Requires: %name-gir = %version-%release
 
 %description gir-devel
-GObject introspection devel data for the Marble library.
+GObject introspection devel data for the MarblePQ library.
 
 
 %package vala
-Summary: Vala language bindings for the Marble library
+Summary: Vala language bindings for the MarblePQ library
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-devel = %version-%release
 
 %description vala
-This package provides Vala language bindings for the Marble library.
+This package provides Vala language bindings for the MarblePQ library.
 
 %prep
 %setup
@@ -89,5 +89,8 @@ This package provides Vala language bindings for the Marble library.
 %_vapidir/*.deps
 
 %changelog
+* Mon Sep 19 2022 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1.gitf240b2e
+- new version with the rename marble -> marblepq
+
 * Mon Sep 19 2022 Vladimir Didenko <cow@altlinux.org> 42-alt1.git6dcc6fe
 - new version

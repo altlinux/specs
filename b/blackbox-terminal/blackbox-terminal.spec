@@ -2,10 +2,10 @@
 %define _name blackbox
 
 Name: blackbox-terminal
-Version: 0.13.2
-Release: alt1
+Version: 0.14.0
+Release: alt4.gitdc3417f
 
-Summary: A beautiful GTK 4 terminal.
+Summary: A beautiful GTK 4 terminal
 License: GPL-3.0
 Group: Terminals
 
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Provides: xvt
+Provides: x-terminal-emulator
 # Executable file name conflict
 Conflicts: blackbox
 
@@ -29,7 +30,7 @@ BuildRequires: libgio-devel
 BuildRequires: libgtk4-devel
 BuildRequires: libvte3-devel >= %vte_ver
 BuildRequires: libadwaita-devel
-BuildRequires: libmarble-vala
+BuildRequires: libmarblepq-vala
 BuildRequires: libpcre2-devel libxml2-devel
 BuildRequires: librsvg-devel
 BuildRequires: libjson-glib-devel
@@ -43,25 +44,46 @@ A beautiful GTK 4 terminal.
 %setup
 
 %build
-%meson
+%meson -Dblackbox_is_flatpak=false -Ddevel=false
 %meson_build
 
 %install
 %meson_install
+
+# alternatives (gnome-terminal -- 39)
+mkdir -p %buildroot%_altdir
+cat >%buildroot%_altdir/%_name <<EOF
+%_bindir/xvt	%_bindir/%_name	38
+%_bindir/x-terminal-emulator	%_bindir/%_name	38
+EOF
 
 %find_lang %_name
 
 %files -f %_name.lang
 %doc COPYING README.md
 %_bindir/%_name
+%_altdir/%_name
 %_datadir/%_name
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/*
 %_iconsdir/hicolor/*/actions/*.svg
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Wed Aug 9 2023 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt4.gitdc3417f
+- Change alternatives priority to avoid conflict with gnome-terminal
+
+* Wed Aug 9 2023 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt3.gitdc3417f
+- Provide x-terminal-emulator (closes: #47180)
+- Support alternatives
+
+* Tue Aug 8 2023 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt2.gitdc3417f
+- New version
+
+* Tue Jul 18 2023 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt1
+- New version
+
 * Thu Mar 9 2023 Vladimir Didenko <cow@altlinux.org> 0.13.2-alt1
 - New version
 
