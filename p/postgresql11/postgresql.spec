@@ -11,8 +11,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     11
-%define postgresql_minor     20
-%define postgresql_altrel    2
+%define postgresql_minor     21
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -928,6 +928,9 @@ fi
 %endif
 
 %changelog
+* Wed Aug 09 2023 Alexei Takaseev <taf@altlinux.org> 11.21-alt1
+- 11.21 (Fixes CVE-2023-39417)
+
 * Mon Jul 24 2023 Alexei Takaseev <taf@altlinux.org> 11.20-alt2
 - Use autoconf_2.60
 
