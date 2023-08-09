@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.13
-Release: alt7
+Release: alt8
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -475,6 +475,10 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Wed Aug 02 2023 Mikhail Efremov <sem@altlinux.org> 1:4.13-alt8
+- usermod: Allow group and submap operations for non-local user
+  (closes: #46847).
+
 * Wed Jun 21 2023 Nikolay Burykin <bne@altlinux.org> 1:4.13-alt7
 - newuidmap/newgidmap: Added cap_dac_read_search to all modes (ALT #46462).
 
