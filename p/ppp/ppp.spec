@@ -1,25 +1,22 @@
-
+%define _unpackaged_files_terminate_build 1
 %def_disable static
-
+%def_enable systemd
+%def_enable cbcp
+%def_enable microsoft-extensions
+%def_enable multilink
+%def_with atm
 %def_with pam
-%def_with cbcp
-%def_with chapms
-%def_with mppe
-%def_with libatm
-%def_with inet6
-%def_with systemd
-# https://bugzilla.redhat.com/1556132
-%def_without crypt
+%def_with pcap
 
 Name: ppp
-Version: 2.4.8
-Release: alt3
+Version: 2.5.0
+Release: alt1
 
 Summary: The PPP daemon and documentation
-License: distributable
-Group: System/Servers
+License: BSD-3-Clause AND LGPL-2.1-or-later AND GPL-2.0-or-later
+Group: Networking/Other
 
-Url: http://ppp.samba.org
+Url: https://ppp.samba.org
 
 Source0: %name-%version.tar
 Source2: ppp.pamd
@@ -28,17 +25,14 @@ Source5: ppp.logrotate
 Source6: ppp.tmpfiles
 Source7: 95-ppp.rules
 
-# eaptls and openssl need manual conflict resolution
-# TODO: %%def_with'ize those?
 Patch1: %name-%version-%release.patch
 
-Obsoletes: ppp-cbcp, ppp-mppe
-Obsoletes: ppp-extra
-
-BuildRequires: libpam-devel libpcap-devel libssl-devel perl-IPC-Signal perl-Proc-Daemon perl-Proc-WaitStat libudev-devel
-%{?_with_libatm:BuildRequires: libatm-devel}
-%{?_with_systemd:BuildRequires: libsystemd-devel}
-Requires: ppp-common libssl
+BuildRequires: libssl-devel perl-IPC-Signal perl-Proc-Daemon perl-Proc-WaitStat
+%{?_with_pam:BuildRequires: libpam-devel}
+%{?_with_pcap:BuildRequires: libpcap-devel}
+%{?_with_atm:BuildRequires: libatm-devel}
+%{?_enable_systemd:BuildRequires: libsystemd-devel}
+Requires: ppp-common
 Requires: kmod >= 14
 Requires: udev >= 204-alt2
 
@@ -48,7 +42,6 @@ Requires: udev >= 204-alt2
 Summary: Header files needed for building extra pppd plugins
 Group: Development/C
 Requires: %name = %version-%release
-BuildArch: noarch
 
 %package radius
 Summary: RADIUS authentication plugin for pppd
@@ -63,11 +56,6 @@ Requires: %name = %version-%release
 
 %package pppoe
 Summary: PPP over ethernet plugin for pppd
-Group: System/Servers
-Requires: %name = %version-%release
-
-%package dhcp
-Summary: DHCP plugin for %{name}
 Group: System/Servers
 Requires: %name = %version-%release
 
@@ -94,10 +82,6 @@ PPP over ATM plugin for pppd.
 %description pppoe
 PPP over ethernet plugin for pppd.
 
-%description    dhcp
-DHCP plugin for pppd.
-
-
 %prep
 %setup
 %patch1 -p1
@@ -110,41 +94,36 @@ sed -i -e "s|/etc/radiusclient|/etc/ppp/radius|g" \
 		pppd/plugins/radius/{*.8,*.c,*.h} \
 		pppd/plugins/radius/etc/*
 
-find -type f -name \*.orig -print -delete
-rm -f include/linux/if_pppol2tp.h
 
 %build
-%add_optflags -fPIC -Wall -D_GNU_SOURCE -fno-strict-aliasing
-%configure
-%make_build %{?_with_pam:USE_PAM=y} \
-	    %{?_with_cbcp:CBCP=y} \
-	    %{?_with_chapms:CHAPMS=y} \
-	    %{?_with_crypt:USE_CRYPT=y} \
-	    %{?_with_mppe:MPPE=y} \
-	    %{?_with_libatm:HAVE_LIBATM=y} \
-	    %{?_with_inet6:HAVE_INET6=y} \
-	    %{?_with_systemd:SYSTEMD=y} \
-	    COPTS="%optflags" \
-	    CC="gcc" \
-	    libdir=%_libdir
+%autoreconf
+%configure \
+    %{subst_enable static} \
+    %{subst_enable systemd} \
+    %{subst_enable cbcp} \
+    %{?_enable_microsoft_extensions:--enable-microsoft-extensions} \
+    %{subst_enable multilink} \
+    --runstatedir=/run \
+    --localstatedir=%_var \
+    --with-runtime-dir=/run/%name \
+    --with-logfile-dir=%_logdir/%name \
+    --with-system-ca-path=/var/lib/ssl/certs \
+    %{subst_with atm} \
+    %{subst_with pam} \
+    %{subst_with pcap} \
+    %nil
+
+%make_build
 
 %install
-%make_install install 	DESTDIR=%buildroot \
-			BINDIR=%buildroot%_sbindir \
-			INCDIR=%buildroot%_includedir \
-			libdir=%_libdir \
-			MANDIR=%buildroot%_man8dir \
-			RUNDIR=%buildroot%_var/run/ppp \
-			LOGDIR=%buildroot%_logdir/ppp
-%make_install install-etcppp INSTROOT=%buildroot \
-			ETCDIR=%buildroot%_sysconfdir/%name
+%makeinstall_std
 
 for f in `find scripts/ sample/ -type f`; do
 	chmod 644 "$f"
-	if fgrep -qs /usr/local/bin/ "$f"; then
+	if grep -F -qs /usr/local/bin/ "$f"; then
 		subst -p 's|/usr/local/bin|%_bindir|g' "$f"
 	fi
-	if file -b "$f" |fgrep -qs 'shell script'; then
+	if file -b "$f" |grep -F -qs 'shell script'; then
 		chmod a+x "$f"
 	fi
 done
@@ -152,29 +131,19 @@ done
 install -pDm640 %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
 
 mkdir -p %buildroot%_sysconfdir/%name/peers
-install -pm600 sample/callback-* %buildroot%_sysconfdir/%name/
-
 mkdir -p %buildroot%_sysconfdir/%name/radius
 cp -a pppd/plugins/radius/etc/* %buildroot%_sysconfdir/%name/radius/
 
 install -pDm755 %SOURCE4 %buildroot%_controldir/%name
 
-# Provide pointers for people who expect stuff in old places
-mkdir -p %buildroot{%_logdir,%_var/run}/%name
+mkdir -p %buildroot%_logdir/%name
 touch %buildroot%_logdir/%name/connect-errors
-touch %buildroot%_var/run/%name/resolv.conf
-
-ln -s ../..%_logdir/%name/connect-errors %buildroot%_sysconfdir/%name/connect-errors
-ln -s ../..%_var/run/%name/resolv.conf %buildroot%_sysconfdir/%name/resolv.conf
 
 install -pDm644 %SOURCE6 %buildroot/%_tmpfilesdir/%name.conf
 install -pDm644 %SOURCE7 %buildroot/%_udevrulesdir/95-%name.rules
 
 # Logrotate script
 install -pDm644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/%name
-
-# Install EAP-TLS config examples
-install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 
 %pre
 %pre_control %name
@@ -191,22 +160,18 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %attr(600,root,root) %config(noreplace) %_sysconfdir/%name/*-secrets
 %attr(600,root,root) %config(noreplace) %_sysconfdir/%name/eaptls-*
 %attr(600,root,root) %config(noreplace) %_sysconfdir/%name/openssl*
-%attr(750,root,root) %config(noreplace) %_sysconfdir/%name/callback-*
 %attr(644,root,root) %config(noreplace) %_sysconfdir/%name/options
-%attr(600,root,root) %_sysconfdir/%name/connect-errors
-%attr(644,root,root) %_sysconfdir/%name/resolv.conf
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/pam.d/%name
 %_tmpfilesdir/%name.conf
 %_udevrulesdir/95-%name.rules
 %config %_controldir/%name
 %_libdir/pppd
-%_var/run/%name
+%exclude %_libdir/pppd/*/*.la
 %_logdir/%name/*
-%{?_with_libatm:%exclude %_libdir/pppd/%version/pppoatm.so}
-%exclude %_libdir/pppd/%version/rp-pppoe.so
+%{?_with_atm:%exclude %_libdir/pppd/%version/pppoatm.so}
+%exclude %_libdir/pppd/%version/pppoe.so
 %exclude %_libdir/pppd/%version/rad*
-%exclude %_libdir/pppd/%version/dhcpc.so
 %_man8dir/*.8*
 %exclude %_man8dir/*rad*
 %exclude %_man8dir/pppoe-discovery*
@@ -214,14 +179,15 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 
 %files devel
 %_includedir/pppd
+%_pkgconfigdir/pppd.pc
 
-%if_with libatm
+%if_with atm
 %files pppoatm
 %_libdir/pppd/%version/pppoatm.so
 %endif
 
 %files pppoe
-%_libdir/pppd/%version/rp-pppoe.so
+%_libdir/pppd/%version/pppoe.so
 %attr(755,root,root) %_sbindir/pppoe-discovery
 %_man8dir/pppoe-discovery*
 
@@ -230,13 +196,12 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %_man8dir/*rad*
 %config(noreplace) %_sysconfdir/%name/radius/
 
-%files dhcp
-%doc pppd/plugins/dhcp/README
-%doc pppd/plugins/dhcp/AUTHORS
-%doc pppd/plugins/dhcp/COPYING
-%_libdir/pppd/%version/dhcpc.so
-
 %changelog
+* Fri Aug 04 2023 Alexey Shabalin <shaba@altlinux.org> 2.5.0-alt1
+- 2.5.0
+- new gear history without old patches
+- drop dhcp plugin
+
 * Wed Apr 21 2021 Slava Aseev <ptrnine@altlinux.org> 2.4.8-alt3
 - fix FTBFS due to sys_errlist removal in glibc
 

@@ -1,7 +1,7 @@
 %define nm_version 1.20.0
 #define git_date .git20170115
 %define git_date %nil
-%define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
+%define ppp_version %(pkg-config --modversion pppd 2>/dev/null || (%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
 %define _unpackaged_files_terminate_build 1
 
@@ -9,7 +9,7 @@
 
 Name: NetworkManager-l2tp
 Version: 1.20.10
-Release: alt1%git_date
+Release: alt2%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
@@ -120,6 +120,9 @@ This package contains files for GTK4 applications to use %name.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Aug 08 2023 Alexey Shabalin <shaba@altlinux.org> 1.20.10-alt2
+- Fixed rebuild with ppp-2.5.0.
+
 * Wed Jun 28 2023 Mikhail Efremov <sem@altlinux.org> 1.20.10-alt1
 - Fixed AC_CHECK_HEADERS usage.
 - Updated to 1.20.10.

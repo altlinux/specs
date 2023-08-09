@@ -1,7 +1,7 @@
 %define nm_version 1.2.28
 %define nm_applet_version 1.2.28
 %define nm_applet_name NetworkManager-applet-gtk
-
+%define ppp_version %(pkg-config --modversion pppd 2>/dev/null || (%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 %def_with gtk4
 %def_without libnm_glib
 
@@ -9,15 +9,13 @@
 
 Name: NetworkManager-fortisslvpn
 Version: 1.4.0
-Release: alt1
-License: %gpl2plus
+Release: alt2
+License: GPLv2+
 Group: System/Configuration/Networking
 Summary: Fortinet compatible SSLVPN support for NetworkManager
 Url: https://gitlab.gnome.org/GNOME/NetworkManager-fortisslvpn.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: intltool
 BuildRequires: libnm-devel >= %nm_version
@@ -38,12 +36,13 @@ BuildRequires: ppp-devel
 
 Requires: NetworkManager-daemon >= %nm_version
 Requires: openfortivpn
+Requires: ppp = %ppp_version
 
 %description
 Fortinet SSLVPN support for NetworkManager
 
 %package gtk
-License: %gpl2plus
+License: GPLv2+
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
 Requires: %nm_applet_name >= %nm_applet_version
@@ -57,7 +56,7 @@ This package contains applications for use with
 NetworkManager panel applet.
 
 %package gtk4
-License: %gpl2plus
+License: GPLv2+
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
 Requires: %nm_applet_name >= %nm_applet_version
@@ -98,15 +97,15 @@ make check
 %_libexecdir/NetworkManager/nm-fortisslvpn-service
 %_libexecdir/NetworkManager/nm-fortisslvpn-pinentry
 %_libdir/NetworkManager/libnm-vpn-plugin-fortisslvpn.so
-%_libdir/pppd/*/*-plugin.so
+%_libdir/pppd/%ppp_version/*.so
 %config %_sysconfdir/dbus-1/system.d/nm-fortisslvpn-service.conf
 %if_with libnm_glib
 %config %_sysconfdir/NetworkManager/VPN/nm-fortisslvpn-service.name
 %endif
 %config %_libexecdir/NetworkManager/VPN/nm-fortisslvpn-service.name
 %attr(700,root,root) %dir %_localstatedir/%name
-%_datadir/appdata/*.xml
-%exclude %_libdir/pppd/*/*-plugin.la
+%_datadir/metainfo/*.xml
+%exclude %_libdir/pppd/%ppp_version/*.la
 %exclude %_libdir/NetworkManager/*.la
 
 %files gtk
@@ -120,6 +119,10 @@ make check
 %_libdir/NetworkManager/libnm-gtk4-vpn-plugin-fortisslvpn-editor.so
 
 %changelog
+* Tue Aug 08 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt2
+- Fixed build with ppp-2.5.0.
+- Update Russian translation.
+
 * Wed Nov 02 2022 L.A. Kostis <lakostis@altlinux.ru> 1.4.0-alt1
 - Build with gtk4 support.
 

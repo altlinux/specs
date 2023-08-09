@@ -4,7 +4,7 @@
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
 
-%define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
+%define ppp_version %(pkg-config --modversion pppd 2>/dev/null || (%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 %define wpa_supplicant_version 0.7.3-alt3
 %define dhcpcd_version 9.3.3
 %define openresolv_version 3.5.4-alt3
@@ -60,7 +60,7 @@
 
 Name: NetworkManager
 Version: 1.43.90
-Release: alt2%git_hash
+Release: alt3%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -688,6 +688,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Aug 08 2023 Alexey Shabalin <shaba@altlinux.org> 1.43.90-alt3
+- Fixed rebuild with ppp-2.5.0.
+
 * Fri Aug 04 2023 Mikhail Efremov <sem@altlinux.org> 1.43.90-alt2
 - Fixed nm-cloud-setup packaging (closes: #47118).
 - Fixed build without ifcfg-rh.

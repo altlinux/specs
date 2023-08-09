@@ -1,13 +1,14 @@
-%define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
+%define ppp_version %(pkg-config --modversion pppd 2>/dev/null || (%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
 Name: sstp-client
-Version: 1.0.12
+Version: 1.0.19
 Release: alt1
 Summary: Secure Socket Tunneling Protocol (SSTP) Client
 Group: System/Servers
 License: GPLv2+
 
 Url: http://sstp-client.sourceforge.net/
+Vcs: https://gitlab.com/sstp-project/sstp-client.git
 Source: %name-%version.tar
 Source2: %name.tmpfiles
 
@@ -48,10 +49,12 @@ This package is required to compile plugin's for sstp-client.
 %build
 %autoreconf
 %configure \
-		--disable-static \
-		--with-libevent=2 \
-		--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
-		--with-runtime-dir="/var/run/sstpc"
+    --disable-static \
+    --with-libevent=2 \
+    --with-pppd-auth-notify-support \
+    --with-system-ca-path="/var/lib/ssl/certs" \
+    --with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
+    --with-runtime-dir="/run/sstpc"
 %make_build
 
 %install
@@ -86,6 +89,9 @@ install -Dpm 644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Aug 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.0.19-alt1
+- 1.0.19
+
 * Tue Oct 02 2018 Alexey Shabalin <shaba@altlinux.org> 1.0.12-alt1
 - 1.0.12
 

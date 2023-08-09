@@ -1,37 +1,32 @@
-%define nm_version 1.2.0
-%define nm_applet_version 1.2.0
+%define nm_version 1.7.0
+%define nm_applet_version 1.8.0
 %define nm_applet_name NetworkManager-applet-gtk
-%define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
+%define ppp_version %(pkg-config --modversion pppd 2>/dev/null || (%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
-%def_without libnm_glib
+%def_with gtk4
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-sstp
-Version: 1.2.6
-Release: alt3
+Version: 1.3.1
+Release: alt1.git.f4395810
 
 Summary:  NetworkManager VPN plugin for SSTP
-License: %gpl2plus
+License: GPLv2+
 Group: System/Configuration/Networking
 
 Url: https://github.com/enaess/network-manager-sstp/
 Source: %name-%version.tar
-Patch100: 0001-Fixing-up-a-compiler-warning-that-broke-the-build-for-Eoan.patch
+Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-
-BuildRequires: ppp-devel libsstp-devel >= 1.0.8
+BuildRequires: ppp-devel libsstp-devel >= 1.0.10
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel >= %nm_applet_version
-%if_with libnm_glib
-BuildRequires: NetworkManager-devel >= %nm_version
-BuildRequires: libnm-glib-vpn-devel >= %nm_version
-BuildRequires: libnm-gtk-devel >= %nm_applet_version
-%endif
-BuildRequires: libgtk+3-devel
-BuildRequires: libsecret-devel
-BuildRequires: intltool gettext
+BuildRequires: libgtk+3-devel >= 3.4
+BuildRequires: libsecret-devel >= 0.18
+BuildRequires: libgnutls-devel
+BuildRequires: gettext
+%{?_with_gtk4:BuildRequires: libgtk4-devel libnma-gtk4-devel}
 
 Requires: NetworkManager-daemon >= %nm_version
 Requires: NetworkManager-ppp >= %nm_version
@@ -43,7 +38,7 @@ This package contains software for integrating the sstp VPN software
 with NetworkManager and the GNOME desktop
 
 %package gtk
-License: %gpl2plus
+License: GPLv2+
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
 Requires: %nm_applet_name >= %nm_applet_version
@@ -56,21 +51,31 @@ Provides: %name-gnome = %version-%release
 This package contains GNOME applications for use with
 NetworkManager panel applet.
 
+%package gtk4
+License: GPLv2+
+Summary: Files for GTK4 applications to use %name
+Group: Graphical desktop/GNOME
+Requires: %nm_applet_name >= %nm_applet_version
+Requires: NetworkManager-sstp = %version-%release
+
+%description gtk4
+This package contains files for GTK4 applications to use %name.
+
 %prep
 %setup
-%patch100 -p1
+%patch -p1
 
 %build
 rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %autoreconf
 %configure \
     --disable-static \
+    --disable-silent-rules \
     --libexecdir=%_libexecdir/NetworkManager \
     --localstatedir=%_var \
     --with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
-%if_without libnm_glib
-    --without-libnm-glib \
-%endif
+    --with-pppd-auth-notify-support \
+    %{subst_with gtk4} \
     --with-dist-version=%version-%release \
 %ifnarch %e2k
     --enable-more-warnings=error
@@ -86,27 +91,27 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 
 %files
 %doc AUTHORS ChangeLog COPYING
-%config %_sysconfdir/dbus-1/system.d/nm-sstp-service.conf
+%_datadir/dbus-1/system.d/nm-sstp-service.conf
 %_libexecdir/NetworkManager/nm-sstp-service
 %_libdir/NetworkManager/libnm-vpn-plugin-sstp.so
 %_libdir/pppd/%ppp_version/*.so
-%if_with libnm_glib
-%config %_sysconfdir/NetworkManager/VPN/nm-sstp-service.name
-%endif
 %config %_libexecdir/NetworkManager/VPN/nm-sstp-service.name
+%_datadir/metainfo/*.xml
 
 %files gtk -f %name.lang
-%if_with libnm_glib
-%_libdir/NetworkManager/libnm-sstp-properties.so
-%endif
 %_libexecdir/NetworkManager/nm-sstp-auth-dialog
 %_libdir/NetworkManager/libnm-vpn-plugin-sstp-editor.so
-%_datadir/appdata/*.xml
 
 %exclude %_libdir/NetworkManager/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
+%files gtk4
+%_libdir/NetworkManager/libnm-gtk4-vpn-plugin-sstp-editor.so
+
 %changelog
+* Mon Aug 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.3.1-alt1.git.f4395810
+- upstream master snapshot
+
 * Sun Sep 19 2021 Michael Shigorin <mike@altlinux.org> 1.2.6-alt3
 - E2K: ftbfs workaround
 - minor spec cleanup

@@ -1,10 +1,10 @@
-%define ppp_ver %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
+%define ppp_ver %(pkg-config --modversion pppd 2>/dev/null || (%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
 %def_enable bcrelay
 
 Name: pptpd
 Version: 1.4.0
-Release: alt3
+Release: alt4
 
 Summary: A PPTP server daemon
 License: GPLv2+ and LGPLv2+
@@ -39,10 +39,16 @@ protocols.
 %setup -q
 %patch -p1
 
-%build
+# configure.in is actually configure.ac
+mv configure.in configure.ac
 
-# dirty hack for fix wtmp work on x86_64
-sed -i -e "s,/usr/lib/pptpd,%_libdir/pptpd,g" pptpctrl.c
+# Automake 1.13 compatibility
+sed -i -e 's/AM_CONFIG_HEADER/AC_CONFIG_HEADER/' configure.ac 
+
+# remove 'missing' script to prevent warnings
+rm -f missing
+
+%build
 
 %autoreconf
 %configure \
@@ -77,6 +83,12 @@ install -pD -m644 %SOURCE3 %buildroot%_unitdir/%name.service
 %doc AUTHORS NEWS README* TODO samples tools ChangeLog* html
 
 %changelog
+* Mon Aug 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt4
+- upstream snapshot 3b7a80c3b63a9f9388991299f76c245bb900875e
+- fixed build with ppp-2.5.0 (thx floppym at gentoo.org)
+- /var/run -> /run for pid file
+- hardening systemd unit
+
 * Tue Oct 02 2018 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt3
 - rebuid without libwrap support
 - backport patches from upstream
