@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.1.18
+Version: 2.1.19
 Release: alt1
 
 Summary: cChardet is high speed universal character encoding detector
@@ -54,6 +54,9 @@ popd
 %doc CHANGES* README*
 
 %changelog
+* Wed Aug 09 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.19-alt1
+- 2.1.19
+
 * Fri Apr 07 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.18-alt1
 - first build for Sisyphus (obsoletes/provides python3-module-cchardet)
 
