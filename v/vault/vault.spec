@@ -2,10 +2,11 @@
 %define vault_user vault
 %define vault_group vault
 %define config_dir vault.d
+%def_with prebuild_webui
 
 Name:    vault
-Version: 1.13.3
-Release: alt2
+Version: 1.13.5
+Release: alt1
 
 Summary: A tool for secrets management, encryption as a service, and privileged access management
 License: MPL-2.0
@@ -20,7 +21,13 @@ Source4: %name.tmpfiles
 Source5: %name.sysconfig
 
 BuildRequires(pre): rpm-build-golang
+%if_without prebuild_webui
+BuildRequires(pre): rpm-build-nodejs
+BuildRequires: npm yarn
+BuildRequires: node node-devel node-sass
+%endif
 BuildRequires: golang
+BuildRequires: /proc
 
 %description
 %summary
@@ -28,14 +35,31 @@ BuildRequires: golang
 %prep
 %setup
 
+%if_without prebuild_webui
+ln -sf %nodejs_sitelib/node-sass ui/node_modules/node-sass
+%endif
+
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export TAGS="vault ui"
+%if_without prebuild_webui
+export PATH="$PATH:$PWD/webui/node_modules/.bin"
+%endif
 
 %golang_prepare
 
 cd .build/src/%import_path
+
+%if_without prebuild_webui
+mkdir -p ./http/web_ui
+pushd ui
+#npm rebuild node-sass
+yarn run --offline build
+popd
+%endif
+
 %golang_build .
 
 %install
@@ -76,6 +100,10 @@ setcap -q cap_ipc_lock+ep %_bindir/%name 2>/dev/null ||:
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Wed Aug 09 2023 Nikolay Burykin <bne@altlinux.org> 1.13.5-alt1
+- 1.13.5
+- build with webui (ALT #46783)
+
 * Sat Jun 17 2023 Nikolay Burykin <bne@altlinux.org> 1.13.3-alt2
 - Fix repocop warning init-condrestart
 
