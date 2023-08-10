@@ -1,9 +1,15 @@
 %def_without objc2
 %def_with doc
 
+# With LTO enabled here, gnustep-base fails to build. See also:
+# https://github.com/gnustep/libs-base/issues/172
+# https://bugzilla.redhat.com/show_bug.cgi?id=1923589
+# TODO: consider using -fcommon instead of disabling LTO
+%define optflags_lto %nil
+
 Name: gnustep-make
 Version: 2.8.0
-Release: alt2
+Release: alt2.1
 # https://github.com/gnustep/tools-make
 License: GPL-3.0+
 Group: Development/Objective-C
@@ -54,10 +60,7 @@ This package contains development documentation for %name.
 %setup
 %patch1 -p1
 
-%ifarch aarch64 ppc64le x86_64
-LIB_SUFF=64
-%endif
-sed -i "s|@64@|$LIB_SUFF|g" FilesystemLayouts/fhs-system-alt
+sed -i "s|@64@|%_libsuff|g" FilesystemLayouts/fhs-system-alt
 
 %build
 OBJCFLAGS="%optflags"
@@ -152,6 +155,11 @@ rm -f %buildroot%_infodir/*
 %endif
 
 %changelog
+* Thu Aug 10 2023 Ivan A. Melnikov <iv@altlinux.org> 2.8.0-alt2.1
+- NMU: get libdir suffix from rpm instead of hardcoding
+  a list of platforms (fixes build in riscv64).
+- disable LTO for gnustep.
+
 * Fri Oct 16 2020 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt2
 - Make gnustep-make-devel arch-depended package.
 
