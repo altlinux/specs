@@ -4,7 +4,7 @@
 %endif
 
 Name: octave
-Version: 8.2.0
+Version: 8.3.0
 Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
@@ -233,6 +233,9 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Thu Aug 10 2023 Cronbuild Service <cronbuild@altlinux.org> 8.3.0-alt1
+- repocop cronbuild 20230810. At your service.
+
 * Tue Apr 18 2023 Andrey Cherepanov <cas@altlinux.org> 8.2.0-alt1
 - New version.
 
