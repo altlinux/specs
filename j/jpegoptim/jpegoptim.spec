@@ -1,5 +1,5 @@
 Name: jpegoptim
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 
 Summary: Utility to optimize jpeg files
@@ -34,6 +34,9 @@ maximum quality factor.
 %doc README
 
 %changelog
+* Thu Aug 10 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.5-alt1
+- 1.5.5
+
 * Mon May 15 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.4-alt1
 - 1.5.4
 
