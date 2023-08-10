@@ -1,5 +1,5 @@
 Name: man-pages
-Version: 6.04
+Version: 6.05.01
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
@@ -94,6 +94,9 @@ done
 %_datadir/%name/
 
 %changelog
+* Thu Aug 10 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.05.01-alt1
+- 6.04 -> 6.05.01.
+
 * Thu Jun 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.04-alt1
 - 5.13 -> 6.04.
 - Fixed License: tag.
