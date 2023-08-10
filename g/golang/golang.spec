@@ -2,7 +2,7 @@
 # contains binary-like things (ELF data for tests, etc)
 %global _unpackaged_files_terminate_build 1
 
-%global go_arches %ix86 x86_64 aarch64 %arm mipsel ppc64le riscv64
+%global go_arches %ix86 x86_64 aarch64 %arm mipsel ppc64le riscv64 loongarch64
 %global go_root %_prefix/lib/golang
 %global golibdir %_libdir/golang
 
@@ -27,19 +27,27 @@
 %ifarch riscv64
 %global go_hostarch  riscv64
 %endif
-
-# Build golang shared objects for stdlib
-%ifarch %ix86 x86_64 ppc64le %arm aarch64
-%def_enable shared
-%else
-%def_disable shared
+%ifarch loongarch64
+%global go_hostarch loong64
 %endif
 
-%def_disable check
+# Build golang shared objects for stdlib
+%ifarch %ix86 x86_64 ppc64le %arm aarch64 riscv64 loongarch64
+%def_enable shared
+%def_enable external_linker
+%def_enable cgo
+%else
+%def_disable shared
+%def_disable external_linker
+%def_disable cgo
+%endif
+
+%def_enable check
+%def_enable fail_on_tests
 
 Name:    golang
 Version: 1.21.0
-Release: alt1
+Release: alt2
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -60,12 +68,16 @@ ExclusiveArch: %go_arches
 AutoReq: nocpp
 
 Requires: %name-src = %version-%release
+Requires: /proc
 
 BuildRequires(pre): rpm-build-golang rpm-build-python3
 BuildRequires: golang
 BuildRequires: libselinux-utils
-BuildRequires: libpcre-devel
+BuildRequires: libpcre2-devel
+BuildRequires: glibc-devel-static
 BuildRequires: /proc
+# for tests 
+BuildRequires: /dev/pts
 
 Provides: go = %version-%release
 
@@ -168,10 +180,16 @@ export CC="gcc"
 export CC_FOR_TARGET="gcc"
 export CFLAGS="$RPM_OPT_FLAGS"
 export LDFLAGS="$RPM_LD_FLAGS"
+%if_disabled external_linker
+export GO_LDFLAGS="-linkmode internal"
+%endif
+%if_disabled cgo
+export CGO_ENABLED=0
+%endif
 
 # build
 cd src
-./make.bash
+./make.bash --no-clean -v
 cd ..
 
 %if_enabled shared
@@ -181,16 +199,30 @@ GOROOT=$PWD PATH="$GOROOT/bin:$PATH" go install -v -buildmode=shared -v -x std
 %check
 export GOROOT=$PWD
 export PATH="$GOROOT/bin:$PATH"
-export CGO_ENABLED=0
 export CC="gcc"
 export CFLAGS="$RPM_OPT_FLAGS"
 export LDFLAGS="$RPM_LD_FLAGS"
 
-cd src
-./run.bash --no-rebuild -v -k
+%if_disabled external_linker
+export GO_LDFLAGS="-linkmode internal"
+%endif
+%if_disabled cgo
+export CGO_ENABLED=0
+%endif
+export GO_TEST_TIMEOUT_SCALE=2
 
+cd src
+%if_enabled fail_on_tests
+./run.bash --no-rebuild -v -v -v -k
+%else
+./run.bash --no-rebuild -v -v -v -k ||:
+%endif
+cd ..
 
 %install
+# remove GC build cache
+rm -rf pkg/obj/go-build/*
+
 # create the top level directories
 mkdir -p -- \
 	%buildroot%_bindir \
@@ -310,6 +342,7 @@ mkdir -p -- \
 
 %if_enabled shared
 %exclude %go_root/pkg/linux_%{go_hostarch}_dynlink
+%exclude %golibdir/*.so
 
 %files shared
 %go_root/pkg/linux_%{go_hostarch}_dynlink
@@ -337,6 +370,12 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Thu Aug 10 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.0-alt2
+- Add loongarch64 to %%go_arches.
+- Enable external_linker and cgo for riscv64 and loongarch64.
+- Add Requires: /proc.
+- Enable %%check.
+
 * Wed Aug 09 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.0-alt1
 - New version (1.21.0).
 
