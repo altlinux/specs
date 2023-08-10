@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.10.1
+Version: 3.10.2
 Release: alt1
 
 Summary: SQLObject, an object-relational mapper for Python
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pydispatcher
 BuildRequires: python3-module-FormEncode
@@ -61,28 +63,33 @@ This package contains tests for %oname
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_check
+%tox_check_pyproject
 
 %files
 %doc LICENSE *.rst
 %_bindir/*
 %python3_sitelibdir/sqlobject
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/sqlobject/tests
+%exclude %python3_sitelibdir/sqlobject/*/tests
 
 %files tests
 %python3_sitelibdir/sqlobject/tests
+%python3_sitelibdir/sqlobject/*/tests
 
 %files doc
 %doc docs/*
 
 %changelog
+* Thu Aug 10 2023 Anton Vyatkin <toni@altlinux.org> 3.10.2-alt1
+- New version 3.10.2.
+
 * Mon Mar 06 2023 Anton Vyatkin <toni@altlinux.org> 3.10.1-alt1
 - new version 3.10.1
 
