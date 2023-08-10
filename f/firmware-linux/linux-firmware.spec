@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230714
+Version: 20230809
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,17 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Aug 10 2023 Anton Midyukov <antohami@altlinux.org> 20230809-alt1
+- configuration changes:
+  + update.sh: fix check_link
+- upstream changes (GIT 789aa815):
+  + amdgpu: partially revert firmware for GC 11.0.0 and GC 11.0.2 (thx Mario Limonciello)
+  + Update AMD cpu microcode (thx John Allen)
+  + rtl_bt: Add firmware v2 file for RTL8852C (thx Hilda Wu)
+  + Revert "rtl_bt: Update RTL8852C BT USB firmware to 0x040D_7225" (thx Hilda Wu)
+  + amdgpu: DMCUB updates for various AMDGPU asics (thx Tom Chung)
+  + cxgb4: Update firmware to revision 1.27.4.0 (thx Rahul Lakkireddy)
+
 * Mon Jul 24 2023 Cronbuild Service <cronbuild@altlinux.org> 20230714-alt1
 - upstream changes (GIT 59fbffa9):
   + amdgpu: update VCN 4.0.0 firmware (thx Alex Deucher)
