@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo5.0
-Version: 5.0.19
+Version: 5.0.20
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
@@ -106,6 +106,7 @@ sed -i 's/\r//' README
        --release \\\
        MONGO_VERSION="%{version}-%{release}" \\\
        --disable-warnings-as-errors \\\
+       --debug-compress=as \\\
        CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
 python3 src/third_party/scons-3.1.2/scons.py CC=gcc-10 CXX=g++-10 %build_opts
@@ -199,6 +200,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Thu Aug 10 2023 Alexei Takaseev <taf@altlinux.org> 5.0.20-alt1
+- 5.0.20
+- Compress debug section to reduce disk space
+
 * Tue Jul 11 2023 Alexei Takaseev <taf@altlinux.org> 5.0.19-alt1
 - 5.0.19
 
