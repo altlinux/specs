@@ -59,8 +59,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.43.90
-Release: alt3%git_hash
+Version: 1.44.0
+Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -688,6 +688,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Aug 10 2023 Mikhail Efremov <sem@altlinux.org> 1.44.0-alt1
+- Updated to 1.44.0.
+
 * Tue Aug 08 2023 Alexey Shabalin <shaba@altlinux.org> 1.43.90-alt3
 - Fixed rebuild with ppp-2.5.0.
 
