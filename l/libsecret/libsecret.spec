@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.20
+%define ver_major 0.21
 %define api_ver 1
 
 %def_disable static
@@ -8,10 +8,10 @@
 %def_enable vala
 %def_enable gtk_doc
 %def_enable man
-%def_disable check
+%def_enable check
 
 Name: libsecret
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
@@ -31,8 +31,8 @@ Patch: %name-0.20.0-alt-python3_shebang.patch
 %define vala_ver 0.17.2.12
 %define gcrypt_ver 1.4.5
 
-BuildRequires(pre): meson >= 0.50
-BuildRequires(pre): rpm-macros-valgrind
+BuildRequires(pre): rpm-macros-meson >= 0.50 rpm-macros-valgrind
+BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver
 BuildRequires: libtpm2-tss-devel
@@ -114,8 +114,7 @@ GObject introspection devel data for %name.
 %find_lang %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-dbus-run-session %meson_test
+dbus-run-session %__meson_test
 
 %files -f %name.lang
 %_bindir/secret-tool
@@ -148,6 +147,10 @@ dbus-run-session %meson_test
 
 
 %changelog
+* Thu Aug 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.21.0-alt1
+- 0.21.0
+- enabled %%check again
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.5-alt1
 - 0.20.5
 
