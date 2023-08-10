@@ -4,37 +4,29 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.0
+Version: 3.4.1
 Release: alt1
-
 Summary: A robust implementation of concurrent.futures.ProcessPoolExecutor
 License: BSD
 Group: Development/Python3
-# Source-git: https://github.com/joblib/loky.git
 Url: https://pypi.org/project/loky
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-# deps
-BuildRequires: python3(cloudpickle)
-
-BuildRequires: python3(pytest)
-%endif
-
+Vcs: https://github.com/joblib/loky
 BuildArch: noarch
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
 # filter MS Windows related deps
 %filter_from_requires /python3(msvcrt\(\..*\)\?)/d
 %filter_from_requires /python3(_winapi\(\..*\)\?)/d
 %filter_from_requires /python3(multiprocessing\.popen_spawn_win32\(\..*\)\?)/d
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+BuildRequires: /proc
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 Provides a robust, cross-platform and cross-version implementation of the
@@ -43,6 +35,8 @@ ProcessPoolExecutor class of concurrent.futures
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -51,7 +45,7 @@ ProcessPoolExecutor class of concurrent.futures
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest --skip-high-memory -ra
 
 %files
 %doc README.rst
@@ -59,5 +53,8 @@ ProcessPoolExecutor class of concurrent.futures
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 10 2023 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
+- 3.3.0 -> 3.4.1.
+
 * Tue Sep 20 2022 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
 - Initial build for Sisyphus.

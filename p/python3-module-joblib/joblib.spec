@@ -4,49 +4,34 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
-Release: alt2
+Version: 1.3.2
+Release: alt1
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/joblib/
-
+Vcs: https://github.com/joblib/joblib
 BuildArch: noarch
-
-# https://github.com/joblib/joblib.git
 Source: %name-%version.tar
 Source1: debundler.py.in
+Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-# unvendored deps
-BuildRequires: python3(loky)
-BuildRequires: python3(cloudpickle)
-
-BuildRequires: /proc
-BuildRequires: python3(numpy)
-BuildRequires: python3(numpy.testing)
-BuildRequires: python3(threadpoolctl)
-BuildRequires: python3(pytest)
-%endif
-
+%pyproject_runtimedeps_metadata
+%pyproject_runtimedeps -- vendored
 # `distributed` is not packaged yet
 %filter_from_requires /python[3]\(\.[[:digit:]]\)\?(distributed\()\|\..*)\)/d
-
 # debundler
 ## filter no longer provided self-dependencies
 %filter_from_requires /python3(joblib\.externals\..*)/d
-
-## dependencies on debundled packages
-%py3_requires loky
-%py3_requires cloudpickle
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps -- vendored
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-timeout
+%endif
 
 %description
 Joblib is a set of tools to provide lightweight pipelining in Python. In
@@ -63,6 +48,14 @@ and has specific optimizations for numpy arrays.
 %prep
 %setup
 %autopatch -p1
+# gen vendored list for upstream
+set -o pipefail
+%__python3 - <<-'EOF' | sort -u > _vendor.txt
+import pkgutil
+for mod in pkgutil.iter_modules(["joblib/externals"]):
+    print(mod.name)
+EOF
+%pyproject_deps_resync vendored pip_reqfile _vendor.txt
 
 VENDORED_PATH='joblib/externals'
 UNVENDORED_PATH="$VENDORED_PATH/__init__.py"
@@ -74,6 +67,9 @@ sed -i \
     -e 's/@VENDORED_FAKE_PACKAGES@/None/' \
     "$UNVENDORED_PATH"
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
 %build
 %pyproject_build
 
@@ -81,8 +77,7 @@ sed -i \
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %doc *.rst
@@ -92,6 +87,9 @@ sed -i \
 %exclude %python3_sitelibdir/joblib/__pycache__/test*
 
 %changelog
+* Thu Aug 10 2023 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1
+- 1.2.0 -> 1.3.2.
+
 * Thu Oct 13 2022 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2
 - Fixed build without check.
 
