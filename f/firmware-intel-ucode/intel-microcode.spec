@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20230512
+%define orig_timestamp 20230808
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 21
+Version: 22
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,59 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Thu Aug 10 2023 L.A. Kostis <lakostis@altlinux.ru> 2:22-alt1.20230808
+- Sync with Debian 3.20230808.1:
+  + New upstream microcode datafile 20230808
+    + Mitigations for "Downfall" INTEL-SA-00828 (CVE-2022-40982),
+    + INTEL-SA-00836 (CVE-2023-23908) and INTEL-SA-00837 (CVE-2022-41804)
+    + Updated microcodes:
+      sig 0x00050653, pf_mask 0x97, 2023-03-23, rev 0x1000181, size 36864
+      sig 0x00050654, pf_mask 0xb7, 2023-03-06, rev 0x2007006, size 44032
+      sig 0x00050656, pf_mask 0xbf, 2023-03-17, rev 0x4003604, size 38912
+      sig 0x00050657, pf_mask 0xbf, 2023-03-17, rev 0x5003604, size 38912
+      sig 0x0005065b, pf_mask 0xbf, 2023-03-21, rev 0x7002703, size 30720
+      sig 0x000606a6, pf_mask 0x87, 2023-03-30, rev 0xd0003a5, size 297984
+      sig 0x000706e5, pf_mask 0x80, 2023-02-26, rev 0x00bc, size 113664
+      sig 0x000806c1, pf_mask 0x80, 2023-02-27, rev 0x00ac, size 111616
+      sig 0x000806c2, pf_mask 0xc2, 2023-02-27, rev 0x002c, size 98304
+      sig 0x000806d1, pf_mask 0xc2, 2023-02-27, rev 0x0046, size 103424
+      sig 0x000806e9, pf_mask 0xc0, 2023-02-22, rev 0x00f4, size 106496
+      sig 0x000806e9, pf_mask 0x10, 2023-02-23, rev 0x00f4, size 105472
+      sig 0x000806ea, pf_mask 0xc0, 2023-02-23, rev 0x00f4, size 105472
+      sig 0x000806eb, pf_mask 0xd0, 2023-02-23, rev 0x00f4, size 106496
+      sig 0x000806ec, pf_mask 0x94, 2023-02-26, rev 0x00f8, size 106496
+      sig 0x000806f8, pf_mask 0x87, 2023-05-09, rev 0x2b0004b1, size 572416
+      sig 0x000806f7, pf_mask 0x87, 2023-05-09, rev 0x2b0004b1
+      sig 0x000806f6, pf_mask 0x87, 2023-05-09, rev 0x2b0004b1
+      sig 0x000806f5, pf_mask 0x87, 2023-05-09, rev 0x2b0004b1
+      sig 0x000806f4, pf_mask 0x87, 2023-05-09, rev 0x2b0004b1
+      sig 0x000806f8, pf_mask 0x10, 2023-05-15, rev 0x2c000271, size 605184
+      sig 0x000806f6, pf_mask 0x10, 2023-05-15, rev 0x2c000271
+      sig 0x000806f5, pf_mask 0x10, 2023-05-15, rev 0x2c000271
+      sig 0x000806f4, pf_mask 0x10, 2023-05-15, rev 0x2c000271
+      sig 0x00090672, pf_mask 0x07, 2023-04-18, rev 0x002e, size 220160
+      sig 0x00090675, pf_mask 0x07, 2023-04-18, rev 0x002e
+      sig 0x000b06f2, pf_mask 0x07, 2023-04-18, rev 0x002e
+      sig 0x000b06f5, pf_mask 0x07, 2023-04-18, rev 0x002e
+      sig 0x000906a3, pf_mask 0x80, 2023-04-18, rev 0x042c, size 219136
+      sig 0x000906a4, pf_mask 0x80, 2023-04-18, rev 0x042c
+      sig 0x000906e9, pf_mask 0x2a, 2023-02-23, rev 0x00f4, size 108544
+      sig 0x000906ea, pf_mask 0x22, 2023-02-23, rev 0x00f4, size 104448
+      sig 0x000906eb, pf_mask 0x02, 2023-02-23, rev 0x00f4, size 106496
+      sig 0x000906ec, pf_mask 0x22, 2023-02-23, rev 0x00f4, size 105472
+      sig 0x000906ed, pf_mask 0x22, 2023-02-27, rev 0x00fa, size 106496
+      sig 0x000a0652, pf_mask 0x20, 2023-02-23, rev 0x00f8, size 97280
+      sig 0x000a0653, pf_mask 0x22, 2023-02-23, rev 0x00f8, size 97280
+      sig 0x000a0655, pf_mask 0x22, 2023-02-23, rev 0x00f8, size 97280
+      sig 0x000a0660, pf_mask 0x80, 2023-02-23, rev 0x00f8, size 97280
+      sig 0x000a0661, pf_mask 0x80, 2023-02-23, rev 0x00f8, size 96256
+      sig 0x000a0671, pf_mask 0x02, 2023-02-26, rev 0x0059, size 104448
+      sig 0x000b0671, pf_mask 0x32, 2023-06-06, rev 0x0119, size 210944
+      sig 0x000b06a2, pf_mask 0xe0, 2023-06-06, rev 0x4119, size 216064
+      sig 0x000b06a3, pf_mask 0xe0, 2023-06-06, rev 0x4119
+      sig 0x000b06e0, pf_mask 0x11, 2023-04-12, rev 0x0011, size 136192
+  + source: update symlinks to reflect id of the latest release, 20230808
+
 * Mon Jul 31 2023 L.A. Kostis <lakostis@altlinux.ru> 2:21-alt1.20230512
 - Sync with Debian 3.20230512.1:
   + New upstream microcode datafile 20230512
