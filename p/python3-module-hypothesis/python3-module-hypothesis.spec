@@ -5,8 +5,8 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 6.75.3
-Release: alt2
+Version: 6.82.3
+Release: alt1
 
 Summary: A library for property based testing
 
@@ -76,6 +76,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_ftz_detector.py
 
 %changelog
+* Thu Aug 10 2023 Alexandr Shashkin <dutyrok@altlinux.org> 6.82.3-alt1
+- 6.75.3 -> 6.82.3 (Closes: #46798)
+
 * Sun May 21 2023 Grigory Ustinov <grenka@altlinux.org> 6.75.3-alt2
 - Bootstrap for python3.11.
 
