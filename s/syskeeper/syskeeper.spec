@@ -5,7 +5,7 @@
 Name: syskeeper
 Summary: %name
 Version: 0.11
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Base
 BuildArch: noarch
@@ -172,6 +172,9 @@ mkdir -p %buildroot%_initdir/
 %files ve
 
 %changelog
+* Fri Aug 11 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.11-alt2
+- fix SIGPIPE in the RPM::Pre-Install-Pkgs hook (Closes: 40519)
+
 * Sun Sep 07 2014 Denis Smirnov <mithraen@altlinux.ru> 0.11-alt1
 - dump udevadm info about disk drives
 
