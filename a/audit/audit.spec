@@ -5,12 +5,12 @@
 %def_without prelude
 
 Name: audit
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
 Group: Monitoring
-URL: http://people.redhat.com/sgrubb/audit/
+URL: https://people.redhat.com/sgrubb/audit/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -92,12 +92,6 @@ and libauparse can be used by python.
 %setup
 %patch0 -p1
 
-#swig flexible array workaround
-cp /usr/include/linux/audit.h lib/
-sed -i 's/buf\[\];/buf\[0\];/' lib/audit.h
-sed -i 's|%include "/usr/include/linux/audit.h"|%include "../lib/audit.h"|' bindings/swig/src/auditswig.i
-sed -i 's|#include <linux/audit.h>|#include "audit.h"|' lib/libaudit.h
-
 %build
 %autoreconf
 
@@ -122,9 +116,6 @@ sed -i 's|#include <linux/audit.h>|#include "audit.h"|' lib/libaudit.h
 
 %make_build
 
-# undo swig flexible array workaround done in %%prep section
-sed -i 's|#include "audit.h"|#include <linux/audit.h>|' lib/libaudit.h
-
 %install
 %makeinstall_std
 
@@ -138,8 +129,6 @@ for i in libaudit libauparse;do
 LIBNAME=$(readlink %buildroot/%_libdir/$i.so)
 ln -sf  ../../%_lib/${LIBNAME##*/}  %buildroot/%_libdir/$i.so
 done
-
-
 
 #replace init script
 install -Dpm755 %name.init %buildroot/%_initdir/%{name}d
@@ -246,6 +235,10 @@ fi
 %endif
 
 %changelog
+* Fri Aug 11 2023 Egor Ignatov <egori@altlinux.org> 3.1.2-alt1
+- new version 3.1.2
+- remove swig flexible array workaround (fixed by upstream)
+
 * Fri Apr 28 2023 Egor Ignatov <egori@altlinux.org> 3.1.1-alt1
 - new version 3.1.1
 
