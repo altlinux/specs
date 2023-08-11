@@ -8,8 +8,8 @@
 %define _pseudouser_home     %_sharedstatedir/opendnssec
 
 Name: opendnssec
-Version: 2.1.12
-Release: alt2
+Version: 2.1.13
+Release: alt1
 
 Summary: DNSSEC key and zone management software
 License: BSD-2-Clause
@@ -163,6 +163,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Tue Aug 01 2023 Stanislav Levin <slev@altlinux.org> 2.1.13-alt1
+- 2.1.12 -> 2.1.13.
+
 * Tue Jun 06 2023 Stanislav Levin <slev@altlinux.org> 2.1.12-alt2
 - Fixed FTBFS (sqlite3 3.41.0).
 
