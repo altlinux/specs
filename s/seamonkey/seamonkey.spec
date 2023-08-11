@@ -20,7 +20,7 @@
 %define ciddir %sm_prefix/extensions/%cid
 
 Name: seamonkey
-Version: 2.53.14
+Version: 2.53.17
 Release: alt1
 Epoch: 1
 Summary: Web browser and mail reader
@@ -30,8 +30,7 @@ Url: http://www.mozilla.org/projects/seamonkey/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-# TODO: build failed on aarch64 and ppc64le
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: x86_64
 
 Source0: %name-%version%beta_suffix.source.tar.xz
 Source2: mozilla-searchplugins.tar
@@ -41,9 +40,8 @@ Source5: seamonkey-prefs.js
 Source7: seamonkey-mozconfig
 Source8: rpm-build.tar
 Source9: cbindgen-vendor.tar
-# Get from http://ftp.mozilla.org/pub/seamonkey/releases/$ver/langpack/seamonkey-$ver.ru.langpack.xpi
+#Source10: seamonkey-%version%beta_suffix.source-l10n.tar.xz
 Source10: seamonkey-%{version}.ru.langpack.xpi
-Source11: seamonkey-ru.watch
 
 Patch0: seamonkey-fix-installdirs.patch
 Patch1: seamonkey-alt-machOS-fix.patch
@@ -57,6 +55,7 @@ Patch11: seamonkey-2.53.2-alt-ppc64le-disable-broken-getProcessorLineSize-code.p
 Patch12: seamonkey-2.53.2-alt-ppc64le-fix-clang-error-invalid-memory-operand.patch
 Patch13: seamonkey-packed_simd-for-rust-1.56.patch
 Patch14: seamonkey-alt-disable-elfhack.patch
+Patch15: seamonkey-undeclared-EVENT__SIZEOF_TIME_T.patch
 Patch120: 0020-MOZILLA-1666567-land-NSS-8ebee3cec9cf-UPGRADE_NSS_RE.patch
 Patch121: 0021-MOZILLA-1666567-land-NSS-8fdbec414ce2-UPGRADE_NSS_RE.patch
 Patch122: 0022-MOZILLA-1666567-land-NSS-NSS_3_58_BETA1-UPGRADE_NSS_.patch
@@ -135,17 +134,14 @@ BuildRequires: libnss-devel-static >= 3.15.1-alt1
 %endif
 
 # Python requires
-BuildRequires: python2-base
-BuildRequires: python-module-distribute
-BuildRequires: python-modules-compiler
-BuildRequires: python-modules-logging
-BuildRequires: python-modules-sqlite3
-BuildRequires: python-modules-json
-
+BuildRequires: /dev/shm
 BuildRequires: python3-base
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pip
-BuildRequires: python3-modules-sqlite3
+BuildRequires: python3(curses)
+BuildRequires: python3(hamcrest)
+BuildRequires: python3(pip)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(sqlite3)
+BuildRequires: python3(mozfile)
 
 Requires: hunspell-ru
 
@@ -203,7 +199,7 @@ Conflicts: rpm-build-seamonkey <= 2.53.12-alt1
 Install this package if you want to create RPM packages for seamonkey.
 
 %prep
-%setup -n %name-%version%beta_suffix
+%setup -n %name-%version%beta_suffix -a 10
 
 #patch0 -p1
 %patch1 -p1
@@ -221,6 +217,7 @@ Install this package if you want to create RPM packages for seamonkey.
 %patch12 -p2
 #patch13 -p1
 %patch14 -p1
+%patch15 -p1
 %if_with system_nss
 %patch120 -p2
 %patch121 -p2
@@ -246,6 +243,9 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "$PWD/my_rust_vendor"
 EOF
+
+rm -rf -- obj-x86_64-pc-linux-gnu
+rm -rf -- third_party/python/setuptools/setuptools*
 
 %build
 %add_optflags %optflags_shared
@@ -310,10 +310,15 @@ export NPROCS=16
 export NPROCS=1
 %endif
 
+export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
+
 #./mach python --exec-file /dev/null
-./mach configure
+#./mach configure
 ./mach build -j $NPROCS
 ./mach buildsymbols
+
+# Build locales
+#make -j1 locales
 
 %install
 export SHELL=/bin/sh
@@ -439,7 +444,7 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
     done
 )
 
-# Install langpack
+# Install dictionaries
 mkdir -p %buildroot/%ciddir/dictionaries
 unzip %SOURCE10 -d %buildroot/%ciddir
 ln -s %_datadir/myspell/ru_RU.aff %buildroot/%ciddir/dictionaries/ru.aff
@@ -469,6 +474,16 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 
 
 %changelog
+* Fri Aug 11 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.53.17-alt1
+- New version.
+- Built only for x86_64.
+
+* Thu Mar 30 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.53.16-alt1
+- New version.
+
+* Fri Jan 20 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.53.15-alt1
+- New version.
+
 * Thu Sep 29 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.53.14-alt1
 - New version.
 
