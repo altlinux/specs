@@ -24,7 +24,7 @@
 %endif
 
 Name: curl
-Version: 8.2.0
+Version: 8.2.1
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -200,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 26 2023 Anton Farygin <rider@altlinux.ru> 8.2.1-alt1
+- 8.2.0 -> 8.2.1
+
 * Wed Jul 19 2023 Anton Farygin <rider@altlinux.ru> 8.2.0-alt1
 - 8.1.2 -> 8.2.0
 - Fixes:
