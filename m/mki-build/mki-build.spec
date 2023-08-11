@@ -1,6 +1,6 @@
 Name: mki-build
 Version: 0.1.1
-Release: alt1
+Release: alt2
 License: GPL-2.0-or-later
 Group: Development/Other
 Summary: Scripts used to build mkimage-based images
@@ -9,6 +9,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 Requires: mkimage
+
+# due to gpasswd in prepare-vm
+Requires: shadow-groups
 
 %description
 This package contains scripts that are used to build mkimage-based images.
@@ -30,6 +33,9 @@ cp prepare-vm -t %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Thu Jul 06 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.1.1-alt2
+- Fixed prepare-vm script dependency to gpasswd.
+
 * Tue Feb 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.1-alt1
 - Changed sctipts:
   + prepare-vm: copy resolver configuration from the host to the vm;
