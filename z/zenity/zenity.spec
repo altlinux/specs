@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: zenity
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: The GNOME port of dialog(1)
@@ -58,6 +58,9 @@ a cooler name.
 %doc AUTHORS NEWS README* THANKS TODO
 
 %changelog
+* Fri Aug 11 2023 Yuri N. Sedunov <aris@altlinux.org> 3.44.2-alt1
+- 3.44.2
+
 * Sat Apr 29 2023 Yuri N. Sedunov <aris@altlinux.org> 3.44.1-alt1
 - 3.44.1
 
