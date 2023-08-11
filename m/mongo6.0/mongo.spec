@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo6.0
-Version: 6.0.8
+Version: 6.0.9
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -18,7 +18,6 @@ ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 BuildRequires(pre): rpm-macros-valgrind
 
 BuildRequires: /proc gcc10-c++ gcc10 python3-module-pymongo python3-module-pkg_resources
-BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
@@ -101,6 +100,7 @@ MongoDB instance.
        --release \\\
        MONGO_VERSION="%{version}-%{release}" \\\
        --disable-warnings-as-errors \\\
+       --debug-compress=as \\\
        CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
 python3 src/third_party/scons-3.1.2/scons.py CC=gcc-10 CXX=g++-10 %build_opts
@@ -187,6 +187,11 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Fri Aug 11 2023 Alexei Takaseev <taf@altlinux.org> 6.0.9-alt1
+- 6.0.9
+- Compress debug section to reduce disk space
+- Remove unused BR: boost, used bandled.
+
 * Wed Jul 12 2023 Alexei Takaseev <taf@altlinux.org> 6.0.8-alt1
 - 6.0.8
 
