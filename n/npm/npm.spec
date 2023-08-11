@@ -1,6 +1,6 @@
 Name: npm
 Version: 9.6.7
-Release: alt1
+Release: alt2
 
 Summary: A package manager for node
 
@@ -30,6 +30,8 @@ AutoProv: no
 AutoReq: no
 
 Requires: bash
+
+Requires: /usr/bin/node
 
 %description
 npm is a package manager for node. You can use it to install and publish your
@@ -87,6 +89,9 @@ done
 %nodejs_sitelib/%name/
 
 %changelog
+* Fri Aug 11 2023 Vitaly Lipatov <lav@altlinux.ru> 9.6.7-alt2
+- add Requires: /usr/bin/node (ALT bug 47191)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 9.6.7-alt1
 - new version 9.6.7 (with rpmrb script)
 - disable AutoReq/AutoProv, add Requires: bash
