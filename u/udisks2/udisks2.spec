@@ -19,7 +19,7 @@
 
 Name: %{_name}2
 Version: 2.10.0
-Release: alt2
+Release: alt3
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -33,6 +33,7 @@ Source: %_name-%version.tar
 %endif
 Source1: %name.control
 Patch10: udisks-2.10.0-up-empty_loop_devices.patch
+Patch20: udisks-2.10.0-disable-sanitize-log.patch
 
 Obsoletes: %_name
 
@@ -172,6 +173,7 @@ This package contains UDisks module for iSCSI configuration.
 %prep
 %setup -n %_name-%version
 %patch10 -p1
+%patch20 -p2
 
 %build
 %autoreconf
@@ -291,6 +293,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Fri Aug 11 2023 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt3
+- src/udiskslinuxnvmecontroller.c: "disable sanitize-log" by mcpain@
+
 * Mon Jul 24 2023 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt2
 - applied upstream fix:
   "udiskslinuxloop: Avoid warnings on empty loop devices"
