@@ -1,6 +1,6 @@
 Name: outwiker
-Version: 3.0.0.888
-Release: alt2
+Version: 3.2.0
+Release: alt1
 
 Summary: OutWiker is designed to store notes in a tree
 
@@ -8,8 +8,7 @@ License: GPL3
 Group: Text tools
 Url: http://jenyay.net/Soft/Outwiker
 
-# ource-url:https://github.com/Jenyay/outwiker/archive/unstable_%version.tar.gz
-# Source-url: https://github.com/Jenyay/outwiker/archive/refs/tags/stable_%version.tar.gz
+# Source-url: https://github.com/Jenyay/outwiker/archive/refs/tags/%version-stable.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: rpm-build-python3
@@ -33,12 +32,6 @@ plain text and HTML, but the number of types of pages will increase in future.
 
 %prep
 %setup
-# 2.0 hack
-#rm -rf need_for_build/{linux,windows}
-#cp -a need_for_build/debian_debsource/* .
-
-#__subst "s|\r$||g" src/runoutwiker.py
-#__subst "s|LD_PRELOAD.* python2.7|python2.7|" %name
 
 %build
 %make_build
@@ -62,6 +55,9 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_pixmapsdir/*
 
 %changelog
+* Thu Aug 10 2023 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
+- New version 3.2.0
+
 * Sun Aug 22 2021 Anton Midyukov <antohami@altlinux.org> 3.0.0.888-alt2
 - Add Requires: python3-module-cyhunspell (ALT bug #40796)
 
