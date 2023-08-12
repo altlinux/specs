@@ -4,7 +4,7 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 7.0.6
+Version: 7.0.7
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -75,13 +75,13 @@ sed -i 's/tbb/tbb32/' src/meson.build
 %install
 %meson_install
 # system-wide config directory
-mkdir -p %buildroot%_sysconfdir/EasyEffects
+#mkdir -p %buildroot%_sysconfdir/EasyEffects
 
 %find_lang --with-gnome --output=%name.lang %name %name-news
 
 %files -f %name.lang
 %_bindir/%name
-%dir %_sysconfdir/EasyEffects
+#%dir %_sysconfdir/EasyEffects
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.*gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
@@ -90,6 +90,9 @@ mkdir -p %buildroot%_sysconfdir/EasyEffects
 %doc README* CHANGELOG.*
 
 %changelog
+* Sat Aug 12 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.7-alt1
+- 7.0.7
+
 * Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.6-alt1
 - 7.0.6
 
