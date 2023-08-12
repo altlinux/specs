@@ -12,7 +12,7 @@
 %define prog_name            postgresql
 %define postgresql_major     12
 %define postgresql_minor     16
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -61,7 +61,7 @@ BuildRequires: postgresql-devel
 BuildRequires: libicu-devel
 %endif
 %if_with jit
-BuildRequires: llvm13.0-devel clang13.0-devel gcc-c++
+BuildRequires: llvm15.0-devel clang15.0-devel gcc-c++
 %endif
 
 %description
@@ -191,7 +191,7 @@ Group: Development/Databases
 Requires: %libpq_name-devel
 Requires: %libecpg_name-devel
 %if_with jit
-Requires: llvm13.0-devel clang13.0-devel gcc-c++
+Requires: llvm15.0-devel clang15.0-devel gcc-c++
 %endif
 %if_with devel
 Provides: %prog_name-server-devel = %EVR
@@ -302,7 +302,7 @@ database.
 Summary: Just-in-time compilation support for PostgreSQL
 Group: Databases
 Requires: %name-server = %EVR
-Requires: llvm13.0
+Requires: llvm15.0
 Provides: %prog_name-llvmjit = %EVR
 
 %description llvmjit
@@ -324,8 +324,8 @@ goal of accelerating analytics queries.
 
 %build
 %if_with jit
-export LLVM_CONFIG=/usr/bin/llvm-config-13
-export CLANG=/usr/bin/clang-13
+export LLVM_CONFIG=/usr/bin/llvm-config-15
+export CLANG=/usr/bin/clang-15
 %endif
 
 %ifnarch armh
@@ -924,6 +924,9 @@ fi
 %endif
 
 %changelog
+* Sat Aug 12 2023 Alexei Takaseev <taf@altlinux.org> 12.16-alt2
+- Change BR llvm 13.0 -> llvm15.0
+
 * Wed Aug 09 2023 Alexei Takaseev <taf@altlinux.org> 12.16-alt1
 - 12.16 (Fixes CVE-2023-39417)
 
