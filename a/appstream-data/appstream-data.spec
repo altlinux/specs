@@ -2,7 +2,7 @@
 
 Name:      appstream-data
 Summary:   ALT Linux AppStream metadata
-Version:   20230713
+Version:   20230812
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
@@ -32,6 +32,10 @@ cp -r xmls/* %buildroot%_datadir/app-info/xmls/
 %_datadir/app-info/icons/altlinux
 
 %changelog
+* Sat Aug 12 2023 Kirill Izmestev <felixz@altlinux.org> 20230812-alt1
+- Updated database.
+- Add imhex in skiplist.
+
 * Thu Jul 13 2023 Kirill Izmestev <felixz@altlinux.org> 20230713-alt1
 - Updated database.
 
