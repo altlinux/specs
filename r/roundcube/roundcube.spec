@@ -1,10 +1,25 @@
+%if_feature php80 8.0.0
+%def_with php80
+%define defphp php8.0
+%endif
+
+%if_feature php81 8.1.0
+%def_with php81
+%define defphp php8.1
+%endif
+
+%if_feature php7 7.4.3
+%def_with php7
+%define defphp php7
+%endif
+
+
 %define oname roundcubemail
 %define rel %nil
-%define phpbase php8.2
 
 Name: roundcube
 Version: 1.6.2
-Release: alt1
+Release: alt3
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
 
@@ -19,37 +34,38 @@ Source2: composer.json-dist
 Patch0: roundcube-1.2.4-sso-alt.patch
 BuildArch: noarch
 
-BuildPreReq: rpm-build-apache2
+BuildRequires(pre): rpm-build-apache2
+BuildRequires(pre): rpm-macros-features >= 0.8
 BuildRequires: rpm-macros-webserver-common
-BuildRequires: php8.2
+BuildRequires: %defphp
 
 Requires: composer >= 1.1.3
 
 
 # check it with composer.json or on http://trac.roundcube.net/wiki/Howto_Requirements
-Requires: %phpbase
+Requires: %defphp
 # php-engine
 Requires: webserver-common
-Requires: pear-Mail_Mime >= 1.10.0
-Requires: pear-Net_SMTP >= 1.8.1
-Requires: pear-Net_IDNA2 >= 0.1.1
-Requires: pear-Auth_SASL >= 1.0.6
-# managesieve plugin
-Requires: pear-Net_Sieve >= 1.3.4
-# for enigma plugin
-#Requires: pear-Crypt_GPG >= 1.4.1
-Requires: pear-Net_Socket >= 1.0.12
-Requires: pear-Mail_mimeDecode
 
-Requires: %phpbase-dom %phpbase-mcrypt %phpbase-openssl
-Requires: %phpbase-pdo_mysql
-Requires: %phpbase-mbstring %phpbase-fileinfo %phpbase-mcrypt %phpbase-zip
+# bundled in vendor dir
+#Requires: pear-Mail_Mime >= 1.10.0
+#Requires: pear-Net_SMTP >= 1.8.1
+#Requires: pear-Auth_SASL >= 1.0.6
+## managesieve plugin
+#Requires: pear-Net_Sieve >= 1.3.4
+## for enigma plugin
+##Requires: pear-Crypt_GPG >= 1.4.1
+#Requires: pear-Net_Socket >= 1.0.12
+
+Requires: %defphp-dom %defphp-mcrypt %defphp-openssl
+Requires: %defphp-pdo_mysql
+Requires: %defphp-mbstring %defphp-fileinfo %defphp-mcrypt %defphp-zip
 # TODO: check if needed
-Requires: %phpbase-sockets %phpbase-intl
+Requires: %defphp-sockets %defphp-intl
 # missed. use browser's spelling
 #php7-pspell
 # for endroid/qrcode
-Requires: %phpbase-gd2
+Requires: %defphp-gd2
 
 Provides: roundcube-plugin-acl
 Obsoletes: roundcube-plugin-acl
@@ -71,7 +87,7 @@ RoundCube Webmail is written in PHP and requires a MySQL or Postgres database.
 Summary: %name's apache config file
 Group: System/Servers
 Requires: %name = %version-%release
-Requires: apache2-httpd apache2-mod_%phpbase
+Requires: apache2-httpd apache2-mod_%defphp
 BuildArch: noarch
 
 %description apache2
@@ -95,7 +111,7 @@ install -Dpm 0644 index.php %buildroot%_datadir/%name/index.php
 install -Dpm 0644 .htaccess %buildroot%_datadir/%name/.htaccess
 #install -Dpm 0644 jsdeps.json %buildroot%_datadir/%name/jsdeps.json
 #install -Dpm 0644 robots.txt %buildroot%_datadir/%name/robots.txt
-cp -ar SQL bin program installer plugins skins public_html %buildroot%_datadir/%name/
+cp -ar SQL bin program installer plugins skins public_html vendor %buildroot%_datadir/%name/
 
 cat > %buildroot%_datadir/%name/installer/.htaccess << EOF
 # deny webserver access to this directory
@@ -110,12 +126,6 @@ EOF
 mkdir -p %buildroot%_localstatedir/%name/{temp,logs,enigma}/
 ln -s %_localstatedir/%name/logs/ %buildroot%_datadir/%name/
 ln -s %_localstatedir/%name/temp/ %buildroot%_datadir/%name/
-rm -rf %buildroot%_datadir/%name/plugins/enigma/home/
-ln -s %_localstatedir/%name/enigma/ %buildroot%_datadir/%name/plugins/enigma/home
-
-cp %buildroot%_datadir/%name/installer/.htaccess %buildroot%_localstatedir/%name/temp/
-cp %buildroot%_datadir/%name/installer/.htaccess %buildroot%_localstatedir/%name/logs/
-cp %buildroot%_datadir/%name/installer/.htaccess %buildroot%_localstatedir/%name/enigma/
 
 mkdir -p %buildroot%_sysconfdir/%name/
 cp -ar config/* %buildroot%_sysconfdir/%name/
@@ -128,7 +138,7 @@ ln -s  %_docdir/%name-%version %buildroot%_datadir/%name/doc
 
 install -pD -m0644 %SOURCE1 %buildroot%apache2_extra_available/%name.conf
 
-rm -fv %buildroot%_datadir/roundcube/plugins/password/helpers/chpass-wrapper.py
+rm -v %buildroot%_datadir/roundcube/plugins/password/helpers/chpass-wrapper.py
 
 %post apache2
 service httpd2 condreload
@@ -142,9 +152,6 @@ service httpd2 condreload
 %dir %attr(2775,root,%webserver_group) %_localstatedir/%name/logs/
 %dir %attr(2775,root,%webserver_group) %_localstatedir/%name/temp/
 %dir %attr(2775,root,%webserver_group) %_localstatedir/%name/enigma/
-%_localstatedir/%name/logs/.htaccess
-%_localstatedir/%name/temp/.htaccess
-%_localstatedir/%name/enigma/.htaccess
 %dir %attr(0750,root,%webserver_group) %_sysconfdir/%name/
 %config(noreplace) %attr(0640,root,%webserver_group) %_sysconfdir/%name/*
 %doc CHANGELOG.md SECURITY.md INSTALL LICENSE README.md UPGRADING SQL/
@@ -153,6 +160,13 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt3
+- use php8.1, if php7.4 is missed
+- home for engine is not accessible from web browser
+
+* Thu Jul 13 2023 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt2
+- pack vendor subdir with bundled php/pear modules
+
 * Wed Jul 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
 - new version 1.6.2 (with rpmrb script)
 - switch to php8.2
