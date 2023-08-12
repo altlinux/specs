@@ -1,14 +1,9 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.39
+%define major 1.40
 
 %if_feature php7 7.4.3
 %def_with php7
 %define defphp php7
-%endif
-
-%if_feature php81 8.1.0
-%def_with php81
-%define defphp php8.1
 %endif
 
 %if_feature php80 8.0.0
@@ -16,10 +11,16 @@
 %define defphp php8.0
 %endif
 
+# default
+%if_feature php81 8.1.0
+%def_with php81
+%define defphp php8.1
+%endif
+
 
 Name: mediawiki
 Version: %major.0
-Release: alt3
+Release: alt1
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
 
@@ -41,7 +42,7 @@ Source6: AdminSettings.sample
 Source7: 99-read-user-configs.php
 
 Patch: %name-1.31-alt.patch
-Patch1: %name-1.39-config-path.patch
+Patch1: %name-1.40-config-path.patch
 
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-licenses
@@ -50,7 +51,7 @@ BuildRequires(pre): rpm-build-webserver-common
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-features >= 0.8
 
-BuildRequires: apache2-devel
+#BuildRequires: apache2-devel
 
 Requires: %name-common = %version-%release
 Requires: %name-apache2
@@ -129,10 +130,7 @@ Requires: diffutils
 Requires: pear-Mail >= 1.4.1
 
 AutoProv:no
-AutoReq:yes,nomingw32,nomingw64,noerlang,noruby,nonodejs
-
-# due shebang with node
-%filter_from_requires /^node$/d
+AutoReq:no
 
 # since 1.20
 Provides: mediawiki-extensions-ParserFunctions
@@ -368,7 +366,7 @@ rm -rf %buildroot%_mediawikidir/maintenance/language/zhtable
 rm -rf %buildroot%_mediawikidir/vendor/zordius/lightncandy/build/
 
 # remove embedded lua binaries
-rm -rv %buildroot%_mediawikidir/extensions/Scribunto/includes/engines/LuaStandalone/binaries
+rm -rv %buildroot%_mediawikidir/extensions/Scribunto/includes/Engines/LuaStandalone/binaries
 
 # devel tools, reqs node
 rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/tools/test.selser.sh
@@ -560,6 +558,23 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1.40.0-alt1
+- new version 1.40.0 (with rpmrb script)
+- disable AutoReq
+- (T335612, CVE-2023-36674) SECURITY: Move badFile lookup to Linker.
+- (T335203, CVE-2023-29197) Upgrade guzzlehttp/psr7 to >= 1.9.1/2.4.5.
+- (T335612, CVE-2023-36674) Manualthumb bypasses badFile lookup.
+- (T332889, CVE-2023-36675) XSS in BlockLogFormatter due to unsafe message use.
+
+* Tue Jun 06 2023 Vitaly Lipatov <lav@altlinux.ru> 1.39.3-alt1
+- new version 1.39.3 (with rpmrb script)
+
+* Sat Feb 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1.39.2-alt1
+- new version 1.39.2 (with rpmrb script)
+
+* Sat Feb 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1.39.1-alt1
+- new version 1.39.1 (with rpmrb script)
+
 * Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 1.39.0-alt3
 - remove embedded extension-Math (ALT bug 44708)
 

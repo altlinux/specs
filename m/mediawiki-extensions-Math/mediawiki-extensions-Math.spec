@@ -1,7 +1,8 @@
 %define ShortName Math
-%define mwversion 1.39
+%define mwversion 1.40
 %setup_mediawiki_ext %mwversion %ShortName
-%define commit 1e7a549
+%define commit 4cf19b0
+%define defphp php8.1
 
 Name: mediawiki-extensions-%ShortName
 Version: 3.0.0.%mwversion
@@ -23,7 +24,9 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-mediawiki >= 0.6
 
 # for default math rendering service
-Requires: php7-curl
+Requires: %defphp-curl
+
+Requires: mediawiki >= %mwversion
 
 %description
 Math extension provides support for rendering mathematical formulas
@@ -41,10 +44,16 @@ on-wiki via texvc.
 %mediawiki_ext_install 50 %ShortName
 
 rm -rv %buildroot%mediawiki_ext_dir/{tests,mathoid,modules/ve-math/tools}
+# disable extra reqs
+rm -v %buildroot%mediawiki_ext_dir/maintenance/{buildPHPparser.js,downloadMoreTexVCtests.sh}
 
 %files -f %ShortName.files
 
 %changelog
+* Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 3.0.0.1.40-alt1.4cf19b0
+- new version (3.0.0.1.40) with rpmgs script
+- change requires to php8.1-curl (ALT bug 46923)
+
 * Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 3.0.0.1.39-alt1.1e7a549
 - new version (3.0.0.1.39) with rpmgs script
 

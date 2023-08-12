@@ -1,27 +1,30 @@
-%define oname Collection
+%define ShortName Collection
+%define mwversion 1.40
+%setup_mediawiki_ext %mwversion %ShortName
+%define commit d3c0c1b
+%define defphp php8.1
 
-Name: mediawiki-extensions-%oname
-Version: 1.32
-Release: alt1
-
-BuildArch: noarch
+Name: mediawiki-extensions-%ShortName
+Version: %mwversion
+Release: alt1.%commit
 
 Group: Networking/WWW
 Summary: Collects a number of pages. Collections can be edited, persisted and optionally retrieved as PDF, ODF or DocBook (XML)
-Url: http://www.mediawiki.org/wiki/Extension:%oname
+Url: http://www.mediawiki.org/wiki/Extension:Collection
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-License: GPL
+License: GPLv2
 
-BuildPreReq: rpm-build-mediawiki >= 0.2
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-mediawiki >= 0.2
 Requires: mediawiki-common >= 1.22
 
-Requires: php7-curl
+Requires: %defphp-curl
 
-#Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-Collection/legacy.tar.gz/REL1_22
-# Source-url: https://extdist.wmflabs.org/dist/extensions/Collection-REL1_32-1af67a8.tar.gz
-Source: %oname-%version.tar
+# Source-url: https://extdist.wmflabs.org/dist/extensions/%ShortName-%MWREL-%commit.tar.gz
+Source: %name-%version.tar
 
 %description
 This extension allows a user to organize personal selections of pages in a collection. Collections can be
@@ -33,14 +36,18 @@ This extension allows a user to organize personal selections of pages in a colle
 * ordered as a printed book at http://pediapress.com/
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %install
-%mediawiki_ext_install 50 %oname
+%mediawiki_ext_install 50 %ShortName
 
-%files -f %oname.files
+%files -f %ShortName.files
 
 %changelog
+* Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1.40-alt1.d3c0c1b
+- new version (1.40) with rpmgs script
+- switch to php8.1 (ALT bug 46922)
+
 * Mon Mar 04 2019 Vitaly Lipatov <lav@altlinux.ru> 1.32-alt1
 - new version 1.32
 
