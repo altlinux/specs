@@ -1,5 +1,7 @@
+%define defphp php8.1
+
 Name: eterban
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: Etersoft ban service
@@ -42,7 +44,8 @@ Etersoft ban service.
 Summary: Etersoft ban service: web
 Group: Development/Other
 Requires: eterban-common = %EVR
-Requires: nginx,php7-redis
+Requires: nginx
+Requires: %defphp-redis
 
 %description web
 Etersoft ban service.
@@ -116,6 +119,11 @@ cp -a prod-server/usr/share/%name/* %buildroot%_datadir/%name/
 %config(noreplace) /etc/fail2ban/action.d/eterban.conf
 
 %changelog
+* Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
+- switch to php8.1-redis (ALT bug 46925)
+- eterban: improve count output
+- eterban: add clear command
+
 * Sun Jan 29 2023 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
 - add i_interface2 support
 - index.html: update text
