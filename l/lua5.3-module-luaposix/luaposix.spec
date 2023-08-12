@@ -2,19 +2,19 @@
 
 %define luaver 5.3
 %define oname luaposix
-%define oversion 36.1-1
+%define rockspecrev 1
+%define oversion %version-%rockspecrev
 
 Name: lua%luaver-module-%oname
-Version: 36.1
-Release: alt1
+Version: 36.2.1
+Release: alt1.%rockspecrev
 
 Summary: Lua bindings for POSIX APIs
 License: MIT
 Group: Development/Other
 Url: https://github.com/luaposix/luaposix
 
-Source0: %name-%version.tar
-Source1: %oname-%oversion.rockspec
+Source: %name-%version.tar
 
 BuildRequires(pre): lua%luaver-luarocks
 BuildRequires(pre): rpm-macros-lua
@@ -36,16 +36,19 @@ separately.
 %setup
 
 %install
-%luarocks_make %SOURCE1
+%luarocks_make %oname-%oversion.rockspec
 %luarocks_move_docs doc
 
 %files
-%doc AUTHORS LICENSE NEWS* README*
+%doc AUTHORS NEWS* README*
 %lua_modulesdir/*
 %lua_modulesdir_noarch/*
 %luarocks_dbdir/%oname
 %exclude %luarocks_dbdir/manifest
 
 %changelog
+* Fri Aug 04 2023 Alexandr Shashkin <dutyrok@altlinux.org> 36.2.1-alt1.1
+- 36.1 -> 36.2.1
+
 * Sun Feb 19 2023 Alexandr Shashkin <dutyrok@altlinux.org> 36.1-alt1
 - Initial build for sisyphus
