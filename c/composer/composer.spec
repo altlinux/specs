@@ -1,9 +1,23 @@
-%define usephp php7
+%if_feature php80 8.0.0
+%def_with php80
+%define defphp php8.0
+%endif
+
+%if_feature php81 8.1.0
+%def_with php81
+%define defphp php8.1
+%endif
+
+%if_feature php7 7.4.3
+%def_with php7
+%define defphp php7
+%endif
+
 # Note: /usr/bin/compose still use php command
 
 Name: composer
-Version: 2.2.12
-Release: alt2
+Version: 2.5.8
+Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
 
@@ -26,11 +40,12 @@ Patch1: composer-compiler.patch
 
 BuildArch: noarch
 
-BuildRequires: %usephp >= 7.2.5
+BuildRequires(pre): rpm-macros-features >= 0.8
+BuildRequires: %defphp >= 7.2.5
 
-Requires: %_bindir/%usephp
-Requires: %usephp >= 7.2.5
-Requires: %usephp-openssl
+Requires: %_bindir/%defphp
+Requires: %defphp >= 7.2.5
+Requires: %defphp-openssl
 
 %description
 Composer helps you declare, manage and install dependencies of PHP projects,
@@ -46,12 +61,11 @@ cp %SOURCE4 .
 %__subst "s|.*SelfUpdateCommand.*||" src/Composer/Console/Application.php
 
 %build
-
 # unused date
 # Note! stat -c%%y output is incompatible with date in python!
 export RELDATE="$(stat -c '%%y' CHANGELOG.md | sed -e 's|\.[0-9]* | |')"
 #build composer.phar
-%usephp -d phar.readonly=off -d date.timezone='Europe/Moscow' ./compile %version "$RELDATE"
+%defphp -d phar.readonly=off -d date.timezone='Europe/Moscow' ./compile %version "$RELDATE"
 
 %install
 install -m 0755 -D composer.phar %buildroot/%_datadir/composer.phar
@@ -65,6 +79,10 @@ install -m 0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt1
+- new version (2.5.8) with rpmgs script
+- build with php8.1 if php7 is missed (ALT bug 44695)
+
 * Tue Apr 26 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2.12-alt2
 - return to php7.4 for compatibility
 
