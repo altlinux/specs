@@ -1,6 +1,21 @@
+%if_feature php80 8.0.0
+%def_with php80
+%define defphp php8.0
+%endif
+
+%if_feature php81 8.1.0
+%def_with php81
+%define defphp php8.1
+%endif
+
+%if_feature php7 7.4.3
+%def_with php7
+%define defphp php7
+%endif
+
 Name: wp-cli
 Version: 2.8.1
-Release: alt1
+Release: alt2
 
 Summary: WP-CLI is a set of command-line tools for managing WordPress installations.
 
@@ -17,8 +32,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-#composer 
-BuildRequires: php7 php7-openssl php7-readline
+BuildRequires(pre): rpm-macros-features
+BuildRequires: %defphp %defphp-openssl %defphp-readline
 
 %define wpcli %_datadir/wp-cli
 
@@ -30,7 +45,7 @@ WP-CLI is a set of command-line tools for managing WordPress installations.
 
 %build
 echo "Generating PHAR ..."
-php -dphar.readonly=0 utils/make-phar.php wp-cli.phar --quiet --version=%version --store-version
+%defphp -dphar.readonly=0 utils/make-phar.php wp-cli.phar --quiet --version=%version --store-version
 
 %install
 
@@ -46,6 +61,9 @@ test "$(%buildroot%_bindir/wp cli version)" = "WP-CLI %version"
 %_bindir/wp
 
 %changelog
+* Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt2
+- use php8.1 if php7.4 is missed
+
 * Fri Jun 30 2023 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt1
 - new version 2.8.1 (with rpmrb script)
 
