@@ -1,6 +1,6 @@
 Name: polymc
 Version: 5.1
-Release: alt1
+Release: alt2
 
 Summary: inecraft launcher with ability to manage multiple instances
 
@@ -14,9 +14,6 @@ Source: %name-%version.tar
 # Source1-url: https://github.com/PolyMC/libnbtplusplus/archive/refs/heads/master.zip
 Source1: %name-libnbtplusplus-%version.tar
 
-# Source2-url: https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz
-Source2: %name-quazip-%version.tar
-
 ExcludeArch: %arm
 
 BuildRequires(pre): rpm-macros-cmake
@@ -28,8 +25,10 @@ BuildRequires: cmake gcc-c++ extra-cmake-modules
 
 BuildRequires: java-devel
 BuildRequires: java-openjdk-headless
-BuildRequires: scdoc libgamemode-devel libtomlplusplus-devel libghc_filesystem-devel
+BuildRequires: scdoc libgamemode-devel
+BuildRequires: libtomlplusplus-devel libghc_filesystem-devel quazip-qt6-devel
 
+Requires: qt6-svg qt6-imageformats
 # 'libgl' 'qt6-base' 'qt6-5compat' 'qt6-svg' 'qt6-imageformats' 'zlib' 'hicolor-icon-theme' 'quazip-qt6')
 
 # for older minecraft versions
@@ -42,7 +41,7 @@ packs, saves, etc) and helps you manage them and their associated options with
 a simple interface.
 
 %prep
-%setup -a1 -a2
+%setup -a1
 %__subst 's|share/jars|share/polymc/jars|' CMakeLists.txt launcher/Application.cpp
 
 %build
@@ -63,6 +62,8 @@ a simple interface.
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_desktopdir/*.desktop
 %_datadir/metainfo/*.xml
+%dir %_datadir/%name/
+%dir %_datadir/%name/jars/
 %_datadir/%name/jars/NewLaunch.jar
 %_datadir/%name/jars/JavaCheck.jar
 %_man6dir/%name.6*
@@ -70,5 +71,9 @@ a simple interface.
 #_datadir/qlogging-categories6/*.categories
 
 %changelog
+* Sun Aug 13 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1-alt2
+- build with external quazip-qt6
+- add Requires: qt6-svg qt6-imageformats
+
 * Wed Mar 29 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1-alt1
 - initial build for ALT Sisyphus

@@ -1,5 +1,6 @@
+%define oname PrismLauncher
 Name: prismlauncher
-Version: 6.3
+Version: 7.2
 Release: alt1
 
 Summary: Minecraft launcher with ability to manage multiple instances
@@ -14,9 +15,6 @@ Source: %name-%version.tar
 # Source1-url: https://github.com/PolyMC/libnbtplusplus/archive/refs/heads/master.zip
 Source1: %name-libnbtplusplus-%version.tar
 
-# Source2-url: https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz
-Source2: %name-quazip-%version.tar
-
 ExcludeArch: %arm
 
 BuildRequires(pre): rpm-macros-cmake
@@ -30,7 +28,11 @@ BuildRequires: java-devel >= 17
 
 Requires: icon-theme-hicolor
 Requires: jre-headless >= 17
-BuildRequires: scdoc libgamemode-devel libtomlplusplus-devel libghc_filesystem-devel
+BuildRequires: scdoc libgamemode-devel
+BuildRequires: libtomlplusplus-devel libghc_filesystem-devel quazip-qt6-devel
+
+# Check https://bugzilla.altlinux.org/47223
+BuildRequires: cmark-devel cmark
 
 Requires: qt6-svg qt6-imageformats
 
@@ -41,7 +43,7 @@ Requires: xrandr
 A custom launcher for Minecraft that allows you to easily manage multiple installations of Minecraft at once (Fork of MultiMC).
 
 %prep
-%setup -a1 -a2
+%setup -a1
 
 %build
 %cmake \
@@ -58,12 +60,19 @@ A custom launcher for Minecraft that allows you to easily manage multiple instal
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_desktopdir/*.desktop
 %_datadir/metainfo/*.xml
-%_datadir/%name/NewLaunch.jar
-%_datadir/%name/JavaCheck.jar
+%dir %_datadir/%oname/
+%_datadir/%oname/NewLaunch.jar
+%_datadir/%oname/JavaCheck.jar
+%_datadir/%oname/qtlogging.ini
 %_man6dir/*
 %_datadir/mime/packages/modrinth-mrpack-mime.xml
 %_datadir/qlogging-categories6/
 
 %changelog
+* Sun Aug 13 2023 Vitaly Lipatov <lav@altlinux.ru> 7.2-alt1
+- new version 7.2 (with rpmrb script)
+- build with external quazip-qt6
+- add BR: cmark-devel
+
 * Sat Mar 18 2023 Vitaly Lipatov <lav@altlinux.ru> 6.3-alt1
 - initial build for ALT Sisyphus
