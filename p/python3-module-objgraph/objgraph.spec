@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.5.0
+Version: 3.6.0
 Release: alt1
 
 Summary: Draws Python object reference graphs with graphviz
@@ -21,6 +21,8 @@ BuildRequires(pre): rpm-build-python3
 
 %if_with check
 BuildRequires: graphviz
+BuildRequires: fontconfig
+BuildRequires: fonts-ttf-liberation
 %endif
 
 %description
@@ -52,6 +54,10 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun Aug 13 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.6.0-alt1
+- Version 3.6.0. This one actually works with python 3.11.
+- Added missing build dependencies for the test suite.
+
 * Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
 - Build new version.
 
