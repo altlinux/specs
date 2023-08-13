@@ -24,7 +24,7 @@
 
 Summary: Perl client interface to SSH
 Name: perl-%dist
-Version: 2.141
+Version: 2.142
 Release: alt1
 License: %perl_license
 Group: Development/Perl
@@ -69,6 +69,9 @@ echo "3" | perl Makefile.PL INSTALLDIRS="vendor" PREFIX="%buildroot%_prefix"
 
 
 %changelog
+* Sun Aug 13 2023 Igor Vlasenko <viy@altlinux.org> 2.142-alt1
+- automated CPAN update
+
 * Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 2.141-alt1
 - automated CPAN update
 
