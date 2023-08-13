@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Authen-SASL
 Name: perl-%dist
-Version: 2.16
+Version: 2.1700
 Release: alt1
 
 Summary: SASL authentication framework for Perl
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/G/GB/GBARR/Authen-SASL-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/EH/EHUELS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -28,7 +29,7 @@ negotiated, a security layer is inserted between the protocol and the
 connection.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -37,7 +38,7 @@ connection.
 %perl_vendor_install
 
 %files
-%doc	api.txt Changes example_pl
+%doc	api.txt Changes example_pl README
 %dir	%perl_vendor_privlib/Authen
 	%perl_vendor_privlib/Authen/SASL.pm
 %doc	%perl_vendor_privlib/Authen/SASL.pod
@@ -48,6 +49,9 @@ connection.
 	%perl_vendor_privlib/Authen/SASL/Perl/*.pm
 
 %changelog
+* Sun Aug 13 2023 Igor Vlasenko <viy@altlinux.org> 2.1700-alt1
+- automated CPAN update
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1
 - automated CPAN update
 
