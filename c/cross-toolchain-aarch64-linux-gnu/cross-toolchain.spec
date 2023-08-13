@@ -3,6 +3,7 @@
 # %%define target_arch arm
 # %%define target_arch mipsel
 # %%define target_arch riscv64
+# %%define target_arch loongarch64
 %define target_arch aarch64
 
 
@@ -12,6 +13,7 @@
 %define target_ld_linux /lib64/ld-linux-aarch64.so.1
 %define target_libdir lib64
 %define target_has_itm 1
+%define target_has_gold 1
 %endif
 
 %if "%target_arch" == "arm"
@@ -20,10 +22,12 @@
 %define target_ld_linux /lib/ld-linux-armhf.so.3
 %define target_libdir lib
 %define target_has_itm 1
+%define target_has_gold 1
 # armhf: use the same arch/fp instruction set as the native compiler
 %define arm_arch armv7-a
 %define arm_fp_isa vfpv3-d16
 %define arm_fp_abi hard
+%define target_no_default_pie 1
 %endif
 
 %if "%target_arch" == "mipsel"
@@ -31,14 +35,31 @@
 %define target_qemu_arch mipsel
 %define target_ld_linux /lib/ld.so.1
 %define target_libdir lib
+%define target_has_gold 1
+%define target_no_default_pie 1
 %endif
 
+%if "%target_arch" == "mips64el"
+%define target_kernel mips
+%define target_qemu_arch mips64el
+%define target_ld_linux /lib64/ld.so.1
+%define target_libdir lib64
+%define target_has_gold 1
+%endif
 
 %if "%target_arch" == "riscv64"
 %define target_kernel riscv
 %define target_qemu_arch riscv64
 %define target_ld_linux /lib64/ld-linux-riscv64-lp64d.so.1
 %define target_libdir lib64
+%endif
+
+%if "%target_arch" == "loongarch64"
+%define target_kernel loongarch
+%define target_qemu_arch loongarch64
+%define target_ld_linux /lib64/ld-linux-loongarch-lp64d.so.1
+%define target_libdir lib64
+%define target_has_itm 1
 %endif
 
 %if "%target_arch" != "arm"
@@ -52,7 +73,7 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20220605
+Version: 20230802
 Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
@@ -64,18 +85,17 @@ ExclusiveArch: x86_64
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
 %define binutils_version %{get_version binutils-source}
 %define glibc_version %{get_version glibc-source}
-%define kernel_version 5.10
+%define kernel_version 6.1
 
-
-BuildPreReq: gcc-c++
-BuildPreReq: libmpc-devel libmpfr-devel libgmp-devel zlib-devel
-BuildPreReq: coreutils flex bison makeinfo perl-Pod-Parser findutils
-# Linux' headers_install uses rsync
-BuildPreReq: rsync
 BuildRequires(pre): gcc-source
 BuildRequires(pre): binutils-source
 BuildRequires(pre): glibc-source
-BuildPreReq: kernel-source-%kernel_version
+BuildRequires: gcc-c++
+BuildRequires: kernel-source-%kernel_version
+BuildRequires: coreutils flex bison makeinfo perl-Pod-Parser findutils
+BuildRequires: libmpc-devel libmpfr-devel libgmp-devel zlib-devel
+# Linux' headers_install uses rsync
+BuildRequires: rsync
 BuildRequires: /usr/bin/qemu-%target_qemu_arch-static
 BuildRequires: python3
 
@@ -89,19 +109,30 @@ Version: %gcc_version
 Summary: %target_arch-targeted GCC cross-compiler
 Group: Development/C
 Requires: gcc-%target-static = %gcc_version
+Requires: cross-gcc-libs-%target = %gcc_version
 Requires: binutils-%target = %binutils_version
 Requires: cross-glibc-%target_arch = %glibc_version
 
 %description -n gcc-%target
 %target_arch-targeted GCC cross-compiler
 
+%package -n cross-gcc-libs-%target
+Version: %gcc_version
+Summary: %target_arch-targeted GCC cross-compiler, target libraries
+Group: Development/C
+BuildArch: noarch
+
+%description -n cross-gcc-libs-%target
+%target_arch-targeted GCC cross-compiler, shared libraries for target
+
 %package -n gcc-%target-static
 Version: %gcc_version
 Summary: %target_arch-targeted GCC cross-compiler, static libraries
 Group: Development/C
+BuildArch: noarch
 
 %description -n gcc-%target-static
-%target_arch-targeted GCC cross-compiler, static libraries
+%target_arch-targeted GCC cross-compiler, static libraries for target
 
 %package -n binutils-%target
 Version: %binutils_version
@@ -184,7 +215,9 @@ cd obj_binutils
 	--with-build-sysroot=${stagedir}%sysroot \
 	--with-system-zlib \
 	--enable-plugins \
+%if 0%{?target_has_gold}
 	--enable-gold=yes \
+%endif
 	--enable-ld=default \
 %if "%target_arch" != "mipsel"
 	--enable-64-bit-bfd \
@@ -240,10 +273,19 @@ cd ../obj_gcc_bootstrap
 	--with-lxc1-sxc1=no \
 	--with-madd4=no \
 %endif
+%if "%target_arch" == "mips64el"
+	--with-arch-64=mips64r2 \
+	--with-abi=64 \
+	--with-lxc1-sxc1=no \
+	--with-madd4=no \
+	--with-fix-loongson3-llsc=yes \
+%endif
 %if "%target_arch" == "riscv64"
 	--with-arch=rv64gc \
 	--with-abi=lp64d \
 %endif
+	--enable-gnu-unique-object \
+	--enable-linker-build-id \
 	%nil
 
 %make_build all-gcc all-target-libgcc
@@ -270,6 +312,9 @@ cd ../obj_glibc
 	--with-lib=${stagedir}%sysroot/usr/lib \
 	--disable-multilib \
 	--disable-crypt \
+%if "%target_arch" == "loongarch64"
+	--disable-werror \
+%endif
 	libc_cv_forced_unwind=yes \
 	%nil
 
@@ -287,6 +332,9 @@ export PATH="${stagedir}%prefix/bin:${save_PATH}"
 # gcc
 cd ../obj_gcc
 # XXX: avoid %%configure puts $target libraries in /usr/lib64
+env \
+	ac_cv_file__proc_self_exe=yes \
+	gcc_cv_libc_provides_ssp=yes \
 ../gcc/configure \
 	--target=%target \
 	--host=%{_configure_platform} \
@@ -315,12 +363,27 @@ cd ../obj_gcc
 	--with-lxc1-sxc1=no \
 	--with-madd4=no \
 %endif
+%if "%target_arch" == "mips64el"
+        --with-arch-64=mips64r2 \
+        --with-abi=64 \
+        --with-lxc1-sxc1=no \
+        --with-madd4=no \
+        --with-fix-loongson3-llsc=yes \
+%endif
 %if "%target_arch" == "riscv64"
 	--with-arch=rv64gc \
 	--with-abi=lp64d \
 %endif
+	--enable-gnu-unique-object \
+	--enable-linker-build-id \
+%if 0%{?target_no_default_pie} == 0
+	--enable-default-pie \
+%endif
 	%nil
 
+env \
+	ac_cv_file__proc_self_exe=yes \
+	gcc_cv_libc_provides_ssp=yes \
 %make_build
 # XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
 %make_install install DESTDIR=${stagedir}
@@ -405,8 +468,10 @@ rm -rf %buildroot%prefix/share/info
 rm -rf %buildroot%prefix/share/man/man7
 # python pretty-printers conflict with native compiler
 rm -rf %buildroot%prefix/share/gcc-%gcc_branch/python
-# conficts with the native compiler and is not particularly useful
+# conflicts with the native compiler and is not particularly useful
 rm -f %buildroot%prefix/%_lib/libcc1.so*
+# conflicts with the native bfd and is not particularly useful
+rm -rf %buildroot%prefix/lib/bfd-plugins
 # Useless for Linux targets
 rm -f %buildroot%_man1dir/%target-windmc*
 rm -f %buildroot%_man1dir/%target-windres*
@@ -422,6 +487,11 @@ install -d -m 755 %buildroot%sysroot/usr/lib
 
 # remove bootstrap toolchain
 rm -rf %buildroot/stage1
+
+
+rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp.a
+rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp_nonshared.a
+rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp.so*
 
 # Leave alone $target libraries
 %add_verify_elf_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
@@ -468,10 +538,19 @@ cat > bye.S <<EOF
 #include <sys/syscall.h>
 
 	.arch armv8-a
+	.data
+message: .asciz "bye-bye ...\n"
+
 	.text
 	.align 2
 	.global _start
 _start:
+	mov x8, __NR_write
+	mov x0, 1
+	adr x1, message
+	mov x2, 12
+	svc #0
+
 	mov x8, __NR_exit
 	mov x0, 0
 	svc #0
@@ -483,18 +562,30 @@ EOF
 cat > bye.S <<EOF
 #include <sys/syscall.h>
 	.arch armv7-a
+	.data
+message: .asciz "bye-bye ...\n"
+
 	.text
 	.align 2
 	.global _start
 _start:
+	mov r7, #__NR_write
+	mov r0, #1
+	ldr r1, address_of_message
+	mov r2, #12
+	swi #0
+
 	mov r0, #0
 	mov r7, #__NR_exit
 	swi #0
+
+.align 4
+address_of_message: .word message
 	.section	.note.GNU-stack,"",%progbits
 EOF
 %endif
 
-%if "%target_arch" == "mipsel"
+%if "%target_arch" == "mipsel" || "%target_arch" == "mips64el"
 cat > bye.S <<EOF
 #include <sys/syscall.h>
 .text
@@ -519,6 +610,30 @@ _start:
 EOF
 %endif
 
+%if "%target_arch" == "loongarch64"
+cat > bye.S <<EOF
+#include <sys/syscall.h>
+
+.data
+message: .asciz "bye-bye ...\n"
+
+.text
+.global _start
+_start:
+	li.w \$a7, __NR_write
+	li.w \$a0, 1 # stdout file descriptor
+	la \$a1, message
+	li.w \$a2, 12 # message length
+	syscall 0x0
+
+	li.w \$a7, __NR_exit
+	li.w \$a0, 0
+	syscall 0x0
+
+.section	.note.GNU-stack,"",@progbits
+EOF
+%endif
+
 env PATH=%buildroot%prefix/bin:$PATH \
 %buildroot%prefix/bin/%target-gcc -static -nostdlib -o bye_asm bye.S || exit 11
 qemu-%target_qemu_arch-static ./bye_asm || exit 13
@@ -534,12 +649,25 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %prefix/libexec/gcc/%target/*
 # avoid 'static library packaging violation' "error"
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libatomic.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libgcc.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libgcc_eh.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libgcov.a
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libgomp.a
 %if 0%{?target_has_itm}
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libitm.a
 %endif
-%exclude %prefix/lib/gcc/%target/%gcc_branch/libssp.a
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++fs.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libsupc++.a
+# avoid 'NEW bad_elf_symbols detected' "error"
+%exclude %prefix/lib/gcc/%target/%gcc_branch/crt*.o
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libatomic.so*
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libgcc_s.so*
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libgomp.so*
+%if 0%{?target_has_itm}
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libitm.so*
+%endif
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++.so*
 # binunitls
 %exclude %prefix/libexec/gcc/%target/bin/*
 %exclude %prefix/libexec/gcc/%target/lib/*
@@ -551,12 +679,26 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 %files -n gcc-%target-static
 %prefix/lib/gcc/%target/%gcc_branch/libatomic.a
+%prefix/lib/gcc/%target/%gcc_branch/libgcc.a
+%prefix/lib/gcc/%target/%gcc_branch/libgcc_eh.a
+%prefix/lib/gcc/%target/%gcc_branch/libgcov.a
 %prefix/lib/gcc/%target/%gcc_branch/libgomp.a
 %if 0%{?target_has_itm}
 %prefix/lib/gcc/%target/%gcc_branch/libitm.a
 %endif
-%prefix/lib/gcc/%target/%gcc_branch/libssp.a
 %prefix/lib/gcc/%target/%gcc_branch/libstdc++.a
+%prefix/lib/gcc/%target/%gcc_branch/libstdc++fs.a
+%prefix/lib/gcc/%target/%gcc_branch/libsupc++.a
+
+%files -n cross-gcc-libs-%target
+%prefix/lib/gcc/%target/%gcc_branch/crt*.o
+%prefix/lib/gcc/%target/%gcc_branch/libatomic.so*
+%prefix/lib/gcc/%target/%gcc_branch/libgcc_s.so*
+%prefix/lib/gcc/%target/%gcc_branch/libgomp.so*
+%if 0%{?target_has_itm}
+%prefix/lib/gcc/%target/%gcc_branch/libitm.so*
+%endif
+%prefix/lib/gcc/%target/%gcc_branch/libstdc++.so*
 
 %files -n cross-glibc-%target_arch
 %sysroot/usr/include/*
@@ -572,7 +714,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %sysroot/usr/lib
 %endif
 %exclude %sysroot/usr/%target_libdir/libBrokenLocale.a
+%if %target_arch != "loongarch64"
 %exclude %sysroot/usr/%target_libdir/libanl.a
+%endif
 %exclude %sysroot/usr/%target_libdir/libdl.a
 %exclude %sysroot/usr/%target_libdir/libm.a
 %exclude %sysroot/usr/%target_libdir/libpthread.a
@@ -582,7 +726,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 %files -n cross-glibc-static-%target_arch
 %sysroot/usr/%target_libdir/libBrokenLocale.a
+%if %target_arch != "loongarch64"
 %sysroot/usr/%target_libdir/libanl.a
+%endif
 %sysroot/usr/%target_libdir/libdl.a
 %sysroot/usr/%target_libdir/libm.a
 %sysroot/usr/%target_libdir/libpthread.a
@@ -595,14 +741,14 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %_bindir/%target-ar
 %_bindir/%target-as
 %_bindir/%target-c++filt
-%if "%target_arch" != "riscv64"
+%if 0%{?target_has_gold}
 %_bindir/%target-dwp
 %endif
 %_bindir/%target-elfedit
 %_bindir/%target-gprof
 %_bindir/%target-ld
 %_bindir/%target-ld.bfd
-%if "%target_arch" != "riscv64"
+%if 0%{?target_has_gold}
 %_bindir/%target-ld.gold
 %endif
 %_bindir/%target-nm
@@ -635,6 +781,17 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Wed Aug 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230802-alt1
+- GCC: don't package libssp any more
+- GCC: enabled gnu-unique-object
+- GCC: enabled default-pie on 64-bit architectures
+- Use kernel-source 6.1 on all architectures
+
+* Thu Feb 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230202-alt1
+- Moved GCC target libraries to a noarch subpackage to avoid spurious
+  'bad ELF symbols' errors.
+- Added bits from riscv64 and loongarch64 cross-toolchains
+
 * Sun Jun 05 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 20220605-alt1
 - Use slow 2-stage bootstrap to avoid a build failure with GCC 12
 
