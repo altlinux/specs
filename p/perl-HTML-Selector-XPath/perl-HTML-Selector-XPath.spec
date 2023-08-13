@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-HTML-Selector-XPath
-Version:        0.26
+Version:        0.28
 Release:        alt1
 Summary:        CSS Selector to XPath compiler
 License:        GPL+ or Artistic
@@ -59,6 +59,9 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Aug 13 2023 Igor Vlasenko <viy@altlinux.org> 0.28-alt1
+- automated CPAN update
+
 * Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.26-alt1
 - automated CPAN update
 
