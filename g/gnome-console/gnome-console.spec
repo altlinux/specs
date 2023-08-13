@@ -11,7 +11,7 @@
 
 Name: gnome-console
 Version: %ver_major.4
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: GNOME Console
 License: GPL-3.0
@@ -31,10 +31,13 @@ Source: %name-%version%beta.tar
 %define vte_ver 0.69.91
 %define nautilus_ver 43
 
+Provides: xvt
+Provides: x-terminal-emulator
+
 Requires(pre): libvte3 >= %vte_ver
 Requires: dconf
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson rpm-macros-alternatives
 BuildRequires: meson yelp-tools
 BuildRequires: desktop-file-utils %_bindir/appstream-util
 BuildRequires: libgio-devel >= %glib_ver
@@ -67,6 +70,12 @@ Nautilus file manager.
 
 %install
 %meson_install
+# alternatives (xterm -- 40, g-t -- 39, blackbox -- 38)
+mkdir -p %buildroot%_altdir
+cat >%buildroot%_altdir/%name <<EOF
+%_bindir/xvt	%_bindir/%binary_name	37
+%_bindir/x-terminal-emulator	%_bindir/%binary_name	37
+EOF
 
 %find_lang --with-gnome %binary_name
 
@@ -77,6 +86,7 @@ Nautilus file manager.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %_datadir/metainfo/%xdg_name.metainfo.xml
+%_altdir/%name
 %doc NEWS README*
 
 %if_with nautilus
@@ -85,6 +95,9 @@ Nautilus file manager.
 %endif
 
 %changelog
+* Sun Aug 13 2023 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt2
+- added alternatives for xvt and x-terminal-emulator
+
 * Sun Aug 06 2023 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1
 - 44.4
 
