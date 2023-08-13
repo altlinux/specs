@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.47
+Version: 0.3.1
 Release: alt1
 
 Summary: Simple image creator
@@ -59,8 +59,9 @@ mkdir -p %buildroot%sysctldir
 echo "fs.protected_hardlinks = 0" > %buildroot%sysctldir/49-%name.conf
 ln -s 49-%name.conf %buildroot%sysctldir/51-%name.conf	# *sigh*
 
-# This script is executed in chroot.
-%add_findreq_skiplist %_datadir/%name/tools/mki-copy-efiboot-chrooted
+# These scripts are executed in the chrooted environment.
+%add_findreq_skiplist %_datadir/%name/tools/mki-copy-grub-efi-chrooted
+%add_findreq_skiplist %_datadir/%name/tools/mki-chroot-sh-functions
 
 %post
 if grep -Fqsx 1 "%procfile"; then
@@ -76,7 +77,7 @@ fi
 %files
 %_bindir/*
 %_datadir/%name
-%doc examples doc/README.ru
+%doc docs/*.md
 
 %files preinstall
 %config(noreplace) %sysctldir/??-%name.conf
@@ -86,6 +87,27 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Sun Aug 13 2023 Alexey Gladkov <legion@altlinux.ru> 0.3.1-alt1
+- mki-pack-boot: Do not imply grub-efi for isolinux and grubpcboot boot types.
+- mki-copy-our2out: MKI_OUTNAME may be empty.
+
+* Wed Aug 09 2023 Alexey Gladkov <legion@altlinux.ru> 0.3.0-alt1
+- Add loongarch64 support.
+- Add custompipe pack method.
+- Add mki-chroot-sh-functions to store common functions for chrooted scripts.
+- mki-pack-*boot: Major refactoring and code cleanup.
+- mki-copy-{pxe,sys}linux: Add compatibility with bootloader-utils >= 0.4.11-alt1.
+- mki-pack-boot: Add proper support for e2kboot.
+- mki-copy-pkgs: Rename copied RPM packages based on their header information.
+- Drop support of elilo and refind EFI bootloaders.
+- Obsolete grubaa64boot boot type.
+- Replace /bin/ash -> /bin/sh.
+- Drop obsolete rules.mk.
+- Drop obsolete examples.
+- mki-cache-*: Major refactoring and code cleanup.
+- mki-cache: Allow custom caching scripts.
+- Add a way to change the image through patches.
+
 * Wed Jul 26 2023 Alexey Gladkov <legion@altlinux.ru> 0.2.47-alt1
 - mki-image-prepare: Allowed to run script just after unpack IMAGE_INIT_LIST.
 - Increased the minimum required version of hasher.
