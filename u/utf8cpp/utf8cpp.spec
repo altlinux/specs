@@ -1,5 +1,5 @@
 Name:    utf8cpp
-Version: 3.2.3
+Version: 3.2.4
 Release: alt1
 
 Summary: UTF-8 with C++ in a Portable Way
@@ -44,5 +44,8 @@ cmake -Wno-dev \
 %_libdir/cmake/*
 
 %changelog
+* Sun Aug 13 2023 Andrey Cherepanov <cas@altlinux.org> 3.2.4-alt1
+- New version.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 3.2.3-alt1
 - Initial build for Sisyphus.
