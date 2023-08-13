@@ -1,5 +1,5 @@
 Name: libnatspec
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Library for national and language-specific issues
@@ -95,6 +95,11 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 0.3.3-alt1
+- enrich_fs_options: fix warning about buffer overflow
+- netspec: use natspec_convert() for transliteration via -a
+- doc: natspec -a transliterate and print only one arg
+
 * Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 0.3.2-alt1
 - update doc files
 
