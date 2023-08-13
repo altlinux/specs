@@ -16,8 +16,8 @@
 %define _libexecdir %prefix/libexec
 
 Name: mold
-Version: 2.0.0
-Release: alt1.git9fe3d75
+Version: 2.1.0
+Release: alt1
 
 Summary: A Modern Linker
 License: MIT
@@ -104,6 +104,9 @@ rm -rfv %buildroot%_docdir/mold
 %_man1dir/*mold.1.*
 
 %changelog
+* Sun Aug 13 2023 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+
 * Mon Jul 31 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.0-alt1.git9fe3d75
 - Updated to 2.0.0.
 - Distributed under MIT license.
