@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.108.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -16,6 +16,7 @@ Source: %rname-%version.tar
 Source10: add-ru.po
 Patch1: alt-def-trash.patch
 Patch2: alt-kio-help-fallback-kde4.patch
+Patch3: alt-copy-first.patch
 Patch10: alt-streebog-support.patch
 
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
@@ -98,6 +99,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %if_enabled streebog
 %patch10 -p2 -b .streebog
@@ -176,6 +178,9 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Aug 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.108.0-alt2
+- move Copy item upper then Move in DnD popup menu
+
 * Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.108.0-alt1
 - new version
 
