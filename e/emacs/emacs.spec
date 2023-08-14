@@ -11,7 +11,7 @@
 
 Name: emacs
 Version: 28.2
-Release: alt2.1
+Release: alt2.2
 
 Summary: GNU Emacs text editor
 License: GPLv3+
@@ -51,7 +51,8 @@ BuildRequires: pkgconfig(xpm)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(zlib)
 
-BuildRequires: rpm-macros-emacs
+BuildRequires(pre): rpm-macros-alternatives
+BuildRequires(pre): rpm-macros-emacs
 BuildRequires: texinfo
 BuildRequires: sendmail-common
 BuildRequires: libgpm-devel
@@ -462,6 +463,10 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Mon Aug 14 2023 Ivan A. Melnikov <iv@altlinux.org> 28.2-alt2.2
+- add missing BR on rpm-macros-alternatives
+  (fixes FTBFS on loongarch64)
+
 * Tue Oct 11 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 28.2-alt2.1
 - added patch for Elbrus
 
