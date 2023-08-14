@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 350
+%define centos_release 354
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -643,6 +643,33 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.354-alt1.el9
+- Updated to kernel-5.14.0-354.el9 (fixes: CVE-2023-1206):
+  + Backport fixes for qcom-snps-femto-v2 PHY driver
+  + Enable Nvidia backlight EC support to resolve backlight control issues
+  + KEYS: use kfree_sensitive with key
+  + Merge commit '4b8b6ef90ba2ddba3bfd9cd15310634040e3ab37'
+  + Revert "x86/PAT: Have pat_enabled() properly reflect state when running on Xen"
+  + Sync vDPA with upstream for RHEL 9.3
+  + VMCI: Use threaded irqs instead of tasklets
+  + drm/simpledrm: Pending patches required to support HDMI on the NVIDIA Orin
+  + ext4: Fix generic/622 failure
+  + fuse: add "expire only" mode to FUSE_NOTIFY_INVAL_ENTRY
+  + i40e: Wait for pending VF reset in VF set callbacks
+  + ipv4: Backport upstream fixes.
+  + ipv6: fix locking issues with loops over idev->addr_list
+  + mm/nvdimm: fix failure to install os on some ppc systems
+  + net: Enable HSR and PRP
+  + netfilter: nf_tables: Support resetting state in rules and set elements
+  + netfilter: nf_tables: add reschedule during chain loop detection
+  + pinctrl: tegra: Add Tegra234 pinctrl driver to RHEL9 kernel
+  + rbd: exclusive lock blocklisting and osd_request_timeout handling fixes
+  + redhat/configs: Remove CONFIG_DRM_I915_GVT & CONFIG_DRM_I915_GVT_KVMGT
+  + tcp: Reduce chance of collisions in inet6_hashfn().
+  + update cpufreq subsystem to v6.3
+  + virtio_transport: temporarily do not depend on ANY_LAYOUT support
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Aug 07 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.350-alt1.el9
 - Updated to kernel-5.14.0-350.el9 (fixes: CVE-2023-1998, CVE-2023-20593, CVE-2023-3141, CVE-2023-3268):
   + ACPI: Avoid breaking S3 wakeup due to might_sleep()
