@@ -1,4 +1,4 @@
-%define libcontrolppver 0.27
+%define libcontrolppver 0.30
 %define confdir %{_sysconfdir}/%{name}
 %define statedir %{_localstatedir}/%{name}
 %define ulim_statedir %{statedir}/ulimits
@@ -6,8 +6,8 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.21.1
-Release: alt2
+Version: 0.21.2
+Release: alt1
 
 Summary: System configuration tool
 License: GPLv3
@@ -117,6 +117,10 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Aug 10 2023 Alexey Appolonov <alexey@altlinux.org> 0.21.2-alt1
+- Improved comparison of ulimits files;
+- Sync with the libcontrol++ ver 0.30.
+
 * Sat Jun 17 2023 Alexey Appolonov <alexey@altlinux.org> 0.21.1-alt2
 - Tests run at build time.
 

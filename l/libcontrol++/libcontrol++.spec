@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.29.1
+Version: 0.30.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -56,6 +56,11 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Aug 10 2023 Alexey Appolonov <alexey@altlinux.org> 0.30.0-alt1
+- The "OpenAndPerform" function provides more feedback;
+- Modified interface of the "OpenAndPerformOnAllFiles" function (the first arg
+  is a full path of a processed file instead of a path of the containing dir).
+
 * Tue Jun 13 2023 Alexey Appolonov <alexey@altlinux.org> 0.29.1-alt1
 - Fixed method "WriteExcludedPaths" of class "TGroupOfFilesMode".
 
