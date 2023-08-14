@@ -1,26 +1,27 @@
 %define _unpackaged_files_terminate_build 1
-%define oname validators
+%define pypi_name validators
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.18.1
+Name: python3-module-%pypi_name
+Version: 0.21.2
 Release: alt1
 
 Summary: Python data validation for Humans
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/validators/
+Vcs: https://github.com/python-validators/validators
 BuildArch: noarch
 
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(decorator)
-BuildRequires: python3(six)
-BuildRequires: python3(tox)
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -31,35 +32,26 @@ schema.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-whitelist_externals =
-    /bin/cp
-    /bin/sed
-commands_pre =
-    /bin/cp %_bindir/py.test3 {envbindir}/py.test
-    /bin/sed -i '1c #!{envpython}' {envbindir}/py.test
-commands =
-    {envbindir}/py.test {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -- tests
+%pyproject_run_pytest -ra
 
 %files
-%doc *.rst LICENSE
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 14 2023 Stanislav Levin <slev@altlinux.org> 0.21.2-alt1
+- 0.18.1 -> 0.21.2.
+
 * Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 0.18.1-alt1
 - Initial build for Sisyphus.
