@@ -65,8 +65,8 @@
 
 
 Name: virtualbox
-Version: 7.0.8
-Release: alt3
+Version: 7.0.10
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -960,6 +960,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Aug 14 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.10-alt1
+- Update to newest version 7.0.10
+
 * Thu Jun 22 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.8-alt3
 - Including <cstdint> for fixed-size integer types in util_bit.h
 
