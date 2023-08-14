@@ -10,10 +10,10 @@
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable sendto
-%def_disable check
+%def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1%beta
 
 Summary: The GNOME Bluetooth Subsystem
@@ -178,6 +178,10 @@ dbus-run-session %__meson_test
 %endif
 
 %changelog
+* Mon Aug 14 2023 Yuri N. Sedunov <aris@altlinux.org> 42.6-alt1
+- 42.6
+- enabled %%check
+
 * Tue Dec 13 2022 Yuri N. Sedunov <aris@altlinux.org> 42.5-alt1
 - 42.5
 
