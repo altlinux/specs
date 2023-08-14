@@ -1,6 +1,6 @@
 %global import_path github.com/cue-lang/cue
 Name:    cue
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Validate and define text-based and dynamic configuration
@@ -58,5 +58,8 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Aug 09 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.6.0-alt1
+- new version 0.6.0
+
 * Thu May 18 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus
