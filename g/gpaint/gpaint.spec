@@ -1,6 +1,6 @@
 Name: 	 gpaint
 Version: 0.3.4
-Release: alt1
+Release: alt2
 Summary: GPaint Easy to use paint program for GNOME
 Summary(ru_RU.UTF-8): Простая рисовалка на GTK
 
@@ -15,19 +15,30 @@ Source1: %name.xpm
 Source2: %name.svg
 Source3: %name.1
 Source4: %name.watch
+Source5: ru.po
+
+Patch0: gpaint-glade-l10n.patch
+Patch1: gpaint-alt-add-ru-l10n.patch
+Patch2: gpaint-hide-effects.patch
 
 BuildRequires: libgtk+3-devel
 BuildRequires: libglade-devel
+BuildRequires: intltool
 
 %description
 gpaint is a simple, easy to use paint program for GNOME.
 
 %prep
 %setup
+# Add Russian localization
+%autopatch -p2
+cp %SOURCE5 po/ru.po
 subst "s,Icon=/usr/share/pixmaps/Clipboard.xpm,Icon=gpaint," %name.desktop
 
 %build
+%autoreconf
 %configure
+make -C po update-po
 %make_build
 
 %install
@@ -49,6 +60,10 @@ ln -s gpaint-2 %buildroot%_bindir/%name
 %_man1dir/%name.1*
 
 %changelog
+* Mon Jul 24 2023 Andrey Cherepanov <cas@altlinux.org> 0.3.4-alt2
+- Return Russian localization.
+- Hide unworking Effects menu.
+
 * Fri Jul 14 2023 Andrey Cherepanov <cas@altlinux.org> 0.3.4-alt1
 - New version.
 - Made gpaint executable (ALT #46855).
