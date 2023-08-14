@@ -3,7 +3,7 @@
 
 Name: cups-filters
 Version: 2.0
-Release: alt0.rc2
+Release: alt0.rc2_1
 
 Summary: OpenPrinting CUPS filters and backends
 License: GPLv2 and GPLv2+ and GPLv3 and MIT
@@ -29,7 +29,7 @@ BuildRequires: libgtk+3-devel
 BuildRequires: libppd-devel
 BuildRequires: libavahi-devel
 Provides: cups-backend-serial = %EVR
-Obsoletes: cups-backend-serial = %EVR
+Obsoletes: cups-backend-serial < %EVR
 
 %description
 Contains backends, filters, and other software that was
@@ -90,6 +90,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %_datadir/man/man*/*
 
 %changelog
+* Fri Aug 11 2023 Anton Midyukov <antohami@altlinux.org> 2.0-alt0.rc2_1
+- NMU: Fix obsoletes cups-backend-serial
+
 * Mon Jul 24 2023 Anton Farygin <rider@altlinux.ru> 2.0-alt0.rc2
 - update to 2.0rc2
 
