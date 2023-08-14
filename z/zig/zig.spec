@@ -4,29 +4,30 @@
 %set_verify_elf_method rpath=relaxed
 
 Name: zig
-Version: 0.10.1
-Release: alt2
+Version: 0.11.0
+Release: alt1
 Summary: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
 # TODO: Zig lib is bundled with a lot of third party with other licenses.
 License: MIT
 Group: Development/C
 Url: https://ziglang.org/
 Vcs: https://github.com/ziglang/zig/
+Requires: /proc
 
 # https://ziglang.org/download/0.10.0/release-notes.html#Support-Table
-# aarch64: OK   53:00
-#    armh: allocation failed
-#    i586: allocation failed
-# ppc64le: OK 1:02:52
-#  x86-64: OK   24:26
-ExcludeArch: %ix86 armh
+# aarch64: OK  1:07:59
+#    armh: UnknownArchitecture
+#    i586: FileTooBig
+# ppc64le: panic: reached unreachable code
+#  x86-64: OK    29:00
+ExclusiveArch: %zig_arches
 
 Source: %name-%version.tar
 
-%define llvm_ver 15
+%define llvm_ver 16
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-zig
 # /proc is required or zig will output FileNotFound
-BuildRequires: /proc
 BuildRequires: chrpath
 BuildRequires: clang%llvm_ver.0-devel
 BuildRequires: cmake
@@ -36,6 +37,7 @@ BuildRequires: libtinfo-devel
 BuildRequires: libxml2-devel
 BuildRequires: lld%llvm_ver.0-devel
 BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: /proc
 BuildRequires: zlib-devel
 
 %description
@@ -44,16 +46,30 @@ BuildRequires: zlib-devel
 %prep
 %setup
 
+%package checkinstall
+Summary: CI test for zig
+Group: Development/Other
+Requires(pre): zig
+
+%description checkinstall
+%summary.
+
 %build
 %define optflags_lto %nil
 export CC=clang-%llvm_ver CXX=clang++-%llvm_ver LDFLAGS="-fuse-ld=lld $LDFLAGS"
+# https://github.com/ziglang/zig/issues/16800
+#   i586: UnknownArchitecture
+#     -DZIG_HOST_TARGET_TRIPLE=native: LibCRuntimeNotFound
+#     -DZIG_HOST_TARGET_TRIPLE=x86-linux-gnu: error: cast increases pointer alignment
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DZIG_USE_LLVM_CONFIG=ON \
-	-DZIG_SHARED_LLVM=ON \
+	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DZIG_PREFER_CLANG_CPP_DYLIB=true \
+	-DZIG_SHARED_LLVM=ON \
 	-DZIG_TARGET_MCPU=baseline \
+	-DZIG_USE_LLVM_CONFIG=ON \
 	-DZIG_VERSION="%version"
+grep ZIG %_cmake__builddir/CMakeCache.txt
 %cmake_build
 
 %install
@@ -66,15 +82,35 @@ PATH=%buildroot%_bindir:$PATH
 zig version
 zig env
 zig run test/standalone/hello_world/hello.zig
+zig run test/standalone/hello_world/hello_libc.zig -lc
+# Run upstream tests from ci/x86_64-linux-debug.sh
+cd %_cmake__builddir
+zig test ../test/behavior.zig -I../test
 
-%define _customdocdir %_docdir/%name
+%pre checkinstall
+set -exo pipefail
+zig version
+zig run %_defaultdocdir/%name/hello.zig
+t=$(mktemp -d)
+cd "$t"
+%__zig init-exe
+%zig_build run
+%zig_test
+rm -rf -- "$t"
 
 %files
-%doc LICENSE README.md test/standalone/hello_world/hello.zig
+%define _customdocdir %_docdir/%name
+%doc LICENSE README.md test/standalone/hello_world/*.zig doc/langref.html.in
 %_bindir/zig
 %_prefix/lib/zig
 
+%files checkinstall
+
 %changelog
+* Sat Aug 12 2023 Vitaly Chikunov <vt@altlinux.org> 0.11.0-alt1
+- Update to 0.11.0 (2023-08-03).
+- spec: Add simplest checkinstall package with a test.
+
 * Sat Jun 03 2023 Vitaly Chikunov <vt@altlinux.org> 0.10.1-alt2
 - Add simple %%check section.
 - Fix crash on Intel x86-64 CPUs (ALT#46366).

@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-macros-zig
-Version: 1
+Version: 2
 Release: alt1
 Summary: RPM macros for Zig
 License: GPL-2.0-only
@@ -21,5 +21,9 @@ install -pDm644 %SOURCE0 %buildroot%_rpmmacrosdir/zig
 %_rpmmacrosdir/zig
 
 %changelog
+* Mon Aug 14 2023 Vitaly Chikunov <vt@altlinux.org> 2-alt1
+- Update arch list for zig-0.11.0 (remove ppc64le).
+- Fix build error: Invalid option: -Drelease-safe.
+
 * Sat Jun 03 2023 Vitaly Chikunov <vt@altlinux.org> 1-alt1
 - First version.
