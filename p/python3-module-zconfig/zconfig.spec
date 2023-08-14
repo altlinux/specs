@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.2.0
-Release: alt3
+Release: alt4
 
 Summary: Python configuration module from Zope
 License: ZPL
@@ -17,6 +17,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 # https://github.com/zopefoundation/ZConfig/issues/34
 Patch1: %oname-%version-upstream-schema2html.patch
+Patch2: 0001-test_logger-dropped-Python-3.2-ResourceWarning-worka.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-zope.testrunner
@@ -65,6 +66,7 @@ This package contains tests for ZConfig.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 sed -i 's|cgi|html|' ZConfig/schema2html.py
 
@@ -89,6 +91,9 @@ sed -i 's|cgi|html|' ZConfig/schema2html.py
 
 
 %changelog
+* Mon Aug 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.2.0-alt4
+- NMU: repaired test_with_syslog
+
 * Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt3
 - compatibility with python3.8
 
