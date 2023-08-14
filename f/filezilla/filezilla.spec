@@ -3,7 +3,7 @@
 %define oname FileZilla
 
 Name: filezilla
-Version: 3.64.0
+Version: 3.65.0
 Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
 
@@ -24,6 +24,7 @@ BuildRequires: libnettle-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libwxGTK3.2-devel
+BuildRequires: boost-devel
 BuildRequires: xdg-utils
 
 %description
@@ -63,6 +64,9 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Mon Aug 14 2023 Anton Midyukov <antohami@altlinux.org> 3.65.0-alt1
+- new version (3.65.0) with rpmgs script
+
 * Fri Jul 07 2023 Anton Midyukov <antohami@altlinux.org> 3.64.0-alt1
 - new version (3.64.0) with rpmgs script
 - build with wxGTK3.2
