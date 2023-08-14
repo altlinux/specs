@@ -1,6 +1,6 @@
 %define module_name             ixgbe
 %define module_version          5.19.6
-%define module_release          alt1
+%define module_release          alt2
 
 %define flavour std-def
 %define karch x86_64 aarch64 ppc64le
@@ -25,7 +25,7 @@ Url: http://www.intel.com/network/connectivity/products/server_adapters.htm
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
-BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): rpm-build-kernel /proc
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name
 
@@ -81,6 +81,10 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Aug 14 2023 Alexei Takaseev <taf@altlinux.org> 5.19.6-alt2
+- Fix build with new kernels
+- Add BR: /proc
 
 * Sat Aug 05 2023 Alexei Takaseev <taf@altlinux.org> 5.19.6-alt1
 - 5.19.6
