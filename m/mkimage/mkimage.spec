@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Simple image creator
@@ -10,7 +10,8 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 BuildArch: noarch
 
 Requires: libshell >= 0.0.2
-Requires: hasher >= 1.7.2-alt1
+# for --predb-prog support
+Requires: hasher >= 1.7.2
 
 Url: http://altlinux.org/mkimage
 Source: %name-%version.tar
@@ -87,6 +88,10 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Mon Aug 14 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.2-alt1
+- tools.mk.in: Correct the path to the mki-image-patches helper script.
+- spec: Exclude the package release specification from the hasher requirement.
+
 * Sun Aug 13 2023 Alexey Gladkov <legion@altlinux.ru> 0.3.1-alt1
 - mki-pack-boot: Do not imply grub-efi for isolinux and grubpcboot boot types.
 - mki-copy-our2out: MKI_OUTNAME may be empty.
