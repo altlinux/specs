@@ -1,25 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pycodestyle
 
+%def_with check
+
 Name: python3-module-%pypi_name
-Version: 2.10.0
+Version: 2.11.0
 Release: alt1
 
 Summary: Python style guide checker
 License: Expat
 Group: Development/Python3
 Url: https://pypi.org/project/pycodestyle/
+Vcs: https://github.com/pycqa/pycodestyle
 BuildArch: noarch
-
-# https://github.com/PyCQA/pycodestyle.git
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 pycodestyle is a tool to check your Python code against some of the style
@@ -28,6 +31,11 @@ conventions in PEP 8.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -38,7 +46,7 @@ conventions in PEP 8.
 mv %buildroot%_bindir/pycodestyle{,.py3}
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra tests
 
 %files
 %doc README.rst LICENSE CONTRIBUTING.rst CHANGES.txt
@@ -48,6 +56,9 @@ mv %buildroot%_bindir/pycodestyle{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 14 2023 Stanislav Levin <slev@altlinux.org> 2.11.0-alt1
+- 2.10.0 -> 2.11.0.
+
 * Mon Feb 13 2023 Anton Zhukharev <ancieg@altlinux.org> 2.10.0-alt1
 - 2.9.1 -> 2.10.0.
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
 
 Summary: Code checking using pep8 and pyflakes
@@ -13,28 +13,16 @@ License: MIT
 Url: https://pypi.org/project/flake8/
 VCS: https://github.com/PyCQA/flake8.git
 BuildArch: noarch
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(mccabe)
-BuildRequires: python3(pycodestyle)
-BuildRequires: python3(pyflakes)
-
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-%py3_requires mccabe
-%py3_requires pycodestyle
-%py3_requires pyflakes
 
 %description
 Flake8 is a wrapper around these tools:
@@ -57,6 +45,11 @@ warning. - a Mercurial hook.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -65,7 +58,7 @@ warning. - a Mercurial hook.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc README.rst LICENSE
@@ -74,6 +67,9 @@ warning. - a Mercurial hook.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 14 2023 Stanislav Levin <slev@altlinux.org> 6.1.0-alt1
+- 6.0.0 -> 6.1.0.
+
 * Mon Feb 13 2023 Anton Zhukharev <ancieg@altlinux.org> 6.0.0-alt1
 - 5.0.4 -> 6.0.0.
 

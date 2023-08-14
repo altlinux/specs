@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.1
-Release: alt2
+Version: 3.1.0
+Release: alt1
 
 Summary: A simple program which checks Python source files for errors
 License: MIT
@@ -17,7 +17,6 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch0: 0001-fix-error-reporter-and-testsuite-in-3.11.4-775.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -32,7 +31,6 @@ check on style.
 
 %prep
 %setup
-%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -57,6 +55,9 @@ rm -r %buildroot%python3_sitelibdir/pyflakes/test
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 14 2023 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
+- 3.0.1 -> 3.1.0.
+
 * Sat Jul 29 2023 Anton Zhukharev <ancieg@altlinux.org> 3.0.1-alt2
 - Fixed FTBFS.
 
