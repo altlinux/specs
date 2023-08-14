@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Summary: Linstor Python API
-Version: 1.18.0
+Version: 1.19.0
 Release: alt1
 Group: Development/Python3
 License: GPLv3
@@ -10,7 +10,9 @@ URL: https://github.com/LINBIT/linstor-api-py
 Source: http://www.linbit.com/downloads/linstor/python-%modulename-%version.tar.gz
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3-dev
 
 %description
 This library provides functions to access the Linstor controller
@@ -22,16 +24,20 @@ make -C linstor-common cleanpython
 make -C linstor-common python
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.md
 %python3_sitelibdir/*
 
 %changelog
+* Mon Aug 14 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.19.0-alt1
+- 1.19.0
+- migrate to pyproject
+
 * Wed May 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.18.0-alt1
 - 1.18.0
 

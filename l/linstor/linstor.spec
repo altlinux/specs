@@ -1,5 +1,5 @@
 %define GRADLE_TASKS installdist
-%define GRADLE_FLAGS --offline --gradle-user-home /tmp --no-daemon --exclude-task generateJava
+%define GRADLE_FLAGS --offline --gradle-user-home /tmp --no-daemon -Pjava11=true --exclude-task generateJava
 %define LS_PREFIX %_datadir/linstor-server
 %define FIREWALLD_SERVICES %_usr/lib/firewalld/services
 %define NAME_VERS %name-server-%version
@@ -8,14 +8,15 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.23.0
+Version: 1.24.1
 Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
 Url: https://github.com/LINBIT/linstor-server
 Source0: http://www.linbit.com/downloads/linstor/linstor-server-%version.tar.gz
-Source1: gradle-6.7-bin.zip
+Source1: gradle-8.2.1-bin.zip
+# Source1: gradle-6.7-bin.zip
 BuildArch: noarch
 
 BuildRequires(pre): /proc rpm-build-java jpackage-utils
@@ -34,7 +35,8 @@ It's used to provide persistent Linux block storage for cloudnative and hypervis
 %setup -n %NAME_VERS -a1
 
 %build
-export PATH=$PWD/gradle-6.7/bin:$PATH
+# export PATH=$PWD/gradle-6.7/bin:$PATH
+export PATH=$PWD/gradle-8.2.1/bin:$PATH
 gradle %GRADLE_TASKS %GRADLE_FLAGS
 #for p in server satellite controller; do echo "%LS_PREFIX/.$p" >> "%_builddir/%NAME_VERS/$p/jar.deps"; done
 
@@ -43,11 +45,13 @@ mkdir -p %buildroot%LS_PREFIX
 cp -r %_builddir/%NAME_VERS/build/install/linstor-server/lib %buildroot%LS_PREFIX
 rm %buildroot/%LS_PREFIX/lib/%NAME_VERS.jar
 chmod a-x %buildroot/%LS_PREFIX/lib/*.jar
-cp -r %_builddir/%NAME_VERS/server/build/install/server/lib/conf %buildroot%LS_PREFIX/lib
+mkdir -p %buildroot/%LS_PREFIX/lib/conf
+cp %_builddir/%NAME_VERS/server/logback.xml %buildroot/%LS_PREFIX/lib/conf
 mkdir -p %buildroot%LS_PREFIX/bin
 cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/Controller %buildroot%LS_PREFIX/bin
 cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/Satellite %buildroot%LS_PREFIX/bin
 cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/linstor-config %buildroot%LS_PREFIX/bin
+cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/linstor-database %buildroot/%LS_PREFIX/bin
 cp -r %_builddir/%NAME_VERS/scripts/postinstall.sh %buildroot%LS_PREFIX/bin/controller.postinst.sh
 mkdir -p %buildroot%_unitdir
 sed -i '/\[Service\]/a Environment="JAVA_HOME=/usr/lib/jvm/jre-11-openjdk"' %_builddir/%NAME_VERS/scripts/linstor-*.service
@@ -100,6 +104,7 @@ Linstor controller manages linstor satellites and persistant data storage.
 %dir %LS_PREFIX/bin
 %LS_PREFIX/bin/Controller
 %LS_PREFIX/bin/linstor-config
+%LS_PREFIX/bin/linstor-database
 %LS_PREFIX/bin/controller.postinst.sh
 %_unitdir/linstor-controller.service
 %FIREWALLD_SERVICES/linstor-controller.xml
@@ -146,6 +151,10 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Mon Aug 14 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.24.1-alt1
+- 1.24.1
+- use gradle 8.2.1
+
 * Tue May 23 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.23.0-alt1
 - 1.23.0
 - add JAVA_HOME for Java 11

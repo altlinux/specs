@@ -3,7 +3,7 @@
 
 Name: linstor-client
 Summary: Linstor Client
-Version: 1.18.0
+Version: 1.19.0
 Release: alt1
 Group: Development/Python3
 License: GPLv3
@@ -11,7 +11,8 @@ URL: https://github.com/LINBIT/linstor-client
 Source: http://www.linbit.com/downloads/linstor/linstor-client-%version.tar.gz
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3-module-linstor >= 1.4.1
 %{?_enable_manpages:BuildRequires: help2man xsltproc docbook-style-xsl}
 
@@ -29,10 +30,11 @@ It automatically places the backing LVM/ZFS volumes among the participating mach
 %if_enabled manpages
 python3 setup.py build_man
 %endif
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+install -D -m 0644 scripts/bash_completion/linstor %buildroot%_sysconfdir/bash_completion.d/linstor
 
 %files
 %doc README.md
@@ -44,6 +46,10 @@ python3 setup.py build_man
 %endif
 
 %changelog
+* Mon Aug 14 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.19.0-alt1
+- 1.19.0
+- migrate to pyproject
+
 * Wed Apr 19 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.18.0-alt1
 - 1.18.0
 
