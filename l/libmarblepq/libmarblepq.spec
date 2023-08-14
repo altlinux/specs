@@ -1,6 +1,6 @@
 Name: libmarblepq
 Version: 2.0.0
-Release: alt1.gitf240b2e
+Release: alt2.gitf240b2e
 
 Summary: A collection of useful functions and reusable GTK widgets.
 License: GPL-3.0
@@ -9,6 +9,7 @@ Group: System/Libraries
 Url: https://gitlab.com/raggesilver/marble
 Source: %name-%version.tar
 Packager: Vladimir Didenko <cow@altlinux.org>
+Patch: %name-2.0.0-alt-css-provider-build-fix.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson
@@ -59,6 +60,7 @@ This package provides Vala language bindings for the MarblePQ library.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -89,6 +91,9 @@ This package provides Vala language bindings for the MarblePQ library.
 %_vapidir/*.deps
 
 %changelog
+* Mon Aug 14 2023 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt2.gitf240b2e
+- build fix for gtk css provider
+
 * Mon Sep 19 2022 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1.gitf240b2e
 - new version with the rename marble -> marblepq
 
