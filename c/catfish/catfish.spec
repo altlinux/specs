@@ -1,5 +1,5 @@
 Name: catfish
-Version: 4.16.4
+Version: 4.18.0
 Release: alt1
 Summary: A handy file search tool
 
@@ -80,6 +80,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %python3_sitelibdir_noarch/%name-%version.dist-info
 
 %changelog
+* Mon Aug 14 2023 Anton Midyukov <antohami@altlinux.org> 4.18.0-alt1
+- Updated to upstream version 4.18.0
+
 * Mon Jun 19 2023 Anton Midyukov <antohami@altlinux.org> 4.16.4-alt1
 - Updated to upstream version 4.16.4
 - Fix Url
