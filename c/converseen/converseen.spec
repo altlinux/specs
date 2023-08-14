@@ -1,14 +1,22 @@
 Name: converseen
-Version: 0.9.9.6
+Version: 0.9.11.1
 Release: alt1
-Summary: Converseen is a free cross-platform batch image processor.
-Summary(ru_RU.UTF-8): Converseen — свободная программа пакетного конвертирования изображений.
+Summary: Converseen is a free cross-platform batch image processor
+Summary(ru_RU.UTF-8): Converseen — свободная программа пакетного конвертирования изображений
 License: GPLv3
 Group: Graphics
 Url: http://converseen.fasterland.net/
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: desktop-file-utils
-BuildRequires: ImageMagick-tools cmake gcc-c++ libImageMagick-devel qt5-base-devel qt5-phonon-devel qt5-designer qt5-tools-devel
-Packager: Anton Midyukov <antohami@altlinux.org>
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: ImageMagick-tools
+BuildRequires: libImageMagick-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-phonon-devel
+BuildRequires: qt5-designer
+BuildRequires: qt5-tools-devel
+
 Source: %name-%version.tar
 
 Requires: ImageMagick-tools
@@ -33,30 +41,26 @@ Converseen — свободная кроссплатформенная прог�
 %setup -n %name-%version
 
 %build
-cmake -DCMAKE_INSTALL_PREFIX=/usr .
-%make_build
+%cmake
+%cmake_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%cmake_install
 desktop-file-validate %buildroot/%_desktopdir/net.fasterland.converseen.desktop
-for x in 16 32 48; do
-    mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
-	convert %buildroot%_pixmapsdir/%name.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/%name.png
-done
 
 %files
 %doc COPYING
 %_bindir/%name
 %_datadir/%name
 %_datadir/kservices5/ServiceMenus/converseen_import.desktop
-%_liconsdir/*
-%_niconsdir/*
-%_miconsdir/*
-%exclude %_pixmapsdir/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
 %_desktopdir/net.fasterland.converseen.desktop
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Aug 14 2023 Anton Midyukov <antohami@altlinux.org> 0.9.11.1-alt1
+- New version 0.9.11.1.
+
 * Thu Jul 21 2022 Anton Midyukov <antohami@altlinux.org> 0.9.9.6-alt1
 - new version 0.9.9.6
 
