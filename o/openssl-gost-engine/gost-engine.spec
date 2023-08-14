@@ -1,22 +1,28 @@
 Name: openssl-gost-engine
-Version: 1.1.0.3.0.255.ge3af41d.p1
-Release: alt4
+Version: 3.0.2
+Release: alt1
 
 License: BSD-style
 Summary: A reference implementation of the Russian GOST crypto algorithms for OpenSSL
 
 Group: System/Libraries
 
+URL: https://github.com/gost-engine/engine.git
+
 Source: %name-%version.tar
 Source1: openssl-gost.control
+Source2: openssl-gost-control-check.sh
+Source3: libprov.tar
 
-Patch0: %name-1.1.0.3.0.255.ge3af41d-mac-iv.patch
-Patch1: %name-1.1.0.3.0.255.ge3af41d-gost89-ecb.patch
+#Patch0: %name-%version-mac-iv.patch
+#Patch1: %name-%version-gost89-ecb.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 # due to gost algorithms identifiers (in headers)
 BuildRequires: libssl-devel >= 1.1.0j-alt2
+# to test the control script
+BuildRequires: control libcrypto1.1
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: ctest perl-devel perl-Test2-Suite openssl}}
 
@@ -34,9 +40,9 @@ Group: File tools
 GOST file digesting utilites.
 
 %prep
-%setup
-%patch0 -p1
-%patch1 -p1
+%setup -a3
+#%patch0 -p1
+#%patch1 -p1
 
 %build
 %ifarch %e2k
@@ -66,8 +72,10 @@ install -D -p -m0755 %_sourcedir/openssl-gost.control \
 CTEST_OUTPUT_ON_FAILURE=1 \
 	%cmake_build -t test
 
+%_sourcedir/openssl-gost-control-check.sh %_sourcedir/openssl-gost.control
+
 %files
-%_libdir/openssl/engines-1.1/gost.so
+%_libdir/openssl/engines-3/gost.so
 %_controldir/openssl-gost
 
 %files -n gostsum
@@ -75,6 +83,27 @@ CTEST_OUTPUT_ON_FAILURE=1 \
 %_man1dir/gost*sum*
 
 %changelog
+* Mon Aug 14 2023 Paul Wolneykien <manowar@altlinux.org> 3.0.2-alt1
+- Upstream version 3.0.2.
+
+* Mon Aug 14 2023 Paul Wolneykien <manowar@altlinux.org> 3.0.1-alt2
+- Disable GOST 28147-89 ECB cipher (patch).
+- Disable setting IV for MAC (patch).
+
+* Tue May 02 2023 Paul Wolneykien <manowar@altlinux.org> 3.0.1-alt1
+- Fix: Implement GOST 28147-89 ECB cipher test case.
+- Upstream version 3.0.1.
+
+* Fri Apr 07 2023 Paul Wolneykien <manowar@altlinux.org> 1.1.0.3.0.255.ge3af41d-alt6
+- Fix the version: don't use the .pN suffix.
+
+* Thu Dec 23 2021 Paul Wolneykien <manowar@altlinux.org> 1.1.0.3.0.255.ge3af41d.p1-alt5
+- Run tests on the control script after build.
+- openssl-gost.control: Fixed appending a "name = value" pair to
+  the end of the configuration file.
+- openssl-gost.control: Insert new "name = value" pair before the
+  first empty line (closes: 39310).
+
 * Thu Jul 15 2021 Paul Wolneykien <manowar@altlinux.org> 1.1.0.3.0.255.ge3af41d.p1-alt4
 - Fix: Remove synonyms for 'enabled' and 'disabled' states (closes: 40500).
 
