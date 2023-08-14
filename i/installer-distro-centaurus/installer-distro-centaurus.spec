@@ -1,6 +1,6 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 10.0
+Version: 10.1
 Release: alt1
 
 Summary: Installer files for Centaurus distro
@@ -65,6 +65,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Fri Aug 11 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt1
+- start NM and systemd-networkd only if needed
+
 * Mon Dec 26 2022 Sergey V Turchin <zerg@altlinux.org> 10.0-alt1
 - stage2: backport of workstation rewrite 80-setup-user-groups
 - update requires
