@@ -1,5 +1,5 @@
 %def_without java
-%def_with php
+%def_without php
 %def_without perl
 %def_with python
 %def_without wsf
@@ -7,19 +7,29 @@
 
 %define soname 3
 
-Summary: Liberty Alliance Single Sign On
-Name: 	 lasso
+
+Name:    lasso
 Version: 2.8.2
-Release: alt1
+Release: alt2
+
+Summary: Liberty Alliance Single Sign On
+
 License: GPLv2+
 Group:   System/Libraries
-Url: 	 http://lasso.entrouvert.org/
+Url:     https://lasso.entrouvert.org/
 
-Source:  http://dev.entrouvert.org/lasso/lasso-%{version}.tar.gz
+Source:  https://dev.entrouvert.org/lasso/lasso-%{version}.tar.gz
 Source1: %name.watch
-Patch1:  lasso-export-symbols-from-logging.h.patch
-# debian patches
-Patch2:  build-without-python2.diff
+# upstream patches
+Patch1:  lasso-web-switch-generation-script-to-python-3.patch
+Patch2:  lasso-web-fix-282-entry-as-not-much-happened-really.patch
+Patch3:  lasso-web-update-download-page-with-latest-version-number.patch
+Patch4:  lasso-web-update-debian-repository-infos-for-bullseye.patch
+Patch5:  lasso-web-update-git-instructions-for-new-gitea-URLs.patch
+Patch6:  lasso-web-update-visit-tracking-to-matomo.patch
+Patch7:  lasso-web-update-URLs-to-https.patch
+Patch8:  lasso-web-remove-mention-of-subversion-commits.patch
+Patch9:  lasso-web-update-mod_auth_mellon-to-new-namehome.patch
 
 BuildRequires: gtk-doc
 BuildRequires: glib2-devel swig
@@ -128,8 +138,7 @@ library.
 
 %prep
 %setup -q -n %{name}-%{version}
-# %%patch1 -p2
-# %%patch2 -p1
+%autopatch -p1
 sed -i 's|echo $VERSION |echo %version |' configure.ac
 sed -i 's|@VERSION@|%version|' lasso.pc.in
 
@@ -242,6 +251,12 @@ make check
 %endif
 
 %changelog
+* Tue Aug 15 2023 Leontiy Volodin <lvol@altlinux.org> 2.8.2-alt2
+- Applied fixes from master branch.
+- Removed obsoleted patches.
+- Built without PHP7 support (removed from Sisyphus).
+- Cleanup spec.
+
 * Mon Mar 20 2023 Leontiy Volodin <lvol@altlinux.org> 2.8.2-alt1
 - New version.
 
