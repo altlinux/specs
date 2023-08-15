@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define major 1.0
 %define api_ver 2.0
@@ -9,10 +9,12 @@
 
 %def_enable fts
 %def_enable docs
+# test-log failed
+%def_disable check
 
 Name: zeitgeist
 Version: %major.4
-Release: alt1
+Release: alt2
 
 Summary: Framework providing Desktop activity awareness
 Group: Office
@@ -26,8 +28,9 @@ Source: http://launchpad.net/%name/%major/%version/+download/%name-%version.tar.
 Vcs: https://gitlab.freedesktop.org/zeitgeist/zeitgeist.git
 Source: %name-%version.tar
 %endif
+Patch: %name-1.0.4-alt-python-import.patch
 
-Requires: lib%name%api_ver = %version-%release
+Requires: lib%name%api_ver = %EVR
 
 %define glib_ver 2.36
 %define vala_ver 0.22
@@ -44,6 +47,7 @@ BuildRequires: vala-tools >= %vala_ver libtelepathy-glib-vala
 %{?_enable_docs:BuildRequires: gtk-doc valadoc}
 # for autoreconf
 BuildRequires: gettext-tools
+%{?_enable_check:BuildRequires: xvfb-run /usr/bin/dbus-launch}
 
 %description
 Zeitgeist is a service which logs the users's activities and events (files
@@ -68,7 +72,7 @@ access to the Zeitgeist daemon.
 %package -n lib%name%api_ver-devel
 Summary: Development files for Zeitgeist
 Group: Development/C
-Requires: lib%name%api_ver = %version-%release
+Requires: lib%name%api_ver = %EVR
 
 %description -n lib%name%api_ver-devel
 Zeitgeist is a service which logs the users's activities and events (files
@@ -80,7 +84,7 @@ This package contains the development files for the Zeitgeist library.
 %package -n lib%name%api_ver-gir
 Summary: GObject introspection data for the Zeitgeist library
 Group: System/Libraries
-Requires: lib%name%api_ver = %version-%release
+Requires: lib%name%api_ver = %EVR
 
 %description -n lib%name%api_ver-gir
 Zeitgeist is a service which logs the users's activities and events (files
@@ -93,8 +97,8 @@ This package provides GObject introspection data for the Zeitgeist library.
 Summary: GObject introspection devel data for the Zeitgeist library
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name%api_ver-gir = %version-%release
-Requires: lib%name%api_ver-devel = %version-%release
+Requires: lib%name%api_ver-gir = %EVR
+Requires: lib%name%api_ver-devel = %EVR
 
 %description -n lib%name%api_ver-gir-devel
 Zeitgeist is a service which logs the users's activities and events (files
@@ -107,7 +111,7 @@ This package provides GObject introspection devel data for the Zeitgeist library
 Summary: Python3 bindings for the Zeitgeist library
 Group: Development/Python3
 BuildArch: noarch
-Requires: lib%name%api_ver = %version-%release
+Requires: lib%name%api_ver = %EVR
 
 %description -n python3-module-%name%api_ver
 Zeitgeist is a service which logs the users's activities and events (files
@@ -128,6 +132,7 @@ This package contains development documentation for the Zeitgeist library.
 
 %prep
 %setup
+%patch -b .imp
 subst 's/_have/have/' data/completions/%name-daemon
 
 %build
@@ -147,6 +152,9 @@ cp -aR doc/lib%name/{docs_c/html,docs_vala} %buildroot%pkgdocdir
 %endif
 
 %find_lang %name
+
+%check
+xvfb-run %make -k check VERBOSE=1
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README
@@ -192,6 +200,10 @@ cp -aR doc/lib%name/{docs_c/html,docs_vala} %buildroot%pkgdocdir
 %endif
 
 %changelog
+* Tue Aug 15 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt2
+- updated to v1.0.4-2-g33ab4cce
+- fixed build against newer rpm-build-python3 (ALT #47206)
+
 * Thu Jan 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
