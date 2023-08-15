@@ -1,5 +1,5 @@
 Name: gnupg2
-Version: 2.2.40
+Version: 2.4.3
 Release: alt1
 
 Group: Text tools
@@ -36,16 +36,26 @@ Conflicts: pinentry < 0.9.2
 Conflicts: pinentry-common < 0.9.2
 Conflicts: gnupg-pkcs11-scd <= 0.9.2-alt5
 
-Patch01: 0001-FEDORA-compatibility-with-system-FIPS-mode.patch
-Patch02: 0002-FEDORA-fix-handling-of-missing-key-usage-on-ocsp-rep.patch
-Patch03: 0003-FEDORA-disable-DIGEST_ALGO_RMD160-in-fips-mode.patch
-Patch04: 0004-FEDORA-allow-8192-bit-RSA-keys-in-keygen-UI-with-lar.patch
-Patch05: 0005-FEDORA-non-upstreamable-patch-adding-file-is-digest-.patch
-Patch06: 0006-ALT-replace-xloadimage-by-xli.patch
-Patch07: 0007-ALT-replace-gnupg-by-gnupg2-in-texinfo.patch
-Patch08: 0008-SUSE-set-umask-before-open-outfile.patch
-Patch09: 0009-gpg-Prefer-SHA-512-and-SHA-384-in-personal-digest-pr.patch
-Patch10: 0010-ALT-disable-warning-about-development-mode.patch
+Patch0001: 0001-FEDORA-compatibility-with-system-FIPS-mode.patch
+Patch0002: 0002-FEDORA-disable-DIGEST_ALGO_RMD160-in-fips-mode.patch
+Patch0003: 0003-FEDORA-allow-8192-bit-RSA-keys-in-keygen-UI-with-lar.patch
+Patch0004: 0004-FEDORA-non-upstreamable-patch-adding-file-is-digest-.patch
+Patch0005: 0005-gpg-allow-import-of-previously-known-keys-even-witho.patch
+Patch0006: 0006-tests-add-test-cases-for-import-without-uid.patch
+Patch0007: 0007-gpg-accept-subkeys-with-a-good-revocation-but-no-sel.patch
+Patch0008: 0008-g10-Fix-memory-leaks.patch
+Patch0009: 0009-dirmgr-Avoid-memory-leaks.patch
+Patch0010: 0010-scd-Avoid-memory-leaks-and-uninitialized-memory.patch
+Patch0011: 0011-tools-Avoid-memory-leaks.patch
+Patch0012: 0012-scd-Use-the-same-allocator-to-free-memory.patch
+Patch0013: 0013-Revert-the-introduction-of-the-RFC4880bis-draft-into.patch
+Patch0014: 0014-gpg-Report-BEGIN_-status-before-examining-the-input.patch
+Patch0015: 0015-ALT-replace-xloadimage-by-xli.patch
+Patch0016: 0016-ALT-replace-gnupg-by-gnupg2-in-texinfo.patch
+Patch0017: 0017-SUSE-set-umask-before-open-outfile.patch
+Patch0018: 0018-gpg-Prefer-SHA-512-and-SHA-384-in-personal-digest-pr.patch
+Patch0019: 0019-ALT-disable-warning-about-development-mode.patch
+Patch0020: 0020-ALT-Disable-own-copy-of-xtryreallocarray.patch
 
 BuildRequires: libldap-devel
 BuildRequires: libreadline-devel
@@ -60,6 +70,9 @@ BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(npth)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(zlib)
+
+# for tests
+BuildRequires: /proc
 
 %description
 GnuPG is GNU's tool for secure communication and data storage.  It can
@@ -108,12 +121,6 @@ rm -r -- \
 
 mv %buildroot%_bindir/gpg{,2}split
 
-mkdir -p -- %buildroot/usr/lib/systemd/user
-install -m 0644 \
-	doc/examples/systemd-user/*.service \
-	doc/examples/systemd-user/*.socket \
-	%buildroot/usr/lib/systemd/user/
-
 install -D -m 0644 doc/examples/gpgconf.conf %buildroot%_sysconfdir/gnupg/gpgconf.conf
 install -D -m 0644 doc/gnupg.info %buildroot%_infodir/gnupg.info
 
@@ -135,6 +142,7 @@ install -pm 0644 doc/*.8 %buildroot%_man8dir/
 %find_lang %name
 
 %check
+ln -s gpg bin/gpg2 # hack
 %make_build -k check
 
 %pre
@@ -147,13 +155,15 @@ install -pm 0644 doc/*.8 %buildroot%_man8dir/
 %_bindir/dirmngr
 %_bindir/dirmngr-client
 %_bindir/g13
+%_bindir/gpg-card
 %_bindir/gpg-connect-agent
+%_bindir/gpg-wks-client
 %_bindir/gpg-wks-server
+%_bindir/gpg2split
 %_bindir/gpgconf
 %_bindir/gpgparsemail
 %_bindir/gpgscm
 %_bindir/gpgsm
-%_bindir/gpg2split
 %_bindir/gpgtar
 %_bindir/gpgv2
 %_bindir/kbxutil
@@ -163,12 +173,14 @@ install -pm 0644 doc/*.8 %buildroot%_man8dir/
 %attr(2711,root,_gnupg) %_bindir/gpg2
 %dir %_libexecdir/gnupg
 %_libexecdir/gnupg/dirmngr_ldap
+%_libexecdir/gnupg/gpg-auth
 %_libexecdir/gnupg/gpg-check-pattern
+%_libexecdir/gnupg/gpg-pair-tool
 %_libexecdir/gnupg/gpg-preset-passphrase
 %_libexecdir/gnupg/gpg-protect-tool
 %_libexecdir/gnupg/gpg-wks-client
+%_libexecdir/gnupg/keyboxd
 %_libexecdir/gnupg/scdaemon
-/usr/lib/systemd/user/*.*
 %dir %_datadir/gnupg
 %_datadir/gnupg/distsigkey.gpg
 %_datadir/gnupg/sks-keyservers.netCA.pem
@@ -178,10 +190,17 @@ install -pm 0644 doc/*.8 %buildroot%_man8dir/
 %_man7dir/*
 %_man8dir/*
 %doc AUTHORS NEWS README doc/OpenPGP doc/KEYSERVER
-%doc doc/examples/gpgconf.conf doc/examples/debug.prf doc/examples/trustlist.txt
+%doc doc/examples/gpgconf.conf doc/examples/trustlist.txt
 %doc tools/addgnupghome tools/applygnupgdefaults
 
 %changelog
+* Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 2.4.3-alt1
+- New version (2.4.3).
+- Remove systemd user unit files which have been dropped upstream.
+
+* Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 2.2.41-alt1
+- New version (2.2.41).
+
 * Mon Jan 09 2023 Alexey Gladkov <legion@altlinux.ru> 2.2.40-alt1
 - New version (2.2.40).
 
