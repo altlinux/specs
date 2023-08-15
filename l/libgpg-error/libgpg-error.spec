@@ -1,6 +1,6 @@
 Name: libgpg-error
-Version: 1.46
-Release: alt2
+Version: 1.47
+Release: alt1
 
 Group: System/Libraries
 Summary: Error library for GnuPG and related projects
@@ -89,9 +89,13 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_infodir/gpgrt.*
 %_pkgconfigdir/*.pc
 %_datadir/common-lisp/source/gpg-error
+%_man1dir/gpgrt-config.1*
 %_man1dir/gpg-error-config.1*
 
 %changelog
+* Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 1.47-alt1
+- New version (1.47).
+
 * Sat Oct 15 2022 Alexey Gladkov <legion@altlinux.ru> 1.46-alt2
 - Pack gpg-error-config again.
 

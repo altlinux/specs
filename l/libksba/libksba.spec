@@ -1,5 +1,5 @@
 Name: libksba
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 
 Group: System/Libraries
@@ -69,6 +69,9 @@ EOF
 %_infodir/*.info*
 
 %changelog
+* Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 1.6.4-alt1
+- New version (1.6.4).
+
 * Tue Dec 27 2022 Alexey Gladkov <legion@altlinux.ru> 1.6.3-alt1
 - New version (1.6.3).
 

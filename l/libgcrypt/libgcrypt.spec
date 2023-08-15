@@ -1,5 +1,5 @@
 Name: libgcrypt
-Version: 1.10.1
+Version: 1.10.2
 Release: alt1
 
 Group: System/Libraries
@@ -128,6 +128,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_infodir/*.info*
 
 %changelog
+* Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 1.10.2-alt1
+- New version (1.10.2).
+
 * Fri Jul 22 2022 Alexey Gladkov <legion@altlinux.ru> 1.10.1-alt1
 - New version (1.10.1).
 
