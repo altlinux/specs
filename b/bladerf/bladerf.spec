@@ -5,7 +5,7 @@
 %define use_syslog 1
 Name: bladerf
 Version: 2.5.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: SDR radio receiver
 License: GPL-2.0-only
@@ -68,8 +68,8 @@ pushd host
 %cmakeinstall_std
 popd
 
-%pre
-getent group %bladerf_group >/dev/null || groupadd -r %bladerf_group
+# allow access only to users in uucp group
+sed -i 's/GROUP="bladerf"/GROUP="uucp"/' %buildroot%_udevrulesdir/*.rules
 
 %files
 %doc README.md COPYING CONTRIBUTORS
@@ -85,6 +85,10 @@ getent group %bladerf_group >/dev/null || groupadd -r %bladerf_group
 %_pkgconfigdir/libbladeRF.pc
 
 %changelog
+* Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 1:2.5.0-alt2
+- allow access only to users in uucp group
+- do not create group 'bladerf'
+
 * Mon Jun 26 2023 Anton Midyukov <antohami@altlinux.org> 1:2.5.0-alt1
 - New version 2.5.0.
 

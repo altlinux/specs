@@ -1,7 +1,7 @@
 %define modulename rtlsdr
 
 Name: python3-module-%modulename
-Version: 0.2.93
+Version: 0.3.0
 Release: alt1
 
 Summary: A Python 3 wrapper for librtlsdr (a driver for Realtek RTL2832U based SDR's)
@@ -39,6 +39,9 @@ find . -name '*.py' | xargs sed -i '1s|^#!.*|#!%_bindir/python3|'
 %python3_sitelibdir/py%modulename-%version.dist-info
 
 %changelog
+* Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
+- New version 0.3.0.
+
 * Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 0.2.93-alt1
 - New version 0.2.93.
 

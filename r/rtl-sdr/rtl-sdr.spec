@@ -1,15 +1,13 @@
 Name: rtl-sdr
-Url: http://sdr.osmocom.org/trac/wiki/rtl-sdr
-Version: 0.6.0
-Release: alt2
-License: GPLv2+
-Group: Communications
 Summary: SDR utilities for Realtek RTL2832 based DVB-T dongles
-Packager: Anton Midyukov <antohami@altlinux.org>
+Version: 0.6.0
+Release: alt3.20221118
+License: GPL-2.0-or-later
+Group: Communications
+Url: https://sdr.osmocom.org/trac/wiki/rtl-sdr
 
 Source: %name-%version.tar
 
-Requires(pre): shadow-utils
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake libusb-devel
 
@@ -39,14 +37,9 @@ rmdir src/getopt
 # remove static libs
 rm -f %buildroot%_libdir/*.a
 
-# Fix udev rules and allow access only to users in rtlsdr group
-%__subst 's/MODE:="0666"/GROUP:="rtlsdr", MODE:="0660", ENV{ID_SOFTWARE_RADIO}="1"/' rtl-sdr.rules
+# Fix udev rules and allow access only to users in uucp group
+sed -i 's/GROUP="plugdev"/GROUP="uucp"/' rtl-sdr.rules
 install -Dpm 644 rtl-sdr.rules %buildroot%_udevrulesdir/10-rtl-sdr.rules
-
-%pre
-getent group rtlsdr >/dev/null || \
-%_sbindir/groupadd -r rtlsdr >/dev/null 2>&1
-exit 0
 
 %files
 %doc AUTHORS COPYING
@@ -57,9 +50,15 @@ exit 0
 %files devel
 %_includedir/*
 %_libdir/*.so
+%_libdir/cmake/rtlsdr
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 0.6.0-alt3.20221118
+- new snapshot
+- allow only users in group 'uucp' to access rtl-sdr devices
+- do not create group 'rtlsdr
+
 * Mon Nov 23 2020 Anton Midyukov <antohami@altlinux.org> 0.6.0-alt2
 - Fix Requires (Closes: 39334)
 
