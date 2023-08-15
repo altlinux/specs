@@ -1,11 +1,11 @@
 %def_without check
 
 Name: drbd9
-Version: 9.2.4
-Release: alt2
-%define githash e5fab26ef31120f166b1b599d8a8ac965a68d8ae
+Version: 9.2.5
+Release: alt1
+%define githash b44520271e63d4b6f359a6642eb4d475b7cc04e0
 
-Summary: The Linux kernel code for DRBD9.
+Summary: The Linux kernel code for DRBD9
 License: GPLv2
 Group: System/Kernel and hardware
 # ExclusiveArch: x86_64 aarch64 ppc64le
@@ -64,6 +64,9 @@ make -C drbd KDIR=/lib/modules/*-un-def-*/build -k
 %doc README.md COPYING
 
 %changelog
+* Tue Aug 15 2023 Andrew A. Vasilyev <andy@altlinux.org> 9.2.5-alt1
+- 9.2.5
+
 * Thu Jun 22 2023 Andrew A. Vasilyev <andy@altlinux.org> 9.2.4-alt2
 - do not BR: kernel headers without check
 
