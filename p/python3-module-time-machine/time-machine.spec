@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.11.0
+Version: 2.12.0
 Release: alt1
 Summary: Travel through time in your tests
 License: MIT
@@ -51,6 +51,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Aug 15 2023 Stanislav Levin <slev@altlinux.org> 2.12.0-alt1
+- 2.11.0 -> 2.12.0.
+
 * Thu Jul 20 2023 Stanislav Levin <slev@altlinux.org> 2.11.0-alt1
 - 2.10.0 -> 2.11.0.
 
