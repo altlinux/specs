@@ -7,7 +7,7 @@
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 29.1.0
+Version: 29.1.3
 Release: alt1
 License: GPLv2+
 Group: Video
@@ -161,6 +161,9 @@ sed -e '/-Werror/d' -i cmake/Modules/CompilerConfig.cmake
 %_libdir/pkgconfig/libobs.pc
 
 %changelog
+* Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 29.1.3-alt1
+- New version 29.1.3.
+
 * Wed May 10 2023 Anton Midyukov <antohami@altlinux.org> 29.1.0-alt1
 - new version 29.1.0
 - include plugin packages and obs-studio-base in obs-studio package
