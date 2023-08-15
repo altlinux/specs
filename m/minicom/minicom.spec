@@ -4,8 +4,8 @@
 %define my_group uucp
 
 Name: minicom
-Version: 2.7.1
-Release: alt2
+Version: 2.8
+Release: alt1
 
 Group: Communications
 Summary: A text-menu-driven modem control and terminal emulation program
@@ -16,8 +16,8 @@ Summary: A text-menu-driven modem control and terminal emulation program
 # The rest is simply GPLv2+.
 License: GPLv2+ and LGPLv2+ and Public Domain
 Url: http://alioth.debian.org/projects/minicom/
-# Source-url: https://alioth.debian.org/frs/download.php/file/4215/%name-%version.tar.gz
 
+# Source-url: https://salsa.debian.org/minicom-team/minicom/-/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.sh
 Source2: %name.csh
@@ -27,32 +27,8 @@ Source6: %name.xpm
 Source7: %name-xstart.sh
 Source9: %name.FAQ.ru
 
-# Upstream patch:
-Patch1: 0001-Add-a-missing-va_end-call.patch
-# Upstream patch:
-Patch2: 0002-Make-sure-strings-copied-by-strncpy-are-null-termina.patch
-# Upstream patch:
-Patch3: 0003-Fix-file-descriptor-leaks.patch
-# Upstream patch:
-Patch4: 0004-Fix-a-directory-handle-leak.patch
-# Upstream patch:
-Patch5: 0005-Fix-a-read-past-end-of-buffer.patch
-# Upstream patch:
-Patch6: 0006-Fix-a-warning-about-an-unused-variable.patch
-# Upstream patch:
-Patch7: 0007-loadconv-Add-missing-fclose.patch
-# Upstream patch:
-Patch8: 0001-Drop-superfluous-global-variable-definitions.patch
-# Upstream patch:
-Patch9: 0002-Drop-superfluous-global-variable-definitions.patch
-# Upstream patch:
-Patch10: 0003-Drop-superfluous-global-variable-definitions.patch
-
 # Without this dependency it would be difficult to find the package with file-transfer tools
 Requires: lrzsz
-
-# added because autopoint requires it. crap.
-BuildRequires: cvs
 
 # I add the specialization of the BuildRequires:
 BuildRequires: bison libtinfo-devel
@@ -63,7 +39,7 @@ BuildRequires: bison libtinfo-devel
 # to set right permissions on files.
 # Also, we need the place to create lockfiles. It should be
 # provided by te new FS pkg.
-PreReq: %my_lockdir
+Requires(pre): %my_lockdir
 
 %description
 Minicom is a simple modem control and terminal emulation program 
@@ -116,7 +92,7 @@ install -pD -m644 %SOURCE6 %buildroot%_liconsdir/%name.xpm
 
 # menu
 mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
+cat > %buildroot%_desktopdir/%name.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
@@ -147,6 +123,9 @@ EOF
 %lang(ru) %doc %name.FAQ.ru
 
 %changelog
+* Mon Aug 14 2023 Anton Midyukov <antohami@altlinux.org> 2.8-alt1
+- new version 2.8
+
 * Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 2.7.1-alt2
 - Added upstream patchs
 - Fix License Tag
