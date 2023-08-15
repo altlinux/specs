@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.108.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -178,6 +178,9 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Tue Aug 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.108.0-alt3
+- fix to move Copy item upper then Move in DnD popup menu
+
 * Mon Aug 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.108.0-alt2
 - move Copy item upper then Move in DnD popup menu
 
