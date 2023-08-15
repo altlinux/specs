@@ -1,43 +1,33 @@
-%def_without bootstrap
-%def_without check
+%def_with check
 
-%define  oname pydantic
+%define  pypi_name pydantic
 
-Name:    python3-module-%oname
-Version: 1.10.7
+Name: python3-module-%pypi_name
+Version: 2.1.1
 Release: alt1
 
 Summary: Data parsing and validation using Python type hints
-
 License: MIT
-Group:   Development/Python3
-URL:     https://pypi.org/project/pydantic
+Group: Development/Python3
+URL: https://pypi.org/project/pydantic
+Vcs: https://github.com/pydantic/pydantic
 
-# https://github.com/pydantic/pydantic
-Source:  %name-%version.tar
+BuildArch: noarch
 
-Packager: Grigory Ustinov <grenka@altlinux.org>
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-typing_extensions
-BuildRequires: python3-module-mypy
-BuildRequires: python3-module-hypothesis
-# These three deps are optional for extra tests
-BuildRequires: python3-module-email_validator
-BuildRequires: python3-module-dotenv
-BuildRequires: python3-module-devtools
-%endif
-
-%if_with bootstrap
-BuildArch: noarch
-%else
-BuildRequires: python3-module-Cython
+%add_pyproject_deps_check_filter pytest-example
+%add_pyproject_deps_check_filter pytest-pretty
+%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra email
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -49,6 +39,11 @@ with pydantic.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pdm testing
+%endif
 
 %build
 %pyproject_build
@@ -57,15 +52,20 @@ with pydantic.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+# tests/test_docs.py: skip testing of documentation
+%pyproject_run_pytest -vra --ignore='tests/test_docs.py'
 
 %files
 %doc LICENSE *.md
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%{pyproject_distinfo %oname}
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Aug 15 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.1.1-alt1
+- 1.10.7 -> 2.1.1
+- built with tests
+- used rpm-build-pyproject
+
 * Thu Mar 23 2023 Grigory Ustinov <grenka@altlinux.org> 1.10.7-alt1
 - Automatically updated to 1.10.7.
 
