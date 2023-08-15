@@ -3,8 +3,8 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.7.9
-Release: alt1
+Version: 3.8.1
+Release: alt2
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -16,35 +16,27 @@ Source: gnutls-%version.tar
 
 Patch3: Fix-privkey-verify-broken-test.patch
 Patch4: tests-Use-IPv4-only-in-s_server.patch
-Patch6: gnulib-E2K-fix-for-lcc-1.23.patch
 Patch8: fix-32bit-LTS.patch
 Patch10: tests-Don-t-use-lscpu.patch
+Patch11: tests-Fix-work-with-ALT-faketime.patch
+
+# Patch from upstream git, must be dropped when new version
+# will be released.
+Patch100: Move-the-GNUTLS_NO_EXTENSIONS-compatibility-define-t.patch
 
 %define libcxx libgnutlsxx%libgnutlsxx_soname
 %define libssl libgnutls%{libgnutls_openssl_soname}-openssl
-%def_enable guile
 #set_automake_version 1.11
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
 BuildRequires: libidn2-devel libunistring-devel
 BuildRequires: libnettle-devel >= 3.6-alt1
-%if_enabled guile
-# Unfortunately we have different version
-# on e2k and don't have guile-devel.
-# See https://bugzilla.altlinux.org/34496
-%ifarch %e2k
-BuildRequires: guile20-devel
-BuildRequires: libguile20-devel
-%else
-BuildRequires: guile22-devel
-%endif
-%endif
 
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildRequires: iproute2}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
-%{?!_without_check:%{?!_disable_check:BuildRequires: datefudge}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: faketime}}
 # tests/pkcs11/tls-neg-pkcs11-key.c doesn't work with softhsm-2.1.0:
 %{?!_without_check:%{?!_disable_check:BuildRequires: softhsm >= 2.4.0}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: openssl}}
@@ -174,20 +166,6 @@ group.
 This package contains command line TLS client and server, and
 certificate manipulation tools.
 
-%package -n libgnutls-guile
-Summary: GnuTLS Guile bindings
-Group: Development/Other
-Requires: lib%name = %version-%release
-Obsoletes: libgnutls-new-guile < %version
-
-%description -n libgnutls-guile
-GnuTLS is a project that aims to develop a library which provides a
-secure  layer, over a reliable transport layer.  Currently the GnuTLS
-library implements the proposed standards by the IETF's TLS working
-group.
-
-This package contains Guile bindings for the library.
-
 %package devel-doc
 Summary: Development documentation for GnuTLS
 Group: Development/C
@@ -208,18 +186,11 @@ This package contains the GnuTLS API Reference Manual.
 %prep
 %setup -n gnutls-%version
 %patch3 -p2
-
-# We have two gnulib sources.
-# Just apply patch twice for both src/gl/ and gl/.
-pushd src/gl
-%patch6 -p4
-popd
-pushd gl
-%patch6 -p4
-popd
-
 %patch8 -p1
 %patch10 -p1
+%patch11 -p2
+
+%patch100 -p1
 
 touch doc/*.texi
 rm doc/*.info*
@@ -240,7 +211,6 @@ sed -i -r 's/^DOMAIN = [^[:blank:]#]+/&%libgnutls_soname/' po/Makevars
 	--disable-libdane  \
 	--without-tpm \
 	--with-default-trust-store-file=/usr/share/ca-certificates/ca-bundle.crt \
-	%{subst_enable guile} \
 	--with-included-libtasn1=no \
 	--enable-openssl-compatibility \
 	--docdir=%_docdir/gnutls-%version/
@@ -267,6 +237,11 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 if openssl s_server --help 2>&1 | grep -Ewe '^[[:blank:]]*-4'; then
    patch -p2 < %PATCH4
 fi
+# Workaround for tests: gnutls-serv will be rebuilded for some reason
+# when it started, so run it before make check to be rebuilded and therefore
+# tests willn't fail due to timeout.
+src/gnutls-serv --help >/dev/null 2>&1
+
 make -k check
 
 %files -n lib%name -f gnutls%libgnutls_soname.lang
@@ -317,15 +292,18 @@ make -k check
 %dir %docdir
 %docdir/*.cfg
 
-%if_enabled guile
-%files -n libgnutls-guile
-%_libdir/guile/*/extensions/guile*.so*
-%_libdir/guile/*/site-ccache/*
-%_datadir/guile/site/*/*
-%exclude %_libdir/guile/*/extensions/*.la
-%endif
-
 %changelog
+* Tue Aug 15 2023 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt2
+- Workaround tests failure.
+
+* Mon Aug 07 2023 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt1
+- Fixed work with ALT faketime.
+- Updated tests-Use-IPv4-only-in-s_server.patch.
+- Dropped gnulib-E2K-fix-for-lcc-1.23.patch.
+- BR: Replaced datefudge with faketime.
+- Dropped libgnutls-guile subpackage.
+- Updated to 3.8.1.
+
 * Fri Feb 17 2023 Mikhail Efremov <sem@altlinux.org> 3.7.9-alt1
 - Updated to 3.7.9 (fixes: CVE-2023-0361).
 
