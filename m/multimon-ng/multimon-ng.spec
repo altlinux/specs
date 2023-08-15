@@ -1,13 +1,14 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name:     multimon-ng
-Version:  1.1.7
-Release:  alt2
+Version:  1.2.0
+Release:  alt1
 
 Summary:  A fork of multimon that decodes multiple digital transmission modes
-License:  GPL-2.0
+License:  GPL-2.0-only
 Group:    Engineering
 Url:      https://github.com/EliasOenal/multimon-ng
-
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source:   %name-%version.tar
 
@@ -39,13 +40,20 @@ MultimonNG a fork of multimon. It decodes the following digital transmission mod
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %doc COPYING README.md
-%_bindir/*
+%_bindir/%name
+%_man1dir/%name.1.*
 
 %changelog
+* Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
+- New version 1.2.0.
+- Update License (GPL-2.0 -> GPL-2.0-only)
+- Clean Packager
+- Enable unpackaged files terminate build
+
 * Fri May 17 2019 Anton Midyukov <antohami@altlinux.org> 1.1.7-alt2
 - Requires: sox
 
