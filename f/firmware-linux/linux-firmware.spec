@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230809
+Version: 20230814
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,12 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 20230814-alt1
+- upstream changes (GIT 0e048b06):
+  + amdgpu: DMCUB updates for various AMDGPU asics (thx Stylon Wang)
+  + Revert "amdgpu: partially revert firmware for GC 11.0.0 and
+    GC 11.0.2" (thx Mario Limonciello)
+
 * Thu Aug 10 2023 Anton Midyukov <antohami@altlinux.org> 20230809-alt1
 - configuration changes:
   + update.sh: fix check_link
