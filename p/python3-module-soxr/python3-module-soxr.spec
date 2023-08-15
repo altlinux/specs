@@ -6,7 +6,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 Summary: Python-SoXR is a Python wrapper of libsoxr
@@ -30,10 +30,10 @@ This package provides Python 3 wrappers for the SoX Resampler library.
 rm -rf libsoxr
 
 %build
-%python3_build --use-system-libsoxr
+%pyproject_build --backend-config-settings='{"--build-option": ["--use-system-libsoxr"]}'
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -41,11 +41,14 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 %files
 %python3_sitelibdir/%pypi_name/
-#%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%python3_sitelibdir/%pypi_name-%version-*.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc README*
 
 %changelog
+* Tue Aug 15 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
+- 0.3.6
+- ported to %%pyproject* macros
+
 * Sat Apr 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
 - 0.3.5
 
