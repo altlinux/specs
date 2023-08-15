@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dynamips
-Version: 0.2.21
+Version: 0.2.23
 Release: alt1
 
 Summary: Cisco 7200 Simulator
@@ -44,7 +44,7 @@ sed -i 's,(__ia64__),& || defined (__e2k__),' common/dynamips_common.h
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 install -d %buildroot%_localstatedir/%name/{labs,images}
 rm -fR %buildroot%_docdir/%name
 
@@ -58,6 +58,9 @@ rm -fR %buildroot%_docdir/%name
 %dir %_localstatedir/%name/labs
 
 %changelog
+* Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 0.2.23-alt1
+- New version 0.2.23.
+
 * Wed Jul 31 2019 Anton Midyukov <antohami@altlinux.org> 0.2.21-alt1
 - new version 0.2.21
 
