@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 1.59.0
-Release: alt1
+Release: alt2
 
 Summary: Typed interactions with the GitHub API v3
 License: LGPL-3.0
@@ -31,6 +31,9 @@ Buildrequires: python3-module-pytest-cov
 BuildArch: noarch
 
 Source:  %name-%version.tar
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 %description
 PyGitHub is a Python library to access the GitHub REST API. This library enables
@@ -57,6 +60,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %doc *.md
 
 %changelog
+* Tue Aug 15 2023 Stanislav Levin <slev@altlinux.org> 1.59.0-alt2
+- Mapped PyPI name to distro's one.
+
 * Tue Jul 04 2023 Grigory Ustinov <grenka@altlinux.org> 1.59.0-alt1
 - Automatically updated to 1.59.0.
 
