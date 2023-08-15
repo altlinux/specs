@@ -13,15 +13,15 @@
 %endif
 
 Name: %bname-utils
-Version: 2.2.8
+Version: 2.2.9
 Release: alt1
 
 Summary: Utilities for managing NILFS v2 filesystems
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 
-Url: http://www.%bname.org
-Source: http://www.%bname.org/download/%name-%version.tar
+Url: https://www.%bname.org
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Provides: %{bname}2-utils = %version-%release
@@ -124,6 +124,9 @@ done
 %endif
 
 %changelog
+* Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 2.2.9-alt1
+- 2.2.9
+
 * Mon Dec 06 2021 Anton Midyukov <antohami@altlinux.org> 2.2.8-alt1
 - 2.2.8
 - enable -ffat-lto-objects for build static
