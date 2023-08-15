@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt16
+Release: alt17
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Aug 15 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt17
+- fix some typos (ALT 47183)
+- small improvements
+
 * Mon Jul 31 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt16
 - update OpenUDS
 - add Dovecot sieve
