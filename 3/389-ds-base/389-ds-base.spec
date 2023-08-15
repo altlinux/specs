@@ -16,7 +16,7 @@
 %define get_dep_ge() %(rpm -q --qf '%%{NAME} >= %%{EVR}' %1 2>/dev/null || echo '%1 >= unknown')
 
 Name: 389-ds-base
-Version: 2.2.8
+Version: 2.2.9
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -74,6 +74,8 @@ BuildRequires: rsync
 
 %if_with cockpit
 BuildRequires: npm
+# https://bugzilla.altlinux.org/47191
+BuildRequires: node
 %endif
 
 %if_with check
@@ -419,6 +421,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 10 2023 Stanislav Levin <slev@altlinux.org> 2.2.9-alt1
+- 2.2.8 -> 2.2.9.
+
 * Mon May 22 2023 Stanislav Levin <slev@altlinux.org> 2.2.8-alt1
 - 2.2.7 -> 2.2.8.
 
