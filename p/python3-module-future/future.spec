@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.18.3
-Release: alt1
+Release: alt2
 Summary: Clean single-source support for Python 3 and 2
 License: MIT
 Group: Development/Python3
@@ -58,6 +58,9 @@ rm -r %buildroot%_bindir/*
 %python3_sitelibdir/*
 
 %changelog
+* Wed Aug 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.18.3-alt2
+- Fixed FTBFS with python 3.11.
+
 * Thu May 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.18.3-alt1
 - Automatically updated to 0.18.3.
 
