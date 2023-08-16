@@ -2,7 +2,7 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3006.1
+Version: 3006.2
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -255,6 +255,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Tue Aug 15 2023 Andrey Cherepanov <cas@altlinux.org> 3006.2-alt1
+- New version.
+
 * Thu Jun 15 2023 Andrey Cherepanov <cas@altlinux.org> 3006.1-alt1
 - New version.
 
