@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %def_enable systemd
 %def_disable wnck
@@ -20,7 +20,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 %define glib_ver 2.56.0
 %define gtk_ver 3.22
-%define glibmm_ver 2.28.0
+%define glibmm_ver 2.46
 %define libgtkmm3_ver 3.3.18
 %define libwnck_ver 3.0.0
 %define libgtop_ver 2.38.0
@@ -78,6 +78,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Wed Aug 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 
