@@ -1,5 +1,5 @@
 Name: xorg-proto-devel
-Version: 2022.1
+Version: 2023.2
 Release: alt1
 Summary: X.Org combined protocol headers
 License: MIT/X11
@@ -50,6 +50,9 @@ X.Org combined protocol headers
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed Aug 16 2023 Valery Inozemtsev <shrek@altlinux.ru> 2023.2-alt1
+- 2023.2
+
 * Thu May 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 2022.1-alt1
 - 2022.1
 

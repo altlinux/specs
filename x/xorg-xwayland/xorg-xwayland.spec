@@ -2,7 +2,7 @@
 %define _deffontdir catalogue:%_sysconfdir/X11/fontpath.d
 
 Name: xorg-xwayland
-Version: 23.1.2
+Version: 23.2.0
 Release: alt1
 Epoch: 2
 License: MIT
@@ -60,6 +60,9 @@ necessary for developing Wayland compositors using Xwayland
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 16 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:23.2.0-alt1
+- 23.2.0
+
 * Fri Jun 09 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:23.1.2-alt1
 - 23.1.2
 
