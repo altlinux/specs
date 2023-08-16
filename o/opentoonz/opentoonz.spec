@@ -7,7 +7,7 @@
 
 Name: opentoonz
 Version: 1.5.0
-Release: alt4
+Release: alt5
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -32,6 +32,8 @@ Patch3: opensuse-0001-Fix-linker-errors-on-Linux.patch
 Patch4: opensuse-0001-Use-the-system-mypaint-brushes.patch
 Patch5: %name-1.5.0-alt-docs-sphinx-compat.patch
 Patch6: Fix-build-proccess.patch
+## https://github.com/opentoonz/opentoonz/pull/4739
+Patch7: Clarify-size_t-origin.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-complete
@@ -39,14 +41,14 @@ BuildRequires: libGLEW-devel
 BuildRequires: libfreeglut-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libturbojpeg-devel
-BuildRequires: libmypaint-devel
-BuildRequires: libpng-devel
-BuildRequires: libusb-devel
-BuildRequires: liblz4-devel
+BuildRequires: libmypaint-devel libffi-devel
+BuildRequires: libpng-devel libbrotli-devel 
+BuildRequires: libusb-devel liblzma-devel
+BuildRequires: liblz4-devel libpcre2-devel
 BuildRequires: liblzo2-devel
 BuildRequires: liblapack-devel
 BuildRequires: libsuperlu-devel
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel bzlib-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-multimedia-devel
@@ -90,6 +92,7 @@ This package contains documentation and samples for OpenToonz.
 %patch3 -p1
 %patch4 -p1
 %patch6 -p1
+%patch7 -p1
 
 pushd %name-%version-docs
 %patch5 -p1
@@ -164,6 +167,9 @@ done
 %doc %name-%version-docs/build/html
 
 %changelog
+* Wed Aug 16 2023 Artyom Bystrov <arbars@altlinux.org> 1.5.0-alt5
+- Fix FTBFS
+
 * Sun May 14 2023 Artyom Bystrov <arbars@altlinux.org> 1.5.0-alt4
 - Fixed build
 - Reworked style of repo
