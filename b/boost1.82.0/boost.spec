@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with boost_build
 %def_with devel_static
@@ -48,7 +48,7 @@
 %add_findreq_skiplist  %_datadir/b2/src/tools/doxproc.py
 
 %define ver_maj 1
-%define ver_min 83
+%define ver_min 82
 %define ver_rel 0
 
 %define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
@@ -61,10 +61,10 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 
-Name: boost
+Name: boost%namesuff
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt4
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -74,13 +74,13 @@ Url: https://www.boost.org
 Source: boost-%version.tar
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1190039
-Patch65: boost-1.83.0-fedora-build-optflags.patch
+Patch65: boost-1.82.0-fedora-build-optflags.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1318383
-Patch82: boost-1.83.0-fedora-no-rpath.patch
+Patch82: boost-1.82.0-fedora-no-rpath.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1541035
-Patch83: boost-1.83.0-fedora-b2-build-flags.patch
+Patch83: boost-1.73.0-fedora-b2-build-flags.patch
 
 # https://lists.boost.org/Archives/boost/2020/04/248812.php
 Patch88: boost-1.73.0-fedora-cmakedir.patch
@@ -88,11 +88,8 @@ Patch88: boost-1.73.0-fedora-cmakedir.patch
 # https://github.com/boostorg/phoenix/issues/111
 Patch89: boost-1.81.0-upstream-phoenix-fix-uargN.patch
 
-# https://github.com/boostorg/mpi/issues/149
-Patch90: boost-1.83.0-alt-mpi-nonreturn-abort.patch
-
 Patch1000: boost-1.63.0-alt-python-paths.patch
-Patch2000: boost-1.83-e2k-makecontext.patch
+Patch2000: boost-1.76-e2k-makecontext.patch
 Patch2001: boost-1.80.0-alt-mips-is-still-mips1.patch
 
 # we use %%_python3_abiflags
@@ -1848,8 +1845,8 @@ done
 
 
 %changelog
-* Tue Aug 15 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.83.0-alt1
-- Updated to upstream version 1.83.0
+* Tue Aug 15 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.82.0-alt4
+- rebuild as compat package without development files
 
 * Thu Aug 03 2023 Michael Shigorin <mike@altlinux.org> 1:1.82.0-alt3
 - E2K: lcc 1.26 ftbfs workaround (ilyakurdyukov@)
