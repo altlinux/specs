@@ -1,6 +1,6 @@
 Name: inxi
-Version: 3.3.28
-Release: alt2
+Version: 3.3.29
+Release: alt1
 
 Summary: A full featured system information script
 Summary(ru): Скрипт вывода полной информации об оборудовании и системе
@@ -63,6 +63,9 @@ perl -c inxi
 %_man1dir/%name.1*
 
 %changelog
+* Wed Aug 16 2023 Leontiy Volodin <lvol@altlinux.org> 3.3.29-alt1
+- New version 3.3.29.
+
 * Mon Aug 07 2023 Vitaly Chikunov <vt@altlinux.org> 3.3.28-alt2
 - Disable out of repo updates and install '/etc/inxi.conf'.
 - spec: Add VCS tag and other minor improvements.
