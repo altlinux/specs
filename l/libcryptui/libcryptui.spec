@@ -9,7 +9,7 @@
 
 Name: libcryptui
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 Summary: Library for OpenPGP prompts
 
 Group: System/Libraries
@@ -21,11 +21,12 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-3.12.2-alt-gnupg-2.4.patch
 
 Obsoletes: seahorse-agent
-Provides:  seahorse-agent = %version-%release
+Provides:  seahorse-agent = %EVR
 Obsoletes: libseahorse
-Provides: libseahorse = %version-%release
+Provides: libseahorse = %EVR
 
 # From configure.ac
 %define glib_ver 2.32.0
@@ -47,9 +48,9 @@ BuildRequires: /proc dbus-tools-gui xvfb-run
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: libseahorse-devel
-Provides: libseahorse-devel = %version-%release
+Provides: libseahorse-devel = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -60,7 +61,7 @@ Summary: Development documentation for %name
 Group: Development/Documentation
 BuildArch: noarch
 Obsoletes: libseahorse-devel-doc
-Provides: libseahorse-devel-doc = %version-%release
+Provides: libseahorse-devel-doc = %EVR
 Conflicts: %name-devel < %version-%release
 
 %description devel-doc
@@ -71,8 +72,8 @@ developing applications that use %name.
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
 Obsoletes: libseahorse-gir
-Provides: libseahorse-gir = %version-%release
-Requires: %name = %version-%release
+Provides: libseahorse-gir = %EVR
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %name library
@@ -82,14 +83,16 @@ Summary: GObject introspection devel data for the %name library
 Group: System/Libraries
 BuildArch: noarch
 Obsoletes: libseahorse-gir-devel
-Provides: libseahorse-gir-devel = %version-%release
-Requires: %name-gir = %version-%release
+Provides: libseahorse-gir-devel = %EVR
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %name library
 
 %prep
 %setup
+%patch -b .gnupg
 
 %build
 export GNUPG=/usr/bin/gpg2
@@ -105,7 +108,7 @@ export GNUPG=/usr/bin/gpg2
 %find_lang --output=%name.lang cryptui
 
 %check
-xvfb-run %make check
+xvfb-run %make -k check VERBOSE=1
 
 %files -f %name.lang
 %_bindir/seahorse-daemon
@@ -137,6 +140,10 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Wed Aug 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt3
+- updated to 3.12.2-73-g95c4c95b
+- fixed build with GnuPG-2.4.x
+
 * Sat Jan 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt2
 - updated to 3.12.2-39-gb05e301
 

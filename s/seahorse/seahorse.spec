@@ -22,7 +22,7 @@
 
 Name: seahorse
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt3%beta
 
 Summary: A password and encryption key manager
 License: GPL-2.0 and LGPL-2.1
@@ -112,6 +112,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc NEWS README* THANKS
 
 %changelog
+* Wed Aug 16 2023 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt3
+- updated to 43.0-15-g034ddf2b (fixed build with GnuPG-2.4.x)
+
 * Thu Feb 09 2023 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt2
 - 43.0-6-g9260c747 (updated translations)
 

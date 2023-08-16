@@ -8,7 +8,7 @@
 
 Name: %_name-nautilus
 Version: %ver_major.92
-Release: alt3
+Release: alt4
 
 Summary: PGP encryption and signing for Nautilus
 License: LGPLv2+
@@ -20,12 +20,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-3.11.92-alt-gnupg-2.4.patch
 
-BuildRequires: meson rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson
 BuildRequires: libgtk+3-devel pkgconfig(libnautilus-extension-%ext_api_ver)
 BuildRequires: libcryptui-devel libgpgme-devel
 BuildRequires: libgnome-keyring-devel libdbus-glib-devel gnupg2-gpg gcr-libs-devel
-%{?_enable_libnotify:BuildPreReq: libnotify-devel >= 0.7.2}
+%{?_enable_libnotify:BuildRequires: libnotify-devel >= 0.7.2}
 
 %description
 This package provides extension for Nautilus which allows encryption
@@ -33,6 +35,7 @@ and decryption of OpenPGP files using GnuPG.
 
 %prep
 %setup
+%patch -b .gnupg
 
 %build
 %meson \
@@ -56,6 +59,10 @@ and decryption of OpenPGP files using GnuPG.
 %doc AUTHORS NEWS README*
 
 %changelog
+* Wed Aug 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt4
+- updated to 3.11.92-99-gbd57374
+- fixed build with GnuPG-2.4.x
+
 * Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt3
 - updated to 3.11.92-95-g2cc2a06
 - build against new libnautilus-extension-4

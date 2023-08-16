@@ -5,7 +5,7 @@
 
 Name: %_name-sharing
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: PGP public key sharing using DNS-SD and HKP
 License: LGPLv2+
@@ -17,8 +17,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-3.8.0-alt-gnupg-2.4.patch
 
-BuildRequires: rpm-build-gnome intltool
+BuildRequires(pre): rpm-build-gnome
+BuildRequires: intltool
 BuildRequires: libgtk+3-devel libsoup-devel libgpgme-devel libavahi-glib-devel
 BuildRequires: libSM-devel gnupg2-gpg
 
@@ -28,6 +30,7 @@ and decryption of OpenPGP files using GnuPG.
 
 %prep
 %setup
+%patch -b .gnupg
 
 %build
 export GNUPG=/usr/bin/gpg2
@@ -49,6 +52,10 @@ export GNUPG=/usr/bin/gpg2
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Aug 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt3
+- updated to 3.8.0-24-g58db1e5
+- fixed build with GnuPG-2.4.x
+
 * Fri Jan 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
 - updated to 3.8.0-22-g0370fb3
 
