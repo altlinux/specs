@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.4
-%define kernel_sublevel	.10
+%define kernel_sublevel	.11
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -582,6 +582,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Aug 17 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.4.11-alt1
+- v6.4.11 (2023-08-16).
+
 * Fri Aug 11 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.4.10-alt1
 - v6.4.10 (2023-08-11).
 - Enable CONFIG_X86_AMD_PSTATE=y (ALT#47159).
