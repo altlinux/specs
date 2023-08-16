@@ -1,7 +1,7 @@
 
 Name: qdmr
-Version: 0.11.2
-Release: alt2
+Version: 0.11.3
+Release: alt1
 
 Summary: GUI application and command-line-tool to program DMR radios
 License: GPLv3+
@@ -82,6 +82,11 @@ fi
 %prefix/include/libdmrconf/*.h
 
 %changelog
+* Wed Aug 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.11.3-alt1
+- v0.11.3, amongst other things
+  + Fixed crash on missing access rights for TyT devices
+  + Fixed encoding for AnyTone devices (programmable keys, mic gain, etc)
+
 * Thu Mar 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.11.2-alt2
 - Relocated udev rules to /lib/udev, no functional changes intended
 
