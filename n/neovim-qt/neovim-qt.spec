@@ -1,6 +1,6 @@
 Name: neovim-qt
 Version: 0.2.17
-Release: alt5.git3ac3d4d
+Release: alt6.git7b02596
 
 Summary: Neovim client library and GUI, in Qt6.
 
@@ -50,6 +50,9 @@ Neovim client library and GUI, in Qt6.
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Wed Aug 16 2023 Vladimir Didenko <cow@altlinux.org> 0.2.17-alt6.git7b02596
+- New version (git7b02596)
+
 * Mon Apr 10 2023 Vladimir Didenko <cow@altlinux.org> 0.2.17-alt5.git3ac3d4d
  - New version (git3ac3d4d)
  - Fix build with msgpack-c 6.0.0
