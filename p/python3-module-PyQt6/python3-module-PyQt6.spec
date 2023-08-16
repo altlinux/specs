@@ -12,14 +12,13 @@
 
 Name: python3-module-%oname
 Version: 6.5.0
-Release: alt2
+Release: alt3
 
 Summary: Python 3 bindings for Qt 6
-
 License: GPLv3
 Group: Development/Python3
-Url: https://www.riverbankcomputing.co.uk/software/pyqt
 
+Url: https://www.riverbankcomputing.co.uk/software/pyqt
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
@@ -39,8 +38,10 @@ BuildRequires: libdbus-devel
 BuildRequires: python3-module-dbus-devel
 %endif
 
-BuildRequires: qt6-connectivity-devel qt6-multimedia-devel qt6-sensors-devel qt6-serialport-devel
-BuildRequires: qt6-svg-devel qt6-tools-devel qt6-websockets-devel libqt6-qml
+BuildRequires: qt6-connectivity-devel qt6-multimedia-devel qt6-sensors-devel
+BuildRequires: qt6-serialport-devel
+BuildRequires: qt6-svg-devel qt6-tools-devel qt6-websockets-devel
+BuildRequires: qt6-declarative-devel
 
 #if_with dbus
 # https://bugzilla.altlinux.org/show_bug.cgi?id=33873
@@ -139,6 +140,9 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Wed Aug 16 2023 Michael Shigorin <mike@altlinux.org> 6.5.0-alt3
+- add missing BR: qt6-declarative-devel
+
 * Tue Apr 25 2023 Anton Midyukov <antohami@altlinux.org> 6.5.0-alt2
 - Add missing provides dbus.mainloop.pyqt6
 
