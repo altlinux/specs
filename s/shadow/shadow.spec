@@ -1,6 +1,6 @@
 Name: shadow
-Version: 4.13
-Release: alt8
+Version: 4.14.0
+Release: alt1
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -41,6 +41,10 @@ Patch: %name-%version-%release.patch
 %def_enable man
 %endif
 
+# libbsd support for readpassphrase().
+# Using in-source implementation instead.
+%def_without libbsd
+
 %set_verify_elf_method strict
 
 BuildPreReq: mktemp >= 1:1.3.1, rpm-build >= 4.0.4-alt10
@@ -59,6 +63,8 @@ BuildPreReq: libselinux-devel libsemanage-devel
 BuildRequires: libpam-devel libtcb-devel pam_userpass-devel
 %endif
 BuildRequires: libcrypt-devel >= 4.0.1-alt1
+
+%{?_with_libbsd:BuildRequires: libbsd-devel}
 
 %description
 This package includes the tools necessary for manipulating local user and
@@ -219,6 +225,7 @@ This virtual package unifies all shadow suite subpackages.
 	%{subst_with selinux} \
 	%{subst_with audit} \
 	%{subst_with btrfs} \
+	%{subst_with libbsd} \
 	--with-group-name-max-length=32 \
 	--without-sha-crypt \
 	--without-su \
@@ -278,7 +285,7 @@ install -pD -m755 %_sourcedir/newgidmap.control %buildroot%_controldir/newgidmap
 touch %buildroot%_sysconfdir/subuid
 touch %buildroot%_sysconfdir/subgid
 
-mkdir -p %buildroot%_sysconfdir/shadow-maint/user{add,del}-{pre,post}.d
+mkdir -p %buildroot%_sysconfdir/shadow-maint/{user,group}{add,del}-{pre,post}.d
 
 %find_lang %name
 %define _unpackaged_files_terminate_build 1
@@ -343,6 +350,7 @@ rm -f %save_login_defs_file
 %attr(640,root,shadow) %config(noreplace) %_sysconfdir/login.defs
 %dir %attr(770,root,root) %_sysconfdir/shadow-maint/
 %dir %attr(770,root,root) %_sysconfdir/shadow-maint/user*.d/
+%dir %attr(770,root,root) %_sysconfdir/shadow-maint/group*.d/
 %if_with pam
 %config(noreplace) %_sysconfdir/pam.d/user-group-mod
 %_sysconfdir/pam.d/groupadd
@@ -475,6 +483,12 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Wed Aug 16 2023 Mikhail Efremov <sem@altlinux.org> 1:4.14.0-alt1
+- utils: Packaged group{add,del}-{pre,post}.d directories.
+- run_part: Don't fail if directory doesn't exist.
+- Fixed build: drop unused variable.
+- Updated to 4.14.
+
 * Wed Aug 02 2023 Mikhail Efremov <sem@altlinux.org> 1:4.13-alt8
 - usermod: Allow group and submap operations for non-local user
   (closes: #46847).
