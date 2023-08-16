@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.9.20
+Version: 0.9.22.5.g0a28b50a
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -53,6 +53,9 @@ BuildRequires: pkgconfig(upower-glib)
 # mpd module
 BuildRequires: pkgconfig(libmpdclient)
 
+# wireplumber module
+BuildRequires: pkgconfig(wireplumber-0.4)
+
 %define _libexecdir %_prefix/libexec
 %define helperdir %_libexecdir/%name
 
@@ -84,6 +87,10 @@ BuildRequires: pkgconfig(libmpdclient)
 %_man5dir/*
 
 %changelog
+* Wed Aug 16 2023 Alexey Gladkov <legion@altlinux.ru> 0.9.22.5.g0a28b50a-alt1
+- New git snapshot.
+- Enable wireplumber module.
+
 * Tue Jul 18 2023 Alexey Gladkov <legion@altlinux.ru> 0.9.20-alt1
 - New version (0.9.20).
 
