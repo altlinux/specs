@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 116.0
+Version: 116.0.3
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -427,6 +427,9 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Aug 17 2023 Alexey Gladkov <legion@altlinux.ru> 116.0.3-alt1
+- New release (116.0.3).
+
 * Tue Aug 01 2023 Alexey Gladkov <legion@altlinux.ru> 116.0-alt1
 - New release (116.0).
 - Sync desktop-file with fedora.
