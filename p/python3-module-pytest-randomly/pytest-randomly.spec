@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.13.0
+Version: 3.15.0
 Release: alt1
 Summary: Pytest plugin to randomly order tests and control random.seed
 License: MIT
@@ -61,6 +61,9 @@ filled in randomly due to not being specified.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 17 2023 Stanislav Levin <slev@altlinux.org> 3.15.0-alt1
+- 3.13.0 -> 3.15.0.
+
 * Thu Jul 20 2023 Stanislav Levin <slev@altlinux.org> 3.13.0-alt1
 - 3.12.0 -> 3.13.0.
 
