@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.12
-%define drelease	73
+%define drelease	93
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		7
@@ -271,6 +271,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu Aug 17 2023 Anton Farygin <rider@altlinux.ru> 6.9.12.93-alt1
+- New version 6.9.12.93 (Fixes: CVE-2022-44268)
+
 * Wed Jan 25 2023 Anton Farygin <rider@altlinux.ru> 6.9.12.73-alt1
 - new version 6.9.12.73
 
