@@ -1,6 +1,10 @@
+%def_with gpm
+%def_with lua
+%def_with doc
+
 Name: elinks
 Version: 0.15.1
-Release: alt1
+Release: alt2
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -28,9 +32,20 @@ Provides: %_bindir/links
 Obsoletes: links
 
 # Automatically added by buildreq on Wed Sep 30 2009
-BuildRequires: bzlib-devel docbook-utils libexpat-devel libgpm-devel lua-devel libssl-devel python-modules-encodings xmlto zlib-devel
-BuildRequires: python3 gcc-c++
+BuildRequires: bzlib-devel libexpat-devel libssl-devel zlib-devel
+BuildRequires: gcc-c++
+%if_with gpm
+BuildRequires: libgpm-devel
+%endif
+%if_with doc
+BuildRequires: docbook-utils python-modules-encodings xmlto python3
+%endif
+%if_with lua
+BuildRequires: lua-devel
+%endif
 
+Requires: /proc
+BuildRequires: /proc
 
 %description
 ELinks is advanced text-mode web browser with wide scale of additional
@@ -85,7 +100,9 @@ make -C src/intl/gettext V=1 plural.c
 %endif
 
 make -C src V=1 CFLAGS="%optflags"
+%if_with doc
 make -C doc V=1 features.txt manual.html
+%endif
 
 %install
 %makeinstall_std V=1
@@ -100,6 +117,9 @@ install -pD -m644 %SOURCE1 %buildroot/etc/elinks/elinks.conf
 
 %find_lang elinks
 
+%check
+echo '<html><body>TEST</body></html>' | %buildroot%_bindir/elinks -no-numbering -no-references -dump
+
 %files -f elinks.lang
 %_bindir/elinks
 %dir /etc/elinks
@@ -108,9 +128,15 @@ install -pD -m644 %SOURCE1 %buildroot/etc/elinks/elinks.conf
 %_man5dir/elinks*
 %_altdir/elinks
 %doc AUTHORS COPYING NEWS README THANKS
+%if_with doc
 %doc doc/manual.html
+%endif
 
 %changelog
+* Sun May 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.15.1-alt2
+- elinks -dump fails without /proc, added /proc requirement.
+- Support build without lua, gmp, and documentation. Useful for bootstrapping.
+
 * Sat Oct 22 2022 Vladislav Zavjalov <slazav@altlinux.org> 0.15.1-alt1
 - 0.15.1
 
