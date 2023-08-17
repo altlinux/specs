@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.37.0
+Version: 2.38.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -407,6 +407,17 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
 
 %changelog
+* Thu Aug 17 2023 Alexey Gladkov <legion@altlinux.ru> 2.38.0-alt1
+- New version (2.38.0).
+- Runtime:
+  + Rename monotonic-timestamp -> timestamp.
+  + Use boottime instead of monotonic time (ALT#47188).
+- Feature dropbear:
+  + Mount devpts if not mounted (ALT#47216).
+- Guess subsystem:
+  + Add device suppliers to initrd (ALT#47045).
+- Remove unsupported bootloader feature.
+
 * Mon Jul 24 2023 Alexey Gladkov <legion@altlinux.ru> 2.37.0-alt1
 - New version (2.37.0).
 - Runtime:
