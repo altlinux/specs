@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: gpodder
-Version: 3.11.1
-Release: alt2
+Version: 3.11.2
+Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
 License: GPL-3.0-or-later
@@ -16,7 +16,7 @@ Source: https://github.com/gpodder/gpodder/archive/%version/%name-%version.tar.g
 Vcs: https://github.com/gpodder/gpodder.git
 Source: %name-%version.tar
 %endif
-Patch: AyatanaAppIndicator.patch
+Patch: %name-3.11.1-alt-AyatanaAppIndicator.patch
 
 BuildArch: noarch
 
@@ -101,6 +101,9 @@ PYTHON=python3 PYTEST=%_bindir/py.test3 %make unittest
 
 
 %changelog
+* Thu Aug 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.11.2-alt1
+- 3.11.2
+
 * Mon Mar 06 2023 Anton Midyukov <antohami@altlinux.org> 3.11.1-alt2
 - add patch for Ayatana AppIndicator support
 
