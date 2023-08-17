@@ -64,7 +64,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -91,9 +91,10 @@ Patch89: boost-1.81.0-upstream-phoenix-fix-uargN.patch
 # https://github.com/boostorg/mpi/issues/149
 Patch90: boost-1.83.0-alt-mpi-nonreturn-abort.patch
 
+Patch91: boost-1.83.0-alt-context-fix-platform-detection.patch
+
 Patch1000: boost-1.63.0-alt-python-paths.patch
 Patch2000: boost-1.83-e2k-makecontext.patch
-Patch2001: boost-1.80.0-alt-mips-is-still-mips1.patch
 
 # we use %%_python3_abiflags
 # we use %%requires_python_ABI, introduced in rpm-build-python3-0.1.9.3-alt1
@@ -1848,6 +1849,11 @@ done
 
 
 %changelog
+* Thu Aug 17 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.83.0-alt2
+- Fix platform detection in Boost.Context (fixes build
+  on riscv64 and mipsel)
+- Drop obsolete mips-specific patch 2001
+
 * Tue Aug 15 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.83.0-alt1
 - Updated to upstream version 1.83.0
 
