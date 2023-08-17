@@ -1,9 +1,10 @@
 # Disable tests because we can not increase build limits
 %def_without tests
+%def_with docs
 
 Name:           ninja-build
 Version:        1.11.1
-Release:        alt1
+Release:        alt2
 
 Summary:        A small build system with a focus on speed
 Group:          Development/Tools
@@ -19,10 +20,14 @@ Source3:        ninja.macros
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: re2c
+%if_with docs
 BuildRequires: asciidoc
 BuildRequires: xsltproc
 BuildRequires: docbook-style-xsl
+%endif
+%if_with tests
 BuildRequires: libgtest-devel
+%endif
 
 %description
 Ninja is a small build system with a focus on speed. It differs from
@@ -57,8 +62,12 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 #CFLAGS="%optflags"
 #export CFLAGS
 ./configure.py --bootstrap --verbose --debug
+%if_with docs
 ./ninja -v manual
+%endif
+%if_with tests
 ./ninja -v ninja_test
+%endif
 
 %check
 %if_with tests
@@ -82,10 +91,12 @@ install -Dpm 644 %SOURCE2 %buildroot%_man1dir/ninja.1
 install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 
 %files
-%doc COPYING README.md doc/manual.html
+%doc COPYING README.md %{?_with_docs:doc/manual.html}
 %_bindir/ninja-build
 %_bindir/ninja
+%if_with docs
 %_man1dir/*.1*
+%endif
 # bash-completion does not own this
 %_sysconfdir/bash_completion.d/
 # zsh does not have a -filesystem package
@@ -100,6 +111,9 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 %files -n rpm-build-ninja
 
 %changelog
+* Fri May 12 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.11.1-alt2
+- Simplified the bootstrap sequence.
+
 * Wed Aug 31 2022 Andrey Cherepanov <cas@altlinux.org> 1.11.1-alt1
 - New version.
 
