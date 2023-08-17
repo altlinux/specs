@@ -1,38 +1,36 @@
 %def_disable snapshot
 
 %define _name cairomm
-%define ver_major 1.16
-%define api_ver %ver_major
+%define ver_major 1.17
+%define api_ver 1.16
 
 %def_enable docs
-# boost.pc required
-%def_disable check
+%def_enable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: This library provides a C++ interface to cairo
 License: LGPL-2.0
 Group: System/Libraries
 Url: https://cairographics.org/cairomm
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 %if_disabled snapshot
 Source: https://www.cairographics.org/releases/%_name-%version.tar.xz
 %else
-Vcs: git://git.cairographics.org/git/cairomm
+Vcs: https://git.cairographics.org/git/cairomm
 Source: %_name-%version.tar
 %endif
 
 %define cairo_ver 1.12
 %define sigc_ver 3.0.0
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ mm-common
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ mm-common
 BuildRequires: libcairo-devel >= %cairo_ver libsigc++3-devel >= %sigc_ver
 %{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
-%{?_enable_check:BuildRequires: boost-test-devel fontconfig-devel}
+%{?_enable_check:BuildRequires: boost-test-devel fontconfig-devel fonts-ttf-google-droid-sans}
 
 %description
 This library provides a C++ interface to cairo.
@@ -63,9 +61,9 @@ This package contains documentation needed for developing %_name applications.
 %{?_enable_snapshot:mm-common-prepare -f}
 %meson \
     %{?_enable_docs:-Dbuild-documentation=true} \
-    %{?_enable_snapshot:-Dmaintainer-mode=true
+    %{?_enable_snapshot:-Dmaintainer-mode=true \
     -Dbuild-documentation=true} \
-    %{?_enable_check:-Dbuild-tests=true
+    %{?_enable_check:-Dbuild-tests=true \
     -Dboost-shared=true}
 %nil
 %meson_build
@@ -74,12 +72,11 @@ This package contains documentation needed for developing %_name applications.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
-%doc AUTHORS NEWS
 %_libdir/*.so.*
+%doc ChangeLog NEWS README*
 
 %files devel
 %_includedir/cairomm-%api_ver
@@ -94,6 +91,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Aug 11 2023 Yuri N. Sedunov <aris@altlinux.org> 1.17.1-alt1
+- 1.17.1
+- enabled %%check
+
 * Mon Sep 26 2022 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 
