@@ -15,7 +15,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -190,6 +190,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Thu Aug 17 2023 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1.1
+- phosh.pam: commented-out pam_gnome_keyring
+
 * Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
 - 0.30.0
 - required /usr/bin/osk-wayland
