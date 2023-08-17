@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jupyter_server
 
-%def_without check
+%def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 
 Summary: The backend -core services, APIs, and REST endpoints-to Jupyter web applications
@@ -36,6 +36,11 @@ BuildRequires: python3-module-send2trash
 BuildRequires: python3-module-pytest-console-scripts
 BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-ipykernel
+BuildRequires: python3-module-traitlets-tests
+BuildRequires: python3-module-flaky
+BuildRequires: python3-module-argon2-cffi
+BuildRequires: /proc
+BuildRequires: /dev/pts
 %endif
 
 %description
@@ -57,7 +62,9 @@ sed -i pyproject.toml -e 's/--color=yes//'
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v -W ignore::ImportWarning -m 'not network'
+# test_restart_kernel randomly fail
+%pyproject_run_pytest -v -W ignore::ImportWarning -m 'not network' -k \
+'not test_restart_kernel'
 
 %files
 %doc README.*
@@ -66,6 +73,9 @@ sed -i pyproject.toml -e 's/--color=yes//'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 17 2023 Anton Vyatkin <toni@altlinux.org> 2.7.1-alt1
+- New version 2.7.1.
+
 * Tue Jun 27 2023 Anton Vyatkin <toni@altlinux.org> 2.7.0-alt1
 - New version 2.7.0.
 
