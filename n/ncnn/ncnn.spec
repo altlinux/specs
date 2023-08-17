@@ -1,11 +1,10 @@
-%define llvm_ver 15
 %define ncnn_ver 1
 
 %def_disable clang
 %def_without python
 
 Name: ncnn
-Version: 20230517
+Version: 20230816
 Release: alt1
 
 Summary: Mobile neural network inference framework
@@ -19,9 +18,9 @@ Source: %url/archive/%version/%name-%version.tar.gz
 BuildRequires(pre): rpm-build-ninja
 %if_enabled clang
 #BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: clang-devel
+BuildRequires: lld-devel
+BuildRequires: llvm-devel
 %else
 BuildRequires: gcc-c++
 %endif
@@ -81,9 +80,9 @@ sed -i '/add_subdirectory(pybind11)/d' \
 %build
 %if_enabled clang
 %define optflags_lto -flto=thin
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 
 %cmake \
@@ -127,6 +126,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Thu Aug 17 2023 Leontiy Volodin <lvol@altlinux.org> 20230816-alt1
+- New version 20230816.
+
 * Fri Jun 09 2023 Leontiy Volodin <lvol@altlinux.org> 20230517-alt1
 - New version 20230517.
 
