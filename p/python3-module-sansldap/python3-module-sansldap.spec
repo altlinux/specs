@@ -7,7 +7,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Python Sans I/O LDAP Library
 License: MIT
@@ -57,8 +57,6 @@ and have it focus purely on the protocol logic.
 %if_with docs
 pushd docs
 make html-strict
-ls -la 
-tree ./
 popd
 %endif
 
@@ -75,5 +73,8 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 17 2023 Andrey Limachko <liannnix@altlinux.org> 0.1.0-alt2
+- Remove debug code from spec
+
 * Sat Jul 08 2023 Andrey Limachko <liannnix@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus
