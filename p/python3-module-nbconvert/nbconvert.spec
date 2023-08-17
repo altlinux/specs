@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 7.7.3
+Version: 7.7.4
 Release: alt1
 
 Summary: Converting Jupyter Notebooks
@@ -67,7 +67,7 @@ BuildRequires: python3-module-traitlets-tests
 %py3_use jinja2 >= 3.0
 %py3_use Pygments >= 2.4.1
 %py3_use jupyterlab_pygments
-%py3_use traitlets >= 5.0
+%py3_use traitlets >= 5.1
 %py3_use jupyter_core >= 4.7
 %py3_use nbformat >= 5.7
 %py3_use bleach
@@ -183,6 +183,9 @@ export JUPYTER_PATH=%buildroot%_datadir/jupyter
 %endif
 
 %changelog
+* Thu Aug 17 2023 Anton Vyatkin <toni@altlinux.org> 7.7.4-alt1
+- New version 7.7.4.
+
 * Wed Jul 26 2023 Anton Vyatkin <toni@altlinux.org> 7.7.3-alt1
 - New version 7.7.3.
 
