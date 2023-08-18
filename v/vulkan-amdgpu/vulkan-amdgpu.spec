@@ -6,7 +6,7 @@
 # As ubuntu
 %define gcc_ver 9
 
-%define _vk_api_version 1.3.252
+%define _vk_api_version 1.3.257
 
 %def_with clang
 %def_with wayland
@@ -22,8 +22,8 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2023.Q2.3
-Release: alt2
+Version: 2023.Q3.1
+Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -122,6 +122,16 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Fri Aug 18 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q3.1-alt1
+- 2023-8-7 update:
+  + icd: bump vulkan version
+  + llvm-dialects: Updated to b5c7de36efa5
+  + llvm-project: Updated to b2b27cdd9f04
+  + gpurt: Updated to a0415aa237c8
+  + llpc: Updated to ce2c12c412bd
+  + pal: Updated to 9a07f5b7883e
+  + xgl: Updated to bc0587c273e5
+
 * Fri Jun 16 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q2.3-alt2
 - Disable 32-bit (again).
 - Use mold for linking.
