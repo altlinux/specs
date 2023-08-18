@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Dev tools for python
@@ -56,6 +56,9 @@ Python's missing debug print command and other development tools.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 18 2023 Anton Zhukharev <ancieg@altlinux.org> 0.12.0-alt1
+- Updated to 0.12.0.
+
 * Tue Jul 25 2023 Anton Zhukharev <ancieg@altlinux.org> 0.11.0-alt1
 - Updated to 0.11.0.
 
