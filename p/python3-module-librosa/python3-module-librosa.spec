@@ -1,9 +1,9 @@
 %define pypi_name librosa
-# no tests
+# no tests data in tarball
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: A python package for music and audio analysis
@@ -17,7 +17,16 @@ Source: https://pypi.io/packages/source/l/%pypi_name/%pypi_name-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools >= 48 python3-module-wheel >= 0.29
+BuildRequires: python3(setuptools) python3(wheel)
+%{?_enable_check:
+BuildRequires: python3(matplotlib) >= 3.3.0
+BuildRequires: python3(packaging) >= 20.0
+BuildRequires: python3(pytest-mpl)
+BuildRequires: python3(pytest-cov)
+BuildRequires: python3(pytest)
+BuildRequires: python3(samplerate)
+BuildRequires: python3(resampy) >= 0.2.2
+BuildRequires: python3(types-decorator)}
 
 %description
 %summary
@@ -32,7 +41,8 @@ BuildRequires: python3-module-setuptools >= 48 python3-module-wheel >= 0.29
 %pyproject_install
 
 %check
-%tox_check
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+py.test-3 tests
 
 %files
 %python3_sitelibdir_noarch/%pypi_name
@@ -41,6 +51,9 @@ BuildRequires: python3-module-setuptools >= 48 python3-module-wheel >= 0.29
 
 
 %changelog
+* Fri Aug 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
+- 0.10.1
+
 * Wed Feb 22 2023 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0
 
