@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: lazygit
-Version: 0.38.2
+Version: 0.40.2
 Release: alt1
 
 Summary: Simple terminal UI for git commands
@@ -11,11 +11,11 @@ URL: https://github.com/jesseduffield/lazygit
 
 ExclusiveArch: %go_arches
 
-#Source-url: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+#Source-url: %url/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
 
 Requires: git-core
 
@@ -46,7 +46,7 @@ ass, lazygit might be for you.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export LDFLAGS="${LDFLAGS:-} main.version=%{version}"
+export LDFLAGS="${LDFLAGS:-} main.version=%version"
 
 %golang_prepare
 
@@ -61,9 +61,14 @@ export IGNORE_SOURCES=1
 
 %files
 %doc README.md LICENSE docs/
-%_bindir/%{name}
+%_bindir/%name
 
 %changelog
+* Thu Aug 17 2023 Ilya Demyanov <turbid@altlinux.org> 0.40.2-alt1
+- new version
+- moving sources to a subdirectory
+- fix spec according to comments from #44756
+
 * Fri May 26 2023 Ilya Demyanov <turbid@altlinux.org> 0.38.2-alt1
 - new version
 
