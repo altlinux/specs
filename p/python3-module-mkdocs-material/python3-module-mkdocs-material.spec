@@ -1,24 +1,25 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name mkdocs-material
+%define mod_name material
 
 Name: python3-module-%pypi_name
-Version: 9.1.4
+Version: 9.1.21
 Release: alt1
 
 Summary: Documentation that simply works
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/mkdocs-material
-
-Source0: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(hatchling)
-BuildRequires: python3(hatch_nodejs_version)
-BuildRequires: python3(hatch_requirements_txt)
+Url: https://pypi.org/project/mkdocs-material/
+Vcs: https://github.com/squidfunk/mkdocs-material
 
 BuildArch: noarch
+
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
 Write your documentation in Markdown and create a professional static site for
@@ -27,6 +28,8 @@ more than 50 languages, for all devices.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -36,10 +39,13 @@ more than 50 languages, for all devices.
 
 %files
 %doc CHANGELOG LICENSE README.md
-%python3_sitelibdir/material
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Aug 18 2023 Anton Zhukharev <ancieg@altlinux.org> 9.1.21-alt1
+- Updated to 9.1.21.
+
 * Wed Mar 29 2023 Anton Zhukharev <ancieg@altlinux.org> 9.1.4-alt1
 - New version.
 
