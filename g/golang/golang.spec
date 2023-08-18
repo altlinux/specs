@@ -47,7 +47,7 @@
 
 Name:    golang
 Version: 1.21.0
-Release: alt2
+Release: alt3
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -56,6 +56,7 @@ URL:     http://golang.org/
 Source0: golang-%version.tar
 Source1: golang-gdbinit
 Patch2:  golang-alt-certs-path.patch
+Patch3:  go-never-download-newer-toolchains.patch
 Patch101: 0001-avoid-requires-libselinux-utils.patch
 
 ExclusiveArch: %go_arches
@@ -160,6 +161,7 @@ AutoReq: noshell, noshebang
 %setup -q
 
 %patch2 -p1
+%patch3 -p1
 %patch101 -p1
 
 %build
@@ -229,7 +231,7 @@ mkdir -p -- \
 	%buildroot%go_root \
 	%buildroot%_datadir/%name
 
-cp -afv api bin doc lib pkg src misc test VERSION \
+cp -apfv api bin doc lib pkg src misc test go.env VERSION \
 	%buildroot%go_root/
 
 find %buildroot%go_root -exec touch -r $PWD/VERSION "{}" \;
@@ -370,6 +372,10 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.0-alt3
+- Add go.env to package.
+- Disable download toolchains in go.env.
+
 * Thu Aug 10 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.0-alt2
 - Add loongarch64 to %%go_arches.
 - Enable external_linker and cgo for riscv64 and loongarch64.
