@@ -4,7 +4,7 @@
 
 Name:    rex
 Version: 1.14.3
-Release: alt1
+Release: alt2
 
 Summary: (R)?ex - Remote Execution Framework
 
@@ -41,7 +41,7 @@ BuildRequires: perl-IPC-Shareable
 Requires: perl-PathTools
 
 # Perl find-requires skips modules inside eval{}, add them manually
-Requires: perl(Expect.pm) perl(Net/SSH2.pm) perl(Term/ANSIColor.pm)
+Requires: perl(Expect.pm) perl(Net/SSH2.pm) perl(Term/ANSIColor.pm) perl(Net/SFTP/Foreign.pm)
 
 
 # Template files does't contains a proper Perl code
@@ -127,6 +127,9 @@ mv -f ChangeLog    ../
 
 
 %changelog
+* Fri Aug 18 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.14.3-alt2
+- Add manual requires on perl-Net-SFTP-Foreign
+
 * Mon Aug 07 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.14.3-alt1
 - New version
 
