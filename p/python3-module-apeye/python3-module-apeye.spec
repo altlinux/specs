@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Handy tools for working with URLs and APIs
@@ -55,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Aug 18 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.1-alt1
+- Updated to 1.4.1.
+
 * Thu Jul 20 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
 - Updated to 1.4.0.
 
