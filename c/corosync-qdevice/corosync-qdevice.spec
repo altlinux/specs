@@ -1,7 +1,7 @@
 
 Name: corosync-qdevice
 Summary: The Corosync Cluster Engine Qdevice
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 Group: System/Base
 License: BSD
@@ -112,6 +112,9 @@ sed -i -e 's/^#User=/User=/' \
 %_man8dir/*qnetd*
 
 %changelog
+* Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 3.0.3-alt1
+- New version 3.0.3.
+
 * Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 3.0.2-alt1
 - new version 3.0.2
 
