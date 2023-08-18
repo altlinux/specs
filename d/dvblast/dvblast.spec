@@ -1,6 +1,6 @@
 Name: dvblast
 Version: 3.4
-Release: alt2
+Release: alt3
 
 Summary: Video/Audio streaming application based on the linux-dvb API
 License: GPLv2+
@@ -47,6 +47,9 @@ install -pm0644 -D dvblast.1 %buildroot%_man1dir/dvblast.1
 %_man1dir/dvblast.1*
 
 %changelog
+* Fri Aug 18 2023 Alexei Takaseev <taf@altlinux.org> 3.4-alt3
+- update to git:4e18d80c2474093925248b01c70c4ead35051e30
+
 * Fri Feb 01 2019 Alexei Takaseev <taf@altlinux.org> 3.4-alt2
 - en50221: fix (small) memory leak
 
