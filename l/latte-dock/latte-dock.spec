@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: latte-dock
-Version: 0.10.8
+Version: 0.10.9
 Release: alt1
 Summary: Latte is a dock based on plasma frameworks
 
@@ -12,15 +12,14 @@ Group: Graphical desktop/KDE
 Url: https://download.kde.org/stable/%name
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
+# Source-url: https://download.kde.org/stable/latte-dock/latte-dock-%version.tar.xz
 Source: %name-%version.tar
 Patch: K5bin.patch
 
+BuildRequires(pre): rpm-macros-cmake rpm-build-kf5 rpm-build-xdg
 BuildRequires: xdg-utils
 BuildRequires: libxdg-basedir-devel
 BuildRequires: cmake
-BuildRequires: rpm-macros-cmake
-BuildRequires: rpm-build-kf5
-BuildRequires: rpm-build-xdg
 BuildRequires: libxcb-devel
 BuildRequires: libxcbutil-devel
 BuildRequires: libSM-devel
@@ -93,6 +92,9 @@ using parabolic zoom effect and tries to be there only when it is needed.
 %_K5srv/plasma-shell-org.kde.latte.shell.desktop
 
 %changelog
+* Thu Aug 17 2023 Mikhail Tergoev <fidel@altlinux.org> 0.10.9-alt1
+- NMU: new version (0.10.9) with rpmgs script (ALT bug 47233)
+
 * Mon Jan 31 2022 Konstantin Rybakov <kastet@altlinux.org> 0.10.8-alt1
 - Updated to upstream version 0.10.8
 
