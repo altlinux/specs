@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: eartag
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Small and simple audio file tag editor
@@ -70,6 +70,9 @@ BuildRequires: python3(mutagen) python3(magic) python3-module-Pillow}
 %doc README*
 
 %changelog
+* Fri Aug 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Tue Jul 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
