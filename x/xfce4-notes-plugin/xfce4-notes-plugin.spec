@@ -1,6 +1,6 @@
 Name: xfce4-notes-plugin
 Version: 1.10.0
-Release: alt1
+Release: alt2
 
 Summary: Sticky notes plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Липкие записки для Xfce.
@@ -57,6 +57,10 @@ BuildRequires: vala
 %_desktopdir/xfce4-notes.desktop
 
 %changelog
+* Fri Aug 18 2023 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt2
+- Fix Russian translation.
+- Use menu entries translation.
+
 * Sat Mar 18 2023 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
 - Updated to 1.10.0.
 
