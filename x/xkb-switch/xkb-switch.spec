@@ -1,14 +1,14 @@
 Summary:        Switch your X keyboard layouts from the command line
 Name:           xkb-switch
 Version:        1.8.5
-Release:        alt1
+Release:        alt2
 URL:            https://github.com/ierton/xkb-switch
-Packager:       Valentin Rosavitskiy <valintinr@altlinux.org>
-License:        GPL-3.0
+License:        GPL-3.0-or-later
 Group:          Graphical desktop/Other
 
 Source:         %name-%version.tar
-BuildPreReq:    cmake rpm-macros-cmake gcc-c++ libX11-devel libxkbfile-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires:  cmake gcc-c++ libX11-devel libxkbfile-devel
 
 
 %description
@@ -17,22 +17,27 @@ layout state. Originally ruby-based code written by J.Broomley.
 
 %prep
 %setup -q
+#quick fix for libdir
+%__subst "s|LIBRARY DESTINATION lib OPTIONAL|LIBRARY DESTINATION %_lib OPTIONAL|" CMakeLists.txt
 
 %build
-#quick fix for libdir
-sed -i 's/LIBRARY DESTINATION lib OPTIONAL/LIBRARY DESTINATION %_lib OPTIONAL/' CMakeLists.txt
-
-cmake . -DCMAKE_INSTALL_PREFIX:PATH=%_usr -DINSTALL_LIBDIR=:PATH=%_libdir .
-
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std PREFIX=/usr
+%cmake_install
 
 %files
 %_bindir/%name
-%_libdir/libxkbswitch.so*
+%_libdir/libxkbswitch.so.1*
 
 %changelog
+* Thu Aug 17 2023 Ilya Demyanov <turbid@altlinux.org> 1.8.5-alt2
+- Fix licence to GPL-3.0-or-later
+- Switch build and install to cmake macros
+- Don't install .so without soname
+- Change "quick fix" CMakeLists.txt from sed to %%__subst macro and move to %prep
+
 * Tue Feb 21 2023 Ilya Demyanov <turbid@altlinux.org> 1.8.5-alt1
 - New version 
 - Change licence to GPL-3.0 (upstream)
