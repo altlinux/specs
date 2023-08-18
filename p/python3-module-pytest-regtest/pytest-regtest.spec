@@ -2,46 +2,53 @@
 %define oname pytest-regtest
 
 Name: python3-module-%oname
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
-Summary: py.test plugin for regression tests
+Summary: pytest plugin for regression tests
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pytest-regtest/
+Url: https://pypi.org/project/pytest-regtest
 
-Source0: https://files.pythonhosted.org/packages/52/0f/790ba30a32b6f6ab9db946cf39dc72a4cb8ad6d275bc4c3de082e247721f/%oname-%version.tar.gz
+Source0: %oname-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-pytest
 
 %py3_provides pytest_regtest
 
 %description
-This pytest-plugin allows capturing of output of test functions which
-can be compared to the captured output from former runs. This is a
-common technique to start TDD if you have to refactor legacy code which
-ships without tests.
+pytest-regtest is a pytest-plugin for implementing regression tests. Compared
+to functional testing a regression test does not test if software produces
+correct results, instead a regression test checks if software behaves the same
+way as it did before introduced changes.
 
 %prep
 %setup -q -n %{oname}-%{version}
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_check
+%pyproject_run_pytest -v tests/test_plugin.py
 
 %files
 %doc PKG-INFO
-%python3_sitelibdir/*
-
+%python3_sitelibdir/__pycache__/pytest_regtest.*
+%python3_sitelibdir/pytest_regtest-%version.dist-info
+%python3_sitelibdir/pytest_regtest.py
 
 %changelog
+* Fri Aug 18 2023 Anton Vyatkin <toni@altlinux.org> 1.5.1-alt1
+- new version 1.5.1
+
 * Mon Feb 27 2023 Anton Vyatkin <toni@altlinux.org> 1.5.0-alt1
 - new version 1.5.0
 
