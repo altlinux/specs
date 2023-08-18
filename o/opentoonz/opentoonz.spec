@@ -6,8 +6,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: opentoonz
-Version: 1.5.0
-Release: alt5
+Version: 1.6.0
+Release: alt1
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -167,6 +167,9 @@ done
 %doc %name-%version-docs/build/html
 
 %changelog
+* Fri Aug 18 2023 Artyom Bystrov <arbars@altlinux.org> 1.6.0-alt1
+- Update to new version
+
 * Wed Aug 16 2023 Artyom Bystrov <arbars@altlinux.org> 1.5.0-alt5
 - Fix FTBFS
 
