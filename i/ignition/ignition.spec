@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name:     ignition
-Version:  2.15.0
+Version:  2.16.2
 Release:  alt1
 
 Summary:  First boot installer and configuration tool
@@ -92,6 +92,9 @@ popd
 %_bindir/%name-validate
 
 %changelog
+* Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 2.16.2-alt1
+- New version 2.16.2.
+
 * Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 2.15.0-alt1
 - New version 2.15.0.
 
