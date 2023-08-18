@@ -1,7 +1,7 @@
 %define pg_ver 13
 
 Name: postgresql%pg_ver-timescaledb
-Version: 2.11.0
+Version: 2.11.2
 Release: alt1
 Summary: Open-source time-series database powered by PostgreSQL
 Group: Databases
@@ -47,6 +47,9 @@ echo "ALTER EXTENSION timescaledb UPDATE;                                       
 %_datadir/pgsql/extension/*
 
 %changelog
+* Fri Aug 18 2023 Alexei Takaseev <taf@altlinux.org> 2.11.2-alt1
+- 2.11.2
+
 * Wed Jun 28 2023 Alexei Takaseev <taf@altlinux.org> 2.11.0-alt1
 - 2.11.0
 
