@@ -1,5 +1,5 @@
 Name: alterator-net-iptables
-Version: 4.19.10
+Version: 4.19.11
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -69,6 +69,10 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Fri Aug 18 2023 Mikhail Efremov <sem@altlinux.org> 4.19.11-alt1
+- index.scm: Don't crash on type-error.
+- all: Initialize variables (closes: #37437).
+
 * Tue Mar 21 2023 Mikhail Efremov <sem@altlinux.org> 4.19.10-alt1
 - Add default values to net-ip6tables.conf (closes: #34291).
 
