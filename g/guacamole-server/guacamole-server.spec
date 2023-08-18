@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define username guacd
 %def_with ffmpeg
 %ifarch %ix86 %arm
@@ -5,8 +6,8 @@
 %endif
 
 Name: guacamole-server
-Version: 1.4.0
-Release: alt3
+Version: 1.5.3
+Release: alt1
 Summary: Server-side native components that form the Guacamole proxy
 License: Apache-2.0
 Url: http://guac-dev.org/
@@ -34,7 +35,7 @@ BuildRequires: pkgconfig(freerdp-client2)
 BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libpulse)
-BuildRequires: pkgconfig(libssh2)
+BuildRequires: pkgconfig(libssh2) >= 1.9.0
 BuildRequires: pkgconfig(libssl)
 BuildRequires: pkgconfig(libtelnet)
 BuildRequires: pkgconfig(libvncserver)
@@ -159,13 +160,19 @@ framework to translate between arbitrary protocols and the Guacamole protocol.
   --disable-static
 
 %make_build
-cd doc/
-doxygen Doxyfile
+for i in libguac libguac-terminal; do
+    pushd doc/$i
+    doxygen Doxyfile
+    popd
+done
 
 %install
 %makeinstall_std
 find %buildroot -type f -name "*.la" -delete
-cp -fr doc/doxygen-output/html .
+mkdir -p html
+for i in libguac libguac-terminal; do
+    cp -fr doc/$i/doxygen-output/html html/$i
+done
 
 mkdir -p %buildroot%_sysconfdir/sysconfig
 install -p -m 644 -D %SOURCE1 %buildroot%_sysconfdir/sysconfig/guacd
@@ -199,11 +206,13 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %doc LICENSE
 %doc README CONTRIBUTING
 %_libdir/libguac.so.*
+%_libdir/libguac-terminal.so.*
 
 %files -n libguac-devel
 %doc html
 %_includedir/*
 %_libdir/libguac.so
+%_libdir/libguac-terminal.so
 
 # The libguac source code dlopen's these plugins, and they are named without
 # the version in the shared object; i.e. "libguac-client-$(PROTOCOL).so".
@@ -247,6 +256,9 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %attr(750,%username,%username) %_sharedstatedir/guacd/share
 
 %changelog
+* Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 1.5.3-alt1
+- New version 1.5.3 (Fixes: CVE-2023-30575, CVE-2023-30576).
+
 * Tue Dec 20 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt3
 - package /var/lib/guacd/share for file sharing
 

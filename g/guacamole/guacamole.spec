@@ -1,7 +1,7 @@
 %define appdir %_var/lib/tomcat/webapps
 
 Name: guacamole
-Version: 1.4.0
+Version: 1.5.3
 Release: alt1
 Summary: Clientless remote desktop gateway
 License: Apache-2.0
@@ -19,6 +19,7 @@ Source13: https://www.apache.org/dist/%name/%version/binary/%name-auth-jdbc-%ver
 Source14: https://www.apache.org/dist/%name/%version/binary/%name-auth-ldap-%version.tar.gz
 Source16: https://www.apache.org/dist/%name/%version/binary/%name-auth-quickconnect-%version.tar.gz
 Source18: https://www.apache.org/dist/%name/%version/binary/%name-auth-totp-%version.tar.gz
+Source19: https://www.apache.org/dist/%name/%version/binary/%name-auth-json-%version.tar.gz
 
 BuildRequires: /proc rpm-build-java java-devel
 #BuildRequires: maven-local
@@ -172,6 +173,20 @@ The TOTP authentication extension allows users to be additionally verified
 against a user-specific and secret key generated during enrollment
 of their authentication device.
 
+%package auth-json
+Summary: Guacamole Encrypted JSON authentication Extension
+Group: Networking/Remote access
+Requires: %name-client = %EVR
+AutoReqProv: noosgi, noosgi-fc
+
+%description auth-json
+Guacamole supports delegating authentication to an arbitrary external service,
+relying on receipt of JSON data which has been signed using HMAC/SHA-256
+and encrypted with 128-bit AES in CBC mode. This JSON contains all information
+describing the user being authenticated, as well as any connections
+they have access to, and is accepted only if the configured secret key was used
+to sign and encrypt the data.
+
 %prep
 #%setup -T -D -b 1  -n %name-client-%version
 %setup -T -D -b 10 -n %name-auth-sso-%version
@@ -181,6 +196,7 @@ of their authentication device.
 %setup -T -D -b 14 -n %name-auth-ldap-%version
 %setup -T -D -b 16 -n %name-auth-quickconnect-%version
 %setup -T -D -b 18 -n %name-auth-totp-%version
+%setup -T -D -b 19 -n %name-auth-json-%version
 
 %build
 %install
@@ -196,7 +212,7 @@ pushd %buildroot%appdir/%name
 %jar -xf %SOURCE2
 popd
 
-for prov in duo header ldap quickconnect totp; do
+for prov in duo header ldap quickconnect totp json; do
 	mkdir -p %buildroot%_docdir/%name/auth-${prov}
 	pushd %_builddir/%name-auth-${prov}-%version
 	mv %name-auth-${prov}-%version.jar %buildroot%_datadir/%name/extensions
@@ -289,7 +305,15 @@ ln -r -s %buildroot%_datadir/java/postgresql-jdbc.jar %buildroot%_sysconfdir/%na
 %_datadir/%name/extensions/%name-auth-totp-%version.jar
 %doc %_docdir/%name/auth-totp
 
+%files auth-json
+%_sysconfdir/%name/extensions/%name-auth-json-%version.jar
+%_datadir/%name/extensions/%name-auth-json-%version.jar
+%doc %_docdir/%name/auth-json
+
 %changelog
+* Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 1.5.3-alt1
+- 1.5.3
+
 * Thu Oct 13 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
 - 1.4.0
 - Moved extensions from /etc to /usr/share
