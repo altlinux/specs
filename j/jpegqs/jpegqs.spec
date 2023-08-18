@@ -1,5 +1,5 @@
 Name: jpegqs
-Version: 1.20210408
+Version: 1.20230818
 Release: alt1
 
 Summary: JPEG Quant Smooth - JPEG artifacts removal
@@ -49,6 +49,9 @@ install -pDm644 jpegqs.1 %buildroot%_man1dir/jpegqs.1
 %_man1dir/jpegqs.1*
 
 %changelog
+* Fri Aug 18 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.20230818-alt1
+- "DCT coefficient out of range" fix
+
 * Thu Apr 08 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.20210408-alt1
 - first release in ALT Linux
 
