@@ -10,15 +10,14 @@
 
 Name: ldapjdk
 Epoch: 1
-Version: 5.2.0
+Version: 5.4.1
 Release: alt1
 
 Summary: LDAP SDK
 License: MPL-1.1 or GPLv2+ or LGPLv2+
 Group: Development/Java
-# Source-git: https://github.com/dogtagpki/ldap-sdk.git
 Url: https://github.com/dogtagpki/ldap-sdk
-
+Vcs: https://github.com/dogtagpki/ldap-sdk
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
@@ -93,12 +92,14 @@ install -m 644 java-sdk/dist/packages/%name.jar %buildroot%_javadir/%name.jar
 install -m 644 java-sdk/dist/packages/ldapsp.jar %buildroot%_javadir/ldapsp.jar
 install -m 644 java-sdk/dist/packages/ldapfilt.jar %buildroot%_javadir/ldapfilt.jar
 install -m 644 java-sdk/dist/packages/ldapbeans.jar %buildroot%_javadir/ldapbeans.jar
+install -m 644 java-sdk/dist/packages/ldaptools.jar %buildroot%_javadir/ldaptools.jar
 
 mkdir -p %buildroot%_mavenpomdir
 install -pm 644 java-sdk/ldapjdk/pom.xml %buildroot%_mavenpomdir/JPP-ldapjdk.pom
 install -pm 644 java-sdk/ldapfilter/pom.xml %buildroot%_mavenpomdir/JPP-ldapfilter.pom
 install -pm 644 java-sdk/ldapbeans/pom.xml %buildroot%_mavenpomdir/JPP-ldapbeans.pom
 install -pm 644 java-sdk/ldapsp/pom.xml %buildroot%_mavenpomdir/JPP-ldapsp.pom
+install -pm 644 java-sdk/ldaptools/pom.xml %buildroot%_mavenpomdir/JPP-ldaptools.pom
 
 install -d -m 755 %buildroot%_javadocdir/%name
 cp -r java-sdk/dist/doc/* %buildroot%_javadocdir/%name
@@ -111,10 +112,12 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 %_javadir/ldapfilt.jar
 %_javadir/ldapbeans.jar
 %_javadir/ldapsdk.jar
+%_javadir/ldaptools.jar
 %_mavenpomdir/JPP-ldapjdk.pom
 %_mavenpomdir/JPP-ldapsp.pom
 %_mavenpomdir/JPP-ldapfilter.pom
 %_mavenpomdir/JPP-ldapbeans.pom
+%_mavenpomdir/JPP-ldaptools.pom
 
 ################################################################################
 %files -n dogtag-ldapjdk-javadoc
@@ -123,6 +126,9 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 
 ################################################################################
 %changelog
+* Tue Aug 01 2023 Stanislav Levin <slev@altlinux.org> 1:5.4.1-alt1
+- 5.2.0 -> 5.4.1.
+
 * Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 1:5.2.0-alt1
 - 5.1.0 -> 5.2.0.
 

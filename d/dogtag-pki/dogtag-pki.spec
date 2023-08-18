@@ -4,8 +4,6 @@
 %def_without javadoc
 %def_without pylint
 
-%define nss_default_db_type sql
-
 %define pki_username pkiuser
 %define pki_groupname pkiuser
 %define pki_homedir %_localstatedir/pki
@@ -22,15 +20,14 @@
 %define pki_rebranded_version 11.0.0-alt1
 
 Name: dogtag-pki
-Version: 11.2.1
-Release: alt2
+Version: 11.4.3
+Release: alt1
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
 Group: System/Servers
-# Source-git: https://github.com/dogtagpki/pki
 Url: http://www.dogtagpki.org
-
+Vcs: https://github.com/dogtagpki/pki
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
@@ -59,7 +56,7 @@ BuildRequires: zlib-devel
 BuildRequires: selinux-policy-alt
 
 BuildRequires: dogtag-ldapjdk >= %ldapjdk_version
-BuildRequires: resteasy
+BuildRequires: pki-resteasy
 BuildRequires: dogtag-tomcatjss >= %tomcatjss_version
 BuildRequires: slf4j-jdk14
 BuildRequires: junit
@@ -107,6 +104,7 @@ Requires: dogtag-pki-kra
 Requires: dogtag-pki-ocsp
 Requires: dogtag-pki-tks
 Requires: dogtag-pki-tps
+Requires: dogtag-pki-est
 
 # removed from Sisyphus
 Obsoletes: idm-console-framework <= 1.2.0-alt1
@@ -245,6 +243,15 @@ publishing Certificate Revocation Lists (CRLs).
 The Certificate Authority can be configured as a self-signing Certificate
 Authority, where it is the root CA, or it can act as a subordinate CA,
 where it obtains its own signing certificate from a public CA.
+
+%package -n dogtag-pki-est
+Summary: Dogtag PKI EST Package
+Group: System/Servers
+Requires: dogtag-pki-server
+
+%description -n dogtag-pki-est
+Dogtag PKI EST subsystem provides an Enrollment over Secure Transport (RFC 7030)
+service.
 
 %package -n dogtag-pki-kra
 Summary: Dogtag PKI KRA Package
@@ -393,7 +400,12 @@ interface for Dogtag PKI Server.
 %patch -p1
 # change port from 8080 to 8090
 # Port 8080 is used by alterator-ahttpd-server
-grep -rl 8080 | xargs sed -i 's/\(\W\|^\)8080\(\W\|$\)/\18090\2/g'
+grep -rEl '(\W|^)8080(\W|$)' | xargs sed -i 's/\(\W\|^\|\)8080\(\W\|$\)/\18090\2/g'
+
+# dogtag-pki 11.4.0 dropped its own server.xml config in favour of tomcat's one,
+# that configures unsecure Connector with 8080 port by default.
+sed -i 's/@ALT_TOMCAT_UNSECURE_PORT@/8080/' \
+    base/server/python/pki/server/deployment/__init__.py
 
 # replace python2 shebangs with python3 to fix unmets
 grep -rlsm1 '^#!/usr/bin/python[[:space:]]*$' | \
@@ -405,14 +417,14 @@ app_server=tomcat-9.0
 %add_optflags -I/usr/include/apu-1
 %cmake \
     --no-warn-unused-cli \
-    -DVERSION=%version-%release \
+    -DVERSION=%version \
+    -DRELEASE=%release \
     -DVAR_INSTALL_DIR:PATH=%_var \
     -DP11_KIT_TRUST=%_libdir/libnssckbi.so \
     -DJAVA_HOME=%java_home \
     -DJAVA_LIB_INSTALL_DIR=%_jnidir \
     -DSYSTEMD_LIB_INSTALL_DIR=%_unitdir \
     -DAPP_SERVER=$app_server \
-    -DNSS_DEFAULT_DB_TYPE=%nss_default_db_type \
     -DPYTHON_EXECUTABLE=%__python3 \
 %if_with check
     -DRUN_TESTS:BOOL=ON \
@@ -536,8 +548,7 @@ fi
 %_datadir/pki/examples/java/
 %_datadir/pki/lib/*.jar
 %dir %_javadir/pki
-%_javadir/pki/pki-cmsutil.jar
-%_javadir/pki/pki-certsrv.jar
+%_javadir/pki/pki-common.jar
 
 %files -n python3-module-dogtag-pki
 %exclude %python3_sitelibdir/pki/server/
@@ -641,8 +652,7 @@ fi
 %ghost %_logdir/pki/server/
 %_unitdir/pki-tomcatd-nuxwdog@.service
 %_unitdir/pki-tomcatd-nuxwdog.target
-%_javadir/pki/pki-cms.jar
-%_javadir/pki/pki-cmsbundle.jar
+%_javadir/pki/pki-server.jar
 %_javadir/pki/pki-tomcat.jar
 %dir %_sharedstatedir/pki
 %_man1dir/pkidaemon.1.*
@@ -653,6 +663,7 @@ fi
 %_man8dir/pkispawn.8.*
 %_man8dir/pki-server.8.*
 %_man8dir/pki-server-acme.8.*
+%_man8dir/pki-server-est.8.*
 %_man8dir/pki-server-instance.8.*
 %_man8dir/pki-server-subsystem.8.*
 %_man8dir/pki-server-nuxwdog.8.*
@@ -674,6 +685,7 @@ fi
 %_datadir/pki/server/upgrade/
 %_datadir/pki/server/certs/
 %_datadir/pki/server/examples/
+%_datadir/pki/server/database/
 
 %files -n dogtag-pki-acme
 %_javadir/pki/pki-acme.jar
@@ -682,6 +694,10 @@ fi
 %files -n dogtag-pki-ca
 %_javadir/pki/pki-ca.jar
 %_datadir/pki/ca/
+
+%files -n dogtag-pki-est
+%_javadir/pki/pki-est.jar
+%_datadir/pki/est/
 
 %files -n dogtag-pki-kra
 %_javadir/pki/pki-kra.jar
@@ -737,6 +753,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Tue Aug 01 2023 Stanislav Levin <slev@altlinux.org> 11.4.3-alt1
+- 11.2.1 -> 11.4.3.
+
 * Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 11.2.1-alt2
 - Disabled Pylint.
 

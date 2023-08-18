@@ -10,14 +10,14 @@
 %define jss_rebranded_version 5.2.0-alt1
 
 Name: jss
-Version: 5.2.1
+Version: 5.4.2
 Release: alt1
 
 Summary: Java Security Services (JSS)
 License: MPL-1.1 or GPLv2+ or LGPLv2+
 Group: System/Libraries
-# Source-git: https://github.com/dogtagpki/jss.git
 Url: https://github.com/dogtagpki/jss
+Vcs: https://github.com/dogtagpki/jss
 
 Source0: %name-%version.tar
 Source1: jss.watch
@@ -124,12 +124,13 @@ CTEST_OUTPUT_ON_FAILURE=1 %cmake_build --target test
 %dir %_libdir/jss
 %_libdir/jss/jss.jar
 %_libdir/jss/libjss.so
-%_libdir/jss/jss-symkey.jar
 %_libdir/jss/libjss-symkey.so
 %_jnidir/jss.jar
-%_jnidir/jss-symkey.jar
 
 %changelog
+* Tue Aug 01 2023 Stanislav Levin <slev@altlinux.org> 5.4.2-alt1
+- 5.2.1 -> 5.4.2.
+
 * Mon Sep 26 2022 Stanislav Levin <slev@altlinux.org> 5.2.1-alt1
 - 5.2.0 -> 5.2.1.
 

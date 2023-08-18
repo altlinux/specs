@@ -8,15 +8,14 @@
 %define tomcatjss_rebranded_version 8.2.0-alt1
 
 Name: tomcatjss
-Version: 8.2.0
+Version: 8.4.1
 Release: alt1
 
 Summary: JSSE module for Apache Tomcat that uses JSS
 License: LGPLv2+
 Group: System/Libraries
-# Source-git: https://github.com/dogtagpki/tomcatjss.git
 Url: https://github.com/dogtagpki/tomcatjss
-
+Vcs: https://github.com/dogtagpki/tomcatjss
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -85,6 +84,9 @@ ant -v -f build.xml \
 %_javadir/tomcatjss.jar
 
 %changelog
+* Tue Aug 01 2023 Stanislav Levin <slev@altlinux.org> 8.4.1-alt1
+- 8.2.0 -> 8.4.1.
+
 * Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 8.2.0-alt1
 - 8.1.0 -> 8.2.0.
 
