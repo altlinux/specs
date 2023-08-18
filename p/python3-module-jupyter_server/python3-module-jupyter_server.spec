@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.7.1
+Version: 2.7.2
 Release: alt1
 
 Summary: The backend -core services, APIs, and REST endpoints-to Jupyter web applications
@@ -73,6 +73,9 @@ sed -i pyproject.toml -e 's/--color=yes//'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 18 2023 Anton Vyatkin <toni@altlinux.org> 2.7.2-alt1
+- New version 2.7.2.
+
 * Thu Aug 17 2023 Anton Vyatkin <toni@altlinux.org> 2.7.1-alt1
 - New version 2.7.1.
 
