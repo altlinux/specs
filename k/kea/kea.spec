@@ -9,7 +9,7 @@
 %define _localstatedir /var
 
 Name: kea
-Version: 2.2.0
+Version: 2.4.0
 Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
@@ -29,6 +29,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel boost-interprocess-devel boost-asio-devel
 BuildRequires: gcc-c++ bison flex
 BuildRequires: libssl-devel
+BuildRequires: libkrb5-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: postgresql-devel
 BuildRequires: liblog4cplus-devel
@@ -119,7 +120,6 @@ sed -i -e "s|%version-git|%version|" configure.ac
 
 %build
 %autoreconf
-export CXXFLAGS="%optflags -std=gnu++11 -Wno-deprecated-declarations"
 
 %configure \
     --disable-dependency-tracking \
@@ -141,6 +141,7 @@ export CXXFLAGS="%optflags -std=gnu++11 -Wno-deprecated-declarations"
     --with-gnu-ld \
     --with-log4cplus \
     --with-openssl \
+    --with-gssapi \
     runstatedir=/run
 
 %make_build
@@ -175,9 +176,6 @@ sed -i -e s/\"output\".*/\"output\":\ \"stdout\",/ -e s@\/\/\ \"pattern@\"patter
     %buildroot%_sysconfdir/kea/kea-dhcp4.conf \
     %buildroot%_sysconfdir/kea/kea-dhcp-ddns.conf
 #    %buildroot%_sysconfdir/kea/kea-netconf.conf  # TODO: no support for netconf/sysconf yet
-
-# cleanup python3 module
-rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 
 %pre
 %_sbindir/groupadd -r -f _kea
@@ -229,6 +227,10 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt1
+- 2.4.0
+- build with gssapi support
+
 * Mon Aug 08 2022 Alexey Shabalin <shaba@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
