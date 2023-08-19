@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
-Version: 1.10.9
-Release: alt2
+Version: 1.10.10
+Release: alt1
 Epoch: 1
 ExcludeArch: %arm %ix86
 
@@ -542,6 +542,10 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Sat Aug 19 2023 Anton Farygin <rider@altlinux.ru> 1:1.10.10-alt1
+- 1.10.9 -> 1.10.10
+- fixed built with new ImageMagick
+
 * Sat Aug 12 2023 Anton Farygin <rider@altlinux.ru> 1:1.10.9-alt2
 - added commits from upstream to fix the build using gcc12 and openssl 3
 
