@@ -4,7 +4,7 @@
 
 Name: gcc%gcc_branch
 Version: 13.2.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -19,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20230729
+%define snapshot 20230817
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -53,7 +53,7 @@ Url: https://gcc.gnu.org/
 %define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le mipsel riscv64
 %define libhwasan_arches	x86_64 aarch64
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le
-%define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le
+%define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le riscv64
 %define liblsan_arches		x86_64 aarch64 ppc64le
 %define libquadmath_arches	%ix86 x86_64 ppc64le
 %define libtsan_arches		x86_64 aarch64 ppc64le
@@ -227,6 +227,7 @@ Obsoletes: libgcc4.1 < %version
 Obsoletes: libgcc4.3 < %version
 Obsoletes: libgcc4.4 < %version
 Obsoletes: libgcc4.5 < %version
+Requires(pre): glibc-core
 
 %description -n libgcc1
 This package contains GCC shared support library which is needed
@@ -1648,6 +1649,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %ifarch ppc ppc64
 %gcc_target_libdir/include/spe.h
 %endif
+%ifarch riscv64
+%gcc_target_libdir/include/riscv_vector.h
+%endif
 %ifarch ppc64le
 %gcc_target_libdir/ecrt*.o
 %gcc_target_libdir/ncrt*.o
@@ -2138,6 +2142,14 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Sat Aug 19 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.1-alt2
+- Updated to merge branch from https://gcc.gnu.org/git/gcc.git:
+  + releases/gcc-13 (snapshot 20230817)
+  commit r13-7730-g76b0a5783b524e4b7963f32069f1c9882d09cf38.
+- riscv64: Packaged riscv_vector.h (thx Ivan A. Melnikov).
+- Added riscv64 to libitm_arches (thx Ivan A. Melnikov).
+- libgcc1: added prerequisites for glibc-core to resolve circular dependency.
+
 * Sat Jul 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.1-alt1
 - Updated to 13.2.1.
 - Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
