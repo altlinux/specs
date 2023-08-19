@@ -18,7 +18,7 @@
 
 Name: rpcs3
 Version: 0.0.29
-Release: alt1
+Release: alt1.1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -89,6 +89,8 @@ BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(wolfssl)
+BuildRequires: libmlir%llvm_version-devel
+BuildRequires: libpolly%llvm_version-devel
 BuildRequires: lld%llvm_version
 BuildRequires: llvm%llvm_version-devel
 BuildRequires: ocaml-ctypes
@@ -174,6 +176,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Sat Aug 19 2023 Nazarov Denis <nenderus@altlinux.org> 0.0.29-alt1.1
+- Fix FTBFS
+
 * Mon Jul 31 2023 Nazarov Denis <nenderus@altlinux.org> 0.0.29-alt1
 - Version 0.0.29
 
