@@ -9,13 +9,13 @@
 %define brand alt
 %define Brand ALT
 %define flavour %brand-%theme
-%define distro_name ALT Starterkit
+%define distro_name Starterkit
 %define branding_data_dir %_datadir/branding-data-current
 %define altbranch %_priority_distbranch
 
 Name: branding-%flavour
 Version: 10
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Url: http://en.altlinux.org/starterkits
@@ -29,6 +29,8 @@ BuildRequires: libalternatives-devel
 
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
 BuildRequires: fribidi
+
+BuildRequires: distro-licenses
 
 %define status %nil
 %define status_en %nil
@@ -194,6 +196,7 @@ XFCE settings for %Brand %version %Theme
 
 %prep
 %setup -n branding
+cp /usr/share/distro-licenses/ALT_Regular_License/license.{all,ru}.html.in notes/
 
 %build
 autoconf
@@ -318,7 +321,7 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %ghost %indexhtmldir/index.html
 %indexhtmldir/index-*.html
 %indexhtmldir/index.css
-%indexhtmldir/img
+%indexhtmldir/images
 %_desktopdir/indexhtml.desktop
 
 %files xfce-settings
@@ -326,6 +329,15 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Sat Aug 19 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt4
+- os-release: add LOGO=altlinux (See ALT bug 43872)
+- copy licenses from distro-licenses
+- fix duplicate ALT word in licenses
+- index.html: Year auto-substitution
+- index.html: use PRODUCT_NAME
+- indexhtml.desktop: Name=About System
+- indexhtml: modernize the appearance, update links
+
 * Thu May 11 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt3
 - os-release: add VERSION to PRETTY_NAME
 
