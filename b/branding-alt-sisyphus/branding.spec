@@ -14,7 +14,7 @@
 %define altbranch %_priority_distbranch
 
 Name: branding-%flavour
-Version: 20230711
+Version: 20230819
 Release: alt1
 
 Url: http://en.altlinux.org
@@ -28,6 +28,8 @@ BuildRequires: libalternatives-devel
 
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
 BuildRequires: fribidi
+
+BuildRequires: distro-licenses >= 1.3.1
 
 %define Theme Sisyphus
 %define status %nil
@@ -194,6 +196,7 @@ XFCE settings for %Brand %version %Theme
 
 %prep
 %setup -n branding
+cp /usr/share/distro-licenses/ALT_Regular_License/license.{all,ru}.html.in notes/
 
 %build
 autoconf
@@ -306,7 +309,7 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %ghost %indexhtmldir/index.html
 %indexhtmldir/index-*.html
 %indexhtmldir/index.css
-%indexhtmldir/img
+%indexhtmldir/images
 %_desktopdir/indexhtml.desktop
 
 %files xfce-settings
@@ -314,6 +317,12 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Sat Aug 19 2023 Anton Midyukov <antohami@altlinux.org> 20230819-alt1
+- os-release: add LOGO=altlinux (Closes: 43872)
+- copy licenses from distro-licenses
+- indexhtml.desktop: Name=About system
+- indexhtml: modernize the appearance, update links
+
 * Tue Jul 11 2023 Anton Midyukov <antohami@altlinux.org> 20230711-alt1
 - Clean @STATUS@ from index.html, notes, license
 - indexhtml, notes: fix name to "ALT Regular Sisyphus"
