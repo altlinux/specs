@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    pdal
-Version: 2.5.5
+Version: 2.5.6
 Release: alt1
 
 Summary: PDAL is Point Data Abstraction Library. GDAL for point cloud data.
@@ -70,5 +70,8 @@ Group: Development/C++
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sat Aug 19 2023 Andrey Cherepanov <cas@altlinux.org> 2.5.6-alt1
+- New version.
+
 * Sun Jun 25 2023 Andrey Cherepanov <cas@altlinux.org> 2.5.5-alt1
 - Initial build for Sisyphus.
