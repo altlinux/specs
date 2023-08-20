@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 354
+%define centos_release 357
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -299,6 +299,8 @@ for o in \
 	CONFIG_NET_9P_RDMA:'CONFIG_NET_9P_RDMA=m' \
 	CONFIG_NET_9P_VIRTIO:'CONFIG_NET_9P_VIRTIO=m' \
 	CONFIG_NET_9P_XEN:'CONFIG_NET_9P_XEN=m' \
+	CONFIG_SECURITY_APPARMOR:'CONFIG_SECURITY_APPARMOR=y' \
+	CONFIG_SECURITY_APPARMOR_DEBUG_MESSAGES:'CONFIG_SECURITY_APPARMOR_DEBUG_MESSAGES=y' \
 ;
 do
 	echo "${o##*:}" > "redhat/configs/custom-overrides/generic/${o%%%%:*}"
@@ -643,6 +645,39 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sun Aug 20 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.357-alt1.el9
+- Updated to kernel-5.14.0-357.el9 (fixes: CVE-2022-40982, CVE-2023-0597, CVE-2023-3389, CVE-2023-3772, CVE-2023-4273):
+  + Add MC client for Tegra234 GPU
+  + Add interconnect support for DRAM scaling in Tegra234
+  + Add support for HTE subsystem and Tegra GTE
+  + CNB: net: extend drop reasons for multiple subsystems
+  + DRM Stable Backport 9.3 from v6.3.13
+  + Increase the maximum number of dynamic misc devices to 1048448
+  + KVM: arm64: Last Round of fixes up to v6.5
+  + MLX5 driver upgrade - kernel v6.3
+  + PCI VPD and PME fixes
+  + Revert "PCI: tegra194: Enable support for 256 Byte payload"
+  + Synchronize virtio ring, net, blk and scsi with upstream
+  + [RHEL-9.3] EFA driver update to 6.3
+  + [s390]: RHEL9.0 - zfcp: defer fc_rport blocking until after ADISC response
+  + crypto: rng - Fix lock imbalance in crypto_del_rng
+  + drm/simpledrm: Support the XB24/AB24 format
+  + exfat: check if filename entries exceeds max filename length
+  + fuse: optional supplementary group in create requests
+  + hwmon: (ina3221) fix and enable driver
+  + i2c: tegra: add GPCDMA support and allocate DMA memory for DMA engine
+  + io_uring: pull in fixes from upstream
+  + irqchip: arm: update arm gic code to upstream v6.4-rc5
+  + kernel: x86/mm: Randomize per-cpu entry area [rhel-9]
+  + net: deprecate PF_KEY
+  + net: stmmac: tegra: Properly allocate clock bulk data
+  + nvme: tcp&rdma: fix potential io hang during reconnection
+  + redhat: Switch UKI to using its own SecureBoot cert
+  + scsi: storvsc: Fix handling of virtual Fibre Channel timeouts
+  + watch_queue: Fix NULL dereference in error cleanup
+  + x86/speculation: Add Gather Data Sampling (GDS) mitigation (CVE-2022-40982)
+  + xfrm: add NULL check in xfrm_update_ae_params
+
 * Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.354-alt1.el9
 - Updated to kernel-5.14.0-354.el9 (fixes: CVE-2023-1206):
   + Backport fixes for qcom-snps-femto-v2 PHY driver
