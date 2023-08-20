@@ -8,8 +8,8 @@
 %endif
 
 Name: libcryptopp
-Version: 8.6.0
-Release: alt1.1
+Version: 8.8.0
+Release: alt1
 
 # convert 5.6.2 -> 562 format
 %define orig_version	%(echo %version | sed -e "s/\\.//g")
@@ -145,6 +145,9 @@ EOF
 %_datadir/cryptopp/
 
 %changelog
+* Sun Aug 20 2023 Vitaly Lipatov <lav@altlinux.ru> 8.8.0-alt1
+- new version 8.8.0 (with rpmrb script)
+
 * Sun May 01 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.6.0-alt1.1
 - fixed build for Elbrus
 
