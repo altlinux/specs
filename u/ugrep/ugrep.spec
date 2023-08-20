@@ -16,7 +16,7 @@
 #
 
 Name: ugrep
-Version: 3.11.2
+Version: 4.0.0
 Release: alt1
 
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
@@ -24,7 +24,7 @@ License: BSD-3-Clause
 Group: File tools
 
 Url: https://github.com/Genivia/ugrep
-Source0: https://github.com/Genivia/ugrep/archive/v%version.tar.gz#/<project>-%{version}.tar.gz
+Source0: https://github.com/Genivia/ugrep/archive/v%version.tar.gz#/%{name}-%{version}.tar.gz
 Source100: ugrep.watch
 
 BuildRequires: gcc-c++
@@ -65,6 +65,27 @@ fuzzy search.
 %_datadir/%name
 
 %changelog
+* Fri Aug 18 2023 Michael Shigorin <mike@altlinux.org> 4.0.0-alt1
+- new version (watch file uupdate)
+
+* Tue Aug 15 2023 Michael Shigorin <mike@altlinux.org> 3.12.7-alt1
+- new version (watch file uupdate)
+
+* Mon Aug 07 2023 Michael Shigorin <mike@altlinux.org> 3.12.6-alt1
+- new version (watch file uupdate)
+
+* Tue Jul 18 2023 Michael Shigorin <mike@altlinux.org> 3.12.4-alt1
+- new version (watch file uupdate)
+
+* Mon Jul 10 2023 Michael Shigorin <mike@altlinux.org> 3.12.2-alt1
+- new version (watch file uupdate)
+
+* Mon Jun 05 2023 Michael Shigorin <mike@altlinux.org> 3.12.1-alt1
+- new version (watch file uupdate)
+
+* Sun Jun 04 2023 Michael Shigorin <mike@altlinux.org> 3.12.0-alt1
+- new version (watch file uupdate)
+
 * Mon Apr 10 2023 Michael Shigorin <mike@altlinux.org> 3.11.2-alt1
 - new version (watch file uupdate)
 
