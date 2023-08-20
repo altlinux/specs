@@ -3,7 +3,7 @@ Name: kernel-image-centos
 %define centos_release 357
 
 Version: 5.14.0.%{centos_release}
-Release: alt1.el9
+Release: alt2.el9
 
 %define kernel_base_version  %version
 %define kernel_extra_version %nil
@@ -288,6 +288,9 @@ chmod +x tools/objtool/sync-check.sh
 # This Prevents scripts/setlocalversion from mucking with our version numbers.
 touch .scmversion
 
+cfg="redhat/configs/common/generic/CONFIG_LSM"
+[ ! -f "$cfg" ] || . "$cfg"
+
 # Extend config from fedora config.
 for o in \
 	CONFIG_9P_FS:'CONFIG_9P_FS=m' \
@@ -301,6 +304,7 @@ for o in \
 	CONFIG_NET_9P_XEN:'CONFIG_NET_9P_XEN=m' \
 	CONFIG_SECURITY_APPARMOR:'CONFIG_SECURITY_APPARMOR=y' \
 	CONFIG_SECURITY_APPARMOR_DEBUG_MESSAGES:'CONFIG_SECURITY_APPARMOR_DEBUG_MESSAGES=y' \
+	CONFIG_LSM:"CONFIG_LSM=\"${CONFIG_LSM:+$CONFIG_LSM,}apparmor\"" \
 ;
 do
 	echo "${o##*:}" > "redhat/configs/custom-overrides/generic/${o%%%%:*}"
@@ -645,6 +649,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sun Aug 20 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.357-alt2.el9
+- Enable apparmor.
+
 * Sun Aug 20 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.357-alt1.el9
 - Updated to kernel-5.14.0-357.el9 (fixes: CVE-2022-40982, CVE-2023-0597, CVE-2023-3389, CVE-2023-3772, CVE-2023-4273):
   + Add MC client for Tegra234 GPU
