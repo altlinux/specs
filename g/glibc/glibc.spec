@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.37.0.22.3593050c27
+Version: 2.38.0.6.g7ac405a74c
 Release: alt1
 Epoch: 6
 
@@ -122,14 +122,14 @@ Provides: rtld(GNU_HASH)
 Provides: rtld(GNU_UNIQUE)
 # The dynamic linker supports STT_GNU_IFUNC
 Provides: rtld(GNU_IFUNC)
+%define lib_suffix %{?_is_libsuff:()(%{_libsuff}bit)}
+# due to __libc_unwind_link_get() which calls __libc_dlopen ("libgcc_s.so.1")
+Requires: libgcc_s.so.1%lib_suffix
 
 %package pthread
 Summary: The GNU libc pthread libraries
 Group: System/Libraries
 PreReq: %name-core = %EVR
-%define lib_suffix %{?_is_libsuff:()(%{_libsuff}bit)}
-# due to pthread_cancel_init() which calls __libc_dlopen ("libgcc_s.so.1")
-Requires: libgcc_s.so.1%lib_suffix
 
 %package nss
 Summary: The GNU libc Name Service Switch subsystem
@@ -372,6 +372,7 @@ pushd %buildtarget
 	--enable-kernel=%enablekernel \
 	--enable-tunables \
 	--enable-stack-protector=strong \
+	--enable-fortify-source=3 \
 	%{?_enable_static_pie:--enable-static-pie} \
 	#
 
@@ -782,6 +783,12 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Sat Aug 19 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.6.g7ac405a74c-alt1
+- Updated to glibc-2.38-6-g7ac405a74c.
+- Moved the libgcc_s requirement to the core subpackage (ALT#47078).
+- Added the --enable-fortify-source=3 flag to compile the libraries and
+  utilities with the -D_FORTIFY_SOURCE=3 flag.
+
 * Thu Jun 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.37.0.22.3593050c27-alt1
 - Updated to glibc-2.37-22-g3593050c27.
 - Removed ppc64le architecture from the list of architectures we consider
