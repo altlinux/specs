@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -40,7 +40,8 @@ Source: %name-%version%beta.tar
 %endif
 
 Source1: gdm_xdmcp.control
-Source2: gdm.wms-method
+# https://bugzilla.altlinux.org/44123
+#Source2: gdm.wms-method
 Source3: default.pa-for-gdm
 
 # PAM config files
@@ -53,6 +54,8 @@ Source15: gdm-fingerprint.pam
 
 Patch2: gdm-40.beta-alt-Xsession.patch
 Patch7: gdm-40.beta-alt-Init.patch
+# replace xterm by x-terminal-emulator (ALT #40031)
+Patch8: gdm-44.1-alt-Xsession-Xterm.patch
 
 Obsoletes: %name-gnome
 Provides: %name-gnome = %version-%release
@@ -177,9 +180,11 @@ This package contains user documentation for Gdm.
 sed -i 's|/usr\(/bin/touch\)|\1|' data/61-gdm.rules.in
 %patch2 -p1 -b .XSession
 %patch7 -p1 -b .Init
+%patch8 -p1 -b .XSession-Xterm
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
+
 
 %build
 %meson \
@@ -203,7 +208,6 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 
 %install
 mkdir -p %buildroot%_sysconfdir/X11/sessions
-mkdir -p %buildroot%_sysconfdir/X11/wms-methods.d
 
 %meson_install
 rm -f %buildroot%_sysconfdir/pam.d/gdm
@@ -212,7 +216,8 @@ rm -f %buildroot%_sysconfdir/pam.d/gdm
 mkdir -p %buildroot{%_sysconfdir/X11,%_datadir}/gdm/env.d
 
 # install external hook for update_wms
-install -m755 %SOURCE2 %buildroot%_sysconfdir/X11/wms-methods.d/%name
+#mkdir -p %buildroot%_sysconfdir/X11/wms-methods.d
+#install -m755 %SOURCE2 %buildroot%_sysconfdir/X11/wms-methods.d/%name
 
 # control gdm/xdmcp
 install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
@@ -256,10 +261,10 @@ dbus-run-session %__meson_test
 %_udevrulesdir/61-%name.rules
 %config %_sysconfdir/dbus-1/system.d/%name.conf
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
-%config(noreplace) %_sysconfdir/X11/%name
-%dir %_sysconfdir/X11/sessions
+%_sysconfdir/X11/%name/
 %config %_controldir/gdm_xdmcp
-%_sysconfdir/X11/wms-methods.d/%name
+#%dir %_sysconfdir/X11/sessions
+#%_sysconfdir/X11/wms-methods.d/%name
 %dir %_datadir/%name
 %_datadir/%name/locale.alias
 %_datadir/%name/gdb-cmd
@@ -297,6 +302,10 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Mon Aug 21 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt2
+- /etc/X11/gdm/Xsession: replaced xterm by x-terminal-emulator (ALT #40031)
+- removed /etc/X11/wms-methods.d/gdm (ALT #44123)
+
 * Sat May 06 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 
