@@ -1,5 +1,5 @@
 Name: libjodycode
-Version: 3.0.1
+Version: 3.1
 Release: alt1
 
 Summary: General purpose utility functions
@@ -54,6 +54,9 @@ rm -rf %buildroot%_man7dir
 %_libdir/libjodycode.so
 
 %changelog
+* Sun Aug 20 2023 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
+- new version 3.1 (with rpmrb script)
+
 * Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
 - initial build for ALT Sisyphus
 
