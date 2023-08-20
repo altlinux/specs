@@ -1,5 +1,5 @@
 Name: far2l
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 
 Summary: Linux port of FAR v2
@@ -81,6 +81,9 @@ Used code from projects:
 %_man1dir/far2l.*
 
 %changelog
+* Sun Aug 20 2023 Anton Midyukov <antohami@altlinux.org> 2.5.2-alt1
+- new version (2.5.2) with rpmgs script
+
 * Mon May 29 2023 Anton Midyukov <antohami@altlinux.org> 2.5.1-alt1
 - new version (2.5.1) with rpmgs script
 
