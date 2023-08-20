@@ -2,7 +2,7 @@
 
 Name:    pdal
 Version: 2.5.6
-Release: alt1
+Release: alt2
 
 Summary: PDAL is Point Data Abstraction Library. GDAL for point cloud data.
 License: BSD-3-Clause
@@ -16,15 +16,16 @@ Source: PDAL-%version.tar
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
+BuildRequires: bash-completion
+BuildRequires: hdf-devel
+BuildRequires: libcurl-devel
 BuildRequires: libgdal-devel
 BuildRequires: libgeotiff-devel
-BuildRequires: libzstd-devel
-BuildRequires: libxml2-devel
-BuildRequires: python3-devel
 BuildRequires: libssl-devel
 BuildRequires: libunwind-devel
-BuildRequires: hdf-devel
-BuildRequires: bash-completion
+BuildRequires: libxml2-devel
+BuildRequires: libzstd-devel
+BuildRequires: python3-devel
 
 %description
 %summary
@@ -70,6 +71,9 @@ Group: Development/C++
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sun Aug 20 2023 Andrey Cherepanov <cas@altlinux.org> 2.5.6-alt2
+- Added libcurl-devel.
+
 * Sat Aug 19 2023 Andrey Cherepanov <cas@altlinux.org> 2.5.6-alt1
 - New version.
 
