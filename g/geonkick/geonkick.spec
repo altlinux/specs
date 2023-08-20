@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     geonkick
-Version:  2.9.1
+Version:  2.9.2
 Release:  alt1
 
 Summary:  A free software percussion synthesizer
@@ -79,5 +79,8 @@ find . -name 'CMakeLists.txt' -exec sed -i '/lstdc++fs/d' '{}' ';'
 
 
 %changelog
+* Sun Aug 20 2023 Ivan A. Melnikov <iv@altlinux.org> 2.9.2-alt1
+- 2.9.2
+
 * Thu Aug 04 2022 Ivan A. Melnikov <iv@altlinux.org> 2.9.1-alt1
 - Initial build for Sisyphus
