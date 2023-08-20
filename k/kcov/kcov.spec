@@ -5,28 +5,29 @@
 %endif
 
 Name: kcov
-Version: 38
-Release: alt3
+Version: 42
+Release: alt1
 Summary: Code coverage tool without special compilation options
 
 # Licenses of kcov itself and its bundled js libraries (see below)
 License: GPLv2 and BSD and MIT
 Url: https://simonkagstrom.github.io/%name
-# Repacked https://github.com/SimonKagstrom/%name/archive/%version/%name-%version.tar.gz
+# Repacked https://github.com/SimonKagstrom/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Group: Development/Tools
 
 # https://github.com/SimonKagstrom/kcov/blob/v35/src/solib-parser/lib.c#L87-L97
 ExclusiveArch: %ix86 x86_64 %arm aarch64 ppc ppc64 ppc64le
 
-# We do not allow use of biarch libraries in build environments.
-Patch0: kcov-38-alt-drop-fork-32-test.patch
+# Biarch libraries are not available in package building environments.
+Patch0: kcov-alt-drop-fork-32-test.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-ninja-build
-# Automatically added by buildreq on Thu May 07 2020
-# optimized out: cmake-modules glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libelf-devel libsasl2-3 libstdc++-devel pkg-config python2-base python3-base sh4 zlib-devel zlib-devel-static
-BuildRequires: binutils-devel cmake gcc-c++ libcurl-devel libdw-devel ninja-build python3
+
+# Automatically added by buildreq on Sun Aug 20 2023
+# optimized out: cmake-modules glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libelf-devel libgpg-error libp11-kit libsasl2-3 libstdc++-devel pkg-config python3-base sh4 zlib-devel zlib-devel-static
+BuildRequires: binutils-devel cmake gcc-c++ libcurl-devel libdw-devel libssl-devel ninja-build python3
 
 # From fedora's specfile:
 # NB: Last I tried to unbundle those dependencies I hit a first roadblock in
@@ -65,7 +66,6 @@ long-running applications.
 %prep
 %setup
 %patch -p1
-rm -r external/ # remove LLDB headers bundled for MacOS
 
 %build
 %define _cmake__builddir BUILD
@@ -73,18 +73,18 @@ rm -r external/ # remove LLDB headers bundled for MacOS
 	-G Ninja \
 	-DKCOV_INSTALL_DOCDIR:STRING=%_docdir/%name-%version \
 	#
-%ninja_build -C BUILD
+%ninja_build -C BUILD -v
 
 %if_enabled check
 cmake -S tests -B build-tests -G Ninja
-%ninja_build -C build-tests
+%ninja_build -C build-tests -v
 %endif
 
 cmake -S tools -B build-tools -G Ninja
-%ninja_build -C build-tools
+%ninja_build -C build-tools -v
 
 %install
-%ninja_install -C BUILD
+%ninja_install -C BUILD -v
 
 %check
 tests/tools/run-tests BUILD/src/kcov /tmp $(pwd)/build-tests $(pwd) -v ||:
@@ -95,6 +95,9 @@ tests/tools/run-tests BUILD/src/kcov /tmp $(pwd)/build-tests $(pwd) -v ||:
 %_docdir/%name-%version
 
 %changelog
+* Sun Aug 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 42-alt1
+- Updated to v42.
+
 * Tue Jun 15 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 38-alt3
 - Fixed build after revolutionary changes in rpm-macros-cmake.
 
