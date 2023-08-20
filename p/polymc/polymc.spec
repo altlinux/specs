@@ -1,10 +1,10 @@
 Name: polymc
 Version: 5.1
-Release: alt2
+Release: alt3
 
-Summary: inecraft launcher with ability to manage multiple instances
+Summary: Minecraft launcher with ability to manage multiple instances
 
-License: GPLv3
+License: GPL-3.0-only
 Group: Games/Strategy
 Url: https://polymc.org
 
@@ -57,7 +57,7 @@ a simple interface.
 %cmake_install
 
 %files
-%doc COPYING.md
+%doc README.md COPYING.md
 %_bindir/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_desktopdir/*.desktop
@@ -71,6 +71,9 @@ a simple interface.
 #_datadir/qlogging-categories6/*.categories
 
 %changelog
+* Sun Aug 20 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1-alt3
+- fix summary, add README, set license to GPL-3.0-only
+
 * Sun Aug 13 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1-alt2
 - build with external quazip-qt6
 - add Requires: qt6-svg qt6-imageformats
