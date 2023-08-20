@@ -2,7 +2,7 @@
 
 Name: yt-dlp
 Version: 2023.07.06
-Release: alt1
+Release: alt2
 
 Summary: A tool for downloading from video services for offline watching
 License: Unlicense
@@ -15,11 +15,15 @@ BuildArch: noarch
 
 Requires: python3-module-%py_name = %EVR
 
-# Automatically added by buildreq on Tue Mar 07 2023
+# Automatically added by buildreq on Sun Aug 20 2023
 # optimized out: libgpg-error python3 python3-base python3-dev python3-module-pkg_resources python3-module-setuptools sh4
 BuildRequires: python3-module-pyproject-installer python3-module-wheel
 
 BuildRequires(pre): rpm-build-python3
+
+# In the p10 branch, the python3-module-wheel package doesn't
+# pull in setuptools.
+BuildPreReq: python3-module-setuptools
 
 %description
 yt-dlp is a small command-line program to retrieve videos from
@@ -67,6 +71,11 @@ rm -r %buildroot%python3_sitelibdir/%py_name/__pyinstaller
 %python3_sitelibdir/%py_name-*.dist-info
 
 %changelog
+* Sun Aug 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2023.07.06-alt2
+- Added GPG signature verification into the gear-cronbuild scripts.
+- Added explicit BR: python3-module-setuptools to facilitate backports
+  to p10 branch.
+
 * Sun Jul 09 2023 Cronbuild Service <cronbuild@altlinux.org> 2023.07.06-alt1
 - Updated to 2023.07.06.
 
