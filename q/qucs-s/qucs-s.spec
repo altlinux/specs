@@ -2,19 +2,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 1.1.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Circuit simulator
 License: GPLv2+
 Group: Education
-Url: https://github.com/ra3xdh/qucs
+Url: https://github.com/ra3xdh/qucs_s
 
 Source: %name-%version.tar
 Patch: fix_S4Q_workdir.patch
-
-# Upstream patches
-Patch100: 0001-Fixed-compiler-warings-in-converter.patch
 
 Buildrequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -68,6 +65,10 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Sun Aug 20 2023 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0.
+- Update Url.
+
 * Thu Jun 08 2023 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
 - New version 1.1.0.
 
