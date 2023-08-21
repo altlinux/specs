@@ -1,23 +1,12 @@
-#
-# spec file for package ugrep
-#
+# SPDX-License-Identifier: MIT
 # Copyright (c) 2020 SUSE LLC
-#
-# All modifications and additions to the file contributed by third parties
-# remain the property of their copyright owners, unless otherwise agreed
-# upon. The license for this file, and modifications and additions to the
-# file, is the same license as for the pristine package itself (unless the
-# license for the pristine package is not an Open Source License, in which
-# case the license is the MIT License). An "Open Source License" is a
-# license that conforms to the Open Source Definition (Version 1.9)
-# published by the Open Source Initiative.
-
-# Please submit bugfixes or comments via https://bugs.opensuse.org/
-#
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: ugrep
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
 License: BSD-3-Clause
@@ -26,13 +15,16 @@ Group: File tools
 Url: https://github.com/Genivia/ugrep
 Source0: https://github.com/Genivia/ugrep/archive/v%version.tar.gz#/%{name}-%{version}.tar.gz
 Source100: ugrep.watch
+AutoReq: noshell
 
+BuildRequires: bzlib-devel
 BuildRequires: gcc-c++
-BuildRequires: pkgconfig
-BuildRequires: pkgconfig(bzip2)
-BuildRequires: pkgconfig(liblzma)
-BuildRequires: pkgconfig(libpcre2-8)
-BuildRequires: pkgconfig(zlib)
+BuildRequires: hardlink
+BuildRequires: liblz4-devel
+BuildRequires: liblzma-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libzstd-devel
+BuildRequires: zlib-devel
 
 %description
 Ugrep supports an interactive query UI and can search file systems, source
@@ -43,17 +35,17 @@ fuzzy search.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %ifarch %e2k
 # cpuid.h is x86-specific
 %add_optflags -UHAVE_SSE2
 %endif
-%configure \
-	--disable-avx \
-	--enable-color
+%configure
 %make_build
 
 %install
 %makeinstall_std
+hardlink -v %buildroot%_bindir
 
 %check
 %make_build test
@@ -65,6 +57,18 @@ fuzzy search.
 %_datadir/%name
 
 %changelog
+* Mon Aug 21 2023 Vitaly Chikunov <vt@altlinux.org> 4.0.0-alt2
+- Enabled LFS on 32-bit systems.
+- Enabled support for lz4 and zstd.
+- Enabled AVX support (it does have runtime dispatch by CPU features).
+- spec: Remove BR on pkgconfig() because build does not use pkg-config to handle
+  these libs. Replaced with BR to appropriate -devel packages.
+- spec: configure --enable-color is deprecated by upstream (and is enabled by
+  default).
+- spec: Make 'ug' and 'ugrep' hardlinked to save space.
+- spec: AR: noshell to avoid creating dependence on optional tools (antiword,
+  pandoc, and pdftotext).
+
 * Fri Aug 18 2023 Michael Shigorin <mike@altlinux.org> 4.0.0-alt1
 - new version (watch file uupdate)
 
