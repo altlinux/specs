@@ -6,7 +6,7 @@
 
 Name:		lxd
 Version:	5.16
-Release:	alt1
+Release:	alt2
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -58,18 +58,6 @@ BuildRequires:	libacl-devel
 
 %description
 REST API, command line tool and OpenStack integration plugin for LXC.
-
-%package devel
-Summary: %summary
-Group: Development/Other
-BuildArch: noarch
-Requires: golang
-
-%description devel
-%summary
-This package contains library source intended for building other packages
-which use the supplementary Go tools libraries with %import_path imports.
-
 
 %prep
 %setup -q
@@ -139,6 +127,9 @@ help2man %buildroot%_bindir/lxd-benchmark -n "The container lightervisor - bench
 %buildroot%_bindir/lxd manpage %buildroot%_man1dir/
 %buildroot%_bindir/lxc manpage %buildroot%_man1dir/
 
+# cleanup
+rm -rf -- %buildroot%go_path
+
 %pre
 %_sbindir/groupadd -r -f %lxdgroup 2>/dev/null || :
 %_sbindir/useradd  -r -g %lxdgroup -c "LXD daemon" \
@@ -182,13 +173,10 @@ fi
 
 %_man1dir/*
 
-%files devel
-%go_path/src/*
-%exclude %go_path/src/%import_path/vendor
-%exclude %go_path/src/%import_path/go.mod
-%exclude %go_path/src/%import_path/go.sum
-
 %changelog
+* Mon Aug 21 2023 Alexey Shabalin <shaba@altlinux.org> 5.16-alt2
+- Drop devel package.
+
 * Thu Aug 03 2023 Alexey Shabalin <shaba@altlinux.org> 5.16-alt1
 - 5.16
 
