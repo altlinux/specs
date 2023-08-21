@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qview
-Version: 6.0
+Version: 6.1
 Release: alt1
 Summary: Practical and minimal image viewer
 License: GPLv3
@@ -44,6 +44,9 @@ rm -rf %buildroot%_datadir/licenses/%name
 %doc LICENSE
 
 %changelog
+* Mon Aug 21 2023 Alexander Makeenkov <amakeenk@altlinux.org> 6.1-alt1
+- Updated to version 6.1.
+
 * Fri Aug 11 2023 Alexander Makeenkov <amakeenk@altlinux.org> 6.0-alt1
 - Updated to version 6.0.
 
