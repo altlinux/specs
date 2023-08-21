@@ -1,42 +1,46 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name mkdocs-material-extensions
+%define mod_name materialx
 
 %def_with check
 
 Name: python3-module-%pypi_name
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Markdown extension resources for MkDocs Material
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/mkdocs-material-extensions
-
-Source0: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(hatchling)
-
-%if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_cov)
-BuildRequires: python3(mkdocs)
-BuildRequires: python3(markdown)
-BuildRequires: python3(pymdownx)
-BuildRequires: python3(material)
-BuildRequires: python3(bs4)
-%endif
+Url: https://pypi.org/project/mkdocs-material-extensions/
+Vcs: https://github.com/facelessuser/mkdocs-material-extensions
 
 BuildArch: noarch
 
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
 %py3_provides %pypi_name
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 Markdown extension resources for MkDocs for Material
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements/test.txt
+%endif
 
 %build
 %pyproject_build
@@ -45,17 +49,18 @@ Markdown extension resources for MkDocs for Material
 %pyproject_install
 
 %check
-# change fontawesome-solid-ambulance to fontawesome-solid-tree
-# because there is no fontawesome-solid-ambulance icon in mkdocs-material
-sed -i tests/extensions/test_emoji.py -e \
-       '/fontawesome-solid/ s/ambulance/tree/'
-%tox_check_pyproject
+# URL changed in mkdocs-material, so the test doesn't pass.
+%pyproject_run_pytest -vra -k 'not test_twemoji'
 
 %files
-%python3_sitelibdir/materialx
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%doc LICENSE.md README.md
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 21 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.1-alt2
+- Fixed FTBFS.
+
 * Wed Mar 29 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.1-alt1
 - New version.
 
