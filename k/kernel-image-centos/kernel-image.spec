@@ -1,9 +1,9 @@
 Name: kernel-image-centos
 
-%define centos_release 357
+%define centos_release 358
 
 Version: 5.14.0.%{centos_release}
-Release: alt2.el9
+Release: alt1.el9
 
 %define kernel_base_version  %version
 %define kernel_extra_version %nil
@@ -289,7 +289,10 @@ chmod +x tools/objtool/sync-check.sh
 touch .scmversion
 
 cfg="redhat/configs/common/generic/CONFIG_LSM"
-[ ! -f "$cfg" ] || . "$cfg"
+if [ -f "$cfg" ]; then
+	. "$cfg"
+	rm -f -- "$cfg"
+fi
 
 # Extend config from fedora config.
 for o in \
@@ -649,6 +652,21 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Aug 21 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.358-alt1.el9
+- Updated to kernel-5.14.0-358.el9 (fixes: CVE-2023-1380, CVE-2023-1855, CVE-2023-3390, CVE-2023-3773, CVE-2023-4004, CVE-2023-4147, CVE-2023-4155):
+  + CVE-2023-1855 kernel: use-after-free bug in remove function xgene_hwmon_remove [rhel-9]
+  + Fix power logic to improve DGPU performance on a desktop system that doesn't report having a power supply
+  + KVM: SEV: only access GHCB fields once (CVE-2023-4155)
+  + Merge commit '254b93df441bd8e37780eedf85f0d2395ab2ad81' from documentation
+  + netfilter: nf_tables: disallow rule addition to bound chain via NFTA_RULE_CHAIN_ID
+  + netfilter: nf_tables: incorrect error path handling with NFT_MSG_NEWRULE
+  + netfilter: nft_set_pipapo: fix improper element removal
+  + tpm: Enable SPI TPM for NVIDIA Grace
+  + wireless: base for the MR including dependencies
+  + wireless: update to v6.4 + bugfixes
+  + xfrm: out-of-bounds read of XFRMA_MTIMER_THRESH nlattr
+  + Various changes and improvements that are poorly described in merge.
+
 * Sun Aug 20 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.357-alt2.el9
 - Enable apparmor.
 
