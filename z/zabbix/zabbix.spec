@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		998f8649378
+%define svnrev		b60e269feb4
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 %endif
 
 Name: zabbix
-Version: 6.0.19
+Version: 6.0.20
 Release: alt1
 Epoch: 1
 
@@ -761,6 +761,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Aug 21 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.20-alt1
+- 6.0.20
+
 * Wed Jun 28 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.19-alt1
 - 6.0.19
 - Add Requires: zabbix-phpfrontend-engine to phpfrontend-php* subpackages (ALT #46487)
