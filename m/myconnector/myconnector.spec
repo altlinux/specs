@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.4.3
+Version:  2.4.4
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -45,7 +45,6 @@ Group:   Networking/Remote access
 
 Requires: myconnector = %EVR
 Requires: xinitrc
-Requires: xterm
 
 Provides:  connector-kiosk = %EVR
 Obsoletes: connector-kiosk
@@ -138,6 +137,13 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Mon Aug 21 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4.4-alt1
+- Fixed using password with special symbols
+- Fixed password removing when copying connection
+- Replaced xvt by x-terminal-emulator
+- kiosk:
+ + Dropped xterm from deps (ALT #47181)
+
 * Wed Feb 09 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4.3-alt1
 - FreeRDP:
  + Floatbar in fullscreen show always
