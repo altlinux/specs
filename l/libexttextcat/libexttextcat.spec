@@ -1,6 +1,9 @@
+
+%define _unpackaged_files_terminate_build 1
+
 Name: libexttextcat
 Version: 3.4.6
-Release: alt1
+Release: alt1.1
 
 Summary: Text categorisation library
 License: BSD
@@ -9,6 +12,9 @@ Url: https://wiki.documentfoundation.org/Libexttextcat
 
 # git-vcs git://gerrit.libreoffice.org/libexttextcat
 Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-vala
+
 Obsoletes: libtextcat < %version
 Provides: libtextcat = %version
 
@@ -54,18 +60,24 @@ mkdir -p m4
 
 %files
 %_libdir/*.so.*
-%_datadir/*
+%_datadir/%name
 
 %files devel
 %doc LICENSE README*
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
+%_vapidir/*
 
 %files tools
 %_bindir/*
 
 %changelog
+* Mon Aug 21 2023 Ivan A. Melnikov <iv@altlinux.org> 3.4.6-alt1.1
+- NMU: fix vapi packaging
+  + put *.vapi file into devel subpackage, where it belongs
+  + avoid packaging %%_vapidir, which belongs to vapi-common
+
 * Tue Jan  4 2022 Aleksey Cheusov <cheusov@altlinux.org> 3.4.6-alt1
 - 3.4.6
 
