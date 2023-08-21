@@ -13,7 +13,7 @@
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.13
+%define major 8.14
 %define rel %nil
 %define conflictbase wine
 
@@ -838,6 +838,9 @@ fi
 %endif
 
 %changelog
+* Sun Aug 20 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.14-alt1
+- new version 8.14 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.13-alt1
 - new version 8.13 (with rpmrb script)
 
