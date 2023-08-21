@@ -1,5 +1,5 @@
 Name: postfix
-Version: 3.6.9
+Version: 3.6.10
 Release: alt1
 Epoch: 1
 
@@ -662,6 +662,9 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Sun Aug 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.10-alt1
+- Updated to 3.6.10.
+
 * Mon May 08 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.9-alt1
 - Updated to 3.6.9 (fixes FTBFS with Linux 6).
 
