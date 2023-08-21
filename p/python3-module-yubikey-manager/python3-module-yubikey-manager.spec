@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.1
+Version: 5.2.0
 Release: alt1
 
 Summary: Tool for managing your YubiKey configuration
@@ -30,6 +30,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %add_pyproject_deps_check_filter pyinstaller
+%add_pyproject_deps_check_filter sphinx-rtd-theme
 %pyproject_builddeps_metadata_extra main
 %pyproject_builddeps_check
 %endif
@@ -64,6 +65,9 @@ install -pD -m0644 man/ykman.1 %buildroot%_man1dir/ykman.1
 %python3_sitelibdir/*
 
 %changelog
+* Mon Aug 21 2023 Anton Zhukharev <ancieg@altlinux.org> 5.2.0-alt1
+- Updated to 5.2.0.
+
 * Mon May 08 2023 Anton Zhukharev <ancieg@altlinux.org> 5.1.1-alt1
 - New version.
 
