@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.38.0.6.g7ac405a74c
-Release: alt1
+Release: alt2
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -783,8 +783,12 @@ fi
 %glibc_sourcedir
 
 %changelog
-* Sat Aug 19 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.6.g7ac405a74c-alt1
+* Mon Aug 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.6.g7ac405a74c-alt2
 - Updated to glibc-2.38-6-g7ac405a74c.
+
+* Sat Aug 19 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.6.g7ac405a74c-alt1
+- This release unintentionally included the source code for
+  glibc-2.37-22-g3593050c27; the source code was not updated by mistake.
 - Moved the libgcc_s requirement to the core subpackage (ALT#47078).
 - Added the --enable-fortify-source=3 flag to compile the libraries and
   utilities with the -D_FORTIFY_SOURCE=3 flag.
