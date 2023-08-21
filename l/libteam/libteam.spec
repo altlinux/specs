@@ -1,16 +1,16 @@
-%define git_hash .g69a7494
+%define git_hash .g7cb5de8
 #define git_hash %nil
 
 %def_disable zmq
 %def_with docs
-%def_with python
+%def_without python
 
 %define _pseudouser_user     _teamd
 %define _pseudouser_group    _teamd
 
 Name: libteam
 Version: 1.31
-Release: alt2%git_hash.1
+Release: alt3%git_hash
 
 Summary: Library for controlling team network device
 License: LGPLv2.1+
@@ -198,6 +198,11 @@ install -pm 0644 team/capi.py %buildroot%python3_sitelibdir/team/
 %endif
 
 %changelog
+* Mon Aug 21 2023 Mikhail Efremov <sem@altlinux.org> 1.31-alt3.g7cb5de8
+- Disabled python binding.
+- python binding: fixed build with modern swig.
+- Upstream git snapshot.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.31-alt2.g69a7494.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
