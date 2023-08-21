@@ -7,8 +7,8 @@
 %def_with wx
 
 Name: python3-module-%oname
-Version: 3.7.0
-Release: alt3
+Version: 3.7.2
+Release: alt1
 
 Summary: Matlab(TM) style python plotting package
 
@@ -77,6 +77,13 @@ Requires: %name = %EVR
 
 %description nbagg
 Interactive figures in the IPython notebook.
+
+%package backend_gtk
+Summary: backend for python3-module-%oname-gtk3 and python3-module-%oname-gtk4
+Group: Development/Python3
+
+%description backend_gtk
+%summary
 
 %package gtk3
 Summary: gtk3 backend for %oname
@@ -265,6 +272,11 @@ done
 %python3_sitelibdir/matplotlib/backends/backend_nbagg.py*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_nbagg.*.py*
 
+%files backend_gtk
+%doc README.md
+%python3_sitelibdir/matplotlib/backends/_backend_gtk.py
+%python3_sitelibdir/matplotlib/backends/__pycache__/_backend_gtk.*
+
 %files gtk3
 %doc README.md
 %python3_sitelibdir/matplotlib/backends/backend_gtk3.py*
@@ -341,6 +353,10 @@ done
 %_datadir/matplotlib/mpl-data
 
 %changelog
+* Wed Aug 16 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.7.2-alt1
+- Updated to 3.7.2.
+- Moved _backend_gtk to python3-module-matplotlib-backend_gtk
+
 * Fri Jun 16 2023 Michael Shigorin <mike@altlinux.org> 3.7.0-alt3
 - Introduced gtk4 knob (on by default).
 

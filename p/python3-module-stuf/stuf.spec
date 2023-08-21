@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.9.16
-Release: alt3.git20150404
+Release: alt3.git20150404.1
 Summary: Normal, default, ordered, chained, restricted, counter, and frozen dictionaries
 License: BSD
 Group: Development/Python3
@@ -20,6 +20,8 @@ BuildRequires: python3-module-pytest python3-module-coverage
 
 %py3_provides %oname
 %py3_requires parse
+
+%add_python3_req_skip stuf.six.moves
 
 %description
 A collection of Python dictionary types that support attribute-style
@@ -46,6 +48,9 @@ nosetests3 -vv --with-coverage --cover-package=%oname
 %exclude %python3_sitelibdir/tests
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.9.16-alt3.git20150404.1
+- NMU: ignored unmet dependency
+
 * Thu Mar 18 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.16-alt3.git20150404
 - Transfer on python3.
 

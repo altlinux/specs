@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 6.5.4
-Release: alt2
+Release: alt2.1
 Summary: Jupyter Interactive Notebook
 License: BSD-3-Clause
 Group: Development/Python3
@@ -65,6 +65,9 @@ The Jupyter HTML notebook is a web-based notebook environment for
 interactive computing.
 
 This package contains tests for %oname.
+
+# There are wrong relative imports in %python3_sitelibdir/notebook/tree/tests/handlers.py
+%add_python3_req_skip notebook.tree.base.handlers notebook.tree.utils
 
 %package pickles
 Summary: Pickles for %oname
@@ -152,6 +155,9 @@ and not test_list_formats"
 %endif
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 6.5.4-alt2.1
+- NMU: ignored unmet dependencies
+
 * Fri Jun 30 2023 Anton Vyatkin <toni@altlinux.org> 6.5.4-alt2
 - Add missing requires.
 

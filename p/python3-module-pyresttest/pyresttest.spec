@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.7.1
-Release: alt2
+Release: alt2.1
 
 Summary: Python RESTful API Testing & Microbenchmarking Tool
 License: ASLv2.0
@@ -24,6 +24,9 @@ BuildRequires: python3-module-future
 %endif
 
 Requires: python3-module-future
+
+# There is a frightening meta-magic with paths
+%add_python3_req_skip pyresttest.six.moves
 
 %py3_provides %oname
 
@@ -57,6 +60,9 @@ python3 -m unittest discover
 
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1.7.1-alt2.1
+- NMU: ignored unmet dependency.
+
 * Mon Feb 27 2023 Anton Vyatkin <toni@altlinux.org> 1.7.1-alt2
 - Fix BuildRequires.
 

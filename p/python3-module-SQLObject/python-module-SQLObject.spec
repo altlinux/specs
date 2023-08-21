@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.10.2
-Release: alt1
+Release: alt1.1
 
 Summary: SQLObject, an object-relational mapper for Python
 License: LGPL-2.1
@@ -78,15 +78,25 @@ This package contains tests for %oname
 %python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/sqlobject/tests
 %exclude %python3_sitelibdir/sqlobject/*/tests
+%exclude %python3_sitelibdir/sqlobject/*/test
+%exclude %python3_sitelibdir/sqlobject/conftest.py
+%exclude %python3_sitelibdir/sqlobject/*/conftest*
 
 %files tests
 %python3_sitelibdir/sqlobject/tests
 %python3_sitelibdir/sqlobject/*/tests
+%python3_sitelibdir/sqlobject/*/test
+%python3_sitelibdir/sqlobject/conftest.py
+%python3_sitelibdir/sqlobject/*/conftest*
 
 %files doc
 %doc docs/*
 
 %changelog
+* Sun Aug 13 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.10.2-alt1.1
+- NMU: moved all tests to subpackage with tests to avoid dependency
+       from main package on subpackage
+
 * Thu Aug 10 2023 Anton Vyatkin <toni@altlinux.org> 3.10.2-alt1
 - New version 3.10.2.
 

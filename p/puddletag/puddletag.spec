@@ -1,6 +1,6 @@
 Name: puddletag
 Version: 2.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Feature rich, easy to use tag editor
 License: GPLv2 and GPLv3+
@@ -14,7 +14,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: ImageMagick
 
-%add_python3_req_skip quodlibet.parse tags
+%add_python3_req_skip quodlibet.parse tags puddlestuff.libraries.mysqllib
 
 %description
 puddletag is an audio tag editor for GNU/Linux similar to Windows program
@@ -62,6 +62,9 @@ done
 %_man1dir/%name.*
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 2.2.0-alt1.1
+- NMU: ignored unmet dependency.
+
 * Sun Jul 16 2023 Anton Kurachenko <srebrov@altlinux.org> 2.2.0-alt1
 - Update to new version 2.2.0.
 

@@ -4,7 +4,7 @@
 
 Name: fgo
 Version: 1.5.5
-Release: alt2
+Release: alt2.1
 
 Summary: A simple launcher for FlightGear flight simulator
 License: distributable
@@ -73,6 +73,10 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 install -pDm644 %SOURCE2 %buildroot%_man6dir/%name.6
 install -pDm644 share/icons/48x48/fgo.png %buildroot%_liconsdir/%name.png
 
+# adding shebang to make them visible for python3.req.py
+find %buildroot%fgodir/src/ -name \*.py -exec sed -i '1 i#!/usr/bin/env python3' {} +
+find %buildroot%fgodir/src/ -name \*.py -exec chmod +x {} +
+
 %files
 %_gamesbindir/%name
 %fgodir/
@@ -82,6 +86,10 @@ install -pDm644 share/icons/48x48/fgo.png %buildroot%_liconsdir/%name.png
 %doc docs/*
 
 %changelog
+* Sat Aug 12 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1.5.5-alt2.1
+- NMU: added shebang to %%fgodir/src python3-modules and made them executable
+       to make them visible to python3.req.py
+
 * Wed Mar 25 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.5.5-alt2
 - Porting to python3.
 

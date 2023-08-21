@@ -29,7 +29,7 @@
 
 Name:    hplip
 Version: 3.23.5
-Release: alt2
+Release: alt2.1
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -81,6 +81,8 @@ BuildRequires(pre): rpm-build-python3
 AutoReqProv: nopython
 AutoProv: nopython3
 %py3_requires distro
+# this is self-provide from sixext.py
+%filter_from_requires /^python3\(.*base.sixext.moves\)/d
 %else
 BuildRequires(pre): rpm-build-python
 %add_python_compile_include %_datadir/%name
@@ -813,6 +815,10 @@ install -p -m644 %{SOURCE100} %{buildroot}%{_datadir}/hal/fdi/policy/10osvendor/
 # hack to properly compile .py files
 python%{pysuffix} -m compileall $RPM_BUILD_ROOT%_datadir/%name
 
+# add shebang to make them visible for python3.req.py
+find %buildroot%_datadir/%name -name \*.py -exec sed -i '1 i#!%__python3
+                                                 \@^#!/usr/bin@d' {} +
+find %buildroot%_datadir/%name -name \*.py -exec chmod +x {} +
 
 # removing unpackaged files
 pushd $RPM_BUILD_ROOT
@@ -1122,6 +1128,12 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sat Aug 12 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1:3.23.5-alt2.1
+- NMU:
+    + added shebang to python3-modules from %%_datadir/%%name and made them
+      executable to make them visible for python3.req.py
+    + ignore self-provide *.sixext.moves
+
 * Fri Jul 14 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.23.5-alt2
 - Removed deprecated hp-pqdiag.
 

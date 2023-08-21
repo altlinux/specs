@@ -2,7 +2,7 @@
 
 Name:           clufter
 Version:        0.77.2
-Release:        alt2
+Release:        alt2.1
 Group:          System/Base
 Summary:        Tool/library for transforming/analyzing cluster configuration formats
 License:        GPLv2+
@@ -64,6 +64,27 @@ Provides:       %name-lib = %version-%release
 Requires:       %name-bin = %version-%release
 Requires:       python3-module-lxml
 BuildArch:      noarch
+
+# These are unmet deps
+%add_python3_req_skip clufter.filters.cib.configuration.utils_xslt
+%add_python3_req_skip clufter.filters.cib.filters._2pcscmd
+%add_python3_req_skip clufter.filters.cib.filters.cib2pcscmd
+%add_python3_req_skip clufter.filters.cib.utils_2to3
+%add_python3_req_skip clufter.filters.cib.utils_prog
+%add_python3_req_skip clufter.filters.cib.utils_xslt
+%add_python3_req_skip clufter.filters.cluster.clusternodes.clusternode.utils_2to3
+%add_python3_req_skip clufter.filters.cluster.clusternodes.clusternode.utils_prog
+%add_python3_req_skip clufter.filters.cluster.filters.ccs_artefacts
+%add_python3_req_skip clufter.filters.corosync.filters._2pcscmd
+%add_python3_req_skip clufter.filters.corosync.utils_xslt
+%add_python3_req_skip clufter.filters.filters._2pcscmd
+%add_python3_req_skip clufter.filters.filters.ccs_artefacts
+%add_python3_req_skip clufter.filters.filters.cib2pcscmd
+%add_python3_req_skip clufter.filters.utils_2to3
+%add_python3_req_skip clufter.filters.utils_cib
+%add_python3_req_skip clufter.filters.utils_prog
+%add_python3_req_skip clufter.filters.utils_xml
+%add_python3_req_skip clufter.filters.utils_xslt
 
 %description -n python3-module-%name
 While primarily aimed at (CMAN,rgmanager)->(Corosync/CMAN,Pacemaker) cluster
@@ -323,6 +344,9 @@ test -x '%_bindir/%name' && test -f "${bashcomp}" \
 %_datadir/%name/ext-plugins/lib-pcs
 
 %changelog
+* Wed Aug 16 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.77.2-alt2.1
+- NMU: ignored unmet deps
+
 * Mon Aug 03 2020 Ivan Razzhivin <underwit@altlinux.org> 0.77.2-alt2
 - fix dependency (Closes: 38759)
 

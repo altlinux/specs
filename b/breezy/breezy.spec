@@ -6,7 +6,7 @@
 
 Name: breezy
 Version: 3.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Breezy is a fork of the Bazaar version control system
 License: GPL-2.0-or-later
@@ -37,6 +37,8 @@ BuildRequires: python3-module-subunit
 %endif
 
 %add_python3_req_skip lazr
+# this module is provided by breezy.bzr.__init__ namespace
+%add_python3_req_skip breezy.bzr.errors
 
 Conflicts: %name-doc < %version-%release
 Conflicts: bzr-git-remote
@@ -146,6 +148,9 @@ cp -a breezy/locale %buildroot%_datadir
 %endif
 
 %changelog
+* Wed Aug 16 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.2.2-alt1.1
+- NMU: ignored unmet dep breezy.bzr.errors
+
 * Wed Apr 13 2022 Anatoly Kitaykin <cetus@altlinux.org> 3.2.2-alt1
 - Release 3.2.2
 

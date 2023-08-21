@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.6
-Release: alt6
+Release: alt6.1
 Summary: behave is behaviour-driven development, Python style
 License: BSD
 Group: Development/Python3
@@ -32,6 +32,8 @@ Requires: %oname-common = %EVR
 %add_python3_req_skip gherkin
 %add_python3_req_skip gherkin.formatter
 %add_python3_req_skip gherkin.tag_expression
+# this provide does not exist
+%add_python3_req_skip behave.contrib.steps
 
 %description
 Behavior-driven development (or BDD) is an agile software development
@@ -94,6 +96,9 @@ py.test-3 tests
 %_sysconfdir/junit.xml/junit-4.xsd
 
 %changelog
+* Tue Aug 15 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1.2.6-alt6.1
+- NMU: ignored unmet dependency
+
 * Mon Apr 17 2023 Anton Vyatkin <toni@altlinux.org> 1.2.6-alt6
 - Fix BuildRequires
 

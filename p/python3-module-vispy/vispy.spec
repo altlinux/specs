@@ -2,7 +2,7 @@
 
 Name: python3-module-vispy
 Version: 0.13.0
-Release: alt1
+Release: alt1.1
 Summary: Interactive visualization in Python 3
 License: BSD-3-Clause
 Group: Development/Python3
@@ -37,6 +37,8 @@ BuildRequires: python3-module-hsluv
 #BuildRequires: python3-module-pypng
 BuildRequires: python3-module-six
 %endif
+# Nobody provides this module
+%add_python3_req_skip vispy.util.geometry.triangulation
 
 %description
 Vispy is an interactive 2D/3D data visualization library. It leverages Graphics
@@ -66,6 +68,9 @@ pytest3 -v
 %python3_sitelibdir/vispy-%version.dist-info
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.13.0-alt1.1
+- NMU: ignored unmet dependency
+
 * Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - new version (0.13.0) with rpmgs script
 

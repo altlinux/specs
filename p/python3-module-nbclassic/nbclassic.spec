@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 Summary: Jupyter Notebook as a Jupyter Server extension
 License: BSD-3-Clause
 Group: Development/Python3
@@ -43,6 +43,8 @@ Summary: Tests for %pypi_name
 Group: Development/Python3
 Requires: %name = %EVR
 %add_python3_req_skip playwright.sync_api
+# There is wrong relative import in %python3_sitelibdir/nbclassic/tests/launchnotebook.py
+%add_python3_req_skip nbclassic.utils
 
 %description tests
 NbClassic provides a backwards compatible Jupyter Notebook interface that you
@@ -87,5 +89,8 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/nbclassic.json \
 %python3_sitelibdir/%pypi_name/*/tests
 
 %changelog
+* Wed Aug 16 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.0-alt1.1
+- NMU: ignore unmet dependency
+
 * Fri Jun 23 2023 Anton Vyatkin <toni@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus

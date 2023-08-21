@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.2.9
-Release: alt1
+Release: alt1.1
 
 Summary: Jupyter widgetds library for webgui js visualization library
 License: LGPL-2.1
@@ -21,6 +21,8 @@ BuildArch: noarch
 Source: webgui_jupyter_widgets-%version.tar
 Source1: submodules.tar
 
+# Nobody provides it.
+%add_python3_req_skip webgui_jupyter_widgets.example
 %description
 %summary
 
@@ -39,5 +41,8 @@ Source1: submodules.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.2.9-alt1.1
+- NMU: ignored unmet dependency.
+
 * Tue Apr 19 2022 Andrey Cherepanov <cas@altlinux.org> 0.2.9-alt1
 - Initial build for Sisyphus.

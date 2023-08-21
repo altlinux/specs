@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.22
+Version: 0.1.23
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -30,7 +30,7 @@ Conflicts: python3 < 3.5
 
 AutoReqProv: yes, nopython
 
-BuildRequires: python3-dev
+BuildRequires: python3-dev python3-module-py3dephell
 
 %description
 These helper macros provide possibility to build python3 modules.
@@ -139,6 +139,13 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.23-alt1
+- python3.prov.py:
+    + Moved all mechanism of provides-searching to py3dephell.py3prov
+- python3.req.py:
+    + Moved all mechanism of requirements-searching to py3dephell.py3req;
+    + Removed encodings as dependencies.
+
 * Sat Apr 22 2023 Vitaly Lipatov <lav@altlinux.ru> 0.1.22-alt1
 - NMU: brp-fix_python3_site-packages_location: replace egrep with grep -E
 

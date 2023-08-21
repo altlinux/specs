@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 24.0.1
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Software library for fast, message-based applications
 
@@ -70,6 +70,9 @@ multiple transport protocols and more.
 
 This package contains the headers for the python bindings.
 
+# Nobody provides it
+%add_python3_req_skip zmq.backend.cffi._cffi
+
 %prep
 %setup
 cp setup.cfg.template setup.cfg
@@ -110,6 +113,9 @@ py.test3 --pyargs zmq -v -k "not test_cython"
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 24.0.1-alt1.1.1
+- NMU: ignored unmet dependency
+
 * Wed Nov 30 2022 Michael Shigorin <mike@altlinux.org> 24.0.1-alt1.1
 - fixed BR:
 

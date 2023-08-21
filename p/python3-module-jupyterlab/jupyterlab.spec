@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.0.4
-Release: alt1
+Release: alt1.1
 Summary: JupyterLab computational environment
 License: BSD-3-Clause
 Group: Development/Python3
@@ -104,12 +104,18 @@ and not test_yarn_config"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %exclude %python3_sitelibdir/%pypi_name/tests
 %exclude %python3_sitelibdir/%pypi_name/pytest_plugin.py
+%exclude %python3_sitelibdir/%pypi_name/browser_check.py
 
 %files tests
 %python3_sitelibdir/%pypi_name/tests
 %python3_sitelibdir/%pypi_name/pytest_plugin.py
+%python3_sitelibdir/%pypi_name/browser_check.py
 
 %changelog
+* Wed Aug 09 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 4.0.4-alt1.1
+- NMU: moved %%python3_sitelibdir/%%pypi_name/browser_check.py to subpackage with
+       tests to avoid dependency from main package on subpackage with tests.
+
 * Fri Aug 04 2023 Anton Vyatkin <toni@altlinux.org> 4.0.4-alt1
 - new version 4.0.4
 

@@ -1,6 +1,6 @@
 Name: python3-module-zstandard
 Version: 0.21.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for zstandard compression library
 License: BSD-3-Clause
@@ -12,6 +12,9 @@ Source0: %name-%version-%release.tar
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(pytest)
+
+# Nobody provides it
+%add_python3_req_skip zstandard._cffi
 
 %description
 %summary
@@ -34,6 +37,9 @@ rm -r zstandard
 %python3_sitelibdir/zstandard-%version.dist-info
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.21.0-alt1.1
+- NMU: ignored unmet dependency
+
 * Wed May 03 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.21.0-alt1
 - 0.21.0 released
 

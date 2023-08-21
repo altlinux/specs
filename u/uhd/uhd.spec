@@ -23,7 +23,7 @@
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
 Version: 4.4.0.0
-Release: alt3
+Release: alt3.1
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -118,6 +118,9 @@ Group: Development/Python3
 Summary: Python 3 module for usrp (part %name)
 Requires: lib%name = %EVR
 %add_python3_req_skip usrp_mpm.libpyusrp_periphs
+
+# self-provide from %python3_sitelibdir/uhd/libpyuhd.cpython-311.so
+%add_python3_req_skip uhd.libpyuhd.paths
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/usrp_mpm/
 
@@ -248,6 +251,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 4.4.0.0-alt3.1
+- NMU: ingored unmet dependency
+
 * Tue Jul 25 2023 Alexey Shabalin <shaba@altlinux.org> 4.4.0.0-alt3
 - fix build with DPDK v22.11 LTS
 

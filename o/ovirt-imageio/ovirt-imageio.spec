@@ -2,7 +2,7 @@
 
 Name: ovirt-imageio
 Version: 2.4.7
-Release: alt1
+Release: alt1.1
 Summary: oVirt imageio
 Group: System/Configuration/Other
 
@@ -41,6 +41,9 @@ Provides: %name-client = %EVR
 Requires: python3-module-%name = %EVR
 # For "qemu:allocation-depth" meta context.
 Requires: qemu-img >= 5.2.0
+
+# There is dep to namespace package, that is provided by python3-module-%name
+%add_python3_req_skip ovirt_imageio._internal.handlers
 
 %description -n python3-module-%name-client
 Python client library for accessing imageio server on oVirt hosts.
@@ -111,6 +114,9 @@ useradd -r -g %ovirtimg_user -d /run/%name \
 %ghost %attr(644, %ovirtimg_user, %ovirtimg_user) %logdir/daemon.log*
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 2.4.7-alt1.1
+- NMU: ignored unmet dependency
+
 * Wed Mar 01 2023 Alexey Shabalin <shaba@altlinux.org> 2.4.7-alt1
 - 2.4.7
 

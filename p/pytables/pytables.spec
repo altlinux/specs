@@ -23,7 +23,7 @@ relational or object oriented databases.
 
 Name: py%oname
 Version: 3.8.0
-Release: alt3.1
+Release: alt3.1.1
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -145,14 +145,20 @@ cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests/
+%exclude %python3_sitelibdir/%oname/nodes/tests/
 
 %files doc
 %_docdir/%name
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/tests/
+%python3_sitelibdir/%oname/nodes/tests/
 
 %changelog
+* Mon Jul 10 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1:3.8.0-alt3.1.1
+- NMU: moved %%python3_sitelibdir/%oname/nodes/tests to another subpackage
+  to avoid dependency from main package on subpackage with tests
+
 * Fri Jun 23 2023 Stanislav Levin <slev@altlinux.org> 1:3.8.0-alt3.1
 - NMU: added compatibility with numpy 1.25.0.
 

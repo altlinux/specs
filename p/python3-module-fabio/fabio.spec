@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 2023.4.1
-Release: alt1
+Release: alt1.1
 Summary: Image IO for fable
 License: MIT
 Group: Development/Python3
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel python3-module-Cython
 BuildRequires: python3(lxml)
 
-%add_python3_req_skip UserDict
+%add_python3_req_skip UserDict python3(fabio.test) python3(fabio.benchmark)
 %py3_requires argparse gzip six
 
 %description
@@ -62,11 +62,18 @@ python3 setup.py test
 %_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/test
+%exclude %python3_sitelibdir/%oname/benchmark
 
 %files tests
 %python3_sitelibdir/%oname/test
+%python3_sitelibdir/%oname/benchmark
 
 %changelog
+* Wed Jul 12 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 2023.4.1-alt1.1
+- NMU:
+     + moved %%python3_sitelibdir/%%oname/benchmark to subpackage with tests
+     + ignore requirements to fabio.tests and fabio.benchmark
+
 * Sat Apr 29 2023 Grigory Ustinov <grenka@altlinux.org> 2023.4.1-alt1
 - Automatically updated to 2023.4.1.
 

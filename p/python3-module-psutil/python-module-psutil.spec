@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.9.5
-Release: alt1
+Release: alt1.1
 
 Summary: A process utilities module for Python
 
@@ -17,7 +17,7 @@ Url: https://pypi.python.org/pypi/psutil/
 Source: %oname-%version.tar
 
 %add_python3_req_skip _psutil_bsd _psutil_mswindows _psutil_osx pywintypes win32com
-%add_python3_req_skip _psutil_sunos _psutil_windows
+%add_python3_req_skip _psutil_sunos psutil._psutil_windows
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
@@ -55,6 +55,9 @@ py.test-3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 5.9.5-alt1.1
+- NMU: ignored unmet dependency
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 5.9.5-alt1
 - new version 5.9.5 (with rpmrb script)
 
