@@ -1,11 +1,25 @@
+%global _unpackaged_files_terminate_build 1
+%define redis_user      _redis
+%define redis_group     _redis
+
+%ifarch %arm %mips32
+%def_disable check
+%else
+%def_enable check
+%endif
+
 Name: redis
-Version: 6.2.8
-Release: alt2
+Version: 7.0.12
+Release: alt1
 
 Summary: Redis is an advanced key-value store
 
-Group: System/Libraries
-License: New BSD License
+Group: Databases
+# redis, hiredis: BSD-3-Clause
+# hdrhistogram, jemalloc, lzf, linenoise: BSD-2-Clause
+# lua: MIT
+# fpconv: BSL-1.0
+License: BSD-3-Clause AND BSD-2-Clause AND MIT AND BSL-1.0
 URL: http://redis.io/
 #URL: https://github.com/antirez/redis
 
@@ -24,14 +38,15 @@ Source8: redis.sysconfig
 Source9: redis.service
 Source10: redis-sentinel.service
 
-Patch1: %name-6.2.3-alt-mips32.patch
+BuildRequires: gcc-c++ libssl-devel libsystemd-devel
 
 # for check section
-BuildPreReq: tcl >= 8.5
+BuildRequires: tcl >= 8.5  tcl-tls openssl
+BuildRequires: /proc
 
-# Automatically added by buildreq on Sun Aug 04 2019
-# optimized out: gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4 tcl tk
-BuildRequires: gcc-c++ git-core tcl-devel xsltproc libssl-devel
+Provides: %name-server = %EVR
+Provides: %name-sentinel = %EVR
+Requires: %name-cli = %EVR
 
 %description
 Redis is an advanced key-value store. It is similar to memcached but
@@ -57,41 +72,57 @@ the very liberal BSD license. Redis is reported to compile and work
 under WIN32 if compiled with Cygwin, but there is no official support
 for Windows currently.
 
-%define redis_user      _redis
-%define redis_group     _redis
+%package cli
+Summary: Development header for Redis module development
+Group: Networking/Other
+Provides: %name-tools = %EVR
+
+%description cli
+Header file required for building loadable Redis modules.
+
+%package devel
+Summary: Development header for Redis module development
+Group: Development/C
+
+%description       devel
+Header file required for building loadable Redis modules.
 
 %prep
 %setup
 %patch0 -p1
-%patch1
-
-sed -e 's|\$(CCOPT) \$(DEBUG) \$(OBJ)|\$(OBJ) \$(CCOPT) \$(DEBUG)|g' -i src/Makefile
+#%%patch1
 
 %build
 
 # For e2k - force use libc malloc instead jemalloc (see #35473)
 USE_MALLOC=
 %ifarch %e2k
-USE_MALLOC="MALLOC=libc"
+USE_MALLOC="USE_JEMALLOC=no MALLOC=libc"
+%else
+USE_MALLOC="USE_JEMALLOC=yes"
 %endif
 
-%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}" $USE_MALLOC BUILD_TLS=yes
+%global make_flags CXXFLAGS="%optflags" CFLAGS="%optflags" OPTIMIZATION="" DEBUG_FLAGS="" DEBUG="" V="echo" PREFIX=%buildroot%_prefix $USE_MALLOC BUILD_TLS=yes USE_SYSTEMD=yes
 
-%ifndef __BTE
-    # make check needs network
-    make test
-%endif
+%make_build %make_flags all
+
+%check
+./utils/gen-test-certs.sh
+./runtest --clients 1 --verbose --tags -largemem:skip --skipunit unit/oom-score-adj --skipunit unit/memefficiency  --skiptest "CONFIG SET rollback on apply error" --tls
+./runtest-moduleapi
+timeout 30m ./runtest-cluster --tls
+./runtest-sentinel
 
 %install
-%makeinstall_std PREFIX=%buildroot%prefix
-mkdir -p %buildroot%_sbindir/
+%make_install %make_flags install
+mkdir -p %buildroot%_sbindir
 mkdir -p %buildroot%_sysconfdir/%name
 mv %buildroot%_bindir/redis-server %buildroot%_sbindir/
 mv %buildroot%_bindir/redis-sentinel %buildroot%_sbindir/
 ln -nsf ../sbin/redis-server %buildroot%_bindir/redis-check-aof
 ln -nsf ../sbin/redis-server %buildroot%_bindir/redis-check-rdb
 
-mkdir -p %buildroot%_localstatedir/%name
+mkdir -p %buildroot%_sharedstatedir/%name
 mkdir -p %buildroot%_logdir/%name
 
 mkdir -p %buildroot%_man1dir
@@ -102,16 +133,22 @@ install -m 644 %SOURCE4 %buildroot%_man1dir/
 # Tune default configuration
 sed -e '/^timeout[[:blank:]]/ s/0/300/' \
     -e '/^daemonize[[:blank:]]/ s/no/yes/' \
-    -e '/^supervised[[:blank:]]/ s/no/auto/' \
-    -e '/^pidfile[[:blank:]]/ s^_6379.pid^/redis-server.pid^' \
+    -e '/^pidfile[[:blank:]]/ s^/var/run/redis_6379.pid^/run/redis/redis-server.pid^' \
     -e '/^logfile[[:blank:]]/ s^""^"/var/log/redis/redis-server.log"^' \
     -e '/^dir[[:blank:]]/ s^\./^/var/lib/redis^' \
     -i %name.conf
+
+sed -e '/^daemonize[[:blank:]]/ s/no/yes/' \
+    -e '/^pidfile[[:blank:]]/ s^/var/run/redis-sentinel.pid^/run/redis/redis-sentinel.pid^' \
+    -e '/^logfile[[:blank:]]/ s^""^"/var/log/redis/redis-sentinel.log"^' \
+    -e '/^dir[[:blank:]]/ s^/tmp^/var/lib/redis^' \
+    -i sentinel.conf
+
 install -m644 %name.conf %buildroot%_sysconfdir/%name/
 install -m644 sentinel.conf %buildroot%_sysconfdir/%name/
 
-mkdir -p %buildroot%_sysconfdir/bash_completion.d
-install -m 644 %SOURCE5 %buildroot%_sysconfdir/bash_completion.d/redis-cli
+mkdir -p %buildroot%_datadir/bash-completion/completions
+install -m 644 %SOURCE5 %buildroot%_datadir/bash-completion/completions/redis-cli
 
 mkdir -p %buildroot%_logrotatedir
 install -m 640 %SOURCE6 %buildroot%_logrotatedir/redis-server
@@ -127,13 +164,16 @@ install -m 0644 %SOURCE9  %buildroot%_unitdir/%name.service
 install -m 0644 %SOURCE10 %buildroot%_unitdir/%name-sentinel.service
 
 mkdir -p  %buildroot%_tmpfilesdir
-echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.conf
+echo 'd /run/%name 0755 %redis_user %redis_group' >> %buildroot%_tmpfilesdir/%name.conf
+
+# Install redis module header
+install -pDm644 src/%{name}module.h %buildroot%_includedir/%{name}module.h
 
 %pre
 # Add the "_redis" user
-%_sbindir/groupadd -r -f %redis_group 2>/dev/null ||:
-%_sbindir/useradd  -r -g %redis_group -c 'Redis daemon' \
-        -s /dev/null -d /var/lib/redis %redis_user 2>/dev/null ||:
+groupadd -r -f %redis_group 2>/dev/null ||:
+useradd  -r -g %redis_group -c 'Redis daemon' \
+        -s /dev/null -M -d %_sharedstatedir/%name %redis_user 2>/dev/null ||:
 
 %post
 %post_service %name
@@ -145,32 +185,59 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 %files
 %doc COPYING 00-RELEASENOTES README.md BUGS MANIFESTO
-
 %attr(0750,root,%redis_group) %dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/redis.conf
-%config(noreplace) %_sysconfdir/%name/sentinel.conf
-
-%config %_logrotatedir/redis-server
-%config %_sysconfdir/bash_completion.d/redis-cli
-%attr(0750,root,%redis_group) %config(noreplace) %_sysconfdir/sysconfig/%name
+%config(noreplace) %attr(0640, %redis_user, %redis_group) %_sysconfdir/%name/redis.conf
+%config(noreplace) %attr(0640, %redis_user, %redis_group) %_sysconfdir/%name/sentinel.conf
+%config(noreplace) %_logrotatedir/redis-server
+%attr(0640,root,%redis_group) %config(noreplace) %_sysconfdir/sysconfig/%name
 %config %_initdir/%name
 %_unitdir/*.service
 %_tmpfilesdir/%name.conf
+%_bindir/%name-check-aof
+%_bindir/%name-check-rdb
+%_sbindir/%name-server
+%_sbindir/%name-sentinel
+%_man1dir/%name-server.*
+%dir %attr(0750,%redis_user,%redis_group) %_logdir/%name
+%dir %attr(0750,%redis_user,%redis_group) %_sharedstatedir/%name
 
-%_bindir/redis-check-aof
-%_bindir/redis-check-rdb
-%_bindir/redis-cli
-%_bindir/redis-benchmark
-%_sbindir/redis-server
-%_sbindir/redis-sentinel
+%files cli
+%_bindir/%name-cli
+%_bindir/%name-benchmark
+%_datadir/bash-completion/completions/%name-cli
+%_man1dir/%name-benchmark.*
+%_man1dir/%name-cli.*
 
-%_man1dir/*
-
-%attr(0770,root,%redis_group) %dir %_localstatedir/%name
-%attr(1770,root,%redis_group) %dir %_logdir/%name
-
+%files devel
+%_includedir/%{name}module.h
 
 %changelog
+* Tue Aug 15 2023 Alexey Shabalin <shaba@altlinux.org> 7.0.12-alt1
+- 7.0.12
+- Fixed License
+- Split cli tools to cli subpackage
+- Update systemd units
+- Update default sentinel config
+- Build with systemd support sd_notify
+- /var/run -> /run
+- Fixed logrotate config
+- Fixed permissions for configs
+- Move make test to check section
+- Enable tests
+- Security fixes:
+  + CVE-2022-24834 Integer Overflow to Buffer Overflow, Heap-based Buffer Overflow
+  + CVE-2022-31144 Out-of-bounds Write, Heap-based Buffer Overflow
+  + CVE-2022-33105 Missing Release of Memory after Effective Lifetime
+  + CVE-2022-35951 Integer Overflow or Wraparound
+  + CVE-2022-35977 Integer Overflow or Wraparound
+  + CVE-2022-36021 Inefficient Algorithmic Complexity
+  + CVE-2023-22458 Integer Overflow or Wraparound
+  + CVE-2023-25155 Integer Overflow or Wraparound
+  + CVE-2023-28425 Improper Neutralization of Special Elements used in a Command (Command Injection)
+  + CVE-2023-28856 Reachable Assertion
+  + CVE-2023-31655 Insufficient Information
+  + CVE-2023-36824 Heap overflow in COMMAND GETKEYS and ACL evaluation
+
 * Thu Aug 03 2023 Andrey Cherepanov <cas@altlinux.org> 6.2.8-alt2
 - Added SSL/TLS support
 
