@@ -1,10 +1,11 @@
 Name: pigz
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 Summary: Parallel Implementation of GZip
 License: zlib
 Group: Archiving/Compression
+
 Url: http://zlib.net/pigz/
 # http://git.altlinux.org/gears/p/pigz.git
 Source: %name-%version-%release.tar
@@ -38,6 +39,9 @@ make test
 %_man1dir/*
 
 %changelog
+* Mon Aug 21 2023 Michael Shigorin <mike@altlinux.org> 2.8-alt1
+- 2.8
+
 * Tue Jan 18 2022 Michael Shigorin <mike@altlinux.org> 2.7-alt1
 - 2.7
 
