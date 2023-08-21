@@ -34,7 +34,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        115.0.5790.110
+Version:        116.0.5845.96
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -91,6 +91,7 @@ Patch021: 0021-ARCH-Add-missing-header.patch
 Patch022: 0022-ALT-Do-not-hardcode-flatbuffer-version.patch
 Patch023: 0023-DEBIAN-lambda-bug-workaround.patch
 Patch024: 0024-Add-missing-headers.patch
+Patch025: 0025-FEDORA-System-brotli.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -514,6 +515,31 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Aug 17 2023 Alexey Gladkov <legion@altlinux.ru> 116.0.5845.96-alt1
+- New version (116.0.5845.96).
+- Security fixes:
+  - CVE-2023-2312: Use after free in Offline.
+  - CVE-2023-4349: Use after free in Device Trust Connectors.
+  - CVE-2023-4350: Inappropriate implementation in Fullscreen.
+  - CVE-2023-4351: Use after free in Network.
+  - CVE-2023-4352: Type Confusion in V8.
+  - CVE-2023-4353: Heap buffer overflow in ANGLE.
+  - CVE-2023-4354: Heap buffer overflow in Skia.
+  - CVE-2023-4355: Out of bounds memory access in V8.
+  - CVE-2023-4356: Use after free in Audio.
+  - CVE-2023-4357: Insufficient validation of untrusted input in XML.
+  - CVE-2023-4358: Use after free in DNS.
+  - CVE-2023-4359: Inappropriate implementation in App Launcher.
+  - CVE-2023-4360: Inappropriate implementation in Color.
+  - CVE-2023-4361: Inappropriate implementation in Autofill.
+  - CVE-2023-4362: Heap buffer overflow in Mojom IDL.
+  - CVE-2023-4363: Inappropriate implementation in WebShare.
+  - CVE-2023-4364: Inappropriate implementation in Permission Prompts.
+  - CVE-2023-4365: Inappropriate implementation in Fullscreen.
+  - CVE-2023-4366: Use after free in Extensions.
+  - CVE-2023-4367: Insufficient policy enforcement in Extensions API.
+  - CVE-2023-4368: Insufficient policy enforcement in Extensions API.
+
 * Wed Jul 26 2023 Alexey Gladkov <legion@altlinux.ru> 115.0.5790.110-alt1
 - New version (115.0.5790.110).
 
