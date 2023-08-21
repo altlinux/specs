@@ -1,6 +1,6 @@
 Name:     xemu
-Version:  0.7.109
-Release:  alt2
+Version:  0.7.111
+Release:  alt1
 
 Summary:  Original Xbox Emulator
 # The license is essentially the same as that of the QEMU project.
@@ -51,6 +51,9 @@ install -vDm644 -t "%buildroot%_iconsdir/hicolor/scalable/apps" ui/icons/xemu.sv
 %doc README.md LICENSE
 
 %changelog
+* Mon Aug 21 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.111-alt1
+- Update to new version
+
 * Mon Jul 31 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.109-alt2
 - NMU:
   + Removed the redundant use of the %%set_autoconf_version macro (this project
