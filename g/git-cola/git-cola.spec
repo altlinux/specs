@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: git-cola
-Version: 4.3.0
+Version: 4.3.1
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 %if_enabled check
-BuildRequires(pre): python3-module-pytest python3-module-tox-pip-version python3-module-qtpy python3-module-PyQt5 python3-module-flake8 python3-module-GitPython
+BuildRequires(pre): python3-module-pytest python3-module-tox-pip-version python3-module-qtpy python3-module-PyQt5 python3-module-GitPython
 %endif
 BuildRequires: python3-module-sphinx-devel python3-module-setuptools python3-module-wheel
 # hasher tests:
@@ -61,6 +61,9 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %python3_sitelibdir/*
 
 %changelog
+* Mon Aug 21 2023 Leontiy Volodin <lvol@altlinux.org> 4.3.1-alt1
+- New version 4.3.1.
+
 * Thu Aug 17 2023 Leontiy Volodin <lvol@altlinux.org> 4.3.0-alt1
 - New version 4.3.0.
 
