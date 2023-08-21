@@ -5,7 +5,7 @@
 
 Name: terminology
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: EFL terminal emulator
 License: BSD-2-Clause
@@ -15,16 +15,18 @@ Url: http://www.enlightenment.org/p.php?p=about/terminology
 %if_disabled snapshot
 Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
 %else
-Vcs: https://git.enlightenment.org/apps/terminology.git
+Vcs: https://git.enlightenment.org/enlightenment/terminology.git
 Source: %name-%version.tar
 %endif
 Patch: %name-1.0.0-alt-default_font.patch
 
 Requires: fonts-bitmap-terminus
 Provides: xvt
+Provides: x-terminal-emulator
 
-BuildRequires(pre): rpm-macros-meson rpm-build-licenses
 Conflicts: libelementary < 1.20.0
+
+BuildRequires(pre): rpm-macros-meson rpm-macros-alternatives
 BuildRequires: meson libelementary-devel >= 1.26.0
 
 %description
@@ -48,6 +50,7 @@ considering it's young age, it does a lot.
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
 %_bindir/xvt	%_bindir/%name	30
+%_bindir/x-terminal-emulator	%_bindir/%name	30
 EOF
 
 %find_lang %name
@@ -65,6 +68,9 @@ EOF
 %doc AUTHORS ChangeLog* COPYING README.md
 
 %changelog
+* Mon Aug 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1.1
+- added alternative for x-terminal-emulator
+
 * Fri Dec 02 2022 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1
 - 1.13.0
 
