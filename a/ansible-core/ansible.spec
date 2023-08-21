@@ -2,7 +2,7 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.15.2
+Version: 2.15.3
 Release: alt1
 
 Group:   System/Configuration/Other
@@ -10,6 +10,7 @@ License: GPL-3.0
 Source0: %rname-%version.tar
 Source1: apt_rpm.py
 Source2: apt_repo.py
+Source3: ansible.cfg
 
 Url: http://www.ansible.com
 
@@ -64,8 +65,7 @@ cp %SOURCE2 lib/ansible/modules/apt_repo.py
 
 %install
 %pyproject_install
-mkdir -p %buildroot%_sysconfdir/%rname/
-cp examples/ansible.cfg %buildroot%_sysconfdir/%rname/
+install -Dpm 0644 %SOURCE3 %buildroot%_sysconfdir/%rname/ansible.cfg
 touch %buildroot%_sysconfdir/%rname/hosts
 
 # Fix shebangs
@@ -73,13 +73,15 @@ rm -f %buildroot%_bindir/ansible-test
 rm -rf %buildroot%python3_sitelibdir/ansible_test
 
 %files
-%doc examples
-%doc README.rst changelogs/CHANGELOG-v*.rst
+%doc README.md changelogs/CHANGELOG-v*.rst
 %_bindir/%{rname}*
 %config(noreplace) %_sysconfdir/%rname
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Sat Aug 19 2023 Andrey Cherepanov <cas@altlinux.org> 2.15.3-alt1
+- New version.
+
 * Fri Jul 21 2023 Andrey Cherepanov <cas@altlinux.org> 2.15.2-alt1
 - New version.
 
