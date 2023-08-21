@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libssh2
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: A library implementing the SSH2 protocol
@@ -8,8 +10,15 @@ License: BSD
 Url: https://www.libssh2.org/
 # Git-VCS: https://github.com/libssh2/libssh2.git 
 Source: %name-%version.tar
+Patch0001: 0001-scp-fix-missing-cast-for-targets-without-large-file-support.patch
+Patch0002: 0002-autotools-skip-tests-requiring-static-lib-if---disable-static-1072.patch
+Patch0003: 0003-autotools-improve-libz-position.patch
+Patch0004: 0004-test_sshdtest-set-a-safe-PID-directory-1089.patch
+Patch0005: 0005-Dont-put-LIBS-in-pc-file.patch
 
-BuildRequires: openssl-devel zlib-devel man
+BuildRequires: libssl-devel zlib-devel
+# for tests
+BuildRequires: /proc /dev/pts openssh-server /usr/bin/man
 
 %description
 libssh2 is a library implementing the SSH2 protocol as defined by
@@ -38,26 +47,30 @@ developing applications that use %name.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 # set version
 ./maketgz %version only
 %autoreconf
-%configure --disable-static --enable-shared
+%configure --disable-static --enable-shared --disable-docker-tests
 %make_build
 
 %install
 %makeinstall_std
 
 %check
-%make_build -k check
+echo "PrintLastLog no" >> tests/openssh_server/sshd_config
+echo "UsePAM no" >> tests/openssh_server/sshd_config
+echo "StrictModes no" >> tests/openssh_server/sshd_config
+LC_ALL=en_US.UTF-8 %make -C tests check
 
 %files
 %doc docs/AUTHORS README RELEASE-NOTES COPYING
 %_libdir/*.so.*
 
 %files docs
-%doc docs/BINDINGS docs/HACKING docs/TODO
+%doc docs/BINDINGS.md docs/HACKING.md docs/TODO
 %_man3dir/*.3*
 
 %files devel
@@ -66,6 +79,10 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 1.11.0-alt1
+- New version 1.11.0.
+- Backport some patches from upstream master.
+
 * Fri Nov 12 2021 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt1
 - new version 1.10.0
 
