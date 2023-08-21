@@ -2,40 +2,35 @@
 
 %define oname bullet
 %def_disable demo
-%def_disable static
 
-Name: %{oname}3
-Version: 2.89
+Name: bullet3
+Version: 3.25
 Release: alt1
 
 Summary: Professional 3D collision detection library
+
 License: Zlib
 Group: System/Libraries
 Url: http://www.bulletphysics.com
 
-# https://github.com/bulletphysics/bullet3.git
+# Source-url: https://github.com/bulletphysics/bullet3/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: cmake gcc-c++ libGL-devel libGLUT-devel libICE-devel
-BuildPreReq: libXi-devel libXmu-devel libXres-devel libxshmfence-devel
-BuildPreReq: libxcbutil-image-devel libXtst-devel libXcomposite-devel
-BuildPreReq: libXcursor-devel libXdamage-devel libXdmcp-devel
-BuildPreReq: libXft-devel libXinerama-devel libxkbfile-devel
-BuildPreReq: libXpm-devel libXrandr-devel libXScrnSaver-devel
-BuildPreReq: libXv-devel libXxf86misc-devel libXxf86vm-devel
-BuildPreReq: libGLEW-devel
+# patch from https://svnweb.mageia.org/packages/cauldron/bullet/current/SOURCES/bullet-3.24-fix-bullet-config.cmake.patch?revision=1919697&view=markup
+Patch0: bullet-3.24-fix-bullet-config.cmake.patch
+
+Patch1: bullet-3.24-use-system-libs.patch
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
+BuildRequires: libICE-devel
+BuildRequires: pkgconfig(freeglut)
+BuildRequires: pkgconfig(tinyxml2)
+BuildRequires: pkgconfig(libglvnd)
 
 %description
 Bullet is a professional open source multi-threaded 3D Collision
 Detection and Rigid Body Dynamics Library for games and animation.
-
-%package demo
-Summary: A demo programs using bullet library
-Group: Graphics
-Requires: lib%name = %version-%release
-
-%description demo
-A demo programs using bullet library.
 
 %package -n lib%name
 Summary: Professional 3D collision detection library
@@ -76,76 +71,147 @@ Conflicts: lib%oname-devel
 %description -n lib%name-devel
 Development headers for bullet 3D collision library.
 
-%package -n lib%name-devel-static
-Summary: Static library for bullet
-Group: Development/C
-Conflicts: lib%oname-devel-static
+%package -n lib%name-extras
+Summary: Extra libraries for %name
+Group: System/Libraries
+License: Zlib and LGPLv2+
 
-%description -n lib%name-devel-static
-Static library for bullet
+%description -n lib%name-extras
+Extra libraries for %name.
+
+%package -n lib%name-extras-devel
+Summary: Development files for %name extras
+Group: Development/C
+License: Zlib and LGPLv2+
+Requires: lib%name-extras = %version-%release
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-extras-devel
+Development headers and libraries for %name extra libraries.
 
 %prep
 %setup
-sed -i \
-       -e 's|-L@CMAKE_INSTALL_PREFIX@/@LIB_DESTINATION@/|-L@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/|' \
-       -e 's|-I@CMAKE_INSTALL_PREFIX@/@INCLUDE_INSTALL_DIR@|-I@INCLUDE_INSTALL_DIR@|' \
-       %oname.pc.cmake
+%autopatch -p1
+
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -type f -print0 -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
+rm -rv build3/*.{bat,exe}
+rm -rv build3/*osx*
+rm -rv build3/premake*
+rm -rv {data/,examples/}
+
 %build
 %cmake \
-    -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-		-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-    -DCLSOCKET_SHARED=ON \
-    -DINSTALL_LIBS=ON \
-    -DBUILD_BULLET2_DEMOS=OFF \
-    -DBUILD_OPENGL_DEMOS=OFF \
-    -DBUILD_CPU_DEMOS=OFF \
-    -DBUILD_UNIT_TESTS=OFF \
+    -DBUILD_BULLET_ROBOTICS_EXTRA=OFF \
+    -DBUILD_BULLET_ROBOTICS_GUI_EXTRA=OFF \
     -DBUILD_EXTRAS=ON \
-		-DINSTALL_EXTRA_LIBS:BOOL=ON \
-		-DUSE_CUSTOM_VECTOR_MATH:BOOL=ON \
-		-DUSE_DOUBLE_PRECISION:BOOL=ON \
+    -DBUILD_OBJ2SDF_EXTRA=OFF \
+    -DBUILD_UNIT_TESTS=OFF \
+    -DCLSOCKET_DEP_ONLY=ON \
+    -DCLSOCKET_SHARED=ON \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_STRIP:FILEPATH="/bin/echo" \
+    -DCMAKE_VERBOSE_MAKEFILE=ON \
+    -DINSTALL_EXTRA_LIBS=ON \
+    -DINSTALL_LIBS=ON \
+    -DOpenGL_GL_PREFERENCE=GLVND \
+    -DUSE_CUSTOM_VECTOR_MATH=ON \
+    -DUSE_DOUBLE_PRECISION=ON \
     -DINCLUDE_INSTALL_DIR=%_includedir/%oname \
-    %{?_disable_demo:-DBUILD_DEMOS=OFF} \
-    %{?_disable_static:-DBUILD_SHARED_LIBS=ON}
+%if_disabled demo
+    -DBUILD_BULLET2_DEMOS=OFF \
+    -DBUILD_CPU_DEMOS=OFF} \
+    -DBUILD_DEMOS=OFF \
+    -DBUILD_OPENGL_DEMOS=OFF \
+%endif
+    -DBUILD_SHARED_LIBS=ON \
+%nil
 
 %cmake_build
 
 %install
 %cmakeinstall_std
 
-%if_enabled demo
-demos=`ls -1 *Demo`
-for i in $demos AllBulletDemos ContinuousConvexCollision BulletDino Raytracer UserCollisionAlgorithm; do
-    install -m 755 $i %buildroot%_bindir/%name-$i
-done
-
-%files demo
-%_bindir/%name-*
-%endif
-
 %files -n lib%name
-%_libdir/*.so.*
 %doc README.md LICENSE.txt AUTHORS.txt
+%_libdir/libBullet3Collision.so.*
+%_libdir/libBullet3Common.so.*
+%_libdir/libBullet3Dynamics.so.*
+%_libdir/libBullet3Geometry.so.*
+%_libdir/libBullet3OpenCL_clew.so.*
+%_libdir/libBulletCollision.so.*
+%_libdir/libBulletDynamics.so.*
+%_libdir/libBulletInverseDynamics.so.*
+%_libdir/libBulletSoftBody.so.*
+%_libdir/libLinearMath.so.*
 
 %files -n lib%name-devel
-%_libdir/pkgconfig/%oname.pc
-%_libdir/pkgconfig/bullet_robotics.pc
-%_includedir/*
+%dir %_includedir/%oname
+%_includedir/%oname/*.h
+%_includedir/%oname/Bullet3Collision
+%_includedir/%oname/Bullet3Common
+%_includedir/%oname/Bullet3Dynamics
+%_includedir/%oname/Bullet3Geometry
+%_includedir/%oname/Bullet3OpenCL
+%_includedir/%oname/BulletCollision
+%_includedir/%oname/BulletDynamics
+%_includedir/%oname/BulletInverseDynamics
+%_includedir/%oname/BulletSoftBody
+%_includedir/%oname/InverseDynamics
+%_includedir/%oname/LinearMath
+%_libdir/libBullet3Collision.so
+%_libdir/libBullet3Common.so
+%_libdir/libBullet3Dynamics.so
+%_libdir/libBullet3Geometry.so
+%_libdir/libBullet3OpenCL_clew.so
+%_libdir/libBulletCollision.so
+%_libdir/libBulletDynamics.so
+%_libdir/libBulletInverseDynamics.so
+%_libdir/libBulletSoftBody.so
+%_libdir/libLinearMath.so
+%_pkgconfigdir/bullet.pc
 %_libdir/cmake/%oname
-%if_disabled static
-%_libdir/*.so
-%else
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif #static
+
+%files -n lib%name-extras
+%_libdir/libConvexDecomposition.so.*
+%_libdir/libGIMPACTUtils.so.*
+%_libdir/libHACD.so.*
+%_libdir/libBulletFileLoader.so.*
+%_libdir/libBullet2FileLoader.so.*
+%_libdir/libBulletInverseDynamicsUtils.so.*
+%_libdir/libBulletWorldImporter.so.*
+%_libdir/libBulletXmlWorldImporter.so.*
+
+%files -n lib%name-extras-devel
+%_includedir/%oname/ConvexDecomposition
+%_includedir/%oname/GIMPACTUtils
+%_includedir/%oname/HACD
+%_includedir/%oname/BulletFileLoader
+%_includedir/%oname/Bullet2FileLoader
+%_includedir/%oname/BulletWorldImporter
+%_includedir/%oname/BulletXmlWorldImporter
+%_libdir/libConvexDecomposition.so
+%_libdir/libGIMPACTUtils.so
+%_libdir/libHACD.so
+%_libdir/libBulletFileLoader.so
+%_libdir/libBullet2FileLoader.so
+%_libdir/libBulletInverseDynamicsUtils.so
+%_libdir/libBulletWorldImporter.so
+%_libdir/libBulletXmlWorldImporter.so
 
 %changelog
+* Thu Aug 10 2023 Mikhail Tergoev <fidel@altlinux.org> 3.25-alt1
+- move to tarball
+- new version (3.25) with rpmgs script
+- added patch from mageia for fix build stuntrally (ALT bug: 47193)
+- added patch for use system libs
+- update BR
+- added extra binaries
+
 * Tue Apr 05 2022 Artyom Bystrov <arbars@altlinux.org> 2.89-alt1
 - Update to version 2.89
 
