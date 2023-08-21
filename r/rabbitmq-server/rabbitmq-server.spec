@@ -4,7 +4,7 @@
 %add_findreq_skiplist */ocf/resource.d/rabbitmq/*
 
 Name: rabbitmq-server
-Version: 3.12.2
+Version: 3.12.3
 Release: alt1
 
 Summary: The RabbitMQ server
@@ -66,12 +66,7 @@ pushd deps/amqp10_common
 %patch301 -p1
 popd
 
-# 3.12.2: Fix build basing on post-release patch
-# See: https://github.com/rabbitmq/rabbitmq-server/pull/8875
-sed -i -e '/--check-formatted/d' deps/rabbitmq_cli/mix.exs
-
 %build
-
 export LANG=en_US.UTF-8
 export VERSION=%version
 %make_build
@@ -160,6 +155,9 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Fri Aug 18 2023 Egor Ignatov <egori@altlinux.org> 3.12.3-alt1
+- 3.12.3
+
 * Tue Jul 18 2023 Egor Ignatov <egori@altlinux.org> 3.12.2-alt1
 - 3.12.2
 
