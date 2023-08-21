@@ -3,7 +3,7 @@
 
 Name: blackbox-terminal
 Version: 0.14.0
-Release: alt4.gitdc3417f
+Release: alt5.gitdc3417f
 
 Summary: A beautiful GTK 4 terminal
 License: GPL-3.0
@@ -11,6 +11,7 @@ Group: Terminals
 
 Url: https://gitlab.gnome.org/raggesilver/blackbox
 Source: %name-%version.tar
+Patch1: blackbox-0.14.0-alt-xvt-compatibility.patch
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Provides: xvt
@@ -42,6 +43,7 @@ A beautiful GTK 4 terminal.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson -Dblackbox_is_flatpak=false -Ddevel=false
@@ -71,6 +73,9 @@ EOF
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Mon Aug 21 2023 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt5.gitdc3417f
+- Support -e option as alias for -c for xvt compatibility (closes: #47180)
+
 * Wed Aug 9 2023 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt4.gitdc3417f
 - Change alternatives priority to avoid conflict with gnome-terminal
 
