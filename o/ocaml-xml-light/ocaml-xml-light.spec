@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-xml-light
-Version: 2.4
-Release: alt7
+Version: 2.5
+Release: alt1
 Summary: Minimal XML parser and printer for OCaml
 
 Group: Development/ML
@@ -9,7 +9,7 @@ License: LGPLv2+
 Url: https://opam.ocaml.org/packages/xml-light/
 Source0: %name-%version.tar
 
-BuildRequires: ocaml-ocamldoc ocaml-findlib
+BuildRequires: ocaml-odoc ocaml-findlib dune rpm-build-ocaml
 
 %description
 Xml-Light is a minimal XML parser & printer for OCaml. It provides
@@ -31,32 +31,21 @@ developing applications that use %name.
 %setup
 
 %build
-make all doc
-make opt
-sed -e 's/@VERSION@/%version/' < META.in > META
+%dune_build --release @install @doc
 
 %install
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR/stublibs
-rm -f test.*
-ocamlfind install xml-light META *.mli *.cmi *.cma *.a *.cmxa *.cmx
+%dune_install
 
-%files
-%doc README
-%_libdir/ocaml/xml-light
-%exclude %_libdir/ocaml/xml-light/*.a
-%exclude %_libdir/ocaml/xml-light/*.cmxa
-%exclude %_libdir/ocaml/xml-light/*.cmx
-%exclude %_libdir/ocaml/xml-light/*.mli
+%files -f ocaml-files.runtime
+%doc CHANGES* README*
 
-%files devel
-%doc README doc/*
-%_libdir/ocaml/xml-light/*.a
-%_libdir/ocaml/xml-light/*.cmxa
-%_libdir/ocaml/xml-light/*.cmx
-%_libdir/ocaml/xml-light/*.mli
+%files devel -f ocaml-files.devel
+%doc _build/default/_doc/*
 
 %changelog
+* Sat Jun 03 2023 Ildar Mulyukov <ildar@altlinux.ru> 2.5-alt1
+- new version
+
 * Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 2.4-alt7
 - rebuilt with ocaml-4.08
 
