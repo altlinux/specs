@@ -1,22 +1,25 @@
 %define  modulename changelog
 
 Name:    python3-module-%modulename
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: A Sphinx extension to generate changelog files
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/sqlalchemyorg/changelog
+URL:     https://pypi.org/project/changelog
+VCS:     https://github.com/sqlalchemyorg/changelog
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
-
-BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 
 Source:  %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 %summary.
@@ -25,18 +28,21 @@ Source:  %name-%version.tar
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
+%doc LICENSE *.rst
 %_bindir/%modulename
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
-%doc *.rst
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Tue Aug 22 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt1
+- Automatically updated to 0.6.1.
+
 * Wed Apr 26 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
 - Automatically updated to 0.6.0.
 
