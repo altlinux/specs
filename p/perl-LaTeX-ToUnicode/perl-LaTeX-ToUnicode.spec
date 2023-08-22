@@ -6,7 +6,7 @@ BuildRequires: perl(Data/Dumper/Concise.pm) perl(Exporter.pm) perl(ExtUtils/Make
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.11
+Version: 0.53
 Release: alt1
 Summary: Convert LaTeX commands to Unicode
 Group: Development/Perl
@@ -15,6 +15,15 @@ Url: %CPAN %module_name
 
 Source0: http://www.cpan.org/authors/id/B/BO/BORISV/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
+
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description scripts
+scripts for %name
 
 %description
 %summary
@@ -32,7 +41,13 @@ BuildArch: noarch
 %doc Changes README
 %perl_vendor_privlib/L*
 
+%files scripts
+%_bindir/ltx2unitxt
+
 %changelog
+* Tue Aug 22 2023 Igor Vlasenko <viy@altlinux.org> 0.53-alt1
+- automated CPAN update
+
 * Mon Dec 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
