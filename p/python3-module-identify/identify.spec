@@ -3,18 +3,21 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2.5.26
+Version: 2.5.27
 Release: alt1
 
 Summary: File identification library for Python
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/pre-commit/identify
+URL:     https://pypi.org/project/identify
+VCS:     https://github.com/pre-commit/identify
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
@@ -34,21 +37,24 @@ BuildRequires: python3-module-cffi
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_check
+%tox_check_pyproject
 
 %files
+%doc LICENSE *.md
 %_bindir/identify-cli
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
-%doc *.md
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Aug 22 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.27-alt1
+- Automatically updated to 2.5.27.
+
 * Mon Jul 24 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.26-alt1
 - Automatically updated to 2.5.26.
 
