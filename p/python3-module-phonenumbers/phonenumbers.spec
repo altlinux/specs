@@ -3,21 +3,23 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.13.17
+Version: 8.13.19
 Release: alt1
 
 Summary: Python port of Google's libphonenumber
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/phonenumbers/
-
-# Source-git: https://github.com/daviddrysdale/python-phonenumbers.git
-Source: %name-%version.tar
+URL: https://pypi.org/project/phonenumbers
+VCS: https://github.com/daviddrysdale/python-phonenumbers
 
 BuildArch: noarch
 
+Source: %name-%version.tar
+
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %py3_provides %oname
 
@@ -30,12 +32,12 @@ storing and validating international phone numbers.
 
 %build
 pushd python
-%python3_build
+%pyproject_build
 popd
 
 %install
 pushd python
-%python3_install
+%pyproject_install
 popd
 
 %check
@@ -44,11 +46,14 @@ pushd python
 popd
 
 %files
-%doc *.md python/HISTORY.md
+%doc LICENSE *.md python/HISTORY.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Aug 22 2023 Grigory Ustinov <grenka@altlinux.org> 8.13.19-alt1
+- Automatically updated to 8.13.19.
+
 * Mon Jul 24 2023 Grigory Ustinov <grenka@altlinux.org> 8.13.17-alt1
 - Automatically updated to 8.13.17.
 
