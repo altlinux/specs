@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.8
+Version: 1.5.9
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -129,6 +129,27 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Aug 21 2023 Anton Midyukov <antohami@altlinux.org> 1.5.9-alt1
+- install2: do not remove library without dependencies
+- sub.in: run 'dconf update' for rootfs, if available
+- hdt: refactoring 10-hdt-img
+- stage1: Continue building when BOOTLOADER is not set and
+  IMAGE_PACKTYPE=isodata
+- lib/boot.mk: do not define BOOTLOADER type for e2k
+- tar2fs, e2k: replace creating boot.conf from tar2fs to feature e2k
+- Drop refind and elilo support everything
+- lib/boot.mk: change BOOTLOADER=grubpcboot on i586, x86_64
+- vm.mk: use grub for sysvinit targets
+- memtest, grub: add EFI support
+- efi, grub: use/efi/shell is now compatible with grub and doesn't
+  use mki-efiboot
+- tar2fs: do not install grub to /EFI/altlinux, install prebuilt grub
+  image always
+- bootloader: deprecate a lilo
+- lists/grub: update architectures supported of grub-efi
+- init: replace udev-rule-generator to udevd-final
+- regular-vm.mk: remove guest addition for vmware and virtualbox
+
 * Fri Jul 28 2023 Anton Midyukov <antohami@altlinux.org> 1.5.8-alt1
 - base+rescue: Add mdmon for IMSM (thanks jqt4)
 - initrd-bootchain: update for new make-initrd-bootchain
