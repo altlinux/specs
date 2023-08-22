@@ -1,6 +1,8 @@
+%define _metainfodir %_datadir/metainfo
+
 Name: CGenius
-Version: 2.6.3.1
-Release: alt2.git.11.gb3efc3da2.1
+Version: 3.4.9
+Release: alt1
 
 Summary: the clone of Commander Keen
 License: GPL2
@@ -89,9 +91,12 @@ cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 %_desktopdir/*.desktop
 %_gamesdatadir/commandergenius
 %_iconsdir/hicolor/512x512/apps/CGLogo.png
+%_iconsdir/hicolor/*/apps/cg.*.png
+%_metainfodir/io.sourceforge.clonekeenplus.appdata.xml
 %exclude %_gamesdatadir/commandergenius/games
 %exclude %_gamesdatadir/commandergenius/global/music
 %exclude %_gamesdatadir/commandergenius/global/snd
+
 
 %files hqp
 %_gamesdatadir/commandergenius/games
@@ -99,6 +104,9 @@ cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 %_gamesdatadir/commandergenius/global/snd
 
 %changelog
+* Tue Aug 22 2023 Artyom Bystrov <arbars@altlinux.org> 3.4.9-alt1
+- Update to new version
+
 * Tue Jul 25 2023 Artyom Bystrov <arbars@altlinux.org> 2.6.3.1-alt2.git.11.gb3efc3da2.1
 - Fix build on GCC13
 
