@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen gcc-c++ imake libXt-devel xorg-cf-files
+BuildRequires: /usr/bin/doxygen imake libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -9,18 +9,17 @@ BuildRequires: /usr/bin/doxygen gcc-c++ imake libXt-devel xorg-cf-files
 %define develname lib%{oname}-devel
 
 Name:           libfakekey
-Version:        0.1
-Release:        alt6_10
+Version:        0.3
+Release:        alt1_1
 Summary:        Converting characters to X key-presses
 
 Group:          System/Libraries
 License:        LGPLv2+
-URL:            http://projects.o-hand.com/matchbox/
-Source0:        http://matchbox-project.org/sources/libfakekey/0.1/%{name}-%{version}.tar.bz2
+URL:            https://git.yoctoproject.org/cgit/cgit.cgi/libfakekey/
+Source0:        https://git.yoctoproject.org/cgit/cgit.cgi/libfakekey/snapshot/%{name}-%{version}.tar.gz
 BuildRequires:  pkgconfig(xtst)
 BuildRequires:  pkgconfig(x11)
 Source44: import.info
-Patch33: libfakekey-0.1-alt-link-fix.patch
 
 %description
 libfakekey is a simple library for converting UTF-8 characters into
@@ -38,6 +37,7 @@ libfakekey is a simple library for converting UTF-8 characters into
 Summary:        Development files for %{name}
 Group:          Development/C
 Requires:       %{libname} = %{version}-%{release}
+Provides:       %{oname}-devel = %{version}-%{release}
 Provides: fakekey-devel = %version-%release
 
 %description -n %{develname}
@@ -48,16 +48,12 @@ developing applications that use %{name}.
 %prep
 %setup -q
 
-# make autoreconf happy
-sed -i -e 's,\(^LT_AGE.*\),\1\nAC_SUBST(LT_AGE),' configure.ac
-%patch33 -p1
-
 %build
 # to recognize aarch64
 autoreconf -vfi
 
-%configure --disable-static
-%make_build LIBS+=-lX11
+%configure --enable-maintainer-mode --disable-static
+%make_build
 
 %install
 %makeinstall_std
@@ -75,6 +71,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Tue Aug 22 2023 Igor Vlasenko <viy@altlinux.org> 0.3-alt1_1
+- new version
+
 * Thu Jun 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt6_10
 - update by mgaimport
 
