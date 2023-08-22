@@ -6,7 +6,7 @@
 
 Name: %realname%dialect
 Version: 2.71
-Release: alt2
+Release: alt3
 
 Summary: A GNU tool for automatically configuring source code
 License: GPLv2+
@@ -107,6 +107,10 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Tue Aug 22 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.71-alt3
+- Backported upstream commit to fix the _AC_LANG_IO_PROGRAM(C) macro to work
+  with glibc 2.38 headers.
+
 * Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.71-alt2
 - Reintroduced the fix for the AC_PROG_CXXCPP macro, which addresses the issue
   where the absence of the C++ preprocessor was considered fatal.  This fix was
