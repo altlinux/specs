@@ -3,7 +3,7 @@
 
 Name: jack_capture
 Version: 0.9.73
-Release: alt1
+Release: alt2.20230104
 Summary: Record sound files with JACK
 Group: Sound
 # As explained in the COPYING file,
@@ -13,7 +13,6 @@ Group: Sound
 # The icon is borrowed from oxygen icon theme, which is LGPLv3+
 License: GPLv2+ and BSD and LGPLv3+
 Url: http://www.musix.org.ar/wiki/index.php/Jack_capture
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: http://archive.notam02.no/arkiv/src/%name-%version.tar.gz
 # Extra sources sent upstream via email on 2009-05-08
@@ -39,13 +38,15 @@ file, but it can do a number of other operations as well.
 
 %prep
 %setup
+#patch -p1
+
+# No need to look for the c++ compiler
+sed -i '/CPP/d' Makefile
 
 %build
-#make %{?_smp_mflags} OPTIMIZE="%optflags"
-%make_build
+%make_build OPTIMIZE="%optflags"
 
 %install
-#make install DESTDIR=%buildroot PREFIX=%prefix
 %makeinstall_std PREFIX=%prefix
 
 # Desktop file
@@ -63,6 +64,10 @@ install -pm 644 %SOURCE2 %buildroot/%_iconsdir/hicolor/48x48/apps/
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Aug 22 2023 Anton Midyukov <antohami@altlinux.org> 0.9.73-alt2.20230104
+- new snapshot
+- cleanup spec
+
 * Mon Feb 04 2019 Anton Midyukov <antohami@altlinux.org> 0.9.73-alt1
 - new version 0.9.73
 
