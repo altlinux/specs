@@ -3,18 +3,24 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
+
 Summary: Extensible validation for Python dictionaries
+
 License: ISCL
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Cerberus
+URL: https://pypi.org/project/Cerberus
+VCS: https://github.com/pyeve/cerberus
 
-# https://github.com/pyeve/cerberus.git
-Source: %name-%version.tar
 BuildArch: noarch
 
+Source: %name-%version.tar
+
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
@@ -29,41 +35,27 @@ Cerberus provides type checking and other base functionality out of the
 box and is designed to be non-blocking and easily extensible, allowing
 for custom validation.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Cerberus is an ISC Licensed validation tool for Python dictionaries.
-
-Cerberus provides type checking and other base functionality out of the
-box and is designed to be non-blocking and easily extensible, allowing
-for custom validation.
-
-This package contains tests for %oname.
-
 %prep
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test3 -v %oname/tests
+%tox_check_pyproject
 
 %files
-%doc AUTHORS LICENSE *.rst docs/*.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
+%doc AUTHORS LICENSE *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/Cerberus-%version.dist-info
 
 %changelog
+* Tue Aug 22 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.5-alt1
+- Automatically updated to 1.3.5.
+
 * Thu May 12 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.4-alt1
 - Automatically updated to 1.3.4.
 
