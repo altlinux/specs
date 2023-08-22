@@ -12,8 +12,7 @@
 %def_without zxing
 
 # enable kde5 UI
-# /usr/src/RPM/BUILD/libreoffice-7.4.6.2/vcl/qt5/QtInstance.cxx:443:51: error: invalid initialization of reference of type 'const drawinglayer::primitive2d::Primitive2DReference&' {aka 'const rtl::Reference<drawinglayer::primitive2d::BasePrimitive2D>&'} from expression of type 'const com::sun::star::uno::Reference<com::sun::star::graphic::XPrimitive2D>'
-%def_disable kde5
+%def_enable kde5
 
 %ifarch mipsel
 %def_without java
@@ -28,23 +27,20 @@
 %def_disable mergelibs
 
 Name: LibreOffice-still
-%define hversion 7.4
-%define urelease 7.2
+%define hversion 7.5
+%define urelease 5.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
 Group: Office
 URL: http://www.libreoffice.org
 
-# [00:22:16] /bin/sh: line 1:  8356 Aborted                 ( LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}"$I/program:$I/program" $I/program/gengal.bin --build-tree --destdir file://$S/extras/source/gallery --name "sounds" --path $W/Gallery/sounds --filenames file://$RESPONSEFILE ) > $W/Gallery/sounds.done.log 2>&1
-#[00:22:16] munmap_chunk(): invalid pointer
-#[00:22:16] make[1]: *** [/usr/src/RPM/BUILD/libreoffice-7.1.6.2/solenv/gbuild/Gallery.mk:56: /usr/src/RPM/BUILD/libreoffice-7.1.6.2/workdir/Gallery/sounds.done] Error 1
 ExcludeArch: armh
 
 Requires: %name-integrated = %EVR
@@ -98,11 +94,11 @@ Patch412: alt-007-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
-Patch600: 001-fix-build-with-Boost-1.81.0.patch
-
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
 %add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
+%add_findreq_skiplist %lodir/sdk/examples/python/DocumentHandling/*.py 
+%add_findprov_skiplist %lodir/sdk/examples/python/DocumentHandling/*.py 
 %add_findreq_skiplist %lodir/sdk/classes
 %add_findreq_skiplist %lodir/sdk/docs
 %add_findreq_skiplist %lodir/sdk/idl
@@ -362,13 +358,11 @@ echo Direct build
 %patch404 -p1
 %patch405 -p1
 %patch406 -p1
-%patch410 -p1
-%patch411 -p1
-%patch412 -p1
+#patch410 -p1
+#patch411 -p1
+#patch412 -p1
 
 %patch500 -p0
-
-%patch600 -p1
 
 # TODO move officebeans to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -704,6 +698,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Aug 21 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.5.2-alt1
+- New version.
+
 * Sun Jul 30 2023 Andrey Cherepanov <cas@altlinux.org> 7.4.7.2-alt2
 - Fixed build with Boost 1.82.
 
