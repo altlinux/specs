@@ -14,6 +14,7 @@
 %define target_libdir lib64
 %define target_has_itm 1
 %define target_has_gold 1
+%define target_has_mvec 1
 %endif
 
 %if "%target_arch" == "arm"
@@ -73,13 +74,13 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20230802
+Version: 20230822
 Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
 Group: Development/C
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 loongarch64
 
 %define gcc_version %{get_version gcc-source}
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
@@ -723,6 +724,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %exclude %sysroot/usr/%target_libdir/libresolv.a
 %exclude %sysroot/usr/%target_libdir/librt.a
 %exclude %sysroot/usr/%target_libdir/libutil.a
+%if 0%{?target_has_mvec}
+%exclude %sysroot/usr/%target_libdir/libmvec.a
+%endif
 
 %files -n cross-glibc-static-%target_arch
 %sysroot/usr/%target_libdir/libBrokenLocale.a
@@ -735,6 +739,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %sysroot/usr/%target_libdir/libresolv.a
 %sysroot/usr/%target_libdir/librt.a
 %sysroot/usr/%target_libdir/libutil.a
+%if 0%{?target_has_mvec}
+%sysroot/usr/%target_libdir/libmvec.a
+%endif
 
 %files -n binutils-%target
 %_bindir/%target-addr2line
@@ -781,6 +788,11 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Tue Aug 22 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230822-alt1
+- glibc: libmvec has been added on aarch64, move libmvec.a into
+  cross-glibc-static-$TARGET subpackage
+- build cross-toolchains on loongarch64
+
 * Wed Aug 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230802-alt1
 - GCC: don't package libssp any more
 - GCC: enabled gnu-unique-object
