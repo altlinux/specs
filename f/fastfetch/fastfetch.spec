@@ -1,5 +1,5 @@
 Name: fastfetch
-Version: 1.11.0
+Version: 2.0.2
 Release: alt1
 Summary: Like neofetch, but much faster because written in c
 
@@ -28,6 +28,10 @@ BuildRequires: glib2-devel
 BuildRequires: ocl-icd-devel
 BuildRequires: rpm-devel
 BuildRequires: libvulkan-devel
+BuildRequires: libXau-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libzstd-devel
+BuildRequires: libffi-devel
 
 BuildRequires: chafa-devel
 
@@ -65,7 +69,6 @@ popd
 %files
 %doc LICENSE
 %doc README.md
-%config(noreplace) %_sysconfdir/%name/
 %_bindir/%name
 %_bindir/flashfetch
 %_datadir/%name/
@@ -74,6 +77,9 @@ popd
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Tue Aug 22 2023 Artyom Bystrov <arbars@altlinux.org> 2.0.2-alt1
+- Update to new version
+
 * Thu Mar 30 2023 Artyom Bystrov <arbars@altlinux.org> 1.11.0-alt1
 - initial build for ALT Sisyphus
 
