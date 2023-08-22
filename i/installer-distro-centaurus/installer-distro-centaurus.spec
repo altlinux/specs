@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 10.1
-Release: alt1
+Release: alt2
 
 Summary: Installer files for Centaurus distro
 License: GPL-2.0-only
@@ -65,6 +65,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Tue Aug 22 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt2
+- 66-setup-net-services.sh: send output to install2.log
+
 * Fri Aug 11 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt1
 - start NM and systemd-networkd only if needed
 
