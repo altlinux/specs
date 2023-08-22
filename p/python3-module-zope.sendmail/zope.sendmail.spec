@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name zope.sendmail
+%define ns_name zope
+%define mod_name sendmail
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.3
+Version: 6.0
 Release: alt1
 Summary: Zope sendmail
 License: ZPL-2.1
@@ -13,20 +15,24 @@ Url: https://pypi.org/project/zope.sendmail/
 Vcs: https://github.com/zopefoundation/zope.sendmail.git
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+# this projects depends on pkg_resources that is subpackaged in ALTLinux
+%add_pyproject_deps_runtime_filter setuptools
+Requires: python3-module-pkg_resources
+
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.security
-BuildRequires: python3-module-zope.testing
+%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-zope.security-tests
 BuildRequires: python3-module-zope.component-tests
-BuildRequires: python3-module-transaction
+BuildRequires: python3-module-zope.interface-tests
 %endif
-
-%py3_requires zope transaction zope.i18nmessageid zope.interface
-%py3_requires zope.schema zope.component zope.configuration
 
 %description
 zope.sendmail is a package for email sending from Zope 3 applications.
@@ -35,15 +41,21 @@ zope.sendmail is a package for email sending from Zope 3 applications.
 Summary: Tests for Zope sendmail
 Group: Development/Python3
 Requires: %name = %EVR
-%py3_requires zope.security zope.component
+%py3_requires zope.testrunner
+%py3_requires zope.testing
+Requires: python3-module-zope.security-tests
+Requires: python3-module-zope.component-tests
+Requires: python3-module-zope.interface-tests
 
 %description tests
 zope.sendmail is a package for email sending from Zope 3 applications.
 
-This package contains tests for Zope sendmail.
+This package contains tests for %pypi_name.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -58,12 +70,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%pyproject_run -- zope-testrunner --test-path=src -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
 %_bindir/*
-%python3_sitelibdir/zope/sendmail/
+%python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
@@ -72,6 +84,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Tue Aug 22 2023 Anton Vyatkin <toni@altlinux.org> 6.0-alt1
+- New version 6.0.
+
 * Sat May 20 2023 Anton Vyatkin <toni@altlinux.org> 5.3-alt1
 - New version 5.3.
 
