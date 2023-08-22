@@ -4,18 +4,18 @@
 %def_without check
 
 Name: python3-module-%modulename
-Version: 3.14.0
+Version: 3.15.2
 Release: alt1
 
 Summary: A Pure-Python library built as a PDF toolkit
 
 Group: Development/Python3
 License: BSD-3-Clause
-Url: https://pypi.org/project/pypdf
+URL: https://pypi.org/project/pypdf
+VCS: https://github.com/py-pdf/pypdf
 
 BuildArch: noarch
 Source: %name-%version.tar
-Vcs: https://github.com/py-pdf/pypdf
 
 BuildArch: noarch
 
@@ -52,6 +52,9 @@ It is therefore a useful tool for websites that manage or manipulate PDFs.
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Tue Aug 22 2023 Grigory Ustinov <grenka@altlinux.org> 3.15.2-alt1
+- Automatically updated to 3.15.2.
+
 * Tue Aug 01 2023 Grigory Ustinov <grenka@altlinux.org> 3.14.0-alt1
 - Automatically updated to 3.14.0.
 
