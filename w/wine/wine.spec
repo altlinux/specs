@@ -13,7 +13,7 @@
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.13
+%define major 8.14
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -70,7 +70,7 @@
 %endif
 
 Name: wine
-Version: %major
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -844,6 +844,9 @@ fi
 %endif
 
 %changelog
+* Mon Aug 21 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.14.1-alt1
+- new version (8.14.1) with rpmgs script
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.13-alt1
 - new version 8.13 (with rpmrb script)
 
