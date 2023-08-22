@@ -1,6 +1,6 @@
 Name: endless-sky
 Version: 0.10.2
-Release: alt1
+Release: alt2
 
 Summary: Space exploration and combat game
 License: GPLv3
@@ -10,8 +10,6 @@ Url: https://endless-sky.github.io/
 VCS: https://github.com/endless-sky/endless-sky
 Source: %name-%version.tar
 Source2: %name.watch
-
-ExclusiveArch: x86_64
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: git
@@ -28,35 +26,37 @@ BuildRequires: libmad-devel
 BuildRequires: libuuid-devel
 Requires: %name-gamedata = %EVR
 
+ExcludeArch: armh
+
 %description
-Endless Sky is a 2D space trading and combat game similar to the classic 
-Escape Velocity series. Explore other star systems. Earn money by trading, 
-carrying passengers, or completing missions. Use your earnings to buy 
-a better ship or to upgrade the weapons and engines on your current one. 
-Blow up pirates. Take sides in a civil war. Or leave human space behind 
+Endless Sky is a 2D space trading and combat game similar to the classic
+Escape Velocity series. Explore other star systems. Earn money by trading,
+carrying passengers, or completing missions. Use your earnings to buy
+a better ship or to upgrade the weapons and engines on your current one.
+Blow up pirates. Take sides in a civil war. Or leave human space behind
 and hope to find friendly aliens whose culture is more civilized than your own.
 
+# game data license differs from game binary license
 %package gamedata
 Summary: Game data for Endless Sky
 License: CC-BY-SA-4.0 AND CC-BY-SA-3.0 AND CC-BY-4.0 AND CC-BY-3.0 AND CC-BY-2.0 AND CC0 AND GPL-2
 Group: Games/Strategy
-#Game data license differs from game binary license
 
 %description gamedata
-Game data for Endless Sky. Licensing details see in /usr/share/doc/%name-gamedata-%version/copyright.
+Game data for Endless Sky.
+See /usr/share/doc/%name-gamedata-%version/copyright for licensing.
 
 %prep
 %setup 
 
 %build
-
-%cmake  -DES_USE_VCPKG=OFF 
+%cmake -DES_USE_VCPKG=OFF
 %cmake_build
 
 %install
 %cmake_install
 mkdir -p %buildroot%_bindir/
-install -m755 x86_64-alt-linux/endless-sky %buildroot%_bindir/endless-sky
+install -m755 %_arch-alt-linux/endless-sky %buildroot%_bindir/endless-sky
 rm -rv %buildroot/usr/share/doc/%name
 %find_lang %name
 
@@ -73,7 +73,7 @@ rm -rv %buildroot/usr/share/doc/%name
 %_iconsdir/hicolor/256x256/
 %_iconsdir/hicolor/512x512/
 %_desktopdir/%name.desktop
-%_man6dir/%name.6.xz
+%_man6dir/%name.6*
 %_datadir/metainfo/
 
 %files gamedata
@@ -81,8 +81,12 @@ rm -rv %buildroot/usr/share/doc/%name
 %_datadir/games/endless-sky/
 
 %changelog
+* Tue Aug 22 2023 Michael Shigorin <mike@altlinux.org> 0.10.2-alt2
+- Tweak EA: while fixing %%install properly wrt non-x86_64.
+- Minor spec cleanup.
+
 * Thu Jun 29 2023 Alexey Shemyakin <alexeys@altlinux.org> 0.10.2-alt1
-- New version 0.10.2. This is a stable release, focused on fixing bugs 
+- New version 0.10.2. This is a stable release, focused on fixing bugs
   and making some other small improvements.
 
 - Some of those improvements are:
