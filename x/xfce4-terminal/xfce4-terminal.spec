@@ -1,6 +1,6 @@
 Name: xfce4-terminal
-Version: 1.0.4
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -10,18 +10,10 @@ Url: https://docs.xfce.org/apps/terminal/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 Vcs: https://gitlab.xfce.org/apps/xfce4-terminal.git
 Source: %name-%version.tar
-# ru.po from commit 13c25dca06f3cb9c1719ba40df32f2dbdc049071
-Source1: updated_ru.po
-# ru.po from upstream master
-Source2: master_ru.po
 Patch: %name-%version-%release.patch
 
-# Patch from upstream git.
-# Should be dropped when new version will be released.
-Patch1: Make-strings-translatable-Issue-222.patch
-
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfconf-devel >= 4.16 libxfce4ui-gtk3-devel >= 4.16
+BuildRequires: libxfconf-devel >= 4.16 libxfce4ui-gtk3-devel >= 4.17.5
 BuildRequires: libpcre2-devel
 BuildRequires: docbook-dtds docbook-style-xsl intltool libvte3-devel
 BuildRequires: xsltproc
@@ -30,6 +22,8 @@ Requires: xfce4-common
 
 Obsoletes: Terminal < %version
 Provides: Terminal = %version-%release
+
+Provides: x-terminal-emulator
 
 %define _unpackaged_files_terminate_build 1
 
@@ -45,14 +39,9 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 # Don't use git tag in version.
 %xfce4_drop_gitvtag terminal_version_tag configure.ac.in
-
-# Merge updated Russian translations
-msgcat --use-first -o merged_ru.po %SOURCE1 %SOURCE2
-mv -f merged_ru.po po/ru.po
 
 %build
 %xfce4reconf
@@ -65,16 +54,27 @@ mv -f merged_ru.po po/ru.po
 %makeinstall_std
 %find_lang %name
 
+mkdir -p %buildroot%_altdir
+cat << __EOF__ > %buildroot%_altdir/%name
+%_bindir/x-terminal-emulator	%_bindir/%name	42
+__EOF__
+
 %files -f %name.lang
 %doc README.md NEWS THANKS
 %_bindir/*
+%_altdir/%name
 %_man1dir/*
 %_datadir/xfce4/terminal
-%_datadir/gnome-control-center/default-apps/%name-default-apps.xml
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/*
 
 %changelog
+* Tue Aug 22 2023 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
+- Added x-terminal-emulator alternative (closes: #45565).
+- Dropped workaround for Russian translation.
+- Dropped obsoleted patch.
+- Updated to 1.1.0.
+
 * Fri May 12 2023 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt2
 - Updated Russian translation.
 - Patch from upstream:
