@@ -6,7 +6,7 @@
 
 Name: ugrep
 Version: 4.0.0
-Release: alt2
+Release: alt2.1
 
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
 License: BSD-3-Clause
@@ -38,7 +38,9 @@ fuzzy search.
 %add_optflags %(getconf LFS_CFLAGS)
 %ifarch %e2k
 # cpuid.h is x86-specific
-%add_optflags -UHAVE_SSE2
+%add_optflags -UHAVE_SSE2 -UHAVE_AVX2
+# can be fixed with this, but performance may be worse
+#sed -i "/<cpuid.h>/{N;s/.*/#define cpuidex __cpuidex/}" include/reflex/simd.h
 %endif
 %configure
 %make_build
@@ -57,6 +59,9 @@ hardlink -v %buildroot%_bindir
 %_datadir/%name
 
 %changelog
+* Tue Aug 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.0-alt2.1
+- Fixed build for Elbrus.
+
 * Mon Aug 21 2023 Vitaly Chikunov <vt@altlinux.org> 4.0.0-alt2
 - Enabled LFS on 32-bit systems.
 - Enabled support for lz4 and zstd.
