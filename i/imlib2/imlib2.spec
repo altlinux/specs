@@ -1,5 +1,5 @@
 Name: imlib2
-Version: 1.11.1
+Version: 1.12.0
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
@@ -14,7 +14,11 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Sep 16 2012
 # optimized out: gnu-config libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: bzlib-devel libXext-devel libfreetype-devel libgif-devel libjpeg-devel libpng-devel libwebp-devel libtiff-devel libid3tag-devel
+BuildRequires: gcc-c++ libgomp-devel
+BuildRequires: bzlib-devel libXext-devel libfreetype-devel libgif-devel libjpeg-devel libpng-devel libwebp-devel libtiff-devel libid3tag-devel libraw-devel libyuv-devel
+%ifnarch armh
+BuildRequires: libjxl-devel
+%endif
 BuildRequires: libheif-devel librsvg-devel liblzma-devel libopenjpeg2.0-devel libspectre-devel
 
 %description
@@ -108,6 +112,10 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Fri Aug 18 2023 Leontiy Volodin <lvol@altlinux.org> 1.12.0-alt1
+- New version 1.12.0.
+- Added JXL, Y4M and RAW support.
+
 * Wed May 03 2023 Leontiy Volodin <lvol@altlinux.org> 1.11.1-alt1
 - New version 1.11.1.
 
