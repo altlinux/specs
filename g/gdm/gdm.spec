@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.1
-Release: alt2%beta
+Release: alt3%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -178,6 +178,7 @@ This package contains user documentation for Gdm.
 %prep
 %setup -n %name-%version%beta
 sed -i 's|/usr\(/bin/touch\)|\1|' data/61-gdm.rules.in
+sed -i 's|/usr\(/bin/rm\)|\1|' data/61-gdm.rules.in
 %patch2 -p1 -b .XSession
 %patch7 -p1 -b .Init
 %patch8 -p1 -b .XSession-Xterm
@@ -302,6 +303,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Tue Aug 22 2023 Alexey Shabalin <shaba@altlinux.org> 44.1-alt3
+- data/61-gdm.rules.in: /usr/bin/rm -> /bin/rm (ALT #47054)
+
 * Mon Aug 21 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt2
 - /etc/X11/gdm/Xsession: replaced xterm by x-terminal-emulator (ALT #40031)
 - removed /etc/X11/wms-methods.d/gdm (ALT #44123)
