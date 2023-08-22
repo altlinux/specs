@@ -4,7 +4,7 @@
 
 Name: lua5.3-luarocks
 Version: 2.4.2
-Release: alt8
+Release: alt9
 Summary: A deployment and management system for Lua modules
 License: MIT
 Group: Development/Tools
@@ -16,13 +16,16 @@ Conflicts: rpm-macros-lua < 1.4
 #	which is defined in rpm-macros-lua package
 Provides: %_prefix/lib/luarocks/rocks-5.3
 Requires: chrpath wget p7zip unzip zip
+Requires: rpm-macros-lua >= 1.5.2 rpm-build-lua
+%add_findreq_skiplist /usr/bin/*
+Requires: lua5.3
 
 Source: http://luarocks.org/releases/%name-%version.tar
 #.gz
 Source1: %oname.filetrigger
 Source2: %oname-files.req.list
 
-BuildPreReq: rpm-macros-lua >= 1.4
+BuildPreReq: rpm-macros-lua >= 1.5.2 rpm-build-lua
 # Automatically added by buildreq on Wed Sep 20 2017
 # optimized out: lua5.3 python-base
 BuildRequires: liblua5.3-devel lua5.1 unzip wget
@@ -46,6 +49,9 @@ Group: Development/Tools
 #	which is defined in rpm-macros-lua package
 Provides: %_prefix/lib/luarocks/rocks-5.1
 Requires: chrpath wget p7zip unzip zip
+Requires: rpm-macros-lua >= 1.5.2 rpm-build-lua
+%add_findreq_skiplist /usr/bin/*
+Requires: lua5.1
 Conflicts: %oname < %EVR
 Conflicts: lua5.3-luarocks < %EVR
 Conflicts: lua5.3-luarocks > %EVR
@@ -109,7 +115,13 @@ done
 # RPM triggers
 mkdir -p %buildroot%_rpmlibdir/
 install -m755 %SOURCE1 %buildroot%_rpmlibdir/
-install -m644 %SOURCE2 %buildroot%_rpmlibdir/
+# remove dependency on luarocks
+# install -m644 %SOURCE2 %buildroot%_rpmlibdir/
+
+%add_findreq_skiplist /usr/share/lua/*/luarocks/fs/lua.lua
+%add_findreq_skiplist /usr/share/lua/*/luarocks/tools/zip.lua
+%add_findprov_skiplist %lua51_modulesdir/%oname/*
+%add_findprov_skiplist %lua53_modulesdir/%oname/*
 
 %files
 %dir %_sysconfdir/%oname
@@ -138,6 +150,10 @@ install -m644 %SOURCE2 %buildroot%_rpmlibdir/
 %doc COPYING README*
 
 %changelog
+* Fri Jun 23 2023 Ildar Mulyukov <ildar@altlinux.ru> 2.4.2-alt9
+- add Requires: rpm-build-lua
+- built rpms no longer have dependency on luarocks
+
 * Fri May 12 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.4.2-alt8
 - luarocks.spec: edit conflicts for lua5.1-luarocks subpackage
 - replace lua-devel by liblua5.3-devel
