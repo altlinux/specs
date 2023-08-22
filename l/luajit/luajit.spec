@@ -2,7 +2,7 @@
 
 Name: luajit
 Version: 2.1
-Release: alt13.gitff6c496
+Release: alt14.gitff6c496
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -12,6 +12,7 @@ Url: http://luajit.org
 Source: %name-%version.tar
 Requires: lib%name = %EVR
 BuildRequires(pre): rpm-macros-luajit
+BuildRequires: rpm-build-lua
 
 ExclusiveArch: %luajit_arches
 ExcludeArch: ppc64le
@@ -35,6 +36,7 @@ It may be embedded or used as a general-purpose, stand-alone language.
 Summary:  Development package that includes the luajit header files
 Group: Development/Other
 Requires: lib%name = %EVR
+Requires: rpm-build-lua
 
 %description -n lib%name-devel
 LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
@@ -91,6 +93,9 @@ mv %buildroot%_bindir/luajit-2.1.0-beta3 %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
+* Tue Aug 22 2023 Ildar Mulyukov <ildar@altlinux.ru> 2.1-alt14.gitff6c496
+- NMU: add req: rpm-build-lua to lib%name-devel for Lua auto req/prov
+
 * Thu Jun 22 2023 Vladimir Didenko <cow@altlinux.org> 2.1-alt13.gitff6c496
 - sync with the latest version of 2.1 branch
 

@@ -4,7 +4,7 @@
 
 Name: luajit-ppc64le
 Version: 2.1
-Release: alt14.gitf0e865dd
+Release: alt15.gitf0e865dd
 
 Summary: a Just-In-Time Compiler for Lua (ppc64le fork)
 License: MIT
@@ -14,6 +14,7 @@ Url: http://luajit.org
 Source: %name-%version.tar
 Requires: lib%name = %EVR
 BuildRequires(pre): rpm-macros-luajit
+BuildRequires: rpm-build-lua
 
 Provides: %_origname = %version-%release
 
@@ -41,6 +42,7 @@ It may be embedded or used as a general-purpose, stand-alone language.
 Summary:  Development package that includes the luajit header files
 Group: Development/Other
 Requires: lib%name = %EVR
+Requires: rpm-build-lua
 Provides: lib%_origname-devel = %version-%release
 
 %description -n lib%name-devel
@@ -100,6 +102,9 @@ mv %buildroot%_bindir/luajit-2.1.0-beta3 %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
+* Tue Aug 22 2023 Ildar Mulyukov <ildar@altlinux.ru> 2.1-alt15.gitf0e865dd
+- NMU: add req: rpm-build-lua to lib%name-devel for Lua auto req/prov
+
 * Tue Jul 6 2021 Vladimir Didenko <cow@altlinux.org> 2.1-alt14.gitf0e865dd
 - fix provides for devel packages
 

@@ -1,5 +1,7 @@
+#TODO: check `luac` usage in lua.req.files
+
 Name: rpm-build-lua
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: RPM helpers to build lua packages
@@ -11,7 +13,7 @@ Url: git://git.altlinux.org/gears/r/rpm-build-lua.git
 Source: %name-%version-%release.tar
 
 BuildArch: noarch
-Requires: rpm-macros-lua >= 1.5
+Requires: rpm-macros-lua >= 1.5.2
 
 %description
 %summary.
@@ -31,6 +33,10 @@ install -p -m0755 -D lua.req.files %buildroot%_rpmlibdir/lua.req.files
 %_rpmlibdir/lua.*
 
 %changelog
+* Tue Aug 22 2023 Ildar Mulyukov <ildar@altlinux.ru> 0.5-alt1
+- enhance the "require modules" search
+- make dependencies work for all Lua versions
+
 * Sat May 27 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.4-alt1
 - lua.prov: fix dynlib provides generation (closes: #46285, #46286).
 
