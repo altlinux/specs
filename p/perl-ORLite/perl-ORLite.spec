@@ -1,26 +1,25 @@
+%define _unpackaged_files_terminate_build 1
 %define dist ORLite
 Name: perl-ORLite
-Version: 1.98
-Release: alt3
+Version: 2.00
+Release: alt1
 
 Summary: ORLite - Extremely light weight SQLite-specific ORM
 License: Perl
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/ORLite-%{version}.tar.gz
-Patch1: %dist-%version-debian-sqlite-vacuum.patch
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
-BuildRequires: perl-devel perl-Params-Util perl-DBI perl-DBD-SQLite perl-File-Remove perl-Test-Script
+BuildRequires: perl-devel perl-Params-Util perl-DBI perl-DBD-SQLite perl-File-Remove perl-Test-Script perl(Test/Deep.pm)
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -q -n %dist-%version
-%patch1 -p1
-[ %version = 1.98 ] && rm t/02_basics.t t/19_view.t t/21_normalize.t
+%setup -q -n %{dist}-%{version}
+#[ %version = 1.98 ] && rm t/02_basics.t t/19_view.t t/21_normalize.t
 
 %build
 %perl_vendor_build
@@ -29,10 +28,14 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
+%doc CONTRIBUTING README LICENSE Changes
 %perl_vendor_privlib/ORLite*
-%doc Changes README 
+%doc Changes README
 
 %changelog
+* Tue Aug 22 2023 Igor Vlasenko <viy@altlinux.org> 2.00-alt1
+- automated CPAN update
+
 * Mon Mar 28 2022 Igor Vlasenko <viy@altlinux.org> 1.98-alt3
 - fixed tests
 
