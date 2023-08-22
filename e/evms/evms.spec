@@ -5,7 +5,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt67
+Release: alt68
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -174,6 +174,12 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Tue Aug 22 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt68
+- imsm changes:
+  + remove volume discovery after region (first pass)
+  + clear volume pointer on region if it has been partitioned
+  + don't go deeper if removing IMSM volume (thus keeping region)
+
 * Thu Jul 13 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt67
 - discover partitions/regions recursively
 - imsm changes:

@@ -1,6 +1,6 @@
 Name: alterator-vm
 Version: 0.4.33
-Release: alt2
+Release: alt3
 
 Summary: Alterator module for volume management
 License: GPL
@@ -37,6 +37,12 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Tue Aug 22 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.33-alt3
+- more IMSM-related fixes:
+  + fix crash when applying profine on IMSM
+  + fix crash when applying profine on nvme
+  + fix crash when trying to apply profile on IMSM-consumed disks
+
 * Thu Jul 13 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.33-alt2
 - rewrite details module
 - imsm: allow volumes to be partitioned
