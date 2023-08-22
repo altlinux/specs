@@ -132,7 +132,7 @@
 # }}}
 
 Name: qemu
-Version: 8.0.3
+Version: 8.0.4
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -1318,6 +1318,10 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Mon Aug 21 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.4-alt1
+- 8.0.4 (Fixes: CVE-2023-3255, CVE-2023-3354, CVE-2023-3180).
+- Backport fix oob memory read in fdp events log (Fixes: CVE-2023-4135).
+
 * Fri Jul 28 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.3-alt1
 - 8.0.3 (Fixes: CVE-2023-3301, CVE-2023-2861, CVE-2023-0330)
 - Disabled support glusterfs for 32-bit arches and riscv64.
