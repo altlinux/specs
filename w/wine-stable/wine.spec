@@ -14,7 +14,7 @@
 
 %define basemajor 8.0
 %define major 8.0
-%define rel .1
+%define rel .2
 %define stagingrel %nil
 
 # the packages will conflict with that
@@ -58,11 +58,9 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %def_with vulkan
 %endif
 
-# TODO
-# [00:01:19] In file included from dlls/opencl/pe_wrappers.c:22:
-# [00:01:19] dlls/opencl/opencl_types.h:3:23: error: expected ';' after top level declarator
-# [00:01:19] typedef int32_t cl_int DECLSPEC_ALIGN(4);
-%if_with mingw
+# use rpm-macros-features
+
+%if_feature opencl
 %def_with opencl
 %else
 %def_without opencl
@@ -86,7 +84,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine-stable
-Version: %major.5
+Version: %major.6
 Release: alt1
 Epoch: 1
 
@@ -123,6 +121,13 @@ ExclusiveArch: %ix86 x86_64 aarch64
 # clang-12: error: unsupported argument 'auto' to option 'flto='
 %define optflags_lto -flto=thin
 %endif
+
+# minimalize memory using
+%ifarch %ix86 armh
+%define optflags_debug -g0
+%define optflags_lto %nil
+%endif
+
 
 # disable LTO: link error in particular, and unverified in general
 #x86_64-alt-linux-gcc -m64 -o loader/wine64-preloader loader/preloader.o loader/preloader_mac.o -static -nostartfiles -nodefaultlibs \
@@ -176,7 +181,6 @@ ExclusiveArch: %ix86 x86_64 aarch64
     %add_verify_elf_skiplist %_bindir/*
     %add_verify_elf_skiplist %winebindir/*
 %endif
-
 
 # TODO: remove it for mingw build (when there will no any dll.so files)
 %add_verify_elf_skiplist %libwinedir/%winesodir/*.*.so
@@ -233,7 +237,9 @@ BuildRequires: libunwind-devel
 %endif
 BuildRequires: libnetapi-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
-# TODO: osmesa
+
+# can be missed on old systems
+BuildRequires: libOSMesa-devel
 
 %if_with vulkan
 BuildRequires: libvulkan-devel
@@ -278,7 +284,6 @@ BuildRequires: desktop-file-utils
 Requires: glibc-pthread glibc-nss
 
 Requires: wine-gecko = %gecko_version
-Conflicts: wine-mono < %mono_version
 
 # For menu/MIME subsystem
 Requires: desktop-file-utils
@@ -480,7 +485,8 @@ develop programs using %name.
 %prep
 %setup -a 1 -a 10
 # Apply wine-staging patches
-%name-staging/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch
+%name-staging/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch \
+    -W programs-findstr -W winemenubuilder-integration -W winex11-wglShareLists
 
 # disable rpath using for executable
 #__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
@@ -864,6 +870,11 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.0.6-alt1
+- update to wine 8.0.2 release
+- add BuildRequires: libOSMesa-devel
+- disable some staging patches (staging patches are not updated for 8.0.2)
+
 * Mon Apr 24 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.0.5-alt1
 - new wine-stable package with 8.0.1 release
 
