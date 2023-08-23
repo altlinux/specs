@@ -20,10 +20,11 @@ relational or object oriented databases.
 %endif
 
 #TODO: fix docs and bench
+%def_without docs
 
 Name: py%oname
 Version: 3.8.0
-Release: alt3.1.1
+Release: alt3.2
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -45,8 +46,10 @@ Requires: python3-module-%oname = %EVR
 Requires: libblosc2
 
 BuildRequires: libhdf5-devel liblzo2-devel bzlib-devel
+%if_with docs
 BuildRequires: xsltproc inkscape fop
 BuildRequires: java-devel-default docbook-tldp-xsl docbook-dtds
+%endif
 BuildRequires: libblosc-devel
 BuildRequires: libblosc2-devel
 
@@ -155,6 +158,9 @@ cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 %python3_sitelibdir/%oname/nodes/tests/
 
 %changelog
+* Wed Aug 23 2023 Ivan A. Melnikov <iv@altlinux.org> 1:3.8.0-alt3.2
+- NMU: Mark docs-only build requires as such.
+
 * Mon Jul 10 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1:3.8.0-alt3.1.1
 - NMU: moved %%python3_sitelibdir/%oname/nodes/tests to another subpackage
   to avoid dependency from main package on subpackage with tests
