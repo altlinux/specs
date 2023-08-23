@@ -4,9 +4,9 @@
 %def_with amdgpu
 %endif
 
-Name: crtools
-Version: 3.17
-Release: alt1.1
+Name: criu
+Version: 3.18
+Release: alt1
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
@@ -14,12 +14,12 @@ Group: System/Configuration/Other
 Url: http://criu.org
 
 VCS: git://github.com/checkpoint-restore/criu.git
-Source: criu-%version.tar
-Source1: criu.watch
+Source: %name-%version.tar
+# Source1: criu.watch
 # git://git.altlinux.org/gears/c/%%name.git
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
-Provides: criu = %EVR
+Obsoletes: crtools < %EVR
 ExclusiveArch: x86_64 aarch64 ppc64le
 
 BuildRequires: libnet2-devel
@@ -157,6 +157,10 @@ find %buildroot -name 'lib*.a' -delete
 %endif
 
 %changelog
+* Wed Aug 23 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.18-alt1
+- Updated to 3.18.
+- Changed name to criu.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.17-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
