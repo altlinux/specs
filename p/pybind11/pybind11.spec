@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 #based on fedora spec
 Name: pybind11
-Version: 2.9.2
-Release: alt2
+Version: 2.11.1
+Release: alt1
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-3-Clause
@@ -11,11 +11,12 @@ Group: Development/Other
 Url: https://github.com/pybind/pybind11
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu May 10 2018
-BuildRequires: boost-devel-headers
+BuildRequires: boost-devel
 BuildRequires: catch-devel
 BuildRequires: ccmake
+BuildRequires: cmake
 BuildRequires: eigen3
 BuildRequires: gcc-c++
 BuildRequires: python3-dev
@@ -75,6 +76,9 @@ PYBIND11_USE_CMAKE=true %python3_install "--install-purelib" "%python3_sitelibdi
 
 rm -rf %buildroot%_includedir/python*
 
+mkdir -p %buildroot%_pkgconfigdir
+mv %buildroot%_datadir/pkgconfig/* %buildroot%_pkgconfigdir/
+
 %check
 %ifarch %e2k
 export SKIP_E2K=1
@@ -87,12 +91,16 @@ export SKIP_E2K=1
 %_includedir/%name
 %_datadir/cmake/%name
 %_bindir/%name-config
+%_pkgconfigdir/*
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Wed Aug 23 2023 Ivan A. Melnikov <iv@altlinux.org> 2.11.1-alt1
+- New version
+
 * Tue Nov 01 2022 Michael Shigorin <mike@altlinux.org> 2.9.2-alt2
 - E2K: drop the kludge
 
