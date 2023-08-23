@@ -1,6 +1,6 @@
 Name:     jsonnet
 Version:  0.20.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Jsonnet - The data templating language
 License:  Apache-2.0
@@ -11,6 +11,7 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source:   %name-%version.tar
 Patch1:   fix-build-ppc64le.patch
+Patch3500: loongarch.patch
 
 BuildRequires: gcc-c++
 BuildRequires: python3
@@ -35,6 +36,7 @@ Group: Development/Other
 %prep
 %setup
 %patch1 -p1
+%patch3500 -p1
 
 %build
 %make_build
@@ -62,6 +64,9 @@ make test
 %doc *.md doc examples
 
 %changelog
+* Wed Aug 23 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.20.0-alt2
+- Support LoongArch architecture (lp64d ABI).
+
 * Mon Apr 24 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.20.0-alt1
 - New version 0.20.0.
 
