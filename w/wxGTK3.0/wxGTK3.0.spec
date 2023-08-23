@@ -9,7 +9,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.5.1
-Release: alt3
+Release: alt4
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -448,6 +448,9 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Tue Aug 22 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.0.5.1-alt4
+- NMU: support LoongArch architecture (lp64d ABI)
+
 * Sun Oct 10 2021 Igor Vlasenko <viy@altlinux.org> 3.0.5.1-alt3
 - NMU: rebuild for perl-Wx compatible configuration without
  --enable-std_string_conv_in_wxstring 
