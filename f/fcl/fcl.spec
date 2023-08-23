@@ -1,6 +1,6 @@
 Name:    fcl
 Version: 0.7.0
-Release: alt1
+Release: alt1.1
 
 Summary: Flexible Collision Library
 License: BSD-3-Clause
@@ -37,6 +37,12 @@ Group: Development/C++
 
 %prep
 %setup
+%ifarch %e2k
+# LCC bug workaround
+sed -i "/extern template/{N;s/.*/#ifndef FCL_SHAPE_CONVEX_CPP\n&\n#endif/}" \
+	include/fcl/geometry/shape/convex-inl.h
+sed -i "1i #define FCL_SHAPE_CONVEX_CPP" src/geometry/shape/convex.cpp
+%endif
 
 %build
 %cmake -GNinja -Wno-dev
@@ -57,5 +63,8 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Aug 23 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.7.0-alt1.1
+- Fixed build for Elbrus.
+
 * Thu Jun 22 2023 Andrey Cherepanov <cas@altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus.
