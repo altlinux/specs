@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 4.0.5
+Version: 4.0.6
 Release: alt1
 
 Summary: Python library to interact with KeePass databases
@@ -40,6 +40,9 @@ Python library to interact with KeePass databases.
 
 
 %changelog
+* Wed Aug 23 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0.6-alt1
+- 4.0.6
+
 * Fri Jun 23 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0.5-alt1
 - first build for Sisyphus
 
