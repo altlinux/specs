@@ -1,6 +1,6 @@
 Name:          vlfeat
 Version:       0.9.21
-Release:       alt1
+Release:       alt1.1
 Summary:       VLFeat is a cross-platform open source collection of vision algorithms
 License:       BSD-2-Clause
 Group:         Sciences/Mathematics
@@ -50,6 +50,18 @@ Requires:      lib%{name} = %EVR
 %setup
 %patch
 cp %SOURCE1 CMakeLists.txt
+%ifarch %e2k
+# must be another LCC
+sed -i "s/defined(__LCC__)/0/" vl/host.h
+# LCC cannot work with expressions inside openmp pragmas
+sed -i -E ":a;/\\\\$/{N;ba};\
+/^[[:space:]]*#pragma omp .*[[:space:]](num_threads|if)\(/{s/#/for(long &/;\
+s/(#.*num_threads\()([^()]*(\(\))*)\)/_xxxn=\\2,\\1_xxxn)/;\
+s/(#.*if\()([^()]*)\)/_xxxi=\\2,\\1_xxxi)/;\
+s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" vl/*.c
+# -fopenmp also needs to be specified for linking
+sed -i "/add_definitions(-fopenmp)/a add_link_options(-fopenmp)" CMakeLists.txt
+%endif
 
 %build
 %cmake
@@ -75,5 +87,8 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/cmake/Modules/FindVLFeat.cmake
 %_datadir/cmake/Modules/*.cmake
 
 %changelog
+* Wed Aug 23 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.21-alt1.1
+- Fixed build for Elbrus
+
 * Wed Aug 26 2020 Pavel Skrylev <majioa@altlinux.org> 0.9.21-alt1
 - initial build for Sisyphus
