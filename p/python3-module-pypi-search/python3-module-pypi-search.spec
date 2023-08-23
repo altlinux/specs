@@ -1,7 +1,7 @@
 %define  modulename pypi-search
 
 Name:    python3-module-%modulename
-Version: 1.2.2
+Version: 2.0
 Release: alt1
 
 Summary: Get Information on Python Packages From PyPI
@@ -12,7 +12,7 @@ URL:     https://github.com/asadmoosvi/pypi-search
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-dev python3-module-setuptools python3-module-wheel
 
 BuildArch: noarch
 
@@ -34,18 +34,21 @@ open up the PyPI website.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc *.md
-%_bindir/pypisearch
+%_bindir/pypi-search
 %python3_sitelibdir/pypi_search
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo pypi_search}
 
 %changelog
+* Wed Aug 23 2023 Andrey Cherepanov <cas@altlinux.org> 2.0-alt1
+- New version.
+
 * Tue May 16 2023 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1
 - New version.
 
