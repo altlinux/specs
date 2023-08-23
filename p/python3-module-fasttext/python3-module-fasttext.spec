@@ -3,7 +3,7 @@
 
 Name: python3-module-%modname
 Version: 0.9.2
-Release: alt1
+Release: alt1.1
 
 Summary: Python3 word representations and sentence classification library
 Group: Development/Python3
@@ -12,6 +12,7 @@ Url: https://pypi.org/project/%modname
 
 Vcs: https://github.com/facebookresearch/fastText.git
 Source: https://pypi.io/packages/source/f/%modname/%modname-%version.tar.gz
+Patch1: fasttext-0.9.2-alt-add-missing-header.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ python3-module-setuptools
@@ -24,6 +25,7 @@ sentence classification.
 
 %prep
 %setup -n %modname-%version
+%patch1 -p2
 
 %build
 %python3_build
@@ -39,6 +41,9 @@ sentence classification.
 %doc README*
 
 %changelog
+* Wed Aug 23 2023 Ivan A. Melnikov <iv@altlinux.org> 0.9.2-alt1.1
+- NMU: fix build with gcc13
+
 * Wed Oct 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
 - first build for Sisyphus
 
