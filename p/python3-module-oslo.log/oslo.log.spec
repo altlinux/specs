@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Oslo Log library
 
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/oslo.log
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+
+Patch1: oslo.log-ustream-catch-runtime-error.patch
 
 BuildArch: noarch
 
@@ -73,6 +75,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%autopatch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -118,6 +121,9 @@ install -pDm 644 man/oslolog.1 %buildroot%_man1dir/oslolog.1
 %endif
 
 %changelog
+* Wed Aug 23 2023 Ivan A. Melnikov <iv@altlinux.org> 5.2.0-alt1.1
+- NMU: add upstream patch for Python 3.11.4 compatibility.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
 - Automatically updated to 5.2.0.
 
