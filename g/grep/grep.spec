@@ -1,6 +1,6 @@
 Name: grep
 Version: 3.7.0.61.561c
-Release: alt1
+Release: alt2
 
 Summary: The GNU versions of grep pattern matching utilities
 License: GPLv3+
@@ -109,6 +109,10 @@ ulimit -s 32768
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Tue Aug 22 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.7.0.61.561c-alt2
+- Fixed build with glibc 2.38 by suppressing the
+  -Wsuggest-attribute=cold warning.
+
 * Fri Apr 29 2022 Dmitry V. Levin <ldv@altlinux.org> 3.7.0.61.561c-alt1
 - grep: v3.6-18-g7051705 -> v3.7-61-g561cf64.
 - gnulib BR: v0.1-4960-g50d64b72f2 -> v0.1-5193-g8fa9898afa.
