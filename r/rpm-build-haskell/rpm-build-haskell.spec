@@ -10,7 +10,7 @@
 %endif
 
 Name: rpm-build-haskell
-Version: 1.4.6
+Version: 1.4.7
 Release: alt1
 
 Summary: RPM helpers to rebuild Haskell packages
@@ -55,6 +55,9 @@ install -D -m0755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelis
 %_libexecdir/%name
 
 %changelog
+* Tue Aug 22 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.7-alt1
+- Added setting ALTWRAP_LLVM_VERSION if available.
+
 * Wed Jun 30 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.4.6-alt1
 - Fix the field() function against newest package.conf format with
   additional spaces between option name and value

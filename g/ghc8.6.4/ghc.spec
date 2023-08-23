@@ -1,8 +1,10 @@
 %def_without bootstrap
 
+%define _llvm_version 12.0
+
 Name: ghc8.6.4
 Version: 8.6.4
-Release: alt8.qa1
+Release: alt9
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -70,7 +72,7 @@ Provides: haskell(abi) = %version
 
 %ifarch armh aarch64
 BuildRequires: rpm-macros-llvm-common
-BuildRequires: llvm
+BuildRequires: llvm%{?_llvm_version}
 Requires: llvm%{?_llvm_version}
 %endif
 
@@ -155,14 +157,20 @@ http://haskell.org/ghc/documentation.html
 sed -ri '/^BuildFlavour/ s,perf$,perf-llvm,' mk/build.mk
 %endif
 
+# Explicitly set version of LLVM which GHC compiled against.
+sed -i '/LlvmVersion/s/6.0/%_llvm_version/' configure.ac
+
 %build
 %ifarch armh
 %define _configure_target armv7l-unknown-linux-gnueabihf
 %else
 %define _configure_target %nil
 %endif
-#autoreconf -fisv
-./boot
+
+export ALTWRAP_LLVM_VERSION="%_llvm_version"
+for configurable in $(find -name 'configure.ac'); do
+    %autoreconf $(dirname "$configurable")
+done
 %configure --with-system-libffi --disable-unregisterised
 %make_build V=1
 
@@ -239,6 +247,7 @@ sed -i 's!/html/!/!' %buildroot%_libdir/ghc-%version/package.conf.d/*.conf
 mkdir -p %buildroot%_rpmmacrosdir
 install %SOURCE1 %buildroot%_rpmmacrosdir/ghc
 sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
+sed -i 's/@GHC_LLVM_VERSION@/%_llvm_version/' %buildroot%_rpmmacrosdir/ghc
 
 %files
 %_libdir/ghc-%version
@@ -264,6 +273,11 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Thu Aug 17 2023 Anton Zhukharev <ancieg@altlinux.org> 8.6.4-alt9
+- Fixed FTBFS.
+- Built with llvm12.0 on armh and aarch64.
+- Stored LLVM version in %%ghc_llvm_version macro.
+
 * Tue Jan 25 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6.4-alt8.qa1
 - NMU: added R: llvm%%_llvm_version on armh and aarch64 architectures (fixes
   regression introduced in 8.6.4-alt8 release which caused all packages and
