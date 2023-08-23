@@ -1,6 +1,6 @@
 Name: osm
 Version: 1.2.3
-Release: alt1
+Release: alt2
 
 Summary: Open Sound Meter
 License: GPLv3
@@ -13,7 +13,7 @@ Requires: qml(QtGraphicalEffects)
 
 Source: %name-%version-%release.tar
 
-ExclusiveArch: aarch64 x86_64
+ExclusiveArch: aarch64 x86_64 %e2k
 
 BuildRequires: gcc-c++
 BuildRequires: ImageMagick-tools
@@ -52,5 +52,8 @@ done
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Tue Aug 22 2023 Michael Shigorin <mike@altlinux.org> 1.2.3-alt2
+- builds fine on e2k
+
 * Tue Jun 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.3-alt1
 - 1.2.3 released
