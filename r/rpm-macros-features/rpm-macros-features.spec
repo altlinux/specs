@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 20230804
+Version: 20230821
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -47,6 +47,10 @@ dfile=macros.mips32
 dfile=macros.arm
 %endif
 
+%ifarch loongarch64
+dfile=macros.loongarch64
+%endif
+
 install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 [ -n "$dfile" ] && [ -s "$dfile" ] && cat $dfile >> %buildroot/%_rpmmacrosdir/features
 
@@ -54,6 +58,11 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Mon Aug 21 2023 Ivan A. Melnikov <iv@altlinux.org> 20230821-alt1
+- loongarch64 support
+- enable OpenCV on riscv64
+- update glibc feature version
+
 * Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 20230804-alt1
 - switch to date stamp release
 - update features' versions, add gcc, glibc, glib2, glibmm
