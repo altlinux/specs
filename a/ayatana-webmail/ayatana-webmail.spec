@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
+%define moname  ayatanawebmail
 Name: ayatana-webmail
 Version: 22.6.28
-Release: alt2
+Release: alt3
 
 Summary: Webmail notifications and actions for any desktop
 License: GPLv3
@@ -62,7 +63,15 @@ done
 %install
 %python3_install
 
-%files
+# these translations are ignored by %%find_lang
+rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%moname.mo
+rm -fv %buildroot%_datadir/locale/zh_Hant/LC_MESSAGES/%moname.mo
+rm -fv %buildroot%_datadir/locale/zh_Hant_HK/LC_MESSAGES/%moname.mo
+rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%moname.mo
+
+%find_lang %moname
+
+%files -f %moname.lang
 %doc COPYING AUTHORS NEWS README.md
 %_bindir/ayatana-webmail
 %_bindir/ayatana-webmail-clear
@@ -71,7 +80,6 @@ done
 %_bindir/ayatana-webmail-url
 %python3_sitelibdir/ayatanawebmail
 %python3_sitelibdir/ayatanawebmail-%{version}*-info
-%_datadir/locale/*/LC_MESSAGES/*.mo
 %config %_sysconfdir/xdg/autostart/%name-autostart.desktop
 %dir %_iconsdir/hicolor/scalable
 %dir %_iconsdir/hicolor/scalable/apps
@@ -82,6 +90,10 @@ done
 %_desktopdir/ayatana-webmail.desktop
 
 %changelog
+* Mon Aug 07 2023 Nikolay Strelkov <snk@altlinux.org> 22.6.28-alt3
+- Removed translations which are ignored by %%find_lang
+- Language specific files are declared
+
 * Mon Feb 13 2023 Nikolay Strelkov <snk@altlinux.org> 22.6.28-alt2
 - removed optional typelib(AppIndicator3) dependency
 

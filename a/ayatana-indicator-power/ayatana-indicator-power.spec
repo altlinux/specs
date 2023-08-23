@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-power
 Version: 22.9.0
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator showing power state
 License: GPLv3
@@ -41,12 +42,17 @@ approach of accessing power information and management features.
 
 %build
 %cmake \
-  -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir \
   -Denable_tests=Off
 %cmake_build
 
 %install
 %cmake_install
+
+# these translations are ignored by %%find_lang
+rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
+rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
+
+%find_lang %name
 
 %post
 %systemd_user_post %name.service
@@ -57,17 +63,24 @@ approach of accessing power information and management features.
 %postun
 %systemd_user_postun %name.service
 
-%files
+%files -f %name.lang
 %doc COPYING AUTHORS NEWS README.md
 %config %_sysconfdir/xdg/autostart/%name.desktop
-%_libexecdir/%name/
+%dir %_libexecdir/%name/
+%_libexecdir/%name/%{name}-service
 %_datadir/glib-2.0/schemas/org.ayatana.indicator.power.gschema.xml
 %dir %_datadir/ayatana
 %dir %_datadir/ayatana/indicators
 %_datadir/ayatana/indicators/org.ayatana.indicator.power
+%dir %_prefix/lib/systemd
+%dir %_userunitdir
 %_userunitdir/%name.service
-%_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Aug 09 2023 Nikolay Strelkov <snk@altlinux.org> 22.9.0-alt2
+- Removed translations which are ignored by %%find_lang
+- Language specific files are declared
+- Move service to /usr/libexec for compatibility with MATE Tweak and Debian
+
 * Sun Nov 06 2022 Nikolay Strelkov <snk@altlinux.org> 22.9.0-alt1
 - Initial build for Sisyphus

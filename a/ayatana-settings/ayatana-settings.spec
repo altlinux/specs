@@ -2,7 +2,7 @@
 
 Name: ayatana-settings
 Version: 21.1.28
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicators Settings
 License: GPLv3
@@ -43,7 +43,12 @@ find 'ayatanasettings' -type 'f' -iname '*.py' -exec chmod -x '{}' '+'
 %install
 %python3_install
 
-%files
+# this translation is ignored by %%find_lang
+rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
+
+%find_lang %name
+
+%files -f %name.lang
 %doc COPYING AUTHORS ChangeLog README.md
 %_bindir/ayatana-settings
 %_man1dir/ayatana-settings.1.*
@@ -54,8 +59,11 @@ find 'ayatanasettings' -type 'f' -iname '*.py' -exec chmod -x '{}' '+'
 %_iconsdir/hicolor/scalable/apps/%name.*
 %_desktopdir/ayatana-settings.desktop
 %_datadir/ayatana-settings/
-%_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Aug 07 2023 Nikolay Strelkov <snk@altlinux.org> 21.1.28-alt2
+- Removed translation which is ignored by %%find_lang
+- Language specific files are declared
+
 * Mon Nov 07 2022 Nikolay Strelkov <snk@altlinux.org> 21.1.28-alt1
 - Initial build for Sisyphus

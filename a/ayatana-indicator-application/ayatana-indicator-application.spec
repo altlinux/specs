@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 
 # psuffix is related to the GTK version. It's usually empty for GTK2.
 %define psuffix 3
 %define sover   7
 Name: ayatana-indicator-application
 Version: 22.2.0
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator that takes StatusNotifiers and puts them in the panel
 License: GPLv3
@@ -56,7 +57,7 @@ BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 
 %description
-This package provides a library and an ayatana indicator to take the 
+This package provides a library and an ayatana indicator to take the
 application StatusNotifiers and display them on the panel bar.
 
 %prep
@@ -64,7 +65,6 @@ application StatusNotifiers and display them on the panel bar.
 
 %build
 %cmake \
-  -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir \
   -Denable_tests=Off
 %cmake_build
 
@@ -85,12 +85,18 @@ find %buildroot -type f -name "*.la" -delete -print
 %doc COPYING AUTHORS INSTALL.md NEWS README.md
 %config %_sysconfdir/xdg/autostart/%name.desktop
 %_datadir/%name/
-%_libexecdir/%name/
+%dir %_libexecdir/%name/
+%_libexecdir/%name/%{name}-service
 %dir %_libdir/ayatana-indicators%{?psuffix}
 %dir %_libdir/ayatana-indicators%{?psuffix}/%sover
 %_libdir/ayatana-indicators%{?psuffix}/%sover/libayatana-application.so
+%dir %_prefix/lib/systemd
+%dir %_userunitdir
 %_userunitdir/%name.service
 
 %changelog
+* Wed Aug 09 2023 Nikolay Strelkov <snk@altlinux.org> 22.2.0-alt2
+- Move service to /usr/libexec for compatibility with MATE Tweak and Debian
+
 * Sun Nov 06 2022 Nikolay Strelkov <snk@altlinux.org> 22.2.0-alt1
 - Initial build for Sisyphus

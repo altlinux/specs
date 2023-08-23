@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-display
 Version: 22.9.3
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator for Display configuration
 License: GPLv3
@@ -34,8 +35,8 @@ This Ayatana Indicator is designed to be placed on the right side
 of a panel and give the user easy control for changing their
 display settings.
 
-Ayatana Indicators are only available on desktop environments that 
-provide a renderer for system indicators (such as MATE, Xfce, Lomiri, 
+Ayatana Indicators are only available on desktop environments that
+provide a renderer for system indicators (such as MATE, Xfce, Lomiri,
 etc.).
 
 %prep
@@ -43,8 +44,7 @@ etc.).
 
 %build
 %cmake \
-  -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir \
-  -Denable_lomiri_features=OFF \
+  -Denable_lomiri_features=Off \
   -Denable_tests=OFF
 %cmake_build
 
@@ -52,6 +52,12 @@ etc.).
 %cmake_install
 
 find %buildroot -type 'f' -name '*.la' -delete -print
+
+# these translations are ignored by %%find_lang
+rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
+rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
+
+%find_lang %name
 
 %post
 %systemd_user_post %name.service
@@ -62,10 +68,11 @@ find %buildroot -type 'f' -name '*.la' -delete -print
 %postun
 %systemd_user_postun %name.service
 
-%files
+%files -f %name.lang
 %doc COPYING AUTHORS INSTALL.md NEWS README README.md
 %config %_sysconfdir/xdg/autostart/%name.desktop
-%_libexecdir/%name/
+%dir %_libexecdir/%name/
+%_libexecdir/%name/%{name}-service
 %_datadir/glib-2.0/schemas/org.ayatana.indicator.display.gschema.xml
 # This should probably be just org.ayatana.indicator.display,
 # but is called rotation_lock for, likely, legacy reasons. Keep
@@ -76,9 +83,15 @@ find %buildroot -type 'f' -name '*.la' -delete -print
 %dir %_iconsdir/hicolor/scalable
 %dir %_iconsdir/hicolor/scalable/status
 %_iconsdir/hicolor/scalable/status/*.svg
+%dir %_prefix/lib/systemd
+%dir %_userunitdir
 %_userunitdir/%name.service
-%_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Aug 09 2023 Nikolay Strelkov <snk@altlinux.org> 22.9.3-alt2
+- Removed translations which are ignored by %%find_lang
+- Language specific files are declared
+- Move service to /usr/libexec for compatibility with MATE Tweak and Debian
+
 * Sun Jan 29 2023 Nikolay Strelkov <snk@altlinux.org> 22.9.3-alt1
 - Initial build for Sisyphus

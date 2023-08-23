@@ -2,7 +2,7 @@
 
 Name: mate-indicator-applet
 Version: 1.26.0
-Release: alt2
+Release: alt3
 
 Summary: MATE panel indicator applet
 License: GPLv3 AND LGPLv3
@@ -40,7 +40,12 @@ NOCONFIGURE=1 mate-autogen
 %install
 %makeinstall_std
 
-%files
+# this translation is ignored by %%find_lang
+rm -fv %buildroot%_datadir/locale/zh-Hans/LC_MESSAGES/%name.mo
+
+%find_lang %name
+
+%files -f %name.lang
 %doc COPYING COPYING.LGPL AUTHORS NEWS README
 %_libexecdir/%name/
 %_datadir/dbus-1/services/org.mate.panel.applet.IndicatorApplet*.service
@@ -52,9 +57,12 @@ NOCONFIGURE=1 mate-autogen
 %_datadir/mate-panel/applets/org.mate.applets.Indicator.mate-panel-applet
 %_datadir/mate-panel/applets/org.mate.applets.IndicatorAppmenu.mate-panel-applet
 %_datadir/mate-panel/applets/org.mate.applets.IndicatorComplete.mate-panel-applet
-%_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Aug 07 2023 Nikolay Strelkov <snk@altlinux.org> 1.26.0-alt3
+- Removed translation which is ignored by %%find_lang
+- Language specific files are declared
+
 * Fri Feb 17 2023 Nikolay Strelkov <snk@altlinux.org> 1.26.0-alt2
 - bump release to override autoimports package
 

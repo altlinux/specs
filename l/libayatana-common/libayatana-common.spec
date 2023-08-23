@@ -3,11 +3,12 @@
 
 %define lname   %{name}0
 %define soname  %name
+%define moname  ayatana-common
 %define sover   0
 %define typelib %name-gir
 Name: libayatana-common
 Version: 0.9.8
-Release: alt1
+Release: alt2
 
 Summary: Common files and libraries used by Ayatana System Indicators
 License: GPLv3
@@ -94,6 +95,12 @@ This package contains the development files.
 %install
 %cmake_install
 
+# these translations are ignored by %%find_lang
+rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%moname.mo
+rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%moname.mo
+
+%find_lang %moname
+
 # Create empty directory for owning within this package.
 install -d -m 755 %buildroot%_datadir/ayatana/indicators
 
@@ -106,15 +113,16 @@ install -d -m 755 %buildroot%_datadir/ayatana/indicators
 %postun -n %common_name
 %systemd_user_postun ayatana-indicators.target
 
-%files -n %common_name
+%files -n %common_name -f %moname.lang
 %doc COPYING NEWS README.md
 %dir %_datadir/ayatana
 %dir %_datadir/ayatana/indicators
 %dir %_datadir/glib-2.0
 %dir %_datadir/glib-2.0/schemas
 %_datadir/glib-2.0/schemas/org.ayatana.common.gschema.xml
+%dir %_libexecdir/systemd
+%dir %_libexecdir/systemd/user
 %_userunitdir/ayatana-indicators.target
-%_datadir/locale/*/LC_MESSAGES/*.mo
 
 %files -n %lname
 %doc COPYING
@@ -132,5 +140,9 @@ install -d -m 755 %buildroot%_datadir/ayatana/indicators
 %_vapidir/AyatanaCommon.vapi
 
 %changelog
+* Wed Aug 09 2023 Nikolay Strelkov <snk@altlinux.org> 0.9.8-alt2
+- Removed translations which are ignored by %%find_lang
+- Language specific files are declared
+
 * Sun Nov 06 2022 Nikolay Strelkov <snk@altlinux.org> 0.9.8-alt1
 - Initial build for Sisyphus

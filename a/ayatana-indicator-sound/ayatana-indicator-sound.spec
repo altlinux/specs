@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-sound
 Version: 22.9.0
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator for managing system sound
 License: GPLv3
@@ -33,11 +34,11 @@ BuildRequires: zlib-devel
 Requires: gobject-introspection
 
 %description
-This Ayatana Indicator is designed to be placed on the right side of a 
-panel and give the user easy control over the system's sound settings. 
+This Ayatana Indicator is designed to be placed on the right side of a
+panel and give the user easy control over the system's sound settings.
 
-Ayatana Indicator Sound provides easy control of the PulseAudio sound 
-daemon, and integrates well with media players that support the Mpris 
+Ayatana Indicator Sound provides easy control of the PulseAudio sound
+daemon, and integrates well with media players that support the Mpris
 protocol.
 
 %prep
@@ -45,9 +46,8 @@ protocol.
 
 %build
 %cmake \
-  -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir \
   -DCMAKE_INSTALL_LOCALSTATEDIR=%_localstatedir \
-  -Denable_tests=Off                              \
+  -Denable_tests=Off \
   -Denable_lomiri_features=Off
 %cmake_build
 
@@ -58,6 +58,12 @@ protocol.
 mkdir -p %buildroot%_localstatedir/polkit-1/localauthority/10-vendor.d/
 mv -v %buildroot%_localstatedir/lib/polkit-1/localauthority/10-vendor.d/50-org.ayatana.indicator.sound.AccountsService.pkla %buildroot%_localstatedir/polkit-1/localauthority/10-vendor.d/
 
+# these translations are ignored by %%find_lang
+rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
+rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
+
+%find_lang %name
+
 %post
 %systemd_user_post %name.service
 
@@ -67,10 +73,11 @@ mv -v %buildroot%_localstatedir/lib/polkit-1/localauthority/10-vendor.d/50-org.a
 %postun
 %systemd_user_postun %name.service
 
-%files
+%files -f %name.lang
 %doc COPYING AUTHORS INSTALL.md NEWS NEWS.Canonical README.md
 %config %_sysconfdir/xdg/autostart/%name.desktop
-%_libexecdir/%name/
+%dir %_libexecdir/%name/
+%_libexecdir/%name/%{name}-service
 %dir %_datadir/ayatana
 %dir %_datadir/ayatana/indicators
 %_datadir/ayatana/indicators/org.ayatana.indicator.sound
@@ -78,17 +85,23 @@ mv -v %buildroot%_localstatedir/lib/polkit-1/localauthority/10-vendor.d/50-org.a
 %dir %_datadir/dbus-1
 %dir %_datadir/dbus-1/interfaces
 %_datadir/dbus-1/interfaces/org.ayatana.indicator.sound.AccountsService.xml
+%dir %_prefix/lib/systemd
+%dir %_userunitdir
 %_userunitdir/%name.service
 %dir %_datadir/accountsservice/
 %dir %_datadir/accountsservice/interfaces/
 %_datadir/accountsservice/interfaces/org.ayatana.indicator.sound.AccountsService.xml
+%dir %_datadir/polkit-1
+%dir %_datadir/polkit-1/actions
 %_datadir/polkit-1/actions/org.ayatana.indicator.sound.AccountsService.policy
-%dir %_localstatedir/polkit-1/
-%dir %_localstatedir/polkit-1/localauthority/
-%dir %_localstatedir/polkit-1/localauthority/10-vendor.d/
 %_localstatedir/polkit-1/localauthority/10-vendor.d/50-org.ayatana.indicator.sound.AccountsService.pkla
-%_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Aug 08 2023 Nikolay Strelkov <snk@altlinux.org> 22.9.0-alt2
+- Removed translations which are ignored by %%find_lang
+- Language specific files are declared
+- Disown /var/lib/polkit-1 to prevent conflict with polkit-pkla-compat
+- Move service to /usr/libexec for compatibility with MATE Tweak and Debian
+
 * Sun Nov 06 2022 Nikolay Strelkov <snk@altlinux.org> 22.9.0-alt1
 - Initial build for Sisyphus
