@@ -4,9 +4,9 @@
 %set_verify_elf_method strict
 
 Name: mboxgrep
-Version: 0.7.10
+Version: 0.7.12a
 Release: alt1
-Summary: displays e-mail messages matching a pattern
+Summary: Displays e-mail messages matching a pattern
 License: GPL-2.0-or-later
 Group: Text tools
 Url: https://mboxgrep.datatipp.se/
@@ -14,7 +14,9 @@ Vcs: https://git.datatipp.se/dspiljar/mboxgrep
 
 Source: %name-%version.tar
 
-BuildRequires: libpcre-devel
+BuildRequires: bzlib-devel
+BuildRequires: libpcre2-devel
+BuildRequires: zlib-devel
 
 %define valgrind_arches %ix86 x86_64
 %{?!_without_check:%{?!_disable_check:
@@ -36,9 +38,10 @@ mailbox.
 
 %build
 %ifarch %ix86 x86_64
-%add_optflags -fanalyzer -Wno-analyzer-malloc-leak
+%add_optflags -fanalyzer -Wno-analyzer-malloc-leak -Wno-analyzer-null-dereference
 %endif
 %add_optflags %(getconf LFS_CFLAGS) -Wno-unused-result -Wno-unused-but-set-variable
+%autoreconf
 %configure
 %make_build
 
@@ -62,11 +65,14 @@ strace -v -o log mboxgrep --no-duplicates . .gear/mbox > out
  grep '^prlimit.*RLIMIT_NOFILE.*rlim_max=0}' log
 
 %files
-%doc COPYING.md INSTALL NEWS README.md ChangeLog
+%doc *.md
 %_bindir/mboxgrep
 %_infodir/%name.info*
 %_man1dir/%name.1*
 
 %changelog
+* Wed Aug 23 2023 Vitaly Chikunov <vt@altlinux.org> 0.7.12a-alt1
+- (Read-tree) update to 0.7.12a (2023-05-21).
+
 * Sun Feb 05 2023 Vitaly Chikunov <vt@altlinux.org> 0.7.10-alt1
 - First import 0.7.10-0-g0649ac9 (2023-02-04).
