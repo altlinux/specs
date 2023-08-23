@@ -1,17 +1,20 @@
-Name:          vlfeat
-Version:       0.9.21
-Release:       alt1.1
-Summary:       VLFeat is a cross-platform open source collection of vision algorithms
-License:       BSD-2-Clause
-Group:         Sciences/Mathematics
-Url:           https://www.vlfeat.org
-Vcs:           git://github.com/vlfeat/vlfeat.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Name: vlfeat
+Version: 0.9.21
+Release: alt1.2
 
-Source:        %name-%version.tar
-Source1:       CMakeLists.txt
-Source2:       FindVLFeat.cmake
-Patch:         patch.patch
+Summary: VLFeat is a cross-platform open source collection of vision algorithms
+License: BSD-2-Clause
+Group: Sciences/Mathematics
+
+Url: https://www.vlfeat.org
+Vcs: git://github.com/vlfeat/vlfeat.git
+Packager: Pavel Skrylev <majioa@altlinux.org>
+
+Source0: %name-%version.tar
+Source1: CMakeLists.txt
+Source2: FindVLFeat.cmake
+Patch: vlfeat-alt.patch
+
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc
@@ -27,24 +30,21 @@ bottleneck). It bundles a MATLAB toolbox, a clean and portable C library and a
 number of command line utilities. Thus it is possible to use the same algorithm
 both from MATLAB, the command line, and your own programs.
 
+%package -n lib%name
+Group: System/Libraries
+Summary: Library code for %name
 
-%package       -n lib%{name}
-Group:         System/Libraries
-Summary:       Library code for %name
-
-%description   -n lib%{name}
+%description -n lib%name
 %summary.
 
+%package -n lib%name-devel
+Group: Development/C++
+Summary: Development files for %name
 
-%package       -n lib%{name}-devel
-Group:         Development/C++
-Summary:       Development files for %name
+Requires: lib%name = %EVR
 
-Requires:      lib%{name} = %EVR
-
-%description   -n lib%{name}-devel
+%description -n lib%name-devel
 %summary.
-
 
 %prep
 %setup
@@ -74,19 +74,22 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/cmake/Modules/FindVLFeat.cmake
 %files
 %doc README*
 %_bindir/*
-%_mandir/man1/*
-%_mandir/man7/*
+%_man1dir/*
+%_man7dir/*
 
-%files         -n lib%{name}
+%files -n lib%name
 %doc README*
 %_libdir/lib%{name}*.so.*
 
-%files         -n lib%{name}-devel
+%files -n lib%name-devel
 %_includedir/vl
-%_libdir/lib%{name}.so
+%_libdir/lib%name.so
 %_datadir/cmake/Modules/*.cmake
 
 %changelog
+* Wed Aug 23 2023 Michael Shigorin <mike@altlinux.org> 0.9.21-alt1.2
+- spec cleanup
+
 * Wed Aug 23 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.21-alt1.1
 - Fixed build for Elbrus
 
