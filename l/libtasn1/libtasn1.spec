@@ -1,6 +1,6 @@
 Name: libtasn1
 Version: 4.19.0
-Release: alt2
+Release: alt3
 
 Summary: The ASN.1 library used in GNUTLS
 Group: System/Libraries
@@ -15,6 +15,7 @@ Patch3: Fix-build-with-gcc11.patch
 Patch4: Fix-build-with-gcc12.patch
 Patch5: Fix-build-tests-with-gcc12.patch
 Patch6: Fix-build-with-gcc13.patch
+Patch7: Fix-tests-build-with-glibc-2.38.patch
 
 BuildRequires: gtk-doc texinfo help2man
 
@@ -78,10 +79,10 @@ This package contains libtasn1 development documentation.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %def_enable Werror
-%add_optflags -Wno-error=format-truncation
 %autoreconf
 %configure \
 	--disable-static \
@@ -126,6 +127,10 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %docdir/reference/
 
 %changelog
+* Wed Aug 23 2023 Mikhail Efremov <sem@altlinux.org> 4.19.0-alt3
+- Dropped -Wno-error=format-truncation.
+- Fixed tests build with glibc 2.38.
+
 * Thu Jun 22 2023 Mikhail Efremov <sem@altlinux.org> 4.19.0-alt2
 - Fixed build with gcc13.
 
