@@ -1,9 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name ruff
 
+%define bash_completionsdir %_datadir/bash-completion/completions
+%define fish_completionsdir %_datadir/fish/vendor_completions.d
+%define zsh_completionsdir %_datadir/zsh/site-functions
+
 Name: python3-module-%pypi_name
 Version: 0.0.285
-Release: alt1
+Release: alt2
 
 Summary: An extremely fast Python linter, written in Rust
 License: MIT
@@ -35,6 +39,9 @@ cat %SOURCE2 >> .cargo/config.toml
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
+# do not ship dependencies lists
+rm -fv docs/requirements*.txt
+
 %build
 %ifarch aarch64
 # aarch64 needs this flag to avoid the following building errors:
@@ -47,13 +54,33 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %install
 %pyproject_install
 
+%__chmod 755 %buildroot%_bindir/%pypi_name
+
+%__mkdir_p %buildroot%bash_completionsdir
+%__mkdir_p %buildroot%fish_completionsdir
+%__mkdir_p %buildroot%zsh_completionsdir
+
+%buildroot%_bindir/%pypi_name generate-shell-completion bash \
+    > %buildroot%bash_completionsdir/%pypi_name
+%buildroot%_bindir/%pypi_name generate-shell-completion fish \
+    > %buildroot%fish_completionsdir/%pypi_name.fish
+%buildroot%_bindir/%pypi_name generate-shell-completion zsh \
+    > %buildroot%zsh_completionsdir/_%pypi_name
+
 %files
-%doc LICENSE README.md BREAKING_CHANGES.md
-%attr(755,root,root) %_bindir/%pypi_name
+%doc LICENSE README.md BREAKING_CHANGES.md docs/*
+%_bindir/%pypi_name
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%bash_completionsdir/%pypi_name
+%fish_completionsdir/%pypi_name.fish
+%zsh_completionsdir/_%pypi_name
 
 %changelog
+* Wed Aug 23 2023 Anton Zhukharev <ancieg@altlinux.org> 0.0.285-alt2
+- Packaged documentation.
+- Packaged shell completions for bash, fish and zsh.
+
 * Tue Aug 22 2023 Anton Zhukharev <ancieg@altlinux.org> 0.0.285-alt1
 - Built for ALT Sisyphus.
 
