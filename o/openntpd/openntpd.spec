@@ -1,6 +1,6 @@
 Name: openntpd
 Version: 3.9p1
-Release: alt14
+Release: alt15
 
 %define privuser  ntpd
 %define privgroup ntpd
@@ -9,7 +9,7 @@ Release: alt14
 %def_with setproctitle
 
 Summary: Network daemon for synchronize local clock to remote NTP servers
-License: ISC-style
+License: ISC and BSD-2-Clause and BSD-3-Clause
 Group: Networking/Other
 Url: http://www.openntpd.org
 
@@ -22,6 +22,7 @@ Source4: ntpd.service
 # http://www.zip.com.au/~dtucker/openntpd/patches/openntpd-3.9p1-linux-adjtimex.patch
 Patch: openntpd-%version-%release.patch
 Patch1: openntpd-3.9p1-alt-openssl1.1.patch
+Patch2: openntpd-3.9p1-alt-AC_USE_SYSTEM_EXTENSIONS.patch
 
 Provides: ntp-server
 
@@ -56,6 +57,7 @@ initially designed as part of OpenBSD.
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
 bzip2 -9k ChangeLog
 
 %build
@@ -98,6 +100,11 @@ install -pD -m644 %_sourcedir/ntpd.service %buildroot%systemd_unitdir/ntpd.servi
 %doc CREDITS ChangeLog.bz2 LICENCE README
 
 %changelog
+* Wed Aug 23 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.9p1-alt15
+- Fixed build with glibc 2.38 by utilizing the autoconf
+  AC_USE_SYSTEM_EXTENSIONS macro, which activates the _GNU_SOURCE extensions.
+- Fixed the License: tag (ISC-style -> ISC and BSD-2-Clause and BSD-3-Clause).
+
 * Sat Feb 09 2019 Anton Midyukov <antohami@altlinux.org> 3.9p1-alt14
 - Fix ntpd.service (Closes: 35979)
 
