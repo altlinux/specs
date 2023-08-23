@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 6.3.20220618
-Release: alt1
+Release: alt2
 
 %define rootdatadir /lib
 
@@ -39,6 +39,71 @@ BuildRequires: gcc-c++
 BuildRequires: libgpm-devel gcc-c++
 %endif
 
+%define ncurses_descr\
+The curses library routines are a terminal-independent method of updating\
+character screens with reasonable optimization.  The %name (new curses)\
+library is a freely distributable replacement for the discontinued 4.4BSD\
+classic curses library.
+
+%define terminfo_descr\
+Terminfo is a data base describing terminals, used by screen-oriented\
+programs and libraries such as curses(3X).  Terminfo describes terminals\
+by giving a set of capabilities which they have, by specifying how to\
+perform screen operations, and by specifying padding requirements and\
+initialization sequences.
+
+%define ABI 6
+# define OLDABI to 6 when ABI increases, it's nil for now
+#define OLDABI 5
+%define libpackage(od:s)\
+%global libpkgname lib%{!-d:%1%{!?-o:%ABI}%{?-o:%{?OLDABI}}}%{-d:%1-devel%{-s:-static}}\
+%global libsummary %{?-o: legacy}%{-d:%{-s: static} development environment}\
+%%package -n %libpkgname\
+Group: %{!?-o:%{?-d:Development/%{-d*}}}%{!?-o:%{!?-d:System/Libraries}}%{?-o:System/Legacy libraries}\
+%{expand:%%{?%{libpkgname}_extra}}\
+Summary: Ncurses %* library%libsummary\
+%%description -n %libpkgname\
+%ncurses_descr\
+\
+This package contains %* library%libsummary\
+%nil
+#{!?-d:%{!?-o:Provides: lib%1 = %version-%release}}\
+
+%define libtinfo6_extra Requires(pre,postun): terminfo = %EVR
+%libpackage tinfo low-level terminfo
+%libpackage -o tinfo low-level terminfo
+%libpackage -dC tinfo low-level terminfo
+%libpackage -sdC tinfo low-level terminfo
+
+%libpackage tic terminfo manipulation
+%libpackage -o tic terminfo manipulation
+%libpackage -dC tic terminfo manipulation
+
+%define libncurses6_extra Provides: %name = %EVR
+%libpackage %name base
+%libpackage -o %name base
+%libpackage -dC %name base
+%libpackage -sdC %name base
+
+%libpackage %{name}++ C++ bindings
+%libpackage -o %{name}++ C++ bindings
+%libpackage -dC++ %{name}++ C++ bindings
+%libpackage -sdC++ %{name}++ C++ bindings
+
+%if_with utf8
+%define libncursesw6_extra Provides: %{name}w = %EVR
+%libpackage %{name}w base library (widechar support)
+%libpackage -o %{name}w base (widechar support)
+%libpackage -dC %{name}w base (widechar support)
+%libpackage -sdC %{name}w base (widechar support)
+
+%libpackage %{name}w++ C++ bindings (widechar support)
+%libpackage -o %{name}w++ C++ bindings (widechar support)
+%libpackage -dC++ %{name}w++ C++ bindings (widechar support)
+%libpackage -sdC++ %{name}w++ C++ bindings (widechar support)
+%endif
+
+
 %package -n terminfo
 Summary: Descriptions of common terminal types
 Group: System/Base
@@ -54,30 +119,9 @@ Provides: %name-extraterms = %version
 Obsoletes: %name-extraterms
 Requires(pre,postun): terminfo = %version-%release
 
-%package -n libtinfo
-Summary: A low-level terminfo shared library
-Group: System/Libraries
-Requires(pre,postun): terminfo = %version-%release
-
-%package -n libtinfo-devel
-Summary: A low-level terminfo development library
-Group: Development/C
-Conflicts: libtermcap-devel < 0:2.0.8-ipl24mdk
-# due to incorrect terminfo handling in old libgpm.
-Conflicts: libgpm < 1.20.1-alt3.1
-Requires: libtinfo = %version-%release
-
-%package -n libtinfo-devel-static
-Summary: A low-level terminfo static library
-Group: Development/C
-Requires: libtinfo-devel = %version-%release
-
 %package -n termutils
 Summary: Basic terminal utilities
 Group: System/Base
-Requires: terminfo = %version-%release
-Requires: libtinfo = %version-%release
-Requires: libtic = %version-%release
 Provides: /bin/tput
 
 %package -n termutils-devel
@@ -85,215 +129,31 @@ Summary: Additional terminal utilities
 Group: Development/Other
 Requires: termutils = %version-%release
 
-%package -n libtic
-Summary: A low-level terminfo manipulation shared library
-Group: System/Libraries
-Requires: libtinfo = %version-%release
-
-%package -n libtic-devel
-Summary: A low-level terminfo manipulation development library
-Group: Development/C
-Requires: libtic = %version-%release
-Requires: libtinfo-devel = %version-%release
-
-%package -n lib%name
-Summary: A CRT screen handling and optimization libraries
-Group: System/Libraries
-Provides: libncurses.so.4 libncurses.so.3
-Requires(pre,postun): libtinfo = %version-%release
-Conflicts: %name < %version-%release
-
-%package -n lib%name-devel
-Summary: Development files for applications which use %name
-Group: Development/C
-Requires: lib%name = %version-%release
-Requires: libtinfo-devel = %version-%release
-Provides: %name-devel = %version-%release
-Obsoletes: %name-devel
-
-%package -n lib%name-devel-static
-Summary: Development static %name libraries
-Group: Development/C
-Requires: lib%name-devel = %version-%release
-Requires: libtic-devel = %version-%release
-Requires: libtinfo-devel-static = %version-%release
-%if_with utf8
-Requires: lib%{name}w-devel = %version-%release
-%endif
-
-%package -n lib%name++
-Summary: C++ interface to lib%name
-Group: System/Libraries
-Requires: lib%name = %version-%release
-
-%package -n lib%name++-devel
-Summary: Development files for applications which use lib%name++
-Group: Development/C++
-Requires: lib%name++ = %version-%release
-Requires: lib%name-devel = %version-%release
-
-%package -n lib%name++-devel-static
-Summary: Development static lib%name++ library
-Group: Development/C++
-Requires: lib%name++-devel = %version-%release
-Requires: lib%name-devel-static = %version-%release
-
-# UTF-8 extentions
-%if_with utf8
-%package -n lib%{name}w
-Summary: A CRT screen handling and optimization libraries with wide character support
-Group: System/Libraries
-Requires(pre,postun): libtinfo = %version-%release
-
-%package -n lib%{name}w-devel
-Summary: Development files for applications which use %name (widechar version)
-Group: Development/C
-Requires: lib%{name}w = %version-%release
-Requires: lib%name-devel = %version-%release
-%endif
-
 %description
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
+%ncurses_descr
 
 %description -n terminfo
-Terminfo is a data base describing terminals, used by screen-oriented
-programs and libraries such as curses(3X).  Terminfo describes terminals
-by giving a set of capabilities which they have, by specifying how to
-perform screen operations, and by specifying padding requirements and
-initialization sequences.
+%terminfo_descr
 
 This package contains what should be a reasonable subset of terminal
 definitions, including: ansi, dumb, linux, rxvt, screen, sun, vt100,
 vt102, vt220, vt52, and xterm.
 
 %description -n terminfo-extra
-Terminfo is a data base describing terminals, used by screen-oriented
-programs and libraries such as curses(3X).  Terminfo describes terminals
-by giving a set of capabilities which they have, by specifying how to
-perform screen operations, and by specifying padding requirements and
-initialization sequences.
+%terminfo_descr
 
 This package contains all of the terminal definitions not found in
 the terminfo package.  There are far too many to list here.
 
-%description -n libtinfo
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
-
-This package contains a low-level terminfo shared library.
-
-%description -n libtinfo-devel
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
-
-This package contains a low-level terminfo development library and include
-files.
-
-%description -n libtinfo-devel-static
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
-
-This package contains a low-level terminfo static library.
-
-%description -n libtic
-lowlevel terminfo manipulation shared library
-
-%description -n libtic-devel
-lowlevel terminfo manipulation development library
-
 %description -n termutils
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
+%ncurses_descr
 
 This package contains basic terminal manipulation utilities.
 
 %description -n termutils-devel
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
+%ncurses_descr
 
 This package contains additional terminal manipulation utilities.
-
-%description -n lib%name
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
-
-%description -n lib%name-devel
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
-
-This package contains include files for developing applications that use
-the %name CRT screen handling and optimization package.
-
-%description -n lib%name-devel-static
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
-
-This package contains staic libraries for developing statically linked
-applications that use the %name CRT screen handling and optimization package.
-
-%description -n lib%name++
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
-
-This package contains a c++ interface shared library.
-
-%description -n lib%name++-devel
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
-
-This package contains include files for developing applications that use
-c++ interface to ncurses routines.
-
-%description -n lib%name++-devel-static
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
-
-This package contains staic library for developing statically linked
-applications that use c++ interface to ncurses routines.
-
-#UTF8 extentions
-%if_with utf8
-%description -n lib%{name}w
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
-This package contains a %name library with wide character support.
-
-%description -n lib%{name}w-devel
-The curses library routines are a terminal-independent method of updating
-character screens with reasonable optimization.  The %name (new curses)
-library is a freely distributable replacement for the discontinued 4.4BSD
-classic curses library.
-
-This package contains include files for developing applications that use
-the %name CRT screen handling and optimization package (widechar version).
-%endif
 
 %prep
 %setup -a100
@@ -320,157 +180,68 @@ export \
 	ac_cv_prog_MAKE_LOWER_TAGS=yes \
 	ac_cv_prog_MAKE_UPPER_TAGS=yes \
 	ac_cv_prog_MAN=man \
-	#
+        %nil
 
 %define _configure_script ../configure
-rm -rf build-classic build-utf8
-mkdir -p build-classic build-utf8
+
+%define configopts --program-transform-name= \\\
+	%{subst_with shared} \\\
+	%{subst_with normal} \\\
+	%{subst_with debug} \\\
+	%{subst_with profile} \\\
+	%{subst_with ada} \\\
+	%{subst_with libtool} \\\
+	%{subst_with gpm} \\\
+        %if_with cxx \
+	--with-cxx-shared \\\
+        %endif \
+	--without-dlsym \\\
+	--with-termlib=tinfo \\\
+	--with-ticlib=tic \\\
+	--with-ospeed="unsigned int" \\\
+	--with-terminfo-dirs="%rootdatadir/terminfo:%_datadir/terminfo" \\\
+	--disable-termcap \\\
+	--enable-const \\\
+	--enable-hard-tabs \\\
+	--enable-no-padding \\\
+	--enable-sigwinch \\\
+	--enable-echo \\\
+	--enable-warnings \\\
+	--with-pkg-config-libdir=%_pkgconfigdir \\\
+	--disable-rpath \\\
+	--disable-root-environ \\\
+	--disable-home-terminfo \\\
+        --disable-stripping \\\
+	--with-chtype=long \\\
+        %nil
+
+%define abi5opts --with-abi-version=5 --disable-pc-files
+%define abi6opts --enable-pc-files
+
+%define configure_flavour(d:) mkdir -p build-%{-d*} && cd build-%{-d*} && %configure %configopts %* && cd ..
 
 # configure classic version
-pushd build-classic
-%configure \
-	--program-transform-name= \
-	%{subst_with shared} \
-	%{subst_with normal} \
-	%{subst_with debug} \
-	%{subst_with profile} \
-	%{subst_with cxx} \
-	%{subst_with ada} \
-	%{subst_with libtool} \
-	%{subst_with gpm} \
-	--without-dlsym \
-	--with-termlib=tinfo \
-	--with-ticlib=tic \
-	--with-ospeed="unsigned int" \
-	--with-terminfo-dirs="%rootdatadir/terminfo:%_datadir/terminfo" \
-	--disable-termcap \
-	--enable-const \
-	--enable-hard-tabs \
-	--enable-no-padding \
-	--enable-sigwinch \
-	--enable-echo \
-	--enable-warnings \
-	--enable-pc-files \
-	--with-pkg-config-libdir=%_pkgconfigdir \
-	--disable-rpath \
-	--disable-root-environ \
-	--disable-home-terminfo \
-	--with-chtype=long \
-	--with-abi-version=5 \
-	#
-
-popd # build-classic
-
-# configure utf8 version
+%configure_flavour -d classic5 -- %abi5opts
+%make_build -C build-classic5
+%configure_flavour -d classic -- %abi6opts
+%make_build -C build-classic
 %if_with utf8
-pushd build-utf8
-%configure \
-	--program-transform-name= \
-	%{subst_with shared} \
-	%{subst_with normal} \
-	%{subst_with debug} \
-	%{subst_with profile} \
-	%{subst_with cxx} \
-	%{subst_with ada} \
-	%{subst_with libtool} \
-	%{subst_with gpm} \
-	--without-dlsym \
-	--with-termlib=tinfo \
-	--with-ticlib=tic \
-	--with-ospeed="unsigned int" \
-	--with-terminfo-dirs="%rootdatadir/terminfo:%_datadir/terminfo" \
-	--disable-termcap \
-	--enable-const \
-	--enable-hard-tabs \
-	--enable-no-padding \
-	--enable-sigwinch \
-	--enable-echo \
-	--enable-warnings \
-	--enable-pc-files \
-	--with-pkg-config-libdir=%_pkgconfigdir \
-	--disable-rpath \
-	--disable-root-environ \
-	--disable-home-terminfo \
-	--with-chtype=long \
-	--enable-widec \
-	--with-abi-version=5 \
-	#
-# Workaround for utf8, rename libtinfow to libtinfo, addon for ncurses-*-alt-utf8-fix.patch
-# will be removed when Thomas finish termlib=name feature
-#    find -type f -name Makefile -print0 |
-#	xargs -r0 subst s,tinfow,tinfo,g
-
-popd # build-utf8
-%endif # with_utf8
-
-# build classic version
-pushd build-classic
-#NO SMP
-%make_build
-
-%if_with cxx
-# Build c++ shared library.
-pushd lib
-g++ -shared -Wl,-soname,libncurses++.so.5 -o libncurses++.so.%version \
-	-Wl,-whole-archive libncurses++.a -Wl,-no-whole-archive \
-	-L. -lform -lmenu -lpanel -lncurses -ltinfo
-ln -s libncurses++.so.%version libncurses++.so.5
-ln -s libncurses++.so.5 libncurses++.so
-popd # lib
-# Rebuild c++ demo.
-rm -f c++/demo
-%make_build -C c++
-%endif # with_cxx
-popd # build-classic
-
-# build utf8 version
-%if_with utf8
-pushd build-utf8
-#NO SMP
-%make_build
-
-%if_with cxx
-# Build c++ shared library.
-pushd lib
-g++ -shared -Wl,-soname,libncurses++w.so.5 -o libncurses++w.so.%version \
-	-Wl,-whole-archive libncurses++w.a -Wl,-no-whole-archive \
-	-L. -lformw -lmenuw -lpanelw -lncursesw -ltinfo
-ln -s libncurses++w.so.%version libncurses++w.so.5
-ln -s libncurses++w.so.5 libncurses++w.so
-popd # lib
-# Rebuild c++ demo.
-rm -f c++/demo
-%make_build -C c++
-%endif # with_cxx
-popd # build-utf8
+%configure_flavour -d utf85 -- --enable-widec %abi5opts
+%make_build -C build-utf85
+%configure_flavour -d utf8 -- --enable-widec %abi6opts
+%make_build -C build-utf8
 %endif # with_utf8
 
 %install
 #install classic ncurses library version
-pushd build-classic
-%makeinstall_std includedir=%_includedir/%name
+%makeinstall_std -C build-classic5 includedir=%_includedir/%name
+%makeinstall_std -C build-classic includedir=%_includedir/%name
 
-%if_with cxx
-# Install c++ shared library.
-install -pm644 lib/libncurses++.so.%version %buildroot%_libdir/
-ln -s libncurses++.so.%version %buildroot%_libdir/libncurses++.so.5
-ln -s libncurses++.so.5 %buildroot%_libdir/libncurses++.so
-%endif # with_cxx
-popd # build-classic
-
-#install utf8 ncurses library version
 %if_with utf8
-pushd build-utf8
-%makeinstall_std includedir=%_includedir/%name
-
-ln -s %name %buildroot%_includedir/%{name}w
-%if_with cxx
-# Install c++ shared library.
-install -pm644 lib/libncurses++w.so.%version %buildroot%_libdir/
-ln -s libncurses++w.so.%version %buildroot%_libdir/libncurses++w.so.5
-ln -s libncurses++w.so.5 %buildroot%_libdir/libncurses++w.so
-%endif # with_cxx
-popd # build-utf8
+%makeinstall_std -C build-utf85 includedir=%_includedir/%name
+find build-utf8 | xargs touch
+%makeinstall_std -C build-utf8 includedir=%_includedir/%name
+ln -rs %buildroot%_includedir/%name %buildroot%_includedir/%{name}w
 %endif # with_utf8
 
 # The resetall script.
@@ -481,7 +252,7 @@ for n in curses eti form menu panel term termcap unctrl; do
 	ln -snf "%name/$n.h" "%buildroot%_includedir/$n.h"
 done
 
-# Relocate libtinfo from %_libdir/ to /lib/.
+# Relocate libtinfo from _libdir/ to /_lib/.
 for f in %buildroot%_libdir/libtinfo*.so; do
 	t=$(readlink "$f")
 	ln -snf "$(relative /%_lib/"$t" %_libdir/)" "$f"
@@ -492,7 +263,7 @@ mv %buildroot%_libdir/libtinfo*.so.* %buildroot/%_lib/
 ln -snf lib%name.so %buildroot%_libdir/libcurses.so
 
 # Library compatibility symlinks.
-t=$(readlink "%buildroot%_libdir/lib%name.so")
+t=$(readlink "%buildroot%_libdir/lib%name.so.5")
 for v in 4 3; do
 	ln -s "$t" "%buildroot%_libdir/lib%name.so.$v"
 done
@@ -547,7 +318,7 @@ for i in ncurses ncursesw; do
 	rm -f %buildroot%_libdir/lib$i.so
 	cat > %buildroot%_libdir/lib$i.so <<-EOF
 	/* GNU ld script */
-	GROUP(%_libdir/lib$i.so.5 -ltinfo)
+	GROUP(%_libdir/lib$i.so.6 -ltinfo)
 	EOF
 done
 
@@ -571,17 +342,12 @@ done
 %_datadir/terminfo/c/console
 
 # LIBTINFO
-%files -n libtinfo
-/%_lib/libtinfo.*
+%files -n libtinfo%ABI
+/%_lib/libtinfo.so.%{ABI}*
 
-%files -n libtic
-%_libdir/libtic.so.*
-
-%files -n libtic-devel
-%_libdir/libtic.so
-%_pkgconfigdir/tic.pc
-%_includedir/%name/term_entry.h
-%_includedir/%name/nc_tparm.h
+%files -n libtinfo%{?OLDABI}
+/%_lib/libtinfo.so.*
+%exclude /%_lib/libtinfo.so.%{ABI}*
 
 %files -n libtinfo-devel
 %_libdir/libtinfo.so
@@ -595,6 +361,19 @@ done
 
 %files -n libtinfo-devel-static
 %_libdir/libtinfo.a
+
+%files -n libtic%ABI
+%_libdir/libtic.so.%{ABI}*
+
+%files -n libtic%{?OLDABI}
+%_libdir/libtic.so.*
+%exclude %_libdir/libtic.so.%{ABI}*
+
+%files -n libtic-devel
+%_libdir/libtic.so
+%_pkgconfigdir/tic.pc
+%_includedir/%name/term_entry.h
+%_includedir/%name/nc_tparm.h
 
 # TERMUTILS
 %files -n termutils
@@ -626,13 +405,18 @@ done
 %_man1dir/tic.*
 
 # LIBNCURSES
-%files -n lib%name
-%_libdir/lib*[musl].so.*
+%files -n lib%name%ABI
+%_libdir/lib*[musl].so.%{ABI}*
 %dir %_docdir/%name-%version/
 %_docdir/%name-%version/[A-Z]*
 
+%files -n lib%{name}%{?OLDABI}
+%exclude %_libdir/lib*[musl].so.%{ABI}*
+%_libdir/lib*[musl].so.*
+
 %files -n lib%name-devel
-%_bindir/%{name}5-config
+%_bindir/%{name}*6-config
+%exclude %_bindir/%{name}5-config
 %_libdir/lib*[musl].so
 %_pkgconfigdir/*[musl].pc
 %_includedir/*
@@ -653,7 +437,6 @@ done
 %_man3dir/*
 %dir %_docdir/%name-%version/
 %_docdir/%name-%version/[a-z]*
-#%doc test
 
 %files -n lib%name-devel-static
 %_libdir/lib*.a
@@ -664,8 +447,11 @@ done
 
 # LIBNCURSES++
 %if_with cxx
-%files -n lib%name++
-%_libdir/libncurses++*.so.*
+%files -n lib%name++%ABI
+%_libdir/libncurses++*.so.6*
+
+%files -n lib%name++%{?OLDABI}
+%_libdir/libncurses++*.so.5*
 
 %files -n lib%name++-devel
 %_libdir/libncurses++*.so
@@ -681,7 +467,11 @@ done
 %endif # with_cxx
 
 %if_with utf8
-%files -n lib%{name}w
+%files -n lib%{name}w%ABI
+%_libdir/lib*[musl]w.so.%{ABI}*
+
+%files -n lib%{name}w%{?OLDABI}
+%exclude %_libdir/lib*[musl]w.so.%{ABI}*
 %_libdir/lib*[musl]w.so.*
 
 %files -n lib%{name}w-devel
@@ -692,6 +482,10 @@ done
 %endif # with_utf8
 
 %changelog
+* Thu Jul 27 2023 Fr. Br. George <george@altlinux.org> 6.3.20220618-alt2
+- Separate API5 and API6 versions (Closes: #44811)
+- Provide semi-automatic package spec generators
+
 * Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 6.3.20220618-alt1
 - Autobuild version bump to 6.3.20220618
 
