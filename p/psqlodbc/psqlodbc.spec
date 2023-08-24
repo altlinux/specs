@@ -1,9 +1,9 @@
 Name: psqlodbc
-Version: 10.03.0000
+Version: 15.00.0000
 Release: alt1
 
 Summary: The official PostgreSQL ODBC Driver
-License: LGPL
+License: LGPLv2+
 Group: Databases
 
 Url: http://www.postgresql.org
@@ -38,6 +38,10 @@ The official PostgreSQL ODBC Driver
 %doc docs/*
 
 %changelog
+* Thu Aug 24 2023 Michael Shigorin <mike@altlinux.org> 15.00.0000-alt1
+- 15.00.0000 (closes: #47251)
+- clarified License:
+
 * Tue Jul 10 2018 Michael Shigorin <mike@altlinux.org> 10.03.0000-alt1
 - initial release (based on mageia package)
 
