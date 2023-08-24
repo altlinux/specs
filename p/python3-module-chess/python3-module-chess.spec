@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.9.4
+Version: 1.10.0
 Release: alt1
 
 Summary: A chess library for Python
@@ -46,5 +46,8 @@ tablebase probing, Syzygy tablebase probing, and UCI/XBoard engine communication
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Aug 07 2023 Leonid Znamenok <respublica@altlinux.org> 1.10.0-alt1
+- New version 1.10.0.
+
 * Thu Apr 06 2023 Leonid Znamenok <respublica@altlinux.org> 1.9.4-alt1
 - Initial build for Sisyphus
