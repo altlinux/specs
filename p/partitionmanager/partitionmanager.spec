@@ -2,7 +2,7 @@
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 23.04.3
+Version: 23.08.0
 Release: alt1
 
 Summary: KDE Partition Manager
@@ -66,6 +66,9 @@ file systems.
 %doc README*
 
 %changelog
+* Thu Aug 24 2023 Yuri N. Sedunov <aris@altlinux.org> 23.08.0-alt1
+- 23.08.0
+
 * Thu Jul 06 2023 Yuri N. Sedunov <aris@altlinux.org> 23.04.3-alt1
 - 23.04.3
 
