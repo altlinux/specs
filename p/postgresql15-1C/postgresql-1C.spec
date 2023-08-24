@@ -11,8 +11,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     15
-%define postgresql_minor     3
-%define postgresql_altrel    4
+%define postgresql_minor     4
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -955,6 +955,10 @@ fi
 %endif
 
 %changelog
+* Thu Aug 24 2023 Alexei Takaseev <taf@altlinux.org> 15.4-alt1
+- 15.4
+- Update 1C patch
+
 * Sun Aug 13 2023 Alexei Takaseev <taf@altlinux.org> 15.3-alt4
 - Change BR llvm 13.0 -> llvm15.0
 
