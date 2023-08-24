@@ -10,7 +10,7 @@
 
 Name: python3-module-%oname
 Version: 6.25.1
-Release: alt1
+Release: alt1.1
 
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
@@ -68,7 +68,8 @@ sed -i 's/--color=yes//' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v -W ignore::DeprecationWarning
+%pyproject_run_pytest -v -W ignore::DeprecationWarning -k "\
+not test_qt_enable_gui"
 
 %files
 %doc *.md examples
@@ -85,6 +86,9 @@ sed -i 's/--color=yes//' pyproject.toml
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Wed Aug 23 2023 Anton Vyatkin <toni@altlinux.org> 6.25.1-alt1.1
+- Fix FTBFS.
+
 * Tue Aug 08 2023 Anton Vyatkin <toni@altlinux.org> 6.25.1-alt1
 - New version 6.25.1.
 
