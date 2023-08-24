@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
 Version: 1.71.1
-Release: alt1
+Release: alt2
 Summary: The Rust Programming Language
 
 %define r_ver 1.70.0
@@ -87,6 +87,9 @@ BuildRequires: rust rust-cargo
 %endif
 %ifarch ppc64le
 %define r_arch powerpc64le
+%endif
+%ifarch loongarch64
+%define r_arch loongarch64
 %endif
 
 %ifarch armh
@@ -455,6 +458,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Wed Aug 23 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.71.1-alt2
+- spec: support LoongArch architecture (lp64d ABI).
+
 * Thu Aug 03 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.71.1-alt1
 - New version (1.71.1).
 - Security fixes:
