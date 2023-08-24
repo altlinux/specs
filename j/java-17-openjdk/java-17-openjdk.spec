@@ -270,7 +270,7 @@
 # New Version-String scheme-style defines
 %global featurever 17
 %global interimver 0
-%global updatever 7
+%global updatever 8
 %global patchver 0
 %global buildver 7
 
@@ -551,18 +551,8 @@ BuildRequires: gcc >= 4.8.3-8
 BuildRequires: systemtap-sdt-devel
 %endif
 
-# this is always built, also during debug-only build
-# when it is built in debug-only this package is just placeholder
-Requires: fontconfig
-Requires: fonts-type1-xorg
-# Require libXcomposite explicitly since it's only dynamically loaded
-# at runtime. Fixes screenshot issues. See JDK-8150954.
-Requires: libXcomposite
-# Requires rest of java
 Requires: %{name}-headless = %{epoch}:%{version}-%{release}
 Requires: %{name}-headless%{?_isa} = %{epoch}:%{version}-%{release}
-# for java-X-openjdk package's desktop binding
-Requires: gtk3-demo libgail3 libgtk+3 libgtk+3-schemas
 
 # Standard JPackage base provides
 Provides: jre-%{javaver} = %{epoch}:%{version}-%{release}
@@ -629,20 +619,6 @@ Requires: javapackages-filesystem
 # Require zone-info data provided by tzdata-java sub-package
 # 2020a required as of JDK-8243541 in 11.0.8+4
 Requires: tzdata-java >= 2020b
-# for support of kernel stream control
-# libsctp.so.1 is being `dlopen`ed on demand
-Requires: liblksctp lksctp-tools
-# tool to copy jdk's configs - should be Recommends only, but then only dnf/yum enforce it,
-# not rpm transaction and so no configs are persisted when pure rpm -u is run. It may be
-# considered as regression
-#Requires: copy-jdk-configs >= 3.3
-#Requires: copy-jdk-configs
-# for printing support
-Requires: libcups
-# Post requires alternatives to install tool alternatives
-# Postun requires alternatives to uninstall tool alternatives
-# for optional support of kernel stream control, card reader and printing bindings
-Requires: liblksctp lksctp-tools libpcsclite
 
 # Standard JPackage base provides
 Provides: jre-%{javaver}-%{origin}-headless = %{epoch}:%{version}-%{release}
@@ -687,7 +663,7 @@ Summary: %{origin_nice} %{featurever} Development Environment
 Group: Development/Java
 
 # Requires base package
-Requires:         %{name} = %{epoch}:%{version}-%{release}
+Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires: %{name}-headless%{?_isa} = %{epoch}:%{version}-%{release}
 # Post requires alternatives to install tool alternatives
 # Postun requires alternatives to uninstall tool alternatives
@@ -2018,6 +1994,18 @@ fi
 %endif
 
 %changelog
+* Thu Aug 24 2023 Andrey Cherepanov <cas@altlinux.org> 0:17.0.8.0.7-alt1
+- New version.
+- Security fixes:
+  + CVE-2023-22006
+  + CVE-2023-22036
+  + CVE-2023-22041
+  + CVE-2023-22044
+  + CVE-2023-22045
+  + CVE-2023-22049
+  + CVE-2023-25193
+- Remove explicit requirements (ALT #47301).
+
 * Sat Jul 29 2023 Andrey Cherepanov <cas@altlinux.org> 0:17.0.7.0.7-alt1
 - New version.
 - Security fixes:
