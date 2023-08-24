@@ -1,6 +1,6 @@
 Name: udev-rule-generator
 Epoch: 2
-Version: 1.4
+Version: 1.5
 Release: alt1
 Summary: Common package for udev rule generator
 Url: https://packages.altlinux.org/en/Sisyphus/srpms/%name
@@ -52,8 +52,8 @@ install -p -m755 udevd-final.init %buildroot%_initdir/udevd-final
 install -p -m644 udevd-final.service %buildroot%_unitdir/udevd-final.service
 
 # Create ghost files
-touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-net.rules
-touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-cd.rules
+#touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-net.rules
+#touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-cd.rules
 
 # udev rule generator
 install -p -m644 rule_generator.functions %buildroot/lib/udev/
@@ -62,7 +62,7 @@ install -p -m644 udev-rule-generator.sysconfig %buildroot%_sysconfdir/sysconfig/
 install -p -m644 75-persistent-net-generator.rules %buildroot/lib/udev/rules.d/
 install -p -m755 write_cd_rules %buildroot/lib/udev/
 install -p -m644 75-cd-aliases-generator.rules %buildroot/lib/udev/rules.d/
-ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-setup-link.rules
+#ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-setup-link.rules
 
 %preun
 %preun_service udevd-final
@@ -71,7 +71,11 @@ ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-setup-link.rules
 %post_service udevd-final
 
 %post net
+ln -sf /dev/null %_sysconfdir/udev/rules.d/80-net-setup-link.rules
 %post_service udevd-final
+
+%preun net
+rm -f %_sysconfdir/udev/rules.d/80-net-setup-link.rules
 
 %files
 /lib/udev/rule_generator.functions
@@ -79,19 +83,24 @@ ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-setup-link.rules
 %_unitdir/udevd-final.service
 
 %files cdrom
-%config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-cd.rules
+#config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-cd.rules
 /lib/udev/rules.d/75-cd-aliases-generator.rules
 /lib/udev/write_cd_rules
 
 %files net
-%config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-net.rules
+#config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-net.rules
+#_sysconfdir/udev/rules.d/80-net-setup-link.rules
 %config(noreplace) %verify(not md5 size mtime) %_sysconfdir/sysconfig/udev-rule-generator
-%_sysconfdir/udev/rules.d/80-net-setup-link.rules
 /lib/udev/rules.d/75-persistent-net-generator.rules
 /lib/udev/write_net_rules
 
-
 %changelog
+* Wed Aug 23 2023 Sergey Y. Afonin <asy@altlinux.org> 2:1.5-alt1
+- used "ether" by default again
+- workaround for ALT #47262:
+  + ghost rules are not packaged in /etc/udev/rules.d
+  + the stub file /etc/udev/rules.d/80-net-setup-link.rules is created in a post script
+
 * Sun Apr 26 2020 Sergey Y. Afonin <asy@altlinux.org> 2:1.4-alt1
 - renamed sysconfig/write_net_rules to sysconfig/udev-rule-generator
 - renaming interfaces if 70-persistent-net.rules recently changed (ALT #32166)
