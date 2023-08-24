@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 6.3.20220618
-Release: alt2
+Release: alt3
 
 %define rootdatadir /lib
 
@@ -53,23 +53,24 @@ perform screen operations, and by specifying padding requirements and\
 initialization sequences.
 
 %define ABI 6
-# define OLDABI to 6 when ABI increases, it's nil for now
-#define OLDABI 5
+%define OLDSO 5
+# define OLDABI to OLDSO when ABI increases, it's nil for now
+#define OLDABI %%OLDSO
 %define libpackage(od:s)\
-%global libpkgname lib%{!-d:%1%{!?-o:%ABI}%{?-o:%{?OLDABI}}}%{-d:%1-devel%{-s:-static}}\
+%global libpkgname lib%{!-d:%{1}%{!?-o:%ABI}%{?-o:%{?OLDABI}}}%{-d:%{1}-devel%{-s:-static}}\
 %global libsummary %{?-o: legacy}%{-d:%{-s: static} development environment}\
 %%package -n %libpkgname\
 Group: %{!?-o:%{?-d:Development/%{-d*}}}%{!?-o:%{!?-d:System/Libraries}}%{?-o:System/Legacy libraries}\
-%{expand:%%{?%{libpkgname}_extra}}\
+%{expand:%%{?libpackage_extra}}\
 Summary: Ncurses %* library%libsummary\
 %%description -n %libpkgname\
 %ncurses_descr\
 \
 This package contains %* library%libsummary\
+%undefine libpackage_extra\
 %nil
-#{!?-d:%{!?-o:Provides: lib%1 = %version-%release}}\
 
-%define libtinfo6_extra Requires(pre,postun): terminfo = %EVR
+%define libpackage_extra Requires(pre,postun): terminfo = %EVR
 %libpackage tinfo low-level terminfo
 %libpackage -o tinfo low-level terminfo
 %libpackage -dC tinfo low-level terminfo
@@ -79,7 +80,7 @@ This package contains %* library%libsummary\
 %libpackage -o tic terminfo manipulation
 %libpackage -dC tic terminfo manipulation
 
-%define libncurses6_extra Provides: %name = %EVR
+%define libpackage_extra Provides: %name = %EVR
 %libpackage %name base
 %libpackage -o %name base
 %libpackage -dC %name base
@@ -91,16 +92,19 @@ This package contains %* library%libsummary\
 %libpackage -sdC++ %{name}++ C++ bindings
 
 %if_with utf8
-%define libncursesw6_extra Provides: %{name}w = %EVR
+%define libpackage_extra Provides: %{name}w = %EVR
 %libpackage %{name}w base library (widechar support)
 %libpackage -o %{name}w base (widechar support)
+%define libpackage_extra Requires: libncurses-devel = %EVR
 %libpackage -dC %{name}w base (widechar support)
 %libpackage -sdC %{name}w base (widechar support)
 
-%libpackage %{name}w++ C++ bindings (widechar support)
-%libpackage -o %{name}w++ C++ bindings (widechar support)
-%libpackage -dC++ %{name}w++ C++ bindings (widechar support)
-%libpackage -sdC++ %{name}w++ C++ bindings (widechar support)
+%libpackage %{name}++w C++ bindings (widechar support)
+%libpackage -o %{name}++w C++ bindings (widechar support)
+%define libpackage_extra Requires: libncursesw-devel = %EVR\
+Requires: libncurses++-devel = %EVR
+%libpackage -dC++ %{name}++w C++ bindings (widechar support)
+%libpackage -sdC++ %{name}++w C++ bindings (widechar support)
 %endif
 
 
@@ -215,7 +219,7 @@ export \
 	--with-chtype=long \\\
         %nil
 
-%define abi5opts --with-abi-version=5 --disable-pc-files
+%define abi5opts --with-abi-version=%OLDSO --disable-pc-files
 %define abi6opts --enable-pc-files
 
 %define configure_flavour(d:) mkdir -p build-%{-d*} && cd build-%{-d*} && %configure %configopts %* && cd ..
@@ -263,7 +267,7 @@ mv %buildroot%_libdir/libtinfo*.so.* %buildroot/%_lib/
 ln -snf lib%name.so %buildroot%_libdir/libcurses.so
 
 # Library compatibility symlinks.
-t=$(readlink "%buildroot%_libdir/lib%name.so.5")
+t=$(readlink "%buildroot%_libdir/lib%name.so.%OLDSO")
 for v in 4 3; do
 	ln -s "$t" "%buildroot%_libdir/lib%name.so.$v"
 done
@@ -318,7 +322,7 @@ for i in ncurses ncursesw; do
 	rm -f %buildroot%_libdir/lib$i.so
 	cat > %buildroot%_libdir/lib$i.so <<-EOF
 	/* GNU ld script */
-	GROUP(%_libdir/lib$i.so.6 -ltinfo)
+	GROUP(%_libdir/lib$i.so.%ABI -ltinfo)
 	EOF
 done
 
@@ -415,8 +419,8 @@ done
 %_libdir/lib*[musl].so.*
 
 %files -n lib%name-devel
-%_bindir/%{name}*6-config
-%exclude %_bindir/%{name}5-config
+%_bindir/%{name}*%ABI-config
+%exclude %_bindir/%{name}%OLDSO-config
 %_libdir/lib*[musl].so
 %_pkgconfigdir/*[musl].pc
 %_includedir/*
@@ -448,22 +452,22 @@ done
 # LIBNCURSES++
 %if_with cxx
 %files -n lib%name++%ABI
-%_libdir/libncurses++*.so.6*
+%_libdir/libncurses++.so.%{ABI}*
 
 %files -n lib%name++%{?OLDABI}
-%_libdir/libncurses++*.so.5*
+%_libdir/libncurses++.so.%{OLDSO}*
 
 %files -n lib%name++-devel
-%_libdir/libncurses++*.so
+%_libdir/libncurses++.so
 %dir %_includedir/%name/
 %_includedir/%name/cursesapp.h
 %_includedir/%name/curses?.h
 %_includedir/%name/cursslk.h
 %_includedir/%name/etip.h
-%_pkgconfigdir/ncurses++*.pc
+%_pkgconfigdir/ncurses++.pc
 
 %files -n lib%name++-devel-static
-%_libdir/libncurses++*.a
+%_libdir/libncurses++.a
 %endif # with_cxx
 
 %if_with utf8
@@ -479,9 +483,28 @@ done
 %_libdir/lib*[musl]w.so
 %_includedir/%{name}w
 %_pkgconfigdir/*[musl]w.pc
+
+%if_with cxx
+%files -n lib%{name}++w%ABI
+%_libdir/libncurses++w*.so.%{ABI}*
+
+%files -n lib%{name}++w%{?OLDABI}
+%_libdir/libncurses++w*.so.%{OLDSO}*
+
+%files -n lib%{name}++w-devel
+%_libdir/libncurses++w.so
+%dir %_includedir/%name/
+%_pkgconfigdir/ncurses++w*.pc
+
+%files -n lib%name++w-devel-static
+%_libdir/libncurses++w*.a
+%endif # with_cxx
 %endif # with_utf8
 
 %changelog
+* Wed Aug 23 2023 Fr. Br. George <george@altlinux.org> 6.3.20220618-alt3
+- Fix requirements loss after spec redesign
+
 * Thu Jul 27 2023 Fr. Br. George <george@altlinux.org> 6.3.20220618-alt2
 - Separate API5 and API6 versions (Closes: #44811)
 - Provide semi-automatic package spec generators
