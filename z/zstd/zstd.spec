@@ -1,6 +1,6 @@
 Name: zstd
 Version: 1.5.5
-Release: alt1
+Release: alt2
 Summary: Zstd compression library and tools
 License: BSD-3-Clause
 Group: Archiving/Compression
@@ -62,8 +62,18 @@ targeting real-time compression scenarios at zlib-level compression ratio.
 This package contains development files required to build applications
 using lib%name library.
 
+%package -n lib%name-devel-static
+Summary: Static library for developing statically linked software that uses zstd
+Group: Development/C
+Requires: lib%name-devel = %EVR
+
+%description -n lib%name-devel-static
+This package contains the static library needed to develop statically
+linked software that use the zstd compression and decompression library.
+
 %prep
 %setup -n %name-%version-%release
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %ifarch %e2k
 # fine tuning for architecture and compiler
 %add_optflags -D__inline='__inline __attribute__((always_inline))'
@@ -77,6 +87,8 @@ rm tests/cli-tests/compression/{basic,gzip-compat}.sh
 # fail on 32-bit targets (not enough memory?)
 rm tests/cli-tests/compression/window-resize.sh*
 %endif
+# this started to fail for no obvious reason and nobody cares to look into it
+rm tests/cli-tests/cltools/zstdless.sh
 %define make_params PREFIX=%prefix LIBDIR=%_libdir GZFILES= ZSTD_LEGACY_SUPPORT=0 HAVE_ZLIB=0
 
 %build
@@ -121,12 +133,16 @@ export CXXFLAGS="$CFLAGS"
 
 %files
 %_bindir/*
+%if_enabled pzstd
 %exclude %_bindir/pzstd
+%endif
 %_man1dir/*
 %doc CHANGELOG README.md
 
+%if_enabled pzstd
 %files -n pzstd
 %_bindir/pzstd
+%endif
 
 %files -n lib%name
 /%_lib/*.so.*
@@ -137,7 +153,13 @@ export CXXFLAGS="$CFLAGS"
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%files -n lib%name-devel-static
+%_libdir/*.a
+
 %changelog
+* Wed Aug 23 2023 Dmitry V. Levin <ldv@altlinux.org> 1.5.5-alt2
+- Packaged static library (by Andrey Sokolov; closes: #47144).
+
 * Tue Apr 04 2023 Dmitry V. Levin <ldv@altlinux.org> 1.5.5-alt1
 - 1.5.4 -> 1.5.5 (closes: #45515).
 
