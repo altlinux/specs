@@ -40,7 +40,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.19.0.7
+%define version 11.0.20.0.8
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -297,9 +297,9 @@ BuildRequires: /proc rpm-build-java
 %global origin          openjdk
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
-%global securityver 19
+%global securityver 20
 %global minorver    0
-%global buildver    7
+%global buildver    8
 %global rpmrelease  1
 %global dist		jpp11
 #%%global tagsuffix      ""
@@ -547,18 +547,8 @@ BuildRequires: gcc >= 4.8.3
 BuildRequires: systemtap-sdt-devel
 %endif
 
-# this is always built, also during debug-only build
-# when it is built in debug-only this package is just placeholder
-Requires: fontconfig
-Requires: fonts-type1-xorg
-# Require libXcomposite explicitly since it's only dynamically loaded
-# at runtime. Fixes screenshot issues. See JDK-8150954.
-Requires: libXcomposite
-# Requires rest of java
 Requires: %{name}-headless = %{epoch}:%{version}-%{release}
 Requires: %{name}-headless%{?_isa} = %{epoch}:%{version}-%{release}
-# for java-X-openjdk package's desktop binding
-Requires: gtk3-demo libgail3 libgtk+3 libgtk+3-schemas
 
 Provides: java-%{javaver}-%{origin} = %{epoch}:%{version}-%{release}
 
@@ -618,20 +608,6 @@ Requires: javapackages-filesystem
 # Require zone-info data provided by tzdata-java sub-package
 # 2020a required as of JDK-8243541 in 11.0.8+4
 Requires: tzdata-java >= 2022a
-# for support of kernel stream control
-# libsctp.so.1 is being `dlopen`ed on demand
-Requires: liblksctp lksctp-tools
-# tool to copy jdk's configs - should be Recommends only, but then only dnf/yum enforce it,
-# not rpm transaction and so no configs are persisted when pure rpm -u is run. It may be
-# considered as regression
-#Requires: copy-jdk-configs >= 3.3
-#Requires: copy-jdk-configs
-# for printing support
-Requires: libcups
-# Post requires alternatives to install tool alternatives
-# Postun requires alternatives to uninstall tool alternatives
-# for optional support of kernel stream control, card reader and printing bindings
-Requires: liblksctp lksctp-tools libpcsclite
 
 # Standard JPackage base provides
 Provides: jre-%{javaver}-%{origin}-headless = %{epoch}:%{version}-%{release}
@@ -668,7 +644,7 @@ Group: Development/Java
 Summary: %{origin_nice} Development Environment %{majorver}
 
 # Requires base package
-Requires:         %{name} = %{epoch}:%{version}-%{release}
+Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires: %{name}-headless%{?_isa} = %{epoch}:%{version}-%{release}
 # Post requires alternatives to install tool alternatives
 # Postun requires alternatives to uninstall tool alternatives
@@ -1778,6 +1754,18 @@ fi
 %endif
 
 %changelog
+* Thu Aug 24 2023 Andrey Cherepanov <cas@altlinux.org> 0:11.0.20.0.8-alt1_1jpp11
+- New version.
+- Security fixes
+  + CVE-2023-22006
+  + CVE-2023-22036
+  + CVE-2023-22041
+  + CVE-2023-22044
+  + CVE-2023-22045
+  + CVE-2023-22049
+  + CVE-2023-25193
+- Removed implicit requirements.
+
 * Sat Jul 29 2023 Andrey Cherepanov <cas@altlinux.org> 0:11.0.19.0.7-alt1_1jpp11
 - New version.
 - Security fixes
