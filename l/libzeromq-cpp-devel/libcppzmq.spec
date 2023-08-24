@@ -1,7 +1,7 @@
 # Header-only library.
 Name:           libzeromq-cpp-devel
 Version:        4.10.0
-Release:        alt2
+Release:        alt2.1
 
 Summary:        Header-only C++ binding for libzmq
 
@@ -28,6 +28,10 @@ automate resource management. cppzmq is a light-weight, header-only binding.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+# LCC bug workaround
+sed -i "s/constexpr zmq::/const zmq::/g" tests/buffer.cpp
+%endif
 
 %build
 %cmake
@@ -43,6 +47,9 @@ automate resource management. cppzmq is a light-weight, header-only binding.
 %_pkgconfigdir/cppzmq.pc
 
 %changelog
+* Thu Aug 24 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.10.0-alt2.1
+- Fixed build for Elbrus.
+
 * Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 4.10.0-alt2
 - NMU: use BR: catch-devel
 
