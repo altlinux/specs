@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: libncurses-devel
+# END SourceDeps(oneline)
 Name: latencytop
 Version: 0.5
-Release: alt1.qa1
+Release: alt2.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -42,6 +45,9 @@ install -pD -m644 latencytop.8 %buildroot%_man8dir/latencytop.8
 %_man8dir/*
 
 %changelog
+* Fri Aug 25 2023 Igor Vlasenko <viy@altlinux.org> 0.5-alt2.qa1
+- NMU: fixed build
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
