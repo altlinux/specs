@@ -1,5 +1,5 @@
 Name: doxygen
-Version: 1.9.6
+Version: 1.9.7
 Release: alt1
 Epoch: 1
 
@@ -11,9 +11,6 @@ Url: http://www.doxygen.org/
 # ftp://ftp.stack.nl/pub/users/dimitri/doxygen-%version.src.tar.gz
 Source: %name-%version.src.tar.gz
 Source500: %name.unused
-
-## FC patches
-Patch1: FC-obsolete-egrep.patch
 
 ## Ubuntu patches
 Patch101: Ubuntu-manpages.patch
@@ -31,11 +28,16 @@ Patch112: Ubuntu-filesystem_glibc.patch
 
 ## ALT patches
 
+BuildRequires(pre): rpm-macros-qt5-webengine
+
 # Automatically added by buildreq on Wed Mar 22 2023
 # optimized out: cmake-modules fontconfig fonts-type1-urw gcc-c++ ghostscript-classic git-core glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libgpg-error libqt5-core libqt5-gui libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel perl perl-parent python-modules python2-base python3 python3-base qt5-base-devel sh4 tex-common texlive texlive-collection-basic texlive-dist
 BuildRequires: cmake flex ghostscript-common graphviz qt5-svg-devel qt5-virtualkeyboard-devel qt5-wayland-devel texlive-collection-basic texlive-dist
+# graphviz uses pango as the default backend. pango needs some font and
+# a properly configured fontconfig to produce something sane.
+BuildRequires: fontconfig fonts-ttf-liberation
 
-%ifnarch ppc64le
+%ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel qt5-webglplugin-devel
 %endif
 
@@ -76,22 +78,19 @@ pdf formats.
 ## Remove junk
 find * -name "*._*" -delete
 
-## FC apply patches
-%patch1 -p1
-
 ## Ubuntu apply patches
 %patch101 -p1
 %patch102 -p1
 ##patch103 -p1
 %patch104 -p1
-%patch105 -p1
+#%%patch105 -p1
 #patch106 -p1
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
 #patch110 -p1
 ##patch111 -p1
-%patch112 -p1
+##patch112 -p1
 
 ## ALT apply patches
 
@@ -107,6 +106,8 @@ export PATH="$QTDIR/bin:$PATH"
 	-DDOC_INSTALL_DIR=share/doc/%name-%version \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix
 %cmake_build
+
+export NPROCS=1
 %cmake_build -t docs
 
 %install
@@ -130,6 +131,12 @@ cd BUILD && make tests
 %exclude %_man1dir/doxy[is]*
 
 %changelog
+* Fri Aug 25 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.9.7-alt1
+- 1.9.7
+
+* Mon Aug 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.9.6-alt1.1
+- NMU: fixed FTBFS
+
 * Fri Mar 24 2023 Fr. Br. George <george@altlinux.org> 1:1.9.6-alt1
 - Autobuild version bump to 1.9.6
 
