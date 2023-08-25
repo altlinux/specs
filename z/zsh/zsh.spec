@@ -1,6 +1,6 @@
 Name: zsh
 Version: 5.9
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -46,7 +46,6 @@ rm config.guess config.sub
 
 %build
 %autoreconf
-cp -f %_datadir/automake/config.{guess,sub} .
 
 # Disable libnsl/NIS support.
 export ac_cv_search_yp_all=no zsh_cv_sys_nis=no zsh_cv_sys_nis_plus=no
@@ -152,6 +151,9 @@ fi
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Fri Aug 25 2023 Arseny Maslennikov <arseny@altlinux.org> 1:5.9-alt2
+- _hasher: complete `hsh --predb-prog`.
+
 * Wed Apr 26 2023 Arseny Maslennikov <arseny@altlinux.org> 1:5.9-alt1
 - 5.8.1 -> 5.9.
 - New patch:
