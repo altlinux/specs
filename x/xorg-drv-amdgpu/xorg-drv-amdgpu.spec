@@ -1,6 +1,6 @@
 Name: xorg-drv-amdgpu
 Version: 23.0.0
-Release: alt1
+Release: alt2
 Summary: AMD GPU video driver for the Xorg X server
 License: MIT
 Group: System/X11
@@ -12,7 +12,7 @@ Requires: xorg-dri-radeon
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-ExclusiveArch: %ix86 x86_64 aarch64 ppc64le %e2k
+ExclusiveArch: %ix86 x86_64 aarch64 loongarch64 ppc64le riscv64 %e2k
 BuildRequires(Pre): xorg-sdk xorg-util-macros
 BuildRequires: libGL-devel libgbm-devel libudev-devel xorg-proto-devel
 
@@ -41,6 +41,9 @@ BuildRequires: libGL-devel libgbm-devel libudev-devel xorg-proto-devel
 %_man4dir/*
 
 %changelog
+* Fri Aug 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 23.0.0-alt2
+- spec: build the thing on LoongArch and riscv (works fine here)
+
 * Thu Aug 03 2023 Valery Inozemtsev <shrek@altlinux.ru> 23.0.0-alt1
 - 23.0.0
 
