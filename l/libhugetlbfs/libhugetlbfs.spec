@@ -26,7 +26,7 @@ BuildRequires: perl-podlators rpm-build-python3
 %define my_make_flags V=1 CFLAGS="%{optflags} -fPIC" LDFLAGS="-pie" BUILDTYPE=NATIVEONLY PREFIX=%{_prefix} LIBDIR32=%{_libdir} DESTDIR=%{buildroot}
 Name:           libhugetlbfs
 Version:        2.23.0.g6b126a4
-Release:        alt1_2.2
+Release:        alt1_2.3
 Summary:        Helper library for the Huge Translation Lookaside Buffer Filesystem
 License:        LGPL-2.1-or-later
 Group:          System/Libraries
@@ -38,6 +38,7 @@ Patch1:         libhugetlbfs_ia64_fix_missing_test.patch
 Patch2:         disable-rw-on-non-ldscripts.diff
 Patch3:         zero_filesize_segment.patch
 Patch4:         glibc-2.34-fix.patch
+Patch3500:	libhugetlbfs_loongarch64_basic_support.patch
 BuildRequires:  doxygen
 BuildRequires:  glibc-devel-static
 # bug437293
@@ -97,6 +98,7 @@ The testsuite for libhugetlbfs. Binaries can be found in
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch3500 -p1
 
 
 %build
@@ -152,6 +154,9 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/*.a
 %{_libdir}/libhugetlbfs/
 
 %changelog
+* Mon Jul 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.23.0.g6b126a4-alt1_2.3
+- Basic support of LoongArch (lp64d ABI) architecture
+
 * Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 2.23.0.g6b126a4-alt1_2.2
 - new version
 
