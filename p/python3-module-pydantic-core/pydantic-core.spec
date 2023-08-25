@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.4.0
+Version: 2.6.3
 Release: alt1
 
 Summary: Core validation logic for pydantic written in rust
@@ -32,6 +32,7 @@ BuildRequires: python3-module-pytest-benchmark
 %add_pyproject_deps_check_filter pydantic
 %add_pyproject_deps_check_filter pytest-example
 %add_pyproject_deps_check_filter pytest-speed
+%add_pyproject_deps_check_filter pytest-codspeed
 %pyproject_builddeps_check
 %endif
 
@@ -77,7 +78,7 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 
 %check
 # tests/benchmarks: do not execute benchmark tests
-%pyproject_run_pytest -vra --ignore='tests/benchmarks'
+%pyproject_run_pytest --ignore='tests/benchmarks'
 
 %files
 %doc README.md
@@ -85,6 +86,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Thu Aug 24 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.6.3-alt1
+- 2.4.0 -> 2.6.3
+
 * Tue Aug 15 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.4.0-alt1
 - Initial build for Sisyphus
 
