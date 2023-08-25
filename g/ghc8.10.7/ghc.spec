@@ -3,11 +3,11 @@
 %define _llvm_version 12.0
 %endif
 
-%def_with bootstrap
+%def_without bootstrap
 
 Name: ghc8.10.7
 Version: 8.10.7
-Release: alt3
+Release: alt4
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -283,6 +283,9 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Sat Aug 26 2023 Evgeny Sinelnikov <sin@altlinux.org> 8.10.7-alt4
+- Rebuild with ghc 8.10.7 (final second bootstrap)
+
 * Sat Aug 26 2023 Evgeny Sinelnikov <sin@altlinux.org> 8.10.7-alt3
 - Fix build with new gcc versions:
  + Don't mark evacuate_large as inline
