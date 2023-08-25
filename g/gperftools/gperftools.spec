@@ -1,6 +1,6 @@
 Name: gperftools
 Version: 2.10
-Release: alt1
+Release: alt2
 
 Provides: google-perftools
 
@@ -47,16 +47,22 @@ sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 
 %build
 %add_optflags -fpermissive
-%configure --disable-static
+%configure --disable-static \
+%ifarch loongarch64
+	--enable-minimal \
+%endif
+	%nil
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
 
+%ifnarch loongarch64
 %files
 %doc %_defaultdocdir/%name
 %_bindir/pprof
 %_man1dir/pprof.*
+%endif
 
 %files -n lib%name
 %_libdir/lib*.so.*
@@ -68,6 +74,10 @@ sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 20 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.10-alt2
+- Basic support of LoongArch: build only tcmalloc (heap profiler and
+  checker are not ported yet). Useful since many packages require tcmalloc.
+
 * Thu Jun 16 2022 Fr. Br. George <george@altlinux.org> 2.10-alt1
 - Autobuild version bump to 2.10
 
