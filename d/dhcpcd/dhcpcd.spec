@@ -9,7 +9,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 9.4.0
-Release: alt1
+Release: alt2
 
 Summary: DHCP Client
 License: BSD-2-Clause
@@ -104,6 +104,9 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Sun Jun 11 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:9.4.0-alt2
+- Fixed compilation on LoongArch (lp64d).
+
 * Fri Jan 22 2021 Mikhail Efremov <sem@altlinux.org> 1:9.4.0-alt1
 - Added Vcs tag.
 - Dropped obsoleted patch.
