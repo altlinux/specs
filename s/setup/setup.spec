@@ -1,5 +1,5 @@
 Name: setup
-Version: 2.2.17
+Version: 2.2.18
 Release: alt1
 
 Summary: Initial set of configuration files
@@ -72,6 +72,11 @@ find %buildroot%_sysconfdir/profile.d -type l |
 %_datadir/base-passwd
 
 %changelog
+* Fri Aug 25 2023 Alexey Gladkov <legion@altlinux.ru> 2.2.18-alt1
+- /etc/services: update services (ALT#41676, ALT#47001)
+- /etc/protocols: Remove dups for 50 and 51 ports (ALT#35474)
+- /etc/fstab: Add ptmxmode=0666 for devpts (ALT#39778)
+
 * Tue Apr 26 2022 Dmitry V. Levin <ldv@altlinux.org> 2.2.17-alt1
 - /etc/hosts: added ::1.
 - /etc/profile.d/proxy.sh: replaced "egrep" with "grep -E".
