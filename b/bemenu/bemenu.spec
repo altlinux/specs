@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: libncurses-devel
+# END SourceDeps(oneline)
 Group: Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:       bemenu
 Version:    0.6.3
-Release:    alt1_1
+Release:    alt2_1
 Summary:    Dynamic menu library and client program inspired by dmenu
 
 # In case upstream do not bump program version when tagging; this should usually just resolve to %%{version}
@@ -78,6 +81,9 @@ Development files for extending %{name}.
 
 
 %changelog
+* Fri Aug 25 2023 Igor Vlasenko <viy@altlinux.org> 0.6.3-alt2_1
+- NMU: fixed build
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.6.3-alt1_1
 - update to new release by fcimport
 
