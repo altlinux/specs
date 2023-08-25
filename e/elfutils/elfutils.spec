@@ -1,6 +1,6 @@
 Name: elfutils
-Version: 0.189
-Release: alt2
+Version: 0.189.0.46.27a8
+Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -371,6 +371,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Aug 02 2023 Dmitry V. Levin <ldv@altlinux.org> 0.189.0.46.27a8-alt1
+- elfutils-0.189 -> elfutils-0.189-46-g27a84961 (closes: #47125).
+
 * Fri Mar 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.189-alt2
 - eu-elflint: added basic support of LoongArch architecture (closes: #45725).
 
