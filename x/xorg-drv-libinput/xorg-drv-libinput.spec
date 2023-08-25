@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: xorg-drv-libinput
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Xorg libinput input driver
@@ -79,6 +79,9 @@ Xorg libinput input driver development files.
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Fri Aug 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Tue Apr 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
