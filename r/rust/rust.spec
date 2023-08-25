@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.71.1
-Release: alt2
+Version: 1.72.0
+Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.70.0
+%define r_ver 1.71.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -64,7 +64,8 @@ BuildRequires: patchelf
 %endif
 
 %if_without bootstrap
-BuildRequires: rust rust-cargo
+BuildRequires: rust
+BuildRequires: rust-cargo
 %define cargo %_bindir/cargo
 %define rustc %_bindir/rustc
 %else
@@ -458,6 +459,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Fri Aug 25 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.72.0-alt1
+- New version (1.72.0).
+
 * Wed Aug 23 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.71.1-alt2
 - spec: support LoongArch architecture (lp64d ABI).
 
