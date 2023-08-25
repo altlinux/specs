@@ -2,7 +2,7 @@
 
 Name:    gz-physics
 Version: 6.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Abstract physics interface designed to support simulation and rapid development of robot applications
 License: Apache-2.0
@@ -26,7 +26,9 @@ BuildRequires: libgz-plugin-devel
 BuildRequires: libgz-common-devel
 BuildRequires: libbullet3-devel
 BuildRequires: libbenchmark-devel
+%ifnarch %e2k
 BuildRequires: libdart-devel
+%endif
 BuildRequires: liburdfdom-devel
 BuildRequires: libfmt-devel
 BuildRequires: libode-devel
@@ -82,6 +84,9 @@ rm -f %buildroot%_libdir/pkgconfig/gz-physics*-bullet-*plugin.pc
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Aug 24 2023 Michael Shigorin <mike@altlinux.org> 6.4.0-alt1.1
+- E2K: build without dart
+
 * Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 6.4.0-alt1
 - New version.
 
