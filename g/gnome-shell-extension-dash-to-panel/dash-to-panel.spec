@@ -1,6 +1,6 @@
 Name: gnome-shell-extension-dash-to-panel
 Version: 56
-Release: alt1
+Release: alt1.1
 
 %define sname dash-to-panel
 %define eid dash-to-panel@jderose9.github.com
@@ -10,7 +10,7 @@ Summary: An icon taskbar for the Gnome Shell
 BuildArch: noarch
 
 License: GPL-2.0
-Group: Other
+Group:  Graphical desktop/GNOME
 Url: https://github.com/home-sweet-gnome/dash-to-panel
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -43,6 +43,8 @@ VERSION=%version %make_build
 %doc README.md
 
 %changelog
+* Fri Aug 25 2023 Hihin Ruslan <ruslandh@altlinux.ru> 56-alt1.1
+- Fix group
+
 * Thu Aug 24 2023 Hihin Ruslan <ruslandh@altlinux.ru> 56-alt1
 - Initial build for Sisyphus
-
