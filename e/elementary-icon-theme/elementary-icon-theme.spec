@@ -4,7 +4,7 @@
 %def_disable palettes
 
 Name: elementary-icon-theme
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Named, vector icons for elementary OS
@@ -46,10 +46,13 @@ and its desktop environment: Pantheon.
 %_datadir/gimp/2.0/palettes/elementary.gpl
 %_datadir/inkscape/palettes/elementary.gpl
 %endif
-%_datadir/metainfo/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Fri Aug 25 2023 Yuri N. Sedunov <aris@altlinux.org> 7.3.1-alt1
+- 7.3.1
+
 * Wed May 03 2023 Yuri N. Sedunov <aris@altlinux.org> 7.3.0-alt1
 - 7.3.0
 

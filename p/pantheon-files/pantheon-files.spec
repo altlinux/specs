@@ -1,14 +1,15 @@
 %def_enable snapshot
+%def_enable check
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 6.1
+%define ver_major 6.5
 %define _name files
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -23,7 +24,7 @@ Vcs: https://github.com/elementary/files.git
 Source: %_name-%version.tar
 %endif
 
-Provides: %rdn_name = %version-%release
+Provides: %rdn_name = %EVR
 
 #Depends: tumbler
 #Recommends: contractor
@@ -31,15 +32,17 @@ Provides: %rdn_name = %version-%release
 Requires: polkit zeitgeist tumbler elementary-icon-theme
 
 %define vala_ver 0.48.2
+%define glib_ver 2.64.6
 %define gtk_ver 3.22.25
 %define granite_ver 6.1.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson vala-tools > %vala_ver
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libappstream-glib-devel
 BuildRequires: libsqlite3-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgee0.8-devel libgranite-devel
-BuildRequires: libgail3-devel libdbus-glib-devel libnotify-devel
+BuildRequires: libdbus-glib-devel libnotify-devel
 BuildRequires: libxkbcommon-devel libgranite-vala >= %granite_ver
 BuildRequires: libzeitgeist2.0-devel libplank-devel libplank-vala
 BuildRequires: libpolkit-devel
@@ -47,6 +50,7 @@ BuildRequires: libcanberra-devel libcanberra-vala
 BuildRequires: libcloudproviders-devel
 BuildRequires: libgit2-glib-devel
 BuildRequires: pkgconfig(libhandy-1)
+%{?_enable_check:BuildRequires: elementary-icon-theme}
 
 %description
 The simple, powerful, and sexy file manager from elementary.
@@ -54,7 +58,7 @@ The simple, powerful, and sexy file manager from elementary.
 %package devel
 Summary: Development files for pantheon-files
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Development files for pantheon-files.
@@ -63,7 +67,7 @@ Development files for pantheon-files.
 Summary: Vala language bindings for the pantheon-files
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description vala
 This package provides Vala language bindings for the pantheon-files.
@@ -79,6 +83,9 @@ This package provides Vala language bindings for the pantheon-files.
 %meson_install
 %find_lang %rdn_name
 
+%check
+%__meson_test
+
 %files -f %rdn_name.lang
 %doc AUTHORS README*
 %_bindir/*
@@ -91,7 +98,7 @@ This package provides Vala language bindings for the pantheon-files.
 %_datadir/polkit-1/actions/%rdn_name.policy
 %dir %_pixmapsdir/%rdn_name
 %_pixmapsdir/%rdn_name/*.png
-%_datadir/metainfo/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 
 %_libexecdir/%rdn_name.xdg-desktop-portal
 %_prefix/lib/systemd/user/%rdn_name.xdg-desktop-portal.service
@@ -103,13 +110,15 @@ This package provides Vala language bindings for the pantheon-files.
 %_libdir/*.so
 %_pkgconfigdir/%name-core.pc
 
-
 %if 0
 %files vala
 %_vapidir/%name-core.vapi
 %endif
 
 %changelog
+* Fri Aug 25 2023 Yuri N. Sedunov <aris@altlinux.org> 6.5.0-alt1
+- updated to 6.5.0-19-gd3e70e095
+
 * Tue Jul 05 2022 Yuri N. Sedunov <aris@altlinux.org> 6.1.4-alt1
 - updated to 6.1.4-9-gac6487cb1
 
