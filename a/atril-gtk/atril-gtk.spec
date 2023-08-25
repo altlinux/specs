@@ -12,14 +12,16 @@
 %def_disable epub
 
 Name:           %_name-gtk
-Version:        1.24.0
+Version:        1.27.0
 Release:        alt1
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL-1.1+
 Group:          Publishing
 URL:            https://github.com/mate-desktop/atril
+Vcs:            git://github.com/mate-desktop/mate-document-viewer.git
 Source0:        %name-%version.tar
+Source1:        smclient.tar
 Patch:          %_name-%version-%release.patch
 
 BuildRequires:  libgtk+3-devel
@@ -49,6 +51,7 @@ BuildRequires:  libxml2-devel
 BuildRequires:  libX11-devel
 BuildRequires:  zlib-devel
 BuildRequires:  libSM-devel
+BuildRequires:  libICE-devel
 BuildRequires:  libgxps-devel
 BuildRequires:  libsynctex-devel
 
@@ -157,12 +160,12 @@ This package contains a backend to let atril display ePub documents.
 %prep
 %setup
 %patch -p1
+tar xf %SOURCE1 -C cut-n-paste/
 
 %build
 NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--disable-static \
-	--disable-scrollkeeper \
 	--enable-comics \
 	--enable-dvi=yes \
 	--enable-djvu=yes \
@@ -173,8 +176,8 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable introspection} \
 	--without-keyring \
 	--disable-caja \
-	--without-matedesktop \
 	%{subst_enable dbus} \
+	--disable-tests \
 	--disable-gtk-doc
 
 %make_build V=1 LIBTOOL=/usr/bin/libtool
@@ -220,7 +223,7 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %if_enabled libs_subpackage
 %files -n lib%name
 %endif
-%doc README COPYING NEWS AUTHORS
+%doc README.md COPYING NEWS AUTHORS
 %{_libdir}/libatrilview.so.*
 %{_libdir}/libatrildocument.so.*
 %dir %{_libdir}/atril
@@ -280,6 +283,11 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Fri Aug 25 2023 Mikhail Efremov <sem@altlinux.org> 1.27.0-alt1
+- Dropped obsoleted configure options.
+- Added libegg from mate-submodules.
+- Updated to 1.27.0.
+
 * Tue Feb 11 2020 Mikhail Efremov <sem@altlinux.org> 1.24.0-alt1
 - Updated to 1.24.0.
 
