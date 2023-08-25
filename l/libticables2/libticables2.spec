@@ -10,21 +10,23 @@ BuildRequires: pkgconfig(libusb-1.0)
 Summary:	Library to handle the different TI link cables
 Name:		libticables2
 Version:	1.3.5
-Release:	alt1_4
+Release:	alt1_7
 License:	LGPLv2+
 Group:		Communications
 Url:		https://sourceforge.net/projects/tilp/
 Source0:	https://download.sourceforge.net/tilp/%{name}-%{version}.tar.bz2
 # Udev rules taken from Arch AUR package.
+# This URL is no longer available
 Source1:	http://tc01.fedorapeople.org/tilp2/69-libticables.rules
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	glib2-devel
 BuildRequires:	gettext-tools libasprintf-devel
 Source44: import.info
+ExcludeArch: ppc64le
 
 %description
 The TiCables library is a part of the TiLP project and constitutes with
-the other libraries a complete framework for developping and/or linking
+the other libraries a complete framework for developing and/or linking
 TI files oriented applications.
 
 It is able to handle the different link cables designed for TI's graphing
@@ -59,7 +61,7 @@ Requires:	%{name}-i18n >= %{version}-%{release}
 
 %description -n %{libname}
 The TiCables library is a part of the TiLP project and constitutes with
-the other libraries a complete framework for developping and/or linking
+the other libraries a complete framework for developing and/or linking
 TI files oriented applications.
 
 It is able to handle the different link cables designed for TI's graphing
@@ -81,7 +83,7 @@ It also supports some 'virtual' link cables for connection with emulators:
 %package -n %{devname}
 Summary:	Development related files for %{name}
 Group:		Development/Other
-Provides:	%{name}-devel = %{version}-%{release}
+#Provides:	%{name}-devel = %{version}-%{release}
 Provides:	ticables2-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 Obsoletes:	%{_lib}ticables-devel < 1:1.3.5
@@ -106,8 +108,8 @@ autoreconf -vfi
 %makeinstall_std
 
 #Rule to allow users to access handhelds
-mkdir -p %{buildroot}%{_usr}/lib/udev/rules.d/
-install -m0644 %{SOURCE1} %{buildroot}%{_usr}/lib/udev/rules.d/
+mkdir -p %{buildroot}%{_udevrulesdir}/
+install -m0644 %{SOURCE1} %{buildroot}%{_udevrulesdir}/
 
 #we don't want these
 find %{buildroot} -name "*.la" -delete
@@ -117,7 +119,7 @@ find %{buildroot} -name "*.la" -delete
 %files i18n -f %{name}.lang
 
 %files -n %{libname}
-%{_usr}/lib/udev/rules.d/69-libticables.rules
+%{_udevrulesdir}/69-libticables.rules
 %{_libdir}/%{name}.so.%{major}
 %{_libdir}/%{name}.so.%{major}.*
 
@@ -129,6 +131,11 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Fri Aug 25 2023 Igor Vlasenko <viy@altlinux.org> 1.3.5-alt1_7
+- fixed build
+- explicit ExcludeArch: ppc64le
+
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.5-alt1_4
 - new version
 
