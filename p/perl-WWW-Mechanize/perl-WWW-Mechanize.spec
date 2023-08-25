@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Encode/JP.pm) perl(Test/Memory/Cycle.pm) perl(Test/Taint.pm)
+BuildRequires: perl(Encode/JP.pm) perl(HTTP/Cookies.pm) perl(Test/Memory/Cycle.pm) perl(Test/Taint.pm)
 # END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist WWW-Mechanize
 Name: perl-%dist
 Version: 2.17
-Release: alt1
+Release: alt2
 
 Summary: Handy web browsing in a Perl object
 License: Artistic
@@ -48,6 +48,9 @@ which can be queried and revisited.
 %doc	%perl_vendor_privlib/WWW/Mechanize/*.pod
 
 %changelog
+* Fri Aug 25 2023 Igor Vlasenko <viy@altlinux.org> 2.17-alt2
+- NMU: fixed build
+
 * Sat Apr 29 2023 Igor Vlasenko <viy@altlinux.org> 2.17-alt1
 - automated CPAN update
 
