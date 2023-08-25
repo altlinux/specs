@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: libncurses-devel
+# END SourceDeps(oneline)
 Name: pspg
 Version: 3.0.4
-Release: alt1
+Release: alt2
 
 Summary: A unix pager optimized for psql
 
@@ -35,5 +38,8 @@ columns, and lot of color themes are included.
 %_bindir/*
 
 %changelog
+* Fri Aug 25 2023 Igor Vlasenko <viy@altlinux.org> 3.0.4-alt2
+- NMU: fixed build
+
 * Wed Apr 15 2020 Maxim Knyazev <mattaku@altlinux.org> 3.0.4-alt1
 - Initial build to Sisyphus
