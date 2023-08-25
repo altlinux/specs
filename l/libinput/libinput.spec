@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.23.0
+Version: 1.24.0
 Release: alt1
 
 Summary: Input devices library
@@ -187,6 +187,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Fri Aug 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Sun Mar 26 2023 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1
 - 1.23.0
 
