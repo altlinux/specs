@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Fatal.pm) perl(Test/Warnings.pm)
 # END SourceDeps(oneline)
 %define dist URI
 Name: perl-%dist
-Version: 5.19
+Version: 5.21
 Release: alt1
 
 Summary: A Perl interface for URI objects
@@ -12,7 +12,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/S/SI/SIMBABQUE/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -40,6 +40,9 @@ Resource Identifier (URI) references as specified in RFC 2396.
 %perl_vendor_privlib/URI*
 
 %changelog
+* Fri Aug 25 2023 Igor Vlasenko <viy@altlinux.org> 5.21-alt1
+- automated CPAN update
+
 * Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 5.19-alt1
 - automated CPAN update
 
