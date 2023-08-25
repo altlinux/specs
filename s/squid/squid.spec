@@ -9,9 +9,9 @@
 %def_with systemd
 
 Name: squid
-Version: 5.7
-Release: alt2
-%define langpack_ver 20220905
+Version: 6.1
+Release: alt1
+%define langpack_ver 20230225
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -298,6 +298,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Thu Aug 24 2023 Egor Ignatov <egori@altlinux.org> 6.1-alt1
+- 6.1
+
 * Mon Jan 09 2023 Alexey Shabalin <shaba@altlinux.org> 5.7-alt2
 - Fixed FTBFS: fix deprecation htmlDefaultSAXHandlerInit() -> xmlInitParser()
 
