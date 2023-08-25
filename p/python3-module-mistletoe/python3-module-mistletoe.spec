@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: A fast, extensible and spec-compliant Markdown parser in pure Python
@@ -62,6 +62,9 @@ Remember to spell mistletoe in lowercase!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Aug 25 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt1
+- Updated to 1.2.1.
+
 * Tue Aug 22 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 
