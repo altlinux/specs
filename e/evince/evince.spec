@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
@@ -20,7 +20,7 @@
 
 Name: evince
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A document viewer
 Group: Office
@@ -47,7 +47,10 @@ Requires: dconf
 %define spectre_ver 0.2.0
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson libpoppler-glib-devel >= %poppler_ver
+BuildRequires: meson
+# for old meson (in p10)
+BuildRequires: /usr/bin/update-desktop-database
+BuildRequires: libpoppler-glib-devel >= %poppler_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gcc-c++ gnome-common /usr/bin/appstream-util yelp-tools
 BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel
@@ -164,17 +167,6 @@ using Evince library.
 %_libexecdir/evince*
 %_prefix/lib/systemd/user/%xdg_name.service}
 %{?_enable_nautilus:%_libdir/nautilus/extensions-3.0/libevince-properties-page.so}
-%dir %_libdir/evince
-%dir %_libdir/evince/%so_ver
-%dir %_libdir/evince/%so_ver/backends
-%_libdir/evince/%so_ver/backends/libcomicsdocument.so
-%_libdir/evince/%so_ver/backends/libdjvudocument.so
-%_libdir/evince/%so_ver/backends/libpdfdocument.so
-%{?_enable_ps:%_libdir/evince/%so_ver/backends/libpsdocument.so}
-%_libdir/evince/%so_ver/backends/libtiffdocument.so
-%{?_enable_xps:%_libdir/evince/%so_ver/backends/libxpsdocument.so}
-%_libdir/evince/%so_ver/backends/*.evince-backend
-%exclude %_libdir/evince/%so_ver/backends/dvidocument.evince-backend
 %doc AUTHORS NEWS* README.md
 
 %files data -f %name.lang
@@ -198,6 +190,18 @@ using Evince library.
 %files -n lib%name
 %_libdir/libevdocument%{api_ver_major}.so.%{so_ver}*
 %_libdir/libevview%{api_ver_major}.so.*
+# backends
+%dir %_libdir/evince
+%dir %_libdir/evince/%so_ver
+%dir %_libdir/evince/%so_ver/backends
+%_libdir/evince/%so_ver/backends/libcomicsdocument.so
+%_libdir/evince/%so_ver/backends/libdjvudocument.so
+%_libdir/evince/%so_ver/backends/libpdfdocument.so
+%{?_enable_ps:%_libdir/evince/%so_ver/backends/libpsdocument.so}
+%_libdir/evince/%so_ver/backends/libtiffdocument.so
+%{?_enable_xps:%_libdir/evince/%so_ver/backends/libxpsdocument.so}
+%_libdir/evince/%so_ver/backends/*.evince-backend
+%exclude %_libdir/evince/%so_ver/backends/dvidocument.evince-backend
 
 %files dvi
 %_libdir/evince/%so_ver/backends/dvidocument.evince-backend
@@ -228,6 +232,10 @@ using Evince library.
 
 
 %changelog
+* Fri Aug 25 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1.1
+- 44.3-2-g2b9c3ea3 (updated translations)
+- moved backends to libevince subpackage (ALT #47351)
+
 * Sat Jul 01 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
 - 44.3
 

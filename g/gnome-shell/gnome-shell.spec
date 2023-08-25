@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
@@ -13,8 +13,8 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.3
-Release: alt1.1%beta
+Version: %ver_major.4
+Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -32,7 +32,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define session_ver 3.26
 %define gjs_ver 1.73.1
-%define mutter_ver 44
+%define mutter_ver 44.4
 %define gtk_ver 3.16.0
 %define adwaita_ver 1.0
 %define gio_ver 2.56.0
@@ -287,6 +287,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Thu Aug 24 2023 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1
+- 44.4
+
 * Thu Jul 13 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1.1
 - filtered from requires /usr/bin/gnome-shell to avoid circular
   dependencies (ALT#46895)
