@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(HTTP/Cookies.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 #
 #   - Catalyst::Plugin::Session::State::Cookie -
@@ -13,7 +16,7 @@
 
 Name: perl-Catalyst-Plugin-Session-State-Cookie
 Version: 0.18
-Release: alt1
+Release: alt2
 Summary: %m_name - Maintain session IDs using cookies
 
 License: Artistic
@@ -50,6 +53,9 @@ mechanism.
 %doc Changes README
 
 %changelog
+* Fri Aug 25 2023 Igor Vlasenko <viy@altlinux.org> 0.18-alt2
+- NMU: fixed build
+
 * Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
