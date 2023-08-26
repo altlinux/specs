@@ -5,9 +5,9 @@
 %define fish_completionsdir %_datadir/fish/vendor_completions.d
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
-Name: python3-module-%pypi_name
+Name: %pypi_name
 Version: 0.0.285
-Release: alt2
+Release: alt3
 
 Summary: An extremely fast Python linter, written in Rust
 License: MIT
@@ -19,7 +19,7 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: config.toml
 Source3: %pyproject_deps_config_name
-Patch0: python3-module-ruff-0.0.285-alt-fix-jemalloc-linking.patch
+Patch0: ruff-0.0.285-alt-fix-jemalloc-linking.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -32,6 +32,15 @@ BuildRequires: libjemalloc-devel
 %description
 %summary.
 
+%package -n python3-module-%pypi_name
+Summary: An extremely fast Python linter, written in Rust (Python package)
+Group: Development/Python3
+BuildArch: noarch
+Requires: %pypi_name = %EVR
+
+%description -n python3-module-%pypi_name
+%summary.
+
 %prep
 %setup -a1
 %autopatch -p1
@@ -40,7 +49,7 @@ cat %SOURCE2 >> .cargo/config.toml
 %pyproject_deps_resync_metadata
 
 # do not ship dependencies lists
-rm -fv docs/requirements*.txt
+rm -rfv docs/requirements*.txt .gitignore .overrides
 
 %build
 %ifarch aarch64
@@ -67,16 +76,28 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %buildroot%_bindir/%pypi_name generate-shell-completion zsh \
     > %buildroot%zsh_completionsdir/_%pypi_name
 
+# move python-module to noarch-directory
+%if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
+%__mkdir_p %buildroot%python3_sitelibdir_noarch
+%__mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
+%endif
+
 %files
-%doc LICENSE README.md BREAKING_CHANGES.md docs/*
+%doc LICENSE README.md BREAKING_CHANGES.md docs
 %_bindir/%pypi_name
-%python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %bash_completionsdir/%pypi_name
 %fish_completionsdir/%pypi_name.fish
 %zsh_completionsdir/_%pypi_name
 
+%files -n python3-module-%pypi_name
+%python3_sitelibdir_noarch/%pypi_name/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
+
 %changelog
+* Sat Aug 26 2023 Anton Zhukharev <ancieg@altlinux.org> 0.0.285-alt3
+- Renamed to "ruff".
+- Fixed documetation packaing.
+
 * Wed Aug 23 2023 Anton Zhukharev <ancieg@altlinux.org> 0.0.285-alt2
 - Packaged documentation.
 - Packaged shell completions for bash, fish and zsh.
