@@ -4,12 +4,12 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-eslint
-Version: 7.11.0
+Version: 8.47.0
 Release: alt1
 
 Summary: Find and fix problems in your JavaScript code
 
-License: MIT License
+License: MIT
 Group: Development/Tools
 Url: https://eslint.org/
 
@@ -30,10 +30,12 @@ BuildRequires(pre): rpm-macros-nodejs
 Requires: node >= 8
 # rpm-build-nodejs
 
-Provides: nodejs-%node_module = %version-%release
+Provides: nodejs-%node_module = %EVR
 Obsoletes: nodejs-%node_module < %version
 
-Provides: %node_module = %version-%release
+Provides: %node_module = %EVR
+
+Provides: eslint = %EVR
 
 AutoReq: no
 AutoProv: no
@@ -60,11 +62,15 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/{docs,tests}/
 
 %files
 %doc README.md
-%doc docs/
 %_bindir/%node_module
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Sat Aug 26 2023 Vitaly Lipatov <lav@altlinux.ru> 8.47.0-alt1
+- new version 8.47.0 (with rpmrb script) (ALT bug 47277)
+- don't pack docs
+- add Provides: eslint
+
 * Wed Nov 11 2020 Vitaly Lipatov <lav@altlinux.ru> 7.11.0-alt1
 - new version 7.11.0 (with rpmrb script)
 
