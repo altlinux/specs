@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.362.b09
+%define version 1.8.0.382.b05
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -295,7 +295,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo shenandoah-jdk8u
-%global shenandoah_revision shenandoah-jdk8u362-b09
+%global shenandoah_revision shenandoah-jdk8u382-b05
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -417,7 +417,7 @@ URL:      http://openjdk.java.net/
 # FILE_NAME_ROOT=%%{shenandoah_project}-%%{shenandoah_repo}-${VERSION}
 # REPO_ROOT=<path to checked-out repository> generate_source_tarball.sh
 # where the source is obtained from http://hg.openjdk.java.net/%%{project}/%%{repo}
-Source0: %{shenandoah_project}-%{shenandoah_repo}-%{shenandoah_revision}-4curve.tar.xz
+Source0: %{shenandoah_project}-%{shenandoah_repo}-%{shenandoah_revision}.tar.xz
 
 # Custom README for -src subpackage
 Source2: README.md
@@ -627,20 +627,9 @@ BuildRequires: gcc >= 4.8.3
 BuildRequires: systemtap-sdt-devel
 %endif
 
-# this is always built, also during debug-only build
-# when it is built in debug-only this package is just placeholder
-Requires: fontconfig
-Requires: fonts-type1-xorg
-# Require libXcomposite explicitly since it's only dynamically loaded
-# at runtime. Fixes screenshot issues. See JDK-8150954.
-Requires: libXcomposite
 # Requires rest of java
 Requires: %{name}-headless = %{epoch}:%{version}-%{release}
 Requires: %{name}-headless%{?_isa} = %{epoch}:%{version}-%{release}
-# for java-X-openjdk package's desktop binding
-%if 0%{?fedora} || 0%{?rhel} >= 8
-Requires: libgail libgtk+2
-%endif
 
 Provides: java-%{javaver}-%{origin} = %{epoch}:%{version}-%{release}
 
@@ -717,18 +706,6 @@ Requires: javapackages-filesystem
 # Require zoneinfo data provided by tzdata-java subpackage.
 # 2021a required as of JDK-8260356 in April CPU
 Requires: tzdata-java >= 2021a
-# libsctp.so.1 is being `dlopen`ed on demand
-Requires: liblksctp lksctp-tools
-# for printing support
-Requires: libcups
-# Post requires alternatives to install tool alternatives
-# in version 1.7 and higher for --family switch
-# Postun requires alternatives to uninstall tool alternatives
-# in version 1.7 and higher for --family switch
-# for optional support of kernel stream control, card reader and printing bindings
-%if 0%{?fedora} || 0%{?rhel} >= 8
-Requires: liblksctp lksctp-tools libpcsclite
-%endif
 
 # Standard JPackage base provides
 Provides: jre-headless = %{epoch}:%{javaver}
@@ -773,7 +750,7 @@ Summary: %{origin_nice} Development Environment %{majorver}
 Group:   Development/Java
 
 # Requires base package
-Requires:         %{name} = %{epoch}:%{version}-%{release}
+Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires: %{name}-headless%{?_isa} = %{epoch}:%{version}-%{release}
 # Post requires alternatives to install tool alternatives
 # in version 1.7 and higher for --family switch
@@ -1166,6 +1143,11 @@ export NUM_PROC=${NUM_PROC:-1}
 %if 0%{?_smp_ncpus_max}
 # Honor %%_smp_ncpus_max
 [ ${NUM_PROC} -gt %{?_smp_ncpus_max} ] && export NUM_PROC=%{?_smp_ncpus_max}
+%endif
+%ifarch aarch64
+export NUM_PROC=2
+%else
+export NUM_PROC=4
 %endif
 
 %ifarch s390x sparc64 alpha %{power64} %{aarch64}
@@ -2146,6 +2128,24 @@ fi
 %endif
 
 %changelog
+* Thu Aug 24 2023 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.382.b05-alt0_1jpp8
+- New version.
+- Seciruty fixes:
+  + CVE-2023-22045
+  + CVE-2023-22049
+- Removed implicit requirements.
+
+* Sat Jul 29 2023 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.372.b07-alt0_1jpp8
+- New version.
+- Seciruty fixes:
+  + CVE-2023-21930
+  + CVE-2023-21937
+  + CVE-2023-21938
+  + CVE-2023-21939
+  + CVE-2023-21954
+  + CVE-2023-21967
+  + CVE-2023-21968
+
 * Wed Feb 08 2023 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.362.b09-alt0_1jpp8
 - New version.
 - Seciruty fixes:
