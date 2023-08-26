@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.11.1
-Release: alt2
+Version: 1.11.2
+Release: alt1
 
 Summary: Avro is a serialization and RPC framework
 License: Apache-2.0
@@ -13,10 +13,13 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/avro/
 
 Source: %name-%version.tar
+Patch: avro-alt-test-timeout.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
@@ -60,23 +63,23 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
 # test_server_with_path: tries to connect to apache.org
-py.test-3 -k 'not test_server_with_path'
+%pyproject_run_pytest -v -k 'not test_server_with_path'
 
 %files
 %doc PKG-INFO
 %_bindir/%oname
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/%oname/test
 
 %files tests
@@ -85,6 +88,9 @@ py.test-3 -k 'not test_server_with_path'
 
 
 %changelog
+* Sat Aug 26 2023 Anton Vyatkin <toni@altlinux.org> 1.11.2-alt1
+- new version 1.11.2
+
 * Mon Mar 13 2023 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 1.11.1-alt2
 - Increase tests timeout
 
