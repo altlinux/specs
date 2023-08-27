@@ -1,6 +1,6 @@
 Name:    simbody
 Version: 3.7
-Release: alt1.1
+Release: alt1.2
 
 Summary: High-performance C++ multibody dynamics/physics library for simulating articulated biomechanical and mechanical systems
 License: Apache-2.0
@@ -88,6 +88,9 @@ Group: Development/Documentation
 %_defaultdocdir/%name/*.*
 
 %changelog
+* Sun Aug 27 2023 Michael Shigorin <mike@altlinux.org> 3.7-alt1.2
+- E2K: fix simbody-e2k.patch (ilyakurdyukov@)
+
 * Sat Aug 26 2023 Michael Shigorin <mike@altlinux.org> 3.7-alt1.1
 - E2K: fixed build with lcc 1.26
   (patch by ilyakurdyukov@; mcst#8270, #8271)
