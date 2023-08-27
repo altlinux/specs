@@ -11,16 +11,8 @@
 %def_without luajit
 %endif
 
-# Update How-to:
-#   git merge -s ours v0.0.9
-#   gear-update-tag libbpf v0.0.9
-#   git commit
-#   git merge v0.15.0
-#   (merge) git rm src/cc/libbpf
-#   (merge) git merge --continue
-
 Name:		bcc
-Version:	0.25.0
+Version:	0.28.0
 Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
@@ -32,32 +24,34 @@ Source:		%name-%version.tar
 Source1: libbpf-0.tar
 Source2: bpftool-0.tar
 Source3: libbpf-1.tar
+Source4: blazesym-0.tar
 
 # bcc does not support 32-bit arches
 # See https://github.com/iovisor/bcc/issues/3241
-ExclusiveArch:	x86_64 aarch64 ppc64le
+ExclusiveArch: x86_64 aarch64 ppc64le
 
 BuildRequires(pre): python3-module-setuptools
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: banner
 BuildRequires: bpftool
+BuildRequires: clang-devel
+BuildRequires: clang-devel-static
 BuildRequires: cmake
 BuildRequires: flex
 BuildRequires: libdebuginfod-devel
+BuildRequires: libelf-devel-static
+BuildRequires: liblzma-devel
+BuildRequires: libncurses-devel
 BuildRequires: libstdc++-devel
-BuildRequires: clang-devel
-BuildRequires: clang-devel-static
+BuildRequires: lld
 BuildRequires: llvm-devel
 BuildRequires: llvm-devel-static
-BuildRequires: lld
 BuildRequires: python3-devel
 BuildRequires: python3-tools
-BuildRequires: libelf-devel-static
 BuildRequires: zlib-devel
-BuildRequires: libncurses-devel
 %if_with luajit
-BuildRequires: luajit
 BuildRequires: libluajit-devel
+BuildRequires: luajit
 %endif
 # Prevent copying into repos with too old pahole.
 BuildRequires: dwarves >= 1.16
@@ -70,7 +64,11 @@ BuildRequires: dwarves >= 1.16
 BuildRequires: /proc
 
 # Assuming 'kernel' dependency will bring un-def kernel
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm kernel-headers-un-def kernel-headers-modules-un-def}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: kernel-headers-modules-un-def
+BuildRequires: kernel-headers-un-def
+BuildRequires: rpm-build-vm
+}}
 
 %description
 BCC is a toolkit for creating efficient kernel tracing and manipulation
@@ -143,6 +141,16 @@ Kernel should be compiled with 'CONFIG_DEBUG_INFO_BTF=y'.
 Installing of libbpf is not required due to it being statically
 linked (and built in bcc package).
 
+%package checkinstall
+Summary: CI test for %name
+Group: Development/Other
+Requires(post): bcc-tools = %EVR
+Requires(post): libbpf-tools = %EVR
+Requires(post): rpm-build-vm
+
+%description checkinstall
+%summary.
+
 %if_with luajit
 %global lua_include `pkg-config --variable=includedir luajit`
 %global lua_libs `pkg-config --variable=libdir luajit`/lib`pkg-config --variable=libname luajit`.so
@@ -154,6 +162,7 @@ linked (and built in bcc package).
 tar xf %SOURCE1 -C libbpf-tools/bpftool
 tar xf %SOURCE2 -C libbpf-tools
 tar xf %SOURCE3 -C src/cc
+tar xf %SOURCE4 -C libbpf-tools
 
 %build
 %define optflags_lto %nil
@@ -183,10 +192,8 @@ export CXX=clang++
 	%{?lua_config}
 %cmake_build
 
-%ifarch x86_64
 # LIBBPF_OBJ expects libbpf.a, but...
 %make_build -C libbpf-tools BPFTOOL=/usr/sbin/bpftool V=1
-%endif
 
 %install
 %set_verify_elf_method relaxed
@@ -195,9 +202,11 @@ pathfix.py -pni %__python3 tools
 %cmake_install
 
 # Cannot make noarch package because bcc exists not on all arches
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot/%python3_sitelibdir
 rmdir %buildroot/%python3_sitelibdir
 mv %buildroot/%python3_sitelibdir_noarch %buildroot/%python3_sitelibdir
+%endif
 
 # Fix man pages
 install -d %buildroot%_man8dir
@@ -211,15 +220,16 @@ rm -rf %buildroot/usr/share/bcc/man
 # Lib with unknown purpose.
 rm -rf %buildroot%_bindir/libbcc-loader-static.a
 
-%ifarch x86_64
 pushd libbpf-tools
-make -p | sed -n /^APPS/s/APPS.=//p | tr ' ' '\n' \
+make --no-print-directory -qs --eval 'print-%%:; $(info $($*))' print-APPS \
+	| xargs -n1 \
 	| xargs -i install -v -Dp {} %buildroot%_sbindir/bpf-{}
 popd
-%endif
 
 install -Dp .gear/bcc.sh %buildroot%_sbindir/bcc
 install -Dp .gear/bcc.bash_completion %buildroot%_datadir/bash-completion/completions/bcc
+ln -rs %buildroot%_datadir/bcc/tools/tplist %buildroot%_bindir
+ln -s bcc-tplist.8 %buildroot%_man8dir/tplist.8
 
 %check
 banner test
@@ -238,12 +248,20 @@ if ! grep -qs CONFIG_DEBUG_INFO_BTF=y /boot/config-$kver; then
 	echo >&2 "option enabled, because of this libbpf-tools will not work."
 fi
 
+%post checkinstall
+set -xeo pipefail
+vm-run bcc cpudist 1 1
+if grep CONFIG_DEBUG_INFO_BTF=y /boot/config-*; then
+	vm-run bpf-cpudist 1 1
+fi
+rm /tmp/vm.* /tmp/initramfs-*.img
+
 %files -n libbcc
 %doc LICENSE.txt
 %_libdir/lib*.so.*
 
 %files -n libbcc-devel
-%doc FAQ.txt LINKS.md README.md
+%doc CODEOWNERS CONTRIBUTING-SCRIPTS.md
 %_libdir/lib*.so
 %_libdir/pkgconfig/*.pc
 %_includedir/bcc
@@ -256,22 +274,31 @@ fi
 
 %if_with luajit
 %files -n bcc-lua
+%doc src/lua/README.md
 %_bindir/bcc-lua
 %endif
 
 %files -n bcc-tools
+%doc FAQ.txt LINKS.md README.md docs/*
 %_bindir/bps
+%_bindir/tplist
 %_sbindir/bcc
 %_datadir/bcc
 %_datadir/bash-completion/completions/bcc
 %_man8dir/*
 
-%ifarch x86_64
 %files -n libbpf-tools
+%doc libbpf-tools/README.md
 %_sbindir/bpf-*
-%endif
+
+%files checkinstall
 
 %changelog
+* Sun Aug 27 2023 Vitaly Chikunov <vt@altlinux.org> 0.28.0-alt1
+- Update to v0.28.0 (2023-06-28).
+- spec: Add checkinstall package with tests.
+- spec: Build libbpf-tools on all supported architectures.
+
 * Sun Oct 09 2022 Vitaly Chikunov <vt@altlinux.org> 0.25.0-alt1
 - Update to v0.25.0 (2022-08-10).
 
