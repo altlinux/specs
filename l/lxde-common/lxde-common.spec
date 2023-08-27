@@ -8,7 +8,7 @@
 %define gtkver 2
 Name: lxde-common
 Version: 0.99.2
-Release: alt7
+Release: alt7.1
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -130,6 +130,9 @@ rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
 %_datadir/%theme_fullname
 
 %changelog
+* Sun Aug 27 2023 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt7.1
+- fix typo in lxde-common-XDG_DATA_DIRS.patch
+
 * Sun Aug 27 2023 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt7
 - do not replace XDG_CONFIG_DATADIR, but add /usr/share/lxde to it
 
