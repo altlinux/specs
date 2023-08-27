@@ -1,5 +1,5 @@
 Name: mygui
-Version: 3.4.2
+Version: 3.4.3
 Release: alt1
 
 Summary: MyGUI is a graphical user interface library developed especialy for using with Ogre (http://www.ogre3d.org)
@@ -269,6 +269,9 @@ sed -i 's|libdir=${prefix}/lib|libdir=${prefix}/%_lib|g' \
 %doc Docs/html/*
 
 %changelog
+* Sun Aug 27 2023 Leontiy Volodin <lvol@altlinux.org> 3.4.3-alt1
+- New version 3.4.3.
+
 * Wed May 10 2023 Leontiy Volodin <lvol@altlinux.org> 3.4.2-alt1
 - New version 3.4.2.
 
