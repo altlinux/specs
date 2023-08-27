@@ -3,7 +3,7 @@
 
 Name:    gz-sim
 Version: 7.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Open source robotics simulator. The latest version of Gazebo.
 License: Apache-2.0
@@ -74,7 +74,9 @@ BuildRequires: libstdc++-devel-static
 BuildRequires: ronn
 BuildRequires: xsltproc
 BuildRequires: libgraphviz-devel
+%ifnarch %e2k
 BuildRequires: libdart-devel
+%endif
 BuildRequires: libfmt-devel
 
 # Requires to gz
@@ -137,6 +139,9 @@ install -Dpm 0644 "%_cmake__builddir"/gz-logo%ver.svg %buildroot%_pixmapsdir/gz-
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sat Aug 26 2023 Michael Shigorin <mike@altlinux.org> 7.5.0-alt1.1
+- E2K: build without dart
+
 * Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.0-alt1
 - New version.
 
