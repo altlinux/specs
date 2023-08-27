@@ -8,7 +8,7 @@
 %define gtkver 2
 Name: lxde-common
 Version: 0.99.2
-Release: alt6
+Release: alt7
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -21,6 +21,7 @@ Source: %name-%version.tar
 Source1: lxde.wm
 Source2: panel
 Patch: lxde-common-copy_skel_settings.patch
+Patch1: lxde-common-XDG_DATA_DIRS.patch
 
 AutoReq: yes,nosymlinks
 
@@ -53,12 +54,10 @@ This package contains unmodified configuration from upstream.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 sed -i 's,lxde.conf,LXDE.conf,' Makefile.am
-sed -i 's,XDG_CONFIG_HOME/pcmanfm,XDG_CONFIG_HOME/pcmanfm/LXDE,;s,pcmanfm/LXDE.conf,pcmanfm/lxde.conf,;s,default/LXDE.conf,pcmanfm.conf,;' startlxde.in
-sed -i '/XDG_MENU/ a\\n# Since shared-mime-info-0.90-alt3 XDG_DATA_DIRS not exported. We need to define\n# the set of base directories explicitly.\nexport XDG_DATA_DIRS="/usr/share/lxde:/usr/share:/usr/local/share"' startlxde.in
-
 %autoreconf
 %configure --enable-man
 
@@ -131,6 +130,9 @@ rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
 %_datadir/%theme_fullname
 
 %changelog
+* Sun Aug 27 2023 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt7
+- do not replace XDG_CONFIG_DATADIR, but add /usr/share/lxde to it
+
 * Tue Jan 04 2022 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt6
 - fix lxde-common-copy_skel_settings.patch (Closes: 41670)
 
