@@ -1,5 +1,5 @@
 Name: librubberband
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1
 
 Summary: high quality library for audio time-stretching and pitch-shifting
@@ -12,7 +12,7 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++ meson
-BuildRequires: ladspa_sdk libfftw3-devel libsamplerate-devel libsndfile-devel libvamp-devel
+BuildRequires: ladspa_sdk libfftw3-devel libsamplerate-devel libsndfile-devel libvamp-devel lv2-devel
 
 %package devel
 Summary: Headers for %name
@@ -22,12 +22,16 @@ Group: Development/C
 Summary: An audio time-stretching and pitch-shifting utility program
 Group: Sound
 
-%package -n vamp-rubberband
-Summary: An audio time-stretching and pitch-shifting Vamp plugin
-Group: Sound
-
 %package -n ladspa-rubberband
 Summary: An audio time-stretching and pitch-shifting LADSPA plugin
+Group: Sound
+
+%package -n lv2-rubberband
+Summary: An audio time-stretching and pitch-shifting LV2 plugin
+Group: Sound
+
+%package -n vamp-rubberband
+Summary: An audio time-stretching and pitch-shifting Vamp plugin
 Group: Sound
 
 %define desc \
@@ -43,11 +47,14 @@ Headers for building software that uses %name
 %description -n rubberband
 An audio time-stretching and pitch-shifting utility program
 
-%description -n vamp-rubberband
-An audio time-stretching and pitch-shifting Vamp plugin
-
 %description -n ladspa-rubberband
 An audio time-stretching and pitch-shifting LADSPA plugin
+
+%description -n lv2-rubberband
+An audio time-stretching and pitch-shifting LV2 plugin
+
+%description -n vamp-rubberband
+An audio time-stretching and pitch-shifting Vamp plugin
 
 %prep
 %setup
@@ -71,14 +78,20 @@ An audio time-stretching and pitch-shifting LADSPA plugin
 %files -n rubberband
 %_bindir/rubberband*
 
-%files -n vamp-rubberband
-%_libdir/vamp/vamp-rubberband*
-
 %files -n ladspa-rubberband
 %_libdir/ladspa/ladspa-rubberband*
 %_datadir/ladspa/rdf/ladspa-rubberband*
 
+%files -n lv2-rubberband
+%_libdir/lv2/rubberband.lv2
+
+%files -n vamp-rubberband
+%_libdir/vamp/vamp-rubberband*
+
 %changelog
+* Mon Aug 28 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.3.0-alt1
+- 3.3.0 released
+
 * Mon Jun 19 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.2.1-alt1
 - 3.2.1 released
 
