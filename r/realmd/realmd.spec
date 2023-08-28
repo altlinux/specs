@@ -2,12 +2,13 @@
 
 Name: realmd
 Version: 0.17.1
-Release: alt2
+Release: alt3
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
 Group: Security/Networking
 Url: http://www.freedesktop.org/software/realmd/
 Source: %name-%version.tar
+Source2: realmd.conf
 Patch: %name-%version.patch
 
 BuildRequires: intltool >= 0.35.0
@@ -54,12 +55,14 @@ applications that use %name.
 %find_lang %name
 
 install -m755 -D service/realmd-altlinux-helper %buildroot%_prefix/lib/realmd/
+install -m0644 -D %SOURCE2 %buildroot%_sysconfdir/
 
 %check
 %make check
 
 %files -f realmd.lang
 %doc AUTHORS COPYING NEWS README
+%config(noreplace) %_sysconfdir/realmd.conf
 %_sysconfdir/dbus-1/system.d/org.freedesktop.realmd.conf
 %_sbindir/realm
 %_prefix/lib/realmd
@@ -75,6 +78,9 @@ install -m755 -D service/realmd-altlinux-helper %buildroot%_prefix/lib/realmd/
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Mon Aug 28 2023 Alexander Burmatov <thatman@altlinux.org> 0.17.1-alt3
+- Added realmd.conf file.
+
 * Fri Apr 28 2023 Alexander Burmatov <thatman@altlinux.org> 0.17.1-alt2
 - Added fixes for joining a domain using sss
 
