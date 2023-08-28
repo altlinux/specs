@@ -2,7 +2,7 @@
 
 Name: hunt
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: A highly-opinionated simplified Find command made with Rust
 License: MIT
@@ -13,6 +13,7 @@ Vcs: https://github.com/LyonSyonII/hunt-rs
 Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: .cargo/config.toml
+Conflicts: bsd-games
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rust
 BuildRequires: rust-cargo
@@ -40,6 +41,9 @@ install -D %SOURCE2 .cargo/config.toml
 %doc README.md LICENSE
 
 %changelog
+* Mon Aug 28 2023 Vladislav Glinkin <smasher@altlinux.org> 2.0.0-alt2
+- Specifying a file conflict with bsd-games in .spec explicitly
+
 * Fri Aug 25 2023 Vladislav Glinkin <smasher@altlinux.org> 2.0.0-alt1
 - Initial build for ALT
 
