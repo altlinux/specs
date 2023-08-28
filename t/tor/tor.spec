@@ -10,7 +10,7 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.4.7.14
+Version: 0.4.8.4
 Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
@@ -23,7 +23,7 @@ Source1: %name.init
 Source2: %name.systemd.service
 Source3: %name.tmpfiles
 
-Patch1:	 %name-0.4.7.7-source-date.patch
+Patch1:	 %name-0.4.8.4-source-date.patch
 
 # Automatically added by buildreq on Sun Apr 17 2022
 # optimized out: asciidoc docbook-dtds docbook-style-xsl glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl pkg-config python2-base python3 python3-base sh4 termutils tzdata xml-common xml-utils xsltproc xz
@@ -152,6 +152,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Thu Aug 24 2023 Vladimir Didenko <cow@altlinux.ru> 0.4.8.4-alt1
+- new version
+
 * Thu Jul 27 2023 Vladimir Didenko <cow@altlinux.ru> 0.4.7.14-alt1
 - new version
 
