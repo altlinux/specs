@@ -9,7 +9,7 @@
 %endif
 
 Name: redis
-Version: 7.0.12
+Version: 7.2.0
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -212,6 +212,9 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Mon Aug 28 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.0-alt1
+- Release Redis 7.2.0 GA
+
 * Tue Aug 15 2023 Alexey Shabalin <shaba@altlinux.org> 7.0.12-alt1
 - 7.0.12
 - Fixed License
