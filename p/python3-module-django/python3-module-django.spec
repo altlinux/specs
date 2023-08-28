@@ -1,4 +1,4 @@
-%define branch 3.2
+%define branch 4.2
 %define origname Django
 %define oname django
 
@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: 3.2.20
+Version: %branch.4
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD
@@ -181,6 +181,9 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Mon Aug 28 2023 Alexey Shabalin <shaba@altlinux.org> 4.2.4-alt1
+- New version 4.2.4 (new 4.2 LTS release).
+
 * Wed Jul 12 2023 Anton Farygin <rider@altlinux.ru> 3.2.20-alt1
 - New version 3.2.19.
 - Fixes for the following security vulnerabilities:
