@@ -1,24 +1,27 @@
 %define  oname traits
+
 %def_without doc
 
+%def_with check
+
 Name:    python3-module-%oname
-Version: 6.4.1
-Release: alt2
+Version: 6.4.2
+Release: alt1
 
 Summary: Observable typed attributes for Python classes
 
 License: BSD-3-Clause and CC-BY-3.0
 Group:   Development/Python3
 URL:     https://pypi.org/project/traits/
+VCS:     https://github.com/enthought/traits
 
-# https://github.com/enthought/traits.git
 Source:  %name-%version.tar
 
-BuildRequires(pre): python3-module-sphinx-devel
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-pygments
 %if_with doc
+BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3-module-sphinx-pickles
 BuildRequires: python3-module-sphinx-copybutton
@@ -88,6 +91,13 @@ make -C docs html
 cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
+%check
+mkdir tester
+pushd tester
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 -m unittest discover -v traits
+popd
+
 %files
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
@@ -115,6 +125,9 @@ cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Aug 23 2023 Anton Vyatkin <toni@altlinux.org> 6.4.2-alt1
+- New version 6.4.2.
+
 * Sat May 20 2023 Grigory Ustinov <grenka@altlinux.org> 6.4.1-alt2
 - Build without docs.
 
