@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.2.3
-Release: alt1
+Release: alt2
 
 Summary: A Python 3.6+ port of the GraphQL.js reference implementation of GraphQL
 License: MIT
@@ -54,14 +54,18 @@ created by Facebook.
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+# Remove broken test for Python 3.11 (there is not asyncio.coroutine anymore).
+%pyproject_run_pytest -vra -k "not recognizes_an_old_style_coroutine"
 
 %files
-%doc README.md
+%doc LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 28 2023 Anton Zhukharev <ancieg@altlinux.org> 3.2.3-alt2
+- Fixed FTBFS.
+
 * Sat May 13 2023 Anton Zhukharev <ancieg@altlinux.org> 3.2.3-alt1
 - Initial build for ALT Sisyphus.
 
