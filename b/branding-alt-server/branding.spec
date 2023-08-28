@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt5
+Release: alt6
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -338,6 +338,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Aug 28 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt6
+- use the Basealt LLC logo for About system
+
 * Thu Jan 19 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt5
 - update year for copyright to 2023
 - set codename to Mendelevium
