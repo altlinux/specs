@@ -17,6 +17,7 @@
 %def_disable vde
 %def_enable alsa
 %def_enable pulseaudio
+%def_enable pipewire
 %def_enable oss
 %def_disable jack
 %def_disable sndio
@@ -115,7 +116,7 @@
 
 %def_enable have_kvm
 
-%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa} %{?_enable_jack:jack} %{?_enable_sndio:sndio} dbus
+%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa} %{?_enable_pipewire:pipewire} %{?_enable_jack:jack} %{?_enable_sndio:sndio} dbus
 %define block_drv_list curl dmg %{?_enable_glusterfs:gluster} %{?_enable_libiscsi:iscsi} %{?_enable_libnfs:nfs} %{?_enable_rbd:rbd} %{?_enable_libssh:ssh} %{?_enable_blkio:blkio} %{?_enable_vitastor:vitastor}
 %define ui_list %{?_enable_gtk:gtk} %{?_enable_curses:curses} %{?_enable_sdl:sdl} %{?_enable_opengl:opengl} dbus
 %define ui_spice_list %{?_enable_spice:app core}
@@ -132,7 +133,7 @@
 # }}}
 
 Name: qemu
-Version: 8.0.4
+Version: 8.1.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -167,7 +168,7 @@ Requires: %name-user = %EVR
 BuildRequires: /dev/kvm
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: meson >= 0.61.3
+BuildRequires: meson >= 0.63.0
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre2-devel-static libattr-devel-static libdw-devel-static
 BuildRequires: glib2-devel >= 2.56 libgio-devel
 BuildRequires: libdw-devel
@@ -177,6 +178,7 @@ BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel >= 7.29.0 libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.5.0.0.20.2431 qboot
 BuildRequires: libpixman-devel >= 0.21.8
+BuildRequires: libkeyutils-devel
 BuildRequires: python3-devel
 BuildRequires: flex
 %ifarch riscv64
@@ -186,6 +188,7 @@ BuildRequires: libatomic-devel-static
 %{?_enable_curses:BuildRequires: libncursesw-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
+%{?_enable_pipewire:BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.60}
 %{?_enable_jack:BuildRequires: libjack-devel jack-audio-connection-kit}
 %{?_enable_sndio:BuildRequires: libsndio-devel}
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
@@ -247,6 +250,7 @@ Requires: %name-block-dmg  \
 %{?_enable_libssh:Requires: %name-block-ssh}     \
 %{?_enable_alsa:Requires: %name-audio-alsa}      \
 %{?_enable_oss:Requires: %name-audio-oss}        \
+%{?_enable_pipewire:Requires: %name-audio-pipewire}  \
 %{?_enable_pulseaudio:Requires: %name-audio-pa}  \
 %{?_enable_jack:Requires: %name-audio-jack}      \
 %{?_enable_sndio:Requires: %name-audio-sndio}    \
@@ -730,10 +734,12 @@ This package provides the system emulator for %%{1}. \
 
 %prep
 %setup
-
-tar -xf %SOURCE100 -C ui/keycodemapdb --strip-components 1
-tar -xf %SOURCE101 -C tests/fp/berkeley-testfloat-3 --strip-components 1
-tar -xf %SOURCE102 -C tests/fp/berkeley-softfloat-3 --strip-components 1
+mkdir -p subprojects/{keycodemapdb,berkeley-testfloat-3,berkeley-softfloat-3}
+tar -xf %SOURCE100 -C subprojects/keycodemapdb --strip-components 1
+tar -xf %SOURCE101 -C subprojects/berkeley-testfloat-3 --strip-components 1
+tar -xf %SOURCE102 -C subprojects/berkeley-softfloat-3 --strip-components 1
+cp -a subprojects/packagefiles/berkeley-testfloat-3/* subprojects/berkeley-testfloat-3/
+cp -a subprojects/packagefiles/berkeley-softfloat-3/* subprojects/berkeley-softfloat-3/
 
 %patch -p1
 
@@ -741,7 +747,7 @@ tar -xf %SOURCE102 -C tests/fp/berkeley-softfloat-3 --strip-components 1
 run_configure() {
 # non-GNU configure
 ../configure \
-	--with-git-submodules=ignore \
+	--disable-download \
 	--prefix=%prefix \
 	--sysconfdir=%_sysconfdir \
 	--libdir=%_libdir \
@@ -792,16 +798,19 @@ run_configure \
 	--disable-capstone \
 	--disable-cloop \
 	--disable-cocoa \
+	--disable-colo-proxy \
 	--disable-coreaudio \
 	--disable-crypto-afalg \
 	--disable-curl \
 	--disable-curses \
 	--disable-dbus-display \
+	--disable-debug-graph-lock \
 	--disable-debug-info \
 	--disable-debug-mutex \
 	--disable-debug-tcg \
 	--disable-dmg \
 	--disable-docs \
+	--disable-download \
 	--disable-dsound \
 	--disable-fuse \
 	--disable-gcrypt \
@@ -847,6 +856,7 @@ run_configure \
 	--disable-pa \
 	--disable-parallels \
 	--disable-pie \
+	--disable-pipewire \
 	--disable-pvrdma \
 	--disable-qcow1 \
 	--disable-qed \
@@ -870,9 +880,14 @@ run_configure \
 	--disable-system \
 	--disable-tools \
 	--disable-tpm \
+	--disable-tsan \
+	--disable-u2f \
 	--disable-usb-redir \
+	--disable-vpc \
 	--disable-vde \
 	--disable-vdi \
+	--disable-vfio-user-server \
+	--disable-vhdx \
 	--disable-vhost-crypto \
 	--disable-vhost-kernel \
 	--disable-vhost-net \
@@ -989,8 +1004,10 @@ run_configure \
 	%{subst_enable blkio} \
 	%{subst_enable libdaxctl} \
 	%{subst_enable fuse} \
+	--enable-vhdx \
+	--enable-vpc \
+	--enable-vmdk \
 	--enable-xkbcommon \
-	--sphinx-build=sphinx-build-3 \
 	--disable-xen
 
 %make_build V=1 $buildldflags
@@ -1318,6 +1335,9 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Wed Aug 23 2023 Alexey Shabalin <shaba@altlinux.org> 8.1.0-alt1
+- 8.1.0.
+
 * Mon Aug 21 2023 Alexey Shabalin <shaba@altlinux.org> 8.0.4-alt1
 - 8.0.4 (Fixes: CVE-2023-3255, CVE-2023-3354, CVE-2023-3180).
 - Backport fix oob memory read in fdp events log (Fixes: CVE-2023-4135).
