@@ -3,11 +3,11 @@
 
 Name:    gitlab-runner
 Version: 16.1.1
-Release: alt1
+Release: alt2
 
 Summary: GitLab Runner is the open source project that is used to run your CI/CD jobs and send the results back to GitLab
 License: MIT
-Group:   Other
+Group:   Development/Tools
 Url:     https://gitlab.com/gitlab-org/gitlab-runner
 
 Source: %name-%version.tar
@@ -67,5 +67,8 @@ fi
 %attr(0770,root,gitlab-runner) %dir %_localstatedir/gitlab-runner
 
 %changelog
+* Mon Aug 28 2023 Nikolay Burykin <bne@altlinux.org> 16.1.1-alt2
+- Changed group from Other to Development/Tools
+
 * Fri Aug 11 2023 Nikolay Burykin <bne@altlinux.org> 16.1.1-alt1
 - Initial build for Sisyphus
