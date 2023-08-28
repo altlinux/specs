@@ -3,7 +3,7 @@
 
 Name: vitastor
 Version: 0.9.6
-Release: alt2
+Release: alt3
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
 
@@ -258,6 +258,9 @@ fi
 %endif
 
 %changelog
+* Mon Aug 28 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.6-alt3
+- update vitastor-osd@.service for send logs to journald
+
 * Thu Aug 03 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.6-alt2
 - cleanup files in mon package
 - enable post and preun service for vitastor-mon
