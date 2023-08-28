@@ -2,7 +2,7 @@
 
 Name: translate-toolkit
 Version: 3.10.0
-Release: alt1
+Release: alt2
 
 Summary: Tools and API for translation and localization engineering.
 
@@ -20,7 +20,7 @@ BuildRequires: python3(wheel)
 BuildRequires: python3-devel
 BuildRequires: python3-module-BeautifulSoup4
 BuildRequires: python3-module-sphinx
-BuildRequires: python3(sphinx-bootstrap-theme)
+BuildRequires: python3(sphinx_bootstrap_theme)
 BuildRequires: python3-module-Levenshtein
 
 Requires: python3-module-%modname = %version-%release
@@ -108,6 +108,9 @@ rm %buildroot%python3_sitelibdir/%modname/storage/{fluent.py,test_fluent.py}
 %doc docs/_build/html
 
 %changelog
+* Mon Aug 28 2023 Anton Midyukov <antohami@altlinux.org> 3.10.0-alt2
+- fix BuildRequires for build on p10
+
 * Mon Aug 28 2023 Anton Midyukov <antohami@altlinux.org> 3.10.0-alt1
 - new version (3.10.0) with rpmgs script
 - migration to PEP517
