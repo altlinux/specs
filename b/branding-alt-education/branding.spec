@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt1
+Release: alt2
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -48,6 +48,7 @@ License: GPL-2.0+
 
 %define distro_name ALT Education %version%status_en
 %define distro_name_ru Альт Образование %version%status
+%define distro_logo alt-education-desktop
 
 %description
 Distro-specific packages with design and texts for %distro_name.
@@ -316,7 +317,7 @@ grep -rl chromium xfce-settings/etcskel/.config/xfce4/panel |
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' XFWM4_COMPOSITING='%xfwm4_compositing' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' PRODUCT_LOGO='%distro_logo' CODENAME='%codename' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' XFWM4_COMPOSITING='%xfwm4_compositing' ./configure
 make
 
 %install
@@ -478,6 +479,10 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Mon Aug 28 2023 Andrey Cherepanov <cas@altlinux.org> 10.2-alt2
+- os-release: added LOGO to /etc/os-release (ALT #47292).
+- xfce-settings: reduced size for power and sound icons on panel.
+
 * Mon Jul 31 2023 Andrey Cherepanov <cas@altlinux.org> 10.2-alt1
 - New version.
 - Generated well-formed desktop files for hidden menu items.
