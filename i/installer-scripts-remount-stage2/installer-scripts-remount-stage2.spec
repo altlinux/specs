@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,11 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Mon Aug 28 2023 Anton Midyukov <antohami@altlinux.org> 0.6.2-alt1
+- partprobe after stop_mdraid && reset_devmapper
+- verbose stop and start mdraid
+- start_mdraid with udev rules, if it is possible
+
 * Tue Aug 22 2023 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
 - install2-remount-functions: re-read partition table after reset /dev/mapper
 

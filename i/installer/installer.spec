@@ -1,6 +1,6 @@
 Name: installer
-Version: 1.14.2
-Release: alt2
+Version: 1.14.3
+Release: alt1
 
 Summary: Installer common parts
 License: GPLv2+
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Aug 28 2023 Anton Midyukov <antohami@altlinux.org> 1.14.3-alt1
+- install2: move 64-md-raid-assembly.rules from udev/rules.d to /tmp
+
 * Mon Aug 21 2023 Anton Midyukov <antohami@altlinux.org> 1.14.2-alt2
 - do not depend udev-rule-generator
 
