@@ -10,13 +10,19 @@
 %def_enable libbrasero
 %def_enable webservices
 %def_disable libchamplain
+%def_enable clutter
 %def_enable libraw
 %def_enable libheif
 %def_enable colord
 %def_enable gstreamer
+%ifarch armh
+%def_disable libjxl
+%else
+%def_enable libjxl
+%endif
 
 Name: gthumb
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -53,7 +59,7 @@ Requires: %name-data = %version-%release
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver
+%{?_enable_clutter:BuildRequires: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver}
 %{?_enable_gstreamer:BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver}
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
 BuildRequires: libsoup-devel >= %soup_ver libsecret-devel
@@ -66,6 +72,7 @@ BuildRequires: libwebkitgtk4-devel >= %webkit_ver
 %{?_enable_webservices:BuildRequires: bison flex}
 %{?_enabled_libchamplain:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
 %{?_enable_colord:BuildRequires: libcolord-devel}
+%{?_enable_libjxl:BuildRequires: libjxl-devel}
 
 %if_enabled exiv2
 BuildRequires: libexiv2-devel >= %exiv2_ver gcc-c++
@@ -121,7 +128,10 @@ This package contains headers needed to build extensions for gThumb.
     %{?_disable_libraw:-Dlibraw=false} \
     %{?_disable_libheif:-Dlibheif=false} \
     %{?_disable_colord:-Dcolord=false} \
-    %{?_disable_gstreamer:-Dgstreamer=false}
+    %{?_disable_gstreamer:-Dgstreamer=false} \
+    %{?_disable_clutter:-Dclutter=false} \
+    %{?_disable_libjxl:-Dlibjxl=false}
+%nil
 %meson_build
 
 %install
@@ -130,8 +140,10 @@ This package contains headers needed to build extensions for gThumb.
 
 %files
 %_bindir/*
-%dir %_libdir/gthumb/extensions
-%_libdir/gthumb/extensions/*
+%dir %_libdir/%name/extensions
+%_libdir/%name/extensions/*
+%dir %_libexecdir/%name
+%_libexecdir/%name/video-thumbnailer
 
 %files data  -f %name.lang
 %_desktopdir/*
@@ -172,6 +184,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Sun Aug 27 2023 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
+- 3.12.3
+
 * Sun Apr 03 2022 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 
