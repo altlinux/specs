@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 6.3.20220618
-Release: alt3
+Release: alt4
 
 %define rootdatadir /lib
 
@@ -83,6 +83,7 @@ This package contains %* library%libsummary\
 %define libpackage_extra Provides: %name = %EVR
 %libpackage %name base
 %libpackage -o %name base
+%define libpackage_extra Provides: %{name}-devel = %EVR
 %libpackage -dC %name base
 %libpackage -sdC %name base
 
@@ -95,14 +96,15 @@ This package contains %* library%libsummary\
 %define libpackage_extra Provides: %{name}w = %EVR
 %libpackage %{name}w base library (widechar support)
 %libpackage -o %{name}w base (widechar support)
-%define libpackage_extra Requires: libncurses-devel = %EVR
+%define libpackage_extra Requires: lib%{name}-devel = %EVR\
+Provides: %{name}w-devel = %EVR
 %libpackage -dC %{name}w base (widechar support)
 %libpackage -sdC %{name}w base (widechar support)
 
 %libpackage %{name}++w C++ bindings (widechar support)
 %libpackage -o %{name}++w C++ bindings (widechar support)
-%define libpackage_extra Requires: libncursesw-devel = %EVR\
-Requires: libncurses++-devel = %EVR
+%define libpackage_extra Requires: lib%{name}w-devel = %EVR\
+Requires: lib%{name}++-devel = %EVR
 %libpackage -dC++ %{name}++w C++ bindings (widechar support)
 %libpackage -sdC++ %{name}++w C++ bindings (widechar support)
 %endif
@@ -502,6 +504,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Sun Aug 27 2023 Fr. Br. George <george@altlinux.org> 6.3.20220618-alt4
+- Fix provides loss after spec redesign
+
 * Wed Aug 23 2023 Fr. Br. George <george@altlinux.org> 6.3.20220618-alt3
 - Fix requirements loss after spec redesign
 
