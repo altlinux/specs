@@ -1,7 +1,6 @@
-#%%{?optflags_lto:%%global optflags_lto %%optflags_lto -ffat-lto-objects}
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators rpm-build-python3
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -26,7 +25,7 @@ BuildRequires: perl-podlators rpm-build-python3
 %define my_make_flags V=1 CFLAGS="%{optflags} -fPIC" LDFLAGS="-pie" BUILDTYPE=NATIVEONLY PREFIX=%{_prefix} LIBDIR32=%{_libdir} DESTDIR=%{buildroot}
 Name:           libhugetlbfs
 Version:        2.23.0.g6b126a4
-Release:        alt1_2.3
+Release:        alt1_3.4
 Summary:        Helper library for the Huge Translation Lookaside Buffer Filesystem
 License:        LGPL-2.1-or-later
 Group:          System/Libraries
@@ -38,14 +37,14 @@ Patch1:         libhugetlbfs_ia64_fix_missing_test.patch
 Patch2:         disable-rw-on-non-ldscripts.diff
 Patch3:         zero_filesize_segment.patch
 Patch4:         glibc-2.34-fix.patch
-Patch3500:	libhugetlbfs_loongarch64_basic_support.patch
 BuildRequires:  doxygen
-BuildRequires:  glibc-devel-static
+BuildRequires:  glibc-devel glibc-devel-static
 # bug437293
 %ifarch ppc64
 Obsoletes:      libhugetlbfs-64bit
 %endif
 Source44: import.info
+Patch33: libhugetlbfs_loongarch64_basic_support.patch
 
 %description
 The libhugetlbfs package interacts with the Linux hugetlbfs to
@@ -83,6 +82,7 @@ pool size control. pagesize lists page sizes available on the machine.
 %{_mandir}/man1/ld.hugetlbfs.1*
 %{_libdir}/libhugetlbfs_privutils.so
 
+
 %package tests
 Summary:        Tests for package libhugetlbfs
 Group:          Development/Tools
@@ -98,7 +98,7 @@ The testsuite for libhugetlbfs. Binaries can be found in
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch3500 -p1
+%patch33 -p1
 
 
 %build
@@ -114,46 +114,38 @@ chmod 644 %{buildroot}%{_libdir}/*.a
 if [ -f %{buildroot}%{_libdir}/libhugetlbfs/tests/obj64/dummy.ldscript ]; then
 	chmod -f a-x %{buildroot}%{_libdir}/libhugetlbfs/tests/obj64/dummy.ldscript
 fi
+rm -r %{buildroot}%{_libdir}/libhugetlbfs/tests
 
 mkdir -p -m755 $RPM_BUILD_ROOT%{_sysconfdir}/security/limits.d
 touch $RPM_BUILD_ROOT%{_sysconfdir}/security/limits.d/hugepages.conf
 
 # remove statically built libraries:
 rm -f $RPM_BUILD_ROOT/%{_libdir}/*.a
-# remove unused sbin directory
-#rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
+
 
 %files
 %doc LGPL-2.1 HOWTO README NEWS
 %{_datadir}/libhugetlbfs
 #%{_bindir}/*
 #%{_mandir}/man[178]/*%{?ext_man}
-%{_mandir}/man7/libhugetlbfs.7*
+#%{_libdir}/libhugetlbfs_privutils.so
 %{_libdir}/libhugetlbfs.so
+%{_mandir}/man7/libhugetlbfs.7*
 %ghost %config(noreplace) %{_sysconfdir}/security/limits.d/hugepages.conf
 %exclude %{_libdir}/libhugetlbfs_privutils.so
 
 %files devel
 %{_includedir}/hugetlbfs.h
 #%{_libdir}/libhugetlbfs.a
-#%{_mandir}/man3/*%{?ext_man}
-%{_mandir}/man3/getpagesizes.3*
-%{_mandir}/man3/free_huge_pages.3*
-%{_mandir}/man3/get_huge_pages.3*
-%{_mandir}/man3/gethugepagesize.3*
-%{_mandir}/man3/gethugepagesizes.3*
-%{_mandir}/man3/free_hugepage_region.3*
-%{_mandir}/man3/get_hugepage_region.3*
-%{_mandir}/man3/hugetlbfs_find_path.3*
-%{_mandir}/man3/hugetlbfs_find_path_for_size.3*
-%{_mandir}/man3/hugetlbfs_test_path.3*
-%{_mandir}/man3/hugetlbfs_unlinked_fd.3*
-%{_mandir}/man3/hugetlbfs_unlinked_fd_for_size.3*
+%{_mandir}/man3/*%{?ext_man}
 
 %files tests
 %{_libdir}/libhugetlbfs/
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 2.23.0.g6b126a4-alt1_3.4
+- merged basic support of LoongArch (lp64d ABI) architecture
+
 * Mon Jul 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.23.0.g6b126a4-alt1_2.3
 - Basic support of LoongArch (lp64d ABI) architecture
 
