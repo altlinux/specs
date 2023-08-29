@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           mirrormagic
 Version:        3.0.0
-Release:        alt1_6
+Release:        alt1_14
 Summary:        Puzzle game where you steer a beam of light using mirrors
 License:        GPL+
 URL:            http://www.artsoft.org/mirrormagic/
@@ -18,7 +18,7 @@ Patch0:         %{name}-%{version}-yesno.patch
 Patch1:         %{name}-%{version}-fcommon-fix.patch
 BuildRequires:  gcc
 BuildRequires:  libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel
-BuildRequires:  libappstream-glib desktop-file-utils
+BuildRequires:  libappstream-glib libappstream-glib-gir desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -42,8 +42,11 @@ mv CREDITS.tmp CREDITS
 
 
 %build
-%make_build PROGBASE=%{name} RO_GAME_DIR=%{_datadir}/%{name} \
-  OPTIONS="$RPM_OPT_FLAGS -DUSE_USERDATADIR_FOR_COMMONDATA" sdl2
+# parallel build has been disabled because for some unknown reason
+# it leads to unknown symbols during the linking of the mirrormagic binary
+make PROGBASE=%{name} RO_GAME_DIR=%{_datadir}/%{name} \
+  OPTIONS="$RPM_OPT_FLAGS -DUSE_USERDATADIR_FOR_COMMONDATA" \
+  EXTRA_LDFLAGS="$RPM_OPT_FLAGS $RPM_LD_FLAGS" sdl2
 
 
 %install
@@ -74,6 +77,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_14
+- update to new release by fcimport
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_6
 - update to new release by fcimport
 
