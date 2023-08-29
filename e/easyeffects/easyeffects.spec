@@ -4,7 +4,7 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 7.0.7
+Version: 7.0.8
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 %define lv2_ver 1.18.2
 %define lilv_ver 0.22
 %define calf_ver 0.90.1
-%define lsp_ver 1.1.24
+%define lsp_ver 1.2.10
 
 Requires: pipewire >= %pw_ver dconf
 Requires: ladspa-zam-plugins
@@ -90,6 +90,9 @@ sed -i 's/tbb/tbb32/' src/meson.build
 %doc README* CHANGELOG.*
 
 %changelog
+* Tue Aug 29 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.8-alt1
+- 7.0.8
+
 * Sat Aug 12 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.7-alt1
 - 7.0.7
 
