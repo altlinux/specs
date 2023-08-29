@@ -2,7 +2,7 @@
 
 Name: alsa-utils
 Version: 1.2.8
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
@@ -21,8 +21,6 @@ Conflicts: alsa-utils < 1.0.9a-alt1
 
 BuildRequires: intltool libalsa-devel libncursesw-devel xmlto libfftw3-devel
 %{?_with_systemd:BuildRequires: systemd-devel}
-Requires: libncursesw >= 5.7
-Requires: sysfsutils
 
 Obsoletes: alsa-bat <= 1.1.0
 Provides: alsa-bat = %version
@@ -104,6 +102,12 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Tue Aug 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.2.8-alt2
+- Dropped R: libncursesw >= 5.7 due to migration to ncurses ABI 6; the original
+  issue ALT#21991 is addressed through the RPM set-versions mechanism.
+- Dropped R: sysfsutils which never actually resolved any issues
+  (see ALT#32065).
+
 * Sun Nov 20 2022 Michael Shigorin <mike@altlinux.org> 1:1.2.8-alt1
 - 1.2.8
 - NB: speaker-test moved into %_bindir
