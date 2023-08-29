@@ -8,10 +8,10 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libspeexdsp
 Version:        1.2.1
-Release:        alt1_2
+Release:        alt1_5
 Summary:        A voice compression format (DSP)
 
-License:        BSD
+License:        BSD-3-Clause
 URL:            http://www.speex.org/
 Source0:        http://downloads.xiph.org/releases/speex/%{oldname}-%{version}.tar.gz
 
@@ -83,6 +83,9 @@ find %{buildroot} -type f -name "*.la" -delete
 %{_libdir}/libspeexdsp.so
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt1_5
+- update to new release by fcimport
+
 * Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt1_2
 - update to new release by fcimport
 
