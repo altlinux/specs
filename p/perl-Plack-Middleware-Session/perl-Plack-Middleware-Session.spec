@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(HTTP/Cookies.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 Name: perl-Plack-Middleware-Session
 Version: 0.33
-Release: alt1
+Release: alt2
 Summary: Plack::Middleware::Session - Middleware for session management
 
 Group: Development/Perl
@@ -30,6 +33,9 @@ BuildRequires: perl-devel perl-Plack perl-Test-Fatal perl-Test-Requires perl-Dig
 %perl_vendor_privlib/Plack/Session*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.33-alt2
+- NMU: fixed build
+
 * Tue Mar 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
 - new version
 
