@@ -1,13 +1,10 @@
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires: swig
-# END SourceDeps(oneline)
 BuildRequires(pre): rpm-macros-environment-modules
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           4ti2
-Version:        1.6.9
-Release:        alt1_15
+Version:        1.6.10
+Release:        alt1_2
 Summary:        Algebraic, geometric and combinatorial problems on linear spaces
 
 %global relver %(tr . _ <<< %{version})
@@ -23,11 +20,6 @@ Source0:        https://github.com/4ti2/4ti2/releases/download/Release_%{relver}
 Source1:        4ti2.module.in
 # Deal with a boolean variable that can somehow hold the value 2
 Patch0:         %{name}-maxnorm.patch
-# Add missing #include for gcc 13
-Patch1:         %{name}-missing-include.patch
-# Fix a memory leak
-# See https://github.com/4ti2/4ti2/pull/36
-Patch2:         %{name}-memleak.patch
 
 BuildRequires:  environment(modules)
 BuildRequires:  gcc
@@ -71,8 +63,6 @@ spaces.
 %prep
 %setup -q
 %patch0
-%patch1
-%patch2
 
 
 # Add a missing executable bit
@@ -86,14 +76,13 @@ mv -f NEWS.utf8 NEWS
 # Update the C++ standard
 sed -i 's/c++0x/c++11/g' configure
 
-# Silence "egrep is obsolescent" warnings
-for f in $(grep -Frl egrep src/groebner test); do
-  sed -i.orig 's/egrep/grep -E/g' $f
-  touch -r $f.orig $f
-  rm $f.orig
-done
-
 %build
+# Do not override Fedora compiler flags
+sed -e 's|-O3 -fomit-frame-pointer|%{optflags}|' \
+    -e 's/-march=\$arch -mcpu=\$arch -m\$arch//' \
+    -e 's/-mtune=\$arch//' \
+    -i configure
+
 %configure --enable-shared --disable-static
 
 # Get rid of undesirable hardcoded rpaths; workaround libtool reordering
@@ -110,8 +99,8 @@ export LD_LIBRARY_PATH=$PWD/src/4ti2/.libs:$PWD/src/fiber/.libs:$PWD/src/groebne
 pushd doc
 make update-manual
 bibtex 4ti2_manual
-pdflatex -interaction=batchmode 4ti2_manual
-pdflatex -interaction=batchmode 4ti2_manual
+pdflatex 4ti2_manual
+pdflatex 4ti2_manual
 popd
 
 %install
@@ -159,6 +148,9 @@ make check
 %{_libdir}/libzsolve*.so.0*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.6.10-alt1_2
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.6.9-alt1_15
 - update to new release by fcimport
 
