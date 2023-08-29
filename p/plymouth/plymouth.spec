@@ -10,7 +10,7 @@
 
 Name: plymouth
 Version: 22.02.122
-Release: alt2.20221016
+Release: alt3.20221016
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -472,6 +472,10 @@ fi \
 %files system-theme
 
 %changelog
+* Tue Aug 29 2023 Anton Midyukov <antohami@altlinux.org> 1:22.02.122-alt3.20221016
+- Add upstream commit:
+  "drm: Use first output for panel info if there is no builtin display"
+
 * Mon May 22 2023 Anton Midyukov <antohami@altlinux.org> 1:22.02.122-alt2.20221016
 - Revert "Revert "Revert "drm: Remove explicit set_scan_out_buffer() from
   activate()"""
