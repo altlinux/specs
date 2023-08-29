@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install
@@ -7,21 +8,21 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           asylum
 Version:        0.3.2
-Release:        alt2_16
+Release:        alt2_29
 Summary:        Game involving shooting anything that moves & collecting others
-Group:          Games/Other
 # For detailed licensing, see the README
-License:        GPLv3 and Public Domain
+License:        GPL-3.0-only and LicenseRef-Fedora-Public-Domain
 URL:            http://sdl-asylum.sourceforge.net
 Source0:        http://downloads.sourceforge.net/sdl-%{name}/%{name}-%{version}.tar.gz
 Source1:        %{name}.png
 Patch0:         asylum-0.3.2-paths.patch
-Patch1:         asylum-0.3.2-alt-gcc8.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
 BuildRequires:  libSDL_mixer-devel
 Requires:       icon-theme-hicolor
 Source44: import.info
+Patch33: asylum-0.3.2-alt-gcc8.patch
 
 %description
 SDL Asylum is a C port of the computer game Asylum, which was written by Andy
@@ -35,7 +36,6 @@ pulsating neurons scattered through the immense map.
 %setup -q
 
 %patch0 -p0
-%patch1 -p2
 
 # Character encoding fixes
 iconv -f iso8859-1 README -t utf8 > README.conv \
@@ -43,6 +43,7 @@ iconv -f iso8859-1 README -t utf8 > README.conv \
 
 # Delete bundled binary to make absolutely sure we get a new one.
 rm -f %{name}
+%patch33 -p2
 
 %build
 %make_build CFLAGS="%{optflags}" LDFLAGS="%{?__global_ldflags}"
@@ -110,8 +111,6 @@ SentUpstream: 2014-09-24
   </screenshots>
 </application>
 EOF
-
-# touching all ghosts; hack for rpm 4.0.4
 for rpm404_ghost in %{_var}/games/%{name}/EgoHighScores %{_var}/games/%{name}/PsycheHighScores %{_var}/games/%{name}/IdHighScores %{_var}/games/%{name}/ExtendedHighScores
 do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
@@ -135,6 +134,9 @@ done
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.3.2-alt2_29
+- update to new release by fcimport
+
 * Tue Feb 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt2_16
 - NMU: fixed build with gcc-8.
 
