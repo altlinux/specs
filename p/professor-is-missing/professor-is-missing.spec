@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
@@ -5,11 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		professor-is-missing
 Version:	0.1
-Release:	alt4_16
+Release:	alt4_29
 Summary:	The Professor is Missing, an AGI adventure game
 
-Group:		Games/Other
-License:	Redistributable, no modification permitted
+License:	CC-BY-ND-4.0
 URL:		http://membres.lycos.fr/agisite/prof.htm
 Source0:	prof.zip
 #Original from http://membres.lycos.fr/agisite/prof.zip includes
@@ -54,7 +54,7 @@ cp %{SOURCE4} .
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
-install -D -m0644 -p * $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -D -m0644 -p logdir object picdir professor-is-missing-LICENSE.fedora readme.txt snddir viewdir vol.0 walkthru.txt words.tok $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -D -m0755 -p %{SOURCE2} $RPM_BUILD_ROOT/%{_bindir}
 
 # desktop file
@@ -74,6 +74,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/professor-is-missing-wrapper.sh
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.1-alt4_29
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_16
 - update to new release by fcimport
 
