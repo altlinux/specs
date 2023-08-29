@@ -1,6 +1,6 @@
 Group: Development/C
 %define _unpackaged_files_terminate_build 1
-%define fedora 32
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -12,8 +12,8 @@ Group: Development/C
 Name: fstrm
 Summary: Frame Streams implementation in C
 Version: 0.6.1
-Release: alt1_2
-License: MIT
+Release: alt1_8
+License: MIT AND NTP
 URL: https://github.com/farsightsec/fstrm
 Source0: https://dl.farsightsecurity.com/dist/%{name}/%{name}-%{version}.tar.gz
 # Patches to libmy library
@@ -144,6 +144,9 @@ make check
 %doc %{_docdir}/%{name}/html
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.6.1-alt1_8
+- update to new release by fcimport
+
 * Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 0.6.1-alt1_2
 - update to new release by fcimport
 
