@@ -1,24 +1,18 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dot
+BuildRequires: /usr/bin/dot unzip
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libpgf
-Version:        6.14.12
-Release:        alt1_17
+Version:        7.21.7
+Release:        alt1_2
 Summary:        PGF (Progressive Graphics File) library
 
 License:        LGPLv2+
 URL:            http://www.libpgf.org
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.tar.gz
-# Modernize automake usage
-Patch0:         libpgf-auto.patch
-
-## backport upstream fixes
-Patch147: libpgf-r147.patch
-Patch148: libpgf-r148.patch
+Source0:        https://downloads.sourceforge.net/project/%{name}/%{name}/%{version}/libpgf.zip
 
 BuildRequires:  doxygen
 BuildRequires:  gcc-c++
@@ -43,11 +37,11 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1 -b .auto
-%patch147 -p1 -b .r147
-%patch148 -p1 -b .r148
+
+mv README.txt README
+
 # Fix line endings
-sed -i -e 's/\r//' configure.ac README
+sed -i -e 's/\r//' configure.ac Makefile.am src/Makefile.am autogen.sh README
 
 sed -i 's|$(DESTDIR)$(datadir)/doc/$(DOC_MODULE)|$(RPM_BUILD_DIR)/libpgf|g' doc/Makefile.am
 
@@ -69,16 +63,13 @@ export CXXFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP -std=c++14"
 %install
 %makeinstall_std
 
-# unpackaged files
-rm -fv %{buildroot}%{_libdir}/libpgf.la
-
 
 
 
 %files
 %doc README
 %doc --no-dereference COPYING
-%{_libdir}/libpgf.so.6*
+%{_libdir}/libpgf.so.7*
 
 %files devel
 %doc html
@@ -89,6 +80,9 @@ rm -fv %{buildroot}%{_libdir}/libpgf.la
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 7.21.7-alt1_2
+- update to new release by fcimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 6.14.12-alt1_17
 - update to new release by fcimport
 
