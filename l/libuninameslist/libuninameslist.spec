@@ -3,12 +3,12 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libuninameslist
-Version:        20221022
-Release:        alt1_1
+Version:        20230523
+Release:        alt1_3
 
 Summary:        A library providing Unicode character names and annotations
 
-License:        BSD
+License:        BSD-3-Clause
 URL:            https://github.com/fontforge/libuninameslist
 Source0:        https://github.com/fontforge/libuninameslist/archive/%{version}.tar.gz
 BuildRequires:  autoconf
@@ -56,6 +56,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libuninameslist.pc
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 20230523-alt1_3
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 20221022-alt1_1
 - update to new release by fcimport
 
