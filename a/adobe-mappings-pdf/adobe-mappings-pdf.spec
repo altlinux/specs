@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/git
 Name:             adobe-mappings-pdf
 Summary:          PDF mapping resources from Adobe
 Version:          20190401
-Release:          alt1_1
-License:          BSD
+Release:          alt1_5
+License:          BSD-3-Clause
 
 URL:              https://www.adobe.com/
 Source:           https://github.com/adobe-type-tools/mapping-resources-pdf/archive/%{version}.tar.gz#/mapping-resources-pdf-%{version}.tar.gz
@@ -85,6 +85,9 @@ _EOF
 # =============================================================================
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 20190401-alt1_5
+- update to new release by fcimport
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 20190401-alt1_1
 - update to new release by fcimport
 
