@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install perl(Proc/Simple.pm) perl(Tk.pm)
 %define _localstatedir %{_var}
 Name: alevt
 Version: 1.8.1
-Release: alt1_1
+Release: alt1_3
 Summary: Teletext decoder/browser
 License: GPLv2
 URL: https://gitlab.com/alevt/alevt
@@ -16,6 +16,7 @@ Patch0: alevt-1.6.2-pixmap.patch
 Patch1: alevt-1.6.2-manpath.patch
 Patch2: alevt-1.8.1-doublefont.patch
 Patch3: alevt-1.6.2-zlib.patch
+Patch4: alevt-c99.patch
 BuildRequires: gcc
 BuildRequires: libX11-devel
 BuildRequires: libpng-devel libpng17-tools
@@ -37,6 +38,7 @@ one to capture teletext pages from scripts.
 %patch1 -p1 -b .manpath
 %patch2 -p1 -b .double
 %patch3 -p1 -b .zlib
+%patch4 -p1
 
 %build
 CC="$CC -DVERSION=\\\"%{version}\\\""
@@ -64,6 +66,9 @@ desktop-file-install \
 %doc README.md CHANGELOG COPYRIGHT
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.8.1-alt1_3
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.8.1-alt1_1
 - update to new release by fcimport
 
