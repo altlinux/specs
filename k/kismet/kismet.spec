@@ -1,14 +1,14 @@
 Epoch: 1
 Group: Security/Networking
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/protoc /usr/bin/protoc-c binutils-devel libbladerf-devel libdw-devel libsensors3-devel libunwind-devel pkgconfig(libusb-1.0) zlib-devel
+BuildRequires: /usr/bin/protoc /usr/bin/protoc-c binutils-devel libbladerf-devel libdw-devel libpcre-devel libsensors3-devel libunwind-devel zlib-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name kismet
 %global _hardened_build 1
-%global _version        2022-01-R3
+%global _version        2023-07-R1
 
 ## {Local macros...
 %global cfgdir          %_sysconfdir/%name
@@ -21,22 +21,23 @@ BuildRequires: /usr/bin/protoc /usr/bin/protoc-c binutils-devel libbladerf-devel
 Summary:        WLAN detector, sniffer and IDS
 Name:           kismet
 Version:        %_rpmversion
-Release:        alt1_1
-License:        GPLv2+
+Release:        alt1_4
+License:        GPL-2.0-or-later
 URL:            http://www.kismetwireless.net/
 Source0:        http://www.kismetwireless.net/code/%{name}-%_version.tar.xz
 
 Patch0:         kismet-include.patch
 Patch1:         kismet-install.patch
+Patch2:         hak5-types.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel diffutils
-BuildRequires:  libpcap-devel libpcre-devel libpcrecpp-devel
+BuildRequires:  libpcap-devel
 BuildRequires:  libssl-devel libcap-devel libnl-devel
 BuildRequires:  libbluez-devel
 BuildRequires:  libmicrohttpd-devel libprotobuf-devel libprotobuf-c-devel
-BuildRequires:  libnm-devel libnm-gir-devel libusb-compat-devel
+BuildRequires:  libnm-devel libnm-gir-devel libusb-devel
 BuildRequires:  libsqlite3-devel libwebsockets-devel
 Source44: import.info
 Conflicts: kismet-server < 2014.02.R4
@@ -55,8 +56,9 @@ traffic.
 %prep
 %setup -qn %{name}-%{_version}
 
-%patch0 -p0
-%patch1 -p0
+%patch -P 0 -p0
+%patch -P 1 -p0
+%patch -P 2 -p0
 
 sed -i 's!\$(prefix)/lib/!%{_libdir}/!g' plugin-*/Makefile
 
@@ -67,6 +69,8 @@ sed -i \
     -e '\!^ouifile=/etc/manuf!d' \
     -e '\!^ouifile=/usr/share/wireshark/wireshark/manuf!d' \
     conf/kismet.conf
+
+sed -i s/@VERSION@/%{version}/g packaging/kismet.pc.in
 
 %build
 
@@ -79,18 +83,15 @@ export LDFLAGS='-Wl,--as-needed'
 
 %make_build
 
-sed -i s/2019-08-GIT/%{version}-%{release}%{?dist}/g packaging/kismet.pc
 
 %install
 BIN=$RPM_BUILD_ROOT/bin ETC=$RPM_BUILD_ROOT/etc make suidinstall DESTDIR=%{?buildroot} INSTALL="install -p"
-
-sed -i 's,^Version:[[:space:]]*$,Version: %version-%release,' %buildroot%{_libdir}/pkgconfig/kismet.pc
 
 %pre
 getent group kismet >/dev/null || groupadd -f -r kismet
 
 %files
-%doc CHANGELOG README*
+%doc README*
 %dir %attr(0755,root,root) %cfgdir
 %config(noreplace) %cfgdir/*
 %{_bindir}/kismet
@@ -106,6 +107,7 @@ getent group kismet >/dev/null || groupadd -f -r kismet
 %{_bindir}/kismetdb_to_kml
 %{_bindir}/kismetdb_to_pcap
 %{_bindir}/kismetdb_to_wiglecsv
+%attr(4711,root,root) %{_bindir}/kismet_cap_hak5_wifi_coconut
 %attr(4711,root,root) %{_bindir}/kismet_cap_linux_bluetooth
 %attr(4711,root,root) %{_bindir}/kismet_cap_linux_wifi
 %attr(4711,root,root) %{_bindir}/kismet_cap_nrf_51822
@@ -119,6 +121,9 @@ getent group kismet >/dev/null || groupadd -f -r kismet
 %{_libdir}/pkgconfig/kismet.pc
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1:0.0.2023.07.R1-alt1_4
+- update to new release by fcimport
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 1:0.0.2022.01.R3-alt1_1
 - update to new release by fcimport
 
