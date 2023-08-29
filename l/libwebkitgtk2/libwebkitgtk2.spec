@@ -13,16 +13,17 @@
 %def_enable web_audio
 %def_disable media_stream
 %def_enable spellcheck
-%ifarch ppc64le
+%ifarch ppc64le loongarch64
 %def_disable jit
 %endif
+%def_enable rsvg
 %def_disable check
 
 %define smp %__nprocs
 
 Name: libwebkitgtk2
 Version: 2.4.11
-Release: alt13.1
+Release: alt14
 
 Summary: Web browser engine
 License: LGPL-2.0 and LGPL-2.1 and BSD-2-Clause
@@ -50,6 +51,8 @@ Patch13: webkitgtk-2.4.11-arch-volatile.patch
 # based on https://trac.webkit.org/changeset/238805/webkit
 Patch14: webkitgtk-2.4.11-alt-SoupSession.patch
 
+Patch3500: webkitgtk-loongarch64.patch
+
 Requires: libjavascriptcoregtk2 = %version-%release
 %{?_enable_geolocation:Requires: geoclue2}
 
@@ -73,7 +76,9 @@ BuildRequires: libenchant-devel >= 0.22
 BuildRequires: libsqlite3-devel >= 3.0
 BuildRequires: libxslt-devel >= 1.1.7
 BuildRequires: gstreamer1.0-devel >= 1.0.3 gst-plugins1.0-devel >= 1.0.3
+%if_enabled rsvg
 BuildRequires: librsvg-devel >= 2.2.0
+%endif
 BuildRequires: gtk-doc >= 1.10
 BuildRequires: libsoup-devel >= 2.42.0
 BuildRequires: libsecret-devel
@@ -215,13 +220,14 @@ GObject introspection devel data for the JavaScriptCore library
 %patch12 -p1 -b .glib-2.68
 %patch13 -p1 -b .volatile
 %patch14 -p1 -b .SoupSession
+%patch3500 -p1 -b .la64
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
 rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmain.sh,missing,libtool.m4,ltoptions.m4,ltsugar.m4,ltversion.m4,lt~obsolete.m4,gsettings.m4,gtk-doc.m4}
 
 %build
-%ifarch ppc64le
+%ifarch ppc64le loongarch64
 %add_optflags -DENABLE_YARR_JIT=0
 %endif
 %add_optflags -Wno-expansion-to-defined -Wno-implicit-fallthrough -Wno-class-memaccess -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_36
@@ -258,7 +264,6 @@ mkdir -p DerivedSources/Platform
 mkdir -p Programs/resources
 
 n=%smp
-[  "$n"  -lt  16  ]  ||  n=16
 %make -j $n
 
 %install
@@ -314,6 +319,10 @@ xvfb-run make check
 %endif
 
 %changelog
+* Sun Jun 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.4.11-alt14
+- support LoongArch architecture (lp64d ABI)
+- lifted the artitificial build concurrency limitation
+
 * Sat Aug 28 2021 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt13.1
 - disabled LTO
 
