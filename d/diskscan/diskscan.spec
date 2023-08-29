@@ -24,7 +24,7 @@ BuildRequires: libtinfo-devel
 
 Name:           diskscan
 Version:        0.20
-Release:        alt1_3.5
+Release:        alt1_3.11
 Summary:        Scan disk for bad or near failure sectors
 License:        GPL-3.0-or-later
 Group:          System/Kernel and hardware
@@ -66,6 +66,9 @@ the disk vendor decision making logic.
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.20-alt1_3.11
+- update by suseimport
+
 * Thu May 05 2022 Igor Vlasenko <viy@altlinux.org> 0.20-alt1_3.5
 - update by suseimport
 
