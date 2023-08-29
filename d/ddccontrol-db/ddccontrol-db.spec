@@ -3,7 +3,7 @@ Group: System/Base
 %define _localstatedir %{_var}
 Name:             ddccontrol-db
 URL:              https://github.com/ddccontrol/ddccontrol-db
-Version:          20230223
+Version:          20230821
 Release:          alt1_1
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
@@ -11,7 +11,12 @@ License:          GPLv2+
 Summary:          DDC/CI control database for ddccontrol
 Source0:          https://github.com/ddccontrol/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 # use autopoint instead of gettextize that is interactive tool
-BuildRequires:    gettext-tools gettext-tools libasprintf-devel, libtool, intltool, perl(XML/Parser.pm)
+BuildRequires:    gettext-tools
+BuildRequires:    gettext-tools libasprintf-devel
+BuildRequires:    libtool
+BuildRequires:    intltool
+BuildRequires:    perl(XML/Parser.pm)
+BuildRequires:    gcc
 BuildArch:        noarch
 Source44: import.info
 Patch33: ddccontrol-db-0.4.2-russian.patch
@@ -40,6 +45,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 20230821-alt1_1
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 20230223-alt1_1
 - update to new release by fcimport
 
