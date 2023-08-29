@@ -28,7 +28,7 @@
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt2
+Release: alt3
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -324,6 +324,9 @@ fi
 
 
 %changelog
+* Tue Aug 29 2023 Anton Midyukov <antohami@altlinux.org> 12.2.5-alt3
+- NMU: replace /var/run/ with /run, /var/lock with /run/lock (Closes: 35890)
+
 * Sat Jul 15 2023 Alexey Shabalin <shaba@altlinux.org> 12.2.5-alt2
 - add udev rule for autostart vmtoolsd.service
 - update pam config
