@@ -2,7 +2,7 @@
 
 Name: cifs-utils
 Version: 6.15
-Release: alt1
+Release: alt1.1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 License: GPLv3+
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch2: cifs-utils-alt-python3.patch
 Patch3: cifs-utils-alt-docutils.patch
 
-BuildRequires(pre): rpm-macros-pam0
+BuildRequires(pre): rpm-macros-pam0 rpm-macros-alternatives
 BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel libpam-devel
 BuildRequires: python3-module-docutils rpm-build-python3
 Requires: keyutils
@@ -119,6 +119,9 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Tue Aug 29 2023 Ivan A. Melnikov <iv@altlinux.org> 6.15-alt1.1
+- NMU: explicitly require rpm-macros-laternatives.
+
 * Wed Aug 31 2022 Evgeny Sinelnikov <sin@altlinux.org> 6.15-alt1
 - Update to stable release 6.15 (Samba#15025, Samba#15026)
 - mount.cifs: fix length check for ip option parsing (fixes: CVE-2022-27239)
