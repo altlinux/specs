@@ -6,7 +6,7 @@ Group: System/Libraries
 Summary: Base libraries for GGZ gaming zone
 Name:    ggz-base-libs
 Version: 0.99.5
-Release: alt3_22.qa1
+Release: alt3_35
 
 License: LGPLv2+ and GPLv2+
 URL: http://www.ggzgamingzone.org/
@@ -16,6 +16,8 @@ Source0: http://mirrors.ibiblio.org/pub/mirrors/ggzgamingzone/ggz/snapshots/ggz-
 # upstreamable patches, fix --with-tls=NSS
 # https://bugs.ggzgamingzone.org/mantis/view.php?id=114
 Patch50: ggz-base-libs-snapshot-0.99.5-tls_nss3.patch
+
+Patch99: ggz-base-libs-0.99.5-fedora-c99.patch
 
 Obsoletes: libggz < 1:0.99.5
 Provides:  libggz = 1:%{version}-%{release}
@@ -27,10 +29,11 @@ Source1: ggz.modules
 # see http://fedoraproject.org/wiki/PackagingDrafts/GGZ
 Source2: macros.ggz
 
+BuildRequires:  gcc
 BuildRequires: libexpat-devel
-BuildRequires: gettext gettext-tools
-BuildRequires: gcrypt-utils libgcrypt-devel
-BuildRequires: libnss-devel libnss-devel-static
+BuildRequires: gettext-tools
+BuildRequires: libgcrypt-devel >= 1.4
+BuildRequires: libnss-devel
 Source44: import.info
 
 
@@ -47,30 +50,17 @@ Obsoletes: ggz-client-libs-devel < 1:0.99.5
 Provides: libggz-devel = 1:%{version}-%{release}
 Provides: ggz-client-libs-devel = 1:%{version}-%{release}
 Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
-Requires: rpm-macros-%{name} = %{version}-%{release}
+Requires: pkgconfig
 # %{_sysconfdir}/rpm ownership
 %description devel
 %{summary}.
 
 
-
-%package -n rpm-macros-%{name}
-Summary: Set of RPM macros for packaging %name-based applications
-Group: Development/Other
-# uncomment if macroses are platform-neutral
-#BuildArch: noarch
-# helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
-Conflicts: ggz-base-libs-devel <= 0.99.5-alt3_22
-
-%description -n rpm-macros-%{name}
-Set of RPM macros for packaging %name-based applications for ALT Linux.
-Install this package if you want to create RPM packages that use %name.
-
 %prep
 %setup -q -n %{name}-snapshot-%{version}
 
 %patch50 -p1 -b .tls_nss3
+%patch99 -p1
 
 %if 0 
 # some auto*/libtool love to quash rpaths
@@ -121,6 +111,8 @@ rm -f %{buildroot}%{_libdir}/lib*.la
 make check ||:
 
 
+
+
 %files -f all.lang
 %doc AUTHORS ChangeLog COPYING NEWS README
 %verify(not size md5 mtime) %config(noreplace) %{_sysconfdir}/ggz.modules
@@ -141,7 +133,7 @@ make check ||:
 %{_datadir}/desktop-directories/ggz*.directory
 
 %files devel
-#%_rpmmacrosdir/ggz
+%{_rpmmacrosdir}/ggz
 # GPLv2+
 %{_includedir}/ggzmod.h
 %{_libdir}/libggzmod.so
@@ -157,14 +149,12 @@ make check ||:
 %{_libdir}/libggzcore.so
 %{_libdir}/pkgconfig/ggzcore.pc
 %{_mandir}/man3/ggzcore_h.3*
-%exclude %_rpmmacrosdir/*
-
-%files -n rpm-macros-%{name}
-%_rpmmacrosdir/*
-
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.99.5-alt3_35
+- update to new release by fcimport
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_22.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
