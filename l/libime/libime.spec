@@ -9,7 +9,7 @@ Group: Development/C
 %define autorelease 1
 
 Name:       libime  
-Version:    1.0.17
+Version:    1.1.1
 License:    LGPLv2+ and MIT and BSD
 Release:    alt1_1
 Summary:    This is a library to support generic input method implementation
@@ -107,6 +107,9 @@ Development files for %{name}
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt1_1
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.0.17-alt1_1
 - update to new release by fcimport
 
