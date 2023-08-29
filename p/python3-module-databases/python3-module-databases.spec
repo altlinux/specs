@@ -5,14 +5,15 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Async database support for Python
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.org/project/databases
-Vcs: https://github.com/encode/databases.git
+Url: https://pypi.org/project/databases/
+Vcs: https://github.com/encode/databases
+
 BuildArch: noarch
 
 Source0: %name-%version.tar
@@ -57,9 +58,12 @@ such as Starlette, Sanic, Responder, Quart, aiohttp, Tornado, or FastAPI.
 %files
 %doc README.md LICENSE.md CHANGELOG.md
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 29 2023 Anton Zhukharev <ancieg@altlinux.org> 0.8.0-alt1
+- Updated to 0.8.0.
+
 * Sat May 06 2023 Anton Zhukharev <ancieg@altlinux.org> 0.7.0-alt1
 - New version.
 
