@@ -1,6 +1,6 @@
 Name: imlib2
 Version: 1.12.0
-Release: alt1
+Release: alt2
 
 Summary: Image loading, saving, rendering, and manipulation library
 License: Imlib2
@@ -8,6 +8,7 @@ Group: System/Libraries
 Url: https://git.enlightenment.org/old/legacy-imlib2
 # Source-url: https://sourceforge.net/projects/enlightenment/files/imlib2-src/%version/%name-%version.tar.xz
 Source: %name-%version.tar
+Patch: imlib2-1.12.0-alt-i586-fix-icewm-segfault.patch
 
 %def_disable static
 %def_enable mmx
@@ -62,6 +63,9 @@ distribution.
 
 %prep
 %setup
+%ifarch i586
+%patch -p1
+%endif
 #sed -i 's/echo \$libdirs -lImlib2 @my_libs@/echo -lImlib2/' imlib2-config.in
 sed -i '1a#include <stdbool.h>' \
   src/modules/loaders/loader_gif.c
@@ -112,6 +116,9 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Tue Aug 29 2023 Leontiy Volodin <lvol@altlinux.org> 1.12.0-alt2
+- Fixed segfault at startup of icewm on i586 (ALT #47331, #47376).
+
 * Fri Aug 18 2023 Leontiy Volodin <lvol@altlinux.org> 1.12.0-alt1
 - New version 1.12.0.
 - Added JXL, Y4M and RAW support.
