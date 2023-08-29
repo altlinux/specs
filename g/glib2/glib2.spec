@@ -30,7 +30,7 @@
 
 Name: glib2
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -61,7 +61,7 @@ Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.75.4-alt-add-xvt.patch
 Patch3: glib-2.71.3-alt-lfs.patch
 
-Patch2000: glib-2.64.5-1-alt-e2k.patch
+Patch2000: glib-2.70.3-alt-e2k.patch
 
 %def_with locales
 %if_with locales
@@ -120,7 +120,7 @@ This package provides internationalization support for Glib.
 %package devel
 Summary: Development files and tools for GLib
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: rpm-build-gir >= 0.5
 Provides: lib%name-devel = %version
 Obsoletes: lib%name-devel < %version
@@ -136,7 +136,7 @@ This package provides header files and development tools for GLIB.
 %package devel-static
 Summary: Static version of GLib libraries
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 Provides: lib%name-devel-static = %version
 Obsoletes: lib%name-devel-static < %version
 
@@ -167,8 +167,8 @@ This package contains documentation for GLib.
 %package -n libgio
 Summary: GIO input/output framework
 Group: System/Libraries
-Provides: gvfs-utils = %version-%release %_bindir/gio
-Requires: %name = %version-%release
+Provides: gvfs-utils = %EVR %_bindir/gio
+Requires: %name = %EVR
 Requires: gsettings-desktop-schemas
 Requires: shared-mime-info >= 0.80
 Requires: desktop-file-utils
@@ -182,8 +182,8 @@ FTP, SFTP etc.).
 %package -n libgio-devel
 Summary: GIO input/output framework
 Group: Development/C
-Requires: libgio = %version-%release
-Requires: %name-devel = %version-%release
+Requires: libgio = %EVR
+Requires: %name-devel = %EVR
 
 %description -n libgio-devel
 GIO is a VFS API, designed to replace GnomeVFS. This GIO implementation is
@@ -197,7 +197,7 @@ This package contains files necessary for development with GIO.
 Summary: GIO documentation
 Group: Development/Documentation
 # due to HTML links
-Requires: %name-doc = %version-%release
+Requires: %name-doc = %EVR
 BuildArch: noarch
 
 %description -n libgio-doc
@@ -211,7 +211,7 @@ This package contains documentation for GIO.
 %package tests
 Summary: Tests for the glib2/libgio packages
 Group: Development/Other
-Requires: libgio = %version-%release
+Requires: libgio = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -230,6 +230,7 @@ the functionality of the installed glib2/libgio packages.
 %patch3 -p1
 %ifarch %e2k
 subst "/subdir('fuzzing')/d" meson.build
+sed -i 's|-Werror|-Wno-error|' gobject/tests/meson.build
 %patch2000 -p1
 %endif
 
@@ -432,6 +433,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Tue Aug 29 2023 Yuri N. Sedunov <aris@altlinux.org> 2.76.4-alt1.1
+- fixed build for %e2k by ilyakurdyukov@
+
 * Thu Jul 06 2023 Yuri N. Sedunov <aris@altlinux.org> 2.76.4-alt1
 - 2.76.4
 
