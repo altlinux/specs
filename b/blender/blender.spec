@@ -37,7 +37,7 @@
 %def_with jemalloc
 
 Name: blender
-Version: 3.6.1
+Version: 3.6.2
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -73,6 +73,9 @@ Patch32: blender-3.6.0-alt-hiprt-enable.patch
 
 # FIXME! e2k patch is outdated
 Patch2000: blender-e2k-support.patch
+
+# Fixes from main
+Patch300: 0001-Cycles-Fix-MNEE-not-accounting-for-closure-Fresnel.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel
@@ -257,6 +260,8 @@ sed -i "/-Werror=return-type/d" CMakeLists.txt
 sed -i 's/"${CMAKE_C_COMPILER_VERSION}" VERSION_LESS/"100" VERSION_LESS/' CMakeLists.txt
 %endif
 
+%patch300 -p1
+
 # Delete the bundled FindOpenJPEG to make find_package use the system version
 # instead (the local version hardcodes the openjpeg version so it is not update
 # proof)
@@ -385,6 +390,15 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Mon Aug 28 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.2-alt1
+- Update to 3.6.2.
+- Cleanup applied patches.
+
+* Mon Jul 31 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.1-alt2
+- Cycles: apply some fixes from main:
+  + Fix MNEE not accounting for closure Fresnel
+  + HIP RT crash with multi device rendering (upstream issue #109417).
+
 * Wed Jul 19 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.1-alt1
 - Update to 3.6.1.
 
