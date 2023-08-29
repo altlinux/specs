@@ -6,15 +6,24 @@ Group: Development/Python3
 Name:           rpm-build-pythondist
 Summary:        Dependency generators for Python RPMs
 Version:        14
-Release:        alt1_3
+Release:        alt1_7
 
-# Originally all those files were part of RPM, so license is kept here
-License:        GPLv2+
-Url:            https://src.fedoraproject.org/python-rpm-generators
-# Commit is the last change in following files
+Url:            https://src.fedoraproject.org/rpms/python-rpm-generators
+
+# Originally the following files were part of RPM, so the license is inherited: GPL-2.0-or-later
+# The COPYING file is grabbed from the last commit that changed the files
 Source0:        https://raw.githubusercontent.com/rpm-software-management/rpm/102eab50b3d0d6546dfe082eac0ade21e6b3dbf1/COPYING
+# This was crafted in-place as a fork of python.attr, hence also GPL-2.0-or-later
+# This one is also originally from RPM, but it has its own license declaration: LGPL-2.1-or-later
 Source4:        pythondistdeps.py
+# This was crafted in-place with the following license declaration:
+#  LicenseRef-Fedora-Public-Domain OR CC0-1.0 OR LGPL-2.1-or-later OR GPL-2.0-or-later
+# Note that CC0-1.0 is not allowed for code in Fedora, so we skip it in the package License tag
 Source5:        pythonbundles.py
+
+# See individual licenses above Source declarations
+# Originally, this was simplified to GPL-2.0-or-later, but "effective license" analysis is no longer allowed
+License:        GPL-2.0-or-later AND LGPL-2.1-or-later AND (LicenseRef-Fedora-Public-Domain OR LGPL-2.1-or-later OR GPL-2.0-or-later)
 
 BuildArch:      noarch
 Source44: import.info
@@ -69,6 +78,9 @@ install -D -m755 python3dist.prov.files %buildroot%_rpmlibdir/python3dist.prov.f
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 14-alt1_7
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 14-alt1_3
 - update to new release by fcimport
 
