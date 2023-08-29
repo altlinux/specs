@@ -5,8 +5,8 @@ Group: Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           zchunk
-Version:        1.3.0
-Release:        alt1_1
+Version:        1.3.1
+Release:        alt1_2
 Summary:        Compressed file format that allows easy deltas
 License:        BSD and MIT
 URL:            https://github.com/zchunk/zchunk
@@ -94,6 +94,9 @@ install contrib/gen_xml_dictionary %{buildroot}%{_libexecdir}/zck_gen_xml_dictio
 %{_includedir}/zck.h
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.3.1-alt1_2
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt1_1
 - update to new release by fcimport
 
