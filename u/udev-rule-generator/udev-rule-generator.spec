@@ -1,6 +1,6 @@
 Name: udev-rule-generator
 Epoch: 2
-Version: 1.5
+Version: 1.6
 Release: alt1
 Summary: Common package for udev rule generator
 Url: https://packages.altlinux.org/en/Sisyphus/srpms/%name
@@ -9,14 +9,14 @@ License: GPLv2+
 PreReq: udev >= 1:238-alt4
 BuildArch: noarch
 
-Provides: udevd-final
+Requires: udevd-final >= 1.0
 
 Source: %name-%version.tar
 
 %description
 This package contains common files for udev-rule-generator:
- - udev-final SysV init script
- - udev-final.service systemd unit
+ - udev-rule-generator SysV init script
+ - udev-rule-generator systemd unit
  - rule_generator.functions
 
 %package cdrom
@@ -48,8 +48,8 @@ This package contains Net rule generator for udev
 
 %install
 mkdir -p %buildroot{%_initdir,%_unitdir,{%_sysconfdir,/lib}/udev/rules.d,%_sysconfdir/sysconfig}
-install -p -m755 udevd-final.init %buildroot%_initdir/udevd-final
-install -p -m644 udevd-final.service %buildroot%_unitdir/udevd-final.service
+install -p -m755 udev-rule-generator.init %buildroot%_initdir/udev-rule-generator
+install -p -m644 udev-rule-generator.service %buildroot%_unitdir/udev-rule-generator.service
 
 # Create ghost files
 #touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-net.rules
@@ -65,22 +65,22 @@ install -p -m644 75-cd-aliases-generator.rules %buildroot/lib/udev/rules.d/
 #ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-setup-link.rules
 
 %preun
-%preun_service udevd-final
+%preun_service udev-rule-generator
 
 %post cdrom
-%post_service udevd-final
+%post_service udev-rule-generator
 
 %post net
 ln -sf /dev/null %_sysconfdir/udev/rules.d/80-net-setup-link.rules
-%post_service udevd-final
+%post_service udev-rule-generator
 
 %preun net
 rm -f %_sysconfdir/udev/rules.d/80-net-setup-link.rules
 
 %files
 /lib/udev/rule_generator.functions
-%_initdir/udevd-final
-%_unitdir/udevd-final.service
+%_initdir/udev-rule-generator
+%_unitdir/udev-rule-generator.service
 
 %files cdrom
 #config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-cd.rules
@@ -95,6 +95,9 @@ rm -f %_sysconfdir/udev/rules.d/80-net-setup-link.rules
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Aug 29 2023 Anton Midyukov <antohami@altlinux.org> 2:1.6-alt1
+- replace udevd-final service to separate package udevd-final
+
 * Wed Aug 23 2023 Sergey Y. Afonin <asy@altlinux.org> 2:1.5-alt1
 - used "ether" by default again
 - workaround for ALT #47262:
