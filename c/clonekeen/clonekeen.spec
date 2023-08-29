@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           clonekeen
 Version:        0.8.4
-Release:        alt1_26
+Release:        alt1_28
 Summary:        "Commander Keen: Invasion of the Vorticons" clone
 License:        GPLv3+
 URL:            http://clonekeen.sourceforge.net/
@@ -51,13 +51,12 @@ the shareware datafiles for you.
 %patch1 -p1
 
 find -name "*.o" -delete
-sed -i 's|gcc -O2|gcc %{optflags} -std=gnu89|g' src/Makefile
 cp -a %{SOURCE2} %{SOURCE3} .
 sed -i 's/\r//g' README src/changelog.txt
 
 
 %build
-CFLAGS="$CFLAGS -std=gnu89"
+%global build_type_safety_c 0
 %make_build -C src -f Makefile
 gcc -o %{name}-extract $CFLAGS extract.c -ldynamite
 gcc -o %{name}-extract-sounds $CFLAGS %{name}-extract-sounds.c
@@ -98,6 +97,9 @@ sed -i s,/usr/libexec,%{_libexecdir},g %buildroot%{_libexecdir}/%{name}* %buildr
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.8.4-alt1_28
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.8.4-alt1_26
 - update to new release by fcimport
 
