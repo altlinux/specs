@@ -23,7 +23,7 @@ BuildRequires: /usr/bin/guile /usr/bin/indent libreadline-devel
 
 Name:           libctl
 Version:        4.5.1
-Release:        alt1_1.1
+Release:        alt1_1.6
 %define somajor 7
 Summary:        A guile Library for Scientific Simulations
 License:        GPL-2.0-or-later
@@ -48,7 +48,7 @@ and Meep software, but has proven useful in other programs too.
 Summary:        A guile Library for Scientific Simulations
 Group:          System/Libraries
 # Missed SOVERSION bump
-Conflicts:      libctl7 <= 4.5.0
+Conflicts:      libctl5 <= 4.5.0
 
 %description -n %{name}%{somajor}
 libctl is a free Guile-based library implementing flexible control files
@@ -112,6 +112,9 @@ cp -r doc/ %{buildroot}%{_docdir}/%{name}/
 %{_docdir}/%{name}/
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 4.5.1-alt1_1.6
+- update by suseimport
+
 * Thu May 05 2022 Igor Vlasenko <viy@altlinux.org> 4.5.1-alt1_1.1
 - update by suseimport
 
