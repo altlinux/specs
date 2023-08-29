@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
@@ -5,11 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		sergueis-destiny
 Version:	1.1
-Release:	alt4_17
+Release:	alt4_30
 Summary:	Serguei's Destiny, an AGI adventure game
 
-Group:		Games/Other
-License:	Redistributable, no modification permitted
+License:	CC-BY-ND-4.0
 URL:		http://membres.lycos.fr/agisite/serguei.htm
 Source0:	serguei.zip
 #Original from http://membres.lycos.fr/agisite/serguei.zip includes
@@ -43,7 +43,7 @@ cp %{SOURCE4} .
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
-install -D -m0644 -p * $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -D -m0644 -p logdir object picdir serguei.txt sergueis-destiny-LICENSE.fedora snddir viewdir vol.0 words.tok $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -D -m0755 -p %{SOURCE2} $RPM_BUILD_ROOT/%{_bindir}
 
 # desktop file
@@ -63,6 +63,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/sergueis-destiny-wrapper.sh
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.1-alt4_30
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_17
 - update to new release by fcimport
 
