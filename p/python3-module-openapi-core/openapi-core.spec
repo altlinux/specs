@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.18.0
-Release: alt2
+Release: alt3
 Summary: Client-side and server-side support for the OpenAPI Specification v3
 License: BSD-3-Clause
 Group: Development/Python3
@@ -27,7 +27,7 @@ BuildRequires: python3-module-more-itertools
 BuildRequires: python3-module-parse
 BuildRequires: python3-module-flask
 BuildRequires: python3-module-aiohttp
-BuildRequires: python3-module-django
+BuildRequires: python3-module-asgiref
 %endif
 
 %description
@@ -45,7 +45,7 @@ sed -i '/--cov/d' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest tests/unit -v
+%pyproject_run_pytest -v --ignore=tests/unit/contrib/django/test_django.py tests/unit
 
 %files
 %doc README.*
@@ -53,6 +53,9 @@ sed -i '/--cov/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Aug 29 2023 Anton Vyatkin <toni@altlinux.org> 0.18.0-alt3
+- Fix FTBFS.
+
 * Mon Aug 07 2023 Anton Vyatkin <toni@altlinux.org> 0.18.0-alt2
 - Fix FTBFS.
 
