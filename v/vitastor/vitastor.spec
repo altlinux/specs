@@ -3,7 +3,7 @@
 
 Name: vitastor
 Version: 0.9.6
-Release: alt3
+Release: alt3.1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
 
@@ -14,6 +14,7 @@ Source2: cpp-btree.tar
 Source3: json11.tar
 
 Patch: %name-%version.patch
+Patch2000: %name-e2k.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -146,6 +147,9 @@ Vitastor Proxmox VE Plugin.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 tar -xf %SOURCE2 -C cpp-btree
 tar -xf %SOURCE3 -C json11
 
@@ -258,6 +262,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug 29 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.6-alt3.1
+- fixed build for Elbrus
+
 * Mon Aug 28 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.6-alt3
 - update vitastor-osd@.service for send logs to journald
 
