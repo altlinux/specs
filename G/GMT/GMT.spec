@@ -40,7 +40,7 @@ BuildRequires: gcc-c++
 
 Name:           GMT
 Version:        6.4.0
-Release:        alt1_5
+Release:        alt1_9
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
@@ -48,6 +48,7 @@ URL:            https://www.generic-mapping-tools.org/
 Source0:        https://github.com/GenericMappingTools/gmt/releases/download/%{version}/gmt-%{version}-src.tar.xz
 # Add missing byteswap include
 Patch0:         https://patch-diff.githubusercontent.com/raw/GenericMappingTools/gmt/pull/6044.patch
+Patch1: GMT-c99.patch
 
 BuildRequires:  ctest cmake
 BuildRequires:  gcc
@@ -165,7 +166,11 @@ applications that use %{name}.
 %prep
 %setup -q -n gmt-%{version}
 %patch0 -p1
+%patch1 -p1
 %patch33 -p2
+%ifarch %e2k
+sed -i 's/gregs\[REG_EIP\]/cr0_hi/' src/gmt_common_sighandler.c
+%endif
 
 
 
@@ -253,6 +258,9 @@ mv %buildroot%_bindir/{,GMT-}batch
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 6.4.0-alt1_9
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 6.4.0-alt1_5
 - update to new release by fcimport
 
