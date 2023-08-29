@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Glib
 Name: perl-%dist
-Version: 1.3293
+Version: 1.3294
 Release: alt1
 
 Summary: Perl module for the glib-2.x library
@@ -72,6 +72,9 @@ sed -i- '/MAN3PODS/d' Makefile.PL
 	%perl_vendor_archlib/Glib/Install/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.3294-alt1
+- automated CPAN update
+
 * Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 1.3293-alt1
 - automated CPAN update
 
