@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.21
-Release: alt1
+Release: alt2
 
 %define libintl libintl3
 
@@ -23,21 +23,20 @@ Patch12: gettext-alt-autopoint-archive.patch
 Patch13: gettext-alt-tmp-autopoint.patch
 Patch14: gettext-alt-gcc.patch
 Patch15: gettext-alt-urlview.patch
-Patch16: gettext-alt-libtextstyle.patch
+Patch16: gettext-fedora-disable-libtextstyle.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
 
 %def_disable static
 %def_without included_gettext
-%def_without java
 %def_with emacs
 
 %{?_with_included_gettext:Requires: %libintl = %version-%release}
-BuildPreReq: gcc-c++ makeinfo xz %{?_with_java:jdkgcj /proc} %{?_with_emacs:emacs-nox}
+BuildPreReq: gcc-c++ makeinfo xz %{?_with_emacs:emacs-nox}
 # Needed for the --color option of the various programs.
 # Otherwise, embedded versions are used, which is forbidden by policy.
-BuildRequires: glib2-devel libcroco-devel libncurses-devel libunistring-devel libxml2-devel
+BuildRequires: glib2-devel libunistring-devel libxml2-devel
 # Needed for the test suite.
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3}}
 
@@ -75,12 +74,6 @@ Requires: mktemp >= 1:1.3.1
 %define lib_suffix %{?_is_libsuff:()(%{_libsuff}bit)}
 %{!?_with_included_gettext:Provides: preloadable_libintl.so%lib_suffix}
 
-%package tools-java
-Summary: Tools for java developers and translators
-License: GPLv3+
-Group: Development/Other
-Requires: %name-tools = %version-%release
-
 %package tools-python
 Summary: Python tools for developers and translators
 License: GPLv2+
@@ -106,17 +99,6 @@ Summary: Development related files for libasprintf
 License: LGPLv2+
 Group: Development/C++
 Requires: libasprintf = %version-%release
-
-%package -n libtextstyle
-Summary: A text styling library
-License: GPLv3+
-Group: Development/C++
-
-%package -n libtextstyle-devel
-Summary: Development related files for libtextstyle
-License: GPLv3+
-Group: Development/C++
-Requires: libtextstyle = %version-%release
 
 %description
 The GNU gettext provides a set of tools and documentation for producing
@@ -157,9 +139,6 @@ programs.
 If you would like to internationalize or incorporate multi-lingual messages
 into programs that you're developing, you should install this package.
 
-%description tools-java
-This package adds java support to %name-tools.
-
 %description tools-python
 This package contains msghack utility.
 
@@ -178,15 +157,6 @@ usable in C++ programs, for use with the <string> strings and the
 %description -n libasprintf-devel
 This packages contains development files for libasprintf,
 a formatted output library for C++.
-
-%description -n libtextstyle
-The GNU libtextstyle is a text styling library that provides an easy way
-to add styling to programs that produce output to a console or terminal
-emulator window.
-
-%description -n libtextstyle-devel
-This packages contains all development related files for the GNU libtextstyle,
-a text styling library.
 
 %prep
 %setup
@@ -216,19 +186,7 @@ rm -rf archive
 # Regenerate texinfo documentation.
 find -type f -name '*.info*' -delete
 
-# Guard against libtextstyle attempt to bundle libcroco and libxml2.
-# The comments indicate this is done because the libtextstyle authors do
-# not want applications using their code to suffer startup delays due to
-# the relocations in these libraries.  This is not an acceptable reason.
-rm -r libtextstyle/gnulib-local/lib/lib* libtextstyle/lib/lib{croco,xml}
-
 %build
-%if_with java
-if [ ! -f /proc/self/maps ]; then
-	echo 'java support is enabled, but /proc/self/maps is not available'
-	exit 1
-fi
-%endif
 ./autogen.sh --skip-gnulib
 %add_optflags -fno-strict-aliasing
 %configure --enable-shared \
@@ -310,7 +268,6 @@ mkdir -p %buildroot%_docdir
 
 %files tools -f %name-tools.lang
 %_libdir/gettext
-%{?_with_java:%exclude %_libdir/gettext/gnu.gettext.*}
 %_libdir/lib%{name}*.so*
 %{!?_with_included_gettext:%_libdir/preloadable_libintl.so}
 %_bindir/*
@@ -328,7 +285,6 @@ mkdir -p %buildroot%_docdir
 %_infodir/gettext.info*
 %_datadir/gettext/
 %_datadir/gettext-*/
-%{?_with_java:%exclude %_datadir/gettext/libintl.jar}
 %_datadir/aclocal/*
 %if_with emacs
 %_datadir/emacs/site-lisp/*.el*
@@ -343,14 +299,6 @@ mkdir -p %buildroot%_docdir
 %exclude %docdir/FAQ.html
 %exclude %docdir/tutorial.html
 
-%if_with java
-%files tools-java
-%dir %_libdir/gettext
-%_libdir/gettext/gnu.gettext.*
-%dir %_datadir/gettext
-%_datadir/gettext/libintl.jar
-%endif
-
 %files tools-python
 %_bindir/msghack
 %_man1dir/msghack.*
@@ -364,16 +312,12 @@ mkdir -p %buildroot%_docdir
 %_infodir/autosprintf.info*
 %_defaultdocdir/libasprintf
 
-%files -n libtextstyle
-%_libdir/libtextstyle.so.*
-
-%files -n libtextstyle-devel
-%_includedir/textstyle*
-%_libdir/libtextstyle.so
-%_infodir/libtextstyle.info*
-%_defaultdocdir/libtextstyle/
-
 %changelog
+* Tue Aug 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.21-alt2
+- Dropped libtextstyle due to its dependence on the unmaintained libcroco
+  library, which also contains known security vulnerabilities
+  (thx Sundeep Anand).
+
 * Thu Jul 01 2021 Dmitry V. Levin <ldv@altlinux.org> 0.21-alt1
 - 0.20.2 -> 0.21 (closes: #31007).
 

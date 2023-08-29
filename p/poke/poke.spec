@@ -6,7 +6,7 @@
 
 Name: poke
 Version: 1.3
-Release: alt2
+Release: alt3
 
 Summary: extensible editor for structured binary data
 
@@ -21,9 +21,9 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Mon Jun 28 2021
-# optimized out: fontconfig glib2-devel gnu-config libX11-devel libjson-c5 libncurses-devel libtinfo-devel perl pkg-config python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4 shared-mime-info tcl-devel texlive tzdata xorg-proto-devel xz
-BuildRequires: appstream flex glibc-devel-static help2man libgc-devel libjson-c-devel libreadline-devel libtextstyle-devel makeinfo texi2dvi valgrind
+# Automatically added by buildreq on Tue Aug 29 2023
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libatomic_ops-devel libgpg-error libjson-c5 perl perl-parent pkg-config sh4 shared-mime-info termutils tzdata xz
+BuildRequires: appstream flex glibc-devel-static help2man libgc-devel libjson-c-devel libreadline-devel makeinfo texi2dvi valgrind
 
 # for poke-qui:
 %{?_with_gui:#BuildRequires: libgtk+3-devel tk-devel}
@@ -140,6 +140,10 @@ ln -s -- $(relative %_licensedir/GPL-3.0+ %_docdir/%name/COPYING) COPYING
 
 
 %changelog
+* Tue Aug 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3-alt3
+- Dropped BR: libtextstyle-devel which is being removed along with
+  unsupported libcroco library.
+
 * Wed Oct 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.3-alt2
 - Fix build with LTO flags
 
