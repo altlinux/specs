@@ -7,8 +7,8 @@
 %def_without mbedtls
 
 Name: freerdp
-Version: 2.10.0
-Release: alt3
+Version: 2.11.0
+Release: alt1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -377,6 +377,9 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Tue Aug 29 2023 Andrey Cherepanov <cas@altlinux.org> 2.11.0-alt1
+- New version.
+
 * Fri Jun 09 2023 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt3
 - Used PAM for authenticate freerdp-shadow-cli (ALT #46465).
 
