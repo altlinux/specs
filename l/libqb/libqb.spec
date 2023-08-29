@@ -14,15 +14,15 @@ Group: System/Libraries
 %bcond_with check
 
 Name:           libqb
-Version:        2.0.6
-Release:        alt1_4
+Version:        2.0.8
+Release:        alt1_1
 Summary:        Library providing high performance logging, tracing, ipc, and poll
 
-License:        LGPLv2+
+License:        LGPL-2.1-or-later
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
 
-Patch0: connretry-recv.patch
+#Patch0: connretry-recv.patch
 
 BuildRequires:  autoconf automake libtool
 BuildRequires:  libcheck-devel
@@ -55,7 +55,7 @@ This package contains the shared library.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .connretry-recv.patch
+#%patch0 -p1 -b .connretry-recv.patch
 
 %build
 ./autogen.sh
@@ -111,6 +111,9 @@ This package contains a program to create nicely-formatted man pages from Doxyge
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 2.0.8-alt1_1
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.0.6-alt1_4
 - update to new release by fcimport
 
