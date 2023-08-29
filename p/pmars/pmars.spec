@@ -3,7 +3,7 @@ Group: Games/Other
 %define _localstatedir %{_var}
 Name:           pmars
 Version:        0.9.2
-Release:        alt2_29
+Release:        alt2_31
 Summary:        Portable corewar system with ICWS'94 extensions
 
 License:        GPL-2.0-or-later
@@ -46,7 +46,8 @@ rm doc_install/doc/pmars.6
 
 
 %build
-make -C src CFLAGS="%{optflags} -DEXT94 -DXWINGRAPHX -DPERMUTATE -std=gnu89"
+%global build_type_safety_c 0
+make -C src CFLAGS="%{optflags} -DEXT94 -DXWINGRAPHX -DPERMUTATE"
 
 
 %install
@@ -61,6 +62,9 @@ install -D -p -m 644 doc/pmars.6 %{buildroot}%{_mandir}/man6/pmars.6
 %{_mandir}/man6/pmars.6*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.9.2-alt2_31
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.9.2-alt2_29
 - update to new release by fcimport
 
