@@ -1,13 +1,14 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build.pm) perl-podlators
+BuildRequires: perl(Module/Build.pm) perl-podlators perl(Test/Needs.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Pod-Coverage-Moose
-Version:        0.07
-Release:        alt3
+Version:        0.08
+Release:        alt1
 Summary:        Pod::Coverage extension for Moose
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Pod-Coverage-Moose
@@ -62,11 +63,13 @@ perl Build.PL --installdirs=vendor
 ./Build test
 
 %files
-%doc --no-dereference LICENSE
 %doc Changes CONTRIBUTING README
 %{perl_vendor_privlib}/Pod/
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.08-alt1
+- new version
+
 * Fri Mar 10 2023 L.A. Kostis <lakostis@altlinux.ru> 0.07-alt3
 - Rebuild by human.
 
