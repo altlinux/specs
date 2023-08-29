@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
@@ -5,11 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		dgae
 Version:	1.1
-Release:	alt4_17
+Release:	alt4_30
 Summary:	DG, a short AGI adventure game
 
-Group:		Games/Other
-License:	Public Domain
+License:	LicenseRef-Fedora-Public-Domain
 URL:		http://membres.lycos.fr/agisite/agisite.htm
 Source0:	dgae.zip
 #Original from http://membres.lycos.fr/agisite/dgae.zip includes
@@ -41,7 +41,7 @@ mv readme.txt.tmp readme.txt
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
-install -D -m0644 -p * $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -D -m0644 -p logdir object picdir readme.txt snddir viewdir vol.0 words.tok $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -D -m0755 -p %{SOURCE2} $RPM_BUILD_ROOT/%{_bindir}
 
 # desktop file
@@ -61,6 +61,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/dgae-wrapper.sh
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.1-alt4_30
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_17
 - update to new release by fcimport
 
