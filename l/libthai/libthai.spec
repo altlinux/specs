@@ -5,8 +5,8 @@ Group: System/Libraries
 Summary:  Thai language support routines
 Name: libthai
 Version: 0.1.29
-Release: alt1_1
-License: LGPLv2+
+Release: alt1_6
+License: LGPL-2.1-or-later
 Source: http://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.xz
 Patch0: libthai-0.1.9-multilib.patch
 URL: http://linux.thai.net
@@ -37,7 +37,8 @@ libthai.
 
 %prep
 %setup -q
-%patch0 -p1 -b .multilib
+%patch0 -p1
+
 
 %build
 %configure --disable-static
@@ -69,6 +70,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.1.29-alt1_6
+- update to new release by fcimport
+
 * Sun Jan 02 2022 Igor Vlasenko <viy@altlinux.org> 0.1.29-alt1_1
 - update to new release by fcimport
 
