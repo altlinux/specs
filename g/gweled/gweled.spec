@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize pkgconfig(
 %define _localstatedir %{_var}
 Name:           gweled
 Version:        0.9.1
-Release:        alt2_30.20130730git819bed
+Release:        alt2_32.20130730git819bed
 
 Summary:        Swapping gem game
 
@@ -17,6 +17,7 @@ URL:            http://launchpad.net/gweled
 #https://github.com/Marisa-Chan/gweled-sdl_mixer.git
 Source0:	gweled-sdl_mixer-819bed.tar.gz
 Patch0:		gweled-fix-librsvg-segfault-v2.patch
+Patch1: gweled-c99.patch
 
 BuildRequires:  libgnomeui-devel >= 2.0.0
 BuildRequires:  librsvg-devel librsvg-gir-devel
@@ -36,6 +37,7 @@ ends when there are no possible moves left.
 %prep
 %setup -qn gweled-sdl_mixer-819bed
 %patch0 -p0
+%patch1 -p1
 
 %build
 
@@ -108,6 +110,9 @@ EOF
 %{_datadir}/sounds/%{name}/
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt2_32.20130730git819bed
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt2_30.20130730git819bed
 - update to new release by fcimport
 
