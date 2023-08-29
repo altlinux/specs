@@ -5,7 +5,7 @@
 %define optflags_lto %nil
 %endif
 
-%define _libexecdir %_prefix/libexec
+%define _libexecdir %prefix/libexec
 %define ver_major 0.3
 %define ms_ver 0.4.2
 %define api_ver 0.3
@@ -15,6 +15,9 @@
 
 %def_enable gstreamer
 %def_enable systemd
+%def_enable jack_devel
+%define jackit_ver 1:1.9.22-alt1
+%define jack_ver 1.9.17
 %def_disable wireplumber
 %def_enable libusb
 %def_enable libcamera
@@ -37,7 +40,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.77
+Version: %ver_major.79
 Release: alt1
 
 Summary: Media Sharing Server
@@ -56,7 +59,7 @@ Source: %name-%version.tar
 Source1: media-session-%ms_ver.tar
 Patch: %name-0.3.19-alt-rpath.patch
 
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 %{?_enable_wireplumber:Requires: wireplumber}
 Requires: rtkit
 %{?_enable_gstreamer:%{?_enable_libcamera:Requires: gst-plugins-libcamera1.0}}
@@ -67,7 +70,6 @@ Requires: rtkit
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson >= %meson_ver libgio-devel libudev-devel libdbus-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
-BuildRequires: libjack-devel
 BuildRequires: libv4l-devel libsamplerate-devel libsndfile-devel
 BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libbluez-devel
@@ -79,7 +81,7 @@ BuildRequires: libfreeaptx-devel libopus-devel
 # LC3plus BT codec
 # BuildRequires: lc3plus-devel
 # for pw-top
-BuildRequires: libncursesw-devel
+BuildRequires: libncursesw-devel libncurses-devel
 # for pw-cli
 BuildRequires: libreadline-devel
 %if_enabled gstreamer
@@ -118,7 +120,7 @@ to interface with a PipeWire media server.
 %package libs-devel
 Summary: Headers and libraries for PipeWire client development
 Group: Development/C
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description libs-devel
 Headers and libraries for developing applications that can communicate with
@@ -137,10 +139,45 @@ This package contains documentation for the PipeWire media server.
 %package utils
 Summary: PipeWire media server utilities
 Group: System/Servers
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description utils
 This package contains command line utilities for the PipeWire media server.
+
+%package jack
+Summary: PipeWire JACK
+Group: System/Servers
+Requires: %name-jack-libs = %EVR
+Conflicts: jack-audio-connection-kit
+Obsoletes: jack-audio-connection-kit < %jackit_ver
+Obsoletes: jackd < %jackit_ver
+Provides: jackd = %EVR
+
+%description jack
+This package provides a JACK implementation based on PipeWire.
+
+%package jack-libs
+Summary: PipeWire JACK libraries
+Group: System/Libraries
+Requires: %name-libs = %EVR
+Conflicts: libjack
+Obsoletes: libjack < %jackit_ver
+
+%description jack-libs
+This package provides PipeWire JACK libraries
+
+%package jack-libs-devel
+Summary: development files for PipeWire JACK
+Group: Development/C
+Requires: %name-libs-devel = %EVR
+Requires: %name-jack-libs = %EVR
+Conflicts: libjack-devel
+Obsoletes: libjack-devel < %jackit_ver
+Provides: jackit-devel = %jack_ver
+Provides: libjack-devel = %jack_ver
+
+%description jack-libs-devel
+This package provides development files for PipeWire JACK.
 
 %prep
 %setup -a1
@@ -157,6 +194,7 @@ export LIB=%_lib
 %meson \
 	%{?_enable_docs:-Ddocs=enabled} \
 	%{?_disable_man:-Dman=disabled} \
+	%{?_enable_jack_devel:-Djack-devel=true} \
 	%{?_enable_gstreamer:-Dgstreamer=enabled} \
 	%{?_disable_vulkan:-Dvulkan=disabled} \
 	%{?_disable_libusb:-Dlibusb=disabled} \
@@ -179,6 +217,10 @@ export LIB=%_lib
 mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %find_lang %name media-session --output=%name.lang
 
+# https://bugzilla.altlinux.org/47286
+mkdir -p %buildroot%_sysconfdir/ld.so.conf.d/
+echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipewire-jack-%_arch.conf
+
 %check
 %__meson_test
 
@@ -189,7 +231,6 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/pw-jack
 %_bindir/%name-aes67
 %_bindir/%name-avb
 %_bindir/%name-pulse
@@ -204,7 +245,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/%name/%name-aes67.conf
 %_datadir/%name/client.conf
 %_datadir/%name/client-rt.conf
-%_datadir/%name/jack.conf
+
 %_datadir/%name/minimal.conf
 %_datadir/%name/%name-avb.conf
 %_datadir/%name/%name-pulse.conf
@@ -219,16 +260,16 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %dir %_datadir/%name/%name-pulse.conf.avail
 %_datadir/%name/%name-pulse.conf.avail/20-upmix.conf
 
-%dir %_datadir/%name/%{name}.conf.avail
-%_datadir/%name/%{name}.conf.avail/10-rates.conf
-%_datadir/%name/%{name}.conf.avail/20-upmix.conf
+%dir %_datadir/%name/%name.conf.avail
+%_datadir/%name/%name.conf.avail/10-rates.conf
+%_datadir/%name/%name.conf.avail/20-upmix.conf
 
 %dir %_datadir/%name/media-session.d
 %_datadir/%name/media-session.d/alsa-monitor.conf
 %_datadir/%name/media-session.d/bluez-monitor.conf
 %_datadir/%name/media-session.d/media-session.conf
 %_datadir/%name/media-session.d/v4l2-monitor.conf
-%_datadir/%name/media-session.d/with-jack
+
 %_datadir/%name/media-session.d/with-pulseaudio
 %dir %_datadir/%name/filter-chain
 %_datadir/%name/filter-chain/demonic.conf
@@ -248,6 +289,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 %_udevrulesdir/90-%name-alsa.rules
 %_datadir/alsa-card-profile/
+
 %if_enabled systemd
 %_userunitdir/%name.service
 %_userunitdir/%name.socket
@@ -255,17 +297,17 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_userunitdir/%name-pulse.socket
 %_userunitdir/%name-media-session.service
 %_userunitdir/filter-chain.service
-
 %{?_enable_systemd_system_service:
 %_unitdir/%name.service
 %_unitdir/%name.socket}
 %endif
+
 %_datadir/alsa/alsa.conf.d/50-pipewire.conf
 %_datadir/alsa/alsa.conf.d/99-pipewire-default.conf
+
 %if_enabled man
 %_man1dir/%name.1*
 %_man1dir/%name-pulse.1*
-%_man1dir/pw-jack.1*
 %_man5dir/%name.conf.5*
 %endif
 %doc README* NEWS
@@ -273,6 +315,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %files libs
 %_libdir/lib%name-%api_ver.so.*
 %_libdir/%name-%api_ver/
+%exclude %_libdir/%name-%api_ver/jack
 %_libdir/spa-%spa_api_ver/
 %_libdir/alsa-lib/
 
@@ -328,8 +371,32 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_man1dir/pw-top.1.*
 %endif
 
+%files jack
+%_bindir/pw-jack
+%_datadir/%name/jack.conf
+%_datadir/%name/media-session.d/with-jack
+%{?_enable_man:%_man1dir/pw-jack.1*}
+
+%files jack-libs
+%_sysconfdir/ld.so.conf.d/pipewire-jack-%_arch.conf
+%_libdir/%name-%api_ver/jack/*.so.*
+
+%files jack-libs-devel
+%_includedir/jack/
+%_libdir/%name-%api_ver/jack/*.so
+%_pkgconfigdir/jack.pc
+
 
 %changelog
+* Tue Aug 29 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.79-alt1
+- updated to 0.3.79-2-g6bf42e9bc
+
+* Wed Aug 23 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.78-alt2
+- new -jack* subpackages obsolete jack-audio-connection-kit
+
+* Tue Aug 22 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.78-alt1
+- updated to 0.3.78-5-gf9c21789d
+
 * Fri Aug 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.77-alt1
 - updated to 0.3.77-1-g140374d20
 

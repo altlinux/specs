@@ -2,7 +2,7 @@
 
 Name: amsynth
 Version: 1.13.0
-Release: alt1.2
+Release: alt1.3
 Summary: A classic synthesizer with dual oscillators
 
 License: GPLv2+
@@ -26,13 +26,13 @@ BuildRequires:  autoconf-archive libX11-devel
 
 BuildRequires:  appliance-base-glibc glibc-utils
 BuildRequires:  libgtk2-devel libgtkmm3-devel
-BuildRequires:  libjack-devel liblash-devel libsndfile-devel libsndfile-utils
+BuildRequires:  pkgconfig(jack) liblash-devel libsndfile-devel libsndfile-utils
 BuildRequires:  libGL-devel libEGL-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
-Requires:       jack-audio-connection-kit libsndfile-utils lash 
-Requires:       %name-data = %EVR
 
+Requires:       %name-data = %EVR
+Requires:       libsndfile-utils lash
 
 %description
 Amsynth is a software synthesis that provides a
@@ -171,6 +171,9 @@ install -pDm644 %SOURCE4 %buildroot%_datadir/appdata/
 %_datadir/appdata/vst-%name-plugin.metainfo.xml
 
 %changelog
+* Wed Aug 23 2023 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1.3
+- removed hard jack-audio-conection-kit dependency allow to use pipewire-jack
+
 * Wed Jan 04 2023 Ivan A. Melnikov <iv@altlinux.org> 1.13.0-alt1.2
 - NMU: main package should require data subpackage
   (closes: #44800).

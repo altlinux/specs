@@ -3,7 +3,7 @@
 
 Name: calf
 Version: 0.90.3
-Release: alt1
+Release: alt1.1
 
 Summary: Audio plugins pack
 Group: Sound
@@ -13,7 +13,7 @@ Url: http://calf-studio-gear.org/
 %if_disabled snapshot
 Source: http://calf-studio-gear.org/files/%name-%version.tar.gz
 %else
-# VCS: https://github.com/calf-studio-gear/calf.git
+Vcs: https://github.com/calf-studio-gear/calf.git
 Source: %name-%version.tar
 %endif
 
@@ -21,7 +21,7 @@ Patch: calf-0.90.1-alt-link.patch
 
 BuildRequires: gcc-c++ desktop-file-utils
 BuildRequires: glib2-devel libexpat-devel libfftw3-devel libfluidsynth-devel
-BuildRequires: libjack-devel liblash-devel lv2-devel
+BuildRequires: pkgconfig(jack) liblash-devel lv2-devel
 %{?_enable_gui:BuildRequires: libcairo-devel libgtk+2-devel}
 
 %description
@@ -36,9 +36,9 @@ This package contains the common files and the Standalone JACK plugin.
 %package gui
 Summary: JACK wrapper for Calf plugins
 Group: Sound
-Provides: %{name}jackhost = %version-%release
-Requires: %name = %version-%release
-Requires: jack-audio-connection-kit
+Provides: %{name}jackhost = %EVR
+Requires: %name = %EVR
+Requires: lash
 
 %description gui
 The Calf project aims at providing a set of high quality open source audio
@@ -52,7 +52,7 @@ This package contains JACK wrapper for Calf plugins with gui.
 %package plugins
 Summary: Calf plugins in LV2 format
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: lv2
 
 %description plugins
@@ -80,7 +80,7 @@ extensions.
 %ifarch x86_64 %ix86
 	--enable-sse
 %endif
-
+%nil
 %make_build
 
 %install
@@ -109,6 +109,9 @@ extensions.
 
 
 %changelog
+* Wed Aug 23 2023 Yuri N. Sedunov <aris@altlinux.org> 0.90.3-alt1.1
+- calf-gui: removed jack-audio-conection-kit dependency, added lash
+
 * Wed Jul 17 2019 Yuri N. Sedunov <aris@altlinux.org> 0.90.3-alt1
 - 0.90.3
 

@@ -8,7 +8,7 @@
 
 Name: qjackctl
 Version: 0.9.11
-Release: alt1
+Release: alt1.1
 
 Summary: Qjackctl is a programm to control the JACK sound server daemon
 Summary(ru_RU.UTF-8): Qjackctl -- это программа для контроля над демоном JACK-сервера
@@ -23,14 +23,13 @@ Source: %name-%cvsdate.tar
 Source: https://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
 %endif
 
-%define jack_ver 0.118
-Requires: jackd >= %jack_ver
+Requires: jackd
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: jackit-devel >= %jack_ver
-BuildRequires: cmake gcc-c++ libalsa-devel
+BuildRequires: cmake gcc-c++
+BuildRequires: libalsa-devel
+BuildRequires: pkgconfig(jack)
 %{?_enable_portaudio:BuildRequires: pkgconfig(portaudio-2.0)}
-BuildRequires: libX11-devel libXext-devel
 %if_enabled qt6
 BuildRequires: qt6-base-devel qt6-tools-devel qt6-svg-devel
 %else
@@ -77,6 +76,9 @@ JACK-клиентов.
 %doc ChangeLog README
 
 %changelog
+* Wed Aug 23 2023 Yuri N. Sedunov <aris@altlinux.org> 0.9.11-alt1.1
+- updated dependencies
+
 * Thu Jun 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.9.11-alt1
 - 0.9.11
 
