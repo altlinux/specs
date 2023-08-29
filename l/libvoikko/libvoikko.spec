@@ -6,11 +6,13 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define autorelease 3
+
 %global _hardened_build 1
 
 Name:           libvoikko
-Version:        4.3.1
-Release:        alt1_6
+Version:        4.3.2
+Release:        alt1_3
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 License:        GPL-2.0-or-later
@@ -135,6 +137,9 @@ mkdir -p %{buildroot}%{_prefix}/lib/voikko
 %{python3_sitelibdir_noarch}/__pycache__/%{name}.cpython-3*.opt-?.pyc
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 4.3.2-alt1_3
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 4.3.1-alt1_6
 - update to new release by fcimport
 
