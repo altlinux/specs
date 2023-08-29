@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt6
+Release: alt7
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -32,6 +32,7 @@ BuildRequires: libalternatives-devel
 BuildRequires: qt5-base-devel
 
 BuildRequires: ImageMagick fontconfig bc
+BuildRequires: distro-licenses >= 1.3.1
 
 Source: branding.tar
 
@@ -227,6 +228,7 @@ Requires(post): indexhtml-common
 
 %prep
 %setup -n branding
+cp /usr/share/distro-licenses/ALT_Server_License/license.{all,ru}.html.in notes/
 
 %build
 autoconf
@@ -338,6 +340,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Aug 29 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt7
+- copy licenses from distro-licenses
+
 * Mon Aug 28 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt6
 - use the Basealt LLC logo for About system
 
