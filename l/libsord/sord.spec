@@ -1,37 +1,27 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: waf
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-BuildRequires: libpcre-devel
 Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname sord
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name sord
-%define version 0.16.8
 %global maj 0
-%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsord
-Version:    0.16.8
+Version:    0.16.14
 Release:    alt1_2
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 License:    ISC
-URL:        http://drobilla.net/software/sord/
-Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
-# This fixes a potential BTree crash with GCC 10, patch from upstream
-Patch0:     %{oldname}-update-zix.patch
+URL:        https://drobilla.net/software/%{oldname}.html
+Source0:    https://download.drobilla.net/%{oldname}-%{version}.tar.xz
 
 BuildRequires: doxygen
-BuildRequires: graphviz libgraphviz
-BuildRequires: glib2-devel libgio libgio-devel
-BuildRequires: python3
-BuildRequires: libserd-devel >= 0.30.0
+BuildRequires: libserd-devel >= 0.30.10
 BuildRequires: gcc
-BuildRequires: gcc-c++
+BuildRequires: meson
+BuildRequires: libpcre-devel libpcrecpp-devel
 Source44: import.info
 Provides: sord = %{version}-%{release}
 
@@ -55,37 +45,27 @@ This package contains the headers and development libraries for %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q
-%patch0 -p1
 
-# Do not run ldconfig.
-sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" wscript
 
 %build
-
-export CFLAGS="%optflags"
-export CXXFLAGS="%optflags"
-export LINKFLAGS="%optflags"
-python3 waf configure \
-    --prefix=%{_prefix} \
-    --libdir=%{_libdir} \
-    --mandir=%{_mandir} \
-    --datadir=%{_datadir} \
-    --docdir=%{_docdir}/%{oldname} \
-    --test \
-    --docs 
-python3 waf build -v %{?_smp_mflags}
+%meson
+%meson_build
 
 %install
-DESTDIR=%{buildroot} python3 waf install
-chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
-install -pm 644 AUTHORS NEWS README.md %{buildroot}%{_docdir}/%{oldname}
+%meson_install
+
+# Move devel docs to the right directory
+install -d %{buildroot}%{_docdir}/%{oldname}
+mv %{buildroot}%{_docdir}/%{oldname}-%{maj} %{buildroot}%{_docdir}/%{oldname}
+
+%check
+%meson_test
 
 %files
 %{_docdir}/%{oldname}
 %exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}/
-#exclude %{_docdir}/%{oldname}/COPYING
 %doc --no-dereference COPYING
-%{_libdir}/lib%{oldname}-%{maj}.so.*
+%{_libdir}/lib%{oldname}-%{maj}.so.%{maj}*
 %{_bindir}/sordi
 %{_bindir}/sord_validate
 %{_mandir}/man1/%{oldname}*.1*
@@ -95,9 +75,11 @@ install -pm 644 AUTHORS NEWS README.md %{buildroot}%{_docdir}/%{oldname}
 %{_libdir}/lib%{oldname}-%{maj}.so
 %{_libdir}/pkgconfig/%{oldname}-%{maj}.pc
 %{_includedir}/%{oldname}-%{maj}/
-%{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.16.14-alt1_2
+- update to new release by fcimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.16.8-alt1_2
 - update to new release by fcimport
 
