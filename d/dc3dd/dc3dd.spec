@@ -6,8 +6,8 @@ BuildRequires: perl(Digest/SHA1.pm) perl(Encode.pm) unzip
 %define _localstatedir %{_var}
 BuildRequires: /usr/bin/git
 Name:           dc3dd
-Version:        7.3.0
-Release:        alt1_1
+Version:        7.3.1
+Release:        alt1_2
 Summary:        Patched version of GNU dd for use in computer forensics
 
 License:        GPLv3+
@@ -17,6 +17,7 @@ Source0:        http://downloads.sourceforge.net/dc3dd/%{name}-%{version}.zip
 #Fixing build error: automatic de-ANSI-fication support has been removed
 #Removing the check for AM_C_PROTOTYPES
 Patch1:         dc3dd-01_automake.patch
+Patch2:         dc3dd-configure-c99.patch
 
 # Original Archlinux patch to fix build with recent libtools version
 # Author: mschlenker
@@ -65,6 +66,8 @@ git add --force .
 git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
 cat %_sourcedir/dc3dd-01_automake.patch | git apply --index --reject  -
 git commit -q -m dc3dd-01_automake.patch --author "rpmbuild <rpmbuild>"
+cat %_sourcedir/dc3dd-configure-c99.patch | git apply --index --reject  -
+git commit -q -m dc3dd-configure-c99.patch --author "rpmbuild <rpmbuild>"
 
 
 #Missing x flag in version 7.2.646 makes the build fail
@@ -93,6 +96,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_mandir}/man1/%{name}.*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 7.3.1-alt1_2
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 7.3.0-alt1_1
 - update to new release by fcimport
 
