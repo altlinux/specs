@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: gmp
-Version: 6.2.1
-Release: alt5
+Version: 6.3.0
+Release: alt1
 
 Summary: GNU MP arbitrary precision arithmetic library
 License: LGPLv3+
@@ -15,9 +15,9 @@ Url: http://gmplib.org/
 Source: gmp-%version.tar
 Patch: gmp-%version-%release.patch
 
-# Automatically added by buildreq on Wed Dec 16 2015
-# optimized out: elfutils libstdc++-devel perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore python-base xz
-BuildRequires: flex gcc-c++ libreadline-devel makeinfo
+# Automatically added by buildreq on Mon Aug 28 2023
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libgpg-error libstdc++-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent sh4
+BuildRequires: flex gcc-c++ makeinfo
 
 %def_disable static
 %def_enable cxx
@@ -119,6 +119,8 @@ arithmetic library.
 %setup
 %patch -p1
 
+rm -f doc/gmp.info*
+
 %build
 # -ffat-lto-objects is needed even if static libraries are disabled
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -127,7 +129,7 @@ arithmetic library.
 LANG=C awk 'NR>=3&&$1=="#define"&&$2~/^[a-z_0-9]+$/&&$3~/^__/{print gensub("^__MPN\\(([^)]+)\\)","__gmpn_\\1",1,$3)}' \
 	gmp.h > libgmp.sym
 sed -n 's/^[^ ]\+ \(__gmp_[^ ]\+\) .*/\1/p' rand/randmt.h >> libgmp.sym
-# extra symbols required by libgmpxx and test suite
+# Extra symbols required by libgmpxx, gmp test suite, ocaml-zarith, and gmp-ecm package:
 cat >>libgmp.sym <<'EOF'
 __gmp_allocate_func
 __gmp_asprintf_final
@@ -148,6 +150,7 @@ __gmp_rands_initialized
 __gmp_reallocate_func
 __gmp_tmp_reentrant_alloc
 __gmp_tmp_reentrant_free
+__gmpn_addaddmul_1msb0
 __gmpn_bases
 __gmpn_bdiv_qr
 __gmpn_bdiv_qr_itch
@@ -204,6 +207,7 @@ __gmpn_mul_fft
 __gmpn_mullo_basecase
 __gmpn_mullo_n
 __gmpn_mulmid
+__gmpn_mulmod_bknp1
 __gmpn_mulmod_bnm1
 __gmpn_mulmod_bnm1_next_size
 __gmpn_powlo
@@ -216,6 +220,7 @@ __gmpn_sbpi1_div_qr
 __gmpn_sbpi1_divappr_q
 __gmpn_sqr_basecase
 __gmpn_sqrlo
+__gmpn_sqrmod_bknp1
 __gmpn_sqrmod_bnm1
 __gmpn_sqrmod_bnm1_next_size
 __gmpn_toom22_mul
@@ -281,6 +286,10 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %endif #cxx && static
 
 %changelog
+* Mon Aug 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.0-alt1
+- Updated to 6.3.0.
+- Removed redundant BuildRequires: libreadline-devel.
+
 * Thu Nov 10 2022 Alexander Danilov <admsasha@altlinux.org> 6.2.1-alt5
 - Backported upstream commit "mpz/inp_raw.c: Avoid bit size overflows"
   (thx Marco Bodrato) (fixes CVE-2021-43618).
