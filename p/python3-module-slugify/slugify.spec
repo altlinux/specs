@@ -5,12 +5,14 @@
 
 Name:    python3-module-%modulename
 Version: 6.1.1
-Release: alt1
+Release: alt2
 
 Summary: Returns unicode slugs
 License: MIT
 Group:   Development/Python3
 URL:     https://github.com/un33k/python-slugify
+
+Provides: python3-module-python-%modulename = %EVR
 
 BuildRequires(pre): rpm-build-python3
 
@@ -56,6 +58,10 @@ tox.py3 --sitepackages -vvr -s false --develop
 %python3_sitelibdir/python_slugify-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sun Aug 27 2023 Alexandr Shashkin <dutyrok@altlinux.org> 6.1.1-alt2
+- added provide to normalized project name for compability with Python
+  ecosystem
+
 * Fri Mar 11 2022 Stanislav Levin <slev@altlinux.org> 6.1.1-alt1
 - 4.0.1 -> 6.1.1.
 
