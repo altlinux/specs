@@ -2,8 +2,8 @@
 %define git_date %nil
 
 Name: xfce4-whiskermenu-plugin
-Version: 2.7.3
-Release: alt2%git_date
+Version: 2.8.0
+Release: alt1%git_date
 
 Summary: Alternate Xfce menu
 License: GPLv2+
@@ -13,14 +13,14 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-whiskermenu-plugin.git
 Source: %name-%version.tar
-Source1: alt_ru.po
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools gcc-c++ rpm-macros-cmake cmake
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libgarcon-devel libexo-gtk3-devel
+BuildRequires: libaccountsservice-devel
 
-Requires: xfce4-panel >= 4.8
+Requires: xfce4-panel >= 4.14
 
 %define _unpackaged_files_terminate_build 1
 
@@ -36,15 +36,10 @@ keeps a list of the last ten applications that you've launched from it.
 %setup
 %patch -p1
 
-# Merge our own and upstream Russian translations
-# (this translation for upstreams main git branch and
-# has some strings that don't exist in the stable-2.7 branch, so
-# upstreams takes precedence).
-msgcat --use-first -o merged_ru.po po/ru.po %SOURCE1
-mv -f merged_ru.po po/ru.po
-
 %build
-%cmake -DLIB_INSTALL_DIR=%_libdir
+%cmake \
+	-DLIB_INSTALL_DIR=%_libdir \
+	-DENABLE_GTK_LAYER_SHELL=OFF
 %cmake_build
 
 %install
@@ -59,6 +54,12 @@ mv -f merged_ru.po po/ru.po
 %_man1dir/*.1.*
 
 %changelog
+* Tue Aug 29 2023 Mikhail Efremov <sem@altlinux.org> 2.8.0-alt1
+- Disabled libgtk-layer-shell support.
+- Build with accountsservice support.
+- Use Russian translation from upstream.
+- Updated to 2.8.0.
+
 * Thu May 11 2023 Mikhail Efremov <sem@altlinux.org> 2.7.3-alt2
 - Updated Russian translation.
 
