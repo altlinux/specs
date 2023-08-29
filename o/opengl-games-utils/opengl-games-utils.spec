@@ -3,9 +3,9 @@ Group: Games/Other
 %define _localstatedir %{_var}
 Name:           opengl-games-utils
 Version:        0.2
-Release:        alt2_20
+Release:        alt2_25
 Summary:        Utilities to check proper 3d support before launching 3d games
-License:        Public Domain
+License:        LicenseRef-Fedora-Public-Domain
 URL:            http://fedoraproject.org/wiki/SIGs/Games
 Source0:        opengl-game-wrapper.sh
 Source1:        opengl-game-functions.sh
@@ -50,6 +50,9 @@ fi
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.2-alt2_25
+- update to new release by fcimport
+
 * Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 0.2-alt2_20
 - added provides for external symlinks in autoimports
 
