@@ -4,9 +4,9 @@ Group: System/Base
 Summary: Utility to create fonts.scale files for truetype fonts
 Name: ttmkfdir
 Version: 3.0.9
-Release: alt3_64
+Release: alt3_69
 # Only licensing attribution is in README, no version.
-License: LGPLv2+
+License: LGPL-2.0-or-later
 # This is a Red Hat maintained package which is specific to
 # our distribution.  Thus the source is only available from
 # within this srpm.
@@ -70,6 +70,9 @@ cp -p %{SOURCE10} %{buildroot}%{_mandir}/man1/
 %{_mandir}/man1/ttmkfdir.1*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 3.0.9-alt3_69
+- update to new release by fcimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 3.0.9-alt3_64
 - fc update
 
