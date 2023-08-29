@@ -23,7 +23,7 @@
 %define tver    0.96
 Name:           mbrola
 Version:        3.3
-Release:        alt1_2.12
+Release:        alt1_1699.2.pm.49
 Summary:        Speech Synthesis System
 Summary(de):    Sprachsynthese System
 License:        AGPL-3.0-or-later
@@ -105,6 +105,9 @@ fdupes %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 3.3-alt1_1699.2.pm.49
+- update by suseimport
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 3.3-alt1_2.12
 - we have freespeech on arm/aarch64/ppc64le now
 
