@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
@@ -5,11 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		naturette
 Version:	1.3
-Release:	alt4_15
+Release:	alt4_28
 Summary:	An AGI adventure game
 
-Group:		Games/Other
-License:	Redistributable, no modification permitted
+License:	CC-BY-ND-4.0
 URL:		http://membres.lycos.fr/agisite/rette.htm
 Source0:	rette13e.zip
 #Original from http://membres.lycos.fr/agisite/rette13e.zip includes
@@ -52,7 +52,7 @@ cp %{SOURCE4} .
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
-install -D -m0644 -p * $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -D -m0644 -p logdir naturette-LICENSE.fedora object picdir snddir viewdir vol.0 words.tok $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -D -m0755 -p %{SOURCE2} $RPM_BUILD_ROOT/%{_bindir}
 
 # desktop file
@@ -72,6 +72,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/naturette-wrapper.sh
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.3-alt4_28
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_15
 - update to new release by fcimport
 
