@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 BuildRequires: perl-podlators
 Name: perl-Glib-Object-Introspection
-Version: 0.050
+Version: 0.051
 Release: alt1
 
 Summary: Dynamically create Perl language bindings
@@ -37,7 +37,7 @@ export LANG=ru_RU.UTF-8
 %perl_vendor_install
 
 %files
-%doc README.md NEWS LICENSE
+%doc README.md
 %perl_vendor_autolib/Glib/Object/Introspection*
 %perl_vendor_archlib/Glib/Object/Introspection*
 
@@ -46,6 +46,9 @@ export LANG=ru_RU.UTF-8
 %_man1dir/perli11ndoc.1*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.051-alt1
+- new version
+
 * Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 0.050-alt1
 - new version
 
