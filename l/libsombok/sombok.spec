@@ -8,9 +8,9 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libsombok
 Version:        2.4.0
-Release:        alt4_14
+Release:        alt4_20
 Summary:        Unicode Text Segmentation Package
-License:        GPLv2+ or Artistic clarified
+License:        (GPL-1.0-or-later OR Artistic-1.0-Perl) AND (GPL-2.0-or-later OR Artistic-1.0-Perl)
 URL:            http://sf.net/projects/linefold/
 Source0:        https://github.com/hatukanezumi/sombok/archive/%{oldname}-%{version}.tar.gz
 # A multilib-safe wrapper, bug #1853260
@@ -93,6 +93,9 @@ mv -f %buildroot%_includedir/{sombok-%{_arch},sombok}.h
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 2.4.0-alt4_20
+- update to new release by fcimport
+
 * Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2.4.0-alt4_14
 - e2k support
 
