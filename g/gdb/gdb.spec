@@ -2,16 +2,10 @@
 %def_with debuginfod
 %def_disable check
 %def_with python
-
-# Currently gdbserver does not support RISC-V
-%ifarch riscv64
-%def_disable gdbserver
-%else
 %def_enable gdbserver
-%endif
 
 Name: gdb
-Version: 11.2
+Version: 13.2.0.43.854f46b6377
 Release: alt1
 
 Summary: A GNU source-level debugger for C, C++ and other languages
@@ -98,7 +92,7 @@ xz -9k gdb/{MAINTAINERS,NEWS}
 %build
 echo '%version-%release (%distribution)' >gdb/version.in
 
-for f in */configure.in; do
+for f in */configure.ac; do
 	pushd "${f%%/*}"
 		[ configure.in -nt configure ] && autoconf
 	popd
@@ -110,22 +104,23 @@ for f in */Makefile.am; do
 done
 
 %define _configure_script ../configure
-%define configure_opts \\\
-	--with-gdb-datadir=%_datadir/gdb \\\
-	--with-separate-debug-dir=/usr/lib/debug \\\
-	--with-auto-load-dir='$debugdir:%_libdir/gdb/auto-load:$datadir/auto-load' \\\
-	--enable-gdb-build-warnings=,-Wno-unused \\\
-	--disable-werror \\\
-	--disable-sim \\\
-	--disable-rpath \\\
-	--with-system-readline \\\
-	--with-lzma \\\
-	--without-libexpat-prefix \\\
-	--without-rpm \\\
-	--without-libunwind \\\
-	--enable-64-bit-bfd \\\
-	--with-system-zlib \\\
-	%nil
+
+set -- \
+	--with-gdb-datadir=%_datadir/gdb \
+	--with-separate-debug-dir=/usr/lib/debug \
+	--with-auto-load-dir='$debugdir:%_libdir/gdb/auto-load:$datadir/auto-load' \
+	--enable-gdb-build-warnings=,-Wno-unused \
+	--disable-werror \
+	--disable-sim \
+	--disable-rpath \
+	--with-system-readline \
+	--with-lzma \
+	--without-libexpat-prefix \
+	--without-libunwind \
+	--enable-64-bit-bfd \
+	--with-system-zlib \
+	#
+
 export \
 	ac_cv_have_x=${ac_cv_have_x='have_x=yes ac_x_includes=%_x11includedir ac_x_libraries=%_x11libdir'} \
 	%{?!_enable_tui:ac_cv_search_tgetent='none required'} \
@@ -137,14 +132,16 @@ mkdir %buildtarget
 pushd %buildtarget
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %configure \
-	%configure_opts \
+	"$@" \
 	%{subst_enable tui} \
 	%{subst_with debuginfod} \
 %if_with python
 	--with-python=python3 \
 %endif
-#
+	#
+
 %make_build
 %make_build -C gdb libgdb.a
 %make_build info MAKEINFOFLAGS=--no-split
@@ -155,7 +152,13 @@ rm -rf light
 mkdir light
 pushd light
 
-%configure %configure_opts --disable-tui --without-expat --without-python --without-debuginfod
+%configure \
+	"$@" \
+	--disable-tui \
+	--without-expat \
+	--without-python \
+	--without-debuginfod \
+	#
 %make_build
 
 popd #light
@@ -168,6 +171,8 @@ install -pm644 alt/gdb-gstack.man %buildroot%_man1dir/gstack.1
 
 # These files are already packaged as a part of binutils.
 rm %buildroot%_infodir/bfd*
+rm %buildroot%_infodir/ctf*
+rm %buildroot%_infodir/sframe*
 rm %buildroot%_datadir/locale/*/LC_MESSAGES/{bfd,opcodes}.mo
 
 pushd %buildtarget
@@ -181,8 +186,10 @@ rm %buildroot/%_datadir/gdb/system-gdbinit/elinos.py
 rm %buildroot/%_datadir/gdb/system-gdbinit/wrs-linux.py
 rmdir %buildroot/%_datadir/gdb/system-gdbinit
 
-# contained in gdb binary
+# These are provided by the gdb binary.
 %add_python3_req_skip _gdb
+%add_python3_req_skip _gdbevents
+%add_python3_req_skip _gdb.disassembler
 %add_python3_path %_datadir/gdb/python
 
 %set_verify_elf_method strict
@@ -236,6 +243,11 @@ fi
 %_libdir/lib*.a
 
 %changelog
+* Wed Aug 23 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.0.43.854f46b6377-alt1
+- Updated to gdb-13.2-release-43-g854f46b6377.
+- Enabled the gdbserver on riscv64 architecture, it is supported upstream
+  since gdb 10.1.
+
 * Sun Feb 06 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.2-alt1
 - Updated to gdb-11.2-release.
 
