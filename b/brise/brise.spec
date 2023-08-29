@@ -6,10 +6,10 @@ Group: Graphical desktop/Other
 
 Name:           brise
 Version:        0.38.20180515
-Release:        alt1_9
+Release:        alt1_12
 Summary:        The official Rime schema repository
 
-License:        GPLv3
+License:        GPL-3.0-only
 URL:            https://rime.im/
 Source0:        https://github.com/rime/brise/releases/download/brise-0.38/%{name}-%{version}.tar.gz
 
@@ -39,6 +39,9 @@ La brise: The official Rime schema repository.
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.38.20180515-alt1_12
+- update to new release by fcimport
+
 * Wed Sep 28 2022 Igor Vlasenko <viy@altlinux.org> 0.38.20180515-alt1_9
 - new version
 
