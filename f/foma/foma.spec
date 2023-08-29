@@ -5,7 +5,6 @@ BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: libtinfo-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define fontpkgname foma
 # Upstream changed its licensing to ASL 2.0 after releasing 0.9.18.
 # I have decided to use the newest upstream code from September 2020 because
 # in addition to many other fixes it fixes the build on Fedora.
@@ -17,10 +16,10 @@ BuildRequires: libtinfo-devel
 
 Name:           foma
 Version:        0.10.0
-Release:        alt1_0.2.%{snapshotdate}git%{shortcommit0}
+Release:        alt1_0.7.%{snapshotdate}git%{shortcommit0}
 Summary:        Xerox-compatible finite-state compiler
 
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://github.com/mhulden/foma
 Source0:        https://github.com/mhulden/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 
@@ -116,6 +115,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.10.0-alt1_0.7.20210601gitdfe1ccb
+- update to new release by fcimport
+
 * Sat Dec 18 2021 Igor Vlasenko <viy@altlinux.org> 0.10.0-alt1_0.2.20210601gitdfe1ccb
 - update to new release by fcimport
 
