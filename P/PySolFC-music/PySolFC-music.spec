@@ -5,13 +5,13 @@ Group: Games/Other
 
 Name:           PySolFC-music
 Version:        4.50
-Release:        alt1_1
+Release:        alt1_11
 Summary:        Music for PySolFC
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            https://pysolfc.sourceforge.io/
 Source0:        https://github.com/shlomif/pysol-music/archive/%{version}/pysol-music-%{version}.tar.gz
-Requires:       PySolFC >= %{mainversion}
+Requires:       PySolFC python3-module-PySolFC
 
 BuildArch: noarch
 Source44: import.info
@@ -35,6 +35,9 @@ cp -a data/music/* $RPM_BUILD_ROOT%{_datadir}/PySolFC/music
 %{_datadir}/PySolFC/music/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 4.50-alt1_11
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 4.50-alt1_1
 - update to new release by fcimport
 
