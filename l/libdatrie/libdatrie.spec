@@ -4,9 +4,9 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libdatrie
 Version:        0.2.13
-Release:        alt1_2
+Release:        alt1_7
 Summary:        Implementation of Double-Array structure for representing trie
-License:        LGPLv2+
+License:        LGPL-2.1-or-later
 URL:            http://linux.thai.net/projects/datrie
 Source0:        http://linux.thai.net/pub/thailinux/software/libthai/%{name}-%{version}.tar.xz
 BuildRequires:  autoconf, automake, libtool
@@ -53,8 +53,6 @@ find %{buildroot} -name '*.*a' -delete -print
 %check
 LD_LIBRARY_PATH=../datrie/.libs %make_build check
 
-
-
 %files
 %doc --no-dereference COPYING
 %{_libdir}/libdatrie.so.*
@@ -73,6 +71,9 @@ LD_LIBRARY_PATH=../datrie/.libs %make_build check
 %{_docdir}/%{name}-devel/*.svg
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.2.13-alt1_7
+- update to new release by fcimport
+
 * Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.2.13-alt1_2
 - update to new release by fcimport
 
