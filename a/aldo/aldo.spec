@@ -3,10 +3,10 @@ Group: Communications
 %define _localstatedir %{_var}
 Name:           aldo
 Version:        0.7.7
-Release:        alt1_1
+Release:        alt1_12
 Summary:        A morse tutor
 
-License:        GPLv2+
+License:        GPL-2.0-or-later AND GPL-3.0
 URL:            http://aldo.nongnu.org/
 
 Source0:        http://savannah.nongnu.org/download/aldo/%{name}-%{version}.tar.bz2
@@ -49,6 +49,9 @@ four type of training methods:
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.7.7-alt1_12
+- update to new release by fcimport
+
 * Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.7-alt1_1
 - update to new release by fcimport
 
