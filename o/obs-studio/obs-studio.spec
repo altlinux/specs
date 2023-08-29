@@ -8,12 +8,15 @@ Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
 Version: 29.1.3
-Release: alt1
+Release: alt3
 License: GPLv2+
 Group: Video
 Url: https://github.com/jp9000/obs-studio.git
 Source: %name-%version.tar
 Patch1: obs-studio-27.2.4-alt-cert-bundle.patch
+
+# https://bugzilla.altlinux.org/47318
+Requires: qt6-svg
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-luajit
@@ -26,8 +29,8 @@ BuildRequires: libX11-devel libxcb-devel
 BuildRequires: libalsa-devel
 BuildRequires: libjack-devel
 BuildRequires: libpulseaudio-devel 
-BuildRequires: qt5-base-devel qt5-x11extras-devel
-BuildRequires: qt5-svg-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-svg-devel
 BuildRequires: pkgconfig(MagickCore)
 BuildRequires: texlive-latex-base
 BuildRequires: zlib-devel
@@ -161,6 +164,12 @@ sed -e '/-Werror/d' -i cmake/Modules/CompilerConfig.cmake
 %_libdir/pkgconfig/libobs.pc
 
 %changelog
+* Tue Aug 29 2023 Anton Midyukov <antohami@altlinux.org> 29.1.3-alt3
+- Requires: qt6-svg (See: ALT bug 47318)
+
+* Tue Aug 22 2023 Anton Midyukov <antohami@altlinux.org> 29.1.3-alt2
+- rebuild with qt6
+
 * Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 29.1.3-alt1
 - New version 29.1.3.
 
