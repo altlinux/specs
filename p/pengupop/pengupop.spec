@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           pengupop
 Version:        2.2.2
-Release:        alt4_32
+Release:        alt4_34
 Summary:        Networked Game in the vein of Move/Puzzle Bobble
 
 License:        GPL-2.0-or-later
@@ -33,8 +33,9 @@ remove all orbs. You lose if any orb attaches below the white line.
 
 
 %build
+%undefine _fortify_level
 %configure
-%make_build CFLAGS="$CFLAGS -D_FORTIFY_SOURCE=0" LIBS="-lm"
+%make_build LIBS="-lm"
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -56,6 +57,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 2.2.2-alt4_34
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 2.2.2-alt4_32
 - update to new release by fcimport
 
