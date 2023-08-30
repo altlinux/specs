@@ -1,6 +1,6 @@
 Name: osm
 Version: 1.2.3
-Release: alt2
+Release: alt3
 
 Summary: Open Sound Meter
 License: GPLv3
@@ -52,6 +52,9 @@ done
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Wed Aug 30 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.3-alt3
+- fix build with pw jack substitute
+
 * Tue Aug 22 2023 Michael Shigorin <mike@altlinux.org> 1.2.3-alt2
 - builds fine on e2k
 
