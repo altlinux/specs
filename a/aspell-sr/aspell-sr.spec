@@ -1,3 +1,4 @@
+Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define lang sr
@@ -6,12 +7,20 @@ Summary: Serbian dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.02
-Release: alt2_20
-License: LGPLv2
-Group: Text tools
+Release: alt2_31
+License: LGPL-2.1-only
 URL: http://aspell.net/
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}.tar.bz2
 Patch0: aspell6-sr-0.02-time.patch
+
+# IMPORTANT
+# This package has been deprecated since Fedora 39
+# The reason behind this is that upstream has been inactive for more than 4 years
+# and there are other variants like hunspell or enchant which has active upstream
+# FESCo approval is located here: https://pagure.io/fesco/issue/3009
+# Change proposal is located here: https://fedoraproject.org/wiki/Changes/AspellDeprecation
+Provides:  deprecated()
+
 Buildrequires: aspell libaspell
 Requires: aspell libaspell
 
@@ -38,6 +47,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.02-alt2_31
+- update to new release by fcimport
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_20
 - update to new release by fcimport
 
