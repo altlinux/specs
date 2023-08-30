@@ -1,6 +1,6 @@
 Name: alterator-vm
 Version: 0.4.33
-Release: alt4
+Release: alt5
 
 Summary: Alterator module for volume management
 License: GPL
@@ -37,6 +37,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Tue Aug 29 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.33-alt5
+- sort partitions on IMSM volume by offset
+
 * Fri Aug 25 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.33-alt4
 - table: fix disappearing /dev/disk_luks regions
 
