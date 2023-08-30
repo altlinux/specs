@@ -1,6 +1,6 @@
 Name: zynaddsubfx
 Version: 3.0.6
-Release: alt3
+Release: alt4
 
 Summary: %name is a open source software synthesizer
 License: GPLv2+
@@ -38,6 +38,8 @@ interesting sounds that you'll boost to an amazing universe of sounds.
 %setup -a1 -a2 -a3
 sed -i '/^#include <string>/ a#include <cstdint>' \
     src/Misc/Bank.h src/Nio/Engine.h
+sed -i 's,/opt/zyn-fusion,%_libdir/zyn-fusion,' \
+    src/Plugin/ZynAddSubFX/ZynAddSubFX-UI-Zest.cpp
 
 %build
 %cmake -DGuiModule=zest -DDefaultOutput=jack -DPluginLibDir=%_lib
@@ -59,6 +61,9 @@ sed -i '/^#include <string>/ a#include <cstdint>' \
 %_pixmapsdir/zynaddsubfx.*
 
 %changelog
+* Wed Aug 30 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.6-alt4
+- fix ui plugin search path (closes: 47068)
+
 * Fri Jun 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.6-alt3
 - rebuilt with gcc13
 
