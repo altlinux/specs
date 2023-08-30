@@ -1,7 +1,7 @@
 
 Summary: Python bindings for the libvirt library
 Name: python3-module-libvirt
-Version: 9.3.0
+Version: 9.6.0
 Release: alt1
 Url: https://libvirt.org
 #git://libvirt.org/libvirt-python.git
@@ -35,13 +35,17 @@ of recent versions of Linux (and other OSes).
 %python3_install
 
 %check
-%{python3_setup:} test
+export PYTHONPATH=%buildroot/%python3_sitelibdir/
+pytest3 -v
 
 %files
 %python3_sitelibdir/*
-%doc README COPYING COPYING.LESSER examples
+%doc README COPYING examples
 
 %changelog
+* Wed Aug 30 2023 Alexey Shabalin <shaba@altlinux.org> 9.6.0-alt1
+- New version 9.6.0.
+
 * Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 9.3.0-alt1
 - New version 9.3.0.
 

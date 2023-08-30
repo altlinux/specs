@@ -81,7 +81,11 @@
 %def_without storage_rbd
 %endif
 %def_with storage_mpath
+%ifarch %ix86 %arm %mips32 ppc riscv64
+%def_without storage_gluster
+%else
 %def_with storage_gluster
+%endif
 %def_with storage_zfs
 %def_without storage_vstorage
 %ifarch %ix86 x86_64 ppc64le aarch64 s390x
@@ -182,7 +186,7 @@
 %def_without modular_daemons
 
 Name: libvirt
-Version: 9.3.0
+Version: 9.6.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
@@ -767,6 +771,7 @@ tar -xf %SOURCE2 -C subprojects/keycodemapdb --strip-components 1
     -Drootprefix='/' \
     -Drpath=disabled \
     -Drunstatedir=%_runtimedir \
+    -Dinitconfdir=%_sysconfdir/sysconfig \
     -Dpackager_version="%release" \
     -Dinit_script=systemd \
     -Dqemu_user=%qemu_user \
@@ -1398,6 +1403,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Aug 30 2023 Alexey Shabalin <shaba@altlinux.org> 9.6.0-alt1
+- 9.6.0 (Fixes: CVE-2023-3750)
+- Disabled support glusterfs for 32-bit arches and riscv64.
+
 * Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 9.3.0-alt1
 - 9.3.0
 
