@@ -5,14 +5,16 @@ Name: hyphen-grc
 Summary: Ancient Greek hyphenation rules
 %global upstreamid 20110913
 Version: 0.%{upstreamid}
-Release: alt1_11
+Release: alt1_25
 #? in a url causes trouble
 #http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-grc.tex?view=co
 Source: hyph-grc.tex
 URL: http://tug.org/tex-hyphen
-License: LPPL
+License: LPPL-1.3a
 BuildArch: noarch
 BuildRequires: libhyphen-devel
+BuildRequires: glibc-locales
+
 Requires: libhyphen
 Patch0: hyphen-grc-cleantex.patch
 Source44: import.info
@@ -43,6 +45,9 @@ cp -p hyph_grc_GR.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.20110913-alt1_25
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20110913-alt1_11
 - update to new release by fcimport
 
