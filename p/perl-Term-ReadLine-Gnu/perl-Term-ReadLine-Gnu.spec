@@ -3,11 +3,11 @@
 %define _without_test 1
 %define dist Term-ReadLine-Gnu
 Name: perl-%dist
-Version: 1.42
+Version: 1.46
 Release: alt1
 
 Summary: Perl interface to the GNU Readline library
-License: GPL or Artistic
+License: GPLv2+ or Artistic-2.0
 Group: Development/Perl
 
 URL: %CPAN %dist
@@ -15,18 +15,17 @@ Source0: %dist-%version.tar
 Source1: Term-ReadLine.tar
 Source2: Makefile.PL
 
-Patch1: perl-Term-ReadLine-Gnu-1.37-at-Gnu.pm-use-XSLoader.patch
+Patch1: perl-Term-ReadLine-Gnu-1.46-at-Gnu.pm-use-XSLoader.patch
 # two merged in one Patch3 file
 # hist/perl-Term-ReadLine-Gnu-at-Gnu.xs-use-curses.patch
 # hist/perl-Term-ReadLine-Gnu-at-dont-use-xmalloc.patch
-Patch3: perl-Term-ReadLine-Gnu-1.37-at-xmalloc-at-curses.patch
-Patch6: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-pass-syntax-check.patch
-Patch7: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-debian-10term.patch
+Patch3: perl-Term-ReadLine-Gnu-1.46-at-xmalloc-at-curses.patch
+Patch6: perl-Term-ReadLine-Gnu-1.46-at-Gnu_XS.pm-pass-syntax-check.patch
+Patch7: perl-Term-ReadLine-Gnu-1.46-at-Gnu_XS.pm-debian-10term.patch
 Patch8: perl-Term-ReadLine-Gnu-at-add-Term-Readline-to-MANIFEST.patch
-Patch9: perl-Term-ReadLine-Gnu-at-perlsh-dont-import-POSIX.patch
-Patch10: perl-Term-ReadLine-Gnu-at-disable-Tk-test.patch
+Patch9: perl-Term-ReadLine-Gnu-1.46-at-perlsh-dont-import-POSIX.patch
+Patch10: perl-Term-ReadLine-Gnu-1.46-at-disable-Tk-test.patch
 Patch11: Term-ReadLine-1.15-at.patch
-Patch12: perl-Term-ReadLine-Gnu-1.37-viy-buildroot.patch
 
 
 # Automatically added by buildreq on Fri Oct 07 2011
@@ -51,7 +50,6 @@ cp -f %{SOURCE2} Makefile.PL
 %patch9 -p1
 %patch10 -p1
 %patch11 -p0
-%patch12 -p1
 
 %build
 %perl_vendor_build
@@ -70,11 +68,14 @@ expect -c '
 '
 
 %files
-%doc README eg Changes
+%doc eg Changes INSTALL.md README.md
 %perl_vendor_archlib/Term
 %perl_vendor_autolib/Term
 
 %changelog
+* Wed Aug 30 2023 Igor Vlasenko <viy@altlinux.org> 1.46-alt1
+- new version
+
 * Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 1.42-alt1
 - new version
 
