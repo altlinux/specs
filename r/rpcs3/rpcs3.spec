@@ -18,7 +18,7 @@
 
 Name: rpcs3
 Version: 0.0.29
-Release: alt1.1
+Release: alt1.2
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -138,6 +138,8 @@ echo "// This is a generated file.
 %build
 export ALTWRAP_LLVM_VERSION=%llvm_version
 
+%add_optflags -L%_libdir/pipewire-0.3/jack
+
 %cmake \
 	-DCMAKE_C_COMPILER:STRING=clang \
 	-DCMAKE_CXX_COMPILER:STRING=clang++ \
@@ -176,6 +178,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Wed Aug 30 2023 Nazarov Denis <nenderus@altlinux.org> 0.0.29-alt1.2
+- Fix FTBFS
+
 * Sat Aug 19 2023 Nazarov Denis <nenderus@altlinux.org> 0.0.29-alt1.1
 - Fix FTBFS
 
