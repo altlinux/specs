@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # we need a font
 BuildRequires: fonts-ttf-liberation
 %define dist Padre
 Name: perl-Padre
-Version: 1.00
-Release: alt8.dac1134
+Version: 1.02
+Release: alt1
 
 
 Summary: Padre - Perl Application Development and Refactoring Environment
@@ -61,6 +62,7 @@ EOF
 %{expand:%%global __find_requires xvfb-run -a %__find_requires}
 
 %files
+%doc README.md Build_locallib_debian_ubuntu14.10.md Build_perlbrew_debian_ubuntu14.10.md Changes PACKAGING.md LICENSE COPYING Artistic
 %_bindir/padre
 %_miconsdir/padre.png
 %_niconsdir/padre.png
@@ -68,9 +70,12 @@ EOF
 %_desktopdir/padre.desktop
 %perl_vendor_privlib/Padre*
 %perl_vendor_privlib/auto/share/dist/Padre
-%doc Changes README* Artistic COPYING
+%doc Changes README* Artistic
 
 %changelog
+* Wed Aug 30 2023 Igor Vlasenko <viy@altlinux.org> 1.02-alt1
+- new version
+
 * Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 1.00-alt8.dac1134
 - added VCS: tag
 
