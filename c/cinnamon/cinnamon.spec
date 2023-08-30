@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 5.8.4
-Release: alt1.git69727ba
+Release: alt2.git69727ba
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -55,10 +55,11 @@ BuildRequires: gcc-c++
 BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menus-devel
 BuildRequires: libstartup-notification-devel libcinnamon-desktop-gir-devel
 BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel libnm-devel libnm-gir-devel
-BuildRequires: libcanberra-gtk3-devel libcroco-devel
+BuildRequires: libcanberra-gtk3-devel
 BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel
 BuildRequires: libcinnamon-menus-gir-devel
 BuildRequires: gst-plugins1.0-devel
+BuildRequires: pkgconfig(libxml-2.0)
 
 # for barriers
 BuildRequires: libXfixes-devel >= 5.0
@@ -207,6 +208,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Wed Aug 30 2023 Vladimir Didenko <cow@altlinux.org> 5.8.4-alt2.git69727ba
+- Remove libcroco-devel from the build deps (not used by package)
+
 * Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 5.8.4-alt1.git69727ba
 - 5.8.4-2-g69727ba9b
 
