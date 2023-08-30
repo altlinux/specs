@@ -5,12 +5,12 @@ Name: hyphen-hsb
 Summary: Upper Sorbian hyphenation rules
 %global upstreamid 20110620
 Version: 0.%{upstreamid}
-Release: alt1_11
+Release: alt1_24
 #? in a url causes trouble
 #http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-hsb.tex?view=co
 Source0: hyph-hsb.tex
 URL: http://tug.org/tex-hyphen
-License: LPPL
+License: LPPL-1.3a
 BuildArch: noarch
 BuildRequires: libhyphen-devel
 Requires: libhyphen
@@ -41,6 +41,9 @@ cp -p hyph_hsb_DE.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.20110620-alt1_24
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20110620-alt1_11
 - update to new release by fcimport
 
