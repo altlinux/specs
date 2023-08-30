@@ -3,14 +3,12 @@ Group: Text tools
 %define _localstatedir %{_var}
 Name: hyphen-tk
 Summary: Turkmen hyphenation rules
-%global upstreamid 20110620
+%global upstreamid 20210322
 Version: 0.%{upstreamid}
-Release: alt1_11
-#? in a url causes trouble
-#http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-tk.tex?view=co
-Source: hyph-tk.tex
+Release: alt1_2
+Source: http://mirror.ctan.org/language/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-tk.tex
 URL: http://tug.org/tex-hyphen
-License: Public Domain
+License: MIT
 BuildArch: noarch
 BuildRequires: libhyphen-devel
 Requires: libhyphen
@@ -30,7 +28,7 @@ substrings.pl hyph-tk.tex hyph_tk_TM.dic UTF-8
 echo "Created with substring.pl by substrings.pl hyph-tk.tex hyph_tk_TM.dic UTF-8" > README
 echo "Original in-line credits were:" >> README
 echo "" >> README
-head -n 15 hyph-tk.tex >> README
+head -n 33 hyph-tk.tex >> README
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
@@ -42,6 +40,9 @@ cp -p hyph_tk_TM.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/hyph_tk_TM.dic
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.20210322-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20110620-alt1_11
 - update to new release by fcimport
 
