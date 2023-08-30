@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libkyotocabinet-devel
+BuildRequires: libdb4-devel
 # END SourceDeps(oneline)
 Group: Other
 %add_optflags %optflags_shared
@@ -8,19 +8,19 @@ Group: Other
 %global snapshot 0
 
 Name:           libpinyin
-Version:        2.6.1
-Release:        alt1_2
+Version:        2.8.1
+Release:        alt1_5
 Summary:        Library to deal with pinyin
 
-License:        GPLv3+
+License:        GPL-3.0-or-later
 URL:            https://github.com/libpinyin/libpinyin
 Source0:        http://downloads.sourceforge.net/libpinyin/libpinyin/%{name}-%{version}.tar.gz
 %if %snapshot
-Patch0:         libpinyin-2.3.x-head.patch
+Patch0:         libpinyin-2.8.x-head.patch
 %endif
 
 BuildRequires:  gcc-c++
-BuildRequires:  libdb4.8-devel glib2-devel libgio libgio-devel
+BuildRequires:  libkyotocabinet-devel glib2-devel libgio libgio-devel
 Requires:       %{name}-data = %{version}-%{release}
 Source44: import.info
 
@@ -76,7 +76,7 @@ The libzhuyin package contains libzhuyin compatibility library.
 
 %build
 %configure --disable-static \
-           --with-dbm=BerkeleyDB \
+           --with-dbm=KyotoCabinet \
            --enable-libzhuyin
 %make_build
 
@@ -119,6 +119,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/libzhuyin*.so.*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 2.8.1-alt1_5
+- update to new release by fcimport
+
 * Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 2.6.1-alt1_2
 - update to new release by fcimport
 

@@ -7,15 +7,15 @@ BuildRequires: gcc-c++ qt5-base-devel
 %define _localstatedir %{_var}
 Name:		fcitx-libpinyin
 Version:	0.5.4
-Release:	alt1_3
+Release:	alt1_8
 Summary:	Libpinyin Wrapper for Fcitx
-License:	GPLv2+
-URL:		  https://fcitx-im.org/wiki/Libpinyin
+License:	GPL-2.0-or-later
+URL:		https://fcitx-im.org/wiki/Libpinyin
 Source0:	http://download.fcitx-im.org/fcitx-libpinyin/%{name}-%{version}_dict.tar.xz
 
 BuildRequires:	gcc
 BuildRequires:	libpinyin-devel >= 1.9.91
-BuildRequires:	ctest cmake, fcitx-devel gettext gettext-tools, intltool, libpinyin-devel
+BuildRequires:	ctest cmake, fcitx-devel, gettext-tools, intltool, libpinyin-devel
 BuildRequires:	libpinyin-tools glib2-devel libgio libgio-devel, fcitx
 BuildRequires:	qt5-webengine-devel, libdbus-devel
 BuildRequires:	fcitx-qt5-devel >= 1.1
@@ -56,6 +56,9 @@ Libpinyin is a Frontend of the Intelligent Pinyin IME Backend.
 %{_datadir}/icons/hicolor/48x48/status/fcitx-*.png
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.5.4-alt1_8
+- update to new release by fcimport
+
 * Wed Feb 02 2022 Igor Vlasenko <viy@altlinux.org> 0.5.4-alt1_3
 - support for qt5_qtwebengine_arches (closes: #41842)
 
