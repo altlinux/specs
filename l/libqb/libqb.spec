@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen2man gcc-c++ pkgconfig(libsystemd) python3-devel
+BuildRequires: gcc-c++ pkgconfig(libsystemd) python3-devel
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -15,7 +15,7 @@ Group: System/Libraries
 
 Name:           libqb
 Version:        2.0.8
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Library providing high performance logging, tracing, ipc, and poll
 
 License:        LGPL-2.1-or-later
@@ -111,6 +111,9 @@ This package contains a program to create nicely-formatted man pages from Doxyge
 
 
 %changelog
+* Wed Aug 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.0.8-alt1_2
+- spec: avoid build dependency on itself
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 2.0.8-alt1_1
 - update to new release by fcimport
 
