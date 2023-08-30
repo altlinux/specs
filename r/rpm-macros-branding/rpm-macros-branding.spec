@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -60,6 +60,7 @@ school-terminal \
 simply-linux \
 sisyphus-server-light \
 xalt-kworkstation \
+etersoft-ximper \
 "
 sed -e "s/@BRANDING_VARIANTS@/$VARIANTS/" -i branding.rpm.macros
 
@@ -71,6 +72,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Jun 09 2023 Roman Alifanov <ximper@altlinux.org> 1.0.8-alt1
+- NMU: Added etersoft-ximper (ALT bug 47384)
+
 * Fri Jul 29 2022 Andrey Cherepanov <cas@altlinux.org> 1.0.7-alt1
 - Added myoffice-plus.
 
