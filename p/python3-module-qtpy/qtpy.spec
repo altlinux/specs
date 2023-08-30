@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 Summary: Provides an uniform layer to support PyQt5, PySide2, PyQt6, PySide6 with a single codebase
 License: MIT
@@ -81,6 +81,9 @@ sed -i 's/--color=yes//' pytest.ini
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Aug 30 2023 Anton Vyatkin <toni@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Tue Jul 11 2023 Anton Vyatkin <toni@altlinux.org> 2.3.1-alt1
 - New version 2.3.1.
 
