@@ -1,5 +1,5 @@
 Name: anilibria-winmaclinux
-Version: 1.2.8
+Version: 1.2.9
 Release: alt1
 
 Summary: AniLibria online video player for desktop platforms
@@ -58,15 +58,20 @@ popd
 %install
 pushd src
 INSTALL_ROOT=%buildroot %makeinstall_std
+mv %buildroot%_desktopdir/anilibria.desktop %buildroot%_desktopdir/tv.anilibria.AniLibria.desktop
 popd
 
 %files
 %doc *.md
 %_bindir/AniLibria
-%_desktopdir/anilibria.desktop
+%_desktopdir/tv.anilibria.AniLibria.desktop
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Wed Aug 30 2023 Roman Alifanov <ximper@altlinux.org> 1.2.9-alt1
+- new version (1.2.9) with rpmgs script
+- rename anilibria.desktop to tv.anilibria.AniLibria.desktop for wayland support
+
 * Fri Aug 04 2023 Roman Alifanov <ximper@altlinux.org> 1.2.8-alt1
 - new version (1.2.8) with rpmgs script (ALT Bug #45956)
 
