@@ -10,7 +10,7 @@
 %define sover 4.4
 Name: %oname%sover
 Version: %major.%minor.%bugfix.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Game programming library
@@ -116,6 +116,9 @@ install -pm 644 keyboard.dat language.dat %buildroot%_datadir/allegro
 %_pkgconfigdir/*
 
 %changelog
+* Wed Aug 30 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.3.1-alt2
+- fix build with pw jack substitute
+
 * Wed Oct 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.3.1-alt1
 - 4.4.3.1 (closes: 41206)
 
