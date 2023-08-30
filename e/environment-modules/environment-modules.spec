@@ -7,11 +7,11 @@ BuildRequires(pre): rpm-macros-alternatives
 %global vimdatadir %{_datadir}/vim/vimfiles
 
 Name:           environment-modules
-Version:        5.1.1
-Release:        alt1_1
+Version:        5.3.1
+Release:        alt1_2
 Summary:        Provides dynamic modification of a user's environment
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            http://modules.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/modules/modules-%{version}.tar.bz2
 
@@ -32,6 +32,9 @@ Requires:       man-db
 Requires(post): coreutils
 Provides:       environment(modules)
 Obsoletes:      environment-modules-compat <= 4.8.99
+
+# Tcl linter is useful for module lint command
+#Recommends:     nagelfar
 Source44: import.info
 
 %description
@@ -82,6 +85,7 @@ Install this package if you want to create RPM packages that use GNAT.
            --libexecdir=%{_libdir}/Modules/libexec \
            --mandir=%{_mandir} \
            --vimdatadir=%{vimdatadir} \
+           --nagelfardatadir=%{_datadir}/Modules/nagelfar \
            --with-bashcompletiondir=%{_datadir}/bash-completion/completions \
            --with-fishcompletiondir=%{_datadir}/fish/vendor_completions.d \
            --with-zshcompletiondir=%{_datadir}/zsh/site-functions \
@@ -101,10 +105,12 @@ Install this package if you want to create RPM packages that use GNAT.
 mkdir -p %{buildroot}%{_sysconfdir}/modulefiles
 mkdir -p %{buildroot}%{_datadir}/modulefiles
 mkdir -p %{buildroot}%{_sysconfdir}/profile.d
+mkdir -p %{buildroot}%{_datadir}/fish/vendor_conf.d
 mkdir -p %{buildroot}%{_bindir}
 
 # setup for alternatives
 touch %{buildroot}%{_sysconfdir}/profile.d/modules.{csh,sh}
+touch %{buildroot}%{_datadir}/fish/vendor_conf.d/modules.fish
 touch %{buildroot}%{_bindir}/modulecmd
 # remove modulecmd wrapper as it will be handled by alternatives
 rm -f %{buildroot}%{_datadir}/Modules/bin/modulecmd
@@ -120,7 +126,7 @@ mv {doc/build/,}changes.txt
 
 # install the rpm config file
 install -Dpm 644 contrib/rpm/macros.%{name} %{buildroot}/%{_rpmmacrosdir}/%{name}
-for rpm404_ghost in %{_sysconfdir}/profile.d/modules.csh %{_sysconfdir}/profile.d/modules.sh %{_bindir}/modulecmd
+for rpm404_ghost in %{_sysconfdir}/profile.d/modules.csh %{_sysconfdir}/profile.d/modules.sh %{_datadir}/fish/vendor_conf.d/modules.fish %{_bindir}/modulecmd
 do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
     touch %buildroot"$rpm404_ghost"
@@ -128,6 +134,7 @@ done
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/modules.sh_environment-modules<<EOF
 %{_sysconfdir}/profile.d/modules.sh	%{_datadir}/Modules/init/profile.sh	40
 %{_sysconfdir}/profile.d/modules.csh	%{_datadir}/Modules/init/profile.csh	%{_datadir}/Modules/init/profile.sh
+%{_datadir}/fish/vendor_conf.d/modules.fish	%{_datadir}/Modules/init/fish	%{_datadir}/Modules/init/profile.sh
 %{_bindir}/modulecmd	%{_libdir}/Modules/libexec/modulecmd.tcl	%{_datadir}/Modules/init/profile.sh
 EOF
 
@@ -136,6 +143,7 @@ EOF
 %post
 [ ! -L %{_sysconfdir}/profile.d/modules.sh ] &&  rm -f %{_sysconfdir}/profile.d/modules.sh
 [ ! -L %{_sysconfdir}/profile.d/modules.csh ] &&  rm -f %{_sysconfdir}/profile.d/modules.csh
+[ ! -L %{_datadir}/fish/vendor_conf.d/modules.fish ] &&  rm -f %{_datadir}/fish/vendor_conf.d/modules.fish
 [ ! -L %{_bindir}/modulecmd ] &&  rm -f %{_bindir}/modulecmd
 
 # Migration from version 3.x to 4
@@ -148,8 +156,9 @@ fi
 %files
 %_altdir/modules.sh_environment-modules
 %doc --no-dereference COPYING.GPLv2
-%doc ChangeLog README NEWS.txt MIGRATING.txt INSTALL.txt CONTRIBUTING.txt changes.txt
+%doc ChangeLog.gz README NEWS.txt MIGRATING.txt INSTALL.txt CONTRIBUTING.txt changes.txt
 %{_sysconfdir}/modulefiles
+%dir %{_datadir}/fish/vendor_conf.d
 %{_bindir}/envml
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/libtclenvmodules.so
@@ -178,6 +187,8 @@ fi
 %{vimdatadir}/ftdetect/modulefile.vim
 %{vimdatadir}/ftplugin/modulefile.vim
 %{vimdatadir}/syntax/modulefile.vim
+%dir %{_datadir}/Modules/nagelfar
+%{_datadir}/Modules/nagelfar/*
 
 %files -n rpm-macros-%name
 %_rpmmacrosdir/*
@@ -185,6 +196,9 @@ fi
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 5.3.1-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_1
 - update to new release by fcimport
 
