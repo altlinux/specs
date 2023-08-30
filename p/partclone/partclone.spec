@@ -1,12 +1,17 @@
 %def_enable xfs
 %def_disable jfs
 %def_disable apfs
+%ifarch loongarch64 %mips ppc64le
+# raiserfs4 does not work with 16k kernel pages
+%def_disable reiser4
+%else
 %def_enable reiser4
+%endif
 %def_enable checkfs
 
 Name: partclone
-Version: 0.3.20
-Release: alt0.1.gitgf5082c4
+Version: 0.3.25
+Release: alt1
 
 Summary: File System Clone Utilities
 License: GPLv2+
@@ -84,7 +89,6 @@ echo '#define git_version "%version"' > src/version.h
 
 %check
 %if_enabled checkfs
-%ifnarch ppc64le
 pushd tests
 make check || {
 	for fname in *.log; do
@@ -99,13 +103,17 @@ make check || {
 }
 popd
 %endif
-%endif
 
 %files -f %name.lang
 %_sbindir/*
 %_man8dir/*
 
 %changelog
+* Wed Aug 30 2023 Ivan A. Melnikov <iv@altlinux.org> 0.3.25-alt1
+- 0.3.25
+- disable reiserfs4 on loongarch64, %%mips and ppc64le
+- enable and fix tests on ppc64le
+
 * Sun Oct 16 2022 Leonid Krivoshein <klark@altlinux.org> 0.3.20-alt0.1.gitgf5082c4
 - Updated to upstream version 0.3.20 from github.
 - Improved test suite.
