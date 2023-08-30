@@ -1,31 +1,35 @@
 Group: Text tools
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name: hyphen-it
-Summary: Italian hyphenation rules
-%global upstreamid 20071127
-Version: 0.%{upstreamid}
-Release: alt1_29
-Source: http://download.services.openoffice.org/contrib/dictionaries/hyph_it_IT.zip
-URL: http://wiki.services.openoffice.org/wiki/Dictionaries
-License: LGPL-2.1-or-later
-BuildArch: noarch
-Requires: libhyphen
-Provides: hyphen-la = 0.%{upstreamid}-3%{?dist}
+%define autorelease 3
+
+Name:           hyphen-it
+Summary:        Italian hyphenation rules
+Version:        5.1.1
+Release:        alt1_3
+# The license text is embedded within the README files
+# Here we specify the thesaurus license only as other files are not packaged 
+License:        LGPL-2.1-only
+URL:            https://pagure.io/dizionario_italiano
+Source:         https://pagure.io/dizionario_italiano/archive/%{version}/dizionario_italiano-%{version}.tar.gz
+
+BuildArch:      noarch
+Requires:       libhyphen
+Provides:       hyphen-la = %{version}
 Source44: import.info
 
 %description
 Italian hyphenation rules.
 
-%prep
-%setup -q -c -n hyphen-it
 
-chmod -x *
+%prep
+%setup -q -n dizionario_italiano-%{version}
+
+
 
 %build
+# Nothing to do
+
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
@@ -40,10 +44,17 @@ done
 
 
 %files
-%doc README_hyph_it_IT.txt
-%{_datadir}/hyphen/*
+%doc --no-dereference LICENSES/lgpl-2.1.txt
+%doc CHANGELOG.txt README.md README_hyph_it_IT.txt
+%{_datadir}/hyphen/hyph_it_IT.dic
+%{_datadir}/hyphen/hyph_it_CH.dic
+%{_datadir}/hyphen/hyph_la_VA.dic
+
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_3
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20071127-alt1_29
 - update to new release by fcimport
 
