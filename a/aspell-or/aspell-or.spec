@@ -7,15 +7,19 @@ Group: Text tools
 
 Name:           aspell-or
 Version:        0.03
-Release:        alt2_19
+Release:        alt2_32
 Summary:        GNU Aspell Odia Dictionary Package
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            http://aspell.net/
 Source0:        ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
 
-BuildRequires:  aspell >= 0.60
-Requires:       aspell >= 0.60
+# This package has been deprecated since Fedora 39 due to aspell package deprecation
+# Change proposal is located here: https://fedoraproject.org/wiki/Changes/AspellDeprecation
+Provides:  deprecated()
+
+BuildRequires:  aspell libaspell
+Requires:       aspell libaspell
 Source44: import.info
 
 %description
@@ -44,11 +48,14 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 %files
 %doc Copyright
-%doc COPYING
+%doc --no-dereference COPYING
 %{_libdir}/aspell/*
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.03-alt2_32
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_19
 - update to new release by fcimport
 
