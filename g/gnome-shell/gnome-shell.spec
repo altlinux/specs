@@ -14,7 +14,7 @@
 
 Name: gnome-shell
 Version: %ver_major.4
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -56,7 +56,6 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define ibus_ver 1.5.19
 %define gsds_ver 42
 %define libsecret_ver 0.18
-%define croco_ver 0.6.8
 %define malcontent_ver 0.11
 %define gweather_api_ver 4.0
 %define webkit_api_ver 4.1
@@ -148,7 +147,6 @@ BuildRequires: libgnome-desktop3-devel >= %desktop_ver
 BuildRequires: pkgconfig(gcr-%gcr_api_ver) >= %gcr_ver
 BuildRequires: libstartup-notification-devel >= %sn_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
-BuildRequires: libcroco-devel >= %croco_ver
 BuildRequires: libcanberra-devel libcanberra-gtk3-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: pkgconfig(gnome-bluetooth-%bt_api_ver) >= %bluetooth_ver libgnome-bluetooth%bt_api_ver-gir-devel
@@ -287,6 +285,10 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Wed Aug 30 2023 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1.1
+- removed useless libcroco-devel from BR (gnome-shell includes
+  the libcroco sources directly under src/st/croco)
+
 * Thu Aug 24 2023 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1
 - 44.4
 
