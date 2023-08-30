@@ -7,7 +7,7 @@ BuildRequires: jpackage-11-compat
 Name:          msv
 Epoch:         1
 Version:       2013.6.1
-Release:       alt2_19jpp11
+Release:       alt3_19jpp11
 Summary:       Multi-Schema Validator
 License:       BSD and ASL 1.1
 URL:           http://msv.java.net/
@@ -204,9 +204,9 @@ install -d -m 755 %{buildroot}%{_datadir}/%{name}/xsdlib
 cp -pr xsdlib/examples/* %{buildroot}%{_datadir}/%{name}/xsdlib
 
 # Scripts
-%jpackage_script com.sun.msv.driver.textui.Driver "" "" msv-msv:msv-xsdlib:relaxngDatatype:isorelax msv true
-%jpackage_script com.sun.msv.generator.Driver "" "" msv-xmlgen:msv-msv:msv-xsdlib:relaxngDatatype:isorelax:xerces-j2 xmlgen true
-%jpackage_script com.sun.msv.writer.relaxng.Driver "" "" msv-rngconv:msv-msv:msv-xsdlib:relaxngDatatype:isorelax:xerces-j2 rngconv true
+%jpackage_script com.sun.msv.driver.textui.Driver "" "" msv-msv:msv-xsdlib:relaxngDatatype2011.1:isorelax msv true
+%jpackage_script com.sun.msv.generator.Driver "" "" msv-xmlgen:msv-msv:msv-xsdlib:relaxngDatatype2011.1:isorelax:xerces-j2 xmlgen true
+%jpackage_script com.sun.msv.writer.relaxng.Driver "" "" msv-rngconv:msv-msv:msv-xsdlib:relaxngDatatype2011.1:isorelax:xerces-j2 rngconv true
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/msv.conf`
 touch $RPM_BUILD_ROOT/etc/java/msv.conf
@@ -245,6 +245,10 @@ touch $RPM_BUILD_ROOT/etc/java/msv.conf
 %{_datadir}/%{name}
 
 %changelog
+* Wed Aug 30 2023 Igor Vlasenko <viy@altlinux.org> 1:2013.6.1-alt3_19jpp11
+- scripts bugfix: changed classpath to compat relaxngDatatype2011.1
+- (closes: #47389)
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1:2013.6.1-alt2_19jpp11
 - build with compat relaxngDatatype
 
