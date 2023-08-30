@@ -1,6 +1,34 @@
-%def_enable shared
-%def_disable static
-%def_enable compat
+Name: GraphicsMagick
+Version: 1.3.41
+Release: alt1
+
+Summary: Image manipulation and translation utility
+License: MIT
+Group: Graphics
+Url: http://www.graphicsmagick.org
+
+Provides: %name-common = %version-%release
+Obsoletes: GraphicsMagick-common
+
+Source: ftp://ftp.graphicsmagick.org/pub/%name/%name-%version.tar
+Patch: %name-%version-%release.patch
+
+BuildRequires: gcc-c++
+BuildRequires: bzlib-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libheif-devel
+BuildRequires: libjasper-devel
+BuildRequires: libjbig-devel
+BuildRequires: libjpeg-devel
+BuildRequires: liblcms2-devel
+BuildRequires: libltdl-devel
+BuildRequires: liblzma-devel
+BuildRequires: libpng-devel
+BuildRequires: libtiff-devel
+BuildRequires: libwebp-devel
+BuildRequires: libxml2-devel
+BuildRequires: libzstd-devel
+BuildRequires: zlib-devel
 
 %ifarch %e2k
 # lcc's openmp implementation is way too old
@@ -9,509 +37,157 @@
 %def_enable openmp
 %endif
 
-%def_enable largefile
-%def_disable debug
-%def_disable efence
-%def_disable prof
-%def_disable gprof
-%def_disable gcov
-%def_with cpp
-%def_with perl
-%def_with x
-%def_with fpx
-%def_with modules
-%def_with threads
-%def_with bzlib
-%def_without dps
-%def_without gslib
-%def_with jbig
-%def_with jpeg
-%def_with jpeg2
-%def_with lcms
-%def_with lcms2
-%def_with lzma
-%def_with png
-%def_with tiff
-%def_without trio
-%def_with ttf
-%def_with webp
-%def_with wmf
-%def_with xml
-%def_with zlib
-%def_with menu
-%def_with nox_gm
 %define quantum_depth 16
-#---------------------------------------------------------------------
-%define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
-%define subst_with_to() %{expand:%%{?_with_%{1}:--with-%{2}}} %{expand:%%{?_without_%{1}:--without-%{2}}}
-%{!?quantum_depth:%define quantum_depth 8}
+%define gmpath %_libdir/%name-%version
+%define modulepath %gmpath/modules-Q%quantum_depth
 
+%package doc
+Summary:  Documentation for Graphicsmagick
+Group: Documentation
+BuildArch: noarch
 
-%define Name GraphicsMagick
-Name: %Name
-%define lname lib%name
-Version: 1.3.40
-Release: alt1
-Summary: An X application for displaying and manipulating images
-Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
-License: %mit
-Group: Graphics
-Url: http://www.graphicsmagick.org
-Source: ftp://ftp.graphicsmagick.org/pub/%Name/%Name-%version.tar
-Patch: %name-%version-%release.patch
-%{?_enable_shared:Requires: %lname = %version-%release}
-Requires: %name-common = %version-%release
+%package -n libGraphicsMagick
+Summary: GraphicsMagick shared libraries
+Group: System/Libraries
 
-BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Fri Jan 19 2007
-BuildRequires: chrpath dcraw enscript libgegl ghostscript-classic gnuplot graphviz groff-base imake libfreetype-devel libltdl-devel mpeg2vidcodec netpbm transfig wget wmf-utils xorg-cf-files xterm zip p7zip
-%{?_with_bzlib:BuildRequires: bzlib-devel}
-%{?_with_perl:BuildRequires: perl-devel}
-%{?_with_x:BuildRequires: libSM-devel libXext-devel}
-%{?_with_fpx:BuildRequires: libfpx-devel}
-%{?_with_jbig:BuildRequires: libjbig-devel}
-%{?_with_lcms:BuildRequires: liblcms-devel}
-%{?_with_lcms2:BuildRequires: liblcms2-devel}
-%{?_with_lzma:BuildRequires: liblzma-devel}
-%{?_with_tiff:BuildRequires: libtiff-devel}
-%{?_with_webp:BuildRequires: libwebp-devel}
-%{?_with_wmf:BuildRequires: libwmf-devel}
-%{?_with_xml:BuildRequires: libxml2-devel}
-%{?_with_jpeg:BuildRequires: libjpeg-devel}
-%{?_with_jpeg2:BuildRequires: libjasper-devel}
-%{?_with_png:BuildRequires: libpng-devel}
-%{?_with_cpp:BuildRequires: gcc-c++}
+%package -n libGraphicsMagick-c++
+Summary: C++ bindings for GraphicsMagick
+Group: System/Libraries
 
+%package -n libGraphicsMagick-devel
+Summary: Header files for GraphicsMagick app development
+Group: Development/C
+
+%package -n libGraphicsMagick-c++-devel
+Summary: C++ bindings for GraphicsMagick
+Group: Development/C++
 
 %description
-%Name provides a powerful image manipulation and translation
+GraphicsMagick provides a powerful image manipulation and translation
 utility. It is capable of displaying still images and animations using
 the X Window system, provides a simple interface for interactively
 editing images, and is capable of importing selected windows or the
-entire desktop. %Name can read and write over 88 image
+entire desktop. GraphicsMagick can read and write over 88 image
 formats, including JPEG, TIFF, WMF, SVG, PNG, PNM, GIF, and Photo CD.
 It can resize, rotate, sharpen, color reduce, or add special effects to
-the image and save the result to any supported format. %Name
+the image and save the result to any supported format. GraphicsMagick
 may be used to create animated or transparent .gifs, create composite
 images, create thumbnail images, and much, much, more.
 
-%description -l ru_RU.UTF-8
-%Name - мощный инструмент для редактирования и преобразования
-изображений. Он может показывать статичные рисунки и анимацию
-используя систему X Windows, обеспечивает простой интерфейс для
-интерактивного редактирования изображений и возможность импорта
-выбранных окон или всего рабочего стола. %Name может читать и
-записывать более чем в 88 графических форматах, включая JPEG, TIFF,
-WMF, SVG, PNG, PNM, GIF, и Photo CD. Он может изменять размеры,
-вращать, улучшать резкость, уменьшать глубину цвета, или добавлять
-специальные эффекты к изображению и сохранять результат в любом
-поддерживаемом формате. %Name может использоваться для
-создания анимационных или прозрачных GIF-ов, создания составных
-изображений, создания миниатюр изображений, и много другое.
-
-
-%if_with nox_gm
-%package nox
-Summary: An X application for manipulating images
-Group: Graphics
-Provides: %name = %version-%release
-Requires: %name-common = %version-%release
-
-%description nox
-%Name provides a powerful image manipulation and translation
-utility.
-%Name can read and write over 88 image formats, including
-JPEG, TIFF, WMF, SVG, PNG, PNM, GIF, and Photo CD. It can resize,
-rotate, sharpen, color reduce, or add special effects to the image and
-save the result to any supported format. %Name may be used to
-create animated or transparent .gifs, create composite images, create
-thumbnail images, and much, much, more.
-%endif
-
-%package common
-Summary: Common files
-Group: Graphics
-BuildArch: noarch
-
-%description common
-Common files for %Name
-
-%package doc
-Summary:  Documentation for %Name
-Group: Documentation
-BuildArch: noarch
-
 %description doc
-Documentation for %Name.
+Documentation for GraphicsMagick.
 
-
-%package ImageMagick-compat
-Summary: Image processing tools providing ImageMagick interface
-Group: Documentation
-BuildArch: noarch
-Requires: %name = %version-%release
-Conflicts: ImageMagick-tools
-
-%description ImageMagick-compat
-%Name provides a set of command-line applications to
-manipulate image files.
-This package contains documentation for %Name
-
-
-%package -n %lname
-Summary: %Name shared libraries
-Group: System/Libraries
-
-%description -n %lname
-%Name is an image manipulation program.
+%description -n libGraphicsMagick
+GraphicsMagick is an image manipulation program.
 This package contains the libraries files you'll need to use
-%Name applications.
+GraphicsMagick applications.
 
-
-%package -n %lname-devel
-Summary: Header files for %Name app development
-Group: Development/C
-Requires: %lname%{?_disable_shared:-devel-static} = %version-%release
-Obsoletes: %name-devel
-
-%description -n %lname-devel
-%Name is an image manipulation program.
-This package contains the header files you'll need to develop
-%Name applications.
-
-
-%if_enabled static
-%package -n %lname-devel-static
-Summary: %Name static libraries
-Group: Development/C
-Requires: %lname-devel = %version-%release
-
-%description -n %lname-devel-static
-%Name is an image manipulation program.
-This package contains %Name static libraries.
-%endif
-
-
-%if_with perl
-%package -n perl-%name
-Summary: Libraries and modules for access to %Name from perl
-Group: Development/Perl
-Requires: %lname = %version-%release
-
-%description -n perl-%name
-Perl bindings to %Name.
-
-
-%package -n perl-%name-demo
-Summary: Demo for %Name perl binding
-Group: Development/Perl
-Requires: perl-%name = %version-%release
-BuildArch: noarch
-
-%description -n perl-%name-demo
-Demo for %Name perl binding.
-%endif
-
-
-%if_with cpp
-%package -n %lname-c++
-Summary: %Name Magick++ library (C++ bindings)
-Group: System/Libraries
-Requires: %lname = %version-%release
-Obsoletes: %Name-c++
-
-%description -n %lname-c++
+%description -n libGraphicsMagick-c++
 This package contains the Magick++ library, a C++ binding to the
-%Name graphics manipulation library.
+GraphicsMagick graphics manipulation library.
 
+%description -n libGraphicsMagick-devel
+GraphicsMagick is an image manipulation program.
+This package contains the header files you'll need to develop
+GraphicsMagick applications.
 
-%package -n %lname-c++-devel
-Summary: C++ bindings for the %Name library
-Group: Development/C++
-Requires: %lname-devel = %version-%release
-Requires: %lname-c++%{?_disable_shared:-devel-static} = %version-%release
-#Requires: bzip2-devel freetype2-devel libxml2-devel
-#Requires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
-Obsoletes: %Name-c++-devel
-
-%description -n %lname-c++-devel
-%Name is an image manipulation program.
+%description -n libGraphicsMagick-c++-devel
+GraphicsMagick is an image manipulation program.
 This package contains header files you'll need to develop
-%Name applications using the Magick++ C++ bindings.
-
-
-%if_enabled static
-%package -n %lname-c++-devel-static
-Summary: %Name Magick++ static library
-Group: Development/C++
-Requires: %lname-c++-devel = %version-%release
-
-%description -n %lname-c++-devel-static
-%Name is an image manipulation program.
-This package contains the %Name Magick++ static library.
-%endif
-%endif
+GraphicsMagick applications using the Magick++ C++ bindings.
 
 %prep
 %setup
 %patch -p1
 iconv -f iso-8859-2 -t utf8 < ChangeLog > ChangeLog.utf8
 mv ChangeLog.utf8 ChangeLog
-
-subst '/^if test $with_perl_static = /s|'yes'|'no'|' configure
-
-# Avoid RPATHs (FIXME: recheck this on newer releases)
-%if "%_libdir" != "/usr/lib"
-sed -i 's|"/lib /usr/lib|"/%_lib %_libdir|' configure
-%endif
-
-# XXX tests fail
-rm PerlMagick/t/mpeg/read.t
-rm PerlMagick/t/ps/read.t
-rm PerlMagick/t/zlib/read.t
+sed -i -e 's|"/lib /usr/lib|"/%_lib %_libdir|' configure
+sed -ri \
+    -e '/^MAGICK_CONFIGURE_PATH/ s,=.+$,=%buildroot%gmpath/config,' \
+    -e '/^MAGICK_CODER_MODULE_PATH/ s,=.+$,=%buildroot%modulepath/coders,' \
+    -e '/^MAGICK_FILTER_MODULE_PATH/ s,=.+$,=%buildroot%modulepath/filters,' \
+    common.shi.in
 
 %build
 %add_optflags -DGRAPHICSMAGICK_DOCS_PATH=\\\"%_docdir/%name-%version/www/index.html\\\"
-%define common_opts \\\
-    %{subst_with fpx} \\\
-    %{subst_enable openmp} \\\
-    --disable-openmp-slow \\\
-    %{subst_enable largefile} \\\
-    --enable-libtool-lock \\\
-    --disable-ltdl-install \\\
-    --enable-installed \\\
-    %{subst_enable_to debug ccmalloc} \\\
-    %{subst_enable efence} \\\
-    %{subst_enable prof} \\\
-    %{subst_enable gprof} \\\
-    %{subst_enable gcov} \\\
-    %{subst_with threads} \\\
-    %{subst_with bzlib} \\\
-    %{subst_with dps} \\\
-    %{subst_with gslib} \\\
-    %{subst_with jbig} \\\
-    %{subst_with jpeg} \\\
-    %{subst_with_to jpeg2 jp2} \\\
-    %{subst_with lcms} \\\
-    %{subst_with lcms2} \\\
-    %{subst_with lzma} \\\
-    %{subst_with png} \\\
-    %{subst_with tiff} \\\
-    %{subst_with trio} \\\
-    %{subst_with ttf} \\\
-    %{subst_with webp} \\\
-    %{subst_with wmf} \\\
-    %{subst_with xml} \\\
-    %{subst_with zlib} \\\
-    --with-quantum-depth=%quantum_depth \\\
-    --without-included-ltdl \\\
-    --with-frozenpaths \\\
-    --disable-symbol-prefix \\\
-    --with-windows-font-dir=%_datadir/fonts/ttf/ms \\\
-    --with-fontpath=%_datadir/fonts/type1/urw \\\
-    --with-gs-font-dir=%_datadir/fonts/type1/urw
-%if_with nox_gm
 %configure \
-    --disable-shared \
-    --enable-static \
-    --without-modules \
-    --disable-magick-compat \
-    --without-perl \
-    --without-magick-plus-plus \
-    --without-x \
-    %common_opts
-%make_build utilities/gm
-mv utilities/gm{,-nox}
-%make clean
-%endif
-%configure \
-    %{subst_enable shared} \
-    %{subst_enable static} \
-    %{subst_with modules} \
-    %{subst_enable_to compat magick-compat} \
-    %{subst_with perl} \
-    %{subst_with_to cpp magick-plus-plus} \
-    %{subst_with x} \
-    %common_opts
+           --enable-shared \
+           --disable-static \
+           --enable-libtool-lock \
+           --enable-installed \
+           --disable-symbol-prefix \
+           %{subst_enable openmp} \
+           --disable-openmp-slow \
+           --with-modules \
+           --with-magick-plus-plus \
+           --without-perl \
+           --without-fpx \
+           --without-wmf \
+           --with-quantum-depth=%quantum_depth \
+           --with-frozenpaths \
+           --with-windows-font-dir=%_datadir/fonts/ttf/ms \
+           --with-fontpath=%_datadir/fonts/type1/urw \
+           --with-gs-font-dir=%_datadir/fonts/type1/urw \
+           #
 %make_build \
-    MAGICK_CODER_MODULE_PATH=%_libdir/%name-%version/modules-Q%quantum_depth/coders \
-    MAGICK_FILTER_MODULE_PATH=%_libdir/%name-%version/modules-Q%quantum_depth/filters
-%if_with x
-export \
-    MAGICK_CONFIGURE_PATH=$PWD/config \
-    MAGICK_CODER_MODULE_PATH=$PWD/coders/.libs \
-    MAGICK_FILTER_MODULE_PATH=$PWD/filters/.libs
-./utilities/gm convert -border 0x51 -bordercolor none -depth 8 www/images/gm-125{x80t,}.png
-for s in 192 128 96 72 64 48 36 32 24 22 16; do
-    ./utilities/gm convert -depth 8 -resize ${s}x$s www/images/{gm-125,%name-$s}.png
-done
-%endif
-
-%if_with perl
-pushd PerlMagick
-%perl_vendor_build
-popd
-%endif
+    MAGICK_CODER_MODULE_PATH=%modulepath/coders \
+    MAGICK_FILTER_MODULE_PATH=%modulepath/filters
 
 %install
 %makeinstall_std docdir=%_docdir/%name-%version
-rm -f %buildroot%_libdir/%name-%version/modules-Q%quantum_depth/{cod,filt}ers/*a
-%{?_with_nox_gm:install -m 0755 utilities/gm-nox %buildroot%_bindir/}
+find %buildroot%_libdir/%name-%version -type f -name '*.la' -delete
 bzip2 --best --keep --force %buildroot%_docdir/%name-%version/{ChangeLog,NEWS}*
 
-%if_with perl
-pushd PerlMagick
-%perl_vendor_install
-popd
-
-# Fix RPATH
-chrpath -d %buildroot%perl_vendor_autolib/Graphics/Magick/Magick.so
-%endif
-
-#Make alternatives
-mv %buildroot%_bindir/gm %buildroot%_bindir/gm-x
-mkdir -p %buildroot%_altdir
-cat > %buildroot%_altdir/%name <<__EOF__
-/usr/bin/gm /usr/bin/gm-x	40
-__EOF__
-
-cat > %buildroot%_altdir/%name-nox <<__EOF__
-/usr/bin/gm /usr/bin/gm-nox	30
-__EOF__
-
-%if_with x
-for s in 192 128 96 72 64 48 36 32 24 22 16; do
-    install -D -m 0644 {www/images/%name-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%name}.png
-done
-%if_with menu
-install -d -m 0755 %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%name.desktop <<__MENU__
-[Desktop Entry]
-Name=%Name
-GenericName=Display
-Comment=Displays any image on X
-Icon=%name
-Exec=gm display
-Terminal=false
-Type=Application
-Categories=Graphics;Viewer;
-Comment[ru]=Показывает изображения в среде X
-Comment[uk]=Показує зображення в X-ах
-__MENU__
-%endif
-%endif
+%check
+make check
 
 %files
-%_bindir/gm-x
-%_altdir/%name
-%if_with x
-%{?_with_menu:%_desktopdir/*}
-%_iconsdir/hicolor/*/apps/*
-%endif
-
-%if_with nox_gm
-%files nox
-%_bindir/gm-nox
-%_altdir/%name-nox
-%endif
-
-%files common
 %doc %_docdir/%name-%version/Copyright.txt
 %dir %_docdir/%name-%version
+
+%_bindir/gm
 %_datadir/%name-%version
 %_man1dir/gm.*
+%_man4dir/miff.*
+%_man5dir/quantize.*
 
 %files doc
-%dir %_docdir/%name-%version
-%_docdir/%name-%version/*
+%_docdir/%name-%version
 %exclude %_docdir/%name-%version/Copyright.txt
 
+%files -n libGraphicsMagick
+%_libdir/libGraphicsMagick.so.*
+%_libdir/libGraphicsMagickWand.so.*
+%_libdir/%name-%version
 
-%files ImageMagick-compat
-%_bindir/composite
-%_bindir/conjure
-%_bindir/convert
-%_bindir/identify
-%_bindir/mogrify
-%_bindir/montage
-%_bindir/compare
-%if_with x
-%_bindir/animate
-%_bindir/display
-%_bindir/import
-%endif
-%_man4dir/*
-%_man5dir/*
+%files -n libGraphicsMagick-c++
+%_libdir/libGraphicsMagick++.so.*
 
+%files -n libGraphicsMagick-devel
+%_bindir/GraphicsMagick-config
+%_bindir/GraphicsMagickWand-config
+%dir %_includedir/GraphicsMagick
+%_includedir/GraphicsMagick/wand
+%_includedir/GraphicsMagick/magick
+%_libdir/libGraphicsMagick.so
+%_libdir/libGraphicsMagickWand.so
+%_pkgconfigdir/GraphicsMagick.pc
+%_pkgconfigdir/GraphicsMagickWand.pc
+%_man1dir/GraphicsMagick-config.*
+%_man1dir/GraphicsMagickWand-config.*
 
-%files -n %lname
-%if_enabled shared
-%_libdir/%lname.so.*
-%_libdir/%{lname}Wand.so.*
-%endif
-%dir %_libdir/%name-%version
-%_libdir/%name-%version/config
-%dir %_libdir/%name-%version/modules-Q%quantum_depth
-%dir %_libdir/%name-%version/modules-Q%quantum_depth/coders
-%dir %_libdir/%name-%version/modules-Q%quantum_depth/filters
-%_libdir/%name-%version/modules-Q%quantum_depth/*/*.so
-
-
-%files -n %lname-devel
-%dir %_includedir/%name
-%_includedir/%name/wand
-%_includedir/%name/magick
-%_libdir/%lname.so
-%_libdir/%{lname}Wand.so
-%_pkgconfigdir/%name.pc
-%_pkgconfigdir/%{name}Wand.pc
-%_bindir/%name-config
-%_bindir/%{name}Wand-config
-%_man1dir/%name-config.*
-%_man1dir/%{name}Wand-config.*
-
-
-%if_enabled static
-%files -n %lname-devel-static
-%_libdir/%lname.a
-%_libdir/%{lname}Wand.a
-%endif
-
-
-%if_with perl
-%files -n perl-%name
-%perl_vendor_archlib/Graphics
-%perl_vendor_archlib/auto/Graphics
-
-
-%files -n perl-%name-demo
-%doc PerlMagick/demo
-%endif
-
-
-%if_with cpp
-%if_enabled shared
-%files -n %lname-c++
-%_libdir/%lname++.so.*
-%endif
-
-
-%files -n %lname-c++-devel
-%_includedir/%name/Magick++.h
-%_includedir/%name/Magick++
-%_libdir/%lname++.so
-%_pkgconfigdir/%name++.pc
-%_bindir/%name++-config
-%_man1dir/%name++-config.*
-
-
-%if_enabled static
-%files -n %lname-c++-devel-static
-%_libdir/%lname++.a
-%endif
-%endif
+%files -n libGraphicsMagick-c++-devel
+%_includedir/GraphicsMagick/Magick++.h
+%_includedir/GraphicsMagick/Magick++
+%_libdir/libGraphicsMagick++.so
+%_pkgconfigdir/GraphicsMagick++.pc
+%_bindir/GraphicsMagick++-config
+%_man1dir/GraphicsMagick++-config.*
 
 %changelog
+* Tue Aug 29 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.41-alt1
+- 1.3.41 released
+
 * Fri Jan 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.40-alt1
 - 1.3.40 released
 
