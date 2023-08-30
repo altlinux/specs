@@ -1,8 +1,8 @@
 %define binutils_sourcedir /usr/src/binutils-source
 
 Name: binutils
-Version: 2.40
-Release: alt2
+Version: 2.41
+Release: alt1
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -35,7 +35,7 @@ BuildRequires: libdebuginfod-devel
 Summary: Compact C Type Format library (no BFD dependency)
 Group: System/Libraries
 
-%package -n libsframe0
+%package -n libsframe1
 Summary: This package includes the libsframe shared library
 Group: System/Libraries
 
@@ -69,8 +69,8 @@ Binutils is a collection of binary utilities, including:
 This package includes the libctf-nobfd shared library.  The Compact C Type
 Format (CTF) is a way of representing information about a binary program.
 
-%description -n libsframe0
-This package includes the libsframe0 shared library.  SFrame stands for
+%description -n libsframe1
+This package includes the libsframe1 shared library.  SFrame stands for
 Simple Frame format.  SFrame format keeps track of the minimal necessary
 information needed for generating stack traces.
 
@@ -263,8 +263,8 @@ XFAIL_TESTS=
 %files -n libctf-nobfd0
 %_libdir/libctf-nobfd.so.0*
 
-%files -n libsframe0
-%_libdir/libsframe.so.0*
+%files -n libsframe1
+%_libdir/libsframe.so.1*
 
 %files devel
 %_libdir/*.a
@@ -281,12 +281,16 @@ XFAIL_TESTS=
 %binutils_sourcedir
 
 %changelog
+* Wed Aug 30 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.41-alt1
+- Updated to 2.41 20230826.
+
 * Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.40-alt2
 - Added linking with libsframe library to the %%_libdir/libbfd.so
   linker script.
 
 * Tue Jul 04 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.40-alt1
 - Updated to 2.40 20230624.
+- Disabled the gold testsuite.
 
 * Mon Aug 01 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.38-alt1
 - Updated to 2.38 20220708.
