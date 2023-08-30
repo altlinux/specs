@@ -1,3 +1,4 @@
+Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global lang la
@@ -6,13 +7,19 @@
 Summary: Latin dictionaries for Aspell
 Name: aspell-%{lang}
 Version: 20020503
-Release: alt1_8
+Release: alt1_21
 License: GPLv2
-Group: Text tools
 URL: http://aspell.net
 Source: http://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
-Buildrequires: aspell >= 0.60
-Requires: aspell >= 0.60
+Buildrequires: aspell libaspell
+Requires: aspell libaspell
+# IMPORTANT
+# This package has been deprecated since Fedora 39
+# The reason behind this is that upstream has been inactive for more than 4 years
+# and there are other variants like hunspell or enchant which has active upstream
+# FESCo approval is located here: https://pagure.io/fesco/issue/3009
+# Change proposal is located here: https://fedoraproject.org/wiki/Changes/AspellDeprecation
+Provides:  deprecated()
 
 %define debug_package %{nil}
 Source44: import.info
@@ -36,6 +43,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 20020503-alt1_21
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 20020503-alt1_8
 - update to new release by fcimport
 
