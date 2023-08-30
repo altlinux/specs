@@ -5,10 +5,10 @@ Name: hyphen-ia
 Summary: Interlingua hyphenation rules
 %global upstreamid 20050628
 Version: 0.%{upstreamid}
-Release: alt1_13
+Release: alt1_26
 Source: http://www.ctan.org/get/language/hyphenation/iahyphen.tex
 URL: http://www.ctan.org/tex-archive/help/Catalogue/entries/iahyphen.html
-License: LPPL
+License: LPPL-1.3a
 BuildArch: noarch
 BuildRequires: libhyphen-devel
 Requires: libhyphen
@@ -39,6 +39,9 @@ cp -p hyph_ia.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.20050628-alt1_26
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050628-alt1_13
 - update to new release by fcimport
 
