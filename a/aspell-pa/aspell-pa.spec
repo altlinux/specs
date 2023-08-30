@@ -7,15 +7,19 @@ Group: Text tools
 
 Name:           aspell-pa
 Version:        0.01
-Release:        alt2_18
+Release:        alt2_31
 Summary:        GNU Aspell Punjabi Dictionary Package
 
 License:        GPLv2+
 URL:            http://aspell.net/
 Source0:        ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
 
-BuildRequires:  aspell >= 0.60
-Requires:       aspell >= 0.60
+# This package has been deprecated since Fedora 39 due to aspell package deprecation
+# Change proposal is located here: https://fedoraproject.org/wiki/Changes/AspellDeprecation
+Provides:  deprecated()
+
+BuildRequires:  aspell libaspell
+Requires:       aspell libaspell
 Source44: import.info
 
 %description
@@ -44,11 +48,14 @@ make install DESTDIR=%{buildroot}
 
 %files
 %doc Copyright
-%doc COPYING
+%doc --no-dereference COPYING
 %{_libdir}/aspell/*
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.01-alt2_31
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_18
 - update to new release by fcimport
 
