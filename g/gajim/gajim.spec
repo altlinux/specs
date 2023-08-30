@@ -4,8 +4,8 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.8.0
-Release: alt2
+Version: 1.8.1
+Release: alt1
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -25,7 +25,7 @@ Requires: python3 >= 3.10
 %filter_from_requires /^typelib(AppIndicator3)/d
 
 Requires: libgtk+3-gir libgtksourceview4-gir
-Requires: python3-module-nbxmpp >= 4.3.1
+Requires: python3-module-nbxmpp >= 4.3.3
 Requires: typelib(AyatanaAppIndicator3)
 # gajim >= 1.8 has imcoropated OMEMO support
 Obsoletes: gajim-plugin-omemo <= 2.9.0-alt1 python3-module-gajim-omemo <= 2.9.0-alt1
@@ -41,7 +41,7 @@ Obsoletes: gajim-plugin-omemo <= 2.9.0-alt1 python3-module-gajim-omemo <= 2.9.0-
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools libsoup-gir-devel libgtksourceview4-gir-devel pyproject-build rpm-macros-python3 python3-module-build
-BuildRequires: python3-module-nbxmpp >= 4.3.1
+BuildRequires: python3-module-nbxmpp >= 4.3.3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildArch: noarch
@@ -122,6 +122,9 @@ end
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Thu Aug 31 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+
 * Thu Jun 01 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.0-alt2
 - Obsoletes gajim-plugin-omemo and python3-module-gajim-omemo
 - Fix required version of python3-module-nbxmpp
