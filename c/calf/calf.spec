@@ -3,7 +3,7 @@
 
 Name: calf
 Version: 0.90.3
-Release: alt1.1
+Release: alt1.2
 
 Summary: Audio plugins pack
 Group: Sound
@@ -16,7 +16,6 @@ Source: http://calf-studio-gear.org/files/%name-%version.tar.gz
 Vcs: https://github.com/calf-studio-gear/calf.git
 Source: %name-%version.tar
 %endif
-
 Patch: calf-0.90.1-alt-link.patch
 
 BuildRequires: gcc-c++ desktop-file-utils
@@ -70,7 +69,7 @@ extensions.
 %patch
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS) -Wno-deprecated-declarations
 %define _optlevel 3
 %autoreconf
 %configure \
@@ -78,8 +77,9 @@ extensions.
 	--with-lv2-dir=%_libdir/lv2 \
 	--enable-experimental=yes \
 %ifarch x86_64 %ix86
-	--enable-sse
+	--enable-sse \
 %endif
+	LIBS="%(pkg-config --libs jack)"
 %nil
 %make_build
 
@@ -109,6 +109,9 @@ extensions.
 
 
 %changelog
+* Wed Aug 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.90.3-alt1.2
+- fixed build against pipewire-jack libraries
+
 * Wed Aug 23 2023 Yuri N. Sedunov <aris@altlinux.org> 0.90.3-alt1.1
 - calf-gui: removed jack-audio-conection-kit dependency, added lash
 
