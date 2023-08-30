@@ -8,10 +8,10 @@ Name: hyphen-fo
 Summary: Faroese hyphenation rules
 %global upstreamid 20040420
 Version: 0.%{upstreamid}
-Release: alt1_12
+Release: alt1_25
 Source: http://fo.speling.org/filer/hyph_fo_FO-20040420a.zip
 URL: http://fo.speling.org/
-License: GPL+
+License: GPL-1.0-or-later
 BuildArch: noarch
 Requires: libhyphen
 Source44: import.info
@@ -44,6 +44,9 @@ cp -p hyph_fo_FO.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.20040420-alt1_25
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040420-alt1_12
 - update to new release by fcimport
 
