@@ -1,5 +1,5 @@
 Name: qownnotes
-Version: 20.7.3
+Version: 23.8.2
 Release: alt1
 License: GPLv2
 Group: Office
@@ -78,6 +78,9 @@ install -D -m644 languages/*.qm "%buildroot/%_datadir/QOwnNotes/languages/"
 %_pixmapsdir/QOwnNotes.png
 
 %changelog
+* Wed Aug 30 2023 Ivan A. Melnikov <iv@altlinux.org> 23.8.2-alt1
+- new version (by samael@).
+
 * Mon Jul 13 2020 Grigory Ustinov <grenka@altlinux.org> 20.7.3-alt1
 - new version
 - build with system libbotan (Closes: #38379)
@@ -87,4 +90,3 @@ install -D -m644 languages/*.qm "%buildroot/%_datadir/QOwnNotes/languages/"
 
 * Tue Jun 27 2017 Konstantin Artyushkin <akv@altlinux.org> 17.06.6-alt1
 - initial build for ALT Sisyphus
-
