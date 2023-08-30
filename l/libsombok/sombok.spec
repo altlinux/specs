@@ -8,7 +8,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libsombok
 Version:        2.4.0
-Release:        alt4_20
+Release:        alt4_21
 Summary:        Unicode Text Segmentation Package
 License:        (GPL-1.0-or-later OR Artistic-1.0-Perl) AND (GPL-2.0-or-later OR Artistic-1.0-Perl)
 URL:            http://sf.net/projects/linefold/
@@ -93,6 +93,9 @@ mv -f %buildroot%_includedir/{sombok-%{_arch},sombok}.h
 
 
 %changelog
+* Wed Aug 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.4.0-alt4_21
+- sombok.h: support LoongArch architecture (lp64d ABI)
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 2.4.0-alt4_20
 - update to new release by fcimport
 
