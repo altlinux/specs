@@ -1,44 +1,39 @@
 Group: Text tools
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name: mythes-it
-Summary: Italian thesaurus
-Version: 2.0.9l
-Release: alt1_29
-Source: http://downloads.sourceforge.net/sourceforge/linguistico/thesaurus2_it_02_09_l_2008_11_29.zip
-URL: http://linguistico.sourceforge.net/pages/thesaurus_italiano.html
-License: AGPL-3.0-or-later
-BuildArch: noarch
-Requires: libmythes
+%define autorelease 2
+
+Name:         mythes-it
+Summary:      Italian thesaurus
+Version:      5.1.1
+Release:      alt1_2
+# The license text is embedded within the README files
+# Here we specify the thesaurus license only as other files are not packaged 
+License:      GPL-3.0-only
+URL:          https://pagure.io/dizionario_italiano
+Source:       https://pagure.io/dizionario_italiano/archive/%{version}/dizionario_italiano-%{version}.tar.gz
+
+BuildArch:    noarch
+Requires:     libmythes
 Source44: import.info
 
 %description
 Italian thesaurus.
 
+
 %prep
-%setup -q -c
+%setup -q -n dizionario_italiano-%{version}
+
 
 
 %build
-for i in th_it_IT_README th_it_IT_ChangeLog th_it_IT_AUTHORS; do
-  if ! iconv -f utf-8 -t utf-8 -o /dev/null $i > /dev/null 2>&1; then
-    iconv -f ISO-8859-1 -t UTF-8 $i > $i.new
-    touch -r $i $i.new
-    mv -f $i.new $i
-  fi
-  tr -d '\r' < $i > $i.new
-  touch -r $i $i.new
-  mv -f $i.new $i
-done
+# Nothing to do
 
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mythes
-cp -p th_it_IT.dat $RPM_BUILD_ROOT/%{_datadir}/mythes/th_it_IT_v2.dat
-cp -p th_it_IT.idx $RPM_BUILD_ROOT/%{_datadir}/mythes/th_it_IT_v2.idx
+cp -p th_it_IT_v2.dat $RPM_BUILD_ROOT/%{_datadir}/mythes/th_it_IT_v2.dat
+cp -p th_it_IT_v2.idx $RPM_BUILD_ROOT/%{_datadir}/mythes/th_it_IT_v2.idx
 
 pushd $RPM_BUILD_ROOT/%{_datadir}/mythes/
 it_IT_aliases="it_CH"
@@ -49,11 +44,15 @@ done
 
 
 %files
-%doc th_it_IT_README th_it_IT_ChangeLog th_it_IT_INSTALL th_it_IT_copyright_licenza.txt th_it_IT_lettera_in_inglese.txt  th_it_IT_AUTHORS
-%doc --no-dereference th_it_IT_COPYING
-%{_datadir}/mythes/*
+%doc --no-dereference LICENSES/gpl-3.0.txt
+%doc CHANGELOG.txt README.md README_th_it_IT.txt
+%{_datadir}/mythes/th_it_IT_v2.*
+%{_datadir}/mythes/th_it_CH_v2.*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_2
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 2.0.9l-alt1_29
 - update to new release by fcimport
 
