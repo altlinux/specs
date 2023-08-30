@@ -7,10 +7,19 @@ Summary: European Portuguese dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 20070510
-Release: alt2_16
-License: GPLv2+
+Release: alt2_26
+License: GPL-2.0-or-later
 URL: http://aspell.net/
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
+
+# IMPORTANT
+# This package has been deprecated since Fedora 39
+# The reason behind this is that upstream has been inactive for more than 4 years
+# and there are other variants like hunspell or enchant which has active upstream
+# FESCo approval is located here: https://pagure.io/fesco/issue/3009
+# Change proposal is located here: https://fedoraproject.org/wiki/Changes/AspellDeprecation
+Provides:  deprecated()
+
 Buildrequires: aspell libaspell
 Requires: aspell libaspell
 Obsoletes: aspell-pt <= 50:0.50
@@ -38,6 +47,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 20070510-alt2_26
+- update to new release by fcimport
+
 * Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 20070510-alt2_16
 - update to new release by fcimport
 
