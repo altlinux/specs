@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ports-access
-Version: 0.5.3
-Release: alt2
+Version: 0.5.4
+Release: alt1
 BuildArch: noarch
 Source:%name-%version.tar
 Summary: alterator module to control ports access
@@ -11,6 +11,7 @@ Group: System/Configuration/Other
 Requires: alterator >= 4.10-alt8 alterator-sh-functions >= 0.6-alt5 libshell >= 0.0.1-alt4 gettext
 Requires: alterator-l10n >= 2.9.110
 Requires: %name-cmdline = %version-%release
+Requires: /usr/share/misc/usb.ids
 BuildPreReq: rpm-build-licenses
 BuildPreReq: rpm-macros-alterator
 BuildRequires: alterator
@@ -39,17 +40,40 @@ Command line part of alterator module to control serial/USB ports access
 #files -f %name.lang
 %files
 %_altdata_dir/applications/*
-%_altdata_dir/ui/*/*
+%_altdata_dir/ui/*
 %_alterator_backend3dir/*
 %_altdata_dir/help/*/*
+%_datadir/alterator/design/scripts/*
+%_datadir/alterator/design/styles/*
 
 %files cmdline
 %_bindir/%name
 %_bindir/%name-lib.sh
-/lib/udev/alterator-ports-access
 %config(noreplace) %_sysconfdir/alterator-ports-access.conf
 
 %changelog
+* Wed Aug 30 2023 Paul Wolneykien <manowar@altlinux.org> 0.5.4-alt1
+- Don't disable USB control to scan for connected devices if not
+  explicitly asked by the user with the use of "Scan" button.
+- Change the order of rules in udev: Move rules to
+  99-alterator-ports-access-00-serial.rules,
+  99-alterator-ports-access-01-usb-auth.rules and
+  99-alterator-ports-access-02-usb-dev.rules files.
+- Add support for USB device and interfaces classes.
+- Fixed getting vendor and product names: quit after first match.
+- Don't automatically re-scan present devices if the table isn't
+  empty.
+- Require /usr/share/misc/usb.ids.
+- Improve the rule file comments and spacing.
+- Remove copyright info from rule file headers.
+- Enable/Disable USB control by changing the udev rules.
+- Allow text to wrap in tables.
+- backend: List USB devices with class, subclass and protocol values
+  and optionally list their interfaces.
+- Fix: Own alterator/ui/*.
+- Fixed %% in changelog.
+- Removed local l10n files.
+
 * Mon Jul 03 2023 Paul Wolneykien <manowar@altlinux.org> 0.5.3-alt2
 - Don't own /etc/udev/rules.d/ files to make sisyphus_check happy.
 
@@ -71,7 +95,7 @@ Command line part of alterator module to control serial/USB ports access
 * Mon Feb 28 2022 Paul Wolneykien <manowar@altlinux.org> 0.5-alt1
 - Update the captions and messages for better translation.
 - Expand the main tables to full width.
-- Specify the width of 100% for all inputs inside the tables.
+- Specify the width of 100%% for all inputs inside the tables.
 - Include into the package the paths of the generated rule files
   as %%ghost files.
 - Apply access mode options to block, input and other USB device
