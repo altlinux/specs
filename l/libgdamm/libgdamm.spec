@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -11,11 +8,12 @@ Group: System/Libraries
 
 Name:           libgdamm
 Version:        4.99.11
-Release:        alt1_4
+Release:        alt1_17
 Summary:        C++ wrappers for libgda
 License:        LGPLv2+
 URL:            http://www.gtkmm.org/
 Source0:        http://ftp.gnome.org/pub/GNOME/sources/libgdamm/4.99/%{name}-%{version}.tar.xz
+BuildRequires:  gcc-c++
 BuildRequires:  libglibmm-devel >= %{glibmm_version}
 BuildRequires:  libgda5-devel libgda5-gir-devel
 BuildRequires:  libgda5-bdb
@@ -58,8 +56,11 @@ This package contains the full API documentation for %{name}.
 %makeinstall_std
 find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 
+
+
+
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %doc AUTHORS NEWS
 %{_libdir}/*.so.*
 
@@ -71,12 +72,15 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*.pc
 
 %files doc
-%doc COPYING
+%doc --no-dereference COPYING
 %doc %{_datadir}/devhelp/books/%{name}-%{api_ver}
 %doc %{_docdir}/%{name}-%{api_ver}
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 4.99.11-alt1_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.99.11-alt1_4
 - update to new release by fcimport
 
