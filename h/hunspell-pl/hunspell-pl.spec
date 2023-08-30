@@ -12,10 +12,10 @@ BuildRequires: unzip
 %endif
 Name: hunspell-pl
 Summary: Polish hunspell dictionaries
-%global upstreamid 20180707
+%global upstreamid 20230601
 Version: 0.%{upstreamid}
-Release: alt1_13
-Source: http://sjp.pl/slownik/ort/sjp-myspell-pl-%{upstreamid}.zip
+Release: alt1_2
+Source: https://sjp.pl/slownik/ort/sjp-myspell-pl-%{upstreamid}.zip
 URL: https://sjp.pl/slownik/ort/
 License: LGPL-2.1-or-later OR GPL-1.0-or-later OR MPL-1.1 OR Apache-2.0 OR CC-BY-SA-4.0
 BuildArch: noarch
@@ -43,6 +43,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 %{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.20230601-alt1_2
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.20180707-alt1_13
 - update to new release by fcimport
 
