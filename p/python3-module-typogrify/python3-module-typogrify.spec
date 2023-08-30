@@ -1,16 +1,23 @@
-%define modname typogrify
+%def_enable snapshot
+%define pypi_name typogrify
 
-Name: python3-module-%modname
+%def_enable check
+
+Name: python3-module-%pypi_name
 Version: 2.0.7
-Release: alt2
+Release: alt3
 
 Summary: Filters to enhance web typography
 Group: Development/Python3
 License: BSD-3-Clause
-Url: https://pypi.org/project/%modname
+Url: https://pypi.org/project/%pypi_name
 
+%if_disabled snapshot
+Source: https://pypi.io/packages/source/t/%pypi_name/%pypi_name-%version.tar.gz
+%else
 Vcs: https://github.com/mintchaos/typogrify
-Source: https://pypi.io/packages/source/t/%modname/%modname-%version.tar.gz
+Source: %pypi_name-%version.tar
+%endif
 
 BuildArch: noarch
 
@@ -23,7 +30,8 @@ Requires: python3-module-smartypants >= 1.8.3
 %filter_from_requires /^python3(jinja/d
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3(wheel) python3(poetry-core)
+%{?_enable_check:BuildRequires: python3(pytest) python3(smartypants)}
 
 %description
 Typogrify provides a set of custom filters that automatically apply
@@ -32,19 +40,30 @@ typographically-improved HTML. While often used in conjunction with Jinja
 and Django template systems, the filters can be used in any environment.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+py.test-3 --doctest-modules typogrify/filters.py typogrify/packages/titlecase/tests.py
 
 %files
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/%pypi_name
+#%%exclude %python3_sitelibdir_noarch/%pypi_name/packages/titlecase/tests.py
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc README*
 
 %changelog
+* Wed Aug 30 2023 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt3
+- updated to 2.0.7-27-g053a8b8
+- ported to %%pyproject macros
+- enabled %%check
+- excluded tests from %%files (ALT #47400)
+
 * Fri Oct 01 2021 Ivan A. Melnikov <iv@altlinux.org> 2.0.7-alt2
 - get rid of django and jinja dependencies (closes: #41042)
 
