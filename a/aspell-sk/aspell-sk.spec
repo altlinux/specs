@@ -3,17 +3,25 @@ Group: Text tools
 %define _localstatedir %{_var}
 %define aspellversion 6
 %define lang sk
-%define langrelease 0
+%define langrelease 1
 %define aspellname aspell%{aspellversion}-%{lang}
 
 Name:           aspell-%{lang}
-Version:        2.02
+Version:        2.4.7
 Release:        alt1_2
 Summary:        Slovak dictionaries for Aspell
 
 License:        GPLv2 or LGPLv2 or MPLv1.1
 URL:            http://sk-spell.sk.cx/aspell-sk
 Source0:        http://www.sk-spell.sk.cx/files/%{aspellname}-%{version}-%{langrelease}.tar.bz2
+
+# IMPORTANT
+# This package has been deprecated since Fedora 39
+# The reason behind this is that upstream has been inactive for more than 4 years
+# and there are other variants like hunspell or enchant which has active upstream
+# FESCo approval is located here: https://pagure.io/fesco/issue/3009
+# Change proposal is located here: https://fedoraproject.org/wiki/Changes/AspellDeprecation
+Provides:  deprecated()
 
 BuildRequires:  aspell libaspell
 Requires:       aspell libaspell
@@ -46,6 +54,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 2.4.7-alt1_2
+- update to new release by fcimport
+
 * Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1_2
 - update to new release by fcimport
 
