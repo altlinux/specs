@@ -16,7 +16,7 @@ Group: System/Libraries
 
 Name:           openni
 Version:        1.5.7.10
-Release:        alt2_23
+Release:        alt2_30
 Summary:        Library for human-machine Natural Interaction
 
 License:        ASL 2.0 and BSD
@@ -192,7 +192,8 @@ do
     touch %buildroot"$rpm404_ghost"
 done
 
-
+# hack for error (#100): non-identical noarch packages
+find Source/DoxyGen/html -name '*.dot' -delete
 
 
 %post
@@ -242,6 +243,9 @@ fi
 
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.5.7.10-alt2_30
+- update to new release by fcimport (restored build on %{ix86})
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 1.5.7.10-alt2_23
 - update to new release by fcimport
 
