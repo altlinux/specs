@@ -11,7 +11,7 @@
 %def_disable devel
 
 Name: unit
-Version: 1.30.0
+Version: 1.31.0
 Release: alt1
 
 Summary: NGINX Unit - Web Application Server
@@ -24,7 +24,7 @@ Vcs: https://github.com/nginx/unit
 Source: %name-%version.tar
 
 BuildRequires: libssl-devel
-BuildRequires: libpcre-devel
+BuildRequires: libpcre2-devel
 %{?_enable_ruby:BuildRequires: ruby libruby-devel}
 %{?_enable_perl:BuildRequires: perl-devel perl-base}
 %{?_enable_php:BuildRequires: php8.1 php8.1-devel php-base}
@@ -206,9 +206,11 @@ logrotate %_sysconfdir/logrotate.d/unit
 %if_enabled devel
   %_libdir/libunit.a
   %_includedir/nxt_*.h
+  %_datadir/pkgconfig/%name.pc
 %else
   %exclude %_libdir/libunit.a
   %exclude %_includedir/nxt_*.h
+  %exclude %_datadir/pkgconfig/%name.pc
 %endif
 
 %if_enabled perl
@@ -238,6 +240,10 @@ logrotate %_sysconfdir/logrotate.d/unit
 %files checkinstall
 
 %changelog
+* Thu Aug 31 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.31.0-alt1
+- Update to 1.31.0 (2023-08-30).
+- Build with libpcre2.
+
 * Sun May 14 2023 Vitaly Chikunov <vt@altlinux.org> 1.30.0-alt1
 - Update to 1.30.0 (2023-05-10).
 
