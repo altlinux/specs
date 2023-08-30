@@ -1,3 +1,4 @@
+Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define lang nl
@@ -7,11 +8,19 @@ Name: aspell-%{lang}
 # Have to bump this to make it newer than the old, bad version.
 #Epoch: 51
 Version: 0.50
-Release: alt1_12
-License: GPLv2+
-Group: Text tools
+Release: alt1_23
+License: GPL-2.0-or-later
 URL: http://aspell.net/
 Source0: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell-%{lang}-%{version}-%{langrelease}.tar.bz2
+
+# IMPORTANT
+# This package has been deprecated since Fedora 39
+# The reason behind this is that upstream has been inactive for more than 4 years
+# and there are other variants like hunspell or enchant which has active upstream
+# FESCo approval is located here: https://pagure.io/fesco/issue/3009
+# Change proposal is located here: https://fedoraproject.org/wiki/Changes/AspellDeprecation
+Provides:  deprecated()
+
 Buildrequires: aspell libaspell
 Requires: aspell libaspell
 
@@ -37,6 +46,9 @@ make install DESTDIR=$RPM_BUILD_ROOT libdir=%{_libdir}
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.50-alt1_23
+- update to new release by fcimport
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1_12
 - update to new release by fcimport
 
