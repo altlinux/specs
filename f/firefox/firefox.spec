@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 116.0.3
+Version: 117.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -427,6 +427,23 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Aug 29 2023 Alexey Gladkov <legion@altlinux.ru> 117.0-alt1
+- New release (117.0).
+- Security fixes:
+  + CVE-2023-4573: Memory corruption in IPC CanvasTranslator
+  + CVE-2023-4574: Memory corruption in IPC ColorPickerShownCallback
+  + CVE-2023-4575: Memory corruption in IPC FilePickerShownCallback
+  + CVE-2023-4576: Integer Overflow in RecordedSourceSurfaceCreation
+  + CVE-2023-4577: Memory corruption in JIT UpdateRegExpStatics
+  + CVE-2023-4578: Error reporting methods in SpiderMonkey could have triggered an Out of Memory Exception
+  + CVE-2023-4579: Persisted search terms were formatted as URLs
+  + CVE-2023-4580: Push notifications saved to disk unencrypted
+  + CVE-2023-4581: XLL file extensions were downloadable without warnings
+  + CVE-2023-4582: Buffer Overflow in WebGL glGetProgramiv
+  + CVE-2023-4583: Browsing Context potentially not cleared when closing Private Window
+  + CVE-2023-4584: Memory safety bugs fixed in Firefox 117, Firefox ESR 102.15, Firefox ESR 115.2, Thunderbird 102.15, and Thunderbird 115.2
+  + CVE-2023-4585: Memory safety bugs fixed in Firefox 117, Firefox ESR 115.2, and Thunderbird 115.2
+
 * Thu Aug 17 2023 Alexey Gladkov <legion@altlinux.ru> 116.0.3-alt1
 - New release (116.0.3).
 
