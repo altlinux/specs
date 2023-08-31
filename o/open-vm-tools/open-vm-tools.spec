@@ -19,16 +19,16 @@
 %def_with gtk3
 %def_with gtkmm3
 
-%global majorversion    12.2
-%global minorversion    5
-%global toolsbuild      21855600
+%global majorversion    12.3
+%global minorversion    0
+%global toolsbuild      22234872
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt3
+Release: alt1
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -324,6 +324,9 @@ fi
 
 
 %changelog
+* Thu Aug 31 2023 Andrew A. Vasilyev <andy@altlinux.org> 12.3.0-alt1
+- 12.3.0 (CVE-2023-20900)
+
 * Tue Aug 29 2023 Anton Midyukov <antohami@altlinux.org> 12.2.5-alt3
 - NMU: replace /var/run/ with /run, /var/lock with /run/lock (Closes: 35890)
 
