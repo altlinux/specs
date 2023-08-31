@@ -1,15 +1,14 @@
 # git describe upstream/dolphin-emu | sed 's/-g[0-9a-f]*\(+*\)$/\1/'
-%define git_version 5.0-17269
+%define git_version 5.0-19870
 # git show-ref --heads --hash upstream/dolphin-emu
-%define git_commit 48c9c224cf9f82f0f9f2690b7cc6283d7448480c
+%define git_commit 032c77b462a220016f23c5079e71bb23e0ad2adf
 
-%define mgba_commit 40d4c430fc36caeb7ea32fd39624947ed487d2f2
-%define zlib_ng_commit a406284705a462939c7a634119884a31b87d6af9
-%define spirv_cross_version sdk-1.3.216.0
-%define libspng_commit dc5b1032c08efac68ad30170f7ccbf0aa8dd55c9
+%define mgba_commit 8739b22fbc90fdf0b4f6612ef9c0520f0ba44a51
+%define implot_commit cc5e1daa5c7f2335a9460ae79c829011dc5cef2d
+%define rcheevos_commit d9e990e6d13527532b7e2bb23164a1f3b7f33bb5
 
 Name: dolphin-emu
-Version: 5.0.17269
+Version: 5.0.19870
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -25,74 +24,72 @@ ExclusiveArch: x86_64 aarch64
 Source0: dolphin-%git_commit.tar
 # https://github.com/mgba-emu/mgba/archive/%mgba_commit/mgba-%mgba_commit.tar.gz
 Source1: mgba-%mgba_commit.tar
-# https://github.com/zlib-ng/zlib-ng/archive/%zlib_ng_commit/zlib-ng-%zlib_ng_commit.tar.gz
-Source2: zlib-ng-%zlib_ng_commit.tar
-# https://github.com/KhronosGroup/SPIRV-Cross/archive/%spirv_cross_version/SPIRV-Cross-%spirv_cross_version.tar.gz
-Source3: SPIRV-Cross-%spirv_cross_version.tar
-# https://github.com/randy408/libspng/archive/$libspng_commit/libspng-%libspng_commit.tar.gz
-Source4: libspng-%libspng_commit.tar
+# https://github.com/epezent/implot/archive/%implot_commit/implot-%implot_commit.tar.gz
+Source2: implot-%implot_commit.tar
+# https://github.com/RetroAchievements/rcheevos/archive/%rcheevos_commit/rcheevos-%rcheevos_commit.tar.gz
+Source3: rcheevos-%rcheevos_commit.tar
 
-Patch0: %name-alt-git.patch
-
-BuildPreReq: pkgconfig(expat)
-BuildPreReq: pkgconfig(libbrotlicommon)
-BuildPreReq: pkgconfig(libpcre)
-BuildPreReq: pkgconfig(uuid)
-
+BuildRequires: bzlib-devel
 BuildRequires: cmake
+BuildRequires: libSFML-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libXdmcp-devel
+BuildRequires: libXft-devel
+BuildRequires: libXi-devel
+BuildRequires: libXinerama-devel
+BuildRequires: libXmu-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libXxf86vm-devel
+BuildRequires: libalsa-devel
+BuildRequires: libavformat-devel
+BuildRequires: libbluez-devel
 BuildRequires: libcubeb-devel
+BuildRequires: libcurl-devel
+BuildRequires: libenet-devel
+BuildRequires: libevdev-devel
+BuildRequires: libffi-devel
+BuildRequires: libfmt-devel
+BuildRequires: libgtest-devel
+BuildRequires: libhidapi-devel
+BuildRequires: liblzma-devel
+BuildRequires: liblzo2-devel
 BuildRequires: libmbedtls-compat-devel
 BuildRequires: libminiupnpc-devel
+BuildRequires: libminizip-ng-compat-devel
+BuildRequires: libpugixml-devel
+BuildRequires: libpulseaudio-devel
+BuildRequires: libspng-devel
+BuildRequires: libswresample-devel
+BuildRequires: libswscale-devel
+BuildRequires: libsystemd-devel
+BuildRequires: libtinfo-devel
+BuildRequires: libudev-devel
+BuildRequires: libusb-devel
+BuildRequires: libvulkan-memory-allocator-devel
+BuildRequires: libxml2-devel
+BuildRequires: libzstd-devel
 BuildRequires: llvm-devel
-BuildRequires: llvm13.0-gold
-BuildRequires: pkgconfig(Qt5)
-BuildRequires: pkgconfig(alsa)
-BuildRequires: pkgconfig(bzip2)
-BuildRequires: pkgconfig(bluez)
-BuildRequires: pkgconfig(fmt) >= 7.1
-BuildRequires: pkgconfig(hidapi-libusb)
-BuildRequires: pkgconfig(libavformat)
-BuildRequires: pkgconfig(libcurl)
-BuildRequires: pkgconfig(libenet)
-BuildRequires: pkgconfig(libevdev)
-BuildRequires: pkgconfig(liblzma)
-BuildRequires: pkgconfig(libpng)
-BuildRequires: pkgconfig(libpulse)
-BuildRequires: pkgconfig(libswresample)
-BuildRequires: pkgconfig(libswscale)
-BuildRequires: pkgconfig(libxml-2.0)
-BuildRequires: pkgconfig(libusb-1.0)
-BuildRequires: pkgconfig(libzstd)
-BuildRequires: pkgconfig(lzo2)
-BuildRequires: pkgconfig(minizip-ng)
-BuildRequires: pkgconfig(pugixml)
-BuildRequires: pkgconfig(systemd)
-BuildRequires: pkgconfig(sfml-all)
-BuildRequires: pkgconfig(xcomposite)
-BuildRequires: pkgconfig(xcursor)
-BuildRequires: pkgconfig(xdamage)
-BuildRequires: pkgconfig(xdmcp)
-BuildRequires: pkgconfig(xft)
-BuildRequires: pkgconfig(xi)
-BuildRequires: pkgconfig(xinerama)
-BuildRequires: pkgconfig(xmu)
-BuildRequires: pkgconfig(xrandr)
-BuildRequires: pkgconfig(xxf86vm)
+BuildRequires: llvm15.0-gold
+BuildRequires: qt6-svg
+BuildRequires: qt6-svg-devel
+BuildRequires: zlib-ng-devel
 
 %description
 Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
 you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %prep
-%setup -n dolphin-%git_commit -b 1 -b 2 -b 3 -b 4
-%patch0 -p1
+%setup -n dolphin-%git_commit -b 1 -b 2 -b 3
 
 %__mv -Tf ../mgba-%mgba_commit Externals/mGBA/mgba
-%__mv -Tf ../zlib-ng-%zlib_ng_commit Externals/zlib-ng/zlib-ng
-%__mv -Tf ../SPIRV-Cross-%spirv_cross_version Externals/spirv_cross/SPIRV-Cross
-%__mv -Tf ../libspng-%libspng_commit Externals/libspng/libspng
+%__mv -Tf ../implot-%implot_commit Externals/implot/implot
+%__mv -Tf ../rcheevos-%rcheevos_commit Externals/rcheevos/rcheevos
 
 %build
+export LDFLAGS="-Wl,--copy-dt-needed-entries"
+
 %cmake .. \
 	-DENABLE_LTO:BOOL=TRUE \
 	-DUSE_SHARED_ENET:BOOL=TRUE \
@@ -119,6 +116,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Thu Aug 31 2023 Nazarov Denis <nenderus@altlinux.org> 5.0.19870-alt1
+- Version 5.0-19870
+
 * Tue Sep 13 2022 Nazarov Denis <nenderus@altlinux.org> 5.0.17269-alt1
 - Version 5.0-17269
 
