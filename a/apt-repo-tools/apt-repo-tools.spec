@@ -1,7 +1,7 @@
 %def_disable coverage
 
 Name: apt-repo-tools
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Utilities to create APT repositories
@@ -62,6 +62,10 @@ make code-coverage-capture -C build
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Thu Aug 31 2023 Ivan A. Melnikov <iv@altlinux.org> 0.8.1-alt1
+- gensrclist: fix patching the last record (closes: #47368)
+- genbasedir: replace deprecated fgrep with grep -F
+
 * Thu Oct 28 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.0-alt1
 - Switched to librpm crypto API instead of libapt.
 - Added support and enabled blake2b hash by default.
