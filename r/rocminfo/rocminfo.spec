@@ -1,5 +1,5 @@
 Name: rocminfo
-Version: 5.6.0
+Version: 5.6.1
 Release: alt0.1
 License: NCSA
 Summary: ROCm Application for Reporting System Info
@@ -37,6 +37,10 @@ subst '/.*{ROCMINFO_CXX_FLAGS} -m64)/d' CMakeLists.txt
 %_bindir/*
 
 %changelog
+* Wed Aug 30 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.1
+- rocm-5.6.1 (no code change, just version bump).
+- rebuild with updated hsa-rocr.
+
 * Tue Jul 04 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.1
 - Rebuild for rocm-5.6.0.
 - Built x86_64 only (due hsa-rocr).

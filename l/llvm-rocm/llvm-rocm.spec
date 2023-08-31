@@ -3,8 +3,6 @@
 %filter_from_requires /python[0-9.]\+(Reporter)/d
 %filter_from_requires /python[0-9.]\+(optpmap)/d
 %filter_from_requires /python[0-9.]\+(libscanbuild[.].*)/d
-# Self-provided by python3(lldb14.0) in a custom path.
-%filter_from_requires /python[0-9.]\+(lldb)/d
 
 %global proj rocm
 # rocm llvm uses llvm16 as codebase
@@ -53,8 +51,8 @@ AutoProv: nopython
 %def_with clang
 
 Name: %llvm_name
-Version: 5.6.0
-Release: alt0.2
+Version: 5.6.1
+Release: alt0.1
 Summary: The LLVM Compiler Infrastructure with ROCm additions
 
 Group: Development/C
@@ -92,7 +90,7 @@ BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
-BuildRequires: python3-module-recommonmark zip zlib-devel binutils-devel ninja-build hsa-rocr-devel = %version
+BuildRequires: zip zlib-devel binutils-devel ninja-build hsa-rocr-devel = %version
 %if_with clang
 BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
 %else
@@ -344,6 +342,7 @@ fi
 	-DLLVM_PARALLEL_LINK_JOBS=4 \
 %endif
 	-DCMAKE_BUILD_TYPE=Release \
+	-DLLVM_BUILD_DOCS:BOOL=OFF \
 	-DCMAKE_INSTALL_PREFIX=%llvm_prefix \
 	%_cmake_skip_rpath \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
@@ -652,9 +651,12 @@ ninja -C %builddir check-all || :
 %llvm_libdir/liblld*.a
 
 %changelog
+* Wed Aug 30 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.1
+- Updated to rocm-5.6.1.
+- BR: cleanup.
+
 * Wed Jul 05 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.2
 - Enable compiler-rt.
 
 * Mon Jul 03 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.1
 - Initial build as separate toolchain for ROCm applications.
-

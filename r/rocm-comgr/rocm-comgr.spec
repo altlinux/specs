@@ -4,8 +4,8 @@
 %define optflags_lto %nil
 
 Name: rocm-comgr
-Version: 5.6.0
-Release: alt0.3
+Version: 5.6.1
+Release: alt0.1
 License: NCSA
 Summary: AMD Code Object Manager (Comgr)
 Url: https://github.com/RadeonOpenCompute/ROCm-CompilerSupport
@@ -80,6 +80,10 @@ pushd %{bdir}
 %_libdir/cmake/amd_comgr
 
 %changelog
+* Wed Aug 30 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.1
+- rocm-5.6.1 (no code change, just version bump).
+- rebuild w/ llvm-rocm-5.6.1.
+
 * Wed Jul 05 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.3
 - Invoke llvm-rocm command explicitly.
 - .spec: cleanup deps/requires.

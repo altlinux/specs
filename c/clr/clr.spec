@@ -10,8 +10,8 @@
 %def_with HIP
 
 Name: clr
-Version: 5.6.0
-Release: alt0.4
+Version: 5.6.1
+Release: alt0.1
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
 Url: https://github.com/ROCm-Developer-Tools/clr
@@ -157,6 +157,9 @@ install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
 %endif
 
 %changelog
+* Wed Aug 30 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.1
+- rocm-5.6.1.
+
 * Fri Jul 14 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.4
 - Apply patches from developer branch:
   + 0001-SWDEV-1-Fix-incorrect-SGPR-usage-in-VGPR-calculation.patch

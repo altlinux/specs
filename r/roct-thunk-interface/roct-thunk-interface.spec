@@ -1,7 +1,7 @@
 %define soname 1
 
 Name: roct-thunk-interface
-Version: 5.6.0
+Version: 5.6.1
 Release: alt0.1
 License: MIT
 Summary: AMD user-mode API interfaces used to interact with the ROCk driver
@@ -54,6 +54,9 @@ Development headers for AMD KFD thunk libraries.
 %_libdir/libhsakmt.so
 
 %changelog
+* Wed Aug 30 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.1
+- rocm-5.6.1 (no code change, just version bump).
+
 * Mon Jul 03 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt0.1
 - rocm-5.6.0.
 
