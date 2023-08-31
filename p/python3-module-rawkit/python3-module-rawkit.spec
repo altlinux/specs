@@ -1,48 +1,63 @@
-%define modname rawkit
+%def_enable snapshot
+
+%define pypi_name rawkit
 %def_enable check
 
-Name: python3-module-%modname
+Name: python3-module-%pypi_name
 Version: 0.6.0
-Release: alt2
+Release: alt3
 
 Summary: CTypes based LibRaw bindings
 Group: Development/Python3
 License: MIT
-Url: http://pypi.python.org/pypi/%modname
-Source: http://pypi.io/packages/source/r/%modname/%modname-%version.tar.gz
+Url: https://pypi.python.org/pypi/%pypi_name
+
+Vcs: https://github.com/photoshell/rawkit.git
+
+%if_disabled snapshot
+Source: https://pypi.io/packages/source/r/%pypi_name/%pypi_name-%version.tar.gz
+%else
+Source: %pypi_name-%version.tar
+%endif
 
 BuildArch: noarch
 
 Requires: libraw
 
-BuildRequires: python3-devel rpm-build-python3
-BuildRequires: python3-module-distribute
-%{?_enable_check:BuildRequires: python3-module-pytest python3-module-mock}
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3(wheel) python3(setuptools)
+%{?_enable_check:BuildRequires: python3(tox) python3(pytest)
+BuildRequires: python3(coverage) python3(mock) python3(numpy) python3(flake8)}
 
 %description
 rawkit (pronounced `rocket`) is a ctypes-based LibRaw_ binding for Python 3
 inspired by the Wand_ API.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+py.test-3 tests
+#%%tox_check
 
 %files
 %python3_sitelibdir_noarch/libraw/
-%python3_sitelibdir_noarch/%modname/
-%python3_sitelibdir_noarch/*.egg-info
+%python3_sitelibdir_noarch/%pypi_name/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 %doc README.rst
 
 
 %changelog
+* Thu Aug 31 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt3
+- updated to v0.6.0-28-g1e99fc9
+- ported to %%pyproject* macros
+
 * Thu Aug 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt2
 - python3-only build
 
