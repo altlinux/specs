@@ -9,7 +9,7 @@
 
 Name:		bpftrace
 Version:	0.16.0
-Release:	alt2
+Release:	alt3
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -130,6 +130,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Wed Aug 30 2023 Vitaly Chikunov <vt@altlinux.org> 0.16.0-alt3
+- Fix FTBFS errors and crash for LLVM 15.
+
 * Mon Dec 19 2022 Vitaly Chikunov <vt@altlinux.org> 0.16.0-alt2
 - Fix SIGSEGV when vmlinux is not available and loading BTF data failed.
 
