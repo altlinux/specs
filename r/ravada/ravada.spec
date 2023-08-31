@@ -6,7 +6,7 @@
 
 Name: ravada
 Version: 2.0.5
-Release: alt1
+Release: alt2
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
 Group: Development/Perl
@@ -23,7 +23,7 @@ Requires: libvirt qemu-img qemu-kvm openssl guestfs-tools lxc-core
 
 BuildRequires(pre): rpm-build-perl
 
-BuildRequires: ImageMagick-tools
+BuildRequires: ImageMagick-tools >= 7.1.1.15-alt1
 BuildRequires: bridge-utils iproute2 net-tools qemu-img wget
 
 BuildRequires: perl-Authen-ModAuthPubTkt
@@ -84,6 +84,8 @@ Ravada is a software that allows the user to connect to a remote virtual desktop
 # find . -type f -name "*.xml" -exec sed -i 's|kvm-spice|qemu-kvm|g' {} ';'
 
 %build
+sed -e 's/Image::Magick::Q16/Image::Magick::Q16HDRI/g' -i lib/Ravada.pm
+
 # set environment variable to make sure DateTime::TimeZone::Local
 # could determine timezone during tests
 export TZ=UTC
@@ -182,6 +184,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Thu Aug 31 2023 Anton Farygin <rider@altlinux.ru> 2.0.5-alt2
+- added fix for using HDRI version of the ImageMagick
+
 * Mon May 29 2023 Andrew A. Vasilyev <andy@altlinux.org> 2.0.5-alt1
 - 2.0.5
 

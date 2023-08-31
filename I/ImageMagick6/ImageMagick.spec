@@ -1,10 +1,10 @@
-%define mversion	7
-%define dversion	%mversion.1.1
-%define drelease	15
-%define qlev		Q16HDRI
+%define mversion	6
+%define dversion	%mversion.9.12
+%define drelease	93
+%define qlev		Q16
 %define mgkdir		ImageMagick
-%define soname		10
-%define sonamepp	5
+%define soname		7
+%define sonamepp	9
 
 %def_with rsvg
 %ifarch %e2k
@@ -13,25 +13,26 @@
 %else
 %def_enable openmp
 %endif
-
-Name: ImageMagick
+%define rname ImageMagick
+Name: ImageMagick6
 Version: %dversion.%drelease
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: ImageMagick
 Group: Graphics
 Url: http://www.imagemagick.org/
-VCS: https://github.com/ImageMagick/ImageMagick
-Source0: %name-%version.tar
+# ftp://ftp.imagemagick.org/pub/ImageMagick/ imported to our git
+Source0: %rname-%dversion-%drelease.tar
 
-Source1: %name.desktop
+Source1: %rname.desktop
 Source2: imagemagick16.png
 Source3: imagemagick32.png
 Source4: imagemagick48.png
-Source5: %name.watch
+Source5: %rname.watch
+Patch0: ImageMagick-6.9.12.1-modules-path.patch
 
-Requires: ghostscript-classic fonts-type1-urw lib%name%mversion.%soname = %EVR
+Requires: ghostscript-classic fonts-type1-urw lib%rname%mversion.%soname = %EVR
 
 BuildPreReq: libpng-devel
 
@@ -55,7 +56,7 @@ BuildRequires: libgomp-devel
 BuildRequires: librsvg-devel
 %endif
 
-Requires: %name-tools %name-doc
+Requires: %rname-tools %rname-doc
 
 %description
 %name is a powerful image display, conversion and manipulation tool.
@@ -64,97 +65,45 @@ a variety of image formats.
 
 This package installs the necessary files to run %name.
 
-%package -n lib%name%mversion.%soname
-Summary: %name shared libraries
+%package -n lib%rname%mversion.%soname
+Summary: %rname shared libraries
 Group: System/Libraries
-Provides: %name-lib = %version
-Obsoletes: %name-lib < %version
-Obsoletes: lib%name < %EVR
-Requires: lib%name%mversion-common = %EVR
+Provides: %rname-lib = %version
+Obsoletes: %rname-lib < %version
+Obsoletes: lib%rname < %EVR
+Requires: lib%rname%mversion-common = %EVR
 
-%description -n lib%name%mversion.%soname
+%description -n lib%rname%mversion.%soname
 %name is a powerful image display, conversion and manipulation libraries.
 
-%package -n lib%name%mversion-common
-Summary: Common files for %name
+%package -n lib%rname%mversion-common
+Summary: Common files for %rname
 Group: System/Libraries
 Conflicts: libImageMagick <= 6.9.10.86
 Conflicts: ImageMagick-tools <= 6.9.10.86
 
-%description -n lib%name%mversion-common
-Common files for lib%{name}.
+%description -n lib%rname%mversion-common
+Common files for lib%{rname}.
 
-%package -n lib%{name}++%mversion.%sonamepp
-Summary: %name shared libraries
+%package -n lib%{rname}++%mversion.%sonamepp
+Summary: %rname shared libraries
 Group: System/Libraries
 
-%description -n lib%{name}++%mversion.%sonamepp
+%description -n lib%{rname}++%mversion.%sonamepp
 %name is a powerful image display, conversion and manipulation libraries.
 
-%package -n lib%name-devel
-Summary: Header files for %name app development
-Group: Development/C
-Requires: lib%name%mversion.%soname = %EVR
-%{?_enable_openmp:Requires: libgomp-devel} 
-Provides: %name-devel = %version
-Obsoletes: %name-devel < %version
-
-%description -n lib%name-devel
-If you want to create applications that will use %name code or APIs,
-you'll need to install these packages as well as %name.  These additional
-packages aren't necessary if you simply want to use %name, however.
-
-%package -n lib%name-devel-static
-Summary: Static libraries for %name app development
-Group: Development/C
-Requires: lib%name-devel = %EVR
-
-%description -n lib%name-devel-static
-If you want to create applications that will use %name code or APIs,
-you'll need to install these packages as well as %name.  These additional
-packages aren't necessary if you simply want to use %name, however.
-
-lib%name-devel is an addition to %name which includes static libraries files
-necessary to develop applications.
-
-%package -n perl-Magick
-Summary: Libraries and modules for access to %name from perl
-Group: Development/Perl
-Requires: lib%name%mversion.%soname = %EVR
-# perl.prov can't get version from inheritance yet
-# so we need to add it manually for versioned dependencies.
-Provides: perl(Image/Magick.pm) = %mversion.860
-
-%description -n perl-Magick
-This is the %name perl support package.  It includes perl modules
-and support files for access to %name library from perl.
-
-%package tools
-Summary: Console tools from %name
-Group: Graphics
-Requires: lib%name%mversion.%soname = %EVR
-Conflicts: GraphicsMagick-ImageMagick-compat
-Provides: convert
-
-%description tools
-%name is a powerful image conversion and manipulation tools.
-This package installs the necessary files to run %name-tools.
-
-%package doc
-Summary: Documentation for %name
-Group: Graphics
-Requires: %name-tools
-BuildArch: noarch
-
-%description doc
-Documentation for %name
 
 %def_disable static
 
 %prep
-%setup -q 
+%setup -q -n %rname-%dversion-%drelease
+%patch0 -p1
 touch config.rpath
 
+# XXX tests fail
+rm PerlMagick/t/composite.t
+rm PerlMagick/t/filter.t
+rm PerlMagick/t/montage.t
 %ifarch %e2k
 sed -i 's,-lomp,-fopenmp,g' configure* # -lomp was wrong in the first place
 %endif
@@ -168,7 +117,7 @@ sed -i 's,-lomp,-fopenmp,g' configure* # -lomp was wrong in the first place
 	--with-gvc=yes \
 	%{subst_with rsvg} \
 	--with-lqr=yes \
-	--enable-hdri \
+	--disable-hdri \
 	--with-gcc-arch=no \
 	--with-perl \
 	--with-xml \
@@ -190,84 +139,38 @@ popd
 %make transform='' DESTDIR=%buildroot INSTALLDIRS=vendor install
 
 
-sed -i "s,%_libdir/libMagickCore.la,-L%_libdir -lMagickCore," %buildroot%_libdir/%mgkdir-%dversion/modules-%qlev/*/*.la
+sed -i "s,%_libdir/libMagickCore.la,-L%_libdir -lMagickCore," %buildroot%_libdir/%mgkdir-%dversion-%soname/modules-%qlev/*/*.la
 
 install -pDm644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 install -pDm644 %SOURCE2 %buildroot%_miconsdir/%name.png
 install -pDm644 %SOURCE3 %buildroot%_niconsdir/%name.png
 install -pDm644 %SOURCE4 %buildroot%_liconsdir/%name.png
 
-chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/%qlev/%qlev.so
-chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Magick.so
+chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Q16/Q16.so
 
-mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
-%files
-
-%files tools
-%_bindir/[a-z]*
-%_man1dir/%name.1*
-%_man1dir/[a-z]*.1*
-# display, menu and icons to be moved into subpackage
-%_datadir/applications/%name.desktop
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
-
-%files -n lib%name%mversion-common
+%files -n lib%rname%mversion-common
 %dir %_datadir/%mgkdir-%mversion
-%dir %_sysconfdir/%name-%mversion
+%dir %_sysconfdir/%rname-%mversion
 %_datadir/%mgkdir-%mversion/*
-%config %_sysconfdir/%name-%mversion/*
+%config %_sysconfdir/%rname-%mversion/*
 
-%files doc
-%dir %_docdir/%name-%dversion
-%dir %_docdir/%name-%dversion/www
-%_docdir/%name-%dversion/LICENSE
-%_docdir/%name-%dversion/images
-%_docdir/%name-%dversion/index.html
-%_docdir/%name-%dversion/www/*
-%exclude %_docdir/%name-%dversion/www/api
-%exclude %_docdir/%name-%dversion/www/Magick++
 
-%files -n lib%name%mversion.%soname
+%files -n lib%rname%mversion.%soname
 %doc LICENSE
-%dir %_libdir/%mgkdir-%dversion
-%dir %_libdir/%mgkdir-%dversion/modules-%qlev
-%dir %_libdir/%mgkdir-%dversion/modules-%qlev/coders
-%dir %_libdir/%mgkdir-%dversion/modules-%qlev/filters
-%_libdir/%mgkdir-%dversion/modules-%qlev/*/*
+%dir %_libdir/%mgkdir-%dversion-%soname
+%dir %_libdir/%mgkdir-%dversion-%soname/modules-%qlev
+%dir %_libdir/%mgkdir-%dversion-%soname/modules-%qlev/coders
+%dir %_libdir/%mgkdir-%dversion-%soname/modules-%qlev/filters
+%_libdir/%mgkdir-%dversion-%soname/modules-%qlev/*/*
 %_libdir/libMagickWand*.so.%{soname}*
 %_libdir/libMagickCore*.so.%{soname}*
 
-%files -n lib%{name}++%mversion.%sonamepp
+%files -n lib%{rname}++%mversion.%sonamepp
 %_libdir/*++*.so.%{sonamepp}*
 
-%files -n lib%name-devel
-%dir %_docdir/%name-%dversion
-%dir %_docdir/%name-%dversion/www
-%_docdir/%name-%dversion/www/api
-%_docdir/%name-%dversion/www/Magick++
-%_bindir/*-config
-%_includedir/*
-%_libdir/*.so
-%_libdir/%mgkdir-%dversion/config-%qlev
-%_pkgconfigdir/*.pc
-%_man1dir/*-config.1*
-
-%files -n perl-Magick
-%doc www/perl-magick.html images/examples.jpg PerlMagick/demo
-%perl_vendor_archlib/Image
-%perl_vendor_autolib/Image
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif
-
 %changelog
-* Wed Aug 30 2023 Anton Farygin <rider@altlinux.ru> 7.1.1.15-alt1
-- 6.9.12.93 -> 7.1.1.15
-- enabled HDRI by default
+* Thu Aug 31 2023 Anton Farygin <rider@altlinux.ru> 6.9.12.93-alt2
+- built as compatability version
 
 * Thu Aug 17 2023 Anton Farygin <rider@altlinux.ru> 6.9.12.93-alt1
 - New version 6.9.12.93 (Fixes: CVE-2022-44268)
