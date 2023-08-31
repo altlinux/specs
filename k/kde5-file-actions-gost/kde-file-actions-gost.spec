@@ -1,6 +1,6 @@
 %define rname kde-file-actions-gost
 Name: kde5-file-actions-gost
-Version: 0.6
+Version: 0.7
 Release: alt1
 %K5init altplace
 
@@ -47,6 +47,9 @@ done
 %_K5srv/*crypt-*-gost.desktop
 
 %changelog
+* Thu Aug 31 2023 Sergey V Turchin <zerg at altlinux dot org> 0.7-alt1
+- fix for new openssl (closes: 47294)
+
 * Fri Jun 26 2020 Sergey V Turchin <zerg at altlinux dot org> 0.6-alt1
 - fix encrypt filenames with spaces
 
