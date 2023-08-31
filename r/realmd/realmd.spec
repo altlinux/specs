@@ -2,7 +2,7 @@
 
 Name: realmd
 Version: 0.17.1
-Release: alt4
+Release: alt5
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
 Group: Security/Networking
@@ -21,6 +21,13 @@ BuildRequires: libldap-devel
 BuildRequires: xsltproc xmlto
 BuildRequires: /usr/bin/net
 %{?_enable_check:BuildRequires: python3-devel}
+Requires: polkit
+Requires: sssd
+Requires: sssd-ad
+Requires: sssd-dbus
+Requires: sssd-pac
+Requires: sssd-tools
+Requires: adcli
 
 %description
 realmd is a DBus system service which manages discovery and enrollment in realms
@@ -78,6 +85,9 @@ install -m0644 -D %SOURCE2 %buildroot%_sysconfdir/
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Thu Aug 31 2023 Alexander Burmatov <thatman@altlinux.org> 0.17.1-alt5
+- Adding necessary requirements (ALT #47410).
+
 * Mon Aug 28 2023 Alexander Burmatov <thatman@altlinux.org> 0.17.1-alt4
 - Adding parameters to the config that can be overridden.
 
