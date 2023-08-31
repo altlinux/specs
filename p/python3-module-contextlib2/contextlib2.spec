@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 21.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: Backports and enhancements for the contextlib module
 
@@ -49,6 +49,9 @@ future enhancements to the standard library version.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 31 2023 Ivan A. Melnikov <iv@altlinux.org> 21.6.0-alt1.1
+- NMU: fix build with python 3.11
+
 * Tue Aug 09 2022 Stanislav Levin <slev@altlinux.org> 21.6.0-alt1
 - 0.6.0 -> 21.6.0.
 
