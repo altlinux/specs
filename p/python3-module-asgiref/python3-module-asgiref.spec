@@ -1,16 +1,18 @@
 
 Summary: ASGI (Asynchronous Server Gateway Interface) is a spiritual successor to WSGI
 Name: python3-module-asgiref
-Version: 3.4.1
+Version: 3.7.2
 Release: alt1
 Url: https://github.com/django/asgiref/
 Source: %name-%version.tar
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools
+# For python_version < "3.11"
+# BuildRequires: python3(typing_extensions) >= 4
 # For check
 BuildRequires: pytest3 python3-module-pytest-asyncio
 
@@ -40,6 +42,9 @@ python3 -m pytest -v
 %doc README.rst CHANGELOG.txt
 
 %changelog
+* Thu Aug 31 2023 Alexey Shabalin <shaba@altlinux.org> 3.7.2-alt1
+- New version 3.7.2.
+
 * Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 3.4.1-alt1
 - Initial build.
 

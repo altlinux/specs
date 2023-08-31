@@ -2,7 +2,7 @@
 %define origname Django
 %define oname django
 
-%def_disable check
+%def_enable check
 
 %add_python3_req_skip hotshot StringIO
 %add_findreq_skiplist %python3_sitelibdir/%oname/contrib/gis/db/backends/*/*
@@ -10,9 +10,9 @@
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
 Version: %branch.4
-Release: alt1
+Release: alt2
 Source0: %origname-%version.tar
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 BuildArch: noarch
 VCS: https://github.com/django/django
@@ -34,6 +34,9 @@ Conflicts: python3-module-django1.11-tests
 %add_python3_req_skip django.test.signals
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-setuptools-wheel
+BuildRequires: python3-module-asgiref >= 3.6.0
+BuildRequires: python3-module-sqlparse >= 0.3.1
 BuildRequires: bash-completion
 
 %if_enabled check
@@ -181,6 +184,9 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Thu Aug 31 2023 Alexey Shabalin <shaba@altlinux.org> 4.2.4-alt2
+- Update BR.
+
 * Mon Aug 28 2023 Alexey Shabalin <shaba@altlinux.org> 4.2.4-alt1
 - New version 4.2.4 (new 4.2 LTS release).
 
@@ -220,7 +226,7 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 * Sun Feb 20 2022 Anton Farygin <rider@altlinux.ru> 3.2.12-alt1
 - 3.2.11 -> 3.2.12
 - Fixes for the following security vulnerabilities:
-  + CVE-2022-22818: Possible XSS via {% debug %} template tag.
+  + CVE-2022-22818: Possible XSS via {%% debug %%} template tag.
   + CVE-2022-23833: Denial-of-service possibility in file uploads.
 
 * Tue Jan 18 2022 Alexey Shabalin <shaba@altlinux.org> 3.2.11-alt1
