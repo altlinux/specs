@@ -1,6 +1,6 @@
 Name:     ares
-Version:  132
-Release:  alt2
+Version:  133
+Release:  alt1
 
 Summary:  ares is a cross-platform, open source, multi-system emulator, focusing on accuracy and preservation.
 License:  ISC
@@ -55,6 +55,9 @@ cp -dr --no-preserve=ownership ./mia/Database/ %buildroot%_datadir/%name/
 %doc LICENSE
 
 %changelog
+* Thu Aug 31 2023 Artyom Bystrov <arbars@altlinux.org> 133-alt1
+- update to new version
+
 * Sun Jun 25 2023 Artyom Bystrov <arbars@altlinux.org> 132-alt2
 - Total rework of repo - upstream not changing tag
 
