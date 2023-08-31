@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.49
+%define kernel_sublevel	.50
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -602,6 +602,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Aug 31 2023 Vitaly Chikunov <vt@altlinux.org> 2:6.1.50-alt2
+- Fix build on aarch64 due to Baikal unmaintained code.
+
+* Wed Aug 30 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.50-alt1
+- v6.1.50 (2023-08-30).
+
 * Mon Aug 28 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.49-alt1
 - v6.1.49 (2023-08-27).
 
