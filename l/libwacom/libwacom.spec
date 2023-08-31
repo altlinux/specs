@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.7
+%define ver_major 2.8
 %define sover 9
 %def_disable docs
 
@@ -28,7 +28,7 @@ Vcs: https://github.com/linuxwacom/libwacom.git
 Source: %name-%version.tar
 %endif
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 Requires: python3-module-pyudev python3-module-libevdev
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind rpm-build-python3
@@ -48,7 +48,7 @@ built-in on-screen tablet", "what is the size of this model", etc.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -124,6 +124,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Aug 31 2023 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Wed May 17 2023 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
 - 2.7.0
 
