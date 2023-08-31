@@ -1,14 +1,14 @@
 %define soname 1
 %define llvm_ver 16.0
 
-%def_without llvm-rocm
+%define with_llvm_rocm 1
 
 # LTO causes segfaults (
 %define optflags_lto %nil
 
 Name: rocr-runtime
 Version: 5.6.1
-Release: alt0.1
+Release: alt0.2
 License: MIT
 Summary: HSA Runtime API and runtime for ROCm
 Url: https://github.com/RadeonOpenCompute/ROCR-Runtime
@@ -21,8 +21,8 @@ Patch1: rocr-runtime-4.3.0_no-aqlprofiler.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libelf-devel libdrm-devel hsakmt-rocm-devel = %version rocm-device-libs xxd
-%if_with llvm-rocm
-BuildRequires: clang-rocm-devel = %version llvm-rocm-devel = %version lld-rocm = %version
+%ifdef with_llvm_rocm
+BuildRequires: clang-rocm-devel = %version clang-rocm-tools = %version llvm-rocm-devel = %version lld-rocm = %version
 %else
 BuildRequires: clang%{llvm_ver}-devel llvm%{llvm_ver}-devel lld%{llvm_ver} libmlir%{llvm_ver}-devel mlir%{llvm_ver}-tools libpolly%{llvm_ver}-devel clang%{llvm_ver}-tools clangd%{llvm_ver}
 %endif
@@ -54,7 +54,7 @@ HSA Runtime API and runtime for ROCm development headers and library.
 %patch1 -p0
 
 %build
-%if_with llvm-rocm
+%ifdef with_llvm_rocm
 export ALTWRAP_LLVM_VERSION=rocm
 %else
 export ALTWRAP_LLVM_VERSION=%{llvm_ver}
@@ -81,6 +81,10 @@ pushd src
 %_libdir/cmake/hsa-runtime64
 
 %changelog
+* Thu Aug 31 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.2
+- Rebuild w/ llvm-rocm-5.6.1.
+- fix llvm-rocm knob.
+
 * Wed Aug 30 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.1
 - rocm-5.6.1.
 - No code changes, just version bump.
