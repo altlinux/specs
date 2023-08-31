@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.14
+Version: 0.4.15
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -96,6 +96,11 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Thu Aug 31 2023 Anton Golubev <golubevan@altlinux.org> 0.4.15-alt1
+- create a prompt queue (Closes: 47377)
+- update thumbnail
+- small fixes
+
 * Wed Aug 09 2023 Anton Golubev <golubevan@altlinux.org> 0.4.14-alt1
 - always show the last logged in user on the userbar
 
