@@ -1,7 +1,7 @@
 
 Name: libblkio
 Version: 1.3.0
-Release: alt1
+Release: alt2
 Summary: Block device I/O library
 Group: System/Libraries
 Url: https://gitlab.com/libblkio/libblkio
@@ -59,6 +59,10 @@ sed -e 's/--locked//' -i src/cargo-build.sh
 %_man3dir/blkio.3*
 
 %changelog
+* Sun Jul 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.3.0-alt2
+- Updated dependencies for LoongArch support:
+  + libc: v0.2.146
+
 * Fri Apr 28 2023 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
 - Initial package
 
