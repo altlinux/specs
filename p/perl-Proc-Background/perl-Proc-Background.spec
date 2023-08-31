@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,19 +5,19 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    Proc-Background
-%define upstream_version 1.30
+%define upstream_version 1.32
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    1.32
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Generic interface to Unix and Win32 background process management
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        https://metacpan.org/release/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/N/NE/NERDVANA/%{upstream_name}-%{version}.tar.gz
+Source0:    https://cpan.metacpan.org/authors/id/B/BZ/BZAJAC/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildArch:  noarch
@@ -30,7 +29,7 @@ Unix and Win32 platforms. This module lets you start, kill, wait on,
 retrieve exit values, and see if background processes still exist.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -44,12 +43,15 @@ make test
 rm -rf $RPM_BUILD_ROOT/%{perl_vendor_archlib}
 
 %files
-%doc Changes META.json META.yml README
+%doc Changes LICENSE META.json META.yml  README
 %{perl_vendor_privlib}/*
 %{_mandir}/man1/*
 %{_bindir}/*
 
 %changelog
+* Thu Aug 31 2023 Igor Vlasenko <viy@altlinux.org> 1.32-alt1_1
+- update by mgaimport
+
 * Sat Apr 29 2023 Igor Vlasenko <viy@altlinux.org> 1.32-alt1
 - automated CPAN update
 
