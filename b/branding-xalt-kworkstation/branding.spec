@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt6
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -486,6 +486,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Aug 31 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt6
+- update distro license
+
 * Tue Aug 08 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt5
 - resize installer background image to fit 4K screens
 
