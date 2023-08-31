@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt6
+Release: alt7
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -289,6 +289,7 @@ cat >>%buildroot/%_sysconfdir/os-release <<__EOF__
 NAME="%Brand"
 VERSION="%altversion%status"
 ID=altlinux
+LOGO="basealt"
 VERSION_ID=%altversion
 PRETTY_NAME="%ProductName%status (%codename)"
 ANSI_COLOR="1;33"
@@ -486,6 +487,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Aug 31 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt7
+- add LOGO to /etc/os-release (ALT #47285)
+
 * Thu Aug 31 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt6
 - update distro license
 
