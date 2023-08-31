@@ -4,31 +4,31 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: Python bindings for jq
 License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/jq/
-Vcs: https://github.com/mwilliamson/jq.py.git
+Vcs: https://github.com/mwilliamson/jq.py
 
 Source0: %name-%version.tar
 Source1: setup.py
+Source2: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
+%py3_provides %pypi_name
 
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(Cython)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+BuildRequires: python3-module-cython
 BuildRequires: libjq-devel
 
 %if_with check
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-%py3_provides %pypi_name
 
 %description
 jq is a lightweight and flexible JSON processor.
@@ -38,12 +38,20 @@ This project contains Python bindings for jq.
 %prep
 %setup
 
-# remove vendored libraries
-rm -fvr deps
-
 # provide self-written building instructions
 cp -fv %SOURCE1 .
+%__subst 's/@VERSION@/%version/' setup.py
 rm -fv pyproject.toml
+
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_pipreqfile test-requirements.txt
+%endif
+
+# remove vendored libraries
+rm -fvr deps
 
 %build
 %pyproject_build
@@ -52,13 +60,17 @@ rm -fv pyproject.toml
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc *.rst LICENSE
+%python3_sitelibdir/%pypi_name.*.so
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 31 2023 Anton Zhukharev <ancieg@altlinux.org> 1.5.0-alt1
+- Updated to 1.5.0.
+
 * Thu Mar 16 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.1-alt1
 - 1.4.0 -> 1.4.0.
 
