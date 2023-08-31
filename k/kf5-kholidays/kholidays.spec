@@ -1,7 +1,7 @@
 %define rname kholidays
 
 Name: kf5-%rname
-Version: 5.108.0
+Version: 5.109.0
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -79,6 +79,9 @@ mkdir -p %buildroot/%_K5data/libkholidays/
 %_K5qml/org/kde/kholidays/
 
 %changelog
+* Thu Aug 31 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.109.0-alt1
+- new version
+
 * Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.108.0-alt1
 - new version
 

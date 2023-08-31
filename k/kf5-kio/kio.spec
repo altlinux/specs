@@ -3,8 +3,8 @@
 %def_enable streebog
 
 Name: kf5-%rname
-Version: 5.108.0
-Release: alt3
+Version: 5.109.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -178,6 +178,9 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Thu Aug 31 2023 Sergey V Turchin <zerg@altlinux.org> 5.109.0-alt1
+- new version
+
 * Tue Aug 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.108.0-alt3
 - fix to move Copy item upper then Move in DnD popup menu
 
