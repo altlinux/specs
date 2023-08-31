@@ -3,7 +3,7 @@
 
 Name: dovi_tool
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Summary: Utilites for working with Dolby Vision
 Group: Video
@@ -91,6 +91,9 @@ cargo test --bins --release
 %_libdir/libdovi.so
 
 %changelog
+* Fri Jul 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.0.3-alt2
+- Updated vendor dependencies to support LoongArch.
+
 * Thu Mar 16 2023 L.A. Kostis <lakostis@altlinux.ru> 2.0.3-alt1
 - Initial build for ALTLinux.
 
