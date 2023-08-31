@@ -1,22 +1,26 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build.pm) perl-podlators
+BuildRequires: perl(Devel/Trepan.pm) perl(Module/Build.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    CPAN-Reporter
-%define upstream_version 1.2018
+%define upstream_version 1.2019
+
+%{?perl_default_filter}
+%global __requires_exclude %__requires_exclude|^perl\\(File::Spec\\)$
+%global __requires_exclude %__requires_exclude|^perl\\(File::HomeDir\\)$
+%global __requires_exclude %__requires_exclude|^perl\\(CPAN\\)
 
 Name:       perl-%{upstream_name}
-Version:    1.2019
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Adds CPAN Testers reporting to CPAN.pm
 License:    Apache License
 Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/G/GA/GARU/%{upstream_name}-%{version}.tar.gz
+Url:        https://metacpan.org/release/%{upstream_name}
+Source0:    https://cpan.metacpan.org/modules/by-module/CPAN/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Archive/Tar.pm)
 BuildRequires: perl(CPAN.pm)
@@ -30,7 +34,7 @@ BuildRequires: perl(Exporter.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Fcntl.pm)
 BuildRequires: perl(File/Basename.pm)
-BuildRequires: perl(File/Copy/Recursive.pm)
+BuildRequires: perl(File/Copy.pm)
 BuildRequires: perl(File/Find.pm)
 BuildRequires: perl(File/Glob.pm)
 BuildRequires: perl(File/HomeDir.pm)
@@ -39,19 +43,19 @@ BuildRequires: perl(File/Spec.pm)
 BuildRequires: perl(File/Spec/Functions.pm)
 BuildRequires: perl(File/Temp.pm)
 BuildRequires: perl(File/pushd.pm)
-BuildRequires: perl(IO/CaptureOutput.pm)
+BuildRequires: perl(FindBin.pm)
 BuildRequires: perl(IO/File.pm)
+BuildRequires: perl(IO/Handle.pm)
 BuildRequires: perl(IPC/Cmd.pm)
-BuildRequires: perl(List/Util.pm)
 BuildRequires: perl(Parse/CPAN/Meta.pm)
 BuildRequires: perl(Probe/Perl.pm)
 BuildRequires: perl(Test/Harness.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(Test/Reporter.pm)
 BuildRequires: perl(constant.pm)
+BuildRequires: perl(lib.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(vars.pm)
-BuildRequires: perl(version.pm)
 BuildRequires: perl(warnings.pm)
 BuildArch:  noarch
 Source44: import.info
@@ -70,7 +74,7 @@ project. Full support for CPAN::Reporter is available in CPAN.pm as of
 version 1.92.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -83,11 +87,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README examples Todo
+%doc Changes LICENSE META.json META.yml  README examples
 %{perl_vendor_privlib}/*
 
-
 %changelog
+* Thu Aug 31 2023 Igor Vlasenko <viy@altlinux.org> 1.2019-alt1_1
+- update by mgaimport
+
 * Sun May 21 2023 Igor Vlasenko <viy@altlinux.org> 1.2019-alt1
 - automated CPAN update
 
