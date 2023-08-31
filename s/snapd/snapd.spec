@@ -30,7 +30,7 @@
 
 Name: snapd
 Version: 2.59.1
-Release: alt1
+Release: alt1.1
 Summary: A transactional software package manager
 License: GPLv3
 Group: System/Configuration/Other
@@ -75,7 +75,9 @@ BuildRequires: pkgconfig(udev)
 BuildRequires: libxfs-devel
 BuildRequires: glibc-devel-static
 BuildRequires: %_bindir/rst2man
+%if_enabled check
 BuildRequires: %_bindir/shellcheck
+%endif
 
 %description -n snap-confine
 This package is used internally by snapd to apply confinement to
@@ -461,6 +463,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 31 2023 Ivan A. Melnikov <iv@altlinux.org> 2.59.1-alt1.1
+- NMU: mark shellcheck as check-only BR
+
 * Mon Apr 17 2023 Alexey Shabalin <shaba@altlinux.org> 2.59.1-alt1
 - 2.59.1
 
