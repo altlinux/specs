@@ -1,10 +1,14 @@
-%def_without static
+%global _unpackaged_files_terminate_build 1
+%def_disable static
+%if_enabled static
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%endif
 %define abiversion 6
 %define oname cln
 
 Name: %oname%abiversion
 Version: 1.3.6
-Release: alt1
+Release: alt2
 
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
@@ -95,12 +99,11 @@ rm -f aclocal.m4
 %install
 %make_install DESTDIR=%buildroot install
 
+%check
+%make_build check
+
 # remove non-packaged files
 rm -f %buildroot%_libdir/*.la
-%if_without static
-rm -f %buildroot%_libdir/*.a
-%endif
-
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -111,7 +114,7 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 %_libdir/pkgconfig/*
 
-%if_with static
+%if_enabled static
 %files -n lib%oname-devel-static
 %_libdir/*.a
 %endif
@@ -123,6 +126,15 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/pi
 
 %changelog
+* Sat Jul 08 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.3.6-alt2
+- Added upstream patch for LoongArch architecture (lp64d ABI) support
+- spec:
+  + disabled static libraries by default for real
+  + correctly build static libraries (if enabled)
+  + do run the test suite in %%check
+  + ensure the build fails if there are unpackaged files
+- gear: removed unused tags
+
 * Sun Feb 27 2022 Ilya Mashkin <oddity@altlinux.ru> 1.3.6-alt1
 - 1.3.6
 - Update License tag
