@@ -14,7 +14,7 @@ BuildRequires: /usr/bin/python3 gcc-c++ perl(JSON.pm) perl(Net/SSH.pm) unzip
 
 Name:          openpgm
 Version:       5.3.128
-Release:       alt1_2
+Release:       alt1_4
 Summary:       An implementation of the PGM reliable multicast protocol
 Group:         System/Libraries
 # The license is LGPLv2.1
@@ -23,6 +23,7 @@ URL:           https://github.com/steve-o/openpgm
 Source0:       https://github.com/steve-o/%{name}/archive/release-%{uver}.zip
 Patch1:        openpgm-autoconf.patch
 BuildRequires: perl
+BuildRequires: bash sh
 Source44: import.info
 
 %description
@@ -77,6 +78,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Thu Aug 31 2023 Igor Vlasenko <viy@altlinux.org> 5.3.128-alt1_4
+- update by mgaimport
+
 * Mon Dec 28 2020 Igor Vlasenko <viy@altlinux.ru> 5.3.128-alt1_2
 - new version
 
