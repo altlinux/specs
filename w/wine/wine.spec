@@ -71,7 +71,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -597,14 +597,6 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %if_with set_cap_net_raw
 %files ping
 %_sbindir/wine-cap_net_raw
-
-%post ping
-%_sbindir/wine-cap_net_raw on || :
-
-%preun ping
-if [ $1 = 0 ]; then
-    %_sbindir/wine-cap_net_raw off || :
-fi
 %endif
 
 %files
@@ -844,6 +836,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 31 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.14.1-alt2
+- remove post/preun scripts for wine-ping
+
 * Mon Aug 21 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.14.1-alt1
 - new version (8.14.1) with rpmgs script
 
