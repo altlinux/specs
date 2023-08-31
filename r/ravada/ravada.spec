@@ -5,8 +5,8 @@
 %def_without check
 
 Name: ravada
-Version: 2.0.5
-Release: alt2
+Version: 2.0.6
+Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
 Group: Development/Perl
@@ -184,6 +184,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Thu Aug 31 2023 Andrew A. Vasilyev <andy@altlinux.org> 2.0.6-alt1
+- 2.0.6
+
 * Thu Aug 31 2023 Anton Farygin <rider@altlinux.ru> 2.0.5-alt2
 - added fix for using HDRI version of the ImageMagick
 
