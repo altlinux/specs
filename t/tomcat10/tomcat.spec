@@ -75,7 +75,7 @@ BuildRequires: jpackage-default
 Name: tomcat10
 Epoch: 1
 Version: %major_version.%minor_version.%micro_version
-Release: alt1_jvm11
+Release: alt2_jvm11
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
 
 License: Apache-2.0
@@ -162,7 +162,7 @@ The docs web application for Apache Tomcat.
 %package jsp-%jspspec-api
 Group: Development/Other
 Summary: Apache Tomcat JavaServer Pages v%jspspec API Implementation Classes
-Provides: jsp = %jspspec
+Provides: jsp_%name = %jspspec
 Obsoletes: %name-jsp-2.2-api
 Requires: %name-servlet-%servletspec-api = %epoch:%version-%release
 Requires: %name-el-%elspec-api = %epoch:%version-%release
@@ -187,9 +187,9 @@ Libraries needed to run the Tomcat Web container.
 %package servlet-%servletspec-api
 Group: Development/Other
 Summary: Apache Tomcat Java Servlet v%servletspec API Implementation Classes
-Provides: servlet = %servletspec
-Provides: servlet6
-Provides: servlet3
+Provides: servlet_%name = %servletspec
+Provides: servlet6_%name
+Provides: servlet3_%name
 Obsoletes: %name-servlet-3.1-api
 Conflicts: %tomcatname-servlet-%servletspec-api
 
@@ -199,7 +199,7 @@ Apache Tomcat Servlet API Implementation Classes.
 %package el-%elspec-api
 Group: Development/Other
 Summary: Apache Tomcat Expression Language v%elspec API Implementation Classes
-Provides: el_api = %elspec
+Provides: el_api_%name = %elspec
 Obsoletes: %name-el-2.2-api
 Conflicts: %tomcatname-el-%elspec-api
 
@@ -513,6 +513,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Fri Sep 01 2023 Ilfat Aminov <aminov@altlinux.org> 1:10.1.5-alt2_jvm11
+- change Provides to differ from tomcat 9
+
 * Tue Feb 28 2023 Ilfat Aminov <aminov@altlinux.org> 1:10.1.5-alt1_jvm11
 - tomcat 10.1.5
 
