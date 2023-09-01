@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Removes unused imports and unused variables as reported by pyflakes
@@ -62,6 +62,9 @@ find %buildroot%python3_sitelibdir -name 'test_*' -exec rm -rfv {} \;
 %python3_sitelibdir/*
 
 %changelog
+* Fri Sep 01 2023 Anton Zhukharev <ancieg@altlinux.org> 2.2.1-alt1
+- Updated to 2.2.1.
+
 * Thu Aug 03 2023 Anton Zhukharev <ancieg@altlinux.org> 2.2.0-alt1
 - Built for ALT Sisyphus.
 
