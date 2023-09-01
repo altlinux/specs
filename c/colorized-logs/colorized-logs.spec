@@ -2,7 +2,7 @@
 
 Name: colorized-logs
 Version: 2.6
-Release: alt1
+Release: alt2
 Summary: Tools for logs with ANSI color
 License: MIT
 Group: File tools
@@ -53,5 +53,8 @@ this package gives you:
 %doc LICENSE
 
 %changelog
+* Fri Sep 01 2023 Alexander Makeenkov <amakeenk@altlinux.org> 2.6-alt2
+- Increased release to support update from autoimports.
+
 * Wed Aug 30 2023 Alexander Makeenkov <amakeenk@altlinux.org> 2.6-alt1
 - Initial build for ALT.
