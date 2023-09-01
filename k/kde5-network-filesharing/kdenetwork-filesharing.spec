@@ -3,7 +3,7 @@
 
 Name: kde5-network-filesharing
 Version: 23.04.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -18,9 +18,9 @@ Source10: ru-add.po
 Patch1: alt-allow-guest.patch
 Patch2: alt-uid-min-max.patch
 Patch3: alt-i18n.patch
-Patch4: alt-permissions-helper.patch
-Patch5: alt-max-domain-uid.patch
-Patch6: alt-share-under-domain-user.patch
+Patch4: alt-max-domain-uid.patch
+Patch5: alt-share-under-domain-user.patch
+Patch6: alt-share-group.patch
 
 # Automatically added by buildreq on Wed Jan 13 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 python3-base ruby ruby-stdlibs
@@ -43,7 +43,7 @@ Adds Configuration of Samba sharing for folders in Dolphin.
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p1 -b .i18n
-#%patch4 -p2 -b .permissions
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 
@@ -71,6 +71,9 @@ rm -f po/ru/kfileshare.po.old
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Fri Sep 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt2
+- fix check user group when sharing over samba
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 
