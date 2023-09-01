@@ -1,8 +1,8 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.38.0.6.g7ac405a74c
-Release: alt2
+Version: 2.38.0.11.g1aed90c9c8
+Release: alt1
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -27,12 +27,6 @@ Url: http://www.gnu.org/software/glibc/
 %def_enable multiarch
 %else
 %def_disable multiarch
-%endif
-
-%ifarch aarch64 i586 x86_64
-%def_enable static_pie
-%else
-%def_disable static_pie
 %endif
 
 %define basever 2.34
@@ -373,7 +367,6 @@ pushd %buildtarget
 	--enable-tunables \
 	--enable-stack-protector=strong \
 	--enable-fortify-source=3 \
-	%{?_enable_static_pie:--enable-static-pie} \
 	#
 
 make %PARALLELMFLAGS
@@ -783,6 +776,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Fri Sep 01 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.11.g1aed90c9c8-alt1
+- Updated to glibc-2.38-11-g1aed90c9c8.
+- Enabled ELF DT_HASH for shared objects and the dynamic loader (ALT#47150).
+
 * Mon Aug 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.6.g7ac405a74c-alt2
 - Updated to glibc-2.38-6-g7ac405a74c.
 
