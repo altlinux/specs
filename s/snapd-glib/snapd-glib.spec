@@ -1,9 +1,18 @@
 
+%def_enable soup2
+
+%if_enabled soup2
+%define api %nil
+%define sffx %nil
+%else
+%define api 2
+%define sffx -%{api}
+%endif
 %define sover 1
-%define libsnapd_qt libsnapd-qt%sover
-%define libsnapd_glib libsnapd-glib%sover
+%define libsnapd_qt libsnapd-qt%{sffx}%{sover}
+%define libsnapd_glib libsnapd-glib%{sffx}%{sover}
 Name: snapd-glib
-Version: 1.60
+Version: 1.64
 Release: alt1
 
 Group: System/Libraries
@@ -12,6 +21,7 @@ License: LGPL-2.0-or-later
 Url: https://github.com/snapcore/%name
 
 Source: snapd-glib-%version.tar
+Patch1: alt-opt-soup2.patch
 
 BuildRequires: gtk-doc
 BuildRequires: meson
@@ -22,7 +32,11 @@ BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(json-glib-1.0)
+%if_enabled soup2
 BuildRequires: pkgconfig(libsoup-2.4)
+%else
+BuildRequires: pkgconfig(libsoup-3.0)
+%endif
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Network)
 BuildRequires: pkgconfig(Qt5Qml)
@@ -82,6 +96,9 @@ that use snapd-qt to communicate with snapd.
 
 %prep
 %setup
+%if_enabled soup2
+%patch1 -p1
+%endif
 
 %build
 %meson
@@ -92,40 +109,43 @@ that use snapd-qt to communicate with snapd.
 
 %files -n %libsnapd_glib
 %doc NEWS COPYING*
-%_libdir/libsnapd-glib.so.%sover
-%_libdir/libsnapd-glib.so.*
-%_libdir/girepository-1.0/Snapd-1.typelib
+%_libdir/libsnapd-glib%{sffx}.so.%sover
+%_libdir/libsnapd-glib%{sffx}.so.*
+%_libdir/girepository-1.0/Snapd*.typelib
 
 %files devel
 %doc %_datadir/gtk-doc/html/snapd-glib/
-%_includedir/snapd-glib/
-%_libdir/libsnapd-glib.so
-%_libdir/pkgconfig/snapd-glib.pc
-%_datadir/vala/vapi/snapd-glib.*
-%_datadir/gir-1.0/Snapd-1.gir
+%_includedir/snapd-glib%{sffx}/
+%_libdir/libsnapd-glib%{sffx}.so
+%_libdir/pkgconfig/snapd-glib%{sffx}.pc
+%_datadir/vala/vapi/snapd-glib%{sffx}.*
+%_datadir/gir-1.0/Snapd*.gir
 
 #%files tests
 #%_libexecdir/installed-tests/snapd-glib/*-glib
 #%_datadir/installed-tests/snapd-glib/*-glib.test
 
 %files -n %libsnapd_qt
-%_libdir/libsnapd-qt.so.%sover
-%_libdir/libsnapd-qt.so.*
+%_libdir/libsnapd-qt%{sffx}.so.%sover
+%_libdir/libsnapd-qt%{sffx}.so.*
 
 %files -n qt5-qml-snapd
-%_qt5_qmldir/Snapd/
+%_qt5_qmldir/Snapd%{api}/
 
 %files -n snapd-qt-devel
-%_includedir/snapd-qt
-%_libdir/libsnapd-qt.so
-%_libdir/pkgconfig/snapd-qt.pc
-%_libdir/cmake/Snapd/
+%_includedir/snapd-qt%{sffx}/
+%_libdir/libsnapd-qt%{sffx}.so
+%_libdir/pkgconfig/snapd-qt%{sffx}.pc
+%_libdir/cmake/Snapd%{api}/
 
 #%files -n snapd-qt-tests
 #%_libexecdir/installed-tests/snapd-glib/*-qt
 #%_datadir/installed-tests/snapd-glib/*-qt.test
 
 %changelog
+* Thu Aug 31 2023 Sergey V Turchin <zerg@altlinux.org> 1.64-alt1
+- new version (closes: 47349)
+
 * Fri Jun 03 2022 Sergey V Turchin <zerg@altlinux.org> 1.60-alt1
 - new version
 
