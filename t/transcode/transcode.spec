@@ -31,7 +31,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt15
+Release: alt16
 
 Summary: A linux video stream processing utility
 
@@ -61,6 +61,7 @@ Patch19: transcode-1.1.7-ffmpeg4.patch
 Patch20: transcode-1.1.7-ffmpeg29.patch
 # Debian
 Patch21: transcode-1.7.7-debian-underlinkage.patch
+Patch22: transcode-1.1.7-imagemagick7.patch
 # ALTLinux patches
 Patch96: transcode-1.1.7-libav-10.patch
 Patch98: transcode-1.1.5-textrel.patch
@@ -154,6 +155,7 @@ sed -i s/getline/get_line/ contrib/subrip/subtitleripper/vobsub.c
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 #
 %patch96 -p1
 %patch98 -p2
@@ -271,6 +273,9 @@ export RPM_FILES_TO_LD_PRELOAD_transcode="$(find %buildroot/%_libdir/%name -type
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Fri Sep 01 2023 Anton Farygin <rider@altlinux.ru> 1.1.7-alt16
+- added fix against changes in Imagemagick 7 (based on patch from PLD)
+
 * Fri Dec 02 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.7-alt15
 - rebuilt without LTO
 
