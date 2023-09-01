@@ -4,7 +4,7 @@
 %define stdxx 17
 
 Name: libphonenumber
-Version: 8.13.19
+Version: 8.13.20
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -76,6 +76,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/cmake/%name/
 
 %changelog
+* Fri Sep 01 2023 Yuri N. Sedunov <aris@altlinux.org> 8.13.20-alt1
+- 8.13.20
+
 * Sat Aug 19 2023 Yuri N. Sedunov <aris@altlinux.org> 8.13.19-alt1
 - 8.13.19
 
