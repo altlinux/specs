@@ -1,6 +1,6 @@
 Name: libchm
 Version: 0.40
-Release: alt6
+Release: alt7
 
 Summary: chmlib is a small library designed for accessing MS ITSS files
 License: LGPLv2.1+
@@ -11,6 +11,7 @@ Source: %url/chmlib-%version.tar.bz2
 Patch0: chmlib-0.39-alt-ppc.patch
 Patch1: chmlib-0.40-mcst-e2k-sparc.patch
 Patch2: chmlib-0.40-arm.patch
+Patch3: chmlib-0.40-loongarch64.patch
 
 # Automatically added by buildreq on Wed Feb 14 2007
 BuildRequires: gcc-c++
@@ -48,6 +49,7 @@ This package contains example utility programs that use chmlib.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %configure --enable-examples --disable-static
@@ -70,6 +72,9 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %_bindir/*
 
 %changelog
+* Sun Jul 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.40-alt7
+- fixed build on LoongArch
+
 * Wed Apr 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.40-alt6
 - fixed build on arm arches
 
