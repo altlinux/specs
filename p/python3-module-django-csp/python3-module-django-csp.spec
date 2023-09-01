@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.7
-Release: alt1
+Release: alt2
 
 Summary: Content Security Policy for Django.
 License: BSD-3-Clause
@@ -56,6 +56,10 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 01 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 3.7-alt2
+- fix FTBFS
+  + build from latest upstream commit (git 17d94154)
+
 * Tue Aug 22 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 3.7-alt1
 - Initial build for ALT Linux
 
