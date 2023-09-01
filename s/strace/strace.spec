@@ -1,5 +1,5 @@
 Name: strace
-Version: 6.4
+Version: 6.5
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -41,7 +41,7 @@ purposes.
 %prep
 %setup -n %name-%version-%release
 echo -n %version-%release > .tarball-version
-echo -n 2022 > .year
+echo -n 2023 > .year
 date +%%Y-%%m-%%d > doc/.strace.1.in.date
 date +%%Y-%%m-%%d > doc/.strace-log-merge.1.in.date
 
@@ -63,7 +63,7 @@ mkdir build
 cd build
 %define _configure_script ../configure
 CFLAGS_FOR_BUILD="$RPM_OPT_FLAGS"; export CFLAGS_FOR_BUILD
-%configure %mpers_check #--enable-maintainer-mode
+%configure %mpers_check --enable-bundled=yes #--enable-maintainer-mode
 %make_build
 
 %install
@@ -90,6 +90,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %doc COPYING CREDITS NEWS README doc/README-linux-ptrace
 
 %changelog
+* Fri Sep 01 2023 Dmitry V. Levin <ldv@altlinux.org> 6.5-alt1
+- v6.4 -> v6.5.
+
 * Mon Jun 26 2023 Dmitry V. Levin <ldv@altlinux.org> 6.4-alt1
 - v6.3 -> v6.4.
 
