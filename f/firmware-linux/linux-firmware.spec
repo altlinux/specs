@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230814
+Version: 20230831
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,25 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Fri Sep 01 2023 Cronbuild Service <cronbuild@altlinux.org> 20230831-alt1
+- upstream changes (GIT 6c097314):
+  + check_whence: reformat using python black (thx Mario Limonciello)
+  + i915: Update MTL DMC to v2.16 (thx Gustavo Sousa)
+  + copy-firmware: Introduce 'RawFile' keyword (thx Juerg Haefliger)
+  + copy-firmware: Support additional compressor options (thx Juerg Haefliger)
+  + Update firmware file for Intel Bluetooth AX203 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth AX211 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth AX210 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth AX200 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth AX201 (thx Lokendra Singh)
+  + update firmware for qat_4xxx devices (thx Adam Guerin)
+  + Update AMD SEV firmware (thx John Allen)
+  + amdgpu: update DMCUB to 0.0.181.0 for various AMDGPU ASICs (thx Hamza Mahfooz)
+  + rtw89: 8852b: update fw to v0.29.29.3 (thx Chin-Yen Lee)
+  + rtw89: 8851b: update fw to v0.29.41.2 (thx Chin-Yen Lee)
+  + i915: add GSC 102.0.0.1655 for MTL (thx Daniele Ceraolo Spurio)
+  + amdgpu: DMCUB updates for various AMDGPU asics (thx Wayne Lin)
+
 * Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 20230814-alt1
 - upstream changes (GIT 0e048b06):
   + amdgpu: DMCUB updates for various AMDGPU asics (thx Stylon Wang)
