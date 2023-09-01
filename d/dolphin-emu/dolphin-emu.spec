@@ -9,7 +9,7 @@
 
 Name: dolphin-emu
 Version: 5.0.19870
-Release: alt1
+Release: alt2
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -90,13 +90,16 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %build
 export LDFLAGS="-Wl,--copy-dt-needed-entries"
 
+#Generate Version Strings
+echo "#define SCM_REV_STR \"%git_commit\"
+#define SCM_DESC_STR \"%git_version\"
+#define SCM_BRANCH_STR \"master\"
+#define SCM_IS_MASTER 1
+#define SCM_DISTRIBUTOR_STR \"ALT Linux Team\"
+#define SCM_UPDATE_TRACK_STR \"\"" > Source/Core/Common/scmrev.h.in
+
 %cmake .. \
 	-DENABLE_LTO:BOOL=TRUE \
-	-DUSE_SHARED_ENET:BOOL=TRUE \
-	-DDOLPHIN_WC_DESCRIBE:STRING="%git_version" \
-	-DDOLPHIN_WC_REVISION:STRING="%git_commit" \
-	-DDOLPHIN_WC_BRANCH:STRING="master" \
-	-DDISTRIBUTOR:STRING="ALT Linux Team" \
 	-Wno-dev
 
 %cmake_build
@@ -116,6 +119,9 @@ export LDFLAGS="-Wl,--copy-dt-needed-entries"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Fri Sep 01 2023 Nazarov Denis <nenderus@altlinux.org> 5.0.19870-alt2
+- Fix version strings
+
 * Thu Aug 31 2023 Nazarov Denis <nenderus@altlinux.org> 5.0.19870-alt1
 - Version 5.0-19870
 
