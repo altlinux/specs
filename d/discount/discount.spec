@@ -1,17 +1,19 @@
 %define sover 0
 
 Name: discount
-Version: 2.2.3a
-Release: alt1.git.13.gddf8b6f
+Version: 2.2.7d
+Release: alt1
 
 Summary: A implementation of John Gruber's Markdown markup language.
-License: BSD
+# BSD, BSD-style, BSD-4-Clause-UC ...
+License: BSD-style
 Group: Text tools
 Url: http://www.pell.portland.or.us/~orc/Code/discount/
 
 Source: %name-%version.tar
 Source44: %name.watch
-Patch: %name-build-alt.patch
+Patch: %name-%version-%release.patch
+Patch1: %name-2.2.7d-alt-no-ldconfig.patch
 
 Requires: lib%name = %EVR
 
@@ -40,6 +42,7 @@ This package contains development files of DISCOUNT.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 # non-GNU configure
@@ -47,31 +50,44 @@ This package contains development files of DISCOUNT.
 CFLAGS="%optflags" ./configure.sh \
 	--prefix=%_prefix \
 	--libdir=%_libdir \
-	--enable-all-features
-%make SOVER=0
-
-%check
-%make test LD_LIBRARY_PATH=%buildroot%_libdir
+	--shared \
+	--pkg-config
+%nil
+%make
 
 %install
-mkdir -p %buildroot/%_bindir
-%make DESTDIR=%buildroot install.everything SOVER=0
+#mkdir -p %buildroot/%_bindir
+%make DESTDIR=%buildroot install.everything
+
+%check
+LD_LIBRARY_PATH=%buildroot%_libdir %make test
+
 
 %files
-%_bindir/*
-%_man1dir/*
-%_man3dir/*
-%_man7dir/*
+%_bindir/makepage
+%_bindir/markdown
+%_bindir/mkd2html
+%_bindir/theme
+%_man1dir/makepage.1*
+%_man1dir/markdown.1*
+%_man1dir/mkd2html.1*
+%_man1dir/theme.1*
+%_man7dir/markdown.7*
+%_man7dir/mkd-extensions.7*
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/libmarkdown.so.*
 
 %files -n lib%name-devel
-%_includedir/*
-%_pkgconfigdir/*
-%_libdir/*.so
+%_includedir/mkdio.h
+%_pkgconfigdir/libmarkdown.pc
+%_libdir/libmarkdown.so
+%_man3dir/*
 
 %changelog
+* Thu Aug 31 2023 Yuri N. Sedunov <aris@altlinux.org> 2.2.7d-alt1
+- 2.2.7d
+
 * Wed Mar 14 2018 Ildar Mulyukov <ildar@altlinux.ru> 2.2.3a-alt1.git.13.gddf8b6f
 - new version
 
