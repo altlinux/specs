@@ -13,7 +13,7 @@
 
 Name: kronosnet
 Summary: Multipoint-to-Multipoint VPN daemon
-Version: 1.25
+Version: 1.26
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: Networking/Other
@@ -206,7 +206,7 @@ cp .version .tarball-version
 
 %build
 %autoreconf
-
+export CFLAGS_FOR_BUILD="%optflags"
 %configure \
 	--enable-man \
 	%{?_enable_sctp:--enable-libknet-sctp} \
@@ -313,6 +313,9 @@ rm -rf %buildroot/usr/share/doc/kronosnet
 %files -n libknet1-plugins-all
 
 %changelog
+* Mon Aug 21 2023 Alexey Shabalin <shaba@altlinux.org> 1.26-alt1
+- 1.26
+
 * Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.25-alt1
 - 1.25
 
