@@ -8,7 +8,7 @@
 
 Name: fontconfig
 Version: 2.14.2
-Release: alt7
+Release: alt8
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
@@ -90,7 +90,7 @@ install -Dp -m755 %SOURCE1 %buildroot%_sysconfdir/firsttime.d/%name
 install -Dp -m755 %SOURCE2 %buildroot%_rpmlibdir/%name.filetrigger
 
 for f in $(ls %buildroot%_datadir/%name/conf.avail/1*.conf | sed -ne 's|\(.*/\)\(.*conf\)|\2|p'); do
-	ln -sf ../../../%_datadir/%name/conf.avail/$f %buildroot%_sysconfdir/fonts/conf.d/$f
+	ln -sf ../../..%_datadir/%name/conf.avail/$f %buildroot%_sysconfdir/fonts/conf.d/$f
 done
 
 # add compatibility symlinks
@@ -143,11 +143,11 @@ fi
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-yes-antialias.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting-full.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-scale-bitmap-fonts.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-sub-pixel-rgb.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/11-lcdfilter-default.conf
 %ghost %_sysconfdir/fonts/conf.d/10-autohint.conf
 %ghost %_sysconfdir/fonts/conf.d/10-no-antialias.conf
-%ghost %_sysconfdir/fonts/conf.d/10-scale-bitmap-fonts.conf
 %ghost %_sysconfdir/fonts/conf.d/10-hinting-slight.conf
 %ghost %_sysconfdir/fonts/conf.d/10-hinting-medium.conf
 %ghost %_sysconfdir/fonts/conf.d/10-hinting-none.conf
@@ -188,6 +188,9 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Fri Sep 01 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt8
+- enable scaling bitmap fonts by default (closes: 43880)
+
 * Tue Apr 25 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt7
 - return adding xmlcatalog entry to post-scripts
 
