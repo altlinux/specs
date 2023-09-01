@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.0.9
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: Library implementing the Brotli compression algorithm
 Group: Development/C++
@@ -13,8 +13,8 @@ Url: http://daniel.haxx.se/blog/2015/09/30/libbrotli-is-brotli-in-lib-form/
 # Source-url: https://github.com/google/brotli/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++
-BuildRequires: rpm-macros-cmake cmake ctest
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake ctest
 
 %description
 Brotli is a generic-purpose lossless compression algorithm that
@@ -130,6 +130,9 @@ rm -f %buildroot%_libdir/*.a
 %doc README.md LICENSE CONTRIBUTING.md
 
 %changelog
+* Thu Aug 31 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.9-alt2
 - fixed pc-files (ALT #38913)
 
