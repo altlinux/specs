@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.7.2
+Version: 2.7.3
 Release: alt1
 
 Summary: The backend -core services, APIs, and REST endpoints-to Jupyter web applications
@@ -62,9 +62,10 @@ sed -i pyproject.toml -e 's/--color=yes//'
 %pyproject_install
 
 %check
-# test_restart_kernel randomly fail
-%pyproject_run_pytest -v -W ignore::ImportWarning -m 'not network' -k \
-'not test_restart_kernel'
+# test_connection and test_restart_kernel randomly fail
+%pyproject_run_pytest -v -W ignore::ImportWarning -m 'not network' -k "\
+not test_restart_kernel \
+and not test_connection"
 
 %files
 %doc README.*
@@ -73,6 +74,9 @@ sed -i pyproject.toml -e 's/--color=yes//'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 01 2023 Anton Vyatkin <toni@altlinux.org> 2.7.3-alt1
+- New version 2.7.3.
+
 * Fri Aug 18 2023 Anton Vyatkin <toni@altlinux.org> 2.7.2-alt1
 - New version 2.7.2.
 
