@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.15
+Version: 0.4.16
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -96,6 +96,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Fri Sep 01 2023 Anton Golubev <golubevan@altlinux.org> 0.4.16-alt1
+- fix bug when changing background in KCM module
+
 * Thu Aug 31 2023 Anton Golubev <golubevan@altlinux.org> 0.4.15-alt1
 - create a prompt queue (Closes: 47377)
 - update thumbnail
