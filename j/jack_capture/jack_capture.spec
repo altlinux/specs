@@ -3,7 +3,7 @@
 
 Name: jack_capture
 Version: 0.9.73
-Release: alt2.20230104
+Release: alt3.20230104
 Summary: Record sound files with JACK
 Group: Sound
 # As explained in the COPYING file,
@@ -19,6 +19,8 @@ Source: http://archive.notam02.no/arkiv/src/%name-%version.tar.gz
 # since there is no upstream bugtracker.
 Source1: %name.desktop
 Source2: %name.png
+
+Patch: %name-%version-get_ldflags_from_jack_pc.patch
 
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
@@ -38,7 +40,7 @@ file, but it can do a number of other operations as well.
 
 %prep
 %setup
-#patch -p1
+%autopatch -p1
 
 # No need to look for the c++ compiler
 sed -i '/CPP/d' Makefile
@@ -64,6 +66,9 @@ install -pm 644 %SOURCE2 %buildroot/%_iconsdir/hicolor/48x48/apps/
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Sep 01 2023 Anton Midyukov <antohami@altlinux.org> 0.9.73-alt3.20230104
+- fix build with pipewire-jack-libs-devel
+
 * Tue Aug 22 2023 Anton Midyukov <antohami@altlinux.org> 0.9.73-alt2.20230104
 - new snapshot
 - cleanup spec
