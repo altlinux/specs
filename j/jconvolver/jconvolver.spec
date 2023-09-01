@@ -5,13 +5,13 @@
 Summary: Real-time Convolution Engine
 Name: jconvolver
 Version: 1.0.3
-Release: alt2
+Release: alt3
 License: GPLv2+
 Group: Sound
 Url: https://kokkinizita.linuxaudio.org
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: https://kokkinizita.linuxaudio.org/downloads/%name-%version.tar.bz2
+Patch: jconvolver-1.0.3-get_ldflags_from_jack_pc.patch
 
 Obsoletes: jace <= 0.2.0
 Provides: jace = %EVR
@@ -20,7 +20,7 @@ Provides: jconv = %EVR
 
 BuildRequires: gcc-c++
 BuildRequires: clthreads-devel
-BuildRequires: jackit-devel
+BuildRequires: pkgconfig(jack)
 BuildRequires: libsndfile-devel
 BuildRequires: zita-convolver-devel >= 4.0.0
 
@@ -32,6 +32,7 @@ diagonal) matrices. Unused matrix elements do not take any CPY time.
 
 %prep
 %setup
+%autopatch -p1
 
 # fix paths of configuration files
 find config-files/ -name \*.conf \
@@ -40,6 +41,9 @@ find config-files/ -name \*.conf \
 
 # Fix optflags
 %__subst 's|-march=native|%optflags|' source/Makefile
+
+# Fix for build with pipewire
+%__subst "s|-ljack|$(pkg-config --libs jack)|" source/Makefile
 
 %build
 %make_build -C source
@@ -57,6 +61,10 @@ cp -a config-files/* %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Fri Sep 01 2023 Anton Midyukov <antohami@altlinux.org> 1.0.3-alt3
+- rebuild with pipewire-jack-libs-devel
+- clean Packager
+
 * Fri Aug 16 2019 Anton Midyukov <antohami@altlinux.org> 1.0.3-alt2
 - fix optflags
 
