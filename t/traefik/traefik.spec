@@ -4,7 +4,7 @@
 %def_with prebuild_webui
 
 Name: traefik
-Version: 2.10.3
+Version: 2.10.4
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -16,6 +16,7 @@ Patch: %name-%version-%release.patch
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
+BuildRequires: golang >= 1.21
 %if_without prebuild_webui
 BuildRequires: npm yarn
 BuildRequires: node node-devel node-gyp node-sass
@@ -145,6 +146,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Fri Sep 01 2023 Alexey Shabalin <shaba@altlinux.org> 2.10.4-alt1
+- 2.10 branch stapshot
+
 * Wed Jul 12 2023 Alexey Shabalin <shaba@altlinux.org> 2.10.3-alt1
 - 2.10.3
 
