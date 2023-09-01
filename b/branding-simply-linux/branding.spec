@@ -16,7 +16,7 @@
 %define xfwm4_compositing false
 %endif
 
-%define def_desktop_wallpaper vladstudio_skyline_16x9_2560x1440.jpg
+%define def_desktop_wallpaper slinux_commander_islands_16x9_2560x1440.png
 
 # NOTE: Helper's name must be one of xfce4-settings helpers.
 
@@ -69,7 +69,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.1.900
+Version: 10.1.990
 Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -82,6 +82,9 @@ BuildRequires: gfxboot >= 4
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
 BuildRequires: qt5-base-devel
+
+# for licenses
+BuildRequires: distro-licenses >= 1.3-alt1
 
 BuildRequires: ImageMagick fontconfig bc
 
@@ -337,7 +340,8 @@ Some system settings for Simply Linux.
 
 %prep
 %setup -q
-
+cp -a /usr/share/distro-licenses/ALT_Simply_License/license.ru.html.in notes/
+cp -a /usr/share/distro-licenses/ALT_Simply_License/license.all.html.in notes/
 
 %build
 autoconf
@@ -347,8 +351,6 @@ make
 %install
 %makeinstall
 
-%define data_cur_dir %_datadir/branding-data-current
-mkdir -p %buildroot%data_cur_dir
 
 #graphics
 mkdir -p %buildroot/%_datadir/design/{%theme,backgrounds}
@@ -383,10 +385,7 @@ done
 pushd notes
 %makeinstall
 popd
-ln -s license.ru.html %buildroot%data_cur_dir/alt-notes/license.uk.html
-for r in %buildroot%data_cur_dir/alt-notes/license.*.html; do
-  touch %buildroot%_datadir/alt-notes/"${r##*/}"
-done
+ln -s license.ru.html %buildroot%_datadir/alt-notes/license.uk.htm
 
 #slideshow
 mkdir -p %buildroot/usr/share/install2/slideshow
@@ -445,12 +444,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 [ "$1" -eq 1 ] || exit 0
 subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
-#notes
-%post notes
-if ! [ -e %_datadir/alt-notes/license.all.html ]; then
-	cp -a %data_cur_dir/alt-notes/license.*.html %_datadir/alt-notes/
-fi
-
 #graphics
 %post graphics
 [ -e %_datadir/design/slinux/backgrounds/default.png ] || \
@@ -494,11 +487,7 @@ fi
 %_sysconfdir/buildreqs/packages/ignore.d/*
 
 %files notes
-%dir %data_cur_dir
-%data_cur_dir/alt-notes
-%_datadir/alt-notes/livecd-*
-%_datadir/alt-notes/release-notes.*
-%ghost %config(noreplace) %_datadir/alt-notes/license.*.html
+%_datadir/alt-notes/*
 
 %files xfce-settings
 %_sysconfdir/X11/profile.d/zdg-move-templates.sh
@@ -540,6 +529,20 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Fri Sep 01 2023 Mikhail Efremov <sem@altlinux.org> 10.1.990-alt1
+- slideshow: Update slides for 10.2.
+- bootsplash,graphics: Update images for SL-10.2.
+- system-settings: Don't use user background in the
+  lightdm-gtk-greeter.
+- backgrounds10: Set Commander Islands wallpaper as default.
+- backgrounds10: Add Commander Islands wallpapers.
+- notes: Always update licenses.
+- notes: Use licenses from distro-licenses package.
+- xfce-settings: Increased category icons size in the menu.
+- xfce-settings: Update whiskermenu config.
+- xfce-settings: Disable item descriptions in the menu.
+- graphics: Drop faces.
+
 * Tue May 30 2023 Mikhail Efremov <sem@altlinux.org> 10.1.900-alt1
 - os-release.in: Update HOME_URL.
 - menu: Fix helpers names.
