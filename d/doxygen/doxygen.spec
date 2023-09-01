@@ -1,5 +1,5 @@
 Name: doxygen
-Version: 1.9.7
+Version: 1.9.8
 Release: alt1
 Epoch: 1
 
@@ -131,6 +131,9 @@ cd BUILD && make tests
 %exclude %_man1dir/doxy[is]*
 
 %changelog
+* Fri Sep 01 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.9.8-alt1
+- 1.9.8
+
 * Fri Aug 25 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.9.7-alt1
 - 1.9.7
 
