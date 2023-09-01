@@ -1,6 +1,6 @@
 Name: cataclysm-dda
-Version: 0.F.3
-Release: alt3
+Version: 0.G
+Release: alt2
 
 Summary: Turn-based survival game set in a post-apocalyptic world
 License: CC-BY-SA-3.0 and GPLv2+ and OFL-1.1 and BSL-1.0 and Zlib and MIT and BSD-3-Clause
@@ -11,11 +11,18 @@ Vcs: https://github.com/CleverRaven/Cataclysm-DDA.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-# Patch from upstream git
-Patch1: fix_compile_error.patch
+Patch1: gcc13-keyword-requires.patch
+Patch2: gcc13-dangling-reference-warning.patch
+Patch3: gcc13-cstdint.patch
 
 BuildRequires: gcc-c++ libncursesw-devel
 BuildRequires: libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libfreetype-devel
+
+# Comment from Debian package:
+# Upstream maintainer confirmed in IRC and issue tracker that
+# 32bit is not supported and they don't have resource for that.
+# https://github.com/CleverRaven/Cataclysm-DDA/issues/64504#issuecomment-1481920922
+ExcludeArch: %arm i586
 
 %define _unpackaged_files_terminate_build 1
 
@@ -58,7 +65,6 @@ This package contains the text-only ncurses-based interface.
 Summary: Data files for %name-ncurses
 Group: Games/Adventure
 BuildArch: noarch
-Requires: %name-ncurses = %EVR
  
 %description data
 Data files for %name-ncurses.
@@ -85,7 +91,6 @@ This package contains version with gfx and sound.
 Summary: Data files for %name-sdl
 Group: Games/Adventure
 BuildArch: noarch
-Requires: %name-sdl = %EVR
 Requires: %name-data = %EVR
  
 %description sdl-data
@@ -94,18 +99,24 @@ Data files for %name-sdl.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 %ifarch %e2k
 # unsupported as of lcc 1.25.19
 sed -i '/-Wodr/d' Makefile
 %endif
-
-%patch1 -p1
 
 %build
 %ifarch %e2k
 # src/rotatable_symbols.cpp:26
 %add_optflags -Wno-error=unused-function
 %endif
+
+%ifarch ppc64le
+%add_optflags -mabi=ieeelongdouble
+%endif
+
 export CXXFLAGS="%optflags"
 # ncurses version
 # Don't build tests, they will be built with SDL version
@@ -156,6 +167,17 @@ LC_ALL=C.UTF-8 make PCH=0 check
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Sep 01 2023 Mikhail Efremov <sem@altlinux.org> 0.G-alt2
+- Dropped dependecies on arch-packages in data subpacakges.
+- Disabled build for 32bit architectures (not supported by upstream).
+- Disabled broken test.
+- Fixed build with gcc13.
+
+* Thu Mar 02 2023 Mikhail Efremov <sem@altlinux.org> 0.G-alt1
+- Fixed version string.
+- Dropped obsoleted patch.
+- Updated to 0.G "Gaiman".
+
 * Mon Jul 11 2022 Mikhail Efremov <sem@altlinux.org> 0.F.3-alt3
 - Fixed build with gcc12 (patch from upstream).
 
