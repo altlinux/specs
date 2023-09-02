@@ -1,8 +1,10 @@
+%define git_commit 2fb55450610a4d10479a1eed1408f905d79318e3
+%define git_rev 7859
 %define sover 0.10
 
 Name: mgba
 Version: %sover.2
-Release: alt1
+Release: alt2
 
 Summary: Game Boy Advance emulator
 License: MPL-2.0
@@ -72,6 +74,12 @@ This package provides development files for library of mGBA.
 %setup
 
 %build
+# Generate version strings
+sed -i -e 's/${GIT_COMMIT}/%git_commit/' src/core/version.c.in
+sed -i -e 's/${GIT_COMMIT_SHORT}/%(c=%{git_commit}; echo ${c:0:8})/' src/core/version.c.in
+sed -i -e 's/${GIT_BRANCH}/%version/' src/core/version.c.in
+sed -i -e 's/${GIT_REV}/%git_rev/' src/core/version.c.in
+
 %add_optflags -Wno-error=return-type
 %cmake -Wno-dev
 %cmake_build
@@ -100,5 +108,8 @@ This package provides development files for library of mGBA.
 %_libdir/lib%name.so
 
 %changelog
+* Sat Sep 02 2023 Nazarov Denis <nenderus@altlinux.org> 0.10.2-alt2
+- Fix version strings
+
 * Sat Sep 02 2023 Nazarov Denis <nenderus@altlinux.org> 0.10.2-alt1
 - Initial build for ALT Linux
