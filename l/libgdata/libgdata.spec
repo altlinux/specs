@@ -15,7 +15,7 @@
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Library for the GData protocol
 Group: System/Libraries
@@ -27,19 +27,20 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-0.18.1-fc-gcr-4.patch
 
 %define glib_ver 2.44
 %define soup_ver 2.42
 %define goa_ver 3.8
 %define uhttpmock_ver 0.5.0
 
-BuildRequires(pre): meson
-BuildRequires: gtk-doc
-BuildRequires: glib2-devel >= %glib_ver libgdk-pixbuf-devel libgtk+3-devel liboauth-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gtk-doc
+BuildRequires: glib2-devel >= %glib_ver libgdk-pixbuf-devel libgtk+3-devel
 BuildRequires: libjson-glib-devel libuhttpmock-devel >= %uhttpmock_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libjson-glib-gir-devel libuhttpmock-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
-%{?_enable_gnome:BuildRequires: gcr-libs-devel libxml2-devel libsoup-gnome-devel >= %soup_ver libsoup-gnome-gir-devel}
+%{?_enable_gnome:BuildRequires: gcr4-libs-devel libxml2-devel libsoup-gnome-devel >= %soup_ver libsoup-gnome-gir-devel}
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver libgnome-online-accounts-gir-devel}
 
 %description
@@ -50,7 +51,7 @@ the common Google services, and has full asynchronous support.
 %package gir
 Summary: GObject introspection data for the GData library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GData library.
@@ -58,7 +59,7 @@ GObject introspection data for the GData library.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -81,7 +82,7 @@ This package contains development documentation for the %name.
 Summary: GObject introspection devel data for the GData library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release %name-devel = %version-%release
+Requires: %name-gir = %EVR %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GData library.
@@ -96,6 +97,7 @@ the functionality of the installed %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson \
@@ -111,8 +113,7 @@ the functionality of the installed %name.
 %find_lang %_name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %_name.lang
 %_libdir/*.so.*
@@ -145,6 +146,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Jul 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt2
+- rebuild against gcr-4
+
 * Fri Mar 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt1
 - 0.18.1
 
