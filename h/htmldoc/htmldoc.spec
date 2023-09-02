@@ -2,7 +2,7 @@
 
 Name: htmldoc
 Version: 1.9.16
-Release: alt1_git_929606c_1
+Release: alt2
 Epoch: 1
 
 License: GPL with exceptions (see COPYING.txt)
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Source2: htmldoc.png
 
 Patch1: htmldoc-1.9.16-pd-pdf.patch
+Patch2: htmldoc-1.9.16-silence-some-warnings.patch
 
 BuildRequires(pre): fontconfig >= 2.4.2 rpm-build-fonts
 Requires: fonts-type1-htmldoc
@@ -46,11 +47,19 @@ from Irmologion project.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
+sed -i 's/-D_FORTIFY_SOURCE=2/-D_FORTIFY_SOURCE=3/g' configure.ac
 
 %build
-# %%autoreconf
+# get fresh auxilary files from current autoconf
+cp -fv /usr/share/autoconf/build-aux/config.{guess,sub} ./
+
+# upstream says autoheader and automake break their build system
 autoconf
+
+%add_optflags -Wno-error=char-subscripts -Wno-error=unused-result
+
 export LDFLAGS="-Wl,-rpath-link -Wl,%_x11libdir"
 %configure \
   --disable-localjpeg  \
@@ -157,6 +166,10 @@ fi
 %_datadir/%name/fonts
 
 %changelog
+* Fri Sep 01 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.9.16-alt2
+- sync sources with 1.9.16 release
+- fix FTBFS
+
 * Sun Sep 18 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:1.9.16-alt1_git_929606c_1
 - Correct desctop file
 
