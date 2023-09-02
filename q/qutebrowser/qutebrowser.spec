@@ -1,7 +1,7 @@
 %global srcname qutebrowser
 
 Name: %srcname
-Version: 2.5.4
+Version: 3.0.0
 Release: alt1
 Summary: A keyboard-driven, vim-like browser based on PyQt5 and QtWebEngine
 License: GPLv3
@@ -10,9 +10,14 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://www.qutebrowser.org
 Source0: %srcname-%version.tar
 BuildArch: noarch
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: asciidoc asciidoc-a2x
 BuildRequires: desktop-file-utils python3-module-setuptools rpm-build-python3
+BuildRequires: pyproject-build rpm-macros-python3 python3-module-PyQt5
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 #Requires: qt5-qtbase
 #Requires: qt5-qtdeclarative
 #Requires: python3-module-setuptools
@@ -46,10 +51,13 @@ a2x -f manpage doc/qutebrowser.1.asciidoc
 # then replace it with '#!/usr/bin/python3' (if it's the 1st line).
 find . -type f -iname "*.py" -exec sed -i '1s_^#!/usr/bin/env python3$_#!/usr/bin/python3_' {} +
 
-%python3_build
+
+%pyproject_build
+#python3_build
 
 %install
-%python3_install
+%pyproject_install
+#python3_install
 
 # install .desktop file
 desktop-file-install \
@@ -62,10 +70,10 @@ desktop-file-install \
 install -Dm644 doc/%srcname.1 -t %buildroot%_mandir/man1
 
 # Install icons
-install -Dm644 icons/qutebrowser.svg \
+install -Dm644 qutebrowser/icons/qutebrowser.svg \
 	-t "%buildroot%_datadir/icons/hicolor/scalable/apps"
 for i in 16 24 32 48 64 128 256 512; do
-	install -Dm644 "icons/qutebrowser-${i}x${i}.png" \
+	install -Dm644 "qutebrowser/icons/qutebrowser-${i}x${i}.png" \
 		"%buildroot%_datadir/icons/hicolor/${i}x${i}/apps/qutebrowser.png"
 done
 
@@ -78,7 +86,7 @@ find %buildroot -size 0 -delete
 
 %files
 %doc README.asciidoc doc/changelog.asciidoc doc/img/* 
-%python3_sitelibdir/%srcname-%version-py?.*.egg-info
+%python3_sitelibdir/%srcname-%version.dist-info
 %python3_sitelibdir/%srcname
 %_bindir/%srcname
 %_datadir/applications/org.%srcname.%srcname.desktop
@@ -94,6 +102,9 @@ find %buildroot -size 0 -delete
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+* Sat Sep 02 2023 Ilya Mashkin <oddity@altlinux.ru> 3.0.0-alt1
+- 3.0.0
+
 * Sat Mar 18 2023 Ilya Mashkin <oddity@altlinux.ru> 2.5.4-alt1
 - 2.5.4
 
