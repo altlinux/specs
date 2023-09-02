@@ -4,8 +4,8 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.30
-Release: alt2
+Version: 2.5.31
+Release: alt1
 
 Group: System/Libraries
 Summary: Library to access to digital cameras
@@ -228,6 +228,9 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Sat Sep 02 2023 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.31-alt1
+- 2.5.31
+
 * Mon Jan 23 2023 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.30-alt2
 - updated russian translation, thanks to Maria Shikunova (translation-team at basealt.ru)
 
