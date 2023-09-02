@@ -3,13 +3,12 @@
 # git show-ref --heads --hash upstream/dolphin-emu
 %define git_commit 032c77b462a220016f23c5079e71bb23e0ad2adf
 
-%define mgba_commit 8739b22fbc90fdf0b4f6612ef9c0520f0ba44a51
 %define implot_commit cc5e1daa5c7f2335a9460ae79c829011dc5cef2d
 %define rcheevos_commit d9e990e6d13527532b7e2bb23164a1f3b7f33bb5
 
 Name: dolphin-emu
 Version: 5.0.19870
-Release: alt2
+Release: alt3
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -22,12 +21,12 @@ ExclusiveArch: x86_64 aarch64
 
 # https://github.com/%name/dolphin/archive/%git_commit/dolphin-%git_commit.tar.gz
 Source0: dolphin-%git_commit.tar
-# https://github.com/mgba-emu/mgba/archive/%mgba_commit/mgba-%mgba_commit.tar.gz
-Source1: mgba-%mgba_commit.tar
 # https://github.com/epezent/implot/archive/%implot_commit/implot-%implot_commit.tar.gz
-Source2: implot-%implot_commit.tar
+Source1: implot-%implot_commit.tar
 # https://github.com/RetroAchievements/rcheevos/archive/%rcheevos_commit/rcheevos-%rcheevos_commit.tar.gz
-Source3: rcheevos-%rcheevos_commit.tar
+Source2: rcheevos-%rcheevos_commit.tar
+
+Patch0: dolphin-gbacore-alt.patch
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake
@@ -56,6 +55,7 @@ BuildRequires: libhidapi-devel
 BuildRequires: liblzma-devel
 BuildRequires: liblzo2-devel
 BuildRequires: libmbedtls-compat-devel
+BuildRequires: libmgba-devel
 BuildRequires: libminiupnpc-devel
 BuildRequires: libminizip-ng-compat-devel
 BuildRequires: libpugixml-devel
@@ -81,11 +81,12 @@ Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
 you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %prep
-%setup -n dolphin-%git_commit -b 1 -b 2 -b 3
+%setup -n dolphin-%git_commit -b 1 -b 2
 
-%__mv -Tf ../mgba-%mgba_commit Externals/mGBA/mgba
 %__mv -Tf ../implot-%implot_commit Externals/implot/implot
 %__mv -Tf ../rcheevos-%rcheevos_commit Externals/rcheevos/rcheevos
+
+%patch0 -p1
 
 %build
 export LDFLAGS="-Wl,--copy-dt-needed-entries"
@@ -119,6 +120,9 @@ echo "#define SCM_REV_STR \"%git_commit\"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Sat Sep 02 2023 Nazarov Denis <nenderus@altlinux.org> 5.0.19870-alt3
+- Build with system libmgba
+
 * Fri Sep 01 2023 Nazarov Denis <nenderus@altlinux.org> 5.0.19870-alt2
 - Fix version strings
 
