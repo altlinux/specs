@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN/DistnameInfo.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.008
+Version: 1.009
 Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/U*
 
 %changelog
+* Sun Sep 03 2023 Igor Vlasenko <viy@altlinux.org> 1.009-alt1
+- automated CPAN update
+
 * Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 1.008-alt1
 - automated CPAN update
 
