@@ -1,5 +1,5 @@
 Name: whois
-Version: 5.5.12
+Version: 5.5.18
 Release: alt1
 
 Summary: Intelligent WHOIS client
@@ -33,13 +33,15 @@ using the given salt.
 gzip -9k debian/changelog
 
 %build
+%define BASHCOMPDIR %_datadir/bash-completion/completions
 %make_build \
 	CFLAGS="%optflags $(getconf LFS_CFLAGS)" \
 	CONFIG_FILE=/etc/whois.conf \
+	BASHCOMPDIR=%BASHCOMPDIR \
 	HAVE_ICONV=1
 
 %install
-%make_install install BASEDIR=%buildroot
+%make_install install BASEDIR=%buildroot BASHCOMPDIR=%BASHCOMPDIR
 install -Dpm644 whois.conf %buildroot/etc/whois.conf
 
 %define _unpackaged_files_terminate_build 1
@@ -53,12 +55,18 @@ install -Dpm644 whois.conf %buildroot/etc/whois.conf
 %_bindir/whois
 %_mandir/man?/whois.*
 %config(noreplace) /etc/whois.conf
+%BASHCOMPDIR/whois
 
 %files -n mkpasswd
 %_bindir/mkpasswd
 %_mandir/man?/mkpasswd.*
+%BASHCOMPDIR/mkpasswd
 
 %changelog
+* Sat Jul 22 2023 Dmitry V. Levin <ldv@altlinux.org> 5.5.18-alt1
+- v5.5.12 -> v5.5.18.
+- Packaged bash completions.
+
 * Wed Feb 23 2022 Dmitry V. Levin <ldv@altlinux.org> 5.5.12-alt1
 - v5.5.10 -> v5.5.12.
 
