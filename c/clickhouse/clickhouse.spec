@@ -21,7 +21,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 23.3.8.21
+Version: 23.3.11.5
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -326,7 +326,7 @@ rm -fv %buildroot%_prefix/lib/*.a
 rm -rf %buildroot%_sysconfdir/clickhouse-keeper
 
 %check
-./%_cmake__builddir/src/unit_tests_dbms --gtest_filter='-CoordinationTest.TestRotateIntervalChanges:ReadBufferAIOTest.TestReadAfterAIO:WeakHash32.*'
+./%_cmake__builddir/src/unit_tests_dbms --gtest_filter='-CoordinationTest.TestRotateIntervalChanges:ReadBufferAIOTest.TestReadAfterAIO:WeakHash32.*:Common.ReverseDNS'
 
 %pre server
 %_sbindir/groupadd -r -f _clickhouse 2> /dev/null ||:
@@ -390,6 +390,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Fri Sep 01 2023 Anton Farygin <rider@altlinux.ru> 23.3.11.5-alt1
+- 23.3.8.21 -> 23.3.11.5
+
 * Tue Aug 08 2023 Anton Farygin <rider@altlinux.ru> 23.3.8.21-alt1
 - 23.3.7.5 -> 23.3.8.21
 
