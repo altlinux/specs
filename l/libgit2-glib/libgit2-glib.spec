@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.1
+%define ver_major 1.2
 %define api_ver 1.0
 
 %def_enable gtk_doc
@@ -15,7 +15,7 @@ Release: alt1
 
 Summary: Git library for GLib
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1
 Url: https://live.gnome.org/Libgit2-glib
 
 %if_disabled snapshot
@@ -66,6 +66,7 @@ Summary: GObject introspection devel data for the Libgit2-glib library
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 Libgit2-glib is a glib wrapper library around the libgit2 git access library.
@@ -134,6 +135,9 @@ sed -i 's/purelib/platlib/' %name/meson.build
 %endif
 
 %changelog
+* Sun Sep 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Mon Jul 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
