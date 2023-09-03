@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1
 
 Summary: Glorious MIME Utility Library
@@ -45,7 +45,7 @@ IETF specifications.
 %package devel
 Summary: Development files for GMime
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development files required for packaging
@@ -54,7 +54,7 @@ GMime-based software.
 %package gir
 Summary: GObject introspection data for the GMime library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GMime library.
@@ -63,8 +63,8 @@ GObject introspection data for the GMime library.
 Summary: GObject introspection devel data for the GMime library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GMime library.
@@ -81,7 +81,7 @@ This package provides development documentation for the GMime library.
 %package devel-static
 Summary: Static GMime libraries
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains development libraries required for packaging
@@ -107,7 +107,7 @@ statically linked GMime-based software.
 %makeinstall_std
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files
 %_libdir/lib%_name-%api_ver.so.*
@@ -135,6 +135,9 @@ statically linked GMime-based software.
 %endif
 
 %changelog
+* Sun Sep 03 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2.14-alt1
+- 3.2.14
+
 * Sat Aug 20 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.13-alt1
 - 3.2.13
 
