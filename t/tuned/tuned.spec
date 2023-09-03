@@ -5,8 +5,8 @@
 %define tuneddir %_prefix/lib/tuned
 
 Name: tuned
-Version: 2.16.0
-Release: alt2
+Version: 2.21.0
+Release: alt1
 
 Summary: A dynamic adaptive system tuning daemon
 
@@ -195,6 +195,14 @@ Requires: %name = %EVR
 %description profiles-postgresql
 Additional tuned profile(s) targeted to PostgreSQL server loads.
 
+%package profiles-openshift
+Group: System/Configuration/Other
+Summary: Additional tuned profile(s) optimized for OpenShift
+Requires: %name = %EVR
+
+%description profiles-openshift
+Additional tuned profile(s) optimized for OpenShift.
+
 %prep
 %setup
 # For systemd-boot kernel-install hook.
@@ -214,6 +222,10 @@ echo 'echo "export tuned_params"' >> 00_tuned
 # For recommend.
 sed -i '/^SYSTEM_RELEASE_FILE/s/system-release-cpe/system-release/' tuned/consts.py
 cp %SOURCE2 recommend.conf
+
+# Remove cargo cult tuna call. See 98f6620 ("ALT: profiles/realtime: Remove
+# tuna(8) call").
+sed -i s/tuna/true/ profiles/realtime/script.sh
 
 %build
 make html PYTHON=%__python3
@@ -248,8 +260,10 @@ rm %buildroot%_man8dir/{diskdevstat,netdevstat,scomes,varnetload}.8*
 
 # Remove cpu-partitioning files, they require Dracut.
 rm %buildroot%_sysconfdir/tuned/cpu-partitioning-variables.conf
+rm %buildroot%_sysconfdir/tuned/cpu-partitioning-powersave-variables.conf
 rm %buildroot%_man7dir/tuned-profiles-cpu-partitioning.7*
 rm -rf %buildroot%tuneddir/cpu-partitioning
+rm -rf %buildroot%tuneddir/cpu-partitioning-powersave
 
 %check
 [ -w /dev/kvm ] && vm-run make test
@@ -336,13 +350,13 @@ fi
 %tuneddir/virtual-host/
 %tuneddir/accelerator-performance/
 %tuneddir/optimize-serial-console/
+%tuneddir/aws/
 
 %config(noreplace) %_sysconfdir/tuned/active_profile
 %config(noreplace) %_sysconfdir/tuned/tuned-main.conf
 %config(noreplace) %_sysconfdir/tuned/profile_mode
 %config(noreplace) %_sysconfdir/tuned/bootcmdline
 %config(noreplace) %_sysconfdir/tuned/post_loaded_profile
-%_sysconfdir/dbus-1/system.d/com.redhat.tuned.conf
 %_sysconfdir/modprobe.d/tuned.conf
 %_tmpfilesdir/tuned.conf
 %_unitdir/tuned.service
@@ -354,6 +368,7 @@ fi
 %_man7dir/tuned-profiles.7*
 %_man8dir/tuned*
 %dir %_datadir/tuned
+%_datadir/dbus-1/system.d/com.redhat.tuned.conf
 %_datadir/tuned/grub2
 %_datadir/polkit-1/actions/com.redhat.tuned.policy
 %_libexecdir/tuned/defirqaffinity*
@@ -394,6 +409,7 @@ fi
 
 %files profiles-sap-hana
 %tuneddir/sap-hana
+%tuneddir/sap-hana-kvm-guest
 %_man7dir/tuned-profiles-sap-hana.7*
 
 %files profiles-mssql
@@ -432,7 +448,9 @@ fi
 %if 0
 %files profiles-cpu-partitioning
 %config(noreplace) %_sysconfdir/tuned/cpu-partitioning-variables.conf
+%config(noreplace) %_sysconfdir/tuned/cpu-partitioning-powersave-variables.conf
 %tuneddir/cpu-partitioning
+%tuneddir/cpu-partitioning-powersave
 %_man7dir/tuned-profiles-cpu-partitioning.7*
 %endif
 
@@ -454,7 +472,16 @@ fi
 %tuneddir/postgresql
 %_man7dir/tuned-profiles-postgresql.7*
 
+%files profiles-openshift
+%tuneddir/openshift
+%tuneddir/openshift-control-plane
+%tuneddir/openshift-node
+%_man7dir//tuned-profiles-openshift.7*
+
 %changelog
+* Sun Sep 03 2023 Vitaly Chikunov <vt@altlinux.org> 2.21.0-alt1
+- Update to v2.21.0 (2023-08-29).
+
 * Wed May 24 2023 Vitaly Chikunov <vt@altlinux.org> 2.16.0-alt2
 - profiles/realtime: Remove tuna(8) call and dependence.
 
