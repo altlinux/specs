@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 9
+%define _php_release_version 10
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -80,7 +80,7 @@ The most common use of PHP coding is probably as a replacement
 for CGI scripts.
 
 %package -n rpm-build-php%_php_suffix-version
-Summary:	RPM helper macros to rebuild PHP7 packages
+Summary:	RPM helper macros to rebuild packages for PHP %_php_suffix
 Provides: rpm-build-php-version = %_php_major.%_php_minor
 Requires: rpm-build-php >= 8.1-alt1
 Group:		Development/Other
@@ -471,6 +471,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Thu Aug 31 2023 Anton Farygin <rider@altlinux.ru> 8.2.10-alt1
+- 8.2.9 -> 8.2.10
+
 * Wed Aug 02 2023 Anton Farygin <rider@altlinux.ru> 8.2.9-alt1
 - 8.2.8 -> 8.2.9
 
