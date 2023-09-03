@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-Abstract
 Name: perl-%dist
-Version: 3.009
+Version: 3.010
 Release: alt1
 
 Summary: unified interface to mail representations
@@ -47,6 +47,9 @@ automatically picked up and used.
 %perl_vendor_privlib/Email
 
 %changelog
+* Sun Sep 03 2023 Igor Vlasenko <viy@altlinux.org> 3.010-alt1
+- automated CPAN update
+
 * Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 3.009-alt1
 - automated CPAN update
 
