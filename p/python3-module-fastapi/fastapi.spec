@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.103.0
+Version: 0.103.1
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -87,6 +87,9 @@ The key features are:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Sep 03 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.103.1-alt1
+- 0.103.0 -> 0.103.1
+
 * Sat Aug 26 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.103.0-alt1
 - 0.102.0 -> 0.103.0
 
