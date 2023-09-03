@@ -2,7 +2,7 @@
 
 Name: py3dephell
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Bunch of tools to control project dependencies and provides
 License: GPLv2
@@ -33,6 +33,11 @@ Group: Development/Python3
 %install
 %pyproject_install
 
+# Sometimes %%python3_sitelibdir can be unavailable
+# but for python3.req.py and python3.prov.py %%_rpmlibdir is always available
+mkdir -p %buildroot%_rpmlibdir
+ln -s -r %buildroot%python3_sitelibdir_noarch/%name %buildroot%_rpmlibdir
+
 %check
 env PYTHONPATH=%buildroot%python3_sitelibdir_noarch python3 -m unittest discover -s tests -v
 
@@ -40,7 +45,12 @@ env PYTHONPATH=%buildroot%python3_sitelibdir_noarch python3 -m unittest discover
 %doc README.md
 %python3_sitelibdir_noarch/%{name}*
 %_bindir/py3*
+%_rpmlibdir/%name
 
 %changelog
+* Fri Sep 01 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.0-alt2
+- Created symlink from %%python3_sitelibdir_noarch/%%name to %%_rpmlibdir
+  to make this python3-package always available for scripts from rpm-build-python3.
+
 * Mon Aug 07 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus.

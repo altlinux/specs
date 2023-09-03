@@ -96,7 +96,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3
 Version: %{pybasever}.4
-Release: alt2
+Release: alt3
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -409,7 +409,6 @@ sed -re "/$begin/,/$end/ {
 
 rm -fr ../build-shared
 mkdir ../build-shared
-%autoreconf
 cp -rl * ../build-shared/
 
 # ======================================================
@@ -417,6 +416,7 @@ cp -rl * ../build-shared/
 # ======================================================
 %build
 build() {
+%autoreconf
 # Improves libpython performance, no effect on static build.
 export CFLAGS_NODIST="-fno-semantic-interposition"
 export LDFLAGS_NODIST="-fno-semantic-interposition"
@@ -1088,6 +1088,9 @@ $(pwd)/python -m test.regrtest \
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Sat Sep 02 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.11.4-alt3
+- Fixed FTBFS with recent autoconf (thx to iv).
+
 * Tue Jun 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.11.4-alt2
 - Changed spec:
   - build with libnsl2-devel for all architectures.

@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.23
+Version: 0.1.24
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -139,6 +139,9 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Wed Aug 30 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.24-alt1
+- Fixed prefixes forming for python3.prov.py and python3.req.py
+
 * Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.23-alt1
 - python3.prov.py:
     + Moved all mechanism of provides-searching to py3dephell.py3prov
