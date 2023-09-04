@@ -3,7 +3,7 @@
 
 Name:     myconnector
 Version:  2.4.4
-Release:  alt1
+Release:  alt2
 
 Summary:  MyConnector - remote desktop client
 License:  GPL-2.0
@@ -45,6 +45,7 @@ Group:   Networking/Remote access
 
 Requires: myconnector = %EVR
 Requires: xinitrc
+Requires: xterm
 
 Provides:  connector-kiosk = %EVR
 Obsoletes: connector-kiosk
@@ -137,6 +138,9 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Mon Sep 04 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4.4-alt2
+- [kiosk] Fixed bugs (xterm needed!) (ALT #44386, #44815, #47181, #47441)
+
 * Mon Aug 21 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4.4-alt1
 - Fixed using password with special symbols
 - Fixed password removing when copying connection
