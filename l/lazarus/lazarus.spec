@@ -3,7 +3,7 @@
 
 Name:    lazarus
 Version: 2.2.6
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -300,6 +300,9 @@ ln -s ../../bin/lazarus %buildroot$LAZARUSDIR/lazarus
 %_libdir/libQt5Pas.so
 
 %changelog
+* Mon Sep 04 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.2.6-alt2
+- Use upstream sources from tag lazarus_2_2_6 (ALT #47097).
+
 * Sun Mar 05 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.2.6-alt1
 - New version.
 
