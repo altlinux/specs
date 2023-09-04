@@ -12,7 +12,7 @@
 
 Name: grub
 Version: 2.06
-Release: alt12
+Release: alt15
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -30,8 +30,6 @@ Source2: gnulib-%version.tar
 Source3: 39_memtest
 Source4: grub.filetrigger
 
-Source5: grub-extras-%version.tar
-
 Source6: grub-autoupdate
 
 Source8: update-grub
@@ -47,110 +45,7 @@ Source14: grub-efi.filetrigger
 
 Source15: sbat.csv.in
 
-Patch0: grub-2.04-os-alt.patch
-Patch1: grub-2.00-sysconfig-path-alt.patch
-Patch2: grub-2.02-altlinux-theme.patch
-Patch4: grub-2.04-os-alt-xen.patch
-Patch5: grub-2.02-debian-disable_floppies.patch
-Patch6: grub-2.04-add-fw_path-variable.patch
-Patch8: grub-2.06-debian-install_signed.patch
-Patch9: grub-2.00-fedora-unrestricted.patch
-Patch10: grub2-stfu.patch
-Patch11: grub-2.02-shift-interrupt-timeout.patch
-Patch13: grub-2.02-check_writes-alt.patch
-Patch14: grub-2.04-alt-luks-use-uuid.patch
-Patch20: grub-2.02-alt-os-prober-compat.patch
-Patch21: grub-2.04-alt-set-default-bootloader_id.patch
-Patch22: grub-2.06-debian-grub-install-extra-removable.patch
-Patch23: grub-2.06-debian-grub-install-removable-shim.patch
-Patch24: grub-2.04-alt-grub-install-no-fallback-for-removable.patch
-Patch25: grub-2.04-alt-add-file-with-Russian-translation.patch
-Patch26: grub-2.04-alt-add-strings-and-translation-for-OS-ALT.patch
-Patch28: grub-2.06-alt-gfxterm-backspace-workaround.patch
-Patch29: grub-2.06-upstream-fs-xfs-Fix-unreadable-filesystem-with-v4-superblock.patch
-Patch30: grub-2.06-upstream-grub-mkconfig-Restore-umask-for-the-grub.cfg.patch
-
-# gnulib adoption
-# see: https://lists.gnu.org/archive/html/grub-devel/2022-03/msg00125.html
-Patch31: grub-2.06-upstream-0001-config.h.in-Use-visual-indentation.patch
-Patch32: grub-2.06-upstream-0002-config-Where-present-ensure-config-util.h-precedes-c.patch
-Patch33: grub-2.06-upstream-0003-gnulib-Drop-fix-base64.patch.patch
-Patch34: grub-2.06-upstream-0004-gnulib-Drop-no-abort.patch.patch
-Patch35: grub-2.06-upstream-0005-gnulib-Update-gnulib-version-and-drop-most-gnulib-pa.patch
-Patch36: grub-2.06-upstream-0006-gnulib-Handle-warnings-introduced-by-updated-gnulib.patch
-Patch37: grub-2.06-upstream-0007-configure-Fix-various-new-autotools-warnings.patch
-Patch38: grub-2.06-upstream-0008-lib-posix_wrap-errno.h-Add-__set_errno-macro.patch
-
-Patch39: grub-2.06-alt-util-grub.d-switch-from-fgrep-to-grep-F.patch
-
-Patch190: grub-2.06-fedora-Rework-how-the-fdt-command-builds.patch
-Patch191: grub-2.06-fedora-Revert-templates-Properly-disable-the-os-prober-by-d.patch
-Patch192: grub-2.06-fedora-Revert-templates-Disable-the-os-prober-by-default.patch
-Patch193: grub-2.06-fedora-blscfg-add-blscfg-module-to-parse-Boot-Loader-Specif.patch
-
-# upstream security patch set 2022-06-07
-# see: https://lists.gnu.org/archive/html/grub-devel/2022-06/msg00035.html
-Patch200: grub-2.06-upstream-0001-loader-efi-chainloader-Simplify-the-loader-state.patch
-Patch201: grub-2.06-upstream-0002-commands-boot-Add-API-to-pass-context-to-loader.patch
-Patch202: grub-2.06-upstream-0003-loader-efi-chainloader-Use-grub_loader_set_ex.patch
-
-Patch203: grub-2.06-upstream-0011-kern-efi-sb-Reject-non-kernel-files-in-the-shim_lock.patch
-Patch204: grub-2.06-upstream-0012-kern-file-Do-not-leak-device_name-on-error-in-grub_f.patch
-
-Patch205: grub-2.06-upstream-0021-video-readers-png-Refuse-to-handle-multiple-image-he.patch
-Patch206: grub-2.06-upstream-0022-video-readers-png-Drop-greyscale-support-to-fix-heap.patch
-Patch207: grub-2.06-upstream-0023-video-readers-png-Avoid-heap-OOB-R-W-inserting-huff-.patch
-Patch208: grub-2.06-upstream-0024-video-readers-png-Sanity-check-some-huffman-codes.patch
-Patch209: grub-2.06-upstream-0025-video-readers-jpeg-Abort-sooner-if-a-read-operation-.patch
-Patch210: grub-2.06-upstream-0026-video-readers-jpeg-Do-not-reallocate-a-given-huff-ta.patch
-Patch211: grub-2.06-upstream-0027-video-readers-jpeg-Refuse-to-handle-multiple-start-o.patch
-Patch212: grub-2.06-upstream-0028-video-readers-jpeg-Block-int-underflow-wild-pointer-.patch
-
-Patch213: grub-2.06-upstream-0031-normal-charset-Fix-array-out-of-bounds-formatting-un.patch
-
-Patch214: grub-2.06-upstream-0041-net-netbuff-Block-overly-large-netbuff-allocs.patch
-Patch215: grub-2.06-upstream-0042-net-dns-Fix-double-free-addresses-on-corrupt-DNS-res.patch
-Patch216: grub-2.06-upstream-0043-net-dns-Don-t-read-past-the-end-of-the-string-we-re-.patch
-Patch217: grub-2.06-upstream-0044-net-tftp-Prevent-a-UAF-and-double-free-from-a-failed.patch
-Patch218: grub-2.06-upstream-0045-net-tftp-Avoid-a-trivial-UAF.patch
-Patch219: grub-2.06-upstream-0046-net-http-Do-not-tear-down-socket-if-it-s-already-bee.patch
-Patch220: grub-2.06-upstream-0047-net-http-Fix-OOB-write-for-split-http-headers.patch
-Patch221: grub-2.06-upstream-0048-net-http-Error-out-on-headers-with-LF-without-CR.patch
-
-Patch222: grub-2.06-upstream-0051-fs-f2fs-Do-not-read-past-the-end-of-nat-bitmap.patch
-Patch223: grub-2.06-upstream-0052-fs-f2fs-Do-not-copy-file-names-that-are-too-long.patch
-Patch224: grub-2.06-upstream-0053-fs-btrfs-Fix-several-fuzz-issues-with-invalid-dir-it.patch
-Patch225: grub-2.06-upstream-0054-fs-btrfs-Fix-more-ASAN-and-SEGV-issues-found-with-fu.patch
-Patch226: grub-2.06-upstream-0055-fs-btrfs-Fix-more-fuzz-issues-related-to-chunks.patch
-
-Patch227: grub-2.06-upstream-0061-net-ip-Do-IP-fragment-maths-safely.patch
-
-# upstream security patch set 2022-11-15
-# see: https://lists.gnu.org/archive/html/grub-devel/2022-11/msg00059.html
-Patch230: grub-2.06-upstream-font-fixes-0001-font-Fix-size-overflow-in-grub_font_get_glyph_intern.patch
-Patch231: grub-2.06-upstream-font-fixes-0002-font-Fix-several-integer-overflows-in-grub_font_cons.patch
-Patch232: grub-2.06-upstream-font-fixes-0003-font-Remove-grub_font_dup_glyph.patch
-Patch233: grub-2.06-upstream-font-fixes-0004-font-Fix-integer-overflow-in-ensure_comb_space.patch
-Patch234: grub-2.06-upstream-font-fixes-0005-font-Fix-integer-overflow-in-BMP-index.patch
-Patch235: grub-2.06-upstream-font-fixes-0006-font-Fix-integer-underflow-in-binary-search-of-char-.patch
-# Do not apply the following patch as it forbids loading fonts not embedded in the efi image
-# if Secure Boot  enabled.  This patch  only reduces the attack  surface [1], but  no actual
-# vulnerabilities have been discovered.
-# Come  back to this  when there  will be ability to sign and load external fonts (ex. [2]).
-# [1] https://lists.gnu.org/archive/html/grub-devel/2022-11/msg00067.html
-# [2] https://lists.gnu.org/archive/html/grub-devel/2022-12/msg00070.html
-#
-# Patch236: grub-2.06-upstream-font-fixes-0007-kern-efi-sb-Enforce-verification-of-font-files.patch
-Patch237: grub-2.06-upstream-font-fixes-0008-fbutil-Fix-integer-overflow.patch
-Patch238: grub-2.06-upstream-font-fixes-0009-font-Fix-an-integer-underflow-in-blit_comb.patch
-Patch239: grub-2.06-upstream-font-fixes-0010-font-Harden-grub_font_blit_glyph-and-grub_font_blit_.patch
-Patch240: grub-2.06-upstream-font-fixes-0011-font-Assign-null_font-to-glyphs-in-ascii_font_glyph.patch
-Patch241: grub-2.06-upstream-font-fixes-0012-normal-charset-Fix-an-integer-overflow-in-grub_unico.patch
-
-# clean boot patch set
-Patch1000: grub-2.06-fedora-0023-Don-t-write-messages-to-the-screen.patch
-Patch1001: grub-2.06-fedora-0024-Don-t-print-GNU-GRUB-header.patch
-Patch1002: grub-2.06-fedora-0039-Don-t-emit-Booting-.-message.patch
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
@@ -291,103 +186,11 @@ when one can't disable it easily, doesn't want to, or needs not to.
 This package enables EFI signature verification.
 
 %prep
-%setup -b 2 -b 5
+%setup -b 2
 
-%patch0 -p2
-%patch1 -p1
-%patch2 -p2
-%patch4 -p2
-%patch5 -p1
-%patch6 -p1
-%patch8 -p2
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch13 -p2
-%patch14 -p2
-%patch20 -p2
-%patch21 -p2
-%patch22 -p1
-%patch23 -p1
-%patch24 -p2
-%patch25 -p2
-%patch26 -p2
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-
-# gnulib adoption
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1
-
-%patch39 -p1
-
-%patch190 -p1
-%patch191 -p1
-%patch192 -p1
-%patch193 -p1
-
-%patch200 -p1
-%patch201 -p1
-%patch202 -p1
-
-%patch203 -p1
-%patch204 -p1
-
-%patch205 -p1
-%patch206 -p1
-%patch207 -p1
-%patch208 -p1
-%patch209 -p1
-%patch210 -p1
-%patch211 -p1
-%patch212 -p1
-
-%patch213 -p1
-
-%patch214 -p1
-%patch215 -p1
-%patch216 -p1
-%patch217 -p1
-%patch218 -p1
-%patch219 -p1
-%patch220 -p1
-%patch221 -p1
-
-%patch222 -p1
-%patch223 -p1
-%patch224 -p1
-%patch225 -p1
-%patch226 -p1
-
-%patch227 -p1
-
-%patch230 -p1
-%patch231 -p1
-%patch232 -p1
-%patch233 -p1
-%patch234 -p1
-%patch235 -p1
-#%patch236 -p1
-%patch237 -p1
-%patch238 -p1
-%patch239 -p1
-%patch240 -p1
-%patch241 -p1
-
-%patch1000 -p1
-%patch1001 -p1
-%patch1002 -p1
+%patch0 -p1
 
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
-sed -i "/^AC_PREREQ/ s/2\.63/2.64/" configure.ac
-sed -i "s/PYTHON:=python/PYTHON:=python3/" autogen.sh
 
 # append ALT data to SBAT section
 # make sure upstream data is set appropriately in sbat.csv.in too
@@ -428,6 +231,7 @@ build_efi_image() {
 		extcmd keystatus procfs cryptodisk gcry_rijndael gcry_sha1 \
 		gcry_sha256 luks gcry_sha512 gcry_serpent gcry_twofish \
 		crypto pbkdf2 password_pbkdf2 echo regexp tftp \
+		f2fs exfat ntfs ntfscomp \
 		"$@"
 }
 
@@ -632,7 +436,8 @@ grub-autoupdate || {
 
 %post efi
 [ -z "$DURING_INSTALL" ] || exit 0
-modprobe efivars
+modprobe -q efivars ||:
+modprobe -q efivarfs ||:
 grep -q '^GRUB_DISTRIBUTOR=' %_sysconfdir/sysconfig/grub2 ||
 	echo 'GRUB_DISTRIBUTOR="ALT Linux"' >> %_sysconfdir/sysconfig/grub2
 
@@ -646,6 +451,19 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Aug 22 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt15
+- 39_memtest: add uefi support (closes: #47244)
+
+* Wed Aug 16 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt14
+- add f2fs, exfat, ntfs, ntfscomp modules to efi image (closes: #47257)
+
+* Wed Jul 19 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt13
+- change repo structure
+ + get rid of git subtree
+ + keep patches in a separate git branch
+ + move alt-specific files to the 'altlinux' directory
+- post efi: probe quietly both efivars and efivarfs (closes: #46660)
+
 * Fri Jun 23 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt12
 - switch to the vendored gnulib of the required version
   + this makes it easier to port grub to other branches
