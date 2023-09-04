@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name:    universal-ctags
-Version: 6.0.0
+Version: 6.0.20230827.0
 Release: alt1
 Epoch:   1
 
@@ -18,6 +18,7 @@ Provides:  ctags = %EVR
 
 Source: %name-%version.tar
 BuildRequires: libjansson-devel
+BuildRequires: libpcre2-devel
 BuildRequires: libseccomp-devel
 BuildRequires: libxml2-devel
 BuildRequires: libyaml-devel
@@ -61,7 +62,7 @@ sed -i '/check:/s/check-genfile//' makefiles/testing.mak
 %make_build check
 
 %files
-%doc COPYING README.md docs/*.rst docs/*.svg
+%doc COPYING README.md NEWS.md docs/*.rst docs/*.svg
 %_bindir/ctags
 %_bindir/readtags
 %_bindir/optscript
@@ -72,6 +73,9 @@ sed -i '/check:/s/check-genfile//' makefiles/testing.mak
 %_man7dir/ctags-*.7*
 
 %changelog
+* Mon Sep 04 2023 Vitaly Chikunov <vt@altlinux.org> 1:6.0.20230827.0-alt1
+- Update to p6.0.20230827.0 (2023-08-24).
+
 * Thu Jan 26 2023 Vitaly Chikunov <vt@altlinux.org> 1:6.0.0-alt1
 - Update to v6.0.0 (2022-12-16).
 
