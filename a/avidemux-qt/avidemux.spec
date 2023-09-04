@@ -6,7 +6,7 @@
 
 Name: avidemux-qt
 Version: 2.8.1
-Release: alt1
+Release: alt2
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -31,6 +31,8 @@ Source1: ffmpeg.tar.bz2
 Source2: avidemux.desktop
 Source3: http://gitorious.org/avidemux2-6/avidemux2-6/blobs/raw/7cf44bbc1f33894594b2bc84089d1779edc5c2b9/avidemux_plugins/ADM_autoScrips/lib/ADM_resize.py
 Source4: avidemux_ru.ts
+# Debian
+Source20: ffmpeg-remove-x86-optimization.patch
 
 %if_enabled ownffmpeg
 Patch1: avidemux-2.5.6-alt-ffmpeg-0.9.2.patch
@@ -123,7 +125,9 @@ Common files for %name
 #%patch6 -p1
 %patch7 -p1
 %patch8 -p1
+#
 %patch100 -p1
+install -m 0644 %SOURCE20 avidemux_core/ffmpeg_package/patches/
 
 #cp -f %SOURCE4 po/
 
@@ -208,6 +212,9 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Mon Sep 04 2023 Sergey V Turchin <zerg@altlinux.org> 2.8.1-alt2
+- fix compile with new binutils
+
 * Thu Jul 13 2023 Sergey V Turchin <zerg@altlinux.org> 2.8.1-alt1
 - new version
 
