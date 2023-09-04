@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: feedbackd
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Feedback library for GNOME
@@ -137,6 +137,9 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 %endif
 
 %changelog
+* Mon Sep 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Mon May 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 

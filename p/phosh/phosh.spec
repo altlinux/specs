@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.30
+%define ver_major 0.31
 %define beta %nil
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
@@ -14,8 +14,8 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.0
-Release: alt1.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -180,6 +180,7 @@ xvfb-run %__meson_test
 %_userunitdir/%rdn_name.service
 %_userunitdir/%rdn_name.target
 %_datadir/xdg-desktop-portal/portals/%name.portal
+%_datadir/xdg-desktop-portal/%name-portals.conf
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %{?_enable_man:%_man1dir/%name.1*
 %_man1dir/%name-session.1*}
@@ -190,6 +191,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Mon Sep 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.31.1-alt1
+- 0.31.1
+
 * Thu Aug 17 2023 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1.1
 - phosh.pam: commented-out pam_gnome_keyring
 

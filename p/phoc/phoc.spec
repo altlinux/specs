@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.30
+%define ver_major 0.31
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -121,6 +121,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Mon Sep 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.31.0-alt1
+- 0.31.0
+
 * Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
 - 0.30.0 (ported to wlroots-0.16)
 - built with patched wlroots-0.16.2
