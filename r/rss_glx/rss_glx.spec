@@ -5,10 +5,10 @@
 
 Name: rss_glx
 Version: 0.9.1
-Release: alt9
+Release: alt10
 
 Summary: Really Slick Screensavers
-License: GNU GPL
+License: GPLv2
 Group: Graphical desktop/Other
 
 Url: http://rss-glx.sourceforge.net
@@ -17,6 +17,7 @@ Patch0: rss-glx-0.9.1-debian-configure.patch
 Patch1: rss-glx-0.9.1-debian-pixelcity-cpp.patch
 Patch2: rss-glx-0.9.1-debian-readme.patch
 Patch3: rss-glx-0.9.1-alt-size_t.patch
+Patch4: rss-glx-0.9.1-imagemagick-7.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 # git://git.altlinux.org/people/mike/packages/rss_glx.git
 
@@ -64,6 +65,7 @@ This package contains KDE menu entries.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p2
+%patch4 -p1
 
 %build
 %autoreconf
@@ -119,6 +121,10 @@ rm %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon Sep 04 2023 Michael Shigorin <mike@altlinux.org> 0.9.1-alt10
+- fix build against IM7 with gentoo patch (thx rider@ for heads-up)
+- clarified License:
+
 * Tue Nov 23 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.1-alt9
 - build fixed
 
