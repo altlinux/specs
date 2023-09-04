@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.3
-Release: alt2
+Release: alt3
 Summary: Python Language Server for the Language Server Protocol
 License: MIT
 Group: Development/Python3
@@ -14,6 +14,7 @@ Vcs: https://github.com/python-lsp/python-lsp-server
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: 0001-Add-support-for-pyflakes-3.1-and-pycodestyle-2.11-41.patch
 %py3_provides %pypi_name
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -32,6 +33,7 @@ A Python 3.7+ implementation of the Language Server Protocol.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -51,6 +53,9 @@ A Python 3.7+ implementation of the Language Server Protocol.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 04 2023 Anton Zhukharev <ancieg@altlinux.org> 1.7.3-alt3
+- Fix FTBFS (pyflakes 3.1 and pycodestyle 2.11).
+
 * Thu Jun 08 2023 Anton Zhukharev <ancieg@altlinux.org> 1.7.3-alt2
 - Fix FTBFS.
 
