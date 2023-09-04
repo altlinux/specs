@@ -2,14 +2,15 @@
 %define llvm_version 15.0
 
 # git describe upstream/yuzu
-%define git_descr mainline-636-11217-g0cefbf95301
+%define git_descr mainline-636-12058-gdf40fee3ac5
 
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
+%define tzdb_to_nx_date 220816
 
 Name: yuzu
-Version: 1452
-Release: alt3.1
+Version: 1487
+Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
@@ -28,6 +29,8 @@ Source0: %name-mainline-mainline-0-%version.tar
 Source1: sirit-%sirit_commit.tar
 # https://github.com/yuzu-emu/mbedtls/archive/%mbedtls_commit/mbedtls-%mbedtls_commit.tar.gz
 Source2: mbedtls-%mbedtls_commit.tar
+
+Source3: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
 
 Patch0: %name-cpp-jwt-version-alt.patch
 
@@ -52,6 +55,7 @@ BuildRequires: liblz4-devel
 BuildRequires: libopus-devel
 BuildRequires: libswscale-devel
 BuildRequires: libusb-devel
+BuildRequires: libvulkan-memory-allocator-devel
 BuildRequires: libzstd-devel
 BuildRequires: lld%llvm_version
 BuildRequires: llvm%llvm_version
@@ -88,6 +92,9 @@ src/common/scm_rev.cpp.in
 %build
 export ALTWRAP_LLVM_VERSION=%llvm_version
 
+%__mkdir_p %_target_platform/externals/nx_tzdb
+%__cp %SOURCE3 %_target_platform/externals/nx_tzdb
+
 %cmake \
 	-DCMAKE_C_COMPILER:STRING=clang \
 	-DCMAKE_CXX_COMPILER:STRING=clang++ \
@@ -101,6 +108,7 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 	-DYUZU_USE_EXTERNAL_VULKAN_HEADERS:BOOL=FALSE \
 	-DYUZU_ENABLE_LTO:BOOL=TRUE \
 	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
+	-DYUZU_DOWNLOAD_TIME_ZONE_DATA:BOOL=TRUE \
 	-GNinja \
 	-Wno-dev
 %cmake_build
@@ -119,6 +127,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Mon Sep 04 2023 Nazarov Denis <nenderus@altlinux.org> 1487-alt1
+- Version 1487
+
 * Thu Jul 27 2023 Nazarov Denis <nenderus@altlinux.org> 1452-alt3.1
 - Fix FTBFS
 
