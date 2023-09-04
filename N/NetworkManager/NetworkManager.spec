@@ -60,7 +60,7 @@
 
 Name: NetworkManager
 Version: 1.44.0
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -688,6 +688,13 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Sep 04 2023 Mikhail Efremov <sem@altlinux.org> 1.44.0-alt2
+- tests: Fixed test-config.
+- Patches from upstream:
+  + checkpoint: Fix segfault crash when rollback;
+  + nm-manager: ensure device is exported on D-Bus in authentication
+    request.
+
 * Thu Aug 10 2023 Mikhail Efremov <sem@altlinux.org> 1.44.0-alt1
 - Updated to 1.44.0.
 
