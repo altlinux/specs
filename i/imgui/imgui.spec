@@ -1,5 +1,5 @@
 Name:           imgui
-Version:        1.88
+Version:        1.89.8
 Release:        alt1
 Summary:        Immediate Mode Graphical User interface for C++ with minimal dependencies
 License:        MIT
@@ -38,5 +38,8 @@ cp *.h %buildroot%_includedir/imgui
 %_includedir/imgui
 
 %changelog
+* Fri Sep  1 2023 Artyom Bystrov <arbars@altlinux.org> 1.89.8-alt1
+- update to new version
+
 * Wed Sep 25 2019 Artyom Bystrov <arbars@altlinux.org> 1.88-alt1
 - initial build for ALT Sisyphus
