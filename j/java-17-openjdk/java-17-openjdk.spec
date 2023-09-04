@@ -293,14 +293,14 @@
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global top_level_dir_name_backup %{top_level_dir_name}-backup
-%global rpmrelease      1
+%global rpmrelease      2
 # Priority must be 8 digits in total; up to openjdk 1.8, we were using 18..... so when we moved to 11, we had to add another digit
 # Using 10 digits may overflow the int used for priority, so we combine the patch and build versions
 # It is very unlikely we will ever have a patch version > 4 or a build version > 20, so we combine as (patch * 20) + build.
 # This means 11.0.9.0+11 would have had a priority of 11000911 as before
 # A 11.0.9.1+1 would have had a priority of 11000921 (20 * 1 + 1), thus ensuring it is bigger than 11.0.9.0+11
 # TODO hardcoded
-%global priority 17000707
+%global priority 17000807
 %global newjavaver %{featurever}.%{interimver}.%{updatever}.%{patchver}
 %global javaver %{featurever}
 
@@ -1449,18 +1449,18 @@ done
 export LANG=ru_RU.UTF-8
 if stat -t %buildroot/usr/share/applications/*policytool.desktop; then
   sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
-  desktop-file-edit --set-key=Name --set-value='OpenJDK %majorver Policy Tool' %buildroot/usr/share/applications/*policytool.desktop
-  desktop-file-edit --set-key=Comment --set-value='Manage OpenJDK %majorver policy files' %buildroot/usr/share/applications/*policytool.desktop
-  desktop-file-edit --set-key=Name[ru] --set-value='Настройка политик OpenJDK %majorver' %buildroot/usr/share/applications/*policytool.desktop
-  desktop-file-edit --set-key=Comment[ru] --set-value='Управление файлами политик OpenJDK %majorver' %buildroot/usr/share/applications/*policytool.desktop
+  desktop-file-edit --set-key=Name --set-value='OpenJDK %featurever Policy Tool' %buildroot/usr/share/applications/*policytool.desktop
+  desktop-file-edit --set-key=Comment --set-value='Manage OpenJDK %featurever policy files' %buildroot/usr/share/applications/*policytool.desktop
+  desktop-file-edit --set-key=Name[ru] --set-value='Настройка политик OpenJDK %featurever' %buildroot/usr/share/applications/*policytool.desktop
+  desktop-file-edit --set-key=Comment[ru] --set-value='Управление файлами политик OpenJDK %featurever' %buildroot/usr/share/applications/*policytool.desktop
 fi
 sed -i 's,^Categories=.*,Categories=Development;Profiling;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
 #Name=OpenJDK 8 Monitoring & Management Console
-desktop-file-edit --set-key=Name --set-value='OpenJDK %majorver Management Console' %buildroot/usr/share/applications/*jconsole.desktop
+desktop-file-edit --set-key=Name --set-value='OpenJDK %featurever Management Console' %buildroot/usr/share/applications/*jconsole.desktop
 #Comment=Monitor and manage OpenJDK applications
-desktop-file-edit --set-key=Comment --set-value='Monitor and manage OpenJDK %majorver' %buildroot/usr/share/applications/*jconsole.desktop
-desktop-file-edit --set-key=Name[ru] --set-value='Консоль OpenJDK %majorver' %buildroot/usr/share/applications/*jconsole.desktop
-desktop-file-edit --set-key=Comment[ru] --set-value='Мониторинг и управление приложениями OpenJDK %majorver' %buildroot/usr/share/applications/*jconsole.desktop
+desktop-file-edit --set-key=Comment --set-value='Monitor and manage OpenJDK %featurever' %buildroot/usr/share/applications/*jconsole.desktop
+desktop-file-edit --set-key=Name[ru] --set-value='Консоль OpenJDK %featurever' %buildroot/usr/share/applications/*jconsole.desktop
+desktop-file-edit --set-key=Comment[ru] --set-value='Мониторинг и управление приложениями OpenJDK %featurever' %buildroot/usr/share/applications/*jconsole.desktop
 
 ##### javadoc Alt specific #####
 echo java-javadoc >java-javadoc-buildreq-substitute
@@ -1994,6 +1994,10 @@ fi
 %endif
 
 %changelog
+* Mon Sep 04 2023 Andrey Cherepanov <cas@altlinux.org> 0:17.0.8.0.7-alt2
+- Replaced %%majorver by %%featurever in desktop files (ALT #47000).
+- Fixed %%priotity.
+
 * Thu Aug 24 2023 Andrey Cherepanov <cas@altlinux.org> 0:17.0.8.0.7-alt1
 - New version.
 - Security fixes:
