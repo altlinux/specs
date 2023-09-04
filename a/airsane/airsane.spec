@@ -1,19 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: airsane
-Version: 0.3.4
-Release: alt2
+Version: 0.3.5
+Release: alt1
 Summary: A SANE WebScan frontend that supports Apple's AirScan protocol.
 License: GPLv3
 Group: Graphics
 
 Url: https://github.com/SimulPiscator/AirSane.git
-#Git: https://github.com/SimulPiscator/AirSane.git
+VCS: https://github.com/SimulPiscator/AirSane.git
+
 Source: %name-%version.tar
 
-Patch1: %name-0.3.4-alt-strerror-fix.patch
 Patch2: %name-0.3.4-alt-mPort-fix.patch
 Patch3: %name-0.3.4-alt-fix-GCC13-build.patch
+Patch4: %name-0.3.5-alt-web-fix-constructor-init-warning.patch
+Patch5: %name-0.3.5-alt-server-fix-constructor-init-warning.patch
+Patch6: %name-0.3.5-alt-server-fix-types-warning.patch
+Patch7: %name-0.3.5-alt-server-fix-defined-but-not-used-warning.patch
 
 BuildRequires: ccmake
 BuildRequires: gcc-c++
@@ -42,23 +46,21 @@ for you. You may be interested in phpSANE instead.
 
 %prep
 %setup
-
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 # fix build with our libpng
-sed -i 's|libpng\/png\.h|png.h|' imageformats/pngencoder.cpp
-# change systemd unit-file settings
-sed -i 's|\/usr\/local\/bin\/airsaned|/usr/bin/airsaned|' systemd/airsaned.service
-sed -i 's|^Group=saned|Group=scanner|' systemd/airsaned.service
-sed -i 's|^User=saned|User=_saned|' systemd/airsaned.service
+sed -i 's|libpng/png.h|png.h|' imageformats/pngencoder.cpp
 #  look for an icon in a more suitable FS path
-sed -i 's|^icon \/etc\/airsane\/Gnome-scanner.png|icon %_iconsdir/hicolor/512x512/apps/Gnome-scanner.png|' etc/options.conf
+sed -i 's|^icon /etc/airsane/Gnome-scanner.png|icon %_iconsdir/hicolor/512x512/apps/Gnome-scanner.png|' etc/options.conf
 
 %build
 %cmake
 %cmake_build
+
+# change systemd unit-file settings
+AIRSANED_SERVICE=$(find -name airsaned.service)
+sed -i 's|^Group=saned|Group=scanner|' $(echo $AIRSANED_SERVICE)
+sed -i 's|^User=saned|User=_saned|'    $(echo $AIRSANED_SERVICE)
 
 %install
 %cmakeinstall_std
@@ -77,11 +79,15 @@ mv %buildroot/%_sysconfdir/%name/*.png %buildroot/%_iconsdir/hicolor/512x512/app
 %doc LICENSE README.md
 %_bindir/*
 %_unitdir/*
+%config(noreplace) %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/*.conf
 %config(noreplace) %_sysconfdir/default/%name
-%_iconsdir/hicolor/512x512/apps/*.png
+%_iconsdir/hicolor/*
 
 %changelog
+* Fri Aug 4 2023 Vasiliy Kovalev <kovalev@altlinux.org> 0.3.5-alt1
+- 0.3.4 -> 0.3.5
+
 * Mon Jul 10 2023 Artyom Bystrov <arbars@altlinux.org> 0.3.4-alt2
 - Fix build on GCC13
 
