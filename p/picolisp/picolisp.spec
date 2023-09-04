@@ -1,6 +1,6 @@
 Name: picolisp
 Version: 22.12
-Release: alt1
+Release: alt2
 
 Summary: Interpreted Lisp
 License: MIT
@@ -12,7 +12,7 @@ Source100: picolisp.watch
 
 
 
-BuildRequires:  clang llvm libreadline-devel libssl-devel libffi-devel
+BuildRequires:  clang llvm-devel libreadline-devel libssl-devel libffi-devel
 # 64-bit build bootstraps using 32-bit one or Java
 #BuildRequires: java /proc
 # armh-alt-linux-gnueabi-gcc: error: unrecognized command line option '-m32'; did you mean '-mbe32'?
@@ -63,6 +63,9 @@ cp man/man1/* %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Mon Sep  4 2023 Artyom Bystrov <arbars@altlinux.org> 22.12-alt2
+- Fix build with LLVM 15
+
 * Thu Dec 29 2022 Ilya Mashkin <oddity@altlinux.ru> 22.12-alt1
 - 22.12
 
