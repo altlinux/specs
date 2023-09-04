@@ -25,7 +25,7 @@
 
 Name: qt6-webengine
 Version: 6.4.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -40,6 +40,10 @@ Patch1: alt-ftbfs.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
+Patch202: compressing_files.patch
+Patch203: ffmpeg-remove-x86-optimization.patch
+Patch204: gcc-13.patch
+Patch205: system-openjpeg2.patch
 
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
@@ -183,6 +187,10 @@ Requires: libqt6-core = %_qt6_version
 #
 %patch200 -p1
 %patch201 -p1
+%patch202 -p1
+%patch203 -p1
+%patch204 -p1
+%patch205 -p1
 #
 #ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 
@@ -394,6 +402,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Mon Sep 04 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
+- update debian patches
+
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 
