@@ -1,13 +1,14 @@
 %define _localstatedir %_var
 
 Name: pdns-recursor
-Version: 4.9.0
+Version: 4.9.1
 Release: alt1
 Summary: Modern, advanced and high performance recursing/non authoritative name server
 License: GPL-2.0
 Group: System/Servers
 URL: https://powerdns.com
 Source0: https://downloads.powerdns.com/releases/%name-%version.tar.bz2
+Source1: %name.watch
 
 ExcludeArch: %arm %ix86
 
@@ -109,6 +110,9 @@ exit 0
 %dir %attr(0755,pdns-recursor,pdns-recursor) %_sharedstatedir/%name/udr
 
 %changelog
+* Mon Sep 04 2023 Andrey Cherepanov <cas@altlinux.org> 4.9.1-alt1
+- New version.
+
 * Fri Jul 07 2023 Andrey Cherepanov <cas@altlinux.org> 4.9.0-alt1
 - New version.
 
