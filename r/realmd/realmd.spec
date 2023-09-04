@@ -2,7 +2,7 @@
 
 Name: realmd
 Version: 0.17.1
-Release: alt6
+Release: alt7
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
 Group: Security/Networking
@@ -80,6 +80,9 @@ install -m0644 -D %SOURCE2 %buildroot%_sysconfdir/
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Mon Sep 04 2023 Alexander Burmatov <thatman@altlinux.org> 0.17.1-alt7
+- Updating the distro config (ALT #47410).
+
 * Thu Aug 31 2023 Alexander Burmatov <thatman@altlinux.org> 0.17.1-alt6
 - Fix automatic installing requirements.
 
