@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Task pipelining for taskiq
@@ -26,7 +26,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-%add_pyproject_deps_check_filter autoflake
 %add_pyproject_deps_check_filter wemake-python-styleguide
 %add_pyproject_deps_check_filter yesqa
 %pyproject_builddeps_metadata
@@ -64,6 +63,9 @@ complete. taskiq-pipeline solves this for you.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 04 2023 Anton Zhukharev <ancieg@altlinux.org> 0.1.1-alt1
+- Updated to 0.1.1.
+
 * Wed Jun 14 2023 Anton Zhukharev <ancieg@altlinux.org> 0.1.0-alt1
 - New version.
 
