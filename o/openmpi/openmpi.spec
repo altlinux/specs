@@ -40,7 +40,7 @@ Name: openmpi
 #pkgname
 
 Version: 2.0.1
-Release: alt8
+Release: alt9
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -334,6 +334,9 @@ EOF
 %endif
 
 %changelog
+* Sun Sep 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.0.1-alt9
+- Fixed FTBFS (m4 quoting versus autoconf 2.71).
+
 * Wed May 22 2019 Nikita Ermakov <arei@altlinux.org> 2.0.1-alt8
 - Build with valgrind only for supported arches.
 
