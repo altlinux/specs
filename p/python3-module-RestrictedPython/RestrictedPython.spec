@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.2
+Version: 6.1
 Release: alt1
 Summary: Provides a restricted execution environment for Python, e.g. for running untrusted code
 License: ZPL-2.1
@@ -58,6 +58,9 @@ tox.py3 --sitepackages --console-scripts -vvr --develop
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sun Aug 27 2023 Nikolai Kostrigin <nickel@altlinux.org> 6.1-alt1
+- 5.2 -> 6.1
+
 * Thu Apr 07 2022 Stanislav Levin <slev@altlinux.org> 5.2-alt1
 - 5.1 -> 5.2.
 
