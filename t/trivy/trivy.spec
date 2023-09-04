@@ -3,21 +3,27 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy
-Version: 0.39.0
+Version: 0.45.0
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
 Group: Monitoring
 License: Apache-2.0
 Url: https://%import_path
+
 Source: %name-%version.tar
+Source2: %name.service
+Source3: %name.sysconfig
 
 ExclusiveArch:  %go_arches
+
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires(pre): rpm-build-golang wire
+
 BuildRequires: /proc
 
 %description
-Trivy (pronunciation) is a comprehensive and versatile security scanner.
+Trivy is a comprehensive and versatile security scanner.
 Trivy has scanners that look for security issues, and targets where it can
 find those issues.
 
@@ -52,15 +58,40 @@ wire gen pkg/commands/... pkg/rpc/...
 
 %install
 export BUILDDIR="$PWD/.gopath"
+mkdir -p %buildroot{%_bindir,%_sharedstatedir/%name,%_sysconfdir/sysconfig,%_unitdir}
+
 %golang_install
+
+install -m 0644 %SOURCE2 %buildroot%_unitdir/%name.service
+install -m 0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
+
 rm -rf -- %buildroot%_datadir
 rm -rf -- %buildroot%go_root
 
+%pre
+groupadd -r -f _%name > /dev/null 2>&1 ||:
+useradd -M -r -d %_sharedstatedir/%name -g _%name -s /dev/null -c "Trivy services" _%name > /dev/null 2>&1 ||:
+
+%post
+%post_systemd %name
+
+%preun
+%preun_systemd %name
+
 %files
-%doc README.md
+%doc LICENSE README.md docs
+%_unitdir/%name.service
+%config(noreplace) %_sysconfdir/sysconfig/%name
+%attr(0755,_trivy,_trivy) %dir %_sharedstatedir/trivy
 %_bindir/%name
 
 %changelog
+* Mon Sep 04 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.45.0-alt1
+- 0.39.0 -> 0.45.0 
+
+* Fri Jun 02 2023 Stepan Paksashvili <paksa@altlinux.org> 0.39.0-alt2
+- Updated ALT support and vendor trivy-db, added systemd unit.
+
 * Tue Apr 25 2023 Stepan Paksashvili <paksa@altlinux.org> 0.39.0-alt1
 - Added full ALT support.
 
