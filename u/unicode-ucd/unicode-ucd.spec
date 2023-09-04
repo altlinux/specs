@@ -2,7 +2,7 @@
 %define ucddir %unicodedir/ucd
 
 Name: unicode-ucd
-Version: 15.0.0
+Version: 15.1.0
 Release: alt1
 
 Summary: Unicode Character Database
@@ -12,7 +12,7 @@ Url: https://www.unicode.org/ucd/
 
 Source: https://www.unicode.org/Public/zipped/%version/UCD.zip
 Source1: https://www.unicode.org/Public/%version/ucd/Unihan.zip
-# http://www.unicode.org/terms_of_use.html referenced in ReadMe.txt redirects to:
+# https://www.unicode.org/terms_of_use.html referenced in ReadMe.txt redirects to:
 Source2: https://www.unicode.org/copyright.html
 
 BuildArch: noarch
@@ -42,6 +42,9 @@ cp -p %SOURCE2 .
 %doc copyright.html
 
 %changelog
+* Mon Sep 04 2023 Yuri N. Sedunov <aris@altlinux.org> 15.1.0-alt1
+- 15.1.0
+
 * Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 15.0.0-alt1
 - 15.0.0
 
