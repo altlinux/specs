@@ -4,7 +4,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.11.5
-Release:       alt2
+Release:       alt2.1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -112,7 +112,7 @@ export PATH=/sbin:$PATH
      bashcompletiondir=%_sysconfdir/bash_completion.d
 
 install -Dm 0755 %SOURCE2 %buildroot%_initdir/pcsd
-install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/pcsd/known-hosts
+install -Dm 0644 %SOURCE3 %buildroot%_localstatedir/pcsd/known-hosts
 
 # Set correct python3 executable in shebang
 subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/pcs/pcs_bundled/packages/pyagentx/*.py
@@ -149,7 +149,6 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %dir %_libdir/pcs/pcs_bundled/packages/
 %_libdir/pcs/pcs_internal
 %_libdir/pcs/data
-%config(noreplace) %_sysconfdir/pcsd/known-hosts
 %config(noreplace) %_sysconfdir/pam.d/pcsd
 %config(noreplace) %_sysconfdir/sysconfig/pcsd
 %config(noreplace) %_logrotatedir/pcsd
@@ -157,6 +156,7 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %dir %_localstatedir/pcsd
 %systemd_unitdir/pcsd.service
 %systemd_unitdir/pcsd-ruby.service
+%_localstatedir/pcsd/known-hosts
 
 %files -n python3-module-pcs
 %python3_sitelibdir_noarch/*
@@ -170,6 +170,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Mon Sep 04 2023 Pavel Skrylev <majioa@altlinux.org> 1:0.11.5-alt2.1
+- ! fixed placement of known-hosts config
+
 * Fri May 12 2023 Pavel Skrylev <majioa@altlinux.org> 1:0.11.5-alt2
 - fixed spec in ruby gem build deps
 - enable ruby build
