@@ -1,6 +1,6 @@
 %define rname kde-file-actions-gost
 Name: kde5-file-actions-gost
-Version: 0.7
+Version: 0.8
 Release: alt1
 %K5init altplace
 
@@ -47,6 +47,9 @@ done
 %_K5srv/*crypt-*-gost.desktop
 
 %changelog
+* Mon Sep 04 2023 Sergey V Turchin <zerg at altlinux dot org> 0.8-alt1
+- fix cipher name for new openssl (closes: 47294)
+
 * Thu Aug 31 2023 Sergey V Turchin <zerg at altlinux dot org> 0.7-alt1
 - fix for new openssl (closes: 47294)
 
