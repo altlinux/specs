@@ -2,10 +2,9 @@
 %define _localstatedir /var
 
 %def_disable dnstap
-%def_disable doc
 
 Name: knot-resolver
-Version: 5.6.0
+Version: 6.0.2
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -19,8 +18,9 @@ Patch0: %name-%version.patch
 
 ExclusiveArch: %luajit_arches
 
-BuildRequires(pre): meson >= 0.49 rpm-macros-luajit rpm-macros-systemd
+BuildRequires(pre): meson >= 0.49 rpm-macros-luajit rpm-macros-systemd rpm-macros-python3
 BuildRequires: gcc-c++ luajit
+BuildRequires: python3-module-setuptools
 BuildRequires: pkgconfig(cmocka)
 BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(libedit)
@@ -35,7 +35,6 @@ BuildRequires: pkgconfig(luajit) >= 2.0
 BuildRequires: pkgconfig(openssl)
 BuildRequires: liblmdb-devel
 %{?_enable_dnstap:BuildRequires: /usr/bin/protoc-c pkgconfig(libfstrm) pkgconfig(libprotobuf-c) >= 1.0.0}
-%{?_enable_doc:BuildRequires: /usr/bin/sphinx-build-3}
 Requires: lua5.1-module-basexx
 Requires: lua5.1-module-cqueues
 Requires: lua5.1-module-http
@@ -46,11 +45,6 @@ The Knot Resolver is a DNSSEC-enabled caching full resolver implementation
 written in C and LuaJIT, including both a resolver library and a daemon.
 Modular architecture of the library keeps the core tiny and efficient, and
 provides a state-machine like API for extensions.
-
-The package is pre-configured as local caching resolver.
-To start using it, start a single kresd instance:
-$ systemctl start kresd@1.service
-
 
 %package -n libkres
 Summary: Library for Knot Resolver
@@ -67,14 +61,6 @@ Group: Development/C
 %description -n libkres-devel
 The package contains development headers for Knot Resolver.
 
-%package doc
-Summary: Documentation for Knot Resolver
-BuildArch: noarch
-Group: Documentation
-
-%description doc
-Documentation for Knot Resolver
-
 %package module-http
 Summary: HTTP module for Knot Resolver
 Group: System/Servers
@@ -88,6 +74,16 @@ provide a web interface for local visualization of the resolver cache and
 queries. It can also serve DNS-over-HTTPS, but it is deprecated in favor of
 native C implementation, which doesn't require this package.
 
+%package manager
+Summary: Configuration tool for Knot Resolver
+Group: Development/Python3
+
+%description manager
+Knot Resolver Manager is a configuration tool for Knot Resolver. The Manager
+hides the complexity of running several independent resolver processes while
+ensuring zero-downtime reconfiguration with YAML/JSON declarative
+configuration and an optional HTTP API for dynamic changes.
+
 %prep
 %setup
 tar -xf %SOURCE11 -C modules/policy/lua-aho-corasick
@@ -95,24 +91,31 @@ tar -xf %SOURCE11 -C modules/policy/lua-aho-corasick
 
 %build
 %meson \
-    %{?_enable_doc:-Ddoc=enabled} \
     -Dsystemd_files=enabled \
-    -Dclient=enabled \
     -Dunit_tests=enabled \
     -Dmanaged_ta=enabled \
     -Dkeyfile_default="%_sharedstatedir/%name/root.keys" \
     -Dinstall_root_keys=enabled \
-    -Dinstall_kresd_conf=enabled \
     %{?_enable_dnstap:-Ddnstap=enabled}
 
 %meson_build
+pushd manager
+%python3_build
+popd
 
 %install
 %meson_install
+# install knot-resolver-manager
+pushd manager
+%python3_install
+install -m 644 -D etc/knot-resolver/config.yaml %buildroot%_sysconfdir/knot-resolver/config.yaml
+install -m 644 -D shell-completion/client.bash %buildroot%_datadir/bash-completion/completions/kresctl
+install -m 644 -D shell-completion/client.fish %buildroot%_datadir/fish/completions/kresctl.fish
+popd
 
-# add kresd.target to multi-user.target.wants to support enabling kresd services
+# add knot-resolver.service to multi-user.target.wants to support enabling kresd services
 install -m 0755 -d %buildroot%_unitdir/multi-user.target.wants
-ln -s ../kresd.target %buildroot%_unitdir/multi-user.target.wants/kresd.target
+ln -s ../knot-resolver.service %buildroot%_unitdir/multi-user.target.wants/knot-resolver.service
 
 # remove modules with missing dependencies
 #rm %buildroot%_libdir/%name/kres_modules/etcd.lua
@@ -132,30 +135,23 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/lib:$(pwd)/%{__builddir}
 groupadd -r -f %name >/dev/null 2>&1 ||:
 useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %name %name >/dev/null 2>&1 ||:
 
-%post
-%post_systemd_postponed kresd@*.service kres-cache-gc.service kresd.target
+%post manager
+%post_systemd_postponed knot-resolver.service
 
-%preun
-%systemd_preun kresd@*.service kres-cache-gc.service kresd.target
+%preun manager
+%systemd_preun knot-resolver.service
 
 %files
 %doc COPYING AUTHORS NEWS etc/config/config.*
 %dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/kresd.conf
 %config(noreplace) %_sysconfdir/%name/root.hints
 %_sysconfdir/%name/icann-ca.pem
 %attr(750,%name,%name) %dir %_sharedstatedir/%name
 %attr(640,%name,%name) %_sharedstatedir/%name/root.keys
 %attr(750,%name,%name) %dir %_cachedir/%name
-%_unitdir/kresd@.service
-%_unitdir/kres-cache-gc.service
-%_unitdir/kresd.target
-%_unitdir/multi-user.target.wants/kresd.target
 /lib/sysusers.d/knot-resolver.conf
 %_tmpfilesdir/%name.conf
-%_man7dir/*
 %_sbindir/kresd
-%_sbindir/kresc
 %_sbindir/kres-cache-gc
 %_libdir/%name
 %_man8dir/*
@@ -172,18 +168,30 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %_pkgconfigdir/libkres.pc
 %_libdir/libkres.so
 
-%if_enabled doc
-%files doc
-%doc html
-%endif
-
 %files module-http
 %_libdir/%name/debug_opensslkeylog.so
 %_libdir/%name/kres_modules/http
 %_libdir/%name/kres_modules/http*.lua
 %_libdir/%name/kres_modules/prometheus.lua
 
+%files manager
+%python3_sitelibdir/knot_resolver_manager*
+%_sysconfdir/knot-resolver/config.yaml
+%_unitdir/knot-resolver.service
+%_unitdir/multi-user.target.wants/knot-resolver.service
+%_bindir/kresctl
+%_bindir/knot-resolver
+%_man8dir/kresctl.8.*
+%_datadir/bash-completion/completions/kresctl
+%_datadir/fish/completions/kresctl.fish
+
 %changelog
+* Mon Sep 04 2023 Alexey Shabalin <shaba@altlinux.org> 6.0.2-alt1
+- 6.0.2
+
+* Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 6.0.1-alt1
+- 6.0.1
+
 * Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 5.6.0-alt1
 - 5.6.0
 

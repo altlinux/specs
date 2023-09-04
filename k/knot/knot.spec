@@ -8,7 +8,7 @@
 %def_disable quic
 
 Name: knot
-Version: 3.2.9
+Version: 3.3.0
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -16,9 +16,6 @@ License: GPL-3.0-or-later
 Url: https://www.knot-dns.cz
 Source0: %name-%version.tar
 Patch0: %name-%version.patch
-
-# Test fails on aarch/s390x for unknown reason, but it is not neccassary for Knot DNS
-Patch1: 01-test_net-disable-udp-send-on-unconnected.patch
 
 # Required dependencies
 BuildRequires: pkgconfig(liburcu)
@@ -31,15 +28,12 @@ BuildRequires: pkgconfig(libidn2)
 BuildRequires: pkgconfig(libnghttp2)
 %{?_enable_maxminddb:BuildRequires: pkgconfig(libmaxminddb)}
 %{?_enable_xdp:BuildRequires: pkgconfig(libbpf) >= 0.0.6 pkgconfig(libmnl) pkgconfig(libxdp)}
-%{?_enable_quic:BuildRequires: pkgconfig(libngtcp2) >= 0.13.1 pkgconfig(gnutls) >= 3.7.2}
+%{?_enable_quic:BuildRequires: pkgconfig(libngtcp2) >= 0.17.0 pkgconfig(gnutls) >= 3.7.2}
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(systemd)
 %{?_enable_documentation:BuildRequires: /usr/bin/sphinx-build-3}
 BuildRequires: liblmdb-devel
 %{?_enable_dnstap:BuildRequires: /usr/bin/protoc-c pkgconfig(libfstrm) pkgconfig(libprotobuf-c) >= 1.0.0}
-
-# Knot DNS 2.7+ isn't compatible with earlier knot-resolver
-Conflicts: knot-resolver < 3.0.0
 
 %description
 Knot DNS is a high-performance authoritative DNS server implementation.
@@ -70,6 +64,8 @@ Knot DNS DNSSEC library
 %package -n libknot
 Summary: Knot DNS library
 Group: System/Libraries
+# Knot DNS 3.2+ isn't compatible with earlier knot-resolver
+Conflicts: knot-resolver < 5.5.2
 
 %description -n libknot
 Knot DNS library
@@ -93,7 +89,6 @@ On-line version is available on https://www.knot-dns.cz/documentation/
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
 # disable debug code (causes unused warnings)
@@ -136,6 +131,7 @@ install -p -m 0644 -D samples/%name.sample.conf %buildroot%_sysconfdir/%name/%na
 
 # install systemd files
 install -p -m 0644 -D distro/common/%name.service %buildroot%_unitdir/%name.service
+install -p -m 0644 -D distro/common/cz.nic.knotd.conf %buildroot%_datadir/dbus-1/system.d/cz.nic.knotd.conf
 
 # create storage dir and key dir
 install -d %buildroot%_sharedstatedir
@@ -162,6 +158,7 @@ V=1 %make check ||:
 %doc COPYING NEWS README.md samples
 %dir %attr(750,root,%name) %_sysconfdir/%name
 %config(noreplace) %attr(640,root,%name) %_sysconfdir/%name/%name.conf
+%_datadir/dbus-1/system.d/cz.nic.knotd.conf
 %dir %attr(775,root,%name) %_sharedstatedir/%name
 %dir %attr(770,root,%name) %_sharedstatedir/%name/keys
 %_unitdir/%name.service
@@ -203,6 +200,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Fri Sep 01 2023 Alexey Shabalin <shaba@altlinux.org> 3.3.0-alt1
+- New version 3.3.0.
+
 * Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.9-alt1
 - New version 3.2.9.
 
