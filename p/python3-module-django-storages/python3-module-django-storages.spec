@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-
-%define oname django-storages
+%define pypi_name django-storages
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.12.3
+Name: python3-module-%pypi_name
+Version: 1.13.2
 Release: alt1
 
 Summary: Support for many storage backends in Django
@@ -14,16 +13,16 @@ Group: Development/Python3
 Url: https://github.com/jschneier/django-storages.git
 BuildArch: noarch
 
-# VCS:https://github.com/jschneier/django-storages.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_django)
-BuildRequires: python3-module-django
-BuildRequires: python3-modules-sqlite3
+BuildRequires: python3(django)
 BuildRequires: python3-module-django-dbbackend-sqlite3
 BuildRequires: python3-module-django-tests
 %endif
@@ -42,19 +41,25 @@ versions of Django. Check the Trove classifiers in setup.py to be sure.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install --install-lib=%python3_sitelibdir
+%pyproject_install
 
 %check
-python3 -m pytest tests/test_utils.py tests/test_ftp.py --ds=tests.settings
+%pyproject_run_pytest tests/test_utils.py tests/test_ftp.py --ds=tests.settings
 
 %files
 %doc *.rst LICENSE AUTHORS
-%python3_sitelibdir/*
+%python3_sitelibdir/storages/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 
 %changelog
+* Fri Sep 01 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 1.13.2-alt1
+- New version 1.13.2
+  + Migrate to pyproject macros
+  + Move .spec in the "alt" directory
+
 * Mon May 30 2022 Dmitry Lyalyaev <fruktime@altlinux.org> 1.12.3-alt1
 - Initial build for ALT Linux
