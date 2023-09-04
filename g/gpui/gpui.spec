@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.33
+Version: 0.2.34
 Release: alt1
 
 Summary: Group policy editor
@@ -112,6 +112,14 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Mon Sep 04 2023 Vladimir Rubanov <august@altlinux.org> 0.2.34-alt1
+- 0.2.34-alt1
+- Fixes:
+  + Fix translations language list (Closes: 47437).
+  + Fix translations for comment in administrative templates plugin (Fixes: 109650).
+  + Fix scripts encoding to UTF-16LE.
+  + Remove browse button from add script widget.
+
 * Fri Sep 01 2023 Vladimir Rubanov <august@altlinux.org> 0.2.33-alt1
 - 0.2.33-alt1
 - Fixes:
