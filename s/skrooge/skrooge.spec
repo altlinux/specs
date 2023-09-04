@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: skrooge
-Version: 2.29.0
+Version: 2.30.0
 Release: alt1
 Summary: Personal finances manager for KF5
 License: %gpl2plus
@@ -11,7 +11,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar.xz
 Source1:%name.po
-Patch0: skrooge-alt-remove-wrong-target.patch
+
+ExcludeArch: ppc64le
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-kf5
@@ -72,6 +73,7 @@ BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-xmlpatterns-devel
+BuildRequires: qt5-webengine-devel
 
 Requires: libgrantlee_templates5
 Requires: kf5-kinit kf5-kio
@@ -84,7 +86,6 @@ and intuitive.
 
 %prep
 %setup
-%patch0 -p2
 cp -f %SOURCE1 po/ru/skrooge.po
 
 %build
@@ -117,6 +118,10 @@ cp -f %SOURCE1 po/ru/skrooge.po
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Sep 04 2023 Andrey Cherepanov <cas@altlinux.org> 2.30.0-alt1
+- New version 2.30.0.
+- Excluded ppc64le.
+
 * Sat Feb 25 2023 Andrey Cherepanov <cas@altlinux.org> 2.29.0-alt1
 - new version 2.29.0
 
