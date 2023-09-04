@@ -10,10 +10,8 @@
 
 Name: redis
 Version: 7.2.0
-Release: alt2
-
+Release: alt3
 Summary: Redis is an advanced key-value store
-
 Group: Databases
 # redis, hiredis: BSD-3-Clause
 # hdrhistogram, jemalloc, lzf, linenoise: BSD-2-Clause
@@ -185,7 +183,7 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 
 %files
 %doc COPYING 00-RELEASENOTES README.md BUGS MANIFESTO
-%attr(0750,root,%redis_group) %dir %_sysconfdir/%name
+%attr(0770,root,%redis_group) %dir %_sysconfdir/%name
 %config(noreplace) %attr(0640, %redis_user, %redis_group) %_sysconfdir/%name/redis.conf
 %config(noreplace) %attr(0640, %redis_user, %redis_group) %_sysconfdir/%name/sentinel.conf
 %config(noreplace) %_logrotatedir/redis-server
@@ -212,6 +210,9 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Mon Sep 04 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.0-alt3
+- Allow write group to /etc/redis for fix redis-sentinel service (ALT#47458)
+
 * Fri Sep 01 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.0-alt2
 - Fixed start redis-sentinel.service (ALT#47436)
 
