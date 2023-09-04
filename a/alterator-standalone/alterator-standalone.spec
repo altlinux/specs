@@ -1,5 +1,5 @@
 Name: alterator-standalone
-Version: 7.4
+Version: 7.4.1
 Release: alt1
 
 Summary: System Management center
@@ -80,6 +80,9 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %_bindir/*
 
 %changelog
+* Mon Sep 04 2023 Sergey V Turchin <zerg@altlinux.org> 7.4.1-alt1
+- add KDE search keywords to desktop-file
+
 * Wed Aug 26 2020 Paul Wolneykien <manowar@altlinux.org> 7.4-alt1
 - Allow to set mode change handler with 'frame:mode-onchange-set!'
   global variable.
