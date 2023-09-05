@@ -1,5 +1,5 @@
 Name:       rivalcfg
-Version:    4.9.1
+Version:    4.10.0
 Release:    alt1
 
 Summary:    Configure SteelSeries Rival gaming mice
@@ -14,8 +14,7 @@ Source0:    %name-%version.tar
 Patch:      %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %description
 rivalcfg is a small CLI utility program that allows you to configure
@@ -28,27 +27,20 @@ SteelSeries Rival gaming mice on Linux.
 sed -i 's|#!/usr/bin/env python|&3|' setup.py
 
 %build
-CFLAGS="%optflags" %__python3 setup.py build
+%pyproject_build
 
 %install
-%__python3 setup.py install --root %buildroot --record=INSTALLED_FILES
+%pyproject_install
 
 mkdir -p %buildroot%_udevrulesdir
 touch %buildroot%_udevrulesdir/99-steelseries-rival.rules
 
-cat << EOF > %buildroot%_bindir/%name
-#!/usr/bin/env python3
-
-from rivalcfg import __main__
-
-__main__.main()
-EOF
-
 %post
 %name --update-udev ||:
 
-%files -f INSTALLED_FILES
+%files
 %doc README* LICENSE* CHANGELOG.* doc/{env,faq}.rst
+%_bindir/%name
 %dir %python3_sitelibdir_noarch/%name
 %python3_sitelibdir_noarch/%name
 %exclude %python3_sitelibdir_noarch/%name-%{version}*
@@ -56,6 +48,9 @@ EOF
 
 
 %changelog
+* Tue Sep 05 2023 L.A. Kostis <lakostis@altlinux.ru> 4.10.0-alt1
+- 4.10.0.
+
 * Sat Jul 22 2023 L.A. Kostis <lakostis@altlinux.ru> 4.9.1-alt1
 - 4.9.1.
 
