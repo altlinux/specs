@@ -186,8 +186,8 @@
 %def_without modular_daemons
 
 Name: libvirt
-Version: 9.6.0
-Release: alt2
+Version: 9.7.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
@@ -1255,8 +1255,6 @@ fi
 %config(noreplace) %_sysconfdir/libvirt/qemu.conf
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.qemu
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu
-%dir %attr(0751, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/channel
-%dir %attr(0751, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/channel/target
 %dir %attr(0751, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/checkpoint
 %dir %attr(0751, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/dump
 %dir %attr(0751, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/nvram
@@ -1265,8 +1263,8 @@ fi
 %dir %attr(0751, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/snapshot
 %dir %attr(0750, root, root) %_cachedir/libvirt/qemu
 %dir %attr(0700, root, root) %_logdir/libvirt/qemu
-%dir %attr(0700, root, root) %_localstatedir/lib/libvirt/swtpm
-%dir %attr(0700, root, root) %_logdir/swtpm/libvirt/qemu
+%dir %attr(0711, root, root) %_localstatedir/lib/libvirt/swtpm
+%dir %attr(0770, tss, tss) %_logdir/swtpm/libvirt/qemu
 %_datadir/augeas/lenses/libvirtd_qemu.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_qemu.aug
 %_bindir/virt-qemu-run
@@ -1407,6 +1405,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Sep 05 2023 Alexey Shabalin <shaba@altlinux.org> 9.7.0-alt1
+- 9.7.0
+
 * Tue Sep 05 2023 Alexey Shabalin <shaba@altlinux.org> 9.6.0-alt2
 - Update Requires, add R:swtpm-tools to daemon-driver-qemu (ALT#47442)
 
