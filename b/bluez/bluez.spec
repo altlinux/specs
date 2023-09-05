@@ -8,7 +8,7 @@
 %def_enable experimental
 
 Name: bluez
-Version: 5.66
+Version: 5.69
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -137,10 +137,9 @@ fi
 
 %files
 %doc AUTHORS ChangeLog README
-%dir %_sysconfdir/bluetooth
+%attr(555,root,root) %dir %_sysconfdir/bluetooth
 %config %_sysconfdir/bluetooth/main.conf
 %_initdir/bluetoothd
-%config %_sysconfdir/dbus-1/system.d/bluetooth.conf
 %_unitdir/*.service
 %_prefix/lib/systemd/user/obex.service
 /lib/udev/rules.d/*-hid2hci.rules
@@ -155,6 +154,7 @@ fi
 %_bindir/mpris-proxy
 %_bindir/rctest
 %_bindir/bneptest
+%_bindir/isotest
 %{?_enable_obex:%_bindir/obexctl}
 
 %if_enabled deprecated
@@ -170,6 +170,7 @@ fi
 
 %_libdir/bluetooth/
 %_libexecdir/bluetooth/
+%_datadir/dbus-1/system.d/bluetooth.conf
 %_datadir/dbus-1/system-services/org.bluez.service
 %_datadir/dbus-1/services/org.bluez.obex.service
 %_localstatedir/bluetooth
@@ -196,6 +197,11 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Tue Sep 05 2023 L.A. Kostis <lakostis@altlinux.ru> 5.69-alt1
+- 5.69.
+- move dbus-1 configuration to datadir as upstream does.
+- added isotest.
+
 * Fri Nov 11 2022 L.A. Kostis <lakostis@altlinux.ru> 5.66-alt1
 - 5.66.
 - remove ell hacks (fixed upstream).
