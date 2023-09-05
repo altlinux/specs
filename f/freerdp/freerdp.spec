@@ -7,7 +7,7 @@
 %def_without mbedtls
 
 Name: freerdp
-Version: 2.11.0
+Version: 2.11.1
 Release: alt1
 
 Group: Networking/Remote access
@@ -377,6 +377,9 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Tue Sep 05 2023 Andrey Cherepanov <cas@altlinux.org> 2.11.1-alt1
+- New version.
+
 * Tue Aug 29 2023 Andrey Cherepanov <cas@altlinux.org> 2.11.0-alt1
 - New version.
 
