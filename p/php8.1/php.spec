@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  1
-%define _php_release_version 22
+%define _php_release_version 23
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -198,6 +198,10 @@ export LIBS CFLAGS
 sed -is 's,\(zend_module_entry \)\(.*= {\),zend_module_entry __attribute__ ((visibility("default"))) \2,;' ext/*/*.c
 
 %build
+%ifarch riscv64
+export LIBS=-latomic
+%endif
+
 # Force use of system libtool:
 libtoolize --force --copy
 cat %_datadir/libtool/aclocal/{libtool,ltoptions,ltsugar,ltversion,lt~obsolete}.m4 >build/libtool.m4
@@ -259,7 +263,7 @@ touch configure.ac
 	--without-sqlite \
 	--with-regex=php \
 	--without-pear \
-	%ifarch %e2k riscv64
+	%ifarch %e2k riscv64 loongarch64
 	--without-pcre-jit \
 	%endif
 #
@@ -463,6 +467,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Mon Sep 04 2023 Anton Farygin <rider@altlinux.ru> 8.1.23-alt1
+- 8.1.22 -> 8.1.23
+
 * Wed Aug 02 2023 Anton Farygin <rider@altlinux.ru> 8.1.22-alt1
 - 8.1.21 -> 8.1.22
 - updated phar-phppath patch against the race in phar.phar generator
