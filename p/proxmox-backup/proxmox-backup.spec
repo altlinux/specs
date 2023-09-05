@@ -3,7 +3,7 @@
 %define proxy_user backup
 
 Name: proxmox-backup
-Version: 2.4.3.1
+Version: 3.0.2.1
 Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
@@ -203,6 +203,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Tue Sep 05 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:3.0.2.1-alt1
+- 3.0.2-1
+
 * Mon Jul 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:2.4.3.1-alt1
 - 2.4.3-1
 - proxmox-restore-daemon: disk - added processing if the device node exists
