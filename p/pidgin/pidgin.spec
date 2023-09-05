@@ -32,7 +32,7 @@
 %def_enable vv
 
 Name: pidgin
-Version: 2.14.6
+Version: 2.14.12
 Release: alt1
 
 Summary: A GTK+ based multiprotocol instant messaging client
@@ -453,6 +453,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 05 2023 Arseny Maslennikov <arseny@altlinux.org> 2.14.12-alt1
+- NMU: 2.14.6 -> 2.14.12.
+
 * Sat Sep 04 2021 Alexey Shabalin <shaba@altlinux.org> 2.14.6-alt1
 - 2.14.6
 
