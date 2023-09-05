@@ -9,7 +9,7 @@
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: A GNOME 3 application to access virtual systems
@@ -77,11 +77,13 @@ gnome-boxes lets you easily create, setup, access, and use:
   * When technology permits, set up access for applications on
     local virtual machines
 
+How to setup Libvirt see https://www.altlinux.org/Libvirt_(Qemu+KVM+Virt-manager).
+
 %package tests
 Summary: Tests for the Boxes
 Group: Development/Other
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -123,6 +125,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Tue Sep 05 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
+- 44.3
+
 * Tue May 30 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
 - 44.2
 
