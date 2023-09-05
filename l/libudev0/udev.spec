@@ -3,7 +3,7 @@
 
 Name: libudev0
 Version: 181
-Release: alt8
+Release: alt9
 
 Summary: Shared library to access udev device information
 License: LGPLv2.1+
@@ -16,6 +16,7 @@ Patch: %name-%version-alt.patch
 Provides: libudev = %version-%release
 Obsoletes: libudev < %version-%release
 
+BuildRequires: autoconf_2.60
 BuildRequires: glib2-devel gobject-introspection-devel gperf gtk-doc pciids usbids
 BuildRequires: libacl-devel libusb-compat-devel usbutils libselinux-devel
 BuildRequires: kmod-devel >= 5 libblkid-devel >= 2.20
@@ -28,6 +29,7 @@ This package provides shared library to access udev device information
 %patch -p1
 
 %build
+%set_autoconf_version 2.60
 %autoreconf
 %configure \
 	--enable-floppy \
@@ -58,6 +60,9 @@ This package provides shared library to access udev device information
 /%_lib/libudev.so.*
 
 %changelog
+* Tue Sep 05 2023 Andrew A. Vasilyev <andy@altlinux.org> 181-alt9
+- FTBFS: build with autoconf 2.60
+
 * Sun Aug 16 2020 Michael Shigorin <mike@altlinux.org> 181-alt8
 - fixed ftbfs (sys/sysmacros.h)
 
