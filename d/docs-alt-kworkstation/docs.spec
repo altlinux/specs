@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt6
+Release: alt7
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Sep 05 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt7
+- update screenshots
+- small improvements
+
 * Thu Aug 31 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt6
 - update to ALT Kworkstation 10.2RC2
 
