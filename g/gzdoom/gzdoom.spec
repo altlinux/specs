@@ -2,7 +2,7 @@
 
 Name: gzdoom
 Version: 4.10.0
-Release: alt3
+Release: alt4
 
 Summary: Enhanced Doom engine
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
@@ -107,6 +107,9 @@ done
 %_gamesdatadir/doom/soundfonts/*
 
 %changelog
+* Tue Sep  5 2023 Artyom Bystrov <arbars@altlinux.org> 4.10.0-alt4
+- Add missing file in gzdoom.pk3
+
 * Mon Aug 28 2023 Artyom Bystrov <arbars@altlinux.org> 4.10.0-alt3
 - Add aarch64 in Exclusive Arch
 
