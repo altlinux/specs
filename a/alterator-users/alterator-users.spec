@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.19
+Version: 10.20
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -52,6 +52,13 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Mon Sep 05 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.20-alt1
+- Fix in desktop and web UI version (ALT #47398, #47393)
+- Add user avatar removal (ALT #47230)
+- Hide the avatar frame display
+- Fix the color scheme in the web UI (ALT #47229)
+- Rename the button (ALT #47405)
+
 * Mon Jul 31 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.19-alt1
 - Fix the display of the avatar for a user who previously had an avatar
 set when the window is reopened
