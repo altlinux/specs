@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 41
+%define ver_major 44
 %define api_ver 1.0
 %define xdg_name org.gnome.gitg
 
@@ -10,9 +10,9 @@
 
 Name: gitg
 Version: %ver_major
-Release: alt2
+Release: alt1
 
-Summary: git repository viewer targeting gtk+/GNOME
+Summary: git repository viewer for GTK+/GNOME
 Group: Development/Other
 License: GPL-2.0
 Url: https://wiki.gnome.org/Apps/Gitg
@@ -22,9 +22,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-41-up-meson-0.61.patch
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 # gitg/gitg-plugins-engine.vala: repo.require("PeasGtk", "1.0", 0);
 Requires: typelib(PeasGtk)
 
@@ -33,26 +32,27 @@ Requires: typelib(PeasGtk)
 %define glib_ver 2.68
 %define gtk_ver 3.20
 %define gtksourceview_ver 4.0.3
-%define git2_ver 1.0.0
-%define webkit_ver 2.6.0
+%define git2_ver 1.2.0
 %define gspell_ver 1.8.1
 %define peas_ver 1.5.0
+%define gspell_ver 1.8.1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3 rpm-build-vala
 BuildRequires: meson vala-tools
+BuildRequires: desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libhandy1-devel
 BuildRequires: libdazzle-devel
 BuildRequires: libgit2-glib-devel >= %git2_ver
 BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
-#BuildRequires: libwebkit2gtk-devel >= %webkit_ver libwebkit2gtk-gir-devel
 BuildRequires: libgspell-devel >= %gspell_ver
 BuildRequires: libpeas-devel >= %peas_ver
-BuildRequires: desktop-file-utils
 BuildRequires: libgee0.8-devel libjson-glib-devel libsecret-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxml2-devel
+BuildRequires: libgpgme-devel
+BuildRequires: gobject-introspection-devel libhandy1-gir-devel libxml2-devel
 BuildRequires: libgit2-glib-gir-devel libgee0.8-gir-devel
-BuildRequires: libgspell-gir-devel
+BuildRequires: libgspell-gir-devel >= %gspell_ver
 BuildRequires: gsettings-desktop-schemas-devel
 %{?_enable_docs:BuildRequires: valadoc}
 %{?_enable_python:BuildRequires(pre): rpm-build-python3}
@@ -79,7 +79,7 @@ This package provides shared Gitg library.
 %package -n lib%name-devel
 Summary: Development files for lib%name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Gitg is a graphical user interface for git. It aims at being a small,
@@ -93,7 +93,7 @@ or other applications
 %package -n lib%name-gir
 Summary: GObject introspection data for the Gitg library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 This package provides GObject introspection data for the Gitg
@@ -103,8 +103,8 @@ library.
 Summary: GObject introspection devel data for the Gitg library
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 This package provides GObject introspection devel data for the Gitg
@@ -112,9 +112,6 @@ library.
 
 %prep
 %setup
-%patch -p1
-# fix python install path
-subst "s/purelib/platlib/" libgitg-ext/meson.build
 # remove useless rpath
 subst "/install_rpath/d" %name/meson.build
 
@@ -132,8 +129,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/%xdg_name.desktop
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -144,7 +140,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/%{name}*
 %_iconsdir/hicolor/scalable/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
-%{?_enable_python:%python3_sitelibdir/gi/overrides/*}
+%{?_enable_python:%python3_sitelibdir_noarch/gi/overrides/GitgExt.py
+%python3_sitelibdir_noarch/gi/overrides/__pycache__/*}
 %doc AUTHORS NEWS README*
 
 %files -n lib%name
@@ -171,6 +168,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Tue Sep 05 2023 Yuri N. Sedunov <aris@altlinux.org> 44-alt1
+- updated to v44-1-gaba8b667
+
 * Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 41-alt2
 - updated to v41-19-g3458f044 (updated translations)
 - fixed build with meson >= 0.61
