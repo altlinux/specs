@@ -1,6 +1,6 @@
 Name: libdrm
-Version: 2.4.115
-Release: alt2
+Version: 2.4.116
+Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
 License: GPL
@@ -74,6 +74,9 @@ Will void your warranty.
 %_bindir/*
 
 %changelog
+* Tue Sep 05 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.116-alt1
+- 2.4.116
+
 * Wed Aug 02 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.115-alt2
 - cherry pick upstream commit "amdgpu: add marketing names from amd-5.4.3 (22.40.3)" (closes: #46421)
 - add test apps to libdrm-utils package (closes: #45719)
