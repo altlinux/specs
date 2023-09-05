@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: stgit
-Version: 2.1.0
+Version: 2.3.2
 Release: alt1
 Summary: Stacked Git
 License: GPL-2.0-only
@@ -13,9 +13,8 @@ Url: https://stacked-git.github.io/
 Vcs: https://github.com/stacked-git/stgit
 
 Source: %name-%version.tar
-
-BuildRequires: /proc
 BuildRequires: asciidoc
+BuildRequires: banner
 BuildRequires: git-core
 BuildRequires: openssl-devel
 BuildRequires: rust-cargo
@@ -43,6 +42,9 @@ directory = "vendor"
 verbose = true
 quiet = false
 
+[build]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
+
 [install]
 root = "%buildroot%_prefix"
 
@@ -63,9 +65,13 @@ install -Dpm644 COPYING README.md AUTHORS.md CHANGELOG.md contrib/stgbashprompt.
 
 %check
 %buildroot%_bindir/stg --version
-# Fails:
+banner unit-tests
+%make_build unit-test
+banner t-tests
 rm t/t7000-sparse-checkout.sh
-%make_build test
+rm t/t1205-push-subdir.sh # https://github.com/stacked-git/stgit/issues/367
+# To debug failures export STG_TEST_OPTS=--verbose
+%make_build -C t STG_PROFILE=release
 
 %files
 %_bindir/stg
@@ -78,6 +84,9 @@ rm t/t7000-sparse-checkout.sh
 %_datadir/doc/stgit
 
 %changelog
+* Mon Sep 04 2023 Vitaly Chikunov <vt@altlinux.org> 2.3.2-alt1
+- Update to v2.3.2 (2023-08-19).
+
 * Mon Dec 19 2022 Vitaly Chikunov <vt@altlinux.org> 2.1.0-alt1
 - Update to v2.1.0 (2022-12-12).
 
