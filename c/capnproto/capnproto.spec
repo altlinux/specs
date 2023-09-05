@@ -4,13 +4,14 @@
 %set_verify_elf_method strict
 
 Name: capnproto
-Version: 0.10.4
+Version: 1.0.0
 Release: alt1
 Summary: A data interchange format and capability-based RPC system
 Group: Development/C
 License: MIT
 Url: https://capnproto.org
 Vcs: https://github.com/capnproto/capnproto
+Requires: libcapnp = %EVR
 
 Source: %name-%version.tar
 Patch2000: %name-e2k.patch
@@ -29,23 +30,28 @@ Think JSON, except binary. Or think Protocol Buffers, except faster.
 This package contains the schema compiler and command-line encoder and
 decoder tools.
 
-%package libs
-Summary: Libraries for %name
+%package -n libcapnp
+Summary: Shared libraries for %name
 Group: System/Libraries
+Obsoletes: capnproto-libs < %EVR
 
-%description libs
-The %name-libs package contains the libraries for using %name
+%description -n libcapnp
+The libcapnp package contains the libraries for using Cap'n Proto
 in applications.
 
+# Two step rename to libcapnp-devel because of BR and unmets at the same time.
+# When there is capnproto-devel and libcapnp-devel at the same time apt will
+# install capnproto-devel.
 %package devel
 Summary: Development files for %name
-Requires: %name-libs = %version-%release
-Requires: %name = %version-%release
 Group: Development/C
+Provides: libcapnp-devel = %EVR
+Requires: capnproto = %EVR
+Requires: libcapnp = %EVR
 
 %description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
+This package contains libraries and header files for developing applications
+that use Cap'n Proto.
 
 %prep
 %setup
@@ -64,6 +70,7 @@ developing applications that use %name.
 %endif
 
 %build
+# Disable LTO: https://github.com/capnproto/capnproto/issues/1660
 %define optflags_lto %nil
 %ifarch %e2k
 # too many warnings of this type on tests
@@ -92,11 +99,12 @@ subst '/TEST(AsyncIo, AncillaryMessageHandler)/,/^}/s/^/\/\//' src/kj/async-io-t
 %files
 %_bindir/cap*
 
-%files libs
+%files -n libcapnp
 %doc LICENSE CONTRIBUTORS README.md
 %_libdir/*-%version.so
 
 %files devel
+%doc c++/LICENSE.txt c++/README.txt doc/*md kjdoc/tour.md
 %_includedir/*
 %_libdir/pkgconfig/*.pc
 %_libdir/cmake/CapnProto
@@ -104,6 +112,11 @@ subst '/TEST(AsyncIo, AncillaryMessageHandler)/,/^}/s/^/\/\//' src/kj/async-io-t
 %_libdir/lib*.so
 
 %changelog
+* Tue Aug 01 2023 Vitaly Chikunov <vt@altlinux.org> 1.0.0-alt1
+- Update to v1.0.0 (2023-07-28).
+- New package names: capnproto-libs -> libcapnp, capnproto-devel =
+  libcapnp-devel.
+
 * Tue Apr 18 2023 Vitaly Chikunov <vt@altlinux.org> 0.10.4-alt1
 - Update to v0.10.4 (2023-04-13).
 - spec: Disable LTO build (issues/1660).
