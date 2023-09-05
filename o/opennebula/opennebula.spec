@@ -12,15 +12,15 @@
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 6.2.0.1
-Release: alt5
+Version: 6.4.0.1
+Release: alt1
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
 
 Source0: %name-%version.tar
 # Failed build js webpack for fireedge
-ExcludeArch: %ix86
+ExcludeArch: %ix86 %arm
 
 BuildRequires(pre): rpm-build-ruby rpm-build-python3 rpm-macros-nodejs rpm-macros-systemd
 BuildRequires(pre): rpm-build-java
@@ -135,6 +135,7 @@ BuildConflicts: gem(sinatra) >= 2
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %_libexecdir/one/sunstone/public/bower_components/**/*
+%add_findreq_skiplist %_libexecdir/one/fireedge/node_modules/**/*
 %add_findreq_skiplist /var/lib/one/*
 
 %ruby_alias_names opennebula-common,install_gems
@@ -241,6 +242,7 @@ Conflicts: gem(ipaddress) >= 0.9
 Conflicts: gem(vsphere-automation-cis) >= 0.5
 Conflicts: gem(vsphere-automation-vcenter) >= 0.5
 Conflicts: gem(rbvmomi) >= 3.1
+Conflicts: gem(dalli) >= 3.0
 
 %description common
 Common package shared by various OpenNebula components.
@@ -493,7 +495,8 @@ ln -sf %nodejs_sitelib/node-sass src/sunstone/public/node_modules/node-sass
 %build
 export PATH_DEFAULT="$PATH"
 npm config set offline true
-npm config set zmq_external true
+#npm config set zmq_external true
+export npm_config_zmq_external=true
 
 %if_disabled prebuilded_sunstone
 pushd src/sunstone/public
@@ -538,7 +541,7 @@ pushd share/man
 popd
 
 pushd src/oca/java
-    ./build.sh -d
+    ./build.sh
 popd
 
 
@@ -1134,6 +1137,9 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Mon Sep 04 2023 Alexey Shabalin <shaba@altlinux.org> 6.4.0.1-alt1
+- 6.4.0.1
+
 * Thu May 18 2023 Alexey Shabalin <shaba@altlinux.org> 6.2.0.1-alt5
 - fix for qemu-img info 8.0.0
 - Revert "F #4231: reserve ephemeral ports in oned.conf (#4235)"
