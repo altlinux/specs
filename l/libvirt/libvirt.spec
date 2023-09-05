@@ -187,7 +187,7 @@
 
 Name: libvirt
 Version: 9.6.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
@@ -532,7 +532,10 @@ Requires: qemu-kvm-core
 # For image compression
 Requires: gzip
 Requires: bzip2
+Requires: lzop
 Requires: xz
+Requires: swtpm-tools
+Requires: systemd-container
 
 %description daemon-driver-qemu
 The qemu driver plugin for the libvirtd daemon, providing
@@ -544,6 +547,7 @@ Summary: LXC driver plugin for the libvirtd daemon
 Group: System/Libraries
 Requires: %name-daemon-driver-network = %EVR
 Requires: %name-daemon = %EVR
+Requires: systemd-container
 
 %description daemon-driver-lxc
 The LXC driver plugin for the libvirtd daemon, providing
@@ -1403,6 +1407,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Sep 05 2023 Alexey Shabalin <shaba@altlinux.org> 9.6.0-alt2
+- Update Requires, add R:swtpm-tools to daemon-driver-qemu (ALT#47442)
+
 * Wed Aug 30 2023 Alexey Shabalin <shaba@altlinux.org> 9.6.0-alt1
 - 9.6.0 (Fixes: CVE-2023-3750)
 - Disabled support glusterfs for 32-bit arches and riscv64.
