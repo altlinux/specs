@@ -1,13 +1,11 @@
 %def_disable static
 
 Name: unbound
-Version: 1.17.1
-Release: alt1.1
+Version: 1.18.0
+Release: alt1
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
-# https://github.com/NLnetLabs/unbound/commit/d7e776114114c16816570e48ab3a27eedc401a0e
-Patch: %name-1.17.1-openssl3-fix.patch
 Summary: Validating, recursive, and caching DNS resolver
 Group: System/Servers
 
@@ -94,7 +92,6 @@ Python3 modules and extensions for unbound
 
 %prep
 %setup
-%patch -p1
 
 %build
 # configure with /var/unbound/unbound.conf so that all default chroot,
@@ -240,6 +237,10 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %endif
 
 %changelog
+* Tue Sep 05 2023 Alexei Takaseev <taf@altlinux.org> 1.18.0-alt1
+- 1.18.0
+- Drop patch unbound-1.17.1-openssl3-fix.patch fixed in upstream
+
 * Tue Aug 01 2023 L.A. Kostis <lakostis@altlinux.ru> 1.17.1-alt1.1
 - Added patch to ignore eof while reading in openssl >= 3.
 
