@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 6.7.4
+Version: 6.7.7
 Release: alt1
 
 Summary: Pure python AMQP 0.9.1 asynchronous client library
@@ -59,6 +59,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 06 2023 Anton Zhukharev <ancieg@altlinux.org> 6.7.7-alt1
+- Updated to 6.7.7.
+
 * Thu May 11 2023 Anton Zhukharev <ancieg@altlinux.org> 6.7.4-alt1
 - Initial build for ALT Sisyphus.
 

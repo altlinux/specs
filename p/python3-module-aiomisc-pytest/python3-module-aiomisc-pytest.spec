@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name aiomisc-pytest
+%define mod_name aiomisc_pytest
 
 # tests are broken
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.1
+Version: 1.1.1
 Release: alt1
 
 Summary: Pytest plugin for aiomisc
@@ -56,10 +57,15 @@ sed -i '/version/s/= .*$/= "%version"/' pyproject.toml
 %pyproject_run_pytest -vra
 
 %files
-%doc README.md
-%python3_sitelibdir/*
+%doc COPYING README.md
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%python3_sitelibdir/__pycache__/%mod_name.*.pyc
 
 %changelog
+* Wed Sep 06 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.1-alt1
+- Updated to 1.1.1.
+
 * Thu May 11 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1-alt1
 - Initial build for ALT Sisyphus.
 

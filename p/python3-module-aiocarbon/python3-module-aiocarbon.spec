@@ -5,8 +5,8 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.15.1
-Release: alt1.git0dbbe0c
+Version: 0.15.2
+Release: alt1
 
 Summary: Asynchronous client for carbon
 License: Apache-2.0
@@ -34,6 +34,10 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 
+# fix version
+VERSION=`python3 -c 'print(tuple(map(int, "%version".split("."))))'`
+sed -i "/version_info =/s/= .*/ = ${VERSION}/" %pypi_name/version.py
+
 # fix python_requires version specifier
 sed -i '/python_requires=/s/3.5.\*/3.5/' setup.py
 
@@ -59,6 +63,9 @@ sed -i '/python_requires=/s/3.5.\*/3.5/' setup.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 06 2023 Anton Zhukharev <ancieg@altlinux.org> 0.15.2-alt1
+- Changed version to 0.15.2.
+
 * Thu May 11 2023 Anton Zhukharev <ancieg@altlinux.org> 0.15.1-alt1.git0dbbe0c
 - Initial commit for ALT Sisyphus.
 
