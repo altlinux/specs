@@ -1,5 +1,5 @@
 Name: xbyak
-Version: 6.71
+Version: 6.73
 Release: alt1
 
 Summary: A C++ JIT assembler for x86 (IA32), x64 (AMD64, x86-64)
@@ -40,6 +40,9 @@ Xbyak is a C++ header library that enables dynamically to assemble x86(IA32), x6
 %_libdir/cmake/%name
 
 %changelog
+* Wed Sep 06 2023 Nazarov Denis <nenderus@altlinux.org> 6.73-alt1
+- New version 6.73.
+
 * Sat Jul 29 2023 Nazarov Denis <nenderus@altlinux.org> 6.71-alt1
 - New version 6.71.
 
