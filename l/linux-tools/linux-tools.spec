@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.4
+%define kernel_base_version 6.5
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
@@ -13,7 +13,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -266,6 +266,18 @@ Url: https://docs.kernel.org/tools/rv/
 rv tool provides the interface for a collection of runtime verification
 monitors.
 
+%package -n nolibc-headers
+Summary: Libc alternative for minimal programs with very limited requirements
+Group: Development/C
+%define nolibc_arch aarch64 armh %ix86 loongarch64 %mips riscv64 s390 x86_64
+
+%description -n nolibc-headers
+This headers files are designed to be used as a libc alternative for minimal
+programs with very limited requirements. It consists of a small number of
+syscall and type definitions, and the minimal startup code needed to call
+main(). All syscalls are declared as static functions so that they can be
+optimized away by the compiler when not used.
+
 %prep
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar
@@ -304,7 +316,10 @@ sed -i '/ln -s/s/-s $(DESTDIR)/-s /' tracing/rtla/Makefile
 %build
 %define optflags_lto %nil
 banner build
-cd %kernel_source/tools
+cd %kernel_source
+# Pre-build headers for selftests, or else 'error: missing kernel header files.'
+%make_build headers
+cd tools
 
 # Use rst2man from python3-module-docutils
 # Sisyphus have rst2man, p10 have rst2man.py, p9 have rst2man.py3.
@@ -389,6 +404,7 @@ make acpi
 	tmon \
 	tracing \
 	mm \
+	%nil
 
 %make_build -C verification/rv
 
@@ -424,13 +440,6 @@ install -m 0644 perf/{CREDITS,design.txt,Documentation/examples.txt,Documentatio
 
 rm %buildroot/%_docdir/perf-tip/tips.txt
 rmdir %buildroot/%_docdir/perf-tip
-
-find %buildroot%_sysconfdir/bash_completion.d \
-	%buildroot%_datadir/perf-core \
-	%buildroot%_libexecdir/perf* \
-	%buildroot%_docdir \
-	-name bin -prune -o -type f \
-	| xargs chmod a-x
 
 ### Install bpf tools
 make %install_opts \
@@ -514,12 +523,18 @@ mv %buildroot%_sbindir/ec         %buildroot%_sbindir/ec-linux
 mv %buildroot%_man8dir/acpidump.8 %buildroot%_man8dir/acpidump-linux.8
 
 make %install_opts bootconfig_install
+make %install_opts debugging_install
 make %install_opts freefall_install
 make %install_opts gpio_install
 make %install_opts iio_install
 make %install_opts mm_install
 make %install_opts tracing_install STRIP=true
 make -C verification/rv %install_opts install STRIP=true
+%ifarch %ix86 x86_64
+mkdir -p %buildroot%_datadir/misc
+make -C arch/x86/kcpuid %install_opts install HWDATADIR=%buildroot%_datadir/misc
+make -C arch/x86/intel_sdsi %install_opts install
+%endif
 install -p -m755 cgroup/cgroup_event_listener	%buildroot%_bindir
 install -p -m755 firmware/ihex2fw		%buildroot%_bindir
 install -p -m755 kvm/kvm_stat/kvm_stat		%buildroot%_bindir
@@ -536,6 +551,11 @@ mkdir -p %buildroot%_libexecdir/kselftests
 ./kselftest_install.sh %buildroot%_libexecdir/kselftests
 popd
 
+%ifarch %nolibc_arch
+make nolibc V=1
+cp -a include/nolibc/sysroot/include %buildroot%_includedir/nolibc
+%endif
+
 %add_debuginfo_skiplist %_prefix/libexec/perf-core/dlfilters/dlfilter-test-api-v0.so
 %add_debuginfo_skiplist %_libexecdir/kselftests/sgx/test_encl.elf
 %filter_from_requires /intel_pstate_tracer/d
@@ -551,6 +571,9 @@ ldd %buildroot%_bindir/perf | sort -V
 # To run more comprehensive test run: perf test
 
 make -C bootconfig test
+%ifarch %nolibc_arch
+make -C testing/selftests/nolibc nolibc-test
+%endif
 
 %pre -n libperf-devel-checkinstall
 set -euxo pipefail
@@ -627,6 +650,12 @@ fi
 %_sbindir/page_owner_sort
 %_sbindir/pfrut
 %_man8dir/pfrut.*
+%ifarch %ix86 x86_64
+%_sbindir/intel_sdsi
+%_sbindir/kcpuid
+%_datadir/misc/cpuid.csv
+%endif
+%_bindir/kernel-chktaint
 
 %files -n perf
 %_bindir/perf
@@ -736,7 +765,16 @@ fi
 %_man1dir/rv.*
 %_man1dir/rv-*
 
+%ifarch %nolibc_arch
+%files -n nolibc-headers
+%_includedir/nolibc
+%endif
+
 %changelog
+* Wed Sep 06 2023 Vitaly Chikunov <vt@altlinux.org> 6.5-alt1
+- Update to v6.5 (2023-08-27).
+- Update packaging: install nolibc and some more tools.
+
 * Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.4-alt2
 - Removed the workaround introduced in the previous release related to linking
   with bfd.a and libsframe, as the bug has been fixed in the binutils-devel
