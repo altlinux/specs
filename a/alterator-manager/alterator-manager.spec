@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.7
-Release: alt2
+Release: alt3
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -52,6 +52,10 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %_includedir/alterator
 
 %changelog
+* Wed Sep 06 2023 Ivan Savin <svn17@altlinux.org> 0.1.7-alt3
+- Undo changes from 0.1.7-alt2. This change causes "double free or
+  corruption".
+
 * Wed Sep 06 2023 Ivan Savin <svn17@altlinux.org> 0.1.7-alt2
 - Fix: add g_free() for newly-allocated copy of the string after
   g_variant_get().
