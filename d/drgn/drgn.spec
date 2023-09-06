@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.21
+Version: 0.0.23
 Release: alt1
 Summary: Scriptable debugger library
 License: GPL-3.0-or-later
@@ -31,7 +31,9 @@ BuildRequires: libstdc++-devel
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
 BuildRequires: zlib-devel
-%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: /proc
+}}
 # Note: Bundled with own version of elfutils.
 
 %description
@@ -49,6 +51,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
+mkdir -p %buildroot%_datadir/drgn
+cp -r contrib tools -t %buildroot%_datadir/drgn
 
 %check
 test -d /proc/self
@@ -59,13 +63,22 @@ test -d /proc/self
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %buildroot%_bindir/drgn --version
 
+# Testing even in vm-run does not work:
+#   warning: could not get debugging information for:
+#   kernel (could not find vmlinux for 6.4.14-un-def-alt1)
+#   kernel modules (could not find loaded kernel modules: could not find 'struct module')
+
 %files
-%doc COPYING README.rst
+%doc COPYING README.rst docs
 %_bindir/drgn
+%_datadir/drgn
 %python3_sitelibdir/drgn*
 %python3_sitelibdir/_drgn.*
 
 %changelog
+* Wed Sep 06 2023 Vitaly Chikunov <vt@altlinux.org> 0.0.23-alt1
+- Update to v0.0.23 (2023-06-28).
+
 * Wed Nov 23 2022 Vitaly Chikunov <vt@altlinux.org> 0.0.21-alt1
 - Update to v0.0.21 (2022-10-12).
 
