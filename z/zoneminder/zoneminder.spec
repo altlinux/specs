@@ -7,7 +7,7 @@ ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.36.33
-Release: alt1.1
+Release: alt2
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -35,7 +35,7 @@ Requires: perl-SOAP-WSDL perl-Class-Std-Fast perl-Data-UUID perl-IO-Socket-Multi
 Requires: perl-Digest-SHA perl-Class-Date perl-DateTime perl-Date-Manip perl-libwww
 Requires: perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable
 AutoReq: noperl
-BuildRequires: bzlib-devel ffmpeg gcc-c++ libavresample-devel libswresample-devel libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel libssl-devel libsystemd-devel libffi-devel libx264-devel libmount-devel libuuid-devel libselinux-devel libblkid-devel libmp4v2
+BuildRequires: bzlib-devel ffmpeg gcc-c++ libswresample-devel libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel libssl-devel libsystemd-devel libffi-devel libx264-devel libmount-devel libuuid-devel libselinux-devel libblkid-devel libmp4v2
 
 %description
 ZoneMinder is a set of applications which is intended to provide a complete
@@ -173,6 +173,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Wed Sep 06 2023 Anton Farygin <rider@altlinux.ru> 1.36.33-alt2
+- removed unnecessary BuildRequires libavresample
+
 * Fri Jun 09 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.36.33-alt1.1
 - fixed build for Elbrus
 
