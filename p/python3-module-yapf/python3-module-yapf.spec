@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.33.0
+Version: 0.40.1
 Release: alt1
 Summary: A formatter for Python files
 License: Apache-2.0
@@ -15,6 +15,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 %pyproject_runtimedeps_metadata
+%filter_from_requires /python3(yapf_third_party._ylib2to3.pgen2.pgen2)/d
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires(pre): rpm-build-vim
 %pyproject_builddeps_build
@@ -53,6 +54,11 @@ Group: Editors
 
 %prep
 %setup
+
+# fix local imports
+sed -i "/from pgen2 import/s/pgen2/.pgen2/" \
+    third_party/yapf_third_party/_ylib2to3/pgen2/conv.py
+
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -78,6 +84,7 @@ popd
 %_bindir/yapf*
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%python3_sitelibdir/yapf_third_party/
 %exclude %python3_sitelibdir/%{pypi_name}tests/
 
 %files -n vim-plugin-yapf
@@ -85,6 +92,9 @@ popd
 %vim_plugin_dir/*
 
 %changelog
+* Wed Sep 06 2023 Anton Zhukharev <ancieg@altlinux.org> 0.40.1-alt1
+- Updated to 0.40.1.
+
 * Wed May 17 2023 Stanislav Levin <slev@altlinux.org> 0.33.0-alt1
 - 0.32.0 -> 0.33.0.
 
