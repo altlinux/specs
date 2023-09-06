@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 23.04.3
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Summary: Webbrowser designed for mobile devices
@@ -17,12 +17,14 @@ ExcludeArch: %not_qt5_qtwebengine_arches
 
 Requires(post,preun): alternatives >= 0.2
 Requires: qt5-feedback
-Provides: webclient
+Provides: webclient x-www-browser
 Provides: kde5-plasma-angelfish = %EVR
 Obsoletes: kde5-plasma-angelfish < %EVR
 
 Source: %rname-%version.tar
+Source1: po-ru-add.po
 Patch1: alt-def-size.patch
+Patch2: alt-i18n.patch
 
 # Automatically added by buildreq on Tue Feb 25 2020 (-bi)
 # optimized out: alternatives cmake cmake-modules elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libgdk-pixbuf libglvnd-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-quickcontrols2 libqt5-svg libqt5-test libqt5-webchannel libqt5-webengine libqt5-webenginecore libqt5-widgets libsasl2-3 libstdc++-devel libx265-176 python-modules python2-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel rpm-build-python3 sh4
@@ -44,6 +46,11 @@ This is the webbrowser designed to
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
+
+msgcat --use-first po/ru/angelfish.po %SOURCE1 > po/ru/angelfish.po.tmp
+cat po/ru/angelfish.po.tmp >po/ru/angelfish.po
+rm -f po/ru/angelfish.po.tmp
 
 %build
 %K5build \
@@ -77,6 +84,9 @@ __EOF__
 %_K5notif/*angelfish*
 
 %changelog
+* Wed Sep 06 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt2
+- fix "Search for" context menu i18n
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 
