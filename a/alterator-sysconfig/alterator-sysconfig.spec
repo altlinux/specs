@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.10
+Version: 1.3.11
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,10 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Wed Sep 06 2023 Anton Midyukov <antohami@altlinux.org> 1.3.11-alt1
+- Create the X11 settings for keyboard layoutsk instead Xkbmap
+- sysconfig-base: replace fgrep with 'grep -F'
+
 * Thu May 04 2023 Andrey Cherepanov <cas@altlinux.org> 1.3.10-alt1
 - proxy: appended attention about usage username and password (ALT #37186).
 

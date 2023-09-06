@@ -2,7 +2,7 @@
 
 Name: alterator-sh-functions
 Version: 0.13
-Release: alt3
+Release: alt4
 
 Requires: gettext libshell >= 0.1.0-alt2
 
@@ -37,6 +37,9 @@ helper functions for alterator shell based backends
 %_man3dir/*
 
 %changelog
+* Wed Sep 06 2023 Anton Midyukov <antohami@altlinux.org> 0.13-alt4
+- NMU: replace fgrep with 'grep -F'
+
 * Mon Dec 27 2010 Vladislav Zavjalov <slazav@altlinux.org> 0.13-alt3
 - file_list_add(): use "fgrep -x" instead of "fgrep -w"
 
