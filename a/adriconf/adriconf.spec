@@ -1,8 +1,8 @@
 %define name adriconf
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
-%define version 2.7.0
-%define release alt2
+%define version 2.7.1
+%define release alt1
 
 Summary: Advanced Mesa DRI Configurator
 Name: %name
@@ -51,6 +51,9 @@ install -m644 flatpak/org.freedesktop.%name.metainfo.xml %buildroot%{_datadir}/m
 %_iconsdir/*.png
 
 %changelog
+* Wed Sep 06 2023 L.A. Kostis <lakostis@altlinux.ru> 2.7.1-alt1
+- 2.7.1.
+
 * Sun Jun 25 2023 L.A. Kostis <lakostis@altlinux.ru> 2.7.0-alt2
 - Apply fix to compile with gcc-13.
 
