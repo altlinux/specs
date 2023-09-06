@@ -9,8 +9,8 @@
 %endif
 
 Name: python3-module-%oname
-Version: 6.25.1
-Release: alt1.1
+Version: 6.25.2
+Release: alt1
 
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
@@ -40,6 +40,7 @@ BuildRequires: python3-module-tornado
 BuildRequires: /proc
 BuildRequires: /dev/pts
 BuildRequires: python3-module-ipyparallel
+BuildRequires: xvfb-run
 %endif
 
 %add_python3_req_skip gtk
@@ -68,8 +69,7 @@ sed -i 's/--color=yes//' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v -W ignore::DeprecationWarning -k "\
-not test_qt_enable_gui"
+%pyproject_run -- xvfb-run pytest -v -W ignore::DeprecationWarning -k 'not test_tk_loop'
 
 %files
 %doc *.md examples
@@ -86,6 +86,9 @@ not test_qt_enable_gui"
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Wed Sep 06 2023 Anton Vyatkin <toni@altlinux.org> 6.25.2-alt1
+- New version 6.25.2.
+
 * Wed Aug 23 2023 Anton Vyatkin <toni@altlinux.org> 6.25.1-alt1.1
 - Fix FTBFS.
 
