@@ -187,7 +187,7 @@
 
 Name: libvirt
 Version: 9.7.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
@@ -203,7 +203,7 @@ Source14: libvirt-guests.init
 Source21: libvirtd.tmpfiles
 
 Patch1: %name-%version.patch
-
+Patch2: libvirt-9.0-vitastor.diff
 
 %{?_with_libvirtd:Requires: %name-daemon = %EVR}
 %{?_with_network:Requires: %name-daemon-config-network = %EVR}
@@ -769,6 +769,7 @@ mkdir -p src/keycodemapdb
 tar -xf %SOURCE2 -C subprojects/keycodemapdb --strip-components 1
 
 %patch1 -p1
+%patch2 -p1
 
 %build
 %meson \
@@ -1405,6 +1406,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Sep 06 2023 Alexey Shabalin <shaba@altlinux.org> 9.7.0-alt2
+- Add patch for vitastor support.
+
 * Tue Sep 05 2023 Alexey Shabalin <shaba@altlinux.org> 9.7.0-alt1
 - 9.7.0
 
