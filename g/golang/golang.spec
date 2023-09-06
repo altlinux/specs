@@ -46,8 +46,8 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.21.0
-Release: alt3
+Version: 1.21.1
+Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -372,6 +372,9 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Wed Sep 06 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.1-alt1
+- New version (1.21.1) (Fixes: CVE-2023-39318, CVE-2023-39319, CVE-2023-39320, CVE-2023-39321, CVE-2023-39322).
+
 * Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.0-alt3
 - Add go.env to package.
 - Disable download toolchains in go.env.
