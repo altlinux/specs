@@ -12,7 +12,7 @@
 
 Name: grub
 Version: 2.06
-Release: alt15
+Release: alt16
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -451,6 +451,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Wed Sep 06 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt16
+- 39_memtest: fix grub.cfg generation on i586 (closes: #47471)
+
 * Tue Aug 22 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt15
 - 39_memtest: add uefi support (closes: #47244)
 
