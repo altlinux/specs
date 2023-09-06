@@ -56,14 +56,21 @@ AutoProv: nopython
 %global optflags_lto %nil
 
 %define hwasan_symbolize_arches x86_64 aarch64
-%ifarch riscv64
+%ifarch riscv64 loongarch64
 %def_without lldb
 %else
 %def_with lldb
 %endif
+%ifarch loongarch64
+# XXX: LoongArch target is not ready yet, see https://reviews.llvm.org/D138135
+%def_without lld
+%else
+%def_with lld
+%endif
 
 %def_disable tests
 # disable clang on aarch64 due very long compile time
+# Do NOT use clang on LoongArch since lld is not ready yet
 %ifarch x86_64 ppc64le
 %def_with clang
 %else
@@ -86,7 +93,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt3
+Release: alt4
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -116,6 +123,7 @@ Patch19: llvm-alt-cmake-build-with-install-rpath.patch
 Patch20: clang-16-alt-rocm-device-libs-path.patch
 Patch21: 0001-lld-Pass-random.randint-stop-parameter-as-int.patch
 Patch22: clang-D142199.patch
+Patch3500: clang-alt-triple-loongarch64.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -636,6 +644,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch20 -p1 -b .clang-rocm-device-path
 %patch21 -p1
 %patch22 -p1 -b .recommonmark
+%patch3500 -p1 -b .la64
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -643,7 +652,10 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 
 %build
-PROJECTS="clang;clang-tools-extra;compiler-rt;lld;mlir;polly"
+PROJECTS="clang;clang-tools-extra;compiler-rt;mlir;polly"
+%if_with lld
+PROJECTS="$PROJECTS;lld"
+%endif
 %if_with lldb
 PROJECTS="$PROJECTS;lldb"
 %endif
@@ -695,7 +707,7 @@ fi
 	%endif
 	%else
 	-DLLVM_ENABLE_LTO=Off \
-	%ifnarch riscv64
+	%ifnarch riscv64 loongarch64
 	-DLLVM_USE_LINKER=gold \
 	%endif
 	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
@@ -744,8 +756,10 @@ sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' %builddir/build.ninja
 ninja -vvv -j $NPROCS -C %builddir
 
 %install
+%if_with lld
 sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' %builddir/build.ninja
 sed -i '/^[[:space:]]*include.*tools\/lld\/docs\/cmake_install.cmake.*/d' %builddir/tools/lld/cmake_install.cmake
+%endif
 DESTDIR=%buildroot ninja -C %builddir install
 
 # scanbuild is noarch
@@ -1119,6 +1133,7 @@ ninja -C %builddir check-all || :
 %llvm_bindir/clangd
 %_bindir/clangd-%v_major
 
+%if_with lld
 %files -n %lld_name
 %llvm_bindir/lld
 %_bindir/lld-%v_major
@@ -1136,6 +1151,7 @@ ninja -C %builddir check-all || :
 %llvm_includedir/mach-o
 %llvm_libdir/cmake/lld
 %llvm_libdir/liblld*.a
+%endif
 
 %if_with lldb
 %files -n %lldb_name
@@ -1207,8 +1223,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/clang
 %doc %llvm_docdir/LLVM/clang-tools
 
+%if_with lld
 %files -n %lld_name-doc
 %doc %llvm_docdir/lld
+%endif
 
 %if_with lldb
 %files -n %lldb_name-doc
@@ -1219,6 +1237,15 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Tue Sep 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 16.0.6-alt4
+- Support LoongArch architecture (lp64d ABI):
+  + clang-alt-triple-loongarch64.patch: added loongarch64-alt-linux triple
+  + spec: do not build/package lld on LoongArch (LoongArch targets are
+    not supported yet)
+  + spec: do not build lldb on LoongArch (not supported yet)
+  + spec: build with GCC/binutils on LoongArch (since lld does not support
+    LoongArch targets yet)
+
 * Mon Aug 07 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt3
 - Added patches:
   + lld: added python 3.12+ compatibility patch.
