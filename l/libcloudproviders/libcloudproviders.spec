@@ -1,5 +1,6 @@
 %def_disable snapshot
 %define _name cloudproviders
+%define rdn_name org.freedesktop.CloudProviders
 %define ver_major 0.3
 %define api_ver %ver_major
 
@@ -8,7 +9,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Library for integration of cloud storage providers
@@ -22,9 +23,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.52
+%define glib_ver 2.56
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel vala-tools
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
@@ -124,12 +125,16 @@ the functionality of the installed %_name library.
 %files tests
 %_bindir/test%{_name}client
 %_bindir/test%{_name}server
+%_desktopdir/%rdn_name.ServerExample.desktop
 %dir %_datadir/cloud-providers
-%_datadir/cloud-providers/org.freedesktop.CloudProviders.ServerExample.ini
-%_datadir/dbus-1/services/org.freedesktop.CloudProviders.ServerExample.service
+%_datadir/cloud-providers/%rdn_name.ServerExample.ini
+%_datadir/dbus-1/services/%rdn_name.ServerExample.service
 %endif
 
 %changelog
+* Wed Sep 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
+- 0.3.4
+
 * Wed Aug 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
 - 0.3.2
 
