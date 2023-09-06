@@ -1,5 +1,5 @@
 Name: libgnutls-guile
-Version: 3.7.14
+Version: 4.0.0
 Release: alt1
 
 Summary: Guile bindings for the GnuTLS library
@@ -50,6 +50,9 @@ Guile-GnuTLS provides Guile bindings for the GnuTLS library.
 %exclude %_libdir/guile/*/extensions/*.la
 
 %changelog
+* Wed Sep 06 2023 Mikhail Efremov <sem@altlinux.org> 4.0.0-alt1
+- Updated to 4.0.0.
+
 * Tue Aug 08 2023 Mikhail Efremov <sem@altlinux.org> 3.7.14-alt1
 - Extracted from libgnutls to a separate package.
 
