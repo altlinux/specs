@@ -8,8 +8,8 @@
 %def_with check
 
 Name: ipython3
-Version: 8.14.0
-Release: alt2
+Version: 8.15.0
+Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -205,6 +205,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Mon Sep 04 2023 Anton Vyatkin <toni@altlinux.org> 8.15.0-alt1
+- New version 8.15.0.
+
 * Fri Jul 07 2023 Anton Vyatkin <toni@altlinux.org> 8.14.0-alt2
 - Fix unmet deps.
 
