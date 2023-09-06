@@ -10,7 +10,7 @@
 
 Name: spdk
 Version: 23.05
-Release: alt2
+Release: alt2.1
 
 Summary: Storage Performance Development Kit
 
@@ -43,6 +43,8 @@ Patch4: spdk-23.05-alpinelinux-backtrace.patch
 
 %add_python3_req_skip common spdk.rpc spdk.rpc.client spdk.rpc.helpers spdk.sma spdk.sma.proto.nvmf_tcp_pb2 spdk.sma.proto.nvmf_tcp_pb2_grpc spdk.sma.proto.sma_pb2 spdk.sma.proto.sma_pb2_grpc spdk.spdkcli
 %filter_from_requires /\%_prefix\/libexec\/spdk\/scripts\/pkgdep/d
+%filter_from_requires /apt*/d
+%filter_from_requires /pacman/d
 # %%filter_from_requires /bpftrace/d
 
 Requires: systemd-utils
@@ -294,6 +296,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Sep 06 2023 Leontiy Volodin <lvol@altlinux.org> 23.05-alt2.1
+- Removed pacman from requires (ALT #47071).
+
 * Mon Aug 07 2023 Leontiy Volodin <lvol@altlinux.org> 23.05-alt2
 - Fixed links with some system libraries.
 - Removed unneeded requires for pkgdep scripts (ALT #47071).
