@@ -3,7 +3,7 @@
 
 Name: deepin-image-viewer
 Version: 5.9.9
-Release: alt1
+Release: alt2
 Summary: Image viewer for Deepin
 License: GPL-3.0+
 Group: Graphics
@@ -11,6 +11,7 @@ Url: https://github.com/linuxdeepin/deepin-image-viewer
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: deepin-image-viewer-5.9.9-libraw-0.21.patch
 
 ExcludeArch: armh
 
@@ -47,6 +48,7 @@ Development libraries for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -106,6 +108,9 @@ cmake --build "%_cmake__builddir" -j1
 %_qt5_plugindir/imageformats/libxraw.so
 
 %changelog
+* Wed Sep 06 2023 Leontiy Volodin <lvol@altlinux.org> 5.9.9-alt2
+- Fixed build with libraw 0.21 (ALT #47425).
+
 * Tue Jan 17 2023 Leontiy Volodin <lvol@altlinux.org> 5.9.9-alt1
 - New version (5.9.9).
 

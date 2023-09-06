@@ -1,10 +1,11 @@
 Name: libfreeimage
 Version: 3.18.0
-Release: alt8
+Release: alt9
 
 Summary: Multi-format image decoder library
 Group: System/Libraries
-License: GPL and FIPL (see the license-fi.txt)
+# see the license-fi.txt
+License: MPL-style
 Url: http://freeimage.sourceforge.net/
 
 %define srcversion %(echo %version | tr -d .)
@@ -19,6 +20,7 @@ Patch2: FreeImage_bigendian.patch
 Patch3: FreeImage-3.18.0-alt-return-type.patch
 Patch4: FreeImage-3.18-deb-libraw-0.20.patch
 Patch5: libfreeimage-3.18.0-libtiff5.patch
+Patch6: FreeImage-3.18.0-alt-libraw-0.21.patch
 
 BuildRequires: gcc-c++ libgomp-devel libmng-devel libpng-devel openexr-devel unzip
 BuildPreReq: rpm-macros-make libraw-devel zlib-devel libwebp-devel
@@ -69,6 +71,7 @@ find ./ -type f -print0| xargs -r0 dos2unix --
 %patch3 -p2
 %patch4 -p1
 %patch5 -p2
+%patch6 -p1
 
 # remove bundled libraries
 rm -r Source/Lib* Source/ZLib Source/OpenEXR
@@ -109,6 +112,9 @@ sh ./genfipsrclist.sh
 %_libdir/%nameplus.so
 
 %changelog
+* Thu Aug 31 2023 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt9
+- fixed build against libraw-0.21
+
 * Sun Mar 12 2023 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt8
 - rebuilt with openexr-3.1.5
 

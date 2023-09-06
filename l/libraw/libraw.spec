@@ -1,16 +1,22 @@
+#2021-09-14  Alex Tutubalin <lexa@lexa.ru>
+#...
+# * API/datastruct Changes:
+#  - imgdata.params.shot_select moved to imgdata.rawparams.shot_select
+#   (because this is decode-time option, not postprocessing option)
+
 %def_disable snapshot
 %def_disable static
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 %define _name LibRaw
-%define ver_major 0.20
-%define sover 20
+%define ver_major 0.21
+%define sover 23
 # demosaic pack version
 %define dmp_ver 0.18.8
 
 Name: libraw
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
@@ -18,8 +24,8 @@ License: LGPLv2.1 and CDDL-1.0
 Url: http://www.libraw.org
 
 %if_disabled snapshot
-#Source: %url/data/%_name-%version.tar.gz
-Source: https://github.com/LibRaw/LibRaw/archive/%version/%_name-%version.tar.gz
+Source: %url/data/%_name-%version.tar.gz
+#Source: https://github.com/LibRaw/LibRaw/archive/%version/%_name-%version.tar.gz
 %else
 Vcs: https://github.com/LibRaw/LibRaw.git
 Source: %_name-%version.tar
@@ -121,6 +127,9 @@ export LIBS+="-lpthread -lomp"
 %endif
 
 %changelog
+* Thu Feb 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.21.1-alt1
+- 0.21.1
+
 * Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.20.2-alt1.1
 - disabled build of static libraries
 
