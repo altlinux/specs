@@ -1,8 +1,8 @@
 Name: neovim-qt
 Version: 0.2.17
-Release: alt6.git7b02596
+Release: alt8.git7b02596
 
-Summary: Neovim client library and GUI, in Qt6.
+Summary: Neovim client library and GUI, in Qt6
 
 License: ISC
 Group: Editors
@@ -17,12 +17,20 @@ BuildRequires: libmsgpack-c-devel
 BuildRequires: nvim
 BuildRequires: qt6-svg-devel
 
-Requires: neovim
+Requires: %name-runtime = %EVR
 
 ExcludeArch: armh
 
 %description
 Neovim client library and GUI, in Qt6.
+
+%package runtime
+Summary: Runtime files for Neovim Qt
+Group: Editors
+Requires: neovim
+
+%description runtime
+Runtime files for Neovim Qt.
 
 %prep
 %setup
@@ -42,14 +50,22 @@ Neovim client library and GUI, in Qt6.
 %files
 %doc README.md
 %doc %_datadir/nvim-qt/LICENSE
-%doc %_datadir/nvim-qt/runtime/doc/*
 %_bindir/nvim-qt
 %_desktopdir/nvim-qt.desktop
-%_datadir/nvim-qt/runtime/plugin/nvim_gui_shim.vim
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 
+%files runtime
+%doc %_datadir/nvim-qt/runtime/doc/*
+%_datadir/nvim-qt/runtime/plugin/nvim_gui_shim.vim
+
 %changelog
+* Wed Sep 6 2023 Vladimir Didenko <cow@altlinux.org> 0.2.17-alt8.git7b02596
+- Move neovim dependency to runtime package
+
+* Wed Sep 6 2023 Vladimir Didenko <cow@altlinux.org> 0.2.17-alt7.git7b02596
+- Move runtime files into the separate package (closes: #47469)
+
 * Wed Aug 16 2023 Vladimir Didenko <cow@altlinux.org> 0.2.17-alt6.git7b02596
 - New version (git7b02596)
 
