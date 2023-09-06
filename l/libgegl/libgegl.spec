@@ -7,7 +7,7 @@
 
 Name: lib%rname
 Version: %api_ver.46
-Release: alt1
+Release: alt2
 Summary: A graph based image processing framework
 License: %gpllgpl3plus
 Group: System/Libraries
@@ -50,6 +50,8 @@ Requires: %name = %version-%release
 
 %description gir
 GObject introspection data for the GEGL library.
+
+%add_findreq_skiplist %_datadir/%rname-%api_ver/lua/*.lua
 
 %prep
 %setup -n %rname-%version
@@ -97,6 +99,9 @@ rm -f %buildroot%_libdir/%rname-%api_ver/*.la
 %_typelibdir/Gegl-%api_ver.typelib
 
 %changelog
+* Wed Sep 06 2023 Valery Inozemtsev <shrek@altlinux.ru> 0.4.46-alt2
+- skip lua requires (closes: #47473)
+
 * Wed Jul 19 2023 Valery Inozemtsev <shrek@altlinux.ru> 0.4.46-alt1
 - 0.4.46
 
