@@ -6,11 +6,11 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.6.4
+Version: 0.6.6
 Release: alt1
 
 Summary: Pure python logging handler for writing logs to the journald using native protocol
-License: Unlicense
+License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/logging-journald/
 Vcs: https://github.com/mosquito/logging-journald
@@ -50,10 +50,16 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %files
-%doc README.md
-%python3_sitelibdir/*
+%doc README.md COPYING
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%python3_sitelibdir/__pycache__/%mod_name.*.pyc
 
 %changelog
+* Wed Sep 06 2023 Anton Zhukharev <ancieg@altlinux.org> 0.6.6-alt1
+- Updated to 0.6.6.
+- Distributed under MIT license.
+
 * Sun May 07 2023 Anton Zhukharev <ancieg@altlinux.org> 0.6.4-alt1
 - Initial build for ALT Sisyphus.
 
