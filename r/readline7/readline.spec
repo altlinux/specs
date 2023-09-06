@@ -1,11 +1,13 @@
-%define sover 8
+%def_disable devel
 
-Name: readline
-%define rl_version 8.2
-%define rl_patch .1
+%define sover 7
+
+Name: readline%sover
+%define rl_version 7.0
+%define rl_patch .3
 %define srcname readline-%rl_version
 Version: %rl_version%rl_patch
-Release: alt1
+Release: alt5
 
 Summary: A library for editing typed in command lines
 License: GPL-3.0-or-later
@@ -21,34 +23,30 @@ Patch: readline-%version-%release.patch
 # Automatically added by buildreq on Mon Sep 02 2002
 BuildRequires: libtinfo-devel makeinfo
 
-%package -n lib%name%sover
+%package -n lib%name
 Summary: A library for editing typed in command lines
-Group: System/Libraries
+Group: System/Legacy libraries
 Obsoletes: readline
-# rpm-build issues a warning regarding this 'Provides' tag:
-# warning: libreadline8 provides another subpackage: readline
-# This appears to be a bug on the rpm-build side.  'readline' is the name of
-# the source package, there is no corresponding binary package with this name.
-Provides: readline = %EVR
-Provides: libreadline = %EVR
+Provides: readline = %version-%release
+Provides: libreadline = %version-%release
 
 %package -n lib%name-devel
 Summary: Files needed to develop programs which use the readline library
 Group: Development/C
-Provides: readline-devel = %EVR
+Provides: readline-devel = %version-%release
 Obsoletes: readline-devel
-Requires: lib%name = %EVR
+PreReq: lib%name = %version-%release
 
 %package -n lib%name-devel-static
 Summary: Files needed to develop statically linked programs which use the readline library
 Group: Development/C
-Requires: lib%name-devel = %EVR
+Requires: lib%name-devel = %version-%release
 
 %description
 The readline library reads a line from the terminal and returns it,
 allowing the user to edit the line with standard emacs editing keys.
 
-%description -n lib%name%sover
+%description -n lib%name
 The readline library reads a line from the terminal and returns it,
 allowing the user to edit the line with standard emacs editing keys.
 
@@ -69,12 +67,15 @@ programs which use the readline library to provide an easy to use
 and more intuitive command line interface for users.
 
 %prep
-%setup
+%setup -n readline-%version
 %patch -p1
 rm examples/*.tar*
 
 %build
 %global optflags_lto %optflags_lto -ffat-lto-objects
+
+# This is required to fix some "implicit declaration" warnings.
+%add_optflags -D_GNU_SOURCE
 
 # Link with libtinfo unconditionally.
 export bash_cv_termcap_lib=libtinfo
@@ -125,29 +126,27 @@ pushd %buildroot%docdir/examples
 	make clean
 popd
 
-%define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%files -n lib%name%sover
+%files -n lib%name
 /%_lib/*
 
+%if_enabled devel
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
 %_mandir/man?/*
 %_infodir/*.info*
-%_pkgconfigdir/history.pc
-%_pkgconfigdir/readline.pc
 %docdir
 
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif
 
 %changelog
-* Wed Sep 06 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.2.1-alt1
-- Updated to 8.2.1.
-- Packaged pkgconfig files (ALT#44993).
+* Wed Sep 06 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.3-alt5
+- Packaged libreadline7 as a legacy library.
 - Fixed the License: tag (GPLv2+ -> GPL-3.0-or-later).
 
 * Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 7.0.3-alt4
