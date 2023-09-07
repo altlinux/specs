@@ -3,7 +3,7 @@
 
 Name: lxqt-build-tools
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: Various packaging tools and scripts for LXQt applications
 License: BSD 3-clause
@@ -11,6 +11,7 @@ Group: Graphical desktop/Other
 
 Url: https://lxqt.org
 Source: %name-%version.tar
+Patch: lxqt-transupdate-qt5-fix.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: qt5-base-devel qt5-tools-devel glib2-devel
@@ -43,6 +44,9 @@ sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
 %_bindir/*
 
 %changelog
+* Tue Sep 05 2023 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt2
+- fix lxqt-transupdate for use lupdate-qt5
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 0.13.0-alt1
 - New version 0.13.0.
 
