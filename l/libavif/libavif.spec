@@ -1,5 +1,5 @@
 Name: libavif
-Version: 0.11.1
+Version: 1.0.0
 Release: alt1
 
 Summary: Implementation of the AV1 Image File Format
@@ -48,6 +48,9 @@ this package contains development part of libavif
 %_pkgconfigdir/*
 
 %changelog
+* Tue Aug 29 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt1
+- 1.0.0 released
+
 * Thu Nov 24 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.11.1-alt1
 - 0.11.1 released
 
