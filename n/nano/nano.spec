@@ -1,32 +1,53 @@
 Name: nano
-Version: 5.8
+Version: 7.2
 Release: alt1
 
 Summary: a user-friendly editor, a Pico clone with enhancements
-License: %gpl3plus/%fdl v1.2+
+License: %gpl3plus & %fdl v1.2+
 Group: Editors
 Url: https://nano-editor.org/
 Packager: Artem Zolochevskiy <azol@altlinux.org>
 
+
 # https://nano-editor.org/dist/v5/nano-5.8.tar.xz
-Source: %name-%version.tar
+Source:  %name-%version.tar
+Patch1:  %name-7.2-build.patch
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Tue Mar 19 2019
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config groff-base libncurses-devel libtinfo-devel pkg-config python-base sh4 xz
-BuildRequires: groff-extra libmagic-devel libncursesw-devel
+# Automatically added by buildreq on Thu Sep 07 2023
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config groff-base libgpg-error libncurses-devel libtinfo-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config sh4 shared-mime-info xz
+BuildRequires: groff-extra libmagic-devel libncursesw-devel makeinfo
+
 # Manually added
 BuildRequires: desktop-file-utils
+
+BuildRequires: makeinfo
 
 %description
 GNU nano is a small and friendly text editor. It aims to emulate the
 Pico text editor while also offering several enhancements.
 
+%package desktop
+Summary: Dektop file to %name
+Group: Editors
+License: %gpl3plus & %fdl v1.2+
+Requires: %name >= %version
+
+%description desktop
+Dektop file to %name
+
 %prep
 %setup
+%patch1 -p1
+
 
 %build
-%configure
+%autoreconf
+
+%configure \
+  --with-gnu-ld  \
+  --enable-utf8
+
 %make_build
 
 %install
@@ -43,12 +64,12 @@ install -pm644 doc/sample.nanorc %buildroot%_docdir/%name/sample.nanorc
 mv %buildroot%_docdir/%name %buildroot%_docdir/%name-%version
 
 # install icons
-install -Dpm644 %name-16x16.png %buildroot%_miconsdir/%name.png
-install -Dpm644 %name-32x32.png %buildroot%_niconsdir/%name.png
-install -Dpm644 %name-48x48.png %buildroot%_liconsdir/%name.png
+install -Dpm644 .alt/%name-16x16.png %buildroot%_miconsdir/%name.png
+install -Dpm644 .alt/%name-32x32.png %buildroot%_niconsdir/%name.png
+install -Dpm644 .alt/%name-48x48.png %buildroot%_liconsdir/%name.png
 
 # install .desktop file
-desktop-file-install --dir %buildroot%_desktopdir %name.desktop
+desktop-file-install --dir %buildroot%_desktopdir .alt/%name.desktop
 
 # list of language specific files
 %find_lang --all-name %name
@@ -63,10 +84,15 @@ desktop-file-install --dir %buildroot%_desktopdir %name.desktop
 %_miconsdir/*
 %_niconsdir/*
 %_liconsdir/*
-%_desktopdir/*
 %config(noreplace) %_sysconfdir/nanorc
 
+%files desktop
+%_desktopdir/*
+
 %changelog
+* Thu Sep 07 2023 Hihin Ruslan <ruslandh@altlinux.ru> 7.2-alt1
+- update to 7.2
+
 * Tue Jul 06 2021 Artem Zolochevskiy <azol@altlinux.org> 5.8-alt1
 - update to 5.8
 
@@ -221,3 +247,5 @@ desktop-file-install --dir %buildroot%_desktopdir %name.desktop
 
 * Sun Mar 19 2006 Dmitry Marochko <mothlike@altlinux.ru> 1.3.10-alt1
 - Initial build for Sisyphus
+
+
