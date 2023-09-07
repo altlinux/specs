@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 358
+%define centos_release 363
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -291,7 +291,7 @@ touch .scmversion
 cfg="redhat/configs/common/generic/CONFIG_LSM"
 if [ -f "$cfg" ]; then
 	. "$cfg"
-	rm -f -- "$cfg"
+	CONFIG_LSM="${CONFIG_LSM//selinux/selinux,apparmor}"
 fi
 
 # Extend config from fedora config.
@@ -306,8 +306,10 @@ for o in \
 	CONFIG_NET_9P_VIRTIO:'CONFIG_NET_9P_VIRTIO=m' \
 	CONFIG_NET_9P_XEN:'CONFIG_NET_9P_XEN=m' \
 	CONFIG_SECURITY_APPARMOR:'CONFIG_SECURITY_APPARMOR=y' \
+	CONFIG_SECURITY_APPARMOR_HASH:'CONFIG_SECURITY_APPARMOR_HASH=y' \
+	CONFIG_SECURITY_APPARMOR_HASH_DEFAULT:'CONFIG_SECURITY_APPARMOR_HASH_DEFAULT=y' \
 	CONFIG_SECURITY_APPARMOR_DEBUG_MESSAGES:'CONFIG_SECURITY_APPARMOR_DEBUG_MESSAGES=y' \
-	CONFIG_LSM:"CONFIG_LSM=\"${CONFIG_LSM:+$CONFIG_LSM,}apparmor\"" \
+	CONFIG_LSM:"CONFIG_LSM=\"$CONFIG_LSM\"" \
 ;
 do
 	echo "${o##*:}" > "redhat/configs/custom-overrides/generic/${o%%%%:*}"
@@ -596,7 +598,7 @@ int main()
 	static const char msg[] = "$msg\n";
 	write(2, msg, sizeof(msg) - 1);
 	reboot(RB_POWER_OFF);
-	pause();
+	while (1) pause();
 }
 __EOF__
 
@@ -629,7 +631,7 @@ timeout --foreground 600 \
 	qemu-system-"$qemu_arch" -m 512 -no-reboot -nographic $qemu_opts \
 		-kernel %buildroot/boot/vmlinuz-$KernelVer \
 		-initrd initrd.img \
-		-append console="$console no_timer_check" \
+		-append console="$console no_timer_check acpi=on panic=1" \
 		> boot.log &&
 grep -q "^$msg" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
@@ -652,6 +654,64 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Sep 07 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.363-alt1.el9
+- Updated to kernel-5.14.0-363.el9:
+  + Backport the erofs filesystem support for chunk-based file on-disk format
+  + Draft: Merge tag 'kernel-5.14.0-362.1.1.el9_3' from 9.3
+  + Fix Thunderbolt 3 display flickering issue on 2nd hot plug onwards
+  + Merge commit '0a495f582c7d925e3d24ff5775d761858302a22f'
+  + Merge tag 'kernel-5.14.0-362.1.1.el9_3' from 9.3
+  + Revert MR 2687: firmware subsystem rebase up to v6.3
+  + [s390]: [IBM 9.3 FEAT] Secure Execution APQN binding and IBK association - kernel part
+  + cgroup/cpuset: Provide better cpuset API to enable creation of isolated partition
+  + dlm: fix plock lookup when using multiple lockspaces
+  + redhat: bump RHEL_MINOR for 9.4
+  + redhat: change default dist suffix for RHEL 9.3
+  + redhat: configs: Disable CONFIG_CRYPTO_STATS since performance issue for storage
+  + redhat: enable zstream release numbering for rhel 9.3
+  + redhat: list Z-Jiras in the changelog before Y-Jiras
+  + sched/core: Use empty mask to reset cpumasks in sched_setaffinity()
+  + x86/cpu: Enable STIBP on AMD if Automatic IBRS is enabled
+  + Various changes and improvements that are poorly described in merge.
+
+* Tue Aug 29 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.362-alt1.el9
+- Updated to kernel-5.14.0-362.el9 (fixes: CVE-2023-4128):
+  + A kernel panic occurred: kernel BUG at fs/gfs2/glock.c:670!
+  + Requesting a merge of 6 critical Broadcom patches into the lpfc inbox driver.
+  + ext4: drop dio overwrite only flag and associated warning
+  + ice: Fix NULL pointer deref during VF reset
+  + net/sched Bind logic fixes for cls_fw, cls_u32 and cls_route
+  + openvswitch: use kfree_skb_reason for ovs drops
+  + sched/core: Add __always_inline to schedule_loop()
+  + smb: client: fix null auth
+  + x86/kasan: fix on-demand shadow mapping of percpu CEA pages
+
+* Mon Aug 28 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.361-alt1.el9
+- Updated to kernel-5.14.0-361.el9 (fixes: CVE-2023-30456, CVE-2023-4194):
+  + Backport KVM fixes from upstream 6.5
+  + Backport MANA updates and bug fixes
+  + Fix memory leak in watch_queue
+  + KVM: nVMX: add missing consistency checks for CR0 and CR4
+  + MLX5: Add upstream patch for MLX5 thermal
+  + Update tree for CI (kpet-db) to autosd-rt from autosd-rhivos-rt
+  + dm cache policy smq: ensure IO doesn't prevent cleaner policy progress
+  + drm/nouveau/nvkm/dp: Add workaround to fix DP 1.3+ DPCD issues
+  + firmware subsystem rebase up to v6.3
+  + gfs2: Fix filesystem freeze deadlocks
+  + locking: 9.3 KRTS JiraReadiness exercise
+  + redhat/configs: enable CONFIG_INET_DIAG_DESTROY
+  + redhat/configs: enable Tegra114 SPI controller
+  + redhat/configs: turn on the framework for SPI NOR for ARM
+  + redhat: add IMA certificates
+  + redhat: stop tainting the kernel with virtio-mem
+  + scsi: storvsc: Limit max_sectors for virtual Fibre Channel devices  and fix duplicate commit
+  + selftests: fix mptcp_join test
+  + tun/tap: set sk_uid from current_fsuid()
+  + vdpa/mlx5: backport fix for vdpa
+  + vxlan: fix segmentation and GRO for VXLAN-GPE
+  + x86/mm: Ease W^X enforcement back to just a warning
+  + x86/sev: Do not try to parse for the CC blob on non-AMD hardware
+
 * Mon Aug 21 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.358-alt1.el9
 - Updated to kernel-5.14.0-358.el9 (fixes: CVE-2023-1380, CVE-2023-1855, CVE-2023-3390, CVE-2023-3773, CVE-2023-4004, CVE-2023-4147, CVE-2023-4155):
   + CVE-2023-1855 kernel: use-after-free bug in remove function xgene_hwmon_remove [rhel-9]
