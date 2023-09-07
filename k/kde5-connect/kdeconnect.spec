@@ -6,9 +6,11 @@
 %define libkdeconnectinterfaces libkdeconnectinterfaces%sover
 %define libkdeconnectsmshelper libkdeconnectsmshelper%sover
 
+%add_findreq_skiplist %_datadir/nautilus-python/extensions/*.py
+
 Name: kde5-connect
 Version: 23.04.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Communications
@@ -167,6 +169,9 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Thu Sep 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt2
+- clean requires from libnautilus
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 
