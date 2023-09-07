@@ -1,15 +1,15 @@
 %define optflags_lto -flto=thin
 %define llvm_version 15.0
 
-# git describe mainline-mainline-0-%version
-%define git_descr mainline-636-12588-g6db81a3cad0
+# git describe mainline-0-%version
+%define git_descr mainline-636-12597-gcd9430e9b24
 
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
 %define tzdb_to_nx_date 220816
 
 Name: yuzu
-Version: 1546
+Version: 1550
 Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
@@ -129,6 +129,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Thu Sep 07 2023 Nazarov Denis <nenderus@altlinux.org> 1550-alt1
+- Version 1550
+
 * Tue Sep 05 2023 Nazarov Denis <nenderus@altlinux.org> 1546-alt1
 - Version 1546 (ALT #47009)
 
