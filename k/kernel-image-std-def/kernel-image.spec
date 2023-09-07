@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.51
+%define kernel_sublevel	.52
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -177,7 +177,7 @@ Group: System/Kernel and hardware
 Requires(pre,post,postun): %name = %EVR
 
 %description -n kernel-modules-drm-ancient-%flavour
-The Direct Rendering Modules for ancient cards: mgag200.ko,
+The Direct Rendering Modules for ancient cards:
 sis.ko, tdfx.ko, savage.ko, r128.ko, mga.ko, via.ko
 
 These are modules for your ALT Linux system
@@ -572,7 +572,6 @@ check-pesign-helper
 %modules_dir/kernel/drivers/platform/x86/thinkpad_acpi.ko
 %endif
 %exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
-%exclude %modules_dir/kernel/drivers/gpu/drm/mgag200
 %ifnarch aarch64 armh
 %exclude %modules_dir/kernel/drivers/gpu/drm/sis
 %exclude %modules_dir/kernel/drivers/gpu/drm/savage
@@ -583,7 +582,6 @@ check-pesign-helper
 %endif
 
 %files -n kernel-modules-drm-ancient-%flavour
-%modules_dir/kernel/drivers/gpu/drm/mgag200
 %ifnarch aarch64 armh
 %modules_dir/kernel/drivers/gpu/drm/sis
 %modules_dir/kernel/drivers/gpu/drm/savage
@@ -602,6 +600,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Sep 07 2023 Vitaly Chikunov <vt@altlinux.org> 2:6.1.52-alt2
+- Remove mgag200 module (CONFIG_DRM_MGAG200).
+
+* Thu Sep 07 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.52-alt1
+- v6.1.52 (2023-09-06).
+
 * Sat Sep 02 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.51-alt1
 - v6.1.51 (2023-09-02).
 
