@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: sslscan
-Version: 2.0.16
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Summary: sslscan tests SSL/TLS enabled services to discover supported cipher suites
 License: GPL-3.0-or-later
 Group: Security/Networking
@@ -22,7 +22,7 @@ BuildRequires: libssl-devel
 %setup
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
+%add_optflags %(getconf LFS_CFLAGS) -fanalyzer -Werror -Wno-analyzer-malloc-leak
 %make_build CFLAGS="%optflags" DEFINES=-DVERSION='\"%version-%release\"'
 
 %install
@@ -45,6 +45,9 @@ grep -q qwerty   a.xml
 %_man1dir/sslscan.1.xz
 
 %changelog
+* Thu Sep 07 2023 Vitaly Chikunov <vt@altlinux.org> 2.1.0-alt1
+- Update to 2.1.0 (2023-09-05).
+
 * Sun Jul 16 2023 Vitaly Chikunov <vt@altlinux.org> 2.0.16-alt2
 - Workaround ALT beekeeper rebuild failure.
 - Rebuild with OpenSSL 3.
