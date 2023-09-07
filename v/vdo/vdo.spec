@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: vdo
-Version: 8.2.0.2
-Release: alt2
+Version: 8.2.2.2
+Release: alt1
 
 Summary: Management tools for Virtual Data Optimizer
 License: GPLv2
@@ -92,6 +92,9 @@ mv %buildroot%_sysconfdir/bash_completion.d/* %buildroot%_datadir/bash-completio
 %_man8dir/vdoregenerategeometry.8*
 
 %changelog
+* Thu Sep 07 2023 Alexey Shabalin <shaba@altlinux.org> 8.2.2.2-alt1
+- 8.2.2.2
+
 * Sat Sep 03 2022 Michael Shigorin <mike@altlinux.org> 8.2.0.2-alt2
 - dropped e2k-specific kludge
 

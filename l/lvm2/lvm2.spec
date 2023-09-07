@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define lvm2version 2.03.20
-%define dmversion 1.02.193
+%define lvm2version 2.03.22
+%define dmversion 1.02.196
 
 %define _sbindir /sbin
 %define usrsbindir %_prefix/sbin
@@ -18,7 +18,11 @@
 %def_disable lvmdbusd
 %def_enable dmfilemapd
 %def_enable thin
+%ifarch x86_64 aarch64 ppc64le ppc64 s390 s390x %e2k
 %def_enable vdo
+%else
+%def_disable vdo
+%endif
 %def_enable writecache
 %def_enable cmirrord
 %def_enable cmdlib
@@ -69,6 +73,7 @@ BuildRequires(pre): rpm-build-python3
 %{?_enable_lvmlockd_sanlock:BuildRequires: sanlock-devel >= 3.3.0}
 %{?_enable_lvmlockd_dlm:BuildRequires: libdlm-devel >= 4.0.9}
 %{?_enable_cmirrord:BuildRequires: libcorosync-devel}
+%{?_enable_vdo:BuildRequires: vdo}
 
 %description
 LVM2 includes all of the support for handling read/write operations
@@ -495,6 +500,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Thu Sep 07 2023 Alexey Shabalin <shaba@altlinux.org> 2.03.22-alt1
+- 2.03.22
+
 * Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 2.03.20-alt1
 - 2.03.20
 
