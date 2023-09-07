@@ -4,36 +4,42 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
-Summary: What The Patch!? -- A Python patch parsing library  
+Summary: What The Patch!? -- A Python patch parsing library
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/whatthepatch/
-
-Source: %name-%version.tar
-Patch1: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(pytest)
-%endif
+Vcs: https://github.com/cscorley/whatthepatch
 
 BuildArch: noarch
 
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch1: %name-1.0.4-alt-increase-tests-timeout.patch
+
 %py3_provides %pypi_name
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 What The Patch!? is a library for both parsing and applying patch files.
 
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
 %build
 %pyproject_build
 
@@ -41,14 +47,17 @@ What The Patch!? is a library for both parsing and applying patch files.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
+%doc LICENSE README.rst HISTORY.md
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 07 2023 Anton Zhukharev <ancieg@altlinux.org> 1.0.5-alt1
+- Updated to 1.0.5.
+
 * Wed Feb 15 2023 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 1.0.4-alt1
 - 1.0.4
 - Increase tests timeout
