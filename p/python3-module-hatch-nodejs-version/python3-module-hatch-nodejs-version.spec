@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Hatch plugin to read pyproject.toml metadata from package.json
@@ -61,6 +61,9 @@ This package provides two Hatch plugins:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 07 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.2-alt1
+- Updated to 0.3.2.
+
 * Wed Aug 02 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.1-alt1
 - Updated to 0.3.1.
 
