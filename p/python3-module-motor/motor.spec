@@ -4,12 +4,12 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 3.2.0
+Version: 3.3.1
 Release: alt1
 
 Summary: Non-blocking MongoDB driver for Tornado
 
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/motor/
 
@@ -50,6 +50,9 @@ applications.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Sep 07 2023 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
+- Automatically updated to 3.3.1.
+
 * Wed Jul 12 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Automatically updated to 3.2.0.
 
