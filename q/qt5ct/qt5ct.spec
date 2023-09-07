@@ -1,6 +1,6 @@
 Name: qt5ct
 Version: 1.7
-Release: alt2
+Release: alt3
 
 Summary: Qt5 Configuration Tool
 Summary(ru_RU.UTF-8): Инструмент для настройки оформления приложений Qt5
@@ -9,35 +9,14 @@ License: BSD-2-Clause-NetBSD
 Group: System/Configuration/Other
 Url: https://sourceforge.net/projects/qt5ct
 
-ExcludeArch: %not_qt5_qtwebengine_arches
-
 # Source-url: https://sourceforge.net/projects/qt5ct/files/qt5ct-%version.tar.bz2/download
 Source: %name/%name-%version.tar
 
 Patch1: %name-1.5-alt-desktop.patch
 
 BuildRequires(pre): rpm-macros-qt5
-BuildRequires(pre): rpm-macros-qt5-webengine
-
-BuildRequires: libinput-devel
-BuildRequires: libmtdev-devel
-BuildRequires: libts-devel
-BuildRequires: libxkbcommon-devel
-BuildRequires: python3-module-zope
 BuildRequires: qt5-base-devel-static
-BuildRequires: qt5-connectivity-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-phonon-devel
-BuildRequires: qt5-quick1-devel
-BuildRequires: qt5-sensors-devel
-BuildRequires: qt5-serialport-devel
-BuildRequires: qt5-speech-devel
-BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
-BuildRequires: qt5-wayland-devel
-BuildRequires: qt5-webengine-devel
-BuildRequires: qt5-websockets-devel
-BuildRequires: qt5-x11extras-devel
 
 %package -n lib%name-devel
 Summary: Development library for %name
@@ -91,6 +70,9 @@ install -Dm 0755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 %_libdir/lib%name-common.so
 
 %changelog
+* Thu Sep 07 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.7-alt3
+- NMU: trimmed build requirements, build on all architectures
+
 * Fri Mar 03 2023 Evgeny Chuck <koi@altlinux.org> 1.7-alt2
 - Fixed packaging in accordance with the Shared Library Policy
 
