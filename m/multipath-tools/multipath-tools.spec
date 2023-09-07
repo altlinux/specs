@@ -5,7 +5,7 @@
 %define libmpathdir %syslibdir/multipath
 
 Name: multipath-tools
-Version: 0.9.4
+Version: 0.9.6
 Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
@@ -28,7 +28,7 @@ Requires: kpartx = %EVR
 Requires: dmsetup
 Requires: udev-rules-sgutils sg3_utils
 
-BuildRequires: libaio-devel libdevmapper-devel libreadline-devel libudev-devel libsystemd-devel
+BuildRequires: libaio-devel libdevmapper-devel libreadline-devel libudev-devel libsystemd-devel libmount-devel
 BuildRequires: libuserspace-rcu-devel
 %{?_enable_libdmmp:BuildRequires: libjson-c-devel}
 
@@ -197,6 +197,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Thu Sep 07 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.6-alt1
+- 0.9.6
+
 * Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.4-alt1
 - 0.9.4
 
