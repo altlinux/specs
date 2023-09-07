@@ -1,6 +1,6 @@
 Name: libdrm
 Version: 2.4.116
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
 License: GPL
@@ -74,6 +74,9 @@ Will void your warranty.
 %_bindir/*
 
 %changelog
+* Thu Sep 07 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.116-alt2
+- amdgpu: add marketing names from Adrenalin 23.9.1
+
 * Tue Sep 05 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.116-alt1
 - 2.4.116
 
