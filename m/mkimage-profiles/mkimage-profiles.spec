@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.9
+Version: 1.5.10
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -129,6 +129,15 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Thu Sep 07 2023 Anton Midyukov <antohami@altlinux.org> 1.5.10-alt1
+- alternatives: add x-terminal-emulator
+- regular.mk, regular-vm.mk: set KFLAVOUR=un-def for BRANCH=p10 on
+  x86_64, aarch64
+- regular-server: drop php8.0 group
+- e2k fixes from mike@
+- alt-server: latest commits from jqt4@
+- kworkstation: latest commits from zerg@
+
 * Mon Aug 21 2023 Anton Midyukov <antohami@altlinux.org> 1.5.9-alt1
 - install2: do not remove library without dependencies
 - sub.in: run 'dconf update' for rootfs, if available
