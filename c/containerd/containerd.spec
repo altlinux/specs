@@ -11,7 +11,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.7.2
+Version:	1.7.5
 Release:	alt1
 Summary:	A daemon to control runC
 
@@ -88,6 +88,9 @@ install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/config.toml
 %_man8dir/*
 
 %changelog
+* Wed Sep 6 2023 Vladimir Didenko <cow@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Fri Jul 7 2023 Vladimir Didenko <cow@altlinux.org> 1.7.2-alt1
 - 1.7.2
 
