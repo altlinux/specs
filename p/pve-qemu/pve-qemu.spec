@@ -8,7 +8,7 @@
 
 Name: pve-%rname
 Version: 7.2.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -146,7 +146,6 @@ export CFLAGS="%optflags"
         --disable-smartcard \
         --disable-strip \
         --disable-xen \
-        --enable-virglrenderer \
         --enable-curl \
         --enable-glusterfs \
         --enable-gnutls \
@@ -164,7 +163,6 @@ export CFLAGS="%optflags"
         --enable-usb-redir \
         --enable-virglrenderer \
         --enable-virtfs \
-        --enable-virtiofsd \
         --enable-zstd
 
 %make_build V=1
@@ -304,6 +302,9 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Thu Sep 07 2023 Alexey Shabalin <shaba@altlinux.org> 1:7.2.0-alt3
+- Update vitastor block driver.
+
 * Wed May 10 2023 Alexey Shabalin <shaba@altlinux.org> 1:7.2.0-alt2
 - Add vitastor support (https://vitastor.io).
 
