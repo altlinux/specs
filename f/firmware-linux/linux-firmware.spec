@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230831
+Version: 20230907
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,22 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Sep 07 2023 Cronbuild Service <cronbuild@altlinux.org> 20230907-alt1
+- upstream changes (GIT dfa11466):
+  + add link to sc8280xp audioreach firmware (thx Srinivas Kandagatla)
+  + qcom: sm8250: add RB5 sensors DSP firmware (thx Dmitry Baryshkov)
+  + qcom: Update vpu-1.0 firmware (thx Dmitry Baryshkov)
+  + qcom: sm8250: update DSP firmware (thx Dmitry Baryshkov)
+  + qcom: add firmware for the onboard WiFi on qcm2290 / qrb4210 (thx Dmitry Baryshkov)
+  + qcom: add venus firmware files for v6.0 (thx Dmitry Baryshkov)
+  + qcom: add firmware for QRB4210 platforms (thx Dmitry Baryshkov)
+  + qcom: add firmware for QCM2290 platforms (thx Dmitry Baryshkov)
+  + qcom: add GPU firmware for QCM2290 / QRB2210 (thx Dmitry Baryshkov)
+  + ath10k/WCN3990: move wlanmdsp to qcom/sdm845 (thx Dmitry Baryshkov)
+  + WHENCE: Don't compress qcom json files (thx Juerg Haefliger)
+  + WHENCE: amd-ucode: Use new RawFile keyword (thx Juerg Haefliger)
+  + check_whence: Recognize RawFile keyword (thx Juerg Haefliger)
+
 * Fri Sep 01 2023 Cronbuild Service <cronbuild@altlinux.org> 20230831-alt1
 - upstream changes (GIT 6c097314):
   + check_whence: reformat using python black (thx Mario Limonciello)
