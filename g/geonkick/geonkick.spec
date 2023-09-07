@@ -3,7 +3,7 @@
 
 Name:     geonkick
 Version:  2.9.2
-Release:  alt1
+Release:  alt2
 
 Summary:  A free software percussion synthesizer
 License:  GPL-3.0
@@ -12,6 +12,7 @@ Url:      https://github.com/free-sm/geonkick
 # https://gitlab.com/iurie-sw/geonkick
 
 Source:   %name-%version.tar
+Patch1:   geonkick-alt-linking-fixes.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: pkgconfig(RapidJSON)
@@ -52,10 +53,7 @@ This package contains Geonkick build as LV2 plugins.
 
 %prep
 %setup
-
-# linking with libstdc++fs is not needed with and not supported by
-# recent gcc/libstdc++
-find . -name 'CMakeLists.txt' -exec sed -i '/lstdc++fs/d' '{}' ';'
+%autopatch -p1
 
 %build
 %cmake
@@ -79,6 +77,9 @@ find . -name 'CMakeLists.txt' -exec sed -i '/lstdc++fs/d' '{}' ';'
 
 
 %changelog
+* Thu Sep 07 2023 Ivan A. Melnikov <iv@altlinux.org> 2.9.2-alt2
+- Fix build with pipwire-provided Jack.
+
 * Sun Aug 20 2023 Ivan A. Melnikov <iv@altlinux.org> 2.9.2-alt1
 - 2.9.2
 
