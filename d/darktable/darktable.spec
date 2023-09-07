@@ -6,7 +6,7 @@
 
 %def_enable noise_tools
 # o.21 required
-%def_disable system_libraw
+%def_enable system_libraw
 %def_enable system_lua
 %def_enable libavif
 %def_enable libheif
@@ -18,7 +18,7 @@
 
 Name: darktable
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -35,6 +35,7 @@ Patch: darktable-3.0.0-is_supported_platform.patch
 Patch1: darktable-4.4.0-alt-disable-use-of-gcc-graphite.patch
 
 ExcludeArch: %ix86 armh
+AutoReq: nolua
 
 %define cmake_ver 3.10
 %define openmp_ver 4.0
@@ -146,6 +147,10 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Thu Sep 07 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt2
+- rebuilt with system libraw-0.21
+- AutoReq: nolua
+
 * Sun Jul 23 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt1
 - 4.4.2
 
