@@ -2,19 +2,25 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-as
 Summary: Assamese hunspell dictionaries
 Version: 1.0.3
-Release: alt2_17
+Release: alt2_30
 Source: https://downloads.sourceforge.net/project/aoo-extensions/2318/4/as_in.oxt
 URL: https://extensions.openoffice.org/en/project/assamese-dictionaryspell-checker
-License: GPLv2+ or LGPLv2+ or MPLv1.1
+License: GPL-2.0-or-later OR LGPL-2.1-or-later OR MPL-1.1
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Assamese hunspell dictionaries.
@@ -26,15 +32,18 @@ Assamese hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p as_IN.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p as_IN.* $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 
 %files
 %doc README_as_IN.txt
 %doc --no-dereference COPYING COPYING.MPL COPYING.GPL COPYING.LGPL
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt2_30
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_17
 - update to new release by fcimport
 
