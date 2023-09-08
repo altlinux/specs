@@ -9,7 +9,7 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 %global debug_package %{nil}
 
 Name:           elfio
-Version:        3.11
+Version:        3.12
 Release:        alt1_1
 Summary:        C++ library for reading and generating ELF files
 
@@ -81,6 +81,9 @@ rm -r %{buildroot}%{_datadir}/docs
 
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 3.12-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 3.11-alt1_1
 - update to new release by fcimport
 
