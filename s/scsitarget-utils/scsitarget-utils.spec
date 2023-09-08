@@ -1,5 +1,9 @@
 %def_with rdma
+%ifarch armh
+%def_without glfs
+%else
 %def_with glfs
+%endif
 %ifarch x86_64 aarch64 ppc64el
 %def_with rbd
 %else
@@ -7,7 +11,7 @@
 %endif
 
 Name: scsitarget-utils
-Version: 1.0.86
+Version: 1.0.87
 Release: alt1
 
 Summary: The SCSI target daemon and utility programs
@@ -165,6 +169,10 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %endif
 
 %changelog
+* Fri Sep 08 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.0.87-alt1
+- 1.0.87
+- drop GlusterFS support for armh
+
 * Wed Jun 28 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.0.86-alt1
 - 1.0.86
 - drop use-after-free patch, fixed by upstream:
