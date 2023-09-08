@@ -2,21 +2,27 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-hr
 Summary: Croatian hunspell dictionaries
 %global upstreamid 20040608
 Version: 0.%{upstreamid}
-Release: alt2_18
+Release: alt2_30
 #Epoch: 1
 Source: http://cvs.linux.hr/spell/myspell/hr_HR.zip
 URL: http://cvs.linux.hr/spell/
-License: LGPLv2+ or SISSL
+License: LGPL-2.1-or-later OR SISSL
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Croatian hunspell dictionaries.
@@ -36,21 +42,24 @@ Croatian hyphenation rules.
 chmod -x *
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p hr_HR.dic hr_HR.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p hr_HR.dic hr_HR.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p hyph_hr.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_hr_HR.dic
 
 
 %files
 %doc README_hr_HR.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %files -n hyphen-hr
 %doc README_hr_HR.txt
 %{_datadir}/hyphen/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20040608-alt2_30
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.20040608-alt2_18
 - update to new release by fcimport
 
