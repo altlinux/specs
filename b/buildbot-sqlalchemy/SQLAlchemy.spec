@@ -1,8 +1,8 @@
 %define oname SQLAlchemy
-%define bbmodulesdir %_libdir/buildbot/modules
+%define bbmodulesdir %_libexecdir/buildbot/modules
 
 Name: buildbot-sqlalchemy
-Version: 1.3.23
+Version: 1.4.44
 Release: alt1
 
 Summary: Version for Buildbot of SQL toolkit and Object Relational Mapper
@@ -45,5 +45,8 @@ rm -rf %buildroot%bbmodulesdir/*/testing
 %bbmodulesdir/*
 
 %changelog
+* Tue Sep 05 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.44-alt1
+- Update to 1.4.44
+
 * Sat Jul 03 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.23-alt1
 - Build old version for buildbot

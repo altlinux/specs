@@ -1,5 +1,5 @@
 Name: buildbot
-Version: 3.6.1
+Version: 3.9.2
 Release: alt1
 Summary: Python-based continuous integration testing framework
 
@@ -42,6 +42,8 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 Requires: python3-module-service-identity buildbot-www python3(msgpack)
+# Version requires due to move location of modules in buildbot-sqlalchemy
+Requires: buildbot-sqlalchemy >= 1.4.44
 
 
 ###############################################################################
@@ -59,6 +61,12 @@ Requires: python3-module-service-identity buildbot-www python3(msgpack)
 %filter_from_requires /python3(win32service)/d
 %filter_from_requires /python3(win32serviceutil)/d
 %filter_from_requires /python3(winerror)/d
+
+
+###############################################################################
+# Change sqlalchemy requires
+###############################################################################
+%filter_from_requires s/python3(sqlalchemy.*).*/buildbot-sqlalchemy/
 
 
 ###############################################################################
@@ -160,6 +168,10 @@ Requires: /dev/pts python3-module-pbr python3-module-treq
 %prep
 %setup
 %patch1 -p1
+sed -i '/buildbot_windows_service/d' master/setup.py
+rm -v master/buildbot/scripts/windows_service.py
+sed -i '/buildbot_worker_windows_service/d' worker/setup.py
+rm -v worker/buildbot_worker/scripts/windows_service.py
 
 %build
 for name in master worker; do
@@ -178,6 +190,13 @@ pushd worker
 %python3_install
 install -Dm 0644 docs/buildbot-worker.1 %buildroot/%_man1dir/buildbot-worker.1
 popd
+
+bbmodulesdir=%_libexecdir/buildbot/modules
+sys_path="\\    sys.path.insert(0, '$bbmodulesdir')"
+python_path="    import os; os.environ['PYTHONPATH'] = '$bbmodulesdir'"
+for b in %buildroot%_bindir/buildbot %buildroot%_bindir/buildbot-worker; do
+    sed -i "/if __name__ == '__main__':/a$sys_path\n$python_path" "$b"
+done
 
 python3 -mzipfile -e %SOURCE1 %buildroot/%python3_sitelibdir
 python3 -mzipfile -e %SOURCE2 %buildroot/%python3_sitelibdir
@@ -276,6 +295,9 @@ buildbot-worker start worker
 %files checkinstall
 
 %changelog
+* Mon Sep 04 2023 Mikhail Gordeev <obirvalger@altlinux.org> 3.9.2-alt1
+- new version 3.9.2
+
 * Tue Nov 15 2022 Mikhail Gordeev <obirvalger@altlinux.org> 3.6.1-alt1
 - new version 3.6.1
 
