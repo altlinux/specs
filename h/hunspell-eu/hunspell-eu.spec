@@ -2,19 +2,25 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-eu
 Summary: Basque hunspell dictionaries
 Version: 5.1
-Release: alt1_2
+Release: alt1_9
 Source0: http://xuxen.eus/static/hunspell/xuxen_%{version}_hunspell.zip
 URL: http://xuxen.eus
-License: LGPLv3+
+License: LGPL-3.0-or-later
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Basque hunspell dictionaries.
@@ -25,16 +31,19 @@ Basque hunspell dictionaries.
 %build
 
 %install
-mkdir -p %{buildroot}%{_datadir}/myspell
-cp -p eu_ES.dic %{buildroot}%{_datadir}/myspell/eu_ES.dic
-cp -p eu_ES.aff %{buildroot}%{_datadir}/myspell/eu_ES.aff
+mkdir -p %{buildroot}%{_datadir}/%{dict_dirname}
+cp -p eu_ES.dic %{buildroot}%{_datadir}/%{dict_dirname}/eu_ES.dic
+cp -p eu_ES.aff %{buildroot}%{_datadir}/%{dict_dirname}/eu_ES.aff
 
 
 %files
 %doc --no-dereference LICENSE.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 5.1-alt1_9
+- update to new release by fcimport
+
 * Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 5.1-alt1_2
 - update to new release by fcimport
 
