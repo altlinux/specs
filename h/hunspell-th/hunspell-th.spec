@@ -2,20 +2,26 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-th
 Summary: Thai hunspell dictionaries
 %global upstreamid 20061212
 Version: 0.%{upstreamid}
-Release: alt2_18
+Release: alt2_30
 Source: http://download.services.openoffice.org/contrib/dictionaries/th_TH.zip
 URL: https://wiki.openoffice.org/wiki/Dictionaries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Thai hunspell dictionaries.
@@ -29,15 +35,18 @@ sed -i -e 's/TIS620-2533/TIS620/g' th_TH.aff
 chmod -x *
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 
 %files
 %doc README_th_TH.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20061212-alt2_30
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20061212-alt2_18
 - update to new release by fcimport
 
