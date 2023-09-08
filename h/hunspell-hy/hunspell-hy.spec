@@ -1,17 +1,23 @@
 Group: Text tools
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-hy
 Summary: Armenian hunspell dictionaries
 Version: 0.20.0
-Release: alt2_12
+Release: alt2_26
 Source: http://downloads.sourceforge.net/armspell/myspell-hy-%{version}.tar.gz
 URL: http://sourceforge.net/projects/armspell
-License: GPLv2+
+License: GPL-2.0-or-later
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Armenian hunspell dictionaries.
@@ -22,15 +28,18 @@ Armenian hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p hy_AM.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p hy_AM.* $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 
 
 %files
 %doc Copyright ChangeLog COPYING
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20.0-alt2_26
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt2_12
 - update to new release by fcimport
 
