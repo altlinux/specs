@@ -2,19 +2,25 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-grc
 Summary: Ancient Greek hunspell dictionaries
 Version: 2.1.5
-Release: alt2_16
+Release: alt2_29
 Source: https://downloads.sourceforge.net/project/aoo-extensions/2313/1/grc.oxt
 URL: http://www.himeros.eu/
-License: GPL+ or LGPLv2+
+License: GPL-1.0-or-later OR LGPL-2.1-or-later
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Ancient Greek hunspell dictionaries.
@@ -25,17 +31,20 @@ Ancient Greek hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p dictionaries/grc_GR.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/grc.aff
-cp -p dictionaries/grc_GR.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/grc.dic
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p dictionaries/grc_GR.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/grc.aff
+cp -p dictionaries/grc_GR.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/grc.dic
 
 
 %files
 %doc LICENSES-en.txt         
 
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 2.1.5-alt2_29
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt2_16
 - update to new release by fcimport
 
