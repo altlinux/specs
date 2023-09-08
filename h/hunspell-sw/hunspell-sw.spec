@@ -1,21 +1,27 @@
 Group: Text tools
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-sw
 Summary: Swahili hunspell dictionaries
 %global upstreamid 20050819
 Version: 0.%{upstreamid}
-Release: alt2_17
+Release: alt2_30
 # Following link is not working and is dead
 # do not report any bugs for this
 Source: http://www.it46.se/downloads/openoffice/dictionary/dictionary_myspell_sw_TZ_1.1.tar.gz
 URL: http://www.it46.se
-License: LGPLv2+
+License: LGPL-2.1-or-later
 BuildArch: noarch
 BuildRequires: hunspell-utils libhunspell-devel
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Swahili hunspell dictionaries.
@@ -37,9 +43,9 @@ for i in README_sw_TZ.txt; do
 done
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
-pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+pushd $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 sw_TZ_aliases="sw_KE"
 for lang in $sw_TZ_aliases; do
         ln -s sw_TZ.aff $lang.aff
@@ -50,9 +56,12 @@ popd
 
 %files
 %doc README_sw_TZ.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20050819-alt2_30
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050819-alt2_17
 - update to new release by fcimport
 
