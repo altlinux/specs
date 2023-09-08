@@ -2,18 +2,24 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-mos
 Summary: Mossi hunspell dictionaries
 %global upstreamid 20101130
 Version: 0.%{upstreamid}
-Release: alt2_12
+Release: alt2_26
 Source: http://www.abcburkina.net/ancien/documents/lingu/DicoMoore.zip
 URL: http://www.abcburkina.net/content/view/377/48/lang,fr
-License: LGPLv3
+License: LGPL-3.0-only
 BuildArch: noarch
-Requires: hunspell
 Source44: import.info
 
 %description
@@ -25,15 +31,18 @@ Mossi hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p mos_BF.* $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p mos_BF.* $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 
 %files
 %doc lgpl-3.0.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20101130-alt2_26
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20101130-alt2_12
 - update to new release by fcimport
 
