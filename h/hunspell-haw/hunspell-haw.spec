@@ -2,17 +2,23 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-haw
 Summary: Hawaiian hunspell dictionaries
 Version: 0.03
-Release: alt1_1
+Release: alt1_14
 Source: https://addons.mozilla.org/firefox/downloads/file/248540/hawaiian_spell_checker-%{version}-tb+fx+fn+sm.xpi
 URL: http://borel.slu.edu/crubadan/
-License: GPLv2+
+License: GPL-2.0-or-later
 BuildArch: noarch
-Requires: hunspell
 Source44: import.info
 
 %description
@@ -25,16 +31,19 @@ Hawaiian hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p dictionaries/haw-US.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/haw.aff
-cp -p dictionaries/haw-US.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/haw.dic
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p dictionaries/haw-US.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/haw.aff
+cp -p dictionaries/haw-US.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/haw.dic
 
 
 %files
 %doc dictionaries/README_haw_US.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.03-alt1_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_1
 - update to new release by fcimport
 
