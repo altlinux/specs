@@ -2,7 +2,7 @@
 
 Name: attractplus
 Version: 3.0.5
-Release: alt1
+Release: alt2
 
 Summary: Arcade-like front-end for emulators
 Summary(ru_RU.UTF-8): Оболочка в стиле аркадных автоматов для эмуляторов
@@ -21,15 +21,16 @@ BuildRequires: libSFML-devel libcurl-gnutls-compat
 BuildRequires: libXinerama-devel
 BuildRequires: libarchive-devel
 BuildRequires: libavformat-devel
-BuildRequires: libavresample-devel libswresample-devel
+BuildRequires: libswresample-devel
 BuildRequires: libcurl-devel libudev-devel
 BuildRequires: libexpat-devel libvorbis-devel libflac-devel
-BuildRequires: libjpeg-devel libXcursor-devel
+BuildRequires: libjpeg-devel libpng-devel libXcursor-devel
 BuildRequires: libopenal-devel
 BuildRequires: libswscale-devel
 BuildRequires: bzlib-devel libpcre2-devel
 BuildRequires: libXrandr-devel
 BuildRequires: ImageMagick-tools
+BuildRequires: bzip2-devel libpcre-devel
 Conflicts: attract
 
 %description
@@ -51,10 +52,10 @@ Mac OS X и Windows.
 
 
 %build
-%make
+%make_build OPTIMISE="%optflags" prefix=%_prefix
 
 %install
-%makeinstall
+%makeinstall_std prefix=%_prefix
 
 # install menu icons
 for N in 16 32 48 64 128;
@@ -77,6 +78,9 @@ install -Dm644 util/linux/attract-mode.desktop         %buildroot%_desktopdir/%n
 %_iconsdir/hicolor/*/apps/%name.xpm
 
 %changelog
+* Fri Sep  8 2023 Artyom Bystrov <arbars@altlinux.org> 3.0.5-alt2
+- Make buildable on P10
+
 * Thu Sep  7 2023 Artyom Bystrov <arbars@altlinux.org> 3.0.5-alt1
 - New version
 
