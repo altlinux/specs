@@ -1,17 +1,23 @@
 Group: Text tools
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-hu
 Summary: Hungarian hunspell dictionaries
 Version: 1.6.1
-Release: alt2_12
+Release: alt2_26
 Source: http://downloads.sourceforge.net/magyarispell/hu_HU-%{version}.tar.gz
 URL: http://magyarispell.sourceforge.net
-License: LGPLv2+ or GPLv2+ or MPLv1.1
+License: LGPL-2.1-or-later OR GPL-2.0-or-later OR MPL-1.1
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Hungarian hunspell dictionaries.
@@ -23,15 +29,18 @@ Hungarian hunspell dictionaries.
 chmod -x *
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 
 %files
 %doc README_hu_HU.txt LEIRAS.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 1.6.1-alt2_26
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt2_12
 - update to new release by fcimport
 
