@@ -2,21 +2,27 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-ne
 Summary: Nepali hunspell dictionaries
 Version: 20080425
-Release: alt2_17
+Release: alt2_30
 # Upstream Source and URL is down now, please don't report FTBFS bugs
 Source: http://nepalinux.org/downloads/ne_NP_dict.zip
 URL: http://nepalinux.org/downloads
 # License is given in README_ne_NP.txt file
-License: LGPLv2
+License: LGPL-2.1-only
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Nepali hunspell dictionaries.
@@ -33,10 +39,10 @@ sed -i 's/\r//;s/[ \t]*$//' ne_NP.dic
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
-pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
+pushd $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 ne_NP_aliases="ne_IN"
 for lang in $ne_NP_aliases; do
         ln -s ne_NP.aff $lang.aff
@@ -46,9 +52,12 @@ popd
 
 %files
 %doc README_ne_NP.txt 
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 20080425-alt2_30
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 20080425-alt2_17
 - update to new release by fcimport
 
