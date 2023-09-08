@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo5.0
-Version: 5.0.20
+Version: 5.0.21
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /proc gcc10-c++ gcc10 python3-module-pymongo python3-module-pkg_resources
-BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
@@ -200,6 +199,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Fri Sep 08 2023 Alexei Takaseev <taf@altlinux.org> 5.0.21-alt1
+- 5.0.21
+- Remove unneeded BuildRequires
+
 * Thu Aug 10 2023 Alexei Takaseev <taf@altlinux.org> 5.0.20-alt1
 - 5.0.20
 - Compress debug section to reduce disk space
