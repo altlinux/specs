@@ -1,6 +1,6 @@
 Name: nano
 Version: 7.2
-Release: alt1
+Release: alt1.1
 
 Summary: a user-friendly editor, a Pico clone with enhancements
 License: %gpl3plus & %fdl v1.2+
@@ -81,15 +81,18 @@ desktop-file-install --dir %buildroot%_desktopdir .alt/%name.desktop
 %_infodir/*
 %_man1dir/*
 %_man5dir/*
-%_miconsdir/*
-%_niconsdir/*
-%_liconsdir/*
 %config(noreplace) %_sysconfdir/nanorc
 
 %files desktop
 %_desktopdir/*
+%_miconsdir/*
+%_niconsdir/*
+%_liconsdir/*
 
 %changelog
+* Fri Sep 08 2023 Hihin Ruslan <ruslandh@altlinux.ru> 7.2-alt1.1
+- move %name.png to %name-desktop 
+
 * Thu Sep 07 2023 Hihin Ruslan <ruslandh@altlinux.ru> 7.2-alt1
 - update to 7.2
 
