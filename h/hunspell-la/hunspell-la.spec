@@ -2,20 +2,26 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-la
 Summary: Latin hunspell dictionaries
 %global upstreamid 20130331
 Version: 0.%{upstreamid}
-Release: alt1_11
+Release: alt1_24
 Source: https://downloads.sourceforge.net/project/aoo-extensions/1141/3/dict-la_2013-03-31.oxt
 URL: http://extensions.services.openoffice.org/project/dict-la
-License: GPLv2+
+License: GPL-2.0-or-later
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Latin hunspell dictionaries.
@@ -37,17 +43,20 @@ for i in README_extension_owner-la.txt la/README_la.txt la/COPYING*; do
 done
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p la/la.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/la.dic
-cp -p la/la.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/la.aff
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p la/la.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/la.dic
+cp -p la/la.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/la.aff
 
 
 %files
 %doc README_extension_owner-la.txt la/README_la.txt
 %doc --no-dereference la/COPYING_*
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20130331-alt1_24
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20130331-alt1_11
 - update to new release by fcimport
 
