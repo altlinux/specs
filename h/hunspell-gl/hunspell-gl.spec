@@ -2,20 +2,26 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-gl
 Summary: Galician hunspell dictionaries
 %global upstreamid 20080515
 Version: 0.%{upstreamid}
-Release: alt2_16
+Release: alt2_29
 Source: https://downloads.sourceforge.net/project/aoo-extensions/800/2/corrector_ooo3.oxt
 URL: http://wiki.mancomun.org/index.php/Corrector_ortogr%%C3%%A1fico_para_OpenOffice.org#Descrici.C3.B3n
-License: GPLv2
+License: GPL-2.0-only
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Galician hunspell dictionaries.
@@ -27,15 +33,18 @@ Galician hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p dictionaries/*.dic dictionaries/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p dictionaries/*.dic dictionaries/*.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 
 %files
 %doc dictionaries/README-gl-ES.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20080515-alt2_29
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20080515-alt2_16
 - update to new release by fcimport
 
