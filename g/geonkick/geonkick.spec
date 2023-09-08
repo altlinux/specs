@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     geonkick
-Version:  2.9.2
-Release:  alt2
+Version:  2.10.0
+Release:  alt1
 
 Summary:  A free software percussion synthesizer
 License:  GPL-3.0
@@ -77,6 +77,9 @@ This package contains Geonkick build as LV2 plugins.
 
 
 %changelog
+* Fri Sep 08 2023 Ivan A. Melnikov <iv@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Thu Sep 07 2023 Ivan A. Melnikov <iv@altlinux.org> 2.9.2-alt2
 - Fix build with pipwire-provided Jack.
 
