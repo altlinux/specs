@@ -4,7 +4,7 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 7.0.8
+Version: 7.1.0
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -90,6 +90,9 @@ sed -i 's/tbb/tbb32/' src/meson.build
 %doc README* CHANGELOG.*
 
 %changelog
+* Thu Sep 07 2023 Yuri N. Sedunov <aris@altlinux.org> 7.1.0-alt1
+- 7.1.0
+
 * Tue Aug 29 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.8-alt1
 - 7.0.8
 
