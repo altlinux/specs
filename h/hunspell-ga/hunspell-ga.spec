@@ -1,47 +1,45 @@
 Group: Text tools
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global dict_dirname hunspell
+
 Name: hunspell-ga
 Summary: Irish hunspell dictionaries
-Version: 5.0
-Release: alt1_4
-Source0: https://github.com/kscanne/gaelspell/releases/download/v%{version}/ispell-gaeilge-%{version}.tar.gz
-Source1: myspell-header
-Source2: hunspell-header
-URL: http://borel.slu.edu/ispell/index.html
-License: GPLv2+
+Version: 5.1
+Release: alt1_3
+Source: https://github.com/kscanne/gaelspell/releases/download/v%{version}/hunspell-ga-%{version}.zip
+URL: https://cadhan.com/gaelspell/
+License: GPL-2.0-or-later
 BuildArch: noarch
 BuildRequires: hunspell-utils libhunspell-devel
-Patch1: ispell-gaeilge-5.0-buildhunspell.patch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Irish hunspell dictionaries.
 
 %prep
-%setup -q -n ispell-gaeilge-%{version}
-%patch1 -p1
+%setup -q -c
+
 
 %build
-make
-cat %{SOURCE1} %{SOURCE2} > header
-export LANG=C.UTF-8
-iconv -f utf-8 -t iso-8859-1 < gaeilge.aff > gaeilge.aff.iso-8859-1
-ispellaff2myspell gaeilge.aff.iso-8859-1 --myheader header | sed -e "s/\"\"/0/g" | sed -e "s/\"//g" > ga_IE.aff
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p ga_IE.dic ga_IE.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p ga_IE.dic ga_IE.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 
 %files
-%doc README ChangeLog
-%doc --no-dereference COPYING
-%{_datadir}/myspell/*
+%doc README_ga_IE.txt
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 5.1-alt1_3
+- update to new release by fcimport
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_4
 - update to new release by fcimport
 
