@@ -3,13 +3,13 @@
 %define fullname MidnightCommander
 
 Name: mc
-Version: 4.8.28
+Version: 4.8.30
 Release: alt1
 
 # '-gitYYYYMMDD' or ''
 %define ver_date ''
 
-License: GPL-3.0-or-later
+License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
 Group: File tools
 Url: http://midnight-commander.org/
@@ -34,13 +34,13 @@ Patch3: mc-4.8.20-alt-menu.patch
 # Misc
 
 # a part of http://www.midnight-commander.org/ticket/1480
-Patch101: mc-4.7.0.2-savannah-edit-homekey.patch
+Patch101: mc-4.8.30-savannah-edit-homekey.patch
 
 # http://www.midnight-commander.org/ticket/2496
 Patch102: mc-4.8.20-alt-forceexec.patch
 
 # http://www.midnight-commander.org/ticket/34
-Patch103: mc-4.8.24-alt-extfs-udar.patch
+Patch103: mc-4.8.30-alt-extfs-udar.patch
 
 # https://src.fedoraproject.org/rpms/mc/raw/rawhide/f/mc-python3.patch
 # https://github.com/MidnightCommander/mc/pull/149
@@ -55,6 +55,8 @@ Obsoletes: %name-locales
 Obsoletes: %name-doc
 
 Requires: rpm >= 4.13
+
+BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: rpm-build-python3
 BuildPreReq: glib2-devel libe2fs-devel
@@ -91,6 +93,15 @@ Requires: cdrkit-utils sqlite3
 This package pulls Midnight Commander with packages which can be
 needed for working additional components (some vfs for example).
 
+%package desktop
+Summary: Dektop file to %name
+Group: Editors
+License: %gpl3plus
+Requires: %name >= %version
+
+%description desktop
+Dektop file to %name
+
 %prep
 %setup -a1
 %patch0 -p1
@@ -101,8 +112,9 @@ needed for working additional components (some vfs for example).
 %patch3 -p0
 
 # Misc
-#patch101 -p1
+#patch101 -p1 // Old Patch
 %patch102 -p1
+
 %patch103 -p1
 %patch104 -p1
 
@@ -189,7 +201,7 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %dir %_sysconfdir/mc
 %config(noreplace) %_sysconfdir/mc/*edit*
 %config(noreplace) %_sysconfdir/mc/filehighlight.ini
-%config(noreplace) %_sysconfdir/mc/mc.ext
+%config(noreplace) %_sysconfdir/mc/mc.ext.ini
 %config(noreplace) %_sysconfdir/mc/mc.keymap
 %config(noreplace) %_sysconfdir/mc/mc.default.keymap
 %config(noreplace) %_sysconfdir/mc/mc.emacs.keymap
@@ -199,18 +211,24 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %_man1dir/*
 
 %_datadir/mc/
-%_desktopdir/%name.desktop
-%_desktopdir/mcedit.desktop
-%_niconsdir/%fullname.png
-%_miconsdir/%fullname.png
 
 %doc AUTHORS doc/FAQ doc/HACKING doc/MAINTAINERS doc/NEWS doc/README
 %doc doc/README.QNX doc/TODO doc/filehighlight.txt contrib/README.xterm
 %doc mc-dnlike.color mc-dark.color
 
+%files desktop
+%_desktopdir/%name.desktop
+%_desktopdir/mcedit.desktop
+%_niconsdir/%fullname.png
+%_miconsdir/%fullname.png
+
+
 %files full
 
 %changelog
+* Fri Sep 08 2023 Hihin Ruslan <ruslandh@altlinux.ru> 4.8.30-alt1
+- 4.8.30
+
 * Fri Apr 29 2022 Sergey Y. Afonin <asy@altlinux.org> 4.8.28-alt1
 - 4.8.28
 - removed build dependency of the cvs package
