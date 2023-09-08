@@ -12,7 +12,7 @@
 
 Name: lib%_name
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: OpenShot Video Library
 Group: System/Libraries
@@ -36,7 +36,7 @@ BuildRequires: /proc cmake gcc-c++ libgomp-devel libunittest-cpp-devel jsoncpp-d
 BuildRequires: libalsa-devel qt5-multimedia-devel qt5-svg-devel libzeromq-cpp-devel
 BuildRequires: libImageMagick-devel zlib-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
-BuildRequires: libavresample-devel libswresample-devel libswscale-devel
+BuildRequires: libswresample-devel libswscale-devel
 BuildRequires: libavdevice-devel libpostproc-devel
 BuildRequires: libbabl-devel
 # https://github.com/RazrFalcon/resvg
@@ -109,6 +109,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Sep 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1.1
+- rebuilt against ffmpeg-6.0 libraries
+
 * Fri Apr 21 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
 - 0.3.2
 

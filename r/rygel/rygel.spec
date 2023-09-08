@@ -7,7 +7,7 @@
 %def_enable mpris_plugin
 %def_disable tracker_plugin
 %def_enable tracker3_plugin
-%def_enable lms_plugin
+%def_disable lms_plugin
 %def_enable gtk
 %define media_engine gstreamer
 
@@ -23,7 +23,7 @@
 
 Name: rygel
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: A UPnP v2 Media Server
 Group: System/Servers
@@ -239,6 +239,9 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_girdir/*.gir
 
 %changelog
+* Thu Sep 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.42.4-alt1.1
+- disabled lms plugin, unmantained lightmediascanner don't supports ffmpeg > 5
+
 * Wed Aug 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.42.4-alt1
 - 0.42.4
 

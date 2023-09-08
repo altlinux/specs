@@ -56,7 +56,7 @@
 
 Name: gst-libav
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
 Group: System/Libraries
@@ -72,7 +72,7 @@ BuildRequires: liborc-test-devel zlib-devel bzlib-devel liblzma-devel
 %{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 %if_with system_libav
 BuildRequires: libavformat-devel >= %libav_ver
-BuildRequires: libswscale-devel libavresample-devel libavfilter-devel
+BuildRequires: libswscale-devel libswresample-devel libavfilter-devel
 %else
 BuildRequires: glibc-devel-static
 BuildRequires: libX11-devel libXext-devel libXvMC-devel libXfixes-devel
@@ -146,6 +146,9 @@ plug-in.
 %endif
 
 %changelog
+* Thu Sep 07 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.5-alt1.1
+- fixed BR for ffmpeg-6.0
+
 * Thu Jul 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.5-alt1
 - 1.22.5
 
