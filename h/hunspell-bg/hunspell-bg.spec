@@ -2,19 +2,25 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-bg
 Summary: Bulgarian hunspell dictionaries
 Version: 4.3
-Release: alt2_14
+Release: alt2_27
 Source: http://downloads.sourceforge.net/bgoffice/OOo-spell-bg-%{version}.zip
 URL: http://bgoffice.sourceforge.net/
-License: GPLv2+ or LGPLv2+ or MPLv1.1
+License: GPL-2.0-or-later OR LGPL-2.1-or-later OR MPL-1.1
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Bulgarian hunspell dictionaries.
@@ -42,16 +48,19 @@ tail -n +2 bg_BG.aff | iconv -f WINDOWS-1251 -t UTF-8 | tr -d '\r' >> bg_BG.aff.
 mv bg_BG.aff.new bg_BG.aff
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 
 %files
 %doc ChangeLog Copyright README.bulgarian
 %doc --no-dereference GPL-2.0.txt LGPL-2.1.txt MPL-1.1.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 4.3-alt2_27
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.3-alt2_14
 - update to new release by fcimport
 
