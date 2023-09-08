@@ -2,20 +2,26 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-mg
 Summary: Malagasy hunspell dictionaries
 %global upstreamid 20050109
 Version: 0.%{upstreamid}
-Release: alt2_18
+Release: alt2_31
 Source: http://download.services.openoffice.org/contrib/dictionaries/mg_MG.zip
 URL: http://borel.slu.edu/crubadan/apps.html
-License: GPLv2+
+License: GPL-2.0-or-later
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Malagasy hunspell dictionaries.
@@ -37,11 +43,11 @@ for i in README_mg_MG.txt; do
 done
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p mg_MG.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/plt.aff
-cp -p mg_MG.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/plt.dic
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p mg_MG.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/plt.aff
+cp -p mg_MG.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/plt.dic
 
-pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
+pushd $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 plt_aliases="mg"
 for lang in $plt_aliases; do
         ln -s plt.aff $lang.aff
@@ -52,9 +58,12 @@ popd
 
 %files
 %doc README_mg_MG.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20050109-alt2_31
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050109-alt2_18
 - update to new release by fcimport
 
