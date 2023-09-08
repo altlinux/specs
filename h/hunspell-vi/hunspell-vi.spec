@@ -2,20 +2,26 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-vi
 Summary: Vietnamese hunspell dictionaries
 %global upstreamid 20120418
 Version: 0.%{upstreamid}
-Release: alt1_1
+Release: alt1_14
 Source: https://downloads.sourceforge.net/project/aoo-extensions/917/3/vi_spellchecker_ooo3.oxt
 URL: https://extensions.openoffice.org/en/project/vietnamese-spellchecker
-License: GPLv2
+License: GPL-2.0-only
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Vietnamese hunspell dictionaries.
@@ -27,15 +33,18 @@ Vietnamese hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p dictionaries/*.dic dictionaries/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p dictionaries/*.dic dictionaries/*.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 
 %files
 %doc --no-dereference LICENSES-en.txt LICENSES-vi.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20120418-alt1_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20120418-alt1_1
 - update to new release by fcimport
 
