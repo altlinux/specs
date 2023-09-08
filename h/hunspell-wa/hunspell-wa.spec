@@ -1,18 +1,25 @@
 Group: Text tools
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-wa
 Summary: Walloon hunspell dictionaries
 Version: 0.4.17
-Release: alt1_8
+Release: alt1_22
 Source0: http://chanae.walon.org/walon/aspell-wa-%{version}.tar.bz2
 URL: http://chanae.walon.org/walon/aspell.php
-License: LGPLv2+
+License: LGPL-2.1-or-later
 BuildArch: noarch
 Patch0: hunspell-wa-0.4.15-buildfix.patch
-
-Requires: hunspell
 Source44: import.info
+
+
 
 %description
 Walloon hunspell dictionaries.
@@ -35,16 +42,19 @@ for i in TODO README; do
 done
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p wa.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/wa_BE.dic
-cp -p wa.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/wa_BE.aff
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p wa.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/wa_BE.dic
+cp -p wa.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/wa_BE.aff
 
 
 %files
 %doc README LGPL ChangeLog TODO
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.4.17-alt1_22
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.17-alt1_8
 - update to new release by fcimport
 
