@@ -2,22 +2,28 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-ur
 Summary: Urdu hunspell dictionaries
 Version: 0.64
-Release: alt2_13
+Release: alt2_28
 #http://urdudictionary.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=30004#DownloadId=74761
 #and click yes to agree to LGPLv2+, which stinks as a download-url :-(
 Source: UrduDictionary.xpi
 URL: http://urdudictionary.codeplex.com
-License: LGPLv2+
+License: LGPL-2.1-or-later
 BuildArch: noarch
 BuildRequires: libredland
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Urdu hunspell dictionaries.
@@ -26,14 +32,14 @@ Urdu hunspell dictionaries.
 %setup -q -c -n hunspell-ur
 
 %build
-rdfproc hunspell-ur parse install.rdf
-rdfproc hunspell-ur print | grep install-manifest | grep -v targetApplication | sed -e 's/.*#//' | sed -e 's/], "/: /'| sed -e 's/"}//' > CREDITS
+rdfproc -s file hunspell-ur parse install.rdf
+rdfproc -s file hunspell-ur print | grep install-manifest | grep -v targetApplication | sed -e 's/.*#//' | sed -e 's/], "/: /'| sed -e 's/"}//' > CREDITS
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p dictionaries/ur.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/ur_PK.aff
-cp -p dictionaries/ur.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ur_PK.dic
-pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p dictionaries/ur.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/ur_PK.aff
+cp -p dictionaries/ur.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/ur_PK.dic
+pushd $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 ur_PK_aliases="ur_IN"
 for lang in $ur_PK_aliases; do
         ln -s ur_PK.aff $lang.aff
@@ -44,9 +50,12 @@ popd
 
 %files
 %doc CREDITS
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.64-alt2_28
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.64-alt2_13
 - update to new release by fcimport
 
