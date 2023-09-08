@@ -58,16 +58,10 @@
 # https://trac.ffmpeg.org/ticket/9112
 %def_disable liblensfun
 %def_enable libmp3lame
-%ifarch x86_64
-%def_enable libmfx
-%else
-%def_disable libmfx
-%endif
 %{?_enable_version3:%def_enable libopencore_amrnb}
 %{?_enable_version3:%def_enable libopencore_amrwb}
 %def_enable libopenjpeg
 %def_enable libopus
-%def_enable libplacebo
 %def_enable libpulse
 %def_enable librabbitmq
 %def_enable librsvg
@@ -109,6 +103,7 @@
 %def_disable libilbc
 %def_disable libklvanc
 %def_disable libkvazaar
+%def_disable libmfx
 %def_disable libmodplug
 %def_disable libmysofa
 %def_disable libopenh264
@@ -148,14 +143,15 @@
 %def_disable cuvid
 %endif # cuvid
 
-%define avdevicever 60
-%define avformatver 60
-%define avfilterver 9
-%define avcodecver 60
-%define postprocver 57
-%define swresamplever 4
-%define swscalever 7
-%define avutilver 58
+%define avdevicever 58
+%define avformatver 58
+%define avfilterver 7
+%define avcodecver 58
+%define postprocver 55
+%define swresamplever 3
+%define avresamplever 4
+%define swscalever 5
+%define avutilver 56
 %ifarch ppc64le armh
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %endif
@@ -164,10 +160,10 @@
 %global optflags_lto %nil
 %endif
 
-Name:		ffmpeg
+Name:		ffmpeg4.4
 Epoch:		2
-Version:	6.0
-Release:	alt1
+Version:	4.4.4
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -178,7 +174,7 @@ Url:		http://ffmpeg.org
 # https://git.ffmpeg.org/ffmpeg.git
 Source:		%name-%version.tar
 Patch:		%name-%version-%release.patch
-Patch2000: %name-e2k-simd.patch
+Patch2000: ffmpeg-e2k-simd.patch
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
 %ifarch %ix86 x86_64
@@ -212,13 +208,11 @@ BuildRequires:	yasm
 %{?_enable_libjack:BuildRequires: libjack-devel}
 %{?_enable_liblensfun:BuildRequires: liblensfun-devel}
 %{?_enable_libmp3lame:BuildRequires: liblame-devel}
-%{?_enable_libmfx:BuildRequires: libmfx-devel}
 %{?_enable_librabbitmq:BuildRequires: librabbitmq-c-devel}
 %{?_enable_libopencore_amrnb:BuildRequires: libopencore-amrnb-devel}
 %{?_enable_libopencore_amrwb:BuildRequires: libopencore-amrwb-devel}
 %{?_enable_libopenjpeg:BuildRequires: libopenjpeg2.0-devel}
 %{?_enable_libopus:BuildRequires: libopus-devel}
-%{?_enable_libplacebo:BuildRequires: libplacebo-devel}
 %{?_enable_libpulse:BuildRequires: libpulseaudio-devel}
 %{?_enable_librsvg:BuildRequires: librsvg-devel}
 %{?_enable_librubberband:BuildRequires: librubberband-devel libstdc++-devel}
@@ -526,6 +520,32 @@ Requires: libswresample-devel = %EVR
 %description -n libswresample-devel-static
 This package contains static development files for libswresample.
 
+%package -n	libavresample%avresamplever
+Summary:	FFmpeg video postprocessing library
+Group:		System/Libraries
+
+%description -n libavresample%avresamplever
+%common_descr
+This package contains libavresample, the ffmpeg project video postprocessing library.
+
+%package -n libavresample-devel
+Summary: Development files for libswresample
+Group: Development/C
+Requires: libavresample%avresamplever = %EVR
+Requires: libavutil-devel = %EVR
+
+%description -n libavresample-devel
+This package contains development files for libavresample.
+
+%package -n libavresample-devel-static
+Summary: Static development files for libavresample
+Group: Development/C
+Requires: libavresample-devel = %EVR
+
+%description -n libavresample-devel-static
+This package contains static development files for libavresample.
+
+
 
 %package -n	libswscale%swscalever
 Summary:	FFmpeg image scaling and colorspace and pixel format conversion library
@@ -604,6 +624,7 @@ xz Changelog
 	%{subst_enable ffplay} \
 	%{subst_enable ffprobe} \
 	--enable-avfilter \
+	--enable-avresample \
 	%{subst_enable avisynth} \
 	%{subst_enable bzlib} \
 	%{subst_enable chromaprint} \
@@ -645,7 +666,6 @@ xz Changelog
 	%{subst_enable libopenjpeg} \
 	%{subst_enable libopenmpt} \
 	%{subst_enable libopus} \
-	%{subst_enable libplacebo} \
 	%{subst_enable libpulse} \
 	%{subst_enable librsvg} \
 	%{subst_enable librtmp} \
@@ -716,161 +736,37 @@ xz Changelog
 tests/checkasm/checkasm
 %endif
 
-%files
-%doc README.md
-%doc MAINTAINERS
-%doc Changelog*
-%doc LICENSE.md
-%_bindir/ffmpeg
-%{?_enable_doc:%_man1dir/ffmpeg*}
-%_datadir/ffmpeg
-%exclude %_datadir/ffmpeg/examples
-
-%if_enabled doc
-%files doc
-%doc doc/ffmpeg*.html
-%doc doc/faq.html
-%doc doc/fate.html
-%doc doc/general.html
-%doc doc/git-howto.html
-%doc doc/lib*.html
-%doc doc/nut.html
-%doc doc/platform.html
-%_man3dir/*
-%endif
-
-%if_enabled ffplay
-%files -n ffplay
-%_bindir/ffplay
-%{?_enable_doc:%_man1dir/ffplay*}
-
-%if_enabled doc
-%files -n ffplay-doc
-%doc doc/ffplay*.html
-%endif
-%endif
-
-%if_enabled ffprobe
-%files -n ffprobe
-%_bindir/ffprobe
-%{?_enable_doc:%_man1dir/ffprobe*}
-
-%if_enabled doc
-%files -n ffprobe-doc
-%doc doc/ffprobe*.html
-%endif
-%endif
-
-%if_enabled ffserver
-%files -n ffserver
-%_bindir/ffserver
-%{?_enable_doc:%_man1dir/ffserver*}
-%endif
-
-%if_enabled doc
-%files -n ffserver-doc
-%{?_enable_ffserver:%doc doc/ffserver*.html}
-%endif
-
 %files -n libavcodec%avcodecver
 %_libdir/libavcodec.so.%{avcodecver}*
-
-%files -n libavcodec-devel
-%_includedir/libavcodec
-%_libdir/libavcodec.so
-%_pkgconfigdir/libavcodec.pc
 
 %files -n libavdevice%avdevicever
 %_libdir/libavdevice.so.%{avdevicever}*
 
-%files -n libavdevice-devel
-%_includedir/libavdevice
-%_libdir/libavdevice.so
-%_pkgconfigdir/libavdevice.pc
-
 %files -n libavfilter%avfilterver
 %_libdir/libavfilter.so.%{avfilterver}*
-
-%files -n libavfilter-devel
-%_includedir/libavfilter
-%_libdir/libavfilter.so
-%_pkgconfigdir/libavfilter.pc
 
 %files -n libavformat%avformatver
 %_libdir/libavformat.so.%{avformatver}*
 
-%files -n libavformat-devel
-%_includedir/libavformat
-%_pkgconfigdir/libavformat.pc
-%_libdir/libavformat.so
-
 %files -n libavutil%avutilver
 %_libdir/libavutil.so.%{avutilver}*
-
-%files -n libavutil-devel
-%_includedir/libavutil
-%_libdir/libavutil.so
-%_pkgconfigdir/libavutil.pc
 
 %files -n libpostproc%postprocver
 %_libdir/libpostproc.so.%{postprocver}*
 
-%files -n libpostproc-devel
-%_includedir/libpostproc
-%_libdir/libpostproc.so
-%_pkgconfigdir/libpostproc.pc
-
 %files -n libswresample%swresamplever
 %_libdir/libswresample.so.%{swresamplever}*
 
-%files -n libswresample-devel
-%_includedir/libswresample
-%_libdir/libswresample.so
-%_pkgconfigdir/libswresample.pc
-
-
+%files -n libavresample%avresamplever
+%_libdir/libavresample.so.%{avresamplever}*
 
 %files -n libswscale%swscalever
 %_libdir/libswscale.so.%{swscalever}*
 
-%files -n libswscale-devel
-%_includedir/libswscale
-%_libdir/libswscale.so
-%_pkgconfigdir/libswscale.pc
-
-%if_enabled static
-%files -n libavformat-devel-static
-%_libdir/libavformat.a
-
-%files -n libavcodec-devel-static
-%_libdir/libavcodec.a
-
-%files -n libavutil-devel-static
-%_libdir/libavutil.a
-
-%files -n libswresample-devel-static
-%_libdir/libswresample.a
-
-%files -n libswscale-devel-static
-%_libdir/libswscale.a
-
-%files -n libavdevice-devel-static
-%_libdir/libavdevice.a
-
-%files -n libavfilter-devel-static
-%_libdir/libavfilter.a
-
-%files -n libpostproc-devel-static
-%_libdir/libpostproc.a
-
-%endif
-
 %changelog
-* Mon Sep 04 2023 Anton Farygin <rider@altlinux.ru> 2:6.0-alt1
-- 4.4.4 -> 6.0
-- built with libmfx (x86_64 only)
-- built with libplacebo
-- updated v4l2-request path from https://github.com/jernejsk/FFmpeg
+* Thu Sep 07 2023 Anton Farygin <rider@altlinux.ru> 2:4.4.4-alt2
+- built as compat library
+- add upstream patch with fixes for assembling with binutil as >= 2.41
 
 * Tue Jun 20 2023 Anton Farygin <rider@altlinux.ru> 2:4.4.4-alt1
 - 4.4.3 -> 4.4.4 (Fixes: CVE-2022-3964, CVE-2022-3341, CVE-2022-3109)

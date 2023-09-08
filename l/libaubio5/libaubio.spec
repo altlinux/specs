@@ -4,13 +4,13 @@
 
 Name: libaubio%sover
 Version: 0.4.9
-Release: alt5
+Release: alt6
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
+VCS: https://github.com/aubio/aubio
 License: GPLv3
 Group: System/Libraries
 
-# git://git.aubio.org/git/aubio/
 Source: %origname-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -18,7 +18,7 @@ Patch0: %name-%version-alt.patch
 BuildRequires: docbook-to-man jackit-devel libfftw3-devel libsamplerate-devel libsndfile-devel
 
 BuildPreReq: python3-base waf >= 1.9.12 libavcodec-devel libavformat-devel
-BuildPreReq: libavresample-devel txt2man doxygen python3-dev libswresample-devel
+BuildPreReq: txt2man doxygen python3-dev libswresample-devel
 BuildPreReq: libnumpy-py3-devel python3-module-numpy
 
 %description
@@ -143,6 +143,9 @@ rm -v %buildroot%_libdir/libaubio.a
 %_docdir/lib%origname-doc
 
 %changelog
+* Thu Sep 07 2023 Anton Farygin <rider@altlinux.ru> 0.4.9-alt6
+- add commits e1888a67 and 19b20ab9 from upstream to support build with ffmpeg 6
+
 * Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 0.4.9-alt5
 - NMU: dropped unneded BR: libnumpy-devel, removed libaubio.a
 
