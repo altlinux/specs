@@ -2,22 +2,28 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-ms
 Summary: Malay hunspell dictionaries
 %global upstreamid 20050117
 Version: 0.%{upstreamid}
-Release: alt2_17
+Release: alt2_30
 Source: http://download.services.openoffice.org/contrib/dictionaries/ms_MY.zip
 URL: https://wiki.openoffice.org/wiki/Dictionaries
 # affix file is under GPL+
 # rest package under GFDL
-License: GFDL and GPL+
+License: GFDL-1.1-or-later AND GPL-1.0-or-later
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Malay hunspell dictionaries.
@@ -30,10 +36,10 @@ Malay hunspell dictionaries.
 chmod -x *
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
-pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
+pushd $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 ms_MY_aliases="ms_BN"
 for lang in $ms_MY_aliases; do
         ln -s ms_MY.aff $lang.aff
@@ -43,9 +49,12 @@ done
 
 %files
 %doc README_ms_MY.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20050117-alt2_30
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050117-alt2_17
 - update to new release by fcimport
 
