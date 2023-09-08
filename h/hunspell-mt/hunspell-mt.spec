@@ -2,21 +2,27 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-mt
 Summary: Maltese hunspell dictionaries
 %global upstreamid 20110414
 Version: 0.%{upstreamid}
-Release: alt1_1
+Release: alt1_14
 Source: https://downloads.sourceforge.net/project/aoo-extensions/5039/0/dict-mt-2011-04-14.oxt
-URL: http://linux.org.mt/node/62
-License: LGPLv2+
+URL: https://extensions.openoffice.org/en/project/maltese-spell-check-dictionary
+License: LGPL-2.1-or-later
 BuildArch: noarch
 BuildRequires: hunspell-utils libhunspell-devel
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Maltese hunspell dictionaries.
@@ -28,17 +34,20 @@ Maltese hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p mt.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/mt_MT.dic
-cp -p mt.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/mt_MT.aff
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p mt.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/mt_MT.dic
+cp -p mt.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/mt_MT.aff
 
 
 %files
 %doc README_en.txt
 %doc --no-dereference licence.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20110414-alt1_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20110414-alt1_1
 - update to new release by fcimport
 
