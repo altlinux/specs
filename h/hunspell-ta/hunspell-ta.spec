@@ -1,19 +1,25 @@
 Epoch: 1
 Group: Text tools
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-ta
 Summary: Tamil hunspell dictionaries
 Version: 1.0.0
-Release: alt1_10
+Release: alt1_22
 #Epoch:   1
 Source: http://anishpatil.fedorapeople.org/ta_in.%{version}.tar.gz
 URL: https://gitorious.org/hunspell_dictionaries/hunspell_dictionaries.git
-License: GPLv2+
+License: GPL-2.0-or-later
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Tamil hunspell dictionaries.
@@ -25,15 +31,18 @@ Tamil hunspell dictionaries.
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p ta_IN/*.dic ta_IN/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p ta_IN/*.dic ta_IN/*.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
 
 %files
 %doc ta_IN/README
 %doc --no-dereference ta_IN/LICENSE ta_IN/Copyright
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 1:1.0.0-alt1_22
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.0-alt1_10
 - update to new release by fcimport
 
