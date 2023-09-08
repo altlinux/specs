@@ -2,20 +2,26 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-hil
 Summary: Hiligaynon hunspell dictionaries
 #Epoch: 1
 Version: 0.14
-Release: alt2_15
+Release: alt2_27
 Source: https://addons.mozilla.org/firefox/downloads/file/108895/litreoir_hiligaynon-%{version}-tb+fx+sm.xpi
 URL: http://extensions.services.openoffice.org/project/hunspell-hil
-License: GPLv2+
+License: GPL-2.0-or-later
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Hiligaynon hunspell dictionaries.
@@ -37,16 +43,19 @@ for i in dictionaries/README_hil_PH.txt; do
 done
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p dictionaries/hil.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/hil_PH.dic
-cp -p dictionaries/hil.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/hil_PH.aff
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p dictionaries/hil.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/hil_PH.dic
+cp -p dictionaries/hil.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/hil_PH.aff
 
 
 %files
 %doc dictionaries/README_hil_PH.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.14-alt2_27
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_15
 - update to new release by fcimport
 
