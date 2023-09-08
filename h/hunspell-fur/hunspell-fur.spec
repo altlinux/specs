@@ -2,20 +2,26 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-fur
 Summary: Friulian hunspell dictionaries
 %global upstreamid 20050912
 Version: 0.%{upstreamid}
-Release: alt2_15
+Release: alt2_29
 Source: http://digilander.libero.it/paganf/coretors/myspell-fur-12092005.zip
 URL: http://digilander.libero.it/paganf/coretors/dizionaris.html
-License: GPLv2+
+License: GPL-2.0-or-later
 BuildArch: noarch
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Friulian hunspell dictionaries.
@@ -37,15 +43,18 @@ for i in COPYING.txt LICENCE.txt LEIMI.txt; do
 done
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p fur_IT.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p fur_IT.* $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/
 
 
 %files
 %doc COPYING.txt LEIMI.txt LICENCE.txt
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20050912-alt2_29
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050912-alt2_15
 - update to new release by fcimport
 
