@@ -2,21 +2,27 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-ak
 Summary: Akan hunspell dictionaries
 Version: 0.9.1
-Release: alt1_1
+Release: alt1_15
 Source: https://addons.mozilla.org/firefox/downloads/file/376172/akan_spelling_dictionary-0.9.1-typefix-fx.xpi
 URL: http://kasahorow.org/content/akan-nsɛmfuaasekyerɛ
 #https://addons.mozilla.org/en-US/firefox/versions/license/73122
-License: LGPLv3
+License: LGPL-3.0-only
 BuildArch: noarch
 BuildRequires: libredland
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Akan hunspell dictionaries.
@@ -26,21 +32,24 @@ Akan hunspell dictionaries.
 
 
 %build
-rdfproc hunspell-oc parse install.rdf
-rdfproc hunspell-oc print | grep install-manifest | grep -v targetApplication | sed -e 's/.*#//' | sed -e 's/], "/: /'| sed -e 's/"}//' > CREDITS
+rdfproc -s file hunspell-oc parse install.rdf
+rdfproc -s file hunspell-oc print | grep install-manifest | grep -v targetApplication | sed -e 's/.*#//' | sed -e 's/], "/: /'| sed -e 's/"}//' > CREDITS
 chmod -x dictionaries/ak-GH.*
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p dictionaries/ak-GH.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/ak_GH.aff
-cp -p dictionaries/ak-GH.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ak_GH.dic
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p dictionaries/ak-GH.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/ak_GH.aff
+cp -p dictionaries/ak-GH.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/ak_GH.dic
 
 
 %files
 %doc CREDITS
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt1_15
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_1
 - update to new release by fcimport
 
