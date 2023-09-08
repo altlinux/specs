@@ -2,53 +2,52 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-csb
 Summary: Kashubian hunspell dictionaries
-%global upstreamid 20050311
+# We are using here upstreamid date as upstream published source archive date
+%global upstreamid 20190319
 Version: 0.%{upstreamid}
-Release: alt2_16
-Source: http://ftp.gnu.org/gnu/aspell/dict/csb/aspell6-csb-0.02-0.tar.bz2
-URL: http://borel.slu.edu/crubadan/apps.html
-License: GPLv2+
+Release: alt1_2
+Source: https://addons.thunderbird.net/firefox/downloads/latest/kashubian-spell-checker-poland/addon-222511-latest.xpi
+URL: https://addons.thunderbird.net/en-us/firefox/addon/kashubian-spell-checker-poland/
+License: GPL-2.0-only
 BuildArch: noarch
-BuildRequires: aspell libhunspell-devel hunspell-utils
-
-Requires: hunspell
 Source44: import.info
+
 
 %description
 Kashubian hunspell dictionaries.
 
 %prep
-%setup -q -n aspell6-csb-0.02-0
+%setup -q -c -n %{name}-%{version}
+
 
 %build
-export LANG=csb_PL.utf8
-preunzip csb.cwl
-wordlist2hunspell csb.wl csb_PL
-for i in Copyright doc/Crawler.txt; do
-  if ! iconv -f utf-8 -t utf-8 -o /dev/null $i > /dev/null 2>&1; then
-    iconv -f ISO-8859-1 -t UTF-8 $i > $i.new
-    touch -r $i $i.new
-    mv -f $i.new $i
-  fi
-  tr -d '\r' < $i > $i.new
-  touch -r $i $i.new
-  mv -f $i.new $i
-done
+# nothing here to build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p dictionaries/Kaszebsczi.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/csb_PL.dic
+cp -p dictionaries/Kaszebsczi.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/csb_PL.aff
 
 
 %files
-%doc COPYING Copyright README doc/Crawler.txt
-%{_datadir}/myspell/*
+%doc dictionaries/Copyright
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.20190319-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050311-alt2_16
 - update to new release by fcimport
 
