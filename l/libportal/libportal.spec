@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.6
+%define ver_major 0.7
 %define api_ver_major 1
 %define api_ver %api_ver_major.0
 %define soname 0
@@ -66,7 +66,7 @@ Group: System/Libraries
 Requires: %name = %EVR
 
 %description qt5
-%name-gtk3 provides Portal API wrapper library for QT5.
+%name-qt5 provides Portal API wrapper library for QT5.
 
 %package devel
 Summary: Development files and libraries for %name
@@ -280,6 +280,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Fri Sep 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.7-alt1
+- 0.7
+
 * Wed Mar 23 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.6-alt1
 - 0.6
 

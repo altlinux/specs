@@ -18,8 +18,8 @@
 %def_disable lsm
 
 Name: %{_name}2
-Version: 2.10.0
-Release: alt3
+Version: 2.10.1
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -32,7 +32,6 @@ Source: https://github.com/storaged-project/%_name/releases/download/%_name-%ver
 Source: %_name-%version.tar
 %endif
 Source1: %name.control
-Patch10: udisks-2.10.0-up-empty_loop_devices.patch
 Patch20: udisks-2.10.0-disable-sanitize-log.patch
 
 Obsoletes: %_name
@@ -43,7 +42,7 @@ Obsoletes: %_name
 %define udev_ver 165
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
-%define blockdev_ver 3.0
+%define blockdev_ver 3.0.3
 %define libmount_ver 2.30
 
 Requires(pre): control
@@ -57,13 +56,13 @@ Requires: dosfstools >= 4.2-alt2
 Requires: mdadm ntfsprogs parted gdisk xfsprogs nvme
 %{?_enable_acl:Requires: acl}
 
-Requires: libblockdev-fs
-Requires: libblockdev-crypto
-Requires: libblockdev-loop
-Requires: libblockdev-mdraid
-Requires: libblockdev-part
-Requires: libblockdev-swap
-Requires: libblockdev-nvme
+Requires: libblockdev-fs >= %blockdev_ver
+Requires: libblockdev-crypto >= %blockdev_ver
+Requires: libblockdev-loop >= %blockdev_ver
+Requires: libblockdev-mdraid >= %blockdev_ver
+Requires: libblockdev-part >= %blockdev_ver
+Requires: libblockdev-swap >= %blockdev_ver
+Requires: libblockdev-nvme >= %blockdev_ver
 
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
@@ -137,7 +136,7 @@ This package contains development documentation for lib%name.
 Summary: UDisks module for LVM2
 Group: System/Servers
 Requires: %name = %EVR
-Requires: libblockdev-lvm
+Requires: libblockdev-lvm >= %blockdev_ver
 
 %description module-lvm2
 This package contains UDisks module for LVM2 configuration.
@@ -146,7 +145,7 @@ This package contains UDisks module for LVM2 configuration.
 Summary: UDisks module for BTRFS
 Group: System/Servers
 Requires: %name = %EVR
-Requires: libblockdev-btrfs
+Requires: libblockdev-btrfs >= %blockdev_ver
 
 %description module-btrfs
 This package contains UDisks module for BTRFS configuration.
@@ -172,8 +171,7 @@ This package contains UDisks module for iSCSI configuration.
 
 %prep
 %setup -n %_name-%version
-%patch10 -p1
-%patch20 -p2
+#%%patch20 -p2
 
 %build
 %autoreconf
@@ -293,6 +291,11 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Fri Sep 08 2023 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
+- 2.10.1
+- disabled "disable-sanitize-log.patch" from previous release
+- explicitly requires libblockdev-3.0.3 with corresponding changes
+
 * Fri Aug 11 2023 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt3
 - src/udiskslinuxnvmecontroller.c: "disable sanitize-log" by mcpain@
 
