@@ -3,7 +3,7 @@
 
 Name: OpenBoard
 Version: 1.6.4
-Release: alt3
+Release: alt4
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -45,6 +45,10 @@ Patch9: 0009-vector_tool.patch
 Patch10: 0010-ru_tr_lineStyles_vectors.patch
 
 Patch11: 0011-fix-videoSize-saving.patch
+
+# Upstream commit
+Patch12: 0001-fix-make-UBFFmpegVideoEncoder-compatible-with-ffmpeg.patch
+Patch13: 0002-fix-avoid-taking-address-of-initializer-list.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -92,16 +96,7 @@ Interactive whiteboard for schools and universities.
 %prep
 %setup -a2
 # update russian translations
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
+%autopatch -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -210,6 +205,9 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Sep 09 2023 Anton Midyukov <antohami@altlinux.org> 1.6.4-alt4
+- add upstream patches for fix build with ffmpeg-6.0
+
 * Mon Dec 26 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.4-alt3
 - Added the patch for restore video size when it loading from a document:
   (https://github.com/OpenBoard-org/OpenBoard/issues/715)
