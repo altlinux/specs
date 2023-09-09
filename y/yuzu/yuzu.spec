@@ -1,15 +1,15 @@
 %define optflags_lto -flto=thin
-%define llvm_version 15.0
+%define llvm_version 17.0
 
 # git describe mainline-0-%version
-%define git_descr mainline-636-12597-gcd9430e9b24
+%define git_descr mainline-636-12601-g84f0a23ff11
 
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
 %define tzdb_to_nx_date 220816
 
 Name: yuzu
-Version: 1550
+Version: 1553
 Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
@@ -39,27 +39,33 @@ BuildRequires: /proc
 BuildRequires: boost-asio-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: catch-devel
-BuildRequires: clang%llvm_version
 BuildRequires: clang-tools
-BuildRequires: cmake
+BuildRequires: clang%llvm_version
 BuildRequires: glslang
 BuildRequires: libSDL2-devel
 BuildRequires: libavcodec-devel
+BuildRequires: libavfilter-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libcpp-httplib-devel
 BuildRequires: libcpp-jwt-devel
 BuildRequires: libcubeb-devel
 BuildRequires: libdynarmic-devel
+BuildRequires: libedit-devel
 BuildRequires: libenet-devel
+BuildRequires: libffi-devel
 BuildRequires: libinih-devel
 BuildRequires: liblz4-devel
 BuildRequires: libopus-devel
+BuildRequires: libpolly%llvm_version-devel
 BuildRequires: libswscale-devel
 BuildRequires: libusb-devel
 BuildRequires: libvulkan-memory-allocator-devel
+BuildRequires: libxml2-devel
 BuildRequires: libzstd-devel
 BuildRequires: lld%llvm_version
-BuildRequires: llvm%llvm_version
+BuildRequires: llvm%llvm_version-devel
+BuildRequires: llvm%llvm_version-gold
+BuildRequires: mlir%llvm_version-tools
 BuildRequires: ninja-build
 BuildRequires: nlohmann-json-devel
 BuildRequires: python-modules-encodings
@@ -94,6 +100,8 @@ src/common/scm_rev.cpp.in
 %build
 export ALTWRAP_LLVM_VERSION=%llvm_version
 
+sed -i -e 's/-Werror=shadow-uncaptured-local/-Wno-error=shadow-uncaptured-local/' src/CMakeLists.txt
+
 %__mkdir_p %_target_platform/externals/nx_tzdb
 %__cp %SOURCE3 %_target_platform/externals/nx_tzdb
 
@@ -109,8 +117,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=FALSE \
 	-DYUZU_USE_EXTERNAL_VULKAN_HEADERS:BOOL=FALSE \
 	-DYUZU_ENABLE_LTO:BOOL=TRUE \
-	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
 	-DYUZU_DOWNLOAD_TIME_ZONE_DATA:BOOL=TRUE \
+	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
+	-DLLVM_DIR:PATH=%_libexecdir/llvm-%llvm_version/%_lib/cmake/llvm \
 	-GNinja \
 	-Wno-dev
 %cmake_build
@@ -129,6 +138,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Sun Sep 10 2023 Nazarov Denis <nenderus@altlinux.org> 1553-alt1
+- Version 1553
+
 * Thu Sep 07 2023 Nazarov Denis <nenderus@altlinux.org> 1550-alt1
 - Version 1550
 
