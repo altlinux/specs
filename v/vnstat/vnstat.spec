@@ -1,7 +1,7 @@
 # SPEC file for vnStat package
 
 Name:    vnstat
-Version: 2.10
+Version: 2.11
 Release: alt1
 
 Summary: console-based network traffic monitor
@@ -96,7 +96,7 @@ chmod a-x examples/vnstat.cgi
 %install
 %makeinstall
 /bin/install -pD %SOURCE1  %buildroot%_controldir/%name
-/bin/install -pD -m 0664 %SOURCE3  %buildroot%cron_file
+/bin/install -pD -m 0644 %SOURCE3  %buildroot%cron_file
 /bin/sed -e 's#%%cron_freq#%{cron_freq}#' -i %buildroot%cron_file
 /bin/install -pD %SOURCE4  %buildroot%_tmpfilesdir/%{name}d.conf
 
@@ -162,6 +162,9 @@ mkdir -p %buildroot%data_dir
 %_man1dir/%{name}i*
 
 %changelog
+* Sat Sep 09 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.11-alt1
+- New version
+
 * Tue Dec 06 2022 Nikolay A. Fetisov <naf@altlinux.org> 2.10-alt1
 - New version
 
