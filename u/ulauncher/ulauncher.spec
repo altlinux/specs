@@ -2,7 +2,7 @@
 
 Name:    ulauncher
 Version: 5.15.3
-Release: alt1
+Release: alt2
 
 Summary: Feature rich application Launcher for Linux
 License: GPL-3.0+
@@ -12,6 +12,7 @@ URL:     https://github.com/Ulauncher/Ulauncher
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: %name-alt-remove-dist.patch
 
 BuildArch: noarch
 
@@ -33,6 +34,7 @@ BuildRequires: intltool
 %add_typelib_req_skiplist typelib(AppIndicator3)
 
 Requires: typelib(Gtk) = 3.0 typelib(WebKit2) = 4.0
+%py3_requires cairo
 
 %description
 Ulauncher is a fast application launcher for Linux. It is written in Python,
@@ -41,6 +43,7 @@ Shortcuts, File browser mode and Custom Color Themes.
 
 %prep
 %setup -n %name-%version
+%patch0 -p1
 subst 's|%%VERSION%%|%version|' setup.py
 
 %build
@@ -70,5 +73,9 @@ subst 's|ulauncher-%version.data/data|usr|' %buildroot%python3_sitelibdir/%name/
 %_libexecdir/systemd/user/%name.service
 
 %changelog
+* Sat Sep 09 2023 Andrey Cherepanov <cas@altlinux.org> 5.15.3-alt2
+- Requires python3(cairo).
+- Remove dist/ in settings lookup.
+
 * Thu Sep 07 2023 Andrey Cherepanov <cas@altlinux.org> 5.15.3-alt1
 - Initial build for Sisyphus.
