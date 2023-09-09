@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: Python Language Server for the Language Server Protocol
 License: MIT
 Group: Development/Python3
@@ -51,8 +51,11 @@ A Python 3.7+ implementation of the Language Server Protocol.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Sep 09 2023 Anton Zhukharev <ancieg@altlinux.org> 1.8.0-alt2
+- Bumped release.
+
 * Sat Sep 09 2023 Anton Zhukharev <ancieg@altlinux.org> 1.8.0-alt1
-- Updated to 2.0.0.
+- Updated to 1.8.0.
 
 * Mon Sep 04 2023 Anton Zhukharev <ancieg@altlinux.org> 1.7.3-alt3
 - Fix FTBFS (pyflakes 3.1 and pycodestyle 2.11).
