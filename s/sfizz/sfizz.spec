@@ -2,28 +2,29 @@
 %define libname libsfizz1
 
 Name:     sfizz
-Version:  1.2.1
-Release:  alt1
+Version:  1.2.2
+Release:  alt2
 
 Summary:  SFZ parser and synthesizer
 License:  BSD-2-Clause
 Group:    Sound
-#Vcs:     https://github.com/sfztools/sfizz
+#Vcs:     https://github.com/sfztools/sfizz-ui
 Url:      https://sfz.tools/sfizz/
 
 ExcludeArch: %arm ppc64le
 
 
-Source: %name-%version.tar
+Source: %name-ui-%version.tar
 Source1:  sub-merge.sources.txt
 Source2:  sub-merge.unpack.sh
+
+# https://github.com/sfztools/sfizz/issues/1180
+Patch1: sfizz-alt-fix-assertion-failed.patch
 
 # import sub-merge sources here
 %(cat %SOURCE1)
 
-Patch1: sfizz-1.2.1-upstream-fix-deftools-build.patch
-
-BuildRequires: cmake ctest gcc-c++
+BuildRequires: cmake gcc-c++
 # BuildRequires: libabseil-cpp-devel
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(sndfile)
@@ -120,7 +121,7 @@ This package contains include files, libraries and other files
 needed for developing applications that use libsfizz.
 
 %prep
-%setup -n %name
+%setup -n %name-ui
 sh '%SOURCE2'
 
 %autopatch -p1
@@ -129,9 +130,11 @@ sh '%SOURCE2'
 # TODO: -DSFIZZ_USE_SYSTEM_ABSEIL=ON -- currently this way it does not build
 
 %cmake \
-    -DLV2PLUGIN_INSTALL_DIR=%_libdir/lv2 \
-    -DSFIZZ_LV2_PSA=ON \
-    -DSFIZZ_VST=OFF \
+    -DLV2_PLUGIN_INSTALL_DIR=%_libdir/lv2 \
+    -DPLUGIN_LV2_PSA=ON \
+    -DPLUGIN_VST2=OFF \
+    -DPLUGIN_VST3=OFF \
+    -DPLUGIN_PUREDATA=OFF \
     -DSFIZZ_USE_SNDFILE=OFF \
     -DSFIZZ_TESTS=ON \
     -DSFIZZ_DEVTOOLS=ON
@@ -141,13 +144,9 @@ sh '%SOURCE2'
 %install
 %cmakeinstall_std
 
-for page in %buildroot%_man1dir/*; do
-  mv "$page" "$page".1
-done
-
 %check
-%cmake_build -t test
-
+binary=$(realpath "%_cmake__builddir/library/bin/sfizz_tests")
+cd library/tests && "$binary"
 
 %files tools
 %_bindir/*
@@ -167,6 +166,13 @@ done
 
 
 %changelog
+* Sat Sep 09 2023 Ivan A. Melnikov <iv@altlinux.org> 1.2.2-alt2
+- fix assertion failure for sustained notes
+
+* Sat Sep 09 2023 Ivan A. Melnikov <iv@altlinux.org> 1.2.2-alt1
+- 1.2.2
+- switch to sfizz-ui for main upstream git
+
 * Wed May 10 2023 Ivan A. Melnikov <iv@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
