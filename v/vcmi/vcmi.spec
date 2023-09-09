@@ -3,7 +3,7 @@
 
 Name: vcmi
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 License: GPL-2.0-or-later
@@ -33,7 +33,6 @@ BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libavutil)
 BuildRequires: pkgconfig(libpostproc)
 BuildRequires: pkgconfig(libswscale)
-BuildRequires: pkgconfig(libavresample)
 BuildRequires: pkgconfig(libswresample)
 BuildRequires: pkgconfig(libavfilter)
 BuildRequires: pkgconfig(minizip)
@@ -119,6 +118,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Sat Sep 09 2023 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt2
+- update BR for build with ffmpeg-6.0
+
 * Sat Aug 19 2023 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt1
 - new version 1.3.1
 
