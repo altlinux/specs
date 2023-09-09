@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-cmdliner
-Version: 1.0.4
+Version: 1.2.0
 Release: alt1
 Summary: Declarative definition of command line interfaces for OCaml
 
@@ -17,6 +17,7 @@ BuildRequires: ocaml
 BuildRequires: ocaml-findlib-devel
 BuildRequires: dune opam
 BuildRequires: ocaml-result-devel
+BuildRequires: ocaml-odoc
 
 %description
 Cmdliner allows the declarative definition of command line
@@ -45,38 +46,24 @@ developing applications that use %name.
 %setup
 
 %build
-sed 's,/lib/,/%_lib/,g' -i Makefile
-make build-byte
-make build-native
-make build-native-dynlink
+%dune_build --release @install @doc
 
 %install
-make install DESTDIR=%buildroot
+%dune_install
 
-# Fix some spurious executable perms?
-chmod -x %buildroot%_libdir/ocaml/%libname/*.cmx
-chmod -x %buildroot%_libdir/ocaml/%libname/*.cmxa
-chmod -x %buildroot%_libdir/ocaml/%libname/*.mli
-chmod -x %buildroot%_libdir/ocaml/%libname/*.a
-chmod -x %buildroot%_libdir/ocaml/%libname/META
-chmod -x %buildroot%_libdir/ocaml/%libname/opam
-
-%files
+%files -f ocaml-files.runtime
 %doc README.md CHANGES.md
-%_libdir/ocaml/%libname
-%exclude %_libdir/ocaml/%libname/*.a
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.mli
 
-%files devel
-%doc README.md CHANGES.md
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.mli
+%files devel -f ocaml-files.devel
+%doc _build/default/_doc/*
 
 %changelog
+* Wed Aug 23 2023 Ildar Mulyukov <ildar@altlinux.ru> 1.2.0-alt1
+- new version
+
+* Thu Mar 24 2022 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+
 * Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 1.0.4-alt1
 - 1.0.4
 
