@@ -9,7 +9,7 @@
 
 Name: audacity
 Version: 3.3.3
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -42,7 +42,7 @@ BuildRequires: chrpath
 %endif
 BuildRequires: patchelf
 BuildRequires: gettext-devel
-BuildRequires: ImageMagick
+BuildRequires: ImageMagick-tools
 BuildRequires: ladspa_sdk
 BuildRequires: liblame-devel
 BuildRequires: libportmidi-devel
@@ -89,13 +89,17 @@ BuildRequires: rpm-build >= 4.0.4-alt133
 
 # Dummy dependency from dlopen()'ed library, without ABI tracking, track at least soname
 # https://github.com/audacity/audacity/issues/2161
-# If soname becomes >58, the build will not fail, but needed functionality will stop working!
-# XXX ALT would better have %%_isa macro
+# This makes sure that the latest ffmpeg libraries Audacity supports
+# are installed, and won't be removed from the repository without
+# us noticing that.
 %if "%_lib" == "lib64"
-Requires: libavcodec.so.58()(64bit)
+%define soname_suffix ()(64bit)
 %else
-Requires: libavcodec.so.58
+%define soname_suffix %nil
 %endif
+Requires: libavformat.so.60%soname_suffix
+Requires: libavcodec.so.60%soname_suffix
+Requires: libavutil.so.58%soname_suffix
 
 %description
 Audacity is a program that lets you manipulate digital audio waveforms.
@@ -233,6 +237,9 @@ echo "$p" | grep -q libmp3lame
 %_datadir/%name/help
 
 %changelog
+* Sat Sep 09 2023 Ivan A. Melnikov <iv@altlinux.org> 3.3.3-alt2
+- Update ffmpeg dependencies to 6.0
+
 * Fri Jun 09 2023 Ivan A. Melnikov <iv@altlinux.org> 3.3.3-alt1
 - 3.3.3
 
