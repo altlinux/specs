@@ -2,7 +2,7 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3006.2
+Version: 3006.3
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -22,7 +22,6 @@ Source5: salt-minion.init
 Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
-Patch2: salt-release-version.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -100,7 +99,6 @@ with XMLRPC or even a Websocket API.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 # Current Salt version from sources
 echo -n '%version' > salt/_version.txt
 # Remove local copy documentation mention
@@ -255,6 +253,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Sat Sep 09 2023 Andrey Cherepanov <cas@altlinux.org> 3006.3-alt1
+- New version.
+
 * Tue Aug 15 2023 Andrey Cherepanov <cas@altlinux.org> 3006.2-alt1
 - New version.
 
