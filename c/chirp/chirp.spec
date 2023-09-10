@@ -1,9 +1,11 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+#%%def_disable check
+
 Name: chirp
-Version: 20230514
-Release: alt2
+Version: 20230906
+Release: alt1
 Summary: A tool for programming two-way radio equipment
 
 Group: Communications
@@ -16,16 +18,19 @@ Patch: %name-%version-alt.diff
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%if_disabled check
+%else
 BuildRequires: python3(future)
-BuildRequires: python3(importlib_resources)
 BuildRequires: python3(libxml2)
 BuildRequires: python3(requests)
 BuildRequires: python3(serial)
-BuildRequires: python3(setuptools)
 BuildRequires: python3(suds)
-BuildRequires: python3(wheel)
 BuildRequires: python3(wx)
 BuildRequires: python3(yattag)
+%endif
 
 # for Radio -> Query Source
 %py3_requires suds
@@ -74,10 +79,14 @@ mkdir -p %buildroot/%_iconsdir/hicolor/scalable/apps
 cp -f chirp/share/chirp.svg %buildroot/%_iconsdir/hicolor/scalable/apps/chirp.svg
 
 # Install translations
-mkdir %buildroot/%python3_sitelibdir/%name/locale
-cp -r chirp/locale/*/ %buildroot/%python3_sitelibdir/%name/locale/
+mkdir -p %buildroot/%_datadir/locale
+find chirp/locale -type d -mindepth 1 -maxdepth 1 -exec cp -r {} %buildroot/%_datadir/locale \;
+%find_lang CHIRP
 
-%files
+%check
+%tox_check
+
+%files -f CHIRP.lang
 %doc README.md
 %_bindir/*
 %python3_sitelibdir/%name/
@@ -86,6 +95,12 @@ cp -r chirp/locale/*/ %buildroot/%python3_sitelibdir/%name/locale/
 %_iconsdir/hicolor/scalable/apps/chirp.svg
 
 %changelog
+* Thu Sep 07 2023 Anton Midyukov <antohami@altlinux.org> 20230906-alt1
+- new snapshot
+- echable check
+- fix localedir
+- do not require importlib-resources
+
 * Wed May 24 2023 Anton Midyukov <antohami@altlinux.org> 20230514-alt2
 - Add desktop file and icon
 - Add translations
