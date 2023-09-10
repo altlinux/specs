@@ -2,7 +2,7 @@
 %define xdg_name in.lsp_plug.lsp_plugins
 
 Name: lsp-plugins
-Version: 1.2.10
+Version: 1.2.11
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -124,6 +124,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Mon Sep 11 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.11-alt1
+- 1.2.11
+
 * Tue Aug 22 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.10-alt1
 - 1.2.10
 
