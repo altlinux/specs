@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.191
+Version: 4.0.4.192
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -246,7 +246,7 @@ make apidocs
 
 # check
 lib/test-set
-make check
+make check VERBOSE=1
 
 %install
 %make_install DESTDIR='%buildroot' install
@@ -384,6 +384,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sun Sep 10 2023 Vitaly Chikunov <vt@altlinux.org> 4.0.4.192-alt1
+- Backport support of tilde in version & release (ALT#46585).
+
 * Wed Aug 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.0.4.191-alt1
 - Support LoongArch architecture (lp64d ABI) (closes: #45769).
 
