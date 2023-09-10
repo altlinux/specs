@@ -1,5 +1,5 @@
 Name:    codium
-Version: 1.72.1.22284
+Version: 1.82.0.23250
 Release: alt1
 
 Summary: Visual Studio Code without MS branding/telemetry/licensing
@@ -21,7 +21,7 @@ Source4: codium.png
 %set_verify_elf_method skip
 %global __find_debuginfo_files %nil
 
-BuildRequires: electron4
+BuildRequires: electron23
 BuildRequires: libgio
 BuildRequires: libnss
 BuildRequires: libnspr
@@ -95,6 +95,9 @@ install -m644 -D %SOURCE4 %buildroot%_pixmapsdir/codium.png
 %_pixmapsdir/codium.png 
 
 %changelog
+* Sun Sep 10 2023 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.82.0.23250-alt1
+- new version (1.82.0.23250) (Closes: 46710)
+
 * Thu Oct 13 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.72.1.22284-alt1
 -  new version (1.72.1.22284) (Closes: 43921)
 
