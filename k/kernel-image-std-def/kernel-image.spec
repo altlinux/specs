@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt3
 epoch:2
 %define kernel_base_version	6.1
 %define kernel_sublevel	.52
@@ -511,6 +511,9 @@ if ! timeout 999 vm-run --kvm=cond \
         sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
         exit 1
 fi
+# Verify fchmodat2 backport.
+make -C tools/testing/selftests/fchmodat2
+timeout 300 vm-run tools/testing/selftests/fchmodat2/fchmodat2_test
 
 %post checkinstall
 check-pesign-helper
@@ -600,6 +603,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Sep 10 2023 Vitaly Chikunov <vt@altlinux.org> 2:6.1.52-alt3
+- Backport fchmodat2 patchset.
+
 * Thu Sep 07 2023 Vitaly Chikunov <vt@altlinux.org> 2:6.1.52-alt2
 - Remove mgag200 module (CONFIG_DRM_MGAG200).
 
