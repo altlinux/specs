@@ -24,7 +24,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt38
+Release: alt39
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -94,7 +94,7 @@ BuildRequires: ima-evm-utils
 BuildRequires: libmemcached-devel liblzo2-devel
 %endif
 
-%{?!_without_check:%{?!_disable_check:BuildRequires: fakechroot}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: fakechroot strace}}
 
 %description
 The RPM Package Manager (RPM) is a powerful command line driven
@@ -415,6 +415,7 @@ fi
 # Run no-pass-on-failure test(s).
 rpmio/test_digest_blake2b
 rpmio/test_digest_sha1dc
+tools/pdeath_execute.test
 
 #%%pre
 #[ ! -L %%_rpmlibdir/noarch-alt-%%_target_os ] || rm -f %%_rpmlibdir/noarch-alt-%%_target_os ||:
@@ -576,6 +577,12 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Sun Sep 10 2023 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt39
+- Add support for caret in version/release to enable in the future. This is
+  safe since sisyphus_check will not pass versions like this.
+- Suppress pdeath_execute post-update script open error in RPM::RootDir.
+- pdeath_execute will use pidfd if possible (also added tests).
+
 * Wed Jul 05 2023 Andrey Limachko <liannnix@altlinux.org> 4.13.0.1-alt38
 - Add support for loongarch64 (thx zhangwenlong)
 - Fix canonical loongarch64 and e2k arch numbers conflict
