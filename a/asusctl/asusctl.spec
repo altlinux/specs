@@ -1,6 +1,6 @@
 Name:     asusctl
-Version:  4.5.0
-Release:  alt0_1_rc4 
+Version:  4.7.2
+Release:  alt1.1
 
 %define user_service /etc/systemd/user/
 
@@ -18,7 +18,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source:  %name-%version.tar
 Source1: README.ru
 #Source2: vendors-%version.tar
-Patch1: asusctl-4.3.1-systemd.patch
+#Patch1: asusctl-4.3.1-systemd.patch
 
 
 BuildRequires(pre): rpm-macros-rust
@@ -29,6 +29,12 @@ BuildRequires: cmake
 # Automatically added by buildreq on Mon Oct 31 2022
 # optimized out: ca-trust cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libfreetype-devel libgpg-error libsasl2-3 libstdc++-devel llvm14.0-libs pkg-config python3 python3-base python3-dev rust sh4
 BuildRequires: cmake fontconfig-devel gcc-c++ libudev-devel python3-module-mpl_toolkits python3-module-setuptools python3-module-zope rust-cargo
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(cairo-gobject)
+BuildRequires: pkgconfig(atk)
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(pango)
+BuildRequires: pkgconfig(gdk-3.0)
 
 
 %description
@@ -57,7 +63,7 @@ Buildrequires: git
 
 %prep
 %setup
-%patch1 -p1
+#%%patch1 -p1
 
 %build
 export RUSTFLAGS="%rustflags"
@@ -68,8 +74,15 @@ export RUSTFLAGS="%rustflags"
 export RUSTFLAGS="%rustflags"
 
 install -m644 %SOURCE1 %_builddir/%name-%version
-
 %makeinstall_std
+
+mkdir -p %buildroot/%user_service
+mv %buildroot/usr/lib/systemd/user/asusd-user.service %buildroot/%user_service/asusd-user.service
+mkdir -p %buildroot/%_unitdir
+mv %buildroot/usr/lib/systemd/system/asusd.service %buildroot/%_unitdir/asusd.service
+mkdir -p %buildroot/%_udevrulesdir
+mv %buildroot/usr/lib/udev/rules.d/99-asusd.rules %buildroot/%_udevrulesdir/99-asusd.rules
+
 
 #rm -rf %buildroot/usr/lib/
 
@@ -78,14 +91,14 @@ install -m644 %SOURCE1 %_builddir/%name-%version
 %_bindir/*
 %exclude %_bindir/rog-control-center
 %doc README.ru *.md
-%_sysconfdir/asusd
+#%%_sysconfdir/asusd
 %_datadir/asusd
 %_datadir/dbus-1/system.d/*.conf
 #_datadir/fish/vendor_completions.d/*
 #_datadir/zsh/site-functions/*
 %_udevrulesdir/*.rules
 %_unitdir/*.service
-%_sysconfdir/systemd/user/*.service
+%user_service/*.service
 %_iconsdir/hicolor/512x512/apps/*
 %exclude %_iconsdir/hicolor/512x512/apps/rog-control-center.png
 %_iconsdir/hicolor/scalable/*
@@ -99,6 +112,12 @@ install -m644 %SOURCE1 %_builddir/%name-%version
 %_datadir/rog-gui/*
 
 %changelog
+* Mon Sep 11 2023 Hihin Ruslan <ruslandh@altlinux.ru> 4.7.2-alt1.1
+- Update sisyphus
+
+* Sat Sep 09 2023 Evgeniy Kukhtinov <neurofreak@altlinux.org> 4.7.2-alt1
+- Version 4.7.2 
+
 * Mon Oct 31 2022 Hihin Ruslan <ruslandh@altlinux.ru> 4.5.0-alt0_1_rc4
 - Update from git (Version 4.5.0-rc4)
 - Git commit ba1d3f045d0fca79f125c165fd3cf34da249b506
