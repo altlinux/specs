@@ -4,7 +4,7 @@
 
 Name: mgba
 Version: %sover.2
-Release: alt2
+Release: alt2.1
 
 Summary: Game Boy Advance emulator
 License: MPL-2.0
@@ -18,7 +18,6 @@ ExcludeArch: %arm
 # https://github.com/%name-emu/%name/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-BuildPreReq: libavresample-devel
 BuildPreReq: libpostproc-devel
 BuildPreReq: libzstd-devel
 
@@ -108,6 +107,9 @@ sed -i -e 's/${GIT_REV}/%git_rev/' src/core/version.c.in
 %_libdir/lib%name.so
 
 %changelog
+* Sun Sep 10 2023 Nazarov Denis <nenderus@altlinux.org> 0.10.2-alt2.1
+- Fix FTBFS
+
 * Sat Sep 02 2023 Nazarov Denis <nenderus@altlinux.org> 0.10.2-alt2
 - Fix version strings
 
