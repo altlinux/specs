@@ -5,7 +5,7 @@
 
 Name: chirp
 Version: 20230906
-Release: alt1
+Release: alt2
 Summary: A tool for programming two-way radio equipment
 
 Group: Communications
@@ -30,7 +30,10 @@ BuildRequires: python3(serial)
 BuildRequires: python3(suds)
 BuildRequires: python3(wx)
 BuildRequires: python3(yattag)
+BuildRequires: python3(importlib_resources)
 %endif
+
+%py3_requires importlib_resources
 
 # for Radio -> Query Source
 %py3_requires suds
@@ -95,6 +98,10 @@ find chirp/locale -type d -mindepth 1 -maxdepth 1 -exec cp -r {} %buildroot/%_da
 %_iconsdir/hicolor/scalable/apps/chirp.svg
 
 %changelog
+* Sun Sep 10 2023 Anton Midyukov <antohami@altlinux.org> 20230906-alt2
+- Revert "do not require importlib-resources"
+- require python3(importlib_resources)'
+
 * Thu Sep 07 2023 Anton Midyukov <antohami@altlinux.org> 20230906-alt1
 - new snapshot
 - echable check
