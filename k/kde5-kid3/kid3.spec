@@ -10,7 +10,7 @@
 
 %define rname kid3
 Name: kde5-%rname
-Version: 3.9.3
+Version: 3.9.4
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}%{!?_enable_obsolete_kde4:altplace}
 
@@ -29,7 +29,8 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: cmake extra-cmake-modules
 BuildRequires: gettext-tools
 BuildRequires: gcc-c++ glib2-devel libreadline-devel /usr/bin/xsltproc
-BuildRequires: libavdevice-devel libavformat-devel libavresample-devel libswscale-devel
+BuildRequires: libavdevice-devel libavformat-devel libswscale-devel
+# libavresample-devel
 BuildRequires: libchromaprint-devel
 BuildRequires: id3lib-devel libtag-devel
 BuildRequires: libflac++-devel libvorbis-devel
@@ -235,6 +236,9 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Mon Sep 11 2023 Sergey V Turchin <zerg@altlinux.org> 3.9.4-alt1
+- new version
+
 * Wed Apr 19 2023 Sergey V Turchin <zerg@altlinux.org> 3.9.3-alt1
 - new version
 
