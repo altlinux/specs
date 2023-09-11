@@ -1,5 +1,5 @@
 Name: livecd-setlocale
-Version: 0.3.9
+Version: 0.3.10
 Release: alt1
 
 Summary: Automatically set locale from /proc/cmdline
@@ -33,6 +33,9 @@ rm -f %_sysconfdir/profile.d/00dconf-kbd.sh
 %_unitdir/livecd-setlocale.service
 
 %changelog
+* Wed Sep 06 2023 Anton Midyukov <antohami@altlinux.org> 0.3.10-alt1
+- Create the X11 settings for keyboard layoutsk instead Xkbmap
+
 * Fri Dec 11 2020 Anton Midyukov <antohami@altlinux.org> 0.3.9-alt1
 - set ctrl+shift for switch keyboard layout for be_BY, tt_RU, uk_UA locale
 - Fix License Tag
