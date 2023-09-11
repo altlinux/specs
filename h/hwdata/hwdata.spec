@@ -1,5 +1,5 @@
 Name: hwdata
-Version: 0.370
+Version: 0.374
 Release: alt1
 
 Summary: Hardware identification and configuration data
@@ -51,5 +51,8 @@ rm -v %buildroot/etc/modprobe.d/dist-blacklist.conf
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Sep 11 2023 Roman Alifanov <ximper@altlinux.org> 0.374-alt1
+- new version 0.374 (with rpmrb script)
+
 * Thu May 04 2023 Roman Alifanov <ximper@altlinux.org> 0.370-alt1
 - Initial build for Sisyphus (ALT bug 46002)
