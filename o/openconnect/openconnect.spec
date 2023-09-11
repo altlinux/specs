@@ -6,9 +6,10 @@
 %def_without openssl
 %def_with gnutls
 %def_with gnutls_tss2
+%def_disable check
 
 Name: openconnect
-Version: 9.01
+Version: 9.12
 Release: alt1
 Summary: Open client for Cisco AnyConnect VPN
 
@@ -17,7 +18,6 @@ License: LGPLv2.1+
 Url: https://www.infradead.org/openconnect.html
 Vcs: git://git.infradead.org/users/dwmw2/openconnect.git
 Source: %name-%version.tar
-Patch0001: 0001-jsondumpc-include-inttypesh-for-PRId64.patch
 
 Requires: lib%name = %version-%release
 BuildRequires: rpm-build-python3
@@ -36,6 +36,14 @@ BuildRequires: vpnc-script
 BuildRequires: libkrb5-devel
 BuildRequires: libgpm-devel
 BuildRequires: python3 groff-extra
+# For tests
+BuildRequires: ocserv tpm2-tools uid_wrapper socket_wrapper
+# root tests
+# BuildRequires: ppp socat
+# root netns tests
+# BuildRequires: nuttcp
+BuildRequires: /proc
+
 Requires: vpnc-script
 %{?_with_openssl:Requires: openssl >= 1.0.1e}
 
@@ -61,7 +69,6 @@ developing applications that use %name.
 
 %prep
 %setup -q
-%patch0001 -p1
 
 %build
 %autoreconf
@@ -70,10 +77,14 @@ developing applications that use %name.
 	%{subst_with libproxy} \
 	%{subst_with stoken} \
 	%{subst_with liboath} \
+	--disable-dsa-tests \
 	--with-system-cafile=/usr/share/ca-certificates/ca-bundle.crt
 
 echo "const char *openconnect_version_str = \"v%version\";" > version.c
 %make_build
+
+%check
+%make check VERBOSE=1
 
 %install
 %makeinstall_std
@@ -97,6 +108,9 @@ rm -f %buildroot%_libexecdir/openconnect/hipreport-android.sh
 %_pkgconfigdir/*
 
 %changelog
+* Mon Sep 11 2023 Alexey Shabalin <shaba@altlinux.org> 9.12-alt1
+- New version 9.12.
+
 * Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 9.01-alt1
 - new version 9.01
 
