@@ -14,7 +14,7 @@
 %define soname 4
 
 Name: embree
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
@@ -117,6 +117,9 @@ rm -f %buildroot%prefix/%{name}-vars.*
 %_man3dir/*
 
 %changelog
+* Mon Sep 11 2023 L.A. Kostis <lakostis@altlinux.ru> 4.2.0-alt1
+- 4.2.0.
+
 * Sun Jul 09 2023 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt1
 - Updated to upstream release 4.1.0.
 - enable back ispc support.

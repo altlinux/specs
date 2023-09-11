@@ -9,7 +9,7 @@
 %endif
 
 Name: ispc
-Version: 1.20.0
+Version: 1.21.0
 Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
@@ -170,6 +170,9 @@ ispc --support-matrix
 %endif
 
 %changelog
+* Mon Sep 11 2023 L.A. Kostis <lakostis@altlinux.ru> 1.21.0-alt1
+- 1.21.0.
+
 * Wed Jun 21 2023 L.A. Kostis <lakostis@altlinux.ru> 1.20.0-alt1
 - Update to 1.20.0 (20230-05-05).
 - BR: added tbb-devel
