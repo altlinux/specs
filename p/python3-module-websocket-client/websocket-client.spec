@@ -3,16 +3,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.6.1
+Version: 1.6.3
 Release: alt1
 
 Summary: WebSocket client for Python with low level API options
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/websocket-client
+Url: https://pypi.org/project/websocket-client
+VCS: https://github.com/websocket-client/websocket-client
 
-# https://github.com/liris/websocket-client.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -58,7 +58,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test-3 -v websocket/tests
 
 %files
-%doc ChangeLog *.md
+%doc LICENSE ChangeLog *.md
 %_bindir/wsdump
 %python3_sitelibdir/websocket
 %python3_sitelibdir/websocket_client-%version-py%_python3_version.egg-info
@@ -68,6 +68,9 @@ py.test-3 -v websocket/tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 1.6.3-alt1
+- Automatically updated to 1.6.3.
+
 * Tue Jul 04 2023 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt1
 - Automatically updated to 1.6.1.
 
