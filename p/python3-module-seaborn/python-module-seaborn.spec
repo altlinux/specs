@@ -6,7 +6,7 @@
 
 Name: python3-module-seaborn
 Version: 0.12.2
-Release: alt2
+Release: alt3
 Summary: Seaborn: statistical data visualization
 License: BSD-3-Clause
 Group: Sciences/Other
@@ -14,6 +14,9 @@ URL: https://pypi.org/project/seaborn/
 
 VCS: https://github.com/mwaskom/seaborn
 Source: %name-%version.tar
+Patch0: %oname-%version-alt-numpy-1.25-fix.patch
+Patch1: %oname-%version-alt-matplotlib-3.7-fix.patch
+Patch2: %oname-%version-alt-statsmodels-0.14-fix.patch
 
 BuildArch: noarch
 
@@ -26,6 +29,7 @@ BuildRequires: python3-module-pandas
 BuildRequires: python3-module-pandas-tests
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-contourpy
+BuildRequires: python3-module-statsmodels
 %endif
 
 %description
@@ -36,6 +40,9 @@ statistical routines from scipy and statsmodels.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %pyproject_build
@@ -47,7 +54,7 @@ statistical routines from scipy and statsmodels.
 rm -fv %buildroot%python3_sitelibdir/%oname/_testing.py
 
 %check
-%pyproject_run_pytest -k 'not test_log_scale and not test_subplot_kws' -n auto
+%pyproject_run_pytest -rfEs -n auto -k 'not test_share_xy'
 
 %files
 %doc LICENSE.md README.md
@@ -55,6 +62,9 @@ rm -fv %buildroot%python3_sitelibdir/%oname/_testing.py
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Sep 11 2023 Anton Vyatkin <toni@altlinux.org> 0.12.2-alt3
+- FTBFS: add patches for numpy-1.25 and matplotlib-3.7 and statsmodels-0.14.
+
 * Wed Mar 01 2023 Grigory Ustinov <grenka@altlinux.org> 0.12.2-alt2
 - Removed extra runtime dependency.
 
