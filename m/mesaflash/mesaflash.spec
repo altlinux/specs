@@ -1,6 +1,6 @@
 Name: mesaflash
-Version: 3.4.0
-Release: alt1.20210527
+Version: 3.4.6
+Release: alt1
 Summary: Configuration and diagnostic tool for Mesa Electronics boards
 License: GPLv2+
 Group: Engineering
@@ -11,6 +11,7 @@ Source0: %name-%version.tar
 ExcludeArch: armh ppc64le
 
 BuildRequires: pkgconfig(libpci)
+BuildRequires: pkgconfig(libmd)
 
 %description
 Configuration and diagnostic tool for Mesa Electronics
@@ -43,5 +44,8 @@ rm -rf *.dll *.sys libpci
 %_mandir/man1/*.1*
 
 %changelog
+* Mon Sep 11 2023 Anton Midyukov <antohami@altlinux.org> 3.4.6-alt1
+- new version 3.4.6
+
 * Sun Jun 13 2021 Anton Midyukov <antohami@altlinux.org> 3.4.0-alt1.20210527
 - Initial build
