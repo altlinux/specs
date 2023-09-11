@@ -1,15 +1,16 @@
 %define oname tornado
 
 Name: python3-module-%oname
-Version: 6.3.2
+Version: 6.3.3
 Release: alt1
+
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache-2.0
 Group: Development/Python3
-Url: http://www.tornadoweb.org
+URL: https://pypi.org/project/tornado
+VCS: https://github.com/tornadoweb/tornado
 
-# https://github.com/tornadoweb/tornado.git
 Source: %name-%version.tar
 Patch: Do-not-turn-DeprecationWarning-into-Exception.patch
 
@@ -50,11 +51,14 @@ export ASYNC_TEST_TIMEOUT=120
 %__python3 -m tornado.test.runtests --verbose
 
 %files
-%doc *.rst
+%doc LICENSE *.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.3-alt1
+- Automatically updated to 6.3.3.
+
 * Tue May 16 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.2-alt1
 - Automatically updated to 6.3.2.
 
