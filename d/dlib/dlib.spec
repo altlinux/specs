@@ -3,7 +3,7 @@
 
 Name: dlib
 Version: 19.24.2
-Release: alt1
+Release: alt2
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
 Group: Engineering
@@ -13,10 +13,11 @@ Source: https://github.com/davisking/%repo/archive/%version/%repo-%version.tar.g
 # Built from VCS.
 # git merge -s ours tag --allow-unrelated-histories
 
-BuildRequires: gcc-c++ cmake rpm-build-python3 python3-module-setuptools python3-module-wheel
-BuildRequires: liblapack-devel libX11-devel libpng-devel zlib-devel libjpeg-devel libwebp-devel pybind11-devel python3-module-pybind11
-BuildRequires: libopenblas-devel libavdevice-devel libavfilter-devel libavformat-devel libavcodec-devel libswresample-devel libswscale-devel libavutil-devel
-BuildRequires: libpostproc-devel libavresample-devel
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ libX11-devel libfftw3-devel libgif-devel libjpeg-devel libpng-devel libsqlite3-devel openmpi-devel python3-devel
+# END SourceDeps(oneline)
+BuildRequires: cmake rpm-build-python3 python3-module-setuptools python3-module-wheel
+BuildRequires: liblapack-devel libopenblas-devel libavdevice-devel libavfilter-devel libavformat-devel libavcodec-devel libswresample-devel libswscale-devel libavutil-devel libpostproc-devel pybind11-devel python3-module-pybind11
 
 %description
 Dlib is a general purpose cross-platform C++ library
@@ -85,6 +86,11 @@ sed -i 's|add_subdirectory(../../dlib/external/pybind11 pybind11_build)|find_pac
 %endif
 
 %changelog
+* Mon Sep 11 2023 Leontiy Volodin <lvol@altlinux.org> 19.24.2-alt2
+- Spec:
+  + Updated BuildRequires.
+  + Fixed build with new ffmpeg.
+
 * Tue Jul 18 2023 Leontiy Volodin <lvol@altlinux.org> 19.24.2-alt1
 - New version 19.24.2.
 - Spec:
