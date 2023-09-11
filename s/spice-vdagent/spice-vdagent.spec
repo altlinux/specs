@@ -6,7 +6,7 @@
 
 Name: spice-vdagent
 Version: 0.22.1
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -95,6 +95,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 %_man1dir/*
 
 %changelog
+* Mon Sep 11 2023 Sergey V Turchin <zerg@altlinux.org> 1:0.22.1-alt1.1
+- NMU: fix systemd user session startup loop (closes: 47329)
+
 * Tue Jul 04 2023 Alexey Shabalin <shaba@altlinux.org> 1:0.22.1-alt1
 - 0.22.1
 
