@@ -2,7 +2,7 @@
 
 Summary: Tiny libvips / gtk+4 image viewer
 Name: vipsdisp
-Version: 2.5.1
+Version: 2.6.0
 Release: alt1
 License: MIT
 Group: Graphics
@@ -40,9 +40,12 @@ types from 1 bit mono to 128-bit double precision complex.
 %_iconsdir/hicolor/128x128/apps/%app.png
 %_desktopdir/%app.desktop
 %_datadir/glib-2.0/schemas/%app.gschema.xml
-%_datadir/metainfo/%app.appdata.xml
+%_datadir/metainfo/%app.metainfo.xml
 
 %changelog
+* Mon Sep 11 2023 L.A. Kostis <lakostis@altlinux.ru> 2.6.0-alt1
+- 2.6.0.
+
 * Mon Aug 07 2023 L.A. Kostis <lakostis@altlinux.ru> 2.5.1-alt1
 - 2.5.1.
 
