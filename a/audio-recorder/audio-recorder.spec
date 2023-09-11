@@ -1,8 +1,8 @@
 %define gstapi	1.0
 
 Name:		audio-recorder
-Version:	2.2.3
-Release:	alt2
+Version:	3.3.4
+Release:	alt1
 
 Summary:	Audio recorder application for the GNOME 3
 
@@ -17,6 +17,8 @@ Patch0:		audio-recorder-correct-desktop-menu.patch
 Patch1:		0001-Port-to-Ayatana-AppIndicator.patch
 Patch2:         audio-recorder-1.9.7-no-autostart.patch
 Patch3:         0002-audio-recorder-2.2.3-update-russian-translation.patch
+Patch4:		0001-Change-APP_INDICATOR-var.patch
+patch5:		0001-Update-russian-translation-patch.patch
 
 BuildRequires:	intltool
 BuildRequires:	pkgconfig(ayatana-appindicator3-0.1)
@@ -45,7 +47,9 @@ your loudspeakers you can record it.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 autoreconf -vfi
@@ -68,5 +72,10 @@ autoreconf -vfi
 %_mandir/man1/%name.1*
 
 %changelog
+* Mon Sep 11 2023 Artyom Bystrov <arbars@altlinux.org>  3.3.4-alt1
+- Update to new version
+- Update translation patch
+- Fix FTBFS (systray indicator)
+
 * Thu Dec 29 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 2.2.3-alt2
 - Initial build
