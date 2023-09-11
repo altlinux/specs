@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.59.0
-Release: alt2
+Version: 1.59.1
+Release: alt1
 
 Summary: Typed interactions with the GitHub API v3
 License: LGPL-3.0
@@ -60,6 +60,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %doc *.md
 
 %changelog
+* Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 1.59.1-alt1
+- Automatically updated to 1.59.1.
+
 * Tue Aug 15 2023 Stanislav Levin <slev@altlinux.org> 1.59.0-alt2
 - Mapped PyPI name to distro's one.
 
