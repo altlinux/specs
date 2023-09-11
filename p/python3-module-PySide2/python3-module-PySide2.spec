@@ -6,7 +6,7 @@
 
 Name: python3-module-PySide2
 Version: 5.15.2
-Release: alt3
+Release: alt4
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python3
@@ -17,6 +17,8 @@ URL: https://wiki.qt.io/Qt_for_Python
 Source: pyside-setup-opensource-src-%version.tar
 Patch1: pyside2-link-with-python.patch
 Patch2: python-pyside2-options_py.patch
+# https://codereview.qt-project.org/gitweb?p=pyside/pyside-setup.git;a=commitdiff;h=1422cf4a7f277fb13fd209f24a90d6c02641497d;hp=99d76b5e4e2397fcb4ddf45de91748ab1861f755
+Patch3: pyside2-fix-build-with-numpy1.23.0.patch
 
 # patches from debian
 Patch10: py3.10-prep-Finally-support-Python-3.10.patch
@@ -150,6 +152,7 @@ the previous versions (without the 2) refer to Qt 4.
 %setup -n pyside-setup-opensource-src-%version
 %patch1 -p2
 %patch2 -p1
+%patch3 -p1
 
 %patch10 -p1
 %patch11 -p1
@@ -218,6 +221,9 @@ done
 %python3_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 5.15.2-alt4
+- Fixed build with numpy1.23.
+
 * Fri Dec 23 2022 Grigory Ustinov <grenka@altlinux.org> 5.15.2-alt3
 - Fixed build with python3.11.
 
