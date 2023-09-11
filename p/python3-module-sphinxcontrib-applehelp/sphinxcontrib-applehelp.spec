@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.0.4
+Version: 1.0.7
 Release: alt1
 
 Summary: A sphinx extension which outputs Apple help books
@@ -11,15 +11,14 @@ Summary: A sphinx extension which outputs Apple help books
 License: BSD-2-Clause
 Group:   Development/Python3
 URL:     https://pypi.org/project/sphinxcontrib-applehelp
+VCS:     https://github.com/sphinx-doc/sphinxcontrib-applehelp
 
-# https://github.com/sphinx-doc/sphinxcontrib-applehelp
-Source:  %oname-%version.tar
+Source:  %name-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-flit
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -32,7 +31,7 @@ BuildArch: noarch
 %summary
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %pyproject_build
@@ -49,6 +48,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo sphinxcontrib_applehelp}
 
 %changelog
+* Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.7-alt1
+- Automatically updated to 1.0.7.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt1
 - Automatically updated to 1.0.4.
 
