@@ -1,5 +1,5 @@
 Name: nmon
-Version: 16n
+Version: 16p
 Release: alt1
 
 Summary: IBM nmon - system monitor
@@ -37,6 +37,9 @@ install -pm755 nmon %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Mon Sep 11 2023 Andrey Bergman <vkni@altlinux.org> 16p-alt1
+- Version update.
+
 * Thu Feb 03 2022 Andrey Bergman <vkni@altlinux.org> 16n-alt1
 - Version update.
 
