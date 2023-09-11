@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 363
+%define centos_release 364
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -654,6 +654,28 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Sep 11 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.364-alt1.el9
+- Updated to kernel-5.14.0-364.el9 (fixes: CVE-2023-3776):
+  + Draft: Merge tag 'kernel-5.14.0-362.2.1.el9_3' from 9.3
+  + Fixes for tracing subsystem
+  + Merge commit '22c722feb2234cc45732b4461007d11563119595'
+  + Merge tag 'kernel-5.14.0-362.2.1.el9_3' from 9.3
+  + PCI: hv: Fix a crash in hv_pci_restore_msi_msg() during hibernation
+  + amd64_edac: add support for F19h models 0x60 - 0x7f (Ryzen)
+  + arm64: dts: qcom: sa8775p: add the PMU node
+  + bonding: update port speed when getting bond speed
+  + bpf: sockmap: Remove preempt_disable in sock_map_sk_acquire
+  + gpio: davinci: Stop using ARCH_NR_GPIOS
+  + gpio: remove MODULE_LICENSE in non-modules
+  + iio: adc: imx93: fix a signedness bug in imx93_adc_read_raw()
+  + locking: revert comment from KRTS JiraReadiness exercise
+  + net/sched: cls_fw: Fix improper refcount update leads to use-after-free
+  + pinctrl: qcom: Add intr_target_width field to support increased number of interrupt targets
+  + rhel: Re-add can-dev features that were removed accidentally
+  + scsi: libfc: Remove get_cpu() semantics in fc_exch_em_alloc()
+  + scsi: st: Add third party poweron reset handling
+  + Various changes and improvements that are poorly described in merge.
+
 * Thu Sep 07 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.363-alt1.el9
 - Updated to kernel-5.14.0-363.el9:
   + Backport the erofs filesystem support for chunk-based file on-disk format
