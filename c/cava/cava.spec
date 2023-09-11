@@ -1,5 +1,5 @@
 Name:    cava
-Version: 0.8.3
+Version: 0.9.1
 Release: alt1
 
 Summary: Cross-platform Audio Visualizer
@@ -42,5 +42,8 @@ echo %version > version
 /lib/kbd/consolefonts/%name.psf
 
 %changelog
+* Mon Sep 11 2023 Roman Alifanov <ximper@altlinux.org> 0.9.1-alt1
+- new version 0.9.1 (with rpmrb script)
+
 * Fri May 12 2023 Roman Alifanov <ximper@altlinux.org> 0.8.3-alt1
 - Initial build for Sisyphus
