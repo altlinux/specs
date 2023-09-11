@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: ocserv
-Version: 1.1.6
-Release: alt2
+Version: 1.2.1
+Release: alt1
 
 Summary: OpenConnect SSL VPN server
 License: GPLv2+
@@ -71,9 +71,6 @@ rm -rf src/ccan/talloc
 rm -f src/pcl/*.c src/pcl/*.h
 sed -i 's|/etc/ocserv.conf|/etc/ocserv/ocserv.conf|g' src/config.c
 sed -i 's/run-as-group = nogroup/run-as-group = nobody/g' tests/data/*.config
-# GPLv3 in headers is a gnulib bug:
-# http://lists.gnu.org/archive/html/bug-gnulib/2013-11/msg00062.html
-sed -i 's/either version 3 of the License/either version 2 of the License/g' build-aux/snippet/*
 
 %build
 %autoreconf
@@ -82,6 +79,7 @@ sed -i 's/either version 3 of the License/either version 2 of the License/g' bui
     --enable-systemd \
     --without-libwrap \
     --without-root-tests \
+    --runstatedir=/run \
     %{subst_with maxmind}
 
 %make_build
@@ -117,7 +115,7 @@ export PATH=/sbin:/usr/sbin:$PATH
 %preun_service %name
 
 %files
-%doc NEWS LICENSE README.md TODO
+%doc NEWS COPYING README.md
 %dir %_localstatedir/lib/ocserv
 %dir %_sysconfdir/ocserv
 %config(noreplace) %_sysconfdir/ocserv/ocserv.conf
@@ -136,6 +134,9 @@ export PATH=/sbin:/usr/sbin:$PATH
 %_initdir/%name
 
 %changelog
+* Thu Sep 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.2.1-alt1
+- 1new version 1.2.1
+
 * Tue Dec 27 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.6-alt2
 - Backported upstream patches
 - Disable check (new hasher or make?)
