@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.0.2
+Version: 1.0.5
 Release: alt1
 
 Summary: A sphinx extension which outputs Devhelp document
@@ -11,13 +11,14 @@ Summary: A sphinx extension which outputs Devhelp document
 License: BSD-2-Clause
 Group:   Development/Python3
 URL:     https://pypi.org/project/sphinxcontrib-devhelp
+VCS:     https://github.com/sphinx-doc/sphinxcontrib-devhelp
 
-# https://github.com/sphinx-doc/sphinxcontrib-devhelp
-Source0: %oname-%version.tar
+Source:  %name-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -30,24 +31,26 @@ BuildArch: noarch
 %summary
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test3 -vv
+%tox_check_pyproject
 
 %files
 %doc README.rst
 %python3_sitelibdir/sphinxcontrib
-%python3_sitelibdir/*.pth
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/sphinxcontrib_devhelp-%version.dist-info
 
 %changelog
+* Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1
+- Automatically updated to 1.0.5.
+
 * Mon Mar 02 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
 - Build new version.
 - Change build scheme.
