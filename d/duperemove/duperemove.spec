@@ -1,7 +1,7 @@
 # SPEC file for duperemove package
 
 Name:    duperemove
-Version: 0.11.3
+Version: 0.12
 Release: alt1
 
 Summary: tool for deduping file system extents
@@ -60,10 +60,10 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
 %doc README.md LICENSE.xxhash
 %doc --no-dereference LICENSE
 
-%_sbindir/%name
-%_sbindir/btrfs-extent-same
-%_sbindir/show-shared-extents
-%_sbindir/hashstats
+%_bindir/%name
+%_bindir/btrfs-extent-same
+%_bindir/show-shared-extents
+%_bindir/hashstats
 
 %_man8dir/%{name}.*
 %_man8dir/btrfs-extent-same.*
@@ -71,6 +71,13 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
 %_man8dir/hashstats.*
 
 %changelog
+* Mon Sep 11 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.12-alt1
+- New version
+  - duplication lookup is now based on extents
+  - new hashfile format
+  - batching has been implemented to use on large dataset
+  - all hash algorithm has been removed and replaced by xxh128
+
 * Sat Nov 06 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.11.3-alt1
 - New version
 
