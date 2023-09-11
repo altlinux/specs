@@ -4,7 +4,7 @@
 
 Name: mc
 Version: 4.8.30
-Release: alt1
+Release: alt2
 
 # '-gitYYYYMMDD' or ''
 %define ver_date ''
@@ -226,6 +226,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %files full
 
 %changelog
+* Mon Sep 11 2023 Sergey Y. Afonin <asy@altlinux.org> 4.8.30-alt2
+- fixed mc-4.8.30-alt-extfs-udar.patch
+
 * Fri Sep 08 2023 Hihin Ruslan <ruslandh@altlinux.ru> 4.8.30-alt1
 - 4.8.30
 
