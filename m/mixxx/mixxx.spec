@@ -8,10 +8,11 @@
 
 Name: mixxx
 Version: 2.3.6
-Release: alt1
+Release: alt2
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
+
 License: GPL-2.0+
 Group: Sound
 Url: http://mixxx.org
@@ -19,34 +20,34 @@ Url: http://mixxx.org
 # https://github.com/mixxxdj/mixxx.git
 Source: %name-%version.tar
 
-Patch1: %name-2.2.4-alt-find-shout2.patch
-Patch2: %name-2.2.4-alt-rpath.patch
-
 Requires: %name-data = %EVR
 Requires: qt5-sql-sqlite3
 
-BuildPreReq: rpm-macros-qt5
-BuildPreReq: rpm-build-ninja
+BuildPreReq: rpm-macros-qt5 rpm-build-ninja
 %if_enabled clang
 BuildRequires: clang-devel llvm-devel-static
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires: flex git-core cmake libflac-devel libid3tag-devel libmad-devel
-BuildRequires: libportaudio2-devel libportmidi-devel
-BuildRequires: libsndfile-devel libtag-devel
-#BuildRequires: scons
-BuildRequires: swig libvamp-devel libprotobuf-devel
-BuildRequires: libchromaprint-devel libusb-devel libfftw3-devel
-BuildRequires: protobuf-compiler
-BuildRequires: libGLU-devel librubberband-devel libopus-devel libopusfile-devel libsqlite3-devel
-BuildRequires: libwavpack-devel libfaad-devel libmp4v2-devel
-BuildRequires: libupower-devel
-BuildRequires: qt5-base-devel qt5-script-devel qt5-svg-devel qt5-xmlpatterns-devel qt5-tools-devel qt5-x11extras-devel
-BuildRequires: liblilv-devel libsoundtouch-devel libvorbis-devel libspeex-devel libtheora-devel
-BuildRequires: liblame-devel libqtkeychain-qt5-devel libavcodec-devel libavformat-devel libavutil-devel libswresample-devel libavdevice-devel libavfilter-devel libpostproc-devel libswscale-devel libavresample-devel
-BuildRequires: libhidapi-devel libkeyfinder-devel libssl-devel
-BuildRequires: libebur128-devel libshout-idjc-devel libmodplug-devel
+BuildRequires: /proc
+# BEGIN SourceDeps(oneline):
+BuildRequires: libGLU-devel libX11-devel libglvnd-devel
+BuildRequires: libogg-devel libprotobuf-devel protobuf-compiler
+BuildRequires: libsqlite3-devel libvorbis-devel qt5-base-devel
+BuildRequires: qt5-script-devel qt5-svg-devel qt5-x11extras-devel
+# END SourceDeps(oneline)
+BuildRequires: cmake git-core libchromaprint-devel
+BuildRequires: libkeyfinder-devel libfftw3-devel libebur128-devel
+BuildRequires: libflac-devel liblame-devel libportaudio2-devel
+BuildRequires: libportmidi-devel librubberband-devel
+BuildRequires: libsndfile-devel libsoundtouch-devel libtag-devel
+BuildRequires: libupower-devel libmp4v2-devel libavcodec-devel
+BuildRequires: libavformat-devel libavutil-devel libswscale-devel
+BuildRequires: libswresample-devel libavdevice-devel
+BuildRequires: libavfilter-devel liblilv-devel libshout-idjc-devel
+BuildRequires: libmodplug-devel libopus-devel libopusfile-devel
+BuildRequires: libmad-devel libid3tag-devel libqtkeychain-qt5-devel
+BuildRequires: libusb-devel libhidapi-devel libwavpack-devel
 
 %if_enabled clang
 ExcludeArch: armh
@@ -70,8 +71,6 @@ This package contains data files for Mixxx.
 
 %prep
 %setup
-# %patch1 -p1
-# %patch2 -p1
 
 %build
 %if_enabled clang
@@ -104,6 +103,12 @@ chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compil
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Mon Sep 11 2023 Leontiy Volodin <lvol@altlinux.org> 2.3.6-alt2
+- Spec:
+  + Updated BuildRequires.
+  + Fixed build with new ffmpeg.
+  + Removed obsoleted patches.
+
 * Wed Aug 16 2023 Leontiy Volodin <lvol@altlinux.org> 2.3.6-alt1
 - New version 2.3.6.
 
