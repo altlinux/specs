@@ -1,8 +1,8 @@
 # SPEC file for gilolite package
 
 Name: gitolite
-Version: 3.6.12
-Release: alt2
+Version: 3.6.13
+Release: alt1
 
 Summary: Highly flexible server for git directory version tracker
 License: %gpl2only
@@ -164,6 +164,9 @@ echo "---------------------------------------------------"
 
 
 %changelog
+* Mon Sep 11 2023 Nikolay A. Fetisov <naf@altlinux.org> 3.6.13-alt1
+- New version
+
 * Thu Feb 10 2022 Nikolay A. Fetisov <naf@altlinux.org> 3.6.12-alt2
 - fix build process
 
