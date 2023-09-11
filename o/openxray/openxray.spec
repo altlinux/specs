@@ -1,14 +1,15 @@
 Name: openxray
-Version: 1.6.02_1747
+Version: 1.6.02_2088
 Release: alt1
 
 Summary: X-Ray Engine Linux port by OpenXRay team
 License: BSD-3-Clause
 Group: Games/Other
 URL: https://github.com/OpenXRay/xray-16
+
 ExcludeArch: armh ppc64le
 
-Source0: %name-%version.tar.xz
+Source: %name-%version.tar.xz
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -55,8 +56,7 @@ cd build
 rm -v %buildroot%_datadir/openxray/gamedata/*/.gitattributes
 
 %files
-%doc License.txt
-%doc README.md
+%doc License.txt README.md
 %_bindir/xr_3da
 %_libdir/xrAICore.so
 %_libdir/xrAPI.so
@@ -73,26 +73,24 @@ rm -v %buildroot%_datadir/openxray/gamedata/*/.gitattributes
 %_libdir/xrSound.so
 %_libdir/xrUICore.so
 %dir %_datadir/openxray
-%_datadir/openxray/fsgame.ltx
 %_datadir/openxray/gamedata
-%_datadir/applications/openxray_cop.desktop
-%_datadir/icons/hicolor/*/apps/openxray_cop.png
-%_datadir/pixmaps/openxray_cop.png
-%_datadir/applications/openxray_cs.desktop
-%_datadir/icons/hicolor/*/apps/openxray_cs.png
-%_datadir/pixmaps/openxray_cs.png
-%_datadir/applications/openxray_soc.desktop
-%_datadir/icons/hicolor/*/apps/openxray_soc.png
-%_datadir/pixmaps/openxray_soc.png
+%_datadir/openxray/fsgame.ltx
+%_datadir/applications/openxray_*.desktop
+%_datadir/icons/hicolor/*/apps/openxray_*.png
+%exclude %_datadir/pixmaps/openxray_*.png
 %_datadir/bash-completion/completions/xr_3da
 
 %changelog
+* Mon Sep 11 2023 Anton Kurachenko <srebrov@altlinux.org> 1.6.02_2088-alt1
+- Updating to new version 1.6.02_2088.
+- Compressing of the %files section in the spec. Cosmetic changes.
+
 * Mon Jun 26 2023 Anton Kurachenko <srebrov@altlinux.org> 1.6.02_1747-alt1
-- Updating to new version 1.6.02_1747
+- Updating to new version 1.6.02_1747.
 
 * Fri Jun 23 2023 Anton Kurachenko <srebrov@altlinux.org> 1.6.02_1144-alt2
-- Cosmetic changes in the spec file
-- ExclusiveArch was added due to problems with assembly for other architectures
+- Cosmetic changes in the spec file.
+- Adding ExclusiveArch due to problems with assembly for other architectures.
 
 * Sat Jun 10 2023 Anton Kurachenko <srebrov@altlinux.org> 1.6.02_1144-alt1
-- Initial build for ALT
+- Initial build for ALT.
