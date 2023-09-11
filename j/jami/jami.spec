@@ -27,7 +27,7 @@
 
 Name: jami
 Version: 20230619
-Release: alt1
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -99,6 +99,7 @@ As the SIP/audio daemon and the user interface are separate processes.
 %package -n jami-client
 Summary: Ring client written in Qt
 Group: Networking/Instant messaging
+Requires: qt6-declarative qt6-5compat
 Requires: jami-daemon
 Provides: jami-client-qt = %EVR
 Provides: jami-qt = %EVR
@@ -320,5 +321,8 @@ ln -s jami %buildroot/%_bindir/jami-qt
 %_pkgconfigdir/jami.pc
 
 %changelog
+* Mon Sep 11 2023 Sergey V Turchin <zerg@altlinux.org> 20230619-alt2
+- fix requires
+
 * Tue Sep 05 2023 Sergey V Turchin <zerg@altlinux.org> 20230619-alt1
 - initial build
