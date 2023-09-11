@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.2.0
-Release: alt10
+Release: alt11
 
 Summary: Digital satellite receiver box with advanced features
 License: GPLv2
@@ -17,10 +17,7 @@ BuildRequires: libGL-devel libGLU-devel libglut-devel libX11-devel libXext-devel
 BuildRequires: libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
 BuildRequires: boost-devel libtntnet-devel libtntdb-devel libdbus-glib-devel perl-Date-Manip
 BuildRequires: libcurl-devel libcxxtools-devel libpcrecpp-devel
-# vaapidevice
-BuildRequires: pkgconfig(libva) pkgconfig(libavcodec) pkgconfig(libswscale) pkgconfig(libswresample)
-BuildRequires: pkgconfig(x11) pkgconfig(x11-xcb) pkgconfig(xcb) pkgconfig(xcb-icccm) pkgconfig(xcb-screensaver)
-BuildRequires: pkgconfig(xcb-dpms)
+BuildRequires: pkgconfig(libavutil)
 
 %description
 VDR, Video Disc Recorder, enables you to build a powerful set-top box on your own
@@ -80,11 +77,6 @@ Requires: vdr = %version-%release
 
 %package plugin-remotetimers
 Summary: VDR remote timers plugin
-Group: Video
-Requires: vdr = %version-%release
-
-%package plugin-vaapidevice
-Summary: VDR HD-capable ffmpeg plugin
 Group: Video
 Requires: vdr = %version-%release
 
@@ -164,9 +156,6 @@ Remote OSD plugin for the Video Disk Recorder (VDR).
 
 %description plugin-remotetimers
 VDR timers manipulations across VDR instances
-
-%description plugin-vaapidevice
-HD-capable (VDPAU) softdevice plugin for the Video Disk Recorder (VDR).
 
 %description plugin-streamdev
 Streaming server and client plugins for the Video Disk Recorder (VDR).
@@ -283,9 +272,6 @@ cp -p PLUGINS/src/remoteosd/README %buildroot%docdir/remoteosd
 mkdir -p %buildroot%docdir/remotetimers
 cp -p PLUGINS/src/remotetimers/README %buildroot%docdir/remotetimers
 
-mkdir -p %buildroot%docdir/vaapidevice
-cp -p PLUGINS/src/vaapidevice/README %buildroot%docdir/vaapidevice
-
 mkdir -p %buildroot%docdir/streamdev
 cp -p PLUGINS/src/streamdev/{README,PROTOCOL} %buildroot%docdir/streamdev
 cp -a PLUGINS/src/streamdev/streamdev-server %buildroot%confdir/plugins
@@ -330,7 +316,6 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=live.lang vdr-live
 %find_lang --output=manager.lang vdr-manager
 %find_lang --output=pvrinput.lang vdr-pvrinput
-%find_lang --output=vaapidevice.lang vdr-vaapidevice
 %find_lang --output=streamdev.lang --append vdr-streamdev-server vdr-streamdev-client
 %find_lang --output=text2skin.lang vdr-text2skin
 %find_lang --output=ttxtsubs.lang vdr-ttxtsubs
@@ -489,10 +474,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %docdir/remotetimers
 %plugindir/libvdr-remotetimers.so.%version
 
-%files plugin-vaapidevice -f vaapidevice.lang
-%docdir/vaapidevice
-%plugindir/libvdr-vaapidevice.so.%version
-
 %files plugin-streamdev -f streamdev.lang
 %docdir/streamdev
 %dir %attr(0770,root,_vdr) %confdir/plugins/streamdev-server
@@ -547,6 +528,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Mon Sep 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt11
+- rebuilt without ffmpeg
+
 * Wed Sep 22 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt10
 - avoid builds with gcc11
 
