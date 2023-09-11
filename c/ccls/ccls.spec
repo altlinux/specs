@@ -1,6 +1,6 @@
 Name: ccls
-Version: 0.20220729
-Release: alt3
+Version: 0.20230717
+Release: alt1
 
 Summary: C/C++/Objective-C language server
 License: Apache-2.0
@@ -34,6 +34,9 @@ export CXX=clang++
 %_bindir/ccls
 
 %changelog
+* Mon Sep 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.20230717-alt1
+- 0.20230717 released
+
 * Fri Jun 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.20220729-alt3
 - unpinned clang version and rebuilt with current clang15
 
