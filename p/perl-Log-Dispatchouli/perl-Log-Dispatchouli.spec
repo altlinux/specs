@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Log::Dispatchouli
 
 Name: perl-Log-Dispatchouli
-Version: 3.005
+Version: 3.007
 Release: alt1
 
 Summary: a simple wrapper around Log::Dispatch
@@ -51,6 +51,9 @@ memory. That last one is mostly useful for testing.
 %perl_vendor_privlib/Log/Fmt.pm
 
 %changelog
+* Mon Sep 11 2023 Nikolay A. Fetisov <naf@altlinux.org> 3.007-alt1
+- New version
+
 * Tue Jul 25 2023 Nikolay A. Fetisov <naf@altlinux.org> 3.005-alt1
 - New version
 
