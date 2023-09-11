@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Fork of the python-jsonrpc-server project, maintained by the Spyder IDE team and the community
@@ -55,6 +55,9 @@ sed -i '/^addopts/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 11 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.1-alt1
+- Updated to 1.1.1.
+
 * Sat Sep 09 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.0-alt1
 - Updated to 1.1.0.
 
