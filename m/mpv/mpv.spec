@@ -4,7 +4,7 @@
 
 Name: mpv
 Version: 0.36.0
-Release: alt1
+Release: alt1.1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-macros-luajit
 BuildRequires(pre): meson ninja-build
 
 # Automatically added by buildreq on Fri Feb 14 2014
-BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel zlib-devel libva-devel
+BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libjpeg-devel libswscale-devel zlib-devel libva-devel
 
 BuildRequires: libpulseaudio-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel libdvdnav-devel libbluray-devel libavfilter-devel
 
@@ -144,6 +144,10 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Tue Aug 29 2023 L.A. Kostis <lakostis@altlinux.ru> 0.36.0-alt1.1
+- Rebuild w/ new ffmpeg.
+- BR: remove libavresample (obsoleted).
+
 * Thu Jul 27 2023 L.A. Kostis <lakostis@altlinux.ru> 0.36.0-alt1
 - 0.36.0.
 - switch to meson.
