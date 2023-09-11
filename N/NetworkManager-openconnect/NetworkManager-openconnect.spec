@@ -1,15 +1,15 @@
 %define nm_version 1.1.90
 %define nm_applet_version 1.2.0
 %define nm_applet_name NetworkManager-applet-gtk
-
+%def_with gtk4
 %def_without libnm_glib
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-openconnect
-Version: 1.2.8
+Version: 1.2.10
 Release: alt1
-License: %gpl2plus
+License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN integration for openconnect
 
@@ -21,9 +21,9 @@ Patch1: %name-%version-%release.patch
 Requires: NetworkManager-daemon >= %nm_version
 Requires: openconnect
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: pkgconfig(glib-2.0) >= 2.34
+BuildRequires: pkgconfig(glib-2.0) >= 2.34 pkgconfig(gmodule-2.0)
 BuildRequires: libopenconnect-devel >= 3.02
+BuildRequires: pkgconfig(webkit2gtk-4.1)
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel >= %nm_applet_version
 %if_with libnm_glib
@@ -31,7 +31,12 @@ BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
 %endif
-BuildRequires: libgtk+3-devel >= 3.12
+%if_with gtk4
+BuildRequires: libgtk4-devel
+BuildRequires: libnma-gtk4-devel
+%else
+BuildRequires: libgtk+3-devel
+%endif
 BuildRequires: gcr-libs-devel >= 3.4
 BuildRequires: libsecret-devel >= 0.18
 BuildRequires: intltool gettext
@@ -42,10 +47,10 @@ This package contains software for integrating the openconnect VPN software
 with NetworkManager and the GNOME desktop
 
 %package gtk
-License: %gpl2plus
+License: GPLv2+
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
-Requires: %nm_applet_name >= %version
+Requires: %nm_applet_name >= %nm_applet_version
 Requires: NetworkManager-openconnect = %version-%release
 
 Obsoletes: %name-gnome < 0.9.8.4
@@ -54,6 +59,17 @@ Provides: %name-gnome = %version-%release
 %description gtk
 This package contains applications for use with
 NetworkManager panel applet.
+
+%package gtk4
+License: GPLv2+
+Summary: Applications for use %name with %nm_applet_name
+Group: Graphical desktop/GNOME
+Requires: %nm_applet_name >= %nm_applet_version
+Requires: NetworkManager-openconnect = %version-%release
+
+%description gtk4
+This package contains applications for use with
+NetworkManager panel applet build with gtk4.
 
 %prep
 %setup
@@ -66,17 +82,26 @@ NetworkManager panel applet.
     --libexecdir=%_libexecdir/NetworkManager \
     --localstatedir=%_var \
 %if_without libnm_glib
-	--without-libnm-glib \
+    --without-libnm-glib \
 %endif
+    %{subst_with gtk4} \
+    --disable-silent-rules \
     --enable-more-warnings=error
 
 %make_build
 
 %install
 %makeinstall_std
+install -d -m 0750 %buildroot%_sharedstatedir/nm-openconnect
 %find_lang %name
 
-%files
+%pre
+groupadd -r -f nm-openconnect 2>/dev/null ||:
+useradd  -r -s /sbin/nologin -d %_sharedstatedir/nm-openconnect -M \
+         -c 'NetworkManager user for OpenConnect' \
+         -g nm-openconnect nm-openconnect 2>/dev/null ||:
+
+%files -f %name.lang
 %doc AUTHORS ChangeLog COPYING
 %_libdir/NetworkManager/libnm-vpn-plugin-openconnect.so
 %_datadir/dbus-1/system.d/nm-openconnect-service.conf
@@ -86,8 +111,9 @@ NetworkManager panel applet.
 %config %_sysconfdir/NetworkManager/VPN/nm-openconnect-service.name
 %endif
 %config %_libexecdir/NetworkManager/VPN/nm-openconnect-service.name
+%attr(0770,nm-openconnect,nm-openconnect) %dir %_sharedstatedir/nm-openconnect
 
-%files gtk -f %name.lang
+%files gtk
 %if_with libnm_glib
 %_libdir/NetworkManager/libnm-openconnect-properties.so
 %endif
@@ -95,9 +121,19 @@ NetworkManager panel applet.
 %_libdir/NetworkManager/libnm-vpn-plugin-openconnect-editor.so
 %_datadir/metainfo/network-manager-openconnect.metainfo.xml
 
+%if_with gtk4
+%files gtk4
+%_libdir/NetworkManager/libnm-gtk4-vpn-plugin-openconnect-editor.so
+%endif
+
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Mon Sep 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.2.10-alt1
+- New version 1.2.10.
+- Add gtk4 package.
+- Add nm-openconnect user in %%pre (ALT#47321).
+
 * Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.8-alt1
 - new version 1.2.8
 
