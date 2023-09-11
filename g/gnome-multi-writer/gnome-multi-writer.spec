@@ -6,7 +6,7 @@
 
 Name: gnome-multi-writer
 Version: %ver_major.90
-Release: alt1
+Release: alt2
 
 Summary: Write an ISO file to multiple USB devices at once
 Group: Archiving/Backup
@@ -61,6 +61,9 @@ USB devices simultaneously.
 
 
 %changelog
+* Mon Sep 11 2023 Yuri N. Sedunov <aris@altlinux.org> 3.35.90-alt2
+- updated to GNOME_MULTI_WRITER_3_35_90-26-g6a6d4d9
+
 * Mon Apr 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.35.90-alt1
 - updated to GNOME_MULTI_WRITER_3_35_90-2-g5d034af
 
