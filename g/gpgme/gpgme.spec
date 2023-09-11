@@ -17,8 +17,8 @@
 %add_python_req_skip _gpgme
 
 Name: gpgme
-Version: 1.21.0
-Release: alt1
+Version: 1.22.0
+Release: alt2
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -32,7 +32,7 @@ Requires: %gpg_bin_path
 Source: gpgme-%version.tar
 
 # Upstream patches
-# (no one so far)
+Patch1: gpgme-1.22.0-fix-build-in-source-directory.patch
 
 # Suse
 Patch2: gpgme-D545-python310.patch
@@ -152,6 +152,7 @@ GPGME-based statically linked applications.
 %prep
 %setup
 
+%patch1 -p1
 %patch2 -p1
 %patch11 -p1
 %patch15 -p2
@@ -237,6 +238,12 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Mon Sep 11 2023 Paul Wolneykien <manowar@altlinux.org> 1.22.0-alt2
+- Fix build in source directory (patch).
+
+* Mon Sep 11 2023 Paul Wolneykien <manowar@altlinux.org> 1.22.0-alt1
+- New version 1.22.0.
+
 * Sun Jul 09 2023 Cronbuild Service <cronbuild@altlinux.org> 1.21.0-alt1
 - New version 1.21.0.
 
