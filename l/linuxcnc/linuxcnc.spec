@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.0
-Release: alt0.9.20230413
+Release: alt0.10.20230910
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -15,11 +15,7 @@ Url: https://github.com/LinuxCNC/linuxcnc
 ExclusiveArch: aarch64 alpha %arm ia64 %ix86 x86_64 %e2k
 
 Source: %name-%version.tar
-Patch1: fix-dir-path.patch
-Patch6: qtvcp_import_fix.patch
-Patch7: not_require_dpkg.patch
-# https://lists.altlinux.org/pipermail/devel/2023-April/217491.html
-Patch8: linuxcnc-2.9-clear__FORTIFY_SOURCE.patch
+Patch: %name-%version-%release.patch
 Buildrequires(pre): rpm-build-tcl rpm-build-python3
 Buildrequires: rpm-build-gir
 Buildrequires: python3-devel
@@ -81,7 +77,7 @@ LinuxCNC is software that runs on Linux, on most standard PCs, that can
 interpret G-code and run a CNC machine. It was originally developed on a
 milling machine, but support was added for lathes and many other types of
 machine. It can be used with mills, lathes, plasma cutters, routers, robots,
-and so on. 
+and so on.
 
 %description -l ru_RU.UTF-8
 LinuxCNC это программа, которая работает на ОС Linux на большинстве стандартных
@@ -187,7 +183,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 cat>%buildroot%_desktopdir/%name-documentation.desktop<<END
 [Desktop Entry]
 Name=LinuxCNC Documentation
-Name[ru_RU]=LinuxCNC Документация 
+Name[ru_RU]=LinuxCNC Документация
 Exec=%_bindir/xdg-open %_docdir/%name
 Icon=linuxcncicon
 Terminal=false
@@ -243,6 +239,10 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Mon Sep 11 2023 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.10.20230910
+- new snapshot
+- generate patch using git diff instead of individual patches
+
 * Mon Jul 31 2023 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.9.20230413
 - replace unavailable GROUP "plugdev" with "uucp" in udev rules
 
@@ -341,7 +341,7 @@ rm %buildroot%_libdir/*.a
 
 * Wed Aug 30 2017 Anton Midyukov <antohami@altlinux.org> 2.7.11-alt1
 - New version 2.7.11
-- Added missing requires 
+- Added missing requires
 
 * Sun Jul 30 2017 Anton Midyukov <antohami@altlinux.org> 2.7.10-alt2
 - Fix desktop categories.
