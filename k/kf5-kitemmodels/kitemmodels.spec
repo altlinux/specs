@@ -5,7 +5,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.109.0
+Version: 5.110.0
 Release: alt1
 %K5init altplace
 
@@ -108,6 +108,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K5qml/org/kde/kitemmodels/
 
 %changelog
+* Mon Sep 11 2023 Sergey V Turchin <zerg@altlinux.org> 5.110.0-alt1
+- new version
+
 * Thu Aug 31 2023 Sergey V Turchin <zerg@altlinux.org> 5.109.0-alt1
 - new version
 
