@@ -5,7 +5,7 @@
 
 Name:    python3-module-%oname
 Version: 0.57.1
-Release: alt1
+Release: alt2
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
@@ -19,6 +19,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libgomp-devel libnumpy-py3-devel
 
 Source:  %name-%version.tar
+
+Patch: numba-0.57.1-add-numpy-1.25-support.patch
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/pycc_distutils_usecase/
 
@@ -34,6 +36,7 @@ C callbacks.
 
 %prep
 %setup
+%patch -p1
 sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
 %ifarch %e2k
@@ -63,6 +66,9 @@ popd
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 0.57.1-alt2
+- Fixed build with numpy 1.25.
+
 * Mon Jul 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.57.1-alt1
 - Automatically updated to 0.57.1.
 
