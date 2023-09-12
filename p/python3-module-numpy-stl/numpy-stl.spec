@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
 Summary: Library to make reading, writing and modifying both binary and ascii STL files easy
 License: BSD
@@ -21,7 +21,9 @@ BuildRequires: python3-module-matplotlib
 BuildRequires: python3-module-python_utils
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-docutils python3-module-sphinx
+BuildRequires: python3-module-docutils
+BuildRequires: python3-module-sphinx
+BuildRequires: xvfb-run
 
 %py3_provides stl
 
@@ -47,6 +49,7 @@ sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 %make -C docs html
 
 %check
+export PYTHONPATH=%buildroot%python3_sitelibdir
 sed -i '/--flake8/d' pytest.ini
 py.test-3 -v
 
@@ -57,6 +60,9 @@ py.test-3 -v
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
+- Fixed FTBFS.
+
 * Thu Mar 16 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Automatically updated to 3.0.1.
 
