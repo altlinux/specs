@@ -1,7 +1,7 @@
 %def_with docs
 Name: python3-module-slixmpp
 Version: 1.7.1
-Release: alt1
+Release: alt2
 Group: Development/Python3
 License: BSD
 Url: https://dev.louiz.org/projects/slixmpp
@@ -39,7 +39,7 @@ threads.
 %python3_build
 
 %if_with docs
-python3 setup.py build_sphinx
+sphinx-build-3 docs html
 %endif
 
 %install
@@ -51,11 +51,14 @@ python3 setup.py test
 %files
 %doc README.rst
 %if_with docs
-%doc build/sphinx/html
+%doc html
 %endif
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt2
+- Fixed FTBFS.
+
 * Tue Feb 08 2022 Fr. Br. George <george@altlinux.ru> 1.7.1-alt1
 - Autobuild version bump to 1.7.1
 
