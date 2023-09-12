@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: HTTP traffic mocking and testing made easy in Python
 
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-python3
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-aiohttp
 BuildRequires: python3-module-furl
 BuildRequires: python3-module-xmltodict
 BuildRequires: python3-module-jsonschema
@@ -54,6 +55,9 @@ py.test-3 -v -k 'not test_engines'
 %doc LICENSE *.rst
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt2
+- Fixed FTBFS.
+
 * Fri Jan 13 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt1
 - Automatically updated to 1.1.1.
 
