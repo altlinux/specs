@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lapce
-Version: 0.2.7
-Release: alt3
+Version: 0.2.8
+Release: alt1
 
 Summary: Lightning-fast and Powerful Code Editor written in Rust
 License: Apache-2.0
@@ -10,7 +10,8 @@ Group: Development/Other
 Url: https://lapce.dev
 Vcs: https://github.com/lapce/lapce
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: config.toml
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires(pre): /proc
@@ -53,8 +54,8 @@ Requires: rust-src
 
 %prep
 %setup
-mkdir .cargo
-cp {.gear,.cargo}/config.toml
+
+install -D %SOURCE1 .cargo/config.toml
 
 # fix path to lapce.svg icon
 sed -i '/Icon=/s/=.*/=%name/' extra/linux/dev.lapce.lapce.desktop
@@ -63,6 +64,8 @@ sed -i '/Icon=/s/=.*/=%name/' extra/linux/dev.lapce.lapce.desktop
 echo "export RUST_SRC_PATH=%_libdir/rustlib/src/rust/library" > lapce-rust.sh
 
 %build
+export RELEASE_TAG_NAME="v%version"
+export CARGO_PKG_VERSION="%version"
 %rust_build
 
 %install
@@ -92,6 +95,9 @@ echo "export RUST_SRC_PATH=%_libdir/rustlib/src/rust/library" > lapce-rust.sh
 %config(noreplace) %_sysconfdir/profile.d/lapce-rust.sh
 
 %changelog
+* Tue Sep 12 2023 Anton Zhukharev <ancieg@altlinux.org> 0.2.8-alt1
+- Updated to 0.2.8.
+
 * Wed May 31 2023 Anton Zhukharev <ancieg@altlinux.org> 0.2.7-alt3
 - Separated lapce-rust for Rust developemnt (ALT 46242).
 
