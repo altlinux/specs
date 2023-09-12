@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 2.1.3
-Release: alt1
+Release: alt2
 
 Summary: URL parsing and manipulation made easy
 
@@ -26,11 +26,14 @@ BuildArch: noarch
 
 Source:  %name-%version.tar
 
+Patch: furl-2.1.3-use-ipadress-library.patch
+
 %description
 %summary
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -48,6 +51,9 @@ py.test-3
 %doc *.md
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.3-alt2
+- Fixed FTBFS.
+
 * Fri Sep 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.3-alt1
 - Automatically updated to 2.1.3.
 
