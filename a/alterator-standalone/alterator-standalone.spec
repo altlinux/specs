@@ -1,5 +1,5 @@
 Name: alterator-standalone
-Version: 7.4.1
+Version: 7.4.2
 Release: alt1
 
 Summary: System Management center
@@ -80,6 +80,9 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %_bindir/*
 
 %changelog
+* Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 7.4.2-alt1
+- update KDE search keywords in desktop-file (closes: 47532)
+
 * Mon Sep 04 2023 Sergey V Turchin <zerg@altlinux.org> 7.4.1-alt1
 - add KDE search keywords to desktop-file
 
