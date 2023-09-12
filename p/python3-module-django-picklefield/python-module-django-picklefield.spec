@@ -3,11 +3,12 @@
 %define module_name django-picklefield
 
 Name: python3-module-%module_name
-Version: 2.0.0
+Version: 3.1.0
 Release: alt1
 
 Summary: django-picklefield provides an implementation of a pickled object field
-License: BSD License
+
+License: MIT
 Group: Development/Python3
 URL: http://github.com/gintas/django-picklefield.git
 
@@ -16,6 +17,7 @@ Source0: %name-%version.tar.gz
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-django
 
+BuildArch: noarch
 
 %description
 django-picklefield provides an implementation of a pickled object field.
@@ -30,17 +32,15 @@ Such fields can contain any picklable objects.
 %install
 %python3_install
 
-%if "%_target_libdir_noarch" != "%_libdir"
-mv %buildroot%_target_libdir_noarch %buildroot%_libdir
-%endif
-
 %files
-%doc README.rst PKG-INFO
+%doc LICENSE README.rst
 %python3_sitelibdir/django_picklefield*
 %python3_sitelibdir/picklefield*
 
-
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Wed Dec 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt1
 - Version updated to 2.0.0
 - build for python2 disabled
