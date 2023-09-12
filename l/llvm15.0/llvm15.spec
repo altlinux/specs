@@ -79,7 +79,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4
+Release: alt5
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -133,7 +133,7 @@ BuildRequires: pkgconfig(ncursesw)
 BuildRequires: pkgconfig(libxml-2.0)
 #BuildRequires: pkgconfig(lua)
 BuildRequires: swig-devel
-BuildRequires: python3-module-sphinx-automodapi
+BuildRequires: python3-module-sphinx-automodapi python3-module-six
 %if_with lldb_python
 BuildRequires: python3-devel
 %endif
@@ -1194,6 +1194,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Tue Sep 12 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt5
+- Fix FTBFS: add missing six module (yes upstream #D131304
+  fixes this, but this change is too big).
+
 * Mon Jun 19 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt4
 - ppc64le: fix macro and build with clang.
 - clang: extend rocm device libs lookup path.
