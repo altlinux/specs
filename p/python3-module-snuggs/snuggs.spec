@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.4.7
-Release: alt1
+Release: alt2
 Summary: Snuggs are s-expressions for Numpy
 License: MIT
 Group: Development/Python3
@@ -13,6 +13,7 @@ Url: https://pypi.python.org/pypi/snuggs
 
 # https://github.com/mapbox/snuggs.git
 Source: %name-%version.tar
+Patch: snuggs-fix-test-failures.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -29,6 +30,7 @@ Snuggs are s-expressions for Numpy.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build_debug
@@ -46,6 +48,9 @@ py.test3 -vv
 %python3_sitelibdir/%oname/__pycache__/__init__.cpython-*.py*
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.4.7-alt2
+- Fixed FTBFS.
+
 * Fri Sep 04 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.7-alt1
 - Automatically updated to 1.4.7.
 
