@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define llvm_ver_major 16.0
-%define git 39969a5c
+%define git 322fca5d
 
 # FIXME!
 %define optflags_lto %nil
 
 Name:    LLVMSPIRVLib
 Version: 16.0.0
-Release: alt2.g%{git}
+Release: alt4.g%{git}
 Summary: A tool and a library for bi-directional translation between SPIR-V and LLVM IR
 Group:   Development/C++
 License: MIT
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): cmake
-BuildRequires: llvm%{llvm_ver_major}-devel mlir%{llvm_ver_major}-tools gcc-c++ libstdc++-devel zlib-devel
+BuildRequires: llvm%{llvm_ver_major}-devel mlir%{llvm_ver_major}-tools libmlir%{llvm_ver_major}-devel libpolly%{llvm_ver_major}-devel gcc-c++ libstdc++-devel zlib-devel
 BuildRequires: libspirv-tools-devel spirv-headers
 
 %description
@@ -86,6 +86,12 @@ command line utility for translating between LLVM bitcode and SPIR-V binary.
 %_bindir/llvm-spirv
 
 %changelog
+* Wed Sep 06 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.0-alt4.g322fca5d
+- GIT 322fca5d.
+
+* Mon Jul 31 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.0-alt3.g44eda7be
+- GIT 44eda7be from llvm_release_160 branch.
+
 * Sun Jun 11 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.0-alt2.g39969a5c
 - Built as spirv-llvm-translator replacement.
 - Enable shared libs/disable static build.
