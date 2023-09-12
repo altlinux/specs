@@ -7,6 +7,8 @@
 %def_without libdpdk
 %endif
 %def_with libgps
+%def_with libudev
+%def_with libatasmart
 %def_enable apache
 %def_enable bind
 %def_enable cgi
@@ -14,10 +16,10 @@
 %def_enable dbi
 %def_enable ipmi
 %def_enable virt
-%def_enable memcached
+%def_with libmemcached
 %def_disable modbus
 %def_enable mysql
-%def_disable netlink
+%def_enable netlink
 %def_enable nginx
 %def_enable notify_desktop
 %def_enable notify_email
@@ -31,12 +33,20 @@
 %def_enable snmp
 %def_enable tokyotyrant
 %def_disable xmms
-
+%def_enable amqp
+%def_enable write_http
+%def_enable write_kafka
+%def_enable write_mongodb
+%def_enable write_prometheus
+%def_enable write_redis
+%def_enable write_sensu
+%def_enable write_syslog
+%def_enable write_tsdb
 %def_disable static
 
 Name: collectd
 Version: 5.12.0
-Release: alt3
+Release: alt4
 
 Summary: (Multi-)System statistics collection
 License: GPLv2 AND MIT
@@ -51,6 +61,9 @@ Patch0: %name-%version-alt.patch
 #BuildRequires: flex gcc-c++ iptables-devel libMySQL-devel libcurl-devel libdbi-devel libesmtp-devel libgcrypt-devel libnet-snmp-devel libnetlink-devel libnotify-devel liboping-devel libpcap-devel librrd-devel libsensors-devel libvirt-devel libxfs-devel libxml2-devel libxmms-devel nut-devel perl-devel perl-threads perl-Regexp-Common postgresql-devel
 BuildRequires: flex gcc-c++ iptables-devel libgcrypt-devel libpcap-devel libxfs-devel
 BuildRequires: libstatgrab-devel
+BuildRequires: libyajl-devel
+%{?_with_libudev:BuildRequires: libudev-devel}
+%{?_with_libatasmart:BuildRequires: libatasmart-devel}
 
 %if_enabled perl
 BuildRequires: perl-devel perl-threads perl-Regexp-Common perl-Pod-Parser perl-RRD
@@ -64,6 +77,25 @@ BuildRequires: perl-devel perl-threads perl-Regexp-Common perl-Pod-Parser perl-R
 
 %define libname lib%{name}client
 %define nginxdir %_sysconfdir/nginx/sites-enabled.d
+
+# Provides plugins in main packages for FC compat
+Provides: %name-chrony = %EVR
+Provides: %name-disk = %EVR
+Provides: %name-dns = %EVR
+Provides: %name-drbd = %EVR
+Provides: %name-email = %EVR
+Provides: %name-hugepages = %EVR
+Provides: %name-infiniband = %EVR
+Provides: %name-iptables = %EVR
+Provides: %name-ipvs = %EVR
+Provides: %name-mcelog = %EVR
+Provides: %name-mdevents = %EVR
+Provides: %name-openldap = %EVR
+Provides: %name-ovs_events = %EVR
+Provides: %name-ovs_stats = %EVR
+Provides: %name-snmp_agent = %EVR
+Provides: %name-synproxy = %EVR
+Provides: %name-zookeeper = %EVR
 
 %description
 collectd is a small program written in C for performance. It reads various
@@ -89,7 +121,7 @@ This package contains shared library for %name clients.
 %package -n %libname-devel
 Summary: Library headers to build %name clients
 Group: Development/C
-Requires: %libname = %version-%release
+Requires: %libname = %EVR
 
 %description -n %libname-devel
 This package contains development part of %libname.
@@ -121,6 +153,7 @@ Group: Monitoring
 BuildArch: noarch
 %{?_with_libgps:Requires: %name-gps}
 %{?_enable_apache:Requires: %name-apache}
+%{?_enable_amqp:Requires: %name-amqp}
 %{?_enable_bind:Requires: %name-bind}
 %{?_enable_cgi:Requires: %name-cgi}
 %{?_enable_curl:Requires: %name-curl}
@@ -141,6 +174,14 @@ BuildArch: noarch
 %{?_enable_snmp:Requires: %name-snmp}
 %{?_enable_tokyotyrant:Requires: %name-tokyotyrant}
 %{?_enable_xmms:Requires: %name-xmms}
+%{?_enable_write_http:Requires: %name-write_http}
+%{?_enable_write_kafka:Requires: %name-write_kafka}
+%{?_enable_write_mongodb:Requires: %name-write_mongodb}
+%{?_enable_write_prometheus:Requires: %name-write_prometheus}
+%{?_enable_write_redis:Requires: %name-write_redis}
+%{?_enable_write_sensu:Requires: %name-write_sensu}
+%{?_enable_write_syslog:Requires: %name-write_syslog}
+%{?_enable_write_tsdb:Requires: %name-write_tsdb}
 
 %description full
 This package pulls in all the different plugins and might
@@ -170,7 +211,7 @@ This plugin provides GPS support for collectd
 %package apache
 Summary: apache2 support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires(pre): apache2-devel
 BuildRequires(pre): rpm-macros-apache2
 
@@ -182,7 +223,7 @@ This plugin provides apache 2.x support for collectd
 %package bind
 Summary: ISC BIND support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires: libcurl-devel libxml2-devel
 
 %description bind
@@ -193,7 +234,7 @@ This plugin provides ISC BIND support for collectd
 %package cgi
 Summary: CGI script for collectd
 Group: Monitoring
-Requires: collectd = %version
+Requires: collectd = %EVR
 Requires: webserver-common perl-RRD perl-HTML-Parser
 BuildRequires: perl-CGI
 BuildRequires(pre): apache2-devel
@@ -208,7 +249,7 @@ check out http://localhost/cgi-bin/%name/collection.cgi
 %package cgi-apache2
 Summary: CGI script for collectd (apache2 config and glue)
 Group: Monitoring
-Requires: collectd-cgi = %version
+Requires: collectd-cgi = %EVR
 Requires: apache2-base apache2-cgi-bin
 BuildArch: noarch
 
@@ -223,7 +264,7 @@ including access restrictions to be imposed.
 %package cgi-nginx
 Summary: CGI script for collectd (nginx config and glue)
 Group: Monitoring
-Requires: collectd-cgi = %version
+Requires: collectd-cgi = %EVR
 Requires: nginx fcgiwrap spawn-fcgi
 BuildArch: noarch
 
@@ -242,8 +283,8 @@ NB: this reconfigures spawn-fcgi and sets it to autostart!
 %package curl
 Summary: CURL support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
-BuildRequires: libcurl-devel
+Requires: %name = %EVR
+BuildRequires: libcurl-devel libyajl-devel libxml2-devel
 
 %description curl
 This plugin provides CURL (proxy, etc) support for collectd
@@ -253,7 +294,7 @@ This plugin provides CURL (proxy, etc) support for collectd
 %package dbi
 Summary: DBI support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires: libdbi-devel
 
 %description dbi
@@ -264,7 +305,7 @@ This plugin provides DBI support for collectd
 %package ipmi
 Summary: IPMI support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 Requires: libopenipmi
 BuildRequires: libopenipmi-devel
 
@@ -276,20 +317,21 @@ This plugin provides ipmi support for collectd
 %package virt
 Summary: virt support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires: libvirt-devel libxml2-devel
-Provides: %name-libvirt = %version
-Obsoletes: %name-libvirt < %version
+Provides: %name-libvirt = %EVR
+Obsoletes: %name-libvirt < %EVR
 
 %description virt
 This plugin provides virtual machines support for collectd
 %endif
 
-%if_enabled memcached
+%if_with libmemcached
 %package memcached
 Summary: memcached support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
+Provides: %name-memcachec = %EVR
 BuildRequires: libmemcached-devel
 
 %description memcached
@@ -302,7 +344,7 @@ http://collectd.org/wiki/index.php/Plugin:memcachec
 %package modbus
 Summary: ModBus support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 # libmodbus-2.9.3+ is going to be supported when a stable version
 # is available, 2.0.3 should get fixed with 4.10.3:
 # http://www.mail-archive.com/collectd@verplant.org/msg01126.html
@@ -316,7 +358,7 @@ This plugin provides ModBus support for collectd
 %package mysql
 Summary: MySQL support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires: libMySQL-devel
 
 %description mysql
@@ -327,8 +369,8 @@ This plugin provides MySQL server support for collectd
 %package netlink
 Summary: netlink support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
-BuildRequires: libnetlink-devel
+Requires: %name = %EVR
+BuildRequires: libmnl-devel
 
 %description netlink
 This plugin provides netlink support for collectd
@@ -338,7 +380,7 @@ This plugin provides netlink support for collectd
 %package nginx
 Summary: nginx support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires: libcurl-devel
 
 %description nginx
@@ -349,7 +391,7 @@ This plugin provides nginx support for collectd
 %package notify_desktop
 Summary: desktop notification support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires: libnotify-devel
 
 %description notify_desktop
@@ -360,7 +402,7 @@ This plugin provides desktop notification support for collectd
 %package notify_email
 Summary: email notification support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires: libesmtp-devel
 
 %description notify_email
@@ -371,7 +413,7 @@ This plugin provides email notification support for collectd
 %package nut
 Summary: Network UPS Tools support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 Requires: libnut
 BuildRequires: libupsclient-devel
 
@@ -383,7 +425,7 @@ This plugin provides UPS support for collectd (with NUT)
 %package rrdcached
 Summary: RRDCacheD support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires: librrd-devel >= 1.4
 
 %description rrdcached
@@ -395,7 +437,7 @@ This plugin provides RRDCacheD support for collectd
 %package rrdtool
 Summary: rrdtool support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 Requires: rrdtool
 BuildRequires: librrd-devel
 
@@ -407,7 +449,7 @@ This plugin provides RRD Tool support for collectd
 %package ping
 Summary: ICMP support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires: liboping-devel
 
 %description ping
@@ -418,7 +460,7 @@ This plugin provides ICMP (ping check) support for collectd
 %package postgresql
 Summary: PostgreSQL support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires: postgresql-devel
 
 %description postgresql
@@ -429,7 +471,7 @@ This plugin provides PostgreSQL support for collectd
 %package sensors
 Summary: lm_sensors support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 Requires: lm_sensors3
 BuildRequires: libsensors3-devel >= 3.1.0-alt4
 
@@ -441,7 +483,7 @@ This plugin provides sensors support for collectd (with lm_sensors)
 %package snmp
 Summary: SNMP support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 Requires: libnet-snmp
 BuildRequires: libnet-snmp-devel net-snmp-common
 
@@ -453,7 +495,7 @@ This plugin provides SNMP support for collectd
 %package tokyotyrant
 Summary: Tokyo Tyrant support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 BuildRequires: libtokyotyrant-devel
 
 %description tokyotyrant
@@ -464,12 +506,24 @@ This plugin provides Tokyo Tyrant support for collectd
 %package xmms
 Summary: XMMS support module for collectd
 Group: Monitoring
-Requires: collectd = %version-%release
+Requires: %name = %EVR
 Requires: libxmms
 BuildRequires: libxmms-devel
 
 %description xmms
 This plugin provides XMMS support for collectd
+%endif
+
+%if_enabled amqp
+%package amqp
+Summary: AMQP plugin for collectd
+Group: Monitoring
+Requires: %name = %EVR
+BuildRequires: librabbitmq-c-devel
+
+%description amqp
+This plugin can be used to communicate with other instances of collectd
+or third party applications using an AMQP message broker.
 %endif
 
 %package -n nagios-plugins-%name
@@ -480,6 +534,93 @@ Requires: nagios-common
 %description -n nagios-plugins-%name
 This Nagios plugin provides possibility to feed statistics
 from collectd into nagios to avoid extra sensor-caused load
+
+%if_enabled write_http
+%package write_http
+Summary: HTTP output plugin for collectd
+Group: Monitoring
+Requires: %name = %EVR
+BuildRequires: libcurl-devel
+
+%description write_http
+This plugin can send data to Redis.
+%endif
+
+%if_enabled write_kafka
+%package write_kafka
+Summary: Kafka output plugin for collectd
+Group: Monitoring
+Requires: %name = %EVR
+BuildRequires: librdkafka-devel
+
+%description write_kafka
+This sends values to Kafka, a distributed messaging system.
+%endif
+
+%if_enabled write_mongodb
+%package write_mongodb
+Summary: MongoDB output plugin for collectd
+Group: Monitoring
+Requires: %name = %EVR
+BuildRequires: libmongoc-devel
+
+%description write_mongodb
+This plugin sends values to MongoDB.
+%endif
+
+%if_enabled write_prometheus
+%package write_prometheus
+Summary: Prometheus output plugin for collectd
+Group: Monitoring
+Requires: %name = %EVR
+BuildRequires: libmicrohttpd-devel protobuf-c-compiler libprotobuf-c-devel
+
+%description write_prometheus
+This plugin exposes collected values using an embedded HTTP
+server, turning the collectd daemon into a Prometheus exporter.
+%endif
+
+%if_enabled write_redis
+%package write_redis
+Summary: Redis output plugin for collectd
+Group: Monitoring
+Requires: %name = %EVR
+BuildRequires: libhiredis-devel
+
+%description write_redis
+This plugin can send data to Redis.
+%endif
+
+%if_enabled write_sensu
+%package write_sensu
+Summary: Sensu output plugin for collectd
+Group: Monitoring
+Requires: %name = %EVR
+
+%description write_sensu
+This plugin can send data to Sensu.
+%endif
+
+%if_enabled write_syslog
+%package write_syslog
+Summary: syslog output plugin for collectd
+Group: Monitoring
+Requires: %name = %EVR
+Provides: %name-write-syslog = %EVR
+
+%description write_syslog
+This plugin can send data to syslog.
+%endif
+
+%if_enabled write_tsdb
+%package write_tsdb
+Summary: OpenTSDB output plugin for collectd
+Group: Monitoring
+Requires: %name = %EVR
+
+%description write_tsdb
+This plugin can send data to OpenTSDB.
+%endif
 
 %prep
 %setup
@@ -504,16 +645,14 @@ mkdir libltdl
 	--without-java \
 	--disable-debug \
 	%{subst_with libdpdk} \
+	%{subst_with libudev} \
 	%{subst_with libgps} \
 	%{subst_enable apache} \
 	%{subst_enable curl} \
 	%{subst_enable dbi} \
 	%{subst_enable ipmi} \
 	%{subst_enable virt} \
-	%if_enabled memcached
-	--enable-memcachec \
-	%endif
-	%{subst_enable memcached} \
+	%{subst_with libmemcached} \
 	%{subst_enable modbus} \
 	%{subst_enable mysql} \
 	%{subst_enable netlink} \
@@ -609,7 +748,7 @@ service %name condrestart ||:
 service %name condrestart ||:
 
 %files
-%doc AUTHORS ChangeLog README ChangeLog
+%doc AUTHORS ChangeLog README
 %doc contrib/
 %config(noreplace) %_sysconfdir/%name.conf
 %_initdir/%name
@@ -623,16 +762,19 @@ service %name condrestart ||:
 %dir %_localstatedir/%name/
 %dir %_libdir/%name/
 %_libdir/%name/*.so
+%{?_enable_amqp:%exclude %_libdir/%name/amqp.so}
 %{?_with_libdpdk:%exclude %_libdir/%name/dpdk*.so}
 %{?_with_libgps:%exclude %_libdir/%name/gps.so}
 %{?_enable_apache:%exclude %_libdir/%name/apache.so}
 %{?_enable_bind:%exclude %_libdir/%name/bind.so}
 %{?_enable_curl:%exclude %_libdir/%name/curl.so}
+%{?_enable_curl:%exclude %_libdir/%name/curl_json.so}
+%{?_enable_curl:%exclude %_libdir/%name/curl_xml.so}
 %{?_enable_dbi:%exclude %_libdir/%name/dbi.so}
 %{?_enable_ipmi:%exclude %_libdir/%name/ipmi.so}
 %{?_enable_virt:%exclude %_libdir/%name/virt.so}
-%{?_enable_memcached:%exclude %_libdir/%name/memcachec.so}
-%{?_enable_memcached:%exclude %_libdir/%name/memcached.so}
+%{?_with_libmemcached:%exclude %_libdir/%name/memcachec.so}
+%{?_with_libmemcached:%exclude %_libdir/%name/memcached.so}
 %{?_enable_modbus:%exclude %_libdir/%name/modbus.so}
 %{?_enable_mysql:%exclude %_libdir/%name/mysql.so}
 %{?_enable_netlink:%exclude %_libdir/%name/netlink.so}
@@ -648,6 +790,15 @@ service %name condrestart ||:
 %{?_enable_snmp:%exclude %_libdir/%name/snmp.so}
 %{?_enable_tokyotyrant:%exclude %_libdir/%name/tokyotyrant.so}
 %{?_enable_xmms:%exclude %_libdir/%name/xmms.so}
+%{?_enable_write_http:%exclude %_libdir/%name/write_http.so}
+%{?_enable_write_kafka:%exclude %_libdir/%name/write_kafka.so}
+%{?_enable_write_mongodb:%exclude %_libdir/%name/write_mongodb.so}
+%{?_enable_write_prometheus:%exclude %_libdir/%name/write_prometheus.so}
+%{?_enable_write_redis:%exclude %_libdir/%name/write_redis.so}
+%{?_enable_write_sensu:%exclude %_libdir/%name/write_sensu.so}
+%{?_enable_write_syslog:%exclude %_libdir/%name/write_syslog.so}
+%{?_enable_write_tsdb:%exclude %_libdir/%name/write_tsdb.so}
+
 %_unitdir/collectd.service
 
 %files -n %libname
@@ -705,6 +856,8 @@ service %name condrestart ||:
 %if_enabled curl
 %files curl
 %_libdir/%name/curl.so
+%_libdir/%name/curl_json.so
+%_libdir/%name/curl_xml.so
 %endif
 
 %if_enabled dbi
@@ -722,7 +875,7 @@ service %name condrestart ||:
 %_libdir/%name/virt.so
 %endif
 
-%if_enabled memcached
+%if_with libmemcached
 %files memcached
 %_libdir/%name/memcachec.so
 %_libdir/%name/memcached.so
@@ -804,6 +957,11 @@ service %name condrestart ||:
 %_libdir/%name/xmms.so
 %endif
 
+%if_enabled amqp
+%files amqp
+%_libdir/%name/amqp.so
+%endif
+
 %files cluster
 
 %files full
@@ -811,14 +969,62 @@ service %name condrestart ||:
 %files -n nagios-plugins-%name
 %_bindir/collectd-nagios
 
+%if_enabled write_http
+%files write_http
+%_libdir/%name/write_http.so
+%endif
+
+%if_enabled write_kafka
+%files write_kafka
+%_libdir/%name/write_kafka.so
+%endif
+
+%if_enabled write_mongodb
+%files write_mongodb
+%_libdir/%name/write_mongodb.so
+%endif
+
+%if_enabled write_prometheus
+%files write_prometheus
+%_libdir/%name/write_prometheus.so
+%endif
+
+%if_enabled write_redis
+%files write_redis
+%_libdir/%name/write_redis.so
+%endif
+
+%if_enabled write_sensu
+%files write_sensu
+%_libdir/%name/write_sensu.so
+%endif
+ 
+%if_enabled write_syslog
+%files write_syslog
+%_libdir/%name/write_syslog.so
+%endif
+ 
+%if_enabled write_tsdb
+%files write_tsdb
+%_libdir/%name/write_tsdb.so
+%endif
+
 # TODO:
 # - reenable netlink plugin
 # - consider building with: libiokit, liboconfig (system),
 #   libiptc [kernhdrs], libjvm?, libkvm, libcredis,
-#   libnotify, librabbitmq, libvarnish, libyajl, ipvs
+#   libnotify, libvarnish 
 # - macroize repetitive sections
 
 %changelog
+* Tue Sep 12 2023 Alexey Shabalin <shaba@altlinux.org> 5.12.0-alt4
+- Build disk.so plugin with libudev and libatasmart
+- Enable build netlink plugin
+- Build amqp(rabbitmq) plugin
+- Add provides plugins name to main package
+- Build kafka, mongodb, prometheus, redis write plugins
+- Move write plugins to subpackages
+
 * Wed Feb 22 2023 Alexey Shabalin <shaba@altlinux.org> 5.12.0-alt3
 - Backport from main:
   + snmp plugin: Add support for SHA224, SHA256, SHA384 and SHA512
@@ -987,7 +1193,7 @@ service %name condrestart ||:
 * Sat Oct 29 2011 Michael Shigorin <mike@altlinux.org> 5.0.1-alt2
 - CGI fixup:
   + added perl-HTML-Parser to cgi subpackage requires
-  + added %_localstatedir/%name to rrdtool subpackage
+  + added %%_localstatedir/%%name to rrdtool subpackage
   + moved apache2 specific configuration into cgi-apache2
     subpackage, added the remaining expected actions there too
 - rrdtool subpackage will condrestart collectd upon (de)installation
@@ -1187,7 +1393,7 @@ service %name condrestart ||:
 - 4.2.4 (major feature enhancements [over 4.0])
   + built for Daedalus
   + note http://collectd.org/migrate-v3-v4.shtml
-    or wipe %_localstatedir/%name/ clean of collected data
+    or wipe %%_localstatedir/%%name/ clean of collected data
 
 * Tue Aug 14 2007 Michael Shigorin <mike@altlinux.org> 4.0.6-alt1
 - 4.0.6 (major feature enhancements)
@@ -1278,7 +1484,7 @@ service %name condrestart ||:
 - 3.8.2
 - built for Sisyphus
 - sample configuration file taken from contrib/ now
-  *and* moved to %_sysconfdir/%name.conf [3.8.1-1 spec]
+  *and* moved to %%_sysconfdir/%%name.conf [3.8.1-1 spec]
 - I've not got around to make this all work more out-of-box, spec fixes
   are welcome but maybe it's better as is (setup isn't that hard)
 
