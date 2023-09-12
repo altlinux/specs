@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-HTTP-BrowserDetect
-Version: 3.38
+Version: 3.39
 Release: alt1
 
 Summary: determine Web browser from an HTTP user agent string
@@ -54,6 +54,9 @@ sed -e '/List::Util/ s/1\.49/1.46/' -i t/01-detect.t
 %perl_vendor_privlib/HTTP/BrowserDetect*
 
 %changelog
+* Mon Sep 11 2023 Nikolay A. Fetisov <naf@altlinux.org> 3.39-alt1
+- New version
+
 * Tue Jul 25 2023 Nikolay A. Fetisov <naf@altlinux.org> 3.38-alt1
 - New version
 
