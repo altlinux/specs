@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.1
-Release: alt3.git20120312
+Release: alt4.git20120312
 Summary: A dot-accessible dictionary (a la JavaScript objects)
 License: MIT
 Group: Development/Python3
@@ -32,6 +32,7 @@ This package contains test for %oname.
 
 %prep
 %setup
+sed -i 's/rU/r/' setup.py
 
 %build
 %python3_build
@@ -50,6 +51,9 @@ This package contains test for %oname.
 %python3_sitelibdir/*/*/test.*
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt4.git20120312
+- Fixed FTBFS.
+
 * Sun Jul 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt3.git20120312
 - Drop python2 support.
 
