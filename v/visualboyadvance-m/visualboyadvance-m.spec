@@ -1,7 +1,7 @@
 %global shortname vbam
 
 Name: visualboyadvance-m
-Version: 2.1.6
+Version: 2.1.7
 Release: alt1
 
 Summary: Game Boy Advance Emulator
@@ -125,6 +125,9 @@ export NPROCS=1
 
 
 %changelog
+* Tue Sep 12 2023 Ilya Mashkin <oddity@altlinux.ru> 2.1.7-alt1
+- 2.1.7
+
 * Wed Jul 12 2023 Ilya Mashkin <oddity@altlinux.ru> 2.1.6-alt1
 - 2.1.6
 
