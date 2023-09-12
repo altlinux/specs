@@ -7,7 +7,7 @@
 %def_without test
 
 Name: %_name%abiversion
-Version: 5.9.3
+Version: 5.9.4
 Release: alt1
 
 Summary: Tools and servers for the SNMP protocol
@@ -556,6 +556,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 %doc python/README
 
 %changelog
+* Tue Sep 12 2023 Alexey Shabalin <shaba@altlinux.org> 5.9.4-alt1
+- V5-9-patches branch
+
 * Tue Feb 21 2023 Alexey Shabalin <shaba@altlinux.org> 5.9.3-alt1
 - 5.9.3
 - Fixes: CVE-2022-44792, CVE-2022-44793
