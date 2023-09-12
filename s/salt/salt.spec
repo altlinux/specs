@@ -3,7 +3,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 3006.3
-Release: alt1
+Release: alt2
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -253,6 +253,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Tue Sep 12 2023 Andrey Cherepanov <cas@altlinux.org> 3006.3-alt2
+- Added missing CVE-2023-20897 and CVE-2023-20898 for 3006.2.
+
 * Sat Sep 09 2023 Andrey Cherepanov <cas@altlinux.org> 3006.3-alt1
 - New version.
 
