@@ -21,15 +21,16 @@
 %def_disable no_sse2
 %endif
 
-%define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
-%if %is_ffmpeg
-%define qt_ffmpeg_type system-ffmpeg
+%define ffmpeg_ver %{get_version libavformat-devel}
+#define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
+%IF_ver_gteq %ffmpeg_ver 6
+%def_disable system_ffmpeg
 %else
-%define qt_ffmpeg_type %nil
+%def_enable system_ffmpeg
 %endif
 
 Name: qt5-webengine
-Version: 5.15.14
+Version: 5.15.15
 Release: alt1
 
 Group: System/Libraries
@@ -62,6 +63,9 @@ Patch45: chromium-python3.patch
 Patch46: python3.11.patch
 Patch47: system-nspr-prtime.patch
 Patch48: system-icu-utf.patch
+Patch49: system-lcms2.patch
+Patch50: system-openjpeg2.patch
+Patch51: ffmpeg-x86-optimization.patch
 # ALT
 Patch101: alt-pepflashplayer.patch
 Patch102: alt-fix-shrank-by-one-character.patch
@@ -78,14 +82,14 @@ BuildRequires(pre): rpm-macros-qt5 rpm-macros-qt5-webengine qt5-tools
 BuildRequires(pre): libavformat-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: libxkbcommon-devel
-%if %is_ffmpeg
-BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libopus-devel
+%if_enabled system_ffmpeg
+BuildRequires: libavcodec-devel libavutil-devel libavformat-devel
 %endif
-BuildRequires: libvpx-devel
+BuildRequires: libvpx-devel libopus-devel
 BuildRequires: /proc
 BuildRequires: flex libicu-devel libEGL-devel
 BuildRequires: libgio-devel libkrb5-devel
-BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel libminizip-devel libnss-devel
+BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel pkgconfig(libopenjp2) libminizip-devel libnss-devel
 BuildRequires: libharfbuzz-devel fontconfig-devel
 BuildRequires: libdrm-devel gyp libudev-devel libxml2-devel jsoncpp-devel liblcms2-devel
 BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp2-devel
@@ -205,6 +209,9 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch46 -p1
 %patch47 -p1
 %patch48 -p1
+%patch49 -p1
+%patch50 -p1
+%patch51 -p1
 #
 %patch101 -p1
 %patch102 -p1
@@ -321,17 +328,19 @@ pushd %_target_platform
     QMAKE_CFLAGS="$CFLAGS" \
     QMAKE_CXXFLAGS="$CXXFLAGS" \
     QMAKE_LFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-overheads" \
-    CONFIG+="release force_debug_info link_pulseaudio system-opus system-webp %qt_ffmpeg_type proprietary-codecs" \
-    WEBENGINE_CONFIG+=" enable_hevc_demuxing use_spellchecker use_proprietary_codecs" \
-    QMAKE_EXTRA_ARGS+="-webengine-kerberos -webengine-proprietary-codecs -webengine-printing-and-pdf" \
+%ifarch %ix86
+    QMAKE_LFLAGS+=-Wl,-z,notext \
+%endif
+    QMAKE_EXTRA_ARGS+="-proprietary-codecs -feature-webengine-system-libvpx -feature-webengine-system-openjpeg2" \
+    QMAKE_EXTRA_ARGS+="-webengine-jumbo-build 0 -system-opus -system-webp -webengine-kerberos" \
 %if_enabled system_icu
-    CONFIG+="system-icu" \
     QMAKE_EXTRA_ARGS+="-system-webengine-icu" \
 %endif
-%if %is_ffmpeg
+%if_enabled system_ffmpeg
     QMAKE_EXTRA_ARGS+="-system-webengine-ffmpeg" \
 %endif
     ..
+#	 QMAKE_EXTRA_ARGS+="-webengine-webrtc-pipewire"
 #(while true; do date; sleep 7m; done) &
 %make_build -Onone
 %if %qdoc_found
@@ -426,6 +435,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Sep 11 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.14-alt1
 - new version
 
