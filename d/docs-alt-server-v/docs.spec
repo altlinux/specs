@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt7
+Release: alt8
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Sep 12 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt8
+- fix some typos (ALT 47501, 47502)
+- small improvements
+
 * Fri Aug 25 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt7
 - update documentation PVE
 - fix some typos 
