@@ -3,8 +3,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.4.3
-Release: alt3
+Version: 1.6.0
+Release: alt1
 
 Summary: A logging replacement for Python
 License: BSD
@@ -57,6 +57,7 @@ ln -s ../objects.inv docs/
 %install
 %python3_install
 
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
 %make -C docs html
 
@@ -66,7 +67,7 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 py.test3
 
 %files
-%doc AUTHORS CHANGES *.md
+%doc LICENSE AUTHORS CHANGES *.md
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/pickle
 
@@ -76,8 +77,10 @@ py.test3
 %files docs
 %doc docs/_build/html/*
 
-
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt1
+- Automatically updated to 1.6.0.
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.3-alt3
 - cleanup BR
 
