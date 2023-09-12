@@ -1,6 +1,6 @@
 
 Name: kdbg
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 %K5init no_altplace
 
@@ -54,6 +54,9 @@ inspecting variables, and stepping through code.
 %_iconsdir/*/*/apps/kdbg.*
 
 %changelog
+* Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt1
+- new version
+
 * Mon Mar 11 2019 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt1
 - new version
 
