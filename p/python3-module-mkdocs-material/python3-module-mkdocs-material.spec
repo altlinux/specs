@@ -3,7 +3,7 @@
 %define mod_name material
 
 Name: python3-module-%pypi_name
-Version: 9.2.8
+Version: 9.3.1
 Release: alt1
 
 Summary: Documentation that simply works
@@ -43,6 +43,9 @@ more than 50 languages, for all devices.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 12 2023 Anton Zhukharev <ancieg@altlinux.org> 9.3.1-alt1
+- Updated to 9.3.1.
+
 * Tue Sep 05 2023 Anton Zhukharev <ancieg@altlinux.org> 9.2.8-alt1
 - Updated to 9.2.8.
 
