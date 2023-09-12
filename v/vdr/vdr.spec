@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.2.0
-Release: alt11
+Release: alt12
 
 Summary: Digital satellite receiver box with advanced features
 License: GPLv2
@@ -12,12 +12,9 @@ Source: %name-%version-%release.tar
 BuildRequires: gcc10-c++ fontconfig-devel
 BuildRequires: libalsa-devel libbluray-devel libcap-devel libncursesw-devel
 BuildRequires: libfreetype-devel libjpeg-devel libssl-devel libudev-devel
-BuildRequires: libGraphicsMagick-c++-devel libxine2-devel libzvbi-devel
-BuildRequires: libGL-devel libGLU-devel libglut-devel libX11-devel libXext-devel
-BuildRequires: libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
+BuildRequires: libGraphicsMagick-c++-devel libzvbi-devel
 BuildRequires: boost-devel libtntnet-devel libtntdb-devel libdbus-glib-devel perl-Date-Manip
 BuildRequires: libcurl-devel libcxxtools-devel libpcrecpp-devel
-BuildRequires: pkgconfig(libavutil)
 
 %description
 VDR, Video Disc Recorder, enables you to build a powerful set-top box on your own
@@ -105,25 +102,6 @@ Summary: VDR wirbelscan plugin
 Group: Video
 Requires: vdr = %version-%release
 
-%package plugin-xineliboutput
-Summary: VDR X11 and framebuffer frontend
-Group: Video
-Requires: vdr = %version-%release
-
-%package plugin-xine
-Summary: Xine plugins for use with VDR frontends
-Group: Video
-
-%package fbfe
-Summary: VDR framebuffer frontend
-Group: Video
-Requires: vdr-plugin-xine = %version-%release
- 
-%package sxfe
-Summary: VDR X11 frontend
-Group: Video
-Requires: vdr-plugin-xine = %version-%release
-
 %description devel
 Header and pkgconfig files of VDR
 
@@ -174,23 +152,6 @@ Network streaming interface for the Video Disk Recorder (VDR).
 This plugin performs a channel scans for digital terrestrial and digital
 cable TV and analog ivtv cards, satellite is also supported.
 
-%description plugin-xineliboutput
-X11 and Linux framebuffer front-end for VDR.
-Plugin displays video and OSD in X/Xv/XvMC window or framebuffer.
-Support for local and remote frontends.
-Built-in image and media player supports playback of most known 
-media files (avi/mp3/divx/jpeg/...), DVDs and radio/video streams
-(http, rtsp, ...) directly from VDR.
-
-%description fbfe
-Linux framebuffer front-end for VDR.
-
-%description sxfe
-X11 front-end for VDR.
-
-%description plugin-xine
-Additional Xine plugins for use with VDR frontends.
-
 %define docdir		%_defaultdocdir/%name-%version
 %define	confdir		%_sysconfdir/vdr
 %define	plugindir	%_libdir/vdr
@@ -219,8 +180,6 @@ sed -e 's,^#PREFIX.\+$,PREFIX = %prefix,' \
 sed -i 's,^IMAGELIB.\+$,IMAGELIB = graphicsmagick,' PLUGINS/src/text2skin/Makefile
 
 %build
-(cd PLUGINS/src/xineliboutput && sh configure  --disable-opengl)
-
 %make_build
 
 %install
@@ -289,10 +248,6 @@ cp -a PLUGINS/src/vnsiserver/vnsiserver %buildroot%confdir/plugins
 mkdir -p %buildroot%docdir/wirbelscan
 cp -p PLUGINS/src/wirbelscan/README %buildroot%docdir/wirbelscan
 
-make install -C PLUGINS/src/xineliboutput DESTDIR=%buildroot
-mkdir -p %buildroot%docdir/xineliboutput
-cp -p PLUGINS/src/xineliboutput/{README,examples/remote.conf.example} %buildroot%docdir/xineliboutput
-
 touch %buildroot%confdir/setup.conf
 install -pD -m0755 vdr.init %buildroot%_initdir/vdr
 install -pD -m0644 vdr.service %buildroot%_unitdir/vdr.service
@@ -300,10 +255,6 @@ install -pD -m0644 vdr.tmpfiles %buildroot%_tmpfilesdir/vdr.conf
 install -pD -m0644 vdr.sysconfig %buildroot%_sysconfdir/sysconfig/vdr
 install -pm0755 contrib/xmltv2vdr/xmltv2vdr.pl %buildroot%_bindir/xmltv2vdr
 install -pm0644 contrib/xmltv2vdr/README %buildroot%docdir/README.xmltv2vdr
-
-mkdir -p %buildroot%_iconsdir
-cp -a icons/* %buildroot%_iconsdir
-install -pm0644 -D vdr.desktop %buildroot%_desktopdir/vdr.desktop
 
 mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 
@@ -323,7 +274,6 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=remotetimers.lang vdr-remotetimers
 %find_lang --output=vnsiserver.lang vdr-vnsiserver
 %find_lang --output=wirbelscan.lang vdr-wirbelscan
-%find_lang --output=xineliboutput.lang vdr-xineliboutput
 
 mkdir -p %buildroot%_libexecdir/rpm
 cat << __EOF__ > %buildroot%_libexecdir/rpm/vdr.filetrigger
@@ -502,32 +452,10 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %docdir/wirbelscan
 %plugindir/libvdr-wirbelscan.so.%version
 
-%files plugin-xineliboutput -f xineliboutput.lang
-%docdir/xineliboutput
-%dir %attr(0770,root,_vdr) %confdir/plugins/xineliboutput
-%config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/xineliboutput/allowed_hosts.conf
-%confdir/plugins/xineliboutput/*.mpg
-%plugindir/libvdr-xineliboutput.so.%version
-
-%files fbfe
-%_bindir/vdr-fbfe
-%dir %plugindir
-%plugindir/libxineliboutput-fbfe.so.%version
-
-%files sxfe
-%_bindir/vdr-sxfe
-%dir %plugindir
-%plugindir/libxineliboutput-sxfe.so.%version
-%_iconsdir/hicolor/*/apps/vdr.png
-%_desktopdir/vdr.desktop
-
-%files plugin-xine
-%_libdir/xine/plugins/*/post/xineplug_post_audiochannel.so
-%_libdir/xine/plugins/*/post/xineplug_post_autocrop.so
-%_libdir/xine/plugins/*/post/xineplug_post_swscale.so
-%_libdir/xine/plugins/*/xineplug_inp_xvdr.so
-
 %changelog
+* Tue Sep 12 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt12
+- rebuilt without xinelib
+
 * Mon Sep 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt11
 - rebuilt without ffmpeg
 
