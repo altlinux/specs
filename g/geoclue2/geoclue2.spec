@@ -14,13 +14,13 @@
 %def_enable check
 
 Name: %{_name}2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The Geoinformation Service
 Group: System/Libraries
 License: LGPLv2
-Url: http://geoclue.freedesktop.org/
+Url: https://geoclue.freedesktop.org/
 
 %if_disabled snapshot
 Source: https://gitlab.freedesktop.org/%_name/%_name/-/archive/%version/%_name-%version.tar.gz
@@ -29,8 +29,8 @@ Vcs: https://gitlab.freedesktop.org/geoclue/geoclue.git
 Source: %_name-%version.tar
 %endif
 
-%define glib_ver 2.44
-%define mm_ver 1.6
+%define glib_ver 2.68
+%define mm_ver 1.10
 %define soup3_ver 3.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
@@ -151,8 +151,8 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %files
 %_libexecdir/%_name
 %dir %_sysconfdir/%_name/conf.d
-%_sysconfdir/dbus-1/system.d/%xdg_name.conf
-%_sysconfdir/dbus-1/system.d/%xdg_name.Agent.conf
+%_datadir/dbus-1/system.d/%xdg_name.conf
+%_datadir/dbus-1/system.d/%xdg_name.Agent.conf
 %_datadir/dbus-1/interfaces/%xdg_name.Agent.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Client.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Location.xml
@@ -202,6 +202,9 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Tue Sep 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
+- 2.7.1
+
 * Sat Jan 28 2023 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
 - 2.7.0
 
