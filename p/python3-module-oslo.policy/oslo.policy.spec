@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.1.0
-Release: alt1.1
+Version: 4.2.1
+Release: alt1
 
 Summary: OpenStack Oslo Policy library
 
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/oslo.policy
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+
+Patch: oslo.policy-fix-build-with-sphinx-6.1.1.patch
 
 BuildArch: noarch
 
@@ -69,6 +71,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -126,6 +129,9 @@ install -pDm 644 man/oslopolicy-sample-generator.1 %buildroot%_man1dir/oslopolic
 %endif
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 4.2.1-alt1
+- Automatically updated to 4.2.1.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1.1
 - Moved on modern pyproject macros.
 
