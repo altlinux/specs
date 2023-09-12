@@ -1,5 +1,5 @@
 %define  oname llvmlite
-%define  llvm_version 11
+%define  llvm_version 12.0
 %define  optflags_lto -flto=thin
 
 #[armh] LLVM ERROR: Symbol not found: __aeabi_unwind_cpp_pr0
@@ -11,7 +11,7 @@
 
 Name:    python3-module-%oname
 Version: 0.40.1
-Release: alt1
+Release: alt2
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
@@ -21,8 +21,8 @@ URL:     https://pypi.org/project/llvmlite
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: clang%{llvm_version}.1 llvm%{llvm_version}.1-devel libstdc++-devel lld%{llvm_version}.1
+BuildRequires(pre): rpm-build-python3 python3-module-setuptools python3-module-wheel
+BuildRequires: clang%{llvm_version} llvm%{llvm_version}-devel libstdc++-devel lld%{llvm_version}
 
 Source:  %name-%version.tar
 
@@ -49,14 +49,14 @@ sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
 %build
 %remove_optflags -frecord-gcc-switches
-%add_optflags -grecord-gcc-switches -fPIC -fuse-ld=lld -DNDEBUG
-export CXX='clang++-%llvm_version'
-export LLVM_CONFIG=%_bindir/llvm-config-%llvm_version
-#export LLVMLITE_SKIP_LLVM_VERSION_CHECK=1
-%python3_build
+%add_optflags -grecord-gcc-switches -fPIC -DNDEBUG
+export ALTWRAP_LLVM_VERSION=%{llvm_version}
+export CXX=clang
+export LDFLAGS='-fuse-ld=lld'
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 %__python3 ./runtests.py
@@ -64,9 +64,13 @@ export LLVM_CONFIG=%_bindir/llvm-config-%llvm_version
 %files
 %doc *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Tue Sep 12 2023 L.A. Kostis <lakostis@altlinux.ru> 0.40.1-alt2
+- Bump llvm version to 12.0 (to get rid of llvm11.1).
+- .spec: upgrade python3 macros.
+
 * Mon Jul 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.40.1-alt1
 - Automatically updated to 0.40.1.
 
