@@ -1,13 +1,15 @@
 %define _name pano13
 
+%def_enable sparse_levmar
 %def_disable java
+%def_enable check
 
 Name: lib%_name
-Version: 2.9.21
+Version: 2.9.22
 Release: alt1
 
 Group: System/Libraries
-Summary: %name - library for panorama stitching programs. This is new generation and development version
+Summary: %name - library for panorama stitching programs.
 License: GPL-2.0
 Url: https://sourceforge.net/projects/panotools
 
@@ -16,9 +18,12 @@ Patch1: %name.patch
 Patch2: %name-2.9.21-alt-static-build.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ libjpeg-devel libpng-devel libtiff-devel zlib-devel
+BuildRequires: cmake gcc-c++
+BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
+%{?_enable_sparse_levmar:BuildRequires: libsuitesparse-devel}
 BuildRequires: /usr/bin/pod2man
 %{?_enable_java:BuildRequires: java-devel}
+%{?_enable_check:BuildRequires: ctest}
 
 %package devel
 Group: System/Libraries
@@ -72,11 +77,16 @@ panoinfo    - Display info from pano12 dll/library
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%cmake -DBUILD_STATIC_LIBS=OFF
+%cmake -DBUILD_STATIC_LIBS=OFF \
+    %{?_enable_sparse_levmar:-DUSE_SPARSE_LEVMAR=ON}
+%nil
 %cmake_build
 
 %install
 %cmake_install
+
+%check
+%cmake_build -t test
 
 %files
 %_libdir/*.so.*
@@ -107,6 +117,12 @@ panoinfo    - Display info from pano12 dll/library
 %doc doc/*.txt tools/README.PTmender
 
 %changelog
+* Tue Sep 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.22-alt1
+- 2.9.22
+- enabled optional "Sparse Levenberg Marquardt" algorithm using
+  libsuitesparse instead of "dense Levenberg Marquard" algorithm
+- enabled %%check
+
 * Fri Dec 31 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.21-alt1
 - 2.9.21 (ported to CMake build system)
 
