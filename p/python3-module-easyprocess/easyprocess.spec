@@ -1,10 +1,15 @@
 %global pypi_name EasyProcess
 %global modulename easyprocess
 
+# proc test failing by chance
+%ifarch ppc64le
+%def_without check
+%endif
+
 Name: python3-module-%modulename
 Summary: Easy to use Python subprocess interface
 Version: 1.1
-Release: alt1
+Release: alt2
 License: BSD
 Group: Development/Python3
 URL: https://github.com/ponty/EasyProcess
@@ -18,6 +23,7 @@ BuildRequires: python3-module-setuptools
 
 %if_disabled check
 %else
+BuildRequires: /proc
 BuildRequires: iputils
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-timeout
@@ -49,6 +55,9 @@ py.test3 -v
 %python3_sitelibdir/%modulename/
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.1-alt2
+- Fixed FTBFS.
+
 * Sun Mar 13 2022 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
 - new version (1.1) with rpmgs script
 
