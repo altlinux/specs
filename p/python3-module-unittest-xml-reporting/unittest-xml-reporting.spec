@@ -1,8 +1,8 @@
 %define oname unittest-xml-reporting
 
 Name: python3-module-%oname
-Version: 3.0.2
-Release: alt1.1
+Version: 3.2.0
+Release: alt1
 
 Summary: unittest-based test runner with Ant/JUnit like XML reporting
 License: BSD
@@ -12,6 +12,8 @@ BuildArch: noarch
 
 # https://github.com/xmlrunner/unittest-xml-reporting.git
 Source: %name-%version.tar
+
+Patch: python3.11-support.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-six python3-module-lxml
@@ -42,6 +44,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch -p1
 
 sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
 
@@ -65,8 +68,10 @@ cp -fR tests/ %buildroot%python3_sitelibdir/xmlrunner
 %files tests
 %python3_sitelibdir/xmlrunner/tests
 
-
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Automatically updated to 3.2.0.
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.0.2-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
