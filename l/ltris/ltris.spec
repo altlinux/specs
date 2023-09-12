@@ -1,5 +1,5 @@
 Name: ltris
-Version: 1.2.6
+Version: 1.2.7
 Release: alt1
 Serial: 1
 
@@ -41,9 +41,9 @@ o Two game modes
 %setup -q
 #patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 #convert ltris48.gif ltris.png
-mv ltris128.png ltris.png
+cp ltris48.png ltris.png
 
 %build
 autoreconf -f -i
@@ -73,13 +73,16 @@ sed -i -e 's,^Icon=.*,Icon=%name,' %buildroot%_desktopdir/%name.desktop
 %attr(2711, root, games) %_gamesbindir/*
 %attr(-, games, games) %_localstatedir/games/%name.hscr
 %_gamesdatadir/%name
-%_datadir/games/icons/ltris.png
+%_datadir/games/icons/hicolor/apps/ltris.png
 %_desktopdir/%name.desktop
 %_niconsdir/%name.xpm
 %_miconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Tue Sep 12 2023 Ilya Mashkin <oddity@altlinux.ru> 1:1.2.7-alt1
+- 1.2.7
+
 * Fri Oct 14 2022 Ilya Mashkin <oddity@altlinux.ru> 1:1.2.6-alt1
 - 1.2.6
 
