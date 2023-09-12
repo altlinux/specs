@@ -3,7 +3,7 @@
 %define oname ptpython
 
 Name: python3-module-%oname
-Version: 3.0.20
+Version: 3.0.23
 Release: alt1
 Summary: Python REPL build on top of prompt_toolkit
 License: BSD-3-Clause
@@ -16,11 +16,11 @@ BuildArch: noarch
 Source: ptpython-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-prompt_toolkit
+BuildRequires: python3-module-prompt_toolkit python3-module-setuptools python3-module-wheel
 BuildRequires: python3(pygments)
-Provides:   %oname = %version.%release
-Provides:   %{oname}3 = %version.%release
-Obsoletes:  %{oname}3 < %version.%release
+Provides: %oname = %version.%release
+Provides: %{oname}3 = %version.%release
+Obsoletes: %{oname}3 < %version.%release
 
 %py3_requires  jedi
 
@@ -40,10 +40,10 @@ Provides: %oname-ipython = %version.%release
 %setup -n %oname-%version
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -52,15 +52,21 @@ python3 tests/run_tests.py -v
 %files
 %doc LICENSE
 %doc CHANGELOG *.rst
+%doc examples
 %_bindir/*
+%exclude %_bindir/*ipython*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
-%exclude %python3_sitelibdir/%oname/ipython.py
+%python3_sitelibdir/%oname-*dist-info
+%exclude %python3_sitelibdir/%oname/*ipython*
 
 %files ipython
-%python3_sitelibdir/%oname/ipython.py
+%_bindir/*ipython*
+%python3_sitelibdir/%oname/*ipython*
 
 %changelog
+* Tue Sep 12 2023 Fr. Br. George <george@altlinux.org> 3.0.23-alt1
+- Autobuild version bump to 3.0.23
+
 * Wed Jan 19 2022 Fr. Br. George <george@altlinux.ru> 3.0.20-alt1
 - Autobuild version bump to 3.0.20
 - Separate IPython add-on
