@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.1.0
-Release: alt1.1
+Version: 3.2.0
+Release: alt1
 
 Summary: OpenStack Oslo Versioned Objects library
 
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/oslo.versionedobjects
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+
+Patch: oslo.versionedobjects-fix-build-with-sphinx-6.1.1.patch
 
 BuildArch: noarch
 
@@ -41,7 +43,7 @@ BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-jsonschema >= 3.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
@@ -78,6 +80,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -124,6 +127,9 @@ install -pDm 644 man/osloversionedobjects.1 %buildroot%_man1dir/osloversionedobj
 %endif
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Automatically updated to 3.2.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1.1
 - Moved on modern pyproject macros.
 
