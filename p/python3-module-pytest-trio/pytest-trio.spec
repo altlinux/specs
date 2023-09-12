@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: Pytest plugin for trio
 
@@ -26,6 +26,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-trio
 BuildRequires: python3-module-trio-tests
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-hypothesis
 %endif
 
 BuildArch: noarch
@@ -52,5 +53,8 @@ BuildArch: noarch
 %doc *.md
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 0.8.0-alt2
+- Fixed FTBFS.
+
 * Wed Feb 08 2023 Grigory Ustinov <grenka@altlinux.org> 0.8.0-alt1
 - Initial build for Sisyphus.
