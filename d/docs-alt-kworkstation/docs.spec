@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt7
+Release: alt8
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Sep 12 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt8
+- fix Discover to dist upgrade
+
 * Tue Sep 05 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt7
 - update screenshots
 - small improvements
