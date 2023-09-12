@@ -1,18 +1,18 @@
 Name: pound
-Version: 2.8
-Release: alt2
+Version: 4.9
+Release: alt1
 
 Summary: Reverse proxy, load balancer and HTTPS front-end for Web servers
 License: GPLv3+
 Group: System/Servers
 
-Url: http://www.apsis.ch/pound/
-Source: http://www.apsis.ch/pound/Pound-%version.tgz
+Url: https://github.com/graygnuorg/pound
+Source: pound-%version.tgz
 Source1: pound.init
 Source2: pound.cfg
 Source3: pound.sysconfig
 
-BuildRequires: libgperftools-devel libpcre-devel LibreSSL-devel openssl
+BuildRequires: libgperftools-devel libpcre2-devel openssl-devel openssl
 
 %description
 Pound was developed to enable distributing the load among several Web-servers
@@ -20,23 +20,22 @@ and to allow for a convenient SSL wrapper for those Web servers that do not
 offer it natively.
 
 %prep
-%setup -n Pound-%version
+%setup
 
 %build
-cp -pv /usr/share/gnu-config/config.* .
-# For rationale of MAXBUF increasing see:
-# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=293915
-CFLAGS="%optflags" ./configure --prefix="" --with-maxbuf=8192
+%configure \
+    --localstatedir=/ \
+    --with-maxbuf=8192   # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=293915
+
 %make_build
-subst 's@/usr/local/@/@' pound.8
 
 %install
-install -d %buildroot{%_sbindir,%_man8dir,%_initrddir,/etc/sysconfig}
-install -p -m0755 pound poundctl %buildroot%_sbindir
+%makeinstall_std
+
+install -d %buildroot{%_initrddir,/etc/sysconfig}
 install -p -m0755 %_sourcedir/pound.init %buildroot%_initrddir/pound
 install -p -m0644 %_sourcedir/pound.cfg %buildroot/etc/
 install -p -m0644 %_sourcedir/pound.sysconfig %buildroot/etc/sysconfig/pound
-install -p -m0644 pound.8 poundctl.8 %buildroot%_man8dir
 
 %post
 %post_service pound
@@ -48,14 +47,21 @@ install -p -m0644 pound.8 poundctl.8 %buildroot%_man8dir
 %preun_service pound
 
 %files
-%doc FAQ README
+%doc AUTHORS COPYING ChangeLog.apsis NEWS README THANKS
 %config(noreplace) /etc/pound.cfg
 %config(noreplace) /etc/sysconfig/pound
 %config(noreplace) %_initrddir/*
 %_sbindir/*
+%_bindir/*
+%dir %_datadir/pound/
+%_datadir/pound/*
+%_man5dir/*
 %_man8dir/*
 
 %changelog
+* Tue Sep 12 2023 Sergey Y. Afonin <asy@altlinux.org> 4.9-alt1
+- 4.9 (a fork by Sergey Poznyakoff)
+
 * Thu Sep 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.8-alt2
 - removed exclusivearch
 
