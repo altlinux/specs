@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.1.2
-Release: alt1.1
+Version: 5.3.0
+Release: alt1
 
 Summary: Authentication Library for OpenStack Identity
 
@@ -23,7 +23,6 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-requests >= 2.14.2
-BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-os-service-types >= 1.2.0
 
@@ -40,10 +39,10 @@ BuildRequires: python3-module-betamax >= 0.7.0
 BuildRequires: python3-module-stestr >= 1.0.0
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-pycodestyle >= 2.0.0
-BuildRequires: python3-module-flake8-import-order >= 0.17.1
-BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-reno >= 3.1.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-flake8-import-order >= 0.17.1
+BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-testresources >= 2.0.0
 BuildRequires: python3-module-requests-kerberos >= 0.8.0
 %endif
@@ -106,7 +105,8 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %check
-%__python3 -m stestr run
+# test_keystoneauth_betamax_fixture broken by urllib3 >= 2.0.1
+%__python3 -m stestr run --exclude-regex 'keystoneauth1.tests.unit.test_betamax_fixture.TestBetamaxFixture.test_keystoneauth_betamax_fixture'
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
@@ -124,6 +124,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 5.3.0-alt1
+- Automatically updated to 5.3.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.2-alt1.1
 - Moved on modern pyproject macros.
 
