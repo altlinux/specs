@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.3.0
-Release: alt1.1
+Release: alt2
 Summary: Coordination library for distributed systems
 Group: Development/Python3
 License: Apache-2.0
@@ -68,11 +68,8 @@ rm -rf %oname.egg-info
 %build
 %python3_build
 
-# disabling git call for last modification date from git repo
-#sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
-python3 setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-rm -fr build/sphinx/html/.buildinfo
+sphinx-build-3 doc/source html
+rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
@@ -86,9 +83,12 @@ rm -fr build/sphinx/html/.buildinfo
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc build/sphinx/html
+%doc html
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2
+- Fixed FTBFS.
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.3.0-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
