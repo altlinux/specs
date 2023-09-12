@@ -10,7 +10,7 @@
 
 Name:    python3-module-%oname
 Version: 23.1.2
-Release: alt1
+Release: alt2
 
 Summary: Complex custom class converters for attrs.
 
@@ -35,6 +35,7 @@ BuildRequires: python3-module-bson
 BuildRequires: python3-module-ujson
 BuildRequires: python3-module-orjson
 BuildRequires: python3-module-cbor2
+BuildRequires: python3-module-hypothesis
 %endif
 
 %description
@@ -80,6 +81,9 @@ your classes and enumerations into dictionaries, integers and strings.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 23.1.2-alt2
+- Fixed FTBFS.
+
 * Thu Jul 27 2023 Grigory Ustinov <grenka@altlinux.org> 23.1.2-alt1
 - Automatically updated to 23.1.2.
 - Build with check.
