@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-MariaDB
 Name: perl-%dist
-Version: 1.22
+Version: 1.23
 Release: alt1
 
 Summary: MariaDB driver for DBI interface in Perl
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: https://cpan.metacpan.org/authors/id/P/PA/PALI/%dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PA/PALI/%{dist}-%{version}.tar.gz
 
 BuildRequires: libmariadb-devel perl-DBI-devel perl-devel
 BuildRequires: perl(Devel/CheckLib.pm) perl(Pod/Man.pm)
@@ -53,10 +53,13 @@ find %buildroot -type f -name '*.bs' -size 0 -delete
 rm %buildroot%perl_vendor_archlib/DBD/MariaDB/INSTALL.pod
 
 %files
-%doc README* Changes*.bz2
+%doc README* Changes Changes.historic
 %perl_vendor_archlib/DBD/*
 %perl_vendor_autolib/DBD/*
 
 %changelog
+* Wed Sep 13 2023 Igor Vlasenko <viy@altlinux.org> 1.23-alt1
+- automated CPAN update
+
 * Thu Aug 11 2022 Alexey Shabalin <shaba@altlinux.org> 1.22-alt1
 - Initial package.
