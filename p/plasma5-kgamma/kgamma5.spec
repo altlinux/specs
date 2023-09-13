@@ -1,7 +1,7 @@
 %define rname kgamma5
 
 Name: plasma5-kgamma
-Version: 5.27.7
+Version: 5.27.8
 Release: alt1
 %K5init altplace
 
@@ -54,6 +54,9 @@ Obsoletes: kf5-kgamma < %EVR
 %_K5data/kgamma/
 
 %changelog
+* Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
+- new version
+
 * Tue Aug 01 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.7-alt1
 - new version
 

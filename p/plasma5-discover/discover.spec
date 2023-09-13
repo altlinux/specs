@@ -7,6 +7,7 @@
 %endif
 #
 %def_enable snap
+%def_disable ostree
 #
 %ifarch %qt5_qtwebengine_arches
 %def_enable qtwebengine
@@ -19,7 +20,7 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.27.7
+Version: 5.27.8
 Release: alt1
 %K5init no_altplace appdata
 
@@ -65,6 +66,9 @@ BuildRequires: pkgconfig(fwupd)
 %endif
 %if_enabled snap
 BuildRequires: snapd-qt-devel
+%endif
+%if_enabled ostree
+BuildRequires: libostree-devel rpm-ostree-devel
 %endif
 BuildRequires: packagekit-qt-devel
 BuildRequires: appstream-qt-devel
@@ -291,6 +295,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
+- new version
+
 * Tue Aug 01 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.7-alt1
 - new version
 

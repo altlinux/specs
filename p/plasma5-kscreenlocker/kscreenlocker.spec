@@ -6,7 +6,7 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: plasma5-%rname
-Version: 5.27.7
+Version: 5.27.8
 Release: alt1
 Epoch: 2
 %K5init altplace
@@ -86,7 +86,11 @@ tar xf %SOURCE2 kcheckpass/
 mv kcheckpass/authenticator.* greeter/
 mv kcheckpass/config-unix.h.cmake ./
 
+mkdir bin_fake
+ln -s /bin/true bin_fake/loginctl
+
 %build
+export PATH=$PWD/bin_fake:$PATH
 %K5build \
     -DINCLUDE_INSTALL_DIR=%_K5inc \
     -DKDE4_KSCREENSAVER_PAM_SERVICE="kf5-screenlocker" \
@@ -132,6 +136,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 2:5.27.8-alt1
+- new version
+
 * Tue Aug 01 2023 Sergey V Turchin <zerg@altlinux.org> 2:5.27.7-alt1
 - new version
 
