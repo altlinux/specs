@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 117.0
+Version: 117.0.1
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -427,6 +427,11 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Sep 13 2023 Alexey Gladkov <legion@altlinux.ru> 117.0.1-alt1
+- New release (117.0.1).
+- Security fixes:
+  + CVE-2023-4863: Heap buffer overflow in libwebp
+
 * Tue Aug 29 2023 Alexey Gladkov <legion@altlinux.ru> 117.0-alt1
 - New release (117.0).
 - Security fixes:
