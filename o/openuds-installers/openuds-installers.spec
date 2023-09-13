@@ -1,7 +1,7 @@
 %define uds_dir %_datadir/openuds/uds
 Name: openuds-installers
 Version: 3.6.0
-Release: alt1
+Release: alt2
 Summary: openUDS installers
 License: BSD-3-Clause
 Group: Networking/Remote access
@@ -28,6 +28,9 @@ install -Dp -m 644 %SOURCE3 %buildroot%uds_dir/osmanagers/WindowsOsManager/files
 %uds_dir/osmanagers/WindowsOsManager/files/*
 
 %changelog
+* Mon Sep 11 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt2
+- Revert 4.0 changes.
+
 * Fri May 19 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
