@@ -1,15 +1,18 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Module/Metadata.pm) perl(Test/Needs.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist JSON-Any
 Name: perl-%dist
-Version: 1.39
-Release: alt2
+Version: 1.40
+Release: alt1
 
 Summary: Wrapper Class for the various JSON classes
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/JSON-Any-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +28,7 @@ JSON API and have it work regardless of which JSON module is actually
 installed.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,10 +37,13 @@ installed.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %perl_vendor_privlib/JSON
 
 %changelog
+* Wed Sep 13 2023 Igor Vlasenko <viy@altlinux.org> 1.40-alt1
+- automated CPAN update
+
 * Thu Dec 27 2018 Igor Vlasenko <viy@altlinux.ru> 1.39-alt2
 - fixed build
 
