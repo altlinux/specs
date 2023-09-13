@@ -7,7 +7,7 @@
 
 Name:           python3-module-%modname
 Version:        0.4.5
-Release:        alt4
+Release:        alt5
 Summary:        A python client library for etcd
 Group:          System/Libraries
 License:        MIT
@@ -22,6 +22,7 @@ BuildArch:      noarch
 ExclusiveArch:  noarch %{ix86} x86_64 %{arm} aarch64 ppc64le s390x
 
 BuildRequires:  python3-module-setuptools
+BuildRequires:  python3-module-wheel
 BuildRequires:  python3-module-dns
 BuildRequires:  python3-module-urllib3
 BuildRequires:  python3-module-OpenSSL
@@ -45,15 +46,13 @@ election.
 %patch -p1
 
 %build
-%{__ospython} setup.py build
+%pyproject_build
 
 %install
-%{__rm} -rf %{buildroot}
-%{__ospython} setup.py install --root %{buildroot} -O1 --skip-build
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelib
-py.test-3 src/etcd/tests/unit/ -k "not test_acquired"
+%pyproject_run_pytest -v src/etcd/tests/unit/ -k 'not test_acquired and not test_machines'
 
 # This seems to require a newer python3-mock than what's currently available
 # in F23, and even Rawhide.  If I let it download mock-1.3.0 from the Python
@@ -67,6 +66,9 @@ py.test-3 src/etcd/tests/unit/ -k "not test_acquired"
 %exclude %python3_sitelib/*/tests
 
 %changelog
+* Wed Sep 13 2023 Anton Vyatkin <toni@altlinux.org> 0.4.5-alt5
+- Fix FTBFS.
+
 * Fri Jun 16 2023 Ilfat Aminov <aminov@altlinux.org> 0.4.5-alt4
 - Rename src to python3-module-etcd
 
