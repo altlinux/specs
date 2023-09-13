@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.5.1
+Version: 1.6.1
 Release: alt1
 
 Summary: Poetry -- Python build system
@@ -22,7 +22,7 @@ Source: %pypi_name-%version.tar
 
 BuildArch: noarch
 
-%define core_ver 1.6.0
+%define core_ver 1.7.0
 %define dulwich_ver 0.21.2
 
 Requires: python3-module-poetry-core >= %core_ver
@@ -69,6 +69,9 @@ that: the new, standardized pyproject.toml.
 %doc README.md CHANGELOG.md 
 
 %changelog
+* Wed Sep 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Mon Jun 19 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
 - 1.5.1
 
