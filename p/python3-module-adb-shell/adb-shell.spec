@@ -1,5 +1,5 @@
 Name: python3-module-adb-shell
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: ADB shell and FileSync functionality implemented in Python 
@@ -31,6 +31,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/adb_shell-%version.dist-info
 
 %changelog
+* Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.4-alt1
+- 0.4.4 released
+
 * Fri Jul 29 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.3-alt1
 - 0.4.3 released
 
