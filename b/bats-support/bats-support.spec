@@ -2,7 +2,7 @@
 
 Name: bats-support
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: Supporting library for Bats test helpers
 License: CC0
@@ -26,9 +26,12 @@ cp -pr src %buildroot%_datadir/bats-support
 cp -pr load.bash %buildroot%_datadir/bats-support
 
 %files
-%doc LICENSE
+%doc LICENSE README.md CHANGELOG.md
 %_datadir/bats-support
 
 %changelog
+* Tue Sep 12 2023 Obidin Oleg <nofex@altlinux.org> 0.3.0-alt2
+- Merge with upstream git history
+
 * Wed Mar 29 2023 Obidin Oleg <nofex@altlinux.org> 0.3.0-alt1
 - First build for ALT

@@ -2,7 +2,7 @@
 
 Name: bats-assert
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Common assertions for Bats
 License: CC0
@@ -25,9 +25,12 @@ cp -pr src %buildroot%_datadir/bats-assert
 cp -pr load.bash %buildroot%_datadir/bats-assert
 
 %files
-%doc LICENSE
+%doc LICENSE README.md
 %_datadir/bats-assert
 
 %changelog
+* Tue Sep 12 2023 Obidin Oleg <nofex@altlinux.org> 2.1.0-alt2
+- Merge with upstream git history
+
 * Wed Mar 30 2023 Obidin Oleg <nofex@altlinux.org> 2.1.0-alt1
 - First build for ALT
