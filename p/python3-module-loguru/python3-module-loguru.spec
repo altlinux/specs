@@ -1,14 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name loguru
-%ifarch ppc64le
-%def_without check
-%else
 %def_with check
-%endif
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
-Release: alt2
+Version: 0.7.2
+Release: alt1
 Summary: Python logging made (stupidly) simple
 License: MIT
 Group: Development/Python3
@@ -48,6 +44,9 @@ Loguru is a library which aims to bring enjoyable logging in Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 12 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.2-alt1
+- Updated to version 0.7.2.
+
 * Mon Jun 19 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.0-alt2
 - Builded for ppc64le arch, but skipped tests for it (closes: #46589)
 
