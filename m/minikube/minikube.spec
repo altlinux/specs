@@ -1,10 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
+%define bash_completionsdir %_datadir/bash-completion/completions
+%define fish_completionsdir %_datadir/fish/vendor_completions.d
+%define zsh_completionsdir %_datadir/zsh/site-functions
+
 %global import_path k8s.io/minikube
 
 Name: minikube
-Version: 1.28.0
-Release: alt3
+Version: 1.31.2
+Release: alt1
 
 Summary: Run Kubernetes locally
 License: Apache-2.0
@@ -12,35 +16,20 @@ Group: System/Configuration/Other
 Url: https://minikube.sigs.k8s.io
 Vcs: https://github.com/kubernetes/minikube
 
-Source: %name-%version.tar
+ExclusiveArch: %go_arches
+
+Source0: %name-%version.tar
+Source1: vendor.tar
 
 BuildRequires(pre): rpm-build-golang
-
-ExclusiveArch: %go_arches
 
 %description
 minikube implements a local Kubernetes cluster on macOS, Linux, and Windows.
 minikube's primary goals are to be the best tool for local Kubernetes
 application development and to support all Kubernetes features that fit.
 
-%package -n bash-completion-%name
-Summary: Bash completions for minikube
-Group: Shells
-BuildArch: noarch
-
-%description -n bash-completion-%name
-%summary.
-
-%package -n zsh-completion-%name
-Summary: Zsh completion for minikube
-Group: Shells
-BuildArch: noarch
-
-%description -n zsh-completion-%name
-%summary.
-
 %prep
-%setup
+%setup -a1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -61,22 +50,26 @@ export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
 %golang_install
 
-mkdir -p %buildroot%_datadir/bash-completion/completions
-mkdir -p %buildroot%_datadir/zsh/site-functions
+%__mkdir_p %buildroot%bash_completionsdir
+%__mkdir_p %buildroot%fish_completionsdir
+%__mkdir_p %buildroot%zsh_completionsdir
 
-%buildroot%_bindir/%name completion bash > %buildroot%_datadir/bash-completion/completions/minikube
-%buildroot%_bindir/%name completion zsh > %buildroot%_datadir/zsh/site-functions/_minikube
+%buildroot%_bindir/%name completion bash > %buildroot%bash_completionsdir/%name
+%buildroot%_bindir/%name completion fish > %buildroot%fish_completionsdir/%name.fish
+%buildroot%_bindir/%name completion zsh > %buildroot%zsh_completionsdir/_%name
 
 %files
-%_bindir/*
-
-%files -n bash-completion-%name
-%_datadir/bash-completion/completions/%name
-
-%files -n zsh-completion-%name
-%_datadir/zsh/site-functions/_%name
+%_bindir/%name
+%bash_completionsdir/%name
+%fish_completionsdir/%name.fish
+%zsh_completionsdir/_%name
 
 %changelog
+* Wed Sep 13 2023 Anton Zhukharev <ancieg@altlinux.org> 1.31.2-alt1
+- Updated to 1.31.2.
+- Stopped packaging shell completions subpackages.
+- Packaged fish shell completions.
+
 * Thu Nov 17 2022 Anton Zhukharev <ancieg@altlinux.org> 1.28.0-alt3
 - build completions for bash and zsh
 
