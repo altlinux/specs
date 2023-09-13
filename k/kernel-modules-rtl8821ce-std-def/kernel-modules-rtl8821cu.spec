@@ -1,6 +1,6 @@
 %define module_name rtl8821ce
 %define module_version 5.5.2
-%define module_release alt4
+%define module_release alt5
 
 %define flavour	std-def
 %define karch %ix86 x86_64
@@ -35,8 +35,10 @@ BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 
+Requires: rtl8821ce-blacklist
+
 %description
-These packages contain Realtek RTL8821CE module.
+This package contains Realtek RTL8821CE module.
 
 %prep
 rm -rf kernel-source-%module_name-%module_version

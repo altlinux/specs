@@ -1,6 +1,6 @@
 Name: kernel-source-rtl8821ce
 Version: 5.5.2
-Release: alt10.gita478095
+Release: alt11.gita478095
 Summary: Source for the rtl8821ce driver
 License: GPLv2
 Group: Development/Kernel
@@ -8,6 +8,7 @@ URL: https://github.com/tomaspinho/rtl8821ce.git
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Source: %name-%version.tar
+Source1: blacklist-rtl8821ce.conf
 
 BuildArch: noarch
 BuildPreReq: kernel-build-tools
@@ -15,17 +16,32 @@ BuildPreReq: kernel-build-tools
 %description
 Linux rtl8821ce driver for Realtek's Wi-Fi cards
 
+%package -n rtl8821ce-blacklist
+Summary: Blacklist modules for rtl8821ce
+Group: System/Kernel and hardware
+
+%description -n rtl8821ce-blacklist
+Blacklist modules for correctly working module rtl8821ce
+
 %prep
 %setup -c
 
 %install
 mkdir -p %kernel_srcdir
 tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
+install -Dpm0644 %SOURCE1 %buildroot%_sysconfdir/modprobe.d/blacklist-rtl8821ce.conf
 
 %files
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
+%files -n rtl8821ce-blacklist
+%dir %_sysconfdir/modprobe.d
+%config %_sysconfdir/modprobe.d/blacklist-rtl8821ce.conf
+
 %changelog
+* Wed Sep 13 2023 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt11.gita478095
+- added package with blacklist rules for rtl8821ce.
+
 * Thu May 25 2023 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt10.gita478095
 - fixes for Linux 6.3
 
