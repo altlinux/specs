@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt17
+Release: alt18
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Sep 13 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt18
+- fix install Zabbix
+- small improvements
+
 * Tue Aug 15 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt17
 - fix some typos (ALT 47183)
 - small improvements
