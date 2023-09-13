@@ -1,5 +1,5 @@
 Name: python3-module-emoji
-Version: 2.6.0
+Version: 2.8.0
 Release: alt1
 
 Summary: Emoji for Python
@@ -35,6 +35,9 @@ BuildRequires: python3(pytest)
 %python3_sitelibdir/emoji-%version.dist-info
 
 %changelog
+* Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.8.0-alt1
+- 2.8.0 released
+
 * Fri Jul 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6.0-alt1
 - 2.6.0 released
 
