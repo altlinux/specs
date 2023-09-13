@@ -30,7 +30,7 @@ Name: kde5-%rname
 %define ver_minor 1
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 %define sover %version
@@ -73,7 +73,7 @@ BuildRequires: libx265-devel libheif-devel
 BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjpeg-devel libpng-devel
 %{?_enable_jasper:BuildRequires: libjasper-devel}
 BuildRequires: libavcodec-devel libavfilter-devel libavformat-devel libavdevice-devel libavutil-devel
-BuildRequires: libswscale-devel libpostproc-devel libavresample-devel libswresample-devel
+BuildRequires: libswscale-devel libpostproc-devel libswresample-devel
 BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
 BuildRequires: libImageMagick-devel
@@ -337,6 +337,9 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Mon Sep 11 2023 Sergey V Turchin <zerg@altlinux.org> 8.1.0-alt2
+- fix build requires
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 8.1.0-alt1
 - new version
 
