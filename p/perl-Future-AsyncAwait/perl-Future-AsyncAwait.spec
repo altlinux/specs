@@ -1,5 +1,5 @@
-%set_perl_req_method relaxed
 %define _unpackaged_files_terminate_build 1
+%set_perl_req_method relaxed
 %define module_name Future-AsyncAwait
 #BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm)
 # BEGIN SourceDeps(oneline):
@@ -14,7 +14,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 #BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Try.pm) perl(Object/Pad.pm)
 
 Name: perl-%module_name
-Version: 0.65
+Version: 0.66
 Release: alt1
 Summary: deferred subroutine syntax for futures
 Group: Development/Perl
@@ -88,6 +88,9 @@ with futures.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Sep 13 2023 Igor Vlasenko <viy@altlinux.org> 0.66-alt1
+- automated CPAN update
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0.65-alt1
 - automated CPAN update
 
