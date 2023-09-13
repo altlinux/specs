@@ -4,12 +4,12 @@
 
 Name: mc
 Version: 4.8.30
-Release: alt2
+Release: alt3
 
 # '-gitYYYYMMDD' or ''
-%define ver_date ''
+%define ver_date '-git20230912'
 
-License: %gpl3plus
+License: GPL-3.0-or-later
 Summary: An user-friendly file manager and visual shell
 Group: File tools
 Url: http://midnight-commander.org/
@@ -39,12 +39,15 @@ Patch101: mc-4.8.30-savannah-edit-homekey.patch
 # http://www.midnight-commander.org/ticket/2496
 Patch102: mc-4.8.20-alt-forceexec.patch
 
+# https://midnight-commander.org/ticket/4502
+Patch103: mc-4.8.30-mc.ext.ini-escape.patch
+
 # http://www.midnight-commander.org/ticket/34
-Patch103: mc-4.8.30-alt-extfs-udar.patch
+Patch104: mc-4.8.30-alt-extfs-udar.patch
 
 # https://src.fedoraproject.org/rpms/mc/raw/rawhide/f/mc-python3.patch
 # https://github.com/MidnightCommander/mc/pull/149
-Patch104: mc-4.8.25-python3.patch
+Patch105: mc-4.8.25-python3.patch
 
 Conflicts: %name-data
 Conflicts: %name-locales
@@ -55,8 +58,6 @@ Obsoletes: %name-locales
 Obsoletes: %name-doc
 
 Requires: rpm >= 4.13
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: rpm-build-python3
 BuildPreReq: glib2-devel libe2fs-devel
@@ -95,12 +96,13 @@ needed for working additional components (some vfs for example).
 
 %package desktop
 Summary: Dektop file to %name
-Group: Editors
-License: %gpl3plus
+Group: File tools
+BuildArch: noarch
+License: GPL-3.0-or-later
 Requires: %name >= %version
 
 %description desktop
-Dektop file to %name
+Dektop files for %name
 
 %prep
 %setup -a1
@@ -117,6 +119,7 @@ Dektop file to %name
 
 %patch103 -p1
 %patch104 -p1
+%patch105 -p1
 
 %build
 cat <<EOF > mc-version.h
@@ -222,15 +225,20 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %_niconsdir/%fullname.png
 %_miconsdir/%fullname.png
 
-
 %files full
 
 %changelog
+* Wed Sep 13 2023 Sergey Y. Afonin <asy@altlinux.org> 4.8.30-alt3
+- updated to 20230912 git snapshot
+- applyed mc-4.8.30-mc.ext.ini-escape.patch (ALT #47523)
+- fixed mc-4.8.30-alt-extfs-udar.patch again (ALT #47513#c7)
+
 * Mon Sep 11 2023 Sergey Y. Afonin <asy@altlinux.org> 4.8.30-alt2
-- fixed mc-4.8.30-alt-extfs-udar.patch
+- fixed mc-4.8.30-alt-extfs-udar.patch (ALT #47513)
 
 * Fri Sep 08 2023 Hihin Ruslan <ruslandh@altlinux.ru> 4.8.30-alt1
 - 4.8.30
+- moved *.desktop and *.png files to mc-desktop subpackage (ALT #47541)
 
 * Fri Apr 29 2022 Sergey Y. Afonin <asy@altlinux.org> 4.8.28-alt1
 - 4.8.28
