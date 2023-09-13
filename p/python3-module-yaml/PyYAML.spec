@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 6.0
-Release: alt2
+Version: 6.0.1
+Release: alt1
 
 Summary: PyYAML, a YAML parser and emitter for Python
 License: MIT
@@ -60,6 +60,9 @@ support, and relatively sensible error messages.
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0.1-alt1
+- 6.0.1
+
 * Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 6.0-alt2
 - Modernized packaging.
 
