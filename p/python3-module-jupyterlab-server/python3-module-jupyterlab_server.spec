@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.24.0
+Version: 2.25.0
 Release: alt1
 Summary: A set of server components for JupyterLab and JupyterLab like applications
 License: BSD-3-Clause
@@ -28,6 +28,9 @@ BuildRequires: python3-module-mistune
 BuildRequires: python3-module-strict-rfc3339
 BuildRequires: python3-module-openapi-core
 BuildRequires: /dev/pts
+BuildRequires: python3-module-ruamel-yaml
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 %endif
 
 %description
@@ -47,13 +50,14 @@ sed -i 's/--color=yes//' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v -W ignore::ImportWarning -W ignore::DeprecationWarning -k "\
-not test_translation_api.py \
-and not test_listings_api.py \
-and not test_settings_api.py \
-and not test_themes_api.py \
-and not test_workspaces_api.py \
-and not test_page_config"
+%__python3 -m venv build/testenv --system-site-packages
+for p in \
+  tests/translations/jupyterlab-some-package \
+  tests/translations/jupyterlab-language-pack-es_CO
+do
+  build/testenv/bin/pip install --use-pep517 --no-build-isolation --disable-pip-version-check $p
+done
+%pyproject_run_pytest -v -W ignore::ImportWarning
 
 %files
 %doc README.*
@@ -61,6 +65,9 @@ and not test_page_config"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Wed Sep 13 2023 Anton Vyatkin <toni@altlinux.org> 2.25.0-alt1
+- New version 2.25.0.
+
 * Mon Jul 24 2023 Anton Vyatkin <toni@altlinux.org> 2.24.0-alt1
 - New version 2.24.0.
 
