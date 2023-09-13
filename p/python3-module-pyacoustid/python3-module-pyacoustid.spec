@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.2.2
+Version: 1.3.0
 Release: alt1
 
 Summary: Python3 bindings for Chromaprint acoustic fingerprinting and the Acoustid API
@@ -49,6 +49,9 @@ py.test3
 %doc README*
 
 %changelog
+* Wed Sep 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Thu Jun 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - first build for Sisyphus
 
