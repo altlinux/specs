@@ -15,7 +15,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 76.0
+Version: 79.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -24,6 +24,9 @@ Url: https://mkvtoolnix.download/
 
 # https://gitlab.com/mbunkus/mkvtoolnix.git
 Source: %name-%version.tar
+
+# https://gitlab.com/mbunkus/mkvtoolnix/-/commit/b317f8dd6ae4b6a1ac70e56c458063fab7a4e991
+Patch: %name-fix-unresolved-dts_reader_c.patch
 
 Provides: mkvmerge = %EVR
 
@@ -41,7 +44,7 @@ BuildRequires: libpcre2-devel
 BuildRequires: libutfcpp-devel
 BuildRequires: nlohmann-json-devel
 
-%{?_enable_qt:BuildRequires: qt5-base-devel qt5-tools qt5-multimedia-devel qt5-svg-devel cmark-devel}
+%{?_enable_qt:BuildRequires: qt6-base-devel qt6-tools qt6-multimedia-devel qt6-svg-devel cmark-devel}
 %{?_with_flac:BuildRequires: libflac-devel}
 %{?_with_dvdread:BuildRequires: libdvdread-devel}
 
@@ -85,6 +88,7 @@ about the codecs used.
 
 %prep
 %setup
+%patch -p1
 
 # remove some bundled libraries
 rm -rf lib/nlohmann-json lib/pugixml lib/utf8-cpp
@@ -94,15 +98,18 @@ sed -i 's,aarch64,&|riscv64|e2k,' ac/ax_boost_base.m4
 %endif
 
 %build
+%if_enabled qt
+export CXXFLAGS="$CXXFLAGS -I%_includedir/qt6 -I%_includedir/qt6/QtCore -I%_includedir/qt6/QtWidgets -I%_includedir/qt6/QtGui -I%_includedir/qt6/QtNetwork -I%_includedir/qt6/QtConcurrent -I%_includedir/qt6/QtMultimedia"
+%endif
 ./autogen.sh
 %configure \
     --disable-update-check \
     --disable-optimization \
     %{subst_enable debug} \
     %{subst_enable profiling} \
-    %{subst_enable qt} \
 %if_enabled qt
-    ac_cv_path_LCONVERT=%_bindir/lconvert-qt5 \
+    --enable-qt6 \
+    ac_cv_path_LCONVERT=%_bindir/lconvert-qt6 \
 %endif
     %{subst_with flac} \
     %{subst_with dvdread} \
@@ -156,11 +163,18 @@ rake V=1 tests:run_unit
 %_iconsdir/hicolor/*/apps/%name-gui.*
 %_desktopdir/org.bunkus.%name-gui.desktop
 %_xdgmimedir/packages/org.bunkus.%name-gui.xml
-%_datadir/mkvtoolnix/sounds/*.webm
 %_datadir/metainfo/org.bunkus.%name-gui.appdata.xml
+%_datadir/%name
 %endif
 
 %changelog
+* Wed Sep 13 2023 L.A. Kostis <lakostis@altlinux.ru> 79.0-alt1
+- 79.0.
+
+* Fri Jul 21 2023 L.A. Kostis <lakostis@altlinux.ru> 78.0-alt1
+- 78.0.
+- qt5->qt6.
+
 * Thu May 11 2023 L.A. Kostis <lakostis@altlinux.ru> 76.0-alt1
 - 76.0.
 
