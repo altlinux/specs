@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 1.5.1
+Version: 1.5.3
 Release: alt1
 
 Summary: Shellingham detects what shell the current Python executable is running in
@@ -19,6 +19,8 @@ Source: https://github.com/sarugaku/shellingham/archive/%version/%pypi_name-%ver
 Vcs: https://github.com/sarugaku/shellingham.git
 Source: %pypi_name-%version.tar
 %endif
+#https://github.com/sarugaku/shellingham/pull/82
+Patch: %pypi_name-1.5.3-up-tests.patch
 
 BuildArch: noarch
 
@@ -37,6 +39,7 @@ BuildRequires: python3(tox_console_scripts)}
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -55,6 +58,9 @@ py.test3
 %doc README* CHANGELOG*
 
 %changelog
+* Wed Sep 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt1
+- 1.5.3 (ALT #47563)
+
 * Tue Feb 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
 - 1.5.1
 
