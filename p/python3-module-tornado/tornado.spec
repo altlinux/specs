@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 6.3.3
-Release: alt1
+Release: alt1.1
 
 Summary: Scalable, non-blocking web server and tools
 
@@ -13,6 +13,7 @@ VCS: https://github.com/tornadoweb/tornado
 
 Source: %name-%version.tar
 Patch: Do-not-turn-DeprecationWarning-into-Exception.patch
+Patch1: tornado-increase-timeout-for-simplehttpclienttest.patch
 
 BuildRequires(pre): rpm-build-python3
 Requires: ca-certificates python3-module-certifi
@@ -31,6 +32,7 @@ ideal for real-time web services.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 # remove shebang from files
 sed -i.orig -e '/^#!\//, 1d' *py tornado/*.py tornado/*/*.py
 
@@ -56,6 +58,10 @@ export ASYNC_TEST_TIMEOUT=120
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed Sep 13 2023 Ivan A. Melnikov <iv@altlinux.org> 6.3.3-alt1.1
+- Increase timeout for simple_httpclient_test
+  (fixes build on riscv64 and mipsel).
+
 * Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.3-alt1
 - Automatically updated to 6.3.3.
 
