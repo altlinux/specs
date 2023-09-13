@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 3.8.4
+Version: 3.8.5
 Release: alt1
 Summary: http client/server for asyncio
 License: Apache-2.0
@@ -99,6 +99,9 @@ python3 setup.py test
 %python3_sitelibdir/%oname/*/*test*
 
 %changelog
+* Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.8.5-alt1
+- 3.8.5 released
+
 * Fri May 05 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.8.4-alt1
 - 3.8.4 released
 
