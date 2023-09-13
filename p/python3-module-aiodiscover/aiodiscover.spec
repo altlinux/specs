@@ -1,5 +1,5 @@
 Name: python3-module-aiodiscover
-Version: 1.4.16
+Version: 1.5.1
 Release: alt1
 
 Summary: Async Host discovery
@@ -40,6 +40,9 @@ BuildRequires: python3(ifaddr)
 %python3_sitelibdir/aiodiscover-%version.dist-info
 
 %changelog
+* Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.1-alt1
+- 1.5.1 released
+
 * Fri May 05 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.16-alt1
 - 1.4.16 released
 
