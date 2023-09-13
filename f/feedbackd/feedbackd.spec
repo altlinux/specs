@@ -13,7 +13,7 @@
 
 Name: feedbackd
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Feedback library for GNOME
 Group: System/Servers
@@ -88,6 +88,7 @@ GObject introspection devel data for %libname
 
 %prep
 %setup -n %name-%{?_disable_snapshot:v}%version
+sed -i 's|-G %name|-G users|' debian/feedbackd.udev
 
 %build
 %meson \
@@ -117,6 +118,7 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 %_datadir/glib-2.0/schemas/org.sigxcpu.feedbackd.gschema.xml
 %{?_enable_man:%_man1dir/fbcli.1.*
 %_man1dir/fbd-theme-validate.1.*
+%_man5dir/feedback-themes.5.*
 %_man8dir/%name.8.*}
 
 %files -n %libname
@@ -137,6 +139,11 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 %endif
 
 %changelog
+* Wed Sep 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1.1
+- 90-feedbackd.rules: use "-G users" instead of "-G feedbackd"
+  as argument for fbd-ledctrl (ALT #47557)
+- packaged lost man 5 feedback-themes
+
 * Mon Sep 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - 0.2.1
 
