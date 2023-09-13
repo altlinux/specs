@@ -3,9 +3,12 @@
 %define oname aws-xray-sdk
 %define modname aws_xray_sdk
 
+# TODO: turn on some tests
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.8.0
-Release: alt1.1
+Version: 2.12.0
+Release: alt1
 Summary: AWS X-Ray SDK for the Python programming language
 Group: Development/Python3
 License: Apache-2.0
@@ -17,15 +20,14 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3(setuptools)
-BuildRequires: python3(botocore)
-BuildRequires: python3(future)
-BuildRequires: python3(jsonpickle)
-BuildRequires: python3(wrapt)
-BuildRequires: /usr/bin/pytest-3
-BuildRequires: python3(sqlite3) python3(sqlalchemy) python3(mock) python3(flask)
-BuildRequires: python3(pg8000) python3(flask_sqlalchemy) python3(bottle) python3(webtest) python3(django)
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-wrapt
+BuildRequires: python3-module-botocore
+BuildRequires: python3-module-coverage
+%endif
 
 %add_python3_req_skip aiobotocore.client flask_sqlalchemy.model
 %add_python3_self_prov_path  %buildroot%python3_sitelibdir/%modname/ext
@@ -39,42 +41,25 @@ to the AWS X-Ray service.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-pytest-3 -vv \
-	--ignore=tests/ext/aiobotocore/test_aiobotocore.py \
-	--ignore=tests/ext/pg8000/test_pg8000.py \
-	--ignore=tests/ext/psycopg2/test_psycopg2.py \
-	--ignore=tests/ext/pymysql/test_pymysql.py \
-	--ignore=tests/ext/pynamodb/test_pynamodb.py \
-	--ignore=tests/ext/sqlalchemy_core/test_postgres.py \
-	--deselect=tests/ext/httplib/test_httplib.py \
-	--deselect=tests/ext/requests/test_requests.py::test_ok \
-	--deselect=tests/ext/requests/test_requests.py::test_error \
-	--deselect=tests/ext/requests/test_requests.py::test_throttle \
-	--deselect=tests/ext/requests/test_requests.py::test_fault \
-	--deselect=tests/ext/requests/test_requests.py::test_name_uses_hostname \
-	--deselect=tests/ext/requests/test_requests.py::test_strip_http_url \
-	--deselect=tests/test_async_local_storage.py::test_localstorage_isolation \
-	--deselect=tests/test_async_recorder.py \
-	--deselect=tests/ext/aiohttp/test_client.py \
-	--deselect=tests/ext/aiohttp/test_middleware.py \
-	--deselect=tests/ext/django/test_db.py \
-	--deselect=tests/ext/django/test_middleware.py \
-	--deselect=tests/ext/django/test_settings.py \
-	%nil
+# tests/ext/flask_sqlalchemy/test_query.py
+# https://github.com/aws/aws-xray-sdk-python/issues/359
+%tox_check_pyproject
 
 %files
-%doc LICENSE
-%doc *.md *.rst
+%doc LICENSE *.md *.rst
 %python3_sitelibdir/%modname
-%python3_sitelibdir/%modname-%version-py*.egg-info
+%python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Wed Sep 13 2023 Grigory Ustinov <grenka@altlinux.org> 2.12.0-alt1
+- Automatically updated to 2.12.0.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.8.0-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
