@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt3
+Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.52
+%define kernel_sublevel	.53
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -603,6 +603,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Sep 13 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.53-alt1
+- v6.1.53 (2023-09-13).
+
 * Sun Sep 10 2023 Vitaly Chikunov <vt@altlinux.org> 2:6.1.52-alt3
 - Backport fchmodat2 patchset.
 
