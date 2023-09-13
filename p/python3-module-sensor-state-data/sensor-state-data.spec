@@ -1,5 +1,5 @@
 Name: python3-module-sensor-state-data
-Version: 2.16.1
+Version: 2.17.1
 Release: alt1
 
 Summary: Models for storing and converting Sensor Data state
@@ -37,6 +37,9 @@ BuildRequires: python3(pytest-cov)
 %python3_sitelibdir/sensor_state_data-%version.dist-info
 
 %changelog
+* Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.17.1-alt1
+- 2.17.1 released
+
 * Mon Jul 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.16.1-alt1
 - 2.16.1 released
 
