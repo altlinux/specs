@@ -3,14 +3,15 @@
 
 Name: jq
 %define lname lib%name
-Version: 1.6
-Release: alt2
+Version: 1.7
+Release: alt1
 Summary: Command-line JSON processor
 Group: Development/Other
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
-Url: http://stedolan.github.io/jq/
-License: BSD-style
+Url: https://stedolan.github.io/jq/
+VCS: https://github.com/stedolan/jq
+License: BSD
 Requires: %lname = %EVR
 
 BuildRequires: flex  liboniguruma-devel
@@ -57,7 +58,7 @@ chmod +x scripts/version
 	--prefix=%_prefix \
 	--libdir=%_libdir \
 	--enable-shared \
-
+	#
 %make_build V=1
 
 %install
@@ -80,6 +81,7 @@ cat ./test-suite.log
 %files -n %lname-devel
 %_includedir/*
 %_libdir/*.so
+%_pkgconfigdir/libjq.pc
 
 %if_enabled static
 %files -n %lname-devel-static
@@ -87,6 +89,10 @@ cat ./test-suite.log
 %endif
 
 %changelog
+* Wed Sep 13 2023 Anton Farygin <rider@altlinux.ru> 1.7-alt1
+- 1.6 -> 1.7
+- fixed URL
+
 * Thu Nov 22 2018 Anton Farygin <rider@altlinux.ru> 1.6-alt2
 - fixed build with --disable check 
 
