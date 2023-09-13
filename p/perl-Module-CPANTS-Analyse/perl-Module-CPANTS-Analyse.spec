@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Module-CPANTS-Analyse
-Version:        1.01
-Release:        alt1_1
+Version:        1.02
+Release:        alt1
 Summary:        Generate Kwalitee ratings for a distribution
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Module-CPANTS-Analyse
-Source0:        https://cpan.metacpan.org/modules/by-module/Module/Module-CPANTS-Analyse-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Module-CPANTS-Analyse-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
@@ -113,7 +114,7 @@ find %{buildroot} -type f -name .packlist -delete
 # %{_fixperms} -c %{buildroot}
 
 %files
-%doc AUTHORS Changes README.md TODO
+%doc AUTHORS Changes README.md
 %dir %{perl_vendor_privlib}/Module/
 %dir %{perl_vendor_privlib}/Module/CPANTS/
 %{perl_vendor_privlib}/Module/CPANTS/Analyse.pm
@@ -122,6 +123,9 @@ find %{buildroot} -type f -name .packlist -delete
 %{perl_vendor_privlib}/Module/CPANTS/Kwalitee/*.pm
 
 %changelog
+* Wed Sep 13 2023 Igor Vlasenko <viy@altlinux.org> 1.02-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_1
 - update to new release by fcimport
 
