@@ -7,7 +7,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt2.g%{git}
+Release: alt3.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Anbox kernel modules sources
 License: GPLv3/GPLv2
@@ -51,6 +51,9 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %_udevrulesdir/99-anbox.rules
 
 %changelog
+* Wed Sep 13 2023 L.A. Kostis <lakostis@altlinux.ru> 14-alt3.gae26ba2
+- udev.rules: remove useless macros.
+
 * Thu Jun 01 2023 L.A. Kostis <lakostis@altlinux.ru> 14-alt2.gae26ba2
 - Apply fixes to compile with 6.3+ kernel.
 
