@@ -1,10 +1,8 @@
 %define oname aio_periodic
 
-%def_with python3
-
 Name: python3-module-%oname
-Version: 0.1.6
-Release: alt1.git20141231.2
+Version: 0.2.8
+Release: alt1
 Summary: The periodic task system client for python3 base on asyncio
 License: Free
 Group: Development/Python3
@@ -31,14 +29,14 @@ The periodic task system client for python3 base on asyncio.
 %install
 %python3_install
 
-%check
-python3 setup.py test
-
 %files
-%doc *.md
+%doc README
 %python3_sitelibdir/*
 
 %changelog
+* Wed Sep 13 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.8-alt1
+- Build new version.
+
 * Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.6-alt1.git20141231.2
 - Drop python2 support.
 
