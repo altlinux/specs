@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.21
+Version: 10.22
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -52,6 +52,12 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Wed Sep 13 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.22-alt1
+- Add reading the avatar from the AccountsService (ALT #47231)
+- Update the avatar display window in full resolution
+- Update the avatar selection window in the web ui
+- Remove non-images from the list of avatars
+
 * Mon Sep 11 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.21-alt1
 - Fix avatar update in desktop version
 - Add avatar copying to the AccountsSerivce directory
