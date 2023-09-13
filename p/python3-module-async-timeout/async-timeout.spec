@@ -1,5 +1,5 @@
 Name: python3-module-async-timeout
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 
 Summary: Timeout context manager for asyncio programs
@@ -29,6 +29,9 @@ Timeout context manager for asyncio programs.
 %python3_sitelibdir/*
 
 %changelog
+* Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.3-alt1
+- 4.0.3
+
 * Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.2-alt1
 - 4.0.2
 
