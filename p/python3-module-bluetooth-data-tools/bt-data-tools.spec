@@ -1,5 +1,5 @@
 Name: python3-module-bluetooth-data-tools
-Version: 1.3.0
+Version: 1.11.0
 Release: alt1
 
 Summary: Tools for converting bluetooth data and packets
@@ -14,6 +14,7 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: gcc-c++
 BuildRequires: python3(cython)
 %pyproject_builddeps_build
+BuildRequires: python3(cryptography)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-cov)
 
@@ -38,6 +39,9 @@ BuildRequires: python3(pytest-cov)
 %python3_sitelibdir/bluetooth_data_tools-%version.dist-info
 
 %changelog
+* Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.11.0-alt1
+- 1.11.0 released
+
 * Mon Jul 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt1
 - 1.3.0 released
 
