@@ -1,5 +1,5 @@
 Name: obs-vkcapture
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: OBS Linux Vulkan/OpenGL game capture
@@ -8,13 +8,13 @@ License: GPL-2.0
 Group: Other
 Url: https://github.com/nowrep/obs-vkcapture
 
-# Source-url: https://github.com/nowrep/obs-vkcapture/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: libobs-devel libvulkan-devel libGL-devel libEGL-devel
 BuildRequires: libX11-devel libxcb-devel libwayland-client-devel
+BuildRequires: libXau-devel libXdmcp-devel libffi-devel
 
 ExcludeArch: %ix86 armh
 
@@ -48,5 +48,9 @@ env OBS_VKCAPTURE=1 command.
 %_datadir/vulkan/implicit_layer.d/obs_vkcapture_64.json
 
 %changelog
+* Wed Sep 13 2023 Mikhail Tergoev <fidel@altlinux.org> 1.4.2-alt1
+- 1.4.2
+- Added BR: libXau-devel libXdmcp-devel libffi-devel
+
 * Wed Aug 02 2023 Mikhail Tergoev <fidel@altlinux.org> 1.4.1-alt1
 - Initial build for Sisyphus
