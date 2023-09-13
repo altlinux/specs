@@ -1,6 +1,6 @@
 Name: python3-module-bluetooth-adapters
-Version: 0.15.4
-Release: alt2
+Version: 0.16.1
+Release: alt1
 
 Summary: Tools to enumerate and find Bluetooth Adapters
 License: Apache-2.0
@@ -18,6 +18,7 @@ BuildRequires: python3(pytest-cov)
 BuildRequires: python3(bleak)
 BuildRequires: python3(usb_devices)
 BuildRequires: python3(async_timeout)
+BuildRequires: python3(typing_extensions)
 
 %description
 %summary
@@ -40,6 +41,9 @@ BuildRequires: python3(async_timeout)
 %python3_sitelibdir/bluetooth_adapters-%version.dist-info
 
 %changelog
+* Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.16.1-alt1
+- 0.16.1 released
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 0.15.4-alt2
 - fixed ftbfs
 
