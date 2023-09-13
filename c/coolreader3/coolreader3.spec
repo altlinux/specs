@@ -2,7 +2,7 @@
 
 Name:     coolreader3
 Version:  3.2.59
-Release:  alt1
+Release:  alt2
 
 Summary:  E-Book reader
 License:  %gpl2only
@@ -24,11 +24,10 @@ Patch1: %name-3.2.57-textlang.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: cmake gcc-c++ libicu-devel libjpeg-devel qt5-phonon-devel
-BuildRequires: qt5-tools-devel libfreetype-devel fontconfig-devel
-BuildRequires: libpcre-devel libuuid-devel libexpat-devel libtextstyle-devel
+BuildRequires: cmake gcc-c++ libicu-devel libjpeg-devel libpng-devel libgif-devel
+BuildRequires: qt5-phonon-devel qt5-tools-devel libfreetype-devel fontconfig-devel
+BuildRequires: libpcre-devel libuuid-devel libexpat-devel
 BuildRequires: libunibreak-devel libfribidi-devel libzstd-devel
-BuildRequires(pre): libpng-devel
 
 %description
 CoolReader is fast and small cross-platform XML/CSS based
@@ -86,6 +85,9 @@ install -m0644 -- %SOURCE4 %buildroot%_liconsdir/%real_name.png
 %_liconsdir/%{real_name}*
 
 %changelog
+* Wed Sep 13 2023 Nikolay A. Fetisov <naf@altlinux.org> 3.2.59-alt2
+- Update BuildRequires
+
 * Sun Nov 21 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.2.59-alt1
 - New version
 
