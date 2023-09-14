@@ -13,7 +13,7 @@
 
 Name:		bcc
 Version:	0.28.0
-Release:	alt1
+Release:	alt2
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -49,6 +49,7 @@ BuildRequires: llvm-devel-static
 BuildRequires: python3-devel
 BuildRequires: python3-tools
 BuildRequires: zlib-devel
+BuildRequires: libxml2-devel libmlir-devel libpolly-devel
 %if_with luajit
 BuildRequires: libluajit-devel
 BuildRequires: luajit
@@ -294,6 +295,9 @@ rm /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Thu Sep 14 2023 Artyom Bystrov <arbars@altlinux.org> 0.28.0-alt2
+- Fix FTBFS
+
 * Sun Aug 27 2023 Vitaly Chikunov <vt@altlinux.org> 0.28.0-alt1
 - Update to v0.28.0 (2023-06-28).
 - spec: Add checkinstall package with tests.
