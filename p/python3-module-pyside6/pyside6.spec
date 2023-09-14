@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 6.4.2
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -25,9 +25,13 @@ BuildRequires(pre): cmake
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-packaging
-BuildRequires: clang-devel
 BuildRequires: python3-devel
-BuildRequires: llvm-devel
+BuildRequires: clang-devel
+BuildRequires: libmlir15.0-devel
+BuildRequires: llvm15.0-devel
+BuildRequires: libpolly15.0-devel
+BuildRequires: clang15.0-tools
+BuildRequires: clangd15.0
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
@@ -116,7 +120,7 @@ which provides access to the complete Qt 6.0+ framework.
 %package devel
 Summary: Development files related to %name
 Group: Development/Python3
-Provides: python3-pyside6-devel = %EVR
+Provides: python3-module-pyside6-devel = %EVR
 
 %description devel
 %summary.
@@ -133,7 +137,7 @@ to Python, or even to get useful information to debug an application.
 %package -n python3-module-shiboken6
 Summary: Python/C++ bindings helper module
 Group: Development/Python3
-Provides: python3-shiboken6 = %EVR
+Provides: python3-module-shiboken6 = %EVR
 
 %description -n python3-module-shiboken6
 The purpose of the shiboken6 Python module is to access information related
@@ -145,7 +149,7 @@ Summary: Python/C++ bindings helper module
 Group: Development/Python3
 Requires: shiboken6
 Requires: python3-module-shiboken6
-Provides: python3-shiboken6-devel = %EVR
+Provides: python3-module-shiboken6-devel = %EVR
 
 %description -n python3-module-shiboken6-devel
 The purpose of the shiboken6 Python module is to access information related
@@ -270,5 +274,8 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Thu Sep 14 2023 Anton Vyatkin <toni@altlinux.org> 6.4.2-alt2
+- Fix FTBFS.
+
 * Sun Sep 03 2023 Anton Vyatkin <toni@altlinux.org> 6.4.2-alt1
 - Initial build for Sisyphus.
