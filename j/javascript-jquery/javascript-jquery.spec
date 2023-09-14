@@ -1,6 +1,6 @@
 %define oname jquery
 Name: javascript-jquery
-Version: 3.7.0
+Version: 3.7.1
 Release: alt1
 
 Summary: jQuery is a new kind of JavaScript Library
@@ -35,6 +35,9 @@ install -m644 %SOURCE1 %buildroot%_jquerydir/jquery.min.js
 %_jquerydir/*
 
 %changelog
+* Thu Sep 14 2023 L.A. Kostis <lakostis@altlinux.ru> 3.7.1-alt1
+- 3.7.1.
+
 * Mon Jun 05 2023 L.A. Kostis <lakostis@altlinux.ru> 3.7.0-alt1
 - 3.7.0.
 
