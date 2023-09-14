@@ -1,7 +1,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.24.0
-Release: alt2
+Release: alt3
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre2-devel libssl-devel perl-devel zlib-devel libkrb5-devel
@@ -10,6 +10,7 @@ BuildRequires: libgd2-devel
 BuildRequires: libpam-devel
 BuildRequires: libxml2-devel libxslt-devel
 %def_with perl
+%def_with accept_language
 %def_with aio
 %def_with aio
 %def_with image_filter
@@ -34,6 +35,7 @@ Source11: mime.types
 Source12: nginx.filetrigger
 Source13: ngx_http_auth_pam_module.tar
 Source14: spnego-http-auth-nginx-module.tar
+Source15: nginx-accept_language-module.tar
 Source100: %name.watch
 
 Patch0: cache-purge-fix-compatibility.patch
@@ -57,6 +59,17 @@ Requires: %name = %EVR
 
 %description geoip
 GeoIP module for nginx
+
+%if_with accept_language
+%package accept_language
+Summary: Nginx Accept Language module
+Group: System/Servers
+Requires: %name = %EVR
+
+%description accept_language
+This module parses the Accept-Language header and gives the most suitable locale
+for the user from a list of supported locales from your website.
+%endif
 
 %if_with image_filter
 %package image_filter
@@ -110,7 +123,7 @@ Fast HTTP server, extremely useful as an Apache frontend
 
 
 %prep
-%setup -a 7 -a 10 -a 13 -a 14
+%setup -a 7 -a 10 -a 13 -a 14 -a 15
 sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
 cp -f %SOURCE11 conf/mime.types
 
@@ -153,6 +166,9 @@ popd
 %endif
 %if_with geoip
 	--with-http_geoip_module=dynamic \
+%endif
+%if_with accept_language
+	--add-dynamic-module=nginx-accept_language-module \
 %endif
 %if_with spnego
 	--add-dynamic-module=spnego-http-auth-nginx-module \
@@ -308,6 +324,12 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_image_filter_module.so
 %endif
 
+%if_with accept_language
+%files accept_language
+%config(noreplace) %nginx_etc/modules-available.d/http_accept_language.conf
+%modpath/ngx_http_accept_language_module.so
+%endif
+
 %files pam
 %config(noreplace) %nginx_etc/modules-available.d/http_auth_pam.conf
 %modpath/ngx_http_auth_pam_module.so
@@ -329,6 +351,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Thu Sep 14 2023 Anton Farygin <rider@altlinux.ru> 1.24.0-alt3
+- added accept_language module (Closes: #47364)
+- updated pam and geoip modules
+
 * Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 1.24.0-alt2
 - updated pam module to 1.5.5
 
