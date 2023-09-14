@@ -2,7 +2,7 @@
 
 Name:    synfigstudio
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: Synfig studio - animation program
 License: GPLv2+
@@ -12,6 +12,9 @@ Url:     http://www.synfig.org
 #Source: https://github.com/synfig/synfig.git
 Source:  %name-%version.tar
 Patch:   synfigstudio-alt-fix-build.patch
+
+# https://github.com/synfig/synfig/pull/2734
+Patch2:  0001-fix-mod_libavcodec-fixed-build-with-FFMPEG-5.0.patch
 
 # FIXME: crippled zlib-devel (#40274)
 ExcludeArch: armh
@@ -112,6 +115,7 @@ Header files for Synfig studio.
 %prep
 %setup
 %patch -p1
+%patch2 -p1
 mkdir local-pkg-config
 %ifarch %e2k
 # -lgcov not there yet...
@@ -220,6 +224,9 @@ echo /usr/share/locale/zh-Hant/LC_MESSAGES/synfigstudio.mo >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Sep 13 2023 Artyom Bystrov <arbars@altlinux.org> 1.5.1-alt2
+- Fix FTBFS 
+
 * Thu Oct 21 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
 - New version.
 
