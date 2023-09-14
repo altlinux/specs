@@ -1,3 +1,4 @@
+%set_perl_req_method relaxed
 %define _unpackaged_files_terminate_build 1
 %define module_name XS-Parse-Sublike
 # BEGIN SourceDeps(oneline):
@@ -6,7 +7,7 @@ BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Sub/Util.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.18
+Version: 0.20
 Release: alt1
 Summary: XS functions to assist in parsing C<sub>-like syntax
 Group: Development/Perl
@@ -39,9 +40,13 @@ It is hoped eventually this will be useful for other modules too.
 %files
 %doc README Changes
 %perl_vendor_archlib/X*
+%perl_vendor_archlib/Sublike/Extended.pm
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Sep 13 2023 Igor Vlasenko <viy@altlinux.org> 0.20-alt1
+- automated CPAN update
+
 * Thu Jun 22 2023 Igor Vlasenko <viy@altlinux.org> 0.18-alt1
 - automated CPAN update
 
