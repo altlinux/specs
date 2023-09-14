@@ -1,10 +1,10 @@
 %define module_name     rtl88x2bu
 %define module_version  35809.20191129
-%define git_rev c866ad2
+%define git_rev         e1e98a4
 
 Name: kernel-source-rtl88x2bu
 Version: 5.8.7.1
-Release: alt5.git%git_rev
+Release: alt6.git%git_rev
 
 Summary: Linux %module_name for Realtek DWA-182 Wireless AC Dual Band USB Adapter
 URL: https://support.dlink.ca/ProductInfo.aspx?m=DWA-182
@@ -34,6 +34,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Sep 14 2023 Andrey Cherepanov <cas@altlinux.org> 5.8.7.1-alt6.gite1e98a4
+- Fixed build for kernel 6.5.2.
+
 * Sat Apr 22 2023 Andrey Cherepanov <cas@altlinux.org> 5.8.7.1-alt5.gitc866ad2
 - Fixed build for kernel 6.1.
 
