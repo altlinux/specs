@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ pkgconfig(aubio) pkgconfig(
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		qtractor
-Version:	0.9.31
-Release:	alt1_2
+Version:	0.9.34
+Release:	alt1_1
 Summary:	An Audio/MIDI multi-track sequencer
 License:	GPLv2+
 Group:		Sound
@@ -31,7 +31,7 @@ BuildRequires:	pkgconfig(suil-0)
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(vorbis)
 BuildRequires:	ladspa_sdk
-BuildRequires:	qt5-tools qt6-designer qt6-tools libqt6-svgwidgets qt6-svg qt6-svg-devel
+BuildRequires:	qt5-tools qt6-designer qt6-tools
 BuildRequires:	ccmake cmake ctest
 
 Requires:	dssi dssi-examples
@@ -59,8 +59,7 @@ sed -i "/#if defined(__GNUC__)/s|#|#ifdef __e2k__\nreturn true;\n#el|" \
 
 
 %build
-%{mageia_cmake} \
-    -DJACK_LIBRARY="%(pkg-config --libs jack)"
+%{mageia_cmake} -DJACK_LIBRARY="%(pkg-config --libs jack)"
 %mageia_cmake_build
 
 %install
@@ -93,6 +92,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Sep 14 2023 Igor Vlasenko <viy@altlinux.org> 0.9.34-alt1_1
+- update by mgaimport
+
 * Wed Sep  6 2023 Artyom Bystrov <arbars@altlinux.org> 0.9.31-alt1_2
 - Fix FTBFS (thanks to aris@)
 
