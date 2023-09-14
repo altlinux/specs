@@ -42,7 +42,7 @@
 
 Name: pipewire
 Version: %ver_major.80
-Release: alt1
+Release: alt1.1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -99,7 +99,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_libffado:BuildRequires: pkgconfig(libffado)}
 %{?_enable_libcamera:BuildRequires: libcamera-devel >= %libcamera_ver libdrm-devel}
 %{?_enable_avahi:BuildRequires: pkgconfig(avahi-client)}
-%{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing)}
+%{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing-1)}
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
 %{?_enable_lv2:BuildRequires: liblilv-devel}
 %{?_enable_libcanberra:BuildRequires: libcanberra-devel}
@@ -391,6 +391,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Thu Sep 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.80-alt1.1
+- rebuilt against webrtc-audio-processing-1
+
 * Thu Sep 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.80-alt1
 - updated to 0.3.80-2-ga4f3b78df
 - enabled firewire support using libffado library
