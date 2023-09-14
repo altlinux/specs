@@ -11,7 +11,7 @@
 
 Name: openuds-server
 Version: 3.6.0
-Release: alt8
+Release: alt9
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -156,6 +156,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Thu Sep 14 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt9
+- Revert changes related to Migrating to Django 4.
+
 * Wed Sep 13 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt8
 - Migrating to Django 4.
 - Fix TypeError for plotting.
