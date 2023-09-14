@@ -1,7 +1,7 @@
 %define  modulename catkin_pkg
 
 Name:    python3-module-%modulename
-Version: 0.5.2
+Version: 1.0.0
 Release: alt1
 
 Summary: Standalone Python library for the catkin build system.
@@ -37,6 +37,9 @@ Standalone Python library for the Catkin package system.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Sep 14 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
+- New version.
+
 * Sat May 28 2022 Andrey Cherepanov <cas@altlinux.org> 0.5.2-alt1
 - New version.
 
