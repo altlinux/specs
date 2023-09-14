@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 23.07
+Version: 23.09
 Release: alt1
 
 Group: System/Libraries
@@ -85,6 +85,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Thu Sep 14 2023 Yuri N. Sedunov <aris@altlinux.org> 23.09-alt1
+- 23.09
+
 * Thu Jul 13 2023 Yuri N. Sedunov <aris@altlinux.org> 23.07-alt1
 - 23.07
 
