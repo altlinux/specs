@@ -1,10 +1,10 @@
-# new libs.req stunt
-%add_findreq_skiplist %_libdir/bolzplatz2006/liblwjgl.so
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
+# new libs.req stunt
+%add_findreq_skiplist %_libdir/bolzplatz2006/liblwjgl.so
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -18,7 +18,7 @@ BuildRequires: jpackage-default
 
 Name:           bolzplatz2006
 Version:        1.0.3
-Release:        alt1_51jpp11
+Release:        alt1_55jpp11
 Summary:        Slam Soccer 2006 is a funny football game in 3D-comic-style
 Summary(fr):    Coup de Foot 2006 est un jeu comique en 3D
 Summary(de):    Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
@@ -57,6 +57,7 @@ Requires:       sdljava dom4j vecmath1.2 java jpackage-utils
 Requires:       icon-theme-hicolor autodownloader
 # These are dynamically opened by lwjgl:
 Requires:       libopenal1
+# Bolzplatz2006 is a mix of java + native code, so it can only run on java_arches
 Source44: import.info
 
 %description
@@ -244,6 +245,9 @@ install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
 
 
 %changelog
+* Thu Sep 14 2023 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_55jpp11
+- update
+
 * Wed Apr 06 2022 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_51jpp11
 - fixed build
 
