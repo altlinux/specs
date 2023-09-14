@@ -1,5 +1,5 @@
 Name: libde265
-Version: 1.0.11
+Version: 1.0.12
 Release: alt1
 Summary: Open H.265 video codec implementation
 License: LGPLv3
@@ -49,6 +49,9 @@ Development libraries for %name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Sep 14 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.0.12-alt1
+- 1.0.12 (closes: #47544)
+
 * Thu Feb 09 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.0.11-alt1
 - 1.0.11
 
