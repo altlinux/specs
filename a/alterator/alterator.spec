@@ -1,5 +1,5 @@
 Name: alterator
-Version: 5.4.2
+Version: 5.4.3
 Release: alt1
 
 Summary: ALT Linux configurator engine
@@ -113,7 +113,6 @@ export LTDL_LIBRARY_PATH=src/libguile-gettext:src/libguile-pipe:%_libdir/guile/%
 ln -s ../bin/alterator-cmdline %buildroot%_sbindir/
 
 #create special directories
-mkdir -p %buildroot%_runtimedir/alteratord
 mkdir -p %buildroot%_cachedir/%name
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_sysconfdir/%name
@@ -131,7 +130,7 @@ cat >%buildroot%_rpmmacrosdir/%name<<EOF
 EOF
 
 cat >%buildroot%_tmpfilesdir/%name.conf<<EOF
-d /var/run/alteratord 0710 root _alteratord -
+d /run/alteratord 0710 root _alteratord -
 EOF
 
 %pre
@@ -169,7 +168,6 @@ EOF
 %_sbindir/*
 %_initdir/*
 %_mandir/man?/*
-%attr(710,root,_alteratord) %dir /var/run/alteratord
 
 %_unitdir/alteratord.service
 %_unitdir/alteratord.socket
@@ -183,6 +181,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Sep 14 2023 Anton Midyukov <antohami@altlinux.org> 5.4.3-alt1
+- NMU: Replace /var/run -> /run, /var/lock -> /run/lock (closes: 35882)
+
 * Wed Feb 22 2023 Paul Wolneykien <manowar@altlinux.org> 5.4.2-alt1
 - Require alterator-l10n >= 2.9.123.
 - Minor fix of error message for the 'system-computer-name' type.

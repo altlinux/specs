@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-preinstall
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: Alterator preinstall hooks runner module
@@ -12,7 +12,7 @@ BuildArch: noarch
 Url: http://www.altlinux.org/Alterator
 Source: %name-%version.tar
 
-Requires: alterator >= 5.0-alt1
+Requires: alterator >= 5.4.3
 Requires: alterator-l10n >= 2.1-alt4
 Conflicts: alterator-lookout < 1.6-alt6
 Conflicts: installer-common-stage2 < 1.14.0-alt1
@@ -36,6 +36,9 @@ This is an alterator preinstall hooks runner module.
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Sep 14 2023 Anton Midyukov <antohami@altlinux.org> 0.9.1-alt1
+- change alteratord_socket_dir="/run/alteratord", like alterator 5.4.3
+
 * Sun Apr 02 2023 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
 - do not run remount_chroot
 - update requires, confilcts
