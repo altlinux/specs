@@ -8,7 +8,7 @@
 
 Name: dolphin-emu
 Version: 5.0.19870
-Release: alt3
+Release: alt3.1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -58,6 +58,8 @@ BuildRequires: libmbedtls-compat-devel
 BuildRequires: libmgba-devel
 BuildRequires: libminiupnpc-devel
 BuildRequires: libminizip-ng-compat-devel
+BuildRequires: libmlir-devel
+BuildRequires: libpolly-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libspng-devel
@@ -120,6 +122,9 @@ echo "#define SCM_REV_STR \"%git_commit\"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Thu Sep 14 2023 Nazarov Denis <nenderus@altlinux.org> 5.0.19870-alt3.1
+- Fix FTBFS
+
 * Sat Sep 02 2023 Nazarov Denis <nenderus@altlinux.org> 5.0.19870-alt3
 - Build with system libmgba
 
