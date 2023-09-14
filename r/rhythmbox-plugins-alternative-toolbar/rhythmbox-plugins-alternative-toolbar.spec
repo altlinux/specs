@@ -7,7 +7,7 @@
 
 Name: rhythmbox-plugins-%_name
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: An alternative toolbar for Rhythmbox
 Group: Sound
@@ -21,7 +21,7 @@ Vcs: https://github.com/fossfreedom/alternative-toolbar.git
 Source: %_name-%version%beta.tar
 %endif
 
-Requires: rhythmbox
+Requires: rhythmbox-plugins-python >= 3.4.7-alt2
 
 %add_python3_path %_libdir/rhythmbox/plugins/%_name
 
@@ -55,6 +55,9 @@ Compact toolbar which can be hidden.
 %doc ChangeLog README*
 
 %changelog
+* Thu Sep 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1.1
+- explicitly required rhythmbox-plugins-python (ALT #47567)
+
 * Sun Sep 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1
 - first build for Sisyphus (ALT #47510)
 

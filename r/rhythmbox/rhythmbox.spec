@@ -23,7 +23,7 @@
 
 Name: rhythmbox
 Version: %ver_major.7
-Release: alt1%rev
+Release: alt2%rev
 
 Summary: Music Management Application
 License: GPL-2.0
@@ -69,6 +69,8 @@ Provides: %name-plugins-generic-player
 
 %define _libexecdir %_libdir/%name
 %add_python3_path %_libexecdir
+%add_python3_path %_libdir/%name/plugins
+
 # python bindings are linked into rhythmbox statically
 Provides: python%__python3_version(rb)
 Provides: python%__python3_version(rhythmdb)
@@ -279,6 +281,7 @@ Summary: Python plugins for Rhythmbox
 Group: Sound
 Requires: %name = %EVR
 Requires: lib%name-gir = %EVR
+Requires: typelib(Soup) = 3.0
 %{?_enable_context:Requires: typelib(WebKit) = 1.0}
 %{?_enable_zeitgeist:Requires: zeitgeist}
 
@@ -477,6 +480,9 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %endif
 
 %changelog
+* Wed Sep 13 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.7-alt2
+- updated python3/typelib dependencies (ALT #47567)
+
 * Sun Apr 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.7-alt1
 - 3.4.7 (ported to libsoup-3.0/libdmapsharing-4.0)
 
