@@ -12,6 +12,7 @@
 %define target_libdir lib64
 %define target_has_itm 1
 %define target_has_gold 1
+%define target_has_mvec 1
 %endif
 
 %if "%target_arch" == "arm"
@@ -37,6 +38,13 @@
 %define target_no_default_pie 1
 %endif
 
+%if "%target_arch" == "mips64el"
+%define target_kernel mips
+%define target_qemu_arch mips64el
+%define target_ld_linux /lib64/ld.so.1
+%define target_libdir lib64
+%define target_has_gold 1
+%endif
 
 %if "%target_arch" == "riscv64"
 %define target_kernel riscv
@@ -64,7 +72,7 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20230508
+Version: 20230913
 Release: alt1
 Packager: Alexey Sheplyakov <asheplyakov@altlinux.org>
 Summary: GCC cross-toolchain for %target
@@ -73,19 +81,15 @@ Group: Development/C
 
 ExclusiveArch: x86_64
 
-%define gcc_version 13.1.0
+%define gcc_version 13.2.0
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
 %define binutils_version 2.40
-%define glibc_version 2.37
-%if "%target_arch" == "loongarch64"
+%define glibc_version 2.38.0.6.g7ac405a74c
 %define kernel_version 6.1
-%else
-%define kernel_version 5.15
-%endif
 
-Source0: gcc-13.1.0.tar
+Source0: gcc-13.2.0.tar
 Source1: binutils-2.40.tar
-Source2: glibc-2.37.tar
+Source2: glibc-2.38.0.6.g7ac405a74c-alt2.0.port.tar
 Source4: gmp-6.2.1.tar
 Source5: isl-0.24.tar
 Source6: mpc-1.2.1.tar
@@ -286,6 +290,13 @@ cd ../obj_gcc_bootstrap
 	--with-lxc1-sxc1=no \
 	--with-madd4=no \
 %endif
+%if "%target_arch" == "mips64el"
+	--with-arch-64=mips64r2 \
+	--with-abi=64 \
+	--with-lxc1-sxc1=no \
+	--with-madd4=no \
+	--with-fix-loongson3-llsc=yes \
+%endif
 %if "%target_arch" == "riscv64"
 	--with-arch=rv64gc \
 	--with-abi=lp64d \
@@ -367,6 +378,13 @@ env \
 	--with-fp-32=xx \
 	--with-lxc1-sxc1=no \
 	--with-madd4=no \
+%endif
+%if "%target_arch" == "mips64el"
+        --with-arch-64=mips64r2 \
+        --with-abi=64 \
+        --with-lxc1-sxc1=no \
+        --with-madd4=no \
+        --with-fix-loongson3-llsc=yes \
 %endif
 %if "%target_arch" == "riscv64"
 	--with-arch=rv64gc \
@@ -583,7 +601,7 @@ address_of_message: .word message
 EOF
 %endif
 
-%if "%target_arch" == "mipsel"
+%if "%target_arch" == "mipsel" || "%target_arch" == "mips64el"
 cat > bye.S <<EOF
 #include <sys/syscall.h>
 .text
@@ -721,6 +739,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %exclude %sysroot/usr/%target_libdir/libresolv.a
 %exclude %sysroot/usr/%target_libdir/librt.a
 %exclude %sysroot/usr/%target_libdir/libutil.a
+%if 0%{?target_has_mvec}
+%exclude %sysroot/usr/%target_libdir/libmvec.a
+%endif
 
 %files -n cross-glibc-static-%target_arch
 %sysroot/usr/%target_libdir/libBrokenLocale.a
@@ -733,6 +754,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %sysroot/usr/%target_libdir/libresolv.a
 %sysroot/usr/%target_libdir/librt.a
 %sysroot/usr/%target_libdir/libutil.a
+%if 0%{?target_has_mvec}
+%sysroot/usr/%target_libdir/libmvec.a
+%endif
 
 %files -n binutils-%target
 %_bindir/%target-addr2line
@@ -779,6 +803,12 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Wed Sep 13 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230913-alt1
+- GCC: updated to release 13.2.0
+- glibc: use ALT glibc 2.38 with sisyphus_loongarch64 patches
+- spec: integrated aarch64 bits for glibc 2.38 packaging
+- spec: integrated mips64el bits
+
 * Mon May 08 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230508-alt1
 - GCC: updated to release 13.1.0
 - GCC: don't package libssp any more
