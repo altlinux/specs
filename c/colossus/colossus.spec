@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           colossus
@@ -12,7 +12,7 @@ Name:           colossus
 %global         revdate    20130917
 Version:        0.14.0
 %global         branch    %{nil}
-Release:        alt1_16jpp11
+Release:        alt1_24jpp11
 Summary:        Allows people to play Titan against each other or AIs
 
 License:        GPLv2
@@ -189,6 +189,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Sep 14 2023 Igor Vlasenko <viy@altlinux.org> 0.14.0-alt1_24jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.14.0-alt1_16jpp11
 - update
 
