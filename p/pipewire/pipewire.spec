@@ -20,6 +20,7 @@
 %define jack_ver 1.9.17
 %def_disable wireplumber
 %def_enable libusb
+%def_enable libffado
 %def_enable libcamera
 %def_enable avahi
 %def_enable webrtc
@@ -40,7 +41,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.79
+Version: %ver_major.80
 Release: alt1
 
 Summary: Media Sharing Server
@@ -95,6 +96,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_wireplumber:BuildRequires: libwireplumber-devel}
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
 %{?_enable_libusb:BuildRequires: pkgconfig(libusb-1.0)}
+%{?_enable_libffado:BuildRequires: pkgconfig(libffado)}
 %{?_enable_libcamera:BuildRequires: libcamera-devel >= %libcamera_ver libdrm-devel}
 %{?_enable_avahi:BuildRequires: pkgconfig(avahi-client)}
 %{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing)}
@@ -198,6 +200,7 @@ export LIB=%_lib
 	%{?_enable_gstreamer:-Dgstreamer=enabled} \
 	%{?_disable_vulkan:-Dvulkan=disabled} \
 	%{?_disable_libusb:-Dlibusb=disabled} \
+	%{?_disable_libffado:-Dlibffado=disabled} \
 	%{?_disable_libcamera:-Dlibcamera=disabled} \
 	%{?_disable_avahi:-Davahi=disabled} \
 	%{?_disable_webrtc:-Decho-cancel-webrtc=disabled} \
@@ -388,6 +391,10 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Thu Sep 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.80-alt1
+- updated to 0.3.80-2-ga4f3b78df
+- enabled firewire support using libffado library
+
 * Tue Aug 29 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.79-alt1
 - updated to 0.3.79-2-g6bf42e9bc
 
