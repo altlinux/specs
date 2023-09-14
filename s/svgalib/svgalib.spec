@@ -1,15 +1,15 @@
 Summary: Library for full screen [S]VGA graphics
-Summary(de):	Library für Vollbildschirm-[S]VGA-Grafiken
-Summary(es):	Biblioteca para gráficos en pantalla llena [S]VGA
-Summary(fr):	Une librairie graphique SVGA plein ecran de bas niveau
-Summary(pl):	Biblioteki dla pełnoekranowej grafiki [S]VGA
-Summary(pt_BR):	Biblioteca para gráficos em tela cheia [S]VGA
-Summary(ru_RU):	Низкоуровневая библиотека полноэкранной SVGA графики
-Summary(tr):	Tam-ekran [S]VGA çizimleri kitaplýđý
-Summary(uk_UA):	Низькорівнева бібліотека повноекранної SVGA графіки
+Summary(de_DE.UTF-8):	Library für Vollbildschirm-[S]VGA-Grafiken
+Summary(es_ES.UTF-8):	Biblioteca para gráficos en pantalla llena [S]VGA
+Summary(fr_FR.UTF-8):	Une librairie graphique SVGA plein ecran de bas niveau
+Summary(pl_PL.UTF-8):	Biblioteki dla pełnoekranowej grafiki [S]VGA
+Summary(pt_BR.UTF-8):	Biblioteca para gráficos em tela cheia [S]VGA
+Summary(ru_RU.UTF-8):	Низкоуровневая библиотека полноэкранной SVGA графики
+Summary(tr_TR.UTF-8):	Tam-ekran [S]VGA çizimleri kitaplýđý
+Summary(uk_UA.UTF-8):	Низькорівнева бібліотека повноекранної SVGA графіки
 Name: svgalib
 Version: 1.9.25
-Release: alt2.6
+Release: alt2.7
 License: distributable
 Group: System/Libraries
 Source0: %name-%version.tar
@@ -40,39 +40,39 @@ for Linux. SVGAlib is a library which allows applications to use full
 screen graphics on a variety of hardware platforms. Many games and
 utilities use SVGAlib for their graphics.
 
-%description -l de
+%description -l de_DE.UTF-8
 SVGAlib ist eine Library, die es Applikationen gestattet, auf einer
 Reihe von Plattformen Vollbild-Grafiken zu benutzen. Viele Games und
 Utilities nutzen diese Library für den Grafikzugriff, da sie für
 Maschinen mit wenig Speicher besser geeignet ist als X-Windows.
 
-%description -l es
+%description -l es_ES.UTF-8
 SVGAlib es una biblioteca que permite a las aplicaciones usar gráficos
 de pantalla llena en una variedad de plataformas de hardware. Muchos
 juegos y utilitarios son puestos a disposición para usar la SVGAlib
 para acceso a gráficos, pues es más indicado en máquinas con poca
 memoria para ejecutar un sistema X Window.
 
-%description -l fr
+%description -l fr_FR.UTF-8
 Le package svgalib apporte la librairie graphique SVGAlib de bas
 niveau pour Linux. SVGAlib est une librairie qui permet aux
 applications d'utiliser des graphismes en plein écran sur diverses
 plateformes matérielles. De nombreux jeux et utilitaires utilisent
 SVGAlib pour leurs graphismes.
 
-%description -l pl
+%description -l pl_PL.UTF-8
 Biblioteki dla pełnoekranowej grafiki [S]VGA. Wiele gier i programów
 użytkowych korzysta z tych bibliotek, gdyż wymagaj± mniej pamięci niż
 X Window System.
 
-%description -l pt_BR
+%description -l pt_BR.UTF-8
 SVGAlib é uma biblioteca que permite a aplicaçőes usar gráficos de
 tela cheia em uma variedade de plataformas de hardware. Muitos jogos e
 utilitários săo disponibilizados para usar a SVGAlib para acesso a
 gráficos, pois ele é mais indicado em máquinas com pouca memória para
 rodar um sistema X Window.
 
-%description -l ru_RU
+%description -l ru_RU.UTF-8
 Низкоуровневая графическая библиотека SVGAlib обеспечивает работу с
 графическими режимами VGA и SVGA в консоли. SVGAlib позволяет
 приложениям использовать полноэкранную графику на разнообразных
@@ -82,13 +82,13 @@ rodar um sistema X Window.
 графики. Вам необходимо будет установить svgalib, если вы используете
 такие программы.
 
-%description -l tr
+%description -l tr_TR.UTF-8
 SVGAlib, deđiţik donaným platformlarý üzerinde, uygulamalarýn tam
 ekran çizim kullanmalarýný sađlayan bir kitaplýktýr. Az bellekli
 makinalar için X Windows'tan daha uygun olmasýnýn yanýsýra, pek çok
 oyun ve yardýmcý programlar çizim eriţimi için bu kitaplýđý kullanýr.
 
-%description -l uk_UA
+%description -l uk_UA.UTF-8
 Низькорівнева графічна бібліотека SVGAlib забезпечує роботу з
 графічними режимами VGA та SVGA з консолі. SVGAlib підтримує
 повноекранну графіку на різноманітних апаратних платформах.
@@ -99,14 +99,14 @@ oyun ve yardýmcý programlar çizim eriţimi için bu kitaplýđý kullanýr.
 
 %package devel
 Summary: Development libraries and include files for [S]VGA graphics
-Summary(de):	Entwicklungs-Libraries und INCLUDE-Dateien für (S)VGA-Grafik
-Summary(es):	Bibliotecas de desarrollo y archivos de inclusión para gráficos [S]VGA
-Summary(fr):	Outils pour développer des programmes utilisant SVGAlib
-Summary(pl):	Pliki nagłówkowe i dokumentacja dla [S]VGA
-Summary(pt_BR):	Bibliotecas de desenvolvimento e arquivos de inclusăo para gráficos [S]VGA
-Summary(ru_RU):	Файлы для разработки программ, использующих SVGAlib
-Summary(tr):	[S]VGA grafikleri için geliţtirme kitaplýklarý ve baţlýk dosyalarý
-Summary(uk_UA):	Файли для побудови програм, що використовують SVGAlib
+Summary(de_DE.UTF-8):	Entwicklungs-Libraries und INCLUDE-Dateien für (S)VGA-Grafik
+Summary(es_ES.UTF-8):	Bibliotecas de desarrollo y archivos de inclusión para gráficos [S]VGA
+Summary(fr_FR.UTF-8):	Outils pour développer des programmes utilisant SVGAlib
+Summary(pl_PL.UTF-8):	Pliki nagłówkowe i dokumentacja dla [S]VGA
+Summary(pt_BR.UTF-8):	Bibliotecas de desenvolvimento e arquivos de inclusăo para gráficos [S]VGA
+Summary(ru_RU.UTF-8):	Файлы для разработки программ, использующих SVGAlib
+Summary(tr_TR.UTF-8):	[S]VGA grafikleri için geliţtirme kitaplýklarý ve baţlýk dosyalarý
+Summary(uk_UA.UTF-8):	Файли для побудови програм, що використовують SVGAlib
 Group: Development/C
 Requires: %name = %version
 
@@ -115,43 +115,43 @@ The svgalib-devel package contains the libraries and header files
 needed to build programs which will use the SVGAlib low-level graphics
 library.
 
-%description devel -l de
+%description devel -l de_DE.UTF-8
 Dies sind die Libraries und Header-Dateien, die zum Erstellen von
 Programmen erforderlich sind, die SVGAlib verwenden. Mit SVGAlib
 können Programme Vollbildgrafiken auf einer Reihe von Plattformen
 verwenden, ohne den von X erforderlichen Overhead.
 
-%description devel -l es
+%description devel -l es_ES.UTF-8
 Estas son las bibliotecas y archivos de inclusión que son necesarios
 para construir programas que usan SVGAlib. Permite que los programas
 usen gráficos de pantalla llena en una variedad de plataformas de
 hardware sin el overhead del X.
 
-%description devel -l fr
+%description devel -l fr_FR.UTF-8
 Le package svgalib-devel contient les librairies et les fichiers
 d'entętes nécessaires pour construire des programmes qui utiliseront
 la librairie graphique plein écran de bas-niveau SVGAlib.
 
-%description devel -l pl
+%description devel -l pl_PL.UTF-8
 Pliki nagłówkowe i dokumentacja dla [S]VGA.
 
-%description devel -l pt_BR
+%description devel -l pt_BR.UTF-8
 Estas săo as bibliotecas e arquivos de inclusăo que săo necessários
 para construir programas que usam SVGAlib. SVGAlib permite que
 programas usem gráficos de tela cheia em uma variedade de plataformas
 de hardware sem o overhead do X.
 
-%description devel -l ru_RU
+%description devel -l ru_RU.UTF-8
 Это файлы, необходимые для компиляции программ, использующих
 библиотеку SVGAlib. SVGAlib позволяет программам использовать
 полноэкранную графику на разнообразных аппаратных платформах и без
 необходимости запускать для этого X Window.
 
-%description devel -l tr
+%description devel -l tr_TR.UTF-8
 Bu paket, SVGAlib kitaplýđýný kullanan programlar geliţtirmek için
 gereken baţlýk dosyalarýný ve statik kitaplýklarý içerir.
 
-%description devel -l uk_UA
+%description devel -l uk_UA.UTF-8
 Це файли, необхідні для компіляції програм, що використовують
 бібліотеку SVGAlib. SVGAlib дає програмам можливість працювати з
 повноекранною графікою на різноманітних апаратних платформах та без
@@ -159,29 +159,29 @@ gereken baţlýk dosyalarýný ve statik kitaplýklarý içerir.
 
 %package devel-static
 Summary: Static [S]VGA graphics librarires
-Summary(pl):	Biblioteki statyczne [S]VGA
-Summary(pt_BR):	Bibliotecas estáticas para desenvolvimento com SVGAlib
-Summary(ru_RU):	Статические библиотеки для построения программ, использующих SVGAlib
-Summary(uk_UA):	Статичні бібліотеки для побудови програм, що використовують SVGAlib
+Summary(pl_PL.UTF-8):	Biblioteki statyczne [S]VGA
+Summary(pt_BR.UTF-8):	Bibliotecas estáticas para desenvolvimento com SVGAlib
+Summary(ru_RU.UTF-8):	Статические библиотеки для построения программ, использующих SVGAlib
+Summary(uk_UA.UTF-8):	Статичні бібліотеки для побудови програм, що використовують SVGAlib
 Group: Development/C
 Requires: %name-devel = %version
 
 %description devel-static
 Static [S]VGA graphics librarires.
 
-%description devel-static -l pl
+%description devel-static -l pl_PL.UTF-8
 Biblioteki statyczne [S]VGA.
 
-%description devel-static -l pt_BR
+%description devel-static -l pt_BR.UTF-8
 Bibliotecas estáticas para desenvolvimento com SVGAlib.
 
-%description devel-static -l ru_RU
+%description devel-static -l ru_RU.UTF-8
 Это файлы, необходимые для компиляции программ, использующих
 библиотеку SVGAlib. SVGAlib позволяет программам использовать
 полноэкранную графику на разнообразных аппаратных платформах и без
 необходимости запускать для этого X Window.
 
-%description devel-static -l uk_UA
+%description devel-static -l uk_UA.UTF-8
 Це файли, необхідні для компіляції програм, що використовують
 бібліотеку SVGAlib. SVGAlib дає програмам можливість працювати з
 повноекранною графікою на різноманітних апаратних платформах та без
@@ -189,26 +189,26 @@ Bibliotecas estáticas para desenvolvimento com SVGAlib.
 
 %package utils
 Summary: Various utils for using with %name.
-Summary(ru_RU): Различные утилиты для %name
+Summary(ru_RU.UTF-8): Различные утилиты для %name
 Group: System/Configuration/Hardware
 Requires: %name = %version-%release
 
 %description utils
 Various useful utils for %name.
 
-%description utils -l ru_RU
+%description utils -l ru_RU.UTF-8
 Различные утилиты для %name, позволяющие управлять видеоустройствами, не
 используя X Window.
 
 %package -n kernel-source-%module_name
 Summary: %name kernel helper module sources
-Summary(ru_RU): kernel-space модуль для %name 
+Summary(ru_RU.UTF-8): kernel-space модуль для %name 
 Group: Development/Kernel
 
 %description -n kernel-source-%module_name
 %name kernel helper module sources for Linux kernel.
 
-%description -n kernel-source-%module_name -l ru_RU
+%description -n kernel-source-%module_name -l ru_RU.UTF-8
 kernel-space модуль для %name, позволяющий получить низкоуровневый доступ к
 видеоустройству не повышая привилегий пользователя.
 
@@ -300,6 +300,9 @@ for i in threeDKit/0-*; do %__cp $i $i.threeDKit; done
 %_usrsrc/kernel
 
 %changelog
+* Thu Sep 14 2023 L.A. Kostis <lakostis@altlinux.ru> 1.9.25-alt2.7
+- .spec: fix encoding (closes #46948).
+
 * Sun Mar 28 2021 L.A. Kostis <lakostis@altlinux.ru> 1.9.25-alt2.6
 - fix asm errors (untested).
 
@@ -352,4 +355,3 @@ for i in threeDKit/0-*; do %__cp $i $i.threeDKit; done
 - make separate kernel-source package.
 - make separate utils package.
 - add demos to -devel package for future testing purposes.
-
