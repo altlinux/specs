@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: gamescope
-Version: 3.12.0
+Version: 3.12.5
 Release: alt1
 
 Summary: SteamOS session compositing window manager
@@ -12,7 +12,6 @@ Group: System/X11
 License: BSD-2-Clause
 Url: https://github.com/Plagman/gamescope
 
-# Source-url: https://github.com/ValveSoftware/%name/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 # Create stb.pc to satisfy dependency('stb')
@@ -114,6 +113,10 @@ export PKG_CONFIG_PATH=pkgconfig
 %_datadir/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.*.json
 
 %changelog
+* Thu Sep 14 2023 Mikhail Tergoev <fidel@altlinux.org> 3.12.5-alt1
+- 3.12.5
+- Revert to git.
+
 * Tue Aug 01 2023 Mikhail Tergoev <fidel@altlinux.org> 3.12.0-alt1
 - New version (3.12.0) with rpmgs script.
 - Moved to update from tarball.
