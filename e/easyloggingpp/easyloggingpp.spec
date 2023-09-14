@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: easyloggingpp
-Version: 9.97.0
+Version: 9.97.1
 Release: alt1
 Summary: Single header efficient logging library for C++ applications
 Group: Development/C++
@@ -48,6 +48,9 @@ requirements.
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Sep 14 2023 L.A. Kostis <lakostis@altlinux.ru> 9.97.1-alt1
+- 9.97.1.
+
 * Wed Mar 29 2023 L.A. Kostis <lakostis@altlinux.ru> 9.97.0-alt1
 - Initial build for ALTLinux.
 
