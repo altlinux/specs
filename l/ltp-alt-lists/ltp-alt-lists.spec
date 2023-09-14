@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 17
+Version: 18
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -51,6 +51,9 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Wed Aug 30 2023 Vitaly Chikunov <vt@altlinux.org> 18-alt1
+- Skip ioprio_set03 (for v6.5).
+
 * Tue Nov 01 2022 Vitaly Chikunov <vt@altlinux.org> 17-alt1
 - Skip statx01 (for p10/std-def-5.10.152/i586).
 
