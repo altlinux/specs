@@ -3,7 +3,7 @@
 %def_without cmake
 Name: fheroes2
 Epoch: 2
-Version: 1.0.7
+Version: 1.0.8
 #define rev 20210604
 #Release: alt1.%rev
 Release: alt1
@@ -115,6 +115,9 @@ install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Fri Sep 15 2023 Igor Vlasenko <viy@altlinux.org> 2:1.0.8-alt1
+- new version
+
 * Tue Aug 22 2023 Igor Vlasenko <viy@altlinux.org> 2:1.0.7-alt1
 - new version
 
