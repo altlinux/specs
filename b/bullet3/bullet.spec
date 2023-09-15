@@ -5,15 +5,15 @@
 
 Name: bullet3
 Version: 3.25
-Release: alt1
+Release: alt2
 
 Summary: Professional 3D collision detection library
 
 License: Zlib
 Group: System/Libraries
 Url: http://www.bulletphysics.com
+VCS: https://github.com/bulletphysics/bullet3.git
 
-# Source-url: https://github.com/bulletphysics/bullet3/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 # patch from https://svnweb.mageia.org/packages/cauldron/bullet/current/SOURCES/bullet-3.24-fix-bullet-config.cmake.patch?revision=1919697&view=markup
@@ -204,6 +204,9 @@ rm -rv {data/,examples/}
 %_libdir/libBulletXmlWorldImporter.so
 
 %changelog
+* Fri Sep 15 2023 Mikhail Tergoev <fidel@altlinux.org> 3.25-alt2
+- revert to git
+
 * Thu Aug 10 2023 Mikhail Tergoev <fidel@altlinux.org> 3.25-alt1
 - move to tarball
 - new version (3.25) with rpmgs script
