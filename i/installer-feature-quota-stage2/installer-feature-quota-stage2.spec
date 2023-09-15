@@ -1,5 +1,5 @@
 Name: installer-feature-quota-stage2
-Version: 0.6.1
+Version: 0.7
 Release: alt1
 
 Summary: Setup quota on local filesystems
@@ -25,6 +25,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Sep 15 2023 Dmitry Terekhin <jqt4@altlinux.org> 0.7-alt1
+- Use chroot to prevent errors when setting quotas in the installer.
+
 * Wed Oct 29 2014 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt1
 - Don't skip /var if there is no OVZ.
 
