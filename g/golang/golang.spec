@@ -32,12 +32,16 @@
 %endif
 
 # Build golang shared objects for stdlib
-%ifarch %ix86 x86_64 ppc64le %arm aarch64 riscv64 loongarch64
+%ifarch %ix86 x86_64 ppc64le %arm aarch64
 %def_enable shared
+%else
+%def_disable shared
+%endif
+
+%ifarch %ix86 x86_64 ppc64le %arm aarch64 riscv64 loongarch64
 %def_enable external_linker
 %def_enable cgo
 %else
-%def_disable shared
 %def_disable external_linker
 %def_disable cgo
 %endif
@@ -47,7 +51,7 @@
 
 Name:    golang
 Version: 1.21.1
-Release: alt1
+Release: alt2
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -372,6 +376,9 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Fri Sep 15 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.1-alt2
+- Don't use -buildmode=shared on loongarch64 and riscv64 (thx to iv@) (ALT#47559).
+
 * Wed Sep 06 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.1-alt1
 - New version (1.21.1) (Fixes: CVE-2023-39318, CVE-2023-39319, CVE-2023-39320, CVE-2023-39321, CVE-2023-39322).
 
