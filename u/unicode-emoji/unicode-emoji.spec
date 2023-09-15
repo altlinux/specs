@@ -1,7 +1,7 @@
 %define unicodedir %_datadir/unicode
 %define emojidir %unicodedir/emoji
-%define unicode_ver 15.0.0
-%define emoji_ver 15.0
+%define unicode_ver 15.1.0
+%define emoji_ver 15.1
 
 Name: unicode-emoji
 Version: %emoji_ver
@@ -31,6 +31,7 @@ http://www.unicode.org/reports/tr51/index.html
 
 %prep
 %setup -cT
+grep -q "Version[: ]%version" %_sourcedir/{emoji-*,ReadMe}.txt || (echo "text files seems not %version" ; exit 1)
 
 %install
 mkdir -p %buildroot%emojidir
@@ -42,6 +43,9 @@ cp -a %_sourcedir/{copyright.html,ReadMe.txt} .
 %doc copyright.html ReadMe.txt
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 15.1-alt1
+- 15.1
+
 * Fri Sep 23 2022 Yuri N. Sedunov <aris@altlinux.org> 15.0-alt1
 - 15.0
 
