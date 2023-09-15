@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Crypt-OpenSSL-AES
 
 Name: perl-%dist
-Version: 0.02
-Release: alt1.2
+Version: 0.07
+Release: alt1
 
 Summary: XS-wrapper around OpenSSL's AES library
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TIMLEGGE/%{dist}-%{version}.tar.gz
 
 BuildRequires: rpm-build-licenses
 
@@ -25,7 +26,7 @@ Crypt::Rijndael which implements AES itself. In contrast, this
 module is simply a wrapper around the OpenSSL library.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -39,6 +40,9 @@ module is simply a wrapper around the OpenSSL library.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri Sep 15 2023 Igor Vlasenko <viy@altlinux.org> 0.07-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.2
 - rebuild with new perl 5.28.1
 
