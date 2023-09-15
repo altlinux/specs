@@ -8,7 +8,7 @@
 
 Name: wxGTK3.2
 Version: 3.2.2
-Release: alt2
+Release: alt3
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets
@@ -216,7 +216,7 @@ CONF_FLAG=" \
 	--with-regex=yes \
 	--disable-rpath \
 	--disable-joystick \
-        --enable-webrequest \
+	--enable-webrequest \
 	--enable-plugins \
 	--enable-precomp-headers=yes \
 	--enable-mediactrl \
@@ -255,6 +255,9 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 
 %find_lang wxstd-3.2 wxmsw32 --output=wxstd.lang
 
+# https://bugzilla.altlinux.org/47593
+ln -s %_bindir/wx-config %buildroot%_bindir/wx-config-%wxbranch
+
 %files -n libwxBase%wxbranch
 %_libdir/libwx_baseu-*.so.*
 %_libdir/libwx_baseu_net-*.so.*
@@ -265,7 +268,7 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_bindir/wx-config
 %_bindir/wxrc
 %_bindir/wxrc-%wxbranch
-#_bindir/wx-config-%wxbranch
+%_bindir/wx-config-%wxbranch
 %_includedir/wx-%wxbranch
 %_libdir/libwx_baseu*.so
 %dir %_libdir/wx
@@ -322,6 +325,10 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Fri Sep 15 2023 Anton Midyukov <antohami@altlinux.org> 3.2.2-alt3
+- add %%_bindir/wx-config-%%wxbranch for compatibilty with Fedora
+  (Closes: 47593)
+
 * Mon Feb 13 2023 Anton Midyukov <antohami@altlinux.org> 3.2.2-alt2
 - Add upstream commit: Fix drawing of icons for non-root wxTreeCtrl items
 
