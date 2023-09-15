@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.2.4
+Version: 5.2.5
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Fri Sep 15 2023 Evgeny Sinelnikov <sin@altlinux.org> 5.2.5-alt1
+- Fix systemd-networkd cache initialization
+
 * Mon Oct 31 2022 Sergey V Turchin <zerg@altlinux.org> 5.2.4-alt1
 - Extend adding IP label text
 
