@@ -1,6 +1,7 @@
 Name: nextcloud-client
 Version: 3.9.0
-Release: alt1
+Release: alt1.1
+%K5init no_altplace
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
@@ -24,12 +25,12 @@ Patch5: alt-move-deleted-to-trash.patch
 Patch6: alt-fix-fortify-source.patch
 
 BuildRequires(pre): rpm-macros-qt5-webengine
-BuildRequires: kde-common-devel rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-qt5-devel libsqlite3-devel libssl-devel python3-dev qt5-tools-devel qt5-webkit-devel zlib-devel
 BuildRequires: libqt5-webenginewidgets qt5-webengine-devel libgio-devel glib2-devel qt5-svg-devel
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: qt5-quickcontrols2-devel
-BuildRequires: qt5-websockets-devel kf5-karchive-devel inkscape
+BuildRequires: qt5-websockets-devel kf5-karchive-devel /usr/bin/rsvg-convert
 
 Requires: qt5-graphicaleffects
 
@@ -43,13 +44,34 @@ Requires: %name
 %description kde5
 KDE5 %name integration
 
+%package mate
+Summary: MATE %name integration
+Group: Graphical desktop/MATE
+Requires: %name
+%description mate
+MATE %name integration
+
+%package gnome
+Summary: GNOME %name integration
+Group: Graphical desktop/GNOME
+Requires: %name
+%description gnome
+GNOME %name integration
+
+%package cinnamon
+Summary: Cinnamon %name integration
+Group: Graphical desktop/Other
+Requires: %name
+%description cinnamon
+Cinnamon %name integration
+
 %prep
 %setup
 %patch6 -p1
 
 %build
 %add_optflags %optflags_shared
-%Kbuild \
+%K5build \
     -DBUILD_WITH_QT4=OFF \
     -DDATA_INSTALL_DIR=%_datadir \
     -DCMAKE_INSTALL_SYSCONFDIR=/etc/%name \
@@ -59,7 +81,7 @@ KDE5 %name integration
     -DNO_SHIBBOLETH=1
 
 %install
-%Kinstall
+%K5install
 mkdir -p %buildroot/%_desktopdir
 desktop-file-install \
     --dir=%buildroot/%_desktopdir %SOURCE2
@@ -78,9 +100,6 @@ desktop-file-install \
 %_libdir/*nextcloud*.*
 %_desktopdir/*.desktop
 %_datadir/mime/packages/nextcloud.xml
-%_datadir/nautilus-python/extensions/
-%_datadir/caja-python/extensions/
-%_datadir/nemo-python/extensions/
 %_iconsdir/hicolor/*/apps/Nextcloud.*
 %_iconsdir/hicolor/*/apps/Nextcloud_*.*
 
@@ -89,7 +108,20 @@ desktop-file-install \
 %_K5plug/kf5/kfileitemaction/
 #%_K5srv/*nextcloud*.desktop
 
+%files mate
+%_datadir/caja-python/extensions/*
+
+%files gnome
+%_datadir/nautilus-python/extensions/*
+
+%files cinnamon
+%_datadir/nemo-python/extensions/*
+
 %changelog
+* Fri Sep 15 2023 Sergey V Turchin <zerg@altlinux.org> 3.9.0-alt1.1
+- NMU: drop requires to mate, gnome and cinnamon libraries from main package (closes: 47503)
+- NMU: fix build requires
+
 * Mon Jun 19 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.9.0-alt1
 - new version
 - fixed showing main window (ALT#42096)
