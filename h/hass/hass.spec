@@ -1,6 +1,6 @@
 Name: hass
 Version: 2023.9.2
-Release: alt1
+Release: alt2
 
 Summary: Home automation platform
 License: APL
@@ -112,6 +112,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Fri Sep 15 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.9.2-alt2
+- interpackage deps fixed
+
 * Thu Sep 14 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.9.2-alt1
 - 2023.9.2 released
 
