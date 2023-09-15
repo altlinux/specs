@@ -1,12 +1,12 @@
-%def_with bootstrap
+%def_without bootstrap
 
-%def_without check
+%def_with check
 
 %define oname lxml
 
 Name: python3-module-lxml
-Version: 4.9.2
-Release: alt2
+Version: 4.9.3
+Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API
 
@@ -16,6 +16,10 @@ URL: https://pypi.org/project/lxml
 
 # https://github.com/lxml/lxml
 Source: %name-%version.tar
+
+Patch: Skip-failing-test-test_html_prefix_nsmap.patch
+Patch1: Make-the-validation-of-ISO-Schematron-files-optional.patch
+Patch2: 57d328d611ea5b3f49a6c132617e37f29a36525e.patch
 
 %if_without bootstrap
 # Used for tests only, but depends on lxml itself,
@@ -29,6 +33,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libxslt-devel zlib-devel
 # see doc/build.txt
 BuildRequires: python3-module-Cython >= 0.18
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries.
@@ -54,6 +60,11 @@ This package contains documentation for lxml.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
+%patch2 -p1
+
+find -type f -name '*.c' -print -delete >&2
 
 %build
 export LC_ALL=en_US.UTF-8
@@ -62,30 +73,33 @@ sed -i 's|/usr/bin/env python.*|/usr/bin/env python3|' \
 	update-error-constants.py test.py
 sed -i 's|/usr/bin/python|/usr/bin/python3|' \
 	doc/rest2latex.py doc/rest2html.py
-%python3_build --with-cython
+export WITH_CYTHON=true
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export LC_ALL=en_US.UTF-8
-# see Makefile
-CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
-CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
-FFLAGS="${FFLAGS:-%optflags}" ; export FFLAGS ;
+# The tests assume inplace build, so we copy the built library to source-dir.
+# If not done that, Python can either import the tests or the extension modules, but not both.
 cp -l build/lib.linux-*/lxml/*.so src/lxml/
-python3 test.py -p -v
-PYTHONPATH=src python3 src/lxml/tests/selftest.py
-PYTHONPATH=src python3 src/lxml/tests/selftest2.py
+# The options are: verbose, unit, functional
+python3 test.py -vuf
 
 %files
+%doc *.txt *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %files doc
 %doc doc samples
 
 %changelog
+* Fri Sep 15 2023 Grigory Ustinov <grenka@altlinux.org> 4.9.3-alt1
+- Automatically updated to 4.9.3.
+- Build with check, without bootstrap.
+
 * Thu Apr 27 2023 Grigory Ustinov <grenka@altlinux.org> 4.9.2-alt2
 - Build without check, because new libxml2 regression ignores namespaces.
 
