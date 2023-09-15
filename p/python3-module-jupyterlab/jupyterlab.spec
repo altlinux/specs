@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.5
+Version: 4.0.6
 Release: alt1
 Summary: JupyterLab computational environment
 License: BSD-3-Clause
@@ -112,6 +112,9 @@ and not test_yarn_config"
 %python3_sitelibdir/%pypi_name/browser_check.py
 
 %changelog
+* Fri Sep 15 2023 Anton Vyatkin <toni@altlinux.org> 4.0.6-alt1
+- new version 4.0.6
+
 * Wed Aug 23 2023 Anton Vyatkin <toni@altlinux.org> 4.0.5-alt1
 - new version 4.0.5
 
