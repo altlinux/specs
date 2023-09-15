@@ -1,77 +1,99 @@
+# sources are not ported to qt5
+%def_with qt4
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global sum     Program to solve mathematical puzzles
+
 Name:           kitsune
-Version:        2.0
-Release:        alt3_24
-Summary:        Program to solve mathematical problems
-
-Group:          Games/Other
+Version:        3.0
+Release:        alt1_8
+Summary:        %{sum}
+Group:          Games/Puzzles
 License:        GPLv2+
-URL:            http://%{name}.tuxfamily.org/wiki/doku.php?id=homepage
-Source0:        http://%{name}.tuxfamily.org/%{name}/%{name}%{version}/%{name}%{version}.tar.gz
-Source1:        %{name}.desktop
-Source2:        http://%{name}.tuxfamily.org/download.php?url=icons/%{name}-icones.tar.gz
+URL:            https://kitsune.tuxfamily.org/wiki/doku.php
+Source0:        https://download.tuxfamily.org/kitsune/%{name}%{version}/%{name}%{version}.tar.gz
+Source1:        kitsune-de.ts
+Patch0:         kitsune-3.0-mga-manage-translations.patch
 
-BuildRequires:  libqt4-declarative libqt4-devel qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools
-BuildRequires:  desktop-file-utils
+BuildRequires:  icoutils icoutils-extra
+%if_with qt4
+BuildRequires:  libqt4-devel
+%else
+BuildRequires:  qt5-base-devel qt5-declarative-devel qt5-tools
+%endif
 Source44: import.info
 
 %description
-Kitsune is a software aiming at solving digit problems 
-of a famous television game show called "Countdown" in England 
-and "Les chiffres et les lettres" in France.
+Kitsune is a software aiming at solving digit problems of a famous
+television game show called "Countdown" in England and "Des chiffres
+et des lettres" in France.
+
+It enables you to solve a problem of your choice, or to train yourself
+with random problems. Facing a problem, Kitsune will find all the different
+solutions: if the problem is solvable, this software will put up all the
+ways to reach the target. If the problem is not solvable, it will put up
+the best approximations. 
 
 %prep
-%setup -q -a 2 -n %{name}%{version}
+%setup -q -n %{name}%{version}
+%patch0 -p1
 
-for f in Changelog.txt txt/gpl-fr.html txt/aide-fr.html txt/licence-fr.html ; do
-   %{_bindir}/iconv -f iso8859-1 -t utf-8 ${f} > ${f}.conv && /bin/mv -f ${f}.conv ${f}
-   /bin/sed -i -e "s/ISO-8859-1/UTF-8/" ${f} 
-done
+
+# German translation seems to be missing from the source tarball
+cp %{_sourcedir}/%{name}-de.ts txt/de/%{name}.ts
 
 %build
-%{qmake_qt4}
+%if_with qt4
 lrelease-qt4 kitsune.pro
+%qmake_qt4
+%else
+lrelease-qt5 kitsune.pro
+%qmake_qt5
+%endif
 %make_build
 
-
 %install
+# Install binary
+mkdir -p %{buildroot}%{_gamesbindir}
+install -m 755 bin/kitsune %{buildroot}%{_gamesbindir}
 
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
-install -m 0755 bin/kitsune $RPM_BUILD_ROOT%{_bindir}
-
-for f in 16 22 32 48 64 ; do
-  mkdir -p  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${f}x${f}/apps
-  install -p -m 0644 %{name}-icones/%{name}-${f}X${f}.png \
-    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${f}x${f}/apps/%{name}.png || \
-  install -p -m 0644 %{name}-icones/%{name}-${f}x${f}.png \
-    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${f}x${f}/apps/%{name}.png
+# Extract and install icon
+for size in 16 32 48; do
+  install -d %{buildroot}%{_iconsdir}/hicolor/${size}x${size}/apps/
+  icotool -x --width=${size} appliwin.ico -o %{buildroot}%{_iconsdir}/hicolor/${size}x${size}/apps/%{name}.png
 done
 
-desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-                                        \
-%endif
-       --dir=$RPM_BUILD_ROOT%{_datadir}/applications    \
-       %{SOURCE1}
+# Remove translation source files from doc, and all pt content
+find -name "*.ts" -delete
+rm txt/pt -rf
 
+# Mageia menu entry
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
+[Desktop Entry]
+Name=Kitsune
+Comment=%{sum}
+Exec=%{name}
+Icon=%{name}
+Terminal=false
+Type=Application
+Categories=Game;LogicGame;
+EOF
 
 %files
 %doc Changelog.txt txt/*
-%{_bindir}/%{name}
-%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/%{name}.desktop
-%else
-%{_datadir}/applications/%{name}.desktop
-%endif
-%{_datadir}/icons/hicolor/*x*/apps/%{name}.png
+%{_gamesbindir}/%{name}
+%{_iconsdir}/hicolor/*/apps/%{name}.png
 
 
 %changelog
+* Fri Sep 15 2023 Igor Vlasenko <viy@altlinux.org> 3.0-alt1_8
+- new version
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_24
 - update to new release by fcimport
 
