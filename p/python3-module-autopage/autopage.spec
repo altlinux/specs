@@ -3,7 +3,7 @@
 
 Name:    python3-module-%oname
 Version: 0.5.1
-Release: alt1
+Release: alt2
 
 Summary: Python library to add automatic paging of CLI output
 
@@ -23,6 +23,7 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-fixtures
+BuildRequires: python3-module-pytest
 BuildRequires: /dev/pts
 %endif
 
@@ -47,11 +48,13 @@ all programs worked like that? Now at least all of your Python programs can.
 
 %install
 %pyproject_install
+# Do not distribute tests with the package
+rm -rf %buildroot%python3_sitelibdir/%oname/tests
 
 %check
 # This test is broken
 rm -fv autopage/tests/test_end_to_end.py
-%tox_check_pyproject
+%pyproject_run_pytest -v
 
 %files
 %doc *.md
@@ -59,5 +62,8 @@ rm -fv autopage/tests/test_end_to_end.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Sep 15 2023 Anton Vyatkin <toni@altlinux.org> 0.5.1-alt2
+- Fix FTBFS.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 0.5.1-alt1
 - Initial build for Sisyphus.
