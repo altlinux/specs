@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 10.5.0
+Version: 10.6.0
 Release: alt1
 
 Summary: Installer common files
@@ -96,17 +96,18 @@ Installer stage3
 %find_lang alterator-simply-linux
 
 %files -f alterator-simply-linux.lang
-%_datadir/alterator/steps/*
 
 %files stage2
 %_datadir/install2/installer-steps
 %_datadir/install2/*.d/*
-%_datadir/install2/steps/*
 %_datadir/install2/alterator-menu
 
 %files stage3
 
 %changelog
+* Fri Sep 15 2023 Mikhail Efremov <sem@altlinux.org> 10.6.0-alt1
+- stage2: Drop custom luks step.
+
 * Fri Jun 16 2023 Mikhail Efremov <sem@altlinux.org> 10.5.0-alt1
 - stage3: Drop installer-feature-sudo-enable-by-default-stage3.
 

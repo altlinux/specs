@@ -70,7 +70,7 @@
 
 Name: branding-simply-linux
 Version: 10.1.990
-Release: alt1
+Release: alt2
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 %ifarch %ix86 x86_64
@@ -529,6 +529,14 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_datadir/install3/*
 
 %changelog
+* Fri Sep 15 2023 Mikhail Efremov <sem@altlinux.org> 10.1.990-alt2
+- alterator: Change selection color.
+- alterator: Use hex color.
+- alterator: Replace Simply fish icons with SL logo.
+- bootsplash,graphics: Update SL logo.
+- alterator: Set progress bar color for 10.2.
+- alterator: Change alterator background color for 10.2.
+
 * Fri Sep 01 2023 Mikhail Efremov <sem@altlinux.org> 10.1.990-alt1
 - slideshow: Update slides for 10.2.
 - bootsplash,graphics: Update images for SL-10.2.
