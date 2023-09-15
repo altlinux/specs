@@ -1,5 +1,5 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_without devel
+%def_with devel
 
 # Use ICU
 %def_with icu
@@ -10,9 +10,9 @@
 %set_autoconf_version 2.60
 
 %define prog_name            postgresql
-%define postgresql_major     15
-%define postgresql_minor     4
-%define postgresql_altrel    3
+%define postgresql_major     16
+%define postgresql_minor     0
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -204,8 +204,8 @@ Conflicts: %{prog_name}11-server-devel
 Conflicts: %{prog_name}12-server-devel
 Conflicts: %{prog_name}13-server-devel
 Conflicts: %{prog_name}14-server-devel
+Conflicts: %{prog_name}15-server-devel
 Conflicts: %{prog_name}15-1C-server-devel
-Conflicts: %{prog_name}16-server-devel
 
 %description server-devel
 The %name-server-devel package contains the header files and configuration
@@ -513,8 +513,6 @@ then
    if [ ! -d %_libdir/%PGSQL/backup ]; then
        mkdir -p %_libdir/%PGSQL/backup
    fi
-   cd %_bindir
-   cp -fp postmaster postgres %_libdir/%PGSQL/backup
 fi
 
 %post server
@@ -806,7 +804,6 @@ fi
 %_bindir/pg_controldata
 %_bindir/pg_ctl
 %_bindir/postgres
-%_bindir/postmaster
 %_bindir/pg_upgrade
 %_bindir/pg_rewind
 %_bindir/pg_receivewal
@@ -819,7 +816,6 @@ fi
 %_man1dir/pg_ctl.1*
 %_man1dir/pg_upgrade.1*
 %_man1dir/postgres.1*
-%_man1dir/postmaster.1*
 %_man1dir/pg_rewind.1*
 %_man1dir/pg_receivewal.1*
 %_man1dir/pg_resetwal.1*
@@ -955,9 +951,8 @@ fi
 %endif
 
 %changelog
-* Fri Sep 15 2023 Alexei Takaseev <taf@altlinux.org> 15.4-alt3
-- Disable -devel
-- Add triggerpostun and conflict for PG 16
+* Wed Sep 13 2023 Alexei Takaseev <taf@altlinux.org> 16.0-alt1
+- 16.0
 
 * Sat Aug 12 2023 Alexei Takaseev <taf@altlinux.org> 15.4-alt2
 - Change BR llvn 13.0 -> llvm15.0

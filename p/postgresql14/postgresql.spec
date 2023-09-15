@@ -12,7 +12,7 @@
 %define prog_name            postgresql
 %define postgresql_major     14
 %define postgresql_minor     9
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -204,6 +204,7 @@ Conflicts: %{prog_name}12-server-devel
 Conflicts: %{prog_name}13-server-devel
 Conflicts: %{prog_name}15-1C-server-devel
 Conflicts: %{prog_name}15-server-devel
+Conflicts: %{prog_name}16-server-devel
 
 %description server-devel
 The %name-server-devel package contains the header files and configuration
@@ -563,6 +564,11 @@ if [ "$2" -eq 0 ]; then
 fi
 
 %triggerpostun -- %{prog_name}15-1C-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}16-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -942,6 +948,9 @@ fi
 %endif
 
 %changelog
+* Fri Sep 15 2023 Alexei Takaseev <taf@altlinux.org> 14.9-alt3
+- Add triggerpostun and conflict for PG 16
+
 * Sun Aug 13 2023 Alexei Takaseev <taf@altlinux.org> 14.9-alt2
 - Change BR llvm 13.0 -> llvm15.0
 
