@@ -4,21 +4,21 @@
 
 Name: python3-module-%oname
 Version: 0.5.7
-Release: alt1
+Release: alt2
 Summary: script for cloning a non-relocatable virtualenv
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/virtualenv-clone/
-Source: %name-%version.tar.gz
-Patch0: %name-%version-%release.patch
+Vcs: https://github.com/edwardgeorge/virtualenv-clone
+Source: %name-%version.tar
+Patch0: venv-clone-%version-alt-py3.11-fix.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(virtualenv)
 %endif
 
@@ -27,28 +27,28 @@ A script for cloning a non-relocatable virtualenv.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOX_TESTENV_PASSENV='PIP_NO_INDEX'
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr
+%pyproject_run_pytest -v
 
 %files
 %doc LICENSE README.md
 %python3_sitelibdir/clonevirtualenv.py
 %python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/virtualenv_clone-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/virtualenv_clone-%version.dist-info
 %_bindir/virtualenv-clone
 
 %changelog
+* Fri Sep 15 2023 Anton Vyatkin <toni@altlinux.org> 0.5.7-alt2
+- Fix FTBFS (migrate to pyproject macroses).
+
 * Thu Feb 24 2022 Stanislav Levin <slev@altlinux.org> 0.5.7-alt1
 - 0.5.4 -> 0.5.7.
 
