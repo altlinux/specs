@@ -93,7 +93,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.1.rc4
+Release: alt0.2.rc4
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -260,6 +260,7 @@ Documentation for the LLVM compiler infrastructure.
 %package tools
 Summary: Various minor tools bundled with LLVM
 Group: Development/C
+BuildArch: noarch
 %requires_filesystem
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
@@ -1039,6 +1040,9 @@ ninja -C %builddir check-all || :
 %dir %llvm_libdir/cmake
 %dir %llvm_includedir
 %dir %llvm_libexecdir
+%if "%_libsuff" == "64"
+%dir %llvm_prefix/lib
+%endif
 %dir %llvm_datadir
 %dir %llvm_datadir/clang
 %dir %llvm_datadir/man
@@ -1235,6 +1239,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Fri Sep 15 2023 Nazarov Denis <nenderus@altlinux.org> 17.0.0-alt0.2.rc4
+- Fix unowned direcory
+- Build tools package as noarch
+
 * Sat Sep 09 2023 Nazarov Denis <nenderus@altlinux.org> 17.0.0-alt0.1.rc4
 - 17.0.0 rc4
 
