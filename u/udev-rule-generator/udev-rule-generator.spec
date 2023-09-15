@@ -1,7 +1,7 @@
 Name: udev-rule-generator
 Epoch: 2
 Version: 1.6
-Release: alt1
+Release: alt2
 Summary: Common package for udev rule generator
 Url: https://packages.altlinux.org/en/Sisyphus/srpms/%name
 Group: System/Configuration/Hardware
@@ -95,6 +95,10 @@ rm -f %_sysconfdir/udev/rules.d/80-net-setup-link.rules
 /lib/udev/write_net_rules
 
 %changelog
+* Fri Sep 15 2023 Sergey Y. Afonin <asy@altlinux.org> 2:1.6-alt2
+- used UPDATE_NET_RULES=yes by default
+  https://bugzilla.altlinux.org/show_bug.cgi?id=29282#c40
+
 * Tue Aug 29 2023 Anton Midyukov <antohami@altlinux.org> 2:1.6-alt1
 - replace udevd-final service to separate package udevd-final
 
