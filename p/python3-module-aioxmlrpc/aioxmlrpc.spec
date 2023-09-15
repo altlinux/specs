@@ -1,25 +1,29 @@
 %define _unpackaged_files_terminate_build 1
 %define oname aioxmlrpc
 
-Name: python3-module-%oname
-Version: 0.3
-Release: alt2
-Summary: XML-RPC for asyncio
-License: BSD
-Group: Development/Python3
-Url: https://pypi.python.org/pypi/aioxmlrpc/
+%def_with check
 
-# https://github.com/mardiros/aioxmlrpc.git
-Source0: https://pypi.python.org/packages/71/83/471ca57441a412193b7824ac55cebf8dd12421d9176e5d2ab60d128aed46/%{oname}-%{version}.tar.gz
+Name: python3-module-%oname
+Version: 0.7.0
+Release: alt1
+Summary: XML-RPC for asyncio
+License: BSD-3-Clause
+Group: Development/Python3
+Url: https://pypi.org/project/aioxmlrpc
+Vcs: https://github.com/mardiros/aioxmlrpc.git
+Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry-core
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-httpx
+BuildRequires: python3-module-pkg_resources
+BuildRequires: python3-module-pytest-asyncio
+%endif
 
 %py3_provides %oname
-%py3_requires asyncio aiohttp
-
-BuildRequires: python3-module-aiohttp
-BuildRequires: python3-module-chardet
 
 %description
 Asyncio version of the standard lib xmlrpc.
@@ -27,40 +31,33 @@ Asyncio version of the standard lib xmlrpc.
 Currently only aioxmlrpc.client, which works like xmlrpc.client but with
 coroutine is implemented.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Asyncio version of the standard lib xmlrpc.
-
-Currently only aioxmlrpc.client, which works like xmlrpc.client but with
-coroutine is implemented.
-
-This package contains tests for %oname.
-
 %prep
-%setup -n %{oname}-%{version}
+%setup
+
+cat >> pyproject.toml <<EOF
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+EOF
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest -v
 
 %files
-%doc *.rst PKG-INFO
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
+%doc LICENSE README.*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Sep 15 2023 Anton Vyatkin <toni@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.3-alt2
 - Drop python2 support.
 
