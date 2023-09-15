@@ -7,7 +7,7 @@ BuildRequires: perl(B.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Importe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.000155
+Version: 0.000156
 Release: alt1
 Summary: Distribution with a rich set of tools built upon the Test2 framework.
 Group: Development/Perl
@@ -35,6 +35,9 @@ you.
 %perl_vendor_privlib/T*
 
 %changelog
+* Fri Sep 15 2023 Igor Vlasenko <viy@altlinux.org> 0.000156-alt1
+- automated CPAN update
+
 * Sat Apr 29 2023 Igor Vlasenko <viy@altlinux.org> 0.000155-alt1
 - automated CPAN update
 
