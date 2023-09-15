@@ -4,7 +4,7 @@
 
 Name: trivy
 Version: 0.45.0
-Release: alt1
+Release: alt2
 Summary: A Fast Vulnerability Scanner for Containers
 
 Group: Monitoring
@@ -50,7 +50,8 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
-export LDFLAGS="-s -w -X=main.version=%version"
+export LDFLAGS="-X github.com/aquasecurity/trivy/pkg/version.ver=%version"
+export CGO_ENABLED=0
 
 %golang_prepare
 wire gen pkg/commands/... pkg/rpc/...
@@ -86,8 +87,12 @@ useradd -M -r -d %_sharedstatedir/%name -g _%name -s /dev/null -c "Trivy service
 %_bindir/%name
 
 %changelog
+* Fri Sep 15 2023 Alexey Shabalin <shaba@altlinux.org> 0.45.0-alt2
+- Fixed version info.
+- Build without strip binary and with CGO_ENABLED=0.
+
 * Mon Sep 04 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.45.0-alt1
-- 0.39.0 -> 0.45.0 
+- 0.39.0 -> 0.45.0
 
 * Fri Jun 02 2023 Stepan Paksashvili <paksa@altlinux.org> 0.39.0-alt2
 - Updated ALT support and vendor trivy-db, added systemd unit.
