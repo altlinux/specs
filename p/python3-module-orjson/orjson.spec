@@ -1,5 +1,5 @@
 Name: python3-module-orjson
-Version: 3.8.10
+Version: 3.9.7
 Release: alt1
 
 Summary: Fast, correct JSON library for Python
@@ -15,6 +15,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(maturin)
+BuildRequires: python3(pytest)
 
 %description
 %summary
@@ -35,11 +36,17 @@ export CARGO_HOME=${PWD}/cargo
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest test
+
 %files
 %python3_sitelibdir/orjson
 %python3_sitelibdir/orjson-%version.dist-info
 
 %changelog
+* Fri Sep 15 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.9.7-alt1
+- 3.9.8 released
+
 * Fri May 05 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.8.10-alt1
 - 3.8.10 released
 
