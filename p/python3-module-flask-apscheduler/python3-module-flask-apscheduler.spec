@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 1.12.4
+Version: 1.13.0
 Release: alt1
 
 Summary: Adds APScheduler support to Flask
@@ -42,5 +42,8 @@ Flask-APScheduler is a Flask extension which adds support for the APScheduler.
 %python3_sitelibdir/Flask_APScheduler-*.dist-info/
 
 %changelog
+* Sat Sep 16 2023 Andrey Cherepanov <cas@altlinux.org> 1.13.0-alt1
+- New version.
+
 * Tue May 02 2023 Andrey Cherepanov <cas@altlinux.org> 1.12.4-alt1
 - Initial build for Sisyphus.
