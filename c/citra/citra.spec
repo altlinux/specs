@@ -1,8 +1,8 @@
-%define git_date 20230721
-%define git_commit a537f56
+%define git_date 20230916
+%define git_commit d2d3741
 
 Name: citra
-Version: 1953
+Version: 1991
 Release: alt1
 
 Summary: Nintendo 3DS emulator
@@ -12,9 +12,10 @@ Group: Emulators
 Url: https://%name-emu.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64 %e2k
+ExclusiveArch: x86_64 aarch64 %e2k
 
-Source: https://github.com/%name-emu/%name-nightly/releases/download/nightly-%version/%name-unified-source-%git_date-%git_commit.tar.xz
+# Source-url: https://github.com/%name-emu/%name-nightly/releases/download/nightly-%version/%name-unified-source-%git_date-%git_commit.tar.xz
+Source: %name-unified-source-%git_date-%git_commit.tar
 
 BuildRequires: ctest
 BuildRequires: doxygen
@@ -22,13 +23,14 @@ BuildRequires: git-core
 BuildRequires: glslang
 BuildRequires: graphviz
 BuildRequires: libSDL2-devel
+BuildRequires: libavfilter-devel
 BuildRequires: libavformat-devel
 BuildRequires: libbacktrace-devel
 BuildRequires: libdbus-devel
-BuildRequires: libjack-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libswresample-devel
 BuildRequires: libusb-devel
+BuildRequires: pipewire-jack-libs-devel
 BuildRequires: python3-dev
 BuildRequires: qt6-multimedia
 BuildRequires: qt6-multimedia-devel
@@ -77,6 +79,9 @@ ctest
 %_man6dir/%name-qt.6*
 
 %changelog
+* Sat Sep 16 2023 Nazarov Denis <nenderus@altlinux.org> 1991-alt1
+- Version Nightly 1991
+
 * Sun Jul 23 2023 Nazarov Denis <nenderus@altlinux.org> 1953-alt1
 - Version Nightly 1953
 
