@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
 Version: 117.0.1
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: https://www.mozilla.org/firefox/
@@ -427,6 +427,9 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sat Sep 16 2023 Alexey Gladkov <legion@altlinux.ru> 117.0.1-alt2
+- Enforce window name to associate icon and title with window in wayland (ALT#44871).
+
 * Wed Sep 13 2023 Alexey Gladkov <legion@altlinux.ru> 117.0.1-alt1
 - New release (117.0.1).
 - Security fixes:
