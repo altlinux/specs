@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
@@ -13,8 +13,8 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.4
-Release: alt1.1%beta
+Version: %ver_major.5
+Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -285,6 +285,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.5-alt1
+- 44.5
+
 * Wed Aug 30 2023 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1.1
 - removed useless libcroco-devel from BR (gnome-shell includes
   the libcroco sources directly under src/st/croco)
