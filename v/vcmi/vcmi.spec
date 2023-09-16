@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: vcmi
-Version: 1.3.1
-Release: alt2
+Version: 1.3.2
+Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 License: GPL-2.0-or-later
@@ -107,7 +107,7 @@ mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/libvcmi.so
 rm -f %buildroot%_libdir/*.a
 
 %files
-%doc README.md AUTHORS
+%doc docs/*
 %_bindir/%{name}*
 %_datadir/%name/
 %_datadir/metainfo/eu.vcmi.VCMI.metainfo.xml
@@ -118,6 +118,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Sat Sep 16 2023 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1
+- new version
+
 * Sat Sep 09 2023 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt2
 - update BR for build with ffmpeg-6.0
 
