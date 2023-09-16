@@ -2,10 +2,10 @@
 %define origname krusader
 
 Name: kde5-%origname
-Version: 2.7.2
-Release: alt3
+Version: 2.8.0
+Release: alt1
 
-# https://download.kde.org/stable/%origname/%version/%origname-%version.tar.xz
+# Source-url: https://download.kde.org/stable/%origname/%version/%origname-%version.tar.xz
 Source0: %origname-%version.tar
 
 Source1: %origname.po
@@ -58,7 +58,7 @@ published under the GNU General Public Licence
 (http://www.gnu.org/copyleft/gpl.html).
 
 %prep
-%setup -qn %origname-%version
+%setup -n %origname-%version
 %patch1 -p2
 cp -f %SOURCE1 po/ru/
 
@@ -72,19 +72,21 @@ cp -f %SOURCE1 po/ru/
 %find_lang %origname --with-kde
 
 %files -f %origname.lang
-%doc README AUTHORS ChangeLog TODO COPYING FAQ INSTALL
+%doc README AUTHORS ChangeLog TODO INSTALL CREDITS
 %_K5bin/%origname
 %_K5xdgapp/*.desktop
 %_datadir/%origname
-%_K5srv/*.protocol
 %_K5xdgconf/kio_isorc
 %_K5icon/*/*/apps/*.png
-%_K5plug/kio_*.so
+%_K5plug/kf5/kio/kio_*.so
 %_K5xmlgui/%origname
 %_K5doc/*/%origname
 %_datadir/metainfo/org.kde.%origname.appdata.xml
 
 %changelog
+* Sat Sep 16 2023 Nazarov Denis <nenderus@altlinux.org> 2.8.0-alt1
+- Version 2.8.0
+
 * Mon Jan 24 2022 Nazarov Denis <nenderus@altlinux.org> 2.7.2-alt3
 - update russian translation
 
