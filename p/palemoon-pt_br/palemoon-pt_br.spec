@@ -11,7 +11,7 @@
 Name: palemoon-pt_br
 
 Version: 32.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Portuguese (Brazilian) Language Pack for Pale Moon
 License: MPL-2.0
@@ -29,7 +29,7 @@ Requires: hunspell-pt
 Requires: palemoon >= 31.3.0
 
 #BuildArch: noarch
-ExcludeArch: %ix86 %arm
+ExcludeArch: %ix86 %arm ppc64le
 
 BuildRequires(pre):	rpm-build-palemoon
 # Automatically added by buildreq on Mon Jul 13 2015
@@ -72,6 +72,9 @@ ln -s %_datadir/myspell/pt_BR.dic %buildroot/%cid_dict_dir/dictionaries/pt_BR.di
 
 
 %changelog
+* Sun Sep 17 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1.1
+- Add ExcludeArch ppc64le
+
 * Tue Jan 31 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1
 - Version 32.0.0
 

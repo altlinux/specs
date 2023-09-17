@@ -13,12 +13,12 @@
 Name: palemoon-uk
 
 Version: 32.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Ukrainian (UA) Language Pack for Pale Moon
 License: MPL-2.0
 
-ExcludeArch: %ix86 %arm
+ExcludeArch: %ix86 %arm ppc64le
 
 Group: Networking/WWW
 Url: http://www.palemoon.org/langpacks.shtml
@@ -74,6 +74,9 @@ ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk-UA.di
 %cid_dict_dir
 
 %changelog
+* Fri Sep 15 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1.1
+- Add ExcludeArch ppc64le
+
 * Wed Feb 01 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1
 - Update to release 32.0.0
 

@@ -14,7 +14,7 @@ Name: palemoon-el
 
 
 Version: 32.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Greek (EL) Language Pack for Pale Moon
 License: MPL-2.0
@@ -27,7 +27,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source: el_palemoon_%version.xpi
 Source2: el_GR_%version.tar
 
-ExcludeArch: %ix86 %arm
+ExcludeArch: %ix86 %arm ppc64le
 
 Requires: hunspell-el
 Requires: palemoon >= 27.7.0
@@ -75,6 +75,9 @@ ln -s %_datadir/myspell/el_GR.dic %buildroot/%cid_dict_dir/dictionaries/el_GR.di
 
 
 %changelog
+* Sat Sep 09 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1.1
+- Remove ppc64le
+
 * Wed Feb 01 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1
 - Version 32.0.0
 

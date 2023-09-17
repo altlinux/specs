@@ -15,9 +15,9 @@
 Name: palemoon-ru
 
 Version: 32.0.0
-Release: alt1
+Release: alt1.1
 
-ExcludeArch: %ix86 %arm
+ExcludeArch: %ix86 %arm ppc64le
 
 Summary: Russian (RU) Language Pack for Pale Moon
 License: MPL-2.0
@@ -52,7 +52,7 @@ The Palemoon Russian translation and dictionary.
 Summary: The Palemoon Russian translation and dictionary.
 Group:   Networking/WWW
 #BuildArch: noarch
-ExcludeArch: %ix86 %arm
+ExcludeArch: %ix86 %arm ppc64le 
 
 Conflicts:  palemoon-ru < 27.7.0
 
@@ -129,6 +129,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
+* Fri Sep 15 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1.1
+- Remove ppc64le arch
+
 * Tue Jan 31 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1
 - Version 32.0.0
 

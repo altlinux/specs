@@ -5,7 +5,7 @@
 
 Name:    palemoon-locale_switcher
 Version: 3.1.0
-Release: alt2
+Release: alt2.1
 
 Summary: The Palemoon locale switcher
 
@@ -15,8 +15,7 @@ Group: Networking/WWW
 Url: http://www.gooeysoftware.com/mozaddons/zinglocale/
 
 # BuildArch: noarch
-ExcludeArch: %ix86 armh
-
+ExcludeArch: %ix86 %arm ppc64le
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -59,6 +58,9 @@ fi
 %cid_dir
 
 %changelog
+* Sun Sep 17 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt2.1
+- Add ExcluderArch ppc64le
+
 * Fri Dec 23 2022 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt2
 - Fix build
 - Remove patch
