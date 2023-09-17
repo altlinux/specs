@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: ipmiutil
-Version: 3.1.3
-Release: alt4
+Version: 3.1.9
+Release: alt1
 
 Summary: IPMI server management utilities
 License: BSD
@@ -115,6 +115,9 @@ rm -v %buildroot%_libdir/*.a
 %_sysconfdir/cron.daily/checksel
 
 %changelog
+* Sun Sep 17 2023 Arseny Maslennikov <arseny@altlinux.org> 3.1.9-alt1
+- 3.1.3 -> 3.1.9.
+
 * Sat Oct 08 2022 Michael Shigorin <mike@altlinux.org> 3.1.3-alt4
 - *disable* parallel build: it's still broken (the same #27254)
 
