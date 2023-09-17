@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.76
+%define ver_major 2.78
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Networking support for GIO
@@ -66,7 +66,7 @@ their dependencies
 %package tests
 Summary: Tests for the %name package
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -119,6 +119,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 2.78.0-alt1
+- 2.78.0
+
 * Fri Jun 30 2023 Yuri N. Sedunov <aris@altlinux.org> 2.76.1-alt1
 - 2.76.1
 

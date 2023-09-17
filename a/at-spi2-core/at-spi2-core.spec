@@ -1,5 +1,5 @@
 %define _name at-spi2
-%define ver_major 2.48
+%define ver_major 2.50
 %define api_ver_major 2
 %define api_ver 2.0
 %define atk_api_ver 1.0
@@ -7,12 +7,13 @@
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
 %def_enable x11
+%def_enable gtk2
 %def_disable xevie
 %def_enable doc
 %def_disable check
 
 Name: %_name-core
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -178,6 +179,7 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %meson \
     -Ddbus_daemon=/bin/dbus-daemon \
     %{?_disable_x11:-Dx11=disabled} \
+    %{?_disable_gtk2:-Dgtk2_atk_adaptor=false} \
     %{?_disable_introspection:-Dintrospection=disabled} \
     %{?_enable_doc:-Ddocs=true}
 %nil
@@ -218,7 +220,7 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 
 %files -n %_name-atk
 %_libdir/libatk-bridge-%api_ver.so.*
-%_libdir/gtk-2.0/modules/libatk-bridge.so
+%{?_enable_gtk2:%_libdir/gtk-2.0/modules/libatk-bridge.so}
 %_libdir/gnome-settings-daemon-3.0/gtk-modules/%_name-atk.desktop
 
 %files -n %_name-atk-devel
@@ -249,6 +251,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 2.50.0-alt1
+- 2.50.0
+
 * Sun Sep 03 2023 Yuri N. Sedunov <aris@altlinux.org> 2.48.4-alt1
 - 2.48.4
 

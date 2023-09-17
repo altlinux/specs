@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.76
+%define ver_major 1.78
 %def_enable doctool
 %ifarch ppc64le armh
 %def_disable check
@@ -34,11 +34,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %filter_from_provides /python3(pkgconfig)/d
 %add_python3_req_skip distutils.msvccompiler
 
-%define glib_ver 2.76.0
-%define python_ver 3.6
+%define glib_ver 2.78.0
+%define python_ver 3.7
 
-BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
-BuildRequires: /proc libgio-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires: /proc meson libgio-devel >= %glib_ver
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel
 BuildRequires: python3-devel >= %python_ver
 %{?_enable_doctool:BuildRequires: python3-module-mako python3-module-markdown}
@@ -144,6 +144,9 @@ gobject-introspection.
 %endif
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.78.1-alt1
+- 1.78.1
+
 * Thu Mar 23 2023 Yuri N. Sedunov <aris@altlinux.org> 1.76.1-alt1
 - 1.76.1
 

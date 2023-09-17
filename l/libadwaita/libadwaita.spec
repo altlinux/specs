@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.3
+%define ver_major 1.4
 %define beta %nil
 %define api_ver 1
 %define xdg_name org.gnome.Adwaita%api_ver
@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -30,13 +30,14 @@ Source: %name-%version%beta.tar
 
 %define meson_ver 0.59
 %define glib_ver 2.72.0
-%define gtk_ver 4.9.5
+%define gtk_ver 4.11.3
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= %meson_ver sassc
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: libfribidi-devel
+BuildRequires: libappstream-devel
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
 BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 4.0}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
@@ -143,6 +144,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.0-alt1
+- 1.4.0
+
 * Sun Sep 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1:1.3.5-alt1
 - 1.3.5
 

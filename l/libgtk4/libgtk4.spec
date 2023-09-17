@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 4.10
+%define ver_major 4.12
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -20,6 +20,7 @@
 %def_enable cloudproviders
 # 4.8.0: tracker and vulkan disabled by default. vulkan is still experimental
 %def_disable tracker
+# still experimental
 %def_disable vulkan
 # media backends
 # gstreamer enabled by default
@@ -28,13 +29,15 @@
 
 %def_disable sysprof
 %def_enable tests
+# fatal: posix_spawn: Resource temporarily unavailable on basalt
+%def_disable testsuite
 # File box-packing.ltr.nodes does not exist
 %def_disable install_tests
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.5
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
 Group: System/Libraries
@@ -50,7 +53,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source5: gtk4-icon-cache.filetrigger
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
-%define meson_ver 0.60
+%define meson_ver 0.63
 %define glib_ver 2.72
 %define gi_ver 1.72
 %define cairo_ver 1.14.0
@@ -231,11 +234,12 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_cloudproviders:-Dcloudproviders=enabled} \
     %{?_enable_tracker:-Dtracker=enabled} \
     %{?_enable_introspection:-Dintrospection=enabled} \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_enable_gtk_doc:-Ddocumentation=true} \
     %{?_enable_man:-Dman-pages=true} \
     %{?_enable_colord:-Dcolord=enabled} \
     %{?_enable_sysprof:-Dsysprof=enabled} \
     %{?_disable_tests:-Dbuild-tests=false} \
+    %{?_disable_testsuite:-Dbuild-testsuite=false} \
     %{?_enable_install_tests:-Dinstall-tests=true} \
     %{?_enable_vulkan:-Dvulkan=enabled} \
     %{?_disable_gstreamer:-Dmedia-gstreamer=disabled} \
@@ -302,6 +306,7 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 %files devel
 %_bindir/gtk4-builder-tool
+%_bindir/gtk4-rendernode-tool
 %_includedir/gtk-%api_ver/
 %_libdir/libgtk-%api_ver_major.so
 %_pkgconfigdir/gtk%api_ver_major.pc
@@ -311,7 +316,8 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_datadir/gettext/its/gtk%{api_ver_major}builder.its
 %_datadir/gettext/its/gtk%{api_ver_major}builder.loc
 %_datadir/gtk-%api_ver/valgrind/
-%{?_enable_man:%_man1dir/gtk%{api_ver_major}-builder-tool.1*}
+%{?_enable_man:%_man1dir/gtk%{api_ver_major}-builder-tool.1*
+%_man1dir/gtk4-rendernode-tool.1*}
 
 %if_enabled wayland
 %_pkgconfigdir/gtk%api_ver_major-wayland.pc
@@ -400,6 +406,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Thu Sep 07 2023 Yuri N. Sedunov <aris@altlinux.org> 4.12.1-alt1
+- 4.12.1
+
 * Thu Sep 07 2023 Yuri N. Sedunov <aris@altlinux.org> 4.10.5-alt1.1
 - disabled experimental ffmpeg media backend incompatible with 6.0
   (https://gitlab.gnome.org/GNOME/gtk/-/issues/5581)

@@ -3,8 +3,9 @@
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.76
+%define ver_major 2.78
 %define api_ver 2.0
+%define ffi_ver 3.0.0
 %define pcre2_ver 10.32
 %define meson_ver 0.60
 %define gtk_doc_ver 1.32.1
@@ -29,7 +30,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -86,7 +87,7 @@ BuildRequires: libpcre2-devel >= %pcre2_ver
 BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-python3
 BuildRequires: meson >= %meson_ver gcc-c++ gtk-doc >= %gtk_doc_ver indent
 BuildRequires: glibc-kernheaders libdbus-devel
-BuildRequires: libffi-devel zlib-devel libelf-devel
+BuildRequires: libffi-devel >= %ffi_ver zlib-devel libelf-devel
 BuildRequires: pkgconfig(bash-completion)
 %{?_enable_libmount:BuildRequires: libmount-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -171,7 +172,7 @@ Provides: gvfs-utils = %EVR %_bindir/gio
 Requires: %name = %EVR
 Requires: gsettings-desktop-schemas
 Requires: shared-mime-info >= 0.80
-Requires: desktop-file-utils
+Requires: /usr/bin/update-desktop-database
 
 %description -n libgio
 GIO is a VFS API, designed to replace GnomeVFS. This GIO implementation is
@@ -339,6 +340,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_datadir/gettext/its/gschema.its
 %_datadir/gettext/its/gschema.loc
 %_datadir/glib-%api_ver/codegen/
+%_datadir/glib-%api_ver/dtds/
 
 %if_enabled man
 %_man1dir/glib-genmarshal.*
@@ -433,6 +435,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Fri Sep 08 2023 Yuri N. Sedunov <aris@altlinux.org> 2.78.0-alt1
+- 2.78.0
+
 * Fri Sep 01 2023 Yuri N. Sedunov <aris@altlinux.org> 2.76.5-alt1
 - 2.76.5
 

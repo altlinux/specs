@@ -1,7 +1,7 @@
 %def_disable bootstrap
 
 %define bname librsvg
-%define ver_major 2.56
+%define ver_major 2.57
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -18,7 +18,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -33,7 +33,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 
 # From configure.ac
 # since 2.53.1 rust-1.56 required
-%define rust_ver 1.65
+%define rust_ver 1.70.0
 %define glib_ver 2.52.0
 %define pango_ver 1.46
 %define gtk3_ver 3.10.0
@@ -210,6 +210,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Thu Sep 14 2023 Yuri N. Sedunov <aris@altlinux.org> 1:2.57.0-alt1
+- 2.57.0
+
 * Fri Jul 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1:2.56.3-alt1
 - 2.56.3
 

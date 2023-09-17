@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.44
+%define ver_major 3.46
 %define api_ver 3.0
 %define gtk_api_ver 3.0
 %def_enable pycairo
@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: python3-module-%{_name}3
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Python3 bindings for GObject
@@ -24,6 +24,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
+# "Use pycairo from target python before pkg-config"
+# Revert this. We don't package headers under %%python_sitelibdir
+Patch10: pygobject-3.46.0-up-pycairo-detect.patch
 
 %add_findprov_lib_path %python3_sitelibdir/gi
 
@@ -31,15 +34,17 @@ Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
 %filter_from_requires /Gst.*/d
 %filter_from_requires /typelib(WebKit)/d
 
-%define glib_ver 2.56.0
-%define gi_ver 1.56.0
+%define meson_ver 0.56
+%define glib_ver 2.64.0
+%define gi_ver 1.64.0
 %define pycairo_ver 1.16
+%define ffi_ver 3.0
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
+BuildRequires(pre): rpm-macros-meson >= %meson_ver rpm-build-gir rpm-build-python3
 BuildRequires: meson gtk-doc
-BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel
+BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel >= %ffi_ver
 BuildRequires: gobject-introspection-devel >= %gi_ver
-BuildRequires: python3-devel python3-module-pytest 
+BuildRequires: python3-devel python3-module-pytest
 %{?_enable_pycairo:BuildRequires: python3-module-pycairo-devel libcairo-gobject-devel}
 %{?_enable_check:BuildRequires: xvfb-run dbus-tools-gui libgtk+3-gir-devel glibc-i18ndata}
 
@@ -89,6 +94,7 @@ Development documentation for %_name.
 %prep
 %setup -n %_name-%version
 %patch -p1
+%patch10 -p1 -R
 
 %build
 %meson \
@@ -123,6 +129,9 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Sun Sep 10 2023 Yuri N. Sedunov <aris@altlinux.org> 3.46.0-alt1
+- 3.46.0
+
 * Fri Mar 24 2023 Yuri N. Sedunov <aris@altlinux.org> 3.44.1-alt1
 - 3.44.1
 
