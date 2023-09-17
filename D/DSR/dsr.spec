@@ -1,5 +1,5 @@
 Name: DSR
-Version: 235
+Version: 241
 Release: alt1
 
 Summary: DSR - A program for modelling of disordered solvents with SHELXL
@@ -9,14 +9,15 @@ URL: https://dkratzert.de/dsr.html
 
 BuildArch: noarch
 
-Source: %name-%version.tar.gz
-Source1: changelog.txt
+Source: %name-version-%version.zip
+Source1: dsrchangelog.html
 
 %add_python3_path %_datadir/%name
 %add_findprov_skiplist %_datadir/%name/*
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: xclip
+#BuildRequires: xclip
+BuildRequires: /usr/bin/unzip
 
 %description
 This program consists of a text database with fragments of molecules and
@@ -28,13 +29,11 @@ from the database to the molecule.
 Development is on GitHub: https://github.com/dkratzert/dsr
 
 %prep
-%setup -q
+%setup -n %name-version-%version
 cp -a %SOURCE1 .
-
+cd src/dsr_shelx
 sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
 sed -i 's|# /usr/bin/env python|#!/usr/bin/env python3|' $(find ./ -name '*.py')
-sed -i 's|time.clock|time.process_time|' dsr.py
-sed -i 's|version > 0|int(version) > 0|' selfupdate.py
 
 %build
 cat > %name.sh << EOF
@@ -56,18 +55,22 @@ mkdir -p %buildroot%_datadir/%name/example
 mkdir -p %buildroot%_datadir/%name/fit
 
 install -m 755 %name.sh %buildroot%_bindir/dsr
-install -m 644 *.py %buildroot%_datadir/%name
-install -m 644 dsr_db.txt %buildroot%_datadir/%name
+install -m 644 src/dsr_shelx/*.py %buildroot%_datadir/%name
+install -m 644 src/dsr_shelx/dsr_db.txt %buildroot%_datadir/%name
+install -m 644 src/dsr_shelx/olex_dsr_db.txt %buildroot%_datadir/%name
 install -m 644 manuals/DSR-manual.pdf %buildroot%_datadir/%name/manuals
 install -m 644 example/* %buildroot%_datadir/%name/example
-cp -R fit %buildroot%_datadir/%name
+cp -R src/dsr_shelx/fit %buildroot%_datadir/%name
 
 %files
-%doc README changelog.txt
+%doc README dsrchangelog.html
 %_bindir/dsr
 %_datadir/%name
 
 %changelog
+* Sun Sep 17 2023 Denis G. Samsonenko <ogion@altlinux.org> 241-alt1
+- new version
+
 * Sat Oct 16 2021 Denis G. Samsonenko <ogion@altlinux.org> 235-alt1
 - new version
 - URL changed
