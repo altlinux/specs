@@ -42,6 +42,9 @@ export LDFLAGS=-lphp-%_php_version
 
 %ifnarch %ix86
 %check
+# remove localhost via unix domain socket tests
+rm -f tests/035.phpt
+rm -f tests/053.phpt
 # remove online test
 rm -f tests/056.phpt
 # run memcached for tests
@@ -66,7 +69,7 @@ NO_INTERACTION=1 make test
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
 
-* Sun Jun 04 2023 Anton Farygin <rider@altlinux.ru> 8.2-alt1
+* Wed May 31 2023 Nikolay A. Fetisov <naf@altlinux.org> 8.2-alt1
 - 8.0.1 -> 8.2
 
 * Mon Oct 03 2022 Anton Farygin <rider@altlinux.ru> 8.0.1-alt1

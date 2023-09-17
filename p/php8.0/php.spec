@@ -3,6 +3,8 @@
 #  https://bugs.php.net/bug.php?id=77445
 %{?optflags_lto:%global optflags_lto %nil}
 
+%define branch %(rpm --eval %%_priority_distbranch)
+
 %ifarch %mips
 %add_optflags -DSLJIT_IS_FPU_AVAILABLE=0
 %endif
@@ -10,7 +12,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  0
-%define _php_release_version 29
+%define _php_release_version 30
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -39,6 +41,7 @@ Patch2: php-shared-1.patch
 Patch3: php-cli-build.patch
 Patch5: php-5.3.3-sapi-scandir.patch
 Patch6: php-devel-scripts-alternatives.patch
+Patch7: %name-%version-%release.patch
 Patch8: php7-source-7.4-cxx.patch
 Patch9: php-8.0-no-static-program.patch
 Patch10: php-set-session-save-path.patch
@@ -76,7 +79,7 @@ The most common use of PHP coding is probably as a replacement
 for CGI scripts.
 
 %package -n rpm-build-php%_php_suffix-version
-Summary:	RPM helper macros to rebuild PHP7 packages
+Summary:	RPM helper macros to rebuild packages for PHP %_php_suffix
 Provides: rpm-build-php-version = %_php_major.%_php_minor
 Requires: rpm-build-php >= 8.1-alt1
 Group:		Development/Other
@@ -119,6 +122,10 @@ read the file SELF-CONTAINED-EXTENSIONS.
 Group: Development/C
 Summary: Package with common data for various PHP packages
 Requires: php-base >= 2.5
+
+%if ( "%branch" == "sisyphus" || "%branch" == "p11" )
+Conflicts: installer-common-stage3 installer-stage3
+%endif
 
 Provides: php%_php_suffix-bcmath = %php_version-%php_release
 Provides: php%_php_suffix-ctype = %php_version-%php_release
@@ -163,6 +170,7 @@ in use by other PHP-related packages.
 %patch3 -p2
 %patch5 -p1 -b .scandir
 %patch6 -p2 -b .alternatives
+%patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p2
@@ -457,6 +465,14 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Thu Sep 14 2023 Anton Farygin <rider@altlinux.ru> 8.0.30-alt1
+- 8.0.29 -> 8.0.30 (Fixes: CVE-2023-3823, CVE-2023-3824)
+- for sisyphus and p11: added conflicts with the installer-stage3 to avoid
+  using php8.0 in distributios: The first stage of EOL plan
+
+* Sat Aug 12 2023 Anton Farygin <rider@altlinux.ru> 8.0.30-alt1
+- 8.0.29 -> 8.0.30 (Fixes: CVE-2023-3823, CVE-2023-3824)
+
 * Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 8.0.29-alt1
 - 8.0.28 -> 8.0.29 (Fixes: CVE-2023-3247)
 
