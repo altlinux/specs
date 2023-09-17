@@ -34,7 +34,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        116.0.5845.96
+Version:        117.0.5938.62
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -89,9 +89,8 @@ Patch019: 0019-Use-yandex-search-as-default.patch
 Patch020: 0020-GENTOO-EnumTable-crash.patch
 Patch021: 0021-ARCH-Add-missing-header.patch
 Patch022: 0022-ALT-Do-not-hardcode-flatbuffer-version.patch
-Patch023: 0023-DEBIAN-lambda-bug-workaround.patch
-Patch024: 0024-Add-missing-headers.patch
-Patch025: 0025-FEDORA-System-brotli.patch
+Patch023: 0023-Add-missing-headers.patch
+Patch024: 0024-FEDORA-System-brotli.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -192,7 +191,6 @@ BuildRequires:  pkgconfig(xtst)
 BuildRequires:  pkgconfig(libavcodec)
 BuildRequires:  pkgconfig(libavfilter)
 BuildRequires:  pkgconfig(libavformat)
-BuildRequires:  pkgconfig(libavresample)
 BuildRequires:  pkgconfig(libavutil)
 BuildRequires:  pkgconfig(opus)
 %endif
@@ -515,6 +513,21 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Sep 13 2023 Alexey Gladkov <legion@altlinux.ru> 117.0.5938.62-alt1
+- New version (117.0.5938.62).
+- Security fixes:
+  - CVE-2023-4863: Heap buffer overflow in WebP.
+  - CVE-2023-4900: Inappropriate implementation in Custom Tabs.
+  - CVE-2023-4901: Inappropriate implementation in Prompts.
+  - CVE-2023-4902: Inappropriate implementation in Input.
+  - CVE-2023-4903: Inappropriate implementation in Custom Mobile Tabs.
+  - CVE-2023-4904: Insufficient policy enforcement in Downloads.
+  - CVE-2023-4905: Inappropriate implementation in Prompts.
+  - CVE-2023-4906: Insufficient policy enforcement in Autofill.
+  - CVE-2023-4907: Inappropriate implementation in Intents.
+  - CVE-2023-4908: Inappropriate implementation in Picture in Picture.
+  - CVE-2023-4909: Inappropriate implementation in Interstitials.
+
 * Thu Aug 17 2023 Alexey Gladkov <legion@altlinux.ru> 116.0.5845.96-alt1
 - New version (116.0.5845.96).
 - Security fixes:
