@@ -1,6 +1,5 @@
 %define module_name	 evdi
 %define module_version 1.14.1
-%define sover 0
 %define stage %nil
 %define rel 63.33
 
@@ -19,7 +18,7 @@
 
 Name: displaylink-driver
 Version: 5.8.0
-Release: alt1.%rel
+Release: alt4.%rel
 Summary: DisplayLink library and tools
 Group: System/Kernel and hardware
 
@@ -30,8 +29,8 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 
 ExclusiveArch: %ix86 x86_64 aarch64 armh
 
-BuildRequires: libdrm-devel libusb chrpath
-BuildRequires: libgomp-devel
+BuildRequires: libdrm-devel libusb
+BuildRequires: libgomp-devel chrpath
 
 Source1: %name-%version-%{stage}%{rel}.run
 Source2: %module_name.modprobe
@@ -40,7 +39,8 @@ Source4: %name.sleep.sh
 Source5: %name-udev.sh
 Source6: %name.rules
 
-Requires: %name-firmware = %EVR lib%{module_name}%{sover} = %EVR
+Requires: %name-firmware = %EVR
+Obsoletes: lib%{module_name}0 lib%{module_name}1
 
 %description
 DisplayLink technology makes it simple to connect any display to any
@@ -67,14 +67,6 @@ Provides: kernel-source-%module_name = %module_version
 %description -n kernel-source-%module_name-%module_version
 %module_name modules sources for Linux kernel
 
-%package -n lib%{module_name}%{sover}
-Group: System/Libraries
-Summary: %{module_name} support library
-Provides: lib%{module_name}%{sover} = %module_version
-
-%description -n lib%{module_name}%{sover}
-%{module_name} support library
-
 %prep
 %setup -T -c
 sh %SOURCE1 --nodiskspace --noexec --keep --target . ||:
@@ -90,7 +82,10 @@ popd
 %brp_strip_none %_bindir/DisplayLinkManager
 %set_debuginfo_skiplist %_bindir/DisplayLinkManager
 
+# TODO maybe create separate kernel-conf- package for this?
 install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/modprobe.d/%module_name.conf
+mkdir -p %buildroot%_sysconfdir/modules-load.d
+echo %module_name > %buildroot%_sysconfdir/modules-load.d/%module_name.conf
 
 # kernel-source install
 mkdir -p {kernel-source-%module_name-%module_version,%buildroot%_usrsrc/kernel/sources}
@@ -128,12 +123,11 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_bindir/*
 %_unitdir/*
 %_sysconfdir/modprobe.d/%module_name.conf
+%_sysconfdir/modules-load.d/%module_name.conf
 %_udev_rulesdir/99-displaylink.rules
 %_systemd_dir/system-sleep/displaylink.sh
 %dir %attr(0700,root,root) %_logdir/displaylink
-
-%files -n lib%{module_name}%{sover}
-%_libdir/*.so.*
+%_libdir/*.so*
 
 %files firmware
 %_datadir/%name
@@ -142,6 +136,22 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 %changelog
+* Sat Sep 16 2023 L.A. Kostis <lakostis@altlinux.ru> 5.8.0-alt4.63.33
+- Use LD_PRELOAD instead of hacks (finally closes #47448).
+- remove libevdi as DisplayLinkManager rely on exact library name
+  (libevdi.so) so anyway correct soname transition not possible.
+- udev.sh: use --no-block for starting the service (to reduce the
+  boot time stall).
+
+* Sat Sep 16 2023 L.A. Kostis <lakostis@altlinux.ru> 5.8.0-alt3.63.33
+- move firmware files to _libdir due ugly libevdi requires.
+- libevdi: bump sover.
+
+* Fri Sep 15 2023 L.A. Kostis <lakostis@altlinux.ru> 5.8.0-alt2.63.33
+- Don't run chrpath as it breaks DisplayLinkManager (first try).
+- udev.rules: fix disable_u1_u2.
+- evdi: added to modules-load.d.
+
 * Tue Sep 05 2023 L.A. Kostis <lakostis@altlinux.ru> 5.8.0-alt1.63.33
 - New release (5.8.0).
 - Update evdi drivers version to 1.14.1.
