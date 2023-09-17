@@ -1,16 +1,15 @@
 Name: accel-ppp
 Version: 1.12.0
-Release: alt7
+Release: alt8
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 License: GPLv2
 Url: http://sourceforge.net/projects/accel-ppp/
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Requires: snmp-mibs-std
 AutoProv: yes
 
-BuildRequires: cmake libnet-snmp-devel libpcre-devel libnl-devel libssl-devel liblua5.3-devel glibc-kernheaders
+BuildRequires: cmake libpcre-devel libnl-devel libssl-devel liblua5.3-devel glibc-kernheaders
 BuildPreReq: rpm-build-kernel
 
 %description
@@ -28,7 +27,6 @@ Features:
 - Radius CoA/DM (PoD)
 - Built-in shaper (htb)
 - Command line interface (telnet)
-- SNMP
 - IPv6 (including builtin Neighbor Discovery and DHCPv6)
 
 %package -n kernel-source-%name
@@ -54,7 +52,7 @@ tar -cjf ../%name-%version.tar.bz2 ../%name-%version
       -DBUILD_DRIVER=FALSE \
       -DCMAKE_INSTALL_PREFIX=%prefix \
       -DRADIUS=TRUE \
-      -DNETSNMP=TRUE \
+      -DNETSNMP=FALSE \
       -DLOG_PGSQL=FALSE \
       -DLUA=5.3 \
       -DBUILD_INSTALL_PREFIX=%buildroot \
@@ -104,6 +102,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Sun Sep 17 2023 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt8
+- Disable net-snmp agent
+
 * Thu Jul 20 2023 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt7
 - ipoe,vlan_mon: add support for kernels 6.3+ and 6.4+
 
