@@ -1,8 +1,9 @@
-%define ver 1.3.7
+%define ver 1.3.8
+%define git a3489a6c8
 
 Name: proftpd
 Version: %ver
-Release: alt0.2.f
+Release: alt0.1.g%{git}
 
 %define _libexecdir %{expand:%_libdir}
 # TODO
@@ -95,7 +96,7 @@ BuildRequires: libsodium-devel
 
 %{?_with_mod_sql_mysql:BuildRequires: libMySQL-devel}
 %{?_with_mod_ldap:BuildRequires: libldap-devel}
-%{?_with_mod_sql_postgres:BuildRequires: libpq-devel postgresql-devel}
+%{?_with_mod_sql_postgres:BuildRequires: libpq-devel}
 %{?_with_mod_tls:BuildRequires: libssl-devel}
 %{?_with_mod_tls_memcache:BuildRequires: libmemcached-devel}
 %{?_with_mod_facl:BuildRequires: libacl-devel}
@@ -693,6 +694,10 @@ fi
 %_controldir/%name
 
 %changelog
+* Sun Sep 17 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.8-alt0.1.ga3489a6c8
+- v1.3.8-31-ga3489a6c8.
+- BR: postgresql-devel->libpq-devel.
+
 * Sun Sep 17 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt0.2.f
 - fix FTBFS: don't pass runstatedir to configure.
 
