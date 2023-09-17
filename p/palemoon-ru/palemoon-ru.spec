@@ -4,8 +4,8 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	32.0.0
-%define max_version	33.0.*
+%define min_version	32.4.0
+%define max_version	32.5.*
 
 %define bname		newmoon
 %define sdir		searchplugins
@@ -14,8 +14,8 @@
 
 Name: palemoon-ru
 
-Version: 32.0.0
-Release: alt1.1
+Version: 32.4.0
+Release: alt1
 
 ExcludeArch: %ix86 %arm ppc64le
 
@@ -129,8 +129,11 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
+* Sun Sep 17 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.4.0-alt1
+- Version 32.4.0
+
 * Fri Sep 15 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1.1
-- Remove ppc64le arch
+- Add ExcludeArch ppc64le arch
 
 * Tue Jan 31 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1
 - Version 32.0.0

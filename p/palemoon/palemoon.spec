@@ -1,10 +1,10 @@
-# git commit 9a7eccc7ecea20840fd0a8b1c4021eb8d9cbfa54
+# git commit 3ac20629e35c3b6241c340371929e761a5b38c93
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version:  32.0.1
+Version:  32.4.0
 
 Release: alt1
 
@@ -14,10 +14,14 @@ Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
-ExcludeArch: %ix86 %arm
+ExcludeArch: %ix86 %arm ppc64le
 
 %define sname palemoon
 %define bname newmoon
+
+%define llvm_version  16.0
+%define rust_version  1.65.0
+%define cargo_version 1.65.0
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -45,12 +49,15 @@ Source11: content.tar
 Source12: xulstore.json
 Source13: kde.js
 
+Patch15: palemoon-32.0.1-ppc64le-alt1.patch
+
 #Patch1: palemoon_google_add-26.4.0.patch
 Patch16: mozilla_palimoon-29.4.6-cross-desctop.patch
 
 Patch18: mozilla_palimoon-29.4.6-bug-1153109-enable-stdcxx-compat.patch
 
-#Patch21: palemoon-29.4.6-build-el5-nss.patch
+Patch21: palemoon-build-el5-nss.patch
+
 Patch22: palemoon_rpath-29.4.6.patch
 
 Patch23: palemoon_version-29.4.6.patch
@@ -69,20 +76,32 @@ Patch112: palemoon-29.4.6-mozilla-kde.patch
 Patch113: palemoon-29.4.6-kde-background.patch
 
 Patch114: nemoon_branding-31.0.0.patch
+Patch115: palemoon-32.4.0-mathops.patch
+Patch116: palemoon-32.4.0-hunspell.patch
 
 #set_gcc_version 10
 %set_autoconf_version 2.13
 
 BuildPreReq: libXcomposite-devel libXdamage-devel
-
-# Automatically added by buildreq on Wed Jul 13 2022
-# optimized out: alt-os-release alternatives fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base sh4 xorg-proto-devel zlib-devel
+# Automatically added by buildreq on Tue Sep 05 2023
+# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base sh4 xorg-proto-devel zlib-devel
 BuildRequires: doxygen gcc-c++ libGConf-devel libXt-devel libalsa-devel
-BuildRequires: libdbus-glib-devel libgtk+2-devel libhunspell-devel
-BuildRequires: libpulseaudio-devel libsocket python-modules-distutils
-BuildRequires: python-modules-json python-modules-wsgiref unzip yasm zip
+BuildRequires: libdbus-glib-devel libgtk+2-devel libgtk+3-devel
+BuildRequires: libhunspell-devel libpulseaudio-devel libsocket
+BuildRequires: python-modules-distutils python-modules-json
+BuildRequires: python-modules-wsgiref unzip yasm zip
+
+BuildRequires: libevent-devel
+
 
 BuildRequires: %_bindir/python2.7 python2-base
+
+BuildRequires: libvpx-devel libzfs-devel
+
+%ifarch x86_64
+BuildRequires: libcpuid-devel
+%endif
+
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: bzlib-devel gobject-introspection-devel libgtest-devel libpng-devel libssl-devel swig texinfo zlib-devel
@@ -92,7 +111,7 @@ BuildRequires(pre): mozilla-common-devel rpm-macros-alternatives mozilla-common
 BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildPreReq: python-module-future python-modules-json python-modules-wsgiref
-BuildPreReq: libnss-devel
+BuildPreReq: libnss-devel libnss
 
 #BuildRequires: gcc%%{_gcc_version}-c++
 
@@ -100,7 +119,24 @@ BuildPreReq: chrpath
 BuildPreReq: autoconf_%_autoconf_version
 
 BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel
-BuildRequires: libhunspell-devel
+
+BuildRequires: pkgconfig(hunspell)
+BuildRequires: clang%llvm_version
+BuildRequires: clang%llvm_version-devel
+BuildRequires: llvm%llvm_version-devel
+BuildRequires: lld%llvm_version-devel
+BuildRequires: libstdc++-devel
+BuildRequires: glibc-kernheaders-generic
+BuildRequires: rpm-macros-alternatives
+BuildRequires: rust >= %rust_version
+BuildRequires: rust-cargo >= %cargo_version
+BuildRequires: node
+BuildRequires: nasm yasm
+BuildRequires: zip unzip
+BuildRequires: libshell
+BuildRequires: libwireless-devel
+BuildRequires: libnss-devel-static
+BuildRequires: xorg-cf-files chrpath alternatives
 
 %description
 The %sname project is a redesign of Mozilla's  Firefox browser component,
@@ -167,6 +203,7 @@ popd
 %setup -T -D -a 11
 
 %patch24 -p1
+
 #patch25 -p1
 
 #patch21 -p1
@@ -183,6 +220,10 @@ cd ..
 
 %patch23 -p1
 
+#ifarch ppc64le
+#patch15 -p1
+#endif
+
 #Pach from Rosa
 ##patch101 -p1 -b .lang
 %patch103  -p1 -b .disable-software-update
@@ -196,8 +237,13 @@ cd ..
 #patch113 -p1 -b .kdebackground
 
 %patch114 -p1
+%patch115 -p1
+%patch116 -p1
+
 
 cd %sname
+
+
 # icons
 for s in 16 22 24 32 48 256; do
 	install -D -m 644 \
@@ -242,7 +288,7 @@ echo "ac_add_options --enable-system-hunspell" >> .mozconfig
 echo "ac_add_options --with-pthreads" >> .mozconfig
 
 echo "ac_add_options --x-libraries=%_libdir/X11" >> .mozconfig
-echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
+echo "ac_add_options --with-nss-prefix=%_libdir" >> .mozconfig
 
 %ifarch %ix86
  echo "ac_add_options --with-arch=i586" >> .mozconfig
@@ -254,10 +300,16 @@ echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
  echo 'ac_add_options --enable-optimize=" -march=x86-64 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
+%ifarch ppc64le
+ echo 'ac_add_options --enable-optimize=" -mcpu=powerpc64 -maltivec  -mpower8-vector"' >> .mozconfig
+# echo 'ac_add_options "-DNSS_DISABLE_CRYPTO_VSX=1"'
+%endif
+
 %build
 cd %sname
 
 %add_optflags %optflags_shared
+
 %add_findprov_lib_path %newmoon_datadir
 
 export MOZ_BUILD_APP=%sname
@@ -272,6 +324,10 @@ MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
 
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS -Wno-error=format-overflow -Wmaybe-uninitialized -Wreorder -D_GNUC_"
+
+#ifarch ppc64le
+#  CXXFLAGS+="-DNSS_DISABLE_CRYPTO_VSX=1"
+#endif
 
 # Add fake RPATH
 rpath="/$(printf %%s '%newmoon_bindir' |tr '[:print:]' '_')"
@@ -288,6 +344,8 @@ export LIBDIR="%_libdir"
 export LIBIDL_CONFIG=%_bindir/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
+
+#./mach build
 
 %__autoconf
 
@@ -466,6 +524,25 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Tue Sep 05 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.4.0-alt1
+- Version 32.4.0
+
+* Sat Sep 02 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.4.0-alt0_1_rc1
+- Version 32.4.0 RC1
+
+* Sun Jun 04 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.2.0-alt1
+- Version 32.2.0
+
+* Sun Jun 04 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.1.2-alt1
+- Add palemoon-32.0.1-ppc64le-alt.patch.
+  Thanks to ximper@ for the patch ;-)
+
+* Sat Apr 22 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.1.1-alt1
+- Version 32.1.1 (CVE-2023-29545, CVE-2023-29539)
+
+* Fri Mar 31 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.1.0-alt1
+- Version 32.1.0 (CVE-2023-25751, CVE-2023-28163)
+
 * Sat Mar 11 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.0.1-alt1
 - Version 32.0.1  (CVE-2023-25733, CVE-2023-25739, CVE-2023-0767)
 
@@ -878,3 +955,5 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+
+
