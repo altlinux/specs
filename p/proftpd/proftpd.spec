@@ -2,7 +2,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt0.1.f
+Release: alt0.2.f
 
 %define _libexecdir %{expand:%_libdir}
 # TODO
@@ -11,6 +11,8 @@ Release: alt0.1.f
 
 %define def_shared() %{expand:%{?1:%%global mod_shared_list %{?mod_shared_list:%mod_shared_list:}%*}}%{expand:%%global _shared_%1 1}%{expand:%%global _with_%1 1}
 %define def_static() %{expand:%{?1:%%global mod_static_list %{?mod_static_list:%mod_static_list:}%*}}%{expand:%%global _static_%1 1}%{expand:%%global _with_%1 1}
+
+%undefine _configure_use_runstatedir
 
 %def_static mod_auth_pam
 %def_static mod_readme
@@ -691,6 +693,9 @@ fi
 %_controldir/%name
 
 %changelog
+* Sun Sep 17 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt0.2.f
+- fix FTBFS: don't pass runstatedir to configure.
+
 * Thu Jan 05 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt0.1.f
 - 1.3.7f release.
 
