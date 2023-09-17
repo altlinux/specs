@@ -89,6 +89,7 @@
 %def_enable libx265
 %def_enable libxml2
 %def_enable libxvid
+%def_enable libzimg
 %def_enable libzmq
 %def_enable libzvbi
 %def_enable lv2
@@ -120,7 +121,6 @@
 %def_disable libtesseract
 %def_disable libvmaf
 %def_disable libxavs2
-%def_disable libzimg
 %def_disable mbedtls
 %def_disable omx
 %def_disable opencl
@@ -167,7 +167,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	6.0
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -240,6 +240,7 @@ BuildRequires:	yasm
 %{?_enable_libx265:BuildRequires: libx265-devel}
 %{?_enable_libxml2:BuildRequires: libxml2-devel}
 %{?_enable_libxvid:BuildRequires: libxvid-devel}
+%{?_enable_libzimg:BuildRequires: libzimg-devel}
 %{?_enable_libzmq:BuildRequires: libzeromq-devel}
 %{?_enable_libzvbi:BuildRequires: libzvbi-devel}
 %{?_enable_lv2:BuildRequires: liblilv-devel lv2-devel}
@@ -866,6 +867,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Sun Sep 17 2023 Anton Farygin <rider@altlinux.ru> 2:6.0-alt2
+- built with libzimg (Closes: #42625)
+
 * Mon Sep 04 2023 Anton Farygin <rider@altlinux.ru> 2:6.0-alt1
 - 4.4.4 -> 6.0
 - built with libmfx (x86_64 only)
