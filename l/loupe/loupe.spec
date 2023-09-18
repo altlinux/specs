@@ -1,47 +1,57 @@
 %def_disable snapshot
-%define ver_major 44
+
+%define optflags_lto %nil
+%define _libexecdir %_prefix/libexec
+
+%define ver_major 45
+%define beta %nil
 %define xdg_name org.gnome.Loupe
 
 %def_disable bootstrap
 
 Name: loupe
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
-Summary: A simple image viewer application written with GTK4 and Rust
+Summary: GNOME Image Viewer
 License: GPL-3.0
 Group: Graphics
 Url: https://gitlab.gnome.org/Incubator/loupe
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Vcs: https://gitlab.gnome.org/Incubator/loupe.git
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
-#Source1: %name-%version-cargo.tar
+%{?_enable_snapshot:Source1: %name-%version-cargo.tar}
 
 %define glib_ver 2.76
-%define gtk_ver 4.10
-%define adwaita_ver 1.3
+%define gtk_ver 4.11.3
+%define adwaita_ver 1.4
 %define gweather_ver 4.0.0
 %define heif_ver 1.14.2
+%define lcms2_ver 2.12.0
+
+Provides: gnome-image-viewer = %EVR
+Requires: glycin-loaders
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson rust-cargo /usr/bin/appstream-util desktop-file-utils
+BuildRequires: meson rust-cargo
+BuildRequires: yelp-tools /usr/bin/appstream-util desktop-file-utils
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gweather4) >= %gweather_ver
 BuildRequires: pkgconfig(libheif) >= %heif_ver
+BuildRequires: pkgconfig(lcms2) >= %lcms2_ver
 BuildRequires: librsvg-devel libxml2-devel
 
 %description
 %summary
 
 %prep
-%setup -n %name-%version
-# %{?_disable_bootstrap:-a1}
+%setup -n %name-%version%beta %{?_enable_snapshot:%{?_disable_bootstrap:-a1}}
 %{?_enable_bootstrap:
 mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
@@ -53,13 +63,11 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %install
 %meson_install
-%find_lang %name
+%find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
-%_datadir/%name/
-%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
@@ -67,6 +75,12 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
+* Sat Jul 01 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
+- 44.3
+
 * Wed Apr 05 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - first build for Sisyphus
 
