@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 364
+%define centos_release 366
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -654,6 +654,22 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Sep 18 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.366-alt1.el9
+- Updated to kernel-5.14.0-366.el9:
+  + Backport cgroup tests
+  + Bluetooth: Add VID/PID 0489/e0e0 for MediaTek MT7921
+  + Draft: Merge tag 'kernel-5.14.0-362.3.1.el9_3' from 9.3
+  + Enable the Intel TPMI Driver
+  + Merge commit '91b73247ecdef17b0792979d292766106fea489a'
+  + Merge commit 'd6933a64e07cce40669787cd9e25cec6b112f545'
+  + Merge tag 'kernel-5.14.0-362.3.1.el9_3' from 9.3
+  + Update kernel's PCI subsystem to v6.4
+  + blk-cgroup: two fixes
+  + pwm: imx-tpm: driver updates
+  + redhat/kernel.spec.template: Add global compression variables
+  + redhat: self-test fixes
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Sep 11 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.364-alt1.el9
 - Updated to kernel-5.14.0-364.el9 (fixes: CVE-2023-3776):
   + Draft: Merge tag 'kernel-5.14.0-362.2.1.el9_3' from 9.3
