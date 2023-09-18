@@ -1,10 +1,10 @@
 Name: kernel-image-rt
 %define kernel_base_version	6.1
 %define kernel_sublevel	.46
-%define kernel_rt_release	rt13
+%define kernel_rt_release	rt14
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt1.%kernel_rt_release
+Release: alt2.%kernel_rt_release
 
 %define krelease	%release
 
@@ -178,7 +178,7 @@ Group: System/Kernel and hardware
 Requires(pre,post,postun): %name = %EVR
 
 %description -n kernel-modules-drm-ancient-%flavour
-The Direct Rendering Modules for ancient cards: mgag200.ko,
+The Direct Rendering Modules for ancient cards:
 sis.ko, tdfx.ko, savage.ko, r128.ko, mga.ko, via.ko
 
 These are modules for your ALT Linux system
@@ -277,6 +277,7 @@ Verify EFI-stub signature.
 rm -rf kernel-source-%kernel_base_version
 tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
+%define _default_patch_flags -s
 %autopatch -p1
 
 # fix -rt suffix
@@ -374,6 +375,9 @@ mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
 install -d %buildroot%kbuild_dir
 cp -a include %buildroot%kbuild_dir/include
 cp -a arch/%arch_dir/include %buildroot%kbuild_dir/arch/%arch_dir
+# Delete CONFIG_ files and stray .cmds
+find %buildroot%kbuild_dir/include/config -name '[0-9A-Z]*' -delete
+find %buildroot%kbuild_dir -name '*.cmd' -delete
 
 # drivers-headers install
 install -d %buildroot%kbuild_dir/drivers/scsi
@@ -514,6 +518,9 @@ if ! timeout 999 vm-run --kvm=cond \
         sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
         exit 1
 fi
+# Verify fchmodat2 backport.
+make -C tools/testing/selftests/fchmodat2
+timeout 300 vm-run tools/testing/selftests/fchmodat2/fchmodat2_test
 
 %post checkinstall
 check-pesign-helper
@@ -575,7 +582,6 @@ check-pesign-helper
 %modules_dir/kernel/drivers/platform/x86/thinkpad_acpi.ko
 %endif
 %exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
-%exclude %modules_dir/kernel/drivers/gpu/drm/mgag200
 %ifnarch aarch64 armh
 %exclude %modules_dir/kernel/drivers/gpu/drm/sis
 %exclude %modules_dir/kernel/drivers/gpu/drm/savage
@@ -586,7 +592,6 @@ check-pesign-helper
 %endif
 
 %files -n kernel-modules-drm-ancient-%flavour
-%modules_dir/kernel/drivers/gpu/drm/mgag200
 %ifnarch aarch64 armh
 %modules_dir/kernel/drivers/gpu/drm/sis
 %modules_dir/kernel/drivers/gpu/drm/savage
@@ -605,6 +610,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Sep 18 2023 Vitaly Chikunov <vt@altlinux.org> 6.1.46-alt2.rt14
+- Synchronize source with std-def/sisyphus.
+
+* Mon Sep 18 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.46-alt1.rt14
+- v6.1.46-rt14 (2023-09-17).
+
 * Fri Aug 18 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.46-alt1.rt13
 - v6.1.46-rt13 (2023-08-18).
 
