@@ -1,5 +1,5 @@
 Name: wondershaper
-Version: 1.1a
+Version: 1.4.1
 Release: alt1
 
 Summary: Helps to maintain interactive latency on modem/ADSL/cable
@@ -8,8 +8,13 @@ Group: System/Servers
 Url: http://lartc.org/%name
 BuildArch: noarch
 Packager: Andy Gorev <horror@altlinux.ru>
+Requires:       iproute2
 
 Source: %url/%name-%version.tar.bz2
+# PATCH-FIX-OPENSUSE wondershaper-fix-conf-path.patch -- Use /etc/wondershaper for wondershaper.conf place
+Patch0:         wondershaper-fix-conf-path.patch
+# PATCH-FIX-OPENSUSE wondershaper-systemd-hardening.patch -- Added hardening to systemd service(s) (bsc#1181400)
+Patch1:         wondershaper-systemd-hardening.patch
 
 %description
 This package attempts to implement
@@ -20,19 +25,25 @@ This package attempts to implement
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %install
-%__mkdir_p $RPM_BUILD_ROOT{%_sbindir,%_sysconfdir/%name}
-%__install -p -m755 wshaper* $RPM_BUILD_ROOT%_sysconfdir/%name/
-for f in wshaper*; do
-	%__ln_s "../..%_sysconfdir/%name/$f" $RPM_BUILD_ROOT%_sbindir/
-done
+install -pDm 755 %{name} %{buildroot}/%{_sbindir}/%{name}
+install -pDm 644 %{name}.service %{buildroot}/%{_unitdir}/%{name}.service
+install -pDm 644 %{name}.conf %{buildroot}/%{_sysconfdir}/%{name}/%{name}.conf
 
 %files
-%_sbindir/*
-%config %_sysconfdir/%name
-%doc README TODO VERSION ChangeLog
+
+%doc COPYING ChangeLog README.bhubert README.md VERSION
+%{_sbindir}/%{name}
+%{_unitdir}/%{name}.service
+%dir %{_sysconfdir}/%{name}
+%config %{_sysconfdir}/%{name}/%{name}.conf
 
 %changelog
+* Mon Sep 18 2023 Artyom Bystrov <arbars@altlinux.org> 1.4.1-alt1
+- Update version
+
 * Tue Oct 14 2003 Dmitry V. Levin <ldv@altlinux.org> 1.1a-alt1
 - Initial revision.
