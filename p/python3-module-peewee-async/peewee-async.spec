@@ -3,25 +3,28 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.1
+Version: 0.9.1
 Release: alt1
 
 Summary: Asynchronous interface for peewee ORM powered by asyncio
 
 License: MIT
 Group: Development/Python3
-Url: http://peewee-async.readthedocs.org/en/latest/
+URL: https://pypi.org/project/peewee-async
+VCS: https://github.com/05bit/peewee-async
 
-# https://github.com/05bit/peewee-async.git
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-peewee
+BuildRequires: python3-module-importlib_metadata
 %endif
 
 %py3_provides peewee_async
@@ -35,22 +38,25 @@ asyncio for peewee ORM.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+%pyproject_run_pytest
 
 %files
-%doc *.md docs/*.rst docs/peewee_async
+%doc LICENSE *.md
 %python3_sitelibdir/peewee_async.py
 %python3_sitelibdir/peewee_asyncext.py
-%python3_sitelibdir/peewee_async-%version-py%_python3_version.egg-info
+%python3_sitelibdir/peewee_async-%version.dist-info
 %python3_sitelibdir/__pycache__
 
 %changelog
+* Mon Sep 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt1
+- Automatically updated to 0.9.1.
+
 * Mon Jun 12 2023 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
 - Automatically updated to 0.8.1.
 
