@@ -4,8 +4,8 @@
 %define cid_dict       el@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	32.0.0
-%define max_version	33.0.*
+%define min_version	32.4.0
+%define max_version	33.4.*
 
 %define bname		newmoon
 %define newmoon_dir 	%palemoon_datadir/browser/
@@ -13,8 +13,8 @@
 Name: palemoon-el
 
 
-Version: 32.0.0
-Release: alt1.1
+Version: 32.4.0
+Release: alt1
 
 Summary: Greek (EL) Language Pack for Pale Moon
 License: MPL-2.0
@@ -30,7 +30,7 @@ Source2: el_GR_%version.tar
 ExcludeArch: %ix86 %arm ppc64le
 
 Requires: hunspell-el
-Requires: palemoon >= 27.7.0
+Requires: palemoon >= 32.4.0
 
 
 BuildRequires(pre):	rpm-build-palemoon
@@ -75,6 +75,9 @@ ln -s %_datadir/myspell/el_GR.dic %buildroot/%cid_dict_dir/dictionaries/el_GR.di
 
 
 %changelog
+* Mon Sep 18 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.4.0-alt1
+- Version 32.4.0
+
 * Sat Sep 09 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1.1
 - Remove ppc64le
 
