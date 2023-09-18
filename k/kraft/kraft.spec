@@ -1,5 +1,7 @@
+%define rev 100ca9f323f4cb90eade1af9d7c6d5351f8c2783
+
 Name: kraft
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Kraft - Software for small business
@@ -35,6 +37,7 @@ your small business.
 %prep
 %setup -q -n %name-%version
 subst 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DIR}|' src/CMakeLists.txt
+echo "%rev" > .tag
 
 %build
 %K5init no_altplace
@@ -56,6 +59,9 @@ subst 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DIR}|' 
 %_datadir/metainfo/*.appdata.xml
 
 %changelog 
+* Sun Sep 17 2023 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
+- New version.
+
 * Sun Dec 18 2022 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - New version.
 
