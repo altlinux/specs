@@ -1,20 +1,28 @@
+%define _unpackaged_files_terminate_build 1
 %define oname hupper
 
+%def_with check
+
 Name:           python3-module-%oname
-Version:        1.0
-Release:        alt2
+Version:        1.12
+Release:        alt1
 
 Summary:        Integrated process monitor for developing servers
 Group:          Development/Python3
 License:        MIT
 BuildArch:      noarch
-URL:            https://pypi.python.org/pypi/%{oname}
-# https://github.com/Pylons/hupper.git
+URL:            https://pypi.org/project/hupper
+VCS:            https://github.com/Pylons/hupper.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3(pytest) python3(pytest_cov) python3(watchdog) python3(mock)
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+%endif
 
 
 %description
@@ -29,21 +37,25 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-PYTHONPATH=%buildroot%python3_sitelibdir py.test3
+%pyproject_run_pytest -v
 
 %files
 %doc CHANGES.rst CONTRIBUTING.rst LICENSE.txt README.rst rtd.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %_bindir/*
 
 
 %changelog
+* Mon Sep 18 2023 Anton Vyatkin <toni@altlinux.org> 1.12-alt1
+- New version 1.12.
+
 * Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2
 - disable python2
 
