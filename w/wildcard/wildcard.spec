@@ -5,7 +5,7 @@
 %def_disable bootstrap
 
 Name: wildcard
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: regular expression testing app for GNOME
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define gtk_ver 4.10
-%define adwaita_ver 1.3
+%define adwaita_ver 1.4
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
@@ -64,6 +64,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Aug 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Sun Aug 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - first build for Sisyphus (v0.2.0-6-gff8c151)
 
