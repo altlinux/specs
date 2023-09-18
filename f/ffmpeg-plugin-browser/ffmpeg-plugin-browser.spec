@@ -159,7 +159,7 @@
 
 Name:		ffmpeg-plugin-browser
 Version:	114
-Release:	alt1
+Release:	alt2
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -174,6 +174,8 @@ Source1: find-provides.sh
 Patch1: chromium.patch
 Patch2: ffmpeg-chromium-100.patch
 Patch3: alt-vulkan-decode-defines.patch
+Patch4: ffmpeg-x86-optimization.patch
+Patch5: armv6-ffmpeg-no-thumb.patch
 Patch2000: ffmpeg-e2k-simd.patch
 
 %define __find_provides %SOURCE1
@@ -577,6 +579,8 @@ This package contains static development files for libswscale.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -764,6 +768,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Mon Sep 18 2023 Sergey V Turchin <zerg@altlinux.org> 114-alt2
+- fix to compile
+
 * Mon Aug 07 2023 Sergey V Turchin <zerg@altlinux.org> 114-alt1
 - new version
 
