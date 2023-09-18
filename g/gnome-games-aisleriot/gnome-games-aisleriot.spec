@@ -11,7 +11,7 @@
 %def_enable theme_kde
 
 Name: gnome-games-%_name
-Version: %ver_major.29
+Version: %ver_major.30
 Release: alt1
 
 Summary: A collection of card games
@@ -79,6 +79,9 @@ which are easy to play with the aid of a mouse.
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 3.22.30-alt1
+- 3.22.30
+
 * Tue Apr 18 2023 Yuri N. Sedunov <aris@altlinux.org> 3.22.29-alt1
 - 3.22.29
 
