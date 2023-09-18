@@ -1,6 +1,6 @@
 Name:           siril
-Version:        1.0.6
-Release:        alt2
+Version:        1.2.0
+Release:        alt1
 Summary:        Astronomical image processing software
 Group: 		Graphics
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -23,7 +23,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg libavcodec-devel
 # libffmpegthumbnailer-devel libopenmpt-devel
 BuildRequires:  gcc-c++
-BuildRequires:  libgif-devel libopencv-devel  libgomp-devel libopenmpt-devel
+BuildRequires:  libgif-devel libopencv-devel  libgomp-devel libopenmpt-devel libheif-devel libffms2-devel libavformat-devel libswscale-devel  libswresample-devel
 BuildRequires:  intltool
 BuildRequires:  libappstream-glib
 BuildRequires:  meson
@@ -104,6 +104,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.free_
 
 
 %changelog
+* Mon Sep 18 2023 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+
 * Thu Nov 17 2022 Ilya Mashkin <oddity@altlinux.ru> 1.0.6-alt2
 - fix build on Elbrus (Ilya Kurdyukov)
 
