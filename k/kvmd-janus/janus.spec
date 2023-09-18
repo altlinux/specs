@@ -1,5 +1,5 @@
 Name: kvmd-janus
-Version: 0.13.3
+Version: 0.14.0
 Release: alt1
 
 Summary: PiKVM -- WebRTC server
@@ -68,6 +68,9 @@ find %buildroot%_libdir -type f -name \*.la -delete
 %_includedir/kvmd-janus
 
 %changelog
+* Mon Sep 18 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.14.0-alt1
+- 0.14.0 released
+
 * Mon Apr 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.13.3-alt1
 - 0.13.3 released
 

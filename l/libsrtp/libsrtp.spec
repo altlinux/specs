@@ -1,83 +1,60 @@
-#============================================================================
-# Please do not edit!
-# Created by specgen utility from files in specs/ subdir
-#============================================================================
 Name: libsrtp
-Summary: Secure Real-time Transport Protocol implementation
 Version: 1.5.4
-Release: alt1
-License: BSD-like
+Release: alt2
+
+Summary: Secure RTP library
+License: BSD-3-Clause
 Group: System/Libraries
-BuildRequires: gcc-c++ libstdc++-devel
-Packager: Denis Smirnov <mithraen@altlinux.ru>
 Url: https://github.com/cisco/libsrtp
-Source: %name-%version.tar
-Source100: %name.watch
-Patch1: %name-%version-%release.patch
 
-%package devel
-Summary: %summary
-Group: System/Libraries
-
-%description devel
-%summary
-
-%package devel-static
-Summary: %summary
-Group: System/Libraries
-Requires: %name-devel
-
-%description devel-static
-%summary
+Source0: %name-%version.tar
 
 %package -n libsrtp1
-Summary: %summary
+Summary: Secure RTP library
 Group: System/Libraries
-Obsoletes: libsrtp < %version-%release
-Conflicts: libsrtp < %version-%release
-Provides:  libsrtp = %version-%release
 
-%description -n libsrtp1
-%summary
+%package devel
+Summary: Development part of libsrtp
+Group: Development/C
+
+%define desc This package provides an implementation of the Secure Real-time\
+Transport Protocol (SRTP), the Universal Security Transform (UST),\
+and a supporting cryptographic kernel.
 
 %description
-The libSRTP library is an open-source implementation of the Secure Real-time
-Transport Protocol (SRTP) originally authored by Cisco Systems, Inc. It is
-available under a BSD-style license.
-SRTP is a security profile for RTP that adds confidentiality, message
-authentication, and replay protection to that protocol. It is specified in RFC
-3711
+%desc
 
+%description -n libsrtp1
+%desc
+
+%description devel
+%desc
+This package contains the headers and libraries for libsrtp development.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
-touch NEWS AUTHORS ChangeLog
+touch ar-lib
 %autoreconf
-export CFLAGS
-CFLAGS="$CFLAGS -fPIC -Wall -O2 -fexpensive-optimizations -funroll-loops"
-%configure --enable-pic
-%make_build all shared_library
-%check
+%configure
+%make_build shared_library
 
 %install
-%makeinstall
-
-%files devel
-%dir %_includedir/srtp
-%_includedir/srtp/*.h
-%_libdir/libsrtp.so
-%_pkgconfigdir/libsrtp.pc
-
-%files devel-static
-%_libdir/libsrtp.a
+%makeinstall_std
 
 %files -n libsrtp1
 %_libdir/libsrtp.so.*
 
+%files devel
+%_includedir/srtp
+%_libdir/libsrtp.so
+%_pkgconfigdir/libsrtp.pc
+
 %changelog
+* Mon Sep 18 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.4-alt2
+- fixed build
+
 * Mon Feb 08 2016 Denis Smirnov <mithraen@altlinux.ru> 1.5.4-alt1
 - new version 1.5.4
 

@@ -1,6 +1,6 @@
 Name: kvmd
-Version: 3.212
-Release: alt2
+Version: 3.217
+Release: alt1
 
 Summary: The PiKVM daemon
 License: GPLv3
@@ -84,6 +84,9 @@ rm -v %buildroot%_unitdir/kvmd-certbot.service
 %python3_sitelibdir/kvmd-%version.dist-info
 
 %changelog
+* Mon Sep 18 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.217-alt1
+- 3.217 released
+
 * Tue Jul 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.212-alt2
 - fixed build with recent setuptools
 
