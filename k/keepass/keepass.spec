@@ -2,7 +2,7 @@
 
 Name: keepass
 Version: 2.54
-Release: alt1
+Release: alt2
 
 Summary: Password manager
 
@@ -14,6 +14,7 @@ ExclusiveArch: %ix86 x86_64
 #source from: https://sourceforge.net/projects/keepass/files/KeePass 2.x/
 Source0: %name-%version.tar
 Source1: %name.appdata.xml
+Source2: translations.tar
 
 # Upstream does not include a .desktop file, etc..
 Patch0: keepass-2.35-fedora-linux.patch
@@ -57,7 +58,7 @@ BuildArch: noarch
 Documentation for KeePass, a free open source password manager.
 
 %prep
-%setup
+%setup -a2
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -100,6 +101,18 @@ sed 's/\r$//' Docs/License.txt > %buildroot/%_docdir/%name/License.txt
 cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %endif
 
+# compress and install translations
+mkdir -p %buildroot/%_libexecdir/%name/Languages/
+pushd translations
+for i in *
+do
+	# keep translations uncompressed in repo to keep track of changes between versions
+	# original files are compressed
+	gzip --best --suffix=".lngx" "$i"
+	install -p -m 0644 "$i.lngx" %buildroot/%_libexecdir/%name/Languages/
+done
+popd
+
 %files
 %dir %_docdir/%name
 %doc %_docdir/%name/History.txt
@@ -118,6 +131,7 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %_datadir/icons/hicolor/16x16/apps/%name.png
 %_mandir/man1/%name.1*
 %_datadir/metainfo/%name.appdata.xml
+%_libexecdir/%name/Languages/*.lngx
 
 %if_with doc
 %files doc
@@ -126,6 +140,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %endif
 
 %changelog
+* Thu Aug 31 2023 Oleg Solovyov <mcpain@altlinux.org> 2.54-alt2
+- added Russian translation
+
 * Thu Jun 29 2023 Oleg Solovyov <mcpain@altlinux.org> 2.54-alt1
 - new version: 2.54
 
