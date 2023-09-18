@@ -17,7 +17,7 @@
 
 Name: mold
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: A Modern Linker
 License: MIT
@@ -26,6 +26,7 @@ Url: https://github.com/rui314/mold
 Vcs: https://github.com/rui314/mold
 
 Source0: %name-%version.tar
+Patch0: 0001-Fix-test.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -55,6 +56,7 @@ particularly in rapid debug-edit-rebuild cycles.
 
 %prep
 %setup
+%autopatch -p1
 
 # Sse system zstd and zlib always.
 rm -rfv third-party/{zlib,zstd}
@@ -104,6 +106,10 @@ rm -rfv %buildroot%_docdir/mold
 %_man1dir/*mold.1.*
 
 %changelog
+* Mon Sep 18 2023 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt2
+- Added patch to skip tests in riscv64 if no static libc.a is available.
+  The patch is formed by 9ee10ba4bd249653f3d95996d8a8f213c7d3b4ba.
+
 * Sun Aug 13 2023 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
 - Updated to 2.1.0.
 
