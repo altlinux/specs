@@ -1,5 +1,5 @@
 Name: coreutils
-Version: 9.1.0.8.e08752
+Version: 9.4.0.24.75e248
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -8,11 +8,11 @@ License: GPLv3+
 Group: System/Base
 Url: https://www.gnu.org/software/coreutils/
 
-# git://git.sv.gnu.org/coreutils refs/heads/master
-# git://git.altlinux.org/people/ldv/packages/coreutils refs/heads/coreutils-current
+# https://git.savannah.gnu.org/git/coreutils.git refs/heads/master
+# https://git.altlinux.org/people/glebfm/packages/coreutils.git refs/heads/coreutils-current
 Source0: %srcname.tar
 # translationproject.org::tp/latest/coreutils/
-# git://git.altlinux.org/people/ldv/packages/coreutils refs/heads/po-current
+# https://git.altlinux.org/people/glebfm/packages/coreutils.git refs/heads/po-current
 Source1: po-%version-%release.tar
 
 # sources from fileutils
@@ -30,7 +30,7 @@ Source27: usleep.1
 Source28: true.1
 Source29: false.1
 
-# git://git.altlinux.org/people/ldv/packages/coreutils coreutils-current..coreutils-alt
+# https://git.altlinux.org/people/glebfm/packages/coreutils.git coreutils-current..coreutils-alt
 Patch: %srcname.patch
 
 %def_enable selinux
@@ -50,8 +50,9 @@ Conflicts: rpm-utils < 0:0.7.6-alt1
 # due to hostname
 Conflicts: net-tools < 0:1.60-alt9
 
-BuildRequires: gnulib >= 0.1.5207.7347ca
-BuildRequires: makeinfo
+BuildRequires: gnulib >= 0.1.6708.04be9
+# due to CHECK_NORMAL_MENU_STRUCTURE option
+BuildRequires: makeinfo >= 6.8
 
 # for ACL support in ls/dir/vdir, cp, mv and install utilities
 BuildRequires: libacl-devel
@@ -224,6 +225,11 @@ export SHELL VERBOSE
 %doc AUTHORS NEWS.xz README THANKS.xz TODO
 
 %changelog
+* Wed Sep 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.4.0.24.75e248-alt1
+- coreutils: v9.1-8-ge08752509 -> v9.4-24-g75e24853b7.
+- gnulib BR: v0.1-5207-g7347caeb9d -> v0.1-6708-g04be956135.
+- Updated translations from translationproject.org.
+
 * Thu Apr 21 2022 Dmitry V. Levin <ldv@altlinux.org> 9.1.0.8.e08752-alt1
 - coreutils: v8.32-165-g18dbcae25 -> v9.1-8-ge08752509.
 - gnulib BR: v0.1-4702-gff7c8b21e -> v0.1-5207-g7347caeb9d.

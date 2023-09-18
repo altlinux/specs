@@ -1,5 +1,5 @@
 Name: gzip
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: The GNU data compression program
@@ -10,7 +10,7 @@ Url: https://www.gnu.org/software/gzip/
 %define srcname %name-%version-%release
 Source0: %srcname.tar
 
-BuildRequires: gnulib >= 0.1.4279.bb6ec, makeinfo
+BuildRequires: gnulib >= 0.1.5474.f5ad0, makeinfo
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: less}}
@@ -132,6 +132,10 @@ rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
 %exclude %_man1dir/zcat.*
 
 %changelog
+* Wed Sep 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.13-alt1
+- gzip: v1.12-3-g83c65d1 -> v1.13.
+- gnulib BR: v0.1-4279-gbb6ecf327 -> v0.1-5474-gf5ad0b6b38.
+
 * Fri Apr 08 2022 Dmitry V. Levin <ldv@altlinux.org> 1.12-alt1
 - gzip: v1.10-31-g34db0a2 -> v1.12-3-g83c65d1 (fixes: CVE-2022-1271).
 

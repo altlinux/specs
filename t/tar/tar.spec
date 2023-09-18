@@ -1,5 +1,5 @@
 Name: tar
-Version: 1.34.0.16.12d67f44
+Version: 1.35.0.20.1cdad4cc
 Release: alt1
 
 Summary: A GNU file archiving program
@@ -14,7 +14,8 @@ Source: %srcname.tar
 %def_enable selinux
 BuildRequires: libacl-devel libattr-devel makeinfo
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-BuildRequires: gnulib >= 0.1.4460.783f2, paxutils >= 0.0.1.139.2f7d
+BuildRequires: gnulib >= 0.1.6321.a97e2
+BuildRequires: paxutils >= 0.0.1.150.6fba
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
@@ -40,7 +41,13 @@ rmdir paxutils
 ln -s %_datadir/paxutils .
 
 %build
-./bootstrap --force --skip-po --gnulib-srcdir=%_datadir/gnulib
+./bootstrap \
+	--force \
+	--no-git \
+	--skip-po \
+	--gnulib-srcdir=%_datadir/gnulib \
+	#
+
 export tar_cv_path_RSH=no
 %configure --bindir=/bin --with-rmt=/sbin/rmt --disable-silent-rules
 %make_build -C po update-po
@@ -68,6 +75,12 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Fri Sep 08 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.35.0.20.1cdad4cc-alt1
+- tar: release_1_34-16-g12d67f44 -> v1.35-20-g1cdad4cc.
+- gnulib BR: v0.1-5208-gc8b8f3bbcd -> v0.1-6321-ga97e2d66a8.
+- paxutils BR: v0.0.1-139-g2f7d215 -> v0.0.1-150-g6fba6e9.
+- Updated translations from translationproject.org.
+
 * Tue Jun 01 2021 Dmitry V. Levin <ldv@altlinux.org> 1.34.0.16.12d67f44-alt1
 - tar: release_1_34-13-g66b59fcc -> release_1_34-16-g12d67f44.
 

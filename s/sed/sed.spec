@@ -1,5 +1,5 @@
 Name: sed
-Version: 4.8.0.25.b8f9
+Version: 4.9.0.32.5420
 Release: alt1
 Epoch: 1
 
@@ -9,17 +9,20 @@ License: GPLv3+
 Url: https://www.gnu.org/software/sed/
 
 %define srcname %name-%version-%release
-# git://git.altlinux.org/people/ldv/packages/sed refs/heads/sed-current
+# https://git.altlinux.org/people/glebfm/packages/sed.git refs/heads/sed-current
 Source0: %srcname.tar
-# git://git.altlinux.org/people/ldv/packages/sed refs/heads/po-current
+# https://git.altlinux.org/people/glebfm/packages/sed.git refs/heads/po-current
 Source1: po-%version-%release.tar
 Source2: subst.tar
-# git://git.altlinux.org/people/ldv/packages/sed sed-current..sed-alt
+# https://git.altlinux.org/people/glebfm/packages/sed.git sed-current..sed-alt
 Patch: %srcname.patch
 
 %def_enable selinux
 
-BuildRequires: makeinfo, gnulib >= 0.1.5085.73495
+BuildRequires: gnulib >= 0.1.5391.2a613
+
+# due to CHECK_NORMAL_MENU_STRUCTURE option
+BuildRequires: makeinfo >= 6.8
 
 # for acl copying support.
 BuildRequires: libacl-devel
@@ -81,6 +84,11 @@ xz -k NEWS
 %doc BUGS NEWS.xz README doc/*.txt.xz
 
 %changelog
+* Wed Sep 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:4.9.0.32.5420-alt1
+- sed: v4.8-25-gb8f98f7 -> v4.9-32-g5420e97c9.
+- gnulib BR: v0.1-5085-g734950a9ed -> v0.1-5391-g2a613e0165.
+- Updated translations from translationproject.org.
+
 * Mon Apr 04 2022 Dmitry V. Levin <ldv@altlinux.org> 1:4.8.0.25.b8f9-alt1
 - sed: v4.8-7-gb352b74 -> v4.8-25-gb8f98f7.
 - gnulib BR: v0.1-4290-gf22259966 -> v0.1-5085-g734950a9ed.

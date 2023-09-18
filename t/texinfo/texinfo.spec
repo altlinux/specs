@@ -1,5 +1,5 @@
 Name: texinfo
-Version: 6.7
+Version: 7.0.3
 Release: alt1
 
 Summary: Tools needed to create Texinfo format documentation files
@@ -24,8 +24,8 @@ Patch3: texinfo-alt-install-info-rpm.patch
 Patch4: texinfo-alt-texi2dvi-baroque-shells.patch
 Patch5: texinfo-alt-texi2any-version.patch
 Patch6: texinfo-alt-makeinfo-split-size.patch
-Patch7: texinfo-alt-perl-fix-syntax-error.patch
-Patch8: texinfo-alt-tests.patch
+Patch7: texinfo-alt-tests.patch
+Patch8: texinfo-fedora-undef-val-array-ref.patch
 
 Requires: makeinfo = %version-%release
 Requires: texi2dvi = %version-%release
@@ -189,6 +189,7 @@ unset ALL_TESTS LANG
 %_man1dir/pod2texi.*
 %_man5dir/texinfo.*
 %_infodir/texinfo.*
+%_infodir/texi2any_*.*
 %_datadir/texinfo/
 %_libdir/texinfo/
 
@@ -219,6 +220,9 @@ unset ALL_TESTS LANG
 %_rpmmacrosdir/*
 
 %changelog
+* Sat Sep 09 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.3-alt1
+- 6.7 -> 7.0.3.
+
 * Thu Nov 26 2020 Dmitry V. Levin <ldv@altlinux.org> 6.7-alt1
 - 6.5 -> 6.7 (closes: #36551).
 

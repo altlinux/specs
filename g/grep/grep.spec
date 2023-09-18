@@ -1,6 +1,6 @@
 Name: grep
-Version: 3.7.0.61.561c
-Release: alt2
+Version: 3.11.0.20.dd8f
+Release: alt1
 
 Summary: The GNU versions of grep pattern matching utilities
 License: GPLv3+
@@ -8,19 +8,22 @@ Group: File tools
 Url: https://www.gnu.org/software/grep/
 
 %define srcname %name-%version-%release
-# git://git.altlinux.org/people/ldv/packages/grep refs/heads/grep-current
+# https://git.altlinux.org/people/glebfm/packages/grep.git refs/heads/grep-current
 Source0: %srcname.tar
-# git://git.altlinux.org/people/ldv/packages/grep refs/heads/po-current
+# https://git.altlinux.org/people/glebfm/packages/grep.git refs/heads/po-current
 Source1: po-%version-%release.tar
 
 Source3: GREP_COLORS
 Source4: color_grep.sh
 Source5: color_grep.csh
 
+# https://git.altlinux.org/people/glebfm/packages/grep.git grep-current..grep-alt
+Patch: %name-%version-%release.patch
+
 Provides: pcre-grep, pgrep
 Obsoletes: pcre-grep, pgrep
 
-BuildRequires: makeinfo, gnulib >= 0.1.5193.8fa98
+BuildRequires: makeinfo, gnulib >= 0.1.6720.7b430
 # due to build from git
 BuildRequires: gperf
 # due to --perl-regexp
@@ -34,6 +37,7 @@ egrep, fgrep, and pcregrep.
 
 %prep
 %setup -n %srcname -a1
+%patch -p1
 
 # Build scripts expect to find the grep version in this file.
 echo -n %version > .tarball-version
@@ -41,8 +45,8 @@ echo -n %version > .tarball-version
 # Generate LINGUAS file.
 ls po/*.po | sed 's|.*/||; s|\.po$||' > po/LINGUAS
 
-# git and rsync aren't needed for build.
-sed -i '/^\(git\|rsync\)[[:space:]]/d' bootstrap.conf
+# git, texi2pdf, and wget aren't needed for build.
+sed -E '/^(git|texi2pdf|wget)[[:space:]]/d' -i bootstrap.conf
 
 %build
 ./bootstrap --skip-po --gnulib-srcdir=%_datadir/gnulib
@@ -109,6 +113,11 @@ ulimit -s 32768
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Fri Sep 15 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.11.0.20.dd8f-alt1
+- grep: v3.6-18-g7051705 -> v3.11-20-gdd8f04957.
+- gnulib BR: v0.1-5193-g8fa9898afa -> v0.1-6720-g7b430a277a.
+- Updated translations from translationproject.org.
+
 * Tue Aug 22 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.7.0.61.561c-alt2
 - Fixed build with glibc 2.38 by suppressing the
   -Wsuggest-attribute=cold warning.

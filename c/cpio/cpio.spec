@@ -1,5 +1,5 @@
 Name: cpio
-Version: 2.13
+Version: 2.14.0.4.e3cc
 Release: alt1
 
 Summary: A GNU archiving program
@@ -12,7 +12,8 @@ Source0: %name-%version-%release.tar
 # git://git.altlinux.org/people/glebfm/packages/cpio refs/heads/po-current
 Source1: po-%version-%release.tar
 
-BuildRequires: gnulib paxutils
+BuildRequires: gnulib
+BuildRequires: paxutils >= 0.0.1.150.6fba
 BuildPreReq: makeinfo
 # Due to static subpackage.
 BuildPreReq: glibc-devel-static
@@ -108,6 +109,11 @@ mv %buildroot%_bindir/cpio{,.}static
 %define _unpackaged_files_terminate_build 1
 
 %changelog
+* Mon Sep 18 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.14.0.4.e3cc-alt1
+- cpio: release_2_13 -> v2.14-4-ge3cc782
+- paxutils BR: v0.0.1-150-g6fba6e9.
+- Updated translations from translationproject.org.
+
 * Fri Dec 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.13-alt1
 - Updated to 2.13.
 

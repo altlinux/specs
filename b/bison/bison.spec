@@ -1,6 +1,6 @@
 Name: bison
-Version: 3.7.6
-Release: alt2
+Version: 3.8.2
+Release: alt1
 
 Summary: A GNU general-purpose parser generator
 License: GPLv3+
@@ -8,11 +8,11 @@ Group: Development/Other
 Url: https://www.gnu.org/software/bison/
 
 %define srcname %name-%version-%release
-# git://git.altlinux.org/people/ldv/packages/bison refs/heads/master
+# git://git.altlinux.org/people/glebfm/packages/bison refs/heads/master
 Source0: %srcname.tar
-# git://git.altlinux.org/people/ldv/packages/bison refs/heads/po-current
+# git://git.altlinux.org/people/glebfm/packages/bison refs/heads/po-current
 Source1: po-%version-%release.tar
-# git://git.altlinux.org/people/ldv/packages/bison refs/heads/runtime-po-current
+# git://git.altlinux.org/people/glebfm/packages/bison refs/heads/runtime-po-current
 Source2: runtime-po-%version-%release.tar
 
 Requires: m4 >= 0:1.4
@@ -21,7 +21,7 @@ Provides: byacc = %version-%release
 Obsoletes: byacc
 
 BuildRequires: flex, gcc-c++, gperf, help2man, makeinfo
-BuildRequires: gnulib >= 0.1.4516.e639e5
+BuildRequires: gnulib >= 0.1.6734.fbd3f
 
 %description
 Bison is a general purpose parser generator which converts a grammar
@@ -112,6 +112,11 @@ touch src/scan-????.l
 %files -f %name-runtime.lang runtime
 
 %changelog
+* Wed Sep 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.8.2-alt1
+- bison: v3.7.6 -> v3.8.2.
+- gnulib BR: v0.1-4516-ge639e557f -> v0.1-6734-gfbd3fbba93.
+- Updated translations from translationproject.org.
+
 * Wed Aug 25 2021 Dmitry V. Levin <ldv@altlinux.org> 3.7.6-alt2
 - Added -ffat-lto-objects to %optflags_lto.
 

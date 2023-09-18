@@ -1,10 +1,10 @@
 Name: gnulib
-Version: 0.1.5208.c8b8f
+Version: 0.1.6734.fbd3f
 Release: alt1
 
 Summary: GNU Portability Library
 # assorted licenses, see the source
-License: Freely distributable
+License: GPL-3.0-or-later and LGPL-2.1-or-later and GFDL-1.3-or-later
 Group: Development/C
 BuildArch: noarch
 Url: https://www.gnu.org/software/gnulib/
@@ -60,6 +60,11 @@ cd build-check
 %_datadir/%name/
 
 %changelog
+* Wed Sep 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.6734.fbd3f-alt1
+- v0.1-5208-gc8b8f3bbcd -> v0.1-6734-gfbd3fbba93.
+- Fixed the License: tag (Freely distributable -> GPL-3.0-or-later and
+  LGPL-2.1-or-later and GFDL-1.3-or-later).
+
 * Fri Apr 22 2022 Dmitry V. Levin <ldv@altlinux.org> 0.1.5208.c8b8f-alt1
 - v0.1-4724-g7e3a9c5bd -> v0.1-5208-gc8b8f3bbcd.
 

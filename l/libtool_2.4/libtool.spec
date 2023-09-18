@@ -5,7 +5,7 @@
 
 Name: libtool_%ltversion
 Version: 2.4.7
-Release: alt2
+Release: alt3
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -21,7 +21,7 @@ Requires: automake
 # git://git.altlinux.org/gears/l/%name.git
 Source: libtool-%version-%release.tar
 
-BuildRequires: gnulib >= 0.1.4550.2a794
+BuildRequires: gnulib >= 0.1.5601.32a72
 BuildRequires: gnulib-modules-bootstrap >= 0.0.70.037f
 BuildRequires: gcc-c++ gcc-g77 help2man makeinfo
 # for tests/search-path.at
@@ -166,6 +166,9 @@ ln -rsnf %buildroot/usr/share/gnu-config/config.{guess,sub} \
 %_libdir/*.a
 
 %changelog
+* Wed Sep 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.7-alt3
+- gnulib BR: v0.1-4550-g2a7948aad4 -> v0.1-5601-g32a72f4537.
+
 * Fri Mar 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.4.7-alt2
 - Adjusted libtool.m4 to use lib64 suffix for LoongArch 64-bit ABIs (closes: #45720)
 

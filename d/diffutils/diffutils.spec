@@ -1,5 +1,5 @@
 Name: diffutils
-Version: 3.8.0.39.dd9d
+Version: 3.10.0.170.23d5
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -8,16 +8,19 @@ License: GPLv3+
 Group: File tools
 Url: https://www.gnu.org/software/diffutils/
 
-# git://git.sv.gnu.org/diffutils refs/heads/master
-# git://git.altlinux.org/people/ldv/packages/diffutils refs/heads/diffutils-current
+# https://git.savannah.gnu.org/git/diffutils.git refs/heads/master
+# https://git.altlinux.org/people/glebfm/packages/diffutils.git refs/heads/diffutils-current
 Source0: %srcname.tar
 # translationproject.org::tp/latest/diffutils/
-# git://git.altlinux.org/people/ldv/packages/diffutils refs/heads/po-current
+# https://git.altlinux.org/people/glebfm/packages/diffutils.git refs/heads/po-current
 Source1: po-%version-%release.tar
+
+# https://git.altlinux.org/people/glebfm/packages/diffutils.git grep-current..grep-alt
+Patch: %srcname.patch
 
 Conflicts: man-pages <= 1.52-alt1
 
-BuildRequires: gnulib >= 0.1.5124.gcbe61
+BuildRequires: gnulib >= 0.1.6717.b93de
 BuildRequires: gperf help2man makeinfo
 
 %description
@@ -34,12 +37,13 @@ Diffutils includes four utilities: diff, cmp, diff3 and sdiff:
 
 %prep
 %setup -n %srcname -a1
+%patch -p1
 
 # Build scripts expect to find the diffutils version in this file.
 echo -n %version > .tarball-version
 
-# git and rsync aren't needed for build.
-sed -i '/^\(git\|rsync\)[[:space:]]/d' bootstrap.conf
+# git, texi2pdf, and wget aren't needed for build.
+sed -E '/^(git|texi2pdf|wget)[[:space:]]/d' -i bootstrap.conf
 
 # Generate LINGUAS file.
 ls po/*.po | sed 's|.*/||; s|\.po$||' > po/LINGUAS
@@ -69,6 +73,11 @@ export PR_PROGRAM=%_bindir/pr
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Mon Sep 18 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.10.0.170.23d5-alt1
+- diffutils: v3.8-39-gdd9deb7 -> v3.10-170-g23d506ac59
+- gnulib BR: v0.1-5124-gcbe61cd260 -> v0.1-6717-gb93de66735.
+- Updated translations from translationproject.org.
+
 * Mon Apr 11 2022 Dmitry V. Levin <ldv@altlinux.org> 3.8.0.39.dd9d-alt1
 - diffutils: v3.7-40-gcaf365b -> v3.8-39-gdd9deb7.
 - gnulib BR: v0.1-4669-gfed6ffdbb -> v0.1-5124-gcbe61cd260.
