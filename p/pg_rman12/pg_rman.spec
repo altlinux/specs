@@ -5,8 +5,8 @@
 %set_verify_elf_method strict,lfs=relaxed
 
 Name: pg_rman%pg_ver
-Version: 1.3.14
-Release: alt3
+Version: 1.3.15
+Release: alt1
 Summary: pg_rman is an online backup and restore tool for PostgreSQL
 License: BSD-3-Clause
 Group: Databases
@@ -28,6 +28,7 @@ Conflicts: pg_rman10
 Conflicts: pg_rman11
 Conflicts: pg_rman13
 Conflicts: pg_rman14
+Conflicts: pg_rman15
 
 %description
 The goal of the pg_rman project is providing a method for online
@@ -54,6 +55,9 @@ cp -r sql examples/
 %_bindir/*
 
 %changelog
+* Mon Sep 18 2023 Alexei Takaseev <taf@altlinux.org> 1.3.15-alt1
+- Updated to upstream version 1.3.15.
+
 * Fri Dec 02 2022 Alexei Takaseev <taf@altlinux.org> 1.3.14-alt3
 - Add conflict to old package
 
