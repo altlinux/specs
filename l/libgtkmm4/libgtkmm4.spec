@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define rname gtkmm
-%define ver_major 4.10
+%define ver_major 4.12
 %define api_ver 4.0
 
 %def_disable demos
@@ -24,7 +24,7 @@ Source: %rname-%version.tar
 
 Provides: %rname-%api_ver = %version
 
-%define gtk_ver 4.10.0
+%define gtk_ver 4.12.0
 %define glibmm_api_ver 2.68
 %define glibmm_ver 2.68.0
 %define pangomm_api_ver 2.48
@@ -93,8 +93,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 xvfb-run %meson_test
 
 %files
-%doc AUTHORS NEWS
 %_libdir/*.so.*
+%doc NEWS
 
 %files devel
 %_includedir/%rname-%api_ver
@@ -114,6 +114,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Wed Aug 09 2023 Yuri N. Sedunov <aris@altlinux.org> 4.12.0-alt1
+- 4.12.0
+
 * Fri Mar 10 2023 Yuri N. Sedunov <aris@altlinux.org> 4.10.0-alt1
 - 4.10.0
 
