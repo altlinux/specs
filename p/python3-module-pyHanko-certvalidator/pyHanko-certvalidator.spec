@@ -4,14 +4,15 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.24.0
+Version: 0.24.1
 Release: alt1
 
 Summary: Python library for validating X.509 certificates and paths
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/MatthiasValvekens/certvalidator
+URL:     https://pypi.org/project/pyhanko-certvalidator
+VCS:     https://github.com/MatthiasValvekens/certvalidator
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -22,6 +23,7 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-asn1crypto
 BuildRequires: python3-module-oscrypto
 BuildRequires: python3-module-requests
@@ -60,11 +62,14 @@ not test_revocation_mode_hard_requests_autofetch and \
 not test_basic_certificate_validator_tls_aia"
 
 %files
-%doc *.md
+%doc LICENSE *.md
 %python3_sitelibdir/%mname
 %python3_sitelibdir/%mname-%version.dist-info
 
 %changelog
+* Mon Sep 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.24.1-alt1
+- Automatically updated to 0.24.1.
+
 * Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 0.24.0-alt1
 - Automatically updated to 0.24.0.
 

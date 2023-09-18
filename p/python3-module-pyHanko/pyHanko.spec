@@ -4,18 +4,20 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 0.20.0
+Version: 0.20.1
 Release: alt1
 
 Summary: pyHanko: sign and stamp PDF files
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/MatthiasValvekens/pyHanko
+URL:     https://pypi.org/project/pyHanko
+VCS:     https://github.com/MatthiasValvekens/pyHanko
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
@@ -61,12 +63,15 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test-3
 
 %files
-%doc *.md
+%doc LICENSE *.md
 %_bindir/pyhanko
 %python3_sitelibdir/pyhanko
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Mon Sep 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.20.1-alt1
+- Automatically updated to 0.20.1.
+
 * Tue Aug 01 2023 Grigory Ustinov <grenka@altlinux.org> 0.20.0-alt1
 - Automatically updated to 0.20.0.
 
