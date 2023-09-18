@@ -4,16 +4,16 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.0.1
-Release: alt1.1
+Version: 4.1.0
+Release: alt1
 
 Summary: stestr is parallel Python test runner
 
 Group: Development/Python3
 License: Apache-2.0
-Url: https://pypi.org/project/stestr
+URL: https://pypi.org/project/stestr
+VCS: https://github.com/mtreinish/stestr
 
-# https://github.com/mtreinish/stestr
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -36,6 +36,8 @@ BuildRequires: python3-module-voluptuous
 BuildRequires: python3-module-future
 BuildRequires: python3-module-ddt
 BuildRequires: python3-module-yaml
+BuildRequires: python3-module-tomlkit
+BuildRequires: python3-module-iso8601
 %endif
 
 %description
@@ -112,6 +114,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc LICENSE html
 
 %changelog
+* Mon Sep 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
+- Automatically updated to 4.1.0.
+
 * Sun Feb 26 2023 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1.1
 - Fixed FTBFS.
 
