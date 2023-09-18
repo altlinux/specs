@@ -1,6 +1,6 @@
 Name: NsCDE
 Version: 2.3
-Release: alt1
+Release: alt2
 Summary: Not so Common Desktop Environment
 Group: Graphical desktop/Other
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -11,13 +11,13 @@ Source: https://github.com/NsCDE/NsCDE/releases/download/2.3/NsCDE-2.3.tar.gz
 
 BuildRequires: libX11-devel libXt-devel libXext-devel libXpm-devel
 BuildRequires: ImageMagick-tools
-BuildRequires: oksh pdksh mksh
+BuildRequires: ksh
 BuildRequires: python3-module-psutil rpm-build-python3 rpm-build-perl
 BuildRequires: python3-module-yaml python3-module-PyQt5-devel
 BuildRequires: rpm-build-gir
 BuildRequires: glibc-devel
 
-Requires: xterm sed fvwm3 cpp xsettingsd stalonetray dunst xclip xdotool
+Requires: xterm sed fvwm3 cpp xsettingsd stalonetray dunst xclip xdotool ksh
 Requires: python3-module-yaml dex
 #Requires: python3-qt5 libqt5-qtstyleplugins-platformtheme-gtk2
 Requires: %_bindir/convert
@@ -76,6 +76,9 @@ lightweight hybrid desktop environment.
 %_sysconfdir/xdg/menus/nscde-applications.menu
 
 %changelog
+* Mon Sep 18 2023 Ilya Mashkin <oddity@altlinux.ru> 2.3-alt2
+- Build only with ksh
+
 * Mon Sep 18 2023 Ilya Mashkin <oddity@altlinux.ru> 2.3-alt1
 - 2.3
 - Build with fvwm3 (Closes: #47568)
