@@ -4,7 +4,7 @@
 
 Name: AFLplusplus
 Version: 4.08c
-Release: alt1
+Release: alt2
 
 Summary: American Fuzzy Lop plus plus (AFL++)
 License: Apache-2.0
@@ -16,6 +16,9 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 Provides: afl++ = %EVR
+
+# Note: Consider removing and obsoleting afl
+Conflicts: afl
 
 Requires: clang%llvm_version lld%llvm_version
 
@@ -127,5 +130,8 @@ install -m755 utils/plot_ui/afl-plot-ui -t %buildroot%_bindir
 %_bindir/afl-plot-ui
 
 %changelog
+* Mon Sep 18 2023 Egor Ignatov <egori@altlinux.org> 4.08c-alt2
+- Conflicts with afl
+
 * Sun Sep 03 2023 Egor Ignatov <egori@altlinux.org> 4.08c-alt1
 - First build for ALT
