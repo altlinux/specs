@@ -1,7 +1,7 @@
 %define oname pycryptodome
 
 Name:     python3-module-%oname
-Version:  3.18.0
+Version:  3.19.0
 Release:  alt1
 
 Summary:  A self-contained cryptographic library for Python
@@ -12,14 +12,16 @@ Summary:  A self-contained cryptographic library for Python
 # modification and usage of the software.
 License:  BSD-2-Clause
 Group:    Development/Python3
-Url:      https://www.pycryptodome.org
-# https://github.com/Legrandin/pycryptodome
+URL:      https://pypi.org/project/pycryptodome
+VCS:      https://github.com/Legrandin/pycryptodome
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source:   %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 Conflicts: python3-module-Crypto < %EVR
 Conflicts: python3-module-pycrypto < %EVR
@@ -47,29 +49,30 @@ This package contains tests for %oname.
 %prep
 %setup
 
-# hotfix for version
-sed -i 's/17/17, 0/' lib/Crypto/__init__.py
-
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+python3 -m Crypto.SelfTest
 
 %files
-%doc AUTHORS.rst Changelog.rst README.rst
+%doc *.rst
 %python3_sitelibdir/Crypto
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/SelfTest
 
 %files tests
 %python3_sitelibdir/*/SelfTest
 
 %changelog
+* Mon Sep 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.19.0-alt1
+- Automatically updated to 3.19.0.
+
 * Thu May 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.18.0-alt1
 - Automatically updated to 3.18.0.
 
