@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Python library for calculating contours in 2D quadrilateral grids
@@ -46,6 +46,8 @@ contouring algorithms without having to include Matplotlib as a dependency.
 
 %prep
 %setup
+# ALT47628
+sed -i '/meson_version/s/1.2.0/1.1.0/' meson.build
 
 %build
 %pyproject_build
@@ -63,6 +65,9 @@ contouring algorithms without having to include Matplotlib as a dependency.
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Mon Sep 18 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt1
+- Automatically updated to 1.1.1.
+
 * Tue Jun 13 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Automatically updated to 1.1.0.
 
