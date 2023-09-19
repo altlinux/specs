@@ -1,6 +1,6 @@
 Name: gzip
 Version: 1.13
-Release: alt1
+Release: alt2
 
 Summary: The GNU data compression program
 License: GPLv3+
@@ -12,7 +12,8 @@ Source0: %srcname.tar
 
 BuildRequires: gnulib >= 0.1.5474.f5ad0, makeinfo
 
-# for test suite
+# Note: less package is required for testing zless utility,
+# but this zless is not packaged.
 %{?!_without_check:%{?!_disable_check:BuildRequires: less}}
 
 %package utils
@@ -51,6 +52,10 @@ echo -n %version > .tarball-version
 # Unset the variable gl_printf_safe to indicate that we do not need
 # a safe handling of non-IEEE-754 'long double' values.
 sed -i 's/gl_printf_safe=yes/gl_printf_safe=/' m4/gnulib-comp.m4 configure
+
+# To prevent the installation of zless; instead, we utilize
+# the one included in the less package.
+export ac_cv_prog_LESS=
 
 %configure --bindir=/bin --disable-silent-rules DEFS=-DNO_ASM
 %make_build
@@ -104,8 +109,8 @@ done
 install -pm755 zme.1 %buildroot%_man1dir/
 ln -s zme.1 %buildroot%_man1dir/bzme.1
 
-# Our zless and zmore live in less package.
-rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
+# Our zmore lives in the less package.
+rm %buildroot{/bin/zmore,%_man1dir/zmore.1}
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -132,6 +137,9 @@ rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
 %exclude %_man1dir/zcat.*
 
 %changelog
+* Tue Sep 19 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.13-alt2
+- Fixed build with disabled check (reported by Michael Shigorin).
+
 * Wed Sep 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.13-alt1
 - gzip: v1.12-3-g83c65d1 -> v1.13.
 - gnulib BR: v0.1-4279-gbb6ecf327 -> v0.1-5474-gf5ad0b6b38.
