@@ -2,14 +2,14 @@
 %define llvm_version 17.0
 
 # git describe mainline-0-%version
-%define git_descr mainline-636-12601-g84f0a23ff11
+%define git_descr mainline-636-12706-g974380fe10c
 
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
 %define tzdb_to_nx_date 220816
 
 Name: yuzu
-Version: 1553
+Version: 1563
 Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
@@ -33,7 +33,6 @@ Source2: mbedtls-%mbedtls_commit.tar
 Source3: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
 
 Patch0: %name-cpp-jwt-version-alt.patch
-Patch1: %name-vulkan-version-alt.patch
 
 BuildRequires: /proc
 BuildRequires: boost-asio-devel
@@ -82,7 +81,6 @@ BuildRequires: zlib-devel
 %setup -n %name-mainline-mainline-0-%version -b 1 -b 2
 
 %patch0 -p1
-%patch1 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
@@ -138,6 +136,9 @@ sed -i -e 's/-Werror=shadow-uncaptured-local/-Wno-error=shadow-uncaptured-local/
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Tue Sep 19 2023 Nazarov Denis <nenderus@altlinux.org> 1563-alt1
+- Version 1563
+
 * Sun Sep 10 2023 Nazarov Denis <nenderus@altlinux.org> 1553-alt1
 - Version 1553
 

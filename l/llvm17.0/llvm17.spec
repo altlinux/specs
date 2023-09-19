@@ -8,7 +8,7 @@
 
 %global v_major 17
 %global v_majmin %v_major.0
-%global v_full %v_majmin.0
+%global v_full %v_majmin.1
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -1239,6 +1239,9 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Tue Sep 19 2023 Nazarov Denis <nenderus@altlinux.org> 17.0.1-alt1
+- 17.0.1
+
 * Tue Sep 19 2023 Nazarov Denis <nenderus@altlinux.org> 17.0.0-alt1
 - 17.0.0 final
 
