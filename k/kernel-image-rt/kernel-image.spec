@@ -1,10 +1,10 @@
 Name: kernel-image-rt
 %define kernel_base_version	6.1
-%define kernel_sublevel	.46
-%define kernel_rt_release	rt14
+%define kernel_sublevel	.54
+%define kernel_rt_release	rt15
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt2.%kernel_rt_release
+Release: alt1.%kernel_rt_release
 
 %define krelease	%release
 
@@ -610,6 +610,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Sep 20 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.54-alt1.rt15
+- v6.1.54-rt15 (2023-09-19).
+
 * Mon Sep 18 2023 Vitaly Chikunov <vt@altlinux.org> 6.1.46-alt2.rt14
 - Synchronize source with std-def/sisyphus.
 
