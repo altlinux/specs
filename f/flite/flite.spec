@@ -1,6 +1,6 @@
 Name: flite
 Version: 2.2
-Release: alt1
+Release: alt2
 
 Summary: flite - a small, fast speech synthesis engine
 License: BSD-like
@@ -55,6 +55,9 @@ sed -e 's,@libdir@,%_libdir,' -e 's,@version@,%version,' \
 %_pkgconfigdir/flite.pc
 
 %changelog
+* Tue Sep 19 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2-alt2
+- fixed build with recent makeinfo
+
 * Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2-alt1
 - 2.2 released
 
