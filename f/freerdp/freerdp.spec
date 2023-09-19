@@ -8,7 +8,7 @@
 
 Name: freerdp
 Version: 2.11.1
-Release: alt1
+Release: alt2
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -17,6 +17,7 @@ URL: http://www.freerdp.com
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Source1: freerdp-server.service
 Patch0: %name-alt-pam-check.patch
 Patch2000: %name-e2k.patch
 
@@ -51,7 +52,7 @@ BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires: pkgconfig(libpulse)
 %{?_with_directfb:BuildRequires: pkgconfig(directfb)}
 BuildRequires: libcups-devel libjpeg-devel zlib-devel
-%{?_with_ffmpeg:BuildRequires: libavcodec-devel libavutil-devel libavresample-devel libswresample-devel}
+%{?_with_ffmpeg:BuildRequires: libavcodec-devel libavutil-devel libswresample-devel}
 %{?_with_x264:BuildRequires: libx264-devel}
 BuildRequires: libkrb5-devel
 BuildRequires: wayland-devel
@@ -313,6 +314,9 @@ $setrpath %_libdir/freerdp2 %buildroot%_bindir/freerdp-proxy
 # Set rpath to library
 $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 
+# Install freerdp-server.service
+install -Dpm0644 %SOURCE1 %buildroot%_libexecdir/systemd/user/freerdp-server.service
+
 %files
 
 %files -n xfreerdp
@@ -332,6 +336,7 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 
 %files server
 %_bindir/freerdp-proxy
+%config(noreplace) %_libexecdir/systemd/user/freerdp-server.service
 %attr(2711, root, chkpwd) %_bindir/freerdp-shadow-cli
 %_man1dir/freerdp-shadow-cli.*
 
@@ -377,6 +382,9 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Tue Sep 19 2023 Andrey Cherepanov <cas@altlinux.org> 2.11.1-alt2
+- Added freerdp-server.service - user service for remote access to desktop via RDP.
+
 * Tue Sep 05 2023 Andrey Cherepanov <cas@altlinux.org> 2.11.1-alt1
 - New version.
 
