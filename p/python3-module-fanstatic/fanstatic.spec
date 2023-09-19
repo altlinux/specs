@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3
+Version: 1.4
 Release: alt1
 Summary: Flexible static resources for web applications
 License: BSD-3-Clause
@@ -17,8 +17,12 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-webob
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-cssmin
 %endif
 
 %description
@@ -48,42 +52,61 @@ http://fanstatic.org
 
 This package contains pickles for fanstatic.
 
+%package tests
+Summary: Tests for fanstatic
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+Fanstatic is a smart static resource publisher for Python. For more
+information on what it's about and how to use it, see:
+http://fanstatic.org
+
+This package contains tests for fanstatic.
+
 %prep
 %setup
 
 %prepare_sphinx3 .
-ln -s ../objects.inv doc/
+ln -s ../objects.inv docs/
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_check -- -k "not test_library_registry"
+%pyproject_run_pytest -v
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%make SPHINXBUILD=sphinx-build-3 -C doc html
-%make SPHINXBUILD=sphinx-build-3 -C doc pickle
+%make SPHINXBUILD=sphinx-build-3 -C docs html
+%make SPHINXBUILD=sphinx-build-3 -C docs pickle
 
-cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/fanstatic/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/fanstatic/
 
 %files
 %doc LICENSE.txt *.rst
 %_bindir/fanstatic-compile
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
-%exclude %python3_sitelibdir/*/pickle
+%python3_sitelibdir/%{pyproject_distinfo %oname}
+%exclude %python3_sitelibdir/%oname/pickle
+%exclude %python3_sitelibdir/%oname/tests
 
 %files docs
-%doc doc/_build/html/*
+%doc docs/_build/html/*
 
 %files pickles
 %dir %python3_sitelibdir/%oname
-%python3_sitelibdir/*/pickle
+%python3_sitelibdir/%oname/pickle
+
+%files tests
+%python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Sep 19 2023 Anton Vyatkin <toni@altlinux.org> 1.4-alt1
+- New version 1.4.
+
 * Fri Mar 03 2023 Anton Vyatkin <toni@altlinux.org> 1.3-alt1
 - new version 1.3
 
