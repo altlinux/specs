@@ -2,7 +2,7 @@
 
 Name:    synfigstudio
 Version: 1.5.1
-Release: alt2
+Release: alt3
 
 Summary: Synfig studio - animation program
 License: GPLv2+
@@ -56,7 +56,7 @@ BuildRequires: libjack-devel
 BuildRequires: libjasper-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libltdl7-devel
-BuildRequires: libmlt++-devel
+BuildRequires: mlt7-devel mlt7xx-devel
 BuildRequires: libmng-devel
 BuildRequires: libpango-devel
 BuildRequires: libpng-devel
@@ -224,8 +224,11 @@ echo /usr/share/locale/zh-Hant/LC_MESSAGES/synfigstudio.mo >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Sep 19 2023 Artyom Bystrov <arbars@altlinux.org> 1.5.1-alt3
+- Move to mlt7.
+
 * Wed Sep 13 2023 Artyom Bystrov <arbars@altlinux.org> 1.5.1-alt2
-- Fix FTBFS 
+- Fix FTBFS.
 
 * Thu Oct 21 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
 - New version.
