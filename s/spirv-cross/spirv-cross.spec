@@ -1,9 +1,9 @@
 %define sover 0
-%define git d26c233e
+%define git bccaa94d
 %def_disable static
 
 Name: spirv-cross
-Version: 0.55.0
+Version: 0.57.0
 Release: alt0.1.g%{git}
 Epoch: 1
 
@@ -68,6 +68,9 @@ sed -i "s/make_msl_version(1, 2)/make_msl_version(1, 2, 0)/" spirv_msl.hpp
 %_datadir/cmake/*
 
 %changelog
+* Tue Sep 19 2023 L.A. Kostis <lakostis@altlinux.ru> 1:0.57.0-alt0.1.gbccaa94d
+- Updated to GIT bccaa94d (sdk-1.3.261.1).
+
 * Tue Mar 28 2023 L.A. Kostis <lakostis@altlinux.ru> 1:0.55.0-alt0.1.gd26c233e
 - Updated to GIT d26c233e (branch sdk-1.3.243).
 
