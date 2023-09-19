@@ -1,6 +1,6 @@
 Name: livecd-setlocale
-Version: 0.3.10
-Release: alt2
+Version: 0.3.11
+Release: alt1
 
 Summary: Automatically set locale from /proc/cmdline
 License: GPLv2+
@@ -33,6 +33,9 @@ rm -f %_sysconfdir/profile.d/00dconf-kbd.sh
 %_unitdir/livecd-setlocale.service
 
 %changelog
+* Tue Sep 19 2023 Anton Midyukov <antohami@altlinux.org> 0.3.11-alt1
+- livecd-setlocale: drop dconf hack for gnome
+
 * Tue Sep 12 2023 Anton Midyukov <antohami@altlinux.org> 0.3.10-alt2
 - livecd-setlocale: fix double 'grp:' in XkbOptions
 
