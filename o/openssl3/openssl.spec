@@ -2,7 +2,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: openssl3
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -384,8 +384,11 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Tue Sep 19 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.3-alt1
+- Updated to 3.1.3 (fixes CVE-2023-4807).
+
 * Tue Aug 01 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.2-alt1
-- Updated to 3.1.2.
+- Updated to 3.1.2 (fixes CVE-2023-2975, CVE-2023-3446, and CVE-2023-3817).
 - libcrypto3: updated the version of the conflict with the libcrypto10 package
   (from "< 1.0.2r-alt3" to "< 1.0.3"), to match all possible versions of
   OpenSSL 1.0.2, as long as the synchronization of the openssl.cnf
