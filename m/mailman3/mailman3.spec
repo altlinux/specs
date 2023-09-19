@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
-Name: mailman3
-Version: 3.2.2
-Release: alt3
+%def_without check
 
-Summary: Managing electronic mail discussion and e-newsletter lists.
+Name: mailman3
+Version: 3.3.8
+Release: alt1
+
+Summary: Managing electronic mail discussion and e-newsletter lists
 License: GPLv3
 Group: Development/Python3
 Url: http://www.list.org/
@@ -19,29 +21,32 @@ Source5: %name-digests.service
 Source6: %name-digests.timer
 
 Patch0: %name-fix-import.patch
+Patch1: %name-subject-prefix.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-setuptools
-BuildRequires: python3-module-aiosmtpd
-BuildRequires: python3-module-alembic
-BuildRequires: python3-module-atpublic
-BuildRequires: python3-module-click
-BuildRequires: python3-module-dns >= 1.14.0
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-nose2
+BuildRequires: python3-module-flufl.testing
 BuildRequires: python3-module-flufl.bounce
 BuildRequires: python3-module-flufl.i18n
 BuildRequires: python3-module-flufl.lock
 BuildRequires: python3-module-lazr.config
-BuildRequires: python3-module-passlib
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-SQLAlchemy
 BuildRequires: python3-module-zope.component
-BuildRequires: python3-module-zope.configuration
-BuildRequires: python3-module-zope.event
-BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-click
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-aiosmtpd
+BuildRequires: python3-module-sqlalchemy
+BuildRequires: python3-module-alembic
+BuildRequires: python3-module-passlib
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-dns
+BuildRequires: python3-module-authheaders
+%endif
 
 Requires: python3-module-%name = %EVR
-
 
 %description
 This is GNU Mailman, a mailing list management system distributed under the
@@ -57,23 +62,21 @@ BuildArch: noarch
 
 Requires: python3-module-alembic
 Requires: python3-module-atpublic
-Requires: python3-module-editor
 Requires: python3-module-aiosmtpd
 Requires: python3-module-alembic
 Requires: python3-module-atpublic
 Requires: python3-module-click
 Requires: python3-module-dns >= 1.14.0
-Requires: python3-module-falcon >= 1.0.0
+Requires: python3-module-falcon
 Requires: python3-module-flufl.bounce
-Requires: python3-module-flufl.i18n >= 2.0.1
-Requires: python3-module-flufl.lock >= 3.1
-Requires: python3-module-passlib >= 1.6.0
-Requires: python3-module-SQLAlchemy >= 1.0.9
+Requires: python3-module-flufl.i18n
+Requires: python3-module-flufl.lock
+Requires: python3-module-passlib
+Requires: python3-module-sqlalchemy >= 1.2.3
 Requires: python3-module-requests
 
-%py3_requires lazr.config zope.interface requests zope.hookable
+%py3_requires lazr.config zope.interface
 %py3_requires zope.component zope.configuration zope.event
-%py3_requires zope.deprecation zope.deferredimport
 
 %description -n python3-module-%name
 This is GNU Mailman, a mailing list management system distributed under the
@@ -85,15 +88,16 @@ This package contain python modules for %name.
 
 %prep
 %setup
-
 %patch0 -p1
+%patch1 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
+# move scripts away from _bindir to avoid conflicts and create a wrapper script
 mkdir -p %buildroot%_libexecdir/%name
 mv %buildroot%_bindir/* %buildroot%_libexecdir/%name/
 
@@ -112,7 +116,7 @@ install -D -m 0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 install -D -m 0644 %SOURCE3 %buildroot%_unitdir/%name.service
 
 mkdir -p %buildroot%_sysconfdir/logrotate.d/
-cat %name.logrotate > %buildroot%_sysconfdir/logrotate.d/%name
+cat %SOURCE4 > %buildroot%_sysconfdir/logrotate.d/%name
 
 install -D -m 0644 %SOURCE5 %buildroot%_unitdir/%name-digests.service
 install -D -m 0644 %SOURCE6 %buildroot%_unitdir/%name-digests.timer
@@ -123,6 +127,11 @@ mkdir -p %buildroot%_spooldir/%name
 mkdir -p %buildroot%_runtimedir/%name %buildroot%_lockdir/%name
 mkdir -p %buildroot%_sysconfdir/%name.d
 mkdir -p %buildroot%_localstatedir/%name/data
+
+%check
+# Running the test suite at build time is not supported for now.
+# See https://gitlab.com/mailman/mailman/-/issues/400
+%__python3 -m nose2 -v
 
 %pre
 getent group mailman >/dev/null || groupadd -r mailman ||:
@@ -161,6 +170,9 @@ getent passwd mailman >/dev/null || \
 
 
 %changelog
+* Mon Sep 18 2023 Anton Vyatkin <toni@altlinux.org> 3.3.8-alt1
+- new version 3.3.8
+
 * Thu Apr 20 2023 Anton Vyatkin <toni@altlinux.org> 3.2.2-alt3
 - Fix Requires
 
