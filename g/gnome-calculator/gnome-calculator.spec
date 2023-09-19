@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define api_ver 2
 # GTK interface library
@@ -10,13 +10,13 @@
 %def_enable check
 
 Name: gnome-calculator
-Version: %ver_major.0
+Version: %ver_major.0.2
 Release: alt1%beta
 
-Summary: GTK+3 based desktop calculator
+Summary: GTK4 based desktop calculator
 License: GPL-3.0-or-later
 Group: Sciences/Mathematics
-Url: https://wiki.gnome.org/Apps/Calculator
+Url: https://apps.gnome.org/Calculator
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
@@ -30,8 +30,8 @@ Requires: libgcalc = %EVR
 Requires: libgci = %EVR
 
 %define glib_ver 2.40
-%define gtk4_ver 4.5.0
-%define adwaita_ver 1.2
+%define gtk4_ver 4.4.1
+%define adwaita_ver 1.4
 %define gee_ver 0.20.0
 %define soup_api_ver 3.0
 %define soup_ver 3.0
@@ -158,8 +158,7 @@ GTK interface library.
 %find_lang --with-gnome %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/*
@@ -213,6 +212,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.2-alt1
+- 45.0.2
+
 * Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

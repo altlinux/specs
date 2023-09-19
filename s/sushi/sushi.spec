@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 44
+%define ver_major 45
 %define xdg_name org.gnome.NautilusPreviewer
 %define api_ver 1.0
 %define gst_api_ver 1.0
@@ -12,7 +12,7 @@
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -108,9 +108,12 @@ GObject introspection devel data for the Sushi library.
 %_datadir/%name/
 %_datadir/dbus-1/services/*
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc README AUTHORS NEWS TODO
+%doc README* AUTHORS NEWS TODO
 
 %changelog
+* Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Mon May 29 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
 - 44.2
 

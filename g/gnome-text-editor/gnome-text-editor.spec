@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define xdg_name org.gnome.TextEditor
 
@@ -13,7 +13,7 @@ Release: alt1%beta
 Summary: A simple Text Editor for GNOME
 Group: Editors
 License: GPL-3.0
-Url: https://gitlab.gnome.org/GNOME/gnome-text-editor
+Url: https://apps.gnome.org/TextEditor
 
 %if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -25,7 +25,7 @@ Source: %name-%version.tar
 %define gtk_ver 4.7
 %define gtksource_ver 5.6.2
 %define enchant_ver 2.2.0
-%define adwaita_ver 1.2
+%define adwaita_ver 1.4
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson /usr/bin/appstream-util desktop-file-utils yelp-tools
@@ -66,6 +66,9 @@ general purpose default editor.
 %doc README* NEWS
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

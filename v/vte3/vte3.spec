@@ -1,14 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _name vte
-%define ver_major 0.72
+%define ver_major 0.74
 %define api_ver 2.91
 # bindigs version for -gtk4 library
 %define bind_ver 3.91
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
@@ -140,13 +140,14 @@ sed -i "1i #define set_child_setup set_child_setup2" src/spawn.cc
 
 %build
 %meson \
-	%{?_disable_gtk3:-Dgtk3=false} \
-	%{?_enable_gtk4:-Dgtk4=true} \
+	%{?_enable_gtk3:-Dgtk3=true} \
+	%{?_disable_gtk4:-Dgtk4=false} \
 	%{?_disable introspection:-Dgir=false} \
 	%{?_enable_docs:-Ddocs=true} \
 	%{?_disable_glade:-Dglade=false} \
 	%{?_enable_sixel:-Dsixel=true}
 %nil
+
 %meson_build
 
 %install
@@ -212,6 +213,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.74.0-alt1
+- 0.74.0
+
 * Fri Jun 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.72.2-alt1
 - 0.72.2
 

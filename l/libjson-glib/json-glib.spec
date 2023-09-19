@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name json-glib
-%define ver_major 1.6
+%define ver_major 1.8
 %define api_ver 1.0
 %def_disable symbol_versioning
 %def_enable gtk_doc
@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: GLib-based JSON manipulation library
@@ -142,6 +142,9 @@ the functionality of the installed %_name library.
 %_datadir/installed-tests/%_name-%api_ver/
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Mon May 09 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6.6-alt1
 - updated to 1.6.6-20-g23ae2f5
 - made symbol versioning introduced in 1.5.2 optional (disabled by default)

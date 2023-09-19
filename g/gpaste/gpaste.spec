@@ -1,6 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 44
+%define ver_major 45
+%define beta %nil
 %define api_ver 2
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
@@ -9,8 +10,8 @@
 %def_disable applet
 
 Name: gpaste
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major
+Release: alt1%beta
 
 Summary: GPaste is a clipboard management system
 Group: Text tools
@@ -18,9 +19,9 @@ License: BSD-2-Clause
 Url: https://github.com/Keruspe/GPaste
 
 %if_disabled snapshot
-Source: %url/archive/v%version/%_name-%version.tar.gz
+Source: %url/archive/v%version%beta/%_name-%version%beta.tar.gz
 %else
-Source: %_name-%version.tar
+Source: %_name-%version%beta.tar
 %endif
 Patch1: %name-42.0-alt-format.patch
 
@@ -32,8 +33,8 @@ Requires: lib%name = %EVR
 %define adwaita_ver 1.1
 %define gi_ver 1.58.0
 %define vala_ver 0.42
-%define mutter_ver 44.0
-%define gjs_ver 1.54
+%define mutter_ver 45.0
+%define gjs_ver 1.78
 %define gcr_ver 3.90.0
 
 BuildRequires(pre):rpm-macros-meson rpm-build-gir rpm-build-vala rpm-build-systemd
@@ -109,7 +110,7 @@ This package provides GPaste applet which starts the status icon
 in notification area.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version%beta
 %ifarch %ix86 armh
 %patch1 -b .format
 %endif
@@ -187,6 +188,9 @@ in notification area.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt1
+- 45
+
 * Sat Jul 15 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 

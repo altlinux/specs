@@ -2,10 +2,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define xdg_name org.gnome.Usage
-%define ver_major 3.38
+%define ver_major 45
 
 Name: gnome-usage
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME system information viewer
@@ -19,22 +19,21 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 3.20.10
-%define dazzle_ver 3.30.0
+%define gtk_ver 4.10
 %define gtop_ver 2.34.0
 %define accountsservice_ver 0.6.40
-%define handy_ver 1.0.0
+%define adw_ver 1.4
 
 Requires: accountsservice >= %accountsservice_ver
 
-BuildRequires(pre): meson rpm-build-gnome
-BuildRequires: vala-tools
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
-BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libdazzle-devel >= %dazzle_ver
+BuildRequires: libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: libgtop-devel >= %gtop_ver
+BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(tracker-sparql-3.0)
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 %description
 Gnome Usage is a graphical tool to view system resources, like memory and
@@ -61,6 +60,9 @@ disk space.
 %doc README* NEWS
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0 (ported to GTK4/Libadwaita)
+
 * Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 

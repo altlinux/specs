@@ -1,6 +1,6 @@
 %set_verify_elf_method unresolved=relaxed
 %define _name tracker-miners
-%define ver_major 3.5
+%define ver_major 3.6
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -8,7 +8,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -64,6 +64,7 @@ Patch: %_name-3.2.0-alt-link.patch
 %define libpng_ver 0.89
 %define libcue_ver 2.0.0
 %define gst_ver 1.10
+%define libav_ver 0.8.4
 
 Provides: tracker%api_ver_major-miners = %EVR
 
@@ -78,7 +79,7 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libupower-devel libstemmer-devel libicu-devel
 BuildRequires: libenca-devel libseccomp-devel libdbus-devel
 BuildRequires: pkgconfig(systemd) pkgconfig(blkid)
-BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel libavutil-devel
+BuildRequires: libavformat-devel >= %libav_ver libavcodec-devel libavutil-devel
 # discoverer
 BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_xml:BuildRequires: libxml2-devel >= %libxml2_ver}
@@ -199,6 +200,9 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Sat May 13 2023 Yuri N. Sedunov <aris@altlinux.org> 3.5.2-alt1
 - 3.5.2
 

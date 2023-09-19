@@ -1,6 +1,6 @@
 %define _name calls
-%define ver_major 44
-%define beta %nil
+%define ver_major 45
+%define beta .rc.0
 %define xdg_name org.gnome.Calls
 
 %def_enable man
@@ -8,8 +8,8 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.2
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: A phone dialer and call handler
 Group: Graphical desktop/GNOME
@@ -37,6 +37,7 @@ BuildRequires: pkgconfig(gom-1.0)
 BuildRequires: pkgconfig(mm-glib) >= %mm_ver
 BuildRequires: pkgconfig(libebook-contacts-1.2)
 BuildRequires: pkgconfig(folks)
+BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: pkgconfig(libcallaudio-0.1)
 BuildRequires: pkgconfig(libfeedback-0.0) >= %feedback_ver
 BuildRequires: pkgconfig(sofia-sip-ua-glib)
@@ -86,6 +87,9 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Sat Sep 02 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt0.9.rc.0
+- 45.rc.0
+
 * Sun Jun 11 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
 - 44.2
 

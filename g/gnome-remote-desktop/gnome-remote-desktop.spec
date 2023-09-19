@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 44
-%define beta %nil
+%define ver_major 45
+%define beta .rc
 
 %def_enable vnc
 %def_enable rdp
@@ -10,8 +10,8 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.2
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: GNOME Remote Desktop
 License: GPLv2+
@@ -33,6 +33,7 @@ Source: %name-%version.tar
 %define fuse_ver 3.9.1
 %define xkbc_ver 1.0.0
 %define nvenc_ver 11.1.5.0
+%define ei_ver 1.0.901
 
 Requires: pipewire >= %pw_ver
 Requires: fuse3 >= %fuse_ver
@@ -50,6 +51,10 @@ BuildRequires: libfuse3-devel >= %fuse_ver
 BuildRequires: libxkbcommon-devel >= %xkbc_ver
 BuildRequires: libsecret-devel libnotify-devel libcairo-devel
 BuildRequires: libepoxy-devel libdrm-devel libgbm-devel
+BuildRequires: libei-devel >= %ei_ver
+
+BuildRequires: /bin/dbus-run-session /usr/bin/openssl
+BuildRequires: pipewire wireplumber mutter-gnome
 
 %description
 Remote desktop daemon for GNOME using pipewire.
@@ -85,6 +90,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Mon Sep 04 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt0.9.rc
+- 45.rc
+
 * Sun May 28 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
 - 44.2
 

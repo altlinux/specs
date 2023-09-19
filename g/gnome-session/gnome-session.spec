@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
@@ -129,6 +129,7 @@ export PATH=$PATH:/sbin
 %_libexecdir/%name-failed
 %dir %_datadir/%name
 %_datadir/%name/hardware-compatibility
+%_datadir/xdg-desktop-portal/gnome-portals.conf
 
 %dir %_datadir/%name/sessions
 %_datadir/%name/sessions/gnome.session
@@ -181,6 +182,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

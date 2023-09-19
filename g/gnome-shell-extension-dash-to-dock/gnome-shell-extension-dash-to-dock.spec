@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name dash-to-dock
-%define ver_major 84
+%define ver_major 87
 %define beta %nil
 %define uuid %_name@micxgx.gmail.com
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -27,7 +27,7 @@ Vcs: https://github.com/micheleg/dash-to-dock.git
 Source: %_name-%version%beta.tar
 %endif
 
-Requires: gnome-shell >= 44
+Requires: gnome-shell >= 45
 Requires: typelib(Gtk) = 4.0
 Requires: typelib(Dbusmenu)
 
@@ -49,12 +49,18 @@ available.
 %makeinstall_std
 %find_lang %gettext_domain
 
+%check
+%make -k check VERBOSE=1
+
 %files -f %gettext_domain.lang
 %_datadir/gnome-shell/extensions/%uuid/
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %doc README.md
 
 %changelog
+* Fri Aug 25 2023 Yuri N. Sedunov <aris@altlinux.org> 87-alt1
+- 87
+
 * Fri Jun 16 2023 Yuri N. Sedunov <aris@altlinux.org> 84-alt1
 - 84
 

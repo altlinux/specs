@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -19,8 +19,8 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.3
-Release: alt1.1%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A document viewer
 Group: Office
@@ -180,8 +180,7 @@ using Evince library.
 %{?_enable_ps:%_datadir/metainfo/%name-psdocument.metainfo.xml}
 %_datadir/metainfo/%name-tiffdocument.metainfo.xml
 %_datadir/metainfo/%name-xpsdocument.metainfo.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
-%_datadir/GConf/gsettings/evince.convert
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_datadir/glib-2.0/schemas/org.gnome.Evince.gschema.xml
 %_datadir/thumbnailers/evince.thumbnailer
 %_iconsdir/hicolor/*/apps/*
@@ -232,6 +231,9 @@ using Evince library.
 
 
 %changelog
+* Tue Sep 19 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Fri Aug 25 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1.1
 - 44.3-2-g2b9c3ea3 (updated translations)
 - moved backends to libevince subpackage (ALT #47351)

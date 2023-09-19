@@ -1,4 +1,4 @@
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
@@ -84,6 +84,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Sun Sep 10 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

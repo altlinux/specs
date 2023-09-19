@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.50
+%define ver_major 1.52
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -33,7 +33,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -59,19 +59,22 @@ Obsoletes: %name-utils < 1.31
 Obsoletes: bash-completion-gvfs < 1.31
 
 %define glib_ver 2.70.0
+%define gudev_ver 207
 %define libsoup3_ver 3.0.0
 %define avahi_ver 0.6
 %define libcdio_paranoia_ver 10.2
 %define bluez_ver 4.0
 %define gdu_ver 3.3.91
 %define udisks_ver 1.99
-%define mtp_ver 1.1.5
+%define mtp_ver 1.1.12
 %define goa_ver 3.17.1
 %define libarchive_ver 3.0.22
 %define imobiledevice_ver 1.3
-%define nfs_ver 1.9.7
-%define gdata_ver 0.17.3
+%define nfs_ver 1.9.8
+%define gdata_ver 0.18.0
+%define gcrypt_ver 1.2.2
 %define libusb_ver 1.0.21
+%define gphoto_ver 2.4.0
 %define gsds_ver 3.33.0
 
 Requires: dconf
@@ -88,11 +91,11 @@ BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libdbus-devel gtk-doc
 BuildRequires: openssh-clients
 # hotplug backend
-BuildRequires: libgudev-devel
+BuildRequires: libgudev-devel >= %gudev_ver
 # required if autoreconf used
 BuildRequires: libgcrypt-devel
 %{?_enable_afc:BuildRequires: libimobiledevice-devel >= %imobiledevice_ver pkgconfig(libplist-2.0)}
-%{?_enable_afp:BuildRequires: libgcrypt-devel}
+%{?_enable_afp:BuildRequires: libgcrypt-devel >= %gcrypt_ver}
 %{?_enable_archive:BuildRequires: libarchive-devel >= %libarchive_ver}
 %{?_enable_dnssd:BuildRequires: libavahi-glib-devel >= %avahi_ver libavahi-devel >= %avahi_ver}
 %{?_enable_bluray:BuildRequires: libbluray-devel}
@@ -101,7 +104,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_gcr:BuildRequires: gcr-libs-devel}
 %{?_enable_gdu:BuildRequires: libgdu-devel >= %gdu_ver libgudev-devel}
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver}
-%{?_enable_gphoto2:BuildRequires: libgphoto2-devel}
+%{?_enable_gphoto2:BuildRequires: libgphoto2-devel >= %gphoto_ver}
 %{?_enable_http:BuildRequires: libsoup3.0-devel >= %libsoup3_ver libxml2-devel}
 %{?_enable_keyring:BuildRequires: libsecret-devel}
 %{?_enable_libmtp:BuildRequires: libmtp-devel >= %mtp_ver}
@@ -539,6 +542,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 1.52.0-alt1
+- 1.52.0
+
 * Sun Aug 06 2023 Yuri N. Sedunov <aris@altlinux.org> 1.50.6-alt1
 - 1.50.6
 

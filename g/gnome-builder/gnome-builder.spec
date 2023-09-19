@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define api_ver %ver_major.0
@@ -22,7 +22,7 @@
 %def_without gvls
 
 Name: gnome-builder
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
@@ -41,11 +41,11 @@ Source1: %name-ru.po
 %set_typelibdir %_libdir/%name/girepository-1.0
 
 %define glib_ver 2.75.0
-%define gtk_ver 4.8
-%define adwaita_ver 1.3
-%define panel_ver 1.2
+%define gtk_ver 4.10
+%define adwaita_ver 1.4
+%define panel_ver 1.4
 %define gtksourceview_api_ver 5
-%define gtksourceview_ver 5.7.2
+%define gtksourceview_ver 5.8
 %define git2_ver 1.1.0
 %define devhelp_ver 3.30.0
 %define xml_ver 2.9.0
@@ -54,7 +54,7 @@ Source1: %name-ru.po
 %define vte_ver 0.70
 %define gtkmm_ver 3.20
 %define gspell_ver 1.8.0
-%define peas_ver 1.34.0
+%define peas_ver 2.0.0
 %define json_glib_ver 1.2.0
 %define template_glib_ver 3.36
 %define soup3_ver 3.0
@@ -63,7 +63,7 @@ Source1: %name-ru.po
 %define portal_ver 0.5
 %define gi_docgen_ver 2021.9
 %define jsonrpc_ver 3.43.0
-%define dex_ver 0.2.0
+%define dex_ver 0.4.0
 
 %add_python3_path %_libdir/%name/plugins
 %add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
@@ -77,7 +77,7 @@ Requires: typelib(Jsonrpc) = 1.0
 #%{?_with_flatpak:Requires: flatpak-builder}
 Requires: meson %_bindir/git %_bindir/indent %_bindir/xmllint
 Requires: devhelp %_bindir/uncrustify %_bindir/ctags %_bindir/cmark
-Requires: libpeas-python3-loader
+Requires: libpeas2-python3-loader
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: /proc meson gcc-c++ flex mm-common yelp-tools
@@ -89,11 +89,11 @@ BuildRequires: libpanel-devel >= %panel_ver
 BuildRequires: libgtksourceview%gtksourceview_api_ver-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
 BuildRequires: libwebkitgtk%webkit_api_ver-devel >= %webkit_ver
-BuildRequires: libxml2-devel >= %xml_ver libpeas-devel >= %peas_ver libvte3-devel >= %vte_ver
+BuildRequires: libxml2-devel >= %xml_ver libpeas2-devel >= %peas_ver libvte3-devel >= %vte_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver libpcre2-devel
 BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel libpanel-gir-devel libvte3-gir-devel
-BuildRequires: libgtksourceview%gtksourceview_api_ver-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
+BuildRequires: libgtksourceview%gtksourceview_api_ver-gir-devel libgit2-glib-gir-devel libpeas2-gir-devel
 BuildRequires: libjson-glib-gir-devel libsoup3.0-gir-devel >= %soup3_ver libwebkitgtk%webkit_api_ver-gir-devel
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgspell-devel >= %gspell_ver libenchant2-devel
@@ -202,6 +202,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Fri Apr 28 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
 - 44.2
 

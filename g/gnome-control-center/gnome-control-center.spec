@@ -3,7 +3,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define api_ver 2.0
 %define xdg_name org.gnome.Settings
@@ -16,7 +16,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -32,7 +32,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 %define glib_ver 2.75.0
 %define gtk4_ver 4.9.3
-%define adwaita_ver 1.2
+%define adwaita_ver 1.4
 %define desktop_ver 43
 %define fontconfig_ver 1.0.0
 %define gsds_ver 42
@@ -51,7 +51,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %define upower_ver 0.99.8
 %define grilo_ver 0.3.0
 %define polkit_ver 0.114
-%define snapd_ver 1.49
+%define snapd_ver 1.62
 %define malcontent_ver 0.11.0
 %define gudev_ver 232
 %define pulse_ver 2.0
@@ -99,8 +99,9 @@ BuildRequires: pkgconfig(systemd) >= %systemd_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libsecret-devel libgnutls-devel
 BuildRequires: libudisks2-devel
+BuildRequires: tecla-devel
 %{?_with_bluetooth:BuildRequires: pkgconfig(gnome-bluetooth-ui-%bt_api_ver) >= %bt_ver}
-%{?_with_snap:BuildRequires: snapd-glib-devel >= %snapd_ver}
+%{?_with_snap:BuildRequires: pkgconfig(snapd-glib-2) >= %snapd_ver}
 %{?_with_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
 BuildRequires: libgudev-devel >= %gudev_ver libgsound-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
@@ -195,6 +196,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1
 - 44.4
 

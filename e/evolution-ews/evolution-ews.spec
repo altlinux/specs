@@ -1,9 +1,12 @@
 %set_verify_elf_method rpath=relaxed
-%define ver_major 3.48
+%define ver_major 3.50
+%define ver_base 3.50
+%define evo_ver_base %ver_base
+
 %define xdg_name org.gnome.Evolution
 
 Name: evolution-ews
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution extension for Exchange Web Services
@@ -12,9 +15,6 @@ License: LGPL-2.1
 Url: https://wiki.gnome.org/Apps/Evolution
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-
-%define ver_base 3.48
-%define evo_ver_base %ver_base
 
 %define evolution_ver %version
 %define eds_ver %version
@@ -28,7 +28,7 @@ Requires: evolution-data-server >= %eds_ver
 Requires: libmspack >= %libmspack_ver
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ intltool
+BuildRequires: cmake ninja-build gcc-c++ intltool
 BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: evolution-devel >= %evolution_ver
 BuildRequires: libmspack-devel >= %libmspack_ver
@@ -46,8 +46,9 @@ versions 2007 and later, through its Exchange Web Services (EWS) interface.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 # reenable RPATH* to link against private libraries
-%cmake \
+%cmake -GNinja \
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON \
@@ -55,17 +56,16 @@ versions 2007 and later, through its Exchange Web Services (EWS) interface.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # Remove files we don't want packaged (no devel subpackage).
 rm -rf %buildroot%_includedir/evolution-data-server
-find %buildroot%_libdir -name '*.la' -exec rm {} \;
 rm -f %buildroot%_libdir/evolution-data-server/*.so
 
 %find_lang %name
 
 %files -f %name.lang
-%doc COPYING NEWS README
+%doc COPYING NEWS README*
 %_libdir/%name/*.so
 %_libdir/evolution-data-server/camel-providers/*
 %_libdir/evolution-data-server/addressbook-backends/*.so
@@ -77,6 +77,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/metainfo/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
+- 3.50.0
+
 * Fri May 26 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.2-alt1
 - 3.48.2
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 53
+%define ver_major 57
 %define beta %nil
 %define uuid appindicatorsupport@rgcjonas.gmail.com
 %define xdg_name org.gnome.shell.extensions.appindicator
@@ -26,11 +26,11 @@ Vcs: https://github.com/ubuntu/gnome-shell-extension-appindicator.git
 Source: %name-%version%beta.tar
 %endif
 
-Requires: gnome-shell >= 44
+Requires: gnome-shell >= 45
 Requires: typelib(Gtk) = 4.0
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson jq eslint
+BuildRequires: meson /usr/bin/glib-compile-schemas jq eslint
 %{?_enable_check:BuildRequires: %_bindir/gjs typelib(Gtk) = 4.0}
 
 %description
@@ -57,6 +57,9 @@ into GNOME Shell, including support for legacy tray icons.
 %doc AUTHORS.md README.md
 
 %changelog
+* Fri Aug 18 2023 Yuri N. Sedunov <aris@altlinux.org> 57-alt1
+- 57
+
 * Sat Mar 25 2023 Yuri N. Sedunov <aris@altlinux.org> 53-alt1
 - first build for Sisyphus
 

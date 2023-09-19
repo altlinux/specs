@@ -2,9 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define ver_major 3.48
-%define api_ver 4
-%define ui_api_ver 5
+%define ver_major 45
+%define beta %nil
+%define api_ver 6
+%define service_ver 3
+%define capture_ver 4
 %define xdg_name org.gnome.Sysprof
 %define _libexecdir %_prefix/libexec
 
@@ -16,7 +18,7 @@
 
 Name: sysprof
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: Sysprof kernel based performance profiler for Linux
 Group: Development/Tools
@@ -24,19 +26,23 @@ License: GPL-3.0
 Url: http://sysprof.com
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.73
-%define gtk_ver 4.6
+%define glib_ver 2.76
+%define gtk_ver 4.10
+%define dex_ver 0.4
+%define panel_ver 1.4
 %define systemd_ver 222
 %define polkit_ver 0.105
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ /usr/bin/appstream-util yelp-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ /usr/bin/appstream-util yelp-tools
 BuildRequires: glib2-devel >= %glib_ver libjson-glib-devel
+BuildRequires: libdex-devel >= %dex_ver
+BuildRequires: libpanel-devel >= %panel_ver
 BuildRequires: gobject-introspection-devel
 %{?_enable_gtk:BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1)}
 %{?_with_sysprofd:BuildRequires: pkgconfig(systemd) libpolkit-devel >= %polkit_ver}
@@ -50,20 +56,19 @@ information.
 %package devel
 Summary: Development files for GtkHex
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use GtkGHex library.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
 	%{?_enable_gtk:-Dgtk=true} \
-	%{?_with_sysprofd:-Dsysprofd=bundled} \
-	-Ddebugdir=%prefix/lib/debug
+	%{?_with_sysprofd:-Dsysprofd=bundled}
 %meson_build
 
 %install
@@ -76,26 +81,21 @@ developing applications that use GtkGHex library.
 %_bindir/%name
 %_bindir/%name-agent
 %_datadir/applications/%xdg_name.desktop
-#%_datadir/glib-2.0/schemas/org.gnome.sysprof3.gschema.xml
 %_iconsdir/hicolor/*/*/*
-%_libdir/lib%name-%api_ver.so
-%_libdir/lib%name-ui-%ui_api_ver.so
+%_libdir/lib%name-%api_ver.so.*
 %_libdir/lib%name-memory-%api_ver.so
 %_libdir/lib%name-speedtrack-%api_ver.so
+%_libdir/lib%name-tracer-%api_ver.so
 
 %if_with sysprofd
 %_libexecdir/sysprofd
-%_unitdir/sysprof2.service
 %_unitdir/sysprof3.service
-%_datadir/dbus-1/system-services/%{xdg_name}2.service
-%_datadir/dbus-1/system-services/%{xdg_name}3.service
-%_datadir/dbus-1/system.d/%{xdg_name}2.conf
-%_datadir/dbus-1/system.d/%{xdg_name}3.conf
-%_datadir/polkit-1/actions/org.gnome.sysprof3.policy
+%_datadir/dbus-1/system-services/%{xdg_name}%{service_ver}.service
+%_datadir/dbus-1/system.d/%{xdg_name}%{service_ver}.conf
+%_datadir/polkit-1/actions/org.gnome.sysprof%{service_ver}.policy
 
-%_datadir/dbus-1/interfaces/%{xdg_name}2.xml
-%_datadir/dbus-1/interfaces/%{xdg_name}3.Profiler.xml
-%_datadir/dbus-1/interfaces/%{xdg_name}3.Service.xml
+%_datadir/dbus-1/interfaces/%{xdg_name}%{service_ver}.Profiler.xml
+%_datadir/dbus-1/interfaces/%{xdg_name}%{service_ver}.Service.xml
 %_datadir/dbus-1/interfaces/%{xdg_name}.Agent.xml
 %endif
 
@@ -104,14 +104,19 @@ developing applications that use GtkGHex library.
 %doc AUTHORS NEWS README*
 
 %files devel
-%_libdir/lib%name-capture-%api_ver.a
+%_libdir/lib%name-capture-%capture_ver.a
+%_libdir/lib%name-%api_ver.so
 %_includedir/%{name}-%api_ver/
-%_includedir/%{name}-ui-%ui_api_ver/
 %_pkgconfigdir/%name-%api_ver.pc
-%_pkgconfigdir/%name-ui-%ui_api_ver.pc
-%_pkgconfigdir/%name-capture-%api_ver.pc
+%_pkgconfigdir/%name-capture-%capture_ver.pc
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
+* Sat Sep 02 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt0.9.rc
+- 45.rc
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
 - 3.48.0
 

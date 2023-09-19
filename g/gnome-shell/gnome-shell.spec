@@ -2,18 +2,17 @@
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
-%define api_ver 12
+%define api_ver 13
 %define gst_api_ver 1.0
-%def_disable soup2
 %def_disable gtk_doc
 %def_disable check
 # removed in 3.31.x
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -32,7 +31,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define session_ver 3.26
 %define gjs_ver 1.73.1
-%define mutter_ver 44.4
+%define mutter_ver 45
 %define gtk_ver 3.16.0
 %define adwaita_ver 1.0
 %define gio_ver 2.56.0
@@ -58,7 +57,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define libsecret_ver 0.18
 %define malcontent_ver 0.11
 %define gweather_api_ver 4.0
-%define webkit_api_ver 4.1
+%define webkit_api_ver 6.0
 
 Requires: %name-data = %version-%release
 # to avoid circular dependency
@@ -69,8 +68,7 @@ Requires: dconf at-spi2-core gnome-icon-theme gnome-icon-theme-symbolic
 Requires: at-spi2-atk ca-certificates polkit
 # since 3.11.x requires org.gnome.login-screen schema
 Requires: gdm-data
-# gkbd-keyboard-display required to show keyboard layouts
-Requires: libgnomekbd
+Requires: tecla
 # network.js requires
 Requires: gnome-control-center
 # since 3.16
@@ -86,13 +84,14 @@ Requires: pipewire
 Requires: xdg-desktop-portal-gnome
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+# js/misc/dependencies.js
 Requires: typelib(AccountsService)
 Requires: typelib(Atk)
 Requires: typelib(Atspi)
 Requires: typelib(Clutter)
 Requires: typelib(Gcr) = %gcr_api_ver
-Requires: typelib(GDesktopEnums)
-Requires: typelib(Gdk)
+Requires: typelib(GDesktopEnums) = 3.0
+Requires: typelib(Gdk) = 4.0
 Requires: typelib(GdkPixbuf)
 Requires: typelib(Gdm)
 Requires: typelib(Geoclue)
@@ -103,7 +102,6 @@ Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
 Requires: typelib(Graphene)
 Requires: typelib(Gst)
-Requires: typelib(Gtk) = 3.0
 Requires: typelib(Gtk) = 4.0
 Requires: typelib(Gvc)
 Requires: typelib(GWeather) = %gweather_api_ver
@@ -118,12 +116,12 @@ Requires: typelib(PolkitAgent)
 Requires: typelib(Rsvg)
 Requires: typelib(Shell)
 Requires: typelib(Shew)
-Requires: typelib(Soup) = %{?_enable_soup2:2.4}%{?_disable_soup2:3.0}
+Requires: typelib(Soup) = 3.0
 Requires: typelib(St)
 Requires: typelib(TelepathyGLib)
 Requires: typelib(TelepathyLogger)
 Requires: typelib(UPowerGlib)
-Requires: typelib(WebKit2) = %webkit_api_ver
+Requires: typelib(WebKit) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires(pre): rpm-build-python3 rpm-build-xdg rpm-build-systemd
@@ -162,12 +160,13 @@ BuildRequires: libfolks-devel >= %folks_ver libfolks-gir-devel
 BuildRequires: libnm-devel >= %nm_ver libnm-gir-devel
 BuildRequires: libgudev-devel libgudev-gir-devel
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildRequires: libsoup%{?_disable_soup2:3.0}-gir-devel ca-certificates
+BuildRequires: libsoup3.0-gir-devel ca-certificates
 BuildRequires: gnome-control-center-devel
 BuildRequires: pkgconfig(systemd)
 BuildRequires: libibus-devel >= %ibus_ver
 BuildRequires: gir(Gcr) = %gcr_api_ver libsecret-devel >= %libsecret_ver libpolkit-gir-devel
 BuildRequires: libgnome-autoar-devel
+BuildRequires: pkgconfig(tecla)
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_browser_plugin:BuildRequires: browser-plugins-npapi-devel}
 
@@ -285,6 +284,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.5-alt1
 - 44.5
 

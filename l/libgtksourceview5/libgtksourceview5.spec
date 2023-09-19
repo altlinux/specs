@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gtksourceview
-%define ver_major 5.8
+%define ver_major 5.10
 %define api_ver 5
 
 %def_disable static
@@ -167,6 +167,9 @@ dbus-run-session xvfb-run %__meson_test
 
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 5.10.0-alt1
+- 5.10.0
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 5.8.0-alt1
 - 5.8.0
 

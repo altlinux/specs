@@ -1,9 +1,8 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
-%define api_ver 43
 %define xdg_name org.gnome.SettingsDaemon
 
 %def_enable smartcard
@@ -12,12 +11,10 @@
 # tests require, as minimum, running colord
 %def_disable check
 %def_disable tests
-# see NEWS 3.30.1.2
-%def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
 License: GPL-2.0
@@ -51,7 +48,6 @@ Source: %name-%version%beta.tar
 
 Requires: dconf >= %dconf_ver
 Requires: colord >= %colord_ver
-Requires: system-config-printer
 Requires: system-config-printer-udev
 Requires: rfkill
 Requires: geoclue2 >= %geoclue_ver
@@ -71,7 +67,7 @@ BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libpulseaudio-devel >= %pulse_ver libalsa-devel libcanberra-gtk3-devel
 BuildRequires: libdbus-devel libpolkit1-devel >= %polkit_ver
 BuildRequires: xkeyboard-config-devel
-%{?_enable_smartcard:BuildRequires: libnss-devel}
+%{?_enable_smartcard:BuildRequires: pkgconfig(gck-2)}
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd) >= %systemd_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel}
 BuildRequires: libxkbfile-devel
@@ -95,7 +91,7 @@ client is GNOME Control Center, another one is Evolution.
 %package devel
 Summary: GNOME Settings Daemon development files
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -104,7 +100,7 @@ developing applications that use %name.
 %package tests
 Summary: GSD test programms
 Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 The %name-tests package provides programms for testing GSD plugins.
@@ -116,8 +112,8 @@ The %name-tests package provides programms for testing GSD plugins.
 %meson \
 	%{?_disable_smartcard:-Dsmartcard=false} \
 	%{?_enable_wayland:-Dwayland=true} \
-	-Dudev_dir='/lib/udev' \
-	%{?_enable_suspend_then_hibernate:-Dexperimental_suspend_then_hibernate=true}
+	-Dudev_dir='/lib/udev'
+%nil
 %meson_build
 
 %install
@@ -191,6 +187,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sun Jul 02 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1.1
 - fixed BR
 

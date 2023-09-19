@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Characters
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
@@ -80,6 +80,9 @@ characters.
 %doc NEWS COPYING README*
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

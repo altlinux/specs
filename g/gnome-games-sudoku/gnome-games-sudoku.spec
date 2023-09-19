@@ -3,7 +3,7 @@
 %define _name sudoku
 %define xdg_name org.gnome.Sudoku
 %define __name gnome-%_name
-%define ver_major 44
+%define ver_major 45
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -20,7 +20,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%versio
 Provides:  %__name = %version-%release
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.24.0
+%define gtk_ver 4.10.0
+%define adw_ver 1.4
 %define qqwing_ver 1.3.4
 
 BuildRequires(pre): rpm-macros-meson
@@ -28,7 +29,9 @@ BuildRequires: meson vala-tools gcc-c++
 BuildRequires: yelp-tools %_bindir/appstream-util desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver libgee0.8-devel libjson-glib-devel
+BuildRequires: libgtk4-devel >= %gtk_ver
+BuildRequires: libadwaita-devel >= %adw_ver
+BuildRequires: libgee0.8-devel libjson-glib-devel
 BuildRequires: libqqwing-devel >= %qqwing_ver
 
 %description
@@ -56,6 +59,9 @@ in popularity.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

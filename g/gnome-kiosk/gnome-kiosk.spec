@@ -1,13 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 44
+%define ver_major 45
+%define beta %nil
 %define xdg_name org.gnome.Kiosk
 
 %def_enable check
 
 Name: gnome-kiosk
 Version: %ver_major.0
-Release: alt0.1
+Release: alt1%beta
 
 Summary: GNOME Kiosk
 License: GPL-2.0-or-later
@@ -15,15 +16,15 @@ Group: Graphical desktop/GNOME
 Url: https://gitlab.gnome.org/GNOME/gnome-kiosk/
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.68.0
 %define gtk4_ver 4.0
-%define mutter_api_ver 12
-%define mutter_ver 44
+%define mutter_api_ver 13
+%define mutter_ver 45
 %define ibus_ver 1.5.24
 
 Requires: dconf gnome-settings-daemon
@@ -66,7 +67,7 @@ Requires: gnome-session
 This package provides a full screen firefox window pointed to Yandex.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 # switch from google to yandex
 sed -i 's|google\.com|ya.ru|' search-app/%xdg_name.SearchApp.desktop.in.in
 # fix shebang
@@ -108,6 +109,9 @@ sed -i 's|/usr/\(bin/sh\)|\1|' kiosk-script/%name-script
 %_datadir/wayland-sessions/%xdg_name.SearchApp.Session.desktop
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Thu Jun 22 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt0.1
 - first preview for Sisyphus (44.0-2-g12a9674)
 

@@ -1,17 +1,17 @@
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Maps is a map application for GNOME
 License: GPL-2.0 and LGPL-2.0
 Group: Graphical desktop/GNOME
-Url: https://wiki.gnome.org/Apps/Maps
+Url: https://apps.gnome.org/Maps/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
@@ -21,11 +21,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %define glib_ver 2.66
 %define gjs_ver 1.69.2
 %define gtk_api_ver 4.0
-%define adwaita_ver 1.2
+%define adwaita_ver 1.4
 %define geocode_api_ver 2.0
 %define geocode_ver 3.26.0
 %define geoclue_ver 2.4.0
-%define shumate_ver 1.0.3
+%define shumate_ver 1.1
 %define gweather_api_ver 4.0
 %define soup_api_ver 3.0
 %define webkit_api_ver 6.0
@@ -40,7 +40,7 @@ Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(Geoclue)
 Requires: typelib(GeocodeGlib) = %geocode_api_ver
-Requires: typelib(GFBGraph)
+Requires: typelib(Graphene)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GnomeMaps)
@@ -65,6 +65,7 @@ BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
 BuildRequires: pkgconfig(geoclue-2.0) >= %geoclue_ver
 BuildRequires: libgee0.8-devel libgeocode-glib%geocode_api_ver-devel
 BuildRequires: libshumate-devel libxml2-devel
+BuildRequires: libportal-devel
 BuildRequires: libgeocode-glib%geocode_api_ver-gir-devel libgweather%gweather_api_ver-devel
 BuildRequires: libshumate-gir-devel librest%rest_api_ver-gir-devel
 
@@ -99,6 +100,9 @@ sed -i 's/\(1.0.0\).beta/\1/' meson.build
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sat Aug 26 2023 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1
 - 44.4
 

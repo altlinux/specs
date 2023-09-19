@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define api_ver 4.0
 %define ext_api_ver 4
@@ -17,13 +17,13 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
 License: GPL-3.0
 Group: Graphical desktop/GNOME
-Url: https://wiki.gnome.org/Apps/Nautilus
+Url: https://apps.gnome.org/Nautilus
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
@@ -32,11 +32,11 @@ Source: %name-%version%beta.tar
 %endif
 
 %define desktop_file_utils_ver 0.8
-%define glib_ver 2.72.0
+%define glib_ver 2.77.0
 %define desktop_ver 43
 %define pango_ver 1.28.3
-%define gtk4_ver 4.10.3
-%define adwaita_ver 1.3
+%define gtk4_ver 4.11.3
+%define adwaita_ver 1.4
 %define libxml2_ver 2.7.8
 %define gexiv2_ver 0.14
 %define gir_ver 0.10.2
@@ -54,7 +54,7 @@ Requires: gvfs >= 1.34
 Requires: %_bindir/bwrap
 Requires: totem-video-thumbnailer
 Requires: gnome-disk-utility
-%{?_enable_tracker:Requires: tracker-miners3}
+%{?_enable_tracker:Requires: tracker3 tracker-miners3}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson desktop-file-utils >= %desktop_file_utils_ver
@@ -206,6 +206,12 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
+* Sat Sep 02 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt0.9.rc
+- 45.rc
+
 * Mon Jun 05 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2.1-alt1
 - 44.2.1
 

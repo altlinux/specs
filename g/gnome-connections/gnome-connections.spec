@@ -1,17 +1,17 @@
 %def_disable snapshot
 %define _name connections
 %define xdg_name org.gnome.Connections
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 
 Name: gnome-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Connections
 Group: Graphical desktop/GNOME
 License: GPL-3.0
-Url: https://wiki.gnome.org/Apps/Connections
+Url: https://apps.gnome.org/Connections
 
 %if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -23,9 +23,10 @@ Source: %name-%version.tar
 %define glib_ver 2.58
 %define gtk_ver 3.22.0
 %define handy_ver 1.6
+%define fuse_ver 3.9.1
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson vala-tools 
+BuildRequires: meson vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -37,6 +38,7 @@ BuildRequires: pkgconfig(winpr2)
 BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: pkgconfig(fuse3) >= %fuse_ver
 
 %description
 %summary
@@ -70,6 +72,12 @@ BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
+* Sat Sep 02 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt0.9.rc
+- 45.rc
+
 * Mon Apr 24 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 

@@ -2,13 +2,13 @@
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _libexecdir %_prefix/libexec
 %def_disable docs
-# test-portals-openuri -- timeout
-%def_disable check
+%def_enable man
+%def_enable check
 %def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.16.0
-Release: alt1.1
+Version: 1.17.2
+Release: alt1
 
 Summary: Portal frontend service to Flatpak
 Group: Graphical desktop/GNOME
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 %{?_enable_installed_tests:%add_python3_path %_libexecdir/installed-tests/%name}
 
 %define meson_ver 0.56.2
-%define glib_ver 2.60
+%define glib_ver 2.66
 %define geoclue_ver 2.5.2
 %define portal_ver 0.2.90
 %define fuse3_ver 3.10.0
@@ -48,6 +48,7 @@ BuildRequires: pkgconfig(json-glib-1.0)
 # since 1.5
 BuildRequires: pkgconfig(libportal) >= %portal_ver
 %{?_enable_docs:BuildRequires: xmlto docbook-dtds docbook-style-xsl}
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_installed_tests:BuildRequires: /proc fuse3 pipewire
 BuildRequires: python3-module-pytest python3-module-pygobject3
 BuildRequires: python3-module-dbus python3-module-dbusmock}
@@ -83,6 +84,7 @@ sed -i 's/pytest-3/py.test-3/' tests/meson.build
 %build
 %meson \
     %{?_disable_docs:-Ddocbook-docs=disabled} \
+    %{?_disable_man:-Dman-pages=disabled} \
     %{?_enable_installed_tests:-Dinstalled-tests=true}
 %nil
 %meson_build
@@ -112,6 +114,7 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %_userunitdir/xdg-document-portal.service
 %_userunitdir/xdg-permission-store.service
 %_userunitdir/%name-rewrite-launchers.service
+%{?_enable_man:%_man5dir/portals.conf.5*}
 %doc README.md NEWS
 %{?_enable_docs:%doc %_docdir/%name}
 
@@ -125,6 +128,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Mon Sep 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.17.2-alt1
+- 1.17.2
+
 * Wed Jun 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1.1
 - removed flatpak dependency (https://bugzilla.altlinux.org/46580)
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name tracker
-%define ver_major 3.5
+%define ver_major 3.6
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %{api_ver_major}.0
@@ -25,7 +25,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -169,7 +169,7 @@ sed -i 's|#!.*/bin/env python3|#!/usr/bin/python3|' docs/reference/libtracker-sp
 %dir %_libdir/%_name-%api_ver
 %_libexecdir/*
 %dir %_datadir/%name
-%_datadir/%name/stop-words/
+#%_datadir/%name/stop-words/
 %_datadir/%name/ontologies/
 %_datadir/bash-completion/completions/%name
 %_userunitdir/%_name-xdg-portal-%api_ver_major.service
@@ -215,6 +215,9 @@ sed -i 's|#!.*/bin/env python3|#!/usr/bin/python3|' docs/reference/libtracker-sp
 %endif
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Thu Jun 01 2023 Yuri N. Sedunov <aris@altlinux.org> 3.5.3-alt1
 - 3.5.3
 

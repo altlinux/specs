@@ -1,4 +1,6 @@
 %set_verify_elf_method textrel=relaxed
+%define optflags_lto %nil
+
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 %def_disable soup2
@@ -10,16 +12,17 @@
 %else
 %if_enabled gtk4
 %define api_ver 6.0
-%def_disable webdriver
+%def_enable webdriver
 %else
 %define api_ver 4.1
+%def_disable webdriver
 %endif
 %endif
 
 %define pkglibexecdir %_libexecdir/webkitgtk-%api_ver
-%define ver_major 2.40
+%define ver_major 2.42
 %define gtk_ver 3.0
-%define gst_ver 1.14.3
+%define gst_ver 1.20
 
 %define oname webkit
 %define _name webkitgtk
@@ -34,8 +37,12 @@
 %def_disable soup2
 %def_enable libavif
 %def_enable speech_synthesis
-# experimental
+# we have no libjxl for armh
+%ifarch armh
 %def_disable jpegxl
+%else
+%def_enable jpegxl
+%endif
 # since 2.19.x in some build environments
 # while build webki2gtk-dep typelibs this error appears
 # FATAL: Could not allocate gigacage memory with maxAlignment = ..
@@ -45,7 +52,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk%api_ver
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -62,7 +69,6 @@ Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 Patch1: webkitgtk-2.35.90-alt-python3.patch
 Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
 Patch10: webkitgtk-2.33.90-alt-format.patch
-
 Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
@@ -297,7 +303,7 @@ export PYTHON=%__python3
 %{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
 %{?_enable_libavif:-DUSE_AVIF:BOOL=ON} \
 %{?_enable_speech_synthesis:-DENABLE_SPEECH_SYNTHESIS=ON} \
-%{?_enable_jpegxl:-DUSE_JPEGXL=ON} \
+%{?_disable_jpegxl:-DUSE_JPEGXL=OFF} \
 %{?_disable_gold:-DUSE_LD_GOLD:BOOL=OFF} \
 %if_disabled bubblewrap_sandbox
 -DENABLE_BUBBLEWRAP_SANDBOX=OFF \
@@ -386,6 +392,13 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
+- 2.42.0
+
+* Fri Sep 08 2023 Yuri N. Sedunov <aris@altlinux.org> 2.41.92-alt1
+- 2.41.92
+- disabled LTO again
+
 * Wed Aug 02 2023 Yuri N. Sedunov <aris@altlinux.org> 2.40.5-alt1
 - 2.40.5
 

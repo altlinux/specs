@@ -1,14 +1,10 @@
 %def_disable snapshot
-# since 3.13.6
-# see https://git.gnome.org/browse/evolution-data-server/commit/?id=a2790163af4d3f375a778055d0e2699207dfd050
-%set_verify_elf_method unresolved=relaxed
-%set_verify_elf_method rpath=relaxed
 
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.48
-%define ver_base 3.48
+%define ver_major 3.50
+%define ver_base 3.50
 %define ver_lib 1.2
 %define ver_libecal 2.0
 %define ver_serverui4 1.0
@@ -36,7 +32,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -63,7 +59,6 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 %define sqlite_ver 3.7.17
 %define gweather4_ver 4.1.0
 %define ical_ver 3.0.7
-%define gdata_ver 0.15.1
 %define goa_ver 3.8.0
 %define vala_ver 0.13.1
 %define webkit_api_ver 4.1
@@ -72,7 +67,7 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gnome rpm-build-licenses rpm-build-xdg rpm-build-gir
-BuildRequires: cmake gcc-c++
+BuildRequires: cmake gcc-c++ ninja-build
 BuildRequires: gtk-doc >= 1.0
 BuildRequires: gnome-common
 BuildRequires: glib2-devel >= %glib_ver
@@ -83,21 +78,20 @@ BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
 BuildRequires: libsqlite3-devel >= %sqlite_ver
 BuildRequires: libgweather4.0-devel >= %gweather4_ver
 BuildRequires: libical-glib-devel >= %ical_ver
-BuildRequires: libgdata-devel >= %gdata_ver
 BuildRequires: libsecret-devel >= %secret_ver
 #%{?_enable_gtk3:BuildRequires: pkgconfig(gcr-%gcr_api_ver-gtk3) >= %gcr_ver}
 #%{?_enable_gtk4:BuildRequires: pkgconfig(gcr-%gcr_api_ver-gtk4) >= %gcr_ver}
 BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel libicu-devel
-%{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel libgdata-devel >= %gdata_ver}
+%{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel}
 %{?_enable_oauth2_webkitgtk3:BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver}
 %{?_enable_oauth2_webkitgtk4:BuildRequires: pkgconfig(webkit2gtk-5.0) >= %webkit_ver}
 BuildRequires: libjson-glib-devel
 %{?_enable_uoa:BuildRequires: libaccounts-glib-devel}
 %{?_enable_introspection:
-BuildRequires: gobject-introspection-devel gir(Soup) = 3.0
+BuildRequires: gobject-introspection-devel gir(Soup) = 3.0 gir(Json) = 1.0
 %{?_enable_gtk3:BuildRequires: libgtk+3-gir-devel}
 %{?_enable_gtk4:BuildRequires: libgtk4-gir-devel}
-BuildRequires: libical-glib-gir-devel libgdata-gir-devel}
+BuildRequires: libical-glib-gir-devel}
 %{?_with_libdb:BuildRequires: libdb4-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver}
@@ -184,6 +178,7 @@ the functionality of the installed EDS libraries.
 %add_optflags %(getconf LFS_CFLAGS)
 # reenable RPATH* to link against private libraries
 %cmake \
+	-GNinja \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
 	-DCAMEL_LOCK_HELPER_GROUP:STRING=mail \
@@ -212,7 +207,7 @@ the functionality of the installed EDS libraries.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 # if unstable
 ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 
@@ -296,6 +291,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
+- 3.50.0
+
 * Fri Jun 30 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.4-alt1
 - 3.48.4
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define xdg_name org.gnome.clocks
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 
 Name: gnome-clocks
@@ -23,7 +23,7 @@ Source: %name-%version%beta.tar
 %define geocode_ver 3.26.0
 %define geoclue_ver 2.4
 %define gtk4_ver 4.5
-%define adwaita_ver 1.2
+%define adwaita_ver 1.4
 
 Requires: geoclue2
 
@@ -62,6 +62,9 @@ Clock application designed for GNOME 3
 %doc README* NEWS*
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

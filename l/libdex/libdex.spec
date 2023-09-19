@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 0.2
+%define ver_major 0.4
 %define beta %nil
 %define api_ver 1
 
@@ -114,7 +114,7 @@ This package contains Dex example programs.
 %_includedir/%name-%api_ver/
 %_libdir/%name-%api_ver.so
 %_pkgconfigdir/%name-%api_ver.pc
-%{?_enable_vala:%_vapidir/%name.*}
+%{?_enable_vala:%_vapidir/%name-%api_ver.*}
 
 %if_enabled introspection
 %files gir
@@ -135,6 +135,9 @@ This package contains Dex example programs.
 %endif
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - first build for Sisyphus
 

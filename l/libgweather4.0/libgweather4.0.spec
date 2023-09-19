@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name libgweather
-%define ver_major 4.2
+%define ver_major 4.4
 %define beta %nil
 %define api_ver_major 4
 %define api_ver 4.0
@@ -19,7 +19,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt1%beta
 
 Summary: A library for weather information
 Group: System/Libraries
@@ -32,9 +32,10 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
 Source: %_name-%version%beta.tar
 %endif
 %{?_enable_new_russia:
-Patch10: %_name-4.2.0-alt-Simferopol.patch
-Patch11: %_name-4.2.0-alt-Donetsk.patch
-Patch12: %_name-4.2.0-alt-Donetsk-po-locations.patch}
+# Simferopol & Kerch, Donetsk, Mariupol, Lugansk,
+# Severodonetsk, Lisichansk, Zaporozhye ...
+Patch10: %_name-4.3.2-alt-Novorossia.patch
+Patch11: %_name-4.3.2-alt-Novorossia-po-locations.patch}
 
 %define glib_ver 2.68
 %define soup2_ver 2.44
@@ -122,9 +123,8 @@ This package provides Vala language bindings for the %name library.
 %prep
 %setup -n %_name-%version%beta
 %{?_enable_new_russia:
-%patch10 -b .Simferopol
-%patch11 -b .Donetsk
-%patch12 -b .Donetsk}
+%patch10 -b .NR
+%patch11 -b .NR}
 
 sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 
@@ -185,6 +185,13 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
+* Mon Sep 04 2023 Yuri N. Sedunov <aris@altlinux.org> 4.3.2-alt1
+- 4.3.2
+- more fixes for new-old regions
+
 * Sun Dec 18 2022 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt2
 - fixed Simferopol and Donetsk locations
 

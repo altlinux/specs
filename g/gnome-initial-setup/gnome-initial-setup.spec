@@ -1,8 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
-%define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
@@ -30,6 +29,7 @@ Source: %name-%version%beta.tar
 %define nma_ver 1.0
 %define glib_ver 2.64.0
 %define gtk4_ver 3.12.0
+%define adwaita_ver 1.4
 %define secret_ver 0.18.8
 %define geoclue_ver 2.4.3
 %define packagekit_ver 1.1.4
@@ -37,7 +37,6 @@ Source: %name-%version%beta.tar
 %define ibus_ver 1.4.99
 %define malcontent_ui_api_ver 1
 %define malcontent_ver 0.11
-%define adwaita_ver 1.2
 %define webkit_api_ver 6.0
 %define webkit_ver 2.39.1
 %define goa_ver 3.45.2
@@ -49,7 +48,7 @@ Source: %name-%version%beta.tar
 
 Requires: dconf geoclue2 >= %geoclue_ver
 Requires: gsettings-desktop-schemas >= %gsds_ver
-Requires: ibus gnome-keyring
+Requires: ibus gnome-keyring tecla
 Requires: gnome-getting-started-docs
 Requires: gnome-tour
 %{?_enable malcontent:Requires: malcontent >= %malcontent_ver}
@@ -63,7 +62,6 @@ BuildRequires: libnm-devel >= %nm_ver pkgconfig(libnma-gtk4) >= %nma_ver
 BuildRequires: libkrb5-devel libpwquality-devel
 BuildRequires: libxkbfile-devel libibus-devel >= %ibus_ver librest-devel
 BuildRequires: libaccountsservice-devel pkgconfig(rest-1.0) pkgconfig(gnome-desktop-4)
-BuildRequires: gstreamer%gst_api_ver-devel
 BuildRequires: pkgconfig(gweather4) libgnome-online-accounts-devel
 BuildRequires: gdm-libs-devel iso-codes-devel libpolkit-devel
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
@@ -108,6 +106,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %_sysconfdir/xdg/autostart/%name-copy-worker.desktop
 %_sysconfdir/xdg/autostart/%name-first-login.desktop
 %_desktopdir/%name.desktop
+%_datadir/dconf/profile/%name
+%dir %_datadir/%name
+%_datadir/%name/initial-setup-dconf-defaults
 %_datadir/gnome-session/sessions/%name.session
 %_datadir/gnome-shell/modes/initial-setup.json
 %_datadir/polkit-1/rules.d/20-gnome-initial-setup.rules
@@ -119,6 +120,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

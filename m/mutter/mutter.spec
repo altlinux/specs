@@ -3,10 +3,10 @@
 
 %def_disable snapshot
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 # %%ver_major - 32
-%define api_ver 12
+%define api_ver 13
 %define sover 0
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
@@ -16,9 +16,11 @@
 %def_enable installed_tests
 %def_enable egl_device
 %def_enable wayland_eglstream
+# disabled by default
+%def_disable libdisplay_info
 
 Name: mutter
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -69,6 +71,7 @@ Patch: mutter-40.0-alt-gsettings_desktop_schemas_dep.patch
 %define wacom_ver 0.13
 %define lcms_ver 2.6
 %define colord_ver 1.4.5
+%define eis_ver 1.0.0
 
 Requires: lib%name = %EVR
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
@@ -100,6 +103,7 @@ BuildRequires: gnome-settings-daemon-devel
 BuildRequires: pkgconfig(sysprof-capture-4)
 BuildRequires: libgraphene-gir-devel >= %graphene_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver
+BuildRequires: pkgconfig(libei-1.0) pkgconfig(libeis-1.0) >= %eis_ver
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
@@ -107,6 +111,7 @@ BuildRequires: libGL-devel libGLES-devel xorg-xwayland-devel %_bindir/cvt
 BuildRequires: libdbus-devel
 %{?_enable_egl_device:BuildRequires: libEGL-devel}
 %{?_enable_wayland_eglstream:BuildRequires: egl-wayland-devel}
+%{?_enable_libdisplay_info:BuildRequires: pkgconfig(libdisplay-info)}
 
 %description
 Mutter is a Wayland display server and X11 window manager and compositor library.
@@ -185,7 +190,9 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 	%{?_enable_remote_desktop:-Dremote_desktop=true} \
 	%{?_enable_egl_device:-Degl_device=true} \
 	%{?_enable_wayland_eglstream:-Dwayland_eglstream=true} \
+	%{?_enable_libdisplay_info:-Dlibdisplay-info=true} \
 	%{?_disable_installed_tests:-Dinstalled_tests=false}
+%nil
 %meson_build
 
 %install
@@ -217,6 +224,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %pkglibdir/lib%name-clutter-%api_ver.so.*
 %pkglibdir/lib%name-cogl-pango-%api_ver.so.*
 %pkglibdir/lib%name-cogl-%api_ver.so.*
+%pkglibdir/lib%name-mtk-%api_ver.so.*
 # symlinks
 %_libdir/lib%name-clutter-%api_ver.so.%sover
 %_libdir/lib%name-cogl-%api_ver.so.%sover
@@ -235,6 +243,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %pkglibdir/Cogl-%api_ver.typelib
 %pkglibdir/CoglPango-%api_ver.typelib
 %pkglibdir/Meta-%api_ver.typelib
+%pkglibdir/Mtk-%api_ver.typelib
 %{?_enable_installed_tests:%pkglibdir/MetaTest-%api_ver.typelib}
 
 %files -n lib%name-gir-devel
@@ -243,6 +252,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %pkglibdir/Cogl-%api_ver.gir
 %pkglibdir/CoglPango-%api_ver.gir
 %pkglibdir/Meta-%api_ver.gir
+%pkglibdir/Mtk-%api_ver.gir
 %{?_enable_installed_tests:%pkglibdir/MetaTest-%api_ver.gir}
 
 %files gnome
@@ -259,6 +269,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1:45.0-alt1
+- 45.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1:44.5-alt1
 - 44.5
 

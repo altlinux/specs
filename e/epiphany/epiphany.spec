@@ -3,12 +3,12 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define xdg_name org.gnome.Epiphany
 
 Name: epiphany
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -28,11 +28,11 @@ Obsoletes: %name-extensions
 
 %add_findprov_lib_path %_libdir/%name
 
-%define glib_ver 2.70.0
+%define glib_ver 2.74.0
 %define webki_api_ver 6.0
-%define webkit_ver 2.39.91
+%define webkit_ver 2.41.1
 %define gtk4_ver 4.9.3
-%define adwaita_ver 1.3
+%define adwaita_ver 1.4
 %define gcr4_ver 3.9.0
 %define nettle_ver 3.4
 %define libxml2_ver 2.6.12
@@ -113,6 +113,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 44.7-alt1
 - 44.7
 

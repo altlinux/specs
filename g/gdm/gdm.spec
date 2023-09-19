@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define api_ver 1.0
 
@@ -25,8 +25,8 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.1
-Release: alt3%beta
+Version: %ver_major.0.1
+Release: alt1%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -40,8 +40,6 @@ Source: %name-%version%beta.tar
 %endif
 
 Source1: gdm_xdmcp.control
-# https://bugzilla.altlinux.org/44123
-#Source2: gdm.wms-method
 Source3: default.pa-for-gdm
 
 # PAM config files
@@ -58,7 +56,7 @@ Patch7: gdm-40.beta-alt-Init.patch
 Patch8: gdm-44.1-alt-Xsession-Xterm.patch
 
 Obsoletes: %name-gnome
-Provides: %name-gnome = %version-%release
+Provides: %name-gnome = %EVR
 Provides: gnome-dm
 
 # from meson.build
@@ -71,12 +69,12 @@ Provides: gnome-dm
 %define session_ver 40
 %define gudev_ver 232
 
-Provides: %name-user-switch-applet = %version-%release
+Provides: %name-user-switch-applet = %EVR
 Obsoletes: %name-user-switch-applet
 
 Requires(pre): %_rpmlibdir/update-dconf-database.filetrigger
-Requires(pre): %name-libs = %version-%release
-Requires(pre): %name-data = %version-%release
+Requires(pre): %name-libs = %EVR
+Requires(pre): %name-data = %EVR
 Requires: gnome-shell >= %shell_ver
 Requires: accountsservice >= %accountsservice_ver
 Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
@@ -93,9 +91,9 @@ BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libaccountsservice-devel >= %accountsservice_ver
 BuildRequires: libgudev-devel >= %gudev_ver
 BuildRequires: dconf pkgconfig(systemd) libpam-devel
-%{?_with_selinux:BuildPreReq: libselinux-devel libattr-devel}
-%{?_with_libaudit:BuildPreReq: libaudit-devel}
-%{?_with_plymouth:BuildPreReq: plymouth-devel}
+%{?_with_selinux:BuildRequires: libselinux-devel libattr-devel}
+%{?_with_libaudit:BuildRequires: libaudit-devel}
+%{?_with_plymouth:BuildRequires: plymouth-devel}
 BuildRequires: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
 BuildRequires: libXdmcp-devel
 
@@ -137,7 +135,7 @@ to work.
 %package libs-devel
 Summary: Development files for GDM libraries
 Group: Development/C
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description libs-devel
 This package contains headers and development libraries for GNOME
@@ -146,7 +144,7 @@ Display Manager.
 %package libs-gir
 Summary: GObject introspection data for the GDM
 Group: System/Libraries
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description libs-gir
 GObject introspection data for the GDM libraries.
@@ -155,8 +153,8 @@ GObject introspection data for the GDM libraries.
 Summary: GObject introspection devel data for the GDM
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-libs-gir = %version-%release
-Requires: %name-libs-devel = %version-%release
+Requires: %name-libs-gir = %EVR
+Requires: %name-libs-devel = %EVR
 
 %description libs-gir-devel
 GObject introspection devel data for the GDM libraries.
@@ -186,7 +184,6 @@ sed -i 's|/usr\(/bin/rm\)|\1|' data/61-gdm.rules.in
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
 
-
 %build
 %meson \
 	%{?_enable_ipv6:-Dipv6=true} \
@@ -200,7 +197,7 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 	-Dudev-dir='%_udevrulesdir' \
 	%{?_without_xdmcp:-Dxdmcp=disabled} \
 	%{?_without_libaudit:-Dlibaudit=disabled} \
-	%{?_without plymouth:-Dplymouth=disabled} \
+	%{?_without_plymouth:-Dplymouth=disabled} \
 	%{?_disable_wayland:-Dwayland-support=false} \
 	%{?_enable_xsession:-Dgdm-xsession=true} \
 	%{?_disable_user_display_server:-Duser-display-server=false}
@@ -215,10 +212,6 @@ rm -f %buildroot%_sysconfdir/pam.d/gdm
 
 # env.d directories
 mkdir -p %buildroot{%_sysconfdir/X11,%_datadir}/gdm/env.d
-
-# install external hook for update_wms
-#mkdir -p %buildroot%_sysconfdir/X11/wms-methods.d
-#install -m755 %SOURCE2 %buildroot%_sysconfdir/X11/wms-methods.d/%name
 
 # control gdm/xdmcp
 install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
@@ -264,8 +257,6 @@ dbus-run-session %__meson_test
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
 %_sysconfdir/X11/%name/
 %config %_controldir/gdm_xdmcp
-#%dir %_sysconfdir/X11/sessions
-#%_sysconfdir/X11/wms-methods.d/%name
 %dir %_datadir/%name
 %_datadir/%name/locale.alias
 %_datadir/%name/gdb-cmd
@@ -303,6 +294,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Thu Sep 14 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt1
+- 45.0.1
+
 * Tue Aug 22 2023 Alexey Shabalin <shaba@altlinux.org> 44.1-alt3
 - data/61-gdm.rules.in: /usr/bin/rm -> /bin/rm (ALT #47054)
 

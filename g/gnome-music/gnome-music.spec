@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
@@ -14,7 +14,7 @@ Release: alt1%beta
 Summary: Music playing application for GNOME3
 Group: Sound
 License: GPLv2+
-Url: http://wiki.gnome.org/Apps/Music
+Url: https://apps.gnome.org/Music
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -34,7 +34,7 @@ BuildArch: noarch
 %define pycairo_ver 1.14.0
 %define goa_ver 3.35.90
 
-Requires: tracker-miners3 >= %tracker_ver typelib(Tracker) = %tracker_api_ver
+Requires: tracker3 tracker-miners3 >= %tracker_ver typelib(Tracker) = %tracker_api_ver
 Requires: grilo-tools >= %grilo_ver grilo-plugins
 Requires: gst-plugins-base%gst_api_ver
 Requires: typelib(Gtk) = 4.0 typelib(Soup) = %soup_api_ver
@@ -80,6 +80,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Thu Mar 23 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

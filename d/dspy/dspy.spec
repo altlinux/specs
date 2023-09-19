@@ -1,4 +1,4 @@
-%define ver_major 1.6
+%define ver_major 1.8
 %define api_ver 1
 %define _name d-spy
 %define xdg_name org.gnome.dspy
@@ -69,7 +69,7 @@ This package provides development files for D-Spy library.
 
 %install
 %meson_install
-%find_lang --with-gnome --output=%name.lang %name
+%find_lang --with-gnome --output=%name.lang %_name
 
 %check
 %__meson_test
@@ -90,6 +90,9 @@ This package provides development files for D-Spy library.
 %_pkgconfigdir/%name-%api_ver.pc
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 

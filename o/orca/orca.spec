@@ -1,17 +1,17 @@
 %def_disable snapshot
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 
 Name: orca
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
 Group: Accessibility
 License: LGPL-2.1
-Url: http://wiki.gnome.org/Projects/Orca
+Url: https://wiki.gnome.org/Projects/Orca
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -30,6 +30,7 @@ Requires: typelib(Gtk) = 3.0 typelib(Atspi) = 2.0
 Requires: yelp
 #Requires: voiceman
 Requires: at-spi2-core
+# don't speak russian
 Requires: speech-dispatcher-module-flite flite
 # speak russian
 Requires: espeak
@@ -40,7 +41,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildPreReq: /proc
 BuildRequires: libgtk+3-devel >= 3.2
 BuildRequires: libgtk+3-gir
-BuildRequires: libat-spi2-core-devel >= 2.26
+BuildRequires: libat-spi2-core-devel >= 2.28
 BuildRequires: at-spi2-atk-devel
 BuildRequires: python3-module-pygobject3-devel >= 3.18
 BuildRequires: python3-module-dbus-devel
@@ -70,7 +71,7 @@ Jaws For Windows компании Freedom Scientific.
 %prep
 %setup -n %name-%version%beta
 #%patch1 -p1
-%patch2 -p1
+#%%patch2 -p1
 #cp -f %SOURCE4 po/ru.po
 
 %build
@@ -102,6 +103,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Thu May 25 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 

@@ -1,12 +1,9 @@
 %def_disable snapshot
-%set_verify_elf_method unresolved=relaxed
-# Some plugins/extensions link with others, resulting in multiple rpath entries
-%set_verify_elf_method rpath=relaxed
 
 %define xdg_name org.gnome.Evolution
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.48
-%define ver_base 3.48
+%define ver_major 3.50
+%define ver_base 3.50
 %define gst_api_ver 1.0
 
 %def_disable gtk_doc
@@ -21,7 +18,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -52,8 +49,8 @@ Provides: camel
 %define libnotify_ver 0.7.0
 %define gweather_ver 3.91
 %define ical_ver 1.0.1
-%define gdata_ver 0.10.0
-%define champlain_ver 0.12
+# libsoup-3.0 build
+%define champlain_ver 0.12.21-alt3
 %define pst_ver 0.6.54
 %define webkit_api_ver 4.1
 %define webkit_ver 2.34
@@ -71,7 +68,7 @@ Requires: gnome-keyring
 Requires: highlight
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
-BuildRequires: cmake gcc-c++ flex  gnome-common
+BuildRequires: cmake ninja-build gcc-c++ flex gnome-common
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgail3-devel >= %gtk_ver
@@ -83,12 +80,11 @@ BuildRequires: libnotify-devel >= %libnotify_ver
 BuildRequires: pkgconfig(gweather4) >= %gweather_ver
 BuildRequires: pkgconfig(geocode-glib-2.0) >= %geocode_ver
 BuildRequires: libical-devel >= %ical_ver libicu-devel
-BuildRequires: libgdata-devel >= %gdata_ver
 BuildRequires: libpst-devel >= %pst_ver
 BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
 #BuildRequires: pkgconfig(gcr-4-gtk3) >= %gcr4_ver
-BuildRequires: libcryptui-devel
+BuildRequires: libcryptui-devel libsecret-devel
 BuildRequires: libkrb5-devel libsqlite3-devel >= %sqlite3_ver
 BuildRequires: cmark-devel highlight
 %{?_enable_map:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
@@ -176,14 +172,13 @@ Requires: %name = %version-%release
 This package provides tests programs that can be used to verify
 the functionality of the installed Evolution.
 
-
 %prep
 %setup
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 # reenable RPATH* to link against private libraries
-%cmake \
+%cmake -GNinja \
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON \
@@ -201,14 +196,11 @@ the functionality of the installed Evolution.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # evolution command name
 mv %buildroot%_bindir/evolution %buildroot%_bindir/evolution-%ver_major
 ln -s %name-%ver_major %buildroot%_bindir/%name
-
-# remove non-packaged files
-find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 %find_lang --with-gnome --output=%name.lang %name %name-%ver_base
 
@@ -279,6 +271,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
+- 3.50.0
+
 * Fri Jun 30 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.4-alt1
 - 3.48.4
 

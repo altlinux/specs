@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 3.48
+%define ver_major 3.50
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-4
@@ -8,7 +8,7 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -24,6 +24,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.52
 %define gtk_ver 3.24
+%define handy_ver 1.6
 %define vte_ver 0.72.2
 
 Provides: xvt
@@ -38,6 +39,7 @@ BuildRequires: meson gcc-c++
 BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel docbook-style-xsl xsltproc
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libvte3-devel >= %vte_ver
 BuildRequires: gsettings-desktop-schemas-devel libSM-devel
 BuildRequires: libdconf-devel libuuid-devel
@@ -109,6 +111,9 @@ EOF
 %endif
 
 %changelog
+* Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
+- 3.50.0
+
 * Sun Aug 06 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.2-alt1
 - 3.48.2
 

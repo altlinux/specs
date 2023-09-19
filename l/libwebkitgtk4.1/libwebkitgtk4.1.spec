@@ -1,4 +1,6 @@
 %set_verify_elf_method textrel=relaxed
+%define optflags_lto %nil
+
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 %def_disable soup2
@@ -7,10 +9,11 @@
 %def_disable webdriver
 %else
 %define api_ver 4.1
+%def_disable webdriver
 %endif
 
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.40
+%define ver_major 2.42
 %define gtk_ver 3.0
 %define gst_ver 1.20
 
@@ -27,6 +30,12 @@
 %def_disable soup2
 %def_enable libavif
 %def_enable speech_synthesis
+# we have no libjxl for armh
+%ifarch armh
+%def_disable jpegxl
+%else
+%def_enable jpegxl
+%endif
 # since 2.19.x in some build environments
 # while build webki2gtk-dep typelibs this error appears
 # FATAL: Could not allocate gigacage memory with maxAlignment = ..
@@ -36,7 +45,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk%api_ver
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -113,6 +122,8 @@ BuildRequires: libmanette-devel
 # since 2.34.0
 %{?_enable_libavif:BuildRequires: libavif-devel}
 %{?_enable_speech_synthesis:BuildRequires: flite-devel >= 2.2}
+# since 2.39.x
+%{?_enable_jpegxl:BuildRequires: libjxl-devel}
 
 %description
 WebKit is an open source web browser engine.
@@ -290,6 +301,8 @@ export PYTHON=%__python3
 %{?_enable_x11:-DENABLE_X11_TARGET:BOOL=ON} \
 %{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
 %{?_enable_libavif:-DUSE_AVIF:BOOL=ON} \
+%{?_enable_speech_synthesis:-DENABLE_SPEECH_SYNTHESIS=ON} \
+%{?_disable_jpegxl:-DUSE_JPEGXL=OFF} \
 %{?_disable_gold:-DUSE_LD_GOLD:BOOL=OFF} \
 %if_disabled bubblewrap_sandbox
 -DENABLE_BUBBLEWRAP_SANDBOX=OFF \
@@ -380,6 +393,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
+- 2.42.0
+
 * Wed Aug 02 2023 Yuri N. Sedunov <aris@altlinux.org> 2.40.5-alt1
 - 2.40.5
 

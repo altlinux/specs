@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 43
+%define ver_major 45
 %define beta %nil
 %define xdg_name ca.desrt.dconf-editor
 
@@ -75,6 +75,9 @@ cp %SOURCE1 po/ru.po
 %doc README*
 
 %changelog
+* Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 

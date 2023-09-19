@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define plugins_ver 20
 %define _libexecdir %_prefix/libexec
@@ -16,6 +16,7 @@
 %def_enable fwupd
 %endif
 %def_enable flatpak
+%def_enable snap
 %def_disable limba
 %def_enable packagekit
 %def_enable webapps
@@ -31,17 +32,17 @@
 %def_enable sysprof
 %endif
 %def_enable tests
-# no /etc/mishine-id in hasher
+# no /etc/mashine-id in hasher
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Software manager for GNOME
 License: GPLv2+
 Group: Graphical desktop/GNOME
-Url: https://wiki.gnome.org/Apps/Software
+Url: https://apps.gnome.org/Software
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -90,6 +91,7 @@ BuildRequires: pkgconfig(sysprof-capture-4)
 %{?_enable_polkit:BuildRequires: libpolkit-devel}
 %{?_enable_fwupd:BuildRequires: fwupd-devel >= %fwupd_ver}
 %{?_enable_flatpak:BuildRequires: libflatpak-devel >= %flatpak_ver}
+%{?_enable_snap:BuildRequires: pkgconfig(snapd-glib-2)}
 %{?_enable_packagekit:BuildRequires: libpackagekit-glib-devel >= %packagekit_ver}
 %{?_enable_rpm_ostree:BuildRequires: libostree-devel >= %ostree_ver}
 %{?_enable_rpm:BuildRequires: librpm-devel}
@@ -102,7 +104,7 @@ GNOME Software is a software center for GNOME.
 %package devel
 Summary: Development files for GNOME Software
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains files necessary to develop plugins for GNOME
@@ -130,6 +132,7 @@ GNOME Software.
 	%{?_enable_polkit:-Dpolkit=true} \
 	%{?_disable_fwupd:-Dfwupd=false} \
 	%{?_enable_flatpak:-Dflatpak=true} \
+	%{?_enable_snap:-Dsnap=true} \
 	%{?_enable_ostree:-Dostree=true} \
 	%{?_enable_rpm_ostree:-Drpm_ostree=true} \
 	%{?_disable_packagekit:-Dpackagekit=false} \
@@ -163,6 +166,7 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%name-local-file-flatpak.desktop
 %{?_enable_fwupd:%_desktopdir/%name-local-file-fwupd.desktop}
+%{?_enable_snap:%_desktopdir/%name-local-file-snap.desktop}
 %_desktopdir/%name-local-file-packagekit.desktop
 %_datadir/swcatalog/xml/%xdg_name.Featured.xml
 %_datadir/swcatalog/xml/gnome-pwa-list-foss.xml
@@ -178,6 +182,7 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %_datadir/metainfo/%xdg_name.Plugin.Epiphany.metainfo.xml
 %{?_enable_flatpak:%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml}
 %{?_enable_fwupd:%_datadir/metainfo/%xdg_name.Plugin.Fwupd.metainfo.xml}
+%{?_enable_snap:%_datadir/metainfo/%xdg_name.Plugin.Snap.metainfo.xml}
 %_man1dir/%name.1.*
 %doc AUTHORS README* NEWS
 
@@ -189,6 +194,12 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
+* Sat Sep 02 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt0.9.rc
+- 45.rc
+
 * Fri Aug 04 2023 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1
 - 44.4
 

@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.2
+%define ver_major 1.4
 %define beta %nil
 %define api_ver 1
 %define xdg_name org.gnome.Panel%api_ver
@@ -28,7 +28,7 @@ Source: %name-%version.tar
 %endif
 
 %define meson_ver 0.60
-%define glib_ver 2.75
+%define glib_ver 2.74
 %define gtk_ver 4.8.0
 %define adwaita_ver 1.2
 
@@ -140,6 +140,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 

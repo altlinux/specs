@@ -3,7 +3,7 @@
 %define _name champlain
 %define ver_major 0.12
 %define api_ver 0.12
-%def_disable libsoup3
+%def_enable libsoup3
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
@@ -13,7 +13,7 @@
 
 Name: lib%_name
 Version: %ver_major.21
-Release: alt2
+Release: alt3
 
 Summary: Map view library for Clutter
 License: LGPLv2+
@@ -212,6 +212,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Sep 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.12.21-alt3
+- rebuilt against libsoup-3.0 again
+
 * Sat Feb 11 2023 Yuri N. Sedunov <aris@altlinux.org> 0.12.21-alt2
 - rebuilt against libsoup-2.4 instead of libsoup-3.0
 

@@ -1,11 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 %def_enable classic_mode
+%def_enable check
 
 Name: gnome-shell-extensions
 Version: %ver_major.0
@@ -33,7 +34,7 @@ Requires: gnome-shell >= %version
 %{?_enable_classic_mode:Requires: typelib(GMenu) = 3.0}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson libgjs-devel libmozjs78-tools sassc
+BuildRequires: meson libgjs-devel libmozjs78-tools sassc eslint
 
 %description
 GNOME Shell Extensions is a collection of extensions providing additional
@@ -49,12 +50,12 @@ See %_docdir/%name-%version/README for more information.
     -Dextension_set=all
 %meson_build
 
-%check
-%meson_test
-
 %install
 %meson_install
 %find_lang %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 # Classic mode
@@ -64,14 +65,16 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/wayland-sessions/gnome-classic.desktop
 %_datadir/xsessions/gnome-classic-xorg.desktop
 %_datadir/gnome-shell/modes/classic.json
-%_datadir/gnome-shell/theme/classic-process-working.svg
-%_datadir/gnome-shell/theme/gnome-classic.css
-%_datadir/gnome-shell/theme/gnome-classic-high-contrast.css
 %_datadir/glib-2.0/schemas/00_org.gnome.shell.extensions.classic.gschema.override
 %endif
 
 ## Extensions
 %dir %_datadir/gnome-shell/extensions
+# light-style
+%dir %_datadir/gnome-shell/extensions/light-style@gnome-shell-extensions.gcampax.github.com
+%_datadir/gnome-shell/extensions/light-style@gnome-shell-extensions.gcampax.github.com/extension.js
+%_datadir/gnome-shell/extensions/light-style@gnome-shell-extensions.gcampax.github.com/metadata.json
+
 # windowsNavigator
 %dir %_datadir/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.%domain/extension.js
@@ -133,11 +136,11 @@ See %_docdir/%name-%version/README for more information.
 
 # window-list
 %dir %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain
-%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/classic.css
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/prefs.js
-%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet.css
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet-dark.css
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet-light.css
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/windowPicker.js
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/workspaceIndicator.js
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.window-list.gschema.xml
@@ -152,6 +155,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

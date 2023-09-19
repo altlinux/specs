@@ -3,19 +3,19 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define xdg_name org.gnome.Boxes
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A GNOME 3 application to access virtual systems
 Group: Emulators
 License: LGPL-2.1
-Url: https://wiki.gnome.org/Apps/Boxes
+Url: https://apps.gnome.org/Boxes
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -125,6 +125,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Tue Sep 05 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
 - 44.3
 
