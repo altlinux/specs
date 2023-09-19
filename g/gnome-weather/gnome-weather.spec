@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Weather
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -12,7 +12,7 @@ Release: alt1%beta
 Summary: Access current weather conditions and forecasts
 Group: Graphical desktop/GNOME
 License: GPL-2.0
-Url: https://wiki.gnome.org/Apps/Weather
+Url: https://apps.gnome.org/Weather
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
@@ -29,7 +29,7 @@ Provides:  %name-data = %version-%release
 %define gi_ver 1.36.0
 %define gjs_ver 1.71.0
 %define gweather4_ver 3.90
-%define adwaita_ver 1.2
+%define adwaita_ver 1.4
 
 Requires: libgjs >= %gjs_ver
 Requires: libgweather4.0-gir >= %gweather4_ver
@@ -84,6 +84,9 @@ access updated forecasts provided by various internet services.
 %doc NEWS
 
 %changelog
+* Tue Sep 19 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

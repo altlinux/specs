@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define xdg_name org.gnome.Console
 %define binary_name kgx
@@ -10,8 +10,8 @@
 %def_without nautilus
 
 Name: gnome-console
-Version: %ver_major.4
-Release: alt2%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GNOME Console
 License: GPL-3.0
@@ -25,9 +25,9 @@ Vcs: https://gitlab.gnome.org/GNOME/console.git
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.72
-%define gtk4_ver 4.6
-%define adwaita_ver 1.3
+%define glib_ver 2.76
+%define gtk4_ver 4.12.1
+%define adwaita_ver 1.4
 %define vte_ver 0.69.91
 %define nautilus_ver 43
 
@@ -63,6 +63,7 @@ Nautilus file manager.
 
 %prep
 %setup -n %name-%version%beta
+sed -i 's|4\.12\.2|4.12.1|' meson.build
 
 %build
 %meson
@@ -95,6 +96,9 @@ EOF
 %endif
 
 %changelog
+* Tue Sep 19 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sun Aug 13 2023 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt2
 - added alternatives for xvt and x-terminal-emulator
 

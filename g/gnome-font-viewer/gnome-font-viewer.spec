@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define xdg_name org.gnome.font-viewer
 
@@ -12,7 +12,7 @@ Release: alt1%beta
 Summary: The GNOME Font Viewer
 Group: Graphical desktop/GNOME
 License: GPL-2.0-or-later
-Url: http://www.gnome.org
+Url: https://apps.gnome.org/FontViewer
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
@@ -21,8 +21,8 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.56.0
-%define gtk4_ver 4.5
-%define adwaita_ver 1.2
+%define gtk4_ver 4.10
+%define adwaita_ver 1.4
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson /usr/bin/appstream-util
@@ -57,6 +57,9 @@ GNOME Font Viewer is a simple application to preview fonts.
 %doc NEWS
 
 %changelog
+* Tue Sep 19 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 
