@@ -3,7 +3,7 @@
 
 Name: simplescreenrecorder
 Version: 0.4.4
-Release: alt3
+Release: alt4
 
 Summary: Simple Screen Recording with OpenGL capture
 
@@ -12,7 +12,8 @@ Group: Video
 Url: https://www.maartenbaert.be/simplescreenrecorder/
 
 Source: https://github.com/MaartenBaert/ssr/archive/%version/ssr-%version.tar.gz
-Patch: simplescreenrecorder-0.4.4-alt-hide-window-on-the-screen-recording.patch
+Patch0: simplescreenrecorder-0.4.4-alt-hide-window-on-the-screen-recording.patch
+Patch1: simplescreenrecorder-0.4.4-upstream-fix-for-compatibility-with-ffmpeg6.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
@@ -43,7 +44,8 @@ Obsoletes: simplescreenrecording
 
 %prep
 %setup -n ssr-%version
-%patch -p2
+%patch0 -p2
+%patch1 -p1
 f="data/simplescreenrecorder.desktop"
 for s in "GenericName=Simple screen recorder" \
 	"GenericName[ru]=Запись видео с экрана" \
@@ -91,6 +93,9 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Tue Sep 19 2023 Leontiy Volodin <lvol@altlinux.org> 0.4.4-alt4
+- Fixed build with ffmpeg 6.0.
+
 * Tue Aug 02 2022 Leontiy Volodin <lvol@altlinux.org> 0.4.4-alt3
 - Hide the window when the screen recording is started (ALT #43422).
 
