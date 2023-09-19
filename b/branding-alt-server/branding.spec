@@ -17,8 +17,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.1
-Release: alt7
+Version: 10.2
+Release: alt1
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -340,6 +340,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Sep 19 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.2-alt1
+- update indexhtml URLs
+
 * Tue Aug 29 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt7
 - copy licenses from distro-licenses
 
