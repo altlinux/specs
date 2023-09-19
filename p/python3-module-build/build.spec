@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name build
-%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.0
+Version: 1.0.3
 Release: alt1
 Summary: Simple, correct PEP 517 build frontend
 License: MIT
@@ -14,35 +13,13 @@ Url: https://pypi.org/project/build
 VCS: https://github.com/pypa/build.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-%if %tomli
-# rebuild against Python 3.11 is required to get rid of old dependency
-%py3_requires tomli
-%endif
-%py3_requires packaging
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(flit-core)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires:
-BuildRequires: python3(packaging)
-BuildRequires: python3(pyproject_hooks)
-%if %tomli
-BuildRequires: python3(tomli)
-%endif
-
-# synced to .[test]
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_rerunfailures)
-BuildRequires: python3(pytest_mock)
-BuildRequires: python3(filelock)
-BuildRequires: python3(toml)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools)
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -63,6 +40,8 @@ Requires: python3-module-%pypi_name
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -71,7 +50,7 @@ Requires: python3-module-%pypi_name
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -m 'not network'
 
 %files
 %doc README.md
@@ -82,6 +61,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Thu Sep 14 2023 Stanislav Levin <slev@altlinux.org> 1.0.3-alt1
+- 0.10.0 -> 1.0.3.
+
 * Tue Jan 24 2023 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
 - 0.9.0 -> 0.10.0.
 
