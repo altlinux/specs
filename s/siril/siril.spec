@@ -1,6 +1,6 @@
 Name:           siril
 Version:        1.2.0
-Release:        alt1
+Release:        alt2
 Summary:        Astronomical image processing software
 Group: 		Graphics
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -59,13 +59,14 @@ SER files)
 %setup
 #patch1 -p1
 %ifarch %e2k
-sed -i -E "/^[[:space:]]*#pragma omp.*\\\\$/N;\
-/^[[:space:]]*#pragma omp .*(num_threads| if)\(/{s/#/for(long &/;\
+sed -i -E ":a;/\\\\$/{N;ba};\
+/^[[:space:]]*#pragma omp .*[[:space:]](num_threads|if|schedule)\(/{s/#/for(long &/;\
 s/(#.*num_threads\()([^()]*)\)/_xxxn=\\2,\\1_xxxn)/;\
 s/(#.*if *\()([^()]*(\([^()]*(\([^()]*\)[^()]*)*\)[^()]*)*)\)/_xxxi=\\2,\\1_xxxi)/;\
 s/(#.*schedule\([^()]*, *)([^()]*)\)/_xxxs=\\2,\\1_xxxs)/;\
 s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" \
- src/{registration,filters,stacking,rt,algos,gui,compositing,pixelMath,core,io}/*.c
+	src/{registration,filters,stacking,rt,algos,gui,compositing,pixelMath,core,io}/*.c \
+	src/filters/{deconvolution/*.{c,hpp},nlbayes/*.cpp}
 %endif
 
 %build
@@ -104,6 +105,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.free_
 
 
 %changelog
+* Tue Sep 19 2023 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt2
+- fix build on Elbrus (thanks to Ilya Kurdyukov)
+
 * Mon Sep 18 2023 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 
