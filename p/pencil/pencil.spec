@@ -3,7 +3,7 @@
 
 Name:     pencil
 Version:  2.0.5
-Release:  alt3
+Release:  alt4
 
 Summary: GUI prototyping tool
 
@@ -14,6 +14,7 @@ URL:      http://pencil.evolus.vn
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 
 ExcludeArch: armh
+ExcludeArch: %{ix86} ppc64le
 
 Source0: %name-%version.tar
 
@@ -63,6 +64,9 @@ cp -a ./%_datadir/%name %buildroot%_datadir/
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Sep 18 2023 Pavel Vasenkov <pav@altlinux.org> 2.0.5-alt4
+- ExcludeArch: %{ix86} ppc64le
+
 * Sun Jan 03 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.5-alt3
 - ExcludeArch: armh
 

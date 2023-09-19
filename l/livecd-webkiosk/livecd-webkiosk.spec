@@ -1,6 +1,6 @@
 Name: livecd-webkiosk
 Version: 0.6.3
-Release: alt1
+Release: alt2
 
 Summary: start the browser for a suitable webkiosk environment
 License: ALT-Public-Domain
@@ -11,6 +11,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: ratpoison xinit libshell
 ExcludeArch: armh
+ExcludeArch: %{ix86} ppc64le
 
 %define skeldir %_sysconfdir/skel
 %define ifacedir %_sysconfdir/net/ifaces/eth0
@@ -145,6 +146,9 @@ chmod +x %wrapper
 %endif
 
 %changelog
+* Tue Sep 19 2023 Pavel Vasenkov <pav@altlinux.org> 0.6.3-alt2
+- ExcludeArch: %{ix86} ppc64le
+
 * Mon May 30 2022 Michael Shigorin <mike@altlinux.org> 0.6.3-alt1
 - disable firefox subpackage on ppc64le
 - minor spec cleanup

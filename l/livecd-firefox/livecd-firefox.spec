@@ -1,6 +1,6 @@
 Name: livecd-firefox
 Version: 0.1
-Release: alt7
+Release: alt8
 
 Summary: configure firefox for a livecd environment
 License: Public domain
@@ -10,6 +10,7 @@ Url: http://altlinux.org/m-p
 Packager: Michael Shigorin <mike@altlinux.org>
 
 ExcludeArch: armh
+ExcludeArch: %{ix86} ppc64le
 
 # it's *not* noarch, btw
 %define prefix %_libdir/firefox/browser/defaults
@@ -39,6 +40,9 @@ _EOF_
 %files
 
 %changelog
+* Mon Sep 18 2023 Pavel Vasenkov <pav@altlinux.org> 0.1-alt8
+- ExcludeArch: %{ix86} ppc64le
+
 * Sun Jan 03 2021 Andrey Cherepanov <cas@altlinux.org> 0.1-alt7
 - ExcludeArch: armh.
 

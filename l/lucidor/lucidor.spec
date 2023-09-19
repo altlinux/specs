@@ -3,7 +3,7 @@
 
 Name:     lucidor
 Version:  0.9.10
-Release:  alt3
+Release:  alt4
 
 Summary: E-book reader application
 
@@ -13,6 +13,7 @@ URL:      http://lucidor.org/lucidor/
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 
 ExcludeArch: armh
+ExcludeArch: %{ix86} ppc64le
 
 Source0: %name-%version.tar
 
@@ -79,6 +80,9 @@ mkdir -p %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Sep 18 2023 Pavel Vasenkov <pav@altlinux.org> 0.9.10-alt4
+- ExcludeArch: %{ix86} ppc64le
+
 * Sun Jan 03 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt3
 - ExcludeArch: armh
 
