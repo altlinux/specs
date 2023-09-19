@@ -1,5 +1,5 @@
 Name: vulkan
-Version: 1.3.250
+Version: 1.3.261.1
 Release: alt1
 Summary: Khronos group Vulkan API SDK
 
@@ -22,9 +22,9 @@ BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 # strict requires due internal dependency
-BuildRequires: glslang-devel = 12.2.0
-BuildRequires: libspirv-tools-devel >= 2023.3
-BuildRequires: spirv-headers >= 1.5.5-alt8
+BuildRequires: glslang-devel = 13.0.0
+BuildRequires: libspirv-tools-devel >= 2023.4
+BuildRequires: spirv-headers >= 1.5.5-alt9
 # -layers need it
 BuildRequires: librobin-hood-hashing-devel
 # - tolls need it
@@ -199,6 +199,14 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %exclude %_datadir/vulkan/registry/genvk.py
 
 %changelog
+* Sun Sep 17 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.261.1-alt1
+- Bump BR.
+- Updated to sdk-1.3.261.1:
+  + vulkan-tools: Updated to a7da7027c.
+  + vulkan-loader: Updated to afdd025ea.
+  + vulkan-layers: Updated to 628cd310b.
+  + vulkan-headers: Updated to 85c2334e9.
+
 * Thu May 25 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.250-alt1
 - Bump BR.
 - Updated to sdk-1.3.250:

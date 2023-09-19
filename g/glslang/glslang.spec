@@ -1,10 +1,10 @@
-%define soname 12
+%define soname 13
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type
 %define optflags_lto %nil
 
 Name: glslang
-Version: 12.2.0
+Version: 13.0.0
 Release: alt1
 Epoch: 1
 
@@ -16,11 +16,12 @@ Url: https://www.khronos.org/opengles/sdk/tools/Reference-Compiler/
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
 Source: https://github.com/KhronosGroup/%name/archive/%version/%name-%version.tar
-Patch0: %{name}-alt-shared-opt.patch
+
+Patch0: glslang-alt-no-external-inc.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
-BuildRequires: python3-devel libspirv-tools-devel >= 2023.3
+BuildRequires: python3-devel libspirv-tools-devel >= 2023.4
 
 %description
 glslang is the official reference compiler front end for the OpenGL
@@ -58,6 +59,8 @@ Requires: %name = %EVR
 %_cmake \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DCMAKE_INSTALL_DATADIR=%_libdir/cmake \
+  -DALLOW_EXTERNAL_SPIRV_TOOLS=ON \
+  -DBUILD_EXTERNAL=OFF \
   -DBUILD_SHARED_LIBS:BOOL=TRUE
 %cmake_build
 %cmake_install
@@ -76,11 +79,17 @@ popd
 %files devel
 %doc README.md
 %_libdir/lib*.so
+%_libdir/lib*.a
 %_libdir/cmake/*
 %_includedir/%name
 %_includedir/SPIRV
 
 %changelog
+* Fri Sep 15 2023 L.A. Kostis <lakostis@altlinux.ru> 1:13.0.0-alt1
+- 13.0.0.
+- disable BUILD_EXTERNAL.
+- glslang: don't include /External dir into cmake target.
+
 * Thu May 25 2023 L.A. Kostis <lakostis@altlinux.ru> 1:12.2.0-alt1
 - 12.2.0.
 
