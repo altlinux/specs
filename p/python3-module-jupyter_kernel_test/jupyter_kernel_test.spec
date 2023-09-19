@@ -3,14 +3,15 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: A tool for testing Jupyter kernels
 
 License: BSD-3-Clause
 Group:   Development/Python3
-URL:     https://github.com/jupyter/jupyter_kernel_test
+URL:     https://pypi.org/project/jupyter-kernel-test
+VCS:     https://github.com/jupyter/jupyter_kernel_test
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -20,6 +21,7 @@ BuildRequires: python3-module-flit
 BuildRequires: python3-module-hatchling
 
 %if_with check
+BuildRequires: /proc
 BuildRequires: python3-module-jupyter_client
 BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-nest-asyncio
@@ -47,11 +49,14 @@ successful code execution and conformance with the Jupyter Messaging Protocol.
 %__python3 test_ipykernel.py
 
 %files
-%doc *.md *.rst
+%doc LICENSE *.md *.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Sep 19 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
+- New version 0.6.0.
+
 * Wed Feb 08 2023 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt1
 - Automatically updated to 0.5.0.
 
