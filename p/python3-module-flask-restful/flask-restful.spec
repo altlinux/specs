@@ -1,29 +1,35 @@
 %define oname Flask-RESTful
-%def_disable check
+
+# In 0.3.10 upstream did not moved from nose
+# https://github.com/flask-restful/flask-restful/issues/926
+# https://github.com/flask-restful/flask-restful/issues/930
+%def_without check
 
 Name: python3-module-flask-restful
-Version: 0.3.9
+Version: 0.3.10
 Release: alt1
 
 Summary: Simple framework for creating REST APIs
 
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
+URL: https://pypi.org/project/Flask-RESTful
+VCS: https://github.com/flask-restful/flask-restful
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-aniso8601 >= 0.82
-BuildRequires: python3-module-flask >= 0.8
-BuildRequires: python3-module-six >= 1.3.0
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-aniso8601
+BuildRequires: python3-module-flask
 BuildRequires: python3-module-pytz
-BuildRequires: python3-module-pycrypto >= 2.6
+%endif
 
 %description
 Flask-RESTful provides the building blocks for creating a great REST API.
@@ -32,17 +38,23 @@ Flask-RESTful provides the building blocks for creating a great REST API.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
+
+%check
+%pyproject_run_pytest
 
 %files
-%doc AUTHORS.md PKG-INFO LICENSE
-%python3_sitelibdir/*
+%doc LICENSE *.md
+%python3_sitelibdir/flask_restful
+%python3_sitelibdir/Flask_RESTful-%version.dist-info
 
 %changelog
+* Tue Sep 19 2023 Grigory Ustinov <grenka@altlinux.org> 0.3.10-alt1
+- Build new version.
+
 * Thu Mar 09 2023 Grigory Ustinov <grenka@altlinux.org> 0.3.9-alt1
 - Build new version.
 
