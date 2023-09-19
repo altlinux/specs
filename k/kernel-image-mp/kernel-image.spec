@@ -1,17 +1,15 @@
-%define kernel_base_version	6.4
-%define kernel_sublevel        .16
-%define kernel_extra_version	%nil
+%define kernel_base_version	6.5
+%define kernel_sublevel        .4
 
 Name: kernel-image-mp
-Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
+Version: %kernel_base_version%kernel_sublevel
 Release: alt1
 
-%define kernel_extra_version_numeric 1.0.0
 %define krelease	%release
 %define flavour		%( s='%name'; printf %%s "${s#kernel-image-}" )
 
 ## Don't edit below this line ##################################
-%define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
+%define kversion	%kernel_base_version%kernel_sublevel
 %define modules_dir	/lib/modules/%kversion-%flavour-%krelease
 
 %define kheaders_dir	%_prefix/include/linux-%kversion-%flavour
@@ -34,7 +32,7 @@ ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: bc flex kmod lzma-utils
 BuildRequires: libdb4-devel
-BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
+BuildRequires: kernel-source-%kernel_base_version
 BuildRequires: libelf-devel libssl-devel zlib-devel
 BuildRequires: openssl python3 rsync
 
@@ -102,7 +100,7 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1
 
-subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
+subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = -%flavour-%krelease/g' Makefile
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
@@ -258,6 +256,12 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Tue Sep 19 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.5.4-alt1
+- 6.5.4
+
+* Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.5.0-alt1
+- 6.5
+
 * Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.4.16-alt1
 - 6.4.16
 
