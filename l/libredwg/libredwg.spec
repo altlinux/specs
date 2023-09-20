@@ -5,7 +5,7 @@
 
 Name:     libredwg
 Version:  0.12.5.5953
-Release:  alt1
+Release:  alt2
 
 Summary:  GNU LibreDWG is a free C library to handle DWG files
 License:  GPL-3.0
@@ -17,6 +17,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: jsmn.h
+Patch0: 0001-Add-missing-#define__GNU_SOURCE.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: doxygen
@@ -50,6 +51,7 @@ Group: Development/C
 
 %prep
 %setup
+%patch0 -p1
 # Generate version
 echo %version >.tarball-version
 echo %version >.version
@@ -84,6 +86,9 @@ rm -rf %buildroot%_datadir/%name
 %_man5dir/*.5*
 
 %changelog
+* Wed Sep 20 2023 Artyom Bystrov <arbars@altlinux.org> 0.12.5.5953-alt2
+- Fix build (missing #define _GNU_SOURCE)
+
 * Fri Jul 21 2023 Andrey Cherepanov <cas@altlinux.org> 0.12.5.5953-alt1
 - New version.
 
