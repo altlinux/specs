@@ -11,7 +11,7 @@
 
 Name: kde5-%rname
 Version: 23.04.3
-Release: alt3
+Release: alt4
 %K5init
 
 Group: File tools
@@ -26,6 +26,7 @@ Source: %rname-%version.tar
 Patch2: alt-def-general.patch
 Patch3: alt-def-toolbar.patch
 Patch4: alt-fix-unmounting-during-preview-generation.patch
+Patch5: upstream-8d7e600f.patch
 
 # Automatically added by buildreq on Fri Apr 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils
@@ -82,6 +83,7 @@ KF5 library
 %patch2 -p1
 %patch3 -p1
 #%patch4 -p2
+%patch5 -R -p1
 
 %build
 %K5build \
@@ -139,6 +141,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Wed Sep 20 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt4
+- revert 8d7e600f to don't portalize drop urls (closes: 47565)
+
 * Thu Sep 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt3
 - don't move Copy action to first place
 
