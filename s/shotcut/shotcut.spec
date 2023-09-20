@@ -5,7 +5,7 @@
 
 Name: shotcut
 Version: 23.07.08
-Release: alt1
+Release: alt1.1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платформенный видеоредактор
 License: GPL-3.0+
@@ -36,7 +36,7 @@ BuildRequires: pkgconfig(Qt6Sql)
 BuildRequires: pkgconfig(Qt6UiTools)
 BuildRequires: qt6-linguist
 BuildRequires: mlt7xx-devel
-BuildRequires: pkgconfig(mlt-framework)
+BuildRequires: pkgconfig(mlt-framework-7)
 BuildRequires: libx264-devel
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: ImageMagick-tools
@@ -141,6 +141,9 @@ done
 %_man1dir/*
 
 %changelog
+* Wed Sep 20 2023 Ivan A. Melnikov <iv@altlinux.org> 23.07.08-alt1.1
+- NMU: Avoid build dependency on mlt 6.
+
 * Sun Jul 09 2023 Andrey Cherepanov <cas@altlinux.org> 23.07.08-alt1
 - New version.
 
