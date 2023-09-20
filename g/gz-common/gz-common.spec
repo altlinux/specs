@@ -2,7 +2,7 @@
 
 Name:    gz-common
 Version: 5.4.0
-Release: alt1
+Release: alt2
 
 Summary: Gazebo Common : AV, Graphics, Events, and much more
 License: Apache-2.0
@@ -32,7 +32,6 @@ BuildRequires: libavformat-devel
 BuildRequires: libavfilter-devel
 BuildRequires: libavcodec-devel
 BuildRequires: libavutil-devel
-BuildRequires: libavresample-devel
 BuildRequires: libgts-devel
 BuildRequires: libpostproc-devel
 BuildRequires: libpcre2-devel
@@ -95,6 +94,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Sep 20 2023 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt2
+- FTBFS: removed libavresample-devel.
+
 * Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt1
 - New version.
 
