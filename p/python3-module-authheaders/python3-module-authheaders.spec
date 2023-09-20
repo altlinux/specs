@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.15.2
+Version: 0.15.3
 Release: alt1
 
 Summary: library for the generation of email authentication headers
@@ -57,5 +57,8 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 20 2023 Anton Vyatkin <toni@altlinux.org> 0.15.3-alt1
+- New version 0.15.3.
+
 * Thu Sep 07 2023 Anton Vyatkin <toni@altlinux.org> 0.15.2-alt1
 - Initial build for Sisyphus
