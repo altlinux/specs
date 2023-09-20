@@ -15,7 +15,7 @@
 Name: palemoon-ru
 
 Version: 32.4.0
-Release: alt1
+Release: alt2
 
 ExcludeArch: %ix86 %arm ppc64le
 
@@ -129,8 +129,8 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
-* Sun Sep 17 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.4.0-alt1
-- Version 32.4.0
+* Wed Sep 20 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.4.0-alt2
+-  Version 32.4.0
 
 * Fri Sep 15 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1.1
 - Add ExcludeArch ppc64le arch
