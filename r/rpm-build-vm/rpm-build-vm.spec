@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.55
+Version: 1.56
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -239,6 +239,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Fri Sep 15 2023 Vitaly Chikunov <vt@altlinux.org> 1.56-alt1
+- Add --stub-exit= option for vm-run stub (ALT#47599).
+
 * Sat Jul 15 2023 Vitaly Chikunov <vt@altlinux.org> 1.55-alt1
 - Add vm-initrd tool (minimalistic initramfs creator).
 

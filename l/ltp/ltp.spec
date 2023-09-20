@@ -4,7 +4,7 @@
 
 Name: ltp
 Version: 20220930
-Release: alt3
+Release: alt4
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -168,7 +168,7 @@ unset LD_PRELOAD
 vm-run runltp -q -f io
 # False positive test.
 echo 'expected_to_fail' false > /usr/lib/ltp/runtest/failpass
-! vm-run runltp -q -f failpass
+! vm-run --stub-exit=1 runltp -q -f failpass
 
 %post testsuite
 if [ -d /.host -a -d /.in -a -d /.out ]; then
@@ -199,6 +199,10 @@ fi
 %files testsuite-checkinstall
 
 %changelog
+* Fri Sep 15 2023 Vitaly Chikunov <vt@altlinux.org> 20220930-alt4
+- spec: Fix false-positive vm-run call on unsupported architectures
+  (ALT#47599).
+
 * Tue May 02 2023 Vitaly Chikunov <vt@altlinux.org> 20220930-alt3
 - Add `Requires: libnuma` which absence triggered mem tests failures on i586.
 
