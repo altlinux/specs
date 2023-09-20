@@ -5,18 +5,18 @@
 %define firefox_prefix  %_libdir/firefox
 
 %define gst_version   1.0
-%define nspr_version  4.33
-%define nss_version   3.72
-%define rust_version  1.60.0
-%define cargo_version 1.60.0
-%define llvm_version  12.0
+%define nspr_version  4.35
+%define nss_version   3.86
+%define rust_version  1.65.0
+%define cargo_version 1.65.0
+%define llvm_version  15.0
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR version)
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 102.12.0
-Release: alt2
+Version: 115.2.1
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -24,6 +24,7 @@ URL: http://www.mozilla.org/projects/firefox/
 Packager: Andrey Cherepanov <cas@altlinux.ru>
 
 Source0: firefox-source.tar
+
 Source1: rpm-build.tar
 Source2: searchplugins.tar
 Source3: cbindgen-vendor.tar
@@ -41,23 +42,22 @@ Source13: policies.json
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
 Patch002: 0002-FEDORA-build-arm.patch
-Patch003: 0003-ALT-Fix-aarch64-build.patch
 Patch004: 0004-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch005: 0005-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
 Patch006: 0006-use-floats-for-audio-on-arm-too.patch
 Patch007: 0007-bmo-847568-Support-system-harfbuzz.patch
 Patch008: 0008-bmo-847568-Support-system-graphite2.patch
-Patch010: 0009-bmo-1559213-Support-system-av1.patch
-Patch011: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch012: 0011-ALT-fix-double_t-redefinition.patch
-Patch013: 0012-build-Disable-Werror.patch
-Patch014: 0013-ALT-fix-double-null.patch
-Patch015: 0014-MOZILLA-1838063-fix-unstable-name-collisions.patch
-Patch016: 0015-ALT-fix-build-failure-with-GCC-13.patch
+Patch009: 0009-bmo-1559213-Support-system-av1.patch
+Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch011: 0011-ALT-fix-double_t-redefinition.patch
+Patch012: 0012-build-Disable-Werror.patch
 ### End Patches
 
+%ifndef build_parallel_jobs
+%global build_parallel_jobs %__nprocs
+%endif
+
 # Hang up on build browser/components/about
-#ExcludeArch: ppc64le
+ExcludeArch: %{ix86} ppc64le
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -71,6 +71,9 @@ BuildRequires: lld%llvm_version-devel
 BuildRequires: gcc
 BuildRequires: gcc-c++
 %endif
+BuildRequires: glibc-kernheaders-generic
+BuildRequires: libshell
+BuildRequires: libwireless-devel
 BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
@@ -103,7 +106,7 @@ BuildRequires: libpulseaudio-devel
 #BuildRequires: libicu-devel
 BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: node
-BuildRequires: nasm
+BuildRequires: nasm yasm
 BuildRequires: libxkbcommon-devel
 BuildRequires: libdrm-devel
 # 91.0
@@ -156,16 +159,13 @@ BuildRequires: pkgconfig(zlib)
 # Python requires
 BuildRequires: /dev/shm
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-modules-compiler
-BuildRequires: python-modules-logging
-BuildRequires: python-modules-sqlite3
-BuildRequires: python-modules-json
-
 BuildRequires: python3-base
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pip
-BuildRequires: python3-modules-sqlite3
+BuildRequires: python3(click)
+BuildRequires: python3(curses)
+BuildRequires: python3(hamcrest)
+BuildRequires: python3(pip)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(sqlite3)
 
 # Rust requires
 BuildRequires: /proc
@@ -190,7 +190,7 @@ Requires: libnss >= %nss_version
 Conflicts:  firefox
 
 # Localization languages
-%define langlist kk ru uk
+%define langlist kk ru uk uz
 %{expand:%(for lang in %{langlist}; do echo -e "Provides: firefox-esr-$lang = %%EVR\nObsoletes: firefox-esr-$lang < %%EVR"; done)}
 
 %description
@@ -249,40 +249,44 @@ cp -f %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
-%ifnarch %{ix86} ppc64le
 ac_add_options --enable-linker=lld
 %ifnarch armh
 ac_add_options --enable-lto=thin
 %endif
-%endif
-%ifarch armh ppc64le
+%ifarch armh
 ac_add_options --disable-webrtc
 %endif
-%ifarch armh %{ix86} x86_64
+%ifarch armh x86_64
 ac_add_options --disable-elf-hack
 %endif
-%ifarch %{ix86}
-ac_add_options --disable-av1
-%endif
-%ifarch armh %{ix86}
+%ifarch armh
 ac_add_options --enable-strip
 ac_add_options --enable-install-strip
 ac_add_options --disable-rust-debug
 ac_add_options --disable-debug-symbols
+%else
+ac_add_options --disable-strip
+ac_add_options --disable-install-strip
 %endif
+mk_add_options MOZ_MAKE_FLAGS="-j%build_parallel_jobs --no-print-directory"
 EOF
-
-# Begin change checksum for rust checksum file
-sed -i 's|73114a5c28472e77082ad259113ffafb418ed602c1741f26da3e10278b0bf93e|c270870108d3f761165be8a6b91f3f30ac09fec64b8248281314f727622cf60e|' ./third_party/rust/mp4parse/.cargo-checksum.json
-sed -i 's|75fe5467109242b2cc7991f8228e2e2ad1de5be2f29272a4a7f08c4e21ab5fa4|b6140aa2565ff0b0d1d4b44db97c5cd9a9ecebcc8606791311c770c5dd6fde0a|' ./third_party/rust/mp4parse/.cargo-checksum.json
-# Finish change checksum for rust checksum file
 
 find third_party \
 	-type f \( -name '*.so' -o -name '*.o' -o -name '*.a' \) \
 	-delete
 
+# Error: relocation R_386_GOTOFF against undefined hidden symbol
+# `tabs_4d51_TabsBridgedEngine_reset' can not be used when making a shared
+# object
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1805809
+%ifarch armh
+find toolkit/components/uniffi-js -type f |
+        xargs sed -ri.poff 's,_4d51_,_1c79_,g'
+%endif
+
 rm -rf -- obj-x86_64-pc-linux-gnu
 rm -rf -- third_party/python/setuptools/setuptools*
+rm -rf -- third_party/python/click/click*
 
 %build
 %add_findprov_lib_path %firefox_prefix
@@ -362,9 +366,8 @@ export srcdir="$PWD"
 export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
 export PATH="$CBINDGEN_BINDIR:$PATH"
-export MACH_USE_SYSTEM_PYTHON=1
+export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 
-python3 ./mach python --exec-file /dev/null
 python3 ./mach build
 
 while read -r loc; do
@@ -509,6 +512,37 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Sep 08 2023 Pavel Vasenkov <pav@altlinux.org> 115.2.1-alt1
+- New ESR version.
+- Security fixes
+  + CVE-2023-3600 Use-after-free in workers
+  + CVE-2023-4045 Offscreen Canvas could have bypassed cross-origin restrictions
+  + CVE-2023-4046 Incorrect value used during WASM compilation
+  + CVE-2023-4047 Potential permissions request bypass via clickjacking
+  + CVE-2023-4048 Crash in DOMParser due to out-of-memory conditions
+  + CVE-2023-4049 Fix potential race conditions when releasing platform objects
+  + CVE-2023-4050 Stack buffer overflow in StorageManager
+  + CVE-2023-4052 File deletion and privilege escalation through Firefox uninstaller
+  + CVE-2023-4054 Lack of warning when opening appref-ms files
+  + CVE-2023-4055 Cookie jar overflow caused unexpected cookie jar state
+  + CVE-2023-4056 Memory safety bugs fixed in Firefox 116, Firefox ESR 115.1, Firefox ESR 102.14, Thunderbird 115.1, and Thunderbird 102.14
+  + CVE-2023-4057 Memory safety bugs fixed in Firefox 116, Firefox ESR 115.1, and Thunderbird 115.1
+  + CVE-2023-4573 Memory corruption in IPC CanvasTranslator
+  + CVE-2023-4574 Memory corruption in IPC ColorPickerShownCallback
+  + CVE-2023-4575 Memory corruption in IPC FilePickerShownCallback
+  + CVE-2023-4576 Integer Overflow in RecordedSourceSurfaceCreation
+  + CVE-2023-4577 Memory corruption in JIT UpdateRegExpStatics
+  + CVE-2023-4051 Full screen notification obscured by file open dialog
+  + CVE-2023-4578 Error reporting methods in SpiderMonkey could have triggered an Out of Memory Exception
+  + CVE-2023-4053 Full screen notification obscured by external program
+  + CVE-2023-4580 Push notifications saved to disk unencrypted
+  + CVE-2023-4581 XLL file extensions were downloadable without warnings
+  + CVE-2023-4582 Buffer Overflow in WebGL glGetProgramiv
+  + CVE-2023-4583 Browsing Context potentially not cleared when closing Private Window
+  + CVE-2023-4584 Memory safety bugs fixed in Firefox 117, Firefox ESR 102.15, Firefox ESR 115.2, Thunderbird 102.15, and Thunderbird 115.2
+  + CVE-2023-4585 Memory safety bugs fixed in Firefox 117, Firefox ESR 115.2, and Thunderbird 115.2
+  + CVE-2023-4863 Heap buffer overflow in libwebp
+
 * Tue Jun 27 2023 Pavel Vasenkov <pav@altlinux.org> 102.12.0-alt2
 - Fixes: Unstable name collisions
          Build failure with GCC 13
