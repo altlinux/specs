@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2.7.3
-Release: alt1
+Release: alt1.1
 
 Summary: The backend -core services, APIs, and REST endpoints-to Jupyter web applications
 License: BSD-3-Clause
@@ -26,6 +26,7 @@ BuildRequires: python3-module-hatch-jupyter-builder
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-jupyter
 BuildRequires: python3-module-nbformat
+BuildRequires: python3-module-nbconvert
 BuildRequires: python3-module-jupyter-events
 BuildRequires: python3-module-prometheus_client
 BuildRequires: python3-module-jupyter_client
@@ -74,6 +75,10 @@ and not test_connection"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 20 2023 Ivan A. Melnikov <iv@altlinux.org> 2.7.3-alt1.1
+- NMU: explicit BR on python3-module-nbconvert
+  (fixes build on loongarch64).
+
 * Fri Sep 01 2023 Anton Vyatkin <toni@altlinux.org> 2.7.3-alt1
 - New version 2.7.3.
 
