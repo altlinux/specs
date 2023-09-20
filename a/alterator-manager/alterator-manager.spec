@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.7
-Release: alt3
+Release: alt4
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -52,6 +52,9 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %_includedir/alterator
 
 %changelog
+* Wed Sep 20 2023 Ivan Savin <svn17@altlinux.org> 0.1.7-alt4
+- Fix: fail to start when the backend files not found.
+
 * Wed Sep 06 2023 Ivan Savin <svn17@altlinux.org> 0.1.7-alt3
 - Undo changes from 0.1.7-alt2. This change causes "double free or
   corruption".
