@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.5.1
-Release:       alt5
+Release:       alt6
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -25,6 +25,7 @@ Source12:      foreman-jobs.sysconfig
 Patch6:        rails_6.patch
 Patch5:        asciidoctor-doc.patch
 Patch3:        invalid_premission.patch
+Patch2:        fast_gettext-2.3.0.patch
 Patch1:        gemfile.patch
 Patch:         alt.patch
 BuildRequires(pre): rpm-build-ruby
@@ -343,7 +344,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.5.1
-Release:       alt5
+Release:       alt6
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -509,6 +510,9 @@ railsctl cleanup %name
 
 
 %changelog
+* Tue Aug 01 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt6
+- ! fixed fast gettext calls for 2.3.0 version
+
 * Wed Jul 26 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt5
 - + updated russion translation po
 - + patch allowing set default value as a parameter for setting model instance
