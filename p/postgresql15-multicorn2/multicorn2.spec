@@ -3,7 +3,7 @@
 
 Name: postgresql%pg_ver-multicorn2
 Version: 2.4
-Release: alt1
+Release: alt2
 
 Summary: Multicorn Python3 Wrapper for Postgresql %pg_ver Foreign Data Wrapper
 License: PostgreSQL
@@ -17,6 +17,7 @@ BuildRequires: gcc-c++
 BuildRequires: postgresql%pg_ver-server-devel
 BuildRequires: python3-dev
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 
 Requires: postgresql%pg_ver-server
 Provides: multicorn2 = %EVR
@@ -52,5 +53,8 @@ rm -rf python/multicorn/gitfdw.py
 %_datadir/pgsql/extension
 
 %changelog
+* Wed Sep 20 2023 Andrey Cherepanov <cas@altlinux.org> 2.4-alt2
+- Add python3-module-setuptools to build requirements.
+
 * Tue Sep 19 2023 Andrey Cherepanov <cas@altlinux.org> 2.4-alt1
 - Initial build for Sisyphus.
