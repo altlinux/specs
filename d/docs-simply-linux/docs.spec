@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Sep 20 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt3
+- update to Simply Linux 10.2
+- fix prepare boot-disk (closes #46961, #46957)
+
 * Thu Jul 13 2023 Artem Zolochevskiy <azol@altlinux.org> 10.2-alt2
 - fix typo in booting section: closes #46888
 - fix Audacity import menu entry name: closes 46865
