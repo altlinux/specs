@@ -28,8 +28,8 @@
 %endif
 
 Name:    hplip
-Version: 3.23.5
-Release: alt2.1
+Version: 3.23.8
+Release: alt1
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -271,7 +271,6 @@ Patch311: hp-systray-make-menu-appear-in-sni-qt-indicator-with-kde.patch
 Patch312: hpaio-option-duplex.diff
 Patch314: pcardext-python3-workaround-upstream.patch
 Patch315: hpscan-deskjet-3520-aio-allow-non-jpeg-scanning.patch
-Patch317: order-page-sizes-consistently.patch
 Patch318: install-check-plugin.diff
 Patch319: HP-LaserJet_4000-PostScript-PPD.patch
 Patch320: ui-patch-upstream-like.patch
@@ -562,7 +561,6 @@ sed -i.duplex-constraints \
 %patch312 -p1
 %patch314 -p2
 %patch315 -p1
-%patch317 -p1
 %patch318 -p1
 %patch319 -p1
 %patch320 -p1
@@ -1128,6 +1126,18 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Sep 20 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.23.8-alt1
+- New version.
+- Added support for the following new printers:
+  + HP Color LaserJet Pro MFP 4201, 4202, 4203, 4301, 4302, 4303
+  + HP DeskJet 2800 All-in-One Printer series
+  + HP DeskJet 2800e All-in-One Printer series
+  + HP DeskJet Ink Advantage 2800 All-in-One Printer series
+  + HP DeskJet 4200 All-in-One Printer series
+  + HP DeskJet 4200e All-in-One Printer series
+  + HP DeskJet Ink Advantage 4200 All-in-One Printer series
+  + HP DeskJet Ink Advantage Ultra 4900 All-in-One Printer series
+
 * Sat Aug 12 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1:3.23.5-alt2.1
 - NMU:
     + added shebang to python3-modules from %%_datadir/%%name and made them
