@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 10.0
-Release: alt3
+Release: alt4
 
 License: GPLv2+
 Group: System/Configuration/Other
@@ -37,7 +37,6 @@ Requires: alterator-notes
 Requires: %name-common = %EVR
 Requires: x-cursor-theme-jimmac
 Requires: installer-integ-stage2
-Requires: alterator-officer
 
 %description stage2
 Cliff Installer stage2.
@@ -86,6 +85,9 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Wed Sep 20 2023 Anton Midyukov <antohami@altlinux.org> 10.0-alt4
+- do not requires alterator-officer
+
 * Wed Sep 20 2023 Anton Midyukov <antohami@altlinux.org> 10.0-alt3
 - Drop officer installer step and initinstall.d/90-remove-unused-officer-steps
 
