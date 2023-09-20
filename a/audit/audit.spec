@@ -6,7 +6,7 @@
 
 Name: audit
 Version: 3.1.2
-Release: alt1
+Release: alt2
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
 Group: Monitoring
@@ -115,6 +115,9 @@ and libauparse can be used by python.
 	%{subst_with prelude}
 
 %make_build
+
+%check
+%make check
 
 %install
 %makeinstall_std
@@ -235,6 +238,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 20 2023 Michael Shigorin <mike@altlinux.org> 3.1.2-alt2
+- add %%check
+
 * Fri Aug 11 2023 Egor Ignatov <egori@altlinux.org> 3.1.2-alt1
 - new version 3.1.2
 - remove swig flexible array workaround (fixed by upstream)
