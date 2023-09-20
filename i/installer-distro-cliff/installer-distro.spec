@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 10.0
-Release: alt2
+Release: alt3
 
 License: GPLv2+
 Group: System/Configuration/Other
@@ -86,6 +86,9 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Wed Sep 20 2023 Anton Midyukov <antohami@altlinux.org> 10.0-alt3
+- Drop officer installer step and initinstall.d/90-remove-unused-officer-steps
+
 * Fri Apr 14 2023 Denis Medvedev <nbr@altlinux.org> 10.0-alt2
 - changed how  mem initialization on free is turned on in boot cmdlines
 
