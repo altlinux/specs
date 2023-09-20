@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libdeflate
-Version: 1.18
+Version: 1.19
 Release: alt1
 
 Summary: Heavily optimized library for DEFLATE/zlib/gzip compression and decompression
@@ -20,10 +20,10 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: ctest
 BuildRequires: zlib-devel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: banner
+BuildRequires: ctest
 %ifarch %valgrind_arches
 BuildRequires: /proc
 BuildRequires: valgrind
@@ -121,6 +121,9 @@ b2sum --check test-file.b2sum
 %_bindir/libdeflate-*
 
 %changelog
+* Mon Sep 18 2023 Vitaly Chikunov <vt@altlinux.org> 1.19-alt1
+- Update to v1.19 (2023-09-16).
+
 * Sat Mar 25 2023 Vitaly Chikunov <vt@altlinux.org> 1.18-alt1
 - Update to v1.18 (2023-03-23).
 
