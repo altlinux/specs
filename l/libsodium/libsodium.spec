@@ -1,18 +1,20 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
+%define sover 26
 Name: libsodium
 Summary: A modern, portable, easy to use crypto library
-Version: 1.0.18
-Release: alt2
+Version: 1.0.19
+Release: alt1
 License: ISC
 Group: System/Libraries
 Url: https://libsodium.org/
 # 'stable' branch is recommended.
+# About versioning https://github.com/jedisct1/libsodium/discussions/1136#discussioncomment-7012438
 Vcs: https://github.com/jedisct1/libsodium
 # Docs: https://doc.libsodium.org/
-# Docs vcs: https://github.com/jedisct1/libsodium-doc
 
 Source: %name-%version.tar
 
@@ -31,19 +33,35 @@ The design choices emphasize security and ease of use. But despite the
 emphasis on high security, primitives are faster across-the-board than
 most implementations.
 
-%package -n libsodium23
+%package -n libsodium%sover
 Summary: %summary
 Group: System/Libraries
+# Will be used for kinds like python3-module-libnacl
+Provides: libsodium = %EVR
 
-%description -n libsodium23
+%description -n libsodium%sover
 %summary.
 
 %package devel
 Summary: Development files for libsodium
 Group: Development/C
+Requires: libsodium%sover = %EVR
 
 %description devel
 %summary.
+
+%package checkinstall
+Summary: CI tests for %name
+Group: Development/Other
+BuildArch: noarch
+Requires(post): gcc
+Requires(post): libsodium-devel = %EVR
+
+%description checkinstall
+%summary.
+
+Check that libsodium-devel basically works before we start building other
+packages.
 
 %prep
 %setup
@@ -53,7 +71,10 @@ Group: Development/C
 # Adding -ffat-lto-objects is workaround to this problem:
 #   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=89147
 %global optflags_lto %optflags_lto -ffat-lto-objects
-
+%ifarch x86_64
+%add_optflags -fanalyzer
+%endif
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-static
 %make_build
@@ -64,17 +85,39 @@ Group: Development/C
 %check
 %make_build check
 
+%post checkinstall
+set -xeuo pipefail
+tmp=$(mktemp -d)
+cd $tmp && trap "rm -vrf $tmp" 0
+cat > test.c <<"EOF"
+#include <sodium.h>
+#include <stdio.h>
+int main(void) { return printf("%s\n", sodium_version_string()), sodium_init(); }
+EOF
+gcc -Wall -Werror -o test test.c $(pkg-config libsodium --libs)
+./test
+# Double check that internal version is correct one.
+./test | grep -Fx "%version"
+
 %files devel
-%doc AUTHORS LICENSE README.markdown THANKS
+%doc AUTHORS LICENSE README.markdown THANKS ChangeLog
 %_libdir/libsodium.so
 %_libdir/pkgconfig/libsodium.pc
 %_includedir/sodium.h
 %_includedir/sodium
 
-%files -n libsodium23
-%_libdir/libsodium.so.23*
+%files -n libsodium%sover
+%_libdir/libsodium.so.%{sover}*
+
+%files checkinstall
 
 %changelog
+* Fri Sep 15 2023 Vitaly Chikunov <vt@altlinux.org> 1.0.19-alt1
+- Update to 1.0.19 (2023-09-13).
+- Provide libsodium name for packages like python3-module-libnacl.
+- Enable LFS on 32-bit systems.
+- Add checkinstall package with a basic build test.
+
 * Thu Aug 26 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.18-alt2
 - Do not build libsodium-devel-static package.
 - spec: Fix build with LTO.

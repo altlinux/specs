@@ -1,6 +1,6 @@
 Name: qtox
 Version: 1.16.3
-Release: alt3
+Release: alt4
 
 Summary: Powerful Tox client that follows the Tox design guidelines
 
@@ -43,11 +43,12 @@ Powerful Tox Qt5 client that follows the Tox design guidelines.
 %__subst "s|.*-Werror.*||g" CMakeLists.txt
 
 %build
+%add_optflags -fpermissive
 %if_with ffmpeg_static
 export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %endif
 %cmake_insource
-%make_build
+%make_build VERBOSE=1
 
 %install
 %makeinstall_std
@@ -59,6 +60,11 @@ export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Sep 16 2023 Vitaly Chikunov <vt@altlinux.org> 1.16.3-alt4
+- NMU: Fix FTBFS adding -fpermissive to CMAKE_CXX_FLAGS for this old codebase
+  to compile on modern toolchain. This is required for libsodium update.
+- NOTE: This project is unmaintained upstream since 2023-02-12.
+
 * Wed Jul 10 2019 Vitaly Lipatov <lav@altlinux.ru> 1.16.3-alt3
 - drop ubt macro
 
