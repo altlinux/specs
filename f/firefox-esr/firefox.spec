@@ -16,7 +16,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (верс�
 
 Name: firefox-esr
 Version: 115.2.1
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -57,7 +57,7 @@ Patch012: 0012-build-Disable-Werror.patch
 %endif
 
 # Hang up on build browser/components/about
-ExcludeArch: %{ix86} ppc64le
+ExcludeArch: ppc64le
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -512,6 +512,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Sep 20 2023 Pavel Vasenkov <pav@altlinux.org> 115.2.1-alt2
+- Restored build for 32bit archs
+
 * Fri Sep 08 2023 Pavel Vasenkov <pav@altlinux.org> 115.2.1-alt1
 - New ESR version.
 - Security fixes
