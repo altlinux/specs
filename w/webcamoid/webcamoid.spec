@@ -1,9 +1,9 @@
 %define subname		avkys
-%define major		9.0
+%define major		9.1
 %define libname lib%name
 
 Name: webcamoid
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: A webcam funny video tool
@@ -43,7 +43,7 @@ BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libswresample)
 BuildRequires: pkgconfig(libavfilter)
 BuildRequires: pkgconfig(libpostproc)
-BuildRequires: pkgconfig(libavresample)
+BuildRequires: pkgconfig(libswresample)
 BuildRequires: pipewire-libs-devel libjack-devel liborc-devel pipewire-libs-devel libalsa-devel
 
 Requires: %libname = %EVR
@@ -80,7 +80,7 @@ applications which will use avkys library as webcamoid.
 
 %prep
 %setup
-%patch0 -p1
+#patch0 -p1
 
 %build
 %cmake
@@ -98,6 +98,7 @@ applications which will use avkys library as webcamoid.
 %_libdir/avkys
 # libdir/qt5/qml/AkQml
 %_datadir/licenses/webcamoid/COPYING
+%_datadir/metainfo/io.github.webcamoid.Webcamoid.metainfo.xml
 
 %files -n %libname
 %_libdir/lib%subname.so.*
@@ -107,6 +108,9 @@ applications which will use avkys library as webcamoid.
 %_libdir/*.so
 
 %changelog
+* Tue Sep 19 2023 Artyom Bystrov <arbars@altlinux.org> 9.1.1-alt1
+- New version
+
 * Thu Feb 24 2022 Alexei Mezin <alexvm@altlinux.org> 9.0.0-alt1
 - New version
 
