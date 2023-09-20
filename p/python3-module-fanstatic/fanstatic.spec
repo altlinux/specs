@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.4
-Release: alt1
+Release: alt2
 Summary: Flexible static resources for web applications
 License: BSD-3-Clause
 Group: Development/Python3
@@ -19,8 +19,8 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-%if_with check
 BuildRequires: python3-module-webob
+%if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-cssmin
 %endif
@@ -76,14 +76,14 @@ ln -s ../objects.inv docs/
 %install
 %pyproject_install
 
-%check
-%pyproject_run_pytest -v
-
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make SPHINXBUILD=sphinx-build-3 -C docs html
 %make SPHINXBUILD=sphinx-build-3 -C docs pickle
 
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/fanstatic/
+
+%check
+%pyproject_run_pytest -v
 
 %files
 %doc LICENSE.txt *.rst
@@ -104,6 +104,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/fanstatic/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Sep 20 2023 Anton Vyatkin <toni@altlinux.org> 1.4-alt2
+- Fix build without check.
+
 * Tue Sep 19 2023 Anton Vyatkin <toni@altlinux.org> 1.4-alt1
 - New version 1.4.
 
