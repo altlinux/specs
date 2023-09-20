@@ -1,6 +1,6 @@
 Name: tvheadend
 Version: 4.2.8
-Release: alt4
+Release: alt6
 
 Summary: Tvheadend TV streaming server
 License: GPLv3
@@ -13,7 +13,7 @@ Source: %name-%version-%release.tar
 
 BuildRequires: cmake gcc-c++ libdbus-devel
 BuildRequires: libssl-devel libsystemd-devel liburiparser-devel zlib-devel
-BuildRequires: libavfilter-devel libavresample-devel libswresample-devel
+BuildRequires: libavfilter-devel libswresample-devel
 BuildRequires: libswscale-devel libavformat-devel libavcodec-devel libavutil-devel
 BuildRequires: python2.7(encodings)
 
@@ -30,7 +30,7 @@ export TVHEADEND_FILE_CACHE=${PWD}/.gear
 CFLAGS="%optflags -fcommon -Wno-format-truncation" PYTHON=%__python \
 sh configure --bindir=%_sbindir --libdir=%_libdir \
 	     --mandir=%_mandir --datadir=%_datadir \
-	     --enable-libav --disable-ffmpeg_static
+	     --disable-libav --disable-ffmpeg_static
 make CFLAGS_NO_WERROR=yes
 
 %install
@@ -72,6 +72,12 @@ f=%_sysconfdir/tvheadend/superuser
 %dir %attr(0770,root,_hts) %_localstatedir/tvheadend
 
 %changelog
+* Wed Sep 20 2023 Artyom Bystrov <arbars@altlinux.org> 4.2.8-alt6
+- Switch to ffmpeg6
+
+* Tue Sep 19 2023 Artyom Bystrov <arbars@altlinux.org> 4.2.8-alt5
+- Fix FTBFS (--disable-libav)
+
 * Thu Jun 22 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.8-alt4
 - rebuilt with gcc13
 
