@@ -1,20 +1,22 @@
-%ifarch i586 armh
+%ifarch i586 armh ppc64le
 %def_without check
 %else
 %def_with check
 %endif
 
 Name: starship
-Version: 1.13.1
+Version: 1.16.0
 Release: alt1
 Summary: The minimal, blazing-fast, and infinitely customizable prompt for any shell
 License: ISC
 Group: Shells
 Url: https://github.com/starship/starship
 Source: %name-%version.tar
-# fixed build due to https://github.com/starship/starship/issues/4958
-Patch1: fix-starship-issue-4958.patch
+Source1: vendor.tar
+# build failed
+Patch1: alt-drop-notify-rust-dep.patch
 
+BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
 BuildRequires: cmake
 
@@ -26,7 +28,7 @@ BuildRequires: git
 %summary.
 
 %prep
-%setup
+%setup -a 1
 %patch1 -p1
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
@@ -38,10 +40,14 @@ directory = "vendor"
 EOF
 
 %build
-cargo build --offline --release
+%ifarch armh
+# LLVM ERROR: out of memory
+sed -i 's/lto = true/lto = false/' Cargo.toml
+%endif
+%rust_build
 
 %install
-cargo install --path . --root %buildroot/%_usr
+%rust_install
 
 %check
 %buildroot%_bindir/%name print-config > %name.toml
@@ -54,6 +60,9 @@ cargo test -- --skip expiration_date_set
 %_bindir/%name
 
 %changelog
+* Wed Sep 13 2023 Alexander Makeenkov <amakeenk@altlinux.org> 1.16.0-alt1
+- Updated to version 1.16.0.
+
 * Thu Apr 06 2023 Alexander Makeenkov <amakeenk@altlinux.org> 1.13.1-alt1
 - Updated to version 1.13.1
 
