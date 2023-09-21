@@ -1,17 +1,6 @@
-# -*- coding: utf-8; mode: rpm-spec -*-
-%def_enable athena
-%def_enable gtk3
-%def_enable nox
-%def_disable natcomp
-
-%ifarch %e2k
-# on default -O3 crashes with SIGILL in lucid_event_type_list_p
-%global _optlevel 2
-%endif
-
 Name: emacs
-Version: 28.2
-Release: alt2.2
+Version: 29.1
+Release: alt1
 
 Summary: GNU Emacs text editor
 License: GPLv3+
@@ -19,7 +8,12 @@ Group: Editors
 Url: http://www.gnu.org/software/emacs/
 
 Source: %name-%version-%release.tar
-Patch2000: %name-e2k.patch
+
+%ifnarch %e2k
+%def_enable natcomp
+%else
+%def_disable natcomp
+%endif
 
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(cairo)
@@ -43,7 +37,9 @@ BuildRequires: pkgconfig(libselinux)
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(tinfo)
+BuildRequires: pkgconfig(tree-sitter)
 BuildRequires: pkgconfig(xfixes)
 BuildRequires: pkgconfig(xft)
 BuildRequires: pkgconfig(xinerama)
@@ -59,9 +55,7 @@ BuildRequires: libgpm-devel
 BuildRequires: libgif-devel
 BuildRequires: inotify-tools-devel
 BuildRequires: libXaw3d-devel libXaw-devel
-%{?_enable_natcomp:BuildRequires: libgccjit12-devel}
-
-%define obsolete_versioned() %(printf 'Provides: emacs26-%{1} = %version-%release\\nObsoletes: emacs26-%{1}\\n')
+%{?_enable_natcomp:BuildRequires: libgccjit13-devel}
 
 %package athena
 Summary: The GNU Emacs text editor for the X Window System (athena)
@@ -71,9 +65,8 @@ Requires: emacs-common = %version-%release
 Provides: /usr/bin/emacs
 Provides: emacs = %version-%release
 Provides: emacs-X11 = %version-%release
-Provides: emacs-X11-program
-Provides: emacsen
-%obsolete_versioned X11-athena
+Provides: emacs-nox = %version-%release
+Obsoletes: emacs-nox
 
 %package gtk3
 Summary: The GNU Emacs text editor for the X Window System (gtk3)
@@ -83,20 +76,14 @@ Requires: emacs-common = %version-%release
 Provides: /usr/bin/emacs
 Provides: emacs = %version-%release
 Provides: emacs-X11 = %version-%release
-Provides: emacs-X11-program
-Provides: emacsen
-%obsolete_versioned X11-gtk
-%obsolete_versioned X11-gtk3
 
-%package nox
-Summary: The GNU Emacs text editor without support for the X Window System
+%package pgtk
+Summary: The GNU Emacs text editor for alternative windowing systems.
 Group: Editors
 Requires(pre): alternatives >= 0.2.0
 Requires: emacs-common = %version-%release
 Provides: /usr/bin/emacs
 Provides: emacs = %version-%release
-Provides: emacsen
-%obsolete_versioned nox
 
 %package common
 Summary: Things needed to run the GNU Emacs text editor
@@ -109,14 +96,6 @@ Provides: emacs-speedbar = %version-%release
 Conflicts: app-defaults < 0.2.1-alt1
 Conflicts: emacs-base-X11 < 0.0.2
 Obsoletes: emacs-base-X11 < 0.0.2
-%obsolete_versioned X11
-%obsolete_versioned cedet
-%obsolete_versioned common
-%obsolete_versioned erc
-%obsolete_versioned gnus
-%obsolete_versioned nxml-mode
-%obsolete_versioned speedbar
-%obsolete_versioned tramp
 AutoReq: yes, nopython
 
 %package el
@@ -124,99 +103,61 @@ Summary: The sources for Lisp programs included with GNU Emacs
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-common = %version-%release
-%obsolete_versioned el
-%obsolete_versioned cedet-el
-%obsolete_versioned erc-el
-%obsolete_versioned gnus-el
-%obsolete_versioned nxml-mode-el
-%obsolete_versioned tramp-el
 
 %package leim
 Summary: GNU Emacs Lisp code for input methods for internationalization
 Group: Editors
 BuildArch: noarch
 Requires: %name-common = %version-%release
-%obsolete_versioned leim
 
 %package leim-el
 Summary: The Emacs Lisp source code for input methods included in %name-leim
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-leim = %version-%release
-%obsolete_versioned leim-el
 
 %package info
 Summary: Info docs for GNU Emacs text editor
 Group: Editors
 BuildArch: noarch
 Requires: %name-common = %version-%release
-%obsolete_versioned info
 
 %package elisp-manual
 Summary: Emacs Lisp Manual
 Group: Editors
 BuildArch: noarch
 Requires: %name-common = %version-%release
-%obsolete_versioned elisp-manual
 
 #{{{
-
-%description
-Emacs is an extensible, customizable, self-documenting real-time
-display editor.  Emacs contains special code editing features, an
-extension language (Emacs Lisp), and the capability to read mail, news
+%define desc \
+Emacs is an extensible, customizable, self-documenting real-time\
+display editor.  Emacs contains special code editing features, an\
+extension language (Emacs Lisp), and the capability to read mail, news\
 and more without leaving the editor.
 
-This package includes things you need to run the Emacs editor, so you
-need to install this package if you intend to use Emacs.  You also
-need to install the actual Emacs program package (%name-nox or
-%name-X11).  Install %name-nox if you are not going to use the X
-Window System; install %name-X11 if you will be using X.
+%description %desc
 
-%description athena
-Emacs-athena includes the GNU Emacs text editor program for use with the X
+%description athena %desc
+emacs-athena includes the GNU Emacs text editor program for use with the X
 Window System using athena widget set (it provides support for the mouse and
-other GUI elements).  Emacs-athena will also run GNU Emacs outside of X,
-but it has a larger memory footprint than the 'non-X' GNU Emacs package
-(%name-nox).
+other GUI elements).  It will also run GNU Emacs outside of X.
 
-Install %name-athena if you are going to use Emacs with the X Window
-System and you like athena look.  You should also install %name-athena if
-you are going to run GNU Emacs both with and without X (it will work fine both
-ways).
-
-%description gtk3
-Emacs-gtk3 includes the GNU Emacs text editor program for use with the X
+%description gtk3 %desc
+emacs-gtk3 includes the GNU Emacs text editor program for use with the X
 Window System using gtk+ toolkit v.3 (it provides support for the mouse and
-other GUI elements).  Emacs-gtk3 will also run GNU Emacs outside of X, but
-it has a larger memory footprint than the 'non-X' GNU Emacs package
-(%name-nox).
+other GUI elements).  It will also run GNU Emacs outside of X.
 
-Install %name-gtk3 if you are going to use Emacs with the X Window
-System and you like gtk+ look.  You should also install %name-gtk3 if you
-are going to run GNU Emacs both with and without X (it will work fine both
-ways).
+%description pgtk %desc
+emacs-pgtk is the GNU Emacs text editor program for use primarily
+with Wayland windowing system.
+If you use exclusively X, do not use this package. There are a
+number of respects in which the regular gtk3 variant works better.
 
-%description nox
-Emacs-nox is the GNU Emacs text editor program without support for
-the X Window System.
-
-You need to install this package only if you plan on exclusively using
-GNU Emacs without the X Window System (%name-athena or %name-gtk3
-will work both in X and out of X, but %name-nox will only work 
-outside of X).
-
-%description common
-GNU Emacs is an extensible, customizable, self-documenting real-time
-display editor.  Emacs contains special code editing features, an
-extension language (Emacs Lisp), and the capability to read mail, news
-and more without leaving the editor.
-
+%description common %desc
 This package includes things you need to run the Emacs editor, so you
 need to install this package if you intend to use Emacs.  You also
-need to install the actual Emacs program package (%name-nox, %name-athena
-or %name-gtk3).  Install %name-nox if you are not going to use the X
-Window System.
+need to install the actual Emacs program package (emacs-athena,
+emacs-gtk3 or emacs-pgtk).
 
 %description el
 Emacs-el contains the Emacs Lisp sources for many of the programs
@@ -249,50 +190,43 @@ This package contain full description of Emacs Lisp language
 
 %define _emacs_archlibdir %_libexecdir/emacs/%version/%_host_alias
 
+%ifarch %e2k
+# on default -O3 crashes with SIGILL in lucid_event_type_list_p
+%global _optlevel 2
+%endif
+
 %prep
 %setup
-%ifarch %e2k
-%patch2000 -p1
-%endif
 sed -ri 's,(\.\./info/[[:alpha:]-]+),\1.info,g' doc/{emacs,misc}/*.texi
 
 %build
 autoreconf -i -I m4
 
-%define AOT %{?_enable_natcomp:NATIVE_FULL_AOT=1}
 %define _configure_script ../configure
 %define _configure_mostly --disable-build-details --sharedstatedir=/var \\\
-	--with-pop --with-wide-int --with-modules %{?_enable_natcomp:--with-native-compilation}
+	--without-pop --without-gpm --with-wide-int --with-modules \\\
+    %{?_enable_natcomp:--with-native-compilation=aot}
 
 mkdir build-athena && pushd build-athena
-%configure %_configure_mostly --without-gpm --without-cairo --without-harfbuzz \
-	--without-rsvg --without-dbus --without-gconf --without-gsettings \
+%configure %_configure_mostly --without-cairo --without-rsvg \
+    --without-dbus --without-gconf --without-gsettings \
 	--with-x-toolkit=athena
 popd
 
-%if_enabled gtk3
 mkdir -p build-gtk3 && pushd build-gtk3
-%configure %_configure_mostly --without-gpm --with-x-toolkit=gtk3
+%configure %_configure_mostly --with-x-toolkit=gtk3
 popd
-%endif
 
-%if_enabled nox
-mkdir build-nox && pushd build-nox
-%configure %_configure_mostly --without-all --with-gnutls --with-gpm --with-selinux \
-	--with-xml2 --with-zlib --with-x=no
+mkdir build-pgtk && pushd build-pgtk
+%configure %_configure_mostly --with-pgtk
 popd
-%endif
 
-%make_build -C build-athena %AOT
-%if_enabled gtk3
-%make_build -C build-gtk3 %AOT
-%endif
-%if_enabled nox
-%make_build -C build-nox %AOT
-%endif
+%make_build -C build-athena
+%make_build -C build-gtk3
+%make_build -C build-pgtk
 
 %install
-%makeinstall -C build-athena %AOT
+%makeinstall -C build-athena
 install -pm0755 build-athena/src/emacs %buildroot%_bindir/%name-athena
 install -pm0644 build-athena/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-athena.pdmp
 %if_enabled natcomp
@@ -301,26 +235,22 @@ echo build-athena/native-lisp/* |sed 's,build-athena/,%_libdir/%name/%version/,'
 touch athena.ls
 %endif
 
-%if_enabled gtk3
 install -pm0755 build-gtk3/src/emacs %buildroot%_bindir/%name-gtk3
 install -pm0644 build-gtk3/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-gtk3.pdmp
 %if_enabled natcomp
-%make_install libdir=%buildroot%_libdir install-eln -C build-gtk3 %AOT
+%make_install libdir=%buildroot%_libdir install-eln -C build-gtk3
 echo build-gtk3/native-lisp/* |sed 's,build-gtk3/,%_libdir/%name/%version/,' > gtk3.ls
 %else
 touch gtk3.ls
 %endif
-%endif
 
-%if_enabled nox
-install -pm0755 build-nox/src/emacs %buildroot%_bindir/%name-nox
-install -pm0644 build-nox/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-nox.pdmp
+install -pm0755 build-pgtk/src/emacs %buildroot%_bindir/%name-pgtk
+install -pm0644 build-pgtk/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-pgtk.pdmp
 %if_enabled natcomp
-%make_install libdir=%buildroot%_libdir install-eln -C build-nox %AOT
-echo build-nox/native-lisp/* |sed 's,build-nox/,%_libdir/%name/%version/,' > nox.ls
+%make_install libdir=%buildroot%_libdir install-eln -C build-pgtk
+echo build-pgtk/native-lisp/* |sed 's,build-pgtk/,%_libdir/%name/%version/,' > pgtk.ls
 %else
-touch nox.ls
-%endif
+touch pgtk.ls
 %endif
 
 # remove the installed duplicate emacs binaries
@@ -329,41 +259,21 @@ rm -vf %buildroot%_bindir/emacs
 rm -vf %buildroot%_bindir/emacs-%version
 rm -vf %buildroot%_emacs_archlibdir/emacs.pdmp
 
-install -pm644 -D .gear/emacs.desktop %buildroot%_desktopdir/emacs.desktop
-sed -i 's,%buildroot,,' %buildroot%_desktopdir/*desktop
-
-#######################
-# Various other stuff #
-#######################
-
+# cleanups
+sed -i 's,%buildroot,,' %buildroot%_desktopdir/*desktop \
+    %buildroot%_libexecdir/systemd/user/emacs.service
 mv %buildroot%_mandir/man1/{,g}ctags.1.gz
 mv %buildroot%_bindir/{,g}ctags
-
 rm -vf %buildroot%_infodir/info*
 rm -vf %buildroot%_infodir/dir
 
-sed -i 's,%buildroot,,' %buildroot%_libexecdir/systemd/user/emacs.service
-
-########################
-# Alternatives support #
-########################
+# alternatives
 install -pm644 -D .gear/athena.alternatives %buildroot%_altdir/%name-athena
-%if_enabled gtk3
 install -pm644 -D .gear/gtk3.alternatives %buildroot%_altdir/%name-gtk3
-%endif
-%if_enabled nox
-install -pm644 -D .gear/nox.alternatives %buildroot%_altdir/%name-nox
-%endif
+install -pm644 -D .gear/pgtk.alternatives %buildroot%_altdir/%name-pgtk
 
 # X resources #
 install -pm0644 -D .gear/xresources %buildroot%_sysconfdir/X11/app-defaults/Emacs
-
-# Substitute emacs-X11.* with emacs-X11 for buildreq
-mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
-echo emacs-X11 > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-athena
-%if_enabled gtk3
-echo emacs-X11 > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-gtk3
-%endif
 
 # file lists
 find %buildroot%_libexecdir/emacs/%version \
@@ -398,25 +308,19 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 
 #---------------------------------------------------------------
 %files athena -f athena.ls
-%_sysconfdir/buildreqs/packages/substitute.d/%name-athena
 %_altdir/%name-athena
 %_bindir/%name-athena
 %_emacs_archlibdir/%name-athena.pdmp
 
-%if_enabled gtk3
 %files gtk3 -f gtk3.ls
-%_sysconfdir/buildreqs/packages/substitute.d/%name-gtk3
 %_altdir/%name-gtk3
 %_bindir/%name-gtk3
 %_emacs_archlibdir/%name-gtk3.pdmp
-%endif
 
-%if_enabled nox
-%files nox -f nox.ls
-%_altdir/%name-nox
-%_bindir/%name-nox
-%_emacs_archlibdir/%name-nox.pdmp
-%endif
+%files pgtk -f pgtk.ls
+%_altdir/%name-pgtk
+%_bindir/%name-pgtk
+%_emacs_archlibdir/%name-pgtk.pdmp
 
 %files common -f common.ls
 %doc BUGS README
@@ -424,12 +328,8 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 
 %_bindir/*
 %exclude %_bindir/%name-athena
-%if_enabled gtk3
 %exclude %_bindir/%name-gtk3
-%endif
-%if_enabled nox
-%exclude %_bindir/%name-nox
-%endif
+%exclude %_bindir/%name-pgtk
 
 %dir %_libexecdir/emacs
 %exclude %_emacs_archlibdir/*.pdmp
@@ -463,6 +363,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Tue Sep 19 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 29.1-alt1
+- 29.1 released
+
 * Mon Aug 14 2023 Ivan A. Melnikov <iv@altlinux.org> 28.2-alt2.2
 - add missing BR on rpm-macros-alternatives
   (fixes FTBFS on loongarch64)
