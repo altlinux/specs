@@ -1,5 +1,5 @@
 Name: volumes-profile-regular
-Version: 0.4.3
+Version: 0.5.0
 Release: alt1
 
 Summary: Volumes description for ALT Linux Regular builds
@@ -8,13 +8,12 @@ Group: System/Configuration/Other
 
 Url: http://en.altlinux.org/regular
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
 
 %description
 %summary
-(and Starterkits)
+(and Starterkits).
 
 %prep
 %setup
@@ -28,6 +27,14 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Sep 19 2023 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
+- not RAID
+- max swap 16G
+- if RAM < 4G; then swap = 1,5 * RAM; else swap = RAM
+- profile "Auto (swap + /)", where '/' is whole disk - swap
+- if disk >= 120G; then add profile "Auto (swap+ / + /home)",
+  where swap, '/' = 50Gb, '/home' >= 50G
+
 * Wed Aug 24 2022 Anton Midyukov <antohami@altlinux.org> 0.4.3-alt1
 - 10-vm-profile.sh: fix calculation $max_disk for multiple disks
 
