@@ -1,6 +1,6 @@
 Name: manatee-open
 Version: 2.214.1
-Release: alt1
+Release: alt2
 
 Summary: Manatee is a corpus management tool
 License: LGPLv2+
@@ -41,6 +41,9 @@ autoreconf -iv
 %doc doc/*
 
 %changelog
+* Thu Sep 21 2023 Artyom Bystrov <arbars@altlinux.org> 2.214.1-alt2
+- Fix build on GCC13
+
 * Wed Jan 04 2023 Kirill Maslinsky <kirill@altlinux.org> 2.214.1-alt1
 - version 2.214.1
 
