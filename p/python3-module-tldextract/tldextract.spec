@@ -3,16 +3,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.5.0
+Version: 3.6.0
 Release: alt1
 
 Summary: Accurately separate the TLD from the registered domain and subdomains of a URL
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/tldextract
+URL: https://pypi.org/project/tldextract
+VCS: https://github.com/john-kurkowski/tldextract
 
-# https://github.com/john-kurkowski/tldextract.git
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -58,6 +58,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Sep 21 2023 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1
+- Automatically updated to 3.6.0.
+
 * Thu Sep 07 2023 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
 - Automatically updated to 3.5.0.
 
