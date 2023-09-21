@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 Summary: Python interface to PROJ
 License: MIT
@@ -57,9 +57,7 @@ cp -r ../%name-%version/pytest.ini .
 
 PATH="%buildroot%_bindir:$PATH" \
 PYTHONPATH=%buildroot%python3_sitelibdir \
-py.test-3 -m "not network" -k "\
-not test_transform_single_point_nad83_to_nad27 \
-and not test_transform_tuple_nad83_to_nad27"
+py.test-3 -m "not network"
 
 %files
 %doc LICENSE* *.md docs
@@ -69,6 +67,9 @@ and not test_transform_tuple_nad83_to_nad27"
 
 
 %changelog
+* Thu Sep 21 2023 Anton Vyatkin <toni@altlinux.org> 3.6.1-alt1
+- New version 3.6.1.
+
 * Thu Jun 15 2023 Anton Vyatkin <toni@altlinux.org> 3.6.0-alt1
 - New version 3.6.0.
 
