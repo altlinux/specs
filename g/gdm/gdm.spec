@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.0.1
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -39,7 +39,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-Source1: gdm_xdmcp.control
+Source1: gdm_xdmcp-45.0.control
 Source3: default.pa-for-gdm
 
 # PAM config files
@@ -58,6 +58,9 @@ Patch8: gdm-44.1-alt-Xsession-Xterm.patch
 Obsoletes: %name-gnome
 Provides: %name-gnome = %EVR
 Provides: gnome-dm
+
+%define gdm_subconfdir %name
+%define gdm_confdir %_sysconfdir/%name
 
 # from meson.build
 %define glib_ver 2.56.0
@@ -189,7 +192,7 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 	%{?_enable_ipv6:-Dipv6=true} \
 	-Dinitial-vt='%vt_nr' \
 	-Ddefault-path='/bin:/usr/bin:/usr/local/bin' \
-	-Dsysconfsubdir='X11/gdm' \
+	-Dsysconfsubdir='%gdm_subconfdir' \
 	-Dpam-prefix='%_sysconfdir' \
 	-Dpam-mod-dir='%_pam_modules_dir' \
 	-Ddefault-pam-config='%default_pam_config' \
@@ -211,7 +214,7 @@ mkdir -p %buildroot%_sysconfdir/X11/sessions
 rm -f %buildroot%_sysconfdir/pam.d/gdm
 
 # env.d directories
-mkdir -p %buildroot{%_sysconfdir/X11,%_datadir}/gdm/env.d
+mkdir -p %buildroot{%gdm_confdir,%_datadir/%name}/env.d
 
 # control gdm/xdmcp
 install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
@@ -255,7 +258,15 @@ dbus-run-session %__meson_test
 %_udevrulesdir/61-%name.rules
 %config %_sysconfdir/dbus-1/system.d/%name.conf
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
-%_sysconfdir/X11/%name/
+%dir %gdm_confdir
+%config(noreplace) %gdm_confdir/custom.conf
+%gdm_confdir/Xsession
+%gdm_confdir/env.d/
+%gdm_confdir/Init/
+%gdm_confdir/PostLogin/
+%gdm_confdir/PostSession/
+%gdm_confdir/PreSession/
+
 %config %_controldir/gdm_xdmcp
 %dir %_datadir/%name
 %_datadir/%name/locale.alias
@@ -294,6 +305,10 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Thu Sep 21 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt2
+- switched GDM config dir to /etc/gdm (default)
+- marked /etc/gdm/custom.conf as %%config(noreplace) (ALT #47675)
+
 * Thu Sep 14 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt1
 - 45.0.1
 
