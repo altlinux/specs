@@ -4,7 +4,7 @@
 
 Name: qpid-proton
 Version: 0.36.0
-Release: alt1
+Release: alt2
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
 
@@ -113,6 +113,7 @@ Documentation for the Python language bindings for Qpid Proton
     -DENABLE_FUZZ_TESTING=NO \
     -DPYTHON_EXECUTABLE=%__python3 \
     -DPYTHON_INCLUDE_DIR=%python3_includedir \
+    "-DCMAKE_C_FLAGS=$CFLAGS -Wno-deprecated-declarations" \
     -DPYTHON_LIBRARY=%__libpython3
 
 %cmake_build --target generated_c_files
@@ -179,6 +180,9 @@ rm -rf %buildroot%proton_datadir/CMakeLists.txt
 %endif
 
 %changelog
+* Thu Sep 21 2023 Artyom Bystrov <arbars@altlinux.org> 0.36.0-alt2
+- Fix FTBFS (added -Wno-deprecated-declarations).
+
 * Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 0.36.0-alt1
 - new version 0.36.0.
 - drop python2 package.
