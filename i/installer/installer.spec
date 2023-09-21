@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.14.3
+Version: 1.14.4
 Release: alt1
 
 Summary: Installer common parts
@@ -19,6 +19,8 @@ Summary: Installer common stage2
 Group: System/Configuration/Other
 Provides: %name-stage2 = %version-%release
 Obsoletes: %name-stage2 < %version-%release
+# because of replace /var/run/alteratord -> /run/alteratord
+Requires: alterator >= 5.4.3
 # installer-preinstall.desktop
 Requires: alterator-preinstall >= 0.9-alt1
 # remount.desktop
@@ -105,6 +107,13 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Wed Sep 20 2023 Anton Midyukov <antohami@altlinux.org> 1.14.4-alt1
+- 00-remove-installer-pkgs.sh:
+  + remove alterator-luks if not detected luks partitions
+  + remove alterator-wizardface if installed alterator-setup or its forks
+  + remove volumes-profile-*
+- replace /var/run -> /run; Requires: alterator >= 5.4.3
+
 * Mon Aug 28 2023 Anton Midyukov <antohami@altlinux.org> 1.14.3-alt1
 - install2: move 64-md-raid-assembly.rules from udev/rules.d to /tmp
 
