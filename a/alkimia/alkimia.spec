@@ -7,7 +7,7 @@
 %endif
 
 Name:    alkimia
-Version: 8.1.1
+Version: 8.1.2
 Release: alt1
 %K5init no_altplace
 
@@ -104,6 +104,9 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Thu Sep 21 2023 Andrey Cherepanov <cas@altlinux.org> 8.1.2-alt1
+- New version.
+
 * Sun Jul 10 2022 Andrey Cherepanov <cas@altlinux.org> 8.1.1-alt1
 - New version.
 
