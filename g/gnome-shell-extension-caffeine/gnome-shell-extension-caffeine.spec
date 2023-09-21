@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name caffeine
 %define ver_major 50
@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt1
+Release: alt1.1
 
 Summary: Enable/Disable auto suspend with quick setting toggle.
 Group: Graphical desktop/GNOME
@@ -46,7 +46,13 @@ glib-compile-schemas --strict --targetdir=caffeine@patapon.info/schemas/ caffein
 mkdir -p %buildroot%_datadir/{gnome-shell/extensions/%uuid,glib-2.0/schemas,icons}
 cp -ar %uuid/{*.js*,preferences,icons} %buildroot%_datadir/gnome-shell/extensions/%uuid/
 cp -a %uuid/schemas/%xdg_name.gschema.xml %buildroot%_datadir/glib-2.0/schemas/
-cp -ar %uuid/locale %buildroot%_datadir/ && rm -f %buildroot/%_datadir/locale/*/*/*.po
+# install locale files
+pushd %uuid/locale
+for po in *.po; do
+    install -d -m 0755 %buildroot%_datadir/locale/${po%.po}/LC_MESSAGES
+    msgfmt -o %buildroot%_datadir/locale/${po%.po}/LC_MESSAGES/%gettext_domain.mo $po
+done
+popd
 
 %find_lang %gettext_domain
 
@@ -56,6 +62,9 @@ cp -ar %uuid/locale %buildroot%_datadir/ && rm -f %buildroot/%_datadir/locale/*/
 %doc README.md
 
 %changelog
+* Thu Sep 21 2023 Yuri N. Sedunov <aris@altlinux.org> 50-alt1.1
+- packaged lost translations
+
 * Thu Sep 21 2023 Yuri N. Sedunov <aris@altlinux.org> 50-alt1
 - 50
 
