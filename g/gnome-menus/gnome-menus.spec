@@ -1,17 +1,24 @@
+%def_enable snapshot
+
 %define ver_major 3.36
 %define api_ver 3.0
 %def_enable introspection
 
 Name: gnome-menus
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME desktop menu
 License: GPL-2.0
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Vcs: https://gitlab.gnome.org/GNOME/gnome-menus.git
+Source: %name-%version.tar
+%endif
 Patch1: %name-3.31.4-alt-add-config-dir.patch
 
 BuildRequires(pre): rpm-build-gnome rpm-build-xdg
@@ -28,12 +35,21 @@ Summary: GNOME Menus common data
 License: GPLv2+
 Group: Graphical desktop/GNOME
 BuildArch: noarch
-Provides: gnome-menus = %version-%release
+Provides: gnome-menus = %EVR
 Obsoletes: gnome-menus < 2.26.2-alt2
 
 %description default
 The package contains an implementation of the draft "Desktop Menu
 Specification" from http://www.freedesktop.org/Standards/menu-spec/
+
+%package x-gnome
+Summary: GNOME Menus X-GNOME directories
+License: GPLv2+
+Group: Graphical desktop/GNOME
+BuildArch: noarch
+
+%description x-gnome
+The package contains specific X-GNOME direcories.
 
 %package -n lib%name
 Summary: Desktop Menu Library for GNOME
@@ -41,7 +57,8 @@ License: LGPLv2+
 Group: System/Libraries
 Obsoletes: gnome-menu-editor
 Obsoletes: gnome-menus-common
-Provides: gnome-menus-common = %version-%release
+Provides: gnome-menus-common = %EVR
+Requires: %name-x-gnome = %EVR
 
 %description -n lib%name
 This package provides Desktop Menu Library for GNOME.
@@ -50,7 +67,7 @@ This package provides Desktop Menu Library for GNOME.
 Summary: Development files for GNOME Desktop Menu Library
 License: LGPLv2+
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package provides files required to develop programs that use
@@ -61,7 +78,7 @@ Summary: Development utilities and examples for GNOME Desktop Menu Library
 License: LGPLv2+
 Group: Development/C
 BuildArch: noarch
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel-examples
 This package provides some examples that use Desktop Menu Library.
@@ -69,7 +86,7 @@ This package provides some examples that use Desktop Menu Library.
 %package -n lib%name-gir
 Summary: GObject introspection data for the GNOME Desktop Menu Library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the GNOME Desktop Menu Library
@@ -78,7 +95,7 @@ GObject introspection data for the GNOME Desktop Menu Library
 Summary: GObject introspection devel data for the GNOME Desktop Menu Library
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
+Requires: lib%name-gir = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the GNOME Desktop Menu Library
@@ -91,7 +108,7 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 %patch1 -b .config_dir
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
     --disable-static \
@@ -104,10 +121,15 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 
 %files default
 %_datadir/desktop-directories/*
+%exclude %_datadir/desktop-directories/X-GNOME*
 %exclude %_xdgmenusdir/gnome-applications.menu
+
+%files x-gnome
+%_datadir/desktop-directories/X-GNOME*
 
 %files -n lib%name -f %name.lang
 %_libdir/*.so.*
+
 %doc AUTHORS NEWS README
 
 %files -n lib%name-devel
@@ -125,6 +147,10 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 
 
 %changelog
+* Thu Sep 21 2023 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
+- 3.36.0-21-g61daaf1 (updated translations)
+- new -x-gnome subpackage with X-GNOME .directory files (ALT #47413)
+
 * Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
