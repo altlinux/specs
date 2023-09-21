@@ -7,8 +7,8 @@
 %def_without mbedtls
 
 Name: freerdp
-Version: 2.11.1
-Release: alt2
+Version: 2.11.2
+Release: alt1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -382,6 +382,9 @@ install -Dpm0644 %SOURCE1 %buildroot%_libexecdir/systemd/user/freerdp-server.ser
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Wed Sep 20 2023 Andrey Cherepanov <cas@altlinux.org> 2.11.2-alt1
+- New version.
+
 * Tue Sep 19 2023 Andrey Cherepanov <cas@altlinux.org> 2.11.1-alt2
 - Added freerdp-server.service - user service for remote access to desktop via RDP.
 
