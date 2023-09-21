@@ -32,7 +32,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.9.12.6
+Version: 0.9.13.0
 Release: alt1
 
 Summary: GPT applier
@@ -183,6 +183,13 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Tue Sep 19 2023 Valery Sinelnikov <greh@altlinux.org> 0.9.13.0-alt1
+- Added KDE applier
+- Fixed loopback policy processing
+- Fixed appliers exception for some chromium policies
+- Fixed ntp error
+- cifs_appliers, polkit_appliers changed to non-experimental
+
 * Wed Jun 14 2023 Valery Sinelnikov <greh@altlinux.org> 0.9.12.6-alt1
 - Added support for dictionaries as policy values for
   yandex_browser_applier and chromium_applier
