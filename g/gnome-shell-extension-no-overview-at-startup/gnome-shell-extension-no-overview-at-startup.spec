@@ -2,7 +2,7 @@
 %define uuid %_name@fthx
 
 Name: gnome-shell-extension-%_name-at-startup
-Version: 44
+Version: 45
 Release: alt1
 
 Summary: No overview at start-up. For GNOME Shell 40+
@@ -15,11 +15,11 @@ BuildArch: noarch
 # Source-url: https://github.com/fthx/no-overview/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-Requires: gnome-shell >= 40
+Requires: gnome-shell >= 45
 Requires: typelib(Adw) = 1
 
 %description
-No overview at start-up. For GNOME Shell 40+.
+No overview at start-up. For GNOME Shell 45+.
 
 %prep
 %setup
@@ -34,5 +34,8 @@ cp -ar *.js* %buildroot%_datadir/gnome-shell/extensions/%uuid/
 %_datadir/gnome-shell/extensions/%uuid/
 
 %changelog
+* Thu Sep 21 2023 Roman Alifanov <ximper@altlinux.org> 45-alt1
+- new version 45 (with rpmrb script)
+
 * Wed Aug 16 2023 Roman Alifanov <ximper@altlinux.org> 44-alt1
 - Initial build for Sisyphus.
