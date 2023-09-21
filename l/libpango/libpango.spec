@@ -1,8 +1,8 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
-%define ver_major 1.50
+%define ver_major 1.51
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
@@ -15,11 +15,10 @@
 %def_enable cairo
 %def_enable libthai
 %def_disable sysprof
-#24/27 test-layout  ERROR  0.55s  exit status 1
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.14
+Version: %ver_major.1
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -164,7 +163,7 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %meson_install
 
 %check
-%__meson_test -v --print-errorlogs
+%__meson_test -v
 
 %files
 %_bindir/%_name-list
@@ -219,6 +218,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.51.1-alt1
+- 1.51.1
+
 * Thu Mar 02 2023 Yuri N. Sedunov <aris@altlinux.org> 1.50.14-alt1
 - 1.50.14
 
