@@ -2,12 +2,12 @@
 
 Name: quilt
 Version: 0.67
-Release: alt1
+Release: alt2
 
 Summary: Scripts for working with series of patches
 License: GPLv2+
 Group: Text tools
-Url: http://savannah.nongnu.org/projects/quilt/
+Url: https://savannah.nongnu.org/projects/quilt/
 BuildArch: noarch
 
 Provides: bash-completion-quilt = %version-%release
@@ -15,7 +15,7 @@ Obsoletes: bash-completion-quilt
 Requires: diffstat
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: ed procmail}}
-# git://git.altlinux.org/gears/q/quilt
+# https://git.altlinux.org/gears/q/quilt.git
 Source: %name-%version-%release.tar
 
 %description
@@ -57,6 +57,10 @@ install -pm644 AUTHORS NEWS TODO doc/README.EMACS doc/*.pdf COPYING \
 %docdir/
 
 %changelog
+* Thu Sep 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.67-alt2
+- Backported upstream change to avoid warnings with grep >= 3.8
+  (thx Jean Delvare).
+
 * Thu Mar 10 2022 Vitaly Chikunov <vt@altlinux.org> 0.67-alt1
 - Updated to v0.67 (2022-02-15).
 
