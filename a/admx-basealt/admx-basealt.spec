@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.12.6
+Version: 0.1.13.0
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,13 @@ done
 %_destdir
 
 %changelog
+* Tue Sep 19 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.13.0-alt1
+- Added a section for user and machine policies to configure
+  the graphical environment of KDE Plasma
+- Added KDE Applier Enable policy
+- Fix supportedOn defenitions to use ranges instead of references
+- Added closure policy in admx-basealt
+
 * Thu Jun 15 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.12.6-alt1
 - Added new admx-files for polkit-actions to NetworkManager and pcsc_lite
 
