@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
@@ -14,7 +14,7 @@ Release: alt1%beta
 Summary: Contacts manager for GNOME
 License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
-Url: https://wiki.gnome.org/Apps/Contacts
+Url: https://apps.gnome.org/Contacts
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -23,8 +23,8 @@ Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.64
-%define gtk4_ver 4.6.0
-%define adwaita_ver 1.2
+%define gtk4_ver 4.10.0
+%define adwaita_ver 1.4
 %define vala_ver 0.54
 %define folks_ver 0.15.6
 %define eds_ver 3.42
@@ -75,6 +75,9 @@ BuildRequires: libqrencode-devel >= %libqrencode_ver
 %doc NEWS README*
 
 %changelog
+* Wed Sep 20 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 
