@@ -3,24 +3,17 @@
 %def_with check
 
 Name: python3-module-fasteners
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: A python package that provides useful locks
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.org/project/fasteners
+URL: https://pypi.org/project/fasteners
+VCS: https://github.com/harlowja/fasteners
 
-# https://github.com/harlowja/fasteners
 Source: %name-%version.tar
-
-# Backport 80a3eaed75276faf21034e7e6c626fd19485ea39 “Move eventlet tests to
-# main folder and to child process”. Fixes “Tests hang with eventlet support”
-# https://github.com/harlowja/fasteners/issues/101. (As an alternative, we
-# could run pytest on tests/ and tests_eventlet/ in separate invocations.) See
-# https://github.com/harlowja/fasteners/issues/101#issuecomment-1249462951.
-Patch: 80a3eaed75276faf21034e7e6c626fd19485ea39.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -42,7 +35,6 @@ A python package that provides useful locks.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -60,6 +52,9 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Sep 21 2023 Grigory Ustinov <grenka@altlinux.org> 0.19-alt1
+- Automatically updated to 0.19.
+
 * Fri Oct 21 2022 Grigory Ustinov <grenka@altlinux.org> 0.18-alt1
 - Build new version.
 
