@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  7.0.10
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		un-def
 %define karch x86_64 %ix86
@@ -28,6 +28,7 @@ ExclusiveOS: Linux
 Url: http://www.virtualbox.org/
 
 Patch0: vboxcommon-5.4.patch
+Patch1: fixes_for_6.5.patch
 
 BuildPreReq: gcc-c++
 BuildRequires: perl
@@ -70,6 +71,7 @@ pushd kernel-source-%vfs_module_name-%module_version
 popd
 tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 pushd kernel-source-%video_module_name-%module_version
+%patch1 -p0
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -99,6 +101,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Sep 20 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.10-alt2
+- Added patch for kernel 6.5
 
 * Mon Aug 14 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.10-alt1
 - Updated template for virtualbox 7.0.10

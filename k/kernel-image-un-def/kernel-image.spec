@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1
-%define kernel_base_version	6.4
-%define kernel_sublevel	.16
+%define kernel_base_version	6.5
+%define kernel_sublevel	.4
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -290,6 +290,10 @@ subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+c
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
 
+%ifarch %ix86 armh
+sed -Ei 's/-j\d*//' scripts/pahole-flags.sh
+%endif
+
 %build
 banner build
 export ARCH=%base_arch
@@ -314,11 +318,17 @@ CONFIGS="$CONFIGS config-debug"
 scripts/kconfig/merge_config.sh -m $CONFIGS
 
 %make_build oldconfig
-%make_build %make_target
+%make_build %make_target || {
+	%make %make_target V=1
+	exit 1
+}
 %ifarch ppc64le
 eu-strip --remove-comment -o %image_path vmlinux
 %endif
-%make_build modules
+%make_build modules || {
+	%make modules V=1
+	exit 1
+}
 %ifarch aarch64 %arm
 %make_build dtbs
 %endif
@@ -503,7 +513,7 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %check
 banner check
 # First boot-test no matter have KVM or not.
-timeout 300 vm-run uname -a
+timeout 300 vm-run --no-quiet uname -a
 # Longer LTP tests only if there is KVM (which is present on all main arches).
 if ! timeout 999 vm-run --kvm=cond \
         "/sbin/sysctl kernel.printk=8;
@@ -512,6 +522,9 @@ if ! timeout 999 vm-run --kvm=cond \
         sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
         exit 1
 fi
+# Verify fchmodat2 backport.
+make -C tools/testing/selftests/fchmodat2
+timeout 300 vm-run tools/testing/selftests/fchmodat2/fchmodat2_test
 
 %post checkinstall
 check-pesign-helper
@@ -582,6 +595,16 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Sep 20 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.5.4-alt1
+- v6.5.4 (2023-09-19).
+
+* Mon Sep 18 2023 Vitaly Chikunov <vt@altlinux.org> 1:6.5.3-alt2
+- config-aarch64: CONFIG_MFD_RK8XX_SPI=m, CONFIG_MFD_RK8XX_I2C=m.
+- Revert "Add rk3568-firefly-roc-pc.dts from Armbian".
+
+* Wed Sep 13 2023 Vitaly Chikunov <vt@altlinux.org> 1:6.5.3-alt1
+- Rebase to v6.5.3 (2023-09-13).
+
 * Wed Sep 13 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.4.16-alt1
 - v6.4.16 (2023-09-13).
 
