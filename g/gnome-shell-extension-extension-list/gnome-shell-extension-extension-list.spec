@@ -2,7 +2,7 @@
 
 %define _name extension-list
 %define ver_major 45
-%define beta .beta
+%define beta %nil
 %define uuid %_name@tu.berry
 %define xdg_name org.gnome.shell.extensions.%_name
 
@@ -13,8 +13,8 @@
 %def_enable check
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major
-Release: alt0.5%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 %define gettext_domain %name
 
@@ -64,6 +64,9 @@ Simple GNOME Shell extension manager in the top panel.
 %doc README.md
 
 %changelog
+* Thu Sep 21 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Wed Sep 13 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt0.5.beta
 - 45.beta
 

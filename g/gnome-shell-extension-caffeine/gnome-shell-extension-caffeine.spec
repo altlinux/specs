@@ -1,7 +1,7 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name caffeine
-%define ver_major 48
+%define ver_major 50
 %define beta %nil
 %define uuid %_name@patapon.info
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -27,7 +27,7 @@ Vcs: https://github.com/eonpatapon/gnome-shell-extension-caffeine.git
 Source: %name-%version%beta.tar
 %endif
 
-Requires: gnome-shell >= 44
+Requires: gnome-shell >= 45
 Requires: typelib(Adw) = 1
 
 BuildRequires: /usr/bin/glib-compile-schemas eslint
@@ -56,6 +56,9 @@ cp -ar %uuid/locale %buildroot%_datadir/ && rm -f %buildroot/%_datadir/locale/*/
 %doc README.md
 
 %changelog
+* Thu Sep 21 2023 Yuri N. Sedunov <aris@altlinux.org> 50-alt1
+- 50
+
 * Thu May 04 2023 Yuri N. Sedunov <aris@altlinux.org> 48-alt1
 - 48
 
