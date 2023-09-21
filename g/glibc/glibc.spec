@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.38.0.11.g1aed90c9c8
+Version: 2.38.0.23.0e1ef6779a
 Release: alt1
 Epoch: 6
 
@@ -364,7 +364,6 @@ pushd %buildtarget
 	%{?_enable_multiarch:--enable-multi-arch} \
 	--enable-obsolete-rpc \
 	--enable-kernel=%enablekernel \
-	--enable-tunables \
 	--enable-stack-protector=strong \
 	--enable-fortify-source=3 \
 	#
@@ -776,6 +775,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Wed Sep 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.23.0e1ef6779a-alt1
+- Updated to glibc-2.38-23-g0e1ef6779a.
+- Updated sanitize-env hardening patch.
+
 * Fri Sep 01 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.11.g1aed90c9c8-alt1
 - Updated to glibc-2.38-11-g1aed90c9c8.
 - Enabled ELF DT_HASH for shared objects and the dynamic loader (ALT#47150).
