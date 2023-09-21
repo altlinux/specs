@@ -3,13 +3,15 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.4.0
+Version: 5.0.1
 Release: alt1
 
 Summary: A Sphinx plugin to automatically document click-based applications
+
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/click-contrib/sphinx-click
+URL:     https://pypi.org/project/sphinx-click
+VCS:     https://github.com/click-contrib/sphinx-click
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -51,5 +53,8 @@ export PBR_VERSION="%version"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 21 2023 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt1
+- Automatically updated to 5.0.1.
+
 * Sat Apr 29 2023 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
 - Initial build for Sisyphus.
