@@ -34,11 +34,16 @@
 %def_without lld
 %endif
 
+%ifarch %e2k
+# error: cpio archive too big - 4690M
+%define optflags_debug -g0
+%endif
+
 %def_with jemalloc
 
 Name: blender
 Version: 3.6.2
-Release: alt1
+Release: alt1.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -71,7 +76,6 @@ Patch30: blender-3.4.1-gcc-13-fix.patch
 Patch31: blender-3.6.0-alt-remove-python2-dependency.patch
 Patch32: blender-3.6.0-alt-hiprt-enable.patch
 
-# FIXME! e2k patch is outdated
 Patch2000: blender-e2k-support.patch
 
 # Fixes from main
@@ -390,6 +394,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Thu Sep 21 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.2-alt1.1
+- Fixed build for Elbrus.
+
 * Mon Aug 28 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.2-alt1
 - Update to 3.6.2.
 - Cleanup applied patches.
