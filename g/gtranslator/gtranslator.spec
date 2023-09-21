@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 42
+%define ver_major 45
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
 
 %def_disable gtk_doc
 
 Name: gtranslator
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A GNOME po file editor with many bells and whistles.
@@ -23,19 +23,21 @@ Source: %name-%version.tar
 
 Requires: libgda6-sqlite gettext-tools
 
-%define gtk_ver 3.22.20
-%define gspell_ver 1.2.0
-%define gtksourceview_api_ver 4
-%define gtksourceview_ver 4.0.2
+%define gtk_ver 4.6.0
+%define adw_ver 1.1
+%define spell_ver 0.2.0
+%define gtksourceview_api_ver 5
+%define gtksourceview_ver 5.10.0
 %define xml_ver 2.4.12
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson yelp-tools gtk-doc libgtk+3-devel >= %gtk_ver
+BuildRequires: meson yelp-tools gtk-doc
+BuildRequires: libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: libgda6-devel libgtksourceview%gtksourceview_api_ver-devel >= %gtksourceview_ver
-BuildRequires: libsoup-devel gsettings-desktop-schemas-devel iso-codes-devel
-BuildRequires: libgspell-devel >= %gspell_ver libxml2-devel >= %xml_ver
-BuildRequires: libjson-glib-devel libdazzle-devel
-BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: libsoup3.0-devel gsettings-desktop-schemas-devel iso-codes-devel
+BuildRequires: libspelling-devel >= %spell_ver libxml2-devel >= %xml_ver
+BuildRequires: libjson-glib-devel
 
 %description
 gtranslator is a quite comfortable gettext po/po.gz/(g)mo files editor
@@ -48,7 +50,7 @@ GNU gettext/GNOME desktop world.
 Summary: %name header files
 Group: Development/C
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides header files needed for build %name plugins.
@@ -95,6 +97,9 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/gtk-doc/html/%name/}
 
 %changelog
+* Thu Sep 21 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
+- 45.1 (ported to GTK4/Libadwaita/libspelling)
+
 * Mon Apr 11 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 
