@@ -1,6 +1,6 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.9.22.1
+Version: 0.9.23
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -277,6 +277,11 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Fri Sep 22 2023 Andrey Cherepanov <cas@altlinux.org> 0.9.23-alt1
+- New version.
+- Security fixes:
+  + CVE-2023-40184: Improper handling of session establishment errors allows bypassing OS-level session restrictions
+
 * Tue May 23 2023 Andrey Cherepanov <cas@altlinux.org> 0.9.22.1-alt1
 - New version.
 
