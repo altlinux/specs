@@ -6,7 +6,7 @@
 %def_enable spell
 %def_disable ots
 %def_with goffice
-%def_with champlain
+%def_without champlain
 %def_with libical
 %def_without eds
 %def_with python
@@ -14,7 +14,7 @@
 
 Name: abiword
 Version: %ver_major.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -210,6 +210,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python3_sitelibdir/gi/overrides/*
 
 %changelog
+* Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt1.2
+- disabled libchamplain support to avoid libsoup{2.4,3.0} conflict
+
 * Thu Sep 08 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt1.1
 - temporarily disabled e-d-s support to avoid libsoup{2.4,3.0} conflict
 
