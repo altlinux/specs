@@ -18,13 +18,13 @@
 %def_without wayland
 %def_with x11
 %def_with rlottie
-%def_with gsl
+%def_without gsl
 %def_without ninja
 %def_without ffmpeg_static
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 4.8.4
+Version: 4.9.9
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -35,6 +35,9 @@ Url: https://telegram.org/
 
 # Source-url: https://github.com/telegramdesktop/tdesktop/releases/download/v%version/tdesktop-%version-full.tar.gz
 Source: %name-%version.tar
+
+# Source1-url: https://github.com/desktop-app/GSL/archive/refs/heads/main.zip
+Source1: %name-gsl-%version.tar
 
 Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
@@ -79,7 +82,10 @@ BuildRequires: qt6-base-devel >= %tg_qt6_version
 BuildRequires: qt6-svg-devel qt6-svg
 BuildRequires: qt6-charts-devel qt6-charts
 BuildRequires: qt6-5compat-devel
+BuildRequires: qt6-imageformats
 %{?_with_wayland:BuildRequires: qt6-wayland-devel}
+# needs for smiles and emojicons
+Requires: qt6-imageformats
 %else
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-base-devel >= %tg_qt5_version
@@ -127,7 +133,7 @@ BuildRequires: pkgconfig(xcb-screensaver)
 %endif
 
 #BuildRequires: libgtk+3-devel
-BuildRequires: libglibmm2.68-devel >= 2.76
+BuildRequires: libglibmm2.68-devel >= 2.77
 BuildRequires: gobject-introspection-devel
 
 BuildRequires: libopus-devel
@@ -162,6 +168,7 @@ BuildRequires: libXrandr-devel libXext-devel libXfixes-devel libXrender-devel li
 BuildRequires: libyuv-devel
 
 # Just to disable noise like Package 'libffi', required by 'gobject-2.0', not found
+# See https://bugzilla.altlinux.org/30001
 BuildRequires: libffi-devel libmount-devel libXdmcp-devel libblkid-devel
 BuildRequires: bzlib-devel libbrotli-devel gstreamer1.0-devel
 
@@ -241,14 +248,14 @@ or business messaging needs.
 
 
 %prep
-%setup
+%setup -a1
 %patch1 -p2
 %patch2 -p2
 %patch5 -p2
 %if_without qt6
 %patch6 -p2
 %endif
-%patch7 -p2
+#patch7 -p2
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
@@ -368,7 +375,7 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %_bindir/Telegram
 %_bindir/telegram
 %_desktopdir/*.desktop
-#%_datadir/dbus-1/services/*.service
+%_datadir/dbus-1/services/*.service
 %_datadir/metainfo/*.metainfo.xml
 %_iconsdir/hicolor/16x16/apps/telegram.png
 %_iconsdir/hicolor/32x32/apps/telegram.png
@@ -381,6 +388,14 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Fri Sep 22 2023 Vitaly Lipatov <lav@altlinux.ru> 4.9.9-alt1
+- new version 4.9.9 (with rpmrb script)
+
+* Wed Sep 20 2023 Vitaly Lipatov <lav@altlinux.ru> 4.9.8-alt1
+- new version 4.9.8 (with rpmrb script)
+- add Requires: qt6-imageformats
+- build with embedded GSL
+
 * Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 4.8.4-alt1
 - new version (4.8.4) with rpmgs script
 - add Provides: telegram
