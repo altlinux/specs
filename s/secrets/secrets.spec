@@ -1,13 +1,13 @@
 %def_enable snapshot
 
-%define ver_major 7
+%define ver_major 8
 %define pypi_name gsecrets
 %define xdg_name org.gnome.World.Secrets
 
-%def_enable check
+%def_disable check
 
 Name: secrets
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A password manager for GNOME
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.73.1
 %define gtk_ver 4.9
-%define adwaita_ver 1.2
+%define adwaita_ver 1.4
 
 Requires: typelib(Adw) = 1
 Requires: yelp
@@ -41,7 +41,7 @@ BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: python3(pykeepass) python3(pyotp) python3(validators) python3(zxcvbn)
-%{?_enable_check:BuildRequires: python3(pytest)}
+%{?_enable_check:BuildRequires: python3(pytest) python3(gi) typelib(Gtk) = 4.0}
 
 %description
 A password manager which integrates perfectly with the GNOME desktop and
@@ -60,7 +60,8 @@ databases.
 %find_lang --with-gnome %name
 
 %check
-%__meson_test
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+%__meson_test -v
 
 %files -f %name.lang
 %_bindir/%name
@@ -74,6 +75,9 @@ databases.
 %doc README*
 
 %changelog
+* Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 8.0-alt1
+- 8.0
+
 * Wed Jun 28 2023 Yuri N. Sedunov <aris@altlinux.org> 7.3-alt1
 - first build for Sisyphus
 

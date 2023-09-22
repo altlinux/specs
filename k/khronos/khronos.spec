@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name khronos
-%define ver_major 3.7
+%define ver_major 4.0
 %define rdn_name io.github.lainsce.Khronos
 
 Name: %_name
@@ -47,11 +47,15 @@ with notifications.
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/*/*.svg
+%_iconsdir/hicolor/symbolic/*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc AUTHORS README*
 
 
 %changelog
+* Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Wed Nov 30 2022 Yuri N. Sedunov <aris@altlinux.org> 3.7.0-alt1
 - first build for Sisyphus (3.7.0-15-gc97c3c2)
 
