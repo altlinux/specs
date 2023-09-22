@@ -70,7 +70,7 @@
 
 Name: branding-simply-linux
 Version: 10.1.990
-Release: alt2
+Release: alt3
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 %ifarch %ix86 x86_64
@@ -529,6 +529,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_datadir/install3/*
 
 %changelog
+* Fri Sep 22 2023 Mikhail Efremov <sem@altlinux.org> 10.1.990-alt3
+- slideshow: Fixed Russian slide 6.
+
 * Fri Sep 15 2023 Mikhail Efremov <sem@altlinux.org> 10.1.990-alt2
 - alterator: Change selection color.
 - alterator: Use hex color.
