@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt8
+Release: alt9
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Sep 12 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt9
+- small improvement (closes #47662)
+- update kfind screenshots (closes #47650)
+- fix discover screenshot (closes #47649)
+
 * Tue Sep 12 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt8
 - fix Discover to dist upgrade
 
