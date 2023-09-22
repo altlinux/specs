@@ -37,7 +37,7 @@
 
 Name: gnome-software
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -149,6 +149,12 @@ GNOME Software.
 ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %buildroot%_libdir/libgnomesoftware.so.%plugins_ver
 
+cat << _EOF_ > \
+%buildroot%_datadir/glib-2.0/schemas/00_org.gnome.software.gschema.override
+[org.gnome.software]
+official-repos=['altlinux']
+_EOF_
+
 %check
 %__meson_test
 
@@ -178,6 +184,7 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/glib-2.0/schemas/org.gnome.software.gschema.xml
+%_datadir/glib-2.0/schemas/00_org.gnome.software.gschema.override
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %_datadir/metainfo/%xdg_name.Plugin.Epiphany.metainfo.xml
 %{?_enable_flatpak:%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml}
@@ -194,6 +201,9 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1.1
+- added "altlinux" to "official-repos" (ALT #47678)
+
 * Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
