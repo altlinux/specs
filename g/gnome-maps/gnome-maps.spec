@@ -6,7 +6,7 @@
 
 Name: gnome-maps
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Maps is a map application for GNOME
 License: GPL-2.0 and LGPL-2.0
@@ -55,6 +55,7 @@ Requires: typelib(Rest) = %rest_api_ver
 Requires: typelib(Secret)
 Requires: typelib(Shumate)
 Requires: typelib(Soup) = %soup_api_ver
+Requires: typelib(Xdp) = 1.0
 #Requires: typelib(WebKit) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
@@ -100,6 +101,9 @@ sed -i 's/\(1.0.0\).beta/\1/' meson.build
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1.1
+- typelib(Xdp) required (ALT #47681)
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
