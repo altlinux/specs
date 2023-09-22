@@ -5,7 +5,7 @@
 
 Name:       hedgewars
 Version:    1.0.2
-Release:    alt1
+Release:    alt2
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -18,6 +18,8 @@ Packager:   Grigory Ustinov <grenka@altlinux.org>
 
 Source:     %name-%version.tar
 Patch:      fix_non_inline_ShiftWorld.patch
+# https://github.com/hedgewars/hw/pull/74
+Patch2:     ffmpeg6.0-support.patch
 
 Requires:   %name-data = %EVR
 Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
@@ -35,11 +37,8 @@ BuildRequires: libffi-devel libfreeglut-devel libgmp-devel liblua5.1-compat-deve
 BuildRequires: libphysfs-devel libqt5-quickshapes libpng-devel
 BuildRequires: libswresample-devel qt5-tools-devel
 BuildRequires: desktop-file-utils chrpath
-%ifarch %ix86
-BuildRequires: clang
-%endif
 
-ExclusiveArch: x86_64 %ix86
+ExclusiveArch: x86_64
 
 %description
 Each player controls a team of several hedgehogs. During the course of the
@@ -99,6 +98,7 @@ This package contains all the data files for %name.
 %prep
 %setup
 %patch -p2
+%patch2 -p1
 
 # Make sure that we don't use bundled libraries
 rm -r misc/liblua
@@ -150,6 +150,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Fri Sep 22 2023 Artyom Bystrov <arbars@altlinux.org> 1.0.2-alt2
+- Add ffmpeg 6.0 support
+
 * Tue Nov 29 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
 - Automatically updated to 1.0.2.
 
