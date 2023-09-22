@@ -5,14 +5,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.1
+Version: 1.4.2
 Release: alt1
 
 Summary: FastAPI-like dependency injection implementation
 License: Unlicense
 Group: Development/Python3
-Url: https://pypi.org/project/taskiq-dependencies
-Vcs: https://github.com/taskiq-python/taskiq.git
+Url: https://pypi.org/project/taskiq-dependencies/
+Vcs: https://github.com/taskiq-python/taskiq-dependencies
 
 BuildArch: noarch
 
@@ -27,7 +27,6 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %add_pyproject_deps_check_filter types-
-%add_pyproject_deps_check_filter autoflake
 %add_pyproject_deps_check_filter wemake-python-styleguide
 %add_pyproject_deps_check_filter yesqa
 %pyproject_builddeps_metadata
@@ -65,6 +64,9 @@ dependencies, and you can easily integrate it in any project.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 22 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.2-alt1
+- Updated to 1.4.2.
+
 * Tue Aug 08 2023 Anton Zhukharev <ancieg@altlinux.org> 1.3.1-alt1
 - Updated to 1.3.1.
 

@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Broker and result backend for taskiq
@@ -27,7 +27,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-%add_pyproject_deps_check_filter autoflake
 %add_pyproject_deps_check_filter wemake-python-styleguide
 %add_pyproject_deps_check_filter yesqa
 %pyproject_builddeps_metadata
@@ -62,6 +61,9 @@ backend based on redis.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 22 2023 Anton Zhukharev <ancieg@altlinux.org> 0.5.0-alt1
+- Updated to 0.5.0.
+
 * Wed Jun 14 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
 - New version.
 
