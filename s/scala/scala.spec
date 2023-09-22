@@ -12,11 +12,11 @@
 
 # Scala needs itself to compile.  Use this if the version in the repository
 # cannot build the current version.
-%def_with bootstrap
+%def_without bootstrap
 
 Name:           scala
 Version:        2.13.9
-Release:        alt1
+Release:        alt2
 Summary:        Hybrid functional/object-oriented language for the JVM
 
 ExcludeArch: %ix86 armh
@@ -469,6 +469,9 @@ install -p -m 644 man/man1/* %{buildroot}%{_mandir}/man1
 %doc target/html/*
 
 %changelog
+* Fri Sep 22 2023 Andrey Cherepanov <cas@altlinux.org> 2.13.9-alt2
+- Build without bootstrapping.
+
 * Fri Sep 22 2023 Andrey Cherepanov <cas@altlinux.org> 2.13.9-alt1
 - New version (fixes: CVE-2022-36944).
 
