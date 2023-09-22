@@ -1,4 +1,4 @@
-%define ver_major 0.102
+%define ver_major 0.103
 %define libname libmsi
 %define api_ver 1.0
 
@@ -99,11 +99,11 @@ This package provides GObject introspection devel data for the %libname.
 %doc NEWS README* TODO
 
 %files -n %libname
-%_libdir/%libname.so.*
+%_libdir/%libname-%api_ver.so.*
 
 %files -n %libname-devel
 %_includedir/%libname-%api_ver/
-%_libdir/%libname.so
+%_libdir/%libname-%api_ver.so
 %_pkgconfigdir/%libname-%api_ver.pc
 %_vapidir/%libname-%api_ver.vapi
 %_vapidir/%libname-%api_ver.deps
@@ -115,6 +115,9 @@ This package provides GObject introspection devel data for the %libname.
 %_girdir/Libmsi-%api_ver.gir
 
 %changelog
+* Tue Sep 19 2023 Yuri N. Sedunov <aris@altlinux.org> 0.103-alt1
+- 0.103
+
 * Tue Jun 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.102-alt1
 - 0.102
 
