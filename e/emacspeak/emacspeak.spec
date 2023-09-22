@@ -2,14 +2,14 @@
 %define _emacspeakdir %_datadir/emacs/site-lisp/emacspeak
 
 Name:       emacspeak
-Version:    55.0
+Version:    58.0
 Release:    alt1
 
 Summary:    Speech output interface to Emacs.
 License:    GPLv2+ and BSD
 Group:      Accessibility
 Url:        http://emacspeak.sourceforge.net
-# https://github.com/tvraman/emacspeak
+VCS:        https://github.com/tvraman/emacspeak
 
 Source0: %name-%version.tar
 Source1: %name-profile.sh
@@ -118,6 +118,10 @@ chmod -R go+rX %_emacspeakdir/media
 
 
 %changelog
+* Fri Sep 22 2023 Danil Shein <dshein@altlinux.org> 58.0-alt1
+- new version 58.0
+  + fix FTBFS
+
 * Thu Apr 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 55.0-alt1
 - 55.0 releaseed
 
