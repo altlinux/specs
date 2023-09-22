@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 5.3.0
-Release: alt1
+Release: alt2
 
 Summary: SIP SIMPLE implementation for Python
 License: GPL-3.0+
@@ -12,6 +12,7 @@ Url: https://github.com/AGProjects/python3-sipsimple
 Source: python3-%modulename-%version.tar
 Source1: deps.tar
 Patch: python-module-sipsimple-alt-add-arch-webrtc-defines.patch
+Patch1: fix_ffmpeg.patch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -44,6 +45,7 @@ types can be easily added by using an extensible high-level API.
 %setup -n python3-%modulename-%version
 tar xf %SOURCE1
 %patch -p1
+%patch1 -p1
 cp -at deps/pjsip/ -- /usr/share/gnu-config/config.*
 chmod +x deps/pjsip/*configure
 %ifarch %e2k
@@ -64,6 +66,9 @@ sed -i 's,^#elif defined(__aarch64__),& || defined(__e2k__),' \
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Sep 22 2023 Anton Vyatkin <toni@altlinux.org> 5.3.0-alt2
+- (NMU) Fix FTBFS.
+
 * Fri Jul 07 2023 Andrey Cherepanov <cas@altlinux.org> 5.3.0-alt1
 - New version.
 
