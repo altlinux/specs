@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    auditd-plugin-clickhouse-lite
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 Summary: A lightweight plugin for auditd daemon to send audit data to a Clickhouse database
 Group:   Monitoring
@@ -48,9 +48,7 @@ install -D -m0755 clickhouse-audit-export \
 		%buildroot/%_bindir/clickhouse-audit-export
 
 %check
-# A pre-check for bats:
-[ -d /dev/fd ] || exit 1
-BUILD=%_cmake__builddir bats test-suite.bats
+BUILD=%_cmake__builddir ./run-tests.sh normal bench
 
 %files
 %_prefix/libexec/%name
@@ -64,6 +62,13 @@ BUILD=%_cmake__builddir bats test-suite.bats
 %_bindir/clickhouse-audit-export
 
 %changelog
+* Fri Sep 22 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.7-alt1
+- Added tests to check the fix.
+- Fixed various potential loss of data.
+- Fix: Don't panic when no data have been read (EOF).
+- CRITICAL FIX: Don't assume the input buffer is always full.
+- Fix: Always panic if no end marker (newline) found.
+
 * Mon Jul 31 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.6-alt1
 - Fixed search for clickhouse-cpp library and use of its headers.
 - Added clickhouse-audit-utils package containing the audit record
