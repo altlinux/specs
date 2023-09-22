@@ -3,7 +3,7 @@
 
 Name:          gem-puppet
 Version:       7.24.0.161
-Release:       alt1
+Release:       alt2
 Summary:       A network tool for managing many disparate systems
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -130,7 +130,6 @@ with obviously discrete elements like packages, services, and files.
 
 %package       -n puppet
 Version:       7.24.0.161
-Release:       alt1
 Summary:       A network tool for managing many disparate systems executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppet
 Group:         System/Servers
@@ -138,6 +137,7 @@ BuildArch:     noarch
 
 Requires:      gem(puppet) = 7.24.0.161
 Requires:      shadow-change
+Provides:      puppet-agent = %EVR
 Requires(preun,post): %name = %EVR
 
 %description   -n puppet
@@ -154,7 +154,6 @@ with obviously discrete elements like packages, services, and files.
 
 %package       -n gem-puppet-doc
 Version:       7.24.0.161
-Release:       alt1
 Summary:       A network tool for managing many disparate systems documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet
 Group:         Development/Documentation
@@ -176,7 +175,6 @@ with obviously discrete elements like packages, services, and files.
 
 %package       -n gem-puppet-devel
 Version:       7.24.0.161
-Release:       alt1
 Summary:       A network tool for managing many disparate systems development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet
 Group:         Development/Ruby
@@ -254,6 +252,7 @@ install -Dp -m0755 %SOURCE1 %buildroot%_initrddir/puppet
 # Systemd files
 install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/puppet.service
 ln -s %_unitdir/puppet.service %buildroot%_unitdir/puppetagent.service
+ln -s %_unitdir/puppet.service %buildroot%_unitdir/puppet-agent.service
 
 install -Dp -m0644 conf/fileserver.conf %buildroot%_sysconfdir/puppet/fileserver.conf
 
@@ -332,6 +331,7 @@ sed -e "s,sample.server.name,$(hostname)," \
 %_initdir/puppet
 %_unitdir/puppet.service
 %_unitdir/puppetagent.service
+%_unitdir/puppet-agent.service
 %config(noreplace) %_tmpfilesdir/%gemname.conf
 %dir %_sysconfdir/puppet
 %attr(0771,_puppet,puppet) %dir %_sysconfdir/puppet/ssl
@@ -373,6 +373,10 @@ sed -e "s,sample.server.name,$(hostname)," \
 
 
 %changelog
+* Fri Sep 22 2023 Andrey Cherepanov <cas@altlinux.org> 7.24.0.161-alt2
+- Provides puppet-agent for puppet package.
+- Remove Release from subpackages.
+
 * Thu Apr 13 2023 Pavel Skrylev <majioa@altlinux.org> 7.24.0.161-alt1
 - ^ 7.24.0 -> 7.24.0p161
 
