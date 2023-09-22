@@ -1,5 +1,5 @@
 Name: autologin-sh-functions
-Version: 0.2.10
+Version: 0.2.11
 Release: alt1
 
 Summary: helper functions for autologin setup
@@ -28,6 +28,9 @@ install -pDm644 %name %buildroot%_bindir/%name
 # TODO: multiseat support (see autologin-sh-functions/TODO)?
 
 %changelog
+* Fri Sep 22 2023 Anton Midyukov <antohami@altlinux.org> 0.2.11-alt1
+- fix autologin for gdm >= 45
+
 * Fri Oct 14 2022 Anton Midyukov <antohami@altlinux.org> 0.2.10-alt1
 - fixed return code of al_backup function when config does not exist
 - overwrite AUTOLOGIN_CFG
