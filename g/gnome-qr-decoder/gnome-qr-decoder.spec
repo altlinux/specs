@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name decoder
-%define ver_major 0.3
+%define ver_major 0.4
 %define xdg_name com.belmoussaoui.Decoder
 
 %define optflags_lto %nil
@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: gnome-qr-%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Scan and Generate QR Codes
@@ -24,11 +24,11 @@ Patch: decoder-0.3.3-alt-cargo.toml-zbar.patch
 #Patch1: decoder-0.3.3-alt-cargo.lock-zbar.patch
 
 %define glib_ver 2.76
-%define gtk_ver 4.10.0
-%define adwaita_ver 1.3
+%define gtk_ver 4.11.0
+%define adwaita_ver 1.4
 %define zbar_ver 0.20
 %define gst_api_ver 1.0
-%define gst_ver 1.18
+%define gst_ver 1.20
 %define pipewire_ver 0.3
 
 Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
@@ -93,6 +93,9 @@ sed -i 's|"build.rs":"894b33392971ba9dad1dd4e45869478198f86e911e0b29f7e0d9fbf134
 
 
 %changelog
+* Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Tue Jul 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - first build for Sisyphus
 
