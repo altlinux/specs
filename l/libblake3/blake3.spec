@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libblake3
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 Summary: The official C implementations of the BLAKE3 cryptographic hash function
 License: Apache-2.0 or CC0-1.0
@@ -54,6 +54,7 @@ Requires(pre): gcc
 %prep
 %setup
 sed -i 's/"blake3.h"/<blake3.h>/' c/example.c
+# Now it's used only for testing.
 ln -s Makefile.altlinux c/GNUmakefile
 # aarch64 does not support `-mfpu=neon` flag, armh should not have it.
 sed -i '/blake3_neon.c.*BLAKE3_CFLAGS_NEON/d' c/CMakeLists.txt
@@ -98,6 +99,9 @@ rm example
 %files checkinstall
 
 %changelog
+* Thu Sep 21 2023 Vitaly Chikunov <vt@altlinux.org> 1.5.0-alt1
+- Update to 1.5.0 (2023-09-20).
+
 * Sun Jun 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.4.0-alt1
 - Update to 1.4.0 (2023-06-08).
 - spec: Switch to CMake when building.
