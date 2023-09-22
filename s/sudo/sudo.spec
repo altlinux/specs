@@ -1,9 +1,12 @@
 %define statusdir /var/run/control
 %def_enable python
+%def_with selinux
+%def_with audit
+
 
 Name: sudo
 Version: 1.9.14p1
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -33,8 +36,9 @@ BuildRequires: flex libpam-devel perl-podlators
 # Due check of man pages type
 BuildRequires: /usr/bin/nroff
 
-BuildRequires: libaudit-devel libcap-devel
-BuildRequires: libselinux-devel
+BuildRequires: libcap-devel
+%{?_with_selinux:BuildRequires: libselinux-devel}
+%{?_with_audit:BuildRequires: libaudit-devel}
 
 BuildRequires: python3-dev
 
@@ -107,8 +111,8 @@ configure_options='
 --with-editor=/bin/vitmp
 --with-sendmail=/usr/sbin/sendmail
 --with-sssd
---with-selinux
---with-linux-audit
+%{subst_with selinux}
+%{?_with_audit:--with-linux-audit}
 --disable-shared-libutil
 --enable-static-sudoers
 %{subst_enable python}
@@ -215,7 +219,9 @@ fi
 %attr(600,root,root) %config(noreplace) %_sysconfdir/pam.d/sudo
 %_bindir/sudoedit
 %dir %_libdir/sudo
+%if_with selinux
 %_libdir/sudo/sesh
+%endif
 %_libdir/sudo/*.so*
 %if_enabled python
 %exclude %_libdir/sudo/python_plugin.so
@@ -257,6 +263,9 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Fri Sep 22 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.9.14p1-alt2.1
+- NMU: Add knobs for building w/o selinux and audit (thx asheplyakov@).
+
 * Fri Jul 14 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.14p1-alt2
 - Disable build of shared libutil.
 - Enable build with static sudoers.
