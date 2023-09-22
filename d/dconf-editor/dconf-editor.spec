@@ -6,7 +6,7 @@
 %define xdg_name ca.desrt.dconf-editor
 
 Name: dconf-editor
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: dconf confuguration editor
@@ -75,6 +75,9 @@ cp %SOURCE1 po/ru.po
 %doc README*
 
 %changelog
+* Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt1
+- 45.0.1
+
 * Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
