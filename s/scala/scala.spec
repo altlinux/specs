@@ -1,56 +1,43 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-%filter_from_requires /osgi(org.apache.ant*/d
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 # Version of scala-altered objectweb-asm
-%global asmver 9.1.0
+%global asmver 9.5.0
 %global asmrel 1
 
 # Version of jquery bundled in scaladoc
-%global jqueryver 3.5.1
+%global jqueryver 3.7.1
 
 # Version of jline to use
-%global jlinever 3.18.0
+%global jlinever 3.22.0
 
 %global scaladir %{_datadir}/scala
 
 # Scala needs itself to compile.  Use this if the version in the repository
 # cannot build the current version.
-%bcond_with bootstrap
+%def_with bootstrap
 
 Name:           scala
-Version:        2.13.5
-Release:        alt2_1jpp11
+Version:        2.13.9
+Release:        alt1
 Summary:        Hybrid functional/object-oriented language for the JVM
-BuildArch:      noarch
+
+ExcludeArch: %ix86 armh
 
 # Used to generate OSGi data
-%global date    20210222
-%global seqnum  205452
-%global commit  8cc248dc1305df4c17bb6b5738b700b60c9b5437
+%global date    20230901
+%global seqnum  134811
+%global commit  80514f73a6c7db32df9887d9a5ca9ae921e25118
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global osgiver %{version}.v%{date}-%{seqnum}-VFINAL-%{shortcommit}
 %global majver  %(cut -d. -f1-2 <<< %{version})
 
-# The project as a whole is ASL 2.0.
-# The bundled ASM is BSD.
+# The project as a whole is Apache-2.0.
+# The bundled ASM is BSD-3-Clause.
 # The bundled jquery is MIT.
-License:        ASL 2.0 and BSD and MIT
-URL:            http://www.scala-lang.org/
+License:        Apache-2.0 and BSD-3-Clause and MIT
+Group: Development/Java
+URL:            https://www.scala-lang.org/
 # Source code
 Source0:        https://github.com/scala/scala/archive/v%{version}/%{name}-%{version}.tar.gz
-%if %{with bootstrap}
+%if_with bootstrap
 # Binary form, used to bootstrap
 Source1:        https://downloads.lightbend.com/scala/%{version}/%{name}-%{version}.tgz
 %endif
@@ -92,9 +79,9 @@ Patch0:         %{name}-tooltemplate.patch
 # Unbundle fonts from scaladoc
 Patch1:         %{name}-unbundle-fonts.patch
 
-# Adapt to name change from difflib to com.github.difflib
-Patch2:         %{name}-difflib.patch
-
+BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): java-11-openjdk-devel
+BuildRequires:  /proc rpm-build-java
 BuildRequires:  aqute-bnd
 BuildRequires:  font(lato)
 BuildRequires:  font(materialicons)
@@ -104,25 +91,22 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(io.github.java-diff-utils:java-diff-utils)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.java.dev.jna:jna)
+BuildRequires:  mvn(org.jline:jline-builtins)
 BuildRequires:  mvn(org.jline:jline-terminal-jna)
-BuildRequires:  mvn(org.jline:jline-reader)
-BuildRequires:  mvn(org.jline:jline-style)
 BuildRequires:  mvn(org.openjdk.jol:jol-core)
 
-%if %{without bootstrap}
+%filter_from_requires /osgi(org.apache.ant*/d
+
+%if_without bootstrap
 BuildRequires:  scala
 %endif
 
 Requires:       %{name}-reflect = %{version}-%{release}
-Requires:       font(lato)
-Requires:       font(materialicons)
-Requires:       font(opensans)
-Requires:       font(sourcecodepro)
 Requires:       javapackages-tools
 
 # scaladoc depends on a specific version of jquery, which may differ from the
 # version in the js-jquery package
-Provides:       bundled(jquery) = %{jqueryver}
+Provides:       bundled(js-jquery) = %{jqueryver}
 
 # The bundled version of objectweb-asm has been altered for Scala purposes.
 Provides:       bundled(objectweb-asm) = %{asmver}
@@ -131,63 +115,65 @@ Provides:       bundled(objectweb-asm) = %{asmver}
 Obsoletes:      ant-%{name} < 2.13.4
 Obsoletes:      %{name}-swing < 2.13.4
 
-%global _desc \
-Scala is a general purpose programming language designed to express\
-common programming patterns in a concise, elegant, and type-safe way.\
-It smoothly integrates features of object-oriented and functional\
+%description
+Scala is a general purpose programming language designed to express
+common programming patterns in a concise, elegant, and type-safe way.
+It smoothly integrates features of object-oriented and functional
 languages.  It is also fully interoperable with Java.
-Source44: import.info
-
-%description 
-%_desc
 
 This package contains the Scala compiler and bytecode parser.
 
 %package        library
-Group: Development/Java
 Summary:        Scala standard library
+Group: Development/Java
 
-%description    library 
-%_desc
+%description    library
+Scala is a general purpose programming language designed to express
+common programming patterns in a concise, elegant, and type-safe way.
+It smoothly integrates features of object-oriented and functional
+languages.  It is also fully interoperable with Java.
 
 This package contains the standard library for the Scala programming
 language.
 
 %package        reflect
-Group: Development/Java
 Summary:        Scala reflection library
+Group: Development/Java
 Requires:       %{name}-library = %{version}-%{release}
 
-%description    reflect 
-%_desc
+%description    reflect
+Scala is a general purpose programming language designed to express
+common programming patterns in a concise, elegant, and type-safe way.
+It smoothly integrates features of object-oriented and functional
+languages.  It is also fully interoperable with Java.
 
 This package contains the reflection library for the Scala programming
 language.
 
 %package        apidoc
-Group: Development/Java
 Summary:        Documentation for the Scala programming language
+Group: Development/Java
 Requires:       font(lato)
 Requires:       font(materialicons)
 Requires:       font(opensans)
 Requires:       font(sourcecodepro)
 
-%description    apidoc 
-%_desc
+%description    apidoc
+Scala is a general purpose programming language designed to express
+common programming patterns in a concise, elegant, and type-safe way.
+It smoothly integrates features of object-oriented and functional
+languages.  It is also fully interoperable with Java.
 
 This package provides reference and API documentation for the Scala
 programming language.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-
-%if %{with bootstrap}
+%setup
+%if_with bootstrap
 %setup -T -D -a 1
 %endif
 %setup -T -D -a 2
+%autopatch -p1
 
 fixtimestamp() {
   touch -r $1.orig $1
@@ -217,20 +203,25 @@ cp -p %{SOURCE6} src/scalap/pom.xml
 %pom_change_dep org.jline:jline org.jline:jline-terminal-jna src/compiler
 %pom_add_dep org.jline:jline-reader:%{jlinever} src/compiler
 %pom_add_dep org.jline:jline-style:%{jlinever} src/compiler
+%pom_add_dep org.jline:jline-builtins:%{jlinever} src/compiler
 
 %build
 export LC_ALL=C.UTF-8
 
-%if %{with bootstrap}
+%if_with bootstrap
 PATH=$PATH:$PWD/%{name}-%{version}/bin
 COMPJAR=$PWD/%{name}-%{version}/lib/scala-compiler.jar
 %else
 COMPJAR=%{_javadir}/scala/scala-compiler.jar
 %endif
 
-JAVAC_FLAGS="-g -parameters -source 11 -target 11"
-SCALAC_FLAGS="-g:vars -release 11 -J-Xmx512M -J-Xms32M"
-SCALADOC_FLAGS='-J-Xmx512M -J-Xms32M -doc-footer epfl -diagrams -implicits -groups -doc-version %{version} -doc-source-url https://github.com/scala/scala/tree/${versionProperties.value.githubTree}€{FILE_PATH_EXT}#L€{FILE_LINE}'
+JAVA_VER=$(java -version 2>&1 | sed -n 's/.*"\([[:digit:]]*\)[.[:digit:]]*[^[:digit:]]*".*/\1/p')
+JLINE_JARS=$(build-classpath jna jline/jline-terminal jline/jline-terminal-jna \
+    jline/jline-reader jline/jline-style jline/jline-builtins)
+JAVAC_FLAGS="-g -parameters -source $JAVA_VER -target $JAVA_VER"
+SCALAC_FLAGS="-g:vars -release $JAVA_VER -J-Xmx512M -J-Xms32M"
+SCALADOC_FLAGS='-J-Xmx512M -J-Xms32M -doc-footer epfl -diagrams -implicits -groups -doc-version %{version} -doc-source-url https://github.com/scala/scala/blob/v%{version}/src/€{FILE_PATH_EXT}#L€{FILE_LINE}'
+DIFFUTILS_JAR=$(build-classpath java-diff-utils)
 
 mkdir -p target/{compiler,library,manual,reflect,scalap,tastytest,testkit}
 mkdir -p target/html/{compiler,library,reflect}
@@ -245,27 +236,32 @@ cd src
 javac $JAVAC_FLAGS -d ../target/library -cp $(build-classpath junit) \
     $(find library -name \*.java)
 scalac $SCALAC_FLAGS -d ../target/library -classpath ../target/library \
-    $(find library -name \*.scala)
-scaladoc $SCALADOC_FLAGS -doc-title 'Scala Standard Library' \
-    -sourcepath $PWD/library -doc-no-compile $PWD/library-aux \
-    -skip-packages scala.concurrent.impl \
-    -doc-root-content $PWD/library/rootdoc.txt $(find library -name \*.scala) ||:
-mv scala ../target/html/library ||:
+    $(find library -name \*.scala | sort)
+
+# Skip docs to avoid jquery bug
+# scaladoc $SCALADOC_FLAGS -doc-title 'Scala Standard Library' \
+#     -sourcepath $PWD/library -doc-no-compile $PWD/library-aux \
+#     -skip-packages scala.concurrent.impl \
+#     -doc-root-content $PWD/library/rootdoc.txt \
+#     $(find library -name \*.scala | sort)
+# mv scala ../target/html/library
 
 # Build the reflection library
 javac $JAVAC_FLAGS -d ../target/reflect $(find reflect -name \*.java)
 scalac $SCALAC_FLAGS -d ../target/reflect -classpath ../target/reflect \
-    $(find reflect -name \*.scala)
-scaladoc $SCALADOC_FLAGS -doc-title 'Scala Reflection Library' \
-    -sourcepath $PWD/reflect \
-    -skip-packages scala.reflect.macros.internal:scala.reflect.internal:scala.reflect.io \
-    $(find reflect -name \*.scala) ||:
-mv scala ../target/html/reflect ||:
+    $(find reflect -name \*.scala | sort)
+
+# scaladoc $SCALADOC_FLAGS -doc-title 'Scala Reflection Library' \
+#    -sourcepath $PWD/reflect \
+#     -skip-packages scala.reflect.macros.internal:scala.reflect.internal:scala.reflect.io \
+#     $(find reflect -name \*.scala | sort)
+# mv scala ../target/html/reflect
 
 # Build the compiler
 javac $JAVAC_FLAGS -d ../target/compiler -cp $COMPJAR \
     $(find compiler -name \*.java)
-scalac $SCALAC_FLAGS -d ../target/compiler -classpath ../target/compiler \
+scalac $SCALAC_FLAGS -d ../target/compiler \
+    -classpath ../target/compiler:$DIFFUTILS_JAR \
     -feature $(find compiler -name \*.scala)
 
 # Build the interactive compiler
@@ -278,23 +274,24 @@ scalac $SCALAC_FLAGS -d ../target/compiler -classpath ../target/reflect \
 
 # Build the REPL frontend
 javac $JAVAC_FLAGS -d ../target/compiler $(find repl-frontend -name \*.java)
-scalac $SCALAC_FLAGS -d ../target/compiler -classpath ../target/compiler \
+scalac $SCALAC_FLAGS -d ../target/compiler \
+    -classpath ../target/compiler:$JLINE_JARS \
     -feature $(find repl-frontend -name \*.scala)
-scaladoc $SCALADOC_FLAGS -doc-title 'Scala Compiler' \
-    -sourcepath $PWD/compiler:$PWD/interactive:$PWD/repl:$PWD/repl-frontend \
-    -doc-root-content $PWD/compiler/rootdoc.txt \
-    -classpath $PWD/../target/library:$PWD/../target/reflect \
-    $(find compiler -name \*.scala) $(find interactive -name \*.scala) \
-    $(find repl -name \*.scala) $(find repl-frontend -name \*.scala) ||:
-mv scala ../target/html/compiler ||:
+# scaladoc $SCALADOC_FLAGS -doc-title 'Scala Compiler' \
+#     -sourcepath $PWD/compiler:$PWD/interactive:$PWD/repl:$PWD/repl-frontend \
+#    -doc-root-content $PWD/compiler/rootdoc.txt \
+#    -classpath $PWD/../target/library:$PWD/../target/reflect:$JLINE_JARS:$DIFFUTILS_JAR \
+#     $(find compiler -name \*.scala) $(find interactive -name \*.scala) \
+#     $(find repl -name \*.scala) $(find repl-frontend -name \*.scala)
+# mv scala ../target/html/compiler
 
 # Build the documentation generator
 # The order of the source files matters!  Some orderings end with this error:
 # error: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving <refinement of scala.tools.nsc.doc.model.ModelFactory with scala.tools.nsc.doc.model.ModelFactoryImplicitSupport with scala.tools.nsc.doc.model.ModelFactoryTypeSupport with scala.tools.nsc.doc.model.diagram.DiagramFactory with scala.tools.nsc.doc.model.CommentFactory with scala.tools.nsc.doc.model.TreeFactory with scala.tools.nsc.doc.model.MemberLookup>
 # I do not know why that happens.  This is one order that works.  There are
 # no doubt many more.
-scalac $SCALAC_FLAGS -d ../target/compiler \
-    $(find scaladoc -name \*.scala | sort)
+# scalac $SCALAC_FLAGS -d ../target/compiler \
+#     $(find scaladoc -name \*.scala | sort)
 
 # Build the bytecode parser
 scalac $SCALAC_FLAGS -d ../target/scalap $(find scalap -name \*.scala)
@@ -311,8 +308,7 @@ scalac $SCALAC_FLAGS -d ../target/testkit \
 # classes.  If we have sbt, then we don't need to build manually anyway.
 
 # Build the integration tests
-scalac $SCALAC_FLAGS -d ../target/tastytest \
-    -classpath $(build-classpath java-diff-utils) \
+scalac $SCALAC_FLAGS -d ../target/tastytest -classpath $DIFFUTILS_JAR \
     $(find tastytest -name \*.scala)
 
 # Build the man page builder
@@ -327,8 +323,8 @@ done
 cp -p src/library/rootdoc.txt target/library
 cp -p src/compiler/rootdoc.txt target/compiler
 cp -a src/compiler/templates target/compiler
-cp -a src/scaladoc/scala/tools/nsc/doc/html/resource \
-      target/compiler/scala/tools/nsc/doc/html
+# cp -a src/scaladoc/scala/tools/nsc/doc/html/resource \
+#       target/compiler/scala/tools/nsc/doc/html
 cp -p src/scalap/decoder.properties target/scalap
 
 # Build the compiler jar
@@ -345,7 +341,7 @@ sed -e "s/@@DATE@@/$propdate/;s/@@VER@@/%{version}/;s/@@OSGI@@/%{osgiver}/" \
   %{SOURCE12} > compiler/compiler.properties
 cp -p compiler/compiler.properties compiler/interactive.properties
 cp -p compiler/compiler.properties compiler/repl.properties
-cp -p compiler/compiler.properties compiler/repl-frontend.properties
+cp -p compiler/compiler.properties compiler/replFrontend.properties
 cp -p compiler/compiler.properties compiler/scaladoc.properties
 sed -e "s/@@DATE@@/$propdate/;s/@@VER@@/%{version}/;s/@@MAJVER@@/%{majver}/" \
   -e "s/@@ASMVER@@/%{asmver}/;s/@@ASMREL@@/%{asmrel}/" \
@@ -378,7 +374,7 @@ cd -
 # Build the man pages
 mkdir -p html man/man1
 cd src
-#scala -classpath ../target/manual:../target/scala-library.jar scala.tools.docutil.ManMaker 'fsc, scala, scalac, scaladoc, scalap' ../html ../man
+scala -classpath ../target/manual:../target/scala-library.jar scala.tools.docutil.ManMaker 'fsc, scala, scalac, scaladoc, scalap' ../html ../man
 cd -
 
 # Prepare to install
@@ -396,7 +392,8 @@ cd -
 # Create the binary scripts
 mkdir -p %{buildroot}%{_bindir}
 CLASSPATH=$(build-classpath jna jline/jline-terminal \
-            jline/jline-terminal-jna jline/jline-reader jline/jline-style)\
+            jline/jline-terminal-jna jline/jline-reader jline/jline-style \
+            jline/jline-builtins)\
 :%{_javadir}/scala/scala-library.jar\
 :%{_javadir}/scala/scala-reflect.jar\
 :%{_javadir}/scala/scala-compiler.jar
@@ -453,24 +450,31 @@ install -p -m 644 %{SOURCE17} %{buildroot}%{_datadir}/mime/packages/
 
 # Install the man pages
 install -d %{buildroot}%{_mandir}/man1
-#install -p -m 644 man/man1/* %{buildroot}%{_mandir}/man1
+install -p -m 644 man/man1/* %{buildroot}%{_mandir}/man1
 
 %files -f .mfiles
-%{_bindir}/*
-%{_datadir}/mime-info/*
-%{_datadir}/mime/packages/*
-#%{_mandir}/man1/*
+%{_bindir}/fsc
+%{_bindir}/scala*
+%{_datadir}/mime-info/scala.*
+%{_datadir}/mime/packages/scala-mime-info.xml
+%{_mandir}/man1/fsc.1*
+%{_mandir}/man1/scala*
 
 %files library -f .mfiles-library
-%doc --no-dereference LICENSE NOTICE doc/LICENSE.md doc/License.rtf
+%doc LICENSE NOTICE doc/LICENSE.md doc/License.rtf
 
 %files reflect -f .mfiles-reflect
 
 %files apidoc
 %doc target/html/*
-%doc --no-dereference LICENSE NOTICE doc/LICENSE.md doc/License.rtf
 
 %changelog
+* Fri Sep 22 2023 Andrey Cherepanov <cas@altlinux.org> 2.13.9-alt1
+- New version (fixes: CVE-2022-36944).
+
+* Fri Sep 22 2023 Andrey Cherepanov <cas@altlinux.org> 2.13.5-alt3
+- Build with added method knownSize
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 2.13.5-alt2_1jpp11
 - fixed build; build w/o scalsdoc
 

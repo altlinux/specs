@@ -18,7 +18,7 @@ BuildRequires: jpackage-default
 
 Name:           scalacheck
 Version:        1.15.4
-Release:        alt1_2jpp11
+Release:        alt1_3jpp11
 Summary:        Property-based testing for Scala
 
 License:        BSD
@@ -32,7 +32,7 @@ Source2:       %{name}.mf
 Source3:       Generate.java
 %endif
 
-BuildArch:      noarch
+ExcludeArch:    %ix86 armh
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
@@ -106,6 +106,9 @@ sbt package deliverLocal publishM2Configuration
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Sep 22 2023 Andrey Cherepanov <cas@altlinux.org> 1.15.4-alt1_3jpp11
+- NMU: Do not build for armh
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 1.15.4-alt1_2jpp11
 - new version
 
