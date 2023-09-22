@@ -3,11 +3,10 @@
 
 Name: strawberry
 Version: 1.0.18
-Release: alt1
+Release: alt2
 Summary: Audio player and music collection organizer
 
 # Main program: GPL-3.0-or-later
-# src/engine/gstengine and src/engine/xineengine: GPL-2.0-or-later
 # 3rdparty/taglib: LGPL-2.1
 # 3rdparty/singleapplication and src/widgets/qocoa_mac.h: MIT
 # 3rdparty/utf8-cpp: BSL
@@ -20,7 +19,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: https://github.com/strawberrymusicplayer/strawberry/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): desktop-file-utils rpm-build-ninja
-BuildRequires: boost-program_options-devel gettext-tools glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libfftw3-devel libgio-devel libgnutls-devel libgpod-devel libimobiledevice-devel libmtp-devel libplist-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libusbmuxd-devel libvlc-devel libxine2-devel
+BuildRequires: boost-program_options-devel gettext-tools glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libfftw3-devel libgio-devel libgnutls-devel libgpod-devel libimobiledevice-devel libmtp-devel libplist-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libusbmuxd-devel libvlc-devel
 BuildRequires: cmake libappstream-glib protobuf-compiler libusb-devel libgtest-devel libicu-devel
 %ifnarch s390 s390x
 BuildRequires: libgpod-devel
@@ -111,6 +110,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Fri Sep 22 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.18-alt2
+- removed superfluous xine build req
+
 * Mon Jul 03 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.18-alt1
 - New version 1.0.18.
 
