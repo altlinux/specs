@@ -1,6 +1,6 @@
 Name: autologin-sh-functions
 Version: 0.2.11
-Release: alt1
+Release: alt2
 
 Summary: helper functions for autologin setup
 License: GPLv2+
@@ -28,6 +28,9 @@ install -pDm644 %name %buildroot%_bindir/%name
 # TODO: multiseat support (see autologin-sh-functions/TODO)?
 
 %changelog
+* Fri Sep 22 2023 Anton Midyukov <antohami@altlinux.org> 0.2.11-alt2
+- Fix detect and disable /etc/gdm/custom.conf (gdm >= 45)
+
 * Fri Sep 22 2023 Anton Midyukov <antohami@altlinux.org> 0.2.11-alt1
 - fix autologin for gdm >= 45
 
