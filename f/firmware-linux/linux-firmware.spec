@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230907
+Version: 20230918
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,12 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Fri Sep 22 2023 Cronbuild Service <cronbuild@altlinux.org> 20230918-alt1
+- upstream changes (GIT 3672ccab):
+  + amd-ucode: Add note on fam19h warnings (thx Sandipan Das)
+  + i915: update MTL HuC to version 8.5.4 (thx Daniele Ceraolo Spurio)
+  + amdgpu: update DMCUB to 0.0.183.0 for various AMDGPU ASICs (thx Stylon Wang)
+
 * Thu Sep 07 2023 Cronbuild Service <cronbuild@altlinux.org> 20230907-alt1
 - upstream changes (GIT dfa11466):
   + add link to sc8280xp audioreach firmware (thx Srinivas Kandagatla)
