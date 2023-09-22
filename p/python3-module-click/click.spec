@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.1.6
+Version: 8.1.7
 Release: alt1
 Summary: Composable command line interface toolkit
 License: BSD-3-Clause
@@ -59,6 +59,9 @@ rm src/click/_winconsole.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Aug 18 2023 Stanislav Levin <slev@altlinux.org> 8.1.7-alt1
+- 8.1.6 -> 8.1.7.
+
 * Mon Jul 24 2023 Stanislav Levin <slev@altlinux.org> 8.1.6-alt1
 - 8.1.3 -> 8.1.6.
 
