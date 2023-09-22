@@ -1,5 +1,5 @@
 Name: erc
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -50,6 +50,11 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Fri Sep 22 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- ercat: add --quiet support
+- fixed 7z working with spaces in names
+- added assume Yes on all queries for unpack with 7z
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - erc-sh-archive: get_archive_type(): hide warning for missed file
 - erc: add support for repack tgz->tar in 7z mode
