@@ -1,5 +1,5 @@
 Name:     theme-mate-windows
-Version:  2.5
+Version:  2.6
 Release:  alt1
 
 Summary:  Mate theme for Windows-like layout
@@ -44,6 +44,9 @@ install -pDm644 windows.layout \
 %_datadir/mate-panel/layouts/windows.layout
 
 %changelog
+* Fri Sep 22 2023 Andrey Cherepanov <cas@altlinux.org> 2.6-alt1
+- Remove deprecated toggle-shaded keybinding.
+
 * Mon Feb 20 2023 Andrey Cherepanov <cas@altlinux.org> 2.5-alt1
 - Deleted obsoleted keys.
 
