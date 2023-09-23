@@ -1,13 +1,14 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 42
-%define beta .beta
+%define ver_major 45
+%define beta %nil
 %define old_name gnome-tweak-tool
 %define xdg_name org.gnome.tweaks
+%define pypi_name gtweak
 
 Name: gnome-tweaks
-Version: %ver_major
-Release: alt0.5%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A tool to customize advanced GNOME 3 options
 Group: Graphical desktop/GNOME
@@ -23,17 +24,19 @@ Patch: %name-3.27.4-alt-desktop.patch
 
 BuildArch: noarch
 
-%define gsds_ver 40
+%define gsds_ver 45
 %define handy_ver 1.5.0
 
-Requires: gnome-shell >= %ver_major nautilus
+Requires: gnome-settings-daemon >= %ver_major
 Requires: gsettings-desktop-schemas-devel >= %gsds_ver
+Requires: sound-theme-freedesktop
 Requires: typelib(Gtk) = 3.0 typelib(Handy) = 1
 
 Provides: %old_name = %version-%release
 Obsoletes: %old_name < 3.27.4
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
+BuildRequires: meson
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: python3-module-pygobject3-devel >= 3.10.0
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver typelib(Handy) = 1
@@ -71,8 +74,7 @@ Features:
 
 %files -f %name.lang
 %_bindir/%name
-%_libexecdir/%old_name-lid-inhibitor
-%python3_sitelibdir_noarch/gtweak/
+%python3_sitelibdir_noarch/%pypi_name/
 %_desktopdir/%xdg_name.desktop
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -81,6 +83,9 @@ Features:
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sat Sep 23 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sun Mar 06 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.5.beta
 - 42.beta
 
