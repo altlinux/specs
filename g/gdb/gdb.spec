@@ -6,7 +6,7 @@
 
 Name: gdb
 Version: 13.2.0.43.854f46b6377
-Release: alt1
+Release: alt2
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -243,6 +243,9 @@ fi
 %_libdir/lib*.a
 
 %changelog
+* Sat Sep 23 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.0.43.854f46b6377-alt2
+- Backported upstream commit to fix build with texinfo >= 7 (thx Enze Li).
+
 * Wed Aug 23 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.0.43.854f46b6377-alt1
 - Updated to gdb-13.2-release-43-g854f46b6377.
 - Enabled the gdbserver on riscv64 architecture, it is supported upstream
