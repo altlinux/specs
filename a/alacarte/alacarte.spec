@@ -1,7 +1,7 @@
-%define ver_major 3.44
+%define ver_major 3.50
 
 Name: alacarte
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Menu editor for GNOME
@@ -44,9 +44,12 @@ specification.
 %_datadir/%name/
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_man1dir/%name.1.*
-%doc README AUTHORS NEWS
+%doc README* AUTHORS NEWS
 
 %changelog
+* Sat Sep 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
+- 3.50.0
+
 * Tue Jul 11 2023 Yuri N. Sedunov <aris@altlinux.org> 3.44.3-alt1
 - 3.44.3
 

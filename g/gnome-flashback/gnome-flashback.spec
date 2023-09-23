@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.46
+%define ver_major 3.50
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
@@ -125,6 +125,7 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_libexecdir/%name-clipboard
 %_libexecdir/%name-media-keys
 %_libexecdir/%name-idle-monitor
+%_libexecdir/%name-polkit
 %_desktopdir/%name.desktop
 %_datadir/gnome-panel/layouts/%name.layout
 %_datadir/desktop-directories/X-GNOME-Flashback-Settings-System.directory
@@ -145,10 +146,12 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_xdgconfigdir/autostart/%name-nm-applet.desktop
 %_xdgconfigdir/autostart/%name-clipboard.desktop
 %_xdgconfigdir/autostart/%name-media-keys.desktop
+%_xdgconfigdir/autostart/%name-polkit.desktop
+
 %_userunitdir/%name.service
 %_userunitdir/%name.target
 %_userunitdir/gnome-session@gnome-flashback-metacity.target.d/session.conf
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %if_with compiz
 %files session-compiz
@@ -162,6 +165,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Sat Sep 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
+- 3.50.0
+
 * Tue Oct 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.0-alt1
 - 3.46.0
 

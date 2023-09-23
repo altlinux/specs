@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.46
+%define ver_major 3.50
 %define xdg_name org.gnome.gnome-applets
 
 %def_enable frequency_selector
@@ -91,9 +91,9 @@ Provides: %name-command = %EVR}
 Obsoletes: %name-timer < 3.37
 Provides: %name-timer = %EVR}
 
+BuildRequires(pre): rpm-build-gnome
 # From configure.ac
 BuildRequires: autoconf-archive
-#BuildRequires: intltool >= 0.35
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -107,7 +107,7 @@ BuildRequires: icon-theme-adwaita >= %icon_theme_ver
 BuildRequires: libX11-devel libXt-devel
 BuildRequires: libgucharmap-devel >= 2.33.2
 BuildRequires: libgweather4.0-devel >= %libgweather4_ver
-BuildRequires: rpm-build-gnome icon-theme-adwaita
+BuildRequires: icon-theme-adwaita
 BuildRequires: gnome-settings-daemon-devel
 BuildRequires: libxml2-devel libdbus-devel
 BuildRequires: libpolkit-devel xorg-cf-files yelp-tools
@@ -165,13 +165,12 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %find_lang --with-gnome --output=%name.lang %name %applets
 
 %files -f %name.lang
-%doc AUTHORS NEWS README
+
 %_libdir/gnome-panel/modules/org.gnome.gnome-applets.so
 %_datadir/%name
 %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_iconsdir/hicolor/*x*/*/*.png
 %_iconsdir/hicolor/scalable/*/*.svg
-%_datadir/dbus-1/system-services/org.gnome.CPUFreqSelector.service
 %_datadir/glib-2.0/schemas/%xdg_name.charpick.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.cpufreq.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.gweather.gschema.xml
@@ -182,8 +181,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_datadir/glib-2.0/schemas/%xdg_name.window-picker-applet.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-title.gschema.xml
 %_datadir/polkit-1/actions/org.gnome.cpufreqselector.policy
-%_sysconfdir/dbus-1/system.d/org.gnome.CPUFreqSelector.conf
 %_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
+%_datadir/dbus-1/system.d/org.gnome.CPUFreqSelector.conf
+%_datadir/dbus-1/system-services/org.gnome.CPUFreqSelector.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.geyes.gschema.xml
 %{?_enable_battstat:%_datadir/glib-2.0/schemas/%xdg_name.battstat.gschema.xml}
 %{?_enable_command:%_datadir/glib-2.0/schemas/%xdg_name.command.gschema.xml}
@@ -194,9 +194,14 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %attr(4711,root,root) %_bindir/cpufreq-selector
 %endif
 
+%doc AUTHORS NEWS README*
+
 %exclude %_libdir/gnome-panel/modules/*.la
 
 %changelog
+* Sat Sep 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
+- 3.50.0
+
 * Sun Oct 02 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.0-alt1
 - 3.46.0
 

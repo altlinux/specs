@@ -1,11 +1,10 @@
 %def_disable snapshot
 
-%define ver_major 3.46
+%define ver_major 3.50
 %define api_ver 3.0
 %define applet_api_ver 6.0
 %define xdg_name org.gnome.gnome-panel
 %def_disable static
-%def_enable gtk_doc
 %def_disable introspection
 %def_enable eds
 
@@ -38,7 +37,6 @@ Source: %name-%version.tar
 %define tp_glib_ver 0.14
 %define gweather4_ver 3.99
 %define rsvg_ver 2.36.2
-%define gtk_doc_ver 1.24.1
 %define systemd_ver 230
 
 Conflicts: gnome-power-manager < 2.15.3
@@ -53,8 +51,7 @@ Requires: tzdata
 BuildRequires: rpm-build-gnome >= 0.4
 
 # From configure.ac
-BuildRequires: autoconf-archive yelp-tools gtk-doc
-%{?_enable_gtk_doc:BuildRequires: gtk-doc >= %gtk_doc_ver}
+BuildRequires: autoconf-archive yelp-tools
 BuildRequires: libgnome-desktop3-devel >= %desktop_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: glib2-devel >= %glib_ver
@@ -109,15 +106,6 @@ Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-devel-static
 Panel static libraries for creating GNOME panels.
-
-%package -n lib%name-devel-doc
-Summary: GNOME Panel development documentation
-Group: Development/GNOME and GTK+
-Conflicts: lib%name-devel < %version
-BuildArch: noarch
-
-%description -n lib%name-devel-doc
-Development documentation for Gnome Panel Applet library.
 
 %package -n lib%name-gir
 Summary: GObject introspection data for the GNOME panel library
@@ -180,7 +168,7 @@ GObject introspection devel data for the GNOME Panel shared library.
 %_iconsdir/hicolor/scalable/apps/%{name}*.svg
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/*.xml
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %exclude %gnome_appletsdir/*.la
 
@@ -191,11 +179,6 @@ GObject introspection devel data for the GNOME Panel shared library.
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
-
-%if_enabled gtk_doc
-%files -n lib%name-devel-doc
-%_gtk_docdir/*
-%endif
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -211,6 +194,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Sat Sep 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
+- 3.50.0
+
 * Sun Oct 02 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.0-alt1
 - 3.46.0
 
