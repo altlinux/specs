@@ -1,7 +1,7 @@
 %define plugname syntastic
 Name:		vim-plugin-%plugname
 Version:	3.10.0
-Release:	alt2
+Release:	alt3
 Summary:	Syntax checking hacks for vim
 Group:		Editors
 License:	WTFPL
@@ -38,6 +38,13 @@ to the user. This can be done on demand, or automatically as files are saved.
 If syntax errors are detected, the user is notified and is happy because they
 didn't have to compile their code or execute their script to find them.
 
+  Note from upstream: "This project is no longer maintained. If you need a
+  syntax checking plugin for Vim you might be interested in Syntastic's
+  spiritual succesor, ALE. Although it shares no code with syntastic and it
+  takes a very different approach to design, ALE can be considered a natural
+  evolution of syntastic in terms of goals and functionality. Check it out, you
+  probably won't be disappointed." [2022]
+
 %prep
 %setup -q
 
@@ -64,6 +71,10 @@ done
 %vim_runtime_dir/syntax_checkers/*
 
 %changelog
+* Sat Sep 23 2023 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt3
+- Final (upstream) update to 3.10.0-36-g8d5e37c2 (2022-07-10).
+- This project is no longer maintained and deprecated in favor of ale.
+
 * Wed Feb 26 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.10.0-alt2
 - Porting to python3
 
