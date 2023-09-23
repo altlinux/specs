@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: honggfuzz
-Version: 2.5
-Release: alt3
+Version: 2.6
+Release: alt1
 Summary: Security oriented software fuzzer
 License: Apache-2.0
 Group: Development/Tools
@@ -70,6 +70,9 @@ hfuzz-gcc test.c -o t2 -fsanitize=address
 %docdir
 
 %changelog
+* Fri Sep 22 2023 Vitaly Chikunov <vt@altlinux.org> 2.6-alt1
+- Update to 2.6 (2023-09-21).
+
 * Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.5-alt3
 - Reverted the workaround introduced in the previous change, as long as the bug
   has been fixed in the binutils-devel 2.40-alt2 release.
