@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: Utility that helps with local TCP ports managment
 
@@ -14,7 +14,6 @@ URL: https://pypi.org/project/port-for
 VCS: https://github.com/kmike/port-for
 
 Source: %name-%version.tar
-Patch1: %oname-0.6.2-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -35,7 +34,6 @@ It can find an unused TCP localhost port and remember the association.
 
 %prep
 %setup
-%patch1 -p2
 
 %build
 %pyproject_build
@@ -53,6 +51,9 @@ It can find an unused TCP localhost port and remember the association.
 %python3_sitelibdir/%{pyproject_distinfo port_for}
 
 %changelog
+* Tue Sep 19 2023 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt2
+- Drop patch, that breaks using of this module.
+
 * Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1
 - Automatically updated to 0.7.1.
 
