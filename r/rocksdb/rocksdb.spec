@@ -16,7 +16,7 @@
 
 Name: rocksdb
 Version: 7.9.3
-Release: alt1
+Release: alt1.1
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
 # License is changed from "BSD-plus-Patents" (BSD-3-Clause) to GPL-2.0 AND Apache-2.0 in 2017.
@@ -91,6 +91,12 @@ Static library for rocksdb
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+sed -i 's/#error No timer .*/return __rdtsc();/;1i #include <x86intrin.h>' \
+	utilities/transactions/lock/range/range_tree/lib/portability/toku_time.h
+%add_optflags -mno-sse4.2
+sed -i 's/-msse4.2/-mno-sse4.2/' CMakeLists.txt
+%endif
 
 #rm -rf third-party/gtest-1.7.0
 #rm java/benchmark/src/main/java/org/rocksdb/benchmark/DbBenchmark.java
@@ -98,7 +104,6 @@ rm build_tools/gnu_parallel
 
 %build
 %cmake \
-    -DPORTABLE=ON \
     -DROCKSDB_BUILD_SHARED:BOOL=ON \
     %{?_with_jemalloc:-DWITH_JEMALLOC:BOOL=ON} \
     %{?_with_java:-DWITH_JNI:BOOL=ON} \
@@ -114,7 +119,9 @@ rm build_tools/gnu_parallel
     -DWITH_TOOLS:BOOL=ON \
     -DUSE_RTTI=ON \
     -DFAIL_ON_WARNINGS=OFF \
+%ifnarch %e2k
     -DPORTABLE:BOOL=ON \
+%endif
     -DWITH_TESTS=ON
 
 %cmake_build
@@ -145,6 +152,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri Sep 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.9.3-alt1.1
+- Fixed build for Elbrus.
+
 * Thu Aug 03 2023 Alexey Shabalin <shaba@altlinux.org> 7.9.3-alt1
 - 7.9.3
 
