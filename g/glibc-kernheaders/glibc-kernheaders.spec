@@ -1,4 +1,4 @@
-%define kernel_base_version 6.4
+%define kernel_base_version 6.5
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -32,7 +32,7 @@ Summary: Linux kernel C header files for use by glibc and other userspace softwa
 #  24 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
 #  25 /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
 # 165 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
-# 991 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+# 993 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 License: GPL-2.0-only with Linux-syscall-note
 Group: Development/Kernel
 Url: https://www.kernel.org/
@@ -50,7 +50,7 @@ Patch5: 0005-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
 Patch6: 0006-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
 
 BuildRequires: rpm-build-kernel rsync
-BuildRequires: %kernel_source = 1.0.0
+BuildRequires: %kernel_source
 
 %if 0%{!?mips:1}
 %define mips mips mipsn32 mips64 mipsel mipsn32el mips64el
@@ -300,6 +300,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sat Sep 23 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.5-alt1
+- v6.4 -> v6.5.
+
 * Sun Jun 25 2023 Dmitry V. Levin <ldv@altlinux.org> 6.4-alt1
 - v6.3 -> v6.4.
 
