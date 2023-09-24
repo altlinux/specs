@@ -14,7 +14,7 @@
 
 Name:    freecad
 Version: 0.20.2
-Release: alt3.1
+Release: alt3.2
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -159,6 +159,7 @@ sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
 %define optflags_debug -g0
 # too much warnings of this type
 %add_optflags -Wno-overloaded-virtual
+sed -i "s/FC_OS_WIN32/__EDG__/" src/Mod/Sketcher/App/GeoEnum.{h,cpp}
 %endif
 
 %build
@@ -251,6 +252,9 @@ rm -f %buildroot%_includedir/E57Format/*.h
 %ldir/doc
 
 %changelog
+* Sun Sep 24 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:0.20.2-alt3.2
+- Fixed build for Elbrus.
+
 * Sun Jul 16 2023 Ivan A. Melnikov <iv@altlinux.org> 1:0.20.2-alt3.1
 - NMU: drop obsolete BR on libf2c-ng-devel.
 
