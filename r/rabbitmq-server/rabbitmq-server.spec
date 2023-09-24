@@ -4,7 +4,7 @@
 %add_findreq_skiplist */ocf/resource.d/rabbitmq/*
 
 Name: rabbitmq-server
-Version: 3.12.3
+Version: 3.12.6
 Release: alt1
 
 Summary: The RabbitMQ server
@@ -155,6 +155,9 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Sat Sep 23 2023 Egor Ignatov <egori@altlinux.org> 3.12.6-alt1
+- 3.12.6
+
 * Fri Aug 18 2023 Egor Ignatov <egori@altlinux.org> 3.12.3-alt1
 - 3.12.3
 
