@@ -12,7 +12,7 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%global llvm_version 15.0
+%global llvm_version 16.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
@@ -35,7 +35,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        111.0.5563.64
+Version:        117.0.5938.62
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -80,20 +80,22 @@ Patch005: 0005-ALT-Use-rpath-link-and-absolute-rpath.patch
 Patch006: 0006-ALT-allow-to-override-clang-through-env-variables.patch
 Patch007: 0007-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch008: 0008-FEDORA-bootstrap-with-python3.patch
-Patch009: 0009-sql-make-VirtualCursor-standard-layout-type.patch
-Patch010: 0010-ALT-use-system-zlib.patch
-Patch011: 0011-ALT-use-system-libdrm-library.patch
-Patch012: 0012-GENTOO-Fix-gtk4-build.patch
-Patch013: 0013-DEBIAN-allow-building-against-system-libraries-even-.patch
-Patch014: 0014-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
-Patch015: 0015-DEBIAN-use-system-opus-library-instead-of-embedded.patch
-Patch016: 0016-DEBIAN-build-using-system-openjpeg.patch
-Patch017: 0017-DEBIAN-use-system-jpeg-library.patch
-Patch018: 0018-DEBIAN-use-system-libevent-library.patch
-Patch019: 0019-ALT-Use-system-libusb-libsecret-flatbuffers.patch
-Patch020: 0020-Use-yandex-search-as-default.patch
-Patch021: 0021-Support-VA-API-on-Linux-Ozone-Wayland.patch
-Patch022: 0022-GENTOO-EnumTable-crash.patch
+Patch009: 0009-ALT-use-system-zlib.patch
+Patch010: 0010-ALT-use-system-libdrm-library.patch
+Patch011: 0011-GENTOO-Fix-gtk4-build.patch
+Patch012: 0012-DEBIAN-allow-building-against-system-libraries-even-.patch
+Patch013: 0013-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
+Patch014: 0014-DEBIAN-use-system-opus-library-instead-of-embedded.patch
+Patch015: 0015-DEBIAN-build-using-system-openjpeg.patch
+Patch016: 0016-DEBIAN-use-system-jpeg-library.patch
+Patch017: 0017-DEBIAN-use-system-libevent-library.patch
+Patch018: 0018-ALT-Use-system-libusb-libsecret-flatbuffers.patch
+##Patch019: 0019-Use-yandex-search-as-default.patch
+Patch020: 0020-GENTOO-EnumTable-crash.patch
+Patch021: 0021-ARCH-Add-missing-header.patch
+Patch022: 0022-ALT-Do-not-hardcode-flatbuffer-version.patch
+Patch023: 0023-Add-missing-headers.patch
+Patch024: 0024-FEDORA-System-brotli.patch
 ### End Patches
 
 # Specific C-G patch
@@ -157,6 +159,7 @@ BuildRequires:  pkgconfig(lcms2)
 BuildRequires:  pkgconfig(libbrotlidec)
 BuildRequires:  pkgconfig(libcurl)
 BuildRequires:  pkgconfig(libdrm)
+BuildRequires:  pkgconfig(libevdev)
 BuildRequires:  pkgconfig(libevent)
 BuildRequires:  pkgconfig(libffi)
 BuildRequires:  pkgconfig(libjpeg)
@@ -197,7 +200,6 @@ BuildRequires:  pkgconfig(xtst)
 BuildRequires:  pkgconfig(libavcodec)
 BuildRequires:  pkgconfig(libavfilter)
 BuildRequires:  pkgconfig(libavformat)
-BuildRequires:  pkgconfig(libavresample)
 BuildRequires:  pkgconfig(libavutil)
 BuildRequires:  pkgconfig(opus)
 %endif
@@ -243,6 +245,7 @@ sed -i \
 	-e 's/"-ffile-compilation-dir=."//g' \
 	-e 's/"-no-canonical-prefixes"//g' \
 	-e 's/"-no-opaque-pointers",//g' \
+	-e 's/"-Wl,-mllvm,-disable-auto-upgrade-debug-info"//g' \
 	build/config/compiler/BUILD.gn
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
@@ -289,6 +292,7 @@ export PATH="$PWD/third_party/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
 
 FLAGS='-Wno-unknown-warning-option -Wno-deprecated-declarations'
+FLAGS+=' -DUSE_SYSTEM_MINIZIP'
 
 export CFLAGS="$FLAGS"
 export CXXFLAGS="$FLAGS"
@@ -321,13 +325,14 @@ gn_arg+=( use_bundled_weston=false )
 gn_arg+=( use_xkbcommon=true )
 gn_arg+=( use_icf=false )
 gn_arg+=( enable_linux_installer=false )
+gn_arg+=( enable_rust=false )
 gn_arg+=( optimize_webui=false )
 gn_arg+=( link_pulseaudio=true )
 gn_arg+=( enable_hangout_services_extension=true )
 gn_arg+=( treat_warnings_as_errors=false )
 gn_arg+=( fatal_linker_warnings=false )
 gn_arg+=( system_libdir=\"%_lib\" )
-gn_arg+=( enable_js_type_check=false )
+gn_arg+=( enable_nocompile_tests=false )
 
 # toolkit
 gn_arg+=( use_qt=false )
@@ -552,6 +557,122 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Sep 21 2023 Fr. Br. George <george@altlinux.org> 117.0.5938.62-alt1
+- GOST vesrion
+
+* Wed Sep 13 2023 Alexey Gladkov <legion@altlinux.ru> 117.0.5938.62-alt1
+- New version (117.0.5938.62).
+- Security fixes:
+  - CVE-2023-4863: Heap buffer overflow in WebP.
+  - CVE-2023-4900: Inappropriate implementation in Custom Tabs.
+  - CVE-2023-4901: Inappropriate implementation in Prompts.
+  - CVE-2023-4902: Inappropriate implementation in Input.
+  - CVE-2023-4903: Inappropriate implementation in Custom Mobile Tabs.
+  - CVE-2023-4904: Insufficient policy enforcement in Downloads.
+  - CVE-2023-4905: Inappropriate implementation in Prompts.
+  - CVE-2023-4906: Insufficient policy enforcement in Autofill.
+  - CVE-2023-4907: Inappropriate implementation in Intents.
+  - CVE-2023-4908: Inappropriate implementation in Picture in Picture.
+  - CVE-2023-4909: Inappropriate implementation in Interstitials.
+
+* Thu Aug 17 2023 Alexey Gladkov <legion@altlinux.ru> 116.0.5845.96-alt1
+- New version (116.0.5845.96).
+- Security fixes:
+  - CVE-2023-2312: Use after free in Offline.
+  - CVE-2023-4349: Use after free in Device Trust Connectors.
+  - CVE-2023-4350: Inappropriate implementation in Fullscreen.
+  - CVE-2023-4351: Use after free in Network.
+  - CVE-2023-4352: Type Confusion in V8.
+  - CVE-2023-4353: Heap buffer overflow in ANGLE.
+  - CVE-2023-4354: Heap buffer overflow in Skia.
+  - CVE-2023-4355: Out of bounds memory access in V8.
+  - CVE-2023-4356: Use after free in Audio.
+  - CVE-2023-4357: Insufficient validation of untrusted input in XML.
+  - CVE-2023-4358: Use after free in DNS.
+  - CVE-2023-4359: Inappropriate implementation in App Launcher.
+  - CVE-2023-4360: Inappropriate implementation in Color.
+  - CVE-2023-4361: Inappropriate implementation in Autofill.
+  - CVE-2023-4362: Heap buffer overflow in Mojom IDL.
+  - CVE-2023-4363: Inappropriate implementation in WebShare.
+  - CVE-2023-4364: Inappropriate implementation in Permission Prompts.
+  - CVE-2023-4365: Inappropriate implementation in Fullscreen.
+  - CVE-2023-4366: Use after free in Extensions.
+  - CVE-2023-4367: Insufficient policy enforcement in Extensions API.
+  - CVE-2023-4368: Insufficient policy enforcement in Extensions API.
+
+* Wed Jul 26 2023 Alexey Gladkov <legion@altlinux.ru> 115.0.5790.110-alt1
+- New version (115.0.5790.110).
+
+* Fri Jul 21 2023 Alexey Gladkov <legion@altlinux.ru> 115.0.5790.102-alt1
+- New version (115.0.5790.102).
+
+* Tue Jul 18 2023 Alexey Gladkov <legion@altlinux.ru> 114.0.5735.198-alt1
+- New version (114.0.5735.198).
+- Use LLVM16.
+- Security fixes:
+  - CVE-2023-3214: Use after free in Autofill payments.
+  - CVE-2023-3215: Use after free in WebRTC.
+  - CVE-2023-3216: Type Confusion in V8.
+  - CVE-2023-3217: Use after free in WebXR.
+  - CVE-2023-3420: Type Confusion in V8.
+  - CVE-2023-3421: Use after free in Media.
+  - CVE-2023-3422: Use after free in Guest View.
+
+* Sat Jun 03 2023 Alexey Gladkov <legion@altlinux.ru> 114.0.5735.90-alt1
+- New version (114.0.5735.90).
+- Security fixes:
+  - CVE-2023-2929: Out of bounds write in Swiftshader.
+  - CVE-2023-2930: Use after free in Extensions.
+  - CVE-2023-2931: Use after free in PDF.
+  - CVE-2023-2932: Use after free in PDF.
+  - CVE-2023-2933: Use after free in PDF.
+  - CVE-2023-2934: Out of bounds memory access in Mojo.
+  - CVE-2023-2935: Type Confusion in V8.
+  - CVE-2023-2936: Type Confusion in V8.
+  - CVE-2023-2937: Inappropriate implementation in Picture In Picture.
+  - CVE-2023-2938: Inappropriate implementation in Picture In Picture.
+  - CVE-2023-2939: Insufficient data validation in Installer.
+  - CVE-2023-2940: Inappropriate implementation in Downloads.
+  - CVE-2023-2941: Inappropriate implementation in Extensions API.
+
+* Wed May 03 2023 Alexey Gladkov <legion@altlinux.ru> 113.0.5672.63-alt1
+- New version (113.0.5672.63).
+- Security fixes:
+  - CVE-2023-2459: Inappropriate implementation in Prompts.
+  - CVE-2023-2460: Insufficient validation of untrusted input in Extensions.
+  - CVE-2023-2461: Use after free in OS Inputs.
+  - CVE-2023-2462: Inappropriate implementation in Prompts.
+  - CVE-2023-2463: Inappropriate implementation in Full Screen Mode.
+  - CVE-2023-2464: Inappropriate implementation in PictureInPicture.
+  - CVE-2023-2465: Inappropriate implementation in CORS.
+  - CVE-2023-2466: Inappropriate implementation in Prompts.
+  - CVE-2023-2467: Inappropriate implementation in Prompts.
+  - CVE-2023-2468: Inappropriate implementation in PictureInPicture.
+
+* Thu Apr 20 2023 Alexey Gladkov <legion@altlinux.ru> 112.0.5615.165-alt1
+- New version (112.0.5615.165).
+- Security fixes:
+  - CVE-2023-1810: Heap buffer overflow in Visuals.
+  - CVE-2023-1811: Use after free in Frames.
+  - CVE-2023-1812: Out of bounds memory access in DOM Bindings.
+  - CVE-2023-1813: Inappropriate implementation in Extensions.
+  - CVE-2023-1814: Insufficient validation of untrusted input in Safe Browsing.
+  - CVE-2023-1815: Use after free in Networking APIs.
+  - CVE-2023-1816: Incorrect security UI in Picture In Picture.
+  - CVE-2023-1817: Insufficient policy enforcement in Intents.
+  - CVE-2023-1818: Use after free in Vulkan.
+  - CVE-2023-1819: Out of bounds read in Accessibility.
+  - CVE-2023-1820: Heap buffer overflow in Browser History.
+  - CVE-2023-1821: Inappropriate implementation in WebShare.
+  - CVE-2023-1822: Incorrect security UI in Navigation.
+  - CVE-2023-1823: Inappropriate implementation in FedCM.
+  - CVE-2023-2033: Type Confusion in V8.
+  - CVE-2023-2133: Out of bounds memory access in Service Worker API.
+  - CVE-2023-2134: Out of bounds memory access in Service Worker API.
+  - CVE-2023-2135: Use after free in DevTools.
+  - CVE-2023-2136: Integer overflow in Skia.
+  - CVE-2023-2137: Heap buffer overflow in sqlite.
+
 * Wed Mar 15 2023 Fr. Br. George <george@altlinux.org> 111.0.5563.64-alt1
 - GOST version
 - Fix startup script (Closes: #45538)
