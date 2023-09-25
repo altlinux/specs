@@ -75,11 +75,15 @@
 %endif
 
 %ifarch %e2k
-%def_disable glusterfs
 %def_disable io_uring
 %else
-%def_enable glusterfs
 %def_enable io_uring
+%endif
+
+%ifarch %e2k armh
+%def_disable glusterfs
+%else
+%def_enable glusterfs
 %endif
 
 %define _samba_libdir  %_libdir
@@ -97,7 +101,7 @@
 %endif
 
 Name:    samba
-Version: 4.17.10
+Version: 4.17.11
 Release: alt1
 
 Group:   System/Servers
@@ -151,6 +155,7 @@ Requires: %name-dcerpc = %version-%release
 Requires: libwbclient = %version-%release
 %endif
 
+BuildRequires: alternatives
 BuildRequires: /proc
 BuildRequires: libe2fs-devel
 BuildRequires: libacl-devel
@@ -163,6 +168,7 @@ BuildRequires: perl-Parse-Yapp
 BuildRequires: perl-JSON
 BuildRequires: libpopt-devel
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: python3-devel
 BuildRequires: libreadline-devel
 BuildRequires: libldap-devel
@@ -187,6 +193,8 @@ BuildRequires: krb5-kdc
 %endif
 
 %if_with dc
+BuildRequires: flex
+BuildRequires: liblmdb-devel >= 0.9.16
 BuildRequires: python3-module-markdown
 BuildRequires: python3-module-dns
 %endif
@@ -196,7 +204,7 @@ BuildRequires: glibc-devel glibc-kernheaders
 BuildConflicts: setproctitle-devel
 BuildRequires: libiniparser-devel
 BuildRequires: libcups-devel
-BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
+BuildRequires: gawk libcap-devel libuuid-devel
 %{?_with_doc:BuildRequires: libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
 
 %if_with snapper
@@ -228,7 +236,9 @@ BuildRequires: python3-module-pyldb-devel
 %{?_enable_avahi:BuildRequires: libavahi-devel}
 %{?_enable_glusterfs:BuildRequires: libglusterfs-api-devel}
 %{?_with_libcephfs:BuildRequires: ceph-devel}
-%{?_enable_spotlight:BuildRequires: tracker-devel flex}
+
+# Build spotlight without tracker backend if enabled.
+#{?_enable_spotlight:BuildRequires: tracker-devel}
 
 %description
 Samba is the standard Windows interoperability suite of programs for Linux and Unix.
@@ -317,7 +327,9 @@ of SMB/CIFS shares and printing to SMB/CIFS printers.
 %package gpupdate
 Summary: Samba GPO support for clients
 Group: Networking/Other
+%ifnarch loongarch64
 Requires: cepces
+%endif
 Requires: certmonger
 Requires: libldb-modules-ldap = %version-%release
 Requires: python3-module-%name = %version-%release
@@ -1263,7 +1275,7 @@ control role-sambashare enabled
 %_samba_mod_libdir/vfs/*.so
 
 %if_with libcephfs
-%exclude %_samba_mod_libdir/vfs/ceph.so
+%exclude %_samba_mod_libdir/vfs/ceph*.so
 %endif
 
 %if_enabled glusterfs
@@ -1469,7 +1481,7 @@ control role-sambashare enabled
 %_man1dir/ldbrename.1*
 %_man1dir/ldbsearch.1*
 %endif
-%_samba_mod_libdir/libldb-cmdline.so
+%_samba_mod_libdir/libldb-cmdline-samba4.so
 %endif
 
 %files common-client
@@ -1759,7 +1771,7 @@ control role-sambashare enabled
 
 %if_with libcephfs
 %files vfs-cephfs
-%_samba_mod_libdir/vfs/ceph.so
+%_samba_mod_libdir/vfs/ceph*.so
 %if_with doc
 %_man8dir/vfs_ceph.8*
 %_man8dir/vfs_ceph_snapshots.8*
@@ -2105,6 +2117,51 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Sat Sep 23 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.11-alt1
+- Update to security release of Samba 4.17
+- smbd fileserver fixes (Samba#15419, Samba#15420, Samba#15430, Samba#15432,
+                         Samba#15417, Samba#15346, Samba#15453, Samba#15435):
+  + Weird filename can cause assert to fail in openat_pathref_fsp_nosymlink().
+  + reply_sesssetup_and_X() can dereference uninitialized tmp pointer.
+  + Missing return in reply_exit_done().
+  + TREE_CONNECT without SETUP causes smbd to use uninitialized pointer.
+  + Renaming results in NT_STATUS_SHARING_VIOLATION if previously attempted
+    to remove the destination.
+  + 2-3min delays at reconnect with smb2_validate_sequence_number:
+    bad message_id 2.
+  + File doesn't show when user doesn't have permission if
+    aio_pthread is loaded.
+  + Regression DFS not working with widelinks = true.
+
+- replication fixes (Samba#15401, Samba#15407)
+  + Improve GetNChanges to address some (but not all "Azure AD Connect")
+    syncronisation tool looping during the initial user sync phase.
+  + Samba replication logs show (null) DN.
+
+- tools fixes (Samba#15384, Samba#15441, Samba#15451):
+  + net ads lookup (with unspecified realm) fails
+  + samba-tool ntacl get segfault if aio_pthread appended.
+  + ctdb_killtcp fails to work with --enable-pcap and libpcap >= 1.9.1.
+
+- other protocol fixes (Samba#15446, Samba#9959, Samba#15463
+                        Samba#15449, Samba#15342, Samba#15427):
+  + DCERPC_PKT_CO_CANCEL and DCERPC_PKT_ORPHANED can't be parsed.
+  + Windows client join fails if a second container CN=System exists somewhere.
+  + macOS mdfind returns only 50 results.
+  + mdssvc: Do an early talloc_free() in _mdssvc_open().
+  + Spotlight sometimes returns no results on latest macOS.
+  + Spotlight results return wrong date in result list.
+
+- Compatibility fixes of spec (thx asheplyakov@):
+  + added missing BR: alternatives.
+  + added rpm-macros-alterinatives as a pre-requirement.
+  + added missing build-requirements: flex, liblmdb-devel.
+  + dropped obsolete build dependency on gtk+2.
+  + samba-client: libldb-cmdline-samba4.so.
+
+- Disabled tracker backend in spotlight (obsolete with version less than 3.x).
+- Disabled glusterfs on armh due it not supported on this architecture.
+
 * Sun Jul 23 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.10-alt1
 - Update to maintenance release of Samba 4.17:
   + Secure channel faulty since Windows 10/11 update 07/2023 (KB5028166).
