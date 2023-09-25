@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.10
+Version: 1.5.11
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -129,6 +129,19 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Sep 25 2023 Anton Midyukov <antohami@altlinux.org> 1.5.11-alt1
+- init: add setup-vconsole-kludge for aarch64 also
+- arm-rpi4: copy dtb from vendor broadcom dir, if exists
+- l10n: create the X11 settings for keyboard layoutsk instead Xkbmap
+- l10n: drop variable XKB_LED, XKB_VARIANTS
+- l10n: use alt+shift by default
+- regular.mk: remove unused targets
+- browser, live: drop use/browser/firefox/live, drop otter-browser
+- install2, live-install: fallback INSTALLER=regular
+- x11-autologin: fix setup autologin for gdm >= 45
+- install2: Add OEM mode for installer
+- latests commits for Alt Server (from @jqt4)
+
 * Thu Sep 07 2023 Anton Midyukov <antohami@altlinux.org> 1.5.10-alt1
 - alternatives: add x-terminal-emulator
 - regular.mk, regular-vm.mk: set KFLAVOUR=un-def for BRANCH=p10 on
