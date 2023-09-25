@@ -1,5 +1,5 @@
 Name: libXaw3d
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 
 Summary: A version of the MIT Athena widget set for X
@@ -65,6 +65,9 @@ for building programs that take full advantage of Xaw3d's features.
 %_libdir/pkgconfig/xaw3d.pc
 
 %changelog
+* Mon Sep 25 2023 Vladislav Zavjalov <slazav@altlinux.org> 1.6.5-alt1
+- 1.6.5
+
 * Sat Oct 22 2022 Vladislav Zavjalov <slazav@altlinux.org> 1.6.4-alt1
 - 1.6.4
 
