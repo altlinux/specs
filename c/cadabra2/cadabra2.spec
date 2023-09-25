@@ -1,5 +1,5 @@
 Name: cadabra2
-Version: 2.4.2.4
+Version: 2.4.4.1
 Release: alt1
 
 %def_with gui
@@ -12,9 +12,6 @@ Url: https://cadabra.science
 # https://github.com/kpeeters/cadabra2
 
 Source: %{name}-%{version}.tar
-Patch0: 0001-PYTHON_SITE_PATH_1.patch
-Patch1: 0002-PYTHON_SITE_PATH_2.patch
-Patch2: 0003-PYTHON_SITE_PATH_3.patch
 Patch3: 0004-nogit.patch
 
 BuildPreReq: rpm-macros-cmake
@@ -46,9 +43,6 @@ kernel for Jupyter
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 %patch3 -p1
 
 %build
@@ -102,6 +96,9 @@ kernel for Jupyter
 %endif
 
 %changelog
+* Mon Sep 25 2023 Vladislav Zavjalov <slazav@altlinux.org> 2.4.4.1-alt1
+- v.2.4.4.1
+
 * Mon Dec 12 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.4.2.4-alt1
 - v.2.4.2.4
 
