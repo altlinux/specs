@@ -1,9 +1,9 @@
 Name: sendmail
 
-%define tarbolversion 8.16.1
+%define tarbolversion 8.18.0.Alpha2
 
-Version: %tarbolversion
-Release: alt1
+Version: 8.18.0
+Release: alt0.Alpha2
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -46,7 +46,7 @@ Source34: %name-cyrus-imap-mailertable.mc
 Source36: %name-cyrus-imap-localrelay.mc
 
 # Patches section
-Patch0: %name-8.15.1-alt.patch
+Patch0: %name-8.18.0-alt.patch
 Patch1: %name-8.10.0-makemapman.patch
 Patch2: %name-8.16.0.45-smrsh.patch
 Patch3: %name-8.8.7-rmail.patch
@@ -497,6 +497,11 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Mon Sep 25 2023 Sergey Y. Afonin <asy@altlinux.org> 8.18.0-alt0.Alpha2
+- New version (with openssl 3.0.x support)
+- changed FEATURE(blacklist_recipients) to FEATURE(blocklist_recipients) in *.mc
+- updated site.config.m4 for Sendmail 8.18 (sasl)
+
 * Tue Jul 07 2020 Sergey Y. Afonin <asy@altlinux.org> 8.16.1-alt1
 - New version
 - removed _FFR_RFC7505 and _FFR_AUTH_FAIL_LOG_USER from site.config.m4:
