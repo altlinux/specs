@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.40.1
+Version: 0.40.2
 Release: alt1
 Summary: A formatter for Python files
 License: Apache-2.0
@@ -80,7 +80,7 @@ popd
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.rst CHANGELOG
+%doc README.md CHANGELOG.md
 %_bindir/yapf*
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
@@ -92,6 +92,9 @@ popd
 %vim_plugin_dir/*
 
 %changelog
+* Mon Sep 25 2023 Anton Zhukharev <ancieg@altlinux.org> 0.40.2-alt1
+- Updated to 0.40.2.
+
 * Wed Sep 06 2023 Anton Zhukharev <ancieg@altlinux.org> 0.40.1-alt1
 - Updated to 0.40.1.
 
