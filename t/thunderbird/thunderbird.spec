@@ -6,15 +6,15 @@
 %endif
 
 %define gst_version   1.0
-%define nspr_version  4.33
-%define nss_version   3.77
-%define rust_version  1.60.0
-%define cargo_version 1.60.0
-%define llvm_version  12.0
+%define nspr_version  4.35
+%define nss_version   3.86
+%define rust_version  1.65.0
+%define cargo_version 1.65.0
+%define llvm_version  15.0
 
 Name: 	 thunderbird
-Version: 102.12.0
-Release: alt2
+Version: 115.2.2
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -33,28 +33,8 @@ Source6: l10n.tar
 Source7: cbindgen-vendor.tar
 Source8: thunderbird-wayland.desktop
 
-Patch12: alt-use-vorbis-on-arm-too.patch
-Patch13: thunderbird-alt-fix-redefinition-double_t.patch
-
-Patch21: mozilla-1353817.patch
-Patch23: build-aarch64-skia.patch
-Patch29: thunderbird-60.7.2-alt-ppc64le-disable-broken-getProcessorLineSize-code.patch
-Patch30: thunderbird-68.2.2-alt-ppc64le-fix-clang-error-invalid-memory-operand.patch
-Patch31:  mozilla-1512162.patch
-# https://salsa.debian.org/mozilla-team/thunderbird/-/blob/debian/experimental/debian/patches/porting-armhf/Bug-1526653-Include-struct-definitions-for-user_vfp-and-u.patch
-Patch32: Bug-1526653-Include-struct-definitions-for-user_vfp-and-u.patch
-Patch33: Don-t-auto-disable-extensions-in-system-directories.patch
-Patch34: Set-javascript.options.showInConsole.patch
-Patch35: Allow-.js-preference-files-to-set-locked-prefs-with-lockP.patch
-Patch36: Bug-1556197-amend-Bug-1544631-for-fixing-mips32.patch
-Patch38: Bug-628252-os2.cc-fails-to-compile-against-GCC-4.6-m.patch
-Patch39: Load-dependent-libraries-with-their-real-path-to-avo.patch
-Patch40: Properly-launch-applications-set-in-HOME-.mailcap.patch
-Patch41: fix-function-nsMsgComposeAndSend-to-respect-Replo.patch
-Patch42: fix-packed_simd_2.patch
-Patch43: set-def-event_sizeof_time_t.patch
-Patch44: fix-unstable-name-collisions.patch
-Patch45: fix-build-failure-with-GCC-13.patch
+Patch01: thunderbird-alt-fix-redefinition-double_t.patch
+Patch02: thunderbird-115-disable-browser-option.patch
 
 ExcludeArch: armh
 
@@ -158,16 +138,13 @@ BuildRequires: pkgconfig(zlib)
 # Python requires
 BuildRequires: /dev/shm
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-modules-compiler
-BuildRequires: python-modules-logging
-BuildRequires: python-modules-sqlite3
-BuildRequires: python-modules-json
-
 BuildRequires: python3-base
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pip
-BuildRequires: python3-modules-sqlite3
+BuildRequires: python3(click)
+BuildRequires: python3(curses)
+BuildRequires: python3(hamcrest)
+BuildRequires: python3(pip)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(sqlite3)
 
 # Rust requires
 BuildRequires: /proc
@@ -250,27 +227,8 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 %prep
 %setup -q
 tar -xf %SOURCE6
-%patch12 -p2
-%patch13 -p2
-%patch21 -p2
-%patch23 -p2
-%patch29 -p2
-%patch30 -p2
-%patch31 -p2
-%ifarch %arm
-%patch32 -p1
-%endif
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch38 -p1
-%patch39 -p2
-%patch40 -p1
-# %patch42 -p2
-%patch43 -p2
-%patch44 -p2
-%patch45 -p2
+%patch01 -p2
+%patch02 -p2
 
 #echo %version > mail/config/version.txt
 
@@ -303,9 +261,8 @@ echo 'export NODEJS="/tmp/node-stdout-nonblocking-wrapper"' >> .mozconfig
 
 sed -i -e '\,hyphenation/,d' comm/mail/installer/removed-files.in
 
-# Begin change checksum for rust checksum file
-sed -i 's|73114a5c28472e77082ad259113ffafb418ed602c1741f26da3e10278b0bf93e|a88d6cc10ec1322b53a8f4c782b5133135ace0fdfcf03d1624b768788e17be0f|' ./third_party/rust/mp4parse/.cargo-checksum.json
-# Finish change checksum for rust checksum file
+rm -rf -- third_party/python/setuptools/setuptools*
+rm -rf -- third_party/python/click/click*
 
 %build
 %define optflags_lto %nil
@@ -587,6 +544,38 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Thu Sep 14 2023 Pavel Vasenkov <pav@altlinux.org> 115.2.2-alt1
+- New version.
+- Security fixes:
+  + CVE-2023-3600 Use-after-free in workers
+  + CVE-2023-3417 File Extension Spoofing using the Text Direction Override Character
+  + CVE-2023-4045 Offscreen Canvas could have bypassed cross-origin restrictions
+  + CVE-2023-4046 Incorrect value used during WASM compilation
+  + CVE-2023-4047 Potential permissions request bypass via clickjacking
+  + CVE-2023-4048 Crash in DOMParser due to out-of-memory conditions
+  + CVE-2023-4049 Fix potential race conditions when releasing platform objects
+  + CVE-2023-4050 Stack buffer overflow in StorageManager
+  + CVE-2023-4052 File deletion and privilege escalation through Firefox uninstaller
+  + CVE-2023-4054 Lack of warning when opening appref-ms files
+  + CVE-2023-4055 Cookie jar overflow caused unexpected cookie jar state
+  + CVE-2023-4056 Memory safety bugs fixed in Firefox 116, Firefox ESR 115.1, Firefox ESR 102.14, Thunderbird 115.1, and Thunderbird 102.14
+  + CVE-2023-4057 Memory safety bugs fixed in Firefox 116, Firefox ESR 115.1, and Thunderbird 115.1
+  + CVE-2023-4573 Memory corruption in IPC CanvasTranslator
+  + CVE-2023-4574 Memory corruption in IPC ColorPickerShownCallback
+  + CVE-2023-4575 Memory corruption in IPC FilePickerShownCallback
+  + CVE-2023-4576 Integer Overflow in RecordedSourceSurfaceCreation
+  + CVE-2023-4577 Memory corruption in JIT UpdateRegExpStatics
+  + CVE-2023-4051 Full screen notification obscured by file open dialog
+  + CVE-2023-4578 Error reporting methods in SpiderMonkey could have triggered an Out of Memory Exception
+  + CVE-2023-4053 Full screen notification obscured by external program
+  + CVE-2023-4580 Push notifications saved to disk unencrypted
+  + CVE-2023-4581 XLL file extensions were downloadable without warnings
+  + CVE-2023-4582 Buffer Overflow in WebGL glGetProgramiv
+  + CVE-2023-4583 Browsing Context potentially not cleared when closing Private Window
+  + CVE-2023-4584 Memory safety bugs fixed in Firefox 117, Firefox ESR 102.15, Firefox ESR 115.2, Thunderbird 102.15, and Thunderbird 115.2
+  + CVE-2023-4585 Memory safety bugs fixed in Firefox 117, Firefox ESR 115.2, and Thunderbird 115.2
+  + CVE-2023-4863 Heap buffer overflow in libwebp
+
 * Tue Jun 27 2023 Pavel Vasenkov <pav@altlinux.org> 102.12.0-alt2
 - Fixes: Unstable name collisions
          Build failure with GCC 13
