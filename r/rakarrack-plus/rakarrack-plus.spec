@@ -1,6 +1,6 @@
 Name:    rakarrack-plus
 Version: 1.2.3
-Release: alt1
+Release: alt1.1
 
 Summary: Rakarrack plus LV2s
 License: GPL-2.0
@@ -45,6 +45,10 @@ This package contains plugins and sample data for LV2 in Rakarrack-plus.
 
 %prep
 %setup
+%ifarch %e2k
+# error: unrecognized command line option
+sed -i 's/-fvect-cost-model//' CMakeLists.txt
+%endif
 
 %build
 %cmake \
@@ -73,5 +77,8 @@ This package contains plugins and sample data for LV2 in Rakarrack-plus.
 %_datadir/RakarrackPlus.lv2
 
 %changelog
+* Mon Sep 25 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.3-alt1.1
+- Fixed build for Elbrus
+
 * Wed Sep 06 2023 Artyom Bystrov <arbars@altlinux.org> 1.2.3-alt1
 - Initial build for Sisyphus
