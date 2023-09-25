@@ -2,7 +2,7 @@
 
 %define rdn_name org.gnome.Gnote
 %define _rdn_name org.gnome.gnote
-%define ver_major 44
+%define ver_major 45
 %define api_ver %ver_major
 %define beta %nil
 %define _libexecdir %_prefix/libexec
@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: gnote
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Note-taking application
@@ -24,22 +24,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 3.22.20
-%define gtkmm_ver 3.22.20
-%define glibmm_ver 2.62
-%define gspell_ver 1.6
+%define glibmm_ver 2.74
+%define gtkmm_ver 4.10
 %define libsecret_ver 0.8
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++
 BuildRequires: yelp-tools desktop-file-utils
-BuildRequires: pkgconfig(glibmm-2.4)  >= %glibmm_ver
-BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
-BuildRequires: pkgconfig(x11)
-BuildRequires: pkgconfig(gtkmm-3.0) >= %gtkmm_ver
-BuildRequires: pkgconfig(glib-2.0) >= 2.32
+BuildRequires: pkgconfig(glibmm-2.68)  >= %glibmm_ver
+BuildRequires: pkgconfig(gtkmm-4.0) >= %gtkmm_ver
 BuildRequires: pkgconfig(libxml-2.0) pkgconfig(libxslt)
-BuildRequires: pkgconfig(gspell-1) >= %gspell_ver
 BuildRequires: pkgconfig(libsecret-1) >= %libsecret_ver
 BuildRequires: pkgconfig(uuid)
 %{?_enable_check:BuildRequires: libunittest-cpp-devel}
@@ -81,6 +75,9 @@ and consumes fewer resources.
 %exclude %_libdir/lib%name-%api_ver.so
 
 %changelog
+* Mon Sep 25 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Fri Jul 21 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 
