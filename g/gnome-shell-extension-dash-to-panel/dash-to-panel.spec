@@ -1,6 +1,6 @@
 Name: gnome-shell-extension-dash-to-panel
-Version: 56
-Release: alt1.1
+Version: 59
+Release: alt1
 
 %define sname dash-to-panel
 %define eid dash-to-panel@jderose9.github.com
@@ -17,7 +17,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %sname-%version.tar
 
-Requires: gnome-shell >= 44
+Requires: gnome-shell >= 45
 
 %define gettext_domain dash-to-panel
 
@@ -30,9 +30,10 @@ similar to that found in KDE Plasma and Windows 7+. A separate dock is no longer
 
 %prep
 %setup  -n %sname-%version
+%__subst  's/"version": [[:digit:]][[:digit:]]*/"version": %version/'  metadata.json;
 
 %build
-VERSION=%version %make_build
+%make_build
 
 %install
 %makeinstall_std
@@ -43,6 +44,15 @@ VERSION=%version %make_build
 %doc README.md
 
 %changelog
+* Mon Sep 25 2023 Hihin Ruslan <ruslandh@altlinux.ru> 59-alt1
+- version v59
+
+* Sat Sep 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 56-alt2_git_2_d5790be
+- Update from github commit d5790be
+
+* Fri Sep 22 2023 Hihin Ruslan <ruslandh@altlinux.ru> 56-alt2_git_1_b86a1c9
+- Update from github commit b86a1c9
+
 * Fri Aug 25 2023 Hihin Ruslan <ruslandh@altlinux.ru> 56-alt1.1
 - Fix group
 
