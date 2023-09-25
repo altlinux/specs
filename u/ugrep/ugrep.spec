@@ -5,8 +5,8 @@
 %set_verify_elf_method strict
 
 Name: ugrep
-Version: 4.0.0
-Release: alt2.1
+Version: 4.2.0
+Release: alt1
 
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
 License: BSD-3-Clause
@@ -59,6 +59,9 @@ hardlink -v %buildroot%_bindir
 %_datadir/%name
 
 %changelog
+* Sat Sep 23 2023 Vitaly Chikunov <vt@altlinux.org> 4.2.0-alt1
+- Update to 4.2.0 (2023-09-23).
+
 * Tue Aug 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.0-alt2.1
 - Fixed build for Elbrus.
 
