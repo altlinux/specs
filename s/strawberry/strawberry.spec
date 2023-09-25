@@ -2,25 +2,26 @@
 %def_disable qt5
 
 Name: strawberry
-Version: 1.0.18
-Release: alt2
+Version: 1.0.20
+Release: alt1
 Summary: Audio player and music collection organizer
 
 # Main program: GPL-3.0-or-later
-# 3rdparty/taglib: LGPL-2.1
-# 3rdparty/singleapplication and src/widgets/qocoa_mac.h: MIT
-# 3rdparty/utf8-cpp: BSL
-# src/core/timeconstants.h and ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: APSL-2.0
-License: GPL-2.0-or-later and GPL-3.0-or-later and LGPL-2.1 and APSL-2.0 and MIT and BSL
+# 3rdparty/ksingleapplication: BSD-3-Clause and MIT
+# src/widgets/qocoa_mac.h: MIT
+# ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: APSL-2.0
+License: GPL-3.0-or-later and BSD-3-Clause and APSL-2.0 and MIT
 Group: Sound
 Url: https://www.strawberrymusicplayer.org/
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: https://github.com/strawberrymusicplayer/strawberry/archive/%version/%name-%version.tar.gz
 
-BuildRequires(pre): desktop-file-utils rpm-build-ninja
-BuildRequires: boost-program_options-devel gettext-tools glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libfftw3-devel libgio-devel libgnutls-devel libgpod-devel libimobiledevice-devel libmtp-devel libplist-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libusbmuxd-devel libvlc-devel
-BuildRequires: cmake libappstream-glib protobuf-compiler libusb-devel libgtest-devel libicu-devel
+BuildRequires(pre): desktop-file-utils rpm-build-ninja /usr/bin/appstream-util
+BuildRequires: cmake protobuf-compiler
+# BEGIN SourceDeps(oneline):
+BuildRequires: boost-devel ccache gcc-c++ gettext glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libX11-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgdk-pixbuf-devel libgio-devel libgmock-devel libgpod-devel libgtest-devel libicu-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libvlc-devel libxcb-devel
+# END SourceDeps(oneline)
 %ifnarch s390 s390x
 BuildRequires: libgpod-devel
 %endif
@@ -33,8 +34,7 @@ BuildRequires: qt6-tools-devel
 Requires: gst-plugins-good1.0 vlc-mini
 
 Provides: bundled(SPMediaKeyTap)
-Provides: bundled(singleapplication)
-Provides: bundled(macdeployqt)
+Provides: bundled(ksingleapplication)
 Provides: bundled(getopt)
 
 %description
@@ -110,6 +110,11 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Sep 25 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.20-alt1
+- New version 1.0.20.
+- Built with libebur128 support.
+- Cleanup list of buildrequires and licenses.
+
 * Fri Sep 22 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.18-alt2
 - removed superfluous xine build req
 
