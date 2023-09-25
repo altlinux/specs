@@ -1,6 +1,6 @@
 Name: libelfin
 Version: 0.3
-Release: alt2
+Release: alt3
 
 Summary: C++11 library for reading ELF binaries and DWARFv4 debug information.
 License: GPL
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Oct 17 2020
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel python-modules python2-base python3 python3-base python3-dev sh4 tzdata
-BuildRequires: gcc-c++ python3-module-mpl_toolkits python3-module-yieldfrom selinux-policy-alt
+BuildRequires: gcc-c++ python3-module-mpl_toolkits selinux-policy-alt
 
 %package devel
 Summary: Development files for programs which will use the Elfin library
@@ -87,6 +87,9 @@ install -pm644 examples/* %buildroot%docdir/examples/
 %_libdir/*.a
 
 %changelog
+* Mon Sep 25 2023 Artyom Bystrov <arbars@altlinux.org> 0.3-alt3
+- Fix FTBFS.
+
 * Fri Oct 28 2022 Michael Shigorin <mike@altlinux.org> 0.3-alt2
 - E2K: lcc 1.25.23 ftbfs workaround.
 - Minor spec cleanup.
