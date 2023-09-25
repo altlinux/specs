@@ -1,5 +1,5 @@
 Name: kooha
-Version: 2.2.3
+Version: 2.2.4
 Release: alt1
 Epoch: 1
 
@@ -9,11 +9,8 @@ License: GPL-3.0+
 Group: Video
 Url: https://github.com/SeaDve/Kooha
 
-Source: %url/archive/%version/Kooha-%version.tar.gz
+Source0: %url/archive/%version/Kooha-%version.tar.gz
 Source1: vendor.tar
-Patch1: 0001-feat-add-accel-for-windowclose.patch
-Patch2: 0001-fix-use-colon-instead-of-period-in-log-for-consistency.patch
-Patch3: 0001-buildcargo-Use-LTO.patch
 
 BuildPreReq: rpm-macros-meson rpm-build-rust
 BuildRequires: /proc
@@ -23,10 +20,8 @@ BuildRequires: meson glib2-devel libgio-devel libgtk4-devel libadwaita-devel gst
 %summary.
 
 %prep
-%setup -n Kooha-%version
+%setup -n Kooha-%version -a1
 %autopatch -p1
-# Unpacked vendor/ into the source (used .gear/tags).
-tar -xf %SOURCE1
 
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
@@ -72,6 +67,9 @@ EOF
 %_datadir/locale/zh_Hant/LC_MESSAGES/%name.mo
 
 %changelog
+* Mon Sep 25 2023 Leontiy Volodin <lvol@altlinux.org> 1:2.2.4-alt1
+- New version 2.2.4.
+
 * Tue Dec 27 2022 Leontiy Volodin <lvol@altlinux.org> 1:2.2.3-alt1
 - New version 2.2.3.
 
