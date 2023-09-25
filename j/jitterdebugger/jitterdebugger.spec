@@ -1,5 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name:     jitterdebugger
-Version:  0.3.0.60.gb90ff3a
+Version:  0.3.0.65.gf7beb27
 Release:  alt1
 
 Summary:  Real time response messaurement tool
@@ -30,15 +34,17 @@ Furthermore, the tool supports storing all samples for post processing.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
+CFLAGS="%optflags" \
 %make_build
 
 %install
-install -D jitterdebugger %buildroot/%_bindir/jitterdebugger
-install -D jitterplot     %buildroot/%_bindir/jitterplot
-install -D jittersamples  %buildroot/%_bindir/jittersamples
-install -D man/jitterdebugger.1 %buildroot/%_man1dir/jitterdebugger.1
-install -D man/jitterplot.1     %buildroot/%_man1dir/jitterplot.1
-install -D man/jittersamples.1  %buildroot/%_man1dir/jittersamples.1
+install -D jitterdebugger %buildroot%_bindir/jitterdebugger
+install -D jitterplot     %buildroot%_bindir/jitterplot
+install -D jittersamples  %buildroot%_bindir/jittersamples
+install -D man/jitterdebugger.1 %buildroot%_man1dir/jitterdebugger.1
+install -D man/jitterplot.1     %buildroot%_man1dir/jitterplot.1
+install -D man/jittersamples.1  %buildroot%_man1dir/jittersamples.1
 
 %files
 %doc README.rst LICENSE
@@ -48,6 +54,11 @@ install -D man/jittersamples.1  %buildroot/%_man1dir/jittersamples.1
 %_man1dir/*.1*
 
 %changelog
+* Mon Sep 25 2023 Vitaly Chikunov <vt@altlinux.org> 0.3.0.65.gf7beb27-alt1
+- Update to 0.3-65-gf7beb27 (2022-02-21) which is latest master branch update.
+- Note that this is master branch that is newer than 0.3.1 (last updated at
+  2019-02-19 and which we never followed).
+
 * Fri Mar 06 2020 Vitaly Chikunov <vt@altlinux.org> 0.3.0.60.gb90ff3a-alt1
 - jitterdebugger: Allow to override the affinity mask (github issue #18).
 
