@@ -1,12 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 0.4
+%define ver_major 0.5
 %define rdn_name app.drey.EarTag
 
 %def_enable check
 
 Name: eartag
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Small and simple audio file tag editor
@@ -41,7 +41,8 @@ BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 %{?_enable_check:BuildRequires: python3(pytest)
 BuildRequires: python3-module-pygobject3 typelib(Adw)
-BuildRequires: python3(mutagen) python3(magic) python3-module-Pillow}
+BuildRequires: python3(mutagen) python3(magic) python3-module-Pillow
+BuildRequires: python3(acoustid)}
 
 %description
 %summary
@@ -70,6 +71,9 @@ BuildRequires: python3(mutagen) python3(magic) python3-module-Pillow}
 %doc README*
 
 %changelog
+* Sun Sep 24 2023 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0-2-gd87ddf6
+
 * Fri Aug 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
 - 0.4.3
 
