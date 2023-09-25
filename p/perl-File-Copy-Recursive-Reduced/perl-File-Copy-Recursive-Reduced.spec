@@ -1,12 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name File-Copy-Recursive-Reduced
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Capture/Tiny.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Copy.pm) perl(File/Copy/Recursive.pm) perl(File/Find.pm) perl(File/Path.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(Path/Tiny.pm) perl(Test/Simple.pm) perl(parent.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.006
+Version: 0.007
 Release: alt1
 Summary: Recursive copying of files and directories within Perl 5 toolchain
 Group: Development/Perl
@@ -33,10 +33,13 @@ described as being part of the Perl toolchain.
 %perl_vendor_install
 
 %files
-%doc LICENSE README Todo Changes
+%doc README Todo Changes
 %perl_vendor_privlib/F*
 
 %changelog
+* Mon Sep 25 2023 Igor Vlasenko <viy@altlinux.org> 0.007-alt1
+- automated CPAN update
+
 * Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
 - automated CPAN update
 
