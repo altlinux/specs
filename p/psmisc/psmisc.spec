@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: psmisc
-Version: 23.5
+Version: 23.6
 Release: alt1
 
 Summary: Miscellaneous utilities that use proc filesystem
@@ -143,6 +143,9 @@ make check
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Wed Dec 28 2022 Vitaly Chikunov <vt@altlinux.org> 23.6-alt1
+- Update to v23.6 (2022-12-09).
+
 * Tue May 10 2022 Vitaly Chikunov <vt@altlinux.org> 23.5-alt1
 - Update to v23.5 (2022-05-09).
 
