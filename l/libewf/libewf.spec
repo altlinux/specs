@@ -1,6 +1,6 @@
 Name: libewf
 Version: 20171104
-Release: alt1
+Release: alt2
 
 Summary: Library and tools to support the Expert Witness Compression Format
 
@@ -79,6 +79,9 @@ find %buildroot -name '*.la' -delete
 %python3_sitelibdir/*.so
 
 %changelog
+* Mon Sep 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20171104-alt2
+- NMU: fixed FTBFS with OpenSSL 3.
+
 * Wed Sep 11 2019 Grigory Ustinov <grenka@altlinux.org> 20171104-alt1
 - Build new version.
 - Transfer to python3.
