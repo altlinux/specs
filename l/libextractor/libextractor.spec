@@ -5,7 +5,7 @@
 
 Name: libextractor
 Version: 1.11
-Release: alt1
+Release: alt2
 
 Summary: libextractor is a simple library for keyword extraction
 
@@ -29,7 +29,7 @@ BuildRequires: iso-codes-devel libgif-devel libarchive-devel libtidy-devel
 BuildRequires: libjpeg-devel gst-plugins1.0-devel
 %if_enabled ffmpeg
 BuildRequires: libavcodec-devel libavutil-devel
-BuildRequires: libavformat-devel libavresample-devel libswscale-devel
+BuildRequires: libavformat-devel libswresample-devel libswscale-devel
 %endif
 BuildRequires: makeinfo
 
@@ -100,6 +100,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Mon Sep 25 2023 Artyom Bystrov <arbars@altlinux.org> 1.11-alt2
+- Fix build with libswresample
+
 * Mon Feb 01 2021 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt1
 - 1.11
 
