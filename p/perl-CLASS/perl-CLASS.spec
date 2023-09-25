@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-CLASS
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 
 Summary: Alias for __PACKAGE__
@@ -46,10 +46,13 @@ $CLASS has the additional benefit of working in strings.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README Changes CONTRIBUTING.md
 %perl_vendor_privlib/CLASS*
 
 %changelog
+* Mon Sep 25 2023 Igor Vlasenko <viy@altlinux.org> 1.1.8-alt1
+- automated CPAN update
+
 * Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 1.1.7-alt1
 - automated CPAN update
 
