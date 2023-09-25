@@ -18,7 +18,7 @@ BuildRequires: perl(Future/AsyncAwait/ExtensionBuilder.pm) perl(Test2/V0.pm) per
 %bcond_with perl_Syntax_Keyword_Dynamically_enables_optional_test
 
 Name:           perl-Syntax-Keyword-Dynamically
-Version:        0.12
+Version:        0.13
 Release:        alt1
 Summary:        Dynamically change the value of a variable
 License:        GPL+ or Artistic
@@ -143,6 +143,9 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 %{_libexecdir}/%{name}
 
 %changelog
+* Mon Sep 25 2023 Igor Vlasenko <viy@altlinux.org> 0.13-alt1
+- automated CPAN update
+
 * Mon Mar 06 2023 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
 - automated CPAN update
 
