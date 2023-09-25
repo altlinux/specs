@@ -1,6 +1,6 @@
 %global import_path github.com/fullstorydev/grpcurl
 Name:     grpcurl
-Version:  1.8.7
+Version:  1.8.8
 Release:  alt1
 
 Summary:  Like cURL, but for gRPC: Command-line tool for interacting with gRPC servers
@@ -45,6 +45,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Mon Sep 25 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.8.8-alt1
+- new version 1.8.8
+
 * Fri Nov 25 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.8.7-alt1
 - new version 1.8.7
 
