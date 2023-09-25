@@ -1,21 +1,31 @@
-%global optflags_lto %nil
+%define _unpackaged_files_terminate_build 1
+
 %def_disable poll
 %def_enable epoll
 %def_enable ecap
 %def_enable esi
 %def_with nettle
+
+# epoll is enabled by default, so disable it if plain poll is enabled
+%{?_enable_poll:%force_disable epoll}
+
 # gnutls for squidclient
 %def_with gnutls
 %def_with systemd
 
-Name: squid
-Version: 6.1
-Release: alt1
+%global optflags_lto %nil
+
 %define langpack_ver 20230225
+
+Name: squid
+Version: 6.3
+Release: alt1
+
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
 Url: http://www.squid-cache.org/
+
 Source0: %name-%version.tar
 Source1: %name-langpack-%langpack_ver.tar
 Source2: %name.init
@@ -27,30 +37,49 @@ Source7: %name.service
 Source8: %name.tmpfiles
 
 Patch: %name-%version-%release.patch
+
+Requires: net-snmp-mibs
+Conflicts: %name-conf-host2cat < 1.01-alt5
+
 Obsoletes: %name-novm < %EVR
 Obsoletes: %name-pinger < %EVR
-Requires: net-snmp-mibs
+
 Provides: %name-common = %version-%release
 Obsoletes: %name-common < %EVR
+
 Provides: %name-server = %version-%release
 Obsoletes: %name-server < %EVR
+
 Provides: %name-cachemgr = %version-%release
 Obsoletes: %name-cachemgr < %EVR
-Conflicts: %name-conf-host2cat < 1.01-alt5
+
 Provides: %name-conf-default = %version-%release
 Obsoletes: %name-conf-default < %EVR
-
-# epoll is enabled by default, so disable it if plain poll is enabled
-%{?_enable_poll:%force_disable epoll}
 
 BuildConflicts: bind-devel
 BuildRequires(pre): rpm-build >= 4.0.4-alt10
 
-# Automatically added by buildreq on Fri Nov 30 2018 (-bb)
-# optimized out: ca-trust cppunit ed elfutils glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcom_err-devel libcrypt-devel libnfnetlink-devel libp11-kit libsasl2-3 libstdc++-devel perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators pkg-config python-base sh3 xz
-# BuildRequires: cppunit-devel doxygen gcc-c++ libcap-devel libdb4-devel libecap-devel libexpat-devel libgnutls-devel libkrb5-devel libldap-devel libltdl7-devel libnetfilter_conntrack-devel libnettle-devel libpam-devel libsasl2-devel libssl-devel libxml2-devel linuxdoc-tools perl-Crypt-OpenSSL-X509 perl-DBI perl-Digest-SHA perl-Pod-Usage perl-URI samba-client samba-winbind-clients
+BuildRequires: gcc-c++ cppunit-devel doxygen linuxdoc-tools
 
-BuildRequires: cppunit-devel doxygen gcc-c++ libcap-devel libtdb-devel libkrb5-devel libldap-devel libltdl7-devel libnetfilter_conntrack-devel libpam-devel libsasl2-devel libssl-devel linuxdoc-tools perl-Crypt-OpenSSL-X509 perl-DBI perl-Digest-SHA perl-Pod-Usage perl-URI samba-client samba-winbind-clients
+BuildRequires: libcap-devel
+BuildRequires: libpam-devel
+BuildRequires: libssl-devel
+BuildRequires: libtdb-devel
+BuildRequires: libkrb5-devel
+BuildRequires: libldap-devel
+BuildRequires: libltdl7-devel
+BuildRequires: libsasl2-devel
+BuildRequires: libnetfilter_conntrack-devel
+
+BuildRequires: perl-DBI
+BuildRequires: perl-URI
+BuildRequires: perl-Pod-Usage
+BuildRequires: perl-Digest-SHA
+BuildRequires: perl-Crypt-OpenSSL-X509
+
+BuildRequires: samba-client
+BuildRequires: samba-winbind-clients
+
 %{?_enable_ecap:BuildRequires: libecap-devel >= 1.0}
 %{?_enable_esi:BuildRequires: libxml2-devel libexpat-devel}
 %{?_with_nettle:BuildRequires: libnettle-devel}
@@ -298,6 +327,10 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Mon Sep 18 2023 Egor Ignatov <egori@altlinux.org> 6.3-alt1
+- 6.3
+- Fix squidclient couldn't access mgr:info (closes: #47423)
+
 * Thu Aug 24 2023 Egor Ignatov <egori@altlinux.org> 6.1-alt1
 - 6.1
 
