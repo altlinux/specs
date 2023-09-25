@@ -1,5 +1,5 @@
 Name: linux-gpib
-Version: 4.3.5
+Version: 4.3.6
 Release: alt1
 
 Summary: Support package for GPIB (IEEE 488) hardware
@@ -109,6 +109,9 @@ install -pDm0644 %SOURCE1 %kernel_srcdir/%name-%version.tar.bz2
 %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Sep 25 2023 Vladislav Zavjalov <slazav@altlinux.org> 4.3.6-alt1
+- v4.3.6
+
 * Fri Apr 21 2023 Vladislav Zavjalov <slazav@altlinux.org> 4.3.5-alt1
 - v4.3.5
 
