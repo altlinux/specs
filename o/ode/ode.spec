@@ -4,7 +4,7 @@
 
 Name: ode
 Version: 0.16.2
-Release: alt1
+Release: alt2
 Summary: The Open Dynamics Engine (ODE)
 License: LGPLv2.1+
 Group: Graphics
@@ -12,6 +12,7 @@ Url: http://www.ode.org/
 
 # https://bitbucket.org/odedevs/ode.git
 Source: %name-%version.tar
+Patch3500: support-loongarch64.patch
 # http://www.ode.org/ode-latest-userguide.pdf
 Source1: ode-latest-userguide.pdf
 # http://www.ode.org/joints.pdf
@@ -94,6 +95,7 @@ This package contains demos of ODE.
 
 %prep
 %setup
+%patch3500 -p1
 
 touch libccd/NEWS libccd/AUTHORS libccd/ChangeLog
 
@@ -165,6 +167,9 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 %_libdir/%name/
 
 %changelog
+* Mon Sep 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.16.2-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Tue Mar 01 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.2-alt1
 - Updated to upstream version 0.16.2.
 
