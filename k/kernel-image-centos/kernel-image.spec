@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 366
+%define centos_release 368
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -654,6 +654,27 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Sep 25 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.368-alt1.el9
+- Updated to kernel-5.14.0-368.el9 (fixes: CVE-2022-45934):
+  + Bluetooth: L2CAP: Fix u8 overflow
+  + Draft: Merge tag 'kernel-5.14.0-362.4.1.el9_3' from 9.3
+  + Expose TPMI interface for SST
+  + Merge commit '77fd6b887cd98bac29adffaa04362d033174698e'
+  + Merge commit 'ba2e0054d2bb347988c85b4429ef30077cfdc431'
+  + Merge tag 'kernel-5.14.0-362.4.1.el9_3' from 9.3
+  + arm64: dts: qcom: sa8775p: Backport four commits to silence bogus error messages due to probe deferrals
+  + crypto: Backport fixes to eliminate running crypto selftests when FIPS is disabled for automotive
+  + drm/amd/display: fix the white screen issue when >= 64GB DRAM
+  + net: macsec: fix performance regression between RHEL8 and RHEL9
+  + nfsd: fix change_info in NFSv4 RENAME replies
+  + perf: sync with upstream v6.5
+  + power: TPMI UFS (Uncore Frequency Scaling) Driver
+  + power: Update RAPL driver to use TPMI
+  + power: pmc: Add PMC driver support for IOE die
+  + redhat: add additional gating boot tests
+  + sched/nohz: Make nohz_full play nice with cfs bandwidth
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Sep 18 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.366-alt1.el9
 - Updated to kernel-5.14.0-366.el9:
   + Backport cgroup tests
