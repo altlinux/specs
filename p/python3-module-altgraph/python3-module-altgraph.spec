@@ -1,7 +1,7 @@
 %define  modulename altgraph
 
 Name:    python3-module-%modulename
-Version: 0.17.3
+Version: 0.17.4
 Release: alt1
 
 Summary: altgraph is a fork of graphlib: a graph (network) package for constructing graphs, BFS and DFS traversals, topological sort, shortest paths, etc. with graphviz output
@@ -39,6 +39,9 @@ features and enhancements related to modulegraph and macholib.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Sep 25 2023 Andrey Cherepanov <cas@altlinux.org> 0.17.4-alt1
+- New version.
+
 * Sun Oct 30 2022 Andrey Cherepanov <cas@altlinux.org> 0.17.3-alt1
 - New version.
 
