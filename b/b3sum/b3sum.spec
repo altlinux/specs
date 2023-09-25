@@ -1,7 +1,7 @@
 %def_without benchmark
 
 Name:     b3sum
-Version:  1.4.1
+Version:  1.5.0
 Release:  alt1
 
 Summary:  A command line utility for calculating BLAKE3 hashes
@@ -60,6 +60,9 @@ hyperfine --style basic --warmup 3 \
 %doc *.md
 
 %changelog
+* Mon Sep 25 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.5.0-alt1
+- new version 1.5.0
+
 * Fri Jul 07 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
