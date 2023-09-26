@@ -6,7 +6,7 @@ BuildRequires: libGLU-devel libX11-devel libglvnd-devel
 %define _localstatedir %{_var}
 Name:           opencsg
 Version:        1.5.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Library for Constructive Solid Geometry using OpenGL
 # This is GPLv2+ since 1.5.0
 # Bundled rendertexture is licensed as zlib
@@ -20,7 +20,8 @@ Patch:          opencsg-build.patch
 BuildRequires:  libfreeglut-devel
 BuildRequires:  gcc-c++
 BuildRequires:  libGLEW-devel
-BuildRequires:  libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools
+# NB: OpenCSG uses qmake as a build system, but does not use Qt itself
+BuildRequires:  qt5-base-devel
 
 # https://github.com/floriankirsch/OpenCSG/commits/master/RenderTexture/
 # Indicates this was once 2.0.3 but has been changed since
@@ -78,7 +79,12 @@ rm -r glew/
 
 
 %build
-%qmake_qt4
+CPPFLAGS="${CPPFLAGS:-%optflags -DPIC -fPIC}"
+export CPPFLAGS
+qmake-qt5 \
+	QMAKE_CFLAGS="${CFLAGS:-%optflags -DPIC -fPIC}" \
+	QMAKE_CXXFLAGS="${CXXFLAGS:-%optflags -DPIC -fPIC}" \
+	%nil
 %make_build
 
 
@@ -107,6 +113,10 @@ cp -p include/opencsg.h %{buildroot}/%{_includedir}/
 
 
 %changelog
+* Tue Sep 26 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.5.0-alt1_2
+- use qmake-qt5 (to build on LoongArch and riscv), while at it trimmed
+  build dependencies
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt1_1
 - update to new release by fcimport
 
