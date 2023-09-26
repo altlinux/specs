@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.46
+Version: 0.47
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -64,6 +64,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Tue Sep 26 2023 Anton Midyukov <antohami@altlinux.org> 0.47-alt1
+- rc.sysinit.rescue: do not remount '/' (already rw)
+
 * Fri Jun 30 2023 Anton Midyukov <antohami@altlinux.org> 0.46-alt1
 - rc.sysinit.rescue: sync with rc.sysinit from startup-0.9.9.16-alt1
 - clean Packager
