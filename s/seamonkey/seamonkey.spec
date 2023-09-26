@@ -20,7 +20,7 @@
 %define ciddir %sm_prefix/extensions/%cid
 
 Name: seamonkey
-Version: 2.53.17
+Version: 2.53.17.1
 Release: alt1
 Epoch: 1
 Summary: Web browser and mail reader
@@ -41,6 +41,7 @@ Source7: seamonkey-mozconfig
 Source8: rpm-build.tar
 Source9: cbindgen-vendor.tar
 #Source10: seamonkey-%version%beta_suffix.source-l10n.tar.xz
+# Get from http://ftp.mozilla.org/pub/seamonkey/releases/$ver/langpack/seamonkey-$ver.ru.langpack.xpi
 Source10: seamonkey-%{version}.ru.langpack.xpi
 
 Patch0: seamonkey-fix-installdirs.patch
@@ -474,6 +475,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 
 
 %changelog
+* Tue Sep 26 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.53.17.1-alt1
+- New version.
+
 * Fri Aug 11 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.53.17-alt1
 - New version.
 - Built only for x86_64.
