@@ -3,7 +3,7 @@
 
 Name: libtalloc
 Version: 2.4.0
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: The talloc library
@@ -15,7 +15,7 @@ Url: http://talloc.samba.org/
 Source: http://samba.org/ftp/talloc/talloc-%version.tar.gz
 Patch: talloc-alt-fix-python-ldflags.patch
 
-BuildRequires: docbook-dtds docbook-style-xsl libacl-devel libcap-devel python-devel xsltproc
+BuildRequires: docbook-dtds docbook-style-xsl libacl-devel libcap-devel xsltproc
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -92,6 +92,9 @@ make test
 %_libdir/libpytalloc-util.cpython*.so
 
 %changelog
+* Tue Sep 26 2023 Ivan A. Melnikov <iv@altlinux.org> 1:2.4.0-alt1.1
+- NMU: drop python2 from BR
+
 * Mon May 29 2023 Grigory Ustinov <grenka@altlinux.org> 1:2.4.0-alt1
 - Build new version for python3.11.
 
