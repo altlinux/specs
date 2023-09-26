@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 7.1.0
-Release: alt2
+Version: 8.0.3
+Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
@@ -61,6 +61,9 @@ It falls back to PKG-INFO/.hg_archival.txt when necessary.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 25 2023 Stanislav Levin <slev@altlinux.org> 8.0.3-alt1
+- 7.1.0 -> 8.0.3.
+
 * Thu Jun 22 2023 Stanislav Levin <slev@altlinux.org> 7.1.0-alt2
 - Fixed FTBFS (setuptools 68.0.0).
 - Modernized packaging.
