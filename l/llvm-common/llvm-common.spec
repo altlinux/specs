@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%global _llvm_version 15.0
+%global _llvm_version 16.0
 
 Name: llvm-common
-Version: 15.0.0
-Release: alt3
+Version: 16.0.0
+Release: alt1
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -529,6 +529,9 @@ for i in %_CI_tests_execdir/[0-9]*; do
 done
 
 %changelog
+* Thu Sep 14 2023 Arseny Maslennikov <arseny@altlinux.org> 16.0.0-alt1
+- Made LLVM 16 the default.
+
 * Fri Jun 30 2023 Arseny Maslennikov <arseny@altlinux.org> 15.0.0-alt3
 - Added a checkinstall test for C toolchain. (Closes: 42473)
 

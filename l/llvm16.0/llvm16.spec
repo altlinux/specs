@@ -93,7 +93,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4
+Release: alt5
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -123,7 +123,6 @@ Patch19: llvm-alt-cmake-build-with-install-rpath.patch
 Patch20: clang-16-alt-rocm-device-libs-path.patch
 Patch21: 0001-lld-Pass-random.randint-stop-parameter-as-int.patch
 Patch22: clang-D142199.patch
-Patch3500: clang-alt-triple-loongarch64.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -644,7 +643,6 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch20 -p1 -b .clang-rocm-device-path
 %patch21 -p1
 %patch22 -p1 -b .recommonmark
-%patch3500 -p1 -b .la64
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -1012,16 +1010,16 @@ EOExecutableList
 # Comment out file validation for CMake targets placed
 # in a different package.
 sed -i '
-/APPEND _IMPORT_CHECK_TARGETS \(mlir-\|MLIR\)/ {s|^|#|}
-/APPEND _IMPORT_CHECK_TARGETS \(tblgen-lsp-server\)/ {s|^|#|}
-/APPEND _IMPORT_CHECK_TARGETS \(Polly\)/ {s|^|#|}
-/APPEND _IMPORT_CHECK_TARGETS \(llvm-omp-device-info\|omptarget\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(mlir-\|MLIR\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(tblgen-lsp-server\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(Polly\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(llvm-omp-device-info\|omptarget\)/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/llvm/LLVMExports-*.cmake
 
 # Comment out file validation for CMake targets producing executables
 # that may be placed in a different package.
 sed -i '
-/APPEND _IMPORT_CHECK_FILES_FOR_.* .*[/]bin[/].*/ {s|^|#|}
+/APPEND _cmake_import_check_files_for_.* .*[/]bin[/].*/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/clang/ClangTargets-*.cmake
 
 %check
@@ -1237,6 +1235,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Thu Sep 14 2023 Arseny Maslennikov <arseny@altlinux.org> 16.0.6-alt5
+- Re-disabled broken import checks.
+- spec: Merged the loongarch64 alt triple patch into clang-alt-triple.patch.
+
 * Tue Sep 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 16.0.6-alt4
 - Support LoongArch architecture (lp64d ABI):
   + clang-alt-triple-loongarch64.patch: added loongarch64-alt-linux triple
