@@ -1,20 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
-%ifarch %e2k ppc64le
-%def_disable qtwebengine
-%else
-%def_enable qtwebengine
-%endif
-
-
 Name: CTK
 Version: 0.1.0
-Release: alt3.git.dc2e1289
+Release: alt4.git.a203172b
 Summary: A set of common support code for medical imaging, surgical navigation, and related purposes
 License: Apache-2.0
 Group: Development/Tools
 Url: https://commontk.org/
 
+# Exclusion source: pythonqt
 ExcludeArch: %arm
 
 # https://github.com/commontk/CTK.git
@@ -24,9 +18,10 @@ Patch1: %name-alt-build.patch
 
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: gcc-c++ cmake
-BuildRequires: qt5-base-devel qt5-script-devel qt5-tools-devel-static qt5-xmlpatterns-devel
-%if_enabled qtwebengine
+BuildRequires: qt5-base-devel qt5-script-devel qt5-tools-devel-static qt5-xmlpatterns-devel qt5-multimedia-devel
+%ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel
 %else
 BuildRequires: qt5-webkit-devel
@@ -97,7 +92,7 @@ This package provides Python bindings to CTK.
 %setup
 %patch1 -p1
 
-%if_disabled qtwebengine
+%ifarch %not_qt5_qtwebengine_arches
 for f in \
     CMake/ctkMacroSetupQt.cmake \
     Libs/CommandLineModules/Frontend/QtWebKit/CMakeLists.txt \
@@ -161,7 +156,7 @@ done
 %_includedir/*
 %_libdir/lib*.so
 %exclude %_libdir/liborg_commontk_*.so
-%_libdir/cmake/*
+%_libdir/cmake/%name
 
 %files qt5-designer-plugin
 %_qt5_plugindir/designer/*.so
@@ -174,6 +169,10 @@ done
 %python3_sitelibdir/*.so
 
 %changelog
+* Wed Jun 07 2023 Elizaveta Morozova <morozovaes@altlinux.org> 0.1.0-alt4.git.a203172b
+- Built from a203172b634253cc3717346de30305ffe721d91c for imports fixes (#46364).
+- Updated dependencies.
+
 * Thu Jan 27 2022 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt3.git.dc2e1289
 - build with webkit on e2k and ppc64le
 

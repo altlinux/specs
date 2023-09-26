@@ -1,21 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%ifarch %e2k ppc64le
-%def_disable qtwebengine
-%else
-%def_enable qtwebengine
-%endif
 
-%define slicerver 4.11
-
+%define slicerver 5.2
 Name: slicer
-Version: %slicerver.20210226
-Release: alt4
+Version: %slicerver.2
+Release: alt1
 Summary: Multi-platform, free open source software for visualization and image computing
 License: BSD-like
 Group: Sciences/Medicine
 Url: https://www.slicer.org/
 
+# Exlusion source: pythonqt, CTK
 ExcludeArch: %arm
 
 # https://github.com/Slicer/Slicer.git
@@ -31,16 +26,18 @@ Source3: slicer.desktop
 
 Patch1: %name-alt-build.patch
 Patch2: %name-alt-python3-compat.patch
-Patch3: %name-upstream-python39-compat.patch
-Patch4: %name-alt-gcc11-compat.patch
+Patch3: %name-upstream-wc-last-change-date-fix.patch
+Patch4: %name-alt-itk-compat.patch
 Patch5: %name-alt-vtk-9.1-compat.patch
 
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: python3-devel
 BuildRequires: gcc-c++ cmake
-BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-script-devel qt5-svg-devel qt5-tools-devel-static qt5-xmlpatterns-devel
-%if_enabled qtwebengine
+BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-script-devel qt5-svg-devel qt5-tools-devel-static qt5-xmlpatterns-devel qt5-x11extras-devel
+BuildRequires: libpcre2-devel libbrotli-devel
+%ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel
 %endif
 BuildRequires: libitk-devel
@@ -64,6 +61,7 @@ BuildRequires: doxygen /usr/bin/dot
 %add_python3_req_skip SegmentEditorEffects SegmentEditorEffects.AbstractScriptedSegmentEditorEffect SegmentEditorEffects.AbstractScriptedSegmentEditorLabelEffect
 %add_python3_req_skip Slicer slicer slicer.ScriptedLoadableModule slicer.util
 %add_python3_req_skip SimpleITK __main__ github github.GithubObject
+%add_python3_req_skip vtk.util vtk.util.numpy_support
 
 %description
 What is 3D Slicer ?
@@ -131,6 +129,7 @@ find . -name '*.py' | xargs sed -i \
 	-e '1s|^#!/usr/bin/python$|#!/usr/bin/python3|' \
 	%nil
 
+
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 
@@ -138,6 +137,8 @@ jqplotdir="$(pwd)/jqPlot"
 
 %cmake \
 	-DSlicer_DEFAULT_RELEASE_TYPE:STRING=Stable \
+	-DSlicer_VERSION:STRING=%slicerver \
+	-DSlicer_VERSION_FULL:STRING=%version \
 	-DSlicer_VTK_VERSION_MAJOR=9 \
 	-DSlicer_SUPERBUILD:BOOL=OFF \
 	-DSlicer_BUILD_I18N_SUPPORT:BOOL=ON \
@@ -154,7 +155,8 @@ jqplotdir="$(pwd)/jqPlot"
 	-DSlicer_USE_SYSTEM_TBB:BOOL=ON \
 	-DSlicer_USE_SYSTEM_python:BOOL=ON \
 	-DSlicer_USE_SYSTEM_QT:BOOL=ON \
-	-DSlicer_BUILD_WEBENGINE_SUPPORT:BOOL=%{?_enable_qtwebengine:ON}%{!?_enable_qtwebengine:OFF} \
+	-DSlicer_BUILD_WEBENGINE_SUPPORT:BOOL=%{?_qt5_qtwebengine_arches:ON}%{!?_not_qt5_qtwebengine_arches:OFF} \
+	-DSlicer_USE_SYSTEM_ITK:BOOL=ON \
 	-DSlicer_USE_SYSTEM_LibArchive:BOOL=ON \
 	-DSlicerExecutionModel_DEFAULT_CLI_INSTALL_RUNTIME_DESTINATION:PATH=%_libdir/Slicer-%slicerver/cli-modules \
 	-DSlicerExecutionModel_DEFAULT_CLI_INSTALL_LIBRARY_DESTINATION:PATH=%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cli-modules \
@@ -176,10 +178,12 @@ chmod +x %buildroot%_bindir/Slicer
 
 # install symlinks for library discovery: they are loaded dynamically, but they have dependencies on each other as well
 # separate library is used for dynamic loading, symlink in generic directory is used for loading as dependency
+
 install -d %buildroot%_libdir
 find %buildroot%_libdir/Slicer-%slicerver -name '*.so*' | while read i ; do
 	ln -sr $i %buildroot%_libdir/
 done
+
 
 # install desktop file and icon
 install -d %buildroot%_desktopdir
@@ -200,7 +204,7 @@ ln -sr %buildroot%_bindir/designer-qt5 %buildroot%_libdir/Slicer-%slicerver/bin/
 
 %files
 %doc COPYRIGHT.txt License.txt
-%doc README.txt CONTRIBUTING.md AUTHORS.rst
+%doc README.txt CONTRIBUTING.md AUTHORS.md
 %_bindir/Slicer
 %_libdir/*.so
 %_libdir/*.so.*
@@ -225,6 +229,13 @@ ln -sr %buildroot%_bindir/designer-qt5 %buildroot%_libdir/Slicer-%slicerver/bin/
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Mon May 15 2023 Elizaveta Morozova <morozovaes@altlinux.org> 5.2.2-alt1
+- Updated version to 5.2.2.
+- Added patch: slicer-alt-itk-compat - removed custom ITK Namespaces (feature requires bundled ITK).
+- Added patch: slicer-upstream-wc-last-change-date-fix - fixed undefined WC_LAST_CHANGED error.
+- Updated patches: slicer-alt-build, slicer-alt-vtk-9.1-compat, slicer-alt-python3-compat.
+- Removed obsolete upstream fixes.
+
 * Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 4.11.20210226-alt4
 - Rebuilt with VTK-9.1.
 
