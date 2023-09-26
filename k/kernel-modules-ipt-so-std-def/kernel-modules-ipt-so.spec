@@ -1,6 +1,6 @@
 %define module_name     ipt-so
 %define module_version  1.0
-%define module_release  alt8
+%define module_release  alt9
 %define flavour         std-def
 
 %ifarch armh
@@ -61,7 +61,7 @@ install -m644 -D xt_so.ko %buildroot/%module_dir/xt_so.ko
 PATH=/sbin:/usr/sbin:$PATH
 timeout 60 \
 vm-run '
-	modprobe -a xt_so iptable_filter iptable_security ip_tables
+	modprobe -a iptable_filter iptable_security ip_tables
 	mount -t tmpfs tmpfs /run
 	export XTABLES_LIBDIR=$PWD:/%_lib/iptables
 	./tests.sh test
