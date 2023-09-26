@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		f609d8e9b3c
+%define svnrev		c083ca2ca4c
 
 %def_with pgsql
 %def_enable java
@@ -16,8 +16,8 @@
 %endif
 
 Name: zabbix
-Version: 6.0.21
-Release: alt2
+Version: 6.0.22
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -737,6 +737,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Sep 26 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.22-alt1
+- 6.0.22
+
 * Mon Sep 11 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.21-alt2
 - Remove subpackages phpfrontend-php8.0 and phpfrontend-apache2-mod_php8.0
 
