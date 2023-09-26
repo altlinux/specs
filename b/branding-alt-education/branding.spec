@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt2
+Release: alt3
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -479,6 +479,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Sep 26 2023 Andrey Cherepanov <cas@altlinux.org> 10.2-alt3
+- menu: hided duplicate menu entries for desktop files from xfce4-settings.
+
 * Mon Aug 28 2023 Andrey Cherepanov <cas@altlinux.org> 10.2-alt2
 - os-release: added LOGO to /etc/os-release (ALT #47292).
 - xfce-settings: reduced size for power and sound icons on panel.
