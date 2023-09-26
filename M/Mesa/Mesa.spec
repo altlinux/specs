@@ -7,17 +7,17 @@
 %define gallium_drivers_add() %{expand:%%global gallium_drivers %{?gallium_drivers:%gallium_drivers,}%{1}}
 %define vulkan_drivers_add() %{expand:%%global vulkan_drivers %{?vulkan_drivers:%vulkan_drivers,}%{1}}
 
-%define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel
-%define vulkan_radeon_arches %ix86 x86_64 ppc64le mipsel
-%define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel
+%define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k
+%define vulkan_radeon_arches %ix86 x86_64 ppc64le mipsel %e2k
+%define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
 %define intel_arches %ix86 x86_64
 %define vulkan_intel_arches %ix86 x86_64
 %define vulkan_virtio_arches %ix86 x86_64 aarch64 ppc64le mipsel
-%define virgl_arches %ix86 x86_64 armh aarch64 ppc64le mipsel
+%define virgl_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
 %define armsoc_arches %arm aarch64
 %define svga_arches %ix86 x86_64
 
-%define gallium_opencl_arches %ix86 x86_64 aarch64 ppc64le mipsel
+%define gallium_opencl_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k
 
 #VDPAU state tracker requires at least one of the following gallium drivers: r300, r600, radeonsi, nouveau
 %define vdpau_arches %radeon_arches %nouveau_arches %virgl_arches
@@ -87,7 +87,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -102,13 +102,19 @@ Patch: %name-%version.patch
 BuildPreReq: /proc
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
-BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel libvulkan-devel
+BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
-BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
+BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel
 BuildRequires: libglvnd-devel >= 1.2.0 llvm-devel >= 11.0.0
 BuildRequires: rpm-build-python3 glslang python3-module-docutils
 BuildRequires: libclc-devel clang-devel
+%ifarch %vulkan_intel_arches %vulkan_radeon_arches %vulkan_virtio_arches
+BuildRequires: libvulkan-devel
+%endif
+%ifnarch %e2k
+BuildRequires: libunwind-devel
+%endif
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -580,6 +586,10 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Sep 25 2023 Michael Shigorin <mike@altlinux.org> 4:23.1.8-alt2
+- add %%e2k to relevant architecture lists
+- BR fixes (should be no-op for mainstream)
+
 * Thu Sep 21 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.1.8-alt1
 - 23.1.8
 
