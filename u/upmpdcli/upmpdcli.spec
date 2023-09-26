@@ -1,5 +1,5 @@
 Name: upmpdcli
-Version: 1.8.1
+Version: 1.8.3
 Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
@@ -119,6 +119,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Tue Sep 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.3-alt1
+- 1.8.3 released
+
 * Wed Jul 12 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.1-alt1
 - 1.8.1 released
 
