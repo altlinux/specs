@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Python bindings for jq
@@ -14,8 +14,7 @@ Url: https://pypi.org/project/jq/
 Vcs: https://github.com/mwilliamson/jq.py
 
 Source0: %name-%version.tar
-Source1: setup.py
-Source2: %pyproject_deps_config_name
+Source1: %pyproject_deps_config_name
 
 %py3_provides %pypi_name
 
@@ -37,11 +36,8 @@ This project contains Python bindings for jq.
 
 %prep
 %setup
-
-# provide self-written building instructions
-cp -fv %SOURCE1 .
-%__subst 's/@VERSION@/%version/' setup.py
-rm -fv pyproject.toml
+sed -i '/sources=/ s/jq.c/jq.pyx/' setup.py
+sed -i '/link_args_deps/ s/"-lonig"//' setup.py
 
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -54,9 +50,11 @@ rm -fv pyproject.toml
 rm -fvr deps
 
 %build
+export JQPY_USE_SYSTEM_LIBS=1
 %pyproject_build
 
 %install
+export JQPY_USE_SYSTEM_LIBS=1
 %pyproject_install
 
 %check
@@ -68,6 +66,9 @@ rm -fvr deps
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 26 2023 Anton Zhukharev <ancieg@altlinux.org> 1.6.0-alt1
+- Updated to 1.6.0.
+
 * Thu Aug 31 2023 Anton Zhukharev <ancieg@altlinux.org> 1.5.0-alt1
 - Updated to 1.5.0.
 
