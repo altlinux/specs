@@ -5,7 +5,7 @@
 
 Summary: Dynamic Kernel Module Support Framework
 Name: dkms
-Version: 3.0.11
+Version: 3.0.12
 Release: alt1
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
@@ -48,16 +48,7 @@ echo "enable dkms.service" > dkms.preset
 sed 's/dkms remove/& --no-depmod/' kernel_prerm.d_dkms > kernel_postrm.d_dkms
 
 %install
-# Install both service types.
-make install-redhat \
-    DESTDIR=%buildroot \
-    BASHDIR=%buildroot%_sysconfdir/bash_completion.d \
-        ETC=%buildroot%_sysconfdir/dkms \
-     LIBDIR=%buildroot%_libexecdir/dkms \
-        MAN=%buildroot%_man8dir \
-       SBIN=%buildroot%_sbindir \
-    SYSTEMD=%buildroot%_unitdir \
-        VAR=%buildroot%_localstatedir/dkms \
+%makeinstall_std SYSTEMD=%_unitdir install-redhat
 
 # Install triggers.
 rm -rf %buildroot%_sysconfdir/kernel
@@ -74,6 +65,9 @@ install -p /usr/bin/lsb_release %buildroot%prefix/lib/dkms/
 install -Dp dkms_autoinstaller %buildroot%_initdir/dkms
 
 install -D -p -m644 dkms.preset %buildroot%_presetdir/30-dkms.preset
+
+# Fix daemon executable in service file
+subst 's|%buildroot||' %buildroot%_unitdir/dkms.service %buildroot%_initdir/dkms %buildroot%_libexecdir/dkms/postinst %buildroot%_libexecdir/dkms/dkms_autoinstaller
 
 %post
 %post_service dkms
@@ -124,11 +118,14 @@ rm -rf /usr/src/dkms_test-1.0
 %_rpmlibdir/*dkms.filetrigger
 %_localstatedir/dkms
 %_man8dir/dkms.8*
-%_sysconfdir/bash_completion.d/dkms
+%_datadir/bash-completion/completions/dkms
 
 %files checkinstall
 
 %changelog
+* Tue Sep 26 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.12-alt1
+- New version.
+
 * Sun Apr 30 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.11-alt1
 - New version.
 
