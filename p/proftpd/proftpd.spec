@@ -3,7 +3,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt0.1.g%{git}
+Release: alt0.2.g%{git}
 
 %define _libexecdir %{expand:%_libdir}
 # TODO
@@ -48,6 +48,8 @@ Release: alt0.1.g%{git}
 %def_shared mod_exec
 %def_shared mod_shaper
 %def_shared mod_unique_id
+# https://bugzilla.altlinux.org/47656
+%def_shared mod_ident
 #def_shared mod_wrap2
 #def_shared mod_wrap2_file
 #def_shared mod_wrap2_sql
@@ -259,6 +261,10 @@ Summary: Generates unique ids
 Group: System/Servers
 Requires: %name = %version-%release
 
+%package -n %name-mod_ident
+Summary: RFC1413 Identification Support
+Group: System/Servers
+Requires: %name = %version-%release
 
 %package -n %name-control
 Summary: ProFTPD control facility
@@ -310,11 +316,12 @@ SQL frontend
 %description -n %name-mod_sql_passwd
 The mod_sql_passwd module provides support for some password formats, which are
 not supported by mod_sql. Such as MD5 or SHA1 passwords, base64-encoded or
-hex-encoded, without the prefix which is required by mod_sql's "OpenSSL" SQLAuthType. 
-   
+hex-encoded, without the prefix which is required by mod_sql's "OpenSSL"
+SQLAuthType.
+
 When the mod_sql_passwd module is enabled, you can configure SQLAuthTypes of
 "MD5", "SHA1", "SHA256", or "SHA512", as well as the existing types supported
-by mod_sql. 
+by mod_sql.
 
 %description -n %name-mod_sql_mysql
 Support for connecting to MySQL databases
@@ -364,6 +371,10 @@ Module implementing daemon-wide rate throttling via IPC
 
 %description -n %name-mod_unique_id
 Module for generating a unique ID for each FTP session.
+
+%description -n %name-mod_ident
+Module which handles the IdentLookups configuration directive and IDENTD
+protocol lookups
 
 %description -n %name-devel
 ProFTPD development header files
@@ -499,6 +510,15 @@ fi
 
 %preun
 %preun_service %name
+
+%triggerun -- proftpd < 1.3.7
+if grep -q IdentLookups /etc/proftpd.conf; then
+    echo 'WARNING! WARNING! Outdated config detected!'
+    echo 'Manual intervention needed:'
+    echo 'Please remove IdentLookups directive from config or'
+    echo 'install proftpd-mod_ident package if you still need'
+    echo 'IDENT lookups support.'
+fi
 
 %files -f %name.lang
 %doc README* ChangeLog INSTALL NEWS CREDITS doc/* contrib/README.*
@@ -684,6 +704,10 @@ fi
 %_libexecdir/%name/mod_unique_id.*
 %endif
 
+%ifdef _shared_mod_ident
+%files -n %name-mod_ident
+%_libexecdir/%name/mod_ident.*
+%endif
 
 %files -n %name-devel
 %_bindir/prxs
@@ -694,6 +718,11 @@ fi
 %_controldir/%name
 
 %changelog
+* Thu Sep 21 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.8-alt0.2.ga3489a6c8
+- enable mod_ident and make trigger with warning if unsupported
+  configuration detected (closes #47656).
+- adjust default configuration for IdentLookups changes.
+
 * Sun Sep 17 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.8-alt0.1.ga3489a6c8
 - v1.3.8-31-ga3489a6c8.
 - BR: postgresql-devel->libpq-devel.
