@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.23
+Version: 0.0.24
 Release: alt1
 Summary: Scriptable debugger library
 License: GPL-3.0-or-later
@@ -76,6 +76,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/_drgn.*
 
 %changelog
+* Tue Sep 26 2023 Vitaly Chikunov <vt@altlinux.org> 0.0.24-alt1
+- Update to v0.0.24 (2023-09-08).
+
 * Wed Sep 06 2023 Vitaly Chikunov <vt@altlinux.org> 0.0.23-alt1
 - Update to v0.0.23 (2023-06-28).
 
