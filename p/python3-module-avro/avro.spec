@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.11.2
+Version: 1.11.3
 Release: alt1
 
 Summary: Avro is a serialization and RPC framework
@@ -88,6 +88,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Tue Sep 26 2023 Anton Vyatkin <toni@altlinux.org> 1.11.3-alt1
+- new version 1.11.3
+
 * Sat Aug 26 2023 Anton Vyatkin <toni@altlinux.org> 1.11.2-alt1
 - new version 1.11.2
 
