@@ -1,18 +1,17 @@
 %define oname tqdm
 
-%def_disable check
+%def_with check
 
 Name: python3-module-tqdm
-Version: 4.65.0
-Release: alt2
+Version: 4.66.1
+Release: alt1
 
 Summary: A fast, extensible progress bar for Python and CLI
 
-License: MPLv2.0
+License: MIT and MPL-2.0
 Group: Development/Python
-Url: https://pypi.python.org/pypi/tqdm
+Url: https://pypi.org/project/tqdm
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -20,9 +19,15 @@ BuildArch: noarch
 Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
-BuildRequires: python3-module-setuptools_scm python3-module-toml
-BuildRequires: python3-module-flake8 python3-module-coverage
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-numpy
+%endif
 
 # make optional
 %add_python3_req_skip dask.callbacks rich.progress
@@ -38,22 +43,24 @@ just wrap any iterable with tqdm(iterable), and you're done!
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=$PWD
-%python3_test
-py.test3
+%pyproject_run_pytest -v
 
 %files
 %doc *.rst
 %_bindir/tqdm
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Sep 26 2023 Anton Vyatkin <toni@altlinux.org> 4.66.1-alt1
+- new version 4.66.1
+
 * Wed Apr 12 2023 Anton Vyatkin <toni@altlinux.org> 4.65.0-alt2
 - Fix BuildRequires
 
