@@ -2,7 +2,7 @@
 
 Name: sane
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -231,6 +231,8 @@ install -D -m0644 tools/udev/libsane.rules %buildroot%_udevrulesdir/25-libsane.r
 
 install -D %SOURCE2 -m0644 %buildroot%_sysconfdir/xinetd.d/%name
 mkdir -p %buildroot%_lockdir/%name/
+mkdir -p %buildroot%_tmpfilesdir/
+echo "D %_lockdir/%name 0770 root scanner -" >%buildroot%_tmpfilesdir/%name.conf
 
 rm -f %buildroot%_libdir/%name/*.la
 
@@ -278,6 +280,7 @@ rm -f %buildroot%_libdir/%name/*.la
 # used in sane-frontends, xsane
 %dir %_datadir/%name/
 %attr(0775,root,scanner) %dir %_lockdir/%name/
+%_tmpfilesdir/%name.conf
 
 %files -n lib%name-gphoto2
 %_libdir/sane/*gphoto2.so.*
@@ -291,6 +294,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Tue Sep 26 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt2
+- add tmpfiles entry for /var/lock/sane (ALT bug 46255)
+
 * Wed Mar 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - new version 1.2.1 (with rpmrb script)
 - update patches list, drop merged patches
