@@ -2,11 +2,11 @@
 %def_with check
 
 Name: python3-module-%oname.core
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 
 Summary: Chameleon Template Compiler
-License: BSD
+License: BSD-4-Clause
 Group: Development/Python3
 Url: http://chameleon.repoze.org/
 # https://github.com/malthe/chameleon
@@ -89,6 +89,9 @@ cp -fR _build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc _build/html/*
 
 %changelog
+* Tue Sep 26 2023 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Automatically updated to 4.2.0.
+
 * Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
 - Automatically updated to 4.1.0.
 
