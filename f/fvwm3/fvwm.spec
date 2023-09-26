@@ -1,6 +1,6 @@
 Name: fvwm3
-Version: 1.0.5
-Release: alt2
+Version: 1.0.8
+Release: alt1
 
 Summary: F(?) Virtual Window Manager, the successor to fvwm2
 License: GPLv2+
@@ -35,7 +35,6 @@ this will change.
 Summary: F(?) Virtual Window Manager, the successor to fvwm2, additional scripts
 Group: Graphical desktop/FVWM based
 BuildArch: noarch
-Requires: %name = %version
 %description scripts
 This package contains the FvwmPerl module, fvwm Perl library and other
 scripts for fvwm3 window manager, the successor to fvwm2.
@@ -51,13 +50,14 @@ scripts for fvwm3 window manager, the successor to fvwm2.
 
 %install
 %makeinstall_std
-(
-  cd %buildroot/%_mandir/man1/;  for i in fvwm[^3]*; do mv $i fvwm3${i#fvwm}; done
-  cd %buildroot/%_mandir/man1/;  for i in Fvwm[^3]*; do mv $i Fvwm3${i#Fvwm}; done
-  cd %buildroot/%_bindir/;       for i in fvwm[^3]*; do mv $i fvwm3${i#fvwm}; done
-  cd %buildroot/%_bindir/;       for i in Fvwm[^3]*; do mv $i Fvwm3${i#Fvwm}; done
-)
-
+mv %buildroot/%_bindir/FvwmCommand         %buildroot/%_bindir/Fvwm3Command
+mv %buildroot/%_bindir/fvwm-convert-2.6    %buildroot/%_bindir/fvwm3-convert-2.6
+mv %buildroot/%_bindir/fvwm-menu-desktop   %buildroot/%_bindir/fvwm3-menu-desktop
+mv %buildroot/%_bindir/fvwm-menu-directory %buildroot/%_bindir/fvwm3-menu-directory
+mv %buildroot/%_bindir/fvwm-menu-xlock     %buildroot/%_bindir/fvwm3-menu-xlock
+mv %buildroot/%_bindir/fvwm-perllib        %buildroot/%_bindir/fvwm3-perllib
+mv %buildroot/%_mandir/man1/FvwmPerl.1     %buildroot/%_mandir/man1/Fvwm3Perl.1
+mv %buildroot/%_mandir/man1/fvwm-convert-2.6.1 %buildroot/%_mandir/man1/fvwm3-convert-2.6.1
 
 # install additional docs
 install -p -D -m644 COPYING NEWS *.md -t $RPM_BUILD_ROOT%_docdir/%name-%version/
@@ -68,14 +68,11 @@ install -p -D -m644 COPYING NEWS *.md -t $RPM_BUILD_ROOT%_docdir/%name-%version/
 
 %files -f %name.lang
 %_bindir/fvwm3
-%_bindir/fvwm3-config
-%_bindir/fvwm3-root
-
+%_bindir/fvwm-root
 %dir %_libexecdir/fvwm3/
 %dir %_libexecdir/fvwm3/%version/
 %_libexecdir/fvwm3/%version/*
 %exclude %_libexecdir/fvwm3/%version/FvwmPerl
-
 %dir %_datadir/fvwm3/
 %_datadir/fvwm3/*
 %exclude %_datadir/fvwm3/perllib/
@@ -83,10 +80,10 @@ install -p -D -m644 COPYING NEWS *.md -t $RPM_BUILD_ROOT%_docdir/%name-%version/
 
 %_mandir/man?/*
 %exclude %_mandir/man1/fvwm3-convert-2.6.1*
-%exclude %_mandir/man1/fvwm3-menu-desktop.1*
-%exclude %_mandir/man1/fvwm3-menu-directory.1*
-%exclude %_mandir/man1/fvwm3-menu-xlock.1*
-%exclude %_mandir/man1/fvwm3-perllib.1*
+%exclude %_mandir/man1/fvwm-menu-desktop.1*
+%exclude %_mandir/man1/fvwm-menu-directory.1*
+%exclude %_mandir/man1/fvwm-menu-xlock.1*
+%exclude %_mandir/man1/fvwm-perllib.1*
 %exclude %_mandir/man1/Fvwm3Perl.1*
 %_docdir/%name-%version
 
@@ -97,19 +94,22 @@ install -p -D -m644 COPYING NEWS *.md -t $RPM_BUILD_ROOT%_docdir/%name-%version/
 %_bindir/fvwm3-menu-directory
 %_bindir/fvwm3-menu-xlock
 %_bindir/fvwm3-perllib
-
 %_libexecdir/fvwm3/%version/FvwmPerl
-
+%dir %_libexecdir/fvwm3
+%dir %_libexecdir/fvwm3/%version
 %_datadir/fvwm3/perllib/
 %_datadir/fvwm3/fvwm-script-ComExample.pl
 %_mandir/man1/fvwm3-convert-2.6.1*
-%_mandir/man1/fvwm3-menu-desktop.1*
-%_mandir/man1/fvwm3-menu-directory.1*
-%_mandir/man1/fvwm3-menu-xlock.1*
-%_mandir/man1/fvwm3-perllib.1*
+%_mandir/man1/fvwm-menu-desktop.1*
+%_mandir/man1/fvwm-menu-directory.1*
+%_mandir/man1/fvwm-menu-xlock.1*
+%_mandir/man1/fvwm-perllib.1*
 %_mandir/man1/Fvwm3Perl.1*
 
 %changelog
+* Tue Sep 26 2023 Vladislav Zavjalov <slazav@altlinux.org> 1.0.8-alt1
+- 1.0.8
+
 * Wed Oct 19 2022 Vladislav Zavjalov <slazav@altlinux.org> 1.0.5-alt2
 - rename scripts and perl libraries to avoid collisions with old fvwm
 
