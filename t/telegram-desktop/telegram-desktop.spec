@@ -24,7 +24,7 @@
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 4.9.9
+Version: 4.10.1
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -277,7 +277,6 @@ for i in \
 	Telegram/ThirdParty/QR \
 	Telegram/ThirdParty/expected \
 	Telegram/ThirdParty/jemalloc \
-	Telegram/ThirdParty/fcitx-qt5 \
 	Telegram/ThirdParty/fcitx5-qt \
 	Telegram/ThirdParty/hime \
 	Telegram/ThirdParty/hunspell \
@@ -388,6 +387,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Tue Sep 26 2023 Vitaly Lipatov <lav@altlinux.ru> 4.10.1-alt1
+- new version 4.10.1 (with rpmrb script)
+
 * Fri Sep 22 2023 Vitaly Lipatov <lav@altlinux.ru> 4.9.9-alt1
 - new version 4.9.9 (with rpmrb script)
 
