@@ -1,5 +1,5 @@
 Name:         xfig
-Version:      3.2.8b
+Version:      3.2.9
 Release:      alt1
 
 Summary:      An X Window System tool for drawing basic vector graphics.
@@ -16,18 +16,13 @@ Source4:      xfig.sh
 Source5:      xfig.alt.desktop
 Patch1:       0001-revert-10pt-search-tolerance-back-to-4pt.patch
 Patch2:       0002-w_library.c-fix-error-message.patch
-Patch3:       0003-app-defaults-use-original-Fig.in.patch
-Patch4:       0004-init_font-improve-debug-mode-output.patch
-Patch5:       0005-fix-font-encoding-in-i18n-mode.patch
-Patch6:       0006-init_font-allow-scalable-backup-fonts.patch
-Patch7:       0007-update-backup-font-table.patch
-Patch8:       0008-use-Paratype-fonts.patch
+Patch3:       0001-app-defaults-metric-nosplash.patch
 
 Requires:     transfig = %version fonts-ttf-PT /usr/bin/gs netpbm
 
 BuildPreReq:  libXpm-devel libXt-devel libXmu-devel libXaw-devel
 BuildPreReq:  libpng-devel libjpeg-devel libXi-devel libXp-devel
-BuildPreReq:  libtiff-devel libgs-devel
+BuildPreReq:  libtiff-devel libgs-devel libXft-devel
 BuildPreReq:  libXaw3d-devel >= 1.5e
 BuildRequires: transfig = %version
 
@@ -61,11 +56,6 @@ XFig documentation
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
-%patch5 -p2
-%patch6 -p2
-%patch7 -p2
-%patch8 -p2
 
 %build
 %autoreconf
@@ -100,6 +90,9 @@ install -D -m 644 %SOURCE5 %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Tue Sep 26 2023 Vladislav Zavjalov <slazav@altlinux.org> 3.2.9-alt1
+- 3.2.9 -- Xft fonts
+
 * Mon Sep 20 2021 Vladislav Zavjalov <slazav@altlinux.org> 3.2.8b-alt1
 - 3.2.8b
 
