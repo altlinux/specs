@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 
 Summary: Python3 client for NATS
@@ -56,6 +56,9 @@ An asyncio Python client for the NATS messaging system.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 26 2023 Anton Zhukharev <ancieg@altlinux.org> 2.4.0-alt1
+- Updated to 2.4.0.
+
 * Thu Sep 07 2023 Anton Zhukharev <ancieg@altlinux.org> 2.3.1-alt1
 - Updated to 2.3.1.
 

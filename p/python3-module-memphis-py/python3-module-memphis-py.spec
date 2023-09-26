@@ -3,7 +3,7 @@
 %define mod_name memphis
 
 Name: python3-module-%pypi_name
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Python client for Memphis. Memphis is an event processing platform
@@ -61,6 +61,9 @@ sed -i 's/"asyncio", //' setup.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 26 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.3-alt1
+- Updated to 1.1.3.
+
 * Thu Sep 07 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.2-alt1
 - Updated to 1.1.2.
 
