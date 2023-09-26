@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 2.8.0.0
-Release: alt1
+Release: alt1.1
 License: BSD3
 Packager: Evgeny Sinelnikov <sin@altlinux.org>
 Group: Development/Haskell
@@ -35,6 +35,7 @@ file:
 %patch -p1
 
 %build
+%autoreconf
 %hs_configure2
 %hs_build
 
@@ -45,5 +46,8 @@ file:
 %files -f %name-files.all
 
 %changelog
+* Tue Sep 26 2023 Ivan A. Melnikov <iv@altlinux.org> 2.8.0.0-alt1.1
+- NMU: spec: call %%autoreconf (fixes build on loongarch64)
+
 * Wed Apr 17 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.8.0.0-alt1
 - Spec created by cabal2rpm 0.20_11
