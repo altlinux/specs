@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.15.2
+Version: 0.15.3
 Release: alt1
 
 Summary: Asynchronous client for carbon
@@ -63,6 +63,9 @@ sed -i '/python_requires=/s/3.5.\*/3.5/' setup.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 26 2023 Anton Zhukharev <ancieg@altlinux.org> 0.15.3-alt1
+- Updated to 0.15.3.
+
 * Wed Sep 06 2023 Anton Zhukharev <ancieg@altlinux.org> 0.15.2-alt1
 - Changed version to 0.15.2.
 
