@@ -1,5 +1,5 @@
 Name: arm-none-eabi-gcc
-Version: 12.2.1
+Version: 12.3.1
 Release: alt1
 
 Summary: GNU Compiler Collection
@@ -119,6 +119,9 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Tue Sep 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.3.1-alt1
+- 12.3.1
+
 * Thu Feb 02 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.2.1-alt1
 - 12.2.1
 
