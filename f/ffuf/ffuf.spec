@@ -3,7 +3,7 @@
 %global import_path github.com/ffuf/ffuf/v2
 
 Name: ffuf
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Fast web fuzzer written in Go
@@ -12,7 +12,8 @@ Group: Networking/Other
 Url: https://github.com/ffuf/ffuf
 Vcs: https://github.com/ffuf/ffuf
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: vendor.tar
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -21,7 +22,7 @@ BuildRequires(pre): rpm-build-golang
 %summary.
 
 %prep
-%setup
+%setup -a1
 
 %build
 export GO111MODULE=off
@@ -48,6 +49,9 @@ mv %buildroot%_bindir/{v2,%name}
 %_bindir/%name
 
 %changelog
+* Tue Sep 26 2023 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+
 * Thu Apr 20 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.0-alt1
 - Initial build for ALT Sisyphus.
 
