@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.1
-Release: alt2
+Version: 1.2
+Release: alt1
 
 Summary: Markdown extension resources for MkDocs Material
 License: MIT
@@ -49,8 +49,7 @@ Markdown extension resources for MkDocs for Material
 %pyproject_install
 
 %check
-# URL changed in mkdocs-material, so the test doesn't pass.
-%pyproject_run_pytest -vra -k 'not test_twemoji'
+%pyproject_run_pytest -vra
 
 %files
 %doc LICENSE.md README.md
@@ -58,6 +57,9 @@ Markdown extension resources for MkDocs for Material
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 26 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2-alt1
+- Updated to 1.2.
+
 * Mon Aug 21 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.1-alt2
 - Fixed FTBFS.
 
