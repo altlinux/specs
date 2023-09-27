@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.29.1
+Version: 0.30.0
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -11,6 +11,7 @@ Group: Terminals
 VCS: https://github.com/kovidgoyal/kitty
 Url: https://sw.kovidgoyal.net/kitty/
 
+Requires: %name-kitten = %EVR
 Requires: %name-terminfo = %EVR
 Requires: %name-shell-integration = %EVR
 
@@ -18,7 +19,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 # 0.27.0: unmet /usr/pkg/bin/tic
-%add_findreq_skiplist %_libexecdir/%name/shell-integration/ssh/bootstrap-utils.sh
+%add_findreq_skiplist %_libexecdir/kitty/shell-integration/ssh/bootstrap-utils.sh
 
 # play sound
 Requires: libcanberra
@@ -46,6 +47,7 @@ BuildRequires: libssl-devel
 BuildRequires: libdbus-devel
 BuildRequires: librsync-devel
 BuildRequires: liblcms2-devel
+BuildRequires: libxxhash-devel
 BuildRequires: fontconfig-devel
 BuildRequires: libharfbuzz-devel
 
@@ -108,8 +110,6 @@ BuildArch: noarch
 %description terminfo
 %summary.
 
-The terminfo file for kitty
-
 %package shell-integration
 Summary: Shell-integration files for kitty
 Group: System/Configuration/Other
@@ -118,8 +118,14 @@ BuildArch: noarch
 %description shell-integration
 %summary.
 
-Shell-integration files for kitty
+%package kitten
+Summary: Standalone kitten executable
+Group: System/Configuration/Other
 
+%description kitten
+Statically compiled, standalone executable, kitten (written in Go) that
+can be used on all UNIX-like servers for remote control (kitten @), viewing
+images (kitten icat), manipulating the clipboard (kitten clipboard), etc.
 
 %prep
 %setup
@@ -130,9 +136,12 @@ find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%__python3|g'  \
                                     -e 's|/usr/bin/env python|%__python3|g'   \
                                     -i "{}" \;
 
-# Match _FORTIFY_SOURCE with gcc's default to fix
-# error "_FORTIFY_SOURCE" redefined
-sed -i -e "s/-D_FORTIFY_SOURCE=2/-D_FORTIFY_SOURCE=3/" setup.py
+# Our gcc enables "_FORTIFY_SOURCE=3" by default, remove defenition
+# form setup.py to avoid error "_FORTIFY_SOURCE" redefined
+sed -i -e "s/-D_FORTIFY_SOURCE=2//" setup.py
+
+# Disable strip for kitten binary
+sed -i -e "/ld_flags.append('-s')/d" -e "s/ld_flags.append('-w')/pass/" setup.py
 
 %build
 %add_optflags -Wno-switch
@@ -148,13 +157,13 @@ mkdir -pv %buildroot
 cp -r ./linux-package %buildroot%_prefix
 
 %buildroot%_bindir/kitten __complete__ setup bash | \
-	install -Dm644 /dev/stdin %buildroot%_datadir/bash-completion/completions/kitty
+    install -Dm644 /dev/stdin %buildroot%_datadir/bash-completion/completions/kitty
 
 %buildroot%_bindir/kitten __complete__ setup zsh | \
-	install -Dm644 /dev/stdin  %buildroot%_datadir/zsh/site-functions/_kitty
+    install -Dm644 /dev/stdin  %buildroot%_datadir/zsh/site-functions/_kitty
 
 %buildroot%_bindir/kitten __complete__ setup fish | \
-	install -Dm644 /dev/stdin %buildroot%_datadir/fish/vendor_completions.d/kitty.fish
+    install -Dm644 /dev/stdin %buildroot%_datadir/fish/vendor_completions.d/kitty.fish
 
 
 %check
@@ -162,6 +171,10 @@ cp -r ./linux-package %buildroot%_prefix
 # test_elliptic_curve_data_exchange fails on ppc64le due to 64k memlock limit in the
 # chroot environmet which is not enough for 64k pagesize system
 rm kitty_tests/crypto.py
+
+# test_transfer_receive and test_transfer_send fail on ppc64le:
+# "Error: inappropriate ioctl for device"
+rm kitty_tests/file_transmission.py
 %endif
 
 PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
@@ -169,7 +182,6 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 
 %files
 %_bindir/kitty
-%_bindir/kitten
 %_libexecdir/kitty/
 %exclude %_libexecdir/kitty/shell-integration
 
@@ -187,7 +199,17 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %files shell-integration
 %_libexecdir/kitty/shell-integration
 
+%files kitten
+%_bindir/kitten
+
 %changelog
+* Tue Sep 26 2023 Egor Ignatov <egori@altlinux.org> 0.30.0-alt1
+- new version 0.30.0
+- move kitten to it's own sub-package
+
+* Thu Jul 27 2023 Egor Ignatov <egori@altlinux.org> 0.29.2-alt1
+- new version 0.29.2
+
 * Mon Jul 17 2023 Egor Ignatov <egori@altlinux.org> 0.29.1-alt1
 - new version 0.29.1
 
