@@ -1,6 +1,6 @@
 Name: emacs
 Version: 29.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Emacs text editor
 License: GPLv3+
@@ -48,12 +48,8 @@ BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(zlib)
 
 BuildRequires(pre): rpm-macros-alternatives
-BuildRequires(pre): rpm-macros-emacs
 BuildRequires: texinfo
-BuildRequires: sendmail-common
-BuildRequires: libgpm-devel
 BuildRequires: libgif-devel
-BuildRequires: inotify-tools-devel
 BuildRequires: libXaw3d-devel libXaw-devel
 %{?_enable_natcomp:BuildRequires: libgccjit13-devel}
 
@@ -189,7 +185,7 @@ This package contain full description of Emacs Lisp language
 #}}}
 
 %define _emacs_archlibdir %_libexecdir/emacs/%version/%_host_alias
-
+%define locallisppath %_libdir/emacs/%version/site-lisp:%_datadir/emacs/%version/site-lisp
 %ifarch %e2k
 # on default -O3 crashes with SIGILL in lucid_event_type_list_p
 %global _optlevel 2
@@ -205,11 +201,12 @@ autoreconf -i -I m4
 %define _configure_script ../configure
 %define _configure_mostly --disable-build-details --sharedstatedir=/var \\\
 	--without-pop --without-gpm --with-wide-int --with-modules \\\
-    %{?_enable_natcomp:--with-native-compilation=aot}
+	--enable-locallisppath=%locallisppath \\\
+	%{?_enable_natcomp:--with-native-compilation=aot}
 
 mkdir build-athena && pushd build-athena
 %configure %_configure_mostly --without-cairo --without-rsvg \
-    --without-dbus --without-gconf --without-gsettings \
+	--without-dbus --without-gconf --without-gsettings \
 	--with-x-toolkit=athena
 popd
 
@@ -258,6 +255,10 @@ touch pgtk.ls
 rm -vf %buildroot%_bindir/emacs
 rm -vf %buildroot%_bindir/emacs-%version
 rm -vf %buildroot%_emacs_archlibdir/emacs.pdmp
+
+# populate non-default part of locallisppath
+cp -av %buildroot%_datadir/emacs/%version/site-lisp \
+   %buildroot%_libdir/emacs/%version/site-lisp
 
 # cleanups
 sed -i 's,%buildroot,,' %buildroot%_desktopdir/*desktop \
@@ -336,9 +337,13 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 
 %_libexecdir/systemd/user/emacs.service
 
+%dir %_libdir/emacs/%version
+%dir %_libdir/emacs/%version/native-lisp
+%_libdir/emacs/%version/site-lisp
+
 %_emacslispdir
-%dir %_emacs_datadir/%version
-%_emacs_datadir/%version/site-lisp
+%dir %_datadir/emacs/%version
+%_datadir/emacs/%version/site-lisp
 
 %_datadir/metainfo/emacs.*.xml
 %_desktopdir/*.desktop
@@ -363,6 +368,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Mon Sep 25 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 29.1-alt2
+- add arch-dependant site-lisp directory
+
 * Tue Sep 19 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 29.1-alt1
 - 29.1 released
 
