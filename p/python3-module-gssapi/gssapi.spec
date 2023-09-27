@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary: Python GSSAPI Wrapper
@@ -14,27 +14,17 @@ VCS: https://github.com/pythongssapi/python-gssapi.git
 Url: https://pypi.org/project/gssapi/
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(Cython)
-
-BuildRequires: libkrb5-devel >= 1.15
-
-%if_with check
-# install_requires
-BuildRequires: python3(decorator)
-
-BuildRequires: python3(k5test)
-BuildRequires: python3(parameterized)
-BuildRequires: krb5-kdc >= 1.15
-%endif
-
+%pyproject_runtimedeps_metadata
 Requires: libkrb5 >= 1.15
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+BuildRequires: libkrb5-devel >= 1.15
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 Python-GSSAPI provides both low-level and high level wrappers around the GSSAPI
@@ -44,6 +34,11 @@ useable with other GSSAPI mechanisms.
 %prep
 %setup
 %patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile test-requirements.txt
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -54,13 +49,11 @@ useable with other GSSAPI mechanisms.
 
 %check
 # see ci/test.sh
-cat > tox.ini <<'EOF'
-[testenv]
-allowlist_externals = bash
-commands =
-    bash -c 'cd gssapi/tests && python -m unittest'
-EOF
-%tox_check_pyproject -c tox.ini
+%pyproject_run -- bash -s <<-'ENDUNITTEST'
+set -eu
+cd gssapi/tests
+python -m unittest
+ENDUNITTEST
 
 %files
 %doc LICENSE.txt README.rst
@@ -70,6 +63,9 @@ EOF
 %exclude %python3_sitelibdir/gssapi/tests/
 
 %changelog
+* Tue Sep 26 2023 Stanislav Levin <slev@altlinux.org> 1.8.3-alt1
+- 1.8.2 -> 1.8.3.
+
 * Wed Oct 26 2022 Stanislav Levin <slev@altlinux.org> 1.8.2-alt1
 - 1.8.1 -> 1.8.2.
 
