@@ -19,7 +19,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt3
+Release: alt4
 Epoch: 1
 Url: https://altsp.su
 
@@ -28,6 +28,8 @@ BuildRequires: libalternatives-devel
 BuildRequires: qt5-base-devel
 
 BuildRequires: ImageMagick fontconfig bc
+
+BuildRequires: distro-licenses >= 1.3.2
 
 Source: branding.tar
 
@@ -202,6 +204,7 @@ Requires(post): indexhtml-common
 
 %prep
 %setup -n branding
+cp /usr/share/distro-licenses/ALT_SP_License/license.{all,ru}.html.in notes/
 
 %build
 autoconf
@@ -282,6 +285,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Sep 22 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt4
+- copy licenses from distro-licenses
+
 * Wed Apr 26 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt3
 - indexhtml/index-en.html.in: fix html tag for "Report a bug"
 - os-release: add BUG_REPORT_URL
