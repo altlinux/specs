@@ -1,27 +1,36 @@
 %define uname   MangoHud
-%define srcname %uname-v%version-1-Source
-%define srcpath %uname-v%version-1
+%define srcname %uname-v%version-Source
+%define srcpath %uname-v%version
 
 Name: mangohud
-Version: 0.6.9
+Version: 0.7.0
 Release: alt1
 
 Summary: A Vulkan overlay layer for monitoring FPS, temperatures, CPU/GPU load and more
 License: MIT
 Group: Games/Arcade
 
-Url: https://github.com/flightlessmango/MangoHud
-# DFSG tarball excludes nonfree nvml.h
-Source: https://github.com/flightlessmango/MangoHud/releases/download/v%version/%srcname-DFSG.tar.xz
+Url: https://github.com/flightlessmango/%uname
+Source: https://github.com/flightlessmango/%uname/releases/download/v%version/%srcname.tar.xz
 
-BuildRequires: gcc-c++ cmake
+Patch0: %name-python3.patch
+
+BuildRequires: appstream
+BuildRequires: gcc-c++
+BuildRequires: git-core
+BuildRequires: glslang
+BuildRequires: libGLEW-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libdbus-devel
+BuildRequires: libglfw3-devel
+BuildRequires: libspdlog-devel
+BuildRequires: libstdc++-devel-static
+BuildRequires: libwayland-client-devel
 BuildRequires: meson
-BuildRequires: glslang libspdlog-devel
-BuildRequires: pkgconfig(dbus-1)
-BuildRequires: pkgconfig(gl)
-BuildRequires: pkgconfig(x11)
-BuildRequires: pkgconfig(libdrm)
-BuildRequires: python3(mako)
+BuildRequires: nlohmann-json-devel
+BuildRequires: nvidia-settings-devel
+BuildRequires: python3-dev
+BuildRequires: python3-module-mako
 
 %description
 A Vulkan overlay layer for monitoring FPS, temperatures, CPU/GPU load and more.
@@ -34,16 +43,25 @@ See '%_docdir/%name' for configuration details.
 The `goverlay` package provides a third-party GUI frontend for MangoHud.
 %endif
 
+%package -n mangoapp
+Summary: A transparent background application with a built-in %uname for gamescope
+Group: Games/Arcade
+Requires: %name
+
+%description -n mangoapp
+A transparent background OpenGL application with a built-in %uname designed to be run inside a gamescope instance.
+
 %prep
 %setup -n %srcpath
+%patch0 -p1
 
 %build
 %meson \
-  -Dinclude_doc=true \
   -Duse_system_spdlog=enabled \
-  -Dwith_nvml=disabled \
-  -Dwith_xnvctrl=disabled
-# NVML is nonfree, XNVCtrl is not packaged yet (but could be enabled if it is)
+  -Dwith_wayland=enabled \
+  -Dmangoapp=true \
+  -Dmangohudctl=true \
+  -Dmangoapp_layer=true
 
 %meson_build
 
@@ -51,9 +69,11 @@ The `goverlay` package provides a third-party GUI frontend for MangoHud.
 %meson_install
 
 %files
-%doc README.md 
+%doc README.md
 %doc LICENSE
 %_bindir/%name
+%_bindir/%{name}ctl
+%_bindir/mangoplot
 %_libdir/%name/
 %_man1dir/%name.1*
 %_datadir/icons/hicolor/scalable/*/*.svg
@@ -61,7 +81,14 @@ The `goverlay` package provides a third-party GUI frontend for MangoHud.
 %_docdir/%name/%uname.conf.example
 %_datadir/metainfo/*.metainfo.xml
 
+%files -n mangoapp
+%_bindir/mangoapp
+%_man1dir/mangoapp.1*
+
 %changelog
+* Wed Sep 27 2023 Nazarov Denis <nenderus@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Fri Jul 07 2023 Nazarov Denis <nenderus@altlinux.org> 0.6.9-alt1
 - 0.6.9-1
 
