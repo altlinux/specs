@@ -3,7 +3,7 @@
 
 Name:    librepcb
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: A powerful, innovative and intuitive EDA suite for everyone
 Summary(ru_RU.UTF-8): Мощный, инновационный и интуитивно понятный пакет EDA для всех
@@ -43,6 +43,7 @@ BuildRequires: libdxflib-devel
 BuildRequires: libpolyclipping-devel
 BuildRequires: libgtest-devel
 BuildRequires: libmuparser-devel
+BuildRequires: fontobene-qt5-devel
 
 %description
 LibrePCB is a free, cross-platform, easy-to-use electronic design automation
@@ -60,7 +61,7 @@ LibrePCB — это бесплатный, кроссплатформенный, 
 
 %build
 %cmake  -DUNBUNDLE_DXFLIB=ON \
-	-DFONTOBENE_QT5=OFF \
+	-DUNBUNDLE_FONTOBENE_QT5=ON \
 	-DUNBUNDLE_GTEST=ON \
 	-DUNBUNDLE_HOEDOWN=OFF \
 	-DUNBUNDLE_MUPARSER=ON \
@@ -84,6 +85,9 @@ LibrePCB — это бесплатный, кроссплатформенный, 
 %_datadir/mime/packages/org.%name.LibrePCB.xml
 
 %changelog
+* Wed Sep 27 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt2
+- unbundle FONTOBENE_QT5
+
 * Tue Sep 26 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
 - new version (1.0.0) with rpmgs script
 - update BR
