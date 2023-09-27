@@ -2,8 +2,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 117.0.1
-Release: alt2
+Version: 118.0
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: https://www.mozilla.org/firefox/
@@ -14,13 +14,12 @@ Source0: firefox-source.tar
 Patch001: 0001-FEDORA-build-arm-libopus.patch
 Patch002: 0002-FEDORA-build-arm.patch
 Patch003: 0003-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch004: 0004-use-floats-for-audio-on-arm-too.patch
-Patch005: 0005-bmo-847568-Support-system-harfbuzz.patch
-Patch006: 0006-bmo-847568-Support-system-graphite2.patch
-Patch007: 0007-bmo-1559213-Support-system-av1.patch
-Patch008: 0008-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch009: 0009-ALT-fix-double_t-redefinition.patch
-Patch010: 0010-build-Disable-Werror.patch
+Patch004: 0004-bmo-847568-Support-system-harfbuzz.patch
+Patch005: 0005-bmo-847568-Support-system-graphite2.patch
+Patch006: 0006-bmo-1559213-Support-system-av1.patch
+Patch007: 0007-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch008: 0008-ALT-fix-double_t-redefinition.patch
+Patch009: 0009-build-Disable-Werror.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -427,6 +426,19 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Sep 26 2023 Alexey Gladkov <legion@altlinux.ru> 118.0-alt1
+- New release (118.0).
+- Security fixes:
+  + CVE-2023-5168: Out-of-bounds write in FilterNodeD2D1
+  + CVE-2023-5169: Out-of-bounds write in PathOps
+  + CVE-2023-5170: Memory leak from a privileged process
+  + CVE-2023-5171: Use-after-free in Ion Compiler
+  + CVE-2023-5172: Memory Corruption in Ion Hints
+  + CVE-2023-5173: Out-of-bounds write in HTTP Alternate Services
+  + CVE-2023-5174: Double-free in process spawning on Windows
+  + CVE-2023-5175: Use-after-free of ImageBitmap during process shutdown
+  + CVE-2023-5176: Memory safety bugs fixed in Firefox 118, Firefox ESR 115.3, and Thunderbird 115.3
+
 * Sat Sep 16 2023 Alexey Gladkov <legion@altlinux.ru> 117.0.1-alt2
 - Enforce window name to associate icon and title with window in wayland (ALT#44871).
 
