@@ -4,7 +4,7 @@
 
 Name: ode
 Version: 0.16.2
-Release: alt2
+Release: alt3
 Summary: The Open Dynamics Engine (ODE)
 License: LGPLv2.1+
 Group: Graphics
@@ -12,7 +12,6 @@ Url: http://www.ode.org/
 
 # https://bitbucket.org/odedevs/ode.git
 Source: %name-%version.tar
-Patch3500: support-loongarch64.patch
 # http://www.ode.org/ode-latest-userguide.pdf
 Source1: ode-latest-userguide.pdf
 # http://www.ode.org/joints.pdf
@@ -95,7 +94,10 @@ This package contains demos of ODE.
 
 %prep
 %setup
-%patch3500 -p1
+# the code is a trashfire with a whitelist of 64-bit architectures
+# there are a dozen ways to detect pointer size portably!
+# there is a whitelist that selects a portable way using <stdint.h>
+sed -i 's/defined(__aarch64__)/1/' include/ode/odeconfig.h
 
 touch libccd/NEWS libccd/AUTHORS libccd/ChangeLog
 
@@ -167,6 +169,10 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 %_libdir/%name/
 
 %changelog
+* Wed Sep 27 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.16.2-alt3
+- LoongArch patch removed.
+- Build fix that should work for any architectures.
+
 * Mon Sep 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.16.2-alt2
 - NMU: fixed FTBFS on LoongArch.
 
