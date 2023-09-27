@@ -1,8 +1,8 @@
 %define py_name yt_dlp
 
 Name: yt-dlp
-Version: 2023.07.06
-Release: alt2
+Version: 2023.09.24
+Release: alt1
 
 Summary: A tool for downloading from video services for offline watching
 License: Unlicense
@@ -71,6 +71,9 @@ rm -r %buildroot%python3_sitelibdir/%py_name/__pyinstaller
 %python3_sitelibdir/%py_name-*.dist-info
 
 %changelog
+* Wed Sep 27 2023 Cronbuild Service <cronbuild@altlinux.org> 2023.09.24-alt1
+- Updated to 2023.09.24.
+
 * Sun Aug 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2023.07.06-alt2
 - Added GPG signature verification into the gear-cronbuild scripts.
 - Added explicit BR: python3-module-setuptools to facilitate backports
