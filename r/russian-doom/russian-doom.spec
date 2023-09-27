@@ -1,5 +1,5 @@
 Name: russian-doom
-Version: 6.2.1
+Version: 7.1
 Release: alt1
 
 Summary: Russian Doom, Freedoom, Heretic and Hexen translation project
@@ -24,8 +24,12 @@ Conflicts: chocolate-doom chocolate-heretic chocolate-hexen
 %description
 Russian Doom, Freedoom, Heretic and Hexen translation project
 
+%description -l ru_RU.UTF-8
+Проект по переводу Doom, Freedoom, Heretic и Hexen на русский язык
+
 %package -n russian-heretic
 Summary: Russian Doom, Freedoom, Heretic and Hexen (Heretic binaries)
+Summary(ru_RU.UTF-8): Heretic на русском языке
 Group: Games/Arcade
 
 Requires: russian-doom = %version
@@ -36,8 +40,12 @@ These are the Heretic binaries.
 
 See https://jnechaevsky.github.io/rusdoom for more information.
 
+%description -n russian-heretic -l ru_RU.UTF-8
+Проект по переводу Heretic на русский язык
+
 %package -n russian-hexen
 Summary: Russian Doom, Freedoom, Heretic and Hexen (Hexen binaries)
+Summary(ru_RU.UTF-8): Hexen на русском языке
 Group: Games/Arcade
 Requires: russian-doom = %version
 
@@ -48,6 +56,9 @@ These are the Hexen binaries.
 
 See https://jnechaevsky.github.io/rusdoom for more information.
 
+%description -n russian-hexen -l ru_RU.UTF-8
+Проект по переводу Hexen на русский язык
+
 %prep
 %setup
 #patch0 -p1
@@ -55,11 +66,6 @@ See https://jnechaevsky.github.io/rusdoom for more information.
 %build
 %cmake \
     -D CMAKE_BUILD_TYPE="Release" \
-    -D CMAKE_INSTALL_PREFIX="/usr" \
-    -D COMPILE_DOOM="ON" \
-    -D COMPILE_HERETIC="ON" \
-    -D COMPILE_HEXEN="ON" \
-    -D COMPILE_STRIFE="ON" \
     -D BUILD_VERSION_OVERWRITE="%version" \
     -D NO_GIT_HASH="ON"
 %cmake_build
@@ -67,6 +73,10 @@ See https://jnechaevsky.github.io/rusdoom for more information.
 
 %install
 %cmake_install
+
+mkdir -p %buildroot%_datadir/{russian-heretic,russian-hexen}
+mv %buildroot%_datadir/%name/heretic* %buildroot%_datadir/russian-heretic
+mv %buildroot%_datadir/%name/hexen* %buildroot%_datadir/russian-hexen
 
 rm -f %buildroot%_desktopdir/screensavers/org.russian_doom.Doom_Screensaver.desktop
 
@@ -83,6 +93,7 @@ cat > %buildroot%_desktopdir/%name.desktop << EOF
 [Desktop Entry]
 Name=Russian Doom
 Comment=Conservative Doom source port
+Comment[ru]=Консервативный порт Doom
 Exec=%name
 Type=Application
 Terminal=false
@@ -94,6 +105,7 @@ cat > %buildroot%_desktopdir/russian-heretic.desktop << EOF
 [Desktop Entry]
 Name=russian Heretic
 Comment=Conservative Heretic source port
+Comment[ru]=Консервативный порт Heretic
 Exec=Russian-heretic
 Type=Application
 Terminal=false
@@ -105,6 +117,7 @@ cat > %buildroot%_desktopdir/russian-hexen.desktop << EOF
 [Desktop Entry]
 Name=Russian Hexen
 Comment=Conservative Hexen source port
+Comment[ru]=Консервативный порт Hexen
 Exec=russian-hexen
 Type=Application
 Terminal=false
@@ -146,7 +159,7 @@ done
 %files
 %doc README.md COMPILING.md LICENSE.txt
 %_bindir/%name
-%_datadir/%name
+%_datadir/%name/*
 %_datadir/doc/%name/GPL.txt
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
@@ -158,17 +171,23 @@ done
 %_bindir/russian-heretic
 %_desktopdir/russian-heretic.desktop
 %_datadir/bash-completion/completions/russian-heretic
+%_datadir/russian-heretic/heretic-*.wad
 %_man6dir/russian-heretic.6.*
 %_man6dir/ru/russian-heretic.6.*
 
 %files -n russian-hexen
 %_bindir/russian-hexen
+%_datadir/russian-hexen/hexen-*.wad
 %_desktopdir/russian-hexen.desktop
 %_datadir/bash-completion/completions/russian-hexen
 %_man6dir/russian-hexen.6.*
 %_man6dir/ru/russian-hexen.6.*
 
 %changelog
+
+* Wed Sep 27 2023 Artyom Bystrov <arbars@altlinux.org> 7.1-alt1
+- Update to new version
+
 * Tue Sep  5 2023 Artyom Bystrov <arbars@altlinux.org> 6.2.1-alt1
 - Update to new version
 
