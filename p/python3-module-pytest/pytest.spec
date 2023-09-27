@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.4.0
+Version: 7.4.2
 Release: alt1
 Summary: Python test framework
 License: MIT
@@ -81,6 +81,9 @@ export TERM=xterm
 %_bindir/pytest-3
 
 %changelog
+* Tue Sep 26 2023 Stanislav Levin <slev@altlinux.org> 7.4.2-alt1
+- 7.4.0 -> 7.4.2.
+
 * Tue Jul 18 2023 Stanislav Levin <slev@altlinux.org> 7.4.0-alt1
 - 7.3.2 -> 7.4.0.
 
