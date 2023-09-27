@@ -3,7 +3,7 @@
 %define major 1
 
 Name: vkd3d
-Version: 1.8
+Version: 1.9
 Release: alt1
 Summary: The vkd3d 3D Graphics Library
 
@@ -103,6 +103,7 @@ rm -f %buildroot%_libdir/*.a
 
 %files utils
 %_bindir/vkd3d-compiler
+%_bindir/vkd3d-dxbc
 
 %if_enabled demos
 %files demos
@@ -111,6 +112,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Sep 27 2023 L.A. Kostis <lakostis@altlinux.ru> 1.9-alt1
+- 1.9.
+
 * Thu Aug 17 2023 Mikhail Tergoev <fidel@altlinux.org> 1.8-alt1
 - NMU: new version 1.8 (with rpmrb script)
 
