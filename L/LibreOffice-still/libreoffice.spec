@@ -28,13 +28,13 @@
 
 Name: LibreOffice-still
 %define hversion 7.5
-%define urelease 6.2
+%define urelease 7.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -55,7 +55,7 @@ Obsoletes: %name-full < %EVR
 Obsoletes: LibreOffice4
 Conflicts: LibreOffice
 
-%define with_lang ru be de fr uk pt-BR es kk tt el
+%define with_lang ru be de fr uk pt-BR es kk tt el uz
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
 #Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
 Requires: gst-libav
@@ -64,7 +64,7 @@ Source:	libreoffice-%version.tar.xz
 Source1: libreoffice-dictionaries-%version.tar.xz
 Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
-Source4: LibreOffice-still-7.5.6.2-l10n-ru.zip
+Source4: LibreOffice-still-%version-l10n-ru.zip
 
 Source10: libreoffice-ext_sources.%version.tar
 Source200: key.gpg
@@ -690,6 +690,7 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %langpack       -l kk -s kk -n Kazakh
 %langpack    -h -l tt -s tt -n Tatar
 %langpack -m -h -l el -s el -n Greek
+%langpack       -l uz -s uz -n Uzbek
 
 %files -n libreofficekit-still
 #_typelibdir/LOKDocView-*.typelib
@@ -700,6 +701,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Sep 27 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.7.1-alt1
+- New version.
+- Add LibreOffice-still-langpack-uz with Uzbek localization.
+
 * Tue Sep 12 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.6.2-alt2
 - Complete Russian localization of interface.
 
