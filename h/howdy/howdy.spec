@@ -1,33 +1,39 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: howdy
 Version: 3.0.0
-Release: alt6.beta1.git943f1e1
+Release: alt7.beta1.gitc5b1766
 Summary: Windows Hello style authentication
 
 License: MIT
 Group: System/Kernel and hardware
 Url: https://github.com/boltgolt/howdy
 
-# commit 943f1e14e2c05159c22fb5176db377c0c1610bba
+# dlib builds successfully but doesn't work properly for ppc
+# https://github.com/davisking/dlib/issues/2711
+ExcludeArch: ppc64le
+
 Source: %url/archive/%version/%name-%version.tar.gz
 Source1: https://github.com/davisking/dlib-models/raw/master/dlib_face_recognition_resnet_model_v1.dat.bz2
 Source2: https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2
 Source3: https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2
 Patch: howdy-3.0.0-alt-fix-the-dublicates-in-the-man.patch
 Patch1: howdy-3.0.0-alt-fix-howdy-gtk-startup.patch
-Patch2: howdy-pull-673.patch
 Patch3: howdy-pull-692-1.patch
 Patch4: howdy-pull-692-2.patch
 Patch5: howdy-pull-692-3.patch
-Patch6: howdy-pull-736.patch
+Patch7: enable-detection-notice.patch
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-pam0
 
 BuildRequires: gcc-c++ rpm-build-python3 meson rpm-build-ninja cmake gettext-tools
 BuildRequires: libinih-devel libevdev-devel libpam0-devel
-Requires: python3-module-opencv python3-module-h5py python3-module-PAM python3-module-numpy python3-module-elevate python3-base python3-module-pygobject3
-%ifnarch ppc64le
-Requires: python3-module-dlib
-%endif
 
-%add_python3_req_skip i18n
+Requires: %name-pam = %EVR
+
+%add_python3_path %_prefix/libexec/howdy/
+%add_python3_path %_prefix/libexec/howdy-gtk/
 
 %description
 Howdy provides Windows Hello style authentication for Linux.
@@ -41,6 +47,7 @@ your password: Login, lock screen, sudo, su, etc.
 %package pam
 Summary: PAM module for howdy
 Group: System/Base
+Requires: %name = %EVR
 
 %description pam
 The package provides PAM module for %name.
@@ -48,7 +55,7 @@ The package provides PAM module for %name.
 %package gtk
 Summary: Windows Hello style authentication - gtk interface
 Group: System/Kernel and hardware
-BuildArch: noarch
+Requires: %name = %EVR
 
 %description gtk
 The package provides gtk interface for %name.
@@ -57,87 +64,61 @@ The package provides gtk interface for %name.
 %setup
 %patch -p1
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
+%patch7 -p1
 cp -a %SOURCE1 %SOURCE2 %SOURCE3 .
 bzip2 -dv *.bz2
-sed -i 's|/lib/security|/%_lib/security|' \
-  howdy/src/pam/meson.build \
-  howdy/src/autocomplete/howdy \
-  howdy/src/pam/main.cc \
-  howdy-gtk/src/tab_video.py \
-  howdy-gtk/src/window.py \
-  howdy/src/pam-config/howdy
-sed -i 's|./main.glade|/usr/libexec/howdy-gtk/main.glade|' \
-  howdy-gtk/src/window.py
-sed -i 's|./onboarding.glade|/usr/libexec/howdy-gtk/onboarding.glade|' \
-  howdy-gtk/src/onboarding.py
-sed -i 's|../howdy-gtk/src/init.py|/usr/libexec/howdy-gtk/src/init.py|' \
-  howdy/src/compare.py
-#sed -i 's|/../config.ini|/%_lib/security/howdy/config.ini|' \
-#  howdy/src/cli/*.py
-#sed -i 's|/../dlib-data/|/%_lib/security/howdy/dlib-data/|' \
-#  howdy/src/cli/add.py \
-#  howdy/src/cli/test.py
-#sed -i 's|/../|/%_lib/security/howdy/|' \
-#  howdy/src/cli/*.py
 sed -i 's|/usr/bin/env python3|%__python3|' \
   howdy-gtk/src/init.py \
-  howdy/src/cli.py
+  howdy/src/cli.py \
+  howdy/src/compare.py
 sed -i 's|/bin/nano|%_bindir/nano|' \
   howdy/src/cli/config.py
-sed -i 's|/usr/lib/howdy-gtk/logo.png|/usr/libexec/howdy-gtk/logo.png|' \
-  howdy-gtk/src/authsticky.py
 
 %build
-pushd howdy/src/pam
-%meson
+%meson \
+    -Dpam_dir=%_pam_modules_dir \
+    -Dpy_sources_dir=%_prefix/libexec
 %meson_build
-popd
 
 %install
-pushd howdy/src/pam
 %meson_install
-popd
 
-mkdir -p %buildroot/%_lib/security/howdy
-cp -a howdy/src/* %buildroot/%_lib/security/howdy
-mkdir -p %buildroot/usr/libexec/howdy-gtk
-cp -a howdy-gtk/src/* %buildroot/usr/libexec/howdy-gtk
-cp -a dlib_face_recognition_resnet_model_v1.dat %buildroot/%_lib/security/howdy/dlib-data/
-cp -a mmod_human_face_detector.dat %buildroot/%_lib/security/howdy/dlib-data/
-cp -a shape_predictor_5_face_landmarks.dat %buildroot/%_lib/security/howdy/dlib-data/
-mkdir -p %buildroot/usr/bin
-ln -s /%_lib/security/howdy/cli.py %buildroot%_bindir/howdy
-ln -s /usr/libexec/howdy-gtk/init.py %buildroot%_bindir/howdy-gtk
-chmod +x %buildroot/%_lib/security/howdy/cli.py
-mkdir -p %buildroot%_datadir/bash-completion/completions
-cp -a howdy/src/autocomplete/howdy %buildroot%_datadir/bash-completion/completions/howdy
-mkdir -p %buildroot%_man1dir
-cp -a howdy/debian/howdy.1 %buildroot%_man1dir/
-# already built
-rm -rf %buildroot/%_lib/security/howdy/pam
-rm -rf %buildroot/%_lib/security/howdy/dlib-data/{Readme.md,install.sh,.gitignore}
+#dlib models
+cp -a *.dat %buildroot%_datadir/dlib-data/
 
 %files
 %doc LICENSE README.md
+%config(noreplace) %_sysconfdir/howdy/config.ini
 %_bindir/howdy
+%_prefix/libexec/howdy/
+%_datadir/howdy/
 %_datadir/bash-completion/completions/howdy
-%config(noreplace) /%_lib/security/howdy/config.ini
-/%_lib/security/howdy/
+%_datadir/dlib-data/
 %_man1dir/howdy*
 
 %files pam
-/%_lib/security/pam_howdy.so
+%_pam_modules_dir/pam_howdy.so
 
 %files gtk
 %_bindir/howdy-gtk
-/usr/libexec/howdy-gtk/
+%_prefix/libexec/howdy-gtk/
+%_datadir/howdy-gtk/
 
 %changelog
+* Mon Sep 25 2023 Anton Golubev <golubevan@altlinux.org> 3.0.0-alt7.beta1.gitc5b1766
+- more recent version including necessary changes/fixes:
+  * do not show a message if the face model is not found
+  * show a message if the user could not be recognized
+  * show prompt if face model found (and enabled option detetion_notice)
+  * ensure Model ID is unique
+- update patches
+- enable detection_notice by default via patch
+- explicitly exclude ppc64le
+- adapt spec to changes in build scripts
+
 * Mon Jan 09 2023 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt6.beta1.git943f1e1
 - Fixed howdy-gtk startup again instead howdy-gtk-auth (ALT #44775).
 
