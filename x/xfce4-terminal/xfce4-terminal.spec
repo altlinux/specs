@@ -1,6 +1,6 @@
 Name: xfce4-terminal
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -12,7 +12,7 @@ Vcs: https://gitlab.xfce.org/apps/xfce4-terminal.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: rpm-build-xfce4 >= 0.2.0-alt1 xfce4-dev-tools
 BuildRequires: libxfconf-devel >= 4.16 libxfce4ui-gtk3-devel >= 4.17.5
 BuildRequires: libpcre2-devel
 BuildRequires: docbook-dtds docbook-style-xsl intltool libvte3-devel
@@ -39,9 +39,7 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %prep
 %setup
 %patch -p1
-
-# Don't use git tag in version.
-%xfce4_drop_gitvtag terminal_version_tag configure.ac.in
+%xfce4_cleanup_version
 
 %build
 %xfce4reconf
@@ -69,6 +67,12 @@ __EOF__
 %_desktopdir/*
 
 %changelog
+* Wed Sep 27 2023 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt2
+- Replaced %%xfce4_drop_gitvtag macro with %%xfce4_cleanup_version.
+- Updated translations from upstream git.
+- Fix F10 handling (patch from upstream):
+  + app: Put GtkSettings:gtk-menu-bar-accel overwrite back in place.
+
 * Tue Aug 22 2023 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
 - Added x-terminal-emulator alternative (closes: #45565).
 - Dropped workaround for Russian translation.
