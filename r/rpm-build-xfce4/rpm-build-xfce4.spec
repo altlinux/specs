@@ -1,5 +1,5 @@
 Name: rpm-build-xfce4
-Version: 0.1.3
+Version: 0.2.0
 Release: alt1
 
 Summary: comfort build environment for xfce4 and plugins
@@ -46,6 +46,9 @@ install -m644 %SOURCE0 %buildroot%_rpmmacrosdir/xfce4
 
 
 %changelog
+* Tue Sep 19 2023 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
+- Add %%xfce4_cleanup_version() macro.
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 0.1.3-alt1
 - NMU:
 - use %%_rpmmacrosdir instead of /etc/rpm/macros.d
