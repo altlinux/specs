@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt9
+Release: alt10
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Sep 27 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt10
+- discover: deleted double (closes #47747)
+- synaptic: fixed typos (closes #47746)
+- fixed boot-disk (closes #47748)
+
 * Tue Sep 12 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt9
 - small improvement (closes #47662)
 - update kfind screenshots (closes #47650)
