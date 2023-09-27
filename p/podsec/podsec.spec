@@ -7,7 +7,7 @@
 %define u7s_admin_homedir %_localstatedir/%u7s_admin_usr
 
 Name: podsec
-Version: 1.0.5
+Version: 1.0.8
 Release: alt1
 
 Summary: Set of scripts for Podman Security
@@ -46,6 +46,7 @@ This package contains utilities for:
 - creating users with rights to run containers in rootless mode
 - downloading docker images from the oci archive, placing them
   on the local system, signing and placing them on the registry
+- deploying a rootless kubernetes cluster
 
 %package k8s
 Summary: Set of scripts for Kubernetes Security
@@ -71,6 +72,7 @@ Requires: systemd-container
 
 %description k8s
 This package contains utilities for:
+- deploying a rootless kubernetes cluster
 - cluster node configurations
 
 %package k8s-rbac
@@ -94,10 +96,9 @@ Requires: podsec >= %EVR
 Requires: openssh-server
 Requires: mailx
 Requires: trivy
-Requires: vixie-cron
 
 %description inotify
-A set of scripts for  security monitoring by crontabs or
+A set of scripts for  security monitoring by systemd timers or
 called from the nagios server side via check_ssh plugin
 to monitor and identify security threats
 
@@ -125,24 +126,14 @@ groupadd -r -f podman_dev >/dev/null 2>&1 ||:
 
 
 %pre k8s
-groupadd -r -f %u7s_admin_grp >/dev/null 2>&1 ||:
-useradd -r -m -g %u7s_admin_grp -d %u7s_admin_homedir -G %kubernetes_grp,systemd-journal,podman,fuse \
-    -c 'usernet user account' %u7s_admin_usr >/dev/null 2>&1 ||:
+groupadd -r -f podman >/dev/null 2>&1 ||:
+groupadd -r -f %u7s_admin_grp  2>&1 ||:
+useradd -r -m -g %u7s_admin_grp -d %u7s_admin_homedir -G %kubernetes_grp,systemd-journal,podman \
+    -c 'usernet user account' %u7s_admin_usr  2>&1 ||:
 
 %post inotify
 %post_systemd podsec-inotify-check-containers.service
-%post_systemd  podsec-inotify-check-kubeapi.service
-cd %_sysconfdir/podsec/crontabs/;
-rootcrontab="%_var/spool/cron/root"
-if [ ! -f $rootcrontab ]; then touch $rootcrontab; fi
-for crontab in *
-do
-  if grep $crontab $rootcrontab >/dev/null 2>&1 ; then :;
-  else
-    cat $crontab >> $rootcrontab
-  fi
-done
-chmod 600 $rootcrontab
+%post_systemd podsec-inotify-check-kubeapi.service
 
 %preun inotify
 %preun_systemd podsec-inotify-check-containers.service
@@ -172,8 +163,6 @@ chmod 600 $rootcrontab
 %files k8s
 %dir %_sysconfdir/podsec/u7s
 %config(noreplace) %_sysconfdir/podsec/u7s/*
-%config(noreplace) %_sysconfdir/kubernetes/manifests/*
-%config(noreplace) %_sysconfdir/kubernetes/audit/*
 %_unitdir/user@.service.d/*
 %_libexecdir/podsec/u7s
 %_localstatedir/podsec/u7s/*
@@ -188,7 +177,6 @@ chmod 600 $rootcrontab
 %exclude %_mandir/man?/podsec-k8s-rbac-*
 %_unitdir/u7s.service
 %_userunitdir/*
-%dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %_sysconfdir/kubernetes/audit/
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %u7s_admin_homedir
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %u7s_admin_homedir
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %_localstatedir/podsec/u7s
@@ -205,7 +193,6 @@ chmod 600 $rootcrontab
 %_mandir/man?/podsec-inotify-*
 %_unitdir/podsec-inotify-*
 %exclude %_unitdir/u7s.service
-%_sysconfdir/podsec/crontabs/*
 
 %files dev
 %_bindir/podsec-save-oci
@@ -214,6 +201,15 @@ chmod 600 $rootcrontab
 %_mandir/man?/podsec-save-oci*
 
 %changelog
+* Tue Sep 26 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.8-alt1
+- 1.0.8
+
+* Thu Sep 21 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.7-alt1
+- 1.0.7
+
+* Tue Jul 25 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.6-alt1
+- 1.0.6
+
 * Sat Jul 15 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.5-alt1
 - 1.0.5
 
