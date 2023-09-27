@@ -1,74 +1,84 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname fabio
 
-# check disabled because it relies a lot on network
-%def_disable check
+# [armh]
+# [00:01:02]   File "/usr/src/RPM/BUILD/python3-module-fabio-2023.6/build/lib/python3/site-packages/fabio/test/codecs/test_brukerimage.py", line 155, in test_linear
+# [00:01:02]     self.assertTrue(error < numpy.finfo(numpy.float32).eps, "Error is %s>1e-7" % error)
+# [00:01:02] AssertionError: False is not true : Error is 1.1920929e-07>1e-7
+%ifnarch armh
+%def_with check
+%else
+%def_without check
+%endif
 
 Name: python3-module-%oname
-Version: 2023.4.1
-Release: alt1.1
-Summary: Image IO for fable
-License: MIT
-Group: Development/Python3
-Url: https://pypi.python.org/pypi/fabio
+Version: 2023.6
+Release: alt1
 
-# https://github.com/silx-kit/fabio.git
+Summary: Image IO for fable
+
+License: BSD-3-Clause AND GPL-2.0-or-later AND LGPL-3.0-or-later AND MIT
+Group: Development/Python3
+URL: https://pypi.org/project/fabio
+VCS: https://github.com/silx-kit/fabio
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libnumpy-py3-devel python3-module-Cython
-BuildRequires: python3(lxml)
+BuildRequires: libnumpy-py3-devel
+BuildRequires: python3-module-Cython
+BuildRequires: meson
+BuildRequires: python3-module-mesonpy
 
-%add_python3_req_skip UserDict python3(fabio.test) python3(fabio.benchmark)
-%py3_requires argparse gzip six
+%if_with check
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-h5py
+BuildRequires: python3-module-Pillow
+BuildRequires: python3-module-glymur
+%endif
 
 %description
-FabIO is an I/O library for images produced by 2D X-ray detectors and written in Python.
-FabIO support images detectors from a dozen of companies (including Mar, Dectris, ADSC, Hamamatsu, Oxford, ...),
-for a total of 20 different file formats (like CBF, EDF, TIFF, ...) and offers an unified interface to their
-headers (as a python dictionary) and datasets (as a numpy ndarray of integers or floats).
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-FabIO is an I/O library for images produced by 2D X-ray detectors and written in Python.
-FabIO support images detectors from a dozen of companies (including Mar, Dectris, ADSC, Hamamatsu, Oxford, ...),
-for a total of 20 different file formats (like CBF, EDF, TIFF, ...) and offers an unified interface to their
-headers (as a python dictionary) and datasets (as a numpy ndarray of integers or floats).
-
-This package contains tests for %oname.
+FabIO is an I/O library for images produced by 2D X-ray detectors and written
+in Python. FabIO support images detectors from a dozen of companies
+(including Mar, Dectris, ADSC, Hamamatsu, Oxford), for a total of 30 different
+file formats (like CBF, EDF, TIFF) and offers an unified interface to their
+headers (as a Python dictionary) and datasets (as a numpy ndarray of integers or
+floats)
 
 %prep
 %setup
 
 # remove some third-party bundled stuff
-rm -rf fabio/third_party/_local
+rm -rv src/fabio/third_party/_local
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+# Dont package tests
+rm -rv %buildroot%python3_sitelibdir/%oname/test
+rm -rv %buildroot%python3_sitelibdir/%oname/benchmark
 
 %check
-python3 setup.py test
+python3 run_tests.py
 
 %files
-%doc README.rst
-%_bindir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/test
-%exclude %python3_sitelibdir/%oname/benchmark
-
-%files tests
-%python3_sitelibdir/%oname/test
-%python3_sitelibdir/%oname/benchmark
+%doc copyright *.rst
+%_bindir/densify_Bragg
+%_bindir/eiger2cbf
+%_bindir/eiger2crysalis
+%_bindir/fabio-convert
+%_bindir/fabio_viewer
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.0.dist-info
 
 %changelog
+* Tue Sep 26 2023 Grigory Ustinov <grenka@altlinux.org> 2023.6-alt1
+- Automatically updated to 2023.6.
+- Built with check.
+- Built without tests.
+
 * Wed Jul 12 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 2023.4.1-alt1.1
 - NMU:
      + moved %%python3_sitelibdir/%%oname/benchmark to subpackage with tests
