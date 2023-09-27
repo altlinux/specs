@@ -1,6 +1,11 @@
 %def_with nas
 %def_with pulse
 %def_with sdl
+# disabled by default
+%def_disable portable
+# "to not attempt to use 64 bit file offsets internally"
+# enabled by default
+%def_enable largefile
 
 # list of audio output modules
 %define mods alsa oss %{?_with_nas:nas} %{?_with_pulse:pulse} %{?_with_sdl:sdl}
@@ -8,8 +13,9 @@
 %def_enable check
 
 Name: mpg123
-Version: 1.32.1
+Version: 1.31.3
 Release: alt1
+Epoch: 1
 
 Summary: MPEG audio player
 Group: Sound
@@ -70,8 +76,10 @@ install -p -m644 %SOURCE1 .
 
 %build
 %autoreconf
-%add_optflags %optflags_shared
+%add_optflags %optflags_shared %(getconf LFS_CFLAGS)
 %configure \
+	%{subst_enable portable} \
+	%{subst_enable largefile} \
 	--with-audio="%mods" \
 	--with-optimization=0 \
 	--enable-network=yes \
@@ -116,6 +124,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Wed Sep 27 2023 Yuri N. Sedunov <aris@altlinux.org> 1:1.31.3-alt1
+- rollback to 1.31.3 (ALT #47750)
+
 * Sun Sep 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1.32.1-alt1
 - 1.32.1
 
