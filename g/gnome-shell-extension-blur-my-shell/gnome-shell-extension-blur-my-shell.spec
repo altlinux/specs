@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name blur-my-shell
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define uuid %_name@aunetx
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -72,6 +72,9 @@ popd
 %doc README.md
 
 %changelog
+* Wed Sep 27 2023 Yuri N. Sedunov <aris@altlinux.org> 51-alt1
+- 51
+
 * Tue Sep 19 2023 Yuri N. Sedunov <aris@altlinux.org> 50-alt1
 - 50 (ported to GNOME-45)
 
