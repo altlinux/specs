@@ -1,12 +1,10 @@
 %define sonamev 0
 
-%def_without tests
-%def_with ffmpeg
-# waiting ImageMagick >= 7.0
-%def_without ImageMagick
+%def_with tests
+%def_with python_ext
 
 Name: vapoursynth
-Version: 63
+Version: 64
 Release: alt1
 Summary: Video processing framework with simplicity in mind
 License: WTFPL and LGPL-2.1+ and OFL-1.1 and GPL-2.0+ and ISC and MIT
@@ -28,22 +26,14 @@ BuildRequires: pkgconfig(tesseract)
 BuildRequires: pkgconfig(zimg)
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-setuptools
+%if_with python_ext
+BuildRequires: python3-module-wheel
+%endif
 BuildRequires: glibc-pthread
-
+# python_ext
 %if_with tests
 BuildRequires: python3-test
 BuildRequires: python3-module-pytest
-%endif
-
-%if_with ImageMagick
-BuildRequires: pkgconfig(Magick++) >= 7.0
-%endif
-
-%if_with ffmpeg
-BuildRequires: pkgconfig(libass)
-BuildRequires: pkgconfig(libavcodec)
-BuildRequires: pkgconfig(libavformat)
-BuildRequires: pkgconfig(libavutil)
 %endif
 
 %description
@@ -89,13 +79,6 @@ Group: Video
 %description tools
 This package contains the vspipe tool for interfacing with VapourSynth.
 
-# %%package plugins
-# Summary: VapourSynth plugins
-# Group: Video
-
-# %%description plugins
-# VapourSynth plugins.
-
 %prep
 %setup -n %name-R%version
 %patch -p1
@@ -111,35 +94,30 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' setup.py
     --enable-core \
     --enable-vsscript \
     --enable-vspipe \
-    --enable-python-module \
-    --enable-eedi3 \
-%if_with ImageMagick
-    --imwri \
-%endif
-    --enable-miscfilters \
-    --enable-morpho \
-    --enable-ocr \
-    --enable-removegrain \
-%if_with ffmpeg
-    --enable-subtext \
-%endif
-    --enable-vinverse \
-    --enable-vivtc
+    --enable-python-module
 
 %make_build LIBDIR=%_libdir
-# %%pyproject_build
 
 %install
-%__python3 setup.py install --skip-build --root=%buildroot --force
 %makeinstall_std
+
+%if_with python_ext
+# Python installer does not find -lvapoursynth.
+%add_optflags -L./.libs -lvapoursynth
+%pyproject_build && %pyproject_install
+%endif
+
 find %buildroot -type f -name "*.la" -delete
 
 # Let RPM pick up docs in the files section
 rm -fr %buildroot%_docdir/%name
+mv -f %buildroot%_prefix/VAPOURSYNTH_VERSION %buildroot%_includedir/%name/
 
 %if_with tests
 %check
-python3 -m pytest -v
+# Python test does not find -lvapoursynth.
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%pyproject_run_pytest -v
 %endif
 
 %files -n lib%name%version
@@ -151,7 +129,10 @@ python3 -m pytest -v
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name.so
-%python3_sitelibdir/VapourSynth-*.egg-info
+%if_with python_ext
+%python3_sitelibdir/%name.cpython*.so
+%python3_sitelibdir/VapourSynth-%version.dist-info/
+%endif
 
 %files devel
 %_includedir/%name/
@@ -163,11 +144,12 @@ python3 -m pytest -v
 %files tools
 %_bindir/vspipe
 
-# %%files plugins
-# %%dir %%_libdir/%%name
-# %%_libdir/%%name/lib*.so
-
 %changelog
+* Thu Sep 28 2023 Leontiy Volodin <lvol@altlinux.org> 64-alt1
+- New version 64.
+- Updated version info patch.
+- Enabled tests.
+
 * Wed Jun 28 2023 Leontiy Volodin <lvol@altlinux.org> 63-alt1
 - New version 63.
 
