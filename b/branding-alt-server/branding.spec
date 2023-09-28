@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -340,6 +340,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Sep 28 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.2-alt2
+- updated licenses from distro-licenses
+- use Basealt logo as a "steps list" button
+
 * Tue Sep 19 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.2-alt1
 - update indexhtml URLs
 
