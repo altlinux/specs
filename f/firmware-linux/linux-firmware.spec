@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230918
+Version: 20230926
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,14 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Sep 28 2023 Cronbuild Service <cronbuild@altlinux.org> 20230926-alt1
+- upstream changes (GIT 8b855f37):
+  + amd_pmf: Add initial PMF TA for Smart PC Solution Builder (thx Shyam Sundar S K)
+  + Update FW files for MRVL PCIE 8997 chipsets (thx Neeraj Kale)
+  + rtl_bt: Update RTL8851B BT USB firmware to 0x048A_D230 (thx Max Chou)
+  + iwlwifi: add new FWs from core81-65 release (thx Gregory Greenman)
+  + iwlwifi: update cc/Qu/QuZ firmwares for core81-65 release (thx Gregory Greenman)
+
 * Fri Sep 22 2023 Cronbuild Service <cronbuild@altlinux.org> 20230918-alt1
 - upstream changes (GIT 3672ccab):
   + amd-ucode: Add note on fam19h warnings (thx Sandipan Das)
