@@ -1,14 +1,16 @@
+%define _stripped_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
+
 Name:    admesh
 Summary: Diagnose and/or repair problems with STereo Lithography files
-Version: 0.98.1
+Version: 0.98.5
 Release: alt1
 
 Group:   Engineering
-License: GPLv2+
-URL:     https://github.com/admesh/admesh/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-# https://github.com/admesh/admesh.git
-Source: %name-%version.tar.gz
+License: GPLv2
+URL:     https://github.com/admesh/admesh
+
+Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 
@@ -54,12 +56,11 @@ cp README{.md,}
 rm -rf %buildroot%_datadir/doc
 
 %files
-%doc COPYING ChangeLog* README *.stl %{name}-doc.txt
+%doc ChangeLog* README *.stl %{name}-doc.txt
 %_bindir/*
 %doc %_man1dir/*
 
 %files -n lib%name
-%doc COPYING
 %_libdir/lib%name.so.*
 
 %files -n lib%{name}-devel
@@ -68,6 +69,10 @@ rm -rf %buildroot%_datadir/doc
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Jul 06 2023 Aleksei Kalinin <kaa@altlinux.org> 0.98.5-alt1
+- Version 0.98.5.
+- Simple spec refactoring: File COPYING excluded. Licese version fixed.
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.98.1-alt1
 - Version 0.98.1
 
@@ -80,4 +85,3 @@ rm -rf %buildroot%_datadir/doc
 
 * Fri Jun 26 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.95-alt1
 - Initial build for Sisyphus
-
