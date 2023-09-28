@@ -1,6 +1,6 @@
 Name: xdp-tools
 Version: 1.3.1
-Release: alt1
+Release: alt2
 Summary: Utilities and example programs for use with XDP
 License: GPL-2.0 and LGPL-2.1 and BSD-2-Clause
 Group: Development/Tools
@@ -11,7 +11,7 @@ Source0: xdp-tools-%{version}.tar
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define llvm_version 15.0
+%define llvm_version 16.0
 
 %add_debuginfo_skiplist  %_libdir/bpf/*.o
 %add_verify_elf_skiplist %_libdir/bpf/*.o
@@ -119,6 +119,9 @@ rm -f -- %buildroot%_libdir/*.a
 %_libdir/pkgconfig/libxdp.pc
 
 %changelog
+* Thu Sep 28 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.3.1-alt2
+- Build with clang/llvm 16 (earlier versions can't target LoongArch).
+
 * Tue May 30 2023 Alexey Gladkov <legion@altlinux.ru> 1.3.1-alt1
 - First build.
 
