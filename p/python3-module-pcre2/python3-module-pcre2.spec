@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the PCRE2 library created by Philip Hazel
 License: BSD-3-Clause
@@ -55,6 +55,9 @@ BuildRequires: libpcre2-devel
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 28 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.0-alt2
+- Cleaned up the package content.
+
 * Thu Sep 28 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.0-alt1
 - Built for ALT Sisyphus.
 
