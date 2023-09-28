@@ -29,7 +29,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.9.4
+Version: 1.9.5
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -274,7 +274,6 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %_datadir/fwupd/add_capsule_header.py
 %_datadir/fwupd/install_dell_bios_exe.py
 %_datadir/fwupd/simple_client.py
-%_presetdir/fwupd-refresh.preset
 %_unitdir/fwupd-offline-update.service
 %_unitdir/fwupd.service
 %_unitdir/fwupd-refresh.timer
@@ -336,6 +335,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %endif
 
 %changelog
+* Mon Sep 25 2023 Egor Ignatov <egori@altlinux.org> 1.9.5-alt1
+- 1.9.5
+
 * Tue Aug 22 2023 Egor Ignatov <egori@altlinux.org> 1.9.4-alt1
 - 1.9.3 -> 1.9.4
 
