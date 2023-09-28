@@ -1,6 +1,6 @@
 Name: installer
 Version: 1.14.4
-Release: alt1
+Release: alt2
 
 Summary: Installer common parts
 License: GPLv2+
@@ -107,6 +107,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Sep 28 2023 Anton Midyukov <antohami@altlinux.org> 1.14.4-alt2
+- steps/notes-license.desktop: update 'Name[ru]'
+
 * Wed Sep 20 2023 Anton Midyukov <antohami@altlinux.org> 1.14.4-alt1
 - 00-remove-installer-pkgs.sh:
   + remove alterator-luks if not detected luks partitions
