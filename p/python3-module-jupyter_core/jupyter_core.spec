@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.3.1
+Version: 5.3.2
 Release: alt1
 Summary: Jupyter core package
 License: BSD-3-Clause
@@ -21,20 +21,11 @@ BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-platformdirs
 BuildRequires: python3-module-traitlets
+BuildRequires: python3-module-pip
 %endif
 
 %description
 Jupyter core package. A base package on which Jupyter projects rely.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Jupyter core package. A base package on which Jupyter projects rely.
-
-This package contains tests for %oname.
 
 %prep
 %setup
@@ -56,12 +47,12 @@ export LC_ALL=en_US.UTF-8
 %python3_sitelibdir/__pycache__/jupyter.*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
-%exclude %python3_sitelibdir/%oname/tests
-
-%files tests
-%python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Sep 28 2023 Anton Vyatkin <toni@altlinux.org> 5.3.2-alt1
+- New version 5.3.2.
+- Remove tests subpackage.
+
 * Mon Jul 03 2023 Anton Vyatkin <toni@altlinux.org> 5.3.1-alt1
 - New version 5.3.1.
 
