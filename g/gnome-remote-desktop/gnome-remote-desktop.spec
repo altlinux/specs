@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 45
-%define beta .rc
+%define beta %nil
 
 %def_enable vnc
 %def_enable rdp
@@ -10,8 +10,8 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major
-Release: alt0.9%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GNOME Remote Desktop
 License: GPLv2+
@@ -90,6 +90,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Thu Sep 28 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Mon Sep 04 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt0.9.rc
 - 45.rc
 
