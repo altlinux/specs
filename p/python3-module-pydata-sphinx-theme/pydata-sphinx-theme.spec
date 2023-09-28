@@ -1,18 +1,25 @@
 %define  modulename pydata-sphinx-theme
 
 Name:    python3-module-%modulename
-Version: 0.8.1
+Version: 0.14.0
 Release: alt1
 
 Summary: Bootstrap-based sphinx theme from the PyData community
 
 License: BSD-3-Clause
 Group:   Development/Python3
-URL:     https://github.com/pydata/pydata-sphinx-theme
+URL:     https://pypi.org/project/pydata-sphinx-theme
+VCS:     https://github.com/pydata/pydata-sphinx-theme
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-sphinx-theme-builder
+BuildRequires: python3-module-nodeenv
+BuildRequires: yarn webpack
+BuildRequires: /proc /dev/pts
 
 BuildArch: noarch
 
@@ -23,22 +30,27 @@ Source:  %name-%version.tar
 
 %prep
 %setup
-# https://bugzilla.altlinux.org/show_bug.cgi?id=39907
-[ -e setup.py ] && rm -f ./setup.py
-echo 'import setuptools; setuptools.setup()' > setup.py
+
+sed -i "s,^\(node-version = \)".*",\1\"$(node --version | sed 's/v//')\"," pyproject.toml
 
 %build
-%python3_build
+yarn build
+python3 -m nodeenv --node=system --prebuilt --clean-src $PWD/.nodeenv
+
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
+%doc LICENSE *.md
 %python3_sitelibdir/pydata_sphinx_theme
-%python3_sitelibdir/*.egg-info
-%doc *.md
+%python3_sitelibdir/pydata_sphinx_theme-%version.dist-info
 
 %changelog
+* Thu Sep 28 2023 Grigory Ustinov <grenka@altlinux.org> 0.14.0-alt1
+- Build new version.
+
 * Sun May 29 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
 - Automatically updated to 0.8.1.
 
