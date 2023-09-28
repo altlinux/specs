@@ -5,7 +5,7 @@
 %endif
 %define pyname pythran
 Name: python3-module-%pyname
-Version: 0.13.1
+Version: 0.14.0
 Release: alt1
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
@@ -105,6 +105,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %python3_sitelibdir_noarch/omp
 
 %changelog
+* Thu Sep 28 2023 Anton Vyatkin <toni@altlinux.org> 0.14.0-alt1
+- (NMU) New version 0.14.0.
+
 * Sun May 14 2023 Anton Farygin <rider@altlinux.ru> 0.13.1-alt1
 - 0.12.1 -> 0.13.1
 
