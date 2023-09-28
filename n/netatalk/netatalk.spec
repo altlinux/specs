@@ -1,5 +1,5 @@
 Name: netatalk
-Version: 3.1.13
+Version: 3.1.17
 Release: alt1
 
 Summary: Open Source Apple Filing Protocol(AFP) File Server
@@ -13,12 +13,15 @@ Source1: netatalk.pam-system-auth
 Patch0: netatalk-3.0.1-basedir.patch
 Patch1: netatalk-3.1.12-alt-mysql8-transition.patch
 Patch2: netatalk-3.1.12-afpstats-python3-compat.patch
+Patch3: netatalk-systemd-execstartpre.patch
+
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cracklib-devel flex libacl-devel libattr-devel libavahi-devel
 BuildRequires: libdb4-devel libdbus-glib-devel libevent-devel libgcrypt-devel
 BuildRequires: libkrb5-devel libldap-devel libmysqlclient-devel libpam-devel
 BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6
+Requires: cracklib-words
 
 %description
 Netatalk is a freely-available Open Source AFP file server. A *NIX/*BSD
@@ -42,10 +45,11 @@ rm -frv libevent/
 
 %patch0 -p1
 %patch1 -p0
-%patch2 -p1
+#patch2 -p1
+#patch3 -p0
 
 # Avoid re-running the autotools
-touch -r aclocal.m4 configure configure.ac macros/gssapi-check.m4
+#touch -r aclocal.m4 configure configure.ac macros/gssapi-check.m4
 
 # fix permissions
 find include \( -name '*.h' -a -executable \) -exec chmod -x {} \;
@@ -54,7 +58,12 @@ find include \( -name '*.h' -a -executable \) -exec chmod -x {} \;
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ \( -name '*.py' -o -name 'afpstats' \))
 
+# Don't call systemctl daemon-reload during the build
+sed -i 's\-systemctl daemon-reload\\g' distrib/initscripts/Makefile.in
+
+
 %build
+%autoreconf
 %add_optflags -fcommon
 %configure \
         --localstatedir=%_localstatedir             \
@@ -98,6 +107,8 @@ install -pm644 %SOURCE1 %buildroot%_sysconfdir/pam.d/netatalk
 
 find %buildroot -name '*.la' -delete -print
 
+touch %buildroot%_sysconfdir/netatalk/afppasswd
+
 %check
 sh test/afpd/test.sh
 
@@ -109,6 +120,7 @@ sh test/afpd/test.sh
 %config(noreplace) %_sysconfdir/netatalk/dbus-session.conf
 %config(noreplace) %_sysconfdir/netatalk/extmap.conf
 %config(noreplace) %_sysconfdir/pam.d/netatalk
+%config(noreplace) %_sysconfdir/netatalk/afppasswd
 %_bindir/*
 %exclude %_bindir/netatalk-config
 %_libdir/netatalk/
@@ -120,6 +132,7 @@ sh test/afpd/test.sh
 /usr/lib/systemd/system/netatalk.service
 %exclude %_localstatedir/netatalk/CNID/README
 %exclude %_localstatedir/netatalk/README
+%dir /var/lib/netatalk
 
 %files devel
 %_bindir/netatalk-config
@@ -129,6 +142,13 @@ sh test/afpd/test.sh
 %_mandir/man*/netatalk-config.1*
 
 %changelog
+* Thu Sep 28 2023 Ilya Mashkin <oddity@altlinux.ru> 3.1.17-alt1
+- 3.1.17 (fixed CVE-2023-42464, CVE-2022-23121, CVE-2022-23123,
+   CVE-2022-43634 and CVE-2022-45188)
+- Add /etc/netatalk/afppasswd (Closes: #46445)
+- Add /var/lib/netatalk (Closes: #46441)
+- Add Requires: cracklib-words (Closes: #46446)
+
 * Thu Nov 17 2022 Yuri N. Sedunov <aris@altlinux.org> 3.1.13-alt1
 - 3.1.13 (fixed CVE-2021-31439, CVE-2022-23121, CVE-2022-23122,
   CVE-2022-23123, CVE-2022-23124, CVE-2022-23125 and CVE-2022-0194)
