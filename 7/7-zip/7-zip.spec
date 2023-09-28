@@ -1,6 +1,6 @@
 Name: 7-zip
-Version: 22.01
-Release: alt1.1
+Version: 23.01
+Release: alt1
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
@@ -9,6 +9,7 @@ Source1: check.tar
 Patch1: nostrip.patch
 Patch2: dangling-pointer.patch
 Patch3: uninitialized.patch
+Patch100: ALT-armh.patch
 Summary: Official 7-zip for linux, the file archiver with a high compression ratio
 Provides: 7zz = %version-%release
 
@@ -38,6 +39,7 @@ BuildRequires: gcc-c++
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch100 -p1
 
 sed -Ei "s@7zCon.sfx@%_libdir/7z/7zCon.sfx@" CPP/7zip/UI/Console/Main.cpp
 
@@ -84,6 +86,10 @@ cd p7zip/check
 sh check.sh %buildroot%_bindir/7zz
 
 %changelog
+* Thu Sep 28 2023 Fr. Br. George <george@altlinux.org> 23.01-alt1
+- Autobuild version bump to 23.01
+- Fix armh build
+
 * Fri Sep 09 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 22.01-alt1.1
 - Fixed build for Elbrus
 
