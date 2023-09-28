@@ -1,10 +1,15 @@
 %def_without bootstrap
+%ifarch %mips riscv64 loongarch64
+%def_enable unregisterised
+%else
+%def_disable unregisterised
+%endif
 
 %define _llvm_version 12.0
 
 Name: ghc8.6.4
 Version: 8.6.4
-Release: alt9
+Release: alt10
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -171,12 +176,12 @@ export ALTWRAP_LLVM_VERSION="%_llvm_version"
 for configurable in $(find -name 'configure.ac'); do
     %autoreconf $(dirname "$configurable")
 done
-%configure --with-system-libffi --disable-unregisterised
-%make_build V=1
+%configure --with-system-libffi %{subst_enable unregisterised}
+%make_build V=1 PARALLEL=${NPROCS:-%__nprocs} -Onone
 
 %install
 %define docdir %_docdir/%name-%version
-%makeinstall_std docdir=%docdir
+%makeinstall_std docdir=%docdir PARALLEL=1 -Onone
 mv %buildroot%docdir/html/* %buildroot%docdir/
 rmdir %buildroot%docdir/html
 
@@ -273,6 +278,15 @@ sed -i 's/@GHC_LLVM_VERSION@/%_llvm_version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Tue Sep 26 2023 Ivan A. Melnikov <iv@altlinux.org> 8.6.4-alt10
+- NMU: unregistered builds for riscv64 and loongarch64:
+  + enable unregistered builds for selected architectures;
+  + backport riscv64 support, add loongarch64 support
+    to aclocal.m4;
+  + backport upstream fixes for unregistered builds
+    (fixes build of ghc8.6.4-juicypixels).
+- Add parallelizm to inner calls to make.
+
 * Thu Aug 17 2023 Anton Zhukharev <ancieg@altlinux.org> 8.6.4-alt9
 - Fixed FTBFS.
 - Built with llvm12.0 on armh and aarch64.
