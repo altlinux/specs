@@ -2,7 +2,7 @@
 
 Name: vdo
 Version: 8.2.2.2
-Release: alt1
+Release: alt2
 
 Summary: Management tools for Virtual Data Optimizer
 License: GPLv2
@@ -12,8 +12,9 @@ Url: http://github.com/dm-vdo/vdo
 Source: %name-%version.tar
 #Patch0: %%name-%%version.patch
 Patch1: vdo-8.2.0.2-e2k.patch
+Patch2: 0001-Support-LoongArch-architecture.patch
 
-ExclusiveArch: x86_64 aarch64 ppc64le ppc64 s390 s390x %e2k
+ExclusiveArch: x86_64 aarch64 ppc64le ppc64 s390 s390x %e2k loongarch64
 
 BuildRequires: libdevmapper-devel libdevmapper-event-devel
 BuildRequires: libuuid-devel libblkid-devel
@@ -40,6 +41,7 @@ This package provides the user-space support tools for VDO.
 %setup
 #%%patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %make
@@ -92,6 +94,9 @@ mv %buildroot%_sysconfdir/bash_completion.d/* %buildroot%_datadir/bash-completio
 %_man8dir/vdoregenerategeometry.8*
 
 %changelog
+* Thu Sep 28 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.2.2.2-alt2
+- Support LoongArch architecture
+
 * Thu Sep 07 2023 Alexey Shabalin <shaba@altlinux.org> 8.2.2.2-alt1
 - 8.2.2.2
 
