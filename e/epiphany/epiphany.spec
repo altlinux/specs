@@ -9,7 +9,7 @@
 
 Name: epiphany
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -86,6 +86,12 @@ This package contains common noarch files needed for Epiphany.
 
 %install
 %meson_install
+cat << _EOF_\
+> %buildroot/%_datadir/glib-2.0/schemas/org.gnome.Epiphany.gschema.override
+[org.gnome.Epiphany]
+homepage-url='file:///usr/share/doc/HTML/index.html'
+_EOF_
+
 %find_lang --with-gnome --output=%name.lang %name
 
 %files
@@ -107,12 +113,16 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/dbus-1/services/*
 %config %_datadir/glib-2.0/schemas/org.gnome.epiphany.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.Epiphany.enums.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.Epiphany.gschema.override
 %_man1dir/*
 %_datadir/gnome-shell/search-providers/%xdg_name.SearchProvider.ini
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Sep 28 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1.1
+- set default homepage to /usr/share/doc/HTML/index.html again
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
