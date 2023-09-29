@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.5
+%define ver_major 0.6
 %define rdn_name app.drey.Warp
 
 %define optflags_lto %nil
@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: warp
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Fast and secure file transfer tool
@@ -27,9 +27,9 @@ Source1: %name-%version-cargo.tar
 #error: failed to run custom build command for `ring v0.16.20`
 ExcludeArch: ppc64le
 
-%define glib_ver 2.76
+%define glib_ver 2.66
 %define gtk_ver 4.10
-%define adwaita_ver 1.2
+%define adwaita_ver 1.4
 
 Requires: yelp
 
@@ -78,6 +78,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Sep 29 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- updated to v0.6.0-3-g3ec6f21
+
 * Wed Jun 21 2023 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
 - first build for Sisyphus
 
