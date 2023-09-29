@@ -6,8 +6,8 @@
 %def_without fetch
 %def_enable lto
 %def_with dconf
-%def_with mdds
-%def_with orcus
+%def_without mdds
+%def_without orcus
 # Uncompatible with zxing-cpp > 1.2
 %def_without zxing
 
@@ -34,7 +34,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -512,7 +512,7 @@ export ac_cv_prog_LO_CLANG_CC=""
 export _JAVA_OPTIONS="-XX:ParallelGCThreads=4 $_JAVA_OPTIONS"
 %endif
 
-%make build AR=/usr/bin/ar verbose=true
+%make build AR=/usr/bin/ar RANLIB=/usr/bin/ranlib verbose=true
 
 # Generate typelib files
 ## TODO us
@@ -701,6 +701,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Sep 29 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.7.1-alt2
+- Rebuilt with bundled mdds and orcus.
+
 * Wed Sep 27 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.7.1-alt1
 - New version.
 - Add LibreOffice-still-langpack-uz with Uzbek localization.
