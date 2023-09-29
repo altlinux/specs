@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.78
-Release: alt7
+Release: alt8
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -34,6 +34,7 @@ Requires: libnsl1
 Requires: libnss
 Requires: lsof
 Requires: sysctl-conf-userns
+Requires: xorg-dri-vmwgfx
 Requires: xz
 
 %add_python3_path %_libexecdir/%name/%{name}_launcher
@@ -73,6 +74,9 @@ savegame and screenshot functionality, and many social features.
 %config %_datadir/polkit-1/rules.d/%name-nm.rules
 
 %changelog 
+* Fri Sep 29 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt8
+- Add require on xorg-dri-vmwgfx (ALT #47710, #47711)
+
 * Fri Jun 30 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt7
 - Prevent prompts Network Manager without admin permissions only for %name (ALT #46456)
 
