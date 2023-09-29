@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name cairomm
-%define ver_major 1.17
+%define ver_major 1.18
 %define api_ver 1.16
 
 %def_enable docs
 %def_enable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: This library provides a C++ interface to cairo
@@ -23,7 +23,7 @@ Vcs: https://git.cairographics.org/git/cairomm
 Source: %_name-%version.tar
 %endif
 
-%define cairo_ver 1.12
+%define cairo_ver 1.14
 %define sigc_ver 3.0.0
 
 BuildRequires(pre): rpm-macros-meson
@@ -91,6 +91,9 @@ This package contains documentation needed for developing %_name applications.
 %endif
 
 %changelog
+* Fri Sep 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Fri Aug 11 2023 Yuri N. Sedunov <aris@altlinux.org> 1.17.1-alt1
 - 1.17.1
 - enabled %%check
