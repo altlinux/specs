@@ -1,6 +1,6 @@
 Name: irony-server
-Version: 1.5.0
-Release: alt3
+Version: 1.6.0
+Release: alt1
 
 Summary: Clang-based irony-mode companion server
 License: GPLv3
@@ -35,6 +35,9 @@ export CXX=clang++
 %_bindir/irony-server
 
 %changelog
+* Fri Sep 29 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.0-alt1
+- 1.6.0 released
+
 * Wed May 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt3
 - unpin clang version
 
