@@ -1,6 +1,6 @@
 %define _name calls
 %define ver_major 45
-%define beta .rc.0
+%define beta %nil
 %define xdg_name org.gnome.Calls
 
 %def_enable man
@@ -8,8 +8,8 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major
-Release: alt0.9%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A phone dialer and call handler
 Group: Graphical desktop/GNOME
@@ -87,6 +87,9 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Fri Sep 29 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sat Sep 02 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt0.9.rc.0
 - 45.rc.0
 
