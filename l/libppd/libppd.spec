@@ -1,7 +1,7 @@
 %define soversion 2
 Name: libppd
-Version: 2.0
-Release: alt0.rc2
+Version: 2.0.0
+Release: alt1
 Summary: Library for retro-fitting legacy printer drivers
 License: Apache-2.0 WITH LLVM-exception
 Url: https://github.com/OpenPrinting/libppd
@@ -116,6 +116,9 @@ rm -rf %buildroot%_docdir/%name
 %_datadir/ppdc/raster.defs
 
 %changelog
+* Fri Sep 29 2023 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
+- 2.0.0 (Fixes: CVE-2023-4504)
+
 * Mon Jul 24 2023 Anton Farygin <rider@altlinux.ru> 2.0-alt0.rc2
 - update to 2.0rc2
 

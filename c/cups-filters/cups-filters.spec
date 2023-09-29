@@ -2,8 +2,8 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 2.0
-Release: alt0.rc2_1
+Version: 2.0.0
+Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
 License: GPLv2 and GPLv2+ and GPLv3 and MIT
@@ -12,7 +12,6 @@ Group: System/Servers
 Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_standard_print_job_format
 Source0: http://www.openprinting.org/download/cups-filters/cups-filters-%version.tar
 Source1: %name.watch
-Source3: default-testpage.pdf
 Patch0: %name-alt.patch
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
@@ -63,7 +62,6 @@ make check
 ln -sf ../lib/cups/filter/universal %buildroot/%_bindir/foomatic-rip
 rm -rf %buildroot%_docdir/%name
 mkdir -p %buildroot/%_datadir/cups/data/
-install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 
 
 %files
@@ -75,7 +73,6 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %attr(0755,root,root) %_cups_serverbin/backend/driverless
 %attr(0755,root,root) %_cups_serverbin/backend/driverless-fax
 %attr(0700,root,root) %_cups_serverbin/backend/serial
-%_datadir/cups/data/*
 %_datadir/cups/drv/cupsfilters.drv
 %_datadir/cups/mime/cupsfilters.types
 %_datadir/cups/mime/cupsfilters.convs
@@ -90,6 +87,10 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %_datadir/man/man*/*
 
 %changelog
+* Fri Sep 29 2023 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+- default-testpage was moved to libcupsfilters package
+
 * Fri Aug 11 2023 Anton Midyukov <antohami@altlinux.org> 2.0-alt0.rc2_1
 - NMU: Fix obsoletes cups-backend-serial
 

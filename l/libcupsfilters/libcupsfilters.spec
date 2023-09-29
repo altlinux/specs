@@ -1,12 +1,13 @@
 %define soversion 2
 Name: libcupsfilters
-Version: 2.0
-Release: alt0.rc2
+Version: 2.0.0
+Release: alt1
 Summary: Library for developing printing filters
 License: Apache-2.0 WITH LLVM-exception
 Group: System/Libraries
 Url: https://github.com/OpenPrinting/libcupsfilters
 Source0: %name-%version.tar
+Source1: default-testpage.pdf
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: gcc-c++
@@ -28,6 +29,7 @@ BuildRequires: pkgconfig(poppler-cpp)
 BuildRequires: fonts-ttf-dejavu
 Requires: ghostscript
 Requires: %name%soversion = %EVR
+Conflicts: cups-filters < 2.0.0-alt1
 
 %description
 Libcupsfilters provides a library, which implements common functions used
@@ -38,6 +40,7 @@ and in printer applications.
 %package -n %name%soversion
 Summary: Library for developing printing filters
 Group: System/Libraries
+Requires: %name = %EVR
 
 %description -n %name%soversion
 Libcupsfilters%soversion provides a library, which implements common functions
@@ -46,7 +49,7 @@ used in cups-browsed daemon and printing filters.
 %package devel
 Summary: Development files for libcupsfilters]
 Group: Development/C
-Requires: %name = %EVR
+Requires: %name%soversion = %EVR
 
 %description devel
 Development files for OpenPrinting cupsfilters library.
@@ -69,6 +72,7 @@ make check
 
 %install
 %makeinstall_std
+install -D -m 644 %SOURCE1 %buildroot/%_datadir/cups/data/
 rm -rf %buildroot/usr/share/doc/libcupsfilters
 
 %files
@@ -112,6 +116,10 @@ rm -rf %buildroot/usr/share/doc/libcupsfilters
 %_libdir/pkgconfig/libcupsfilters.pc
 
 %changelog
+* Fri Sep 29 2023 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+- added default-testpage.pdf from cups-filters package (Closes: #47646)
+
 * Mon Jul 24 2023 Anton Farygin <rider@altlinux.ru> 2.0-alt0.rc2
 - update to 2.0rc2
 
