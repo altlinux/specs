@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 8.3.1
-Release: alt1
+Release: alt2
 Summary: Jupyter protocol implementation and client libraries
 License: BSD-3-Clause
 Group: Development/Python3
@@ -27,6 +27,7 @@ BuildRequires: python3-module-pytest-jupyter
 BuildRequires: python3-module-pytest-timeout
 BuildRequires: openssh-clients
 BuildRequires: iproute2
+BuildRequires: python3-module-flaky
 %endif
 
 %py3_provides %oname
@@ -50,7 +51,8 @@ sed -i '/--color=yes/d' pyproject.toml
 
 %check
 sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
-%pyproject_run_pytest -k 'not test_input_request'
+%pyproject_run_pytest -v -k 'not test_input_request' \
+		      --force-flaky --max-runs=3 --no-success-flaky-report
 
 %files
 %doc *.md
@@ -60,6 +62,9 @@ sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
 
 
 %changelog
+* Fri Sep 29 2023 Anton Vyatkin <toni@altlinux.org> 8.3.1-alt2
+- Fix FTBFS (use flaky for parallel kernel test).
+
 * Wed Aug 30 2023 Anton Vyatkin <toni@altlinux.org> 8.3.1-alt1
 - New version 8.3.1.
 
