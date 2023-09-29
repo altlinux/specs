@@ -3,25 +3,25 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.11.0
-Release: alt2
+Version: 0.12.0
+Release: alt1
 
 Summary: Composable style cycles
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Cycler
+Url: https://pypi.org/project/cycler
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools
-BuildPreReq: python3-module-six
+BuildPreReq: python3-module-wheel
 %if_with check
 BuildPreReq: python3-module-pytest
+BuildPreReq: python3-module-pytest-xdist
 %endif
 
 %description
@@ -34,20 +34,23 @@ iteration logic.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3
+%pyproject_run_pytest -raR -n auto
 
 %files
-%doc *.rst doc/source/*.rst
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Sep 29 2023 Anton Vyatkin <toni@altlinux.org> 0.12.0-alt1
+- new version 0.12.0 (add tests from upstream github)
+
 * Fri Apr 07 2023 Anton Vyatkin <toni@altlinux.org> 0.11.0-alt2
 - Fix BuildRequires
 
