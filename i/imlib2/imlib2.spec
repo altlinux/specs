@@ -1,6 +1,6 @@
 Name: imlib2
-Version: 1.12.0
-Release: alt2
+Version: 1.12.1
+Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
 License: Imlib2
@@ -91,6 +91,9 @@ export LIBS+="-L/%_lib -lm"
 # remove non-packaged files
 find %buildroot%_libdir/ -name '*.la' -delete
 
+%check
+make check
+
 %files
 %_libdir/*.so.*
 %dir %_libdir/%name/
@@ -116,6 +119,10 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Thu Sep 28 2023 Leontiy Volodin <lvol@altlinux.org> 1.12.1-alt1
+- New version 1.12.1.
+- Enabled check.
+
 * Tue Aug 29 2023 Leontiy Volodin <lvol@altlinux.org> 1.12.0-alt2
 - Fixed segfault at startup of icewm on i586 (ALT #47331, #47376).
 
