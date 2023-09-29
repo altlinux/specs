@@ -1,5 +1,5 @@
 Name:           gigolo
-Version:        0.5.2
+Version:        0.5.3
 Release:        alt1
 Summary:        frontend to manage connections to remote filesystems using GIO/GVfs
 Group:          File tools
@@ -44,6 +44,9 @@ filesystem and manage bookmarks of such.
 %_man1dir/%name.*
 
 %changelog
+* Fri Sep 29 2023 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
+- Updated to 0.5.3.
+
 * Thu Mar 25 2021 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
 - Dropped obsoleted patch.
 - Updated to 0.5.2.
