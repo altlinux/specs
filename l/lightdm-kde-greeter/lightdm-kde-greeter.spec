@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.16
+Version: 0.4.17
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -96,6 +96,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Thu Sep 28 2023 Anton Golubev <golubevan@altlinux.org> 0.4.17-alt1
+- Show tooltips for keyboard and session buttons (Closes: 46496)
+- Cancel auth when click 'Log in as another user' (Closes: 47760)
+
 * Fri Sep 01 2023 Anton Golubev <golubevan@altlinux.org> 0.4.16-alt1
 - fix bug when changing background in KCM module
 
