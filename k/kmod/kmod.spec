@@ -1,5 +1,5 @@
 Name:		kmod
-Version:	30
+Version:	31
 Release:	alt1
 Summary:	Linux kernel module management utilities
 
@@ -11,7 +11,6 @@ Requires:	lib%name = %version-%release
 
 Source0:	%name-%version.tar
 
-Patch0001: 0001-testsuite-repair-read-of-uninitialized-memory.patch
 Patch0002: 0002-man-Fix-path.patch
 
 %define _unpackaged_files_terminate_build 1
@@ -151,6 +150,9 @@ make check V=1
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sat Sep 30 2023 Alexey Gladkov <legion@altlinux.ru> 31-alt1
+- Version (31).
+
 * Wed Sep 21 2022 Alexey Gladkov <legion@altlinux.ru> 30-alt1
 - Version (30).
 
