@@ -24,7 +24,7 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 11.0.2
+Version: 11.0.3
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -218,6 +218,9 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_datadir/qtcreator/*
 
 %changelog
+* Sat Sep 30 2023 Andrey Cherepanov <cas@altlinux.org> 11.0.3-alt1
+- New version.
+
 * Thu Aug 17 2023 Andrey Cherepanov <cas@altlinux.org> 11.0.2-alt1
 - New version.
 
