@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %def_with docs
 
 %ifarch %valgrind_arches
@@ -6,18 +7,19 @@
 
 Name: rapidjson
 Version: 1.1.0
-Release: alt4
+Release: alt6.git473553bd
 
 Summary: Fast JSON parser and generator for C++
 
 License: MIT
 Group: Development/C++
 Url: https://rapidjson.org/
+Vcs: https://github.com/Tencent/rapidjson.git
 
-# URL: https://github.com/miloyip/%name
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 # Downstream-patch for gtest.
-Patch: rapidjson-1.1.0-do_not_include_gtest_src_dir.patch
+Patch1: rapidjson-1.1.0-do_not_include_gtest_src_dir.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-valgrind
@@ -113,7 +115,7 @@ sed -i 's/ -std=c++11//' CMakeLists.txt
 
 %build
 %cmake \
-    -DDOC_INSTALL_DIR=%_docdir/%name-%version \
+    -DDOC_INSTALL_DIR=%_docdir/%name-doc-%version \
     -DGTESTSRC_FOUND=TRUE \
     -DGTEST_SOURCE_DIR=.
 %cmake_build
@@ -125,30 +127,41 @@ sed -i 's/ -std=c++11//' CMakeLists.txt
 mv -f %buildroot%_libdir/* %buildroot%_datadir
 
 # Copy the documentation-files to final location.
-cp -at %buildroot%_docdir/%name-%version -- \
-	license.txt CHANGELOG.md readme*.md examples
+cp -at %buildroot%_docdir/%name-doc-%version -- examples
+
+#Removing duplicate readme.md with meta package devel.
+rm -f %buildroot%_docdir/%name-doc-%version/readme.md
 
 # Find and purge build-sys files.
 find %buildroot -type f -name 'CMake*.txt' -print0 |
 	xargs -r0 rm -fv --
 
 %files devel
-%doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/license.txt
-%doc %_docdir/%name-%version/CHANGELOG.md
-%doc %_docdir/%name-%version/readme*.md
+%doc license.txt CHANGELOG.md readme*.md
 %_datadir/cmake
+%ifarch x86_64 aarch64 ppc64le
+%_libexecdir/cmake
+%endif
 %_datadir/pkgconfig/*
 %_includedir/%name
 
 %files doc
-%doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/examples
+%doc %_docdir/%name-doc-%version/examples
 %if_with docs
-%doc %_docdir/%name-%version/html
+%doc %_docdir/%name-doc-%version/html
 %endif # docs
 
 %changelog
+* Tue Sep 26 2023 Aleksei Kalinin <kaa@altlinux.org> 1.1.0-alt6.git473553bd
+- Location of documentation files has been sepporated.
+- Add missing cmake instructions file for x86_64 arch.
+- Add option to spec for strict check unpacked files.
+
+* Mon May 15 2023 Aleksei Kalinin <kaa@altlinux.org> 1.1.0-alt5.git473553bd
+- Added cursor wrapper support. Required for OpenTimelineIO package.
+- Changed GIT package strategy and worktree
+- Other upstream updates.
+
 * Tue Apr 04 2023 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt4
 - rename package rapidjson to rapidjson-devel (Closes: 45742)
 - Clear Packager
