@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 Name:     denise
-Version:  2.0
-Release:  alt2
+Version:  2.1
+Release:  alt1
 
 Summary:  Highly accurate C64/Amiga emulator
 License:  GPL3
@@ -48,6 +48,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_datadir
 
 
 %changelog
+* Sat Sep 30 2023 Artyom Bystrov <arbars@altlinux.org> 2.1-alt1
+- Update to new version
+
 * Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 2.0-alt2
 - update sources
 - fixed build on GCC13
