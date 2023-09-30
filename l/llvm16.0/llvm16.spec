@@ -93,7 +93,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt5
+Release: alt6
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -123,6 +123,8 @@ Patch19: llvm-alt-cmake-build-with-install-rpath.patch
 Patch20: clang-16-alt-rocm-device-libs-path.patch
 Patch21: 0001-lld-Pass-random.randint-stop-parameter-as-int.patch
 Patch22: clang-D142199.patch
+Patch101: clang-ALT-bug-40628-grecord-command-line.patch
+Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -643,6 +645,8 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch20 -p1 -b .clang-rocm-device-path
 %patch21 -p1
 %patch22 -p1 -b .recommonmark
+%patch101 -p1
+%patch102 -p2
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -689,6 +693,7 @@ fi
 	-DCLANG_PLUGIN_SUPPORT:BOOL=ON \
 	-DCLANG_LINK_CLANG_DYLIB=ON \
 	-DCLANG_FORCE_MATCHING_LIBCLANG_SOVERSION:BOOL=ON \
+	-DENABLE_LINKER_BUILD_ID:BOOL=ON \
 	\
 	%if_with clang
 	-DCMAKE_C_COMPILER=clang \
@@ -1235,6 +1240,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Sat Sep 30 2023 Arseny Maslennikov <arseny@altlinux.org> 16.0.6-alt6
+- Restored clang-ALT-bug-40628-grecord-command-line.patch.
+- Made clang pass --build-id=sha1 to the linker.
+
 * Thu Sep 14 2023 Arseny Maslennikov <arseny@altlinux.org> 16.0.6-alt5
 - Re-disabled broken import checks.
 - spec: Merged the loongarch64 alt triple patch into clang-alt-triple.patch.
