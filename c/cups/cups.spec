@@ -1,6 +1,6 @@
 Name: cups
-Version: 2.4.2
-Release: alt3
+Version: 2.4.7
+Release: alt1
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -27,19 +27,16 @@ Source98: pofix.py
 
 ## FC patches
 Patch1: FC-system-auth.patch
-Patch2: FC-multilib.patch
 Patch3: FC-banners.patch
 Patch4: FC-no-export-ssllibs.patch
 Patch5: FC-direct-usb.patch
 Patch6: FC-driverd-timeout.patch
 Patch7: FC-usb-paperout.patch
-Patch8: FC-uri-compat.patch
 Patch9: FC-freebind.patch
 Patch10: FC-ipp-multifile.patch
 Patch11: FC-web-devices-timeout.patch
 Patch12: FC-failover-backend.patch
 Patch13: FC-dymo-deviceid.patch
-Patch14: FC-0001-scheduler-ipp.c-Allocate-device_uri-via-cupsdSetStri.patch
 Patch15: FC-lspp.patch
 
 ## Ubuntu patches
@@ -53,23 +50,17 @@ Patch107: Ubuntu-0012-Debian-Use-dpkg-architecture-in-cups-config-to-make-.patch
 Patch108: Ubuntu-0013-Debian-Build-mantohtml-with-the-build-architecture-c.patch
 Patch109: Ubuntu-0014-Debian-Reproducibility-httpAddrGetHostname-test-fail.patch
 Patch110: Ubuntu-0015-Debian-Reproducibility-Do-not-run-stp-tests-as-root.patch
-Patch111: Ubuntu-0016-Debian-po4a-infrastructure-and-translations-for-manp.patch
 Patch112: Ubuntu-9100-ppd-cache-add-auto-presets.patch
-Patch113: Ubuntu-9110-create-local-printer-localhost-fix.patch
-Patch114: Ubuntu-CVE-2022-26691-2.patch
 
 ## ALT patches
-Patch500: ALT-1.6.1-hardening.patch
 Patch501: ALT-build_po.patch
 Patch502: ALT-remove_BSD.patch
 Patch503: ALT-enable-631.patch
 Patch504: ALT-1.6.2-lpd-utf8.patch
-Patch505: ALT-1.4.6-config-libs.patch
 Patch506: ALT-1.6.2-lspp-SE.patch
 Patch507: ALT-1.7.0-docroot-i18n.patch
 Patch508: ALT-644.patch
 Patch509: ALT-1.7.2-local_ipv6.patch
-Patch510: ALT-config-nolibs.patch
 Patch511: ALT-pwg-raster-attributes.patch
 Patch512: ALT-2.1.0-lpd-sanitizer.patch
 Patch513: ALT-fc-lspp.patch
@@ -85,8 +76,6 @@ Patch558: ALT-lspp-in-alt-job-ft.patch
 Patch559: ALT-mime-pjl-pdf.patch
 Patch560: ALT-SE-ippcalls.patch
 
-# Upstream patches
-Patch600: UPSTREAM-scheduler-printers.c-Check-for-CMYK-as-well-fixes-42.patch
 
 ## Provides
 Provides: %name-ppd = %version %name-common = %version
@@ -158,19 +147,16 @@ services using the main CUPS library "libcups".
 
 ## FC apply patches
 %patch1 -p1 -b .system-auth
-#patch2 -p1 -b .multilib
 %patch3 -p1 -b .banners
 %patch4 -p1 -b .no-export-ssllibs
 %patch5 -p1 -b .direct-usb
 %patch6 -p1 -b .driverd-timeout
 %patch7 -p1 -b .usb-paperout
-#patch8 -p1 -b .uri-compat
 %patch9 -p1 -b .freebind
 %patch10 -p1 -b .ipp-multifile
 %patch11 -p1 -b .web-devices-timeout
 %patch12 -p1 -b .failover
 %patch13 -p1 -b .dymo-deviceid
-%patch14 -p1 -b .invalid-pointer-uri
 %patch15 -p1 -b .lspp
 
 ## Ubuntu apply patches
@@ -184,23 +170,17 @@ services using the main CUPS library "libcups".
 %patch108 -p1
 %patch109 -p1
 %patch110 -p1
-#patch111 -p1
 %patch112 -p1
-%patch113 -p1
-%patch114 -p1
 
 ## ALT apply patches
-##patch500 -p1
 %patch501 -p1
 %patch502 -p1
 %patch503 -p2
 %patch504 -p1
-#patch505 -p1
 %patch506 -p1
 %patch507 -p1
 %patch508 -p1
 %patch509 -p1
-#patch510 -p1
 %patch511 -p1
 %patch512 -p2
 %patch513 -p1
@@ -216,9 +196,6 @@ services using the main CUPS library "libcups".
 %patch559 -p1
 %patch560 -p2
 
-# Upstream patches
-# https://github.com/OpenPrinting/cups/pull
-%patch600 -p1
 
 cp %SOURCE98 %SOURCE97 %SOURCE10 %SOURCE11 .
 cp %SOURCE21 scheduler/cups.sh.in
@@ -429,6 +406,19 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Fri Sep 29 2023 Anton Farygin <rider@altlinux.ru> 2.4.7-alt1
+- 2.4.7 (Fixes: CVE-2023-4504)
+- updated Ubuntu-9100-ppd-cache-add-auto-presets.patch
+- removed unused and/or integrated to upstream patches:
+   - FC-multilib.patch
+   - FC-uri-compat.patch
+   - FC-0001-scheduler-ipp.c-Allocate-device_uri-via-cupsdSetStri.patch
+   - Ubuntu-0016-Debian-po4a-infrastructure-and-translations-for-manp.patch
+   - Ubuntu-9110-create-local-printer-localhost-fix.patch
+   - ALT-1.6.1-hardening.patch
+   - ALT-1.4.6-config-libs.patch
+   - ALT-config-nolibs.patch
+
 * Fri May 19 2023 Andrey Cherepanov <cas@altlinux.org> 2.4.2-alt3
 - Upstream fix for https://github.com/OpenPrinting/cups/issues/421
 
