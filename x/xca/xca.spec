@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: xca
-Version: 2.4.0
-Release: alt2
+Version: 2.5.0
+Release: alt1
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
 Group: Security/Networking
@@ -13,10 +13,11 @@ Url: https://hohnstaedt.de/xca/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Patch1: Adaptions-to-stay-OpenSSL-3.0-compatible.patch
-
-BuildRequires: qt5-base-devel qt5-tools-devel
-BuildRequires: libltdl-devel openssl-devel linuxdoc-tools rpm-build-xdg OpenSP groff-base
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
+BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
 Graphical certification authority is an interface for managing RSA
@@ -30,39 +31,31 @@ presented.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 %build
-./bootstrap
 
-%__subst "s|ITERATION=.*$|ITERATION=\"0\"|" configure
-%__subst "s|VERSIONHASH=.*$|VERSIONHASH=\"aaaaaaaaaaaa\"|" configure
-
-CFLAGS="%optflags" \
-CXXFLAGS="%optflags" \
-./configure --prefix="%_prefix" \
-      docdir=%_docdir/%name-%version
-%make_build
+%cmake
+%cmake_build
 
 %install
-mkdir -p %buildroot{%_bindir,%_datadir/xca,%_desktopdir,%_man1dir}
-
-%make_install install \
-    DESTDIR=%buildroot prefix=/usr STRIP=: \
-    mandir=%_mandir docdir=%_docdir/%name-%version datarootdir=%_datadir
+%cmake_install
 
 %files
-%doc AUTHORS doc/html/*.html doc/qthelp/*.qhcp
-%_bindir/*
+%doc AUTHORS README.md
 %_datadir/xca
+%_datadir/doc/xca
 %_desktopdir/xca*
+%_datadir/bash-completion/completions/xca
+%_datadir/mime/packages/xca.xml
 %_man1dir/xca*.1*
-%_xdgmimedir/packages/xca.xml
 %_pixmapsdir/xca*.xpm
 %_iconsdir/hicolor/*/*/*
-%_datadir/bash-completion/completions/xca
+%_bindir/*
 
 %changelog
+* Sat Sep 30 2023 Pavel Nakonechnyi <zorg@altlinux.ru> 2.5.0-alt1
+- update to 2.5.0 release, Qt6-based build
+
 * Sat Jul 22 2023 Pavel Nakonechnyi <zorg@altlinux.ru> 2.4.0-alt2
 - add temporary OpenSSL3 support from xca-240-ossl3 branch
 
