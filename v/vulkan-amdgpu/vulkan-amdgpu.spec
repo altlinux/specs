@@ -6,7 +6,7 @@
 # As ubuntu
 %define gcc_ver 9
 
-%define _vk_api_version 1.3.257
+%define _vk_api_version 1.3.264
 
 %def_with clang
 %def_with wayland
@@ -22,7 +22,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2023.Q3.1
+Version: 2023.Q3.3
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -122,6 +122,16 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Sat Sep 30 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q3.3-alt1
+- 2023-9-29 update:
+  + icd: bump vulkan version
+  + llvm-dialects: Updated to 8c54ca076fbf
+  + llvm-project: Updated to 92bd7b3505d4
+  + gpurt: Updated to 7a3d1d10f98a
+  + llpc: Updated to e9a336171294
+  + pal: Updated to 2de164b431f8
+  + xgl: Updated to 5f4c7d9498c6
+
 * Fri Aug 18 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q3.1-alt1
 - 2023-8-7 update:
   + icd: bump vulkan version
