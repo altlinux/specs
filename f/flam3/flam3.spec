@@ -3,7 +3,7 @@
 
 Name: flam3
 Version: 3.1.1
-Release: alt4
+Release: alt5
 
 Summary: Programs to generate and render cosmic recursive fractal flames
 License: GPL-3.0-or-later
@@ -12,15 +12,16 @@ Url: https://flam3.com
 Vcs: https://github.com/scottdraves/flam3
 
 Source: %name-%version.tar
-Patch1: 001-manpage_whatis_fix.patch
-Patch2: 002-libxml.patch
-Patch3: 003-ljpeg.patch
-Patch4: 004-flam3.patch
-Patch5: 005-readme.patch
-Patch6: 006-icu67.patch
-Patch7: 007-autoconf.patch
-Patch8: 008-libm_linking.patch
-Patch9: 009-optimisation_fix.patch
+Patch: %name-%version-%release.patch
+Patch1: flam3-3.1.1-alt-001-manpage_whatis_fix.patch
+Patch2: flam3-3.1.1-alt-002-libxml.patch
+Patch3: flam3-3.1.1-alt-003-ljpeg.patch
+Patch4: flam3-3.1.1-alt-004-flam3.patch
+Patch5: flam3-3.1.1-alt-005-readme.patch
+Patch6: flam3-3.1.1-alt-006-icu67.patch
+Patch7: flam3-3.1.1-alt-007-autoconf.patch
+Patch8: flam3-3.1.1-alt-008-libm_linking.patch
+Patch9: flam3-3.1.1-alt-009-optimisation_fix.patch
 
 Requires: %name-palettes = %EVR
 
@@ -75,8 +76,14 @@ The %name palettes xml file.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Sep 22 2023 Aleksei Kalinin <kaa@altlinux.org> 3.1.1-alt5
+- Naming patches according to recommendations.
+- Changed GIT package strategy and worktree location.
+- Uses upstream Git repository to maintain history.
+- Previous changelog display of macros corrected.
+
 * Tue Sep 12 2023 Aleksei Kalinin <kaa@altlinux.org> 3.1.1-alt4
-- Spec refactoring: %define place changed. File COPYING excluded.
+- Spec refactoring: %%define place changed. File COPYING excluded.
 - Prapared patch: fix optimisations flags.
 - Prapared patch: fix undefined libm references.
 
