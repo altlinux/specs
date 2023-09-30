@@ -1,5 +1,5 @@
 Name:    trustedqsl
-Version: 2.6.5
+Version: 2.7
 Release: alt1
 Summary: TrustedQSL ham-radio applications
 
@@ -19,6 +19,7 @@ BuildRequires: libdb4-devel
 BuildRequires: libssl-devel
 BuildRequires: libcurl-devel
 BuildRequires: libexpat-devel
+BuildRequires: libsqlite3-devel
 BuildRequires: libwxGTK3.2-devel
 BuildRequires: zlib-devel
 BuildRequires: desktop-file-utils
@@ -53,7 +54,7 @@ contains the to develop with tqsllib.
 %prep
 %setup -q -n tqsl-%version
 %patch1 -p1
-%patch2 -p2
+#patch2 -p2
 %patch3 -p1
 
 %build
@@ -63,16 +64,16 @@ contains the to develop with tqsllib.
 %install
 %cmakeinstall_std
 
-# Install desktop files
-mkdir -p %buildroot%_desktopdir
-sed -i -e "s/.png//g" -e "s/Application;/Network;/g" -e "s/Utility;/GTK;/g" apps/tqsl.desktop
-desktop-file-install --dir=%buildroot%_desktopdir apps/tqsl.desktop
-
-# Install icons
-for size in 16 32 48 64 128; do
-     install -Dpm 0644 apps/icons/key${size}.png \
-     %buildroot%_iconsdir/hicolor/${size}x${size}/apps/TrustedQSL.png
-done
+## Install desktop files
+#mkdir -p %buildroot%_desktopdir
+#sed -i -e "s/.png//g" -e "s/Application;/Network;/g" -e "s/Utility;/GTK;/g" apps/tqsl.desktop
+#desktop-file-install --dir=%buildroot%_desktopdir apps/tqsl.desktop
+#
+## Install icons
+#for size in 16 32 48 64 128; do
+#     install -Dpm 0644 apps/icons/key${size}.png \
+#     %buildroot%_iconsdir/hicolor/${size}x${size}/apps/TrustedQSL.png
+#done
 
 %find_lang --output=%name.lang tqslapp
 rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
@@ -81,8 +82,8 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %doc AUTHORS.txt LICENSE.txt README
 %_bindir/tqsl
 %_datadir/TrustedQSL
-%_desktopdir/tqsl.desktop
-%_iconsdir/hicolor/*/apps/TrustedQSL.png
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/*/apps/*.png
 %_pixmapsdir/TrustedQSL.png
 %_man5dir/*.5*
 
@@ -95,6 +96,9 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %_libdir/libtqsllib.so
 
 %changelog
+* Sat Sep 30 2023 Andrey Cherepanov <cas@altlinux.org> 2.7-alt1
+- New version.
+
 * Thu Aug 25 2022 Andrey Cherepanov <cas@altlinux.org> 2.6.5-alt1
 - New version.
 
