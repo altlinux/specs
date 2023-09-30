@@ -2,12 +2,12 @@
 %def_enable check
 
 Name: gpodder
-Version: 3.11.2
+Version: 3.11.3
 Release: alt1
 
-Summary: podcast receiver/catcher in PyGTK
+Summary: Media aggregator and podcast client
 License: GPL-3.0-or-later
-Group: Sound
+Group: Networking/News
 Url: https://gpodder.org
 
 %if_disabled snapshot
@@ -61,11 +61,10 @@ BuildRequires: python3-module-requests
 %endif
 
 %description
-gPodder enables you to subscribe to RSS feeds and download
-podcast episodes from these feeds. gPodder can operate in
-GUI mode and in CLI mode. Downloaded podcasts can either
-be synchronized to portable MP3 players (including iPods)
-or played back on the user's desktop.
+gPodder lets you manage your Podcast subscriptions, discover new content
+and download episodes to your devices.
+You can also take advantage of the service gpodder.net, which lets you
+sync subscriptions, playback progress and starred episodes.
 
 %prep
 %setup
@@ -101,6 +100,9 @@ PYTHON=python3 PYTEST=%_bindir/py.test3 %make unittest
 
 
 %changelog
+* Sat Sep 30 2023 Yuri N. Sedunov <aris@altlinux.org> 3.11.3-alt1
+- 3.11.3
+
 * Thu Aug 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.11.2-alt1
 - 3.11.2
 
