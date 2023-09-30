@@ -15,8 +15,8 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 115.2.1
-Release: alt2
+Version: 115.3.1
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -512,6 +512,16 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Sep 29 2023 Pavel Vasenkov <pav@altlinux.org> 115.3.1-alt1
+- New ESR version.
+- Security fixes
+  + CVE-2023-5168 Out-of-bounds write in FilterNodeD2D1
+  + CVE-2023-5169 Out-of-bounds write in PathOps
+  + CVE-2023-5171 Use-after-free in Ion Compiler
+  + CVE-2023-5174 Double-free in process spawning on Windows
+  + CVE-2023-5176 Memory safety bugs fixed in Firefox 118, Firefox ESR 115.3, and Thunderbird 115.3
+  + CVE-2023-5217 Heap buffer overflow in libvpx
+
 * Wed Sep 20 2023 Pavel Vasenkov <pav@altlinux.org> 115.2.1-alt2
 - Restored build for 32bit archs
 
