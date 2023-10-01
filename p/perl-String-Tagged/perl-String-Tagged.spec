@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 BuildRequires: perl(experimental.pm)
 
 Name: perl-%module_name
-Version: 0.20
+Version: 0.21
 Release: alt1
 Summary: string buffers with value tags on extents
 Group: Development/Perl
@@ -38,6 +38,9 @@ Patch: String-Tagged-0.17-alt-perl534.patch
 %perl_vendor_privlib/S*
 
 %changelog
+* Sun Oct 01 2023 Igor Vlasenko <viy@altlinux.org> 0.21-alt1
+- automated CPAN update
+
 * Sat Feb 18 2023 Igor Vlasenko <viy@altlinux.org> 0.20-alt1
 - automated CPAN update
 
