@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 45
 %define beta %nil
@@ -10,7 +10,7 @@
 
 Name: gnome-shell-extensions
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -155,6 +155,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Sun Oct 01 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt2
+- updated to 45.0-5-g092b268 (fixed drives menu)
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
