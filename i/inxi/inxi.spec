@@ -1,5 +1,5 @@
 Name: inxi
-Version: 3.3.29
+Version: 3.3.30
 Release: alt1
 
 Summary: A full featured system information script
@@ -8,8 +8,8 @@ Summary(ru): Скрипт вывода полной информации об о
 License: GPL-3.0-or-later
 Group: Monitoring
 URL: https://smxi.org
-Vcs: https://github.com/smxi/inxi
-# Source-url: https://github.com/smxi/inxi/archive/%version/%name-%version-1.tar.gz
+Vcs: https://codeberg.org/smxi/inxi
+# Source-url: https://codeberg.org/smxi/inxi/archive/%version/%name-%version-1.tar.gz
 Source: %name-%version.tar.gz
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -63,6 +63,10 @@ perl -c inxi
 %_man1dir/%name.1*
 
 %changelog
+* Sun Oct 01 2023 Leontiy Volodin <lvol@altlinux.org> 3.3.30-alt1
+- New version 3.3.30.
+- Changed VCS tag.
+
 * Wed Aug 16 2023 Leontiy Volodin <lvol@altlinux.org> 3.3.29-alt1
 - New version 3.3.29.
 
