@@ -1,5 +1,5 @@
 Name: input-remapper
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: An easy to use tool to change the behaviour of your input devices
@@ -56,6 +56,9 @@ subst 's|/usr/lib/systemd/system|%_unitdir|' setup.py
 %_datadir/polkit-1/actions/input-remapper.policy
 
 %changelog
+* Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
+- new version 2.0.1 (with rpmrb script)
+
 * Sat May 27 2023 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - initial build for ALT Sisyphus
 
