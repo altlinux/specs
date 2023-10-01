@@ -2,7 +2,7 @@
 
 Name: libwlroots%soversion
 Version: 0.16.2
-Release: alt1
+Release: alt2
 
 Summary: Modular Wayland compositor library
 License: MIT
@@ -15,6 +15,7 @@ Url: https://gitlab.freedesktop.org/wlroots/wlroots
 Source: wlroots.tar
 
 Patch0001: 0001-Avoid-duplicate-case-values.patch
+Patch0002: 0002-examples-dmabuf-capture-fix-frame_number-deprecated-.patch
 
 BuildRequires(pre): meson
 BuildRequires: cmake
@@ -94,6 +95,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/wlroots.pc
 
 %changelog
+* Sun Oct 01 2023 Alexey Gladkov <legion@altlinux.ru> 0.16.2-alt2
+- Fix frame_number deprecated in FFmpeg 6.0
+
 * Fri Mar 10 2023 Alexey Gladkov <legion@altlinux.ru> 0.16.2-alt1
 - New version (0.16.2)
 
