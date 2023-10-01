@@ -93,7 +93,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt1
+Release: alt3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -121,7 +121,8 @@ Patch18: lld-compact-unwind-encoding.h.patch
 Patch19: llvm-alt-cmake-build-with-install-rpath.patch
 Patch20: clang-16-alt-rocm-device-libs-path.patch
 Patch22: clang-D142199.patch
-Patch3500: clang-alt-triple-loongarch64.patch
+Patch101: clang-ALT-bug-40628-grecord-command-line.patch
+Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -641,7 +642,8 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch19 -p1 -b .llvm-cmake-build-with-install-rpath
 %patch20 -p1 -b .clang-rocm-device-path
 %patch22 -p1 -b .recommonmark
-%patch3500 -p1 -b .la64
+%patch101 -p1
+%patch102 -p2
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -689,6 +691,7 @@ fi
 	-DCLANG_PLUGIN_SUPPORT:BOOL=ON \
 	-DCLANG_LINK_CLANG_DYLIB=ON \
 	-DCLANG_FORCE_MATCHING_LIBCLANG_SOVERSION:BOOL=ON \
+	-DENABLE_LINKER_BUILD_ID:BOOL=ON \
 	\
 	%if_with clang
 	-DCMAKE_C_COMPILER=clang \
@@ -1011,16 +1014,16 @@ EOExecutableList
 # Comment out file validation for CMake targets placed
 # in a different package.
 sed -i '
-/APPEND _IMPORT_CHECK_TARGETS \(mlir-\|MLIR\)/ {s|^|#|}
-/APPEND _IMPORT_CHECK_TARGETS \(tblgen-lsp-server\)/ {s|^|#|}
-/APPEND _IMPORT_CHECK_TARGETS \(Polly\)/ {s|^|#|}
-/APPEND _IMPORT_CHECK_TARGETS \(llvm-omp-device-info\|omptarget\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(mlir-\|MLIR\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(tblgen-lsp-server\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(Polly\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(llvm-omp-device-info\|omptarget\)/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/llvm/LLVMExports-*.cmake
 
 # Comment out file validation for CMake targets producing executables
 # that may be placed in a different package.
 sed -i '
-/APPEND _IMPORT_CHECK_FILES_FOR_.* .*[/]bin[/].*/ {s|^|#|}
+/APPEND _cmake_import_check_files_for_.* .*[/]bin[/].*/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/clang/ClangTargets-*.cmake
 
 %check
@@ -1239,6 +1242,16 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Thu Sep 28 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.1-alt3
+- clang: Restore the default disposition of -grecord-command-line.
+- clang: Pass --build-id=sha1 to linkers by default. (Closes: 47780)
+  Both of these changes are applied to clangs we build ALT packages with; if we
+  ever decouple clang-for-packages from clang-for-users, upstream behaviour can
+  be restored for the latter.
+
+* Mon Sep 25 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.1-alt2
+- Readjusted CMake file validation fixes.
+
 * Tue Sep 19 2023 Nazarov Denis <nenderus@altlinux.org> 17.0.1-alt1
 - 17.0.1
 
@@ -1246,7 +1259,7 @@ ninja -C %builddir check-all || :
 - 17.0.0 final
 
 * Fri Sep 15 2023 Nazarov Denis <nenderus@altlinux.org> 17.0.0-alt0.2.rc4
-- Fix unowned direcory
+- Fix unowned directory on 64-bit arches
 - Build tools package as noarch
 
 * Sat Sep 09 2023 Nazarov Denis <nenderus@altlinux.org> 17.0.0-alt0.1.rc4

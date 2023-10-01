@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%global _llvm_version 16.0
+%global _llvm_version 17.0
 
 Name: llvm-common
-Version: 16.0.0
+Version: 17.0.0
 Release: alt1
 
 Summary: Common directories, symlinks and tool selection for LLVM
@@ -529,6 +529,9 @@ for i in %_CI_tests_execdir/[0-9]*; do
 done
 
 %changelog
+* Sat Sep 30 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.0-alt1
+- Made LLVM 17 the default.
+
 * Thu Sep 14 2023 Arseny Maslennikov <arseny@altlinux.org> 16.0.0-alt1
 - Made LLVM 16 the default.
 
