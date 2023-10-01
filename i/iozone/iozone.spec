@@ -1,7 +1,7 @@
 %define oversion %(echo %version | sed -e "s|\\.|_|g")
 
 Name: iozone
-Version: 3.490
+Version: 3.506
 Release: alt1
 
 Summary: IOzone Filesystem Benchmark
@@ -96,6 +96,9 @@ catdoc Run_rules.doc >Run_rules.txt
 %_datadir/%name/
 
 %changelog
+* Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 3.506-alt1
+- new version 3.506 (with rpmrb script)
+
 * Wed Mar 31 2021 Vitaly Lipatov <lav@altlinux.ru> 3.490-alt1
 - new version 3.490 (with rpmrb script)
 
