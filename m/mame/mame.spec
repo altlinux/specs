@@ -1,6 +1,6 @@
 
 Name: mame
-Version: 0.258
+Version: 0.259
 Release: alt1
 Group: Games/Arcade
 Summary: Multiple Arcade Machine Emulator
@@ -291,6 +291,9 @@ find %buildroot%_datadir/%name -name LICENSE -exec rm {} \;
 %_datadir/%name/hash/*
 
 %changelog
+* Sun Oct  1 2023 Artyom Bystrov <arbars@altlinux.org> 0.259-alt1
+- Update to new version
+
 * Wed Aug 30 2023 Artyom Bystrov <arbars@altlinux.org> 0.258-alt1
 - Update to new version
 
