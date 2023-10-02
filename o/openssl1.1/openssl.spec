@@ -6,8 +6,8 @@
 %def_disable utils
 
 Name: openssl1.1
-Version: 1.1.1u
-Release: alt3
+Version: 1.1.1w
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -484,6 +484,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Fri Sep 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1w-alt1
+- Updated to 1.1.1w (fixes CVE-2023-3817, CVE-2023-3446, CVE-2023-4807).
+
 * Sun Jul 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1u-alt3
 - libcrypto1.1: updated the version of the conflict with libcrypto10 package
   (1.0.2q-alt1 -> 1.0.2r-alt3).
