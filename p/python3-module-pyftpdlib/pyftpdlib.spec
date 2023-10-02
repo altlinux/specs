@@ -8,7 +8,7 @@ language.
 %def_with docs
 
 Name: python3-module-%oname
-Version: 1.5.7
+Version: 1.5.8
 Release: alt1
 
 Summary: Python FTP server library
@@ -78,8 +78,6 @@ This package contains pickles for %oname.
 sed -i -e "s|^__ver__ = '[^']*'|__ver__ = '%version'|" pyftpdlib/__init__.py
 
 %if_with docs
-sed -i "s/= python/= python3/" docs/Makefile
-
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
 %endif
@@ -128,6 +126,9 @@ cp -fR docs/_build/man/* %buildroot%_man1dir
 %endif
 
 %changelog
+* Mon Oct 02 2023 Grigory Ustinov <grenka@altlinux.org> 1.5.8-alt1
+- Automatically updated to 1.5.8.
+
 * Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.5.7-alt1
 - Automatically updated to 1.5.7.
 
