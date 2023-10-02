@@ -2,7 +2,7 @@
 %def_without test
 
 Name:    python3-module-%modulename
-Version: 1.29.2
+Version: 1.30.3
 Release: alt1
 
 Summary: Pure Python 3 Telegram client library
@@ -63,6 +63,9 @@ test -r %buildroot%python3_sitelibdir/telethon/errors/rpcerrorlist.py
 %python3_sitelibdir/%modulename-*.egg-info/
 
 %changelog
+* Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.30.3-alt1
+- new version 1.30.3 (with rpmrb script)
+
 * Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.29.2-alt1
 - new version 1.29.2 (with rpmrb script)
 - add missed requires rsa (ALT bug 45531)
