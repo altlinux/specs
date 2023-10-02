@@ -1,16 +1,19 @@
 Name: python3-module-mutagen
-Version: 1.46.0
+Version: 1.47.0
 Release: alt1
 
 Summary: Python module to handle audio metadata
 License: GPLv2
 Group: Development/Python
-Url: https://github.com/quodlibet/mutagen.git
+Url: https://pypi.org/project/mutagen/
 
-Source0: %name-%version.tar
+Provides: mutagen = %version-%release
+Obsoletes: mutagen
+
+Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(poetry-core)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
@@ -25,14 +28,6 @@ accurately calculate the bitrate and length of MP3s. ID3 and APEv2 tags
 can be edited regardless of audio format. It can also manipulate Ogg
 streams on an individual packet/page level.
 
-%package -n mutagen
-Summary: Various mutagen (python module to handle audio metadata) binary tools
-Group: Sound
-Requires: python3-module-mutagen = %version-%release
-
-%description -n mutagen
-%summary
-
 %prep
 %setup
 
@@ -43,19 +38,19 @@ Requires: python3-module-mutagen = %version-%release
 %pyproject_install
 
 %check
-LC_ALL=en_US.UTF-8 \
-python3 setup.py test
+%pyproject_run_pytest tests
 
 %files
-%python3_sitelibdir/mutagen
-%python3_sitelibdir/mutagen-%version.dist-info
-
-%files -n mutagen
 %doc COPYING NEWS README.rst
 %_bindir/*
+%python3_sitelibdir/mutagen
+%python3_sitelibdir/mutagen-%version.dist-info
 %_man1dir/*
 
 %changelog
+* Mon Oct  2 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.47.0-alt1
+- 1.47.0 released
+
 * Mon Nov 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.46.0-alt1
 - 1.46.0 released
 
