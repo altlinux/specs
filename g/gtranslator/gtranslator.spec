@@ -7,7 +7,7 @@
 %def_disable gtk_doc
 
 Name: gtranslator
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A GNOME po file editor with many bells and whistles.
@@ -97,6 +97,9 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/gtk-doc/html/%name/}
 
 %changelog
+* Mon Oct 02 2023 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
+- 45.2
+
 * Thu Sep 21 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1 (ported to GTK4/Libadwaita/libspelling)
 
