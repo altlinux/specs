@@ -7,7 +7,7 @@
 
 Name: rapidjson
 Version: 1.1.0
-Release: alt6.git473553bd
+Release: alt7.git473553bd
 
 Summary: Fast JSON parser and generator for C++
 
@@ -139,7 +139,7 @@ find %buildroot -type f -name 'CMake*.txt' -print0 |
 %files devel
 %doc license.txt CHANGELOG.md readme*.md
 %_datadir/cmake
-%ifarch x86_64 aarch64 ppc64le
+%ifarch x86_64 aarch64 ppc64le %e2k
 %_libexecdir/cmake
 %endif
 %_datadir/pkgconfig/*
@@ -152,6 +152,9 @@ find %buildroot -type f -name 'CMake*.txt' -print0 |
 %endif # docs
 
 %changelog
+* Mon Oct 02 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.1.0-alt7.git473553bd
+- Fixed build for Elbrus.
+
 * Tue Sep 26 2023 Aleksei Kalinin <kaa@altlinux.org> 1.1.0-alt6.git473553bd
 - Location of documentation files has been sepporated.
 - Add missing cmake instructions file for x86_64 arch.
