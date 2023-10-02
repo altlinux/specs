@@ -14,11 +14,11 @@ BuildRequires(pre): rpm-macros-mageia-compat
 
 Name:          liblscp
 Summary:       LinuxSampler Control Protocol (LSCP) wrapper library
-Version:       0.9.10
-Release:       alt1_3
+Version:       0.9.11
+Release:       alt1_1
 License:       LGPLv2
 Group:         System/Libraries
-URL:           http://www.linuxsampler.org/
+URL:           https://www.linuxsampler.org/
 Source0:       https://sourceforge.net/projects/qsampler/files/liblscp/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires: ccmake cmake ctest
@@ -39,7 +39,8 @@ Provides:       %name = %version-%release
 LinuxSampler Control Protocol (LSCP) wrapper library.
 
 %files -n %libname
-%{_libdir}/liblscp.so.%{major}*
+%{_libdir}/liblscp.so.%{major}
+%{_libdir}/liblscp.so.%{major}.*
 
 #--------------------------------------------------------------------
 
@@ -92,6 +93,9 @@ Docs for %oname.
 
 
 %changelog
+* Mon Oct 02 2023 Igor Vlasenko <viy@altlinux.org> 0.9.11-alt1_1
+- update by mgaimport
+
 * Sat Jul 29 2023 Igor Vlasenko <viy@altlinux.org> 0.9.10-alt1_3
 - update by mgaimport
 
