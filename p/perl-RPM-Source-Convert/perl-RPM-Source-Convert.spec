@@ -4,7 +4,7 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 %define module RPM-Source-Convert
 
 Name: perl-%module
-Version: 0.6919
+Version: 0.6920
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -72,6 +72,9 @@ Utils for porting srpms and spec files from other rpm based distros to Sisyphus
 %_bindir/srpmconvert-*
 
 %changelog
+* Mon Oct 02 2023 Igor Vlasenko <viy@altlinux.org> 0.6920-alt1
+- new version
+
 * Sat Sep 16 2023 Igor Vlasenko <viy@altlinux.org> 0.6919-alt1
 - new version
 
