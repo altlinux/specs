@@ -2,24 +2,21 @@
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cjose
-%define major 0
-%define libname lib%{name}%{major}
-
-BuildRequires:  gcc
+%define major     0
+%define libname   lib%{name}%{major}
 %define develname lib%{name}-devel
 
 Name:		cjose
-Version:	0.6.1
-Release:	alt1_3
+Version:	0.6.2.2
+Release:	alt1_1
 Summary:	C library implementing the Javascript Object Signing and Encryption (JOSE)
 Group:		System/Libraries
 License:	MIT
-URL:		https://github.com/cisco/cjose
-Source0:	https://github.com/cisco/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
-
-Patch1: concatkdf.patch
+URL:		https://github.com/OpenIDC/cjose
+Source0:	https://github.com/OpenIDC/cjose/releases/download/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:	doxygen
+BuildRequires:	gcc
 BuildRequires:	pkgconfig(check) >= 0.9.2
 BuildRequires:	pkgconfig(jansson) >= 2.3
 BuildRequires:	pkgconfig(openssl) >= 1.0.1h
@@ -51,7 +48,6 @@ This package contains development files for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch1 -p1
 
 
 %build
@@ -85,6 +81,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Mon Oct 02 2023 Igor Vlasenko <viy@altlinux.org> 0.6.2.2-alt1_1
+- update by mgaimport
+
 * Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 0.6.1-alt1_3
 - update by mgaimport
 
