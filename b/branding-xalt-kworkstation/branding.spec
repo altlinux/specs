@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt7
+Release: alt8
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -487,6 +487,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Oct 02 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt8
+- cleanup installer slideshow
+
 * Thu Aug 31 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt7
 - add LOGO to /etc/os-release (ALT #47285)
 
