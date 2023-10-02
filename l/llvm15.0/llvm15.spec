@@ -18,9 +18,9 @@
 %global mlir_name mlir%v_majmin
 %global polly_name polly%v_majmin
 
-%global llvm_default_name llvm%_llvm_version
-%global clang_default_name clang%_llvm_version
-%global lld_default_name lld%_llvm_version
+%global llvm_default_name llvm15.0
+%global clang_default_name clang15.0
+%global lld_default_name lld15.0
 
 %global llvm_prefix %_prefix/lib/llvm-%v_majmin
 %global llvm_bindir %llvm_prefix/bin
@@ -79,7 +79,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt5
+Release: alt6
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -107,7 +107,8 @@ Patch18: lld-compact-unwind-encoding.h.patch
 # ROCm needs this
 Patch19: llvm-D132140.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
-Patch102: clang-15-alt-rocm-device-libs-path.patch
+Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
+Patch103: clang-15-alt-rocm-device-libs-path.patch
 # use DWARF4 by default
 Patch200: clang-produce-DWARF4-by-default.patch
 
@@ -626,7 +627,8 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch19 -p1
 
 %patch101 -p1
-%patch102 -p1 -b .clang-rocm-device-libs-path
+%patch102 -p2
+%patch103 -p1 -b .clang-rocm-device-libs-path
 %patch200 -p1
 
 # LLVM 12 and onward deprecate Python 2:
@@ -645,6 +647,7 @@ if [ "$NPROCS" -gt 64 ]; then
 fi
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %define builddir %_cmake__builddir
+export ALTWRAP_LLVM_VERSION=15.0
 %cmake -G Ninja -S llvm \
 	-DPACKAGE_VENDOR="%vendor" \
 %if_with clang
@@ -1194,6 +1197,13 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Mon Oct 02 2023 Arseny Maslennikov <arseny@altlinux.org> 15.0.7-alt6
+- Fix FTBFS: use llvm15.0 to build us explicitly.
+- clang: Pass --build-id=sha1 to linkers by default. (Closes: 47780)
+  Both of these changes are applied to clangs we build ALT packages with; if we
+  ever decouple clang-for-packages from clang-for-users, upstream behaviour can
+  be restored for the latter.
+
 * Tue Sep 12 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt5
 - Fix FTBFS: add missing six module (yes upstream #D131304
   fixes this, but this change is too big).
