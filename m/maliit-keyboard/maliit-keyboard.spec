@@ -1,7 +1,7 @@
 
 Name: maliit-keyboard
 Version: 2.3.1
-Release: alt2
+Release: alt3
 %K5init no_altplace
 
 Group: System/Libraries
@@ -15,6 +15,7 @@ Obsoletes: maliit-plugins < %version
 Requires: maliit-framework
 
 Source: %name-%version.tar
+Patch1: alt-fix-start-settings.patch
 
 # Automatically added by buildreq on Fri Jun 04 2021 (-bi)
 # optimized out: cmake-modules debugedit elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libgio-devel libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libsasl2-3 libssl-devel libstdc++-devel libwayland-client pkg-config python-modules python2-base python3 python3-base python3-module-paste qt5-base-devel qt5-declarative-devel rpm-build-gir rpm-build-python3 rpm-build-qml sh4
@@ -31,7 +32,7 @@ Currently it provides a single QML based keyboard plugin.
 
 %prep
 %setup -n %name-%version
-
+%patch1 -p1
 sed -i '/find_package.*Pinyin/d' CMakeLists.txt
 
 %build
@@ -63,6 +64,9 @@ rm -rf %buildroot/%_defaultdocdir/maliit-plugins/html
 %_datadir/glib-2.0/schemas/org.maliit.keyboard.maliit.gschema.xml
 
 %changelog
+* Mon Oct 02 2023 Sergey V Turchin <zerg@altlinux.org> 2.3.1-alt3
+- fix to fix to launch settings
+
 * Thu Sep 21 2023 Sergey V Turchin <zerg@altlinux.org> 2.3.1-alt2
 - fix to launch settings
 
