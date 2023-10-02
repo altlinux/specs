@@ -1,43 +1,52 @@
-%define modname pocketlint
+%define pypi_name pocketlint
 
-Name: python3-module-%modname
-Version: 0.24
+%def_enable check
+
+Name: python3-module-%pypi_name
+Version: 0.25
 Release: alt1
 
 Summary: Addon for Pylint
 Group: Development/Python3
 License: GPLv2+
-Url: https://pypi.org/project/%modname
+Url: https://pypi.org/project/%pypi_name
 
-Source: https://pypi.io/packages/source/p/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-pylint
+BuildRequires: python3(wheel) python3(setuptools)
+%{?_enable_check:BuildRequires: python3(pylint) python3(packaging)}
 
 %description
 Addon pylint modules and configuration settings for checking the validity
 of Python-based source projects.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py check
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+python3 -v tests/pylint/runpylint.py
 
 %files
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/%pypi_name/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc README
 
 
 %changelog
+* Mon Oct 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.25-alt1
+- 0.25
+- ported to %%pyproject* macros
+
 * Thu Jul 14 2022 Yuri N. Sedunov <aris@altlinux.org> 0.24-alt1
 - 0.24
 
