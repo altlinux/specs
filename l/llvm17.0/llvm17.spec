@@ -17,6 +17,8 @@
 %global lldb_name lldb%v_majmin
 %global mlir_name mlir%v_majmin
 %global polly_name polly%v_majmin
+%global clang_sover %v_major
+%global clang_cpp_sover %v_major
 
 %global llvm_default_name llvm%_llvm_version
 %global clang_default_name clang%_llvm_version
@@ -93,7 +95,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt3
+Release: alt4
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -295,20 +297,59 @@ The goal of the Clang project is to create a new C, C++, Objective C
 and Objective C++ front-end for the LLVM compiler. Its tools are built
 as libraries and designed to be loosely-coupled and extendable.
 
+%package -n libclang%clang_sover
+Group: Development/C
+Summary: clang shared library
+%requires_filesystem
+Requires: libclang%clang_sover-support = %EVR
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n libclang%clang_sover
+The goal of the Clang project is to create a new C, C++, Objective C
+and Objective C++ front-end for the LLVM compiler. Its tools are built
+as libraries and designed to be loosely-coupled and extendable.
+
+This package contains the clang shared library.
+
+%package -n libclang-cpp%clang_cpp_sover
+Group: Development/C
+Summary: clang-cpp shared libraries
+%requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n libclang-cpp%clang_cpp_sover
+The goal of the Clang project is to create a new C, C++, Objective C
+and Objective C++ front-end for the LLVM compiler. Its tools are built
+as libraries and designed to be loosely-coupled and extendable.
+
+This package contains the clang-cpp shared library.
+
 %package -n %clang_name-libs
 Group: Development/C
 Summary: clang shared libraries
 %requires_filesystem
-Requires: %clang_name-libs-support = %EVR
+# This is a compat package.
+Requires: libclang%clang_sover = %EVR
+Requires: libclang-cpp%clang_cpp_sover = %EVR
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
 AutoProv: nopython
 
 %description -n %clang_name-libs
-Shared libraries for the clang compiler.
+The goal of the Clang project is to create a new C, C++, Objective C
+and Objective C++ front-end for the LLVM compiler. Its tools are built
+as libraries and designed to be loosely-coupled and extendable.
 
-%package -n %clang_name-libs-support
+This package contains shared libraries for the clang compiler.
+
+%package -n libclang%clang_sover-support
 Group: Development/C
 Summary: Support for Clang's shared libraries
 %requires_filesystem
@@ -317,22 +358,22 @@ Summary: Support for Clang's shared libraries
 AutoReq: nopython
 AutoProv: nopython
 
-%description -n %clang_name-libs-support
+%description -n libclang%clang_sover-support
 The Clang's shared libraries implement compilers for C and C++, and thus have
 to bundle additional platform support headers and libraries for use within the
 compilation product. This package contains the platform support.
 
-%package -n %clang_name-libs-support-shared-runtimes
+%package -n libclang%clang_sover-support-shared-runtimes
 Group: Development/C
 Summary: Shared runtimes for Clang's shared libraries
 %requires_filesystem
-Requires: %clang_name-libs-support = %EVR
+Requires: libclang%clang_sover-support = %EVR
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
 AutoProv: nopython
 
-%description -n %clang_name-libs-support-shared-runtimes
+%description -n libclang%clang_sover-support-shared-runtimes
 This package contains shared runtime libraries for Scudo and sanitizers.
 
 %package -n %clang_name-devel
@@ -1095,18 +1136,25 @@ ninja -C %builddir check-all || :
 %llvm_datadir/clang/bash-autocomplete.sh
 %_datadir/bash-completion/completions/clang*
 
-%files -n %clang_name-libs
-%llvm_libdir/libclang*.so.*
-%_libdir/libclang*.so.*
+%files -n libclang%clang_sover
+%llvm_libdir/libclang.so.%{clang_sover}*
+%_libdir/libclang.so.%{clang_sover}*
 
-%files -n %clang_name-libs-support -f %_tmppath/dyn-files-libclang-support
+%files -n libclang-cpp%clang_cpp_sover
+%llvm_libdir/libclang-cpp*.so.%{clang_cpp_sover}*
+%_libdir/libclang-cpp*.so.%{clang_cpp_sover}*
+
+%files -n %clang_name-libs
+# This is a compat package.
+
+%files -n libclang%clang_sover-support -f %_tmppath/dyn-files-libclang-support
 %llvm_libdir/clang
 # clang-tools
 %ifarch %hwasan_symbolize_arches
 %exclude %llvm_libdir/clang/%v_major/bin/hwasan_symbolize
 %endif
 
-%files -n %clang_name-libs-support-shared-runtimes -f %_tmppath/libclang-support-shared-runtimes
+%files -n libclang%clang_sover-support-shared-runtimes -f %_tmppath/libclang-support-shared-runtimes
 
 %files -n %clang_name-devel
 %llvm_includedir/clang
@@ -1242,6 +1290,11 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Sat Sep 30 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.1-alt4
+- Split libclang-cpp.so into its own package. (Closes: 44263)
+- Split libclang.so into its own package, making clangX-libs a compat package
+  which pulls both shared libraries in.
+
 * Thu Sep 28 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.1-alt3
 - clang: Restore the default disposition of -grecord-command-line.
 - clang: Pass --build-id=sha1 to linkers by default. (Closes: 47780)
