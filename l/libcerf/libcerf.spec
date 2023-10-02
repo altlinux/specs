@@ -12,14 +12,13 @@ BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 
 Name:		libcerf
 Summary:	Complex error functions, Dawson, Faddeeva, and Voigt function
-Version:	2.1
-Release:	alt1_1
+Version:	2.4
+Release:	alt1_2
 Group:		System/Libraries
 License:	MIT
 Url:		https://jugit.fz-juelich.de/mlz/libcerf
 Source0:	https://jugit.fz-juelich.de/mlz/libcerf/-/archive/v%{version}/%{name}-v%{version}.tar.gz
 BuildRequires:	ccmake cmake ctest
-BuildRequires:	clang
 Source44: import.info
 
 %description
@@ -44,7 +43,7 @@ and a Lorentzian.
 Summary:	Development files for %{name}
 Group:		Development/Other
 Requires:	%{libname} = %{version}-%{release}
-#Provides:	%{name}-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{devname}
 This package contains the development files for %{name}.
@@ -64,9 +63,6 @@ rm -rf fortran/__MACOSX
 
 %build
 %remove_optflags -frecord-gcc-switches
-# for some reason %ix86 tests fails with gcc
-export CC=clang
-export LDFLAGS="$LDFLAGS -Wl,--build-id=sha1"
 %{mageia_cmake}
 %mageia_cmake_build
 
@@ -74,9 +70,7 @@ export LDFLAGS="$LDFLAGS -Wl,--build-id=sha1"
 %mageia_cmake_install
 
 %check
-%ifnarch %{ix86}
 %{mageia_ctest}
-%endif
 
 %files -n %{libname}
 %doc CHANGELOG README*
@@ -94,6 +88,9 @@ export LDFLAGS="$LDFLAGS -Wl,--build-id=sha1"
 
 
 %changelog
+* Mon Oct 02 2023 Igor Vlasenko <viy@altlinux.org> 2.4-alt1_2
+- update by mgaimport
+
 * Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 2.1-alt1_1
 - update by mgaimport
 
