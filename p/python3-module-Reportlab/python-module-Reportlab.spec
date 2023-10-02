@@ -2,7 +2,7 @@
 %define oname Reportlab
 
 Name: python3-module-%oname
-Version: 3.6.12
+Version: 3.6.13
 Release: alt1
 
 Summary: The Reportlab Toolkit
@@ -56,8 +56,10 @@ This package contains documentation for Reportlab Toolkit.
 
 %files docs
 %doc docs/build/html docs/userguide demos
-
 %changelog
+* Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 3.6.13-alt1
+- new version 3.6.13 (with rpmrb script)
+
 * Tue Feb 21 2023 Grigory Ustinov <grenka@altlinux.org> 3.6.12-alt1
 - Build new version (Closes: #44773).
 
