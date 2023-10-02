@@ -1,5 +1,5 @@
 Name:    magic-wormhole
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: get things from one computer to another, safely
@@ -72,6 +72,9 @@ rm -rf %buildroot%python3_sitelibdir/wormhole/test/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 0.13.0-alt1
+- new version 0.13.0 (with rpmrb script)
+
 * Wed May 06 2020 Vitaly Lipatov <lav@altlinux.ru> 0.12.0-alt1
 - new version 0.12.0 (with rpmrb script)
 
