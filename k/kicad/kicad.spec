@@ -4,7 +4,7 @@
 %define majver 7.0
 
 Name: kicad
-Version: 7.0.7
+Version: %majver.8
 Release: alt1
 Epoch: 1
 
@@ -173,6 +173,9 @@ rm -r %buildroot/%_datadir/locale/pt_br
 %dir %_datadir/kicad/template
 
 %changelog
+* Mon Oct 02 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.8-alt1
+- New version 7.0.8
+
 * Mon Aug 14 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.7-alt1
 - New version 7.0.7
 
