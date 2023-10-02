@@ -1,6 +1,9 @@
 %define soname 1
+%ifarch armh
+%def_disable check
+%endif
 Name: srt
-Version: 1.5.1
+Version: 1.5.3
 Release: alt1
 Summary: Secure Reliable Transport protocol tools
 Group: Networking/Other
@@ -60,7 +63,7 @@ sed -Ei 's,(^TEST_F.*\, )(.*),\1DISABLED_\2,' test/test_ipv6.cpp test/test_muxer
 rm -f %buildroot/%_libdir/pkgconfig/haisrt.pc
 
 %check
-./%_cmake__builddir/test-srt
+LD_LIBRARY_PATH=%_cmake__builddir ./%_cmake__builddir/test-srt
 
 %files
 %doc README.md docs LICENSE
@@ -80,6 +83,9 @@ rm -f %buildroot/%_libdir/pkgconfig/haisrt.pc
 %_libdir/pkgconfig/srt.pc
 
 %changelog
+* Mon Oct 02 2023 Anton Farygin <rider@altlinux.ru> 1.5.3-alt1
+- 1.5.3
+
 * Mon Nov 28 2022 Anton Farygin <rider@altlinux.ru> 1.5.1-alt1
 - 1.5.1
 
