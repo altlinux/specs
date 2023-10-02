@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ pkgconfig(aubio) pkgconfig(
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		qtractor
-Version:	0.9.34
+Version:	0.9.35
 Release:	alt1_1
 Summary:	An Audio/MIDI multi-track sequencer
 License:	GPLv2+
@@ -92,6 +92,9 @@ desktop-file-install \
 
 
 %changelog
+* Mon Oct 02 2023 Igor Vlasenko <viy@altlinux.org> 0.9.35-alt1_1
+- update by mgaimport
+
 * Thu Sep 14 2023 Igor Vlasenko <viy@altlinux.org> 0.9.34-alt1_1
 - update by mgaimport
 
