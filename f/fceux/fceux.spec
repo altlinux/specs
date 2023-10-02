@@ -1,6 +1,6 @@
 Name: fceux
-Version: 2.6.5
-Release: alt1
+Version: 2.6.6
+Release: alt2
 
 Summary: FCEUX is a Nintendo Entertainment System (NES), Famicom, and Famicom Disk System (FDS) emulator
 Summary(ru_RU.UTF-8): FCEUX - это эмулятор Nintendo Entertainment System ("Денди"), Famicom и Famicom Disk System (FDS)
@@ -35,7 +35,7 @@ Patch6: %name-2.2.3-SConstruct.patch
 BuildRequires: gcc-c++ libSDL2-devel python-modules-email scons zlib-devel  libminizip-devel qt5-base-devel cmake
 # liblua5.1-compat-devel
 
-Excludearch: armh
+Excludearch: armh  aarch64 ppc64le
 
 
 %description
@@ -147,6 +147,12 @@ install -D -m 644 %SOURCE3 %buildroot/%_pixmapsdir/%name-big.png
 
 
 %changelog
+* Mon Oct 02 2023 Ilya Mashkin <oddity@altlinux.ru> 2.6.6-alt2
+- Excludearch: aarch64 ppc64le
+
+* Wed Sep 06 2023 Ilya Mashkin <oddity@altlinux.ru> 2.6.6-alt1
+- 2.6.6
+
 * Sun Feb 12 2023 Ilya Mashkin <oddity@altlinux.ru> 2.6.5-alt1
 - 2.6.5
 
