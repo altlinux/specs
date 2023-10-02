@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.59.1
+Version: 2.1.1
 Release: alt1
 
 Summary: Typed interactions with the GitHub API v3
@@ -26,6 +26,8 @@ Buildrequires: python3-module-pynacl
 Buildrequires: python3-module-jwt
 Buildrequires: python3-module-httpretty
 Buildrequires: python3-module-pytest-cov
+Buildrequires: python3-module-dateutil
+Buildrequires: python3-module-typing-extensions
 %endif
 
 BuildArch: noarch
@@ -55,11 +57,14 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %tox_check_pyproject
 
 %files
+%doc COPYING *.md
 %python3_sitelibdir/github
 %python3_sitelibdir/%oname-%version.dist-info
-%doc *.md
 
 %changelog
+* Mon Oct 02 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
+- Automatically updated to 2.1.1.
+
 * Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 1.59.1-alt1
 - Automatically updated to 1.59.1.
 
