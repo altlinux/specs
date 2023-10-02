@@ -13,7 +13,7 @@
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.15
+%define major 8.16
 %define rel %nil
 %define conflictbase wine
 
@@ -66,7 +66,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -830,6 +830,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.16-alt1
+- new version 8.16 (with rpmrb script)
+
 * Tue Sep 05 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.15-alt2
 - remove post/preun scripts for wine-vanilla-ping
 
