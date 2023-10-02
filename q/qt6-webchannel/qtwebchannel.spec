@@ -7,7 +7,7 @@
 
 Name: qt6-webchannel
 Version: 6.4.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - WebChannel component
@@ -90,9 +90,11 @@ export QT_HASH_SEED=0
 %files common
 %doc LICENSES/*
 
+%files
+%_qt6_qmldir/QtWebChannel/
+
 %files -n libqt6-webchannel
 %_qt6_libdir/libQt?WebChannel.so.*
-%_qt6_qmldir/QtWebChannel/
 
 %files devel
 %_qt6_headerdir/Qt*/
@@ -116,6 +118,9 @@ export QT_HASH_SEED=0
 #%_qt6_examplesdir/*
 
 %changelog
+* Mon Oct 02 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
+- split modules to separate package
+
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 
