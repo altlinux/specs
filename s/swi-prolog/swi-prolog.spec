@@ -4,13 +4,12 @@
 
 Summary: Prolog interpreter and compiler
 Name: swi-prolog
-Version: 8.2.1
-Release: alt2
+Version: 9.0.4
+Release: alt1
 License: LGPLv2+
 Group: Development/Other
 Requires: %name-nox
 Requires: %name-xpce
-Source44: import.info
 # pl is not perl
 AutoReq: yes,noperl
 AutoProv: yes,noperl
@@ -19,7 +18,7 @@ Source0: http://www.swi-prolog.org/download/stable/src/swipl-%version.tar.gz
 
 # Automatically added by buildreq on Sun Oct 04 2020
 # optimized out: ca-trust cmake-modules fontconfig fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 java java-headless javazi libICE-devel libSM-devel libX11-devel libXau-devel libXrender-devel libcrypt-devel libfreetype-devel libsasl2-3 libstdc++-devel libtinfo-devel libunixODBC-devel-compat libxcb-devel pkg-config python2-base sh4 xorg-proto-devel
-BuildRequires: cmake flex gcc-c++ git-core java-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libarchive-devel libdb6-devel libedit-devel libgmp-devel libjpeg-devel libncurses-devel libreadline-devel libssl-devel libunixODBC-devel libuuid-devel zlib-devel bzip2-devel libpng-devel libpcre-devel libbrotli-devel libexpat-devel
+BuildRequires: cmake flex gcc-c++ libstdc++-devel git-core libXext-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libc++-devel libarchive-devel libdb6-devel libedit-devel libgmp-devel libjpeg-devel libncurses-devel libreadline-devel libssl-devel libunixODBC-devel libuuid-devel zlib-devel bzip2-devel libpng-devel libpcre-devel libbrotli-devel libexpat-devel rpm-build-python3 python3-devel rpm-build-python
 
 %if_with test
 BuildRequires: ctest
@@ -54,19 +53,19 @@ AutoProv: yes,noperl
 XPCE is a toolkit for developing graphical applications in Prolog and
 other interactive and dynamically typed languages.
 
-%package java
-Group: Development/Java
-Summary: Java interface for %name
-Requires: %name-nox = %version-%release
-Provides: %name-jpl
+#%package java
+#Group: Development/Java
+#Summary: Java interface for %name
+#Requires: %name-nox = %version-%release
+#Provides: %name-jpl
 # pl is not perl
-AutoReq: yes,noperl
-AutoProv: yes,noperl
+#AutoReq: yes,noperl
+#AutoProv: yes,noperl
 
-%description java
-JPL is a dynamic, bi-directional interface between %name and Java
-runtimes. It offers two APIs: Java API (Java-calls-Prolog) and Prolog
-API (Prolog-calls-Java).
+#%description java
+#JPL is a dynamic, bi-directional interface between %name and Java
+#runtimes. It offers two APIs: Java API (Java-calls-Prolog) and Prolog
+#API (Prolog-calls-Java).
 
 %package odbc
 Group: Development/Databases
@@ -107,15 +106,15 @@ export LD_LIBRARY_PATH=`pwd`/%_cmake__builddir/src
 %cmake_build
 
 # XXX this gone while switching to cmake
-cc -g -pthread packages/xpce/src/unx/client.c -o %_cmake__builddir/xpce-client
+#cc -g -pthread packages/xpce/src/unx/client.c -o %_cmake__builddir/xpce-client
 
 %install
 # TODO verify against swipl.so
 %add_verify_elf_skiplist %_libdir/swipl-%version/*
 %cmakeinstall_std
 # XXX
-install -D %_cmake__builddir/xpce-client %buildroot%_bindir/xpce-client
-install -D packages/xpce/man/xpce-client.1 %buildroot%_man1dir/xpce-client.1
+#install -D %_cmake__builddir/xpce-client %buildroot%_bindir/xpce-client
+#install -D packages/xpce/man/xpce-client.1 %buildroot%_man1dir/xpce-client.1
 test %_lib != lib && mv %buildroot%_prefix/lib/cmake %buildroot%_libdir/
 ln -rs %buildroot%_libdir/swipl-%version/lib/*/lib* %buildroot%_libdir/
 
@@ -137,26 +136,26 @@ LC_ALL=ru_RU.UTF-8 LD_LIBRARY_PATH=`pwd`/src ctest -j`nproc`
 %_libdir/lib*.so*
 %_datadir/pkgconfig/swipl.pc
 %exclude %_datadir/swipl-%version/doc
-%exclude %_libdir/swipl-%version/lib/*/libjpl.so
-%exclude %_libdir/swipl-%version/lib/jpl.jar
-%exclude %_libdir/swipl-%version/library/jpl.pl
+#%exclude %_libdir/swipl-%version/lib/*/libjpl.so
+#%exclude %_libdir/swipl-%version/lib/jpl.jar
+#%exclude %_libdir/swipl-%version/library/jpl.pl
 %exclude %_libdir/swipl-%version/xpce/*
 %exclude %_libdir/swipl-%version/lib/*/odbc4pl.so
 %exclude %_libdir/swipl-%version/library/odbc.pl
 
 %files x
-%_mandir/*/xpce*
+#%_mandir/*/xpce*
 %doc %_datadir/swipl-%version/doc/Manual/*xpce.html
-%_bindir/xpce*
+#  %_bindir/xpce*
 %_libdir/swipl-%version/xpce/*
 
-%files java
-%doc packages/jpl/*.md packages/jpl/*.doc packages/jpl/docs
-%doc %_datadir/swipl-%version/doc/packages/examples/jpl
-%doc %_datadir/swipl-%version/doc/packages/jpl.html
-%_libdir/swipl-%version/lib/*/libjpl.so
-%_libdir/swipl-%version/lib/jpl.jar
-%_libdir/swipl-%version/library/jpl.pl
+#%files java
+#%doc packages/jpl/*.md packages/jpl/*.doc packages/jpl/docs
+#%doc %_datadir/swipl-%version/doc/packages/examples/jpl
+#%doc %_datadir/swipl-%version/doc/packages/jpl.html
+#%_libdir/swipl-%version/lib/*/libjpl.so
+#%_libdir/swipl-%version/lib/jpl.jar
+#%_libdir/swipl-%version/library/jpl.pl
 
 %files odbc
 %doc %_datadir/swipl-%version/doc/packages/odbc.html
@@ -169,11 +168,14 @@ LC_ALL=ru_RU.UTF-8 LD_LIBRARY_PATH=`pwd`/src ctest -j`nproc`
 %doc %_datadir/swipl-%version/doc/Manual
 %exclude %_datadir/swipl-%version/doc/Manual/*xpce.html
 %doc %_datadir/swipl-%version/doc/packages
-%exclude %_datadir/swipl-%version/doc/packages/examples/jpl
-%exclude %_datadir/swipl-%version/doc/packages/jpl.html
+#%exclude %_datadir/swipl-%version/doc/packages/examples/jpl
+#%exclude %_datadir/swipl-%version/doc/packages/jpl.html
 %exclude %_datadir/swipl-%version/doc/packages/odbc.html
 
 %changelog
+* Mon Jul 31 2023 Denis Medvedev <nbr@altlinux.org> 9.0.4-alt1
+- new version
+
 * Mon Feb 27 2023 Igor Vlasenko <viy@altlinux.org> 8.2.1-alt2
 - NMU: fixed build
 
