@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 17.3.21
+Version: 17.3.23
 Release: alt1
 
 Summary: Miscellaneous utils for asyncio
@@ -86,6 +86,9 @@ sed -i '/^__version__/s/= .*$/= "%version"/' aiomisc/version.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 02 2023 Anton Zhukharev <ancieg@altlinux.org> 17.3.23-alt1
+- Updated to 17.3.23.
+
 * Thu Aug 03 2023 Anton Zhukharev <ancieg@altlinux.org> 17.3.21-alt1
 - Updated to 17.3.21.
 
