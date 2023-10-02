@@ -1,5 +1,5 @@
 Name: kde5-autofs-shares
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 %K5init
 
@@ -23,7 +23,7 @@ This plugin allows mounting samba shares from Dolphin
 
 %install
 install -D -m 0644 autofs-shares-manage.desktop %buildroot/%_K5srv/ServiceMenus/autofs-shares-manage.desktop
-install -D -m 0755 autofs-shares-mount.desktop %buildroot/%_K5start/autofs-shares-mount.desktop
+install -D -m 0644 autofs-shares-mount.desktop %buildroot/%_K5start/autofs-shares-mount.desktop
 install -D -m 0755 bin/kde5-autofs-shares-manage %buildroot/%_bindir/kde5-autofs-shares-manage
 install -D -m 0755 bin/kde5-autofs-shares-mount %buildroot/%_bindir/kde5-autofs-shares-mount
 # translations
@@ -43,6 +43,10 @@ done
 %_bindir/kde5-autofs-shares-*
 
 %changelog
+* Mon Oct 02 2023 Sergey V Turchin <zerg@altlinux.org> 0.2.3-alt1
+- update russian translation (closes: 47635)
+- fix autostart desktop-file permissions (closes: 47723)
+
 * Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 0.2.2-alt1
 - check ~/.autofs.shares available on mount
 
