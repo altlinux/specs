@@ -1,6 +1,6 @@
 %define oname nanopb
 Name: libnanopb
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 
 Summary: Nanopb - Protocol Buffers for Embedded Systems
@@ -63,6 +63,9 @@ subst "s|PythonInterp 2.7|PythonInterp 3|" CMakeLists.txt
 %_libdir/cmake/nanopb/
 
 %changelog
+* Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 0.4.7-alt1
+- new version 0.4.7 (with rpmrb script)
+
 * Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 0.4.6-alt1
 - new version 0.4.6 (with rpmrb script)
 - add BR: protobuf-compiler
