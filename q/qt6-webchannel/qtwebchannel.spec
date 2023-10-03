@@ -7,7 +7,7 @@
 
 Name: qt6-webchannel
 Version: 6.4.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt6 - WebChannel component
@@ -87,6 +87,11 @@ export QT_HASH_SEED=0
 %endif
 %endif
 
+# relax depends on plugins files
+for f in %buildroot/%_libdir/cmake/Qt?*/{*,}/Qt*Targets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
+
 %files common
 %doc LICENSES/*
 
@@ -118,6 +123,9 @@ export QT_HASH_SEED=0
 #%_qt6_examplesdir/*
 
 %changelog
+* Tue Oct 03 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt3
+- fix cmake files
+
 * Mon Oct 02 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
 - split modules to separate package
 
