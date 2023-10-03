@@ -25,7 +25,7 @@
 
 Name: qt6-webengine
 Version: 6.4.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -332,6 +332,10 @@ sed -i -e \
   "s|%version[[:space:]][[:space:]]*\${_Qt6WebEngine\(.*_FIND_VERSION_EXACT\)|%_qt6_version \${_Qt6WebEngine\1|" \
   %buildroot/%_libdir/cmake/Qt6WebEngine*/Qt6WebEngine*Config.cmake
 %endif
+# relax depends on plugins files
+for f in %buildroot/%_libdir/cmake/Qt?*/{*,}/Qt*Targets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
 
 # find translations
 echo "%%defattr(644,root,root,755)" >translations_list.lang
@@ -356,12 +360,12 @@ done
 %if_disabled system_icu
 %_qt6_datadir/resources/*icu*
 %endif
-
+%files
+%_qt6_qmldir/QtWebEngine/
 %files -n libqt6-webenginequick
 %_qt6_libdir/libQt?WebEngineQuick.so.*
 %files -n libqt6-webenginequickdelegatesqml
 %_qt6_libdir/libQt?WebEngineQuickDelegatesQml.so.*
-%_qt6_qmldir/QtWebEngine/
 %files -n libqt6-webenginecore
 %_qt6_libdir/libQt?WebEngineCore.so.*
 %_qt6_libexecdir/QtWebEngineProcess
@@ -402,6 +406,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Mon Oct 02 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt3
+- split modules to separate package
+
 * Mon Sep 04 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
 - update debian patches
 
