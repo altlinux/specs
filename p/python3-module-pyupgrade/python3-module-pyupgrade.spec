@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.13.0
+Version: 3.14.0
 Release: alt1
 
 Summary: A tool (and pre-commit hook) to automatically upgrade syntax for newer versions of the language
@@ -55,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 03 2023 Anton Zhukharev <ancieg@altlinux.org> 3.14.0-alt1
+- Updated to 3.14.0.
+
 * Mon Sep 25 2023 Anton Zhukharev <ancieg@altlinux.org> 3.13.0-alt1
 - Updated to 3.13.0.
 
