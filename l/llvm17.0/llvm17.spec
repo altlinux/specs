@@ -8,7 +8,7 @@
 
 %global v_major 17
 %global v_majmin %v_major.0
-%global v_full %v_majmin.1
+%global v_full %v_majmin.2
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -95,7 +95,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4
+Release: alt0.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -154,6 +154,8 @@ BuildRequires: python3-devel
 %endif
 %endif
 %if_with clang
+# The following line is for one intermediate release only:
+BuildRequires: libclang17-support
 BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
 %else
 BuildRequires: gcc-c++
@@ -282,6 +284,7 @@ Group: Development/C
 # Should they be packaged separately?
 Requires: gcc
 Requires: clang >= %_llvm_version
+Requires: %clang_name-support = %EVR
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -301,7 +304,7 @@ as libraries and designed to be loosely-coupled and extendable.
 Group: Development/C
 Summary: clang shared library
 %requires_filesystem
-Requires: libclang%clang_sover-support = %EVR
+Requires: %clang_name-support = %EVR
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -349,7 +352,7 @@ as libraries and designed to be loosely-coupled and extendable.
 
 This package contains shared libraries for the clang compiler.
 
-%package -n libclang%clang_sover-support
+%package -n %clang_name-support
 Group: Development/C
 Summary: Support for Clang's shared libraries
 %requires_filesystem
@@ -358,22 +361,22 @@ Summary: Support for Clang's shared libraries
 AutoReq: nopython
 AutoProv: nopython
 
-%description -n libclang%clang_sover-support
+%description -n %clang_name-support
 The Clang's shared libraries implement compilers for C and C++, and thus have
 to bundle additional platform support headers and libraries for use within the
 compilation product. This package contains the platform support.
 
-%package -n libclang%clang_sover-support-shared-runtimes
+%package -n %clang_name-support-shared-runtimes
 Group: Development/C
 Summary: Shared runtimes for Clang's shared libraries
 %requires_filesystem
-Requires: libclang%clang_sover-support = %EVR
+Requires: %clang_name-support = %EVR
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
 AutoProv: nopython
 
-%description -n libclang%clang_sover-support-shared-runtimes
+%description -n %clang_name-support-shared-runtimes
 This package contains shared runtime libraries for Scudo and sanitizers.
 
 %package -n %clang_name-devel
@@ -453,6 +456,7 @@ Summary: A clang-based language server
 Group: Development/C
 %requires_filesystem
 Requires: clangd >= %_llvm_version
+Requires: %clang_name-support = %EVR
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -886,8 +890,8 @@ find %buildroot%llvm_libdir/clang -type f,l -name '*.a' -or -name '*.so' | \
     sed -r -n 's/^(\/.+)\.a$/\1/p; s/^(.+)\.so$/\1/p' | sort | uniq -d > %_tmppath/libclang-support-dupes
 sed < %_tmppath/libclang-support-dupes 's)^%buildroot)); s/$/.a/' > %_tmppath/libclang-support-static-runtimes
 sed < %_tmppath/libclang-support-dupes 's)^%buildroot)); s/$/.so/' > %_tmppath/libclang-support-shared-runtimes
-sed < %_tmppath/libclang-support-shared-runtimes 's/^/%%exclude /' > %_tmppath/dyn-files-libclang-support
-echo "Expelling likely redundant Clang shared runtimes:" && cat %_tmppath/dyn-files-libclang-support
+sed < %_tmppath/libclang-support-shared-runtimes 's/^/%%exclude /' > %_tmppath/dyn-files-clang-support
+echo "Expelling likely redundant Clang shared runtimes:" && cat %_tmppath/dyn-files-clang-support
 
 # Emit a stanza list for %%files.
 # A tool can be accompanied by a man page or not.
@@ -1147,14 +1151,14 @@ ninja -C %builddir check-all || :
 %files -n %clang_name-libs
 # This is a compat package.
 
-%files -n libclang%clang_sover-support -f %_tmppath/dyn-files-libclang-support
+%files -n %clang_name-support -f %_tmppath/dyn-files-clang-support
 %llvm_libdir/clang
 # clang-tools
 %ifarch %hwasan_symbolize_arches
 %exclude %llvm_libdir/clang/%v_major/bin/hwasan_symbolize
 %endif
 
-%files -n libclang%clang_sover-support-shared-runtimes -f %_tmppath/libclang-support-shared-runtimes
+%files -n %clang_name-support-shared-runtimes -f %_tmppath/libclang-support-shared-runtimes
 
 %files -n %clang_name-devel
 %llvm_includedir/clang
@@ -1290,6 +1294,11 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Tue Oct 03 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.2-alt0.1
+- 17.0.2.
+- This is an intermediate release to work around broken 17.0.1-alt4.
+- Add explicit dependency on clangX-support to clang and clangd.
+
 * Sat Sep 30 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.1-alt4
 - Split libclang-cpp.so into its own package. (Closes: 44263)
 - Split libclang.so into its own package, making clangX-libs a compat package
