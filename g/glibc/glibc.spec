@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.38.0.23.0e1ef6779a
+Version: 2.38.0.27.750a45a783
 Release: alt1
 Epoch: 6
 
@@ -775,9 +775,12 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Tue Oct 03 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.27.750a45a783-alt1
+- Updated to glibc-2.38-27-g750a45a783 (fixes: CVE-2023-4911, CVE-2023-5156).
+
 * Wed Sep 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.23.0e1ef6779a-alt1
-- Updated to glibc-2.38-23-g0e1ef6779a.
-- Updated sanitize-env hardening patch.
+- Updated to glibc-2.38-23-g0e1ef6779a (fixes: CVE-2023-4527, CVE-2023-4806).
+- Updated sanitize-env hardening patch (mitigates: CVE-2023-4911).
 
 * Fri Sep 01 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.11.g1aed90c9c8-alt1
 - Updated to glibc-2.38-11-g1aed90c9c8.
