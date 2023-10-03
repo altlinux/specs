@@ -1,6 +1,6 @@
 Name: libgcrypt
 Version: 1.10.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: The GNU crypto library
@@ -10,6 +10,7 @@ Url: http://www.gnupg.org/
 Source: %name-%version.tar
 
 Patch0: 0001-Fix-LFS-on-32-bit-systems.patch
+Patch1: 0002-Remove-unknown-suffix-from-version.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -128,6 +129,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_infodir/*.info*
 
 %changelog
+* Tue Oct 03 2023 Alexey Gladkov <legion@altlinux.ru> 1.10.2-alt2
+- Remove -unknown suffix from version (ALT#47806).
+
 * Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 1.10.2-alt1
 - New version (1.10.2).
 
