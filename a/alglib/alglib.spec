@@ -5,12 +5,12 @@ BuildRequires(pre): rpm-macros-generic-compat rpm-macros-mageia-compat
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name alglib
-%define major     3
+%define major     4
 %define libname   lib%{name}%{major}
 %define develname lib%{name}-devel
 
 Name:           alglib
-Version:        3.20.0
+Version:        4.00.0
 Release:        alt1_1
 Summary:        A numerical analysis and data processing library
 Group:          System/Libraries
@@ -124,7 +124,8 @@ popd
 
 %files -n %{libname}
 %doc --no-dereference gpl2.txt
-%{_libdir}/libalglib.so.%{major}*
+%{_libdir}/libalglib.so.%{major}
+%{_libdir}/libalglib.so.%{major}.*
 
 %files -n %{develname}
 %{_includedir}/%{name}/
@@ -137,6 +138,9 @@ popd
 
 
 %changelog
+* Mon Oct 02 2023 Igor Vlasenko <viy@altlinux.org> 4.00.0-alt1_1
+- update by mgaimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 3.20.0-alt1_1
 - update by mgaimport
 
