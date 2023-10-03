@@ -1,7 +1,7 @@
 %define lng_list af ar as ast be be@latin bg bn bn_IN br bs ca ca@valencia crh cs csb cy da de el en en_GB en_US eo es es_AR et eu fa fi fr fy ga gd gl gu ha he hi hne hr hsb hu hy ia id is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms my nb nds ne nl nn oc or pa pl ps pt pt_BR ro ru se si sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta te tg th tok tr tt ug uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW
 
 %define major 5
-%define minor 98
+%define minor 100
 %define bugfix 0
 
 Name: kf5-filesystem
@@ -41,7 +41,7 @@ mkdir -p %buildroot/%_K5start
 mkdir -p %buildroot/%_K5app
 mkdir -p %buildroot/%_K5emo
 mkdir -p %buildroot/%_K5snd
-mkdir -p %buildroot/%_K5tmpl
+mkdir -p %buildroot/%_K5tmpl/.source
 mkdir -p %buildroot/%_K5wall
 mkdir -p %buildroot/%_K5conf
 mkdir -p %buildroot/%_K5cfg
@@ -96,14 +96,14 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir/kde5
 
 # install dbus dirs
 mkdir -p %buildroot/{%_K5conf_dbus_sessd,%_K5conf_dbus_sysd}
-install -m 0644 %SOURCE2 %buildroot/%_K5conf_dbus_sessd/kf5.conf
-#install -m 0644 %SOURCE3 %buildroot/%_K5conf_dbus_sysd/kf5.conf
+#install -m 0644 %SOURCE2 %buildroot/%_K5conf_dbus_sessd/kf5.conf
+###install -m 0644 %SOURCE3 %buildroot/%_K5conf_dbus_sysd/kf5.conf
 # configs
 install -m 0644 %SOURCE10 %buildroot/%_K5xdgconf/
 
 %files
-%config %_K5conf_dbus_sessd/kf5.conf
-#%config %_K5conf_dbus_sysd/kf5.conf
+#%config %_K5conf_dbus_sessd/kf5.conf
+###%config %_K5conf_dbus_sysd/kf5.conf
 %_bindir/kde5
 %_datadir/*5/
 %_datadir/locale/*/LC_SCRIPTS/
@@ -121,6 +121,9 @@ install -m 0644 %SOURCE10 %buildroot/%_K5xdgconf/
 %dir %_desktopdir/kf5
 
 %changelog
+* Tue Oct 03 2023 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt1
+- don't package dbus config for additional session services directory
+
 * Mon Oct 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.98.0-alt1
 - package /usr/share/locale/*/LC_SCRIPTS/ (closes: 30947)
 - package more dirs from /usr/share/kf5/
