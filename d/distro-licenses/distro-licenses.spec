@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Mon Oct 02 2023 Anton Midyukov <antohami@altlinux.org> 1.3.3-alt1
+- ALT_Community_License: add english version
+
 * Fri Sep 22 2023 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1
 - ALT SP license changed definition of End User (from @blackdc)
 - Alt Server: 1.5 Alt Virtualization Server -> Alt Virtualization
