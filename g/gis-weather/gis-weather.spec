@@ -1,12 +1,14 @@
 Name:		gis-weather
-Version:	0.8.1
-Release:	alt1.1
+Version:	0.8.4.17
+Release:	alt1
 License:	GPLv3
 Summary:	Customizable weather widget
+
+# 		https://github.com/RingOV/gis-weather
 Url:		http://sourceforge.net/projects/gis-weather
 Group:		Accessibility
 Packager:       Motsyo Gennadi <drool@altlinux.ru>
-Source:		%name-%version.tar.gz
+Source:		%name-%version.tar
 Source1:	gis-weather
 Source2:	gis-weather.desktop
 
@@ -68,6 +70,9 @@ grep -rl '^#!' %buildroot%_datadir/%name/ | xargs chmod 0755
 %_datadir/%name
 
 %changelog
+* Tue Oct 03 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.8.4.17-alt1
+- Update from github (ALT #47590)
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1.1
 - Rebuild with python3.7.
 
