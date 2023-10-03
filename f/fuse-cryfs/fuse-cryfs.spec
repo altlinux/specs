@@ -1,12 +1,11 @@
 %define oname cryfs
-%def_without system_spdlog
 Name: fuse-cryfs
-Version: 0.9.11
-Release: alt2.1
+Version: 0.11.4
+Release: alt1
 
 Summary: Cryptographic filesystem for the cloud
 
-License: LGPL
+License: LGPLv2
 Group: System/Kernel and hardware
 Url: https://www.cryfs.org/
 
@@ -17,26 +16,22 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 
-# ported changes from upstream
-Patch1: fuse-cryfs-glibc-compat.patch
+ExcludeArch: armh
 
-BuildRequires: rpm-macros-cmake cmake
-BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-program_options-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake >= 3.10
+BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-program_options-devel boost-asio-devel
 #BuildRequires: boost-devel-static
 BuildRequires: libcryptopp-devel
 BuildRequires: libcurl-devel
-BuildRequires: libfuse-devel
+BuildRequires: libfuse-devel >= 2.8.6
 BuildRequires: libssl-devel
+BuildRequires: librange-v3-devel >= 0.11.0
+BuildRequires: libspdlog-devel >= 1.8.5
 
 BuildRequires: gcc-c++
-
-# TODO: check when will req spdlog >= 1.1
-%if_with system_spdlog
-# instead builtin
-BuildRequires: libspdlog-devel = 0.12.0
-%endif
-
-BuildRequires: python-modules-json
+BuildRequires: libgomp-devel
+BuildRequires: python3
 
 %description
 CryFS encrypts your files, so you can safely store them anywhere.
@@ -46,24 +41,11 @@ See https://www.cryfs.org.
 
 %prep
 %setup
-%patch1 -p2
-
-# conflicts with CHAR_WIDTH macro
-%__subst "s|CHAR_WIDTH|SPDLOG_CHAR_WIDTH|g" vendor/spdlog/spdlog/fmt/bundled/format.h
-%if_with system_spdlog
-# replaced with libspdlog-devel
-rm -rf vendor/spdlog/
-%__subst "s|.*spdlog.*||" vendor/CMakeLists.txt
-%__subst "s|spdlog||" src/cpp-utils/CMakeLists.txt
-%endif
-
-# explicitly set python-2
-find . -type f | xargs sed -i \
-	-e '1s:^#!/usr/bin/env python$:#!/usr/bin/python%__python_version:' \
-	%nil
 
 %build
-%cmake -DBUILD_TESTING=off -DBoost_INCLUDE_DIRS=%_includedir/boost -DBoost_USE_STATIC_LIBS=off -DCMAKE_BUILD_TYPE=RELEASE
+%cmake -DBUILD_TESTING=off -DBoost_INCLUDE_DIRS=%_includedir/boost -DBoost_USE_STATIC_LIBS=off \
+       -DCMAKE_BUILD_TYPE=RELEASE \
+       -DDEPENDENCY_CONFIG=cmake-utils/DependenciesFromLocalSystem.cmake
 %cmake_build
 
 %install
@@ -71,9 +53,15 @@ find . -type f | xargs sed -i \
 
 %files
 %_bindir/cryfs
+%_bindir/cryfs-unmount
 %_man1dir/*
 
 %changelog
+* Tue Oct 03 2023 Vitaly Lipatov <lav@altlinux.ru> 0.11.4-alt1
+- new version (0.11.4) with rpmgs script
+- update BR, build with system spdlog
+- ExcludeArch: armh
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.11-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
