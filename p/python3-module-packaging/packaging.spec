@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 23.1
+Version: 23.2
 Release: alt1
 Summary: Core utilities for Python packages
 License: Apache-2.0 or BSD-2-Clause
@@ -50,6 +50,9 @@ Core utilities for Python packages.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 02 2023 Stanislav Levin <slev@altlinux.org> 23.2-alt1
+- 23.1 -> 23.2.
+
 * Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 23.1-alt1
 - 23.0 -> 23.1.
 
@@ -89,7 +92,7 @@ Core utilities for Python packages.
 
 * Tue Feb 02 2016 Sergey Alembekov <rt@altlinux.ru> 15.4-alt2.dev0.git20150801
 - rebuild with clean buildreq
-- disable tests 
+- disable tests
 
 * Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 15.4-alt1.dev0.git20150801
 - Initial build for Sisyphus
