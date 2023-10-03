@@ -1,7 +1,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.24.0
-Release: alt3
+Release: alt4
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre2-devel libssl-devel perl-devel zlib-devel libkrb5-devel
@@ -351,6 +351,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Tue Oct 03 2023 Arseny Maslennikov <arseny@altlinux.org> 1.24.0-alt4
+- NMU: Rebuild with libcrypto.so.3, listen on [::1]:80 in default site config.
+
 * Thu Sep 14 2023 Anton Farygin <rider@altlinux.ru> 1.24.0-alt3
 - added accept_language module (Closes: #47364)
 - updated pam and geoip modules
