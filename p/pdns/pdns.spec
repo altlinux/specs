@@ -4,14 +4,13 @@
 %define _pkgdocdir %_docdir/%name
 
 Name: pdns
-Version: 4.8.0
+Version: 4.8.2
 Release: alt1
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
 License: GPLv2
 Url: http://powerdns.com
 Source0: %name-%version.tar
-Patch1: %name-4.2.2-alt-boost-1.73.0-compat.patch
 Patch4: %name-4.2.2-alt-fix-missing-include.patch
 ExcludeArch: %ix86 %arm %mips32 ppc
 
@@ -141,7 +140,6 @@ This package contains the ixfrdist program.
 
 %prep
 %setup
-%patch1 -p2
 %patch4 -p1
 %ifarch %e2k
 sed -i 's/constexpr QClass QClass/inline &/' pdns/qtype.hh
@@ -154,23 +152,25 @@ export PDNS_TEST_NO_IPV6=1
 
 %autoreconf
 %configure \
-	--sysconfdir=%_sysconfdir/%name \
-	--disable-static \
-	--enable-fortify-source=auto \
+    --sysconfdir=%_sysconfdir/%name \
+    --disable-static \
+    --enable-fortify-source=auto \
     --enable-lto=auto \
-	--disable-dependency-tracking \
-	--disable-silent-rules \
-	--with-modules='' \
-	--with-lua \
-	--enable-lua-records \
-	--with-dynmodules='%backends' \
-	--enable-tools \
-	--with-libsodium \
-	--enable-remotebackend-zeromq \
-	--enable-unit-tests \
-	--enable-reproducible \
-	--enable-systemd --with-systemd=%_unitdir \
-	--enable-ixfrdist
+    --disable-dependency-tracking \
+    --disable-silent-rules \
+    --with-modules='' \
+    --with-lua \
+    --enable-lua-records \
+    --with-dynmodules='%backends' \
+    --enable-tools \
+    --with-libsodium \
+    --enable-remotebackend-zeromq \
+    --enable-unit-tests \
+    --enable-reproducible \
+    --enable-dns-over-tls \
+    --enable-systemd --with-systemd=%_unitdir \
+    --with-socketdir=/run \
+    --enable-ixfrdist
 
 %make_build
 
@@ -336,6 +336,11 @@ fi
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Fri Sep 29 2023 Alexey Shabalin <shaba@altlinux.org> 4.8.2-alt1
+- 4.8.2
+- Add --enable-dns-over-tls.
+- Set /run as socketdir.
+
 * Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 4.8.0-alt1
 - 4.8.0
 
