@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name gitignore-parser
+%define mod_name gitignore_parser
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Summary: A spec-compliant gitignore parser for Python 3.5+
@@ -43,9 +44,14 @@ A spec-compliant gitignore parser for Python.
 
 %files
 %doc README.md LICENSE
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/__pycache__/%mod_name.*.pyc
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 03 2023 Anton Zhukharev <ancieg@altlinux.org> 0.1.7-alt1
+- Updated to 0.1.7.
+
 * Fri Aug 11 2023 Anton Zhukharev <ancieg@altlinux.org> 0.1.6-alt1
 - Updated to 0.1.6.
 
