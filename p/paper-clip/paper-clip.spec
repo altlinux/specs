@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _name Paper-Clip
 %define binary_name pdf-metadata-editor
 %define ver_major 3
@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: paper-clip
-Version: %ver_major.2
+Version: %ver_major.5
 Release: alt1
 
 Summary: PDF metadata editor for GNOME
@@ -20,7 +20,7 @@ Url: https://github.com/Diego-Ivan/Paper-Clip
 Source: %url/archive/v%version/%_name-%version.tar.gz
 %else
 Vcs: https://github.com/Diego-Ivan/Paper-Clip.git
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 
 %define gtk_ver 4.10
@@ -61,6 +61,9 @@ BuildRequires: pkgconfig(libportal-gtk4)
 
 
 %changelog
+* Tue Oct 03 2023 Yuri N. Sedunov <aris@altlinux.org> 3.5-alt1
+- updated to v3.5-1-gff3a532
+
 * Fri Aug 04 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
 - first build for Sisyphus
 
