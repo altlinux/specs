@@ -7,7 +7,7 @@
 
 Name: guacamole-server
 Version: 1.5.3
-Release: alt1
+Release: alt2
 Summary: Server-side native components that form the Guacamole proxy
 License: Apache-2.0
 Url: http://guac-dev.org/
@@ -75,6 +75,8 @@ This is virtual package with depends on:
 %package -n libguac
 Summary: The common library used by all C components of Guacamole
 Group: System/Libraries
+# monospace font for telnet, ssh, kubernetes
+Requires: fonts-ttf-liberation
 
 %description -n libguac
 libguac is the core library for guacd (the Guacamole proxy) and any protocol
@@ -154,6 +156,7 @@ framework to translate between arbitrary protocols and the Guacamole protocol.
 %patch -p1
 
 %build
+%add_optflags -Wno-error=discarded-qualifiers
 %autoreconf
 %configure \
   --disable-silent-rules \
@@ -256,6 +259,9 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %attr(750,%username,%username) %_sharedstatedir/guacd/share
 
 %changelog
+* Mon Oct 02 2023 Alexey Shabalin <shaba@altlinux.org> 1.5.3-alt2
+- Add requires to fonts-ttf-liberation (ALT#47735).
+
 * Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 1.5.3-alt1
 - New version 1.5.3 (Fixes: CVE-2023-30575, CVE-2023-30576).
 
