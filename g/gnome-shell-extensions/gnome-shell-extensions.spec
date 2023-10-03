@@ -10,7 +10,7 @@
 
 Name: gnome-shell-extensions
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt2.1%beta
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -34,7 +34,7 @@ Requires: gnome-shell >= %version
 %{?_enable_classic_mode:Requires: typelib(GMenu) = 3.0}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson libgjs-devel libmozjs78-tools sassc eslint
+BuildRequires: meson libgjs-devel sassc eslint
 
 %description
 GNOME Shell Extensions is a collection of extensions providing additional
@@ -155,6 +155,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Tue Oct 03 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt2.1
+- fixed BR (ALT #47819)
+
 * Sun Oct 01 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt2
 - updated to 45.0-5-g092b268 (fixed drives menu)
 
