@@ -95,7 +95,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.1
+Release: alt1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -154,8 +154,6 @@ BuildRequires: python3-devel
 %endif
 %endif
 %if_with clang
-# The following line is for one intermediate release only:
-BuildRequires: libclang17-support
 BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
 %else
 BuildRequires: gcc-c++
@@ -1294,10 +1292,13 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Tue Oct 03 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.2-alt1
+- 17.0.2.
+- Add explicit dependency on clangX-support to clang and clangd.
+
 * Tue Oct 03 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.2-alt0.1
 - 17.0.2.
 - This is an intermediate release to work around broken 17.0.1-alt4.
-- Add explicit dependency on clangX-support to clang and clangd.
 
 * Sat Sep 30 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.1-alt4
 - Split libclang-cpp.so into its own package. (Closes: 44263)
