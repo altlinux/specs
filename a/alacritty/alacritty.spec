@@ -1,5 +1,5 @@
 Name: alacritty
-Version: 0.12.2
+Version: 0.12.3
 Release: alt1
 
 Summary: A fast, cross-platform, OpenGL terminal emulator
@@ -61,6 +61,9 @@ install -pm0644 -D alacritty.yml %buildroot%_sysconfdir/alacritty/alacritty.yml
 %_man1dir/alacritty.1*
 
 %changelog
+* Tue Oct  3 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.3-alt1
+- 0.12.3 released
+
 * Tue Jul 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.2-alt1
 - 0.12.2 released
 
