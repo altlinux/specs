@@ -1,12 +1,12 @@
 %define _cmake__builddir BUILD
-%def_disable tests
 
 Name: libkeyfinder
-Version: 2.2.7
+Version: 2.2.8
 Release: alt1
 
 Summary: Musical key detection for digital audio
 Summary(ru_RU.UTF-8): Обнаружение музыкального ключа для цифрового звука
+
 License: GPL-3.0+
 Group: System/Libraries
 Url: https://mixxxdj.github.io/libkeyfinder
@@ -17,8 +17,17 @@ BuildPreReq: rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: libfftw3-devel
-%if_enabled tests
-BuildRequires: catch2-devel
+# tests
+BuildRequires: catch-devel ctest
+
+%ifnarch i586
+%if "3" <= "%{get_version catch-devel}"
+%def_enable tests
+%else
+%def_disable tests
+%endif
+%else
+%def_disable tests
 %endif
 
 %description
@@ -66,6 +75,11 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %install
 %cmake_install
 
+%if_enabled tests
+%check
+%cmake_build --target test
+%endif
+
 %files -n libkeyfinder2
 %doc CHANGELOG.md LICENSE README.md
 %_libdir/libkeyfinder.so.2*
@@ -79,6 +93,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/KeyFinder/*
 
 %changelog
+* Tue Oct 03 2023 Leontiy Volodin <lvol@altlinux.org> 2.2.8-alt1
+- New version.
+- Enabled tests.
+
 * Mon Jun 20 2022 Leontiy Volodin <lvol@altlinux.org> 2.2.7-alt1
 - New version.
 - Upstream:
