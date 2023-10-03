@@ -1,5 +1,5 @@
 Name: ixion
-Version: 0.17.0
+Version: 0.18.1
 Release: alt1
 Url: https://gitlab.com/ixion/ixion
 License: MPL-2.0
@@ -45,7 +45,7 @@ sed -i 's/sphinx-build/sphinx-build-3/g' Makefile.am
 
 %build
 %autoreconf
-%configure
+%configure CXXFLAGS="-fexcess-precision=fast"
 %make_build
 %make_build doc
 
@@ -72,5 +72,8 @@ sed -i 's/sphinx-build/sphinx-build-3/g' Makefile.am
 %python3_sitelibdir/*
 
 %changelog
+* Fri Aug 25 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.18.1-alt1
+- Updated to 0.18.1
+
 * Thu Jan 13 2022 Fr. Br. George <george@altlinux.ru> 0.17.0-alt1
 - Initial build for ALT

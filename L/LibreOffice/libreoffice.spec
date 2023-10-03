@@ -1,4 +1,4 @@
-# 7.5.4.2
+# 7.6.2.1
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -21,18 +21,21 @@
 %def_disable mergelibs
 
 Name: LibreOffice
-%define hversion 7.5
-%define urelease 4.2
+%define hversion 7.6
+%define urelease 2.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1.1
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
 URL: http://www.libreoffice.org
+
+# LibreOffice-unmet-holder should provide it
+ExcludeArch: armh
 
 Requires: %name-integrated = %EVR
 Requires: %name-langpack-en_US
@@ -108,6 +111,9 @@ BuildRequires: libwebp-devel libtiff-devel
 
 # 7.5
 BuildRequires: libzxing-cpp-devel
+
+# 7.6
+BuildRequires: frozen-devel
 
 %if_with java
 BuildRequires: java-devel >= 9.0.0 junit ant bsh pentaho-reporting-flow-engine 
@@ -615,6 +621,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Sep 29 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.6.2.1-alt1
+- Update to 7.6.2.1
+
 * Wed Aug 16 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.5.4.2-alt1.1
 - NMU: prevents detection of unmet dependency ListDataListener
 

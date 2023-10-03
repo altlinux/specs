@@ -5,8 +5,8 @@
 %def_enable spreadsheet-model
 %def_with python
 Name: liborcus
-Version: 0.17.2
-Release: alt2
+Version: 0.18.1
+Release: alt1
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ License: MPL-2.0
 Url: https://gitlab.com/orcus/orcus
 Source: orcus-%version.tar.gz
 
-%define libver 0.17
+%define libver 0.18
 
 # Automatically added by buildreq on Thu Jul 25 2013
 # optimized out: boost-devel boost-intrusive-devel libstdc++-devel pkg-config
@@ -103,6 +103,9 @@ ln -s %name-%libver.pc %buildroot%_pkgconfigdir/%name.pc
 %endif
 
 %changelog
+* Wed Sep 27 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.18.1-alt1
+- Updated to 0.18.1
+
 * Mon Jul 17 2023 Artyom Bystrov <arbars@altlinux.org> 0.17.2-alt2
 - Fix build on GCC13
 

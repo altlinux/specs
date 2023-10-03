@@ -1,5 +1,5 @@
 Name: mdds
-Version: 2.0.3
+Version: 2.1.1
 Release: alt1
 Summary: A collection of multi-dimensional data structures and indexing algorithms
 
@@ -55,7 +55,7 @@ Docs for %name.
 sed -i -e '/^CPPFLAGS_NODEBUG=/s/=.*/="%optflags"/' configure
 
 %build
-%configure --enable-docs
+%configure --enable-docs CXXFLAGS="-fexcess-precision=fast"
 %make_build all
 %make_build doc-sphinx
 
@@ -84,6 +84,9 @@ cp -a ./example %buildroot/%_docdir/%name-%version/
 %_datadir/pkgconfig/*
 
 %changelog
+* Thu Aug 24 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 2.1.1-alt1
+- Updated to 2.1.1
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 2.0.3-alt1
 - Autobuild version bump to 2.0.3
 
