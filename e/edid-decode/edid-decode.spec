@@ -1,5 +1,5 @@
 Name:		edid-decode
-Version:	20221006
+Version:	20230831
 Release:	alt1
 
 Summary:	EDID decoder and conformance tester
@@ -28,6 +28,9 @@ BuildRequires:	gcc-c++
 %_man1dir/edid-decode.1*
 
 %changelog
+* Tue Oct  3 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20230831-alt1
+- updated from git.e59b8a2
+
 * Thu Oct  6 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 20221006-alt1
 - updated from git.f63a945
 
