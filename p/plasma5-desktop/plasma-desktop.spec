@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.27.8
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -250,6 +250,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Tue Oct 03 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt2
+- add yandex-browser to menu favorites when available
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
 - new version
 
