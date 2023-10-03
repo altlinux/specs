@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.8.0
+Version: 4.8.2
 Release: alt1
 Group: Education
 License: GPLv2
@@ -131,6 +131,9 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_datadir/%name
 
 %changelog
+* Tue Oct 03 2023 Egor Ignatov <egori@altlinux.org> 4.8.2-alt1
+- new version 4.8.2 (closes: #47470)
+
 * Fri Apr 28 2023 Egor Ignatov <egori@altlinux.org> 4.8.0-alt1
 - new version 4.8.0
 
