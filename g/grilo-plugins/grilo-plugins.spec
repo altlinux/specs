@@ -2,7 +2,6 @@
 
 %define ver_major 0.3
 %define api_ver %ver_major
-%define gupnp_api_ver 1.2
 
 %def_enable soup3
 %def_enable lua_factory
@@ -22,7 +21,7 @@
 
 Name: grilo-plugins
 Version: %ver_major.16
-Release: alt1
+Release: alt2
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -50,8 +49,6 @@ BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.68
 BuildRequires: libgrilo-devel >= %ver_major.15
 BuildRequires: libxml2-devel
-BuildRequires: libgupnp%gupnp_api_ver-devel >= 0.13
-BuildRequires: libgssdp%gupnp_api_ver-devel
 BuildRequires: libgupnp-av-devel >= 0.5
 BuildRequires: libsqlite3-devel
 BuildRequires: libgdata-devel >= 0.17
@@ -102,7 +99,7 @@ This package contains plugins to get information from theses sources:
 %package devel
 Summary: Development files for Grilo flaugins
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Grilo is a framework that provides access to different sources of
@@ -165,6 +162,10 @@ xvfb-run %__meson_test -t 2
 
 
 %changelog
+* Tue Oct 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt2
+- updated to 0.3.16-15-ga72787d3
+- fixed BR
+
 * Tue Apr 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1
 - 0.3.16
 - switched build to lua-5.4, libsoup-3.0/libdmapsharing-4.0
