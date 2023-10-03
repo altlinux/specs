@@ -4,10 +4,10 @@
 
 Name: mc
 Version: 4.8.30
-Release: alt3
+Release: alt4
 
 # '-gitYYYYMMDD' or ''
-%define ver_date '-git20230912'
+%define ver_date '-git20230916'
 
 License: GPL-3.0-or-later
 Summary: An user-friendly file manager and visual shell
@@ -39,15 +39,12 @@ Patch101: mc-4.8.30-savannah-edit-homekey.patch
 # http://www.midnight-commander.org/ticket/2496
 Patch102: mc-4.8.20-alt-forceexec.patch
 
-# https://midnight-commander.org/ticket/4502
-Patch103: mc-4.8.30-mc.ext.ini-escape.patch
-
 # http://www.midnight-commander.org/ticket/34
-Patch104: mc-4.8.30-alt-extfs-udar.patch
+Patch103: mc-4.8.30-alt-extfs-udar.patch
 
 # https://src.fedoraproject.org/rpms/mc/raw/rawhide/f/mc-python3.patch
 # https://github.com/MidnightCommander/mc/pull/149
-Patch105: mc-4.8.25-python3.patch
+Patch104: mc-4.8.25-python3.patch
 
 Conflicts: %name-data
 Conflicts: %name-locales
@@ -63,6 +60,7 @@ BuildRequires: rpm-build-python3
 BuildPreReq: glib2-devel libe2fs-devel
 BuildPreReq: groff-base libX11-devel unzip
 BuildPreReq: libslang2-devel libmount-devel
+BuildPreReq: libssh2-devel libpcre2-devel
 %if_with gpm
 BuildPreReq: libgpm-devel
 %endif
@@ -116,10 +114,8 @@ Dektop files for %name
 # Misc
 #patch101 -p1 // Old Patch
 %patch102 -p1
-
 %patch103 -p1
 %patch104 -p1
-%patch105 -p1
 
 %build
 cat <<EOF > mc-version.h
@@ -136,7 +132,9 @@ sed 's|@@VERSION@@|%version-%release%ver_date|' -i mc-version.h
 %configure %{?_with_smb:--enable-vfs-smb --with-smb-configdir=%_sysconfdir/samba} \
 	PYTHON=%__python3 \
 	--enable-extcharset \
-	--enable-vfs-undelfs
+	--enable-vfs-undelfs \
+	--enable-vfs-sftp \
+	--with-search-engine=pcre2
 
 %make_build
 
@@ -228,6 +226,11 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %files full
 
 %changelog
+* Tue Oct 03 2023 Sergey Y. Afonin <asy@altlinux.org> 4.8.30-alt4
+- updated to 20230916 git snapshot (mc.ext.ini-escape.patch included)
+- built with --enable-vfs-sftp (ALT #44181)
+- built with --with-search-engine=pcre2
+
 * Wed Sep 13 2023 Sergey Y. Afonin <asy@altlinux.org> 4.8.30-alt3
 - updated to 20230912 git snapshot
 - applyed mc-4.8.30-mc.ext.ini-escape.patch (ALT #47523)
