@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.4.1
-Release: alt1
+Release: alt2
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -125,10 +125,10 @@ Common files for %name.
 %prep
 %setup
 
-%if 0
 # remove with new version
 # https://redmine.basealt.space/issues/2497
 cp -fv %SOURCE1 po/ru.po
+%if 0
 cp -fv %SOURCE2 data/
 %endif
 
@@ -136,6 +136,9 @@ cat <<EOF >>data/gimagereader.desktop.in
 Comment=Scan pages and optical text recognize
 Comment[ru]=Сканирование страниц и распознавание текста
 EOF
+
+# https://bugzilla.altlinux.org/47822
+subst 's|text/html;||' data/gimagereader.desktop.in
 
 subst "s|/usr/bin/python$|%__python3|" gtk/data/uigen.py
 
@@ -203,6 +206,10 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Oct 03 2023 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt2
+- drop text/html mime type from desktop file (ALT bug 47822)
+- update ru translation
+
 * Sat Feb 25 2023 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt1
 - new version 3.4.1 (with rpmrb script)
 - drop all patches (obsoleted or incorporated)
