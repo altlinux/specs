@@ -2,7 +2,7 @@
 
 Name:    cargo-cache
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Summary: manage cargo cache (${CARGO_HOME}, ~/.cargo/), print sizes of dirs and remove dirs selectively
 License: Apache-2.0 or MIT
@@ -14,7 +14,6 @@ Url:     https://github.com/matthiaskrgr/cargo-cache.git
 Source: %name.tar
 
 BuildRequires(pre): rpm-build-rust
-BuildRequires: /proc
 
 %if_with check
 BuildRequires: git-core
@@ -49,5 +48,8 @@ Optional cache pruning.
 %_bindir/%name
 
 %changelog
+* Mon Jul 03 2023 Alexander Stepchenko <geochip@altlinux.org> 0.8.3-alt2
+- Remove explicit BuildRequires for /proc
+
 * Thu May 04 2023 Alexander Stepchenko <geochip@altlinux.org> 0.8.3-alt1
 - Initial build for ALT.
