@@ -1,5 +1,5 @@
 Name: libantlr4
-Version: 4.8
+Version: 4.11.1
 Release: alt1
 
 Summary: ANTLR C++ runtime
@@ -36,11 +36,11 @@ Header files for %name.
 %setup
 # build only cpp runtime
 rm -f *.* && mv runtime runtime-t && mv runtime-t/Cpp/* .
-# TODO: fix in upstream
-%__subst "s|DESTINATION lib|DESTINATION %_lib|" runtime/CMakeLists.txt
 
 %build
-%cmake_insource -DANTLR4_INSTALL=ON -DWITH_DEMO=False -DCMAKE_BUILD_TYPE=Release
+%cmake_insource -DANTLR4_INSTALL=ON -DWITH_DEMO=False -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_LIBDIR=%_libdir \
+    -DANTLR_BUILD_CPP_TESTS=OFF
 %make_build
 
 %install
@@ -55,9 +55,13 @@ rm -fv %buildroot%_docdir/%name/README.md
 %_docdir/%name/
 %_libdir/libantlr4-runtime.so
 %_includedir/antlr4-runtime/
-%_libdir/cmake/antlr4/
+%_libdir/cmake/antlr4-runtime/
+%_libdir/cmake/antlr4-generator/
 
 %changelog
+* Tue Jun 27 2023 Alexander Stepchenko <geochip@altlinux.org> 4.11.1-alt1
+- Update to 4.11.1
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 4.8-alt1
 - initial build for ALT Sisyphus
 
