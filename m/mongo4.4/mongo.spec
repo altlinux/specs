@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo4.4
-Version: 4.4.23
+Version: 4.4.25
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /proc gcc10-c++ gcc10 python3-module-pymongo python3-module-pkg_resources
-BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
@@ -200,6 +199,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Wed Oct 04 2023 Alexei Takaseev <taf@altlinux.org> 4.4.25-alt1
+- 4.4.25
+- Remove unneeded BuildRequires
+
 * Tue Jul 11 2023 Alexei Takaseev <taf@altlinux.org> 4.4.23-alt1
 - 4.4.23
 
