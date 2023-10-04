@@ -1,6 +1,8 @@
 # https://bugzilla.altlinux.org/36391
 %def_without	devel
 
+%define _runtimedir /run
+
 %if_with devel
 %def_with	libnfdump
 %else
@@ -9,7 +11,7 @@
 
 Name: nfdump
 Version: 1.7.2
-Release: alt1
+Release: alt2
 Summary: collect and process netflow data
 Group: Monitoring
 %if_without libnfdump
@@ -185,6 +187,10 @@ rm -f  %buildroot%_sysconfdir/nfdump.conf.dist
 %endif
 
 %changelog
+* Wed Oct 04 2023 Sergey Y. Afonin <asy@altlinux.org> 1.7.2-alt2
+- use -w option instead of deprecated -l
+- use /run instead of /var/run
+
 * Tue Jul 18 2023 Sergey Y. Afonin <asy@altlinux.org> 1.7.2-alt1
 - 1.7.2
 
