@@ -2,7 +2,7 @@
 %def_with jit
 
 Name: postgresql%pg_ver-pg_partman
-Version: 4.7.4
+Version: 5.0.0
 Release: alt1
 
 Summary: pg_partman is an extension to create and manage both time-based and serial-based table partition sets.
@@ -22,12 +22,17 @@ BuildRequires: postgresql%pg_ver-server-devel
 Requires: postgresql%pg_ver-server
 
 %description
-pg_partman is an extension to create and manage both time-based and serial-based
-table partition sets. Native partitioning in PostgreSQL 10 is supported as of
-pg_partman v3.0.1 and much more extensively as of 4.0.0 along with
-PostgreSQL 11. Note that all the features of trigger-based partitioning
-are not yet supported in native, but performance in both reads & writes is
-significantly better.
+pg_partman is an extension to create and manage both time-based and number-based table
+partition sets. As of version 5.0.0, only built-in, declarative partitioning is
+supported and the older trigger-based methods have been deprecated.
+
+The declarative partitioning built into PostgreSQL provides the commands to create
+a partitioned table and its children. pg_partman uses the built-in declarative features
+that PostgreSQL provides and builds upon those with additional features and enhancements
+to make managing partitions easier. One key way that pg_partman extends partitioning in
+Postgres is by providing a means to automate the child table maintenance over time (Ex.
+adding new children, dropping old ones based on a retention policy). pg_partman also has
+features to turn an existing table into a partitioned table or vice versa.
 
 %prep
 %setup
@@ -58,6 +63,10 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
 %doc %_datadir/doc/postgresql/extension/*
 
 %changelog
+* Wed Oct 04 2023 Alexei Takaseev <taf@altlinux.org> 5.0.0-alt1
+- 5.0.0
+- Build only for PostgreSQL >= 14
+
 * Mon Sep 11 2023 Alexei Takaseev <taf@altlinux.org> 4.7.4-alt1
 - 4.7.4
 
