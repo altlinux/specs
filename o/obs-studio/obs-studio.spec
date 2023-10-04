@@ -8,7 +8,7 @@ Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
 Version: 29.1.3
-Release: alt5
+Release: alt6
 License: GPLv2+
 Group: Video
 Url: https://github.com/jp9000/obs-studio.git
@@ -131,6 +131,11 @@ sed -e '/-Werror/d' -i cmake/Modules/CompilerConfig.cmake
 	-DENABLE_AJA=OFF \
 	-DENABLE_JACK=ON \
 	-DENABLE_LIBFDK=ON \
+%ifarch %luajit_arches
+	-DENABLE_SCRIPTING_LUA=ON \
+%else
+	-DENABLE_SCRIPTING_LUA=OFF \
+%endif
 	-DOpenGL_GL_PREFERENCE=GLVND
 
 %cmake_build
@@ -164,6 +169,10 @@ sed -e '/-Werror/d' -i cmake/Modules/CompilerConfig.cmake
 %_libdir/pkgconfig/libobs.pc
 
 %changelog
+* Sun Oct 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 29.1.3-alt6
+- explicitly disabled lua scripting on architectures where
+  luajit is not available. Fixes FTBFS on LoongArch.
+
 * Sat Sep 09 2023 Anton Midyukov <antohami@altlinux.org> 29.1.3-alt5
 - update BR for build with ffmpeg-6.0
 
