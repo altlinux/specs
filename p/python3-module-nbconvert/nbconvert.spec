@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 7.8.0
+Version: 7.9.0
 Release: alt1
 
 Summary: Converting Jupyter Notebooks
@@ -80,17 +80,6 @@ BuildRequires: python3-module-traitlets-tests
 Jupyter nbconvert converts notebooks to various other formats via Jinja
 templates.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Jupyter nbconvert converts notebooks to various other formats via Jinja
-templates.
-
-This package contains tests for %oname.
-
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python3
@@ -147,22 +136,13 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %check
 export JUPYTER_PATH=%buildroot%_datadir/jupyter
 
-# test_filename_accent_pdf, test_filename_spaces, test_linked_images, test_pdf,
-# test_export - no unicode-data, see alt bug #44679
 # some tests need pandoc, version must be at least 2.14.2 but less then 4.0.0
 
 %pyproject_run -- xvfb-run pytest -v -m 'not network' --color=no \
---deselect=nbconvert/exporters/tests/test_pdf.py::TestPDF::test_export \
---deselect=nbconvert/exporters/tests/test_pdf.py::TestPDF::test_texinputs \
---deselect=nbconvert/exporters/tests/test_qtpdf.py::TestQtPDFExporter::test_export \
---deselect=nbconvert/exporters/tests/test_qtpng.py::TestQtPNGExporter::test_export \
---deselect=nbconvert/exporters/tests/test_asciidoc.py::TestASCIIDocExporter::test_export \
---deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_convert_full_qualified_name \
---deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_filename_accent_pdf \
---deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_filename_spaces \
---deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_linked_images \
---deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_pdf \
---deselect=nbconvert/tests/test_nbconvertapp.py::TestNbConvertApp::test_post_processor \
+--deselect=tests/exporters/test_qtpdf.py::TestQtPDFExporter::test_export \
+--deselect=tests/exporters/test_qtpng.py::TestQtPNGExporter::test_export \
+--deselect=tests/test_nbconvertapp.py::TestNbConvertApp::test_convert_full_qualified_name \
+--deselect=tests/test_nbconvertapp.py::TestNbConvertApp::test_post_processor
 
 %files
 %doc *.md
@@ -183,6 +163,9 @@ export JUPYTER_PATH=%buildroot%_datadir/jupyter
 %endif
 
 %changelog
+* Wed Oct 04 2023 Anton Vyatkin <toni@altlinux.org> 7.9.0-alt1
+- New version 7.9.0.
+
 * Wed Aug 30 2023 Anton Vyatkin <toni@altlinux.org> 7.8.0-alt1
 - New version 7.8.0.
 
