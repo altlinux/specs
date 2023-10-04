@@ -2,21 +2,26 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-Name:		codespell
-Version: 2.2.5
+Name: codespell
+Version: 2.2.6
 Release: alt1
-Summary:	Check code for common misspellings
-Group:		Development/Tools
-License:	GPL-2.0-only
-Url:		https://github.com/codespell-project/codespell
-Source:		%name-%version.tar
-BuildArch:	noarch
+Summary: Check code for common misspellings
+Group: Development/Tools
+License: GPL-2.0-only
+Url: https://github.com/codespell-project/codespell
+BuildArch: noarch
 
+Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: help2man
-BuildRequires: python3-devel >= 3.6
+BuildRequires: python3-devel >= 3.8
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: pytest3
+BuildRequires: python3-module-chardet
+BuildRequires: python3-module-pytest-cov
+}}
 
 %description
 Fix common misspellings in text files. It's designed primarily for checking
@@ -29,7 +34,16 @@ subst 's/help2man/& -L en_US.UTF-8 --no-discard-stderr/' Makefile
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
+
+# Manpage requires 'codespell' executable.
+# Create venv then make it accessible.
+%pyproject_run true
+PATH=$PWD/.run_venv/bin:$PATH
+type codespell
+# Note: man-page is incorrectly formatted because it uses GNU help2man which
+# don't understand Python argparse output.
 make codespell.1
+! grep 'runas:' codespell.1 || exit 1
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -41,16 +55,21 @@ ln -sf -r %buildroot%python3_sitelibdir/codespell_lib/data %buildroot%_datadir/c
 rm -rf %buildroot%python3_sitelibdir/codespell_lib/data/{__pycache__,__init__.py}
 
 %check
-cd %buildroot
-export PYTHONPATH=%buildroot%python3_sitelibdir
+# codespell executable is required both for pytest and our smoke test.
 PATH=%buildroot%_bindir:$PATH
-codespell --version
+
+# UserWarning: aspell not found, but not required, skipping aspell tests.
+%pyproject_run_pytest
+
+export PYTHONPATH=%buildroot%python3_sitelibdir
+codespell --version | grep -Fw %version
 echo Millenium  > /tmp/example.txt
-! codespell /tmp/example.txt
+! codespell /tmp/example.txt || exit 2
   codespell --ignore-words-list=millenium /tmp/example.txt
-! codespell --summary --write-changes /tmp/example.txt
+  codespell --summary --write-changes /tmp/example.txt |& grep FIXED
   codespell /tmp/example.txt
   grep -qx Millennium /tmp/example.txt
+  rm /tmp/example.txt
 
 %files
 %define _customdocdir %_docdir/%name
@@ -61,6 +80,11 @@ echo Millenium  > /tmp/example.txt
 %_datadir/codespell
 
 %changelog
+* Tue Oct 03 2023 Vitaly Chikunov <vt@altlinux.org> 2.2.6-alt1
+- Update to v2.2.6 (2023-09-30).
+- Fix man page generation error.
+- spec: Improve testing.
+
 * Thu Jun 15 2023 Vitaly Chikunov <vt@altlinux.org> 2.2.5-alt1
 - Update to v2.2.5 (2023-06-14).
 
