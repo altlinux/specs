@@ -34,7 +34,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -94,6 +94,13 @@ Patch411: alt-006-svg-icons-2.patch
 Patch412: alt-007-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
+
+# make -j32 fails without this patch
+Patch700: alt-700-external-project-concurrency.patch
+
+# LoongArch
+Patch3500: alt-011-ax_boost_base-loongarch64.patch
+Patch3501: alt-012-configure_loongarch64.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -190,6 +197,8 @@ BuildRequires: python3-dev
 %if_with dconf
 BuildRequires: libdconf-devel
 %endif
+
+BuildRequires: gnu-config
 
 %description
 LibreOffice is a productivity suite that is compatible with other major
@@ -366,6 +375,10 @@ unzip -o -d translations/source/ru %SOURCE4
 
 %patch500 -p0
 
+%patch700 -p1
+%patch3500 -p1
+%patch3501 -p1
+
 # TODO move officebeans to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
 sed -i 's@JAVA_HOME/lib/ -ljawt@JAVA_HOME/lib/ -Wl,-rpath=/usr/lib/jvm/jre/lib -ljawt@' configure.ac
@@ -437,6 +450,9 @@ if [ "$PARALLEL" -gt 24 ] ; then
         PARALLEL=24
 fi
 %endif
+
+cp -af /usr/share/gnu-config/config.guess .
+cp -af /usr/share/gnu-config/config.sub .
 
 export ac_cv_prog_LO_CLANG_CXX=""
 export ac_cv_prog_LO_CLANG_CC=""
@@ -701,6 +717,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Sep 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 7.5.7.1-alt3
+- Support LoongArch architecture (lp64d ABI).
+
 * Fri Sep 29 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.7.1-alt2
 - Rebuilt with bundled mdds and orcus.
 
