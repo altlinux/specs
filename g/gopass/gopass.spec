@@ -1,9 +1,9 @@
-%define with_check
+%def_with check
 
 %global import_path github.com/gopasspw/gopass
 
 Name:    gopass
-Version: 1.15.5
+Version: 1.15.8
 Release: alt1
 
 Summary: The slightly more awesome standard unix password manager for teams
@@ -19,7 +19,9 @@ Patch0: gopass-1.15.5-alt-fix-tests-for-vendored-build.patch
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 
+%if_with check
 BuildRequires: git gnupg gnupg2
+%endif
 
 %description
 Manage your credentials with ease. In a globally distributed team, on multiple
@@ -62,16 +64,14 @@ cd .build/src/%import_path
 %doc *.md
 %_man1dir/*
 %_bindir/%name
-%dir %_datadir/bash-completion/
-%dir %_datadir/bash-completion/completions/
 %_datadir/bash-completion/completions/%name
-%dir %_datadir/zsh/
-%dir %_datadir/zsh/site-functions/
 %_datadir/zsh/site-functions/_%name
-%dir %_datadir/fish/
-%dir %_datadir/fish/vendor_completions.d/
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Oct 04 2023 Alexander Stepchenko <geochip@altlinux.org> 1.15.8-alt1
+- 1.15.5 -> 1.15.8
+- Drop ownership of system-wide autocompletion directories.
+
 * Thu Apr 27 2023 Alexander Stepchenko <geochip@altlinux.org> 1.15.5-alt1
 - Initial build for ALT
