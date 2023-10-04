@@ -2,7 +2,7 @@
 
 Name: ripgrep
 Version: 13.0.0
-Release: alt2
+Release: alt3
 Summary: Recursively searches directories for a regex pattern
 License: MIT and Unlicense
 Group: File tools
@@ -30,6 +30,8 @@ directory = "vendor"
 EOF
 
 %build
+# XXX: help pcre2-sys to disable JIT on LoongArch
+export TARGET="%{_arch}-unknown-linux-gnu"
 cargo build --offline --release --features=pcre2
 
 %install
@@ -53,6 +55,9 @@ install -m 0644 target/release/build/%name-*/out/%bname.fish %buildroot%_datadir
 %doc COPYING LICENSE-MIT UNLICENSE
 
 %changelog
+* Wed Oct 04 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 13.0.0-alt3
+- Support LoongArch architecture
+
 * Tue Jul 20 2021 Mikhail Gordeev <obirvalger@altlinux.org> 13.0.0-alt2
 - Add zsh and fish completions
 
