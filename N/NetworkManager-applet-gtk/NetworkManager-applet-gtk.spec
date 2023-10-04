@@ -1,6 +1,6 @@
 %define nm_version 1.18.10-alt3
-%define git_hash .g4909bd30
-#define git_hash %nil
+#define git_hash .g4909bd30
+%define git_hash %nil
 
 %define _unpackaged_files_terminate_build 1
 
@@ -9,7 +9,7 @@
 %def_without selinux
 
 Name: NetworkManager-applet-gtk
-Version: 1.33.0
+Version: 1.34.0
 Release: alt1%git_hash
 License: GPLv2+
 Group: Graphical desktop/GNOME
@@ -94,6 +94,9 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Wed Oct 04 2023 Mikhail Efremov <sem@altlinux.org> 1.34.0-alt1
+- Updated to 1.34.0.
+
 * Thu Jun 08 2023 Mikhail Efremov <sem@altlinux.org> 1.33.0-alt1.g4909bd30
 - Dropped libgudev-devel from BR.
 - Upstream git snapshot (closes: #46429).
