@@ -3,12 +3,12 @@
 %define api_ver 2
 
 %def_enable aspell
-%def_disable voikko
+%def_enable voikko
 %def_disable relocatable
 %def_disable check
 
 Name: %_name%api_ver
-Version: 2.4.0
+Version: 2.6.1
 Release: alt1
 
 Summary: An Enchanting Spell Checking Program
@@ -23,7 +23,7 @@ Vcs: https://github.com/AbiWord/enchant.git
 Source: %_name-%version.tar
 %endif
 
-Requires:  lib%name = %version-%release
+Requires:  lib%name = %EVR
 
 BuildRequires: gcc-c++ glib2-devel libdbus-glib-devel libhunspell-devel
 BuildRequires: groff
@@ -45,7 +45,7 @@ A library that wraps other spell checking backends.
 %package -n lib%name-devel
 Summary: Support files necessary to compile applications with libenchant.
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Libraries, headers, and support files necessary to compile applications
@@ -94,6 +94,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Wed Sep 27 2023 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
+- 2.6.1
+
+* Wed May 24 2023 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Tue May 23 2023 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
