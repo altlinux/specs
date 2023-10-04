@@ -4,6 +4,9 @@
 %define set_disable() %{expand:%%force_disable %{1}} %{expand:%%undefine _enable_%{1}}
 %define set_enable() %{expand:%%force_enable %{1}} %{expand:%%undefine _disable_%{1}}
 %define subst_enable_with() %{expand:%%{?_enable_%{1}:--enable-%{2}} } %{expand:%%{?_disable_%{1}:--disable-%{2}} }
+%define if_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+
+%define vulkan_ver %{get_version libvulkan-devel}
 
 # License
 %def_enable gpl
@@ -87,7 +90,11 @@
 %def_enable sdl2
 %def_enable vaapi
 %def_enable vdpau
+%if_ver_gteq %vulkan_ver 1.2.189
 %def_enable vulkan
+%else
+%def_disable vulkan
+%endif
 %def_enable zlib
 
 # library needed
@@ -159,7 +166,7 @@
 
 Name:		ffmpeg-plugin-browser
 Version:	114
-Release:	alt2
+Release:	alt3
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -247,7 +254,7 @@ BuildRequires:	yasm
 %{?_enable_sdl2:BuildRequires: libSDL2-devel}
 %{?_enable_vaapi:BuildRequires: libva-devel}
 %{?_enable_vdpau:BuildRequires: libvdpau-devel}
-%{?_enable_vulkan:BuildRequires: libvulkan-devel}
+BuildRequires(pre): libvulkan-devel
 %{?_enable_cuvid:BuildRequires: nv-codec-headers}
 
 %define common_descr \
@@ -768,6 +775,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Wed Oct 04 2023 Sergey V Turchin <zerg@altlinux.org> 114-alt3
+- fix to build when old vulkan
+
 * Mon Sep 18 2023 Sergey V Turchin <zerg@altlinux.org> 114-alt2
 - fix to compile
 
