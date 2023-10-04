@@ -36,16 +36,16 @@
 %def_enable libiptc
 %def_enable polkit
 %def_enable homed
-%def_enable pwquality
+%def_enable passwdqc
 %def_enable networkd
 %def_enable timesyncd
 %def_enable resolve
-%ifarch %{ix86} x86_64 aarch64 %arm
+%ifarch %{ix86} x86_64 aarch64 %arm riscv32 riscv64 loongarch32 loongarch64
 %def_enable efi
-%def_enable gnu_efi
+%def_enable bootloader
 %else
 %def_disable efi
-%def_disable gnu_efi
+%def_disable bootloader
 %endif
 %def_disable p11kit
 %def_enable utmp
@@ -92,11 +92,11 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 253
+%define ver_major 254
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.8
+Version: %ver_major.5
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -165,7 +165,7 @@ Patch1: %name-%version.patch
 
 %define dbus_ver 1.11.0
 
-BuildRequires(pre): rpm-build-xdg meson >= 0.49
+BuildRequires(pre): rpm-build-xdg meson >= 0.60.0
 BuildRequires(pre): rpm-macros-systemd >= 5
 BuildRequires: glibc-kernheaders
 BuildRequires: intltool >= 0.40.0
@@ -212,15 +212,15 @@ BuildRequires: pkgconfig(fdisk) >= 2.32
 %{?_enable_libidn2:BuildRequires: pkgconfig(libidn2) >= 2.0.0}
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_polkit:BuildRequires: pkgconfig(polkit-gobject-1)}
-%{?_enable_gnu_efi:BuildRequires: gnu-efi}
+%{?_enable_bootloader:BuildRequires: python3-module-elftools}
 %{?_enable_pstore:BuildRequires: libacl-devel libdw-devel liblzma-devel liblz4-devel}
-%{?_enable_pwquality:BuildRequires: pkgconfig(pwquality)}
+%{?_enable_passwdqc:BuildRequires: pkgconfig(passwdqc)}
 %{?_enable_bpf_framework:BuildRequires: pkgconfig(libbpf) >= 0.1.0 /usr/bin/clang /usr/bin/llvm-strip bpftool}
 # for make check
 #BuildRequires: /proc
 #BuildRequires: lz4
 # for tests
-%{?_enable_tests:BuildRequires: rpm-build-python3}
+%{?_enable_tests:BuildRequires: rpm-build-python3 diffutils}
 
 Requires: dbus >= %dbus_ver
 Requires: filesystem >= 2.3.10-alt1
@@ -631,6 +631,8 @@ Requires: %name = %EVR
 Requires: %name-utils = %EVR
 Group: Development/Other
 License: LGPLv2+
+%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/testsuite-50.sh
+%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/testsuite-81.fstab-generator.sh
 
 %description tests
 "Installed tests" that are usually run as part of the build system.
@@ -717,6 +719,7 @@ Conflicts: startup < 0.9.9.14
         -Dlink-timesyncd-shared=false \
         -Dlink-journalctl-shared=false \
         -Dlink-boot-shared=false \
+        -Dlink-portabled-shared=false \
         %{?_enable_static_libsystemd:-Dstatic-libsystemd=pic} \
         %{?_enable_static_libudev:-Dstatic-libudev=pic} \
         %{?_enable_standalone_binaries:-Dstandalone-binaries=true} \
@@ -759,7 +762,7 @@ Conflicts: startup < 0.9.9.14
         -Dbump-proc-sys-fs-file-max=false \
         -Dbump-proc-sys-fs-nr-open=false \
         %{?_enable_elfutils:-Delfutils=true} \
-        %{?_enable_pwquality:-Dpwquality=true} \
+        %{?_enable_passwdqc:-Dpasswdqc=true} \
         %{?_enable_xz:-Dxz=true} \
         %{?_enable_zlib:-Dzlib=true} \
         %{?_enable_bzip2:-Dbzip2=true} \
@@ -802,8 +805,9 @@ Conflicts: startup < 0.9.9.14
         -Dntp-servers="" \
         %{?_enable_sysusers:-Dsysusers=true} \
         %{?_enable_ldconfig:-Dldconfig=true} \
+        -Dbootloader=%{?_enable_bootloader:true}%{!?_enable_bootloader:false} \
+        -Dukify=%{?_enable_bootloader:true}%{!?_enable_bootloader:false} \
         -Dfirstboot=%{?_enable_firstboot:true}%{!?_enable_firstboot:false} \
-        %{?_enable_gnu_efi:-Dgnu-efi=true} \
         %{?_enable_seccomp:-Dseccomp=true} \
         %{?_enable_ima:-Dima=true} \
         %{?_enable_selinux:-Dselinux=true} \
@@ -989,6 +993,7 @@ mkdir -p %buildroot%_user_presetdir
 install -m 0644 %SOURCE34 %buildroot%_presetdir/
 install -m 0644 %SOURCE35 %buildroot%_presetdir/
 install -m 0644 %SOURCE36 %buildroot%_presetdir/
+install -m 0644 %SOURCE36 %buildroot%_user_presetdir/
 install -m 0644 %SOURCE37 %buildroot%_presetdir/
 install -m 0644 %SOURCE38 %buildroot%_presetdir/
 
@@ -1003,6 +1008,7 @@ install -Dm0664 -t %buildroot%_systemd_dir/network/ %SOURCE25
 sed -i 's|#!/usr/bin/env python3|#!%__python3|' %buildroot%_prefix%_systemd_dir/tests/run-unit-tests.py
 
 mkdir -p %buildroot%_sysconfdir/systemd/network
+mkdir -p %buildroot%_sysconfdir/systemd/nspawn
 
 # The following services are currently installed by initscripts
 #pushd %%buildroot%%_unitdir/graphical.target.wants && {
@@ -1598,8 +1604,14 @@ fi
 %_mandir/*/*backlight*
 %ghost %dir %_localstatedir%_systemd_dir/backlight
 
+%_systemd_dir/systemd-battery-check
+%_mandir/*/*battery-check*
+
 /sbin/systemd-machine-id-setup
 %_man8dir/systemd-machine-id-*
+
+/bin/systemd-confext
+%_man8dir/systemd-confext.*
 
 /bin/systemd-sysext
 %_man8dir/systemd-sysext.*
@@ -1641,6 +1653,7 @@ fi
 %_bindir/systemd-delta
 %_bindir/systemd-detect-virt
 %_bindir/systemd-dissect
+/sbin/mount.ddi
 %_bindir/systemd-id128
 %_bindir/systemd-mount
 %_bindir/systemd-umount
@@ -1713,7 +1726,8 @@ fi
 /%_lib/cryptsetup/libcryptsetup-token-systemd-tpm2.so
 %_man1dir/systemd-measure*
 %_man8dir/systemd-pcrphase*
-%if_enabled gnu_efi
+%_man8dir/systemd-pcrfs*
+%if_enabled bootloader
 %_man8dir/systemd-pcrfs*
 %endif
 %endif
@@ -1789,6 +1803,7 @@ fi
 %_man1dir/systemd-delta.*
 %_man1dir/systemd-detect-virt.*
 %_man1dir/systemd-dissect.*
+%_man1dir/mount.ddi.*
 %_man1dir/systemd-inhibit.*
 %_man1dir/systemd-id128.*
 %_man1dir/systemd-mount.*
@@ -1853,6 +1868,7 @@ fi
 %_man8dir/systemd-rfkill*
 %_man8dir/systemd-run-generator*
 %_man8dir/systemd-socket-proxyd*
+%_man8dir/systemd-soft-reboot*
 %_man8dir/systemd-suspend*
 %_man8dir/systemd-system-update-generator*
 %_man8dir/systemd-update-utmp*
@@ -1883,7 +1899,7 @@ fi
 %_env_gen_dir
 %if_enabled efi
 %exclude %_gen_dir/systemd-bless-boot-generator
-%if_enabled gnu_efi
+%if_enabled bootloader
 %exclude %_prefix%_systemd_dir/boot
 %endif
 %endif
@@ -2141,6 +2157,7 @@ fi
 %_user_unitdir/slice.d/10-oomd-per-slice-defaults.conf
 
 %files container
+%dir %_sysconfdir/systemd/nspawn
 %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
 %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
 /bin/machinectl
@@ -2263,16 +2280,15 @@ fi
 %_man8dir/systemd-bless*
 %_man8dir/systemd-boot*
 %exclude %_man8dir/systemd-boot-check*
-%if_enabled gnu_efi
+%if_enabled bootloader
 %dir %_prefix%_systemd_dir/boot
 %dir %_prefix%_systemd_dir/boot/efi
 %_prefix%_systemd_dir/boot/efi/*
 
-
 %endif
 %endif
 
-%if_enabled gnu_efi
+%if_enabled bootloader
 %files ukify
 %_systemd_dir/ukify
 %_man1dir/ukify.*
@@ -2385,6 +2401,7 @@ fi
 %_mandir/*/*hwdb*
 %_mandir/*/*.link*
 %_man5dir/systemd.device*
+%_man5dir/iocost*
 %exclude %_man3dir/*
 %_datadir/bash-completion/completions/udevadm
 %_datadir/zsh/site-functions/_udevadm
@@ -2397,6 +2414,15 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Mon Oct 02 2023 Alexey Shabalin <shaba@altlinux.org> 1:254.5-alt1
+- 254.5
+
+* Mon Sep 25 2023 Alexey Shabalin <shaba@altlinux.org> 1:254.4-alt1
+- 254.4
+- Build with passwdqc instead of pwquality.
+- Install 99-default-disable.preset to user-preset dir.
+- Package /etc/systemd/nspawn to container package.
+
 * Thu Aug 10 2023 Alexey Shabalin <shaba@altlinux.org> 1:253.8-alt1
 - 253.8
 
