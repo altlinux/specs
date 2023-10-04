@@ -1,6 +1,6 @@
 Name: openssl-gost-engine
 Version: 3.0.2
-Release: alt1
+Release: alt2
 
 License: BSD-style
 Summary: A reference implementation of the Russian GOST crypto algorithms for OpenSSL
@@ -22,12 +22,12 @@ BuildRequires: cmake
 # due to gost algorithms identifiers (in headers)
 BuildRequires: libssl-devel >= 1.1.0j-alt2
 # to test the control script
-BuildRequires: control libcrypto1.1
+BuildRequires: control libcrypto >= 1.1.0j-alt2
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: ctest perl-devel perl-Test2-Suite openssl}}
 
 # due to gost algorithms identifiers (inside libcrypto)
-Requires: libcrypto1.1 >= 1.1.0j-alt2
+Requires: libcrypto >= 1.1.0j-alt2
 
 %description
 A reference implementation of the Russian GOST crypto algorithms for OpenSSL.
@@ -83,6 +83,9 @@ CTEST_OUTPUT_ON_FAILURE=1 \
 %_man1dir/gost*sum*
 
 %changelog
+* Wed Oct 04 2023 Paul Wolneykien <manowar@altlinux.org> 3.0.2-alt2
+- Remove libcrypto1.1 dependencies.
+
 * Mon Aug 14 2023 Paul Wolneykien <manowar@altlinux.org> 3.0.2-alt1
 - Upstream version 3.0.2.
 
