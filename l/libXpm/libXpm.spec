@@ -1,5 +1,5 @@
 Name: libXpm
-Version: 3.5.15
+Version: 3.5.17
 Release: alt1
 Summary: X Pixmap Library
 License: MIT/X11
@@ -57,6 +57,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Wed Oct 04 2023 Valery Inozemtsev <shrek@altlinux.ru> 3.5.17-alt1
+- 3.5.17 (fixes: CVE-2023-43787)
+
 * Wed Jan 18 2023 Valery Inozemtsev <shrek@altlinux.ru> 3.5.15-alt1
 - 3.5.15 (fixes: CVE-2022-46285, CVE-2022-44617, CVE-2022-4883)
 
