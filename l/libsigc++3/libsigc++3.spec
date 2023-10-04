@@ -1,9 +1,9 @@
 %def_disable snapshot
 
 %define _name libsigc++
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
-%def_enable docs
+%def_disable docs
 %def_enable check
 
 Name: %{_name}3
@@ -65,11 +65,10 @@ This package provides API documentation of libsigc++ library.
 %meson_install
 %define docdir %_docdir/libsigc++-%api_ver
 %{?_disable_docs:mkdir -p %buildroot%docdir}
-install -pm644 AUTHORS NEWS README* %buildroot%docdir/
+install -pm644 NEWS README* %buildroot%docdir/
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/libsigc-%api_ver.so.*
@@ -84,11 +83,14 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files doc
 %docdir
-%exclude %docdir/[ANR]*
+%exclude %docdir/[NR]*
 %{?_enable_docs:%_datadir/devhelp/books/*}
 
 
 %changelog
+* Sun Oct 01 2023 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Sat Dec 31 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
