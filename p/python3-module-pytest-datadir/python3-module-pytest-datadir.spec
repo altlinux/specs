@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: pytest plugin for manipulating test data directories and files
@@ -53,6 +53,9 @@ pytest plugin for manipulating test data directories and files.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 04 2023 Anton Zhukharev <ancieg@altlinux.org> 1.5.0-alt1
+- Updated to 1.5.0.
+
 * Wed May 10 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.1-alt1
 - New version.
 
