@@ -1,6 +1,6 @@
 Name: altlinux-repos
 Version: 1.0
-Release: alt3
+Release: alt4
 
 Summary: A set of ALT repos desktop files
 License: GPL
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Tue Oct 03 2023 Ivan A. Melnikov <iv@altlinux.org> 1.0-alt4
+- Added sisyphus_loongarch64.
+
 * Wed May 24 2023 Denis Medvedev <nbr@altlinux.org> 1.0-alt3
 - version bump to allow for c10f1 update
 
