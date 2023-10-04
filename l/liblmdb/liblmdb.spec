@@ -2,14 +2,15 @@
 %def_with check
 
 Name: liblmdb
-Version: 0.9.29
-Release: alt1.1
+Version: 0.9.31
+Release: alt1
 
 Summary: Symas Lightning Memory-Mapped Database
 Group: System/Libraries
-Url: http://symas.com/mdb
-License: LGPLv2+
-
+Url: https://symas.com/lmdb
+License: OLDAP-2.8
+# branch mdb.RE/0.9
+Vcs: https://git.openldap.org/openldap/openldap.git
 Source: %name-%version.tar
 
 Patch12: liblmdb-0.9.18-alt-deb-add-soname-fix-install.patch
@@ -70,11 +71,14 @@ make -C %name test
 %_man1dir/mdb_*
 
 %changelog
+* Wed Oct 04 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.31-alt1
+- Updated to 0.9.31.
+
 * Tue Sep 13 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.29-alt1.1
 - Build to sisyphus.
 
 * Thu Sep 02 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.29-alt1
-- Updated to 0.9.29
+- Updated to 0.9.29.
 
 * Thu Jul 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.28-alt1
 - Updated to 0.9.28 with backported refixes from Engineering.
