@@ -1,6 +1,6 @@
 Name: libglvnd
-Version: 1.6.0
-Release: alt2
+Version: 1.7.0
+Release: alt1
 Epoch: 7
 Group: System/Libraries
 Summary: The GL Vendor-Neutral Dispatch library
@@ -120,6 +120,9 @@ rm -f %buildroot%_pkgconfigdir/glesv1*.pc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Oct 04 2023 Valery Inozemtsev <shrek@altlinux.ru> 7:1.7.0-alt1
+- 1.7.0
+
 * Mon May 22 2023 Valery Inozemtsev <shrek@altlinux.ru> 7:1.6.0-alt2
 - python -> python3 (closes: #46204)
 
