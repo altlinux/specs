@@ -1,6 +1,6 @@
 Name:     vml
 Version:  0.1.9
-Release:  alt1
+Release:  alt2
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
 License:  MIT
@@ -15,7 +15,9 @@ BuildRequires: libssl-devel
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 
-Requires: rsync socat openssh-clients /usr/bin/kvm cloud-utils
+Requires: rsync socat openssh-clients /usr/bin/kvm cloud-utils-cloud-localds
+
+ExclusiveArch: aarch64 x86_64
 
 %description
 VML is a tool for easily and transparently work with qemu virtual machines.
@@ -27,7 +29,7 @@ Debian, Fedora, openSUSE and Ubuntu could be created with just one command.
 %setup
 
 %build
-RUSTFLAGS="${RUSTFLAGS} -g"
+export RUSTFLAGS="${RUSTFLAGS} -g"
 %ifarch ppc64le
 cargo build --no-default-features --features=native-tls --release %{?_smp_mflags} --offline
 %else
@@ -57,6 +59,10 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Wed Oct 04 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.9-alt2
+- Reduce transitive requires
+- Set ExclusiveArch
+
 * Tue Jun 06 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.9-alt1
 - Fix updating images config
 - Fix creating ~ with rsync-to
