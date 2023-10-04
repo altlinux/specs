@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-pywlroots
-Version: 0.15.24
-Release: alt2
+Version: 0.16.5
+Release: alt1
 
 Summary: Python binding to the wlroots library using cffi
 License: NCSA
@@ -20,7 +20,6 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-xkbcommon
 BuildRequires: python3-module-pywayland
 BuildRequires: libxkbcommon-devel
-BuildRequires: libwlroots10
 BuildRequires: libwlroots-devel
 BuildRequires: libinput-devel
 BuildRequires: libxcb-devel
@@ -40,8 +39,6 @@ provide wlroots keyboard functionality.
 %patch0 -p1
 
 %build
-# NOTE(egori): revert '2ef42bb6a2a30f6595b29619cd712d1f38d86724' before building
-# with wlroots 0.16.0 see: https://github.com/flacjacket/pywlroots/pull/109
 %__python3 ./wlroots/ffi_build.py
 %pyproject_build
 
@@ -61,6 +58,9 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %python3_sitelibdir/%{pyproject_distinfo pywlroots}
 
 %changelog
+* Wed Sep 27 2023 Egor Ignatov <egori@altlinux.org> 0.16.5-alt1
+- new version 0.16.5
+
 * Sun Jan 15 2023 Egor Ignatov <egori@altlinux.org> 0.15.24-alt2
 - fix FTBFS: build with old libwlroots 0.15.1
 

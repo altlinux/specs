@@ -4,8 +4,8 @@
 %def_without docs
 
 Name: qtile
-Version: 0.22.1
-Release: alt2
+Version: 0.23.0
+Release: alt1
 
 Summary: A full-featured, hackable tiling window manager written and configured in Python
 License: MIT
@@ -15,6 +15,10 @@ Group: Graphical desktop/Other
 Url: http://www.qtile.org/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
+
+Requires: python3-module-pywlroots >= 0.16.4
+Requires: python3-module-cairocffi >= 1.6.0
+Requires: python3-module-xcffib >= 1.4.0
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -29,11 +33,11 @@ BuildRequires: python3-module-xkbcommon
 BuildRequires: libxcbutil-icccm-devel
 BuildRequires: libwlroots-devel
 BuildRequires: libcairo-devel
-BuildRequires: libpulseaudio-devel
 BuildRequires: libpango-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libinput-devel
 BuildRequires: libxkbcommon-devel
+BuildRequires: libdrm-devel
 
 %if_with check
 BuildRequires: python3-module-bowler
@@ -74,15 +78,11 @@ BuildRequires: python3-module-numpydoc
 
 sed -i -e 's/pytest/pytest3/' docs/Makefile
 
-# NOTE(egori): remove this sed before building with wlroots 0.16.0
-# see: https://github.com/qtile/qtile/pull/3985
-sed -i -e 's/"wlroots"/":libwlroots.so.10"/' \
-    libqtile/backend/wayland/libinput_ffi_build.py
-
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export CFFI_TMPDIR=$(mktemp -d -t cffi_tempidr.XXXXXXXXX)
-./scripts/ffibuild -v
+PYTHONPATH="$PWD" ./scripts/ffibuild -v
+
 %pyproject_build
 
 %if_with docs
@@ -126,6 +126,9 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %_datadir/wayland-sessions/qtile-wayland.desktop
 
 %changelog
+* Wed Sep 27 2023 Egor Ignatov <egori@altlinux.org> 0.23.0-alt1
+- new version 0.23.0
+
 * Sat Jan 14 2023 Egor Ignatov <egori@altlinux.org> 0.22.1-alt2
 - fix FTBFS: build _libinput.so with old libwlroots 0.15.1
 - migrate to new python macros
