@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: iotop-c
-Version: 1.23
+Version: 1.24
 Release: alt1
 Summary: A top utility for IO
 License: GPL-2.0-or-later
@@ -37,13 +37,17 @@ runs without Python at all.
 
 %prep
 %setup
-sed -i '/STRIP/d' Makefile
+# <command-line>: warning: "_FORTIFY_SOURCE" redefined
+sed -i 's/-D_FORTIFY_SOURCE=[[:digit:]]//' Makefile
 
 %build
+%ifarch x86_64
+%add_optflags -fanalyzer
+%endif
 %make_build CFLAGS="%optflags %(getconf LFS_CFLAGS)" V=1
 
 %install
-%makeinstall_std
+%makeinstall_std STRIP=: V=1
 mv %buildroot%_sbindir/iotop   %buildroot%_sbindir/iotop-c
 mv %buildroot%_man8dir/iotop.8 %buildroot%_mandir/man8/iotop-c.8
 
@@ -53,6 +57,9 @@ mv %buildroot%_man8dir/iotop.8 %buildroot%_mandir/man8/iotop-c.8
 %_man8dir/iotop-c.*
 
 %changelog
+* Wed Oct 04 2023 Vitaly Chikunov <vt@altlinux.org> 1.24-alt1
+- Update to v1.24 (2023-09-30).
+
 * Thu Jan 26 2023 Vitaly Chikunov <vt@altlinux.org> 1.23-alt1
 - Update to v1.23 (2023-01-24).
 
