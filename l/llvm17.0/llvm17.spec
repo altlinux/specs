@@ -63,17 +63,11 @@ AutoProv: nopython
 %else
 %def_with lldb
 %endif
-%ifarch loongarch64
-# XXX: LoongArch target is not ready yet, see https://reviews.llvm.org/D138135
-%def_without lld
-%else
 %def_with lld
-%endif
 
 %def_disable tests
 # disable clang on aarch64 due very long compile time
-# Do NOT use clang on LoongArch since lld is not ready yet
-%ifarch x86_64 ppc64le
+%ifarch x86_64 ppc64le loongarch64
 %def_with clang
 %else
 %def_without clang
@@ -95,7 +89,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt1
+Release: alt2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1292,6 +1286,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Wed Oct 04 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.0.2-alt2
+- spec: build lld on LoongArch (LoongArch targets are already supported).
+- spec: build llvm with clang on LoongArch.
+
 * Tue Oct 03 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.2-alt1
 - 17.0.2.
 - Add explicit dependency on clangX-support to clang and clangd.
