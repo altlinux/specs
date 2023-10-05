@@ -5,7 +5,7 @@
 %define acme_version %version
 
 Name: certbot
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -262,6 +262,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Thu Oct 05 2023 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
+- new version 2.7.0 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
 - new version 2.6.0 (with rpmrb script)
 
