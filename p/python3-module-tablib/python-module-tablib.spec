@@ -1,21 +1,34 @@
 %define modname tablib
+%define release_version 3.5.0
+%define commit_num .9
+%define commit_id .g0f0ddf6
+%def_enable check
+%if_enabled check
+%def_enable extra_check
+%else
+%def_disable extra_check
+%endif
+%def_enable docs
 
 Name:		python3-module-%modname
-Version:	0.12.1
-Release:	alt2.1
+Version:	%release_version.0%commit_num%commit_id
+Release:	alt1
 Summary:	Format agnostic tabular data library (XLS, JSON, YAML, CSV)
 
 Group:		Development/Python3
 License:	MIT
-URL:		http://github.com/kennethreitz/tablib
+URL:		https://github.com/jazzband/tablib.git
 Source0:	%name-%version.tar
 
 BuildArch:	noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pyproject-installer python3(setuptools) python3(wheel)
 BuildPreReq: python3-module-html5lib python3-module-pbr python3-module-yaml
+%{?_enable_check:BuildRequires: python3(pytest) python3(pytest-cov) python3(openpyxl) python3(tabulate) python3(xlrd) python3(xlwt) python3(odf)}
+%{?_enable_extra_check:BuildRequires: python3(pandas)}
+%{?_enable_docs:BuildRequires: python3-module-sphinx python3-module-setuptools_scm}
 
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%modname/packages/dbfpy3/utils.py
 
 %description
 Tablib is a format-agnostic tabular dataset library, written in Python.
@@ -29,27 +42,42 @@ Output formats supported:
  - TSV (Sets)
  - CSV (Sets)
 
-%add_python3_req_skip UserDict
-%add_python3_req_skip odf
 
 %prep
 %setup
-pushd tablib/packages/dbfpy/
-sed -i '/print.*/ s/$/)/' dbfnew.py | sed 's/print/print(/' > dbfnew.py
-popd
 
 %build
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%release_version
+%pyproject_build
+
+%if_enabled docs
+env PYTHONPATH="$PWD/src" sphinx-build-3 docs html
+env PYTHONPATH="$PWD/src" sphinx-build-3 -b man docs man
+rm -rf html/.{buildinfo,doctrees}
+%endif
 
 %install
-%python3_install
+%pyproject_install
+%{?_enable_docs:install -pDm 644 man/%modname.1 %buildroot%_man1dir/%modname.1}
+
+%check
+%pyproject_run_pytest -v
 
 %files
-%doc README.rst AUTHORS LICENSE
-%python3_sitelibdir/*
+%doc README.md AUTHORS LICENSE HISTORY.md CODE_OF_CONDUCT.md RELEASING.md
+%if_enabled docs
+%doc html
+%_man1dir/%{modname}*
+%endif
+%python3_sitelibdir/%{modname}*
 
 
 %changelog
+* Wed Oct 04 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.5.0.0.9.g0f0ddf6-alt1
+- Changed the upstream URL
+- Updated to upstream 3.5.0-9-g0f0ddf6
+- Turned on tests running and docs building
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.12.1-alt2.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
