@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.24
+Version: 0.25
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -53,6 +53,10 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Tue Oct 03 2023 Anton Midyukov <antohami@altlinux.org> 0.25-alt1
+- grub: check that the password does not contain non-ASCII characters
+  (Closes: 47720)
+
 * Sun Aug 13 2023 Anton Midyukov <antohami@altlinux.org> 0.24-alt1
 - Revert "merge "efiremovable" and "efinonvram" as "efinonvram""
 - grub_uefi --removable for efinonvram
