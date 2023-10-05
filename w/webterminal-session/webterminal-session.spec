@@ -1,6 +1,6 @@
 
 Name: webterminal-session
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 %K5init no_altplace
 
@@ -44,6 +44,9 @@ install -m 0644 99WEBTERMINAL %buildroot/%_x11sysconfdir/wmsession.d/
 %_datadir/xsessions/webterminal.desktop
 
 %changelog
+* Thu Oct 05 2023 Sergey V Turchin <zerg at altlinux dot org> 0.3.0-alt1
+- add support for yandex-browser
+
 * Thu Aug 25 2022 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt1
 - fix to start
 
