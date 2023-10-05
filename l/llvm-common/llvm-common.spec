@@ -4,7 +4,7 @@
 
 Name: llvm-common
 Version: 17.0.0
-Release: alt1
+Release: alt2
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -473,12 +473,14 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 
 %files -n lld-devel
 
+%ifnarch loongarch64
 %files -n lldb
 %_bindir/lldb
 %_bindir/lldb-argdumper
 %_bindir/lldb-instr
 %_bindir/lldb-server
 %_bindir/lldb-vscode
+%endif
 
 %files -n libmlir-devel
 
@@ -529,6 +531,9 @@ for i in %_CI_tests_execdir/[0-9]*; do
 done
 
 %changelog
+* Tue Oct 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.0.0-alt2
+- lldb is not available on Loongarch [yet].
+
 * Sat Sep 30 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.0-alt1
 - Made LLVM 17 the default.
 
