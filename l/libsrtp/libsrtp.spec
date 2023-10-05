@@ -1,6 +1,6 @@
 Name: libsrtp
-Version: 1.5.4
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Secure RTP library
 License: BSD-3-Clause
@@ -52,6 +52,9 @@ touch ar-lib
 %_pkgconfigdir/libsrtp.pc
 
 %changelog
+* Thu Oct 05 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.0-alt1
+- 1.6.0 released
+
 * Mon Sep 18 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.4-alt2
 - fixed build
 
