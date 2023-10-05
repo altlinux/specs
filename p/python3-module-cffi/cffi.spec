@@ -1,43 +1,37 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name cffi
 
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.15.1
-Release: alt2
-
+Version: 1.16.0
+Release: alt1
 Summary: Foreign Function Interface for Python calling C code
-
-Group: Development/Python3
 License: MIT
+Group: Development/Python3
 Url: https://pypi.org/project/%pypi_name/
-
-Source: %pypi_name-%version.tar
+Vcs: https://github.com/python-cffi/cffi
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: cffi-0.8.6-alt-link.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: libffi-devel
-
+%pyproject_builddeps_build
 %if_with check
+%pyproject_builddeps_metadata
 BuildRequires: gcc-c++
-BuildRequires: python3(pycparser)
-BuildRequires: python3(pytest)
+BuildRequires: python3-module-pytest
 %endif
-
-%py3_requires pycparser
 
 %description
 Foreign Function Interface for Python calling C code.
 
 %prep
-%setup -n %pypi_name-%version
+%setup
 %patch -p2
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -48,8 +42,7 @@ Foreign Function Interface for Python calling C code.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %python3_sitelibdir/_cffi_backend.cpython-%{python_version_nodots python3}.so
@@ -57,6 +50,9 @@ Foreign Function Interface for Python calling C code.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 03 2023 Stanislav Levin <slev@altlinux.org> 1.16.0-alt1
+- 1.15.1 -> 1.16.0.
+
 * Thu Nov 24 2022 Grigory Ustinov <grenka@altlinux.org> 1.15.1-alt2
 - Bootstrap for python3.11.
 
