@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.135
+Version: 2.9.136
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -120,6 +120,9 @@ make check
 %lang(da) %_datadir/alterator/help/da_DK/*.html
 
 %changelog
+* Wed Oct 04 2023 Oleg Solovyov <mcpain@altlinux.org> 2.9.136-alt1
+- alterator-vm: update strings 
+
 * Wed Sep 13 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 2.9.135-alt1
 - Add help about the user's avatar for alterator-users (ALT #47406)
 

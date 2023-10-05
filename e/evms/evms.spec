@@ -5,7 +5,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt68
+Release: alt69
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -174,6 +174,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Wed Oct 04 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt69
+- fix compiler warnings
+
 * Tue Aug 22 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt68
 - imsm changes:
   + remove volume discovery after region (first pass)

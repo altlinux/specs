@@ -1,6 +1,6 @@
 Name: alterator-vm
 Version: 0.4.33
-Release: alt6
+Release: alt7
 
 Summary: Alterator module for volume management
 License: GPL
@@ -37,6 +37,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed Oct 04 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.33-alt7
+- new translations
+
 * Tue Sep 26 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.33-alt6
 - fix crash (Closes: #47701)
 

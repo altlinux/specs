@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.6.5
-Release: alt2
+Release: alt3
 
 Summary: Guile bindings for EVMS
 License: GPLv2
@@ -17,8 +17,6 @@ http://evms.sourceforge.net
 %define guile_sodir %(guile-config info extensiondir)
 %define guile_godir %(guile-config info siteccachedir)
 
-%set_gcc_version 8
-
 %prep
 %setup
 
@@ -33,6 +31,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Mon Sep 18 2023 Oleg Solovyov <mcpain@altlinux.org> 0.6.5-alt3
+- don't enforce gcc8
+
 * Thu Apr 06 2023 Oleg Solovyov <mcpain@altlinux.org> 0.6.5-alt2
 - evms: ext2 plugin was renamed
 
