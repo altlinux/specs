@@ -1,5 +1,5 @@
 Name: barman
-Version: 3.8.0
+Version: 3.9.0
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
@@ -145,6 +145,9 @@ getent passwd barman >/dev/null || \
 exit 0
 
 %changelog
+* Thu Oct 05 2023 Leontiy Volodin <lvol@altlinux.org> 3.9.0-alt1
+- New version 3.9.0.
+
 * Mon Sep 04 2023 Leontiy Volodin <lvol@altlinux.org> 3.8.0-alt1
 - New version 3.8.0.
 
