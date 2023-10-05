@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0
+Version: 5.1
 Release: alt1
 
 Summary: Metaclass for subclassable extension types
@@ -15,6 +15,8 @@ Vcs: https://github.com/zopefoundation/ExtensionClass.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-zope.testrunner
 %endif
@@ -55,13 +57,13 @@ Tests for ExtensionClass, ComputedAttribute and MethodObject.
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_check
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
@@ -73,6 +75,9 @@ Tests for ExtensionClass, ComputedAttribute and MethodObject.
 
 
 %changelog
+* Thu Oct 05 2023 Anton Vyatkin <toni@altlinux.org> 5.1-alt1
+- New version 5.1.
+
 * Wed Mar 29 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 
