@@ -7,7 +7,7 @@
 
 Name: rapidjson
 Version: 1.1.0
-Release: alt7.git473553bd
+Release: alt8.git473553bd
 
 Summary: Fast JSON parser and generator for C++
 
@@ -20,6 +20,9 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 # Downstream-patch for gtest.
 Patch1: rapidjson-1.1.0-do_not_include_gtest_src_dir.patch
+
+# The in-tree config is not needed for an RPM
+Patch2: rapidjson-1.1.0-alt-no-intree-config.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-valgrind
@@ -123,9 +126,6 @@ sed -i 's/ -std=c++11//' CMakeLists.txt
 %install
 %cmakeinstall_std
 
-# Move pkgconfig and CMake-stuff to generic datadir.
-mv -f %buildroot%_libdir/* %buildroot%_datadir
-
 # Copy the documentation-files to final location.
 cp -at %buildroot%_docdir/%name-doc-%version -- examples
 
@@ -136,13 +136,13 @@ rm -f %buildroot%_docdir/%name-doc-%version/readme.md
 find %buildroot -type f -name 'CMake*.txt' -print0 |
 	xargs -r0 rm -fv --
 
+%check
+%_cmake__builddir/bin/unittest
+
 %files devel
 %doc license.txt CHANGELOG.md readme*.md
-%_datadir/cmake
-%ifarch x86_64 aarch64 ppc64le %e2k
-%_libexecdir/cmake
-%endif
-%_datadir/pkgconfig/*
+%_libdir/cmake/*
+%_pkgconfigdir/*
 %_includedir/%name
 
 %files doc
@@ -152,6 +152,11 @@ find %buildroot -type f -name 'CMake*.txt' -print0 |
 %endif # docs
 
 %changelog
+* Thu Oct 05 2023 Ivan A. Melnikov <iv@altlinux.org> 1.1.0-alt8.git473553bd
+- Fix installation of pkg-config and cmake files
+  (fixes build on loongarch64 and riscv64);
+- Add simple %%check section.
+
 * Mon Oct 02 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.1.0-alt7.git473553bd
 - Fixed build for Elbrus.
 
