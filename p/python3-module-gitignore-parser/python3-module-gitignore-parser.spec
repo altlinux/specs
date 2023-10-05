@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Summary: A spec-compliant gitignore parser for Python 3.5+
@@ -49,6 +49,9 @@ A spec-compliant gitignore parser for Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 05 2023 Anton Zhukharev <ancieg@altlinux.org> 0.1.8-alt1
+- Updated to 0.1.8.
+
 * Tue Oct 03 2023 Anton Zhukharev <ancieg@altlinux.org> 0.1.7-alt1
 - Updated to 0.1.7.
 
