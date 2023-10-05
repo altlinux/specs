@@ -73,7 +73,7 @@
 %vulkan_drivers_add amd
 %endif
 %ifarch %vulkan_virtio_arches
-%vulkan_drivers_add virtio-experimental
+%vulkan_drivers_add virtio
 %endif
 %ifarch %armsoc_arches
 %vulkan_drivers_add freedreno
@@ -82,12 +82,12 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 23.1
-%define ver_minor 8
+%define ver_major 23.2
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -106,9 +106,11 @@ BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-d
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel
-BuildRequires: libglvnd-devel >= 1.2.0 llvm-devel >= 11.0.0
-BuildRequires: rpm-build-python3 glslang python3-module-docutils
-BuildRequires: libclc-devel clang-devel
+BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils
+BuildRequires: llvm-devel clang-devel
+%ifarch %gallium_opencl_arches
+BuildRequires: libclc-devel libLLVMSPIRVLib-devel libspirv-tools-devel
+%endif
 %ifarch %vulkan_intel_arches %vulkan_radeon_arches %vulkan_virtio_arches
 BuildRequires: libvulkan-devel
 %endif
@@ -586,6 +588,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Oct 02 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.2.1-alt1
+- 23.2.1
+
 * Mon Sep 25 2023 Michael Shigorin <mike@altlinux.org> 4:23.1.8-alt2
 - add %%e2k to relevant architecture lists
 - BR fixes (should be no-op for mainstream)
