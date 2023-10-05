@@ -26,8 +26,8 @@
 %define libjamiclient libjamiclient%jamiclient_sover
 
 Name: jami
-Version: 20230619
-Release: alt4
+Version: 20230922
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -39,11 +39,12 @@ ExcludeArch: %not_qt6_qtwebengine_arches
 Source: %name-%version.tar
 Source100: ffmpeg-n6.0.tar
 Source101: msgpack-c-cpp-6.0.0.tar
-Source102: pjproject-e4b83585a0bdf1523e808a4fc1946ec82ac733d0.tar
+Source102: pjproject-97f45c2040c2b0cf6f3349a365b0e900a2267333.tar
 Source103: restinio-bbaa034dbcc7555ce67df0f8a1475591a7441733.tar
-Source104: opendht-2.5.5.tar
+Source104: opendht-2.6.0.tar
 Source105: sdbus-cpp-1.2.0.tar
 Source106: gmp-6.2.1.tar
+Source107: dhtnet-2f3539bc19cf770cd23912c7eebe63e8d2f80515.tar
 
 Source120: ffmpeg-remove-x86-optimization.patch
 Patch3: alt-armh.patch
@@ -69,6 +70,7 @@ BuildRequires: libssl-devel libgpg-error-devel libgcrypt-devel
 BuildRequires: libnettle-devel libpcre-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libvpx-devel
 BuildRequires: libspeexdsp-devel libswscale-devel libudev-devel libupnp-devel libuuid-devel jsoncpp-devel
 BuildRequires: zlib-devel libopus-devel libspeex-devel libilbc-devel libx264-devel libx265-devel libva-devel libvdpau-devel
+BuildRequires: libfmt-devel libarchive-devel libgit2-devel
 #BuildRequires: libmsgpack-devel
 BuildRequires: libyaml-cpp-devel yasm perl-Pod-Usage cppunit-devel libgmp-devel libexpat-devel
 #BuildRequires: evolution-data-server-devel libclutter-gtk3-devel libnotify-devel libpixman-devel libappindicator-gtk3-devel libwebkit2gtk-devel libcanberra-gtk3-devel
@@ -176,6 +178,7 @@ gzip  -c1 %SOURCE103 > daemon/contrib/tarballs/`basename %SOURCE103`.gz
 gzip  -c1 %SOURCE104 > daemon/contrib/tarballs/`basename %SOURCE104`.gz
 gzip  -c1 %SOURCE105 > daemon/contrib/tarballs/`basename %SOURCE105`.gz
 bzip2 -c1 %SOURCE106 > daemon/contrib/tarballs/`basename %SOURCE106`.bz2
+gzip  -c1 %SOURCE107 > daemon/contrib/tarballs/`basename %SOURCE107`.gz
 
 install -m 0644 %SOURCE120 daemon/contrib/src/ffmpeg/
 
@@ -322,6 +325,9 @@ ln -s jami %buildroot/%_bindir/jami-qt
 %_pkgconfigdir/jami.pc
 
 %changelog
+* Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 20230922-alt1
+- new version
+
 * Mon Oct 02 2023 Sergey V Turchin <zerg@altlinux.org> 20230619-alt4
 - fix requires
 
