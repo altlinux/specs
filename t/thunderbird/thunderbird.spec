@@ -10,11 +10,15 @@
 %define nss_version   3.86
 %define rust_version  1.65.0
 %define cargo_version 1.65.0
+%ifarch loongarch64
+%define llvm_version  16.0
+%else
 %define llvm_version  15.0
+%endif
 
 Name: 	 thunderbird
 Version: 115.2.2
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -35,6 +39,11 @@ Source8: thunderbird-wayland.desktop
 
 Patch01: thunderbird-alt-fix-redefinition-double_t.patch
 Patch02: thunderbird-115-disable-browser-option.patch
+Patch3500: 0001-thunderbird-115-add-loongarch-support.patch
+Patch3501: 0002_xpcom_add_loongarch64_support.patch 
+Patch3502: 0003_botan_loongarch64_buildfix.patch
+Patch3503: 0004_rust_loongarch64.patch
+Patch3504: 0005_rust_checksums_upd.patch
 
 ExcludeArch: armh
 
@@ -48,7 +57,11 @@ BuildRequires(pre): browser-plugins-npapi-devel
 BuildRequires: clang%llvm_version
 BuildRequires: clang%llvm_version-devel
 BuildRequires: llvm%llvm_version-devel
+%ifarch loongarch64
+BuildRequires: binutils
+%else
 BuildRequires: lld%llvm_version-devel
+%endif
 %ifarch armh %{ix86}
 BuildRequires: gcc
 BuildRequires: gcc-c++
@@ -229,6 +242,11 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 tar -xf %SOURCE6
 %patch01 -p2
 %patch02 -p2
+%patch3500 -p1
+%patch3501 -p1
+%patch3502 -p1
+%patch3503 -p1
+%patch3504 -p1
 
 #echo %version > mail/config/version.txt
 
@@ -236,7 +254,7 @@ cp -f %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
-%ifnarch armh %{ix86} ppc64le
+%ifnarch armh %{ix86} ppc64le loongarch64
 ac_add_options --enable-linker=lld
 %endif
 %ifnarch x86_64
@@ -317,7 +335,7 @@ export MOZ_DEBUG_FLAGS=" "
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
-%ifarch aarch64 x86_64
+%ifarch aarch64 x86_64 loongarch64
 export CFLAGS="$CFLAGS -DHAVE_USR_LIB64_DIR=1"
 %endif
 
@@ -337,10 +355,12 @@ export CXX="g++"
 %else
 export CC="clang"
 export CXX="clang++"
+%ifnarch loongarch64
 export AR="llvm-ar"
 export NM="llvm-nm"
 export RANLIB="llvm-ranlib"
 export LLVM_PROFDATA="llvm-profdata"
+%endif
 %endif
 export PREFIX='%_prefix'
 export LIBDIR='%_libdir'
@@ -544,6 +564,9 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Sep 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 115.2.2-alt2
+- Support LoongArch architecture (lp64d ABI).
+
 * Thu Sep 14 2023 Pavel Vasenkov <pav@altlinux.org> 115.2.2-alt1
 - New version.
 - Security fixes:
