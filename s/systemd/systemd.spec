@@ -17,6 +17,8 @@
 %def_enable libcryptsetup
 %ifnarch ppc64le loongarch64 riscv64 %mips32
 %def_enable tpm2
+%else
+%def_disable tpm2
 %endif
 %def_enable logind
 %def_enable vconsole
@@ -97,7 +99,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.5
-Release: alt1.1
+Release: alt1.2
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -854,6 +856,15 @@ rm -f %buildroot/usr/lib/rpm/macros.d/macros.systemd
 # debugedit: Failed to update file: invalid section entry size
 %ifarch %ix86
 rm -f %buildroot%_prefix%_systemd_dir/boot/efi/linuxia32.elf.stub
+%endif
+
+%if_disabled tpm2
+# for some weird reason, systemd still installs these man pages
+# even though the corresponding binaries are not built
+rm -vf %buildroot%_man1dir/systemd-measure*
+rm -vf %buildroot%_man8dir/systemd-pcrfs*
+rm -vf %buildroot%_man8dir/systemd-pcrphase*
+rm -vf %buildroot%_man8dir/systemd-pcrmachine*
 %endif
 
 %find_lang %name
@@ -2414,6 +2425,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Oct 05 2023 Ivan A. Melnikov <iv@altlinux.org> 1:254.5-alt1.2
+- NMU: fix build w/o tpm2
+
 * Thu Oct 05 2023 Ivan A. Melnikov <iv@altlinux.org> 1:254.5-alt1.1
 - NMU: build w/o tpm2 on loongarch64, riscv64 and mipsel
 - don't require libseccomp when seccomp is disabled (thx asheplyakov@).
