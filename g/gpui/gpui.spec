@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.34
+Version: 0.2.35
 Release: alt1
 
 Summary: Group policy editor
@@ -112,6 +112,13 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Thu Oct 05 2023 Vladimir Rubanov <august@altlinux.org> 0.2.35-alt1
+- 0.2.35-alt1
+- Fixes:
+  + Fix subsequent deletion of multiple elements in scripts dialog (Closes: 47553).
+  + Fix desktop file entry.
+  + Fix add folder name to script path.
+
 * Mon Sep 04 2023 Vladimir Rubanov <august@altlinux.org> 0.2.34-alt1
 - 0.2.34-alt1
 - Fixes:
