@@ -15,7 +15,7 @@
 
 Name: arrow
 Version: 12.0.0
-Release: alt2
+Release: alt2.1
 Summary: Apache Arrow is a data processing library for analysis
 Group: Development/C++
 
@@ -457,6 +457,12 @@ Development files for python3-pyarrow
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+sed -i '/Unknown system processor/c set(ARROW_CPU_FLAG "e2k")' \
+	cpp/cmake_modules/SetupCxxFlags.cmake
+sed -i 's/__aarch64__/__e2k__/' \
+	cpp/src/arrow/vendored/double-conversion/utils.h
+%endif
 sed -r -i 's/(oldest-supported-)(numpy)/\2/' python/pyproject.toml
 
 %build
@@ -763,6 +769,9 @@ rm -rf %buildroot%_docdir/%name
 %python3_sitelibdir/pyarrow/include
 
 %changelog
+* Thu Oct 05 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 12.0.0-alt2.1
+- Fixed build for Elbrus.
+
 * Sun Sep 24 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 12.0.0-alt2
 - NMU: fixed FTBFS on LoongArch.
 
