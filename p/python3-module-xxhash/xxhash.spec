@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.0
+Version: 3.4.1
 Release: alt1
 Summary: Binding for xxHash
 License: BSD-2-Clause
@@ -33,7 +33,6 @@ xxhash is a Python binding for the xxHash library.
 # remove bundled libs
 rm -r deps
 
-%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -59,6 +58,9 @@ ENDUNITTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 05 2023 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
+- 3.3.0 -> 3.4.1.
+
 * Wed Aug 09 2023 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
 - 3.1.0 -> 3.3.0.
 
