@@ -4,7 +4,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2-tools
 Version: 20221117
-Release: alt1
+Release: alt2
 Summary: EFI Development Kit II Tools
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
@@ -20,7 +20,7 @@ License: BSD-2-Clause-Patent
 Group: Emulators
 Url: http://www.tianocore.org
 
-ExclusiveArch:  %ix86 x86_64 %arm aarch64
+ExclusiveArch:  %ix86 x86_64 %arm aarch64 loongarch64
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: iasl nasm gcc-c++
@@ -195,6 +195,9 @@ popd
 %doc BaseTools/UserManuals/*.rtf
 
 %changelog
+* Mon Oct 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20221117-alt2
+- NMU: build on LoongArch
+
 * Wed Nov 30 2022 Alexey Shabalin <shaba@altlinux.org> 20221117-alt1
 - edk2-stable202211 (Fixes: CVE-2021-38578)
 
