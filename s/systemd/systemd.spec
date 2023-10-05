@@ -15,7 +15,7 @@
 %def_disable static_libudev
 %def_enable elfutils
 %def_enable libcryptsetup
-%ifnarch ppc64le
+%ifnarch ppc64le loongarch64 riscv64 %mips32
 %def_enable tpm2
 %endif
 %def_enable logind
@@ -97,7 +97,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -227,7 +227,7 @@ Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 Requires: acl
 Requires: util-linux >= 2.27.1
-Requires: libseccomp >= 2.3.1
+%{?_enable_seccomp:Requires: libseccomp >= 2.3.1}
 %{?_enable_libidn:Requires: libidn >= 1.33-alt2}
 %{?_enable_libidn2:Requires: libidn2 > 2.0.4-alt3}
 
@@ -1432,7 +1432,7 @@ useradd -g systemd-journal-remote -c 'Journal Remote' \
     -d %_logdir/journal/remote -s /dev/null -r -l systemd-journal-remote >/dev/null 2>&1 ||:
 
 %post journal-remote
-%post_systemd_postponed systemd-journal-gatewayd.service systemd-journal-remote.service 
+%post_systemd_postponed systemd-journal-gatewayd.service systemd-journal-remote.service
 %if_enabled libcurl
 %post_systemd_postponed systemd-journal-upload.service
 %endif
@@ -2414,6 +2414,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Oct 05 2023 Ivan A. Melnikov <iv@altlinux.org> 1:254.5-alt1.1
+- NMU: build w/o tpm2 on loongarch64, riscv64 and mipsel
+- don't require libseccomp when seccomp is disabled (thx asheplyakov@).
+
 * Mon Oct 02 2023 Alexey Shabalin <shaba@altlinux.org> 1:254.5-alt1
 - 254.5
 
