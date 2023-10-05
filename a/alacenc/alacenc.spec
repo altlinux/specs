@@ -1,8 +1,6 @@
-%set_gcc_version 12
-
 Name: alacenc
-Version: 0.3.0
-Release: alt1.2
+Version: 0.4.0
+Release: alt1
 
 Summary: encode audio into the Apple Lossless Audio Codec (ALAC) format
 License: MIT
@@ -11,13 +9,11 @@ Group: Sound
 URL: https://github.com/flacon/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExcludeArch: %arm ppc64le
-
 # https://github.com/flacon/%name/archive/v%version/%name-%version.tar.gz
 Source: https://github.com/flacon/%name/archive/v%version/%name-%version.tar
 
 BuildRequires: cmake
-BuildRequires: gcc12-c++
+BuildRequires: gcc-c++
 
 %description
 %name - encode audio into the Apple Lossless Audio Codec (ALAC) format
@@ -40,6 +36,9 @@ sed -i "s/__aarch64__/__e2k__/" vendor/alac/codec/EndianPortable.c
 %_bindir/%name
 
 %changelog
+* Thu Oct 05 2023 Nazarov Denis <nenderus@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+
 * Sat Jul 01 2023 Nazarov Denis <nenderus@altlinux.org> 0.3.0-alt1.2
 - Fix FTBFS
 
