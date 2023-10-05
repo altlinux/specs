@@ -6,7 +6,7 @@
 
 Name: gdb
 Version: 13.2.0.43.854f46b6377
-Release: alt2
+Release: alt3
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -223,7 +223,7 @@ fi
 %files -n gdbserver
 %_bindir/gdbserver
 # no ipa_obj for arm* and mips*
-%ifnarch armh %mips
+%ifnarch armh %mips loongarch64
 %_libdir/libinproctrace.so
 %endif
 %endif
@@ -243,6 +243,9 @@ fi
 %_libdir/lib*.a
 
 %changelog
+* Wed Sep 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 13.2.0.43.854f46b6377-alt3
+- NMU: fixed FTBFS on LoongArch (in process tracing is not supported).
+
 * Sat Sep 23 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.0.43.854f46b6377-alt2
 - Backported upstream commit to fix build with texinfo >= 7 (thx Enze Li).
 
