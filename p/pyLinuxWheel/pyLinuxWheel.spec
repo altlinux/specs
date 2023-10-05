@@ -2,7 +2,7 @@
 
 Name: pyLinuxWheel
 Version: 0.6.1
-Release: alt2
+Release: alt3
 
 Summary: A simple utility to configure logitech steering wheels for Linux
 
@@ -10,19 +10,17 @@ License: GPLv3
 Group: Development/Python3
 Url: https://gitlab.com/OdinTdh/pyLinuxWheel
 
-# Source-url: https://gitlab.com/OdinTdh/pyLinuxWheel/-/archive/%version/pyLinuxWheel-%version.tar.gz
 Source: %name-%version.tar
 
 Patch1: pyLinuxWheel-0.6.1-alt-added_ru_locale.patch
+Patch2: pyLinuxWheel-0.6.1-alt-fix-desktop-file.patch
+Patch3: pyLinuxWheel-0.6.1-alt-fix-rules-file.patch
 
 BuildRequires(pre): rpm-build-python3
 # For desktop file & AppData
 BuildRequires: libappstream-glib desktop-file-utils
 
 Requires: python3-module-pycairo python3-module-evdev python3-module-pygobject python3-module-pyudev
-Requires: udev
-
-AutoReq: no
 
 BuildArch: noarch
 
@@ -32,16 +30,16 @@ BuildArch: noarch
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+%build
 pushd locale/ru/LC_MESSAGES/
 msgfmt -o %name.mo %name.po
 popd
 rm -v locale/%name.pot
 rm -v locale/*/LC_MESSAGES/*.po
 
-%__subst 's/Utility/Game/' data/desktop/io.itch.pyLinuxWheel.desktop
-%__subst 's/Exec=pyLinuxWheel/Exec=pylinuxwheel/' data/desktop/io.itch.pyLinuxWheel.desktop
-
-%build
 %install
 mkdir -p %buildroot%_bindir/
 install -m 755 pyLinuxWheel.py %buildroot%_bindir/pylinuxwheel
@@ -72,6 +70,11 @@ cp -rv data/rules/99-logitech-wheel-perms.rules %buildroot/lib/udev/rules.d/
 %_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/io.itch.pyLinuxWheel.appdata.xml
 
 %changelog
+* Thu Oct 05 2023 Mikhail Tergoev <fidel@altlinux.org> 0.6.1-alt3
+- cleaning spec file
+- added patch to fix desktop file
+- added patch to fix rules file (thanx @kovalev)
+
 * Mon Aug 28 2023 Mikhail Tergoev <fidel@altlinux.org> 0.6.1-alt2
 - find_lang is used for translation
 - added Russian translation
