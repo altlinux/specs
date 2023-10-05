@@ -4,10 +4,10 @@
 %define _name libsigc++
 %define api_ver 2.0
 %define ver_major 2.12
-%def_enable docs
+%def_disable docs
 
 Name: %{_name}2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -63,7 +63,7 @@ This package provides API documentation of libsigc++ library.
 %{?_enable_snapshot:mm-common-prepare -f}
 %meson \
     %{?_enable_docs:-Dbuild-documentation=true} \
-    %{?_enable_snapshot:-Dmaintainer-mode=true
+    %{?_enable_snapshot:-Dmaintainer-mode=true \
     -Dbuild-documentation=true}
 %nil
 %meson_build
@@ -72,7 +72,7 @@ This package provides API documentation of libsigc++ library.
 %meson_install
 %define docdir %_docdir/%_name-%api_ver
 %{?_disable_docs:mkdir -p %buildroot%docdir}
-install -pm644 AUTHORS NEWS README* %buildroot%docdir/
+install -pm644 NEWS README* %buildroot%docdir/
 
 %check
 %__meson_test
@@ -80,7 +80,7 @@ install -pm644 AUTHORS NEWS README* %buildroot%docdir/
 %files
 %_libdir/libsigc-%api_ver.so.*
 %dir %docdir
-%docdir/[ANR]*
+%docdir/[NR]*
 
 %files devel
 %_libdir/libsigc-%api_ver.so
@@ -95,6 +95,9 @@ install -pm644 AUTHORS NEWS README* %buildroot%docdir/
 
 
 %changelog
+* Thu Oct 05 2023 Yuri N. Sedunov <aris@altlinux.org> 2.12.1-alt1
+- 2.12.1
+
 * Mon Apr 03 2023 Yuri N. Sedunov <aris@altlinux.org> 2.12.0-alt1
 - 2.12.0
 
