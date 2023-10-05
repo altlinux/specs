@@ -64,7 +64,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -91,7 +91,15 @@ Patch89: boost-1.81.0-upstream-phoenix-fix-uargN.patch
 # https://github.com/boostorg/mpi/issues/149
 Patch90: boost-1.83.0-alt-mpi-nonreturn-abort.patch
 
+# https://github.com/boostorg/context/pull/234
 Patch91: boost-1.83.0-alt-context-fix-platform-detection.patch
+
+# https://github.com/boostorg/context/issues/235
+# https://github.com/boostorg/context/pull/236
+Patch92: boost-1.83.0-alt-context-fix-macos-detection.patch
+
+# https://github.com/boostorg/unordered/issues/205
+Patch93: boost-1.83.0-upstream-unordered-fix-copy-assign.patch
 
 Patch1000: boost-1.63.0-alt-python-paths.patch
 Patch2000: boost-1.83-e2k-makecontext.patch
@@ -1259,7 +1267,7 @@ cat >> boost/config/user.hpp << EOF
 EOF
 sed -i 's/BOOST_GCC >= 70000/0/' boost/assert/source_location.hpp
 # "expression not folded to a constant due to excessive constexpr function call complexity"
-sed -i 's/static constexpr/static const/' boost/url/detail/impl/replacement_field_rule.ipp
+sed -i 's/static constexpr/static const/' libs/url/src/detail/replacement_field_rule.cpp
 %endif
 
 cat >> ./tools/build/src/user-config.jam << EOF
@@ -1849,6 +1857,11 @@ done
 
 
 %changelog
+* Thu Oct 05 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.83.0-alt3
+- E2K: replacement_field_rule is moved in 1.83.0 (thx ilyakurdyukov@)
+- Context: fix Mac OS detection in ucontext
+- Add upstream fix for potential crash in Boost.Unordered
+
 * Thu Aug 17 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.83.0-alt2
 - Fix platform detection in Boost.Context (fixes build
   on riscv64 and mipsel)
