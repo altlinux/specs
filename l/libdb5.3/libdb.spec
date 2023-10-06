@@ -9,7 +9,7 @@
 Summary: The Berkeley DB database library for C
 Name: libdb%{__soversion}
 Version: 5.3.28
-Release: alt5
+Release: alt5.1
 Group: System/Libraries
 License: BSD and LGPLv2 and Sleepycat
 URL: http://www.oracle.com/database/berkeley-db/
@@ -261,9 +261,15 @@ test -d dist/dist-tls || mkdir dist/dist-tls
 /bin/sh libtool --tag=LD --mode=link %{__cc} -o dist/dist-tls/db_dump185 dist/dist-tls/db_dump185.lo db.1.85/PORT/%{_os}/libdb.a
 
 # Update config files to understand aarch64
-for dir in dist lang/sql/sqlite lang/sql/jdbc lang/sql/odbc; do
-  cp /usr/share/gnu-config/config.{guess,sub} "$dir"
+for dir in lang/sql/sqlite lang/sql/jdbc lang/sql/odbc; do
+  pushd "$dir"
+  %autoreconf
+  popd
 done
+
+pushd dist
+sh s_config
+popd
 
 pushd dist/dist-tls
 %define _configure_script ../configure
@@ -391,6 +397,10 @@ mv man/* %buildroot%_man1dir
 %_includedir/%name/dbsql.h
 
 %changelog
+* Fri Oct 06 2023 Ivan A. Melnikov <iv@altlinux.org> 5.3.28-alt5.1
+- NMU: properly regenerate configure scripts to fix build
+  with recent autoconf and rpm-build.
+
 * Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.28-alt5
 - Removed static libraries.
 
