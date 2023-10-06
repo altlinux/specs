@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 10
+%define _php_release_version 11
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -204,6 +204,10 @@ export LIBS CFLAGS
 sed -is 's,\(zend_module_entry \)\(.*= {\),zend_module_entry __attribute__ ((visibility("default"))) \2,;' ext/*/*.c
 
 %build
+%ifarch riscv64
+export LIBS=-latomic
+%endif
+
 # Force use of system libtool:
 libtoolize --force --copy
 cat %_datadir/libtool/aclocal/{libtool,ltoptions,ltsugar,ltversion,lt~obsolete}.m4 >build/libtool.m4
@@ -265,7 +269,7 @@ touch configure.ac
 	--without-sqlite \
 	--with-regex=php \
 	--without-pear \
-	%ifarch %e2k riscv64
+	%ifarch %e2k riscv64 loongarch64
 	--without-pcre-jit \
 	%endif
 #
@@ -471,6 +475,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Fri Oct 06 2023 Anton Farygin <rider@altlinux.ru> 8.2.11-alt1
+- 8.2.10 -> 8.2.11
+
 * Thu Aug 31 2023 Anton Farygin <rider@altlinux.ru> 8.2.10-alt1
 - 8.2.9 -> 8.2.10
 

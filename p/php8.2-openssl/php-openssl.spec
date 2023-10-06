@@ -10,6 +10,9 @@ License:	PHP-3.01
 
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
+%if "%_php_suffix" == "8.0"
+Patch0: php8.0-openssl-3-support.patch
+%endif
 
 BuildRequires(pre): rpm-build-php8.2-version
 BuildRequires:	php-devel = %php_version
@@ -27,6 +30,9 @@ Some of these may be added in the future.
 %prep
 %setup -T -c
 cp -pr %php_extsrcdir/%php_extension/* .
+%if ("%_php_suffix" == "8.0" && "%(rpmvercmp '%{get_version libssl-devel}' '3.0')" > "0")
+%patch0 -p1
+%endif
 
 # simple fix
 mv config0.m4 config.m4
