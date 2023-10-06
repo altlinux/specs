@@ -50,8 +50,8 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.21.1
-Release: alt2
+Version: 1.21.2
+Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -376,6 +376,9 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.2-alt1
+- New version (1.21.2) (Fixes: CVE-2023-39323).
+
 * Fri Sep 15 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.1-alt2
 - Don't use -buildmode=shared on loongarch64 and riscv64 (thx to iv@) (ALT#47559).
 
