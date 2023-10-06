@@ -1,5 +1,5 @@
 Name: live555
-Version: 20221119
+Version: 20230724
 Release: alt1
 
 Summary: Live555.com Streaming Media Library Utilities
@@ -53,7 +53,7 @@ This package contains all needed files to build programs based on live555.com.
 
 %build
 sh genMakefiles linux
-%make_build CPPFLAGS='%optflags %optflags_shared'
+%make_build CPPFLAGS='%optflags %optflags_shared -DNO_STD_LIB'
 
 %install
 %makeinstall_std PREFIX=%prefix LIBDIR=%_libdir
@@ -77,6 +77,9 @@ done
 %_includedir/liveMedia
 
 %changelog
+* Fri Oct 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20230724-alt1
+- 2023.07.24 released
+
 * Fri Nov 25 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 20221119-alt1
 - 2022.11.19 released
 
