@@ -3,7 +3,7 @@
 %def_enable prebuilded_frontend
 
 Name: prometheus
-Version: 2.46.0
+Version: 2.47.1
 Release: alt1
 Summary: Prometheus monitoring system and time series database
 
@@ -146,6 +146,9 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 2.47.1-alt1
+- 2.47.1
+
 * Thu Jul 27 2023 Alexey Shabalin <shaba@altlinux.org> 2.46.0-alt1
 - 2.46.0
 
