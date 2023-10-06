@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.5
-%define kernel_sublevel	.5
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -513,7 +513,7 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %check
 banner check
 # First boot-test no matter have KVM or not.
-timeout 300 vm-run --no-quiet uname -a
+timeout 300 vm-run --loglevel=debug uname -a
 # Longer LTP tests only if there is KVM (which is present on all main arches).
 if ! timeout 999 vm-run --kvm=cond \
         "/sbin/sysctl kernel.printk=8;
@@ -595,6 +595,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Oct 06 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.5.6-alt1
+- v6.5.6 (2023-10-06).
+
 * Sat Sep 23 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.5.5-alt1
 - v6.5.5 (2023-09-23).
 
