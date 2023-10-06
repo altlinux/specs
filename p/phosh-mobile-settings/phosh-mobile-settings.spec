@@ -1,8 +1,8 @@
-%define gmobile_ver f4d4e57
+%define gmobile_ver v0.0.3
 %define xdg_name org.sigxcpu.MobileSettings
 
 Name: phosh-mobile-settings
-Version: 0.31.0
+Version: 0.32.0
 Release: alt1
 
 Summary: Mobile Settings App for phosh and related components
@@ -14,7 +14,7 @@ Vcs: https://gitlab.gnome.org/guidog/phosh-mobile-settings.git
 Source: https://gitlab.gnome.org/guidog/phosh-mobile-settings/-/archive/v%version/phosh-mobile-settings-v%version.tar.gz
 Source1: gmobile-%gmobile_ver.tar
 
-Requires: phosh lm_sensors3
+Requires: dconf lm_sensors3
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: gcc-c++ meson
@@ -64,6 +64,9 @@ mv gmobile-%gmobile_ver subprojects/gmobile
 
 
 %changelog
+* Thu Oct 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.32.0-alt1
+- 0.32.0
+
 * Sun Oct 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.31.0-alt1
 - first build for Sisyphus
 

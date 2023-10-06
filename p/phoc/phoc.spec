@@ -1,13 +1,13 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.31
+%define ver_major 0.32
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
 
 %define dev_uid 500
 %define wlroots_ver 0.16.2
-%define gmobile_ver f4d4e57
+%define gmobile_ver v0.0.3
 
 # since 0.30 system 0.16 may be used but patched version required
 %def_enable embed_wlroots
@@ -121,6 +121,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Thu Oct 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.32.0-alt1
+- 0.32.0
+
 * Mon Sep 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.31.0-alt1
 - 0.31.0
 
