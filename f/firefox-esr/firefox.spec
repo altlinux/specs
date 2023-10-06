@@ -9,14 +9,18 @@
 %define nss_version   3.86
 %define rust_version  1.65.0
 %define cargo_version 1.65.0
+%ifarch loongarch64
+%define llvm_version 16.0
+%else
 %define llvm_version  15.0
+%endif
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR version)
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
 Version: 115.3.1
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -50,6 +54,12 @@ Patch009: 0009-bmo-1559213-Support-system-av1.patch
 Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch011: 0011-ALT-fix-double_t-redefinition.patch
 Patch012: 0012-build-Disable-Werror.patch
+Patch016: 0016-xptcall-loongarch64.patch
+Patch017: 0017-build-config-loongarch64.patch
+Patch018: 0018-rust-loongarch64.patch
+Patch019: 0019-libwebrtc-loongarch64.patch
+Patch021: 0021-rust-authenticator.patch
+Patch022: 0022-rust-update-checksums.patch
 ### End Patches
 
 %ifndef build_parallel_jobs
@@ -66,7 +76,11 @@ BuildRequires(pre): browser-plugins-npapi-devel
 BuildRequires: clang%llvm_version
 BuildRequires: clang%llvm_version-devel
 BuildRequires: llvm%llvm_version-devel
+%ifarch loongarch64
+BuildRequires: binutils
+%else
 BuildRequires: lld%llvm_version-devel
+%endif
 %ifarch armh %{ix86}
 BuildRequires: gcc
 BuildRequires: gcc-c++
@@ -249,8 +263,10 @@ cp -f %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
+%ifnarch loongarch64
 ac_add_options --enable-linker=lld
-%ifnarch armh
+%endif
+%ifnarch armh loongarch64
 ac_add_options --enable-lto=thin
 %endif
 %ifarch armh
@@ -512,7 +528,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Oct 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 115.3.1-alt2
+- Support LoongArch architecture (lp64d ABI).
+
 * Fri Sep 29 2023 Pavel Vasenkov <pav@altlinux.org> 115.3.1-alt1
+--
 - New ESR version.
 - Security fixes
   + CVE-2023-5168 Out-of-bounds write in FilterNodeD2D1
