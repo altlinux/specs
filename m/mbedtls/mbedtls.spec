@@ -1,11 +1,11 @@
-%define __nprocs 1
-%define so_tls_version 19
-%define so_crypto_version 14
-%define so_x509_version 5
+%define optflags_lto %nil
+%define so_tls_version 20
+%define so_crypto_version 15
+%define so_x509_version 6
 %def_disable static
 
 Name: mbedtls
-Version: 3.4.1
+Version: 3.5.0
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -88,6 +88,9 @@ Cryptographic utilities based on mbed TLS
 
 %prep
 %setup
+%ifarch %ix86
+%add_optflags -mpclmul -msse2 -maes
+%endif
 %ifarch %e2k
 # unsupported as of lcc 1.25.17
 sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
@@ -123,21 +126,25 @@ rm -rf %buildroot%_bindir
 
 %files -n lib%name-devel
 %doc ChangeLog LICENSE README.md
-%dir %_includedir/%name
-%_includedir/%name/*.h
-%dir %_includedir/psa
-%_includedir/psa/*h
+%_includedir/%name
+%_includedir/psa
+%_includedir/everest
 %_libdir/libmbedcrypto.so
 %_libdir/lib%name.so
 %_libdir/libmbedx509.so
-%dir %_libdir/cmake/MbedTLS
-%_libdir/cmake/MbedTLS/*.cmake
+%_libdir/cmake/MbedTLS
+%if_disabled static
+%_libdir/libeverest.a
+%_libdir/libp256m.a
+%endif
 
 %if_enabled static
 %files -n lib%name-devel-static
 %_libdir/libmbedcrypto.a
 %_libdir/lib%name.a
 %_libdir/libmbedx509.a
+%_libdir/libeverest.a
+%_libdir/libp256m.a
 %endif
 
 %files utils
@@ -145,6 +152,9 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Thu Oct 05 2023 Nazarov Denis <nenderus@altlinux.org> 3.5.0-alt1
+- New version 3.5.0.
+
 * Fri Aug 04 2023 Nazarov Denis <nenderus@altlinux.org> 3.4.1-alt1
 - New version 3.4.1.
 
