@@ -2,10 +2,11 @@
 %define oname persistent
 
 %def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 5.0
-Release: alt2
+Version: 5.1
+Release: alt1
 
 Summary: Translucent persistent objects
 License: ZPL-2.1
@@ -15,17 +16,20 @@ Vcs: https://github.com/zopefoundation/persistent.git
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-objects.inv
 BuildRequires: python3-module-repoze.sphinx.autointerface
-BuildRequires: python3-dev
+BuildRequires: python3-module-sphinx_rtd_theme
+%endif
 %if_with check
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-manuel
 BuildRequires: python3-module-manuel-tests
+BuildRequires: python3-module-cffi
 %endif
 
 %py3_provides persistent.TimeStamp
@@ -67,9 +71,11 @@ This package contains the files needed for binding the persistent C module.
 %prep
 %setup
 
+%if_with docs
 sed -i 's|sphinx-build|py3_sphinx-build|' docs/Makefile
 %prepare_sphinx3 .
 ln -s ../objects.inv3 docs/
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -83,14 +89,15 @@ install -p -m644 src/persistent/_compat.h \
 # Don't bother with development files
 rm %buildroot%python3_sitelibdir/%oname/*.c
 
+%if_with docs
 # Build documentation
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
-
 rm -f docs/_build/html/.buildinfo
+%endif
 
 %check
-%tox_check_pyproject
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt README.rst CHANGES.rst
@@ -99,8 +106,10 @@ rm -f docs/_build/html/.buildinfo
 %exclude %python3_sitelibdir/%oname/test*
 %exclude %python3_sitelibdir/%oname/*.h
 
+%if_with docs
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %files tests
 %python3_sitelibdir/%oname/test*
@@ -110,6 +119,9 @@ rm -f docs/_build/html/.buildinfo
 %python3_sitelibdir/%oname/*.h
 
 %changelog
+* Fri Oct 06 2023 Anton Vyatkin <toni@altlinux.org> 5.1-alt1
+- New version 5.1.
+
 * Sun Jun 04 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt2
 - Package split, create devel package (Closes: #46375).
 
