@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		telegraf
-Version:	1.27.1
+Version:	1.28.2
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -20,7 +20,7 @@ Source104: telegraf.tmpfiles
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.20
+BuildRequires: rpm-build-golang golang >= 1.21
 
 %description
 Telegraf is an agent written in Go for collecting, processing, aggregating, and writing metrics.
@@ -52,10 +52,13 @@ export VERSION=%version
 export COMMIT=%release
 export BRANCH=altlinux
 
-CGO_ENABLED=0 GOGC=off go install -ldflags " \
+CGO_ENABLED=0 go install -ldflags " \
     -X $INTERNAL_PKG.Version=$VERSION \
     -X $INTERNAL_PKG.Commit=$COMMIT \
     -X $INTERNAL_PKG.Branch=$BRANCH \
+%ifarch %arm %ix86 %mips32
+    -w -s \
+%endif
     " -a ./cmd/telegraf
 popd
 
@@ -112,6 +115,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 1.28.2-alt1
+- 1.28.2
+
 * Fri Jun 30 2023 Alexey Shabalin <shaba@altlinux.org> 1.27.1-alt1
 - 1.27.1
 
