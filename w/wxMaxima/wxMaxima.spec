@@ -1,5 +1,5 @@
 Name: wxMaxima
-Version: 23.08.0
+Version: 23.10.0
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -83,6 +83,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_datadir/metainfo/*wxMaxima.appdata.xml
 
 %changelog
+* Wed Oct 04 2023 Andrey Cherepanov <cas@altlinux.org> 23.10.0-alt1
+- New version.
+
 * Sun Aug 20 2023 Andrey Cherepanov <cas@altlinux.org> 23.08.0-alt1
 - New version.
 
