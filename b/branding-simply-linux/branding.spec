@@ -69,8 +69,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.1.990
-Release: alt3
+Version: 10.1.991
+Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 %ifarch %ix86 x86_64
@@ -529,6 +529,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_datadir/install3/*
 
 %changelog
+* Fri Oct 06 2023 Mikhail Efremov <sem@altlinux.org> 10.1.991-alt1
+- slideshow: Fix documentation link.
+
 * Fri Sep 22 2023 Mikhail Efremov <sem@altlinux.org> 10.1.990-alt3
 - slideshow: Fixed Russian slide 6.
 
