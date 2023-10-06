@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230926
+Version: 20231004
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,18 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Fri Oct 06 2023 Cronbuild Service <cronbuild@altlinux.org> 20231004-alt1
+- upstream changes (GIT 5105ff4b):
+  + Add firmware file for Intel Bluetooth AX211 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth AX201 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth AX211 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth AX210 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth 9560 (thx Lokendra Singh)
+  + Update firmware file for Intel Bluetooth 9260 (thx Lokendra Singh)
+  + i915: Update MTL DMC to v2.17 (thx Gustavo Sousa)
+  + iwlwifi: add FWs for new GL and MA device types with multiple
+    RF modules (thx Gregory Greenman)
+
 * Thu Sep 28 2023 Cronbuild Service <cronbuild@altlinux.org> 20230926-alt1
 - upstream changes (GIT 8b855f37):
   + amd_pmf: Add initial PMF TA for Smart PC Solution Builder (thx Shyam Sundar S K)
