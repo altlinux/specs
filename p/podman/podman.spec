@@ -4,11 +4,11 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     podman
-Version:  4.5.1
+Version:  4.7.1
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
-License:  Apache-2.0
+License:  Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0
 Group:    System/Configuration/Other
 # https://github.com/containers/podman.git
 Url:      https://podman.io/
@@ -17,7 +17,7 @@ Source:   %name-%version.tar
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang rpm-macros-systemd
-BuildRequires: golang go-md2man
+BuildRequires: golang go-md2man man-db
 BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libgpg-error-devel libbtrfs-devel
 BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
 BuildRequires: libassuan-devel libsystemd-devel libsubid-devel
@@ -121,6 +121,7 @@ rm -f %buildroot%_man5dir/dockerfile*
 
 %files
 %_bindir/%name
+%_bindir/%{name}sh
 %_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
@@ -152,6 +153,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 4.7.1-alt1
+- New version 4.7.1.
+
 * Wed Jul 05 2023 Alexey Shabalin <shaba@altlinux.org> 4.5.1-alt1
 - New version 4.5.1.
 
