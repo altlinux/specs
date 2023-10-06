@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.9
+Version: 10.0.10
 Release: alt1
 
 Summary: IT and asset management software
@@ -54,7 +54,7 @@ Group: Networking/Other
 Requires: %name = %version-%release
 Requires: php8.1
 Requires: php8.1-curl, php8.1-fileinfo, php8.1-gd2, php8.1-json, php8.1-mbstring, php8.1-mysqlnd-mysqli, php8.1-session, php8.1-zlib, php8.1-intl
-Requires: php8.1-bz2, php8.1-exif, php8.1-ldap, php8.1-opcache, php8.1-openssl, php8.1-sodium, php8.0-xmlreader, php8.1-zip
+Requires: php8.1-bz2, php8.1-exif, php8.1-ldap, php8.1-opcache, php8.1-openssl, php8.1-sodium, php8.1-xmlreader, php8.1-zip
 
 %description php8.1
 php8.1 dependencies for %name
@@ -65,7 +65,7 @@ Group: Networking/Other
 Requires: %name = %version-%release
 Requires: php8.2
 Requires: php8.2-curl, php8.2-fileinfo, php8.2-gd2, php8.2-json, php8.2-mbstring, php8.2-mysqlnd-mysqli, php8.2-session, php8.2-zlib, php8.2-intl
-Requires: php8.2-bz2, php8.2-exif, php8.2-ldap, php8.2-opcache, php8.2-openssl, php8.2-sodium, php8.0-xmlreader, php8.2-zip
+Requires: php8.2-bz2, php8.2-exif, php8.2-ldap, php8.2-opcache, php8.2-openssl, php8.2-sodium, php8.2-xmlreader, php8.2-zip
 
 %description php8.2
 php8.2 dependencies for %name
@@ -180,6 +180,21 @@ fi
 %files php8.2
 
 %changelog
+* Sun Oct 01 2023 Pavel Zilke <zidex@altlinux.org> 10.0.10-alt1
+- New version 10.0.10
+- This release fixes a security issue that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2023-42802 : Unallowed PHP script execution
+ + CVE-2023-41320 : Account takeover via SQL Injection in UI layout preferences
+ + CVE-2023-41326 : Account takeover via Kanban feature
+ + CVE-2023-41324 : Account takeover through API
+ + CVE-2023-42462 : File deletion through document upload process
+ + CVE-2023-41321 : Sensitive fields enumeration through API
+ + CVE-2023-41322 : Privilege Escalation from technician to super-admin
+ + CVE-2023-41323 : Users login enumeration by unauthenticated user
+ + CVE-2023-41888 : Phishing through a login page malicious URL
+ + CVE-2023-42461 : SQL injection in ITIL actors
+
 * Thu Jul 13 2023 Pavel Zilke <zidex@altlinux.org> 10.0.9-alt1
 - New version 10.0.9
 - This release fixes several security issues that has been recently discovered. Update is recommended!
