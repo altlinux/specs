@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.31
+%define ver_major 0.32
 %define beta %nil
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -191,6 +191,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Thu Oct 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.32.0-alt1
+- 0.32.0
+
 * Mon Sep 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.31.1-alt1
 - 0.31.1
 
