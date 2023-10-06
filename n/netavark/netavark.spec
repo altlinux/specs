@@ -3,7 +3,7 @@
 
 Name: netavark
 Version: 1.8.0
-Release: alt1
+Release: alt2
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
 Group: Development/Other
@@ -81,6 +81,9 @@ popd
 %_unitdir/*
 
 %changelog
+* Fri Oct 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.8.0-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt1
 - New version 1.8.0.
 
