@@ -5,8 +5,8 @@
 
 
 Name: sudo
-Version: 1.9.14p1
-Release: alt2.1
+Version: 1.9.14p3
+Release: alt1
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -263,6 +263,16 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Sat Sep 23 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.14p3-alt1
+- Update to latest stable release with regressions fixes.
+- Fixed a bug introduced in sudo 1.9.14 that affects matching sudoers rules
+  containing a Runas_Spec with an empty Runas user.
+- Fixed a problem with "stair-stepped" output when piping or redirecting the
+  output of a sudo command that takes user input.
+- Fixed a crash introduced in version 1.9.14 when running a command with a NULL
+  argv[0] if "log_subcmds" or "intercept" is enabled in sudoers.
+- Adapted the sudo Python plugin test output to match Python 3.12.
+
 * Fri Sep 22 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.9.14p1-alt2.1
 - NMU: Add knobs for building w/o selinux and audit (thx asheplyakov@).
 
