@@ -10,7 +10,7 @@
 %def_enable checkfs
 
 Name: partclone
-Version: 0.3.25
+Version: 0.3.27
 Release: alt1
 
 Summary: File System Clone Utilities
@@ -109,6 +109,9 @@ popd
 %_man8dir/*
 
 %changelog
+* Thu Oct 05 2023 Ivan A. Melnikov <iv@altlinux.org> 0.3.27-alt1
+- 0.3.27
+
 * Wed Aug 30 2023 Ivan A. Melnikov <iv@altlinux.org> 0.3.25-alt1
 - 0.3.25
 - disable reiserfs4 on loongarch64, %%mips and ppc64le
