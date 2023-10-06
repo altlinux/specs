@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.72.1
+Version: 1.73.0
 Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.71.0
+%define r_ver 1.72.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -20,7 +20,7 @@ Patch0003: 0003-Fix-version-check.patch
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
-%global llvm_version 16.0
+%global llvm_version 17.0
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -433,7 +433,6 @@ rm -rf %rustdir
 %files cargo
 %doc src/tools/cargo/{LICENSE-APACHE,LICENSE-MIT,LICENSE-THIRD-PARTY,README.md}
 %_bindir/cargo
-%_libexecdir/cargo-credential-1password
 %_man1dir/cargo*.1*
 %_sysconfdir/bash_completion.d/cargo
 %_datadir/zsh/site-functions/_cargo
@@ -459,6 +458,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Fri Oct 06 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.73.0-alt1
+- New version (1.73.0).
+
 * Mon Sep 25 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.72.1-alt1
 - New version (1.72.1).
 
