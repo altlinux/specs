@@ -9,8 +9,8 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.4
-Release: alt2
+Version: %branch.6
+Release: alt1
 Source0: %origname-%version.tar
 License: BSD-3-Clause
 Group: Development/Python3
@@ -184,6 +184,12 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 4.2.6-alt1
+- New version 4.2.6.
+- Fixes for the following security vulnerabilities:
+  + CVE-2023-41164 Potential denial of service vulnerability in django.utils.encoding.uri_to_iri()
+  + CVE-2023-43665 Denial-of-service possibility in django.utils.text.Truncator
+
 * Thu Aug 31 2023 Alexey Shabalin <shaba@altlinux.org> 4.2.4-alt2
 - Update BR.
 
@@ -193,7 +199,7 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 * Wed Jul 12 2023 Anton Farygin <rider@altlinux.ru> 3.2.20-alt1
 - New version 3.2.19.
 - Fixes for the following security vulnerabilities:
-  + CVE-2023-36053: Potential regular expression denial of service vulnerability in EmailValidator/URLValidator
+  + CVE-2023-36053 Potential regular expression denial of service vulnerability in EmailValidator/URLValidator
 
 * Sat May 27 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.19-alt1
 - New version 3.2.19.
