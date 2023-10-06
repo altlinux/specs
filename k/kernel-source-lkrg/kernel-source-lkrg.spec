@@ -1,9 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+
 %define module_name lkrg
-%define module_version 0.9.6
+%define module_version 0.9.7
 
 Name: kernel-source-lkrg
 Version: %module_version
-Release: alt2
+Release: alt1
 
 Summary:  Linux Kernel Runtime Guard module sources
 
@@ -14,11 +16,13 @@ Url:  https://lkrg.org/
 VCS: https://github.com/lkrg-org/lkrg.git
 Source: %module_name-%version.tar
 Source1: %module_name.init
-Patch: %name-%version-%release.patch
 
 ExclusiveArch: aarch64 armh %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
-%{?!_without_check:%{?!_disable_check:BuildRequires: kernel-headers-modules-un-def}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: kernel-headers-modules-un-def
+BuildRequires: shellcheck
+}}
 BuildArch: noarch
 
 %description
@@ -52,13 +56,10 @@ detection). For process credentials, LKRG attempts to detect the exploit and
 take action before the kernel would grant the process access (such as open a
 file) based on the unauthorized credentials.
 
-This package contains common files fo Linux Kernel Runtime Guard.
+This package contains common files for Linux Kernel Runtime Guard.
 
 %prep
-%setup -q -c
-pushd %module_name-%version
-%patch -p1
-popd
+%setup -c
 cp -a %SOURCE1 .
 
 %install
@@ -97,6 +98,9 @@ enable lkrg.service
 EOF
 
 %check
+bash -n lkrg.init
+shellcheck -x lkrg.init
+
 # Just a test build on un-def kernel.
 cd %module_name-%version
 for V in $(ls /lib/modules); do
@@ -115,6 +119,12 @@ fi
 %preun -n lkrg-common
 %preun_service lkrg
 
+%pre
+[ -d /.host -a -d /.in -a -d /.out ] || {
+	echo >&2 '%name is not allowed outside hasher environments'
+	exit 1
+}
+
 %files
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
@@ -125,6 +135,13 @@ fi
 %_presetdir/30-lkrg.preset
 
 %changelog
+* Thu Oct 05 2023 Vitaly Chikunov <vt@altlinux.org> 0.9.7-alt1
+- Update to v0.9.7 (2023-09-14).
+- Init script will not unload module on 'stop' anymore.
+- gear: Simplify maintenance by read-tree merging upstream.
+- spec: Do not allow installing sources outside of Hasher.
+- spec: Add syntax check of shell script.
+
 * Fri Feb 10 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.6-alt2
 - Add support for RHEL9.2 5.14.0-248.el9.
 

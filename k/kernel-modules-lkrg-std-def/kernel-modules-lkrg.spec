@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 %define module_name	lkrg
-%define module_version	0.9.6
-%define module_release	alt2
+%define module_version	0.9.7
+%define module_release	alt1
 
 %define flavour		std-def
 %define karch		aarch64 %ix86 x86_64
@@ -14,26 +16,21 @@ Summary: Linux Kernel Runtime Guard module
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
-License: GPL-2.0
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
-URL: https://www.openwall.com/lkrg/
-
-%define qemu_pkg %_arch
-%ifarch %ix86 x86_64
-%define qemu_pkg x86
-%endif
-%ifarch %arm
-%define qemu_pkg arm
-%endif
+Url: https://lkrg.org/
+VCS: https://github.com/lkrg-org/lkrg.git
 
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
-%{?!_without_check:%{?!_disable_check:BuildRequires(pre): rpm-build-kernel-perms}}
-%{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-%qemu_pkg-core ipxe-roms-qemu glibc-devel-static kernel-image-%flavour}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: kernel-image-%flavour = %kepoch%kversion-%krelease
+BuildRequires: rpm-build-vm
+}}
 
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -66,142 +63,30 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 install -D -p -m0644 lkrg.ko %buildroot%module_dir/lkrg.ko
 
 %check
-# based on %%check of kernel-image-%%flavour.spec
-KernelVer=%kversion-%flavour-%krelease
-mkdir -p test
-cd test
-lkrg_trigger=/proc/sys/lkrg/trigger
-failmsg="LKRG test failed"
-%__cc %optflags -s -static -xc -o init - <<__EOF__
-#include <errno.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <linux/module.h>
-#include <sys/mount.h>
-#include <sys/reboot.h>
-#include <sys/syscall.h>
-#define finit_module(fd, param_values, flags) syscall(__NR_finit_module, fd, param_values, flags)
-#define delete_module(name, flags) syscall(__NR_delete_module, name, flags)
-int main()
-{
-	int fd = open("lkrg.ko", O_RDONLY);
-
-	if (fd == -1) {
-		perror("$failmsg lkrg.ko");
-		goto exit;
-	}
-
-	/* always returns -1 caused module verification */
-	finit_module(fd, "log_level=3", MODULE_INIT_IGNORE_MODVERSIONS|MODULE_INIT_IGNORE_VERMAGIC);
-	close(fd);
-
-	sleep(2);
-
-	if (mount("proc", "/proc", "proc", 0, NULL) == -1) {
-		perror("$failmsg mount");
-		goto exit;
-	}
-
-	fd = open("$lkrg_trigger", O_WRONLY);
-	if (fd == -1) {
-		perror("$failmsg $lkrg_trigger");
-		goto exit;
-	}
-
-	int r = write(fd, "1\n", sizeof("1\n"));
-	close(fd);
-
-	if (r == -1) {
-		perror("$failmsg write");
-		goto exit;
-	}
-
-	fd = open("fuse.ko", O_RDONLY);
-	if (fd == -1) {
-		perror("$failmsg fuse.ko");
-		goto exit;
-	}
-
-	finit_module(fd, NULL, MODULE_INIT_IGNORE_MODVERSIONS|MODULE_INIT_IGNORE_VERMAGIC);
-	close(fd);
-
-	sleep(2);
-
-exit:
-	delete_module("fuse", 0);
-	delete_module("lkrg", 0);
-
-	reboot(RB_POWER_OFF);
-	pause();
-}
-__EOF__
-mkdir -p proc
-cp -a %buildroot%module_dir/lkrg.ko lkrg.ko
-cp -a /lib/modules/%kversion-%flavour-%krelease/kernel/fs/fuse/fuse.ko fuse.ko
-find init fuse.ko lkrg.ko proc -print | cpio -H newc -o | gzip -8n > initrd.img.gz
-qemu_arch=%_arch
-qemu_opts=""
-console=ttyS0
-timeout=600
-%ifarch %ix86
-qemu_arch=i386
-%endif
-%ifarch aarch64
-qemu_opts="-machine accel=tcg,type=virt -cpu cortex-a57"
-console=ttyAMA0
-%endif
-%ifarch %arm
-qemu_arch=arm
-qemu_opts="-machine accel=tcg,type=virt"
-console=ttyAMA0
-timeout=1800
-%endif
-timeout --foreground "$timeout" qemu-system-"$qemu_arch" -m 512 $qemu_opts -kernel /boot/vmlinuz-$KernelVer -nographic -append console="$console no_timer_check" -initrd initrd.img.gz > boot.log &&
-grep -qF "LKRG initialized successfully" boot.log &&
-grep -qF "LKRG unloaded" boot.log &&
-grep -qE '^.*Power down' boot.log &&
-! grep -qF "$failmsg" &&
-! grep -qF 'Kernel panic' || {
+timeout 60 \
+vm-run --kvm=cond --kernel=%flavour --sbin --loglevel=debug "
+	insmod lkrg.ko log_level=3
+	sleep 2
+	echo 1 > /proc/sys/lkrg/trigger
+	modprobe -a fuse
+	sleep 2
+	modprobe -r fuse
+	rmmod lkrg
+" &> boot.log &&
+grep 'LKRG initialized successfully' boot.log &&
+grep 'LKRG unloaded' boot.log &&
+grep 'Power down' boot.log &&
+! grep 'Kernel panic|BUG:|WARNING:|ALERT:|FAULT:|FATAL:|Oops|Call Trace' || {
 	cat >&2 boot.log
 	exit 1
 }
+# Maybe interesting to see even on successful build.
+grep -i 'LKRG' boot.log
 
 %post
 if [ $1 -eq 2 ]; then
 	service lkrg condrestart
 fi
-
-%preun
-# do not stop service if module was not build for currently running kernel
-# do not unregister service: the other kernel flavour module still can be installed
-if [ $1 -eq 0 ] && [ "$(uname -r)" = "%kversion-%flavour-%krelease" ]; then
-	service lkrg stop
-fi
-
-# {{{
-# hacks to keep LKRG running to prevent it stopping during remove-old-kernel
-%triggerun -- kernel-modules-lkrg-std-def < 0.9.1-alt1
-if [ "$2" -gt 0 ]; then
-	/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
-fi
-
-%triggerun -- kernel-modules-lkrg-un-def < 0.9.1-alt1
-if [ "$2" -gt 0 ]; then
-	/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
-fi
-
-%triggerun -- kernel-modules-lkrg-std-debug < 0.9.1-alt1
-if [ "$2" -gt 0 ]; then
-	/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
-fi
-
-%triggerun -- kernel-modules-lkrg-std-pae < 0.9.1-alt1
-if [ "$2" -gt 0 ]; then
-	/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
-fi
-# }}}
 
 %files
 %doc README
@@ -211,6 +96,12 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Fri Oct 05 2023 Vitaly Chikunov <vt@altlinux.org> 0.9.7-alt1
+- Update to 0.9.7 (2023-09-14).
+- Update License, URL, and VCS tags.
+- Remove unnecessary 'stop'-with-unload workarounds.
+- spec: Change testing to using vm-run.
 
 * Wed Mar 22 2023 Vitaly Chikunov <vt@altlinux.org> 0.9.6-alt2
 - Remove armh from build architectures.
