@@ -89,7 +89,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt2
+Release: alt3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -103,6 +103,7 @@ Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
 Patch3: llvm-alt-fix-linking.patch
 Patch4: llvm-alt-triple.patch
 Patch5: compiler-rt-alt-i586-arch.patch
+Patch6: clang-AST-Use-explicit-type-erasure.patch
 Patch7: clang-alt-aarch64-dynamic-linker-path.patch
 Patch8: clang-tools-extra-alt-gcc-0001-clangd-satisfy-ALT-gcc-s-Werror-return-type.patch
 Patch10: llvm-10-alt-python3.patch
@@ -666,6 +667,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch3 -p1 -b .alt-fix-linking
 %patch4 -p1 -b .alt-triple
 %patch5 -p1 -b .alt-i586-arch
+%patch6 -p2
 %patch7 -p1 -b .alt-aarch64-dynamic-linker
 %patch8 -p1
 %patch10 -p1
@@ -1286,6 +1288,11 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Fri Oct 06 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.2-alt3
+- Apply new patch for compat with g++-13 -Werror:
+  + clang-AST-Use-explicit-type-erasure.patch
+- Restore the enforce-DWARF4 patch.
+
 * Wed Oct 04 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.0.2-alt2
 - spec: build lld on LoongArch (LoongArch targets are already supported).
 - spec: build llvm with clang on LoongArch.
