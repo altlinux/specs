@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name python-lsp-server
+%define mod_name pylsp
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.0
-Release: alt2
+Version: 1.8.1
+Release: alt1
 Summary: Python Language Server for the Language Server Protocol
 License: MIT
 Group: Development/Python3
@@ -46,11 +47,15 @@ A Python 3.7+ implementation of the Language Server Protocol.
 %pyproject_run_pytest -ra -o=addopts=-Wignore test
 
 %files
-%_bindir/pylsp
-%python3_sitelibdir/pylsp/
+%doc LICENSE CHANGELOG.md
+%_bindir/%mod_name
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 06 2023 Anton Zhukharev <ancieg@altlinux.org> 1.8.1-alt1
+- Updated to 1.8.1.
+
 * Sat Sep 09 2023 Anton Zhukharev <ancieg@altlinux.org> 1.8.0-alt2
 - Bumped release.
 
