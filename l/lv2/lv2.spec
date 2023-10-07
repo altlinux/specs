@@ -3,7 +3,7 @@
 
 Name: lv2
 Version: 1.18.10
-Release: alt1
+Release: alt1.1
 
 Summary: Audio Plugin Standard
 # lv2specgen template.html is CC-AT-SA
@@ -14,6 +14,7 @@ Url: http://lv2plug.in
 Vcs: https://github.com/lv2/lv2.git
 Source: http://lv2plug.in/spec/lv2-%version.tar.xz
 Source1: lv2-1.18.4-include-symlinks
+Patch1: %name-1.18.10-alt-codespell.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson
@@ -88,6 +89,7 @@ Example LV2 audio plugins
 
 %prep
 %setup
+%patch1
 # Fix wrong interpreter in lv2specgen.py
 sed -i '1s|^#!.*|#!%__python3|' lv2specgen/lv2specgen.py
 
@@ -146,6 +148,9 @@ sed -i '1s|^#!.*|#!%__python3|' lv2specgen/lv2specgen.py
 %_docdir/%name/
 
 %changelog
+* Sat Oct 07 2023 Yuri N. Sedunov <aris@altlinux.org> 1.18.10-alt1.1
+- fixed misspellings found by codespell-2.2.6
+
 * Sat Sep 10 2022 Yuri N. Sedunov <aris@altlinux.org> 1.18.10-alt1
 - 1.18.8 (ported to Meson build system)
 
