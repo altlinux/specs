@@ -1,10 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 45
 %define beta %nil
 
 Name: orca
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
@@ -91,7 +91,7 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS ChangeLog NEWS README* TODO
 %_bindir/%name
 %python3_sitelibdir/%name/
 %_iconsdir/hicolor/*/apps/%name.png
@@ -103,6 +103,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Sat Oct 07 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
+- updated to ORCA_45_1-2-g4471fdc13
+
 * Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
