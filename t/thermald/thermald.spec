@@ -6,7 +6,7 @@
 %def_with monitor
 
 Name: thermald
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 Summary: Thermal daemon for IA
@@ -20,8 +20,6 @@ Url: https://github.com/intel/thermal_daemon
 Source: %name-%version.tar
 Source1: thermald.init
 Source2: %name-monitor.svg
-
-Patch1: thermald-2.4.6-alt-ui-cosmetic-fixes-to-avoid-label-cut-in-dialogs.patch
 
 ExclusiveArch: x86_64
 
@@ -70,9 +68,8 @@ embedded devices.
 
 %prep
 %setup
-#patch1 -p2
 
-sed -i 's/LIBS += -lqcustomplot/LIBS += -lqcustomplot-qt5/' \
+sed -i 's/LIBS += -lQCustomPlot/LIBS += -lqcustomplot-qt5/' \
   tools/thermal_monitor/ThermalMonitor.pro
 
 %build
@@ -102,10 +99,6 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 # Install management-script
 install -Dpm 0755 tools/thermald_set_pref.sh \
     %buildroot%_bindir/%name-set-pref
-
-# DBus config belongs into %%_datadir
-mkdir -p %buildroot%_datadir/dbus-1
-mv -f %buildroot%_sysconfdir/dbus-1/* %buildroot%_datadir/dbus-1/
 
 # Install tmpfiles.d
 mkdir -p alt_addons
@@ -188,6 +181,10 @@ exit 0
 %endif
 
 %changelog
+* Sat Oct 07 2023 Anton Midyukov <antohami@altlinux.org> 2.5.4-alt1
+- new version 2.5.4
+- cleaup spec
+
 * Mon Jul 10 2023 Anton Midyukov <antohami@altlinux.org> 2.5.3-alt1
 - new version 2.5.3
 - Update License tag (GPLv2+ -> GPL-3.0-or-later)
