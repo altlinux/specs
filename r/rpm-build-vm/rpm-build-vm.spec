@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.57
+Version: 1.58
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -239,6 +239,13 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Sat Oct 07 2023 Vitaly Chikunov <vt@altlinux.org> 1.58-alt1
+- Fix "adding" built-in modules into initrd (centos).
+- Fix booting ext4 on kernels where it isn't built-in (ovz-el7).
+- Do not ignore initrd generation errors.
+- Allow adding arbitrary files into initrd (such as toybox).
+- initrd: Add support for rdshell and rddebug.
+
 * Mon Sep 25 2023 Vitaly Chikunov <vt@altlinux.org> 1.57-alt1
 - Enhance and document --loglevel= (for boot debugging).
 - Run (eval) command in a subshell with 'set -ex' by default.
