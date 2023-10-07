@@ -5,8 +5,8 @@
 %def_disable static
 
 Name: %pkgname-compat
-Version: 2.28.4
-Release: alt1.1
+Version: 2.28.5
+Release: alt1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
@@ -139,6 +139,9 @@ sed -i 's/-Werror/-Wno-error/' CMakeLists.txt
 %endif
 
 %changelog
+* Sat Oct 07 2023 Nazarov Denis <nenderus@altlinux.org> 2.28.5-alt1
+- Version 2.28.5
+
 * Sun Aug 06 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.28.4-alt1.1
 - Fixed build for Elbrus
 
