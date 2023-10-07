@@ -7,13 +7,12 @@
 Name: syncthing
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
-Version: 1.24.0
+Version: 1.25.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/Other
 Url: https://github.com/syncthing/syncthing
 
-Packager: Anton Midyukov <antohami@altlinux.org>
 # Source-url: https://github.com/syncthing/syncthing/releases/download/v%version/syncthing-source-v%version.tar.gz
 Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-golang rpm-build-golang
@@ -198,6 +197,10 @@ export GO111MODULE=off
 %_man1dir/strelaysrv*
 
 %changelog
+* Sat Oct 07 2023 Anton Midyukov <antohami@altlinux.org> 1.25.0-alt1
+- new version (1.25.0) with rpmgs script
+- cleanup Packager
+
 * Thu Sep 07 2023 Anton Midyukov <antohami@altlinux.org> 1.24.0-alt1
 - new version (1.24.0) with rpmgs script
 
