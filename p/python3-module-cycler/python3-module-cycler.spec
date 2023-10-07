@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 
 Summary: Composable style cycles
@@ -48,6 +48,9 @@ iteration logic.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Oct 07 2023 Anton Vyatkin <toni@altlinux.org> 0.12.1-alt1
+- new version 0.12.1
+
 * Fri Sep 29 2023 Anton Vyatkin <toni@altlinux.org> 0.12.0-alt1
 - new version 0.12.0 (add tests from upstream github)
 
