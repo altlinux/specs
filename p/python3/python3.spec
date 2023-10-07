@@ -95,8 +95,8 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with desktop_file
 
 Name: python3
-Version: %{pybasever}.4
-Release: alt3
+Version: %{pybasever}.6
+Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -623,16 +623,11 @@ rm -v %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_events*.
 rm -v %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_utils*.py*
 rm -v %buildroot%pylibdir/test/{,__pycache__/}test_winconsoleio*.py*
 rm -v %buildroot%pylibdir/test/{,__pycache__/}test_msilib*.py*
-
-# Get rid of bad* tests -- just skip them:
-%add_findreq_skiplist %pylibdir/test/bad*.py
-%add_findprov_skiplist %pylibdir/test/bad*.py
-
+# Get rid of bad* tests
+rm -v %buildroot%pylibdir/test/test_future_stmt/bad*.py
 # Get rid of windows-related stuff
-%add_findreq_skiplist %pylibdir/distutils/*msvc*compiler*.py*
-%add_findprov_skiplist %pylibdir/distutils/*msvc*compiler*.py*
+rm -v %buildroot%pylibdir/distutils/*msvc*compiler*.py*
 rm -v %buildroot%tool_dir/scripts/win_add2path.py
-
 # Get rid of crap
 rm -v -r %buildroot%pylibdir/ctypes/macholib/fetch_macholib
 rm -v %buildroot%tool_dir/scripts/md5sum.py
@@ -1088,8 +1083,11 @@ $(pwd)/python -m test.regrtest \
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Tue Oct 03 2023 Grigory Ustinov <grenka@altlinux.org> 3.11.6-alt1
+- Updated to upstream version 3.11.6 (thx to kotopesutility@).
+
 * Sat Sep 02 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.11.4-alt3
-- Fixed FTBFS with recent autoconf (thx to iv).
+- Fixed FTBFS with recent autoconf (thx to iv@).
 
 * Tue Jun 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.11.4-alt2
 - Changed spec:
