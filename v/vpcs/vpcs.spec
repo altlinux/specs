@@ -1,16 +1,14 @@
 Name: vpcs
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: Virtual PC Simulator
-License: BSD
+License: BSD-2-Clause
 Group: Networking/Other
 Url: https://github.com/GNS3/vpcs
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
 Source: %name-%version.tar
-Patch0: %name-0.8.2-external-cflag.patch
+Patch: %name-%version-%release.patch
 
 %description
 The VPCS can simulate up to 9 PCs. You can ping/traceroute them, or ping/traceroute
@@ -47,6 +45,11 @@ cp man/vpcs.1.xz %buildroot/%_man1dir/
 %_man1dir/*.1.*
 
 %changelog
+* Sat Oct 07 2023 Anton Midyukov <antohami@altlinux.org> 0.8.3-alt1
+- new version 0.8.3
+- clean Packager
+- fix License (BSD -> BSD-2-Clause)
+
 * Fri Jan 07 2022 Anton Midyukov <antohami@altlinux.org> 0.8.2-alt1
 - new version 0.8.2
 
