@@ -1,23 +1,23 @@
 Name: cool-retro-term
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Cool Retro Terminal
-License: GPLv3
+License: GPLv3+
 Group: Terminals
 
 Url: https://github.com/Swordfish90/cool-retro-term
 Source0: %name-%version.tar.gz
-Source1: qmltermwidget.tar
+#Source1: qmltermwidget.tar
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Gui)
 BuildRequires: pkgconfig(Qt5Quick)
-BuildRequires: qt5-declarative-devel
+BuildRequires: qt5-declarative-devel qt5-qmltermwidget 
 BuildRequires: desktop-file-utils qt5-quickcontrols2-devel
 
-Requires: qt5-graphicaleffects
+Requires: qt5-graphicaleffects qt5-qmltermwidget 
 Requires: qt5-quickcontrols qt5-quickcontrols2
 
 %description
@@ -26,7 +26,11 @@ of the old cathode tube screens. It has been designed to be eye-candy,
 customizable, and reasonably lightweight.
 
 %prep
-%setup -a 1
+#setup -a 1
+%setup -q
+
+rm -rf ./qmltermwidget
+sed -e "s/SUBDIRS += qmltermwidget//" -i %{name}.pro
 
 %build
 qmake-qt5
@@ -44,11 +48,14 @@ desktop-file-install \
 %files
 %doc gpl-2.0.txt gpl-3.0.txt README.md
 %_bindir/%name
-%_libdir/qt5/qml/
+#_libdir/qt5/qml/
 %_datadir/applications/%name.desktop
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Sat Oct 07 2023 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt2
+- Build with system qt5-qmltermwidget  (Closes: #44546)
+
 * Sun Jan 30 2022 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 - Update url (Closes: #41687)
