@@ -5,14 +5,14 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      freexl
-Version:   1.0.6
-Release:   alt1_1
+Version:   2.0.0
+Release:   alt1
 Summary:   Library to extract data from within an Excel spreadsheet 
 License:   MPLv1.1 or GPLv2+ or LGPLv2+
-URL:       http://www.gaia-gis.it/FreeXL
+URL:       https://www.gaia-gis.it/fossil/freexl
 Source0:   http://www.gaia-gis.it/gaia-sins/%{name}-sources/%{name}-%{version}.tar.gz
 BuildRequires:  gcc
-BuildRequires: doxygen
+BuildRequires: doxygen libminizip-devel libminizip-devel libexpat-devel
 Source44: import.info
 Patch33: freexl-1.0.0d-alt-linkage.patch
 
@@ -87,6 +87,10 @@ rm -f %{buildroot}%{_libdir}/lib%{name}.la
 
 
 %changelog
+* Sat Oct 07 2023 Ilya Mashkin <oddity@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+- Update Url
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt1_1
 - update to new release by fcimport
 
