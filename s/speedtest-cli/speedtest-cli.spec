@@ -1,7 +1,7 @@
 %define git 22210ca
 %define name speedtest-cli
 %define version 2.1.4
-%define release alt0.1.g%{git}
+%define release alt0.2.g%{git}
 
 Name: %name
 Version: %version
@@ -51,6 +51,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Oct 07 2023 L.A. Kostis <lakostis@altlinux.ru> 2.1.4-alt0.2.g22210ca
+- set secure connection by default (upstream PR #800)
+
 * Wed Sep 28 2022 L.A. Kostis <lakostis@altlinux.ru> 2.1.4-alt0.1.g22210ca
 - GIT 22210ca (w/ python 3.10 support).
 
