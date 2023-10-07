@@ -1,5 +1,5 @@
 Name: netatalk
-Version: 3.1.17
+Version: 3.1.18
 Release: alt1
 
 Summary: Open Source Apple Filing Protocol(AFP) File Server
@@ -21,7 +21,7 @@ BuildRequires: cracklib-devel flex libacl-devel libattr-devel libavahi-devel
 BuildRequires: libdb4-devel libdbus-glib-devel libevent-devel libgcrypt-devel
 BuildRequires: libkrb5-devel libldap-devel libmysqlclient-devel libpam-devel
 BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6
-Requires: cracklib-words
+Requires: cracklib-words cracklib
 
 %description
 Netatalk is a freely-available Open Source AFP file server. A *NIX/*BSD
@@ -142,6 +142,9 @@ sh test/afpd/test.sh
 %_mandir/man*/netatalk-config.1*
 
 %changelog
+* Sat Oct 07 2023 Ilya Mashkin <oddity@altlinux.ru> 3.1.18-alt1
+- 3.1.18 (fixed CVE-2022-22995)
+
 * Thu Sep 28 2023 Ilya Mashkin <oddity@altlinux.ru> 3.1.17-alt1
 - 3.1.17 (fixed CVE-2023-42464, CVE-2022-23121, CVE-2022-23123,
    CVE-2022-43634 and CVE-2022-45188)
