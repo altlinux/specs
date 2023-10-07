@@ -17,8 +17,8 @@
 %endif
 
 Name: 	 thunderbird
-Version: 115.2.2
-Release: alt2
+Version: 115.3.1
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -564,6 +564,16 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Fri Oct 06 2023 Pavel Vasenkov <pav@altlinux.org> 115.3.1-alt1
+- New version.
+- Security fixes:
+  + CVE-2023-5168 Out-of-bounds write in FilterNodeD2D1
+  + CVE-2023-5169 Out-of-bounds write in PathOps
+  + CVE-2023-5171 Use-after-free in Ion Compiler
+  + CVE-2023-5174 Double-free in process spawning on Windows
+  + CVE-2023-5176 Memory safety bugs fixed in Firefox 118, Firefox ESR 115.3, and Thunderbird 115.3
+  + CVE-2023-5217 Heap buffer overflow in libvpx
+
 * Wed Sep 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 115.2.2-alt2
 - Support LoongArch architecture (lp64d ABI).
 
