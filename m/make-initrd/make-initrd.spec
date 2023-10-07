@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.38.0
-Release: alt2
+Release: alt3
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -71,6 +71,7 @@ AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
 Patch0001: 0001-Use-really-raw-output.patch
+Patch0002: 0002-initrd-scanmod-Handle-ENODATA-return-code.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -408,6 +409,9 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
 
 %changelog
+* Sat Oct 07 2023 Alexey Gladkov <legion@altlinux.ru> 2.38.0-alt3
+- Handle changes in kmod >= v31.
+
 * Sat Aug 19 2023 Alexey Gladkov <legion@altlinux.ru> 2.38.0-alt2
 - Use really raw output (ALT#47284).
 
