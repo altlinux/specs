@@ -1,6 +1,6 @@
 Name: flacon
 Version: 11.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -19,9 +19,7 @@ BuildRequires: libtag-devel
 BuildRequires: libuchardet-devel
 BuildRequires: qt5-tools-devel
 
-%ifnarch %arm ppc64le
 Requires: alacenc
-%endif
 Requires: faac
 Requires: flac
 Requires: lame
@@ -73,6 +71,9 @@ Extracts audio tracks from audio CD image to separate tracks.
 %_man1dir/%name.1.*
 
 %changelog
+* Sat Oct 07 2023 Nazarov Denis <nenderus@altlinux.org> 11.3.0-alt1.1
+- Require alacenc on all architectures
+
 * Wed Oct 04 2023 Nazarov Denis <nenderus@altlinux.org> 11.3.0-alt1
 - New version 11.3.0.
 
