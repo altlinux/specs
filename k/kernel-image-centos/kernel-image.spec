@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 368
+%define centos_release 370
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -654,6 +654,43 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Oct 02 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.370-alt1.el9
+- Updated to kernel-5.14.0-370.el9:
+  + CNB94: devlink: update devlink to the v6.5
+  + CNB94: update ethtool core to upstream v6.5
+  + CXL: daxctl online all memory by default
+  + Draft: Merge tag 'kernel-5.14.0-362.5.1.el9_3' from 9.3
+  + Fix NFS fscache failing to read from cache
+  + IPv6: add extack info for IPv6 address add/delete
+  + MCA: add support for 56 bit addresses
+  + Merge commit '479060bb20067a208bf4a89c622325979b3fde11'
+  + Merge tag 'kernel-5.14.0-362.5.1.el9_3' from 9.3
+  + RDMA: update to v6.5
+  + [s390] RHEL9.0 - dasd: fix command reject error on formatting ESE devices
+  + [s390] RHEL9.0 - dasd: fix hanging device after quiesce/resume
+  + [s390] RHEL9.0 - dasd: fix hanging device after request requeue
+  + [s390] RHEL9.0 - dasd: print copy pair message only for the correct error
+  + [s390] RHEL9.0 - kernel: /sys/firmware/ipl/has_secure missing
+  + [s390] RHEL9.0 - kernel: fix elf platform string for z16
+  + [s390] RHEL9.0 - s390/qeth: recovery and set offline lose routes and IPv6 addr
+  + [s390]: RHEL9.0 - kernel: fix reply buffer calculations for CCA replies
+  + [s390]: [IBM 9.4 FEAT] pkey: support generation of keys of type PKEY_TYPE_EP11_AES
+  + block: sync with v6.5
+  + bonding: reset bond's flags when down link is P2P device
+  + ftrace: backport relevant fprobe fixes from 6.4 and 6.5
+  + intel-speed-select: v.17 release
+  + iw_cxgb4: driver update to v6.5
+  + mlx5, some connction tracking updates and bug fixes
+  + netfs: Only call folio_start_fscache() one time for each folio
+  + nfsd: Set technology preview if inter SSC offload is enabled
+  + rdma_rxe: driver update to v6.5
+  + redhat: Use SB cert from system-sb-certs for signing UKI
+  + refscale: Fix uninitalized use of wait_queue_head_t
+  + thermal/drivers/imx: Remove redundant msg in imx8mm_tmu_probe() and imx_sc_thermal_probe()
+  + trace: Add trace_ipi_send_cpumask()
+  + watchdog: imx2_wdg: Declare local symbols static
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Sep 25 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.368-alt1.el9
 - Updated to kernel-5.14.0-368.el9 (fixes: CVE-2022-45934):
   + Bluetooth: L2CAP: Fix u8 overflow
