@@ -5,7 +5,7 @@
 
 
 Name: apache2-%module_name
-Version: 2.4.11
+Version: 2.4.14.3
 Release: alt1
 
 Summary: Apache 2.x OpenID Connect Relying Party authentication and authorization module
@@ -131,5 +131,8 @@ fi
 %dir %apache2_spooldir/%module_name
 
 %changelog
+* Sat Oct 07 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.4.14.3-alt1
+- New version
+
 * Wed Mar 23 2022 Nikolay A. Fetisov <naf@altlinux.org> 2.4.11-alt1
 - Initial build for ALT Linux Sisyphus
