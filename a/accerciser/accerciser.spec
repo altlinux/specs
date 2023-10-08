@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 3.40
+%define ver_major 3.42
 %define xdg_name org.gnome.accerciser
 
 Name: accerciser
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Interactive Python accessibility explorer
 Group: Accessibility
@@ -20,7 +20,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-Requires: python3-module-%name = %version-%release
+Requires: python3-module-%name = %EVR
+Requires: python3-module-ipython
 Requires: at-spi2-core
 
 %add_python3_path %_datadir/%name
@@ -28,7 +29,7 @@ Requires: at-spi2-core
 %add_python3_req_skip gi.repository.Gio
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: rpm-build-gnome /usr/bin/appstream-util
+BuildRequires: rpm-build-gnome libappstream-glib-devel
 BuildRequires: yelp-tools libgtk+3-devel python3-module-pygobject3-devel
 BuildRequires: desktop-file-utils libat-spi2-core-devel
 BuildRequires: python3-module-ipython
@@ -49,7 +50,8 @@ Accerciser uses libwnck designed to work in X11 only.
 Summary: Python module for accerciser
 Group: Development/Python3
 BuildArch: noarch
-Requires: typelib(Gtk) = 3.0 typelib(Wnck) = 3.0
+Requires: typelib(Gtk) = 3.0 libgtk+3-gir >= 3.24
+Requires: typelib(Wnck) = 3.0
 
 %description -n python3-module-%name
 An interactive Python accessibility explorer.
@@ -61,7 +63,8 @@ This package contains Python module for accerciser.
 %{?_enable_snapshot:ln -s README.md README}
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+#NOCONFIGURE=1 ./autogen.sh
+%autoreconf
 %configure PYTHON=%__python3
 %make_build
 
@@ -89,6 +92,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %python3_sitelibdir/%name/
 
 %changelog
+* Sun Oct 08 2023 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
+- 3.42.0
+
 * Tue May 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt2
 - updated to 3.40.0-21-g5447968
 - fixed dependencies
