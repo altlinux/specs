@@ -3,7 +3,7 @@
 %def_enable check
 
 %define ver_major 2
-%define ver_minor 2
+%define ver_minor 3
 
 Name: shared-mime-info
 Version: %ver_major.%ver_minor
@@ -23,16 +23,17 @@ Source: %name-%version.tar
 %endif
 Source1: %name.filetrigger
 # https://gitlab.freedesktop.org/xdg/xdgmime.git
-Source2: xdgmime-92f6a09.tar
+Source2: xdgmime-1792967.tar
 
-Patch: %name-2.0-alt-cachedir-param.patch
-Patch2: %name-2.0-alt-q_option.patch
+Patch: %name-2.3-alt-cachedir-param.patch
+Patch2: %name-2.3-alt-q_option.patch
 
 %define glib_ver 2.6.0
 %define libxml2_ver 2.4.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
-BuildRequires: meson libgio-devel >= %glib_ver libxml2-devel >= %libxml2_ver
+BuildRequires: meson gcc-c++ 
+BuildRequires: libgio-devel >= %glib_ver libxml2-devel >= %libxml2_ver
 BuildRequires: xmllint xmlto
 
 %description
@@ -105,7 +106,7 @@ rm -rf %_xdgmimedir/{application,audio,globs,image,inode,magic,message,model,\
 multipart,text,video,XMLnamespaces}
 
 %check
-%meson_test
+%__meson_test
 
 %files -f db.files
 %_bindir/update-mime-database
@@ -123,6 +124,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Sun Oct 08 2023 Yuri N. Sedunov <aris@altlinux.org> 2.3-alt1
+- 2.3
+
 * Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
 - 2.2
 - removed obsolete SWF patch
