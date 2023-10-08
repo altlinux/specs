@@ -11,7 +11,7 @@
 
 Name: gobject-introspection
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Introspection system for GObject-based libraries
 Group: System/Libraries
@@ -34,13 +34,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %filter_from_provides /python3(pkgconfig)/d
 %add_python3_req_skip distutils.msvccompiler
 
+Requires: python3(setuptools._distutils)
+
 %define glib_ver 2.78.0
 %define python_ver 3.7
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: /proc meson libgio-devel >= %glib_ver
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel
-BuildRequires: python3-devel >= %python_ver
+BuildRequires: python3-devel >= %python_ver python3(setuptools._distutils)
 %{?_enable_doctool:BuildRequires: python3-module-mako python3-module-markdown}
 
 %description
@@ -144,6 +146,9 @@ gobject-introspection.
 %endif
 
 %changelog
+* Sun Oct 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.78.1-alt1.1
+- updated dependencies for python3 >= 3.11.6-alt1 w/o distutils
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.78.1-alt1
 - 1.78.1
 
