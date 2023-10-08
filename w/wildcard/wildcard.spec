@@ -1,11 +1,11 @@
 %def_enable snapshot
-%define ver_major 0.2
+%define ver_major 0.3
 %define rdn_name com.felipekinoshita.Wildcard
 
 %def_disable bootstrap
 
 Name: wildcard
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: regular expression testing app for GNOME
@@ -64,6 +64,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Oct 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Sun Aug 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - 0.2.1
 

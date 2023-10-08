@@ -1,7 +1,7 @@
 %define _name eyedropper
 
 %def_enable snapshot
-%define ver_major 0.6
+%define ver_major 1.0
 %define rdn_name com.github.finefindus.%_name
 
 %def_disable bootstrap
@@ -68,13 +68,16 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-#%_datadir/dbus-1/services/%rdn_name.service
-#%_datadir/gnome-shell/search-providers/%rdn_name.search-provider.ini
+%_datadir/dbus-1/services/%rdn_name.SearchProvider.service
+%_datadir/gnome-shell/search-providers/%rdn_name.search-provider.ini
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc CHANGELOG* README*
 
 %changelog
+* Sun Oct 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- v1.0.0-5-g2c52ba0
+
 * Mon Sep 25 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - first build for Sisyphus
 

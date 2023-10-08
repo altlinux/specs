@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -41,8 +41,8 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.80
-Release: alt1.1
+Version: %ver_major.81
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -391,6 +391,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Sun Oct 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.81-alt1
+- 0.3.81
+
 * Thu Sep 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.80-alt1.1
 - rebuilt against webrtc-audio-processing-1
 
