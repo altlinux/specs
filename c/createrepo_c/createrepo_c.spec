@@ -1,6 +1,6 @@
 Summary:  Creates a common metadata repository
 Name:     createrepo_c
-Version:  1.0.0
+Version:  1.0.1
 Release:  alt1
 Group:    System/Configuration/Packaging
 License:  GPL-2.0+
@@ -96,6 +96,9 @@ ln -s modifyrepo_c %buildroot%_bindir/modifyrepo
 %python3_sitelibdir/*
 
 %changelog
+* Sat Oct 07 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
+- New version.
+
 * Mon Jul 31 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
 - New version.
 
