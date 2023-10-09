@@ -1,5 +1,5 @@
 Name: ardour
-Version: 7.5
+Version: 8.0
 Release: alt1
 
 Summary: Professional multi-track audio recording application
@@ -107,28 +107,31 @@ LC_ALL=C.utf8 ./waf configure \
 %install
 ./waf --destdir=%buildroot install
 install -pm0644 -D ardour.1 %buildroot%_man1dir/ardour.1
-install -pm0644 -D gtk2_ardour/resources/Ardour-icon_16px.png %buildroot%_miconsdir/ardour7.png
-install -pm0644 -D gtk2_ardour/resources/Ardour-icon_32px.png %buildroot%_niconsdir/ardour7.png
-install -pm0644 -D gtk2_ardour/resources/Ardour-icon_48px.png %buildroot%_liconsdir/ardour7.png
+install -pm0644 -D gtk2_ardour/resources/Ardour-icon_16px.png %buildroot%_miconsdir/ardour8.png
+install -pm0644 -D gtk2_ardour/resources/Ardour-icon_32px.png %buildroot%_niconsdir/ardour8.png
+install -pm0644 -D gtk2_ardour/resources/Ardour-icon_48px.png %buildroot%_liconsdir/ardour8.png
 find %buildroot%_bindir -type l |while read l; do
 	ln -srvf %buildroot/$(readlink $l) $l
 done
-%find_lang --output ardour.lang --append ardour7 gtk2_ardour7 gtkmm2ext3
+%find_lang --output ardour.lang --append ardour8 gtk2_ardour8 gtkmm2ext3
 
 %files -f ardour.lang
-%dir %_sysconfdir/ardour7
-%config(noreplace) %_sysconfdir/ardour7/*
-%_bindir/ardour7*
+%dir %_sysconfdir/ardour8
+%config(noreplace) %_sysconfdir/ardour8/*
+%_bindir/ardour8*
 %_libdir/lib*.so.*
-%_libdir/ardour7
-%_datadir/ardour7
-%_datadir/appdata/ardour7.appdata.xml
+%_libdir/ardour8
+%_datadir/ardour8
+%_datadir/appdata/ardour8.appdata.xml
 %_datadir/mime/packages/ardour.xml
-%_desktopdir/ardour7.desktop
+%_desktopdir/ardour8.desktop
 %_iconsdir/*/*/*/*.png
 %_man1dir/ardour.1*
 
 %changelog
+* Mon Oct 09 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.0-alt1
+- 8.0 released
+
 * Mon Jun 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.5-alt1
 - 7.5 released
 
