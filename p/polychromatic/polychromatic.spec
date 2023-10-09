@@ -1,5 +1,5 @@
 Name: polychromatic
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: RGB lighting interface utilites
@@ -9,11 +9,11 @@ URL: https://github.com/polychromatic/polychromatic
 
 ExclusiveArch: %qt5_qtwebengine_arches
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-qt5-webengine
-BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-build-python3
 BuildRequires: sassc
 BuildRequires: intltool
 BuildRequires: meson
@@ -46,5 +46,8 @@ graphical, command line or tray applet interface.
 %_man1dir/%name-*
 
 %changelog
+* Mon Oct 09 2023 Anton Kurachenko <srebrov@altlinux.org> 0.8.2-alt1
+- New version 0.8.2.
+
 * Sat Jul 1 2023 Anton Kurachenko <srebrov@altlinux.org> 0.8.1-alt1
 - Initial build for Sisyphus.
