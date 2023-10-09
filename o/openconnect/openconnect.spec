@@ -5,12 +5,16 @@
 # openssl or gnutls
 %def_without openssl
 %def_with gnutls
+%ifarch loongarch64
+%def_without gnutls_tss2
+%else
 %def_with gnutls_tss2
+%endif
 %def_disable check
 
 Name: openconnect
 Version: 9.12
-Release: alt1
+Release: alt1.1
 Summary: Open client for Cisco AnyConnect VPN
 
 Group: Networking/Remote access
@@ -36,8 +40,10 @@ BuildRequires: vpnc-script
 BuildRequires: libkrb5-devel
 BuildRequires: libgpm-devel
 BuildRequires: python3 groff-extra
-# For tests
-BuildRequires: ocserv tpm2-tools uid_wrapper socket_wrapper
+%if_enabled check
+BuildRequires: ocserv uid_wrapper socket_wrapper
+%{?_with_gnutls_tss2:BuildRequires: tpm2-tools}
+%endif
 # root tests
 # BuildRequires: ppp socat
 # root netns tests
@@ -108,6 +114,11 @@ rm -f %buildroot%_libexecdir/openconnect/hipreport-android.sh
 %_pkgconfigdir/*
 
 %changelog
+* Mon Oct 09 2023 Ivan A. Melnikov <iv@altlinux.org> 9.12-alt1.1
+- NMU: build on loongarch64
+  + on loongarch64 build w/o gnutls_tss2;
+  + don't require %%check's dependencies when check is disabled.
+
 * Mon Sep 11 2023 Alexey Shabalin <shaba@altlinux.org> 9.12-alt1
 - New version 9.12.
 
