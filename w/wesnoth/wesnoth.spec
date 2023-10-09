@@ -22,8 +22,8 @@
 %define _wesnothd_home     %_runtimedir/wesnothd%wessuffix
 
 Name: wesnoth%wessuffix
-Version: 1.16.7
-Release: alt2.1
+Version: 1.16.9
+Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -201,7 +201,7 @@ scons all \
 # ignore: it just renames datadirname/translations to datadirname/locale
 #          localedirname=locale \
 
-bzip2 --keep --best --force changelog*
+bzip2 --keep --best --force changelog.md
 
 %install
 
@@ -415,6 +415,9 @@ mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%_datadir/%name/data/t
 %endif
 
 %changelog
+* Mon Oct 09 2023 Igor Vlasenko <viy@altlinux.org> 1.16.9-alt1
+- new version
+
 * Wed Aug 16 2023 Ivan A. Melnikov <iv@altlinux.org> 1.16.7-alt2.1
 - NMU: fix build with boost 1.83.0
 
