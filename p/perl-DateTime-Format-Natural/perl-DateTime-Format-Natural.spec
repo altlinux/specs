@@ -7,7 +7,7 @@ BuildRequires: perl(DateTime/HiRes.pm) perl(DateTime/Locale.pm) perl(Term/ReadLi
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Natural
-Version:        1.17
+Version:        1.18
 Release:        alt1
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
@@ -88,6 +88,9 @@ perl Build.PL installdirs=vendor
 
 
 %changelog
+* Mon Oct 09 2023 Igor Vlasenko <viy@altlinux.org> 1.18-alt1
+- automated CPAN update
+
 * Thu Jun 22 2023 Igor Vlasenko <viy@altlinux.org> 1.17-alt1
 - automated CPAN update
 
