@@ -17,7 +17,7 @@
 
 Name: zabbix
 Version: 6.0.22
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: A network monitor
@@ -737,6 +737,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Oct 09 2023 Ivan A. Melnikov <iv@altlinux.org> 1:6.0.22-alt1.1
+- NMU: add riscv64 and loongarch64 support
+
 * Tue Sep 26 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.22-alt1
 - 6.0.22
 
