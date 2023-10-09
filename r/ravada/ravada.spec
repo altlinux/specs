@@ -4,8 +4,17 @@
 
 %def_without check
 
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
+
 Name: ravada
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
@@ -23,7 +32,7 @@ Requires: libvirt qemu-img qemu-kvm openssl guestfs-tools lxc-core
 
 BuildRequires(pre): rpm-build-perl
 
-BuildRequires: ImageMagick-tools >= 7.1.1.15-alt1
+BuildRequires: ImageMagick-tools
 BuildRequires: bridge-utils iproute2 net-tools qemu-img wget
 
 BuildRequires: perl-Authen-ModAuthPubTkt
@@ -84,7 +93,9 @@ Ravada is a software that allows the user to connect to a remote virtual desktop
 # find . -type f -name "*.xml" -exec sed -i 's|kvm-spice|qemu-kvm|g' {} ';'
 
 %build
-sed -e 's/Image::Magick::Q16/Image::Magick::Q16HDRI/g' -i lib/Ravada.pm
+%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
+sed -e 's/Image::Magick::Q16;/Image::Magick::Q16HDRI;/g' -i lib/Ravada.pm
+%endif
 
 # set environment variable to make sure DateTime::TimeZone::Local
 # could determine timezone during tests
@@ -184,6 +195,11 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Mon Oct 09 2023 Andrew A. Vasilyev <andy@altlinux.org> 2.1.2-alt1
+- 2.1.2
+- use "fix for using HDRI version of the ImageMagick" hack only for
+  Sysiphus/p11
+
 * Tue Sep 26 2023 Andrew A. Vasilyev <andy@altlinux.org> 2.1.1-alt1
 - 2.1.1
 
