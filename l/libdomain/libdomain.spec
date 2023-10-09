@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libdomain
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 
 Summary: Libdomain library provides ability to manipulate LDAP entries.
@@ -70,6 +70,11 @@ install -v -p -m 644 -D %_builddir/%name-%version/src/*.h %buildroot%_includedir
 %_bindir/*
 
 %changelog
+* Mon Oct 09 2023 Vladimir Rubanov <august@altlinux.org> 0.8.0-alt1
+- Implemented:
+  + Implement directory service type detection.
+  + Implement new message type handling.
+
 * Thu Aug 24 2023 Vladimir Rubanov <august@altlinux.org> 0.7.1-alt1
 - Fixes:
   + Fixes unbind in error state.
