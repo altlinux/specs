@@ -1,6 +1,6 @@
 Name: installer
-Version: 1.14.4
-Release: alt2
+Version: 1.14.5
+Release: alt1
 
 Summary: Installer common parts
 License: GPLv2+
@@ -107,6 +107,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Oct 09 2023 Dmitry Terekhin <jqt4@altlinux.org> 1.14.5-alt1
+- postinstall.d/65-setup-services.sh: add (un)mask units
+
 * Thu Sep 28 2023 Anton Midyukov <antohami@altlinux.org> 1.14.4-alt2
 - steps/notes-license.desktop: update 'Name[ru]'
 
