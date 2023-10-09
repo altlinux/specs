@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 370
+%define centos_release 374
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -513,6 +513,8 @@ cat > kernel-headers.files <<EOF
 %kheaders_dir
 EOF
 
+scanmod=/usr/sbin/initrd-scanmod
+scanmod=/home/legion/scm/.initrd/make-initrd/.build/dest/usr/sbin/initrd-scanmod
 filter()
 {
 	rm -f -- .scanmod-[0-9]*
@@ -521,7 +523,7 @@ filter()
 		echo >> ".scanmod-$num" "${arg#*:}"
 	done
 	for f in .scanmod-*; do
-		/usr/sbin/initrd-scanmod -k "$KernelVer" -b "%buildroot" "$f"
+		$scanmod -k "$KernelVer" -b "%buildroot" "$f"
 	done |
 		sed -r -e 's#^.*(/lib/modules/)#\1#' |
 		sort -u
@@ -654,6 +656,43 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Oct 09 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.374-alt1.el9
+- Updated to kernel-5.14.0-374.el9:
+  + Add symbols to stablelist and enable check-kabi
+  + BULK: Add PCIe Support for Qualcomm sa8775p SoC and other DT related
+  + CNB94: phy: update phy subsystem to v6.5
+  + Draft: Merge tag 'kernel-5.14.0-362.6.1.el9_3' from 9.3
+  + Draft: Merge tag 'kernel-5.14.0-362.8.1.el9_3' from 9.3
+  + Input: bbnsm_pwrkey - updates bbnsm power key support
+  + Merge commit '485647e37d41073c6855023413e7c32462331cc1'
+  + Merge commit '7d95e1685bb0cc95c75323651265883ea817ff8a'
+  + Merge commit '8f7868f87f8351812e1b5b539e75d415f7ba6b6d'
+  + Merge tag 'kernel-5.14.0-362.6.1.el9_3' from 9.3
+  + Merge tag 'kernel-5.14.0-362.8.1.el9_3' from 9.3
+  + PHX: Random system hang during suspend/resume due to race condition with GFXOFF, interrupts and RLC
+  + Performance Improvement of ibmvnic
+  + Prevent memory access violation in lpfc_dev_loss_tmo_callback during driver unload.
+  + Revert "dma-mapping: reject __GFP_COMP in dma_alloc_attrs" and "cnic: don't pass bogus GFP_ flags to dma_alloc_coherent"
+  + Revert "net/mlx5e: Switch to using napi_build_skb()"
+  + Update cpufreq:amd-pstate
+  + Update intel_idle to upstream 6.6
+  + Update kernel's PCI subsystem to v6.5
+  + Update x86/mtrr to 6.5
+  + Updates for powerpc EEH
+  + arm64: dts: imx93-11x11-evk: updates
+  + clk: imx: imx93: driver updates
+  + cpupower: Make TSC read per CPU for Mperf monitor
+  + i2c: imx-lpi2c: driver updates
+  + i2c: imx: driver updates
+  + iavf: fix delay when adding/deleting iavf vlans
+  + interconnect: imx: fix registration race
+  + phy: freescale: imx8m-pcie: Use devm_platform_ioremap_resource()
+  + redhat: Keep track of SPDX-License-Identifier tags in the code
+  + remoteproc: imx_dsp_rproc: driver updates
+  + remoteproc: imx_rproc: driver updates
+  + vfio/group: Defer device removal from no-iommu group
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Oct 02 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.370-alt1.el9
 - Updated to kernel-5.14.0-370.el9:
   + CNB94: devlink: update devlink to the v6.5
