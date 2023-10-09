@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.3.16
+Version: 0.4.0
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -26,8 +26,8 @@ Requires: alterator-datetime
 Requires: alterator-root
 Requires: alterator-users
 
-Requires(post): chkconfig
-Requires(preun): chkconfig
+Requires(post): chkconfig service
+Requires(preun): chkconfig service
 
 Conflicts: alterator-livecd
 Conflicts: installer-common-stage2
@@ -92,6 +92,11 @@ EOF
 %files -n installer-feature-%name-x11vnc-stage2
 %_datadir/install2/postinstall.d/81-alterator-setup-vnc
 
+%post
+if [ -x /sbin/sd_booted ]; then
+/sbin/sd_booted || %post_service setup
+fi
+
 # package is removed in postinstall hook, but
 # 'systemd stop' stops whole setup.service with hook.
 %preun
@@ -100,6 +105,10 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Sun Oct 08 2023 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
+- run alterator-setup if the systemd.unit=setup.target in kernel cmdline
+- notes-license.desktop: update Name[ru]
+
 * Tue May 02 2023 Anton Midyukov <antohami@altlinux.org> 0.3.16-alt1
 - Fix vnc support when lightdm on videocardless computers (Closes: 46028)
 
