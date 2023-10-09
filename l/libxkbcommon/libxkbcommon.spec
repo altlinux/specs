@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -102,9 +102,9 @@ This package provides xkbcli -- tool to interact with XKB keymaps.
 %{?_enable_x11:xvfb-run} %__meson_test
 
 %files
-%doc LICENSE NEWS README*
 %_libdir/%name.so.*
 %{?_enable_xkbregistry:%_libdir/libxkbregistry.so.*}
+%doc LICENSE NEWS README*
 
 %files devel
 %_libdir/%name.so
@@ -137,10 +137,13 @@ This package provides xkbcli -- tool to interact with XKB keymaps.
 %_bindir/xkbcli
 %dir %_libexecdir/%_name
 %_libexecdir/%_name/xkbcli-*
+%_datadir/bash-completion/completions/xkbcli
 %_man1dir/xkbcli*
 
-
 %changelog
+* Mon Oct 09 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Tue Jan 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
