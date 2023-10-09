@@ -7,7 +7,7 @@
 
 Name: xreader
 Version: 3.8.2
-Release: alt1
+Release: alt2
 
 Summary: A document viewer
 Group: Office
@@ -147,6 +147,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Mon Oct 9 2023 Vladimir Didenko <cow@altlinux.org> 3.8.2-alt2
+- New version 3.8.2-5-g31c9f12 (fixes build with meson 1.2)
+
 * Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 3.8.2-alt1
 - New version
 
