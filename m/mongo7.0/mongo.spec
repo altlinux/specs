@@ -3,13 +3,14 @@
 %endif
 
 Name: mongo7.0
-Version: 7.0.1
+Version: 7.0.2
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
 Url: https://www.mongodb.org
 Source: %name-%version.tar
+Patch0: mongo7.0-7.0.2-debuginfo.patch
 
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
@@ -18,7 +19,6 @@ ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 BuildRequires(pre): rpm-macros-valgrind
 
 BuildRequires: /proc gcc12-c++ gcc12 python3-module-pymongo python3-module-pkg_resources
-BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libssl-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
@@ -76,12 +76,13 @@ MongoDB instance.
 %prep
 %setup
 
-%build
-# Disable LTO to reduce disk space usage
-%define optflags_lto %nil
+%patch -p1
 
+%build
 %ifarch aarch64
 %define ccflags_arch_opts "-march=armv8-a+crc"
+# Disable LTO for fix crash compile on Aarch64
+%define optflags_lto %nil
 %endif
 
 %ifarch %e2k
@@ -104,7 +105,6 @@ MongoDB instance.
        MONGO_VERSION="%{version}-%{release}" \\\
        --disable-warnings-as-errors \\\
        --linker=gold \\\
-       --debug-compress=as \\\
        CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
 python3 src/third_party/scons-3.1.2/scons.py CC=gcc-12 CXX=g++-12 %build_opts
@@ -191,6 +191,12 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Thu Oct 05 2023 Alexei Takaseev <taf@altlinux.org> 7.0.2-alt1
+- 7.0.2
+- Remove unneeded BuildRequires
+- Enable LTO, exclude aarch64
+- Add patch reduce debuginfo
+
 * Wed Sep 06 2023 Alexei Takaseev <taf@altlinux.org> 7.0.1-alt1
 - 7.0.1
 
