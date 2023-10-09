@@ -1,61 +1,59 @@
-#define status beta
 Name: rosegarden
-Version: 21.06
+Version: 23.06
 Release: alt1
 
-Summary: MIDI and audio sequencer and musical notation editor
-License: GPL
+Summary: MIDI sequencer and musical notation editor
+License: GPLv2
 Group: Sound
-
 Url: http://www.rosegardenmusic.com
-Source: %name-%version.tar
 
-Requires: libsndfile-utils
-Obsoletes: rosegarden-alsa rosegarden-arts rosegarden-common librosegarden-alsa librosegarden-arts
+Source: %name-%version-%release.tar
 
-# Automatically added by buildreq on Mon Jul 31 2017
-# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 ladspa_sdk libEGL-devel libGL-devel libICE-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libalsa-devel libqt5-core libqt5-gui libqt5-network libqt5-printsupport libqt5-test libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python-modules qt5-base-common qt5-base-devel qt5-tools raptor2-devel shared-mime-info xorg-kbproto-devel xorg-xproto-devel
-BuildRequires: cmake dssi-devel libSM-devel libXcursor-devel libXinerama-devel libXrandr-devel libXtst-devel libXv-devel libfftw3-devel libjack-devel liblirc-devel liblo-devel liblrdf-devel libsamplerate-devel libsndfile-devel qt5-tools-devel zlib-devel
+BuildRequires: cmake gcc-c++ ladspa_sdk
+BuildRequires: pkgconfig(Qt6)
+BuildRequires: pkgconfig(Qt6Core5Compat)
+BuildRequires: pkgconfig(Qt6Linguist)
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(dssi)
+BuildRequires: pkgconfig(fftw3f)
+BuildRequires: pkgconfig(jack)
+BuildRequires: pkgconfig(liblo)
+BuildRequires: pkgconfig(lrdf)
+BuildRequires: pkgconfig(samplerate)
+BuildRequires: pkgconfig(sndfile)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(zlib)
 
 %description
-Rosegarden is a professional audio and MIDI sequencer, score editor, and
-general-purpose music composition and editing environement.
-
-Rosegarden is an easy-to-learn, attractive application that runs on
-Linux, ideal for composers, musicians, music students, and small studio
-or home recording environments.
+Rosegarden is a music composition and editing environment based around
+a MIDI sequencer that features a rich understanding of music notation
+and includes basic support for digital audio.
+Rosegarden is an easy-to-learn, attractive application that runs on Linux,
+ideal for composers, musicians, music students, and small studio or home
+recording environments.
 
 %prep
 %setup
-%ifarch %e2k
-# -std=c++03 by default as of lcc 1.23.20
-sed -i "1 i\set (CMAKE_CXX_STANDARD 11)" CMakeLists.txt
-# strip UTF-8 BOM for lcc < 1.24
-find -type f -print0 -name '*.cpp' -o -name '*.h' |
-	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
-%endif
 
 %build
-%cmake
+%cmake -DUSE_QT6=ON
 %cmake_build
 
 %install
 %cmakeinstall_std
-%find_lang --with-kde %name
 
-%check
-# doesn't work yet
-#make test -C BUILD
-
-%files -f %name.lang
-%doc AUTHORS CONTRIBUTING README
-%_bindir/*
-%_desktopdir/*
-%_iconsdir/hicolor/*/*/*
-%_datadir/metainfo/%name.*
-%_datadir/mime/packages/*
+%files
+%doc AUTHORS CONTRIBUTING README.md
+%_bindir/rosegarden
+%_desktopdir/*.desktop
+%_iconsdir/*/*/*/*.png
+%_datadir/metainfo/rosegarden.*
+%_datadir/mime/packages/rosegarden.*
 
 %changelog
+* Mon Oct 09 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 23.06-alt1
+- 23.06 released
+
 * Sun Jul 25 2021 Vitaly Lipatov <lav@altlinux.ru> 21.06-alt1
 - new version 21.06 (ALT bug 40573)
 
