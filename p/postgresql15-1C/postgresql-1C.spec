@@ -12,7 +12,7 @@
 %define prog_name            postgresql
 %define postgresql_major     15
 %define postgresql_minor     4
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -961,6 +961,9 @@ fi
 %endif
 
 %changelog
+* Mon Oct 09 2023 Alexei Takaseev <taf@altlinux.org> 15.4-alt3
+- Fix typo (Fixes ALT 47838)
+
 * Fri Sep 15 2023 Alexei Takaseev <taf@altlinux.org> 15.4-alt2
 - Add triggerpostun and conflict for PG 16
 
