@@ -1,5 +1,5 @@
 Name: volumes-profile-regular
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Volumes description for ALT Linux Regular builds
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Oct 09 2023 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
+- add btrfs with subvolumes support
+
 * Tue Sep 19 2023 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
 - not RAID
 - max swap 16G
