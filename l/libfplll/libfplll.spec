@@ -6,21 +6,27 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 2
+%define autorelease 5
+
+#%%bcond bundled_thread_pool 0
 
 Name:           libfplll
 Version:        5.4.4
 %global so_version 8
-Release:        alt1_2
+Release:        alt1_%autorelease
 Summary:        Lattice algorithms using floating-point arithmetic
 
 # The entire source is LGPL-2.1-or-later, except:
 #
 #   - The contents of fplll/enum-parallel/ are MIT
-#   - fplll/io/thread_pool.hpp is MIT
-#   - fplll/io/json.hpp is MIT AND CC0-1.0 (the latter because it includes
-#     Hedley); while it is unbundled, it is a header-only library, and so it
-#     still contributes to the license of the binary RPMs
+#
+# The header-only libraries are unbundled; since header-only libraries are
+# treated as static libraries, their licenses still contribute to the licenses
+# of the binary RPMs
+#   - cr-marcstevens-snippets-thread_pool-static is MIT; it replaces
+#     fplll/io/thread_pool.hpp
+#   - json-static is is MIT AND CC0-1.0 (the latter because it includes
+#     Hedley); it replaces fplll/io/json.hpp
 #
 # Additionally, a number of autoconf build system sources, which do not
 # contribute to the binary RPM license because they are neither installed nor
@@ -54,16 +60,17 @@ BuildRequires:  nlohmann-json-devel
 # bundled dependency because the separate fplll-extenum library was integrated
 # into fplll and is no longer separately developed.
 
+%if %{without bundled_thread_pool}
+BuildRequires:  cr-marcstevens-snippets-thread_pool-devel
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/#_packaging_header_only_libraries
+BuildRequires:  cr-marcstevens-snippets-thread_pool-static
+%else
 # The file fplll/io/thread_pool.hpp is a copy of cxxheaderonly/thread_pool.hpp
 # from commit e01ae885cdbef3af265341110a434f6fa7b8e8ac (or, equivalently, a
 # number of earlier commits that did not modify that file) of
 # https://github.com/cr-marcstevens/snippets/.
-#
-# This can be unbundled once the package review is complete:
-# Review Request: cr-marcstevens-snippets - Collection of useful one-file C/C++
-#   headers
-# https://bugzilla.redhat.com/show_bug.cgi?id=2090707
 Provides:       bundled(cr-marcstevens-snippets-thread_pool-devel) = 0^20210722gite01ae88
+%endif
 Source44: import.info
 
 %description
@@ -93,6 +100,14 @@ Group: Development/C
 Summary:        Development files for libfplll
 
 Requires:       libfplll = %{version}-%{release}
+
+%if %{without bundled_thread_pool}
+# We unbundled this; the API header now references the system copy of the
+# header, so dependent packages need it installed. (Technically, they should
+# also explicitly BR the -static package, since they are indirectly using the
+# header-only library.)
+Requires:       cr-marcstevens-snippets-thread_pool-static
+%endif
 
 %description    devel
 The libfplll-devel package contains libraries and header files for
@@ -132,13 +147,17 @@ the functionality of libfplll.
 
 # Unbundle “JSON for Modern C++”:
 echo '#include <nlohmann/json.hpp>' > fplll/io/json.hpp
+%if %{without bundled_thread_pool}
+# Unbundle cr-marcstevens-snippets-thread_pool-devel
+sed -r -i 's@io/thread_pool\.hpp@@' fplll/Makefile.am
+sed -r -i 's@fplll/io(/thread_pool\.hpp)@cr-marcstevens\1@' fplll/threadpool.h
+%endif
 
 
 %build
 autoreconf --install --force --verbose
 
 # This is a formality; no extra flags are required in practice:
-
 export CFLAGS="${CFLAGS-} $(pkgconf --cflags nlohmann_json)"
 export LDFLAGS="${LDFLAGS-} $(pkgconf --libs nlohmann_json)"
 
@@ -193,6 +212,9 @@ LD_LIBRARY_PATH="${PWD}/src/.libs" %make_build check
 
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.4.4-alt1_5
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 5.4.4-alt1_2
 - update to new release by fcimport
 
