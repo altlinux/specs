@@ -2,7 +2,7 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%define fedora 37
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %if 0%{?fedora} >= 36 || 0%{?rhel} > 9
@@ -14,13 +14,12 @@ BuildRequires: unzip
 Name: hunspell-ak
 Summary: Akan hunspell dictionaries
 Version: 0.9.1
-Release: alt1_15
+Release: alt1_16
 Source: https://addons.mozilla.org/firefox/downloads/file/376172/akan_spelling_dictionary-0.9.1-typefix-fx.xpi
 URL: http://kasahorow.org/content/akan-nsɛmfuaasekyerɛ
 #https://addons.mozilla.org/en-US/firefox/versions/license/73122
 License: LGPL-3.0-only
 BuildArch: noarch
-BuildRequires: libredland
 Source44: import.info
 
 
@@ -32,8 +31,6 @@ Akan hunspell dictionaries.
 
 
 %build
-rdfproc -s file hunspell-oc parse install.rdf
-rdfproc -s file hunspell-oc print | grep install-manifest | grep -v targetApplication | sed -e 's/.*#//' | sed -e 's/], "/: /'| sed -e 's/"}//' > CREDITS
 chmod -x dictionaries/ak-GH.*
 
 %install
@@ -43,10 +40,12 @@ cp -p dictionaries/ak-GH.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/ak_GH.d
 
 
 %files
-%doc CREDITS
 %{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt1_16
+- update to new release by fcimport
+
 * Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt1_15
 - update to new release by fcimport
 
