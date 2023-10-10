@@ -1,6 +1,6 @@
 Name: bluefish
 Version: 2.2.14
-Release: alt1
+Release: alt2
 
 Summary: A GTK3 web development application for experienced users
 
@@ -95,6 +95,8 @@ cat %{name}_plugin_*.lang >> %name.lang
 %files
 %_bindir/*
 %_libdir/%name
+%_desktopdir/%name.desktop
+%_datadir/metainfo/%name.appdata.xml
 
 %files common -f %name.lang
 %exclude %_defaultdocdir/%name
@@ -102,8 +104,6 @@ cat %{name}_plugin_*.lang >> %name.lang
 %dir %_datadir/%name
 %_datadir/%name/*
 %_datadir/pixmaps/*
-%_datadir/applications/*
-%_datadir/metainfo/%name.appdata.xml
 %_datadir/mime/packages/*
 %_iconsdir/hicolor/*/*/*.??g
 %_man1dir/*
@@ -111,6 +111,10 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Wed Oct 11 2023 Anton Midyukov <antohami@altlinux.org> 2:2.2.14-alt2
+- replace %_desktopdir/%name.desktop, %_datadir/metainfo/%name.appdata.xml
+  from bluefish-common to bluefish
+
 * Mon Jun 26 2023 Anton Midyukov <antohami@altlinux.org> 2:2.2.14-alt1
 - new version (2.2.14) with rpmgs script
 
