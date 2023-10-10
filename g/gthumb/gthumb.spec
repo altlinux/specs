@@ -22,7 +22,7 @@
 %endif
 
 Name: gthumb
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -184,6 +184,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Tue Oct 10 2023 Yuri N. Sedunov <aris@altlinux.org> 3.12.4-alt1
+- 3.12.4
+
 * Sun Aug 27 2023 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
 - 3.12.3
 
