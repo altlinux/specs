@@ -1,7 +1,7 @@
 %define oname xlsxwriter
 
 Name:    python3-module-%oname
-Version: 3.1.6
+Version: 3.1.7
 Release: alt1
 Summary: A Python module for creating Excel XLSX files
 License: BSD
@@ -55,6 +55,9 @@ py.test3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Tue Oct 10 2023 Andrey Cherepanov <cas@altlinux.org> 3.1.7-alt1
+- New version.
+
 * Mon Oct 02 2023 Andrey Cherepanov <cas@altlinux.org> 3.1.6-alt1
 - New version.
 
