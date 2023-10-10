@@ -6,8 +6,8 @@ Group: Development/C
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           librime
-Version:        1.8.5
-Release:        alt1_3
+Version:        1.9.0
+Release:        alt1_1
 Summary:        Rime Input Method Engine Library
 
 License:        GPL-3.0-only
@@ -23,7 +23,6 @@ BuildRequires:  libyaml-cpp-devel
 BuildRequires:  libgflags-devel
 BuildRequires:  libmarisa-devel
 BuildRequires:  libleveldb-devel
-BuildRequires:  capnproto, capnproto-devel
 Source44: import.info
 
 %description
@@ -104,9 +103,13 @@ The %{name}-tools package contains tools for %{name}.
 %{_bindir}/rime_deployer
 %{_bindir}/rime_dict_manager
 %{_bindir}/rime_patch
+%{_bindir}/rime_table_decompiler
 
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1.9.0-alt1_1
+- update to new release by fcimport
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.8.5-alt1_3
 - update to new release by fcimport
 
