@@ -1,16 +1,17 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+BuildRequires: /usr/bin/gettext
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 2
+%define autorelease 1
 
 %global __provides_exclude_from ^%{_libdir}/fcitx5/.*\\.so$
 
 Name:       fcitx5-unikey
-Version:    5.0.11
-Release:    alt1_%autorelease
+Version:    5.1.1
+Release:    alt1_1
 Summary:    Unikey support for Fcitx5
 License:    GPLv2+ and LGPLv2+
 URL:        https://github.com/fcitx/fcitx5-unikey
@@ -26,7 +27,7 @@ BuildRequires:  ninja-build python3-module-ninja_syntax
 BuildRequires:  cmake(Fcitx5Core)
 BuildRequires:  cmake(Fcitx5Qt5WidgetsAddons)
 BuildRequires:  qt5-base-devel
-BuildRequires:  gettext gettext-tools
+BuildRequires:  gettext-tools
 BuildRequires:  libappstream-glib libappstream-glib-gir
 Requires:       icon-theme-hicolor
 Requires:       fcitx5-data
@@ -57,11 +58,14 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_libdir}/fcitx5/qt5/libfcitx5-unikey-keymap-editor.so
 %{_datadir}/fcitx5/addon/unikey.conf
 %{_datadir}/fcitx5/inputmethod/unikey.conf
-%{_datadir}/icons/hicolor/128x128/apps/fcitx-unikey.png
-%{_datadir}/icons/hicolor/128x128/apps/org.fcitx.Fcitx5.fcitx-unikey.png
+%{_datadir}/icons/hicolor/*/apps/fcitx-unikey.png
+%{_datadir}/icons/hicolor/*/apps/org.fcitx.Fcitx5.fcitx-unikey.png
 %{_metainfodir}/org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_1
+- update to new release by fcimport
+
 * Fri Sep 16 2022 Igor Vlasenko <viy@altlinux.org> 5.0.11-alt1_2
 - new version
 
