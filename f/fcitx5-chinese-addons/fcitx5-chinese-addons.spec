@@ -5,13 +5,13 @@ BuildRequires: /usr/bin/gettext boost-devel qt5-base-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 2
+%define autorelease 1
 
 %global __provides_exclude_from ^%{_libdir}/fcitx5/.*\\.so$
 
 Name:           fcitx5-chinese-addons
-Version:        5.0.15
-Release:        alt1_%autorelease
+Version:        5.1.1
+Release:        alt1_1
 Summary:        Chinese related addon for fcitx5
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5-chinese-addons
@@ -102,6 +102,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_bindir}/scel2org5
 %{_libdir}/fcitx5/*.so
 %{_libdir}/fcitx5/qt5/libpinyindictmanager.so
+%{_libdir}/fcitx5/qt5/libcustomphraseeditor.so
 
 %files data
 %dir %{_datadir}/fcitx5/pinyin
@@ -123,6 +124,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_libdir}/cmake/Fcitx5Module*
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_1
+- update
+
 * Fri Sep 16 2022 Igor Vlasenko <viy@altlinux.org> 5.0.15-alt1_2
 - new version
 
