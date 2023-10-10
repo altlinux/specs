@@ -1,24 +1,19 @@
-%define _libexecdir %_prefix/libexec
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: libX11-devel libxcb-devel pkgconfig(xkbcommon)
 # END SourceDeps(oneline)
+%define _libexecdir %_prefix/libexec
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 2
+%define autorelease 3
 
 %global __provides_exclude_from ^%{_libdir}/(fcitx5|qt5)/.*\\.so$
 
-%ifarch s390x
-# Don't build fcitx5-qt6 for s390x
-%global build_qt6 0
-%else
 %global build_qt6 1
-%endif
 
 Name:           fcitx5-qt
-Version:        5.0.15
+Version:        5.1.1
 Release:        alt1_%autorelease
 Summary:        Qt library and IM module for fcitx5
 # Fcitx5Qt{4,5}DBusAddons Library and Input context plugin are released under BSD.
@@ -38,7 +33,7 @@ BuildRequires:  pkgconfig(Fcitx5Utils)
 BuildRequires:  pkgconfig(Qt5)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Gui) 
-BuildRequires:  gettext gettext-tools
+BuildRequires:  gettext-tools
 BuildRequires:  qt5-base-devel
 %if %{build_qt6}
 BuildRequires:  pkgconfig(Qt6)
@@ -93,6 +88,7 @@ Qt6 library and IM module for fcitx5.
 Group: Graphical desktop/Other
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
+# fedora autoprovides, not implemented in ALT
 Provides: cmake(Fcitx5Qt5WidgetsAddons)
 
 %description devel
@@ -123,9 +119,11 @@ Development files for %{name}
 %{_libexecdir}/fcitx5-qt5-gui-wrapper
 %{_libdir}/fcitx5/qt5/
 %{_datadir}/applications/org.fcitx.fcitx5-qt5-gui-wrapper.desktop
+
 %if %{build_qt6}
 %files -n fcitx5-qt6
 %{_qt6_plugindir}/platforminputcontexts/libfcitx5platforminputcontextplugin.so
+%{_bindir}/fcitx5-qt6-immodule-probing
 %{_libdir}/libFcitx5Qt6DBusAddons.so.1
 %{_libdir}/libFcitx5Qt6DBusAddons.so.*.*
 %endif
@@ -144,6 +142,7 @@ Development files for %{name}
 
 %files module 
 %{_qt5_plugindir}/platforminputcontexts/libfcitx5platforminputcontextplugin.so
+%{_bindir}/fcitx5-qt5-immodule-probing
 
 %files libfcitx5qt5widgets
 %doc --no-dereference LICENSES/LGPL-2.1-or-later.txt
@@ -156,6 +155,9 @@ Development files for %{name}
 %{_libdir}/libFcitx5Qt5DBusAddons.so.*.*
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_3
+- update
+
 * Tue Jun 27 2023 Anton Midyukov <antohami@altlinux.org> 5.0.15-alt1_2
 - NMU: fix buildrequires
 
