@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name dash-to-dock
-%define ver_major 87
+%define ver_major 89
 %define beta %nil
 %define uuid %_name@micxgx.gmail.com
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -58,6 +58,9 @@ available.
 %doc README.md
 
 %changelog
+* Tue Oct 10 2023 Yuri N. Sedunov <aris@altlinux.org> 89-alt1
+- 89
+
 * Fri Aug 25 2023 Yuri N. Sedunov <aris@altlinux.org> 87-alt1
 - 87
 
