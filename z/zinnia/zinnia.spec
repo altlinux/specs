@@ -1,22 +1,22 @@
+BuildRequires: chrpath
+%add_optflags %optflags_shared
+Group: Development/C
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-build-python3
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
-BuildRequires: chrpath
-Group: Development/C
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		zinnia
 Version:	0.06
-Release:	alt1_60
+Release:	alt1_66
 Summary:	Online handwriting recognition system with machine learning
 
-License:	BSD
+License:	BSD-3-Clause
 URL:		http://zinnia.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/zinnia/%{name}-%{version}.tar.gz
-Source1:        http://zinnia.svn.sourceforge.net/viewvc/zinnia/zinnia/tomoe2s.pl
-Source2:        Makefile.tomoe
+Source1:	http://zinnia.svn.sourceforge.net/viewvc/zinnia/zinnia/tomoe2s.pl
+Source2:	Makefile.tomoe
 Patch0:		zinnia-0.05-bindings.patch
 Patch1:		zinnia-0.06-fixes-ppc-float.patch
 Patch2:		always-store-data-in-little-endian-format.patch
@@ -30,6 +30,7 @@ BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 BuildRequires:	tomoe
 BuildRequires:	autoconf
 BuildRequires:	gnome-common
+BuildRequires:	python3-module-pkg_resources python3-module-setuptools
 Source44: import.info
 
 %description
@@ -47,7 +48,6 @@ This package contains the shared libraries.
 %package -n libzinnia0
 Summary:        Shared library for the %name library
 Group:          System/Libraries
-Provides: zinnia0 = %{version}-%{release}
 
 %description -n libzinnia0
 Zinnia provides a simple, customizable, and portable dynamic OCR
@@ -68,7 +68,6 @@ Group: Development/C
 Summary:	Development files for %{name}
 Requires:	libzinnia0 = %EVR
 Provides: %name-devel = %EVR
-Provides: zinnia-devel = %{version}-%{release}
 
 %description    -n libzinnia-devel
 The %{name}-devel package contains libraries and header files for
@@ -133,10 +132,11 @@ This package contains Simplified Chinese tomoe model files for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .bindings
-%patch1 -p1 -b .ppc
-%patch2 -p1 -R -b .little-endian
-%patch3 -p1 -b .gcc6
+%patch0  -p1 -b .bindings
+%patch1  -p1 -b .ppc
+%patch2  -p1 -R -b .little-endian
+%patch3  -p1 -b .gcc6
+
 find . -type f -name "*.pyc" -exec rm -f {} ';'
 cp %{SOURCE1} .
 cp %{SOURCE2} .
@@ -177,7 +177,7 @@ pushd python
 python3 setup.py install --root $RPM_BUILD_ROOT
 
 #the following line fixes RHBZ#2048104
-rm $RPM_BUILD_ROOT%{python3_sitelibdir}/zinnia_python-0.0.0-py%{__python3_version}.egg-info
+rm -rf $RPM_BUILD_ROOT%{python3_sitelibdir}/zinnia_python-0.0.0-py%{__python3_version}.egg-info
 pushd
 
 #remove something unnecessary
@@ -187,6 +187,7 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 
 #change the privilege of some files
 chmod 0755 $RPM_BUILD_ROOT%{perl_vendor_archlib}/auto/%{name}/%{name}.so
+
 
 chrpath -d %buildroot%{perl_vendor_archlib}/auto/%{name}/*.so
 
@@ -230,6 +231,9 @@ chrpath -d %buildroot%{perl_vendor_archlib}/auto/%{name}/*.so
 %{_datadir}/zinnia/model/tomoe/handwriting-zh_CN.model
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 0.06-alt1_66
+- update to new release by fcimport
+
 * Wed Sep 28 2022 Igor Vlasenko <viy@altlinux.org> 0.06-alt1_60
 - new version
 
