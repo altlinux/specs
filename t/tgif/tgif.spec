@@ -3,12 +3,12 @@ Group: Graphics
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel
 # END SourceDeps(oneline)
 Summary(ru_RU.KOI8-R): Tgif - пакет 2-мерной графики
-%define fedora 37
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		tgif
 Version:	4.2.5
-Release:	alt2_26
+Release:	alt2_28
 Summary:	2-D drawing tool
 
 License:	QPL
@@ -24,7 +24,7 @@ Patch103: tgif-c99.patch
 BuildRequires:	gcc
 BuildRequires:	xorg-cf-files gccmakedep imake
 BuildRequires:	desktop-file-utils
-BuildRequires:	gettext gettext-tools
+BuildRequires:	gettext-tools
 BuildRequires:	libXmu-devel
 BuildRequires:	libidn-devel
 BuildRequires:	zlib-devel
@@ -52,12 +52,15 @@ Tgif является пакетом для двумерной графики. Он поддерживает создание иерархичес
 #%%patch10 -p0 -b textcursor
 # Check later
 #%%patch101 -p1 -b .size
-%patch102 -p1 -b .format
-%patch103 -p1
+%patch102  -p1 -b .format
+%patch103  -p1
 
 /usr/bin/perl -pi \
 	-e 's,JISX-0208-1983-0,EUC-JP,g' \
 	po/ja/ja.po
+sed -i \
+	-e 's|charset= koi8-r|charset=ISO-8859-1|' \
+	po/fr/fr.po
 
 # use scalable bitmap font
 sed \
@@ -173,6 +176,9 @@ desktop-file-install \
 %{_datadir}/applications/*%{name}.desktop
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 4.2.5-alt2_28
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 4.2.5-alt2_26
 - update to new release by fcimport
 
