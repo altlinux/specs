@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
-# Copyright (C) 2019 Vitaly Chikunov <vt@altlinux.org>
+# Copyright (C) 2019-2023 Vitaly Chikunov <vt@altlinux.org>
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.58
+Version: 1.59
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -213,7 +213,11 @@ rm /tmp/filelist
 > %_rpmlibdir/z-vm-createimage.filetrigger
 
 kvm-ok
-timeout 300 vm-run --verbose uname -a
+timeout 300 vm-run --heredoc <<-EOF
+	uname -a
+	uname -a
+EOF
+! timeout --preserve-status 300 vm-run "true; false; true" || exit 1
 timeout 300 vm-run --mem=max free -g
 timeout 300 vm-run --mem=256 --cpu=max lscpu
 df -h /tmp
@@ -222,7 +226,6 @@ rm /tmp/vm-tmpfs.qcow2
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
 rmdir /mnt/0
 rm /usr/src/ext4.0.img
-! timeout --preserve-status 300 vm-run --verbose exit 1 || exit 1
 timeout 300 vm-run --rootfs --verbose df
 rm /tmp/vm-ext4.img
 timeout 300 vm-run --hvc --no-quiet 'dmesg -r | grep Unknown'
@@ -239,8 +242,13 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Tue Oct 10 2023 Vitaly Chikunov <vt@altlinux.org> 1.59-alt1
+- Improve rdshell environment usability.
+- Improve busybox/toybox compatibility for rdshell.
+- Add --heredoc option (run script from here-document).
+- Allow adding out-of-tree modules and arbitrary files to initrd.
+
 * Sat Oct 07 2023 Vitaly Chikunov <vt@altlinux.org> 1.58-alt1
-- Fix "adding" built-in modules into initrd (centos).
 - Fix booting ext4 on kernels where it isn't built-in (ovz-el7).
 - Do not ignore initrd generation errors.
 - Allow adding arbitrary files into initrd (such as toybox).
