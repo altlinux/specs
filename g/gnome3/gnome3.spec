@@ -1,4 +1,4 @@
-%define ver_major 44
+%define ver_major 45
 
 Name: gnome3
 Version: %ver_major.0
@@ -39,9 +39,8 @@ BuildRequires(pre): rpm-build-licenses
 %define pidgin_ver 2.6.3
 %define evince_ver %ver_major
 %define applets_ver %ver_major
-%define gedit_ver 42.2
-%define gedit_plugins_ver 42.1
-%define gud_ver %ver_major
+%define gedit_ver 46.1
+%define gedit_plugins_ver 46.0
 %define gdm_ver %ver_major
 %define gdu_ver %ver_major
 %define evo_ver 3.46
@@ -54,7 +53,7 @@ BuildRequires(pre): rpm-build-licenses
 %define todo_ver 41.0
 %define characters_ver %ver_major
 %define music_ver 42.1
-%define photos_ver %ver_major
+%define photos_ver 44.0
 %define nettool_ver 42.0
 %define gucharmap_ver 15.0.2
 ## Engines, themes
@@ -78,9 +77,11 @@ Obsoletes: gnome-minimal
 Provides: gnome-minimal = %version-%release
 
 # GNOME Desktop Core
-Requires: gnome-session >= %session_ver
+Requires: gnome-session-wayland >= %session_ver
+Requires: gnome-session-xsession
 Requires: pipewire wireplumber
 Requires: gnome-control-center >= %ver_major
+#Requires: power-profiles-daemon
 Requires: xorg-drv-libinput
 Requires: gnome-shell >= %ver_major
 Requires: gnome-shell-extensions >= %ver_major
@@ -115,7 +116,17 @@ Requires: gnome-terminal >= %terminal_ver
 ## Default archiving tool
 Requires: file-roller >= %roller_ver
 ## Default text editor
-Requires: gedit >= %gedit_ver
+Requires: gnome-text-editor
+## Default web-browser
+Requires: epiphany >=  %epiphany_ver
+## Default image viewer
+Requires: loupe
+# Weather application
+Requires: gnome-weather >= %weather_ver
+# Clock application
+Requires: gnome-clocks >= %ver_major
+# Maps application
+Requires: gnome-maps >= %ver_major
 
 # Look & Feel
 ## Default themes
@@ -168,15 +179,14 @@ Requires: xdg-utils
 Requires: gnome-disk-utility >= %gdu_ver
 ## Display manager
 Requires: gdm-gnome >= %gdm_ver
-## Default web-browser
-Requires: epiphany >=  %epiphany_ver
+
 #Requires: mozilla-plugin-adobe-flash
 ## Default mailer
 Requires: evolution >= %evo_ver
 ## Default messenger
 Requires: empathy >= %emp_ver
 ## IRC client
-Requires: polari >= %polari_ver
+#Requires: polari >= %polari_ver
 # Und contacts manager
 Requires: gnome-contacts >= %contacts_ver
 
@@ -196,7 +206,8 @@ Requires: gnome-utils >= %utils_ver
 Requires: notification-daemon
 
 # Applications
-## Plugins for gedit
+# extended text-geditor
+Requires: gedit >= %gedit_ver
 Requires: gedit-plugins >= %gedit_plugins_ver
 ## Stock multimedia applications
 Requires: gnome-sound-recorder >= %recorder_ver
@@ -214,7 +225,7 @@ Requires: totem-plugins
 Requires: gnome-games-full >= %games_ver
 ## Default photo viewer
 Requires: gnome-photos >= %photos_ver
-## Default image viewer
+# Image viewer
 Requires: eog >= %eog_ver
 Requires: eog-plugins
 ## Default CD/DVD burning interface
@@ -231,12 +242,7 @@ Requires: gnome-epub-thumbnailer
 Requires: gnome-terminal-nautilus
 # Menu editor
 Requires: alacarte
-# Weather application
-Requires: gnome-weather >= %weather_ver
-# Clock application
-Requires: gnome-clocks >= %ver_major
-# Maps application
-Requires: gnome-maps >= %ver_major
+
 # power consumption statistic
 Requires: gnome-power-manager >= %pm_ver
 Requires: NetworkManager-gnome >= %network_manager_ver
@@ -443,7 +449,11 @@ Requires: %name-default = %version-%release
 Requires: phosh
 Requires: geary
 Requires: gnome-console
-Requires: gnome-text-editor
+#Requires: gnome-text-editor
+Requires: amberol
+%ifnarch ppc64le
+#Requires: warp
+%endif
 
 %description mobile
 This virtual package includes GNOME 3 Desktop components and some other
@@ -462,6 +472,17 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Tue Oct 10 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- minimal: gedit replaced by gnome-text-editor (ALT #47485),
+           added gnome-session-xsession (part of ALT#47915)
+           added loup,
+           epiphany, gnome-{clocks,maps,weather) moved from default
+- default: added gedit & plugins
+
+* Fri Jul 14 2023 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
+- default: removed polari
+- mobile: added amberol, warp
+
 * Mon Mar 27 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - regular: added appindicator, blur-my-shell, caffeine, dash-to-dock,
   extension-list and openweather gnome-shell extensions.

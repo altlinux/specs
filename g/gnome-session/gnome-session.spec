@@ -12,7 +12,7 @@
 
 Name: gnome-session
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 Group: Graphical desktop/GNOME
@@ -40,7 +40,7 @@ Patch11: gnome-session-3.3.92-nv30.patch
 %define upower_ver 0.9
 %define systemd_ver 242
 
-Requires(pre): xinitrc libcanberra-gnome libcanberra-gtk3
+Requires(pre): libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
 Requires: gnome-filesystem
@@ -94,6 +94,16 @@ Requires: xorg-xwayland
 %description wayland
 This package permits to log into GNOME using Wayland.
 
+%package xsession
+Summary: A Xorg session for the GNOME
+Group: Graphical desktop/GNOME
+BuildArch: noarch
+Requires: %name = %EVR
+Requires(pre): xinitrc
+
+%description xsession
+This package permits to log into GNOME using Xorg.
+
 %prep
 %setup -n %name-%version%beta
 %patch11 -p1 -b .nv30
@@ -130,12 +140,10 @@ export PATH=$PATH:/sbin
 %dir %_datadir/%name
 %_datadir/%name/hardware-compatibility
 %_datadir/xdg-desktop-portal/gnome-portals.conf
-
 %dir %_datadir/%name/sessions
 %_datadir/%name/sessions/gnome.session
 %_datadir/%name/sessions/gnome-dummy.session
-%_datadir/xsessions/gnome.desktop
-%_datadir/xsessions/gnome-xorg.desktop
+
 %config %_datadir/glib-2.0/schemas/org.gnome.SessionManager.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
 %{?_enable_man:
@@ -176,12 +184,19 @@ export PATH=$PATH:/sbin
 %_datadir/xsessions/gnome-custom-session.desktop
 %endif
 
+%files xsession
+%_datadir/xsessions/gnome.desktop
+%_datadir/xsessions/gnome-xorg.desktop
+
 %files wayland
 %_datadir/wayland-sessions/gnome.desktop
 %_datadir/wayland-sessions/gnome-wayland.desktop
 
 
 %changelog
+* Tue Oct 10 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1.1
+- moved xsessions to separate subpackage (ALT #47915)
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
