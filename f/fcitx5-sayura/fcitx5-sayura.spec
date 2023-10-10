@@ -1,16 +1,17 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+BuildRequires: /usr/bin/gettext
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 2
+%define autorelease 1
 
 %global __provides_exclude_from ^%{_libdir}/fcitx5/.*\\.so$
 
 Name:       fcitx5-sayura
-Version:    5.0.8
-Release:    alt1_%autorelease
+Version:    5.1.0
+Release:    alt1_1
 Summary:    Sinhala Transe IME engine for Fcitx5
 License:    GPLv2+
 URL:        https://github.com/fcitx/fcitx5-sayura
@@ -24,7 +25,7 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  gcc-c++
 BuildRequires:  ninja-build python3-module-ninja_syntax
 BuildRequires:  pkgconfig(Fcitx5Core)
-BuildRequires:  gettext gettext-tools
+BuildRequires:  gettext-tools
 BuildRequires:  /usr/bin/appstream-util
 Requires:       icon-theme-hicolor
 Requires:       fcitx5-data
@@ -68,6 +69,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.0-alt1_1
+- update to new release by fcimport
+
 * Fri Sep 16 2022 Igor Vlasenko <viy@altlinux.org> 5.0.8-alt1_2
 - new version
 
