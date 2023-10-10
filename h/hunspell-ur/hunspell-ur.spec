@@ -2,7 +2,7 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%define fedora 37
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %if 0%{?fedora} >= 36 || 0%{?rhel} > 9
@@ -14,14 +14,14 @@ BuildRequires: unzip
 Name: hunspell-ur
 Summary: Urdu hunspell dictionaries
 Version: 0.64
-Release: alt2_28
+Release: alt2_29
 #http://urdudictionary.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=30004#DownloadId=74761
 #and click yes to agree to LGPLv2+, which stinks as a download-url :-(
 Source: UrduDictionary.xpi
+# This URL is dead now
 URL: http://urdudictionary.codeplex.com
 License: LGPL-2.1-or-later
 BuildArch: noarch
-BuildRequires: libredland
 Source44: import.info
 
 
@@ -32,8 +32,7 @@ Urdu hunspell dictionaries.
 %setup -q -c -n hunspell-ur
 
 %build
-rdfproc -s file hunspell-ur parse install.rdf
-rdfproc -s file hunspell-ur print | grep install-manifest | grep -v targetApplication | sed -e 's/.*#//' | sed -e 's/], "/: /'| sed -e 's/"}//' > CREDITS
+# nothing here
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
@@ -49,10 +48,12 @@ popd
 
 
 %files
-%doc CREDITS
 %{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 0.64-alt2_29
+- update to new release by fcimport
+
 * Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 0.64-alt2_28
 - update to new release by fcimport
 
