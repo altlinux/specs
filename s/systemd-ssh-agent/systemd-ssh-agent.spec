@@ -7,10 +7,12 @@
 %endif
 
 Name: systemd-ssh-agent
-Version: 1.0
+Version: 1.1
 Release: alt1
 
-Requires: ssh-provider-openssh-clients
+#Requires: ssh-provider-openssh-clients
+#Requires: openssh-clients
+Requires: /usr/bin/ssh-agent
 
 Group: System/Configuration/Other
 Summary: Systemd unit for SSH agent
@@ -39,5 +41,8 @@ install -m 0644 %SOURCE1 %buildroot/%_environmentdir/30-ssh_auth_socket.conf
 %_userunitdir/ssh-agent.service
 
 %changelog
+* Tue Oct 10 2023 Sergey V Turchin <zerg@altlinux.org> 1.1-alt1
+- update requires
+
 * Mon Dec 19 2022 Sergey V Turchin <zerg@altlinux.org> 1.0-alt1
 - initial build
