@@ -21,9 +21,9 @@
 # version-release
 
 %define nv_version 535
-%define nv_release 104
-%define nv_minor 05
-%define pkg_rel alt267
+%define nv_release 113
+%define nv_minor 01
+%define pkg_rel alt268
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -353,6 +353,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Tue Oct 10 2023 Sergey V Turchin <zerg@altlinux.org> 535.113.01-alt268
+- new version
+
 * Tue Sep 19 2023 Sergey V Turchin <zerg@altlinux.org> 535.104.05-alt267
 - new version
 
