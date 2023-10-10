@@ -1,16 +1,17 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+BuildRequires: /usr/bin/gettext
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 2
+%define autorelease 1
 
 %global __provides_exclude_from ^%{_libdir}/fcitx5/.*\\.so$
 
 Name:       fcitx5-hangul
-Version:    5.0.10
-Release:    alt1_%autorelease
+Version:    5.1.0
+Release:    alt1_1
 Summary:    Hangul Wrapper for Fcitx5
 # data/symbol.txt is licensed under BSE license
 License:    LGPLv2+ and BSD
@@ -26,7 +27,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  ninja-build python3-module-ninja_syntax
 BuildRequires:  cmake(Fcitx5Core)
 BuildRequires:  pkgconfig(libhangul) >= 0.0.12
-BuildRequires:  gettext gettext-tools
+BuildRequires:  gettext-tools
 BuildRequires:  /usr/bin/appstream-util
 Requires:       icon-theme-hicolor
 Requires:       fcitx5-data
@@ -68,6 +69,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/org.fcitx.Fcitx5.Addon.Hangul.metainfo.xml
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.0-alt1_1
+- update to new release by fcimport
+
 * Fri Sep 16 2022 Igor Vlasenko <viy@altlinux.org> 5.0.10-alt1_2
 - new version
 
