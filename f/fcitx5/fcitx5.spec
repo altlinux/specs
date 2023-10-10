@@ -1,21 +1,21 @@
-%define _libexecdir %_prefix/libexec
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr/bin/gettext /usr/bin/wayland-scanner libxcbutil-devel pkgconfig(dbus-1) pkgconfig(enchant-2) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(libevent_core)
+BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr/bin/gettext /usr/bin/wayland-scanner libxcbutil-devel pkgconfig(dbus-1) pkgconfig(enchant-2) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(libevent_core) zlib-devel
 # END SourceDeps(oneline)
+%define _libexecdir %_prefix/libexec
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name fcitx5
-%define autorelease 0
+%define autorelease 1
 
 %global _xinputconf %{_sysconfdir}/X11/xinit/xinput.d/fcitx5.conf
 %global __provides_exclude_from ^%{_libdir}/%{name}/.*\\.so$
 
 Name:           fcitx5
-Version:        5.0.19
-Release:        alt4_%autorelease
+Version:        5.1.1
+Release:        alt1_%autorelease
 Summary:        Next generation of fcitx
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5
@@ -64,7 +64,7 @@ Requires:       setup
 #Recommends:       (fcitx5-gtk if (gtk2 or gtk3 or gtk4))
 #Recommends:       (fcitx5-qt if (qt5-qtbase or qt6-qtbase))
 #Recommends:       (fcitx5-qt-module if (qt5-qtbase or qt6-qtbase))
-##bootstrap##Requires:       fcitx5-configtool
+Requires:       fcitx5-configtool
 Source44: import.info
 
 %description
@@ -86,8 +86,8 @@ The %{name}-data package provides shared data for Fcitx5.
 Group: Graphical desktop/Other
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
-Provides: cmake(Fcitx5Core)
-Provides: cmake(Fcitx5Utils)
+#Provides: cmake(Fcitx5Core)
+#Provides: cmake(Fcitx5Utils)
 
 %description devel
 The %{name}-devel package contains libraries and header files necessary for
@@ -105,6 +105,7 @@ This package will setup autostart and environment needed for fcitx5 to work prop
 %prep
 %setup -q
 
+# bash4
 sed -i '1s,env bash,env bash4,' data/fcitx5-diagnose.sh
 
 %build
@@ -178,6 +179,9 @@ EOF
 %config %{_sysconfdir}/profile.d/fcitx5.sh
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_1
+- update to new release by fcimport
+
 * Wed Jul  5 2023 Artyom Bystrov <arbars@altlinux.org> 5.0.19-alt4_0
 - Fix build on GCC13
 
