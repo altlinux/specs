@@ -7,25 +7,25 @@ Group: Other
 # use a hardcoded system id.  Well, until something installs another, and
 # incompatible set of entities using the same public id anyway...
 
-%define date    19991224
+%define date     19991224
 
-Name:           html401-dtds
-Version:        4.01
-Release:        alt1_%{date}.12.9
-Summary:        HTML 4.01 document type definitions
+Name:            html401-dtds
+Version:         4.01
+Release:         alt1_%{date}.12.22
+Summary:         HTML 4.01 document type definitions
 
 # W3C Software License for DTDs etc:
 # http://www.w3.org/Consortium/Legal/IPR-FAQ-20000620#DTD
-License:        W3C
-URL:            http://www.w3.org/TR/1999/REC-html401-%{date}/
+License:         W3C
+URL:             http://www.w3.org/TR/1999/REC-html401-%{date}/
 # Source0 generated with Source99, see comments in the script
-Source0:        %{name}-%{date}.tar.bz2
-Source99:       %{name}-prepare-tarball.sh
-Patch0:         %{name}-catalog.patch
+Source0:         %{name}-%{date}.tar.bz2
+Source99:        %{name}-prepare-tarball.sh
+Patch0:          %{name}-catalog.patch
 
-BuildArch:      noarch
-Requires:       xml-common sgml-common
-Requires(post): /usr/bin/install-catalog
+BuildArch:       noarch
+Requires:        xml-common sgml-common
+Requires(post):  /usr/bin/install-catalog
 Requires(preun): /usr/bin/install-catalog
 Source44: import.info
 
@@ -38,7 +38,7 @@ SGMLSpm.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1
+%patch0  -p1
 
 
 %build
@@ -46,21 +46,16 @@ SGMLSpm.
 
 %install
 
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/sgml/html/4.01
-install -pm 644 *.dtd *.cat *.ent *.decl \
-    $RPM_BUILD_ROOT%{_datadir}/sgml/html/4.01
+install -dm 0755 %{buildroot}%{_datadir}/sgml/html/4.01
+install -pm 0644 *.dtd *.cat *.ent *.decl %{buildroot}%{_datadir}/sgml/html/4.01
 
-install -dm 755 $RPM_BUILD_ROOT%{_sysconfdir}/sgml
-cd $RPM_BUILD_ROOT%{_sysconfdir}/sgml
-touch %{name}-%{version}-%{release}.soc
-ln -s %{name}-%{version}-%{release}.soc %{name}.soc
-cd -
-
-# touching all ghosts; hack for rpm 4.0.4
-for rpm_404_ghost in %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.soc
+install -dm 0755 %{buildroot}%{_sysconfdir}/sgml
+touch %{buildroot}%{_sysconfdir}/sgml/%{name}-%{version}-%{release}.soc
+ln -s %{name}-%{version}-%{release}.soc %{buildroot}%{_sysconfdir}/sgml/%{name}.soc
+for rpm404_ghost in %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.soc
 do
-    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
-    touch %buildroot"$rpm_404_ghost"
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
 done
 
 
@@ -83,6 +78,9 @@ done
 
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 4.01-alt1_19991224.12.22
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1_19991224.12.9
 - update to new release by fcimport
 
