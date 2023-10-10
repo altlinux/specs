@@ -9,10 +9,10 @@ BuildRequires: /usr/bin/mysql_config /usr/bin/unzip /usr/bin/xsltproc gcc-c++
 
 Name:           tomoe
 Version:        0.6.0
-Release:        alt3_50
+Release:        alt3_54
 Summary:        Handwritten input system for Japanese and Chinese
 
-License:        LGPLv2+
+License:        LGPL-2.1-or-later
 URL:            http://tomoe.sourceforge.jp/
 ## stripped tarball is generated as follows:
 # $ wget http://downloads.sourceforge.net/sourceforge/tomoe/%{name}-%{version}.tar.gz
@@ -23,9 +23,9 @@ Patch0:         tomoe-0.6.0-multiarch-conflict.patch
 Patch1:         tomoe-0.6.0-bz502662.patch
 Patch2:         tomoe-0.6.0-fixes-glib-includes.patch
 Patch3:         tomoe-0.6.0-fixes-set-parse-error.patch
-Patch4:		tomoe-strerror.patch
+Patch4:         tomoe-strerror.patch
 
-BuildRequires:  glib2-devel libgio libgio-devel gettext gettext-tools gtk-doc gtk-doc-mkpdf, libtool, intltool
+BuildRequires:  glib2-devel libgio libgio-devel, gettext-tools gtk-doc gtk-doc-mkpdf, libtool, intltool
 BuildRequires:  perl(XML/Parser.pm), python3
 %if %{python_binding}
 BuildRequires:  python-module-pygobject-devel, python-devel, python-module-pygtk-devel
@@ -53,11 +53,11 @@ Install this package if you want to develop programs which use tomoe.
 
 %prep
 %setup -q
-%patch0 -p0 -b .multiarch-conflict
-%patch1 -p0 -b .bz502662
-%patch2 -p1 -b .glib
-%patch3 -p1 -b .compile
-%patch4 -p1 -b .strerror
+%patch0  -p0 -b .multiarch-conflict
+%patch1  -p0 -b .bz502662
+%patch2  -p1 -b .glib
+%patch3  -p1 -b .compile
+%patch4  -p1 -b .strerror
 
 %build
 ./autogen.sh
@@ -77,10 +77,6 @@ chmod 755 $RPM_BUILD_ROOT%{_datadir}/%{name}/xml2est.rb
 find ${RPM_BUILD_ROOT}%{_libdir} -name '*.la' | xargs rm
 
 %find_lang %{name}
-
-
-
-
 
 
 %files -f %{name}.lang
@@ -109,6 +105,9 @@ find ${RPM_BUILD_ROOT}%{_libdir} -name '*.la' | xargs rm
 %endif
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 0.6.0-alt3_54
+- update to new release by fcimport
+
 * Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 0.6.0-alt3_50
 - to Sisyphus as zinnia dep
 
