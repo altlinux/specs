@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-ninja-build
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -12,34 +12,36 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %bcond_with check
-%bcond_without doc
+%bcond_with doc
 
 Name:           libpqxx
 Summary:        C++ client API for PostgreSQL
 Epoch:          1
-Version:        7.6.0
-Release:        alt1_1
+Version:        7.7.5
+Release:        alt1_2
 
 %global         forgeurl https://github.com/jtv/%{name}/
 %global         tag %{version}
+# FedoraForgeMeta2ALT: generated meta
 %global forgeurl https://github.com/jtv/libpqxx/
-%global forgesource https://github.com/jtv/libpqxx//archive/7.6.0/libpqxx-7.6.0.tar.gz
-%global archivename libpqxx-7.6.0
+%global forgesource https://github.com/jtv/libpqxx//archive/7.7.5/libpqxx-7.7.5.tar.gz
+%global archivename libpqxx-7.7.5
 %global archiveext tar.gz
-%global archiveurl https://github.com/jtv/libpqxx//archive/7.6.0/libpqxx-7.6.0.tar.gz
-%global topdir libpqxx-7.6.0
-%global extractdir libpqxx-7.6.0
+%global archiveurl https://github.com/jtv/libpqxx//archive/7.7.5/libpqxx-7.7.5.tar.gz
+%global topdir libpqxx-7.7.5
+%global extractdir libpqxx-7.7.5
 %global repo libpqxx
 #global owner %nil
 #global namespace %nil
 %global scm git
-%global tag 7.6.0
+%global tag 7.7.5
 #global commit %nil
 #global shortcommit %nil
 #global branch %nil
-%global version 7.6.0
+%global version 7.7.5
 #global date %nil
-%global distprefix .git7.6.0
+%global distprefix .git7.7.5
+# FedoraForgeMeta2ALT: end generated meta
 
 License:        BSD
 URL:            http://pqxx.org/
@@ -82,7 +84,7 @@ BuildArch: noarch
 %endif
 
 %prep
-%setup -q -n libpqxx-7.6.0
+%setup -q -n libpqxx-7.7.5
 
 
 %build
@@ -90,10 +92,10 @@ BuildArch: noarch
 %if %{with doc}
   -DBUILD_DOC=ON
 %endif
-%ninja_build -C "%{_vpath_builddir}"
+%fedora_v2_cmake_build
 
 %install
-%ninja_install -C "%{_vpath_builddir}"
+%fedora_v2_cmake_install
 
 %check
 %if %{with check}
@@ -106,11 +108,10 @@ cd -
 %files
 %doc AUTHORS NEWS README.md VERSION
 %doc --no-dereference COPYING
-%{_libdir}/%{name}-7.6.so
+%{_libdir}/%{name}-7.7.so
 
 %files devel
 %dir %{_libdir}/cmake/%{name}
-%doc README-UPGRADE
 %{_includedir}/pqxx
 %{_libdir}/%{name}.so
 %{_libdir}/pkgconfig/%{name}.pc
@@ -137,6 +138,9 @@ cd -
 %endif
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1:7.7.5-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 1:7.6.0-alt1_1
 - update to new release by fcimport
 
