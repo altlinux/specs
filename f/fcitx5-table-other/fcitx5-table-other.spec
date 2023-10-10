@@ -1,15 +1,15 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/gettext gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 2
+%define autorelease 1
 
 Name:       fcitx5-table-other
-Version:    5.0.10
-Release:    alt1_%autorelease
+Version:    5.1.0
+Release:    alt1_1
 Summary:    Other tables for Fcitx5
 License:    GPLv3
 URL:        https://github.com/fcitx/fcitx5-table-other
@@ -24,9 +24,8 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  ninja-build python3-module-ninja_syntax
 BuildRequires:  boost-complete
 BuildRequires:  cmake(Fcitx5Utils)
-#BuildRequires:  cmake(LibIMETable)
 BuildRequires:  libime-devel
-BuildRequires:  gettext gettext-tools
+BuildRequires:  gettext-tools
 BuildRequires:  libappstream-glib libappstream-glib-gir
 
 Requires:       icon-theme-hicolor
@@ -67,6 +66,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/org.fcitx.Fcitx5.Addon.TableOther.metainfo.xml
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.0-alt1_1
+- update to new release by fcimport
+
 * Fri Sep 16 2022 Igor Vlasenko <viy@altlinux.org> 5.0.10-alt1_2
 - new version
 
