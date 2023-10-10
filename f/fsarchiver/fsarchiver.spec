@@ -1,8 +1,8 @@
-Summary: Filesystem Archiver for Linux
+Summary: Safe and flexible file-system backup/deployment tool
 Summary(ru_RU.UTF-8): Архиватор файловых систем
 
 Name: fsarchiver
-Version: 0.8.6
+Version: 0.8.7
 Release: alt1
 Url: https://github.com/fdupoux/fsarchiver
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -15,16 +15,24 @@ Source: %name-%version.tar
 License: GPLv2+
 Group: Archiving/Backup
 
-# Automatically added by buildreq on Tue Nov 29 2011
-# optimized out: libcom_err-devel libgpg-error libgpg-error-devel pkg-config
-BuildRequires: bzlib-devel libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel
-BuildRequires: liblzma-devel liblzo2-devel libparted-devel libuuid-devel zlib-devel
+# Automatically added by buildreq on Tue Oct 10 2023
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcom_err-devel libgpg-error libgpg-error-devel perl pkg-config sh4
+BuildRequires: bzlib-devel libblkid-devel libe2fs-devel libgcrypt-devel 
+BuildRequires: liblz4-devel liblzma-devel liblzo2-devel libuuid-devel libzstd-devel perl-parent zlib-devel
+
+# BEGIN SourceDeps(oneline):
+BuildRequires: liblz4-devel libzstd-devel pkgconfig(com_err)
+# END SourceDeps(oneline)
+
 
 %description
-FSArchiver is a system tool that allows you to save the contents of
-a file-system to a compressed archive file. The file-system can be
-restored on a partition which has a different size and it can be
-restored on a different file-system.
+FSArchiver is a system tool that allows you to save the contents of a
+filesystem to a compressed archive file. The filesystem contents can be
+restored on a device which has a different size and it can be restored on a
+different filesystem. Unlike tar/dar, FSArchiver also creates the
+filesystem when it extracts the data to devices. Everything is checksummed
+in the archive in order to protect the data. If the archive is corrupt, you
+just lose the current file, not the whole archive.
 
 The following features have already been implemented in the current version:
 
@@ -73,8 +81,9 @@ FSArchiver предоставляет следующие возможности:
 
 %build
 %autoreconf
-%configure --disable-lz4 \
-           --disable-zstd
+##configure --disable-lz4 \
+#           --disable-zstd
+%configure
 
 %make_build
 
@@ -82,12 +91,15 @@ FSArchiver предоставляет следующие возможности:
 %makeinstall_std
 
 %files
-%doc COPYING ChangeLog AUTHORS README
+%doc ChangeLog AUTHORS README README THANKS NEWS
 #config %_sysconfdir/%name.conf
 %_sbindir/%name
 %_man8dir/*
 
 %changelog
+* Tue Oct 10 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.8.7-alt1
+- Version 0.8.7
+
 * Thu May 19 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.8.6-alt1
 - Version 0.8.6
 
