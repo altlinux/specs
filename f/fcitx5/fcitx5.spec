@@ -15,7 +15,7 @@ BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr
 
 Name:           fcitx5
 Version:        5.1.1
-Release:        alt1_%autorelease
+Release:        alt2_%autorelease
 Summary:        Next generation of fcitx
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5
@@ -86,8 +86,8 @@ The %{name}-data package provides shared data for Fcitx5.
 Group: Graphical desktop/Other
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
-#Provides: cmake(Fcitx5Core)
-#Provides: cmake(Fcitx5Utils)
+Provides: cmake(Fcitx5Core)
+Provides: cmake(Fcitx5Utils)
 
 %description devel
 The %{name}-devel package contains libraries and header files necessary for
@@ -179,6 +179,9 @@ EOF
 %config %{_sysconfdir}/profile.d/fcitx5.sh
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt2_1
+- restored Provides: cmake(Fcitx5*)
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_1
 - update to new release by fcimport
 
