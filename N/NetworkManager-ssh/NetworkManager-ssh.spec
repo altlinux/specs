@@ -10,12 +10,12 @@
 
 Name: NetworkManager-ssh
 Version: 1.2.12
-Release: alt1%git_date
+Release: alt2%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for SSH
 Url: https://github.com/danfruehauf/NetworkManager-ssh
-Vcs: git://github.com/danfruehauf/NetworkManager-ssh.git
+Vcs: https://github.com/danfruehauf/NetworkManager-ssh.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -31,7 +31,7 @@ BuildRequires: libgtk+3-devel
 BuildRequires: libsecret-devel
 
 Requires: NetworkManager-daemon   >= %nm_version
-Requires: openssh
+Requires: openssh-clients
 
 %description
 This package contains software for integrating VPN capabilities with
@@ -95,6 +95,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Tue Oct 10 2023 Mikhail Efremov <sem@altlinux.org> 1.2.12-alt2
+- Require openssh-clients instead of openssh.
+- Updated Vcs tag.
+
 * Thu Apr 22 2021 Mikhail Efremov <sem@altlinux.org> 1.2.12-alt1
 - Added Vcs tag.
 - Updated to 1.2.12.
