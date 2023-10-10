@@ -1,5 +1,5 @@
 %define vrs	3.1
-%define tstamp 	20221030
+%define tstamp 	20230828
 
 Name: libedit3
 Version: %vrs.%tstamp
@@ -76,6 +76,9 @@ cd -
 %_man3dir/*
 
 %changelog
+* Tue Oct 03 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.20230828-alt1
+- Updated to 20230828-3.1.
+
 * Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.20221030-alt1
 - Updated to 20221030-3.1.
 
