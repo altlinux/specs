@@ -3,13 +3,14 @@
 %endif
 
 Name: mongo6.0
-Version: 6.0.9
+Version: 6.0.11
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
 Url: https://www.mongodb.org
 Source: %name-%version.tar
+Patch0: mongo6.0-6.0.11-debuginfo.patch
 
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
@@ -74,6 +75,7 @@ MongoDB instance.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %ifarch aarch64
@@ -100,7 +102,6 @@ MongoDB instance.
        --release \\\
        MONGO_VERSION="%{version}-%{release}" \\\
        --disable-warnings-as-errors \\\
-       --debug-compress=as \\\
        CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
 python3 src/third_party/scons-3.1.2/scons.py CC=gcc-10 CXX=g++-10 %build_opts
@@ -187,6 +188,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue Oct 10 2023 Alexei Takaseev <taf@altlinux.org> 6.0.11-alt1
+- 6.0.11
+- Add patch reduce debuginfo
+
 * Fri Aug 11 2023 Alexei Takaseev <taf@altlinux.org> 6.0.9-alt1
 - 6.0.9
 - Compress debug section to reduce disk space
