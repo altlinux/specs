@@ -1,11 +1,11 @@
+BuildRequires: chrpath
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-build-python rpm-build-python3 rpm-build-ruby
-BuildRequires: perl-podlators python3-module-setuptools
-BuildRequires: chrpath
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
-%define fedora 37
+%define fedora 38
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -23,18 +23,17 @@ Group: Development/C
 %endif
 
 Name:          marisa
-Version:       0.2.4
-Release:       alt1_57
+Version:       0.2.6
+Release:       alt1_5
 Summary:       Static and spece-efficient trie data structure library
 
-License:       BSD or LGPLv2+
-URL:  https://code.google.com/p/marisa-trie
-# Currently the working URL is
-# https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/marisa-trie/%%{name}-%%{version}.tar.gz
-Source0: https://marisa-trie.googlecode.com/files/%{name}-%{version}.tar.gz
+License:       BSD-2-Clause OR LGPL-2.1-or-later
+URL:  https://github.com/s-yata/marisa-trie
+Source0: https://github.com/s-yata/marisa-trie/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
-BuildRequires:  gcc
-BuildRequires:  gcc-c++
+BuildRequires: autoconf, automake, libtool
+BuildRequires: gcc
+BuildRequires: gcc-c++
 BuildRequires: swig
 BuildRequires: perl-devel
 BuildRequires: rpm-build-perl
@@ -42,6 +41,7 @@ BuildRequires: rpm-build-perl
 BuildRequires: python-devel
 %endif
 BuildRequires: python3-devel
+BuildRequires: python3-module-pkg_resources python3-module-setuptools
 BuildRequires: libruby-devel
 Source44: import.info
 
@@ -134,57 +134,54 @@ Python 3 language binding for marisa
 Group: Development/C
 Summary: Ruby language binding for marisa
 Requires:      libmarisa0 = %EVR
-%if 0%{?fedora} || 0%{?rhel} > 7
-Requires:      ruby(release)
-%else
-%endif
 
 %description ruby
 Ruby language binding for groonga
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-trie-%{version}
 
 
 
 %build
 
 
+autoreconf -i
 %configure --disable-static
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-%make_build
+%{make_build}
 
 # build Perl bindings
 pushd bindings/perl
-/usr/bin/perl Makefile.PL INC="-I%{_builddir}/%{name}-%{version}/lib" LIBS="-L%{_builddir}/%{name}-%{version}/lib/.libs -lmarisa" INSTALLDIRS=vendor
-%make_build
+/usr/bin/perl Makefile.PL INC="-I%{_builddir}/%{name}-trie-%{version}/include" LIBS="-L%{_builddir}/%{name}-trie-%{version}/lib/%{name}/.libs -lmarisa" INSTALLDIRS=vendor
+%{make_build}
 popd
 
 # build Python bindings
 # Regenerate Python bindings
-make --directory=bindings swig-python
+%{make_build} --directory=bindings swig-python
 
 pushd bindings/python
 %if %{with python2}
-%{__python} setup.py build_ext --include-dirs="%{_builddir}/%{name}-%{version}/lib" --library-dirs="%{_builddir}/%{name}-%{version}/lib/.libs"
+%{__python} setup.py build_ext --include-dirs="%{_builddir}/%{name}-trie-%{version}/include" --library-dirs="%{_builddir}/%{name}-trie-%{version}/lib/%{name}/.libs"
 %python_build
 %endif
 
-%{__python3} setup.py build_ext --include-dirs="%{_builddir}/%{name}-%{version}/lib" --library-dirs="%{_builddir}/%{name}-%{version}/lib/.libs"
+%{__python3} setup.py build_ext --include-dirs="%{_builddir}/%{name}-trie-%{version}/include" --library-dirs="%{_builddir}/%{name}-trie-%{version}/lib/%{name}/.libs"
 %python3_build
 popd
 
 # build Ruby bindings
 # Regenerate ruby bindings
 pushd bindings
-make swig-ruby
+%{make_build} swig-ruby
 popd
 
 pushd bindings/ruby
-ruby extconf.rb --with-opt-include="%{_builddir}/%{name}-%{version}/lib" --with-opt-lib="%{_builddir}/%{name}-%{version}/lib/.libs" --vendor
-make
+ruby extconf.rb --with-opt-include="%{_builddir}/%{name}-trie-%{version}/include" --with-opt-lib="%{_builddir}/%{name}-trie-%{version}/lib/%{name}/.libs" --vendor
+%{make_build}
 popd
 
 %install
@@ -204,6 +201,7 @@ pushd bindings/python
 %python_install
 %endif
 %python3_install
+rm -rf %{buildroot}/%{python3_sitelibdir}/marisa-0.0.0-py%{__python3_version}.egg-info
 popd
 
 # install Ruby bindings
@@ -220,13 +218,14 @@ find $RPM_BUILD_ROOT -name 'perllocal.pod' -exec rm -f {} ';'
 rm -f $RPM_BUILD_ROOT%{perl_vendor_archlib}/sample.pl
 
 
-
 chrpath -d %buildroot%{perl_vendor_archlib}/auto/marisa/*.so
 
+
+
 %files -n libmarisa0
-%doc docs/style.css AUTHORS README docs/readme.en.html
+%doc docs/style.css AUTHORS README.md docs/readme.en.html
 %lang(ja) %doc docs/readme.ja.html
-%doc --no-dereference COPYING
+%doc --no-dereference COPYING.md
 %_libdir/libmarisa.so.0
 %_libdir/libmarisa.so.0.*
 
@@ -247,6 +246,7 @@ chrpath -d %buildroot%{perl_vendor_archlib}/auto/marisa/*.so
 %files perl
 %{perl_vendor_archlib}/marisa.pm
 %{perl_vendor_archlib}/auto/marisa
+%{perl_vendor_archlib}/benchmark.pl
 
 %if %{with python2}
 %files -n python-module-marisa
@@ -259,14 +259,14 @@ chrpath -d %buildroot%{perl_vendor_archlib}/auto/marisa/*.so
 %{python3_sitelibdir}/__pycache__/marisa*
 %{python3_sitelibdir}/_marisa*.so
 %{python3_sitelibdir}/marisa.py
-%{python3_sitelibdir}/marisa-0.0.0-py%{__python3_version}.egg-info
 
-%if 0
 %files ruby
 %{ruby_vendorarchdir}/marisa.so
-%endif
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 0.2.6-alt1_5
+- update to new release by fcimport
+
 * Wed Sep 28 2022 Igor Vlasenko <viy@altlinux.org> 0.2.4-alt1_57
 - new version
 
