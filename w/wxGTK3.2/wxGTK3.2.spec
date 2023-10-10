@@ -7,8 +7,8 @@
 %define wxbranch 3.2
 
 Name: wxGTK3.2
-Version: 3.2.2
-Release: alt3
+Version: 3.2.3
+Release: alt1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets
@@ -22,8 +22,6 @@ Source2: pcre.tar
 Source3: nanosvg.tar
 Source11: ld_shared_wrapper.pl
 Patch1: wxGTK3.0-disable-ABI-checking.patch
-# Upstream patch
-Patch2: 0001-Fix-drawing-of-icons-for-non-root-wxTreeCtrl-items.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel libGLU-devel libSM-devel
@@ -325,6 +323,9 @@ ln -s %_bindir/wx-config %buildroot%_bindir/wx-config-%wxbranch
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Tue Oct 10 2023 Anton Midyukov <antohami@altlinux.org> 3.2.3-alt1
+- new stable release 3.2.3
+
 * Fri Sep 15 2023 Anton Midyukov <antohami@altlinux.org> 3.2.2-alt3
 - add %%_bindir/wx-config-%%wxbranch for compatibilty with Fedora
   (Closes: 47593)
