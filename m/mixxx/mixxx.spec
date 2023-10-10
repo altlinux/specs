@@ -8,7 +8,7 @@
 
 Name: mixxx
 Version: 2.3.6
-Release: alt2
+Release: alt3
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -20,7 +20,7 @@ Url: http://mixxx.org
 # https://github.com/mixxxdj/mixxx.git
 Source: %name-%version.tar
 
-Requires: %name-data = %EVR
+Provides: %name-data = %EVR
 Requires: qt5-sql-sqlite3
 
 BuildPreReq: rpm-macros-qt5 rpm-build-ninja
@@ -61,14 +61,6 @@ you need to perform live mixes.
 Mixxx - это бесплатная, с открытым исходным кодом программа для DJ,
 дающая вам всё необходимое для живых выступлений.
 
-%package data
-Summary: Data files for Mixxx
-Group: Sound
-BuildArch: noarch
-
-%description data
-This package contains data files for Mixxx.
-
 %prep
 %setup
 
@@ -90,8 +82,6 @@ chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compil
 
 %files
 %_bindir/%name
-
-%files data
 %exclude %_datadir/doc
 %doc README.md COPYING LICENSE res/Mixxx-Keyboard-Shortcuts.pdf
 %_datadir/%name
@@ -103,6 +93,9 @@ chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compil
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Tue Oct 10 2023 Leontiy Volodin <lvol@altlinux.org> 2.3.6-alt3
+- Merged data subpackage for compatibility with packagekit.
+
 * Mon Sep 11 2023 Leontiy Volodin <lvol@altlinux.org> 2.3.6-alt2
 - Spec:
   + Updated BuildRequires.
