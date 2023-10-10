@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/gettext pkgconfig(bzip2) p
 %global translation_domain org.fcitx.fcitx5.kcm
 
 Name:           fcitx5-configtool
-Version:        5.0.15
+Version:        5.1.1
 Release:        alt1_%autorelease
 Summary:        Configuration tools used by fcitx5
 License:        GPLv2+
@@ -132,12 +132,16 @@ mv %buildroot/usr/lib/kf5/bin %buildroot%_bindir
 %files -n fcitx5-migrator
 %{_bindir}/fcitx5-migrator
 %{_libdir}/libFcitx5Migrator.so.5*
+%{_libdir}/libFcitx5Migrator.so.1
 %{_datadir}/applications/org.fcitx.fcitx5-migrator.desktop
 
 %files -n fcitx5-migrator-devel
 %{_libdir}/libFcitx5Migrator.so
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_1
+- update
+
 * Fri Sep 16 2022 Igor Vlasenko <viy@altlinux.org> 5.0.15-alt1_1
 - new version
 
