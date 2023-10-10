@@ -6,7 +6,7 @@ Group: Development/Python3
 Name:           rpm-build-pythondist
 Summary:        Dependency generators for Python RPMs
 Version:        14
-Release:        alt1_7
+Release:        alt1_8
 
 Url:            https://src.fedoraproject.org/rpms/python-rpm-generators
 
@@ -78,6 +78,9 @@ install -D -m755 python3dist.prov.files %buildroot%_rpmlibdir/python3dist.prov.f
 
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 14-alt1_8
+- update to new release by fcimport
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 14-alt1_7
 - update to new release by fcimport
 
