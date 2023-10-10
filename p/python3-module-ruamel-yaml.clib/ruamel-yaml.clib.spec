@@ -1,5 +1,5 @@
 Name:     python3-module-ruamel-yaml.clib
-Version:  0.2.7
+Version:  0.2.8
 Release:  alt1
 
 Summary:  C version of reader, parser and emitter for ruamel.yaml derived from libyaml
@@ -13,6 +13,8 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 Source:   %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 This package was split of from ruamel.yaml, so that ruamel.yaml can be build
@@ -25,17 +27,20 @@ a ruamel directory) and the Python code for ruamel.yaml under /usr/lib/pythonX.Y
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install --single-version-externally-managed --skip-build
+%pyproject_install
 
 %files
-%doc *.rst
+%doc LICENSE README.rst
 %python3_sitelibdir/_ruamel_yaml.*.so
-%python3_sitelibdir/ruamel.yaml.clib-%version-py%_python3_version.egg-info
+%python3_sitelibdir/ruamel.yaml.clib-%version.dist-info
 
 %changelog
+* Tue Oct 10 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.8-alt1
+- Automatically updated to 0.2.8.
+
 * Fri Mar 03 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.7-alt1
 - Automatically updated to 0.2.7.
 
