@@ -1,7 +1,7 @@
 %define  modulename pypuppetdb
 
 Name:    python3-module-%modulename
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 Epoch: 1
 
@@ -32,6 +32,7 @@ PuppetDB.
 
 %install
 %pyproject_install
+rm -f %buildroot%_prefix/requirements_for_tests/requirements-test.txt
 
 %files
 %doc README.md CHANGELOG.md
@@ -39,6 +40,9 @@ PuppetDB.
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Tue Oct 10 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.2.0-alt1
+- New version.
+
 * Tue May 02 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.1.0-alt1
 - New version.
 
