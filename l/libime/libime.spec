@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel openmpi-devel python3-devel rpm-build-python3
+BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel liblzma-devel openmpi-devel python3-devel rpm-build-python3
 # END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 1
+%define autorelease 2
 
 Name:       libime  
-Version:    1.1.1
+Version:    1.1.2
 License:    LGPLv2+ and MIT and BSD
-Release:    alt1_1
+Release:    alt1_2
 Summary:    This is a library to support generic input method implementation
 URL:        https://github.com/fcitx/libime
 Source:     https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}_dict.tar.xz
@@ -29,7 +29,7 @@ BuildRequires: python3
 BuildRequires: doxygen
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(bzip2)
-BuildRequires: pkgconfig(liblzma)
+BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(eigen3)
 Requires:      %{name}-data
 Source44: import.info
@@ -107,6 +107,9 @@ Development files for %{name}
 
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1.1.2-alt1_2
+- update to new release by fcimport
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt1_1
 - update to new release by fcimport
 
