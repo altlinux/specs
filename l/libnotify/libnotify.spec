@@ -9,7 +9,7 @@
 %def_enable man
 
 Name: libnotify
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Desktop notification library
@@ -24,8 +24,10 @@ Patch: %name-%version-%release.patch
 Provides: %{name}4 = %EVR
 Obsoletes: %{name}4
 
+%define glib_ver 2.62
+
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson libgio-devel
+BuildRequires: meson libgio-devel >= %glib_ver
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_docbook_docs:BuildRequires: xmlto}
 %{?_enable_check:BuildRequires: libgtk+3-devel}
@@ -141,6 +143,9 @@ the command line.
 %{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Tue Oct 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Sat Feb 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
