@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%module_name
-Version: 4.2.2
+Version: 4.2.3
 Release: alt1
 Summary: Python API to access openQA server
 License: GPL-2.0
@@ -47,6 +47,9 @@ BuildRequires: python3(freezegun)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 10 2023 Alexander Makeenkov <amakeenk@altlinux.org> 4.2.3-alt1
+- Updated to version 4.2.3.
+
 * Fri Sep 15 2023 Alexander Makeenkov <amakeenk@altlinux.org> 4.2.2-alt1
 - Updated to version 4.2.2.
 
