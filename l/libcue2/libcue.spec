@@ -1,5 +1,5 @@
 Name: libcue2
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Cue sheet parser library
@@ -50,6 +50,10 @@ subst "s|\(ADD_LIBRARY(cue \)|\1 SHARED |" CMakeLists.txt
 %_pkgconfigdir/libcue.pc
 
 %changelog
+* Wed Oct 11 2023 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- new version 2.3.0 (with rpmrb script)
+- CVE-2023-43641
+
 * Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
 - new version 2.2.1 (with rpmrb script) (closes: #39700)
 
