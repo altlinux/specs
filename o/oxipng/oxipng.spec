@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 8.0
+%define ver_major 9.0
 
 %def_disable bootstrap
 %def_enable check
@@ -30,7 +30,7 @@ used via a command-line interface or as a library in other Rust programs.
 %prep
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
-mkdir .cargo
+[ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
@@ -45,9 +45,12 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %files
 %_bindir/%name
-%doc README*
+%doc README* CHANGELOG* MANUAL*
 
 %changelog
+* Wed Oct 11 2023 Yuri N. Sedunov <aris@altlinux.org> 9.0.0-alt1
+- 9.0.0
+
 * Fri Sep 29 2023 Yuri N. Sedunov <aris@altlinux.org> 8.0.0-alt1
 - first build for Sisyphus
 
