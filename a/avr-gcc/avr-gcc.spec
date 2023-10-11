@@ -1,6 +1,6 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr/bin/runtest perl(English.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(IPC/Open2.pm) swig texinfo
+BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr/bin/runtest liblzma-devel libzstd-devel swig texinfo
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -8,13 +8,15 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 %define target avr
 
 Name:           %{target}-gcc
-Version:        10.2.0
+#FIXME:11.2 fails with Werror-format-security https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100431
+#revert -Wno-format-security once fix is available
+Version:        13.2.0
 Release:        alt1_1
 Epoch:          1
 Summary:        Cross Compiling GNU GCC targeted at %{target}
-License:        GPLv2+
+License:        GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-2.0-or-later AND MIT AND BSD-2-Clause
 URL:            http://gcc.gnu.org/
-Source0:        ftp://ftp.gnu.org/gnu/gcc/gcc-%{version}/gcc-%{version}.tar.xz
+Source0:        http://ftp.gnu.org/gnu/gcc/gcc-%{version}/gcc-%{version}.tar.xz
 Source2:        README.fedora
 
 Patch0:         avr-gcc-4.5.3-mint8.patch
@@ -23,7 +25,8 @@ Patch1:		avr-gcc-config.patch
 BuildRequires:  gcc-c++
 BuildRequires:  %{target}-binutils >= 1:2.23, zlib-devel gawk libgmp-devel libgmpxx-devel libmpfr-devel libmpc-devel, flex
 #for autoreconf:
-BuildRequires:  gettext-tools libasprintf-devel autoconf automake
+BuildRequires:  gettext-tools libasprintf-devel automake
+#BuildRequires:  autoconf = 2.69
 Requires:       %{target}-binutils >= 1:2.23
 Provides:       bundled(libiberty)
 Source44: import.info
@@ -50,14 +53,14 @@ platform.
 [ -d gcc-%{version} ] || mv gcc-4.7-* gcc-%{version}
 
 pushd gcc-%{version}
-%patch0 -p2 -b .mint8
-%patch1 -p2 -b .config
+%patch0  -p2 -b .mint8
+#patch -P1 -p2 -b .config
 
 pushd libiberty
-autoconf -f
+#autoconf -f
 popd
 pushd intl
-autoconf -f
+#autoconf -f
 popd
 
 contrib/gcc_update --touch
@@ -90,20 +93,24 @@ pushd gcc-%{version}
 acv=$(autoreconf --version | head -n1)
 acv=${acv##* }
 sed -i "/_GCC_AUTOCONF_VERSION/s/2.64/$acv/" config/override.m4
-autoreconf -fiv
+#autoreconf -fiv
 pushd intl
-autoreconf -ivf
+#autoreconf -ivf
 popd
 popd
 mkdir -p gcc-%{target}
 pushd gcc-%{target}
-CC="gcc ${RPM_OPT_FLAGS} -fno-stack-protector" \
+FILTERED_RPM_OPT_FLAGS=$(echo "${RPM_OPT_FLAGS}" | sed 's/Werror=format-security/Wno-format-security/g')
+export CFLAGS=$FILTERED_RPM_OPT_FLAGS
+export CXXFLAGS=$FILTERED_RPM_OPT_FLAGS
+CC="gcc ${FILTERED_RPM_OPT_FLAGS} -fno-stack-protector" \
 ../gcc-%{version}/configure --prefix=%{_prefix} --mandir=%{_mandir} \
   --infodir=%{_infodir} --target=%{target} --enable-languages=c,c++ \
   --disable-nls --disable-libssp --with-system-zlib \
   --enable-version-specific-runtime-libs \
   --with-pkgversion="Fedora %{version}-%{release}" \
   --with-bugurl="https://bugzilla.redhat.com/"
+
 make
 popd
 
@@ -147,6 +154,9 @@ rm -r $RPM_BUILD_ROOT%{_libexecdir}/gcc/%{target}/%{version}/install-tools ||:
 
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1:13.2.0-alt1_1
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1:10.2.0-alt1_1
 - update to new release by fcimport
 
