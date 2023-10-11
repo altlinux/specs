@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.16.05
+Version: 0.17.00
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -47,7 +47,7 @@ ways. It was designed to exercise various physical subsystems
 of a computer as well as the various operating system kernel
 interfaces. Stress-ng features:
 
-  * 300+ stress tests
+  * 310+ stress tests
   * 80+ CPU specific stress tests that exercise floating point, integer,
     bit manipulation and control flow
   * 20+ virtual memory stress tests
@@ -99,9 +99,6 @@ install -pD debian/tests/fast-test-all %buildroot%_datadir/stress-ng/fast-test-a
 install -pD debian/tests/lite-test     %buildroot%_datadir/stress-ng/lite-test
 
 %check
-# getrandom test does not work in Girar:
-#   getrandom using flags GRND_INSECURE failed, errno=22 (Invalid argument)
-sed -i '/STRESSORS/s/getrandom //g' debian/tests/lite-test
 # Cache test for a long time hanging ALT beekeeper for a unknown reason.
 sed -i '/STRESSORS/s/ cache / /g' debian/tests/lite-test
 
@@ -118,6 +115,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Wed Oct 11 2023 Vitaly Chikunov <vt@altlinux.org> 0.17.00-alt1
+- Update to V0.17.00 (2023-10-08).
+
 * Tue Sep 05 2023 Vitaly Chikunov <vt@altlinux.org> 0.16.05-alt1
 - Update to V0.16.05 (2023-09-05).
 
