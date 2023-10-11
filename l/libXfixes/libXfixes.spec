@@ -1,5 +1,5 @@
 Name: libXfixes
-Version: 6.0.0
+Version: 6.0.1
 Release: alt1
 Summary: X Fixes Library
 License: MIT/X11
@@ -46,6 +46,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Wed Oct 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 6.0.1-alt1
+- 6.0.1
+
 * Mon Sep 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 6.0.0-alt1
 - 6.0.0
 

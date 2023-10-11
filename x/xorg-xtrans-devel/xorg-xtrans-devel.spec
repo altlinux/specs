@@ -1,5 +1,5 @@
 Name: xorg-xtrans-devel
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Abstract network code for X
@@ -51,6 +51,9 @@ autoconf m4 macro file with the flags needed to use it.
 %_datadir/aclocal/*.m4
 
 %changelog
+* Wed Oct 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+
 * Mon Mar 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
