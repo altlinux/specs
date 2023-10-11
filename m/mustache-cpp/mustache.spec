@@ -3,29 +3,35 @@ Group: Development/C++
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 %define oldname mustache
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%undefine __cmake_in_source_build
 %global appname Mustache
 
 Name: mustache-cpp
 Version: 4.1
-Release: alt1_4
+Release: alt1_10
 
-License: Boost
+License: BSL-1.0
 Summary: Mustache text templates for modern C++
 
 URL: https://github.com/kainjow/%{appname}
-Source0: %{url}/archive/v%{version}/%{oldname}-%{version}.tar.gz
+Source0: https://github.com/kainjow/%{appname}/archive/v%{version}/%{oldname}-%{version}.tar.gz
 
 # https://github.com/kainjow/Mustache/pull/42
 Patch100: %{oldname}-4.1-catch-fixes.patch
 
-BuildRequires: catch2-devel
 BuildRequires: ctest cmake
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: ninja-build python3-module-ninja_syntax
+
+# mustache currently support only catch v2
+%if 0%{?fedora} >= 38 || 0%{?rhel} >= 10
+BuildRequires: catch2-devel
+%else
+BuildRequires: catch-devel catch2-devel
+%endif
 
 BuildArch: noarch
 Source44: import.info
@@ -68,6 +74,9 @@ install -m 0644 -p %{oldname}.hpp %{buildroot}%{_includedir}
 %{_includedir}/%{oldname}.hpp
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 4.1-alt1_10
+- update to new release by fcimport
+
 * Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 4.1-alt1_4
 - fixed build
 
