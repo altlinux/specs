@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Oct 11 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt2
+- bug fixes
+- update support
+
 * Wed Sep 27 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt1
 - update to ALT Server 10.2Beta1
 
