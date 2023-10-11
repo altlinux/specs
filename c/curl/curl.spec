@@ -31,7 +31,7 @@
 %endif
 
 Name: curl
-Version: 8.3.0
+Version: 8.4.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -207,6 +207,12 @@ popd
 %endif
 
 %changelog
+* Wed Oct 11 2023 Anton Farygin <rider@altlinux.ru> 8.4.0-alt1
+- 8.3.0 -> 8.4.0
+- Fixes:
+   * CVE-2023-38545: SOCKS5 heap buffer overflow
+   * CVE-2023-38546
+
 * Wed Sep 13 2023 Anton Farygin <rider@altlinux.ru> 8.3.0-alt1
 - 8.2.1 -> 8.3.0
 - Fixes:
