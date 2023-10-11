@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 6.4.2
+Version: 6.4.3
 Release: alt1
 
 Summary: Observable typed attributes for Python classes
@@ -125,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 11 2023 Anton Vyatkin <toni@altlinux.org> 6.4.3-alt1
+- New version 6.4.3.
+
 * Wed Aug 23 2023 Anton Vyatkin <toni@altlinux.org> 6.4.2-alt1
 - New version 6.4.2.
 
