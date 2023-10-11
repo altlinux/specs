@@ -2,14 +2,15 @@
 %define rpmstate /run/openvswitch-rpm-state-
 
 Name: ovn
-Version: 23.06.0
+Version: 23.09.0
 Release: alt1
 
 Summary: Open Virtual Network support
 License: Apache-2.0 AND LGPL-2.1-only AND SISSL
 Group: Networking/Other
 
-URL: http://www.openvswitch.org/
+URL: https://www.ovn.org
+Vcs: https://github.com/ovn-org/ovn.git
 Source0: %name-%version.tar
 Source1: ovs.tar
 Source2: %name.tmpfiles
@@ -401,6 +402,9 @@ fi
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Tue Oct 10 2023 Alexey Shabalin <shaba@altlinux.org> 23.09.0-alt1
+- 23.09.0
+
 * Wed Jul 12 2023 Alexey Shabalin <shaba@altlinux.org> 23.06.0-alt1
 - 23.06.0
 

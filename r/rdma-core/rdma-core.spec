@@ -11,7 +11,7 @@
 
 
 Name: rdma-core
-Version: 46.0
+Version: 48.0
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -163,7 +163,7 @@ are used by the IB diagnostic and management tools, including OpenSM.
 %package -n libibmad
 Summary: library to encode, decode, and dump IB MAD packets
 Group: System/Libraries
-Conflicts: libinfiniband-diags =< 2.2.0-alt1 
+Conflicts: libinfiniband-diags =< 2.2.0-alt1
 
 %description -n libibmad
 libibmad is a convenience library to encode, decode, and dump IB MAD packets.
@@ -172,7 +172,7 @@ It is implemented on top of libibumad.
 %package -n libibnetdisc
 Summary: Infiniband Net Discovery runtime library
 Group: System/Libraries
-Conflicts: libinfiniband-diags =< 2.2.0-alt1 
+Conflicts: libinfiniband-diags =< 2.2.0-alt1
 
 %description -n libibnetdisc
 This package contains the Infiniband Net Discovery runtime library needed
@@ -198,7 +198,7 @@ Summary: OpenFabrics InfiniBand Diagnostic Tools
 Group: System/Base
 Provides: openib-diags = %version
 Obsoletes: openib-diags < %version
-Conflicts: libinfiniband-diags =< 2.2.0-alt1 
+Conflicts: libinfiniband-diags =< 2.2.0-alt1
 
 %description -n infiniband-diags
 This package provides IB diagnostic programs and scripts needed to
@@ -586,6 +586,9 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %docdir/ibsrpdm.md
 
 %changelog
+* Tue Oct 10 2023 Alexey Shabalin <shaba@altlinux.org> 48.0-alt1
+- new version 48.0
+
 * Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 46.0-alt1
 - new version 46.0
 

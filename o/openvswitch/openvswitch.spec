@@ -12,7 +12,7 @@
 %endif
 
 Name: openvswitch
-Version: 3.1.2
+Version: 3.2.0
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -380,6 +380,9 @@ fi
 %python3_sitelibdir/ovs-*.egg-info
 
 %changelog
+* Tue Oct 10 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.0-alt1
+- 3.2.0.
+
 * Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 3.1.2-alt1
 - 3.1.2.
 - Cleanup spec (remove kernel souce package, xenserver support).

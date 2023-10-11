@@ -10,7 +10,7 @@
 
 
 Name: dpdk
-Version: 22.11.2
+Version: 22.11.3
 Release: alt1
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
@@ -151,6 +151,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Oct 10 2023 Alexey Shabalin <shaba@altlinux.org> 22.11.3-alt1
+- Update to LTS release 22.11.3.
+
 * Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 22.11.2-alt1
 - Update to LTS release 22.11.2.
 
