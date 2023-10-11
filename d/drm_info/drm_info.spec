@@ -2,7 +2,7 @@
 %def_enable man
 
 Name: drm_info
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Small utility to dump info about DRM devices
@@ -45,6 +45,9 @@ BuildRequires: meson libdrm-devel pkgconfig(json-c) >= 0.14 libpci-devel
 %doc README*
 
 %changelog
+* Wed Oct 11 2023 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Mon May 29 2023 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - first build for Sisyphus (v2.5.0-3-gc18976c)
 
