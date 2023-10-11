@@ -8,7 +8,7 @@
 Name: mumble
 %define build_number 287
 Version: 1.4.287
-Release: alt2
+Release: alt2.1
 
 Summary: Low latency encrypted VoIP client
 
@@ -49,7 +49,7 @@ BuildRequires: libspeex-devel libspeexdsp-devel
 BuildRequires: libopus-devel
 BuildRequires: librnnoise-devel
 
-Requires: qt5-sql-sqlite3
+Requires: qt5-sql-sqlite
 
 %description
 Mumble is a low-latency, high quality voice chat program primarily intended
@@ -219,6 +219,9 @@ mkdir -p %buildroot%_logdir/murmur
 %_bindir/%name-overlay
 
 %changelog
+* Wed Oct 11 2023 Sergey V Turchin <zerg@altlinux.org> 1.4.287-alt2.1
+- NMU: fix requires
+
 * Wed Jul 19 2023 Arseny Maslennikov <arseny@altlinux.org> 1.4.287-alt2
 - Backported f4cea62ed95e ("Migrate to OpenSSL 3.0-compatible API") from master.
 
