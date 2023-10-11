@@ -1,8 +1,8 @@
 %def_without check
 
 Name:    ulauncher
-Version: 5.15.3
-Release: alt2
+Version: 5.15.4
+Release: alt1
 
 Summary: Feature rich application Launcher for Linux
 License: GPL-3.0+
@@ -73,6 +73,9 @@ subst 's|ulauncher-%version.data/data|usr|' %buildroot%python3_sitelibdir/%name/
 %_libexecdir/systemd/user/%name.service
 
 %changelog
+* Tue Oct 10 2023 Andrey Cherepanov <cas@altlinux.org> 5.15.4-alt1
+- New version.
+
 * Sat Sep 09 2023 Andrey Cherepanov <cas@altlinux.org> 5.15.3-alt2
 - Requires python3(cairo).
 - Remove dist/ in settings lookup.
