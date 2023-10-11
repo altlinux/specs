@@ -1,6 +1,6 @@
 Name: sqliteman
 Version: 1.2.2
-Release: alt1.qa9
+Release: alt1.qa9.1
 
 Url: http://sqliteman.com/
 License: GPL
@@ -19,7 +19,7 @@ Patch1: sqliteman-1.2.2-gentoo-qt5.patch
 BuildRequires: ccmake gcc-c++ libqscintilla2-qt5-devel qt5-base-devel xorg-sdk
 
 Requires: sqlite3
-Requires: libqt5-sql qt5-sql-sqlite3
+Requires: libqt5-sql qt5-sql-sqlite
 BuildRequires: desktop-file-utils
 
 %description
@@ -54,6 +54,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/sqliteman/
 
 %changelog
+* Wed Oct 11 2023 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt1.qa9.1
+- NMU: fix requires
+
 * Mon Jun 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1.qa9
 - Rebuilt with Qt5.
 
