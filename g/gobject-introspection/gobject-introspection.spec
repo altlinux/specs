@@ -11,14 +11,14 @@
 
 Name: gobject-introspection
 Version: %ver_major.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Introspection system for GObject-based libraries
 Group: System/Libraries
 License: GPL-2.0-or-later and LGPL-2.0-or-later and MIT
 Url: https://live.gnome.org/GObjectIntrospection
 
-Provides: gir-repository = %version-%release
+Provides: gir-repository = %EVR
 Obsoletes: gir-repository
 
 %if_enabled snapshot
@@ -33,8 +33,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 # python3(pkgconfig) provided by giscanner/pkgconfig.py
 %filter_from_provides /python3(pkgconfig)/d
 %add_python3_req_skip distutils.msvccompiler
-
-Requires: python3(setuptools._distutils)
 
 %define glib_ver 2.78.0
 %define python_ver 3.7
@@ -53,7 +51,7 @@ for bindings, documentation tools and API verification.
 %package x11
 Summary: x11-dependent typelibs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description x11
 This package provides x11-dependent typelibs from %name package.
@@ -61,9 +59,10 @@ This package provides x11-dependent typelibs from %name package.
 %package devel
 Summary: Libraries and headers for gobject-introspection
 Group: Development/C
-Requires: %name = %version-%release libgio-devel rpm-build-gir
-Requires: %name-x11 = %version-%release
-Provides: gir-repository-devel = %version-%release
+Requires: %name = %EVR libgio-devel rpm-build-gir
+Requires: %name-x11 = %EVR
+Requires: python3(setuptools._distutils)
+Provides: gir-repository-devel = %EVR
 Obsoletes: gir-repository-devel
 
 %description devel
@@ -146,6 +145,9 @@ gobject-introspection.
 %endif
 
 %changelog
+* Thu Oct 12 2023 Yuri N. Sedunov <aris@altlinux.org> 1.78.1-alt1.2
+- g-i-devel requires setuptools (ALT #47966)
+
 * Sun Oct 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.78.1-alt1.1
 - updated dependencies for python3 >= 3.11.6-alt1 w/o distutils
 
