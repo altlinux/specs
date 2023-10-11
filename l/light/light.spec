@@ -3,10 +3,10 @@ Group: Other
 %define _localstatedir %{_var}
 Name:       light
 Version:    1.2.2
-Release:    alt1_3
+Release:    alt1_10
 Summary:    Control backlight controllers
 
-License:    GPLv3
+License:    GPL-3.0-only
 URL:        http://haikarainen.github.io/light/
 Source0:    https://github.com/haikarainen/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 
@@ -63,6 +63,9 @@ fi
 
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1.2.2-alt1_10
+- update to new release by fcimport
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_3
 - fixed build
 
