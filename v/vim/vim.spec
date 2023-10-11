@@ -48,7 +48,7 @@
 
 Name: vim
 %define branch 9.0
-Version: %branch.1893
+Version: %branch.2009
 Release: alt1
 Epoch: 4
 
@@ -1053,6 +1053,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Wed Oct 11 2023 Alexander Danilov <admsasha@altlinux.org> 4:9.0.2009-alt1
+- Updated to v9.0.2009 (fixes CVE-2023-5344, CVE-2023-5441).
+
 * Mon Sep 11 2023 Alexander Danilov <admsasha@altlinux.org> 4:9.0.1893-alt1
 - Updated to v9.0.1893 (fixes CVE-2023-4781, CVE-2023-4752, CVE-2023-4750,
   CVE-2023-4733, CVE-2023-4738, CVE-2023-4736, CVE-2023-4735, CVE-2023-4734).
