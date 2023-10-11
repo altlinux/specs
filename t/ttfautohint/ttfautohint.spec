@@ -3,20 +3,30 @@ Group: File tools
 BuildRequires: /usr/bin/bison /usr/bin/flex /usr/bin/import /usr/bin/inkscape /usr/bin/kpsewhich /usr/bin/pandoc /usr/bin/xelatex
 # END SourceDeps(oneline)
 BuildRequires: chrpath
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# RHEL 10 is dropping Qt5
+#bcond gui 1
+%define with_gui 1
+
 Name:           ttfautohint
 Version:        1.8.4
-Release:        alt1_1
+Release:        alt1_7
 Summary:        Automated hinting utility for TrueType fonts
-License:        FTL or GPLv2
+License:        FTL or GPL-2.0-only
 URL:            http://www.freetype.org/ttfautohint
 Source0:        http://download.savannah.gnu.org/releases/freetype/%{name}-%{version}.tar.gz
 
+BuildRequires:  autoconf automake libtool
 BuildRequires:  gcc gcc-c++
 BuildRequires:  libfreetype-devel
 BuildRequires:  libharfbuzz-devel libharfbuzz-gir-devel libharfbuzz-utils
+%if %{with gui}
 BuildRequires:  qt5-base-devel
+%endif
 Provides:       bundled(gnulib)
 Requires:       %{name}-libs = %{version}-%{release}
 Source44: import.info
@@ -28,6 +38,7 @@ are bytecode hinted using the information given by FreeType's autohinting
 module. The idea is to provide the excellent quality of the autohinter on 
 platforms which don't use FreeType.
 
+%if %{with gui}
 %package        gui
 Group: File tools
 Summary:        GUI for %{name} based on Qt
@@ -40,7 +51,8 @@ are bytecode hinted using the information given by FreeType's autohinting
 module. The idea is to provide the excellent quality of the autohinter on 
 platforms which don't use FreeType.
 
-This is a GUI of %{name} based on Qt. 
+This is a GUI of %{name} based on Qt.
+%endif
 
 %package        libs
 Group: File tools
@@ -69,6 +81,11 @@ platforms which don't use FreeType.
 %prep
 %setup -q
 
+# drop this hack if --with-doc is enabled
+echo %{version} > VERSION
+sed -i -e '/dist_man_MANS/d' -e 's/manpages/dist_man_MANS/' frontend/local.mk
+autoreconf -fiv
+
 %build
 %ifarch %e2k
 # lcc 1.23.12 doesn't do __builtin_mul_overflow_p
@@ -76,7 +93,10 @@ platforms which don't use FreeType.
 %add_optflags -D__ICC
 %endif
 
-%configure --disable-silent-rules --disable-static
+# doc: requires help2man, ImageMagick, inkscape, pandoc, xelatex, xvfb-run
+%configure \
+  --disable-silent-rules --disable-static --without-doc \
+  %{!?with_gui:--without-qt}
 %make_build
 
 %install
@@ -99,11 +119,12 @@ done
 %{_bindir}/ttfautohint
 %{_mandir}/man1/ttfautohint.1*
 
+%if %{with gui}
 %files gui
 %doc --no-dereference COPYING
-%{_docdir}/%{name}/
 %{_bindir}/ttfautohintGUI
 %{_mandir}/man1/ttfautohintGUI.1*
+%endif
 
 %files libs
 %doc --no-dereference COPYING
@@ -116,6 +137,9 @@ done
 %{_libdir}/pkgconfig/ttfautohint.pc
 
 %changelog
+* Wed Oct 11 2023 Igor Vlasenko <viy@altlinux.org> 1.8.4-alt1_7
+- update
+
 * Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 1.8.4-alt1_1
 - update to new release by fcimport
 
