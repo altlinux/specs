@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 23.1.0
+Version: 23.2.0
 Release: alt1
 
 Summary: structlog is the production-ready logging solution for Python
@@ -44,6 +44,9 @@ BuildRequires: python3(pre_commit) python3(sphinx) python3(mypy)}
 %doc README* COPYRIGHT CHANGELOG*
 
 %changelog
+* Wed Oct 11 2023 Yuri N. Sedunov <aris@altlinux.org> 23.2.0-alt1
+- 23.2.0
+
 * Tue Aug 8 2023 Yuri N. Sedunov <aris@altlinux.org> 23.1.0-alt1
 - first build for Sisyphus
 
