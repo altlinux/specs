@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Math-Round
 Name: perl-%dist
-Version: 0.07
+Version: 0.08
 Release: alt1
 
 Summary: Perl extension for rounding numbers
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/G/GR/GROMMEL/Math-Round-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEILB/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +23,7 @@ default; others are available as described below.  "use ... qw(:all)"
 exports all functions.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +32,13 @@ exports all functions.
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE README
 %perl_vendor_privlib/Math
-%perl_vendor_privlib/auto/Math
 
 %changelog
+* Wed Oct 11 2023 Igor Vlasenko <viy@altlinux.org> 0.08-alt1
+- automated CPAN update
+
 * Sat Jan 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - automated CPAN update
 
