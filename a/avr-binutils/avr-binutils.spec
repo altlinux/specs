@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/flex /usr/bin/m4 /usr/bin
 
 Name:           %{target}-binutils
 Version:        2.35
-Release:        alt1_1
+Release:        alt1_2
 Epoch:          2
 Summary:        Cross Compiling GNU binutils targeted at %{target}
 License:        GPLv2+
@@ -21,7 +21,9 @@ Patch2: avr-binutils-config.patch
 
 BuildRequires:  gawk makeinfo gcc
 #for autoreconf:
-BuildRequires:  gettext-tools libasprintf-devel autoconf automake
+BuildRequires:  gettext-tools libasprintf-devel automake
+BuildRequires:  autoconf_2.60
+%set_autoconf_version 2.60
 Provides: bundled(libiberty)
 Source44: import.info
 
@@ -103,6 +105,9 @@ fi
 
 
 %changelog
+* Wed Oct 11 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2:2.35-alt1_2
+- NMU: fixed FTBFS (use autoconf 2.69)
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 2:2.35-alt1_1
 - update to new release by fcimport
 
