@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.8
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -111,7 +111,7 @@ Patch134: alt-zonetab.patch
 Patch135: alt-fix-virtualkeyboard-size.patch
 Patch136: alt-users-use-gost-yescrypt.patch
 Patch137: alt-systemd-boot.patch
-Patch138: alt-digital-clock-hide-tz.patch
+Patch138: alt-digital-clock-tz.patch
 Patch139: alt-locales-list.patch
 Patch140: alt-watch-wallpaper.patch
 Patch141: alt-weather-fix-ua.patch
@@ -553,6 +553,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 
 
 %changelog
+* Wed Oct 11 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt2
+- show digital clock applet settings timezones
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt1
 - new version
 
