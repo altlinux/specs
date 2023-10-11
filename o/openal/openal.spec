@@ -4,7 +4,7 @@
 
 Name: openal
 Version: 1.22.2
-Release: alt1
+Release: alt2
 
 Summary: Open Audio Library
 
@@ -115,7 +115,7 @@ install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 
 %if_without bootstrap
 %files tools
-/usr/bin/alffplay
+#/usr/bin/alffplay
 /usr/bin/alhrtf
 /usr/bin/allatency
 /usr/bin/alloopback
@@ -147,6 +147,9 @@ install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 # - alrecord, altonegen not packaged (really needed?)
 
 %changelog
+* Wed Oct 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.22.2-alt2
+- rebuild
+
 * Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 1.22.2-alt1
 - new version 1.22.2 (with rpmrb script)
 
