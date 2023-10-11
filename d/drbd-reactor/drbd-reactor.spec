@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: drbd-reactor
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 Summary: React to DRBD events via plugins.
 
@@ -81,10 +81,14 @@ install -D -m644 example/ctl.completion.bash %buildroot%_datadir/bash-completion
 %_man5dir/drbd-reactor.toml.5*
 %_man5dir/drbd-reactor.umh.5*
 %_man5dir/drbd-reactor.promoter.5*
+%_man5dir/drbd-reactor.agentx.5*
 %_man5dir/drbd-reactor.debugger.5*
 %_man5dir/drbd-reactor.prometheus.5*
 
 %changelog
+* Wed Oct 11 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.3.0-alt1
+- v1.3.0
+
 * Wed May 31 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.2.0-alt1
 - Initial release for ALT.
 
