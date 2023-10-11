@@ -2,17 +2,16 @@ Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # END SourceDeps(oneline)
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 15
+%define autorelease 31
 
-%bcond_without icu
+#%%bcond icu 1
+%global with_icu 1
+
 Name:           xalan-c
 Version:        1.12.0
 # The soversion is made from the major and minor version numbers, e.g. 112 for
@@ -24,7 +23,10 @@ Version:        1.12.0
 Release:        alt1_%autorelease
 Summary:        Xalan XSLT processor for C/C++
 
-License:        ASL 2.0
+# The entire source is Apache-2.0, except cmake/RunTest.cmake, which is
+# libtiff, but is a build-system file that does not contribute to the licenses
+# of the binary RPMs.
+License:        Apache-2.0
 URL:            http://xalan.apache.org/xalan-c/
 %global tag Xalan-C_%(echo '%{version}' | tr . _)
 %global tar_name xalan_c-%(echo %{version} | cut -d . -f -2)
@@ -108,7 +110,6 @@ cp -at . -- /usr/share/gnu-config/config.{guess,sub}
 # the HTML version of the API documentation.
 rm -rf %{buildroot}%{_prefix}/share/doc/xalan-c/api
 
- 
 # alt fixes for xalan-c.pc
 sed -i 's,^Version:,Version: %version,;/^Cflags/d' %buildroot%_pkgconfigdir/xalan-c.pc
 
@@ -122,7 +123,9 @@ sed -i 's,^Version:,Version: %version,;/^Cflags/d' %buildroot%_pkgconfigdir/xala
 %doc KEYS
 %doc NOTICE
 %doc README.md
+
 %{_bindir}/Xalan
+
 %{_libdir}/libxalanMsg.so.%{so_version}
 %{_libdir}/libxalanMsg.so.%{so_version}.*
 %{_libdir}/libxalan-c.so.%{so_version}
@@ -132,25 +135,31 @@ sed -i 's,^Version:,Version: %version,;/^Cflags/d' %buildroot%_pkgconfigdir/xala
 %files devel
 %{_libdir}/libxalanMsg.so
 %{_libdir}/libxalan-c.so
+
 %{_includedir}/xalanc/
+
 %dir %{_libdir}/cmake/XalanC
 %{_libdir}/cmake/XalanC/*.cmake
+
 %{_libdir}/pkgconfig/xalan-c.pc
 
 
-%if 0
-# non-indentical noarch packages :(
 %files doc
 %doc --no-dereference LICENSE
+
 %doc CREDITS
 %doc KEYS
 %doc NOTICE
 %doc README.md
-%doc docs/*.md docs/images
-%doc samples
-%endif
+%doc docs/*.md
+%doc docs/images/
+%doc samples/
+
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1.12.0-alt1_31
+- update to new release by fcimport
+
 * Thu Oct 14 2021 Igor Vlasenko <viy@altlinux.org> 1.12.0-alt1_15
 - update to new release by fcimport
 
