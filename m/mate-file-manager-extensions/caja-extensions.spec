@@ -2,7 +2,7 @@
 
 Name: mate-file-manager-extensions
 Version: 1.26.1
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: Set of extensions for caja file manager
 License: GPLv2+
@@ -13,7 +13,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
-BuildRequires: mate-common gtk-doc libdbus-glib-devel libgupnp1.2-devel mate-desktop-devel mate-file-manager-devel
+BuildRequires: mate-common gtk-doc libdbus-glib-devel mate-desktop-devel mate-file-manager-devel
 
 %description
 Extensions for the caja file-browser, open-terminal, image-converter, sendto and share
@@ -165,6 +165,9 @@ find %buildroot%_libdir -name \*.la -delete
 #_datadir/caja/extensions/libcaja-xattr-tags.caja-extension
 
 %changelog
+* Wed Oct 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt4
+- updated build dependensions
+
 * Tue Apr 18 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt3
 - updated translations
 - sendto: emailclient only (closes: #44272)
