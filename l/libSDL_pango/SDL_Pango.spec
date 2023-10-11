@@ -1,11 +1,12 @@
 %define shortname SDL_pango
+%define soname 1
 
 Name: lib%shortname
 Version: 0.1.2
-Release: alt5
+Release: alt6
 
 Summary: Rendering of internationalized text for SDL (Simple DirectMedia Layer)
-License: LGPL
+License: LGPL-2.0-or-later
 Group: System/Libraries
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -16,10 +17,22 @@ Source1: doxygen.png
 
 Patch0: SDL_Pango-0.1.2-suppress-warning.patch
 Patch1: SDL_Pango-0.1.2-API-adds.patch
+Patch2: SDL_Pango-0.1.2-matrix_declarations.patch
+Patch3: SDL_Pango-0.1.2-fedora-c99.patch
 
 BuildRequires: libpango-devel libSDL-devel dos2unix
 
 %description
+Pango is the text rendering engine of GNOME 2. SDL_Pango connects that engine
+to SDL, the Simple DirectMedia Layer.
+
+%package -n lib%shortname%soname
+Summary: %summary
+Group: System/Libraries
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+
+%description -n lib%shortname%soname
 Pango is the text rendering engine of GNOME 2. SDL_Pango connects that engine
 to SDL, the Simple DirectMedia Layer.
 
@@ -36,29 +49,29 @@ Development files for SDL_Pango.
 %setup -q -n %shortname-%version
 %patch0 -p1 -b .suppress-warning
 %patch1 -p1 -b .API-adds
+%patch2 -p1 -b .matrix_declarations
+%patch3 -p1 -b .c99
 
 # Clean up, we include the entire "docs/html" content for the devel package
-%__rm -rf docs/html/CVS/
+rm -rf docs/html/CVS/
 
 # Replace the corrupt doxygen.png file with a proper one
-%__install -m 0644 -p %SOURCE1 docs/html/doxygen.png
+install -m 0644 -p %SOURCE1 docs/html/doxygen.png
 
 # Fix the (many) DOS encoded files, not *.png since they get corrupt
 find . -not -name \*.png -type f -exec dos2unix {} \;
 
 %build
 %autoreconf
-libtoolize --copy --force
-
 %configure --disable-static
 %make
 
 %install
 %make_install DESTDIR="%buildroot" install
 
-%files -n lib%shortname
+%files -n lib%shortname%soname
 %doc AUTHORS ChangeLog COPYING NEWS README
-%_libdir/*.so.*
+%_libdir/*.so.%{soname}*
 
 %files -n lib%shortname-devel
 %doc docs/html/*
@@ -67,6 +80,12 @@ libtoolize --copy --force
 %_libdir/*.so
 
 %changelog
+* Wed Oct 11 2023 Leontiy Volodin <lvol@altlinux.org> 0.1.2-alt6
+- Fixed FTBFS.
+- Specified url.
+- Applied improvements (thanks fedora for patches).
+- Renamed libSDL_pango to libSDL_pango1.
+
 * Thu Mar 10 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt5
 - Rebuilt for debuginfo
 
