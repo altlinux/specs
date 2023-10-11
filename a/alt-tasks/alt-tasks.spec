@@ -1,6 +1,6 @@
 Name: alt-tasks
-Version: 0.3.0
-Release: alt2
+Version: 0.4.0
+Release: alt1
 
 Summary: Utility for observing ALT Linux tasks
 License: GPLv3
@@ -38,6 +38,11 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Oct 11 2023 Alexey Appolonov <alexey@altlinux.org> 0.4.0-alt1
+- A previous version of a package is displayed for each subtask (use a new flag
+  "--no_prev_ver" for the former behavior) as well as the "built from" part of
+  a subtask commit designation ("gear" or "srpm").
+
 * Mon Mar 01 2021 Alexey Appolonov <alexey@altlinux.org> 0.3.0-alt2
 - Fixed build after new release of the "golang" package ("1.16-alt1").
 
