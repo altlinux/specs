@@ -1,7 +1,7 @@
-%define php_version 8.0
+%define php_version 8.2
 
 Name:    jobe
-Version: 1.7.0
+Version: 1.9.0
 Release: alt1
 
 Summary: jobe is a server that runs small programming jobs in a variety of programming languages
@@ -19,6 +19,7 @@ Patch1: jobe-alt-fixes.patch
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-webserver-common
 BuildRequires(pre): rpm-build-python3
+BuildRequires: libcgroup-devel
 #BuildRequires: apache2-devel
 
 %define webappdir %webserver_webappsdir/%name
@@ -58,7 +59,7 @@ Install this package, if you wish to run %name with MySQL database
 
 %build
 cd runguard
-gcc -o runguard runguard.c
+gcc -o runguard runguard.c -lcgroup -lm
 chmod 700 runguard
 
 %install
@@ -110,6 +111,13 @@ a2ensite %name
 %files -n %name-mysql
 
 %changelog
+* Wed Oct 11 2023 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt1
+- New version.
+- Used PHP 8.2.
+
+* Tue Oct 10 2023 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
+- New version.
+
 * Mon Nov 28 2022 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
 - New version.
 

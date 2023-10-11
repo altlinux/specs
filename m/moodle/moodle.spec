@@ -1,9 +1,9 @@
-%define php_version 8.0
+%define php_version 8.2
 %def_without pam
 
 Name: moodle
-Version: 3.11.15
-Release: alt3
+Version: 4.3.0
+Release: alt1
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -24,6 +24,7 @@ Source: %name-%version.tar
 
 Source1: distrolib.php
 Source2: %name.cron
+Source3: %name.ini
 Source10: %moodle_name.httpd.conf
 Source20: %moodle_name.httpd2.conf
 Source21: %moodle_name.start.extra.conf
@@ -72,6 +73,7 @@ Requires: iconv
 Requires: php-engine
 Requires: php%php_version-curl
 Requires: php%php_version-dom
+Requires: php%php_version-exif
 Requires: php%php_version-fileinfo
 Requires: php%php_version-fpm-fcgi
 Requires: php%php_version-gd2
@@ -83,7 +85,6 @@ Requires: php%php_version-openssl
 Requires: php%php_version-soap
 Requires: php%php_version-sodium
 Requires: php%php_version-xmlreader
-Requires: php%php_version-xmlrpc
 Requires: php%php_version-zip
 Provides: %moodle_dir
 Provides: %moodle_admindir
@@ -213,6 +214,9 @@ for ar in *.zip;do unzip "$ar" >/dev/null && rm -f "$ar";done
 # Install cron scripts
 install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 
+# Install PHP configuration for Moodle
+install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/%php_version/apache2-mod_php/php.d/moodle.ini
+
 %post apache2
 # Disable mod_php7 if it is enabled
 /usr/sbin/apachectl2 -M | grep -q php7_module && ( a2dismod mod_php7 &>/dev/null; %_initdir/httpd2 condreload ) ||:
@@ -239,6 +243,7 @@ install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 %config(noreplace) %apache2_confdir_inc/Directory_%{moodle_name}_default.conf
 %config(noreplace) %apache2_extra_start/100-%name.conf
 %config(noreplace) %apache2_mods_start/100-%name.conf
+%config(noreplace) %_sysconfdir/%php_version/apache2-mod_php/php.d/moodle.ini
 
 %files local-mysql
 
@@ -248,6 +253,15 @@ install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 %endif
 
 %changelog
+* Wed Oct 11 2023 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1
+- New version.
+- Use PHP 8.2.
+- Security fixes: CVE-2023-40316, CVE-2023-40317, CVE-2023-40318,
+  CVE-2023-40319, CVE-2023-40320, CVE-2022-39369, CVE-2023-40322,
+  CVE-2023-40323, CVE-2023-40324, CVE-2023-40325
+- Requires exif PHP module.
+- Set PHP parameter max_input_vars=5000.
+
 * Fri Jul 21 2023 Andrey Cherepanov <cas@altlinux.org> 3.11.15-alt3
 - Require PHP module fpm-fcgi.
 - Fix write permission for mod, theme and enroll directories.
