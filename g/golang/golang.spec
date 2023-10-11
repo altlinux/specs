@@ -50,7 +50,7 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.21.2
+Version: 1.21.3
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -81,7 +81,7 @@ BuildRequires: libselinux-utils
 BuildRequires: libpcre2-devel
 BuildRequires: glibc-devel-static
 BuildRequires: /proc
-# for tests 
+# for tests
 BuildRequires: /dev/pts
 
 Provides: go = %version-%release
@@ -376,6 +376,9 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Wed Oct 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.3-alt1
+- New version (1.21.3) (Fixes: CVE-2023-39325).
+
 * Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.2-alt1
 - New version (1.21.2) (Fixes: CVE-2023-39323).
 
