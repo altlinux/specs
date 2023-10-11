@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 44
+%define ver_major 45
 %define beta %nil
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: ghex
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Binary editor for GNOME
@@ -120,6 +120,9 @@ GObject introspection devel data for the GtkGHex library.
 %endif
 
 %changelog
+* Wed Oct 11 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Thu Aug 17 2023 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
 - 44.2
 
