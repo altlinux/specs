@@ -18,9 +18,15 @@
 # Windows platform
 %add_tcl_req_skip twapi
 
+%def_without bootstrap
+%if_with bootstrap
+%add_tcl_req_skip Trf
+%add_tcl_req_skip zlibtcl
+%endif
+
 Name: tcllib
 Version: 1.21
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: The Tcl standard library
@@ -74,6 +80,9 @@ make check
 %_mandir/mann/*
 
 %changelog
+* Wed Oct 11 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.21-alt1.1
+- NMU: add bootstrap knob
+
 * Thu Oct 20 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.21-alt1
 - Updated to 1.21.
 - Enabled tests.
