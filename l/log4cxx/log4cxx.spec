@@ -1,28 +1,29 @@
+BuildRequires: /usr/bin/dot
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dot /usr/bin/iodbc-config gcc-c++ libesmtp-devel libunixODBC-devel
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+BuildRequires: /usr/bin/zip qt5-base-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define autorelease 3
+
+%global sover 15
+
 Name: log4cxx
-Version: 0.10.0
-Release: alt1_25
+Version: 1.1.0
+Release: alt1_3
 Summary: A port to C++ of the Log4j project
 
-License: ASL 2.0
+License: Apache-2.0
 URL: http://logging.apache.org/log4cxx/index.html
 Source0: http://www.apache.org/dist/logging/log4cxx/%{version}/apache-%{name}-%{version}.tar.gz
-# Filed into upstream bugtracker at:
-# https://issues.apache.org/jira/browse/LOGCXX-332
-Patch0: log4cxx-cstring.patch
-# From Debian:
-# https://anonscm.debian.org/cgit/collab-maint/log4cxx.git/plain/debian/patches/170-gcc6-fix.patch
-Patch1: log4cxx-gcc6.patch
-Patch2: log4cxx-gcc6-tests.patch
 
 BuildRequires: libapr1-devel
 BuildRequires: libaprutil1-devel
+BuildRequires: ctest cmake
 BuildRequires: doxygen
+BuildRequires: gcc-c++
 Source44: import.info
 
 %description
@@ -51,41 +52,41 @@ Documentation for %{name}.
 
 %prep
 %setup -q -n apache-%{name}-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+
 
 %build
-sed -i.libdir_syssearch -e \
- '/sys_lib_dlsearch_path_spec/s|/usr/lib |/usr/lib /usr/lib64 /lib /lib64 |' \
- configure
-%configure --disable-static
-sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
-%make_build
+%{fedora_v2_cmake} -DBUILD_SITE=ON
+%fedora_v2_cmake_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
-mv $RPM_BUILD_ROOT%{_datadir}/%{name}/html .
-rm $RPM_BUILD_ROOT/%{_libdir}/liblog4cxx.la
+%fedora_v2_cmake_install
+
+%check
+%fedora_v2_ctest
 
 %files
-%{_libdir}/liblog4cxx.so.10.0.0
-%{_libdir}/liblog4cxx.so.10
+%{_libdir}/liblog4cxx.so.%{sover}*
 
 %doc NOTICE KEYS
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 
 %files devel
 %{_includedir}/log4cxx
 %{_libdir}/liblog4cxx.so
 %{_libdir}/pkgconfig/liblog4cxx.pc
+%{_libdir}/cmake/log4cxx
 
+%if 0
 %files doc
-%doc LICENSE
-%doc html/
+%doc --no-dereference LICENSE
+%doc %{_vpath_builddir}/src/site/html/
+%endif
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1.1.0-alt1_3
+- new version
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1_25
 - update to new release by fcimport
 
