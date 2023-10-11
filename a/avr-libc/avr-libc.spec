@@ -4,7 +4,7 @@ Group: Development/Tools
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 %brp_strip_none /usr/avr/lib/*
-%define fedora 34
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
  # FORCE NOARCH
@@ -16,9 +16,9 @@ BuildRequires: gcc-c++ unzip
 
 Name:           avr-libc
 Version:        2.0.0
-Release:        alt6_15
+Release:        alt6_20
 Summary:        C library for use with GCC on Atmel AVR microcontrollers
-License:        BSD
+License:        BSD-3-Clause
 URL:            http://www.nongnu.org/avr-libc/
 #Source0:        http://download.savannah.gnu.org/releases/avr-libc/avr-libc-%{version}.tar.bz2
 #Source4:        http://distribute.atmel.no/tools/opensource/Atmel-AVR-GNU-Toolchain/3.4.2/avr/avr-patches.tar.gz
@@ -66,7 +66,7 @@ mv libc delete-libc
 mv delete-libc/avr-libc/* .
 rmdir delete-libc/avr-libc
 tar -joxf %SOURCE1
-%patch0 -p1 -b .nolatexbatch
+%patch0  -p1 -b .nolatexbatch
 
 I=0
 unzip %{SOURCE5} -d avr8-headers
@@ -146,6 +146,9 @@ chmod -R u=rwX,g=rX,o=rX $RPM_BUILD_ROOT%{_docdir}/%{name}/html
 %doc %{_docdir}/%{name}/%{name}*.pdf
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1:2.0.0-alt6_20
+- rebuild with new avr-gcc
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1:2.0.0-alt6_15
 - update to new release by fcimport
 
