@@ -1,8 +1,8 @@
 %set_compress_method none
-%define bash_version 4
+%define bash_version 5
 
 Name: bash-defaults
-Version: 4.4.23
+Version: 5.2.15
 Release: alt1
 
 Summary: %vendor setup for the GNU Bourne Again SHell (Bash)
@@ -87,6 +87,9 @@ done
 %_pkgconfigdir/bash.pc
 
 %changelog
+* Wed Oct 11 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.15-alt1
+- Changed default sh and bash to sh5 and bash5, respectively (closes: #46887).
+
 * Tue Dec 18 2018 Dmitry V. Levin <ldv@altlinux.org> 4.4.23-alt1
 - Changed default sh and bash to sh4 and bash4, respectively (closes: #31399).
 
