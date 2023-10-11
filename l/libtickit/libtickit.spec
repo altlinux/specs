@@ -14,13 +14,13 @@ Group: Development/C
 %bcond_without unibilium
 
 Name:           lib%{libname}
-Version:        0.4.2a
-Release:        alt1_1
+Version:        0.4.3
+Release:        alt1_3
 Summary:        Terminal Interface Construction Kit
 
 License:        MIT
 URL:            http://www.leonerd.org.uk/code/%{name}/
-Source0:        %{url}/%{name}-%{version}.tar.gz
+Source0:        http://www.leonerd.org.uk/code/%{name}//%{name}-%{version}.tar.gz
 
 BuildRequires:  coreutils
 BuildRequires:  gcc
@@ -37,7 +37,7 @@ BuildRequires:  pkgconfig(termkey)
 %if %{with unibilium}
 BuildRequires:  pkgconfig(unibilium) >= 1.1.0
 %else
-BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+BuildRequires:  libncurses++-devel libncurses++w-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 %endif
 # Tests
 BuildRequires:  %{_bindir}/prove
@@ -102,6 +102,9 @@ make examples
 %{_mandir}/man7/%{libname}_*.7*
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 0.4.3-alt1_3
+- update to new release by fcimport
+
 * Wed Nov 24 2021 Igor Vlasenko <viy@altlinux.org> 0.4.2a-alt1_1
 - new version
 
