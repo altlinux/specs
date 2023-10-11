@@ -1,28 +1,27 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: libncurses-devel
-# END SourceDeps(oneline)
 Group: Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define autorelease 1
+
 Name:       bemenu
-Version:    0.6.3
-Release:    alt2_1
+Version:    0.6.16
+Release:    alt1_1
 Summary:    Dynamic menu library and client program inspired by dmenu
 
 # In case upstream do not bump program version when tagging; this should usually just resolve to %%{version}
-%global     soversion   0
+%global     soversion   %{version}
 
 # Library and bindings are LGPLv3+, other files are GPLv3+
 License:    GPLv3+ and LGPLv3+
 URL:        https://github.com/Cloudef/bemenu
-Source0:    %{url}/releases/download/%{version}/%{name}-%{version}.tar.gz
-Source1:    %{url}/releases/download/%{version}/%{name}-%{version}.tar.gz.asc
+Source0:    https://github.com/Cloudef/bemenu/releases/download/%{version}/%{name}-%{version}.tar.gz
+Source1:    https://github.com/Cloudef/bemenu/releases/download/%{version}/%{name}-%{version}.tar.gz.asc
 Source2:    https://cloudef.pw/bemenu-pgp.txt
 
 Patch:      respect-env-build-flags.patch
 
-BuildRequires:  gnupg2
 BuildRequires:  gcc
+BuildRequires:  gnupg2
 BuildRequires:  pkgconfig(cairo)
 BuildRequires:  pkgconfig(ncursesw)
 BuildRequires:  pkgconfig(pango)
@@ -34,6 +33,7 @@ BuildRequires:  pkgconfig(wayland-server)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xinerama)
 BuildRequires:  pkgconfig(xkbcommon)
+BuildRequires:  scdoc
 Source44: import.info
 
 %description
@@ -66,8 +66,8 @@ Development files for extending %{name}.
 %{_bindir}/%{name}-run
 %{_mandir}/man1/%{name}*.1*
 # Long live escaping! %%%% resolves to %%; $v%%.* strips everything after first dot
+%{_libdir}/lib%{name}.so.0
 %{_libdir}/lib%{name}.so.%{soversion}
-%{_libdir}/lib%{name}.so.%{version}
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/%{name}-renderer-curses.so
 %{_libdir}/%{name}/%{name}-renderer-wayland.so
@@ -81,6 +81,9 @@ Development files for extending %{name}.
 
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 0.6.16-alt1_1
+- update to new release by fcimport
+
 * Fri Aug 25 2023 Igor Vlasenko <viy@altlinux.org> 0.6.3-alt2_1
 - NMU: fixed build
 
