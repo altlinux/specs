@@ -9,12 +9,11 @@ BuildRequires: /usr/bin/clang-format /usr/bin/cppcheck /usr/bin/desktop-file-val
 BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Colorize terminal output. Helps to find problems during build process.
-%global optflags %{optflags} -fdiagnostics-color=always
+%define autorelease 3
 
 Name:           springlobby
-Version:        0.271
-Release:        alt1_6
+Version:        0.273
+Release:        alt1_3
 Summary:        Free cross-platform lobby client for the Spring RTS project
 
 # License clarification: http://springlobby.info/issues/show/810
@@ -29,10 +28,10 @@ BuildRequires:  ctest cmake
 BuildRequires:  desktop-file-utils
 BuildRequires:  dumb-devel
 BuildRequires:  gcc-c++ >= 8
-BuildRequires:  gettext gettext-tools
-BuildRequires:  libappstream-glib
+BuildRequires:  gettext-tools
+BuildRequires:  libappstream-glib 
 BuildRequires:  libcurl-devel
-BuildRequires:  libnotify-devel libnotify-gir-devel
+BuildRequires:  libnotify-devel
 BuildRequires:  libminizip-devel
 BuildRequires:  ninja-build python3-module-ninja_syntax
 BuildRequires:  libopenal-devel
@@ -89,7 +88,6 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 
 %files -f %{name}.lang
 %doc --no-dereference COPYING
-%doc ChangeLog
 %{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
@@ -98,6 +96,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 0.273-alt1_3
+- update to new release by fcimport
+
 * Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.271-alt1_6
 - update to new release by fcimport
 
