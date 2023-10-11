@@ -1,16 +1,16 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install python3-module-setuptools
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: slingshot
 Version:  0.9
-Release:  alt2_12
+Release:  alt2_21
 Summary: A Newtonian strategy game
 
-License: GPLv2+        
+License: GPL-2.0-or-later        
 URL: https://github.com/ryanakca/slingshot
 Source0: https://github.com/ryanakca/slingshot/archive/%{version}/slingshot-%{version}.tar.gz
 Source1: slingshot.desktop
@@ -19,9 +19,9 @@ Source2: slingshot.appdata.xml
 Patch0: 243aef95dde390f97f1e0abbbdb646b3e5b97f7d.patch
 BuildArch: noarch
 BuildRequires: desktop-file-utils
-BuildRequires: libappstream-glib
+BuildRequires: libappstream-glib libappstream-glib-gir
 BuildRequires: python3-devel
-BuildRequires: python3-module-distribute
+BuildRequires: python3-module-pkg_resources python3-module-setuptools
 Requires: fonts-ttf-gnu-freefont-sans
 Requires: icon-theme-hicolor
 Requires: python3-module-pygame
@@ -76,9 +76,13 @@ ln -s %{_datadir}/fonts/ttf/gnu-free/FreeSansBold.ttf $RPM_BUILD_ROOT%{python3_s
 %doc --no-dereference LICENSE
 %{_datadir}/applications/slingshot.desktop
 %{_datadir}/icons/hicolor/64x64/apps/slingshot.png
+#%{_datadir}/pixmaps/slingshot.xpm
 %{_metainfodir}/slingshot.appdata.xml
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 0.9-alt2_21
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_12
 - update to new release by fcimport
 
