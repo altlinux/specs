@@ -1,19 +1,25 @@
+# for tests
+BuildRequires:  /proc
 Group: Development/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           pstreams-devel
 Version:        1.0.3
-Release:        alt1_1
+Release:        alt1_10
 Summary:        POSIX Process Control in C++
 
-License:        Boost
+License:        BSL-1.0
 URL:            http://pstreams.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/pstreams/pstreams-%{version}.tar.gz
+Patch0:         pstreams-make-check.patch
+Patch1:         pstreams-doxyfile.patch
+Patch2:         pstreams-test-race.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  doxygen
 BuildRequires:  perl
 BuildRequires:  gawk
+BuildRequires:  coreutils
 BuildArch:      noarch
 Source44: import.info
 Provides: pstreams = %version
@@ -26,23 +32,40 @@ PStreams classes are like C++ wrappers for the POSIX.2 functions
 popen(3) and pclose(3), using C++ iostreams instead of C's stdio
 library.
 
+%package -n pstreams-doc
+Group: Development/Other
+Summary: Documentation for pstreams
+BuildArch: noarch
+
+%description -n pstreams-doc
+API documentation for the pstreams-devel package, in HTML format.
+
 %prep
 %setup -q -n pstreams-%{version}
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
-%make_build
-make docs
+%make_build docs
+
+%check
+make %{?_smp_mflags} EXTRA_CXXFLAGS="$CXXFLAGS" check
 
 %install
 make install  DESTDIR=$RPM_BUILD_ROOT includedir=%{_includedir}
 
 %files
 %doc --no-dereference LICENSE_1_0.txt
-%doc doc/html README AUTHORS ChangeLog
 %{_includedir}/pstreams
 
+%files -n pstreams-doc
+%doc doc/html README AUTHORS ChangeLog
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_10
+- update to new release by fcimport
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_1
 - update to new release by fcimport
 
