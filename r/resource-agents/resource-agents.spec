@@ -4,8 +4,8 @@
 
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
-Version: 4.12.0
-Release: alt2
+Version: 4.13.0
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -17,6 +17,7 @@ Conflicts: heartbeat < 2.1.4
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel xsltproc libxslt-devel glib2-devel which docbook-style-xsl docbook-dtds libnet2-devel 
+BuildRequires: libqb-devel
 %{?_with_cluster_glue:BuildRequires: libcluster-glue-devel}
 BuildRequires: perl-podlators perl-Socket6 perl-libwww perl-IO-Socket-INET6 perl-Net-Ping perl-MailTools
 BuildRequires: systemd-devel
@@ -353,6 +354,9 @@ rm -f %buildroot%_datadir/cluster/drbd.*
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Wed Oct 11 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.13.0-alt1
+- 4.13.0
+
 * Wed Jun 14 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.12.0-alt2
 - FTBFS: python3(json) in python3-base
 
