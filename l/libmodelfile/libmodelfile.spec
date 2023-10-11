@@ -3,23 +3,24 @@
 #Verifying ELF objects in /usr/src/tmp/libmodelfile-buildroot (arch=normal,fhs=normal,lfs=relaxed,lint=relaxed,rpath=normal,stack=normal,textrel=normal,unresolved=normal)
 #verify-elf: ERROR: ./usr/lib64/libmd3-0.2.so.1.0.0: undefined symbol: sincos
 %global optflags_lto %nil
-%add_optflags %optflags_shared
-Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: libSDL-devel libglvnd-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 BuildRequires: gcc-c++
+Group: Development/Other
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libmodelfile
 Version:        0.1.92
-Release:        alt3_28
+Release:        alt3_34
 Summary:        Library for accessing various model file formats
 
-License:        zlib
+License:        Zlib
 URL:            http://www.worldforge.org
 Source0:        http://downloads.sourceforge.net/worldforge/%{name}-%{version}.tar.gz
+Patch0:         libmodelfile-configure-c99.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  libSDL_image-devel libGL-devel libGLU-devel
@@ -42,6 +43,8 @@ that use libmodelfile.
 
 %prep
 %setup -q
+%patch0 -p1
+
 
 
 %build
@@ -74,6 +77,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 0.1.92-alt3_34
+- update to new release by fcimport
+
 * Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 0.1.92-alt3_28
 - fixed build
 
