@@ -1,6 +1,6 @@
 Name: libcrypt
 Version: 4.4.35
-Release: alt1
+Release: alt2
 
 Summary: Modern password hashing library
 License: LGPLv2.1+
@@ -42,13 +42,24 @@ Conflicts: man-pages < 4.16
 This package contains libraries and header files for developing
 applications that use libcrypt.
 
+%package devel-static
+Summary: Development files (static) for libcrypt password hashing library
+License: LGPLv2.1+
+Group: Development/C
+Requires: %name-devel = %EVR
+Conflicts: glibc-devel-static < %ver_glibc_final
+
+%description devel-static
+This package contains static library for developing applications that use
+libcrypt.
+
 %prep
 %setup -n %name-%version-%release
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %autoreconf
 %configure \
-	--disable-static \
 	--enable-obsolete-api=alt \
 	--enable-hashes=alt,glibc,strong \
 	#
@@ -84,7 +95,13 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_pkgconfigdir/lib*crypt.pc
 %_man3dir/*.3*
 
+%files devel-static
+%_libdir/lib*crypt.a
+
 %changelog
+* Wed Oct 11 2023 Vitaly Chikunov <vt@altlinux.org> 4.4.35-alt2
+- Package libcrypt-devel-static.
+
 * Tue Jun 06 2023 Dmitry V. Levin <ldv@altlinux.org> 4.4.35-alt1
 - v4.4.23 -> v4.4.35.
 
