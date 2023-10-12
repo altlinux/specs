@@ -2,16 +2,12 @@
 
 Name: alterator-bind
 Version: 0.9.6
-Release: alt2
-
-Source:%name-%version.tar
-
-Provides: alterator-ddns = %version
-Obsoletes: alterator-ddns
+Release: alt3
 
 Summary: alterator module to create and manage dynamic dns
 License: GPL
 Group: System/Configuration/Other
+
 Requires: bind bind-utils
 Requires: alterator-net-common >= 0.6-alt1
 Requires: alterator-dhcp >= 0.9-alt1 alterator >= 5.0
@@ -19,22 +15,17 @@ Requires: alterator-l10n >= 2.8-alt2
 Requires: alterator-net-functions >= 1.3.0
 Requires: alterator-service-functions >= 2.0.0
 
-Conflicts: alterator-fbi < 5.25-alt2
+Source: %name-%version.tar
 
-BuildPreReq: alterator >= 5.0
+BuildRequires(pre): alterator >= 5.0
 BuildRequires: alterator-fbi
-
-%ifarch %e2k
-BuildRequires: guile20-devel libguile20-devel
-%else
 BuildRequires: guile22-devel
-%endif
 
 %description
 alterator module to create and manage dynamic dns
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -55,6 +46,10 @@ alterator module to create and manage dynamic dns
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Wed Oct 11 2023 Michael Shigorin <mike@altlinux.org> 0.9.6-alt3
+- E2K: move to guile22 too
+- minor spec cleanup (see also ALT#46206)
+
 * Thu Feb 02 2023 Dmitry Terekhin <jqt4@altlinux.org> 0.9.6-alt2
 - ddns-sh-functions: Change name of key file for nsupdate
 

@@ -1,11 +1,11 @@
 Name:    alterator-net-domain
 Version: 0.7.3
-Release: alt2
-Source:  %name-%version.tar
+Release: alt3
 
 Summary: Alterator module to provision system network domain
 License: GPL
 Group:   System/Configuration/Other
+
 Requires: alterator >= 5.0
 Requires: alterator-l10n >= 2.9.114-alt1
 Requires: alterator-default-configs >= 0.0.2-alt1
@@ -14,14 +14,12 @@ Conflicts: ldap-user-tools < 0.8.1
 Conflicts: alterator-lookout < 1.6-alt6
 Conflicts: alterator-fbi < 5.9-alt2
 
+Source:  %name-%version.tar
 
-%ifarch %e2k
-BuildRequires: guile20-devel libguile20-devel
-%else
 BuildRequires: guile22-devel
-%endif
 BuildRequires: rpm-build >= 4.0.4-alt103
-BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
+BuildRequires: alterator >= 5.0
+BuildRequires: alterator-fbi >= 5.33-alt1
 
 %description
 Alterator module to provision system network domain.
@@ -29,7 +27,7 @@ Supported domain type: BIND, ALT-domain, Active Directory
 and FreeIPA domain.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -46,6 +44,10 @@ and FreeIPA domain.
 %_bindir/*-sh-functions
 
 %changelog
+* Wed Oct 11 2023 Michael Shigorin <mike@altlinux.org> 0.7.3-alt3
+- E2K: move to guile22 too
+- Minor spec cleanup
+
 * Tue Nov 15 2022 Dmitry Terekhin <jqt4@altlinux.org> 0.7.3-alt2
 - Enable bind-caps
 

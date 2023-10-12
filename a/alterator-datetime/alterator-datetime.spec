@@ -1,19 +1,13 @@
 # -*- mode: RPM-SPEC; tab-width: 8; fill-column: 70; -*- 
 
-%define _altdata_dir %_datadir/alterator
-
 Name: alterator-datetime
 Version: 4.8.1
-Release: alt1
-
-%add_findreq_skiplist %_datadir/install2/postinstall.d/*
-
-
-Source:%name-%version.tar
+Release: alt2
 
 Summary: alterator module for date/time setup
 License: GPL
 Group: System/Configuration/Other
+
 Requires: alterator >= 5.2-alt1 alterator-sh-functions >= 0.6-alt5
 Requires: alterator-service-functions >= 2.0.0-alt1
 Requires: alterator-l10n >= 2.9.117-alt1
@@ -25,24 +19,16 @@ Conflicts: alterator-fbi < 5.17-alt3
 Conflicts: alterator-lookout < 1.6-alt3
 Conflicts: alterator-dhcp < 0.4-alt1
 
-Provides: alterator-openntpd = %version
-Obsoletes: alterator-openntpd
+Source: %name-%version.tar
 
-Provides: alterator-tzone = %version
-Obsoletes: alterator-tzone
-
-BuildPreReq: alterator >= 4.7-alt1
-
-BuildPreReq: alterator >= 5.0
+BuildRequires(pre): alterator >= 5.0
 BuildRequires: alterator-fbi
 
-%ifarch %e2k
-BuildRequires: guile20-devel libguile20-devel
-%else
 BuildRequires: guile-devel
-%endif
 
 %define _unpackaged_files_terminate_build 1
+%define _altdata_dir %_datadir/alterator
+%add_findreq_skiplist %_datadir/install2/postinstall.d/*
 
 %description
 alterator module for date/time setup
@@ -71,6 +57,10 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Wed Oct 11 2023 Michael Shigorin <mike@altlinux.org> 4.8.1-alt2
+- E2K: move to guile22 too
+- minor spec cleanup (see also ALT#46206)
+
 * Fri Oct 14 2022 Mikhail Efremov <sem@altlinux.org> 4.8.1-alt1
 - datetime-functions,postinstall: Replace egrep with grep -E.
 

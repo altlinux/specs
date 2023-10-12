@@ -1,15 +1,13 @@
 Name: alterator-net-iptables
 Version: 4.19.11
-Release: alt1
-
-Packager: Vladislav Zavjalov <slazav@altlinux.org>
+Release: alt2
 
 Summary: alterator module for simple iptables configuration
 License: GPL
 Group: System/Configuration/Other
-Url: http://wiki.sisyphus.ru/Alterator
 
-Source: %name-%version.tar
+Url: http://wiki.sisyphus.ru/Alterator
+Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
 Requires: alterator >= 5.0-alt4
 Requires: alterator-l10n >= 2.0-alt2
@@ -19,21 +17,17 @@ Requires: alterator-net-functions >= 1.3.1-alt1
 Requires: alterator-net-common >= 0.4-alt1
 Conflicts: alterator-fbi < 5.23-alt1
 
-BuildPreReq: alterator >= 5.0
+Source: %name-%version.tar
 
-%ifarch %e2k
-BuildRequires: guile20-devel libguile20-devel
-%else
+BuildRequires(pre): alterator >= 5.0
+BuildRequires: alterator-fbi >= 5.33-alt1
 BuildRequires: guile22-devel
-%endif
-
-BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 %description
 Alterator module for simple iptables configuration
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -69,6 +63,10 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Wed Oct 11 2023 Michael Shigorin <mike@altlinux.org> 4.19.11-alt2
+- E2K: move to guile22 too.
+- Minor spec cleanup.
+
 * Fri Aug 18 2023 Mikhail Efremov <sem@altlinux.org> 4.19.11-alt1
 - index.scm: Don't crash on type-error.
 - all: Initialize variables (closes: #37437).
