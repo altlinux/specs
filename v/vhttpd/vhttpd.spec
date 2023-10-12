@@ -1,6 +1,6 @@
 Name: vhttpd
 Version: 0.7.13
-Release: alt1
+Release: alt2
 
 Summary: simple embedded web server
 License: LGPL
@@ -8,12 +8,8 @@ Group: System/Servers
 
 Source:%name-%version.tar
 
-%ifarch %e2k
-Buildrequires: guile20-devel libguile20-devel /proc
-%else
 BuildRequires: guile-devel >= 2.0
 BuildRequires: /proc
-%endif
 BuildRequires: glib2-devel libssl-devel cgreen
 #BuildRequires: libgnutls-devel
 
@@ -94,6 +90,9 @@ guile bindings for %name
 %guile_ccachedir/vhttpd.go
 
 %changelog
+* Tue Oct 10 2023 Michael Shigorin <mike@altlinux.org> 0.7.13-alt2
+- E2K: move to guile22 too.
+
 * Thu May 25 2023 Vladimir Rubanov <august@altlinux.org> 0.7.13-alt1
 - Add support for cgreen 1.6.2.
 
