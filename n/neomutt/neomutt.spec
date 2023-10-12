@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: neomutt
-Version: 20230517
+Version: 20231006
 Release: alt1
 Summary: A version of Mutt with added features
 License: GPL-2.0-only and ALT-Public-Domain
@@ -46,16 +46,11 @@ for color terminals, MIME, OpenPGP, and a threaded sorting mode.
 
 %prep
 %setup
-%ifarch armh
-sed -i 's/armle-/armh-/' autosetup/autosetup-config.sub
-%endif
 %autopatch -p1
 %ifarch %e2k
 # can't find BerkeleyDB due to silly warning from LCC
 sed -i 's/-E | tail -1/-w &/' auto.def
 %endif
-# obvious bug in the source, failed test because of this
-sed -i 's/TEST_CASE(imap_tests\[i\])/TEST_CASE(imap_tests[i].str)/' test/date/mutt_date_parse_imap.c
 
 %build
 %define docdir %_docdir/%name
@@ -105,6 +100,9 @@ make -s test
 %_datadir/neomutt
 
 %changelog
+* Wed Oct 11 2023 Vitaly Chikunov <vt@altlinux.org> 20231006-alt1
+- Update to 20231006 (2023-10-06).
+
 * Fri May 19 2023 Vitaly Chikunov <vt@altlinux.org> 20230517-alt1
 - Update to 20230517 (2023-05-17).
 
