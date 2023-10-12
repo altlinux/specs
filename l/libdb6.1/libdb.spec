@@ -1,7 +1,7 @@
 %define _sover 6.1
 Name: libdb%_sover
 Version: %_sover.19
-Release: alt7
+Release: alt8
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -39,6 +39,8 @@ Patch1: java8-fix.patch
 %{?_enable_tcl:BuildPreReq: tcl-devel >= 8.4.0-alt1}
 
 BuildRequires: libsocket-devel
+BuildRequires: autoconf_2.60
+%set_autoconf_version 2.60
 
 %package -n db%_sover-utils
 Summary: Command line tools for managing Berkeley DB databases
@@ -405,6 +407,9 @@ done
 %endif
 
 %changelog
+* Thu Oct 12 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.1.19-alt8
+- NMU: fixed FTBFS due to autoconf 2.71 (use autoconf 2.69 instead)
+
 * Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 6.1.19-alt7
 - NMU: build with java 8 explicitly
 
