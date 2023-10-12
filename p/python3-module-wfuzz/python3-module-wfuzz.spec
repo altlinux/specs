@@ -1,39 +1,35 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name wfuzz
 
-# TODO: run autotests correctly
+# tests require running docker containers
 %def_without check
 
 Name: python3-module-%pypi_name
 Version: 3.1.0
-Release: alt3
+Release: alt4
 
 Summary: Web application fuzzer
 License: GPL-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/wfuzz
-Vcs: https://github.com/xmendez/wfuzz.git
-
-Source: %name-%version.tar
-Patch0: python3-module-wfuzz-3.1.0-alt-fix-relative-imports--bz44825.patch
-Patch1: wfuzz-3.1.0-Correct-dependency-specification-for-pyparsing.patch
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(pycurl)
-BuildRequires: python3(chardet)
-
-BuildRequires: /proc /dev/kvm
-BuildRequires: rpm-build-vm
-%endif
-
-%py3_requires pyparsing
+Vcs: https://github.com/xmendez/wfuzz
 
 BuildArch: noarch
+
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: python3-module-wfuzz-3.1.0-alt-fix-relative-imports--bz44825.patch
+Patch1: wfuzz-3.1.0-Correct-dependency-specification-for-pyparsing.patch
+Patch2: python3-module-wfuzz-3.1.0-alt-do-not-use-distutils.patch
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%add_pyproject_deps_check_filter pip-tools
+%pyproject_builddeps_metadata_extra dev
+%endif
 
 %description
 Wfuzz - The Web Fuzzer
@@ -71,6 +67,8 @@ it's a tool by pentesters for pentesters ;)
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -79,9 +77,9 @@ it's a tool by pentesters for pentesters ;)
 %pyproject_install
 
 %check
-# overwrite tox.ini (upstream's one uses docker)
-%tox_create_default_config
-vm-run "%tox_check_pyproject"
+%__python3 tests/server_dir/simple_server.py >/dev/null 2>&1 &
+# TODO: find a way to run mitmproxy and httpbin services.
+%pyproject_run_pytest -vra
 
 %files
 %doc LICENSE README.md wordlist
@@ -90,6 +88,9 @@ vm-run "%tox_check_pyproject"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 12 2023 Anton Zhukharev <ancieg@altlinux.org> 3.1.0-alt4
+- Do not use distutils.
+
 * Tue Feb 14 2023 Stanislav Levin <slev@altlinux.org> 3.1.0-alt3
 - Fixed FTBFS (setuptools 66).
 
