@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 0.4.0
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for the docker credentials store API
 License: %asl
@@ -12,6 +12,9 @@ Url: https://github.com/shin-/dockerpy-creds
 BuildArch: noarch
 
 Source: %oname-%version.tar
+
+# Remove dependency on distutils
+Patch: 27cbd31e74a38ad91a70365939299bcee96c3c09.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
@@ -23,6 +26,7 @@ Python bindings for the docker credentials store API
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -39,6 +43,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Thu Oct 12 2023 Grigory Ustinov <grenka@altlinux.org> 0.4.0-alt3
+- Dropped dependency on distutils.
+
 * Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.0-alt2
 - python2 disabled
 
