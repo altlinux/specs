@@ -1,13 +1,13 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/pathfix.py
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           monsterz
 Version:        0.7.1
-Release:        alt3_27
+Release:        alt3_34
 Summary:        Puzzle game, similar to Bejeweled or Zookeeper
 License:        WTFPL
 URL:            http://sam.zoy.org/monsterz/
@@ -19,7 +19,7 @@ Patch2:         %{name}-0.7.1-blit-crash.patch
 Patch3:         %{name}-0.7.1-py3.patch
 BuildRequires:  gcc
 BuildRequires:  desktop-file-utils
-BuildRequires:  python3-devel /usr/bin/pathfix.py
+BuildRequires:  python3-devel
 Requires:       python3-module-pygame
 Requires:       icon-theme-hicolor
 Provides:       %{name}-data = %{version}-%{release}
@@ -93,6 +93,9 @@ install -pm0644 graphics/icon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/ap
 
 
 %changelog
+* Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 0.7.1-alt3_34
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt3_27
 - update to new release by fcimport
 
