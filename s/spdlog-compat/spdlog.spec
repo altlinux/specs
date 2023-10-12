@@ -1,8 +1,8 @@
-%define sover 1.12
+%define rname spdlog
 
-Name: spdlog
-Version: 1.12.0
-Release: alt1
+Name: %rname-compat
+Version: 1.10.0
+Release: alt2
 
 Summary: Super fast C++ logging library
 
@@ -12,44 +12,28 @@ Url: https://github.com/gabime/spdlog
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/gabime/%name/archive/v%version.tar.gz
-Source: %name-%version.tar
-
-# https://github.com/gabime/%name/commit/d8d23a660601a406a1e1aa07380b5b1c5781c190
-Patch0: %name-%version-circular_q-size-fix.patch
-# https://github.com/gabime/%name/commit/2ee8bac78e6525a8ad9a9196e65d502ce390d83a
-Patch1: %name-%version-level_to_string_view-fix.patch
+# Source-url: https://github.com/gabime/%rname/archive/v%version.tar.gz
+Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: ctest
-BuildRequires: catch-devel
 BuildRequires: gcc-c++
-BuildRequires: libfmt-devel libsystemd-devel
+BuildRequires: libbenchmark-devel libfmt-devel
 
 %description
 This is a packaged version of the gabime/spdlog header-only C++
 logging library available at Github.
 
-%package -n lib%name%sover
+%package -n lib%rname
 Summary: Super fast C++ logging library
 Group: Development/C++
 
-%description -n lib%name%sover
+%description -n lib%rname
 This is a packaged version of the gabime/spdlog header-only C++
 logging library available at Github.
 
-%package -n lib%name-devel
-Summary: Development files for %name
-Group: Development/Other
-Requires: lib%name%sover = %EVR
-
-%description -n lib%name-devel
-The %name-devel package contains C++ header files for developing
-applications that use %name.
-
 %prep
-%setup
-%autopatch -p1
+%setup -n %rname-%version
 rm -rfv include/spdlog/fmt/bundled/
 
 %build
@@ -62,25 +46,21 @@ rm -rfv include/spdlog/fmt/bundled/
 %cmake_install
 # enable external libfmt using
 %__subst "s|// #define SPDLOG_FMT_EXTERNAL|#define SPDLOG_FMT_EXTERNAL|" %buildroot%_includedir/spdlog/tweakme.h
+%__rm -rf %buildroot%_includedir
+%__rm -rf %buildroot%_libdir/libspdlog.so
+%__rm -rf %buildroot%_libdir/cmake
+%__rm -rf %buildroot%_pkgconfigdir
 
 %check
 export LD_LIBRARY_PATH=$(pwd)/%_cmake__builddir
 %cmake_build --target test
 
-%files -n lib%name%sover
+%files -n lib%rname
 %_libdir/libspdlog.so.*
 
-%files -n lib%name-devel
-%doc README.md example/
-%doc LICENSE
-%_includedir/spdlog/
-%_libdir/libspdlog.so
-%_libdir/cmake/spdlog
-%_pkgconfigdir/*.pc
-
 %changelog
-* Thu Oct 12 2023 Nazarov Denis <nenderus@altlinux.org> 1.12.0-alt1
-- 1.12.0 released (ALT #47981)
+* Thu Oct 12 2023 Nazarov Denis <nenderus@altlinux.org> 1.10.0-alt2
+- Build as compat
 
 * Tue Jul 19 2022 Vladimir Didenko <cow@altlinux.ru> 1.10.0-alt1
 - 1.10.0 released
