@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.9.2
+Version: 0.9.4
 Release: alt1
 
 Summary: heavily refactored vim fork
@@ -92,6 +92,9 @@ install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
 %_datadir/nvim/sysinit.vim
 
 %changelog
+* Wed Oct 11 2023 Vladimir Didenko <cow@altlinux.org> 0.9.4-alt1
+- New version
+
 * Thu Sep 7 2023 Vladimir Didenko <cow@altlinux.org> 0.9.2-alt1
 - New version
 
