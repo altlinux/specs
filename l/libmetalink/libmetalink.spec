@@ -2,7 +2,7 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 24
+%define autorelease 32
 
 Name:           libmetalink
 Version:        0.1.3
@@ -10,17 +10,18 @@ Version:        0.1.3
 Release:        alt1_%autorelease
 Summary:        Metalink library written in C
 
+# SPDX
 License:        MIT
 URL:            https://github.com/metalink-dev/libmetalink
-Source0:        %{url}/archive/release-%{version}/libmetalink-release-%{version}.tar.gz
+Source:         https://github.com/metalink-dev/libmetalink/archive/release-%{version}/libmetalink-release-%{version}.tar.gz
 
 # NULL ptr deref in initial_state_start_fun
 # https://bugs.launchpad.net/libmetalink/+bug/1888672
-Patch0:         https://bugs.launchpad.net/libmetalink/+bug/1888672/+attachment/5395227/+files/libmetalink-0.1.3-ns_uri.patch
+Patch0:          https://bugs.launchpad.net/libmetalink/+bug/1888672/+attachment/5395227/+files/libmetalink-0.1.3-ns_uri.patch
 # Fix few issues found by the Coverity static analysis tool
 # https://bugs.launchpad.net/libmetalink/+bug/1784359
 # https://github.com/metalink-dev/libmetalink/pull/2
-Patch1:         https://bugs.launchpad.net/libmetalink/+bug/1784359/+attachment/5169495/+files/0001-fix-covscan-issues.patch
+Patch1:          https://bugs.launchpad.net/libmetalink/+bug/1784359/+attachment/5169495/+files/0001-fix-covscan-issues.patch
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -90,6 +91,9 @@ find '%{buildroot}' -type f -name '*la' -print -delete
 
 
 %changelog
+* Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 0.1.3-alt1_32
+- update to new release by fcimport
+
 * Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 0.1.3-alt1_24
 - update to new release by fcimport
 
