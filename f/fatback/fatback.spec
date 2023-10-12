@@ -1,6 +1,6 @@
 Name: fatback
 Version: 1.3
-Release: alt1
+Release: alt1.1
 
 Summary: A forensic tool for recovering files from FAT file systems
 License: GPLv2 and Public Domain
@@ -41,7 +41,7 @@ makeinfo --html fatback-manual.texi
 %makeinstall_std
 
 mkdir -p %buildroot%_datadir/%name
-cp -a fatback-manual %buildroot%_datadir/%name
+cp -a fatback-manual_html %buildroot%_datadir/%name/fatback-manual
 # Change .info filename to match instructions in man page
 mv %buildroot%_infodir/%name{-manual,}.info
 
@@ -53,6 +53,9 @@ mv %buildroot%_infodir/%name{-manual,}.info
 %_datadir/%name
 
 %changelog
+* Thu Oct 12 2023 Anton Midyukov <antohami@altlinux.org> 1.3-alt1.1
+- fix FTBFS
+
 * Tue Apr 15 2014 Michael Shigorin <mike@altlinux.org> 1.3-alt1
 - initial build for ALT Linux Sisyphus (based on Mageia package)
 
