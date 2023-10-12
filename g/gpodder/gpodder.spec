@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: gpodder
-Version: 3.11.3
+Version: 3.11.4
 Release: alt1
 
 Summary: Media aggregator and podcast client
@@ -37,15 +37,15 @@ BuildArch: noarch
 # last commit in 2015
 %add_python3_req_skip kaa.metadata
 
-%define urllib3_ver 1.26.5
-%define mgpoclient_ver 1.8
-%define podcastparser_ver 0.6.9
+%define urllib3_ver 2.0.6
+%define mgpoclient_ver 1.9
+%define podcastparser_ver 0.6.10
 
 Requires: typelib(Gtk) = 3.0 typelib(WebKit2) = 4.0
 Requires: python3-module-mygpoclient >= %mgpoclient_ver
 Requires: python3-module-podcastparser >= %podcastparser_ver
 Requires: python3-module-urllib3 >= %urllib3_ver
-Requires: %_bindir/ffmpeg xdg-utils
+Requires: %_bindir/ffmpeg xdg-utils yt-dlp
 Requires: python3-module-eyeD3
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
@@ -100,6 +100,9 @@ PYTHON=python3 PYTEST=%_bindir/py.test3 %make unittest
 
 
 %changelog
+* Thu Oct 12 2023 Yuri N. Sedunov <aris@altlinux.org> 3.11.4-alt1
+- 3.11.4
+
 * Sat Sep 30 2023 Yuri N. Sedunov <aris@altlinux.org> 3.11.3-alt1
 - 3.11.3
 
