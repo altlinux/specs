@@ -1,24 +1,39 @@
 %define sover 0
 
+%def_enable check
+
+
+%ifarch x86_64 i586 aarch64
+%def_enable valgrind
+%else
+%def_disable valgrind
+%endif
+
 Name: qm-dsp
-Version: 1.7
-Release: alt4
+Version: 1.7.1
+Release: alt1
 
 Summary: A C++ library for audio analysis
 License: GPLv2+
 Group: Sound
 Url: https://code.soundsoftware.ac.uk/projects/qm-dsp
+Vcs: https://github.com/c4dm/qm-dsp
 
-# hg clone https://code.soundsoftware.ac.uk/hg/qm-dsp
 Source: %name-%version.tar
+Patch:  %name-%version-%release.patch
 
-BuildPreReq: doxygen graphviz gcc-c++ qt5-base-devel libvamp-devel
-BuildPreReq: bzlib-devel libfftw3-devel libsndfile-devel
-BuildPreReq: libsamplerate-devel librubberband-devel liblo-devel
-BuildPreReq: libjack-devel liblrdf-devel liboggz-devel
-BuildPreReq: libfishsound-devel libmad-devel libid3tag-devel
-BuildPreReq: libalsa-devel dataquay-minefeld-devel libclapack-devel
-BuildPreReq: libopenblas-devel
+BuildRequires: gcc-c++
+BuildRequires: imake
+BuildRequires: libopenblas-devel
+BuildRequires: liblapack-devel
+
+%if_enabled check
+BuildRequires: boost-devel
+%{?_enable_valgrind:BuildRequires: valgrind}
+%endif
+
+# for docs:
+BuildRequires: doxygen graphviz fonts-ttf-dejavu
 
 %description
 A C++ library for audio analysis, developed in the Centre for Digital
@@ -64,38 +79,44 @@ This package contains development documentation for lib%name.
 
 %prep
 %setup
-%ifnarch %ix86 x86_64
-sed -ri -e 's, -msse2*,,g' -e 's, -mfpmath=sse,,' build/linux/Makefile*
-%endif
+%autopatch -p1
 
-find -type f -name '.*' -exec rm -fR '{}' +
-rm -fR ext/kissfft/.hg build/linux/amd64
+rm -rf build/linux/amd64 build/mingw32
+rm -vf include/{cblas.h,clapack.h}
+
 
 %build
-%if "%_lib" == "lib64"
-%make_build -f build/linux/Makefile.linux64
-%else
-%make_build -f build/linux/Makefile.linux32
-%endif
+%add_optflags  -DUSE_PTHREADS
 
-g++ -shared -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive \
-	-llo -lpthread -lbz2 -lfftw3f -lasound -lQt5Core -ldl -lsamplerate \
-	-lvamp-hostsdk -lfishsound -lid3tag -lsndfile -lQt5Xml -ldataquay \
-	-lmad -loggz -llrdf -lQt5Network -lopenblas -lclapack \
-	-Wl,-soname=lib%name.so.%sover -o lib%name.so.%sover
+CFLAGS="%optflags $(pkg-config --cflags openblas lapack)" \
+CXXFLAGS="%optflags $(pkg-config --cflags openblas lapack)" \
+%make_build -f build/general/Makefile.inc
+
+g++ -shared %optflags \
+        -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive \
+        -Wl,-soname=lib%name.so.%sover \
+        -o lib%name.so.%sover \
+        $(pkg-config --libs openblas lapack)
+
+doxygen
 
 %install
-for i in $(find ./ -name '*.h*'); do
-	j=$(echo $i |sed 's|\(.*\)/[^/]*|\1|')
-	install -d %buildroot%_includedir/%name/$j
-	install -p -m644 $i %buildroot%_includedir/%name/$j/
+find . -type d -name ext -prune -o -name '*.h' -print \
+| while read header; do
+  install -Dpm644 "$header" "%buildroot%_includedir/%name/$header"
 done
 
 install -d %buildroot%_libdir
 install -m644 lib%name.so.%sover %buildroot%_libdir/
 ln -s lib%name.so.%sover %buildroot%_libdir/lib%name.so
 
-doxygen
+%check
+%if_disabled valgrind
+sed -i 's/^VG.*$/VG :=/' tests/Makefile
+%endif
+
+%make_build -C tests
+
 
 %files -n lib%name
 %doc *.txt
@@ -109,6 +130,12 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Tue Oct 10 2023 Ivan A. Melnikov <iv@altlinux.org> 1.7.1-alt1
+- 1.7.1, switch to official upstream github;
+- major build dependencies cleanup, spec cleanup;
+- link with lapack instead of clapack;
+- add %%check section.
+
 * Mon Dec 06 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7-alt4
 - rebuilt for non-x86 arches
 
