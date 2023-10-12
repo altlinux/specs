@@ -3,8 +3,8 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 23.04.3
-Release: alt3
+Version: 23.08.1
+Release: alt1
 %K5init altplace
 
 Group: Databases
@@ -226,11 +226,11 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %_K5data/akonadi_knut_resource/
 %endif
 
-%files -n qt5-sql-sqlite3
-%_qt5_plugindir/sqldrivers/libqsqlite3.so
+#%files -n qt5-sql-sqlite3
+#%_qt5_plugindir/sqldrivers/libqsqlite3.so
 
 %files database-1-sqlite
-%files database-3-sqlite3
+#%files database-3-sqlite3
 %files database-5-postgresql
 %files database-9-mariadb
 %files database-10-mysql
@@ -291,6 +291,9 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %endif
 
 %changelog
+* Thu Sep 21 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Thu Aug 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt3
 - prefer MySQL backend over MariaDB
 - return mysql_upgrade and mysqlcheck run order

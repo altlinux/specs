@@ -7,16 +7,12 @@
 %define libkmindexreader libkmindexreader%pim_sover
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 
-%ifarch %not_qt5_qtwebengine_arches
-%def_disable qtwebengine
-%else
-%def_enable qtwebengine
-%endif
-
 Name: kde5-pim-runtime
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init altplace
+
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Group: Graphical desktop/KDE
 Summary: Akonadi resources
@@ -34,9 +30,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ kde5-akonadi-calendar-devel kde5-kalarmcal-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmbox-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-pimlibs-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kross-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkgapi-devel kf5-solid-devel kf5-sonnet-devel libkolab-devel libsasl2-devel python-module-google qt5-quick1-devel qt5-speech-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-python3 rpm-build-ruby xsltproc
 BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel qt5-xmlpatterns-devel
-%if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
-%endif
 BuildRequires: qt5-speech-devel qt5-networkauth-devel
 BuildRequires: libqca-qt5-devel
 BuildRequires: libqtkeychain-qt5-devel
@@ -113,16 +107,6 @@ KF5 library
 %prep
 %setup -n %rname-%version
 
-%if_disabled qtwebengine
-#sed -i 's|WebEngineWidgets||' CMakeLists.txt
-sed -i "/add_subdirectory([[:space:]]ews[[:space:]])/d" resources/CMakeLists.txt
-rm -rf resources/ews
-sed -i "/add_subdirectory([[:space:]]tomboynotes[[:space:]])/d" resources/CMakeLists.txt
-rm -rf resources/tomboynotes
-sed -i "/add_subdirectory([[:space:]]facebook[[:space:]])/d" resources/CMakeLists.txt
-rm -rf resources/facebook
-%endif
-
 %build
 %K5build
 
@@ -151,6 +135,7 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5bin/akonadi_*
 %_K5plug/pim5/akonadi/config/*.so
 %_K5plug/pim5/kcms/kaddressbook/*.so
+%_K5plug/pim5/mailtransport/*.so
 %_K5plug/kf5/kio/*.so
 %_K5xdgapp/org.kde.akonadi*.desktop
 %_datadir/akonadi5/accountwizard/*
@@ -181,6 +166,9 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Thu Sep 21 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

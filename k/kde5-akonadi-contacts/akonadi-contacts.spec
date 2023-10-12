@@ -1,7 +1,7 @@
 %define rname akonadi-contacts
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init
 
@@ -81,7 +81,6 @@ KF5 library
 
 %files -n libkf5akonadicontact
 %_K5lib/libKPim5AkonadiContact.so.*
-%_K5plug/pim5/kcms/kaddressbook/*akonadicontact*.so
 #
 %_K5plug/akonadi_serializer_addressee.so
 %_datadir/akonadi5/plugins/serializer/akonadi_serializer_addressee.desktop
@@ -90,12 +89,14 @@ KF5 library
 
 %files -n libkf5contacteditor
 %_K5lib/libKPim5ContactEditor.so.*
-%_K5plug/pim5/akonadi/contacts/plugins/categorieseditwidgetplugin.so
 #
 %_K5plug/akonadi_serializer_contactgroup.so
 %_datadir/akonadi5/plugins/serializer/akonadi_serializer_contactgroup.desktop
 
 %changelog
+* Thu Sep 21 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

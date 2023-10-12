@@ -6,7 +6,7 @@
 %define libkleopatraclientgui libkleopatraclientgui%kleopatraclientgui_sover
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -31,7 +31,7 @@ BuildRequires: libassuan-devel libgpgme-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdoctools-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-knotifications-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-sonnet-devel kf5-kitemmodels-devel
-BuildRequires: kf5-kcrash-devel kf5-kwallet-devel
+BuildRequires: kf5-kcrash-devel kf5-kwallet-devel kf5-kio-devel
 BuildRequires: kde5-kmime-devel kde5-libkleo-devel kf5-kauth-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kconfig-devel
 BuildRequires: kde5-kidentitymanagement-devel kde5-kmailtransport-devel kde5-kpimtextedit-devel kde5-akonadi-mime-devel kde5-akonadi-devel
 
@@ -109,6 +109,9 @@ mv %buildroot/%_datadir/mime/packages/application-vnd-kde{,5}-kleopatra.xml
 %_K5lib/libkleopatraclientgui.so.*
 
 %changelog
+* Thu Sep 21 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kmailtransport
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init altplace
 
@@ -50,18 +50,10 @@ developing applications that use %name.
 
 %package -n libkf5mailtransport
 Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
+Summary: %name library
+Requires: %name-common >= %EVR
 %description -n libkf5mailtransport
-KF5 library
-
-%package -n libkf5mailtransportakonadi
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n libkf5mailtransportakonadi
-KF5 library
-
+%name library.
 
 %prep
 %setup -n %rname-%version
@@ -86,14 +78,14 @@ KF5 library
 
 %files -n libkf5mailtransport
 %_K5lib/libKPim5MailTransport.so.*
-%_K5plug/*mailtransport.so
+#%_K5plug/*mailtransport.so
 %_K5plug/pim5/mailtransport/*smtp*.so
-%_K5srv/*mailtransport.desktop
-%files -n libkf5mailtransportakonadi
-%_K5plug/pim5/mailtransport/*akonadi*.so
-%_K5lib/libKPim5MailTransportAkonadi.so.*
+#%_K5srv/*mailtransport.desktop
 
 %changelog
+* Thu Sep 21 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

@@ -6,7 +6,7 @@
 %define libkf5pimcommonautocorrection libkf5pimcommonautocorrection%sover
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init
 
@@ -91,20 +91,23 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/PimCommon*/
+%_includedir/KPim5/PimCommon*/
 %_K5link/lib*.so
 %_K5lib/cmake/K*5PimCommon*/
 %_K5archdata/mkspecs/modules/qt_PimCommon*.pri
 %_K5plug/designer/*.so
 
 %files -n %libkf5pimcommon
-%_K5lib/libKF5PimCommon.so.%sover
-%_K5lib/libKF5PimCommon.so.*
+%_K5lib/libKPim5PimCommon.so.%sover
+%_K5lib/libKPim5PimCommon.so.*
 %files -n %libkf5pimcommonakonadi
-%_K5lib/libKF5PimCommonAkonadi.so.%sover
-%_K5lib/libKF5PimCommonAkonadi.so.*
+%_K5lib/libKPim5PimCommonAkonadi.so.%sover
+%_K5lib/libKPim5PimCommonAkonadi.so.*
 
 %changelog
+* Thu Sep 21 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

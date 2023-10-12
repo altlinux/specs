@@ -2,11 +2,9 @@
 %def_disable qtkeychain
 
 %define rname kio-gdrive
-%define sover 16
-%define libktcore libktcore%sover
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init altplace appdata
 
@@ -70,6 +68,9 @@ rm -f "$tmp_file"
 %endif
 
 %changelog
+* Thu Sep 21 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

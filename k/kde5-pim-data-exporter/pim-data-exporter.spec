@@ -4,7 +4,7 @@
 %define libpimdataexporterprivate libpimdataexporterprivate%pim_sover
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -95,6 +95,9 @@ done
 %_K5lib/libpimdataexporterprivate.so.*
 
 %changelog
+* Thu Sep 21 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 
