@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.11.3
-Release: alt1
+Release: alt2
 
 Summary: Avro is a serialization and RPC framework
 License: Apache-2.0
@@ -14,6 +14,7 @@ Url: https://pypi.python.org/pypi/avro/
 
 Source: %name-%version.tar
 Patch: avro-alt-test-timeout.patch
+Patch1: drop-distutils.patch
 
 BuildArch: noarch
 
@@ -64,6 +65,7 @@ This package contains tests for %oname.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %pyproject_build
@@ -88,6 +90,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Thu Oct 12 2023 Anton Vyatkin <toni@altlinux.org> 1.11.3-alt2
+- drop distutils dependency
+
 * Tue Sep 26 2023 Anton Vyatkin <toni@altlinux.org> 1.11.3-alt1
 - new version 1.11.3
 
