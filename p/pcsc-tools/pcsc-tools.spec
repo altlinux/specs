@@ -1,5 +1,5 @@
 Name:    pcsc-tools
-Version: 1.6.2
+Version: 1.7.0
 Release: alt1
 Summary: Tools to be used with smart cards and PC/SC
 
@@ -12,6 +12,7 @@ Source1: %name.watch
 BuildRequires: libpcsclite-devel >= 1.2.9
 BuildRequires: perl-pcsc
 BuildRequires: perl-Gtk3
+BuildRequires: perl-libintl
 BuildRequires: desktop-file-utils
 
 Requires: pcsc-lite
@@ -38,7 +39,6 @@ card from a GTK user interface.
 %setup 
 
 %build
-%autoreconf
 %configure
 %make_build
 
@@ -47,8 +47,9 @@ card from a GTK user interface.
 desktop-file-install --mode=644 \
   --dir=$RPM_BUILD_ROOT%{_datadir}/applications gscriptor.desktop
 # TODO: icon
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc Changelog README
 %_bindir/*
 %_datadir/pcsc/
@@ -62,6 +63,9 @@ desktop-file-install --mode=644 \
 %doc %_man1dir/gscriptor.*
 
 %changelog
+* Tue Oct 10 2023 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
+- New veriosn.
+
 * Sat Feb 04 2023 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt1
 - New version.
 
