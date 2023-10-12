@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/less /usr/bin/zdump texinfo
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 19
+%define autorelease 24
 
 %global gcalmantag 4
 
@@ -23,10 +23,12 @@ Source0:	ftp://ftp.gnu.org/gnu/gcal/%{name}-%{version}.tar.xz
 # $ git archive --format=tar v${gcalmantag} -- doc/en/man | \
 #     xz > gcal-man-v${gcalmantag}.tar.xz
 Source1:	gcal-man-v%{gcalmantag}.tar.xz
-Patch:		gcal-glibc-no-libio.patch
+Patch0:		gcal-glibc-no-libio.patch
+Patch1:		gcal-configure-c99.patch
 BuildRequires:  gcc
-BuildRequires:	gettext gettext-tools libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+BuildRequires:	gettext-tools libncurses++-devel libncurses++w-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:  libunistring-devel
+BuildRequires: autoconf automake gettext-tools libasprintf-devel
 
 # Gnulib is granted exception of "no bundled libraries" packaging guideline:
 # https://fedoraproject.org/wiki/Packaging:No_Bundled_Libraries#Packages_granted_exceptions
@@ -40,13 +42,14 @@ It also displays holiday lists for many countries around the globe.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
+
 tar xf %{SOURCE1}
 
 
 %build
-CFLAGS="%{optflags}"
-export CFLAGS
+autoreconf -ifv
 export LIBS=-lunistring
 %configure --enable-unicode
 %make_build
@@ -75,6 +78,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/*.1*
 
 %changelog
+* Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 4.1-alt3_24
+- update to new release by fcimport
+
 * Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 4.1-alt3_19
 - fixed build
 
