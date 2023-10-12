@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: touche
-Version: 2.0.5
+Version: 2.0.10
 Release: alt1
 
 Summary: The desktop application to configure Touchegg
@@ -118,6 +118,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/appdata/com.github.jos
 %_girdir/*.gir
 
 %changelog
+* Thu Oct 12 2023 Anton Midyukov <antohami@altlinux.org> 2.0.10-alt1
+- new version (2.0.10) with rpmgs script
+
 * Mon May 16 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 2.0.5-alt1
 - new version (2.0.5) with rpmgs script
 - Removed unneeded patches (Accepted by upstream)
