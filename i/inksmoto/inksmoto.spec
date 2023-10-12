@@ -1,7 +1,7 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: python3-tools
 BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
+BuildRequires: /usr/bin/pathfix.py
 # END SourceDeps(oneline)
 # internal py
 %filter_from_requires /^python3.inksmoto./d
@@ -10,10 +10,10 @@ BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
 %define _localstatedir %{_var}
 Name: inksmoto
 Version: 0.7.0
-Release: alt2_23
+Release: alt2_32
 Summary: The new xmoto level editor for Inkscape
 
-License: GPLv2
+License: GPL-2.0-only
 URL: http://xmoto.sourceforge.net/
 Source0: http://download.tuxfamily.org/xmoto/svg2lvl/%{version}~rc1/inksmoto-%{version}.tar.gz
 BuildRequires: python3-devel
@@ -56,6 +56,9 @@ cp -pr inksmoto %{buildroot}%{_datadir}/inkscape/extensions/
 %doc AUTHORS INSTALL README
 
 %changelog
+* Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 0.7.0-alt2_32
+- update to new release by fcimport
+
 * Fri Dec 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_23
 - python3 migration
 
