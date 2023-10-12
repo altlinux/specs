@@ -1,66 +1,167 @@
 Group: Emulators
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/valgrind bzlib-devel
+BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/pkgconf /usr/bin/valgrind /usr/bin/wine bzlib-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define autorelease 7
+
 Name:           advancecomp
-Version:        2.1
-Release:        alt1_16
-Summary:        Recompression utilities for png, mng, zip and gz files
-License:        GPLv3
-URL:            http://www.advancemame.it/
-Source0:        https://github.com/amadvance/advancecomp/releases/download/v%{version}/advancecomp-%{version}.tar.gz
+Version:        2.5
+Release:        alt1_7
+Summary:        Recompression utilities for .png, .mng, .zip and .gz files
 
-#  CVE-2019-8383 advancecomp: denial of service in function adv_png_unfilter_8
-Patch0:         advancecomp-CVE-2019-8383.patch
-# CVE-2019-9210 advancecomp: integer overflow in png_compress in pngex.cc
-Patch1:         advancecomp-CVE-2019-9210.patch
+# Source file headers all specify GPL-2.0-or-later (see source file headers),
+# except:
+#
+#   The bundled and forked 7z (7-Zip code) in 7z/ is under the a.'LGPLa.' license.
+#   Based on https://www.7-zip.org/license.txt, and the absence of any mention
+#   of license changes in https://www.7-zip.org/history.txt, 7-Zip has always
+#   been licensed under LGPL-2.1-or-later, specifically; we thus assume this is
+#   the intended specific license for the contents of the 7z/ directory. None
+#   of the sources that would be covered by the a.'unRAR license restrictiona.' or
+#   the BSD-3-Clause license for LZFSE are present in this fork.
+#
+#   Certain build-system files, which do not contribute to the license of the
+#   binary RPM, are under other permissible licenses.
+#
+# However, in version 1.17, the COPYING file was updated to GPLv3, with a
+# changelog message (in HISTORY and elsewhere) of a.'Changes to GPL3.a.' We
+# interpret this as an overall license of GPL-3.0-only.
+License:        GPL-3.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later
+URL:            https://www.advancemame.it/
+%global forgeurl https://github.com/amadvance/advancecomp
+Source:         %{forgeurl}/archive/v%{version}/advancecomp-%{version}.tar.gz
 
-BuildRequires:  gcc gcc-c++
-BuildRequires:  tofrodos
-BuildRequires:  zlib-devel
+BuildRequires:  autoconf
+BuildRequires:  automake
+
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
+
 BuildRequires:  dos2unix
+
+# System library supported by upstream
+BuildRequires:  zlib-devel
+
+# Unbundled downstream
+BuildRequires:  pkgconfig(libdeflate)
+BuildRequires:  libzopfli-devel
+
+# From 7z/README:
+#
+#   This directory contains some source files from the
+#   7z archive utility. (www.7-zip.org)
+#
+#   All the files in this directory was originally released
+#   with the LGPL license.
+#
+#   All the modifications made on the original files must
+#   be considered Copyright (C) 2002 Andrea Mazzoleni and
+#   released under the LGPL license.
+#
+# It is not clear which version was forked. Because 7-Zip does not provide a
+# library, and because the implementation is modified, there is no possibility
+# of unbundling. Note that this was forked from the original 7-Zip, not from
+# p7zip.
+Provides:      bundled(7zip)
 Source44: import.info
 
 %description
-AdvanceCOMP is a set of recompression utilities for .PNG, .MNG and .ZIP files.
-The main features are :
-* Recompress ZIP, PNG and MNG files using the Deflate 7-Zip implementation.
-* Recompress MNG files using Delta and Move optimization.
+AdvanceCOMP contains recompression utilities for your .zip archives,
+.png images, .mng video clips and .gz files.
+
+The official site of AdvanceCOMP is:
+
+  https://www.advancemame.it
 
 This package contains:
-* advzip - Recompression and test utility for zip files
-* advpng - Recompression utility for png files
-* advmng - Recompression utility for mng files
-* advdef - Recompression utility for deflate streams in png, mng and gz files
+  advzip - Recompression and test utility for zip files
+  advpng - Recompression utility for png files
+  advmng - Recompression utility for mng files
+  advdef - Recompression utility for deflate streams in .png, .mng and .gz files
+
 
 %prep
 %setup -q
-%patch0 -p1 -b .CVE-2019-8383
-%patch1 -p1 -b .CVE-2019-9210
+
 
 dos2unix -k doc/*.txt
 
+# Patch out bundled libdeflate
+rm -rvf libdeflate
+sed -r -i '/libdeflate[\/_]/d' Makefile.am
+# Fix up #include paths. The find-then-modify pattern keeps us from discarding
+# mtimes on any sources that do not need modification.
+find . -type f -exec gawk \
+    '/^[[:blank:]]*#include.*libdeflate/ { print FILENAME; nextfile }' \
+    '{}' '+' |
+  xargs -r -t sed -r -i 's@^([[:blank:]]*#include.*)libdeflate/@\1@'
+
+# Patch out bundled zopfli
+rm -rvf zopfli
+sed -r -i \
+    -e '/zopfli[\/_]/d' \
+    -e 's/((\(7z_SOURCES\)|WindowOut\.h).*)[[:blank:]]*\\/\1/' \
+    Makefile.am
+# Fix up #include paths. The find-then-modify pattern keeps us from discarding
+# mtimes on any sources that do not need modification.
+find . -type f -exec gawk \
+    '/^[[:blank:]]*#include.*zopfli/ { print FILENAME; nextfile }' \
+    '{}' '+' |
+  xargs -r -t sed -r -i -e 's@^([[:blank:]]*#include.*)zopfli/@\1@'
+
+
 %build
-export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
+autoreconf --force --install --verbose
+
+# Link against system libdeflate
+export CFLAGS="$(pkgconf --cflags libdeflate) ${CFLAGS-}"
+export CXXFLAGS="$(pkgconf --cflags libdeflate) ${CXXFLAGS-}"
+#export LDFLAGS="$(pkgconf --libs libdeflate) ${LDFLAGS-}"
+export LIBS="$(pkgconf --libs libdeflate) ${LIBS-}"
+
+# Link against system zopfli
+#export LDFLAGS="-lzopfli ${LDFLAGS-}"
+export LIBS="-lzopfli ${LIBS-}"
+
 %configure
 %make_build
 
+
 %install
-make install DESTDIR=%{buildroot}
+%makeinstall_std
+
+
+# We don’t run upstream tests (%%make_build check) because they are too
+# brittle, expecting recompressed outputs to be identical. Across platforms,
+# compilers, and unbundled library versions, this doesn’t hold up.
+
 
 %files
 %doc --no-dereference COPYING
-%doc AUTHORS HISTORY README
-%doc doc/adv*.txt
-%doc doc/authors.txt
-%doc doc/history.txt
-%doc doc/readme.txt
-%{_bindir}/*
-%{_mandir}/man1/*
+%doc AUTHORS
+%doc HISTORY
+%doc README
+%doc doc/advdef.txt
+%doc doc/advmng.txt
+%doc doc/advpng.txt
+%doc doc/advzip.txt
+
+%{_bindir}/advdef
+%{_bindir}/advmng
+%{_bindir}/advpng
+%{_bindir}/advzip
+%{_mandir}/man1/advdef.1*
+%{_mandir}/man1/advmng.1*
+%{_mandir}/man1/advpng.1*
+%{_mandir}/man1/advzip.1*
+
 
 %changelog
+* Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 2.5-alt1_7
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_16
 - update to new release by fcimport
 
