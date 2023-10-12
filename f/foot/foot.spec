@@ -1,5 +1,5 @@
 Name: foot
-Version: 1.15.3
+Version: 1.16.0
 Release: alt1
 
 Summary: A fast, lightweight and minimalistic Wayland terminal emulator
@@ -49,6 +49,9 @@ BuildRequires: pkgconfig(libutf8proc)
 %_mandir/*/*
 
 %changelog
+* Thu Oct 12 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.16.0-alt1
+- 1.16.0 released
+
 * Mon Aug 14 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.15.3-alt1
 - 1.15.3 released
 
