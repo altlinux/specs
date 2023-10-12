@@ -10,8 +10,8 @@
 %endif
 
 Name: nfdump
-Version: 1.7.2
-Release: alt2
+Version: 1.7.3
+Release: alt1
 Summary: collect and process netflow data
 Group: Monitoring
 %if_without libnfdump
@@ -33,7 +33,7 @@ Source8: sfcapd.service
 
 Packager: Vladimir Lettiev <crux@altlinux.org>
 
-BuildRequires: librrd-devel libpcap-devel flex bison bzlib-devel
+BuildRequires: librrd-devel libpcap-devel flex bison bzlib-devel libzstd-devel
 
 %description
 Nfdump is a set of tools to collect and process netflow data.
@@ -139,11 +139,8 @@ rm -f %buildroot%_libdir/libnfdump.a
 rm -f  %buildroot%_sysconfdir/nfdump.conf.dist
 
 %pre
-%_sbindir/groupadd -r -f nfcapd
-%_sbindir/useradd -r -n -g nfcapd -d %_cachedir/nfcapd -s /bin/false nfcapd >/dev/null 2>&1 ||:
-
-%_sbindir/groupadd -r -f sfcapd
-%_sbindir/useradd -r -n -g sfcapd -d %_cachedir/sfcapd -s /bin/false sfcapd >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -d %_cachedir/nfcapd -s /bin/false nfcapd >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -d %_cachedir/sfcapd -s /bin/false sfcapd >/dev/null 2>&1 ||:
 
 %post
 %post_service nfcapd
@@ -187,6 +184,10 @@ rm -f  %buildroot%_sysconfdir/nfdump.conf.dist
 %endif
 
 %changelog
+* Thu Oct 12 2023 Sergey Y. Afonin <asy@altlinux.org> 1.7.3-alt1
+- 1.7.3
+- built with libzstd-devel
+
 * Wed Oct 04 2023 Sergey Y. Afonin <asy@altlinux.org> 1.7.2-alt2
 - use -w option instead of deprecated -l
 - use /run instead of /var/run
