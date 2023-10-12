@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.6
+Version: 4.0.7
 Release: alt1
 Summary: JupyterLab computational environment
 License: BSD-3-Clause
@@ -28,6 +28,7 @@ BuildRequires: python3-module-async-lru
 BuildRequires: python3-module-pytest-console-scripts
 BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-requests-cache
+BuildRequires: node
 %endif
 
 %description
@@ -68,26 +69,14 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/jupyterlab.json \
    %buildroot%_sysconfdir/jupyter/jupyter_notebook_config.d
 
 %check
-%pyproject_run_pytest -v -k "\
-not test_uninstall_core_extension \
-and not test_install_and_uninstall_pinned_folder \
-and not test_install_and_uninstall_pinned \
-and not test_build_custom_minimal_core_config \
-and not test_build_custom \
-and not test_build_check \
-and not test_clear \
-and not test_update \
-and not test_install \
-and not test_uninstall \
-and not test_app_dir \
-and not test_list_extension \
-and not test_enable_extension \
-and not test_disable_extension \
-and not test_link \
-and not test_build \
-and not test_unlink_package \
-and not test_get_registry \
-and not test_yarn_config"
+%pyproject_run_pytest -v \
+--deselect=jupyterlab/tests/test_build_api.py::TestBuildAPI::test_clear \
+--deselect=jupyterlab/tests/test_build_api.py::TestBuildAPI::test_build \
+--deselect=jupyterlab/tests/test_jupyterlab.py::TestExtension::test_build \
+--deselect=jupyterlab/tests/test_jupyterlab.py::TestExtension::test_install_and_uninstall_pinned_folder \
+--deselect=jupyterlab/tests/test_jupyterlab.py::TestExtension::test_install_and_uninstall_pinned \
+--deselect=jupyterlab/tests/test_jupyterlab.py::TestExtension::test_uninstall_core_extension
+
 
 %files
 %doc README.*
@@ -112,6 +101,9 @@ and not test_yarn_config"
 %python3_sitelibdir/%pypi_name/browser_check.py
 
 %changelog
+* Thu Oct 12 2023 Anton Vyatkin <toni@altlinux.org> 4.0.7-alt1
+- new version 4.0.7
+
 * Fri Sep 15 2023 Anton Vyatkin <toni@altlinux.org> 4.0.6-alt1
 - new version 4.0.6
 
