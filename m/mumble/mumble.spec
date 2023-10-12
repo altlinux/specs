@@ -8,7 +8,7 @@
 Name: mumble
 %define build_number 287
 Version: 1.4.287
-Release: alt2.1
+Release: alt2.2
 
 Summary: Low latency encrypted VoIP client
 
@@ -63,7 +63,7 @@ Summary: Mumble voice chat server
 Group: System/Servers
 Provides: %name-server = %version-%release
 
-Requires: qt5-sql-sqlite3
+Requires: qt5-sql-sqlite
 
 %description -n murmur
 Murmur is the VoIP server component for Mumble. Murmur is installed
@@ -219,6 +219,9 @@ mkdir -p %buildroot%_logdir/murmur
 %_bindir/%name-overlay
 
 %changelog
+* Thu Oct 12 2023 Sergey V Turchin <zerg@altlinux.org> 1.4.287-alt2.2
+- NMU: fix requires
+
 * Wed Oct 11 2023 Sergey V Turchin <zerg@altlinux.org> 1.4.287-alt2.1
 - NMU: fix requires
 
