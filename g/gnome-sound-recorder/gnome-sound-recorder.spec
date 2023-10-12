@@ -1,13 +1,13 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
-%define ver_major 42
-%define beta %nil
+%define ver_major 43
+%define beta .beta
 %define xdg_name org.gnome.SoundRecorder
 %define gst_api_ver 1.0
 
 Name: gnome-sound-recorder
-Version: %ver_major.0
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: Sound Recorder for GNOME
 Group: Sound
@@ -17,7 +17,7 @@ Url: https://wiki.gnome.org/Design/Apps/SoundRecorder
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 BuildArch: noarch
@@ -27,9 +27,9 @@ Obsoletes: gnome-media-grecord
 Provides:  gnome-media-grecord = %version-%release
 
 %define glib_ver 2.44
-%define gtk_ver 4.2
+%define gtk_ver 4.4.0
 %define gjs_ver 1.54
-%define adwaita_ver 1.0.0
+%define adwaita_ver 1.2.0
 
 Requires: libgjs >= %gjs_ver
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
@@ -47,7 +47,8 @@ Requires: typelib(Gtk) = 4.0
 Requires: libgst-plugins%gst_api_ver-gir
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
+BuildRequires: meson /usr/bin/tsc
+BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
 BuildRequires: libgjs-devel libgtk4-gir-devel yelp-tools
 BuildRequires: pkgconfig(gstreamer-player-%gst_api_ver)
 BuildRequires: gst-plugins%gst_api_ver-devel
@@ -80,6 +81,9 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Fri Oct 13 2023 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.5.beta
+- updated to 43.beta-51-gaffa6c5
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 
