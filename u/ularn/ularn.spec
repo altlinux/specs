@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           ularn
 Version:        1.5p4
-Release:        alt2_43
+Release:        alt2_45
 Summary:        Simple roguelike game
 
 License:        GPL-1.0-or-later
@@ -21,7 +21,7 @@ Patch2:         ularn-datadir.patch
 Patch3:         ularn-drop-setgid.patch
 
 BuildRequires:  gcc
-BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+BuildRequires:  libncurses++-devel libncurses++w-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:  desktop-file-utils
 Requires:       ncompress
 Source44: import.info
@@ -48,6 +48,9 @@ chmod +x config.h.SH
 %patch3 -p1
 
 %build
+# This package requires C89 compatibility mode (bug 2155503).
+%global build_type_safety_c 0
+
 # Keep track of where we are.  Some of the configuration scripts change
 # the current working directory.
 builddir=`pwd`
@@ -55,7 +58,7 @@ builddir=`pwd`
 ${builddir}/Makefile.u.SH
 cd ${builddir}
 mv Makefile.u Makefile
-CC="gcc $RPM_OPT_FLAGS -fcommon -std=gnu89" make %{?_smp_mflags}
+CC="gcc $RPM_OPT_FLAGS -fcommon" make %{?_smp_mflags}
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -79,6 +82,9 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/app
 %doc --no-dereference GPL
 
 %changelog
+* Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 1.5p4-alt2_45
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.5p4-alt2_43
 - update to new release by fcimport
 
