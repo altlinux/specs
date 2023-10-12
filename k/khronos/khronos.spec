@@ -4,7 +4,7 @@
 %define rdn_name io.github.lainsce.Khronos
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Track each task's time in a simple inobtrusive way
@@ -53,6 +53,9 @@ with notifications.
 
 
 %changelog
+* Thu Oct 12 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
 * Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - 4.0.0
 
