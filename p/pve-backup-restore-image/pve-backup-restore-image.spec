@@ -2,7 +2,7 @@
 %define cachedir /var/cache/proxmox-backup
 
 Name: pve-backup-restore-image
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Kernel/initramfs images for Proxmox Backup single file restore
@@ -12,10 +12,12 @@ Group: Development/Other
 ExclusiveArch: x86_64 aarch64
 
 Requires(post): make-initrd-pbs
-Requires(post): lvm2 thin-provisioning-tools zfs-utils
+Requires(post): thin-provisioning-tools
 Requires(post): kernel
 Requires(post): proxmox-backup-file-restore
 Requires: /proc
+
+Provides: proxmox-backup-restore-image = %EVR
 
 %description
 %summary.
@@ -67,6 +69,9 @@ chmod 0755 %buildroot%imagedir/%name.sh
 #%%ghost %imagedir/initramfs.img
 
 %changelog
+* Thu Oct 12 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.2-alt1
+- add Provides for proxmox-backup-restore-image
+
 * Fri Jul 21 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.1-alt1
 - Initial release.
 
