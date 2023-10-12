@@ -5,7 +5,7 @@
 
 Name: htop
 Version: 3.2.2
-Release: alt2.1
+Release: alt2.2
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPLv2+
@@ -102,8 +102,11 @@ rm -r %buildroot%_pixmapsdir/
 
 
 %changelog
+* Thu Oct 12 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.2.2-alt2.2
+- Fix spec and .gear/rules
+
 * Tue Sep 19 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.2.2-alt2.1
-- moved *.desktop and *.png/svg files to mc-desktop subpackage (ALT #47509)
+- moved *.desktop and *.png/svg files to %name-desktop subpackage (ALT #47509)
 
 * Sat Aug  5 2023 Artyom Bystrov <arbars@altlinux.org> 3.2.2-alt2
 - Enable showing temperature of CPU (powered by libsensors)
