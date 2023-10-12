@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 23.7.4.983
+Version: 23.9.1.1033
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -173,7 +173,6 @@ store_partner_data() {
     remove_partner_storage
     store_partner_file "" "partner_config"
     store_partner_file "" "distrib_info"
-    store_partner_file "" "initial_preferences"
     store_partner_file "" "master_preferences"
     store_partner_file "Extensions" "external_extensions.json"
     store_partner_files "resources" "clids*.xml"
@@ -205,6 +204,80 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+
+* Tue Oct 11 2023 yabro <yabro@altlinux.org> 23.9.1.1033-alt1
+- Browser updated to 23.9.1.1033
+
+* Tue Oct 10 2023 yabro <yabro@altlinux.org> 23.9.1.1015-alt1
+- Browser updated to 23.9.1.1015
+ + Critical CVE-2023-4863: Heap buffer overflow in WebP.
+ + High CVE-2023-2312: Use after free in Offline.
+ + High CVE-2023-3727: Use after free in WebRTC.
+ + High CVE-2023-3730: Use after free in Tab Groups.
+ + High CVE-2023-3732: Out of bounds memory access in Mojo.
+ + High CVE-2023-4068: Type Confusion in V8.
+ + High CVE-2023-4069: Type Confusion in V8.
+ + High CVE-2023-4070: Type Confusion in V8.
+ + High CVE-2023-4071: Heap buffer overflow in Visuals.
+ + High CVE-2023-4072: Out of bounds read and write in WebGL.
+ + High CVE-2023-4073: Out of bounds memory access in ANGLE.
+ + High CVE-2023-4074: Use after free in Blink Task Scheduling.
+ + High CVE-2023-4075: Use after free in Cast.
+ + High CVE-2023-4076: Use after free in WebRTC.
+ + High CVE-2023-4349: Use after free in Device Trust Connectors.
+ + High CVE-2023-4350: Inappropriate implementation in Fullscreen.
+ + High CVE-2023-4351: Use after free in Network.
+ + High CVE-2023-4352: Type Confusion in V8.
+ + High CVE-2023-4353: Heap buffer overflow in ANGLE.
+ + High CVE-2023-4354: Heap buffer overflow in Skia.
+ + High CVE-2023-4355: Out of bounds memory access in V8.
+ + High CVE-2023-4427: Out of bounds memory access in V8.
+ + High CVE-2023-4428: Out of bounds memory access in CSS.
+ + High CVE-2023-4429: Use after free in Loader.
+ + High CVE-2023-4430: Use after free in Vulkan.
+ + High CVE-2023-4572: Use after free in MediaStream.
+ + High CVE-2023-4761: Out of bounds memory access in FedCM.
+ + High CVE-2023-4762: Type Confusion in V8.
+ + High CVE-2023-4763: Use after free in Networks.
+ + High CVE-2023-4764: Incorrect security UI in BFCache.
+ + High CVE-2023-5186: Use after free in Passwords.
+ + High CVE-2023-5187: Use after free in Extensions.
+ + High CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx.
+ + High CVE-2023-5346: Type Confusion in V8.
+ + Medium CVE-2023-3733: Inappropriate implementation in WebApp Installs.
+ + Medium CVE-2023-3734: Inappropriate implementation in Picture In Picture.
+ + Medium CVE-2023-3735: Inappropriate implementation in Web API Permission Prompts.
+ + Medium CVE-2023-3736: Inappropriate implementation in Custom Tabs.
+ + Medium CVE-2023-3737: Inappropriate implementation in Notifications.
+ + Medium CVE-2023-3738: Inappropriate implementation in Autofill.
+ + Medium CVE-2023-4077: Insufficient data validation in Extensions.
+ + Medium CVE-2023-4078: Inappropriate implementation in Extensions.
+ + Medium CVE-2023-4356: Use after free in Audio.
+ + Medium CVE-2023-4357: Insufficient validation of untrusted input in XML.
+ + Medium CVE-2023-4358: Use after free in DNS.
+ + Medium CVE-2023-4359: Inappropriate implementation in App Launcher.
+ + Medium CVE-2023-4360: Inappropriate implementation in Color.
+ + Medium CVE-2023-4361: Inappropriate implementation in Autofill.
+ + Medium CVE-2023-4362: Heap buffer overflow in Mojom IDL.
+ + Medium CVE-2023-4363: Inappropriate implementation in WebShare.
+ + Medium CVE-2023-4364: Inappropriate implementation in Permission Prompts.
+ + Medium CVE-2023-4365: Inappropriate implementation in Fullscreen.
+ + Medium CVE-2023-4366: Use after free in Extensions.
+ + Medium CVE-2023-4367: Insufficient policy enforcement in Extensions API.
+ + Medium CVE-2023-4368: Insufficient policy enforcement in Extensions API.
+ + Medium CVE-2023-4431: Out of bounds memory access in Fonts.
+ + Medium CVE-2023-4900: Inappropriate implementation in Custom Tabs.
+ + Medium CVE-2023-4901: Inappropriate implementation in Prompts.
+ + Medium CVE-2023-4902: Inappropriate implementation in Input.
+ + Medium CVE-2023-4903: Inappropriate implementation in Custom Mobile Tabs.
+ + Medium CVE-2023-4904: Insufficient policy enforcement in Downloads.
+ + Medium CVE-2023-4905: Inappropriate implementation in Prompts.
+ + Low CVE-2023-3740: Insufficient validation of untrusted input in Themes.
+ + Low CVE-2023-4906: Insufficient policy enforcement in Autofill.
+ + Low CVE-2023-4907: Inappropriate implementation in Intents.
+ + Low CVE-2023-4908: Inappropriate implementation in Picture in Picture.
+ + Low CVE-2023-4909: Inappropriate implementation in Interstitials.
+
 * Tue Sep 5 2023 yabro <yabro@altlinux.org> 23.7.4.983-alt1
 - Browser updated to 23.7.4.983
 
