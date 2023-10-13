@@ -1,7 +1,7 @@
 %define origname ghostscript
 Name: ghostscript9
-Version: 9.54.0
-Release: alt4
+Version: 9.56.1
+Release: alt1
 
 %define ijsver	0.35
 %global origver %version
@@ -21,6 +21,10 @@ Source2: ghostscript.unused
 Source3: README.patches
 
 ## FC patches
+Patch0: FC-9.56-fix-PDFFitPage-with-square-MediaBox.patch
+Patch1: FC-9.56.1-Fix-color-info-juggling-with-x11-devices.patch
+Patch2: FC-9.56.1-use-proper-bounds-check-for-subfunctions-of.patch
+Patch3: FC-9.56.1-Deal-with-different-VM-modes-during-CIDFont-loading.patch
 
 ## Ubuntu patches
 Patch101: Ubuntu-2001_docdir_fix_for_debian.patch
@@ -94,6 +98,10 @@ Common files for the %name
 rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/libs
 
 ## FC apply patches
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 ## Ubuntu apply patches
 %patch101 -p1
@@ -104,9 +112,9 @@ rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/li
 #patch106 -p1
 #patch107 -p1
 #patch108 -p1
-%patch109 -p1
+#patch109 -p1
 %patch110 -p1
-%patch111 -p1
+#patch111 -p1
 #patch112 -p1
 #patch113 -p1
 
@@ -114,7 +122,7 @@ rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/li
 %patch500 -p1
 %patch501 -p1
 %patch502 -p1
-%patch600 -p1
+#patch600 -p1
 
 sed -i 's/FT_CALLBACK_DEF(\(.*\))/static \1/g' base/fapi_ft.c
 sed -i 's/ -dNO/ -dNOSAFER -dNO/' lib/pfbtopfa
@@ -193,6 +201,9 @@ mkdir -p %buildroot/%_datadir/ghostscript/conf.d
 %exclude %_libdir/ghostscript
 
 %changelog
+* Fri Oct 13 2023 Fr. Br. George <george@altlinux.org> 9.56.1-alt1
+- Build last 9.x series version
+
 * Thu Apr 13 2023 Fr. Br. George <george@altlinux.ru> 9.54.0-alt4
 - Build library only version
 
