@@ -2,7 +2,7 @@
 %define cachedir /var/cache/proxmox-backup
 
 Name: pve-backup-restore-image
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Kernel/initramfs images for Proxmox Backup single file restore
@@ -28,6 +28,8 @@ mkdir -p %buildroot%imagedir
 cat > %buildroot%imagedir/%name.mk <<END
 IMAGEFILE = %imagedir/initramfs.img
 FEATURES += pbs
+# To restore files from NTFS use kernel >= 5.15, uncomment next line and run %imagedir/%name.sh
+# MODULES_PRELOAD += ntfs3
 END
 
 cat > %buildroot%imagedir/%name.sh <<EOF
@@ -69,6 +71,9 @@ chmod 0755 %buildroot%imagedir/%name.sh
 #%%ghost %imagedir/initramfs.img
 
 %changelog
+* Fri Oct 13 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.3-alt1
+- fix NTFS restore (only for kernels 5.15+)
+
 * Thu Oct 12 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.2-alt1
 - add Provides for proxmox-backup-restore-image
 
