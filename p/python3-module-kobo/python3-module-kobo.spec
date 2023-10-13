@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.25.0
+Version: 0.30.1
 Release: alt1
 Summary: A collection of Python utilities
 License: LGPLv2.1 
@@ -54,5 +54,8 @@ export TOX_TESTENV_PASSENV='DJANGO_SETTINGS_MODULE'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 13 2023 Mikhail Chernonog <snowmix@altlinux.org> 0.30.1-alt1
+- 0.25.0 -> 0.30.1
+
 * Wed Nov 30 2022 Mikhail Chernonog <snowmix@altlinux.org> 0.25.0-alt1
 - Initial build for Sisyphus
