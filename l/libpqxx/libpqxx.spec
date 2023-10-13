@@ -18,7 +18,7 @@ Name:           libpqxx
 Summary:        C++ client API for PostgreSQL
 Epoch:          1
 Version:        7.7.5
-Release:        alt1_2
+Release:        alt2_2
 
 %global         forgeurl https://github.com/jtv/%{name}/
 %global         tag %{version}
@@ -85,7 +85,9 @@ BuildArch: noarch
 
 %prep
 %setup -q -n libpqxx-7.7.5
-
+%ifarch %e2k
+sed -i '/Args, Args/{N;s/\.\.\./ /g}' include/pqxx/internal/conversions.hxx
+%endif
 
 %build
 %{fedora_v2_cmake} -G Ninja \
@@ -138,6 +140,9 @@ cd -
 %endif
 
 %changelog
+* Fri Oct 13 2023 Igor Vlasenko <viy@altlinux.org> 1:7.7.5-alt2_2
+- e2k support
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1:7.7.5-alt1_2
 - update to new release by fcimport
 
