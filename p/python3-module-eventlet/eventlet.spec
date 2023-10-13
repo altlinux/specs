@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.33.3
-Release: alt2
+Release: alt3
 
 Summary: Highly concurrent networking library
 License: MIT
@@ -16,6 +16,7 @@ Url: https://pypi.org/project/eventlet/
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 Patch: remove-nose.patch
+Patch1: eventlet-0.33.3-alt-drop-distutils.patch
 
 BuildArch: noarch
 
@@ -93,6 +94,7 @@ This package contains documentation for Eventlet.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 # requires thrift, python 2.7 only
 rm -rv eventlet/zipkin
@@ -152,6 +154,9 @@ py.test3 -v -o norecursedirs="tests/*" -k "
 %endif
 
 %changelog
+* Fri Oct 13 2023 Anton Vyatkin <toni@altlinux.org> 0.33.3-alt3
+- Dropped dependency on distutils.
+
 * Wed Apr 12 2023 Anton Vyatkin <toni@altlinux.org> 0.33.3-alt2
 - Fix BuildRequires
 

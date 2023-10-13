@@ -6,7 +6,7 @@
 
 Name:    python3-module-%oname
 Version: 3.3.1
-Release: alt2
+Release: alt3
 
 Summary: The Official API Spec Language for Dropbox API V2
 License: MIT
@@ -17,6 +17,7 @@ VCS:     https://github.com/dropbox/stone
 BuildArch: noarch
 
 Source:  %name-%version.tar
+Patch:   stone-3.3.1-alt-drop-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -32,6 +33,7 @@ BuildRequires: python3-module-six
 
 %prep
 %setup
+%patch -p0
 
 # Don't use pytest-runner
 sed -i '/pytest-runner/d' setup.py
@@ -54,6 +56,9 @@ sed -i 's/getargspec/getfullargspec/' stone/frontend/ir_generator.py
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Oct 12 2023 Anton Vyatkin <toni@altlinux.org> 3.3.1-alt3
+- Dropped dependency on distutils.
+
 * Thu Jun 08 2023 Anton Vyatkin <toni@altlinux.org> 3.3.1-alt2
 - Fix FTBFS
 
