@@ -3,7 +3,7 @@
 
 Name: %parent-%child
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Summary: This feature is needed to create a file recovery image used by Proxmox backup client
 License: GPL-3.0
@@ -13,7 +13,7 @@ ExclusiveArch: x86_64 aarch64
 Source: %name-%version.tar
 
 BuildRequires: proxmox-backup-file-restore
-Requires: zfs-utils lvm2 ntfs-3g
+Requires: zfs-utils lvm2
 Requires: make-initrd >= 2.2.6
 Requires: make-initrd-lvm make-initrd-mdadm make-initrd-luks
 Requires: make-initrd-iscsi make-initrd-multipath make-initrd-devmapper
@@ -32,6 +32,9 @@ cp -r pbs %buildroot%_datadir/%parent/features
 %_datadir/%parent/features/pbs
 
 %changelog
+* Fri Oct 13 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.3-alt2
+- remove ntfs-3g package 
+
 * Fri Oct 13 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.3-alt1
 - v1.0.2 -> v1.0.3 
 
