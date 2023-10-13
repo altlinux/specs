@@ -1,5 +1,5 @@
 Name:    python3-module-googleapis-common-protos
-Version: 1.60.0
+Version: 1.61.0
 Release: alt1
 
 Summary: Common protobufs used in Google APIs
@@ -34,6 +34,9 @@ protos in the googleapis/api-common-protos repository.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 1.61.0-alt1
+- New version.
+
 * Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 1.60.0-alt1
 - New version.
 
