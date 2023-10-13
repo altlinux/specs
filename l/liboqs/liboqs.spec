@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: liboqs
-Version: 0.8.0
-Release: alt3
+Version: 0.9.0
+Release: alt1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT and BSD-3-Clause and Apache-2.0 and ALT-Public-Domain and CC0-1.0
 Group: System/Libraries
@@ -67,7 +67,7 @@ sed -i '/CMAKE_SYSTEM_PROCESSOR.*armhf/s/")/|armv8l&/' CMakeLists.txt
 
 %build
 %define optflags_lto %nil
-%add_optflags %(getconf LFS_CFLAGS) -Wa,--noexecstack
+%add_optflags %(getconf LFS_CFLAGS)
 # CMake options https://github.com/open-quantum-safe/liboqs/wiki/Customizing-liboqs
 # -DOQS_ENABLE_TEST_CONSTANT_TIME=ON -- does not pass.
 %cmake -B build \
@@ -104,11 +104,12 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 timeout 222 %ninja_build -C build run_tests
 
 %files
-%doc LICENSE.txt README.md RELEASE.md
+%doc LICENSE.txt README.md RELEASE.md SECURITY.md
 %_libdir/liboqs.so.*
 
 %files devel
-%doc LICENSE.txt README.md RELEASE.md CONTRIBUTORS tests/example_*.c docs/algorithms
+%doc LICENSE.txt README.md RELEASE.md CONTRIBUTORS CODE_OF_CONDUCT.md
+%doc tests/example_*.c docs/algorithms
 %_includedir/oqs
 %_libdir/cmake/liboqs
 %_libdir/liboqs.so
@@ -118,6 +119,9 @@ timeout 222 %ninja_build -C build run_tests
 %_bindir/oqs-*
 
 %changelog
+* Fri Oct 13 2023 Vitaly Chikunov <vt@altlinux.org> 0.9.0-alt1
+- Update to 0.9.0 (2023-10-12).
+
 * Thu Jul 20 2023 Vitaly Chikunov <vt@altlinux.org> 0.8.0-alt3
 - spec: Remove obsolete armh build workaround that isn't suitable for GCC10.
 
