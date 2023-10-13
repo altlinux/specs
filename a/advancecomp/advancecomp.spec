@@ -1,6 +1,6 @@
 Group: Emulators
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/pkgconf /usr/bin/valgrind /usr/bin/wine bzlib-devel
+BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/pkgconf bzlib-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/pkgconf /usr/bin/valgrind /u
 
 Name:           advancecomp
 Version:        2.5
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Recompression utilities for .png, .mng, .zip and .gz files
 
 # Source file headers all specify GPL-2.0-or-later (see source file headers),
@@ -33,11 +33,15 @@ URL:            https://www.advancemame.it/
 %global forgeurl https://github.com/amadvance/advancecomp
 Source:         %{forgeurl}/archive/v%{version}/advancecomp-%{version}.tar.gz
 
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires:  autoconf
 BuildRequires:  automake
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
+%ifarch %valgrind_arches
+BuildRequires: /usr/bin/valgrind
+%endif
 
 BuildRequires:  dos2unix
 
@@ -159,6 +163,10 @@ export LIBS="-lzopfli ${LIBS-}"
 
 
 %changelog
+* Fri Oct 13 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.5-alt1_8
+- spec: do not require wine (used only when cross-compiling with mingw on Linux)
+- spec: require valrgind only on supported architectures
+
 * Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 2.5-alt1_7
 - update to new release by fcimport
 
