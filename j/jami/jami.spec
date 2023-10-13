@@ -27,7 +27,7 @@
 
 Name: jami
 Version: 20230922
-Release: alt2
+Release: alt3
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -46,7 +46,14 @@ Source105: sdbus-cpp-1.2.0.tar
 Source106: gmp-6.2.1.tar
 Source107: dhtnet-2f3539bc19cf770cd23912c7eebe63e8d2f80515.tar
 Source108: pupnp-release-1.14.18.tar
-Source109: libgit2-1.6.4.tar
+Source109: libgit2-v1.6.4.tar
+Source110: http-parser-2.9.4.tar
+Source111: argon2-16d3df698db2486dde480b09a732bf9bf48599f9.tar
+Source112: asio-asio-1-22-1.tar
+Source113: libnatpmp-20150609.tar
+Source114: secp256k1-0b7024185045a49a1a6a4c5615bf31c94f63d9c4.tar
+Source115: webrtc-audio-processing-v0.3.1.tar
+Source116: jsoncpp-1.9.3.tar
 
 Source120: ffmpeg-remove-x86-optimization.patch
 Patch3: alt-armh.patch
@@ -58,7 +65,7 @@ Patch8: alt-include.patch
 
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: cmake gcc-c++ glibc-devel autoconf-archive
-BuildRequires: asio-devel
+BuildRequires: asio-devel libnatpmp-devel
 BuildRequires: libsystemd-devel
 BuildRequires: doxygen graphviz gtk-doc
 BuildRequires: qt6-tools-devel
@@ -183,7 +190,13 @@ bzip2 -c1 %SOURCE106 > daemon/contrib/tarballs/`basename %SOURCE106`.bz2
 gzip  -c1 %SOURCE107 > daemon/contrib/tarballs/`basename %SOURCE107`.gz
 gzip  -c1 %SOURCE108 > daemon/contrib/tarballs/`basename %SOURCE108`.gz
 gzip  -c1 %SOURCE109 > daemon/contrib/tarballs/`basename %SOURCE109`.gz
-mv daemon/contrib/tarballs/libgit2-*.tar.gz `ls -1d daemon/contrib/tarballs/libgit2-*.tar.gz| sed 's|git2-|git2-v|'`
+gzip  -c1 %SOURCE110 > daemon/contrib/tarballs/`basename %SOURCE110`.gz
+gzip  -c1 %SOURCE111 > daemon/contrib/tarballs/`basename %SOURCE111`.gz
+gzip  -c1 %SOURCE112 > daemon/contrib/tarballs/`basename %SOURCE112`.gz
+gzip  -c1 %SOURCE113 > daemon/contrib/tarballs/`basename %SOURCE113`.gz
+gzip  -c1 %SOURCE114 > daemon/contrib/tarballs/`basename %SOURCE114`.gz
+gzip  -c1 %SOURCE115 > daemon/contrib/tarballs/`basename %SOURCE115`.gz
+gzip  -c1 %SOURCE116 > daemon/contrib/tarballs/`basename %SOURCE116`.gz
 
 install -m 0644 %SOURCE120 daemon/contrib/src/ffmpeg/
 
@@ -330,6 +343,9 @@ ln -s jami %buildroot/%_bindir/jami-qt
 %_pkgconfigdir/jami.pc
 
 %changelog
+* Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 20230922-alt3
+- cleanup jami.tar from tarballs
+
 * Wed Oct 11 2023 Sergey V Turchin <zerg@altlinux.org> 20230922-alt2
 - fix to build on p10
 
