@@ -20,7 +20,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (верс�
 
 Name: firefox-esr
 Version: 115.3.1
-Release: alt2
+Release: alt3
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -419,8 +419,8 @@ make -C objdir \
 	install
 
 # install altlinux-specific configuration
-install -D -m 644 %SOURCE9  %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
-install -D -m 644 %SOURCE12 %buildroot/%_sysconfdir/firefox/pref/all-privacy.js
+install -D -m 644 %SOURCE9  %buildroot%firefox_prefix/browser/defaults/preferences/all-altlinux.js
+install -D -m 644 %SOURCE12 %buildroot%_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 # Install default policies
 install -D -m 644 %SOURCE13 %buildroot%_sysconfdir/firefox/policies/policies.json
@@ -504,7 +504,8 @@ rm -rf -- \
 
 %files
 %dir %_sysconfdir/firefox
-%dir %_sysconfdir/firefox/pref
+%dir %_sysconfdir/firefox/defaults
+%dir %_sysconfdir/firefox/defaults/pref
 %dir %_sysconfdir/firefox/policies
 %config(noreplace) %_sysconfdir/firefox/policies/policies.json
 %_altdir/firefox-esr
@@ -525,9 +526,12 @@ rm -rf -- \
 %_datadir/applications/firefox-wayland.desktop
 
 %files config-privacy
-%config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
+%config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Fri Oct 13 2023 Pavel Vasenkov <pav@altlinux.org> 115.3.1-alt3
+- Fix folder location for config-privacy js configuration files (Closes #47960)
+
 * Thu Oct 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 115.3.1-alt2
 - Support LoongArch architecture (lp64d ABI).
 
