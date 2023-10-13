@@ -1,6 +1,6 @@
 Name: live555
 Version: 20230724
-Release: alt1
+Release: alt2
 
 Summary: Live555.com Streaming Media Library Utilities
 License: LGPLv3
@@ -57,6 +57,19 @@ sh genMakefiles linux
 
 %install
 %makeinstall_std PREFIX=%prefix LIBDIR=%_libdir
+cat > live555.pc << 'E_O_F'
+prefix=%_prefix
+exec_prefix=%_prefix
+libdir=%_libdir
+includedir=%_includedir
+
+Name: live555
+Description: Live555.com Streaming Media Library
+Version: %version
+Libs: -lliveMedia
+Cflags: -I${includedir}/liveMedia -I${includedir}/UsageEnvironment -I${includedir}/groupsock -I${includedir}/BasicUsageEnvironment
+E_O_F
+install -pm0644 -D live555.pc %buildroot%_pkgconfigdir/live555.pc
 rm -v %buildroot%_libdir/*.a
 for f in BasicUsageEnvironment UsageEnvironment groupsock; do
 echo 'INPUT(AS_NEEDED(%_libdir/libliveMedia.so))' >%buildroot%_libdir/lib$f.so
@@ -75,8 +88,12 @@ done
 %_includedir/UsageEnvironment
 %_includedir/groupsock
 %_includedir/liveMedia
+%_pkgconfigdir/live555.pc
 
 %changelog
+* Fri Oct 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20230724-alt2
+- add pkgconfig file
+
 * Fri Oct 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20230724-alt1
 - 2023.07.24 released
 
