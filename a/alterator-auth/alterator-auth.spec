@@ -2,15 +2,12 @@
 
 Name: alterator-auth
 Version: 0.44.5
-Release: alt1
-
-%filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
-
-Source:%name-%version.tar
+Release: alt3
 
 Summary: Alterator module for system wide auth settings
-License: GPL
+License: GPL-2.0+
 Group: System/Configuration/Other
+
 Requires: alterator >= 4.7-alt4
 Requires: alterator-l10n >= 2.9.114-alt1
 Requires: pam-config >= 1.7.0-alt1
@@ -23,19 +20,13 @@ Requires: bind-utils
 Requires: local-policy >= 0.4.8-alt1
 Requires: alterator-default-configs >= 0.0.2-alt1
 
-Conflicts: alterator-fbi < 5.9-alt2
-Conflicts: alterator-lookout < 1.6-alt6
+Source: %name-%version.tar
 
-Provides: alterator-nsswitch = %version
-Obsoletes: alterator-nsswitch
-
-BuildPreReq: alterator >= 5.0 alterator-lookout
-
-%ifarch %e2k
-BuildRequires: guile20-devel libguile20-devel
-%else
+BuildRequires(pre): alterator >= 5.0
+BuildRequires(pre): alterator-lookout
 BuildRequires: guile22-devel
-%endif
+
+%filter_from_requires /^samba-common$/d;/^systemd/d;/^gpupdate$/d;/gpupdate-setup/d
 
 %description
 Alterator module for system wide auth settings
@@ -122,7 +113,7 @@ Common package with default roles and privileges.
 Contains basic roles: users, power and localadmins.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build libdir=%_libdir
@@ -137,6 +128,7 @@ install -Dpm644 etc/role.d/powerusers.role %buildroot%_sysconfdir/role.d/powerus
 install -Dpm644 etc/role.d/localadmins.role %buildroot%_sysconfdir/role.d/localadmins.role
 install -Dpm755 sbin/system-auth %buildroot/%_sbindir/system-auth
 install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
+rm -f %buildroot%_libexecdir/alterator/hooks/auth
 
 %pre -n alterator-roles-common
 %_sbindir/groupadd -r -f -g 98 everyone 2> /dev/null ||:
@@ -177,6 +169,15 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 0.44.5-alt3
+- Fix autoreq filters: hostnamectl is in systemd package
+- Remove orphaned hook file
+- Specified license with version.
+
+* Wed Oct 11 2023 Michael Shigorin <mike@altlinux.org> 0.44.5-alt2
+- E2K: move to guile22 too
+- minor spec cleanup (see also ALT#46206)
+
 * Tue Sep 19 2023 Andrey Cherepanov <cas@altlinux.org> 0.44.5-alt1
 - Requires pam_propperpwnam for join to AD and FreeIPA to ignore login name in different forms.
 - system-auth: add --gpo to use GPO after join machine to Active Directory.
