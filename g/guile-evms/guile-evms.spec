@@ -1,12 +1,15 @@
 Name: guile-evms
 Version: 0.6.5
-Release: alt3
+Release: alt4
 
 Summary: Guile bindings for EVMS
 License: GPLv2
 Group: Development/Scheme
 
 BuildRequires: guile-devel >= 2.0 libblkid-devel libe2fs-devel libevms-devel swig >= 3.0.12-alt2
+%ifarch %e2k
+BuildRequires: ed
+%endif
 
 Source: %name-%version-%release.tar
 
@@ -19,6 +22,13 @@ http://evms.sourceforge.net
 
 %prep
 %setup
+%ifarch %e2k
+sed -i -e 's/^SWIGOPT[[:space:]]*=.*$/& -D__ptr64__/'          \
+       -e 's,guile\([/-]\)[0-9]\+\(\.[0-9]\+\)\+,guile\12.0,g' \
+    Makefile
+printf '/boot.*nosuid/m?home.*nosuid?-\nwq\n' "$pat2" "$pat1"  |
+    ed -s evms.scm
+%endif
 
 %build
 make
@@ -31,6 +41,11 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Wed Oct 11 2023 Michael Shigorin <mike@altlinux.org> 0.6.5-alt4
+- E2K:
+  + adapt build (manowar@)
+  + move /boot above /home so it's suggested right after /
+
 * Mon Sep 18 2023 Oleg Solovyov <mcpain@altlinux.org> 0.6.5-alt3
 - don't enforce gcc8
 
