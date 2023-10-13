@@ -16,7 +16,7 @@
 
 Name:           scala
 Version:        2.13.9
-Release:        alt2
+Release:        alt3
 Summary:        Hybrid functional/object-oriented language for the JVM
 
 ExcludeArch: %ix86 armh
@@ -290,8 +290,8 @@ scalac $SCALAC_FLAGS -d ../target/compiler \
 # error: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving <refinement of scala.tools.nsc.doc.model.ModelFactory with scala.tools.nsc.doc.model.ModelFactoryImplicitSupport with scala.tools.nsc.doc.model.ModelFactoryTypeSupport with scala.tools.nsc.doc.model.diagram.DiagramFactory with scala.tools.nsc.doc.model.CommentFactory with scala.tools.nsc.doc.model.TreeFactory with scala.tools.nsc.doc.model.MemberLookup>
 # I do not know why that happens.  This is one order that works.  There are
 # no doubt many more.
-# scalac $SCALAC_FLAGS -d ../target/compiler \
-#     $(find scaladoc -name \*.scala | sort)
+scalac $SCALAC_FLAGS -d ../target/compiler \
+    $(find scaladoc -name \*.scala | sort)
 
 # Build the bytecode parser
 scalac $SCALAC_FLAGS -d ../target/scalap $(find scalap -name \*.scala)
@@ -469,6 +469,9 @@ install -p -m 644 man/man1/* %{buildroot}%{_mandir}/man1
 %doc target/html/*
 
 %changelog
+* Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 2.13.9-alt3
+- Build classes for scaladoc (ALT #47749).
+
 * Fri Sep 22 2023 Andrey Cherepanov <cas@altlinux.org> 2.13.9-alt2
 - Build without bootstrapping.
 
