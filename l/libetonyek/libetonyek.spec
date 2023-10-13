@@ -1,6 +1,6 @@
 Name: libetonyek
-Version: 0.1.9
-Release: alt3
+Version: 0.1.10
+Release: alt1
 Summary: A library for import of Apple Keynote presentations
 
 Group: System/Libraries
@@ -8,7 +8,6 @@ License: MPL-2.0
 # https://gerrit.libreoffice.org/#/admin/projects/libetonyek
 Url: http://www.freedesktop.org/wiki/Software/libetonyek/
 Source: %name-%version.tar.xz
-Patch1: 0001-glm-force-dmat3-initialization-needed-from-v0.9.9.0.patch
 Patch2: libetonyek-0.1.9-ALT-C++11.patch
 
 BuildRequires: cppunit-devel
@@ -49,7 +48,6 @@ Currently supported: XHTML, raw, text.
 
 %prep
 %setup
-%patch1 -p1
 %patch2 -p1
 ## XXX hack out mdds=1.0 (too low)
 #sed -i 's/mdds-1.0/mdds/' configure.ac
@@ -60,7 +58,7 @@ Currently supported: XHTML, raw, text.
 
 %build
 %autoreconf
-%configure --disable-silent-rules --disable-static --disable-werror --with-mdds=2.0
+%configure --disable-silent-rules --disable-static --disable-werror --with-mdds=2.1
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
@@ -95,6 +93,11 @@ make check
 %_bindir/*
 
 %changelog
+* Fri Oct 13 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.10-alt1
+- Updated to upstream 0.1.10
+- Skipped patch 0001-glm-force-dmat3-initialization-needed-from-v0.9.9.0.patch
+- Used mdds-2.1
+
 * Thu Feb 03 2022 Andrey Cherepanov <cas@altlinux.org> 0.1.9-alt3
 - FTBFS: fix build with mdds-2.0.
 
