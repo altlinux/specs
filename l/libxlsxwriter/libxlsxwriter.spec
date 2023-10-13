@@ -1,6 +1,6 @@
 Name: libxlsxwriter
-Version: 1.1.4
-Release: alt2
+Version: 1.1.5
+Release: alt1
 Summary: A C library for creating Excel XLSX files
 Group: Development/C
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -16,6 +16,7 @@ BuildRequires: make
 BuildRequires: gcc-c++
 BuildRequires: libminizip-devel
 BuildRequires: zlib-devel
+BuildRequires: python3-module-pytest
 
 %description
 Libxlsxwriter is a C library that can be used to write text, numbers, formulas
@@ -49,7 +50,7 @@ rm -f include/xlsxwriter/third_party/zip.h
 
 %files
 %doc Readme.md Changes.txt License.txt
-%_libdir/%name.so.4*
+%_libdir/%name.so.5*
 
 %files devel
 %_includedir/xlsxwriter.h
@@ -58,6 +59,9 @@ rm -f include/xlsxwriter/third_party/zip.h
 %_libdir/pkgconfig/xlsxwriter.pc
 
 %changelog
+* Fri Oct 13 2023 Ilya Mashkin <oddity@altlinux.ru> 1.1.5-alt1
+- 1.1.5
+
 * Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt2
 - NMU: fix zlib find via cmake
 
