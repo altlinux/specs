@@ -2,7 +2,7 @@
 
 Name:     imagescan
 Version:  3.65.0
-Release:  alt5
+Release:  alt6
 
 Summary:  EPSON Image Scan v3 front-end for scanners and all-in-ones
 License:  GPL-3.0+
@@ -21,6 +21,7 @@ Patch2:   %name-alt-config-cleanup.patch
 Patch3:   %name-alt-boost-1.73.0-compat.patch
 Patch4:   %name-alt-check-sane-compatibility.patch
 Patch5:   %name-alt-autoconf2.71.patch
+Patch6:   %name-alt-ImageMagick7.patch
 
 BuildRequires: gcc-c++
 BuildRequires: ImageMagick-tools
@@ -67,11 +68,7 @@ line option.
 
 %prep
 %setup -n utsushi-%utsushi_version
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
-%patch5 -p2
+%autopatch -p2
 %ifarch %e2k
 sed -ie "s|v = \\(utsushi::value (.*)\\);|v = sane::value (\\1);|" sane/handle.cpp
 %endif
@@ -143,6 +140,9 @@ chmod +x %buildroot%_bindir/imagescan
 %_datadir/utsushi/drivers
 
 %changelog
+* Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 3.65.0-alt6
+- FTBFS: fixed build with ImageMagick 7.x.
+
 * Sun Jul 30 2023 Andrey Cherepanov <cas@altlinux.org> 3.65.0-alt5
 - Fixed build with autoconf 2.71.
 
