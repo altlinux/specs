@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: warp
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Fast and secure file transfer tool
@@ -78,6 +78,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Oct 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
 * Fri Sep 29 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - updated to v0.6.0-3-g3ec6f21
 
