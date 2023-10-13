@@ -2,7 +2,7 @@
 %define pypi_name mariadb
 
 Name: python3-module-%pypi_name
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 
 Summary: MariaDB Connector/Python
@@ -43,6 +43,9 @@ client library for client server communication.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.8-alt1
+- Updated to 1.1.8.
+
 * Thu Jul 20 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.7-alt1
 - Updated to 1.1.7.
 
