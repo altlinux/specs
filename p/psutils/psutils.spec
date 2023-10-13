@@ -1,6 +1,6 @@
 %def_with check
 Name: psutils
-Version: 2.07
+Version: 2.10
 Release: alt1
 Epoch: 2
 %add_perl_lib_path %_datadir/%name
@@ -8,7 +8,7 @@ Summary: PostScript utilities
 License: GPLv3
 Group: Publishing
 BuildArch: noarch
-BuildRequires: gnulib help2man
+BuildRequires: gnulib help2man git-core
 %if_with check
 BuildRequires: paper
 %endif
@@ -42,6 +42,9 @@ into signatures for booklet printing, and page merging for n-up printing.
 %_man1dir/*
 
 %changelog
+* Fri Oct 13 2023 Fr. Br. George <george@altlinux.org> 2:2.10-alt1
+- 2.10
+
 * Fri Nov 05 2021 Anton Farygin <rider@altlinux.ru> 2:2.07-alt1
 - 2.07
 
