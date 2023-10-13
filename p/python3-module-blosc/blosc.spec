@@ -1,34 +1,32 @@
 %define _unpackaged_files_terminate_build 1
 %define oname blosc
 
-%def_without check
+%def_with check
 %def_without docs
 
 Name: python3-module-%oname
-Version: 1.5.1
-Release: alt5
+Version: 1.11.1
+Release: alt1
 
 Summary: A Python wrapper for the extremely fast Blosc compression library
-License: MIT / BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: http://python-blosc.blosc.org/
+Url: https://pypi.org/project/blosc
+Vcs: https://github.com/Blosc/python-blosc.git
 
-# https://github.com/Blosc/python-blosc.git
 Source: %name-%version.tar
-Patch0: python-module-blosc-%version-arm.patch
-Patch1: %oname-%version-alt-docs.patch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: libblosc-devel
+BuildRequires: python3-module-scikit-build
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-numpydoc
 %endif
 %if_with check
-BuildRequires: python3-module-nose
 BuildRequires: python3-module-numpy-testing
-BuildRequires: python3-module-pytest
 %endif
 
 %py3_provides %oname
@@ -87,9 +85,7 @@ This package contains pickles for %oname.
 
 %prep
 %setup
-%ifnarch %ix86 x86_64
-%patch0 -p1
-%endif
+rm -rf blosc/c-blosc
 
 sed -i "s|.*blosc.test.*||" blosc/__init__.py
 
@@ -97,16 +93,12 @@ sed -i "s|.*blosc.test.*||" blosc/__init__.py
 sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 %endif
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
 %build
-%python3_build_debug --blosc=%prefix
+export USE_SYSTEM_BLOSC=1
+%pyproject_build
 
 %install
-%python3_install --blosc=%prefix
-%python3_prune
-rm -fv %buildroot/%python3_sitelibdir/%oname/test.py
+%pyproject_install
 
 %if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -116,27 +108,24 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
-%if_with check
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-nosetests3 -v --with-doctest %oname
-%endif
+%__python3 -m blosc.test
 
 %files
-%doc *.rst bench
+%doc *.rst
 %if_with docs
 %doc doc/_build/html
 %endif
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %if_with docs
 %exclude %python3_sitelibdir/*/pickle
 %endif
-%if 0
 %exclude %python3_sitelibdir/*/test*
 
 %files tests
 %python3_sitelibdir/*/test*
-%endif
 
 %if_with docs
 %files pickles
@@ -145,6 +134,9 @@ nosetests3 -v --with-doctest %oname
 
 
 %changelog
+* Fri Oct 13 2023 Anton Vyatkin <toni@altlinux.org> 1.11.1-alt1
+- New version 1.11.1.
+
 * Thu Dec 09 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.1-alt5
 - Build without docs for python3.10.
 
