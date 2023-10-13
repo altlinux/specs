@@ -5,7 +5,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: kubernetes
-Version: 1.26.6
+Version: 1.26.9
 Release: alt1
 Summary: Container cluster management
 
@@ -50,6 +50,7 @@ for deployment, maintenance, and scaling of applications.
 %package common
 Summary: Kubernetes common files
 Group: System/Configuration/Other
+BuildArch: noarch
 
 %description common
 Kubernetes is an open source system for managing containerized applications
@@ -131,6 +132,7 @@ Kubernetes client tools like kubectl
 %package crio
 Summary: Kubernetes crio files
 Group: System/Configuration/Other
+BuildArch: noarch
 Requires: cri-o
 
 %description crio
@@ -343,6 +345,10 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Wed Oct 04 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.9-alt1
+- 1.26.6 -> 1.26.9 (Fixes: CVE-2023-3955, CVE-2023-3676)
+- Make kubernetes-common and kubernetes-crio noarch packages
+
 * Wed Jul 12 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.6-alt1
 - 1.26.3. -> 1.26.6 (Fixes: CVE-2023-2727, CVE-2023-2728).
 - Closes ALT#46869.

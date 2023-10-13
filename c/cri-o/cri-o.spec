@@ -11,7 +11,7 @@
 %define _libexecdir /usr/libexec
 
 Name: cri-o
-Version: 1.26.2
+Version: 1.26.4
 Release: alt1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
@@ -124,6 +124,9 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Sat Oct 07 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.4-alt1
+- 1.26.2 -> 1.26.4
+
 * Mon Mar 27 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.2-alt1
 - 1.26.2
 - Fixes: CVE-2022-2995, CVE-2022-27652, CVE-2022-4318
