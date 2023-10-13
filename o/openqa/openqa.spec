@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt12
+Release: alt13
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -295,6 +295,8 @@ export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 # packaging
 export CONTAINER_TEST=0
 export HELM_TEST=0
+# We don't want fatal warnings during package building
+export PERL_TEST_WARNINGS_ONLY_REPORT_WARNINGS=1
 make test-with-database OGIT_CEILING_DIRECTORIES="/" BS_RUN=1 PROVE_ARGS='-r' CHECKSTYLE=0 TEST_PG_PATH=%buildroot/DB
 rm -rf %buildroot/DB
 
@@ -432,6 +434,7 @@ fi
 %dir %_unitdir
 /lib/systemd/system-generators/systemd-openqa-generator
 %_unitdir/openqa-worker.target
+%_unitdir/openqa-worker.slice
 %_unitdir/openqa-worker@.service
 %_unitdir/openqa-worker-plain@.service
 %_unitdir/openqa-worker-cacheservice-minion.service
@@ -504,6 +507,9 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Fri Oct 13 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt13
+- update to current version
+
 * Wed Jul 19 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt12
 - update to current version
 
