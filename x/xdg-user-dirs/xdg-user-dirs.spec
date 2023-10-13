@@ -1,6 +1,10 @@
+%ifndef _userunitdir
+%define _userunitdir %_prefix/lib/systemd/user
+%endif
+
 Name: xdg-user-dirs
-Version: 0.17
-Release: alt2
+Version: 0.18
+Release: alt1
 Summary: Handles user special directories
 Group: Graphical desktop/Other
 License: GPLv2+ and MIT
@@ -10,6 +14,7 @@ Packager: Radik Usupov <radik@altlinux.org>
 Source0: http://user-dirs.freedesktop.org/releases/%name-%version.tar.gz
 Source1: xdg-user-dirs.sh
 Source2: xdg-user-dirs.control
+Source10: xdg-user-dirs.service
 Patch1: user-dirs-fix-encoding-0.13-alt.patch
 Patch2: xdg-user-dirs-0.14-alt-home.patch
 Patch3: user-dirs-update-fix-0.13-alt.patch
@@ -34,8 +39,11 @@ homedirectory based on the defaults configured by the administrator.
 %make DESTDIR=%buildroot install
 mkdir -p %buildroot%_x11sysconfdir/profile.d
 mkdir -p %buildroot%_controldir/
+mkdir -p %buildroot%_controldir/
+mkdir -p %buildroot%_userunitdir/
 install -p -m 755 %SOURCE1 %buildroot%_x11sysconfdir/profile.d
 install -p -m 755 %SOURCE2 %buildroot%_controldir/xdg-user-dirs
+install -p -m 0644 %SOURCE10 %buildroot/%_userunitdir/xdg-user-dirs.service
 %find_lang %name
 
 %post
@@ -50,11 +58,16 @@ install -p -m 755 %SOURCE2 %buildroot%_controldir/xdg-user-dirs
 %config(noreplace) %_sysconfdir/xdg/user-dirs.conf
 %config(noreplace) %_sysconfdir/xdg/user-dirs.defaults
 %_x11sysconfdir/profile.d/*
+%_userunitdir/xdg-user-dirs.service
 %_controldir/*
 %_man1dir/*user-dir*
 %_man5dir/*user-dir*
 
 %changelog
+* Thu Oct 12 2023 Sergey V Turchin <zerg@altlinux.org> 0.18-alt1
+- new version
+- add systemd user service
+
 * Thu Oct 21 2021 Andrey Cherepanov <cas@altlinux.org> 0.17-alt2
 - Move Picture, Misic, Images subdirectories from Documents directory.
 
