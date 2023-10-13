@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20231004
+Version: 20231006
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,10 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Fri Oct 13 2023 Cronbuild Service <cronbuild@altlinux.org> 20231006-alt1
+- upstream changes (GIT 7727f7e3):
+  + WHENCE: add symlink for BananaPi M64 (thx Peter Robinson)
+
 * Fri Oct 06 2023 Cronbuild Service <cronbuild@altlinux.org> 20231004-alt1
 - upstream changes (GIT 5105ff4b):
   + Add firmware file for Intel Bluetooth AX211 (thx Lokendra Singh)
