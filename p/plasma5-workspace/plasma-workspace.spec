@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.8
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -67,10 +67,13 @@ Source: %rname-%version.tar
 Source1: freememorynotifier.po
 Source2: libkicker-ru-add.po
 Source3: plasma_lookandfeel_org.kde.lookandfeel-ru-add.po
+#
 Source11: freememorynotifier.tar
 Source40: ssh-agent.conf
 Source41: spice-vdagent.conf
 Source42: obex.conf
+Source43: xdg-user-dirs.conf
+#
 Source50: dbus-restart-kde5.sh
 
 Patch100: alt-startkde.patch
@@ -419,6 +422,7 @@ mkdir -p %buildroot/%_unitdir_user/plasma-workspace@.target.d/
 install -m0644 -p -D %SOURCE40 %buildroot/%_unitdir_user/plasma-core.target.d/ssh-agent.conf
 install -m0644 -p -D %SOURCE41 %buildroot/%_unitdir_user/plasma-core.target.d/spice-vdagent.conf
 install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/obex.conf
+install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xdg-user-dirs.conf
 
 %find_lang %name --with-kde --all-name
 
@@ -553,6 +557,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 
 
 %changelog
+* Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt3
+- start xdg-user-dirs user service
+
 * Wed Oct 11 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt2
 - show digital clock applet settings timezones
 
