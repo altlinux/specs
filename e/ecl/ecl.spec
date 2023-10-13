@@ -1,6 +1,6 @@
 Name: ecl
 Version: 21.2.1
-Release: alt1
+Release: alt1.1
 Summary: Embeddable Common-Lisp
 
 License: LGPLv2+ and BSD and MIT and ALT-Public-Domain
@@ -30,12 +30,14 @@ Patch3: %name-20.4.24-fenv-access.patch
 Patch4: %name-20.4.24-write-error.patch
 # Fix bogus test compromised by LTO.
 Patch5: %name-20.4.24-configure.patch
+# Fix generated manual subdirectory
+Patch6: %name-21.2.1-alt-doc-build.patch
 
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: docbook5-schemas
 BuildRequires: docbook5-style-xsl
-BuildRequires: emacs26-common
+BuildRequires: emacs-common
 BuildRequires: libgmp-devel
 BuildRequires: libgmpxx-devel
 BuildRequires: makeinfo
@@ -68,6 +70,7 @@ Gray streams.
 %patch3 -p0
 %patch4 -p0
 %patch5 -p0
+%patch6 -p1
 # Remove spurious executable bits
 find src/{c,h} -type f -perm /0111 -exec chmod a-x {} \+
 # Temporary fix for missing braces in initializers, causes build failure
@@ -123,6 +126,10 @@ cp -p %SOURCE2 %buildroot%_iconsdir/hicolor/scalable/apps
 %_man1dir/*
 
 %changelog
+* Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 21.2.1-alt1.1
+- FTBFS: used emacs-common without version.
+- Fixed documentation build.
+
 * Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 21.2.1-alt1
 - New version.
 
