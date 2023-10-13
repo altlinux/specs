@@ -2,7 +2,7 @@
 %define _xorgmoduledir %_libdir/X11/modules
 
 Name: tigervnc
-Version: 1.11.0
+Version: 1.13.1
 Release: alt1
 Summary: A TigerVNC remote display system
 
@@ -21,23 +21,14 @@ Source2: vncserver.service
 Source3: vncserver.pl
 Source4: vncserver.man
 
-Source100: xorg-server-source.tar
+Source100: xorg-server-21.1.8.tar
 Source101: tightpasswd.tar.gz
 Source200: repatch_spec.sh
 Source201: tigervnc.unused
 
 ## FC patches
-Patch1: FC-xserver120.patch
-Patch2: FC-let-user-know-about-not-using-view-only-password.patch
-Patch3: FC-working-tls-on-fips-systems.patch
-Patch4: FC-utilize-system-crypto-policies.patch
-Patch5: FC-passwd-crash-with-malloc-checks.patch
-Patch6: FC-tolerate-specifying-boolparam.patch
-Patch7: FC-systemd-service.patch
-Patch8: FC-correctly-start-vncsession-as-daemon.patch
-Patch9: FC-selinux-missing-compression-and-correct-location.patch
-Patch10: FC-selinux-policy-improvements.patch
-Patch11: FC-argb-runtime-ximage-byteorder-selection.patch
+Patch1: FC-vncsession-restore-script-systemd-service.patch
+Patch2: FC-xserver120.patch
 
 ## Ubuntu patches
 Patch101: Ubuntu-0000-find-fltk-libs.patch
@@ -51,12 +42,16 @@ Patch108: Ubuntu-0175-xtigervncviewer-WM_CLASS.patch
 Patch109: Ubuntu-0205-defined-CMAKE_INSTALL_FULL_BINDIR.patch
 Patch110: Ubuntu-0210-use-tigervncsession-name.patch
 Patch111: Ubuntu-0220-remove-systemd-service-obsolete-syslog-target.patch
-Patch112: Ubuntu-0300-fix-Xtigervnc-boolparam-parsing.patch
-Patch113: Ubuntu-rh_0904-Added-RH-patch-tigervnc11-rh588342.patch-which-fixes.patch
-Patch114: Ubuntu-rh_tigervnc-manpages.patch
-Patch115: Ubuntu-rh_tigervnc-cursor.patch
-Patch116: Ubuntu-rh_tigervnc-working-tls-on-fips-systems.patch
-Patch117: Ubuntu-CVE-2014-8240-849479.patch
+Patch112: Ubuntu-0300-xorg-0121.patch
+Patch113: Ubuntu-backport_0001-Fix-formatting-of-rfbport-in-man-pages.patch
+Patch114: Ubuntu-backport_0002-Fix-typo-in-mirror-monitor-detection.patch
+Patch115: Ubuntu-backport_0003-Fix-handling-of-VMware-cursors.patch
+Patch116: Ubuntu-backport_0004-Fix-session-resize-after-mirroring-on-Linux-vncviewe.patch
+Patch117: Ubuntu-backport_0005-Added-AppStream-meta-info-file-for-the-vncviewer.patch
+Patch118: Ubuntu-rh_0904-Added-RH-patch-tigervnc11-rh588342.patch-which-fixes.patch
+Patch119: Ubuntu-rh_tigervnc-manpages.patch
+Patch120: Ubuntu-rh_tigervnc-cursor.patch
+Patch121: Ubuntu-CVE-2014-8240-849479.patch
 
 ## ALT patches
 Patch501: tigervnc-stdinpasswd.patch
@@ -64,15 +59,15 @@ Patch502: ALT-FC-xserver120.patch
 Patch601: U_0001-Properly-store-certificate-exceptions.patch
 Patch602: U_0002-Properly-store-certificate-exceptions-in-Java-viewer.patch
 
-# Automatically added by buildreq on Thu Dec 19 2019
-# optimized out: cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libICE-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libcrypt-devel libglvnd-devel libgpg-error libgpg-error-devel libsasl2-3 libstdc++-devel perl pkg-config python2-base sh4 xorg-proto-devel
-BuildRequires: ImageMagick-tools cmake doxygen flex gcc-c++ libGL-devel libSM-devel libXdamage-devel libXdmcp-devel libXfont2-devel libXinerama-devel libXrandr-devel libXtst-devel libdrm-devel libfltk-devel libgcrypt-devel libgnutls-devel libjpeg-devel libpam-devel libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel libxshmfence-devel xorg-xtrans-devel zlib-devel
+# Automatically added by buildreq on Thu Oct 12 2023
+# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXmu-devel libXrender-devel libXt-devel libavutil-devel libcairo-gobject libcap-ng libcrypt-devel libgdk-pixbuf libglvnd-devel libgmp-devel libgpg-error libgpg-error-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libsasl2-3 libstdc++-devel libwayland-client-devel libx265-199 libxcb-devel paper perl pkg-config python3 python3-base sh5 shared-mime-info wayland-devel xml-utils xorg-proto-devel xsltproc
+BuildRequires: ImageMagick-tools cmake doxygen flex gcc-c++ libGL-devel libXaw-devel libXdamage-devel libXdmcp-devel libXfont2-devel libXinerama-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libaudit-devel libavcodec-devel libdrm-devel libfltk-devel libgbm-devel libgcrypt-devel libgnutls-devel libjpeg-devel libnettle-devel libpam-devel libpciaccess-devel libpixman-devel libselinux-devel libssl-devel libswscale-devel libtasn1-devel libudev-devel libxcb-render-util-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel libxkbfile-devel libxshmfence-devel perl-parent xmlto xorg-xtrans-devel zlib-devel
 
 BuildRequires: libfltk-devel >= 1.3.3
 
 BuildRequires: xorg-sdk xorg-font-utils
 
-BuildRequires: libXrender-devel
+BuildRequires: libXrender-devel libxcvt-devel
 
 %ifarch %ix86 x86_64
 BuildRequires: nasm
@@ -126,17 +121,8 @@ PAM module for TigerVNC servers
 cp %SOURCE3 %SOURCE4 .
 
 ## FC apply patches
-#patch1 -p1 -b .xserver120-rebased
-%patch2 -p1 -b .let-user-know-about-not-using-view-only-password
-%patch3 -p1 -b .working-tls-on-fips-systems
-%patch4 -p1 -b .utilize-system-crypto-policies
-%patch5 -p1 -b .passwd-crash-with-malloc-checks
-%patch6 -p1 -b .tolerate-specifying-boolparam
-%patch7 -p1 -b .systemd-service
-%patch8 -p1 -b .correctly-start-vncsession-as-daemon
-%patch9 -p1 -b .selinux-missing-compression-and-correct-location
-%patch10 -p1 -b .selinux-policy-improvements
-%patch11 -p1 -b .argb-runtime-ximage-byteorder-selection
+%patch1 -p1 -b .vncsession-restore-script-systemd-service
+#patch2 -p1 -b .xserver120-rebased
 
 ## Ubuntu apply patches
 %patch101 -p1
@@ -145,21 +131,25 @@ cp %SOURCE3 %SOURCE4 .
 %patch104 -p1
 #patch105 -p1
 %patch106 -p1
-%patch107 -p1
+##patch107 -p1
 %patch108 -p1
 %patch109 -p1
 #patch110 -p1
-%patch111 -p1
+##patch111 -p1
 #patch112 -p1
-%patch113 -p1
+#patch113 -p1
 #patch114 -p1
-%patch115 -p1
+#patch115 -p1
 #patch116 -p1
-%patch117 -p1
+##patch117 -p1
+%patch118 -p1
+%patch119 -p1
+%patch120 -p1
+%patch121 -p1
 
 ## ALT apply patches
 %patch501 -p1
-%patch502 -p1
+#patch502 -p1
 #patch601 -p1
 #patch602 -p1
 
@@ -169,13 +159,20 @@ sed -i 's/xtigervncviewer/vncviewer/g' vncviewer/vncviewer.desktop.in.in
 %build
 
 %add_optflags -fPIC
-%cmake_insource -DCMAKE_INSTALL_UNITDIR:PATH=%_unitdir
-%make_build
+%cmake -DCMAKE_INSTALL_UNITDIR:PATH=%_unitdir
+%cmake_build
 
-pushd unix/xserver
-%autoreconf
-%configure \
-	--disable-composite \
+cp -a unix/xserver  %_cmake__builddir/unix/
+cp -a xorg-server-*/* %_cmake__builddir/unix/xserver/
+
+patch -p1 -i `pwd`/unix/xserver21.1.1.patch -d %_cmake__builddir/unix/xserver
+
+## pushd %_cmake__builddir/unix/xserver
+%autoreconf %_cmake__builddir/unix/xserver
+#	--disable-composite \
+#
+( cd %_cmake__builddir/unix/xserver
+  %configure \
 	--disable-config-dbus \
 	--disable-config-hal \
 	--disable-config-udev \
@@ -186,11 +183,11 @@ pushd unix/xserver
 	--disable-selective-werror \
 	--disable-static \
 	--disable-unit-tests \
-	--disable-wayland \
 	--disable-xephyr \
 	--disable-xnest \
 	--disable-xorg \
 	--disable-xvfb \
+	--disable-wayland \
 	--disable-xwayland \
 	--disable-xwin \
 	--enable-dri2 \
@@ -202,14 +199,16 @@ pushd unix/xserver
 	--with-dri-driver-path=%_libdir/dri \
 	--with-module-dir="%_xorgmoduledir" \
 	--with-pic \
-	--with-xkb-output=%_localstatedir/xkb
+	--with-xkb-output=%_localstatedir/xkb \
+        || exit 1
+)
 
-%make_build LIBS="-ljpeg -lpam -lz -lgnutls -lm" CPPFLAGS="-I/usr/include/libdrm"
-popd
+%make_build -C %_cmake__builddir/unix/xserver LIBS="-ljpeg -lpam -lz -lgnutls -lm" CPPFLAGS="-I/usr/include/libdrm" TIGERVNC_SRCDIR=`pwd`
+## popd
 
 # Build icons
 ##pushd media
-##%cmake_insource -DDATA_DIR:PATH=%_datadir
+##cmake_insource -DDATA_DIR:PATH=%_datadir
 ##%make
 ##popd
 
@@ -219,9 +218,8 @@ cc %optflags *.c -o tightpasswd
 popd
 
 %install
-%makeinstall_std
-
-%makeinstall_std -C unix/xserver/hw/vnc
+%cmakeinstall_std
+%makeinstall_std -C %_cmake__builddir/unix/xserver/hw/vnc
 
 # Install Xvnc as service
 install -pD -m755 %SOURCE1 %buildroot%_initddir/vncserver
@@ -262,6 +260,8 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/*/apps/*.svg
 %_man1dir/vncviewer.1*
+%_datadir/metainfo/org.tigervnc.vncviewer.metainfo.xml
+
 
 %files server
 %_initddir/vncserver
@@ -278,6 +278,7 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 %_man1dir/vncconfig.1*
 %_man8dir/*.8*
 %_man1dir/x0vncserver.1*
+%_man1dir/vncserver.1*
 
 %files common
 %_bindir/vncpasswd
@@ -293,6 +294,10 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Fri Oct 13 2023 Fr. Br. George <george@altlinux.org> 1.13.1-alt1
+- Udate to 1.13.1
+- Update patches
+
 * Fri Aug 06 2021 Fr. Br. George <george@altlinux.ru> 1.11.0-alt1
 - Udate to 1.11.0
 - Update patches
