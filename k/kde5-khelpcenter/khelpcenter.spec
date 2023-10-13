@@ -1,7 +1,7 @@
 %define rname khelpcenter
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init altplace
 
@@ -73,6 +73,9 @@ __EOF__
 %_K5dbus_srv/*.service
 
 %changelog
+* Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

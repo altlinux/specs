@@ -22,7 +22,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -110,12 +110,14 @@ K3b - это мощная графическая оболочка для про�
 %package -n %libk3blib
 Summary: KDE 4 library
 Group: System/Libraries
+Requires: kf5-filesystem
 %description -n %libk3blib
 KDE 4 library.
 
 %package -n %libk3bdevice
 Summary: KDE 4 library
 Group: System/Libraries
+Requires: kf5-filesystem
 %description -n %libk3bdevice
 KDE 4 library.
 
@@ -184,6 +186,9 @@ fi
 %_K5inc/k3b*.h
 
 %changelog
+* Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

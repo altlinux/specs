@@ -9,8 +9,8 @@
 %add_findreq_skiplist %_datadir/nautilus-python/extensions/*.py
 
 Name: kde5-connect
-Version: 23.04.3
-Release: alt2
+Version: 23.08.1
+Release: alt1
 %K5init
 
 Group: Communications
@@ -36,6 +36,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: qt5-base-devel qt5-declarative-devel qt5-multimedia-devel
 BuildRequires: qt5-x11extras-devel qt5-quickcontrols2-devel qt5-wayland-devel
 BuildRequires: extra-cmake-modules
+BuildRequires: libgio-devel libxkbcommon-devel
 BuildRequires: pulseaudio-qt5-devel
 BuildRequires: libfakekey-devel libqca-qt5-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
@@ -72,28 +73,28 @@ developing applications that use %name.
 %package -n %libkdeconnectcore
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libkdeconnectcore
 KF5 library
 
 %package -n %libkdeconnectpluginkcm
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libkdeconnectpluginkcm
 KF5 library
 
 %package -n %libkdeconnectinterfaces
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libkdeconnectinterfaces
 KF5 library
 
 %package -n %libkdeconnectsmshelper
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libkdeconnectsmshelper
 KF5 library
 
@@ -169,6 +170,9 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Thu Sep 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt2
 - clean requires from libnautilus
 

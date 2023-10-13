@@ -8,7 +8,7 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init altplace
 
@@ -77,14 +77,14 @@ developing applications that use %name.
 %package -n %libmolletnetwork
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libmolletnetwork
 KF5 library
 
 %package -n %libkioarchive
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libkioarchive
 KF5 library
 
@@ -96,7 +96,9 @@ KF5 library
 %patch13 -p1
 
 %build
-%K5build
+%K5build \
+    -DINCLUDE_INSTALL_DIR=%_K5inc \
+    #
 
 %install
 %K5install
@@ -130,8 +132,8 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5dbus_srv/*.service
 
 %files devel
-%_K5inc/*kio*archive*.h
-#%_K5inc/KIO*/
+#%_K5inc/*kio*archive*.h
+%_K5inc/Kio*/
 #%_K5inc/kio/
 #%_K5link/lib*.so
 %_K5lib/cmake/Kio*/
@@ -147,6 +149,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

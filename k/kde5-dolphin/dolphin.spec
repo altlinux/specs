@@ -10,8 +10,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 23.04.3
-Release: alt4
+Version: 23.08.1
+Release: alt1
 %K5init
 
 Group: File tools
@@ -141,6 +141,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Wed Sep 20 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt4
 - revert 8d7e600f to don't portalize drop urls (closes: 47565)
 

@@ -4,7 +4,7 @@
 %define libksanecore libksanecore%sover
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init
 
@@ -49,7 +49,7 @@ developing applications that use %name.
 %package -n %libksanecore
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n %libksanecore
 KF5 library
 
@@ -82,6 +82,9 @@ KF5 library
 %_K5lib/libKSaneCore.so.*
 
 %changelog
+* Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

@@ -12,11 +12,11 @@
 %def_disable obsolete_kde4
 %endif
 
-%define sover 10
+%define sover 11
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
@@ -101,7 +101,7 @@ developing applications that use %name.
 %package -n %libokularcore
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libokularcore
 KF5 library
 
@@ -214,6 +214,9 @@ fi
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

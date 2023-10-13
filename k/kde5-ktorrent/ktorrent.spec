@@ -11,7 +11,7 @@
 %add_findreq_skiplist %_K5data/%rname/scripts/*.py
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.1
 Release: alt1
 %K5init
 
@@ -56,7 +56,7 @@ ktorrent - KDE BitTorrent client. It comes with many useful plugins.
 %package -n %libktcore
 Summary: KTorrent library
 Group: System/Libraries
-#Requires: %name-common
+Requires: kf5-filesystem
 %description -n %libktcore
 KTorrent library
 
@@ -103,6 +103,9 @@ done
 
 
 %changelog
+* Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 
