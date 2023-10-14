@@ -1,5 +1,5 @@
 Name:    libarpack-ng
-Version: 3.9.0
+Version: 3.9.1
 Release: alt1
 Summary: Fortran 77 subroutines for solving large scale eigenvalue problems
 
@@ -92,6 +92,9 @@ rm -rf %buildroot%_libdir/*.la
 %_libdir/libarpack.a
 
 %changelog
+* Sat Oct 14 2023 Andrey Cherepanov <cas@altlinux.org> 3.9.1-alt1
+- New version.
+
 * Sat Feb 11 2023 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
 - New version.
 
