@@ -1,20 +1,22 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: 7kaa
-Version: 2.14.7
+Version: 2.15.6
 Release: alt1
 Summary: Seven Kingdoms: Ancient Adversaries
 
 License: GPLv3+ and GPLv2+
 Group: Games/Strategy
-Url: http://7kfans.com/
-# Source-url: https://github.com/the3dfxdude/7kaa/releases/download/v%version/7kaa-%version.tar.xz
-Packager: Anton Midyukov <antohami@altlinux.org>
+Url: https://7kfans.com
 
+# Source-url: https://sourceforge.net/projects/skfans/files/7KAA%20%version/7kaa-%version.tar.gz/download
 Source: %name-%version.tar
 Source1: %name.autodlrc
 Source2: %name-data-installer
 
 BuildRequires: gcc-c++ libSDL2-devel libSDL2_net-devel libenet-devel libopenal-devel pkgconfig(libcurl) desktop-file-utils ImageMagick-tools
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 
 %description
 Seven Kingdoms is a real-time strategy (RTS) computer game developed
@@ -60,7 +62,7 @@ export CXXFLAGS="%optflags -fsigned-char"
 
 for x in 16 32 48; do
     mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
-        convert data/image/7k_icon.bmp -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/7kaa_icon.png
+        convert data/IMAGE/7K_ICON.BMP -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/7kaa_icon.png
 done
 
 ### == desktop file
@@ -100,13 +102,15 @@ fi
 cd /tmp/%name-music
 tar xjvf /tmp/%name-music/%name-music.tar.bz2
 echo "Input password root: "
-su -c install -v -m 644 /tmp/%name-music/%name-music/music/* %_datadir/%name/music
+su -c 'install -v -m 644 /tmp/%name-music/%name-music/music/* %_datadir/%name/music'
 echo "Done"
 END
 
 install -m 755 %SOURCE2 %buildroot%_bindir
 install -m 755 %music_installer %buildroot%_bindir
 install -m 644 %SOURCE1 %buildroot%prj_music_dir
+
+%find_lang %name
 
 %postun music
 if [ $1 -eq 0 ] ; then
@@ -120,12 +124,12 @@ fi
 %_bindir/%data_installer
 %_desktopdir/%name.desktop
 
-%files data
+%files data -f %name.lang
 %dir %_datadir/%name
 %_datadir/%name/[^m]*
-%_liconsdir/*
-%_niconsdir/*
-%_miconsdir/*
+%_liconsdir/7kaa_icon.png
+%_niconsdir/7kaa_icon.png
+%_miconsdir/7kaa_icon.png
 
 %files music
 %_bindir/%music_installer
@@ -133,6 +137,9 @@ fi
 %prj_music_dir/%name.autodlrc
 
 %changelog
+* Sun Oct 15 2023 Anton Midyukov <antohami@altlinux.org> 2.15.6-alt1
+- new version (2.15.6) with rpmgs script
+
 * Sun Aug 06 2017 Anton Midyukov <antohami@altlinux.org> 2.14.7-alt1
 - new version (2.14.7) with rpmgs script
 
