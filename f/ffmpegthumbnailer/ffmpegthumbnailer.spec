@@ -1,15 +1,16 @@
 Name: ffmpegthumbnailer
-Version: 2.2.0
-Release: alt3.1
+Version: 2.2.2
+Release: alt1.20221021
 
 Summary: Lightweight video thumbnailer that can be used by file managers
-License: GPLv2
+License: GPL-2.0
 Group: Graphics
 
-Url: http://code.google.com/p/ffmpegthumbnailer/
-Source: http://ffmpegthumbnailer.googlecode.com/files/%name-%version.tar.gz
+Url: https://github.com/dirkvdb/ffmpegthumbnailer
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libavformat-devel libjpeg-devel libpng-devel libswscale-devel cmake libswresample-devel libavfilter-devel libavresample-devel libpostproc-devel
+BuildRequires: gcc-c++ libavformat-devel libjpeg-devel libpng-devel libswscale-devel cmake libswresample-devel libavfilter-devel libpostproc-devel
 
 %description
 Lightweight video thumbnailer that can be used by file managers.
@@ -45,6 +46,7 @@ developers to generate thumbnails in their projects
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_GIO=ON -DENABLE_THUMBNAILER=ON
@@ -68,6 +70,10 @@ developers to generate thumbnails in their projects
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Oct 14 2023 Anton Midyukov <antohami@altlinux.org> 2.2.2-alt1.20221021
+- update source from git
+- clean BR: libavresample-devel
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.2.0-alt3.1
 - NMU: spec: adapted to new cmake macros.
 
