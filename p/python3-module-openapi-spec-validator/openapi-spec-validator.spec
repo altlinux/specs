@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: OpenAPI 2.0 (aka Swagger) and OpenAPI 3.0 spec validator
@@ -28,6 +28,7 @@ BuildRequires: python3(jsonschema)
 BuildRequires: python3(openapi-schema-validator)
 BuildRequires: python3(jsonschema-spec)
 BuildRequires: python3(lazy-object-proxy)
+BuildRequires: python3(jsonschema-path)
 
 BuildRequires: python3(pytest)
 %endif
@@ -63,6 +64,9 @@ to check for full compliance with the Specification.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Oct 14 2023 Anton Vyatkin <toni@altlinux.org> 0.7.1-alt1
+- New version 0.7.1.
+
 * Wed Oct 11 2023 Anton Vyatkin <toni@altlinux.org> 0.7.0-alt1
 - New version 0.7.0.
 
