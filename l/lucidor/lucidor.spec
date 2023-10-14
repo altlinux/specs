@@ -2,8 +2,8 @@
 #
 
 Name:     lucidor
-Version:  0.9.10
-Release:  alt4
+Version:  0.9.15
+Release:  alt1
 
 Summary: E-book reader application
 
@@ -13,12 +13,11 @@ URL:      http://lucidor.org/lucidor/
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 
 ExcludeArch: armh
-ExcludeArch: %{ix86} ppc64le
 
 Source0: %name-%version.tar
 
 Patch0: %name-0.9.7-alt-desktop.patch
-Patch1: %name-0.9.10-alt-xulrunner.patch
+Patch1: %name-0.9.15-alt-firefox.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -43,7 +42,7 @@ Lucidor provides functionality to:
 %prep
 %setup
 %patch0
-%patch1
+%patch1 -p2
 
 mv gpl-3.0.txt gpl-3.0.txt.orig
 ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/gpl-3.0.txt) gpl-3.0.txt
@@ -80,6 +79,9 @@ mkdir -p %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Oct 10 2023 Pavel Vasenkov <pav@altlinux.org> 0.9.15-alt1
+- New version (Closes: #47908)
+
 * Mon Sep 18 2023 Pavel Vasenkov <pav@altlinux.org> 0.9.10-alt4
 - ExcludeArch: %{ix86} ppc64le
 
