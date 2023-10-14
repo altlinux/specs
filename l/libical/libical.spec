@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define api_ver 3.0
 
@@ -18,8 +18,8 @@
 %def_with system_tzdata
 
 Name: libical
-Version: 3.0.16
-Release: alt2
+Version: 3.0.17
+Release: alt1
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -32,7 +32,7 @@ Source: %url/%name/releases/download/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
-%define tzdata_ver 2022d
+%define tzdata_ver 2023c
 %define glib_ver 2.38
 %define xml2_ver 2.7.3
 %{?_with_system_tzdata:Requires: tzdata >= %tzdata_ver}
@@ -211,6 +211,9 @@ sed -i 's|zone.tab|zone1970.tab|' src/libical/icaltz-util.h
 
 
 %changelog
+* Sun Oct 15 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.17-alt1
+- 3.0.17
+
 * Sun Jul 09 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.16-alt2
 - updated to v3.0.16-18-gcdfdaa02
 - built with system tzdata (2023c-alt1)
