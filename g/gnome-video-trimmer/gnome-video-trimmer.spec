@@ -6,7 +6,7 @@
 %def_disable bootstrap
 
 Name: gnome-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Video Trimmer
@@ -23,7 +23,7 @@ Source: %_name-%version.tar
 Source1: %_name-%version-cargo.tar
 
 %define gtk_ver 4.0.0
-%define adwaita_ver 1.2
+%define adwaita_ver 1.4
 
 Requires: ffmpeg ffprobe
 
@@ -68,6 +68,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Oct 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
+- updated to v0.8.2-3-g4259123
+
 * Fri Aug 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - first build for Sisyphus (v0.8.1-23-ge116fc9)
 
