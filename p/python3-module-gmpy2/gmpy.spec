@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 2.1.5
-Release: alt1
+Release: alt2
 
 Summary: GMP/MPIR, MPFR, and MPC interface
 
@@ -82,6 +82,9 @@ python3 test/runtests.py
 %doc docs/_build/html test*
 
 %changelog
+* Sat Oct 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.1.5-alt2
+- NMU: fixed FTBFS with MPFR 4.2.1
+
 * Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.5-alt1
 - new version 2.1.5 (with rpmrb script)
 
