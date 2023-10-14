@@ -4,7 +4,7 @@
 
 Name:    %oname-ovz
 Version: 0.1.95
-Release: alt2
+Release: alt3
 
 Summary: Process HAULer -- a tool to live-migrate containers and processes
 License: LGPL-2.1
@@ -67,6 +67,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sun Oct 15 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.1.95-alt3
+- drop dependency on distutils
+
 * Sun Dec 11 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.1.95-alt2
 - use pycriu module from crtools-ovz
 
