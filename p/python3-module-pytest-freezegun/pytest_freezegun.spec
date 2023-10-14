@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: Wrap tests with fixtures in freeze_time
 License: MIT
@@ -15,6 +15,7 @@ Url: https://pypi.org/project/pytest-freezegun/
 
 Source: %name-%version.tar.gz
 Patch: %name-%version-alt.patch
+Patch1: drop-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -38,6 +39,7 @@ Features:
 %prep
 %setup
 %patch -p1
+%patch1 -p0
 
 %build
 %python3_build
@@ -58,6 +60,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/pytest_freezegun-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Oct 14 2023 Anton Vyatkin <toni@altlinux.org> 0.4.2-alt2
+- Dropped dependency on distutils.
+
 * Mon Oct 26 2020 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1
 - Initial build for Sisyphus.
 
