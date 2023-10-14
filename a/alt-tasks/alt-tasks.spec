@@ -1,5 +1,5 @@
 Name: alt-tasks
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Utility for observing ALT Linux tasks
@@ -38,6 +38,13 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Sat Oct 14 2023 Alexey Appolonov <alexey@altlinux.org> 0.5.0-alt1
+- Time saving on the processing the timelines of packages if a time of the
+  previous processing is no latter than a requested "before" time (the dump
+  file is used even if it's expired);
+- The "after" param is checked to ensure that it doesn't exceed the current time
+  (instead of getting an empty result, the program terminates with an error).
+
 * Thu Oct 11 2023 Alexey Appolonov <alexey@altlinux.org> 0.4.0-alt1
 - A previous version of a package is displayed for each subtask (use a new flag
   "--no_prev_ver" for the former behavior) as well as the "built from" part of
