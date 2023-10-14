@@ -1,20 +1,36 @@
-%define oname Levenshtein
+%define _unpackaged_files_terminate_build 1
+%define pypi_name Levenshtein
 
-Name: python3-module-%oname
-Version: 0.12.0
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 0.23.0
 Release: alt1
 
 Summary: Python extension for computing string edit distances and similarities
-License: GPLv2+
+License: GPL-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/python-Levenshtein/
+Url: https://pypi.org/project/Levenshtein/
+Vcs: https://github.com/maxbachmann/Levenshtein
 
-# https://github.com/ztane/python-Levenshtein.git
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: python3-module-Levenshtein-0.23.0-alt-use-base-cython.patch
 
-BuildRequires(pre): rpm-build-python3
+%py3_provides %pypi_name
 
-%py3_provides %oname
+%pyproject_runtimedeps_metadata
+Provides: python3-module-%{pep503_name %pypi_name}
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+BuildRequires: gcc-c++
+BuildRequires: rapidfuzz-devel
+
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 The Levenshtein Python C extension module contains functions for fast
@@ -29,21 +45,28 @@ It supports both normal and Unicode strings.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest -vra
 
 %files
-%doc NEWS* *.rst
-%python3_sitelibdir/*
+%doc HISTORY.md README.md SECURITY.md
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 0.23.0-alt1
+- Updated to 0.23.0.
+
 * Fri Feb 21 2020 Grigory Ustinov <grenka@altlinux.org> 0.12.0-alt1
 - Build new version for python3.8.
 
