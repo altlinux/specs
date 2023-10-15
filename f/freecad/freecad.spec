@@ -4,6 +4,9 @@
 %add_findprov_skiplist %_libdir/freecad/Mod/* %_libdir/freecad/Ext/*
 %def_with bundled_libs
 %def_with glvnd
+%def_with ninja
+%def_with pybind11
+
 %define oname freecad
 %define ldir %_libdir/%oname
 %ifndef build_parallel_jobs
@@ -13,8 +16,8 @@
 %define git_date 05.12.2022
 
 Name:    freecad
-Version: 0.20.2
-Release: alt3.2
+Version: 0.21.1
+Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -31,28 +34,27 @@ Patch1: %name-remove-3rdParty.patch
 %endif
 Patch2: freecad-0.19.2-alt-boost-link.patch
 Patch3: freecad-alt-fix-icon-name-in-menu.patch
-Patch4: freecad-alt-remove-unused-header.patch
-Patch5: 0001-libE57Format-fix-compile-using-gcc13.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
 
-ExcludeArch: armh
+ExcludeArch: armh ppc64le
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-xdg
+%if_with ninja
 BuildRequires(pre): rpm-build-ninja
+%endif
 BuildRequires(pre): rpm-build-python3
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-assistant
 BuildRequires: qt5-designer
-BuildRequires: qt5-sql-sqlite3
+BuildRequires: qt5-phonon-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-tools-devel-static
-BuildRequires: qt5-webkit-devel
+BuildRequires: qt5-webengine-devel
 BuildRequires: qt5-x11extras-devel
-BuildRequires: qt5-phonon-devel
 BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: python3-module-PySide2
 BuildRequires: pyside2-tools
@@ -97,6 +99,10 @@ Requires: libEGL-devel libGLU-devel
 %endif
 #BuildRequires: texlive-extra-utils
 BuildRequires: python3-module-pivy
+BuildRequires: libnetgen-devel netgen
+%if_with pybind11
+BuildRequires: pybind11-devel
+%endif
 
 %py3_requires pivy matplotlib.backends.backend_qt5
 #py3_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
@@ -113,6 +119,11 @@ Requires: python3-module-GitPython
 Requires: netgen
 Requires: libredwg
 
+Provides:  free-cad-docs = %version-%release
+Obsoletes: free-cad-docs < %version-%release
+Provides:  freecad-docs = %version-%release
+Obsoletes: freecad-docs < %version-%release
+
 %description
 FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
 mechanical engineering and product design but also fits in a wider range of uses
@@ -123,25 +134,6 @@ also falls into the category of MCAD, PLM, CAx and CAE. It will be a feature
 based parametric modeler with a modular software architecture which makes it
 easy to provide additional functionality without modifying the core system.
 
-%package docs
-Summary: Documentation for FreeCAD
-Group: Documentation
-Provides:  free-cad-docs = %version-%release
-Obsoletes: free-cad-docs < %version-%release
-Requires: qt5-assistant
-
-%description docs
-FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
-mechanical engineering and product design but also fits in a wider range of uses
-around engineering, such as architecture or other engineering specialties.
-
-FreeCAD features tools similar to Catia, SolidWorks or Solid Edge, and therefore
-also falls into the category of MCAD, PLM, CAx and CAE. It will be a feature
-based parametric modeler with a modular software architecture which makes it
-easy to provide additional functionality without modifying the core system.
-
-This package contains documentation for FreeCAD.
-
 %prep
 %setup
 %if_without bundled_libs
@@ -151,8 +143,6 @@ rm -rf src/3rdParty
 %endif
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
 # because "error: cpio archive too big"
@@ -165,10 +155,11 @@ sed -i "s/FC_OS_WIN32/__EDG__/" src/Mod/Sketcher/App/GeoEnum.{h,cpp}
 %build
 export PATH=$PATH:%_qt5_bindir
 %add_optflags -Wl,-rpath,%ldir/lib
-# Unable to use ninja-build because
-# ninja: error: dependency cycle: src/Mod/TechDraw/Gui/mtextedit.h -> src/Mod/TechDraw/Gui/mtextedit.h
-#cmake_insource -GNinja \
+%if_with ninja
+%cmake_insource -GNinja \
+%else
 %cmake_insource \
+%endif
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
 	-DCMAKE_INSTALL_DATADIR=%ldir \
@@ -176,6 +167,9 @@ export PATH=$PATH:%_qt5_bindir
 	-DCMAKE_INSTALL_LIBDIR=%ldir/lib \
 	-DOPENMPI_INCLUDE_DIRS=%_libdir/openmpi/include \
 	-DPYTHON_EXECUTABLE=%__python3 \
+%if_with pybind11
+    -DFREECAD_USE_PYBIND11=ON \
+%endif
 	-DFREECAD_LIBPACK_USEPYSIDE=OFF \
 	-DBUILD_QT5=ON \
 %if_without bundled_libs
@@ -191,12 +185,21 @@ export PATH=$PATH:%_qt5_bindir
 	-DPACKAGE_WCREF="%git_rev" \
 	-DPACKAGE_WCDATE="%git_date" \
 	-DPACKAGE_WCURL="https://github.com/FreeCAD/FreeCAD" \
+    -DUSE_OPENCV=ON \
 	-Wno-dev
 export NPROCS=%build_parallel_jobs
+%if_with ninja
+%ninja_build
+%else
 %make_build
+%endif
 
 %install
+%if_with ninja
+%ninja_install
+%else
 %makeinstall_std
+%endif
 
 # binaries
 mkdir -p %buildroot%ldir/bin
@@ -226,10 +229,14 @@ rm -f %buildroot%_libdir/freecad/lib/*.a
 
 # remove header file
 rm -f %buildroot%_includedir/E57Format/*.h
+rm -rf %buildroot%_includedir/{gmock,gtest}
+
+# remove buggy Tux mod
+rm -rf %buildroot%ldir/Mod/Tux
 
 %files -f %name.lang
-%doc ChangeLog.txt README.md
-%doc %ldir/License.txt
+%doc README.md SECURITY.md
+%doc %ldir/doc
 %dir %ldir
 %_bindir/*
 %ldir/bin
@@ -240,18 +247,21 @@ rm -f %buildroot%_includedir/E57Format/*.h
 %ldir/3Dconnexion
 %ldir/examples
 %_desktopdir/*.desktop
-%_iconsdir/hicolor/*/apps/%name.*
+%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/scalable/*/*.svg
 %_man1dir/*
 %_xdgdatadir/mime/packages/*
 %_pixmapsdir/%name.xpm
 %_datadir/metainfo/*.appdata.xml
 %_datadir/thumbnailers/FreeCAD.thumbnailer
-%_iconsdir/hicolor/scalable/*/*.svg
-
-%files docs
-%ldir/doc
 
 %changelog
+* Sat Oct 14 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.21.1-alt1
+- New version.
+- FTBFS: removed qt5-sql-sqlite3.
+- Added support of netgen, pybind11 and opencv.
+- Merge freecad-docs with freecad.
+
 * Sun Sep 24 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:0.20.2-alt3.2
 - Fixed build for Elbrus.
 
