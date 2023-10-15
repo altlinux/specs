@@ -1,4 +1,4 @@
-%define ver_major 44
+%define ver_major 45
 
 Name: gnome-super-minimal
 Version: %ver_major.0
@@ -13,7 +13,9 @@ Conflicts: gnome3-minimal
 BuildArch: noarch
 
 # GNOME Desktop Core
-Requires: gnome-session
+Requires: gnome-session-wayland
+Requires: gnome-session-xsession
+
 Requires: pipewire wireplumber
 Requires: gnome-control-center
 Requires: xorg-drv-libinput
@@ -54,5 +56,8 @@ and to allow the removal of applications that the user does not need.
 %files
 
 %changelog
+* Thu Oct 12 2023 Roman Alifanov <ximper@altlinux.org> 45.0-alt1
+- replace gnome-session to gnome-session-wayland and gnome-session-xsession
+
 * Wed Aug 09 2023 Roman Alifanov <ximper@altlinux.org> 44.0-alt1
 - Initial build for Sisyphus.
