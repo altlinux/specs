@@ -1,5 +1,5 @@
 Name: cherrytree
-Version: 0.99.55
+Version: 1.0.2
 Release: alt1
 
 Summary: Hierarchical note taking application
@@ -78,6 +78,9 @@ sed -i "s|filename(pOutStr|filename((gchar*)pOutStr|" src/ct/ct_filesystem.cc
 
 
 %changelog
+* Sat Oct 14 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.2-alt1
+- new version 1.0.2 (with rpmrb script)
+
 * Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 0.99.55-alt1
 - new version 0.99.55 (with rpmrb script)
 

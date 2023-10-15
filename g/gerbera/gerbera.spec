@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gerbera
-Version: 1.11.0
+Version: 1.12.1
 Release: alt1
 
 Summary: UPnP Media Server
@@ -123,6 +123,9 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %_datadir/%name
 
 %changelog
+* Sat Oct 14 2023 Nazarov Denis <nenderus@altlinux.org> 1.12.1-alt1
+- New version 1.12.1.
+
 * Fri Jul 22 2022 Vladimir Didenko <cow@altlinux.org> 1.11.0-alt1
 - 1.11.0
 - fix build with libfmt 9.0

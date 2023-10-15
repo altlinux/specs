@@ -4,7 +4,7 @@
 Name: CuraEngine
 Epoch: 1
 Version: 5.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: Engine for processing 3D models into G-code instructions for 3D printers
 License: AGPL-3.0
@@ -22,6 +22,7 @@ Source5: CMakeLists.txt
 Source6: CPackConfig.cmake
 
 Patch2: %name-static-libstdcpp.patch
+Patch3: %name-5.3.0-fmt10.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -83,6 +84,9 @@ rm -rf libs
 %doc README.md
 
 %changelog
+* Thu Oct 12 2023 Nazarov Denis <nenderus@altlinux.org> 1:5.3.1-alt1.1
+- NMU: Fix build with libfmt 10
+
 * Thu Apr 27 2023 Anton Midyukov <antohami@altlinux.org> 1:5.3.1-alt1
 - new version (5.3.1) with rpmgs script
 

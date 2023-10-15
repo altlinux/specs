@@ -2,7 +2,7 @@
 
 Name: nheko
 Version: 0.9.3
-Release: alt1
+Release: alt1.1
 
 Summary: Desktop client (QT) for the Matrix protocol
 
@@ -11,6 +11,7 @@ License: GPLv3
 Url: https://nheko.im/nheko-reborn/nheko
 
 Source: %name-%version.tar
+Patch: %name-fmt10-fix.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: qt5-tools-devel qt5-multimedia-devel qt5-svg-devel
@@ -40,6 +41,7 @@ and less like an IRC client.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake -DUSE_BUNDLED_SPDLOG=OFF    \
@@ -73,6 +75,9 @@ and less like an IRC client.
 %_man1dir/nheko*
 
 %changelog
+* Sun Oct 15 2023 Nazarov Denis <nenderus@altlinux.org> 0.9.3-alt1.1
+- NMU: Fix build with fmt 10
+
 * Tue Jul 19 2022 Vladimir Didenko <cow@altlinux.org> 0.9.3-alt1
 - Updated to v0.9.3.
 

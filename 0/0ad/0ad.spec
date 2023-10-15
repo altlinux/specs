@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.26
-Release: alt0_4_alpha
+Release: alt0_5_alpha
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -26,6 +26,7 @@ Patch2: 0ad-0.0.25-fonts.patch
 # Patch4: 0ad-0.0.26-ppc64le.patch
 Patch5: 0ad-0.0.25-i586.patch
 Patch6: 0ad-fix-build-with-gcc13.patch
+Patch7: 0ad-fix-build-with-libfmt10.patch
 
 # disabled i586 build to unblock wxGTK3.0 rebuild; please remove later
 # ExcludeArch: %ix86
@@ -78,6 +79,7 @@ educational celebration of game development and ancient history.
 
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # update shebangs from python to python3
 find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
@@ -141,6 +143,9 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Thu Oct 12 2023 Nazarov Denis <nenderus@altlinux.org> 1:0.0.26-alt0_5_alpha
+- NMU: Fix build with libfmt 10
+
 * Tue Aug 08 2023 Ivan A. Melnikov <iv@altlinux.org> 1:0.0.26-alt0_4_alpha
 - NMU: Fix FTBFS
   + drop python3-module-jsonlib from BR

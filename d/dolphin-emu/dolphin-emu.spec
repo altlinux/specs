@@ -8,7 +8,7 @@
 
 Name: dolphin-emu
 Version: 5.0.19870
-Release: alt3.1
+Release: alt3.2
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -27,6 +27,7 @@ Source1: implot-%implot_commit.tar
 Source2: rcheevos-%rcheevos_commit.tar
 
 Patch0: dolphin-gbacore-alt.patch
+Patch1: dolphin-fmt10.patch
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake
@@ -89,6 +90,7 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %__mv -Tf ../rcheevos-%rcheevos_commit Externals/rcheevos/rcheevos
 
 %patch0 -p1
+%patch1 -p1
 
 %build
 export LDFLAGS="-Wl,--copy-dt-needed-entries"
@@ -122,6 +124,9 @@ echo "#define SCM_REV_STR \"%git_commit\"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Sun Oct 15 2023 Nazarov Denis <nenderus@altlinux.org> 5.0.19870-alt3.2
+- Fix build with fmt 10
+
 * Thu Sep 14 2023 Nazarov Denis <nenderus@altlinux.org> 5.0.19870-alt3.1
 - Fix FTBFS
 
