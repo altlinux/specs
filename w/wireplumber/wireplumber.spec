@@ -9,8 +9,8 @@
 %define soversion 0
 
 Name: wireplumber
-Version: 0.4.14
-Release: alt2
+Version: 0.4.15
+Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
 
@@ -159,6 +159,7 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %_bindir/wpctl
 %_bindir/wpexec
 %_datadir/wireplumber
+%_datadir/zsh/site-functions/_wpctl
 %if_enabled systemd
 %_user_unitdir/wireplumber.service
 %_user_unitdir/wireplumber@.service
@@ -189,6 +190,9 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Sun Oct 15 2023 Arseny Maslennikov <arseny@altlinux.org> 0.4.15-alt1
+- 0.4.14 -> 0.4.15.
+
 * Sun Jun 25 2023 Arseny Maslennikov <arseny@altlinux.org> 0.4.14-alt2
 - Fixed FTBFS.
 
