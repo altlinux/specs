@@ -1,20 +1,23 @@
 %def_with check
+
 Name: psutils
 Version: 2.10
-Release: alt1
+Release: alt2
 Epoch: 2
-%add_perl_lib_path %_datadir/%name
+
 Summary: PostScript utilities
 License: GPLv3
 Group: Publishing
+
+Url: https://github.com/rrthomas/psutils
+Source: %name-%version.tar
+
 BuildArch: noarch
 BuildRequires: gnulib help2man git-core
-%if_with check
 BuildRequires: paper
-%endif
 BuildRequires: perl(IPC/Run3.pm)
-Url: https://github.com/rrthomas/psutils
-Source0: %name-%version.tar
+
+%add_perl_lib_path %_datadir/%name
 
 %description
 psutils contains some utilities for manipulating PostScript documents.
@@ -42,6 +45,9 @@ into signatures for booklet printing, and page merging for n-up printing.
 %_man1dir/*
 
 %changelog
+* Sun Oct 15 2023 Michael Shigorin <mike@altlinux.org> 2:2.10-alt2
+- fix build --without check
+
 * Fri Oct 13 2023 Fr. Br. George <george@altlinux.org> 2:2.10-alt1
 - 2.10
 
