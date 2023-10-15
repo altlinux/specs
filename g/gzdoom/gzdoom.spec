@@ -1,8 +1,8 @@
 %define optflags_lto %nil
 
 Name: gzdoom
-Version: 4.10.0
-Release: alt4
+Version: 4.11.1
+Release: alt1
 
 Summary: Enhanced Doom engine
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
@@ -19,8 +19,9 @@ Source: %name-%version.tar
 Source1: %name.png
 
 Patch: fix-soundfont-paths.patch
+Patch2: gzdoom-g4.10.0-sse2.patch
 
-BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2
+BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2 libwebp-devel
 BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libtimidity-devel xz zmusic-devel
 BuildRequires: libopenal1-devel libGLU-devel libsndfile-devel libmpg123-devel flac libogg-devel libvorbis-devel ImageMagick-tools libvpx-devel
 Requires: fluidsynth fluid-soundfont-gs
@@ -52,6 +53,7 @@ GZDoom - порт движка Doom, основанный на ZDoom. Основ
 %setup -n %name-%version
 
 %patch0 -p1
+%patch2 -p1
 
 %build
 %cmake_insource \
@@ -107,6 +109,10 @@ done
 %_gamesdatadir/doom/soundfonts/*
 
 %changelog
+* Sun Oct 15 2023 Artyom Bystrov <arbars@altlinux.org> 4.11.1-alt1
+- Update to new version
+- Add patch for enabling sse2 (tnx to proklov_av@ from ROSA Team)
+
 * Tue Sep  5 2023 Artyom Bystrov <arbars@altlinux.org> 4.10.0-alt4
 - Add missing file in gzdoom.pk3
 
