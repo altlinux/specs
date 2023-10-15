@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/flex /usr/bin/m4 /usr/bin
 
 Name:           %{target}-binutils
 Version:        2.35
-Release:        alt1_2
+Release:        alt1_3
 Epoch:          2
 Summary:        Cross Compiling GNU binutils targeted at %{target}
 License:        GPLv2+
@@ -21,6 +21,7 @@ Patch2: avr-binutils-config.patch
 
 BuildRequires:  gawk makeinfo gcc
 #for autoreconf:
+BuildRequires:  gnu-config
 BuildRequires:  gettext-tools libasprintf-devel automake
 BuildRequires:  autoconf_2.60
 %set_autoconf_version 2.60
@@ -39,6 +40,7 @@ pushd binutils-%{version}
 %patch1 -p2 -b .avr-size
 %patch2 -p1 -b .config
 
+cp -af /usr/share/gnu-config/config.{sub,guess} .
 # We call configure directly rather than via macros, thus if
 # we are using LTO, we have to manually fix the broken configure
 # scripts
@@ -105,6 +107,9 @@ fi
 
 
 %changelog
+* Sun Oct 15 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2:2.35-alt1_3
+- NMU: use fresh config.{guess,sub} from gnu-config. Fixes FTBFS on LoongArch.
+
 * Wed Oct 11 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2:2.35-alt1_2
 - NMU: fixed FTBFS (use autoconf 2.69)
 
