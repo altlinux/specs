@@ -1,5 +1,5 @@
 Name:     system-monitoring-center 
-Version:  1.43.10
+Version:  2.25.1
 Release:  alt1
 
 Summary:  Multi-featured system monitor
@@ -8,37 +8,43 @@ Group:    Monitoring
 Url:      https://github.com/hakandundar34coding/system-monitoring-center
 
 BuildArch: noarch
+
+# Source-url: https://github.com/hakandundar34coding/system-monitoring-center/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-Patch1: system-monitoring-center-1.43.6-uid500-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires: meson
+BuildRequires: gtk4-update-icon-cache
 
 %description
 %summary
 
 %prep
 %setup
-%patch1 -p1
 
 %build
-%python3_build
+%meson
+%meson_build
 
 %install
-%python3_install
+%meson_install
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc README.md
 %_bindir/%name
 %_datadir/%{name}*
-%python3_sitelibdir/*.egg-info/
+%_datadir/appdata/io.*.appdata.xml
 %_iconsdir/*/*/*/*.svg
 %_man1dir/*
-%_datadir/polkit-1/actions/io.github.hakandundar34coding.%name.policy
 %_desktopdir/*
 
 %changelog
+* Sun Oct 15 2023 Roman Alifanov <ximper@altlinux.org> 2.25.1-alt1
+- new version 2.25.1 (gtk4 ver) (ALT bug 47606)
+- move to tarball
+- remove uid500 patch (not relevant for sisyphus)
+
 * Sat Aug 05 2023 Roman Alifanov <ximper@altlinux.org> 1.43.10-alt1
 - new version 1.43.10 (with rpmrb script)
 
