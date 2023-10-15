@@ -1,6 +1,6 @@
 Name: pulseaudio-dlna
 Version: 0.6.0
-Release: alt1.20190209
+Release: alt2.20190209
 Summary: A lightweight streaming server which brings DLNA/UPNP and Chromecast
 
 License: GPLv3
@@ -9,10 +9,12 @@ Url: https://github.com/masmu/pulseaudio-dlna
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch:  remove-distutils-for-python-3.12.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %add_python3_req_skip BaseHTTPServer SocketServer urlparse
 
@@ -27,24 +29,26 @@ UPNP renderers in your network will show up as pulseaudio sinks.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-rm %buildroot%python3_sitelibdir/*.egg-info/requires.txt
+%pyproject_install
 
 %files
 %_bindir/*
 %doc LICENSE
 %doc README.*
 %python3_sitelibdir/pulseaudio_dlna
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/pulseaudio_dlna-%version.dist-info
 %_man1dir/%name.1.*
 
 %changelog
+* Fri Oct 13 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2.20190209
+- NMU: dropped dependency on distutils.
+
 * Sat Sep 26 2020 Anton Midyukov <antohami@altlinux.org> 0.6.0-alt1.20190209
 - New snapshot (future 0.6.0)
 - switch to python3
