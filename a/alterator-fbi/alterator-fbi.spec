@@ -1,8 +1,9 @@
+%def_without guile20
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
 Version: 5.49.3
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar
 Patch0: alterator-fbi-5.49.1-call-cc-via-reset.patch
@@ -31,7 +32,7 @@ Requires(pre): shadow-utils
 
 BuildPreReq: alterator >= 5.4.1-alt3, libguile-vhttpd, libexpat-devel
 
-%ifarch %e2k
+%if_with guile20
 BuildRequires: guile20-devel libguile20-devel
 %else
 BuildPreReq: guile22-devel
@@ -160,6 +161,9 @@ fi ||:
 
 
 %changelog
+* Wed Sep 20 2023 Michael Shigorin <mike@altlinux.org> 5.49.3-alt3
+- Change guile20 condition from e2k to guile20.
+
 * Wed May 11 2022 Paul Wolneykien <manowar@altlinux.org> 5.49.3-alt2
 - Fixed dependencies (closes: 42426).
 
