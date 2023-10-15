@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.9.0
-Release: alt1
+Release: alt2
 Summary: An implementation of the psycopg2 module using cffi
 License: LGPLv3+
 Group: Development/Python3
@@ -12,6 +12,8 @@ Url: https://pypi.python.org/pypi/psycopg2cffi/
 
 # https://github.com/chtd/psycopg2cffi.git
 Source: %name-%version.tar
+
+Patch: remove-distutils-for-python-3.12.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: postgresql-devel libpq-devel
@@ -37,6 +39,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -61,6 +64,9 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Sun Oct 15 2023 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt2
+- Dropped dependency on distutils.
+
 * Wed Mar 17 2021 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
 - Automatically updated to 2.9.0.
 - Transfer to python3.
