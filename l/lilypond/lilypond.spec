@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 2.22
-%define ver_minor 1
+%define ver_major 2.24
+%define ver_minor 2
 %define _lily_dir %_datadir/%name/%version
 %define _texmf %_datadir/texmf
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 Group: Publishing
 Summary: A program for printing sheet music
 License: GPLv3+ with Font-exception-2.0 and GFDL-1.3 and MIT and OFL-1.1
@@ -106,7 +106,7 @@ rm -f %buildroot%_infodir/lilypond* %buildroot%_infodir/music*
 
 %files -f %name.lang
 %doc COPYING COPYING.FDL LICENSE LICENSE.DOCUMENTATION LICENSE.OFL
-%doc DEDICATION HACKING INSTALL.txt NEWS.txt README.md ROADMAP
+%doc DEDICATION INSTALL.txt NEWS.txt README.md ROADMAP
 %doc russian-lirycs-test.ly
 %_bindir/*
 %_datadir/%name
@@ -128,6 +128,9 @@ rm -f %buildroot%_infodir/lilypond* %buildroot%_infodir/music*
 %vim_runtime_dir/syntax/*
 
 %changelog
+* Sun Oct 15 2023 Artyom Bystrov <arbars@altlinux.org> 2.24.2-alt1
+- Update to new version
+
 * Tue Jul 18 2023 Artyom Bystrov <arbars@altlinux.org> 2.22.1-alt2
 - Fix build on GCC13
 
