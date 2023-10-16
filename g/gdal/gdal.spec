@@ -8,7 +8,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 3.6.2
-Release: alt1.1
+Release: alt1.2
 Group: Sciences/Geosciences
 
 License: MIT
@@ -154,7 +154,8 @@ Python module for %name.
     -DGDAL_USE_XERCESC=ON \
     -DGDAL_USE_ZLIB=ON \
     -DGDAL_USE_ZSTD=ON \
-    -DOGR_BUILD_OPTIONAL_DRIVERS=ON
+    -DOGR_BUILD_OPTIONAL_DRIVERS=ON \
+    -DBUILD_TESTING=OFF
 
 %cmake_build
 %if_with docs
@@ -220,6 +221,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 3.6.2-alt1.2
+- FTBFS: remote autotest build.
+
 * Thu Apr 13 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.2-alt1.1
 - Removed obsolete e2k fix that became a problem
 
