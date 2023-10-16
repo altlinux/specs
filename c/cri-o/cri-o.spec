@@ -12,7 +12,7 @@
 
 Name: cri-o
 Version: 1.26.4
-Release: alt1
+Release: alt2
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
@@ -40,6 +40,7 @@ BuildRequires: libseccomp-devel
 BuildRequires: libselinux-devel
 BuildRequires: libsystemd-devel
 BuildRequires: go-md2man
+BuildRequires: /proc
 Provides: oci-runtime = 2
 Provides: cri-runtime
 
@@ -124,6 +125,9 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Oct 16 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.4-alt2
+- Add `BuildRequires: /proc`
+
 * Sat Oct 07 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.4-alt1
 - 1.26.2 -> 1.26.4
 
