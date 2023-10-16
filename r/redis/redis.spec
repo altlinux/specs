@@ -9,8 +9,8 @@
 %endif
 
 Name: redis
-Version: 7.2.0
-Release: alt3
+Version: 7.2.1
+Release: alt1
 Summary: Redis is an advanced key-value store
 Group: Databases
 # redis, hiredis: BSD-3-Clause
@@ -210,6 +210,10 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Mon Oct 16 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.1-alt1
+- 7.2.1 (Fixes: CVE-2023-41053)
+- drop PrivateUsers=true for allow run unit in container (ALT#47882)
+
 * Mon Sep 04 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.0-alt3
 - Allow write group to /etc/redis for fix redis-sentinel service (ALT#47458)
 
