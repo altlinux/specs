@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 374
+%define centos_release 376
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -656,6 +656,26 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Oct 16 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.376-alt1.el9
+- Updated to kernel-5.14.0-376.el9 (fixes: CVE-2023-25775):
+  + Bring MD code up to date with upstream RHEL9.4
+  + CIFS: Sync with upstream v6.4 for RHEL 9.4
+  + Integrate UFS Backports for Qualcomm Hardware Support in CS9
+  + KVM: aarch64: Rebase up to v6.5 (first round)
+  + Merge commit '27eb23fac78d0384e23af1463c677b7846c2f8d7'
+  + RDMA/irdma: Prevent zero-length STAG registration
+  + bpf: update to 6.4
+  + ibmveth tx performance enhancement
+  + mm/slab_common: fix slab_caches list corruption after kmem_cache_destroy()
+  + perf/x86/intel: Add Crestmont PMU
+  + rbd: fix a deadlock around header_rwsem and lock_rwsem
+  + redhat: Fix cross compiles
+  + siw: driver update to v6.5
+  + update kernel drivers/char/random to upstream v6.2
+  + vdpa/mlx5: Correct default number of queues when MQ is on
+  + x86/hyperv: Enable TDX guests on Hyper-V hosts with paravisor
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Oct 09 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.374-alt1.el9
 - Updated to kernel-5.14.0-374.el9:
   + Add symbols to stablelist and enable check-kabi
