@@ -2,7 +2,7 @@
 
 Name: pioneerspacesim
 Version: 20230203
-Release: alt2
+Release: alt3
 
 Summary: A game of lonely space adventure
 License: GPLv3 and BSD and MIT and Apache-2.0 and ALT-Public-Domain and CC-BY-SA-3.0 and Bitstream-Vera and OFL-1.1
@@ -21,6 +21,7 @@ Source: %name-%version.tar
 Patch1: suse-use-system-fmt.patch
 Patch2: alt-add-return-value.patch
 Patch3: alt-fix-fmt-wont-format-enum.patch
+Patch3500: alt-profiler-loongarch-ftbfs-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -63,6 +64,7 @@ This package contains models, scripts and other data for the game.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch3500 -p1
 
 #fix the version, otherwise it will be set to the build date
 #also, instead of the commit hash, write the alt release version
@@ -102,6 +104,9 @@ sed -i "/^string(TIMESTAMP PROJECT_VERSION/c\set(PROJECT_VERSION %version)\nset(
 %_datadir/%name/
 
 %changelog
+* Mon Oct 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230203-alt3
+- NMU: fixed FTBFS on LoongArch
+
 * Mon Oct 16 2023 Anton Golubev <golubevan@altlinux.org> 20230203-alt2
 - fix FTBFS due to libfmt update
 - better commentary on unused architectures
