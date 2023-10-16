@@ -2,7 +2,7 @@
 
 Name: compiz
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: OpenGL window and compositing manager
 License: GPLv2 and LGPLv2 and MIT
@@ -89,7 +89,6 @@ __EOF__
 mkdir -p %buildroot%_datadir/cmake/Modules/%name
 mv %buildroot%_datadir/cmake*/Find*.cmake %buildroot%_datadir/cmake/Modules/%name/
 rm -f %buildroot%_bindir/compiz-decorator
-rm -f %buildroot%python3_sitelibdir_noarch/*.egg-info
 
 %find_lang --output=global.lang %name ccsm
 
@@ -127,6 +126,9 @@ rm -f %buildroot%python3_sitelibdir_noarch/*.egg-info
 %_datadir/cmake/Modules/%name
 
 %changelog
+* Mon Oct 16 2023 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.2-alt2
+- updated build dependencies
+
 * Fri Sep 30 2022 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.2-alt1
 - 0.9.14.2
 
