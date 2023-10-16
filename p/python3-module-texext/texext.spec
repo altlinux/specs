@@ -1,38 +1,40 @@
 %define _unpackaged_files_terminate_build 1
-%def_without test
 
 %define oname texext
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: Sphinx extensions for working with LaTeX math
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
-Url: https://github.com/matthew-brett/texext
+Url: https://pypi.org/project/texext
+Vcs: https://github.com/matthew-brett/texext.git
 
 BuildArch: noarch
 
-# https://github.com/matthew-brett/texext.git
 Source: %name-%version.tar
-Patch0: texext-0.6.1-Adapt-tests-to-Sphinx-2-output.patch
+Patch: drop-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-docutils
-BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinxtesters
 BuildRequires: python3-module-sympy
-BuildRequires: python3-module-matplotlib
 BuildRequires: python3-module-matplotlib-sphinxext
+%endif
 
 %description
 Texext - sphinx extensions for working with LaTeX math.
 
 %prep
 %setup
-#patch0 -p1
+%patch -p0
 
 # fix version info
 sed -i \
@@ -40,18 +42,23 @@ sed -i \
 	%oname/_version.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test3 -vv
+%pyproject_run_pytest -v
 
 %files
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Oct 16 2023 Anton Vyatkin <toni@altlinux.org> 0.6.7-alt1
+- New version 0.6.7.
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 0.6.6-alt1
 - NMU: new version 0.6.6
 - NMU: disable tests (wait for real users of texext)
