@@ -12,7 +12,7 @@
 %define libkpimgapitasks libkpimgapitasks%sover
 
 Name: kde5-%rname
-Version: 23.08.1
+Version: 23.08.2
 Release: alt1
 %K5init altplace
 
@@ -177,6 +177,9 @@ done
 %_K5lib/libKPim5GAPITasks.so.*
 
 %changelog
+* Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Thu Sep 21 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
 - new version
 
