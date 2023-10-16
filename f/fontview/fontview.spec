@@ -1,10 +1,10 @@
 Name: fontview
 Version: 0.3.1
-Release: alt1.20191205
+Release: alt2.20191205
 
 Summary: Demo app that displays fonts with a free/libre/open-source text rendering stack: FreeType, HarfBuzz and Raqm
 
-License: Apache 2.0
+License: Apache-2.0
 Group: Publishing
 Url: https://github.com/googlei18n/fontview
 
@@ -20,7 +20,7 @@ BuildRequires: gcc-c++
 BuildRequires: libfribidi-devel
 BuildRequires: libharfbuzz-devel
 BuildRequires: libfreetype-devel
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: %_bindir/python3
 
 BuildRequires: libucdn-devel
@@ -46,6 +46,9 @@ FreeType, HarfBuzz and Raqm.
 #%_desktopdir/%name.desktop
 
 %changelog
+* Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt2.20191205
+- NMU: rebuild with wxGTK3.2
+
 * Thu Jun 04 2020 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1.20191205
 - New version
 
