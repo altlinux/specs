@@ -1,7 +1,7 @@
 %define modulename migen
 
 Name: python3-module-%modulename
-Version: 0.4.0.56.gd594c71
+Version: 0.9.2
 Release: alt1
 
 Summary: A Python toolbox for building complex digital hardware
@@ -50,5 +50,8 @@ reusable and elegant designs.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.2-alt1
+- Build new version.
+
 * Fri Feb 10 2017 Elvira Khabirova <lineprinter@altlinux.org> 0.4.0.56.gd594c71-alt1
 - Initial build
