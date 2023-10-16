@@ -9,8 +9,8 @@
 %def_disable clang
 
 Name: spdk
-Version: 23.05
-Release: alt2.1
+Version: 23.09
+Release: alt1
 
 Summary: Storage Performance Development Kit
 
@@ -21,11 +21,10 @@ Url: https://spdk.io
 ExcludeArch: i586 ppc64le armh
 
 Source: spdk-%version.tar.gz
-Patch: spdk-21.10-alt-scripts-syntax.patch
+Patch: spdk-23.09-alt-scripts-syntax.patch
 Patch1: spdk-21.10-alt-scripts-startup.patch
-Patch2: spdk-23.05-alpinelinux-use-system-isal.patch
-Patch3: spdk-23.05-alpinelinux-remove-stupid.patch
-Patch4: spdk-23.05-alpinelinux-backtrace.patch
+Patch2: spdk-23.09-alpinelinux-use-system-isal.patch
+Patch3: spdk-23.09-alpinelinux-remove-stupid.patch
 
 # This is a minimal set of requirements needed for SPDK apps to run when built with
 # default configuration. These are also predetermined by rpmbuild. Extra requirements
@@ -49,27 +48,26 @@ Patch4: spdk-23.05-alpinelinux-backtrace.patch
 
 Requires: systemd-utils
 
-BuildPreReq: libfuse3-devel
+# Automatically added by buildreq on Mon Oct 16 2023
+# optimized out: bash5 bashrc glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libncurses-devel libstdc++-devel libtinfo-devel pkg-config python3 python3-base python3-dev sh5
+BuildRequires: libaio-devel libfuse3-devel libisal-devel libssl-devel libuuid-devel python3-module-setuptools
+BuildRequires: rdma-core-devel zlib-devel libpcap-devel libdbus-devel libelf-devel libzstd-devel libjansson-devel
 %if_enabled clang
 #BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires: clang-devel
 BuildRequires: lld-devel
 BuildRequires: llvm-devel
+BuildRequires: libstdc++-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires: libstdc++-devel
-BuildRequires: glibc-devel rpm-build-python3 libuuid-devel libssl-devel libaio-devel libncurses-devel libisal-devel libdbus-devel
-BuildRequires: rdma-core-devel libbpf-devel libelf-devel zlib-devel libpcap-devel libjansson-devel
-BuildRequires: libzstd-devel
-# BuildPreReq: libpmem-devel rdma-core-devel libiscsi-devel liburing-devel librbd-devel libpmem-devel
 %if_enabled dpdk_internal
 BuildPreReq: libnuma-devel libfdt-devel
-BuildPreReq: libarchive-devel libbsd-devel libjansson-devel libpcap-devel
+BuildPreReq: libarchive-devel libbsd-devel
 BuildPreReq: doxygen python3-module-sphinx-sphinx-build-symlink
 BuildRequires: meson rpm-build-ninja python3-module-elftools
 %else
-BuildRequires: dpdk-devel libdpdk
+BuildRequires: dpdk-devel
 %endif
 %if_enabled tests
 BuildRequires: CUnit-devel
@@ -106,13 +104,20 @@ Group: System/Libraries
 SPDK devel libraries
 %endif
 
+%package -n python3-module-%name
+Summary: Python3 module for %name
+Group: Development/Python3
+BuildArch: noarch
+
+%description -n python3-module-%name
+This package provides python3 module for %name.
+
 %prep
 %setup
 %patch -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 sed -i 's|__bitwise__|__bitwise|' include/linux/virtio_types.h
 
@@ -295,7 +300,16 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/lib*.a
 %endif
 
+%files -n python3-module-%name
+%python3_sitelibdir_noarch/%name/
+%python3_sitelibdir_noarch/%{name}-*
+
 %changelog
+* Mon Oct 16 2023 Leontiy Volodin <lvol@altlinux.org> 23.09-alt1
+- New version 23.09.
+- Fixed build with python 3.11.6.
+- Cleanup BRs.
+
 * Wed Sep 06 2023 Leontiy Volodin <lvol@altlinux.org> 23.05-alt2.1
 - Removed pacman from requires (ALT #47071).
 
