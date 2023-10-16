@@ -1,6 +1,6 @@
 Name: kodi
 Version: 20.2
-Release: alt2
+Release: alt2.1
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -12,6 +12,8 @@ Requires: kodi-data = %version-%release
 Requires: kodi-x11 = %version-%release
 
 Source0: %name-%version-%release.tar
+
+Patch0: %name-fmt10.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: libcrossguid-devel libflatbuffers-devel libgif-devel liblzo2-devel
@@ -142,6 +144,7 @@ This package contains X11-specific part of Kodi.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake %cdefs %platdefs
@@ -192,6 +195,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Mon Oct 16 2023 Nazarov Denis <nenderus@altlinux.org> 20.2-alt2.1
+- NMU: Fix build with fmt 10
+
 * Fri Sep 22 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.2-alt2
 - rebuilt with recent ffmpeg
 
