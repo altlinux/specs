@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 7.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Oslo Rootwrap
 
@@ -42,7 +42,6 @@ BuildRequires: python3-module-pre-commit >= 2.6.0
 %if_with docs
 BuildRequires: python3-module-sphinx >= 1.6.2
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 3.1.0
 %endif
 
 %description
@@ -119,6 +118,9 @@ TEST_EVENTLET=1 %__python3 -m stestr run tests.test_functional_eventlet
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 7.0.1-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 7.0.1-alt1
 - Automatically updated to 7.0.1.
 

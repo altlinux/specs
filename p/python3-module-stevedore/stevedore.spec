@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Manage dynamic plugins for Python applications
 
@@ -34,7 +34,6 @@ BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-sphinx-devel
-BuildRequires: python3-module-reno >= 2.5.0
 %endif
 
 %description
@@ -116,6 +115,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
 - Automatically updated to 5.1.0.
 

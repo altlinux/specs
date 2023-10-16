@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: A library for plugging and unplugging virtual interfaces in OpenStack
 
@@ -47,7 +47,6 @@ BuildRequires: python3-module-tzdata >= 2022.4
 
 %if_with docs
 BuildRequires: python3-module-sphinx >= 2.0.0
-BuildRequires: python3-module-reno >= 1.8.0
 BuildRequires: python3-module-openstackdocstheme >= 2.2.1
 %endif
 
@@ -77,6 +76,9 @@ This package contains documentation for %oname.
 %prep
 %setup -n %oname-%version
 %patch -p2
+
+# reno is not used, after openstack moved on openstackdocstheme
+find . -name "conf.py" | xargs sed -i '/reno/d'
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -131,6 +133,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Automatically updated to 3.2.0.
 - Build with check.

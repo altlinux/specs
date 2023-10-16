@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack library containing standardized trait strings
 
@@ -33,7 +33,6 @@ BuildRequires: python3-module-testtools >= 2.2.0
 
 %if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 0.8.0
 BuildRequires: python3-module-openstackdocstheme
 %endif
 
@@ -106,6 +105,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 

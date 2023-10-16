@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.4.3
-Release: alt2.1
+Release: alt2.2
 
 Summary: OpenStack Profiler Library
 
@@ -47,7 +47,6 @@ BuildRequires: python3-module-redis-py
 
 %if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
@@ -125,6 +124,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 3.4.3-alt2.2
+- Dropped build dependency on python3-module-reno.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.4.3-alt2.1
 - Moved on modern pyproject macros.
 

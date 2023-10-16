@@ -9,7 +9,7 @@
 
 Name: python3-module-%oname
 Version: 2.1.0
-Release: alt2.1
+Release: alt2.2
 Summary: OpenStack Client Configuration Library
 Group: Development/Python3
 License: Apache-2.0
@@ -38,7 +38,6 @@ BuildRequires: python3-module-glanceclient
 
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
 
 %description
 The os-client-config is a library for collecting client configuration for
@@ -95,6 +94,9 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt2.2
+- Dropped build dependency on python3-module-reno.
+
 * Thu Mar 31 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt2.1
 - Fixed build.
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Oslo Middleware library
 
@@ -49,7 +49,6 @@ BuildRequires: python3-module-pre-commit >= 2.6.0
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
 %endif
 
 %description
@@ -122,6 +121,9 @@ install -pDm 644 man/oslomiddleware.1 %buildroot%_man1dir/oslomiddleware.1
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt1
 - Automatically updated to 5.1.1.
 

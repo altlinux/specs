@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.2.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: OpenStack DNS-as-a-Service - Client
 
@@ -45,7 +45,6 @@ BuildRequires: python3-module-requests-mock >= 1.2.0
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 3.1.0
 BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
 
@@ -118,6 +117,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1.2
+- Dropped build dependency on python3-module-reno.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1.1
 - Moved on modern pyproject macros.
 

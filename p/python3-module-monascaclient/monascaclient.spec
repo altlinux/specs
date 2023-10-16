@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.7.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Monasca API Client Library
 
@@ -41,7 +41,6 @@ BuildRequires: python3-module-testtools >= 2.2.0
 
 %if_with docs
 BuildRequires: python3-module-sphinx >= 1.6.5
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-doc8 >= 0.8.1
 %endif
@@ -115,6 +114,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt1
 - Automatically updated to 2.7.0.
 

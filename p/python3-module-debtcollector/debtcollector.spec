@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.5.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: A collection of Python deprecation patterns and strategies
 
@@ -34,7 +34,6 @@ BuildRequires: python3-module-pre-commit >= 2.6.0
 
 %if_with docs
 BuildRequires: python3-module-sphinx >= 2.0.0
-BuildRequires: python3-module-reno >= 3.1.0
 BuildRequires: python3-module-doc8 >= 0.8.1
 BuildRequires: python3-module-openstackdocstheme >= 2.2.1
 %endif
@@ -112,6 +111,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1.2
+- Dropped build dependency on python3-module-reno.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1.1
 - Moved on modern pyproject macros.
 

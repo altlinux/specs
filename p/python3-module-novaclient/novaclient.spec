@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 18.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Client library for OpenStack Compute API
 
@@ -50,7 +50,6 @@ BuildRequires: python3-module-osprofiler >= 1.4.0
 
 %if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
@@ -129,6 +128,9 @@ install -pDm 644 tools/nova.bash_completion \
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 18.3.0-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 18.3.0-alt1
 - Automatically updated to 18.3.0.
 

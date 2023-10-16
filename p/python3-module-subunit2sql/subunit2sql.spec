@@ -18,7 +18,7 @@ different format.
 
 Name: python3-module-%oname
 Version: 1.10.0
-Release: alt2
+Release: alt2.1
 
 Summary: Tool for storing test results data in a SQL database
 
@@ -36,7 +36,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-psycopg2
 BuildRequires: python3-module-pymysql
-BuildRequires: python3-module-reno
 BuildRequires: python3-module-testscenarios
 BuildRequires: python3-module-testresources
 BuildRequires: python3-module-openstackdocstheme
@@ -76,6 +75,9 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 1.10.0-alt2.1
+- Dropped build dependency on python3-module-reno.
+
 * Sat Oct 26 2019 Grigory Ustinov <grenka@altlinux.org> 1.10.0-alt2
 - Build without python2.
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.6.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: OpenStack Client Library for Zun
 
@@ -49,7 +49,6 @@ BuildRequires: python3-module-testscenarios >= 0.4
 %if_with docs
 BuildRequires: python3-module-sphinx >= 1.6.2
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
 %endif
 
 %description
@@ -125,6 +124,9 @@ install -pDm 644 tools/zun.bash_completion \
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1.2
+- Dropped build dependency on python3-module-reno.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1.1
 - Moved on modern pyproject macros.
 

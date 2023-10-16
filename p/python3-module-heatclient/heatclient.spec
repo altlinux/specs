@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Orchestration API Client Library
 
@@ -47,7 +47,6 @@ BuildRequires: python3-module-iso8601 >= 0.1.11
 
 %if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 %endif
 
@@ -124,6 +123,9 @@ install -pDm 644 tools/heat.bash_completion \
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
 - Automatically updated to 3.3.0.
 

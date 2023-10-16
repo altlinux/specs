@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 6.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Cinder brick library for managing local volume attaches
 
@@ -55,7 +55,6 @@ BuildRequires: python3-module-eventlet >= 0.30.1
 
 %if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 0.8.0
 BuildRequires: python3-module-openstackdocstheme
 %endif
 
@@ -82,6 +81,9 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+
+# reno is not used, after openstack moved on openstackdocstheme
+find . -name "conf.py" | xargs sed -i '/reno/d'
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -133,6 +135,9 @@ mv %buildroot/usr/etc/os-brick/rootwrap.d/*.filters %buildroot%_sysconfdir/%onam
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.0-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.0-alt1
 - Automatically updated to 6.3.0.
 

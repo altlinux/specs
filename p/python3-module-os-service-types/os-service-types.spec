@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.7.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: Python library for consuming OpenStack sevice-types-authority data
 
@@ -36,7 +36,6 @@ BuildRequires: python3-module-six >= 1.10.0
 %if_with docs
 BuildRequires: python3-module-sphinx >= 1.6.2
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
 %endif
 
 %description
@@ -116,6 +115,9 @@ cp os_service_types/data/service-types.json %buildroot%python3_sitelibdir/os_ser
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt2.2
+- Dropped build dependency on python3-module-reno.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt2.1
 - Moved on modern pyproject macros.
 

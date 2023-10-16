@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 6.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Command-line Client
 
@@ -53,7 +53,6 @@ BuildRequires: python3-module-osprofiler >= 1.4.0
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
 %endif
 
@@ -129,6 +128,9 @@ install -pDm 644 man/openstack.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1
 - Automatically updated to 6.2.0.
 

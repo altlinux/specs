@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 32.0.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: OpenStack Integration Testing
 
@@ -53,7 +53,6 @@ BuildRequires: python3-module-flake8-import-order
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-sphinxcontrib-rsvgconverter
 %endif
 
@@ -140,6 +139,9 @@ mv %buildroot/usr/etc/%oname/allow-list.yaml %buildroot%_sysconfdir/%oname
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 32.0.0-alt1.2
+- Dropped build dependency on python3-module-reno.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 32.0.0-alt1.1
 - Moved on modern pyproject macros.
 

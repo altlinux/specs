@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.3.0
-Release: alt2
+Release: alt2.1
 Summary: Coordination library for distributed systems
 Group: Development/Python3
 License: Apache-2.0
@@ -27,7 +27,6 @@ BuildRequires: python3-module-oslo.serialization >= 1.10.0
 %endif
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.11.0
-BuildRequires: python3-module-reno >= 1.8.0
 BuildRequires: python3-module-pymemcache
 BuildRequires: python3-module-pymysql
 BuildRequires: python3-module-sysv_ipc
@@ -86,6 +85,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2.1
+- Dropped build dependency on python3-module-reno.
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2
 - Fixed FTBFS.
 

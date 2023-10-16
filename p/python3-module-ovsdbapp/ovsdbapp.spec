@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack library for creating OVSDB applications
 
@@ -35,7 +35,6 @@ BuildRequires: python3-module-testtools >= 2.2.0
 
 %if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 %endif
 
@@ -110,6 +109,9 @@ export OS_TEST_PATH=ovsdbapp/tests/unit
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
 - Automatically updated to 2.4.0.
 

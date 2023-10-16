@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 9.0.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: OpenStack Oslo Configuration API
 
@@ -53,7 +53,6 @@ BuildRequires: python3-module-requests-mock
 BuildRequires: python3-module-sphinx >= 1.2.1
 BuildRequires: python3-module-openstackdocstheme
 BuildRequires: python3-module-sphinxcontrib-apidoc
-BuildRequires: python3-module-reno >= 2.5.0
 %endif
 
 %description
@@ -132,6 +131,9 @@ install -pDm 644 man/osloconfig.1 %buildroot%_man1dir/osloconfig.1
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 9.0.0-alt2.2
+- Dropped build dependency on python3-module-reno.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 9.0.0-alt2.1
 - Moved on modern pyproject macros.
 

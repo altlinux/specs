@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Image Service Store Library
 
@@ -57,7 +57,6 @@ BuildRequires: python3-module-oslo.rootwrap >= 5.8.0
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-doc8 >= 0.6.0
 %endif
@@ -148,6 +147,9 @@ mv %buildroot/usr/etc/glance/rootwrap.d/glance_cinder_store.filters \
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
 - Automatically updated to 4.4.0.
 

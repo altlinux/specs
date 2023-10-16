@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Client Library for OpenStack Identity
 
@@ -55,7 +55,6 @@ BuildRequires: python3-module-tempest >= 17.1.0
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
 
@@ -126,6 +125,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
 - Automatically updated to 5.1.0.
 

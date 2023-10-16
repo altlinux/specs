@@ -5,7 +5,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 9.3.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: OpenStack Block Storage API Client Library
 
@@ -44,7 +44,6 @@ BuildRequires: python3-module-requests-mock >= 1.2.0
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-doc8 >= 0.8.1
 %endif
 
@@ -71,6 +70,9 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+
+# reno is not used, after openstack moved on openstackdocstheme
+find . -name "conf.py" | xargs sed -i '/reno/d'
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -122,6 +124,9 @@ install -pDm 644 tools/cinder.bash_completion \
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 1:9.3.0-alt1.2
+- Dropped build dependency on python3-module-reno.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 1:9.3.0-alt1.1
 - Moved on modern pyproject macros.
 

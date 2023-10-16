@@ -5,7 +5,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 14.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Oslo Messaging API
 
@@ -61,7 +61,6 @@ BuildRequires: python3-module-greenlet >= 0.4.15
 %if_with docs
 BuildRequires: python3-module-sphinx >= 1.6.2
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
 %endif
 
 %description
@@ -138,6 +137,9 @@ install -pDm 644 man/oslomessaging.1 %buildroot%_man1dir/oslomessaging.1
 %endif
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 1:14.3.1-alt1.1
+- Dropped build dependency on python3-module-reno.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 1:14.3.1-alt1
 - Automatically updated to 14.3.1.
 
