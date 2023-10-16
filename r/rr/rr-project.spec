@@ -5,27 +5,30 @@
 #  %%set_verify_elf_method strict
 
 Name:		rr
-Version:	5.6.0
-Release:	alt3
+Version:	5.7.0
+Release:	alt1
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
 License:	MIT and BSD and Apache-2.0
 URL:		https://rr-project.org/
 Vcs:		https://github.com/rr-debugger/rr
 # Upstream issue tracker: https://github.com/mozilla/rr/issues/
-
-Source:		%name-%version.tar
-ExclusiveArch:	x86_64 aarch64
-
 Obsoletes:	rr-project < %EVR
 Provides:	rr-project = %EVR
 Requires:	gdb
+ExclusiveArch:	x86_64 aarch64
+AutoReqProv: nopython
 
-BuildRequires(pre): rpm-build-python3
+Source:		%name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: capnproto-devel
 BuildRequires: cmake
 BuildRequires: gcc-c++
+BuildRequires: gdb
+BuildRequires: patchelf
+BuildRequires: python3-module-pexpect
+BuildRequires: rpm-build-python
+BuildRequires: rpm-build-python3
 BuildRequires: zlib-devel
 
 %description
@@ -42,6 +45,28 @@ rr currently requires either:
 - Certain AArch64 microarchitectures (e.g. ARM Neoverse N1 or the Apple
   Silicon M-series).
 
+%package testsuite
+Summary: Test suite for rr (debugger)
+Group: Development/Other
+Requires: rr = %EVR
+AutoReqProv: nopython
+Requires: ctest
+
+%description testsuite
+%summary.
+Prerequisites:
+- Supported hardware
+- echo 1 > /proc/sys/kernel/perf_event_paranoid
+- echo 0 > /proc/sys/kernel/userns_restrict
+
+%package checkinstall
+Summary: CI test for %name
+Group: Development/Other
+Requires(post): rr-testsuite = %EVR
+
+%description checkinstall
+%summary.
+
 %prep
 %setup
 
@@ -49,20 +74,35 @@ rr currently requires either:
 # %%define optflags_lto %nil
 # Workarounds for 5.6.0:
 %add_optflags -Wno-error=redundant-move -Wno-error=maybe-uninitialized -Wno-error=dangling-reference
-%cmake -Ddisable32bit=ON -DBUILD_TESTS=OFF
+%cmake -Ddisable32bit=ON -DINSTALL_TESTSUITE=ON -Wno-dev
 %cmake_build
 
 %install
 %cmake_install
 rm -rf %buildroot%_datadir/rr/src
-
 # By default, with `--strip-all` it strips `.replay.text` causing `rr replay` crash.
 # https://github.com/rr-debugger/rr/issues/3364
-%brp_strip_none %_libdir/rr/lib*.so
+%brp_strip_none %_libdir/rr/librr*.so
+# verify-elf: ERROR: ./usr/lib64/rr/testsuite/obj/bin/constructor: RPATH contains illegal entry "/usr/src/RPM/BUILD": /usr/src/RPM/BUILD/rr-5.6.0/x86_64-alt-linux/lib/rr
+patchelf --set-rpath '%_libdir/rr' %buildroot%_libdir/rr/testsuite/obj/bin/constructor
+
+# https://github.com/rr-debugger/rr/issues/3625#issuecomment-1763326259
+# debuginfo should not be stripped out of testsuite.
+# We cannot also make it R package because of cyclic dependence.
+%add_debuginfo_skiplist %_libdir/rr/testsuite %_libdir/rr/libtest_lib*.so
+
+%post checkinstall
+set -ex
+# librrpage should have special pages.
+readelf -S %_libdir/rr/librrpage.so | grep -Fw '.record.text'
+readelf -S %_libdir/rr/librrpage.so | grep -Fw '.replay.text'
+# Tests in testsuite should be non-stripped.
+file %_libdir/rr/libtest_lib.so | grep 'with debug_info, not stripped'
+file %_libdir/rr/testsuite/obj/bin/alternate_thread_diversion | grep 'with debug_info, not stripped'
 
 %files
 %define _customdocdir %_docdir/%name
-%doc LICENSE README.md scripts/zen_workaround.py
+%doc LICENSE README.md scripts/zen_workaround.* wiki
 %_bindir/rr
 %_bindir/rr_exec_stub
 %_bindir/signal-rr-recording.sh
@@ -70,8 +110,25 @@ rm -rf %buildroot%_datadir/rr/src
 %_datadir/rr
 %_datadir/bash-completion/completions/rr
 %_libdir/rr
+%exclude %_libdir/rr/libtest_lib*.so
+%exclude %_libdir/rr/testsuite
+
+%files testsuite
+%_libdir/rr/libtest_lib*.so
+%_libdir/rr/testsuite
+
+%files checkinstall
 
 %changelog
+* Mon Oct 16 2023 Vitaly Chikunov <vt@altlinux.org> 5.7.0-alt1
+- Update to 5.7.0 (2023-10-03).
+- Testsuite should not have debuginfo stripped or separated.
+- Install wiki (markdown) pages into %%doc.
+- spec: Add checkinstall package.
+
+* Sun Oct 01 2023 Vitaly Chikunov <vt@altlinux.org> 5.6.0-alt4
+- Package testsuite.
+
 * Sun Jul 16 2023 Vitaly Chikunov <vt@altlinux.org> 5.6.0-alt3
 - Workaround ALT beekeeper rebuild failures (gcc13).
 
