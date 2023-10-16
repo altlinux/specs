@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.23.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python extension for computing string edit distances and similarities
 License: GPL-2.0
@@ -50,6 +50,10 @@ It supports both normal and Unicode strings.
 %pyproject_deps_resync_metadata
 
 %build
+%ifarch %e2k
+# standard is not specified, but rapidfuzz requires at least C++17
+%add_optflags -std=c++17
+%endif
 %pyproject_build
 
 %install
@@ -64,6 +68,9 @@ It supports both normal and Unicode strings.
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Mon Oct 16 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.23.0-alt1.1
+- Fixed build for Elbrus.
+
 * Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 0.23.0-alt1
 - Updated to 0.23.0.
 
