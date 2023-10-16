@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.7
-Release: alt4
+Version: 0.1.8
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -52,6 +52,9 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %_includedir/alterator
 
 %changelog
+* Mon Oct 16 2023 Ivan Savin <svn17@altlinux.org> 0.1.8-alt1
+- Fix: wrong method names in ru.basealt.alterator.manager.
+
 * Wed Sep 20 2023 Ivan Savin <svn17@altlinux.org> 0.1.7-alt4
 - Fix: fail to start when the backend files not found.
 
