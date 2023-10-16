@@ -1,7 +1,7 @@
 %define rname libkexiv2
 
 Name: kde5-%rname
-Version: 23.08.1
+Version: 23.08.2
 Release: alt1
 %K5init altplace
 
@@ -68,6 +68,9 @@ KF5 library
 %_K5lib/libKF5KExiv2.so.*
 
 %changelog
+* Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
 - new version
 

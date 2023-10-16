@@ -9,7 +9,7 @@
 %add_findreq_skiplist %_datadir/nautilus-python/extensions/*.py
 
 Name: kde5-connect
-Version: 23.08.1
+Version: 23.08.2
 Release: alt1
 %K5init
 
@@ -26,8 +26,6 @@ Requires: kf5-kirigami kf5-kirigami-addons
 # KF5PeopleVCard
 
 Source: %rname-%version.tar
-Patch1: alt-hide-menu-item.patch
-
 
 # Automatically added by buildreq on Fri Feb 05 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ gtk-update-icon-cache libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libxcbutil-keysyms libxkbfile-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -101,7 +99,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build \
@@ -170,6 +167,12 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
+* Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt3
+- fix to don't handle application/octet-stream files
+
 * Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
 - new version
 

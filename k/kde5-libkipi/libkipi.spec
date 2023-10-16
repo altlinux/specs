@@ -1,7 +1,7 @@
 %define rname libkipi
 
 Name: kde5-%rname
-Version: 23.08.1
+Version: 23.08.2
 Release: alt1
 %K5init altplace
 
@@ -77,6 +77,9 @@ mkdir -p %buildroot/%_K5data/kipi/
 %_K5lib/libKF5Kipi.so.*
 
 %changelog
+* Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Thu Oct 05 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
 - new version
 
