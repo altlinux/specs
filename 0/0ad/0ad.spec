@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.26
-Release: alt0_5_alpha
+Release: alt0_6_alpha
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -35,13 +35,13 @@ Patch7: 0ad-fix-build-with-libfmt10.patch
 # optimized out: at-spi2-atk boost-devel boost-devel-headers cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libat-spi2-core libcairo-gobject libfreetype-devel libgdk-pixbuf libglvnd-devel libgpg-error libicu-devel libogg-devel libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwxBase3.0-devel libwxGTK3.0-gl libwxGTK3.0-webview perl pkg-config python3 python3-base sh4 xorg-proto-devel zlib-devel
 BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-lockfree-devel boost-signals-devel
 BuildRequires: cmake gcc-c++ libSDL2-devel libcurl-devel libenet-devel libfmt-devel libgloox-devel libminiupnpc-devel
-BuildRequires: libmozjs78-devel libopenal-devel libpng-devel libsodium-devel libvorbis-devel libwxGTK3.0-devel libxml2-devel
+BuildRequires: libmozjs78-devel libopenal-devel libpng-devel libsodium-devel libvorbis-devel libxml2-devel
 BuildRequires: python3-dev
 
 BuildRequires: gcc-c++ %_bindir/python3 cmake
 BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-signals-devel
 BuildRequires: libjpeg-devel libpng-devel libvorbis-devel libfreetype-devel
-BuildRequires: libopenal-devel libGL-devel libSDL2-devel libwxGTK3.0-devel libXcursor-devel
+BuildRequires: libopenal-devel libGL-devel libSDL2-devel libwxGTK3.2-devel libXcursor-devel
 BuildRequires: libcurl-devel libxml2-devel libnspr-devel libicu-devel zlib-devel
 BuildRequires: libenet-devel libminiupnpc-devel libgloox-devel libsodium-devel
 BuildRequires: python3-dev
@@ -143,6 +143,9 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 1:0.0.26-alt0_6_alpha
+- NMU: rebuild with wxGTK3.2
+
 * Thu Oct 12 2023 Nazarov Denis <nenderus@altlinux.org> 1:0.0.26-alt0_5_alpha
 - NMU: Fix build with libfmt 10
 
