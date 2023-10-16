@@ -4,8 +4,8 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.28.4
-Release: alt2
+Version: 1.30.0
+Release: alt1
 
 Summary: MBIM modem protocol helper library
 License: LGPLv2+
@@ -128,6 +128,9 @@ This package contains development documentation for %name
 
 
 %changelog
+* Mon Oct 16 2023 Mikhail Efremov <sem@altlinux.org> 1.30.0-alt1
+- Updated to 1.30.0.
+
 * Thu Jun 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.28.4-alt2
 - Dropped python2 from build dependencies since all python scripts are
   compatible with python3, and meson uses python3 anyway (closes: #46356).
