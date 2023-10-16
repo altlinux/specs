@@ -10,7 +10,7 @@
 
 Name: kea
 Version: 2.4.0
-Release: alt1
+Release: alt2
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
 License: MPL-2.0 and BSL-1.0
@@ -142,6 +142,7 @@ sed -i -e "s|%version-git|%version|" configure.ac
     --with-log4cplus \
     --with-openssl \
     --with-gssapi \
+    --with-site-packages=%python3_sitelibdir_noarch \
     runstatedir=/run
 
 %make_build
@@ -175,7 +176,7 @@ sed -i -e s/\"output\".*/\"output\":\ \"stdout\",/ -e s@\/\/\ \"pattern@\"patter
     %buildroot%_sysconfdir/kea/kea-dhcp6.conf \
     %buildroot%_sysconfdir/kea/kea-dhcp4.conf \
     %buildroot%_sysconfdir/kea/kea-dhcp-ddns.conf
-#    %buildroot%_sysconfdir/kea/kea-netconf.conf  # TODO: no support for netconf/sysconf yet
+#    %%buildroot%%_sysconfdir/kea/kea-netconf.conf  # TODO: no support for netconf/sysconf yet
 
 %pre
 %_sbindir/groupadd -r -f _kea
@@ -227,6 +228,9 @@ sed -i -e s/\"output\".*/\"output\":\ \"stdout\",/ -e s@\/\/\ \"pattern@\"patter
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Oct 16 2023 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt2
+- fixed execute kea-shell (fix define python3 site-packages path)
+
 * Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt1
 - 2.4.0
 - build with gssapi support
