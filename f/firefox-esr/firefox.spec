@@ -20,7 +20,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (верс�
 
 Name: firefox-esr
 Version: 115.3.1
-Release: alt3
+Release: alt4
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -82,6 +82,7 @@ BuildRequires: binutils
 BuildRequires: lld%llvm_version-devel
 %endif
 %ifarch armh %{ix86}
+%filter_from_requires /libc.so.6(GLIBC_PRIVATE)/d
 BuildRequires: gcc
 BuildRequires: gcc-c++
 %endif
@@ -529,6 +530,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Mon Oct 16 2023 Pavel Vasenkov <pav@altlinux.org> 115.3.1-alt4
+- Fix check dependencies error for GLIBC_PRIVATE
+
 * Fri Oct 13 2023 Pavel Vasenkov <pav@altlinux.org> 115.3.1-alt3
 - Fix folder location for config-privacy js configuration files (Closes #47960)
 
