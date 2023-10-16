@@ -1,30 +1,60 @@
-Name: igt-gpu-tools
-Version: 1.26
-Release: alt2
+%define _unpackaged_files_terminate_build 1
 
-Summary: tools for debugging the Intel graphics driver
+Name: igt-gpu-tools
+Version: 1.28
+Release: alt1
+
+Summary: IGT gpu tools and tests
 License: MIT
 Group: Development/Debug
 
-# http://cgit.freedesktop.org/xorg/app/intel-gpu-tools/
-Url: http://01.org/linuxgraphics/
-Source: %name-%version.tar.xz
+Url: https://gitlab.freedesktop.org/drm/igt-gpu-tools
+Source: %name-%version.tar
 
-Provides: intel-gpu-tools-@version@
-Obsoletes: intel-gpu-tools
+Provides: intel-gpu-tools = %EVR
+Obsoletes: intel-gpu-tools < %EVR
 
 ExclusiveArch: %ix86 x86_64
 
-Requires: intel-gen4asm = %version
+Requires: intel-gen4asm = %EVR
 
-# Automatically added by buildreq on Wed Nov 17 2021
-# optimized out: docbook-dtds docbook-style-xsl fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXau-devel libXext-devel libXrender-devel libcrypt-devel libctf-nobfd0 libelf-devel libfreetype-devel libglvnd-devel libgpg-error libgraphite2-devel libicu-devel libjson-c5 libncurses-devel libp11-kit libpng-devel libsasl2-3 libtinfo-devel libxcb-devel libxmlrpc-client ninja-build perl pkg-config python3 python3-base python3-module-Pygments sh4 xml-common xsltproc xz zlib-devel
-BuildRequires: ctags flex git-core gtk-doc libXrandr-devel libXv-devel libalsa-devel libcairo-devel libcurl-devel libdb4-devel libdrm-devel libdw-devel libgdbm-devel libgsl-devel libharfbuzz-devel libjson-c-devel libkmod-devel liboping-devel libpciaccess-devel libpixman-devel libprocps-devel libudev-devel libunwind-devel libxmlrpc-devel meson python3-dev
+BuildRequires: rpm-build-perl
+BuildRequires: perl-Pod-Usage
+BuildRequires: python3-dev
+BuildRequires: meson flex
+BuildRequires: libdrm-devel
+BuildRequires: libpciaccess-devel
+BuildRequires: libkmod-devel
+BuildRequires: libproc2-devel
+BuildRequires: libunwind-devel
+BuildRequires: libdw-devel
+BuildRequires: libpixman-devel
+BuildRequires: libcairo-devel
+BuildRequires: libudev-devel
+BuildRequires: libxmlrpc-devel
+BuildRequires: libgsl-devel
+BuildRequires: libalsa-devel
+BuildRequires: libcurl-devel
+BuildRequires: libXv-devel
+BuildRequires: libXrandr-devel
+BuildRequires: liboping-devel
+BuildRequires: libdb4-devel
+BuildRequires: libgdbm-devel
+BuildRequires: libharfbuzz-devel
+BuildRequires: libjson-c-devel
+BuildRequires: glib2-devel
+BuildRequires: gtk-doc
+BuildRequires: python3-module-docutils
 
 %description
-igt-gpu-tools is a package of tools for debugging the Intel graphics
-driver, including a GPU hang dumping program, performance monitor,
-and performance microbenchmarks for regression testing the DRM.
+IGT GPU Tools is a collection  of tools for development and testing of
+the DRM drivers. There are many  macro-level test suites that get used
+against  the  drivers,  including   xtest,  rendercheck,  piglit,  and
+oglconform, but failures from those can  be difficult to track down to
+kernel  changes,  and many  require  complicated  build procedures  or
+specific testing  environments to  get useful results.  Therefore, IGT
+GPU  Tools  includes  low-level   tools  and  tests  specifically  for
+development and testing of the DRM Drivers.
 
 %package -n intel-gen4asm
 Summary: Intel 965 assembly language compiler
@@ -32,12 +62,12 @@ License: MIT
 Group: Development/Tools
 
 %description -n intel-gen4asm
-intel-gen4asm is a program to compile an assembly language for the Intel 965
-Express Chipset.  It has been used to construct programs for textured video
-in the 2d driver.
+intel-gen4asm is  a program  to compile an  assembly language  for the
+Intel 965 Express Chipset.  It has been used to construct programs for
+textured video in the 2d driver.
 
 %package devel
-Summary: GTK development suite for %name
+Summary: GTK development suite for igt-gpu-tools
 License: MIT
 Group: Development/C
 
@@ -45,7 +75,7 @@ Group: Development/C
 %summary
 
 %package devel-doc
-Summary: GTK development documentation for %name
+Summary: GTK development documentation for igt-gpu-tools
 License: MIT
 BuildArch: noarch
 Group: Development/Documentation
@@ -56,8 +86,8 @@ Group: Development/Documentation
 %prep
 %setup
 
-# fix FTBFS with meson>=0.60
-sed -i -e '/underscorify(f)/ s/(f)/()/' lib/meson.build
+# fix: warning: "_FORTIFY_SOURCE" redefined
+sed -i -e 's/_FORTIFY_SOURCE=2/_FORTIFY_SOURCE=3/' meson.build
 
 %build
 %meson
@@ -68,14 +98,14 @@ sed -i -e '/underscorify(f)/ s/(f)/()/' lib/meson.build
 %meson_install
 
 %files
+%doc README.md COPYING NEWS
 %_bindir/*
 %_libdir/*.so.*
-%_usr/lib/%name/
-%_datadir/%name/
-#_mandir/*/*
+%_man1dir/*
+%_libexecdir/igt-gpu-tools
+%_datadir/igt-gpu-tools
 %exclude %_bindir/intel-gen4asm
 %exclude %_bindir/intel-gen4disasm
-%exclude %_pkgconfigdir/intel-gen4asm.pc
 
 %files devel
 %_libdir/*.so
@@ -83,15 +113,23 @@ sed -i -e '/underscorify(f)/ s/(f)/()/' lib/meson.build
 %_pkgconfigdir/i915-perf.pc
 
 %files devel-doc
-%_datadir/gtk-doc/html/%name
+%_datadir/gtk-doc/html/igt-gpu-tools
 
 %files -n intel-gen4asm
+%doc assembler/README assembler/TODO assembler/doc/examples/
 %_bindir/intel-gen4asm
 %_bindir/intel-gen4disasm
 %_pkgconfigdir/intel-gen4asm.pc
-%doc assembler/README assembler/TODO assembler/doc/examples/
 
 %changelog
+* Fri Oct 13 2023 Egor Ignatov <egori@altlinux.org> 1.28-alt1
+- new version 1.28
+- change packaging scheme
+
+* Fri Mar 03 2023 Egor Ignatov <egori@altlinux.org> 1.27.1-alt1
+- new version 1.27.1
+- clean up spec
+
 * Thu Dec 22 2022 Egor Ignatov <egori@altlinux.org> 1.26-alt2
 - Fix FTBFS with meson>=0.60
 

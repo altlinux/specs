@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.8.2
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -42,7 +42,7 @@ BuildRequires: liblzo2-devel
 BuildRequires: libssl-devel
 BuildRequires: libldap-devel
 BuildRequires: libpam0-devel
-BuildRequires: libprocps-devel
+BuildRequires: libproc2-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libpng-devel
 BuildRequires: libXrandr-devel
@@ -50,6 +50,9 @@ BuildRequires: libXinerama-devel
 BuildRequires: libqca-qt5-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libXtst-devel
+BuildRequires: libfakekey-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXcursor-devel
 
 %description
 Veyon is a free and open source software
@@ -131,6 +134,9 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_datadir/%name
 
 %changelog
+* Thu Oct 12 2023 Egor Ignatov <egori@altlinux.org> 4.8.2-alt2
+- update BuildRequires
+
 * Tue Oct 03 2023 Egor Ignatov <egori@altlinux.org> 4.8.2-alt1
 - new version 4.8.2 (closes: #47470)
 

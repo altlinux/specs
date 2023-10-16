@@ -1,62 +1,45 @@
-Name: procps
-Version: 4.0.4
-Release: alt1
+Name: libprocps
+Version: 3.3.17
+Release: alt8.g37f1060
+
+%def_disable devel
 
 %def_disable bootstrap
 %if_enabled bootstrap
 %force_without systemd
-%force_disable check
 %else
 %def_with systemd
 %endif
 
-Summary: System and process monitoring utilities
-License: GPLv2+ and LGPLv2+
-Group: Monitoring
+Summary: Compat %name shared library
+License: LGPLv2+
+Group: System/Libraries
 URL: https://gitlab.com/procps-ng/procps
 
 # git://git.altlinux.org/gears/p/procps.git
 Vcs: https://gitlab.com/procps-ng/procps.git
 Source: %name-%version-%release.tar
 
-# it is actually procps-ng
-Provides: procps-ng = %version-%release
-
-Requires: libproc2 = %version-%release
-
-# Due to kill(1) relocation to coreutils.
-Requires: coreutils >= 0:5.2.1-alt2
-
-BuildRequires: libncursesw-devel
 %if_with systemd
 BuildRequires: libsystemd-devel
 %endif
-%{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu}}
 
 %define _unpackaged_files_terminate_build 1
 
 %description
-This package contains a set of system utilities which provide system
-information.  procps includes: free, pgrep, pkill, pmap, ps, pwdx,
-skill, slabtop, snice, sysctl, tload, top, uptime, vmstat, w, watch.
+This package contains %name runtime library.
 
-%package -n libproc2
-Summary: %name shared library
-License: LGPLv2+
-Group: System/Libraries
-
-%package -n libproc2-devel
+%if_enabled devel
+%package devel
 Summary: Development files for building %name-aware applications
 License: LGPLv2+
 Group: Development/C
-Requires: libproc2 = %version-%release
+Requires: %name = %version-%release
 
-%description -n libproc2
-This package contains libproc2 runtime library.
-
-%description -n libproc2-devel
+%description devel
 This package contains development files for building %name-aware
 applications.
+%endif
 
 %prep
 %setup -n %name-%version-%release
@@ -68,32 +51,21 @@ echo -n %version-%release > .tarball-version
 %add_optflags "-Werror"
 ./autogen.sh
 %configure \
-	--exec-prefix=/ \
-	--sbindir=/sbin \
-	--enable-watch8bit \
 	--disable-static \
+	--without-ncurses \
 	--disable-kill \
-	--enable-skill \
+	--disable-skill \
 	--disable-pidof \
 	--disable-nls \
 	--disable-modern-top \
+	--disable-pidwait \
+	--disable-w \
 	%{subst_with systemd} \
 	#
 %make_build
 
 %install
 %makeinstall_std
-rm -r %buildroot%_docdir/procps-ng
-
-# move ps to /bin
-mkdir -p %buildroot/bin
-mv %buildroot%_bindir/ps %buildroot/bin/
-
-# reduce redundancy
-ln -snf pgrep %buildroot%_bindir/pkill
-ln -snf pgrep %buildroot%_bindir/pidwait
-ln -snf skill %buildroot%_bindir/snice
-
 # relocate shared libraries from %_libdir/ to /%_lib/
 for f in %buildroot%_libdir/*.so; do
 	t=$(readlink -v "$f")
@@ -102,41 +74,25 @@ done
 mkdir -p %buildroot/%_lib
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
-%check
-make check
-
 %files
-/bin/*
-/sbin/*
-%_bindir/*
-%_mandir/man?/*
-%doc AUTHORS doc/bugs.md doc/FAQ NEWS README.md src/top/README.top doc/TODO
-
-%files -n libproc2
 /%_lib/*
 
-%files -n libproc2-devel
+%if_enabled devel
+%files devel
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
+%else
+%exclude %_libdir/*.so
+%exclude %_includedir/*
+%exclude %_pkgconfigdir/*.pc
+%endif
+
 %changelog
-* Wed Oct 04 2023 Mikhail Efremov <sem@altlinux.org> 4.0.4-alt1
-- Disabled broken tests.
-- Renamed checkproc() -> procps_checkproc().
-- w: Dropped unused variable.
-- uptime/w: Don't link with libsystemd.
-- Mark that elogind is not supported in ALT patches.
-- vmstat: Dropped unused variable.
-- w: Use checkproc() to check /proc is mounted.
-- Fixed build with nls enabled.
-- Fixed build without nls.
-- Renamed libproc subpackage to libproc2.
-- Fixed docs packaging.
-- pwdx.c: Fixed include checkproc.h.
-- tests: Dropped unused variable.
-- checkproc.h: Don't use EXTERN_C_* macros.
-- checkproc.h: Dropped procps.h include.
-- Updated to v4.0.4 (closes: #46768).
+* Thu Sep 14 2023 Mikhail Efremov <sem@altlinux.org> 3.3.17-alt8.g37f1060
+- Disabled devel subpackage.
+- Build libprocps only.
+- Renamed to librocps.
 
 * Fri Apr 07 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.3.17-alt7.g37f1060
 - spec: added knobs to make the bootstrap easier:

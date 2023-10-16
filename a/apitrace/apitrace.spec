@@ -1,6 +1,6 @@
 Name: apitrace
 Version: 11.1
-Release: alt1
+Release: alt2
 
 Summary: Tools for tracing OpenGL
 
@@ -26,7 +26,7 @@ BuildRequires: libsnappy-devel
 BuildRequires: desktop-file-utils
 #BuildRequires: libappstream-glib
 BuildRequires: libgtest-devel
-BuildRequires: libdwarf-devel libprocps-devel
+BuildRequires: libdwarf-devel libproc2-devel
 BuildRequires: libbacktrace-devel
 
 # for gui tools
@@ -112,6 +112,9 @@ make check
 %_datadir/appdata/qapitrace.appdata.xml
 
 %changelog
+* Sun Oct 15 2023 Vitaly Lipatov <lav@altlinux.ru> 11.1-alt2
+- rebuild with libproc2-devel
+
 * Mon Jul 03 2023 Mikhail Tergoev <fidel@altlinux.org> 11.1-alt1
 - new version 11.1 (with rpmgs script)
 - fix building with CMakeLists.txt from subdirectory
