@@ -19,7 +19,7 @@
 
 Name: OpenSceneGraph
 Version: 3.6.5
-Release: alt2
+Release: alt3
 
 Summary: High performance real-time graphics toolkit
 License: OSGPL (wxWidgets, clarified LGPL)
@@ -88,7 +88,7 @@ BuildRequires: libxkbfile-devel
 BuildRequires: libxml2-devel
 BuildRequires: libgta-devel
 
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
 #BuildRequires: pkgconfig(gtk+-2.0)
 
 BuildRequires: gstreamer1.0-devel
@@ -477,6 +477,9 @@ rm -rf %buildroot/usr/doc/
 %_includedir/OpenThreads
 
 %changelog
+* Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 3.6.5-alt3
+- rebuild with wxGTK3.2
+
 * Thu Jan 20 2022 Michael Shigorin <mike@altlinux.org> 3.6.5-alt2
 - move present3D from examples (it isn't) to the main package
 
