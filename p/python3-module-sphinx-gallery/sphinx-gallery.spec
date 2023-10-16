@@ -4,21 +4,21 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.10.1
+Version: 0.14.0
 Release: alt1
 Summary: Sphinx extension for automatic generation of an example gallery
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://sphinx-gallery.github.io
+Vcs: https://github.com/sphinx-gallery/sphinx-gallery.git
 
 BuildArch: noarch
 
-# https://github.com/sphinx-gallery/sphinx-gallery.git
 Source: %name-%version.tar
 
-Patch0: %name-%version-alt.patch
-
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: /proc
@@ -41,13 +41,12 @@ A Sphinx extension that builds an HTML version of any Python script and puts it 
 
 %prep
 %setup
-%autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # outdated script requiring dropped easy_install
 rm %buildroot%_bindir/copy_sphinxgallery.sh
@@ -56,20 +55,28 @@ rm %buildroot%_bindir/copy_sphinxgallery.sh
 mv %buildroot%_bindir/sphx_glr_python_to_jupyter{.py,}
 
 %check
-py.test3 -vra \
-	--deselect=sphinx_gallery/tests/test_docs_resolv.py::test_embed_code_links_get_data \
-	--deselect=sphinx_gallery/tests/test_full.py \
-	%nil
+sed -i '/addopts/d' pyproject.toml
+# some tests need jupyterlite_sphinx which not packaged yet
+%pyproject_run_pytest --durations=5 -ra \
+ --deselect=sphinx_gallery/tests/test_docs_resolv.py::test_embed_code_links_get_data \
+ --deselect=sphinx_gallery/tests/test_full.py \
+ --deselect=sphinx_gallery/tests/test_full_noexec.py \
+ --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents \
+ --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents_non_default_contents \
+ --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents_with_jupyterlite_disabled_via_config
 
 %files
 %doc LICENSE
 %doc README.rst RELEASES.md CHANGES.rst
 %_bindir/sphx_glr_python_to_jupyter
 %python3_sitelibdir/sphinx_gallery
-%python3_sitelibdir/sphinx_gallery-%version-*.egg-info
+%python3_sitelibdir/sphinx_gallery-%version.dist-info
 %exclude %python3_sitelibdir/sphinx_gallery/tests
 
 %changelog
+* Mon Oct 16 2023 Anton Vyatkin <toni@altlinux.org> 0.14.0-alt1
+- New version 0.14.0.
+
 * Tue Mar 01 2022 Stanislav Levin <slev@altlinux.org> 0.10.1-alt1
 - 0.9.0 -> 0.10.1.
 
