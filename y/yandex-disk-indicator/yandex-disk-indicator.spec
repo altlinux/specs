@@ -1,6 +1,6 @@
 Name:  yandex-disk-indicator
-Version: 1.11.0
-Release: alt3.git561c25c
+Version: 1.12.2
+Release: alt1
 Summary: Panel indicator for YandexDisk CLI client for Linux
 Group: Communications
 License: GPL-3.0
@@ -37,6 +37,9 @@ chmod 0644 %buildroot%_desktopdir/*.desktop
 %_datadir/yd-tools
 
 %changelog
+* Mon Oct 16 2023 Andrey Cherepanov <cas@altlinux.org> 1.12.2-alt1
+- New version.
+
 * Mon Mar 06 2023 Anton Midyukov <antohami@altlinux.org> 1.11.0-alt3.git561c25c
 - NMU: require typelib(AyatanaAppIndicator3) instead typelib(AppIndicator3)
 
