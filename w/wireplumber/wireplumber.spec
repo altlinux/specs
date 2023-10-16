@@ -10,7 +10,7 @@
 
 Name: wireplumber
 Version: 0.4.15
-Release: alt1
+Release: alt2
 
 Summary: a modular session/policy manager for PipeWire
 
@@ -33,6 +33,7 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-breathe
 BuildRequires: python3(sphinx_rtd_theme)
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-setuptools
 BuildRequires: python3(lxml)
 BuildRequires: doxygen >= 1.8.0
 %endif
@@ -190,6 +191,9 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Mon Oct 16 2023 Michael Shigorin <mike@altlinux.org> 0.4.15-alt2
+- Added explicit BR: python3-module-setuptools to fix ftbfs on e2k.
+
 * Sun Oct 15 2023 Arseny Maslennikov <arseny@altlinux.org> 0.4.15-alt1
 - 0.4.14 -> 0.4.15.
 
