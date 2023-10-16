@@ -2,7 +2,7 @@
 
 Name: pioneerspacesim
 Version: 20230203
-Release: alt1
+Release: alt2
 
 Summary: A game of lonely space adventure
 License: GPLv3 and BSD and MIT and Apache-2.0 and ALT-Public-Domain and CC-BY-SA-3.0 and Bitstream-Vera and OFL-1.1
@@ -10,13 +10,19 @@ Group: Games/Other
 Url: https://pioneerspacesim.net/
 Vcs: https://github.com/pioneerspacesim/pioneer
 
-# 32 bit platforms are not supported by upstream
+# Apparently, the upstream developers do not care about 32-bit systems.  For
+# instance, the src/lua/LuaPushPull.h header is not aware that the size_t type
+# could potentially be equivalent to an unsigned int.
+# There is no point for us to invest efforts in 32-bit systems either.
 ExcludeArch: armh i586
 
 Source: %name-%version.tar
 
 Patch1: suse-use-system-fmt.patch
 Patch2: alt-add-return-value.patch
+Patch3: alt-fix-fmt-wont-format-enum.patch
+
+BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -56,6 +62,7 @@ This package contains models, scripts and other data for the game.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 #fix the version, otherwise it will be set to the build date
 #also, instead of the commit hash, write the alt release version
@@ -95,6 +102,11 @@ sed -i "/^string(TIMESTAMP PROJECT_VERSION/c\set(PROJECT_VERSION %version)\nset(
 %_datadir/%name/
 
 %changelog
+* Mon Oct 16 2023 Anton Golubev <golubevan@altlinux.org> 20230203-alt2
+- fix FTBFS due to libfmt update
+- better commentary on unused architectures
+- fix warnings about cmake rpm macro not found
+
 * Fri Mar 17 2023 Anton Golubev <golubevan@altlinux.org> 20230203-alt1
 - initial build
 
