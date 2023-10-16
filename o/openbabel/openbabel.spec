@@ -3,7 +3,7 @@
 
 Name: openbabel
 Version: %ver_major.1
-Release: alt3
+Release: alt4
 
 %define tag_ver %(echo %version|tr . -)
 
@@ -23,7 +23,7 @@ Patch: %name-%version-%release.patch
 BuildRequires: rpm-macros-cmake rpm-build-python3
 BuildRequires: cmake eigen3 gcc-c++ rapidjson
 BuildRequires: boost-devel boost-filesystem-devel
-BuildRequires: libcairo-devel libwxGTK3.0-devel
+BuildRequires: libcairo-devel libwxGTK3.2-devel
 BuildRequires: zlib-devel libxml2-devel xml-utils
 BuildRequires: python3-devel python3-module-setuptools swig
 
@@ -136,6 +136,9 @@ sed -i 's/dist\(-packages\)/site\1/' scripts/CMakeLists.txt
 %endif
 
 %changelog
+* Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt4
+- NMU: rebuild with wxGTK3.2
+
 * Wed May 03 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt3
 - NMU: fixed FTBFS.
 
