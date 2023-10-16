@@ -3,16 +3,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.7.7
+Version: 0.7.9
 Release: alt1
 
 Summary: Python Netlink library
 
 Group: Development/Python3
-License: GPLv2+, ASL 2.0
+License: GPLv2+ and Apache-2.0
 Url: https://github.com/svinota/pyroute2
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildArch: noarch
 
@@ -36,7 +36,7 @@ The library was started as an RTNL protocol implementation,
 so the name is pyroute2, but now it supports many netlink protocols.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %pyproject_build
@@ -49,11 +49,18 @@ so the name is pyroute2, but now it supports many netlink protocols.
 
 %files
 %doc *.rst
-%_bindir/*
-%python3_sitelibdir/*
-
+%_bindir/%oname-cli
+%_bindir/%oname-dhcp-client
+%_bindir/%oname-test-platform
+%_bindir/ss2
+%python3_sitelibdir/%oname
+%python3_sitelibdir/pr2modules
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 0.7.9-alt1
+- Automatically updated to 0.7.9.
+
 * Fri Apr 28 2023 Anton Vyatkin <toni@altlinux.org> 0.7.7-alt1
 - NMU: New version 0.7.7.
 
