@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: Python tool configuration
@@ -27,6 +27,9 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 %add_pyproject_deps_check_filter tox-pdm
 %add_pyproject_deps_check_filter sphinx-rtd-theme
+%add_pyproject_deps_check_filter pytest-emoji
+%add_pyproject_deps_check_filter pytest-md
+%add_pyproject_deps_check_filter tox-gh
 %pyproject_builddeps_metadata_extra gendocs
 %pyproject_builddeps_check
 BuildRequires: python3-module-tabulate
@@ -62,6 +65,9 @@ configuration file.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 16 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.6-alt1
+- Updated to 1.2.6.
+
 * Thu Sep 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.5-alt1
 - Updated to 1.2.5.
 
