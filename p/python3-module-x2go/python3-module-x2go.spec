@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.6.1.4
-Release: alt1
+Release: alt2
 Summary: Python module providing X2Go client API
 Group:	 Communications 
 
@@ -10,6 +10,7 @@ License: AGPL-3.0-or-later
 URL:     https://www.x2go.org/
 Source0: %name-%version.tar
 Patch0:  fix-sshbroker-error.patch
+Patch1:  drop-distutils.patch
 
 BuildArch: noarch
 
@@ -43,6 +44,7 @@ Python applications by providing a Python-based X2Go client API.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
 
 %build
 %pyproject_build
@@ -55,6 +57,9 @@ Python applications by providing a Python-based X2Go client API.
 %python3_sitelibdir/x2go*
 
 %changelog
+* Mon Oct 16 2023 Anton Vyatkin <toni@altlinux.org> 0.6.1.4-alt2
+- Dropped dependency on distutils.
+
 * Thu Sep 21 2023 Anton Vyatkin <toni@altlinux.org> 0.6.1.4-alt1
 - new version 0.6.1.4
 
