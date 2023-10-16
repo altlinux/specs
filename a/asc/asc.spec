@@ -1,6 +1,6 @@
 Name: asc
 Version: 2.8.0.2
-Release: alt1
+Release: alt2
 
 Summary: ASC - a battle isle clone
 License: GPLv2+
@@ -20,7 +20,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildRequires: boost-program_options-devel bzlib-devel gcc-c++
 BuildRequires: libSDL_image-devel libSDL_mixer-devel libSDL_sound-devel
-BuildRequires: libexpat-devel libfreetype-devel liblua5-devel libphysfs-devel libsigc++2-devel libwxGTK3.0-devel
+BuildRequires: libexpat-devel libfreetype-devel liblua5-devel libphysfs-devel libsigc++2-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: libcurl-devel libogg-devel libpng-devel libxvid-devel zip libjpeg-devel
 BuildRequires: desktop-file-utils
 
@@ -74,6 +75,9 @@ install -p -m 644 %SOURCE11 \
 %doc AUTHORS COPYING ChangeLog README TODO doc
 
 %changelog
+* Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 2.8.0.2-alt2
+- NMU: rebuild with wxGTK3.2
+
 * Tue Nov 09 2021 Ilya Mashkin <oddity@altlinux.ru> 2.8.0.2-alt1
 - Version 2.8.0.2
 
