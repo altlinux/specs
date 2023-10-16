@@ -1,18 +1,32 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+# section [ 4] '.rela.plt': relocation 0: invalid symbol index
+%set_verify_elf_method strict,lint=relaxed
+
 Name: dropbear
 Summary: A smallish SSH server and client
-Version: 2022.82
+Version: 2022.83
 Release: alt1
 License: MIT
 Group: System/Servers
 Url: https://matt.ucc.asn.au/dropbear/dropbear.html
 Vcs: https://github.com/mkj/dropbear
 
-Source: %name-%version.tar.bz2
-Source1: localoptions.h
+Source: %name-%version.tar
 Source2: dropbear.service
 Source3: dropbear.sysconfig
 
-BuildRequires: zlib-devel
+BuildRequires: glibc-devel-static
+BuildRequires: libcrypt-devel-static
+BuildRequires: zlib-devel-static
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: iproute2
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-pytest-rerunfailures
+BuildRequires: rpm-build-vm
+BuildRequires: /usr/bin/pytest3
+BuildRequires: /usr/bin/ssh-keygen
+}}
 
 %description
 Dropbear is a relatively small SSH 2 server.
@@ -27,14 +41,29 @@ Conflicts: openssh-common
 The Dropbear distribution includes a standalone version of OpenSSH's scp
 program.
 
-# TODO: Use static versons for embedding and leave documentation where it belongs
-
 %prep
 %setup
-install -p %SOURCE1 localoptions.h
+cat > localoptions.h <<EOF
+#define SFTPSERVER_PATH "/usr/lib/openssh/sftp-server"
+EOF
 
 %build
-%configure
+%ifarch x86_64 aarch64 %ix86
+	export LDFLAGS=-static-pie
+	%define how_linked static-pie
+	%define test_no_aslr %nil
+%else
+	# ld: cannot find rcrt1.o: No such file or directory
+	export LDFLAGS=-static
+	%define how_linked statically
+	%define test_no_aslr -k 'not aslr'
+%endif
+# --disable-harden: We have hardening enabled in GCC by default.
+%ifarch x86_64 %ix86
+# Additional upstream hardening for x86.
+%add_optflags -mfunction-return=thunk -mindirect-branch=thunk
+%endif
+%configure --disable-harden
 %make_build all scp SCPPROGRESS=1
 
 %install
@@ -44,15 +73,34 @@ mkdir -p %buildroot%_sysconfdir/%name
 install -Dpm644 %SOURCE2 %buildroot%_unitdir/%name.service
 install -Dpm644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 
-%define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
-
 %check
+./dropbear -V |& grep -Fx 'Dropbear v%version'
+./dropbearkey || : 'Listed key algorithms'
+./dbclient -c help || : 'Listed ciphers'
+./dbclient -m help || : 'Listed MACs'
 ./dropbearkey -t rsa -f dropbear_rsa_host_key
-! ./dropbearkey -t dss -f dropbear_dss_host_key
 ./dropbearkey -t ecdsa -f dropbear_ecdsa_host_key
 ./dropbearkey -t ed25519 -f dropbear_ed25519_host_key
+# Upstream tend to enable DSS (ignoring config).
+! ./dropbearkey | grep -iw DSS || exit 1
+# Sizes, sizes.
+ls -l %buildroot/usr/*bin
+for i in dbclient dropbear dropbearconvert dropbearkey scp; do
+	file $i | grep '%how_linked linked' || {
+		file $i
+		exit 1
+	}
+done
+# Upstream testsuite.
+vm-run --ext4 --heredoc <<-EOF
+  cd test
+  make fakekey
+  HOME=/root
+  mkdir -p ~/.ssh
+  ../dropbearkey -t ecdsa -f ~/.ssh/id_dropbear | grep ^ecdsa > ~/.ssh/authorized_keys
+  chmod 700 ~/.ssh ~/.ssh/authorized_keys
+  pytest3 --reruns=3 --hostkey=fakekey --dbclient=../dbclient --dropbear=../dropbear %test_no_aslr
+EOF
 
 %post
 %post_service %name
@@ -76,6 +124,11 @@ install -Dpm644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 %_bindir/scp
 
 %changelog
+* Mon Oct 16 2023 Vitaly Chikunov <vt@altlinux.org> 2022.83-alt1
+- Update to DROPBEAR_2022.83 (2022-11-14).
+- Experimentally build static executables (glibc based).
+- spec: Run upstream testsuite in %%check.
+
 * Sun Jun 19 2022 Vitaly Chikunov <vt@altlinux.org> 2022.82-alt1
 - Update to DROPBEAR_2022.82 (2022-04-01). (Fixes: CVE-2018-15599,
   CVE-2018-5399, CVE-2018-20685, CVE-2019-12953, CVE-2020-15833,
