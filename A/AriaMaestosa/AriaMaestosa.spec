@@ -2,19 +2,25 @@
 
 Name: AriaMaestosa
 Version: 1.4.13
-Release: alt1
+Release: alt2
 
 Summary: Aria Maestosa is an opensource (GPL) midi tracker/editor
 License: GPLv2 with exceptions (look at license.txt)
 Group: Sound
 Url: http://ariamaestosa.sourceforge.net
 
-Packager: Alex Karpov <karpov@altlinux.org>
-
 Source: %srcname-%version.tar
+# Upstream patches
+Patch1: 0001-Use-a-sensible-default-folder-for-opening-saving-fil.patch
+Patch2: 0001-Update-to-wxWidgets-3.1.2.patch
+Patch3: 0001-Make-the-scons-build-compatible-with-Python-3.patch
+# Mageia patches
+Patch50: ariamaestosa-wxgtk.patch
+Patch51: ariamaestosa-scons.patch
+Patch52: ariamaestosa-skip-upstream-version-check.patch
 
 # Automatically added by buildreq on Thu Nov 18 2010
-BuildRequires: cvs flex gcc-c++ ghostscript-utils glib2-devel libGLU-devel libalsa-devel libjack-devel libwxGTK3.0-devel python-modules-email rcs scons swig texlive-latex-base
+BuildRequires: cvs flex gcc-c++ ghostscript-utils glib2-devel libGLU-devel libalsa-devel libjack-devel libwxGTK3.2-devel python-modules-email rcs scons swig texlive-latex-base
 BuildRequires: chrpath
 
 %description
@@ -24,12 +30,13 @@ interface offering keyboard, guitar, drum and controller views.
 
 %prep
 %setup -n %srcname-%version
+%autopatch -p1
 
 %build
-python2 scons/scons.py prefix=/usr destdir=%buildroot
+scons config=debug prefix=%prefix destdir=%buildroot
 
 %install
-python2 scons/scons.py install prefix=%buildroot/usr
+scons install config=debug prefix=%buildroot%prefix
 
 chrpath -d %buildroot%_bindir/Aria
 
@@ -41,6 +48,12 @@ chrpath -d %buildroot%_bindir/Aria
 %_datadir/Aria
 
 %changelog
+* Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 1.4.13-alt2
+- NMU: 
+  + rebuild with wxGTK3.2
+  + add upstream and Mageya patches
+  + clean Packager
+
 * Wed Oct 06 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.13-alt1
 - Build new version.
 
