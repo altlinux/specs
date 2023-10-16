@@ -4,7 +4,7 @@
 
 Name: desktop-file-utils
 Version: 0.26
-Release: alt4
+Release: alt5
 
 Summary: Utilities for manipulating .desktop files
 Group: Graphical desktop/Other
@@ -73,8 +73,8 @@ sh autogen.sh
 mkdir -p %buildroot/%_rpmlibdir/
 cat <<__TRIGGER__ >%buildroot/%_rpmlibdir/update-desktop-database.filetrigger
 #!/bin/sh -e
-XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/share:/var/cache}"
-echo "$XDG_DATA_DIRS" | grep '/var/cache' || XDG_DATA_DIRS+=":/var/cache"
+XDG_DATA_DIRS="\${XDG_DATA_DIRS:-/usr/share:/var/cache}"
+echo "\$XDG_DATA_DIRS" | grep '/var/cache' || XDG_DATA_DIRS+=":/var/cache"
 export XDG_DATA_DIRS
 grep -qs -e '/applications/' && update-desktop-database -q ||:
 __TRIGGER__
@@ -119,6 +119,9 @@ touch %buildroot/%_desktopdir/mimeinfo.cache
 %endif
 
 %changelog
+* Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 0.26-alt5
+- fix package filetrigger
+
 * Tue Jul 04 2023 Sergey V Turchin <zerg@altlinux.org> 0.26-alt4
 - don't force custom XDG_DATA_DIRS in filetrigger (closes: 46615)
 
