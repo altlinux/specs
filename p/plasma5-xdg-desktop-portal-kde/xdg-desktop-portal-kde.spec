@@ -5,7 +5,7 @@
 %define rname xdg-desktop-portal-kde
 Name: plasma5-%rname
 Version: 5.27.8
-Release: alt1
+Release: alt4
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -19,6 +19,8 @@ Requires: xdg-desktop-portal
 
 Source: %rname-%version.tar
 Source1: env.sh
+Patch1: alt-show-preferred-apps.patch
+Patch2: 0001-data-kde-portals.conf-Fallback-to-GTK-portals-for-Se.patch
 
 # Automatically added by buildreq on Thu Feb 20 2020 (-bi)
 # optimized out: clang7.0 cmake cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libdbusmenu-qt52 libglvnd-devel libgpg-error libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-texttospeech libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libwayland-client libwayland-server libxcbutil-keysyms pipewire-libs pkg-config python-modules python2-base python3 python3-base qt5-base-devel qt5-declarative-devel rpm-build-python3 sh4
@@ -40,6 +42,8 @@ that is using Qt/KF5.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
+%patch2 -p1
 
 %build
 %K5build
@@ -64,6 +68,15 @@ install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}.sh
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Tue Oct 17 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt4
+- fix start preferred app
+
+* Tue Oct 17 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt3
+- add fallback to GTK portals for Settings
+
+* Tue Oct 17 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt2
+- fix to show preferred applications in app chooser
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
 - new version
 
