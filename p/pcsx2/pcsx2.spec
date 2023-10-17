@@ -1,18 +1,23 @@
 %define optflags_lto -flto=thin
-%define llvm_version 16.0
+%define llvm_version 17.0
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20230513071212
+%define svn_rev 20231014024210
 
-%define libchdr_commit fec8ab94212cc65d9d9a62cb3da924f5830c04b0
 %define gtest_version 1.12.1
-%define zstd_version 1.5.2
+%define zstd_version 1.5.5
 %define vulkan_headers_version 1.3.226
 %define glslang_version 11.7.1
-%define rcheevos_commit 31f8788fe0e694e99db7ce138d45a655c556fa96
+%define rcheevos_commit 43f8c2a2a0750561786f17dd35af8755716705aa
+%define libwebp_version 1.3.2
+%define fmt_version 8.1.1
+%define rapidyaml_version 0.4.1
+%define c4core_commit d35c7c9bf370134595699d791e6ff8db018ddc8d
+%define cmake_commit 371982300ff5a076d7c3199057ebed77bbe3472f
+%define debugbreak_commit 5dcbe41d2bd4712c8014aa7e843723ad7b40fd74
 
 Name: pcsx2
-Version: 1.7.4587
+Version: 1.7.5107
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -47,21 +52,32 @@ BuildRequires(pre): wayland-protocols
 
 # https://github.com/PCSX2/%name/archive/v%version/%name-%version.tar.gz
 Source0: %name-%version.tar
-# https://github.com/rtissera/libchdr/archive/%libchdr_commit/libchdr-%libchdr_commit.tar.gz
-Source1: libchdr-%libchdr_commit.tar
 # https://github.com/google/googletest/archive/release-%gtest_version/googletest-release-%gtest_version.tar.gz
-Source2: googletest-release-%gtest_version.tar
+Source1: googletest-release-%gtest_version.tar
 # https://github.com/facebook/zstd/archive/v%zstd_version/zstd-%zstd_version.tar.gz
-Source3: zstd-%zstd_version.tar
+Source2: zstd-%zstd_version.tar
 # https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
-Source4: Vulkan-Headers-%vulkan_headers_version.tar
+Source3: Vulkan-Headers-%vulkan_headers_version.tar
 # https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
-Source5: glslang-%glslang_version.tar
+Source4: glslang-%glslang_version.tar
 # https://github.com/RetroAchievements/rcheevos/archive/%rcheevos_commit/rcheevos-%rcheevos_commit.tar.gz
-Source6: rcheevos-%rcheevos_commit.tar
+Source5: rcheevos-%rcheevos_commit.tar
+# https://github.com/webmproject/libwebp/archive/v%libwebp_version/libwebp-%libwebp_version.tar.gz
+Source6: libwebp-%libwebp_version.tar
+# https://github.com/fmtlib/fmt/archive/%fmt_version/fmt-%fmt_version.tar.gz
+Source7: fmt-%fmt_version.tar
+# https://github.com/biojppm/rapidyaml/archive/v%rapidyaml_version/rapidyaml-%rapidyaml_version.tar.gz
+Source8: rapidyaml-%rapidyaml_version.tar
+# https://github.com/biojppm/c4core/archive/%c4core_commit/c4core-%c4core_commit.tar.gz
+Source9: c4core-%c4core_commit.tar
+# https://github.com/biojppm/cmake/archive/%cmake_commit/cmake-%cmake_commit.tar.gz
+Source10: cmake-%cmake_commit.tar
+# https://github.com/biojppm/debugbreak/archive/%debugbreak_commit/debugbreak-%debugbreak_commit.tar.gz
+Source11: debugbreak-%debugbreak_commit.tar
 
 BuildRequires: clang%llvm_version
-BuildRequires: cmake
+BuildRequires: ctest
+BuildRequires: extra-cmake-modules
 BuildRequires: libGLU-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libXcomposite-devel
@@ -78,21 +94,15 @@ BuildRequires: libalsa-devel
 BuildRequires: libavformat-devel
 BuildRequires: libbacktrace-devel
 BuildRequires: libcurl-devel
+BuildRequires: libdbus-devel
 BuildRequires: libfast_float-devel
-BuildRequires: libfmt-devel
 BuildRequires: liblzma-devel
 BuildRequires: libpcap-devel
 BuildRequires: libpulseaudio-devel
-BuildRequires: libryml-devel
-BuildRequires: libsoundtouch-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: libudev-devel
-BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
-BuildRequires: libwayland-server-devel
-BuildRequires: libzip-devel
-BuildRequires: libzip-utils
 BuildRequires: lld%llvm_version
 BuildRequires: llvm%llvm_version
 BuildRequires: llvm%llvm_version-gold
@@ -104,14 +114,19 @@ PCSX2 is an emulator for the playstation 2 video game console. It is written mos
 There is still lot of on going work to improve compatibility & speed.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
 
-%__mv -Tf ../libchdr-%libchdr_commit 3rdparty/libchdr/libchdr
 %__mv -Tf ../googletest-release-%gtest_version 3rdparty/gtest
 %__mv -Tf ../zstd-%zstd_version 3rdparty/zstd/zstd
 %__mv -Tf ../Vulkan-Headers-%vulkan_headers_version 3rdparty/vulkan-headers
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../rcheevos-%rcheevos_commit 3rdparty/rcheevos/rcheevos
+%__mv -Tf ../libwebp-%libwebp_version 3rdparty/libwebp/libwebp
+%__mv -Tf ../fmt-%fmt_version 3rdparty/fmt/fmt
+%__mv -Tf ../rapidyaml-%rapidyaml_version 3rdparty/rapidyaml/rapidyaml
+%__mv -Tf ../c4core-%c4core_commit 3rdparty/rapidyaml/rapidyaml/ext/c4core
+%__mv -Tf ../cmake-%cmake_commit 3rdparty/rapidyaml/rapidyaml/ext/c4core/cmake
+%__mv -Tf ../debugbreak-%debugbreak_commit 3rdparty/rapidyaml/rapidyaml/ext/c4core/src/c4/ext/debugbreak
 
 %build
 export ALTWRAP_LLVM_VERSION=%llvm_version
@@ -128,7 +143,6 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 	-DCMAKE_BUILD_PO:BOOL=TRUE \
 	-DDISABLE_ADVANCE_SIMD:BOOL=TRUE \
 	-DDISABLE_BUILD_DATE:BOOL=TRUE \
-	-DUSE_SYSTEM_RYML:BOOL=TRUE \
 	-DLTO_PCSX2_CORE:BOOL=TRUE \
 	-GNinja \
 	-Wno-dev
@@ -148,6 +162,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %__install -Dp -m0644 %_target_platform/bin/resources/icons/AppIconLarge.png %buildroot%_iconsdir/hicolor/256x256/apps/PCSX2.png
 %__install -Dp -m0644 .github/workflows/scripts/linux/%name-qt.desktop %buildroot%_desktopdir/%name-qt.desktop
 
+%check
+%ctest
+
 %files
 %doc bin/docs/*.pdf
 %_bindir/%name-qt
@@ -156,6 +173,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %_iconsdir/hicolor/256x256/apps/PCSX2.png
 
 %changelog
+* Wed Oct 18 2023 Nazarov Denis <nenderus@altlinux.org> 1.7.5107-alt1
+- Version 1.7.5107
+
 * Sat Jun 17 2023 Nazarov Denis <nenderus@altlinux.org> 1.7.4587-alt1
 - Version 1.7.4587
 
