@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 4.18.1
+Version: 4.18.2
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -107,8 +107,6 @@ Vala bindings for %name.
 %patch -p1
 
 %build
-# Don't use git tag in version.
-%xfce4_drop_gitvtag xfconf_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--disable-static \
@@ -169,6 +167,10 @@ xvfb-run make -k check
 %endif
 
 %changelog
+* Tue Oct 17 2023 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
+- Dropped %%xfce4_drop_gitvtag macro.
+- Updated to 4.18.2.
+
 * Mon Apr 17 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
 - Disabled tests (closes: #45324).
 - Updated to 4.18.1.
