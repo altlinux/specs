@@ -18,7 +18,7 @@
 
 Name: 	 thunderbird
 Version: 115.3.1
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -63,6 +63,7 @@ BuildRequires: binutils
 BuildRequires: lld%llvm_version-devel
 %endif
 %ifarch armh %{ix86}
+%filter_from_requires /libc.so.6(GLIBC_PRIVATE)/d
 BuildRequires: gcc
 BuildRequires: gcc-c++
 %endif
@@ -564,6 +565,9 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Mon Oct 16 2023 Pavel Vasenkov <pav@altlinux.org> 115.3.1-alt2
+- Fix check dependencies error for GLIBC_PRIVATE
+
 * Fri Oct 06 2023 Pavel Vasenkov <pav@altlinux.org> 115.3.1-alt1
 - New version.
 - Security fixes:
