@@ -2,7 +2,7 @@
 
 Name: redis-rdb-tools
 Version: 0.1.15
-Release: alt1.1
+Release: alt2
 
 Summary: Parse Redis dump.rdb files, Analyze Memory, and Export Data to JSON
 
@@ -17,8 +17,11 @@ BuildArch: noarch
 # Source-url: https://github.com/sripathikrishnan/redis-rdb-tools/archive/rdbtools-%version.tar.gz
 Source: %name-%version.tar
 Patch0: port-on-python3.patch
+Patch1: drop-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-packaging
+
 Requires: python3-module-%pyname = %EVR
 
 Provides: rdbtools = %EVR
@@ -46,6 +49,7 @@ This package contains python3 module for %name.
 %prep
 %setup
 #patch0 -p2
+%patch1 -p2
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ \( -name '*.py' -o -name 'run_tests' \))
@@ -83,6 +87,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/%pyname/
 
 
 %changelog
+* Tue Oct 17 2023 Anton Vyatkin <toni@altlinux.org> 0.1.15-alt2
+- NMU: dropped dependency on distutils
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.15-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
