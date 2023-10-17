@@ -2,12 +2,13 @@
 
 Name: python3-module-%modulename
 Summary: Linstor Python API
-Version: 1.19.0
+Version: 1.20.0
 Release: alt1
 Group: Development/Python3
 License: GPLv3
 URL: https://github.com/LINBIT/linstor-api-py
 Source: http://www.linbit.com/downloads/linstor/python-%modulename-%version.tar.gz
+Patch1: linstor-remove-distutils.patch
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -20,6 +21,7 @@ e.g.: add nodes, resources and query object status
 
 %prep
 %setup -n python-%modulename-%version
+%patch1 -p1
 make -C linstor-common cleanpython
 make -C linstor-common python
 
@@ -34,6 +36,10 @@ make -C linstor-common python
 %python3_sitelibdir/*
 
 %changelog
+* Wed Oct 18 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.20.0-alt1
+- 1.20.0
+- remove distutils
+
 * Mon Aug 14 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.19.0-alt1
 - 1.19.0
 - migrate to pyproject
