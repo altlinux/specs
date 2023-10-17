@@ -1,18 +1,39 @@
-Name:       dosage
-Version:    2.15
-Release:    alt2
+%define pypi_name dosage
 
-Summary:    a commandline webcomic downloader and archiver
-License:    %mit
+%def_with check
+
+Name:       dosage
+Version:    3.0
+Release:    alt1
+
+Summary:    dosage is a comic strip downloader and archiver
+License:    MIT
 Group:      Other
-URL:        https://github.com/wummel/dosage
+URL:        https://pypi.org/project/dosage
+Vcs:        https://github.com/webcomics/dosage
 
 BuildArch:  noarch
 
 Source0:    %name-%version.tar
+Patch:      drop-distutils.patch
 
-BuildRequires(pre): rpm-build-licenses rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-colorama
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-imagesize
+BuildRequires: python3-module-appdirs
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-platformdirs
+BuildRequires: python3-module-responses
+%endif
 
+%add_python3_req_skip requests.packages.urllib3.util.retry
 
 %description
 Dosage is designed to keep a local copy of specific webcomics
@@ -24,21 +45,29 @@ webcomic's site layout makes this impossible).
 
 %prep
 %setup
+%patch -p0
 
 %build
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -v
 
 %files
-%doc doc/changelog.txt doc/dosage.txt doc/README.txt
-%_bindir/%name
-%_man1dir/*
-%python3_sitelibdir/*
+%doc README.*
+%_bindir/%pypi_name
+%python3_sitelibdir/dosagelib
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 
 %changelog
+* Tue Oct 17 2023 Anton Vyatkin <toni@altlinux.org> 3.0-alt1
+- New version 3.0.
+
 * Mon Feb 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.15-alt2
 - Porting to python3.
 
