@@ -3,7 +3,7 @@
 
 Name: lxqt-session
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Session manager
 License: LGPL
@@ -21,7 +21,7 @@ BuildRequires: qtxdg-tools
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: rpm-build-xdg libqtxdg-devel xdg-utils xdg-user-dirs
 BuildRequires: libudev-devel
-BuildRequires: libprocps-devel
+BuildRequires: libproc2-devel
 
 Requires: lxqt-themes
 Requires: xdg-utils
@@ -62,6 +62,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Wed Oct 11 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt2
+- rebuild with libproc2-devel
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 
