@@ -69,7 +69,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.1.991
+Version: 10.2
 Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -529,6 +529,12 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_datadir/install3/*
 
 %changelog
+* Tue Oct 17 2023 Mikhail Efremov <sem@altlinux.org> 10.2-alt1
+- xfce-settings: Disable menu editor.
+- menu: Drop mc.desktop and mcedit.desktop.
+- xfce-settings: Rename templates OpenOffice.org -> LibreOffice.
+- slideshow: Fix documentation link in the Enhlish slide 1.
+
 * Fri Oct 06 2023 Mikhail Efremov <sem@altlinux.org> 10.1.991-alt1
 - slideshow: Fix documentation link.
 
