@@ -2,7 +2,7 @@
 
 Name:    gwe
 Version: 0.15.6
-Release: alt1
+Release: alt2
 
 Summary: System utility designed to provide information, control the fans and overclock your NVIDIA card
 License: GPL-3.0
@@ -14,6 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %name-%version.tar
 # https://gitlab.com/leinardi/gwe/-/merge_requests/73
 Patch: AyatanaAppIndicator3.patch
+Patch1: remove-distutils-for-python-3.12.patch
 
 BuildArch: noarch
 
@@ -56,6 +57,9 @@ and overclock your NVIDIA video card and graphics processor.
 %_iconsdir/hicolor/symbolic/apps/*.svg
 
 %changelog
+* Tue Oct 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.15.6-alt2
+- Dropped dependency on distutils.
+
 * Sat Sep 30 2023 Andrey Cherepanov <cas@altlinux.org> 0.15.6-alt1
 - New version.
 
