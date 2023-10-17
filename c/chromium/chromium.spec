@@ -34,7 +34,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        117.0.5938.132
+Version:        118.0.5993.70
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -91,6 +91,7 @@ Patch021: 0021-ARCH-Add-missing-header.patch
 Patch022: 0022-ALT-Do-not-hardcode-flatbuffer-version.patch
 Patch023: 0023-Add-missing-headers.patch
 Patch024: 0024-FEDORA-System-brotli.patch
+Patch025: 0025-Add-check-for-use_system_freetype-when-importing-pri.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -513,6 +514,25 @@ EOF
 %_altdir/%name
 
 %changelog
+* Mon Oct 16 2023 Alexey Gladkov <legion@altlinux.ru> 118.0.5993.70-alt1
+- New version (118.0.5993.70).
+- Security fixes:
+  - CVE-2023-5218: Use after free in Site Isolation.
+  - CVE-2023-5346: Type Confusion in V8.
+  - CVE-2023-5473: Use after free in Cast.
+  - CVE-2023-5474: Heap buffer overflow in PDF.
+  - CVE-2023-5475: Inappropriate implementation in DevTools.
+  - CVE-2023-5476: Use after free in Blink History.
+  - CVE-2023-5477: Inappropriate implementation in Installer.
+  - CVE-2023-5478: Inappropriate implementation in Autofill.
+  - CVE-2023-5479: Inappropriate implementation in Extensions API.
+  - CVE-2023-5481: Inappropriate implementation in Downloads.
+  - CVE-2023-5483: Inappropriate implementation in Intents.
+  - CVE-2023-5484: Inappropriate implementation in Navigation.
+  - CVE-2023-5485: Inappropriate implementation in Autofill.
+  - CVE-2023-5486: Inappropriate implementation in Input.
+  - CVE-2023-5487: Inappropriate implementation in Fullscreen.
+
 * Thu Sep 28 2023 Alexey Gladkov <legion@altlinux.ru> 117.0.5938.132-alt1
 - New version (117.0.5938.132).
 - Security fixes:
