@@ -8,7 +8,7 @@
 
 Name: mixxx
 Version: 2.3.6
-Release: alt3.1
+Release: alt3.2
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -21,6 +21,7 @@ Url: http://mixxx.org
 Source: %name-%version.tar
 
 Provides: %name-data = %EVR
+Obsoletes: %name-data < %EVR
 Requires: qt5-sql-sqlite
 
 BuildPreReq: rpm-macros-qt5 rpm-build-ninja
@@ -93,6 +94,9 @@ chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compil
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Tue Oct 17 2023 Leontiy Volodin <lvol@altlinux.org> 2.3.6-alt3.2
+- Fixed file conflicts (ALT #48039).
+
 * Wed Oct 11 2023 Sergey V Turchin <zerg@altlinux.org> 2.3.6-alt3.1
 - NMU: fix requires
 
