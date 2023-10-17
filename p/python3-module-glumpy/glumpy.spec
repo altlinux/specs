@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: Fast, scalable & beautiful scientific visualisation
 
@@ -75,6 +75,8 @@ sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 # Force recythonize it please!
 rm -f glumpy/ext/sdf/_sdf.c
 
+sed -i 's/distutils.core/setuptools/' glumpy/ext/sdf/setup.py
+
 %build
 %python3_build
 
@@ -102,6 +104,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc doc/_build/html examples
 
 %changelog
+* Tue Oct 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt2.2
+- Dropped dependency on distutils.
+
 * Wed Aug 16 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1.2.0-alt2.1
 - NMU: ignored unmet dependency
 
