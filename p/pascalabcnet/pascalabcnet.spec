@@ -1,5 +1,5 @@
 Name:    pascalabcnet
-Version: 3.8.3.3257
+Version: 3.9.0.3372
 Release: alt1
 
 Summary: PascalABC.NET programming language  
@@ -130,6 +130,9 @@ install -Dpm 0644 %SOURCE3 %buildroot%_datadir/metainfo/PascalABCNETLinux.appdat
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Tue Oct 17 2023 Andrey Cherepanov <cas@altlinux.org> 3.9.0.3372-alt1
+- New version.
+
 * Thu May 18 2023 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3257-alt1
 - New version.
 
