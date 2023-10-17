@@ -1,6 +1,6 @@
 Name: quisk
 Version: 4.2.23
-Release: alt1
+Release: alt2
 Summary: QUISK is a Software Defined Radio (SDR) transceiver that can control various radio hardware
 
 License: GPL-2.0
@@ -16,6 +16,8 @@ BuildRequires: python3-devel
 BuildRequires: libfftw3-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %filter_from_requires /^python3(\(_quisk\|ftd2xx\))/d
 %py3_requires usb PIL
@@ -47,19 +49,26 @@ find . -name \*.pyc -o -name \*.pyd -o -name \*.so -o -name \*.dll | xargs rm -f
 # Remove executable bit from any files
 find . -type f -exec chmod a-x '{}' ';'
 
+# Drop dependency on distutils
+grep -rl "distutils.core" | xargs sed -i 's/distutils.core/setuptools/'
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.txt CHANGELOG.txt *.html
-%_bindir/*
-%python3_sitelibdir/%name/
-%python3_sitelibdir/*.egg-info
+%_bindir/quisk
+%_bindir/quisk_vna
+%python3_sitelibdir/%name
+%python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Tue Oct 17 2023 Grigory Ustinov <grenka@altlinux.org> 4.2.23-alt2
+- Dropped dependency on distutils.
+
 * Sun Sep 17 2023 Andrey Cherepanov <cas@altlinux.org> 4.2.23-alt1
 - New version 4.2.23.
 
