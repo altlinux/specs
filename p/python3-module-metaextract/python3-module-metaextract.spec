@@ -1,8 +1,10 @@
 %define  modulename metaextract
 
+%def_with check
+
 Name:    python3-module-%modulename
 Version: 1.0.9
-Release: alt2
+Release: alt3
 
 Summary: Get metadata for python modules
 License: Apache-2.0
@@ -12,6 +14,13 @@ URL:     https://github.com/toabctl/metaextract
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pbr
+%endif
 
 BuildArch: noarch
 
@@ -27,19 +36,28 @@ too.
 %prep
 %setup -n %modulename-%version
 
+grep -rl "distutils.core" | xargs sed -i 's/distutils.core/setuptools/'
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest
 
 %files
-%doc *.rst
+%doc LICENSE *.rst
 %_bindir/metaextract
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Tue Oct 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.9-alt3
+- Dropped dependency on distutils.
+- Built with check.
+
 * Fri Oct 14 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.9-alt2
 - NMU: Fixed build requires.
 
