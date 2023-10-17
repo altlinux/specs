@@ -2,7 +2,7 @@
 
 Name: clementine
 Version: 1.4.0
-Release: alt5.git67a947f11
+Release: alt6.git7b678f26e
 Summary: A music player and library organiser
 
 Group: Sound
@@ -26,8 +26,9 @@ BuildRequires: libpulseaudio-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: libalsa-devel
 BuildRequires: libfftw3-devel
+BuildRequires: git
 
-BuildRequires: qt5-sql-sqlite3 protobuf-compiler
+BuildRequires: protobuf-compiler
 # Enable Google Drive support
 BuildRequires: libgoogle-sparsehash
 BuildPreReq: libavcodec-devel libavformat-devel libpcre-devel
@@ -49,6 +50,15 @@ sed -i "s|== Separator|== QChar(Separator)|" \
 	ext/libclementine-tagreader/fmpsparser.cpp
 %endif
 
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag -a '%version' -m '%version'
+fi
+
 %build
 %cmake
 %cmake_build
@@ -61,15 +71,19 @@ sed -i "s|== Separator|== QChar(Separator)|" \
 %doc Changelog
 %_bindir/clementine
 %_bindir/clementine-tagreader
-%_desktopdir/clementine.desktop
+%_desktopdir/org.clementine_player.Clementine.desktop
 %_datadir/kservices5/*.protocol
 %_datadir/clementine
-%_datadir/metainfo/clementine.appdata.xml
+%_datadir/metainfo/org.clementine_player.Clementine.appdata.xml
 %_datadir/icons/hicolor/*/apps/*.png
 %_datadir/icons/hicolor/*/apps/*.svg
 
 
 %changelog
+* Tue Oct 17 2023 Vladimir Didenko <cow@altlinux.org> 1.4.0-alt6.git7b678f26e
+- Update upstream source to 1.4.0rc1-901-g7b678f26e
+- Remove qt5-sql-sqlite3 from build requires
+
 * Tue Sep 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.4.0-alt5.git67a947f11
 - Fixed build for Elbrus
 
