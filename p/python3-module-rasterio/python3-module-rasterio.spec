@@ -1,11 +1,12 @@
-%def_with test
 %define oname rasterio
 
-Name: python3-module-%oname
-Version: 1.3
-Release: alt0.a2.0
+%def_with check
 
-License: BSD
+Name: python3-module-%oname
+Version: 1.3.8.post2
+Release: alt1
+
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/rasterio/
 
@@ -16,21 +17,26 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 
-#BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3 rpm-build-intro >= 2.2.4
-
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-Cython libnumpy-py3-devel ipython3
-BuildRequires: python3-module-affine python3-module-cligj
-BuildRequires: python3(enum)
-BuildRequires: python3-module-wheel python3-module-click
-BuildRequires: python3-module-snuggs python3-module-click-plugins
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-boto3 python3-module-packaging
-
-BuildRequires: libgdal-devel libproj-nad libproj-devel gcc-c++ libnumpy-py3-devel
-BuildRequires: xvfb-run
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-Cython
+BuildRequires: libnumpy-py3-devel
+BuildRequires: libgdal-devel
+BuildRequires: gcc-c++
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-affine
+BuildRequires: python3-module-boto3
+BuildRequires: python3-module-click
+BuildRequires: python3-module-click-plugins
+BuildRequires: python3-module-cligj
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-snuggs
+BuildRequires: python3-module-pyparsing
+BuildRequires: python3-module-attrs
+BuildRequires: gdal
+%endif
 
 %py3_provides %oname
 %py3_requires numpy IPython
@@ -47,29 +53,30 @@ more fun.
 %setup
 %__subst "s|/usr/local/share/proj|/usr/share/proj|" setup.py
 
-# remove their cython generated files
-find . -name "_*.cpp" | xargs rm
+# Drop dependency on distutils
+sed -i '/from distutils.version/d' rasterio/rio/calc.py
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
-%if_with test
 %check
-#python3_test
-xvfb-run python3 setup.py test ||:
-xvfb-run py.test3 ||:
-%endif
+rm -rf %oname # Don't try unbuilt copy.
+
+%pyproject_run_pytest -ra -m 'not network and not wheel'
 
 %files
 %doc *.txt *.rst docs/ examples/
-%_bindir/*
-%python3_sitelibdir/*
+%_bindir/rio
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Oct 17 2023 Anton Vyatkin <toni@altlinux.org> 1.3.8.post2-alt1
+- new version 1.3.8.post2
+
 * Wed Jan 26 2022 Grigory Ustinov <grenka@altlinux.org> 1.3-alt0.a2.0
 - new version 1.3.a2 for python3.10
 
