@@ -7,7 +7,7 @@
 
 Name: ltrace
 Version: 0.7.91.0.198.git82c6640
-Release: alt5
+Release: alt6
 
 Summary: Tracks runtime library calls from dynamically linked executables
 License: GPLv2+
@@ -43,6 +43,8 @@ Patch32: ltrace-rh1225568.patch
 
 # GCC erroneously warns about uninitialized values
 Patch35: ltrace-0.7.91-rh1799619.patch
+
+Patch37: ltrace-ppc64le-use-after-free.patch
 
 # ===== ALT Patches goes here vvv =====
 Patch1001: ltrace-0.7.91.0.198.git82c6640-fix_attach_process.patch
@@ -96,6 +98,7 @@ Ltrace перехватывает и выводит все выполняемы�
 %patch29 -p1
 %patch32 -p1
 %patch35 -p1
+%patch37 -p1
 
 %patch1001 -p1
 %patch1002 -p1
@@ -107,7 +110,7 @@ Ltrace перехватывает и выводит все выполняемы�
 
 %build
 export CFLAGS="%optflags -Werror"
-%autoreconf
+./autogen.sh
 %configure
 %make_build
 
@@ -126,6 +129,9 @@ LC_ALL=en_US.UTF-8 make check RUNTESTFLAGS="--tool_exec=%buildroot/%_bindir/ltra
 %exclude %_docdir/%name
 
 %changelog
+* Tue Oct 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.7.91.0.198.git82c6640-alt6
+- Fixed FTBFS.
+
 * Mon Nov 22 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.91.0.198.git82c6640-alt5
 - Fixed FTBFS.
 
