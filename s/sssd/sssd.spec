@@ -8,8 +8,8 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.8.1
-Release: alt3.1
+Version: 2.9.2
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -65,6 +65,7 @@ BuildRequires: libldb-devel >= 1.3.3
 BuildRequires: libdhash-devel >= 0.4.2
 BuildRequires: libcollection-devel >= 0.5.1
 BuildRequires: libini_config-devel >= 1.3.0
+BuildRequires: libfido2-devel
 BuildRequires: libdbus-devel
 BuildRequires: libldap-devel
 BuildRequires: libpam-devel
@@ -96,7 +97,7 @@ BuildRequires: cifs-utils-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libnfsidmap-devel >= 1:2.2.1-alt1
 BuildRequires: libunistring-devel
-BuildRequires: libssl-devel libgnutls-devel libp11-kit-devel
+BuildRequires: libssl-devel libgnutls-devel libp11-kit-devel gnutls-utils
 BuildRequires: nscd
 %if_with kcm
 BuildRequires: libuuid-devel
@@ -109,7 +110,7 @@ BuildRequires: libjansson-devel
 BuildRequires: libjose-devel
 
 %if_with check
-BuildRequires: /proc
+BuildRequires: /proc /dev/pts
 BuildRequires: openssl
 BuildRequires: openssh
 BuildRequires: nss-utils
@@ -119,11 +120,15 @@ BuildRequires: nss_wrapper
 BuildRequires: pam_wrapper
 BuildRequires: softhsm
 BuildRequires: adcli
+BuildRequires: gnutls-utils
 %endif
 BuildRequires: po4a
 
 # Due sssd-drop-privileges control for unprivileged mode support
 Requires: local-policy >= 0.4.8
+
+# libsss_simpleifp is removed starting 2.9.0
+Obsoletes: libsss_simpleifp < 2.9.0
 
 %description
 Provides a set of daemons to manage access to remote directories and
@@ -357,23 +362,16 @@ Requires: %name = %version-%release
 Provides the D-Bus responder of the SSSD, called the InfoPipe, that allows
 the information from the SSSD to be transmitted over the system bus.
 
-%package -n libsss_simpleifp
-Summary: The SSSD D-Bus responder helper library
-Group: System/Libraries
+%package passkey
+Summary: SSSD helpers and plugins needed for authentication with passkey token
+Group: System/Servers
 License: GPLv3+
-Requires: %name-dbus = %version-%release
+Requires: sssd = %version-%release
+#Requires: libfido2
 
-%description -n libsss_simpleifp
-Provides library that simplifies D-Bus API for the SSSD InfoPipe responder.
-
-%package -n libsss_simpleifp-devel
-Summary: The SSSD D-Bus responder helper library
-Group: Development/C
-License: GPLv3+
-Requires: libsss_simpleifp = %version-%release
-
-%description -n libsss_simpleifp-devel
-Provides library that simplifies D-Bus API for the SSSD InfoPipe responder.
+%description passkey
+This package provides helper processes and Kerberos plugins that are required to
+enable authentication with passkey token.
 
 %package winbind-idmap
 Summary: SSSD's idmap_sss Backend for Winbind
@@ -456,6 +454,9 @@ Provides python3 programs with sssd analyze tools
 %setup
 %patch -p1
 
+## Disable pam-srv-tests due it not works (one by one only).
+sed -i -e '/^\s\+pam-srv-tests\s\+\\$/d' Makefile.am
+
 %build
 %autoreconf
 %configure \
@@ -473,6 +474,7 @@ Provides python3 programs with sssd analyze tools
     --enable-nfsidmaplibdir=%nfsidmapdir \
     --with-syslog=journald \
     --with-test-dir=/dev/shm \
+    --with-passkey \
     --enable-ldb-version-check \
     --enable-krb5-locator-plugin \
     --enable-pac-responder \
@@ -535,6 +537,9 @@ mkdir -p %buildroot%_sysconfdir/krb5.conf.d
 # Enable krb5 idp plugins by default (when sssd-idp package is installed)
 cp %buildroot%_datadir/sssd/krb5-snippets/sssd_enable_idp %buildroot%_sysconfdir/krb5.conf.d/sssd_enable_idp
 
+# Enable krb5 passkey plugins by default (when sssd-passkey package is installed)
+cp %buildroot%_datadir/sssd/krb5-snippets/sssd_enable_passkey %buildroot%_sysconfdir/krb5.conf.d/sssd_enable_passkey
+
 # krb5 configuration snippet
 cp %buildroot%_datadir/sssd/krb5-snippets/enable_sssd_conf_dir %buildroot%_sysconfdir/krb5.conf.d/enable_sssd_conf_dir
 
@@ -546,6 +551,9 @@ printf '%_libdir/cifs-utils/idmap-plugin\t%_libdir/cifs-utils/cifs_idmap_sss.so\
 # Clean manpages l10n
 rm -f %buildroot/%_mandir/*/man5/sssd-systemtap.5*
 %endif
+
+# Clean manpages l10n of deprecated files provider
+rm -f %buildroot/%_mandir/*/man5/sssd-files.5*
 
 %check
 export CK_TIMEOUT_MULTIPLIER=10
@@ -605,7 +613,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libdir/%name/libsss_crypt.so
 %_libdir/%name/libsss_cert.so
 %_libdir/%name/libsss_debug.so
-%_libdir/%name/libsss_files.so
 %_libdir/%name/libsss_krb5_common.so
 %_libdir/%name/libsss_ldap_common.so
 %_libdir/%name/libsss_util.so
@@ -654,13 +661,10 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_datadir/%name/sssd.api.conf
 %dir %_datadir/%name/sssd.api.d
 %_datadir/%name/sssd.api.d/sssd-simple.conf
-%_datadir/%name/sssd.api.d/sssd-files.conf
 %_man1dir/sss_ssh_*
 %_mandir/*/man1/sss_ssh_*
 %_man5dir/sssd.conf.5*
 %_mandir/*/man5/sssd.conf.5*
-%_man5dir/sssd-files.5*
-%_mandir/*/man5/sssd-files.5*
 %_man5dir/sssd-simple.5*
 %_mandir/*/man5/sssd-simple.5*
 %_man5dir/sssd-sudo.5*
@@ -811,7 +815,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_man5dir/sssd-ifp*
 %_mandir/*/man5/sssd-ifp*
 # InfoPipe DBus plumbing
-%_sysconfdir/dbus-1/system.d/org.freedesktop.sssd.infopipe.conf
+%_datadir/dbus-1/system.d/org.freedesktop.sssd.infopipe.conf
 %_datadir/dbus-1/system-services/org.freedesktop.sssd.infopipe.service
 %_unitdir/sssd-ifp.service
 
@@ -832,14 +836,11 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_datadir/sssd/krb5-snippets/sssd_enable_idp
 %config(noreplace) %_sysconfdir/krb5.conf.d/sssd_enable_idp
 
-%files -n libsss_simpleifp
-%_libdir/libsss_simpleifp.so.*
-
-%files -n libsss_simpleifp-devel
-%_includedir/sss_sifp.h
-%_includedir/sss_sifp_dbus.h
-%_libdir/libsss_simpleifp.so
-%_pkgconfigdir/sss_simpleifp.pc
+%files passkey
+%_libexecdir/%name/passkey_child
+%_libdir/%name/modules/sssd_krb5_passkey_plugin.so
+%_datadir/sssd/krb5-snippets/sssd_enable_passkey
+%config(noreplace) %_sysconfdir/krb5.conf.d/sssd_enable_passkey
 
 %files winbind-idmap
 %_libdir/samba/idmap/sss.so
@@ -879,6 +880,22 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Fri Oct 06 2023 Evgeny Sinelnikov <sin@altlinux.org> 2.9.2-alt1
+- Update to latest 2.9 major release.
+- sss_simpleifp library removed due it deprecated.
+- "Files provider" removed due it deprecated, using "Proxy provider" with
+  proxy_lib_name = files instead.
+- New passkey functionality, which will allow the use of FIDO2 compliant devices
+  to authenticate a centrally managed user locally.
+- Default value of cache_first option was changed to true.
+- sssctl cert-show and cert-show cert-eval-rule can now be run as non-root user.
+- certmap: Handle type change of x400Address (due to CVE-2023-0286).
+- New option local_auth_policy is added to control which offline authentication
+  methods will be enabled by SSSD.
+- SSSD can be configured not to perform a DNS search during DNS name resolution.
+  This behavior is governed by the new dns_resolver_use_search_list in the
+  domain section. Default value is true (follows the system settings).
+
 * Fri Jul 28 2023 Ivan A. Melnikov <iv@altlinux.org> 2.8.1-alt3.1
 - NMU: Backport upstream commit to fix build with krb5 1.21*
 
