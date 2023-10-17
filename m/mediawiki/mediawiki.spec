@@ -11,15 +11,20 @@
 %define defphp php8.0
 %endif
 
-# default
 %if_feature php81 8.1.0
 %def_with php81
 %define defphp php8.1
 %endif
 
+# default
+%if_feature php82 8.2.0
+%def_with php82
+%define defphp php8.2
+%endif
+
 
 Name: mediawiki
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
@@ -117,6 +122,21 @@ Requires: php8.1-dom php8.1-fileinfo php8.1-intl php8.1-mbstring
 Requires: php8.1-mcrypt php8.1-xmlreader php8.1-gd
 Requires: php8.1-opcache php8.1-apcu
 Requires: php8.1-openssl
+
+Requires: %name-common = %EVR
+
+%package -n %name-php8.2
+Summary: Common files for %name
+Group: Networking/WWW
+Requires: webserver-common
+# https://www.mediawiki.org/wiki/Compatibility
+Requires: php8.2-libs >= 8.2.0
+# inside php8.1-libs
+# Requires: php8.2-ctype php8.2-iconv php8.2-json php8.2-xml
+Requires: php8.2-dom php8.2-fileinfo php8.2-intl php8.2-mbstring
+Requires: php8.2-mcrypt php8.2-xmlreader php8.2-gd
+Requires: php8.2-opcache php8.2-apcu
+Requires: php8.2-openssl
 
 Requires: %name-common = %EVR
 
@@ -245,6 +265,14 @@ range of features and support for high-traffic websites using multiple
 servers.
 
 This package contains all needed php8.1 requires.
+
+%description -n %name-php8.2
+MediaWiki is the software used for Wikipedia and the other Wikimedia
+Foundation websites. Compared to other wikis, it has an excellent
+range of features and support for high-traffic websites using multiple
+servers.
+
+This package contains all needed php8.2 requires.
 
 %package -n %name-apache2
 Summary: Apache2's requires and config files for %name
@@ -506,6 +534,10 @@ fi
 %files -n %name-php8.1
 %endif
 
+%if_with php82
+%files -n %name-php8.2
+%endif
+
 %files -n %name-common
 %add_findreq_skiplist %_datadir/%name/config/LocalSettings.php
 %_mediawikidir/
@@ -558,6 +590,17 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Mon Oct 16 2023 Vitaly Lipatov <lav@altlinux.ru> 1.40.1-alt1
+- new version 1.40.1 (with rpmrb script)
+- build with php8.2 by default (ALT bug 48033)
+- (T333050, CVE-2023-45363) SECURITY: Fix infinite loop for self-redirects with variants conversion.
+- (T340217, CVE-2023-45359) SECURITY: Vector 2022: Numerous unescaped messages leading to potential XSS.
+- (T340220, CVE-2023-45361) SECURITY: Vector 2022: vector-intro-page message is assumed to yield a valid title.
+- (T340221, CVE-2023-45360) SECURITY: XSS via 'youhavenewmessagesmanyusers' and 'youhavenewmessages' messages.
+- (T341529, CVE-2023-45362) SECURITY: diff-multi-sameuser ("X intermediate revisions by the same user not shown") ignores username suppression.
+- (T341565, CVE-2023-3550) SECURITY: Stored XSS when uploading crafted XML file to Special:Upload (non standard configuration).
+
+
 * Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1.40.0-alt1
 - new version 1.40.0 (with rpmrb script)
 - disable AutoReq
