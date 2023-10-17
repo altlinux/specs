@@ -24,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt4
+Release: alt5
 Epoch: 1
 Url: https://altsp.su
 
@@ -321,6 +321,10 @@ subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.c
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Oct 17 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt5
+- indexhtml: update link to official telegram chat
+- indexhtml: add link to Mailing Lists
+
 * Fri Sep 22 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt4
 - copy licenses from distro-licenses
 
