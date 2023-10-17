@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define ver_major 3.22
 %define xdg_name org.gnome.Meld
 
@@ -5,14 +7,18 @@
 
 Name: meld
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Meld Diff Viewer
 License: GPL-2.0-or-later
 Group: Text tools
 Url: http://meld.app
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
 
@@ -52,6 +58,7 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %files -f %name.lang
 %attr(0755,root,root) %_bindir/%name
 %python3_sitelibdir_noarch/*
+%exclude %python3_sitelibdir_noarch/%name/build_helpers.py
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*
@@ -62,6 +69,10 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %doc NEWS README*
 
 %changelog
+* Tue Oct 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt2
+- updated to 3.22.0-53-geebd1a0e
+- excluded useless build_helpers.py
+
 * Sun Sep 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
