@@ -1,5 +1,6 @@
 %define modname python-distutils-extra
-%define ver_major 2.47
+%define pypi_name python_distutils_extra
+%define ver_major 3.0
 
 %def_disable check
 
@@ -16,9 +17,10 @@ Vcs: https://salsa.debian.org/python-team/packages/python-distutils-extra.git
 Source: %modname-%version.tar
 
 BuildArch: noarch
+Requires: python3-module-setuptools >= 54.0
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3(wheel) python3(setuptools)
 %{?_enable_check:BuildRequires: /proc python3-module-pytest python3-module-httplib2
 BuildRequires: python3-module-pygobject3 intltool python3-module-pyflakes}
 
@@ -30,24 +32,30 @@ documentation into Python's distutils.
 %setup -n %modname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 chmod a+x %buildroot%python3_sitelibdir/DistUtilsExtra/command/build_extra.py
 
 %check
-%__python3 test/auto.py -v
+#export PYTHONPATH=%buildroot%python3_sitelibdir
+export PYTHONPATH=./
+%__python3 -v test/auto.py
 %_bindir/pyflakes-py3  DistUtilsExtra/ test/
 
 %files
-%doc doc/*
 %python3_sitelibdir/DistUtilsExtra/
-%python3_sitelibdir/python_distutils_extra*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%doc doc/*
 
 
 %changelog
+* Tue Oct 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
+- 3.0
+- ported to %%pyproject macros
+
 * Mon Jun 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.47-alt1
 - 2.47
 
