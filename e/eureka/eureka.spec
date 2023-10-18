@@ -1,6 +1,6 @@
 Name: eureka
 Version: 1.27
-Release: alt1
+Release: alt2
 Summary: A cross-platform map editor for the classic DOOM games
 Summary(ru_RU.UTF-8): Кросплатформенный редактор карт классического Doom
 Group: Editors
@@ -10,6 +10,7 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: eureka-1.27-Makefile.patch
+Patch1: 0001-fix-loading-wad-files-on-aarch64.patch
 
 BuildRequires: gcc-c++
 BuildRequires: binutils
@@ -48,6 +49,10 @@ Eureka - кросплатформенный редактор карт класс
 %setup -n %name-%version
 %patch0 -p1 
 
+%ifarch aarch64
+%patch1 -p1
+%endif
+
 %build
 make OPTIMISE="%optflags"
 
@@ -65,6 +70,9 @@ mkdir -p %buildroot%prefix
 %_man6dir/%name.6.xz
 
 %changelog
+* Wed Oct 18 2023 Artyom Bystrov <arbars@altlinux.org> 1.27-alt2
+- Fix load WAD files on aarch64
+
 * Tue Feb 18 2020 Artyom Bystrov <arbars@altlinux.org> 1.27-alt1
 - Update to 1.27
 
