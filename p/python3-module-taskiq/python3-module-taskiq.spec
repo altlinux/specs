@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.3
+Version: 0.10.0
 Release: alt1
 
 Summary: Distributed task queue with full async support 
@@ -24,7 +24,9 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %set_pyproject_deps_check_filter types-
-%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra orjson
+%pyproject_builddeps_metadata_extra cbor
+%pyproject_builddeps_metadata_extra msgpack
 %pyproject_builddeps_check
 %endif
 
@@ -61,6 +63,9 @@ understands all types correctly.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 18 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.0-alt1
+- Updated to 0.10.0.
+
 * Wed Oct 11 2023 Anton Zhukharev <ancieg@altlinux.org> 0.9.3-alt1
 - Updated to 0.9.3.
 
