@@ -1,6 +1,6 @@
 Name: imhex
 Version: 1.30.1
-Release: alt1
+Release: alt1.1
 
 Summary: A hex editor for reverse engineers and programmers
 
@@ -10,6 +10,9 @@ Url: https://imhex.werwolv.net/
 
 # Source-url: https://github.com/WerWolv/ImHex/releases/download/v%version/Full.Sources.tar.gz
 Source: %name-%version.tar
+
+# https://github.com/WerWolv/ImHex/commit/fc93f8bd664b5394f8ba8bcb3c18fcc424d6bdbd
+Patch: %name-fmt10.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -36,6 +39,7 @@ same time ImHex is completely free and open source under the GPLv2 language.
 
 %prep
 %setup
+%patch0 -p1
 rm -rv lib/external/{capstone,fmt,curl,nativefiledialog,yara,nlohmann_json}
 
 %build
@@ -80,5 +84,8 @@ rm -rv %buildroot%_datadir/licenses/imhex/
 %_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/net.werwolv.%name.metainfo.xml
 
 %changelog
+* Wed Oct 18 2023 Nazarov Denis <nenderus@altlinux.org> 1.30.1-alt1.1
+- NMU: Fix build with fmt 10
+
 * Tue Jul 24 2023 Mikhail Tergoev <fidel@altlinux.org> 1.30.1-alt1
 - Initial build for ALT Sisyphus
