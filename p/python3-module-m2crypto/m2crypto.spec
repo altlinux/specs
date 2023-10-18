@@ -2,10 +2,14 @@
 
 %define oname m2crypto
 
+%ifnarch %ix86 armh
 %def_with check
+%else
+%def_without check
+%endif
 
 Name: python3-module-%oname
-Version: 0.39.0
+Version: 0.39.0.0.11.git.ce75069
 Release: alt1
 
 Summary: Support for using OpenSSL in python scripts.
@@ -66,9 +70,12 @@ py.test-3 -v
 %files
 %doc CHANGES LICENCE README.rst tests doc/*
 %python3_sitelibdir/M2Crypto
-%python3_sitelibdir/M2Crypto-%version-py%_python3_version.egg-info
+%python3_sitelibdir/M2Crypto-0.39.0-py%_python3_version.egg-info
 
 %changelog
+* Wed Oct 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.39.0.0.11.git.ce75069-alt1
+- Fixed build with python3.12.
+
 * Tue Jul 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.39.0-alt1
 - Automatically updated to 0.39.0.
 
