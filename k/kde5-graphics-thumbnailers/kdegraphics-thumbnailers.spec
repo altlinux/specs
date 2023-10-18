@@ -1,7 +1,7 @@
 %define rname kdegraphics-thumbnailers
 
 Name: kde5-graphics-thumbnailers
-Version: 23.04.3
+Version: 23.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -41,11 +41,12 @@ BuildRequires: kf5-karchive-devel kf5-kio-devel
 
 %files -f %name.lang
 %doc COPYING*
-%_K5plug/*thumbnail*.so
-%_K5srv/*thumbnail*.desktop
-#%_K5cfg/*.kcfg
+%_K5plug/kf5/thumbcreator/*thumb*.so
 
 %changelog
+* Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

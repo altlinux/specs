@@ -1,7 +1,7 @@
 %define rname tokodon
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -20,9 +20,10 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules
 BuildRequires: libqtkeychain-qt5-devel
+BuildRequires: libmpv-devel
 BuildRequires: qt5-multimedia-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-websockets-devel
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kirigami-addons-devel kf5-kirigami-devel
-BuildRequires: kf5-knotifications-devel kf5-qqc2-desktop-style-devel
+BuildRequires: kf5-knotifications-devel kf5-qqc2-desktop-style-devel kf5-kirigami-addons-devel
 
 %description
 A modern Mastodon client.
@@ -69,6 +70,9 @@ Requires: %name-common = %version-%release
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

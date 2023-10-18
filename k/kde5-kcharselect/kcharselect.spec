@@ -1,7 +1,7 @@
 %define rname kcharselect
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -65,6 +65,9 @@ KF5 library
 #%_K5xmlgui/kcharselect/
 
 %changelog
+* Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

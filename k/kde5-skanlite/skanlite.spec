@@ -10,7 +10,7 @@
 %endif
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.2
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -62,6 +62,9 @@ with auto-generated names and format.
 %_K5icon/hicolor/*/apps/*skanlite*
 
 %changelog
+* Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

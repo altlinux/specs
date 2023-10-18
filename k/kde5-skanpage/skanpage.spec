@@ -2,7 +2,7 @@
 %define rname skanpage
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.2
 Release: alt1
 %K5init altplace
 
@@ -11,7 +11,7 @@ Summary: Multi-page scanning application
 Url: http://www.kde.org
 License:  GPL-2.0-or-later
 
-Requires: qt5-imageformats
+Requires: qt5-imageformats kde5-kquickimageeditor
 
 Source: %rname-%version.tar
 Patch1: alt-def-no-ocr.patch
@@ -24,8 +24,8 @@ BuildRequires: extra-cmake-modules
 BuildRequires: qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel
 BuildRequires: libgomp-devel libleptonica-devel tesseract-devel
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-ki18n-devel kf5-kirigami-devel
-BuildRequires: kf5-purpose-devel
-BuildRequires: kde5-ksanecore-devel
+BuildRequires: kf5-purpose-devel kf5-kxmlgui-devel
+BuildRequires: kde5-ksanecore-devel kde5-kquickimageeditor-devel
 
 %description
 Skanpage is a multi-page scanning application built using the libksane library and a QML interface.
@@ -50,6 +50,9 @@ It supports saving to image and PDF files.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

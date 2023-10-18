@@ -4,7 +4,7 @@
 %define libkdfprivate libkdfprivate%kdfprivate_sover
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -49,7 +49,7 @@ developing applications that use %name.
 %package -n %libkdfprivate
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libkdfprivate
 KF5 library
 
@@ -73,20 +73,22 @@ KF5 library
 %files
 %_K5bin/kdf
 %_K5bin/kwikdisk
-%_K5plug/*kcm_kdf.so
+%_K5plug/plasma/kcms/systemsettings_qwidgets/*kdf*.so
+%_K5xdgapp/*kdf*.desktop
+%_K5xdgapp/*kwikdisk*.desktop
 %_K5icon/*/*/apps/kdf.*
 %_K5icon/*/*/apps/kwikdisk.*
 %_K5icon/*/*/apps/kcmdf.*
-#%_K5srv/kcmdf.desktop
 %_K5xmlgui/kdf/
-%_K5xdgapp/*.kdf.desktop
-%_K5xdgapp/*.kwikdisk.desktop
 
 %files -n %libkdfprivate
 %_K5lib/libkdfprivate.so.%kdfprivate_sover
 %_K5lib/libkdfprivate.so.*
 
 %changelog
+* Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

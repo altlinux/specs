@@ -14,7 +14,7 @@
 %def_disable python_plugins
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.2
 Release: alt1
 %K5init no_altplace
 
@@ -50,7 +50,7 @@ support, Speed Dial and SSL Certificate manager.
 Group: Graphical desktop/KDE
 Summary: Falkon KDE integration
 Requires(post,preun): alternatives >= 0.2
-Provides: webclient
+Provides: webclient x-www-browser
 Provides: %rname = %EVR
 Obsoletes: %rname < %EVR
 Provides: qupzilla = %version-%release
@@ -138,6 +138,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.*
 
 %changelog
+* Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 
