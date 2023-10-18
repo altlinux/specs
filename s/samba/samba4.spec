@@ -102,7 +102,7 @@
 
 Name:    samba
 Version: 4.17.11
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -903,7 +903,6 @@ cp -a ../%rname-%version ../%rname-%version-separate-heimdal-server
 %endif \
 	%{subst_enable spotlight} \\\
 	%{subst_enable avahi} \\\
-	--with-libcephfs-common=%_libdir/ceph \\\
 	%{subst_enable cephfs} \\\
 	%{subst_enable glusterfs} \\\
 	%*
@@ -2117,6 +2116,9 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Sat Oct 07 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.11-alt2
+- New build scheme with separate upstream, altlinux and sisyphus branches.
+
 * Sat Sep 23 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.11-alt1
 - Update to security release of Samba 4.17
 - smbd fileserver fixes (Samba#15419, Samba#15420, Samba#15430, Samba#15432,
