@@ -1,9 +1,9 @@
 %define module generic-compat
 Name: rpm-macros-%module
 Summary: Generic non-ALTLinux compatibility set of macro
-Version: 0.04
+Version: 0.05
 Release: alt1
-License: GPL
+License: GPLv2+
 Group: System/Base
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -26,6 +26,9 @@ install -D -m644 %module -p %buildroot%_rpmmacrosdir/%module-base
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Oct 18 2023 Igor Vlasenko <viy@altlinux.org> 0.05-alt1
+- added %%_rundir
+
 * Sat May 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - added %%power64
 
