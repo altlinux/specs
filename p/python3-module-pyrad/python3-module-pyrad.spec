@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.4
-Release: alt2
+Release: alt3
 
 Summary: Python RADIUS Implementation
 License: BSD-3-Clause
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-poetry
 %if_with check
 BuildRequires: python3-module-netaddr
+BuildRequires: python3-module-six
 %endif
 
 BuildArch: noarch
@@ -47,6 +48,9 @@ decoding responses.
 %doc *.rst
 
 %changelog
+* Wed Oct 18 2023 Grigory Ustinov <grenka@altlinux.org> 2.4-alt3
+- Fixed BuildRequires.
+
 * Tue Apr 04 2023 Anton Vyatkin <toni@altlinux.org> 2.4-alt2
 - (NMU) Fix BuildRequires.
 
