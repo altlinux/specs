@@ -1,6 +1,6 @@
 Name: imhex
-Version: 1.30.1
-Release: alt1.1
+Version: 1.31.0
+Release: alt1
 
 Summary: A hex editor for reverse engineers and programmers
 
@@ -11,8 +11,8 @@ Url: https://imhex.werwolv.net/
 # Source-url: https://github.com/WerWolv/ImHex/releases/download/v%version/Full.Sources.tar.gz
 Source: %name-%version.tar
 
-# https://github.com/WerWolv/ImHex/commit/fc93f8bd664b5394f8ba8bcb3c18fcc424d6bdbd
-Patch: %name-fmt10.patch
+# https://github.com/WerWolv/ImHex/commit/25ddaa08dc872429cd97d990507a7db8f47d76eb
+Patch: %name-fix-build-with-capstone-4.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -40,7 +40,7 @@ same time ImHex is completely free and open source under the GPLv2 language.
 %prep
 %setup
 %patch0 -p1
-rm -rv lib/external/{capstone,fmt,curl,nativefiledialog,yara,nlohmann_json}
+rm -rv lib/external/{capstone,fmt,nativefiledialog,yara,nlohmann_json}
 
 %build
 %cmake \
@@ -65,6 +65,14 @@ cp -av lib/external/microtar/LICENSE microtar-LICENSE
 cp -av lib/external/xdgpp/LICENSE xdgpp-LICENSE
 rm -rv %buildroot%_datadir/licenses/imhex/
 
+%check
+# build binaries required for tests
+%cmake_build --target unit_tests
+%ctest --exclude-regex '(Helpers/StoreAPI|Helpers/TipsAPI|Helpers/ContentAPI)'
+
+%_bindir/desktop-file-validate %buildroot/%_desktopdir/%name.desktop
+%_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/net.werwolv.%name.metainfo.xml
+
 %files
 %doc README.md *LICENSE
 %_bindir/imhex
@@ -75,15 +83,10 @@ rm -rv %buildroot%_datadir/licenses/imhex/
 %_datadir/metainfo/
 %_datadir/metainfo/net.werwolv.imhex.appdata.xml
 
-%check
-# build binaries required for tests
-%cmake_build --target unit_tests
-%ctest --exclude-regex '(Helpers/StoreAPI|Helpers/TipsAPI|Helpers/ContentAPI)'
-
-%_bindir/desktop-file-validate %buildroot/%_desktopdir/%name.desktop
-%_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/net.werwolv.%name.metainfo.xml
-
 %changelog
+* Wed Oct 18 2023 Mikhail Tergoev <fidel@altlinux.org> 1.31.0-alt1
+- update to upstream 1.31.0
+
 * Wed Oct 18 2023 Nazarov Denis <nenderus@altlinux.org> 1.30.1-alt1.1
 - NMU: Fix build with fmt 10
 
