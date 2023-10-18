@@ -17,7 +17,7 @@
 
 Name:    freecad
 Version: 0.21.1
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -56,9 +56,6 @@ BuildRequires: qt5-tools-devel-static
 BuildRequires: qt5-webengine-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-xmlpatterns-devel
-BuildRequires: python3-module-PySide2
-BuildRequires: pyside2-tools
-BuildRequires: python3-module-PySide2-devel
 BuildRequires: python3-module-shiboken2-devel
 %define qmake %qmake_qt5
 %define qtbindir %_qt5_bindir
@@ -80,7 +77,6 @@ BuildRequires: opencascade-devel libgts-devel
 BuildRequires: libode-devel libann-devel
 BuildRequires: doxygen graphviz
 BuildRequires: eigen3
-#BuildRequires: python-module-pivy
 BuildRequires: libnumpy-py3-devel
 BuildRequires: boost-interprocess-devel
 BuildRequires: gdb
@@ -98,13 +94,12 @@ BuildRequires: libglvnd-devel
 Requires: libEGL-devel libGLU-devel
 %endif
 #BuildRequires: texlive-extra-utils
-BuildRequires: python3-module-pivy
 BuildRequires: libnetgen-devel netgen
 %if_with pybind11
 BuildRequires: pybind11-devel
 %endif
 
-%py3_requires pivy matplotlib.backends.backend_qt5
+%py3_requires matplotlib.backends.backend_qt5
 #py3_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
 #py3_provides PartGui Sketcher TestSketcherApp Robot RobotGui SketcherGui
 #py3_provides ImageGui PartDesignGui _PartDesign
@@ -256,6 +251,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Wed Oct 18 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.21.1-alt2
+- Remove PySide2 from requires.
+
 * Sat Oct 14 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.21.1-alt1
 - New version.
 - FTBFS: removed qt5-sql-sqlite3.
