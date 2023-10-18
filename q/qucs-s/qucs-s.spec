@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 2.0.0
-Release: alt1
+Version: 2.1.0
+Release: alt2.20231018
 
 Summary: Circuit simulator
 License: GPLv2+
@@ -11,7 +11,7 @@ Group: Education
 Url: https://github.com/ra3xdh/qucs_s
 
 Source: %name-%version.tar
-Patch: fix_S4Q_workdir.patch
+Patch: %name-%version-%release.patch
 
 Buildrequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -42,14 +42,14 @@ window.
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=Release
+%cmake -DCMAKE_BUILD_TYPE=Release -DUPDATE_TRANSLATIONS=On
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 for l in $(find %buildroot%_datadir/%name/lang -name \*.qm); do
     echo -n $l | sed 's,.*_\(.*\)\.qm,%%lang\(\1\) ,'
@@ -65,6 +65,14 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Wed Oct 18 2023 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt2.20231018
+- update russian translation
+- use git diff instead patches
+- remove outdated patch
+
+* Wed Oct 18 2023 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1.20231017
+- new snapshot with update russian translations
+
 * Sun Aug 20 2023 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0.
 - Update Url.
