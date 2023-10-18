@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.0.10
-Release: alt1
+Release: alt2
 
 Summary: Pytest plugin for testing examples in docstrings and markdown files
 License: MIT
@@ -18,6 +18,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: python3-module-pytest-examples-0.0.10-alt-update-tests-for-new-ruff.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -47,6 +48,7 @@ or update print statements.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -70,6 +72,9 @@ cat requirements/{pyproject,testing}.txt > requirements.txt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 18 2023 Anton Zhukharev <ancieg@altlinux.org> 0.0.10-alt2
+- Fixed FTBFS (ruff 0.1.0).
+
 * Thu Sep 07 2023 Anton Zhukharev <ancieg@altlinux.org> 0.0.10-alt1
 - Built for ALT Sisyphus.
 
