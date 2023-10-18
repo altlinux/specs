@@ -1,5 +1,5 @@
 Name: alt-csp-cryptopro
-Version: 0.2.9
+Version: 0.2.10
 Release: alt1
 
 Group: File tools
@@ -10,7 +10,6 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: cmake
-BuildRequires: libprocps-devel
 BuildRequires: quazip-qt5-devel
 BuildRequires: qt5-tools-devel
 
@@ -42,6 +41,9 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Wed Oct 18 2023 Oleg Solovyov <mcpain@altlinux.org> 0.2.10-alt1
+- drop procps dependency
+
 * Mon Jul 10 2023 Oleg Solovyov <mcpain@altlinux.org> 0.2.9-alt1
 - change categories
 
