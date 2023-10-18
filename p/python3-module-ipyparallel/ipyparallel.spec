@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname ipyparallel
 
-%def_with check
-%def_without bootstrap
+%def_without check
+%def_with bootstrap
 
 Name: python3-module-%oname
 Version: 8.6.1
-Release: alt1
+Release: alt2
 Summary: Interactive Parallel Computing with IPython
 License: BSD-3-Clause
 Group: Development/Python3
@@ -105,6 +105,9 @@ export TMPDIR=/tmp
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Oct 18 2023 Anton Vyatkin <toni@altlinux.org> 8.6.1-alt2
+- Build with bootstrap.
+
 * Mon Jun 12 2023 Anton Vyatkin <toni@altlinux.org> 8.6.1-alt1
 - New version 8.6.1.
 

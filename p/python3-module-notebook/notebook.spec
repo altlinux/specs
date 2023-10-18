@@ -5,8 +5,8 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 6.5.4
-Release: alt2.1
+Version: 7.0.6
+Release: alt1
 Summary: Jupyter Interactive Notebook
 License: BSD-3-Clause
 Group: Development/Python3
@@ -17,31 +17,18 @@ Source: %name-%version.tar
 Requires: python3-module-nest-asyncio
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-jupyter-packaging
-BuildRequires: python3-module-nbclassic
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-jupyterlab
+BuildRequires: python3-module-hatch-jupyter-builder
 
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-testpath
+BuildRequires: python3-module-pytest-jupyter
 BuildRequires: python3-module-requests
-BuildRequires: python3-module-traitlets-tests
-
-BuildRequires: python3-module-send2trash
-BuildRequires: python3-module-nbconvert
-BuildRequires: python3-module-nbformat
-BuildRequires: python3-module-nest-asyncio
-BuildRequires: python3-module-tornado
-BuildRequires: python3-module-traitlets
-BuildRequires: python3-module-jupyter_client
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-pytest-console-scripts
 BuildRequires: python3-module-ipykernel
-BuildRequires: python3-module-jinja2
-BuildRequires: python3-module-argon2-cffi
-BuildRequires: python3-module-terminado
-BuildRequires: python3-module-nbclassic
-BuildRequires: python3-module-requests-unixsocket
-BuildRequires: /dev/pts
+BuildRequires: python3-module-jupyter_server
 %endif
 
 %if_with doc
@@ -54,20 +41,6 @@ Conflicts: python-module-%oname
 %description
 The Jupyter HTML notebook is a web-based notebook environment for
 interactive computing.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-The Jupyter HTML notebook is a web-based notebook environment for
-interactive computing.
-
-This package contains tests for %oname.
-
-# There are wrong relative imports in %python3_sitelibdir/notebook/tree/tests/handlers.py
-%add_python3_req_skip notebook.tree.base.handlers notebook.tree.utils
 
 %package pickles
 Summary: Pickles for %oname
@@ -92,8 +65,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-# remove selenium tests
-rm -rf notebook/tests/selenium
 
 %if_with doc
 %prepare_sphinx3 docs
@@ -113,38 +84,26 @@ export PYTHONPATH=$PWD
 cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
+install -d -m 755 %buildroot%_sysconfdir/jupyter/jupyter_server_config.d
+mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/notebook.json \
+   %buildroot%_sysconfdir/jupyter/jupyter_server_config.d
+
 %check
-export LANG=en_US.UTF-8
-# trash tests doesn't seem to work
-%pyproject_run_pytest -v -k "\
-not test_kernels_api \
-and not test_checkpoints_follow_file \
-and not test_delete \
-and not test_delete_dirs \
-and not test_delete_non_empty_dir \
-and not test_list_formats"
+%pyproject_run_pytest -v -W ignore::DeprecationWarning
 
 %files
 %doc *.md
-%_bindir/jupyter-bundlerextension
-%_bindir/jupyter-nbextension
 %_bindir/jupyter-notebook
-%_bindir/jupyter-serverextension
 %_desktopdir/jupyter-notebook.desktop
 %_iconsdir/hicolor/scalable/apps/notebook.svg
+%_datadir/jupyter/*
+%dir %_sysconfdir/jupyter/
+%config(noreplace) %_sysconfdir/jupyter/*
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%{pyproject_distinfo %oname}
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/*/tests
-%exclude %python3_sitelibdir/*/*/*/tests
 %if_with doc
 %exclude %python3_sitelibdir/%oname/pickle
 %endif
-
-%files tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/*/tests
-%python3_sitelibdir/*/*/*/tests
 
 %if_with doc
 %files pickles
@@ -155,6 +114,9 @@ and not test_list_formats"
 %endif
 
 %changelog
+* Wed Oct 18 2023 Anton Vyatkin <toni@altlinux.org> 7.0.6-alt1
+- new version 7.0.6
+
 * Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 6.5.4-alt2.1
 - NMU: ignored unmet dependencies
 
