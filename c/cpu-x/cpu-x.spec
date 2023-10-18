@@ -3,7 +3,7 @@
 
 Name: cpu-x
 Version: 4.5.3
-Release: alt1
+Release: alt2
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPL-3.0-or-later
 Group: System/Kernel and hardware
@@ -19,7 +19,7 @@ BuildRequires: pkgconfig(json-c)
 BuildRequires: pkgconfig(libcpuid) >= 0.4.0
 BuildRequires: pkgconfig(libcurl)
 BuildRequires: pkgconfig(libpci)
-BuildRequires: pkgconfig(libprocps)
+BuildRequires: pkgconfig(libproc2)
 BuildRequires: pkgconfig(libstatgrab)
 BuildRequires: pkgconfig(ncursesw)
 Requires: icon-theme-hicolor
@@ -63,6 +63,9 @@ rm -r %buildroot%_datadir/locale/zh_Hant
 %_prefix/libexec/*
 
 %changelog
+* Wed Oct 18 2023 Anton Midyukov <antohami@altlinux.org> 4.5.3-alt2
+- rebuild with libproc2
+
 * Sun Apr 23 2023 Anton Midyukov <antohami@altlinux.org> 4.5.3-alt1
 - New version 4.5.3.
 
