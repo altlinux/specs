@@ -1,5 +1,5 @@
 Name:    libleatherman
-Version: 1.12.9
+Version: 1.12.10
 Release: alt1
 Summary: A collection of C++ and CMake utility libraries
  
@@ -79,6 +79,9 @@ zip -ru Catch-1.10.0.zip Catch-1.10.0/
 %_libdir/cmake/leatherman
 
 %changelog
+* Wed Oct 18 2023 Andrey Cherepanov <cas@altlinux.org> 1.12.10-alt1
+- New version.
+
 * Fri Oct 07 2022 Andrey Cherepanov <cas@altlinux.org> 1.12.9-alt1
 - New version.
 
