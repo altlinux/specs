@@ -7,7 +7,7 @@
 
 Name: ltrace
 Version: 0.7.91.0.198.git82c6640
-Release: alt6
+Release: alt7
 
 Summary: Tracks runtime library calls from dynamically linked executables
 License: GPLv2+
@@ -56,6 +56,7 @@ Patch1004: ltrace-0.7.91.0.198.git82c6640-fix_errors_in_tests.patch
 %{?_without_glibc_debuginfo:
 Patch1005: ltrace-0.7.91.0.198.git82c6640-disable_glibc_core_debuginfo_tests.patch}
 Patch1006: ltrace-0.7.91.0.198.git82c6640-fix_Wlto-type-mismatch.patch
+Patch3500: ltrace-loongarch.patch
 
 BuildRequires: libelf-devel elfutils-devel gcc-c++
 %{?!_without_check:%{?!_disable_check:
@@ -107,6 +108,7 @@ Ltrace перехватывает и выводит все выполняемы�
 %{?_without_glibc_debuginfo:
 %patch1005 -p1}
 %patch1006 -p1
+%patch3500 -p1
 
 %build
 export CFLAGS="%optflags -Werror"
@@ -129,6 +131,9 @@ LC_ALL=en_US.UTF-8 make check RUNTESTFLAGS="--tool_exec=%buildroot/%_bindir/ltra
 %exclude %_docdir/%name
 
 %changelog
+* Wed Oct 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.7.91.0.198.git82c6640-alt7
+- Support LoongArch architecture.
+
 * Tue Oct 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.7.91.0.198.git82c6640-alt6
 - Fixed FTBFS.
 
