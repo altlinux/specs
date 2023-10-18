@@ -1,5 +1,5 @@
 Name:           xfce4-notifyd
-Version:        0.8.2
+Version:        0.9.2
 Release:        alt1
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
@@ -14,13 +14,15 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 %def_disable wayland
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
+BuildPreReq: rpm-build-xfce4 xfce4-dev-tools >= 4.18.1
 BuildRequires: libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
 BuildRequires: libxfce4panel-gtk3-devel
 BuildRequires: libgio-devel libX11-devel
 BuildRequires: libnotify-devel
 BuildRequires: libcanberra-gtk3-devel
 BuildRequires: libsqlite3-devel
+BuildRequires: libdbus-devel
+BuildRequires: rpm-build-xdg
 %{?_enable_wayland:BuildRequires: libgtk-layer-shell-devel}
 
 Requires:       xfce4-common
@@ -66,15 +68,10 @@ Notification plugin for the Xfce panel.
 %configure \
 	--enable-maintainer-mode \
 	--enable-dbus-start-daemon \
-	--enable-gdk-x11 \
-%if_enabled wayland
-	--enable-gdk-wayland \
-	--enable-gtk-layer-shell \
-%else
-	--disable-gdk-wayland \
-	--disable-gtk-layer-shell \
-%endif
+	--enable-x11 \
+	%{subst_enable wayland} \
 	--enable-sound \
+	--enable-systemd \
 	--enable-debug=minimum
 %make_build
 
@@ -84,6 +81,7 @@ Notification plugin for the Xfce panel.
 
 %files -f %name.lang
 %doc AUTHORS NEWS README.md
+%_xdgconfigdir/autostart/*.desktop
 %_bindir/xfce4-notifyd-config
 %_libdir/xfce4/notifyd/
 %_desktopdir/*.desktop
@@ -104,6 +102,10 @@ Notification plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Oct 18 2023 Mikhail Efremov <sem@altlinux.org> 0.9.2-alt1
+- Require xfce4-dev-tools >= 4.18.1.
+- Updated to 0.9.2.
+
 * Tue Feb 28 2023 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
 - Updated to 0.8.2.
 
