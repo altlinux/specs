@@ -1,5 +1,5 @@
 Name: distrodb-utils
-Version: 0.256
+Version: 0.257
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -50,6 +50,9 @@ install -m 644 ProjectDB/Repo/*.pm %buildroot%perl_vendor_privlib/ProjectDB/Repo
 %perl_vendor_privlib/ProjectDB
 
 %changelog
+* Wed Oct 18 2023 Igor Vlasenko <viy@altlinux.org> 0.257-alt1
+- new version
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.256-alt1
 - new version
 
