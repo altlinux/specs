@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p10
-Release: alt8
+Release: alt9
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -122,7 +122,7 @@ Group: Engineering
 #Requires: camotics
 #endif
 Requires: pycam
-Requires: flatcam
+#Requires: flatcam
 %ifnarch %ix86 %arm
 Requires: pcb2gcodeGUI
 %endif
@@ -202,6 +202,9 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Wed Oct 18 2023 Anton Midyukov <antohami@altlinux.org> p10-alt9
+- CAM: do'nt require flatcam
+
 * Wed Jul 19 2023 Anton Midyukov <antohami@altlinux.org> p10-alt8
 - CAM: do'nt require camotics
 
