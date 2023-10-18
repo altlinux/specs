@@ -1,9 +1,9 @@
 Name: xfce4-dev-tools
-Version: 4.18.0
+Version: 4.18.1
 Release: alt1
 
 Summary: Development tools for Xfce
-Summary (ru): Инструменты для разработчика Xfce
+Summary (ru_RU.UTF-8): Инструменты для разработчика Xfce
 License: GPLv2+
 Url: https://docs.xfce.org/xfce/xfce4-dev-tools/start
 Group: Graphical desktop/XFce
@@ -25,7 +25,7 @@ The Xfce Development Tools are a set of scripts and m4/autoconf macros
 that ease build system maintenance.
 This package is used to build Xfce packages to Sisyphus.
 
-%description -l ru
+%description -l ru_RU.UTF-8
 Данный пакет содержит в себе инструменты необходимые для разработчика
 окружения рабочего стола Xfce.
 
@@ -55,6 +55,10 @@ make check
 %_man1dir/*
 
 %changelog
+* Wed Oct 18 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
+- Use ru_RU.UTF-8 for Russian summary/description.
+- Updated to 4.18.1.
+
 * Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
 - Updated description.
 - Updated to 4.18.0.

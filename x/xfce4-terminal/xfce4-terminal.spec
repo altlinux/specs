@@ -1,6 +1,6 @@
 Name: xfce4-terminal
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -12,7 +12,7 @@ Vcs: https://gitlab.xfce.org/apps/xfce4-terminal.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: rpm-build-xfce4 >= 0.2.0-alt1 xfce4-dev-tools >= 4.18.0
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools >= 4.18.1
 BuildRequires: libxfconf-devel >= 4.16 libxfce4ui-gtk3-devel >= 4.17.5
 BuildRequires: libpcre2-devel
 BuildRequires: docbook-dtds docbook-style-xsl intltool libvte3-devel
@@ -24,11 +24,6 @@ Obsoletes: Terminal < %version
 Provides: Terminal = %version-%release
 
 Provides: x-terminal-emulator
-
-# NOTE: Don't forget to revert commit
-# cf7749e0996efc19dbea96519bb4b36b19c5ee39 when
-# xfce4-dev-tools-4.19 will be in the Sisyphus!
-BuildRequires: xfce4-dev-tools < 4.19.0
 
 %define _unpackaged_files_terminate_build 1
 
@@ -71,6 +66,11 @@ __EOF__
 %_desktopdir/*
 
 %changelog
+* Wed Oct 18 2023 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt2
+- Don't require rpm-build-xfce4 >= 0.2.0-alt1.
+- Require xfce4-dev-tools >= 4.18.1.
+- Dropped patch for xfce4-dev-tools-4.18.0.
+
 * Mon Oct 16 2023 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt1
 - Don't use xfce4-dev-tools-4.19.
 - Updated to 1.1.1.
