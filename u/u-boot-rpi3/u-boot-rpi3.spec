@@ -1,6 +1,6 @@
 Name: u-boot-rpi3
 Version: 2023.10
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -47,6 +47,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Wed Oct 18 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.10-alt2
+- fix booting from sdcard (closes: 48042)
+
 * Mon Oct 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.10-alt1
 - 2023.10 released
 
