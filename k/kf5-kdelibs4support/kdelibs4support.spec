@@ -1,10 +1,11 @@
 %define rname kdelibs4support
 
 %add_python3_path %_libdir/cmake
+%add_findreq_skiplist %_libdir/cmake/*.py
 
 Name: kf5-%rname
 Version: 5.110.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -130,6 +131,9 @@ rm -rf %buildroot/%_libdir/cmake/KF5KDELibs4Support/FindSIP.*
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Wed Oct 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.110.0-alt2
+- skip python2 requires
+
 * Mon Sep 11 2023 Sergey V Turchin <zerg@altlinux.org> 5.110.0-alt1
 - new version
 
