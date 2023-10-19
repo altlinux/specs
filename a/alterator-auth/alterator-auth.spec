@@ -1,8 +1,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.44.5
-Release: alt3
+Version: 0.44.6
+Release: alt1
 
 Summary: Alterator module for system wide auth settings
 License: GPL-2.0+
@@ -169,6 +169,9 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Thu Oct 19 2023 Andrey Cherepanov <cas@altlinux.org> 0.44.6-alt1
+- system-auth: fix join to sub OU (ALT #44924)
+
 * Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 0.44.5-alt3
 - Fix autoreq filters: hostnamectl is in systemd package
 - Remove orphaned hook file
