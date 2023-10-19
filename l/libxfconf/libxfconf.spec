@@ -13,7 +13,7 @@
 
 Name: lib%_name
 Version: 4.18.2
-Release: alt1
+Release: alt2
 
 Summary: Hierarchical configuration system for Xfce
 Summary (ru_RU.UTF-8): Система конфигурации Xfce
@@ -28,7 +28,7 @@ Patch: %_name-%version-%release.patch
 
 %define _unpackaged_files_terminate_build 1
 
-BuildRequires: rpm-build-xfce4 libxfce4util-devel xfce4-dev-tools
+BuildRequires: rpm-build-xfce4 >= 0.2.0 libxfce4util-devel xfce4-dev-tools
 BuildRequires: libxfce4util-devel >= 4.17.3
 BuildRequires: libgio-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -105,6 +105,7 @@ Vala bindings for %name.
 %prep
 %setup -n %_name-%version
 %patch -p1
+%xfce4_cleanup_version
 
 %build
 %xfce4reconf
@@ -167,6 +168,11 @@ xvfb-run make -k check
 %endif
 
 %changelog
+* Thu Oct 19 2023 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt2
+- Patches from upstream git (closes: #48061):
+  + cache: Fix overwritten error;
+  + cache: Fix uncached value.
+
 * Tue Oct 17 2023 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
 - Dropped %%xfce4_drop_gitvtag macro.
 - Updated to 4.18.2.
