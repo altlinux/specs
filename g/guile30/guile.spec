@@ -1,6 +1,6 @@
 Name: guile30
 Version: 3.0.9
-Release: alt1
+Release: alt2
 
 Summary: A GNU implementation of Scheme
 License: GPLv3
@@ -37,6 +37,10 @@ This package provides Guile development tools, headers and libraries.
 %prep
 %setup
 echo %version > .tarball-version
+%ifarch %e2k
+# ia64 test: false positive
+sed -E -i 's/(AUXILIARY_STACK=)1/\10/' configure.ac
+%endif
 
 %build
 %autoreconf
@@ -79,6 +83,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Wed Oct 18 2023 Michael Shigorin <mike@altlinux.org> 3.0.9-alt2
+- E2K: fixed build (ilyakurdyukov@)
+
 * Thu Jan 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.9-alt1
 - 3.0.9 released
 
