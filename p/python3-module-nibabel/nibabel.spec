@@ -3,37 +3,40 @@
 
 %def_disable docs
 
+# on armh couple tests failed
+# FAILED nibabel/tests/test_arraywriters.py::test_rt_bias
+# FAILED nibabel/tests/test_round_trip.py::test_round_trip
+%ifnarch armh
+%def_with check
+%else
+%def_without check
+%endif
+
 Name: python3-module-%oname
-Version: 3.1.1
-Release: alt2
+Version: 5.1.0
+Release: alt1
 
 Summary: Easy access to NIfTI images from within Python
 License: MIT
 Group: Development/Python3
-URL: http://niftilib.sf.net/pynifti/
+URL: https://pypi.org/project/nibabel
+Vcs: https://github.com/nipy/nibabel
 
 BuildArch: noarch
 
-# https://github.com/nipy/nibabel.git
 Source: %oname-%version.tar
-
-# git submodules
-Source1: %name-%version-nibabel-data-nipy-ecattest.tar
-Source2: %name-%version-nibabel-data-nitest-balls1.tar
-Source3: %name-%version-nibabel-data-nitest-cifti2.tar
-Source4: %name-%version-nibabel-data-nitest-dicom.tar
-Source5: %name-%version-nibabel-data-nitest-freesurfer.tar
-Source6: %name-%version-nibabel-data-nitest-minc2.tar
-Source7: %name-%version-nibabel-data-parrec_oblique.tar
-
-Patch1: %oname-alt-doc.patch
+Patch: drop-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-numpy
-
-# https://github.com/nipy/nibabel/pull/865
-%add_python3_req_skip nose.tools
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-pytest-httpserver
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-modules-sqlite3
+%endif
 
 Conflicts: python-module-%oname
 
@@ -88,8 +91,8 @@ This package contains pickles for NiBabel.
 %endif
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7
-%patch1 -p1
+%setup
+%patch -p1
 
 %if_enabled docs
 sed -i 's|@PYVER@|%_python3_version|g' doc/Makefile
@@ -98,10 +101,18 @@ sed -i 's|sphinx-build|&-3|' doc/Makefile
 %endif
 
 %build
-%python3_build
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_enabled docs
 cp -f doc/source/conf.py %buildroot%python3_sitelibdir
@@ -115,19 +126,22 @@ cp -fR build/html %buildroot%_docdir/%oname/
 cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
-rm -f %buildroot%python3_sitelibdir/conf.py
+%check
+%pyproject_run_pytest -v
 
 %files
-%doc AUTHOR Changelog COPYING
+%doc README.*
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/nisext
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %if_enabled docs
 %exclude %python3_sitelibdir/%oname/pickle
 %endif
+%exclude %python3_sitelibdir/nisext/test*
+%exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/testing
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/%oname/*/test*
-%exclude %python3_sitelibdir/%oname/*/*/test*
+%exclude %python3_sitelibdir/%oname/*/tests
 
 %if_enabled docs
 %files doc
@@ -139,12 +153,15 @@ rm -f %buildroot%python3_sitelibdir/conf.py
 %endif
 
 %files tests
+%python3_sitelibdir/nisext/test*
+%python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/testing
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/%oname/*/test*
-%python3_sitelibdir/%oname/*/*/test*
+%python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Thu Oct 19 2023 Anton Vyatkin <toni@altlinux.org> 5.1.0-alt1
+- New version 5.1.0.
+
 * Mon Apr 24 2023 Anton Vyatkin <toni@altlinux.org> 3.1.1-alt2
 - Fix Requires
 
