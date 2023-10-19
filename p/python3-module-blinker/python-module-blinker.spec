@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.2
-Release: alt2
+Version: 1.6.3
+Release: alt1
 
 Summary: Fast, simple object-to-object and broadcast signaling
 License: MIT
@@ -53,6 +53,9 @@ sent by any sender.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 19 2023 Anton Vyatkin <toni@altlinux.org> 1.6.3-alt1
+- New version 1.6.3.
+
 * Mon May 15 2023 Anton Vyatkin <toni@altlinux.org> 1.6.2-alt2
 - Modernized packaging.
 
