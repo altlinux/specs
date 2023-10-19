@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_need_version	6.4
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -423,6 +423,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Oct 19 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.4.16-alt2
+- enabled modem power control driver
+
 * Fri Sep 22 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.4.16-alt1
 - 6.4.16
 
