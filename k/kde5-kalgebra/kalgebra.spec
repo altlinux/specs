@@ -7,7 +7,7 @@
 %endif
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -34,7 +34,8 @@ BuildRequires: kde5-analitza-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools-devel
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel
-BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
+BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-plasma-framework-devel
+BuildRequires: kf5-kpackage-devel
 
 %description
 KAlgebra is an application that can replace your graphing calculator.
@@ -62,10 +63,12 @@ however, one does not need to know MathML to use KAlgebra.
 %if_enabled qtwebengine
 %_K5data/plasma/plasmoids/org.kde.graphsplasmoid/
 %_datadir/katepart5/syntax/kalgebra.xml
-%_K5srv/graphsplasmoid.desktop
 %endif
 
 %changelog
+* Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 

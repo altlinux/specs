@@ -7,7 +7,7 @@
 %define libanalitza libanalitza%sover
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -46,28 +46,28 @@ developing applications that use %name.
 %package -n %libanalitzaplot
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libanalitzaplot
 KF5 library
 
 %package -n %libanalitzagui
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libanalitzagui
 KF5 library
 
 %package -n %libanalitzawidgets
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libanalitzawidgets
 KF5 library
 
 %package -n %libanalitza
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libanalitza
 KF5 library
 
@@ -111,6 +111,9 @@ KF5 library
 %_K5lib/libAnalitza.so.*
 
 %changelog
+* Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 
