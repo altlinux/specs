@@ -1,6 +1,6 @@
 Name: kodi
 Version: 20.2
-Release: alt2.1
+Release: alt2.2
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -145,6 +145,14 @@ This package contains X11-specific part of Kodi.
 %prep
 %setup
 %patch0 -p1
+%ifarch %e2k
+sed -i "/make_map/s/std::string_view/const char*/g" \
+	xbmc/cores/VideoSettings.h xbmc/utils/ColorUtils.h \
+	xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/ShaderFormats.h \
+	xbmc/rendering/{gl/RenderSystemGL.h,gles/RenderSystemGLES.h}
+sed -i "s/HTML_BASIC_COLORS.find(value/&.c_str()/" \
+	xbmc/cores/VideoPlayer/DVDSubtitles/DVDSubtitleTagSami.cpp
+%endif
 
 %build
 %cmake %cdefs %platdefs
@@ -195,6 +203,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Wed Oct 18 2023 Michael Shigorin <mike@altlinux.org> 20.2-alt2.2
+- E2K: fix build with lcc 1.26 (ilyakurdyukov@, mcst#7982)
+
 * Mon Oct 16 2023 Nazarov Denis <nenderus@altlinux.org> 20.2-alt2.1
 - NMU: Fix build with fmt 10
 
