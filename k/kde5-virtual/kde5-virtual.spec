@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-virtual
-Version: 5.27.0
+Version: 5.28.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -224,16 +224,6 @@ Requires: kde5-kopete
 %description -n kde5-messenger-client-2-kopete
 %summary
 
-%package -n kde5-messenger-client-4-telepathy
-Group: Graphical desktop/KDE
-Summary: Telepathy messaging client
-Provides: kde5-messenger-client = %EVR
-Provides: kde5-messenger-client-telepathy = %EVR
-Requires: kf5-filesystem
-Requires: kde5-telepathy
-%description -n kde5-messenger-client-4-telepathy
-%summary
-
 %package -n kde5-messenger-client-6-mix
 Group: Graphical desktop/KDE
 Summary: Mixed messaging client
@@ -241,7 +231,7 @@ Provides: kde5-messenger-client = %EVR
 Provides: kde5-messenger-client-mix = %EVR
 Requires: kf5-filesystem
 #Requires: choqok
-##Requires: blink-qt
+#Requires: jami
 #Requires: kde5-konversation
 %ifnarch armh ppc64le aarch64
 #Requires: telegram-desktop
@@ -314,7 +304,6 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 
 %files -n kde5-messenger-client-0-dummy
 %files -n kde5-messenger-client-2-kopete
-%files -n kde5-messenger-client-4-telepathy
 %files -n kde5-messenger-client-6-mix
 
 %files -n kde5-display-manager-0-dummy
@@ -322,6 +311,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 %files -n kde5-display-manager-7-lightdm
 
 %changelog
+* Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
+- exclude telepathy
+
 * Fri May 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt1
 - set lightdm by default
 
