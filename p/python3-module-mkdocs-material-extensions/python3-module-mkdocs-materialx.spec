@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Markdown extension resources for MkDocs Material
@@ -57,6 +57,9 @@ Markdown extension resources for MkDocs for Material
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 19 2023 Anton Zhukharev <ancieg@altlinux.org> 1.3-alt1
+- Updated to 1.3.
+
 * Tue Sep 26 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2-alt1
 - Updated to 1.2.
 
