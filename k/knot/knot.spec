@@ -8,7 +8,7 @@
 %def_disable quic
 
 Name: knot
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -65,7 +65,7 @@ Knot DNS DNSSEC library
 Summary: Knot DNS library
 Group: System/Libraries
 # Knot DNS 3.2+ isn't compatible with earlier knot-resolver
-Conflicts: knot-resolver < 5.5.2
+Conflicts: knot-resolver < 5.7.0
 
 %description -n libknot
 Knot DNS library
@@ -200,6 +200,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Thu Oct 19 2023 Alexey Shabalin <shaba@altlinux.org> 3.3.1-alt1
+- New version 3.3.1.
+
 * Fri Sep 01 2023 Alexey Shabalin <shaba@altlinux.org> 3.3.0-alt1
 - New version 3.3.0.
 
