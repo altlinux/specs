@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.13.0
+Version: 0.1.13.1
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,11 @@ done
 %_destdir
 
 %changelog
+* Thu Oct 19 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.13.1-alt1
+- Polkit-restrictions of ModemManager1 in admx-templates
+- Fix polkit translate in russian language
+- Fix bugs (closes: 47973, 47985, 47987, 47743, 47990, 47818, 48002)
+
 * Tue Sep 19 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.13.0-alt1
 - Added a section for user and machine policies to configure
   the graphical environment of KDE Plasma
