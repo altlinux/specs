@@ -1,8 +1,8 @@
 %define rname kweather
 
 Name: kde5-%rname
-Version: 23.04.3
-Release: alt2
+Version: 23.08.2
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -71,6 +71,9 @@ Requires: %name-common
 %_K5data/plasma/plasmoids/*kweather*/
 
 %changelog
+* Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Mon Jul 17 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt2
 - when search show subdivision if possible (closes: 46940)
 

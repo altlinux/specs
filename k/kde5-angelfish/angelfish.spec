@@ -4,8 +4,8 @@
 %define libfalkonprivate libfalkonprivate%sover
 
 Name: kde5-%rname
-Version: 23.04.3
-Release: alt2
+Version: 23.08.2
+Release: alt1
 %K5init altplace no_appdata
 
 Summary: Webbrowser designed for mobile devices
@@ -31,7 +31,8 @@ Patch2: alt-i18n.patch
 #BuildRequires: appstream extra-cmake-modules git-core kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kirigami-devel kf5-purpose-devel libssl-devel python3-dev qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
 BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
-BuildRequires: qt5-feedback-devel
+BuildRequires: qt5-feedback-devel qcoro5-devel
+BuildRequires: futuresql-qt5-devel
 BuildRequires: extra-cmake-modules kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kirigami-devel kf5-purpose-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kconfig-devel kf5-kdbusaddons-devel kf5-knotifications-devel
 BuildRequires: kf5-kirigami-addons-devel kf5-qqc2-desktop-style-devel
@@ -84,6 +85,9 @@ __EOF__
 %_K5notif/*angelfish*
 
 %changelog
+* Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Wed Sep 06 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt2
 - fix "Search for" context menu i18n
 

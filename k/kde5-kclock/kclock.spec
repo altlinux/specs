@@ -1,7 +1,7 @@
 %define rname kclock
 
 Name: kde5-%rname
-Version: 23.04.3
+Version: 23.08.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -15,6 +15,7 @@ Requires: %name-common
 
 Source: %rname-%version.tar
 Patch1: alt-bindir.patch
+Patch2: alt-clean-countries.patch
 
 # Automatically added by buildreq on Fri Aug 27 2021 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kconfig-devel kf5-kcoreaddons-common kf5-kcoreaddons-devel kf5-kjobwidgets-common kf5-kwidgetsaddons-common kf5-kwindowsystem-devel libctf-nobfd0 libdbusmenu-qt52 libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickcontrols2 libqt5-quicktemplates2 libqt5-sql libqt5-svg libqt5-test libqt5-texttospeech libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-cursor libxcbutil-keysyms python-modules python2-base python3 python3-base python3-module-paste qt5-base-common qt5-base-devel qt5-declarative-devel rpm-build-file rpm-build-python3 rpm-build-qml rpm-macros-python sh4 tzdata
@@ -56,6 +57,7 @@ Requires: %name-common
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build
@@ -83,6 +85,9 @@ Requires: %name-common
 
 
 %changelog
+* Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Fri Jul 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 
