@@ -1,8 +1,8 @@
 %define soversion 5
 
 Name: json-c
-Version: 0.15
-Release: alt1.1
+Version: 0.17
+Release: alt1
 
 Summary: JSON implementation in C
 License: MIT
@@ -51,7 +51,7 @@ This package contains development part of JSON-C
 
 %build
 %cmake \
-  -DBUILD_STATIC_LIBS:BOOL=OFF 	\
+  -DBUILD_STATIC_LIBS:BOOL=OFF \
   -DCMAKE_BUILD_TYPE:STRING=RELEASE \
   -DCMAKE_C_FLAGS_RELEASE:STRING="" \
   -DDISABLE_BSYMBOLIC:BOOL=OFF \
@@ -88,6 +88,9 @@ popd
 %_libdir/cmake/%name
 
 %changelog
+* Thu Oct 19 2023 Alexey Shabalin <shaba@altlinux.org> 0.17-alt1
+- Updated to 0.17 (Fixes: CVE-2021-32292).
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.15-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
