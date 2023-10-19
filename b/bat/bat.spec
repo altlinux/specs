@@ -1,12 +1,14 @@
 Name: bat
-Version: 0.23.0
-Release: alt2
+Version: 0.24.0
+Release: alt1
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
 Group: File tools
 Url: https://github.com/sharkdp/bat
 Source: %name-%version.tar
+Source1: vendor.tar
 
+BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
 Conflicts: bacula9-bat
 Conflicts: bacula11-bat
@@ -17,7 +19,7 @@ A cat(1) clone which supports syntax highlighting for a large number of
 programming and markup languages. It has git integration and automatic paging.
 
 %prep
-%setup
+%setup -a 1
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -28,12 +30,11 @@ directory = "vendor"
 EOF
 
 %build
-cargo build --offline --release
+%rust_build
 
 %install
-mkdir -p %buildroot%_bindir
+%rust_install
 mkdir -p %buildroot%_man1dir
-install -m 0755 target/release/%name %buildroot%_bindir
 install -m 0644 target/release/build/%name-*/out/assets/manual/%name.1 %buildroot%_man1dir
 install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.bash %buildroot%_datadir/bash-completion/completions/bat
 install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.zsh %buildroot%_datadir/zsh/site-functions/_bat
@@ -52,6 +53,9 @@ cargo test -- --skip no_args_doesnt_break
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Wed Oct 18 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.24.0-alt1
+- Updated to version 0.24.0.
+
 * Tue Aug 08 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.23.0-alt2
 - Added conflict with bacula13-bat package.
 
