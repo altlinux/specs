@@ -1,6 +1,6 @@
 Name: safeeyes
 Version: 2.1.6
-Release: alt1
+Release: alt1.1
 
 Summary: Tool for reminding the user to take breaks
 
@@ -10,6 +10,8 @@ Url: https://github.com/slgobinath/SafeEyes
 
 # Source-url: https://github.com/slgobinath/SafeEyes/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+
+Patch: remove-distutils-for-python-3.12.patch
 
 #BuildRequires: hicolor-icon-theme
 BuildRequires(pre): rpm-build-python3
@@ -24,6 +26,7 @@ at the computer in an effort to alleviate eye strain (asthenopia).
 
 %prep
 %setup
+%patch -p2
 
 %build
 %python3_build
@@ -40,6 +43,9 @@ at the computer in an effort to alleviate eye strain (asthenopia).
 %python3_sitelibdir/%name-%version-py*.egg-info
 
 %changelog
+* Thu Oct 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.6-alt1.1
+- NMU: dropped dependency on distutils.
+
 * Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
 - new version 2.1.6 (with rpmrb script)
 
