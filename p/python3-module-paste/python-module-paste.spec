@@ -2,8 +2,8 @@
 %def_with bootstrap
 
 Name: python3-module-paste
-Version: 3.5.0
-Release: alt1.1
+Version: 3.7.1
+Release: alt1
 
 Summary: Tools for using a Web Server Gateway Interface stack
 
@@ -53,6 +53,9 @@ touch %buildroot%python3_sitelibdir/paste/__init__.py
 
 
 %changelog
+* Thu Oct 19 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.7.1-alt1
+- Updated to upstream 3.7.1
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.5.0-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
