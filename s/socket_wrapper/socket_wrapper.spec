@@ -1,6 +1,6 @@
 Name:           socket_wrapper
-Version:        1.4.0
-Release:        alt3
+Version:        1.4.2
+Release:        alt1
 Group:          Development/Other
 License:        BSD
 Summary:        A library passing all socket communications through Unix sockets
@@ -96,6 +96,11 @@ popd
 %_libdir/cmake/%name/%{name}_noop-config*.cmake
 
 %changelog
+* Fri Oct 20 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.4.2-alt1
+- Fixed LFS issues on 32bit platforms
+- Fixed issue with fnctl() on 32bit
+- Added openat64() to detect stale fds
+
 * Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.4.0-alt3
 - Fix cmocka >= 1.1.6 find_package()
 
