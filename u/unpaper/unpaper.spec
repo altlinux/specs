@@ -3,7 +3,7 @@
 
 Name:          unpaper
 Version:       7.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       unpaper is a post-processing tool for scanned sheets of paper
 Summary(ru_RU.UTF-8): программа для обработки страниц после сканирования
 License:       GPL-2.0-only and 0BSD and Apache-2.0 and MIT
@@ -58,9 +58,8 @@ sed -i "/-Werror=return-type/d" meson.build
 
 %check
 export LC_CTYPE=en_US.UTF-8
-meson test -C %_target_platform \
-   unpaper_tests.py
-   
+meson test -C %_target_platform
+
 %files
 %_bindir/%name
 %_man1dir/%name.1.xz
@@ -68,6 +67,9 @@ meson test -C %_target_platform \
 
 
 %changelog
+* Thu Oct 19 2023 Pavel Skrylev <majioa@altlinux.org> 7.0.0-alt1.1
+- ! fixed build on check stage
+
 * Tue Jan 03 2023 Pavel Skrylev <majioa@altlinux.org> 7.0.0-alt1
 - ^ 6.1 -> 7.0.0
 

@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt7
+Release:       alt8
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,9 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Thu Oct 19 2023 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt8
+- ! fixed jeweler spec detecton by using class variable storage
+
 * Fri Jan 20 2023 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt7
 - * crop upper bound for requires
 - ! alias detection for sources with current source name autoaliased

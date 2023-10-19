@@ -1,20 +1,23 @@
-Name: mytetra
-Version: 1.44.160
-Release: alt1
+%define        _unpackaged_files_terminate_build 1
 
-Summary: Simple cross-platform manager for data collecting
+Name:          mytetra
+Version:       1.44.161
+Release:       alt0.1
+
+Summary:       Simple cross-platform manager for data collecting
 Summary(ru_RU.UTF-8): несложный кроссплатформенный менеджер накопления информации
-License: GPLv3
-Group: Office
-Url: http://webhamster.ru/site/page/index/articles/projectcode/105
-VCS: https://github.com/xintrea/mytetra_dev
-Packager: Malo Skryleve <malo@altlinux.org>
+License:       GPLv3
+Group:         Office
+Url:           http://webhamster.ru/site/page/index/articles/projectcode/105
+Vcs:           https://github.com/xintrea/mytetra_dev
 
-Source: %name-%version.tar
-
+Source:        %name-%version.tar
+Patch:         fix-compilation-1.4.161.patch
 BuildRequires(pre): rpm-macros-qt5
-BuildRequires: gcc-c++ desktop-file-utils
-BuildRequires: qt5-base-devel qt5-svg-devel
+BuildRequires: gcc-c++
+BuildRequires: desktop-file-utils
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-svg-devel
 
 %description
 MyTetra is open source and cross platform personal manager for information
@@ -35,6 +38,7 @@ MyTetra — предоставить естественный, интуитив�
 
 %prep
 %setup
+%autopatch
 echo "QMAKE_CXXFLAGS = %optflags" >> %name.pro
 subst 's/^TARGET_OS=.*$/TARGET_OS=ANY_OS/' app/*.pro
 subst 's|/usr/local/bin|%_bindir|' app/*.pro
@@ -57,6 +61,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_liconsdir/%name.png
 
 %changelog
+* Thu Oct 19 2023 Pavel Skrylev <majioa@altlinux.org> 1.44.161-alt0.1
+- ^ 1.44.160 -> 1.44[.161]
+- ! fixed compilation to avoid incompatible types bug
+
 * Tue May 16 2023 Andrey Cherepanov <cas@altlinux.org> 1.44.160-alt1
 - New version.
 
