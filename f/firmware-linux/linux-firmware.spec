@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20231006
+Version: 20231019
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,14 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Oct 19 2023 Cronbuild Service <cronbuild@altlinux.org> 20231019-alt1
+- upstream changes (GIT d983107a):
+  + Update AMD cpu microcode (thx John Allen)
+  + amdgpu: update SMU 13.0.0 firmware (thx Alex Deucher)
+  + add Amlogic bluetooth firmware (thx yang.li)
+  + i915: Add GuC v70.13.1 for DG2, TGL, ADL-P and MTL (thx John Harrison)
+  + iwlwifi: add a missing FW from core80-39 release (thx Gregory Greenman)
+
 * Fri Oct 13 2023 Cronbuild Service <cronbuild@altlinux.org> 20231006-alt1
 - upstream changes (GIT 7727f7e3):
   + WHENCE: add symlink for BananaPi M64 (thx Peter Robinson)
