@@ -1,7 +1,7 @@
 
 Summary: Library for producing small, fast columnar storage for Hadoop workloads
 Name: apache-orc
-Version: 1.8.3
+Version: 1.9.1
 Release: alt1
 License: Apache-2.0
 Url: http://orc.apache.org/
@@ -14,7 +14,7 @@ Patch1: %name-%version-%release.patch
 # Ceph (by way of Apache Arrow) which is also 64-bit only
 ExcludeArch: %ix86 %arm
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires: cmake >= 3.12.0
 BuildRequires: gcc-c++
 BuildRequires: libprotobuf-devel protobuf-compiler
 BuildRequires: zlib-devel
@@ -118,5 +118,8 @@ library.
 %_libdir/cmake/orc
 
 %changelog
+* Thu Oct 19 2023 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt1
+- New version 1.9.1.
+
 * Fri Apr 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.8.3-alt1
 - Initial build.
