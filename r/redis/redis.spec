@@ -10,7 +10,7 @@
 
 Name: redis
 Version: 7.2.1
-Release: alt1
+Release: alt1.1
 Summary: Redis is an advanced key-value store
 Group: Databases
 # redis, hiredis: BSD-3-Clause
@@ -89,6 +89,9 @@ Header file required for building loadable Redis modules.
 %setup
 %patch0 -p1
 #%%patch1
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' deps/hiredis/Makefile
+%endif
 
 %build
 
@@ -210,6 +213,9 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Thu Oct 19 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.2.1-alt1.1
+- Fixed build for Elbrus
+
 * Mon Oct 16 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.1-alt1
 - 7.2.1 (Fixes: CVE-2023-41053)
 - drop PrivateUsers=true for allow run unit in container (ALT#47882)
