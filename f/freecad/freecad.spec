@@ -17,7 +17,7 @@
 
 Name:    freecad
 Version: 0.21.1
-Release: alt2
+Release: alt3
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -105,6 +105,7 @@ BuildRequires: pybind11-devel
 #py3_provides ImageGui PartDesignGui _PartDesign
 %add_python3_req_skip pyopencl IfcImport Units
 %add_findreq_skiplist %ldir/Mod/*
+%filter_from_requires /python3(PySide2/d
 
 %ifnarch armh
 # TODO: cgal needed for openscad was not built for armh
@@ -251,6 +252,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Thu Oct 19 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.21.1-alt3
+- Complete remove PySide2 from requirements.
+
 * Wed Oct 18 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.21.1-alt2
 - Remove PySide2 from requires.
 
