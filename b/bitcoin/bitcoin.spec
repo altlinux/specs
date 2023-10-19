@@ -1,5 +1,5 @@
 Name: bitcoin
-Version: 25.0
+Version: 25.1
 Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
@@ -59,6 +59,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Wed Oct 18 2023 Alexei Takaseev <taf@altlinux.org> 25.1-alt1
+- 25.1
+
 * Fri May 26 2023 Alexei Takaseev <taf@altlinux.org> 25.0-alt1
 - 25.0
 
