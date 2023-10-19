@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Distributed task queue with full async support 
@@ -63,6 +63,9 @@ understands all types correctly.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 19 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.1-alt1
+- Updated to 0.10.1.
+
 * Wed Oct 18 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.0-alt1
 - Updated to 0.10.0.
 
