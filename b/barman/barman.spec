@@ -1,6 +1,6 @@
 Name: barman
 Version: 3.9.0
-Release: alt1
+Release: alt1.1
 Summary: Backup and Recovery Manager for PostgreSQL
 
 License: GPL-3.0+
@@ -10,11 +10,14 @@ Url: http://www.pgbarman.org/
 Source: https://sourceforge.net/projects/pgbarman/files/%version/%name-%version.tar.gz
 Source1: barman.cron
 Source2: barman.logrotate
+Patch: barman-3.9.0-alt-python-312.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): python3-module-wheel
-BuildRequires: python3-devel python3-module-setuptools
+# Automatically added by buildreq on Thu Oct 12 2023
+# optimized out: libgpg-error python3 python3-base python3-dev python3-module-pkg_resources python3-module-py3dephell python3-module-setuptools sh5
+BuildRequires: python3-module-pyproject-installer python3-module-wheel
+
 Requires(pre): shadow-utils
 Requires: python3-module-argcomplete
 Requires: rsync >= 3.0.4
@@ -51,7 +54,7 @@ by 2ndQuadrant.
 %package -n python3-module-barman
 Summary: The shared libraries required for Barman family components
 Group: Databases
-Requires: python3-module-setuptools, python3-module-psycopg2 >= 2.4.2, python3-module-argh >= 0.21.2, python3-module-argcomplete, python3-module-dateutil
+# Requires: python3-module-setuptools, python3-module-psycopg2 >= 2.4.2, python3-module-argh >= 0.21.2, python3-module-argcomplete, python3-module-dateutil
 
 %description -n python3-module-barman
 Python libraries used by Barman.
@@ -68,6 +71,7 @@ by 2ndQuadrant.
 
 %prep
 %setup
+%patch -p1
 
 # Change shebang in all relevant executable files in this directory and all subdirectories
 find -type f -executable -exec sed -i '1s=^#!%_bindir/\(python\|env python\)[23]\?=#!%__python3=' {} +
@@ -145,6 +149,10 @@ getent passwd barman >/dev/null || \
 exit 0
 
 %changelog
+* Wed Oct 18 2023 Leontiy Volodin <lvol@altlinux.org> 3.9.0-alt1.1
+- Cleanup BuildRequires.
+- Fixed build with python 3.12.
+
 * Thu Oct 05 2023 Leontiy Volodin <lvol@altlinux.org> 3.9.0-alt1
 - New version 3.9.0.
 
