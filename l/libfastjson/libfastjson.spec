@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libfastjson
-Version: 0.99.9
+Version: 1.2304.0
 Release: alt1
 
 Summary: A JSON implementation in C
@@ -10,7 +10,6 @@ Group: System/Libraries
 
 Url: https://github.com/rsyslog/libfastjson
 Source: %name-%version.tar
-
 
 %description
 libfastjson implements a reference counting object
@@ -64,6 +63,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Thu Oct 19 2023 Alexey Shabalin <shaba@altlinux.org> 1.2304.0-alt1
+- New version 1.2304.0 (Fixed: CVE-2020-12762).
+
 * Fri Jan 29 2021 Alexey Shabalin <shaba@altlinux.org> 0.99.9-alt1
 - new version 0.99.9
 
