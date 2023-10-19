@@ -2,12 +2,11 @@
 %define ver_major 5.8
 
 %def_enable exempi
-%def_enable tracker
 %def_enable introspection
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -35,7 +34,6 @@ Requires: xapps-icons
 %define exempi_ver 2.2.0
 %define gir_ver 0.10.2
 %define notify_ver 0.7.0
-%define tracker_ver 0.16
 
 Requires(pre): lib%name = %version-%release
 Requires: gnome-icon-theme >= %icon_theme_ver
@@ -67,7 +65,6 @@ BuildRequires: docbook-utils gtk-doc
 BuildRequires: python3-module-polib python3-module-pygobject3
 BuildRequires: libxapps-devel >= 1.0.4
 %{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
-%{?_enable_tracker:BuildPreReq: tracker-devel >= %tracker_ver}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 BuildRequires: libgsf-devel
@@ -186,6 +183,10 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Thu Oct 19 2023 Vladimir Didenko <cow@altlinux.org> 5.8.5-alt1
+- 5.8.5
+- remove unused tracker build dependency
+
 * Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 5.8.4-alt1
 - 5.8.4
 
