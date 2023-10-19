@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Summary: Configurable event system for Jupyter applications and extensions
 License: BSD-3-Clause
@@ -56,6 +56,9 @@ sed -i 's/--color=yes//' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Thu Oct 19 2023 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Wed Aug 02 2023 Anton Vyatkin <toni@altlinux.org> 0.7.0-alt1
 - New version 0.7.0.
 
