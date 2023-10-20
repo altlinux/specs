@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: llama.cpp
-Version: 20230728
+Version: 20231019
 Release: alt1
 Summary: Inference of LLaMA model in pure C/C++
 License: MIT
@@ -30,8 +30,8 @@ BuildRequires: gcc-c++
 %description
 Plain C/C++ implementation (of inference of LLaMA model) without
 dependencies. AVX, AVX2 and AVX512 support for x86 architectures.
-Mixed F16/F32 precision. 4-bit, 5-bit and 8-bit integer quantization
-support. Runs on the CPU. Supported models:
+Mixed F16/F32 precision. 2-bit, 3-bit, 4-bit, 5-bit, 6-bit and 8-bit
+integer quantization support. Runs on the CPU. Supported models:
 
     LLaMA
     LLaMA 2
@@ -42,9 +42,16 @@ support. Runs on the CPU. Supported models:
     Vicuna
     Koala
     OpenBuddy (Multilingual)
-    Pygmalion 7B / Metharme 7B
+    Pygmalion / Metharme
     WizardLM
-    Baichuan-7B and its derivations (such as baichuan-7b-sft)
+    Baichuan 1 & 2 + derivations
+    Aquila 1 & 2
+    Starcoder models
+    Mistral AI v0.1
+    Refact
+    Persimmon 8B
+    MPT
+    Bloom
 
 NOTE 1: You will need to:
 
@@ -66,35 +73,41 @@ Overall this is all raw and experimental, no warranty, no support.
 %build
 %cmake
 %cmake_build
+find -name '*.py' | xargs sed -i '1s|#!/usr/bin/env python3|#!%__python3|'
+sed -i '1i\%__python3' convert-persimmon-to-gguf.py
 
 %install
-mkdir -p %buildroot%_bindir
-echo "#!%__python3" > %buildroot%_bindir/llama-convert
-cat convert.py >> %buildroot%_bindir/llama-convert
-chmod a+rx %buildroot%_bindir/llama-convert
-
-mkdir -p %buildroot%_datadir/%name
-install -pm644 requirements.txt -t %buildroot%_datadir/%name
+# Main format converter.
+install -Dp convert.py %buildroot%_bindir/llama-convert
+# Additional and experimental converters.
+install -Dp convert-*.py -t %buildroot%_bindir
+# Python requirements file.
+install -Dpm644 requirements.txt -t %buildroot%_datadir/%name
+# Additional data.
 cp -rp prompts -t %buildroot%_datadir/%name
-
-mkdir -p %buildroot%_datadir/%name/examples
-cp -p examples/*.sh -t %buildroot%_datadir/%name/examples
-
+cp -rp grammars -t %buildroot%_datadir/%name
+# Not all examples.
+install -Dp examples/*.sh -t %buildroot%_datadir/%name/examples
+# Install and rename binaries to have llama- prefix.
 cd %_cmake__builddir/bin
 find -maxdepth 1 -type f -executable -printf '%f\0' |
 	xargs -0ti -n1 install -p {} %buildroot%_bindir/llama-{}
-
-%define _customdocdir %_docdir/%name
 
 %check
 %cmake_build --target test
 
 %files
+%define _customdocdir %_docdir/%name
 %doc LICENSE README.md SHA256SUMS docs
 %_bindir/llama-*
+%_bindir/convert-*.py
 %_datadir/%name
 
 %changelog
+* Fri Oct 20 2023 Vitaly Chikunov <vt@altlinux.org> 20231019-alt1
+- Update to b1400 (2023-10-19).
+- Install experimental converters (convert- prefixed tools).
+
 * Sun Jul 30 2023 Vitaly Chikunov <vt@altlinux.org> 20230728-alt1
 - Update to master-8a88e58 (2023-07-28).
 
