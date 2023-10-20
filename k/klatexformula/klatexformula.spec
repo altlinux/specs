@@ -1,6 +1,6 @@
 Name: klatexformula
 Version: 4.1.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: Generating images from LaTeX equations
 License: GPLv2
@@ -11,6 +11,7 @@ Source: %name-%version.tar.gz
 Patch: klatexformula-4.0.0-alt-qt-5.11.patch
 Patch1: klatexformula-4.1.0-alt-qt-5.15.patch
 Patch2: klatexformula-4.1.0-alt-python3.patch
+Patch3: klatexformula-4.1.0-reimplementation_of_strtobool_function.patch
 
 BuildRequires(pre): rpm-build-xdg
 
@@ -39,6 +40,7 @@ TODO: make shared version of %name-devel.
 %patch -p2
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
 
 %build
 %ifarch %e2k
@@ -73,6 +75,9 @@ done
 %_libdir/lib*.so
 
 %changelog
+* Fri Oct 20 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt2.2
+- NMU: dropped dependency on distutils.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 4.1.0-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
