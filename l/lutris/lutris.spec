@@ -3,7 +3,7 @@
 %define appid net.lutris.Lutris
 
 Name: lutris
-Version: 0.5.13
+Version: 0.5.14
 Release: alt1
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
@@ -20,12 +20,11 @@ BuildRequires: rpm-build-python3
 %if_enabled meson
 BuildPreReq: meson
 %else
-BuildRequires: python3-module-setuptools python3-module-wheel
+# Automatically added by buildreq on Fri Oct 20 2023
+# optimized out: libgpg-error python3 python3-base python3-dev python3-module-pkg_resources python3-module-py3dephell python3-module-setuptools sh5 xz
+BuildRequires: python3-module-pyproject-installer python3-module-wheel
 %endif
-# Automatically added by buildreq on Fri Aug 30 2019 (-bi)
-# optimized out: bash4 bashrc kmod perl python-base python-modules python3 python3-base python3-dev python3-module-pkg_resources rpm-build-python3 sh4 tzdata xz
-#BuildRequires: eject fuse python3-module-setuptools rpm-build-gir unzip xlsfonts
-Requires: python3-module-magic python3-module-pygobject3 python3-module-yaml python3-module-requests python3-module-pylint python3-module-distro python3-module-setproctitle python3-module-Pillow libgdk-pixbuf-gir libgnome-desktop3-gir libwebkit2gtk-gir libnotify-gir libgtk+3-gir
+Requires: python3-module-magic python3-module-pygobject3 python3-module-pylint python3-module-distro python3-module-setproctitle python3-module-Pillow libgdk-pixbuf-gir libgnome-desktop3-gir libwebkit2gtk-gir libnotify-gir libgtk+3-gir
 Requires: python3-module-evdev
 # Recommends: psmisc p7zip curl cabextract xrandr glibc-gconv-modules winetricks
 
@@ -74,6 +73,9 @@ chmod +x %buildroot%_datadir/lutris/bin/lutris-wrapper
 %_man1dir/%name.1.xz
 
 %changelog
+* Fri Oct 20 2023 Leontiy Volodin <lvol@altlinux.org> 0.5.14-alt1
+- New version 0.5.14.
+
 * Mon May 22 2023 Leontiy Volodin <lvol@altlinux.org> 0.5.13-alt1
 - New version 0.5.13.
 - Updated python3 patch.
