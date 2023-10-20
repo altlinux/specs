@@ -3,7 +3,7 @@
 
 Name: plasma5-nm
 Version: 5.27.8
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -71,7 +71,7 @@ Requires: %name-connect-iodine
 Requires: %name-connect-l2tp
 Requires: %name-connect-pptp
 Requires: %name-connect-sstp
-#Requires: %name-connect-ssh
+Requires: %name-connect-ssh
 Provides: kf5-plasma-nm-maxi = %EVR
 Obsoletes: kf5-plasma-nm-maxi < %EVR
 %description maxi
@@ -192,7 +192,7 @@ Obsoletes: kf5-plasma-nm-connect-sstp < %EVR
 Group: Graphical desktop/KDE
 Summary: SSH support for %name
 Requires: %name
-Requires: NetworkManager-ssh
+Requires: ssh-provider-openssh-clients NetworkManager-ssh
 Provides: kf5-plasma-nm-connect-ssh = %EVR
 Obsoletes: kf5-plasma-nm-connect-ssh < %EVR
 %description connect-ssh
@@ -260,6 +260,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Fri Oct 20 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt2
+- update requires
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt1
 - new version
 
