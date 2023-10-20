@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      2.2
+Version:      2.3
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -56,6 +56,28 @@ export SKIP_IMG_DIFFS=1
 %_datadir/xfig/Libraries/*
 
 %changelog
+* Fri Oct 20 2023 Vladislav Zavjalov <slazav@altlinux.org> 2.3-alt1
+- fixes for macOS build (thanks to Nikolay Korotkiy)
+- impreve module building system: use make program to extract dependencies from Makefiles.
+- fig: support for utf8 files produced by xfig 3.2.9
+- srtm: fix 1px shift in y-coordinate
+- ocad: transfer code from mapsoft1 (no adaptation for mapsoft2)
+- ms2geofig srtm: change scnt_minpts default; apply this filter before
+    reducing number of points; --replace option
+- Vector maps:
+  - Do not connect labels with wrong name if object have other labels with correct name.
+  - Render Pulkovo-1942 grid on vector maps (pulk_grid drawing feature).
+  - Add label_maxnum drawing feature. Default 0 for labels, 1 for points.
+  - Add short_expand and short_skip drawing features. Expand/skip too short lines.
+  - Fix clip drawing feature.
+  - Remove clip_border parameter. Use "brd clip" drawing feature instead.
+  - Allow re-defining variables in config files.
+  - Add outer drawing feature border step.
+  - Save multisegment objects to FIG/GPX as multiple objects; detect holes when reading.
+  - Much faster tile rendering for a small map piece in a large border.
+  - Default render configuration: grid, new signs for passes, fix rendering
+    of steep glaciers, expand short bridges to 4px, etc.
+
 * Fri Jul 21 2023 Vladislav Zavjalov <slazav@altlinux.org> 2.2-alt1
 - Fix hangs and crashes in downloader (thanks to Ilya Kurdyukov)
 
