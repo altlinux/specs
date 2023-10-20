@@ -1,7 +1,7 @@
 
 Name: kcheckers
 Version: 0.8.1
-Release: alt8
+Release: alt9
 
 Group: Games/Boards
 Summary: Classic boardgame - checkers
@@ -43,32 +43,31 @@ export PATH=%_qt5_bindir/bin:$PATH
 
 %build
 export PATH=%_qt5_bindir/bin:$PATH
-#%add_optflags -D_REENTRANT -DQT_NO_DEBUG
-#make_build CFLAGS="%optflags" CXXFLAGS="%optflags"
 %make_build
 lrelease-qt5 i18n/*.ts
 
 %install
-mkdir -p %buildroot/%_bindir
-install -m 0755 %name %buildroot/%_bindir
-
-mkdir -p %buildroot/%_desktopdir/
-install -m0644 %SOURCE1 %buildroot/%_desktopdir/%name.desktop
-
-mkdir -p %buildroot/%_datadir/%name/
+%installqt5
 install -Dm 0644 i18n/*.qm %buildroot/%_datadir/%name/
+rm -f %buildroot/%_datadir/%name/*.ts ||:
+rm -f %buildroot/%_datadir/%name/{AUTHORS,COPYING,ChangeLog,README} ||:
 install -Dm 0644 %SOURCE2 %buildroot/%_iconsdir/hicolor/16x16/apps/%name.png
 install -Dm 0644 %SOURCE3 %buildroot/%_iconsdir/hicolor/32x32/apps/%name.png
 install -Dm 0644 %SOURCE4 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.png
+mkdir -p %buildroot/%_desktopdir/
+install -m0644 %SOURCE1 %buildroot/%_desktopdir/%name.desktop
 
 %files
 %_bindir/*
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/*/*/*/%name.png
-%doc ChangeLog AUTHORS
+%doc ChangeLog AUTHORS README
 
 %changelog
+* Fri Oct 20 2023 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt9
+- install themes
+
 * Fri Oct 20 2023 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt8
 - move to %%_bindir
 
