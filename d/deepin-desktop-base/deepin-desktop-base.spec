@@ -1,6 +1,6 @@
 Name: deepin-desktop-base
 Version: 2023.03.31
-Release: alt1
+Release: alt1.1
 Summary: Base component for Deepin
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -57,6 +57,9 @@ rm -r %buildroot/usr/share/python-apt
 %exclude %_datadir/plymouth/deepin-logo.png
 
 %changelog
+* Fri Oct 20 2023 Ivan A. Melnikov <iv@altlinux.org> 2023.03.31-alt1.1
+- NMU: loongarch64 support
+
 * Thu Apr 13 2023 Leontiy Volodin <lvol@altlinux.org> 2023.03.31-alt1
 - New version 2023.03.31.
 
