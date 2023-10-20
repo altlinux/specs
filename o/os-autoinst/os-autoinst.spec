@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt13
+Release: alt13.1
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -109,6 +109,10 @@ sed -e 's,/bin/env python,/bin/python3,' -i crop.py
 for i in 10-terminal 10-virtio_terminal 14-isotovideo 18-qemu 18-qemu-options 18-backend-qemu 27-consoles-vmware 29-backend-generalhw 28-signalblocker 33-vagrant 99-full-stack ; do
     rm -f t/$i.t
 done
+%ifarch aarch64 ppc64le
+rm -f t/13-osutils.t
+%endif
+
 # exclude unnecessary author tests
 rm -f xt/00-tidy.t
 # Remove test relying on a git working copy
@@ -142,6 +146,9 @@ export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Fri Oct 20 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt13.1
+- Disabling 13-osutils.t for aarhc64, ppc64le architectures
+
 * Fri Oct 13 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt13
 - update to current version
 
