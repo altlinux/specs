@@ -6,10 +6,11 @@
 
 Name: kde5-virtual
 Version: 5.28.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
+Url: https://www.altlinux.org/
 License: Public Domain
 
 #BuildArch: noarch
@@ -311,6 +312,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 %files -n kde5-display-manager-7-lightdm
 
 %changelog
+* Fri Oct 20 2023 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt2
+- add url to package info
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
 - exclude telepathy
 
