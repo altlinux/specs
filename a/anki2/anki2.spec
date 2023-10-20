@@ -1,6 +1,6 @@
 Name: anki2
 Version: 2.1.12
-Release: alt3
+Release: alt3.1
 
 Summary: Flashcard program for using space repetition learning
 
@@ -10,6 +10,8 @@ Url: https://apps.ankiweb.net/
 
 # Source-url: https://apps.ankiweb.net/downloads/current/anki-%version-source.tgz
 Source: %name-%version.tar
+
+Patch: remove-distutils-for-python-3.12.patch
 
 ExcludeArch: %not_qt5_qtwebengine_arches
 
@@ -34,6 +36,7 @@ as possible. Anki is based on a theory called spaced repetition.
 
 %prep
 %setup
+%patch -p2
 #rm -r thirdparty
 
 %build
@@ -86,6 +89,9 @@ done
 %doc touch-%_arch LICENSE* README*
 
 %changelog
+* Fri Oct 20 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.12-alt3.1
+- NMU: dropped dependency on distutils.
+
 * Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.12-alt3
 - using not_qt5_qtwebengine_arches macro
 
