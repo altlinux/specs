@@ -1,6 +1,6 @@
 Name: libheif
-Version: 1.15.2
-Release: alt1.1
+Version: 1.17.1
+Release: alt1
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
 Group: System/Libraries
@@ -10,11 +10,11 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires: gcc-c++ libde265-devel libjpeg-devel libpng-devel libx265-devel libgdk-pixbuf-devel libaom-devel
-BuildRequires: libdav1d-devel
-%ifnarch %e2k
-BuildRequires: librav1e-devel
-%endif
+BuildRequires: cmake gcc-c++ libde265-devel libjpeg-devel libpng-devel libx265-devel libgdk-pixbuf-devel libaom-devel
+#BuildRequires: libdav1d-devel
+#%ifnarch %e2k
+#BuildRequires: librav1e-devel
+#%endif
 
 %description
 HEIF is a new image file format employing HEVC (h.265) image coding for the
@@ -35,18 +35,17 @@ sed -i 's/-Werror/-Wno-error/g' configure.ac CMakeLists.txt
 %endif
 
 %build
-%autoreconf
-%configure \
-	--disable-static
+%cmake
 
-%make_build
+%cmake_build
 
 %install
-%make DESTDIR=%buildroot install
+%cmake_install
 
 %files
 %_bindir/*
 %_libdir/%name.so.*
+%_libdir/%name
 %_libdir/gdk-pixbuf-2.0/2.10.0/loaders/*.so*
 %_datadir/thumbnailers/heif.thumbnailer
 %_man1dir/*.1*
@@ -54,14 +53,15 @@ sed -i 's/-Werror/-Wno-error/g' configure.ac CMakeLists.txt
 %files devel
 %_includedir/%name
 %_libdir/%name.so
+%_libdir/cmake/%name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Oct 19 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.17.1-alt1
+- 1.17.1
+
 * Thu Aug 31 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.15.2-alt1.1
 - Fixed build for Elbrus
-
-* Mon Apr 03 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.15.2-alt1
-- 1.15.2
 
 * Mon Mar 06 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.15.1-alt1
 - 1.15.1
