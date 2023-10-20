@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.5.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Client Library for OpenStack Zaqar Messaging API
 
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/python-zaqarclient
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+
+Patch: remove-distutils-for-python-3.12.patch
 
 BuildArch: noarch
 
@@ -70,6 +72,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p2
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -114,6 +117,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Oct 20 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1.2
+- Dropped dependency on distutils.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1.1
 - Moved on modern pyproject macros.
 
