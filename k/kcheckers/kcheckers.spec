@@ -1,7 +1,7 @@
 
 Name: kcheckers
 Version: 0.8.1
-Release: alt7
+Release: alt8
 
 Group: Games/Boards
 Summary: Classic boardgame - checkers
@@ -49,8 +49,8 @@ export PATH=%_qt5_bindir/bin:$PATH
 lrelease-qt5 i18n/*.ts
 
 %install
-mkdir -p %buildroot/%_gamesbindir
-install -m 0755 %name %buildroot/%_gamesbindir
+mkdir -p %buildroot/%_bindir
+install -m 0755 %name %buildroot/%_bindir
 
 mkdir -p %buildroot/%_desktopdir/
 install -m0644 %SOURCE1 %buildroot/%_desktopdir/%name.desktop
@@ -62,13 +62,16 @@ install -Dm 0644 %SOURCE3 %buildroot/%_iconsdir/hicolor/32x32/apps/%name.png
 install -Dm 0644 %SOURCE4 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.png
 
 %files
-%_gamesbindir/*
+%_bindir/*
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/*/*/*/%name.png
 %doc ChangeLog AUTHORS
 
 %changelog
+* Fri Oct 20 2023 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt8
+- move to %%_bindir
+
 * Tue Jul 12 2022 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt7
 - update russian translation
 
