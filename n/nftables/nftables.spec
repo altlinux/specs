@@ -1,6 +1,6 @@
 Name:           nftables
 Epoch:          1
-Version:        1.0.8
+Version:        1.0.9
 Release:        alt1
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
@@ -9,8 +9,9 @@ URL:            http://netfilter.org/projects/nftables
 Requires:       lib%name = %version-%release
 # git://git.netfilter.org/nftables
 Source:        %name-%version.tar
+
 BuildRequires: libmnl-devel libnftnl-devel flex bison libgmp-devel libreadline-devel asciidoc-a2x libjansson-devel
-BuildRequires(pre): docbook2X rpm-build-python3 python3-devel
+BuildRequires(pre): docbook2X rpm-build-python3 python3-devel python3-module-setuptools
 
 %description
 libnftnl is a userspace library providing a low-level netlink programming interface (API) to the
@@ -67,6 +68,8 @@ make check
 %install
 %makeinstall_std
 
+( cd py && python3 setup.py install --root=%buildroot --prefix=%_prefix)
+
 #mkdir -p %buildroot%_sysconfdir/nftables
 install -dm0755 %buildroot%_docdir/%name
 install -pDm0644 nftables.nft %buildroot%_sysconfdir/nftables/nftables.nft
@@ -100,6 +103,9 @@ install -pDm0644 nftables.service %buildroot%_unitdir/nftables.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Oct 20 2023 Alexei Takaseev <taf@altlinux.org> 1:1.0.9-alt1
+- 1.0.9
+
 * Wed Jul 26 2023 Alexei Takaseev <taf@altlinux.org> 1:1.0.8-alt1
 - 1.0.8
 
