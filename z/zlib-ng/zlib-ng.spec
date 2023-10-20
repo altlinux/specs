@@ -2,10 +2,11 @@
 %define soversion 2
 
 Name: zlib-ng
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: Zlib replacement with optimizations
+Summary(ru_RU.UTF-8): Замена Zlib с оптимизацией
 License: Zlib
 Group: System/Libraries
 
@@ -24,6 +25,7 @@ systems.
 
 %package -n libz-ng%soversion
 Summary: Zlib replacement with optimizations
+Summary(ru_RU.UTF-8): Замена Zlib с оптимизацией
 Group: System/Libraries
 Provides: %name = %EVR
 Obsoletes: %name <= 2.0.5-alt1.1
@@ -32,22 +34,36 @@ Obsoletes: %name <= 2.0.5-alt1.1
 %name is a zlib replacement that provides optimizations for "next generation"
 systems.
 
+%description -l ru_RU.UTF-8 -n libz-ng%soversion
+%name — это замена zlib, обеспечивающая оптимизацию
+для систем «следующего поколения».
+
 %package devel
 Summary: Development files for %name
+Summary(ru_RU.UTF-8): Файлы разработки для %name
 Group: Development/C
 
 %description devel
 The %name-devel package contains development files for
 developing application that use %name.
 
+%description -l ru_RU.UTF-8 devel
+Пакет %name-devel содержит файлы для
+разработки приложений, использующих %name.
+
 %package devel-static
 Summary: Static library for %name
+Summary(ru_RU.UTF-8): Статическая библиотека для %name
 Group: Development/C
 Requires: %name-devel = %EVR
 
 %description devel-static
 The %name-devel package contains static library for
 developing application that use %name.
+
+%description -l ru_RU.UTF-8 devel-static
+Пакет %name-devel содержит статическую библиотеку для
+разработки приложений, использующих %name.
 
 %prep
 %setup
@@ -62,7 +78,10 @@ developing application that use %name.
 
 %cmake \
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
-	-DWITH_GTEST:BOOL=OFF
+	-DWITH_GTEST:BOOL=OFF \
+%ifarch aarch64
+	-DWITH_ARMV6:BOOL=OFF \
+%endif
 
 %cmake_build
 
@@ -70,7 +89,7 @@ developing application that use %name.
 %cmake_install
 
 %check
-%make -C %_cmake__builddir test
+%ctest
 
 %files -n libz-ng%soversion
 %doc FAQ.zlib PORTING.md README.md doc/*.txt
@@ -85,6 +104,9 @@ developing application that use %name.
 %_libdir/libz-ng.a
 
 %changelog
+* Thu Oct 19 2023 Nazarov Denis <nenderus@altlinux.org> 2.1.4-alt1
+- New version 2.1.4.
+
 * Sat Jul 01 2023 Nazarov Denis <nenderus@altlinux.org> 2.1.3-alt1
 - New version 2.1.3.
 
