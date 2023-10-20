@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-firefox
-Version: 4.4
+Version: 4.12
 Release: alt1
 
 Summary: Firefox-specific ADMX policy templates
@@ -41,12 +41,16 @@ for file in %buildroot%_destdir/*.admx %buildroot%_destdir/*-*/*.adml; do
 done
 
 %files
+%doc docs/index.md linux/policies.json
 %dir %_destdir
 %dir %_destdir/*-*/
 %_destdir/*.admx
 %_destdir/*/*.adml
 
 %changelog
+* Fri Oct 20 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.12-alt1
+- Update Policy templates for Firefox 114 and Firefox ESR 102.12
+
 * Tue Oct 25 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.4-alt1
 - Update Policy templates for Firefox 106 and Firefox ESR 102.4
 - This release contains some typo fixes and new Russian translations
