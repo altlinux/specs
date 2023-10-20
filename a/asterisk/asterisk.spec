@@ -11,7 +11,7 @@
 
 Name: asterisk
 Version: 17.5.1
-Release: alt2.3
+Release: alt2.4
 
 Summary: Open source PBX
 License: GPLv2
@@ -30,6 +30,7 @@ BuildRequires: libiksemel-devel libldap-devel libradiusclient-ng-devel
 BuildRequires: libunixODBC-devel postgresql-devel zlib-devel
 BuildRequires: libnet-snmp-devel libsystemd-devel
 BuildRequires: rpm-build-python3
+BuildRequires: gnu-config
 %if_with clang
 BuildRequires: clang clang-devel llvm llvm-devel
 BuildRequires: libBlocksRuntime-devel
@@ -124,6 +125,12 @@ sed -i "s/_FORTIFY_SOURCE=2/_FORTIFY_SOURCE=0/" configure{,.ac}
 %build
 export EXTERNALS_CACHE_DIR=$(pwd)/.gear
 sh bootstrap.sh
+cp -a /usr/share/gnu-config/config.{sub,guess} .
+cp -a /usr/share/gnu-config/config.{sub,guess} menuselect/
+# XXX: config.{sub,guess} from the top level source directory
+# are automatically copied into third-party/pjproject/source directory
+# cp -a /usr/share/gnu-config/config.{sub,guess} 'third-party/pjproject/source/'
+
 %configure \
 %if_with clang
 	CC=clang \
@@ -307,6 +314,9 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Fri Oct 20 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.5.1-alt2.4
+- NMU: fixed FTBFS on LoongArch (use fresh config.guess/sub).
+
 * Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 17.5.1-alt2.3
 - configure.ac: removed the use of the AC_HEADER_STDC macro to address build
   issues with autoconf 2.70+.
