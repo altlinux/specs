@@ -2,6 +2,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
+%ifarch riscv64
+%define optflags_lto %nil
+%endif
+
 %def_with ocf
 %def_with tcmalloc
 %def_without libzfs
@@ -22,7 +26,11 @@
 %def_without mgr_dashboard
 %def_with blustore
 %def_with liburing
+%ifarch loongarch64 riscv64
+%def_without pmem
+%else
 %def_with pmem
+%endif
 %def_with rbd_rwl_cache
 %def_with rbd_ssd_cache
 %def_without seastar
@@ -52,7 +60,7 @@
 
 Name: ceph
 Version: 17.2.6
-Release: alt3.1
+Release: alt3.2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -92,6 +100,10 @@ Source36: arrow.tar
 Source37: utf8proc.tar
 
 Patch: %name-%version.patch
+
+# cmake/ninja need /proc to correctly estimate system
+# resources and run several build jobs in parallel
+BuildRequires: /proc
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-systemd >= 5
@@ -1817,6 +1829,12 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Fri Oct 20 2023 Ivan A. Melnikov <iv@altlinux.org> 17.2.6-alt3.2
+- NMU: build on riscv64 and loongarch64
+  + disable pmem on those architectures (not available yet);
+  + disable LTO on riscv64 (takes days);
+  + add BR: /proc to avoid single-process build.
+
 * Mon Jul 24 2023 Ivan A. Melnikov <iv@altlinux.org> 17.2.6-alt3.1
 - NMU: fix build with boost 1.82.0.
 
