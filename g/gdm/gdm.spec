@@ -17,7 +17,7 @@
 %def_with xdmcp
 %def_with selinux
 %def_with libaudit
-%def_without plymouth
+%def_with plymouth
 %def_enable wayland
 %def_enable xsession
 #Enable running X server as user
@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.0.1
-Release: alt2%beta
+Release: alt3%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -305,6 +305,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Fri Oct 20 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt3
+- enabled plymouth integration again (ALT #48083)
+
 * Thu Sep 21 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt2
 - switched GDM config dir to /etc/gdm (default)
 - marked /etc/gdm/custom.conf as %%config(noreplace) (ALT #47675)
