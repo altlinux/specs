@@ -1,6 +1,6 @@
 Name: ttyescape
 Version: 1.0.2
-Release: alt1
+Release: alt2
 Summary: because mobile users can be hackers too
 License: GPLv2
 Group: Accessibility
@@ -10,7 +10,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar.xz
 
 BuildArch: noarch
-Requires: hkdm buffyboard fonts-console-terminus
+Requires(pre): hkdm
+Requires: buffyboard fonts-console-terminus
 
 %description
 TTYescape is a collection of config files and a shell script enabling mobile
@@ -24,7 +25,7 @@ acceleration", ascending to the one TRUE form of computer usage - the TTY.
 
 %install
 install -pD -m0755 togglevt.sh %buildroot%_bindir/togglevt.sh
-install -pD -m0644 ttyescape-hkdm.toml %buildroot%_sysconfdir/%name/config.d/ttyescape.toml
+install -pD -m0644 ttyescape-hkdm.toml %buildroot%_sysconfdir/hkdm/config.d/ttyescape.toml
 
 mkdir -p %buildroot%_sysconfdir/sysconfig
 touch %buildroot%_sysconfdir/sysconfig/ttyescape.conf
@@ -32,10 +33,13 @@ touch %buildroot%_sysconfdir/sysconfig/ttyescape.conf
 %files
 %doc README.md
 %ghost %_sysconfdir/sysconfig/ttyescape.conf
-%_sysconfdir/%name/config.d/ttyescape.toml
+%_sysconfdir/hkdm/config.d/ttyescape.toml
 %_bindir/togglevt.sh
 
 %changelog
+* Fri Oct 20 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.0.2-alt2
+- moved config to hkdm dir
+
 * Mon Sep 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.0.2-alt1
 - initial release
 
