@@ -10,7 +10,7 @@
 
 Name:    qgis3
 Version: 3.32.3
-Release: alt1
+Release: alt2
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -26,6 +26,7 @@ Source5: qgis.xml
 
 Patch1: qgis-serverprefix.patch
 Patch2: qgis-no-politics.patch
+Patch3: 0001-cmake-update-to-find-PDAL-2.6.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -170,6 +171,7 @@ Please refer to %name-server-README for details!
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # Delete bundled libs
 rm -rf src/core/gps/qextserialport
@@ -361,6 +363,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Thu Oct 19 2023 Andrey Cherepanov <cas@altlinux.org> 3.32.3-alt2
+- Fixed build with PDAL 2.6.x.
+
 * Wed Sep 20 2023 Andrey Cherepanov <cas@altlinux.org> 3.32.3-alt1
 - New version.
 

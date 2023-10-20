@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    pdal
-Version: 2.5.6
-Release: alt2
+Version: 2.6.0
+Release: alt1
 
 Summary: PDAL is Point Data Abstraction Library. GDAL for point cloud data.
 License: BSD-3-Clause
@@ -46,10 +46,12 @@ Group: Development/C++
 
 %prep
 %setup -n PDAL-%version
+sed -i '/{CMAKE_DL_LIBS}/a unwind' CMakeLists.txt
 
 %build
 %cmake -GNinja -Wno-dev \
-       -DPDAL_LIB_INSTALL_DIR=%_libdir
+       -DPDAL_LIB_INSTALL_DIR=%_libdir \
+       -DWITH_TESTS=false
 %ninja_build -C "%_cmake__builddir"
 
 %install
@@ -71,6 +73,9 @@ Group: Development/C++
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
+- New version.
+
 * Sun Aug 20 2023 Andrey Cherepanov <cas@altlinux.org> 2.5.6-alt2
 - Added libcurl-devel.
 
