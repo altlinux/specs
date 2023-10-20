@@ -2,7 +2,7 @@
 
 Name: deepin-draw
 Version: 5.10.6
-Release: alt1
+Release: alt1.1
 Summary: A lightweight drawing tool for Linux Deepin
 License: GPL-3.0+
 Group: Graphics
@@ -12,9 +12,9 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-tools
+BuildRequires: clang12.0-tools
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja desktop-file-utils
 BuildRequires: cmake libfreeimage-devel dtk5-widget-devel libexif-devel libxcbutil-devel qt5-base-devel qt5-svg-devel qt5-linguist qt5-multimedia-devel qt5-x11extras-devel qt5-tools-devel
@@ -77,6 +77,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/draw/
 
 %changelog
+* Fri Oct 20 2023 Ivan A. Melnikov <iv@altlinux.org> 5.10.6-alt1.1
+- NMU: remove (pre) from conditional BR's, they don't
+  work like that and are not needed (fixes build on loongarch64).
+
 * Wed Feb 09 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.6-alt1
 - New version (5.10.6).
 
