@@ -1,7 +1,7 @@
 Name: kernel-image-rt
 %define kernel_base_version	6.1
-%define kernel_sublevel	.54
-%define kernel_rt_release	rt15
+%define kernel_sublevel	.59
+%define kernel_rt_release	rt16
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -610,6 +610,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Oct 21 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.59-alt1.rt16
+- v6.1.59-rt16 (2023-10-20).
+
 * Wed Sep 20 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.54-alt1.rt15
 - v6.1.54-rt15 (2023-09-19).
 
