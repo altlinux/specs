@@ -8,7 +8,7 @@
 
 %global v_major 17
 %global v_majmin %v_major.0
-%global v_full %v_majmin.2
+%global v_full %v_majmin.3
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -89,7 +89,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt3
+Release: alt1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -869,8 +869,6 @@ find %buildroot%llvm_libdir/*.so* -type f,l \
 paste %_tmppath/shared-objects %_tmppath/shared-object-links | while read object link; do
 	ln -srv "$object" "$link"
 done
-# FIXME
-rm -f %buildroot%_libdir/libmlir_float16_utils.so
 
 # List all packaged binaries in this source package.
 find %buildroot%_bindir/*-%v_major > %_tmppath/PATH-executables
@@ -1288,6 +1286,9 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Sat Oct 21 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.3-alt1
+- 17.0.3.
+
 * Fri Oct 06 2023 Arseny Maslennikov <arseny@altlinux.org> 17.0.2-alt3
 - Apply new patch for compat with g++-13 -Werror:
   + clang-AST-Use-explicit-type-erasure.patch
