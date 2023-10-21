@@ -1,6 +1,6 @@
 Name: btop
 Version: 1.2.13
-Release: alt1
+Release: alt2
 
 Summary: Resource monitor that shows usage and stats for processor, memory, disks, network and processes.
 License: Apache-2.0
@@ -10,7 +10,7 @@ Url: https://github.com/aristocratos/btop
 Source: %name-%version.tar.gz
 Packager: Alexei Mezin <alexvm@altlinux.org>
 
-Summary(ru_RU.UTF8): Монитор ресурсов, показыавющий загрузку процессора, памяти, дисков, сети и список процессов.
+Summary(ru_RU.UTF8): Монитор ресурсов, показывающий загрузку процессора, памяти, дисков, сети и список процессов.
 
 %set_gcc_version 10
 BuildRequires(pre): gcc10-c++
@@ -20,7 +20,7 @@ BuildRequires(pre): gcc10-c++
 Colorful resource monitor that shows usage and stats for processor, memory, disks, network and processes. It supports visual themes.
 
 %description -l ru_RU.UTF8
-Красочный монитор ресурсов, показыавющий загрузку процессора, памяти, дисков, сети и список процессов. Поддерживает визуальные темы оформления.
+Красочный монитор ресурсов, показывающий загрузку процессора, памяти, дисков, сети и список процессов. Поддерживает визуальные темы оформления.
 
 %prep
 %setup
@@ -41,6 +41,9 @@ PREFIX=%buildroot/%_prefix make install
 
 
 %changelog
+* Sat Oct 21 2023 Alexei Mezin <alexvm@altlinux.org> 1.2.13-alt2
+- Fix typo in package description.
+
 * Sat Jan 14 2023 Alexei Mezin <alexvm@altlinux.org> 1.2.13-alt1
 - New version
 
