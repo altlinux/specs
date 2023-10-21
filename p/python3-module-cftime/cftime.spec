@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: Time-handling functionality from netcdf4-python
@@ -53,6 +53,9 @@ py.test-3 -v \
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.6.3-alt1
+- Automatically updated to 1.6.3.
+
 * Sun Sep 18 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.2-alt1
 - Automatically updated to 1.6.2.
 
