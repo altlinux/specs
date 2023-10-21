@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %define module MIDI
 %define origname %module-Perl
 
 Name: perl-%module
-Version: 0.83
+Version: 0.84
 Release: alt1
 
 Summary: %{module} module for perl
 License: GPL or Artistic
 Group: Development/Perl
 
-Source: http://www.cpan.org/authors/id/C/CO/CONKLIN/MIDI-Perl-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/C/CO/CONKLIN/%{module}-Perl-%{version}.tar.gz
 BuildArch: noarch
 
 Packager: Afanasov Dmitry <ender@altlinux.org>
@@ -24,7 +25,7 @@ BuildRequires: perl-devel
 # build with --define 'comment ""'	// mike
 
 %prep
-%setup -q -n %origname-%version
+%setup -q -n %{module}-Perl-%{version}
 %ifdef comment
 %__subst 's/\"\$0 at \" \. scalar(localtime)/"%comment"/' lib/MIDI/Simple.pm
 %endif
@@ -40,6 +41,9 @@ BuildRequires: perl-devel
 %perl_vendor_privlib/MIDI*
 
 %changelog
+* Sat Oct 21 2023 Igor Vlasenko <viy@altlinux.org> 0.84-alt1
+- automated CPAN update
+
 * Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.83-alt1
 - automated CPAN update
 
