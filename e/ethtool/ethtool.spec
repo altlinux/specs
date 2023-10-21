@@ -1,6 +1,6 @@
 %def_with check
 Name: ethtool
-Version: 6.4
+Version: 6.5
 Release: alt1
 Epoch: 1
 Summary: Ethernet settings tools for network cards
@@ -52,6 +52,9 @@ make check
 %_datadir/bash-completion
 
 %changelog
+* Sat Oct 21 2023 Anton Farygin <rider@altlinux.ru> 1:6.5-alt1
+- 6.5
+
 * Thu Jul 13 2023 Anton Farygin <rider@altlinux.ru> 1:6.4-alt1
 - 6.4
 
