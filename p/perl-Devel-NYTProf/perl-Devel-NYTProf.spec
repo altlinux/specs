@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Devel-NYTProf
 Name: perl-%dist
-Version: 6.13
+Version: 6.14
 Release: alt1
 
 Summary: Powerful fast feature-rich perl source code profiler
@@ -40,6 +40,9 @@ rm -rv %buildroot%perl_vendor_archlib/Devel/auto
 %perl_vendor_autolib/Devel
 
 %changelog
+* Sat Oct 21 2023 Igor Vlasenko <viy@altlinux.org> 6.14-alt1
+- automated CPAN update
+
 * Wed Oct 11 2023 Igor Vlasenko <viy@altlinux.org> 6.13-alt1
 - automated CPAN update
 
