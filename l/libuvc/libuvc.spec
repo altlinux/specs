@@ -1,5 +1,5 @@
 Name:           libuvc
-Version:        0.0.6
+Version:        0.0.7
 Release:        alt1
 Summary:        libuvc is a cross-platform library for USB video devices.
 #Summary(ru_RU.UTF8): 
@@ -11,8 +11,6 @@ Group:		System/Libraries
 
 
 Source0:        %{name}-%{version}.tar.gz
-Patch0:		%{name}-soversion.patch
-Patch1:		%{name}-libdir.patch
 
 
 BuildPreReq: cmake rpm-macros-cmake
@@ -38,9 +36,7 @@ developing applications that use %{name}.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%cmake -DCMAKE_BUILD_TARGET="Shared"
+%cmake -DCMAKE_BUILD_TARGET="Shared" -DCMAKE_INSTALL_PREFIX="/usr"
 
 %build
 %cmake_build
@@ -61,6 +57,9 @@ doxygen doxygen.conf
 %doc doc/*
 
 %changelog
+* Sat Oct 21 2023 Alexei Mezin <alexvm@altlinux.org> 0.0.7-alt1
+- New version
+
 * Wed Feb 23 2022 Alexei Mezin <alexvm@altlinux.org> 0.0.6-alt1
 - Initial build
 
