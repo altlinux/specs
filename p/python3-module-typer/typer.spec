@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
 License: MIT
@@ -68,11 +68,12 @@ find tests -name *.py -type f -exec sed -i 's/-m coverage run //g' {} \; \
 # test_tutorial002.py and test_tutorial002_an.py) don't pass at narrow
 # terminals.
 export COLUMNS=135
-# Run tests from bash, because typer doesn't support sh and some tests (
-# test_show_completion and test_install_completion) failure. ":;" was added,
-# because of shellingham module can't determine bash which is launched from sh
-# otherwise
-%pyproject_run -- bash -c ":; python3 -m pytest"
+## test_show_completion and test_install_completion
+# Deselect these tests because of typer doesn't support SH, but this shell is
+# run in hasher.
+%pyproject_run_pytest \
+    --deselect="tests/test_completion/test_completion.py::test_show_completion" \
+    --deselect="tests/test_completion/test_completion.py::test_install_completion"
 
 %files
 %doc README.md docs
@@ -80,5 +81,8 @@ export COLUMNS=135
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Oct 21 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.9.0-alt2
+- Fixed FTBFS: deselect some tests for bash completion
+
 * Thu Sep 14 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.9.0-alt1
 - Initial build for ALT Sisyphus
