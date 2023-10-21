@@ -36,8 +36,8 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.0
-Release: alt1.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -66,7 +66,7 @@ Source: %name-%version%beta.tar
 %define malcontent_ver 0.11
 
 %{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
-%{?_enable_packagekit:Requires: appstream-data gnome-packagekit}
+%{?_enable_packagekit:Requires: appstream-data}
 %{?_enable_malcontent:Requires: malcontent} >= %malcontent_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
@@ -201,6 +201,10 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Oct 20 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
+- 45.1
+- removed gnome-packagekit from requires (ALT #48003)
+
 * Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1.1
 - added "altlinux" to "official-repos" (ALT #47678)
 
