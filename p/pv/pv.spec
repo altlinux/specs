@@ -1,12 +1,12 @@
 # Spec file for pv - Pipe Viewer 
 
 Name: pv
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Pipe Viewer
 
-License: %artistic_license
+License: %gpl3plus
 Group: Text tools
 URL: http://www.ivarch.com/programs/pv.shtml
 
@@ -31,35 +31,33 @@ in a complex pipeline.
 %prep
 %setup -q
 
-pushd doc
-mv -f -- COPYING COPYING.orig
-ln -s -- $(relative %_licensedir/Artistic-2 %_docdir/%name/COPYING) COPYING
-popd
-
 %build
-pushd autoconf/
-autoconf configure.in > ../configure
-popd
-touch autoconf/make/{depend.mk~,filelist.mk~,modules.mk~}
-chmod u+x configure
+%autoreconf
 
 %configure
-make make
-make dep
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
 %find_lang %name
+pushd docs
+mv -f -- COPYING COPYING.orig
+ln -s -- $(relative %_licensedir/GPL-3.0+ %_docdir/%name/COPYING) COPYING
+popd
 
 %files -f %name.lang
-%doc doc/NEWS.md doc/TODO.md doc/ACKNOWLEDGEMENTS.md
-%doc --no-dereference doc/COPYING
+%doc docs/NEWS.md docs/TODO.md docs/ACKNOWLEDGEMENTS.md docs/DEVELOPERS.md
+%doc --no-dereference docs/COPYING
 
 %_bindir/%name
 %_man1dir/%name.*
+%exclude %_datadir/doc
 
 %changelog
+* Sat Oct 21 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.8.0-alt1
+- New version
+- Licensing change from Artistic 2.0 to GPLv3+
+
 * Sun Aug 06 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.7.0-alt1
 - New version
 
