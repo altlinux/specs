@@ -4,7 +4,7 @@ BuildRequires: perl(List/SomeUtils.pm) perl(PPIx/Utils/Traversal.pm)
 # END SourceDeps(oneline)
 %define m_distro Perl-Critic
 Name: perl-Perl-Critic
-Version: 1.150
+Version: 1.152
 Release: alt1
 
 Summary: Critique Perl source code for best-practices.  
@@ -62,6 +62,9 @@ code analysis.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Sat Oct 21 2023 Igor Vlasenko <viy@altlinux.org> 1.152-alt1
+- automated CPAN update
+
 * Mon Mar 06 2023 Igor Vlasenko <viy@altlinux.org> 1.150-alt1
 - automated CPAN update
 
