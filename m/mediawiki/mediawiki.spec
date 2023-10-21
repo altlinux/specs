@@ -25,7 +25,7 @@
 
 Name: mediawiki
 Version: %major.1
-Release: alt1
+Release: alt2
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
 
@@ -80,7 +80,7 @@ package to get all needed php requires.
 If you wish %name without any php dependencies, install only %name-common package.
 
 %package -n %name-php7
-Summary: Common files for %name
+Summary: Mediawiki's requires for php 7.4
 Group: Networking/WWW
 Requires: webserver-common
 # https://www.mediawiki.org/wiki/Compatibility
@@ -96,7 +96,7 @@ Requires: %name-common = %EVR
 
 
 %package -n %name-php8.0
-Summary: Common files for %name
+Summary: Mediawiki's requires for php 8.0
 Group: Networking/WWW
 Requires: webserver-common
 # https://www.mediawiki.org/wiki/Compatibility
@@ -111,7 +111,7 @@ Requires: php8.0-openssl
 Requires: %name-common = %EVR
 
 %package -n %name-php8.1
-Summary: Common files for %name
+Summary: Mediawiki's requires for php 8.1
 Group: Networking/WWW
 Requires: webserver-common
 # https://www.mediawiki.org/wiki/Compatibility
@@ -126,7 +126,7 @@ Requires: php8.1-openssl
 Requires: %name-common = %EVR
 
 %package -n %name-php8.2
-Summary: Common files for %name
+Summary: Mediawiki's requires for php 8.2
 Group: Networking/WWW
 Requires: webserver-common
 # https://www.mediawiki.org/wiki/Compatibility
@@ -405,10 +405,11 @@ rm -rv %buildroot%_mediawikidir/vendor/wikimedia/wikipeg/tools/impact
 rm -rfv  %buildroot%_mediawikidir/skins/MinervaNeue/dev-scripts
 
 
-find %buildroot%_mediawikidir/ \
-  \( -name .htaccess -or -name \*.cmi \) \
-  -print0 \
-  | xargs -r0 rm
+# https://www.mediawiki.org/wiki/Manual:Security#Upload_security
+#find %buildroot%_mediawikidir/ \
+#  \( -name .htaccess -or -name \*.cmi \) \
+#  -print0 \
+#  | xargs -r0 rm -v
 
 # packed as docs
 rm -rf %buildroot%_mediawikidir/docs/
@@ -554,7 +555,9 @@ fi
 %attr(2775,root,%webserver_group) %dir %webappdir/images/
 %attr(2770,root,%webserver_group) %dir %webappdir/cache/
 %webappdir/wiki/
+%webappdir/cache/.htaccess
 %webappdir/images/*
+%webappdir/images/.htaccess
 %webappdir/config/AdminSettings.sample
 
 %doc COPYING CREDITS FAQ HISTORY README.md RELEASE-NOTES-%major UPGRADE
@@ -590,6 +593,10 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Sat Oct 21 2023 Vitaly Lipatov <lav@altlinux.ru> 1.40.1-alt2
+- fix descriptions of php subpackages
+- restore .htaccess to disable php execution in data only dirs
+
 * Mon Oct 16 2023 Vitaly Lipatov <lav@altlinux.ru> 1.40.1-alt1
 - new version 1.40.1 (with rpmrb script)
 - build with php8.2 by default (ALT bug 48033)
