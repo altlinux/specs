@@ -4,7 +4,7 @@
 %define cid	\{dc3dce74-bf98-4eb4-adc4-75597edb6c5c\}
 
 Name:		%firefox_name-%rname
-Version:	3.0.0
+Version:	4.0.0
 Release:	alt1
 
 Summary:	Tab2QR Firefox extension
@@ -43,5 +43,8 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Sat Oct 21 2023 Nikolay A. Fetisov <naf@altlinux.org> 4.0.0-alt1
+- New version
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.0.0-alt1
 - Initial build for ALT Linux Sisyphus
