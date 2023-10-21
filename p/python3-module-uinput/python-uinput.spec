@@ -2,7 +2,7 @@
 
 Name: python3-module-uinput
 Version: 0.11.2
-Release: alt1
+Release: alt2
 
 Summary: Pythonic API to the Linux uinput kernel module
 
@@ -15,7 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: http://pypi.python.org/packages/source/p/%oldname/%oldname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires(pre): rpm-build-python3
 BuildRequires: rdma-core-devel
 BuildRequires: libudev-devel
 
@@ -33,6 +33,9 @@ which allows attaching userspace device drivers into kernel.
 # Use unversioned .so
 %__subst "s/libudev.so.0/libudev.so/" setup.py
 
+# Hack off distutils dependency
+sed -i 's/distutils.sysconfig as //' src/__init__.py
+
 %build
 %python3_build
 
@@ -48,6 +51,9 @@ chmod a-x examples/*
 %python3_sitelibdir/uinput/
 
 %changelog
+* Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 0.11.2-alt2
+- Dropped dependency on distutils.
+
 * Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 0.11.2-alt1
 - Build new version.
 
