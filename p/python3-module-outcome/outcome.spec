@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 Summary: Capture the outcome of Python function calls
 License: MIT or Apache-2.0
 Group: Development/Python
@@ -49,6 +49,9 @@ Capture the outcome of Python function calls. Extracted from the Trio project.
 %python3_sitelibdir/%{pyproject_distinfo %modulename}/
 
 %changelog
+* Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Automatically updated to 1.3.0.
+
 * Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2
 - Modernized packaging.
 - Fixed FTBFS (pytest 7.3.1).
