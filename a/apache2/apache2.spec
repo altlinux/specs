@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.57
-Release: alt2
+Version: 2.4.58
+Release: alt1
 Epoch: 1
 
 License: %asl
@@ -1541,6 +1541,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Fri Oct 20 2023 Anton Farygin <rider@altlinux.ru> 1:2.4.58-alt1
+- 2.4.58
+
 * Thu Jun 01 2023 Andrey Limachko <liannnix@altlinux.org> 1:2.4.57-alt2
 - Add missing a2enmod config for apache2-mod_ldap
 - Add missing libaprutil1-ldap requirement for apache2-mod_ldap
