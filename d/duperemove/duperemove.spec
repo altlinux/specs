@@ -1,7 +1,7 @@
 # SPEC file for duperemove package
 
 Name:    duperemove
-Version: 0.12
+Version: 0.13
 Release: alt1
 
 Summary: tool for deduping file system extents
@@ -71,6 +71,9 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
 %_man8dir/hashstats.*
 
 %changelog
+* Sat Oct 21 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.13-alt1
+- New version
+
 * Mon Sep 11 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.12-alt1
 - New version
   - duplication lookup is now based on extents
