@@ -1,5 +1,5 @@
 Name: livecd-setlocale
-Version: 0.3.12
+Version: 0.3.13
 Release: alt1
 
 Summary: Automatically set locale from /proc/cmdline
@@ -33,6 +33,9 @@ rm -f %_sysconfdir/profile.d/00dconf-kbd.sh
 %_unitdir/livecd-setlocale.service
 
 %changelog
+* Fri Oct 20 2023 Anton Midyukov <antohami@altlinux.org> 0.3.13-alt1
+- Add KEYMAP to /etc/vconsole.conf, if exists
+
 * Mon Oct 02 2023 Anton Midyukov <antohami@altlinux.org> 0.3.12-alt1
 - Always create /etc/X11/xorg.conf.d/00-keyboard.conf
 

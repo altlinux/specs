@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.12
+Version: 1.3.13
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Sat Oct 21 2023 Anton Midyukov <antohami@altlinux.org> 1.3.13-alt1
+- sysconfig-base: set /etc/vconsole.conf if exist
+
 * Mon Oct 02 2023 Anton Midyukov <antohami@altlinux.org> 1.3.12-alt1
 - sysconfig-base: always create keyboard configs
 - 20-sysconfig.sh: assign layout='us' as fallback
