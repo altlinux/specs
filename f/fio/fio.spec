@@ -2,10 +2,11 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%def_enable gfapi
 %def_enable gfio
 %def_enable http
 %def_enable libiscsi
+%def_enable libnbd
+%def_enable libnfs
 %def_enable numa
 %def_enable rdmacm
 %ifarch %ix86 %arm %mips32 ppc
@@ -13,16 +14,23 @@
 %else
 %def_enable rbd
 %endif
+%ifarch armh
+%def_disable gfapi
+%else
+%def_enable gfapi
+%endif
 
 Name: fio
-Version: 3.35
+Version: 3.36
 Release: alt1
 Summary: IO testing tool
 License: GPL-2.0
 Group: System/Kernel and hardware
 Url: https://git.kernel.dk/cgit/fio/
+Obsoletes: fio-tools < %EVR
 
 Conflicts: python3-module-fiona
+%add_python3_req_skip pandas
 
 Source0: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
@@ -33,12 +41,17 @@ BuildRequires: zlib-devel
 %{?_enable_gfio:BuildRequires: libgtk+2-devel}
 %{?_enable_http:BuildRequires: libcurl-devel libssl-devel}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel}
+%{?_enable_libnbd:BuildRequires: libnbd-devel}
+%{?_enable_libnfs:BuildRequires: libnfs-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel }
 %{?_enable_rbd:BuildRequires: ceph-devel}
 %{?_enable_rdmacm:BuildRequires: librdmacm-devel}
 %ifarch x86_64 aarch64 ppc64le
 BuildRequires: libpmem-devel
 %endif
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: CUnit-devel
+}}
 
 %description
 fio is a tool that will spawn a number of threads or processes doing a
@@ -47,16 +60,6 @@ number of global parameters, each inherited by the thread unless
 otherwise parameters given to them overriding that setting is given.
 The typical use of fio is to write a job file matching the io load
 one wants to simulate.
-
-%package tools
-Summary: Analyze tools for %name
-Group: System/Kernel and hardware
-Requires: %name = %version-%release
-
-%description tools
-fio2gnuplot - analyze a set of fio's log files to turn them into a set of
-  graphical traces using gnuplot tool.
-fio_generate_plots - Generate plots for Flexible I/O Tester
 
 %package -n gfio
 Summary: GTK frontend for %name
@@ -75,13 +78,16 @@ This package contains GTK frontend for %name.
 
 %prep
 %setup
+find  -name '*.py' | xargs sed -i '1s|#!/usr/bin/env python3|#!%__python3|'
 
 %build
 ./configure \
 	--prefix=%_prefix \
+	--disable-native \
 	--disable-optimizations \
 	%{subst_enable gfio} \
 	%{subst_enable libiscsi} \
+	%{subst_enable libnbd} \
 	--extra-cflags="%optflags"
 %make_build V=1
 
@@ -89,32 +95,34 @@ This package contains GTK frontend for %name.
 %makeinstall_std mandir=%_mandir
 
 %check
+unittests/unittest
 %make test
 ./fio -i
 
 %files
+%define _customdocdir %_docdir/%name
 %doc HOWTO* README* REPORTING-BUGS examples
-%_bindir/genfio
-%_bindir/%name
-%_man1dir/%name.1.*
-
-%files tools
+%doc COPYING CITATION.cff MORAL-LICENSE
 %_bindir/*
-%_datadir/%name
-%_man1dir/*
 %exclude %_bindir/gfio
-%exclude %_bindir/fio
-%exclude %_bindir/genfio
-%exclude %_man1dir/%name.1.*
+%_datadir/%name
+%_man1dir/*.1*
 
 %files -n gfio
 %_bindir/gfio
 
 %changelog
+* Mon Oct 23 2023 Vitaly Chikunov <vt@altlinux.org> 3.36-alt1
+- Update to fio-3.36 (2023-10-20).
+- Enable nbd and nfs engines.
+- Merge fio-tools into fio package.
+- spec: Run unit tests in %%check.
+
 * Thu Jul 20 2023 Vitaly Chikunov <vt@altlinux.org> 3.35-alt1
 - Update to fio-3.35 (2023-05-23).
 - Do not package html docs (there are .rst docs already).
 - Add libblkio, libiscsi, and pmem/dev-dax engines.
+- spec: Run (smoke) tests in %%check.
 
 * Tue Aug 31 2021 Vitaly Lipatov <lav@altlinux.ru> 3.27-alt1
 - new version 3.27
