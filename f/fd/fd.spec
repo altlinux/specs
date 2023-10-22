@@ -1,12 +1,14 @@
 Name: fd
-Version: 8.7.0
+Version: 8.7.1
 Release: alt1
 Summary: A simple, fast and user-friendly alternative to 'find'
 License: MIT and Apache-2.0
 Group: File tools
 Url: https://github.com/sharkdp/fd
 Source: %name-%version.tar
+Source1: vendor.tar
 
+BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
 
 %description
@@ -20,7 +22,7 @@ fd is an alternative to GNU find. It features:
 - A parallel execution similar to GNU Parallel is available.
 
 %prep
-%setup
+%setup -a 1
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -31,19 +33,19 @@ directory = "vendor"
 EOF
 
 %build
-cargo build --offline --release
+%rust_build
 target/release/%name --gen-completions bash > %name.bash
 target/release/%name --gen-completions fish > %name.fish
 
 %install
-install -Dm 0755 target/release/%name %buildroot%_bindir/%name
+%rust_install
 install -Dm 0644 doc/%name.1 %buildroot%_man1dir/%name.1
 install -Dm 0644 %name.bash %buildroot%_datadir/bash-completion/completions/%name
 install -Dm 0644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.fish
 install -Dm 0644 contrib/completion/_%name %buildroot%_datadir/zsh/site-functions/_%name
 
 %check
-cargo test
+%rust_test
 
 %files
 %_bindir/%name
@@ -53,6 +55,9 @@ cargo test
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sun Oct 22 2023 Alexander Makeenkov <amakeenk@altlinux.org> 8.7.1-alt1
+- Updated to version 8.7.1.
+
 * Fri Feb 24 2023 Alexander Makeenkov <amakeenk@altlinux.org> 8.7.0-alt1
 - Updated to version 8.7.0
 
