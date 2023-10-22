@@ -2,7 +2,7 @@
 
 Name: displaycal
 Version: 3.9.11
-Release: alt3
+Release: alt4
 
 Summary: A graphical user interface for the Argyll CMS display calibration utilities
 
@@ -77,6 +77,7 @@ ln -s ./lib64 DisplayCAL/lib32
 %pyproject_install
 mkdir -p %buildroot%_sysconfdir/xdg/autostart/
 mv -v %buildroot%_datadir/DisplayCAL/z-displaycal-apply-profiles.desktop %buildroot%_sysconfdir/xdg/autostart/
+rm -v %buildroot%python3_sitelibdir/%up_name/{setup.py,postinstall.py}
 
 %files
 %_docdir/%up_name-%version/
@@ -93,6 +94,9 @@ mv -v %buildroot%_datadir/DisplayCAL/z-displaycal-apply-profiles.desktop %buildr
 
 
 %changelog
+* Sun Oct 22 2023 Vitaly Lipatov <lav@altlinux.ru> 3.9.11-alt4
+- remove setup.py designed for uninstall only
+
 * Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 3.9.11-alt3
 - AutoProv: no
 
