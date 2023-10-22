@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
 
-%define  pypi_name pydantic
+%define pypi_name pydantic
 
 Name: python3-module-%pypi_name
 Version: 2.4.2
-Release: alt1
+Release: alt2
 
 Summary: Data parsing and validation using Python type hints
 License: MIT
 Group: Development/Python3
-URL: https://pypi.org/project/pydantic
+Url: https://pypi.org/project/pydantic
 Vcs: https://github.com/pydantic/pydantic
 
 BuildArch: noarch
@@ -51,9 +51,6 @@ with pydantic.
 %pyproject_install
 
 %check
-# It seems error with new Faker 19.6.2-alt1. See https://github.com/pydantic/pydantic/issues/7607
-# Replace digest temporary for passing the tests.
-sed -i -E "s/(_EXPECTED_NORTH_STAR_DATA_MD5 =) .+/\1 'e0fb021af00010f90e9348d8c7fc8da4'/" tests/benchmarks/test_north_star.py
 # tests/test_docs.py: skip testing of documentation
 %pyproject_run_pytest -vra --ignore='tests/test_docs.py'
 
@@ -63,6 +60,10 @@ sed -i -E "s/(_EXPECTED_NORTH_STAR_DATA_MD5 =) .+/\1 'e0fb021af00010f90e9348d8c7
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 22 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.4.2-alt2
+- Fixed FTBFS: delete workaround for mismatching of EXPECTED_NORTH_STAR_DATA_MD5
+  because of updating Faker to 19.11.0
+
 * Fri Sep 29 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.4.2-alt1
 - 2.3.0 -> 2.4.2
 
