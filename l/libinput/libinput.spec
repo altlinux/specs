@@ -9,7 +9,7 @@
 
 Name: libinput
 Version: 1.24.0
-Release: alt1
+Release: alt1.1
 
 Summary: Input devices library
 Group: System/Libraries
@@ -36,7 +36,13 @@ BuildRequires: libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
 BuildRequires: libudev-devel pkgconfig(systemd)
 BuildRequires: libcheck-devel
 %{?_enable_libwacom:BuildRequires: libwacom-devel}
-%{?_enable_debug_gui:BuildRequires: libgtk4-devel wayland-protocols}
+%{?_enable_debug_gui:BuildRequires: wayland-protocols
+%ifarch %e2k
+BuildRequires: libgtk+3-devel
+%else
+BuildRequires: libgtk4-devel
+%endif
+}
 %{?_enable_documentation:BuildRequires: doxygen graphviz}
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: /proc gdb  python3-module-pytest python3-module-pytest-xdist
@@ -98,7 +104,7 @@ the functionality of the installed libinput library.
 
 %build
 %meson %{?_enable_libwacom:-Dlibwacom=true} \
-       %{?_enable_debug_gui:-Ddebug-gui=true} \
+       %{?_disable_debug_gui:-Ddebug-gui=false} \
        %{?_disable_documentation:-Ddocumentation=false} \
        %{?_disable_tests:-Dtests=false} \
        %{?_enable_install_tests:-Dinstall-tests=true} \
@@ -187,6 +193,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Sun Oct 22 2023 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1.1
+- fixed build debug-gui for %%e2k
+
 * Fri Aug 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
 - 1.24.0
 
