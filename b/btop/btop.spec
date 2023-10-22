@@ -1,6 +1,6 @@
 Name: btop
 Version: 1.2.13
-Release: alt2
+Release: alt3
 
 Summary: Resource monitor that shows usage and stats for processor, memory, disks, network and processes.
 License: Apache-2.0
@@ -12,8 +12,7 @@ Packager: Alexei Mezin <alexvm@altlinux.org>
 
 Summary(ru_RU.UTF8): Монитор ресурсов, показывающий загрузку процессора, памяти, дисков, сети и список процессов.
 
-%set_gcc_version 10
-BuildRequires(pre): gcc10-c++
+BuildRequires(pre): gcc-c++
 
 
 %description
@@ -41,6 +40,9 @@ PREFIX=%buildroot/%_prefix make install
 
 
 %changelog
+* Sun Oct 22 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2.13-alt3
+- NMU: build with default GCC. Fixes FTBFS on LoongArch.
+
 * Sat Oct 21 2023 Alexei Mezin <alexvm@altlinux.org> 1.2.13-alt2
 - Fix typo in package description.
 
