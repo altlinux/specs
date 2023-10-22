@@ -9,11 +9,11 @@
 %def_without pyod
 
 # Please, update here commit id for the release
-%define release_commit 2c305f3bac39a5e404f988921f1587fa67dd12b5
+%define release_commit 250a04cd7d6f08d7e2b4b47276f25686d4e816b1
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.41.0
+Version: 1.43.0
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -301,6 +301,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Sun Oct 22 2023 Vitaly Lipatov <lav@altlinux.ru> 1.43.0-alt1
+- new version 1.43.0 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.41.0-alt1
 - new version 1.41.0 (with rpmrb script)
 
