@@ -1,37 +1,54 @@
+%define _gimpplugindir %(gimptool-2.0 --gimpplugindir)/plug-ins/
+
 Summary: A GTK front-end for gPhoto2
 Name: gtkam
-Version: 0.2.0
-Release: alt2
+Version: 1.0
+Release: alt1
 License: GPLv2
-Group: File tools
-Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
+Group: Graphics
+Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
 Source0: %name-%version.tar
-Patch1: %name-0.2.0-alt-conf.patch
-Patch2: %name-0.1.14-alt-fhs.patch
-Patch3: %name-0.1.18-alt-fix-DSO-link.patch
+Patch1: %name-%version-%release.patch
 
 Url: http://www.gphoto.org
 
 # Automatically added by buildreq on Wed Mar 20 2013
+BuildRequires(pre): libgimp-devel
 BuildRequires: intltool libexif-gtk-devel libgphoto2-devel libgtk+2-devel
+Requires: gtkam-i18n = %EVR
 
 %description
-The gtKam package provides a GTK-based front-end to gPhoto2.  Install
+The GTKam package provides a GTK-based front-end to gPhoto2.  Install
 this package if you want to use a digital camera with Linux.
+
+%package -n gimp-plugin-%name
+Summary: GIMP plugin to open digital camera pictures
+Group: Graphics
+Requires: gtkam-i18n = %EVR gimp
+
+%description -n gimp-plugin-%name
+GIMP plugin that allows you to open pictures on a digital camera within GIMP.
+
+%package -n %name-i18n
+Summary: Languages support for GTKam
+Group: Graphics
+BuildArch: noarch
+
+%description -n %name-i18n
+Languages support for GTKam.
 
 %prep
 %setup
-rm -f po/*.gmo
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %autoreconf
-%configure --without-bonobo --without-gimp --without-gnome --disable-scrollkeeper
-make
-make -C po update-po
+%configure \
+	--with-gimp \
+	--without-gnome \
+	--without-bonobo
+%make_build
 
 %install
 %makeinstall
@@ -41,7 +58,7 @@ mv %buildroot%_pixmapsdir/gtkam-camera.png %buildroot%_liconsdir/
 
 %find_lang %name
 
-%files -f %name.lang
+%files
 %_bindir/*
 %_desktopdir/*
 %_datadir/%name
@@ -50,9 +67,19 @@ mv %buildroot%_pixmapsdir/gtkam-camera.png %buildroot%_liconsdir/
 %_man1dir/*
 %_liconsdir/*
 %_pixmapsdir/*
-%doc AUTHORS README CHANGES NEWS TODO
+%doc AUTHORS NEWS README TODO
+
+%files -n gimp-plugin-%name
+%_gimpplugindir/*
+
+%files -n %name-i18n -f %name.lang
 
 %changelog
+* Sun Oct 22 2023 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt1
+- Last git snapshot gtkam-1_0-release-15-g8a9bde6
+- Built gimp plugin
+- Built i18n as separate package
+
 * Thu Jan 29 2015 Dmitriy Khanzhin <jinn@altlinux.org> 0.2.0-alt2
 - Rebuild (libgphoto2)
 

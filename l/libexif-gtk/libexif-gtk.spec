@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libexif-gtk
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: libexif-gtk provides GTK+ widgets to display/edit EXIF tags
@@ -10,6 +10,7 @@ License: LGPLv2+
 Group: System/Libraries
 Url: http://www.sourceforge.net/projects/libexif
 Source0: %name.tar
+Patch1: gettext-gtk-version.patch
 # Automatically added by buildreq on Wed Mar 13 2013
 BuildRequires: libexif-devel libgtk+2-devel
 
@@ -50,6 +51,7 @@ This library provides GTK+ widgets to display/edit EXIF tags.
 
 %prep
 %setup -n %name
+%patch1 -p1
 
 %build
 %configure %{subst_enable static}
@@ -61,6 +63,7 @@ This library provides GTK+ widgets to display/edit EXIF tags.
 
 %files -f %name.lang
 %_libdir/*.so.*
+%doc NEWS README
 
 %files devel
 %_libdir/*.so
@@ -73,6 +76,9 @@ This library provides GTK+ widgets to display/edit EXIF tags.
 %endif
 
 %changelog
+* Mon Oct 09 2023 Dmitriy Khanzhin <jinn@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Wed Mar 13 2013 Dmitriy Khanzhin <jinn@altlinux.org> 0.4.0-alt1
 - 0.4.0
 - buildreq
