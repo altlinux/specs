@@ -102,7 +102,7 @@
 
 Name:    samba
 Version: 4.17.12
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1085,7 +1085,6 @@ install -m755 %SOURCE20 %buildroot%_initrddir/samba
 # Put README in builddir
 cp %SOURCE200 %SOURCE201 .
 
-subst 's,Type=notify,Type=forking,' %buildroot%_unitdir/*.service
 %if_with clustering_support
 install -m755 %SOURCE12 %buildroot%_initrddir/ctdb
 echo "d %_samba_piddir/ctdb 755 root root" >> %buildroot%_tmpfilesdir/ctdb.conf
@@ -2115,6 +2114,9 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Sun Oct 22 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.12-alt2
+- Revert services type from forking to notify.
+
 * Sat Oct 17 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.12-alt1
 - Update to security release of Samba 4.17
 - Security fixes (Samba#15422, Samba#15424, Samba#15439, Samba#15473, Samba#15474):
