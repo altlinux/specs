@@ -16,7 +16,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -64,7 +64,11 @@ Requires: gnome-filesystem
 Requires: gnome-settings-daemon >= %sett_daemon_ver
 # for graphical passwd changing apps
 Requires: accountsservice >= %acc_ver
-#Requires: userpasswd
+Requires: cups-pk-helper
+Requires: geoclue2
+Requires: shadow-utils
+Requires: setxkbmap
+Requires: fwupd
 Requires: gnome-online-accounts >= %goa_ver
 Requires: gnome-bluetooth%bt_api_ver
 # for VPN
@@ -81,7 +85,7 @@ BuildRequires: pkgconfig(gnome-desktop-4) pkgconfig(gnome-bg-4) pkgconfig(gnome-
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: gnome-settings-daemon-devel >= %sett_daemon_ver
 BuildRequires: libcolord-devel >= %colord_ver pkgconfig(colord-gtk4)
-BuildRequires: libibus-devel >= %ibus_ver libxkbfile-devel
+BuildRequires: libibus-devel >= %ibus_ver libxkbfile-devel setxkbmap
 BuildRequires: libupower-devel >= %upower_ver libpolkit1-devel >= %polkit_ver
 BuildRequires: libgio-devel librsvg-devel libxml2-devel
 BuildRequires: libX11-devel libXi-devel
@@ -196,6 +200,10 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Oct 23 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
+- 45.1
+- updated runtime dependencies
+
 * Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
