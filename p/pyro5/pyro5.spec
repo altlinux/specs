@@ -2,7 +2,7 @@
 %define modulename Pyro5
 
 Name: pyro5
-Version: 5.14
+Version: 5.15
 Release: alt1
 Summary: Distributed object middleware for Python (RPC)
 License: MIT
@@ -11,8 +11,6 @@ Url: https://github.com/irmen/Pyro5
 # Source-url: https://files.pythonhosted.org/packages/source/P/Pyro5/Pyro5-%version.tar.gz
 
 Source: %modulename-%version.tar
-# PATCH-FIX-UPSTREAM gh#irmen/Pyro5#76
-Patch: add-network-marker.patch
 
 BuildArch: noarch
 
@@ -78,5 +76,8 @@ py.test3 -m "not network"
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Mon Oct 23 2023 Anton Midyukov <antohami@altlinux.org> 5.15-alt1
+- new version (5.15) with rpmgs script
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 5.14-alt1
 - initial build
