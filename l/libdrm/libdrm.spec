@@ -1,9 +1,9 @@
 Name: libdrm
-Version: 2.4.116
-Release: alt2
+Version: 2.4.117
+Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
-License: GPL
+License: MIT
 Group: System/Libraries
 Url: http://dri.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
@@ -45,10 +45,25 @@ Will void your warranty.
 %meson \
 	-Dudev=true \
 	-Dinstall-test-programs=true \
-%ifarch armh aarch64
+	-Dvmwgfx=enabled \
+%ifarch %ix86 x86_64
+	-Dintel=enabled \
+%endif
+%ifarch %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
+	-Dradeon=enabled \
+	-Damdgpu=enabled \
+%endif
+%ifarch %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
+	-Dnouveau=enabled \
+%endif
+%ifarch armh aarch64 loongarch64
 	-Detnaviv=enabled \
-	-Dexynos=enabled \
+%endif
+%ifarch armh
 	-Domap=enabled \
+%endif
+%ifarch armh aarch64
+	-Dexynos=enabled \
 	-Dtegra=enabled \
 	-Dvc4=enabled \
 	-Dfreedreno=enabled
@@ -74,6 +89,9 @@ Will void your warranty.
 %_bindir/*
 
 %changelog
+* Mon Oct 23 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.117-alt1
+- 2.4.117
+
 * Thu Sep 07 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.116-alt2
 - amdgpu: add marketing names from Adrenalin 23.9.1
 
