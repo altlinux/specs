@@ -2,19 +2,23 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cpu-x
-Version: 4.5.3
-Release: alt2
+Version: 5.0.1
+Release: alt1
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPL-3.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/X0rg/CPU-X
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Buildrequires(pre): rpm-macros-cmake
 Buildrequires: gcc-c++ cmake 
 BuildRequires: nasm
 BuildRequires: libappstream-glib
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.12.0
+BuildRequires: pkgconfig(gtkmm-3.0) >= 3.12.0
+BuildRequires: pkgconfig(gl)
+BuildRequires: pkgconfig(glfw3) >= 3.3
+BuildRequires: pkgconfig(vulkan)
 BuildRequires: pkgconfig(json-c)
 BuildRequires: pkgconfig(libcpuid) >= 0.4.0
 BuildRequires: pkgconfig(libcurl)
@@ -36,7 +40,7 @@ NCurses. A dump mode is present from command line.
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 
 %build
 %cmake
@@ -63,6 +67,9 @@ rm -r %buildroot%_datadir/locale/zh_Hant
 %_prefix/libexec/*
 
 %changelog
+* Mon Oct 23 2023 Anton Midyukov <antohami@altlinux.org> 5.0.1-alt1
+- New version 5.0.1 (Closes: 48113).
+
 * Wed Oct 18 2023 Anton Midyukov <antohami@altlinux.org> 4.5.3-alt2
 - rebuild with libproc2
 
