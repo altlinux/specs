@@ -1,20 +1,28 @@
-%define modname brotlipy
+%define pypi_name brotlicffi
 
-Name: python3-module-%modname
-Version: 0.7.0
-Release: alt3
+Name: python3-module-%pypi_name
+Version: 1.1.0.0
+Release: alt1
 
 Summary: Library contains Python bindings for the reference Brotli
 License: MIT
 Group: Development/Python3
-Url: https://github.com/python-hyper/brotlipy/
+Url: https://github.com/python-hyper/brotlicffi/
 
-Source: %modname-%version.tar
+Source: %pypi_name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: gcc-c++ python3-module-sphinx
-BuildRequires: python3-module-cffi
+BuildRequires(pre): rpm-build-pyproject
+
+BuildRequires: python3(pytest-cov)
+BuildRequires: python3(hypothesis)
+BuildRequires: python3-module-sphinx
+
+%pyproject_runtimedeps_metadata
+%pyproject_builddeps_build
+
+%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_check
 
 %description
 This library contains Python bindings for the reference Brotli 
@@ -25,6 +33,8 @@ use the Brotli compression algorithm directly from Python code.
 Summary: Documentation for %name
 Group: Development/Documentation
 
+BuildArch: noarch
+
 %description docs
 This library contains Python bindings for the reference Brotli 
 encoder/decoder, available here. This allows Python software to 
@@ -33,21 +43,21 @@ use the Brotli compression algorithm directly from Python code.
 This package contains documentation for %name
 
 %prep
-%setup -n %modname-%version
-
-rm -rf *deb
+%setup -n %pypi_name-%version
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 export PYTHONPATH=$PWD
 %make SPHINXBUILD="sphinx-build-3" -C docs man
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+%tox_check_pyproject
 
 %files
 %doc LICENSE *.rst
@@ -57,6 +67,10 @@ python3 setup.py test
 %doc docs/build/*
 
 %changelog
+* Sun Oct 22 2023 Andrey Limachko <liannnix@altlinux.org> 1.1.0.0-alt1
+- Version 1.1.0.0
+- Rename package to brotlicffi. brotli provide replaced with python3-module-brotli
+
 * Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt3
 - Drop python2 support.
 
