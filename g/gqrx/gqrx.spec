@@ -1,13 +1,11 @@
 Name: gqrx
-Version: 2.17
+Version: 2.17.3
 Release: alt1
 
 Summary: Software defined radio receiver powered by GNU Radio and Qt.
 License: GPL-3.0
 Group: Other
 Url: https://github.com/csete/gqrx
-
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -19,12 +17,12 @@ BuildRequires: libfftw3-devel
 BuildRequires: libalsa-devel
 BuildRequires: libjack-devel
 BuildRequires: liborc-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-svg-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-svg-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libpulse-simple)
-BuildRequires: git
+#BuildRequires: git-core
 BuildRequires: pkgconfig(gnuradio-analog)
 BuildRequires: pkgconfig(gnuradio-blocks)
 BuildRequires: pkgconfig(gnuradio-digital)
@@ -39,6 +37,9 @@ BuildRequires: libappstream-glib
 BuildRequires: libsndfile-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libunwind-devel
+
+# https://bugzilla.altlinux.org/47318
+Requires: qt6-svg
 
 # uhd not available for %ix86 %arm
 ExcludeArch: %ix86 %arm
@@ -55,7 +56,7 @@ ExcludeArch: %ix86 %arm
 #sed -i -e 's/Accessories;//g' gqrx.desktop
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
 #This appears to be borked
@@ -70,6 +71,10 @@ appstream-util validate-relax --nonet \
 %doc COPYING LICENSE-CTK README.md
 
 %changelog
+* Mon Oct 23 2023 Anton Midyukov <antohami@altlinux.org> 2.17.3-alt1
+- New version 2.17.3.
+- build with qt6
+
 * Tue Oct 03 2023 Anton Midyukov <antohami@altlinux.org> 2.17-alt1
 - New version 2.17.
 
