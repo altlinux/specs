@@ -1,5 +1,5 @@
 Name: libinklevel
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: Library for retrieving the ink level of a printer
@@ -12,7 +12,7 @@ Source1: %name-index.html
 Source2: %name.watch
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-BuildPreReq: libieee1284-devel libusb-devel
+BuildPreReq: libieee1284-devel libusb-devel libxml2-devel 
 
 %package devel
 Summary: Headers for libinklevel
@@ -49,6 +49,9 @@ ln -sf /usr/share/license/GPL-2 COPYING
 %_includedir/*.h
 
 %changelog
+* Mon Oct 23 2023 Ilya Mashkin <oddity@altlinux.ru> 0.9.5-alt1
+- 0.9.5
+
 * Tue Aug 16 2022 Ilya Mashkin <oddity@altlinux.ru> 0.9.4-alt1
 - 0.9.4
 
