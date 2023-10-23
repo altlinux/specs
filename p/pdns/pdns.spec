@@ -4,7 +4,7 @@
 %define _pkgdocdir %_docdir/%name
 
 Name: pdns
-Version: 4.8.2
+Version: 4.8.3
 Release: alt1
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
@@ -336,6 +336,9 @@ fi
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Mon Oct 23 2023 Alexey Shabalin <shaba@altlinux.org> 4.8.3-alt1
+- 4.8.3
+
 * Fri Sep 29 2023 Alexey Shabalin <shaba@altlinux.org> 4.8.2-alt1
 - 4.8.2
 - Add --enable-dns-over-tls.
