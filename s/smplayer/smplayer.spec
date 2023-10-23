@@ -1,4 +1,4 @@
-%define		svn 10036
+%define		git afa9c7dfe
 
 %define		rel alt1
 
@@ -9,10 +9,10 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT5
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	21.10.0
-Release:	%rel.%svn
+Version:	23.6.0
+Release:	%rel.git_1_%git
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
-Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
+Source0:	%name-%version.tar
 Patch0:		smplayer-paths-fix-alt.patch
 Patch1:		smplayer-18.3-disable_update.patch
 
@@ -106,6 +106,9 @@ export OPTFLAGS="%optflags"
 %files -n %name-mplayer
 
 %changelog
+* Sun Oct 22 2023 Hihin Ruslan <ruslandh@altlinux.ru> 23.6.0-alt1.git_1_afa9c7dfe
+- v23.6.0.10168 (git commit afa9c7dfe)
+
 * Fri Feb 11 2022 Motsyo Gennadi <drool@altlinux.ru> 21.10.0-alt1.10036
 - 21.10.0 (rev10036)
 
