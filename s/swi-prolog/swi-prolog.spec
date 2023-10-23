@@ -5,7 +5,7 @@
 Summary: Prolog interpreter and compiler
 Name: swi-prolog
 Version: 9.0.4
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Group: Development/Other
 Requires: %name-nox
@@ -18,7 +18,7 @@ Source0: http://www.swi-prolog.org/download/stable/src/swipl-%version.tar.gz
 
 # Automatically added by buildreq on Sun Oct 04 2020
 # optimized out: ca-trust cmake-modules fontconfig fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 java java-headless javazi libICE-devel libSM-devel libX11-devel libXau-devel libXrender-devel libcrypt-devel libfreetype-devel libsasl2-3 libstdc++-devel libtinfo-devel libunixODBC-devel-compat libxcb-devel pkg-config python2-base sh4 xorg-proto-devel
-BuildRequires: cmake flex gcc-c++ libstdc++-devel git-core libXext-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libc++-devel libarchive-devel libdb6-devel libedit-devel libgmp-devel libjpeg-devel libncurses-devel libreadline-devel libssl-devel libunixODBC-devel libuuid-devel zlib-devel bzip2-devel libpng-devel libpcre-devel libbrotli-devel libexpat-devel rpm-build-python3 python3-devel rpm-build-python
+BuildRequires: cmake flex gcc-c++ libstdc++-devel git-core libXext-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libc++-devel libarchive-devel libdb6-devel libedit-devel libgmp-devel libjpeg-devel libncurses-devel libreadline-devel libssl-devel libunixODBC-devel libuuid-devel zlib-devel bzip2-devel libpng-devel libpcre-devel libbrotli-devel libexpat-devel rpm-build-python3 python3-devel rpm-build-python java-11-openjdk-devel
 
 %if_with test
 BuildRequires: ctest
@@ -53,19 +53,19 @@ AutoProv: yes,noperl
 XPCE is a toolkit for developing graphical applications in Prolog and
 other interactive and dynamically typed languages.
 
-#%package java
-#Group: Development/Java
-#Summary: Java interface for %name
-#Requires: %name-nox = %version-%release
-#Provides: %name-jpl
+%package java
+Group: Development/Java
+Summary: Java interface for %name
+Requires: %name-nox = %version-%release
+Provides: %name-jpl
 # pl is not perl
-#AutoReq: yes,noperl
-#AutoProv: yes,noperl
+AutoReq: yes,noperl
+AutoProv: yes,noperl
 
-#%description java
-#JPL is a dynamic, bi-directional interface between %name and Java
-#runtimes. It offers two APIs: Java API (Java-calls-Prolog) and Prolog
-#API (Prolog-calls-Java).
+%description java
+JPL is a dynamic, bi-directional interface between %name and Java
+runtimes. It offers two APIs: Java API (Java-calls-Prolog) and Prolog
+API (Prolog-calls-Java).
 
 %package odbc
 Group: Development/Databases
@@ -149,13 +149,13 @@ LC_ALL=ru_RU.UTF-8 LD_LIBRARY_PATH=`pwd`/src ctest -j`nproc`
 #  %_bindir/xpce*
 %_libdir/swipl-%version/xpce/*
 
-#%files java
-#%doc packages/jpl/*.md packages/jpl/*.doc packages/jpl/docs
-#%doc %_datadir/swipl-%version/doc/packages/examples/jpl
-#%doc %_datadir/swipl-%version/doc/packages/jpl.html
-#%_libdir/swipl-%version/lib/*/libjpl.so
-#%_libdir/swipl-%version/lib/jpl.jar
-#%_libdir/swipl-%version/library/jpl.pl
+%files java
+%doc packages/jpl/*.md packages/jpl/*.doc packages/jpl/docs
+%doc %_datadir/swipl-%version/doc/packages/examples/jpl
+%doc %_datadir/swipl-%version/doc/packages/jpl.html
+%_libdir/swipl-%version/lib/*/libjpl.so
+%_libdir/swipl-%version/lib/jpl.jar
+%_libdir/swipl-%version/library/jpl.pl
 
 %files odbc
 %doc %_datadir/swipl-%version/doc/packages/odbc.html
@@ -168,11 +168,14 @@ LC_ALL=ru_RU.UTF-8 LD_LIBRARY_PATH=`pwd`/src ctest -j`nproc`
 %doc %_datadir/swipl-%version/doc/Manual
 %exclude %_datadir/swipl-%version/doc/Manual/*xpce.html
 %doc %_datadir/swipl-%version/doc/packages
-#%exclude %_datadir/swipl-%version/doc/packages/examples/jpl
-#%exclude %_datadir/swipl-%version/doc/packages/jpl.html
+%exclude %_datadir/swipl-%version/doc/packages/examples/jpl
+%exclude %_datadir/swipl-%version/doc/packages/jpl.html
 %exclude %_datadir/swipl-%version/doc/packages/odbc.html
 
 %changelog
+* Mon Oct 23 2023 Denis Medvedev <nbr@altlinux.org> 9.0.4-alt2
+- java reenabled
+
 * Mon Jul 31 2023 Denis Medvedev <nbr@altlinux.org> 9.0.4-alt1
 - new version
 
