@@ -3,7 +3,7 @@
 %define sover 15
 
 Name: gnuastro
-Version: 0.20
+Version: 0.21
 Release: alt1
 Summary: GNU Astronomy Utilities
 License: GPLv3+
@@ -106,6 +106,9 @@ mv -v %buildroot/%_datadir/%name/completion.bash %buildroot/%_datadir/bash-compl
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Mon Oct 23 2023 Ilya Mashkin <oddity@altlinux.ru> 0.21-alt1
+- 0.21
+
 * Sun May 07 2023 Ilya Mashkin <oddity@altlinux.ru> 0.20-alt1
 - 0.20
 
