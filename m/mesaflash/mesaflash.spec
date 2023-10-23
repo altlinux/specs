@@ -1,8 +1,8 @@
 Name: mesaflash
-Version: 3.4.6
+Version: 3.4.9
 Release: alt1
 Summary: Configuration and diagnostic tool for Mesa Electronics boards
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Engineering
 Url: https://github.com/LinuxCNC/mesaflash
 Source0: %name-%version.tar
@@ -44,6 +44,9 @@ rm -rf *.dll *.sys libpci
 %_mandir/man1/*.1*
 
 %changelog
+* Mon Oct 23 2023 Anton Midyukov <antohami@altlinux.org> 3.4.9-alt1
+- new version 3.4.9
+
 * Mon Sep 11 2023 Anton Midyukov <antohami@altlinux.org> 3.4.6-alt1
 - new version 3.4.6
 
