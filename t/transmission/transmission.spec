@@ -8,7 +8,7 @@
 
 Name: transmission
 Version: 4.0.4
-Release: alt1
+Release: alt2
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -251,6 +251,9 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Mon Oct 23 2023 Mikhail Tergoev <fidel@altlinux.org> 4.0.4-alt2
+- fixed permissions for transmission-daemon (ALT bug: 48101)
+
 * Mon Oct 09 2023 Mikhail Tergoev <fidel@altlinux.org> 4.0.4-alt1
 - updated to upstream version 4.0.4 (ALT bug: 45494)
 - fixed permissions (ALT bug: 44852, 33055)
