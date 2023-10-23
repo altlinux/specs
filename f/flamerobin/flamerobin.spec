@@ -1,13 +1,14 @@
 Name: flamerobin
 Summary: Graphical client for Firebird
-Version: 0.9.6
+Version: 0.9.9
 Release: alt1
 License: MIT
 Group: Databases
 
-Source: %name-%version.tar
 Url: http://www.flamerobin.org/
+
 # Source-url: https://github.com/mariuz/flamerobin/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -29,7 +30,7 @@ toolkit.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 install -d %buildroot{%_niconsdir,%_miconsdir,%_liconsdir}
 convert -size 16x16 ./res/fricon128.png %buildroot%_miconsdir/%name.png
@@ -48,6 +49,9 @@ convert -size 48x48 ./res/fricon128.png %buildroot%_liconsdir/%name.png
 %_miconsdir/%name.png
 
 %changelog
+* Mon Oct 23 2023 Anton Midyukov <antohami@altlinux.org> 0.9.9-alt1
+- new version (0.9.9) with rpmgs script
+
 * Thu Mar 16 2023 Anton Midyukov <antohami@altlinux.org> 0.9.6-alt1
 - new version (0.9.6) with rpmgs script
 - build with libwxGTK3.2
