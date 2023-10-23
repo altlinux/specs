@@ -3,7 +3,7 @@
 
 Name: libalsa
 Version: 1.2.8
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -129,6 +129,8 @@ mkdir -p %buildroot%_sysconfdir/modprobe.d
 cat << __EOF__ >> %buildroot%modprobe_conf
 ## spare index=0 for a hotplug soundcard (if any)
 #options snd-usb-audio index=0
+## prefer multi-output USB card to a "simple" one in a hub
+#options snd-usb-audio index=1,0 vid=0x0d8c,0x31b2
 
 ## offset HDMI output compared to onboard audio (#28648)
 #options snd_hda_codec_hdmi index=2,3
@@ -199,6 +201,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Mon Oct 23 2023 Michael Shigorin <mike@altlinux.org> 1:1.2.8-alt2
+- add another snd-usb-audio example to modprobe.d file
+
 * Sun Nov 20 2022 Michael Shigorin <mike@altlinux.org> 1:1.2.8-alt1
 - 1.2.8
 
