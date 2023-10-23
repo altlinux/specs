@@ -6,8 +6,8 @@
 %def_with check
 
 Name:       python3-module-%mod_name
-Version:    0.4.1
-Release:    alt2
+Version:    0.4.3
+Release:    alt1
 
 Summary:    Python library for Windows Remote Management
 License:    MIT
@@ -82,6 +82,9 @@ py.test3 -v winrm/tests/
 
 
 %changelog
+* Mon Oct 23 2023 Anton Vyatkin <toni@altlinux.org> 0.4.3-alt1
+- NMU: New version 0.4.3.
+
 * Mon Oct 03 2022 Stanislav Levin <slev@altlinux.org> 0.4.1-alt2
 - NMU: Dropped build dependency on removed pytest-flake8.
 
