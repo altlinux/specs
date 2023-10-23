@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%def_without bootstrap
+
 BuildRequires: perl-podlators
 Name: perl-Glib-Object-Introspection
 Version: 0.051
-Release: alt1
+Release: alt2
 
 Summary: Dynamically create Perl language bindings
 Group: Development/Perl
@@ -11,7 +13,13 @@ License: LGPL-2.1+
 Url: %CPAN Glib-Object-Introspection
 Source: %name-%version.tar
 
-BuildRequires: gobject-introspection-devel libcairo-gobject-devel perl-devel perl-ExtUtils-Depends perl-Glib-devel perl-ExtUtils-PkgConfig perl(XML/LibXML.pm) perl(Gtk3.pm)
+BuildRequires: gobject-introspection-devel libcairo-gobject-devel perl-devel perl-ExtUtils-Depends perl-Glib-devel perl-ExtUtils-PkgConfig perl(XML/LibXML.pm)
+# dependency loop
+%if_with bootstrap
+%add_findreq_skiplist %_bindir/perli11ndoc
+%else
+BuildRequires: perl-Gtk3
+%endif
 
 %description
 %summary
@@ -46,6 +54,9 @@ export LANG=ru_RU.UTF-8
 %_man1dir/perli11ndoc.1*
 
 %changelog
+* Mon Oct 23 2023 Igor Vlasenko <viy@altlinux.org> 0.051-alt2
+- added bootstrap sdupport for circular dep on perl-Gtk3
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.051-alt1
 - new version
 
