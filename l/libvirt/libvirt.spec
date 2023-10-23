@@ -144,7 +144,7 @@
 
 %if_with  qemu
 %def_with qemu_tcg
-
+%def_with libnbd
 %ifarch %ix86 x86_64 armh aarch64 ppc64le
 %def_with qemu_kvm
 %endif
@@ -186,8 +186,8 @@
 %def_without modular_daemons
 
 Name: libvirt
-Version: 9.7.0
-Release: alt2
+Version: 9.8.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
@@ -200,15 +200,14 @@ Source11: libvirtd.init
 Source12: virtlockd.init
 Source13: virtlogd.init
 Source14: libvirt-guests.init
-Source21: libvirtd.tmpfiles
 
 Patch1: %name-%version.patch
-Patch2: libvirt-9.0-vitastor.diff
+Patch2: 0001-Add-Vitastor-support.patch
 
 %{?_with_libvirtd:Requires: %name-daemon = %EVR}
 %{?_with_network:Requires: %name-daemon-config-network = %EVR}
 %{?_with_nwfilter:Requires: %name-daemon-config-nwfilter = %EVR}
-%{?_with_qemu:Requires: %name-qemu-common = %EVR}
+%{?_with_qemu:Requires: %name-qemu-common = %EVR %name-client-qemu = %EVR}
 %{?_with_polkit:Requires: polkit}
 Requires: %name-client = %EVR
 Requires: %name-libs = %EVR
@@ -243,6 +242,7 @@ BuildRequires(pre): meson >= 0.56.0
 %{?_with_hyperv:BuildRequires: libwsman-devel >= 2.6.3}
 %{?_with_audit:BuildRequires: libaudit-devel}
 %{?_with_fuse:BuildRequires: libfuse-devel >= 2.8.6}
+%{?_with_libnbd:BuildRequires: libnbd-devel}
 %{?_with_pm_utils:BuildRequires: pm-utils}
 %{?_with_wireshark:BuildRequires: glib2-devel wireshark tshark wireshark-devel >= 2.1.0}
 BuildRequires: pkgconfig(bash-completion) >= 2.0
@@ -905,8 +905,6 @@ dir=%_libdir/libvirt/
 grep -qs '^'\$dir'' && /sbin/service libvirtd condrestart ||:
 EOF
 install -pD -m 755 filetrigger %buildroot%_rpmlibdir/%name.filetrigger
-
-install -pD -m644 %SOURCE21 %buildroot/lib/tmpfiles.d/libvirtd.conf
 %endif
 
 %find_lang %name
@@ -1024,7 +1022,6 @@ fi
 %files daemon
 %dir %_datadir/libvirt
 %dir %attr(0700, root, root) %_logdir/libvirt
-%_tmpfilesdir/libvirtd.conf
 %_unitdir/libvirtd*
 %_unitdir/virtproxyd*
 %_unitdir/virt-guest-shutdown.target
@@ -1406,6 +1403,13 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Oct 18 2023 Alexey Shabalin <shaba@altlinux.org> 9.8.0-alt1
+- 9.8.0
+- Build with nbdkit.
+- Add requires libvirt-client-qemu to main package.
+- Drop tmpfiles config (and fixed perm to swtpm runtime dir ALT#47442).
+- Update vitastor support patch.
+
 * Wed Sep 06 2023 Alexey Shabalin <shaba@altlinux.org> 9.7.0-alt2
 - Add patch for vitastor support.
 
