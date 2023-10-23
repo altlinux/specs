@@ -3,7 +3,7 @@
 %def_without check
 
 Name: mailman3
-Version: 3.3.8
+Version: 3.3.9
 Release: alt1
 
 Summary: Managing electronic mail discussion and e-newsletter lists
@@ -20,16 +20,12 @@ Source4: %name.logrotate
 Source5: %name-digests.service
 Source6: %name-digests.timer
 
-Patch0: %name-fix-import.patch
-Patch1: %name-subject-prefix.patch
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-nose2
-BuildRequires: python3-module-flufl.testing
 BuildRequires: python3-module-flufl.bounce
 BuildRequires: python3-module-flufl.i18n
 BuildRequires: python3-module-flufl.lock
@@ -44,6 +40,7 @@ BuildRequires: python3-module-passlib
 BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-dns
 BuildRequires: python3-module-authheaders
+BuildRequires: python3-module-aiosmtpd
 %endif
 
 Requires: python3-module-%name = %EVR
@@ -72,7 +69,7 @@ Requires: python3-module-flufl.bounce
 Requires: python3-module-flufl.i18n
 Requires: python3-module-flufl.lock
 Requires: python3-module-passlib
-Requires: python3-module-sqlalchemy >= 1.2.3
+Requires: python3-module-sqlalchemy >= 1.4.0
 Requires: python3-module-requests
 
 %py3_requires lazr.config zope.interface
@@ -88,8 +85,6 @@ This package contain python modules for %name.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 
 %build
 %pyproject_build
@@ -170,6 +165,9 @@ getent passwd mailman >/dev/null || \
 
 
 %changelog
+* Mon Oct 23 2023 Anton Vyatkin <toni@altlinux.org> 3.3.9-alt1
+- new version 3.3.9
+
 * Mon Sep 18 2023 Anton Vyatkin <toni@altlinux.org> 3.3.8-alt1
 - new version 3.3.8
 
