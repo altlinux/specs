@@ -1,6 +1,6 @@
 Name: unfs3
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: UNFS3 user-space NFSv3 server
 License: BSD-3-Clause
@@ -40,6 +40,7 @@ install -p -m 0644 %SOURCE1 %buildroot%_unitdir
 %files
 %doc CREDITS README.md README.nfsroot LICENSE NEWS contrib doc
 %_sbindir/unfsd
+%_unitdir/%name.service
 %_man7dir/*
 %_man8dir/*
 
@@ -50,6 +51,9 @@ install -p -m 0644 %SOURCE1 %buildroot%_unitdir
 %preun_service unfs3
 
 %changelog
+* Mon Oct 23 2023 Oleg Obidin <nofex@altlinux.org> 0.10.0-alt2
+- NMU: Added unfs3.service in files (closes: #48124).
+
 * Wed Jun 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.10.0-alt1
 - 0.10.0
 - Ensure TCP socket is always listened (closes: #40213)
