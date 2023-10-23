@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt13
+Release: alt13.1
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -507,6 +507,9 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Mon Oct 23 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt13.1
+- merge p10 changes
+
 * Fri Oct 13 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt13
 - update to current version
 
@@ -521,6 +524,9 @@ fi
 
 * Tue Mar 28 2023 Pavel Skrylev <majioa@altlinux.org> 4.6-alt9.2
 - ! fixed build deps to ruby gems and some syntax
+
+* Tue Mar 28 2023 Pavel Skrylev <majioa@altlinux.org> 4.6-alt2.1
+- ! deps to ruby gems
 
 * Thu Feb 09 2023 Alexei Takaseev <taf@altlinux.org> 4.6-alt9.1
 - Change BR: postgresql10-server -> postgresql15-server
