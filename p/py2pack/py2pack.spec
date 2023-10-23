@@ -2,7 +2,7 @@
 
 Name:       py2pack
 Version:    0.8.7
-Release:    alt1
+Release:    alt2
 
 Summary:    Generate distribution packages from Python packages on PyPI
 License:    GPL-2.0+
@@ -23,6 +23,8 @@ BuildRequires: python3-module-requests
 BuildRequires: python3-module-pbr
 
 Requires: python3-module-py2pack = %version-%release
+
+%add_python3_req_skip distutils.core
 
 %description
 This script allows to generate RPM spec or DEB dsc files from Python modules.
@@ -61,6 +63,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/%{oname}*
 
 %changelog
+* Mon Oct 23 2023 Anton Vyatkin <toni@altlinux.org> 0.8.7-alt2
+- NMU: skip distutils.core requires.
+
 * Mon Jun 07 2021 Andrey Cherepanov <cas@altlinux.org> 0.8.7-alt1
 - New version.
 
