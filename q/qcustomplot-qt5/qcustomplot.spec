@@ -1,21 +1,22 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%global so_ver 2.1.0
+%global so_ver 2.0.0
 
 Name: qcustomplot-qt5
-Version: 2.1.0
-Release: alt2
+Version: 2.1.1
+Release: alt1
 Summary: Qt widget for plotting and data visualization
 
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Development/C++
 Url: http://www.qcustomplot.com/
-Packager: Anton Midyukov <antohami@altlinux.org>
 
+# Source-url: http://www.qcustomplot.com/release/%version/QCustomPlot.tar.gz
 Source: qcustomplot-%version.tar
-# Source-url: http://www.qcustomplot.com/release/%{version}fixed/QCustomPlot.tar.gz
 Source1: qcustomplot.pro
+
+Obsoletes: qcustomplot <= 2.1.0
 
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
@@ -32,6 +33,7 @@ This package contains the Qt5 version.
 Summary: Development files for %name
 Group: Development/C++
 Requires: %name
+Obsoletes: qcustomplot <= 2.1.0
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -63,10 +65,10 @@ cat > %buildroot%_pkgconfigdir/%name.pc <<EOF
 libdir=%_libdir
 includedir=%_includedir
 
-Name: %name-qt5
+Name: %name
 Description: %summary
 Version: %version
-Cflags: -I\${includedir}\/qt5
+Cflags: -I\${includedir}/qt5
 Libs: -L\${libdir} -lqcustomplot-qt5
 EOF
 
@@ -83,6 +85,12 @@ EOF
 %doc documentation examples
 
 %changelog
+* Mon Oct 23 2023 Anton Midyukov <antohami@altlinux.org> 2.1.1-alt1
+- new version (2.1.1) with rpmgs script
+- fix soversion (2.1.0 -> 2.0.0)
+- fix Name in %%name.pc
+- add missing 'Obsoletes: qcustomplot <= 2.1.0'
+
 * Wed Apr 13 2022 Vladimir Rubanov <august@altlinux.org> 2.1.0-alt2
 - Fix include in pc file
 
