@@ -50,8 +50,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.6.11
-Release: alt1.qa1
+Version: 10.11.5
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -102,6 +102,7 @@ Source103: wsrep-lib.tar
 Source104: wsrep-API.tar
 Source105: columnstore.tar
 Source106: libmarias3.tar
+Source107: fmt.tar
 
 Patch0: %name-%version.patch
 
@@ -111,7 +112,6 @@ Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mariadb-10.1.8-alt-client.patch
 #Patch5: mariadb-10.0.21-alt-load_defaults.patch
 Patch7: mariadb-10.3.8-alt-config-libs.patch
-Patch8: mariadb-10.6.11-alt-upstream-gcc13.patch
 
 # Patches specific for this mysql package
 Patch30: mariadb-errno.patch
@@ -123,6 +123,7 @@ Patch33: mariadb-covscan-signexpr.patch
 Patch101: rocksdb-6.8.0-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
+Patch104: mariadb-10.11.5-disable-download-fmt.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -419,6 +420,8 @@ tar -xf %SOURCE103 -C wsrep-lib
 tar -xf %SOURCE104 -C wsrep-lib/wsrep-API/v26
 tar -xf %SOURCE105 -C storage/columnstore/columnstore
 tar -xf %SOURCE106 -C storage/maria/libmarias3
+mkdir -p extra/libfmt/src/libfmt
+tar -xf %SOURCE107 -C extra/libfmt/src/libfmt
 
 %patch0 -p1
 %patch1 -p1
@@ -426,7 +429,6 @@ tar -xf %SOURCE106 -C storage/maria/libmarias3
 %patch4 -p1
 #%%patch5 -p1
 %patch7 -p1
-%patch8 -p1
 
 %patch30 -p1
 #%%patch31 -p1
@@ -437,6 +439,7 @@ tar -xf %SOURCE106 -C storage/maria/libmarias3
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
 #%%patch102 -p1
 %patch103 -p1 -d ./storage/rocksdb/rocksdb
+%patch104 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -460,6 +463,10 @@ chmod -R a-s,go-w sql-bench
 find sql-bench -type f -name 'innotest*' | xargs dos2unix
 
 %build
+%ifarch %ix86
+# Disable LTO for fix crash compile on i586, until fix gcc-13 bug
+%define optflags_lto %nil
+%endif
 CFLAGS="%optflags -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
 # force PIC mode so that we can build libmysqld.so
 CFLAGS="$CFLAGS -fPIC"
@@ -648,6 +655,8 @@ install -p -m644 README.md %SOURCE14 support-files/*.cnf %buildroot%_docdir/%nam
 
 rm -f %buildroot%_bindir/safe_mysqld
 rm -f %buildroot%_datadir/mysql/mysql{-*.spec,-log-rotate,.server}
+# remove unneeded expamles
+rm -f %buildroot%_datadir/mysql/{mariadb.logrotate,mini-benchmark}
 
 
 rm -rf %buildroot%_datadir/mysql-test
@@ -747,6 +756,12 @@ fi
 %config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
 %config(noreplace) %_sysconfdir/my.cnf.server/*.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/spider.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/hashicorp_key_management.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/provider_bzip2.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/provider_lz4.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/provider_lzma.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/provider_lzo.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/provider_snappy.cnf
 %_tmpfilesdir/%name.conf
 %_unitdir/mysqld.service
 %_unitdir/mariadb.service
@@ -1041,6 +1056,13 @@ fi
 %endif
 
 %changelog
+* Mon Oct 16 2023 Alexei Takaseev <taf@altlinux.org> 10.11.5-alt1
+- 10.11.5 (ALT #46388)
+- Add patch mariadb-10.11.5-disable-download-fmt.patch
+- Drop mariadb-10.6.11-alt-upstream-gcc13.patch
+- Fixes: CVE-2022-47015
+- Disable LTO for fix crash compile on i586, until fix gcc-13 bug
+
 * Fri Jul 14 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.6.11-alt1.qa1
 - NMU: backported upstream commits to fix FTBFS with gcc13 (thx Khem Raj and
   Heiko Becker).
