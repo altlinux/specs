@@ -2,7 +2,7 @@
 
 Name: perl-POE-Component-Client-DNS
 Version: 1.054
-Release: alt1
+Release: alt2
 
 Summary: Non-blocking/concurrent DNS queries using Net::DNS and POE
 
@@ -12,6 +12,7 @@ Url: http://www.cpan.org
 
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/R/RC/RCAPUTO/POE-Component-Client-DNS-%{version}.tar.gz
+Patch: https://salsa.debian.org/perl-team/modules/packages/libpoe-component-client-dns-perl/raw/master/debian/patches/net-dns-1.38-deprecations.patch
 
 # Automatically added by buildreq on Fri Oct 23 2009
 BuildRequires: perl-Net-DNS perl-POE perl-Test-NoWarnings
@@ -23,6 +24,7 @@ while waiting for name servers to respond.
 
 %prep
 %setup -q -n %module-%version
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -34,6 +36,9 @@ while waiting for name servers to respond.
 %perl_vendor_privlib/POE/*
 
 %changelog
+* Mon Oct 23 2023 Igor Vlasenko <viy@altlinux.org> 1.054-alt2
+- fixed build
+
 * Fri Nov 13 2015 Igor Vlasenko <viy@altlinux.ru> 1.054-alt1
 - automated CPAN update
 
