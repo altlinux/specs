@@ -1,6 +1,6 @@
 Name: flowblade
 Version: 2.10.0.2
-Release: alt1
+Release: alt2
 
 Summary: non-linear video editor
 Summary(ru_RU.utf8): Редактор нелинейного видео монтажа
@@ -15,8 +15,12 @@ Patch1: %name-trunk-%version-%release.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): libayatana-indicator3-devel librsvg-devel
-BuildRequires: intltool python3-module-chardet python3-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: libayatana-indicator3-devel librsvg-devel
+BuildRequires: python3-module-chardet
+
+%py3_requires mlt7
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/Flowblade
 
@@ -38,25 +42,29 @@ To use Blender projects in Flowblade you should install Blender.
 %patch1 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %_bindir/%name
-%_man1dir/%name.1*
-%python3_sitelibdir/Flowblade
-%python3_sitelibdir/flowblade*
+%_man1dir/%name.1.*
+%python3_sitelibdir/Flowblade/
+%python3_sitelibdir/flowblade-%version.dist-info/*
 %_datadir/metainfo/io.github.jliljebl.Flowblade.appdata.xml
 %_datadir/applications/io.github.jliljebl.Flowblade.desktop
-%dir %_datadir/icons/hicolor/128x128
-%dir %_datadir/icons/hicolor/128x128/apps
 %_datadir/icons/hicolor/128x128/apps/io.github.jliljebl.Flowblade.png
 %_datadir/mime/packages/flowblade
 %_datadir/mime/packages/io.github.jliljebl.Flowblade.xml
 
 %changelog
+* Mon Oct 23 2023 Anton Midyukov <antohami@altlinux.org> 2.10.0.2-alt2
+- NMU:
+  + migrating to PEP517-aware RPM macros
+  + cleanup spec
+  + add %%py3_requires mlt7 (Closes: 46788)
+
 * Mon Jun 26 2023 Artyom Bystrov <arbars@altlinux.org> 2.10.0.2-alt1
 - New version 2.10.0.2.
 
