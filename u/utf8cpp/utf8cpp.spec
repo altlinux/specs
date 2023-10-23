@@ -1,5 +1,5 @@
 Name:    utf8cpp
-Version: 3.2.5
+Version: 4.0.0
 Release: alt1
 
 Summary: UTF-8 with C++ in a Portable Way
@@ -10,6 +10,7 @@ Url:     https://github.com/nemtrif/utfcpp
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: %name-alt-cmake-dir.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -26,6 +27,7 @@ Group: Development/C++
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 cmake -Wno-dev \
@@ -39,11 +41,14 @@ cmake -Wno-dev \
 %makeinstall_std
 
 %files -n lib%name-devel
-%doc README.md samples/docsample.cpp
+%doc README.md
 %_includedir/*
 %_libdir/cmake/*
 
 %changelog
+* Mon Oct 23 2023 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
+- New version.
+
 * Mon Sep 25 2023 Andrey Cherepanov <cas@altlinux.org> 3.2.5-alt1
 - New version.
 
