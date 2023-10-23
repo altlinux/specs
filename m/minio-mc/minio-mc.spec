@@ -1,8 +1,8 @@
 %global import_path github.com/minio/mc
-%global commit 1c17ff4c995d772c97eed8c5a269f2074a9425fe
+%global commit d158b9a478a6a5a74795f01097d069be82edfff6
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2023-07-21T20-44-27Z
-%define version 2023.07.21
+%global tag RELEASE.2023-10-14T01-57-03Z
+%define version 2023.10.14
 
 %global _unpackaged_files_terminate_build 1
 
@@ -68,6 +68,9 @@ install -p -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Oct 23 2023 Alexey Shabalin <shaba@altlinux.org> 2023.10.14-alt1
+- Update to RELEASE.2023-10-14T01-57-03Z
+
 * Mon Jul 31 2023 Alexey Shabalin <shaba@altlinux.org> 2023.07.21-alt1
 - Update to RELEASE.2023-07-21T20-44-27Z
 

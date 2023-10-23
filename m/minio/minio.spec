@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit d004c4538643eb05ea69b919557d5cf7cc332fae
+%global commit 4d9f05a195a4fac3bd5f7db85a6f540f368ad54b
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2023-09-30T07-02-29Z
-%define version 2023.09.30
+%global tag RELEASE.2023-10-16T04-13-43Z
+%define version 2023.10.16
 
 %global _unpackaged_files_terminate_build 1
 
@@ -96,6 +96,9 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Mon Oct 23 2023 Alexey Shabalin <shaba@altlinux.org> 2023.10.16-alt1
+- Update to RELEASE.2023-10-16T04-13-43Z
+
 * Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 2023.09.30-alt1
 - Update to RELEASE.2023-09-30T07-02-29Z
 
