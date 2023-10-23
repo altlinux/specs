@@ -1,7 +1,7 @@
 %define rname karchive
 
 Name: kf5-%rname
-Version: 5.110.0
+Version: 5.111.0
 Release: alt1
 %K5init altplace
 
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 #BuildRequires: bzlib-devel extra-cmake-modules gcc-c++ liblzma-devel python-module-google qt5-base-devel rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: qt5-base-devel qt5-tools-devel
-BuildRequires: bzlib-devel extra-cmake-modules gcc-c++ liblzma-devel zlib-devel
+BuildRequires: bzlib-devel extra-cmake-modules gcc-c++ liblzma-devel zlib-devel libzstd-devel
 
 %description
 KArchive provides classes for easy reading, creation and manipulation of
@@ -74,6 +74,9 @@ KF5 library
 %_K5lib/libKF5Archive.so.*
 
 %changelog
+* Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
+- new version
+
 * Mon Sep 11 2023 Sergey V Turchin <zerg@altlinux.org> 5.110.0-alt1
 - new version
 

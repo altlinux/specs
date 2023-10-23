@@ -1,7 +1,7 @@
 %define rname khtml
 
 Name: kf5-%rname
-Version: 5.110.0
+Version: 5.111.0
 Release: alt1
 %K5init altplace
 
@@ -88,6 +88,9 @@ sed -i "s/Q_CC_INTEL/__EDG__/" src/svg/SVGTransformable.h
 #%_K5xmlgui/khtml/
 
 %changelog
+* Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
+- new version
+
 * Mon Sep 11 2023 Sergey V Turchin <zerg@altlinux.org> 5.110.0-alt1
 - new version
 

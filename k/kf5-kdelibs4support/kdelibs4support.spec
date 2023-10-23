@@ -4,8 +4,8 @@
 %add_findreq_skiplist %_libdir/cmake/*.py
 
 Name: kf5-%rname
-Version: 5.110.0
-Release: alt2
+Version: 5.111.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -131,6 +131,9 @@ rm -rf %buildroot/%_libdir/cmake/KF5KDELibs4Support/FindSIP.*
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
+- new version
+
 * Wed Oct 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.110.0-alt2
 - skip python2 requires
 
