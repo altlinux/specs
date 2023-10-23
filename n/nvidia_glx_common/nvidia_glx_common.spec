@@ -23,7 +23,7 @@
 %define nv_version 535
 %define nv_release 113
 %define nv_minor 01
-%define pkg_rel alt268
+%define pkg_rel alt269
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -87,6 +87,7 @@ Source4: nvidia-prime-run
 Source10: nvidia-sleep.tar
 Source11: udev.rules
 Source12: device-create.tar
+Source13: kernel_module.conf
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libsysfs-devel
@@ -262,6 +263,8 @@ mkdir -p %buildroot/%_sysconfdir/X11/xorg.conf.d/
 echo >%buildroot/%_sysconfdir/X11/xorg.conf.d/09-nvidia.conf
 mkdir -p %buildroot/%_sysconfdir/ld.so.conf.d/
 echo >%buildroot/%_sysconfdir/ld.so.conf.d/nvidia.conf
+mkdir -p %buildroot/etc/modprobe.d/
+install -m 0644 %SOURCE13 %buildroot/etc/modprobe.d/nvidia_common.conf
 # setup make-initrd
 mkdir -p %buildroot/%_datadir/make-initrd/features/nvidia/
 echo "BLACKLIST_MODULES += nvidia nvidia-drm nvidia-modeset" >%buildroot/%_datadir/make-initrd/features/nvidia/config.mk
@@ -344,6 +347,7 @@ fi
 %_bindir/nvidia-prime-run
 /usr/lib/nvidia/alternate-install-present
 #
+%config(noreplace) /etc/modprobe.d/nvidia_common.conf
 /sbin/ub-device-create
 %_bindir/nvidia-sleep.sh
 /lib/tmpfiles.d/nvidia-sleep.conf
@@ -353,6 +357,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Mon Oct 23 2023 Sergey V Turchin <zerg@altlinux.org> 535.113.01-alt269
+- set modeset=1 by default for all nvidia-drm kernel modules
+
 * Tue Oct 10 2023 Sergey V Turchin <zerg@altlinux.org> 535.113.01-alt268
 - new version
 
