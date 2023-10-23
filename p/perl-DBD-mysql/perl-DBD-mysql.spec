@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-mysql
 Name: perl-%dist
-Version: 4.050
-Release: alt1.1
+Version: 5.001
+Release: alt1
 
 Summary: MySQL driver for DBI interface in Perl
 License: GPL or Artistic
@@ -25,10 +25,10 @@ bzip2 -k Changes
 %build
 %ifdef _mysql_testdb
 export SLOW_TESTS=1
-%perl_vendor_build --ssl --nocatchstderr --testdb=%_mysql_testdb
+%perl_vendor_build --nocatchstderr --testdb=%_mysql_testdb
 %else
 %def_without test
-%perl_vendor_build --ssl --nocatchstderr
+%perl_vendor_build --nocatchstderr
 %endif
 
 %install
@@ -44,6 +44,9 @@ rm %buildroot%perl_vendor_archlib/Bundle/DBD/mysql.pm
 %perl_vendor_autolib/DBD
 
 %changelog
+* Mon Oct 23 2023 Igor Vlasenko <viy@altlinux.org> 5.001-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 4.050-alt1.1
 - rebuild with new perl 5.28.1
 
