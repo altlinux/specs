@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 376
+%define centos_release 378
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -656,6 +656,40 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Oct 23 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.378-alt1.el9
+- Updated to kernel-5.14.0-378.el9 (fixes: CVE-2023-2166, CVE-2023-42752):
+  + AMD: add support for larger microcode patches
+  + Backport missing commits for BCM2835 and QCOM SoC thermal sensors
+  + CNB94: net: introduce and use skb_frag_fill_page_desc()
+  + CNB94: net: lockless stop/wake combo macros
+  + CNB94: net: move gso declarations and functions to their own files
+  + CNB94: vxlan: Expose helper vxlan_build_gbp_hdr
+  + Fix KASAN error in intel_powerclamp
+  + Merge commit '6fb75f48a4fbd24dce1c140ca618db742feadfc5'
+  + Scheduler updates for 9.4
+  + Update KVM s390x kernel code and add the crypto PV passthrough feature
+  + [intel_th] Add new device IDs for NPK on MTL-P
+  + arm64: perf: updates for arm cspmu driver
+  + block: create multi-page bvecs in bio_integrity_add_page
+  + can: af_can: fix NULL pointer dereference in can_rcv_filter
+  + cgroup: Add *.peak cgroup control files
+  + cgroup: always put cset in cgroup_css_set_put_fork
+  + fs/buffer.c: disable per-CPU buffer_head cache for isolated CPUs
+  + ice: Don't tx before switchdev is fully configured
+  + ice: Enable DPLL support
+  + ice: always add legacy 32byte RXDID in supported_rxdids
+  + igmp: limit igmpv3_newpack() packet size to IP_MAX_MTU
+  + keys: Fix linking a duplicate key to a keyring's assoc_array
+  + md: kernel pickup upstream
+  + mm,kfence: decouple kfence from page granularity mapping judgement
+  + net: stmmac: Pull in bridge mode and PTP fixes
+  + perf/x86/amd: Do not WARN() on every IRQ
+  + phy: qcom-qmp-usb: fix initialization of PCS_USB
+  + qedr: driver update to v6.5
+  + rcu: Backport upstream RCU commits up to v6.4
+  + redhat: update self-test data
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Oct 16 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.376-alt1.el9
 - Updated to kernel-5.14.0-376.el9 (fixes: CVE-2023-25775):
   + Bring MD code up to date with upstream RHEL9.4
