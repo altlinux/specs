@@ -1,5 +1,5 @@
 Name: conntrack-tools
-Version: 1.4.7
+Version: 1.4.8
 Release: alt1
 Summary: Tool to manipulate netfilter connection tracking table
 Group: System/Kernel and hardware
@@ -68,6 +68,9 @@ install -pm0644 %SOURCE15 %buildroot%_logrotatedir/conntrackd
 %_man5dir/*
 
 %changelog
+* Mon Oct 23 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.8-alt1
+- 1.4.8
+
 * Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.7-alt1
 - 1.4.7
 
