@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4.0
-Release: alt3
+Release: alt4
 Summary: pyScss is a compiler for the Sass language
 License: MIT
 Group: Development/Python
@@ -17,6 +17,7 @@ Vcs: https://github.com/Kronuz/pyScss
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch1: %name-%version-alt.patch
+Patch2: drop-distutils.patch
 %pyproject_runtimedeps_metadata
 Requires: python3-module-pillow
 BuildRequires(pre): rpm-build-pyproject
@@ -35,6 +36,7 @@ programming capabilities and some other syntactic sugar.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -77,6 +79,9 @@ popd
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Oct 23 2023 Anton Vyatkin <toni@altlinux.org> 1.4.0-alt4
+- NMU: Dropped dependency on distutils.
+
 * Tue Jul 18 2023 Stanislav Levin <slev@altlinux.org> 1.4.0-alt3
 - Modernized packaging.
 - Fixed FTBFS (pytest 7.4.0).
