@@ -18,7 +18,7 @@ BuildRequires: perl-podlators
 %bcond_without perl_Term_Table_enables_unicode
 
 Name:           perl-Term-Table
-Version:        0.017
+Version:        0.018
 Release:        alt1
 Summary:        Format a header and rows into a table
 License:        GPL+ or Artistic
@@ -91,6 +91,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 23 2023 Igor Vlasenko <viy@altlinux.org> 0.018-alt1
+- automated CPAN update
+
 * Fri Sep 15 2023 Igor Vlasenko <viy@altlinux.org> 0.017-alt1
 - automated CPAN update
 
