@@ -1,11 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Mail-Box
+# true for 3.010
+# ERROR: spam-assassin version 4.000000 is not supported (only versions 2.x)
+%def_disable spamassasin
+
 Name: perl-%dist
 Version: 3.010
-Release: alt1
+Release: alt2
 
 Summary: Manage a mailbox, a folder with messages
-License: Artistic
+License: Artistic-2.0
 Group: Development/Perl
 
 URL: %CPAN %dist
@@ -15,29 +19,60 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Sun Jan 23 2011 (-bi)
 BuildRequires: perl-Email-Simple perl-File-FcntlLock perl-File-Remove perl-Font-AFM perl-IO-stringy perl-MIME-Types perl-MIME-tools perl-Mail-IMAPClient perl-Mail-Transport-Dbx perl-Object-Realize-Later perl-Storable perl-Test-Pod perl-Text-Autoformat perl-User-Identity perl(Devel/GlobalDestruction.pm) perl(HTML/TreeBuilder.pm) perl(Mail/Box/Parser/Perl.pm) perl(Mail/Message/Head/Complete.pm)
+%if_enabled spamassasin
+BuildRequires: perl-Mail-SpamAssassin
+%endif
 
 %description
 The Mail::Box folder is a modern mail-folder manager.  It is written
 to be a replacement of MailTools and Mail::Folder, an alternative to
 the Email::* set of modules.
 
+%package -n perl-Mail-Box-SpamAssassin
+Summary: SpamAssassin support for Mail::Box
+Group: Development/Perl
+Requires: perl-Mail-Box = %EVR
+
+%description -n perl-Mail-Box-SpamAssassin
+SpamAssassin support for Mail::Box
+
 %prep
 %setup -q -n %{dist}-%{version}
+
+# https://rt.cpan.org/Public/Bug/Display.html?id=150141
+[ "%version" = 3.010 ] && rm t/505parser-bodymp.t
 
 %build
 %perl_vendor_build
 
 %install
 %perl_vendor_install
-# only < 3 SpamAssassin is supported
+
+%if_disabled spamassasin
 rm %buildroot%perl_vendor_privlib/Mail/Message/Wrapper/SpamAssassin.{pm,pod}
 rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
+%endif
 
 %files
 %doc ChangeLog README README.todo examples README.md
 %perl_vendor_privlib/Mail/
+%if_enabled spamassasin
+%exclude %perl_vendor_privlib/Mail/Message/Wrapper/SpamAssassin.p*
+%exclude %perl_vendor_privlib/Mail/Box/Search/SpamAssassin.p*
+%endif
+
+%if_enabled spamassasin
+%files -n perl-Mail-Box-SpamAssassin
+%perl_vendor_privlib/Mail/Message/Wrapper/SpamAssassin.p*
+%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.p*
+%endif
 
 %changelog
+* Mon Oct 23 2023 Igor Vlasenko <viy@altlinux.org> 3.010-alt2
+- fixed build
+- updated license
+- added disabled SpamAssassin subpackage
+
 * Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 3.010-alt1
 - new version 3.010 (with rpmrb script)
 
