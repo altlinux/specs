@@ -1,5 +1,5 @@
 Name: shadow
-Version: 4.14.0
+Version: 4.14.1
 Release: alt1
 Epoch: 1
 
@@ -483,6 +483,10 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Tue Oct 24 2023 Mikhail Efremov <sem@altlinux.org> 1:4.14.1-alt1
+- Updated patches.
+- Updated to 4.14.1.
+
 * Wed Aug 16 2023 Mikhail Efremov <sem@altlinux.org> 1:4.14.0-alt1
 - utils: Packaged group{add,del}-{pre,post}.d directories.
 - run_part: Don't fail if directory doesn't exist.
