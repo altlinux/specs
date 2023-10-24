@@ -2,8 +2,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.5.1
-Release: alt2
+Version: 0.5.2
+Release: alt1
 
 Summary: Python library to add automatic paging of CLI output
 
@@ -62,6 +62,9 @@ rm -fv autopage/tests/test_end_to_end.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Oct 24 2023 Anton Vyatkin <toni@altlinux.org> 0.5.2-alt1
+- New version 0.5.2.
+
 * Fri Sep 15 2023 Anton Vyatkin <toni@altlinux.org> 0.5.1-alt2
 - Fix FTBFS.
 
