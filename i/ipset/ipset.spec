@@ -5,7 +5,7 @@
 %define _prefix /
 %define soname 13
 Name: ipset
-Version: 7.17
+Version: 7.19
 Release: alt1
 
 Summary: Tools for managing sets of IP or ports with iptables
@@ -106,6 +106,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Tue Oct 24 2023 Anton Farygin <rider@altlinux.ru> 7.19-alt1
+- 7.17 -> 7.19
+
 * Wed Feb 01 2023 Anton Farygin <rider@altlinux.ru> 7.17-alt1
 - 7.15 -> 7.17
 
