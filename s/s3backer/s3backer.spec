@@ -1,5 +1,5 @@
 Name: s3backer
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: FUSE-based single file backing store via Amazon S3
@@ -39,6 +39,9 @@ rather than a filesystem.
 %_man1dir/s3backer.1*
 
 %changelog
+* Tue Oct 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.1-alt1
+- 2.1.1 released
+
 * Mon Sep 25 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.0-alt1
 - 2.1.0 released
 
