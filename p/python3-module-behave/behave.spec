@@ -5,9 +5,9 @@
 
 Name: python3-module-%oname
 Version: 1.2.6
-Release: alt6.1
+Release: alt7
 Summary: behave is behaviour-driven development, Python style
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/behave/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -15,9 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/behave/behave.git
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+Patch1: drop-distutils.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -60,12 +63,13 @@ This package contains common files for Python 2 & 3 modules.
 %prep
 %setup
 %patch -p1
+%patch1 -p2
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 pushd %buildroot%_bindir
 for i in $(ls); do
@@ -77,8 +81,7 @@ install -d %buildroot%_sysconfdir
 cp -fR etc/* %buildroot%_sysconfdir/
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 tests
+%pyproject_run_pytest -v tests/
 
 %files
 %doc *.rst *features
@@ -86,7 +89,7 @@ py.test-3 tests
 %python3_sitelibdir/behave/
 %python3_sitelibdir/setuptools_behave.py
 %python3_sitelibdir/__pycache__/setuptools_behave.cpython-*.py*
-%python3_sitelibdir/behave-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/behave-%version.dist-info/
 
 %files -n %oname-common
 %dir %_sysconfdir/json
@@ -96,6 +99,9 @@ py.test-3 tests
 %_sysconfdir/junit.xml/junit-4.xsd
 
 %changelog
+* Tue Oct 24 2023 Anton Vyatkin <toni@altlinux.org> 1.2.6-alt7
+- NMU: Dropped dependency on distuils.
+
 * Tue Aug 15 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1.2.6-alt6.1
 - NMU: ignored unmet dependency
 
