@@ -1,11 +1,12 @@
-%filter_from_requires /^python3(_common)/d 
+%filter_from_requires /^python3(_common)/d
 %filter_from_requires /^xfce4-session/d
 %filter_from_requires /^\/sbin\/poweroff/d
 %filter_from_requires /^\/sbin\/reboot/d
+%filter_from_requires /^\/usr\/share\/ltsp\/ltsp_config/d
 
 Name:           epoptes
 Version:        22.01
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Computer lab management tool
 Summary(ru_RU.UTF-8): Инструмент управления компьютерным классом
@@ -19,13 +20,15 @@ Source0:         %name-%version.tar
 Source1:       %name-server.service
 Source2:       %name-client.service
 
+Patch:         remove-distutils-for-python-3.12.patch
+
 BuildRequires: rpm-build-python3
 BuildRequires: python3-module-distutils-extra
 BuildRequires: intltool
 
 BuildArch:     noarch
 
-Requires: python3-module-pygobject3-pygtkcompat 
+Requires: python3-module-pygobject3-pygtkcompat
 Requires: twisted-core-tools
 Requires: cert-sh-functions
 Requires: python3-module-service_identity
@@ -56,7 +59,8 @@ This is a client part of Epoptes Computer lab management tool
 Клиентская часть инструмента управления компьютерным классом.
 
 %prep
-%setup -q -n %name-%version 
+%setup -n %name-%version
+%patch -p2
 
 sed -i -e 's,/etc/default/epoptes,/etc/epoptes.conf,g' debian/epoptes.postinst
 sed -i -e 's,/etc/default/epoptes,/etc/epoptes.conf,g' epoptes/common/config.py
@@ -84,7 +88,7 @@ sed -i -e 's,/etc/epoptes/server.crt,/var/lib/ssl/certs/epoptes.cert,g' epoptes-
 
 install -pD -m644 %SOURCE1 %buildroot%_unitdir/%name-server.service
 install -pD -m644 %SOURCE2 %buildroot%_unitdir/%name-client.service
-rm -f %buildroot/%_docdir/%name/README.md 
+rm -f %buildroot/%_docdir/%name/README.md
 install -pD -m644 %_builddir/%name-%version/debian/epoptes.default %buildroot%_sysconfdir/%name.conf
 install -pD -m644 %_builddir/%name-%version/debian/epoptes-client.default %buildroot%_sysconfdir/%name-client.conf
 
@@ -100,7 +104,7 @@ getent group epoptes >/dev/null || groupadd -f -r epoptes
 %_datadir/ltsp/
 %python3_sitelibdir_noarch/%name/
 %python3_sitelibdir_noarch/twisted/
-%python3_sitelibdir_noarch/%{name}-%{version}*.egg-info
+%python3_sitelibdir_noarch/%{name}-22.1.*.egg-info
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.svg
 %_man1dir/*.1*
@@ -114,5 +118,8 @@ getent group epoptes >/dev/null || groupadd -f -r epoptes
 %_man8dir/*.8*
 
 %changelog
+* Fri Oct 20 2023 Grigory Ustinov <grenka@altlinux.org> 22.01-alt1.1
+- NMU: dropped dependecy on distutils.
+
 * Tue Nov 22 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 22.01-alt1
-- Initial build 
+- Initial build
