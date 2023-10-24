@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 2.9.27
-Release: alt3
+Release: alt4
 
 Group:   System/Configuration/Other
 License: GPL-3.0
@@ -69,6 +69,11 @@ tar xf %SOURCE1
 cp -f %SOURCE2 lib/ansible/modules/packaging/os/apt_repo.py
 cp -f %SOURCE3 lib/ansible/modules/packaging/os/apt_rpm.py
 
+# Get rid of distutils, according https://peps.python.org/pep-0632
+grep -rl distutils.version | xargs sed -i 's/distutils.version/packaging.version/g;s/LooseVersion\|StrictVersion/Version/g'
+grep -rl distutils.spawn | xargs sed -i 's/distutils.spawn/shutil/g;s/find_executable/which/g'
+sed -i 's/distutils.cmd/setuptools/' lib/ansible/module_utils/network/cnos/cnos.py
+
 %build
 %python3_build
 
@@ -96,6 +101,9 @@ grep -Rl '^#!.*python$' %buildroot | xargs subst 's|^#!.*python$|#!%__python3|'
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Tue Oct 17 2023 Grigory Ustinov <grenka@altlinux.org> 2.9.27-alt4
+- NMU: dropped dependency on distutils.
+
 * Fri Mar 03 2023 Andrey Cherepanov <cas@altlinux.org> 2.9.27-alt3
 - ansible-galaxy requires python3(resolvelib).
 
