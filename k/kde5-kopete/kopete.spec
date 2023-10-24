@@ -31,7 +31,7 @@
 
 Name: kde5-kopete
 Version: 23.08.2
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Networking/Instant messaging
@@ -65,7 +65,8 @@ BuildRequires: libotr-devel
 BuildRequires: libmediastreamer-devel libmediastreamer-ilbc
 %endif
 BuildRequires: libsqlite3-devel
-BuildRequires: libsrtp-devel libortp-devel libv4l-devel libxslt-devel
+BuildRequires: libsrtp-devel libv4l-devel libxslt-devel
+#BuildRequires: libortp-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kcrash-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdoctools-devel kf5-kemoticons-devel kf5-ki18n-devel
 BuildRequires: kf5-kcmutils-devel kf5-khtml-devel kf5-knotifyconfig-devel kf5-kparts-devel
@@ -329,6 +330,9 @@ fi
 %_K5dbus_iface/*
 
 %changelog
+* Tue Oct 24 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- update build requires
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
