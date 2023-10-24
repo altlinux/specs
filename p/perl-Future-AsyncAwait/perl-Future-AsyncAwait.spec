@@ -1,21 +1,27 @@
 %define _unpackaged_files_terminate_build 1
-%set_perl_req_method relaxed
+#set_perl_req_method relaxed
 %define module_name Future-AsyncAwait
+%def_without bootstrap
+
 #BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm)
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Future.pm) perl(IO/Async/Loop.pm) perl(Module/Build.pm) perl(Object/Pad.pm) perl(Role/Tiny.pm) perl(Role/Tiny/With.pm) perl(Syntax/Keyword/Defer.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Match.pm) perl(Syntax/Keyword/MultiSub.pm) perl(Syntax/Keyword/Try.pm) perl(Test/Fatal.pm) perl(Test/Future/Deferred.pm) perl(Test/MemoryGrowth.pm) perl(Test/More.pm) perl(Test/Refcount.pm) perl(Test2/V0.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
+BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Future.pm) perl(IO/Async/Loop.pm) perl(Module/Build.pm) perl(Role/Tiny.pm) perl(Role/Tiny/With.pm) perl(Test/Fatal.pm) perl(Test/Future/Deferred.pm) perl(Test/MemoryGrowth.pm) perl(Test/More.pm) perl(Test/Refcount.pm) perl(Test2/V0.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
-# exclude for bootstrap:
-# perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm) perl(Object/Pad.pm) perl(Syntax/Keyword/Defer.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Try.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
+%if_with bootstrap
 # bootstrap loop with Syntax/Keyword* and Future-AsyncAwait
 %define _without_test 1
-#BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Try.pm) perl(Object/Pad.pm)
+%else
+BuildRequires: /proc
+#BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm)
+BuildRequires: perl(Object/Pad.pm)
+BuildRequires: perl(Syntax/Keyword/Defer.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Match.pm) perl(Syntax/Keyword/MultiSub.pm) perl(Syntax/Keyword/Try.pm)
+%endif
 
 Name: perl-%module_name
 Version: 0.66
-Release: alt1
+Release: alt2
 Summary: deferred subroutine syntax for futures
 Group: Development/Perl
 License: perl
@@ -24,54 +30,21 @@ Url: %CPAN %module_name
 Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 
 %description
-use Future::AsyncAwait;
+This module provides syntax for deferring and resuming subroutines
+while waiting for Futures to complete. This syntax aims to make code
+that performs asynchronous operations using futures look neater and
+more expressive than simply using then chaining and other techniques on
+the futures themselves. It is also a similar syntax used by a number of
+other languages; notably C# 5, EcmaScript 6, Python 3, Dart, Rust, C++20.
 
- async sub do_a_thing
- {
-    my $first = await do_first_thing();
+This module is still under active development. While it now seems
+relatively stable enough for most use-cases and has received a lot of
+"battle-testing" in a wide variety of scenarios, there may still be the
+occasional case of memory leak left in it, especially if still-pending
+futures are abandoned.
 
-    my $second = await do_second_thing();
+The new syntax takes the form of two new keywords, async and await.
 
-    return combine_things( $first, $second );
- }
-
- do_a_thing()->get;
-
-This module provides syntax for deferring and resuming subroutines while
-waiting for the Future manpages to complete.
-
-WARNING: The actual semantics in this module are not yet implemented. This
-is released purely to demonstrate the syntax parts of its operation, to
-reserve the name on CPAN, and to provide something that actually exists in
-order to look at it. Don't expect to be able to use this module in any real
-code yet.
-
-That said, the only part that isn't actually implemented currently is the part
-that suspends and resumes subroutines while waiting for a future to complete.
-The syntax parsing, as well as semantics for immediate futures, are already
-defined and working now. So it is already very slightly useful for writing
-simple functions that return immediate futures.
-
-Instead of writing
-
- sub foo
- {
-    ...
-    return Future->done( @result );
- }
-
-you can now simply write
-
- async sub
- {
-    ...
-    return @result;
- }
-
-with the added side-benefit that any exceptions thrown by the elided code will
-be turned into an immediate-failed `Future' rather than making the call
-itself propagate the exception, which is usually what you wanted when dealing
-with futures.
 %prep
 %setup -q -n %{module_name}-%{version}
 
@@ -88,6 +61,9 @@ with futures.
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Oct 23 2023 Igor Vlasenko <viy@altlinux.org> 0.66-alt2
+- proper bootstrap support
+
 * Wed Sep 13 2023 Igor Vlasenko <viy@altlinux.org> 0.66-alt1
 - automated CPAN update
 
