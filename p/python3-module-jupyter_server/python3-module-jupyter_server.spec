@@ -4,8 +4,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.7.3
-Release: alt1.1
+Version: 2.8.0
+Release: alt1
 
 Summary: The backend -core services, APIs, and REST endpoints-to Jupyter web applications
 License: BSD-3-Clause
@@ -63,8 +63,11 @@ sed -i pyproject.toml -e 's/--color=yes//'
 %pyproject_install
 
 %check
+# Cause pytest error.
+rm -rf examples/
+
 # test_connection and test_restart_kernel randomly fail
-%pyproject_run_pytest -v -W ignore::ImportWarning -m 'not network' -k "\
+%pyproject_run_pytest -v -W ignore::DeprecationWarning -m 'not network' -k "\
 not test_restart_kernel \
 and not test_connection"
 
@@ -75,6 +78,9 @@ and not test_connection"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 24 2023 Anton Vyatkin <toni@altlinux.org> 2.8.0-alt1
+- New version 2.8.0.
+
 * Wed Sep 20 2023 Ivan A. Melnikov <iv@altlinux.org> 2.7.3-alt1.1
 - NMU: explicit BR on python3-module-nbconvert
   (fixes build on loongarch64).
