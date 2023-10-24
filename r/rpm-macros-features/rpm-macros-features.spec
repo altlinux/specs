@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 20230821
+Version: 20231024
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -58,6 +58,9 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Tue Oct 24 2023 Ivan A. Melnikov <iv@altlinux.org> 20231024-alt1
+- no php8.0 on loongarch64
+
 * Mon Aug 21 2023 Ivan A. Melnikov <iv@altlinux.org> 20230821-alt1
 - loongarch64 support
 - enable OpenCV on riscv64
