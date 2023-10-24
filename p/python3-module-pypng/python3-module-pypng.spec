@@ -4,7 +4,7 @@
 %def_with numpy
 
 Name:    python3-module-%pypi_name
-Version: 0.20220715.0
+Version: 0.20231004.0
 Release: alt1
 
 Summary: Pure Python library for PNG image encoding/decoding
@@ -27,16 +27,12 @@ BuildRequires: python3-module-numpy
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch1: 80bb83b6ccdbc0df3324a43398a0089c9aa46a6c.patch
-Patch2: 6fb772c472ba014c8788ac434708a89a864f7167.patch
 
 %description
 %summary
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
 
 %build
 %pyproject_build
@@ -68,5 +64,8 @@ rm -f %buildroot%_bindir/priplan9topng
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 0.20231004.0-alt1
+- Automatically updated to 0.20231004.0.
+
 * Mon Feb 13 2023 Grigory Ustinov <grenka@altlinux.org> 0.20220715.0-alt1
 - Initial build for Sisyphus.
