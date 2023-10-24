@@ -2,7 +2,7 @@
 
 Name: python3-module-kivy
 Version: 2.1.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Open source UI framework written in Python
 
@@ -40,6 +40,8 @@ that make use of innovative user interfaces, such as multi-touch apps.
 %prep
 %setup
 
+sed -i 's/distutils.cmd/setuptools/' kivy/tools/packaging/factory.py
+
 %build
 %python3_build
 
@@ -54,6 +56,9 @@ rm -vrf %buildroot/usr/share/kivy-examples/
 
 
 %changelog
+* Tue Oct 24 2023 Anton Vyatkin <toni@altlinux.org> 2.1.0-alt1.2
+- NMU: Dropped dependency on distutils.
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.1.0-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
