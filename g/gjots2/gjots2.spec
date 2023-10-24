@@ -1,5 +1,5 @@
 Name: gjots2
-Version: 3.1.9
+Version: 3.2.1
 Release: alt1
 
 Summary: A note jotter. Organise your ideas, notes, facts in a hierarchy
@@ -17,9 +17,18 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: desktop-file-utils
+BuildRequires: python3-module-setuptools
+
+# missed on p10
+BuildRequires: python3-module-wheel
 
 # see %_libdir/girepository-1.0
 Requires: libgtk+3-gir libgtksourceview3-gir
+
+AutoProv: no
+
+# FIXME: fix broken autoreq
+%add_python3_req_skip common file find general gui prefs printDialog sortDialog version
 
 %description
 gjots2 ("gee-jots" or, if you prefer, "gyachts"!) is a way to marshall
@@ -41,10 +50,10 @@ subst 's|/usr/bin/bash|/bin/bash|' bin/*
 #sed -i "s|prefix + '/lib/gjots2|'%python_sitelibdir/%name|g" setup.py bin/%name
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # fix strict python
 #sed -i "s,/usr/bin/python,/usr/bin/env python," %name
@@ -69,13 +78,17 @@ desktop-file-install --dir %buildroot%_desktopdir \
 /usr/share/glib-2.0/schemas/org.gtk.gjots2.gschema.xml
 /usr/share/metainfo/gjots2.metainfo.xml
 %python3_sitelibdir/%name/
-%python3_sitelibdir/gjots2-*.egg-info
+%python3_sitelibdir/gjots2-%version.dist-info
 %_desktopdir/*
 %_pixmapsdir/*
 %_datadir/%name/
 %_man1dir/*
 
 %changelog
+* Sun Oct 22 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- new version 3.2.1 (with rpmrb script)
+- switch to pyproject_build, disable AutoProv
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.9-alt1
 - new version (3.1.9) with rpmgs script
 - switch to python3
