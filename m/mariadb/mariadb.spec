@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 10.11.5
-Release: alt1
+Release: alt1.1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -1056,6 +1056,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 24 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 10.11.5-alt1.1
+- e2k patch update
+
 * Mon Oct 16 2023 Alexei Takaseev <taf@altlinux.org> 10.11.5-alt1
 - 10.11.5 (ALT #46388)
 - Add patch mariadb-10.11.5-disable-download-fmt.patch
