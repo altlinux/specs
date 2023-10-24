@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Oct 24 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt4
+- update to latest public distr
+
 * Wed Sep 20 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt3
 - update to Simply Linux 10.2
 - fix prepare boot-disk (closes #46961, #46957)
