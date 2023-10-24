@@ -3,8 +3,8 @@
 %def_enable visualization
 
 Name: vlc
-Version: 3.0.18
-Release: alt3
+Version: 3.0.19
+Release: alt1
 
 Summary: VLC media player
 License: GPLv2
@@ -13,11 +13,10 @@ Url: http://www.videolan.org
 
 Source: vlc-%version.tar
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ yasm /proc
 BuildRequires: freetype2-devel glib2-devel flex
-BuildRequires: libdvdcss-devel libavcodec-devel libnotify-devel
-BuildRequires: libavutil-devel libpostproc-devel libavformat-devel
-BuildRequires: libswscale-devel libmpeg2-devel libebml-devel >= 1.3.5-alt1
+BuildRequires: libdvdcss-devel libnotify-devel libvdpau-devel
+BuildRequires: libmpeg2-devel libebml-devel >= 1.3.5-alt1
 BuildRequires: libmatroska-devel libcddb-devel liblive-devel aalib-devel
 BuildRequires: libtwolame-devel libssh2-devel liba52-devel libalsa-devel
 BuildRequires: libcdio-devel libdvbpsi-devel libdvdnav-devel >= 6.1.0
@@ -624,11 +623,12 @@ This package contains fortunes from VLC media player.
 sed -i "s/#include <stdalign.h>/#define alignas(n) __attribute__((aligned(n)))/" \
 	modules/video_filter/deinterlace/yadif.h
 %endif
+sed -ri '/^TARBALLS/ s,\S+$,%_builddir/%name-%version/.gear,' contrib/src/main.mak
 echo %version-%release > src/revision.txt
 
 %build
 export BUILDCC=gcc
-
+(cd contrib && ./bootstrap && make)
 ./bootstrap
 
 %configure \
@@ -702,6 +702,7 @@ export BUILDCC=gcc
 	--with-default-monospace-font=/usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf \
 	--with-default-font-family="Sans Serif" \
 	--with-default-monospace-font-family="Monospace" \
+	--with-contrib=$(gcc -dumpmachine) \
 	#
 
 %make_build
@@ -949,6 +950,13 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/misc/libxdg_screensaver_plugin.so
 %vlc_plugindir/misc/libaddonsfsstorage_plugin.so
 %vlc_plugindir/misc/libaddonsvorepository_plugin.so
+
+%ifarch armh
+%dir %vlc_plugindir/arm_neon
+%vlc_plugindir/arm_neon/libchroma_yuv_neon_plugin.so
+%vlc_plugindir/arm_neon/libvolume_neon_plugin.so
+%vlc_plugindir/arm_neon/libyuv_rgb_neon_plugin.so
+%endif
 
 %ifarch ppc ppc64
 %dir %vlc_plugindir/altivec
@@ -1208,6 +1216,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 
 %files plugin-h264
 %vlc_plugindir/codec/libx264_plugin.so
+%vlc_plugindir/codec/libx26410b_plugin.so
 %vlc_plugindir/packetizer/libpacketizer_h264_plugin.so
 
 %files plugin-h265
@@ -1236,7 +1245,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/libavcodec_plugin.so
 %vlc_plugindir/demux/libavformat_plugin.so
 %vlc_plugindir/video_chroma/libswscale_plugin.so
-%vlc_plugindir/video_filter/libpostproc_plugin.so
 %vlc_plugindir/packetizer/libpacketizer_avparser_plugin.so
 
 %files plugin-framebuffer
@@ -1374,6 +1382,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Fri Oct 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.19-alt1
+- 3.0.19 released
+
 * Fri Jul 07 2023 Anton Farygin <rider@altlinux.ru> 3.0.18-alt3
 - updated russian translation by Maria Shikunova
 
