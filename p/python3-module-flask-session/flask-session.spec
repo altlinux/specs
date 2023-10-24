@@ -2,7 +2,7 @@
 %define oname flask-session
 
 Name: python3-module-%oname
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Server side session extension for Flask
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-flit
 
 BuildArch: noarch
 
@@ -38,6 +39,9 @@ Session to your application.
 %exclude %python3_sitelibdir/flask_session/__pycache__
 
 %changelog
+* Tue Oct 24 2023 Slava Aseev <ptrnine@altlinux.org> 0.5.0-alt1
+- Update to new version
+
 * Wed Apr 19 2023 Slava Aseev <ptrnine@altlinux.org> 0.4.0-alt1
 - Initial build for ALT
 
