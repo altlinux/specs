@@ -1,6 +1,7 @@
 %define		git afa9c7dfe
+%define		svn 10169
 
-%define		rel alt1
+%define		rel alt2
 
 Name:		smplayer
 Summary:	A great MPlayer/MPV front-end (QT5)
@@ -10,7 +11,7 @@ License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
 Version:	23.6.0
-Release:	%rel.git_1_%git
+Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	%name-%version.tar
 Patch0:		smplayer-paths-fix-alt.patch
@@ -106,8 +107,14 @@ export OPTFLAGS="%optflags"
 %files -n %name-mplayer
 
 %changelog
+* Tue Oct 24 2023 Hihin Ruslan <ruslandh@altlinux.ru> 23.6.0-alt2.10169
+- 23.6.0 (rev10169)
+
 * Sun Oct 22 2023 Hihin Ruslan <ruslandh@altlinux.ru> 23.6.0-alt1.git_1_afa9c7dfe
 - v23.6.0.10168 (git commit afa9c7dfe)
+
+* Fri Feb 11 2022 Motsyo Gennadi <drool@altlinux.ru> 21.10.0-alt0.p10.10036
+- build for p10
 
 * Fri Feb 11 2022 Motsyo Gennadi <drool@altlinux.ru> 21.10.0-alt1.10036
 - 21.10.0 (rev10036)
