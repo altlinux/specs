@@ -24,7 +24,7 @@
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 4.10.4
+Version: 4.10.5
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -387,6 +387,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Mon Oct 23 2023 Vitaly Lipatov <lav@altlinux.ru> 4.10.5-alt1
+- new version 4.10.5 (with rpmrb script)
+
 * Sun Oct 22 2023 Vitaly Lipatov <lav@altlinux.ru> 4.10.4-alt1
 - new version 4.10.4 (with rpmrb script)
 
