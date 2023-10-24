@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 4.19.19
-Release: alt8
+Release: alt9
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -18,6 +18,7 @@ URL: http://www.riverbankcomputing.com/software/sip/
 Source: %oname-%version.tar
 
 Patch: sip-4.19.25-pyframe_getback.patch
+Patch1: reimplementation_of_newer_and_newer_group_functions.patch
 
 %py3_provides %oname
 
@@ -41,6 +42,8 @@ Header files for sip (Python 3).
 %prep
 %setup -n %oname-%version
 %patch -p1
+%patch1 -p2
+sed -i 's/distutils/setuptools/g' sipdistutils.py
 
 %build
 python3 configure.py --debug -d %python3_sitelibdir
@@ -78,6 +81,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 #doc doc/*
 
 %changelog
+* Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 4.19.19-alt9
+- Dropped dependency on distutils.
+
 * Sat May 20 2023 Grigory Ustinov <grenka@altlinux.org> 4.19.19-alt8
 - fixed build with python3.11
 
