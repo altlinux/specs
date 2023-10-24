@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 4.19.19
-Release: alt9
+Release: alt9.1
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -81,6 +81,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 #doc doc/*
 
 %changelog
+* Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 4.19.19-alt9.1
+- Slightly fixed distutils' reimplementation patch.
+
 * Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 4.19.19-alt9
 - Dropped dependency on distutils.
 
