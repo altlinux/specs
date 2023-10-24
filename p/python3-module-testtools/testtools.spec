@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.6.0
-Release: alt1
+Release: alt1.1
 Summary: Extensions to the Python standard library's unit testing framework
 License: MIT
 Group: Development/Python3
@@ -46,6 +46,9 @@ sources.
 %install
 %pyproject_install
 
+# remove import of distutils.dist
+rm -rv %buildroot%python3_sitelibdir/%mod_name/tests/test_distutilscmd.py
+
 %check
 %pyproject_run -- python -m testtools.run testtools.tests.test_suite
 
@@ -55,6 +58,9 @@ sources.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1.1
+- NMU: dropped dependency on distutils.
+
 * Thu Jun 15 2023 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
 - 2.5.0 -> 2.6.0.
 
