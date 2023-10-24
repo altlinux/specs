@@ -5,7 +5,7 @@
 Summary: Prolog interpreter and compiler
 Name: swi-prolog
 Version: 9.0.4
-Release: alt2
+Release: alt3
 License: LGPLv2+
 Group: Development/Other
 Requires: %name-nox
@@ -18,7 +18,7 @@ Source0: http://www.swi-prolog.org/download/stable/src/swipl-%version.tar.gz
 
 # Automatically added by buildreq on Sun Oct 04 2020
 # optimized out: ca-trust cmake-modules fontconfig fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 java java-headless javazi libICE-devel libSM-devel libX11-devel libXau-devel libXrender-devel libcrypt-devel libfreetype-devel libsasl2-3 libstdc++-devel libtinfo-devel libunixODBC-devel-compat libxcb-devel pkg-config python2-base sh4 xorg-proto-devel
-BuildRequires: cmake flex gcc-c++ libstdc++-devel git-core libXext-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libc++-devel libarchive-devel libdb6-devel libedit-devel libgmp-devel libjpeg-devel libncurses-devel libreadline-devel libssl-devel libunixODBC-devel libuuid-devel zlib-devel bzip2-devel libpng-devel libpcre-devel libbrotli-devel libexpat-devel rpm-build-python3 python3-devel rpm-build-python java-11-openjdk-devel
+BuildRequires: cmake flex gcc-c++ libstdc++-devel git-core libXext-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libarchive-devel libdb6-devel libedit-devel libgmp-devel libjpeg-devel libncurses-devel libreadline-devel libssl-devel libunixODBC-devel libuuid-devel zlib-devel bzip2-devel libpng-devel libpcre-devel libbrotli-devel libexpat-devel rpm-build-python3 python3-devel rpm-build-python java-11-openjdk-devel
 
 %if_with test
 BuildRequires: ctest
@@ -173,6 +173,10 @@ LC_ALL=ru_RU.UTF-8 LD_LIBRARY_PATH=`pwd`/src ctest -j`nproc`
 %exclude %_datadir/swipl-%version/doc/packages/odbc.html
 
 %changelog
+* Mon Oct 23 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 9.0.4-alt3
+- NMU: removed libc++-devel from build dependencies (it's impossible
+  to link with two C++ runtimes). Fixes FTBFS on LoongArch.
+
 * Mon Oct 23 2023 Denis Medvedev <nbr@altlinux.org> 9.0.4-alt2
 - java reenabled
 
