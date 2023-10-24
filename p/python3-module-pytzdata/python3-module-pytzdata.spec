@@ -2,13 +2,14 @@
 
 Name: python3-module-%pypi_name
 Version: 2020.1
-Release: alt1
+Release: alt1.1
 Group: Development/Python3
 License: MIT
 Summary: Timezone database for Python
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: https://github.com/sdispater/%pypi_name
 Source0: %pypi_name-%version.tar.gz
+Patch: remove-distutils-for-python-3.12.patch
 BuildArch: noarch
 
 BuildRequires: rpm-build-python3 python3-module-setuptools rpm-macros-python3 pyproject-build  python3-module-build
@@ -19,6 +20,7 @@ The Olson timezone database for Python.
 %prep
 
 %setup -n %pypi_name-%version
+%patch -p2
 # https://bugzilla.altlinux.org/show_bug.cgi?id=39907
 [ -e setup.py ] && rm -f ./setup.py
 echo 'import setuptools; setuptools.setup()' > setup.py
@@ -37,6 +39,9 @@ echo 'import setuptools; setuptools.setup()' > setup.py
 
 
 %changelog
+* Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 2020.1-alt1.1
+- NMU: dropped dependency on distutils.
+
 * Thu May 05 2022 Ilya Mashkin <oddity@altlinux.ru> 2020.1-alt1
 - Build for Sisyphus
 
