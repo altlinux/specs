@@ -1,9 +1,9 @@
 
 Name: opennebula-context
 Summary: OpenNebula Contextualization Package
-Version: 5.10.0
+Version: 6.6.1
 Release: alt1
-License: Apache
+License: Apache-2.0
 Group: System/Servers
 Url: http://opennebula.org
 # https://github.com/OpenNebula/addon-context-linux.git
@@ -48,20 +48,22 @@ install -p -D -m 755 src/etc/one-context.d/loc-05-grow-rootfs \
 			%buildroot%_sysconfdir/one-context.d/loc-05-grow-rootfs
 install -p -D -m 755 src/etc/one-context.d/loc-09-timezone \
 			%buildroot%_sysconfdir/one-context.d/loc-09-timezone
-install -p -D -m 755 src/etc/one-context.d/loc-10-network##arch.one \
+install -p -D -m 755 src/etc/one-context.d/loc-10-network \
 			%buildroot%_sysconfdir/one-context.d/loc-10-network
 install -p -D -m 755 src/etc/one-context.d/loc-10-network-pci##one \
 			%buildroot%_sysconfdir/one-context.d/loc-10-network-pci
+install -p -D -m 755 src/etc/one-context.d/loc-10-network.d/functions \
+			%buildroot%_sysconfdir/one-context.d/loc-10-network.d/functions
 #install -p -D -m 755 src/etc/one-context.d/loc-11-dns##one \
 #			%buildroot%_sysconfdir/one-context.d/loc-11-dns
-install -p -D -m 755 src/etc/one-context.d/loc-12-firewall##apk \
-            %buildroot%_sysconfdir/one-context.d/loc-12-firewall
+install -p -D -m 755 src/etc/one-context.d/loc-12-firewall##vr \
+			%buildroot%_sysconfdir/one-context.d/loc-12-firewall
 install -p -D -m 755 src/etc/one-context.d/loc-14-mount-swap##one \
 			%buildroot%_sysconfdir/one-context.d/loc-14-mount-swap
-install -p -D -m 755 src/etc/one-context.d/loc-15-ip_forward##apk \
-            %buildroot%_sysconfdir/one-context.d/loc-15-ip_forward
-install -p -D -m 755 src/etc/one-context.d/loc-15-keepalived##apk \
-            %buildroot%_sysconfdir/one-context.d/loc-15-keepalived
+install -p -D -m 755 src/etc/one-context.d/loc-15-ip_forward##vr \
+			%buildroot%_sysconfdir/one-context.d/loc-15-ip_forward
+install -p -D -m 755 src/etc/one-context.d/loc-15-keepalived##vr \
+			%buildroot%_sysconfdir/one-context.d/loc-15-keepalived
 install -p -D -m 755 src/etc/one-context.d/loc-16-gen-env \
 			%buildroot%_sysconfdir/one-context.d/loc-16-gen-env
 install -p -D -m 755 src/etc/one-context.d/loc-20-set-username-password \
@@ -114,11 +116,15 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 %files
 %_bindir/*
 %_sbindir/*
+%dir %_sysconfdir/one-context.d
 %config %_sysconfdir/one-context.d/*
 %_udevrulesdir/*
 %_unitdir/*
 
 %changelog
+* Wed Oct 18 2023 Andrew A. Vasilyev <andy@altlinux.org> 6.6.1-alt1
+- 6.6.1
+
 * Mon Feb 03 2020 Alexey Shabalin <shaba@altlinux.org> 5.10.0-alt1
 - 5.10.0
 
