@@ -13,7 +13,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -36,14 +36,10 @@ BuildRequires: libcap-ng-devel
 BuildRequires: libdebuginfod-devel
 BuildRequires: libdw-devel
 BuildRequires: libfuse-devel
-BuildRequires: libhugetlbfs-devel
 BuildRequires: liblzma-devel
 BuildRequires: libmnl-devel
-BuildRequires: libmount-devel
 BuildRequires: libnl-devel
 BuildRequires: libpfm-devel
-BuildRequires: libpopt-devel
-BuildRequires: libprocps-devel
 %ifnarch %arm
 BuildRequires: libnuma-devel
 %endif
@@ -771,6 +767,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 24 2023 Vitaly Chikunov <vt@altlinux.org> 6.5-alt2
+- spec: Remove unneeded BRs to fix the rebuild (ALT#48150).
+
 * Wed Sep 06 2023 Vitaly Chikunov <vt@altlinux.org> 6.5-alt1
 - Update to v6.5 (2023-08-27).
 - Update packaging: install nolibc and some more tools.
