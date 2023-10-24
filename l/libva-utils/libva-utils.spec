@@ -1,5 +1,5 @@
 Name: libva-utils
-Version: 2.19.0
+Version: 2.20.0
 Release: alt1
 Summary: Tools for VAAPI (including vainfo)
 License: MIT and BSD
@@ -14,7 +14,7 @@ BuildRequires: libXext-devel
 BuildRequires: libXfixes-devel
 BuildRequires: libdrm-devel
 BuildRequires: libpciaccess-devel
-BuildRequires: libva-devel >= 2.19.0
+BuildRequires: libva-devel >= 2.20.0
 BuildRequires: libEGL-devel
 BuildRequires: libGL-devel
 BuildRequires: libGLES-devel
@@ -73,6 +73,9 @@ autoreconf -fisv
 
 
 %changelog
+* Tue Oct 24 2023 Anton Farygin <rider@altlinux.ru> 2.20.0-alt1
+- 2.20.0
+
 * Thu Jul 06 2023 Anton Farygin <rider@altlinux.ru> 2.19.0-alt1
 - 2.19.0
 
