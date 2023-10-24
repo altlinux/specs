@@ -1,9 +1,10 @@
-%def_disable clang
-%def_disable qt5
+%def_without clang
+%def_without qt5
 
 Name: strawberry
-Version: 1.0.20
+Version: 1.0.21
 Release: alt1
+
 Summary: Audio player and music collection organizer
 
 # Main program: GPL-3.0-or-later
@@ -12,30 +13,33 @@ Summary: Audio player and music collection organizer
 # ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: APSL-2.0
 License: GPL-3.0-or-later and BSD-3-Clause and APSL-2.0 and MIT
 Group: Sound
-Url: https://www.strawberrymusicplayer.org/
-Packager: Leontiy Volodin <lvol@altlinux.org>
+Url: https://www.strawberrymusicplayer.org
 
 Source: https://github.com/strawberrymusicplayer/strawberry/archive/%version/%name-%version.tar.gz
-
-BuildRequires(pre): desktop-file-utils rpm-build-ninja /usr/bin/appstream-util
-BuildRequires: cmake protobuf-compiler
-# BEGIN SourceDeps(oneline):
-BuildRequires: boost-devel ccache gcc-c++ gettext glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libX11-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgdk-pixbuf-devel libgio-devel libgmock-devel libgpod-devel libgtest-devel libicu-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libvlc-devel libxcb-devel
-# END SourceDeps(oneline)
-%ifnarch s390 s390x
-BuildRequires: libgpod-devel
-%endif
-%if_enabled qt5
-BuildRequires: qt5-tools-devel qt5-x11extras-devel
-%else
-BuildRequires: qt6-tools-devel
-%endif
-
-Requires: gst-plugins-good1.0 vlc-mini
 
 Provides: bundled(SPMediaKeyTap)
 Provides: bundled(ksingleapplication)
 Provides: bundled(getopt)
+
+Requires: gst-plugins-good1.0 vlc-mini
+
+BuildRequires(pre): desktop-file-utils rpm-build-ninja /usr/bin/appstream-util
+# Automatically added by buildreq on Tue Oct 24 2023
+# optimized out: boost-devel-headers cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel icu-utils libX11-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmock-devel libgpg-error libgst-plugins1.0 libicu-devel libimobiledevice-devel libp11-kit libplist-devel libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libvulkan-devel libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 shared-mime-info xorg-proto-devel zlib-devel
+BuildRequires: boost-devel cmake gst-plugins1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgpod-devel libgtest-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libvlc-devel protobuf-compiler
+BuildRequires: qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql
+
+%if_with clang
+BuildRequires: clang-devel
+%else
+BuildRequires: gcc-c++
+%endif
+
+%if_with qt5
+BuildRequires: qt5-tools-devel qt5-x11extras-devel
+%else
+BuildRequires: qt6-tools-devel
+%endif
 
 %description
 Strawberry is a audio player and music collection organizer.
@@ -67,7 +71,7 @@ mv 3rdparty/kdsingleapplication/LICENSE 3rdparty/kdsingleapplication/LICENSE-kds
 mv 3rdparty/SPMediaKeyTap/LICENSE 3rdparty/SPMediaKeyTap/LICENSE-SPMediaKeyTap
 
 %build
-%if_enabled clang
+%if_with clang
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
@@ -77,10 +81,16 @@ export CXX="g++"
 export AR="ar"
 %endif
 
+%if_with qt5
+export PATH=%_qt5_bindir:$PATH
+%else
+export PATH=%_qt6_bindir:$PATH
+%endif
+
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-%if_enabled qt5
+%if_with qt5
   -DBUILD_WITH_QT5=ON \
 %else
   -DBUILD_WITH_QT6=ON \
@@ -110,6 +120,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Tue Oct 24 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.21-alt1
+- New version 1.0.21.
+- Cleanup spec and BRs.
+
 * Mon Sep 25 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.20-alt1
 - New version 1.0.20.
 - Built with libebur128 support.
