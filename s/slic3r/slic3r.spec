@@ -5,6 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 # END SourceDeps(oneline)
 %set_perl_req_method relaxed
 
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global use_system_admesh 0
@@ -14,7 +15,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 
 Name:           slic3r
 Version:        1.3.0
-Release:        alt3_26
+Release:        alt3_31
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -87,11 +88,22 @@ BuildRequires:  perl(Wx.pm)
 %if %{use_system_admesh}
 BuildRequires:  libadmesh-devel >= 0.98.1
 Requires:       libadmesh >= 0.98.1
+
+%if 0%{?fedora} >= 37 || 0%{?rhel} >= 10
+# https://fedoraproject.org/wiki/Changes/EncourageI686LeafRemoval
+ExcludeArch:    %{ix86}
+%endif
 %else
 Provides:       bundled(admesh) = 0.98
+
 # Bundled admesh FTBFS with:
 # error "admesh works correctly on little endian machines only!"
+%if 0%{?fedora} >= 37 || 0%{?rhel} >= 10
+# https://fedoraproject.org/wiki/Changes/EncourageI686LeafRemoval
+ExcludeArch:    ppc ppc64 s390 s390x %{ix86}
+%else
 ExcludeArch:    ppc ppc64 s390 s390x
+%endif
 %endif
 
 %if %{use_system_expat}
@@ -268,6 +280,9 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{_datadir}/%{name}
 
 %changelog
+* Tue Oct 24 2023 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt3_31
+- disabled i586 check not to block perl rebuild
+
 * Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt3_26
 - update to new release by fcimport
 
