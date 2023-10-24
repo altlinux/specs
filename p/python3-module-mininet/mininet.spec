@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.3.1
-Release: alt0.b1
+Release: alt0.b4
 
 Summary: Emulator for rapid prototyping of Software Defined Networks
 
@@ -43,6 +43,9 @@ for full line-rate execution.
 %doc *.md
 
 %changelog
+* Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt0.b4
+- Build new version.
+
 * Mon Feb 27 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt0.b1
 - Build new version.
 
