@@ -1,6 +1,6 @@
 Name:    clevis
 Version: 19
-Release: alt1
+Release: alt1.1
 Summary: Automated Encryption Framework
 
 License: GPL-3.0-or-later
@@ -9,7 +9,7 @@ URL:     https://github.com/latchset/clevis
 Source:  clevis-%{version}.tar.gz
 Patch: clevis-19-alt-fix-requires-detection.patch
 
-Requires: clevis-pin-tpm2
+Requires: clevis-pin-tpm2 dracut
 BuildRequires: libjose-devel meson cmake bash-completion libpwquality-devel libcryptsetup-devel cryptsetup libjq-devel jq libluksmeta-devel libsystemd-devel systemd asciidoc-a2x libaudit-devel libudisks2-devel libgio-devel keyutils curl tpm2-tools dracut tang socat
 
 %description
@@ -81,6 +81,9 @@ or even automated unlocking of LUKS volumes.
 %_man7dir/clevis-luks-unlockers.7*
 
 %changelog
+* Tue Oct 24 2023 Leontiy Volodin <lvol@altlinux.org> 19-alt1.1
+- add require
+
 * Tue Sep 12 2023 Leontiy Volodin <lvol@altlinux.org> 19-alt1
 - new version
 - update url tag
