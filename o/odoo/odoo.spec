@@ -1,9 +1,9 @@
-%define  snapshot  20210112
+%define  snapshot  20231013
 %define  addonsdir %python_sitelibdir/odoo/addons
 
 Name:    odoo
-Version: 14.0
-Release: alt3.%snapshot
+Version: 16.0
+Release: alt1.%snapshot
 
 Summary: Odoo is a suite of web based open source business apps
 License: LGPL-3.0
@@ -17,7 +17,6 @@ Source2: odoo.init
 Source3: README.ALT
 
 Patch1: %name-alt-fix-openerp-import.patch
-Patch2: %name-alt-fix-werkzeug-import.patch
 
 BuildArch: noarch
 
@@ -38,8 +37,7 @@ Obsoletes: openerp < %version-%release
 Provides:  openerp-httpd-fonts-access = %version-%release
 Obsoletes: openerp-httpd-fonts-access < %version-%release
 
-%filter_from_requires /python3(xmlrpclib)/d
-%filter_from_requires /python3(odoo.addons.hw_drivers.tools)/d
+%add_python3_req_skip xmlrpclib odoo.addons.hw_drivers.tools RPi.GPIO vcgencmd
 %py3_requires feedparser gevent mako mock ofxparse PIL psutil pydot ldap pyparsing serial usb qrcode vobject xlsxwriter xlwt num2words phonenumbers sassc
 Requires: python3-module-suds
 Requires: wkhtmltopdf
@@ -71,8 +69,9 @@ http://www.openerp.com/ or  http://apps.openerp.com/
 %prep
 %setup -q -n %name
 %patch1 -p1
-%patch2 -p1
 cp %SOURCE3 .
+rm -f addons/hw_drivers/iot_handlers/drivers/PrinterDriver_W.py \
+      addons/hw_drivers/iot_handlers/interfaces/PrinterInterface_W.py
 
 %build
 NO_INSTALL_REQS=1 %python3_build
@@ -142,6 +141,9 @@ getent passwd _odoo > /dev/null || \
 #%%attr(-,openerp,openerp) %ghost %_logdir/openerp/openerp-server.log
 
 %changelog
+* Tue Oct 24 2023 Andrey Cherepanov <cas@altlinux.org> 16.0-alt1.20231013
+- New version (ALT #45090).
+
 * Sat Mar 05 2022 Danil Shein <dshein@altlinux.org> 14.0-alt3.20210112
 - fix werkzeug deprecated import
 
