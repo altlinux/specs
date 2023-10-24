@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
+# unresolved=relaxed because of DSOs.
+%set_verify_elf_method strict,unresolved=relaxed
 
 %def_enable gfio
 %def_enable http
+%def_enable libblkio
 %def_enable libiscsi
 %def_enable libnbd
 %def_enable libnfs
@@ -19,36 +21,42 @@
 %else
 %def_enable gfapi
 %endif
+%ifarch x86_64 aarch64 ppc64le
+%def_enable libpmem
+%else
+%def_disable libpmem
+%endif
 
 Name: fio
 Version: 3.36
-Release: alt1
-Summary: IO testing tool
+Release: alt2
+Summary: Flexible I/O Tester
 License: GPL-2.0
 Group: System/Kernel and hardware
 Url: https://git.kernel.dk/cgit/fio/
+# Backup: https://github.com/axboe/fio
 Obsoletes: fio-tools < %EVR
 
 Conflicts: python3-module-fiona
 %add_python3_req_skip pandas
+# Instead of Recommends.
+Provides: fio-engine-libaio
 
 Source0: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libaio-devel
-BuildRequires: libblkio-devel
 BuildRequires: zlib-devel
 %{?_enable_gfapi:BuildRequires: libglusterfs-devel}
 %{?_enable_gfio:BuildRequires: libgtk+2-devel}
 %{?_enable_http:BuildRequires: libcurl-devel libssl-devel}
+%{?_enable_libblkio:BuildRequires: libblkio-devel}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel}
 %{?_enable_libnbd:BuildRequires: libnbd-devel}
 %{?_enable_libnfs:BuildRequires: libnfs-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel }
 %{?_enable_rbd:BuildRequires: ceph-devel}
 %{?_enable_rdmacm:BuildRequires: librdmacm-devel}
-%ifarch x86_64 aarch64 ppc64le
-BuildRequires: libpmem-devel
-%endif
+%{?_enable_libpmem:BuildRequires: libpmem-devel}
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: CUnit-devel
 }}
@@ -60,6 +68,65 @@ number of global parameters, each inherited by the thread unless
 otherwise parameters given to them overriding that setting is given.
 The typical use of fio is to write a job file matching the io load
 one wants to simulate.
+
+%package engine-http
+Summary: HTTP engine for fio
+Requires: %name = %EVR
+Group: %group
+
+%description engine-http
+%summary (based on libcurl).
+
+%package engine-libblkio
+Summary: libblkio engine for fio
+Requires: %name = %EVR
+Group: %group
+
+%description engine-libblkio
+%summary.
+
+%package engine-libiscsi
+Summary: iSCSI engine for fio
+Requires: %name = %EVR
+Group: %group
+
+%description engine-libiscsi
+%summary.
+
+%package engine-nbd
+Summary: Network Block Device engine for fio
+Requires: %name = %EVR
+Group: %group
+
+%description engine-nbd
+%summary.
+
+%package engine-pmdk
+Summary: PMDK engines for fio
+Requires: %name = %EVR
+Group: %group
+Provides: fio-engine-dev-dax
+Provides: fio-engine-libpmem
+
+%description engine-pmdk
+%summary: dev-dax and libpmem.
+
+%package engine-rados
+Summary: Rados engines for fio
+Requires: %name = %EVR
+Group: %group
+Provides: fio-engine-rbd
+
+%description engine-rados
+%summary: rados and rbd (Rados Block Device).
+
+%package engine-rdma
+Summary: RDMA engine for fio
+Requires: %name = %EVR
+Group: %group
+
+%description engine-rdma
+%summary.
 
 %package -n gfio
 Summary: GTK frontend for %name
@@ -76,14 +143,28 @@ one wants to simulate.
 
 This package contains GTK frontend for %name.
 
+%package checkinstall
+Summary: CI test for %name
+Group: Development/Other
+BuildArch: noarch
+Requires(post): fio-engine-nbd = %EVR
+# Attempt to solve package ambiguity due to pve-qemu-img.
+Requires(post): qemu-img /usr/bin/qemu-nbd
+Requires(post): /usr/bin/time
+
+%description checkinstall
+%summary.
+
 %prep
 %setup
 find  -name '*.py' | xargs sed -i '1s|#!/usr/bin/env python3|#!%__python3|'
+sed -i '\!FIO_EXT_ENG_DIR!s!".*"!"%_libdir/fio"!' os/os-linux.h
 
 %build
 ./configure \
 	--prefix=%_prefix \
 	--disable-native \
+	--dynamic-libengines \
 	--disable-optimizations \
 	%{subst_enable gfio} \
 	%{subst_enable libiscsi} \
@@ -92,26 +173,88 @@ find  -name '*.py' | xargs sed -i '1s|#!/usr/bin/env python3|#!%__python3|'
 %make_build V=1
 
 %install
-%makeinstall_std mandir=%_mandir
+%makeinstall_std mandir=%_mandir libdir=%_libdir/fio
 
 %check
 unittests/unittest
 %make test
 ./fio -i
 
+%post checkinstall
+set -ex
+fio -i
+fio -i | grep -w libaio
+fio -i'aio'
+%if_enabled libnbd
+cd $(mktemp -d)
+truncate -s 256M disk.img
+qemu-nbd -t -k $PWD/socket -f raw disk.img &
+sleep 1
+time fio --ioengine=nbd --rw=randrw --time_based --runtime=3 --uri=nbd+unix:///?socket=socket --name=job
+kill %%
+rm disk.img
+rmdir $PWD
+%endif
+
 %files
 %define _customdocdir %_docdir/%name
 %doc HOWTO* README* REPORTING-BUGS examples
 %doc COPYING CITATION.cff MORAL-LICENSE
 %_bindir/*
+%dir %_libdir/fio
+%_libdir/fio/fio-libaio.so
 %exclude %_bindir/gfio
 %_datadir/%name
 %_man1dir/*.1*
 
+%if_enabled http
+%files engine-http
+%_libdir/fio/fio-http.so
+%endif
+
+%files engine-libblkio
+%_libdir/fio/fio-libblkio.so
+
+%if_enabled libiscsi
+%files engine-libiscsi
+%_libdir/fio/fio-libiscsi.so
+%endif
+
+%if_enabled libnbd
+%files engine-nbd
+%_libdir/fio/fio-nbd.so
+%endif
+
+%if_enabled libpmem
+%files engine-pmdk
+%_libdir/fio/fio-dev-dax.so
+%_libdir/fio/fio-libpmem.so
+%endif
+
+%if_enabled rbd
+%files engine-rados
+%_libdir/fio/fio-rados.so
+%_libdir/fio/fio-rbd.so
+%endif
+
+%if_enabled rdmacm
+%files engine-rdma
+%_libdir/fio/fio-rdma.so
+%endif
+
+%if_enabled gfio
 %files -n gfio
 %_bindir/gfio
+%endif
+
+%files checkinstall
 
 %changelog
+* Tue Oct 24 2023 Vitaly Chikunov <vt@altlinux.org> 3.36-alt2
+- Split external I/O engine into separate packages.
+- spec: Add checkinstall package.
+- spec: Update Summary.
+
 * Mon Oct 23 2023 Vitaly Chikunov <vt@altlinux.org> 3.36-alt1
 - Update to fio-3.36 (2023-10-20).
 - Enable nbd and nfs engines.
