@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.12.0
+Version: 2.12.1
 Release: alt1
 Summary: AWS X-Ray SDK for the Python programming language
 Group: Development/Python3
@@ -57,6 +57,9 @@ to the AWS X-Ray service.
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 2.12.1-alt1
+- Automatically updated to 2.12.1.
+
 * Wed Sep 13 2023 Grigory Ustinov <grenka@altlinux.org> 2.12.0-alt1
 - Automatically updated to 2.12.0.
 
