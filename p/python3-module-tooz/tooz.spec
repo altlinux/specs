@@ -1,47 +1,63 @@
 %define oname tooz
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 2.3.0
-Release: alt2.1
+Version: 4.2.0
+Release: alt1
+
 Summary: Coordination library for distributed systems
-Group: Development/Python3
+
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Group: Development/Python3
+Url: https://pypi.org/project/tooz
+
+Source: %oname-%version.tar
+Source1: %oname.watch
+
+Patch: remove-distutils-for-python-3.12.patch
+
 BuildArch: noarch
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 1.6
-BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-stevedore >= 1.16.0
 BuildRequires: python3-module-voluptuous >= 0.8.9
 BuildRequires: python3-module-msgpack >= 0.4.0
 BuildRequires: python3-module-fasteners >= 0.7
-BuildRequires: python3-module-tenacity >= 3.2.1
+BuildRequires: python3-module-tenacity >= 5.0.0
 BuildRequires: python3-module-futurist >= 1.2.0
-BuildRequires: python3-module-oslo.utils >= 3.15.0
+BuildRequires: python3-module-oslo.utils >= 4.7.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
-%endif
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-openstackdocstheme >= 1.11.0
+
+%if_with check
+BuildRequires: python3-module-testtools >= 1.4.0
+BuildRequires: python3-module-coverage >= 3.6
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-pifpaf >= 0.10.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-ddt >= 1.2.1
+BuildRequires: python3-module-pre-commit >= 2.6.0
+BuildRequires: python3-module-etcd3
+BuildRequires: python3-module-etcd3gw
+BuildRequires: python3-module-zake
+BuildRequires: python3-module-sysv_ipc
 BuildRequires: python3-module-pymemcache
 BuildRequires: python3-module-pymysql
-BuildRequires: python3-module-sysv_ipc
-BuildRequires: python3-module-psycopg2
-BuildRequires: python3-module-redis-py
-BuildRequires: python3-module-kazoo
-BuildRequires: python3-module-zake
-BuildRequires: python3-module-stevedore >= 1.16.0
+%endif
 
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/drivers
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme >= 1.11.0
+%endif
 
 %description
 The Tooz project aims at centralizing the most common distributed
 primitives like group membership protocol, lock service and leader
-election by providing a coordination API helping developers to build distributed applications.
+election by providing a coordination API helping developers to build
+distributed applications.
 
 %package tests
 Summary: Tests for %oname
@@ -51,40 +67,67 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
 Summary: Documentation for Coordination library
 Group: Development/Documentation
 
 %description doc
 Documentation for Coordination library.
+%endif
 
 %prep
 %setup -n %oname-%version
+%patch -p2
 
 # Remove bundled egg-info
-rm -rf %oname.egg-info
+rm -rfv %oname.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
+%if_with docs
+export PYTHONPATH="$PWD"
+# generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
-%python3_install
+%pyproject_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
+%check
+export TOOZ_TEST_URL="ipc://"
+%__python3 -m stestr run
 
 %files
-%doc AUTHORS ChangeLog LICENSE PKG-INFO README.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%doc LICENSE AUTHORS ChangeLog *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files doc
-%doc html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
+%endif
 
 %changelog
+* Wed Oct 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Automatically updated to 4.2.0.
+- Spec refactoring.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2.1
 - Dropped build dependency on python3-module-reno.
 
