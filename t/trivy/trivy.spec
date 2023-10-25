@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy
-Version: 0.45.1
+Version: 0.46.0
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -87,6 +87,9 @@ useradd -M -r -d %_sharedstatedir/%name -g _%name -s /dev/null -c "Trivy service
 %_bindir/%name
 
 %changelog
+* Tue Oct 17 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.46.0-alt1
+- 0.45.1 -> 0.46.0
+
 * Sun Sep 17 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.45.1-alt1
 - 0.45.0 -> 0.45.1 
 
