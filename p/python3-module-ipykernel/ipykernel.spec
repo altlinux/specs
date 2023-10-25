@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 6.25.2
+Version: 6.26.0
 Release: alt1
 
 Summary: IPython Kernel for Jupyter
@@ -41,6 +41,7 @@ BuildRequires: /proc
 BuildRequires: /dev/pts
 BuildRequires: python3-module-ipyparallel
 BuildRequires: xvfb-run
+BuildRequires: python3-module-trio
 %endif
 
 %add_python3_req_skip gtk
@@ -68,24 +69,30 @@ sed -i 's/--color=yes//' pyproject.toml
 %install
 %pyproject_install
 
+# ipykernel.tests.utils need by python3-module-numba
+cp -r tests/ %buildroot%python3_sitelibdir/%oname/
+
 %check
+# Cause pytest error.
+rm -rf examples/
 %pyproject_run -- xvfb-run pytest -v -W ignore::DeprecationWarning -k 'not test_tk_loop'
 
 %files
-%doc *.md examples
+%doc README.*
 %_datadir/jupyter
 %python3_sitelibdir/ipykernel_launcher.py
 %python3_sitelibdir/__pycache__/ipykernel_launcher.*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/*/tests
 
 %files tests
 %python3_sitelibdir/%oname/tests
-%python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Wed Oct 25 2023 Anton Vyatkin <toni@altlinux.org> 6.26.0-alt1
+- New version 6.26.0.
+
 * Wed Sep 06 2023 Anton Vyatkin <toni@altlinux.org> 6.25.2-alt1
 - New version 6.25.2.
 
