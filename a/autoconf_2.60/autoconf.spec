@@ -4,7 +4,7 @@
 
 Name: %realname%dialect
 Version: 2.69
-Release: alt11
+Release: alt12
 Epoch: 2
 
 Summary: A GNU tool for automatically configuring source code
@@ -107,6 +107,9 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Wed Oct 25 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.69-alt12
+- Fixed build with texinfo >= 6.3.
+
 * Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.69-alt11
 - Fixed the definition of the RELEASE_YEAR variable.
 
