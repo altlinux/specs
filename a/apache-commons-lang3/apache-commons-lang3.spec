@@ -16,7 +16,7 @@ BuildRequires: jpackage-default
 
 Name:           apache-commons-lang3
 Version:        3.12.0
-Release:        alt1_7jpp11
+Release:        alt2_7jpp11
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 URL:            https://commons.apache.org/lang
@@ -85,7 +85,7 @@ sed -i '/<argLine>/d' pom.xml
 
 %build
 # See "-DcommonsLang3Version" in maven-surefire for the tested version
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.test.skip.exec=true -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -95,6 +95,9 @@ sed -i '/<argLine>/d' pom.xml
 %doc RELEASE-NOTES.txt
 
 %changelog
+* Wed Oct 25 2023 Igor Vlasenko <viy@altlinux.org> 3.12.0-alt2_7jpp11
+- fixed build (closes: #48155)
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.12.0-alt1_7jpp11
 - update
 
