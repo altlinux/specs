@@ -30,7 +30,7 @@
 Name: erlang
 Epoch: 1
 Version: 25.3
-Release: alt1
+Release: alt1.1
 Summary: A programming language developed by Ericsson
 License: Apache-2.0
 Group: Development/Erlang
@@ -61,7 +61,7 @@ BuildRequires: libGLU-devel
 BuildRequires: libsystemd-devel
 
 %{?_enable_sctp:BuildRequires: liblksctp-devel}
-%{?_enable_docs:BuildRequires: xml-utils xsltproc %_bindir/fop}
+%{?_enable_docs:BuildRequires: xml-utils xsltproc %_bindir/fop fontconfig fonts-ttf-liberation}
 %{?_with_java:BuildRequires: java-devel-default}
 %{?_with_ssl:BuildRequires: libssl-devel openssl libkrb5-devel}
 %{?_with_gmp:BuildRequires: libgmp-devel}
@@ -1220,6 +1220,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Wed Oct 25 2023 Ivan A. Melnikov <iv@altlinux.org> 1:25.3-alt1.1
+- NMU: add fonts to BR to fix building of the documentation
+
 * Mon Mar 20 2023 Egor Ignatov <egori@altlinux.org> 1:25.3-alt1
 - new version 25.3
 
