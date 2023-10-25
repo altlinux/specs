@@ -7,7 +7,7 @@
 %define soname 2
 
 Name: openimagedenoise
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 Summary: Intel Open Image Denoise library
 Group: Development/Other
@@ -64,7 +64,7 @@ This package contains development files for Intel Open Image Denoise.
 
 %build
 export ROCM_PATH=/usr
-export export ALTWRAP_LLVM_VERSION=rocm
+export ALTWRAP_LLVM_VERSION=rocm
 %cmake \
 	-DOIDN_STATIC_LIB:BOOL=OFF \
 	-DOIDN_DEVICE_HIP:BOOL=ON \
@@ -96,8 +96,11 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_hip.so.%{version}
 %_libdir/cmake/*
 
 %changelog
+* Wed Oct 25 2023 L.A. Kostis <lakostis@altlinux.ru> 2.1.0-alt1
+- Updated to upstream version 2.1.0.
+
 * Wed Jul 05 2023 L.A. Kostis <lakostis@altlinux.ru> 2.0.1-alt1
-- 2.0.1.
+- Updated to upstream version 2.0.1.
 - Rebuild with HIP rocm-5.6.0.
 
 * Tue Jun 20 2023 L.A. Kostis <lakostis@altlinux.ru> 2.0.0-alt1
