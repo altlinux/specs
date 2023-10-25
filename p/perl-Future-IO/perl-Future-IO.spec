@@ -12,7 +12,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.15
-Release: alt1
+Release: alt2
 Summary: Future-returning IO methods
 Group: Development/Perl
 License: perl
@@ -43,11 +43,13 @@ This module contains a collection of acceptance tests for implementations of Fut
 %setup -q -n %{module_name}-%{version}
 
 # ifarch ppc64le define _without_test 1 does not work for noarch :(
-if [ X`uname -m` = Xppc64le ]; then
+case `uname -m` in
+    ppc64*|loongarch*)
     # hangs
     #rm -f t/04syswrite.t ?
     rm -f t/0[4-9]*.t
-fi
+    ;;
+esac
 
 %build
 %perl_vendor_build
@@ -65,6 +67,9 @@ fi
 %endif
 
 %changelog
+* Wed Oct 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.15-alt2
+- NMU: disable 04syswrite test on LoongArch too. Fixes FTBFS on LoongArch.
+
 * Mon Oct 23 2023 Igor Vlasenko <viy@altlinux.org> 0.15-alt1
 - automated CPAN update
 
