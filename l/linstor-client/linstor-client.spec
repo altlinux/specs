@@ -3,7 +3,7 @@
 
 Name: linstor-client
 Summary: Linstor Client
-Version: 1.19.0
+Version: 1.20.1
 Release: alt1
 Group: Development/Python3
 License: GPLv3
@@ -46,6 +46,9 @@ install -D -m 0644 scripts/bash_completion/linstor %buildroot%_sysconfdir/bash_c
 %endif
 
 %changelog
+* Wed Oct 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.20.1-alt1
+- 1.20.1
+
 * Mon Aug 14 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.19.0-alt1
 - 1.19.0
 - migrate to pyproject
