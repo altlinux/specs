@@ -29,8 +29,8 @@
   --enable-toolbar
 
 Name: xterm
-Version: 379
-Release: alt2
+Version: 388
+Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
 Summary(ru_RU.UTF8): Стандартный эмулятор терминала для X Window System
@@ -52,8 +52,7 @@ Patch0008: 0008-xterm-alt-i18n.patch
 Patch0009: 0009-xterm-alt-colors.patch
 Patch0010: 0010-xterm-alt-back_old_behavior_for_modifyFunctionKeys.patch
 Patch0011: 0011-xterm-alt-appdef.patch
-Patch0012: 0012-xterm-alt-man_suffix.patch
-Patch0013: 0013-xterm-alt-translate-update-desktop.patch
+Patch0012: 0012-xterm-alt-translate-update-desktop.patch
 
 Provides: xvt, %_bindir/xvt
 Requires(pre): libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
@@ -108,7 +107,6 @@ install -pm755 %_sourcedir/uxterm .
 %patch0010 -p2
 %patch0011 -p2
 %patch0012 -p2
-%patch0013 -p2
 
 sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
 sed -i 's|_48x48||' *.desktop
@@ -172,6 +170,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Tue Oct 24 2023 Fr. Br. George <george@altlinux.org> 388-alt1
+- Autobuild version bump to 388
+
 * Thu Mar 16 2023 Fr. Br. George <george@altlinux.org> 379-alt2
 - Rename xterm-resize package to resize, since not only xterm can do resizing
 
