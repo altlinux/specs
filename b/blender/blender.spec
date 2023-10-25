@@ -42,7 +42,7 @@
 %def_with jemalloc
 
 Name: blender
-Version: 3.6.3
+Version: 3.6.5
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -340,9 +340,9 @@ fi
 	-DWITH_OPENSUBDIV:BOOL=ON \
 %if_with lld
 	-DWITH_LINKER_LLD:BOOL=ON \
-	-DCMAKE_EXE_LINKER_FLAGS:STRING="-Wl,--build-id=sha1" \
-	-DCMAKE_SHARED_LINKER_FLAGS:STRING="-Wl,--build-id=sha1" \
-	-DCMAKE_MODULE_LINKER_FLAGS:STRING="-Wl,--build-id=sha1" \
+	-DCMAKE_EXE_LINKER_FLAGS:STRING="-Wl,--build-id=sha1,--undefined-version" \
+	-DCMAKE_SHARED_LINKER_FLAGS:STRING="-Wl,--build-id=sha1,--undefined-version" \
+	-DCMAKE_MODULE_LINKER_FLAGS:STRING="-Wl,--build-id=sha1,--undefined-version" \
 %endif
 	-DOPENEXR_INCLUDE_DIRS=%_includedir/OpenEXR \
 	%nil
@@ -394,6 +394,10 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Wed Oct 25 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.5-alt1
+- Update to 3.6.5.
+- fix link with recent lld (due https://reviews.llvm.org/D135402).
+
 * Fri Sep 22 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.3-alt1
 - Update to 3.6.3.
 - alt-hiprt-enable: rebase to 3.6.3.
