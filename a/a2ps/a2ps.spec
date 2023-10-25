@@ -2,7 +2,7 @@
 
 Name: a2ps
 Version: 4.14
-Release: alt3
+Release: alt4
 
 # Brain damaged lib/program_name system...
 %set_verify_elf_method unresolved=relaxed
@@ -32,6 +32,7 @@ Patch14: %name-alt-koi8.edf.patch
 Patch15: %name-4.14-gentoo-CVE-2014-0466.patch
 Patch16: %name-4.14-debian-fix-bad-free.patch
 Patch17: %name-4.14-debian-fix-format-security.patch
+Patch18: %name-glibc-2.38-fix.patch
 
 PreReq: lib%name = %EVR
 
@@ -122,6 +123,7 @@ This package contains library for building statically linked software.
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
 
 %build
 %{?!_enable_static:export lt_cv_prog_cc_static_works=no}
@@ -164,6 +166,9 @@ install -m 755 %SOURCE1 %buildroot%_sbindir
 %endif
 
 %changelog
+* Wed Oct 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.14-alt4
+- NMU: fixed FTBFS with glibc 2.38
+
 * Fri Dec 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.14-alt3
 - Applied security patches from Debian and Gentoo (Fixes: CVE-2014-0466, CVE-2015-8107).
 
