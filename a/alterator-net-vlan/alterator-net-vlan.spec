@@ -1,5 +1,5 @@
 Name: alterator-net-vlan
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Source:%name-%version.tar
@@ -38,6 +38,9 @@ alterator module for VLAN network interfaces
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Oct 25 2023 Elena Mishina <lepata@altlinux.org> 0.1.3-alt1
+- Fix for translate (closes #47524)
+
 * Thu Jul 11 2019 Mikhail Efremov <sem@altlinux.org> 0.1.2-alt1
 - Fix Qt interface.
 
