@@ -3,7 +3,7 @@
 
 Name: stk
 Version: 4.6.1
-Release: alt1
+Release: alt2
 License: MIT
 Group: Sound
 Summary: C++ classes for audio digital signal processing
@@ -11,6 +11,7 @@ Url: http://www-ccrma.stanford.edu/software/stk/
 Source: stk-%version.tar
 Patch0: stk-4.6.1-header.patch
 Patch1: stk-4.6.1-cflags-lib.patch
+Patch2: stk-4.6.1-alt-add-pkgconfig-jack.patch
 
 Requires: lib%name = %EVR
 
@@ -99,10 +100,12 @@ you need to know if you want to develop an STK application.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 sed -i 's:../../rawwaves/:/usr/share/stk/rawwaves/:g' projects/demo/demo.cpp
 
 %build
+#export LIBS=(pkg-config --libs jack)
 %autoreconf
 %configure \
 	--with-alsa \
@@ -207,6 +210,9 @@ mv doc/doxygen/index.txt.tmp doc/doxygen/index.txt
 %endif
 
 %changelog
+* Wed Oct 25 2023 Igor Vlasenko <viy@altlinux.org> 4.6.1-alt2
+- fixed build (closes: #48158)
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 4.6.1-alt1
 - new version
 
