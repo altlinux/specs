@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
 Version: 1.10.10
-Release: alt1
+Release: alt3
 Epoch: 1
 ExcludeArch: %arm %ix86
 
@@ -32,7 +32,7 @@ BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
 BuildRequires: libspandsp3-devel libsofia-sip-devel >= 1.13.12
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
 BuildRequires: libuuid-devel postgresql-devel 
-BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
+BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libswresample-devel libswscale-devel
 BuildRequires: libmemcached-devel libopus-devel libbroadvoice-devel libcodec2-devel libImageMagick-devel
 BuildRequires: flite-devel libyuv-devel libfreetype-devel libvpx-devel libg7221-devel libvlc-devel libavcodec-devel libx264-devel
 BuildRequires: libks-devel >= 1.8.2
@@ -318,6 +318,7 @@ fi
 
 %_sbindir/freeswitch
 %_bindir/fs_cli
+%_sysconfdir/fs_cli.conf
 %_sbindir/fs_ivrd
 %_bindir/fs_encode
 %_bindir/fs_tts
@@ -403,6 +404,7 @@ fi
 %_libdir/%name/mod_soundtouch.so
 %_libdir/%name/mod_spandsp.so
 %_libdir/%name/mod_spy.so
+%_libdir/%name/mod_ssml.so
 %_libdir/%name/mod_syslog.so
 %_libdir/%name/mod_theora.so
 %_libdir/%name/mod_timerfd.so
@@ -542,6 +544,13 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Thu Sep 07 2023 Anton Farygin <rider@altlinux.ru> 1:1.10.10-alt3
+- fixed build with ffmpeg 6
+
+* Mon Aug 28 2023 Anton Farygin <rider@altlinux.ru> 1:1.10.10-alt2
+- added default fs_cli.conf
+- enabled mod_ssml.so (Fixes: #47335)
+
 * Sat Aug 19 2023 Anton Farygin <rider@altlinux.ru> 1:1.10.10-alt1
 - 1.10.9 -> 1.10.10
 - fixed built with new ImageMagick
