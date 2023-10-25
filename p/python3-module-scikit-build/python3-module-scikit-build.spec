@@ -6,7 +6,7 @@
 
 Name: python3-module-%modname
 Version: 0.17.6
-Release: alt1
+Release: alt1.1
 
 Summary: Improved build system generator for CPython C/C++/Fortran/Cython extensions
 Group: Development/Python3
@@ -15,6 +15,7 @@ Url: http://pypi.python.org/pypi/%modname
 
 Vcs: https://github.com/scikit-build/scikit-build.git
 Source: https://pypi.io/packages/source/s/%pypi_name/%pypi_name-%version.tar.gz
+Patch: scikit_build-0.17.6-up-no-distutils-cmake.patch
 
 BuildArch: noarch
 
@@ -25,6 +26,10 @@ Requires: python3(tomli)
 %else
 Requires: python3(tomllib)
 %endif
+
+# for python w/o distutils
+%filter_from_requires /python3(distutils.*)/d
+Requires: python3(setuptools._distutils)
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-wheel
@@ -42,6 +47,7 @@ setuptools Python module and CMake.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -60,6 +66,9 @@ py.test3
 
 
 %changelog
+* Fri Oct 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.17.6-alt1.1
+- prepared for python w/o distutils
+
 * Mon Jun 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.17.6-alt1
 - 0.17.6
 
