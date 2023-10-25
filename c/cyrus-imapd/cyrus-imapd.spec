@@ -15,10 +15,10 @@
 %def_without sphinx
 
 %def_with srs2
-%def_with snmp
+%def_without snmp
 
 Name: cyrus-imapd
-Version: 3.2.8
+Version: 3.2.11
 Release: alt1
 
 Summary: A high-performance email, contacts and calendar server
@@ -504,6 +504,10 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Wed Oct 25 2023 Sergey Y. Afonin <asy@altlinux.org> 3.2.11-alt1
+- 3.2.11
+- built without net-snmp (fixed FTBFS, Closes: #48148)
+
 * Sun Sep 05 2021 Sergey Y. Afonin <asy@altlinux.org> 3.2.8-alt1
 - 3.2.8 (fixes: CVE-2021-33582)
 
