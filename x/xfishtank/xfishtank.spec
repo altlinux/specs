@@ -1,6 +1,6 @@
 Name: xfishtank
-Version: 3.1.1
-Release: alt1.1
+Version: 3.2.1pre1
+Release: alt1
 
 Summary:  An aquarium for your screen, with fish swimming around on your desktop.
 License: GPLv3+
@@ -12,7 +12,11 @@ Packager: Alexei Mezin <alexvm@altlinux.org>
 
 Summary(ru_RU.UTF8):  Аквариум на вашем рабочем столе.
 
-BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel libdbus-devel gcc-c++ ImageMagick-tools desktop-file-utils
+Patch0: rus_descr.patch
+
+BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel libdbus-devel gcc-c++ 
+BuildRequires: ImageMagick-tools libXinerama-devel libxkbcommon-devel libXtst-devel
+
 
 %description
 Xfishtank is a modern clone of well-known vintage application called xfish. It shows fishes swimming over the desktop.
@@ -22,6 +26,8 @@ Xfishtank это современная версия винтажного при
 
 %prep
 %setup
+%patch0 -p1
+
 
 %build
 %autoreconf
@@ -47,6 +53,9 @@ desktop-file-install --dir %buildroot/%_desktopdir \
 %_desktopdir/*
  
 %changelog
+* Wed Oct 25 2023 Alexei Mezin <alexvm@altlinux.org> 3.2.1pre1-alt1
+- New version
+
 * Sun Jan 16 2022 Michael Shigorin <mike@altlinux.org> 3.1.1-alt1.1
 - Added explicit BR: desktop-file-utils (older libgio didn't pull it in)
 
