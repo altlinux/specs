@@ -5,6 +5,8 @@
 
 %define optflags_lto %nil
 
+%define llvm_ver 15.0
+
 %ifnarch x86_64 ppc64le
 %def_without lld
 %set_verify_elf_method strict
@@ -16,7 +18,7 @@
 
 Name: openshadinglanguage
 Version: 1.12.13.0
-Release: alt0.1
+Release: alt0.2
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
 License: BSD-3-Clause
@@ -33,7 +35,7 @@ Source2: %name.watch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): libopenimageio-devel
 BuildRequires: cmake gcc-c++
-BuildRequires: llvm-devel clang-devel
+BuildRequires: llvm%{llvm_ver}-devel clang%{llvm_ver}-devel
 BuildRequires: boost-complete
 BuildRequires: openexr-devel
 BuildRequires: flex bison
@@ -43,7 +45,7 @@ BuildRequires: qt5-base-devel
 BuildRequires: zlib-devel
 BuildRequires: partio-devel
 %if_with lld
-BuildRequires: lld
+BuildRequires: lld%{llvm_ver}
 %endif
 
 %define oiio_major_minor_ver %(rpm -q --queryformat='%%{VERSION}' libopenimageio-devel | cut -d . -f 1-2)
@@ -136,6 +138,7 @@ Open Shading Language (OSL) python3 module.
 %setup
 
 %build
+export ALTWRAP_LLVM_VERSION=%llvm_ver
 %cmake \
 	-DCMAKE_CXX_STANDARD=17 \
 	-DOSL_BUILD_MATERIALX:BOOL=ON \
@@ -189,6 +192,9 @@ mv %buildroot%_libdir/osl.imageio.so %buildroot%_libdir/OpenImageIO-%{oiio_major
 %python3_sitelibdir/*.so
 
 %changelog
+* Wed Oct 25 2023 L.A. Kostis <lakostis@altlinux.ru> 1.12.13.0-alt0.2
+- fix FTBFS: build w/ llvm15.0.
+
 * Thu Jul 13 2023 L.A. Kostis <lakostis@altlinux.ru> 1.12.13.0-alt0.1
 - Updated to upstream version 1.12.13.0.
 
