@@ -1,6 +1,6 @@
 Name: alterator-l10n
-Version: 2.9.136
-Release: alt1
+Version: 2.9.137
+Release: alt2
 
 Summary: translations for all alterator modules
 License: GPL
@@ -120,6 +120,25 @@ make check
 %lang(da) %_datadir/alterator/help/da_DK/*.html
 
 %changelog
+* Wed Oct 25 2023 Elena Mishina <lepata@altlinux.org> 2.9.137-alt2
+- alterator-sslkey: update russian translation
+- alterator-audit: add help, russian translation (closes #41163, #40596)
+- alterator-net-bridge: add help
+- alterator-net-bond: add help
+- alterator-net-vlan: add help, russian translation
+- alterator-roles: update help
+
+* Mon Oct 23 2023 Elena Mishina <lepata@altlinux.org> 2.9.137-alt1
+- alterator-net-iptables: update help, russian translation (closes #29037, #48089, #48090)
+- alterator-grub: update help (closes #48088)
+- alterator-datetime: update help (closes #48065, #43006)
+- alterator-users: update help (closes #41219)
+- alterator-gpupdate: add help (closes #41164)
+- alterator-updates: update help (closes #48119)
+- alterator-packages: update help (closes #48100)
+- alterator-update-kernel: update help (closes #48118)
+- alterator-net-openvpn: fix typo (closes #41766)
+
 * Wed Oct 04 2023 Oleg Solovyov <mcpain@altlinux.org> 2.9.136-alt1
 - alterator-vm: update strings 
 
