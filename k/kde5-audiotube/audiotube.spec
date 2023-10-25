@@ -4,9 +4,9 @@
 %define libaudiotubecore libaudiotubecore%sover
 
 Name: kde5-%rname
-Version: 23.04.2
+Version: 23.08.2
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Group: Sound
 Summary: YouTube Music client
@@ -24,6 +24,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: pybind11-devel python3-devel python3(ytmusicapi) python3(yt_dlp)
 BuildRequires: qt5-quickcontrols2-devel qt5-svg-devel
+BuildRequires: futuresql-qt5-devel qcoro5-devel
 BuildRequires: kf5-kirigami-addons-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-ki18n-devel kf5-kirigami-addons-devel
@@ -56,6 +57,9 @@ Convergent YouTube Music client.
 %_K5icon/*/*/apps/*%{rname}*
 
 %changelog
+* Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- new version
+
 * Thu Jun 29 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.2-alt1
 - new version
 
