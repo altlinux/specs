@@ -5,8 +5,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: System/Configuration/Printing
 Summary: Printer management for KDE
@@ -94,15 +94,19 @@ rm -f "$tmp_file"
 %_K5plug/plasma/kcms/systemsettings_qwidgets/*print*.so
 %_K5plug/kf5/kded/*print*.so
 %_K5xdgapp/*rint*.desktop
-%_K5data/plasma/plasmoids/org.kde.plasma.printmanager/
+%_kf5_data/plasma/plasmoids/org.kde.plasma.printmanager/
 %_K5qml/org/kde/plasma/printmanager/
 %_K5notif/printmanager.notifyrc
+%_datadir/metainfo/*print*.xml
 
 %files -n %libkcupslib
 %_K5lib/libkcupslib.so.%sover
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- fix package
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

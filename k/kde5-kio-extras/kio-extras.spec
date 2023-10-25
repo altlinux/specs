@@ -9,8 +9,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 additional kio-slaves
@@ -117,15 +117,13 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5xdgmime/*.xml
 
 %files
-%_K5exec/smbnotifier
+%_kf5_exec/smbnotifier
 %_K5plug/kf5/*/*.so
 %_K5plug/*.so
 %_K5data/kio_*/
-#%_K5data/konqsidebartng
 %_K5data/konqueror
 %_K5data/remoteview
 %_K5srv/*.desktop
-#%_K5srv/*.protocol
 %_K5srvtyp/*.desktop
 %_K5data/solid/actions/*.desktop
 %_K5cfg/*.kcfg
@@ -149,6 +147,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Tue Oct 24 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- fix package in normal place
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -60,11 +60,14 @@ Conflicts: kde5-pim-common < 16.12
 %_K5bin/merkuro-*
 %_K5qml/org/kde/merkuro/
 %_K5qml/org/kde/akonadi/
-%_K5data/plasma/plasmoids/org.kde.merkuro.contact/
+%_kf5_data/plasma/plasmoids/org.kde.merkuro.contact/
 %_K5xdgapp/org.kde.merkuro*.desktop
 %_K5icon/*/*/apps/*merkuro*.*
 
 %changelog
+* Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- fix package
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

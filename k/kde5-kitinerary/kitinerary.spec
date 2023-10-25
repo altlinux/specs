@@ -14,8 +14,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt2
-%K5init altplace
+Release: alt3
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Itinerary data model
@@ -97,11 +97,14 @@ Obsoletes: libkpimitinerary < %EVR
 #%_K5archdata/mkspecs/modules/qt_kitinerary.pri
 
 %files -n %libkpimitinerary
-%_K5exec/kitinerary*
+%_kf5_exec/kitinerary*
 %_K5lib/libKPim5Itinerary.so.%sover
 %_K5lib/libKPim5Itinerary.so.*
 
 %changelog
+* Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt3
+- fix package
+
 * Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
 - build with libphonenumber when available
 

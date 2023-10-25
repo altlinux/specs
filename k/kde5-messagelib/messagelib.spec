@@ -17,7 +17,7 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
+Release: alt2
 %K5init
 
 Group: System/Libraries
@@ -161,7 +161,7 @@ mkdir -p %buildroot/%_K5plug/pim5
 %doc LICENSES/*
 %dir %_K5plug/pim5/
 %_datadir/qlogging-categories5/*.*categories
-%_K5data/*/
+%_K5data/messagelist/
 
 %files devel
 %_includedir/KPim5/*
@@ -176,8 +176,6 @@ mkdir -p %buildroot/%_K5plug/pim5
 %files -n %libkf5webengineviewer
 %_K5lib/libKPim5WebEngineViewer.so.%sover
 %_K5lib/libKPim5WebEngineViewer.so.*
-%_K5cfg/*.kcfg
-%_K5notif/*.notifyrc
 %files -n %libkf5messageviewer
 %_K5lib/libKPim5MessageViewer.so.%sover
 %_K5lib/libKPim5MessageViewer.so.*
@@ -185,9 +183,15 @@ mkdir -p %buildroot/%_K5plug/pim5
 %dir %_K5plug/pim5/messageviewer/headerstyle/
 %_K5plug/pim5/messageviewer/headerstyle/*.so
 %_K5plug/pim5/messageviewer/grantlee/
+%_K5data/knsrcfiles/
+%_K5data/libmessageviewer/
+%_K5data/messageviewer/
+%_K5notif/*.notifyrc
 %files -n %libkf5messageparser
 %_K5lib/libKPim5TemplateParser.so.%sover
 %_K5lib/libKPim5TemplateParser.so.*
+%_K5data/org.kde.syntax-highlighting/
+%_K5cfg/*template*.kcfg
 %endif
 
 %files -n %libkf5messagecore
@@ -201,6 +205,9 @@ mkdir -p %buildroot/%_K5plug/pim5
 %_K5lib/libKPim5MimeTreeParser.so.*
 
 %changelog
+* Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- fix package
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

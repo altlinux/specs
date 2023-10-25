@@ -4,8 +4,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -191,13 +191,13 @@ mkdir -p %buildroot/%_K5plug/akonadi/contacts/plugins/
 
 mkdir -p %buildroot/%_datadir/akonadi5/{agents,contact,plugins,accountwizard}
 
-mkdir %buildroot/%_K5data/akonadi/
-mkdir %buildroot/%_K5data/akonadi5/
+mkdir -p %buildroot/%_kf5_data/akonadi/
+mkdir -p %buildroot/%_kf5_data/akonadi5/
 for f in %buildroot/%_datadir/akonadi5/*.xs* ; do
     fname=`basename $f`
     dname=`dirname $f`
-    ln -s `relative %_datadir/akonadi5/$fname %_K5data/akonadi/$fname` %buildroot/%_K5data/akonadi/$fname
-    ln -s `relative %_datadir/akonadi5/$fname %_K5data/akonadi5/$fname` %buildroot/%_K5data/akonadi5/$fname
+    ln -s `relative %_datadir/akonadi5/$fname %_kf5_data/akonadi/$fname` %buildroot/%_kf5_data/akonadi/$fname
+    ln -s `relative %_datadir/akonadi5/$fname %_kf5_data/akonadi5/$fname` %buildroot/%_kf5_data/akonadi5/$fname
 done
 
 # cleanup
@@ -223,7 +223,7 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %_K5bin/akonadi_knut_resource
 %_K5plug/pim5/akonadi/*.so
 %_datadir/akonadi5/agents/knutresource.desktop
-%_K5data/akonadi_knut_resource/
+%_kf5_data/akonadi_knut_resource/
 %endif
 
 #%files -n qt5-sql-sqlite3
@@ -245,8 +245,8 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %dir %_K5xdgconf/akonadi/
 %dir %_K5srv/akonadi/
 %dir %_K5srv/akonadi/contact/
-%dir %_K5data/akonadi/
-%dir %_K5data/akonadi5/
+%dir %_kf5_data/akonadi/
+%dir %_kf5_data/akonadi5/
 %dir %_datadir/akonadi5/
 %dir %_datadir/akonadi5/accountwizard/
 %dir %_datadir/akonadi5/agents/
@@ -267,8 +267,8 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %_K5dbus_iface/*.Akonadi.*.xml
 %_K5archdata/mkspecs/modules/qt_Akonadi*.pri
 %_datadir/akonadi5/*.xs*
-%_K5data/akonadi/*.xs*
-%_K5data/akonadi5/*.xs*
+%_kf5_data/akonadi/*.xs*
+%_kf5_data/akonadi5/*.xs*
 %_K5data/kdevappwizard/templates/*akonadi*
 
 %files -n libkf5akonadiprivate
@@ -291,6 +291,9 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %endif
 
 %changelog
+* Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- fix package
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

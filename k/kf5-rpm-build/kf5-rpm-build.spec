@@ -1,17 +1,32 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
+%define __if_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
+%define __if_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%define __if_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%define __if_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
+%define __if_ver_eq() %if "%(rpmvercmp '%1' '%2')" == "0"
+%define __if_ver_not_gt() %if "%(rpmvercmp '%1' '%2')" <= "0"
+%define __if_ver_not_gteq() %if "%(rpmvercmp '%1' '%2')" < "0"
+%define __if_ver_not_lt() %if "%(rpmvercmp '%2' '%1')" <= "0"
+%define __if_ver_not_lteq() %if "%(rpmvercmp '%2' '%1')" < "0"
+%define __if_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 Name: kf5-rpm-build
-Version: 5.14.0
+Version: 5.100.0
 Release: alt1
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
 Url: http://altlinux.org/KDE
-License: GPL
+License: GPL-2.0-or-later
 
 BuildArch: noarch
 
 Source1: macrosd
 Source2: rpm-build-kf5-find-qtlang
+
+BuildRequires: rpm-build-ubt
 
 %description
 Set of KF5 RPM macros.
@@ -29,6 +44,11 @@ Install this package if you want to create RPM packages that use KF5.
 
 %install
 install -D -m 0644 %SOURCE1 %buildroot/%_rpmmacrosdir/kf5
+%__if_ver_gteq %ubt_id M110
+sed -i 's|^%%__kf5_altplace_default[[:space:]].*|%%__kf5_altplace_default false|' %buildroot/%_rpmmacrosdir/kf5
+%else
+sed -i 's|^%%__kf5_altplace_default[[:space:]].*|%%__kf5_altplace_default true|' %buildroot/%_rpmmacrosdir/kf5
+%endif
 install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 
 %files -n rpm-build-kf5
@@ -36,6 +56,10 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Tue Oct 24 2023 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt1
+- move all to standart placement by default(only for new branches)
+- move desktop-files up from subdirectory by default
+
 * Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt1
 - fix removing metainfo
 
