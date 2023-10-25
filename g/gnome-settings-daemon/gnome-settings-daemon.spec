@@ -14,7 +14,7 @@
 
 Name: gnome-settings-daemon
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A program that manages general GNOME settings
 License: GPL-2.0
@@ -26,6 +26,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version%beta.tar
 %endif
+# https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/338/diffs?commit_id=d304ae4ed6b8e8e0a56e7e1a4eac4a1698e166c7
+Patch10: %name-45.0-up-show-sleep-warning-conditional-to-chassis-type.patch
 
 %define glib_ver 2.58.0
 %define gtk_ver 3.16
@@ -107,6 +109,7 @@ The %name-tests package provides programms for testing GSD plugins.
 
 %prep
 %setup -n %name-%version%beta
+%patch10 -p1
 
 %build
 %meson \
@@ -187,6 +190,11 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Wed Oct 25 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1.1
+- applied patch proposed for
+  https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/issues/656
+  (ALT #48062)
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
