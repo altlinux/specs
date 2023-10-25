@@ -7,7 +7,7 @@
 %endif
 
 Name: btrfs-progs
-Version: 6.5.2
+Version: 6.5.3
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -34,6 +34,7 @@ BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %if_with check
 BuildRequires: /proc /dev/kvm
 BuildRequires: /sbin/dmsetup
+BuildRequires: /usr/bin/setfattr
 BuildRequires: /usr/bin/getfacl
 BuildRequires: /sbin/udevadm
 BuildRequires: rpm-build-vm
@@ -142,6 +143,9 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 %_includedir/*
 
 %changelog
+* Wed Oct 25 2023 Anton Farygin <rider@altlinux.ru> 6.5.3-alt1
+- 6.5.3
+
 * Fri Oct 20 2023 Anton Farygin <rider@altlinux.ru> 6.5.2-alt1
 - 6.3.2 -> 6.5.2
 
