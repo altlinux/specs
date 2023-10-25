@@ -30,7 +30,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -89,6 +89,7 @@ BuildRequires: meson >= %meson_ver gcc-c++ gtk-doc >= %gtk_doc_ver indent
 BuildRequires: glibc-kernheaders libdbus-devel
 BuildRequires: libffi-devel >= %ffi_ver zlib-devel libelf-devel
 BuildRequires: pkgconfig(bash-completion)
+BuildRequires: python3(setuptools._distutils)
 %{?_enable_libmount:BuildRequires: libmount-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_fam:BuildRequires: libgamin-devel}
@@ -123,6 +124,8 @@ Summary: Development files and tools for GLib
 Group: Development/C
 Requires: %name = %EVR
 Requires: rpm-build-gir >= 0.5
+%add_python3_req_skip distutils.version
+Requires: python3(setuptools._distutils)
 Provides: lib%name-devel = %version
 Obsoletes: lib%name-devel < %version
 
@@ -435,6 +438,12 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Wed Oct 25 2023 Yuri N. Sedunov <aris@altlinux.org> 2.78.1-alt1
+- 2.78.1
+
+* Thu Oct 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.78.0-alt1.1
+- requires setuptools for compatibility with python-3.12
+
 * Fri Sep 08 2023 Yuri N. Sedunov <aris@altlinux.org> 2.78.0-alt1
 - 2.78.0
 
