@@ -1,21 +1,25 @@
 Name: autogen
-Version: 5.18.12
-Release: alt2
+Version: 5.18.16
+Release: alt1
 
 Summary: AutoGen - The Automated Program Generator
-License: %gpl3plus
+License: GPL-3.0-or-later AND GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-2.0-or-later AND BSD-2-Clause
 Group: Development/Other
 Url: http://www.gnu.org/software/autogen/
-Packager: Mikhail Efremov <sem@altlinux.org>
 
 Source: %name-%version.tar
 Patch1: autogen-5.18.4-masquerade-deps.patch
-
-BuildPreReq: rpm-build-licenses
+Patch2: suse_01-autogen-catch-race-error.patch
+Patch3: suse_03-gcc9-fix-wrestrict.patch
+Patch4: suse_04-guile-version.patch
+Patch5: suse_05-sprintf-overflow.patch
+Patch6: suse_06-autogen-avoid-GCC-code-analysis-bug.patch
+Patch7: suse_07-installable-programs.patch
 
 # Automatically added by buildreq on Sun Dec 10 2017
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 guile22 libgc-devel libgmp-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl pkg-config python-base
-BuildRequires: guile22-devel libxml2-devel makeinfo texi2html
+BuildRequires: guile-devel libxml2-devel makeinfo texi2html
+BuildRequires: /proc
 
 %define _unpackaged_files_terminate_build 1
 
@@ -39,7 +43,7 @@ options.
 %package -n libopts
 Summary: Command line option parser based on AutoGen
 Group: Development/Other
-License: %lgpl3plus, %bsd
+License: LGPLv3+
 
 %description -n libopts
 AutoOpts is a very powerful command line option parser consisting of
@@ -51,7 +55,7 @@ option types and many attributes for each option.
 %package -n libopts-devel
 Summary: AutoGen development files and libraries
 Group: Development/Other
-License: %lgpl3plus, %bsd
+License: LGPLv3+
 Requires: libopts = %version-%release
 Obsoletes: autogen-devel = %version-%release
 Provides: autogen-devel = %version-%release
@@ -68,6 +72,12 @@ This package is needed to write programs that use AutoOpts API.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 rm doc/autogen.info*
 
 %build
@@ -78,6 +88,9 @@ rm doc/autogen.info*
 
 %install
 %makeinstall_std
+
+%check
+make -k check
 
 %files
 %doc AUTHORS TODO COPYING NEWS THANKS README VERSION
@@ -108,6 +121,12 @@ rm doc/autogen.info*
 %_man3dir/*.3.*
 
 %changelog
+* Wed Oct 25 2023 Mikhail Efremov <sem@altlinux.org> 5.18.16-alt1
+- Enabled tests.
+- Added SUSE patches.
+- BR: guile22-devel -> guile-devel.
+- Updated to 5.18.16 (closes: #48152).
+
 * Sun Dec 10 2017 Dmitry V. Levin <ldv@altlinux.org> 5.18.12-alt2
 - Regenerated texinfo documentation.
 
