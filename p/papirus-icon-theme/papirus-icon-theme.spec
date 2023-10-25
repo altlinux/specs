@@ -1,6 +1,6 @@
 Name:     papirus-icon-theme
 Version:  20230901
-Release:  alt1
+Release:  alt2
 
 Summary:  All Papirus icon themes
 License:  GPLv3
@@ -125,6 +125,13 @@ for dir in Papirus/*; do
 	done
 done
 
+rm -rf $THEME_DIR/24x24/panel
+ln -s ../../Papirus-Light/24x24/panel $THEME_DIR/24x24/panel
+rm -rf $THEME_DIR/22x22/panel
+ln -s ../../Papirus-Light/22x22/panel $THEME_DIR/22x22/panel
+rm -rf $THEME_DIR/16x16/panel
+ln -s ../../Papirus-Light/16x16/panel $THEME_DIR/16x16/panel
+
 %install
 mkdir -p %buildroot%_iconsdir
 cp -a Papirus Papirus-Dark Papirus-Edu Papirus-Light ePapirus %buildroot%_iconsdir
@@ -153,6 +160,9 @@ cp -a Papirus Papirus-Dark Papirus-Edu Papirus-Light ePapirus %buildroot%_iconsd
 %_iconsdir/ePapirus
 
 %changelog
+* Wed Oct 25 2023 Kirill Izmestev <felixz@altlinux.org> 20230901-alt2
+- Added a symlink to papirus-light/panel in the Papirus-Education theme (ALT #48153, #48156).
+
 * Mon Sep 04 2023 Kirill Izmestev <felixz@altlinux.org> 20230901-alt1
 - New version.
 
