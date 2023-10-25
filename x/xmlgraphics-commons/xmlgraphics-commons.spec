@@ -5,7 +5,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           xmlgraphics-commons
 Version:        2.7
-Release:        alt1_2jpp11
+Release:        alt2_2jpp11
 Epoch:          0
 Summary:        XML Graphics Commons
 
@@ -62,7 +62,7 @@ find -name "*.jar" -delete
 
 %build
 %mvn_file : %{name}
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -75,6 +75,9 @@ find -name "*.jar" -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Oct 25 2023 Igor Vlasenko <viy@altlinux.org> 0:2.7-alt2_2jpp11
+- fixed build (closes: #48160)
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.7-alt1_2jpp11
 - new version
 
