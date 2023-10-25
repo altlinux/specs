@@ -5,8 +5,8 @@
 %set_verify_elf_method strict
 
 Name: openquantumsafe-openssh
-Version: 8.9p1.202306
-Release: alt2
+Version: 8.9p1.202310
+Release: alt1
 
 Summary: OQS-OpenSSH is a fork of OpenSSH that adds quantum-safe algorithms
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
@@ -314,6 +314,10 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Wed Oct 25 2023 Vitaly Chikunov <vt@altlinux.org> 8.9p1.202310-alt1
+- Update to OQS-OpenSSH-snapshot-2023-10 (2023-10-21): syncing algorithm list
+  with liboqs 0.9.0 (2023-10-12).
+
 * Thu Jul 20 2023 Vitaly Chikunov <vt@altlinux.org> 8.9p1.202306-alt2
 - Apply fixes for CVE-2023-38408 (PKCS#11 providers).
 
