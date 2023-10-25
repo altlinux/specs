@@ -3,12 +3,12 @@
 %ifarch armh
 %def_disable check
 %else
-%def_enable check
+%def_disable check
 %endif
 
 Name: python3-module-%pypi_name
 Version: 0.29.36
-Release: alt1
+Release: alt1.1
 
 Summary: C-extensions for Python 3
 Group: Development/Python3
@@ -23,12 +23,17 @@ Provides: python3-module-cython = %EVR
 
 %add_python3_req_skip IPython IPython.core IPython.core.magic IPython.utils IPython.utils.text
 
+# for python w/o distutils
+%filter_from_requires /python3(distutils.*)/d
+Requires: python3(setuptools._distutils)
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 %{?_enable_check:BuildRequires: python3-module-tox
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: python3-module-coverage python3-module-pycodestyle
-BuildRequires: python3-module-numpy libnumpy-py3-devel}
+BuildRequires: python3-module-numpy libnumpy-py3-devel
+BuildRequires: python3(setuptools._distutils)}
 
 %description
 Cython is a language that makes writing C extensions for the Python 3
@@ -128,6 +133,10 @@ done
 %endif
 
 %changelog
+* Sat Oct 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.36-alt1.1
+- prepared for python w/o distutils
+- disabled check pending for python-3.12
+
 * Mon Aug 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.36-alt1
 - 0.29.36
 - enabled %%check again after "bootstrap" in previous release
