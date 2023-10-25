@@ -1,6 +1,6 @@
 Name: x2gobroker
 Version: 0.0.4.1
-Release: alt17
+Release: alt18
 Summary: X2Go Session Broker
 License: AGPLv3+
 Group: Communications
@@ -18,6 +18,7 @@ Patch6: alt-fix-tests.patch
 Patch7: alt-%name-daemon-user.patch
 Patch8: alt-disable-2to3.patch
 Patch9: alt-remove-nose.patch
+Patch10: alt-drop-distutils.patch
 
 BuildRequires: python3-module-setuptools
 BuildRequires: perl-File-Which
@@ -265,6 +266,7 @@ installed on your to-be-managed X2Go servers.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %build
 echo "Files where we will be patching libexecedir:"
@@ -423,6 +425,10 @@ touch ~/.ssh/id_rsa
 %_man8dir/x2gobroker-pubkeyauthorizer.8*
 
 %changelog
+* Wed Oct 25 2023 Oleg Solovyov <mcpain@altlinux.org> 0.0.4.1-alt18
+- drop distutils (by toni@)
+- replace distutils in doc
+
 * Wed Jul 19 2023 Oleg Solovyov <mcpain@altlinux.org> 0.0.4.1-alt17
 - remove nose from dependencies
 
