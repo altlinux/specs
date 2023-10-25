@@ -1,3 +1,12 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
+%_K5if_ver_gteq %ubt_id M110
+%def_enable phonenumber
+%else
+%def_disable phonenumber
+%endif
+
 %define rname kitinerary
 
 %define sover 5
@@ -5,7 +14,7 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -17,12 +26,15 @@ Source: %rname-%version.tar
 Patch1: alt-zonetab.patch
 Patch2: alt-old-poppler.patch
 
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 # Automatically added by buildreq on Mon Feb 04 2019 (-bi)
 # optimized out: cmake cmake-modules elfutils fontconfig gcc-c++ gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-test libqt5-xml libsasl2-3 libstdc++-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel rpm-build-python3 rpm-build-ruby ruby ruby-bundler ruby-rake ruby-rdoc ruby-stdlibs sh4 xml-utils zlib-devel
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel
 BuildRequires: libpoppler-devel libxml2-devel xsltproc zlib-devel
 BuildRequires: libzxing-cpp-devel
+%if_enabled phonenumber
+BuildRequires: libphonenumber-devel
+%endif
 BuildRequires: kde5-kcontacts-devel kde5-kmime-devel kde5-kpkpass-devel
 BuildRequires: kf5-karchive-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kcalcore-devel
@@ -90,6 +102,9 @@ Obsoletes: libkpimitinerary < %EVR
 %_K5lib/libKPim5Itinerary.so.*
 
 %changelog
+* Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- build with libphonenumber when available
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
