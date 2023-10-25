@@ -11,7 +11,7 @@
 
 Name: gobject-introspection
 Version: %ver_major.1
-Release: alt1.2
+Release: alt1.3
 
 Summary: Introspection system for GObject-based libraries
 Group: System/Libraries
@@ -27,12 +27,23 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
+# setuptools internally ends up imports `inspect`, which needs `ast`.
+# When giscanner/ is in PYTHONPATH (as it is in tests), it provides its
+# own top-level `ast.py`, overriding the standard library with an
+# incompatible module. Tests will fail.
+# https://bugzilla.redhat.com/show_bug.cgi?id=2208966
+# https://gitlab.gnome.org/GNOME/gobject-introspection/-/issues/429
+Patch10: %name-1.78.1-fc-ast.patch
+
 %add_python3_path %_libdir/%name/giscanner
-%add_python3_path %_libdir/%name/giscanner
+# especially for Patch10
+# python3(giscanner.ast) < 0
+%add_python3_req_skip giscanner.ast
 #https://bugzilla.altlinux.org/38965
 # python3(pkgconfig) provided by giscanner/pkgconfig.py
 %filter_from_provides /python3(pkgconfig)/d
 %add_python3_req_skip distutils.msvccompiler
+%filter_from_requires /python3(distutils.*)/d
 
 %define glib_ver 2.78.0
 %define python_ver 3.7
@@ -88,6 +99,8 @@ gobject-introspection.
 
 %prep
 %setup
+%patch10 -p1
+mv giscanner/ast.py giscanner/gio_ast.py
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -145,6 +158,9 @@ gobject-introspection.
 %endif
 
 %changelog
+* Fri Oct 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.78.1-alt1.3
+- fixed %%check w/o distutils
+
 * Thu Oct 12 2023 Yuri N. Sedunov <aris@altlinux.org> 1.78.1-alt1.2
 - g-i-devel requires setuptools (ALT #47966)
 
