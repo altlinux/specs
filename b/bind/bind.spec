@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 # build rules
-%def_with docs
+%def_without docs
 %def_with openssl
 %def_with libjson
-%def_without python
 %def_with check
 %def_without system_tests
 
@@ -24,8 +23,8 @@
 %endif
 
 Name: bind
-Version: 9.16.44
-%define src_version 9.16.44
+Version: 9.18.19
+%define src_version 9.18.19
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -66,9 +65,7 @@ Patch0002: 0002-ALT-Minimize-linux-capabilities.patch
 Patch0003: 0003-ALT-Make-it-possible-to-retain-Linux-capabilities-of.patch
 Patch0004: 0004-ALT-named-Allow-non-writable-working-directory.patch
 Patch0005: 0005-ALT-tests-Unchroot-named-for-tests.patch
-Patch0006: 0006-ALT-tests-Add-tests-for-signing-with-custom-OpenSSL.patch
 Patch0007: 0007-ALT-tests-Raise-expected-delta-time-for-cds.patch
-Patch0008: 0008-ALT-tests-Wait-up-to-30sec-for-the-server-start.patch
 Patch0009: 0009-ALT-tests-Avoid-socket-creation-on-9pfs.patch
 Patch0010: 0010-ALT-tests-Handle-unset-TSAN_OPTIONS.patch
 
@@ -87,6 +84,7 @@ BuildRequires: python3(hypothesis)
 BuildRequires: softhsm
 BuildRequires: libp11
 BuildRequires: opensc
+BuildRequires: openssl
 %else
 BuildRequires: rpm-build-vm
 BuildRequires: /sbin/runuser
@@ -224,6 +222,9 @@ s,@LOG_DIR@,%log_dir,g;
 export SPHINX_BUILD=/usr/bin/sphinx-build-3
 %endif
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=2122841#c30
+%add_optflags -DOPENSSL_API_COMPAT=10100
+
 %autoreconf
 %configure \
 	--localstatedir=/var \
@@ -234,11 +235,10 @@ export SPHINX_BUILD=/usr/bin/sphinx-build-3
 %if_with libjson
 	--with-json-c=yes \
 %endif
-	 %{subst_with python} \
 	--disable-static \
 	--includedir=%{_includedir}/bind9 \
-	--with-libtool \
 	--with-gssapi=yes \
+	--disable-doh \
 	#
 
 %make_build
@@ -251,7 +251,7 @@ export SPHINX_BUILD=/usr/bin/sphinx-build-3
 %makeinstall_std
 
 # Install additional headers.
-install -pm644 lib/isc/unix/errno2result.h %buildroot%_includedir/bind9/isc/
+install -pm644 lib/isc/errno2result.h %buildroot%_includedir/bind9/isc/
 
 # Install startup scripts.
 install -pD -m755 addon/bind.init %buildroot%_initdir/bind
@@ -297,15 +297,18 @@ ln -s %_chrootdir/dev/log %buildroot%_sysconfdir/syslog.d/bind
 
 # ALT docs
 mkdir -p %buildroot%docdir
-cp -a README %SOURCE3 %SOURCE4 CHANGES %buildroot%docdir/
+cp -a README.md %SOURCE3 %SOURCE4 CHANGES %buildroot%docdir/
 
 %if_with docs
 mkdir -p %buildroot%docdir/arm
 cp -a doc/arm/_build/html %buildroot%docdir/arm/
 %endif
 
-# legacy path for plugins (for example, bind-dyndb-ldap)
-mkdir -p %buildroot%_libdir/bind
+# alternative path for plugins
+mkdir -p %buildroot%_libdir/named
+
+# clean up la files
+rm %buildroot%_libdir/bind/*.la
 
 # filetrigger: delayed restart of named if named or its plugins were
 # installed/upgraded
@@ -328,11 +331,35 @@ chmod 0755 %buildroot%_rpmlibdir/%name-restart.filetrigger
 perl bin/tests/system/testsock.pl || sudo sh -x bin/tests/system/ifconfig.sh up
 
 # setup softhsm
-export SOFTHSM_MODULE_PATH=%_libdir/softhsm/libsofthsm2.so
-export SOFTHSM2_CONF=/tmp/softhsm2/softhsm2.conf
-export OPENSSL_CONF=/tmp/softhsm2/openssl.cnf
-export PKCS11_ENGINE=pkcs11
-export SLOT=$(sh -eu bin/tests/prepare-softhsm2.sh)
+# taken from https://gitlab.isc.org/isc-projects/images/-/blob/main/docker/bind9/debian-template/prep-softhsm-openssl-engine.sh.in
+export OPENSSL_CONF="/tmp/openssl.cnf"
+export SOFTHSM2_WORKDIR="/tmp/softhsm2"
+export SOFTHSM2_CONF="$SOFTHSM2_WORKDIR/softhsm2.conf"
+export SOFTHSM2_MODULE="%_libdir/softhsm/libsofthsm2.so"
+
+rm -rf "$SOFTHSM2_WORKDIR"
+mkdir -p "$SOFTHSM2_WORKDIR/tokens"
+cat <<EOF > "$SOFTHSM2_CONF"
+directories.tokendir = $SOFTHSM2_WORKDIR/tokens
+objectstore.backend = file
+log.level = DEBUG
+EOF
+
+cat > "$OPENSSL_CONF"<<EOF
+openssl_conf = openssl_init
+
+[openssl_init]
+engines = engine_section
+
+[engine_section]
+pkcs11 = pkcs11_section
+
+[pkcs11_section]
+engine_id = pkcs11
+dynamic_path = $(pkg-config libcrypto --variable=enginesdir)/pkcs11.so
+MODULE_PATH = %_libdir/softhsm/libsofthsm2.so
+init=0
+EOF
 
 # tests are run as current user
 # see .gitlab-ci.yml
@@ -340,10 +367,6 @@ pushd bin/tests/system
 # named must be unchrooted for upstream tests
 export ALT_NAMED_OPTIONS=' -t / '
 SYSTEMTEST_NO_CLEAN=1 %make_build -k test V=1
-
-# depends on PKCS11_TEST, which is only defined if named is built with native
-# PKCS11
-SYSTEMTEST_NO_CLEAN=1 sh run.sh pkcs11
 
 # teardown
 popd
@@ -367,13 +390,19 @@ ip a
 export ALT_NAMED_OPTIONS=' -t / '
 
 pushd bin/tests/system
-source ./conf.sh
-for testdir in $SUBDIRS; do
+testdirs=
+for testdir in */; do
     subns=$(find "$testdir" -maxdepth 1 -type d -name "ns[0-9]" | wc -l)
-    if [ $subns -lt 2 ]; then
-        runuser -u "$runas" -- sh run.sh "$testdir"
+    if [ $subns -lt 2 ] && [ $subns -gt 0 ] ; then
+        testdirs="$testdirs ${testdir%%*/}"
     fi
 done
+
+if [ -z "$testdirs" ] ; then
+    echo 'Tests using ns==1 not found'
+    exit 1
+fi
+runuser -u "$runas" -- python3 -m pytest $testdirs
 
 # teardown
 popd
@@ -472,17 +501,23 @@ fi
 %files
 %dir %docdir
 %docdir/CHANGES
-%docdir/README
+%docdir/README.md
 %docdir/README.ALT
 # plugins
 %dir %_libdir/named
-%_libdir/named/filter-aaaa.so
-# legacy path for plugins (for example, bind-dyndb-ldap)
 %dir %_libdir/bind
+%_libdir/bind/filter-aaaa.so
+%_libdir/bind/filter-a.so
 
 %_bindir/arpaname
-%_bindir/named-rrchecker
-%_sbindir/*
+%_bindir/named-*
+%_bindir/nsec3hash
+%_bindir/dnssec-*
+%_sbindir/ddns-confgen
+%_sbindir/named
+%_sbindir/rndc
+%_sbindir/rndc-confgen
+%_sbindir/tsig-keygen
 %_sysconfdir/bind
 %_sysconfdir/bind.keys
 %_sysconfdir/named.conf
@@ -496,10 +531,12 @@ fi
 
 %_rpmlibdir/%name-restart.filetrigger
 
-%_man1dir/named-rrchecker.1*
+%_man1dir/arpaname.1.*
+%_man1dir/dnssec-*.*
+%_man1dir/named-*.1.*
+%_man1dir/nsec3hash.1.*
 %_man5dir/*
 %_man8dir/*
-%_man1dir/arpaname*
 
 #chroot
 %_sysconfdir/syslog.d/*
@@ -545,6 +582,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 26 2023 Stanislav Levin <slev@altlinux.org> 9.18.19-alt1
+- 9.16.44 -> 9.18.19.
+
 * Wed Sep 20 2023 Stanislav Levin <slev@altlinux.org> 9.16.44-alt1
 - 9.16.42 -> 9.16.44 (fixes: CVE-2023-3341).
 

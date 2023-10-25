@@ -5,7 +5,7 @@
 
 Name: bind-dyndb-ldap
 Version: 11.10
-Release: alt3
+Release: alt4
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -22,6 +22,7 @@ BuildRequires: libldap-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libuuid-devel
 BuildRequires: libsasl2-devel
+BuildRequires: autoconf-archive
 
 Requires: bind >= %bind_version
 
@@ -105,6 +106,9 @@ sed -i.bak --follow-symlinks -e "$SEDSCRIPT" /etc/named.conf
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Tue Oct 24 2023 Stanislav Levin <slev@altlinux.org> 11.10-alt4
+- Fixed build with bind 9.18.19.
+
 * Mon Jan 16 2023 Stanislav Levin <slev@altlinux.org> 11.10-alt3
 - Fixed build with Bind 9.16.36.
 
