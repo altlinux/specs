@@ -1,7 +1,7 @@
 Name: geany-plugins
-Version: 1.38
-Release: alt2
-%define geany_ver 1.38
+Version: 2.0
+Release: alt1
+%define geany_ver 2.0
 
 Summary: Plugins for Geany
 
@@ -91,6 +91,9 @@ export PYTHON_VERSION=2
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Wed Oct 25 2023 Fr. Br. George <george@altlinux.org> 2.0-alt1
+- Autobuild version bump to 2.0
+
 * Sun Apr 02 2023 Yuri N. Sedunov <aris@altlinux.org> 1.38-alt2
 - cherry-picked "Simplify libgit2 version checks" (668f5d0) and
   "Add support for libgit2 1.4" (5d9f1bc),

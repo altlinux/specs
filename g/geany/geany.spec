@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geany
-Version: 1.38
+Version: 2.0
 Release: alt1
 
 Summary: A fast and lightweight IDE using GTK2
@@ -11,7 +11,7 @@ Group: Development/Tools
 Url: http://geany.org
 
 Source: %name-%version.tar.bz2
-Patch: geany-1.35-defaults.patch
+Patch: geany-2.0-defaults.patch
 
 Requires: libvte
 Requires: %name-data = %version
@@ -52,7 +52,7 @@ use Geany.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 
 # hack out space in file name
 sed -i '/"untitled"/,/^$/s/\([^a-z]\) \([^a-z]\)/\1_\2/g' po/ru.po
@@ -92,13 +92,18 @@ end.
 @@@
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+## NOCONFIGURE=1 ./autogen.sh
+%autoreconf
 
 %configure --docdir=%_defaultdocdir/%name-%version \
+            --disable-rpath \
             --enable-html-docs \
             --with-python-command=python3
+#           --enable-binreloc \
+#
 
 %make_build --silent --no-print-directory
+%make -C po update-gmo
 
 %install
 %makeinstall_std --silent --no-print-directory
@@ -126,6 +131,9 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_libdir/*.so
 
 %changelog
+* Fri Oct 20 2023 Fr. Br. George <george@altlinux.org> 2.0-alt1
+- Autobuild version bump to 2.0
+
 * Mon May 23 2022 Fr. Br. George <george@altlinux.ru> 1.38-alt1
 - Autobuild version bump to 1.38
 
