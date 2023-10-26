@@ -3,8 +3,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kcollectd
-Version: 0.12.0
-Release: alt2
+Version: 0.12.1
+Release: alt1
 
 Summary: collectd graphing frontend for KDE
 License: %gpl3plus
@@ -50,6 +50,7 @@ ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 %install
 %cmakeinstall_std
 %find_lang --with-kde %name
+mv -f %buildroot/%_desktopdir/net.aerusso.kcollectd.desktop %buildroot%_desktopdir/%name.desktop
 
 
 %files -f %name.lang
@@ -68,6 +69,9 @@ ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 
 
 %changelog
+* Thu Oct 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.12.1-alt1
+- New version
+
 * Tue Aug 08 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.12.0-alt2
 - Fix desktop file
 
