@@ -18,14 +18,14 @@
 %def_without wayland
 %def_with x11
 %def_with rlottie
-%def_without gsl
+%def_with gsl
 %def_without ninja
 %def_without ffmpeg_static
 %def_without jemalloc
 
 Name: telegram-desktop
 Version: 4.10.5
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -44,6 +44,7 @@ Patch2: telegram-desktop-set-native-window-frame.patch
 Patch5: telegram-desktop-fix-missed-cstdint.patch
 Patch6: telegram-desktop-disabled-icon-checkbox.patch
 Patch7: telegram-desktop-fix-build-with-make.patch
+Patch8: telegram-desktop-use-external-gsl.patch
 
 # lacks few build deps, still
 # [ppc64le] E: Couldn't find package libdispatch-devel
@@ -259,6 +260,8 @@ or business messaging needs.
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
+%else
+%patch8 -p2
 %endif
 
 # See https://github.com/desktop-app/tg_owt/pull/82
@@ -387,6 +390,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Thu Oct 26 2023 Vitaly Lipatov <lav@altlinux.ru> 4.10.5-alt2
+- build with external GSL (ALT bug 47959)
+
 * Mon Oct 23 2023 Vitaly Lipatov <lav@altlinux.ru> 4.10.5-alt1
 - new version 4.10.5 (with rpmrb script)
 
