@@ -3,13 +3,14 @@
 %endif
 
 Name: mongo5.0
-Version: 5.0.21
+Version: 5.0.22
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
 Group: Development/Databases
 Url: https://www.mongodb.org
 Source: %name-%version.tar
+Patch0: mongo5.0-5.0.21-debuginfo.patch
 
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
@@ -75,6 +76,7 @@ MongoDB instance.
 
 %prep
 %setup
+%patch0 -p1
 
 # CRLF -> LF
 sed -i 's/\r//' README
@@ -199,6 +201,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Thu Oct 26 2023 Alexei Takaseev <taf@altlinux.org> 5.0.22-alt1
+- 5.0.22
+- Reduce debuginfo
+
 * Fri Sep 08 2023 Alexei Takaseev <taf@altlinux.org> 5.0.21-alt1
 - 5.0.21
 - Remove unneeded BuildRequires
