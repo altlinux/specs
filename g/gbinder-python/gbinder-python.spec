@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: %pypi_name
-Version: 1.1.1
+Version: 1.1.2
 Release: alt0.1
 Summary: Python bindings for libgbinder
 Group: Development/Python
@@ -41,5 +41,8 @@ python3 setup.py sdist --cython
 %python3_sitelibdir/gbinder_python-%{version}.dist-info/
 
 %changelog
+* Thu Oct 26 2023 L.A. Kostis <lakostis@altlinux.ru> 1.1.2-alt0.1
+- 1.1.2.
+
 * Thu Mar 30 2023 L.A. Kostis <lakostis@altlinux.ru> 1.1.1-alt0.1
 - Initial build for ALTLinux.
