@@ -8,8 +8,7 @@
 
 Name:    alkimia
 Version: 8.1.2
-Release: alt1
-%K5init no_altplace
+Release: alt2
 
 Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
 License: LGPLv2+
@@ -69,6 +68,7 @@ Headers and other files for develop with %name.
 %setup -q
 
 %build
+%K5init no_altplace
 %K5build -DCMAKE_SKIP_RPATH=1 \
          -DBUILD_WITH_WEBKIT=OFF \
 %if_enabled qtwebengine
@@ -86,11 +86,10 @@ Headers and other files for develop with %name.
 %doc README.md
 %_bindir/onlinequoteseditor*
 %_K5qml/org/kde/alkimia
-%_desktopdir/kf5/*.desktop
-#_datadir/alkimia5
+%_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/onlinequoteseditor*
 %_datadir/metainfo/*.appdata.xml
-%_K5data/plasma/plasmoids/org.wincak.foreigncurrencies2
+%_datadir/kf5/plasma/plasmoids/org.wincak.foreigncurrencies2
 %_datadir/knsrcfiles//*.knsrc
 
 %files -n lib%name
@@ -104,6 +103,9 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 8.1.2-alt2
+- FTBFS: fixed desktop and plasmoid location.
+
 * Thu Sep 21 2023 Andrey Cherepanov <cas@altlinux.org> 8.1.2-alt1
 - New version.
 
