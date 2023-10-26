@@ -12,8 +12,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init no_appdata
+Release: alt2
+%K5init
 
 Group: Education
 Summary: A virtual globe and world atlas
@@ -106,10 +106,14 @@ done
 
 mv %buildroot/%_K5xdgmime/geo{,-kde5}.xml
 
-mkdir -p %buildroot/%_K5xdgapp
-mv %buildroot/%_desktopdir/*.desktop %buildroot/%_K5xdgapp/
-mkdir -p %buildroot/%_K5inc
-mv %buildroot/%_includedir/marble %buildroot/%_K5inc/
+if [ "%_desktopdir" != "%_K5xdgapp" ] ;then
+    mkdir -p %buildroot/%_K5xdgapp
+    mv %buildroot/%_desktopdir/*.desktop %buildroot/%_K5xdgapp/ ||:
+fi
+if [ "%_includedir" != "%_K5inc" ] ;then
+    mkdir -p %buildroot/%_K5inc
+    mv %buildroot/%_includedir/marble %buildroot/%_K5inc/ ||:
+fi
 
 
 rm -rf %buildroot/%_datadir/locale/*/LC_MESSAGES/*_qt.qm
@@ -128,7 +132,7 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5plug/*marble*.so
 %_K5plug/kf5/krunner/*marble*.so
 %_K5data/marble/
-%_K5data/plasma/*/org.kde.plasma.*world*/
+%_kf5_data/plasma/*/org.kde.plasma.*world*/
 %_K5lib/marble/
 %_K5qml/org/kde/marble/
 %_K5srv/*.desktop
@@ -136,6 +140,7 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5icon/*/*/apps/marble.*
 %_iconsdir/*/*/apps/marble.*
 %_K5xmlgui/marble/
+%_datadir/metainfo/*.xml
 
 %files devel
 #%_K5plug/designer/*.so
@@ -150,6 +155,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- fix package
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
