@@ -5,8 +5,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Pass-OTP
-Version: 1.5
-Release: alt2
+Version: 1.6
+Release: alt1
 
 Summary: Perl implementation of HOTP / TOTP algorithms
 
@@ -49,5 +49,8 @@ algorithms according to the RFC 4226 and RFC 6238.
 %_man1dir/otptool.*
 
 %changelog
+* Thu Oct 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.6-alt1
+- New version
+
 * Sun Jan 15 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.5-alt2
 - Initial build for ALT Linux Sisyphus
