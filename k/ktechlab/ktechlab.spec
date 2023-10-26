@@ -1,6 +1,6 @@
 Name:    ktechlab
 Version: 0.51.0
-Release: alt1
+Release: alt2
 
 Summary: Development and simulation of micro-controllers and electronic circuits
 License: GPL-2.0
@@ -75,10 +75,13 @@ echo "Comment[ru]=Среда разработки микроконтроллер
 %_K5xdgmime/*.xml
 %_K5cfg/%name.kcfg
 %_datadir/katepart5/syntax/microbe.xml
-%_desktopdir/kf5/*.desktop
+%_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 0.51.0-alt2
+- FTBFS: fix desktop file location.
+
 * Tue Apr 25 2023 Andrey Cherepanov <cas@altlinux.org> 0.51.0-alt1
 - New version.
 
