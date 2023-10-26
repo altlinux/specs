@@ -1,6 +1,6 @@
 Name:     kde5-kup
 Version:  0.9.1
-Release:  alt1.1
+Release:  alt2
 
 Summary:  KDE-based frontend for bup backup software and incremental backups
 License:  GPL-2.0+
@@ -59,18 +59,20 @@ that gives you easy and fast incremental backups!
 %_libdir/libkdeinit5_kup-daemon.so
 %_qt5_plugindir/*.so
 %_qt5_plugindir/plasma/dataengine/*.so
-%_K5data/plasma/plasmoids/org.kde.kupapplet
-%_K5data/plasma/services/kupservice.operations
+%_datadir/kf5/plasma/plasmoids/org.kde.kupapplet
+%_datadir/kf5/plasma/services/*.operations
 %_K5notif/kupdaemon.notifyrc
 %_K5srv/*.protocol
 %_K5srv/*.desktop
 %_datadir/metainfo/*.appdata.xml
 %_K5srv/kcm_kup.desktop
 %_iconsdir/hicolor/scalable/apps/kup.svg
-%_K5data/plasma/services/kupdaemonservice.operations
 %_datadir/qlogging-categories5/kup.categories
 
 %changelog
+* Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 0.9.1-alt2
+- FTBFS: fixed plasmoid and operations location.
+
 * Mon Aug 16 2021 Michael Shigorin <mike@altlinux.org> 0.9.1-alt1.1
 - EA += %%e2k (builds just fine)
 - minor spec cleanup
