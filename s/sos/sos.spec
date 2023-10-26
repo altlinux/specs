@@ -2,8 +2,8 @@
 
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
-Version: 4.4
-Release: alt3
+Version: 4.6.0
+Release: alt1
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %name-%version.tar
@@ -64,6 +64,9 @@ rm -f %buildroot%_datadir/licenses/sos/LICENSE
 %_man5dir/sos.conf.5*
 
 %changelog
+* Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 4.6.0-alt1
+- New version (ALT #48188).
+
 * Thu Jan 26 2023 Andrey Cherepanov <cas@altlinux.org> 4.4-alt3
 - Removed dependency of libxml2-python (ALT #45036).
 
