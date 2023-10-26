@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: loki
-Version: 2.8.2
+Version: 2.9.2
 Release: alt1
 Summary: Loki: like Prometheus, but for logs
 License: Apache-2.0
@@ -149,6 +149,9 @@ useradd -r -N -g _promtail -G systemd-journal -c 'Promtail log collector' \
 %doc clients/cmd/docker-driver/pipeline-example.yaml
 
 %changelog
+* Fri Oct 27 2023 Alexey Shabalin <shaba@altlinux.org> 2.9.2-alt1
+- New version 2.9.2.
+
 * Tue Jul 04 2023 Alexey Shabalin <shaba@altlinux.org> 2.8.2-alt1
 - New version 2.8.2.
 
