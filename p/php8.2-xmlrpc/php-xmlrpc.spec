@@ -19,7 +19,7 @@ Source0:	php-%php_extension-%version.tar
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
 
-BuildRequires(pre): rpm-build-php8.0-version
+BuildRequires(pre): rpm-build-php8.2-version
 BuildRequires:  libxml2-devel
 BuildRequires:	php-devel = %php_version
 BuildRequires: rpm-build-php
