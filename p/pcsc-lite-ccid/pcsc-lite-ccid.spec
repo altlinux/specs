@@ -1,5 +1,5 @@
 Name: pcsc-lite-ccid
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 
 Summary: USB CCID IFD Handler
@@ -15,6 +15,7 @@ Patch1: ccid-disable-examples-build.patch
 
 BuildRequires: flex libpcsclite-devel libusb-devel
 BuildRequires: autoconf-archive
+BuildRequires: zlib-devel
 
 Provides: ccid = %version-%release
 Obsoletes: ccid < %version-%release
@@ -53,6 +54,9 @@ cp -a src/92_pcscd_ccid.rules %buildroot/lib/udev/rules.d/
 /lib/udev/rules.d/92_pcscd_ccid.rules
 
 %changelog
+* Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
+- New version.
+
 * Mon Feb 20 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
 - New version.
 - Conflicted with pcsc-lite-openct (ALT #45282).
