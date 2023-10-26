@@ -5,8 +5,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init no_appdata
+Release: alt2
+%K5init
 
 Group: Education
 Summary: Graph Theory
@@ -74,7 +74,7 @@ KF5 library
 #%_K5data/rocsgraphtheory/
 
 %files
-%_K5bin/
+%_K5bin/rocs
 %_K5plug/rocs/
 %_K5data/rocs/
 %_K5icon/*/*/apps/rocs.*
@@ -82,6 +82,7 @@ KF5 library
 %_K5xdgapp/org.kde.rocs.desktop
 %_K5cfg/rocs.kcfg
 %_K5xmlgui/rocs/
+%_datadir/metainfo/*.xml
 
 %files devel
 %_K5inc/rocs/
@@ -92,6 +93,9 @@ KF5 library
 %_K5lib/librocsgraphtheory.so.*
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- fix package
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
