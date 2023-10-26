@@ -1,7 +1,7 @@
 
 Name: qt5-phonon-backend-gstreamer
 Version: 4.10.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Gstreamer phonon backend
@@ -58,9 +58,12 @@ Gstreamer phonon backend
 %files -n qt5-phonon-backend-5-gstreamer -f phonon_gstreamer_qt.lang
 %_qt5_plugindir/phonon4qt5_backend/phonon_gstreamer.so
 #_K5srv/phononbackends/gstreamer.desktop
-%_datadir/kf5/icons/hicolor/*/apps/phonon-gstreamer.*
+%_K5icon/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt2
+- fix package
+
 * Fri Jan 17 2020 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
 - new version
 
