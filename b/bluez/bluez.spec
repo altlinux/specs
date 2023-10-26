@@ -8,7 +8,7 @@
 %def_enable experimental
 
 Name: bluez
-Version: 5.69
+Version: 5.70
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -197,6 +197,9 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Thu Oct 26 2023 L.A. Kostis <lakostis@altlinux.ru> 5.70-alt1
+- 5.70.
+
 * Tue Sep 05 2023 L.A. Kostis <lakostis@altlinux.ru> 5.69-alt1
 - 5.69.
 - move dbus-1 configuration to datadir as upstream does.
