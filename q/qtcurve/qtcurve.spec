@@ -4,7 +4,7 @@
 
 Name:    qtcurve
 Version: 1.9.1
-Release: alt1.git%git_rev
+Release: alt2.git%git_rev
 Epoch:   2
 
 Summary: A set of widget styles for GTK+ and Qt widget toolkits
@@ -124,8 +124,8 @@ rm -fv %buildroot%_libdir/libqtcurve-{cairo,utils}.so
 rm -f %buildroot%_datadir/kxmlgui5/QtCurve/QtCurveui.rc
 
 # Move KF5 file to appropriate place
-mkdir -p %buildroot%_K5data/kstyle/themes/
-mv %buildroot%_datadir/kstyle/themes/qtcurve.themerc %buildroot%_K5data/kstyle/themes/
+mkdir -p %buildroot%_datadir/kf5/kstyle/themes/
+mv %buildroot%_datadir/kstyle/themes/qtcurve.themerc %buildroot%_datadir/kf5/kstyle/themes/
 
 %find_lang %name
 
@@ -151,10 +151,13 @@ mv %buildroot%_datadir/kstyle/themes/qtcurve.themerc %buildroot%_K5data/kstyle/t
 
 %files -n kf5-styles-%name
 %_qt5_plugindir/kstyle_qtcurve5_config.so
-%_K5data/kstyle/themes/qtcurve.themerc
+%_datadir/kf5/kstyle/themes/qtcurve.themerc
 %endif
 
 %changelog
+* Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 2:1.9.1-alt2.git4e56a76a
+- FTBFS: fix locations.
+
 * Mon Jun 19 2023 Andrey Cherepanov <cas@altlinux.org> 2:1.9.1-alt1.git4e56a76a
 - New version.
 
