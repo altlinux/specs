@@ -1,6 +1,6 @@
 Name: python3-module-watchfiles
 Version: 0.19.0
-Release: alt1
+Release: alt2
 
 Summary: Simple, modern file watching and code reload in python.
 License: MIT
@@ -42,6 +42,9 @@ export CARGO_HOME=${PWD}/cargo
 %python3_sitelibdir/watchfiles-%version.dist-info
 
 %changelog
+* Thu Oct 26 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.19.0-alt2
+- NMU: support LoongArch architecture
+
 * Fri Apr 14 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.19.0-alt1
 - 0.19.0 released
 
