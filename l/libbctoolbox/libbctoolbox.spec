@@ -1,20 +1,18 @@
 Name: libbctoolbox
-Version: 0.6.0
-Release: alt5
+Version: 5.2.109
+Release: alt1
 Summary: Utilities library used by Belledonne Communications softwares
-
 Group: System/Libraries
-
-Packager: Alexei Takaseev <taf@altlinux.ru>
-
-License: GPLv2
-Url: http://www.belle-sip.org
+License: GPLv3
+Url: https://gitlab.linphone.org/BC/public/bctoolbox
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
+BuildRequires(pre): cmake
+
 # Automatically added by buildreq on Thu Mar 02 2017
 # optimized out: bcunit gnu-config libstdc++-devel perl pkg-config python-base
-BuildRequires: bcunit-devel gcc8-c++ libmbedtls13-devel
+BuildRequires: bcunit-devel gcc-c++ libmbedtls-compat-devel
 
 %description
 Utilities library used by Belledonne Communications
@@ -33,23 +31,14 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %patch0 -p1
 
 %build
-# Glibc 2.33 deprecated mallinfo() in favor of mallinfo2() 
-sed -e 's,mallinfo,mallinfo2,g' -i src/tester.c
-
-%ifnarch %e2k
-%set_gcc_version 8
-export CC="gcc-%{_gcc_version}"
-export CXX="g++-%{_gcc_version}"
-%endif
-./autogen.sh
-%configure
-%make
+%cmake -DENABLE_STATIC=FALSE
+%cmake_build
 
 %install
-%makeinstall
+%cmakeinstall_std
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README.md
+%doc CHANGELOG.md LICENSE.txt README.md
 %_libdir/*.so.*
 
 %files devel
@@ -58,8 +47,13 @@ export CXX="g++-%{_gcc_version}"
 %_libdir/libbctoolbox.so
 %_libdir/pkgconfig/bctoolbox-tester.pc
 %_libdir/pkgconfig/bctoolbox.pc
+%_datadir/bctoolbox
 
 %changelog
+* Thu Oct 26 2023 Alexei Takaseev <taf@altlinux.org> 5.2.109-alt1
+- 5.2.109 (ALT #48191)
+- Use Cmake for build
+
 * Wed Jan 19 2022 Alexander Danilov <admsasha@altlinux.org> 0.6.0-alt5
 - fixed FTBFS
 
