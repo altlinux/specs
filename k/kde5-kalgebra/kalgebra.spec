@@ -8,8 +8,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init no_appdata
+Release: alt2
+%K5init
 
 Group: Education
 Summary: Graph Calculator
@@ -61,11 +61,15 @@ however, one does not need to know MathML to use KAlgebra.
 %_K5xdgapp/*algebra*.desktop
 %_K5icon/*/*/apps/*algebra.*
 %if_enabled qtwebengine
-%_K5data/plasma/plasmoids/org.kde.graphsplasmoid/
+%_kf5_data/plasma/plasmoids/org.kde.graphsplasmoid/
 %_datadir/katepart5/syntax/kalgebra.xml
 %endif
+%_datadir/metainfo/*.xml
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- fix package
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
