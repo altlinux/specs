@@ -3,8 +3,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init no_appdata
+Release: alt2
+%K5init
 
 Group: Education
 Summary: Vocabulary training application
@@ -56,13 +56,17 @@ also known as flash cards.
 %_K5xdgapp/org.kde.parley.desktop
 %_K5icon/*/*/apps/parley.*
 %_K5icon/*/*/apps/parley-*.*
-%_kf5_icon/oxygen/*/actions/*.*
+%_K5icon/oxygen/*/actions/*.*
 %_K5cfg/documentsettings.kcfg
 %_K5cfg/languagesettings.kcfg
 %_K5cfg/parley.kcfg
 %_K5data/knsrcfiles/*parley*.knsrc
+%_datadir/metainfo/*.xml
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- fix package
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
