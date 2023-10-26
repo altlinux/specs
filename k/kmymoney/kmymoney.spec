@@ -6,8 +6,7 @@
 
 Name:    kmymoney
 Version: 5.1.3
-Release: alt1
-%K5init no_altplace
+Release: alt2
 
 Summary: A Personal Finance Manager for KDE
 Summary(ru_RU.UTF-8): Учёт финансов под KDE
@@ -267,6 +266,7 @@ Internationalization and documentation for KMyMoney
 cp %SOURCE1 po/ru/kmymoney.po
 
 %build
+%K5init no_altplace
 # Need to build in one thread, see https://bugs.kde.org/show_bug.cgi?id=364387 for details
 #export NPROCS=1
 %K5build -DCMAKE_SKIP_RPATH=1 \
@@ -293,7 +293,7 @@ cp %SOURCE1 po/ru/kmymoney.po
 %_K5lib/libkmm_settings.so.*
 %_K5lib/libkmm_widgets.so.*
 %_K5lib/libkmm_printer.so.*
-%_desktopdir/kf5/*%name.desktop
+%_desktopdir/*%name.desktop
 %doc %_K5doc/en/*
 %_K5cfg/*.kcfg
 #_K5srvtyp/*.desktop
@@ -389,6 +389,9 @@ cp %SOURCE1 po/ru/kmymoney.po
 %exclude %_K5doc/en
 
 %changelog
+* Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 5.1.3-alt2
+- FTBFS: fixed desktop file location.
+
 * Sun Jul 31 2022 Andrey Cherepanov <cas@altlinux.org> 5.1.3-alt1
 - New version.
 
