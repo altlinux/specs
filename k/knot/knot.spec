@@ -8,7 +8,7 @@
 %def_disable quic
 
 Name: knot
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -200,6 +200,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Fri Oct 27 2023 Alexey Shabalin <shaba@altlinux.org> 3.3.2-alt1
+- New version 3.3.2.
+
 * Thu Oct 19 2023 Alexey Shabalin <shaba@altlinux.org> 3.3.1-alt1
 - New version 3.3.1.
 
