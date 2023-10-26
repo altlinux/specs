@@ -5,7 +5,7 @@
 %define	TDSVER 7.4
 %define	name freetds
 %define	release alt1
-%define	version 1.3.16
+%define	version 1.4.5
 
 Name:		%name
 Version:	%version
@@ -71,7 +71,7 @@ This package is built with support for TDS version %TDSVER.
 Summary: 	An OpenSource implementation of the TDS protocol. Development files
 License:	GPL/LGPL
 Group: 		Development/C
-PreReq:		lib%name = %EVR
+Requires:	lib%name = %EVR
 Provides:	%name-devel
 
 %description -n lib%name-devel
@@ -85,7 +85,7 @@ This package is built with support for TDS version %TDSVER.
 Summary: 	An OpenSource implementation of the TDS protocol. Static libraries
 License:	GPL/LGPL
 Group: 		Development/C
-PreReq:		lib%name-devel = %EVR
+Requires:	lib%name-devel = %EVR
 Provides:	%name-devel-static
 
 %description -n lib%name-devel-static
@@ -100,7 +100,7 @@ This package is built with support for TDS version %TDSVER.
 Summary:	An OpenSource implementation of the TDS protocol. Utilities
 License:	GPL/LGPL
 Group:		Databases
-PreReq:		lib%name = %EVR
+Requires:	lib%name = %EVR
 Provides:	%name-utils
 
 %description -n %name-utils
@@ -171,6 +171,9 @@ useful utilities.
 
 
 %changelog
+* Thu Oct 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.4.5-alt1
+- New version
+
 * Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.3.16-alt1
 - New version
 
