@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     chow-tape-model
-Version:  2.11.1
-Release:  alt2
+Version:  2.11.3
+Release:  alt1
 
 ExclusiveArch: x86_64
 
@@ -23,8 +23,6 @@ Source2:  sub-merge.unpack.sh
 %(cat %SOURCE1)
 
 Patch1:   juice-alt-fix-build.patch
-Patch2:   chow-tape-model-2.11.1-alt-restrict-to-stereo.patch
-
 
 BuildRequires: cmake gcc-c++
 BuildRequires: pkgconfig(alsa)
@@ -93,6 +91,9 @@ install -m644  -t "$dst_path" "$src_path/"*.ttl
 %doc Manual/ChowTapeManual.pdf
 
 %changelog
+* Thu Oct 26 2023 Ivan A. Melnikov <iv@altlinux.org> 2.11.3-alt1
+- 2.11.3
+
 * Mon Jan 16 2023 Ivan A. Melnikov <iv@altlinux.org> 2.11.1-alt2
 - Build stereo-only version of LV2 plugin to avoid
   crashes in Ardour.
