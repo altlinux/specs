@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: Collection of low-level Python packages and modules used by Logilab projects
@@ -15,16 +15,17 @@ Url: https://pypi.org/project/logilab-common
 BuildArch: noarch
 
 Source: %oname-%version.tar
-Patch0: logilab-%version-alt-urllib2.patch
+Patch0: logilab-1.10.0-alt-urllib2.patch
+Patch1: drop-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-mypy_extensions
-BuildRequires: python3-module-importlib-metadata
 BuildRequires: python3-module-typing_extensions
 BuildRequires: python3-module-pytz
+BuildRequires: python3-module-pytest
 %endif
 
 %py3_provides logilab
@@ -44,8 +45,9 @@ designed to ease:
   * logging
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
 %patch0 -p1
+%patch1 -p2
 
 %build
 %pyproject_build
@@ -54,16 +56,19 @@ designed to ease:
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -k 'not test_deprecation'
+%pyproject_run_pytest -v -k 'not test_deprecation'
 
 %files
-%doc ChangeLog README.rst COPYING
+%doc README.rst COPYING
 %_bindir/*
 %python3_sitelibdir/logilab
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/*-nspkg.pth
 
 %changelog
+* Thu Oct 26 2023 Anton Vyatkin <toni@altlinux.org> 1.11.0-alt1
+- new version 1.11.0
+
 * Thu Jul 13 2023 Anton Vyatkin <toni@altlinux.org> 1.10.0-alt1
 - new version 1.10.0
 
