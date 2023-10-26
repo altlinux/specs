@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     Cardinal
-Version:  23.09
+Version:  23.10
 Release:  alt1
 
 Summary:  Virtual modular synthesizer plugin
@@ -161,6 +161,9 @@ install -m 644 docs/*.md docs/*.png %buildroot%_datadir/doc/cardinal/docs/
 %doc %_datadir/doc/cardinal
 
 %changelog
+* Tue Oct 24 2023 Ivan A. Melnikov <iv@altlinux.org> 23.10-alt1
+- 23.10
+
 * Sun Sep 17 2023 Ivan A. Melnikov <iv@altlinux.org> 23.09-alt1
 - 23.09
 
