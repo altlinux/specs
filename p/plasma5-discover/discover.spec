@@ -20,9 +20,9 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
-%K5init no_altplace appdata
+%K5init no_altplace
 
 Group: System/Configuration/Packaging
 Summary: KDE Software Center
@@ -295,6 +295,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
 - new version
 

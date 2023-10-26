@@ -1,9 +1,9 @@
 %define rname plasma-systemmonitor
 
 Name: plasma5-systemmonitor
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
-%K5init altplace no_appdata
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Plasma 5 system resources monitor
@@ -82,6 +82,7 @@ Requires: %name-common
 %_K5cfg/*systemmonitor*
 %_K5data/knsrcfiles/*systemmonitor*
 %_K5data/plasma/kinfocenter/externalmodules/*systemmonitor*.desktop
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/plasma-systemmonitor_version.h
@@ -94,6 +95,9 @@ Requires: %name-common
 #%_K5lib/libplasma-systemmonitor.so.*
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
 - new version
 

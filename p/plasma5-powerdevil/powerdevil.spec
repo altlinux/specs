@@ -12,8 +12,8 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: plasma5-%rname
-Version: 5.27.8
-Release: alt2
+Version: 5.27.9
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -162,6 +162,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
+- new version
+
 * Wed Oct 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt2
 - don't suspend on AC by default
 

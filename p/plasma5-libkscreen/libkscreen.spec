@@ -4,7 +4,7 @@
 
 %define rname libkscreen
 Name: plasma5-%rname
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
 %K5init altplace
 
@@ -95,6 +95,7 @@ export PATH=%_qt5_bindir:$PATH
 
 %files utils
 %_K5bin/*
+%_datadir/zsh/site-functions/_*
 
 %files devel
 %_K5inc/kscreen_version.h
@@ -115,6 +116,9 @@ export PATH=%_qt5_bindir:$PATH
 %_K5lib/libKF5ScreenDpms.so.*
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
 - new version
 

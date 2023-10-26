@@ -2,9 +2,9 @@
 %filter_from_requires /inkscape/d
 
 Name: plasma5-sdk
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
-%K5init altplace no_appdata
+%K5init altplace
 
 Group: Development/KDE and QT
 Summary: KDE Workspace 5 Applications useful for Plasma Development
@@ -80,8 +80,13 @@ KF5 library
 %_K5data/plasma/shells/*/
 %_K5data/kpackage/
 %_K5srv/*.desktop
+%_datadir/zsh/site-functions/_*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
 - new version
 

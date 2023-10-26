@@ -36,10 +36,10 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.27.8
-Release: alt3
+Version: 5.27.9
+Release: alt1
 Epoch: 1
-%K5init altplace no_appdata
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Plasma
@@ -505,6 +505,8 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 %dir %_unitdir_user/plasma-workspace@.target.d/
 %_unitdir_user/*.service
 %_unitdir_user/*.target
+%_datadir/zsh/site-functions/_*
+%_datadir/metainfo/*.xml
 
 %files -n polkit-kde-plasma-workspace
 %_datadir/polkit-1/actions/*fontinst*.policy
@@ -557,6 +559,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt3
 - start xdg-user-dirs user service
 

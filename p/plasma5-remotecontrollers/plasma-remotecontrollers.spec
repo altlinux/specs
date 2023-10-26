@@ -4,9 +4,9 @@
 %def_disable xwiimote
 
 Name: plasma5-remotecontrollers
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
-%K5init altplace no_appdata
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: Input events to keypresses translator
@@ -102,11 +102,15 @@ mv %buildroot/%_libdir/udev/rules.d/40-uinput.rules %buildroot/%_udevrulesdir/40
 %_K5notif/*remotecontrollers*
 %_K5srv/*remotecontrollers*.desktop
 %_datadir/qlogging-categories5/*.*categories
+%_datadir/metainfo/*.xml
 
 %files devel
 %_K5dbus_iface/*remotecontrollers*
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
 - new version
 

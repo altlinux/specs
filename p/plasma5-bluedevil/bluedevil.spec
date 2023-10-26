@@ -1,10 +1,10 @@
 %define rname bluedevil
 
 Name: plasma5-%rname
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
 Epoch: 1
-%K5init altplace no_appdata
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 bluetooth stack
@@ -98,16 +98,12 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %_K5srv/*.desktop
 %_K5xdgmime/*.xml
 %_datadir/qlogging-categories5/*.*categories
-
-%post
-printf "Updating mime database: "
-if update-mime-database /usr/share/mime/ &>/dev/null; then
-        echo "OK"
-else
-        echo "FAIL"
-fi
+%_datadir/metainfo/*.xml
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt1
 - new version
 

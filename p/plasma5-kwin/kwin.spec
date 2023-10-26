@@ -16,7 +16,7 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: plasma5-%rname
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
 %K5init altplace
 
@@ -207,6 +207,9 @@ done
 
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
 - new version
 

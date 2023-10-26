@@ -4,9 +4,9 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: plasma5-%rname
-Version: 5.27.8
-Release: alt2
-%K5init altplace no_appdata
+Version: 5.27.9
+Release: alt1
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Info Center
@@ -154,12 +154,16 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K5bin/kinfocenter5-ansi2html.sh
 %_K5dbus_sys_srv/*dmidecode*
 %_datadir/dbus-1/system.d/*dmidecode*
 %_datadir/polkit-1/actions/*dmidecode*
+%_datadir/metainfo/*.xml
 
 %files -n %libkinfocenterinternal
 %_K5lib/libKInfoCenterInternal.so.*
 %_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt2
 - show full distro name in about module
 

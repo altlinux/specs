@@ -5,10 +5,10 @@
 %endif
 
 Name: plasma5-%rname
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
 Epoch: 1
-%K5init altplace no_appdata
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Display Management software
@@ -98,6 +98,7 @@ rm -f po/ru/kscreen.po.tmp
 %_unitdir_user/*kscreen*.service
 %_K5libexecdir/kscreen_osd_service
 %_K5dbus_srv/*kscreen*.service
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/kscreen_version.h
@@ -107,6 +108,9 @@ rm -f po/ru/kscreen.po.tmp
 #%_K5archdata/mkspecs/modules/qt_KScreen.pri
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt1
 - new version
 

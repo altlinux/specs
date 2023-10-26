@@ -1,10 +1,10 @@
 %define rname plasma-vault
 
 Name: plasma5-vault
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
 Epoch: 1
-%K5init altplace no_appdata
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: Encrypted vaults support for KDE
@@ -77,8 +77,12 @@ Requires: %name-common = %version-%release
 %_K5plug/plasma/applets/*vault*.so
 %_K5data/plasma/plasmoids/*vault*/
 %_K5srv/*.desktop
+%_datadir/metainfo/*.xml
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt1
 - new version
 

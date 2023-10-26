@@ -2,9 +2,9 @@
 %def_disable scim
 
 Name: plasma5-desktop
-Version: 5.27.8
-Release: alt2
-%K5init altplace no_appdata
+Version: 5.27.9
+Release: alt1
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 plasma desktop view furniture
@@ -236,6 +236,7 @@ done
 %_K5dbus_sys_srv/*.service
 %_datadir/accounts/providers/kde/*.provider
 %_datadir/accounts/services/kde/*.service
+%_datadir/metainfo/*.xml
 
 %files maxi
 %_K5bin/*emojier*
@@ -250,6 +251,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
+- new version
+
 * Tue Oct 03 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt2
 - add yandex-browser to menu favorites when available
 

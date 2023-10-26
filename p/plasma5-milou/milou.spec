@@ -4,10 +4,10 @@
 %define libmilou libmilou%milou_sover
 
 Name: plasma5-%rname
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
 Epoch: 1
-%K5init altplace no_appdata
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Search and Launch
@@ -80,6 +80,7 @@ KF5 library
 %_K5data/plasma/plasmoids/org.kde.milou/
 %_K5srv/*.desktop
 #%_K5srvtyp/*.desktop
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/milou_version.h
@@ -93,6 +94,9 @@ KF5 library
 %_K5lib/libmilou.so.%milou_sover
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt1
 - new version
 

@@ -2,10 +2,10 @@
 %def_disable libreswan
 
 Name: plasma5-nm
-Version: 5.27.8
-Release: alt2
+Version: 5.27.9
+Release: alt1
 Epoch: 1
-%K5init altplace no_appdata
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Plasma applet written in QML for managing network connections
@@ -232,6 +232,7 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5data/plasma/updates/*nm*
 %_K5notif/networkmanagement.notifyrc
 %_datadir/qlogging-categories5/*.*categories
+%_datadir/metainfo/*.xml
 
 %files maxi
 %files connect-mobile
@@ -260,6 +261,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
+- new version
+
 * Fri Oct 20 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt2
 - update requires
 

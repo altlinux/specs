@@ -9,7 +9,7 @@
 %define rname polkit-kde-agent-1
 
 Name: plasma5-polkit-kde-agent
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -92,6 +92,9 @@ KF5 library
 %endif
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.8-alt1
 - new version
 

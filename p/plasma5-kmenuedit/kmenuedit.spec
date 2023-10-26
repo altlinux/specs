@@ -1,9 +1,9 @@
 %define rname kmenuedit
 
 Name: plasma5-%rname
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
-%K5init altplace no_appdata
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Menu Editor
@@ -82,8 +82,12 @@ KF5 library
 %_K5xmlgui/kmenuedit/
 %_K5xdgapp/*.desktop
 %_K5icon/*/*/apps/kmenuedit.*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
 - new version
 

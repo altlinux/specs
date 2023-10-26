@@ -2,9 +2,9 @@
 %def_disable dialer
 
 Name: plasma5-mobile
-Version: 5.27.8
+Version: 5.27.9
 Release: alt1
-%K5init altplace no_appdata
+%K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: UI components for Plasma Phone
@@ -36,7 +36,7 @@ BuildRequires: kf5-kpackage-devel kf5-kpeople-devel kf5-kwayland-devel kf5-plasm
 BuildRequires: plasma5-kwin-devel plasma5-workspace-devel
 BuildRequires: kf5-kirigami-addons-devel
 %if_enabled dialer
-BuildRequires: phonenumber-devel
+BuildRequires: libphonenumber-devel
 %endif
 
 %description
@@ -108,6 +108,9 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 %_datadir/xsessions/plasma-mobile.desktop
 
 %changelog
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
+- new version
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.8-alt1
 - new version
 
