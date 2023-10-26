@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-gtk
-Version: 1.14.1
+Version: 1.15.1
 Release: alt1
 
 Summary: Backend implementation for xdg-desktop-portal using GTK+
@@ -17,13 +17,16 @@ Source: %url/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define xdg_desktop_portal_ver %version
+%define xdg_desktop_portal_ver 1.14
 %define gtk_ver 3.22
 
 Requires: xdg-desktop-portal >= %xdg_desktop_portal_ver
 
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: libgtk+3-devel >= %gtk_ver gsettings-desktop-schemas-devel
 BuildRequires: pkgconfig(xdg-desktop-portal) >= %xdg_desktop_portal_ver
+BuildRequires: pkgconfig(gnome-desktop-3.0)
 BuildRequires: libdbus-devel pkgconfig(systemd)
 
 %description
@@ -35,12 +38,14 @@ org.gnome.SessionManager D-Bus interfaces.
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
+
+%check
+%__meson_test
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -49,10 +54,16 @@ org.gnome.SessionManager D-Bus interfaces.
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.gtk.service
 %_datadir/xdg-desktop-portal/portals/gtk.portal
 %_userunitdir/%name.service
-%doc NEWS
+%doc NEWS README*
 
 
 %changelog
+* Thu Oct 26 2023 Yuri N. Sedunov <aris@altlinux.org> 1.15.1-alt1
+- 1.15.1
+
+* Thu Oct 05 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt2
+- updated to 1.14.1-21-g2bf8482
+
 * Wed Nov 30 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
 - 1.14.1
 
