@@ -2,7 +2,7 @@
 
 Name: stockfish
 Version: 16
-Release: alt1
+Release: alt2
 Group: Games/Boards
 
 Summary: Powerful open source chess engine
@@ -25,6 +25,7 @@ Source20: https://raw.githubusercontent.com/spinkham/stockfish/master/polyglot.i
 
 # Patch removes check for the existence of curl or wget in the makefile
 Patch0: stockfish-16-alt-remove-nnue-downloading-makefile.patch
+Patch3500: stockfish-loongarch64.patch
 
 BuildRequires: gcc-c++
 BuildRequires: make
@@ -43,6 +44,7 @@ test %nnuehash = "$(sha256sum %SOURCE1 | cut -c1-12)"
 %setup
 
 %patch0 -p1
+%patch3500 -p1
 %ifarch %e2k
 # SSSE3 is available on e2k, but assembly is different
 sed -i '/#define USE_INLINE_ASM/d' src/nnue/layers/simd.h
@@ -88,6 +90,10 @@ sed -e 's,\(EngineDir = \).*,\1%_bindir,' \
 %global sfarch e2k
 %endif
 
+%ifarch loongarch64
+%global sfarch loongarch64
+%endif
+
 %make_build -C src build ARCH=%sfarch
 
 %install
@@ -107,6 +113,9 @@ cp -p polyglot.ini %buildroot%_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/polyglot.ini
 
 %changelog
+* Fri Oct 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 16-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Wed Jul 19 2023 Leonid Znamenok <respublica@altlinux.org> 16-alt1
 - New version
 
