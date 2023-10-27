@@ -8,7 +8,7 @@ BuildRequires: libgnutls-devel
 %define _localstatedir %{_var}
 Name:           libobby
 Version:        0.4.8
-Release:        alt1_15
+Release:        alt2_15
 Summary:        A library which provides synced document buffers
 
 Group:          Development/Other
@@ -16,7 +16,7 @@ License:        GPLv2+
 URL:            http://releases.0x539.de/obby
 Source0:        http://releases.0x539.de/obby/%{oldname}-%{version}.tar.gz
 
-BuildRequires:  libnet6-devel libgmp-devel libgmpxx-devel gettext-tools libasprintf-devel, libavahi-devel
+BuildRequires:  libnet6-1.3-devel libgmp-devel libgmpxx-devel gettext-tools libasprintf-devel, libavahi-devel
 Source44: import.info
 Provides: obby = %{version}-%{release}
 
@@ -65,6 +65,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Fri Oct 27 2023 Igor Vlasenko <viy@altlinux.org> 0.4.8-alt2_15
+- build with new libnet6-1.3-devel
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt1_15
 - update to new release by fcimport
 
