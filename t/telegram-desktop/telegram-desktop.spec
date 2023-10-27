@@ -19,13 +19,14 @@
 %def_with x11
 %def_with rlottie
 %def_with gsl
+%def_without system_fonts
 %def_without ninja
 %def_without ffmpeg_static
 %def_without jemalloc
 
 Name: telegram-desktop
 Version: 4.10.5
-Release: alt2
+Release: alt3
 
 Summary: Telegram Desktop messaging app
 
@@ -297,6 +298,13 @@ for i in \
 	rm -r $i
 done
 
+%if_with rlottie
+# really ALT's rlottie is forked rlottie from desktop-app
+subst 's|#ifndef LOTTIE_USE_PACKAGED_RLOTTIE|#ifdef LOTTIE_USE_PACKAGED_RLOTTIE|' \
+	Telegram/lib_lottie/lottie/lottie_icon.cpp \
+	Telegram/lib_lottie/lottie/details/lottie_frame_provider_direct.cpp
+%endif
+
 %build
 %if_with ffmpeg_static
 export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
@@ -322,7 +330,11 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
     -DTDESKTOP_API_ID=%apiid \
     -DTDESKTOP_API_HASH=%apihash \
     -DDESKTOP_APP_USE_PACKAGED:BOOL=ON \
+%if_with system_fonts
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=ON \
+%else
+    -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=OFF \
+%endif
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
 %if_with qt6
@@ -390,6 +402,10 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Fri Oct 27 2023 Vitaly Lipatov <lav@altlinux.ru> 4.10.5-alt3
+- set rlottie as patched version (it is really so)
+- bulid with embedded fonts
+
 * Thu Oct 26 2023 Vitaly Lipatov <lav@altlinux.ru> 4.10.5-alt2
 - build with external GSL (ALT bug 47959)
 
