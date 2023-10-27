@@ -6,7 +6,7 @@
 
 Name: breezy
 Version: 3.2.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Breezy is a fork of the Bazaar version control system
 License: GPL-2.0-or-later
@@ -18,12 +18,14 @@ Packager: Anatoly Kitaykin <cetus@altlinux.ru>
 Source: %name-%version.tar
 
 Patch0: %name-%version-alt.patch
+Patch1: drop-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-six
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-configobj
+BuildRequires: python3-module-packaging
 
 %if_with check
 
@@ -88,6 +90,7 @@ This package contains 'bzr' alias for breezy 'brz' command.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -148,6 +151,9 @@ cp -a breezy/locale %buildroot%_datadir
 %endif
 
 %changelog
+* Fri Oct 27 2023 Anton Vyatkin <toni@altlinux.org> 3.2.2-alt1.2
+- NMU: Dropped dependency on distutils.
+
 * Wed Aug 16 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.2.2-alt1.1
 - NMU: ignored unmet dep breezy.bzr.errors
 
