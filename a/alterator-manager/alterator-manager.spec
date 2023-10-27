@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -52,6 +52,12 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %_includedir/alterator
 
 %changelog
+* Fri Oct 27 2023 Ivan Savin <svn17@altlinux.org> 0.1.9-alt1
+- Fix method names in ru.basealt.alterator.manager.
+- Add automatic cleaning of environment variables.
+- Add support environment variables management for dbus senders (sin@).
+- Fix typos in alterator_manager_backends.h (sin@).
+
 * Mon Oct 16 2023 Ivan Savin <svn17@altlinux.org> 0.1.8-alt1
 - Fix: wrong method names in ru.basealt.alterator.manager.
 
