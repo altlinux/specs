@@ -2,7 +2,7 @@
 
 Name: kde5-plasma-wallpapers-dynamic
 Version: 4.4.0
-Release: alt1
+Release: alt2
 Summary: Dynamic wallpaper plugin for KDE Plasma
 License: GPL-3.0-or-later and LGPL-3.0-or-later and MIT
 Group: Graphical desktop/KDE
@@ -52,11 +52,11 @@ https://github.com/karmanyaahm/awesome-plasma5-dynamic-wallpapers
 %find_lang --with-kde %name
 
 %files -f %name.lang
-%_kf5_bin/kdynamicwallpaperbuilder
+%_bindir/kdynamicwallpaperbuilder
 %_libdir/libkdynamicwallpaper.so.*
 %_K5plug/kpackage/packagestructure/packagestructure_dynamicwallpaper.so
 %_K5qml/com/github/zzag/plasma/wallpapers/dynamic
-%_K5data/plasma/wallpapers/com.github.zzag.dynamic
+%_kf5_data/plasma/wallpapers/com.github.zzag.dynamic
 %_datadir/wallpapers/Dynamic
 %_datadir/locale/*/LC_MESSAGES/plasma_wallpaper_com.github.zzag.dynamic.mo
 %_datadir/metainfo/com.github.zzag.dynamic.appdata.xml
@@ -72,6 +72,9 @@ https://github.com/karmanyaahm/awesome-plasma5-dynamic-wallpapers
 %_libdir/cmake/KDynamicWallpaper
 
 %changelog
+* Thu Oct 26 2023 Alexander Makeenkov <amakeenk@altlinux.org> 4.4.0-alt2
+- Fixed build with new rpm-build-kf5.
+
 * Thu Oct 06 2022 Alexander Makeenkov <amakeenk@altlinux.org> 4.4.0-alt1
 - Updated to version 4.4.0
 - Spec:
