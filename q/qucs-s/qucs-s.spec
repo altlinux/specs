@@ -3,10 +3,10 @@
 
 Name: qucs-s
 Version: 2.1.0
-Release: alt2.20231018
+Release: alt3
 
 Summary: Circuit simulator
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Education
 Url: https://github.com/ra3xdh/qucs_s
 
@@ -17,14 +17,15 @@ Buildrequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: flex
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-script-devel
-BuildRequires: qt5-svg-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-svg-devel
 BuildRequires: rpm-build-python3
 Requires: %name-data = %EVR
 #Requires: qucs
 Requires: ngspice
+# https://bugzilla.altlinux.org/47318
+Requires: qt6-svg
 %add_python3_path %_datadir/%name/python
 
 Obsoletes: qucs-s-data =< %EVR
@@ -65,6 +66,10 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Fri Oct 27 2023 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt3
+- 2.1.0 release
+- build with qt6
+
 * Wed Oct 18 2023 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt2.20231018
 - update russian translation
 - use git diff instead patches
