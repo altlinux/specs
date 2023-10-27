@@ -6,7 +6,7 @@
 %define pyname pythran
 Name: python3-module-%pyname
 Version: 0.14.0
-Release: alt1
+Release: alt2
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
 Provides: %pyname
@@ -16,6 +16,7 @@ BuildArch: noarch
 Url: https://github.com/serge-sans-paille/pythran
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
+Patch1: drop-distutils.patch
 
 BuildRequires: make
 BuildRequires: boost-devel
@@ -58,6 +59,7 @@ instruction units.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 find -name '*.hpp' -exec chmod -x {} +
 sed -i '1{/#!/d}' pythran/run.py
 
@@ -94,7 +96,7 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %tox_create_default_config
 %tox_check_pyproject -- -k "not test_cli and not test_toolchain"
 
-%files 
+%files
 %doc LICENSE
 %doc README.rst
 %doc docs/_build/html
@@ -105,6 +107,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %python3_sitelibdir_noarch/omp
 
 %changelog
+* Fri Oct 27 2023 Anton Vyatkin <toni@altlinux.org> 0.14.0-alt2
+- (NMU) Dropped dependency on distutils.
+
 * Thu Sep 28 2023 Anton Vyatkin <toni@altlinux.org> 0.14.0-alt1
 - (NMU) New version 0.14.0.
 
