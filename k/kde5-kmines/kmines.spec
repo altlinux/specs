@@ -2,8 +2,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init no_appdata no_appdata
+Release: alt2
+%K5init
 
 Group: Games/Strategy
 Summary: The classical mine sweeper
@@ -45,8 +45,12 @@ BuildRequires: kf5-kcrash-devel
 %_K5icon/*/*/apps/kmines.*
 %_K5xdgapp/org.kde.kmines.desktop
 %_datadir/qlogging-categories5/*.*categories
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Oct 27 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
