@@ -1,6 +1,6 @@
 Name: fail2ban
 Version: 0.11.2
-Release: alt2
+Release: alt3
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -21,6 +21,8 @@ Patch1: 410a6ce5c80dd981c22752da034f2529b5eee844.patch
 Patch2: 747d4683221b5584f9663695fb48145689b42ceb.patch
 # python 3.10 fix
 Patch3: ea26509594a3220b012071604d73bb42d0ecae2c.patch
+# python 3.12 fix
+Patch4: drop-distutils.patch
 
 BuildArch: noarch
 
@@ -54,6 +56,7 @@ Recommends: python3-module-systemd
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 %__subst "s|paths-debian.conf|paths-altlinux.conf|g" config/jail.conf
 # setuptools>=58 breaks support for use_2to3
 %__subst "s|.*use_2to3.*||" setup.py
@@ -124,6 +127,9 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 %_logrotatedir/%name
 
 %changelog
+* Fri Oct 27 2023 Anton Vyatkin <toni@altlinux.org> 0.11.2-alt3
+- Dropped dependency on distutils.
+
 * Sat Sep 18 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.2-alt2
 - fix build, apply patches from upstream
 - .service: use /run instead of /var/run
