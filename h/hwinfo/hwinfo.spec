@@ -3,7 +3,7 @@
 Name: hwinfo
 %define lname lib%name
 Version: 21.23
-Release: alt1.2
+Release: alt1.3
 Summary: Hardware detection tool
 License: GPLv2
 Group: System/Kernel and hardware
@@ -16,6 +16,7 @@ Patch2: %name-21.23-makefile.patch
 Patch3: %name-14.19-alt.patch
 Patch4: %name-alt-no-hal.patch
 Patch5: hwinfo-21.23-perl522.patch
+Patch3500: hwinfo-loongarch64.patch
 
 Requires: %lname = %version-%release
 
@@ -93,6 +94,7 @@ on a system.
 %patch3 -p1
 %patch4 -p2
 %patch5 -p2
+%patch3500 -p1
 
 
 %build
@@ -146,6 +148,9 @@ install -m 0644 doc/libhd/html/* %buildroot%_docdir/%lname-%version/html/
 
 
 %changelog
+* Thu Oct 26 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 21.23-alt1.3
+- NMU: fixed FTBFS on LoongArch.
+
 * Mon Oct 18 2021 Grigory Ustinov <grenka@altlinux.org> 21.23-alt1.2
 - Build without static library.
 
