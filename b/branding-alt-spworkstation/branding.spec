@@ -24,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt5
+Release: alt6
 Epoch: 1
 Url: https://altsp.su
 
@@ -274,7 +274,6 @@ if ! [ -e %_datadir/alt-notes/license.all.html ]; then
 fi
 
 %post mate-settings
-subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
 /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
 
 %files alterator
@@ -305,6 +304,7 @@ subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.c
 
 %files mate-settings
 %_datadir/glib-2.0/schemas/*.gschema.override
+%_datadir/install3/*
 
 #%%files slideshow
 #/etc/alterator/slideshow.conf
@@ -321,6 +321,11 @@ subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.c
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Oct 27 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt6
+- mate-settings: add settings for lightdm-gtk-greeter:
+  + add keyboard layout indicator
+  + enable screen keyboard (onboard)
+
 * Tue Oct 17 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt5
 - indexhtml: update link to official telegram chat
 - indexhtml: add link to Mailing Lists
