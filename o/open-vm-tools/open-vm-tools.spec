@@ -20,8 +20,8 @@
 %def_with gtkmm3
 
 %global majorversion    12.3
-%global minorversion    0
-%global toolsbuild      22234872
+%global minorversion    5
+%global toolsbuild      22544099
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -324,6 +324,9 @@ fi
 
 
 %changelog
+* Fri Oct 27 2023 Andrew A. Vasilyev <andy@altlinux.org> 12.3.5-alt1
+- 12.3.5 (CVE-2023-34058, CVE-2023-34059)
+
 * Thu Aug 31 2023 Andrew A. Vasilyev <andy@altlinux.org> 12.3.0-alt1
 - 12.3.0 (CVE-2023-20900)
 
