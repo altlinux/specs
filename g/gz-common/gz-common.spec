@@ -2,7 +2,7 @@
 
 Name:    gz-common
 Version: 5.4.0
-Release: alt2
+Release: alt3
 
 Summary: Gazebo Common : AV, Graphics, Events, and much more
 License: Apache-2.0
@@ -15,6 +15,12 @@ Source: %name-%version.tar
 Patch0: gz-common-alt-fix-build.patch
 Patch1: gz-common-alt-gcc13.patch
 Patch2: gz-common-alt-gdal-without-version.patch
+
+# XXX: gz_remotery_vis calls `xdg-open` if available tries
+# XXX: `open` if not (presumably to support both Linux and macos).
+# XXX: This causes a spurious dependency on gnustep (which tries
+# XXX: to mimic macos)
+%filter_from_requires /\/bin\/open$/d
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -94,6 +100,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Oct 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.4.0-alt3
+- NMU: avoid spurious dependency on gnustep.
+
 * Wed Sep 20 2023 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt2
 - FTBFS: removed libavresample-devel.
 
