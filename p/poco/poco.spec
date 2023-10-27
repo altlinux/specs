@@ -1,6 +1,6 @@
 Name: poco
-Version: 1.12.4
-Release: alt2
+Version: 1.12.5
+Release: alt1
 Summary: POrtable COmponents C++ Libraries
 License: BSL-1.0
 Group: Development/C++
@@ -303,6 +303,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %_libdir/cmake/*
 
 %changelog
+* Fri Oct 27 2023 Alexei Takaseev <taf@altlinux.org> 1.12.5-alt1
+- 1.12.5
+
 * Wed Dec 07 2022 Alexei Takaseev <taf@altlinux.org> 1.12.4-alt2
 - Add subpackage postgresql
 
