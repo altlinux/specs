@@ -15,7 +15,7 @@
 
 Name: embree
 Version: 4.3.0
-Release: alt1
+Release: alt1.1
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
 License: Apache-2.0
@@ -117,6 +117,9 @@ rm -f %buildroot%prefix/%{name}-vars.*
 %_man3dir/*
 
 %changelog
+* Fri Oct 27 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.3.0-alt1.1
+- Updated patch for Elbrus.
+
 * Thu Oct 26 2023 L.A. Kostis <lakostis@altlinux.ru> 4.3.0-alt1
 - Updated to upstream version 4.3.0.
 
