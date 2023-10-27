@@ -1,6 +1,6 @@
 Name: xorg-conf-synaptics
 Version: 1.0
-Release: alt1
+Release: alt2
 Summary: Config file for Synaptics touchpads
 License: %pubdomain
 Group: System/Configuration/Hardware
@@ -23,6 +23,9 @@ install -Dm0644 %SOURCE0 %buildroot/%_sysconfdir/X11/xorg.conf.d/75-synaptics-ex
 %config(noreplace) %_sysconfdir/X11/xorg.conf.d/75-synaptics-extra.conf
 
 %changelog
+* Wed Oct 25 2023 Dmitry Terekhin <jqt4@altlinux.org> 1.0-alt2
+- Add an additional setting for touchpads with ID 0911:5288
+
 * Mon Jul 03 2017 Mikhail Efremov <sem@altlinux.org> 1.0-alt1
 - Rename config and move it to 75 position (closes: #33611).
 - Drop MaxTapTime option.
