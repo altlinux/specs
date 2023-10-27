@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-UUID
-Version: 0.28
-Release: alt1.1
+Version: 0.29
+Release: alt1
 Summary: DCE compatible Universally Unique Identifier library for Perl
 
 Group: Development/Perl
@@ -37,6 +37,9 @@ Environment (DCE) utility uuidgen.
 %perl_vendor_autolib/UUID
 
 %changelog
+* Fri Oct 27 2023 Igor Vlasenko <viy@altlinux.org> 0.29-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1.1
 - rebuild with new perl 5.28.1
 
