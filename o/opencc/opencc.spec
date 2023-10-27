@@ -1,6 +1,6 @@
 Name:       opencc
 Version:    1.1.7
-Release:    alt1
+Release:    alt1.1
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
 License:    Apache-2.0
@@ -15,7 +15,7 @@ BuildRequires: gcc-c++
 BuildRequires: gettext
 BuildRequires: ctest
 BuildRequires: doxygen
-BuildRequires: python-modules-encodings
+BuildRequires: python3
 
 %description
 OpenCC is a library for converting characters and phrases between
@@ -86,6 +86,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Oct 27 2023 Ivan A. Melnikov <iv@altlinux.org> 1.1.7-alt1.1
+- NMU: Drop python2 from BR (thx asheplyakov@).
+
 * Mon Oct 16 2023 Andrey Cherepanov <cas@altlinux.org> 1.1.7-alt1
 - New version.
 
