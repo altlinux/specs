@@ -2,27 +2,42 @@
 
 %define oname scikit-learn
 
-%def_disable check
+# CPU time limit exceeded on armh and ppc64le
+# test_graphviz_toy failed on i586
+%ifnarch armh ppc64le %ix86
+%def_with check
+%else
+%def_without check
+%endif
 
 Name: python3-module-%oname
-Version: 0.23.2
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: A set of python modules for machine learning and data mining
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/scikit-learn/
+Url: https://pypi.python.org/pypi/scikit-learn
 
-# https://github.com/scikit-learn/scikit-learn.git
+# https://github.com/scikit-learn/scikit-learn
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ liblapack-devel xvfb-run
+BuildRequires: gcc-c++
+BuildRequires: liblapack-devel
 BuildRequires: libgomp-devel
-BuildRequires: libnumpy-py3-devel python3-module-numpy-testing python3-module-scipy python3-module-zope python3-module-pytest
-BuildRequires: python3-module-six python3-module-joblib python3-module-Cython
-BuildRequires: python3(threadpoolctl)
+BuildRequires: libnumpy-py3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-scipy
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-joblib
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-threadpoolctl
+BuildRequires: python3-module-contourpy
+%endif
 
 %py3_provides sklearn
 
@@ -41,52 +56,37 @@ SciPy and distributed under the 3-Clause BSD license.
 
 This package contains tests for %oname.
 
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-scikit-learn is a Python module for machine learning built on top of
-SciPy and distributed under the 3-Clause BSD license.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-%patch1 -p1
 
 %build
 export BLAS=openblas
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-rm -fR build
-%__python3 setup.py build_ext -i
-xvfb-run py.test3 -vv
+pushd %buildroot%python3_sitelibdir
+py.test3 -vv
+rm -rv .pytest_cache
+popd
 
 %files
-%doc *.md *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/*/test*
+%doc COPYING *.md *.rst
+%python3_sitelibdir/sklearn
+%python3_sitelibdir/scikit_learn-%version.dist-info
+%python3_sitelibdir/sklearn/tests
+%python3_sitelibdir/sklearn/*/tests
+%python3_sitelibdir/sklearn/*/*/tests
+%python3_sitelibdir/sklearn/utils/_testing.py
+%python3_sitelibdir/sklearn/utils/__pycache__/_testing.*
 
-%files tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/*/test*
-%python3_sitelibdir/*/*/*/*/test*
-
-%files docs
-%doc examples doc
 
 %changelog
+* Fri Oct 27 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Automatically updated to 1.3.0 (Closes: #46326).
+
 * Thu Apr 27 2023 Anton Vyatkin <toni@altlinux.org> 0.23.2-alt2
 - Fix BuildRequries
 
@@ -129,4 +129,3 @@ xvfb-run py.test3 -vv
 
 * Sat Nov 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16-alt1.git20141113
 - Initial build for Sisyphus
-

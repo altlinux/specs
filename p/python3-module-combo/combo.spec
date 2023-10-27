@@ -1,8 +1,11 @@
 %define oname combo
 
+# breaking cycle dependency on pyod
+%def_without check
+
 Name: python3-module-combo
 Version: 0.1.0
-Release: alt1
+Release: alt1.16.git.c3e7402
 
 Summary: A Python Toolbox for Machine Learning Model Combination
 
@@ -38,7 +41,10 @@ BuildRequires(pre): rpm-build-python3 rpm-build-intro
 
 # for tests
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-scikit-learn-tests
+BuildRequires: python3-module-scikit-learn
+%if_with check
+BuildRequires: python3-module-pyod
+%endif
 
 %description
 combo is a comprehensive Python toolbox for combining machine learning (ML) models and scores.
@@ -68,5 +74,8 @@ PYTHONPATH=$(pwd) py.test3 || echo "Test result are ignored."
 %python3_sitelibdir/%oname-*.egg-info/
 
 %changelog
+* Fri Oct 27 2023 Grigory Ustinov <grenka@altlinux.org> 0.1.0-alt1.16.git.c3e7402
+- Build from snapshot, because deprecated sklearn.utils.testing was removed.
+
 * Sat Feb 27 2021 Vitaly Lipatov <lav@altlinux.ru> 0.1.0-alt1
 - initial build for ALT Sisyphus
