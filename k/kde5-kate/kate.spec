@@ -5,8 +5,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init altplace no_appdata
+Release: alt2
+%K5init
 
 Group: Editors
 Summary: Advanced text editor
@@ -80,6 +80,9 @@ Requires: %name-common
 %setup -n %rname-%version
 %patch1 -p1
 
+# clean mime-type
+sed -i 's|inode/directory;||' apps/kate/data/org.kde.kate.desktop
+
 %build
 %K5build
 
@@ -139,11 +142,13 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 %_K5data/kateproject/
 %_K5data/katexmltools/
 %_K5conf_up/*kate*
+%_datadir/metainfo/*kate*.xml
 
 %files -n kde5-kwrite
 %_K5bin/kwrite
 %_K5xdgapp/org.kde.kwrite.desktop
 %_K5icon/hicolor/*/apps/kwrite.*
+%_datadir/metainfo/*kwrite*.xml
 
 %files -n %libkateprivate
 %_K5lib/libkateprivate.so.%sover
@@ -155,6 +160,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 #%_K5link/lib*.so
 
 %changelog
+* Fri Oct 27 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- fix open directories by kate
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
