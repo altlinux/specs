@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20231019
+Version: 20231026
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,16 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Fri Oct 27 2023 Cronbuild Service <cronbuild@altlinux.org> 20231026-alt1
+- upstream changes (GIT 2ceaa29d):
+  + Intel Bluetooth: Update firmware file for Intel Bluetooth AX203 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Intel Bluetooth
+    Magnetor AX201 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Intel Bluetooth
+    Magnetor AX211 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Intel Bluetooth BE200 (thx Kiran K)
+  + rtl_nic: update firmware of RTL8156B (thx Hayes Wang)
+
 * Thu Oct 19 2023 Cronbuild Service <cronbuild@altlinux.org> 20231019-alt1
 - upstream changes (GIT d983107a):
   + Update AMD cpu microcode (thx John Allen)
