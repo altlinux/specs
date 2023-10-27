@@ -7,7 +7,7 @@
 
 Name:           python3-module-%modname
 Version:        0.4.5
-Release:        alt5
+Release:        alt5.1
 Summary:        A python client library for etcd
 Group:          System/Libraries
 License:        MIT
@@ -16,10 +16,6 @@ Source0:        %{name}-%{version}.tar
 Patch:          remove-nose.patch
 
 BuildArch:      noarch
-
-# See https://bugzilla.redhat.com/1393497
-# Also https://fedoraproject.org/wiki/Packaging:Guidelines#Noarch_with_Unported_Dependencies
-ExclusiveArch:  noarch %{ix86} x86_64 %{arm} aarch64 ppc64le s390x
 
 BuildRequires:  python3-module-setuptools
 BuildRequires:  python3-module-wheel
@@ -66,6 +62,10 @@ election.
 %exclude %python3_sitelib/*/tests
 
 %changelog
+* Sat Oct 28 2023 Ivan A. Melnikov <iv@altlinux.org> 0.4.5-alt5.1
+- NMU: drop Fedora-specific ExclusiveArch
+  to build on loongarch64 and ricv64.
+
 * Wed Sep 13 2023 Anton Vyatkin <toni@altlinux.org> 0.4.5-alt5
 - Fix FTBFS.
 
