@@ -1,29 +1,26 @@
 %define _localedir %_datadir/locale
 
-Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
 Version: 4.6.0
-Release: alt1
-Packager: Evgeny Sinelnikov <sin@altlinux.ru>
+Release: alt2
 
-Source: %name-%version.tar
+Summary: A set of tools to gather troubleshooting information from a system
 License: GPL-2.0+
 Group: System/Configuration/Other
-
-BuildArch: noarch
 Url: http://github.com/sosreport/sos
+Packager: Evgeny Sinelnikov <sin@altlinux.ru>
+BuildArch: noarch
+
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
+
+Provides: sysreport = 1.3.15-8
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3-module-wheel
-Provides: sysreport = 1.3.15-8
 
-Patch: %name-%version-alt.patch
-
-%filter_from_requires /setuptools._vendor.packaging/d
-%py3_requires setuptools
 
 %description
 Sos is a set of tools that gathers information about system
@@ -32,7 +29,7 @@ diagnostic purposes and debugging. Sos is commonly used to help
 support technicians and developers.
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 %patch -p1
 
 %build
@@ -48,12 +45,16 @@ rm -f %buildroot%_defaultdocdir/%name/{AUTHORS,README.md}
 rm -f %buildroot%_datadir/licenses/sos/LICENSE
 %find_lang %name
 
+# like Fedora does
+rm -rf %buildroot/usr/config/
+
 %files -f %name.lang
 %doc AUTHORS README.md docs/*
 %config(noreplace) %_sysconfdir/sos/sos.conf
 %_sbindir/sos
 %_sbindir/sosreport
 %_sbindir/sos-collector
+%dir %_sysconfdir/sos
 %dir %_sysconfdir/sos/cleaner
 %dir %_sysconfdir/sos/presets.d
 %dir %_sysconfdir/sos/extras.d
@@ -64,6 +65,12 @@ rm -f %buildroot%_datadir/licenses/sos/LICENSE
 %_man5dir/sos.conf.5*
 
 %changelog
+* Thu Oct 26 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 4.6.0-alt2
+- NMU:
+    + cleaned up spec
+    + replace python2.7 with python3 for setup.py patch
+    + fixed up building and runtime dependencies and their filters
+
 * Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 4.6.0-alt1
 - New version (ALT #48188).
 
