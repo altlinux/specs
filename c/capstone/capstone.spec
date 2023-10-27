@@ -7,7 +7,7 @@
 Summary: Capstone disassembly/disassembler framework
 Name: capstone
 Version: 4.0.2
-Release: alt4
+Release: alt4.1
 License: BSD-3-Clause
 Group: Development/Tools
 Url: http://capstone-engine.org/
@@ -15,6 +15,7 @@ Vcs: https://github.com/capstone-engine/capstone
 
 Source: %name-%version-%release.tar
 Patch1: Allow-to-override-PYTHON-23-in-Makefiles.patch
+Patch2: remove-distutils-for-python-3.12.patch
 
 Requires: lib%name = %EVR
 
@@ -134,6 +135,9 @@ cstool -d x64 90
 %_javadir/*.jar
 
 %changelog
+* Fri Oct 27 2023 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt4.1
+- NMU: dropped dependency on distutils.
+
 * Tue Aug 08 2023 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt4
 - NMU: remove unused BR: python3-module-yieldfrom
 
