@@ -1,3 +1,5 @@
+# for now is not adapted for python3.12
+%def_without demo
 # for now, sphinx fails on armh :( remove when fixed.
 %def_enable archdocs
 %ifarch armh
@@ -8,7 +10,7 @@
 %endif
 Name:		python3-module-wx
 Version:	4.2.0
-Release:	alt1
+Release:	alt2
 Group:		Development/Python3
 Summary:	The cross-platform GUI toolkit for the Python language
 URL:		https://pypi.org/project/wxPython
@@ -26,6 +28,23 @@ BuildRequires: python3-module-sphinx
 # pip is used in wget as latest fallback, but we have wget or urllib
 %add_python3_req_skip pip
 
+# there are no provides that could ever satisfy these deps :(
+%add_python3_req_skip wx._msw
+%add_python3_req_skip wx.lib.pubsub.core.arg1.callables
+%add_python3_req_skip wx.lib.pubsub.core.arg1.listenerbase
+%add_python3_req_skip wx.lib.pubsub.core.arg1.publisherbase
+%add_python3_req_skip wx.lib.pubsub.core.arg1.topicutils
+%add_python3_req_skip wx.lib.pubsub.core.kwargs.callables
+%add_python3_req_skip wx.lib.pubsub.core.kwargs.listenerbase
+%add_python3_req_skip wx.lib.pubsub.core.kwargs.publisherbase
+%add_python3_req_skip wx.lib.pubsub.core.kwargs.topicutils
+%add_python3_req_skip wx.lib.pubsub.core.kwargs.validatedefnargs
+%add_python3_req_skip wx.lib.pubsub.core.listenerimpl
+%add_python3_req_skip wx.lib.pubsub.core.publisher
+%add_python3_req_skip wx.lib.pubsub.core.publishermixin
+%add_python3_req_skip wx.lib.pubsub.core.topicargspecimpl
+%add_python3_req_skip wx.lib.pubsub.core.topicmgrimpl
+
 %description
 wxPython is a cross-platform GUI toolkit for the Python programming
 language. It allows Python programmers to create programs with a robust,
@@ -39,6 +58,7 @@ is free for anyone to use and the source code is available for anyone to
 look at and modify. And anyone can contribute fixes or enhancements to
 the project.
 
+%if_with demo
 %package demo
 Summary: Demo programs for wxPython
 Group: Development/Python3
@@ -47,6 +67,7 @@ License:	GPL-2.0+ WITH WxWindows-exception-3.1
 %summary
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/wx/demo
+%endif
 
 %package utils
 Summary: Development tools for wxPython
@@ -105,6 +126,10 @@ mkdir -p %buildroot%python3_sitelibdir_noarch
 cp -a demo %buildroot%python3_sitelibdir/wx/demo
 # TODO icon/desktop for pycrust/demo
 
+%if_without demo
+rm -rv %buildroot%python3_sitelibdir/wx/demo
+%endif
+
 %find_lang wxstd
 
 %add_python3_req_skip wx.activex comtypes.client comtypes.gen comtypes.hresult comtypes win32com.client.gencache __main__
@@ -112,21 +137,27 @@ cp -a demo %buildroot%python3_sitelibdir/wx/demo
 %files -f wxstd.lang
 %doc [A-Z]*.*
 %python3_sitelibdir/*
+%if_with demo
 %exclude %python3_sitelibdir/wx/demo
+
+%files demo
+%python3_sitelibdir/wx/demo
+%endif
 
 %if_enabled docs
 %files docs
 %doc docs/html samples
 %endif
 
-%files demo
-%python3_sitelibdir/wx/demo
-
 %files utils
 %doc wx/py/README.txt
 %_bindir/*
 
 %changelog
+* Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt2
+- Build without demo.
+- Skipped unmet dependencies (thx to kotopesutility@).
+
 * Sat Jan 14 2023 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Build new version (Closes: #44826 and #44827).
 
