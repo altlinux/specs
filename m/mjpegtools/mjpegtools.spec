@@ -3,7 +3,7 @@
 
 Name: mjpegtools
 Version: 2.2.1
-Release: alt1
+Release: alt2
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
 License: GPLv2
@@ -117,6 +117,9 @@ sed -i 's,local/bin/,/bin/,' %buildroot%_bindir/*.sh
 # remove non-packaged files
 rm -f %buildroot%_infodir/dir
 
+# remove unsupported transcode
+rm -f %buildroot%_bindir/lavtc.sh
+
 %files
 %_bindir/*
 %_man1dir/*
@@ -136,6 +139,9 @@ rm -f %buildroot%_infodir/dir
 %_libdir/*.a
 
 %changelog
+* Fri Oct 27 2023 Anton Farygin <rider@altlinux.ru> 2.2.1-alt2
+- removed lavtc.sh due to unsupported transcode
+
 * Mon Oct 04 2021 Anton Farygin <rider@altlinux.ru> 2.2.1-alt1
 - 2.2.1
 
