@@ -6,7 +6,7 @@
 %define sover 0
 
 Name: libnbd
-Version: 1.18.0
+Version: 1.19.1
 Release: alt1
 Summary: NBD client library in userspace
 License: LGPL-2.1-or-later
@@ -84,8 +84,11 @@ rm %buildroot%_datadir/bash-completion/completions/nbdsh
 %_man3dir/*.3*
 
 %changelog
+* Thu Oct 26 2023 Vitaly Chikunov <vt@altlinux.org> 1.19.1-alt1
+- Update to v1.19.1 (2023-10-23).
+
 * Wed Sep 27 2023 Vitaly Chikunov <vt@altlinux.org> 1.18.0-alt1
-- Update to v1.18.0 (2023-09-27).
+- Update to v1.18.0 (2023-09-27). (Fixes: CVE-2023-5215).
 
 * Sun Sep 10 2023 Vitaly Chikunov <vt@altlinux.org> 1.17.5-alt1
 - Update to v1.17.5 (2023-09-08).
