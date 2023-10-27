@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.12
+Version: 1.5.13
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,25 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Oct 27 2023 Anton Midyukov <antohami@altlinux.org> 1.5.13-alt1
+- remove lilo support
+- image.in/Makefile: fix show image size
+- oem: do not set English language by default
+- services: Add (un)mask systemd units (thx @jqt4)
+- grub: add variable DISABLE_LANG_MENU
+- x11-autostart: enable graphical.target
+- oem: fix enabled oem.target
+- x11-autostart: do not require use/x11
+- Revert "initrd-propagator: add {STAGE2,RESCUE}_BOOTARGS=udev.log_level=err"
+- l10n: set KEYMAP in vconsole.conf if exist
+- initrd-bootchain: exclude initrd feature kbd
+- live-install: remove use/live-install/vnc
+- live-install: add use/live-install-pkg
+- oem: add systemd.unit=setup.target to kernel cmdline
+- alt-education: sync with ALT Education 10.2 (thx @cas)
+- slinux: sync with Simply Linux 10.2 (thx @sem)
+- alt-server: add latest commits (thx @jqt4)
+
 * Fri Sep 29 2023 Anton Midyukov <antohami@altlinux.org> 1.5.12-alt1
 - pkgpriorities: fix clash 50-pkgpriorities.mk,
   fix usage for main subprofile
