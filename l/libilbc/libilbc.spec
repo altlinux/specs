@@ -11,7 +11,7 @@ Summary:	Internet Low Bitrate Codec (iLBC) library
 Name:		libilbc
 Epoch:		1
 Version:	2.0.2
-Release:	alt1_8.1
+Release:	alt1_8.2
 License:	BSD-style
 Group:		System/Libraries
 URL:		https://github.com/TimothyGu/libilbc
@@ -96,6 +96,9 @@ rm -rf %{buildroot}%{_datadir}/doc/libilbc
 
 
 %changelog
+* Fri Oct 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:2.0.2-alt1_8.2
+- NMU: fixed FTBFS on LoongArch
+
 * Sat Jan 08 2022 Michael Shigorin <mike@altlinux.org> 1:2.0.2-alt1_8.1
 - E2K: ftbfs workaround (ilyakurdyukov@)
 
