@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl(Module/Runtime.pm) perl(Types/Standard.pm) perl-podlators
 # END SourceDeps(oneline)
 %define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
-Version:	0.400002
-Release:	alt1_13
+Version:	0.500002
+Release:	alt1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/CPAN-Changes
-Source0:	https://cpan.metacpan.org/modules/by-module/CPAN/CPAN-Changes-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/H/HA/HAARG/CPAN-Changes-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
@@ -80,6 +81,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Fri Oct 27 2023 Igor Vlasenko <viy@altlinux.org> 0.500002-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_13
 - update to new release by fcimport
 
