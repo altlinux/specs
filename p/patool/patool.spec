@@ -1,6 +1,6 @@
 Name: patool
-Version: 1.12
-Release: alt2
+Version: 1.15.0
+Release: alt1
 
 Summary: Portable command line archive file manager
 
@@ -15,7 +15,8 @@ Url: https://github.com/wummel/patool/
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %description
 Various archive types can be created, extracted, tested and listed by
@@ -42,17 +43,21 @@ and do not require helper applications to be installed.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %_bindir/%name
-%_man1dir/%name.*
+#_man1dir/%name.*
 %python3_sitelibdir/*
 
 %changelog
+* Sat Oct 28 2023 Vitaly Lipatov <lav@altlinux.ru> 1.15.0-alt1
+- new version 1.15.0
+- switch to pyproject_build
+
 * Tue Jan 21 2020 Vitaly Lipatov <lav@altlinux.ru> 1.12-alt2
 - rebuild with python3
 
