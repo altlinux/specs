@@ -13,7 +13,7 @@ BuildRequires: gcc-c++
 
 Name:          gtkglextmm
 Version:       1.2.0
-Release:       alt3_14
+Release:       alt3_15
 Summary:       C++ wrapper for GtkGlExt
 Group:         System/Libraries
 License:       LGPL
@@ -25,9 +25,7 @@ Patch1:		fix_ftbfs_gtk_2_20.patch
 Patch2:		fix_ftbfs_gtk_2_36.patch
 Patch3:		fix_ftbfs_gtk_2_37.patch
 Patch4:		gtkglextmm-1.2.0-autotools.patch
-BuildRequires: glibc-devel glibc-devel-static
-BuildRequires: libgcc
-BuildRequires: libstdc++12-devel
+BuildRequires: glibc-devel
 BuildRequires: pkgconfig(atk)
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(cairomm-1.0)
@@ -135,6 +133,10 @@ rm -f %{buildroot}%{_libdir}/*.la
 
 
 %changelog
+* Sat Oct 28 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2.0-alt3_15
+- NMU: fixed FTBFS on LoongArch (dropped bogus build requirements, such
+  as C++ runtime from GCC 12, etc)
+
 * Fri Oct 27 2023 Igor Vlasenko <viy@altlinux.org> 1.2.0-alt3_14
 - mageia re-import
 - switched to shared libs policy
