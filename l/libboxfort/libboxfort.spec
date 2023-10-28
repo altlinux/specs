@@ -2,7 +2,7 @@
 
 %define oname boxfort
 Name: libboxfort
-Version: 0.1.4
+Version: 0.1.4.0.4.c91d718
 Release: alt1
 
 Summary: Convenient & cross-platform sandboxing C library
@@ -13,6 +13,7 @@ Url: https://github.com/Snaipe/BoxFort
 
 # Source-url: https://github.com/Snaipe/BoxFort/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Patch3500: 0001-Support-LoongArch-architecture-lp64-ABIs.patch
 
 ExcludeArch: armh ppc64le
 
@@ -33,6 +34,7 @@ Header files for %name library.
 
 %prep
 %setup
+%patch3500 -p1
 
 %build
 %meson
@@ -47,5 +49,8 @@ Header files for %name library.
 %_includedir/*.h
 
 %changelog
+* Sat Oct 28 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.1.4.0.4.c91d718-alt1
+- Support LoongArch and riscv64 architectures
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 0.1.4-alt1
 - initial build for ALT Sisyphus
