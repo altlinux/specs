@@ -13,7 +13,7 @@
 
 Name: sushi
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A quick previewer for Nautilus
 Group: Graphical desktop/GNOME
@@ -33,6 +33,9 @@ Source: %name-%version.tar
 Requires: gst-plugins-base%gst_api_ver gst-libav
 Requires: %lo_bin
 Requires: typelib(Gtk) = 3.0
+Requires: typelib(GtkSource) = 4
+Requires: typelib(WebKit2) = 4.1
+
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson %_bindir/appstream-util desktop-file-utils
@@ -111,6 +114,10 @@ GObject introspection devel data for the Sushi library.
 %doc README* AUTHORS NEWS TODO
 
 %changelog
+* Sun Oct 29 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1.1
+- explicitly required: typelib(GtkSource) = 4,
+  typelib(WebKit2) = 4.1 (ALT #48235)
+
 * Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
