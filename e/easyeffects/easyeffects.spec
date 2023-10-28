@@ -4,7 +4,7 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 7.1.0
+Version: 7.1.1
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -45,6 +45,7 @@ BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
 BuildRequires: nlohmann-json-devel
 BuildRequires: pkgconfig(gsl)
 BuildRequires: lv2-devel >= %lv2_ver
+BuildRequires: ladspa_sdk
 BuildRequires: libsndfile-devel libsamplerate-devel libfftw3-devel
 BuildRequires: libbs2b-devel
 BuildRequires: liblilv-devel >= %lilv_ver
@@ -90,6 +91,9 @@ sed -i 's/tbb/tbb32/' src/meson.build
 %doc README* CHANGELOG.*
 
 %changelog
+* Sat Oct 28 2023 Yuri N. Sedunov <aris@altlinux.org> 7.1.1-alt1
+- 7.1.1
+
 * Thu Sep 07 2023 Yuri N. Sedunov <aris@altlinux.org> 7.1.0-alt1
 - 7.1.0
 
