@@ -2,7 +2,7 @@
 #based on fedora spec
 Name: pybind11
 Version: 2.11.1
-Release: alt1
+Release: alt2
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-3-Clause
@@ -60,6 +60,10 @@ This package contains the Python 3 files.
 %prep
 %setup
 
+# Dropped dependency on distutils (for python3.12)
+sed -i 's/import distutils.ccompiler/import setuptools._distutils.ccompiler/' pybind11/setup_helpers.py
+sed -i 's/import distutils.errors/import setuptools._distutils.errors/' pybind11/setup_helpers.py
+
 %build
 %define _cmake__builddir python3/BUILD
 mkdir -p python3
@@ -98,6 +102,9 @@ export SKIP_E2K=1
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Sat Oct 28 2023 Anton Vyatkin <toni@altlinux.org> 2.11.1-alt2
+- NMU: Dropped dependency on distutils.
+
 * Wed Aug 23 2023 Ivan A. Melnikov <iv@altlinux.org> 2.11.1-alt1
 - New version
 
