@@ -13,7 +13,7 @@
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.17
+%define major 8.18
 %define rel %nil
 %define conflictbase wine
 
@@ -830,6 +830,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sun Oct 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.18-alt1
+- new version 8.18 (with rpmrb script)
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.17-alt1
 - new version 8.17 (with rpmrb script)
 
