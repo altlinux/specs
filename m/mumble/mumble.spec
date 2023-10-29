@@ -8,7 +8,7 @@
 Name: mumble
 %define build_number 287
 Version: 1.4.287
-Release: alt2.2
+Release: alt2.3
 
 Summary: Low latency encrypted VoIP client
 
@@ -38,7 +38,7 @@ Patch4: gtav-exclusive-x86_64.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake >= 3.15
 
-BuildRequires: boost-devel-headers libalsa-devel libavahi-devel libcap-devel libprotobuf-devel libpulseaudio-devel libqtav-devel libsndfile-devel libspeechd-devel libssl-devel protobuf-compiler
+BuildRequires: boost-devel-headers libalsa-devel libavahi-devel libcap-devel libprotobuf-devel libpulseaudio-devel libsndfile-devel libspeechd-devel libssl-devel protobuf-compiler
 # BuildRequires: python3-modules-xml
 BuildRequires: qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-enginio-devel qt5-gamepad-devel qt5-multimedia-devel qt5-networkauth-devel qt5-quickcontrols2-devel qt5-remoteobjects-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-virtualkeyboard-devel qt5-wayland-devel qt5-x11extras-devel qt5-xmlpatterns-devel
 BuildRequires: libpoco-devel
@@ -219,6 +219,9 @@ mkdir -p %buildroot%_logdir/murmur
 %_bindir/%name-overlay
 
 %changelog
+* Sun Oct 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.4.287-alt2.3
+- NMU: QtAv is not required for build
+
 * Thu Oct 12 2023 Sergey V Turchin <zerg@altlinux.org> 1.4.287-alt2.2
 - NMU: fix requires
 
