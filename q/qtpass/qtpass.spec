@@ -4,8 +4,8 @@
 %define real_name    QtPass
 
 Name:     qtpass
-Version:  1.3.2
-Release:  alt3.gitcfac4db8.1
+Version:  1.4.0
+Release:  alt1
 
 Summary: a multi-platform GUI for pass, the standard unix password manager
 Summary(ru_RU.UTF-8): кросс-платформенный интерфейс к менеджеру паролей pass
@@ -21,8 +21,6 @@ Source0: %real_name-%version.tar
 Patch0:  %real_name-%version-%release.patch
 
 Patch1:  %name-1.1.6-alt-desktop.patch
-Patch2:  %name-1.3.2-github-pull_559.patch
-Patch3:  %name-1.3.2-alt-key_dates.patch
 
 Source1: %name-16.png
 Source2: %name-32.png
@@ -34,7 +32,7 @@ BuildRequires(pre): rpm-build-licenses desktop-file-utils
 # Automatically added by buildreq on Tue Jan 28 2020
 # optimized out: gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libqt5-core libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-modules python2-base python3 python3-base python3-dev qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel ruby ruby-stdlibs sh4
 BuildRequires: kf5-kwallet-devel python3-module-mpl_toolkits qt5-multimedia-devel qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
-%ifnarch %e2k
+%ifnarch %e2k ppc64le
 BuildRequires: qt5-webengine-devel
 %endif
 
@@ -72,8 +70,6 @@ QtPass -  кроссплатформенный графический интер
 %patch0 -p1
 
 %patch1
-%patch2 -p1
-%patch3
 
 ## TEMPORARY FIX program version - 1.3.3 not released yet:
 sed -e 's#1\.3\.3#1.3.2-371-gcfac4db8#' -i Doxyfile
@@ -111,6 +107,10 @@ install -D -m0644 -- qtpass.appdata.xml %buildroot%_datadir/appdata/%name.appdat
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sun Oct 29 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.4.0-alt1
+- New version
+- ppc64le: avoid webengine (missing)
+
 * Tue Aug 03 2021 Michael Shigorin <mike@altlinux.org> 1.3.2-alt3.gitcfac4db8.1
 - E2K: avoid webengine (missing)
 - Enable parallel build
