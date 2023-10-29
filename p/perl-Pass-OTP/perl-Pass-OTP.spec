@@ -6,7 +6,7 @@
 
 Name: perl-Pass-OTP
 Version: 1.6
-Release: alt1
+Release: alt2
 
 Summary: Perl implementation of HOTP / TOTP algorithms
 
@@ -40,15 +40,26 @@ algorithms according to the RFC 4226 and RFC 6238.
 %install
 %perl_vendor_install
 
+# Rename files to prevent file conflict with oathtool package
+mv -- %buildroot%_bindir/oathtool      %buildroot%_bindir/oathtool.pl
+mv -- %buildroot%_bindir/otptool       %buildroot%_bindir/otptool.pl
+mv -- %buildroot%_man1dir/oathtool.1   %buildroot%_man1dir/oathtool.pl.1
+mv -- %buildroot%_man1dir/otptool.1    %buildroot%_man1dir/otptool.pl.1
+sed -e 's/oathtool /oathtool.pl /g' -i %buildroot%_man1dir/oathtool.pl.1
+sed -e 's/otptool /otptool.pl /g'   -i %buildroot%_man1dir/otptool.pl.1
+
 %files
 %doc README Changes
 %perl_vendor_privlib/Pass/OTP*
-%_bindir/oathtool
-%_bindir/otptool
-%_man1dir/oathtool.*
-%_man1dir/otptool.*
+%_bindir/oathtool.pl
+%_bindir/otptool.pl
+%_man1dir/oathtool.pl.*
+%_man1dir/otptool.pl.*
 
 %changelog
+* Sun Oct 29 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.6-alt2
+- Ffix file conflict with oathtool package
+
 * Thu Oct 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.6-alt1
 - New version
 
