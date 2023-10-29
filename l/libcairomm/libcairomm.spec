@@ -4,32 +4,31 @@
 %define ver_major 1.14
 %define api_ver 1.0
 
-%def_enable docs
+%def_disable docs
 # boost.pc required
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: This library provides a C++ interface to cairo
 License: LGPL-2.0
 Group: System/Libraries
 Url: https://cairographics.org/cairomm
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 %if_disabled snapshot
 Source: https://www.cairographics.org/releases/%_name-%version.tar.xz
 %else
-Vcs: git://git.cairographics.org/git/cairomm
+Vcs: https://git.cairographics.org/git/cairomm
 Source: %_name-%version.tar
 %endif
 
 %define cairo_ver 1.12
 %define sigc_ver 2.6.0
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ mm-common
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ mm-common
 BuildRequires: libcairo-devel >= %cairo_ver libsigc++2-devel >= %sigc_ver
 %{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 %{?_enable_check:BuildRequires: boost-test-devel fontconfig-devel}
@@ -40,7 +39,7 @@ This library provides a C++ interface to cairo.
 %package devel
 Summary: Headers and development files of %name library
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains the headers and various development files needed
@@ -74,11 +73,10 @@ This package contains documentation needed for developing %_name applications.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
-%doc AUTHORS NEWS
+%doc NEWS
 %_libdir/*.so.*
 
 %files devel
@@ -94,6 +92,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Oct 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.5-alt1
+- 1.14.5
+
 * Sat Dec 31 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
 - 1.14.4
 
