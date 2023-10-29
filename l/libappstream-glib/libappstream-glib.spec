@@ -16,7 +16,7 @@
 
 Name: lib%_name
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Library for AppStream metadata
 Group: System/Libraries
@@ -34,8 +34,10 @@ Source: %_name-%version.tar
 %define curl_ver 7.56
 %define json_glib_ver 1.1.2
 
+Requires: shared-mime-info >= 2.3
+
 Obsoletes: appdata-tools < 0.1.9
-Provides: appdata-tools = %version-%release
+Provides: appdata-tools = %EVR
 Provides: %_bindir/appstream-util
 Provides: %_bindir/appstream-builder
 
@@ -62,7 +64,7 @@ representation.
 %package devel
 Summary: GLib Libraries and headers for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: libappstream-builder-devel < 0.9.15
 Conflicts: libappstream-builder-devel < 0.9.15
 
@@ -72,7 +74,7 @@ GLib headers and libraries for appstream-glib.
 %package gir
 Summary: GObject introspection data for the %_name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: libappstream-builder-gir < 0.9.15
 Conflicts: libappstream-builder-gir < 0.9.15
 
@@ -83,8 +85,8 @@ GObject introspection data for the AppStream metadata library.
 Summary: GObject introspection devel data for the %_name library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 Obsoletes: libappstream-builder-gir-devel < 0.9.15
 Conflicts: libappstream-builder-gir-devel < 0.9.15
 
@@ -105,15 +107,17 @@ metadata library.
 Summary: Tests for the %_name package
 Group: Development/Other
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
 the functionality of the installed %_name library.
 
-
 %prep
 %setup -n %_name-%version
+#application/yaml: use IANA registered type
+#https://www.iana.org/assignments/media-types/application/yaml
+sed -i 's|\(application\/\)x-\(yaml\)|\1\2|' libappstream-glib/as-yaml.c
 
 %build
 %meson \
@@ -127,7 +131,7 @@ the functionality of the installed %_name library.
 %find_lang %_name
 
 %check
-%__meson_test
+%__meson_test -v
 
 %files -f %_name.lang
 %_bindir/appstream-util
@@ -168,6 +172,9 @@ the functionality of the installed %_name library.
 
 
 %changelog
+* Sun Oct 29 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1.1
+- fixed for shared-mime-info-2.3
+
 * Fri Nov 11 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
