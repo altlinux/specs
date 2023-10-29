@@ -13,7 +13,7 @@
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.13
+%define major 8.18
 %define rel %nil
 %define conflictbase wine-vanilla
 
@@ -90,6 +90,7 @@ Source6: %name-%version-bin-scripts.tar
 
 Patch1: 0011-build-fake-binary-makes-autoreq-happy.patch
 Patch2: 0102-fix-build-on-32-bit-systems-with-llvm-https-bugs.win.patch
+Patch3: wine-tkg-alt-fix-belauncher.patch
 
 AutoReq: yes, noperl, nomingw32
 
@@ -457,6 +458,7 @@ develop programs using %name.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 # Apply local patches
 #name-patches/patchapply.sh
 
@@ -839,6 +841,10 @@ fi
 %endif
 
 %changelog
+* Wed Oct 25 2023 Mikhail Tergoev <fidel@altlinux.org> 1:8.18-alt1
+- update to 8.18
+- added patch for fix FTBFS
+
 * Sun Aug 06 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.13-alt1
 - update to 8.13
 
