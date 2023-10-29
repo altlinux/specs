@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/pod2man
 
 Name:           %{target}-gdb
 Version:        8.1
-Release:        alt1_4
+Release:        alt1_5
 Summary:        GDB for (remote) debugging %{target} binaries
 License:        GPLv2+
 URL:            http://www.sourceware.org/gdb/
@@ -21,6 +21,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:  zlib-devel
 BuildRequires:  makeinfo
+BuildRequires:  gnu-config
 
 Provides: bundled(libiberty)
 Source44: import.info
@@ -38,6 +39,7 @@ cp %{SOURCE1} .
 
 
 %build
+cp -a /usr/share/gnu-config/config.{guess,sub} gdb-%{version}/
 mkdir -p build
 pushd build
 CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE" \
@@ -72,6 +74,9 @@ rm -rf $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Sun Oct 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.1-alt1_5
+- NMU: fixed FTBFS on LoongArch (use fresh config.guess,sub)
+
 * Sat Oct 10 2020 Igor Vlasenko <viy@altlinux.ru> 8.1-alt1_4
 - rebuild on armh
 
