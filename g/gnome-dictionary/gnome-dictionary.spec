@@ -1,13 +1,14 @@
 %def_enable snapshot
-%define ver_major 40
-%define xdg_name org.gnome.Dictionary
+%define ver_major 41
+%define beta .alpha
+%define xdg_name org.gnome.Dictionary.Devel
 %define api_ver 1.0
 
 %def_enable man
 
 Name: gnome-dictionary
-Version: %ver_major.0
-Release: alt3
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: Gnome client for MIT dictionary server
 Group: Graphical desktop/GNOME
@@ -15,9 +16,9 @@ License: LGPLv2.1
 Url: https://wiki.gnome.org/Apps/Dictionary
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 Obsoletes: libgdict < %version
@@ -35,7 +36,7 @@ GNOME Dictionary - look up an online dictionary for definitions and
 correct spelling of words.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson -Duse_ipv6=true \
@@ -60,6 +61,9 @@ correct spelling of words.
 %doc NEWS README*
 
 %changelog
+* Sun Oct 29 2023 Yuri N. Sedunov <aris@altlinux.org> 41-alt0.5.alpha
+- updated to 40.0-89-g0f14a2e
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt3
 - updated to 40.0-64-gd77ecf7 (fixed build with meson >= 0.61, updated translations)
 
