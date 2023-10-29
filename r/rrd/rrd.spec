@@ -2,7 +2,7 @@
 
 Name: rrd
 Version: 1.8.0
-Release: alt1
+Release: alt2
 %define native rrdtool
 %define abiversion 8
 %define rrdcached_user root
@@ -41,7 +41,7 @@ BuildRequires: tcl-devel
 %endif
 
 # Automatically added by buildreq on Wed Oct 12 2011
-BuildRequires: groff-base libdbi-devel libpango-devel libpng-devel libxml2-devel lua5 perl-Pod-Parser perl-devel python3-devel
+BuildRequires: groff-base libdbi-devel libpango-devel libpng-devel libxml2-devel lua5 perl-Pod-Parser perl-devel python3-devel /usr/bin/pod2html
 BuildRequires: libfreetype-devel zlib-devel fonts-ttf-dejavu
 
 Summary(ru_RU.UTF-8): RRDtool - база данных с "циклическим обновлением"
@@ -370,6 +370,9 @@ rm -rf %buildroot/usr/share/tcl
 #   (the tcl one looks broken too as of 1.5.4-alt2.1)
 
 %changelog
+* Sun Oct 29 2023 Igor Vlasenko <viy@altlinux.org> 1.8.0-alt2
+- NMU: perl 5.38 support
+
 * Wed Jun 15 2022 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
