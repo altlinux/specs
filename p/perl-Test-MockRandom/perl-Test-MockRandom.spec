@@ -2,12 +2,13 @@
 
 Name: perl-Test-MockRandom
 Version: 1.01
-Release: alt3
+Release: alt4
 Summary: Replaces random number generation with non-random number generation
 License: Apache-2.0
 Group: Development/Perl
 Url: https://github.com/dagolden/Test-MockRandom
 Source: %name-%version.tar
+BuildArch: noarch
 
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 
@@ -31,12 +32,16 @@ fractionally less than one.
 %install
 %perl_vendor_install
 
+rm %buildroot%perl_vendor_archlib/auto/Test/MockRandom/.packlist
+
 %files
 %doc CONTRIBUTING Changes examples README
-%perl_vendor_archlib/*
-%perl_vendorlib/*
+%perl_vendorlib/T*
 
 %changelog
+* Sun Oct 29 2023 Igor Vlasenko <viy@altlinux.org> 1.01-alt4
+- set BuildArch: noarch
+
 * Fri Aug 27 2021 Alexandr Antonov <aas@altlinux.org> 1.01-alt3
 - release greater for autoimports
 
