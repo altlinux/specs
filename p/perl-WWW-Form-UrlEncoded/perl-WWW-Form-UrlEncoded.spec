@@ -7,14 +7,14 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.26
-Release: alt1
+Release: alt2
 Summary: parser and builder for application/x-www-form-urlencoded
 Group: Development/Perl
 License: perl
 URL: https://github.com/kazeburo/WWW-Form-UrlEncoded
 
 Source0: http://www.cpan.org/authors/id/K/KA/KAZEBURO/%{module_name}-%{version}.tar.gz
-#BuildArch: noarch
+BuildArch: noarch
 
 %description
 From summary: %summary
@@ -28,12 +28,21 @@ From summary: %summary
 %install
 %perl_vendor_install
 
+# repack for noarch
+rm %buildroot%perl_vendor_archlib/auto/WWW/Form/UrlEncoded/XS/.keep
+rmdir %buildroot%perl_vendor_archlib/auto/WWW/Form/UrlEncoded/XS
+rm %buildroot%perl_vendor_archlib/auto/WWW/Form/UrlEncoded/.packlist
+mkdir -p %buildroot%perl_vendor_privlib
+mv %buildroot%perl_vendor_archlib/WWW %buildroot%perl_vendor_privlib/
+
 %files
 %doc Changes README.md
-%perl_vendor_archlib/W*
-%perl_vendor_autolib/W*
+%perl_vendor_privlib/W*
 
 %changelog
+* Sun Oct 29 2023 Igor Vlasenko <viy@altlinux.org> 0.26-alt2
+- set BuildArch: noarch
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
