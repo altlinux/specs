@@ -16,7 +16,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.5.8
+Version: 2.6.6
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -53,11 +53,12 @@ Source14: %name-client@.service
 Conflicts: syslogd < 1.4.1-alt11
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Tue Jun 29 2021
-# optimized out: libgpg-error libpkcs11-helper libssl-devel perl pkg-config python-module-Pygments python-module-docutils python-modules python-modules-compiler python-modules-encodings python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4
-BuildRequires: cmake git-core glibc-devel-static iproute2 liblz4-devel liblzo2-devel libselinux-devel net-tools time
+# Automatically added by buildreq on Thu Oct 26 2023
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcap-ng libgpg-error libpkcs11-helper libssl-devel perl pkg-config python-modules python2-base python3 python3-base python3-dev sh5 xz
+BuildRequires: cmake git-core glibc-devel-static iproute2 libcap-ng-devel liblz4-devel liblzo2-devel libselinux-devel net-tools time
 
 BuildRequires: python3-module-docutils
+#BuildRequires: lua5.4 libcrypto1.1
 
 %{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_with_pkcs11:BuildRequires: libpkcs11-helper-devel}
@@ -277,7 +278,7 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
 %files
 %doc AUTHORS CONTRIBUTING.rst ChangeLog.gz PORTS README COPYING
-%doc README.IPv6 TODO.IPv6
+%doc README.ec
 %doc --no-dereference COPYRIGHT.GPL
 %doc README.ALT.utf-8 server.conf client.conf
 %if_with management
@@ -342,6 +343,15 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Sun Oct 29 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.6.6-alt1
+- New version (Closes: 46933)
+   - certificate pinning/verify peer fingerprint authentification
+     for small setups without the need for a PKI
+   - static key mode (non-TLS) has been deprecated
+   - TLS 1.0 and 1.1 are deprecated
+   - built-in packet filtering functionality has been removed
+   - compatibility mode (--compat-mode) to work with older servers
+
 * Sun Jan 15 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.5.8-alt1
 - New version
 
