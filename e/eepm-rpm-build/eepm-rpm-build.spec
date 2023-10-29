@@ -1,13 +1,14 @@
 %define rpmhome %_libexecdir/eepm-rpm
 %define rpmlibdir %_libdir/eepm-rpm
 
-%define verbase 4.18.x
+%define major 4.18
+%define verbase %major.x
 %global soversion 9
 %define default_payload w2T.xzdio
 
 Name: eepm-rpm-build
-Version: 4.18.1
-Release: alt1
+Version: %major.1
+Release: alt2
 
 Summary: Simplified RPM rpmbuild used in epm repack
 
@@ -15,7 +16,6 @@ License: GPLv2+
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 
-# http://ftp.rpm.org/releases/rpm-4.18.x/rpm-4.18.1.tar.bz2
 # Source-url: http://ftp.rpm.org/releases/rpm-%verbase/rpm-%version.tar.bz2
 Source: %name-%version.tar
 
@@ -68,6 +68,7 @@ This rpmbuild built in distro agnostic way to support epm repack.
 	--with-cap \
 	--with-acl \
 	--libdir=%rpmlibdir \
+	--localstatedir=/var \
 	#
 
 %make_build
@@ -140,5 +141,9 @@ rm -rf %buildroot%_mandir/
 %rpmhome/rpmuncompress
 
 %changelog
+* Sun Oct 29 2023 Vitaly Lipatov <lav@altlinux.ru> 4.18.1-alt2
+- use major macro in the spec
+- set correct localstatedir /var
+
 * Mon Jul 31 2023 Vitaly Lipatov <lav@altlinux.ru> 4.18.1-alt1
 - initial build for ALT Sisyphus
