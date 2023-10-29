@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 2.3.1
+Version: 3.0.0
 Release: alt1
 
 Summary: An easy-to-use, Pythonic and complete IMAP client library
@@ -42,5 +42,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/IMAPClient-%version.dist-info/
 
 %changelog
+* Sun Oct 29 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
+- New version.
+
 * Tue Sep 19 2023 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1
 - Initial build for Sisyphus.
