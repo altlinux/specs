@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: eartag
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Small and simple audio file tag editor
@@ -35,8 +35,7 @@ Requires: python3(acoustid)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson yelp-tools
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
-BuildRequires: /usr/bin/appstreamcli
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 %{?_enable_check:BuildRequires: python3(pytest)
@@ -71,6 +70,9 @@ BuildRequires: python3(acoustid)}
 %doc README*
 
 %changelog
+* Sun Oct 29 2023 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Sun Sep 24 2023 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0-2-gd87ddf6
 
