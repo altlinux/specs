@@ -6,21 +6,24 @@
 
 Name: fbi
 Version: 2.14
-Release: alt2
+Release: alt2.1
 
 Summary: Image viewer for Linux framebuffer console
 License: GPL-2.0-or-later
 Group: Graphics
-Url: http://www.kraxel.org/cgit/fbida/
-Vcs: https://git.kraxel.org/git/fbida
+Url: https://www.kraxel.org/cgit/fbida/
+Vcs: https://github.com/kraxel/fbida
 
 %if_disabled snapshot
 Source: http://www.kraxel.org/releases/fbida/fbida-%version.tar.gz
 %else
 Source: fbida-%version.tar
 %endif
+# according to changes in libxkbcommon-1.6
+Patch10: fbida-2.14-alt-libxkbcommon-1.6.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 # image format BR
 BuildRequires: libjpeg-devel
 BuildRequires: libpcd-devel
@@ -72,6 +75,8 @@ Framebuffer terminal console.
 
 %prep
 %setup -n fbida-%version
+%patch10
+
 echo %version > VERSION
 
 %build
@@ -97,6 +102,9 @@ echo %version > VERSION
 %_datadir/wayland-sessions/fbcon.desktop
 
 %changelog
+* Sun Oct 29 2023 Yuri N. Sedunov <aris@altlinux.org> 2.14-alt2.1
+- fixed build with libxkbcommon-1.6
+
 * Thu Dec 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.14-alt2
 - updated to 2.14-1-120-ge1a7db6 (ported to Meson build system)
 - new fbpdf and fbcon subpackages
