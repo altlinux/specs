@@ -7,7 +7,7 @@
 
 Name: hivex
 Version: 1.3.23
-Release: alt1
+Release: alt2
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -17,7 +17,7 @@ Url: http://libguestfs.org/
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
-BuildRequires: perl-Test-Pod
+BuildRequires: perl-Test-Pod /usr/bin/pod2html
 BuildRequires: perl-Test-Pod-Coverage
 BuildRequires: perl-libintl
 %{?_enable_ocaml:BuildRequires: ocaml ocaml-findlib ocaml-ocamldoc ocaml-ocamlbuild}
@@ -226,6 +226,9 @@ rm -f %buildroot%python3_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Sun Oct 29 2023 Igor Vlasenko <viy@altlinux.org> 1.3.23-alt2
+- NMU: perl5.38 support
+
 * Fri Jan 20 2023 Anton Farygin <rider@altlinux.ru> 1.3.23-alt1
 - 1.3.23
 
