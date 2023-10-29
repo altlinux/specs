@@ -5,7 +5,7 @@
 
 
 Name: apache2-%module_name
-Version: 2.4.14.3
+Version: 2.4.14.4
 Release: alt1
 
 Summary: Apache 2.x OpenID Connect Relying Party authentication and authorization module
@@ -78,47 +78,6 @@ ln -s -- $(relative %_licensedir/Apache-2.0 %_docdir/%name/LICENSE.txt) LICENSE.
 
 /bin/mkdir -p %buildroot%apache2_spooldir/%module_name
 
-%post
-# Reconfigure Apache2:
-%apache2_sbindir/a2chkconfig ||:
-
-if [ -e %apache2_mods_enabled/%module_name.load ]; then
-    CONF_OK=0
-    %apache2_sbindir/apachectl2 configtest && CONF_OK=1 ||:
-    if [ "$CONF_OK" = "1" ]; then
-        service %apache2_dname condrestart ||:
-    else
-        echo "Some errors detected in Apache2 configuration!"
-        echo "To use %real_name check configuration and start %apache2_dname service."
-    echo
-    fi
-else
-    echo "Apache2 %real_name module had been installed, but does't enabled."
-    echo "Check %apache2_mods_start directory for files with '%module_name=no' lines."
-    echo
-fi
-
-%preun
-if [ "$1" = "0" ] ; then # last uninstall
-    [ -e %apache2_mods_enabled/%module_name.load ] && %apache2_sbindir/a2dismod %module_name 2>&1 >/dev/null ||:
-fi
-
-
-%postun
-# Reconfigure Apache2:
-%apache2_sbindir/a2chkconfig ||:
-if [ "$1" = "0" ] ; then # last uninstall
-    CONF_OK=0
-    %apache2_sbindir/apachectl2 configtest && CONF_OK=1 ||:
-    if [ "$CONF_OK" = "1" ]; then
-        service %apache2_dname condrestart ||:
-    else
-        echo "Some errors detected in Apache2 configuration!"
-        echo "To complete %real_name uninstalling check configuration and restart %apache2_dname service."
-        echo
-    fi
-fi
-
 
 %files
 %doc README.md ChangeLog AUTHORS SECURITY.md
@@ -131,6 +90,10 @@ fi
 %dir %apache2_spooldir/%module_name
 
 %changelog
+* Sun Oct 29 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.4.14.4-alt1
+- New version
+- Switch to use httpd2.filetrigger
+
 * Sat Oct 07 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.4.14.3-alt1
 - New version
 
