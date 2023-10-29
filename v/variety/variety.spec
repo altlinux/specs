@@ -1,6 +1,6 @@
 Name:    variety
-Version: 0.8.10
-Release: alt2
+Version: 0.8.11
+Release: alt1
 
 Summary: Wallpaper downloader and manager for Linux systems
 License: GPL-3.0
@@ -86,6 +86,9 @@ cp -av build/mo/* %buildroot%_datadir/locale
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sun Oct 29 2023 Andrey Cherepanov <cas@altlinux.org> 0.8.11-alt1
+- New version.
+
 * Mon Mar 06 2023 Anton Midyukov <antohami@altlinux.org> 0.8.10-alt2
 - NMU: require typelib(AyatanaAppIndicator3) instead typelib(AppIndicator3)
 
