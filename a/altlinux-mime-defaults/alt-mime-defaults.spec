@@ -1,6 +1,6 @@
 %def_without kde4
 Name: altlinux-mime-defaults
-Version: 0.438
+Version: 0.439
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -34,13 +34,15 @@ install -D -m 644 %{S:1} %buildroot/%_datadir/kde4/applications/kde4/mimeapps.li
 ln -s kde4/mimeapps.list %buildroot/%_datadir/kde4/applications/mimeapps.list
 %endif
 
-touch %buildroot/%_desktopdir/defaults.list
-
+touch %buildroot%_desktopdir/defaults.list
+mkdir -p %buildroot%_sysconfdir/xdg/
+touch %buildroot%_sysconfdir/xdg/mimeapps.list
 
 %files
 #%doc README
 %_desktopdir/mimeapps.list
 %_desktopdir/defaults.list
+%_sysconfdir/xdg/mimeapps.list
 %_datadir/kf5/applications/mimeapps.list
 %_datadir/gnome/applications/defaults.list
 %_datadir/mate/applications/defaults.list
@@ -50,6 +52,10 @@ touch %buildroot/%_desktopdir/defaults.list
 %endif
 
 %changelog
+* Sun Oct 29 2023 Igor Vlasenko <viy@altlinux.org> 0.439-alt1
+- updated mime defaults
+- added empty %_sysconfdir/xdg/mimeapps.list (closes: #48178)
+
 * Mon Oct 17 2022 Igor Vlasenko <viy@altlinux.org> 0.438-alt1
 - updated mime defaults
 - moved up thunderbird for mail (closes: #44040)
