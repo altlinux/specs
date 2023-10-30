@@ -1,6 +1,6 @@
 Name: python3-module-webrtcvad
 Version: 2.0.10
-Release: alt1
+Release: alt2
 
 Summary: Python interface to the WebRTC Voice Activity Detector
 License: MIT
@@ -33,5 +33,8 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/webrtcvad-%version.dist-info
 
 %changelog
+* Mon Oct 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.0.10-alt2
+- NMU: support LoongArch architecture
+
 * Fri May 05 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.10-alt1
 - initial
