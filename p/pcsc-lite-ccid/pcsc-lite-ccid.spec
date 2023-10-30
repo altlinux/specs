@@ -1,5 +1,5 @@
 Name: pcsc-lite-ccid
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 
 Summary: USB CCID IFD Handler
@@ -54,6 +54,9 @@ cp -a src/92_pcscd_ccid.rules %buildroot/lib/udev/rules.d/
 /lib/udev/rules.d/92_pcscd_ccid.rules
 
 %changelog
+* Mon Oct 30 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.4-alt1
+- New version.
+
 * Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
 - New version.
 
