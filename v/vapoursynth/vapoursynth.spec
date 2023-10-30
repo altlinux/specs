@@ -4,32 +4,27 @@
 %def_with python_ext
 
 Name: vapoursynth
-Version: 64
+Version: 65
 Release: alt1
+
 Summary: Video processing framework with simplicity in mind
+
 License: WTFPL and LGPL-2.1+ and OFL-1.1 and GPL-2.0+ and ISC and MIT
 Group: Video
 Url: http://www.vapoursynth.com
-
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: https://github.com/%name/%name/archive/R%version/%name-R%version.tar.gz
 Patch: %name-version-info.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: autoconf
-BuildRequires: automake
-BuildRequires: gcc-c++
-BuildRequires: libtool
-BuildRequires: nasm
-BuildRequires: pkgconfig(tesseract)
-BuildRequires: pkgconfig(zimg)
-BuildRequires: python3-module-Cython
-BuildRequires: python3-module-setuptools
+# Automatically added by buildreq on Mon Oct 30 2023
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libgpg-error libstdc++-devel perl pkg-config python3 python3-base python3-dev python3-module-setuptools sh5 xz
+BuildRequires: gcc-c++ libzimg-devel python3-module-Cython
+
 %if_with python_ext
 BuildRequires: python3-module-wheel
 %endif
-BuildRequires: glibc-pthread
+
 # python_ext
 %if_with tests
 BuildRequires: python3-test
@@ -46,7 +41,6 @@ Summary: VapourSynth core library with a C++ API
 Group: System/Libraries
 Provides: lib%name = %version
 Obsoletes: lib%name < %version
-Requires: lib%name-script%sonamev = %version
 
 %description -n lib%name%version
 VapourSynth core library with a C++ API.
@@ -83,7 +77,7 @@ This package contains the vspipe tool for interfacing with VapourSynth.
 %setup -n %name-R%version
 %patch -p1
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' setup.py
+sed -i 's|#!/usr/bin/env python|#!%__python3|' setup.py
 
 %build
 %add_optflags -L/%_lib -lpthread
@@ -111,7 +105,6 @@ find %buildroot -type f -name "*.la" -delete
 
 # Let RPM pick up docs in the files section
 rm -fr %buildroot%_docdir/%name
-mv -f %buildroot%_prefix/VAPOURSYNTH_VERSION %buildroot%_includedir/%name/
 
 %if_with tests
 %check
@@ -145,6 +138,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/vspipe
 
 %changelog
+* Mon Oct 30 2023 Leontiy Volodin <lvol@altlinux.org> 65-alt1
+- New version 65.
+- Cleanup BRs.
+
 * Thu Sep 28 2023 Leontiy Volodin <lvol@altlinux.org> 64-alt1
 - New version 64.
 - Updated version info patch.
