@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Gtk3
 Version: 0.038
-Release: alt1
+Release: alt2
 
 Summary: Perl interface to the 3.x series of the gtk+ toolkit
 Group: Development/Perl
@@ -9,6 +9,7 @@ License: lgpl
 
 Url: %CPAN Gtk3
 Source: %name-%version.tar
+Patch: perl-Gtk3-alt-no-init-in-check-mode.patch
 
 BuildArch: noarch
 BuildRequires:libgtk+3-devel libgtk+3-gir perl(Glib/Object/Introspection.pm) perl-devel perl(Cairo/GObject.pm)
@@ -20,6 +21,7 @@ Requires: libgtk+3-gir
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -32,6 +34,9 @@ Requires: libgtk+3-gir
 %doc README
 
 %changelog
+* Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 0.038-alt2
+- disabled init in check mode
+
 * Thu Jan 21 2021 Igor Vlasenko <viy@altlinux.ru> 0.038-alt1
 - new version
 
