@@ -1,3 +1,4 @@
+%filter_from_requires /^perl.Enbugger.pm./d
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -7,7 +8,7 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators perl(YAML/PP.pm)
 %define _localstatedir %{_var}
 Name:           perl-XXX
 Version:        0.38
-Release:        alt1
+Release:        alt2
 Summary:        See Your Data in the Nude
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -64,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 0.38-alt2
+- forcibly removed Embugger from Requires.
+
 * Sun Jul 11 2021 Igor Vlasenko <viy@altlinux.org> 0.38-alt1
 - automated CPAN update
 
