@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.104.0
+Version: 0.104.1
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %description
 FastAPI is a modern, fast (high-performance), web framework for
-building APIs with Python 3.7+ based on standard Python type hints.
+building APIs with Python 3.8+ based on standard Python type hints.
 
 The key features are:
 - Fast: Very high performance, on par with NodeJS and Go (thanks to
@@ -88,6 +88,9 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 30 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.104.1-alt1
+- 0.104.0 -> 0.104.1
+
 * Sun Oct 22 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.104.0-alt1
 - 0.103.2 -> 0.104.0
 
