@@ -1,5 +1,5 @@
 Name: thunar-archive-plugin
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Thunar archive plugin
@@ -58,6 +58,9 @@ using a single click.
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/thunar-archive-plugin.mo
 
 %changelog
+* Mon Oct 30 2023 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
+- Updated to 0.5.2.
+
 * Sun Apr 02 2023 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
 - Updated to 0.5.1.
 
