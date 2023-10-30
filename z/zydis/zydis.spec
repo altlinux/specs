@@ -2,7 +2,7 @@
 
 Name: zydis
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: Fast and lightweight x86/x86-64 disassembler and code generation library.
 License: MIT
@@ -13,6 +13,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/zyantific/%name/archive/refs/tags/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
+Patch3500: zydis-loongarch64.patch
 
 BuildRequires: cmake
 BuildRequires: doxygen
@@ -46,6 +47,7 @@ Development tools for %name
 
 %prep
 %setup
+%patch3500 -p1
 
 %build
 %cmake \
@@ -70,5 +72,8 @@ Development tools for %name
 %_bindir/Zydis*
 
 %changelog
+* Mon Oct 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.0.0-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Mon May 29 2023 Nazarov Denis <nenderus@altlinux.org> 4.0.0-alt1
 - Initial build for ALT Linux
