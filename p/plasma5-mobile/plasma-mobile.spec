@@ -1,9 +1,17 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define rname plasma-mobile
+
+%_K5if_ver_gteq %ubt_id M110
+%def_enable dialer
+%else
 %def_disable dialer
+%endif
 
 Name: plasma5-mobile
 Version: 5.27.9
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -20,16 +28,14 @@ Requires: plasma5-kpipewire
 Requires: kf5-kirigami-addons
 
 Source: %rname-%version.tar
-Patch1: alt-startplasma.patch
 Patch2: alt-def-shell.patch
 Patch3: alt-no-dialer.patch
 
 # Automatically added by buildreq on Fri Feb 21 2020 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-common kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-common kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-common kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libdbusmenu-qt52 libglvnd-devel libgpg-error libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-test libqt5-texttospeech libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libtelepathy-qt5-farstream0 libtelepathy-qt5-service0 libtelepathy-qt50 libwayland-client libxcbutil-keysyms pkg-config python-modules python2-base python3 python3-base qt5-base-common qt5-base-devel qt5-declarative-devel rpm-build-gir rpm-build-python3 rpm-build-qml sh4
 #BuildRequires: appstream extra-cmake-modules gst-plugins1.0-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kpeople-devel kf5-kwayland-devel kf5-plasma-framework-devel libssl-devel python-modules-compiler python3-dev qt5-translations qt5-wayland-devel telepathy-qt5-devel
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-wayland-devel qt5-svg-devel
-BuildRequires: gst-plugins1.0-devel telepathy-qt5-devel
 BuildRequires: kf5-modemmanager-qt-devel ModemManager-devel kf5-networkmanager-qt-devel kf5-kcmutils-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-knotifications-devel
 BuildRequires: kf5-kpackage-devel kf5-kpeople-devel kf5-kwayland-devel kf5-plasma-framework-devel
@@ -71,7 +77,6 @@ Requires: %name-common
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 #%patch2 -p1
 %if_disabled dialer
 %patch3 -p1
@@ -104,10 +109,16 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 %_K5data/plasma/shells/org.kde.plasma.phoneshell/
 %_K5notif/*.notifyrc
 %_K5srv/plasma-applet-*.desktop
+%if_disabled dialer
 %exclude %_K5srv/plasma-applet-org.kde.plasma.phone.desktop
-%_datadir/xsessions/plasma-mobile.desktop
+%endif
+%_datadir/wayland-sessions/plasma-mobile.desktop
+%_datadir/metainfo/*.xml
 
 %changelog
+* Mon Oct 30 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
+- don't force X11 session (closes: 44714)
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
 - new version
 
