@@ -9,12 +9,12 @@ BuildRequires: jpackage-default
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without tests
+%bcond_with tests
 
 Name:		classloader-leak-test-framework
 %global nwname classloader-leak-prevention-parent
 Version:	2.7.0
-Release:	alt1_1jpp11
+Release:	alt2_1jpp11
 Summary:	Detection and verification of Java ClassLoader leaks
 License:	ASL 2.0
 URL:		https://github.com/mjiderhamn/classloader-leak-prevention/tree/master/%{name}
@@ -74,6 +74,9 @@ cat pom.xml | grep -B 3 -A 3 -e 1.6 -e 8
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt2_1jpp11
+- fixed build (closes: #48227)
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt1_1jpp11
 - new version
 
