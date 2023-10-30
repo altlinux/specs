@@ -38,6 +38,8 @@ NO_INTERACTION=1 make test
 %doc README.md
 
 %changelog
-* Fri Oct 13 2023 Alexey Shemyakin <alexeys@altlinux.org> 1.1.0-alt1.%php_version
-- Initial build for ALT.
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php-devel = %version-%release
 
+* Fri Oct 13 2023 Alexey Shemyakin <alexeys@altlinux.org> 1.1.0-alt1
+- Initial build for ALT.

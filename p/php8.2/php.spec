@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 11
+%define _php_release_version 12
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -475,6 +475,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Fri Oct 27 2023 Anton Farygin <rider@altlinux.ru> 8.2.12-alt1
+- 8.2.11 -> 8.2.12
+
 * Fri Oct 06 2023 Anton Farygin <rider@altlinux.ru> 8.2.11-alt1
 - 8.2.10 -> 8.2.11
 
