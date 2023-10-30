@@ -1,6 +1,6 @@
 Name:    ktechlab
 Version: 0.51.0
-Release: alt2
+Release: alt2.1
 
 Summary: Development and simulation of micro-controllers and electronic circuits
 License: GPL-2.0
@@ -67,18 +67,21 @@ echo "Comment[ru]=Среда разработки микроконтроллер
 %files -f %name.lang
 %doc AUTHORS ChangeLog README.md
 %doc %_K5doc/en/%name
-%_bindir/%name
-%_bindir/microbe
+%_K5bin/%name
+%_K5bin/microbe
 %_datadir/%name
 %_K5xmlgui/%name
 %_datadir/metainfo/*.xml
 %_K5xdgmime/*.xml
 %_K5cfg/%name.kcfg
 %_datadir/katepart5/syntax/microbe.xml
-%_desktopdir/*.desktop
-%_iconsdir/hicolor/*/*/*.png
+%_K5xdgapp/*.desktop
+%_K5icon/hicolor/*/*/*.png
 
 %changelog
+* Mon Oct 30 2023 Sergey V Turchin <zerg@altlinux.org> 0.51.0-alt2.1
+- NMU: fix files location (closes: 48220)
+
 * Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 0.51.0-alt2
 - FTBFS: fix desktop file location.
 
