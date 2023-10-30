@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.12
+Version: 0.13
 Release: alt1
 Summary: Automatically conversion of .ini/.cfg files to TOML equivalents
 License: MPL-2.0
@@ -67,7 +67,7 @@ Extra 'full' for %pypi_name.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra
+%pyproject_run_pytest -ra -o=addopts=-Wignore
 
 %files
 %doc README.rst
@@ -76,10 +76,11 @@ Extra 'full' for %pypi_name.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files lite
-
 %files full
-
 %changelog
+* Fri Oct 27 2023 Stanislav Levin <slev@altlinux.org> 0.13-alt1
+- 0.12 -> 0.13.
+
 * Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 0.12-alt1
 - 0.11.3 -> 0.12.
 
