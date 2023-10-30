@@ -1,11 +1,11 @@
 %def_without xen
-%define githash bb297231c27690a31bf527e8bf77dca1fc2ce268
+%define githash fd0904f7bf256ecd380e1c19ec73c712f3855d40
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: drbd-utils
-Version: 9.25.0
+Version: 9.26.0
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -28,6 +28,7 @@ Patch0: %name-%version-%release.patch
 BuildRequires: docbook-style-xsl flex xsltproc
 BuildRequires: gcc-c++ po4a udev libudev-devel libsystemd-devel
 BuildRequires: asciidoctor resource-agents
+BuildRequires: libkeyutils-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc clitest}}
 
 Requires: linux-ha-common
@@ -135,6 +136,7 @@ make test
 %_sysconfdir/ha.d/resource.d/*
 %_initdir/drbd
 %_unitdir/drbd.service
+%_unitdir/drbd-graceful-shutdown.service
 %_unitdir/drbd-lvchange@.service
 %_unitdir/drbd-promote@.service
 %_unitdir/drbd-reconfigure-suspend-or-error@.service
@@ -186,6 +188,9 @@ make test
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Mon Oct 30 2023 Andrew A. Vasilyev <andy@altlinux.org> 9.26.0-alt1
+- 9.26.0
+
 * Wed Jul 26 2023 Andrew A. Vasilyev <andy@altlinux.org> 9.25.0-alt1
 - 9.25.0
 
