@@ -6,8 +6,8 @@
 
 %define rname qmmp
 Name: qmmp%major
-Version: 1.6.2
-Release: alt2
+Version: 1.6.5
+Release: alt1
 %K5init no_altplace appdata
 
 Group: Sound
@@ -41,8 +41,8 @@ BuildRequires: libavformat-devel libwildmidi-devel
 BuildRequires: libfaad-devel libflac-devel libgme-devel libopusfile-devel libsamplerate-devel libsoxr-devel
 BuildRequires: libmad-devel libmpg123-devel
 BuildRequires: libmodplug-devel libvorbis-devel libwavpack-devel
+BuildRequires: libshout2-devel
 #BuildRequires: libmpcdec0-devel
-#BuildRequires: libshout2-devel
 #BuildRequires: libarchive-devel
 #BuildRequires: libsidplayfp-devel
 
@@ -285,6 +285,9 @@ done
 %_K5link/lib*.so
 
 %changelog
+* Fri Oct 27 2023 Sergey V Turchin <zerg@altlinux.org> 1.6.5-alt1
+- new version
+
 * Tue Feb 14 2023 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt2
 - return original desktop-file names
 
