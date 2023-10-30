@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy
-Version: 0.46.0
+Version: 0.46.1
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -69,24 +69,41 @@ install -m 0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 rm -rf -- %buildroot%_datadir
 rm -rf -- %buildroot%go_root
 
-%pre
+%package server
+Requires: trivy-db
+Summary: Trivy local server
+Group: System/Servers
+BuildArch: noarch
+
+%description server
+%summary.
+
+%pre server
 groupadd -r -f _%name > /dev/null 2>&1 ||:
 useradd -M -r -d %_sharedstatedir/%name -g _%name -s /dev/null -c "Trivy services" _%name > /dev/null 2>&1 ||:
 
-%post
+%post server
 %post_systemd %name
 
-%preun
+%preun server
 %preun_systemd %name
 
 %files
 %doc LICENSE README.md docs
+%_bindir/%name
+
+%files server
 %_unitdir/%name.service
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %attr(0755,_trivy,_trivy) %dir %_sharedstatedir/trivy
-%_bindir/%name
 
 %changelog
+* Sun Oct 29 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.46.1-alt1
+- 0.46.0 -> 0.46.1 
+
+* Thu Oct 26 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.46.0-alt2
+- Add subpackage `trivy-server` 
+
 * Tue Oct 17 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.46.0-alt1
 - 0.45.1 -> 0.46.0
 
