@@ -13,7 +13,7 @@
 %define __if_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 Name: kf5-rpm-build
-Version: 5.100.0
+Version: 5.100.1
 Release: alt1
 
 Group: Development/KDE and QT
@@ -44,10 +44,9 @@ Install this package if you want to create RPM packages that use KF5.
 
 %install
 install -D -m 0644 %SOURCE1 %buildroot/%_rpmmacrosdir/kf5
-%__if_ver_gteq %ubt_id M110
-sed -i 's|^%%__kf5_altplace_default[[:space:]].*|%%__kf5_altplace_default false|' %buildroot/%_rpmmacrosdir/kf5
-%else
+%__if_ver_lt %ubt_id M110
 sed -i 's|^%%__kf5_altplace_default[[:space:]].*|%%__kf5_altplace_default true|' %buildroot/%_rpmmacrosdir/kf5
+sed -i 's|^%%__kf5_desktop_subdir[[:space:]].*|%%__kf5_desktop_subdir /kf5|' %buildroot/%_rpmmacrosdir/kf5
 %endif
 install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 
@@ -56,6 +55,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Mon Oct 30 2023 Sergey V Turchin <zerg@altlinux.org> 5.100.1-alt1
+- don't move desktop-files upper for old branches
+
 * Tue Oct 24 2023 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt1
 - move all to standart placement by default(only for new branches)
 - move desktop-files up from subdirectory by default
