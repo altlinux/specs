@@ -1,6 +1,6 @@
 Name: devscripts
 Version: 2.22.2
-Release: alt2
+Release: alt2.qa1
 Source: %{name}_%version.tar.xz
 Source1: devscripts-po4a.conf
 Patch: devscripts-uscan-no_ssl_namecheck.patch
@@ -13,7 +13,7 @@ Summary: Scripts to make the life of a Debian Package maintainer easier
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl perl-Dpkg perl-Encode perl-Encode-Locale perl-File-Which perl-HTTP-Date perl-HTTP-Message perl-Locale-gettext perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Pod-Usage perl-Tie-RefHash perl-Time-Piece perl-Try-Tiny perl-URI perl-parent perl-podlators pkg-config python3 python3-base python3-dev sh4 xml-common xz
 BuildRequires: docbook5-style-xsl dpkg help2man perl-File-HomeDir perl-JSON-PP perl-Pod-Checker perl-String-ShellQuote perl-autodie perl-libwww po4a python3-module-setuptools xsltproc
 
-BuildRequires: perl-DB_File perl-HTTP-Tiny perl-File-DesktopEntry perl-Git-Wrapper perl-List-Compare perl-Moo perl-IPC-Run perl-TimeDate perl-GitLab-API-v4 perl-File-DirList perl-File-Touch
+BuildRequires: perl-DB_File perl-HTTP-Tiny perl-File-DesktopEntry perl-Git-Wrapper perl-List-Compare perl-Moo perl-IPC-Run perl-TimeDate perl-GitLab-API-v4 perl-File-DirList perl-File-Touch perl(JSON.pm)
 
 %description
 Devscripts provides several scripts which may be of use to Debian
@@ -110,6 +110,9 @@ mv %buildroot/%_bindir/dget %buildroot/%_bindir/dget-debian
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 2.22.2-alt2.qa1
+- NMU: fixed build
+
 * Tue Aug 23 2022 Fr. Br. George <george@altlinux.org> 2.22.2-alt2
 - Rename rarely used dget in the sake of dmd (Closes: #43534)
 
