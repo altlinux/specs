@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.11.1
+Version: 3.12.0
 Release: alt1
 
 Summary: Python socket mock framework
@@ -15,6 +15,7 @@ URL:     https://github.com/mindflayer/python-mocket
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -46,10 +47,10 @@ included, with gevent/asyncio/SSL support.
 touch requirements.txt
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -64,10 +65,13 @@ py.test-3 -k "not test_file_object and \
 
 %files
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %doc LICENSE *.rst
 
 %changelog
+* Mon Oct 30 2023 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1
+- Automatically updated to 3.12.0.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 3.11.1-alt1
 - Automatically updated to 3.11.1.
 
