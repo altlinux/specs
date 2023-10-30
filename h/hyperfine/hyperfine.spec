@@ -1,6 +1,6 @@
 Name:     hyperfine
 Version:  1.18.0
-Release:  alt1
+Release:  alt2
 
 Summary:  A command-line benchmarking tool
 License:  Apache-2.0
@@ -36,6 +36,9 @@ BuildRequires: /proc
 %doc *.md
 
 %changelog
+* Mon Oct 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.18.0-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Sat Oct 28 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.18.0-alt1
 - new version 1.18.0
 
