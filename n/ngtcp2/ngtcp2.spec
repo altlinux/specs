@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
-%define ngtcpsoname 13
-%define ngtcp2_crypto_gnutls 5
+%define ngtcpsoname 16
+%define ngtcp2_crypto_gnutls 8
 
 Name: ngtcp2
-Version: 0.16.0
+Version: 1.0.1
 Release: alt1
 Summary: An implementation of the RFC9000 QUIC protocol
 
@@ -79,6 +79,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_libdir/*.so
 
 %changelog
+* Tue Oct 24 2023 Anton Farygin <rider@altlinux.ru> 1.0.1-alt1
+- 0.16.0 -> 1.0.1
+
 * Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.15.0 -> 0.16.0
 - The library package was renamed in accordance with the Shared Libs Policy.
