@@ -11,7 +11,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/gettext pkgconfig(bzip2) p
 
 Name:           fcitx5-configtool
 Version:        5.1.1
-Release:        alt1_%autorelease
+Release:        alt2_%autorelease
 Summary:        Configuration tools used by fcitx5
 License:        GPLv2+
 URL:            https://github.com/fcitx/fcitx5-configtool
@@ -111,7 +111,6 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 %find_lang %{name}
 %find_lang %{translation_domain}
 
-mv %buildroot/usr/lib/kf5/bin %buildroot%_bindir
 
 %files -f %{name}.lang 
 %doc --no-dereference LICENSES/GPL-2.0-or-later.txt
@@ -139,6 +138,9 @@ mv %buildroot/usr/lib/kf5/bin %buildroot%_bindir
 %{_libdir}/libFcitx5Migrator.so
 
 %changelog
+* Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt2_1
+- fixed build
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_1
 - update
 
