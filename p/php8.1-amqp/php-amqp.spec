@@ -49,5 +49,8 @@ NO_INTERACTION=1 php run-tests.php --offline
 %php_extension_preun
 
 %changelog
-* Tue Oct 10 2023 Alexey Shemyakin <alexeys@altlinux.org> 2.1.0-alt1.%php_version
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php-devel = %version-%release
+
+* Tue Oct 10 2023 Alexey Shemyakin <alexeys@altlinux.org> 2.1.0-alt1
 - Initial build for ALT.
