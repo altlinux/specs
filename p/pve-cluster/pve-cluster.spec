@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%def_with bootstrap
 
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 7.3.3
-Release: alt3
+Release: alt4
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -19,7 +20,10 @@ Patch: %name-%version.patch
 Source3: %name.filetrigger
 
 BuildRequires(pre): rpm-macros-systemd
-BuildRequires: pve-common pve-doc-generator libcheck-devel xmlto
+BuildRequires: pve-common libcheck-devel xmlto
+%if_without bootstrap
+BuildRequires: pve-doc-generator
+%endif
 BuildRequires: pve-apiclient pve-access-control
 BuildRequires: pkgconfig(libcpg) pkgconfig(libcpg) pkgconfig(libcmap) pkgconfig(libquorum) pkgconfig(libqb) pkgconfig(glib-2.0) pkgconfig(fuse) pkgconfig(sqlite3) pkgconfig(librrd)
 BuildRequires: perl(ExtUtils/Embed.pm) perl(Term/ReadLine.pm) perl(Digest/HMAC_SHA1.pm) perl(XML/Parser.pm) perl(RRDs.pm)
@@ -52,6 +56,12 @@ This package contains the API2 endpoints and CLI binary 'pvecm'.
 %prep
 %setup
 %patch -p1
+%if_with bootstrap
+sed -i -e '/^install:/ s/pvecm.1//' -e '/^install:/ s/datacenter.cfg.5//' -e '/^install:/ s/pvecm.bash-completion//' -e '/^install:/ s/pvecm.zsh-completion//' data/PVE/Makefile
+sed -i -e '/install -D .*pvecm.1/d' -e '/install -D .*datacenter.cfg.5/d' -e '/install -m .*pvecm.bash-completion/d' -e '/install -m .*pvecm.zsh-completion/d' data/PVE/Makefile
+sed -i -e '/^install:/ s/pmxcfs.8//' data/src/Makefile
+sed -i -e '/install -D .*pmxcfs.8/d' data/src/Makefile
+%endif
 
 %build
 %make -C data
@@ -110,11 +120,15 @@ fi
 %perl_vendor_privlib/PVE/Cluster/IPCConst.pm
 %perl_vendor_privlib/PVE/IPCC.pm
 %dir %_localstatedir/%name
+%if_without bootstrap
 %_man8dir/pmxcfs.8*
+%endif
 %_prefix/lib/rpm/%name.filetrigger
 
 %files -n libpve-cluster-perl
+%if_without bootstrap
 %_man5dir/datacenter.cfg.5*
+%endif
 %perl_vendor_privlib/PVE/Corosync.pm
 %perl_vendor_privlib/PVE/DataCenterConfig.pm
 %perl_vendor_privlib/PVE/RRD.pm
@@ -122,14 +136,19 @@ fi
 
 %files -n libpve-cluster-api-perl
 %_bindir/pvecm
+%if_without bootstrap
 %_datadir/bash-completion/completions/pvecm
 %_datadir/zsh/vendor-completions/_pvecm
 %_man1dir/pvecm.1*
+%endif
 %perl_vendor_privlib/PVE/API2/*
 %perl_vendor_privlib/PVE/CLI/*
 %perl_vendor_privlib/PVE/Cluster/Setup.pm
 
 %changelog
+* Sun Oct 29 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.3-alt4
+- add bootstrap mode (Closes: #48151)
+
 * Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.3-alt3
 - add copyright file
 
