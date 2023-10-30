@@ -1,7 +1,7 @@
 %define oversion 33_0
 Name: libcdf
 Version: 3.3.0
-Release: alt3
+Release: alt4
 
 Summary: Common Data Format (CDF)
 
@@ -64,7 +64,7 @@ touch NEWS README AUTHORS
 rm -rf cdfjava/lib
 
 %build
-%ifarch %e2k armh aarch64
+%ifarch %e2k armh aarch64 loongarch64
 %add_optflags -DIBMPC
 %endif
 
@@ -101,6 +101,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %endif
 
 %changelog
+* Sun Oct 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.3.0-alt4
+- NMU: fixed FTBFS (use pkg-config to ask for ncurses libs/cflags)
+
 * Mon Sep 20 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.3.0-alt3
 - fixed build for Elbrus and ARM
 
