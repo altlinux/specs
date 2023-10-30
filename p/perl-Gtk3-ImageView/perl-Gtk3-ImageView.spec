@@ -1,14 +1,18 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Cairo.pm) perl(Carp/Always.pm) perl(Glib.pm) perl(Glib/Object/Subclass.pm) perl(Gtk3.pm) perl(Image/Magick.pm) perl(Readonly.pm) perl(Test/Deep.pm) perl(Test/MockObject.pm) perl(Test/Perl/Critic.pm) perl(Try/Tiny.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
-# needed xvfb-run
-%def_disable test
+# we use xvfb-run
+#def_without test
+%define _without_test 1
 
 Name: perl-Gtk3-ImageView
 Version: 10
-Release: alt1
+Release: alt2
 
 Summary: Image viewer widget for GTK 3
 
-License: GPL+ or Artistic
+License: Perl
 Group: Development/Perl
 Url: https://metacpan.org/release/Gtk3-ImageView
 
@@ -21,41 +25,27 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel
 
-#BuildRequires: perl(ExtUtils::MakeMaker) >= 6.76
 # Run-time:
-#BuildRequires: perl(base)
 BuildRequires: perl(Cairo.pm)
-BuildRequires: perl(Carp.pm)
-BuildRequires: perl(Glib.pm) >= 1.21
+BuildRequires: perl(Carp/Always.pm)
+BuildRequires: perl(Glib.pm)
 BuildRequires: perl(Glib/Object/Subclass.pm)
 BuildRequires: perl(Gtk3.pm)
-BuildRequires: perl(List/Util.pm)
-BuildRequires: perl(POSIX.pm)
 BuildRequires: perl(Readonly.pm)
-BuildRequires: perl(Scalar/Util.pm)
 
 # Tests:
-#BuildRequires: perl(Carp::Always)
-#BuildRequires: perl(English)
-#BuildRequires: perl(File::Spec)
-#BuildRequires: perl(File::Temp)
-#BuildRequires: perl(Image::Magick)
-#BuildRequires: perl(MIME::Base64)
-BuildRequires: perl(Test/Differences.pm)
-#BuildRequires: perl(Test::MockObject)
-#BuildRequires: perl(Test::More)
-#BuildRequires: perl(Try::Tiny)
-#BuildRequires: xorg-x11-server-Xvfb
+BuildRequires: perl(Image/Magick.pm)
+BuildRequires: perl(Test/Deep.pm)
+BuildRequires: perl(Test/MockObject.pm)
+BuildRequires: perl(Test/Perl/Critic.pm)
+BuildRequires: perl(Try/Tiny.pm)
+BuildRequires: xvfb-run
 
 # Optional tests:
 # git-core not used
 # Test::Perl::Critic not used
-#Requires: perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 Requires: perl(if.pm)
 Requires: perl(Glib.pm) >= 1.21
-
-# Remove under-specified dependencies
-#global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\(Glib\\)$
 
 %description
 The Gtk3::ImageView widget allows the user to zoom, pan and select the
@@ -69,20 +59,20 @@ sed -i -e "3iuse Gtk3;" lib/Gtk3/ImageView/Tool.pm
 
 %build
 %perl_vendor_build
+xvfb-run -a make test
 
 %install
 %perl_vendor_install
 
-%check
-#unset TEST_AUTHOR
-#xvfb-run -d make test
 
 %files
 %doc README.md Changes README
 %perl_vendor_privlib/*
-#_man3dir/*
 
 %changelog
+* Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 10-alt2
+- enabled tests
+
 * Tue Oct 05 2021 Igor Vlasenko <viy@altlinux.org> 10-alt1
 - automated CPAN update
 
