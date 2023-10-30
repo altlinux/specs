@@ -1,6 +1,6 @@
 Name: bat
 Version: 0.24.0
-Release: alt1
+Release: alt2
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
 Group: File tools
@@ -13,6 +13,10 @@ BuildRequires: rust-cargo
 Conflicts: bacula9-bat
 Conflicts: bacula11-bat
 Conflicts: bacula13-bat
+
+%ifarch i586 armh
+%filter_from_requires /libc.so.6(GLIBC_PRIVATE)/d
+%endif
 
 %description
 A cat(1) clone which supports syntax highlighting for a large number of
@@ -53,6 +57,9 @@ cargo test -- --skip no_args_doesnt_break
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Mon Oct 30 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.24.0-alt2
+- Filtered requires on GLIBC_PRIVATE for i586 and armh.
+
 * Wed Oct 18 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.24.0-alt1
 - Updated to version 0.24.0.
 
