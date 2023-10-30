@@ -1,9 +1,9 @@
-Summary:  Creates a common metadata repository
 Name:     createrepo_c
-Version:  1.0.1
+Version:  1.0.2
 Release:  alt1
-Group:    System/Configuration/Packaging
+Summary:  Creates a common metadata repository
 License:  GPL-2.0+
+Group:    System/Configuration/Packaging
 URL:      https://github.com/rpm-software-management/createrepo_c
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -96,6 +96,9 @@ ln -s modifyrepo_c %buildroot%_bindir/modifyrepo
 %python3_sitelibdir/*
 
 %changelog
+* Mon Oct 30 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
+- New version.
+
 * Sat Oct 07 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - New version.
 
