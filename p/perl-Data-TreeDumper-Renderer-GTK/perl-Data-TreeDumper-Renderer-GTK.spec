@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define m_distro Data-TreeDumper-Renderer-GTK
 Name: perl-Data-TreeDumper-Renderer-GTK
-Version: 0.02
-Release: alt2
+Version: 0.03
+Release: alt1
 Summary: Rendering plug-in for Data::TreeDumper
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -13,10 +13,10 @@ Url: http://search.cpan.org/~nkh/Data-TreeDumper-Renderer-GTK/
 
 BuildArch: noarch
 Source: %m_distro-%version.tar
-BuildRequires: xvfb-run perl-devel perl-Gtk2 perl-Cairo perl-Data-TreeDumper perl-Term-Size
+BuildRequires: xvfb-run perl-devel perl-Gtk3 perl-Cairo perl-Data-TreeDumper perl-Term-Size
 
 %description
-This Gtk2::TreeView derived widget allows you to diplay a
+This Gtk3::TreeView derived widget allows you to diplay a
 Data::TreeDumper generated dump in a GTK window. The nodes are
 collapsable.
 
@@ -37,9 +37,12 @@ rm -f %buildroot%_bindir/*.pl %buildroot%perl_vendor_privlib/Data/TreeDumper/Ren
 %files
 %perl_vendor_privlib/Data/TreeDumper/Renderer/GTK*
 %perl_vendor_privlib/auto/Data/TreeDumper/Renderer/GTK
-%doc Changes Todo README 
+%doc Todo README
 
 %changelog
+* Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 0.03-alt1
+- new version
+
 * Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2
 - fixed unpackaged files
 
