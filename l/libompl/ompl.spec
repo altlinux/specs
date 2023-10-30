@@ -1,6 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/R boost-devel boost-filesystem-devel boost-program_options-devel
+BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
+%ifnarch %ix86
+BuildRequires: /usr/bin/R
+%endif
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -14,7 +17,7 @@ Group: System/Libraries
 
 Name:           libompl
 Version:        1.5.0
-Release:        alt3_7
+Release:        alt4_7
 Summary:        The Open Motion Planning Library
 
 License:        BSD
@@ -112,6 +115,10 @@ export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 %{_libdir}/%{oldname}
 
 %changelog
+* Mon Oct 30 2023 Ivan A. Melnikov <iv@altlinux.org> 1.5.0-alt4_7
+- NMU: drop /usr/bin/R from build requirements on i586,
+  where it's not available (fixes FTBFS).
+
 * Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt3_7
 - Rebuilt with boost-1.77.0.
 
