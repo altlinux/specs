@@ -1,17 +1,19 @@
 %filter_from_requires /^perl.utf8_heavy.pl./d
+# compat require: now renamed to perl.B.C.Config.pm
+%filter_from_requires /^perl.B.C.Flags.pm./d
 %define _unpackaged_files_terminate_build 1
-# hack for perl 5.26.1 migration
+# hack for perl 5.38.0 migration
 %def_without test
 Name: perl-B-C
-Version: 1.57
-Release: alt3
+Version: 1.57_01
+Release: alt1.gitb29a5b8f
 
 Summary: Perl compiler's C backend
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN B-C
-# Cloned from git https://code.google.com/p/perl-compiler
+VCS: https://github.com/rurban/perl-compiler.git
 Source: %name-%version.tar
 
 BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel %{perl_libdb_pkgname}-devel perl-B-Flags perldoc perl-threads perl(Attribute/Handlers.pm) perl(AnyDBM_File.pm) perl(Encode/JP.pm)
@@ -43,6 +45,9 @@ BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel %{perl_libd
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 1.57_01-alt1.gitb29a5b8f
+- updated to git HEAD
+
 * Sun May 30 2021 Igor Vlasenko <viy@altlinux.org> 1.57-alt3
 - perl(utf8_heavy.pl) marked as optional dependency
 
