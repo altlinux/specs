@@ -1,14 +1,13 @@
 Name: cups
 Version: 2.4.7
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
 Group: System/Servers
 
 Url: https://openprinting.github.io/cups/
-
-# https://github.com/OpenPrinting/cups/
+VCS: https://github.com/OpenPrinting/cups/
 Source: %name-%version.tar.gz
 
 # READMEs
@@ -46,7 +45,6 @@ Patch103: Ubuntu-0008-Debian-Set-LogFileGroup-to-adm.patch
 Patch104: Ubuntu-0009-Debian-Move-cupsd.conf.default-from-SERVERROOT-to-DA.patch
 Patch105: Ubuntu-0010-Debian-Do-not-alter-the-permissions-of-cupsd.conf-ev.patch
 Patch106: Ubuntu-0011-Debian-Show-compile-command-lines.patch
-Patch107: Ubuntu-0012-Debian-Use-dpkg-architecture-in-cups-config-to-make-.patch
 Patch108: Ubuntu-0013-Debian-Build-mantohtml-with-the-build-architecture-c.patch
 Patch109: Ubuntu-0014-Debian-Reproducibility-httpAddrGetHostname-test-fail.patch
 Patch110: Ubuntu-0015-Debian-Reproducibility-Do-not-run-stp-tests-as-root.patch
@@ -65,6 +63,8 @@ Patch511: ALT-pwg-raster-attributes.patch
 Patch512: ALT-2.1.0-lpd-sanitizer.patch
 Patch513: ALT-fc-lspp.patch
 Patch514: ALT-checkpo.patch
+# should be removed - see https://github.com/OpenPrinting/cups/issues/804 and https://github.com/OpenPrinting/libcupsfilters/issues/38
+Patch515: ALT-pantun-PR805-hotfix.patch
 
 # ALT SE related patches
 Patch552: ALT-ipp-alt-extension-copy-document.patch
@@ -84,10 +84,7 @@ Provides: cups-libs = %version
 ## External dependencies
 Requires: printer-testpages bc cups-filters
 
-# Automatically added by buildreq on Tue Dec 24 2013
-# optimized out: libcom_err-devel libkrb5-devel libstdc++-devel libsystemd-daemon pkg-config
 BuildRequires: gcc-c++ libacl-devel libaudit-devel libavahi-devel libdbus-devel libpam-devel libpaper-devel libselinux-devel libssl-devel libsystemd-daemon-devel systemd-devel libusb-devel xdg-utils zlib-devel
-
 BuildRequires: dbus python3 python3-module-polib
 BuildRequires: libgnutls-devel
 BuildRequires: libkrb5-devel
@@ -166,7 +163,6 @@ services using the main CUPS library "libcups".
 %patch104 -p1
 %patch105 -p1
 %patch106 -p1
-%patch107 -p1
 %patch108 -p1
 %patch109 -p1
 %patch110 -p1
@@ -185,6 +181,7 @@ services using the main CUPS library "libcups".
 %patch512 -p2
 %patch513 -p1
 %patch514 -p1
+%patch515 -p1
 
 # ALT SE related patches
 %patch552 -p1
@@ -406,6 +403,10 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Mon Oct 30 2023 Anton Farygin <rider@altlinux.ru> 2.4.7-alt2
+- add hotfix from Alexander Pevzner for Pantum driverless printing (closes: #48114)
+- removed Ubuntu-0012-Debian-Use-dpkg-architecture-in-cups-config-to-make-.patch (closes: #38564)
+
 * Fri Sep 29 2023 Anton Farygin <rider@altlinux.ru> 2.4.7-alt1
 - 2.4.7 (Fixes: CVE-2023-4504)
 - updated Ubuntu-9100-ppd-cache-add-auto-presets.patch
