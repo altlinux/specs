@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,7 +7,7 @@ BuildRequires: perl(Pod/Usage.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Pod-Markdown
-Version:        3.300
+Version:        3.400
 Release:        alt1
 Summary:        Convert POD to Markdown
 License:        GPL+ or Artistic
@@ -64,6 +65,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 3.400-alt1
+- automated CPAN update
+
 * Sun Nov 01 2020 Igor Vlasenko <viy@altlinux.ru> 3.300-alt1
 - automated CPAN update
 
