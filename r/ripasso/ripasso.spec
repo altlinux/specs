@@ -8,7 +8,7 @@
 
 Name: ripasso
 Version: 0.6.5
-Release: alt1
+Release: alt2
 
 Summary: a simple password manager written in Rust
 Summary(ru_RU.UTF-8): простой парольный менеджер, написанный на Rust
@@ -29,9 +29,9 @@ Source2: config.toml
 Source10: ripasso.sh
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Sat Dec 10 2022
-# optimized out: ca-trust clang13.0 clang13.0-devel clang13.0-libs clang13.0-libs-support glibc-kernheaders-generic glibc-kernheaders-x86 libassuan-devel libgmp-devel libgpg-error libgpg-error-devel libsasl2-3 llvm-common llvm13.0-libs llvm15.0-libs pkg-config python-modules python2-base python3 python3-base rust sh4
-BuildRequires: bzlib-devel clang libgpgme-devel libnettle-devel libssl-devel libxcb-devel
+# Automatically added by buildreq on Sat Oct 21 2023
+# optimized out: ca-trust clang clang13.0-libs clang15.0-libs clang16.0-libs clang17.0 clang17.0-devel clang17.0-support libclang-cpp17 libgmp-devel libgpg-error libgpg-error-devel libp11-kit libsasl2-3 llvm-common llvm17.0-libs pkg-config python-modules python2-base python3 python3-base rust sh5
+BuildRequires: bzlib-devel clang-devel libgpgme-devel libnettle-devel libssl-devel libxcb-devel zlib-devel
 
 BuildRequires: rust-cargo
 BuildRequires: /proc
@@ -99,6 +99,9 @@ cp -a -- target/translations/*  %buildroot%_datadir/%name/
 
 
 %changelog
+* Sat Oct 21 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.6.5-alt2
+- Update BuildRequires
+
 * Tue Aug 08 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.6.5-alt1
 - New version
 
