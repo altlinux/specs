@@ -4,8 +4,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.0
-Release: alt2
+Version: 1.15.1
+Release: alt1
 
 Summary: Simple job queues for Python
 License: BSD
@@ -17,11 +17,10 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-redis-py
-BuildRequires: python3-module-click
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %py3_provides %oname
-
 
 %description
 RQ is a simple, lightweight, library for creating background jobs, and
@@ -31,23 +30,26 @@ processing them.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-%if_with check
 %check
 %__python3 setup.py test
-%endif
 
 %files
 %doc *.md
-%_bindir/*
-%python3_sitelibdir/*
-
+%_bindir/rq
+%_bindir/rqinfo
+%_bindir/rqworker
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Oct 04 2023 Alexander Burmatov <thatman@altlinux.org> 1.15.1-alt1
+- Updated to upstream version 1.15.1.
+
 * Fri Nov 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2
 - python2 disabled
 
@@ -74,4 +76,3 @@ processing them.
 
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.6-alt1.git20140917
 - Initial build for Sisyphus
-
