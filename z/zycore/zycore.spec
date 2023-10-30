@@ -2,7 +2,7 @@
 
 Name: zycore
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: Zyan Core Library for C
 License: MIT
@@ -13,6 +13,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/zyantific/zycore-c/archive/refs/tags/v%version/%name-c-%version.tar.gz
 Source: %name-c-%version.tar
+Patch3500: zycore-loongarch64.patch
 
 BuildRequires: cmake
 BuildRequires: doxygen
@@ -38,6 +39,7 @@ Header files for lib%name
 
 %prep
 %setup -n %name-c-%version
+%patch3500 -p1
 
 %build
 %cmake -DZYCORE_BUILD_SHARED_LIB:BOOL=TRUE
@@ -57,5 +59,8 @@ Header files for lib%name
 %_defaultdocdir/Zycore
 
 %changelog
+* Mon Oct 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.4.1-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Mon May 29 2023 Nazarov Denis <nenderus@altlinux.org> 1.4.1-alt1
 - Initial build for ALT Linux
