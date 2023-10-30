@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: Meson PEP 517 Python build backend
@@ -60,6 +60,9 @@ for more details.
 %python3_sitelibdir/%{pyproject_distinfo meson_python}
 
 %changelog
+* Mon Oct 30 2023 Grigory Ustinov <grenka@altlinux.org> 0.15.0-alt1
+- Automatically updated to 0.15.0.
+
 * Thu Sep 07 2023 Grigory Ustinov <grenka@altlinux.org> 0.14.0-alt1
 - Automatically updated to 0.14.0.
 
