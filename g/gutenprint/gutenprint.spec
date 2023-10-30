@@ -1,6 +1,6 @@
 Name: gutenprint
 Version: 5.3.4
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Gutenprint Printer Drivers
 License: GPL-2.0+
@@ -17,6 +17,7 @@ Patch0: gutenprint-5.3.1-alt-fixes.patch
 Patch1: gutenprint-5.2.9-alt-makefile.patch
 Patch2: gutenprint-alt-LFS.patch
 Patch3: gutenprint-alt-link-plugins-with-libraries.patch
+Patch4: gutenprint-alt-add-oki-mb472.patch
 
 BuildRequires: flex foomatic-db-engine libcups-devel libgimp-devel libreadline-devel
 BuildRequires: libusb-devel
@@ -92,6 +93,7 @@ This package contains PPDs for gutenprint-cups.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%patch4 -p1
 rm -rf gutenprint/po/*.gmo
 install %SOURCE2 po/ru.po
 
@@ -189,6 +191,9 @@ fi
 %_datadir/cups/model/Global
 
 %changelog
+* Mon Oct 30 2023 Mikhail Chernonog <snowmix@altlinux.org> 1:5.3.4-alt2
+- Added support for the manually tested Oki MB472 printer.
+
 * Thu Dec 17 2020 Andrey Cherepanov <cas@altlinux.org> 1:5.3.4-alt1
 - New version.
 - Package watch file.
