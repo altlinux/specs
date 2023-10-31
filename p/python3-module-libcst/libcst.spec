@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
 License: MIT and Python-2.0 and Apache-2.0
@@ -17,6 +17,7 @@ Source0: %name-%version.tar
 Source1: vendor_rust.tar
 Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+Patch1: drop-distutils.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -82,6 +83,9 @@ export LIBCST_PARSER_TYPE=pure
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 31 2023 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt2
+- NMU: Dropped dependency on distutils.
+
 * Fri Oct 06 2023 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 1.0.1 -> 1.1.0.
 
