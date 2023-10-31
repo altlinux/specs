@@ -1,13 +1,16 @@
 Group: Development/C
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-valgrind
+%ifarch %valgrind_arches
 BuildRequires: /usr/bin/valgrind
+%endif
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:			ppl
 Version:		1.2
-Release:		alt2_20
+Release:		alt2_21
 Summary:		The Parma Polyhedra Library: a library of numerical abstractions
 License:		GPLv3+
 URL:			http://www.bugseng.com/ppl
@@ -303,6 +306,9 @@ mv \
 %doc %{_datadir}/doc/%{name}/ppl-user-prolog-interface-%{version}.ps.gz
 
 %changelog
+* Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2-alt2_21
+- NMU: fixed FTBFS on LoongArch
+
 * Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 1.2-alt2_20
 - fixed build with LTO
 
