@@ -1,9 +1,7 @@
-%set_automake_version 1.11
-
 Name: gsasl
 %define libname lib%name
-Version: 1.8.0
-Release: alt3
+Version: 2.2.0
+Release: alt1
 
 Summary: GNU SASL implementation
 Group: System/Libraries
@@ -16,6 +14,8 @@ Requires: lib%name = %version-%release
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gtk-doc libgnutls-devel libidn-devel libkrb5-devel libntlm-devel libreadline-devel
+BuildRequires: libgcrypt-devel
+BuildRequires: texinfo
 
 %description
 GNU SASL is an implementation of the Simple Authentication and
@@ -48,9 +48,8 @@ sed -i 's/^AM_CPPFLAGS +=/& \$(GSS_CFLAGS)/' lib/gl/Makefile.*
 sed -i -r 's/^(TESTS \+= .*)test-(lock|thread_create)/\1/' gltests/Makefile.am
 
 # Use gnulib largefile module in the library as well.
-ln gl/m4/largefile.m4 lib/gl/m4/
 sed -i '/AC_REQUIRE(\[gl_USE_SYSTEM_EXTENSIONS\])/a AC_REQUIRE([AC_SYS_LARGEFILE])' \
-	lib/gl/m4/gnulib-comp.m4
+	lib/m4/gnulib-comp.m4
 
 %build
 %autoreconf
@@ -83,7 +82,6 @@ sed -i '/libgsasl\.mo/d' %name.lang
 
 %files -n lib%name -f lib%name.lang
 %_libdir/*.so.*
-%doc lib/AUTHORS lib/NEWS lib/README lib/THANKS
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -93,6 +91,9 @@ sed -i '/libgsasl\.mo/d' %name.lang
 %_man3dir/*
 
 %changelog
+* Sun Oct 29 2023 Arseny Maslennikov <arseny@altlinux.org> 2.2.0-alt1
+- 1.8.0 -> 2.2.0.
+
 * Mon Dec 10 2018 Dmitry V. Levin <ldv@altlinux.org> 1.8.0-alt3
 - Built the library with LFS support.
 
