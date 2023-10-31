@@ -5,7 +5,7 @@
 
 Name: easyeffects
 Version: 7.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Audio effects for Pipewire applications
 License: GPL-3.0
@@ -32,9 +32,7 @@ Source: %name-%version.tar
 Requires: pipewire >= %pw_ver dconf
 Requires: ladspa-zam-plugins
 Requires: calf-plugins >= %calf_ver
-%ifarch %ix86 x86_64 aarch64 %e2k
 Requires: lv2-lsp-plugins >= %lsp_ver
-%endif
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ pkgconfig(sigc++-3.0) >= %sigc_ver libfmt-devel
@@ -91,6 +89,9 @@ sed -i 's/tbb/tbb32/' src/meson.build
 %doc README* CHANGELOG.*
 
 %changelog
+* Tue Oct 31 2023 Yuri N. Sedunov <aris@altlinux.org> 7.1.1-alt1.1
+- required lsp-plugins for all default arches
+
 * Sat Oct 28 2023 Yuri N. Sedunov <aris@altlinux.org> 7.1.1-alt1
 - 7.1.1
 

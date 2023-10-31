@@ -3,7 +3,7 @@
 
 Name: lsp-plugins
 Version: 1.2.13
-Release: alt1
+Release: alt1.1
 
 Summary: Linux Studio Plugins
 Group: Sound
@@ -20,7 +20,7 @@ BuildRequires: libsndfile-devel libcairo-devel
 BuildRequires: libGL-devel libXrandr-devel
 BuildRequires: %_bindir/php
 
-ExclusiveArch: %ix86 x86_64 aarch64 %e2k
+#ExclusiveArch: %ix86 x86_64 aarch64 %e2k riscv64 loongarch64
 
 %description
 LSP (Linux Studio Plugins) is a collection of open-source plugins
@@ -124,6 +124,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Tue Oct 31 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.13-alt1.1
+- try to build for all default arches
+
 * Mon Oct 30 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.13-alt1
 - 1.2.13
 
