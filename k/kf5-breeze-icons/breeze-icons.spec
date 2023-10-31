@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.111.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -44,11 +44,10 @@ The %name-devel package files for developing applications that use %name.
 
 chmod a+x *.sh
 
-# remove telegram status icons
-#find ./ -type f -name 'telegram-*' | \
-#while read f; do
-#    rm -f $f
-#done
+# remove some icons
+for n in 'yandex-browser.*' ; do
+    find ./ -type f -name $n | while read f; do rm -f $f;  done
+done
 
 %build
 %K5build
@@ -127,6 +126,9 @@ done
 %_libdir/cmake/KF5BreezeIcons/
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt2
+- remove yandex-browser icon (closes: 48263)
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
 - new version
 
