@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.13.1
+Version: 0.1.13.2
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,11 @@ done
 %_destdir
 
 %changelog
+* Tue Oct 31 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.13.2-alt1
+- Edited description of blocking
+- Edited English version of adml GSettings
+- Fixed bugs in ModemManager policies
+
 * Thu Oct 19 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.13.1-alt1
 - Polkit-restrictions of ModemManager1 in admx-templates
 - Fix polkit translate in russian language
