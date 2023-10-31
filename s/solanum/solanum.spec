@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name solanum
-%define ver_major 4.0
+%define ver_major 5.0
 %define xdg_name org.gnome.Solanum
 
 %def_disable bootstrap
@@ -21,8 +21,8 @@ Source1: %_name-%version-cargo.tar
 # build failed for 32-bit
 #ExcludeArch: %ix86 armh
 
-%define gtk_ver 4.0.0
-%define adwaita_ver 1.0.0
+%define gtk_ver 4.11.3
+%define adwaita_ver 1.4.0
 %define gst_api_ver 1.0
 %define gst_ver 1.18
 
@@ -69,6 +69,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Oct 31 2023 Yuri N. Sedunov <aris@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Sun Jun 11 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - 4.0.0
 
