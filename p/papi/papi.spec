@@ -7,13 +7,14 @@
 
 Name: papi
 Version: 6.0.0
-Release: alt7.1
+Release: alt8
 
 Summary: Performance Application Programming Interface
 
 License: BSD-3-Clause
 Group: Development/Tools
-Url: http://icl.cs.utk.edu/papi/
+Url: https://icl.utk.edu/exa-papi/
+Vcs: https://github.com/icl-utk-edu/papi
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -32,7 +33,7 @@ Requires: lib%name = %EVR
 BuildRequires: /proc
 BuildRequires: rpm-build-python3
 BuildRequires: libncurses-devel gcc-fortran libsensors3-devel libgomp-devel
-BuildRequires: libltdl-devel doxygen
+BuildRequires: doxygen
 %if_with doc
 BuildRequires: graphviz
 %endif
@@ -199,6 +200,10 @@ set -x
 %endif
 
 %changelog
+* Tue Oct 31 2023 Vitaly Chikunov <vt@altlinux.org> 6.0.0-alt8
+- spec: Update Url and Vcs links.
+- spec: Remove BR on libltdl-devel.
+
 * Fri May 26 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.0.0-alt7.1
 - Fixed build for Elbrus.
 
