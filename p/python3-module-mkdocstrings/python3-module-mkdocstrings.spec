@@ -1,10 +1,10 @@
 %define pypi_name mkdocstrings
 
-%def_without check
+%def_with check
 
 Name:    python3-module-%pypi_name
 Version: 0.23.0
-Release: alt1
+Release: alt2
 
 Summary: Automatic documentation from sources, for MkDocs
 License: ISC
@@ -70,5 +70,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 27 2023 Alexander Burmatov <thatman@altlinux.org> 0.23.0-alt2
+- Enable check.
+
 * Wed Oct 25 2023 Alexander Burmatov <thatman@altlinux.org> 0.23.0-alt1
 - Initial build for Sisyphus.
