@@ -1,4 +1,6 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
+#BuildRequires: perl(Clone/Fast.pm)
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Clone.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
@@ -6,12 +8,13 @@ BuildRequires: perl(CPAN.pm) perl(Clone.pm) perl(JSON.pm) perl(Module/Build.pm) 
 %define _localstatedir %{_var}
 Name:           perl-Data-Clone
 Version:        0.004
-Release:        alt1_11.2
+Release:        alt1_30
 Summary:        Polymorphic data cloning
-License:        GPL+ or Artistic
-Group:          Development/Other
-URL:            http://search.cpan.org/dist/Data-Clone/
-Source0:        http://www.cpan.org/authors/id/G/GF/GFUJI/Data-Clone-%{version}.tar.gz
+License:        GPL-1.0-or-later OR Artistic-1.0-Perl
+URL:            https://metacpan.org/release/Data-Clone
+Source0:        https://cpan.metacpan.org/authors/id/G/GF/GFUJI/Data-Clone-%{version}.tar.gz
+# Remove using of ' as a package name separator (CPAN RT#148415)
+Patch0:         Data-Clone-0.004-Fix-for-perl-5.38.patch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(constant.pm)
@@ -45,9 +48,10 @@ polymorphic data cloning.
 
 %prep
 %setup -q -n Data-Clone-%{version}
+%patch0  -p1
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 %make_build
 
 %install
@@ -68,6 +72,9 @@ make test
 %{perl_vendor_archlib}/Data*
 
 %changelog
+* Tue Oct 31 2023 Igor Vlasenko <viy@altlinux.org> 0.004-alt1_30
+- reimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_11.2
 - rebuild with new perl 5.28.1
 
