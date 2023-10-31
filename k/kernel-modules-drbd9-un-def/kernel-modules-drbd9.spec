@@ -1,8 +1,8 @@
 %define module_name     drbd9
 %define module_version  9.2.6
 %define module_release  alt1
-%define flavour         ovz-el7
-%define karch x86_64
+%define flavour         un-def
+%define karch x86_64 aarch64 ppc64le
 
 %setup_kernel_module %flavour
 
@@ -12,7 +12,7 @@
 Summary: Kernel driver for DRBD
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Epoch: 2
+Epoch: 1
 Release: %module_release.%kcode.%kbuildrelease
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -21,7 +21,7 @@ Url: http://www.drbd.org/
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-ovz-el7
+BuildRequires(pre): kernel-headers-modules-un-def
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 BuildRequires: coccinelle >= 1.0.8
@@ -43,6 +43,7 @@ tar xf %kernel_src/kernel-source-%module_name-%module_version.tar*
 %setup -D -T -n %module_name-%module_version
 
 %build
+#sed -i s/SUBDIRS=/M=/g Makefile
 make -C drbd KDIR=/lib/modules/*/build
 
 %install
