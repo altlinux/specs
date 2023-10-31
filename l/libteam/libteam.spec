@@ -1,5 +1,5 @@
-%define git_hash .g7cb5de8
-#define git_hash %nil
+#define git_hash .g7cb5de8
+%define git_hash %nil
 
 %def_disable zmq
 %def_with docs
@@ -7,10 +7,11 @@
 
 %define _pseudouser_user     _teamd
 %define _pseudouser_group    _teamd
+%define teamd_rundir /run/teamd
 
 Name: libteam
-Version: 1.31
-Release: alt3%git_hash
+Version: 1.32
+Release: alt1%git_hash
 
 Summary: Library for controlling team network device
 License: LGPLv2.1+
@@ -124,6 +125,7 @@ chmod -x _tmpdoc2/examples/*.py
 	--enable-dbus \
 	--with-user=%_pseudouser_user \
 	--with-group=%_pseudouser_group \
+	--with-run-dir=%teamd_rundir \
 	--disable-silent-rules
 %make_build
 %if_with docs
@@ -142,7 +144,7 @@ mkdir -p %buildroot%_tmpfilesdir
 cat > %buildroot%_tmpfilesdir/teamd.conf <<EOF
 # See tmpfiles.d(5) for details
 # Type(d=directory) Path Mode UID GID Age(until delete when cleaning)
-d /var/run/teamd/ 0755 %_pseudouser_user %_pseudouser_group -
+d %teamd_rundir/ 0755 %_pseudouser_user %_pseudouser_group -
 EOF
 
 %if_with python
@@ -198,6 +200,10 @@ install -pm 0644 team/capi.py %buildroot%python3_sitelibdir/team/
 %endif
 
 %changelog
+* Tue Oct 31 2023 Mikhail Efremov <sem@altlinux.org> 1.32-alt1
+- Use /run/teamd/ as teamd rundir.
+- Updated to 1.32.
+
 * Mon Aug 21 2023 Mikhail Efremov <sem@altlinux.org> 1.31-alt3.g7cb5de8
 - Disabled python binding.
 - python binding: fixed build with modern swig.
