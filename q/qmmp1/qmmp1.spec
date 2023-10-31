@@ -7,7 +7,7 @@
 %define rname qmmp
 Name: qmmp%major
 Version: 1.6.5
-Release: alt1
+Release: alt2
 %K5init no_altplace appdata
 
 Group: Sound
@@ -34,7 +34,7 @@ Patch5: alt-def-id3v1-encoding.patch
 #BuildRequires: cmake doxygen libalsa-devel libavformat-devel libbs2b-devel libcddb-devel libcdio-paranoia-devel libcurl-devel libenca-devel libfaad-devel libflac-devel libgme-devel libjack-devel libmad-devel libmms-devel libmodplug-devel libmpcdec-devel libopusfile-devel libprojectM-devel libpulseaudio-devel libsamplerate-devel libsidplayfp-devel libtag-devel libvorbis-devel libwavpack-devel libwildmidi-devel python-module-google python3-dev qt5-tools-devel qt5-x11extras-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-wlskins
 BuildRequires: cmake doxygen qt5-tools-devel qt5-x11extras-devel
-BuildRequires: libmms-devel libprojectM-devel libtag-devel
+BuildRequires: libmms-devel projectm-devel libtag-devel
 BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel qt5-multimedia-devel pipewire-libs-devel
 BuildRequires: libbs2b-devel libcddb-devel libcdio-paranoia-devel libcurl-devel libenca-devel
 BuildRequires: libavformat-devel libwildmidi-devel
@@ -285,6 +285,9 @@ done
 %_K5link/lib*.so
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 1.6.5-alt2
+- build with projectm
+
 * Fri Oct 27 2023 Sergey V Turchin <zerg@altlinux.org> 1.6.5-alt1
 - new version
 
