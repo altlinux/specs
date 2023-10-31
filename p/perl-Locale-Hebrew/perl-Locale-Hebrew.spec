@@ -1,14 +1,15 @@
 %define dist Locale-Hebrew
 Name: perl-%dist
 Version: 1.05
-Release: alt5.2
+Release: alt6
 
 Summary: Bidirectional Hebrew support
-License: GPL or Artistic
+License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+Patch: Locale-Hebrew-1.05-perl5.38.patch
 
 # Automatically added by buildreq on Wed Nov 16 2011
 BuildRequires: perl-Encode perl-Pod-Escapes perl-devel
@@ -20,6 +21,7 @@ the real charset from scratch.  There might have some mistakes, though.
 
 %prep
 %setup -q -n %dist-%version
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -33,6 +35,9 @@ the real charset from scratch.  There might have some mistakes, though.
 %perl_vendor_autolib/Locale
 
 %changelog
+* Tue Oct 31 2023 Igor Vlasenko <viy@altlinux.org> 1.05-alt6
+- perl 5.38 support
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.05-alt5.2
 - rebuild with new perl 5.28.1
 
