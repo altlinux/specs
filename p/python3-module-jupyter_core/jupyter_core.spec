@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.4.0
+Version: 5.5.0
 Release: alt1
 Summary: Jupyter core package
 License: BSD-3-Clause
@@ -49,6 +49,9 @@ export LC_ALL=en_US.UTF-8
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Oct 31 2023 Anton Vyatkin <toni@altlinux.org> 5.5.0-alt1
+- New version 5.5.0.
+
 * Wed Oct 11 2023 Anton Vyatkin <toni@altlinux.org> 5.4.0-alt1
 - New version 5.4.0.
 
