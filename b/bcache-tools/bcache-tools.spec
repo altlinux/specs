@@ -1,34 +1,26 @@
-%global _udevlibdir /lib/udev
+Name: bcache-tools
+Version: 1.1
+Release: alt1
+Epoch: 1
 
 Summary: Tools for Linux kernel block layer cache
-Name: bcache-tools
-Version: 1.0.8
-Epoch: 1
-Release: alt4
 License: GPLv2
 Group: System/Kernel and hardware
 Url: http://bcache.evilpiepirate.org/
 
-Source0: %name.tar
-# This part is a prerelease version obtained by https://gist.github.com/djwong/6343451:
-# git clone https://gist.github.com/6343451.git
-# cd 6343451/
-# git archive --format=tar --prefix=bcache-status-20140220/ 6d278f9886ab5f64bd896080b1b543ba7ef6c7a6 | gzip > ../bcache-status-20140220.tar.gz
-# see also http://article.gmane.org/gmane.linux.kernel.bcache.devel/1951
-Source1: bcache-status-20140220.tar.gz
-# bcache status not provided as a true package, so this is a self maintained
-# man page for it
-# http://article.gmane.org/gmane.linux.kernel.bcache.devel/1946
-Source2: bcache-status.8
-
-Patch0: %name-%version-alt.patch
-# Fix BZ#1360951 - this fix is python 3 only
-Patch1: bcache-status-rootgc.patch
-# Fix bcache-status shebang
-Patch2: bcache-status-python3.patch
+#git://git.kernel.org/pub/scm/linux/kernel/git/colyli/bcache-tools.git
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libuuid-devel libblkid-devel
+BuildRequires: pkgconfig(blkid)
+BuildRequires: pkgconfig(smartcols)
+BuildRequires: pkgconfig(uuid)
+
+%package -n bcache-status
+Summary: Display useful bcache statistics
+Group: System/Kernel and hardware
+Requires: %name
+BuildArch: noarch
 
 %description
 Bcache is a Linux kernel block layer cache. It allows one or more fast disk
@@ -36,57 +28,40 @@ drives such as flash-based solid state drives (SSDs) to act as a cache for
 one or more slower hard disk drives.
 This package contains the utilities for manipulating bcache.
 
-%package -n bcache-status
-Summary: Display useful bcache statistics
-Group: System/Kernel and hardware
-Requires: %name
-BuildArch: noarch
 %description -n bcache-status
 Display useful bcache statistics
 
 %prep
-%setup -n %name
-%patch0 -p1
-
-tar xzf %SOURCE1 --strip-components=1
-cp %SOURCE2 .
-chmod +x configure
-%patch1 -p1 -b .rootgc
-%patch2 -p1
+%setup
 
 %build
-%configure
 %make_build
 
 %install
-mkdir -p \
-    %buildroot%_sbindir \
-    %buildroot%_man8dir \
-    %buildroot%_udevlibdir \
-    %buildroot%_udevrulesdir
-
-%makeinstall_std \
-    UDEVLIBDIR=%_udevlibdir \
-    MANDIR=%_mandir
-
-install -p  -m 755 bcache-status %buildroot%_sbindir/bcache-status
+%make_install DESTDIR=%buildroot install
 
 %files
-%_udevrulesdir/*
-%_man8dir/bcache-super-show.8.*
-%_man8dir/make-bcache.8.*
-%_man8dir/probe-bcache.8.*
-%_udevlibdir/bcache-register
-%_udevlibdir/probe-bcache
+%doc README COPYING
+%_udevrulesdir/*.rules
+/lib/udev/bcache-register
+/lib/udev/probe-bcache
+
+%_sbindir/bcache
 %_sbindir/bcache-super-show
 %_sbindir/make-bcache
-%doc README COPYING
+
+%_man8dir/bcache-super-show.*
+%_man8dir/make-bcache.*
+%_man8dir/probe-bcache.*
 
 %files -n bcache-status
 %_sbindir/bcache-status
 %_man8dir/bcache-status.8.*
 
 %changelog
+* Tue Oct 31 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.1-alt1
+- 1.1 released
+
 * Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 1:1.0.8-alt4
 - Fix FTBFS due to missing rpm-build-python3
 
