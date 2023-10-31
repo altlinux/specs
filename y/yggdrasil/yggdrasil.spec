@@ -5,8 +5,8 @@
 %define _libexecdir /usr/libexec
 
 Name: yggdrasil
-Version: 0.4.7
-Release: alt2
+Version: 0.5.1
+Release: alt1
 
 Summary: End-to-end encrypted IPv6 networking
 License: LGPLv3
@@ -14,7 +14,8 @@ Group: Security/Networking
 Url: https://yggdrasil-network.github.io
 Vcs: https://github.com/yggdrasil-network/yggdrasil-go.git
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: vendor.tar
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -34,7 +35,7 @@ Network provides IPv6 routing between nodes, peering connections can be set up
 over either IPv4 or IPv6.
 
 %prep
-%setup
+%setup -a1
 
 # fix 'chmod' path
 sed -i contrib/systemd/yggdrasil-default-config.service -e '/chmod/ s|/usr||'
@@ -80,6 +81,9 @@ mv %buildroot{%_bindir,%_libexecdir/yggdrasil}/genkeys
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Tue Oct 31 2023 Anton Zhukharev <ancieg@altlinux.org> 0.5.1-alt1
+- Updated to 0.5.1.
+
 * Tue Jan 17 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.7-alt2
 - package 'genkeys' util
 - clean up spec
