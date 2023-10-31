@@ -25,7 +25,7 @@
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 4.11.0
+Version: 4.11.1
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -38,7 +38,7 @@ Url: https://telegram.org/
 Source: %name-%version.tar
 
 # Source1-url: https://github.com/desktop-app/GSL/archive/refs/heads/main.zip
-Source1: %name-gsl-%version.tar
+#Source1: %name-gsl-%version.tar
 
 Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
@@ -250,7 +250,7 @@ or business messaging needs.
 
 
 %prep
-%setup -a1
+%setup
 %patch1 -p2
 %patch2 -p2
 %patch5 -p2
@@ -402,6 +402,10 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Mon Oct 30 2023 Vitaly Lipatov <lav@altlinux.ru> 4.11.1-alt1
+- new version 4.11.1 (with rpmrb script)
+- drop embedded GSL
+
 * Sun Oct 29 2023 Vitaly Lipatov <lav@altlinux.ru> 4.11.0-alt1
 - new version 4.11.0 (with rpmrb script)
 
