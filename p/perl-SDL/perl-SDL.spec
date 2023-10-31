@@ -1,17 +1,27 @@
 # we need a font
 BuildRequires: fonts-ttf-liberation
+%def_enable sysfonts
 %define _unpackaged_files_terminate_build 1
 %define dist SDL
 Name: perl-%dist
 Version: 2.548
-Release: alt3
+Release: alt4
 
 Summary: Simple DirectMedia Layer for Perl
-License: LGPL
+License: LGPL-2.1-or-later AND (GPL-1.0-or-later OR Artistic-1.0-Perl)
 Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar
+# Fix an implicit function declaration, proposed to the upstream,
+# bug #2177189, <https://github.com/PerlGameDev/SDL/pull/299>.
+Patch0:         SDL-2.548-Fix-implicit-declaration-of-_calc_offset.patch
+# Unbundle Gentium Book Basic font, not suitable for the upstream, the file is
+# delete in %%prep section.
+Patch1:         SDL-2.548-Unbundle-Gentium-Book-Basic-regular-font-alt.patch
+# Adapt to perl 5.37.1, proposed to upstream,
+# <https://github.com/PerlGameDev/SDL/issues/303>
+Patch2:         SDL-2.548-Adapt-to-perl-5.37.1.patch
 
 Conflicts: frozen-bubble < 2.2.0-alt3.2
 Conflicts: perl-SDL_Perl
@@ -24,6 +34,13 @@ Provides: perl-SDL25 = %version
 %add_findreq_skiplist */SDLx/TTF.pm
 
 BuildRequires: libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libjpeg-devel libpng-devel libsmpeg-devel perl-Module-Build perl-Alien-SDL perl-Tie-Simple perl-Test-Most libSDL_pango-devel perl-Archive-Zip
+
+
+%if_enabled sysfonts
+# unbundle GenBkBasR.ttf
+BuildRequires: /usr/share/fonts/ttf/sil-gentium-basic/GenBkBasR.ttf
+Requires: /usr/share/fonts/ttf/sil-gentium-basic/GenBkBasR.ttf
+%endif
 
 %package pods
 Summary: POD documentation for Simple DirectMedia Layer for Perl
@@ -55,12 +72,23 @@ application/game into PAR archive.
 
 %prep
 %setup -q -n %dist-%version
+%patch0 -p1
+%if_enabled sysfonts
+%patch1 -p1
+%endif
+%patch2 -p1
 
 if [ %version = 2.548 ]; then
 # Disable the sdlx_controller_interface.t test, it hangs on arm and ppc64le
 rm t/sdlx_controller_interface.t
 sed -i -e '/t\/sdlx_controller_interface\.t/d' MANIFEST
 fi
+
+%if_enabled sysfonts
+# Delete a bundled font file, code removed with
+# Unbundle-Gentium-Book-Basic-regular-font.patch.
+rm -r share
+%endif
 
 %build
 %perl_vendor_build
@@ -72,7 +100,9 @@ fi
 %doc CHANGELOG TODO OFL.txt OFL-FAQ.txt examples
 %perl_vendor_archlib/SDL*
 %perl_vendor_autolib/SDL*
+%if_disabled sysfonts
 %perl_vendor_autolib/share/dist/SDL/GenBasR.ttf
+%endif
 
 %files pods
 %perl_vendor_archlib/pods/SDL*
@@ -81,6 +111,9 @@ fi
 %perl_vendor_archlib/Module/Build/SDL.pm
 
 %changelog
+* Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 2.548-alt4
+- fixed build with perl 5.38
+
 * Tue Apr 05 2022 Igor Vlasenko <viy@altlinux.org> 2.548-alt3
 - fixed build
 
