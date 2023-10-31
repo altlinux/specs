@@ -1,6 +1,6 @@
 Name: procps
 Version: 4.0.4
-Release: alt1
+Release: alt2
 
 %def_disable bootstrap
 %if_enabled bootstrap
@@ -120,6 +120,10 @@ make check
 %_includedir/*
 %_pkgconfigdir/*.pc
 %changelog
+* Fri Oct 27 2023 Mikhail Efremov <sem@altlinux.org> 4.0.4-alt2
+- w: Fixed ut_user check.
+- Fixed w crash (patches from upstream).
+
 * Wed Oct 04 2023 Mikhail Efremov <sem@altlinux.org> 4.0.4-alt1
 - Disabled broken tests.
 - Renamed checkproc() -> procps_checkproc().
