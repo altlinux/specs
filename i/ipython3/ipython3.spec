@@ -8,16 +8,16 @@
 %def_with check
 
 Name: ipython3
-Version: 8.16.0
+Version: 8.17.1
 Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://ipython.org
+Vcs: https://github.com/ipython/ipython.git
 
 BuildArch: noarch
 
-# https://github.com/ipython/ipython.git
 Source: %name-%version.tar
 
 Patch1: %name-alt-docs.patch
@@ -26,7 +26,6 @@ Patch1: %name-alt-docs.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(prompt_toolkit)
-BuildRequires: python3(backcall)
 BuildRequires: python3(stack_data)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
@@ -205,6 +204,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Tue Oct 31 2023 Anton Vyatkin <toni@altlinux.org> 8.17.1-alt1
+- New version 8.17.1.
+
 * Fri Sep 29 2023 Anton Vyatkin <toni@altlinux.org> 8.16.0-alt1
 - New version 8.16.0.
 
