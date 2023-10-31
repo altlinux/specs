@@ -3,7 +3,7 @@
 Name: pve-xtermjs
 Summary: HTML/JS Shell client
 Version: 4.16.0.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -11,7 +11,7 @@ Url: https://git.proxmox.com/
 Vcs: git://git.proxmox.com/git/pve-xtermjs.git
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust pkgconfig(openssl) libuuid-devel
 BuildRequires: /proc
@@ -43,6 +43,9 @@ cp src/www/* %buildroot%_datadir/%name/
 %_datadir/%name
 
 %changelog
+* Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.16.0.1-alt2
+- Support LoongArch architecture
+
 * Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.16.0.1-alt1
 - add copyright file
 
