@@ -5,7 +5,7 @@
 
 Name:		python3-module-%oname
 Version:	1.7.4
-Release:	alt1
+Release:	alt2
 
 Summary:	Comprehensive password hashing framework supporting over 20 schemes
 
@@ -64,6 +64,8 @@ sed -i 's|@VERSION@|%version|' docs/conf.py
 %install
 %python3_install
 %python3_prune
+# remove unused code with distutils (ALT bug 48244)
+rm -rv %buildroot%python3_sitelibdir/passlib/_setup/
 
 %if 0
 export PYTHONPATH=$PWD
@@ -80,6 +82,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt2
+- remove used code with distutils (ALT bug 48244)
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt1
 - new version 1.7.4 (with rpmrb script)
 
