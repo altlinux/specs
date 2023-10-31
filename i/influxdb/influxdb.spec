@@ -4,7 +4,7 @@
 
 Name:		influxdb
 Version:	1.8.10
-Release:	alt1
+Release:	alt1.1
 Summary:	Distributed time-series database
 
 Group:		Development/Other
@@ -118,6 +118,10 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue Oct 31 2023 Ivan A. Melnikov <iv@altlinux.org> 1.8.10-alt1.1
+- NMU: update vendored golang.org/x/sys to fix build
+  on loongarch64
+
 * Wed Nov 17 2021 Alexey Shabalin <shaba@altlinux.org> 1.8.10-alt1
 - 1.8.10
 
