@@ -4,7 +4,7 @@
 %def_without python
 
 Name: ncnn
-Version: 20230816
+Version: 20231027
 Release: alt1
 
 Summary: Mobile neural network inference framework
@@ -16,16 +16,18 @@ Url: https://github.com/Tencent/ncnn
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja
+# Automatically added by buildreq on Tue Oct 31 2023
+# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 glslang libgpg-error libp11-kit libsasl2-3 libspirv-tools0 libstdc++-devel python3 python3-base sh5
+BuildRequires: cmake glslang-devel libgomp-devel libprotobuf-devel libvulkan-devel protobuf-compiler python3-devel
+
 %if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires: clang-devel
 BuildRequires: lld-devel
 BuildRequires: llvm-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires: cmake
-BuildRequires: libgomp-devel python3-devel protobuf-compiler glslang-devel libprotobuf-devel libvulkan-devel
+
 %if_with python
 BuildRequires: pybind11-devel python3-module-pybind11 python3-module-opencv
 %endif
@@ -126,6 +128,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Tue Oct 31 2023 Leontiy Volodin <lvol@altlinux.org> 20231027-alt1
+- New version 20231027.
+
 * Thu Aug 17 2023 Leontiy Volodin <lvol@altlinux.org> 20230816-alt1
 - New version 20230816.
 
