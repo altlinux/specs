@@ -1,9 +1,10 @@
 %define oname pyodbc
 
-%def_with check
+# Tests need database connection
+%def_without check
 
 Name:    python3-module-%oname
-Version: 4.0.39
+Version: 5.0.1
 Release: alt1
 
 Summary: Python ODBC bridge
@@ -17,8 +18,11 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libunixODBC-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
-BuildRequires: sqliteodbc
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-env
 %endif
 
 %description
@@ -29,25 +33,25 @@ more Pythonic convenience.
 %prep
 %setup
 
-echo 'Version: %{version}' > PKG-INFO
-
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-python3 tests3/sqlitetests.py -v "Driver=SQLITE3;Database=sqlite.db"
+%pyproject_run_pytest -v tests/postgresql_test.py
 
 %files
 %doc *.md *.txt
-%python3_sitelibdir/*.so
-%python3_sitelibdir/*.pyi
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname.*.so
+%python3_sitelibdir/%oname.pyi
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Oct 31 2023 Anton Vyatkin <toni@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Sat Apr 15 2023 Anton Vyatkin <toni@altlinux.org> 4.0.39-alt1
 - New version 4.0.39.
 
