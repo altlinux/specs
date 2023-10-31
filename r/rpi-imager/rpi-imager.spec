@@ -1,6 +1,6 @@
 Name:           rpi-imager
-Version:        1.7.3
-Release:        alt2
+Version:        1.8.1
+Release:        alt1
 Summary:        Raspberry Pi Imaging Utility
 Group:          System/Configuration/Other
 
@@ -11,7 +11,8 @@ Patch:          %name-%version-alt.patch
 
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-svg-devel qt5-declarative-devel qt5-tools-devel
-BuildRequires: libarchive-devel libcurl-devel libssl-devel lsblk
+BuildRequires: libarchive-devel libcurl-devel libssl-devel
+BuildRequires: libdrm-devel liblzma-devel
 BuildRequires: cmake gcc-c++
 
 Requires: qt5-quickcontrols2
@@ -41,6 +42,9 @@ operating systems to an SD card ready to use with your Raspberry Pi.
 
 
 %changelog
+* Fri Oct 27 2023 Dmitry Terekhin <jqt4@altlinux.org> 1.8.1-alt1
+- Update to new release 1.8.1
+
 * Wed Jul  5 2023 Artyom Bystrov <arbars@altlinux.org> 1.7.3-alt2
 - Fix build on GCC13
 
