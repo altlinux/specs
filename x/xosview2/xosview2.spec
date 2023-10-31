@@ -2,7 +2,7 @@
 
 Name: xosview2
 Version: 2.3.3
-Release: alt1
+Release: alt2
 Summary: An X Window System utility for monitoring system resources
 License: GPL-2.0 and BSD-4-Clause-UC
 Group: Monitoring
@@ -13,7 +13,7 @@ Source: %name-%version.tar.gz
 Source1: xosview16.png
 Source2: xosview32.png
 Source3: xosview48.png
-ExcludeArch: armh i586
+#ExcludeArch: armh i586
 BuildRequires: gcc-c++ libXpm-devel libX11-devel desktop-file-utils
 
 %description
@@ -25,7 +25,7 @@ Xosview runs under the X Window System.
 %setup
 
 %build
-
+%add_optflags -std=gnu++17
 %configure
 
 %make_build
@@ -71,6 +71,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_miconsdir/*.png
 
 %changelog
+* Tue Oct 31 2023 Ilya Mashkin <oddity@altlinux.ru> 2.3.3-alt2
+- Fixed build for Elbrus (Thanks to Ilya Kurdyukov)
 
 * Sun Oct 29 2023 Ilya Mashkin <oddity@altlinux.ru> 2.3.3-alt1
 - 2.3.3
