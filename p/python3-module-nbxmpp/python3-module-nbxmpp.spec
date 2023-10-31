@@ -1,6 +1,6 @@
 %global modname nbxmpp
 Name: python3-module-%modname
-Version: 4.3.3
+Version: 4.5.0
 Release: alt1
 Summary: Python library for non-blocking use of Jabber/XMPP
 License: GPLv3+
@@ -20,8 +20,8 @@ BuildRequires: python3(wheel)
 # python-nbxmpp 4.0.0 has been ported to libsoup3
 Requires: libsoup3.0-gir
 
-# does not work with gajim < 1.7
-Conflicts: gajim < 1.7
+# does not work with gajim < 1.8
+Conflicts: gajim < 1.8
 Obsoletes: python3-nbxmpp-doc
 
 %description
@@ -53,6 +53,9 @@ Features:
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Tue Oct 31 2023 Ilya Mashkin <oddity@altlinux.ru> 4.5.0-alt1
+- 4.5.0
+
 * Thu Aug 31 2023 Ilya Mashkin <oddity@altlinux.ru> 4.3.3-alt1
 - 4.3.3
 
