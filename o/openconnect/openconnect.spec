@@ -14,7 +14,7 @@
 
 Name: openconnect
 Version: 9.12
-Release: alt1.1
+Release: alt2
 Summary: Open client for Cisco AnyConnect VPN
 
 Group: Networking/Remote access
@@ -83,10 +83,21 @@ developing applications that use %name.
 	%{subst_with libproxy} \
 	%{subst_with stoken} \
 	%{subst_with liboath} \
+%if_with gnutls
+    --with-gnutls \
+    --without-gnutls-version-check \
+    --with-default-gnutls-priority="@OPENCONNECT,SYSTEM" \
+    --without-openssl \
+%endif
+%if_with openssl
+    --with-openssl \
+    --without-openssl-version-check \
+    --without-gnutls \
+%endif
 	--disable-dsa-tests \
 	--with-system-cafile=/usr/share/ca-certificates/ca-bundle.crt
 
-echo "const char *openconnect_version_str = \"v%version\";" > version.c
+%make version.c
 %make_build
 
 %check
@@ -114,6 +125,10 @@ rm -f %buildroot%_libexecdir/openconnect/hipreport-android.sh
 %_pkgconfigdir/*
 
 %changelog
+* Tue Oct 31 2023 Alexey Shabalin <shaba@altlinux.org> 9.12-alt2
+- Add configure options for openssl and gnutls.
+- Fixed version info (ALT#48011).
+
 * Mon Oct 09 2023 Ivan A. Melnikov <iv@altlinux.org> 9.12-alt1.1
 - NMU: build on loongarch64
   + on loongarch64 build w/o gnutls_tss2;
