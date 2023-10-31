@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 0.080
-Release: alt1
+Release: alt2
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
 License: %perl_license
@@ -83,6 +83,12 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 
 #[ %version = 0.061 ] && rm -f t/mbi_ltm_bugs.t t/mbi_ltm_bigintpm.t
 
+%ifarch x86_64
+# those cpu flags are in x86_64v2, but not in x86_64
+sed -i 's,-msse4.[12] -maes,,' Makefile.PL
+
+%endif
+
 %build
 %perl_vendor_build
 
@@ -97,6 +103,9 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 %perl_vendor_archlib/Math
 
 %changelog
+* Tue Oct 31 2023 Igor Vlasenko <viy@altlinux.org> 0.080-alt2
+- removed -msse4.1 -maes, for early x86_64 support
+
 * Thu Oct 05 2023 Igor Vlasenko <viy@altlinux.org> 0.080-alt1
 - automated CPAN update
 
