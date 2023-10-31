@@ -3,7 +3,7 @@
 %def_enable visualization
 
 Name: vlc
-Version: 3.0.19
+Version: 3.0.20
 Release: alt1
 
 Summary: VLC media player
@@ -1382,6 +1382,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Tue Oct 31 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.20-alt1
+- 3.0.20 released
+
 * Fri Oct 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.19-alt1
 - 3.0.19 released
 
