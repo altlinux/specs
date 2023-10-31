@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_without check
-%ifarch x86_64 aarch64
+%ifarch x86_64 aarch64 loongarch64
 %def_with pythran
 %else
 %def_without pythran
@@ -15,7 +15,7 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -177,6 +177,9 @@ popd
 %_includedir/%modname-py3
 
 %changelog
+* Mon Oct 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.10.1-alt2
+- Use pythran on LoongArch. Unbreaks scipy.stats on LoongArch.
+
 * Mon Feb 27 2023 Anton Farygin <rider@altlinux.ru> 1.10.1-alt1
 - 1.10.0 -> 1.10.1
 
