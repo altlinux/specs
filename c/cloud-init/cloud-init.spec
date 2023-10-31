@@ -2,7 +2,7 @@
 
 Name:    cloud-init
 Version: 23.1.2
-Release: alt1
+Release: alt2
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -29,6 +29,7 @@ Source33: 01_network-manager.cfg
 Source41: 90_datasource-list.cfg
 
 Patch1: %name-%version-%release.patch
+Patch2: use_python3_in_uncloud-init.patch
 
 %add_findreq_skiplist /lib/systemd/system-generators/cloud-init-generator
 
@@ -116,6 +117,7 @@ Conflicts: cloud-init-config-etcnet cloud-init-config-netplan
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %python3_build_debug
@@ -205,6 +207,9 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Tue Oct 31 2023 Mikhail Gordeev <obirvalger@altlinux.org> 23.1.2-alt2
+- Remove python dependency
+
 * Wed May 03 2023 Mikhail Gordeev <obirvalger@altlinux.org> 23.1.2-alt1
 - 23.1.2
 
