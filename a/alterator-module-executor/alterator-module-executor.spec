@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -8,9 +8,9 @@ Group: System/Configuration/Other
 
 BuildRequires: cmake gcc
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
-BuildRequires: alterator-manager-devel >= 0.1.7
+BuildRequires: alterator-manager-devel >= 0.1.10
 
-Requires: alterator-manager >= 0.1.7-alt1
+Requires: alterator-manager >= 0.1.10-alt1
 
 Source: %name-%version.tar
 
@@ -33,6 +33,14 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Oct 31 2023 Ivan Savin <svn17@altlinux.org> 0.1.7-alt1
+- Add the ability to add environment variables from the alterator-manager
+  database.
+- Add memory freeing for the structure with data for launching processes in case
+  of a process startup error and in case of a command line parsing error.
+- Add reduction of thread counters in case of command line parsing error and in
+  case of process startup error.
+
 * Tue Jul 11 2023 Ivan Savin <svn17@altlinux.org> 0.1.6-alt1
 - Add validation of interfaces by template.
 
