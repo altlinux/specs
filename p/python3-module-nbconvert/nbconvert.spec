@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 7.9.2
+Version: 7.10.0
 Release: alt1
 
 Summary: Converting Jupyter Notebooks
@@ -32,8 +32,8 @@ BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
 
-BuildRequires(pre): rpm-macros-sphinx3
 %if_with doc
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-html5lib python3(pandocfilters)
 BuildRequires: python3(sphinx_rtd_theme) python3(nbsphinx) python3(pandocfilters)
 BuildRequires: texlive texlive-dist
@@ -103,8 +103,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-rm -rf nbconvert.egg-info
-echo "nbsphinx_allow_errors = True" >> docs/source/conf.py
 
 mkdir -p share/templates/classic/static/
 mkdir -p share/templates/lab/static/
@@ -115,6 +113,7 @@ cp %SOURCE4 share/templates/lab/static/theme-dark.css
 
 
 %if_with doc
+echo "nbsphinx_allow_errors = True" >> docs/source/conf.py
 %prepare_sphinx3 docs
 ln -s ../objects.inv docs/source/
 %endif
@@ -163,6 +162,9 @@ export JUPYTER_PATH=%buildroot%_datadir/jupyter
 %endif
 
 %changelog
+* Tue Oct 31 2023 Anton Vyatkin <toni@altlinux.org> 7.10.0-alt1
+- New version 7.10.0.
+
 * Thu Oct 05 2023 Anton Vyatkin <toni@altlinux.org> 7.9.2-alt1
 - New version 7.9.2.
 
