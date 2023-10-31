@@ -3,7 +3,7 @@
 Name: pve-%sname
 Summary: VNC Terminal Emulator
 Version: 1.7.1
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -14,7 +14,7 @@ Source1: wchardata.c
 Source2: unifont.hex
 Patch0: %sname-alt.patch
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 BuildRequires: cmake libgnutls-devel libjpeg-devel perl-Pod-Usage zlib-devel libpng-devel
 
 %description
@@ -40,6 +40,9 @@ install -m0644 %SOURCE2 .
 %_man1dir/%sname.1*
 
 %changelog
+* Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.7.1-alt2
+- Build on LoongArch
+
 * Wed Sep 29 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.7.1-alt1
 - 1.7-1
 

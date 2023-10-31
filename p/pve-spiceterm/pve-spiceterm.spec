@@ -4,13 +4,13 @@
 Name: pve-%sname
 Summary: SPICE Terminal Emulator
 Version: 3.2.2
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Networking/WWW
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Source0: %sname.tar.xz
 Patch0: spiceterm-keymaps.patch
@@ -38,6 +38,9 @@ sed -i 's|\ -Werror||' src/Makefile
 %_man1dir/%sname.1*
 
 %changelog
+* Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.2.2-alt2
+- Also build on LoongArch
+
 * Thu Sep 30 2021 Valery Inozemtsev <shrek@altlinux.ru> 3.2.2-alt1
 - 3.2-2
 
