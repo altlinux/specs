@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.201
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for leveldb database library
 License: BSD-3-Clause
@@ -12,6 +12,7 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/leveldb/
 
 Source: %name-%version.tar
+Patch3500: pyleveldb-loongarch64.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -23,6 +24,7 @@ Python bindings for leveldb database library.
 
 %prep
 %setup
+%patch3500 -p1
 
 %build
 %python3_build_debug
@@ -40,6 +42,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.201-alt2
+- NMU: support LoongArch architecture
+
 * Thu Mar 30 2023 Anton Vyatkin <toni@altlinux.org> 0.201-alt1
 - New version 0.201.
 
