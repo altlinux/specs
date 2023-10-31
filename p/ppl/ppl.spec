@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/valgrind
 %define _localstatedir %{_var}
 Name:			ppl
 Version:		1.2
-Release:		alt2_21
+Release:		alt2_22
 Summary:		The Parma Polyhedra Library: a library of numerical abstractions
 License:		GPLv3+
 URL:			http://www.bugseng.com/ppl
@@ -306,6 +306,9 @@ mv \
 %doc %{_datadir}/doc/%{name}/ppl-user-prolog-interface-%{version}.ps.gz
 
 %changelog
+* Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2-alt2_22
+- NMU: fixed ppl.hh/ppl_c.h headers on LoongArch
+
 * Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2-alt2_21
 - NMU: fixed FTBFS on LoongArch
 
