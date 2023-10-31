@@ -1,11 +1,13 @@
 Name: doctest
 Version: 2.4.11
-Release: alt1
+Release: alt2
+
 Summary: Feature-rich header-only C++ testing framework
 License: MIT
 Group: Development/C++
+
 Url: https://github.com/doctest/doctest
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: cmake ctest
@@ -25,6 +27,10 @@ Requires: libstdc++-devel
 
 %prep
 %setup
+%ifarch %e2k
+# unsupported as of lcc 1.26.20; see also mcst#8397
+sed -i '/-Werror/d;/-Wcast-align=strict/d' scripts/cmake/common.cmake
+%endif
 
 %build
 %cmake \
@@ -47,6 +53,10 @@ ctest --test-dir %_cmake__builddir
 %_libdir/cmake/%name/
 
 %changelog
+* Tue Oct 31 2023 Michael Shigorin <mike@altlinux.org> 2.4.11-alt2
+- E2K: ftbfs workaround for lcc
+- minor spec cleanup
+
 * Sun May 14 2023 Anton Farygin <rider@altlinux.ru> 2.4.11-alt1
 - 2.4.11
 
