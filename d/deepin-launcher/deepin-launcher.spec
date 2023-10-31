@@ -2,11 +2,11 @@
 
 %define repo dde-launcher
 %define llvm_ver 15
-%define gcc_ver 12
+%define gcc_ver 13
 
 Name: deepin-launcher
 Version: 5.6.1
-Release: alt3
+Release: alt3.1
 
 Summary: Deepin desktop-environment - Launcher module
 
@@ -90,6 +90,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/org.deepin.dde.launcher/org.deepin.dde.launcher.json
 
 %changelog
+* Tue Oct 31 2023 Ivan A. Melnikov <iv@altlinux.org> 5.6.1-alt3.1
+- NMU: build with gcc 13 (fixes build on loongarch64).
+
 * Wed Feb 01 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.1-alt3
 - Fixed build with dtkgui 5.6.4.
 
