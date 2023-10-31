@@ -1,10 +1,8 @@
-%define llvm_ver 15
-
 %def_disable clang
 
 Name: deepin-system-monitor
 Version: 6.0.4
-Release: alt1
+Release: alt2
 Summary: A more user-friendly system monitor
 License: GPL-3.0+
 Group: Monitoring
@@ -16,45 +14,20 @@ Source: %url/archive/%version/%name-%version.tar.gz
 Patch: deepin-system-monitor-5.9.4-alt-aarch64-armh.patch
 %endif
 Patch1: deepin-system-monitor-6.0.4-fix-unknown-DockPart.patch
+Patch2: deepin-system-monitor-6.0.4-fix-build-procps0.patch
+Patch3: deepin-system-monitor-6.0.4-fix-build-procps1.patch
+
+BuildRequires(pre): rpm-build-ninja rpm-build-xdg desktop-file-utils
+# Automatically added by buildreq on Tue Oct 31 2023
+# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libXext-devel libdouble-conversion3 libdtk5-widget libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libudev-devel libwayland-client libwayland-server libxcb-devel libxcbutil-icccm perl perl-Config-Tiny perl-Encode perl-XML-LibXML perl-parent pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-tools sh5 wayland-devel
+BuildRequires: cmake deepin-dock-devel deepin-gettext-tools deepin-qt-dbus-factory-devel dtk5-widget-devel dwayland-devel gsettings-qt-devel libnl-devel libpcap-devel libwayland-client-devel libxcbutil-icccm-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
 
 %if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: clang-devel
+BuildRequires: lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja rpm-build-xdg
-BuildRequires(pre): desktop-file-utils
-BuildRequires: cmake
-BuildRequires: dtk5-widget-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: deepin-dock-devel
-BuildRequires: gsettings-qt-devel
-BuildRequires: libprocps-devel
-BuildRequires: libxcb-devel
-BuildRequires: libxcbutil-devel
-BuildRequires: libX11-devel
-BuildRequires: libXext-devel
-BuildRequires: libXtst-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: qt5-linguist
-BuildRequires: libpcap-devel
-BuildRequires: libcap-devel
-BuildRequires: libncurses-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: libicu-devel
-BuildRequires: deepin-gettext-tools
-BuildRequires: libxcbutil-icccm-devel
-BuildRequires: dtk5-common
-BuildRequires: libnl-devel
-BuildRequires: kf5-kwayland-devel
-BuildRequires: libgtest-devel
-BuildRequires: dwayland-devel libwayland-client-devel
-#Recommends:     deepin-manual
 
 %description
 %summary.
@@ -65,6 +38,8 @@ BuildRequires: dwayland-devel libwayland-client-devel
 %patch -p1
 %endif
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 sed -i 's|lib/dde-dock/plugins|%_lib/dde-dock/plugins|' \
     deepin-system-monitor-plugin/CMakeLists.txt
 sed -i '/include_directories(${DtkCore_INCLUDE_DIRS})/a include_directories(${DtkWidget_INCLUDE_DIRS})' \
@@ -77,9 +52,9 @@ sed -i 's|DGuiApplicationHelper::|Dtk::Gui::DGuiApplicationHelper::|g' \
 %build
 %if_enabled clang
 %define optflags_lto -flto=thin
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 %cmake \
     -GNinja \
@@ -119,7 +94,11 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/system-monitor/
 
 %changelog
-* Fri Feb 04 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt1
+* Tue Oct 31 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt2
+- Fixed build with procps.
+- Cleanup BRs.
+
+* Sat Feb 04 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt1
 - New version (6.0.4).
 - Removed old patches.
 - Fixed build with dtkcore and dtkgui 5.6.4.
