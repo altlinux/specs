@@ -13,7 +13,7 @@
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.15
+%define major 8.17
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -199,6 +199,10 @@ BuildRequires: gcc
 %if_with mingw
 BuildRequires: %llvm_br
 %endif
+
+# hack against broken patch in wine-staging
+# Failed to apply patch eventfd_synchronization/0011-server-Add-an-object-operation-to-grab-the-esync-fil.patch
+BuildRequires: git-core
 
 # General dependencies
 BuildRequires(pre): rpm-build-intro >= 2.1.14
@@ -419,9 +423,14 @@ Provides: libwine-devel = %EVR
 # we don't need provide anything
 AutoProv:no
 
-# due winegcc requires
-Requires: gcc gcc-c++ glibc-devel libstdc++-devel
+# winegcc requires
+Requires: glibc-devel libstdc++-devel
 
+%if_with clang
+Requires: %llvm_br
+%else
+Requires: gcc gcc-c++
+%endif
 
 %description devel-tools
 %name-devel-tools contains tools needed to
@@ -836,6 +845,13 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Oct 30 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.17.1-alt1
+- new version 8.17.1 (with rpmrb script)
+- fix clang/gcc requires for devel-tools (winegcc)
+
+* Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.16.1-alt1
+- new version 8.16.1 (with rpmrb script)
+
 * Mon Sep 04 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.15.1-alt1
 - new version 8.15.1 (with rpmrb script)
 
