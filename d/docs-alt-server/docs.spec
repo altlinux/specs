@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Oct 31 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt4
+- small improvements
+
 * Thu Oct 19 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt3
 - install-distro: add autoinstall
 
