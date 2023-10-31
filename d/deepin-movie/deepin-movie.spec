@@ -1,11 +1,15 @@
 %define llvm_ver 15
-%define gcc_ver 12
+%define gcc_ver 13
 
+%ifarch loongarch64
+%def_disable clang
+%else
 %def_enable clang
+%endif
 
 Name: deepin-movie
 Version: 6.0.5
-Release: alt1
+Release: alt1.1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and CC0-1.0 and CC-BY-4.0
 Group: Video
@@ -130,6 +134,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Tue Oct 31 2023 Ivan A. Melnikov <iv@altlinux.org> 6.0.5-alt1.1
+- NMU: Build on loongarch64 with gcc13.
+
 * Fri Mar 24 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt1
 - New version 6.0.5.
 
