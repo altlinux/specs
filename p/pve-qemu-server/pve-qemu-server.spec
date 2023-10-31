@@ -4,7 +4,7 @@
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
 Version: 7.4.3
-Release: alt2
+Release: alt3
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -67,6 +67,9 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/*.pm
 
 %changelog
+* Tue Oct 31 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt3
+- add new (block) VM state
+
 * Mon May 22 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt2
 - qmeventd: fix daemon fall with "epoll_wait: Interrupted system call" (ALT #46195)
 
