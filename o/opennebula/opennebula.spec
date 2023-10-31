@@ -12,7 +12,7 @@
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 6.4.0.1
+Version: 6.6.1.1
 Release: alt1
 License: Apache-2.0
 Group: System/Servers
@@ -421,23 +421,6 @@ Requires: systemd-settings-disable-kill-user-processes
 %description node-firecracker
 Services and configurations for OpenNebula Firecracker node.
 
-# %package node-xen
-# Summary: Configures an OpenNebula node providing xen
-# Group: System/Servers
-# BuildArch: noarch
-# Conflicts: %name-node-kvm
-# Requires: centos-release-xen
-# Requires: ruby
-# Requires: openssh-server
-# Requires: openssh-clients
-# Requires: xen
-# Requires: nfs-utils
-# Requires: bridge-utils
-# Requires: %name-common = %version
-#
-# %description node-xen
-# Configures an OpenNebula node providing xen.
-
 %package node-lxc
 Summary: Configures an OpenNebula node providing LXC
 Group: System/Servers
@@ -491,6 +474,9 @@ rm -rf src/sunstone/public/node_modules/node-gyp
 rm -rf src/sunstone/public/node_modules/node-sass
 ln -sf %nodejs_sitelib/node-gyp src/sunstone/public/node_modules/node-gyp
 ln -sf %nodejs_sitelib/node-sass src/sunstone/public/node_modules/node-sass
+
+rm -rf src/fireedge/node_modules/zeromq/build/Release
+rm -rf src/fireedge/node_modules/zeromq/zmq
 
 %build
 export PATH_DEFAULT="$PATH"
@@ -584,6 +570,7 @@ install -p -D -m 644 share/pkgs/ALT/opennebula-showback.service %buildroot%_unit
 install -p -D -m 644 share/pkgs/ALT/opennebula-showback.timer %buildroot%_unitdir/opennebula-showback.timer
 install -p -D -m 644 share/pkgs/ALT/opennebula-flow.service  %buildroot%_unitdir/opennebula-flow.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-gate.service  %buildroot%_unitdir/opennebula-gate.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-gate-proxy.service  %buildroot%_unitdir/opennebula-gate-proxy.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-hem.service  %buildroot%_unitdir/opennebula-hem.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-novnc.service %buildroot%_unitdir/opennebula-novnc.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-scheduler.service %buildroot%_unitdir/opennebula-scheduler.service
@@ -715,11 +702,6 @@ fi
 
 %preun server
 %preun_systemd %name.service %name-scheduler.service %name-hem.service %name-ssh-agent.service
-
-# %post node-xen
-# if [ $1 = 1 ]; then
-#     /usr/bin/grub-bootxen.sh
-# fi
 
 %post provision
 if [ ! -d "%oneadmin_home/.ssh-oneprovision/" ]; then
@@ -889,6 +871,9 @@ fi
 #%config %_sysconfdir/cron.d/opennebula-node
 %config(noreplace) %_sysconfdir/sudoers.d/opennebula-node-kvm
 %_bindir/qemu-kvm-one-gen
+%_bindir/onegate-proxy
+%_libexecdir/one/onegate-proxy
+%_unitdir/opennebula-gate-proxy.service
 
 %files node-lxc
 %_bindir/svncterm_server
@@ -898,7 +883,9 @@ fi
 %config(noreplace) %_sysconfdir/sudoers.d/opennebula-node-lxc
 #%config %{_sysconfdir}/cron.d/opennebula-node
 %attr(0751, oneadmin, oneadmin) %dir /var/lib/lxc-one
-
+%_bindir/onegate-proxy
+%_libexecdir/one/onegate-proxy
+%_unitdir/opennebula-gate-proxy.service
 
 %if_with firecracker
 %files node-firecracker
@@ -908,9 +895,10 @@ fi
 %_sbindir/one-prepare-firecracker-domain
 %_bindir/svncterm_server
 %config(noreplace) %_sysconfdir/sudoers.d/opennebula-node-firecracker
+%_bindir/onegate-proxy
+%_libexecdir/one/onegate-proxy
+%_unitdir/opennebula-gate-proxy.service
 %endif
-
-# %files node-xen
 
 %files java
 %_javadir/org.opennebula.client.jar
@@ -927,6 +915,7 @@ fi
 #%ruby_sitelibdir/CommandManager.rb
 #%ruby_sitelibdir/ActionManager.rb
 #%ruby_sitelibdir/DriverExecHelper.rb
+#%ruby_sitelibdir/HostSyncManager.rb
 #%ruby_sitelibdir/cloud/CloudClient.rb
 
 %_libexecdir/one/ruby/scripts_common.rb
@@ -977,6 +966,8 @@ fi
 %config %_sysconfdir/one/fireedge/provision/provision-server.conf
 %dir %_sysconfdir/one/fireedge/provision/providers.d
 %config %_sysconfdir/one/fireedge/provision/providers.d/*
+%dir %_sysconfdir/one/fireedge/provision/providers.d-extra
+%config %_sysconfdir/one/fireedge/provision/providers.d-extra/*
 %dir %_sysconfdir/one/fireedge/sunstone
 %config %_sysconfdir/one/fireedge/sunstone/sunstone-server.conf
 %config %_sysconfdir/one/fireedge/sunstone/sunstone-views.yaml
@@ -1031,14 +1022,13 @@ fi
 %_bindir/onecfg
 
 %_datadir/one/examples
-%_datadir/one/esx-fw-vnc
 %_datadir/one/follower_cleanup
+%_datadir/one/pre_cleanup
 %_datadir/one/start-scripts
 %_datadir/one/schemas
 %_datadir/one/context
 %_datadir/one/conf
 %_datadir/one/dockerhub
-%_datadir/one/backup_vms
 %_datadir/one/onecfg
 
 %_datadir/augeas/lenses/oned.aug
@@ -1056,6 +1046,7 @@ fi
 %_libexecdir/one/ruby/ssh_stream.rb
 %_libexecdir/one/ruby/equinix_driver.rb
 %_libexecdir/one/ruby/PublicCloudDriver.rb
+%_libexecdir/one/ruby/HostSyncManager.rb
 %_libexecdir/one/sh
 %_libexecdir/one/onecfg
 #%ruby_gemspecdir/opennebula-server/Gemfile
@@ -1102,6 +1093,8 @@ fi
 %_bindir/onehook
 %_bindir/onehost
 %_bindir/oneimage
+%_bindir/oneirb
+%_bindir/onelog
 %_bindir/onemarket
 %_bindir/onemarketapp
 %_bindir/onetemplate
@@ -1137,6 +1130,9 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Tue Oct 24 2023 Alexey Shabalin <shaba@altlinux.org> 6.6.1.1-alt1
+- 6.6.1.1
+
 * Mon Sep 04 2023 Alexey Shabalin <shaba@altlinux.org> 6.4.0.1-alt1
 - 6.4.0.1
 
