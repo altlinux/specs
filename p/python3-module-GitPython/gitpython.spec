@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.32
+Version: 3.1.40
 Release: alt1
 Summary: GitPython is a python library used to interact with Git repositories
 License: BSD
@@ -95,6 +95,9 @@ export NO_SUBMODULES=YES
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue Oct 31 2023 Stanislav Levin <slev@altlinux.org> 3.1.40-alt1
+- 3.1.32 -> 3.1.40 (closes: #48252).
+
 * Thu Jul 27 2023 Stanislav Levin <slev@altlinux.org> 3.1.32-alt1
 - 3.1.31 -> 3.1.32.
 
