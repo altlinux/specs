@@ -1,7 +1,7 @@
 %define dist SGML-Parser-OpenSP
 Name: perl-%dist
 Version: 0.994
-Release: alt4.1
+Release: alt5
 
 Summary: Parse SGML documents using OpenSP
 License: Perl
@@ -9,6 +9,9 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+
+# Don't use deprecated uvuni_to_utf8_flags (CPAN RT#148488)
+Patch0:         SGML-Parser-OpenSP-0.994-Stop-using-deprecated-uvuni_to_utf8_flags.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: gcc-c++ libOpenSP-devel perl-Class-Accessor perl-Test-Exception perl-Test-Pod
@@ -22,6 +25,8 @@ are called with suitable parameters.
 
 %prep
 %setup -q -n %dist-%version
+%patch0  -p1
+
 # fakeroot specific; $TMP check fails in hasher
 [ %version = "0.994" ] && rm -f t/20passfd.t t/21parsestring.t
 
@@ -40,6 +45,9 @@ are called with suitable parameters.
 %perl_vendor_autolib/SGML
 
 %changelog
+* Tue Oct 31 2023 Igor Vlasenko <viy@altlinux.org> 0.994-alt5
+- perl 5.38.0 support
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.994-alt4.1
 - rebuild with new perl 5.28.1
 
