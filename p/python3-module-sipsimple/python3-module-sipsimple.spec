@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 5.3.0
-Release: alt2
+Release: alt3
 
 Summary: SIP SIMPLE implementation for Python
 License: GPL-3.0+
@@ -13,10 +13,13 @@ Source: python3-%modulename-%version.tar
 Source1: deps.tar
 Patch: python-module-sipsimple-alt-add-arch-webrtc-defines.patch
 Patch1: fix_ffmpeg.patch
+Patch2: 0001-webrtc-typedefs.h-added-stanza-for-LoongArch.patch
+Patch3: 0002-pjsip-aconfigure.ac-do-NOT-assume-SSE2-is-available-.patch
+Patch4: 0003-deps-pjsip-re-generated-aconfigure-script.patch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-ExclusiveArch: x86_64 %e2k
+ExclusiveArch: x86_64 %e2k aarch64 loongarch64
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -46,6 +49,10 @@ types can be easily added by using an extensible high-level API.
 tar xf %SOURCE1
 %patch -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
 cp -at deps/pjsip/ -- /usr/share/gnu-config/config.*
 chmod +x deps/pjsip/*configure
 %ifarch %e2k
@@ -66,6 +73,10 @@ sed -i 's,^#elif defined(__aarch64__),& || defined(__e2k__),' \
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Nov 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.3.0-alt3
+- NMU: teached pjsip configure script that SSE is available only on x86.
+  Build for more platforms (aarch64 and LoongArch).
+
 * Fri Sep 22 2023 Anton Vyatkin <toni@altlinux.org> 5.3.0-alt2
 - (NMU) Fix FTBFS.
 
