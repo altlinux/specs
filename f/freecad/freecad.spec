@@ -17,7 +17,7 @@
 
 Name:    freecad
 Version: 0.21.1
-Release: alt3
+Release: alt4
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -56,7 +56,6 @@ BuildRequires: qt5-tools-devel-static
 BuildRequires: qt5-webengine-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-xmlpatterns-devel
-BuildRequires: python3-module-shiboken2-devel
 %define qmake %qmake_qt5
 %define qtbindir %_qt5_bindir
 BuildRequires: python3-devel swig gcc-fortran chrpath
@@ -252,6 +251,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Wed Nov 01 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.21.1-alt4
+- Removed python3-module-shiboken2-devel.
+
 * Thu Oct 19 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.21.1-alt3
 - Complete remove PySide2 from requirements.
 
