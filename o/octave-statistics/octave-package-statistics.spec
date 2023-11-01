@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/octave-cli makeinfo
 Epoch: 1
 Name: octave-%octave_pkg_name
 Version: 1.4.3
-Release: alt1
+Release: alt2
 Summary: Additional statistics functions for Octave
 
 Group: Sciences/Mathematics
@@ -53,6 +53,9 @@ octave -q -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_da
 %endif
 
 %changelog
+* Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.4.3-alt2
+- NMU: fixed FTBFS on LoongArch (refreshed config.{guess,sub})
+
 * Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.4.3-alt1
 - new version
 
