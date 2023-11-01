@@ -1,12 +1,10 @@
 Name: u-boot-tools
 Version: 2023.10
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
 Group: System/Kernel and hardware
-
-ExclusiveArch: armh aarch64 mipsel riscv64 %ix86 x86_64
 
 Provides: uboot-tools = %version-%release
 Obsoletes: uboot-tools
@@ -32,7 +30,7 @@ This package contains U-Boot tools.
 %install
 mkdir -p %buildroot%_bindir
 install -pm0644 -D tools/env/fw_env.config %buildroot%_sysconfdir/fw_env.config
-install -pm0755 tools/{dumpimage,fdtgrep,gen_eth_addr,kwboot,mkimage,mkenvimage,env/fw_printenv} %buildroot%_bindir/
+install -pm0755 tools/{dumpimage,fdtgrep,gen_eth_addr,kwboot,mksunxiboot,mkimage,mkenvimage,env/fw_printenv} %buildroot%_bindir/
 ln -s fw_printenv %buildroot%_bindir/fw_setenv
 
 %files
@@ -40,6 +38,10 @@ ln -s fw_printenv %buildroot%_bindir/fw_setenv
 %_bindir/*
 
 %changelog
+* Wed Nov 01 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.10-alt2
+- package mksunxiboot utility
+- drop exclusivearch
+
 * Mon Oct 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.10-alt1
 - 2023.10 released
 

@@ -1,6 +1,6 @@
 Name: sunxi-tools
 Version: 1.5
-Release: alt0.20220729
+Release: alt0.20231025
 Epoch: 1
 
 Summary: Tools for use with Allwinner SoC based devices
@@ -12,6 +12,7 @@ Source0: %name-%version-%release.tar
 Source1: boards-%version-%release.tar
 
 BuildRequires: libfdt-devel libusb-devel zlib-devel
+BuildRequires: arm-none-eabi-gcc u-boot-tools >= 2023.10-alt2
 
 %description
 Tools to help hacking Allwinner SoC (aka sunxi) based devices.
@@ -20,11 +21,12 @@ Tools to help hacking Allwinner SoC (aka sunxi) based devices.
 %setup
 
 %build
-%make_build
+%make_build tools binfiles
 
 %install
 %make_install DESTDIR=%buildroot PREFIX=%prefix install
 mkdir -p %buildroot%_datadir/sunxi-tools
+cp -pv *.sunxi %buildroot%_datadir/sunxi-tools/
 tar xf %SOURCE1 -C %buildroot%_datadir/sunxi-tools
 
 %files
@@ -34,6 +36,9 @@ tar xf %SOURCE1 -C %buildroot%_datadir/sunxi-tools
 %_man1dir/sunxi-fel.1*
 
 %changelog
+* Tue Oct 31 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.5-alt0.20231025
+- updated from git.91f9ccfc
+
 * Fri Oct 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.5-alt0.20220729
 - up to 5cf618a
 
