@@ -1,5 +1,5 @@
 Name: inxi
-Version: 3.3.30
+Version: 3.3.31
 Release: alt1
 
 Summary: A full featured system information script
@@ -63,6 +63,9 @@ perl -c inxi
 %_man1dir/%name.1*
 
 %changelog
+* Wed Nov 01 2023 Leontiy Volodin <lvol@altlinux.org> 3.3.31-alt1
+- New version 3.3.31.
+
 * Sun Oct 01 2023 Leontiy Volodin <lvol@altlinux.org> 3.3.30-alt1
 - New version 3.3.30.
 - Changed VCS tag.
