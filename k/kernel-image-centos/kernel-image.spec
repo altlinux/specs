@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 378
+%define centos_release 381
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -66,6 +66,7 @@ Patch0002: 0002-9p-Convert-to-invalidate_folio.patch
 Patch0003: 0003-9p-Convert-from-launder_page-to-launder_folio.patch
 Patch0004: 0004-9p-Convert-to-release_folio.patch
 Patch0005: 0005-Add-sysctl-to-disable-idmapped-mounts.patch
+Patch0006: 0006-9p-convert-to-advancing-variant-of-iov_iter_get_page.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: x86_64 aarch64
@@ -300,16 +301,18 @@ for o in \
 	CONFIG_9P_FSCACHE:'CONFIG_9P_FSCACHE=y' \
 	CONFIG_9P_FS_POSIX_ACL:'CONFIG_9P_FS_POSIX_ACL=y' \
 	CONFIG_9P_FS_SECURITY:'CONFIG_9P_FS_SECURITY=y' \
+	CONFIG_IKCONFIG:"CONFIG_IKCONFIG=y" \
+	CONFIG_IKCONFIG_PROC:"CONFIG_IKCONFIG_PROC=y" \
+	CONFIG_LSM:"CONFIG_LSM=\"$CONFIG_LSM\"" \
 	CONFIG_NET_9P:'CONFIG_NET_9P=m' \
 	CONFIG_NET_9P_DEBUG:'# CONFIG_NET_9P_DEBUG is not set' \
 	CONFIG_NET_9P_RDMA:'CONFIG_NET_9P_RDMA=m' \
 	CONFIG_NET_9P_VIRTIO:'CONFIG_NET_9P_VIRTIO=m' \
 	CONFIG_NET_9P_XEN:'CONFIG_NET_9P_XEN=m' \
 	CONFIG_SECURITY_APPARMOR:'CONFIG_SECURITY_APPARMOR=y' \
+	CONFIG_SECURITY_APPARMOR_DEBUG_MESSAGES:'CONFIG_SECURITY_APPARMOR_DEBUG_MESSAGES=y' \
 	CONFIG_SECURITY_APPARMOR_HASH:'CONFIG_SECURITY_APPARMOR_HASH=y' \
 	CONFIG_SECURITY_APPARMOR_HASH_DEFAULT:'CONFIG_SECURITY_APPARMOR_HASH_DEFAULT=y' \
-	CONFIG_SECURITY_APPARMOR_DEBUG_MESSAGES:'CONFIG_SECURITY_APPARMOR_DEBUG_MESSAGES=y' \
-	CONFIG_LSM:"CONFIG_LSM=\"$CONFIG_LSM\"" \
 ;
 do
 	echo "${o##*:}" > "redhat/configs/custom-overrides/generic/${o%%%%:*}"
@@ -656,6 +659,41 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Oct 31 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.381-alt1.el9
+- Updated to kernel-5.14.0-381.el9 (fixes: CVE-2023-37453, CVE-2023-4133, CVE-2023-42754):
+  + 9.4 mm changes
+  + CNB94: PM: runtime: Add DEFINE_RUNTIME_DEV_PM_OPS() macro
+  + CNB94: leds: Change led_trigger_blink[_oneshot]() delay parameters to pass-by-value
+  + CNB94: net: vlan: introduce skb_vlan_eth_hdr()
+  + CNB94: tc: update tc subsystem to the upstream v6.5
+  + Enable amd-pmf driver
+  + Kernel DEXCR Support
+  + MapleTree update for future nouveau usage
+  + Merge commit '23fbbc67cb8a8e53760455ec225739faa35e3604'
+  + Merge commit '9926977e898c5061bb680fb3b22cfd1b20155fd3'
+  + Powerpc GPCI PMU enhancements
+  + RHEL-9.4 P1 IPv6 stable backport
+  + RHEL-9.4 P1 Team stable backport
+  + Sched: Avoid unnecessary migrations within SMT domains
+  + UDP: stable backports for rhel 9.4 phase 1
+  + Updates for IBM vEth Driver
+  + Updates for powerpc fadum rtal_call
+  + [s390] [IBM 9.4 FEAT] pkey: support EP11 API ordinal 6 for secure guests
+  + cxgb4: fix use after free bugs caused by circular dependency problem
+  + ipv4: fix null-deref in ipv4_link_failure
+  + ipvlan: phase-1 backports for RHEL-9.4
+  + kernel: usb: out-of-bounds read in read_descriptors
+  + mm, mremap: fix mremap() expanding for vma's with vm_ops->close()
+  + netfilter: set default timeout to 3 secs for sctp shutdown send and recv state
+  + nvme-fc: Prevent null pointer dereference in nvme_fc_io_getuuid()
+  + powerpc/perf/hv-24x7: Update domain value check
+  + redhat/configs: Enable CONFIG_DEVICE_PRIVATE on aarch64
+  + redhat: fix bug/zjira sort in the changelog
+  + sctp: backports from upstream
+  + tunnels: First round of upstream fixes for RHEL 9.4.
+  + wifi: Include U-NII-4 5.9GHz channels support for Realtek 8852BE
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Oct 23 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.378-alt1.el9
 - Updated to kernel-5.14.0-378.el9 (fixes: CVE-2023-2166, CVE-2023-42752):
   + AMD: add support for larger microcode patches
