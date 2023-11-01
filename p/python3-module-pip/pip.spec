@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 23.3.1
-Release: alt1
+Release: alt2
 
 Summary: The PyPA recommended tool for installing Python packages
 License: MIT
@@ -17,7 +17,8 @@ VCS: https://github.com/pypa/pip.git
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# drop false positive dependency on distutils
+%filter_from_requires /python3(distutils\(\..*\)\?)/d
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -121,6 +122,9 @@ export NO_LATEST_WHEELS=YES
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Wed Nov 01 2023 Stanislav Levin <slev@altlinux.org> 23.3.1-alt2
+- Dropped false positive dependency on distutils.
+
 * Tue Oct 24 2023 Stanislav Levin <slev@altlinux.org> 23.3.1-alt1
 - 23.3 -> 23.3.1.
 
