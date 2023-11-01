@@ -18,7 +18,7 @@
 %def_without snmp
 
 Name: cyrus-imapd
-Version: 3.2.11
+Version: 3.4.6
 Release: alt1
 
 Summary: A high-performance email, contacts and calendar server
@@ -504,6 +504,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Wed Nov 01 2023 Sergey Y. Afonin <asy@altlinux.org> 3.4.6-alt1
+- 3.4.6
+
 * Wed Oct 25 2023 Sergey Y. Afonin <asy@altlinux.org> 3.2.11-alt1
 - 3.2.11
 - built without net-snmp (fixed FTBFS, Closes: #48148)
