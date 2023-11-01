@@ -46,7 +46,7 @@
 
 Name: collectd
 Version: 5.12.0
-Release: alt4
+Release: alt5
 
 Summary: (Multi-)System statistics collection
 License: GPLv2 AND MIT
@@ -1017,6 +1017,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Wed Nov 01 2023 Anton Farygin <rider@altlinux.ru> 5.12.0-alt5
+- fixed build with python 3.11
+
 * Tue Sep 12 2023 Alexey Shabalin <shaba@altlinux.org> 5.12.0-alt4
 - Build disk.so plugin with libudev and libatasmart
 - Enable build netlink plugin
