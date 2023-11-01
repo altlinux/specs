@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ valgrind-devel
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -12,11 +12,15 @@ BuildRequires: gcc-c++ valgrind-devel
 Name:		libsecp256k1
 Summary:	Optimized C library for EC operations on curve secp256k1
 Version:	0.25.4
-Release:	alt1_1
+Release:	alt1_2
 License:	MIT
 Group:		System/Libraries
 Url:		https://github.com/Bitcoin-ABC/secp256k1
 Source0:	https://github.com/Bitcoin-ABC/secp256k1/archive/v%{version}/%{oname}-%{version}.tar.gz
+BuildRequires(pre): rpm-macros-valgrind
+%ifarch %valgrind_arches
+BuildRequires: valgrind-devel
+%endif
 BuildRequires:	pkgconfig(libcrypto)
 Source44: import.info
 
@@ -96,6 +100,9 @@ make check
 
 
 %changelog
+* Wed Nov 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.25.4-alt1_2
+- NMU: fixed build requirements for LoongArch (valgrind is not available)
+
 * Wed May 11 2022 Igor Vlasenko <viy@altlinux.org> 0.25.4-alt1_1
 - update by mgaimport
 
