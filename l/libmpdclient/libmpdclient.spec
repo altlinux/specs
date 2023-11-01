@@ -2,19 +2,21 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmpdclient
-Version: 2.19
+Version: 2.20
 Release: alt1
 
 Summary: MPD client library
+
 License: BSD-like
 Group: System/Libraries
 Url: https://www.musicpd.org/
+VCS: https://github.com/MusicPlayerDaemon/libmpdclient.git
 
-# https://github.com/MusicPlayerDaemon/libmpdclient.git
 Source: %name-%version.tar
 
-BuildRequires(pre): meson libvala-devel
-BuildRequires: doxygen graphviz
+BuildRequires(pre): rpm-macros-meson rpm-build-vala
+BuildRequires: meson libvala-devel
+BuildRequires: doxygen fontconfig
 
 %description
 Library for Music Player Daemon client development.
@@ -73,6 +75,9 @@ This package provides Vala language bindings for %name.
 %_vapidir/*
 
 %changelog
+* Wed Nov 01 2023 Mikhail Tergoev <fidel@altlinux.org> 2.20-alt1
+- Updated to upstream version 2.20.
+
 * Mon Jul 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.19-alt1
 - Updated to upstream version 2.19.
 
