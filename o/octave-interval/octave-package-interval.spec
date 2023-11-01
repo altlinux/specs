@@ -5,7 +5,7 @@ BuildRequires: libgmp-devel makeinfo texinfo
 %define octpkg interval
 Name: octave-%octpkg
 Version: 3.2.1
-Release: alt1
+Release: alt2
 Summary: Real-valued interval arithmetic
 
 Group: Sciences/Mathematics
@@ -16,6 +16,7 @@ Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Pac
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
+BuildRequires: gnu-config
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
@@ -39,6 +40,7 @@ The interval package for real-valued interval arithmetic allows
 %setup -q -n %{octpkg}-%{version}
 
 %build
+cp -a /usr/share/gnu-config/config.{guess,sub} src/crlibm/
 %octave_build
 
 %install
@@ -52,6 +54,9 @@ The interval package for real-valued interval arithmetic allows
 %endif
 
 %changelog
+* Wed Nov 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.2.1-alt2
+- NMU: fixed FTBFS on LoongArch (use fresh config.{sub,guess})
+
 * Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt1
 - new version
 
