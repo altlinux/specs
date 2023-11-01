@@ -1,9 +1,9 @@
 Name: quakespasm
-Version: 0.96.0
+Version: 0.96.1
 Release: alt1
 
 Summary: Quake engine
-License: GPL
+License: GPLv2
 Group: Games/Arcade
 Url: http://quakespasm.sf.net
 
@@ -52,6 +52,9 @@ install -pm644 %SOURCE1 %buildroot%docdir/
 %docdir/README.maintainer
 
 %changelog
+* Tue Oct 31 2023 Andrey Bergman <vkni@altlinux.org> 0.96.1-alt1
+- Version update.
+
 * Mon Sep 11 2023 Andrey Bergman <vkni@altlinux.org> 0.96.0-alt1
 - Version update.
 
