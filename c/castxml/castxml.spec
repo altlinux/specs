@@ -1,9 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
+%ifarch loongarch64
+# XXX: as of llvm 17 lld does not support some common LoongArch relocations
+# XXX: As a result linking with glibc (and/or GCC C++ runtime) often fails
+# XXX: with `unknown relocation' errors, like this
+# XXX: ld.lld: error: /usr/lib64/Scrt1.o:(.text+0x0): unknown relocation (102) against symbol
+%def_without lld
+%else
+%def_with lld
+%endif
+
 Name:    castxml
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
 Summary: C-family abstract syntax tree XML output tool
 
@@ -16,7 +26,10 @@ Source:	%name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake ctest gcc-c++
-BuildRequires: llvm-devel lld
+BuildRequires: llvm-devel
+%if_with lld
+BuildRequires: lld
+%endif
 BuildRequires: clang-devel
 BuildRequires: libedit-devel
 BuildRequires: zlib-devel
@@ -53,7 +66,9 @@ export CXX=clang++
        -DLLVM_LINK_LLVM_DYLIB:BOOL=ON \
        -DBUILD_TESTING:BOOL=ON \
        -DSPHINX_MAN:BOOL=ON \
+%if_with lld
        -DCMAKE_EXE_LINKER_FLAGS:STRING=-fuse-ld=lld \
+%endif
        -DLLVM_DIR=$(llvm-config --cmakedir) \
        %nil
 
@@ -83,6 +98,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Wed Nov 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.6.2-alt2
+- NMU: Fixed FTBFS on LoongArch
+
 * Fri Oct 27 2023 Mikhail Tergoev <fidel@altlinux.org> 0.6.2-alt1
 - NMU: Updated to upstream release version 0.6.2
 
