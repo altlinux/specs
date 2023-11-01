@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Dosage
@@ -73,6 +73,9 @@ Features:
 %doc README*
 
 %changelog
+* Wed Nov 01 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
+- 1.1.2
+
 * Mon Oct 30 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - first build for Sisyphus
 
