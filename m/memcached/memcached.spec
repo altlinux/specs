@@ -5,14 +5,14 @@
 %def_enable tls
 
 Name: memcached
-Version: 1.6.21
+Version: 1.6.22
 Release: alt1
 
 Summary: memcached - memory caching daemon
 License: BSD
 Group: System/Servers
 Url: http://www.memcached.org/
-#https://github.com/memcached/memcached.git
+VCS: https://github.com/memcached/memcached.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
@@ -34,7 +34,7 @@ I/O.
 Summary: Files needed for development using memcached protocol
 Group: Development/C
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains files needed for development using memcached
@@ -112,6 +112,9 @@ fi
 %_man1dir/%name-tool.*
 
 %changelog
+* Wed Nov 01 2023 Anton Farygin <rider@altlinux.ru> 1.6.22-alt1
+- New version 1.6.22.
+
 * Thu Sep 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.6.21-alt1
 - New version 1.6.21.
 
