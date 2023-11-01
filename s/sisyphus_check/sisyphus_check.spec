@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.67
+Version: 0.8.68
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Mon Oct 23 2023 Arseny Maslennikov <arseny@altlinux.org> 0.8.68-alt1
+- Allow tilde in version and release (ALT#47589).
+
 * Sat Mar 18 2023 Dmitry V. Levin <ldv@altlinux.org> 0.8.67-alt1
 - 185-check-udev: new check, disallows packages containing
   system udev rules files outside /lib/udev/rules.d/.
