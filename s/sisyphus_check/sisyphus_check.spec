@@ -1,6 +1,6 @@
 Name: sisyphus_check
 Version: 0.8.68
-Release: alt1
+Release: alt2
 
 Summary: package checker for Sisyphus
 License: GPLv2+
@@ -11,6 +11,9 @@ Source: %name-%version.tar
 
 Requires: getopt, mktemp >= 1:1.3.1, rpm
 Conflicts: sisyphus < 0.7.2
+
+# 010-check-gpg is not enabled in hasher by default
+%filter_from_requires /^alt-rpmkeys-utils/d
 
 %description
 This package contains sisyphus_check utility.
@@ -32,6 +35,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Wed Nov 01 2023 Dmitry V. Levin <ldv@altlinux.org> 0.8.68-alt2
+- Suppressed dependency on alt-rpmkeys-checksig.
+
 * Mon Oct 23 2023 Arseny Maslennikov <arseny@altlinux.org> 0.8.68-alt1
 - Allow tilde in version and release (ALT#47589).
 
