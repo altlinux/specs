@@ -1,5 +1,5 @@
 Name: alt-tasks
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: Utility for observing ALT Linux tasks
@@ -38,6 +38,10 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Nov 01 2023 Alexey Appolonov <alexey@altlinux.org> 0.7.0-alt1
+- The missing initial package versions are taken from the "plan/rm-src" files
+  of the tasks.
+
 * Fri Oct 27 2023 Alexey Appolonov <alexey@altlinux.org> 0.6.0-alt1
 - A dump file is not used if the file "~/.alt-tasks/src_list" was modified after
   this dump file was created (rescan is performed).
