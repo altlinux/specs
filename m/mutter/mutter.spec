@@ -20,7 +20,7 @@
 %def_disable libdisplay_info
 
 Name: mutter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 Epoch: 1
 
@@ -80,6 +80,7 @@ BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
 BuildRequires: meson /proc xvfb-run
 #BuildRequires: catchsegv
 BuildRequires: gobject-introspection-devel >= %gi_ver
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -269,6 +270,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Wed Nov 01 2023 Yuri N. Sedunov <aris@altlinux.org> 1:45.1-alt1
+- 45.1
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1:45.0-alt1
 - 45.0
 

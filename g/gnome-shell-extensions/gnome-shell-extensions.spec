@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 45
 %define beta %nil
@@ -9,8 +9,8 @@
 %def_enable check
 
 Name: gnome-shell-extensions
-Version: %ver_major.0
-Release: alt2.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -155,6 +155,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Wed Nov 01 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
+- 45.1
+
 * Tue Oct 03 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt2.1
 - fixed BR (ALT #47819)
 
