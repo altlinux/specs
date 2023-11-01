@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.1
+Version: 1.7.1
 Release: alt1
 Summary: Format click help output nicely with rich
 License: MIT
@@ -58,5 +58,8 @@ ENDTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 01 2023 Stanislav Levin <slev@altlinux.org> 1.7.1-alt1
+- 1.6.1 -> 1.7.1.
+
 * Wed Oct 04 2023 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1
 - Initial build for Sisyphus.
