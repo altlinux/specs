@@ -5,7 +5,7 @@
 
 Name: libtool_%ltversion
 Version: 2.4.7
-Release: alt3
+Release: alt4
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -166,6 +166,9 @@ ln -rsnf %buildroot/usr/share/gnu-config/config.{guess,sub} \
 %_libdir/*.a
 
 %changelog
+* Wed Nov 01 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.7-alt4
+- Fixed the testsuite with GNU grep >= 3.8.
+
 * Wed Sep 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.7-alt3
 - gnulib BR: v0.1-4550-g2a7948aad4 -> v0.1-5601-g32a72f4537.
 
