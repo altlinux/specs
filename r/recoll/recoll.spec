@@ -6,8 +6,8 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.35.0
-Release: alt2
+Version: 1.36.0
+Release: alt1
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -39,6 +39,7 @@ BuildRequires: libxslt-devel
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: rpm-build-python3
+BuildRequires: chrpath
 
 %if_enabled qtgui
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel libXt-devel xorg-cf-files
@@ -123,7 +124,7 @@ This package contains Python bindings for Recoll.
 sed -i 's/openoffice/loffice/' sampleconf/mimeview
 sed -i '/^Categories=/s/=/=Qt;/' desktop/*.desktop
 # updated translations: ru
-cp -a %SOURCE1 %SOURCE2 qtgui/i18n/
+#cp -a %SOURCE1 %SOURCE2 qtgui/i18n/
 cp -a %SOURCE5 desktop/
 
 %build
@@ -155,9 +156,12 @@ rm -f %buildroot%_datadir/%name/filters/xdg-open
 sed -i "s|#!/usr/bin/env python3|#!%__python3|" \
 	%buildroot%_datadir/%name/filters/*.py
 
+# as of 1.36.0
+chrpath -d %buildroot%_bindir/recollindex
+
 %files
 %_bindir/*
-%_libdir/%name
+%_libdir/lib%{name}*.so*
 %_datadir/%name
 %exclude %_datadir/%name/filters/rcllyx
 %exclude %_datadir/%name/filters/*.py
@@ -185,6 +189,9 @@ sed -i "s|#!/usr/bin/env python3|#!%__python3|" \
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Wed Nov 01 2023 Michael Shigorin <mike@altlinux.org> 1.36.0-alt1
+- new version (watch file uupdate)
+
 * Fri Oct 27 2023 Michael Shigorin <mike@altlinux.org> 1.35.0-alt2
 - fixed Russian translation (rm#77859),
   thx lepata@ for the reminder
