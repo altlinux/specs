@@ -3,7 +3,7 @@
 
 Name: xorg-xwayland
 Version: 23.2.2
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT
 Summary: Wayland X server
@@ -21,6 +21,7 @@ BuildRequires: libXrender-devel libXres-devel libXtst-devel libXv-devel libaudit
 BuildRequires: libgbm-devel libpciaccess-devel libpixman-devel libselinux-devel libssl-devel libtirpc-devel libudev-devel libwayland-client-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel libxkbfile-devel
 BuildRequires: libxcvt-devel libxshmfence-devel wayland-protocols xorg-xtrans-devel xorg-proto-devel libgcrypt-devel xkbcomp rendercheck
+BuildRequires: pkgconfig(libei-1.0) pkgconfig(liboeffis-1.0) pkgconfig(libdecor-0)
 
 %description
 Xwayland is an X server for running X clients under Wayland
@@ -60,6 +61,9 @@ necessary for developing Wayland compositors using Xwayland
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 01 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:23.2.2-alt2
+- enabled emulated input support (closes: #48278)
+
 * Wed Oct 25 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:23.2.2-alt1
 - 23.2.2
 
