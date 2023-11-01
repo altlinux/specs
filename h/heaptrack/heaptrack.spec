@@ -3,29 +3,29 @@
 %set_verify_elf_method strict
 
 Name: heaptrack
-Version: 1.3.0
+Version: 1.5.0
 Release: alt1
-Group: Development/Other
+
 Summary: A heap memory profiler for Linux 
-Url: https://www.kde.org
+
 License: LGPL-2.1
+Group: Development/Other
+Url: https://www.kde.org
+VCS: https://github.com/KDE/heaptrack.git
 
 %K5init altplace man
 
-# https://github.com/KDE/heaptrack.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: gcc-c++
-BuildRequires: cmake
+BuildRequires: gcc-c++ cmake extra-cmake-modules ctest
 BuildRequires: libunwind-devel zlib-devel libzstd-devel
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libdwarf-devel
-BuildRequires: extra-cmake-modules
 BuildRequires: qt5-base-devel
-BuildRequires: kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kitemmodels-devel kf5-threadweaver-devel kf5-kconfigwidgets-devel kf5-kio-devel
-BuildRequires: kf5-kdiagram-devel
-BuildRequires: kf5-kiconthemes-devel
+BuildRequires: kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kitemmodels-devel kf5-threadweaver-devel kf5-kconfigwidgets-devel kf5-kio-devel kf5-kdiagram-devel kf5-kiconthemes-devel
+BuildRequires: librobin-map-devel
+BuildRequires: elfutils-devel
 
 %description
 Heaptrack traces all memory allocations and annotates these events with stack traces.
@@ -82,10 +82,10 @@ rm -f screenshots/.directory
 
 %install
 %K5install
+%find_lang --with-kde %name
 
-%files
-%doc LICENSES
-%doc README.md screenshots
+%files -f %name.lang
+%doc LICENSES README.md screenshots
 %_bindir/*
 %_libdir/%name
 
@@ -99,6 +99,9 @@ rm -f screenshots/.directory
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Wed Nov 01 2023 Mikhail Tergoev <fidel@altlinux.org> 1.5.0-alt1
+- Updated to upstream version 1.5.0.
+
 * Thu Jan 13 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt1
 - Updated to upstream version 1.3.0.
 
