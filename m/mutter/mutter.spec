@@ -21,7 +21,7 @@
 
 Name: mutter
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 Epoch: 1
 
 Summary: Clutter based compositing Window Manager
@@ -59,6 +59,8 @@ Patch: mutter-40.0-alt-gsettings_desktop_schemas_dep.patch
 %define Xi_ver 1.7.4
 %define wayland_ver 1.21
 %define wayland_protocols_ver 1.26
+# xwayland with ei support
+%define xwayland_ver 2:23.2.2-alt2
 %define upower_ver 0.99.0
 %define libinput_ver 1.18
 %define fribidi_ver 1.0.0
@@ -108,7 +110,7 @@ BuildRequires: pkgconfig(libei-1.0) pkgconfig(libeis-1.0) >= %eis_ver
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
-BuildRequires: libGL-devel libGLES-devel xorg-xwayland-devel %_bindir/cvt
+BuildRequires: libGL-devel libGLES-devel xorg-xwayland-devel >= %xwayland_ver %_bindir/cvt
 BuildRequires: libdbus-devel
 %{?_enable_egl_device:BuildRequires: libEGL-devel}
 %{?_enable_wayland_eglstream:BuildRequires: egl-wayland-devel}
@@ -270,6 +272,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Wed Nov 01 2023 Yuri N. Sedunov <aris@altlinux.org> 1:45.1-alt1.1
+- rebuilt against Xwayland with emulated input support
+
 * Wed Nov 01 2023 Yuri N. Sedunov <aris@altlinux.org> 1:45.1-alt1
 - 45.1
 
