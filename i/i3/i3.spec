@@ -1,6 +1,6 @@
 Name: i3
-Version: 4.22
-Release: alt2
+Version: 4.23
+Release: alt1
 
 Summary: I3 window manager
 License: BSD-like
@@ -123,6 +123,9 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Tue Oct 31 2023 Andrey Bergman <vkni@altlinux.org> 4.23-alt1
+- Version update
+
 * Sun Jul 30 2023 Andrey Bergman <vkni@altlinux.org> 4.22-alt2
 - Add xvt to the list of terminals in i3-sensible-terminal
 
