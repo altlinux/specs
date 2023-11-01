@@ -13,7 +13,7 @@
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.17
+%define major 8.18
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -432,6 +432,10 @@ Requires: %llvm_br
 Requires: gcc gcc-c++
 %endif
 
+%if_with mingw
+Requires: %llvm_br
+%endif
+
 %description devel-tools
 %name-devel-tools contains tools needed to
 develop programs using %name.
@@ -845,6 +849,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Wed Nov 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.18.1-alt1
+- new version 8.18.1 (with rpmrb script)
+- add clang requires for devel-tools for mingw build (ALT bug 47472)
+
 * Mon Oct 30 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.17.1-alt1
 - new version 8.17.1 (with rpmrb script)
 - fix clang/gcc requires for devel-tools (winegcc)
