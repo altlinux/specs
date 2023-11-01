@@ -1,33 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-# clang doesn't know used LTO flags
-%define optflags_lto -flto=thin
-
 Name:    castxml
-Version: 0.4.4
+Version: 0.6.2
 Release: alt1
+
 Summary: C-family abstract syntax tree XML output tool
+
 Group:   Development/Other
 License: Apache-2.0
 URL:     https://github.com/CastXML/CastXML
 
-# https://github.com/CastXML/CastXML.git
 Source:	%name-%version.tar
+
+BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake ctest gcc-c++
 BuildRequires: llvm-devel lld
-# The llvm cmake files get confused if the static libraries are
-# not present even though we don't link against them.
-BuildRequires: llvm-devel-static
 BuildRequires: clang-devel
-# Required clang libraries are built statically at the moment
-BuildRequires: clang-devel-static
-# Required clang tools are packaged separately
-BuildRequires: clang-tools clangd
 BuildRequires: libedit-devel
 BuildRequires: zlib-devel
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
+BuildRequires: libxml2-devel libtinfo-devel libffi-devel
 BuildRequires: /proc
 
 Requires: /proc
@@ -89,6 +83,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Fri Oct 27 2023 Mikhail Tergoev <fidel@altlinux.org> 0.6.2-alt1
+- NMU: Updated to upstream release version 0.6.2
+
 * Tue Dec 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.4-alt1
 - Updated to upstream release version 0.4.4.
 
