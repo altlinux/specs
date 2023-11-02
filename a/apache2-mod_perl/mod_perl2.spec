@@ -4,8 +4,8 @@
 %define module_name  perl
 
 Name:    apache2-mod_perl
-Version: 2.0.11
-Release: alt3
+Version: 2.0.13
+Release: alt1
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -21,14 +21,13 @@ Source3: perl.start
 
 Source4: Apache-Test-1.43.tar
 Source5: Apache-SizeLimit-0.98.tar
-Source6: Apache-Reload-0.13.tar
+Source6: Apache-Reload-0.14.tar
 Source7: docs-2.0.tar
 
 
 Patch1: mod_perl-2.0.5-lfs.patch
 Patch2: mod_perl-2.0.7-alt-disable_prctl_set_name.patch
 Patch4: mod_perl-2.0.10-test_config.patch
-Patch5: mod_perl-2.0.11-fix_building_with_perl-5.33.7.patch
 
 Provides: mod_perl = %version
 
@@ -130,9 +129,6 @@ module.
 %patch1 -p1
 %patch2
 %patch4 -p1
-%if "%(rpmquery --qf '%%{VERSION}' perl-base 2>/dev/null)" != "5.32.1"
-%patch5
-%endif
 
 # Complete installation with separate projects
 tar xvf %SOURCE4
@@ -227,7 +223,7 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 %exclude %perl_vendor_archlib/ModPerl/WrapXS.pm
 
 %files devel
-%doc SVN-MOVE BRANCHING README-SVN RELEASE STATUS
+%doc SVN-MOVE BRANCHING README-SVN RELEASE STATUS CONTRIBUTING.md
 %_bindir/mp2bug
 
 %apache2_includedir/mod_perl.h
@@ -261,6 +257,12 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 %doc docs/*
 
 %changelog
+* Thu Nov 02 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.0.13-alt1
+- New version (Closes: 48272)
+  - fix build for perl >= 5.37.1.
+  - fix SIGSEGV crash due to wrong use of perl_parse()
+- Update Apache::Reload module to 1.14
+
 * Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.0.11-alt3
 - Update Apache::Test module to the release version 1.43
 
