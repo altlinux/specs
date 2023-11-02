@@ -1,12 +1,12 @@
 %define repo dde-file-manager
 %define llvm_ver 15
-%define gcc_ver 12
+%define gcc_ver 13
 
 %def_disable clang
 
 Name: deepin-file-manager
 Version: 5.8.3
-Release: alt2
+Release: alt2.1
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: File tools
@@ -248,7 +248,7 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/polkit-1/actions/com.deepin.pkexec.dde-file-manager.policy
 %_datadir/applications/context-menus/.readme
 %_datadir/dsg/configs/org.deepin.dde.file-manager/org.deepin.dde.file-manager.json
-%ifnarch armh ppc64le
+%ifnarch armh ppc64le riscv64 loongarch64
 %dir %_libdir/deepin-anything-server-lib/
 %dir %_libdir/deepin-anything-server-lib/plugins/
 %dir %_libdir/deepin-anything-server-lib/plugins/handlers/
@@ -313,6 +313,11 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 5.8.3-alt2.1
+- NMU: fix build on riscv64 and loongarch64
+  + build with gcc13;
+  + no deepin-anything on these architectures.
+
 * Tue Jan 31 2023 Leontiy Volodin <lvol@altlinux.org> 5.8.3-alt2
 - Enabled deepin-anything on aarch64.
 - Enabled build on armh and ppc64le.
