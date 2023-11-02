@@ -9,8 +9,8 @@
 
 Name: kde5-pim-runtime
 Version: 23.08.2
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 ExcludeArch: %not_qt5_qtwebengine_arches
 
@@ -166,6 +166,9 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- dont force alternate placement
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
