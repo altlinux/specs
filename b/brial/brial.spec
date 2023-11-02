@@ -4,7 +4,7 @@
 
 Name: brial
 Version: 1.2.12
-Release: alt1
+Release: alt2
 Summary: Framework for Boolean Rings
 # The entire source code is GPLv2+ except the Cudd directory that is BSD
 License: GPL-2.0+ and BSD-3-Clause
@@ -15,6 +15,8 @@ Source: %url/releases/download/%version/%name-%version.tar.bz2
 # The clock function has been removed from python 3.8.  See
 # https://github.com/BRiAl/BRiAl/commit/74d861705c77c3af7e6a2e49dd57f8d26a664072
 Patch: %name-clock.patch
+Patch3500: brial-boost-loongarch64.patch
+
 # cudd/cudd.h:#define CUDD_VERSION "2.5.0"
 Provides: bundled(cudd) = 2.5.0
 
@@ -72,6 +74,7 @@ Python 3 interface to %name.
 %prep
 %setup
 %patch -p1
+%patch3500 -p1
 
 %build
 export CPPFLAGS="-DPBORI_NDEBUG"
@@ -123,6 +126,9 @@ make check
 %endif
 
 %changelog
+* Thu Nov 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2.12-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Mon Jan 16 2023 Leontiy Volodin <lvol@altlinux.org> 1.2.12-alt1
 - New version.
 
