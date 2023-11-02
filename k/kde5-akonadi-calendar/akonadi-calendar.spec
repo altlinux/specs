@@ -2,8 +2,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Akonadi Calendar Integration
@@ -93,6 +93,9 @@ KF5 library
 %_K5lib/libKPim5AkonadiCalendar.so.*
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- dont force alternate placement
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
