@@ -1,4 +1,4 @@
-%ifarch %e2k ppc64le riscv64
+%ifarch %not_qt5_qtwebengine_arches
 %def_disable qtwebengine
 %else
 %def_enable qtwebengine
@@ -6,7 +6,7 @@
 
 Name: deepin-manual
 Version: 6.0.4
-Release: alt1
+Release: alt1.1
 Summary: Help files for DDE
 License: GPL-3.0+ and CC0-1.0 and BSD-3-Clause
 # LICENSES/: CC0-1.0 and CC-BY-4.0 and MIT and BSD-3-Clause and LGPL-3.0 and GPL-3.0
@@ -24,6 +24,7 @@ Patch: deepin-manual-5.8.4-alt-aarch64-armh.patch
 %endif
 
 BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: gcc-c++ cmake qt5-base-devel qt5-tools-devel qt5-webchannel-devel dtk5-widget-devel qt5-x11extras-devel libgmock-devel
 %if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
@@ -79,6 +80,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 6.0.4-alt1.1
+- NMU: employ rpm-macros-qt5-webengine (fixes build on loongarch64).
+
 * Mon Mar 13 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt1
 - New version (6.0.4).
 
