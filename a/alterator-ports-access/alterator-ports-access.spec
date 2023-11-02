@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ports-access
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 BuildArch: noarch
 Source:%name-%version.tar
@@ -52,6 +52,12 @@ Command line part of alterator module to control serial/USB ports access
 %config(noreplace) %_sysconfdir/alterator-ports-access.conf
 
 %changelog
+* Thu Nov 02 2023 Paul Wolneykien <manowar@altlinux.org> 0.5.5-alt1
+- Fixed USB rule editor (closes: 47454).
+- Fixed glob pattern used to extract class, subclass and protocol
+  values from USB_WHITE_LIST.
+- Additional formal check before adding new rule.
+
 * Wed Aug 30 2023 Paul Wolneykien <manowar@altlinux.org> 0.5.4-alt1
 - Don't disable USB control to scan for connected devices if not
   explicitly asked by the user with the use of "Scan" button.
