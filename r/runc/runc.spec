@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.1.9
-Release:        alt1
+Release:        alt1.1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -24,6 +24,8 @@ URL:            https://%provider_prefix
 ExclusiveArch:  %go_arches
 
 Source0:        %name-%version.tar
+
+Patch1:         runc-alt-loongarch64-support.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang go-md2man
@@ -40,6 +42,8 @@ and to manage containers running under runc.
 %prep
 %setup -q
 sed -i 's/ -trimpath//g' Makefile
+
+%patch1 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -75,6 +79,9 @@ EOF
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 1.1.9-alt1.1
+- NMU: add patch for loongarch64 support
+
 * Wed Sep 6 2023 Vladimir Didenko <cow@altlinux.ru> 1.1.9-alt1
 - New version
 

@@ -12,7 +12,7 @@
 
 Name:		containerd
 Version:	1.7.8
-Release:	alt1
+Release:	alt1.1
 Summary:	A daemon to control runC
 
 Group:		Development/Other
@@ -25,6 +25,8 @@ Source0: %name-%version.tar
 Source2: %name.init
 Source3: %name.limits
 Source4: config.toml
+
+Patch1:  containerd-alt-loongarch64-support.patch
 
 ExclusiveArch: %go_arches
 
@@ -88,6 +90,9 @@ install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/config.toml
 %_man8dir/*
 
 %changelog
+* Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 1.7.8-alt1.1
+- NMU: Add patch for loongarch64 support
+
 * Fri Oct 27 2023 Vladimir Didenko <cow@altlinux.org> 1.7.8-alt1
 - 1.7.8
 

@@ -12,7 +12,7 @@
 
 Name:    docker-engine
 Version: 24.0.7
-Release: alt1
+Release: alt1.1
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -27,6 +27,8 @@ Source2: %servicename.init
 Source3: %servicename.sysconf
 Source4: %servicename-storage.sysconf
 Source5: daemon.json
+
+Patch1: altlinux/docker-engine-alt-loongarch64-support.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel libbtrfs-devel libseccomp-devel
@@ -71,6 +73,7 @@ This package provides docker-proxy util.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 # Temporary workaround to build with golang 1.16. Waiting for upstream to
@@ -148,6 +151,9 @@ exit 0
 %_udevrulesdir/80-docker.rules
 
 %changelog
+* Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 24.0.7-alt1.1
+- NMU: add patch for loongarch64 support
+
 * Fri Oct 27 2023 Vladimir Didenko <cow@altlinux.org> 24.0.7-alt1
 - 24.0.7
 
