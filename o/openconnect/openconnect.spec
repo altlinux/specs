@@ -14,7 +14,7 @@
 
 Name: openconnect
 Version: 9.12
-Release: alt2
+Release: alt3
 Summary: Open client for Cisco AnyConnect VPN
 
 Group: Networking/Remote access
@@ -86,7 +86,6 @@ developing applications that use %name.
 %if_with gnutls
     --with-gnutls \
     --without-gnutls-version-check \
-    --with-default-gnutls-priority="@OPENCONNECT,SYSTEM" \
     --without-openssl \
 %endif
 %if_with openssl
@@ -125,6 +124,9 @@ rm -f %buildroot%_libexecdir/openconnect/hipreport-android.sh
 %_pkgconfigdir/*
 
 %changelog
+* Thu Nov 02 2023 Alexey Shabalin <shaba@altlinux.org> 9.12-alt3
+- Drop default-gnutls-priority configure option.
+
 * Tue Oct 31 2023 Alexey Shabalin <shaba@altlinux.org> 9.12-alt2
 - Add configure options for openssl and gnutls.
 - Fixed version info (ALT#48011).
