@@ -1,6 +1,6 @@
-%def_without kde4
+#def_without N
 Name: altlinux-mime-defaults
-Version: 0.439
+Version: 0.440
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -8,11 +8,11 @@ License: ALT-Public-Domain
 Group: Graphical desktop/Other
 
 URL: http://altlinux.org/
-Source: mimeapps.list
-Source1: mimeapps-KDE.list
-Source2: defaults-GNOME.list
-Source3: defaults-MATE.list
-Source4: mimeapps-KF5.list
+Source0: mimeapps.list
+Source1: defaults-GNOME.list
+Source2: defaults-MATE.list
+Source3: mimeapps-KDE.list
+#SourceN: mimeapps-N.list
 Packager: Igor Vlasenko <viy@altlinux.org>
 
 BuildArch: noarch
@@ -26,12 +26,12 @@ System-wide MIME preferences.
 
 %install
 install -D -m 644 %{SOURCE0} %buildroot%_desktopdir/mimeapps.list
-install -D -m 644 %{S:2} %buildroot/%_datadir/gnome/applications/defaults.list
-install -D -m 644 %{S:3} %buildroot/%_datadir/mate/applications/defaults.list
-install -D -m 644 %{S:4} %buildroot/%_datadir/kf5/applications/mimeapps.list
-%if_with kde4
-install -D -m 644 %{S:1} %buildroot/%_datadir/kde4/applications/kde4/mimeapps.list
-ln -s kde4/mimeapps.list %buildroot/%_datadir/kde4/applications/mimeapps.list
+install -D -m 644 %{S:1} %buildroot%_datadir/gnome/applications/defaults.list
+install -D -m 644 %{S:2} %buildroot%_datadir/mate/applications/defaults.list
+install -D -m 644 %{S:3} %buildroot%_datadir/applications/KDE-mimeapps.list
+mkdir -p  %buildroot/%_datadir/kf5/applications/
+ln -s ../../applications/KDE-mimeapps.list %buildroot/%_datadir/kf5/applications/mimeapps.list
+%if_with N
 %endif
 
 touch %buildroot%_desktopdir/defaults.list
@@ -43,15 +43,18 @@ touch %buildroot%_sysconfdir/xdg/mimeapps.list
 %_desktopdir/mimeapps.list
 %_desktopdir/defaults.list
 %_sysconfdir/xdg/mimeapps.list
+%_desktopdir/KDE-mimeapps.list
 %_datadir/kf5/applications/mimeapps.list
 %_datadir/gnome/applications/defaults.list
 %_datadir/mate/applications/defaults.list
-%if_with kde4
-%_datadir/kde4/applications/kde4/mimeapps.list
-%_datadir/kde4/applications/mimeapps.list
+%if_with N
 %endif
 
 %changelog
+* Thu Nov 02 2023 Igor Vlasenko <viy@altlinux.org> 0.440-alt1
+- updated mime defaults (due to KDE kf5-*.desktop prefix migration)
+- added %_desktopdir/KDE-mimeapps.list
+
 * Sun Oct 29 2023 Igor Vlasenko <viy@altlinux.org> 0.439-alt1
 - updated mime defaults
 - added empty %_sysconfdir/xdg/mimeapps.list (closes: #48178)
