@@ -1,9 +1,15 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %arm aarch64 ppc64le loongarch64 riscv64
+%def_without glinject
+%else
+%def_with glinject
+%endif
+
 Name: simplescreenrecorder
 Version: 0.4.4
-Release: alt4
+Release: alt4.1
 
 Summary: Simple Screen Recording with OpenGL capture
 
@@ -67,10 +73,7 @@ export PATH=%_qt5_bindir:$PATH
 %ifnarch %ix86 x86_64
     -DENABLE_X86_ASM=FALSE \
 %endif
-%ifarch %arm aarch64
-    -DWITH_GLINJECT=FALSE \
-%endif
-%ifarch ppc64le
+%if_without glinject
     -DWITH_GLINJECT=FALSE \
 %endif
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -83,7 +86,7 @@ rm -f %buildroot%_libdir/*.la
 
 %files
 %_bindir/*
-%ifnarch %arm aarch64 ppc64le
+%if_with glinject
 %_libdir/lib*
 %endif
 %_desktopdir/*
@@ -93,6 +96,10 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 0.4.4-alt4.1
+- Introduce with/without glinject knob;
+- Disable glinject on loongarch64 and riscv64.
+
 * Tue Sep 19 2023 Leontiy Volodin <lvol@altlinux.org> 0.4.4-alt4
 - Fixed build with ffmpeg 6.0.
 
