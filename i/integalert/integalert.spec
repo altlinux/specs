@@ -1,66 +1,56 @@
-Name:     settings-s
+%define _unpackaged_files_terminate_build 1
+
+Name:     integalert
 Version:  0.4.2
-Release:  alt1
+Release:  alt3
 
-Summary:  settings for custom distro
+Summary:  Osec-based integrity checking script and settings
 License:  GPLv2
-Group:    Other
-Url:      http://git.altlinux.org/people/nbr/packages/settings-s.git
+Group:    Monitoring
+Url:      http://git.altlinux.org/people/manowar/packages/integalert.git
 
-Packager: Denis Medvedev <nbr@altlinux.org>
+Packager: Paul Wolneykien <manowar@altlinux.org>
 
 Source:   %name-%version.tar
-
 BuildArch: noarch
-Requires:  checker
+
+Obsoletes: integ < 0.4.2-alt2
 
 %description
-These are settings for custom distro.
+Osec-based integrity checking script and settings.
 
-%package -n integ
-Summary: integrity checker script and settings
-Group: System/Configuration/Other
 Requires: systemd
 Requires: osec-cronjob >= 1.3.1-alt2
 
-%description -n integ
-Integrity check setup only
-
-%package -n installer-integ-stage2
-Summary: Run integrity check after install
+%package -n installer-integalert-stage2
+Summary: Run integrity check after install (installer files)
 Group: System/Configuration/Other
 
-%description -n installer-integ-stage2
+%description -n installer-integalert-stage2
 Run integrity check after install (installer files).
 
-%package -n installer-integ-stage3
-Summary: Run integrity check after install
+%package -n installer-integalert-stage3
+Summary: Run integrity check after install (chroot files)
 Group: System/Configuration/Other
-Requires: integ = %version-%release
+Requires: integalert = %version-%release
 
-%description -n installer-integ-stage3
+%description -n installer-integalert-stage3
 Run integrity check after install (chroot files).
 
 %prep
 %setup
 
 %install
-mkdir -p %buildroot%_datadir/install2/postinstall.d
-mkdir -p %buildroot/sbin
-mkdir -p %buildroot%_unitdir
-mkdir -p %buildroot/%_sysconfdir/firsttime.d
-mkdir -p %buildroot/lib/systemd/system-preset
-mkdir -p %buildroot/%_sysconfdir/osec/integalert
+install -D -m 0644 65-integrity.preset %buildroot/lib/systemd/system-preset/65-integrity.preset
+install -D -m 0755 90-integrity-init.sh  %buildroot%_datadir/install2/postinstall.d/90-integrity-init.sh
+install -D -m 0644 integalert.service %buildroot%_unitdir/integalert.service
+install -D -m 0700 integalert %buildroot/sbin/integalert
 
-install -Dm 0644 65-integrity.preset %buildroot/lib/systemd/system-preset/
-install -Dm 0755 65-settings.sh  %buildroot%_datadir/install2/postinstall.d/
-install -Dm 0755 90-integrity-init.sh  %buildroot%_datadir/install2/postinstall.d/
-install -Dm 0644 integalert.service %buildroot%_unitdir/
-install -Dm 0700 integalert %buildroot/sbin/
-install -D -m 0600 dirs.conf %buildroot/%_sysconfdir/osec/integalert/dirs.conf
+install -D -m 0600 osec/integalert/dirs.conf %buildroot/%_sysconfdir/osec/integalert/dirs.conf
+install -D -m 0600 osec/integalert_vm/dirs.conf %buildroot/%_sysconfdir/osec/integalert_vm/dirs.conf
+install -D -m 0600 osec/integalert_container/dirs.conf %buildroot/%_sysconfdir/osec/integalert_container/dirs.conf
 
-
-%post -n integ
+%post -n integalert
 if [ $1 -ge 2 ]; then
     if systemctl -q is-enabled integalert.service; then
         systemctl daemon-reload
@@ -68,23 +58,28 @@ if [ $1 -ge 2 ]; then
     fi
 fi
 
-%files
-%_datadir/install2/postinstall.d/65-settings.sh
-
-%files -n installer-integ-stage2
+%files -n installer-integalert-stage2
 %_datadir/install2/postinstall.d/90-integrity-init.sh
 
-%files -n installer-integ-stage3
+%files -n installer-integalert-stage3
 
-%files -n integ
+%files
 %_unitdir/integalert.service
 /lib/systemd/system-preset/65-integrity.preset
 /sbin/integalert
-%dir %_sysconfdir/osec/integalert
-%config(noreplace) %_sysconfdir/osec/integalert/*.conf
-
+%dir %_sysconfdir/osec/integalert*
+%config(noreplace) %_sysconfdir/osec/integalert*/*.conf
 
 %changelog
+* Thu Nov 02 2023 Paul Wolneykien <manowar@altlinux.org> 0.4.2-alt3
+- Obsolete integ < 0.4.2-alt2.
+
+* Wed Nov 01 2023 Paul Wolneykien <manowar@altlinux.org> 0.4.2-alt2
+- Remove 65-settings.sh and the corresponding package.
+- Rename package to "integalert".
+- Don't require 'checker' package.
+- Add dirs.conf for "vm" and "container" profiles.
+
 * Tue Apr 25 2023 Paul Wolneykien <manowar@altlinux.org> 0.4.2-alt1
 - Provide the default dirs.conf for 'integalert' profile as a part of
   the 'integ' package.

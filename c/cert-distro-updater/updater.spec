@@ -1,20 +1,21 @@
-Name:     updater
+Name:     cert-distro-updater
 Version:  1.3
-Release:  alt3
+Release:  alt5
 
 Summary:  Updater of packages for distros with security and integrity
 License:  GPL v2+
 Group:    Other
-Url:      http://git.altlinux.org/gears/u/updater.git
+Url:      http://git.altlinux.org/people/nbr/packages/cert-distro-updater.git
 
 Packager: Denis Medvedev <nbr@altlinux.org>
 
 Source:   %name-%version.tar
-
 BuildArch: noarch
 
+Obsoletes: updater < 1.3-alt4
+
 %description
-Some distros are using technologies like SE and ima/evm.
+Some distros are using technologies like SE and IMA/EVM.
 Updating packages in them needs correct procedure to follow.
 Scripts in this distro are needed to ensure that correct procedure.
 
@@ -44,6 +45,12 @@ install -Dm 0750 parser-bootloader-extlinux-conf.awk %buildroot%_sbindir/parser-
 /lib/systemd/system/*
 
 %changelog
+* Thu Nov 02 2023 Paul Wolneykien <manowar@altlinux.org> 1.3-alt5
+- Obsolete updater < 1.3-alt4.
+
+* Wed Nov 01 2023 Paul Wolneykien <manowar@altlinux.org> 1.3-alt4
+- Rename to cert-distro-updater (was: updater).
+
 * Tue Nov 17 2020 Anton Midyukov <antohami@altlinux.org> 1.3-alt3
 - updater-start: fix unexpected failure to run when started directly
 

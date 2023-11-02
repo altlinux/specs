@@ -1,12 +1,12 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 10.0
-Release: alt4
+Release: alt5
 
 License: GPLv2+
 Group: System/Configuration/Other
 BuildRequires: alterator-officer
-Summary: Installer files for Cliff distro
+Summary: Installer files for the Cliff distro
 
 Source: %name-%version.tar
 
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Installer files for Cliff distro.
 
 %package common
-Summary: Cliff Installer common files
+Summary: Cliff installer common files
 License: GPLv2+
 Group: System/Configuration/Other
 
@@ -23,7 +23,7 @@ Cliff Installer common files.
 Needed also for alterator-setup.
 
 %package stage2
-Summary: Installer stage2
+Summary: Cliff installer stage2 files
 License: GPLv2+
 Group: System/Configuration/Other
 Provides: installer-%distro-stage2 = %name-%version
@@ -36,13 +36,13 @@ Requires: alterator-vm
 Requires: alterator-notes
 Requires: %name-common = %EVR
 Requires: x-cursor-theme-jimmac
-Requires: installer-integ-stage2
+Requires: installer-integalert-stage2
 
 %description stage2
-Cliff Installer stage2.
+Cliff installer stage2 files.
 
 %package stage3
-Summary: Installer stage3
+Summary: Cliff installer stage3 files
 License: GPLv2+
 Group: System/Configuration/Other
 Provides: installer-%distro-stage3 = %name-%version
@@ -56,11 +56,11 @@ Requires: alterator-net-general
 Requires: alterator-net-bond alterator-net-bridge
 Requires: installer-feature-nfs-server-stage3
 Requires: installer-feature-powerbutton-stage3
-Requires: installer-integ-stage3
+Requires: installer-integalert-stage3
 Requires: alterator-luks
 
 %description stage3
-Cliff Installer stage3.
+Cliff installer stage3 files.
 
 %prep
 %setup
@@ -85,6 +85,11 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Wed Nov 01 2023 Paul Wolneykien <manowar@altlinux.org> 10.0-alt5
+- Require installer-integalert-stage2 and 3 (due to rename of
+  these packages).
+- Fixed descriptions.
+
 * Wed Sep 20 2023 Anton Midyukov <antohami@altlinux.org> 10.0-alt4
 - do not requires alterator-officer
 
