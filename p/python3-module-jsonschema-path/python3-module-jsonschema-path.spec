@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.3.1
-Release: alt1
+Release: alt2
 
 Summary: Object-oriented JSONSchema
 License: Apache-2.0
@@ -25,6 +25,7 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pathable
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-responses
+BuildRequires: python3-module-referencing
 %endif
 
 %description
@@ -49,5 +50,8 @@ sed -i '/--cov/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 02 2023 Anton Vyatkin <toni@altlinux.org> 0.3.1-alt2
+- Fix FTBFS.
+
 * Sat Oct 14 2023 Anton Vyatkin <toni@altlinux.org> 0.3.1-alt1
 - Initial build for Sisyphus
