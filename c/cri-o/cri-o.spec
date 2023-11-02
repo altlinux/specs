@@ -12,7 +12,7 @@
 
 Name: cri-o
 Version: 1.26.4
-Release: alt2
+Release: alt2.1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
@@ -20,6 +20,7 @@ URL: https://%provider_prefix
 ExclusiveArch: %go_arches
 
 Source: %name-%version.tar
+Patch:  %name-%version-%release.patch
 
 Requires: containers-common
 Requires: runc
@@ -49,6 +50,7 @@ Provides: cri-runtime
 
 %prep
 %setup
+%autopatch -p1
 
 sed -i 's/\/local//' contrib/systemd/crio.service
 sed -i 's/\/local//' contrib/systemd/crio-wipe.service
@@ -125,6 +127,9 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 1.26.4-alt2.1
+- NMU: loongarch64 support
+
 * Mon Oct 16 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.4-alt2
 - Add `BuildRequires: /proc`
 
