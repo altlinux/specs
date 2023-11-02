@@ -17,8 +17,8 @@
 %endif
 
 Name: 	 thunderbird
-Version: 115.3.1
-Release: alt2
+Version: 115.4.1
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -39,6 +39,7 @@ Source8: thunderbird-wayland.desktop
 
 Patch01: thunderbird-alt-fix-redefinition-double_t.patch
 Patch02: thunderbird-115-disable-browser-option.patch
+Patch03: thunderbird-115-fix-types-defination.patch
 Patch3500: 0001-thunderbird-115-add-loongarch-support.patch
 Patch3501: 0002_xpcom_add_loongarch64_support.patch 
 Patch3502: 0003_botan_loongarch64_buildfix.patch
@@ -243,6 +244,7 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 tar -xf %SOURCE6
 %patch01 -p2
 %patch02 -p2
+%patch03 -p2
 %patch3500 -p1
 %patch3501 -p1
 %patch3502 -p1
@@ -565,6 +567,19 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Nov 01 2023 Pavel Vasenkov <pav@altlinux.org> 115.4.1-alt1
+- New version.
+- Security fixes:
+  + CVE-2023-5721 Queued up rendering could have allowed websites to clickjack
+  + CVE-2023-5732 Address bar spoofing via bidirectional characters
+  + CVE-2023-5724 Large WebGL draw could have led to a crash
+  + CVE-2023-5725 WebExtensions could open arbitrary URLs
+  + CVE-2023-5726 Full screen notification obscured by file open dialog on macOS
+  + CVE-2023-5727 Download Protections were bypassed by .msix, .msixbundle, .appx, and .appxbundle files on Windows
+  + CVE-2023-5728 Improper object tracking during GC in the JavaScript engine could have led to a crash.
+  + CVE-2023-5730 Memory safety bugs fixed in Firefox 119, Firefox ESR 115.4, and Thunderbird 115.4.1
+
+
 * Mon Oct 16 2023 Pavel Vasenkov <pav@altlinux.org> 115.3.1-alt2
 - Fix check dependencies error for GLIBC_PRIVATE
 
