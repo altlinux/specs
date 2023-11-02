@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		c083ca2ca4c
+%define svnrev		315e9acac58
 
 %def_with pgsql
 %def_enable java
@@ -16,8 +16,8 @@
 %endif
 
 Name: zabbix
-Version: 6.0.22
-Release: alt1.1
+Version: 6.0.23
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -340,7 +340,6 @@ sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h src/zabbix_java/src/c
 	--with-ldap \
 	--with-libcurl \
 	--with-libxml2 \
-	--with-jabber \
 	--with-openipmi \
 	--with-openssl \
 	%{subst_with ssh2} \
@@ -360,7 +359,6 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_mysql
 	--with-ldap \
 	--with-libcurl \
 	--with-libxml2 \
-	--with-jabber \
 	--with-openipmi \
 	--with-openssl \
 	%{subst_with ssh2} \
@@ -381,7 +379,6 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_pgsql
 	--with-libxml2 \
 	--with-net-snmp \
 	--with-ldap \
-	--with-jabber \
 	--with-openipmi \
 	--with-openssl \
 	%{subst_with ssh2} \
@@ -405,7 +402,6 @@ export GOFLAGS="-mod=vendor"
 	--with-libxml2 \
 	--with-net-snmp \
 	--with-ldap \
-	--with-jabber \
 	--with-openipmi \
 	--with-openssl \
 	%{subst_with ssh2} \
@@ -737,6 +733,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Nov 02 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.23-alt1
+- 6.0.23
+- Remove deprecate --with-jabber
+
 * Mon Oct 09 2023 Ivan A. Melnikov <iv@altlinux.org> 1:6.0.22-alt1.1
 - NMU: add riscv64 and loongarch64 support
 
