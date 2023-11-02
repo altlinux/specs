@@ -41,8 +41,8 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.83
-Release: alt1.1
+Version: %ver_major.84
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -391,6 +391,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Thu Nov 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.84-alt1
+- updated to 0.3.84-2-g38157a893
+
 * Thu Nov 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.83-alt1.1
 - ilyakurdyukov@: fixed build for %%e2k
 
