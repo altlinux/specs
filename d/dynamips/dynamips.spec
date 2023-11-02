@@ -3,7 +3,7 @@
 
 Name: dynamips
 Version: 0.2.23
-Release: alt1
+Release: alt1.1
 
 Summary: Cisco 7200 Simulator
 License: GPLv2
@@ -11,6 +11,7 @@ Group: Emulators
 
 Url: https://github.com/GNS3/dynamips
 Source: %name-%version.tar
+Patch1: dynamips-alt-loongarch-support.patch
 
 BuildRequires(pre): rpm-macros-cmake cmake 
 BuildRequires: libelf-devel libpcap-devel libuuid-devel
@@ -35,6 +36,8 @@ The goals of this emulator are mainly:
 
 %prep
 %setup
+%autopatch -p1
+
 %ifarch %e2k
 sed -i 's,(__ia64__),& || defined (__e2k__),' common/dynamips_common.h
 %endif
@@ -58,6 +61,9 @@ rm -fR %buildroot%_docdir/%name
 %dir %_localstatedir/%name/labs
 
 %changelog
+* Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 0.2.23-alt1.1
+- NMU: add patch for loongarch64 support.
+
 * Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 0.2.23-alt1
 - New version 0.2.23.
 
