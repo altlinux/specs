@@ -10,8 +10,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: p11-kit
-Version: 0.24.1
-Release: alt2
+Version: 0.25.2
+Release: alt1
 Epoch: 1
 
 Summary: Utilities for PKCS#11 modules
@@ -23,6 +23,7 @@ Vcs: https://github.com/p11-glue/p11-kit.git
 Source: %name-%version.tar
 
 Source1: p11-kit-extract-trust
+Source2: pkcs11-json.tar
 Patch: %name-%version-%release.patch
 Patch1: lib%name-0.23.8-alt-lfs.patch
 
@@ -36,6 +37,8 @@ BuildRequires: libnss-devel
 %endif
 %{?_enable_systemd:BuildRequires: systemd-devel}
 %{?_enable_doc:BuildRequires: gtk-doc}
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: gnutls-utils}}
 
 %description
 %name provides a way to load and enumerate PKCS#11 modules, as well
@@ -117,6 +120,7 @@ system only and should not be installed in the real systems.
 %prep
 %setup -n %name-%version
 %patch -p1
+tar xf %SOURCE2 -C subprojects/
 
 %autoreconf
 %patch1
@@ -226,6 +230,10 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Wed Nov 01 2023 Mikhail Efremov <sem@altlinux.org> 1:0.25.2-alt1
+- Updated BR for tests.
+- 0.25.2.
+
 * Mon Jul 10 2023 Mikhail Efremov <sem@altlinux.org> 1:0.24.1-alt2
 - Rollbak to 0.24.1: gcr/gcr4 tests fails with 0.25.0.
 
