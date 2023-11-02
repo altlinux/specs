@@ -1,11 +1,12 @@
 %def_disable clang
 
-%define _cmake__builddir BUILD
 %define repo dde-control-center
 
 Name: deepin-control-center
 Version: 5.6.3
-Release: alt1
+Release: alt1.1
+%K5init no_altplace
+
 Summary: New control center for Linux Deepin
 License: LGPL-3.0+
 Group: Graphical desktop/Other
@@ -109,9 +110,9 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
+
 # src/frame/CMakeLists.txt
-%K5cmake \
-    -GNinja \
+%K5build \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DDCC_DISABLE_GRUB=YES \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
@@ -128,11 +129,10 @@ export READELF="llvm-readelf"
     -DDCC_DISABLE_FEEDBACK=YES \
     -DDCC_DISABLE_POWERSAVE=YES \
 %nil
-cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%cmake_install
-# place holder plugins dir
+%K5install
+
 mkdir -p %buildroot%_libdir/%repo/plugins
 
 %ifnarch armh i586
@@ -140,7 +140,6 @@ mv %buildroot/usr/lib/libdccwidgets.so %buildroot%_libdir/
 %endif
 
 mkdir -p %buildroot%_bindir/
-mv -f %buildroot%_K5bin/%{repo}* %buildroot%_bindir/
 install -Dm644 com.deepin.controlcenter.addomain.policy %buildroot%_datadir/polkit-1/actions/
 
 %check
@@ -174,6 +173,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 5.6.3-alt1.1
+- NMU: Cleanup usage of %%K5* macros (fixes FTBFS).
+
 * Wed Jan 11 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.3-alt1
 - New version (5.6.3).
 - Cleanup spec.
