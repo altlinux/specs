@@ -1,6 +1,6 @@
 Name: shelxle
 Version: 1.0.1566
-Release: alt1
+Release: alt2
 
 Summary: A Qt GUI for SHELX
 License: LGPLv2
@@ -11,7 +11,9 @@ Source: %name-%version.tar.bz2
 
 ExcludeArch: armh
 
-BuildRequires: gcc-c++ libgomp-devel qt5-base-devel libGLU-devel
+BuildRequires: gcc-c++ libgomp-devel qt6-base-devel libGLU-devel
+
+Requires: qt6-svg
 
 %description
 ShelXle is a graphical user interface for the SHELX structure
@@ -24,7 +26,7 @@ J. Appl. Cryst. (2011). 44, 1281-1284.
 subst 's/Qt;Science;Chemistry;Physics;Education/Science;Chemistry;/' %name.desktop
 
 %build
-%qmake_qt5 "CONFIG+=debug"
+%qmake_qt6 "CONFIG+=debug"
 %make_build
 
 %install
@@ -41,6 +43,9 @@ cp kissfft/COPYING COPYING_kissfft
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Thu Nov 02 2023 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1566-alt2
+- build with Qt6
+
 * Wed Nov 01 2023 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1566-alt1
 - new version
 
