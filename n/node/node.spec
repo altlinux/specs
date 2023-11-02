@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 18.17
+%define major 18.18
 
 %define nodejs_soversion 108
 %define nodejs_abi %nodejs_soversion
@@ -80,7 +80,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.0
+Version: %major.2
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -488,6 +488,13 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Thu Nov 02 2023 Vitaly Lipatov <lav@altlinux.ru> 18.18.2-alt1
+- new version 18.18.2 (with rpmrb script)
+- note: libuv reverted to 1.44.2 in upstream due some regressions
+
+* Thu Oct 12 2023 Vitaly Lipatov <lav@altlinux.ru> 18.18.1-alt1
+- new version 18.18.1 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 18.17.0-alt1
 - new version 18.17.0 (with rpmrb script)
 - set npm >= 9.6.7
