@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.10
-Release: alt1
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -52,6 +52,9 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %_includedir/alterator
 
 %changelog
+* Wed Nov 01 2023 Ivan Savin <svn17@altlinux.org> 0.1.10-alt2
+- Update docs/README-ru.md.
+
 * Tue Oct 31 2023 Ivan Savin <svn17@altlinux.org> 0.1.10-alt1
 - Add name checking when adding an environment variable. The name must not
   contain =.
