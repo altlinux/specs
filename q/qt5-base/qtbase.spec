@@ -37,7 +37,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.10
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -64,6 +64,7 @@ Patch20: QTBUG-94557.patch
 Patch51: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch52: qtbase-opensource-src-5.7.1-moc_macros.patch
 Patch53: qtbase-use-wayland-on-gnome.patch
+Patch54: qtbase-libxkbcommon-1.6.0.patch
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
 # ALT
@@ -403,6 +404,7 @@ done
 %patch51 -p1
 %patch52 -p1
 %patch53 -p1
+%patch54 -p1
 #
 %patch100 -p1
 #
@@ -866,6 +868,9 @@ make check -k ||:
 
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt2
+- fix to build with new libxkbcommon
+
 * Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt1
 - new version
 
