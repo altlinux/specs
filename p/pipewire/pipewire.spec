@@ -42,7 +42,7 @@
 
 Name: pipewire
 Version: %ver_major.83
-Release: alt1
+Release: alt1.1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -186,7 +186,7 @@ This package provides development files for PipeWire JACK.
 %ifarch %e2k
 # no attribute cleanup in C++ mode, but it's only used in C sources
 sed -i '1i #ifndef __cplusplus' spa/include/spa/utils/cleanup.h
-echo -e "\n#endif" >> spa/include/spa/utils/cleanup.h
+echo -e "\n#else\n#define SPA_DEFINE_AUTO_CLEANUP(...)\n#endif" >> spa/include/spa/utils/cleanup.h
 %endif
 
 mv media-session-%ms_ver subprojects/media-session
@@ -391,6 +391,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Thu Nov 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.83-alt1.1
+- ilyakurdyukov@: fixed build for %%e2k
+
 * Thu Oct 19 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.83-alt1
 - updated to 0.3.83-1-gb92b66cf5
 
