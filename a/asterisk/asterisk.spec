@@ -10,8 +10,8 @@
 %endif
 
 Name: asterisk
-Version: 17.5.1
-Release: alt2.4
+Version: 20.5.0
+Release: alt1
 
 Summary: Open source PBX
 License: GPLv2
@@ -171,7 +171,7 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #{{{
 
 %files
-%doc CHANGES COPYING CREDITS LICENSE README* UPGRADE*.txt
+%doc ChangeLogs/ChangeLog-20.5.0.md COPYING CREDITS LICENSE README* UPGRADE*.txt
 %doc configs/samples configs/basic-pbx
 
 %_initdir/asterisk
@@ -199,6 +199,11 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 %_sbindir/astdb2sqlite3
 %_sbindir/asterisk
 %_sbindir/rasterisk
+%_sbindir/astcanary
+%_sbindir/astgenkey
+%_sbindir/astversion
+%_sbindir/autosupport
+%_sbindir/safe_asterisk
 
 %_libdir/libasteriskpj.so.2
 %_libdir/libasteriskssl.so.1
@@ -314,6 +319,12 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Thu Nov 02 2023 Alexei Takaseev <taf@altlinux.org> 20.5.0-alt1
+- 20.5.0
+
+* Thu Nov 02 2023 Alexei Takaseev <taf@altlinux.org> 20.2.1-alt1
+- 20.2.1 (ALT#46017)
+
 * Fri Oct 20 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.5.1-alt2.4
 - NMU: fixed FTBFS on LoongArch (use fresh config.guess/sub).
 
