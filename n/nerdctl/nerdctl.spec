@@ -1,7 +1,7 @@
 %global import_path github.com/containerd/nerdctl
 Name:     nerdctl
 Version:  1.6.2
-Release:  alt1
+Release:  alt1.1
 
 Summary:  contaiNERD CTL - Docker-compatible CLI for containerd
 License:  Apache-2.0
@@ -14,6 +14,7 @@ Source:   %name-%version.tar
 
 Patch1:   wrap-selinuxenabled-to-wariable-to-skip-requires.patch
 Patch2:   add-sbin-to-path-to-work-in-rootless-mode.patch
+Patch3:   nerdctl-alt-loongarch64-support.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -39,6 +40,7 @@ Requires: rootlesskit %name slirp4netns
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -82,6 +84,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 1.6.2-alt1.1
+- NMU: add patch for loongarch64 support
+
 * Sat Oct 28 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.6.2-alt1
 - new version 1.6.2
 
