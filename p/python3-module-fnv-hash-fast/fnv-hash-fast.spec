@@ -1,5 +1,5 @@
 Name: python3-module-fnv-hash-fast
-Version: 0.4.1
+Version: 0.5.0
 Release: alt1
 
 Summary: CPP implementation of fnv1a
@@ -38,6 +38,9 @@ BuildRequires: python3(fnvhash)
 %python3_sitelibdir/fnv_hash_fast-%version.dist-info
 
 %changelog
+* Fri Nov 03 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt1
+- 0.5.0 released
+
 * Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.1-alt1
 - 0.4.1 released
 
