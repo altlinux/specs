@@ -8,11 +8,11 @@
 
 Name: transmission
 Version: 4.0.4
-Release: alt2
+Release: alt3
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
-License: GPLv2 + MIT
+License: MIT and GPL-2.0-only
 Url: http://www.transmissionbt.com/
 
 Provides: %rname = %EVR
@@ -28,7 +28,6 @@ Requires: %name-daemon = %EVR
 Requires(post,postun): desktop-file-utils
 
 Source: http://download.m0k.org/%name/files/%name-%version.tar
-Patch1: %name-alt-desktop.patch
 Patch2: %name-alt-extra-doc-disable.patch
 Patch3: %name-alt-fix-trsnslations-qt.patch
 Source1: %dname.init
@@ -73,14 +72,8 @@ feature bloat. Furthermore, it is free for anyone to use or modify.
 Group: Networking/File transfer
 Summary: Common files for %name
 Conflicts: %name < 1.00-alt10
+Obsoletes: %name-gui-common < %EVR
 %description common
-Common files for %name
-
-%package gui-common
-Group: Networking/File transfer
-Summary: Common files for %name
-Requires: %name-common = %EVR
-%description gui-common
 Common files for %name
 
 %package gtk
@@ -88,7 +81,6 @@ Group: Networking/File transfer
 Summary: Graphical BitTorrent client
 Provides: %name-gui = %EVR
 Requires: %name-common = %EVR
-Requires: %name-gui-common = %EVR
 %description gtk
 GTK-based graphical BitTorrent client
 
@@ -98,7 +90,6 @@ Group: Networking/File transfer
 Summary: Graphical BitTorrent client
 Provides: %name-gui = %EVR
 Requires: %name-common = %EVR
-Requires: %name-gui-common = %EVR
 %description qt
 Qt-based graphical BitTorrent client
 %endif
@@ -126,9 +117,7 @@ Daemonised BitTorrent client
 
 %prep
 %setup -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 %build
 %cmake \
@@ -181,6 +170,7 @@ echo "TRANSMISSION_OPTIONS=\"-e %_logdir/%dname/%dname.log -g %_localstatedir/%d
 
 mkdir -p %buildroot/%_logdir/%dname
 mkdir -p %buildroot/%_localstatedir/%dname
+mkdir -p %buildroot/%_localstatedir/%dname/resume
 
 # Re-enable if DhtTest.usesBootstrapFile and LT.WebUtilsTest.url passes
 # %check
@@ -199,17 +189,15 @@ fi
 
 %files common
 %dir %_datadir/%name
-
-%files gui-common
 %_iconsdir/hicolor/*/*/*
-%_datadir/applications/%name.desktop
-%_datadir/%name/public_html/*
+%_datadir/%name/public_html/
 
 %files gtk -f %name-gtk.lang
 %doc AUTHORS COPYING README.md
 %_bindir/%name-gtk
 %_altdir/%name-gtk
 %_man1dir/%name-gtk.1*
+%_datadir/applications/%name-gtk.desktop
 %_datadir/metainfo/transmission-gtk.metainfo.xml
 
 %if_enabled qt
@@ -217,6 +205,7 @@ fi
 %doc AUTHORS COPYING README.md
 %_bindir/%name-qt
 %_altdir/%name-qt
+%_datadir/applications/%name-qt.desktop
 %_datadir/%name/translations/%{name}_*.qm
 %_man1dir/%name-qt.1*
 %endif
@@ -248,9 +237,17 @@ fi
 %attr(0750,root,_%dname) %dir %_sysconfdir/%dname
 %config(noreplace) %_sysconfdir/%dname/settings.json
 %attr(0750,root,_%dname) %dir %_localstatedir/%dname
+%attr(0750,_%dname,_%dname) %dir %_localstatedir/%dname/resume
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Fri Nov 03 2023 Anton Midyukov <antohami@altlinux.org> 4.0.4-alt3
+- NMU:
+    + remove transmission-alt-desktop.patch
+    + spec: remove transmission-gui-common subpackage
+    + spec: create %_localstatedir/%dname/resume (ALT bug: 48177)
+    + spec: fix License
+
 * Mon Oct 23 2023 Mikhail Tergoev <fidel@altlinux.org> 4.0.4-alt2
 - fixed permissions for transmission-daemon (ALT bug: 48101)
 
