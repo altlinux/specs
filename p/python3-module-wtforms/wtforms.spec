@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 
 Summary: A flexible forms validation and rendering library for python web development
@@ -88,6 +88,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Fri Nov 03 2023 Andrey Cherepanov <cas@altlinux.org> 3.1.1-alt1
+- New version.
+
 * Wed Oct 11 2023 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
 - New version.
 
