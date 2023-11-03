@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt2
+Release: alt2.1
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -229,6 +229,10 @@ Requires(post): indexhtml-common
 %prep
 %setup -n branding
 cp /usr/share/distro-licenses/ALT_Server_License/license.{all,ru}.html.in notes/
+%ifarch %e2k
+# cf. rm#115880
+sed -i 's,#alt-server,&-e2k,' indexhtml/index-*.html.in
+%endif
 
 %build
 autoconf
@@ -340,6 +344,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Nov 02 2023 Michael Shigorin <mike@altlinux.org> 10.2-alt2.1
+- E2K: link to platform-specific distribution manual (rm#115880)
+
 * Thu Sep 28 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.2-alt2
 - updated licenses from distro-licenses
 - use Basealt logo as a "steps list" button

@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt4
+Release: alt4.1
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -251,6 +251,10 @@ Requires(post): indexhtml-common
 
 %prep
 %setup -n branding
+%ifarch %e2k
+# cf. rm#115880
+sed -i 's,#alt-workstation,&-e2k,' indexhtml/index-*.html.in
+%endif
 
 %build
 autoconf
@@ -362,6 +366,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Nov 02 2023 Michael Shigorin <mike@altlinux.org> 10.1-alt4.1
+- E2K: link to platform-specific distribution manual (rm#115880)
+
 * Tue Dec 20 2022 Mikhail Efremov <sem@altlinux.org> 10.1-alt4
 - all: Bump distro version to 10.1
 

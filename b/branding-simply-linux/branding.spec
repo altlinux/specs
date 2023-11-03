@@ -70,7 +70,7 @@
 
 Name: branding-simply-linux
 Version: 10.2
-Release: alt1
+Release: alt1.1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 %ifarch %ix86 x86_64
@@ -342,6 +342,10 @@ Some system settings for Simply Linux.
 %setup -q
 cp -a /usr/share/distro-licenses/ALT_Simply_License/license.ru.html.in notes/
 cp -a /usr/share/distro-licenses/ALT_Simply_License/license.all.html.in notes/
+%ifarch %e2k
+# cf. rm#115880
+sed -i 's,#alt-simply,&-e2k,' components/indexhtml/index-*.html.in
+%endif
 
 %build
 autoconf
@@ -529,6 +533,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_datadir/install3/*
 
 %changelog
+* Thu Nov 02 2023 Michael Shigorin <mike@altlinux.org> 10.2-alt1.1
+- E2K: link to platform-specific distribution manual (rm#115880)
+
 * Tue Oct 17 2023 Mikhail Efremov <sem@altlinux.org> 10.2-alt1
 - xfce-settings: Disable menu editor.
 - menu: Drop mc.desktop and mcedit.desktop.

@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt3
+Release: alt3.1
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -314,6 +314,10 @@ Some system settings for %distro_name.
 grep -rl chromium xfce-settings/etcskel/.config/xfce4/panel |
 	xargs -r -- sed -i 's,chromium,firefox,g;s,Chromium,Firefox,g'
 %endif
+%ifarch %e2k
+# cf. rm#115880
+sed -i 's,#alt-education,&-e2k,' indexhtml/index-*.html.in
+%endif
 
 %build
 autoconf
@@ -479,6 +483,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Thu Nov 02 2023 Michael Shigorin <mike@altlinux.org> 10.2-alt3.1
+- E2K: link to platform-specific distribution manual (rm#115880)
+
 * Tue Sep 26 2023 Andrey Cherepanov <cas@altlinux.org> 10.2-alt3
 - menu: hided duplicate menu entries for desktop files from xfce4-settings.
 
