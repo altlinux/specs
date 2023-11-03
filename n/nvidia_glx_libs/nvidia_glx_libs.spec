@@ -18,7 +18,7 @@
 %endif
 
 Name: nvidia_glx_libs
-Version: 535.113.01
+Version: 535.129.03
 Release: alt1
 
 ExclusiveArch: %ix86 x86_64 aarch64
@@ -246,6 +246,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %endif
 
 %changelog
+* Fri Nov 03 2023 Sergey V Turchin <zerg@altlinux.org> 535.129.03-alt1
+- new version
+
 * Tue Oct 10 2023 Sergey V Turchin <zerg@altlinux.org> 535.113.01-alt1
 - new version
 

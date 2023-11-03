@@ -21,9 +21,9 @@
 # version-release
 
 %define nv_version 535
-%define nv_release 113
-%define nv_minor 01
-%define pkg_rel alt269
+%define nv_release 129
+%define nv_minor 03
+%define pkg_rel alt270
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -357,6 +357,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Fri Nov 03 2023 Sergey V Turchin <zerg@altlinux.org> 535.129.03-alt270
+- new version
+
 * Mon Oct 23 2023 Sergey V Turchin <zerg@altlinux.org> 535.113.01-alt269
 - set modeset=1 by default for all nvidia-drm kernel modules
 
