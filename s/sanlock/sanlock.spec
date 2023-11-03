@@ -3,7 +3,7 @@
 
 Name: sanlock
 Version: 3.8.5
-Release: alt1
+Release: alt2
 Summary: A shared storage lock manager
 
 Group: System/Configuration/Other
@@ -115,23 +115,19 @@ install -D -m 0644 init.d/sanlk-resetd.service %buildroot%_unitdir/sanlk-resetd.
 install -D -m 0755 init.d/sanlk-resetd %buildroot%_initddir/sanlk-resetd
 
 install -D -m 0644 src/logrotate.sanlock \
-	%buildroot/etc/logrotate.d/sanlock
+        %buildroot/etc/logrotate.d/sanlock
 
 install -D -m 0644 init.d/sanlock.sysconfig \
-	%buildroot/etc/sysconfig/sanlock
+        %buildroot/etc/sysconfig/sanlock
 
 install -D -m 0644 init.d/wdmd.sysconfig \
         %buildroot/etc/sysconfig/wdmd
 
 install -Dd -m 0755 %buildroot/etc/wdmd.d
-install -Dd -m 0775 %buildroot/run/sanlock
-install -Dd -m 0775 %buildroot/run/wdmd
-install -Dd -m 0775 %buildroot/run/fence_sanlock
-install -Dd -m 0775 %buildroot/run/fence_sanlockd
 
 %pre
-%_sbindir/groupadd -r -f %name
-%_sbindir/useradd -r -d /run/%name -s /bin/false -c "sanlock user" -g %name -G disk %name >/dev/null 2>&1 || :
+groupadd -r -f %name >/dev/null 2>&1 ||:
+useradd -r -d -M /run/%name -s /bin/false -c "sanlock user" -g %name -G disk %name >/dev/null 2>&1 ||:
 
 %post
 %post_service wdmd
@@ -164,8 +160,6 @@ install -Dd -m 0775 %buildroot/run/fence_sanlockd
 %_sbindir/sanlock
 %_sbindir/wdmd
 %dir /etc/wdmd.d
-%dir %attr(0775,sanlock,sanlock) /run/sanlock
-%dir %attr(0775,root,sanlock) /run/wdmd
 %_man8dir/wdmd*
 %_man8dir/sanlock*
 %config(noreplace) %_sysconfdir/logrotate.d/sanlock
@@ -191,8 +185,6 @@ install -Dd -m 0775 %buildroot/run/fence_sanlockd
 %_initddir/fence_sanlockd
 %_sbindir/fence_sanlock
 %_sbindir/fence_sanlockd
-%dir %attr(0775,root,root) /run/fence_sanlock
-%dir %attr(0775,root,root) /run/fence_sanlockd
 %_man8dir/fence_sanlock*
 
 %files -n sanlk-reset
@@ -203,6 +195,10 @@ install -Dd -m 0775 %buildroot/run/fence_sanlockd
 %_man8dir/sanlk-reset*
 
 %changelog
+* Fri Nov 03 2023 Alexey Shabalin <shaba@altlinux.org> 3.8.5-alt2
+- Fixed wdmd.service unit
+- Not package dir in /run because is a tmpfs
+
 * Thu Nov 03 2022 Alexey Shabalin <shaba@altlinux.org> 3.8.5-alt1
 - 3.8.5
 
