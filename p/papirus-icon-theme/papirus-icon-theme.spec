@@ -1,6 +1,6 @@
 Name:     papirus-icon-theme
-Version:  20230901
-Release:  alt2
+Version:  20231101
+Release:  alt1
 
 Summary:  All Papirus icon themes
 License:  GPLv3
@@ -160,6 +160,9 @@ cp -a Papirus Papirus-Dark Papirus-Edu Papirus-Light ePapirus %buildroot%_iconsd
 %_iconsdir/ePapirus
 
 %changelog
+* Fri Nov 03 2023 Kirill Izmestev <felixz@altlinux.org> 20231101-alt1
+- New version.
+
 * Wed Oct 25 2023 Kirill Izmestev <felixz@altlinux.org> 20230901-alt2
 - Added a symlink to papirus-light/panel in the Papirus-Education theme (ALT #48153, #48156).
 
