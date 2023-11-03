@@ -1,6 +1,6 @@
 Name:     bleachbit
-Version:  4.4.2
-Release:  alt2
+Version:  4.5.1
+Release:  alt1
 
 Summary:  Remove unnecessary files, free space, and maintain privacy
 License:  GPL-3.0+
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-gnome
 BuildRequires(pre): rpm-build-gir
 BuildRequires(pre): python3-devel
+BuildRequires: python3-module-wheel
 
 Requires: typelib(Gtk) = 3.0
 
@@ -40,10 +41,11 @@ and history list of many common programs.
 
 %build
 make -C po local 
-%python3_build
+%pyproject_build
 
 %install
 %makeinstall_std prefix=%_prefix
+#pyproject_install
 # Create desktop file to run BleachBit as Administrator
 pushd %buildroot%_desktopdir
 cp org.bleachbit.BleachBit.desktop org.bleachbit.BleachBit-root.desktop
@@ -67,6 +69,12 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Fri Nov 03 2023 Andrey Cherepanov <cas@altlinux.org> 4.5.1-alt1
+- New version.
+
+* Mon Sep 11 2023 Andrey Cherepanov <cas@altlinux.org> 4.5.0-alt1
+- New version.
+
 * Sun Mar 26 2023 Andrey Cherepanov <cas@altlinux.org> 4.4.2-alt2
 - Rebuilt with rpm-build-gir.
 - Required typelib(Gtk).
