@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.32
+%define ver_major 0.33
 %define beta %nil
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
@@ -156,6 +156,8 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/calendar.plugin
 %_libdir/%name/plugins/lib%name-plugin-ticket-box.so
 %_libdir/%name/plugins/ticket-box.plugin
+%_libdir/%name/plugins/launcher-box.plugin
+%_libdir/%name/plugins/libphosh-plugin-launcher-box.so
 %_libdir/%name/plugins/lib%name-plugin-upcoming-events.so
 %_libdir/%name/plugins/upcoming-events.plugin
 %_libdir/%name/plugins/emergency-info.plugin
@@ -169,6 +171,7 @@ xvfb-run %__meson_test
 %_desktopdir/sm.puri.OSK0.desktop
 %_datadir/glib-2.0/schemas/sm.puri.phosh.gschema.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.enums.xml
+%_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.launcher-box.gschema.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.ticket-box.gschema.xml
 %_datadir/glib-2.0/schemas/00_%rdn_name.gschema.override
 %_datadir/dbus-1/services/%rdn_name.CalendarServer.service
@@ -191,6 +194,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.33.0-alt1
+- 0.33.0
+
 * Thu Oct 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.32.0-alt1
 - 0.32.0
 
