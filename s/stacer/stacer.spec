@@ -1,6 +1,6 @@
 Name:     stacer
 Version:  1.1.0
-Release:  alt1.3
+Release:  alt1.4
 
 Summary:  Linux System Optimizer and Monitoring - https://oguzhaninan.github.io/Stacer-Web
 License:  GPL-3.0
@@ -9,28 +9,15 @@ Url:      https://github.com/oguzhaninan/Stacer
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-#set_gcc_version 11
-
 Source:   %name-%version.tar
 Patch1:  stacer-1.1.0-translation.patch
 Patch2:  stacer-1.0.0-apt-rpm.patch
 Patch3:  stacer-1.0.0-fixlscpu.patch
 Patch4:  stacer-1.0.0-fix_warnings.patch
 
-BuildRequires(pre): cmake rpm-macros-cmake  rpm-macros-qt5 gcc-c++ 
-
-# Automatically added by buildreq on Thu Jun 02 2022
-# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libgpg-error libqt5-charts libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-svg libqt5-widgets libsasl2-3 libssl-devel libstdc++-devel python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel sh4
-BuildRequires: cmake python3-module-zope qt5-charts-devel qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-sensors-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel
-
-%ifnarch ppc64le
-BuildRequires: qt5-webengine-devel
-%endif
-
+BuildRequires(pre): rpm-macros-cmake  rpm-macros-qt5
+BuildRequires: cmake gcc-c++
 BuildRequires: qt5-base-devel qt5-svg-devel qt5-charts-devel qt5-tools-devel 
-
-# BuildRequires: bzlib-devel libblkid-devel libe2fs-devel libgcrypt-devel liblz4-devel liblzma-devel liblzo2-devel libuuid-devel python3-module-zope qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-sensors-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel zlib-devel
-
 Requires: util-linux
 
 %description
@@ -81,6 +68,10 @@ cp stacer/translations/%{name}*.qm %buildroot%_datadir/%name/translations
 
 
 %changelog
+* Thu Nov 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.1.0-alt1.4
+- NMU: trimmed build dependencies according to CMakeLists.txt.
+  As a side effect package can be built for LoongArch.
+
 * Fri Jun 03 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.1.0-alt1.3
 - Add apt-rpm
 
