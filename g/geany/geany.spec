@@ -3,9 +3,9 @@
 
 Name: geany
 Version: 2.0
-Release: alt1
+Release: alt2
 
-Summary: A fast and lightweight IDE using GTK2
+Summary: A fast and lightweight IDE using GTK3
 License: GPLv2
 Group: Development/Tools
 Url: http://geany.org
@@ -13,7 +13,7 @@ Url: http://geany.org
 Source: %name-%version.tar.bz2
 Patch: geany-2.0-defaults.patch
 
-Requires: libvte
+Requires: libvte3
 Requires: %name-data = %version
 BuildPreReq: desktop-file-utils
 
@@ -21,15 +21,15 @@ BuildPreReq: desktop-file-utils
 
 # Automatically added by buildreq on Sat Nov 07 2020
 # optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl perl perl-Encode perl-XML-Parser perl-parent pkg-config python-module-lxml python-modules python-modules-compiler python-modules-encodings python2-base sh4 shared-mime-info wayland-devel xorg-proto-devel
-BuildRequires: gcc-c++ git-core intltool libgtk+3-devel libgtk4-devel python3-module-docutils time rpm-build-python3
+BuildRequires: gcc-c++ git-core intltool libvte3-devel libgtk+3-devel python3-module-docutils time rpm-build-python3
 
 %description
 Geany is a small and lightweight integrated development environment.
 It was developed to provide a small and fast IDE, which has only a few
 dependencies from other packages. Another goal was to be as
 independent as possible from a special Desktop Environment like KDE or
-GNOME. So it is using only the GTK2 toolkit and therefore you need
-only the GTK2 runtime libraries to run Geany.
+GNOME. So it is using only the GTK3 toolkit and therefore you need
+only the GTK3 runtime libraries to run Geany.
 
 %package data
 Summary: Data files for Geany IDE
@@ -98,6 +98,7 @@ end.
 %configure --docdir=%_defaultdocdir/%name-%version \
             --disable-rpath \
             --enable-html-docs \
+            --enable-vte \
             --with-python-command=python3
 #           --enable-binreloc \
 #
@@ -131,6 +132,10 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_libdir/*.so
 
 %changelog
+* Fri Nov 03 2023 Fr. Br. George <george@altlinux.org> 2.0-alt2
+- Eliminate GTK variety (Closes: #48302)
+- Enable VTE build
+
 * Fri Oct 20 2023 Fr. Br. George <george@altlinux.org> 2.0-alt1
 - Autobuild version bump to 2.0
 
