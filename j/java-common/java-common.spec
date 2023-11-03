@@ -3,12 +3,12 @@
 %def_enable desktop
 
 Name: java-common
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Common files for Java runtimes
 Group: System/Base
-License: GPL
+License: GPLv2+
 Packager: Igor Vlasenko <viy@altlinux.org>
 Requires: jpackage-utils
 
@@ -98,12 +98,16 @@ EOF
 #%dir %{_sysconfdir}/.java/
 #%dir %{_sysconfdir}/.java/.systemPrefs
 %if_enabled desktop
-%{_datadir}/mime/packages/*.xml
+%{_datadir}/mime/packages/x-java-archive.xml
+%{_datadir}/mime/packages/x-java-jnlp-file.xml
 %_desktopdir/%{origin}-java.desktop
-%_desktopdir/%{origin}-javaws.desktop
+%exclude %_desktopdir/%{origin}-javaws.desktop
 %endif
 
 %changelog
+* Fri Nov 03 2023 Igor Vlasenko <viy@altlinux.org> 1.7.0-alt1
+- dropped deprecated javaws support
+
 * Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1
 - dropped /etc/.java/.systemPrefs
 - fixed javahome.sh (closes: #36987)
