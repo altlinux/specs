@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9.137
-Release: alt2
+Release: alt3
 
 Summary: translations for all alterator modules
 License: GPL
@@ -120,6 +120,10 @@ make check
 %lang(da) %_datadir/alterator/help/da_DK/*.html
 
 %changelog
+* Fri Nov 03 2023 Elena Mishina <lepata@altlinux.org> 2.9.137-alt3
+- help: fix typos, reindent lines
+- fix install help (closes #45209, #44640)
+
 * Wed Oct 25 2023 Elena Mishina <lepata@altlinux.org> 2.9.137-alt2
 - alterator-sslkey: update russian translation
 - alterator-audit: add help, russian translation (closes #41163, #40596)
