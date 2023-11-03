@@ -9,8 +9,8 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.32.3
-Release: alt3
+Version: 3.34.0
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -26,7 +26,7 @@ Source5: qgis.xml
 
 Patch1: qgis-serverprefix.patch
 Patch2: qgis-no-politics.patch
-Patch3: 0001-cmake-update-to-find-PDAL-2.6.patch
+Patch3: qgis-alt-python3-libpath.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -101,6 +101,8 @@ BuildRequires: /proc
 BuildRequires: libzstd-devel
 BuildRequires: libpdal-devel
 BuildRequires: pdal
+BuildRequires: libdraco-devel
+BuildRequires: libtiff-devel
 
 #Requires: libqt4-sql-sqlite
 Requires: qca-qt5-ossl
@@ -341,7 +343,6 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %files grass
 %_libdir/libqgisgrass*.so.*
 %_libdir/%rname/libprovider_grass*.so
-%_libdir/%rname/libprovider_grassraster*.so
 %_libdir/%rname/grass
 %_datadir/%rname/grass
 %endif
@@ -363,6 +364,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Sun Oct 29 2023 Andrey Cherepanov <cas@altlinux.org> 3.34.0-alt1
+- New version.
+
 * Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 3.32.3-alt3
 - Rebuilt with GRASS 8.3.1.
 
