@@ -1,8 +1,8 @@
 %def_with doc
 
 Name: cifs-utils
-Version: 6.15
-Release: alt1.1
+Version: 7.0
+Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 License: GPLv3+
@@ -119,6 +119,9 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Sat Nov 04 2023 Evgeny Sinelnikov <sin@altlinux.org> 7.0-alt1
+- Latest stable release with gssproxy support
+
 * Tue Aug 29 2023 Ivan A. Melnikov <iv@altlinux.org> 6.15-alt1.1
 - NMU: explicitly require rpm-macros-laternatives.
 
