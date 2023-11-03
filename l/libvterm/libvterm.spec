@@ -1,5 +1,5 @@
 Name: libvterm
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 Epoch: 1
 
@@ -66,6 +66,9 @@ make test
 %_bindir/*
 
 %changelog
+* Fri Nov 3 2023 Vladimir Didenko <cow@altlinux.org> 1:0.3.3-alt1
+- Updated to 0.3.3
+
 * Thu May 25 2023 Vladimir Didenko <cow@altlinux.org> 1:0.3.2-alt1
 - Updated to 0.3.2
 
