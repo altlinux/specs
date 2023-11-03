@@ -1,5 +1,5 @@
 Name: kodi-addon-inputstream-adaptive
-Version: 20.3.13
+Version: 20.3.14
 Release: alt1
 
 Summary: Adaptive stream addon for Kodi
@@ -30,6 +30,9 @@ BuildRequires: libexpat-devel libgtest-devel libap4-devel-static
 %_datadir/kodi/addons/*
 
 %changelog
+* Fri Nov 03 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.3.14-alt1
+- 20.3.14 released
+
 * Mon Sep 25 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.3.13-alt1
 - 20.3.13 released
 
