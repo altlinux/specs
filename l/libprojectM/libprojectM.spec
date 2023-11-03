@@ -8,7 +8,7 @@
 
 Name: lib%oname
 Version: 2.1.0
-Release: alt15.1
+Release: alt16
 
 Summary: Awesome music visualizer
 License: LGPLv2.1
@@ -121,6 +121,8 @@ sed -i '/<libvisual\/libvisual\.h>/i #include <sstream>' \
 	-DINCLUDE-PROJECTM-PULSEAUDIO:BOOL=FALSE \
 	-DINCLUDE-PROJECTM-JACK:BOOL=FALSE \
 %endif
+	-DprojectM_FONT_MENU=/usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf \
+	-DprojectM_FONT_TITLE=/usr/share/fonts/ttf/dejavu/DejaVuSans.ttf \
 	#
 %cmake_build
 
@@ -130,9 +132,7 @@ cd docs && doxygen %oname.dox
 %cmakeinstall_std
 
 rm -f %buildroot/%_libdir/libprojectM.a
-rm -f %buildroot/%_datadir/%oname/fonts/*.ttf
-ln -s /usr/share/fonts/ttf/dejavu/DejaVuSans.ttf %buildroot/%_datadir/%oname/fonts/Vera.ttf
-ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname/fonts/VeraMono.ttf
+mkdir -p %buildroot/%_datadir/%oname/fonts/
 
 %files
 %doc AUTHORS.txt FAQ.txt docs/doxygen/html
@@ -140,7 +140,6 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 %dir %_datadir/%oname/
 %_datadir/%oname/config.inp
 %dir %_datadir/%oname/fonts/
-%_datadir/%oname/fonts/*.ttf
 %dir %_datadir/%oname/presets/
 %_datadir/%oname/presets/*
 %dir %_datadir/%oname/shaders/
@@ -177,6 +176,9 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 # - consider https://src.fedoraproject.org/rpms/libprojectM/raw/master/f/libprojectM-c++14.patch
 
 %changelog
+* Fri Nov 03 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt16
+- exclude font symlinks
+
 * Fri Dec 09 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1.0-alt15.1
 - Fixed build for Elbrus.
 
