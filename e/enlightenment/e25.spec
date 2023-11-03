@@ -22,7 +22,7 @@
 
 Name: enlightenment
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -72,7 +72,7 @@ Requires: gnome-icon-theme
 Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%name >= 0.55
 Requires: udisks2
-Requires: pulseaudio-daemon
+#Requires: pulseaudio-daemon
 Requires: geoclue2
 Requires: connman
 # for the evrything module calculator mode
@@ -236,6 +236,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.4-alt1.1
+- removed pulseaudio-daemon from runtime depedencies (ALT #48333)
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.4-alt1
 - 0.25.4 (fixed CVE-2022-37706)
 
