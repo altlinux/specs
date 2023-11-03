@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: systemd-bootchart
-Version: 234
+Version: 235
 Release: alt1
 Summary: Boot performance graphing tool
 
@@ -45,6 +45,7 @@ sed -Ei 's,/usr(/lib/systemd),\1,g' man/*.xml
 %preun_service %name
 
 %files
+%define _customdocdir %_docdir/%name
 %doc LICENSE.GPL2 LICENSE.LGPL2.1 README
 %config(noreplace) %_sysconfdir/systemd/bootchart.conf
 %systemd_unitdir/%name.service
@@ -54,5 +55,8 @@ sed -Ei 's,/usr(/lib/systemd),\1,g' man/*.xml
 %_man5dir/bootchart.conf.d.5*
 
 %changelog
+* Fri Nov 03 2023 Vitaly Chikunov <vt@altlinux.org> 235-alt1
+- Update to v235 (2023-11-01).
+
 * Fri May 07 2021 Vitaly Chikunov <vt@altlinux.org> 234-alt1
 - First import of v234 (2020-12-16).
