@@ -5,7 +5,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt69
+Release: alt70
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -174,6 +174,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Fri Nov 03 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt70
+- GPT: fix partitioning on nvme disks with 4k-sectors
+
 * Wed Oct 04 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt69
 - fix compiler warnings
 

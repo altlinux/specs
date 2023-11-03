@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.34
+Version: 0.4.35
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -37,6 +37,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Fri Nov 03 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.35-alt1
+- Double size for /boot/efi
+
 * Thu Oct 19 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.34-alt1
 - autoinstall: resolve conflict between vm-profile.scm and auto-appending /boot/efi
 
