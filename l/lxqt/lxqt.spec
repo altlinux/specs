@@ -1,6 +1,6 @@
 Name: lxqt
 Version: 1.3
-Release: alt1
+Release: alt2
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
 License: GPL-2.0-or-later
@@ -60,8 +60,6 @@ BuildArch: noarch
 Requires: lxqt-mini
 # sound mixer
 Requires: pavucontrol-qt >= %version
-# for pavucontrol-qt
-Requires: pulseaudio-daemon pulseaudio-utils alsa-plugins-pulse
 # optional components
 Requires: lxqt-openssh-askpass >= %version
 Requires: lxqt-admin >= %version
@@ -91,6 +89,10 @@ Requires: xdg-desktop-portal-lxqt
 %files regular
 
 %changelog
+* Sat Nov 04 2023 Anton Midyukov <antohami@altlinux.org> 1.3-alt2
+- regular: do'nt require pulseaudio-daemon, pulseaudio-utils,
+  alsa-plugins-pulse
+
 * Sun Apr 16 2023 Anton Midyukov <antohami@altlinux.org> 1.3-alt1
 - new version 1.3
 
