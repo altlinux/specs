@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -46,7 +46,7 @@ The gUPnP API is intended to be easy to use, efficient and flexible.
 %package devel
 Summary: Development files and libraries for gUPnP
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 gUPnP is an object-oriented open source framework for creating UPnP
@@ -71,7 +71,7 @@ This package provides development documentations for gUPnP.
 %package gir
 Summary: GObject introspection data for the gUPnP library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the gUPnP library
@@ -80,7 +80,7 @@ GObject introspection data for the gUPnP library
 Summary: GObject introspection devel data for the gUPnP library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the gUPnP library
@@ -133,6 +133,9 @@ sed -i '/\--nowrite/d' doc/meson.build
 
 
 %changelog
+* Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.6-alt1
+- 1.6.6
+
 * Mon Jul 31 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.5-alt1
 - 1.6.5
 

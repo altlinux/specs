@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -40,7 +40,7 @@ of gUPnP.
 %package devel
 Summary: Development files for gSSDP library
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides files for development with gSSDP.
@@ -60,7 +60,7 @@ This package provides development documentation for gSSDP.
 %package gir
 Summary: GObject introspection data for the  library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the  library
@@ -69,7 +69,7 @@ GObject introspection data for the  library
 Summary: GObject introspection devel data for the  library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GSSDP library
@@ -77,7 +77,7 @@ GObject introspection devel data for the GSSDP library
 %package -n %_name%ver_major-tools
 Summary: Graphical SSDP sniffer
 Group: Networking/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n %_name%ver_major-tools
 A Device Sniffer tool based on GSSDP framework.
@@ -131,6 +131,9 @@ A Device Sniffer tool based on GSSDP framework.
 
 
 %changelog
+* Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
+- 1.6.3
+
 * Mon Nov 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
 - 1.6.2
 
