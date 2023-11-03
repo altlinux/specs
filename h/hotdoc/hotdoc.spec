@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: hotdoc
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: Hotdoc is a documentation framework
@@ -37,7 +37,7 @@ Requires: python3-module-feedgen >= 0.9.0
 Requires: python3-module-lxml >= 4.9.1
 Requires: python3-module-pkgconfig >= 1.5.1
 Requires: python3-module-toposort >= 1.6
-Requires: python3-module-yaml >= 5.4.1
+Requires: python3-module-yaml >= 6
 Requires: python3-module-schema >= 0.7.2
 Requires: python3-module-six >= 1.16.0
 Requires: python3-module-networkx-core >= 2.8.8
@@ -74,12 +74,14 @@ mv %name-%version-bootstrap_theme.tar %_sourcedir/
 %endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
+#export PYTHONPATH=%buildroot%python3_sitelibdir
+#py.test3 %name/tests
 %__python3 setup.py test
 
 %files
@@ -89,6 +91,9 @@ mv %name-%version-bootstrap_theme.tar %_sourcedir/
 %doc README.md
 
 %changelog
+* Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.15.1-alt1
+- 0.15.1
+
 * Thu Apr 27 2023 Yuri N. Sedunov <aris@altlinux.org> 0.15-alt1
 - 0.15
 
