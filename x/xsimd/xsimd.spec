@@ -1,6 +1,6 @@
 Name: xsimd
 Version: 11.1.0
-Release: alt1
+Release: alt1.1
 Summary: C++ wrappers for SIMD intrinsics
 Group: Development/C++
 License: BSD
@@ -42,6 +42,18 @@ Provides: %name-static = %version-%release
 %prep
 %setup
 %patch1 -p1
+%ifarch %e2k
+sed -i '/#elif defined(__x86_64__)/i #elif defined(__e2k__)\nsse2=sse3=ssse3=sse4_1=1;best=sse4_1::version();' \
+	include/xsimd/config/xsimd_cpuid.hpp
+sed -i -E 's/#ifdef __(SSE4_2|AVX|AVX2|FMA|FMA4)__/#if 0/' include/xsimd/config/xsimd_config.hpp
+# EDG bug workaround
+sed -i -E 's/\((typename .*)\)(G::get\(Is, sizeof\.\.\.\(Is\)\))/static_cast<\1>(\2)/' \
+	include/xsimd/types/xsimd_batch_constant.hpp
+# remove extra annoying warnings
+sed -i 's/-Wextra/& -Wno-type-limits -Wno-overflow -Wno-reduced-alignment/' test/CMakeLists.txt
+sed -i 's/<T, A>::batch.*(register_type reg/& __attribute__((unused))/' \
+	include/xsimd/types/xsimd_batch.hpp
+%endif
 
 %build
 %cmake -DBUILD_TESTS=ON
@@ -64,6 +76,9 @@ Provides: %name-static = %version-%release
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Nov 02 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 11.1.0-alt1.1
+- fixed build for Elbrus
+
 * Thu Jul 06 2023 Anton Farygin <rider@altlinux.ru> 11.1.0-alt1
 - 10.0.0 -> 11.1.0
 
