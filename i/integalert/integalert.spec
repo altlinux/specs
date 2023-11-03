@@ -2,7 +2,7 @@
 
 Name:     integalert
 Version:  0.4.2
-Release:  alt3
+Release:  alt4
 
 Summary:  Osec-based integrity checking script and settings
 License:  GPLv2
@@ -22,19 +22,19 @@ Osec-based integrity checking script and settings.
 Requires: systemd
 Requires: osec-cronjob >= 1.3.1-alt2
 
-%package -n installer-integalert-stage2
+%package -n installer-feature-integalert-stage2
 Summary: Run integrity check after install (installer files)
 Group: System/Configuration/Other
 
-%description -n installer-integalert-stage2
+%description -n installer-feature-integalert-stage2
 Run integrity check after install (installer files).
 
-%package -n installer-integalert-stage3
+%package -n installer-feature-integalert-stage3
 Summary: Run integrity check after install (chroot files)
 Group: System/Configuration/Other
 Requires: integalert = %version-%release
 
-%description -n installer-integalert-stage3
+%description -n installer-feature-integalert-stage3
 Run integrity check after install (chroot files).
 
 %prep
@@ -58,10 +58,10 @@ if [ $1 -ge 2 ]; then
     fi
 fi
 
-%files -n installer-integalert-stage2
+%files -n installer-feature-integalert-stage2
 %_datadir/install2/postinstall.d/90-integrity-init.sh
 
-%files -n installer-integalert-stage3
+%files -n installer-feature-integalert-stage3
 
 %files
 %_unitdir/integalert.service
@@ -71,6 +71,9 @@ fi
 %config(noreplace) %_sysconfdir/osec/integalert*/*.conf
 
 %changelog
+* Fri Nov 03 2023 Paul Wolneykien <manowar@altlinux.org> 0.4.2-alt4
+- Rename installer packages to installer-feature-integalert-*.
+
 * Thu Nov 02 2023 Paul Wolneykien <manowar@altlinux.org> 0.4.2-alt3
 - Obsolete integ < 0.4.2-alt2.
 

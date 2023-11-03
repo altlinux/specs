@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 10.0
-Release: alt5
+Release: alt6
 
 License: GPLv2+
 Group: System/Configuration/Other
@@ -36,7 +36,7 @@ Requires: alterator-vm
 Requires: alterator-notes
 Requires: %name-common = %EVR
 Requires: x-cursor-theme-jimmac
-Requires: installer-integalert-stage2
+Requires: installer-feature-integalert-stage2
 
 %description stage2
 Cliff installer stage2 files.
@@ -56,7 +56,7 @@ Requires: alterator-net-general
 Requires: alterator-net-bond alterator-net-bridge
 Requires: installer-feature-nfs-server-stage3
 Requires: installer-feature-powerbutton-stage3
-Requires: installer-integalert-stage3
+Requires: installer-feature-integalert-stage3
 Requires: alterator-luks
 
 %description stage3
@@ -85,6 +85,9 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Fri Nov 03 2023 Paul Wolneykien <manowar@altlinux.org> 10.0-alt6
+- Require renamed installer-feature-integalert-*.
+
 * Wed Nov 01 2023 Paul Wolneykien <manowar@altlinux.org> 10.0-alt5
 - Require installer-integalert-stage2 and 3 (due to rename of
   these packages).
