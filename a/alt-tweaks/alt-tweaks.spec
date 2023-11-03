@@ -1,7 +1,7 @@
 %define xdg_name org.alt.Tweaks
 
 Name: alt-tweaks
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Summary: A tool to customize advanced phosh options of ALT Mobile OS
@@ -65,6 +65,9 @@ rm -f %buildroot%_datadir/postmarketos-tweaks/postmarketos-tweakd.initd.in
 %doc README*
 
 %changelog
+* Fri Nov  3 2023 Artyom Bystrov <arbars@altlinux.org> 0.2.1-alt1
+- Fix locale value
+
 * Fri Oct 27 2023 Artyom Bystrov <arbars@altlinux.org> 0.2-alt1
 - Add simply (dumb, bout working) l10n support (UTF-8-only)
 - Add Pinephone Pro battery charging level settings
