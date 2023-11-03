@@ -19,8 +19,8 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 115.3.1
-Release: alt4
+Version: 115.4.0
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -530,6 +530,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Nov 02 2023 Pavel Vasenkov <pav@altlinux.org> 115.4.0-alt1
+- New ESR version.
+- Security fixes
+  + CVE-2023-5721 Queued up rendering could have allowed websites to clickjack
+  + CVE-2023-5732 Address bar spoofing via bidirectional characters
+  + CVE-2023-5724 Large WebGL draw could have led to a crash
+  + CVE-2023-5725 WebExtensions could open arbitrary URLs
+  + CVE-2023-5726 Full screen notification obscured by file open dialog on macOS
+  + CVE-2023-5727 Download Protections were bypassed by .msix, .msixbundle, .appx, and .appxbundle files on Windows
+  + CVE-2023-5728 Improper object tracking during GC in the JavaScript engine could have led to a crash.
+  + CVE-2023-5730 Memory safety bugs fixed in Firefox 119, Firefox ESR 115.4, and Thunderbird 115.4.1
+
 * Mon Oct 16 2023 Pavel Vasenkov <pav@altlinux.org> 115.3.1-alt4
 - Fix check dependencies error for GLIBC_PRIVATE
 
