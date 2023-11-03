@@ -1,6 +1,6 @@
 Name: mergerfs
 Version: 2.33.4
-Release: alt1
+Release: alt1.1
 
 Summary: A FUSE union filesystem
 
@@ -22,6 +22,9 @@ behavior.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's/#ifdef O_DSYNC/#if defined(O_DSYNC) \&\& O_DSYNC != O_SYNC/' libfuse/lib/debug.c
+%endif
 #rm -rf libfuse/
 subst "s|chown.*||" libfuse/Makefile
 echo >tools/update-version
@@ -45,6 +48,9 @@ mkdir -p %buildroot/sbin/
 %doc README.md
 
 %changelog
+* Fri Nov 03 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.33.4-alt1.1
+- fixed build for Elbrus
+
 * Wed Mar 30 2022 Vitaly Lipatov <lav@altlinux.ru> 2.33.4-alt1
 - new version 2.33.4 (with rpmrb script)
 - build with internal libfuse again (strict and patched version)
