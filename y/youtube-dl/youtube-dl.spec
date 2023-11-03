@@ -1,7 +1,9 @@
 %define py_name youtube_dl
+# snapshot does not have the man page
+%def_with snapshot
 
 Name: youtube-dl
-Version: 2021.12.17
+Version: 2023.09.27
 Release: alt1
 
 Summary: Download videos from YouTube
@@ -19,6 +21,9 @@ Requires: python3-module-%py_name = %EVR
 # optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python3 python3-base
 BuildRequires: python-module-setuptools python3-dev python3-module-setuptools
 BuildRequires(pre): rpm-build-python3
+%if_with snapshot
+BuildRequires: /usr/bin/sphinx-build
+%endif
 
 %description
 Youtube-dl is a small command-line program to download videos
@@ -54,6 +59,9 @@ done
 %build
 cd py2
 	%python3_build
+%if_with snapshot
+	make -C docs man
+%endif
 cd -
 
 cd py3
@@ -67,6 +75,9 @@ cd -
 
 cd py2
 	%python3_install
+%if_with snapshot
+	install -D -m644 docs/_build/man/youtube-dl.1 %buildroot%_man1dir/youtube-dl.1
+%endif
 cd -
 
 %files
@@ -82,6 +93,9 @@ cd -
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Fri Nov 03 2023 Igor Vlasenko <viy@altlinux.org> 2023.09.27-alt1
+- updated to 2023.09.27 git snapshot
+
 * Sun Dec 19 2021 Cronbuild Service <cronbuild@altlinux.org> 2021.12.17-alt1
 - Updated to 2021.12.17.
 
