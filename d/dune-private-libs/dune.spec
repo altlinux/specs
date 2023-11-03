@@ -10,7 +10,7 @@
 %endif
 
 Name: dune%subpackagename
-Version: 2.9.3
+Version: 3.11.1
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -86,12 +86,17 @@ developing applications that use %name.
 sed -i '/^(name/a (version %version)' dune-project
 ./configure --libdir=%_libdir/ocaml \
 	    --mandir=%_mandir  \
+	    --datadir=%_datadir \
 	    --etcdir %_sysconfdir \
-	    --docdir %_docdir
+	    --bindir %_bindir \
+            --sbindir %_sbindir \
+	    --docdir %_docdir \
+	    %nil
 
 %if_without subpackage
 %make_build release
 %else
+rm -rf vendor/csexp
 %dune_build -p %name
 %endif
 
@@ -120,9 +125,6 @@ sed -i '/^(name/a (version %version)' dune-project
 %_man1dir/dune-build.1*
 %_man1dir/dune-cache.1*
 %_man1dir/dune-clean.1*
-%_man1dir/dune-compute.1.*
-%_man1dir/dune-format-dune-file.1.*
-%_man1dir/dune-upgrade.1.*
 %_man1dir/dune-exec.1*
 %_man1dir/dune-external-lib-deps.1*
 %_man1dir/dune-install.1*
@@ -137,14 +139,23 @@ sed -i '/^(name/a (version %version)' dune-project
 %_man1dir/dune-uninstall.1*
 %_man1dir/dune-utop.1*
 %_man5dir/dune-config.5*
-%_man1dir/dune-compute.1.*
 %_man1dir/dune-format-dune-file.1.*
 %_man1dir/dune-upgrade.1.*
+%_man1dir/dune-coq.1.*
+%_man1dir/dune-diagnostics.1.*
+%_man1dir/dune-fmt.1.*
+%_man1dir/dune-internal.1.*
+%_man1dir/dune-monitor.1.*
+%_man1dir/dune-ocaml.1.*
+%_man1dir/dune-pkg.1.*
+%_man1dir/dune-rpc.1.*
+%_man1dir/dune-show.1.*
+%_man1dir/dune-shutdown.1.*
+%_man1dir/dune-promotion.1.*
 %endif
 
 %if "%dune_pkg" == "private-libs"
 %files -n ocaml-%name -f ocaml-files.runtime
-%_ocamldir/stublibs/dllstdune_stubs.so
 %endif
 
 %if "%dune_pkg" == "configurator"
@@ -156,6 +167,9 @@ sed -i '/^(name/a (version %version)' dune-project
 %endif
 
 %changelog
+* Thu Nov 02 2023 Anton Farygin <rider@altlinux.ru> 3.11.1-alt1
+- 2.9.3 -> 3.11.1
+
 * Sun Jan 30 2022 Anton Farygin <rider@altlinux.ru> 2.9.3-alt1
 - 2.9.1 -> 2.9.3
 

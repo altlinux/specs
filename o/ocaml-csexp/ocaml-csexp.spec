@@ -2,8 +2,8 @@
 %def_without check
 
 Name:           ocaml-%libname
-Version:        1.5.1
-Release:        alt2
+Version:        1.5.2
+Release:        alt1
 Summary:        Canonical S-expressions for OCaml
 License:        MIT
 Group:          Development/ML
@@ -33,6 +33,7 @@ programs which use %name
 %setup -q
 
 %build
+sed '3 i (version %version)' dune-project
 %dune_build -p %libname
 
 %install
@@ -47,6 +48,9 @@ programs which use %name
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 02 2023 Anton Farygin <rider@altlinux.ru> 1.5.2-alt1
+- 1.5.2
+
 * Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 1.5.1-alt2
 - disabled test for bootstrap ocaml 4.13
 
