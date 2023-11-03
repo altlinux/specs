@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/pod2man
 
 Name:		sunpinyin
 Version:	3.0.0
-Release:	alt1_0.5.20190805git
+Release:	alt1_0.5.20190805git.1
 Summary:	A statistical language model based Chinese input method engine
 License:	LGPLv2 or CDDL
 URL:		http://code.google.com/p/sunpinyin/
@@ -21,6 +21,7 @@ Source2:	http://downloads.sourceforge.net/project/open-gram/lm_sc.3gm.arpa-20140
 Source3:	http://downloads.sourceforge.net/project/open-gram/dict.utf8-20131214.tar.bz2
 Patch0: 	sunpinyin-use-python3.patch
 Patch1: 	sunpinyin-fixes-scons.patch
+Patch3500:	sunpinyin-loongarch.patch
 BuildRequires:  gcc-c++
 BuildRequires:	libsqlite3-devel
 BuildRequires:	gettext gettext-tools	
@@ -60,6 +61,7 @@ files needed by the sunpinyin input methods.
 %setup -q -n %{name}-%{gitdate}
 %patch0 -p1 -b .python3
 %patch1 -p1 -b .scons
+%patch3500 -p1 -b .la64
 
 mkdir -p raw
 cp %SOURCE2 raw
@@ -112,6 +114,9 @@ install -m0644 AUTHORS TODO %{buildroot}%{_docdir}/%{name}
 %{_docdir}/%{name}/SLM-*.mk
 
 %changelog
+* Fri Nov 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.0.0-alt1_0.5.20190805git.1
+- NMU: fixed FTBFS on LoongArch
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_0.5.20190805git
 - new version
 
