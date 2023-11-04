@@ -1,6 +1,6 @@
 Name:       ninja-ide
 Version:    2.4
-Release:    alt1
+Release:    alt2
 Summary:    Ninja IDE for Python development
 
 Group:	    Development/Python
@@ -15,6 +15,7 @@ Patch2:     %name-fix-python3-syntax.patch
 Patch3:     %name-fix-missing-build.patch
 Patch4:     %name-python3.8.patch
 Patch5:     %name-fix-missing-CONSTANT.patch
+Patch6:     %name-replace-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-module-setuptools
@@ -44,13 +45,15 @@ It currently features:
 
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+rm -f build_files/installer/windows/setup.py
 
 %build
 %python3_build
@@ -70,6 +73,9 @@ install -Dm 644 %SOURCE1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Sat Nov 04 2023 Andrey Cherepanov <cas@altlinux.org> 2.4-alt2
+- Replaced deprecated distutils.
+
 * Fri Mar 27 2020 Andrey Cherepanov <cas@altlinux.org> 2.4-alt1
 - New version built with Python3 and Qt5.
 - Fix License tag according SPDX.
