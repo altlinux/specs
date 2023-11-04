@@ -28,13 +28,13 @@
 
 Name: LibreOffice-still
 %define hversion 7.5
-%define urelease 7.1
+%define urelease 8.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -64,7 +64,7 @@ Source:	libreoffice-%version.tar.xz
 Source1: libreoffice-dictionaries-%version.tar.xz
 Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
-Source4: LibreOffice-still-%version-l10n-ru.zip
+#Source4: LibreOffice-still-%version-l10n-ru.zip
 
 Source10: libreoffice-ext_sources.%version.tar
 Source200: key.gpg
@@ -353,7 +353,7 @@ Provides additional %{langname} translations and resources for %name. \
 %prep
 echo Direct build
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
-unzip -o -d translations/source/ru %SOURCE4
+#unzip -o -d translations/source/ru %%SOURCE4
 
 ## FC apply patches
 #patch1 -p1                                                                                                                                                                                   
@@ -717,6 +717,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sat Nov 04 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.8.2-alt1
+- New version.
+
 * Fri Sep 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 7.5.7.1-alt3
 - Support LoongArch architecture (lp64d ABI).
 
