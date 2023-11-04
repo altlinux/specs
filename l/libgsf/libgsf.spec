@@ -10,7 +10,7 @@
 %endif
 
 Name: libgsf
-Version: %ver_major.50
+Version: %ver_major.51
 Release: alt1
 
 Summary: GNOME Structured file library
@@ -60,8 +60,8 @@ GObject introspection data for the GNOME Structured file library.
 Summary: GObject introspection devel data for the gsf library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GNOME Structured file library.
@@ -78,7 +78,7 @@ This package contains the documentation for development programs using gsf.
 %package devel-static
 Summary: Static gsf libraries
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package provides the necessary development libraries to allow you
@@ -154,6 +154,9 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 %endif
 
 %changelog
+* Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.51-alt1
+- 1.14.51
+
 * Thu Jul 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.50-alt1
 - 1.14.50
 
