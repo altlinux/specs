@@ -1,6 +1,6 @@
 Name:    pyinstaller
-Version: 5.6.2
-Release: alt2
+Version: 6.1.0
+Release: alt1
 
 Summary: Freeze (package) Python programs into stand-alone executables
 License: GPL-2.0+
@@ -13,7 +13,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Requires: python3-module-pyinstaller-hooks-contrib
 
-Source:  %name-%version.tar
+Source: %name-%version.tar
+Patch0: %name-distutils-is-deprecated.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
@@ -23,11 +24,7 @@ BuildRequires: zlib-devel
 BuildRequires: libcmocka-devel
 
 %filter_from_requires /python3(macholib.*)/d
-%filter_from_requires /python3(pywintypes)/d
-%filter_from_requires /python3(pefile)/d
-%filter_from_requires /python3(win32com.*)/d
-
-%add_python3_req_skip pyimod01_archive pyimod02_importers pyimod03_ctypes
+%add_python3_req_skip pywintypes pefile pyimod01_archive pyimod02_importers pyimod03_ctypes
 
 %description
 PyInstaller bundles a Python application and all its dependencies into a single
@@ -36,6 +33,7 @@ interpreter or any modules.
 
 %prep
 %setup
+%patch0 -p1
 # Remove binary files
 rm -rf PyInstaller/bootloader/*
 
@@ -64,6 +62,10 @@ fi
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Nov 04 2023 Andrey Cherepanov <cas@altlinux.org> 6.1.0-alt1
+- New version.
+- Removed deprecated distutils.
+
 * Tue Apr 04 2023 Michael Shigorin <mike@altlinux.org> 5.6.2-alt2
 - E2K: fix build.
 
