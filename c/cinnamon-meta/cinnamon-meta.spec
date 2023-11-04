@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -53,8 +53,6 @@ Group: Graphical desktop/GNOME
 
 Requires: cinnamon-default = %version-%release
 
-# Sound support
-Requires: pulseaudio-daemon alsa-plugins-pulse
 # Color manager
 Requires: gnome-color-manager
 # Password keeper
@@ -88,7 +86,7 @@ Requires: xviewer
 Requires: gnome-power-manager
 Requires: NetworkManager-gnome >= 0.8.995
 #Bluetooth configuration
-Requires: blueman
+#Requires: blueman
 
 %description -n cinnamon-regular
 This package provides Cinnamon desktop and set
@@ -100,6 +98,12 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Sat Nov 04 2023 Anton Midyukov <antohami@altlinux.org> 5.6.0-alt2
+- NMU:
+  + regular: do'nt require pulseaudio-daemon, alsa-plugins-pulse
+    (closes: #48331)
+  + regular: do'nt require blueman
+
 * Mon Jan 30 2023 Vladimir Didenko <cow@altlinux.org> 5.6.0-alt1
 - version bump
 - cinnamon-minimal moved to cinnamon-package
