@@ -101,8 +101,8 @@
 %endif
 
 Name:    samba
-Version: 4.17.12
-Release: alt2
+Version: 4.18.8
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -212,22 +212,22 @@ BuildRequires: libdbus-devel
 %endif
 
 %if_without talloc
-BuildRequires: libtalloc-devel >= 2.3.4
+BuildRequires: libtalloc-devel >= 2.4.0
 BuildRequires: python3-module-talloc-devel
 %endif
 
 %if_without tevent
-BuildRequires: libtevent-devel >= 0.13.0
+BuildRequires: libtevent-devel >= 0.14.0
 BuildRequires: python3-module-tevent
 %endif
 
 %if_without tdb
-BuildRequires: libtdb-devel >= 1.4.7
+BuildRequires: libtdb-devel >= 1.4.8
 BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.6.2
+%define ldb_version 2.7.2
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -1682,6 +1682,7 @@ control role-sambashare enabled
 %_samba_mod_libdir/libsmb-transport-samba4.so
 %_samba_mod_libdir/libsmbd-shim-samba4.so
 %_samba_mod_libdir/libsmbpasswdparser-samba4.so
+%_samba_mod_libdir/libstable-sort-samba4.so
 %_samba_mod_libdir/libsocket-blocking-samba4.so
 %_samba_mod_libdir/libsys-rw-samba4.so
 %_samba_mod_libdir/libtalloc-report-printf-samba4.so
@@ -2114,6 +2115,28 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Nov 01 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.18.8-alt1
+- Update to stable release of Samba 4.18 with latest bugfixes and new features:
+ + SMB Server performance improvements. The locking overhead for contended path
+   based operations is reduced by an additional factor of ~ 3 compared to 4.17.
+ + More succinct samba-tool error messages.
+ + Accessing the old samba-tool messages with full Python stack trace by using
+   the argument '-d3'.
+ + New samba-tool dsacl subcommand for deleting ACES
+ + Colour output with samba-tool --color and
+ + No colour with NO_COLOR environment variable
+ + New wbinfo option --change-secret-at which forces the trust account password
+   to be changed at a specified domain controller.
+ + New option acl_xattr:security_acl_name to change the NT ACL default protected
+   location security.NTACL not accessible from normal users outside of Samba.
+ + New option server addresses as per-share parameter to limit share visibility
+   and accessibility to specific server IP addresses. This option can offer a
+   different set of shares per interface.
+ + Azure Active Directory / Office365 synchronisation improvements with the
+   Azure AD Connect cloud sync tool which now supported for password hash
+   synchronisation, allowing Samba AD Domains to synchronise passwords with this
+   popular cloud environment.
+
 * Sun Oct 22 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.12-alt2
 - Revert services type from forking to notify.
 

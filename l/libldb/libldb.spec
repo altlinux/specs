@@ -8,7 +8,7 @@
 %endif
 
 Name: libldb
-Version: 2.6.2
+Version: 2.7.2
 Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
@@ -24,14 +24,14 @@ Patch4: ldb-pyldb-overflow-timestring-test-32bit.patch
 
 BuildRequires: libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
 BuildRequires: libcmocka-devel >= 1.1.3
-BuildRequires: socket_wrapper >= 1.3.4
+BuildRequires: socket_wrapper >= 1.4.0
 BuildRequires: nss_wrapper >= 1.1.12
 BuildRequires: resolv_wrapper >= 1.1.7
 BuildRequires: uid_wrapper >= 1.2.7
 BuildRequires: pam_wrapper >= 1.1.2
-BuildRequires: libtdb-devel >= 1.4.7
-BuildRequires: libtalloc-devel >= 2.3.4
-BuildRequires: libtevent-devel >= 0.13.0
+BuildRequires: libtdb-devel >= 1.4.8
+BuildRequires: libtalloc-devel >= 2.4.0
+BuildRequires: libtevent-devel >= 0.14.1
 %if_with mdb
 BuildRequires: liblmdb-devel >= 0.9.16
 %endif
@@ -42,9 +42,9 @@ BuildRequires: python3-module-tdb
 BuildRequires: python3-module-talloc-devel
 BuildRequires: python3-module-tevent
 
-Requires: libtdb >= 1.4.7
-Requires: libtalloc >= 2.3.4
-Requires: libtevent >= 0.13.0
+Requires: libtdb >= 1.4.8
+Requires: libtalloc >= 2.4.0
+Requires: libtevent >= 0.14.1
 %if_with mdb
 Requires: liblmdb >= 0.9.16
 %endif
@@ -185,6 +185,9 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Tue Jul 11 2023 Evgeny Sinelnikov <sin@altlinux.org> 2.7.2-alt1
+- Update to the 2.7.2 for samba-4.18.x
+
 * Wed Mar 29 2023 Evgeny Sinelnikov <sin@altlinux.org> 2.6.2-alt1
 - Update to the 2.6.2 for samba-4.17.7 release
 

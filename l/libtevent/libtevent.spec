@@ -2,8 +2,8 @@
 %def_with check
 
 Name: libtevent
-Version: 0.14.0
-Release: alt2
+Version: 0.14.1
+Release: alt1
 Summary: The tevent library
 License: LGPLv3+
 Group: System/Libraries
@@ -12,15 +12,15 @@ Url: http://tevent.samba.org/
 Source: http://samba.org/ftp/tevent/tevent-%{version}.tar.gz
 Patch: tevent-alt-fix-python-ldflags.patch
 
-BuildRequires: libtalloc-devel >= 2.3.4
+BuildRequires: libtalloc-devel >= 2.4.0
 BuildRequires: zlib-devel
 BuildRequires: libcmocka-devel >= 1.1.3
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-talloc-devel >= 2.3.4
+BuildRequires: python3-module-talloc-devel >= 2.4.0
 
-Requires: libtalloc >= 2.3.4
+Requires: libtalloc >= 2.4.0
 
 %description
 Tevent is an event system based on the talloc memory management library.
@@ -82,6 +82,9 @@ make test < /dev/null
 %python3_sitelibdir/__pycache__/tevent.*
 
 %changelog
+* Wed Nov 01 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.14.1-alt1
+- New version for samba-4.18
+
 * Mon Aug 07 2023 Ivan A. Melnikov <iv@altlinux.org> 0.14.0-alt2
 - NMU: fix and re-enable checks
 
@@ -110,23 +113,23 @@ make test < /dev/null
 * Tue Nov 27 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.9.37-alt2
 - Disable ubt macros due binary package identity changes
 
-* Sun Jul 22 2018 Stanislav Levin <slev@altlinux.org> 0.9.37-alt1%ubt
+* Sun Jul 22 2018 Stanislav Levin <slev@altlinux.org> 0.9.37-alt1
 - 0.9.36 -> 0.9.37
 - Build package for Python3
 
-* Fri Mar 23 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.9.36-alt1%ubt
+* Fri Mar 23 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.9.36-alt1
 - New version for samba-4.8
 
-* Thu Nov 16 2017 Evgeny Sinelnikov <sin@altlinux.org> 0.9.34-alt1%ubt
+* Thu Nov 16 2017 Evgeny Sinelnikov <sin@altlinux.org> 0.9.34-alt1
 - New version for samba-4.6.10 and samba-4.7.2
 
-* Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.9.33-alt1%ubt
+* Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.9.33-alt1
 - New version for samba-4.7.0
 
-* Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.9.31-alt2%ubt
+* Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.9.31-alt2
 - Rebuild with universal build tag (aka ubt macros) for p7 and c7
 
-* Tue Mar 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.9.31-alt1%ubt
+* Tue Mar 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.9.31-alt1
 - New version for samba-4.6.0
 
 * Thu Sep 08 2016 Evgeny Sinelnikov <sin@altlinux.ru> 0.9.29-alt1
