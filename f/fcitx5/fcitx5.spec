@@ -1,7 +1,7 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr/bin/gettext /usr/bin/wayland-scanner libxcbutil-devel pkgconfig(dbus-1) pkgconfig(enchant-2) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(libevent_core) zlib-devel
+BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr/bin/gettext /usr/bin/wayland-scanner libxcbutil-devel pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(libevent_core) zlib-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -14,8 +14,8 @@ BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr
 %global __provides_exclude_from ^%{_libdir}/%{name}/.*\\.so$
 
 Name:           fcitx5
-Version:        5.1.1
-Release:        alt2_%autorelease
+Version:        5.1.2
+Release:        alt1_1
 Summary:        Next generation of fcitx
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5
@@ -36,7 +36,7 @@ BuildRequires:  rpm-macros-systemd
 BuildRequires:  pkgconfig(cairo)
 BuildRequires:  pkgconfig(cldr-emoji-annotation)
 BuildRequires:  pkgconfig(dri)
-BuildRequires:  pkgconfig(enchant)
+BuildRequires:  pkgconfig(enchant-2)
 BuildRequires:  pkgconfig(expat)
 BuildRequires:  pkgconfig(fmt)
 BuildRequires:  pkgconfig(gdk-pixbuf-2.0)
@@ -59,16 +59,26 @@ BuildRequires:  pkgconfig(xkeyboard-config)
 BuildRequires:  /usr/bin/appstream-util
 Requires:       dbus
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       %{name}-libs = %{version}-%{release}
 Requires:       setup
+Source44: import.info
 
 #Recommends:       (fcitx5-gtk if (gtk2 or gtk3 or gtk4))
 #Recommends:       (fcitx5-qt if (qt5-qtbase or qt6-qtbase))
 #Recommends:       (fcitx5-qt-module if (qt5-qtbase or qt6-qtbase))
-Requires:       fcitx5-configtool
-Source44: import.info
+#Recommends:       fcitx5-configtool
 
 %description
 Fcitx 5 is a generic input method framework released under LGPL-2.1+.
+
+%package libs
+Group: Graphical desktop/Other
+Summary:        Libraries for %{name}
+Conflicts: fcitx5 < 5.1.2
+
+%description libs
+The %{name}-libs package contains runtime shared libraries necessary for
+running programs using Fcitx5 libraries.
 
 %package data
 Group: Graphical desktop/Other
@@ -85,9 +95,14 @@ The %{name}-data package provides shared data for Fcitx5.
 %package devel
 Group: Graphical desktop/Other
 Summary:        Development files for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}-libs = %{version}-%{release}
+# fedora autoprovides, not implemented in ALT
 Provides: cmake(Fcitx5Core)
 Provides: cmake(Fcitx5Utils)
+# hack to hide old enchant from buildreq-src
+%if 0
+BuildRequires: pkgconfig(enchant)
+%endif
 
 %description devel
 The %{name}-devel package contains libraries and header files necessary for
@@ -115,7 +130,7 @@ sed -i '1s,env bash,env bash4,' data/fcitx5-diagnose.sh
 %install
 %fedora_v2_cmake_install
 install -pm 644 -D %{S:3} %{buildroot}%{_xinputconf}
-install -pm 644 -D %{S:4} %{buildroot}%{_sysconfdir}/profile.d/fcitx5.sh
+install -pm 755 -D %{S:4} %{buildroot}%{_sysconfdir}/profile.d/fcitx5.sh
 install -d                %{buildroot}%{_datadir}/%{name}/inputmethod
 install -d                %{buildroot}%{_datadir}/%{name}/table
 desktop-file-install --delete-original \
@@ -137,11 +152,12 @@ done
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %find_lang %{name}
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/xinputrc_fcitx5<<EOF
-%{_sysconfdir}/X11/xinit/xinputrc	%{_xinputconf}	56
+%{_sysconfdir}/X11/xinit/xinputrc	%{_xinputconf}	55
 EOF
 
 %check
-#fedora_v2_ctest
+# dbus test fails in 5.1.2
+%fedora_v2_ctest ||:
 
 %files -f %{name}.lang
 %_altdir/xinputrc_fcitx5
@@ -153,11 +169,14 @@ EOF
 %{_bindir}/%{name}-remote
 %{_bindir}/%{name}-diagnose
 %{_libdir}/%{name}/
+%{_libexecdir}/fcitx5-wayland-launcher
+
+%files libs
+%doc --no-dereference LICENSES/LGPL-2.1-or-later.txt
 %{_libdir}/libFcitx5*.so.*.*
 %{_libdir}/libFcitx5Config.so.6
 %{_libdir}/libFcitx5Core.so.7
 %{_libdir}/libFcitx5Utils.so.2
-%{_libexecdir}/fcitx5-wayland-launcher
 
 %files devel
 %{_includedir}/Fcitx5/
@@ -179,6 +198,10 @@ EOF
 %config %{_sysconfdir}/profile.d/fcitx5.sh
 
 %changelog
+* Fri Nov 03 2023 Igor Vlasenko <viy@altlinux.org> 5.1.2-alt1_1
+- new version
+- fixed profile (closes: #46880)
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt2_1
 - restored Provides: cmake(Fcitx5*)
 
