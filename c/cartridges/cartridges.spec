@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Cartridges
@@ -69,6 +69,9 @@ SteamGridDB.
 
 
 %changelog
+* Sat Nov 04 2023 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
+- 2.6.2
+
 * Mon Oct 30 2023 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
 - first preview for Sisyphus
 
