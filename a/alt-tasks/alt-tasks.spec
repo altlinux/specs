@@ -1,5 +1,5 @@
 Name: alt-tasks
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Utility for observing ALT Linux tasks
@@ -38,6 +38,11 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Sat Nov 04 2023 Alexey Appolonov <alexey@altlinux.org> 0.8.0-alt1
+- Ability to filter resuls not only by a src package name, but also by its
+  version and release;
+- Branch names are displayed in the results.
+
 * Wed Nov 01 2023 Alexey Appolonov <alexey@altlinux.org> 0.7.0-alt1
 - The missing initial package versions are taken from the "plan/rm-src" files
   of the tasks.
