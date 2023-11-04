@@ -1,6 +1,6 @@
 Name:    blink-qt
 Version: 5.6.0
-Release: alt2
+Release: alt3
 
 Summary: Blink SIP Client
 License: GPL-3.0+
@@ -10,7 +10,7 @@ URL:     http://icanblink.com/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # python3-module-sipsimple adapted only for these architectures
-ExclusiveArch: x86_64 aarch64 loongarch64
+ExclusiveArch: x86_64 aarch64 loongarch64 %e2k
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libvncserver-devel
@@ -63,6 +63,9 @@ install -Dm 0644 debian/blink.1 %buildroot%_man1dir/blink.1
 %_man1dir/blink.1*
 
 %changelog
+* Sat Nov 04 2023 Michael Shigorin <mike@altlinux.org> 5.6.0-alt3
+- NMU: build for %%e2k too
+
 * Thu Nov 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.6.0-alt2
 - NMU: build for more architectures (aarch64, LoongArch).
 
