@@ -7,7 +7,7 @@ Summary: software for continuation and bifurcation problems in ODE
 Name: auto-07p
 Version: 0.9.3
 
-Release: alt0.4
+Release: alt0.5
 Packager: Igor Vlasenko <viy@altlinux.org>
 License: GPLv2+
 Group: Sciences/Mathematics
@@ -22,6 +22,7 @@ Source3: auto48.png
 Source4: %{name}.1
 
 Patch0: auto-07p-0.93-alt-cleanup.patch
+Patch1: auto-07p-0.93-alt-open-manual.patch
 
 # debian patches for 0.92: we do not need them
 #Patch01: 01_auto.patch replaced by auto-07p-0.93-alt-cleanup.patch
@@ -137,15 +138,11 @@ Note that the test results should be checked manually.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 sed -i -e 's,@AUTO_DIR@,%auto_dir,g' bin/auto bin/autox
 
-%if_with python2
-sed -i -e 's,^#! */usr/bin/env *python,#!/usr/bin/env python2,' `grep -rl '^#! */usr/bin/env *python$'`
-%else
 sed -i -e 's,^#! */usr/bin/env *python,#!/usr/bin/env python3,' `grep -rl '^#! */usr/bin/env *python$'`
-%endif
-
 # we rename auto -> %name
 sed -i -e 's,^#! */usr/bin/env *auto,#!/usr/bin/env %{name},' `grep -rl '^#! */usr/bin/env *auto$'`
 
@@ -182,8 +179,8 @@ pushd doc
 popd
 
 %install
-install -m 644 -D bin/auto %buildroot%_bindir/auto-07p
-install -m 644 -D bin/autox %buildroot%_bindir/autox
+install -m 755 -D bin/auto %buildroot%_bindir/auto-07p
+install -m 755 -D bin/autox %buildroot%_bindir/autox
 
 mkdir -p %buildroot%_includedir
 install -m 644 -D include/auto*.h %buildroot%_includedir
@@ -211,8 +208,8 @@ install -m 644 autorc .autorc %buildroot%auto_dir/
 # autox
 #### gui
 # auto97
-# plaut04
 #### plaut: to AUTO_DIR/bin
+# plaut04
 # plaut
 #### utils: to AUTO_DIR/bin
 # autlab
@@ -235,6 +232,9 @@ rm -f %buildroot%auto_dir/gui/*.c
 
 install -m 644 -D plaut04/doc/userguide.pdf %buildroot%auto_dir/plaut04/doc/userguide.pdf
 cp -av plaut04/includes plaut04/widgets plaut04/plaut04.rc %buildroot%auto_dir/plaut04/
+
+# for auto97, @mn
+install -m 644 -D doc/auto.pdf %buildroot%auto_dir/plaut04/doc/auto.pdf
 
 
 cp -av demos %buildroot%auto_dir/
@@ -260,13 +260,14 @@ install -D -m644 %{SOURCE3} %buildroot%_liconsdir/%name.png
 # install desktop
 mkdir -p %buildroot%_desktopdir/
 
-# autox ?
-for cmd in auto97 plaut04; do
+# autox plaut04 - from command line
+for cmd in auto97; do
     cat > %buildroot%_bindir/%{name}-${cmd}.sh <<EOF
 #!/bin/sh
 . %auto_dir/cmds/auto.env.sh
 exec %auto_dir/bin/${cmd}
 EOF
+    chmod 755 %buildroot%_bindir/%{name}-${cmd}.sh
     cat > %buildroot%_desktopdir/%name-${cmd}.desktop <<EOF
 [Desktop Entry]
 Version=1.0
@@ -311,14 +312,6 @@ done
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
-#exclude %auto_dir/demos
-#exclude %auto_dir/test
-#exclude %auto_dir/gui
-#%exclude %auto_dir/bin/auto97
-#exclude %auto_dir/plaut04
-#exclude %auto_dir/bin/plaut04
-#auto_dir/bin/auto97
-#auto_dir/bin/plaut04
 %if 0
 %files devel
 %endif
@@ -331,8 +324,8 @@ done
 %auto_dir/bin/auto97
 
 %files plaut04
-%_bindir/%name-plaut04.sh
-%_desktopdir/%{name}-plaut04.desktop
+#%_bindir/%name-plaut04.sh
+#%_desktopdir/%{name}-plaut04.desktop
 %auto_dir/plaut04
 %auto_dir/bin/plaut04
 
@@ -349,6 +342,10 @@ done
 
 
 %changelog
+* Sat Nov 04 2023 Igor Vlasenko <viy@altlinux.org> 0.9.3-alt0.5
+- permission fixes
+- plaut04 is meant to run from command line
+
 * Thu Nov 02 2023 Igor Vlasenko <viy@altlinux.org> 0.9.3-alt0.4
 - Sisyphus pre-release
 - built with libInventorXt/Motif interface
