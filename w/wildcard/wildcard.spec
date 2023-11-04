@@ -5,18 +5,18 @@
 %def_disable bootstrap
 
 Name: wildcard
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: regular expression testing app for GNOME
 License: GPL-3.0-or-later
-Group: Sound
-Url: https://github.com/fkinoshita/Wildcard
+Group: Text tools
+Url: https://gitlab.gnome.org/World/Wildcard
 
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/fkinoshita/Wildcard.git
+Vcs: https://gitlab.gnome.org/World/Wildcard.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
@@ -64,6 +64,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Nov 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Sun Oct 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
