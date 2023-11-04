@@ -19,7 +19,7 @@
 
 Name: moc
 Version: 2.6.0
-Release: alt0.5
+Release: alt0.7
 
 Summary: Console player
 Group: Sound
@@ -30,11 +30,13 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source: moc-%version.tar
 Patch0: ffmpeg4.patch
+# https://bugs.gentoo.org/834393
+Patch1: ffmpeg6.patch
 
 Requires: %name-player %name-plugin-flac %name-plugin-mp3 %name-plugin-sndfile %name-plugin-vorbis
 
 # Automatically added by buildreq on Wed Jun 07 2006
-BuildRequires: gcc-c++ glibc-devel-static jackit-devel libalsa-devel libcurl-devel 
+BuildRequires: gcc-c++ jackit-devel libalsa-devel libcurl-devel 
 BuildRequires: libncursesw-devel libsamplerate-devel pkg-config libltdl7-devel
 BuildRequires: libdb4.8-devel
 BuildRequires: libmagic-devel
@@ -212,7 +214,7 @@ Hybrid Lossless Wavefile Compressor support.
 
 %prep
 %setup -q
-%patch0 -p1
+%autopatch -p1
 
 %build
 %add_optflags %optflags_warnings
@@ -327,6 +329,9 @@ EOF
 %endif
 
 %changelog
+* Sat Nov 04 2023 L.A. Kostis <lakostis@altlinux.ru> 2.6.0-alt0.7
+- Fix FTBFS: added ffmpeg6 compat patch (tnx Felix Neumarker) from Gentoo.
+
 * Sun Jun 17 2018 Alexey Gladkov <legion@altlinux.ru> 2.6.0-alt0.5
 - Rebuilt with libva.
 
