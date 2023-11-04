@@ -67,7 +67,7 @@
 %define  Name MPD
 
 Name:    mpd
-Version: 0.23.13
+Version: 0.23.14
 Release: alt1
 
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
@@ -276,6 +276,9 @@ install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Fri Nov 03 2023 L.A. Kostis <lakostis@altlinux.ru> 0.23.14-alt1
+- 0.23.14.
+
 * Mon Jul 17 2023 L.A. Kostis <lakostis@altlinux.ru> 0.23.13-alt1
 - 0.23.13.
 
