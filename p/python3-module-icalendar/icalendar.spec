@@ -1,8 +1,10 @@
+%def_without check
+
 %define oname icalendar
 
 Name: python3-module-%oname
-Version: 4.0.3
-Release: alt2
+Version: 5.0.11
+Release: alt1
 
 Summary: iCalendar parser/generator
 License: GPLv2.1
@@ -14,7 +16,17 @@ BuildArch: noarch
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-hypothesis
+%endif
 
 %description
 iCalendar is a parser/generator of iCalendar files
@@ -24,20 +36,25 @@ iCalendar is a parser/generator of iCalendar files
 %setup -n %oname-%version
 
 %build
-%python3_build -b build3
+%pyproject_build
 PYTHONPATH=../src %make -C docs html BUILDDIR=build3 SPHINXBUILD=py3_sphinx-build
 
 %install
-rm -f build && ln -sf build3 build
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest src/icalendar/tests
 
 %files
 %doc docs/build3/html *.rst
 %_bindir/*
 %python3_sitelibdir_noarch/%oname
-%python3_sitelibdir_noarch/%oname-*
+%python3_sitelibdir_noarch/%oname-%version.dist-info
 
 %changelog
+* Sun Nov 05 2023 Grigory Ustinov <grenka@altlinux.org> 5.0.11-alt1
+- Automatically updated to 5.0.11 (Closes: #48334).
+
 * Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.0.3-alt2
 - Build for python2 disabled.
 
