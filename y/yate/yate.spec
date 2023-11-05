@@ -1,6 +1,6 @@
 Name: yate
 Version: 6.1.0
-Release: alt2
+Release: alt3
 
 Summary: Yet Another Telephony Engine
 
@@ -16,6 +16,7 @@ Source2: yate.init
 
 Patch: yate-aarch64.patch
 Patch1: yate-6.1.0-alt-mysql8-transition.patch
+Patch3500: yate-loongarch64.patch
 
 BuildRequires: gcc-c++ doxygen kdoc
 BuildRequires: dahdi-linux-headers libalsa-devel libgsm-devel liblksctp-devel libmysqlclient-devel
@@ -224,6 +225,7 @@ for small to large scale projects.
 %setup
 %patch -p2
 %patch1 -p1
+%patch3500 -p1
 
 %build
 %configure --enable-sctp --enable-tdmcard --enable-dahdi --without-coredumper
@@ -489,6 +491,9 @@ cp -p packing/yate.logrotate %buildroot%_sysconfdir/logrotate.d/yate
 %config(noreplace) %_sysconfdir/yate/zlibcompress.conf
 
 %changelog
+* Sun Nov 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.1.0-alt3
+- NMU: fixed FTBFS on LoongArch
+
 * Mon Jan 14 2019 Nikolai Kostrigin <nickel@altlinux.org> 6.1.0-alt2
 - fix FTBFS due to transition to libmysqlclient21
 
