@@ -1,7 +1,7 @@
-%def_without check
+%def_with check
 Name: ocaml-re
-Version: 1.10.3
-Release: alt2
+Version: 1.11.0
+Release: alt1
 Summary: A regular expression library for OCaml
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Url: https://github.com/ocaml/ocaml-re
@@ -51,6 +51,9 @@ sed -si 's,oUnit,ounit2,' lib_test/fort_unit/dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 03 2023 Anton Farygin <rider@altlinux.ru> 1.11.0-alt1
+- 1.11.0
+
 * Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 1.10.3-alt2
 - disabled tests for bootstrap ocaml-4.13
 

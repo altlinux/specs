@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt_log
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Summary: Lwt-friendly logger
 
@@ -13,7 +13,6 @@ Source: %name-%version.tar
 %filter_from_requires /ocaml-cmi(Lwt_log_core)/d
 
 BuildRequires: dune ocaml-lwt
-Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
 
 %description
@@ -32,39 +31,19 @@ developing applications that use %name.
 %setup
 
 %build
-dune build
+%dune_build
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%files -f ocaml-files.runtime
 %doc CHANGES README.md
-%dir %_libdir/ocaml/lwt_log
-%dir %_libdir/ocaml/lwt_log/core
-%_libdir/ocaml/lwt_log*/META
-%_libdir/ocaml/lwt_log*/*.cma
-%_libdir/ocaml/lwt_log*/*.cmi
-%_libdir/ocaml/lwt_log*/*.cmxs
-%_libdir/ocaml/lwt_log/core/*.cma
-%_libdir/ocaml/lwt_log/core/*.cmi
-%_libdir/ocaml/lwt_log/core/*.cmxs
 
-%files devel
-%_libdir/ocaml/lwt_log*/dune-package
-%_libdir/ocaml/lwt_log*/opam
-%_libdir/ocaml/lwt_log*/*.a
-%_libdir/ocaml/lwt_log*/*.cmt*
-%_libdir/ocaml/lwt_log*/*.cmxa
-%_libdir/ocaml/lwt_log*/*.cmx
-%_libdir/ocaml/lwt_log*/*.mli
-%_libdir/ocaml/lwt_log*/*.ml
-%_libdir/ocaml/lwt_log/core/*.a
-%_libdir/ocaml/lwt_log/core/*.cmt*
-%_libdir/ocaml/lwt_log/core/*.cmxa
-%_libdir/ocaml/lwt_log/core/*.cmx
-%_libdir/ocaml/lwt_log/core/*.mli
-%_libdir/ocaml/lwt_log/core/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 03 2023 Anton Farygin <rider@altlinux.ru> 1.1.2-alt1
+- 1.1.2
+
 * Sun Jun 21 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.1-alt1
 - Initial build for Sisyphus

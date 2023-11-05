@@ -1,6 +1,6 @@
-%define lwt_modules lwt,lwt_ppx,lwt_luv,lwt_react
+%define lwt_modules lwt,lwt_ppx,lwt_react
 Name: ocaml-lwt
-Version: 5.5.0
+Version: 5.7.0
 Release: alt1
 Summary: OCaml lightweight thread library
 
@@ -11,7 +11,7 @@ Url: http://ocsigen.org/lwt/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: ocaml-findlib ocaml-ocamldoc termutils ocaml-ssl ocaml-react glib2-devel libev-devel chrpath
+BuildRequires:  ocaml-ocamldoc termutils ocaml-ssl ocaml-react glib2-devel libev-devel chrpath
 BuildRequires: dune ocaml-cppo ocaml-bisect_ppx-devel ocaml-ppxlib-devel ocaml-ocplib-endian-devel
 BuildRequires: ocaml-migrate-parsetree-devel ocaml-result-devel
 BuildRequires: ocaml-dune-configurator-devel ocaml-luv-devel
@@ -50,6 +50,9 @@ developing applications that use %name.
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Fri Nov 03 2023 Anton Farygin <rider@altlinux.ru> 5.7.0-alt1
+- 5.5.0 -> 5.7.0
+
 * Mon Jan 03 2022 Anton Farygin <rider@altlinux.ru> 5.5.0-alt1
 - 5.4.2 -> 5.5.0
 
