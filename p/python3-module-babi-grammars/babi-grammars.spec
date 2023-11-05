@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name babi-grammars
 
-# %check requires babi (disabled for now)
+# %check is disabled because python3-module-cson not packaged
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.0.52
+Version: 0.0.54
 Release: alt1
 
 Summary: grammars for babi
@@ -57,6 +57,9 @@ grammars for babi
 %_datadir/babi/
 
 %changelog
+* Sun Nov 05 2023 Vladislav Glinkin <smasher@altlinux.org> 0.0.54-alt1
+- Updated to 0.0.54
+
 * Wed Aug 30 2023 Vladislav Glinkin <smasher@altlinux.org> 0.0.52-alt1
 - Initial build for ALT
 
