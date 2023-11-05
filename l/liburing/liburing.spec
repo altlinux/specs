@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: liburing
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 Summary: The io_uring library
@@ -75,6 +75,7 @@ TEST_EXCLUDE="
 	eeed8b54e0df.t
 	file-verify.t
 	fpos.t
+	hardlink.t
 	io-cancel.t
 	iopoll.t
 	io_uring_register.t
@@ -88,6 +89,7 @@ TEST_EXCLUDE="
 	sq-poll-dup.t
 	sq-poll-share.t
 	sync-cancel.t
+	wq-aff.t
 " make runtests
 %endif
 
@@ -107,6 +109,9 @@ TEST_EXCLUDE="
 %_man7dir/*
 
 %changelog
+* Sun Nov 05 2023 Vitaly Chikunov <vt@altlinux.org> 2.5-alt1
+- Update to liburing-2.5 (2023-11-04).
+
 * Sun Jun 11 2023 Vitaly Chikunov <vt@altlinux.org> 2.4-alt1
 - Update to liburing-2.4-0-gb4ee310 (2023-06-09).
 - FFI support.
