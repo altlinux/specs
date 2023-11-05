@@ -5,7 +5,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           librtaudio
 Version:        5.2.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Real-time Audio I/O Library
 
 License:        MIT
@@ -18,7 +18,9 @@ BuildRequires:  gcc-c++
 BuildRequires:  libjack-devel
 BuildRequires:  libtool
 BuildRequires:  libpulseaudio-devel
+BuildRequires:  autoconf-archive
 Source44: import.info
+Patch1: rtaudio-pipewire-jack.patch
 Provides: rtaudio = %{version}-%{release}
 
 
@@ -62,6 +64,7 @@ designed with the following objectives:
 
 %prep
 %setup -n %{oldname}-%{version} -q
+%patch1 -p1
 
 # Fix encoding issues
 for file in tests/teststops.cpp; do
@@ -73,6 +76,9 @@ done
 
 
 %build
+mkdir -p m4
+cp -pt m4 /usr/share/aclocal/ax_cxx_compile_stdcxx.m4
+%autoreconf
 export CFLAGS="%optflags -fPIC"
 %configure --with-jack --with-alsa --with-pulse --enable-shared --disable-static --verbose
 %make_build
@@ -97,6 +103,9 @@ export CFLAGS="%optflags -fPIC"
 
 
 %changelog
+* Sun Nov 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.2.0-alt1_2
+- NMU: fixed FTBFS with pipewire-jack
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 5.2.0-alt1_1
 - update to new release by fcimport
 
