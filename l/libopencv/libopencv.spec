@@ -37,11 +37,11 @@
 
 %define bname opencv
 %define Name OpenCV
-%define sover 4.7
+%define sover 4.8
 Name: lib%bname
 Epoch: 1
-Version: 4.7.0
-Release: alt1.1
+Version: 4.8.1
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -51,6 +51,8 @@ URL: https://opencv.org
 Source: %bname-%version.tar
 # https://github.com/opencv/opencv_contrib.git
 Source1: %bname-contrib-%version.tar
+Source2: expected_mods.list
+Source3: expected_mods_ppc64le_aarch64.list
 
 Patch1: %name-4.5.5-alt-python-paths.patch
 Patch2: %name-4.5.5-alt-build.patch
@@ -78,7 +80,7 @@ BuildRequires: ceres-solver-devel
 %{?_with_v4l:BuildRequires: libv4l-devel}
 %{?_with_openmp:BuildRequires: libgomp-devel}
 %{?_with_unicap:BuildRequires: libunicap-devel}
-%{?_with_ffmpeg:BuildRequires: libavformat-devel libswscale-devel libavresample-devel}
+%{?_with_ffmpeg:BuildRequires: libavformat-devel libswscale-devel libswresample-devel}
 %{?_with_gstreamer:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel}
 %{?_with_gtk:BuildRequires: libgtk+3-devel}
 %{?_with_xine:BuildRequires: libxine-devel}
@@ -201,6 +203,14 @@ Summary: Python3 modules for %Name
 Provides: python3-module-%{bname}3.4 = %EVR
 Conflicts: python3-module-%{bname}3.4 < %EVR
 Obsoletes: python3-module-%{bname}3.4 < %EVR
+%ifarch %arm aarch64 %ix86 x86_64
+    %py3_provides %(echo `cat %SOURCE2 2>/dev/null || echo unkwown`)
+%endif
+%ifarch ppc64le
+    %py3_provides %(echo `cat %SOURCE3 2>/dev/null || echo unkwown`)
+%endif
+# filter self provides
+%filter_from_requires /python3(cv2\(\..*\)\?)/d
 
 %description -n python3-module-%bname
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -293,6 +303,46 @@ rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protob
 %install
 %cmakeinstall_std install_docs
 
+# compare expected provides against actual modules
+# fill the list of actual modules
+PYTHONPATH=%buildroot%python3_sitelibdir \
+LD_LIBRARY_PATH=%buildroot%_libdir:$LD_LIBRARY_PATH \
+python3 - <<-'EOF' | sort -u > actual_mods.list
+import importlib
+import inspect
+
+import cv2
+
+def predicate(obj):
+    return inspect.ismodule(obj) and obj.__name__.startswith("cv2.")
+
+
+def find_mods(mod_name, found_mods=set()):
+    mod = importlib.import_module(mod_name)
+    for x in inspect.getmembers(mod, predicate):
+        mod_name_cand = x[1].__name__
+        if mod_name_cand not in found_mods:
+            found_mods.add(mod_name_cand)
+            find_mods(mod_name_cand, found_mods)
+
+
+found_mods = set()
+find_mods("cv2", found_mods)
+for mod in found_mods:
+    print(mod)
+EOF
+
+%ifarch %arm %ix86 x86_64
+    sort %SOURCE2 > expected_mods.list
+    diff -y expected_mods.list actual_mods.list ||
+	{ echo 'Update expected list of modules' ; exit 1 ; }
+%endif
+%ifarch ppc64le aarch64
+    sort %SOURCE3 > expected_mods.list
+    diff -y expected_mods.list actual_mods.list ||
+	{ echo 'Update expected list of modules' ; exit 1 ; }
+%endif
+
 %files -n lib%bname%sover
 %doc README.md
 %_libdir/*.so.*
@@ -331,6 +381,11 @@ rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protob
 %_datadir/%Name/quality
 
 %changelog
+* Wed Oct 25 2023 Aleksei Kalinin <kaa@altlinux.org> 1:4.8.1-alt1
+- Updated to upstream version 4.8.1.
+- spec: Generate and validate list of provided mods (by slev@).
+- ALT: Correct Python paths  (by slev@).
+
 * Tue Jun 20 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:4.7.0-alt1.1
 - E2K patch update
 
