@@ -1,5 +1,5 @@
 Name: opam
-Version: 2.1.4
+Version: 2.1.5
 Release: alt1
 Summary: A source-based package manager for OCaml
 License: LGPLv3
@@ -64,10 +64,15 @@ The %name-doc package contains documentation for using %name.
 
 %build
 %configure
+export DUNE_ARGS="--verbose"
+export PATH=$PWD:$PATH
 
 make
 
 %install
+export DUNE_ARGS="--verbose"
+export PATH=$PWD:$PATH
+
 %makeinstall_std LIBINSTALL_DIR=%buildroot%_libdir/ocaml
 
 rm -rf %buildroot%prefix/doc
@@ -86,6 +91,9 @@ rm -rf %buildroot%prefix/doc
 %doc shell/
 
 %changelog
+* Thu Nov 02 2023 Anton Farygin <rider@altlinux.ru> 2.1.5-alt1
+- 2.1.5
+
 * Wed Jan 25 2023 Anton Farygin <rider@altlinux.ru> 2.1.4-alt1
 - 2.1.4
 
