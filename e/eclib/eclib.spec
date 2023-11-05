@@ -4,13 +4,14 @@
 
 Name: eclib
 Version: 20230424
-Release: alt1
+Release: alt2
 Summary: Tools for create the elliptic curve database
 Group: Sciences/Mathematics
 License: GPL-2.0+
 Url: http://homepages.warwick.ac.uk/~masgaj/mwrank/
 
 Source: https://github.com/JohnCremona/eclib/releases/download/%version/%name-%version.tar.bz2
+Patch1: ax_boost_base-loongarch64.patch
 
 BuildRequires: boost-program_options-devel
 BuildRequires: libflint2-devel
@@ -47,6 +48,7 @@ curves defined over the rational numbers.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 # FLINT_LEVEL 2 assumes that the C int type == half the width of a limb_t.
@@ -111,6 +113,9 @@ make check LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/mwrank.1*
 
 %changelog
+* Sun Nov 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230424-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Thu Apr 27 2023 Leontiy Volodin <lvol@altlinux.org> 20230424-alt1
 - New version.
 
