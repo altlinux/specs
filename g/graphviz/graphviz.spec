@@ -23,8 +23,8 @@
 
 
 Name: graphviz
-Version: 8.0.5
-Release: alt2
+Version: 9.0.0
+Release: alt1
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -366,6 +366,9 @@ rm -rf %buildroot%gvlibdir/python3/
 # - enable/fix/test language bindings
 
 %changelog
+* Fri Nov 03 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 9.0.0-alt1
+- Updated to upstream 9.0.0
+
 * Tue May 23 2023 Michael Shigorin <mike@altlinux.org> 8.0.5-alt2
 - I don't need devil
 
