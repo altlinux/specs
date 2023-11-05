@@ -6,7 +6,7 @@
 
 Name: clspv
 Version: 0.1
-Release: alt0.4.g%{git}
+Release: alt0.5.g%{git}
 License: Apache-2.0
 Summary: Clspv is a prototype compiler for a subset of OpenCL C to Vulkan compute shaders
 Group: Development/Other
@@ -16,7 +16,7 @@ Patch0: clspv-spirv-tools-link.patch
 
 # armh doesn't compile due memory limits
 # i586 fails with error: stat(lib/libclspv_combined.a): Value too large for defined data type.
-ExclusiveArch: x86_64 aarch64 ppc64le
+ExclusiveArch: x86_64 aarch64 ppc64le loongarch64
 
 BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++ zlib-devel libtinfo-devel spirv-headers libspirv-tools-devel python3-base
@@ -61,6 +61,9 @@ rm -rf %buildroot%_libdir/*.a
 %_includedir/%name
 
 %changelog
+* Sat Nov 04 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.1-alt0.5.g2c1e7c4a42
+- spec: build on LoongArch too.
+
 * Thu Aug 31 2023 L.A. Kostis <lakostis@altlinux.ru> 0.1-alt0.4.g2c1e7c4a42
 - .spec: limit build arches to 64-bit only.
 
