@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: CapyPDF is a library for generating PDF files
@@ -21,7 +21,7 @@ Vcs: https://github.com/jpakkane/capypdf.git
 Source: %_name-%version.tar
 %endif
 
-%define fmt_ver 10.1.0
+%define fmt_ver 10.1.1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson gcc-c++
@@ -58,8 +58,10 @@ This package provides Python3 bindings for CapyPDF library.
 
 %prep
 %setup -n %_name-%version
-sed -i 's|,c++latest||' meson.build
 sed -i 's|truetype\/noto|ttf/google-noto|' test/%{_name}tests.py
+
+# https://bugzilla.altlinux.org/48030
+sed -i 's|/usr/share/color/icc/ghostscript/a98.icc|/usr/share/ghostscript/10.01.1/iccprofiles/a98.icc|' test/capypdftests.py
 
 %build
 %meson
@@ -86,6 +88,9 @@ sed -i 's|truetype\/noto|ttf/google-noto|' test/%{_name}tests.py
 
 
 %changelog
+* Sun Nov 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Mon Oct 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - first build for Sisyphus
 

@@ -1,14 +1,13 @@
 %def_enable snapshot
 %define _name Paper-Clip
 %define binary_name pdf-metadata-editor
-%define ver_major 3.5
+%define ver_major 3.6
 %define rdn_name io.github.diegoivan.pdf_metadata_editor
 
-# broken matadata
-%def_disable check
+%def_enable check
 
 Name: paper-clip
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: PDF metadata editor for GNOME
@@ -28,7 +27,7 @@ Source: %_name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(poppler-glib)
@@ -61,6 +60,9 @@ BuildRequires: pkgconfig(libportal-gtk4)
 
 
 %changelog
+* Sun Nov 05 2023 Yuri N. Sedunov <aris@altlinux.org> 3.6-alt1
+- 3.6
+
 * Mon Oct 09 2023 Yuri N. Sedunov <aris@altlinux.org> 3.5.1-alt1
 - 3.5.1
 
