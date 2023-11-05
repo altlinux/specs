@@ -34,7 +34,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        118.0.5993.70
+Version:        119.0.6045.105
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -77,21 +77,22 @@ Patch007: 0007-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch008: 0008-FEDORA-bootstrap-with-python3.patch
 Patch009: 0009-ALT-use-system-zlib.patch
 Patch010: 0010-ALT-use-system-libdrm-library.patch
-Patch011: 0011-GENTOO-Fix-gtk4-build.patch
-Patch012: 0012-DEBIAN-allow-building-against-system-libraries-even-.patch
-Patch013: 0013-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
-Patch014: 0014-DEBIAN-use-system-opus-library-instead-of-embedded.patch
-Patch015: 0015-DEBIAN-build-using-system-openjpeg.patch
-Patch016: 0016-DEBIAN-use-system-jpeg-library.patch
-Patch017: 0017-DEBIAN-use-system-libevent-library.patch
-Patch018: 0018-ALT-Use-system-libusb-libsecret-flatbuffers.patch
-Patch019: 0019-Use-yandex-search-as-default.patch
-Patch020: 0020-GENTOO-EnumTable-crash.patch
-Patch021: 0021-ARCH-Add-missing-header.patch
-Patch022: 0022-ALT-Do-not-hardcode-flatbuffer-version.patch
-Patch023: 0023-Add-missing-headers.patch
-Patch024: 0024-FEDORA-System-brotli.patch
-Patch025: 0025-Add-check-for-use_system_freetype-when-importing-pri.patch
+Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
+Patch012: 0012-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
+Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
+Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
+Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
+Patch016: 0016-DEBIAN-use-system-libevent-library.patch
+Patch017: 0017-ALT-Use-system-libusb-libsecret-flatbuffers.patch
+Patch018: 0018-Use-yandex-search-as-default.patch
+Patch019: 0019-GENTOO-EnumTable-crash.patch
+Patch020: 0020-ARCH-Add-missing-header.patch
+Patch021: 0021-ALT-Do-not-hardcode-flatbuffer-version.patch
+Patch022: 0022-Add-missing-headers.patch
+Patch023: 0023-FEDORA-System-brotli.patch
+Patch024: 0024-atspi-mark-possibly-unused-gn-variables.patch
+Patch025: 0025-Revert-Use-aggregate-init-designed-initializers-more.patch
+Patch026: 0026-Add-std-namespace.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -188,6 +189,7 @@ BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(xshmfence)
 BuildRequires:  pkgconfig(xt)
 BuildRequires:  pkgconfig(xtst)
+BuildRequires:  pkgconfig(zlib)
 %if_enabled ffmpeg
 BuildRequires:  pkgconfig(libavcodec)
 BuildRequires:  pkgconfig(libavfilter)
@@ -514,6 +516,24 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Nov 03 2023 Alexey Gladkov <legion@altlinux.ru> 119.0.6045.105-alt1
+- New version (119.0.6045.105).
+- Security fixes:
+  - CVE-2023-5480: Inappropriate implementation in Payments.
+  - CVE-2023-5482: Insufficient data validation in USB.
+  - CVE-2023-5849: Integer overflow in USB.
+  - CVE-2023-5850: Incorrect security UI in Downloads.
+  - CVE-2023-5851: Inappropriate implementation in Downloads.
+  - CVE-2023-5852: Use after free in Printing.
+  - CVE-2023-5853: Incorrect security UI in Downloads.
+  - CVE-2023-5854: Use after free in Profiles.
+  - CVE-2023-5855: Use after free in Reading Mode.
+  - CVE-2023-5856: Use after free in Side Panel.
+  - CVE-2023-5857: Inappropriate implementation in Downloads.
+  - CVE-2023-5858: Inappropriate implementation in WebApp Provider.
+  - CVE-2023-5859: Incorrect security UI in Picture In Picture.
+  - CVE-2023-5472: Use after free in Profiles.
+
 * Mon Oct 16 2023 Alexey Gladkov <legion@altlinux.ru> 118.0.5993.70-alt1
 - New version (118.0.5993.70).
 - Security fixes:
