@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: procs
-Version: 0.14.0
+Version: 0.14.3
 Release: alt1
 
 Summary: procs is a replacement for ps written in Rust
@@ -37,6 +37,9 @@ install -D %SOURCE2 .cargo/config.toml
 %doc README.md LICENSE
 
 %changelog
+* Sun Nov 05 2023 Vladislav Glinkin <smasher@altlinux.org> 0.14.3-alt1
+- Updated to 0.14.3
+
 * Mon Sep 04 2023 Vladislav Glinkin <smasher@altlinux.org> 0.14.0-alt1
 - Initial build for ALT
 
