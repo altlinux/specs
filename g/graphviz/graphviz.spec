@@ -24,7 +24,7 @@
 
 Name: graphviz
 Version: 9.0.0
-Release: alt1
+Release: alt2
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -39,6 +39,7 @@ Patch0:  graphviz-2.24.0-alt-perl-5.12.patch
 Patch1:  graphviz-2.28.0-alt-string_h_trhow.patch
 Patch2:  graphviz-2.38.0-gs-9.18-fix.patch
 Patch3:  graphviz-2.41.2-alt-add-riscv64.patch
+Patch4:  graphviz-9.0.0-loongarch64.patch
 
 # From Fedora:
 Patch40:                 graphviz-2.40.1-visio.patch
@@ -176,6 +177,7 @@ This package makes %name functionality accessible from Tcl
 #patch1
 %patch2 -p1
 #patch3 -p1
+%patch4 -p1
 
 #patch40 -p1 -b .visio
 #patch41 -p1 -b .python3
@@ -366,6 +368,9 @@ rm -rf %buildroot%gvlibdir/python3/
 # - enable/fix/test language bindings
 
 %changelog
+* Mon Nov 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 9.0.0-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Fri Nov 03 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 9.0.0-alt1
 - Updated to upstream 9.0.0
 
