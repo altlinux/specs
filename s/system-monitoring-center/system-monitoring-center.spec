@@ -1,5 +1,5 @@
 Name:     system-monitoring-center 
-Version:  2.25.1
+Version:  2.26.0
 Release:  alt1
 
 Summary:  Multi-featured system monitor
@@ -12,7 +12,7 @@ BuildArch: noarch
 # Source-url: https://github.com/hakandundar34coding/system-monitoring-center/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
 BuildRequires: gtk4-update-icon-cache
 
@@ -40,6 +40,10 @@ BuildRequires: gtk4-update-icon-cache
 %_desktopdir/*
 
 %changelog
+* Sat Nov 04 2023 Roman Alifanov <ximper@altlinux.org> 2.26.0-alt1
+- new version 2.26.0 (with rpmrb script)
+- added rpm-build-gir to pre req for more correct dependencies
+
 * Sun Oct 15 2023 Roman Alifanov <ximper@altlinux.org> 2.25.1-alt1
 - new version 2.25.1 (gtk4 ver) (ALT bug 47606)
 - move to tarball
