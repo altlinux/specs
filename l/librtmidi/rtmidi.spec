@@ -5,11 +5,12 @@ Group: Development/C
 %define _localstatedir %{_var}
 Name:       librtmidi
 Version:    4.0.0
-Release:    alt1_1
+Release:    alt1_2
 Summary:    Library for realtime MIDI input/output (ALSA support)
 License:    MIT
 URL:        https://www.music.mcgill.ca/~gary/rtmidi/index.html
 Source0:    https://www.music.mcgill.ca/~gary/rtmidi/release/%{oldname}-%{version}.tar.gz
+Patch1: rtmidi-pipewire-jack-buildfix.patch
 BuildRequires:  libalsa-devel, pkgconfig(jack)
 BuildRequires:  autoconf, automake, libtool, /usr/bin/dos2unix
 BuildRequires:  doxygen
@@ -64,6 +65,7 @@ Development headers and libraries for rtmidi.
 
 %prep
 %setup -n %{oldname}-%{version} -q
+%patch1 -p1
 
 sed -i.orig -e 's/\/lib/\/%{_lib}/' Makefile.in rtmidi.pc.in
 # fix end of line
@@ -100,6 +102,9 @@ rm %{buildroot}%{_libdir}/lib%{oldname}.{a,la}
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Sun Nov 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.0.0-alt1_2
+- NMU: fixed build with pipewire-jack
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt1_1
 - new version
 
