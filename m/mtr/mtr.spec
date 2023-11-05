@@ -1,6 +1,6 @@
 Name: mtr
 Version: 0.95
-Release: alt1
+Release: alt2
 
 Summary: Matt's Traceroute - network diagnostic tool
 License: GPLv2
@@ -9,7 +9,6 @@ Group: Monitoring
 Url: http://www.bitwizard.nl/mtr/
 
 Source: http://ftp.bitwizard.nl/mtr/mtr-%version.tar.gz
-Source1: gtk1.m4
 Source2: mtr.ru.UTF-8.8
 Source3: mtr-packet.ru.UTF-8.8
 Source4: mtr.desktop
@@ -20,7 +19,8 @@ Requires: mtr-packet = %EVR
 Requires(pre): shadow-utils
 Requires: /var/resolv
 
-BuildRequires: libgtk+2-devel libncurses-devel
+BuildRequires: libgtk+3-devel libncurses-devel
+BuildRequires: pkgconfig(jansson)
 
 Summary(ru_RU.UTF-8): Matt's Traceroute - утилита для диагностики сети
 Summary(uk_UA.UTF-8): Matt's Traceroute - утиліта для діагностики мережі
@@ -95,7 +95,6 @@ This package contains the somewhat-privileged packet sender for mtr.
 
 %prep
 %setup
-install -pm644 %_sourcedir/gtk1.m4 acinclude.m4
 touch ChangeLog
 
 %build
@@ -111,13 +110,13 @@ subst 's/@PACKAGE_VERSION@/%version/' Makefile.in
 
 mkdir -p build-xmtr
 pushd build-xmtr
-	%configure --sbindir=%_bindir --with-gtk --enable-gtk2 --enable-ipv6
+	%configure --sbindir=%_bindir --with-jansson --with-gtk --enable-ipv6
 	%make_build
 popd
 
 mkdir -p build-mtr
 pushd build-mtr
-	%configure --sbindir=%_bindir --without-gtk --enable-ipv6
+	%configure --sbindir=%_bindir --with-jansson --without-gtk --enable-ipv6
 	%make_build
 popd
 
@@ -188,6 +187,9 @@ fi
 # - netadmin group would get non-predictable gid if not pre-existed
 
 %changelog
+* Thu Nov 02 2023 Arseny Maslennikov <arseny@altlinux.org> 0.95-alt2
+- Built with GTK 3 and libjansson.
+
 * Fri Oct 13 2023 Arseny Maslennikov <arseny@altlinux.org> 0.95-alt1
 - 0.82 -> 0.95. (Closes: 47555)
 - Nowadays the upstream ships a separate program, mtr-packet(8), to call
