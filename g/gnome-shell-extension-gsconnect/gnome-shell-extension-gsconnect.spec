@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 55
+%define ver_major 56
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
@@ -18,22 +18,22 @@ Release: alt1
 Summary: GSConnect is a implementation of KDE Connect for GNOME Shell
 Group: Graphical desktop/GNOME
 License: GPL-2.0
-Url: https://github.com/andyholmes/%name
+Url: https://github.com/GSConnect//%name
 
 %{?_disable_webextension:BuildArch: noarch}
 
 %if_disabled snapshot
 Source: %url/archive/v%version%beta/%name-%version%beta.tar.gz
 %else
-Vcs: https://github.com/andyholmes/gnome-shell-extension-gsconnect.git
+Vcs: https://github.com/GSConnect//gnome-shell-extension-gsconnect.git
 Source: %name-%version%beta.tar
 %endif
 
-Requires: gnome-shell >= 44
+Requires: gnome-shell >= 45
 Requires: /usr/bin/ffmpeg /usr/bin/fusermount
 Requires: /usr/bin/ssh-keygen /usr/bin/ssh-add
 Requires: fuse-sshfs /usr/bin/openssl
-Requires: libadwaita-gir >= 1.2
+Requires: libadwaita-gir >= 1.4
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
 BuildRequires: meson eslint libgio-devel libdbus-devel libgtk4-devel
@@ -97,6 +97,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Mon Nov 06 2023 Yuri N. Sedunov <aris@altlinux.org> 56-alt1
+- 56
+
 * Sun Mar 26 2023 Yuri N. Sedunov <aris@altlinux.org> 55-alt1
 - 55
 
