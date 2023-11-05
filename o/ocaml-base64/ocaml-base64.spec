@@ -1,7 +1,7 @@
 %define  modulename base64
 Name:    ocaml-%modulename
-Version: 3.5.0
-Release: alt2
+Version: 3.5.1
+Release: alt1
 Summary: Base64 encoding for OCaml
 License: ISC
 Group:   Development/ML
@@ -47,6 +47,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 3.5.1-alt1
+- 3.5.1
+
 * Wed Nov 03 2021 Anton Farygin <rider@altlinux.ru> 3.5.0-alt2
 - added --release in the check section to igrnore the alerts about deprecation
 
