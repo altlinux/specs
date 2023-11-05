@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: python cffi bindings for the oniguruma regex engine
@@ -31,8 +31,6 @@ python cffi bindings for the oniguruma regex engine
 %prep
 %setup
 
-# Edit setup.cfg for setuptools (actual for 1.2.0)
-sed -i -e 's/license_file/license_files/' setup.cfg
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -57,6 +55,9 @@ sed -i -e 's/license_file/license_files/' setup.cfg
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Nov 05 2023 Vladislav Glinkin <smasher@altlinux.org> 1.3.0-alt1
+- Updated to 1.3.0
+
 * Sat Sep 02 2023 Vladislav Glinkin <smasher@altlinux.org> 1.2.0-alt1
 - Initial build for ALT
 
