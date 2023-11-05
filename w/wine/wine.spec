@@ -13,7 +13,7 @@
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.18
+%define major 8.19
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -849,6 +849,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sun Nov 05 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.19.1-alt1
+- new version 8.19.1 (with rpmrb script)
+
 * Wed Nov 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.18.1-alt1
 - new version 8.18.1 (with rpmrb script)
 - add clang requires for devel-tools for mingw build (ALT bug 47472)
