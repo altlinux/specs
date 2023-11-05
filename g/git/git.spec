@@ -1,5 +1,5 @@
 Name: git
-Version: 2.33.8
+Version: 2.42.1
 Release: alt1
 
 Summary: Git core and tools
@@ -408,10 +408,10 @@ popd
 %_bindir/*
 %exclude %_bindir/git-cvs*
 %gitexecdir/
+%exclude %gitexecdir/git-citool
 %exclude %gitexecdir/git-cvs*
 %exclude %gitexecdir/git-gui*
-%exclude %gitexecdir/git-citool
-%exclude %gitexecdir/git-add--interactive
+%exclude %gitexecdir/git-request-pull
 %exclude %gitexecdir/git-subtree
 %exclude %_bindir/gitk
 %exclude %_bindir/diff-highlight
@@ -423,11 +423,12 @@ popd
 %exclude %_datadir/git-core/contrib/
 %if_with doc
 %_mandir/man?/*
-%exclude %_man1dir/git-subtree.*
-%exclude %_man1dir/git-daemon.*
-%exclude %_man1dir/git-svn*.1*
-%exclude %_man1dir/git-cvs*.1*
 %exclude %_man1dir/git-archimport.1*
+%exclude %_man1dir/git-cvs*.1*
+%exclude %_man1dir/git-daemon.*
+%exclude %_man1dir/git-request-pull.1*
+%exclude %_man1dir/git-subtree.*
+%exclude %_man1dir/git-svn*.1*
 %exclude %_man1dir/git-*email*.1*
 %exclude %_man1dir/gitk*.1*
 %exclude %_man3dir/Git.3*
@@ -459,7 +460,8 @@ popd
 %endif #cvs
 
 %files -n perl-Git
-%gitexecdir/git-add--interactive
+%gitexecdir/git-request-pull
+%_man1dir/git-request-pull.1*
 %if_with doc
 %_man3dir/Git.3*
 %endif
@@ -537,6 +539,12 @@ popd
 %endif #doc
 
 %changelog
+* Thu Nov 02 2023 Dmitry V. Levin <ldv@altlinux.org> 2.42.1-alt1
+- 2.42.0 -> 2.42.1 (closes: #47999).
+
+* Mon Aug 21 2023 Dmitry V. Levin <ldv@altlinux.org> 2.42.0-alt1
+- 2.33.8 -> 2.42.0.
+
 * Mon Apr 17 2023 Dmitry V. Levin <ldv@altlinux.org> 2.33.8-alt1
 - 2.33.7 -> 2.33.8 (fixes: CVE-2023-25652, CVE-2023-25815, CVE-2023-29007).
 
