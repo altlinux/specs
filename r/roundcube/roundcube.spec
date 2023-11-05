@@ -18,7 +18,7 @@
 %define rel %nil
 
 Name: roundcube
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -160,6 +160,11 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Sun Nov 05 2023 Vitaly Lipatov <lav@altlinux.ru> 1.6.5-alt1
+- new version 1.6.5 (with rpmrb script)
+- fixes vulnerabilities:
+ + Fix cross-site scripting (XSS) vulnerability in setting Content-Type/Content-Disposition for attachment preview/download
+
 * Tue Oct 31 2023 Vitaly Lipatov <lav@altlinux.ru> 1.6.4-alt1
 - new version 1.6.4 (with rpmrb script)
 - fixes vulnerabilities:
