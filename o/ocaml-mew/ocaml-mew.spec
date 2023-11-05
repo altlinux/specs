@@ -1,7 +1,8 @@
+%def_with check
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-mew
 Version: 0.1.0
-Release: alt1
+Release: alt2
 Summary: Modal Editing Witch
 
 Group: Development/ML
@@ -9,7 +10,10 @@ License: MIT
 Url: https://github.com/kandu/mew
 Source: %name-%version.tar
 
-BuildRequires: dune ocaml-cppo ocaml-trie
+BuildRequires: dune ocaml-trie-devel ocaml-result-devel
+%if_with check
+BuildRequires: ocaml-ppx_expect-devel
+%endif
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
 
@@ -20,6 +24,7 @@ This is the core module of mew, a general modal editing engine generator.
 Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %EVR
+Requires: ocaml-result-devel
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -29,28 +34,23 @@ developing applications that use %name.
 %setup
 
 %build
-dune build
+%dune_build
+
+%check
+%dune_check
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/mew
-%_libdir/ocaml/mew*/META
-%_libdir/ocaml/mew*/*.cma
-%_libdir/ocaml/mew*/*.cmi
-%_libdir/ocaml/mew*/*.cmxs
 
-%files devel
-%_libdir/ocaml/mew*/dune-package
-%_libdir/ocaml/mew*/opam
-%_libdir/ocaml/mew*/*.a
-%_libdir/ocaml/mew*/*.cmt*
-%_libdir/ocaml/mew*/*.cmxa
-%_libdir/ocaml/mew*/*.cmx
-%_libdir/ocaml/mew*/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.1.0-alt2
+- cleanup spec and buildrequires
+- enabled check
+
 * Sat Jun 20 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus
