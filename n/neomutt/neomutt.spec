@@ -3,9 +3,12 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%define commit_num .4
+%define commit_id .g992c7938e
+
 Name: neomutt
-Version: 20231023
-Release: alt1
+Version: 20231103
+Release: alt1%commit_num%commit_id
 Summary: A version of Mutt with added features
 License: GPL-2.0-only and ALT-Public-Domain
 Group: Networking/Mail
@@ -43,6 +46,38 @@ BuildRequires: zlib-devel
 Neomutt is a small but powerful text based program for reading and
 sending electronic mail under UNIX operating systems, including support
 for color terminals, MIME, OpenPGP, and a threaded sorting mode.
+
+                      ==
+                    ++
+                   +..@@
+                  +.,.+
+       +          +.,.+  +++
+      +          @+.,.+ +@@
+    @+           +....+++.@
+    +.@         @+.......+
+    +.+         +@....+.+
+    +.+        @+.....+.+
+    +.+@       +@........++++
+    +.@+      @+.........+;;>
+    +..+++++++%@$#.......+.--
+    @@.@+&%&+@%%@@.......+>->
+     +..@+++@.@%%@$@......+++
+     +.........@%%+@$$....+
+    @@$.........@%%++@$..$+
+    +@@..........*%%++@@$+
+    +@@...........@%%++++
+    +@$............@+
+    +@@...#.......@+
+    @+@.#$+@@@...$++
+     +..$+@*@+..$+@+
+    @@.@++++++$.+@*+
+   @+..+*@@+=+@.+@.+
+   +@..+++@+++@..++@@+@
+   +@.....+@@+@.....+@.@
+   +$.....+@*+$.....+@.+
+   +@@.$..+@@+@@.$..+@.+
+   @++++++@++@++++++@++@
+
 
 %prep
 %setup
@@ -100,6 +135,9 @@ make -s test
 %_datadir/neomutt
 
 %changelog
+* Sun Nov 05 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 20231103-alt1.4.g992c7938e
+- Update to 20231103-4-g992c7938e.
+
 * Thu Oct 26 2023 Vitaly Chikunov <vt@altlinux.org> 20231023-alt1
 - Update to 20231023 (2023-10-23).
 
