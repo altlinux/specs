@@ -5,11 +5,16 @@
 # wx-config --libs: https://github.com/audacity/audacity/issues/552
 # libmp3lame: https://github.com/audacity/audacity/issues/2166
 %add_optflags %(wx-config --cflags || :) -DDISABLE_DYNAMIC_LOADING_LAME=1
+
+%ifarch armh
+%add_optflags -DPFFFT_SIMD_DISABLE=1
+%endif
+
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.3.3
-Release: alt2
+Version: 3.4.0
+Release: alt1.1
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -17,10 +22,8 @@ License: GPL
 Group: Sound
 
 Url: http://audacity.sourceforge.net/
-# https://www.fosshub.com/Audacity.html/audacity-manual-%{version}.zip
 # https://github.com/audacity/audacity/releases
 # https://github.com/audacity/audacity-manual
-# https://github.com/audacity/audacity/archive/%{commit}.tar.gz
 Source0: %name-minsrc-%version.tar
 Source1: %name-%version-help-en.tar
 # XXX
@@ -31,6 +34,10 @@ Patch0002: 0002-Use-home-directory-for-temp-dir-instead-of-var-tmp-t.patch
 Patch0003: 0003-Fix-building-with-system-sbsms.patch
 Patch0004: 0004-Force-GTK-3.0.patch
 Patch0005: 0005-Fix-lv2-external-gui.patch
+Patch0006: 0006-Fix-build-without-dynamic-lame.patch
+Patch0007: 0007-Find-modules-in-lib64.patch
+Patch0008: 0008-Fix-linking-with-libopusfile.patch
+Patch0009: 0009-Fix-gcc-on-arm-neon.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -66,7 +73,9 @@ BuildRequires: pkgconfig(lv2)
 BuildRequires: pkgconfig(mad)
 BuildRequires: pkgconfig(ogg)
 BuildRequires: pkgconfig(opus)
+BuildRequires: pkgconfig(opusfile)
 BuildRequires: pkgconfig(portaudio-2.0)
+BuildRequires: pkgconfig(RapidJSON)
 BuildRequires: pkgconfig(samplerate)
 BuildRequires: pkgconfig(sbsms)
 BuildRequires: pkgconfig(sndfile)
@@ -149,7 +158,7 @@ export CC="$(command -v gcc)"
 %cmake \
 %ifarch %e2k
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-  -DCMAKE_INSTALL_RPATH:PATH='$ORIGIN' \
+  -DCMAKE_INSTALL_RPATH:PATH='$ORIGIN/../' \
 %endif
   -Daudacity_lib_preference:STRING=system \
   -Daudacity_has_networking=no \
@@ -198,23 +207,25 @@ setrpath="chrpath -r"
 setrpath="patchelf --set-rpath"
 %endif
 $setrpath '$ORIGIN/../%_lib/audacity' %buildroot%_bindir/audacity
-find %buildroot%_libdir/audacity -name '*.so' -print | while read -r line
-do
-	$setrpath '$ORIGIN' "$line"
+for lib in %buildroot%_libdir/audacity/*.so; do
+  $setrpath '$ORIGIN' "$lib"
+done
+for lib in %buildroot%_libdir/audacity/modules/*.so; do
+  $setrpath '$ORIGIN/../' "$lib"
 done
 
 %find_lang %name
 
 %check
-p="$(patchelf --print-needed %buildroot/%_bindir/audacity)"
 # upstream seems to assume statically linking bundled libsbsms,
 # verify that system one is used
-echo "$p" | grep -q sbsms
+patchelf --print-needed %buildroot/%_bindir/audacity | grep -q sbsms
 # mp3lame can be either dlopen'ed or linked explicitly,
 # ensure that a system library is linked explicitly
-echo "$p" | grep -q libmp3lame
+patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -q libmp3lame
+
 # https://github.com/audacity/audacity/issues/2161
-#echo "$p" | grep -q libavcodec
+# [...] | grep -q libavcodec
 
 %files -f %name.lang
 %doc CHANGELOG.txt CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.md
@@ -237,6 +248,12 @@ echo "$p" | grep -q libmp3lame
 %_datadir/%name/help
 
 %changelog
+* Mon Nov 06 2023 Ivan A. Melnikov <iv@altlinux.org> 3.4.0-alt1.1
+- Fix build on armh by disabling (some) SIMD optimizations there
+
+* Fri Nov 03 2023 Ivan A. Melnikov <iv@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Sat Sep 09 2023 Ivan A. Melnikov <iv@altlinux.org> 3.3.3-alt2
 - Update ffmpeg dependencies to 6.0
 
