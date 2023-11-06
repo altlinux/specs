@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 1.0
+%define ver_major 1.1
 %define rdn_name com.felipekinoshita.Kana
 
 %def_disable bootstrap
@@ -72,6 +72,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Nov 06 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
+- 1.1
+
 * Sat Nov 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
 - first build for Sisyphus (v1.0-1-g1cdd14e)
 

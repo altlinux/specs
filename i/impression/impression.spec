@@ -1,12 +1,12 @@
 %def_enable snapshot
-%define ver_major 2
+%define ver_major 3.0
 %define rdn_name io.gitlab.adhami3310.Impression
 
 %def_disable bootstrap
 %def_disable check
 
 Name: impression
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: Impression is a tool to create bootable drives
@@ -28,9 +28,10 @@ Source1: %name-%version-cargo.tar
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
 BuildRequires: blueprint-compiler
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver gir(Adw)
+BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(dbus-1)
 
 %description
@@ -67,6 +68,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Nov 06 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
+- 3.0
+
 * Mon Sep 11 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
 - first build for Sisyphus (v2.1-15-g8840b25)
 
