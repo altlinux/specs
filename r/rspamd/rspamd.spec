@@ -3,7 +3,7 @@
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
 Version: 3.7.3
-Release: alt1
+Release: alt2
 
 Summary: Fast and modular antispam system written in C
 
@@ -19,6 +19,7 @@ Source4: %name.sysconfig
 Source5: %name.logrotate
 
 Patch1: rspamd-fix-error.patch
+Patch3500: rspamd-loongarch.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake libdb4-devel libevent-devel libgmime-devel liblua5-devel
@@ -48,6 +49,7 @@ anywhere in code.
 %prep
 %setup
 %patch1 -p2
+%patch3500 -p1
 
 %build
 %cmake_insource -DSYSTEMDDIR=%{_unitdir} \
@@ -117,6 +119,9 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Mon Nov 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.7.3-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Mon Nov 06 2023 Vitaly Lipatov <lav@altlinux.ru> 3.7.3-alt1
 - new version 3.7.3 (with rpmrb script)
 
