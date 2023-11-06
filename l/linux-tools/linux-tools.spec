@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.5
+%define kernel_base_version 6.6
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
@@ -13,7 +13,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -265,7 +265,7 @@ monitors.
 %package -n nolibc-headers
 Summary: Libc alternative for minimal programs with very limited requirements
 Group: Development/C
-%define nolibc_arch aarch64 armh %ix86 loongarch64 %mips riscv64 s390 x86_64
+%define nolibc_arch aarch64 armh %ix86 loongarch64 %mips ppc64le riscv64 s390 x86_64
 
 %description -n nolibc-headers
 This headers files are designed to be used as a libc alternative for minimal
@@ -568,7 +568,7 @@ ldd %buildroot%_bindir/perf | sort -V
 
 make -C bootconfig test
 %ifarch %nolibc_arch
-make -C testing/selftests/nolibc nolibc-test
+make -C testing/selftests/nolibc nolibc-test V=1 XARCH_powerpc=ppc64le
 %endif
 
 %pre -n libperf-devel-checkinstall
@@ -767,6 +767,10 @@ fi
 %endif
 
 %changelog
+* Fri Nov 03 2023 Vitaly Chikunov <vt@altlinux.org> 6.6-alt1
+- Update to v6.6 (2023-10-29).
+- Nolibc is finally on all base architectures.
+
 * Tue Oct 24 2023 Vitaly Chikunov <vt@altlinux.org> 6.5-alt2
 - spec: Remove unneeded BRs to fix the rebuild (ALT#48150).
 
