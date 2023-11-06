@@ -2,7 +2,7 @@
 
 Name: gst
 Version: 0.7.6
-Release: alt1
+Release: alt2
 
 Summary: System utility designed to stress and monitor various hardware components
 License: GPL-3.0
@@ -12,6 +12,7 @@ Url: https://gitlab.com/leinardi/gst
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: gst-0.7.6-alt-remove-distutils-dependency.patch
 
 # Runtime dependencies from upstream (Python dependencies listed in requirements.txt)
 Requires: dmidecode
@@ -38,6 +39,7 @@ components like CPU and RAM.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson
@@ -58,6 +60,9 @@ components like CPU and RAM.
 %_datadir/glib-2.0/schemas/com.leinardi.gst.gschema.xml
 
 %changelog
+* Mon Nov 06 2023 Vladislav Glinkin <smasher@altlinux.org> 0.7.6-alt2
+- Rebuild with 'gst-0.7.6-alt-remove-distutils-dependency.patch'
+
 * Sat Oct 28 2023 Vladislav Glinkin <smasher@altlinux.org> 0.7.6-alt1
 - Initial build for ALT
 
