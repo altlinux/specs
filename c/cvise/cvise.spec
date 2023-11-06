@@ -1,7 +1,7 @@
 %def_with check
 
 Name: cvise
-Version: 2.8.0.git
+Version: 2.9.0
 Release: alt1
 
 Summary: Super-parallel Python port of the C-Reduce
@@ -12,8 +12,8 @@ Url: https://github.com/marxin/cvise
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-#Source-url: https://github.com/marxin/cvise/archive/v%version.tar.gz
-# Source-url: https://github.com/marxin/cvise/archive/refs/heads/master.zip
+# Source-url: https://github.com/marxin/cvise/archive/v%version.tar.gz
+#Source-url: https://github.com/marxin/cvise/archive/refs/heads/master.zip
 Source: %name-%version.tar
 
 BuildRequires: astyle
@@ -104,6 +104,9 @@ py.test3 -vra .
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt1
+- new version 2.9.0 (with rpmrb script)
+
 * Mon Nov 06 2023 Vitaly Lipatov <lav@altlinux.ru> 2.8.0.git-alt1
 - build git head with llvm 17 fixes
 
