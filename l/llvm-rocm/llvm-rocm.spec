@@ -5,10 +5,8 @@
 %filter_from_requires /python[0-9.]\+(libscanbuild[.].*)/d
 
 %global proj rocm
-# rocm llvm uses llvm16 as codebase
-%global v_major 16
-%global v_minor 0
-%global v_full %{v_major}.%{v_minor}.0
+# rocm llvm uses llvm17 as codebase
+%global v_major 17
 
 %global llvm_name llvm-%proj
 %global clang_name clang-%proj
@@ -34,12 +32,7 @@ AutoReq: nopython
 AutoProv: nopython
 
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
-%ifarch aarch64
-%define optflags_debug -g0
-#define __nprocs 1
-%else
 %define optflags_debug -g1
-%endif
 
 # LTO-related flags are set by CMake.
 # LTO causes LLVM to break badly on %%ix86 see
@@ -51,8 +44,8 @@ AutoProv: nopython
 %def_with clang
 
 Name: %llvm_name
-Version: 5.6.1
-Release: alt0.1
+Version: 5.7.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure with ROCm additions
 
 Group: Development/C
@@ -73,7 +66,6 @@ Patch10: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch11: lld-compact-unwind-encoding.h.patch
 Patch12: llvm-alt-cmake-build-with-install-rpath.patch
 Patch13: clang-16-alt-rocm-device-libs-path.patch
-Patch14: llvm-gcc-13-fix.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -90,9 +82,9 @@ BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
-BuildRequires: zip zlib-devel binutils-devel ninja-build hsa-rocr-devel = %version
+BuildRequires: zip zlib-devel binutils-devel ninja-build hsa-rocr-devel
 %if_with clang
-BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
+BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name rocm-device-libs
 %else
 BuildRequires: gcc-c++
 %endif
@@ -127,7 +119,6 @@ Group: Development/C
 Summary: Libraries and header files for LLVM
 %requires_filesystem
 Requires: llvm-devel >= %_llvm_version
-Conflicts: llvm%{v_major}.%{v_minor}-devel
 Requires: %name = %EVR
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
@@ -318,7 +309,6 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch11 -p1
 #%%patch12 -p1 -b .llvm-cmake-build-with-install-rpath
 %patch13 -p1 -b .clang-rocm-device-path
-%patch14 -p1 -b .llvm-gcc-13-fix
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -349,13 +339,18 @@ fi
 	-DCMAKE_BUILD_RPATH:STRING='' \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DLLVM_ENABLE_PROJECTS="$PROJECTS" \
-	-DLLVM_TARGETS_TO_BUILD="AMDGPU;X86;AArch64;PowerPC" \
+	-DLLVM_TARGETS_TO_BUILD="AMDGPU;X86" \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
 	-DLLVM_ENABLE_ZLIB:BOOL=ON \
 	-DLLVM_ENABLE_FFI:BOOL=ON \
 	-DLLVM_ENABLE_RTTI:BOOL=ON \
 	-DLLVM_OPTIMIZED_TABLEGEN:BOOL=ON \
 	-DLLVM_BINUTILS_INCDIR="%_includedir/bfd" \
+	\
+	-DCLANG_PLUGIN_SUPPORT:BOOL=ON \
+	-DCLANG_FORCE_MATCHING_LIBCLANG_SOVERSION:BOOL=ON \
+	-DENABLE_LINKER_BUILD_ID:BOOL=ON \
+	\
 	%if_with clang
 	-DCMAKE_C_COMPILER=clang \
 	-DCMAKE_CXX_COMPILER=clang++ \
@@ -459,7 +454,6 @@ bin	llvm-cxxdump
 bin	llvm-cxxfilt
 bin	llvm-cxxmap
 bin	llvm-debuginfod-find
-bin	llvm-debuginfod
 bin	llvm-diff
 bin	llvm-dis
 bin	llvm-dlltool
@@ -651,6 +645,21 @@ ninja -C %builddir check-all || :
 %llvm_libdir/liblld*.a
 
 %changelog
+* Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.2
+- Remove bogus conflicts to llvm17.0-devel.
+
+* Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.1
+- Updated to rocm-5.7.1.
+
+* Wed Sep 20 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.0-alt0.2
+- .spec: disable unneeded arches (we exclude then anyway).
+- .spec: build with llvm17.0.
+
+* Tue Sep 19 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.0-alt0.1
+- Updated to rocm-5.7.0.
+- llvm_major: 16->17.
+- Skip strip if compile with clang.
+
 * Wed Aug 30 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.1
 - Updated to rocm-5.6.1.
 - BR: cleanup.

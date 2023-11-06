@@ -10,8 +10,8 @@
 %def_with HIP
 
 Name: clr
-Version: 5.6.1
-Release: alt0.1
+Version: 5.7.1
+Release: alt0.2
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
 Url: https://github.com/ROCm-Developer-Tools/clr
@@ -29,10 +29,8 @@ Patch0: hipcc-alt-paths.patch
 Patch1: rocclr-gcc-13-fixes.patch
 Patch2: opencl-gcc-13-fixes.patch
 Patch3: hipcc-alt-hardcore-llvm-rocm.patch
+Patch4: hipcc-alt-hipInfo-path.patch
 # patches from developer branch
-Patch100: 0001-SWDEV-1-Fix-incorrect-SGPR-usage-in-VGPR-calculation.patch
-Patch101: 0001-SWDEV-389477-Check-D2D-is-intra-device.patch
-Patch102: 0001-SWDEV-398047-Disable-arena-for-XNACK.patch
 
 BuildRequires(pre): cmake /proc ninja-build
 BuildRequires: llvm-rocm-devel = %version clang-rocm-devel = %version clang-rocm-tools = %version
@@ -140,14 +138,15 @@ install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
 %doc hip/README.md hip/RELEASE.md hip/LICENSE.txt
 %_sysconfdir/profile.d/hip.sh
 %_bindir/*
-%_bindir/.hipVersion
 %exclude %_bindir/rocm-clinfo
 %_includedir/hip
 %_includedir/hip_prof_str.h
 %_datadir/cmake/hip
+%_datadir/hip
 
 %files -n hip-runtime-amd
 %doc hipamd/README.md hipamd/LICENSE.txt
+%_libdir/.hipInfo
 %_libdir/cmake/hip
 %_libdir/cmake/hip-lang
 %_libdir/cmake/hiprtc
@@ -157,6 +156,16 @@ install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
 %endif
 
 %changelog
+* Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.2
+- hipcc: fix hipInfo search path.
+
+* Tue Oct 17 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.1
+- rocm-5.7.1.
+
+* Wed Sep 20 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.0-alt0.1
+- rocm-5.7.0.
+- cleanup merged patches.
+
 * Wed Aug 30 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.1
 - rocm-5.6.1.
 

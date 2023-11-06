@@ -1,7 +1,7 @@
 %define soname 1
 
 Name: roct-thunk-interface
-Version: 5.6.1
+Version: 5.7.1
 Release: alt0.1
 License: MIT
 Summary: AMD user-mode API interfaces used to interact with the ROCk driver
@@ -9,6 +9,7 @@ Url: https://github.com/RadeonOpenCompute/ROCT-Thunk-Interface
 Group: System/Libraries
 
 Source: %name-%version.tar
+Patch: libhsakmt-add-extra-symbols.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libnuma-devel libdrm-devel
@@ -33,6 +34,7 @@ Development headers for AMD KFD thunk libraries.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
@@ -54,6 +56,15 @@ Development headers for AMD KFD thunk libraries.
 %_libdir/libhsakmt.so
 
 %changelog
+* Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.1
+- rocm-5.7.1.
+
+* Wed Sep 20 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.0-alt0.2
+- Add missing symbols used by -runtime library.
+
+* Tue Sep 19 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.0-alt0.1
+- rocm-5.7.0.
+
 * Wed Aug 30 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.1
 - rocm-5.6.1 (no code change, just version bump).
 

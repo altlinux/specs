@@ -4,7 +4,7 @@
 %define optflags_lto %nil
 
 Name: rocm-comgr
-Version: 5.6.1
+Version: 5.7.1
 Release: alt0.1
 License: NCSA
 Summary: AMD Code Object Manager (Comgr)
@@ -61,8 +61,8 @@ export ALTWRAP_LLVM_VERSION=rocm
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
     -DLLD_DIR=%_prefix/lib/llvm-rocm/%_lib/cmake/lld \
-    -DCMAKE_CXX_LINKER_FLAGS='-fuse-ld=lld' \
-    -DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld' \
+    -DCMAKE_CXX_LINKER_FLAGS='-fuse-ld=lld -Wl,--build-id=sha1' \
+    -DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld -Wl,--build-id=sha1' \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo
 %cmake_build
 
@@ -80,6 +80,13 @@ pushd %{bdir}
 %_libdir/cmake/amd_comgr
 
 %changelog
+* Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.1
+- rocm-5.7.1.
+- use sha1 for build-id.
+
+* Wed Sep 20 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.0-alt0.1
+- rocm-5.7.0.
+
 * Wed Aug 30 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.1
 - rocm-5.6.1 (no code change, just version bump).
 - rebuild w/ llvm-rocm-5.6.1.

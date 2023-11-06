@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: rocm-device-libs
-Version: 5.6.1
+Version: 5.7.1
 Release: alt0.1
 License: NCSA
 Summary: AMD specific device-side language runtime libraries
@@ -50,6 +50,12 @@ export ALTWRAP_LLVM_VERSION=rocm
 %_datadir/cmake/AMDDeviceLibs
 
 %changelog
+* Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.1
+- rocm-5.7.1.
+
+* Wed Sep 20 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.0-alt0.1
+- rocm-5.7.0.
+
 * Wed Aug 30 2023 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt0.1
 - rocm-5.6.1 (no code change, just version bump).
 - Rebuild w/ llvm-rocm-5.6.1.
