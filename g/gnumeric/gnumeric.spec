@@ -4,6 +4,7 @@
 %define ver_major 1.12
 %define api_ver 1.12
 %define goffice_api_ver 0.10
+%define rdn_name org.gnumeric.gnumeric
 
 %def_without gda
 %def_with python
@@ -12,7 +13,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.55
+Version: %ver_major.56
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -25,15 +26,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-Patch: gnumeric-desktop-alt.patch
+Patch: gnumeric-1.12.56-alt-desktop.patch
 
 Obsoletes: %name-light
-Provides: %name-light = %version-%release
+Provides: %name-light = %EVR
 
-%define gsf_ver 1.14.50
+%define gsf_ver 1.14.51
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.55
+%define goffice_ver 0.10.56
 
 %{?_with_python:
 %add_python3_path %_libdir/%name/%version/plugins
@@ -42,8 +43,8 @@ Provides: python3(Gnumeric)}
 
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
 Requires: libgnomeoffice%goffice_api_ver >= %goffice_ver
-Requires: libspreadsheet%{api_ver} = %version-%release
-Requires: %name-data = %version-%release
+Requires: libspreadsheet%{api_ver} = %EVR
+Requires: %name-data = %EVR
 
 BuildRequires(pre): rpm-build-gnome rpm-build-gir
 BuildRequires: bison flex help2man gtk-doc
@@ -97,8 +98,8 @@ This package provide libspreadsheet library
 %package -n libspreadsheet-devel
 Summary: libspreadsheet library headers
 Group: Development/C
-Provides: libspreadsheet%{api_ver}-devel = %version-%release
-Requires: libspreadsheet%{api_ver} = %version-%release
+Provides: libspreadsheet%{api_ver}-devel = %EVR
+Requires: libspreadsheet%{api_ver} = %EVR
 
 %description -n libspreadsheet-devel
 This package provide libspreadsheet library headers
@@ -106,7 +107,7 @@ This package provide libspreadsheet library headers
 %package gir
 Summary: GObject introspection data for the Gnumeric
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Gnumeric.
@@ -115,7 +116,7 @@ GObject introspection data for the Gnumeric.
 Summary: GObject introspection devel data for the Gnumeric
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Gnumeric.
@@ -126,7 +127,7 @@ GObject introspection devel data for the Gnumeric.
 # prevent linking against libpython3.x.a
 sed -i s'@\-L\$PY_LIB_DIR@@' configure.ac
 
-subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
+subst 's@zz-application\/zz-winassoc-xls;@@' %rdn_name.desktop.in
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -168,14 +169,13 @@ NOCONFIGURE=1 ./autogen.sh
 %files data -f %name.lang
 %dir %_datadir/%name
 %_datadir/%name/%version/
-%_datadir/applications/*
-#%_datadir/pixmaps/*
-%_iconsdir/hicolor/*/apps/gnumeric.*
+%_desktopdir/%rdn_name.desktop
+%_iconsdir/hicolor/*/apps/%rdn_name.*
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.dialogs.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.plugin.gschema.xml
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%rdn_name.appdata.xml
 
 %if_enabled introspection
 %files gir
@@ -193,6 +193,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_pkgconfigdir/*
 
 %changelog
+* Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.12.56-alt1
+- 1.12.56
+
 * Fri Feb 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.12.55-alt1
 - 1.12.55
 

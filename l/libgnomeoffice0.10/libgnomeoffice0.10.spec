@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define ver_major 0.10
 %define api_ver 0.10
 %define _name goffice
@@ -8,16 +10,22 @@
 %def_disable check
 %endif
 
+%def_enable gtk_doc
+
 Name: libgnomeoffice%api_ver
-Version: %ver_major.55
-Release: alt1
+Version: %ver_major.57
+Release: alt0.1
 
 Summary: Library for writing gnome office programs
 Group: Graphical desktop/GNOME
 License: GPL-2.0 or GPL-3.0
 Url: http://www.gnumeric.org/
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
 %define glib_ver 2.28.0
 %define gsf_ver 1.14.47
@@ -25,10 +33,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define cairo_ver 1.10.0
 %define lasem_ver 0.4.1
 
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgsf-devel >= %gsf_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libcairo-devel >= %cairo_ver
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir}
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgsf-devel >= %gsf_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libgs-devel
 BuildRequires: libXext-devel libXrender-devel libxml2-devel libxslt-devel librsvg-devel
 BuildRequires: intltool gtk-doc
@@ -67,7 +76,7 @@ GObject introspection data for the Goffice library.
 
 %package gir-devel
 Summary: GObject introspection devel data for the Goffice library
-Group: System/Libraries
+Group: Development/Other
 BuildArch: noarch
 Requires: %name-gir = %EVR
 Requires: %name-devel = %EVR
@@ -86,7 +95,8 @@ GObject introspection devel data for the Goffice library.
 %configure \
 	--with-config-backend=gsettings \
 	%{subst_with lasem} \
-	%{?_enable_introspection:--enable-introspection=yes}
+	%{?_enable_introspection:--enable-introspection=yes} \
+	%{?_enable_gtk_doc:--enable-gtk-doc}
 %nil
 %make_build
 
@@ -123,10 +133,12 @@ GObject introspection devel data for the Goffice library.
 %files devel
 %_includedir/libgoffice-%api_ver/
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/%_name-%api_ver/
+%endif
 
 %if_enabled introspection
 %files gir
@@ -138,6 +150,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Mon Nov 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.10.57-alt0.1
+- updated to GOFFICE_0_10_56-4-g9ce985d0
+
 * Fri Feb 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.10.55-alt1
 - 0.10.55
 
