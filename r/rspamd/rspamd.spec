@@ -2,7 +2,7 @@
 
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
-Version: 3.5
+Version: 3.7.3
 Release: alt1
 
 Summary: Fast and modular antispam system written in C
@@ -117,6 +117,9 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Mon Nov 06 2023 Vitaly Lipatov <lav@altlinux.ru> 3.7.3-alt1
+- new version 3.7.3 (with rpmrb script)
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt1
 - new version 3.5 (with rpmrb script)
 - build with system libxxhash-devel libzstd-devel doctest-devel libfmt-devel
