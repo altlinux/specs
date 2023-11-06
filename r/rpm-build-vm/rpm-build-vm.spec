@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.59
+Version: 1.60
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -113,6 +113,7 @@ at "/tmp/vm-ext4.img" out of your hasher root to run vm-run with it as rootfs.
 Summary: Checkinstall for vm-run
 Group: Development/Other
 BuildArch: noarch
+Requires(pre): busybox
 Requires(pre): %name-createimage = %EVR
 Requires(pre): procps
 Requires(pre): time
@@ -217,6 +218,7 @@ timeout 300 vm-run --heredoc <<-EOF
 	uname -a
 	uname -a
 EOF
+timeout 300 vm-run --initrd --append=rddebug 'uname -a; exit 7' || test $? -eq 7
 ! timeout --preserve-status 300 vm-run "true; false; true" || exit 1
 timeout 300 vm-run --mem=max free -g
 timeout 300 vm-run --mem=256 --cpu=max lscpu
@@ -242,6 +244,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Sun Nov 05 2023 Vitaly Chikunov <vt@altlinux.org> 1.60-alt1
+- Experimental support for --initrd mode (run script in initrd using busybox).
+
 * Tue Oct 10 2023 Vitaly Chikunov <vt@altlinux.org> 1.59-alt1
 - Improve rdshell environment usability.
 - Improve busybox/toybox compatibility for rdshell.
