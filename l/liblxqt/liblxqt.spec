@@ -2,14 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: liblxqt
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Core utility library for LxQt components
-License: LGPL
+License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+Url: https://github.com/lxqt/liblxqt
 Source: %name-%version.tar
 Patch: liblxqt-0.14.1-fix_translate_load.patch
 
@@ -27,11 +27,11 @@ Obsoletes: librazorqt < 0.7.0
 
 Provides: %name-data = %version
 Obsoletes: %name-data < 0.11.0
-Obsoletes: lxqt-backlight_backend
-Obsoletes: lxqt-l10n
+Obsoletes: lxqt-backlight_backend < %EVR
+Obsoletes: lxqt-l10n < %EVR
 
 %description
-%summary
+%summary.
 
 %package devel
 Summary: Development headers for LXQt library
@@ -52,7 +52,7 @@ This package provides the development files for LXQt library.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_libdir/*.so.*
@@ -69,6 +69,9 @@ This package provides the development files for LXQt library.
 %_datadir/cmake/*/
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

@@ -2,24 +2,25 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    pcmanfm-qt
-Version: 1.3.0
-Release: alt3
+Version: 1.4.0
+Release: alt1
 Epoch: 1
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
-License: GPLv2+
+License: GPL-2.0-or-later
 Group:   File tools
 
-Url:     https://lxqt.org
+Url:     https://github.com/lxqt/pcmanfm-qt
 Source0: %name-%version.tar
 Source1: %name.desktop
 
 # fix initial settigs
 Patch: alt-settings.patch
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
 BuildRequires: qt5-base-devel qt5-tools-devel
-BuildRequires: libfm-qt-devel >= 0.14.0
+BuildRequires: libfm-qt-devel >= 1.4.0
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: liblxqt-devel
 BuildRequires: libmenu-cache-devel
@@ -48,9 +49,13 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_xdgconfigdir/*/*
 %_datadir/%name
 %_man1dir/*
+%_iconsdir/hicolor/scalable/apps/%name.svg
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1:1.4.0-alt1
+- New version 1.4.0.
+
 * Fri May 05 2023 Anton Midyukov <antohami@altlinux.org> 1:1.3.0-alt3
 - CloseOnUnmount=false (Closes: 37618)
 

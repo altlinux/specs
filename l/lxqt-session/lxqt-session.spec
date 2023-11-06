@@ -2,14 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-session
-Version: 1.3.0
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: Session manager
-License: LGPL
+License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+Url: https://github.com/lxqt/lxqt-session
 Source0: %name-%version.tar
 Source1: 08lxqt
 Patch: fix_XDG_CONFIG_DIRS.patch
@@ -32,7 +32,7 @@ Obsoletes: razorqt-session < 0.7.0
 Conflicts: lxqt-common <= 0.11.0
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -48,7 +48,7 @@ sed -i 's,Exec=,Exec=%_bindir/,' xsession/lxqt.desktop.in
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 
 %files
@@ -62,6 +62,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Wed Oct 11 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt2
 - rebuild with libproc2-devel
 

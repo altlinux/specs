@@ -2,17 +2,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-policykit
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Policykit authentication agent
-License: LGPL
+License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+Url: https://github.com/lxqt/lxqt-policykit
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
 BuildRequires: rpm-build-xdg libqtxdg-devel
 BuildRequires: libpolkit-devel libpolkitqt5-qt5-devel
@@ -24,7 +25,7 @@ Obsoletes: razorqt-polkit-agent < 0.7.0
 Conflicts: lxqt-common <= 0.11.0
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -34,7 +35,7 @@ Conflicts: lxqt-common <= 0.11.0
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_bindir/*
@@ -44,6 +45,9 @@ Conflicts: lxqt-common <= 0.11.0
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

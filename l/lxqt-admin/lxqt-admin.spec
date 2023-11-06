@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     lxqt-admin
-Version:  1.3.0
-Release:  alt3
+Version:  1.4.0
+Release:  alt1
 
 Summary:  LXQt system administration tool
 License:  LGPL-2.1
@@ -34,7 +34,7 @@ BuildRequires: libpolkitqt5-qt5-devel
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_bindir/*
@@ -44,6 +44,9 @@ BuildRequires: libpolkitqt5-qt5-devel
 %doc AUTHORS CHANGELOG *.md
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Mon Aug 07 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt3
 - do not pack %%_datadir/polkit-1/actions/, pack only its contents
 

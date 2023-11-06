@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     xdg-desktop-portal-lxqt
-Version:  0.4.0
+Version:  0.5.0
 Release:  alt1
 
 Summary:  A backend implementation for xdg-desktop-portal
@@ -42,6 +42,9 @@ BuildRequires: libgio-devel
 %_datadir/xdg-desktop-portal/portals/lxqt.portal
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
+- New version 0.5.0.
+
 * Sun Apr 16 2023 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
 - New version 0.4.0.
 

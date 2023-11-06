@@ -2,11 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-config
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
-License: LGPL
+License: LGPL-2.1-or-later
 Group: Graphical desktop/Other
 
 Url: https://lxqt.org
@@ -20,6 +20,9 @@ BuildRequires: rpm-build-xdg
 BuildRequires: zlib-devel
 BuildRequires: pkgconfig(xorg-libinput)
 BuildRequires: libudev-devel
+BuildRequires: lxqt-menu-data-devel
+
+Requires: lxqt-menu-data >= 1.4.0
 
 Provides: razorqt-config = %version
 Obsoletes: razorqt-config < 0.7.0
@@ -35,30 +38,26 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %autopatch -p1
 
 %build
-# https://github.com/lxqt/lxqt-config/issues/903
-# https://github.com/lxqt/lxqt-build-tools/pull/83
-# libkscreen-qt5 5.26.90 config.h now includes <optional>, which needs
-# at least -std=c++17
-%cmake  -DCMAKE_CXX_STANDARD=17 \
-	-DCMAKE_SKIP_RPATH:BOOL=OFF \
+%cmake  -DCMAKE_SKIP_RPATH:BOOL=OFF \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_bindir/*
 %_libdir/%name/*.so
 %_datadir/lxqt/*
-%_datadir/desktop-directories/*.directory
 %_man1dir/*
-%_xdgconfigdir/*/*
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

@@ -2,17 +2,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-openssh-askpass
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Used to ask for user/password with GUI for OpenSSH
-License: LGPL
+License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+Url: https://github.com/lxqt/lxqt-openssh-askpass
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel libqtxdg-devel
 BuildRequires: kf5-kwindowsystem-devel
 
@@ -20,7 +21,7 @@ Provides: razorqt-openssh-askpass = %version
 Obsoletes: razorqt-openssh-askpass < 0.7.0
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -30,7 +31,7 @@ Obsoletes: razorqt-openssh-askpass < 0.7.0
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_bindir/*
@@ -39,6 +40,9 @@ Obsoletes: razorqt-openssh-askpass < 0.7.0
 %_man1dir/*
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

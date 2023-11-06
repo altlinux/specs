@@ -2,17 +2,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lximage-qt
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Image viewer and screenshot tool
-License: LGPL
+License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+Url: https://github.com/lxqt/lximage-qt
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
 BuildRequires: libXdmcp-devel libXfixes-devel libexif-devel
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel
@@ -21,7 +22,7 @@ BuildRequires: libmenu-cache-devel >= 0.5.0
 BuildRequires: glib2-devel libpcre-devel
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -31,7 +32,7 @@ BuildRequires: glib2-devel libpcre-devel
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_bindir/*
@@ -42,6 +43,9 @@ BuildRequires: glib2-devel libpcre-devel
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

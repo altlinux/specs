@@ -2,17 +2,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfm-qt
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
-License: LGPLv2+
+License: LGPL-2.1
 Group: System/Libraries
 
-Url: https://lxqt.org
+Url: https://github.com/lxqt/libfm-qt
 Source: %name-%version.tar
 
-BuildRequires: cmake rpm-macros-cmake
+BuildRequires: rpm-macros-cmake
+BuildRequires: cmake
 BuildRequires: rpm-build-xdg
 BuildRequires: gcc-c++
 BuildRequires: lxqt-build-tools >= 0.5.0
@@ -22,6 +23,9 @@ BuildRequires: qt5-tools-devel
 BuildRequires: pkgconfig(Qt5X11Extras)
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(libmenu-cache) >= 1.1.0
+BuildRequires: lxqt-menu-data-devel
+
+Requires: lxqt-menu-data >= 1.4.0
 
 Obsoletes: libfm-qt3
 
@@ -51,7 +55,7 @@ export NPROCS=1
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # We need to fix this upstream
 find %buildroot -size 0 -delete
@@ -69,6 +73,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

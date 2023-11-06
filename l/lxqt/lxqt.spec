@@ -1,6 +1,6 @@
 Name: lxqt
-Version: 1.3
-Release: alt2
+Version: 1.4
+Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
 License: GPL-2.0-or-later
@@ -8,7 +8,7 @@ Url: https://lxqt-project.org
 BuildArch: noarch
 
 %description
-%summary
+%summary.
 
 %package mini
 Summary: Meta package for install LxQt
@@ -16,9 +16,9 @@ Group: Graphical desktop/Other
 BuildArch: noarch
 
 # core componenets
-Requires: lxmenu-data
+Requires: lxqt-menu-data >= %version
 Requires: lxqt-about >= %version
-Requires: lxqt-themes >= %version
+Requires: lxqt-themes >= 1.3
 Requires: lxqt-globalkeys >= %version
 Requires: lxqt-notificationd >= %version
 Requires: lxqt-panel >= %version
@@ -89,6 +89,9 @@ Requires: xdg-desktop-portal-lxqt
 %files regular
 
 %changelog
+* Mon Nov 06 2023 Anton Midyukov <antohami@altlinux.org> 1.4-alt1
+- new version 1.4
+
 * Sat Nov 04 2023 Anton Midyukov <antohami@altlinux.org> 1.3-alt2
 - regular: do'nt require pulseaudio-daemon, pulseaudio-utils,
   alsa-plugins-pulse

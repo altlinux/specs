@@ -2,10 +2,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    qps
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 Summary: Visual process status monitor
-License: GPLv2+
+License: GPL-2.0-or-later
 Group:   Monitoring
 URL:     https://github.com/lxqt/qps
 Source0: %name-%version.tar
@@ -55,16 +55,20 @@ convert -resize 16x16 icon/%name.png %buildroot%_miconsdir/%name.png
 
 %files
 %dir %_datadir/%name
-%doc CHANGELOG COPYING LICENSE.QPL README.md
+%doc CHANGELOG COPYING README.md
 %_man1dir/*
 %_bindir/*
 %_datadir/%name
+%_datadir/metainfo/org.lxqt.Qps.appdata.xml
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 2.8.0-alt1
+- New version 2.8.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 2.7.0-alt1
 - New version 2.7.0.
 

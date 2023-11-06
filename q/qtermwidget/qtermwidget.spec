@@ -2,18 +2,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qtermwidget
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
-Summary: unicode-enabled, embeddable QT4 terminal widget
-License: GPL
+Summary: unicode-enabled, embeddable QT5 terminal widget
+License: GPL-2.0-or-later
 Group: Terminals
 
 Url: https://github.com/lxqt/qtermwidget
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Wed Mar 07 2012
-# optimized out: cmake-modules fontconfig libqt4-core libqt4-designer libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: qt5-base-devel qt5-tools-devel
 BuildRequires: lxqt-build-tools
@@ -48,7 +47,7 @@ This package contains the shared data.
 %package -n lib%name
 Summary: unicode-enabled, embeddable Qt5 terminal widget library
 Group: System/Libraries
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 Conflicts: libqtermwidget-qt5 < 0.8.0
 
 %description -n lib%name
@@ -57,6 +56,7 @@ This package contains the shared library for %name.
 %package -n lib%name-devel
 Summary: unicode-enabled, embeddable Qt5 terminal widget library
 Group: Development/KDE and QT
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package contains the development headers for %name library.
@@ -69,7 +69,7 @@ This package contains the development headers for %name library.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 
@@ -87,6 +87,9 @@ This package contains the development headers for %name library.
 %_libdir/cmake/*/
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

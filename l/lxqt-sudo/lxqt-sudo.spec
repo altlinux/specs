@@ -2,15 +2,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     lxqt-sudo
-Version:  1.3.0
+Version:  1.4.0
 Release:  alt1
 
 Summary:  GUI frontend for sudo/su
 License:  LGPL-2.1
 Group:    Graphical desktop/Other
 Url:      https://github.com/lxqt/lxqt-sudo
-
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source:   %name-%version.tar
 
@@ -33,7 +31,7 @@ BuildRequires: kf5-kwindowsystem-devel
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %doc *.md
@@ -42,6 +40,9 @@ BuildRequires: kf5-kwindowsystem-devel
 %_man1dir/*
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

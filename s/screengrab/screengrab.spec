@@ -4,11 +4,11 @@
 #set_verify_elf_method relaxed
 
 Name: screengrab
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Summary: ScreenGrab is a tool for geting screenshots
-License: GPLv2
+License: GPL-2.0-only
 Group: Graphics
 
 Url: https://github.com/lxqt/screengrab
@@ -70,6 +70,9 @@ sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' 
 %_datadir/metainfo/screengrab.metainfo.xml
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 2.7.0-alt1
+- New version 2.7.0.
+
 * Sun Apr 16 2023 Anton Midyukov <antohami@altlinux.org> 2.6.0-alt1
 - New version 2.6.0.
 

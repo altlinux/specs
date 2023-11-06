@@ -2,14 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-panel
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Desktop panel
-License: LGPL
+License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+Url: https://github.com/lxqt/lxqt-panel
 Source: %name-%version.tar
 Patch: alt-settings.patch
 
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel
 BuildRequires: libqtxdg-devel
+BuildRequires: lxqt-menu-data-devel >= 1.4.0
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: kf5-solid-devel
@@ -50,6 +51,7 @@ Conflicts: lxqt-common <= 0.11.0
 
 Requires: menu-cache
 Requires: udisks2 gvfs
+Requires: lxqt-menu-data >= 1.4.0
 
 %description
 %summary
@@ -72,7 +74,7 @@ This package provides the development files for %name.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_man1dir/*
@@ -80,13 +82,15 @@ This package provides the development files for %name.
 %_libdir/*/*.so
 %_xdgconfigdir/*/*
 %_datadir/lxqt/*
-%_datadir/desktop-directories/*
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %files devel
 %_includedir/*/*.h
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

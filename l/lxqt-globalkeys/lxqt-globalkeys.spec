@@ -2,14 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-globalkeys
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Service used to register global keyboard shortcuts
-License: LGPL
+License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+Url: https://github.com/lxqt/lxqt-globalkeys
 Source: %name-%version.tar
 Patch: lxqt-globalkeys-conf-alt.patch
 
@@ -25,12 +25,12 @@ Obsoletes: razorqt-globalkeyshortcuts < 0.7.0
 Conflicts: lxqt-common <= 0.11.0
 
 %description
-%summary
+%summary.
 
 %package devel
 Summary: Development headers for %name
 Group: Development/C++
-Requires: %name = %version
+Requires: %name = %EVR
 
 %description devel
 This package provides the development files for %name.
@@ -44,11 +44,7 @@ This package provides the development files for %name.
 %cmake_build
 
 %install
-%cmakeinstall_std
-
-# Fix FTBFS for lxqt-runner, lxqt-panel 0.14.1
-sed -i '/find_dependency(lxqt-globalkeys 0.14.2)/d' \
-  %buildroot%_datadir/cmake/lxqt-globalkeys-ui/lxqt-globalkeys-ui-config.cmake
+%cmake_install
 
 %files
 %_bindir/*
@@ -66,6 +62,9 @@ sed -i '/find_dependency(lxqt-globalkeys 0.14.2)/d' \
 %_datadir/cmake/*/
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

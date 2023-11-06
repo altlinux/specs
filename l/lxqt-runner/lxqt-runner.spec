@@ -2,14 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-runner
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Tool used to launch programs quickly by typing their names
-License: LGPL
+License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+Url: https://github.com/lxqt/lxqt-runner
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
@@ -23,7 +23,7 @@ Provides: razorqt-runner = %version
 Obsoletes: razorqt-runner < 0.7.0
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -33,7 +33,7 @@ Obsoletes: razorqt-runner < 0.7.0
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_bindir/*
@@ -43,6 +43,9 @@ Obsoletes: razorqt-runner < 0.7.0
 %_xdgconfigdir/*/*
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

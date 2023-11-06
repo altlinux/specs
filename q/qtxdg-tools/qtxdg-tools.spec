@@ -1,5 +1,5 @@
 Name:     qtxdg-tools
-Version:  3.11.0
+Version:  3.12.0
 Release:  alt1
 
 Summary:  libqtxdg user tools
@@ -37,6 +37,9 @@ Obsoletes: qtxdg-mat <= %version
 %doc *.md
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 3.12.0-alt1
+- New version 3.12.0.
+
 * Sun Apr 16 2023 Anton Midyukov <antohami@altlinux.org> 3.11.0-alt1
 - New version 3.11.0.
 

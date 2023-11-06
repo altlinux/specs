@@ -2,16 +2,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qterminal
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Qt-based multitab terminal emulator
-License: GPL-2.0
+License: GPL-2.0-only
 Group: Terminals
 
 Url: http://github.com/qterminal/qterminal
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake lxqt-build-tools
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-x11extras-devel
 BuildRequires: libqtermwidget-devel >= %version
@@ -45,7 +46,7 @@ at http://qterminal.sourceforge.net/
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %doc AUTHORS LICENSE CHANGELOG README*
@@ -56,6 +57,9 @@ at http://qterminal.sourceforge.net/
 %_datadir/%name
 
 %changelog
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 
