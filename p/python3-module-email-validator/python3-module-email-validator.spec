@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0.post2
+Version: 2.1.0.post1
 Release: alt1
 
 Summary: A robust email syntax and deliverability validation library for Python
@@ -68,7 +68,7 @@ use pyIsEmail.
 %pyproject_deps_resync_metadata
 
 %if_with check
-%pyproject_deps_resync check pipreqfile test_requirements.txt
+%pyproject_deps_resync_check_pipreqfile test_requirements.txt
 %endif
 
 %build
@@ -87,6 +87,9 @@ use pyIsEmail.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 2.1.0.post1-alt1
+- Updated to 2.1.0.post1.
+
 * Sat May 06 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.0.post2-alt1
 - New version.
 - Reformat description.
