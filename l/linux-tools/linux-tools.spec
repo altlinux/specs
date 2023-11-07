@@ -13,7 +13,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -75,6 +75,8 @@ Source23: hypervfcopyd.service
 Source31: hypervkvpd.rules
 Source32: hypervvssd.rules
 Source33: hypervfcopyd.rules
+
+Patch1: 0002-rtla-basic-loongarch-support.patch
 
 %description
 Various tools from the Linux Kernel source tree.
@@ -767,6 +769,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.6-alt2
+- NMU: rtla: basic LoongArch support. Fixes FTBFS on LoongArch.
+
 * Fri Nov 03 2023 Vitaly Chikunov <vt@altlinux.org> 6.6-alt1
 - Update to v6.6 (2023-10-29).
 - Nolibc is finally on all base architectures.
