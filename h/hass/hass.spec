@@ -1,6 +1,6 @@
 Name: hass
-Version: 2023.9.2
-Release: alt2
+Version: 2023.11.1
+Release: alt1
 
 Summary: Home automation platform
 License: APL
@@ -35,16 +35,8 @@ BuildRequires: python3(yaml)
 %package core
 Summary: Home automation platform
 Group: System/Servers
-Requires: python3-module-aiohttp >= 3.8.1
-Requires: python3-module-astral >= 2.2
-Requires: python3-module-httpcore >= 0.14.5
 Requires: python3-module-pip >= 21.0
-Requires: python3-module-async-timeout >= 4.0.2
-Requires: python3-module-text-unidecode >= 1.3
-Requires: python3-module-voluptuous >= 0.13.1
-Requires: python3-module-websocket-client >= 0.56.0
-Requires: python3-module-yaml >= 6.0
-Requires: python3-module-hass-frontend >= 20230503.3
+Requires: python3-module-hass-frontend >= 20231030.1
 
 %package -n python3-module-hass
 Summary: Home automation platform
@@ -112,6 +104,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Tue Nov 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.11.1-alt1
+- 2023.11.1 released
+
 * Fri Sep 15 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.9.2-alt2
 - interpackage deps fixed
 
