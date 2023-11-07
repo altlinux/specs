@@ -2,8 +2,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 help center
@@ -71,8 +71,13 @@ __EOF__
 %_K5srv/*
 %_datadir/qlogging-categories5/*.*categories
 %_K5dbus_srv/*.service
+%_datadir/metainfo/*.xml
 
 %changelog
+* Tue Nov 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- don't hardcode altplace
+- package metainfo
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
