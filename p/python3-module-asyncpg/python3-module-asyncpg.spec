@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.28.0
+Version: 0.29.0
 Release: alt1
 
 Summary: A fast PostgreSQL Database Client Library for Python/asyncio
@@ -35,8 +35,8 @@ asyncpg is a database interface library designed specifically for PostgreSQL
 and Python/asyncio. asyncpg is an efficient, clean implementation of PostgreSQL
 server binary protocol for use with Python's asyncio framework.
 
-asyncpg requires Python 3.7 or later and is supported for PostgreSQL
-versions 9.5 to 15. Older PostgreSQL versions or other databases implementing
+asyncpg requires Python 3.8 or later and is supported for PostgreSQL
+versions 9.5 to 16. Older PostgreSQL versions or other databases implementing
 the PostgreSQL protocol may work, but are not being actively tested.
 
 %prep
@@ -62,6 +62,9 @@ the PostgreSQL protocol may work, but are not being actively tested.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 0.29.0-alt1
+- Updated to 0.29.0.
+
 * Mon Jul 24 2023 Anton Zhukharev <ancieg@altlinux.org> 0.28.0-alt1
 - Updated to 0.28.0.
 
