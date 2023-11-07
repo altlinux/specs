@@ -1,5 +1,5 @@
 Name: optipng
-Version: 0.7.7
+Version: 0.7.8
 Release: alt1
 
 Summary: Optimizer for png files
@@ -50,6 +50,9 @@ make test
 %_man1dir/*
 
 %changelog
+* Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 0.7.8-alt1
+- new version 0.7.8 (with rpmrb script)
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.7-alt1
 - new version 0.7.7 (with rpmrb script)
 
