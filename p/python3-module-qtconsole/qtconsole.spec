@@ -6,7 +6,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.4.4
+Version: 5.5.0
 Release: alt1
 Summary: Jupyter Qt console
 License: BSD
@@ -29,11 +29,11 @@ BuildRequires: python3-module-qtpy
 BuildRequires: python3-module-PyQt5
 BuildRequires: python3-module-traitlets
 BuildRequires: python3-module-ipython
-BuildRequires: python3-module-ipython_genutils
 BuildRequires: python3(sphinx_rtd_theme)
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
 %if_with check
+BuildRequires: python3-module-qtpy
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-qt
 BuildRequires: python3-module-pytest-xvfb
@@ -95,6 +95,7 @@ export PYTHONPATH=$PWD
 %pyproject_run -- xvfb-run -s '-nolisten local' pytest -v qtconsole \
 --ignore qtconsole/tests/test_inprocess_kernel.py
 
+
 %files
 %doc README.* LICENSE
 %if_with docs
@@ -111,6 +112,9 @@ export PYTHONPATH=$PWD
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Nov 07 2023 Anton Vyatkin <toni@altlinux.org> 5.5.0-alt1
+- New version 5.5.0.
+
 * Wed Sep 06 2023 Anton Vyatkin <toni@altlinux.org> 5.4.4-alt1
 - New version 5.4.4.
 
