@@ -2,7 +2,7 @@
 
 Name: lib%oname
 Version: 1.7.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: A library to benchmark code snippets
 
@@ -24,6 +24,18 @@ BuildRequires(pre): rpm-macros-cmake
 # Automatically added by buildreq on Sun Jul 11 2021
 # optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgmock-devel libsasl2-3 libstdc++-devel python3-base sh4
 BuildRequires: cmake gcc-c++ libgtest-devel ctest ninja-build
+# some tests query CPU info via /proc
+BuildRequires: /proc
+
+%ifarch %ix86
+# XXX: i387 doubles have extended precision (mantissa is 80 bits), so results
+# of calculations might differ from those obtained with strictly IEEE-754
+# doubles (with 53-bit mantissa). This is why StatisticsTest.CV fails on i586
+# (the problem can be reproduced on x86_64 by forcing i387 for floating point
+# arithmetics with `-mfpmath=387` GCC flag).
+# To avoid the problem force SSE on 32-bit x86:
+%add_optflags -msse -mfpmath=sse
+%endif
 
 %description
 A library to benchmark code snippets, similar to unit tests.
@@ -87,6 +99,10 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_includedir/*
 
 %changelog
+* Mon Oct 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.7.1-alt1.2
+- NMU: fixed FTBFS on LoongArch (some tests need /proc).
+  While at it worked around Statistics.CV test failure on i586.
+
 * Wed May 03 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.7.1-alt1.1
 - e2k: patch update, werror off
 
