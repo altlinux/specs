@@ -1,7 +1,7 @@
 %global import_path github.com/containerd/nerdctl
 Name:     nerdctl
-Version:  1.6.2
-Release:  alt1.1
+Version:  1.7.0
+Release:  alt1
 
 Summary:  contaiNERD CTL - Docker-compatible CLI for containerd
 License:  Apache-2.0
@@ -84,6 +84,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Nov 07 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.7.0-alt1
+- new version 1.7.0
+
 * Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 1.6.2-alt1.1
 - NMU: add patch for loongarch64 support
 
