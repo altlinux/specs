@@ -1,6 +1,6 @@
 %global import_path github.com/bluenviron/mediamtx
 Name:    mediamtx
-Version: 0.23.8
+Version: 1.1.1
 Release: alt1
 
 Summary: Ready-to-use SRT / WebRTC / RTSP / RTMP / LL-HLS media server
@@ -47,5 +47,8 @@ export IGNORE_SOURCES=1
 %_bindir/mediamtx
 
 %changelog
+* Fri Oct 06 2023 Leonid Znamenok <respublica@altlinux.org> 1.1.1-alt1
+- New release 1.1.1
+
 * Fri Aug 04 2023 Leonid Znamenok <respublica@altlinux.org> 0.23.8-alt1
 - Initial build for Sisyphus
