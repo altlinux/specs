@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.18.1
+Version: 0.18.2
 Release: alt1
 Summary: Client-side and server-side support for the OpenAPI Specification v3
 License: BSD-3-Clause
@@ -60,6 +60,9 @@ sed -i '/--cov/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Nov 07 2023 Anton Vyatkin <toni@altlinux.org> 0.18.2-alt1
+- New version 0.18.2.
+
 * Fri Sep 15 2023 Anton Vyatkin <toni@altlinux.org> 0.18.1-alt1
 - New version 0.18.1.
 
