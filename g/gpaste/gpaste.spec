@@ -11,7 +11,7 @@
 
 Name: gpaste
 Version: %ver_major
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: GPaste is a clipboard management system
 Group: Text tools
@@ -96,6 +96,7 @@ Group: Graphical desktop/GNOME
 BuildArch: noarch
 Requires: gnome-shell >= %ver_major
 Requires: %name = %EVR
+Requires: lib%name-gir = %EVR
 
 %description -n gnome-shell-extension-%name
 GNOME Shell extension for GPaste clipboard management system.
@@ -188,6 +189,9 @@ in notification area.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Tue Nov 07 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt1.1
+- libgpaste-gir required for gnome-shell-extension-gpaste subpackage
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt1
 - 45
 
