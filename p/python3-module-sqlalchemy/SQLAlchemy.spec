@@ -1,6 +1,6 @@
 Name: python3-module-sqlalchemy
-Version: 2.0.18
-Release: alt1.1
+Version: 2.0.22
+Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -18,6 +18,9 @@ BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(cython)
+BuildRequires: python3(pytest)
+BuildRequires: python3(typing_extensions)
+BuildRequires: python3(mypy)
 
 # Make sure that at least the Python built-in sqlite driver
 # is present (and can be used by SQLAlchemy--among other things--
@@ -32,20 +35,48 @@ It provides a full suite of well known enterprise-level persistence patterns,
 designed for efficient and high-performing database access, adapted into a
 simple and Pythonic domain language.
 
+%package tests
+Summary: Tests for SQLAlchemy (Python 3)
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives
+application developers the full power and flexibility of SQL.
+
+It provides a full suite of well known enterprise-level persistence patterns,
+designed for efficient and high-performing database access, adapted into a
+simple and Pythonic domain language.
+
+This package contains tests for SQLAlchemy.
+
 %prep
 %setup -n SQLAlchemy-%version
 
 %build
-%add_optflags -fno-strict-aliasing
 %pyproject_build
 
 %install
 %pyproject_install
 
+%add_python3_req_skip sqlalchemy.testing
+%add_python3_req_skip sqlalchemy.testing.provision
+
+%check
+%pyproject_run_pytest test
+
 %files
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/testing
+
+%files tests
+%python3_sitelibdir/*/testing
 
 %changelog
+* Fri Nov 03 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.22-alt1
+- 2.0.22 released
+- revert unwarranted subpackage merge made in previous release
+
 * Wed Jul 12 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 2.0.18-alt1.1
 - NMU: Merged subpackage with test back into main package to avoid dependency
   from main package on subpackage with tests
