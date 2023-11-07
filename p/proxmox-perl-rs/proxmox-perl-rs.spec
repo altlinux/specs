@@ -2,7 +2,7 @@
 
 Name: proxmox-perl-rs
 Version: 0.2.1
-Release: alt2
+Release: alt3
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -90,6 +90,9 @@ install -m0644 Proxmox/Lib/{Common,PVE}.pm %buildroot%perl_vendor_privlib/Proxmo
 
 
 %changelog
+* Tue Nov 07 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.2.1-alt3
+- libpve-rs-perl: add linking with libperl (Closes: #48330)
+
 * Fri Mar 17 2023 Alexey Shabalin <shaba@altlinux.org> 0.2.1-alt2
 - Update libpve-rs-perl 0.7.3
 
