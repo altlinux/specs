@@ -4,39 +4,30 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Epoch: 1
 
 Summary: HTML form validation, generation, and convertion package for Python
 License: MIT
 Group: Development/Python3
 
-URL: http://formencode.org
+Url: http://formencode.org
+Vcs: https://github.com/formencode/formencode
 BuildArch: noarch
-
-# git://github.com/formencode/formencode.git
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(six)
-
-BuildRequires: python3(dns)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pycountry)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-# PyPI name
-%py3_provides %pypi_name
 
 %description
 FormEncode validates and converts nested structures. It allows for
@@ -46,17 +37,12 @@ for filling and generating forms.
 %prep
 %setup
 %autopatch -p1
-
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-test.txt
+%endif
 
 %build
 %pyproject_build
@@ -64,12 +50,8 @@ fi
 %install
 %pyproject_install
 
-# don't ship tests
-rm -r %buildroot/%python3_sitelibdir/formencode/tests/
-
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra tests
 
 %files
 %doc README.rst
@@ -77,6 +59,9 @@ rm -r %buildroot/%python3_sitelibdir/formencode/tests/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue Nov 07 2023 Stanislav Levin <slev@altlinux.org> 1:2.1.0-alt1
+- 2.0.1 -> 2.1.0.
+
 * Tue Sep 20 2022 Stanislav Levin <slev@altlinux.org> 1:2.0.1-alt2
 - Fixed FTBFS (removed obsoleted setuptools-scm-git-archive).
 - Packaged missing i18n data.
