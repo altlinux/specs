@@ -4,7 +4,7 @@
 %define _dotnet_corerelease 7.0*
 
 Name: powershell
-Version: 7.3.7
+Version: 7.3.9
 Release: alt1
 
 Summary: PowerShell for every system!
@@ -154,6 +154,9 @@ ln -s pwsh %buildroot%_bindir/%name
 %doc docs/*
 
 %changelog
+* Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 7.3.9-alt1
+- new version 7.3.9 (with rpmrb script)
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 7.3.7-alt1
 - new version 7.3.7 (with rpmrb script)
 
