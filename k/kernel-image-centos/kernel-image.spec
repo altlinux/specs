@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 381
+%define centos_release 383
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -659,6 +659,27 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Nov 07 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.383-alt1.el9
+- Updated to kernel-5.14.0-383.el9:
+  + Backport overlayfs features for composefs
+  + DRM Backport 9.4 dependencies
+  + EFI sync + unaccepted memory support for SNP and TDX
+  + KVM: arm64: Fix soft-lockup on 64KB host to boot 4KB guest
+  + i40e: Fix VF VLAN offloading when port VLAN is configured
+  + ice:  fix ice driver misc irq
+  + iommu: Optimise PCI SAC address trick
+  + ipv4: First round of upstream fixes for RHEL 9.4.
+  + kernel/fork: beware of __put_task_struct() calling context
+  + nfsd: lock_rename() needs both directories to live on the same fs
+  + ppp: First round of upstream fixes for RHEL 9.4.
+  + scsi: megaraid_sas: a driver update
+  + soc: qcom: geni-se: Add SPI Peripheral Device mode support for GENI QuPv3
+  + target: update to latest version
+  + vhost: Allow null msg.size on VHOST_IOTLB_INVALIDATE
+  + virtio_balloon: Fix endless deflation and inflation on arm64
+  + x86/platform/uv: Use alternate source for socket to node data
+  + x86/sgx: update sgx subsystem upto v6.6
+
 * Tue Oct 31 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.381-alt1.el9
 - Updated to kernel-5.14.0-381.el9 (fixes: CVE-2023-37453, CVE-2023-4133, CVE-2023-42754):
   + 9.4 mm changes
