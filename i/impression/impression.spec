@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: impression
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: Impression is a tool to create bootable drives
@@ -68,6 +68,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Nov 07 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Mon Nov 06 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
 - 3.0
 
