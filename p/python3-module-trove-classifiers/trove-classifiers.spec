@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2023.9.19
+Version: 2023.10.18
 Release: alt1
 Summary: Canonical source for classifiers on PyPI
 License: Apache-2.0
@@ -65,6 +65,9 @@ echo '%version' > ./calver_version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 2023.10.18-alt1
+- 2023.9.19 -> 2023.10.18.
+
 * Thu Oct 05 2023 Stanislav Levin <slev@altlinux.org> 2023.9.19-alt1
 - 2023.8.7 -> 2023.9.19.
 
