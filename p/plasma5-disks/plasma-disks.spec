@@ -2,8 +2,8 @@
 
 Name: plasma5-disks
 Version: 5.27.9
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Plasma 5 Hard disk health monitoring
@@ -74,6 +74,9 @@ Requires: %name-common
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
 - new version
 

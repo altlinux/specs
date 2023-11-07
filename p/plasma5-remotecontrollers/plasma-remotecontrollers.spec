@@ -5,8 +5,8 @@
 
 Name: plasma5-remotecontrollers
 Version: 5.27.9
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Input events to keypresses translator
@@ -78,9 +78,11 @@ Requires: %name-common
 %K5install
 %K5install_move data locale kpackage
 # fix install autostart
-mkdir -p %buildroot/%_K5start/
-mv %buildroot/%_sysconfdir/xdg/autostart/*.desktop \
-    %buildroot/%_K5start/
+if [ "%_K5start" != "%_sysconfdir/xdg/autostart" ] ; then
+    mkdir -p %buildroot/%_K5start/
+    mv %buildroot/%_sysconfdir/xdg/autostart/*.desktop \
+	%buildroot/%_K5start/
+fi
 # rename udev rules
 mkdir -p %buildroot/%_udevrulesdir/
 mv %buildroot/%_libdir/udev/rules.d/40-uinput.rules %buildroot/%_udevrulesdir/40-uinput-%name.rules
@@ -108,6 +110,9 @@ mv %buildroot/%_libdir/udev/rules.d/40-uinput.rules %buildroot/%_udevrulesdir/40
 %_K5dbus_iface/*remotecontrollers*
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
 - new version
 

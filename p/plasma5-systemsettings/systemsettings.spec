@@ -5,8 +5,8 @@
 
 Name: plasma5-%rname
 Version: 5.27.9
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 settings
@@ -71,8 +71,10 @@ KF5 library
 
 sed -i 's|\(^Name.*=.*\)|\1 KDE5|' app/systemsettings.desktop
 sed -i '/^Name.*=/s/KDE/KDE5/' app/kdesystemsettings.desktop
-sed -i 's|\(^Exec.*=\)\(.*\)|\1kde5 \2|' app/kdesystemsettings.desktop
 sed -i '/EnabledByDefault/s|true|false|' runner/systemsettingsrunner.json
+if [ "%_K5bin" != "%_bindir" ] ; then
+    sed -i 's|\(^Exec.*=\)\(.*\)|\1kde5 \2|' app/kdesystemsettings.desktop
+fi
 
 %build
 %K5build \
@@ -86,9 +88,10 @@ sed -i '/EnabledByDefault/s|true|false|' runner/systemsettingsrunner.json
 [ -e %buildroot/%_K5bin/systemsettings ] \
     || ln -s systemsettings5 %buildroot/%_K5bin/systemsettings
 
-mkdir -p %buildroot/%_desktopdir/kf5
-mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5/
-
+if [ "%_K5xdgapp" != "%_desktopdir" ] ; then
+    mkdir -p %buildroot/%_desktopdir/
+    mv %buildroot/%_K5xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/
+fi
 
 %find_lang %name --with-kde --all-name
 
@@ -104,11 +107,10 @@ mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5
 %_K5data/systemsettings/
 %_K5data/kglobalaccel/*systemsettings*
 %_K5data/kpackage/genericqml/org.kde.systemsettings.sidebar/
-#%_K5srv/*.desktop
 %_K5srvtyp/*.desktop
 %_K5xmlgui/*
-%_K5xdgapp/*.desktop
-%_desktopdir/kf5/kdesystemsettings.desktop
+%_K5xdgapp/systemsettings.desktop
+%_desktopdir/kdesystemsettings.desktop
 %_datadir/zsh/site-functions/_*
 %_datadir/metainfo/*.xml
 
@@ -121,6 +123,9 @@ mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5
 %_K5lib/libsystemsettingsview.so.*
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
 - new version
 

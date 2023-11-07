@@ -6,9 +6,9 @@
 
 Name: plasma5-kactivitymanagerd
 Version: 5.27.9
-Release: alt1
+Release: alt2
 Epoch: 1
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Core component for the KDE Activity concept
@@ -65,6 +65,9 @@ Obsoletes: kf5-kactivitymanagerd < %EVR
 %_K5data/krunner/dbusplugins/plasma-runnners-activities.desktop
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
 - new version
 

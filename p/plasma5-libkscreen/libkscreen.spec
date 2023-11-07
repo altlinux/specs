@@ -5,8 +5,8 @@
 %define rname libkscreen
 Name: plasma5-%rname
 Version: 5.27.9
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: System/Libraries
 Summary: KDE Workspace 5 display configuration library
@@ -107,7 +107,7 @@ export PATH=%_qt5_bindir:$PATH
 
 %files -n libkf5screen
 %_K5lib/libKF5Screen.so.*
-%_K5exec/kscreen_backend_launcher
+%_kf5_exec/kscreen_backend_launcher
 %_K5plug/kf5/kscreen/
 %_K5dbus_srv/org.kde.kscreen.service
 %_unitdir_user/*.service
@@ -116,6 +116,9 @@ export PATH=%_qt5_bindir:$PATH
 %_K5lib/libKF5ScreenDpms.so.*
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
 - new version
 

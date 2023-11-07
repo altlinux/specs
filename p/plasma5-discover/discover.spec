@@ -21,7 +21,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.9
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: System/Configuration/Packaging
@@ -295,6 +295,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
 - new version
 

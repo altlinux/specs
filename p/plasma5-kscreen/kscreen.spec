@@ -6,9 +6,9 @@
 
 Name: plasma5-%rname
 Version: 5.27.9
-Release: alt1
+Release: alt2
 Epoch: 1
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Display Management software
@@ -93,7 +93,7 @@ rm -f po/ru/kscreen.po.tmp
 %_K5plug/plasma/applets/*kscreen*.so
 %_K5xdgapp/*kscreen*.desktop
 %_K5data/kpackage/kcms/kcm_kscreen/
-%_K5data/plasma/plasmoids/org.kde.kscreen/
+%_kf5_data/plasma/plasmoids/org.kde.kscreen/
 %_K5srv/*kscreen*.desktop
 %_unitdir_user/*kscreen*.service
 %_K5libexecdir/kscreen_osd_service
@@ -108,6 +108,9 @@ rm -f po/ru/kscreen.po.tmp
 #%_K5archdata/mkspecs/modules/qt_KScreen.pri
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
 - new version
 

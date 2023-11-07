@@ -3,8 +3,8 @@
 
 Name: plasma5-desktop
 Version: 5.27.9
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 plasma desktop view furniture
@@ -221,14 +221,15 @@ done
 %_K5notif/*
 %_K5data/solid/devices/solid-*.desktop
 %_K5data/kcm*/
-%_K5data/kactivitymanagerd/
+%_kf5_data/kcm*/
+%_kf5_data/kactivitymanagerd/
 %_K5data/kpackage/kcms/*
 %_K5data/plasma/emoji/
-%_K5data/plasma/plasmoids/*
-%_K5data/plasma/packages/*
-%_K5data/plasma/layout-templates/*
-%_K5data/plasma/shells/*/
-%_K5data/plasma/services/*
+%_kf5_data/plasma/plasmoids/*
+%_kf5_data/plasma/packages/*
+%_kf5_data/plasma/layout-templates/*
+%_kf5_data/plasma/shells/*/
+%_kf5_data/plasma/services/*
 %_K5data/plasma/desktoptheme/default/icons/*
 %_K5data/kglobalaccel/*.desktop
 %exclude %_K5data/kglobalaccel/*emojier*.desktop
@@ -251,6 +252,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
 - new version
 

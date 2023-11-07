@@ -3,9 +3,9 @@
 
 Name: plasma5-nm
 Version: 5.27.9
-Release: alt1
+Release: alt2
 Epoch: 1
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Plasma applet written in QML for managing network connections
@@ -228,7 +228,7 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5qml/org/kde/plasma/networkmanagement/
 %_K5xdgapp/*networkmanagement*.desktop
 %_K5data/*networkmanagement/
-%_K5data/plasma/plasmoids/org.kde.plasma.networkmanagement/
+%_kf5_data/plasma/plasmoids/org.kde.plasma.networkmanagement/
 %_K5data/plasma/updates/*nm*
 %_K5notif/networkmanagement.notifyrc
 %_datadir/qlogging-categories5/*.*categories
@@ -261,6 +261,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
 - new version
 

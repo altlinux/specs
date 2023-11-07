@@ -2,9 +2,9 @@
 
 Name: plasma5-vault
 Version: 5.27.9
-Release: alt1
+Release: alt2
 Epoch: 1
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Encrypted vaults support for KDE
@@ -75,11 +75,14 @@ Requires: %name-common = %version-%release
 %_K5plug/kf5/kfileitemaction/*.so
 %_K5plug/kf5/kded/*vault*.so
 %_K5plug/plasma/applets/*vault*.so
-%_K5data/plasma/plasmoids/*vault*/
+%_kf5_data/plasma/plasmoids/*vault*/
 %_K5srv/*.desktop
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
 - new version
 

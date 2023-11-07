@@ -15,9 +15,9 @@
 
 Name: plasma5-addons
 Version: 5.27.9
-Release: alt1
+Release: alt2
 Epoch: 1
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Plasma addons
@@ -147,7 +147,7 @@ touch touch-%_arch
 %_K5qml/org/kde/plasma/private/*/
 %_K5qml/org/kde/plasmacalendar/*/
 %_K5qml/org/kde/plasma/wallpapers/potd/
-%_K5data/plasma/*
+%_kf5_data/plasma/*
 %_K5data/kwin/*
 %_K5srvtyp/*
 %_datadir/metainfo/*.xml
@@ -166,6 +166,9 @@ touch touch-%_arch
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
 - new version
 

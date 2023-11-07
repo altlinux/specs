@@ -3,8 +3,8 @@
 
 Name: plasma5-sdk
 Version: 5.27.9
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Development/KDE and QT
 Summary: KDE Workspace 5 Applications useful for Plasma Development
@@ -21,7 +21,7 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils kf5-attica-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libdb4-devel python-module-google qt5-svg-devel qt5-webkit-devel rpm-build-gir rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++  qt5-svg-devel qt5-webkit-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-svg-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel
@@ -77,13 +77,16 @@ KF5 library
 %_K5bin/*
 %_K5xdgapp/*.desktop
 %_K5plug/ktexteditor/
-%_K5data/plasma/shells/*/
+%_kf5_data/plasma/shells/*/
 %_K5data/kpackage/
 %_K5srv/*.desktop
 %_datadir/zsh/site-functions/_*
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
 - new version
 

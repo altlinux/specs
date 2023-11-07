@@ -6,9 +6,9 @@
 
 Name: plasma5-%rname
 Version: 5.27.9
-Release: alt1
+Release: alt2
 Epoch: 1
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Crash Handler
@@ -82,6 +82,9 @@ Requires: %name-common = %version-%release
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
 - new version
 

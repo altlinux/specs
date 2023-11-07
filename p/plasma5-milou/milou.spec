@@ -5,9 +5,9 @@
 
 Name: plasma5-%rname
 Version: 5.27.9
-Release: alt1
+Release: alt2
 Epoch: 1
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Search and Launch
@@ -77,7 +77,7 @@ KF5 library
 %files
 #%_K5plug/*.so
 %_K5qml/org/kde/milou/
-%_K5data/plasma/plasmoids/org.kde.milou/
+%_kf5_data/plasma/plasmoids/org.kde.milou/
 %_K5srv/*.desktop
 #%_K5srvtyp/*.desktop
 %_datadir/metainfo/*.xml
@@ -94,6 +94,9 @@ KF5 library
 %_K5lib/libmilou.so.%milou_sover
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
 - new version
 

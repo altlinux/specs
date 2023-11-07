@@ -5,8 +5,8 @@
 
 Name: plasma5-pa
 Version: 5.27.9
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Audio Volume Plasma Applet
@@ -84,7 +84,7 @@ rm -rf %buildroot/%_datadir/kde4/ ||:
 %_K5plug/plasma/kcms/systemsettings/*pulse*.so
 %_K5qml/org/kde/plasma/private/volume/
 %_K5xdgapp/*pulse*.desktop
-%_K5data/plasma/plasmoids/org.kde.plasma.volume/
+%_kf5_data/plasma/plasmoids/org.kde.plasma.volume/
 %_K5data/kpackage/kcms/*pulse*/
 %_K5cf_upd/*
 %_K5srv/*.desktop
@@ -102,6 +102,9 @@ rm -rf %buildroot/%_datadir/kde4/ ||:
 #%_K5lib/libQPulseAudioPrivate.so.*
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt1
 - new version
 

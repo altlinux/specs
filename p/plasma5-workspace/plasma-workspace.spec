@@ -37,9 +37,9 @@
 
 Name: plasma5-workspace
 Version: 5.27.9
-Release: alt1
+Release: alt2
 Epoch: 1
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Plasma
@@ -378,8 +378,9 @@ sed -i 's|^Exec=.*|Exec=%_K5bin/krunner|' %buildroot/%_K5dbus_srv/org.kde.krunne
 mkdir -p %buildroot/%_K5xdgconf/plasma-workspace/env/
 
 mkdir -p %buildroot/%_bindir
-ln -s `relative %_kf5_bin/startplasma-x11 %_bindir/startkde5` %buildroot/%_bindir/startkde5
-ln -s startplasma-x11 %buildroot/%_kf5_bin/startkde5
+mkdir -p %buildroot/%_kf5_bin
+ln -s `relative %_K5bin/startplasma-x11 %_bindir/startkde5` %buildroot/%_bindir/startkde5
+ln -s `relative %_K5bin/startplasma-x11 %_kf5_bin/startkde5` %buildroot/%_kf5_bin/startkde5
 install -m0755 %SOURCE50 %buildroot/%_bindir/dbus-restart-kde5
 
 # Add chksession support
@@ -388,9 +389,9 @@ cat <<__EOF__ > %buildroot/%x11confdir/wmsession.d/01PLASMA
 NAME=Plasma
 DESC=Plasma by KDE
 ICON=%_K5icon/hicolor/48x48/apps/kwin.png
-EXEC=%_kf5_bin/startplasma-x11
+EXEC=%_K5bin/startplasma-x11
 SCRIPT:
-exec %_kf5_bin/startplasma-x11
+exec %_K5bin/startplasma-x11
 __EOF__
 
 
@@ -405,17 +406,6 @@ cat <<__EOF__ > %buildroot/%_menudir/kde5-session
 			icon="kwin.png"
 __EOF__
 
-# disable annoing autostart
-mkdir -p %buildroot/%_K5start/
-for n in tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store ; do
-    echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_K5start/$n.desktop
-done
-# disable annoing menus
-mkdir -p %buildroot/%_kf5_xdgapp/
-for n in gnome-mplayer mplayer gmplayer ; do
-    echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_kf5_xdgapp/$n.desktop
-done
-
 # systemd user service deps
 mkdir -p %buildroot/%_unitdir_user/plasma-core.target.d/
 mkdir -p %buildroot/%_unitdir_user/plasma-workspace@.target.d/
@@ -429,10 +419,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 %files common -f %name.lang
 %doc LICENSES/*
-%dir %_K5data/plasma/look-and-feel/
+%dir %_kf5_data/plasma/look-and-feel/
 %dir %_K5xdgconf/plasma-workspace/
 %dir %_K5xdgconf/plasma-workspace/env/
-%dir %_K5data/desktop-directories/
 %dir %_K5plug/kpackage/
 %dir %_K5qml/org/kde/plasma/workspace/
 %dir %_K5qml/org/kde/plasma/private/
@@ -449,7 +438,7 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 %dir %_K5plug/plasma/*/
 %dir %_K5plug/phonon_platform/
 %_bindir/*
-%_K5bin/*
+%_kf5_bin/*
 %_K5exec/*
 %_K5libexecdir/kauth/*
 %_K5conf_bin/*
@@ -471,9 +460,10 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 %_K5qml/org/kde/colorcorrect/
 %_K5qml/org/kde/notificationmanager/
 %_K5data/knsrcfiles/*.knsrc
+%_kf5_data/plasma/
 %_K5data/plasma/
-%exclude %_K5data/plasma/look-and-feel/*
-%exclude %_K5data/plasma/wallpapers/org.kde.image/
+%exclude %_kf5_data/plasma/look-and-feel/*
+%exclude %_kf5_data/plasma/wallpapers/org.kde.image/
 %_K5data/kglobalaccel/*.desktop
 %_K5data/kio/servicemenus/*
 %_K5data/kio_desktop/
@@ -514,8 +504,8 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 %files -n %name-qml
 %_K5plug/kpackage/packagestructure/plasma_wallpaper.so
 %_K5qml/org/kde/plasma/
-%_K5data/plasma/look-and-feel/*
-%_K5data/plasma/wallpapers/org.kde.image/
+%_kf5_data/plasma/look-and-feel/*
+%_kf5_data/plasma/wallpapers/org.kde.image/
 
 %files -n sddm-theme-breeze
 %_datadir/sddm/themes/breeze/
@@ -559,6 +549,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
 - new version
 

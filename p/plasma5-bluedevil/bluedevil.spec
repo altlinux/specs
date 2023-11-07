@@ -2,9 +2,9 @@
 
 Name: plasma5-%rname
 Version: 5.27.9
-Release: alt1
+Release: alt2
 Epoch: 1
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 bluetooth stack
@@ -90,7 +90,7 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %_K5plug/kf5/kio/*.so
 %_K5qml/org/kde/plasma/private/bluetooth/
 %_K5data/kpackage/kcms/kcm_bluetooth/
-%_K5data/plasma/plasmoids/org.kde.plasma.bluetooth/
+%_kf5_data/plasma/plasmoids/org.kde.plasma.bluetooth/
 %_K5data/bluedevilwizard/
 %_K5data/remoteview/bluetooth-network.desktop
 %_K5xdgapp/*.desktop
@@ -101,6 +101,9 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt1
 - new version
 

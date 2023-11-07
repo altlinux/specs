@@ -7,9 +7,9 @@
 
 Name: plasma5-%rname
 Version: 5.27.9
-Release: alt1
+Release: alt2
 Epoch: 2
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Screen Locker
@@ -25,8 +25,7 @@ Source: %rname-%version.tar
 Source2: kcheckpass.tar
 Source10: pam-kf5-screenlocker
 Patch1: alt-def-screenlocker.patch
-Patch2: alt-greeter-path.patch
-Patch3: alt-pam-support.patch
+Patch2: alt-pam-support.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: glibc-devel
@@ -80,7 +79,6 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 tar xf %SOURCE2 kcheckpass/
 mv kcheckpass/authenticator.* greeter/
@@ -100,7 +98,6 @@ export PATH=$PWD/bin_fake:$PATH
 
 %install
 %K5install
-%K5install_move exec all
 %K5install_move data kconf_update ksmserver kpackage
 %find_lang %name --all-name
 
@@ -114,8 +111,8 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 
 %files
 %config(noreplace) %_sysconfdir/pam.d/kf5-screenlocker
-%attr(2711,root,chkpwd) %_K5exec/kcheckpass
-%_K5exec/kscreenlocker_greet
+%attr(2711,root,chkpwd) %_K5libexecdir/kcheckpass
+%_K5libexecdir/kscreenlocker_greet
 %_K5plug/plasma/kcms/systemsettings/*screenlocker*.so
 %_K5data/ksmserver/screenlocker/
 %_K5data/kpackage/kcms/kcm_screenlocker/
@@ -136,6 +133,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 2:5.27.9-alt2
+- dont force alternate placement
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 2:5.27.9-alt1
 - new version
 
