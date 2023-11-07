@@ -24,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt6
+Release: alt7
 Epoch: 1
 Url: https://altsp.su
 
@@ -82,6 +82,7 @@ Group:    System/Configuration/Boot and Init
 BuildArch: noarch
 Provides: plymouth-theme-%theme
 Requires: plymouth-plugin-script
+Requires: plymouth-theme-bgrt-alt
 Requires(pre):   plymouth
 
 %branding_add_conflicts %flavour bootsplash
@@ -265,7 +266,7 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 #bootsplash
 %post bootsplash
 [ "$1" -eq 1 ] || exit 0
-subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
+subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 
 #notes
 %post notes
@@ -287,8 +288,8 @@ fi
 %_iconsdir/hicolor/*/apps/alt-%theme.png
 
 %files bootsplash
-%_datadir/plymouth/themes/%theme/*
-%_pixmapsdir/system-logo.png
+#_datadir/plymouth/themes/%theme/*
+#_pixmapsdir/system-logo.png
 
 %files release
 %_sysconfdir/buildreqs/packages/ignore.d/*
@@ -321,6 +322,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Nov 07 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt7
+- add system-logo.png for plymouth-theme-bgrt-alt
+- bootsplash: use plymouth-theme-bgrt-alt
+
 * Fri Oct 27 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt6
 - mate-settings: add settings for lightdm-gtk-greeter:
   + add keyboard layout indicator

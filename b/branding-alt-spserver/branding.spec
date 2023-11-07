@@ -19,7 +19,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt5
+Release: alt6
 Epoch: 1
 Url: https://altsp.su
 
@@ -77,6 +77,7 @@ Group:    System/Configuration/Boot and Init
 BuildArch: noarch
 Provides: plymouth-theme-%theme
 Requires: plymouth-plugin-script
+Requires: plymouth-theme-bgrt-alt
 Requires(pre):   plymouth
 
 %branding_add_conflicts %flavour bootsplash
@@ -236,7 +237,7 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 #bootsplash
 %post bootsplash
 [ "$1" -eq 1 ] || exit 0
-subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
+subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 
 #notes
 %post notes
@@ -255,8 +256,8 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme.png
 
 %files bootsplash
-%_datadir/plymouth/themes/%theme/*
-%_pixmapsdir/system-logo.png
+#_datadir/plymouth/themes/%theme/*
+#_pixmapsdir/system-logo.png
 
 %files release
 %_sysconfdir/buildreqs/packages/ignore.d/*
@@ -285,6 +286,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Nov 07 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt6
+- add system-logo.png for plymouth-theme-bgrt-alt
+- bootsplash: use plymouth-theme-bgrt-alt
+
 * Tue Oct 17 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt5
 - indexhtml: update link to official telegram chat
 - indexhtml: add link to Mailing Lists
