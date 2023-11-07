@@ -1,23 +1,27 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
-%ifnarch %ix86
-BuildRequires: /usr/bin/R
-%endif
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname ompl
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%add_optflags %optflags_shared
 %define fontpkgname ompl
+BuildRequires(pre): rpm-macros-R
+%ifnarch %R_exclude_arches
+BuildRequires: /usr/bin/R
+%endif
+ExcludeArch: %R_exclude_arches
+
 %undefine __cmake_in_source_build
 %global soversion 16
 %global apiversion 1.5
 
 Name:           libompl
 Version:        1.5.0
-Release:        alt4_7
+Release:        alt4_14
 Summary:        The Open Motion Planning Library
 
 License:        BSD
@@ -91,7 +95,8 @@ rm -f ompl_doc/installdox
 rm -f %{buildroot}%{_datadir}/%{oldname}/demos/*.py
 rm -rf %{buildroot}%{_includedir}/%{oldname}/CMakeFiles
 rm -rf %{buildroot}%{_bindir}
-rm -f %{buildroot}%{_mandir}/man1/plannerareana*
+rm -f %{buildroot}%{_mandir}/man1/plannerarena*
+rm -f %{buildroot}%{_mandir}/man1/ompl_benchmark_statistics*
 
 %check
 export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
@@ -104,7 +109,6 @@ export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 %doc LICENSE README.md
 %{_libdir}/libompl.so.%{version}
 %{_libdir}/libompl.so.%{soversion}
-%{_mandir}/man1/*.1*
 
 %files devel
 %doc %{_vpath_builddir}/ompl_doc
@@ -115,6 +119,9 @@ export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 %{_libdir}/%{oldname}
 
 %changelog
+* Tue Nov 07 2023 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt4_14
+- dropped unused man pages (closes: #48352)
+
 * Mon Oct 30 2023 Ivan A. Melnikov <iv@altlinux.org> 1.5.0-alt4_7
 - NMU: drop /usr/bin/R from build requirements on i586,
   where it's not available (fixes FTBFS).
