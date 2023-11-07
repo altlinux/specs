@@ -40,7 +40,7 @@ BuildRequires: gcc-c++
 
 Name:           GMT
 Version:        6.4.0
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
@@ -49,6 +49,7 @@ Source0:        https://github.com/GenericMappingTools/gmt/releases/download/%{v
 # Add missing byteswap include
 Patch0:         https://patch-diff.githubusercontent.com/raw/GenericMappingTools/gmt/pull/6044.patch
 Patch1: GMT-c99.patch
+Patch3500: GMT-loongarch.patch
 
 BuildRequires:  ctest cmake
 BuildRequires:  gcc
@@ -92,6 +93,12 @@ Obsoletes:      GMT-octave <= 4.5.11
 
 # Do not generate provides for plugins
 %global __provides_exclude_from ^%{_libdir}/gmt/.*\\.so$
+# XXX: Prevent # XXX: shell.req from making a bogus
+# XXX: Requires: /opt/gmt/bin/gmt-config.
+# XXX: That dependency stems from tools/gmt_prepmex.sh which is a macos
+# XXX: specific script. That script installs a copy of GMT to /opt/gmt
+# XXX: and runs gmt-config from there to verify the copy.
+%filter_from_requires /\/opt\/gmt\/bin\/gmt-config$/d
 Source44: import.info
 Patch33: GMT-gstat.patch
 
@@ -168,6 +175,7 @@ applications that use %{name}.
 %patch0 -p1
 %patch1 -p1
 %patch33 -p2
+%patch3500 -p1
 %ifarch %e2k
 sed -i 's/gregs\[REG_EIP\]/cr0_hi/' src/gmt_common_sighandler.c
 %endif
@@ -258,6 +266,9 @@ mv %buildroot%_bindir/{,GMT-}batch
 
 
 %changelog
+* Sun Oct 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.4.0-alt1_10
+- NMU: fixed FTBFS on LoongArch
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 6.4.0-alt1_9
 - update to new release by fcimport
 
