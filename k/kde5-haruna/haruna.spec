@@ -5,8 +5,8 @@
 
 Name: kde5-%rname
 Version: 0.12.1
-Release: alt2
-%K5init altplace
+Release: alt3
+%K5init
 
 Group: Video
 Summary: Video Player
@@ -96,6 +96,7 @@ KF5 library
 %_K5bin/haruna
 %_K5xdgapp/*haruna*.desktop
 %_K5icon/hicolor/*/apps/*haruna*.*
+%_datadir/metainfo/*haruna*.xml
 
 #%files -n %libharuna
 #%doc LICENSE* README.md
@@ -103,6 +104,10 @@ KF5 library
 #%_K5lib/libharuna.so.*
 
 %changelog
+* Tue Nov 07 2023 Sergey V Turchin <zerg@altlinux.org> 0.12.1-alt3
+- don't hardcode altplace
+- package metainfo
+
 * Mon Oct 30 2023 Sergey V Turchin <zerg@altlinux.org> 0.12.1-alt2
 - update russian translation
 
