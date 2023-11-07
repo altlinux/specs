@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.38.0
-Release: alt3
+Version: 2.39.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -70,8 +70,6 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch0001: 0001-Use-really-raw-output.patch
-Patch0002: 0002-initrd-scanmod-Handle-ENODATA-return-code.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -409,6 +407,15 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
 
 %changelog
+* Tue Nov 07 2023 Alexey Gladkov <legion@altlinux.ru> 2.39.0-alt1
+- New version (2.39.0).
+- Feature plymouth:
+  + Show splash in synchronous mode to avoid race with plymouth users (ALT#48254).
+- Feature fsck:
+  + Fix typo in boot variable and fix the FASTBOOT parameter.
+- Utilities:
+  + initrd-scanmod: Add support for kmod > v30-25-g5c004af.
+
 * Sat Oct 07 2023 Alexey Gladkov <legion@altlinux.ru> 2.38.0-alt3
 - Handle changes in kmod >= v31.
 
