@@ -2,8 +2,8 @@
 
 Name: kde5-%rname
 Version: 23.01.0
-Release: alt1
-%K5init altplace no_appdata
+Release: alt2
+%K5init no_appdata
 
 Group: Graphical desktop/KDE
 Summary: Settings application for Plasma Mobile
@@ -113,6 +113,9 @@ Requires: %name-common
 #%_K5lib/libplasma-settings.so.*
 
 %changelog
+* Tue Nov 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.01.0-alt2
+- don't hardcode altplace
+
 * Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 23.01.0-alt1
 - new version
 
