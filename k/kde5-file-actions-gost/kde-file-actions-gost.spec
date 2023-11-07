@@ -1,8 +1,8 @@
 %define rname kde-file-actions-gost
 Name: kde5-file-actions-gost
 Version: 0.8
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Simple scripts to encrypt files
@@ -47,6 +47,9 @@ done
 %_K5srv/*crypt-*-gost.desktop
 
 %changelog
+* Tue Nov 07 2023 Sergey V Turchin <zerg at altlinux dot org> 0.8-alt2
+- don't hardcode alternate placement
+
 * Mon Sep 04 2023 Sergey V Turchin <zerg at altlinux dot org> 0.8-alt1
 - fix cipher name for new openssl (closes: 47294)
 
