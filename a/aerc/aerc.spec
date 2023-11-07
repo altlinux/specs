@@ -1,7 +1,7 @@
 %define gobuild go build
 
 Name: aerc
-Version: 0.15.2
+Version: 0.16.0
 Release: alt1
 Summary: Email client for your terminal
 
@@ -66,14 +66,19 @@ desktop-file-validate %buildroot/%_desktopdir/aerc.desktop
 %doc LICENSE
 %doc doc README.md
 %_bindir/aerc
+%_bindir/carddav-query
 %_datadir/aerc/
 %_desktopdir/aerc.desktop
 /usr/libexec/aerc/
+%_man1dir/carddav-query.*
 %_man1dir/aerc-*.1.*
 %_man1dir/aerc.1*
 %_man5dir/aerc-*.5.*
 %_man7dir/aerc-*.7.*
 
 %changelog
+* Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 0.16.0-alt1
+- new version 0.16.0 (with rpmrb script)
+
 * Wed Aug 02 2023 Vitaly Lipatov <lav@altlinux.ru> 0.15.2-alt1
 - initial build for ALT
