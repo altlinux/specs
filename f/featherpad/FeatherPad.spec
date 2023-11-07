@@ -1,6 +1,6 @@
 Name: featherpad
 Version: 1.4.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: A lightweight Qt5 plain-text editor for Linux
 License: GPLv3+
@@ -10,13 +10,8 @@ Url: https://github.com/tsujan/FeatherPad
 Source: V%version.tar.gz
 
 BuildPreReq: cmake rpm-build-ninja
-# Automatically added by buildreq on Mon May 07 2018
-# optimized out: GraphicsMagick GraphicsMagick-common gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libX11-devel libqt5-core libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel xorg-xproto-devel
-BuildRequires: ImageMagick-tools qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-gamepad-devel qt5-multimedia-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libhunspell-devel
+BuildRequires: ImageMagick-tools qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-x11extras-devel libhunspell-devel
 
-%ifnarch %e2k ppc64le
-BuildRequires: qt5-webview-devel qt5-webengine-devel qt5-webkit-devel
-%endif
 
 %description
 FeatherPad is a lightweight Qt5 plain-text editor for Linux.
@@ -63,6 +58,11 @@ done
 %_datadir/metainfo/featherpad.metainfo.xml
 
 %changelog
+* Tue Nov 07 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.4.1-alt1.2
+- NMU: trimmed build dependencies according to CMakeLists.txt
+  (cross-check: dependencies of binary package did not change).
+  As a result the package can be build for LoongArch.
+
 * Tue Sep 19 2023 Leontiy Volodin <lvol@altlinux.org> 1.4.1-alt1.1
 - fixed build with ImageMagick 7
 
