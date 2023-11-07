@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Broker and result backend for taskiq
@@ -61,6 +61,9 @@ backend based on redis.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 0.5.1-alt1
+- Updated to 0.5.1.
+
 * Fri Sep 22 2023 Anton Zhukharev <ancieg@altlinux.org> 0.5.0-alt1
 - Updated to 0.5.0.
 
