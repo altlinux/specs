@@ -5,7 +5,7 @@
 %define _libexecdir /usr/libexec
 
 Name: yggdrasil
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: End-to-end encrypted IPv6 networking
@@ -81,6 +81,9 @@ mv %buildroot{%_bindir,%_libexecdir/yggdrasil}/genkeys
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 0.5.2-alt1
+- Updated to 0.5.2.
+
 * Tue Oct 31 2023 Anton Zhukharev <ancieg@altlinux.org> 0.5.1-alt1
 - Updated to 0.5.1.
 
