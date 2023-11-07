@@ -1,6 +1,6 @@
 Name:    cutechess
-Version: 1.3.0
-Release: alt0.beta4
+Version: 1.3.1
+Release: alt1
 
 Summary: Cute Chess is a graphical user interface, command-line interface and a library for playing chess
 License: GPL-3.0
@@ -51,5 +51,8 @@ May 2008 and is currently in active development.
 %_man6dir/*
 
 %changelog
+* Fri Oct 06 2023 Leonid Znamenok <respublica@altlinux.org> 1.3.1-alt1
+- New release 1.3.1
+
 * Tue Jul 11 2023 Leonid Znamenok <respublica@altlinux.org> 1.3.0-alt0.beta4
 - Initial build for Sisyphus
