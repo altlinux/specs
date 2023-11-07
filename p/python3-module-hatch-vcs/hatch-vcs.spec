@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.0
-Release: alt3
+Version: 0.4.0
+Release: alt1
 Summary: Hatch plugin for versioning with your preferred VCS
 License: MIT
 Group: Development/Python3
@@ -53,6 +53,9 @@ system (like Git) to determine project versions.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 07 2023 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
+- 0.3.0 -> 0.4.0.
+
 * Tue Sep 26 2023 Stanislav Levin <slev@altlinux.org> 0.3.0-alt3
 - Fixed FTBFS (setuptools-scm 8.0).
 
