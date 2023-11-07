@@ -1,6 +1,6 @@
 Name: libetpan
 Version: 1.9.4
-Release: alt3
+Release: alt4
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
 License: BSD-3-Clause
@@ -18,6 +18,12 @@ Patch: %name-%version-%release.patch
 # new version will be released.
 Patch2: CVE-2020-15953.patch
 Patch3: CVE-2022-4121.patch
+Patch4: Fix-potential-null-pointer-deference-348.patch
+Patch5: Fix-potential-null-pointer-deferenced-361.patch
+Patch6: Fix-potential-null-pointer-deferenced-363.patch
+Patch7: Missing-boundary-fix-384.patch
+Patch8: CVE-2020-15953-2.patch
+Patch9: Fix-buffer-overwrite-for-empty-string-in-remove_trai.patch
 
 %def_with gnutls
 %def_without openssl
@@ -58,6 +64,12 @@ program which use lib%name.
 %patch -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 ln -s README.md README
 
 %build
@@ -89,6 +101,17 @@ install -Dm0755 %SOURCE1 %buildroot%_bindir/%name-config
 %_libdir/%name.so
 
 %changelog
+* Tue Nov 07 2023 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt4
+- Patches from upstream git:
+  + Fix buffer overwrite for empty string in remove_trailing_eol
+    (upstream issue #408);
+  + Detect extra data after STARTTLS response and exit (upstrem
+    issue #387) (fixes: CVE-2020-15953);
+  + Missing boundary fix (upstream issue #384);
+  + Fix potential null pointer deferenced (upstream issue #363);
+  + Fix potential null pointer deferenced (upstream issue #361);
+  + Fix potential null pointer deference (upstream issue #348).
+
 * Tue Dec 20 2022 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt3
 - Fixed libssl knob.
 - Fixed License tag.
