@@ -1,6 +1,6 @@
 Name: leafpad
-Version: 0.8.18.1
-Release: alt4
+Version: 0.8.19
+Release: alt1
 
 Summary: GTK+2 based notepad clone
 
@@ -45,9 +45,13 @@ EOF
 %_bindir/%name
 %_pixmapsdir/*
 %_iconsdir/hicolor/*/*/*g
+%_man1dir/leafpad.1.*
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 0.8.19-alt1
+- new version 0.8.19 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.8.18.1-alt4
 - fix desktop file again (ALT bug #29255)
 
