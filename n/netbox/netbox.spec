@@ -2,7 +2,7 @@
 
 Name:    netbox
 Version: 3.6.3
-Release: alt1
+Release: alt2
 
 Summary: The premier source of truth powering network automation
 License: Apache-2.0
@@ -61,6 +61,7 @@ Source2: httpd2.conf
 Source3: httpd2-ssl.conf
 Source4: README
 Source5: upgrade_netbox
+Source6: netbox.logrotate
 
 %description
 NetBox is the leading solution for modeling and documenting modern networks.
@@ -116,6 +117,7 @@ cp contrib/gunicorn.py %buildroot%_sysconfdir/netbox/gunicorn.py
 mkdir -p %buildroot%_sysconfdir/cron.daily/
 cp contrib/netbox-housekeeping.sh %buildroot%_sysconfdir/cron.daily/netbox-housekeeping
 touch %buildroot%_logdir/netbox/netbox.log
+install -p -D -m 644 %SOURCE6 %buildroot%_logrotatedir/netbox
 # httpd2
 mkdir -p %buildroot%apache2_sites_available
 install -p -D -m 644 %SOURCE2 %buildroot%apache2_sites_available/netbox.conf
@@ -177,6 +179,7 @@ cert-sh generate apache2-netbox ||:
 %dir %attr(0770, root, netbox) %_sharedstatedir/netbox
 %dir %attr(0770, root, netbox) %_logdir/netbox
 %attr(0644, netbox, netbox) %_logdir/netbox/netbox.log
+%config(noreplace) %_logrotatedir/netbox
 %_unitdir/netbox-rq.service
 %_defaultdocdir/netbox/README
 
@@ -191,5 +194,8 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Tue Nov 07 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.3-alt2
+- Add logrotate file.
+
 * Fri Sep 15 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.3-alt1
 - Initial build for Sisyphus.
