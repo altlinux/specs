@@ -6,8 +6,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init altplace no_appdata
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: The KDE Screenshot Utility
@@ -87,11 +87,16 @@ developing applications that use %name.
 %_K5conf_up/*.py
 %_datadir/qlogging-categories5/*.*categories
 %_unitdir_user/%service_name.service
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Tue Nov 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- don't hardcode altplace
+- package metainfo
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
