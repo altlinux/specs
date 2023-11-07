@@ -2,8 +2,8 @@
 %define oname grok
 
 Name: libgrokj2k
-Version: 10.0.8
-Release: alt1.1
+Version: 11.0.0
+Release: alt1
 
 Summary: World's Leading Open Source JPEG 2000 Codec
 License: AGPL-3.0
@@ -106,6 +106,9 @@ rm -rf thirdparty/libz
 %_pkgconfigdir/libgrokj2kcodec.pc
 
 %changelog
+* Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 11.0.0-alt1
+- new version 11.0.0 (with rpmrb script)
+
 * Sun Aug 06 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 10.0.8-alt1.1
 - fixed build for Elbrus
 
