@@ -1,5 +1,5 @@
 Name: alterator-kiosk
-Version: 1.10
+Version: 1.11
 Release: alt1
 
 Source: %name-%version.tar
@@ -55,6 +55,9 @@ install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 %_man5dir/kiosk-profiles.5.xz
 
 %changelog
+* Tue Nov 07 2023 Oleg Solovyov <mcpain@altlinux.org> 1.11-alt1
+- update profiles
+
 * Wed May 04 2022 Oleg Solovyov <mcpain@altlinux.org> 1.10-alt1
 - add manpage about profiles
 
