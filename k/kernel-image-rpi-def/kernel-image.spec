@@ -9,7 +9,7 @@ epoch:1
 %define kernel_need_version	5.15
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.15
-%define kernel_sublevel .73
+%define kernel_sublevel .92
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -450,6 +450,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Nov 07 2023 Dmitry Terekhin <jqt4@altlinux.org> 1:5.15.92-alt1
+- Updated to 5.15.92
+- https://github.com/raspberrypi/linux.git rpi-5.15.y commit 14b35093ca68bf2c81bbc90aace5007142b40b40
+- Add support for RBS Repka Pi 3 board
+
 * Fri Oct 14 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.73-alt1
 - Updated to 5.15.73
 - https://github.com/raspberrypi/linux.git rpi-5.15.y commit ab70db591ba6a3688192e773e967cd5015a693a8
