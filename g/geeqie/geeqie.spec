@@ -5,9 +5,11 @@
 %def_enable map
 %def_enable ffmpegthumbnailer
 %def_enable lua
+#%%%%define optflags_lto %nil
+%def_enable check
 
 Name: geeqie
-Version: 2.0.1
+Version: 2.1
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -21,6 +23,8 @@ Source: https://github.com/BestImageViewer/geeqie/archive/v%version/%name-%versi
 Vcs: https://github.com/BestImageViewer/geeqie.git
 Source: %name-%version.tar
 %endif
+Patch10: %name-2.1-up-lua-build.patch
+Patch11: %name-2.1-up-do-not-truncate-socket-path.patch
 
 Provides: gqview = %version-%release
 Obsoletes: gqview < %version
@@ -31,12 +35,20 @@ Obsoletes: gqview < %version
 Requires: %_bindir/exiftool %_bindir/exiftran
 Requires: %_bindir/convert %_bindir/gphoto2
 Requires: %_bindir/zenity lcms2-utils >= 2.12-alt2
+Requires: libwebp-pixbuf-loader
+# for print preview
+Requires: evince
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ yelp-tools /usr/bin/appstream-util
+BuildRequires: evince
 BuildRequires: python3-module-markdown pandoc
 BuildRequires: libgtk+3-devel libjpeg-devel libtiff-devel libwebp-devel
 BuildRequires: libopenjpeg2.0-devel libdjvu-devel liblcms2-devel
+BuildRequires: libwebp-pixbuf-loader
+%ifnarch armh
+BuildRequires: libjxl-devel
+%endif
 BuildRequires: libpoppler-glib-devel libheif-devel
 BuildRequires: libraw-devel libgomp-devel
 BuildRequires: libexiv2-devel zlib-devel libarchive-devel
@@ -44,6 +56,7 @@ BuildRequires: libgspell-devel
 %{?_enable_lua:BuildRequires: liblua%lua_ver-devel}
 %{?_enable_map:BuildRequires: libgps-devel pkgconfig(clutter-gtk-1.0) libchamplain-gtk3-devel}
 %{?_enable_ffmpegthumbnailer:BuildRequires: libffmpegthumbnailer-devel}
+%{?_enable_check:BuildRequires: xvfb-run shellcheck}
 
 %description
 Geeqie is a lightweight image viewer. It was forked from GQview. The development
@@ -53,6 +66,8 @@ ExifTool.
 
 %prep
 %setup
+%patch10 -p1 -b .lua
+%patch11 -p1 -b .socket
 
 %build
 %{?_enable_ffmpegthumbnailer:%add_optflags -Wno-error=unused-function}
@@ -72,6 +87,9 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 
 %find_lang %name
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%name/
@@ -90,11 +108,16 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*x*/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
 %_man1dir/%name.1.*
 %_datadir/metainfo/%rdn_name.appdata.xml
 %doc NEWS README.*
 
 %changelog
+* Tue Nov 07 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
+- 2.1
+- enabled %%check
+
 * Fri Aug 12 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
