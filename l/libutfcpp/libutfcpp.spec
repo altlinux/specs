@@ -1,5 +1,5 @@
 Name: libutfcpp
-Version: 3.2.5
+Version: 4.0.2
 Release: alt1
 
 Summary: A library for handling UTF-8 encoded strings
@@ -29,6 +29,9 @@ See https://github.com/ledger/utfcpp also.
 %build
 %cmake
 %cmake_build
+cd tests
+%cmake_insource
+%make_build
 
 %install
 cd source
@@ -37,7 +40,7 @@ install -m0644 utf8.h %buildroot/%_includedir
 install -m0644 utf8/*.h %buildroot/%_includedir/utf8
 
 %check
-cd %_host_alias/tests
+cd tests
 ./apitests
 ./cpp11
 ./cpp17
@@ -56,6 +59,9 @@ A library for handling UTF-8 encoded strings.
 %_includedir/utf8.h
 
 %changelog
+* Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt1
+- new version 4.0.2 (with rpmrb script)
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.5-alt1
 - new version 3.2.5 (with rpmrb script)
 
