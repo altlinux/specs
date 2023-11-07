@@ -5,7 +5,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Crypt-Argon2
-Version: 0.019
+Version: 0.020
 Release: alt1
 
 Summary: Perl interface to the Argon2 key derivation functions
@@ -54,6 +54,9 @@ argon2-calibrate can be used.
 %_man1dir/argon2-calibrate*
 
 %changelog
+* Tue Nov 07 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.020-alt1
+- New version
+
 * Tue Jul 25 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.019-alt1
 - New version
 - Upstream had switched to Apache Public License 2.0
