@@ -2,8 +2,8 @@
 %def_with rpcgen
 
 Name: autofs
-Version: 5.1.8
-Release: alt6
+Version: 5.1.9
+Release: alt1
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPLv2
@@ -143,6 +143,9 @@ chmod 0600 %_sysconfdir/autofs_ldap_auth.conf ||:
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Tue Nov 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.9-alt1
+- 5.1.9 released
+
 * Sat Oct 22 2022 Michael Shigorin <mike@altlinux.org> 5.1.8-alt6
 - added e2k to pure 64-bit arches (closes: #42862; thanks ilyakurdyukov@)
 - introduce rpcgen knob for older glibc
