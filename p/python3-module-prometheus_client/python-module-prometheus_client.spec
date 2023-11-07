@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: The Python client for Prometheus
 
@@ -16,6 +16,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %oname-%version.tar
 
 BuildArch: noarch
+
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro >= 2.1.4
 BuildRequires: python3-module-decorator python3-module-pytest
@@ -39,6 +41,9 @@ The Python client for Prometheus.
 %python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 0.8.0-alt2
+- (NMU) Provided PEP503-normalized project name.
+
 * Tue Oct 13 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.0-alt1
 - new version 0.8.0 (with rpmrb script)
 
