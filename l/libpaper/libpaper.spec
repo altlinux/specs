@@ -1,8 +1,8 @@
 %define soname 2
 
 Name: libpaper
-Version: 2.1.1
-Release: alt3
+Version: 2.1.2
+Release: alt1
 Epoch: 2
 
 Summary: Library and tools for handling papersize
@@ -106,6 +106,9 @@ to develop applications which use libpaper.
 %_libdir/libpaper.so
 
 %changelog
+* Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 2:2.1.2-alt1
+- new version 2.1.2 (with rpmrb script)
+
 * Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.1.1-alt3
 - NMU:
   - Moved the /etc/paperspecs data file from paper subpackage to the libpaper2
