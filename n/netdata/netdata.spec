@@ -9,12 +9,12 @@
 %def_without pyod
 
 # Please, update here commit id for the release
-%define release_commit 250a04cd7d6f08d7e2b4b47276f25686d4e816b1
+%define release_commit 9dc3b13b4d0f372d32f83788b2acce7060362a14
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.43.0
-Release: alt2
+Version: 1.43.2
+Release: alt1
 
 Summary: Real-time performance monitoring, done right!
 
@@ -28,8 +28,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Source1: netdata.logrotate
-
-Patch1: 938bcf54af73e2c28e3cefa1b7fe24de90548241.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: bash4
@@ -133,7 +131,6 @@ Use this plugin to enable metrics collection from cupsd, the daemon running when
 
 %prep
 %setup
-%patch1 -p1
 
 %if_enabled cloud
 # strange upstream wants static libs
@@ -192,6 +189,10 @@ rm -rf %buildroot%_libexecdir/netdata/python.d/python_modules/urllib3/
 
 mkdir -p %buildroot%_sysconfdir/%name/
 install -m 644 -p system/netdata.conf %buildroot%_sysconfdir/%name/netdata.conf
+
+%if "%_libdir" != "%_libexecdir"
+mv -v %buildroot%_libdir/%name/conf.d %buildroot%_libexecdir/%name/conf.d
+%endif
 
 # This should be opt-in, not opt-out. I do not believe most users would agree
 # with sending usage data to Google Analytics, whether anonymized or not.
@@ -272,13 +273,12 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_sbindir/netdata-claim.sh
 %_unitdir/netdata.service
 %dir %_libexecdir/%name/
+%_libexecdir/%name/conf.d/
 %_libexecdir/%name/charts.d/
 #_libexecdir/%name/node.d/
 %_libexecdir/%name/plugins.d/
 %_libexecdir/%name/python.d/
 %dir %_datadir/%name
-%dir %_libdir/%name/
-%_libdir/%name/conf.d/
 
 #exclude %_libexecdir/%name/python.d/postgres.chart.py
 %exclude %_libexecdir/%name/plugins.d/cups.plugin
@@ -304,6 +304,10 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 1.43.2-alt1
+- new version 1.43.2 (with rpmrb script)
+- fix conf.d placement (ALT bug 48291)
+
 * Wed Nov 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.43.0-alt2
 - add fix to build without distutils (ALT bug 48184)
 
