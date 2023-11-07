@@ -1,5 +1,5 @@
 Name: corectrl
-Version: 1.3.7
+Version: 1.3.8
 Release: alt1
 Summary: Core control application
 Group: System/Configuration/Hardware
@@ -71,6 +71,9 @@ fi
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Tue Nov 07 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.8-alt1
+- 1.3.8.
+
 * Fri Nov 03 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt1
 - 1.3.7.
 
