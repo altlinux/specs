@@ -1,7 +1,7 @@
 %def_with check
 
 Name:    tlpui
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: A GTK user interface for TLP written in Python
@@ -17,6 +17,9 @@ BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
+BuildRequires: python3(gi)
+BuildRequires: gobject-introspection-devel
+BuildRequires: libgtk+3-gir-devel
 %endif
 
 Requires: tlp
@@ -24,7 +27,7 @@ Requires: tlp
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch0: correct-desktopdir.1.5.0.patch
+Patch0: tlpui-1.6.0-alt-correct-test-case.patch
 
 %description
 The Python scripts in this project generate a GTK-UI to change TLP
@@ -54,5 +57,8 @@ of all the valid configuration values.
 
 
 %changelog
+* Fri Oct 06 2023 Leonid Znamenok <respublica@altlinux.org> 1.6.0-alt1
+- New release 1.6.0
+
 * Tue Mar 28 2023 Leonid Znamenok <respublica@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus
