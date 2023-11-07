@@ -7,8 +7,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: Archiving/Compression
 Summary: KDE archivers frontend
@@ -95,6 +95,7 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K5plug/kerfuffle/
 %_K5conf_up/*ark*
 %_K5srv/*ark*.desktop
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/ark_version.h
@@ -108,6 +109,10 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Tue Nov 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- don't hardcode altplace
+- package metainfo
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
