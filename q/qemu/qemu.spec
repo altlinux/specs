@@ -134,7 +134,7 @@
 
 Name: qemu
 Version: 8.1.2
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1335,6 +1335,9 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Fri Nov 03 2023 Alexey Shabalin <shaba@altlinux.org> 8.1.2-alt2
+- update vitastor block driver to vitastor/hotfix-1.1.0
+
 * Wed Oct 18 2023 Alexey Shabalin <shaba@altlinux.org> 8.1.2-alt1
 - 8.1.2 (Fixes: CVE-2023-42467).
 
