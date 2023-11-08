@@ -1,8 +1,11 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define lng_list af ar as ast be be@latin bg bn bn_IN br bs ca ca@valencia crh cs csb cy da de el en en_GB en_US eo es es_AR et eu fa fi fr fy ga gd gl gu ha he hi hne hr hsb hu hy ia id is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms my nb nds ne nl nn oc or pa pl ps pt pt_BR ro ru se si sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta te tg th tok tr tt ug uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW
 
 %define major 5
 %define minor 100
-%define bugfix 0
+%define bugfix 1
 
 Name: kf5-filesystem
 Version: %major.%minor.%bugfix
@@ -22,6 +25,7 @@ Source3: dbus-system-dir.conf
 Source10: kdeglobals
 
 BuildRequires(pre): rpm-build-kf5
+BuildRequires: rpm-build-ubt
 
 %description
 The %name package is one of the basic KF5 packages that is installed on
@@ -96,13 +100,15 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir/kde5
 
 # install dbus dirs
 mkdir -p %buildroot/{%_K5conf_dbus_sessd,%_K5conf_dbus_sysd}
-#install -m 0644 %SOURCE2 %buildroot/%_K5conf_dbus_sessd/kf5.conf
+install -m 0644 %SOURCE2 %buildroot/%_K5conf_dbus_sessd/kf5.conf
 ###install -m 0644 %SOURCE3 %buildroot/%_K5conf_dbus_sysd/kf5.conf
 # configs
 install -m 0644 %SOURCE10 %buildroot/%_K5xdgconf/
 
 %files
-#%config %_K5conf_dbus_sessd/kf5.conf
+%_K5if_ver_lt %ubt_id M110
+%config %_K5conf_dbus_sessd/kf5.conf
+%endif
 ###%config %_K5conf_dbus_sysd/kf5.conf
 %_bindir/kde5
 %_datadir/*5/
@@ -121,6 +127,9 @@ install -m 0644 %SOURCE10 %buildroot/%_K5xdgconf/
 %dir %_desktopdir/kf5
 
 %changelog
+* Wed Nov 08 2023 Sergey V Turchin <zerg@altlinux.org> 5.100.1-alt1
+- package dbus config only for old branches
+
 * Tue Oct 03 2023 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt1
 - don't package dbus config for additional session services directory
 
