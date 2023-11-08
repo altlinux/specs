@@ -5,11 +5,11 @@
 %def_disable static
 
 Name: mbedtls
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
-License: Apache-2.0
+License: Apache-2.0 OR GPL-2.0-or-later
 Group: System/Libraries
 
 Url: https://tls.mbed.org/
@@ -152,6 +152,9 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Wed Nov 08 2023 Nazarov Denis <nenderus@altlinux.org> 3.5.1-alt1
+- New version 3.5.1.
+
 * Thu Oct 05 2023 Nazarov Denis <nenderus@altlinux.org> 3.5.0-alt1
 - New version 3.5.0.
 
