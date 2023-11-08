@@ -72,7 +72,7 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20230913
+Version: 20231108
 Release: alt1
 Packager: Alexey Sheplyakov <asheplyakov@altlinux.org>
 Summary: GCC cross-toolchain for %target
@@ -83,12 +83,12 @@ ExclusiveArch: x86_64
 
 %define gcc_version 13.2.0
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
-%define binutils_version 2.40
+%define binutils_version 2.41
 %define glibc_version 2.38.0.6.g7ac405a74c
 %define kernel_version 6.1
 
 Source0: gcc-13.2.0.tar
-Source1: binutils-2.40.tar
+Source1: binutils-2.41.tar
 Source2: glibc-2.38.0.6.g7ac405a74c-alt2.0.port.tar
 Source4: gmp-6.2.1.tar
 Source5: isl-0.24.tar
@@ -803,6 +803,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Wed Nov 08 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20231108-alt1
+- binutils: updated to version 2.41. Required for SIMD and virtualization support.
+
 * Wed Sep 13 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230913-alt1
 - GCC: updated to release 13.2.0
 - glibc: use ALT glibc 2.38 with sisyphus_loongarch64 patches
