@@ -5,7 +5,7 @@
 
 Name: libextractor
 Version: 1.11
-Release: alt2
+Release: alt3
 
 Summary: libextractor is a simple library for keyword extraction
 
@@ -18,6 +18,8 @@ Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-1.11-up-exiv2-0.28.patch
+Patch1: %name-1.11-alt-exiv2-0.28.1-32-bit.patch
 
 %define flac_ver 1.3
 
@@ -61,6 +63,8 @@ This package contains the files needed to build packages that depend on %name.
 
 %prep
 %setup
+%patch -p1 -b .exiv2
+%patch1 -p1 -b .exiv2-32.bit
 
 %build
 %autoreconf
@@ -100,6 +104,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Wed Nov 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt3
+- prepared for exiv2-0.28
+
 * Mon Sep 25 2023 Artyom Bystrov <arbars@altlinux.org> 1.11-alt2
 - Fix build with libswresample
 
