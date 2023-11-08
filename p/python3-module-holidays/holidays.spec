@@ -1,5 +1,5 @@
 Name: python3-module-holidays
-Version: 0.21.13
+Version: 0.35
 Release: alt1
 
 Summary: Holidays calculator
@@ -33,6 +33,9 @@ a specific date is a holiday as fast and flexible as possible.
 %python3_sitelibdir/holidays-%version.dist-info
 
 %changelog
+* Wed Nov 08 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.35-alt1
+- 0.35 released
+
 * Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.21.13-alt1
 - 0.21.13 released
 
