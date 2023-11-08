@@ -1,6 +1,6 @@
 Name:    python3-module-google-api-core
-Version: 2.12.0
-Release: alt2
+Version: 2.13.0
+Release: alt1
 
 Summary: Core Library for Google Client Libraries
 License: Apache-2.0
@@ -15,7 +15,6 @@ BuildRequires: python3-dev python3-module-setuptools
 BuildArch: noarch
 
 Source:  python-api-core-%version.tar
-Patch:   reimplementation_of_strtobool_function.patch
 
 %description
 %summary
@@ -26,7 +25,6 @@ documentation at https://googleapis.dev/python/google-api-core/latest.
 
 %prep
 %setup -n python-api-core-%version
-%patch -p1
 
 %build
 %python3_build
@@ -41,6 +39,9 @@ documentation at https://googleapis.dev/python/google-api-core/latest.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Nov 08 2023 Andrey Cherepanov <cas@altlinux.org> 2.13.0-alt1
+- New version.
+
 * Tue Oct 17 2023 Grigory Ustinov <grenka@altlinux.org> 2.12.0-alt2
 - Dropped dependency on distutils.
 
