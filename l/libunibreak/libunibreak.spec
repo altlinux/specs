@@ -1,6 +1,6 @@
 Name: libunibreak
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: Unicode line-breaking library
 License: zlib
@@ -40,16 +40,18 @@ developing applications that use libunibreak.
 %install
 %makeinstall_std
 
+rm -f %buildroot/%_includedir/*
+rm -f %buildroot/%_libdir/*.so
+rm -f %buildroot/%_libdir/pkgconfig/%name.pc
+
 %files
 %doc AUTHORS ChangeLog LICENCE NEWS README.md
 %_libdir/*.so.*
 
-%files devel
-%_includedir/*
-%_libdir/*.so
-%_libdir/pkgconfig/%name.pc
-
 %changelog
+* Wed Nov 08 2023 Sergey V Turchin <zerg@altlinux.org> 3.0-alt2
+- don't package devel files
+
 * Tue Jul 28 2015 Mikhail Kolchin <mvk@altlinux.org> 3.0-alt1
 - new version
 
