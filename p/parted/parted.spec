@@ -24,7 +24,7 @@
 %define Name Parted
 Name: parted
 %define lname lib%name
-Version: 3.4
+Version: 3.6
 %define prerel %nil
 %define git_version %{version}.46-e4ae
 Release: alt1
@@ -147,7 +147,6 @@ with %lname.
 %patch0 -p1
 
 %build
-%autoreconf
 %configure \
     %{subst_enable rpath} \
     %{subst_with pic} \
@@ -240,6 +239,9 @@ __MENU__
 
 
 %changelog
+* Tue Nov 07 2023 Leontiy Volodin <lvol@altlinux.org> 3.6-alt1
+- 3.4 -> 3.6
+
 * Thu Sep 09 2021 Anton Farygin <rider@altlinux.ru> 3.4-alt1
 - 3.2 -> 3.4 (closes: #40175)
 
