@@ -1,5 +1,5 @@
 Name: python3-module-pyradios
-Version: 1.0.2
+Version: 2.0.0
 Release: alt1
 
 Summary: Python client for the Radio Browser API
@@ -31,5 +31,8 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/pyradios-%version.dist-info
 
 %changelog
+* Wed Nov 08 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.0-alt1
+- 2.0.0 released
+
 * Mon Feb 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.2-alt1
 - 1.0.2 released
