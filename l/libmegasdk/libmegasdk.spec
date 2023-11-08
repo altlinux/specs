@@ -1,5 +1,5 @@
 Name: libmegasdk
-Version: 3.7.3b
+Version: 4.28.3
 Release: alt1
 
 Summary: MEGA SDK - Client Access Engine Coverity Scan Build Status
@@ -18,11 +18,15 @@ Source: v%version.tar.gz
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# manually removed: cppcheck glibc-devel-static glibc-kernheaders-generic
-# manually removed: openssl-engines python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs selinux-policy sssd texlive-latex-base
-# Automatically added by buildreq on Wed Apr 10 2019
-# optimized out: glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libpcre-devel libsasl2-3 libstdc++-devel perl python-base sh4
-BuildRequires: doxygen gcc-c++ libcares-devel libcryptopp-devel libcurl-devel libfreeimage-devel libfuse-devel libpcrecpp-devel libreadline-devel libsodium-devel libsqlite3-devel libssl-devel libstdc++-devel-static libuv-devel zlib-devel
+BuildRequires: doxygen
+BuildRequires: gcc-c++
+# devel-static due libstdc++fs.a
+BuildRequires: libstdc++-devel-static
+BuildRequires: libcares-devel libcryptopp-devel libcurl-devel libfreeimage-devel libfuse-devel libpcrecpp-devel
+BuildRequires: libreadline-devel libsodium-devel libsqlite3-devel libssl-devel libuv-devel zlib-devel libicu-devel
+BuildRequires: libavformat-devel libgomp-devel libraw-devel libswscale-devel libzen-devel libmediainfo-devel libcryptopp-devel
+# FIXME: suddenly required for libcryptopp checking
+BuildRequires: libudev-devel
 
 %description
 MEGA SDK - Client Access Engine Coverity Scan Build Status.
@@ -72,19 +76,27 @@ Example tools from MEGA SDK - Client Access Engine
 # hack against missed --tag=CXX during linking
 sed -i 's|ANDROID|TRUE|' Makefile.am
 
+sed -i 's/#define CAP_TRUNCATED CODEC_CAP_TRUNCATED/#define CAP_TRUNCATED 0/' src/gfx/freeimage.cpp
+
 sed -i 's|with_pcre/include|with_pcre|' configure.ac
 sed -i 's|with_db/include|with_db|' configure.ac
 
 %build
 %autoreconf
-%add_optflags -std=gnu++17
-%configure --disable-static --without-termcap --enable-gcc-hardening \
+#add_optflags -std=gnu++17
+%configure --disable-static \
            --disable-java \
            --disable-php \
            --disable-python \
+           --disable-curl-checks \
+           --disable-gcc-hardening \
+           --enable-drive-notifications \
            --enable-chat \
-           --with-cares --with-cryptopp --with-curl --with-sodium --with-openssl --with-sqlite --with-zlib --with-readline \
-           --with-freeimage --with-pcre=%_includedir/pcre --with-fuse --with-libuv
+           --with-cares --with-curl --with-sodium --with-openssl --with-sqlite --with-zlib \
+           --with-freeimage --with-pcre=%_includedir/pcre --with-fuse --with-libuv \
+           --with-libzen --with-libmediainfo --with-ffmpeg --with-cryptopp \
+           %nil
+
 # only sqlite or db4
 #           --with-db=%_includedir/db4
 
@@ -107,11 +119,11 @@ cp -a m4/ax*.m4 %buildroot/%_datadir/%name/m4/
 #cp #SOURCE4 %buildroot%_bindir/
 
 # missed headers
-cp include/mega/{mega_glob.h,mega_http_parser.h} %buildroot/%_includedir/mega/
+cp include/mega/{mega_glob.h,mega_http_parser.h,textchat.h,nodemanager.h,setandelement.h,heartbeats.h} %buildroot/%_includedir/mega/
+cp include/mega/posix/drivenotifyposix.h %buildroot/%_includedir/mega/posix/
 
 %files
 %_libdir/libmega.so.*
-%_libdir/libmega.so.*.*
 
 %files devel
 %_includedir/mega/
@@ -126,10 +138,13 @@ cp include/mega/{mega_glob.h,mega_http_parser.h} %buildroot/%_includedir/mega/
 
 %files tools
 %_bindir/megacli
-%_bindir/megafuse
+#_bindir/megafuse
 %_bindir/megasimplesync
 
 %changelog
+* Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 4.28.3-alt1
+- new version 4.28.3 (with rpmrb script)
+
 * Tue Sep 15 2020 Vitaly Lipatov <lav@altlinux.ru> 3.7.3b-alt1
 - new version 3.7.3b (with rpmrb script)
 
