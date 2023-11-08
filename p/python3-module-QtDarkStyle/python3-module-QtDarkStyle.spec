@@ -1,6 +1,6 @@
 Name: python3-module-QtDarkStyle
 Version: 3.1
-Release: alt1
+Release: alt2
 
 License: MIT
 Group: Development/Python
@@ -14,6 +14,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArch: noarch
+
+Provides: python3-module-QDarkStyle
+Provides: python3-module-%{pep503_name QDarkStyle}
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 
@@ -35,6 +38,10 @@ rm -fv %buildroot/usr/bin/{qdarkstyle.example,qdarkstyle.utils}
 %python3_sitelibdir/*
 
 %changelog
+* Sat Oct 21 2023 Anton Zhukharev <ancieg@altlinux.org> 3.1-alt2
+- (NMU) Provided correct project name.
+- (NMU) Provided PEP503-normalized project name.
+
 * Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
 - new version 3.1 (with rpmrb script)
 

@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 24.0.1
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: Software library for fast, message-based applications
 
@@ -15,6 +15,8 @@ License: LGPLv3+ and BSD-3-Clause
 Url: http://www.zeromq.org/bindings:python
 # http://github.com/zeromq/pyzmq.git
 Source: %name-%version.tar
+
+Provides: python3-module-pyzmq
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libzeromq-devel
@@ -113,6 +115,9 @@ py.test3 --pyargs zmq -v -k "not test_cython"
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 24.0.1-alt1.1.1.1
+- (NMU) Provided PEP503-normalized project name.
+
 * Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 24.0.1-alt1.1.1
 - NMU: ignored unmet dependency
 

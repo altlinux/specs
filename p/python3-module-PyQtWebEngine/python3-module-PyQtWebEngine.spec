@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.15.6
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for Qt WebEngine 5
 
@@ -37,6 +37,8 @@ BuildRequires: pkgconfig(Qt5WebEngineWidgets)
 Provides: python3(PyQt5.QtWebEngine)
 Provides: python3(PyQt5.QtWebEngineCore)
 Provides: python3(PyQt5.QtWebEngineWidgets)
+
+Provides: python3-module-%{pep503_name %oname}
 
 %description
 Python bindings for the Qt WebEngine C++ class library.
@@ -79,6 +81,9 @@ sip-build --no-make --debug \
 %_qt5_datadir/qsci/PyQtWebEngine.api
 
 %changelog
+* Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 5.15.6-alt2
+- (NMU) Provided PEP503-normalized project name.
+
 * Thu Aug 04 2022 Vitaly Lipatov <lav@altlinux.ru> 5.15.6-alt1
 - new version 5.15.6 (with rpmrb script)
 
