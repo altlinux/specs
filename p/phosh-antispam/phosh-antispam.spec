@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: phosh-antispam
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Phosh Anti-Spam
@@ -61,6 +61,9 @@ hangs up depending on the user's preferences.
 
 
 %changelog
+* Wed Nov 08 2023 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1
+- 3.3.1
+
 * Fri Oct 06 2023 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
 - first build for Sisyphus
 
