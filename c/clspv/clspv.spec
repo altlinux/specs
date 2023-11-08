@@ -1,22 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%define git 2c1e7c4a42
+%define git d9d9172be7
+
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
+%ifarch %ix86 %arm mipsel
+%define optflags_debug -g0
+#define __nprocs 1
+%else
 %define optflags_debug -g1
+%endif
+
+# LTO-related flags are set by CMake.
+# LTO causes LLVM to break badly on %%ix86 see
+# https://github.com/llvm/llvm-project/issues/57740
+# will enable it conditionally per platform
+%global optflags_lto %nil
 
 Name: clspv
 Version: 0.1
-Release: alt0.5.g%{git}
+Release: alt0.6.g%{git}
 License: Apache-2.0
 Summary: Clspv is a prototype compiler for a subset of OpenCL C to Vulkan compute shaders
 Group: Development/Other
 Url: https://github.com/google/clspv
 Source: %name-%version.tar
 Patch0: clspv-spirv-tools-link.patch
-
-# armh doesn't compile due memory limits
-# i586 fails with error: stat(lib/libclspv_combined.a): Value too large for defined data type.
-ExclusiveArch: x86_64 aarch64 ppc64le loongarch64
 
 BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++ zlib-devel libtinfo-devel spirv-headers libspirv-tools-devel python3-base
@@ -37,8 +45,12 @@ It consists of:
 %autopatch -p1
 
 %build
+export NPROCS="%__nprocs"
+if [ "$NPROCS" -gt 64 ]; then
+	export NPROCS=64
+fi
 %cmake -G Ninja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_BUILD_TYPE=Release \
     -DSPIRV_HEADERS_SOURCE_DIR=%_prefix \
     -DSPIRV_TOOLS_SOURCE_DIR=%_prefix \
     -DSPIRV_TOOLS_BINARY_DIR=%_prefix \
@@ -61,8 +73,15 @@ rm -rf %buildroot%_libdir/*.a
 %_includedir/%name
 
 %changelog
+* Wed Nov 08 2023 L.A. Kostis <lakostis@altlinux.ru> 0.1-alt0.6.gd9d9172be7
+- GIT d9d9172be7.
+- Try to enable all arches again (with some build tweaks applied).
+
 * Sat Nov 04 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.1-alt0.5.g2c1e7c4a42
 - spec: build on LoongArch too.
+
+* Thu Sep 21 2023 L.A. Kostis <lakostis@altlinux.ru> 0.1-alt0.5.gf43601e423
+- Rebuild with updated spirv-tools/headers.
 
 * Thu Aug 31 2023 L.A. Kostis <lakostis@altlinux.ru> 0.1-alt0.4.g2c1e7c4a42
 - .spec: limit build arches to 64-bit only.

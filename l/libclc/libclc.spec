@@ -1,14 +1,14 @@
+%ifarch armh
+%global optflags_lto %nil
+%else
+%global optflags_lto -flto=thin
+%endif
 # libclc itself can be built by any LLVM but newer is preferred
 # cause it contains better optimisations and improvements
-%define llvm_version 16.0
-%ifarch armh
-%def_without clangpp
-%else
-%def_with clangpp
-%endif
+%global llvm_version 17.0
 
 Name: libclc
-Version: 16.0.5
+Version: 17.0.4
 Release: alt1
 Summary: An open source implementation of the OpenCL 1.1 library requirements
 License: BSD
@@ -19,12 +19,9 @@ Source: https://github.com/llvm/llvm-project/releases/tag/llvmorg-%version/%name
 Patch: libclc-llvm-spirv-path.patch
 
 BuildRequires(pre): cmake /proc
-BuildRequires: clang%{llvm_version}
-BuildRequires: python3 libstdc++-devel mlir%{llvm_version}-tools llvm%{llvm_version}-devel llvm-spirv >= %{llvm_version}.0
-# clang++ segfaults on armh :(
-%if_without clangpp
-BuildRequires: gcc-c++
-%endif
+BuildRequires: python3 libstdc++-devel
+BuildRequires: llvm-spirv >= %{llvm_version}.0, clspv
+BuildRequires: clang%{llvm_version} llvm%{llvm_version}-devel lld%{llvm_version}
 
 # clc code is IR code
 BuildArch: noarch
@@ -72,12 +69,8 @@ developing applications that use %name
 export ALTWRAP_LLVM_VERSION=%{llvm_version}
 %cmake \
 	-DCMAKE_C_COMPILER=clang \
-	%if_without clangpp
-	-DCMAKE_C_COMPILER=gcc \
-	-DCMAKE_CXX_COMPILER=c++
-	%else
-	-DCMAKE_CXX_COMPILER=clang++
-	%endif
+	-DCMAKE_CXX_COMPILER=clang++ \
+	-DCMAKE_EXE_LINKER_FLAGS='-fuse-ld=lld'
 
 %cmake_build
 
@@ -93,6 +86,17 @@ export ALTWRAP_LLVM_VERSION=%{llvm_version}
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed Nov 08 2023 L.A. Kostis <lakostis@altlinux.ru> 17.0.4-alt1
+- 17.0.4.
+- BR: added clspv.
+
+* Wed Sep 13 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt2
+- armh: disable LTO and compile with clang.
+- .spec: cleanup.
+
+* Wed Sep 13 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt1.1
+- fix FTBFS: add missing llvm -devel packages.
+
 * Mon Jun 12 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt1
 - 16.0.5.
 - armh:  use gcc as CXX (clang++ segfaults).

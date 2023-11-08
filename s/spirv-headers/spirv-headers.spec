@@ -1,9 +1,8 @@
-%define git 124a966
+%define git 4183b26
 
 Name: spirv-headers
 Version: 1.5.5
-# sdk-1.3.250
-Release: alt9.g%{git}
+Release: alt10.g%{git}
 Epoch: 2
 
 Summary: machine-readable files for the SPIR-V Registry
@@ -45,6 +44,9 @@ This repository contains machine-readable files for the SPIR-V Registry. This in
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed Nov 08 2023 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt10.g4183b26
+- Updated to GIT 4183b260f4cccae52a89efdfcdd43c4897989f42 (as required by clspv).
+
 * Thu Sep 14 2023 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt9.g124a966
 - Updated to GIT 124a966 (for sdk-1.3.261.1).
 
