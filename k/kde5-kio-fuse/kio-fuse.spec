@@ -6,8 +6,8 @@
 
 Name: kde5-%rname
 Version: 5.0.1
-Release: alt2
-%K5init altplace no_appdata
+Release: alt3
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Fuse interface for KIO
@@ -67,6 +67,9 @@ developing applications that use %name.
 /lib/tmpfiles.d/kio-fuse-tmpfiles.conf
 
 %changelog
+* Wed Nov 08 2023 Sergey V Turchin <zerg@altlinux.org> 5.0.1-alt3
+- don't force alternate placement
+
 * Fri Sep 03 2021 Sergey V Turchin <zerg@altlinux.org> 5.0.1-alt2
 - fix requires
 
