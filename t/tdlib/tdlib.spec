@@ -3,6 +3,8 @@
 # about versioning:
 # https://github.com/tdlib/td/issues/2215
 
+# check tag in Source-url every release
+
 %def_disable static
 # Enable or disable clang compiler...
 %ifarch %e2k
@@ -12,7 +14,7 @@
 %endif
 
 Name: tdlib
-Version: 1.8.14
+Version: 1.8.21
 Release: alt1
 
 Summary: Cross-platform library for building Telegram clients
@@ -24,7 +26,7 @@ Url: https://github.com/tdlib/td
 ExcludeArch: %ix86
 
 #Source-url: %url/archive/v%version.tar.gz#/%name-%version.tar.gz
-# Source-url: https://github.com/tdlib/td/commit/8517026415e75a8eec567774072cbbbbb52376c1
+# Source-url: https://github.com/tdlib/td/commit/3870c29b158b75ca5e48e0eebd6b5c3a7994a000
 Source: %name-%version.tar
 
 Patch: %name-system-crypto.patch
@@ -121,7 +123,7 @@ rm -fv %buildroot%_libdir/*.a
 %_includedir/td
 %_libdir/libtd*.so
 %_pkgconfigdir/*.pc
-%_libdir/cmake/Td
+%_libdir/cmake/Td/
 
 %if_enabled static
 %files devel-static
@@ -129,6 +131,9 @@ rm -fv %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Nov 08 2023 Vitaly Lipatov <lav@altlinux.ru> 1.8.21-alt1
+- new version (1.8.21) with rpmgs script
+
 * Wed Aug 02 2023 Vitaly Lipatov <lav@altlinux.ru> 1.8.14-alt1
 - new version (1.8.14) with rpmgs script
 
