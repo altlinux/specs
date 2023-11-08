@@ -9,7 +9,7 @@
 
 Name: dhcp
 Version: 4.4.3.P1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -44,6 +44,8 @@ Source25: dhcpd.service
 Source26: dhcpd6.service
 Source27: dhcrelay.service
 Source28: dhcrelay6.service
+Source29: dhcpd-chroot.control
+Source30: dhcpd6-chroot.control
 
 Patch0001: 0001-Apply-dhcp-3.0.5-alt-warnings.patch.patch
 Patch0002: 0002-Apply-dhcp-3.0.3-alt-defaults.patch.patch
@@ -105,7 +107,7 @@ BuildArch: noarch
 Summary: The ISC DHCP client daemon
 Group: System/Servers
 Requires(pre): %name-common = %epoch:%version-%release
-Requires: %name-libs = %epoch:%version-%release
+Requires: %name-libs = %epoch:%version-%release libshell
 # NetworkManager can use dhclient
 Provides: nm-dhcp-client
 
@@ -292,6 +294,9 @@ mkdir -p %buildroot{%ROOT,/etc/{sysconfig,%name/dhclient.d}}
 	#
 
 # dhcpd
+install -pD -m755 %SOURCE29 %buildroot%_controldir/dhcpd-chroot
+install -pD -m755 %SOURCE30 %buildroot%_controldir/dhcpd6-chroot
+
 install -pD -m600 %_sourcedir/dhcpd.conf.sample \
 	%buildroot/etc/%name/dhcpd.conf.sample
 
@@ -493,6 +498,8 @@ fi
 %config(noreplace) /etc/sysconfig/dhcpd
 %config(noreplace) /etc/sysconfig/dhcpd6
 %attr(750,root,dhcp) %_sbindir/dhcpd
+%attr(0755,root,root) %config(noreplace) %_controldir/dhcpd-chroot
+%attr(0755,root,root) %config(noreplace) %_controldir/dhcpd6-chroot
 %_man5dir/dhcpd.*
 %_man5dir/dhcp-options.*
 %_man5dir/dhcp-eval.*
@@ -565,6 +572,10 @@ fi
 # }}}
 
 %changelog
+* Tue Oct 31 2023 Aleksei Kalinin <kaa@altlinux.org> 1:4.4.3.P1-alt2
+- Added functionality for switching chroot mode (closes: #36509).
+  + Changes based on Alex Moskalenko <mav@elserv.msk.su>.
+
 * Fri Oct 07 2022 Mikhail Efremov <sem@altlinux.org> 1:4.4.3.P1-alt1
 - Updated to 4.4.3-P1 (fixes: CVE-2022-2928,CVE-2022-2929).
 
