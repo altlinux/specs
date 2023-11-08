@@ -5,7 +5,7 @@
 
 
 Name: sudo
-Version: 1.9.14p3
+Version: 1.9.15p1
 Release: alt1
 Epoch: 1
 
@@ -263,6 +263,57 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Wed Nov 08 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.15p1-alt1
+- Update to latest stable bugfix and security release (fixes: CVE-2023-42465):
+ + The sudoers plugin has been modified to make it more resilient to ROWHAMMER
+   attacks on authentication and policy matching.
+ + The sudoers plugin now constructs the user time stamp file path name using
+   the user-ID instead of the user name. This avoids a potential problem with
+   user names that contain a path separator ('/') being interpreted as part of
+   the path name. A similar issue in sudo-rs has been assigned CVE-2023-42456.
+- Fixes in behavior:
+ + The visudo utility will no longer create an empty file when the specified
+   sudoers file does not exist and the user exits the editor without making any
+   changes (GitHub#294).
+ + Fixed a bug where output could go to the wrong terminal if "use_pty" is
+   enabled (the default) and the standard input, output or error is redirected
+   to a different terminal. Bug #1056.
+ + A path separator ('/') in a user, group or host name is now replaced with an
+   underbar character ('_') when expanding escapes in @include and @includedir
+   directives as well as the "iolog_file" and "iolog_dir" sudoers Default
+   settings.
+- Fixes in user output:
+ + Running "sudo -ll command" now produces verbose output that includes matching
+   rule as well as the path to the sudoers file the matching rule came from.
+ + Changes to terminal settings are now performed atomically, where possible.
+   If the command is being run in a pseudo-terminal and the user's terminal is
+   already in raw mode, sudo will not change the user's terminal settings. This
+   prevents concurrent sudo processes from restoring the terminal settings to
+   the wrong values (GitHub#312).
+ + Better log message when rejecting a command if the "intercept" option is
+   enabled and the "intercept_allow_setid" option is disabled. Previously,
+   "command not allowed" would be logged and the user had no way of knowing
+   what the actual problem was.
+- Fixes in logging:
+ + The sudoers source is now logged in the JSON event log. This makes it
+   possible to tell which rule resulted in a match.
+ + Sudo will now log the invoking user's environment as "submitenv" in the JSON
+   logs. The command's environment ("runenv") is no longer logged for commands
+   rejected by the sudoers file or an approval plugin.
+ + The sudo_logsrvd server will now raise its open file descriptor limit to the
+   maximum allowed value when it starts up. Each connection can require up to
+   nine open file descriptors so the default soft limit may be too low.
+- Fixed regressions:
+ + Fixed the warning message for "sudo -l command" when the command is not
+   permitted. There was a missing space between "list" and the actual command
+   due to changes in sudo 1.9.14.
+ + The "intercept_verify" sudoers option is now only applied when the
+   "intercept" option is set in sudoers. Previously, it was also applied when
+   "log_subcmds" was enabled. Sudo 1.9.14 contained an incorrect fix for this.
+ + Reverted a change from sudo 1.9.4 that resulted in PAM session modules being
+   called with the environment of the command to be run instead of the
+   environment of the invoking user (GitHub#318).
+
 * Sat Sep 23 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.14p3-alt1
 - Update to latest stable release with regressions fixes.
 - Fixed a bug introduced in sudo 1.9.14 that affects matching sudoers rules
