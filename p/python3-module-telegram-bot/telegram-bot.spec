@@ -1,5 +1,5 @@
 Name: python3-module-telegram-bot
-Version: 13.14
+Version: 13.15
 Release: alt1
 
 Summary: Python interface for the Telegram Bot API
@@ -31,6 +31,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/python_telegram_bot-%version.dist-info
 
 %changelog
+* Wed Nov 08 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.15-alt1
+- 13.15 released
+
 * Mon Nov 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.14-alt1
 - 13.14 released
 
