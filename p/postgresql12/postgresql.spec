@@ -11,8 +11,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     12
-%define postgresql_minor     16
-%define postgresql_altrel    4
+%define postgresql_minor     17
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -930,6 +930,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 08 2023 Alexei Takaseev <taf@altlinux.org> 12.17-alt1
+- 12.17 (Fixes CVE-2023-5868, CVE-2023-5869, CVE-2023-5870)
+
 * Mon Oct 09 2023 Alexei Takaseev <taf@altlinux.org> 12.16-alt4
 - Fix typo (Fixes ALT 47838)
 

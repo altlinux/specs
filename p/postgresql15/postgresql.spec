@@ -11,8 +11,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     15
-%define postgresql_minor     4
-%define postgresql_altrel    4
+%define postgresql_minor     5
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -45,6 +45,7 @@ Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch4: 0004-Setup-logging.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
+Patch9: 0008-Add_event-id_to_jsonlog.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -53,7 +54,7 @@ Conflicts: %prog_name > %EVR
 Conflicts: %{prog_name}15-1C
 
 BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python3-dev setproctitle-devel tcl-devel xsltproc zlib-devel
-BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel
+BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel libuuid-devel
 %if_without devel
 BuildRequires: postgresql-devel
 %endif
@@ -323,6 +324,7 @@ goal of accelerating analytics queries.
 %patch4 -p1
 %patch6 -p2
 %patch8 -p1
+%patch9 -p1
 
 %build
 %if_with jit
@@ -955,6 +957,11 @@ fi
 %endif
 
 %changelog
+* Wed Nov 08 2023 Alexei Takaseev <taf@altlinux.org> 15.5-alt1
+- 15.5 (Fixes CVE-2023-5868, CVE-2023-5869, CVE-2023-5870)
+- Change 0004-Setup-logging.patch to JSON log format
+- Add patch 0008-Add_event-id_to_jsonlog.patch
+
 * Mon Oct 09 2023 Alexei Takaseev <taf@altlinux.org> 15.4-alt4
 - Fix typo (Fixes ALT 47838)
 
