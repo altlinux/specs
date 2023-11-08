@@ -1,9 +1,9 @@
 Name: setup
-Version: 2.2.18
+Version: 2.2.19
 Release: alt1
 
 Summary: Initial set of configuration files
-License: GPL
+License: GPL-2.0
 Group: System/Configuration/Other
 BuildArch: noarch
 AutoReq: no
@@ -72,6 +72,12 @@ find %buildroot%_sysconfdir/profile.d -type l |
 %_datadir/base-passwd
 
 %changelog
+* Wed Nov 01 2023 Arseny Maslennikov <arseny@altlinux.org> 2.2.19-alt1
+- /etc/services: dropped incorrect last-updated timestamp (ALT#47357)
+- /etc/protocols: dropped incorrect last-updated timestamp (ALT#47357)
+- /etc/protocols: add 2 new entries from IANA list as published on 2023-09-09 (ALT#47357)
+- /etc/protocols: fixed typo: "crdup" -> "crudp".
+
 * Fri Aug 25 2023 Alexey Gladkov <legion@altlinux.ru> 2.2.18-alt1
 - /etc/services: update services (ALT#41676, ALT#47001)
 - /etc/protocols: Remove dups for 50 and 51 ports (ALT#35474)
