@@ -1,5 +1,5 @@
 Name: libsolv
-Version: 0.7.25
+Version: 0.7.26
 Release: alt1
 
 Summary: Library for solving packages and reading repositories
@@ -76,6 +76,9 @@ Group: System/Configuration/Packaging
 %_man1dir/*.1*
 
 %changelog
+* Wed Nov 08 2023 Andrey Cherepanov <cas@altlinux.org> 0.7.26-alt1
+- New version.
+
 * Fri Sep 15 2023 Andrey Cherepanov <cas@altlinux.org> 0.7.25-alt1
 - New version.
 
