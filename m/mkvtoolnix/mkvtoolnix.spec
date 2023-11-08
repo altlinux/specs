@@ -15,7 +15,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 79.0
+Version: 80.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -24,9 +24,6 @@ Url: https://mkvtoolnix.download/
 
 # https://gitlab.com/mbunkus/mkvtoolnix.git
 Source: %name-%version.tar
-
-# https://gitlab.com/mbunkus/mkvtoolnix/-/commit/b317f8dd6ae4b6a1ac70e56c458063fab7a4e991
-Patch: %name-fix-unresolved-dts_reader_c.patch
 
 Provides: mkvmerge = %EVR
 
@@ -88,7 +85,6 @@ about the codecs used.
 
 %prep
 %setup
-%patch -p1
 
 # remove some bundled libraries
 rm -rf lib/nlohmann-json lib/pugixml lib/utf8-cpp
@@ -168,6 +164,10 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Wed Nov 08 2023 L.A. Kostis <lakostis@altlinux.ru> 80.0-alt1
+- 80.0.
+- remove merged patches.
+
 * Wed Sep 13 2023 L.A. Kostis <lakostis@altlinux.ru> 79.0-alt1
 - 79.0.
 
