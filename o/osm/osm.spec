@@ -1,6 +1,6 @@
 Name: osm
 Version: 1.3
-Release: alt1
+Release: alt2
 
 Summary: Open Sound Meter
 License: GPLv3
@@ -30,6 +30,10 @@ Sound measurement application for tuning audio systems in real-time.
 %prep
 %setup
 sed -i 's,@APP_GIT_VERSION@,v%version,' OpenSoundMeter.pro
+%ifarch %e2k
+# feature misdetection: SSE doesn't mean x86
+sed -i 's/defined(Q_PROCESSOR_X86_64)/1/' src/math/*.{h,cpp}
+%endif
 
 %build
 %qmake_qt5 -o Makefile OpenSoundMeter.pro
@@ -52,6 +56,9 @@ done
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Wed Nov 08 2023 Michael Shigorin <mike@altlinux.org> 1.3-alt2
+- E2K: ftbfs workaround (ilyakurdyukov@)
+
 * Thu Nov  2 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3-alt1
 - 1.3 released
 
