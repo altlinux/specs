@@ -9,11 +9,11 @@
 %def_without devel
 %def_without vanilla
 %define gecko_version 2.47.4
-%define mono_version 8.0.0
+%define mono_version 8.1.0
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.18
+%define major 8.19
 %define rel %nil
 %define conflictbase wine-vanilla
 
@@ -841,6 +841,10 @@ fi
 %endif
 
 %changelog
+* Wed Nov 08 2023 Mikhail Tergoev <fidel@altlinux.org> 1:8.19-alt1
+- update to 8.19
+- mono 8.1.0
+
 * Wed Oct 25 2023 Mikhail Tergoev <fidel@altlinux.org> 1:8.18-alt1
 - update to 8.18
 - added patch for fix FTBFS
