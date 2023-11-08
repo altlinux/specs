@@ -1,9 +1,9 @@
 %define rname krename
 
 Name: kde5-%rname
-Version: 5.0.1
+Version: 5.0.2
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Summary: A powerful batch renamer for KDE5
 Group: File tools
@@ -14,7 +14,6 @@ Source: %rname-%version.tar
 Source10: po-ru.po
 Patch1: alt-startupinfo-labels-color.patch
 Patch2: alt-cmake.patch
-Patch3: alt-desktopfile.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
@@ -22,7 +21,8 @@ BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-kjs-devel kf5-kio-devel kf5-kservice-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kxmlgui-devel
-BuildRequires: libexiv2-devel libfreetype-devel libpodofo-devel libtag-devel
+#BuildRequires: libexiv2-devel
+BuildRequires: fontconfig-devel libfreetype-devel libpodofo-devel libtag-devel
 BuildRequires: qt5-base-devel
 
 %description
@@ -38,8 +38,7 @@ It can also change access and modification dates, permissions, and file ownershi
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-cat %SOURCE10 >po/ru/krename.po
+#cat %SOURCE10 >po/ru/krename.po
 
 %build
 %K5build
@@ -54,8 +53,13 @@ cat %SOURCE10 >po/ru/krename.po
 %_K5xdgapp/*.desktop
 %_K5icon/*/*/apps/*.*
 %_K5srv/ServiceMenus/*.desktop
+%_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 08 2023 Sergey V Turchin <zerg@altlinux.org> 5.0.2-alt1
+- new version
+- build without exiv2
+
 * Wed Apr 07 2021 Sergey V Turchin <zerg@altlinux.org> 5.0.1-alt1
 - new version
 
