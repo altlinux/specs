@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define git 2eede2
+%define git 0d6e9b3
 %define optflags_lto %nil
 
 %global _description \
@@ -12,7 +12,7 @@ counterparts to produce the exact semantics of the intrinsics.
 
 Name:    sse2neon
 Version: 1.6.0
-Release: alt2.g%{git}
+Release: alt3.g%{git}
 Summary: A translator from Intel SSE intrinsics to Arm/Aarch64 NEON implementation
 Group:   Development/C++
 License: MIT
@@ -65,6 +65,9 @@ make check ||:
 %_includedir/*
 
 %changelog
+* Wed Nov 08 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6.0-alt3.g0d6e9b3
+- v1.6.0-59-g0d6e9b3.
+
 * Fri Jul 07 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6.0-alt2.g2eede2
 - fix armh detection.
 
