@@ -5,11 +5,11 @@
 %def_disable static
 
 Name: %pkgname-compat
-Version: 2.28.5
+Version: 2.28.6
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
-License: Apache-2.0
+License: Apache-2.0 OR GPL-2.0-or-later
 Group: System/Legacy libraries
 
 Url: https://tls.mbed.org/
@@ -139,6 +139,9 @@ sed -i 's/-Werror/-Wno-error/' CMakeLists.txt
 %endif
 
 %changelog
+* Wed Nov 08 2023 Nazarov Denis <nenderus@altlinux.org> 2.28.6-alt1
+- Version 2.28.6
+
 * Sat Oct 07 2023 Nazarov Denis <nenderus@altlinux.org> 2.28.5-alt1
 - Version 2.28.5
 
