@@ -1,5 +1,5 @@
 Name: shadow
-Version: 4.14.1
+Version: 4.14.2
 Release: alt1
 Epoch: 1
 
@@ -483,6 +483,9 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Wed Nov 08 2023 Mikhail Efremov <sem@altlinux.org> 1:4.14.2-alt1
+- Updated to 4.14.2.
+
 * Tue Oct 24 2023 Mikhail Efremov <sem@altlinux.org> 1:4.14.1-alt1
 - Updated patches.
 - Updated to 4.14.1.
