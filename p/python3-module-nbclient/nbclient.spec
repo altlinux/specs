@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.0
-Release: alt3
+Version: 0.9.0
+Release: alt1
 Summary: A client library for executing notebooks. Formally nbconvert's ExecutePreprocessor
 License: BSD-3-Clause
 Group: Development/Python3
@@ -41,15 +41,6 @@ NBClient was spun out of nbconvert's former ExecutePreprocessor.
 
 NBClient lets you execute notebooks.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %oname
-
-
 %prep
 %setup
 
@@ -64,17 +55,16 @@ This package contains tests for %oname
 %pyproject_run_pytest -v --color=no -k 'not test_many_parallel_notebooks'
 
 %files
-%doc LICENSE
 %doc CHANGELOG.md CONTRIBUTING.md README.md
 %_bindir/jupyter-execute
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-*.dist-info
-%exclude %python3_sitelibdir/%oname/tests
-
-%files tests
-%python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Nov 08 2023 Anton Vyatkin <toni@altlinux.org> 0.9.0-alt1
+- New version 0.9.0.
+- Drop tests subpackage.
+
 * Fri Jul 21 2023 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt3
 - FTBFS: add missing BR.
 
