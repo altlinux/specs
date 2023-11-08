@@ -2,8 +2,8 @@
 %def_enable profiling
 
 Name: libjpeg-turbo
-Version: 2.1.2
-Release: alt1.2
+Version: 2.1.5.1
+Release: alt1
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -22,7 +22,8 @@ Patch1: libjpeg-turbo-alt-versioning.patch
 Patch2: libjpeg-turbo-fedora-noinst.patch
 Patch2000: %name-e2k-simd.patch
 
-%def_enable static
+# why it should be enabled?
+%def_disable static
 
 BuildRequires: cmake ctest
 
@@ -101,7 +102,7 @@ This package contains development files for the turbojpeg library.
 
 %prep
 %setup -n %name-%version-%release
-%patch0 -p1
+%patch0 -p2
 %patch1 -p1
 %patch2 -p2
 %ifarch %e2k
@@ -127,12 +128,15 @@ local: *;
 EOF
 
 %build
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-# using PGO makes the code about 10% faster
-# up to 50% on e2k for progressive JPEG decoding
+# using PGO makes the code about 10%% faster
+# up to 50%% on e2k for progressive JPEG decoding
 %if_enabled profiling
 %add_optflags -fprofile-generate
-%cmake -G'Unix Makefiles'
+%cmake -G'Unix Makefiles' \
+%if_disabled static
+-DENABLE_STATIC=FALSE
+%endif
+%nil
 %cmake_build
 # it's better not to do it in parallel
 ( cd %_cmake__builddir ; make -k test ; make clean )
@@ -199,6 +203,12 @@ install -pm644 README* change.log \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Tue Nov 07 2023 L.A. Kostis <lakostis@altlinux.ru> 2:2.1.5.1-alt1
+- 2.1.5.1.
+- .spec: Escape unparseable symbols.
+- .spec: Disable static build (cmake often prefer -static over shared which
+         is not desired way).
+
 * Sat May 28 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:2.1.2-alt1.2
 - improved SIMD patch for Elbrus
 - e2k: also need to specify a directory with profiles

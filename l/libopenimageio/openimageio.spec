@@ -7,10 +7,10 @@
 # TODO: build and run tests
 
 %define oname openimageio
-%define soname 2.4
+%define soname 2.5
 
 Name:           lib%oname
-Version:        2.4.16.0
+Version:        2.5.5.0
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -37,7 +37,7 @@ BuildRequires:  qt6-base-devel
 BuildRequires:  boost-devel boost-python3-devel boost-filesystem-devel boost-asio-devel
 BuildRequires:  libGLEW-devel
 BuildRequires:  openexr-devel imath-devel
-BuildRequires:  libpng-devel libtiff-devel libjpeg-devel libopenjpeg2.0-devel
+BuildRequires:  libpng-devel libtiff-devel libjpeg-devel libturbojpeg-devel libopenjpeg2.0-devel
 BuildRequires:  libgif-devel
 BuildRequires:  libwebp-devel
 BuildRequires:  libhdf5-devel
@@ -233,11 +233,17 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Tue Nov 07 2023 L.A. Kostis <lakostis@altlinux.ru> 2.5.5.0-alt1
+- Updated to upstream version 2.5.5.0.
+
+* Tue Nov 07 2023 L.A. Kostis <lakostis@altlinux.ru> 2.4.17.0-alt1
+- Updated to upstream version 2.4.17.0.
+
 * Wed Oct 25 2023 L.A. Kostis <lakostis@altlinux.ru> 2.4.16.0-alt1
-- v2.4.16.0.
+- Updated to upstream version 2.4.16.0.
 
 * Tue Sep 05 2023 L.A. Kostis <lakostis@altlinux.ru> 2.4.15.0-alt1
-- Updated to 2.4.15.0.
+- Updated to upstream version 2.4.15.0.
 
 * Thu Jul 13 2023 L.A. Kostis <lakostis@altlinux.ru> 2.4.13.0-alt1
 - Updated to upstream version 2.4.13.0.
