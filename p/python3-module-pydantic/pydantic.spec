@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.4.2
-Release: alt2
+Release: alt3
 
 Summary: Data parsing and validation using Python type hints
 License: MIT
@@ -52,7 +52,14 @@ with pydantic.
 
 %check
 # tests/test_docs.py: skip testing of documentation
-%pyproject_run_pytest -vra --ignore='tests/test_docs.py'
+#
+# --benchmark-skip:
+# Skip executing tests from tests/benchmark. These tests don't have sense for
+# our check section, because of they test only pydantic work speed.
+# Also generating north_star_data.json at each test exec and comparing it with
+# expected md5sum leads to failed build, because of Faker or something else has
+# been updated.
+%pyproject_run_pytest -vra --ignore='tests/test_docs.py' --benchmark-skip
 
 %files
 %doc LICENSE *.md
@@ -60,6 +67,10 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 08 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.4.2-alt3
+- Fixed FTBFS: skip benchmark tests with their often changed expected md5sum of
+  testing data
+
 * Sun Oct 22 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.4.2-alt2
 - Fixed FTBFS: delete workaround for mismatching of EXPECTED_NORTH_STAR_DATA_MD5
   because of updating Faker to 19.11.0
