@@ -1,5 +1,5 @@
 Name: rpm-build-ocaml
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 BuildArch: noarch
 
@@ -34,6 +34,10 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Wed Nov 08 2023 Anton Farygin <rider@altlinux.ru> 1.5.0-alt1
+- added .o and .cmo files to filelist of the devel package in
+  dune_install macros
+
 * Sun Apr 04 2021 Anton Farygin <rider@altlinux.org> 1.4.2-alt1
 - removed the creation of buggy dependencies from .cmxa to .a archives
   (ocaml 4.12 does not create .a archive for the empty cmxa)
