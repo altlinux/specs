@@ -9,8 +9,8 @@
 %endif
 
 Name: redis
-Version: 7.2.1
-Release: alt1.1
+Version: 7.2.3
+Release: alt1
 Summary: Redis is an advanced key-value store
 Group: Databases
 # redis, hiredis: BSD-3-Clause
@@ -213,6 +213,9 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Tue Nov 07 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.3-alt1
+- 7.2.3 (Fixes: CVE-2023-45145)
+
 * Thu Oct 19 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.2.1-alt1.1
 - Fixed build for Elbrus
 
