@@ -1,7 +1,7 @@
 %define modulename OWSLib
 
 Name:           python3-module-%modulename
-Version:        0.29.2
+Version:        0.29.3
 Release:        alt1
 
 Summary:        Client library for OGC web services
@@ -42,6 +42,9 @@ models.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Nov 09 2023 Andrey Cherepanov <cas@altlinux.org> 0.29.3-alt1
+- New version.
+
 * Sun May 21 2023 Andrey Cherepanov <cas@altlinux.org> 0.29.2-alt1
 - New version.
 
