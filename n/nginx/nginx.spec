@@ -1,7 +1,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.24.0
-Release: alt4
+Release: alt5
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre2-devel libssl-devel perl-devel zlib-devel libkrb5-devel
@@ -39,6 +39,7 @@ Source15: nginx-accept_language-module.tar
 Source100: %name.watch
 
 Patch0: cache-purge-fix-compatibility.patch
+Patch1: nginx-upstream-http2-cdda286c0f1b.patch
 
 Requires(pre): shadow-utils
 Requires(post): sed
@@ -130,6 +131,7 @@ cp -f %SOURCE11 conf/mime.types
 pushd cache_purge
 %patch0 -p1
 popd
+%patch1 -p1
 
 %build
 ./configure \
@@ -351,6 +353,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Thu Nov 09 2023 Anton Farygin <rider@altlinux.ru> 1.24.0-alt5
+- added upstream change 9165:cdda286c0f1b to improve the per-iteration stream
+  handling limit for HTTP2 protocol (in is related to CVE-2023-44487)
+
 * Tue Oct 03 2023 Arseny Maslennikov <arseny@altlinux.org> 1.24.0-alt4
 - NMU: Rebuild with libcrypto.so.3, listen on [::1]:80 in default site config.
 
