@@ -2,7 +2,7 @@
 
 Name:    netbox
 Version: 3.6.3
-Release: alt2
+Release: alt3
 
 Summary: The premier source of truth powering network automation
 License: Apache-2.0
@@ -194,6 +194,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Thu Nov 09 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.3-alt3
+- Fix upgrade script.
+
 * Tue Nov 07 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.3-alt2
 - Add logrotate file.
 
