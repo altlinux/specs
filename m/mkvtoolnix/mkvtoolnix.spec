@@ -16,7 +16,7 @@
 
 Name: mkvtoolnix
 Version: 80.0
-Release: alt1
+Release: alt2
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
 Group: Video
@@ -24,6 +24,7 @@ Url: https://mkvtoolnix.download/
 
 # https://gitlab.com/mbunkus/mkvtoolnix.git
 Source: %name-%version.tar
+Patch1: ax_boost_base_morearch.patch
 
 Provides: mkvmerge = %EVR
 
@@ -85,13 +86,10 @@ about the codecs used.
 
 %prep
 %setup
+%patch1 -p1
 
 # remove some bundled libraries
 rm -rf lib/nlohmann-json lib/pugixml lib/utf8-cpp
-
-%ifarch %e2k riscv64
-sed -i 's,aarch64,&|riscv64|e2k,' ac/ax_boost_base.m4
-%endif
 
 %build
 %if_enabled qt
@@ -164,6 +162,9 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Thu Nov 09 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 80.0-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Wed Nov 08 2023 L.A. Kostis <lakostis@altlinux.ru> 80.0-alt1
 - 80.0.
 - remove merged patches.
