@@ -2,8 +2,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init altplace no_appdata
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Clock
@@ -77,14 +77,18 @@ Requires: %name-common
 %_K5xdgapp/*kclock*.desktop
 %_K5dbus_srv/*kclock*.service
 %_K5icon/*/*/apps/*kclock*.*
-%_K5data/plasma/plasmoids/org.kde.plasma.kclock*/
+%_kf5_data/plasma/plasmoids/org.kde.plasma.kclock*/
 %_K5notif/*kclock*.notifyrc
+%_datadir/metainfo/*.xml
 
 %files devel
 %_K5dbus_iface/org.kde.kclockd.*.xml
 
 
 %changelog
+* Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- package metainfo
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
