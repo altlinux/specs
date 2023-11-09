@@ -13,8 +13,8 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.4.0
-Release: alt1.1
+Version: 3.4.1
+Release: alt1
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -24,8 +24,8 @@ Group: Sound
 Url: http://audacity.sourceforge.net/
 # https://github.com/audacity/audacity/releases
 # https://github.com/audacity/audacity-manual
-Source0: %name-minsrc-%version.tar
-Source1: %name-%version-help-en.tar
+Source0: %name-sources-%version.tar
+Source1: %name-manual-%version.tar
 # XXX
 Source2: loffice-libcxx-wrapper.sh
 
@@ -34,10 +34,7 @@ Patch0002: 0002-Use-home-directory-for-temp-dir-instead-of-var-tmp-t.patch
 Patch0003: 0003-Fix-building-with-system-sbsms.patch
 Patch0004: 0004-Force-GTK-3.0.patch
 Patch0005: 0005-Fix-lv2-external-gui.patch
-Patch0006: 0006-Fix-build-without-dynamic-lame.patch
-Patch0007: 0007-Find-modules-in-lib64.patch
-Patch0008: 0008-Fix-linking-with-libopusfile.patch
-Patch0009: 0009-Fix-gcc-on-arm-neon.patch
+Patch0006: 0006-Find-modules-in-lib64.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -137,7 +134,7 @@ on-line if internet connection is available.
 For the most up to date manual content, use the on-line manual.
 
 %prep
-%setup -n %name-src-%version
+%setup -n %name-sources-%version
 %autopatch -p1
 
 %ifarch %e2k
@@ -192,6 +189,7 @@ export CC="$(command -v gcc)"
 %install
 %cmakeinstall_std
 tar -xf %SOURCE1 -C %buildroot%_datadir/%name
+mv %buildroot%_datadir/%name/{%name-manual-%version,help}
 rm -rf %buildroot%_defaultdocdir/%name
 rm -rf %buildroot%_datadir/%name/include
 # Remove a helper script that runs audacity in GitHub CI builds
@@ -248,6 +246,9 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 %_datadir/%name/help
 
 %changelog
+* Thu Nov 09 2023 Ivan A. Melnikov <iv@altlinux.org> 3.4.1-alt1
+- 3.4.1
+
 * Mon Nov 06 2023 Ivan A. Melnikov <iv@altlinux.org> 3.4.0-alt1.1
 - Fix build on armh by disabling (some) SIMD optimizations there
 
