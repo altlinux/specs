@@ -4,12 +4,11 @@
 
 Name: xdg-user-dirs
 Version: 0.18
-Release: alt1
+Release: alt2
 Summary: Handles user special directories
 Group: Graphical desktop/Other
 License: GPLv2+ and MIT
 Url: http://freedesktop.org/wiki/Software/xdg-user-dirs
-Packager: Radik Usupov <radik@altlinux.org>
 
 Source0: http://user-dirs.freedesktop.org/releases/%name-%version.tar.gz
 Source1: xdg-user-dirs.sh
@@ -48,9 +47,25 @@ install -p -m 0644 %SOURCE10 %buildroot/%_userunitdir/xdg-user-dirs.service
 
 %post
 %post_control -s disabled xdg-user-dirs
+SYSTEMCTL=systemctl
+if [ $1 = 1 ] && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+    $SYSTEMCTL -q --global enable %name.service >/dev/null 2>&1 || :
+fi
 
 %pre
 %pre_control xdg-user-dirs
+
+%preun
+SYSTEMCTL=systemctl
+if [ $1 = 0 ] && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+    $SYSTEMCTL -q --global disable %name.service >/dev/null 2>&1 || :
+fi
+
+%triggerin -- %name < 0.18-alt2
+SYSTEMCTL=systemctl
+if "$SYSTEMCTL" --version >/dev/null 2>&1; then
+    $SYSTEMCTL -q --global enable %name.service >/dev/null 2>&1 || :
+fi
 
 %files -f %name.lang
 %doc NEWS AUTHORS README
@@ -64,6 +79,11 @@ install -p -m 0644 %SOURCE10 %buildroot/%_userunitdir/xdg-user-dirs.service
 %_man5dir/*user-dir*
 
 %changelog
+* Wed Nov 08 2023 Anton Midyukov <antohami@altlinux.org> 0.18-alt2
+- clear Packager
+- xdg-user-dirs.service: install to graphical-session-pre.target
+- enable xdg-user-dirs.service when first install
+
 * Thu Oct 12 2023 Sergey V Turchin <zerg@altlinux.org> 0.18-alt1
 - new version
 - add systemd user service
