@@ -1,15 +1,14 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 1.10.0
-Release: alt3
+Version: 1.11.0
+Release: alt1
 
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Group: System/Libraries
 
 Source: %name-%version.tar
 #Patch2: %%name-%%version-altlinux.patch
-Patch0001: 0001-build-Add-option-to-select-libsoup-ABI.patch
 
 Url: https://libosinfo.org
 BuildRequires(pre): meson >= 0.49.0
@@ -76,7 +75,6 @@ Contains developer documentation for %name.
 %prep
 %setup
 #%%patch2 -p1
-%patch0001 -p1
 
 %build
 %meson \
@@ -122,6 +120,9 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/osinfo
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Nov 09 2023 Alexey Shabalin <shaba@altlinux.org> 1.11.0-alt1
+- New version 1.11.0.
+
 * Wed Aug 31 2022 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt3
 - build with libsoup-3.0
 
