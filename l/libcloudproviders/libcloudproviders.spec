@@ -9,7 +9,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Library for integration of cloud storage providers
@@ -132,6 +132,9 @@ the functionality of the installed %_name library.
 %endif
 
 %changelog
+* Thu Nov 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
+- 0.3.5
+
 * Wed Sep 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
