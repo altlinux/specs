@@ -3,7 +3,7 @@
 
 Name: dlib
 Version: 19.24.2
-Release: alt2
+Release: alt3
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
 Group: Engineering
@@ -51,6 +51,9 @@ This package provides python module for %name.
 rm -rf dlib/external
 sed -i 's|add_subdirectory(../../dlib/external/pybind11 pybind11_build)|find_package(pybind11 CONFIG)|' \
   tools/python/CMakeLists.txt
+# don't apply cmake options for cmake into python's setup.py
+sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | OFF |;' \
+  dlib/cmake_utils/set_compiler_specific_options.cmake
 
 %build
 %cmake \
@@ -58,6 +61,8 @@ sed -i 's|add_subdirectory(../../dlib/external/pybind11 pybind11_build)|find_pac
   -DLIB_USE_CUDA=false \
   -DBUILD_SHARED_LIBS=true \
   -DBLAS_LIBRARIES=%_libdir/libopenblas.so \
+#   -DUSE_AVX_INSTRUCTIONS=false \
+#   -DUSE_SSE4_INSTRUCTIONS=false \
 #
 %cmake_build
 %ifnarch ppc64le
@@ -86,6 +91,9 @@ sed -i 's|add_subdirectory(../../dlib/external/pybind11 pybind11_build)|find_pac
 %endif
 
 %changelog
+* Thu Nov 09 2023 Leontiy Volodin <lvol@altlinux.org> 19.24.2-alt3
+- Built without SSE4 and AVX (ALT #48280).
+
 * Mon Sep 11 2023 Leontiy Volodin <lvol@altlinux.org> 19.24.2-alt2
 - Spec:
   + Updated BuildRequires.
