@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
 
 Summary: KDE Partition Manager core library
@@ -18,7 +18,7 @@ Provides: %_name = %version-%release
 
 %define blkid_ver 2.30
 
-Requires: sfdisk polkit ntfs-3g
+Requires: sfdisk polkit ntfs-3g exfatprogs btrfs-progs
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++ extra-cmake-modules %_bindir/appstreamcli
@@ -68,6 +68,9 @@ using %_name.
 
 
 %changelog
+* Thu Nov 09 2023 Yuri N. Sedunov <aris@altlinux.org> 23.08.3-alt1
+- 23.08.3
+
 * Thu Oct 12 2023 Yuri N. Sedunov <aris@altlinux.org> 23.08.2-alt1
 - 23.08.2
 
