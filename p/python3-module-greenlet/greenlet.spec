@@ -3,7 +3,7 @@
 %define oname greenlet
 
 Name: python3-module-%oname
-Version: 2.0.2
+Version: 3.0.1
 Release: alt1
 
 Summary: Lightweight in-process concurrent programming
@@ -14,8 +14,6 @@ Url: http://pypi.python.org/pypi/greenlet
 
 # Source-url: %__pypi_url %oname
 Source: %oname-%version.tar
-# LoongArch support
-Patch3500: 3500_loongarch64_support.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
@@ -51,7 +49,6 @@ Requires: %name = %EVR
 
 %prep
 %setup -n %oname-%version
-%patch3500 -p1
 
 %build
 %python3_build_debug
@@ -72,6 +69,9 @@ Requires: %name = %EVR
 %_includedir/python%_python3_version%_python3_abiflags/greenlet
 
 %changelog
+* Thu Nov 09 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Build new version.
+
 * Thu Jun 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.0.2-alt1
 - Upstream version 2.0.2. Amongst other things solves FTBFS with GCC 13.
 - Support LoongArch architecture (from
