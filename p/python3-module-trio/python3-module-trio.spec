@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 0.22.0
-Release: alt3
+Version: 0.23.1
+Release: alt1
 Summary: Trio - Pythonic async I/O for humans and snake people
 License: MIT or Apache-2.0
 Group: Development/Python3
@@ -20,9 +20,9 @@ Source1: %pyproject_deps_config_name
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter types-
 %pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: /proc
+BuildRequires: python3-module-pytest
 %endif
 
 # Self provides
@@ -57,9 +57,6 @@ sed -i 's/0.21.0+dev/%version/' trio/_version.py
 
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile test-requirements.in
-%endif
 
 %build
 %pyproject_build
@@ -68,22 +65,33 @@ sed -i 's/0.21.0+dev/%version/' trio/_version.py
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra -m 'not redistributors_should_skip'
+# see ci.sh for details
+%pyproject_run_pytest -ra \
+    -p trio._tests.pytest_plugin \
+    --skip-optional-imports \
+    -m 'not redistributors_should_skip' \
 
 %files
 %doc README.*
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/%modulename/tests
+%exclude %python3_sitelibdir/%modulename/_tests
 %exclude %python3_sitelibdir/%modulename/testing
-%exclude %python3_sitelibdir/%modulename/_core/tests
+%exclude %python3_sitelibdir/%modulename/_core/_tests
+%exclude %python3_sitelibdir/%modulename/tests.py
+%exclude %python3_sitelibdir/%modulename/__pycache__/tests.*
 
 %files tests
-%python3_sitelibdir/%modulename/tests
+%python3_sitelibdir/%modulename/_tests
 %python3_sitelibdir/%modulename/testing
-%python3_sitelibdir/%modulename/_core/tests
+%python3_sitelibdir/%modulename/_core/_tests
+%python3_sitelibdir/%modulename/tests.py
+%python3_sitelibdir/%modulename/__pycache__/tests.*
 
 %changelog
+* Tue Nov 07 2023 Stanislav Levin <slev@altlinux.org> 0.23.1-alt1
+- 0.22.0 -> 0.23.1.
+
 * Thu Apr 27 2023 Stanislav Levin <slev@altlinux.org> 0.22.0-alt3
 - Modernized packaging.
 - Fixed FTBFS (setuptools 67.7.2).

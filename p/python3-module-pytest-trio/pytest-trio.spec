@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.8.0
-Release: alt2
+Release: alt2.1
 
 Summary: Pytest plugin for trio
 
@@ -14,6 +14,8 @@ URL:     https://pypi.org/project/pytest-trio
 
 # https://github.com/python-trio/pytest-trio
 Source:  %name-%version.tar
+# trio >= 0.22.1
+Patch0: pytest-trio-0.8.0-Remove-trio.tests-import-causing-warnings.patch
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -36,6 +38,7 @@ BuildArch: noarch
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -53,6 +56,9 @@ BuildArch: noarch
 %doc *.md
 
 %changelog
+* Wed Nov 08 2023 Stanislav Levin <slev@altlinux.org> 0.8.0-alt2.1
+- NMU: fixed FTBFS (trio 0.22.1).
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 0.8.0-alt2
 - Fixed FTBFS.
 
