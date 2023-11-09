@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     chow-tape-model
-Version:  2.11.3
+Version:  2.11.4
 Release:  alt1
 
 ExclusiveArch: x86_64
@@ -91,6 +91,9 @@ install -m644  -t "$dst_path" "$src_path/"*.ttl
 %doc Manual/ChowTapeManual.pdf
 
 %changelog
+* Mon Nov 06 2023 Ivan A. Melnikov <iv@altlinux.org> 2.11.4-alt1
+- 2.11.4
+
 * Thu Oct 26 2023 Ivan A. Melnikov <iv@altlinux.org> 2.11.3-alt1
 - 2.11.3
 
