@@ -2,13 +2,13 @@
 
 Name: alt-app-starter
 Version: 1.3.0
-Release: alt1
+Release: alt2
 Group: Graphical desktop/KDE
 Summary: The tool to run programs as another user
 License: GPLv2
 URL: http://git.altlinux.org/gears/a/alt-app-starter.git
 
-%K5init altplace
+%K5init
 
 Source: %name-%version.tar
 
@@ -45,6 +45,9 @@ This tool was designed to work with KDE.
 %_K5xdgapp/*.desktop
 
 %changelog
+* Thu Nov 09 2023 Sergey V Turchin <zerg at altlinux dot org> 1.3.0-alt2
+- don't hardcode alternate placement
+
 * Wed Sep 23 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt1
 - Code cleanup and minor bugfixes.
 
