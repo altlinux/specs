@@ -2,7 +2,7 @@
 
 Name: alt-tweaks
 Version: 0.2.1
-Release: alt2
+Release: alt3
 
 Summary: A tool to customize advanced phosh options of ALT Mobile OS
 Group: Graphical desktop/GNOME
@@ -65,6 +65,9 @@ rm -f %buildroot%_datadir/postmarketos-tweaks/postmarketos-tweakd.initd.in
 %doc README*
 
 %changelog
+* Wed Nov 08 2023 Andrey Limachko <liannnix@altlinux.org> 0.2.1-alt3
+- Fix getting locale (next iteration).
+
 * Sun Nov  5 2023 Artyom Bystrov <arbars@altlinux.org> 0.2.1-alt2
 - Fix back getting locale value
 
