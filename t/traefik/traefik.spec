@@ -4,7 +4,7 @@
 %def_with prebuild_webui
 
 Name: traefik
-Version: 2.10.4
+Version: 2.10.5
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -146,6 +146,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu Nov 09 2023 Alexey Shabalin <shaba@altlinux.org> 2.10.5-alt1
+- 2.10.5
+
 * Fri Sep 01 2023 Alexey Shabalin <shaba@altlinux.org> 2.10.4-alt1
 - 2.10 branch stapshot
 
