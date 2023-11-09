@@ -1,6 +1,6 @@
 Name: procps
 Version: 4.0.4
-Release: alt2
+Release: alt3
 
 %def_disable bootstrap
 %if_enabled bootstrap
@@ -66,6 +66,10 @@ echo -n %version-%release > .tarball-version
 
 %build
 %add_optflags "-Werror"
+%ifarch %e2k
+# lcc 1.26.20 barfs on ncurses_colors (mcst#8106)
+%add_optflags "-Wno-error=unused-but-set-variable"
+%endif
 ./autogen.sh
 %configure \
 	--exec-prefix=/ \
@@ -120,6 +124,9 @@ make check
 %_includedir/*
 %_pkgconfigdir/*.pc
 %changelog
+* Thu Nov 09 2023 Michael Shigorin <mike@altlinux.org> 4.0.4-alt3
+- E2K: lcc 1.26.20 ftbfs workaround (ilyakurdyukov@).
+
 * Fri Oct 27 2023 Mikhail Efremov <sem@altlinux.org> 4.0.4-alt2
 - w: Fixed ut_user check.
 - Fixed w crash (patches from upstream).
