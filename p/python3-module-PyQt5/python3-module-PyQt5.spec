@@ -8,8 +8,8 @@
 #define qtver %(rpm -q --qf '%%{VERSION}' libqt5-core | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
-Version: 5.15.7
-Release: alt1.1
+Version: 5.15.10
+Release: alt1
 
 Summary: Python 3 bindings for Qt 5
 
@@ -182,6 +182,9 @@ rm -rv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %python3_sitelibdir/PyQt5/__pycache__/pyrcc*
 
 %changelog
+* Thu Nov 09 2023 Anton Midyukov <antohami@altlinux.org> 5.15.10-alt1
+- new version (5.15.10) with rpmgs script
+
 * Wed May 17 2023 Stanislav Levin <slev@altlinux.org> 5.15.7-alt1.1
 - NMU: mapped PyPI name to distro's one.
 

@@ -1,7 +1,7 @@
 %define oname PyQt5_sip
 
 Name: python3-module-PyQt5-sip
-Version: 12.11.0
+Version: 12.13.0
 Release: alt1
 
 Summary: The sip module support for PyQt5
@@ -36,6 +36,9 @@ The sip extension module provides support for the PyQt5 package.
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Thu Nov 09 2023 Anton Midyukov <antohami@altlinux.org> 12.13.0-alt1
+- new version (12.13.0) with rpmgs script
+
 * Thu Aug 04 2022 Vitaly Lipatov <lav@altlinux.ru> 12.11.0-alt1
 - new version 12.11.0 (with rpmrb script)
 
