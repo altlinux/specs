@@ -2,8 +2,8 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
-%K5init altplace no_appdata
+Release: alt2
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Weather application
@@ -68,9 +68,13 @@ Requires: %name-common
 %_K5xdgapp/*kweather*.desktop
 %_K5dbus_srv/*kweather*.service
 %_K5icon/hicolor/*/apps/*kweather*
-%_K5data/plasma/plasmoids/*kweather*/
+%_kf5_data/plasma/plasmoids/*kweather*/
+%_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- package metainfo
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
