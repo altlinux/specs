@@ -19,7 +19,7 @@
 
 Name: cyrus-imapd
 Version: 3.4.6
-Release: alt1
+Release: alt2
 
 Summary: A high-performance email, contacts and calendar server
 License: ALT-Cyrus
@@ -51,6 +51,7 @@ Source21: %name.init
 Source22: %name.cyrus-conf
 
 Patch1: cyrus-imapd-3.0.11-setproctitle.c.patch
+Patch2: cyrus-imapd-3.4.6-README-build-config.patch
 
 Requires(pre): e2fsprogs /sbin/chkconfig /sbin/service cert-sh-functions
 Requires: su, tzdata
@@ -88,6 +89,9 @@ BuildRequires: perl-Pod-POM-View-Restructured
 BuildRequires: python-module-GitPython
 BuildRequires: python-module-sphinx >= 1.6
 %endif
+
+# 3.4.6
+BuildRequires: libshape-devel libbrotli-devel libnghttp2-devel libchardet-devel
 
 %description
 The Cyrus IMAP (Internet Message Access Protocol) server provides
@@ -176,6 +180,7 @@ for IMAP server and SASL library
 echo %version > VERSION
 
 %patch1 -p1
+%patch2 -p1
 
 ##
 ## hack to really enable pcre
@@ -210,8 +215,9 @@ find -type f -print0 -name '*.c' |
 autoreconf -v -i
 
 %add_optflags -lcrypto -lsasl2 -lssl -DUSE_SETPROCTITLE
+%add_optflags "-Wl,-z,noexecstack"
 
-CFLAGS="-Wl,-z,noexecstack" %configure \
+%configure \
   --with-extraident="%release" \
   \
   --sbindir=%_cyrexecdir \
@@ -457,7 +463,7 @@ done
 %_libdir/libcyrus*.so.*
 
 %files doc
-%doc COPYING README.md
+%doc COPYING README.md README-build-config
 %doc $RPM_SOURCE_DIR/cyrus-procmailrc
 %doc $RPM_SOURCE_DIR/cyrus-user-procmailrc.template
 %doc $RPM_SOURCE_DIR/%name-procmail+cyrus.mc
@@ -504,6 +510,12 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Wed Nov 08 2023 Sergey Y. Afonin <asy@altlinux.org> 3.4.6-alt2
+- fixed using CFLAGS in spec (built again with USE_SETPROCTITLE and pcre)
+- added cyrus-imapd-3.4.6-README-build-config.patch
+- added to BuildRequires:
+  libshape-devel libbrotli-devel libnghttp2-devel libchardet-devel
+
 * Wed Nov 01 2023 Sergey Y. Afonin <asy@altlinux.org> 3.4.6-alt1
 - 3.4.6
 
