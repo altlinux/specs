@@ -8,7 +8,7 @@
 %def_with check
 
 Name: ipython3
-Version: 8.17.1
+Version: 8.17.2
 Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
@@ -34,17 +34,35 @@ BuildRequires: python3(wheel)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-asyncio)
 BuildRequires: python3(testpath)
+BuildRequires: python3(traitlets)
+BuildRequires: python3(pygments)
+BuildRequires: python3(pexpect)
+BuildRequires: python3-modules-sqlite3
+BuildRequires: python3(jedi)
+BuildRequires: python3(pickleshare)
 BuildRequires: /dev/pts
+BuildRequires: /proc
 BuildRequires: git
 %endif
 
 %if_with doc
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx-devel python3-module-matplotlib-sphinxext
-BuildRequires: python3(sphinx_rtd_theme) graphviz
-BuildRequires: python3(traitlets) python3(pexpect) python3(pickleshare) python3(ipykernel) python3-module-sphinx-sphinx-build-symlink
-BuildRequires: python3(black) python3(jedi)
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3(sphinx_rtd_theme)
+BuildRequires: python3(ipykernel)
+BuildRequires: python3(matplotlib)
+BuildRequires: python3(stack_data)
+BuildRequires: python3(exceptiongroup)
+BuildRequires: python3(testpath)
+BuildRequires: python3(numpy)
+BuildRequires: python3(prompt_toolkit)
+BuildRequires: python3(pickleshare)
+BuildRequires: python3(jedi)
+BuildRequires: python3-module-matplotlib-sphinxext
+BuildRequires: python3-module-sphinx-devel
 BuildRequires: /proc
+# Some trouble with graphviz generating 'Inheritance diagram'
+#BuildRequires: graphviz
 %endif
 
 %add_python3_req_skip __main__
@@ -204,6 +222,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Tue Nov 07 2023 Anton Vyatkin <toni@altlinux.org> 8.17.2-alt1
+- New version 8.17.2.
+
 * Tue Oct 31 2023 Anton Vyatkin <toni@altlinux.org> 8.17.1-alt1
 - New version 8.17.1.
 
