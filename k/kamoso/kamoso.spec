@@ -1,7 +1,7 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 23.08.2
+Version: 24.01.75
 Release: alt1
 
 Group:   Video
@@ -94,11 +94,14 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5xdgapp/*%name.desktop
 %_datadir/metainfo/org.kde.kamoso.appdata.xml
 %doc %_K5doc/*/%name
-%_datadir/sounds/kamoso-shutter.wav
+#_datadir/sounds/kamoso-shutter.wav
 %_libdir/gstreamer-1.0/gstkamosoqt5videosink.so
 %_K5notif/%name.notifyrc
 
 %changelog
+* Wed Nov 08 2023 Andrey Cherepanov <cas@altlinux.org> 24.01.75-alt1
+- New version.
+
 * Thu Oct 12 2023 Andrey Cherepanov <cas@altlinux.org> 23.08.2-alt1
 - New version.
 
