@@ -1,10 +1,10 @@
 Name: netatop
-Version: 0.3
+Version: 3.1
 Release: alt1
 Summary: Daemon fo gather statistics about the TCP and UDP packets
 License: GPLv2
 Group: Monitoring
-URL: http://www.atoptool.nl
+URL: https://www.atoptool.nl
 Source: %url/%name-%version.tar
 Patch: %name-%version-%release.patch
 Provides: %{name}d = %version-%release
@@ -53,6 +53,7 @@ ln -sf module kernel-source-%name-%version
 %install
 install -d -m 0755 %buildroot{%_sbindir,%_man4dir,%_man8dir} %kernel_srcdir
 install -pD -m 0755 %name.init %buildroot%_initddir/%name
+install -pD -m 0644 %name.service %buildroot%_unitdir/%name.service
 install -p -m 0755 daemon/%{name}d %buildroot%_sbindir/
 install -p -m 0644 man/*.4 %buildroot%_man4dir/
 install -p -m 0644 man/*.8 %buildroot%_man8dir/
@@ -71,6 +72,7 @@ tar --transform='s,^module,%name-%version,' -cJhf %kernel_srcdir/%name-%version.
 %files
 %_sbindir/*
 %_initddir/*
+%_unitdir/*
 %_man4dir/*
 %_man8dir/*
 
@@ -80,6 +82,9 @@ tar --transform='s,^module,%name-%version,' -cJhf %kernel_srcdir/%name-%version.
 
 
 %changelog
+* Thu Nov 09 2023 Leontiy Volodin <lvol@altlinux.org> 3.1-alt1
+- 3.1
+
 * Sun Sep 01 2013 Led <led@altlinux.ru> 0.3-alt1
 - 0.3
 

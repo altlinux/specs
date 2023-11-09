@@ -2,8 +2,8 @@
 %filter_from_requires /^.usr.bin.systemctl/d
 
 Name: atop
-Version: 2.5.0
-Release: alt3
+Version: 2.9.0
+Release: alt1
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
@@ -64,6 +64,9 @@ done
 /usr/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Fri Nov 03 2023 Leontiy Volodin <lvol@altlinux.org> 2.9.0-alt1
+- atop 2.9.0
+
 * Fri Dec 17 2021 Igor Vlasenko <viy@altlinux.org> 2.5.0-alt3
 - NMU: drop shell.req autodeps on /usr/bin/systemctl
   due to recent sysV-systemd conflict
