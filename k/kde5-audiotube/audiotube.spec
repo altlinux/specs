@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Sound
@@ -55,8 +55,12 @@ Convergent YouTube Music client.
 %_K5bin/*
 %_K5xdgapp/*audiotube.desktop
 %_K5icon/*/*/apps/*%{rname}*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- package metadata
+
 * Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
