@@ -4,8 +4,8 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 7.1.1
-Release: alt1.1
+Version: 7.1.3
+Release: alt1
 
 Summary: Audio effects for Pipewire applications
 License: GPL-3.0
@@ -89,6 +89,9 @@ sed -i 's/tbb/tbb32/' src/meson.build
 %doc README* CHANGELOG.*
 
 %changelog
+* Thu Nov 09 2023 Yuri N. Sedunov <aris@altlinux.org> 7.1.3-alt1
+- 7.1.3
+
 * Tue Oct 31 2023 Yuri N. Sedunov <aris@altlinux.org> 7.1.1-alt1.1
 - required lsp-plugins for all default arches
 
