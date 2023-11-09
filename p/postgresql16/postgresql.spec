@@ -5,14 +5,21 @@
 %def_with icu
 
 # Use JIT
+%ifarch loongarch64
+# XXX: llvm versions <= 15 do not support LoongArch targets.
+# pgsql jit relies on deprecated llvm's typed pointers which are not
+# available since llvm 16 (the first version which supports LoongArch).
+%def_without jit
+%else
 %def_with jit
+%endif
 
 %set_autoconf_version 2.60
 
 %define prog_name            postgresql
 %define postgresql_major     16
 %define postgresql_minor     1
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -953,6 +960,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 09 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 16.1-alt2
+- NMU: build without jit on LoongArch. Fixes FTBFS.
+
 * Wed Nov 08 2023 Alexei Takaseev <taf@altlinux.org> 16.1-alt1
 - 16.1 (Fixes CVE-2023-5868, CVE-2023-5869, CVE-2023-5870)
 - Add patch 0008-Add_event-id_to_jsonlog.patch
