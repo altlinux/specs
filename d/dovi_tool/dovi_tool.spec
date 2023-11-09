@@ -2,8 +2,8 @@
 %define soname 3
 
 Name: dovi_tool
-Version: 2.0.3
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: Utilites for working with Dolby Vision
 Group: Video
@@ -15,7 +15,7 @@ Source1: %name-vendor.tar
 Source2: dolby_vision-vendor.tar
 
 BuildRequires: fontconfig-devel
-BuildRequires: /proc rust rust-cargo rust-cargo-c
+BuildRequires: /proc rust rust-cargo rust-cargo-c rpm-macros-rust
 
 %package -n libdovi%{soname}
 Summary: Library to read & write Dolby Vision metadata
@@ -58,11 +58,7 @@ done
 %build
 for d in . dolby_vision; do
 pushd "$d"
-cargo build \
-	--release \
-	%{?_smp_mflags} \
-	--offline \
-	%nil
+%rust_build
 popd
 done
 
@@ -91,6 +87,10 @@ cargo test --bins --release
 %_libdir/libdovi.so
 
 %changelog
+* Thu Nov 09 2023 L.A. Kostis <lakostis@altlinux.ru> 2.1.0-alt1
+- 2.1.0.
+- Use rpm macros for rust (and fix debuginfo).
+
 * Fri Jul 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.0.3-alt2
 - Updated vendor dependencies to support LoongArch.
 
