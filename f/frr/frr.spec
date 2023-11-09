@@ -29,14 +29,14 @@
 %def_enable pcre2posix
 %def_disable cumulus
 %def_disable datacenter
-%def_disable protobuf
+%def_enable protobuf
 %def_disable rpki
 %def_disable scripting
 %def_disable backtrace
 %def_disable dp_dpdk
 
 Name: frr
-Version: 8.5.2
+Version: 9.0.1
 Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -71,7 +71,7 @@ BuildRequires: makeinfo
 %{?_enable_zeromq:BuildRequires: pkgconfig(libzmq) >= 4.0.0}
 %{?_enable_rpki:BuildRequires: pkgconfig(rtrlib) >= 0.8.0}
 %{?_enable_backtrace:BuildRequires: pkgconfig(libunwind)}
-%{?_enable_protobuf:BuildRequires: /usr/bin/protoc /usr/bin/protoc-c pkgconfig(libprotobuf-c) >= 0.14}
+%{?_enable_protobuf:BuildRequires: /usr/bin/protoc /usr/bin/protoc-c pkgconfig(libprotobuf-c) >= 1.1.0}
 %{?_enable_dp_dpdk:BuildRequires: pkgconfig(libdpdk)}
 
 Requires: /usr/bin/less
@@ -235,6 +235,9 @@ fi
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Thu Nov 09 2023 Alexey Shabalin <shaba@altlinux.org> 9.0.1-alt1
+- 9.0.1
+
 * Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 8.5.2-alt1
 - 8.5.2
 
