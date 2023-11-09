@@ -1,6 +1,6 @@
 
 Name: libvirglrenderer
-Version: 0.10.4
+Version: 1.0.0
 Release: alt1
 
 Summary: Virgl Rendering library
@@ -11,7 +11,7 @@ Url: https://gitlab.freedesktop.org/virgl/virglrenderer.git
 Vcs: https://gitlab.freedesktop.org/virgl/virglrenderer.git
 Source: %name-%version.tar
 
-BuildRequires(pre): meson >= 0.53
+BuildRequires(pre): meson >= 0.55
 BuildRequires: pkgconfig(libdrm) >= 2.4.50
 BuildRequires: pkgconfig(gbm) >= 18.0.0
 BuildRequires: pkgconfig(epoxy) >= 1.5.4
@@ -65,6 +65,9 @@ driver to test virgl rendering without GL.
 %_bindir/virgl_test_server
 
 %changelog
+* Thu Nov 09 2023 Alexey Shabalin <shaba@altlinux.org> 1.0.0-alt1
+- New version 1.0.0.
+
 * Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 0.10.4-alt1
 - new version 0.10.4
 
