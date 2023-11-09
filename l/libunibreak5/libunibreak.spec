@@ -1,9 +1,10 @@
 %define rname libunibreak
-%define sover 5
-%define libunibreak %rname%sover
+%define major 5
+%define sover %major
+%define libunibreak %rname%major
 Name: %libunibreak
 Version: 5.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Unicode line-breaking library
@@ -27,7 +28,9 @@ showbreak and breaktext.
 Group: Development/C
 Summary: Development files for libunibreak
 Provides: libunibreak-devel = %version
-Obsoletes: libunibreak-devel <  %version-%release
+Conflicts: libunibreak-devel
+Conflicts: libunibreak3-devel
+Requires(post,preun): alternatives >= 0.2
 %description devel
 The libunibreak-devel package contains libraries and header files for
 developing applications that use libunibreak.
@@ -42,6 +45,13 @@ developing applications that use libunibreak.
 %install
 %makeinstall_std
 
+#install alternative
+mv %buildroot/%_libdir/pkgconfig/%rname{,-%major}.pc
+install -d %buildroot/%_sysconfdir/alternatives/packages.d/
+cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name-devel <<__EOF__
+%_libdir/pkgconfig/%rname.pc %_libdir/pkgconfig/%rname-%major.pc %version
+__EOF__
+
 %files
 %doc AUTHORS LICENCE NEWS README.md
 %_libdir/libunibreak.so.%sover
@@ -49,10 +59,14 @@ developing applications that use libunibreak.
 
 %files devel
 %doc doc/html
+%config /%_sysconfdir/alternatives/packages.d/%name-devel
 %_includedir/*
 %_libdir/lib*.so
-%_libdir/pkgconfig/%rname.pc
+%_libdir/pkgconfig/%rname-%major.pc
 
 %changelog
+* Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.1-alt2
+- add alternatives support for pc-file
+
 * Wed Nov 08 2023 Sergey V Turchin <zerg@altlinux.org> 5.1-alt1
 - initial build

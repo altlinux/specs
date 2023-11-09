@@ -1,6 +1,8 @@
+%define major 3
+%define rname libunibreak
 Name: libunibreak
 Version: 3.0
-Release: alt2
+Release: alt3
 
 Summary: Unicode line-breaking library
 License: zlib
@@ -25,7 +27,7 @@ showbreak and breaktext.
 %package devel
 Summary: Development files for libunibreak
 Group: Development/C
-
+Requires(post,preun): alternatives >= 0.2
 %description devel
 The libunibreak-devel package contains libraries and header files for
 developing applications that use libunibreak.
@@ -40,15 +42,28 @@ developing applications that use libunibreak.
 %install
 %makeinstall_std
 
-rm -f %buildroot/%_includedir/*
-rm -f %buildroot/%_libdir/*.so
-rm -f %buildroot/%_libdir/pkgconfig/%name.pc
+#install alternative
+mv %buildroot/%_libdir/pkgconfig/%rname{,-%major}.pc
+install -d %buildroot/%_sysconfdir/alternatives/packages.d/
+cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name-devel <<__EOF__
+%_libdir/pkgconfig/%rname.pc %_libdir/pkgconfig/%rname-%major.pc %version
+__EOF__
 
 %files
 %doc AUTHORS ChangeLog LICENCE NEWS README.md
 %_libdir/*.so.*
 
+%files devel
+%config /%_sysconfdir/alternatives/packages.d/%name-devel
+%_includedir/*
+%_libdir/*.so
+%_libdir/pkgconfig/%rname-%major.pc
+
 %changelog
+* Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 3.0-alt3
+- package devel files again
+- add alternatives support for pc-file
+
 * Wed Nov 08 2023 Sergey V Turchin <zerg@altlinux.org> 3.0-alt2
 - don't package devel files
 
