@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2022.10.9
+Version: 2023.11.2
 Release: alt1
 
 Summary: List of packages in the stdlib
@@ -57,6 +57,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 09 2023 Stanislav Levin <slev@altlinux.org> 2023.11.2-alt1
+- 2022.10.9 -> 2023.11.2.
+
 * Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 2022.10.9-alt1
 - 2022.6.8 -> 2022.10.9.
 
