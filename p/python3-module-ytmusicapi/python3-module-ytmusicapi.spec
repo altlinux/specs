@@ -2,7 +2,7 @@
 
 Name: python3-module-%rname
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Group: Development/Python3
 Summary: YouTube Music Unofficial API
@@ -23,9 +23,15 @@ Patch3: alt-locales-dir.patch
 #BuildRequires: meson python3-module-chardet python3-module-hypothesis python3-module-markdown python3-module-markups python3-module-mpl_toolkits python3-module-nose python3-module-pyproject-installer python3-module-tempora python3-module-wheel python3-module-ytmusicapi
 #BuildRequires: python3-module-chardet python3-module-hypothesis python3-module-markdown python3-module-markups python3-module-mpl_toolkits python3-module-nose python3-module-pyproject-installer python3-module-tempora python3-module-wheel
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools) python3(wheel)
 
 %description
+ytmusicapi is a Python 3 library to send requests to the YouTube Music API.
+It emulates YouTube Music web client requests using the user's cookie data for authentication.
+
+%package -n %rname
+Group: Development/Python3
+Summary: %name utility
+%description -n %rname
 ytmusicapi is a Python 3 library to send requests to the YouTube Music API.
 It emulates YouTube Music web client requests using the user's cookie data for authentication.
 
@@ -34,26 +40,29 @@ It emulates YouTube Music web client requests using the user's cookie data for a
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-sed -i 's|@VERSION@|%version|' pyproject.toml
 sed -i 's|@VERSION@|%version|' ytmusicapi/__init__.py
 
-%build
-%pyproject_build
-
 %install
-%pyproject_install
-mkdir -p %buildroot/%_datadir/%rname/
-mv %buildroot/%python3_sitelibdir_noarch/%rname/locales %buildroot/%_datadir/%rname/
+mkdir -p %buildroot/%_datadir/%rname/locales/
+cp -ar %rname/locales/{??,*_*}/ %buildroot/%_datadir/%rname/locales/
+find %buildroot/%_datadir/%rname/locales/ -name \*.po | while read f; do rm -f "$f"; done
 
-rm -rf %buildroot/%python3_sitelibdir_noarch/%{pyproject_distinfo %rname} ||:
+mkdir -p %buildroot/%python3_sitelibdir_noarch/%rname/
+cp -ar %rname %buildroot/%python3_sitelibdir_noarch/
+rm -rf %buildroot/%python3_sitelibdir_noarch/%rname/locales/
 
 %files
 %doc README.rst
-#%_bindir/%rname
 %python3_sitelibdir_noarch/%rname/
 %_datadir/%rname/
 
+#%files -n %rname
+#%_bindir/%rname
+
 %changelog
+* Wed Nov 08 2023 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt2
+- don't use setuptools for packaging
+
 * Thu Jul 13 2023 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1
 - new version
 
