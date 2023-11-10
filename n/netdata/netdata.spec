@@ -14,7 +14,7 @@
 %define netdatauser netdata
 Name: netdata
 Version: 1.43.2
-Release: alt1
+Release: alt2
 
 Summary: Real-time performance monitoring, done right!
 
@@ -159,6 +159,8 @@ done
 
 %__subst "s|^pybinary=.*|pybinary=python3|" collectors/python.d.plugin/python.d.plugin.in
 
+%__subst 's|${libdir}/netdata/conf.d|${libexecdir}/netdata/conf.d|' configure.ac
+
 %build
 %autoreconf
 %configure \
@@ -189,10 +191,6 @@ rm -rf %buildroot%_libexecdir/netdata/python.d/python_modules/urllib3/
 
 mkdir -p %buildroot%_sysconfdir/%name/
 install -m 644 -p system/netdata.conf %buildroot%_sysconfdir/%name/netdata.conf
-
-%if "%_libdir" != "%_libexecdir"
-mv -v %buildroot%_libdir/%name/conf.d %buildroot%_libexecdir/%name/conf.d
-%endif
 
 # This should be opt-in, not opt-out. I do not believe most users would agree
 # with sending usage data to Google Analytics, whether anonymized or not.
@@ -304,6 +302,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Fri Nov 10 2023 Vitaly Lipatov <lav@altlinux.ru> 1.43.2-alt2
+- fix libexecdir using for conf.d (ALT bug 48381)
+
 * Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 1.43.2-alt1
 - new version 1.43.2 (with rpmrb script)
 - fix conf.d placement (ALT bug 48291)
