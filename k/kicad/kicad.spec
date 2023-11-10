@@ -4,7 +4,7 @@
 %define majver 7.0
 
 Name: kicad
-Version: %majver.8
+Version: %majver.9
 Release: alt1
 Epoch: 1
 
@@ -148,9 +148,6 @@ for i in %buildroot%_desktopdir/*.desktop; do
 		"$i"
 done
 
-# remove not supported locale
-rm -r %buildroot/%_datadir/locale/pt_br
-
 %find_lang %name
 
 %files -f %name.lang
@@ -173,6 +170,9 @@ rm -r %buildroot/%_datadir/locale/pt_br
 %dir %_datadir/kicad/template
 
 %changelog
+* Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.9-alt1
+- new version 7.0.9
+
 * Mon Oct 02 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.8-alt1
 - New version 7.0.8
 
