@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.2
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -20,8 +20,7 @@ Requires(post,preun): alternatives >= 0.2
 
 Source: %rname-%version.tar
 
-Patch4: khelpcenter-alt-contents-tree-synchronization.patch
-Patch5: khelpcenter-alt-hide-links-on-contents-screen.patch
+Patch1: khelpcenter-alt-hide-links-on-contents-screen.patch
 
 # Automatically added by buildreq on Mon Apr 25 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -40,8 +39,7 @@ KDE help center.
 
 %prep
 %setup -n %rname-%version
-#%patch4 -p2
-%patch5 -p2
+%patch1 -p2
 
 %build
 %K5build \
@@ -54,9 +52,12 @@ KDE help center.
 
 # install alternatives
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
-cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
-%_bindir/khelpcenter       %_K5bin/khelpcenter      5
+echo > %buildroot/%_sysconfdir/alternatives/packages.d/%name
+if [ "%_bindir" != "%_K5bin" ] ; then
+    cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
+%_bindir/khelpcenter       %_K5bin/khelpcenter      %version
 __EOF__
+fi
 
 %find_lang %name --with-kde --all-name
 
@@ -74,6 +75,9 @@ __EOF__
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt3
+- fix alternative
+
 * Tue Nov 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
 - don't hardcode altplace
 - package metainfo
