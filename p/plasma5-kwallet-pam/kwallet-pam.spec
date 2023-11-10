@@ -6,7 +6,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.9
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -29,6 +29,8 @@ Patch10: alt-allow-empty-password.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: cmake gcc-c++ glibc-devel extra-cmake-modules qt5-base-devel libgcrypt-devel libpam-devel
 BuildRequires: kf5-kwallet-devel
+# find kwalletd5
+BuildRequires: kf5-kwallet
 
 %package -n pam0_kwallet
 Summary: KDE4 PAM KWallet integration
@@ -44,8 +46,6 @@ Requires: socat
 %description -n pam0_kwallet5
 KDE5 PAM KWallet integration
 
-
-
 %description
 %summary.
 
@@ -56,10 +56,19 @@ KDE5 PAM KWallet integration
 %patch10 -p1
 
 %build
+KWALLETD_PATH=%_K5bin/kwalletd5
+for f in \
+    /usr/share/dbus-1/services/org.kde.kwalletd5.service \
+    #
+do
+    [ -e $f ] || continue
+    KWALLETD_PATH_NEW=`grep '^Exec=' $f | sed 's|^Exec=||'`
+    [ -z "$KWALLETD_PATH_NEW" ] || KWALLETD_PATH=$KWALLETD_PATH_NEW
+done
 %K5build \
     -DKWALLET5=1 \
     -DCMAKE_INSTALL_LIBDIR=/%_lib \
-    -DKWALLETD_BIN_PATH=%_K5bin/kwalletd5 \
+    -DKWALLETD_BIN_PATH=$KWALLETD_PATH \
     #
 
 %install
@@ -94,6 +103,9 @@ sed -i '/^ExecStart=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
 %_unitdir_user/*.service
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt3
+- fix find kwalletd
+
 * Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
 - dont force alternate placement
 

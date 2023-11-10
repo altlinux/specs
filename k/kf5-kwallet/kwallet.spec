@@ -2,16 +2,15 @@
 
 Name: kf5-%rname
 Version: 5.111.0
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 safe desktop-wide storage for passwords
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-# For secrets API tests
-BuildRequires: qca-qt5-ossl
+Requires(post,preun): alternatives >= 0.2
 
 Source: %rname-%version.tar
 Source1: kwalletd5.po
@@ -33,6 +32,8 @@ BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-knotifications-dev
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kdoctools-devel kf5-kdoctools
 BuildRequires: libqca-qt5-devel
+# For secrets API tests
+BuildRequires: qca-qt5-ossl
 
 %description
 This framework contains two main components:
@@ -92,19 +93,31 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
+install -d %buildroot/%_sysconfdir/alternatives/packages.d/
+echo > %buildroot/%_sysconfdir/alternatives/packages.d/%name
+# install alternative
+if [ "%_K5dbus_srv" == "%_datadir/dbus-1/services" ] ; then
+    mkdir -p %buildroot/%_datadir/kf5/dbus-1/services/
+    mv %buildroot/%_K5dbus_srv/org.freedesktop.secrets.service %buildroot/%_datadir/kf5/dbus-1/services/
+    cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
+%_K5dbus_srv/org.freedesktop.secrets.service %_datadir/dbus-1/services/org.kde.kwalletd5.service %version
+__EOF__
+fi
+
 %files common -f %name.lang
 %doc LICENSES/* README.md
 %_datadir/qlogging-categories5/*.*categories
 
 %files
+%config /%_sysconfdir/alternatives/packages.d/%name
 %_bindir/kwalletd5
 %_K5bin/kwalletd5
 %_K5bin/kwallet-query
 %_K5xdgapp/*.desktop
 %_K5notif/*.notifyrc
 %_K5srv/*.desktop
-%_datadir/dbus-1/services/*.service
-%_K5dbus_srv/*.service
+%_datadir/dbus-1/services/org.kde.kwalletd5.service
+%_datadir/kf5/dbus-1/services/org.freedesktop.secrets.service
 
 %files devel
 #%_K5inc/kwallet_version.h
@@ -120,6 +133,10 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt2
+- don't force alternate placement placement
+- add alternative for dbus org.freedesktop.secrets.service
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
 - new version
 
