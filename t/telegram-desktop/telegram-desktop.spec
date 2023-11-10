@@ -15,7 +15,7 @@
 
 # TODO: def_with clang
 %def_with qt6
-%def_without wayland
+%def_with wayland
 %def_with x11
 %def_with rlottie
 %def_with gsl
@@ -25,7 +25,7 @@
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 4.11.5
+Version: 4.11.6
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -85,7 +85,7 @@ BuildRequires: qt6-svg-devel qt6-svg
 BuildRequires: qt6-charts-devel qt6-charts
 BuildRequires: qt6-5compat-devel
 BuildRequires: qt6-imageformats
-%{?_with_wayland:BuildRequires: qt6-wayland-devel}
+%{?_with_wayland:BuildRequires: qt6-wayland-devel qt6-wayland}
 # needs for smiles and emojicons
 Requires: qt6-imageformats
 %else
@@ -402,6 +402,10 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Fri Nov 10 2023 Vitaly Lipatov <lav@altlinux.ru> 4.11.6-alt1
+- new version 4.11.6 (with rpmrb script)
+- enable wayland integration
+
 * Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 4.11.5-alt1
 - new version 4.11.5 (with rpmrb script)
 
