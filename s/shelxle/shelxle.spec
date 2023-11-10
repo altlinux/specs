@@ -1,6 +1,6 @@
 Name: shelxle
-Version: 1.0.1566
-Release: alt2
+Version: 1.0.1573
+Release: alt1
 
 Summary: A Qt GUI for SHELX
 License: LGPLv2
@@ -43,6 +43,9 @@ cp kissfft/COPYING COPYING_kissfft
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Fri Nov 10 2023 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1573-alt1
+- new version
+
 * Thu Nov 02 2023 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1566-alt2
 - build with Qt6
 
