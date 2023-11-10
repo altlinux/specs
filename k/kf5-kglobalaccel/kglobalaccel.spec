@@ -6,8 +6,8 @@
 
 Name: kf5-%rname
 Version: 5.111.0
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 global desktop keyboard shortcuts
@@ -105,6 +105,9 @@ mkdir -p %buildroot/%_K5data/kglobalaccel/
 %_K5lib/libKF5GlobalAccelPrivate.so.*
 
 %changelog
+* Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt2
+- don't hardcode alternate placement
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
 - new version
 
