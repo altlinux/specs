@@ -1,6 +1,6 @@
 Name:     zxing-cpp
 Version:  2.1.0
-Release:  alt1
+Release:  alt1.1
 
 Summary:  C++ port of ZXing
 License:  Apache-2.0 and LGPL-2.0 with exceptions
@@ -50,8 +50,9 @@ Development files for lib%name.
 %setup
 %ifarch %e2k
 # error #1587: cannot deduce "auto" type
-sed -i '/{PointI{0, 1}/s/, {1/, PointI{1/g' core/src/ConcentricFinder.cpp
-sed -i '/{PointF{0, 1}/s/, {1/, PointF{1/g' core/src/ConcentricFinder.h
+sed -i '/{PointI{/s/, {/, PointI{/g;/{PointF{/s/, {/, PointF{/g' \
+	core/src/ConcentricFinder.{h,cpp} \
+	core/src/{aztec/AZ,qrcode/QR,datamatrix/DM}Detector.cpp
 sed -E -i '/std::pair\(tl/s/\{(..), \{/std::pair{\1, PointI{/g' core/src/qrcode/QRDetector.cpp
 sed -i '1i #define preferred_separator preferred_separator_zxing' test/blackbox/ZXFilesystem.h
 %endif
@@ -74,6 +75,9 @@ sed -i '1i #define preferred_separator preferred_separator_zxing' test/blackbox/
 %_libdir/pkgconfig/zxing.pc
 
 %changelog
+* Fri Nov 11 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1.0-alt1.1
+- Fixed build for Elbrus.
+
 * Fri Jul 07 2023 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
 - New version.
 
