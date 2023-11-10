@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.15.1
+Version: 1.15.2
 Release: alt1
 
 Summary: Dynamically create python functions with a proper signature
@@ -53,10 +53,13 @@ Small library to dynamically create python functions.
 
 %files
 %doc LICENSE README.md docs
-%python3_sitelibdir/%pypi_name
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 10 2023 Anton Zhukharev <ancieg@altlinux.org> 1.15.2-alt1
+- Updated to 1.15.2.
+
 * Tue Aug 01 2023 Anton Zhukharev <ancieg@altlinux.org> 1.15.1-alt1
 - Updated to 1.15.1.
 
