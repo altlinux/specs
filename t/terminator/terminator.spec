@@ -5,7 +5,7 @@
 
 Name: terminator
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: Store and run multiple GNOME terminals in one window
 Group: Terminals
@@ -28,6 +28,7 @@ BuildArch: noarch
 %add_python3_req_skip gi.repository.GLib
 
 Requires: typelib(Gtk) = 3.0
+Requires: typelib(Vte) = 2.91
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 
@@ -78,6 +79,9 @@ xvfb-run py.test-3
 %doc README* CHANGELOG*
 
 %changelog
+* Fri Nov 10 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt1.1
+- explicitly required typelib(Vte) = 2.91
+
 * Thu Mar 02 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt1
 - 2.1.3
 
