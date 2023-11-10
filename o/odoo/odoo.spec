@@ -3,7 +3,7 @@
 
 Name:    odoo
 Version: 16.0
-Release: alt1.%snapshot
+Release: alt2.%snapshot
 
 Summary: Odoo is a suite of web based open source business apps
 License: LGPL-3.0
@@ -38,10 +38,11 @@ Provides:  openerp-httpd-fonts-access = %version-%release
 Obsoletes: openerp-httpd-fonts-access < %version-%release
 
 %add_python3_req_skip xmlrpclib odoo.addons.hw_drivers.tools RPi.GPIO vcgencmd
-%py3_requires feedparser gevent mako mock ofxparse PIL psutil pydot ldap pyparsing serial usb qrcode vobject xlsxwriter xlwt num2words phonenumbers sassc
+%py3_requires feedparser gevent mako mock ofxparse PIL psutil pydot ldap pyparsing serial usb qrcode vobject xlsxwriter xlwt num2words phonenumbers
 Requires: python3-module-suds
 Requires: wkhtmltopdf
 Requires: lessjs >= 3.0.0
+Requires: sassc
 
 %description
 Server package for OpenERP.
@@ -141,6 +142,9 @@ getent passwd _odoo > /dev/null || \
 #%%attr(-,openerp,openerp) %ghost %_logdir/openerp/openerp-server.log
 
 %changelog
+* Fri Nov 10 2023 Andrey Cherepanov <cas@altlinux.org> 16.0-alt2.20231013
+- Requires sassc executable instead of python3(sassc).
+
 * Tue Oct 24 2023 Andrey Cherepanov <cas@altlinux.org> 16.0-alt1.20231013
 - New version (ALT #45090).
 

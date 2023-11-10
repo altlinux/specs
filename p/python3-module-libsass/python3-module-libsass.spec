@@ -1,7 +1,7 @@
 %define  modulename libsass
 
 Name:    python3-module-%modulename
-Version: 0.20.1
+Version: 0.22.0
 Release: alt1
 
 Summary: A straightforward binding of libsass for Python
@@ -18,9 +18,11 @@ BuildRequires: python3-module-setuptools
 BuildRequires: libsass-devel >= 3.4.9
 
 Source:  %modulename-python-%version.tar
+Source1: submodules.tar
 
 %set_verify_elf_method strict
 %add_python3_req_skip _sass
+%filter_from_requires /python3(distutils/d
 
 %description
 This package provides a simple Python extension module sass which is
@@ -32,10 +34,12 @@ nor Node.js.
 
 %prep
 %setup -n %modulename-python-%version
+tar xf %SOURCE1
 %__subst "s|-lstdc++|-lsass|" setup.py
 pkg-config --modversion libsass > .libsass-upstream-version
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %python3_build
 
 %install
@@ -43,7 +47,6 @@ pkg-config --modversion libsass > .libsass-upstream-version
 
 %files
 %doc CONTRIBUTING.rst README.rst
-%_bindir/sassc
 %_bindir/pysassc
 %python3_sitelibdir/__pycache__/*.pyc
 %python3_sitelibdir/*.so
@@ -52,6 +55,12 @@ pkg-config --modversion libsass > .libsass-upstream-version
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Nov 04 2023 Andrey Cherepanov <cas@altlinux.org> 0.22.0-alt1
+- New version.
+
+* Fri May 21 2021 Andrey Cherepanov <cas@altlinux.org> 0.21.0-alt1
+- New version.
+
 * Sun Aug 30 2020 Andrey Cherepanov <cas@altlinux.org> 0.20.1-alt1
 - New version.
 
