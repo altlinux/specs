@@ -1,5 +1,5 @@
 Name:    python3-module-libusb1
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 
 Summary: Python 3 ctype-based wrapper around libusb1
@@ -7,10 +7,10 @@ License: LGPL-2.1-or-later
 Group:   Development/Python3
 URL:     https://github.com/vpelletier/python-libusb1
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: libusb-devel
 
 BuildArch: noarch
@@ -18,30 +18,39 @@ BuildArch: noarch
 Source:  %name-%version.tar
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
+rm -rf libusb1.egg-info
 
 # fix egg-info
 sed -i 's/\(^\s\+git_refnames = \).*$/\1"%version"/' usb1/_version.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 %__python3 setup.py test
 
 %files
-%python3_sitelibdir/*
-%doc README.rst
+%python3_sitelibdir/libusb1.py
+%python3_sitelibdir/usb1/
+%python3_sitelibdir/__pycache__/libusb1.cpython-*
+%python3_sitelibdir/libusb1-%version.dist-info/
+%doc README.rst examples
 %exclude %python3_sitelibdir/usb1/testUSB1.py
 %exclude %python3_sitelibdir/usb1/__pyinstaller
 
 %changelog
+* Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
+- New version 3.1.0.
+- spec: migration to PEP517
+- cleanup spec
+
 * Sat Feb 19 2022 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
 - new version 3.0.0
 
