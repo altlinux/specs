@@ -7,10 +7,10 @@
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.10.7.0
+Version: 3.10.8.0
 Release: alt1
 Summary: Software defined radio framework
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Engineering
 Url: http://www.gnuradio.org
 
@@ -81,6 +81,7 @@ BuildRequires: /usr/bin/latex /usr/bin/dvips tex(dvips.def)
 BuildRequires: desktop-file-utils xdg-utils
 %add_python3_req_skip PyQt5.Qwt
 %add_python3_req_skip gnuradio.ctrlport.GNURadio
+%add_python3_req_skip Generate_LDPC_matrix_functions
 
 Obsoletes: gnuradio-data < 3.8
 Obsoletes: libgnuradio < 3.8
@@ -129,7 +130,7 @@ GNU Radio Headers.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # remove verify_elf problem files
 rm %buildroot%_datadir/%name/examples/audio/dial_tone
@@ -191,6 +192,9 @@ done
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 3.10.8.0-alt1
+- New version 3.10.8.0.
+
 * Mon Aug 14 2023 Anton Midyukov <antohami@altlinux.org> 3.10.7.0-alt1
 - New version 3.10.7.0.
 
