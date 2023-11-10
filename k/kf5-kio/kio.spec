@@ -4,8 +4,8 @@
 
 Name: kf5-%rname
 Version: 5.111.0
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init no_altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 network transparent access to files and data
@@ -137,11 +137,13 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %files
 %config(noreplace) %_K5xdgconf/*
 %_bindir/*5
-%_K5bin/*
+%_K5bin/kcookiejar5
+%_K5bin/ktelnetservice5
+%_K5bin/ktrash5
 %_K5exec/*
 %_K5plug/kf5/*
 %_K5plug/plasma/kcms/systemsettings*
-%_K5data/kcookiejar/
+%_kf5_data/kcookiejar/
 %_K5notif/*
 %_K5plug/*.so
 %_K5xdgapp/*.desktop
@@ -155,6 +157,7 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 #%_datadir/polkit-1/actions/*.policy
 
 %files devel
+%_K5bin/protocoltojson
 %_K5plug/designer/*.so
 #%_K5inc/kio_version.h
 %_K5inc/KIO*/
@@ -178,6 +181,9 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt2
+- force standard placement
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
 - new version
 
