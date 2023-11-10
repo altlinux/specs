@@ -6,8 +6,8 @@
 
 Name: kf5-%rname
 Version: 5.111.0
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 central daemon of KDE work spaces
@@ -17,7 +17,6 @@ License: LGPL-2.0 or GPL-2.0
 Requires: %name-common = %version-%release
 
 Source: %rname-%version.tar
-Patch1: alt-systemd-service.patch
 
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs xml-common xml-utils
@@ -59,12 +58,11 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build \
-    -DSYSTEMD_USER_UNIT_INSTALL_DIR=%_unitdir_user \
     #
+#    -DSYSTEMD_USER_UNIT_INSTALL_DIR=%_unitdir_user \
 
 %install
 %K5install
@@ -105,6 +103,9 @@ KF5 library
 #%_K5lib/libKF5DED.so.*
 
 %changelog
+* Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt2
+- don't hardcode alternate placement
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
 - new version
 
