@@ -1,15 +1,13 @@
 Name: CloudCross
 Version: 1.4.5
-Release: alt1
+Release: alt2
 License: BSD
 Group: Networking/File transfer
 Summary: Syncronization of local files and folders with clouds
 Source: v%version.tar.gz
 Url: https://cloudcross.mastersoft24.ru/#usage
 
-# Automatically added by buildreq on Wed Jul 26 2017
-# optimized out: gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libqt5-core libqt5-network libstdc++-devel python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-script-devel qt5-webchannel-devel qt5-xmlpatterns-devel
-BuildRequires: qt5-3d-devel qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-quickcontrols2-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel libcurl-devel
+BuildRequires: gcc-c++ libcurl-devel qt5-base-devel qt5-tools-devel
 
 %description
 CloudCross it's open source software for the synchronization of local
@@ -36,6 +34,10 @@ install -D ccross-app/doc/ccross %buildroot%_man1dir/ccross.1
 %_man1dir/*
 
 %changelog
+* Fri Nov 10 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.4.5-alt2
+- NMU: trimmed dependencies according to project files.
+  As a side effect package can be build for LoongArch.
+
 * Sat Oct 26 2019 Fr. Br. George <george@altlinux.ru> 1.4.5-alt1
 - Autobuild version bump to 1.4.5
 
