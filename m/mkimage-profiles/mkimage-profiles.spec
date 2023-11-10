@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.13
+Version: 1.5.14
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,14 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 1.5.14-alt1
+- image.in/Makefile: fix show out image size
+- distro.mk: fix VOL_SET when is empty (fixed typo)
+- x11, mixim.mk: replace pulseaudio with pipewire
+- x11: enable dm.service as a fallback and other improvements
+- regular-vm.mk: increaze size vm image (desktops to 8 GiB, jeos to 4 GiB)
+- deflogin: add missing groups (video, camera, cdrom, floppy)
+
 * Fri Oct 27 2023 Anton Midyukov <antohami@altlinux.org> 1.5.13-alt1
 - remove lilo support
 - image.in/Makefile: fix show image size
