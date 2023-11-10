@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.9
-Release: alt3
+Release: alt4
 Epoch: 1
 %K5init
 
@@ -551,6 +551,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt4
+- remove bbc weather dataengine
+
 * Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt3
 - fix lockout applet (closes: 48379)
 
