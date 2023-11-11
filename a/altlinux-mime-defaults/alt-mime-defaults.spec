@@ -1,6 +1,6 @@
 #def_without N
 Name: altlinux-mime-defaults
-Version: 0.440
+Version: 0.441
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -51,6 +51,10 @@ touch %buildroot%_sysconfdir/xdg/mimeapps.list
 %endif
 
 %changelog
+* Sat Nov 11 2023 Igor Vlasenko <viy@altlinux.org> 0.441-alt1
+- updated mime defaults (due to KDE kf5-*.desktop prefix migration)
+- added support for a list of new desktop names
+
 * Thu Nov 02 2023 Igor Vlasenko <viy@altlinux.org> 0.440-alt1
 - updated mime defaults (due to KDE kf5-*.desktop prefix migration)
 - added %_desktopdir/KDE-mimeapps.list
