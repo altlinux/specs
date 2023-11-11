@@ -38,7 +38,7 @@ BuildRequires: gcc-c++
 
 Name:           perl-PDL
 Version:        2.084
-Release:        alt1.1
+Release:        alt1.2
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
@@ -208,6 +208,7 @@ Group: Development/Other
 Summary:        Tests for %{name}
 Requires:       %{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       perl(Devel/CheckLib.pm)
+BuildArch:	noarch
 
 %description tests
 Tests from %{name}-%{version}. Execute them
@@ -300,6 +301,9 @@ make test
 %{_libexecdir}/%{name}
 
 %changelog
+* Sat Nov 11 2023 Igor Vlasenko <viy@altlinux.org> 2.084-alt1.2
+- set tests subpackage to noarch
+
 * Sun Jul 16 2023 Ivan A. Melnikov <iv@altlinux.org> 2.084-alt1.1
 - NMU: drop obsolete BR on libf2c-ng-devel
 
