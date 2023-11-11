@@ -1,6 +1,6 @@
 Name: soqt
 Version: 1.6.0
-Release: alt3.1
+Release: alt3.2
 Summary: Qt GUI component toolkit library for Coin
 License: BSD-3-Clause
 Group: Development/Tools
@@ -24,8 +24,9 @@ BuildRequires(pre): qt5-base-devel
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel
 BuildRequires: libGLU-devel
-BuildRequires: doxygen
+BuildRequires: doxygen /usr/bin/dot
 BuildRequires: libX11-devel
+BuildRequires: libXi-devel
 BuildRequires: libcoin3d-devel
 
 %description
@@ -93,6 +94,7 @@ tar xf %SOURCE3
 
 %install
 %ninja_install -C BUILD
+mkdir -p %buildroot%_includedir/Coin4/
 mv %buildroot%_includedir/Inventor %buildroot%_includedir/Coin4/
 rm -rf %buildroot%_infodir
 rm -rf %buildroot%_man3dir/misc.3*
@@ -116,6 +118,10 @@ rm -rf %buildroot%_man3dir/misc.3*
 %doc %_defaultdocdir/SoQt
 
 %changelog
+* Thu Nov 09 2023 Igor Vlasenko <viy@altlinux.org> 1.6.0-alt3.2
+- NMU: added missing BR: libXi-devel,dot
+- NMU: fixed broken headers
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.6.0-alt3.1
 - NMU: spec: adapted to new cmake macros.
 
