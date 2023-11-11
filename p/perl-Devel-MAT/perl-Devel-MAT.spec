@@ -9,7 +9,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.51
-Release: alt1
+Release: alt2
 Summary: Perl Memory Analysis Tool
 Group: Development/Perl
 License: perl
@@ -23,7 +23,8 @@ From summary: %summary
 %package scripts
 Summary: %module_name scripts
 Group: Development/Perl
-Requires: %name = %{?epoch:%epoch:}%version-%release
+Requires: %name = %EVR
+BuildArch: noarch
 
 %description scripts
 scripts for %module_name
@@ -47,6 +48,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Sat Nov 11 2023 Igor Vlasenko <viy@altlinux.org> 0.51-alt2
+- scripts are noarch
+
 * Mon Apr 03 2023 Igor Vlasenko <viy@altlinux.org> 0.51-alt1
 - automated CPAN update
 
