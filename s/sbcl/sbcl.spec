@@ -15,14 +15,14 @@
 
 Name: sbcl
 Summary: Steel Bank Common Lisp
-Version: 2.3.9
+Version: 2.3.10
 Release: alt1
 Group: Development/Lisp
 License: BSD
 Url: http://sbcl.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-%version-source.tar.bz2
 
-ExclusiveArch: armh aarch64 %ix86 x86_64 ppc sparcv9
+ExclusiveArch: armh aarch64 %ix86 x86_64 ppc sparcv9 %e2k
 
 # Pre-generated html docs
 Source1: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-%version-documentation-html.tar.bz2
@@ -255,6 +255,9 @@ popd
 %_infodir/*.info*
 
 %changelog
+* Sat Nov 11 2023 Ilya Mashkin <oddity@altlinux.ru> 2.3.10-alt1
+- 2.3.10
+
 * Sat Oct 07 2023 Andrey Cherepanov <cas@altlinux.org> 2.3.9-alt1
 - 2.3.9
 
