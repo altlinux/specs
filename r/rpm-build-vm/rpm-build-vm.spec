@@ -5,7 +5,7 @@
 
 Name: rpm-build-vm
 Version: 1.60
-Release: alt2
+Release: alt3
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -113,7 +113,9 @@ at "/tmp/vm-ext4.img" out of your hasher root to run vm-run with it as rootfs.
 Summary: Checkinstall for vm-run
 Group: Development/Other
 BuildArch: noarch
+%ifarch %supported_arches
 Requires(pre): busybox
+%endif
 Requires(pre): %name-createimage = %EVR
 Requires(pre): procps
 Requires(pre): time
@@ -163,10 +165,7 @@ install -D -p -m 0755 kvm-ok      %buildroot%_bindir/kvm-ok
 
 %files
 
-%ifnarch %e2k
-# no busybox in e2k-alt-linux so far
 %files checkinstall
-%endif
 
 %files createimage
 %ifarch %supported_arches
@@ -244,9 +243,21 @@ find /tmp/vm.?????????? -maxdepth 0 | xargs -t -i -n1 rm {} {}.ret
 %check
 # Verify availability of KVM in girar & beehiver.
 ls -l /dev/kvm && test -w /dev/kvm
+
+%else
+# Test stub.
+%pre checkinstall
+set -ex
+vm-run --unknown-option date
+vm-run -- exit 1
+vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Sat Nov 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.60-alt3
+- spec: checkinstall: Remove BR:busybox for unsupported architectures.
+- spec: checkinstall: Add tests for unsupported architectures.
+
 * Sat Nov 11 2023 Michael Shigorin <mike@altlinux.org> 1.60-alt2
 - E2K: no busybox in e2k-alt-linux so far (and no %%checkinstall either).
 
