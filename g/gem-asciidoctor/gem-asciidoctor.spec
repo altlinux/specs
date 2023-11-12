@@ -1,7 +1,7 @@
 %define        gemname asciidoctor
 
 Name:          gem-asciidoctor
-Version:       2.0.18
+Version:       2.0.20
 Release:       alt1
 Summary:       A fast text processor and publishing toolchain for converting AsciiDoc content to different formats
 License:       MIT
@@ -17,9 +17,9 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(concurrent-ruby) >= 1.1.0
 BuildRequires: gem(cucumber) >= 3.1.0
 BuildRequires: gem(erubi) >= 1.10.0
-BuildRequires: gem(haml) >= 5.2.0
+BuildRequires: gem(haml) >= 6.1.0
 BuildRequires: gem(minitest) >= 5.14.0
-BuildRequires: gem(nokogiri) >= 1.10.0
+BuildRequires: gem(nokogiri) >= 1.13.0
 BuildRequires: gem(rake) >= 12.3.0
 BuildRequires: gem(slim) >= 4.1.0
 BuildRequires: gem(tilt) >= 2.0.0
@@ -52,7 +52,7 @@ BuildConflicts: gem(simplecov) >= 1
 %ruby_use_gem_dependency rake >= 13.0.1,rake < 14
 %ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
-Provides:      gem(asciidoctor) = 2.0.18
+Provides:      gem(asciidoctor) = 2.0.20
 
 
 %description
@@ -61,14 +61,14 @@ AsciiDoc content to HTML5, DocBook 5 (or 4.5) and other formats.
 
 
 %package       -n asciidoctor
-Version:       2.0.18
+Version:       2.0.20
 Release:       alt1
 Summary:       A fast text processor and publishing toolchain for converting AsciiDoc content to different formats executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета asciidoctor
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(asciidoctor) = 2.0.18
+Requires:      gem(asciidoctor) = 2.0.20
 
 %description   -n asciidoctor
 A fast text processor and publishing toolchain for converting AsciiDoc content
@@ -82,14 +82,14 @@ AsciiDoc content to HTML5, DocBook 5 (or 4.5) and other formats.
 
 
 %package       -n gem-asciidoctor-doc
-Version:       2.0.18
+Version:       2.0.20
 Release:       alt1
 Summary:       A fast text processor and publishing toolchain for converting AsciiDoc content to different formats documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета asciidoctor
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(asciidoctor) = 2.0.18
+Requires:      gem(asciidoctor) = 2.0.20
 Obsoletes:     asciidoctor-doc
 Provides:      asciidoctor-doc
 
@@ -112,6 +112,8 @@ AsciiDoc content to HTML5, DocBook 5 (or 4.5) and other formats.
 
 %install
 %ruby_install
+mkdir -p %buildroot%_man1dir
+mv %buildroot%_mandir/asciidoctor* %buildroot%_man1dir/
 
 %check
 %ruby_test
@@ -124,6 +126,7 @@ AsciiDoc content to HTML5, DocBook 5 (or 4.5) and other formats.
 %files         -n asciidoctor
 %doc README-de.adoc README-fr.adoc README-jp.adoc README-zh_CN.adoc README.adoc
 %_bindir/asciidoctor
+%_man1dir/asciidoctor.1*
 
 %files         -n gem-asciidoctor-doc
 %doc README-de.adoc README-fr.adoc README-jp.adoc README-zh_CN.adoc README.adoc
@@ -131,6 +134,9 @@ AsciiDoc content to HTML5, DocBook 5 (or 4.5) and other formats.
 
 
 %changelog
+* Mon Nov 13 2023 Evgeny Sinelnikov <sin@altlinux.org> 2.0.20-alt1
+- ^ 2.0.18 -> 2.0.20
+
 * Sun Jan 29 2023 Pavel Skrylev <majioa@altlinux.org> 2.0.18-alt1
 - ^ 2.0.16 -> 2.0.18 (no devel)
 
