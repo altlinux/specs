@@ -10,14 +10,14 @@ BuildRequires: gcc-c++ libcheck-devel
 Summary: Base library of Galago
 Name: libgalago
 Version: 0.5.2
-Release: alt1_20
+Release: alt1_21
 Source0: http://www.galago-project.org/files/releases/source/libgalago/%{name}-%{version}.tar.bz2
 License: LGPL
 Group: System/Libraries
 Url: http://www.galago-project.org/
 BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: gtk-doc
-BuildRequires: gettext-tools libasprintf-devel libtextstyle-devel
+BuildRequires: gettext-tools libasprintf-devel
 Source44: import.info
 
 %description
@@ -76,6 +76,9 @@ find %{buildroot} -name '*.la' | xargs rm -f
 
 
 %changelog
+* Sun Nov 12 2023 Igor Vlasenko <viy@altlinux.org> 0.5.2-alt1_21
+- fixed build
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1_20
 - update by mgaimport
 
