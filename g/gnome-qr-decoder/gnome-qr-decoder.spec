@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: gnome-qr-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Scan and Generate QR Codes
@@ -93,6 +93,9 @@ sed -i 's|"build.rs":"894b33392971ba9dad1dd4e45869478198f86e911e0b29f7e0d9fbf134
 
 
 %changelog
+* Sun Nov 12 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- updated to 0.4.1-22-gd494532
+
 * Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
