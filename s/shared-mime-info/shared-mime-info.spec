@@ -3,7 +3,7 @@
 %def_enable check
 
 %define ver_major 2
-%define ver_minor 3
+%define ver_minor 4
 
 Name: shared-mime-info
 Version: %ver_major.%ver_minor
@@ -124,6 +124,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Sun Nov 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
+- 2.4
+
 * Sun Oct 08 2023 Yuri N. Sedunov <aris@altlinux.org> 2.3-alt1
 - 2.3
 
