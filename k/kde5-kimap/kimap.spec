@@ -1,9 +1,9 @@
 %define rname kimap
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Job-based API for interacting with IMAP servers
@@ -77,6 +77,9 @@ KF5 library
 %_K5lib/libKPim5IMAP.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

@@ -16,8 +16,8 @@
 %define libkf5webengineviewer libkf5webengineviewer%sover
 
 Name: kde5-%rname
-Version: 23.08.2
-Release: alt2
+Version: 23.08.3
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -205,6 +205,9 @@ mkdir -p %buildroot/%_K5plug/pim5
 %_K5lib/libKPim5MimeTreeParser.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
 - fix package
 

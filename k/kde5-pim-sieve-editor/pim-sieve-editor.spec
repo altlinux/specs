@@ -4,9 +4,9 @@
 %define libsieveeditor libsieveeditor%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Sieve Editor
@@ -76,12 +76,16 @@ Requires: %name-common = %version-%release
 %_K5xdgapp/*sieveeditor*.desktop
 %_K5cfg/*sieveeditor*
 %_datadir/qlogging-categories5/*.*categories
+%_datadir/metainfo/*.xml
 
 %files -n %libsieveeditor
 %_K5lib/libsieveeditor.so.%sover
 %_K5lib/libsieveeditor.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

@@ -1,9 +1,9 @@
 %define rname merkuro
 
 Name: kde5-%rname
-Version: 23.08.2
-Release: alt2
-%K5init no_appdata
+Version: 23.08.3
+Release: alt1
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Calendar and task management
@@ -63,8 +63,12 @@ Conflicts: kde5-pim-common < 16.12
 %_kf5_data/plasma/plasmoids/org.kde.merkuro.contact/
 %_K5xdgapp/org.kde.merkuro*.desktop
 %_K5icon/*/*/apps/*merkuro*.*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
 - fix package
 

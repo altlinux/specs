@@ -4,9 +4,9 @@
 %define rname kio-gdrive
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace appdata
+%K5init
 
 Group:     Networking/File transfer
 Summary:   KIO-client for Google Drive
@@ -68,6 +68,9 @@ rm -f "$tmp_file"
 %endif
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

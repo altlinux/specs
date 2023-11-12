@@ -4,9 +4,9 @@
 %define libkmailprivate libkmailprivate%pim_sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Networking/Mail
 Summary: EMail client
@@ -101,6 +101,7 @@ Requires: %name-common
 %_K5notif/akonadi_*_agent.notifyrc
 %_datadir/akonadi5/agents/*.desktop
 %_K5dbus_srv/*kmail*.service
+%_datadir/metainfo/*.xml
 #
 %_K5bin/ktnef
 %_K5xdgapp/org.kde.ktnef.desktop
@@ -119,6 +120,9 @@ Requires: %name-common
 %_K5lib/libkmailprivate.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

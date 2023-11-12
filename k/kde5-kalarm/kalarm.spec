@@ -5,9 +5,9 @@
 %define libkalarmplugin libkalarmplugin%pim_sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Personal Alarm Scheduler
@@ -98,6 +98,7 @@ Requires: %name-common
 %_K5dbus/system.d/org.kde.kalarm.rtcwake.conf
 %_K5notif/kalarm.notifyrc
 %_datadir/polkit-1/actions/org.kde.kalarm.rtcwake.policy
+%_datadir/metainfo/*.xml
 
 %files -n %libkalarmcalendar
 %_K5lib/libkalarmcalendar.so.%pim_sover
@@ -108,6 +109,9 @@ Requires: %name-common
 %_K5lib/libkalarmplugin.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

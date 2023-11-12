@@ -6,9 +6,9 @@
 %define libkleopatraclientgui libkleopatraclientgui%kleopatraclientgui_sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Certificate Manager for KDE
@@ -100,6 +100,8 @@ mv %buildroot/%_datadir/mime/packages/application-vnd-kde{,5}-kleopatra.xml
 #
 %_K5bin/kwatchgnupg
 %_K5data/kwatchgnupg/
+#
+%_datadir/metainfo/*.xml
 
 %files -n %libkleopatraclientcore
 %_K5lib/libkleopatraclientcore.so.%kleopatraclientcore_sover
@@ -109,6 +111,9 @@ mv %buildroot/%_datadir/mime/packages/application-vnd-kde{,5}-kleopatra.xml
 %_K5lib/libkleopatraclientgui.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

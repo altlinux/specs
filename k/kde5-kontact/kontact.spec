@@ -4,9 +4,9 @@
 %define libkontactprivate libkontactprivate%pim_sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Integrated solution to the KDE PIM
@@ -82,6 +82,7 @@ Requires: %name-common = %version-%release
 #%_K5srv/*kontact*.desktop
 %_K5icon/*/*/apps/*kontact*.*
 %_K5dbus_srv/*kontact*.service
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/kontact_version.h
@@ -95,6 +96,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkontactprivate.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

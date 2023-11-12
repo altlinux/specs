@@ -4,9 +4,9 @@
 %define libpimdataexporterprivate libpimdataexporterprivate%pim_sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: PIM Setting Exporter
@@ -82,6 +82,7 @@ done
 #%_K5conf_up/*pimsettingexporter*
 %_K5xdgapp/*pimdataexporter*.desktop
 %_K5cfg/*pimdataexporter*
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/pim-data-exporter_version.h
@@ -95,6 +96,9 @@ done
 %_K5lib/libpimdataexporterprivate.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

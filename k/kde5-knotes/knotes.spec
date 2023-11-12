@@ -5,9 +5,9 @@
 %define libnotesharedprivate libnotesharedprivate%pim_sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Post-It notes on the KDE desktop
@@ -100,6 +100,7 @@ Requires: %name-common
 %_K5icon/*/*/actions/*note*.*
 %_K5notif/*note*.notifyrc
 %_datadir/akonadi5/agents/*note*
+%_datadir/metainfo/*.xml
 
 %files devel
 %_K5dbus_iface/*otes*.xml
@@ -118,6 +119,9 @@ Requires: %name-common
 %_K5lib/libnotesharedprivate.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

@@ -5,9 +5,9 @@
 %define libakregatorprivate libakregatorprivate%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Networking/News
 Summary: RSS/Atom feed reader
@@ -99,6 +99,7 @@ Requires: %name-common
 %_K5notif/akregator.notifyrc
 #%_K5srv/akregator_*.desktop
 %_K5icon/*/*/apps/akregator*.*
+%_datadir/metainfo/*.xml
 
 %files devel
 %_K5dbus_iface/*akregator*.xml
@@ -116,6 +117,9 @@ Requires: %name-common
 %_K5lib/libakregatorprivate.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

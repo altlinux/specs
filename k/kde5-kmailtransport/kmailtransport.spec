@@ -1,9 +1,9 @@
 %define rname kmailtransport
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Manage mail transport
@@ -83,6 +83,9 @@ Requires: %name-common >= %EVR
 #%_K5srv/*mailtransport.desktop
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
