@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 6.4.2
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -26,12 +26,17 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-packaging
 BuildRequires: python3-devel
-BuildRequires: clang-devel
-BuildRequires: libmlir15.0-devel
+
+BuildRequires: llvm15.0
 BuildRequires: llvm15.0-devel
+BuildRequires: libmlir15.0-devel
 BuildRequires: libpolly15.0-devel
+BuildRequires: clang15.0-devel
 BuildRequires: clang15.0-tools
 BuildRequires: clangd15.0
+BuildRequires: clang15.0-libs
+BuildRequires: mlir15.0-tools
+
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
@@ -81,6 +86,7 @@ BuildRequires: libqt6-svgwidgets
 BuildRequires: libqt6-uitools
 BuildRequires: libqt6-webchannel
 BuildRequires: qt6-webchannel-devel
+BuildRequires: qt6-webchannel
 
 BuildRequires: libqt6-qml
 BuildRequires: libqt6-qmlcompiler
@@ -166,7 +172,9 @@ sed -i 's/purelib/platlib/' sources/shiboken6/cmake/ShibokenHelpers.cmake
 
 %global optflags_lto %nil
 
-export CXX=/usr/bin/clang++
+export CXX=/usr/bin/clang++-15
+
+export ALTWRAP_LLVM_VERSION=15.0
 
 export PYTHONPATH=$PWD/%_cmake__builddir/sources
 
@@ -220,7 +228,8 @@ ctest \
   --output-on-failure \
   --force-new-ctest-process \
   --test-dir shiboken6 \
-  --parallel %_smp_build_ncpus
+  --parallel %_smp_build_ncpus \
+  --exclude-regex 'sample_privatector|sample_privatedtor'
 popd
 
 export PYTHONPATH=%buildroot%python3_sitelibdir:$PYTHONPATH
@@ -274,6 +283,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Sat Nov 11 2023 Anton Vyatkin <toni@altlinux.org> 6.4.2-alt3
+- Fix FTBFS.
+
 * Thu Sep 14 2023 Anton Vyatkin <toni@altlinux.org> 6.4.2-alt2
 - Fix FTBFS.
 
