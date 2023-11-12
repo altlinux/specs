@@ -7,44 +7,56 @@
 
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
-Name:		bpftrace
-Version:	0.16.0
-Release:	alt3
-Summary:	High-level tracing language for Linux eBPF
-Group:		Development/Debuggers
-License:	Apache-2.0
-URL:		https://github.com/iovisor/bpftrace
-Vcs:		https://github.com/iovisor/bpftrace.git
-# Docs:		https://github.com/iovisor/bpftrace/blob/master/docs/reference_guide.md
-# Docs:		https://github.com/iovisor/bpftrace/blob/master/docs/tutorial_one_liners.md
-# Docs:		http://www.brendangregg.com/BPF/bpftrace-cheat-sheet.html
-# Docs:		http://www.brendangregg.com/ebpf.html#bpftrace
-# PR:		https://lwn.net/Articles/793749/
-# PR:		http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html
+Name: bpftrace
+Version: 0.19.1
+Release: alt1
+Summary: High-level tracing language for Linux eBPF
+Group: Development/Debuggers
+License: Apache-2.0
+URL: https://github.com/iovisor/bpftrace
+# Docs: https://github.com/iovisor/bpftrace/blob/master/docs/reference_guide.md
+# Docs: https://github.com/iovisor/bpftrace/blob/master/docs/tutorial_one_liners.md
+# Docs: http://www.brendangregg.com/BPF/bpftrace-cheat-sheet.html
+# Docs: http://www.brendangregg.com/ebpf.html#bpftrace
+# PR: https://lwn.net/Articles/793749/
+# PR: http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html
 
-Source:		%name-%version.tar
+Source: %name-%version.tar
+# Submodules are maintained with gear-submodule-update.
+Source1: bcc-0.tar
+Source2: blazesym-0.tar
+Source3: bpftool-0.tar
+Source4: libbpf-0.tar
+Source5: libbpf-1.tar
+Source6: libbpf-2.tar
 ExclusiveArch:	x86_64 aarch64
 
+%define llvm_min 11
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: binutils-devel
 BuildRequires: cereal-devel
+BuildRequires: clangd >= %llvm_min
+BuildRequires: clang-devel >= %llvm_min
+BuildRequires: clang-devel-static >= %llvm_min
+BuildRequires: clang-tools >= %llvm_min
 BuildRequires: cmake
 BuildRequires: flex
-BuildRequires: libstdc++-devel
-BuildRequires: libstdc++-devel-static
-BuildRequires: clangd >= 11
-BuildRequires: clang-devel >= 11
-BuildRequires: clang-tools >= 11
-BuildRequires:  llvm-devel >= 11
-BuildRequires:  llvm-devel-static >= 11
-BuildRequires: clang-devel-static >= 11
-BuildRequires:   lld >= 11
 BuildRequires: libbcc-devel
 BuildRequires: libbpf-devel
+BuildRequires: libdw-devel
 BuildRequires: libelf-devel
-BuildRequires: binutils-devel
+BuildRequires: libpcap-devel
+BuildRequires: libstdc++-devel
+BuildRequires: libstdc++-devel-static
+BuildRequires: lld >= %llvm_min
+BuildRequires: llvm-devel >= %llvm_min
+BuildRequires: llvm-devel-static >= %llvm_min
 BuildRequires: /proc
 # Assuming 'kernel' dependency will bring un-def kernel
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm kernel-headers-modules-un-def}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: kernel-headers-modules-un-def
+BuildRequires: rpm-build-vm
+}}
 
 %description
 bpftrace is a high-level tracing language for Linux enhanced Berkeley
@@ -58,6 +70,12 @@ was created by Alastair Robertson.
 
 %prep
 %setup
+tar xf %SOURCE1 -C .
+tar xf %SOURCE2 -C bcc/libbpf-tools
+tar xf %SOURCE3 -C bcc/libbpf-tools
+tar xf %SOURCE4 -C bcc/libbpf-tools/bpftool
+tar xf %SOURCE5 -C bcc/src/cc
+tar xf %SOURCE6 -C .
 sed -i 's/\bpython\b/python3/' tests/runtime/call
 sed -i 's/@.*@/True/' tests/runtime/engine/cmake_vars.py
 
@@ -75,7 +93,8 @@ export Clang_DIR=/usr/share/cmake/Modules/clang
 	-DLLVM_DIR=$(llvm-config --cmakedir) \
 	-DOFFLINE_BUILDS:BOOL=ON \
 	-DALLOW_UNSAFE_PROBE:BOOL=ON \
-
+	-DUSE_SYSTEM_BPF_BCC:BOOL=ON \
+	%nil
 %cmake_build
 
 %install
@@ -123,13 +142,17 @@ if [ -w /dev/kvm ]; then
 fi
 
 %files
-%doc LICENSE README.md CONTRIBUTING-TOOLS.md
+%define _customdocdir %_docdir/%name
+%doc LICENSE README.md CHANGELOG.md CONTRIBUTING-TOOLS.md
 %doc docs/reference_guide.md docs/tutorial_one_liners.md
 %_bindir/*
 %_datadir/%name
 %_man8dir/*
 
 %changelog
+* Sun Nov 12 2023 Vitaly Chikunov <vt@altlinux.org> 0.19.1-alt1
+- Update to v0.19.1 (2023-10-04).
+
 * Wed Aug 30 2023 Vitaly Chikunov <vt@altlinux.org> 0.16.0-alt3
 - Fix FTBFS errors and crash for LLVM 15.
 
