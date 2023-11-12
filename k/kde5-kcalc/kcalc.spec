@@ -1,8 +1,8 @@
 %define rname kcalc
 
 Name: kde5-%rname
-Version: 23.08.2
-Release: alt2
+Version: 23.08.3
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -70,6 +70,9 @@ KF5 library
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Tue Nov 07 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
 - don't hardcode altplace
 - package metainfo

@@ -3,20 +3,14 @@
 
 %define rname konsole
 
-%_K5if_ver_gteq %ubt_id M100
-%def_enable obsolete_kde4
-%else
-%def_disable obsolete_kde4
-%endif
-
 %define sover 1
 %define libkonsoleprivate libkonsoleprivate%sover
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
+%K5init no_altplace
 
 Group: Terminals
 Summary: Terminal emulator for KDE
@@ -26,10 +20,8 @@ License: GPLv2+ / LGPLv2+
 Requires(post,preun): alternatives >= 0.2
 Provides: x-terminal-emulator xvt %_x11bindir/xvt
 #Requires: fonts-bitmap-misc
-%if_enabled obsolete_kde4
 Provides: kde4-konsole = %version-%release
 Obsoletes: kde4-konsole < %version-%release
-%endif
 
 Source: %rname-%version.tar
 Source10: profiles.tar
@@ -106,13 +98,8 @@ Requires: %name-common = %version-%release
 
 %build
 %K5build \
-%if_enabled obsolete_kde4
     -DCONFIG_INSTALL_DIR:PATH=%_xdgconfigdir \
     -DDATA_INSTALL_DIR=%_datadir \
-%else
-    -DCONFIG_INSTALL_DIR:PATH=%_K5xdgconf \
-    -DDATA_INSTALL_DIR=%_K5data \
-%endif
     #
 
 %install
@@ -120,10 +107,7 @@ Requires: %name-common = %version-%release
 %K5install_move data kglobalaccel kio knsrcfiles kconf_update
 
 # install profiles
-KONSOLE_DATA_DIR=%buildroot/%_K5data/konsole/
-%if_enabled obsolete_kde4
 KONSOLE_DATA_DIR=%buildroot/%_datadir/konsole/
-%endif
 for f in profiles/*.profile ; do
     install -m 0644 $f $KONSOLE_DATA_DIR
 done
@@ -151,13 +135,8 @@ __EOF__
 %_K5plug/konsole*.so
 %_K5plug/konsoleplugins/
 %_K5xdgapp/org.kde.konsole.desktop
-%if_enabled obsolete_kde4
 %config %_xdgconfigdir/*konsole*
 %_datadir/konsole/
-%else
-%config %_K5xdgconf/*konsole*
-%_K5data/konsole/
-%endif
 %_K5conf_bin/*konsole*
 %_K5conf_up/*konsole*
 %_K5data/kio/servicemenus/konsolerun.desktop
@@ -167,9 +146,7 @@ __EOF__
 %_K5notif/*
 %_K5data/knsrcfiles/*konsole*
 %_K5data/kglobalaccel/*konsole*
-%if_enabled obsolete_kde4
 %_datadir/metainfo/*konsole*
-%endif
 
 %files -n %libkonsoleprivate
 %_K5lib/libkonsoleprivate.so.*
@@ -180,6 +157,9 @@ __EOF__
 %_K5lib/libkonsoleapp.so.%sover
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

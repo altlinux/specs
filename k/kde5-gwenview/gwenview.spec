@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
 %K5init
 
@@ -100,6 +100,7 @@ rm -f po/ru/gwenview.po.tmp
 %_K5srv/*.desktop
 #%_K5xmlgui/*
 %_K5conf_up/*gwenview*
+%_datadir/metainfo/*.xml
 
 %files devel
 #%_K5inc/gwenview_version.h
@@ -113,6 +114,9 @@ rm -f po/ru/gwenview.po.tmp
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

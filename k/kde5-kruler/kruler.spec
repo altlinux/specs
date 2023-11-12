@@ -1,9 +1,9 @@
 %define rname kruler
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace
+%K5init
 
 Group: Graphics
 Summary: Screen ruler
@@ -42,9 +42,12 @@ BuildRequires: kf5-ki18n-devel kf5-knotifications-devel kf5-kwidgetsaddons-devel
 %_K5xdgapp/org.kde.kruler.desktop
 %_K5data/kruler/
 %_K5notif/kruler*
-
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

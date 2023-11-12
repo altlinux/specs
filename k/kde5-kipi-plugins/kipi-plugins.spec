@@ -8,7 +8,7 @@
 
 %define rname kipi-plugins
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
 %K5init
 
@@ -127,6 +127,9 @@ __EOF__
 %K5install
 %K5install_move data locale kipiplugin_flashexport kipiplugin_piwigo kipiplugin_printimages
 
+# remove metainfo
+rm -rf %buildroot/%_datadir/metainfo/*.xml
+
 rm -f %buildroot/%_K5i18n/*/*/digikam*
 rm -f %buildroot/%_K5i18n/*/*/libkvkontakte*
 %find_lang --with-kde %rname
@@ -189,6 +192,9 @@ done
 %_K5lib/libKF5kipiplugins.so.%libsover.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

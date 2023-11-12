@@ -1,8 +1,8 @@
 %define rname khelpcenter
 
 Name: kde5-%rname
-Version: 23.08.2
-Release: alt3
+Version: 23.08.3
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -75,6 +75,9 @@ fi
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt3
 - fix alternative
 

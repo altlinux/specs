@@ -4,9 +4,9 @@
 %define libkrdccore libkrdccore%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Networking/Remote access
 Summary: Remote Desktop Client
@@ -80,6 +80,7 @@ KF5 library
 %_K5xdgapp/org.kde.krdc.desktop
 %_K5cfg/krdc.kcfg
 %_K5data/kio/servicemenus/*rdc*.desktop
+%_datadir/metainfo/*.xml
 
 %files devel
 %_K5inc/krdccore_export.h
@@ -91,6 +92,9 @@ KF5 library
 %_K5lib/libkrdccore.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

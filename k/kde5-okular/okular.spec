@@ -6,19 +6,14 @@
 %def_disable progress
 %def_enable msits
 %def_enable mobile
-%_K5if_ver_gteq %ubt_id M90
-%def_enable obsolete_kde4
-%else
-%def_disable obsolete_kde4
-%endif
 
 %define sover 11
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
+%K5init no_altplace
 
 Group: Office
 Summary: Document Viewer
@@ -26,12 +21,10 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Requires: %name-core
-%if_enabled obsolete_kde4
 Provides: kde4-okular = %version-%release
 Obsoletes: kde4-okular < %version-%release
 Provides: kde4graphics-okular = %version-%release
 Obsoletes: kde4graphics-okular < %version-%release
-%endif
 
 Source: %rname-%version.tar
 Source10: alt-loading-ru.po
@@ -70,7 +63,7 @@ Document viewer; support different kinds of documents.
 %package mobile
 Summary: Mobile Document Viewer
 Group: Office
-Requires: %name-core = %EVR
+Requires: %name-core
 Requires: kf5-kdeclarative kf5-kirigami
 %description mobile
 Document viewer; support different kinds of documents.
@@ -86,7 +79,7 @@ Requires: kf5-filesystem
 %package core
 Summary: Core files for %name
 Group: Graphical desktop/KDE
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: kde5-runtime
 %description core
 Core files for %name
@@ -139,9 +132,6 @@ rm -f "$tmp_file"
 
 %install
 %K5install
-%if_disabled obsolete_kde4
-%K5install_move data okular kpackage kconf_update
-%endif
 
 if [ -n "`ls -1d %buildroot/%_datadir/qlogging-categories5/*.*categories`" ] ; then
     mkdir -p %buildroot/%_K5xdgconf/
@@ -161,48 +151,34 @@ fi
 %_K5xmlgui/okular/
 %_K5xdgapp/org.kde.okular.desktop
 %_K5xdgapp/okularApplication_*.desktop
-%if_enabled obsolete_kde4
 %_datadir/metainfo/org.kde.okular.appdata.xml
-%endif
 
 %if_enabled mobile
 %files mobile
 %_K5bin/okularkirigami
 %_K5xdgapp/org.kde.okular.kirigami.desktop
 %_K5xdgapp/org.kde.mobile.okular_*.desktop
-%if_enabled obsolete_kde4
 %_datadir/metainfo/org.kde.okular.kirigami.appdata.xml
-%endif
 %else
-%{?_enable_obsolete_kde4:%exclude %_datadir/kpackage/genericqml/org.kde.mobile.okular/}
-%{!?_enable_obsolete_kde4:%exclude %_K5data/kpackage/genericqml/org.kde.mobile.okular/}
+%exclude %_datadir/kpackage/genericqml/org.kde.mobile.okular/
+%exclude %_K5data/kpackage/genericqml/org.kde.mobile.okular/
 %exclude %_K5xdgapp/org.kde.mobile.okular.desktop
 %exclude %_K5xdgapp/org.kde.mobile.okular_*.desktop
 %endif
 
 %files core
-%if_enabled obsolete_kde4
 %_datadir/okular/
-%else
-%_K5data/okular/
-%endif
 %_K5qml/org/kde/okular/
 %_K5plug/okular/
 %_K5plug/okularpart.so
 %_K5srv/okular*.desktop
-%if_enabled obsolete_kde4
 %_datadir/kconf_update/okular*
-%else
-%_K5conf_up/okular*
-%endif
 %_K5cfg/*okular*
 %_K5cfg/*settings*
 %if_enabled msits
 %_K5plug/kf5/kio/kio_msits.so
 %endif
-%if_enabled obsolete_kde4
 %_datadir/metainfo/org.kde.okular-*.metainfo.xml
-%endif
 
 %files devel
 %_K5inc/okular/
@@ -214,6 +190,9 @@ fi
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname ksystemlog
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
 %K5init
 
@@ -51,8 +51,12 @@ who want to quickly see problems occuring on their server.
 #%_K5icon/*/*/apps/ksystemlog.*
 %_K5xdgapp/org.kde.ksystemlog.desktop
 %_K5xmlgui/ksystemlog/
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

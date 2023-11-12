@@ -4,8 +4,8 @@
 %define libkrfbprivate libkrfbprivate%sover
 
 Name: kde5-%rname
-Version: 23.08.2
-Release: alt2
+Version: 23.08.3
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -79,6 +79,7 @@ KF5 library
 %_K5xdgapp/*krfb*.desktop
 %_K5data/krfb/
 %_K5icon/*/*/apps/krfb.*
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/krfb_version.h
@@ -92,6 +93,9 @@ KF5 library
 %_K5lib/libkrfbprivate.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
 - fix package
 

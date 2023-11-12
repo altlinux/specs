@@ -1,7 +1,7 @@
 %define rname kfind
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
 %K5init
 
@@ -41,8 +41,12 @@ KDE utility to find files.
 %_K5xdgapp/org.kde.kfind.desktop
 %_K5icon/*/*/apps/kfind.*
 %_datadir/qlogging-categories5/*.*categories
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

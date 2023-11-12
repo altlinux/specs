@@ -2,7 +2,7 @@
 
 %define rname konversation
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
 %define beta %nil
 %K5init no_altplace
@@ -74,12 +74,14 @@ sed -i \
 %_datadir/qlogging-categories5/*.*categories
 %_datadir/%rname/
 %_datadir/knsrcfiles/konversation*.*
-#%_K5srv/*
 %_K5notif/*
-#%_K5xmlgui/*
 %_K5dbus_srv/*.service
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

@@ -4,8 +4,8 @@
 %define libkcupslib libkcupslib%sover
 
 Name: kde5-%rname
-Version: 23.08.2
-Release: alt2
+Version: 23.08.3
+Release: alt1
 %K5init
 
 Group: System/Configuration/Printing
@@ -104,6 +104,9 @@ rm -f "$tmp_file"
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Wed Oct 25 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
 - fix package
 

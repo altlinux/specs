@@ -1,12 +1,6 @@
 %{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
 %define ubt_id %__ubt_branch_id
 
-%_K5if_ver_gteq %ubt_id M90
-%def_enable obsolete_kde4
-%else
-%def_disable obsolete_kde4
-%endif
-
 %define sover 8
 %define libk3blib libk3blib%sover
 %define libk3bdevice libk3bdevice%sover
@@ -22,9 +16,9 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init %{?_enable_obsolete_kde4:no_altplace}
+%K5init no_altplace
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -35,10 +29,8 @@ License: GPL-2.0-or-later
 Provides: k3b = %version-%release
 Requires: %req_all
 Conflicts: k3b-mini < 1.0.5-alt7
-%if_enabled obsolete_kde4
 Provides: kde4-k3b = %version-%release
 Obsoletes: kde4-k3b < %version-%release
-%endif
 
 Source0: %rname-%version.tar
 Patch1: alt-permissions.patch
@@ -186,6 +178,9 @@ fi
 %_K5inc/k3b*.h
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

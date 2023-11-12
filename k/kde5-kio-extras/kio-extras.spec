@@ -8,8 +8,8 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 23.08.2
-Release: alt2
+Version: 23.08.3
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -147,6 +147,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Tue Oct 24 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
 - fix package in normal place
 

@@ -11,7 +11,7 @@
 %add_findreq_skiplist %_K5data/%rname/scripts/*.py
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
 %K5init
 
@@ -96,6 +96,7 @@ done
 %if_enabled qtwebengine
 %_K5data/%rname/
 %endif
+%_datadir/metainfo/*.xml
 
 %files -n %libktcore
 %_libdir/libktcore.so.%sover
@@ -103,6 +104,9 @@ done
 
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

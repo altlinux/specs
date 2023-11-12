@@ -1,9 +1,9 @@
 %define rname kwalletmanager
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Wallet Manager
@@ -77,9 +77,13 @@ cp -ar po/ru/docs/kwallet5 po/ru/docs/kwalletmanager5
 %_K5srv/*kwallet*.desktop
 %_datadir/qlogging-categories5/*.*categories
 %_datadir/polkit-1/actions/*kwallet5*.policy
+%_datadir/metainfo/*.xml
 
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
