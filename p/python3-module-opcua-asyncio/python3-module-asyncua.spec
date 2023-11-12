@@ -6,7 +6,7 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: OPC UA library for python >= 3.7
@@ -62,5 +62,8 @@ pytest3 -v -k "not (test_xml_import_companion_specifications[client]) \
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Sun Nov 12 2023 Anton Midyukov <antohami@altlinux.org> 1.0.5-alt1
+- new version 1.0.5
+
 * Sat Oct 28 2023 Anton Midyukov <antohami@altlinux.org> 1.0.4-alt1
 - Initial build for Sisyphus
