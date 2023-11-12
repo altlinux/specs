@@ -5,8 +5,8 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
-Release: alt3
+Version: 2.1.0
+Release: alt1
 
 Summary: Command-line interfaces Python library
 License: MIT
@@ -39,9 +39,6 @@ Cleo allows you to create beautiful and testable command-line interfaces.
 
 %prep
 %setup -n %pypi_name-%version
-# https://github.com/python-poetry/cleo/commit/57c6b9ee79164c099aed385413566ac3f3d2af4e
-sed -i "s/\^2\.2\.0/\^3\.0\.0/" pyproject.toml
-#sed -i 's|\(crashtest = "^0.\)3.1|\14.0|' pyproject.toml
 
 %build
 %pyproject_build
@@ -59,6 +56,9 @@ sed -i "s/\^2\.2\.0/\^3\.0\.0/" pyproject.toml
 %doc README.md CHANGELOG.md
 
 %changelog
+* Sun Nov 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt3
 - Fixed FTBFS.
 
