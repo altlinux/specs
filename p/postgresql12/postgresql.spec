@@ -4,15 +4,23 @@
 # Use ICU
 %def_with icu
 
-# Use JIT
+%ifarch loongarch64
+# XXX: support of LoongArch targets is available in llvm versions >= 16
+# However psql JIT code makes use of deprecated typed pointers which
+# are known broken in llvm 16 (and have been removed in llvm 17).
+# Thus no JIT on LoongArch :(
+%def_without jit
+%else
+# Use JIT elsewhere
 %def_with jit
+%endif
 
 %set_autoconf_version 2.60
 
 %define prog_name            postgresql
 %define postgresql_major     12
 %define postgresql_minor     17
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -930,6 +938,9 @@ fi
 %endif
 
 %changelog
+* Sun Nov 12 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 12.17-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Wed Nov 08 2023 Alexei Takaseev <taf@altlinux.org> 12.17-alt1
 - 12.17 (Fixes CVE-2023-5868, CVE-2023-5869, CVE-2023-5870)
 
