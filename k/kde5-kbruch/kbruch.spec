@@ -1,9 +1,9 @@
 %define rname kbruch
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Education
 Summary: Exercise Fractions
@@ -69,6 +69,7 @@ KF5 library
 %_K5icon/*/*/apps/kbruch.*
 %_K5xdgapp/org.kde.kbruch.desktop
 %_K5cfg/kbruch.kcfg
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/kbruch_version.h
@@ -81,6 +82,9 @@ KF5 library
 #%_K5lib/libKF5Bruch.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

@@ -1,9 +1,9 @@
 %define rname kdeedu-data
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Common KDE EDU data
@@ -41,6 +41,9 @@ BuildRequires: extra-cmake-modules qt5-base-devel kf5-ki18n-devel
 %_K5icon/*/*/actions/*.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

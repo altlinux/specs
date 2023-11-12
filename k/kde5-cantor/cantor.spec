@@ -15,9 +15,9 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Education
 Summary: KDE Frontend to Mathematical Software
@@ -130,6 +130,7 @@ mkdir -p %buildroot
 %_K5xmlgui/cantor/
 %_K5data/knsrcfiles/*cantor*.knsrc
 %_K5xdgmime/*cantor*.xml
+%_datadir/metainfo/*.xml
 %endif
 
 %if_enabled qtwebengine
@@ -150,6 +151,9 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

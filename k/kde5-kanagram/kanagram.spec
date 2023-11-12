@@ -1,9 +1,9 @@
 %define rname kanagram
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Games/Educational
 Summary: Word learning program
@@ -51,8 +51,12 @@ vocabularies, and distribute them through Kanagram's KNewStuff download service.
 %_K5data/knsrcfiles/*.knsrc
 %_K5cfg/kanagram.kcfg
 %_K5icon/*/*/apps/kanagram*.*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

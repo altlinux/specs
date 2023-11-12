@@ -3,9 +3,9 @@
 %define libminuetinterfaces libminuetinterfaces%minuet_sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Education
 Summary: Music Education Software
@@ -72,6 +72,7 @@ sed -i 's|^#set(FluidSynth_VERSION|set(FluidSynth_VERSION|' cmake/FindFluidSynth
 %_K5icon/hicolor/*/actions/minuet-*.*
 %_K5xdgapp/org.kde.minuet.desktop
 %_K5plug/minuet/
+%_datadir/metainfo/*.xml
 
 %files common -f %name.lang
 %doc COPYING*
@@ -85,6 +86,9 @@ sed -i 's|^#set(FluidSynth_VERSION|set(FluidSynth_VERSION|' cmake/FindFluidSynth
 %_K5inc/minuet/
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

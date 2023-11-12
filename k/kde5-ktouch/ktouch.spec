@@ -1,9 +1,9 @@
 %define rname ktouch
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Education
 Summary: A program for learning touch typing
@@ -57,8 +57,12 @@ chmod 0755 %buildroot/%_K5xdgapp/org.kde.ktouch.desktop
 %_K5icon/*/*/apps/ktouch.*
 %_K5data/ktouch/
 %_K5cfg/ktouch.kcfg
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

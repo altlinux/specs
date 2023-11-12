@@ -7,9 +7,9 @@
 #%endif
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: UML Modeller
@@ -76,9 +76,13 @@ sed -i '/^#!\/usr\/bin\/env/s|python|%__python3|' umbrello/headings/heading.py
 %_K5icon/hicolor/*/apps/umbrello.*
 %_K5icon/hicolor/*/mimetypes/application-x-uml.*
 %_K5xdgapp/org.kde.umbrello*.desktop
+%_datadir/metainfo/*.xml
 
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

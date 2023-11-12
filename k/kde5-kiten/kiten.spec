@@ -4,9 +4,9 @@
 %define libkiten libkiten%soname
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Japanese reference/learning tool
@@ -88,6 +88,7 @@ rm -rf %buildroot/%_datadir/fonts/ ||:
 %_K5xdgapp/org.kde.kiten*.desktop
 %_K5xmlgui/kiten*
 %_K5cfg/kiten*
+%_datadir/metainfo/*.xml
 
 %files devel
 #%_K5inc/kiten_version.h
@@ -101,6 +102,9 @@ rm -rf %buildroot/%_datadir/fonts/ ||:
 %_K5lib/libkiten.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
