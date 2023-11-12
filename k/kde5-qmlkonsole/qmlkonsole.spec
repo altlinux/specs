@@ -1,9 +1,9 @@
 %define rname qmlkonsole
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Mobile terminal application
@@ -68,6 +68,7 @@ Requires: %name-common
 %_K5xdgapp/*qmlkonsole*.desktop
 %_K5cfg/*terminalsettings*
 %_K5icon/*/*/apps/*qmlkonsole*
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/qmlkonsole_version.h
@@ -80,6 +81,9 @@ Requires: %name-common
 #%_K5lib/libqmlkonsole.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

@@ -1,9 +1,9 @@
 %define rname krecorder
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Audio Recorder
@@ -70,6 +70,7 @@ Requires: %name-common
 %_K5bin/krecorder
 %_K5xdgapp/*krecorder*.desktop
 %_K5icon/hicolor/*/apps/*krecorder*.*
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/krecorder_version.h
@@ -82,6 +83,9 @@ Requires: %name-common
 #%_K5lib/libkrecorder.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

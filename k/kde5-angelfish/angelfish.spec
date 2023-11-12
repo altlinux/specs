@@ -4,9 +4,9 @@
 %define libfalkonprivate libfalkonprivate%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Summary: Webbrowser designed for mobile devices
 License: GPLv3+
@@ -83,8 +83,12 @@ __EOF__
 %_K5icon/*/*/apps/*angelfish*.*
 %_K5cfg/*angelfish*
 %_K5notif/*angelfish*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
