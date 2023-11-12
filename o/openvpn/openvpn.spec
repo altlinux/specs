@@ -16,7 +16,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.6.6
+Version: 2.6.7
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -343,6 +343,12 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Sun Nov 12 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.6.7-alt1
+- New version
+- Fixes:
+  + CVE-2023-46850 Incorrectly use a send buffer after it has been free()d
+  + CVE-2023-46849 Division by zero when "--fragment" is used
+
 * Sun Oct 29 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.6.6-alt1
 - New version (Closes: 46933)
    - certificate pinning/verify peer fingerprint authentification
