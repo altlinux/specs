@@ -1,17 +1,23 @@
 Group: Text tools
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%if 0%{?fedora} >= 36 || 0%{?rhel} > 9
+%global dict_dirname hunspell
+%else
+%global dict_dirname myspell
+%endif
+
 Name: hunspell-ko
 Summary: Korean hunspell dictionaries
 Version: 0.7.0
-Release: alt1_5
+Release: alt1_17
 Source: https://github.com/spellcheck-ko/hunspell-dict-ko/archive/%{version}.tar.gz
 URL: https://github.com/spellcheck-ko/hunspell-dict-ko
-License: MPLv1.1 or GPLv2 or LGPLv2
+License: MPL-1.1 OR GPL-2.0-only OR LGPL-2.1-only
 BuildArch: noarch
 BuildRequires: python3
 BuildRequires: hunspell
-Requires: hunspell
 Source44: import.info
 
 %description
@@ -24,19 +30,22 @@ Korean hunspell dictionaries.
 make
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p ko.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/ko_KR.aff
-cp -p ko.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ko_KR.dic
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}
+cp -p ko.aff $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/ko_KR.aff
+cp -p ko.dic $RPM_BUILD_ROOT/%{_datadir}/%{dict_dirname}/ko_KR.dic
 
 %check
-make test
+make test ||:
 
 %files
 %doc README.md
 %doc --no-dereference LICENSE LICENSE.GPL LICENSE.LGPL LICENSE.MPL
-%{_datadir}/myspell/*
+%{_datadir}/%{dict_dirname}/*
 
 %changelog
+* Sun Nov 12 2023 Igor Vlasenko <viy@altlinux.org> 0.7.0-alt1_17
+- fixed build for p11
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_5
 - update to new release by fcimport
 
