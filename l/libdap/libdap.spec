@@ -1,6 +1,6 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-generic-compat
+BuildRequires(pre): rpm-macros-generic-compat rpm-macros-valgrind
 BuildRequires: libossp-uuid-devel
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/groff
@@ -11,7 +11,7 @@ BuildRequires: chrpath
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
 Version: 3.20.10
-Release: alt1_4
+Release: alt1_5
 
 License: LGPL-2.1-or-later
 URL: http://www.opendap.org/
@@ -37,7 +37,7 @@ BuildRequires: libtirpc-devel
 BuildRequires: libuuid-devel
 BuildRequires: libxml2-devel
 BuildRequires: libssl-devel
-%ifnarch s390 %{mips}
+%ifarch %valgrind_arches
 BuildRequires: valgrind
 %endif
 
@@ -146,6 +146,9 @@ done
 
 
 %changelog
+* Mon Nov 13 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.20.10-alt1_5
+- NMU: fixed FTBFS on LoongArch
+
 * Sun Nov 12 2023 Igor Vlasenko <viy@altlinux.org> 3.20.10-alt1_4
 - new version
 
