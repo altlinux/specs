@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: unbound
-Version: 1.18.0
+Version: 1.19.0
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -237,6 +237,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %endif
 
 %changelog
+* Fri Nov 10 2023 Alexei Takaseev <taf@altlinux.org> 1.19.0-alt1
+- 1.19.0
+
 * Tue Sep 05 2023 Alexei Takaseev <taf@altlinux.org> 1.18.0-alt1
 - 1.18.0
 - Drop patch unbound-1.17.1-openssl3-fix.patch fixed in upstream
