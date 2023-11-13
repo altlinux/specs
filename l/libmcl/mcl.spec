@@ -1,7 +1,7 @@
 %define rname mcl
 
 Name: lib%rname
-Version: 0.1.12
+Version: 0.1.13
 Release: alt1
 
 Summary: A collection of C++20 utilities which is common to a number of merry's projects.
@@ -56,5 +56,8 @@ Header files for %name
 %_includedir/%rname
 
 %changelog
+* Mon Nov 13 2023 Nazarov Denis <nenderus@altlinux.org> 0.1.13-alt1
+- New version 0.1.13.
+
 * Mon May 29 2023 Nazarov Denis <nenderus@altlinux.org> 0.1.12-alt1
 - Initial build for ALT Linux
