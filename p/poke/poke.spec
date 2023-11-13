@@ -6,7 +6,7 @@
 
 Name: poke
 Version: 1.3
-Release: alt3
+Release: alt4
 
 Summary: extensible editor for structured binary data
 
@@ -19,11 +19,14 @@ Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source0: %name-%version.tar
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-macros-valgrind
 
 # Automatically added by buildreq on Tue Aug 29 2023
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libatomic_ops-devel libgpg-error libjson-c5 perl perl-parent pkg-config sh4 shared-mime-info termutils tzdata xz
-BuildRequires: appstream flex glibc-devel-static help2man libgc-devel libjson-c-devel libreadline-devel makeinfo texi2dvi valgrind
+BuildRequires: appstream flex glibc-devel-static help2man libgc-devel libjson-c-devel libreadline-devel makeinfo texi2dvi
+%ifarch %valgrind_arches
+BuildRequires: valgrind
+%endif
 
 # for poke-qui:
 %{?_with_gui:#BuildRequires: libgtk+3-devel tk-devel}
@@ -140,6 +143,9 @@ ln -s -- $(relative %_licensedir/GPL-3.0+ %_docdir/%name/COPYING) COPYING
 
 
 %changelog
+* Mon Nov 13 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.3-alt4
+- NMU: fixed FTBFS on LoongArch.
+
 * Tue Aug 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3-alt3
 - Dropped BR: libtextstyle-devel which is being removed along with
   unsupported libcroco library.
