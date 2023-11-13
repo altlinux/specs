@@ -1,19 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
-%define soversion 0.8
+%define pkgname yaml-cpp
+%define soversion 0.7
 
-Name: yaml-cpp
-Version: 0.8.0
-Release: alt1
+Name: %pkgname%soversion
+Version: 0.7.0
+Release: alt2
 
 Summary: A YAML parser and emitter for C++
 License: MIT
-Group: System/Libraries
+Group: System/Legacy libraries
 
-Url: https://github.com/jbeder/%name
+Url: https://github.com/jbeder/%pkgname
 
-# https://github.com/jbeder/%name/archive/%version/%name-%version.tar.gz
-Source: %name-%version.tar
+# https://github.com/jbeder/%pkgname/archive/%pkgname-%version/%pkgname-%pkgname-%version.tar.gz
+Source: %pkgname-%pkgname-%version.tar
+
+Patch1: https://patch-diff.githubusercontent.com/raw/jbeder/yaml-cpp/pull/1037.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: boost-devel-headers cmake gcc-c++
@@ -21,25 +24,16 @@ BuildRequires: boost-devel-headers cmake gcc-c++
 %description
 A YAML parser and emitter for C++
 
-%package -n lib%name%soversion
+%package -n lib%name
 Summary: A YAML parser and emitter for C++
-Group: System/Libraries
+Group: System/Legacy libraries
 
-%description -n lib%name%soversion
+%description -n lib%name
 A YAML parser and emitter for C++
 
-%package -n lib%name-devel
-Summary: YAML Development libraries
-Group: Development/C++
-Provides: %name-devel = %EVR
-Obsoletes: %name-devel < %EVR
-
-%description -n lib%name-devel
-Development libraries for YAML.
-This package contains static development files for YAML.
-
 %prep
-%setup
+%setup -n %pkgname-%pkgname-%version
+%patch1 -p1
 
 %build
 %cmake \
@@ -52,21 +46,20 @@ This package contains static development files for YAML.
 %cmake_build
 
 %install
-%cmake_install
+%cmakeinstall_std
 
-%files -n lib%name%soversion
+%__rm -rf %buildroot%_includedir/%pkgname
+%__rm -rf %buildroot%_pkgconfigdir/*.pc
+%__rm -rf %buildroot%_libdir/*.so
+%__rm -rf %buildroot%_libdir/cmake/%pkgname
+
+%files -n lib%name
 %doc LICENSE *.md
 %_libdir/*.so.*
 
-%files -n lib%name-devel
-%_includedir/%name
-%_pkgconfigdir/*.pc
-%_libdir/*.so
-%_libdir/cmake/%name
-
 %changelog
-* Sun Nov 12 2023 Nazarov Denis <nenderus@altlinux.org> 0.8.0-alt1
-- New version 0.8.0.
+* Sun Nov 12 2023 Nazarov Denis <nenderus@altlinux.org> 0.7.0-alt2
+- Build as legacy library
 
 * Fri Nov 05 2021 Nazarov Denis <nenderus@altlinux.org> 0.7.0-alt1
 - Updated to upstream version 0.7.0.
