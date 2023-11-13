@@ -1,10 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 2.6
+%define ver_major 3.0
 %define rdn_name com.github.johnfactotum.Foliate
+# https://github.com/johnfactotum/foliate-js.git
+%define fjs_ver f75fbba
 
 Name: foliate
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -18,11 +20,15 @@ Source: %url/archive/%version/%name-%version.tar.gz
 Vcs: https://github.com/johnfactotum/foliate.git
 Source: %name-%version.tar
 %endif
+Source1: %name-js-%fjs_ver.tar
 
-%define handy_api_ver 1
-%define webkit_api_ver 4.0
+BuildArch: noarch
+
+%define adw_api_ver 1
+%define adw_ver 1.4
+%define webkit_api_ver 6.0
 %define tracker_api_ver 3.0
-%define gjs_ver 1.52
+%define gjs_ver 1.76
 %define iso_codes_ver 3.57
 
 Requires: libgjs >= %gjs_ver dconf iso-codes >= %iso_codes_ver
@@ -34,19 +40,19 @@ Requires: typelib(GdkPixbuf)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GObject)
-Requires: typelib(Gspell)
-Requires: typelib(Gtk) = 3.0
-Requires: typelib(Handy) = %handy_api_ver
+Requires: typelib(Gtk) = 4.0
+Requires: typelib(Adw) = %adw_api_ver
 Requires: typelib(Pango)
-Requires: typelib(Soup)
+Requires: typelib(Soup) = 3.0
 Requires: typelib(Tracker) = %tracker_api_ver
-Requires: typelib(WebKit2) = %webkit_api_ver
+Requires: typelib(Gst) = 1.0
+Requires: typelib(WebKit) = %webkit_api_ver
 
-%add_python3_path %_datadir/%rdn_name
-
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3
-BuildRequires: desktop-file-utils libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson desktop-file-utils /usr/bin/appstream-util
 BuildRequires: libgjs-devel iso-codes-devel >= %iso_codes_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: pkgconfig(webkitgtk-6.0)
 
 %description
 Foliate is a simple and modern GTK eBook reader with following features:
@@ -60,10 +66,8 @@ Foliate is a simple and modern GTK eBook reader with following features:
 - Quick dictionary lookup
 
 %prep
-%setup
-# switch python shebangs to python3
-sed -i 's|\(#\!/usr/bin/env python\)$|\13|
-	s|\(/usr/bin/python\)$|\13|' src/assets/KindleUnpack/*.py
+%setup -a1
+mv %name-js-%fjs_ver/* src/%name-js
 
 %build
 %meson
@@ -74,7 +78,7 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|
 %find_lang --with-gnome --output=%name.lang %name %rdn_name
 
 %files -f %name.lang
-%_bindir/%rdn_name
+%_bindir/%name
 %_desktopdir/%rdn_name.desktop
 %_datadir/%rdn_name/
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
@@ -85,6 +89,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|
 
 
 %changelog
+* Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
+- updated to 3.0.0-2-g06e3857 (ported to GTK4/Adw)
+
 * Fri Jan 14 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt1
 - updated to 2.6.4-1-ged40d8b
 
