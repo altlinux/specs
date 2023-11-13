@@ -31,8 +31,8 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.4.2
-Release: alt3
+Version: 6.6.0
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -50,13 +50,17 @@ Source1: rpm-macros
 Source2: rpm-macros-addon
 # FC
 Patch1: qtbase-version-check.patch
+Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
+Patch3: qtbase-tell-the-truth-about-private-API.patch
+Patch4: qtbase-use-qgnomeplatform-as-default-platform-theme-on-gnome.patch
+Patch5: qtbase-libxkbcommon-1.6.0.patch
+# ALT
 Patch1000: alt-timezone.patch
 Patch1001: alt-zonetab.patch
 Patch1002: alt-ca-certificates-path.patch
 Patch1003: alt-decrease-iconloader-fallback-depth.patch
 Patch1004: alt-kernel-requires.patch
 Patch1005: e2k-qt-6.patch
-Patch3500: alt-loongarch64.patch
 
 # macros
 %define _qt6 %gname
@@ -81,6 +85,7 @@ BuildRequires: libpcre2-devel libproxy-devel libts-devel
 BuildRequires: libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
 BuildRequires: libxkbcommon-x11-devel libxkbfile-devel libzstd-devel
+BuildRequires: libat-spi2-core-devel
 %{?_enable_vulkan:BuildRequires: pkgconfig(vulkan)}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 %{?_enable_journald:BuildRequires: pkgconfig(libsystemd-journal)}
@@ -363,6 +368,10 @@ OpenGL widgets library for the Qt%major toolkit
 %prep
 %setup -n %qt_module-everywhere-src-%version
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 %patch1000 -p1
 %patch1001 -p1
 %patch1002 -p1
@@ -371,7 +380,6 @@ OpenGL widgets library for the Qt%major toolkit
 %ifarch %e2k
 %patch1005 -p1
 %endif
-%patch3500 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -382,7 +390,7 @@ sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = $QM
 
 # remove some bundled libs to ensure they're not accidentally used
 pushd src/3rdparty
-rm -rf freetype/{src,include} libjpeg libpng zlib xcb
+rm -rf freetype/{src,include} libjpeg libpng zlib xcb harfbuzz-ng
 popd
 
 # exclude from build
@@ -418,7 +426,7 @@ cmake .. \
     -DINSTALL_MKSPECSDIR:STRING=%_qt6_mkspecsdir \
     \
     -GNinja \
-    -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+    -DCMAKE_BUILD_TYPE:STRING=%_qt6_build_type \
     -DBUILD_SHARED_LIBS:BOOL=ON \
     -DBUILD_WITH_PCH:BOOL=OFF \
     -DQT_QMAKE_TARGET_MKSPEC:STRING=%platform \
@@ -428,18 +436,20 @@ cmake .. \
     -DQT_FEATURE_relocatable:BOOL=OFF \
     -DQT_FEATURE_separate_debug_info:BOOL=OFF \
     -DQT_FEATURE_rpath:BOOL=OFF \
-    -DQT_FEATURE_use_gold_linker:BOOL=OFF \
     -DQT_DISABLE_RPATH:BOOL=ON \
+    -DQT_FEATURE_use_gold_linker:BOOL=OFF \
     -DQT_CREATE_VERSIONED_HARD_LINK:BOOL=OFF \
 %ifnarch ppc64le
     -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
 %endif
     \
     -DQT_BUILD_EXAMPLES:BOOL=ON \
+    -DQT_INSTALL_EXAMPLES_SOURCES:BOOL=ON \
     -DQT_BUILD_TESTS:BOOL=OFF \
     -DQT_BUILD_STANDALONE_TESTS:BOOL=OFF \
     -DQT_FEATURE_journald:BOOL=OFF \
     -DQT_FEATURE_openssl_linked:BOOL=ON \
+    -DQT_FEATURE_openssl_hash:BOOL=ON \
     -DQT_FEATURE_accessibility:BOOL=ON \
     -DQT_FEATURE_fontconfig:BOOL=ON \
     -DQT_FEATURE_glib:BOOL=ON \
@@ -485,8 +495,7 @@ cmake --build BUILD --target docs
 %endif
 
 %install
-cmake --install BUILD --prefix %buildroot/%prefix
-cmake --install BUILD/examples --prefix %buildroot/%_qt6_examplesdir
+DESTDIR="%buildroot" cmake --install BUILD
 %if %qdoc_found
 DESTDIR=%buildroot cmake --build BUILD --target install_docs
 %endif
@@ -515,8 +524,9 @@ qt.qpa.xcb.xcberror.warning=false
 __EOF__
 ln -s `relative %_sysconfdir/qt6/qtlogging.ini %_qt6_datadir/qtlogging.ini` %buildroot/%_qt6_datadir/qtlogging.ini
 
-# remove .la files
+# cleanup
 rm -rf %buildroot/%_qt6_libdir/*.la
+rm -rf %buildroot/%_qt6_examplesdir/corelib/serialization/cbordump
 
 # .pc
 mkdir -p %buildroot/%_pkgconfigdir/
@@ -664,12 +674,8 @@ done
 %_qt6_bindir/androiddeployqt*
 %_bindir/androidtestrunner*
 %_qt6_bindir/androidtestrunner*
-%_bindir/qt-cmake-private*
-%_qt6_bindir/qt-cmake-private*
 %_bindir/qt-cmake*
 %_qt6_bindir/qt-cmake*
-%_bindir/qt-cmake-standalone-test*
-%_qt6_bindir/qt-cmake-standalone-test*
 %_bindir/qt-configure-module*
 %_qt6_bindir/qt-configure-module*
 %_bindir/qtpaths*
@@ -682,9 +688,8 @@ done
 %_qt6_bindir/qmake*
 #
 %_qt6_libexecdir/moc
-%_qt6_libexecdir/qt-testrunner.py
 %_qt6_libexecdir/rcc
-%_qt6_libexecdir/syncqt.pl
+%_qt6_libexecdir/syncqt
 %_qt6_libexecdir/uic
 %_qt6_libexecdir/qlalr
 %_qt6_libexecdir/qvkgen
@@ -693,6 +698,11 @@ done
 %_qt6_libexecdir/cmake_automoc_parser
 %_qt6_libexecdir/ensure_pro_file.cmake
 %_qt6_libexecdir/qt-internal-configure-tests
+%_qt6_libexecdir/qt-cmake-private*
+%_qt6_libexecdir/qt-cmake-standalone-test
+%_qt6_libexecdir/qt-testrunner.py
+%_qt6_libexecdir/sanitizer-testrunner.py
+%_qt6_libexecdir/tracepointgen
 #
 %dir %_qt6_headerdir
 %dir %_qt6_prefix/include/
@@ -707,9 +717,8 @@ done
 %_qt6_libdir/libQt%{major}*.a
 %dir %_qt6_libdir/cmake/
 %_qt6_libdir/cmake/Qt%{major}*/
-%_qt6_libdir/metatypes/qt%{major}*.json
-%dir %_qt6_datadir/modules/
-%_qt6_datadir/modules/*.json
+%_qt6_archdatadir/metatypes/
+%_qt6_archdatadir/modules/
 %_pkgconfigdir/Qt%{major}*.pc
 
 %files devel-static
@@ -810,6 +819,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Tue Jun 13 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt3
 - fixed compilation on LoongArch (thanks asheplyakov@alt) (closes: 46477)
 

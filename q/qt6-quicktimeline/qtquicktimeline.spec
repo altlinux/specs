@@ -2,8 +2,8 @@
 %global qt_module qtquicktimeline
 
 Name: qt6-quicktimeline
-Version: 6.4.2
-Release: alt2
+Version: 6.6.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - Keyframe-based timeline construction
@@ -92,8 +92,8 @@ done
 %_qt6_libdir/cmake/Qt*/
 %_qt6_archdatadir/mkspecs/modules/qt_lib_*.pri
 #%_qt6_archdatadir/mkspecs/features/*scxml*.prf
-%_qt6_libdir/metatypes/qt6*.json
-%_qt6_datadir/modules/*.json
+%_qt6_archdatadir/metatypes/qt6*.json
+%_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
 
 %files doc
@@ -103,6 +103,9 @@ done
 #%_qt6_examplesdir/*
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Wed Apr 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
 - relax depends on plugins files when build with
 

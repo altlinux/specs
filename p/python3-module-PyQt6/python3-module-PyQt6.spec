@@ -11,8 +11,8 @@
 #define qtver %(rpm -q --qf '%%{VERSION}' libqt6-core | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
-Version: 6.5.0
-Release: alt3
+Version: 6.6.0
+Release: alt1
 
 Summary: Python 3 bindings for Qt 6
 License: GPLv3
@@ -140,6 +140,9 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Mon Nov 13 2023 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
+- new version (6.6.0) with rpmgs script
+
 * Wed Aug 16 2023 Michael Shigorin <mike@altlinux.org> 6.5.0-alt3
 - add missing BR: qt6-declarative-devel
 

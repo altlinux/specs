@@ -1,7 +1,7 @@
 %define oname PyQt6_sip
 
 Name: python3-module-PyQt6-sip
-Version: 13.5.1
+Version: 13.6.0
 Release: alt1
 
 Summary: The sip module support for PyQt6
@@ -37,5 +37,8 @@ The sip extension module provides support for the PyQt6 package.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Nov 13 2023 Anton Midyukov <antohami@altlinux.org> 13.6.0-alt1
+- new version (13.6.0) with rpmgs script
+
 * Mon Apr 24 2023 Anton Midyukov <antohami@altlinux.org> 13.5.1-alt1
 - initial build

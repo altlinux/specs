@@ -6,7 +6,7 @@
 %def_disable fmt_jp2
 
 Name: qt6-imageformats
-Version: 6.4.2
+Version: 6.6.0
 Release: alt1
 
 Group: System/Libraries
@@ -15,6 +15,7 @@ Url: http://qt.io/
 License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later)
 
 Requires: %name-common = %EVR
+Requires: qt6-svg
 
 Source: %qt_module-everywhere-src-%version.tar
 
@@ -37,6 +38,14 @@ BuildArch: noarch
 Requires: qt6-base-common
 %description common
 Common package for %name
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+Requires: %name-common = %EVR
+Requires: qt6-base-devel
+%description devel
+%summary.
 
 %package doc
 BuildArch: noarch
@@ -67,11 +76,18 @@ rm -rf  config.tests/libmng
 %make -C BUILD DESTDIR=%buildroot install_docs ||:
 %endif
 
+# relax depends on plugins files
+for f in %buildroot/%_libdir/cmake/Qt?*/Qt*Targets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
+
 %files common
 %doc LICENSES/*
 
 %files
 %_qt6_plugindir/imageformats/*.so
+
+%files devel
 %_libdir/cmake/Qt?Gui/Qt?Q*Plugin*.cmake
 %_libdir/cmake/Qt6/Find*.cmake
 
@@ -81,6 +97,9 @@ rm -rf  config.tests/libmng
 %endif
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 

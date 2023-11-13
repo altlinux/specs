@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.4.2
+Version: 6.6.0
 Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
@@ -54,7 +54,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: qt6-base-devel rpm-build-qml6
 %description devel
 %summary.
@@ -62,7 +62,7 @@ Requires: qt6-base-devel rpm-build-qml6
 %package devel-static
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name-devel
 %description devel-static
 %summary.
@@ -70,7 +70,7 @@ Requires: %name-devel
 %package doc
 Summary: Document for developing apps which will use Qt6 %qt_module
 Group: Development/KDE and QT
-Requires: %name-common = %EVR
+Requires: %name-common
 %description doc
 This package contains documentation for Qt6 %qt_module
 
@@ -84,7 +84,7 @@ QML modules by some Alt Linux Team Policy compatible way.
 %package -n libqt6-qml
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 Obsoletes: libqt6-v8 < %version-%release
 Provides: qt6-qtdeclarative = %version-%release
@@ -94,7 +94,7 @@ Provides: qt6-qtdeclarative = %version-%release
 %package -n libqt6-quick
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 Provides: libQtQuick6 = %version-release
 %description -n libqt6-quick
@@ -103,7 +103,7 @@ Provides: libQtQuick6 = %version-release
 %package -n libqt6-quickparticles
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickparticles
 %summary
@@ -112,7 +112,7 @@ Requires: libqt6-core = %_qt6_version
 Group: System/Libraries
 Summary: Qt6 - library
 Provides: qml(Qt.test.qtestroot)
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quicktest
 %summary
@@ -120,7 +120,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-quickwidgets
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickwidgets
 %summary
@@ -128,7 +128,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-quickshapes
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickshapes
 %summary
@@ -136,7 +136,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-qmlmodels
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-qmlmodels
 %summary
@@ -144,7 +144,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-qmlworkerscript
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-qmlworkerscript
 %summary
@@ -152,7 +152,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-quickcontrols2impl
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickcontrols2impl
 %summary
@@ -160,7 +160,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-quickdialogs2
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickdialogs2
 %summary
@@ -168,7 +168,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-quickdialogs2quickimpl
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickdialogs2quickimpl
 %summary
@@ -176,7 +176,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-quickdialogs2utils
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickdialogs2utils
 %summary
@@ -184,7 +184,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-quickcontrols2
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickcontrols2
 %summary
@@ -192,7 +192,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-qmlxmllistmodel
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-qmlxmllistmodel
 %summary
@@ -200,7 +200,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-qmllocalstorage
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-qmllocalstorage
 %summary
@@ -208,7 +208,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-quicklayouts
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quicklayouts
 %summary
@@ -216,7 +216,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-quicktemplates2
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quicktemplates2
 %summary
@@ -224,7 +224,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-qmlcore
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-qmlcore
 %summary
@@ -232,7 +232,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-labswavefrontmesh
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-labswavefrontmesh
 %summary
@@ -240,7 +240,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-labssharedimage
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-labssharedimage
 %summary
@@ -248,7 +248,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-labssettings
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-labssettings
 %summary
@@ -256,7 +256,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-labsqmlmodels
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-labsqmlmodels
 %summary
@@ -264,7 +264,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-labsfolderlistmodel
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-labsfolderlistmodel
 %summary libqt6-labsfolderlistmodel
@@ -272,7 +272,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-labsanimation
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-labsanimation
 %summary
@@ -280,9 +280,17 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-qmlcompiler
 Group: System/Libraries
 Summary: Qt6 - library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-qmlcompiler
+%summary
+
+%package -n libqt6-quickeffects
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickeffects
 %summary
 
 %prep
@@ -410,6 +418,8 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_libdir/libQt?QuickLayouts.so.*
 %files -n libqt6-quicktemplates2
 %_qt6_libdir/libQt?QuickTemplates2.so.*
+%files -n libqt6-quickeffects
+%_qt6_libdir/libQt?QuickEffects.so.*
 
 %files devel
 %_bindir/qml*
@@ -427,8 +437,8 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_libdir/cmake/Qt*/
 %_qt6_libdatadir/libQt*.a
 %_qt6_libdir/libQt?*.a
-%_qt6_libdir/metatypes/qt*.json
-%_qt6_datadir/modules/*.json
+%_qt6_archdatadir/metatypes/qt*.json
+%_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
 
 %files devel-static
@@ -445,6 +455,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 

@@ -2,7 +2,7 @@
 %global qt_module qtwayland
 
 Name: qt6-wayland
-Version: 6.4.2
+Version: 6.6.0
 Release: alt1
 
 Group: System/Libraries
@@ -165,9 +165,10 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_libdatadir/libQt*.prl
 %_qt6_libdir/cmake/Qt*/
 %_qt6_archdatadir/mkspecs/modules/*.pri
-%_qt6_libdir/metatypes/qt6*.json
-%_qt6_datadir/modules/*.json
+%_qt6_archdatadir/metatypes/qt6*.json
+%_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
+%_qt6_examplesdir/*
 
 %files doc
 %if %qdoc_found
@@ -175,6 +176,9 @@ Requires: libqt6-core = %_qt6_version
 %endif
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 

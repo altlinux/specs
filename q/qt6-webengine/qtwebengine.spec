@@ -16,16 +16,17 @@
 %endif
 %def_enable always_reducing_debuginfo
 
-%define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
-%if %is_ffmpeg
-%define qt_ffmpeg_type system-ffmpeg
+%define ffmpeg_ver %{get_version libavformat-devel}
+#define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
+%IF_ver_gteq %ffmpeg_ver 5
+%def_disable system_ffmpeg
 %else
-%define qt_ffmpeg_type %nil
+%def_enable system_ffmpeg
 %endif
 
 Name: qt6-webengine
-Version: 6.4.2
-Release: alt3
+Version: 6.6.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -42,29 +43,30 @@ Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
 Patch202: compressing_files.patch
 Patch203: ffmpeg-remove-x86-optimization.patch
-Patch204: gcc-13.patch
-Patch205: system-openjpeg2.patch
 
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires(pre): libavformat-devel
 BuildRequires: cmake libstdc++-devel-static
 BuildRequires: libxkbcommon-devel libxkbfile-devel
-%if %is_ffmpeg
-BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libswresample-devel libopus-devel
+%if_enabled system_ffmpeg
+BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libswresample-devel
 %endif
 BuildRequires: libvpx-devel
 BuildRequires: /proc
 BuildRequires: flex libicu-devel libEGL-devel libdrm-devel
 BuildRequires: libgio-devel libkrb5-devel
-BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel libminizip-devel libnss-devel
+BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libminizip-devel libnss-devel
 BuildRequires: libharfbuzz-devel fontconfig-devel
 BuildRequires: libXcomposite-devel libXcursor-devel libXrandr-devel libXi-devel libxshmfence-devel libXtst-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libcups-devel
 BuildRequires: gyp libudev-devel libxml2-devel jsoncpp-devel liblcms2-devel
-BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp2-devel
-BuildRequires: libwebp-devel libxslt-devel ninja-build protobuf-compiler libva-devel libvdpau-devel
+BuildRequires: libopus-devel libpulseaudio-devel
+BuildRequires: libpci-devel libprotobuf-devel protobuf-compiler libre2-devel libsnappy-devel libsrtp2-devel
+BuildRequires: libpng-devel libjpeg-devel libtiff-devel libwebp-devel
+BuildRequires: libxslt-devel libva-devel libvdpau-devel
+BuildRequires: ninja-build gn
 BuildRequires: libopenjpeg2.0-devel
 BuildRequires: node-yargs node-terser
 BuildRequires: python3(json) python3(html5lib)
@@ -189,8 +191,6 @@ Requires: libqt6-core = %_qt6_version
 %patch201 -p1
 %patch202 -p1
 %patch203 -p1
-%patch204 -p1
-%patch205 -p1
 #
 #ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 
@@ -281,11 +281,11 @@ export CFLAGS="$OPTFLAGS" CXXFLAGS="$OPTFLAGS"
 %if "%_lib" == "lib"
 export LDFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-overheads"
 %endif
-%global __qt6_build_tool ninja
+%global _qt6_build_tool ninja
 %Q6cmake \
     --log-level=STATUS \
     -DCMAKE_TOOLCHAIN_FILE:STRING="%_libdir/cmake/Qt6/qt.toolchain.cmake" \
-%if %is_ffmpeg
+%if_enabled system_ffmpeg
     -DFEATURE_webengine_system_ffmpeg:BOOL=ON \
 %endif
 %if_enabled system_icu
@@ -356,10 +356,8 @@ done
 %doc LICENSES/*
 %dir %_qt6_translationdir/qtwebengine_locales/
 %dir %_qt6_datadir/resources/
-%_qt6_datadir/resources/qtwebengine*.pak
-%if_disabled system_icu
-%_qt6_datadir/resources/*icu*
-%endif
+%_qt6_datadir/resources/*
+
 %files
 %_qt6_qmldir/QtWebEngine/
 %files -n libqt6-webenginequick
@@ -384,7 +382,7 @@ done
 %if %qdoc_found
 #%_qt6_docdir/*
 %endif
-#%_qt6_examplesdir/*
+%_qt6_examplesdir/*
 
 %files devel
 #%_bindir/qwebengine_convert_dict*
@@ -401,11 +399,14 @@ done
 %_qt6_libdatadir/libQt*.prl
 %_qt6_libdir/cmake/Qt*/
 %_qt6_archdatadir/mkspecs/modules/qt_*.pri
-%_qt6_libdir/metatypes/qt6*.json
-%_qt6_datadir/modules/*.json
+%_qt6_archdatadir/metatypes/qt6*.json
+%_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Mon Oct 02 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt3
 - split modules to separate package
 

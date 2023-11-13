@@ -2,7 +2,7 @@
 %global qt_module qtvirtualkeyboard
 
 Name: qt6-virtualkeyboard
-Version: 6.4.2
+Version: 6.6.0
 Release: alt1
 
 Group: System/Libraries
@@ -122,15 +122,15 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %_libdir/cmake/Qt?Qml/QmlPlugins/Qt?qtvkb*plugin*.cmake
 %_qt6_headerdir/Qt*/
 %_qt6_archdatadir/mkspecs/modules/qt_lib_*.pri
-%_qt6_libdir/metatypes/qt6*.json
-%_qt6_datadir/modules/*.json
+%_qt6_archdatadir/metatypes/qt6*.json
+%_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
 %_qt6_docdir/*
 %endif
-#%_qt6_examplesdir/*
+%_qt6_examplesdir/*
 
 %files -n libqt6-virtualkeyboard
 %_qt6_libdir/libQt?VirtualKeyboard.so.*
@@ -138,6 +138,9 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %_qt6_libdir/libQt?HunspellInputMethod.so.*
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 

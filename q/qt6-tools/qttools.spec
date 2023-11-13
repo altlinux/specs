@@ -4,8 +4,8 @@
 %define kf6_bindir %prefix/lib/kf6/bin
 
 Name: qt6-tools
-Version: 6.4.2
-Release: alt2
+Version: 6.6.0
+Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -24,7 +24,6 @@ Requires: %name-common = %EVR
 
 Source: %qt_module-everywhere-src-%version.tar
 Patch1: alt-run-qttools-with-qt6-suffix.patch
-Patch2: alt-clang16.patch
 
 Source20: assistant.desktop
 Source21: designer.desktop
@@ -37,7 +36,7 @@ BuildRequires: clang-devel-static llvm-devel-static
 BuildRequires: clang-devel llvm-devel
 BuildRequires: /usr/bin/clang-format /usr/bin/clangd
 #endif
-BuildRequires: cmake desktop-file-utils gcc-c++ glibc-devel zlib-devel libicu-devel
+BuildRequires: cmake desktop-file-utils gcc-c++ glibc-devel zlib-devel libzstd-devel libicu-devel
 BuildRequires: qt6-base-devel qt6-declarative-devel
 BuildRequires: libXext-devel libX11-devel libxkbcommon-x11-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
@@ -88,7 +87,7 @@ This package contains documentation for Qt6 %qt_module
 Group: Text tools
 Summary: Documentation browser for Qt6
 Requires: %name-common = %EVR
-Requires: %name = %EVR
+Requires: %name
 %description -n qt6-assistant
 %summary.
 
@@ -96,7 +95,8 @@ Requires: %name = %EVR
 Group: Development/KDE and QT
 Summary: Designer for the Qt6
 Requires: %name-common = %EVR
-Requires: %name = %EVR
+Requires: %name
+Requires: qt6-base-devel
 Provides: qt6-linguist = %EVR
 %description -n qt6-designer
 %summary.
@@ -150,7 +150,6 @@ Requires: libqt6-core = %_qt6_version
 %prep
 %setup -n %qt_module-everywhere-src-%version
 #%patch1 -p1
-%patch2 -p1
 
 %build
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
@@ -282,13 +281,7 @@ done
 %_iconsdir/hicolor/*/apps/linguist*.*
 
 %files devel
-#%_qt6_libexecdir/*
-%_qt6_headerdir/QtDesigner/
-%_qt6_headerdir/QtDesignerComponents/
-%_qt6_headerdir/QtHelp/
-%_qt6_headerdir/QtUiTools/
-%_qt6_headerdir/QtUiPlugin/
-%_qt6_headerdir/QtTools/
+%_qt6_headerdir/Qt*/
 %_qt6_libdir/libQt*.prl
 %_qt6_libdatadir/libQt*.prl
 %_qt6_libdir/libQt*.so
@@ -296,8 +289,8 @@ done
 %_qt6_plugindir/designer/lib*.so
 %_qt6_archdatadir/mkspecs/modules/*.pri
 %_libdir/cmake/Qt*/
-%_qt6_libdir/metatypes/qt6*.json
-%_qt6_datadir/modules/*.json
+%_qt6_archdatadir/metatypes/qt6*.json
+%_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
 # devel-static
 #%_qt6_libdir/libQt?*.a
@@ -323,6 +316,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Tue Jun 13 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
 - fixed compilation error with clang 16 (thanks asheplyakov@alt) (closes: 46478)
 

@@ -6,8 +6,8 @@
 %add_findreq_skiplist %_qt6_examplesdir/*
 
 Name: qt6-webchannel
-Version: 6.4.2
-Release: alt3
+Version: 6.6.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - WebChannel component
@@ -39,7 +39,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: qt6-base-devel
 %description devel
 %summary.
@@ -47,7 +47,7 @@ Requires: qt6-base-devel
 %package devel-static
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name-devel
 %description devel-static
 %summary.
@@ -55,16 +55,24 @@ Requires: %name-devel
 %package doc
 Summary: Document for developing apps which will use Qt6 %qt_module
 Group: Development/KDE and QT
-Requires: %name-common = %EVR
+Requires: %name-common
 %description doc
 This package contains documentation for Qt6 %qt_module
 
 %package -n libqt6-webchannel
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-webchannel
+%summary
+
+%package -n libqt6-webchannelquick
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-webchannelquick
 %summary
 
 %prep
@@ -100,6 +108,8 @@ done
 
 %files -n libqt6-webchannel
 %_qt6_libdir/libQt?WebChannel.so.*
+%files -n libqt6-webchannelquick
+%_qt6_libdir/libQt?WebChannelQuick.so.*
 
 %files devel
 %_qt6_headerdir/Qt*/
@@ -108,10 +118,9 @@ done
 %_qt6_libdir/libQt*.prl
 %_qt6_libdatadir/libQt*.prl
 %_qt6_libdir/cmake/Qt*/
-#%_qt6_libdir/pkgconfig/Qt*.pc
 %_qt6_archdatadir/mkspecs/modules/*.pri
-%_qt6_libdir/metatypes/qt6*.json
-%_qt6_datadir/modules/*.json
+%_qt6_archdatadir/metatypes/qt6*.json
+%_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
 
 %files doc
@@ -120,9 +129,12 @@ done
 %_qt6_docdir/*
 %endif
 %endif
-#%_qt6_examplesdir/*
+%_qt6_examplesdir/*
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Tue Oct 03 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt3
 - fix cmake files
 

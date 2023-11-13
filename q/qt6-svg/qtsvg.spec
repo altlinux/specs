@@ -2,7 +2,7 @@
 %global qt_module qtsvg
 
 Name: qt6-svg
-Version: 6.4.2
+Version: 6.6.0
 Release: alt1
 
 Group: System/Libraries
@@ -91,7 +91,6 @@ for f in %buildroot/%_libdir/cmake/Qt?*/Qt*Targets.cmake ; do
     sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
 done
 
-
 %files common
 %files
 %doc LICENSES/*
@@ -116,8 +115,8 @@ done
 %_qt6_libdir/cmake/Qt?Gui/*Svg*.cmake
 %_qt6_libdir/cmake/Qt?BuildInternals/StandaloneTests/*Svg*.cmake
 %_qt6_archdatadir/mkspecs/modules/qt_lib_svg*.pri
-%_qt6_libdir/metatypes/qt6*.json
-%_qt6_datadir/modules/*.json
+%_qt6_archdatadir/metatypes/qt6*.json
+%_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
 
 %files doc
@@ -127,6 +126,9 @@ done
 #%_qt6_examplesdir/*
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 

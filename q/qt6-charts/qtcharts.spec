@@ -2,8 +2,8 @@
 %global qt_module qtcharts
 
 Name: qt6-charts
-Version: 6.4.2
-Release: alt2
+Version: 6.6.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - Charts component
@@ -107,17 +107,20 @@ done
 %_qt6_libdir/libQt*.prl
 %_qt6_libdir/cmake/Qt*/
 %_qt6_archdatadir/mkspecs/modules/qt_lib_*.pri
-%_qt6_libdir/metatypes/qt6*.json
-%_qt6_datadir/modules/*.json
+%_qt6_archdatadir/metatypes/qt6*.json
+%_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
 %_qt6_docdir/*
 %endif
-#%_qt6_examplesdir/*
+%_qt6_examplesdir/*
 
 %changelog
+* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Mon Jul 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt2
 - relax depends on plugins files
 
