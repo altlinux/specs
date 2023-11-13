@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.111.0
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -146,6 +146,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Nov 13 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt2
+- fix find default wallpaper
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
 - new version
 
