@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 383
+%define centos_release 384
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -659,6 +659,21 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Nov 13 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.384-alt1.el9
+- Updated to kernel-5.14.0-384.el9 (fixes: CVE-2023-39189, CVE-2023-39193, CVE-2023-39194, CVE-2023-39198, CVE-2023-5717):
+  + CNB94: page_pool: allow caching from safely localized NAPI
+  + Update 9.4 RT (not printk) part 1
+  + Updates for IBM vNIC Driver
+  + Updates for rtas_flash
+  + drm/qxl: fix UAF on handle creation
+  + net: xfrm: Fix xfrm_address_filter OOB read
+  + netfilter: nfnetlink_osf: avoid OOB read
+  + netfilter: xt_sctp: validate the flag_info count
+  + perf: Disallow mis-matched inherited group reads
+  + scsi: scsi_debug: Sync with upstream v6.5 and fix scsi/007
+  + smartpqi updates
+  + tty: update timestamps on all device nodes
+
 * Tue Nov 07 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.383-alt1.el9
 - Updated to kernel-5.14.0-383.el9:
   + Backport overlayfs features for composefs
