@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -52,11 +52,10 @@ KDE help center.
 
 # install alternatives
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
-echo > %buildroot/%_sysconfdir/alternatives/packages.d/%name
+> %buildroot/%_sysconfdir/alternatives/packages.d/%name
 if [ "%_bindir" != "%_K5bin" ] ; then
-    cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
-%_bindir/khelpcenter       %_K5bin/khelpcenter      %version
-__EOF__
+    echo "%_bindir/khelpcenter       %_K5bin/khelpcenter      %version" \
+	> %buildroot/%_sysconfdir/alternatives/packages.d/%name
 fi
 
 %find_lang %name --with-kde --all-name
@@ -75,6 +74,9 @@ fi
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Nov 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt2
+- fix alternatives
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 
