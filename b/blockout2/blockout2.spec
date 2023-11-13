@@ -2,18 +2,18 @@
 
 Name: blockout2
 Version: 2.5
-Release: alt2
+Release: alt2.1
 
 Summary: 3D Tetris game
 Summary(ru_RU.UTF-8): Трехмерный вариант игры Тетрис
-
-License: GPL
+License: GPL-2.0-or-later
 Group: Games/Arcade
 Url: http://www.blockout.net/blockout2/
 
 Source: http://downloads.sourceforge.net/blockout/bl25-src.tar.gz
 Source1: http://downloads.sourceforge.net/blockout/bl25-linux-x86.tar.gz
 Source2: %name.desktop
+Source3: %name-512x512-2.svg
 
 # fc patches
 Patch0: %_name-2.3-syslibs.patch
@@ -98,9 +98,6 @@ for r in 16 32 48; do
 convert -scale $r BlockOut/block_icon.ico %_name-"$r"x"$r".png
 done
 
-# GraphicsMagick lacks svg support
-#convert -scale 48 BlockOut/block_icon.ico %_name.svg
-
 %install
 mkdir -p %buildroot{%_bindir,%_desktopdir,%_datadir/%name/{images,sounds}}
 install -m 755 BlockOut/blockout %buildroot%_bindir/%name
@@ -109,14 +106,15 @@ install -p -m 644 blockout/sounds/* %buildroot%_datadir/%name/sounds
 
 desktop-file-install --dir %buildroot%_desktopdir %SOURCE2
 mkdir -p %buildroot%_datadir/icons/hicolor/{16x16,32x32,48x48,scalable}/apps
-install -p -m 644 %_name-16x16.png \
-  %buildroot%_datadir/icons/hicolor/16x16/apps/%_name.png
-install -p -m 644 %_name-32x32.png \
-  %buildroot%_datadir/icons/hicolor/32x32/apps/%_name.png
-install -p -m 644 %_name-48x48.png \
-  %buildroot%_datadir/icons/hicolor/48x48/apps/%_name.png
-#install -p -m644 %_name.svg \
-#  %buildroot%_iconsdir/hicolor/scalable/apps/%_name-symbolic.svg
+install -p -m644 %SOURCE3 \
+  %buildroot%_iconsdir/hicolor/scalable/apps/%_name.svg
+
+#install -p -m 644 %_name-16x16.png \
+#  %buildroot%_datadir/icons/hicolor/16x16/apps/%_name.png
+#install -p -m 644 %_name-32x32.png \
+#  %buildroot%_datadir/icons/hicolor/32x32/apps/%_name.png
+#install -p -m 644 %_name-48x48.png \
+#  %buildroot%_datadir/icons/hicolor/48x48/apps/%_name.png
 
 %files
 %_bindir/*
@@ -125,9 +123,13 @@ install -p -m 644 %_name-48x48.png \
 %files data
 %_datadir/%name/
 %_desktopdir/%name.desktop
-%_datadir/icons/hicolor/*/apps/%_name.png
+%_datadir/icons/hicolor/scalable/apps/%_name.svg
 
 %changelog
+* Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt2.1
+- installed automatically converted from block_icon.ico svg icon
+- fixed License tag
+
 * Fri Mar 30 2018 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt2
 - new noarch -data subpackage
 - removed wrapper, fixed bl2Home in bl2Home.patch
