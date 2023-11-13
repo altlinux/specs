@@ -3,7 +3,7 @@
 
 Name: libjpeg-turbo
 Version: 2.1.5.1
-Release: alt1.1
+Release: alt2
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -15,7 +15,6 @@ Url: http://sourceforge.net/projects/%name/
 Source: %name-%version-%release.tar
 Source2: http://jpegclub.org/jpegexiforient.c
 Source3: exifautotran
-Source4: jpeginfo.c
 
 Patch0: libjpeg-turbo-alt-rdjpgcom-i18n.patch
 Patch1: libjpeg-turbo-alt-versioning.patch
@@ -109,7 +108,7 @@ This package contains development files for the turbojpeg library.
 %patch2000 -p1
 %endif
 
-install -pm644 %_sourcedir/{jpegexiforient,jpeginfo}.c .
+install -pm644 %_sourcedir/jpegexiforient.c .
 install -pm755 %_sourcedir/exifautotran .
 
 # restrict list of global symbols exported by the library.
@@ -156,12 +155,10 @@ bzip2 -9fk libjpeg.txt structure.txt usage.txt
 
 %check
 LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test -- -k
-LD_LIBRARY_PATH=%buildroot%_libdir ./jpeginfo %_cmake__builddir/*.jpg >/dev/null
 
 %install
 %cmake_install
-%__cc %optflags -D_GNU_SOURCE -I%buildroot%_includedir jpeginfo.c -L%buildroot%_libdir -ljpeg -o jpeginfo
-install -pm755 exifautotran jpegexiforient jpeginfo %buildroot%_bindir/
+install -pm755 exifautotran jpegexiforient %buildroot%_bindir/
 # do not package unwanted libturbojpeg files
 find %buildroot -name 'libturbojpeg.*a' -delete
 
@@ -203,6 +200,9 @@ install -pm644 README* change.log \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Mon Nov 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:2.1.5.1-alt2
+- dropped jpeginfo in favour of external one (closes: 41171, 48408)
+
 * Mon Nov 13 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:2.1.5.1-alt1.1
 - e2k patch update
 
