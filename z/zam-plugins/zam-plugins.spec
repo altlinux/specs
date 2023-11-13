@@ -1,12 +1,13 @@
+# dpf required
 %def_enable snapshot
 
 Name: zam-plugins
-Version: 3.14
+Version: 4.2
 Release: alt1
 
 Summary: A collection of LV2/LADSPA/JACK audio plugins
 Group: Sound
-License: GPL-2.0-only and ISC
+License: GPL-2.0-or-later and ISC
 Url: http://www.zamaudio.com/
 
 %if_disabled snapshot
@@ -21,7 +22,7 @@ BuildRequires: lv2-devel >= 1.8.1 ladspa_sdk
 BuildRequires: libfftw3-devel >= 3.3.5
 BuildRequires: libsamplerate-devel
 BuildRequires: zita-convolver-devel >= 3.1.0
-BuildRequires: libX11-devel libGL-devel
+BuildRequires: libX11-devel libglvnd-devel
 
 %description
 zam-plugins is a collection of LV2/LADSPA/VST/JACK audio plugins
@@ -47,14 +48,29 @@ zam-plugins is a collection of LV2/LADSPA/VST/JACK audio plugins
 for sound processing developed in-house at ZamAudio.
 This is the LADSPA version.
 
+%package -n vst-zam-plugins
+Summary: A collection of LV2/LADSPA/JACK audio plugins. VST* version
+Group: Sound
+
+%description -n vst-zam-plugins
+zam-plugins is a collection of LV2/LADSPA/VST/JACK audio plugins
+for sound processing developed in-house at ZamAudio.
+This is the VST/VST3 version.
+
+%package -n clap-zam-plugins
+Summary: A collection of LV2/LADSPA/JACK audio plugins. CLAP version
+Group: Sound
+
+%description -n clap-zam-plugins
+zam-plugins is a collection of LV2/LADSPA/VST/JACK audio plugins
+for sound processing developed in-house at ZamAudio.
+This is the CLAP (CLever Audio Plug-in API) version.
+
 %prep
 %setup
 
 %build
-# dpf/Makefile.base.mk
-# BASE_OPTS  = -O3 -ffast-math -mtune=generic -msse -msse2 -fdata-sections -ffunction-sections
-
-base_opts=" -ffast-math -fdata-sections -ffunction-sections"
+base_opts=" -ffast-math -fdata-sections -ffunction-sections %(getconf LFS_CFLAGS)"
 
 %ifarch %ix86
 base_opts+=" -msse -mfpmath=sse"
@@ -72,22 +88,32 @@ export HAVE_ZITA_CONVOLVER=true
 export HAVE_ZITA_CONVOLVER=true
 %makeinstall_std %opts
 
-# remove VST and DSSI plugins
-rm -rf %buildroot%_libdir/vst %buildroot/*-dssi*
-
 %files
 %_bindir/*
 %doc README.md NOTICE.*
 
 %files -n lv2-zam-plugins
 %_libdir/lv2/*
-%doc README.md
+%doc README.md NOTICE.*
 
 %files -n ladspa-zam-plugins
 %_libdir/ladspa/*
 %doc README.md NOTICE.*
 
+%files -n vst-zam-plugins
+%_libdir/vst/*
+%_libdir/vst3/*
+%doc README.md NOTICE.*
+
+%files -n clap-zam-plugins
+%_libdir/clap/*
+%doc README.md NOTICE.*
+
 %changelog
+* Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
+- 4.2
+- new vst- and clap- subpackages
+
 * Mon Dec 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.14-alt1
 - 3.14
 
