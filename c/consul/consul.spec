@@ -1,7 +1,7 @@
 %global import_path github.com/hashicorp/consul
 Name:     consul
 Version:  1.17.0
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Consul is a tool for service discovery and configuration
 License:  MPL-2.0
@@ -12,6 +12,9 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source:   %name-%version.tar
 
+Patch1:   0001-Add-loongarc64-support-for-vendored-github.com-boltd.patch
+Patch2:   0002-Add-loongarch64-support-for-vendored-github.com-shir.patch
+
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 
@@ -21,6 +24,7 @@ connect and configure applications across dynamic, distributed infrastructure.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -44,6 +48,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Mon Nov 13 2023 Ivan A. Melnikov <iv@altlinux.org> 1.17.0-alt1.1
+- NMU: re-add loongarch64 support, via patches this time
+
 * Thu Nov 09 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.17.0-alt1
 - new version 1.17.0 (Closes: 44495)
 
