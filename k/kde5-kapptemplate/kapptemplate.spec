@@ -1,9 +1,9 @@
 %define rname kapptemplate
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE applications templates
@@ -48,8 +48,12 @@ KAppTemplate provide a skeleton and example of what the code typically looks lik
 %_K5icon/*/*/apps/kapptemplate.*
 %_K5xdgapp/*kapptemplate.desktop
 %_datadir/qlogging-categories5/*.*categories
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

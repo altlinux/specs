@@ -1,7 +1,7 @@
 %define rname sweeper
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
 %K5init no_appdata
 
@@ -62,8 +62,12 @@ Requires: %name-common = %version-%release
 %_K5xdgapp/org.kde.sweeper.desktop
 %_K5xmlgui/sweeper/
 %_datadir/qlogging-categories5/*.*categories
+#%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

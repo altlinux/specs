@@ -4,9 +4,9 @@
 %define libelisalib libelisalib%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Music player
@@ -79,6 +79,7 @@ sed -i '/find_package.*UPNPQT/s|UPNPQT|UPNPQT_disabled|' CMakeLists.txt
 %_K5xdgapp/*elisa*.desktop
 %_K5icon/*/*/apps/elisa.*
 %_K5dbus_srv/org.kde.elisa.service
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/elisa_version.h
@@ -92,6 +93,9 @@ sed -i '/find_package.*UPNPQT/s|UPNPQT|UPNPQT_disabled|' CMakeLists.txt
 %_K5lib/libelisaLib.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

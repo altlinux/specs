@@ -4,14 +4,16 @@
 %define libkolourpaint libkolourpaint_lgpl%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphics
 Summary: Paint program
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: kde5-runtime
 
 Source: %rname-%version.tar
 
@@ -70,6 +72,7 @@ KF5 library
 %_K5xmlgui/kolourpaint/
 %_K5xdgapp/org.kde.kolourpaint.desktop
 %_K5icon/*/*/apps/kolourpaint.*
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/kolourpaint_version.h
@@ -83,6 +86,9 @@ KF5 library
 %_K5lib/libkolourpaint_lgpl.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

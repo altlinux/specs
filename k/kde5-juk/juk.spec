@@ -2,9 +2,9 @@
 %def_disable tunepimp
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Sound
 Summary: Music Player
@@ -75,8 +75,12 @@ sed -i '/^find_package.*TunePimp/d' CMakeLists.txt
 %_K5icon/*/*/apps/juk.*
 %_K5data/kio/servicemenus/*juk*.desktop
 %_K5notif/juk.notifyrc
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

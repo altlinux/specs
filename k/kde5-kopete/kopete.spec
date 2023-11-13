@@ -30,8 +30,8 @@
 %define libqgroupwise libqgroupwise%sover
 
 Name: kde5-kopete
-Version: 23.08.2
-Release: alt2
+Version: 23.08.3
+Release: alt1
 %K5init no_appdata
 
 Group: Networking/Instant messaging
@@ -330,6 +330,9 @@ fi
 %_K5dbus_iface/*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Tue Oct 24 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
 - update build requires
 

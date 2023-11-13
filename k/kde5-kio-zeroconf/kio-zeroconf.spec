@@ -1,9 +1,9 @@
 %define rname kio-zeroconf
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: DNS-SD Service Discovery for KDE
@@ -49,8 +49,12 @@ DNS-SD Service Discovery for KDE
 %_K5plug/kf5/kded/dnssdwatcher.so
 %_K5plug/kf5/kio/zeroconf.so
 %_K5data/remoteview/*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

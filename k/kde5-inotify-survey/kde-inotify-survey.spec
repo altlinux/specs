@@ -1,9 +1,9 @@
 %define rname kde-inotify-survey
 
 Name: kde5-inotify-survey
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata man
+%K5init man
 
 Group: Sound
 Summary: Inotify state of the user
@@ -50,8 +50,12 @@ Sporting a kded module to tell you when things are getting dicey and a CLI tool 
 %_K5dbus_sys_srv/*inotify*.service
 %_K5dbus/system.d/*inotify*.conf
 %_datadir/polkit-1/actions/*inotify*.policy
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

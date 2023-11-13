@@ -6,9 +6,9 @@
 %filter_from_requires /^cvs$/d
 
 Name: kde5-dev-scripts
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Various development scripts
@@ -63,9 +63,12 @@ done
 %doc COPYING* README
 %_bindir/*
 %_K5bin/*
-%_K5data/*/
+%_K5data/uncrustify/
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

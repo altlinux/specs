@@ -1,9 +1,9 @@
 %define rname kcron
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KDE Task Scheduler
@@ -70,8 +70,12 @@ KF5 library
 %_K5dbus_sys_srv/*kcron*.service
 %_K5dbus/system.d/*kcron*.conf
 %_datadir/polkit-1/actions/*kcron*.policy
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

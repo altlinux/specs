@@ -2,9 +2,9 @@
 %define rname skanpage
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace
+%K5init
 
 Group: Graphics
 Summary: Multi-page scanning application
@@ -48,8 +48,12 @@ It supports saving to image and PDF files.
 %_K5xdgapp/*skanpage*.desktop
 %_K5icon/hicolor/*/apps/*skanpage*
 %_datadir/qlogging-categories5/*.*categories
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

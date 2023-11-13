@@ -4,14 +4,14 @@
 %define libkmixcore libkmixcore%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace  no_appdata
+%K5init
 
 Group: Sound
 Summary: KDE sound mixer
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
 
@@ -74,11 +74,9 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files
-%config(noreplace) %_K5xdgconf/*
 %_K5bin/*
 %_K5plug/kf5/kded/*kmix*.so
-#%_K5plug/plasma/dataengine/plasma_engine_mixer.so
-#%_K5data/plasma/services/mixer.operations
+%_K5start/*.desktop
 %_K5data/kmix/
 %_K5cfg/*kmix*.kcfg
 %_K5xmlgui/kmix/
@@ -86,6 +84,7 @@ KF5 library
 %_K5srv/*.desktop
 %_K5notif/*kmix*.notifyrc
 %_K5icon/*/*/actions/kmix.*
+%_datadir/metainfo/*.xml
 
 %files devel
 %_K5dbus_iface/*.xml
@@ -95,6 +94,9 @@ KF5 library
 %_K5lib/libkmixcore.so.%sover
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

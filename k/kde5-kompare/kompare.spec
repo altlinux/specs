@@ -5,9 +5,9 @@
 %define libkompareinterface libkompareinterface%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Graphical File Differences Tool
@@ -86,6 +86,7 @@ KF5 library
 %_K5icon/hicolor/*/apps/*kompare*.*
 %_K5data/kio/servicemenus/*kompare*.desktop
 %_datadir/qlogging-categories5/*.*categories
+%_datadir/metainfo/*.xml
 
 %files devel
 #%_K5inc/kompare_version.h
@@ -102,6 +103,9 @@ KF5 library
 %_K5lib/libkomparedialogpages.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

@@ -1,9 +1,9 @@
 %define rname kcharselect
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Group: Text tools
 Summary: KDE Character Selector
@@ -62,9 +62,12 @@ KF5 library
 %doc LICENSES/*
 %_K5bin/kcharselect
 %_K5xdgapp/org.kde.kcharselect.desktop
-#%_K5xmlgui/kcharselect/
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

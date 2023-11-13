@@ -1,9 +1,9 @@
 %define rname ktimer
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: Application executor
@@ -44,8 +44,12 @@ Lets you start an application after a certain amount of time has passed.
 %_K5bin/ktimer
 %_K5xdgapp/org.kde.ktimer.desktop
 %_K5icon/*/*/*/ktimer.*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

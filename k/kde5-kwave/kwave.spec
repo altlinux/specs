@@ -5,9 +5,9 @@
 %define libkwave libkwave%sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Sound
 Summary: Simple Sound Editor
@@ -91,6 +91,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5data/kwave/
 %_K5icon/*/*/*/*kwave*.*
 %_K5xdgapp/*kwave*.desktop
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K5inc/kwave_version.h
@@ -107,6 +108,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkwavegui.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

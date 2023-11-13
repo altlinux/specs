@@ -1,9 +1,9 @@
 %define rname kcolorchooser
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init altplace no_appdata
+%K5init
 
 Group: Graphics
 Summary: Color Chooser
@@ -60,8 +60,12 @@ KF5 library
 %_K5bin/kcolorchooser
 %_K5xdgapp/*kcolorchooser*.desktop
 %_K5icon/*/*/apps/*kcolorchooser*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Mon Oct 16 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
