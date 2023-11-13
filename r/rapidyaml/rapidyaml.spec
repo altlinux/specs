@@ -1,6 +1,6 @@
 Name: rapidyaml
-Version: 0.4.1
-Release: alt3
+Version: 0.5.0
+Release: alt1
 
 Summary: A library to parse and emit YAML
 License: MIT
@@ -78,6 +78,9 @@ This package contains development headers and examples.
 %_libdir/libryml.so
 
 %changelog 
+* Mon Nov 13 2023 Nazarov Denis <nenderus@altlinux.org> 0.5.0-alt1
+- Version 0.5.0
+
 * Mon May 23 2022 Nazarov Denis <nenderus@altlinux.org> 0.4.1-alt3
 - Fix libdir
 
