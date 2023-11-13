@@ -1,11 +1,12 @@
 Name:           wf-recorder
 Version:        0.4.1
-Release:        alt1
+Release:        alt2
 Summary:        Utility program for screen recording of wlroots-based compositors
 License:        MIT
 Group:          Video
 URL:            https://github.com/ammen99/wf-recorder
 Source0:        %{name}-%{version}.tar
+Source2:        wf_record.sh
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  meson >= 0.54.0
@@ -35,11 +36,53 @@ Utility program for screen recording of wlroots-based compositors
 %install
 %meson_install
 
+#install start script
+install -D -m0755 %SOURCE2 %buildroot%_bindir/
+
+# install "start button"
+mkdir -p %buildroot%_desktopdir
+cat > %buildroot%_desktopdir/%name-start.desktop << EOF
+[Desktop Entry]
+Name=Start screen record
+Name[ru]=Начать запись экрана
+Comment=start button for wf-recorder
+Exec=wf_record.sh &
+Icon=record-desktop
+Terminal=false
+Type=Application
+Categories=Video;
+OnlyShowIn=Phosh;
+X-Purism-FormFactor=Workstation;Mobile;
+EOF
+
+# install "stop button"
+cat > %buildroot%_desktopdir/%name-stop.desktop << EOF
+[Desktop Entry]
+Name=Stop screen record
+Name[ru]=Остановить запись экрана
+Comment=stop button for wf-recorder
+Exec=wf_record.sh &
+Icon=media-playback-stop
+Terminal=false
+Type=Application
+Categories=Video;
+OnlyShowIn=Phosh;
+X-Purism-FormFactor=Workstation;Mobile;
+EOF
+
+
 %files
 %doc README.md LICENSE
-%attr(0755,root,root) /usr/bin/wf-recorder
+%_bindir/wf-recorder
+%_bindir/wf_record.sh
+%_desktopdir/%name-start.desktop
+%_desktopdir/%name-stop.desktop
 %{_mandir}/man?/%{name}*
 
 %changelog
+* Fri Nov 10 2023 Artyom Bystrov <arbars@altlinux.org> 0.4.1-alt2
+- Add run script and "buttons" to run and stop record
+
+
 * Sun Nov  5 2023 Artyom Bystrov <arbars@altlinux.org> 0.4.1-alt1
 - Initial commit for Sisyphus
