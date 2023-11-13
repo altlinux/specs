@@ -1,5 +1,5 @@
 Name: vulkan
-Version: 1.3.261.1
+Version: 1.3.268
 Release: alt1
 Summary: Khronos group Vulkan API SDK
 
@@ -22,12 +22,12 @@ BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 # strict requires due internal dependency
-BuildRequires: glslang-devel = 13.0.0
-BuildRequires: libspirv-tools-devel >= 2023.4
-BuildRequires: spirv-headers >= 1.5.5-alt9
+BuildRequires: glslang-devel = 13.1.1
+BuildRequires: libspirv-tools-devel >= 2023.5
+BuildRequires: spirv-headers >= 1.5.5-alt10
 # -layers need it
-BuildRequires: librobin-hood-hashing-devel
-# - tolls need it
+BuildRequires: vulkan-utility-libraries-devel = %version librobin-hood-hashing-devel
+# -tools need it
 BuildRequires: wayland-protocols
 
 # textrel due asm optimisation in loader code
@@ -122,7 +122,7 @@ pushd %_builddir/vulkan-headers
 %cmakeinstall_std
 popd
 
-# then vulkan-loader and layers
+# then vulkan-loader and validation-layers
 for dir in loader layers; do
 pushd %_builddir/vulkan-"$dir"
 %cmake \
@@ -164,7 +164,7 @@ mkdir -p %buildroot%_datadir/vulkan/icd.d ||:
 chrpath -d %buildroot%_bindir/{vulkaninfo,vkcubepp}
 
 # remove static libs to make LTO checks happy
-rm -rf %buildroot%_libdir/libVkLayer*.a ||:
+rm -rf %buildroot%_libdir/*.a ||:
 
 %files tools
 %_bindir/*
@@ -178,6 +178,8 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %_includedir/vk_video
 %_libdir/libvulkan.so
 %_pkgconfigdir/vulkan.pc
+%dir %_libdir/cmake/VulkanLoader
+%_libdir/cmake/VulkanLoader/*.cmake
 %dir %_datadir/cmake/VulkanHeaders
 %_datadir/cmake/VulkanHeaders/*.cmake
 
@@ -199,6 +201,17 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %exclude %_datadir/vulkan/registry/genvk.py
 
 %changelog
+* Mon Nov 13 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.268-alt1
+- BR:
+  + Bump version requires
+  + Added new libraries as result of splitting -layers.
+- Updated to sdk-1.3.268:
+  + vulkan-utility-libraries: Updated to c9ca4ac62.
+  + vulkan-layers: Updated to 3c64adb4e.
+  + vulkan-tools: Updated to 1532001f7.
+  + vulkan-loader: Updated to f4c838e2e.
+  + vulkan-headers: Updated to 7b3466a1f.
+
 * Sun Sep 17 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.261.1-alt1
 - Bump BR.
 - Updated to sdk-1.3.261.1:
