@@ -3,7 +3,7 @@
 
 Name: libjpeg-turbo
 Version: 2.1.5.1
-Release: alt1
+Release: alt1.1
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -203,6 +203,9 @@ install -pm644 README* change.log \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Mon Nov 13 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:2.1.5.1-alt1.1
+- e2k patch update
+
 * Tue Nov 07 2023 L.A. Kostis <lakostis@altlinux.ru> 2:2.1.5.1-alt1
 - 2.1.5.1.
 - .spec: Escape unparseable symbols.
