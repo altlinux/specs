@@ -34,7 +34,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        119.0.6045.105
+Version:        119.0.6045.123
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -516,6 +516,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Mon Nov 13 2023 Alexey Gladkov <legion@altlinux.ru> 119.0.6045.123-alt1
+- New version (119.0.6045.123).
+- Security fixes:
+  - CVE-2023-5996: Use after free in WebAudio.
+
 * Fri Nov 03 2023 Alexey Gladkov <legion@altlinux.ru> 119.0.6045.105-alt1
 - New version (119.0.6045.105).
 - Security fixes:
