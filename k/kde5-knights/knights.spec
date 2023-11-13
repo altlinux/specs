@@ -1,9 +1,9 @@
 %define rname knights
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_altplace
+%K5init
 
 Group: Games/Boards
 Summary: Chess board
@@ -13,6 +13,7 @@ License: GPLv2+
 Provides: knights = %EVR
 Obsoletes: knights < %EVR
 Requires: gnuchess
+Requires: %name-common
 
 Source: %rname-%version.tar
 
@@ -42,6 +43,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: %name-common
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -49,7 +51,7 @@ developing applications that use %name.
 %package -n libkf5nights
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n libkf5nights
 %name library
 
@@ -65,7 +67,10 @@ Requires: %name-common = %version-%release
 %K5install_move data knsrcfiles
 %find_lang %name --with-kde --all-name
 
-%files -f %name.lang
+%files common -f %name.lang
+%_datadir/qlogging-categories5/*.categories
+
+%files
 %doc LICENSE*
 %_K5bin/knights
 %_datadir/knights/
@@ -75,19 +80,14 @@ Requires: %name-common = %version-%release
 %_K5xdgapp/*knights*.desktop
 %_K5data/knsrcfiles/*knights*.knsrc
 %_datadir/metainfo/*knights*.xml
-%_datadir/qlogging-categories5/*.categories
 
-#%files devel
-#%_K5inc/knights_version.h
-#%_K5inc/knights/
-#%_K5link/lib*.so
-#%_K5lib/cmake/knights
-#%_K5archdata/mkspecs/modules/qt_knights.pri
-
-#%files devel
-#%_K5dbus_iface/*nights*.xml
+%files devel
+%_K5dbus_iface/*nights*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

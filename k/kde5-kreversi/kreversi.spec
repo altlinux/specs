@@ -1,9 +1,9 @@
 %define rname kreversi
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Games/Boards
 Summary: Old reversi board game, also known as othello
@@ -69,8 +69,12 @@ Requires: %name-common = %version-%release
 %_K5icon/hicolor/*/actions/*moves*.*
 %_K5xdgapp/*kreversi*.desktop
 %_K5notif/*kreversi*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

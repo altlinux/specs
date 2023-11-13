@@ -1,9 +1,9 @@
 %define rname kigo
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Summary: %rname is an open-source implementation of the popular Go game
 License: GPLv2
@@ -47,8 +47,12 @@ glass or plastic) on the vacant intersections of a grid of 19x19 lines (9x9 or
 %_K5cfg/%{rname}.kcfg
 %_K5data/knsrcfiles/*%{rname}*.knsrc
 %_datadir/qlogging-categories5/*.*categories
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

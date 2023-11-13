@@ -1,9 +1,9 @@
 %define rname knavalbattle
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Games/Strategy
 Summary: Battleship game with built-in game server
@@ -44,9 +44,12 @@ BuildRequires: kf5-kxmlgui-devel kf5-sonnet-devel kf5-kcrash-devel
 %_K5data/knavalbattle/
 %_K5icon/*/*/apps/knavalbattle.*
 %_K5xdgapp/org.kde.knavalbattle.desktop
-#%_K5conf_up/knavalbattle.upd
+%_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

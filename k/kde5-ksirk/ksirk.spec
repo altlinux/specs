@@ -4,9 +4,9 @@
 %define libiris_ksirk libiris_ksirk%iris_ksirk_sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Games/Strategy
 Summary: World Domination Strategy Game
@@ -81,12 +81,16 @@ Requires: %name-common = %version-%release
 %_K5icon/*/*/apps/ksirk.*
 %_K5cfg/ksirk*.kcfg
 %_K5data/knsrcfiles/*ksirk*.*
+%_datadir/metainfo/*.xml
 
 %files -n %libiris_ksirk
 %_K5lib/libiris_ksirk.so.%iris_ksirk_sover
 %_K5lib/libiris_ksirk.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 

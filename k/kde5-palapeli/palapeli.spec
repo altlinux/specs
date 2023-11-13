@@ -4,9 +4,9 @@
 %define libpala libpala%pala_sover
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Games/Strategy
 Summary: Jigsaw puzzle gam
@@ -84,6 +84,7 @@ mv %buildroot/%_K5xdgmime/palapeli-mimetypes.xml \
 %_K5data/palapeli/
 %_K5data/kio/servicemenus/*pala*.desktop
 %_K5notif/*pala*.notifyrc
+%_datadir/metainfo/*.xml
 
 %files devel
 %_K5inc/Pala/
@@ -95,6 +96,9 @@ mv %buildroot/%_K5xdgmime/palapeli-mimetypes.xml \
 %_K5lib/libpala.so.*
 
 %changelog
+* Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
