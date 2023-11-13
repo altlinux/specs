@@ -9,7 +9,7 @@
 
 Name: ipython3
 Version: 8.17.2
-Release: alt1
+Release: alt1.1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -118,7 +118,7 @@ This package contains examples for IPython.
 %package -n python3-module-%oname
 Summary: An enhanced interactive Python 3 shell
 Group: Development/Python3
-Requires: python3(matplotlib_inline)
+Requires: python3(matplotlib_inline) python3(pickleshare)
 
 %description -n python3-module-%oname
 IPython provides a replacement for the interactive Python interpreter with
@@ -222,6 +222,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Mon Nov 13 2023 Mikhail Gordeev <obirvalger@altlinux.org> 8.17.2-alt1.1
+- NMU: Add requires to pickleshare to fix exception after %%rehashx.
+
 * Tue Nov 07 2023 Anton Vyatkin <toni@altlinux.org> 8.17.2-alt1
 - New version 8.17.2.
 
