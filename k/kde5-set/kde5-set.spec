@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 23.08.1
+Version: 23.08.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -69,7 +69,7 @@ Requires: kde5-network-manager
 ##Requires: pam0_kwallet5
 Requires: gtk3-theme-breeze
 Requires: gtk2-theme-breeze
-Requires: kf5-qqc2-desktop-style
+Requires: kf5-kguiaddons kf5-qqc2-desktop-style
 Requires: kde5-plasma-applet-places-widget
 Requires: plasma5-oxygen-sounds
 Requires: plasma5-kde-gtk-config plasma5-bluedevil plasma5-kscreen plasma5-ksshaskpass
@@ -204,7 +204,6 @@ Requires: kde5-pim-data-exporter kde5-pim-addons
 Requires: kde5-akregator kde5-kontact
 Requires: kde5-korganizer kde5-zanshin kde5-merkuro
 Requires: kde5-akonadi-calendar-tools
-Requires: kde5-akonadi-calendar-tools
 %endif
 Requires: kde5-kalarm kde5-knotes
 Requires: kde5-kaddressbook
@@ -230,6 +229,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Tue Nov 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
+- update requires
+
 * Fri Oct 13 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.1-alt1
 - update requires
 
