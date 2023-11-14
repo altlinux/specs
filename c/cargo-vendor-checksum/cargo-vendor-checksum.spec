@@ -1,11 +1,11 @@
 Name:     cargo-vendor-checksum
-Version:  0.1.0
+Version:  0.1.1
 Release:  alt1
 
 Summary:  It is a tool for updating checksum files in vendor directories
 License:  MIT
 Group:    Development/Other
-Url:      https://github.com/Obirvalger/vml
+Url:      https://github.com/alt-chill/cargo-vendor-checksum
 
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
@@ -42,5 +42,8 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc *.md
 
 %changelog
+* Tue Nov 14 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.1-alt1
+- Add threads
+
 * Thu Nov 09 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus
