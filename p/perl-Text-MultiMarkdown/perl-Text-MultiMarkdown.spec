@@ -16,8 +16,8 @@ Epoch: 1
 %define _enable_test 1
 
 Name: perl-Text-MultiMarkdown
-Version: 1.001
-Release: alt1.1
+Version: 1.002
+Release: alt1
 
 Summary: Convert MultiMarkdown syntax to (X)HTML
 
@@ -62,12 +62,15 @@ export TEST_POD=1
 %perl_vendor_install
 
 %files
-%doc MARKDOWN.md README.pod Changes LICENSE
+%doc MARKDOWN.md README.pod Changes
 %_bindir/MultiMarkdown.pl
 %_man1dir/*
 %perl_vendor_privlib/Text/*
 
 %changelog
+* Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 1:1.002-alt1
+- automated CPAN update
+
 * Sun Aug 13 2023 Igor Vlasenko <viy@altlinux.org> 1:1.001-alt1.1
 - automated CPAN update
 
