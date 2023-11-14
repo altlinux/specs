@@ -7,8 +7,8 @@
 
 Name: kf5-%rname
 Version: 5.111.0
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init no_altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 utilities for graphical user interfaces
@@ -112,8 +112,6 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 %files common -f %name.lang
 %doc LICENSES/* README.md
-#%dir %_K5plug/kf5/kguiaddons/
-#%dir %_K5plug/kf5/kguiaddons/kmodifierkey/
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -121,7 +119,6 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K5xdgapp/*geo*handler*.desktop
 
 %files devel
-#%_K5inc/kguiaddons_version.h
 %_K5inc/KGuiAddons/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5GuiAddons
@@ -129,7 +126,6 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 %files -n libkf5guiaddons
 %_K5lib/libKF5GuiAddons.so.*
-#%_K5plug/kf5/kguiaddons/kmodifierkey/kmodifierkey_*.so
 
 %if_enabled python
 #%files -n python-module-%rname
@@ -143,6 +139,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Tue Nov 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt2
+- force standard placement
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
 - new version
 
