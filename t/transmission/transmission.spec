@@ -8,7 +8,7 @@
 
 Name: transmission
 Version: 4.0.4
-Release: alt3
+Release: alt4
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -143,12 +143,12 @@ Daemonised BitTorrent client
 # made alternatives entries
 mkdir -p %buildroot/%_altdir
 
-cat >%buildroot/%_altdir/%name-gtk <<__EOF__
+cat >%buildroot%_altdir/%name-gtk <<__EOF__
 %_bindir/%name %_bindir/%name-gtk 30
 __EOF__
 
 %if_enabled qt
-cat >%buildroot/%_altdir/%name-qt <<__EOF__
+cat >%buildroot%_altdir/%name-qt <<__EOF__
 %_bindir/%name %_bindir/%name-qt 20
 __EOF__
 %endif
@@ -163,14 +163,13 @@ install -pD -m644 %SOURCE3 %buildroot%systemd_unitdir/transmission-daemon.servic
 
 %_cmake__builddir/daemon/transmission-daemon -d 2> %_cmake__builddir/daemon/settings.json
 sed -i 's,/usr/src/,/var/lib/transmission-daemon/,' %_cmake__builddir/daemon/settings.json
-install -pD -m640 %_cmake__builddir/daemon/settings.json %buildroot/%_sysconfdir/transmission-daemon/settings.json
+install -pD -m640 %_cmake__builddir/daemon/settings.json %buildroot%_sysconfdir/transmission-daemon/settings.json
 
-mkdir -p %buildroot/%_sysconfdir/sysconfig/
-echo "TRANSMISSION_OPTIONS=\"-e %_logdir/%dname/%dname.log -g %_localstatedir/%dname\"" > %buildroot/%_sysconfdir/sysconfig/%dname
+mkdir -p %buildroot%_sysconfdir/sysconfig/
+echo "TRANSMISSION_OPTIONS=\"-e %_logdir/%dname/%dname.log -g %_localstatedir/%dname\"" > %buildroot%_sysconfdir/sysconfig/%dname
 
-mkdir -p %buildroot/%_logdir/%dname
-mkdir -p %buildroot/%_localstatedir/%dname
-mkdir -p %buildroot/%_localstatedir/%dname/resume
+mkdir -p %buildroot%_logdir/%dname
+mkdir -p %buildroot%_localstatedir/%dname
 
 # Re-enable if DhtTest.usesBootstrapFile and LT.WebUtilsTest.url passes
 # %check
@@ -236,11 +235,13 @@ fi
 %config %_initdir/%dname
 %attr(0750,root,_%dname) %dir %_sysconfdir/%dname
 %config(noreplace) %_sysconfdir/%dname/settings.json
-%attr(0750,root,_%dname) %dir %_localstatedir/%dname
-%attr(0750,_%dname,_%dname) %dir %_localstatedir/%dname/resume
+%attr(0750,_%dname,_%dname) %dir %_localstatedir/%dname
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Tue Nov 14 2023 Mikhail Tergoev <fidel@altlinux.org> 4.0.4-alt4
+- fixed permissions for transmission-daemon (ALT bug: 48426)
+
 * Fri Nov 03 2023 Anton Midyukov <antohami@altlinux.org> 4.0.4-alt3
 - NMU:
     + remove transmission-alt-desktop.patch
