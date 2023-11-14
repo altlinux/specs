@@ -3,7 +3,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 7.4.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -72,6 +72,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Fri May 26 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.1-alt2
+- etcnet: skip unrecognized route line (ALT #45932)
+
 * Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.1-alt1
 - 7.4-1
 - add copyright file
