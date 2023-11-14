@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: autorepo-altnode-config
-Version: 0.17
+Version: 0.18
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,8 +13,11 @@ License: GPLv2+
 Url: https://watch.altlinux.org
 Source: %name-%version.tar
 
-Requires(pre): postfix rsync-server anonftp vsftpd
+Requires(pre): postfix rsync-server anonftp
 Requires: autorepo-altnode-config-apt = %EVR
+
+# paths expected and configured in autorepo-altnode-admin-create-node
+Requires: hasher
 
 %description
 %summary
@@ -27,6 +30,17 @@ Requires: autorepo-altnode-config = %EVR
 
 %description nginx
 %summary nginx
+
+%if_with ftp
+%package ftp
+Group: System/Configuration/Other
+Summary: generic ftp config for the automated packaging node
+Requires(pre): vsftpd
+Requires: autorepo-altnode-config = %EVR
+
+%description ftp
+%summary ftp
+%endif
 
 %package apt
 Group: System/Configuration/Other
@@ -55,7 +69,7 @@ install -m 644 monit/* %buildroot%_sysconfdir/monitrc.d
 if ! grep '^relayhost' /etc/postfix/main.cf; then
     cat >> /etc/postfix/main.cf <<EOF
 # altnode auto configuration
-relayhost = [192.168.1.7]
+relayhost = [relay.mskdc.altlinux.org]
 EOF
     service postfix restart ||:
 fi
@@ -82,8 +96,6 @@ list
 EOF
     chkconfig rsync on
 fi
-# ftpd
-chkconfig vsftpd on ||:
 if grep 'only_from = 127.0.0.1' /etc/xinetd.conf; then
     sed -i -e 's,only_from = .*,only_from = 0.0.0.0,' /etc/xinetd.conf
 fi
@@ -97,6 +109,16 @@ service nginx restart ||:
 if [ "$RPM_INSTALL_ARG1" -eq 1 ]; then
     service monit restart ||:
 fi
+
+%if_with ftp
+%post ftp
+chkconfig vsftpd on ||:
+service xinetd restart
+if [ "$RPM_INSTALL_ARG1" -eq 1 ]; then
+    service monit restart ||:
+fi
+%endif
+
 
 %files
 %config %_sysconfdir/monitrc.d/00base.conf
@@ -120,6 +142,11 @@ fi
 %_sysconfdir/autorepo/apt/sources.list.*
 
 %changelog
+* Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 0.18-alt1
+- changed relayhost
+- removed ftp (deprecated service)
+- added p11
+
 * Sat Jan 15 2022 Igor Vlasenko <viy@altlinux.org> 0.17-alt1
 - added p10
 
