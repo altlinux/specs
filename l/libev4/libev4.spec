@@ -2,16 +2,14 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-
-%set_automake_version 1.11
-
+%define sover 4
 Name:		libev4
 Version:	4.33
-Release:	alt2
+Release:	alt3
 Summary:	libev - an event notification library
-License:	BSD or GPL v2+
-URL:		http://software.schmorp.de/pkg/libev
+License: BSD-2-Clause OR GPL-2.0-or-later
+URL: http://software.schmorp.de/pkg/libev.html
+Vcs: http://cvs.schmorp.de/libev/
 Group:		System/Libraries
 
 # Source-url: http://dist.schmorp.de/libev/libev-%version.tar.gz
@@ -31,59 +29,60 @@ Group:		Development/C
 Requires:	%name = %EVR
 
 %description -n libev-devel
-Header files for libev library.
+%summary.
 
-%package -n libev-devel-static
-Summary:	Static libev library
+%package -n libev-libevent-devel
+Summary:	libevent compatibility header for libev library
 Group:		Development/C
 Requires:	libev-devel = %EVR
+Conflicts: libevent-devel
 
-%description -n libev-devel-static
-Static libev library.
+%description -n libev-libevent-devel
+The package contains libevent compatibility header, only core events supported.
 
 %prep
 %setup
 # Add pkgconfig support
 cp -p %{SOURCE1} .
-sed -i.pkgconfig -e 's|Makefile|Makefile libev.pc|' configure.ac configure
-sed -i.pkgconfig -e 's|lib_LTLIBRARIES|pkgconfigdir = $(libdir)/pkgconfig\n\npkgconfig_DATA = libev.pc\n\nlib_LTLIBRARIES|' Makefile.am Makefile.in
+sed -i.pkgconfig -e 's|Makefile|Makefile libev.pc|' configure.ac
+sed -i.pkgconfig -e 's|lib_LTLIBRARIES|pkgconfigdir = $(libdir)/pkgconfig\n\npkgconfig_DATA = libev.pc\n\nlib_LTLIBRARIES|' Makefile.am
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-
-aclocal
-automake
+%ifarch x86_64
+%add_optflags -fanalyzer
+%endif
+%add_optflags %(getconf LFS_CFLAGS) -fno-strict-aliasing -Wno-unused -Wno-comment
 %autoreconf
-%configure --with-pic
-#--disable-static
+%configure --disable-static
 %make_build
 
 %install
 %makeinstall
 
-# move to libev and create compat symlinks
-pushd %buildroot%_includedir/
-mkdir libev
-mv *.h libev/
-ln -s libev/ev.h libev/ev++.h .
-popd
-
 %files
 %doc Changes LICENSE README
-%_libdir/libev.so.*
+%_libdir/libev.so.%sover
+%_libdir/libev.so.%sover.*
 
 %files -n libev-devel
 %_libdir/libev.so
 %_includedir/ev.h
 %_includedir/ev++.h
-%_includedir/libev
 %_libdir/pkgconfig/libev.pc
 %_man3dir/*
 
-%files -n libev-devel-static
-%_libdir/libev.a
+%files -n libev-libevent-devel
+%_includedir/event.h
 
 %changelog
+* Mon Nov 13 2023 Vitaly Chikunov <vt@altlinux.org> 4.33-alt3
+- Update sources from CVS for Jun 2023 (contain bug fixes).
+- spec: Update License, Url, Vcs tags. Enable strict brp checks.
+- Remove static library package.
+- Move libevent compatibility header event.h into libev-libevent-devel package
+  instead of packaging headers into /usr/include/libev. The result is the same
+  as Debian and Fedora have it.
+
 * Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.33-alt2
 - Fixed build with LTO
 
