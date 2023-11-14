@@ -11,7 +11,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
@@ -64,7 +64,7 @@ mypyc. Compiled mypy is about 4x faster than without compilation.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile test-requirements.txt
+%pyproject_deps_resync_check_pipreqfile test-requirements.in
 %endif
 
 %build
@@ -127,9 +127,15 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %files -n python3-module-mypyc
 %python3_sitelibdir/mypyc/
 %_bindir/mypyc
+# Build script for mypyc C runtime library unit tests
+%exclude %python3_sitelibdir/mypyc/lib-rt/setup.py
+%exclude %python3_sitelibdir/mypyc/lib-rt/__pycache__/setup.*
 %endif
 
 %changelog
+* Tue Nov 14 2023 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
+- 1.6.1 -> 1.7.0.
+
 * Fri Oct 27 2023 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1
 - 1.5.1 -> 1.6.1.
 
