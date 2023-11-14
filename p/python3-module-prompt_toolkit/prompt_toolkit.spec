@@ -4,8 +4,10 @@
 
 %def_with check
 
+%def_with doc
+
 Name: python3-module-%oname
-Version: 3.0.39
+Version: 3.0.40
 Release: alt1
 Summary: Library for building powerful interactive command lines in Python
 License: BSD-3-Clause
@@ -22,14 +24,17 @@ Patch1: %oname-alt-docs.patch
 %add_findreq_skiplist %python3_sitelibdir/%oname/input/win32.py
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+%if_with doc
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3-module-alabaster
 BuildRequires: python3-module-docutils
 BuildRequires: python3-module-objects.inv
+BuildRequires: python3-module-sphinx-copybutton
+%endif
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-wcwidth
@@ -64,8 +69,10 @@ This package contains documentation for %oname.
 %setup
 %patch1 -p1
 
+%if_with doc
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %pyproject_build
@@ -73,10 +80,12 @@ ln -s ../objects.inv docs/
 %install
 %pyproject_install
 
+%if_with doc
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
 %make -C docs html
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
 %pyproject_run_pytest -v
@@ -85,6 +94,7 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc CHANGELOG *.rst LICENSE
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
+%if_with doc
 %exclude %python3_sitelibdir/%oname/pickle
 
 %files pickles
@@ -93,8 +103,12 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %files docs
 %doc examples docs/_build/html
+%endif
 
 %changelog
+* Tue Nov 14 2023 Anton Vyatkin <toni@altlinux.org> 3.0.40-alt1
+- New version 3.0.40.
+
 * Tue Jul 04 2023 Anton Vyatkin <toni@altlinux.org> 3.0.39-alt1
 - New version 3.0.39.
 
