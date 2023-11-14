@@ -5,7 +5,7 @@ BuildRequires: perl(Crypt/CBC.pm) perl(Crypt/Mode/CBC.pm) perl(Crypt/Mode/CFB.pm
 %define dist Crypt-OpenSSL-AES
 
 Name: perl-%dist
-Version: 0.17
+Version: 0.19
 Release: alt1
 
 Summary: XS-wrapper around OpenSSL's AES library
@@ -42,6 +42,9 @@ module is simply a wrapper around the OpenSSL library.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 0.19-alt1
+- automated CPAN update
+
 * Mon Oct 23 2023 Igor Vlasenko <viy@altlinux.org> 0.17-alt1
 - automated CPAN update
 
