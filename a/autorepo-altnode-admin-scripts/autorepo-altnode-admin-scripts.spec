@@ -1,5 +1,5 @@
 Name: autorepo-altnode-admin-scripts
-Version: 0.07
+Version: 0.08
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 %install
 
 mkdir -p $RPM_BUILD_ROOT%_bindir
-install -m 755 autorepo-altnode-admin-setup-build-node $RPM_BUILD_ROOT%_bindir
+install -m 755 autorepo-altnode-admin-setup-* $RPM_BUILD_ROOT%_bindir
 mkdir -p $RPM_BUILD_ROOT%_sbindir
 install -m 755 autorepo-altnode-admin-create-*node $RPM_BUILD_ROOT%_sbindir
 install -m 755 autorepo-altnode-admin-delete-*node $RPM_BUILD_ROOT%_sbindir
@@ -32,6 +32,9 @@ install -m 755 autorepo-altnode-admin-delete-*node $RPM_BUILD_ROOT%_sbindir
 %_sbindir/*
 
 %changelog
+* Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 0.08-alt1
+- added autorepo-altnode-admin-setup-* family
+
 * Mon Apr 25 2022 Igor Vlasenko <viy@altlinux.org> 0.07-alt1
 - added robots group
 
