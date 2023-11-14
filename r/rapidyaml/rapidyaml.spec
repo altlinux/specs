@@ -1,6 +1,6 @@
 Name: rapidyaml
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: A library to parse and emit YAML
 License: MIT
@@ -12,6 +12,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 Source: https://github.com/biojppm/%name/releases/download/v%version/%name-%version-src.tgz
 
 Patch0: %name-libdir-alt.patch
+Patch3500: rapidyaml-loongarch64.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -51,6 +52,7 @@ This package contains development headers and examples.
 %prep
 %setup -n %name-%version-src
 %patch0 -p1
+%patch3500 -p1
 
 %build
 %cmake \
@@ -78,6 +80,9 @@ This package contains development headers and examples.
 %_libdir/libryml.so
 
 %changelog 
+* Tue Nov 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.5.0-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Mon Nov 13 2023 Nazarov Denis <nenderus@altlinux.org> 0.5.0-alt1
 - Version 0.5.0
 
