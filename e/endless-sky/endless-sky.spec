@@ -1,6 +1,6 @@
 Name: endless-sky
-Version: 0.10.2
-Release: alt2
+Version: 0.10.4
+Release: alt1
 
 Summary: Space exploration and combat game
 License: GPLv3
@@ -8,8 +8,8 @@ Group: Games/Strategy
 
 Url: https://endless-sky.github.io/
 VCS: https://github.com/endless-sky/endless-sky
+
 Source: %name-%version.tar
-Source2: %name.watch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: git
@@ -72,7 +72,7 @@ rm -rv %buildroot/usr/share/doc/%name
 %_iconsdir/hicolor/128x128/
 %_iconsdir/hicolor/256x256/
 %_iconsdir/hicolor/512x512/
-%_desktopdir/%name.desktop
+%_desktopdir/io.github.endless_sky.endless_sky.desktop
 %_man6dir/%name.6*
 %_datadir/metainfo/
 
@@ -81,6 +81,9 @@ rm -rv %buildroot/usr/share/doc/%name
 %_datadir/games/endless-sky/
 
 %changelog
+* Mon Nov 13 2023 Alexey Shemyakin <alexeys@altlinux.org> 0.10.4-alt1
+- Update to version 0.10.4.
+
 * Tue Aug 22 2023 Michael Shigorin <mike@altlinux.org> 0.10.2-alt2
 - Tweak EA: while fixing %%install properly wrt non-x86_64.
 - Minor spec cleanup.
