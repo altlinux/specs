@@ -5,7 +5,7 @@
 
 Name: glslang
 Version: 13.1.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: OpenGL and OpenGL ES shader front end and validator
@@ -63,6 +63,8 @@ Requires: %name = %EVR
   -DBUILD_EXTERNAL=OFF \
   -DBUILD_SHARED_LIBS:BOOL=TRUE
 %cmake_build
+
+%install
 %cmake_install
 pushd %buildroot%_includedir
 rm -rf SPIRV
@@ -84,6 +86,9 @@ popd
 %_includedir/SPIRV
 
 %changelog
+* Tue Nov 14 2023 L.A. Kostis <lakostis@altlinux.ru> 1:13.1.1-alt2
+- Fix debuginfo files generation.
+
 * Mon Nov 13 2023 L.A. Kostis <lakostis@altlinux.ru> 1:13.1.1-alt1
 - 13.1.1.
 
