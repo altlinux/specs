@@ -4,9 +4,9 @@
 
 %define rname smb4k
 Name: kde5-%rname
-Version: 3.1.2
+Version: 3.2.4
 Release: alt1
-%K5init altplace
+%K5init
 
 Group: Networking/Other
 Summary: A KDE SMB/CIFS share browser
@@ -64,24 +64,30 @@ Developemnt files for %name
 %_K5bin/*
 %_K5plug/*.so
 %_K5libexecdir/kauth/mounthelper
-%_K5qml/org/kde/smb4k/smb4kqmlplugin/
+%_K5qml/org/kde/smb4k/
 %_K5conf_up/*
-%_K5xdgapp/org.kde.smb4k.desktop
-%_K5data/plasma/plasmoids/org.kde.smb4kqml/
+%_K5xdgapp/*smb4k*.desktop
+%_kf5_data/plasma/plasmoids/*smb4k*/
 %_K5cfg/smb4k.kcfg
 %_K5icon/*/*/apps/*.*
-#%_K5conf_dbus_sysd/org.kde.smb4k.mounthelper.conf
-%_K5dbus/system.d/org.kde.smb4k.mounthelper.conf
-%_K5dbus_sys_srv/org.kde.smb4k.mounthelper.service
+%_K5dbus/system.d/*smb4k*.conf
+%_K5dbus_sys_srv/*smb4k*.service
 %_K5xmlgui/smb4k/
 %_K5notif/smb4k.*
-%_datadir/polkit-1/actions/org.kde.smb4k.mounthelper.policy
+%_K5srv/*smb4k*.desktop
+%_datadir/polkit-1/actions/*smb4k*.policy
+%_datadir/metainfo/*.xml
 
 %files -n %libsmb4kcore
 %_K5lib/libsmb4kcore.so.%sover
 %_K5lib/libsmb4kcore.so.%sover.*
 
 %changelog
+* Tue Nov 14 2023 Sergey V Turchin <zerg@altlinux.org> 3.2.4-alt1
+- new version
+- don't force alternate placement
+- package metadata
+
 * Tue Jul 12 2022 Sergey V Turchin <zerg@altlinux.org> 3.1.2-alt1
 - new version
 
