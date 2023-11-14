@@ -6,7 +6,7 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.44
+Version: 0.45
 Release: alt1
 Summary: GNU C library compatible strftime for loggers and servers
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/P*
 
 %changelog
+* Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 0.45-alt1
+- automated CPAN update
+
 * Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
 - automated CPAN update
 
