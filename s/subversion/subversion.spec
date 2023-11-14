@@ -19,7 +19,7 @@
 %else
 %def_with javahl
 %endif
-%def_with swig_py
+%def_without swig_py
 %def_with swig_pl
 %def_with kwallet
 %def_with gnome_keyring
@@ -63,7 +63,7 @@
 
 Name:     subversion
 Version:  1.14.2
-Release:  alt1
+Release:  alt2
 
 Summary:  A version control system
 Group:    Development/Other
@@ -773,6 +773,9 @@ fi
 %endif
 
 %changelog
+* Tue Nov 14 2023 Andrey Cherepanov <cas@altlinux.org> 1.14.2-alt2
+- Built without subversion-python3 (ALT #48441).
+
 * Fri Apr 15 2022 Andrey Cherepanov <cas@altlinux.org> 1.14.2-alt1
 - New version.
 - Security fixes:
