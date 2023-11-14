@@ -2,8 +2,8 @@
 
 Name: kf5-%rname
 Version: 5.111.0
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init no_altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 downloading and sharing additional application data
@@ -77,7 +77,6 @@ KF5 library
 # clean kmoretools menu
 for app in \
     disk \
-    org.kde.partitionmanager \
     org.gnome.clocks \
     gnome-search-tool \
     #
@@ -97,7 +96,7 @@ done
 %doc LICENSES/* README.md
 %_datadir/qlogging-categories5/*.*categories
 #%_K5data/knewstuff/
-%_K5data/kmoretools/
+%_kf5_data/kmoretools/
 
 %files
 %_K5bin/knewstuff-dialog*
@@ -123,6 +122,9 @@ done
 
 
 %changelog
+* Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt2
+- force standard placement
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
 - new version
 
