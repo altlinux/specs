@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -131,6 +131,9 @@ This package contains development documentation for GStreamer Good Plugins
 %endif
 
 %changelog
+* Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.7-alt1
+- 1.22.7
+
 * Thu Sep 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.6-alt1
 - 1.22.6
 
