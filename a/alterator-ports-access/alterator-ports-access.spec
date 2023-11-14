@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ports-access
-Version: 0.5.5
+Version: 0.5.6
 Release: alt1
 BuildArch: noarch
 Source:%name-%version.tar
@@ -52,6 +52,12 @@ Command line part of alterator module to control serial/USB ports access
 %config(noreplace) %_sysconfdir/alterator-ports-access.conf
 
 %changelog
+* Tue Nov 14 2023 Paul Wolneykien <manowar@altlinux.org> 0.5.6-alt1
+- Fix: Apply changes without need to re-plug the device by
+  recursively triggering USB "change" events on authorized devices.
+- Fix: Don't specify ID_USB_INTERFACES for devices with USB class 00
+  (closes: 48360).
+
 * Thu Nov 02 2023 Paul Wolneykien <manowar@altlinux.org> 0.5.5-alt1
 - Fixed USB rule editor (closes: 47454).
 - Fixed glob pattern used to extract class, subclass and protocol
