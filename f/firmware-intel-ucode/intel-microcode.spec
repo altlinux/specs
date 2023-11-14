@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20230808
+%define orig_timestamp 20231114
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 22
+Version: 23
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,38 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Tue Nov 14 2023 L.A. Kostis <lakostis@altlinux.ru> 2:23-alt1.20231114
+- New upstream microcode datafile 20231114:
+  + Security updates for INTEL-SA-00950 (CVE-2023-23583).
+  + Updated microcodes:
+    sig 0x000606a6, pf_mask 0x87, 2023-09-01, rev 0xd0003b9, size 299008
+    sig 0x000606c1, pf_mask 0x10, 2023-09-08, rev 0x1000268, size 290816
+    sig 0x000706e5, pf_mask 0x80, 2023-09-03, rev 0x00c2, size 113664
+    sig 0x000806c1, pf_mask 0x80, 2023-09-07, rev 0x00b4, size 111616
+    sig 0x000806c2, pf_mask 0xc2, 2023-09-07, rev 0x0034, size 98304
+    sig 0x000806d1, pf_mask 0xc2, 2023-09-07, rev 0x004e, size 104448
+    sig 0x000806f4, pf_mask 0x87, 2023-06-16, rev 0x2b0004d0, size 572416
+    sig 0x000806f4, pf_mask 0x10, 2023-06-26, rev 0x2c000290, size 605184
+    sig 0x000806f5, pf_mask 0x87, 2023-06-16, rev 0x2b0004d0, size 572416
+    sig 0x000806f5, pf_mask 0x10, 2023-06-26, rev 0x2c000290, size 605184
+    sig 0x000806f6, pf_mask 0x87, 2023-06-16, rev 0x2b0004d0, size 572416
+    sig 0x000806f6, pf_mask 0x10, 2023-06-26, rev 0x2c000290, size 605184
+    sig 0x000806f7, pf_mask 0x87, 2023-06-16, rev 0x2b0004d0, size 572416
+    sig 0x000806f8, pf_mask 0x87, 2023-06-16, rev 0x2b0004d0, size 572416
+    sig 0x000806f8, pf_mask 0x10, 2023-06-26, rev 0x2c000290, size 605184
+    sig 0x00090672, pf_mask 0x07, 2023-06-07, rev 0x0032, size 222208
+    sig 0x00090675, pf_mask 0x07, 2023-06-07, rev 0x0032, size 222208
+    sig 0x000906a3, pf_mask 0x80, 2023-06-07, rev 0x0430, size 220160
+    sig 0x000906a4, pf_mask 0x80, 2023-06-07, rev 0x0430, size 220160
+    sig 0x000a0671, pf_mask 0x02, 2023-09-03, rev 0x005d, size 104448
+    sig 0x000b0671, pf_mask 0x32, 2023-08-29, rev 0x011d, size 210944
+    sig 0x000b06a2, pf_mask 0xe0, 2023-08-30, rev 0x411c, size 216064
+    sig 0x000b06a3, pf_mask 0xe0, 2023-08-30, rev 0x411c, size 216064
+    sig 0x000b06e0, pf_mask 0x11, 2023-06-26, rev 0x0012, size 136192
+    sig 0x000b06f2, pf_mask 0x07, 2023-06-07, rev 0x0032, size 222208
+    sig 0x000b06f5, pf_mask 0x07, 2023-06-07, rev 0x0032, size 222208
+- source: update symlinks to reflect id of the latest release, 20231114.
+
 * Thu Aug 10 2023 L.A. Kostis <lakostis@altlinux.ru> 2:22-alt1.20230808
 - Sync with Debian 3.20230808.1:
   + New upstream microcode datafile 20230808
