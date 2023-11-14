@@ -1,10 +1,10 @@
 %define sover 0
-%define git bccaa94d
+%define git 2de1265f
 %def_disable static
 
 Name: spirv-cross
 Version: 0.57.0
-Release: alt0.1.g%{git}
+Release: alt0.2.g%{git}
 Epoch: 1
 
 Summary: tool to parse and convert SPIR-V to other shader languages
@@ -56,6 +56,8 @@ sed -i "s/make_msl_version(1, 2)/make_msl_version(1, 2, 0)/" spirv_msl.hpp
 %endif
   -DSPIRV_CROSS_SHARED=ON
 %cmake_build
+
+%install
 %cmake_install
 
 %files -n lib%{name}-c-shared%{sover}
@@ -68,6 +70,10 @@ sed -i "s/make_msl_version(1, 2)/make_msl_version(1, 2, 0)/" spirv_msl.hpp
 %_datadir/cmake/*
 
 %changelog
+* Tue Nov 14 2023 L.A. Kostis <lakostis@altlinux.ru> 1:0.57.0-alt0.2.g2de1265f
+- Updated to GIT 2de1265f (sdk-1.3.268.0).
+- Fix debuginfo.
+
 * Tue Sep 19 2023 L.A. Kostis <lakostis@altlinux.ru> 1:0.57.0-alt0.1.gbccaa94d
 - Updated to GIT bccaa94d (sdk-1.3.261.1).
 
