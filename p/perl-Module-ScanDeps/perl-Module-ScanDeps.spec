@@ -1,10 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(IPC/Run3.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 %define dist Module-ScanDeps
 Name: perl-%dist
-Version: 1.34
+Version: 1.35
 Release: alt1
 
 Summary: Recursively scan Perl programs for dependencies
@@ -41,6 +41,9 @@ such projects, PAR and App::Packer.
 %perl_vendor_privlib/Module
 
 %changelog
+* Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 1.35-alt1
+- automated CPAN update
+
 * Mon Sep 25 2023 Igor Vlasenko <viy@altlinux.org> 1.34-alt1
 - automated CPAN update
 
