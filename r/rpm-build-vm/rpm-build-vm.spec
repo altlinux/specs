@@ -4,8 +4,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.60
-Release: alt3
+Version: 1.61
+Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -216,11 +216,16 @@ rm /tmp/filelist
 > %_rpmlibdir/z-vm-createimage.filetrigger
 
 kvm-ok
-timeout 300 vm-run --heredoc <<-EOF
+timeout 300 vm-run --heredoc <<-'EOF'
 	uname -a
-	uname -a
+	echo $USER '(date)' "(date)"
 EOF
-timeout 300 vm-run --initrd --append=rddebug 'uname -a; exit 7' || test $? -eq 7
+timeout 300 vm-run --kvm=cond "date; date"
+# Should show neither syntax error nor username.
+timeout 300 vm-run --kvm=cond echo '(date)' '$USER'
+if type -p busybox; then
+	timeout 300 vm-run --initrd --append=rddebug 'uname -a; exit 7' || test $? -eq 7
+fi
 ! timeout --preserve-status 300 vm-run "true; false; true" || exit 1
 timeout 300 vm-run --mem=max free -g
 timeout 300 vm-run --mem=256 --cpu=max lscpu
@@ -254,6 +259,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Tue Nov 14 2023 Vitaly Chikunov <vt@altlinux.org> 1.61-alt1
+- Add 'exact command' mode (when there is more than single argument).
+
 * Sat Nov 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.60-alt3
 - spec: checkinstall: Remove BR:busybox for unsupported architectures.
 - spec: checkinstall: Add tests for unsupported architectures.
