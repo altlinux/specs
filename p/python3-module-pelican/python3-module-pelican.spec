@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pelican
 
-%def_with docs
+%def_without docs
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.8.0
+Version: 4.9.0
 Release: alt1
 Summary: Static site generator that supports Markdown and reST syntax
 License: AGPL-3.0
@@ -28,15 +28,12 @@ Requires: python3-module-rich
 Requires: python3-module-dateutil
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-pdm-backend
 %if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-rich
-BuildRequires: python3-module-dateutil
-BuildRequires: python3-module-pytz
-BuildRequires: python3-module-blinker
-BuildRequires: python3-module-feedgenerator
+BuildRequires: python3-module-sphinxext-opengraph
+BuildRequires: python3-module-livereload
+BuildRequires: python3-module-furo
 %endif
 %if_with check
 BuildRequires: python3-module-pytest
@@ -54,6 +51,8 @@ BuildRequires: python3-module-beautifulsoup4
 BuildRequires: python3-module-lxml
 BuildRequires: python3-module-markdown
 BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-watchfiles
+BuildRequires: python3-module-ordered-set
 %endif
 
 Obsoletes: python-module-%pypi_name
@@ -104,7 +103,6 @@ This package contains tests for %pypi_name.
 %pyproject_build
 
 %if_with docs
-sed -i "s|'pelican-doc':  ('https://docs.getpelican.com/%%s/', '')|'pelican-doc':  ('https://docs.getpelican.com/%%s/', '%%s')|" docs/conf.py
 # Build docs (can't be exec without python3-module-pelican itself!)
 export PYTHONPATH=$PWD
 sphinx-build-3 docs html
@@ -117,11 +115,7 @@ rm -rf html/_downloads/* html/.doctrees html/.buildinfo
 %pyproject_install
 
 %check
-sed -i "/addopts/d" tox.ini
-%pyproject_run_pytest -v -W ignore::DeprecationWarning -k "\
-not test_basic_generation_works \
-and not test_custom_generation_works \
-and not test_custom_locale_generation_works"
+%pyproject_run_pytest -v
 
 %files
 %if_with docs
@@ -143,6 +137,9 @@ and not test_custom_locale_generation_works"
 %files -n %pypi_name
 
 %changelog
+* Tue Nov 14 2023 Anton Vyatkin <toni@altlinux.org> 4.9.0-alt1
+- New version 4.9.0 (closes: #36804).
+
 * Tue Jul 25 2023 Anton Vyatkin <toni@altlinux.org> 4.8.0-alt1
 - New version 4.8.0.
 
