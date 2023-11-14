@@ -5,15 +5,15 @@
 
 Name: kde5-%rname
 Version: 1.0
-Release: alt1
-%K5init altplace no_appdata
+Release: alt2
+%K5init
 
 Group:  Video
 Summary: Simple camera application for mobile devices
 License: GPL-3.0-only
 Url: https://anongit.kde.org/plasma-camera.git
 
-Requires: kf5-kirigami
+Requires: qt5-multimedia kf5-kirigami
 
 Source: %rname-%version.tar
 
@@ -41,7 +41,11 @@ Simple camera application for mobile devices.
 %files -f %name.lang
 %_K5bin/*camera*
 %_K5xdgapp/*camera*.desktop
+%_datadir/metainfo/*.xml
 
 %changelog
+* Tue Nov 14 2023 Sergey V Turchin <zerg@altlinux.org> 1.0-alt2
+- package metadata
+
 * Fri Mar 20 2020 Sergey V Turchin <zerg@altlinux.org> 1.0-alt1
 - initial build
