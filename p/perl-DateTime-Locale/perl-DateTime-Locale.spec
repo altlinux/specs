@@ -4,7 +4,7 @@ BuildRequires: perl(DateTime/Locale.pm)
 # END SourceDeps(oneline)
 %define dist DateTime-Locale
 Name: perl-%dist
-Version: 1.39
+Version: 1.40
 Release: alt1
 
 Summary: Localization support for DateTime.pm
@@ -43,6 +43,9 @@ on available locales.
 %perl_vendor_privlib/auto/share/dist/DateTime-Locale
 
 %changelog
+* Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 1.40-alt1
+- automated CPAN update
+
 * Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 1.39-alt1
 - automated CPAN update
 
