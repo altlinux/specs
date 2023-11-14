@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: glycin-loaders
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Glycin loaders for several formats
@@ -19,10 +19,10 @@ Url: https://gitlab.gnome.org/Incubator/loupe
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/Incubator/loupe.git
+Vcs: https://gitlab.gnome.org/GNOME/glycin-loaders.git
 Source: %name-%version%beta.tar
 %endif
-Source1: %name-%version-cargo.tar
+%{?_enable_snapshot:Source1: %name-%version-cargo.tar}
 
 %define gtk_ver 4.11.3
 %define heif_ver 1.14.2
@@ -41,7 +41,7 @@ and to extract image metadata.
 This package provides modular image loaders for Glycin.
 
 %prep
-%setup -n %name-%version%beta %{?_disable_bootstrap:-a1}
+%setup -n %name-%version%beta %{?_enable_snapshot:%{?_disable_bootstrap:-a1}}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
@@ -67,6 +67,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Nov 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1
+- 0.1.2
+
 * Thu Sep 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - 0.1.0
 
