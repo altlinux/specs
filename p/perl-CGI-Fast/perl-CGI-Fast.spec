@@ -6,7 +6,7 @@ BuildRequires: perl(CGI.pm) perl(ExtUtils/MakeMaker.pm) perl(FCGI.pm) perl(Test/
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.16
+Version: 2.17
 Release: alt1
 Summary: CGI::Fast is a subclass of the CGI object created by CGI.pm
 Group: Development/Perl
@@ -39,6 +39,9 @@ see large performance improvements.
 %perl_vendor_privlib/C*
 
 %changelog
+* Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 2.17-alt1
+- automated CPAN update
+
 * Wed Sep 01 2021 Igor Vlasenko <viy@altlinux.org> 2.16-alt1
 - automated CPAN update
 
