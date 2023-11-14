@@ -1,6 +1,6 @@
 Group: Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/valadoc /usr/bin/valgrind pkgconfig(gio-2.0)
+BuildRequires: /usr/bin/valadoc pkgconfig(gio-2.0)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/valadoc /usr/bin/valgrind pkgconfig(gio-2.0)
 
 Name:		libkkc
 Version:	0.3.5
-Release:	alt1_23
+Release:	alt1_24
 Summary:	Japanese Kana Kanji conversion library
 
 License:	GPLv3+
@@ -20,6 +20,7 @@ Patch0:		libkkc-HEAD.patch
 Patch1:         libkkc-POT.skip.patch
 Patch2:         libkkc-vala-abstract-create.patch
 
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires:  gcc-c++
 BuildRequires:	marisa-devel
 BuildRequires:	vala vala-tools valadoc-devel
@@ -30,6 +31,9 @@ BuildRequires:	intltool
 BuildRequires:	python3-devel
 BuildRequires:	python3-module-marisa
 BuildRequires: chrpath
+%ifarch %valgrind_arches
+BuildRequires: /usr/bin/valgrind
+%endif
 
 Requires:	skkdic
 Requires:	%{name}-data >= %{dataversion}
@@ -130,6 +134,9 @@ chrpath --delete $RPM_BUILD_ROOT%{_bindir}/kkc
 
 
 %changelog
+* Tue Nov 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.3.5-alt1_24
+- NMU: fixed FTBFS on LoongArch
+
 * Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 0.3.5-alt1_23
 - new version
 
