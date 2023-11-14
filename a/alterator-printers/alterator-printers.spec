@@ -1,5 +1,5 @@
 Name: alterator-printers
-Version: 6.3
+Version: 6.3.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -39,6 +39,9 @@ simple alterator module for printer administration
 %_libexecdir/%name
 
 %changelog
+* Tue Nov 14 2023 Anton Midyukov <antohami@altlinux.org> 6.3.1-alt1
+- printers.desktop: add X-Alterator-Help=printers (ALT bug: 42425)
+
 * Mon Dec 07 2020 Lenar Shakirov <snejok@altlinux.org> 6.3-alt1
 - Socket:// type added
 
