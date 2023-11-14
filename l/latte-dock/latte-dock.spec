@@ -4,7 +4,7 @@
 
 Name: latte-dock
 Version: 0.10.9
-Release: alt1
+Release: alt2
 Summary: Latte is a dock based on plasma frameworks
 
 License: GPLv2+
@@ -78,9 +78,9 @@ using parabolic zoom effect and tries to be there only when it is needed.
 %_datadir/knotifications5/lattedock.notifyrc
 %_K5srv/plasma-containmentactions-lattecontextmenu.desktop
 %_datadir/kservicetypes5/latte-indicator.desktop
-%_K5data/plasma/plasmoids/org.kde.latte.containment/
-%_K5data/plasma/plasmoids/org.kde.latte.plasmoid/
-%_K5data/plasma/shells/org.kde.latte.shell/
+%_kf5_data/plasma/plasmoids/org.kde.latte.containment/
+%_kf5_data/plasma/plasmoids/org.kde.latte.plasmoid/
+%_kf5_data/plasma/shells/org.kde.latte.shell/
 %_datadir/latte
 %_qt5_qmldir/org/kde/latte
 %_qt5_plugindir/plasma_containmentactions_lattecontextmenu.so
@@ -92,6 +92,9 @@ using parabolic zoom effect and tries to be there only when it is needed.
 %_K5srv/plasma-shell-org.kde.latte.shell.desktop
 
 %changelog
+* Tue Nov 14 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.10.9-alt2
+- NMU: Fixed build with new rpm-build-kf5.
+
 * Thu Aug 17 2023 Mikhail Tergoev <fidel@altlinux.org> 0.10.9-alt1
 - NMU: new version (0.10.9) with rpmgs script (ALT bug 47233)
 
