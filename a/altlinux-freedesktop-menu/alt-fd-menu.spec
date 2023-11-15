@@ -4,7 +4,7 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.68
+Version: 0.69
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -354,6 +354,9 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Wed Nov 15 2023 Anton Midyukov <antohami@altlinux.org> 0.69-alt1
+- cinnamon-applications.menu: fix submenu Settings (ALT bug: 42811)
+
 * Sun Jul 11 2021 Igor Vlasenko <viy@altlinux.org> 0.68-alt1
 - updated license to alt policy
 - rebuild to fix unwanted worries (closes: #40424)
