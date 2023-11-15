@@ -13,7 +13,7 @@
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.19
+%define major 8.20
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -849,6 +849,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sun Nov 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.20.1-alt1
+- new version 8.20.1 (with rpmrb script)
+
 * Sun Nov 05 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.19.1-alt1
 - new version 8.19.1 (with rpmrb script)
 
