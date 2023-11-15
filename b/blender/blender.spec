@@ -43,7 +43,7 @@
 
 Name: blender
 Version: 3.6.5
-Release: alt1
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -117,6 +117,8 @@ BuildRequires: libzstd-devel
 BuildRequires: libepoxy-devel
 BuildRequires: libwayland-egl-devel wayland-protocols libwayland-cursor-devel libxkbcommon-devel libdecor-devel
 BuildRequires: libvulkan-devel
+BuildRequires: libspnav-devel
+BuildRequires: libwebp-devel
 %ifarch x86_64
 BuildRequires: openimagedenoise-devel
 %endif
@@ -321,10 +323,8 @@ fi
 	-DWITH_CYCLES_EMBREE:BOOL=OFF \
 %endif
 	-DWITH_OPENCOLORIO=ON \
-	-DWITH_OPENIMAGEIO=ON \
 	-DWITH_OPENVDB:BOOL=ON \
 	-DWITH_OPENVDB_BLOSC:BOOL=ON \
-	-DWITH_SYSTEM_GLEW=ON \
 	-DWITH_SYSTEM_LZO=ON \
 	-DWITH_SYSTEM_EIGEN3:BOOL=ON \
 	-DWITH_SYSTEM_GFLAGS:BOOL=ON \
@@ -394,6 +394,12 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Tue Nov 14 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.5-alt2
+- Update BR:
+  + Added WebP support.
+  + Added libspnav support.
+  + remove deprecated options.
+
 * Wed Oct 25 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.5-alt1
 - Update to 3.6.5.
 - fix link with recent lld (due https://reviews.llvm.org/D135402).
