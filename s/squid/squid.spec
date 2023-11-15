@@ -18,7 +18,7 @@
 %define langpack_ver 20230225
 
 Name: squid
-Version: 6.3
+Version: 6.5
 Release: alt1
 
 Summary: The Squid proxy caching server
@@ -44,16 +44,16 @@ Conflicts: %name-conf-host2cat < 1.01-alt5
 Obsoletes: %name-novm < %EVR
 Obsoletes: %name-pinger < %EVR
 
-Provides: %name-common = %version-%release
+Provides: %name-common = %EVR
 Obsoletes: %name-common < %EVR
 
-Provides: %name-server = %version-%release
+Provides: %name-server = %EVR
 Obsoletes: %name-server < %EVR
 
-Provides: %name-cachemgr = %version-%release
+Provides: %name-cachemgr = %EVR
 Obsoletes: %name-cachemgr < %EVR
 
-Provides: %name-conf-default = %version-%release
+Provides: %name-conf-default = %EVR
 Obsoletes: %name-conf-default < %EVR
 
 BuildConflicts: bind-devel
@@ -327,6 +327,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Thu Nov 09 2023 Egor Ignatov <egori@altlinux.org> 6.5-alt1
+- 6.5
+
 * Mon Sep 18 2023 Egor Ignatov <egori@altlinux.org> 6.3-alt1
 - 6.3
 - Fix squidclient couldn't access mgr:info (closes: #47423)
