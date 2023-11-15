@@ -10,7 +10,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: p11-kit
-Version: 0.25.2
+Version: 0.25.3
 Release: alt1
 Epoch: 1
 
@@ -230,6 +230,9 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Wed Nov 15 2023 Mikhail Efremov <sem@altlinux.org> 1:0.25.3-alt1
+- 0.25.3.
+
 * Wed Nov 01 2023 Mikhail Efremov <sem@altlinux.org> 1:0.25.2-alt1
 - Updated BR for tests.
 - 0.25.2.
