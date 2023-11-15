@@ -1,6 +1,6 @@
 Name: bcache-tools
 Version: 1.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Tools for Linux kernel block layer cache
@@ -13,7 +13,6 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: pkgconfig(blkid)
-BuildRequires: pkgconfig(smartcols)
 BuildRequires: pkgconfig(uuid)
 
 %package -n bcache-status
@@ -43,6 +42,7 @@ Display useful bcache statistics
 %files
 %doc README COPYING
 %_udevrulesdir/*.rules
+/lib/udev/bcache-export-cached
 /lib/udev/bcache-register
 /lib/udev/probe-bcache
 
@@ -59,6 +59,9 @@ Display useful bcache statistics
 %_man8dir/bcache-status.8.*
 
 %changelog
+* Wed Nov 15 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.1-alt2
+- bcache-tools-1.1-37-ga5e3753
+
 * Tue Oct 31 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.1-alt1
 - 1.1 released
 
