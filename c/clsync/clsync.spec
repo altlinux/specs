@@ -3,7 +3,7 @@
 # license: GPL-3+
 
 %global _unpackaged_files_terminate_build 1
-%ifarch aarch64 armh %mips
+%ifarch aarch64 armh %mips loongarch64
 %def_disable seccomp
 %else
 %def_enable seccomp
@@ -15,7 +15,7 @@
 
 Name: clsync
 Version: 0.4.5
-Release: alt4
+Release: alt5
 
 Summary: Live sync tool based on inotify
 License: GPLv3+
@@ -26,6 +26,12 @@ Source0: %name-%version.tar
 
 BuildRequires: glib2-devel libcap-devel libcgroup-devel
 BuildRequires: doxygen graphviz
+# XXX: graphviz produces broken graphs without fontconfig (and
+# the actual font). Most importantly those graphs are broken in
+# different ways on different architectures which causes a build
+# failure due to non-identical noarch packages.
+BuildRequires: fontconfig fonts-ttf-liberation
+
 
 %define common_descr \
 Live sync tool based on inotify, written in GNU C \
@@ -174,6 +180,12 @@ mv doc/doxygen/html %buildroot%_docdir/%name/
 %_docdir/%name/html
 
 %changelog
+* Wed Nov 15 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.4.5-alt5
+- Disabled seccomp on LoongArch. As a side note the list of allowed syscalls
+  looks wrong even for x86: it should have included openat, fchmodat, etc.
+  While at in fixed broken graphs in the documentation (so the apidocs
+  package is identical on all architectures).
+
 * Sun Sep 12 2021 Andrew Savchenko <bircoph@altlinux.org> 0.4.5-alt4
 - Fix build after gross LTO enforcement.
 
