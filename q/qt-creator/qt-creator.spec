@@ -25,7 +25,7 @@
 
 Name:    qt-creator
 Version: 11.0.3
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -98,6 +98,12 @@ Requires: qt6-tools
 %ifarch %e2k
 # error: cpio archive too big - 4446M
 %global __find_debuginfo_files %nil
+%endif
+%ifarch loongarch64
+# Similar problem here (the size is even bigger for LoongArch is a RISC).
+# However we want to have readable backtraces, so do NOT disable debuginfo
+# completely:
+%add_optflags -g1
 %endif
 
 %add_python3_req_skip dmgbuild
@@ -218,6 +224,9 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_datadir/qtcreator/*
 
 %changelog
+* Wed Nov 15 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 11.0.3-alt2
+- NMU: fixed FTBFS on LoongArch (reduced debuginfo so it fits into 4 GB).
+
 * Sat Sep 30 2023 Andrey Cherepanov <cas@altlinux.org> 11.0.3-alt1
 - New version.
 
