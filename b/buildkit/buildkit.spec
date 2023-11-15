@@ -1,6 +1,6 @@
 %global import_path github.com/moby/buildkit
 Name:     buildkit
-Version:  0.12.2
+Version:  0.12.3
 Release:  alt1
 
 Summary:  BuildKit is a toolkit for converting source code to build artifacts
@@ -33,6 +33,7 @@ export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 
 cd .build/src/%import_path
+export LDFLAGS="${LDFLAGS:-} -X %import_path/version.Version=%version -X %import_path/version.Revision="
 %golang_build cmd/buildkitd cmd/buildctl
 
 %install
@@ -56,6 +57,9 @@ install -Dm 0644 examples/systemd/system/* -t %buildroot%_unitdir
 %doc docs
 
 %changelog
+* Wed Nov 15 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.12.3-alt1
+- new version 0.12.3
+
 * Mon Sep 11 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.12.2-alt1
 - new version 0.12.2
 
