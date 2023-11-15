@@ -2,11 +2,10 @@
 %define git_rev 7a82602
 
 %define xbyak_commit ce083a0dcc306c1717685a81f577a4e050193919
-%define spirv_cross_version 1.3.268.0
 
 Name: rpcsx
 Version: 20231111
-Release: alt1
+Release: alt2
 
 Summary: PS4 emulator
 License: GPLv2
@@ -21,8 +20,6 @@ ExclusiveArch: x86_64
 Source0: %name-%name-v%version.tar
 # https://github.com/RPCSX/xbyak/archive/%xbyak_commit/xbyak-%xbyak_commit.tar.gz
 Source1: xbyak-%xbyak_commit.tar
-# https://github.com/KhronosGroup/SPIRV-Cross/archive/vulkan-sdk-%spirv_cross_version/SPIRV-Cross-vulkan-sdk-%spirv_cross_version.tar.gz
-Source2: SPIRV-Cross-vulkan-sdk-%spirv_cross_version.tar
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -30,6 +27,7 @@ BuildRequires: glslang
 BuildRequires: glslc
 BuildRequires: libglfw3-devel
 BuildRequires: libsox-devel
+BuildRequires: libspirv-cross-devel-static
 BuildRequires: libspirv-tools-devel
 BuildRequires: libunwind-devel
 BuildRequires: libvulkan-devel
@@ -38,7 +36,7 @@ BuildRequires: libvulkan-devel
 An experimental PlayStation 4 emulator for Linux written in C++
 
 %prep
-%setup -b 1 -b 2 -n %name-%name-v%version
+%setup -b 1 -n %name-%name-v%version
 
 %__rm -r 3rdparty/xbyak
 %__ln_s %_builddir/xbyak-%xbyak_commit 3rdparty/xbyak
@@ -52,19 +50,9 @@ sed -e 's/find_package(Git)/#find_package(Git)/' \
 	-i rx/CMakeLists.txt
 
 %build
-pushd %_builddir/SPIRV-Cross-vulkan-sdk-%spirv_cross_version
 %cmake \
-	-DSPIRV_CROSS_CLI:BOOL=FALSE \
-	-Wno-dev
-%cmake_build
-%cmakeinstall_std DESTDIR=%_builddir/SPIRV-Cross-install
-popd
-
-%add_optflags -I%_builddir/SPIRV-Cross-install%_includedir
-
-%cmake \
-	-Dspirv_cross_core_DIR:PATH=%_builddir/SPIRV-Cross-install%_datadir/spirv_cross_core/cmake \
-	-Dspirv_cross_glsl_DIR:PATH=%_builddir/SPIRV-Cross-install%_datadir/spirv_cross_glsl/cmake \
+	-Dspirv_cross_core_DIR:PATH=%_datadir/cmake \
+	-Dspirv_cross_glsl_DIR:PATH=%_datadir/cmake \
 	-Wno-dev
 %cmake_build
 
@@ -77,5 +65,8 @@ popd
 %_bindir/%name-os
 
 %changelog
+* Wed Nov 15 2023 Nazarov Denis <nenderus@altlinux.org> 20231111-alt2
+- Build with system SPIRV Cross
+
 * Sun Nov 12 2023 Nazarov Denis <nenderus@altlinux.org> 20231111-alt1
  - Initial build for ALT Linux
