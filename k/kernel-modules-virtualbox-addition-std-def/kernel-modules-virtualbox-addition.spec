@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  7.0.12
-%define module_release	alt2
+%define module_release	alt3
 
 %define flavour		std-def
 %define karch x86_64 %ix86
@@ -99,6 +99,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Nov 15 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.12-alt3
+- Fixed wrong merge p10
 
 * Fri Oct 20 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.12-alt2
 - Merge branch 'p10'
