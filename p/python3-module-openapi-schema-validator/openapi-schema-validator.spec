@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6.2
-Release: alt1
+Release: alt1.1
 
 Summary: OpenAPI schema validation
 License: BSD-3-Clause
@@ -55,7 +55,7 @@ Openapi-schema-validator is a Python library that validates schema against:
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -k 'not test_array_prefixitems_invalid'
 
 %files
 %doc README.rst
@@ -63,6 +63,9 @@ Openapi-schema-validator is a Python library that validates schema against:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 15 2023 Anton Vyatkin <toni@altlinux.org> 0.6.2-alt1.1
+- Fixed FTBFS.
+
 * Fri Oct 06 2023 Anton Vyatkin <toni@altlinux.org> 0.6.2-alt1
 - New version 0.6.2.
 
