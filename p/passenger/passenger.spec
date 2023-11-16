@@ -2,7 +2,7 @@
 
 Name:          passenger
 Version:       6.0.11
-Release:       alt2
+Release:       alt3
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
 Summary(ru_RU.UTF-8): Простой и ясный мост между приложениями на Рельсах и серверами Апач и Нжинкс
 License:       MIT
@@ -31,6 +31,7 @@ BuildRequires: apache2-httpd-worker
 BuildRequires: gcc-c++
 BuildRequires: gem(rake) >= 0.8.1
 BuildRequires: gem(rack) >= 0
+BuildRequires: gnu-config
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -210,6 +211,8 @@ framework, a breeze. It follows the usual Ruby on Rails conventions, such as
 # Set correct python3 executable in shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 subst '1i #!%__python3' test/stub/wsgi/passenger_wsgi.py
+cp -a -t src/cxx_supportlib/vendor-modified/libev /usr/share/gnu-config/config.{guess,sub}
+cp -a -t src/cxx_supportlib/vendor-copy/libuv /usr/share/gnu-config/config.{guess,sub}
 
 %build
 %ruby_build
@@ -321,6 +324,9 @@ fi
 
 
 %changelog
+* Thu Nov 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.0.11-alt3
+- NMU: fixed FTBFS on LoongArch (use fresh config.{guess,sub})
+
 * Mon Mar 14 2022 Pavel Skrylev <majioa@altlinux.org> 6.0.11-alt2
 - !fix build for new setup
 
