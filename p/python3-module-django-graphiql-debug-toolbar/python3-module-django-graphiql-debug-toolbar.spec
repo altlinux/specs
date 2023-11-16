@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Django Debug Toolbar for GraphiQL IDE and Graphene
 License: MIT
@@ -38,16 +38,20 @@ Source: %pypi_name-%version.tar
 
 %install
 %pyproject_install
+rm -f %buildroot%python3_sitelibdir/LICENSE
+rm -f %buildroot%python3_sitelibdir/README.md
 
 %check
 %pyproject_run_pytest
 
 %files
-%python3_sitelibdir/LICENSE
-%python3_sitelibdir/README.md
+%doc *.md
 %python3_sitelibdir/graphiql_debug_toolbar/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 16 2023 Alexander Burmatov <thatman@altlinux.org> 0.2.0-alt2
+- Move doc files in the right place.
+
 * Tue Sep 26 2023 Alexander Burmatov <thatman@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus.
