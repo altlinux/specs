@@ -1,5 +1,5 @@
 Name: alt-csp-cryptopro
-Version: 0.2.10
+Version: 0.2.11
 Release: alt1
 
 Group: File tools
@@ -41,6 +41,9 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Thu Nov 16 2023 Oleg Solovyov <mcpain@altlinux.org> 0.2.11-alt1
+- add .p7s extension
+
 * Wed Oct 18 2023 Oleg Solovyov <mcpain@altlinux.org> 0.2.10-alt1
 - drop procps dependency
 
