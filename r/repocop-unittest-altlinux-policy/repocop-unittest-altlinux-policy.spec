@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.47
+Version: 0.48
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -63,6 +63,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Thu Nov 16 2023 Igor Vlasenko <viy@altlinux.org> 0.48-alt1
+- no more multiline strings in new sqlite3
+
 * Mon May 02 2022 Igor Vlasenko <viy@altlinux.org> 0.47-alt1
 - removed specfile-macros-post_fonts-is-deprecated (done)
 - egrep is obsolescent; using grep -E
