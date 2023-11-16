@@ -1,6 +1,6 @@
 Name:		fontmatrix
 Version:	0.9.100
-Release:	alt1
+Release:	alt2
 Summary:	Is a font manager for Linux users
 Summary(ru_RU.UTF8): Менеджер шрифтов для пользователей Linux
 Url:		https://github.com/fontmatrix/fontmatrix
@@ -12,13 +12,7 @@ Patch1:		bug_564904_fix-missing-DSO-icuuc.diff
 Patch2:		%name-0.9.99-arm.diff
 Patch3:     %name-g++8.patch
 
-##BuildRequires: cmake gcc-c++ ImageMagick-tools qt5-base-devel libSM-devel libXcursor-devel libXi-devel
-##BuildRequires: libXinerama-devel libXrandr-devel libicu-devel
-
-# Automatically added by buildreq on Thu Jun 24 2021
-# optimized out: cmake-modules fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libfreetype-devel libglvnd-devel libicu-devel libqt5-core libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel pkg-config python-modules python2-base python3 python3-base qt5-base-devel qt5-tools sh4
-BuildRequires: cmake fontconfig-devel python-modules-encodings qt5-svg-devel qt5-tools-devel qt5-virtualkeyboard-devel qt5-wayland-devel qt5-webengine-devel qt5-webglplugin-devel qt5-webkit-devel
-
+BuildRequires: cmake fontconfig-devel qt5-base-devel qt5-tools-devel qt5-svg-devel qt5-webkit-devel
 BuildRequires: ImageMagick-tools
 
 %description
@@ -74,6 +68,11 @@ convert -resize 16x16 %name.png %buildroot%_miconsdir/%name.png
 %_datadir/%name
 
 %changelog
+* Thu Nov 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.9.100-alt2
+- NMU: trimmed build dependencies according to CMakeLists.txt. Note that
+  the dependencies of binary packages have not changed.
+  Fixes FTBFS on LoongArch.
+
 * Thu Jun 24 2021 Fr. Br. George <george@altlinux.ru> 0.9.100-alt1
 - Switch upstream
 - Update to 0.9.100
