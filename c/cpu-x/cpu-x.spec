@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cpu-x
-Version: 5.0.1
+Version: 5.0.2
 Release: alt1
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPL-3.0-or-later
@@ -67,6 +67,9 @@ rm -r %buildroot%_datadir/locale/zh_Hant
 %_prefix/libexec/*
 
 %changelog
+* Thu Nov 16 2023 Anton Midyukov <antohami@altlinux.org> 5.0.2-alt1
+- New version 5.0.2.
+
 * Mon Oct 23 2023 Anton Midyukov <antohami@altlinux.org> 5.0.1-alt1
 - New version 5.0.1 (Closes: 48113).
 
