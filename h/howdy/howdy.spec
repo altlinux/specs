@@ -2,7 +2,7 @@
 
 Name: howdy
 Version: 3.0.0
-Release: alt7.beta1.gitc5b1766
+Release: alt9.beta1.gitc5b1766
 Summary: Windows Hello style authentication
 
 License: MIT
@@ -17,12 +17,21 @@ Source: %url/archive/%version/%name-%version.tar.gz
 Source1: https://github.com/davisking/dlib-models/raw/master/dlib_face_recognition_resnet_model_v1.dat.bz2
 Source2: https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2
 Source3: https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2
+# There are no translations in upstream yet
+# taken from https://crowdin.com/project/howdy
+Source4: po.tar.gz
+Source5: po-gtk.tar.gz
+
 Patch: howdy-3.0.0-alt-fix-the-dublicates-in-the-man.patch
-Patch1: howdy-3.0.0-alt-fix-howdy-gtk-startup.patch
 Patch3: howdy-pull-692-1.patch
 Patch4: howdy-pull-692-2.patch
 Patch5: howdy-pull-692-3.patch
 Patch7: enable-detection-notice.patch
+Patch8: pass-env-to-pkexec.patch
+Patch9: pr853-connect-to-signals-of-the-shown-window.patch
+Patch10: pr855-segfault-adding-a-model.patch
+Patch11: pr857-fix-things-regarding-translations.patch
+Patch12: integrate-translations.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-pam0
@@ -31,6 +40,7 @@ BuildRequires: gcc-c++ rpm-build-python3 meson rpm-build-ninja cmake gettext-too
 BuildRequires: libinih-devel libevdev-devel libpam0-devel
 
 Requires: %name-pam = %EVR
+Requires: libgtk+3-gir
 
 %add_python3_path %_prefix/libexec/howdy/
 %add_python3_path %_prefix/libexec/howdy-gtk/
@@ -61,13 +71,15 @@ Requires: %name = %EVR
 The package provides gtk interface for %name.
 
 %prep
-%setup
+%setup -a 4 -a 5
 %patch -p1
-%patch1 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 cp -a %SOURCE1 %SOURCE2 %SOURCE3 .
 bzip2 -dv *.bz2
 sed -i 's|/usr/bin/env python3|%__python3|' \
@@ -86,10 +98,13 @@ sed -i 's|/bin/nano|%_bindir/nano|' \
 %install
 %meson_install
 
+%find_lang %name
+%find_lang %name-gtk
+
 #dlib models
 cp -a *.dat %buildroot%_datadir/dlib-data/
 
-%files
+%files -f %name.lang
 %doc LICENSE README.md
 %config(noreplace) %_sysconfdir/howdy/config.ini
 %_bindir/howdy
@@ -102,12 +117,22 @@ cp -a *.dat %buildroot%_datadir/dlib-data/
 %files pam
 %_pam_modules_dir/pam_howdy.so
 
-%files gtk
+%files gtk -f %name-gtk.lang
 %_bindir/howdy-gtk
 %_prefix/libexec/howdy-gtk/
 %_datadir/howdy-gtk/
 
 %changelog
+* Wed Nov 15 2023 Anton Golubev <golubevan@altlinux.org> 3.0.0-alt9.beta1.gitc5b1766
+- add translations
+
+* Tue Nov 07 2023 Anton Golubev <golubevan@altlinux.org> 3.0.0-alt8.beta1.gitc5b1766
+- remove 'fix-startup' patch (ALT #46340)
+- use pkexec in advance to pass some env values (ALT #44606)
+- fix segfault when adding a model via howdy-gtk (ALT #46339)
+- fixup window destroy signals
+- explicit requires libgtk+3-gir
+
 * Mon Sep 25 2023 Anton Golubev <golubevan@altlinux.org> 3.0.0-alt7.beta1.gitc5b1766
 - more recent version including necessary changes/fixes:
   * do not show a message if the face model is not found
