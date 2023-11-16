@@ -21,7 +21,7 @@
 Summary:       ObexFTP implements the Object Exchange (OBEX) protocols file transfer
 Name:          obexftp
 Version:       0.24.2.1
-Release:       alt1
+Release:       alt2
 License:       GPLv2
 Group:         Communications
 Url:           https://sourceforge.net/projects/openobex/
@@ -31,6 +31,8 @@ Source:        %name-%version.tar
 # Patches from Fedora
 Patch0:        %name-norpath.patch
 Patch1:        %name-0.24-fix-absurd-install-path.patch
+
+Patch2:        %name-0.24.2.1-alt-link-with-libperl.patch
 
 Requires:      lib%name = %version-%release
 
@@ -193,6 +195,9 @@ Tcl bindings for obexftp.
 %endif
 
 %changelog
+* Thu Nov 16 2023 Igor Vlasenko <viy@altlinux.org> 0.24.2.1-alt2
+- NMU: link perl xs with libperl
+
 * Sun Aug 28 2022 Pavel Skrylev <majioa@altlinux.org> 0.24.2.1-alt1
 - ^ 0.24.2 -> 0.24.2[1]
 - *move to github repo
