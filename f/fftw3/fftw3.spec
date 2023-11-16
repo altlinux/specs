@@ -1,6 +1,6 @@
 Name: fftw3
 Version: 3.3.8
-Release: alt2
+Release: alt3
 
 Summary: Library for computing Fast Fourier Transforms
 License: GPLv2+
@@ -10,6 +10,7 @@ Url: http://www.fftw.org/
 # ftp://ftp.fftw.org/pub/fftw/fftw-%version.tar.gz
 Source: fftw-%version.tar
 Patch: fftw-alt-link.patch
+Patch1: fftw3-alt-add-cmake-FFTW3LibraryDepends.patch
 Patch2000: %name-e2k-simd.patch
 
 %def_enable check
@@ -185,6 +186,7 @@ library in html and pdf formats.
 %setup -n fftw-%version
 rm m4/l*.m4
 %patch -p1
+%patch1 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -291,6 +293,10 @@ fi
 %docdir/*.pdf
 
 %changelog
+* Wed Nov 15 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.8-alt3
+- Added a patch to generate and package the FFTW3LibraryDepends.cmake files for
+  builds with cmake (fixes: ALT#48427).
+
 * Tue Jun 08 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.3.8-alt2
 - added SIMD patch for Elbrus
 
