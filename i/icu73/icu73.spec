@@ -1,32 +1,20 @@
-%def_disable snapshot
-%define real_ver_major 74
-%define real_ver_minor 1
+%define real_ver_major 73
+%define real_ver_minor 2
 %define real_ver %{real_ver_major}.%{real_ver_minor}
 
 %def_without doc
 
-%define __isa_bits %(s="%_lib"; s=${s#lib}; echo "${s:-32}")
-
-%if "%__isa_bits" == "32"
-%def_disable check
-%endif
-
-Name: icu
+Name: icu%real_ver_major
 Version: %(echo %real_ver_major | sed -e 's|\(.\)|\1.|').%real_ver_minor
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: International Components for Unicode
-Group: System/Libraries
+Group: System/Legacy libraries
 License: ICU and BSD-3-Clause and Unicode-TOU and naist-2003
 Url: http://www.icu-project.org/
 
-%if_disabled snapshot
-Source: https://github.com/unicode-org/%name/releases/download/release-%{real_ver_major}-%{real_ver_minor}/icu4c-%{real_ver_major}_%{real_ver_minor}-src.tgz
-%else
-Vcs: https://github.com/unicode-org/icu.git
-Source: icu-%version.tar
-%endif
+Source: http://download.icu-project.org/files/icu4c/%real_ver/icu4c-%{real_ver_major}_%{real_ver_minor}-src.tgz
 Patch: icu-6.3.1-alt-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -39,47 +27,15 @@ BuildRequires: autoconf-archive gcc-c++ libstdc++-devel python3-base
 ICU is a C++ and C library that provides robust and full-featured Unicode
 support
 
-%package utils
-Summary: International Components for Unicode (utilities)
-Group: Text tools
-Requires: %libicu = %EVR
-Provides: icu = %version
-Obsoletes: icu < %version
-
-%description utils
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains the utilites for compiling and developing
-programs with ICU
-
 %package -n %libicu
 Summary: International Components for Unicode (libraries)
 Group: System/Libraries
-Provides: libicu = %EVR
-Obsoletes: libicu < %EVR
+Provides: libicu = %epoch:%version-%release
+Obsoletes: libicu < %epoch:%version-%release
 
 %description -n %libicu
 ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains the runtime libraries for ICU
-
-%package -n libicu-devel
-Summary: International Components for Unicode (development files)
-Group: Development/C++
-Requires: %libicu = %EVR
-Requires: icu-utils = %EVR
-
-%description -n libicu-devel
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains the development files for ICU.
-
-%package samples
-Summary: Sample programs for ICU
-Group: Development/Other
-Requires: libicu-devel = %EVR
-BuildArch: noarch
-
-%description samples
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains sample code for ICU.
+support. This package contains the runtime libraries for ICU.
 
 %prep
 %setup -c
@@ -90,9 +46,6 @@ support. This package contains sample code for ICU.
 %endif
 
 sed -ri '/^LDFLAGSICUDT=/ s,-nodefaultlibs -nostdlib,,' source/config/mh-linux
-
-# switch to zone1970.tab
-sed -i 's|zone\.tab|zone1970.tab|' source/tools/tzcode/*
 
 %build
 export PYTHON=%__python3
@@ -108,100 +61,59 @@ cd source
 %install
 cd source
 %makeinstall_std
-cp -a samples %buildroot%_datadir/icu
-
-%check
-cd source
-%make -k check VERBOSE=1
-
-%files utils
-%_bindir/*
-%exclude %_bindir/icu-config
-%_sbindir/*
-%exclude %_man1dir/icu-config.1*
-%_man1dir/*
-%_man8dir/*
 
 %files -n %libicu
 %_libdir/*.so.*
-%doc LICENSE readme.html
 
-%files -n libicu-devel
-%_includedir/*
-%_bindir/icu-config
-%_libdir/*.so
-%_libdir/icu
-%_pkgconfigdir/*.pc
-%dir %_datadir/icu
-%_datadir/icu/%real_ver
-%_man1dir/icu-config.1*
-%doc *.html *.css
-
-%files samples
-%_datadir/icu/samples
+%exclude %_bindir/*
+%exclude %_sbindir/*
+%exclude %_libdir/*.so
+%exclude %_libdir/icu/
+%exclude %_includedir/*
+%exclude %_pkgconfigdir/*.pc
+%exclude %_datadir/icu/%real_ver/
+%exclude %_man1dir/*
+%exclude %_man8dir/*
 
 %changelog
-* Tue Oct 31 2023 Yuri N. Sedunov <aris@altlinux.org> 1:7.4.1-alt1
-- 7.4.1
+* Wed Nov 15 2023 Yuri N. Sedunov <aris@altlinux.org> 1:7.3.2-alt2
+- icu73 compat library
 
-* Tue Oct 31 2023 Yuri N. Sedunov <aris@altlinux.org> 1:7.3.2-alt1.1
-- disabled %%check
+* Thu Apr 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1:7.2.1-alt2
+- icu72 compat library
 
-* Wed Jun 14 2023 Yuri N. Sedunov <aris@altlinux.org> 1:7.3.2-alt1
-- 73.2
+* Sun Oct 23 2022 Yuri N. Sedunov <aris@altlinux.org> 1:7.1.1-alt2
+- icu71 compat library
 
-* Thu Apr 27 2023 Yuri N. Sedunov <aris@altlinux.org> 1:7.3.1-alt2
-- applied upstream fix:
-  "ICU-22356 Use ConstChar16Ptr to safely cast from UChar* to char16_t*."
-  (ALT #45979)
+* Mon Apr 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1:6.9.1-alt3
+- icu69 compat library
 
-* Thu Apr 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1:7.3.1-alt1
-- 7.3.1
+* Mon Nov 02 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.7.1-alt2
+- icu67 compat library
 
-* Sun Oct 23 2022 Yuri N. Sedunov <aris@altlinux.org> 1:7.2.1-alt1
-- 72.1
+* Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.6.1-alt2
+- icu66 compat library
 
-* Sun Apr 17 2022 Yuri N. Sedunov <aris@altlinux.org> 1:7.1.1-alt1
-- 7.1.1
+* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.5.1-alt2
+- icu65 compat library
 
-* Sun Jun 27 2021 Yuri N. Sedunov <aris@altlinux.org> 1:6.9.1-alt2
-- applied patch for ICU-21613: "Fix undefined behaviour in ComplexUnitsConverter::applyRounder"
-  (fixed build for mipsel and riscv64)
+* Sat Oct 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.4.2-alt2
+- icu64 compat library
 
-* Wed Jun 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1:6.9.1-alt1
-- 6.9.1
+* Mon Apr 08 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.3.1-alt2
+- icu63 compat library
 
-* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.7.1-alt2
-- source/config/mh-linux:
-  cleaned LDFLAGSICUDT to avoid linking problems on armh
+* Sat Oct 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.2.1-alt2
+- icu62 compat library
 
-* Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.7.1-alt1
-- 6.7.1
-
-* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.6.1-alt1
-- 6.6.1
-- fixed License tag
-
-* Sun Oct 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.5.1-alt1
-- 6.5.1
-
-* Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.4.2-alt1
-- 6.4.2
-
-* Sat Apr 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.4.1-alt1
-- 6.4.1
-
-* Fri Mar 29 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.3.1-alt2
-- mike@: fixed build on e2k
-
-* Sat Oct 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.3.1-alt1
-- 6.3.1
-
-* Sat Jun 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.2.1-alt1
-- 6.2.1
+* Sat Jun 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.0.2-alt2
+- icu60 compat library
 
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.0.2-alt1
 - 6.0.2
+
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1:5.6.1-alt2
+- icu56 compat library
 
 * Thu Jan 12 2017 Michael Shigorin <mike@altlinux.org> 1:5.6.1-alt1.1.1
 - BOOTSTRAP: drop unused BR: doxygen
