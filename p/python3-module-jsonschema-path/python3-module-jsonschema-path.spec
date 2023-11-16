@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.1
-Release: alt2
+Version: 0.3.2
+Release: alt1
 
 Summary: Object-oriented JSONSchema
 License: Apache-2.0
@@ -50,6 +50,9 @@ sed -i '/--cov/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 16 2023 Anton Vyatkin <toni@altlinux.org> 0.3.2-alt1
+- New version 0.3.2.
+
 * Thu Nov 02 2023 Anton Vyatkin <toni@altlinux.org> 0.3.1-alt2
 - Fix FTBFS.
 
