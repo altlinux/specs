@@ -1,6 +1,6 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
-Version: 2.11.2
+Version: 2.12.0
 Release: alt1
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
@@ -155,6 +155,9 @@ rm -rf -- %cache/*
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Tue Nov 14 2023 Alexey Gladkov <legion@altlinux.ru> 2.12.0-alt1
+- New version (2.12.0).
+
 * Mon Jul 03 2023 Alexey Gladkov <legion@altlinux.ru> 2.11.2-alt1
 - New version (2.11.2).
 
