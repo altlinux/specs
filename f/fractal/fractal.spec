@@ -1,12 +1,13 @@
 Name: fractal
 Version: 5.beta2
-Release: alt1
+Release: alt2
 Summary: Matrix messaging app for GNOME written in Rust
 License: GPL3
 Group: Networking/Instant messaging
 Url: https://gitlab.gnome.org/GNOME/fractal/
 Source: %name-%version.tar
 Source1: vendor.tar
+Patch1: nix-loongarch64.patch
 ExcludeArch: i586 armh
 
 BuildRequires(pre): rpm-build-ninja rpm-build-rust
@@ -27,6 +28,8 @@ software projects.
 %prep
 %setup
 tar xf %SOURCE1
+%patch1 -p1
+
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -80,6 +83,9 @@ EOF
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.beta2-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Mon Oct 30 2023 Ildar Mulyukov <ildar@altlinux.ru> 5.beta2-alt1
 - new version
 
