@@ -1,7 +1,7 @@
 %define php_extension amqp
 
 Name: php%_php_suffix-%php_extension
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1.%php_version
 
 Summary: PHP extension to communicate with any AMQP compliant server
@@ -9,7 +9,9 @@ License: PHP-3.01
 Group: System/Servers
 
 Url: https://github.com/php-amqp/php-amqp
-Source: php-%php_extension-%version.tar
+Source0:  php-%php_extension-%version.tar
+Source1: php-%php_extension.ini
+Source2: php-%php_extension-params.sh
 
 BuildRequires(pre): rpm-build-php8.2-version
 BuildRequires: rpm-build-php
@@ -33,6 +35,8 @@ phpize
 
 %install
 %php_make_install
+install -D -m 644 %SOURCE1 %buildroot/%php_extconf/%php_extension/config
+install -D -m 644 %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 
 %check
 NO_INTERACTION=1 php run-tests.php --offline
@@ -51,6 +55,9 @@ NO_INTERACTION=1 php run-tests.php --offline
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %version-%release
+
+* Tue Nov 15 2023 Alexey Shemyakin <alexeys@altlinux.org> 2.1.1-alt1.%php_version
+- Update to version 2.1.1.
 
 * Tue Oct 10 2023 Alexey Shemyakin <alexeys@altlinux.org> 2.1.0-alt1
 - Initial build for ALT.
