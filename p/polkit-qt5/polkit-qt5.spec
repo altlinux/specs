@@ -3,22 +3,22 @@
 %define polkit_qt5_core_major 1
 
 Name: polkit-qt5
-Version: 0.114.0
+Version: 0.175.0
 Release: alt1
 
 Summary: Qt 5 bindings for PolicyKit
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Libraries
 
-Url: https://projects.kde.org/projects/kdesupport/polkit-qt-1
-Source: polkit-qt-1-%version.tar
+Url: https://invent.kde.org/libraries/polkit-qt-1
 # Source-url: https://invent.kde.org/libraries/polkit-qt-1/-/archive/v%version/polkit-qt-1-v%version.tar.gz
+Source: polkit-qt-1-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
-BuildRequires: extra-cmake-modules rpm-macros-cmake cmake
+BuildRequires: extra-cmake-modules cmake
 BuildRequires: libpolkit1-devel
 BuildPreReq: qt5-base-devel
-#BuildPreReq: rpm-build-kf5
 BuildPreReq: kde-common-devel
 
 %description
@@ -71,7 +71,7 @@ Provides: polkitqt5-devel
 rm -fv html/installdox
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files -n libpolkit-qt5-agent
 %_libdir/libpolkit-qt5-agent-1.so.%{polkit_qt5_agent_major}*
@@ -95,6 +95,11 @@ rm -fv html/installdox
 %_libdir/cmake/PolkitQt5-1/
 
 %changelog
+* Thu Nov 16 2023 Anton Midyukov <antohami@altlinux.org> 0.175.0-alt1
+- new version (0.175.0) with rpmgs script
+- update Url
+- cleanup spec
+
 * Thu Dec 16 2021 Anton Midyukov <antohami@altlinux.org> 0.114.0-alt1
 - new version (0.114.0) with rpmgs script
 - cleanup spec
