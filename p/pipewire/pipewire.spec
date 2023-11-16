@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -30,7 +30,8 @@
 %def_enable lc3
 #system service: not recommended and disabled by default
 %def_disable systemd_system_service
-%def_enable vulkan
+# disabled by default
+%def_disable vulkan
 %ifarch %e2k
 %def_disable examples
 %else
@@ -41,7 +42,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.84
+Version: %ver_major.85
 Release: alt1
 
 Summary: Media Sharing Server
@@ -198,7 +199,7 @@ export LIB=%_lib
 	%{?_disable_man:-Dman=disabled} \
 	%{?_enable_jack_devel:-Djack-devel=true} \
 	%{?_enable_gstreamer:-Dgstreamer=enabled} \
-	%{?_disable_vulkan:-Dvulkan=disabled} \
+	%{?_enable_vulkan:-Dvulkan=enabled} \
 	%{?_disable_libusb:-Dlibusb=disabled} \
 	%{?_disable_libffado:-Dlibffado=disabled} \
 	%{?_disable_libcamera:-Dlibcamera=disabled} \
@@ -237,6 +238,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_bindir/%name-aes67
 %_bindir/%name-avb
 %_bindir/%name-pulse
+%{?_enable_vulkan:%_bindir/%name-vulkan}
 %_bindir/%name-media-session
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %_sysconfdir/security/limits.d/25-pw-rlimits.conf
@@ -252,6 +254,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_datadir/%name/minimal.conf
 %_datadir/%name/%name-avb.conf
 %_datadir/%name/%name-pulse.conf
+%{?_enable_vulkan:%_datadir/%name/%name-vulkan.conf}
 %_datadir/%name/filter-chain.conf
 
 %dir %_datadir/%name/client-rt.conf.avail
@@ -391,6 +394,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Thu Nov 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.85-alt1
+- 0.3.85
+
 * Thu Nov 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.84-alt1
 - updated to 0.3.84-2-g38157a893
 
