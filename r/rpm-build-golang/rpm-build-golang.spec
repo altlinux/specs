@@ -1,5 +1,7 @@
+%def_disable bootstrap
+
 Name:      rpm-build-golang
-Version:   1.0.7
+Version:   1.0.9
 Release:   alt1
 Summary:   RPM build enviroment to build GO packages
 Group:     Development/Other
@@ -18,8 +20,11 @@ Source5:   golang-prov.files
 
 Source6:   golang-req
 Source7:   golang-req.files
+Source8:   golang.env
 
+%if_disabled bootstrap
 Requires:  golang
+%endif
 Requires:  rpm-macros-golang >= %EVR
 
 #lav@: Ещё у меня предложение по rpm-build-golang
@@ -50,6 +55,7 @@ cp %SOURCE4 %buildroot%_rpmlibdir/golang.prov
 cp %SOURCE5 %buildroot%_rpmlibdir/golang.prov.files
 cp %SOURCE6 %buildroot%_rpmlibdir/golang.req
 cp %SOURCE7 %buildroot%_rpmlibdir/golang.req.files
+cp %SOURCE8 %buildroot%_rpmmacrosdir/golang.env
 
 %files
 %_datadir/golang
@@ -58,8 +64,16 @@ cp %SOURCE7 %buildroot%_rpmlibdir/golang.req.files
 
 %files -n rpm-macros-golang
 %_rpmmacrosdir/golang
+%_rpmmacrosdir/golang.env
 
 %changelog
+* Thu Nov 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.0.9-alt1
+- Added loongarch64 to %%go_arches.
+- %%gobuild: don't force `-buildmode pie` on LoongArch (not supported yet).
+- golang-req: support using the newly build go binary (similarly to
+  python3-req). Required for bootstrapping.
+- version 1.0.9 to be newer than that in sisyphus_loongarch64 (1.0.8).
+
 * Thu Feb 27 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.7-alt1
 - Added riscv64 to %%go_arches.
 
