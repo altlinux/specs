@@ -4,7 +4,7 @@
 %def_enable tarball
 
 Name:    gitea
-Version: 1.20.5
+Version: 1.21.0
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -27,9 +27,9 @@ Patch2: ALT_config.patch
 Patch3: disable-strip.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang >= 1.19
+BuildRequires: golang >= 1.21
 %if_disabled tarball
-BuildRequires: npm >= 6.13.6-alt2 node >= 14.0.0 esbuild node-gyp go-bindata
+BuildRequires: npm >= 6.13.6-alt2 node >= 18.0.0 esbuild node-gyp go-bindata
 %endif
 BuildRequires: libpam-devel
 BuildRequires: /proc
@@ -117,6 +117,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 
 
 %changelog
+* Thu Nov 16 2023 Alexey Shabalin <shaba@altlinux.org> 1.21.0-alt1
+- 1.21.0
+
 * Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 1.20.5-alt1
 - 1.20.5
 
