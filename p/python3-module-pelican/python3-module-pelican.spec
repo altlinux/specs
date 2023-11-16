@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.9.0
+Version: 4.9.1
 Release: alt1
 Summary: Static site generator that supports Markdown and reST syntax
 License: AGPL-3.0
@@ -137,6 +137,9 @@ rm -rf html/_downloads/* html/.doctrees html/.buildinfo
 %files -n %pypi_name
 
 %changelog
+* Thu Nov 16 2023 Anton Vyatkin <toni@altlinux.org> 4.9.1-alt1
+- New version 4.9.1.
+
 * Tue Nov 14 2023 Anton Vyatkin <toni@altlinux.org> 4.9.0-alt1
 - New version 4.9.0 (closes: #36804).
 
