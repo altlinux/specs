@@ -3,10 +3,17 @@
 %define mod_name pyside6
 
 %def_with check
+%ifarch loongarch64
+# The first version of LLVM which supports LoongArch targets
+%global llvm_version 16.0
+%else
+%global llvm_version 15.0
+%endif
+%global clang_version %(echo %llvm_version | cut -d . -f 1)
 
 Name: python3-module-%mod_name
 Version: 6.6.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -29,15 +36,15 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-packaging
 BuildRequires: python3-devel
 
-BuildRequires: llvm15.0
-BuildRequires: llvm15.0-devel
-BuildRequires: libmlir15.0-devel
-BuildRequires: libpolly15.0-devel
-BuildRequires: clang15.0-devel
-BuildRequires: clang15.0-tools
-BuildRequires: clangd15.0
-BuildRequires: clang15.0-libs
-BuildRequires: mlir15.0-tools
+BuildRequires: llvm%{llvm_version}
+BuildRequires: llvm%{llvm_version}-devel
+BuildRequires: libmlir%{llvm_version}-devel
+BuildRequires: libpolly%{llvm_version}-devel
+BuildRequires: clang%{llvm_version}-devel
+BuildRequires: clang%{llvm_version}-tools
+BuildRequires: clangd%{llvm_version}
+BuildRequires: clang%{llvm_version}-libs
+BuildRequires: mlir%{llvm_version}-tools
 
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libxml2-devel
@@ -177,9 +184,9 @@ sed -i 's/purelib/platlib/' sources/shiboken6/cmake/ShibokenHelpers.cmake
 
 %global optflags_lto %nil
 
-export CXX=/usr/bin/clang++-15
+export CXX=/usr/bin/clang++-%{clang_version}
 
-export ALTWRAP_LLVM_VERSION=15.0
+export ALTWRAP_LLVM_VERSION=%{llvm_version}
 
 export PYTHONPATH=$PWD/%_cmake__builddir/sources
 
@@ -288,6 +295,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Wed Nov 15 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.6.0-alt2
+- NMU: fixed FTBFS on LoongArch (use llvm 16)
+
 * Mon Nov 13 2023 Anton Vyatkin <toni@altlinux.org> 6.6.0-alt1
 - new version 6.6.0
 
