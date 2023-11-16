@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: autorepo-altnode-config
-Version: 0.18
+Version: 0.19
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -64,6 +64,9 @@ install -D -m 644 nginx/autoports.conf %buildroot%_sysconfdir/nginx/sites-enable
 mkdir -p %buildroot%_sysconfdir/monitrc.d
 install -m 644 monit/* %buildroot%_sysconfdir/monitrc.d
 
+mkdir -p %buildroot%_sysconfdir/sysctl.d
+echo "vm.swappiness = 10" > %buildroot%_sysconfdir/sysctl.d/10-autorepo.conf
+
 %post
 # postfix
 if ! grep '^relayhost' /etc/postfix/main.cf; then
@@ -121,6 +124,7 @@ fi
 
 
 %files
+%config %_sysconfdir/sysctl.d/10-autorepo.conf
 %config %_sysconfdir/monitrc.d/00base.conf
 %config %_sysconfdir/monitrc.d/10mail.conf
 %config %_sysconfdir/monitrc.d/20httpd.conf
@@ -129,9 +133,9 @@ fi
 %config %_sysconfdir/monitrc.d/nginx.conf
 %config %_sysconfdir/monitrc.d/postfix.conf
 %config(noreplace) %_sysconfdir/monitrc.d/sshd.conf
-%config %_sysconfdir/monitrc.d/system.conf
 %config %_sysconfdir/monitrc.d/xinetd.conf
 %exclude %_sysconfdir/monitrc.d/nginx.conf
+#%config %_sysconfdir/monitrc.d/system.conf
 
 %files nginx
 %_sysconfdir/nginx/sites-enabled.d/autorepo.conf
@@ -142,6 +146,9 @@ fi
 %_sysconfdir/autorepo/apt/sources.list.*
 
 %changelog
+* Thu Nov 16 2023 Igor Vlasenko <viy@altlinux.org> 0.19-alt1
+- set vm.swappiness = 10
+
 * Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 0.18-alt1
 - changed relayhost
 - removed ftp (deprecated service)
