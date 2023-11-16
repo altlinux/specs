@@ -6,7 +6,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 Summary: Jupyter Qt console
 License: BSD
@@ -112,6 +112,9 @@ export PYTHONPATH=$PWD
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Nov 16 2023 Anton Vyatkin <toni@altlinux.org> 5.5.1-alt1
+- New version 5.5.1.
+
 * Tue Nov 07 2023 Anton Vyatkin <toni@altlinux.org> 5.5.0-alt1
 - New version 5.5.0.
 
