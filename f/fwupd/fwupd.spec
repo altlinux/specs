@@ -6,8 +6,9 @@
 %def_without check
 %endif
 
+%def_with check
+
 %def_enable tests
-%def_enable dummy
 %def_enable flashrom
 
 # fwupdate is only available on these arches
@@ -20,16 +21,12 @@
 %def_enable msr
 %endif
 
-# libsmbios is only available on x86, and fwupdate is available on just x86_64
-%ifarch x86_64
-%def_enable dell
-%endif
-
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.9.5
+Version: 1.9.8
+
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -41,7 +38,6 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires: bash-completion
 BuildRequires: cmake
-BuildRequires: gcab
 BuildRequires: rpm-build-python3
 BuildRequires: git-core
 BuildRequires: gi-docgen
@@ -57,7 +53,6 @@ BuildRequires: liblzma-devel
 BuildRequires: libcbor-devel
 BuildRequires: libcurl-devel
 BuildRequires: libelf-devel
-BuildRequires: libgcab-devel
 BuildRequires: libgnutls-devel
 BuildRequires: libgpgme-devel
 BuildRequires: libgudev-devel
@@ -65,12 +60,10 @@ BuildRequires: libgusb-gir-devel
 BuildRequires: libjcat-devel >= 0.1.10
 BuildRequires: libpango-devel
 BuildRequires: libpolkit-devel
-%if_enabled dell
-BuildRequires: libsmbios-devel
-%endif
 %if_enabled flashrom
 BUildRequires: libflashrom-devel
 %endif
+BuildRequires: libdrm-devel
 BuildRequires: libsoup-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libsystemd-devel
@@ -93,13 +86,12 @@ BuildRequires: libfreetype-devel
 BuildRequires: fontconfig
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: gnu-efi
-Requires: gcab
 Requires: fwupd-efi
 Provides: fwupdate
 Obsoletes: fwupdate
 %endif
 
-%if_enabled tests
+%if_with check
 BuildRequires: rpm-build-vm /dev/kvm
 %endif
 
@@ -155,6 +147,7 @@ sed -i -e "/get_option('tests')/ s/$/ and false/" \
     -Dman=true \
     -Dlvfs=true \
     -Dsupported_build=enabled \
+    -Dlaunchd=disabled \
 %if_enabled flashrom
     -Dplugin_flashrom=enabled \
 %else
@@ -170,11 +163,6 @@ sed -i -e "/get_option('tests')/ s/$/ and false/" \
 %else
     -Dtests=false \
 %endif
-%if_enabled dummy
-    -Dplugin_dummy=true \
-%else
-    -Dplugin_dummy=false \
-%endif
 %if_enabled gpio
     -Dplugin_gpio=enabled \
 %else
@@ -183,19 +171,13 @@ sed -i -e "/get_option('tests')/ s/$/ and false/" \
 %if_enabled uefi
     -Dplugin_uefi_capsule=enabled \
     -Dplugin_uefi_pk=enabled \
+    -Dplugin_tpm=enabled \
     -Defi_binary=false \
 %else
     -Dplugin_redfish=enabled \
     -Dplugin_uefi_capsule=disabled \
     -Dplugin_uefi_pk=disabled \
     -Dplugin_nvme=enabled \
-%endif
-%if_enabled dell
-    -Dplugin_dell=enabled \
-    -Dplugin_synaptics_mst=enabled \
-%else
-    -Dplugin_dell=disabled \
-    -Dplugin_synaptics_mst=disabled \
 %endif
     -Dplugin_modem_manager=enabled \
 #
@@ -217,11 +199,9 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 
 %find_lang %name
 
-%if_enabled tests
 %check
 vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
        %__meson_test
-%endif
 
 %files -f %name.lang
 %doc README.md COPYING
@@ -232,7 +212,6 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %_man8dir/*
 %config(noreplace)%_sysconfdir/fwupd/fwupd.conf
 %dir %_libexecdir/fwupd
-%dir %_iconsdir/hicolor/scalable/apps
 %_libexecdir/fwupd/fwupd
 %_bindir/fwupdtool
 %_libexecdir/fwupd/fwupdoffline
@@ -258,10 +237,6 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %dir %_datadir/fwupd/remotes.d
 %dir %_datadir/fwupd/remotes.d/vendor
 %_datadir/dbus-1/system.d/org.freedesktop.fwupd.conf
-%ifarch x86_64
-%dir %_datadir/fwupd/remotes.d/dell-esrt
-%_datadir/fwupd/remotes.d/dell-esrt/metadata.xml
-%endif
 %_datadir/fwupd/remotes.d/vendor/firmware
 %_datadir/dbus-1/interfaces/org.freedesktop.fwupd.xml
 %_datadir/polkit-1/actions/org.freedesktop.fwupd.policy
@@ -298,6 +273,7 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %config(noreplace)%_sysconfdir/grub.d/35_fwupd
 %_datadir/fwupd/uefi-capsule-ux.tar.xz
 %endif
+/lib/sysusers.d/fwupd.conf
 
 %ghost %_localstatedir/fwupd/gnupg
 
@@ -335,6 +311,12 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %endif
 
 %changelog
+* Thu Nov 16 2023 Egor Ignatov <egori@altlinux.org> 1.9.8-alt1
+- 1.9.8
+
+* Tue Nov 14 2023 Egor Ignatov <egori@altlinux.org> 1.9.7-alt1
+- 1.9.7
+
 * Mon Sep 25 2023 Egor Ignatov <egori@altlinux.org> 1.9.5-alt1
 - 1.9.5
 
