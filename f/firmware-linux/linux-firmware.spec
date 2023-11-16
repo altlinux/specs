@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20231030
-Release: alt1
+Version: 20231115
+Release: alt2
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -76,6 +76,35 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Nov 16 2023 Anton Midyukov <antohami@altlinux.org> 20231115-alt2
+- copy-firmware.sh: do'nt require rdfind
+
+* Wed Nov 15 2023 Anton Midyukov <antohami@altlinux.org> 20231115-alt1
+- upstream changes (GIT 124b6639):
+  + iwlwifi: add new FWs from core83-55 release (thx Gregory Greenman)
+  + iwlwifi: update cc/Qu/QuZ firmwares for core83-55 release (thx Gregory Greenman)
+  + add firmware for mt7988 internal 2.5G ethernet phy (thx SkyLake.Huang)
+  + Intel Bluetooth: Update firmware file for Magnetor Intel
+    Bluetooth AX101 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Magnetor Intel
+    Bluetooth AX203 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Magnetor Intel
+    Bluetooth AX211 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth
+    AX101 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX101 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth
+    AX203 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX203 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth
+    AX211 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX211 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX210 (thx Kiran K)
+
 * Thu Nov 02 2023 Cronbuild Service <cronbuild@altlinux.org> 20231030-alt1
 - upstream changes (GIT 2b304bfe):
   + Intel Bluetooth: Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
