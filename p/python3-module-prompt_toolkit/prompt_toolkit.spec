@@ -7,7 +7,7 @@
 %def_with doc
 
 Name: python3-module-%oname
-Version: 3.0.40
+Version: 3.0.41
 Release: alt1
 Summary: Library for building powerful interactive command lines in Python
 License: BSD-3-Clause
@@ -106,6 +106,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Nov 16 2023 Anton Vyatkin <toni@altlinux.org> 3.0.41-alt1
+- New version 3.0.41.
+
 * Tue Nov 14 2023 Anton Vyatkin <toni@altlinux.org> 3.0.40-alt1
 - New version 3.0.40.
 
