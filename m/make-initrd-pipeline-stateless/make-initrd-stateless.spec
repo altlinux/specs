@@ -1,7 +1,7 @@
 %add_findreq_skiplist /usr/share/make-initrd/features/*
 
 Name: make-initrd-pipeline-stateless
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Stateless rootfs feature for make-initrd's pipeline mechanism
@@ -32,6 +32,11 @@ cp -a feature %buildroot/usr/share/make-initrd/features/pipeline-stateless
 %_datadir/make-initrd/features/pipeline-stateless
 
 %changelog
+* Thu Nov 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3-alt1
+- Modified the stateless pipeline method as follows:
+  + Actually deactivate LUKS-encrypted host devices;
+  + Extract file extended attributes (e.g. capabilities).
+
 * Tue Jun 06 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2-alt1
 - Modified the stateless pipeline method as follows:
   + Avoid attempting to unmount the host filesystem in overlay mode;
