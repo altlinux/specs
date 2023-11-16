@@ -13,8 +13,8 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.4.1
-Release: alt2
+Version: 3.4.2
+Release: alt1
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -32,10 +32,8 @@ Source2: loffice-libcxx-wrapper.sh
 Patch0001: 0001-Desktop-file-fix-exec-command.patch
 Patch0002: 0002-Use-home-directory-for-temp-dir-instead-of-var-tmp-t.patch
 Patch0003: 0003-Fix-building-with-system-sbsms.patch
-Patch0004: 0004-Force-GTK-3.0.patch
 Patch0005: 0005-Fix-lv2-external-gui.patch
 Patch0006: 0006-Find-modules-in-lib64.patch
-Patch0007: 0007-Fixes-compatibility-with-wxWidgets-3.2.4.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -247,6 +245,9 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 %_datadir/%name/help
 
 %changelog
+* Fri Nov 17 2023 Ivan A. Melnikov <iv@altlinux.org> 3.4.2-alt1
+- 3.4.2
+
 * Wed Nov 15 2023 Ivan A. Melnikov <iv@altlinux.org> 3.4.1-alt2
 - Backport upstream workaround for wxWidgets 3.2.4 (alt#48434)
 
