@@ -3,7 +3,7 @@
 
 Name: cdrdao
 Version: 1.2.5
-Release: alt2
+Release: alt3
 
 Summary: Cdrdao - Write audio CD-Rs in disk-at-once mode
 Group: Archiving/Cd burning
@@ -12,6 +12,8 @@ Url: http://cdrdao.sourceforge.net
 
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: %name.control
+# https://github.com/cdrdao/cdrdao/commit/251a40ab.patch
+Patch10: %name-1.2.5-up-Fix-uninitialized-TOC-data-file-name.patch
 Patch2000: %name-e2k.patch
 Requires(pre,postun): control
 
@@ -43,6 +45,7 @@ ISRC codes/CD-TEXT and non destructive cut of the audio data.
 
 %prep
 %setup
+%patch10 -p1
 %ifarch %e2k
 # mcst#7806: EDG archdep deficiency
 %patch2000 -p2
@@ -101,6 +104,9 @@ chmod 700 %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Thu Nov 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt3
+- Fixed uninitialized TOC data file name (https://github.com/cdrdao/cdrdao/pull/21)
+
 * Sun Feb 05 2023 Michael Shigorin <mike@altlinux.org> 1.2.5-alt2
 - E2K: ftbfs workaround (mcst#7806)
 
