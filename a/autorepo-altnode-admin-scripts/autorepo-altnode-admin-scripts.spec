@@ -1,5 +1,5 @@
 Name: autorepo-altnode-admin-scripts
-Version: 0.08
+Version: 0.09
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -32,6 +32,9 @@ install -m 755 autorepo-altnode-admin-delete-*node $RPM_BUILD_ROOT%_sbindir
 %_sbindir/*
 
 %changelog
+* Thu Nov 16 2023 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
+- cronbuild node support
+
 * Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 0.08-alt1
 - added autorepo-altnode-admin-setup-* family
 
