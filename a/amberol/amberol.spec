@@ -6,12 +6,12 @@
 
 Name: amberol
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: A small and simple sound and music player that is well integrated with GNOME
 License: GPL-3.0
-Group: Graphics
-Url: https://gitlab.gnome.org/World/amberol
+Group: Sound
+Url: https://apps.gnome.org/Amberol
 
 %if_disabled snapshot
 Source: %url/-/archive/%version/%name-%version.tar.gz
@@ -20,6 +20,7 @@ Vcs: https://gitlab.gnome.org/World/amberol.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
+Patch1: %name-0.10.3-alt-vendored-nix-loongarch64-support.patch
 
 %define glib_ver 2.76
 %define gtk_ver 4.10
@@ -57,6 +58,12 @@ mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
+%patch1 -p1
+
+# allow patching vendored rust code
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+        ./vendor/nix/.cargo-checksum.json
+
 %build
 %meson
 %meson_build
@@ -80,6 +87,10 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Thu Nov 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.10.3-alt1.1
+- fixed build for loongarch64 (iv@)
+- fixed Url and Group tags
+
 * Tue Jun 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.10.3-alt1
 - first build for Sisyphus
 

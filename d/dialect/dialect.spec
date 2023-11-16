@@ -1,10 +1,10 @@
 %def_enable snapshot
 %define _name dialect
-%define ver_major 2.1
+%define ver_major 2.2
 %define rdn_name app.drey.Dialect
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A translation app for GNOME
@@ -21,10 +21,11 @@ Source: %_name-%version.tar
 
 BuildArch: noarch
 
+%define bp_ver 0.10
 %define gi_ver 1.35
 %define gst_ver 1.18
 %define gtk4_ver 4.6
-%define adw_ver 1.0
+%define adw_ver 1.4
 %define pygobject_ver 3.40
 
 Requires: typelib(Gtk) = 4.0 typelib(Soup) = 3.0
@@ -35,8 +36,8 @@ Requires: python3(gtts)
 %add_python3_path %_datadir/%_name
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson blueprint-compiler
-BuildRequires: yelp-tools /usr/bin/appstream-util desktop-file-utils
+BuildRequires: meson blueprint-compiler >= %bp_ver
+BuildRequires: yelp-tools /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= %gi_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk4_ver
@@ -48,12 +49,15 @@ BuildRequires: pkgconfig(pygobject-3.0) >= %pygobject_ver
 
 %description
 Features:
-Translation based on Google Translate
-Translation based on the LibreTranslate API, allowing you to use any public instance
-Translation history
-Automatic language detection
-Text to speech
-Clipboard buttons
+- Translation based on Google Translate
+- Translation based on the LibreTranslate API, allowing you to use any public instance
+- Translation based on Lingva Translate API
+- Translation based on Bing
+- Translation based on Yandex
+- Translation history
+- Automatic language detection
+- Text to speech
+- Clipboard buttons
 
 %prep
 %setup -n %_name-%version
@@ -79,7 +83,10 @@ Clipboard buttons
 
 
 %changelog
-* Thu Nov 29 2022 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
+* Thu Nov 16 2023 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0-5-g478c4a4
+
+* Tue Nov 29 2022 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - first build for Sisyphus (2.1.1-7-g29dcb52)
 
 
