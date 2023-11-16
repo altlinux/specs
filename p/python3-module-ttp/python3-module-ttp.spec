@@ -1,10 +1,10 @@
 %define pypi_name ttp
 
-%def_without check
+%def_with check
 
 Name:    python3-module-%pypi_name
 Version: 0.9.5
-Release: alt1
+Release: alt2
 
 Summary: Template Text Parser
 License: MIT
@@ -58,5 +58,8 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 15 2023 Alexander Burmatov <thatman@altlinux.org> 0.9.5-alt2
+- Enable check.
+
 * Tue Nov 14 2023 Alexander Burmatov <thatman@altlinux.org> 0.9.5-alt1
 - Initial build for Sisyphus.
