@@ -15,7 +15,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.32
+Version: 8.0.33
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -56,14 +56,16 @@ Source30: mysqlrouter.conf
 Patch0: mysql-%version.patch
 
 # ALTLinux
-Patch1: mysql-8.0.31-alt-chroot.patch
+Patch1: mysql-8.0.33-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mysql-8.0.26-alt-client.patch
 Patch5: mysql-8.0.12-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-8.0.27-alt-mysql_config-libs.patch
-Patch9: mysql-8.0.29-alt-disable-run-libmysql_api_test.patch
-Patch10: mysql-8.0.32-alt-upstream-gcc13.patch
+Patch9: mysql-8.0.33-alt-disable-run-libmysql_api_test.patch
+
+Patch50: mysql-8.0.33-upstream-set-variables-to-parent-scope-in-cmake-functions.patch
+Patch51: mysql-8.0.33-alt-Restore-system-ZLIB-version-determination-in-CMake-f.patch
 
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
@@ -389,7 +391,9 @@ Python module for MySQL Shell
 %patch5 -p1
 %patch7 -p1
 %patch9 -p1
-%patch10 -p1
+
+%patch50 -p1
+%patch51 -p1
 
 # Patch Boost
 pushd boost/boost_1_77_0
@@ -921,6 +925,23 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri Nov 17 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.33-alt1
+- new version
+  + (fixes: CVE-2022-37434, CVE-2022-43551, CVE-2023-0215, CVE-2023-21911)
+  + (fixes: CVE-2023-21912, CVE-2023-21913, CVE-2023-21917, CVE-2023-21919)
+  + (fixes: CVE-2023-21920, CVE-2023-21929, CVE-2023-21933, CVE-2023-21935)
+  + (fixes: CVE-2023-21940, CVE-2023-21945, CVE-2023-21946, CVE-2023-21947)
+  + (fixes: CVE-2023-21953, CVE-2023-21955, CVE-2023-21962, CVE-2023-21963)
+  + (fixes: CVE-2023-21966, CVE-2023-21972, CVE-2023-21976, CVE-2023-21977)
+  + (fixes: CVE-2023-21980, CVE-2023-21982)
+- update mysql-shell 8.0.32 -> 8.0.33
+- update alt-chroot patch 8.0.31->8.0.33
+- update alt-disable-run-libmysql_api_test patch 8.0.29->8.0.33
+- fix system zlib autodetection in CMake files
+  + add upstream-set-variables-to-parent-scope-in-cmake-functions patch
+  + add alt-Restore-system-ZLIB-version-determination-in-CMake-f patch
+- remove alt-upstream-gcc13 patch
+
 * Fri Nov 17 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.32-alt1
 - new version
   + (fixes: CVE-2022-32221, CVE-2023-21868, CVE-2023-21875, CVE-2023-21869)
