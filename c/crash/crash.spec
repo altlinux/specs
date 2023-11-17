@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,unresolved=normal
 
 Name:    crash
-Version: 8.0.3
+Version: 8.0.4
 Release: alt1
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
@@ -40,8 +40,8 @@ Note: You will need -debuginfo package for the current kernel installed
 %setup
 install -m644 %SOURCE1 .
 mv crash-extensions/*.c extensions/
-tar xvf crash-extensions/crash-gcore-command-* -C extensions --strip-components=1
-tar xvf crash-extensions/ptdump-*              -C extensions --strip-components=1
+tar xvf crash-extensions/crash-gcore-command-1.6.1.tar.gz -C extensions --strip-components=1
+tar xvf crash-extensions/ptdump-1.0.7.tar.gz -C extensions --strip-components=1
 
 %build
 %add_optflags $(getconf LFS_CFLAGS)
@@ -64,6 +64,9 @@ install -p -m0644 extensions/*.so %buildroot%_libdir/crash/extensions
 %_libdir/crash
 
 %changelog
+* Thu Nov 16 2023 Vitaly Chikunov <vt@altlinux.org> 8.0.4-alt1
+- Update to 8.0.4 (2023-11-16).
+
 * Wed Apr 26 2023 Vitaly Chikunov <vt@altlinux.org> 8.0.3-alt1
 - Update to 8.0.3 (2023-04-26).
 
