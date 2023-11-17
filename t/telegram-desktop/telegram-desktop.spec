@@ -25,7 +25,7 @@
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 4.11.6
+Version: 4.11.8
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -398,10 +398,14 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %_iconsdir/hicolor/128x128/apps/telegram.png
 %_iconsdir/hicolor/256x256/apps/telegram.png
 %_iconsdir/hicolor/512x512/apps/telegram.png
+%_iconsdir/hicolor/symbolic/apps/telegram-symbolic.svg
 #_man1dir/*
 %doc README.md
 
 %changelog
+* Wed Nov 15 2023 Vitaly Lipatov <lav@altlinux.ru> 4.11.8-alt1
+- new version 4.11.8 (with rpmrb script)
+
 * Fri Nov 10 2023 Vitaly Lipatov <lav@altlinux.ru> 4.11.6-alt1
 - new version 4.11.6 (with rpmrb script)
 - enable wayland integration
