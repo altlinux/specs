@@ -1,7 +1,7 @@
 Name:    highlight
 Summary: Universal source code to formatted text converter
 Version: 4.3
-Release: alt1
+Release: alt2
 Group:   Development/Tools
 License: GPL-3.0
 URL:     http://www.andre-simon.de/
@@ -9,6 +9,8 @@ URL:     http://www.andre-simon.de/
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
+
+Patch0001: highlight-alt-link-with-perl.patch
 
 BuildRequires: boost-devel-headers
 BuildRequires: gcc-c++
@@ -64,6 +66,7 @@ It is easily possible to create new language definitions and colour themes.
 
 %prep
 %setup -q -n highlight
+%autopatch -p2
 
 %build
 %add_optflags %optflags_shared
@@ -99,6 +102,9 @@ rm -rf -- %buildroot/%_datadir/doc/%name
 %perl_vendor_archlib/*
 
 %changelog
+* Sat Nov 18 2023 Alexey Gladkov <legion@altlinux.ru> 4.3-alt2
+- Link with -lperl (ALT#48474)
+
 * Mon Oct 17 2022 Alexey Gladkov <legion@altlinux.ru> 4.3-alt1
 - New version (4.3).
 
