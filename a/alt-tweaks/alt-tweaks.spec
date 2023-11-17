@@ -2,7 +2,7 @@
 
 Name: alt-tweaks
 Version: 0.2.1
-Release: alt4
+Release: alt5
 
 Summary: A tool to customize advanced phosh options of ALT Mobile OS
 Group: Graphical desktop/GNOME
@@ -65,6 +65,10 @@ rm -f %buildroot%_datadir/postmarketos-tweaks/postmarketos-tweakd.initd.in
 %doc README*
 
 %changelog
+* Fri Nov 17 2023 Artyom Bystrov <arbars@altlinux.org> 0.2.1-alt5
+- Replaced info about device in separate config in en_US locale;
+- Updated version in "about" files.
+
 * Thu Nov 16 2023 Artyom Bystrov <arbars@altlinux.org> 0.2.1-alt4
 - Optimized getting locale variable (thanks to bircoph@)
 
