@@ -2,7 +2,7 @@
 
 %define _name pano
 %define __name gnome-shell-%_name
-%define ver_major 20
+%define ver_major 22
 %define beta %nil
 %define uuid pano@elhan.io
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -19,6 +19,8 @@ Group: Graphical desktop/GNOME
 License: GPL-2.0
 Url: https://github.com/oae/gnome-shell-pano
 
+#Error: Your current platform "linux" and architecture "ia32" combination is not yet supported by the native Rollup build.
+ExclusiveArch: x86_64
 BuildArch: noarch
 
 %if_disabled snapshot
@@ -55,7 +57,6 @@ yarn run --offline build
 install -d -m 0755 %buildroot%_datadir/gnome-shell/extensions/%uuid
 pushd dist
 cp -p -r dbus images thirdparty icons %buildroot%_datadir/gnome-shell/extensions/%uuid
-#cp -p -r icons  %buildroot%_datadir/icons
 cp -p -r locale %buildroot%_datadir/locale
 cp -a *.json *.js *.css %buildroot%_datadir/gnome-shell/extensions/%uuid/
 # install the schema file
@@ -70,10 +71,12 @@ popd
 %files -f %gettext_domain.lang
 %_datadir/gnome-shell/extensions/%uuid/
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-#%_iconsdir/hicolor/scalable/actions/*.svg
 %doc README.md
 
 %changelog
+* Fri Nov 17 2023 Yuri N. Sedunov <aris@altlinux.org> 22-alt1
+- 22
+
 * Sun Nov 5 2023 Yuri N. Sedunov <aris@altlinux.org> 20-alt1
 - first build for Sisyphus
 
