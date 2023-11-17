@@ -4,7 +4,7 @@
 
 Name: AFLplusplus
 Version: 4.08c
-Release: alt2
+Release: alt3
 
 Summary: American Fuzzy Lop plus plus (AFL++)
 License: Apache-2.0
@@ -27,6 +27,7 @@ Requires: clang%llvm_version lld%llvm_version
 
 BuildRequires(pre): rpm-build-python3
 
+BuildRequires: python3-dev
 BuildRequires: gcc-c++ gcc-plugin-devel
 BuildRequires: llvm%llvm_version llvm%llvm_version-devel
 BuildRequires: clang%llvm_version lld%llvm_version
@@ -77,6 +78,9 @@ export RANLIB=llvm-ranlib
 # Fix bad_elf_symbol _ZNK4llvm3cfg6UpdateIPNS_10BasicBlockEE4dumpEv
 # from llvm-project/llvm/include/llvm/Support/CFGUpdate.h:51
 export CPPFLAGS=-DNDEBUG
+
+# Compile with AFL_PERSISTENT_RECORD support
+export CFLAGS="$CFLAGS -DAFL_PERSISTENT_RECORD"
 
 %make_build PREFIX=%prefix NO_NYX=1 -j $(nproc) source-only
 
@@ -130,6 +134,9 @@ install -m755 utils/plot_ui/afl-plot-ui -t %buildroot%_bindir
 %_bindir/afl-plot-ui
 
 %changelog
+* Tue Nov 07 2023 Egor Ignatov <egori@altlinux.org> 4.08c-alt3
+- Build with python3 and AFL_PERSISTENT_RECORD support
+
 * Mon Sep 18 2023 Egor Ignatov <egori@altlinux.org> 4.08c-alt2
 - Conflicts with afl
 
