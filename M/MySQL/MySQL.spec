@@ -15,7 +15,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.33
+Version: 8.0.34
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -63,9 +63,6 @@ Patch5: mysql-8.0.12-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-8.0.27-alt-mysql_config-libs.patch
 Patch9: mysql-8.0.33-alt-disable-run-libmysql_api_test.patch
-
-Patch50: mysql-8.0.33-upstream-set-variables-to-parent-scope-in-cmake-functions.patch
-Patch51: mysql-8.0.33-alt-Restore-system-ZLIB-version-determination-in-CMake-f.patch
 
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
@@ -391,9 +388,6 @@ Python module for MySQL Shell
 %patch5 -p1
 %patch7 -p1
 %patch9 -p1
-
-%patch50 -p1
-%patch51 -p1
 
 # Patch Boost
 pushd boost/boost_1_77_0
@@ -925,6 +919,16 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri Nov 17 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.34-alt1
+- new version
+  + (fixes: CVE-2022-4899, CVE-2023-21950, CVE-2023-22005, CVE-2023-22007)
+  + (fixes: CVE-2023-22008, CVE-2023-22033, CVE-2023-22038, CVE-2023-22046)
+  + (fixes: CVE-2023-22048, CVE-2023-22053, CVE-2023-22054, CVE-2023-22056)
+  + (fixes: CVE-2023-22057, CVE-2023-22058)
+- update mysql-shell 8.0.33 -> 8.0.34
+- remove upstream-set-variables-to-parent-scope-in-cmake-functions patch
+- remove alt-Restore-system-ZLIB-version-determination-in-CMake-f patch
+
 * Fri Nov 17 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.33-alt1
 - new version
   + (fixes: CVE-2022-37434, CVE-2022-43551, CVE-2023-0215, CVE-2023-21911)
