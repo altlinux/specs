@@ -5,7 +5,7 @@
 %def_without gnome
 
 Name: viewnior
-Version: 1.7
+Version: 1.8
 Release: alt1
 
 Summary: Elegant image viewer
@@ -16,11 +16,12 @@ Url: http://xsisqox.github.com/Viewnior
 Source0: %name-%version.tar.gz
 Source1: %name.watch
 Patch0:         fix-appdata.patch
-
+Patch1:		0001-Fix-build-with-exiv2-0.28.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Apr 13 2014
 # optimized out: fontconfig fontconfig-devel glib2-devel gnu-config libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config
+BuildRequires: rpm-macros-meson
 BuildRequires: gcc-c++ intltool libexiv2-devel libgtk+2-devel
 BuildRequires:  meson
 
@@ -42,7 +43,8 @@ space for your images. Among its features are:
 
 %prep
 %setup -n Viewnior-%name-%version
-%patch0 -p1
+#patch0 -p1
+%patch1 -p1
 # fix spurious executable perms
 chmod 644 AUTHORS COPYING NEWS README.md TODO src/*
 
@@ -66,9 +68,12 @@ chmod 644 AUTHORS COPYING NEWS README.md TODO src/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %_datadir/%name/
-%{_datadir}/appdata/%{name}.appdata.xml
+%_datadir/metainfo/%{name}.metainfo.xml
 
 %changelog
+* Fri Nov 17 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8-alt1
+- 1.8
+
 * Fri Feb 12 2021 Ilya Mashkin <oddity@altlinux.ru> 1.7-alt1
 - 1.7
 
