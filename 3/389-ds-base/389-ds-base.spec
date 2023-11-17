@@ -17,7 +17,7 @@
 
 Name: 389-ds-base
 Version: 2.2.9
-Release: alt1
+Release: alt1.1
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -31,6 +31,7 @@ Source1: vendor_nodejs.tar
 %endif
 Source2: vendor_rust.tar
 Patch: %name-%version-alt.patch
+Patch1: vendored-rustix-loongarch64-support.patch
 
 ExcludeArch: %ix86
 
@@ -180,6 +181,7 @@ A cockpit UI Plugin for configuring and administering the 389 Directory Server
 %prep
 %setup %{?_with_cockpit:-a1} -a2
 %patch -p1
+%patch1 -p1
 
 grep -qsF 'sysctldir = @prefixdir@/lib/sysctl.d' Makefile.am || exit 1
 sed -i 's|sysctldir = .*|sysctldir = %_sysctldir|' Makefile.am
@@ -199,6 +201,10 @@ grep -qs 'saslpath = "/usr/lib/aarch64-linux-gnu"' \
 ldap/servers/slapd/ldaputil.c || exit 1
 sed -i 's|\(saslpath = "/usr/\)lib\(/aarch64-linux-gnu"\)|\1lib64\2|g' \
 ldap/servers/slapd/ldaputil.c
+
+# allow patching vendored rust code
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+        vendor/rustix/.cargo-checksum.json
 
 %build
 %ifarch mipsel
@@ -421,6 +427,9 @@ fi
 %endif
 
 %changelog
+* Fri Nov 17 2023 Ivan A. Melnikov <iv@altlinux.org> 2.2.9-alt1.1
+- NMU: loongarch64 support
+
 * Thu Aug 10 2023 Stanislav Levin <slev@altlinux.org> 2.2.9-alt1
 - 2.2.8 -> 2.2.9.
 
