@@ -3,7 +3,7 @@
 Name: openipmi
 Summary: %name - Library interface to IPMI
 Version: 2.0.33
-Release: alt1
+Release: alt2
 License: LGPLv2.1
 # VCS: https://git.code.sf.net/p/openipmi/code
 Url: http://openipmi.sourceforge.net
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires: libpopt-devel python3-devel libnet-snmp-devel rpm-build-python3
-BuildRequires: libncurses-devel libssl-devel tkinter swig
+BuildRequires: libncurses-devel libssl-devel tkinter swig perl-devel
 BuildRequires: glib2-devel tcl-devel libedit-devel libreadline-devel
 
 %description
@@ -168,6 +168,9 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 
 
 %changelog
+* Fri Nov 17 2023 Igor Vlasenko <viy@altlinux.org> 2.0.33-alt2
+- NMU: link perl module with -lperl
+
 * Wed Feb 01 2023 Anton Farygin <rider@altlinux.ru> 2.0.33-alt1
 - 2.0.33
 
