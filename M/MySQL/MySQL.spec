@@ -15,8 +15,8 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.30
-Release: alt2
+Version: 8.0.31
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -56,14 +56,14 @@ Source30: mysqlrouter.conf
 Patch0: mysql-%version.patch
 
 # ALTLinux
-Patch1: mysql-8.0.21-alt-chroot.patch
+Patch1: mysql-8.0.31-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mysql-8.0.26-alt-client.patch
 Patch5: mysql-8.0.12-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-8.0.27-alt-mysql_config-libs.patch
 Patch9: mysql-8.0.29-alt-disable-run-libmysql_api_test.patch
-Patch10: mysql-8.0.30-alt-upstream-gcc13.patch
+Patch10: mysql-8.0.31-alt-upstream-gcc13.patch
 
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
@@ -921,6 +921,19 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed Nov 15 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.31-alt1
+- new version
+  + (fixes: CVE-2022-2097, CVE-2022-21589, CVE-2022-21592, CVE-2022-21594)
+  + (fixes: CVE-2022-21595, CVE-2022-21599, CVE-2022-21600, CVE-2022-21604)
+  + (fixes: CVE-2022-21605, CVE-2022-21607, CVE-2022-21608, CVE-2022-21611)
+  + (fixes: CVE-2022-21617, CVE-2022-21625, CVE-2022-21632, CVE-2022-21633)
+  + (fixes: CVE-2022-21635, CVE-2022-21637, CVE-2022-21638, CVE-2022-21640)
+  + (fixes: CVE-2022-21641, CVE-2022-39400, CVE-2022-39408, CVE-2022-39410)
+- update mysql-shell 8.0.30 -> 8.0.31
+  + (fixes: CVE-2022-39402, CVE-2022-39403)
+- update alt-chroot patch 8.0.21 -> 8.0.31 (thanks aibure@ for fix)
+- update alt-upstream-gcc13 patch 8.0.30 -> 8.0.31
+
 * Fri Jul 14 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.0.30-alt2
 - NMU: backported upstream commits to fix FTBFS with gcc13 (thx Tor Didriksen).
 
