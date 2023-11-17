@@ -1,4 +1,4 @@
-# spec file for package openvpn (Version 2.5)
+# spec file for package openvpn (Version 2.6)
 #
 %define _unpackaged_files_terminate_build 1
 
@@ -16,7 +16,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.6.7
+Version: 2.6.8
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -343,6 +343,10 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Fri Nov 17 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.6.8-alt1
+- New version
+  - Fix SIGSEGV crash sometimes after an unsuccessful TLS handshake
+
 * Sun Nov 12 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.6.7-alt1
 - New version
 - Fixes:
