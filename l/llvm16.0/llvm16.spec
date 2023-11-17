@@ -93,7 +93,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt6
+Release: alt7
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -125,6 +125,7 @@ Patch21: 0001-lld-Pass-random.randint-stop-parameter-as-int.patch
 Patch22: clang-D142199.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
+Patch3500: llvm-16-loongarch-cpuname.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -342,6 +343,7 @@ Group: Development/C
 %requires_filesystem
 Requires: clang-devel >= %_llvm_version
 Requires: %clang_name = %EVR
+Requires: %clang_name-tidy-devel-static = %EVR
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -349,6 +351,18 @@ AutoProv: nopython
 
 %description -n %clang_name-devel
 This package contains header files for the Clang compiler.
+
+%package -n %clang_name-tidy-devel-static
+Summary: Static libraries for clang tidy
+Group: Development/C
+%requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n %clang_name-tidy-devel-static
+This package contains static libraries for Clang Tidy.
 
 %package -n %clang_name-devel-static
 Summary: Static libraries for clang
@@ -647,6 +661,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch22 -p1 -b .recommonmark
 %patch101 -p1
 %patch102 -p2
+%patch3500 -p1 -b .la64
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -669,10 +684,14 @@ fi
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake -G Ninja -S llvm \
 	-DPACKAGE_VENDOR="%vendor" \
+%ifarch loongarch64
+	-DLLVM_PARALLEL_LINK_JOBS=%__nprocs \
+%else
 %if_with clang
 	-DLLVM_PARALLEL_LINK_JOBS=1 \
 %else
 	-DLLVM_PARALLEL_LINK_JOBS=4 \
+%endif
 %endif
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX=%llvm_prefix \
@@ -1113,7 +1132,11 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libclang*.so
 %llvm_libdir/cmake/clang
 %llvm_libdir/libclang*.a
+%exclude %llvm_libdir/libclangTidy*.a
 %llvm_libdir/libfindAllSymbols.a
+
+%files -n %clang_name-tidy-devel-static
+%llvm_libdir/libclangTidy*.a
 
 %files -n %clang_name-analyzer -f %_tmppath/dyn-files-%clang_name-analyzer
 %llvm_libexecdir/c++-analyzer
@@ -1240,6 +1263,16 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Fri Nov 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 16.0.6-alt7
+- spec: clang-devel does not fit into 4 GB on LoongArch, split clangTidy.a
+  into a subpackage to avoid the problem. Fixes FTBFS on LoongArch.
+- LoongArch: made `llc --version` print a meaningful CPU name instead of
+  '(unknown)' (upstream commit e53f41c39f3eb5052965c720d2cb517d2945fd12).
+  Some CMake scripts (in particular pocl) rely on `Host CPU` to figure out
+  the native target.
+- spec: do not restrict build concurrency on LoongArch (got enough CPU and
+  RAM here).
+
 * Sat Sep 30 2023 Arseny Maslennikov <arseny@altlinux.org> 16.0.6-alt6
 - Restored clang-ALT-bug-40628-grecord-command-line.patch.
 - Made clang pass --build-id=sha1 to the linker.
