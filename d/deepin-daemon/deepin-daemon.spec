@@ -2,7 +2,7 @@
 
 Name: deepin-daemon
 Version: 5.15.1
-Release: alt1.1
+Release: alt2
 Epoch: 2
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -13,6 +13,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 Source3: deepin-auth
 Patch: deepin-daemon-5.14.109-fix-backlight-outside-debian.patch
+Patch1: deepin-daemon-6.0.23-archlinux-ddcutil-2.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: gcc-c++ glib2-devel libgio-devel libgtk+3-devel libsystemd-devel libudev-devel fontconfig-devel libpam0-devel libnl-devel librsvg-devel libfprint2-devel libalsa-devel libpulseaudio-devel libXcursor-devel libXfixes-devel libpulseaudio-devel libXi-devel libgudev-devel libinput-devel libddcutil-devel librsvg-utils deepin-gettext-tools deepin-clipboard libgdk-pixbuf-xlib-devel
@@ -40,7 +41,7 @@ patch -p1 < rpm/locale.go.patch
 patch -p1 < rpm/passwd.go.patch
 %patch -p1
 patch -p1 < archlinux/dde-daemon.patch
-# patch -p1 < archlinux/remove-tc.patch
+%patch1 -p1
 
 # install -m 644 %%SOURCE3 misc/etc/pam.d/deepin-auth
 # sed -i 's|/usr/libexec|/usr/lib|' keybinding/shortcuts/system_shortcut.go
@@ -172,6 +173,9 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_datadir/dsg/configs/org.deepin.dde.daemon/*.json
 
 %changelog
+* Fri Nov 17 2023 Leontiy Volodin <lvol@altlinux.org> 2:5.15.1-alt2
+- Built with ddcutil2 support (ALT #47877).
+
 * Thu Dec 15 2022 Leontiy Volodin <lvol@altlinux.org> 2:5.15.1-alt1.1
 - Added requires.
 
