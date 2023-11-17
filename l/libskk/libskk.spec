@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/fep /usr/bin/valadoc /usr/bin/valgrind pkgconfig(gio-2.0)
+BuildRequires: /usr/bin/fep /usr/bin/valadoc pkgconfig(gio-2.0)
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -7,18 +7,22 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:		libskk
 Version:	1.0.4
-Release:	alt3_10
+Release:	alt3_11
 Summary:	Library to deal with Japanese kana-to-kanji conversion method
 
 License:	GPLv3+
 URL:		http://github.com/ueno/libskk
 Source0:	https://bitbucket.org/libskk/libskk/downloads/%{name}-%{version}.tar.xz
 
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires:	vala vala-tools valadoc-devel
 BuildRequires:	pkgconfig(gee-0.8)
 BuildRequires:	libjson-glib libjson-glib-devel libjson-glib-gir-devel
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gettext-tools libasprintf-devel
+%ifarch %valgrind_arches
+BuildRequires: /usr/bin/valgrind
+%endif
 Source44: import.info
 
 %description
@@ -90,6 +94,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Nov 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.0.4-alt3_11
+- NMU: fixed FTBFS on LoongArch (no valgrind here yet)
+
 * Wed Sep 28 2022 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt3_10
 - to Sisyphus for fcitx5-skk
 
