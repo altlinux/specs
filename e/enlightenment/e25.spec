@@ -22,7 +22,7 @@
 
 Name: enlightenment
 Version: %ver_major.4
-Release: alt1.1
+Release: alt1.2
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -48,6 +48,8 @@ Patch1: e17-0.17.0-alt-g-s-d_path.patch
 Patch2: enlightenment-0.22.4-alt-e_sys_nosuid.patch
 Patch3: auto-ptrace-disable.patch
 Patch4: enlightenment-0.19.0-alt-pam-helper.patch
+
+Patch10: enlightenment-0.25.4-alt-ddcutil-2.0.patch
 
 Provides: e19 = %EVR
 # Obsoletes/Provides old eNN
@@ -79,7 +81,8 @@ Requires: connman
 Requires: bc
 # sinc 0.24
 #src/bin/system/e_system_ddc.c:   ddc_lib = dlopen("libddcutil.so.4", RTLD_NOW | RTLD_LOCAL);
-Requires: %_libdir/libddcutil.so.4
+# change this to so.5 for ddcutil-2.0
+Requires: %_libdir/libddcutil.so.5
 %{?_enable_xwayland:Requires: xorg-xwayland xorg-drv-libinput}
 %{?_enable_bluetooth:Requires: bluez %_sbindir/rfkill udev-rules-rfkill-uaccess}
 %{?_enable_connman:Requires: connman}
@@ -121,6 +124,7 @@ Development headers for Enlightenment.
 %patch1 -p1 -b .gsd
 %{?_without_suid_binaries:%patch2 -p1 -b .nosuid}
 #%patch3 -p2 -b .ptrace
+%patch10 -p1 -b .ddcutil
 
 # fix logic
 sed -i "s/\(if config_h\.has('HAVE_WAYLAND') == \)false/\1true/" data/session/meson.build
@@ -236,6 +240,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Fri Nov 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.4-alt1.2
+- src/bin/system/e_system_ddc.c: support latest libddcutil.so.5
+
 * Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.4-alt1.1
 - removed pulseaudio-daemon from runtime depedencies (ALT #48333)
 

@@ -15,10 +15,10 @@
 
 # Please submit bugfixes or comments via https://bugzilla.altlinux.org
 
-%define soname 4
+%define soname 5
 
 Name: ddcutil
-Version: 1.4.1
+Version: 2.0.0
 Release: alt1
 
 Summary: Utility to query and update monitor settings
@@ -31,11 +31,13 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 BuildRequires: libi2c-devel i2c-tools
 BuildRequires: python-devel
 BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(jansson)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libkmod)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xext)
 BuildRequires: pkgconfig(zlib)
 
 %description
@@ -72,6 +74,7 @@ Header files and pkgconfig control file for libddcutil.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 NOCONFIGURE=1 ./autogen.sh
 %configure \
     --enable-lib \
@@ -82,18 +85,22 @@ NOCONFIGURE=1 ./autogen.sh
 %make_build
 
 %install
-%makeinstall_std rulesdir=%_udevrulesdir
+%makeinstall_std rulesdir=%_udevrulesdir \
+installed_modulesdir=%_modulesloaddir
 
 %check
 %make check
 
 %files
 %_bindir/%name
-%_udevrulesdir/60-%name.rules
+%_modulesloaddir/%name.conf
+%_udevrulesdir/60-%name-i2c.rules
+%_udevrulesdir/60-%name-usb.rules
 %dir %_datadir/%name
 %dir %_datadir/%name/data
 %_datadir/%name/data/*rules
 %_datadir/%name/data/90-nvidia-i2c.conf
+%_datadir/%name/data/nvidia-i2c.conf
 %_man1dir/%name.1*
 %doc AUTHORS NEWS.md README.md CHANGELOG.md
 
@@ -113,6 +120,9 @@ NOCONFIGURE=1 ./autogen.sh
 # TODO: python subpackage?
 
 %changelog
+* Fri Sep 29 2023 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Tue Jan 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 

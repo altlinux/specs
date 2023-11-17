@@ -1,5 +1,5 @@
 Name: ddcui
-Version: 0.3.0
+Version: 0.4.2
 Release: alt1
 
 Summary: Graphical utility to query and update monitor settings
@@ -9,7 +9,7 @@ Url: http://github.com/rockowitz/%name
 
 Source: %url/archive/v%version/%name-%version.tar.gz
 
-%define ddcutil_ver 1.2.2
+%define ddcutil_ver 1.5
 %define glib_ver 2.40
 %define qt_ver 5.5
 
@@ -46,6 +46,9 @@ BuildRequires: pkgconfig(Qt5Help)
 %doc AUTHORS NEWS.md README.md CHANGELOG.md
 
 %changelog
+* Fri Sep 29 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Wed Aug 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
