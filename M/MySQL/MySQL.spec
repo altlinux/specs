@@ -15,7 +15,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.34
+Version: 8.0.35
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -919,6 +919,18 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri Nov 17 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.35-alt1
+- new version
+  + (fixes: CVE-2023-2650, CVE-2023-22015, CVE-2023-22026, CVE-2023-22028)
+  + (fixes: CVE-2023-22032, CVE-2023-22059, CVE-2023-22064, CVE-2023-22065)
+  + (fixes: CVE-2023-22066, CVE-2023-22068, CVE-2023-22070, CVE-2023-22078)
+  + (fixes: CVE-2023-22079, CVE-2023-22084, CVE-2023-22092, CVE-2023-22095)
+  + (fixes: CVE-2023-22097, CVE-2023-22103, CVE-2023-22104, CVE-2023-22110)
+  + (fixes: CVE-2023-22111, CVE-2023-22112, CVE-2023-22113, CVE-2023-22114)
+  + (fixes: CVE-2023-22115, CVE-2023-38545)
+  + (closes: #48120)
+- update mysql-shell 8.0.34 -> 8.0.35
+
 * Fri Nov 17 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.34-alt1
 - new version
   + (fixes: CVE-2022-4899, CVE-2023-21950, CVE-2023-22005, CVE-2023-22007)
