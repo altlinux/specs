@@ -2,7 +2,7 @@
 
 Name: howdy
 Version: 3.0.0
-Release: alt9.beta1.gitc5b1766
+Release: alt10.beta1.gitc5b1766
 Summary: Windows Hello style authentication
 
 License: MIT
@@ -80,6 +80,8 @@ The package provides gtk interface for %name.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
 cp -a %SOURCE1 %SOURCE2 %SOURCE3 .
 bzip2 -dv *.bz2
 sed -i 's|/usr/bin/env python3|%__python3|' \
@@ -123,6 +125,9 @@ cp -a *.dat %buildroot%_datadir/dlib-data/
 %_datadir/howdy-gtk/
 
 %changelog
+* Fri Nov 17 2023 Anton Golubev <golubevan@altlinux.org> 3.0.0-alt10.beta1.gitc5b1766
+- actually add translations
+
 * Wed Nov 15 2023 Anton Golubev <golubevan@altlinux.org> 3.0.0-alt9.beta1.gitc5b1766
 - add translations
 
