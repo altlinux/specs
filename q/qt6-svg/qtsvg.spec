@@ -3,7 +3,7 @@
 
 Name: qt6-svg
 Version: 6.6.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - Support for rendering and displaying SVG
@@ -11,6 +11,9 @@ Url: http://qt.io/
 License:  LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch1: qtsvg-fix-nullptr-dereference-with-invalid-svg.patch
+Patch2: qtsvg-make-sure-we-dont-load-invalid-svg-twice.patch
+Patch3: qtsvg-verify-loading-of-invalid-svg-files-dont-crash.patch
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: qt6-base-devel
@@ -73,6 +76,9 @@ Provides: %name = %EVR
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %Q6build
@@ -126,6 +132,9 @@ done
 #%_qt6_examplesdir/*
 
 %changelog
+* Fri Nov 17 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt2
+- add upstream fixes
+
 * Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
 - new version
 
