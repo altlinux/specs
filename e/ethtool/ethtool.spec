@@ -1,7 +1,7 @@
 %def_with check
 Name: ethtool
 Version: 6.5
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Ethernet settings tools for network cards
 License: GPLv2
@@ -12,6 +12,8 @@ Source: %name-%version-%release.tar
 BuildRequires: libmnl-devel
 Summary(ru_RU.UTF-8): утилита настройки Ethernet-карт
 Summary(uk_UA.UTF-8): утил╕та налаштування Ethernet-карток
+
+Source1: ethlist
 
 Conflicts: net-tools <= 1.60-alt15
 
@@ -39,6 +41,8 @@ Ethernet-картки, таких як швидк╕сть, порт, autonegoti
 %install
 %makeinstall_std
 
+install %SOURCE1 %buildroot%_sbindir/ethlist
+
 %check
 make check
 
@@ -49,6 +53,9 @@ make check
 %_datadir/bash-completion
 
 %changelog
+* Tue Nov 14 2023 Sergey Y. Afonin <asy@altlinux.org> 1:6.5-alt3
+- NMU: added the ethlist script (ALT #39620)
+
 * Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 1:6.5-alt2
 - fixed URL and VCS tags
 
