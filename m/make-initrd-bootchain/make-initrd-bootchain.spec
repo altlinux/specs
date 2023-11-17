@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt19
+Release: alt20
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -208,6 +208,10 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Fri Nov 17 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt20
+- introduced a common default for setting timeouts
+- altboot: fixed localdev module (ALT #48448)
+
 * Tue Jul 18 2023 Anton Midyukov <antohami@altlinux.org> 0.1.5-alt19
 - bootchain/copyfile: fix unbound variable
 
