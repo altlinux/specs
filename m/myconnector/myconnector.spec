@@ -2,8 +2,8 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.4.4
-Release:  alt3
+Version:  2.5
+Release:  alt1
 
 Summary:  MyConnector - remote desktop client
 License:  GPL-2.0
@@ -138,6 +138,10 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Fri Nov 17 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.5-alt1
+- [CLI] Added an update of the program via the Internet
+- [SSH] Added Terminal
+
 * Thu Nov 09 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4.4-alt3
 - [kiosk] Fixed for SDDM (ALT #44386)
 
