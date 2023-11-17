@@ -2,7 +2,7 @@
 # odbcinst -i -d -f template
 
 Name: mysql-connector-odbc
-Version: 8.0.30
+Version: 8.0.35
 Release: alt1
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
@@ -83,6 +83,18 @@ rm -f %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt,INFO_BIN,INFO_SRC}
 %exclude %_prefix/test
 
 %changelog
+* Sat Nov 18 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.35-alt1
+- New version
+
+* Sat Nov 18 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.33-alt1
+- New version
+
+* Wed Jun 14 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.32-alt1
+- New version (fixes: CVE-2022-24407)
+
+* Tue Nov 15 2022 Nikolai Kostrigin <nickel@altlinux.org> 8.0.31-alt1
+- New version (fixes: CVE-2022-2097)
+
 * Wed Aug 24 2022 Nikolai Kostrigin <nickel@altlinux.org> 8.0.30-alt1
 - New version
 
