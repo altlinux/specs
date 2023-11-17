@@ -15,7 +15,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.31
+Version: 8.0.32
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -63,7 +63,7 @@ Patch5: mysql-8.0.12-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-8.0.27-alt-mysql_config-libs.patch
 Patch9: mysql-8.0.29-alt-disable-run-libmysql_api_test.patch
-Patch10: mysql-8.0.31-alt-upstream-gcc13.patch
+Patch10: mysql-8.0.32-alt-upstream-gcc13.patch
 
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
@@ -921,6 +921,19 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri Nov 17 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.32-alt1
+- new version
+  + (fixes: CVE-2022-32221, CVE-2023-21868, CVE-2023-21875, CVE-2023-21869)
+  + (fixes: CVE-2023-21877, CVE-2023-21880, CVE-2023-21872, CVE-2023-21871)
+  + (fixes: CVE-2023-21836, CVE-2023-21887, CVE-2023-21863, CVE-2023-21864)
+  + (fixes: CVE-2023-21865, CVE-2023-21866, CVE-2023-21867, CVE-2023-21870)
+  + (fixes: CVE-2023-21873, CVE-2023-21876, CVE-2023-21878, CVE-2023-21879)
+  + (fixes: CVE-2023-21881, CVE-2023-21883, CVE-2023-21840, CVE-2023-21882)
+  + (fixes: CVE-2023-21874)
+- update mysql-shell 8.0.31 -> 8.0.32
+  + (fixes: CVE-2020-10735, CVE-2020-36242)
+- update alt-upstream-gcc13 patch 8.0.31 -> 8.0.32
+
 * Wed Nov 15 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.31-alt1
 - new version
   + (fixes: CVE-2022-2097, CVE-2022-21589, CVE-2022-21592, CVE-2022-21594)
