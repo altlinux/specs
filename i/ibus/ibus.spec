@@ -20,9 +20,10 @@
 #172     if test $HAVE_GRAPHICS -eq 1 ; then
 #173         /usr/libexec/Xorg.wrap -noreset ...
 %def_disable installed_tests
+%def_enable gtk_doc
 
 Name: ibus
-Version: 1.5.28
+Version: 1.5.29
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -31,7 +32,8 @@ Group: System/Libraries
 Url: https://github.com/ibus/ibus/wiki
 
 %if_disabled snapshot
-Source: https://github.com/%name/%name/releases/download/%version/%name-%version.tar.gz
+#Source: https://github.com/%name/%name/releases/download/%version/%name-%version.tar.gz
+Source: https://github.com/%name/%name/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -70,7 +72,7 @@ BuildRequires: libgtk+3-devel
 %{?_enable_gtk4:BuildRequires: libgtk4-devel}
 BuildRequires: libdbus-devel
 BuildRequires: desktop-file-utils
-BuildRequires: gtk-doc
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 BuildRequires: iso-codes-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: gnome-icon-theme-symbolic
@@ -85,7 +87,7 @@ BuildRequires: libnotify-devel
 # since 1.5.14
 %{?_enable_emoji_dict:BuildRequires: cldr-emoji-annotation-devel >= 42
 BuildRequires: unicode-emoji >= %unicode_ver unicode-ucd >= %unicode_ver gir(Gtk) = 3.0}
-%{?_enable_appindicator:BuildRequires: qt5-base-devel}
+%{?_enable_appindicator:BuildRequires: qt5-base-devel libdbusmenu-gtk3-devel}
 %{?_enable_check:BuildRequires: xvfb-run gnome-desktop-testing}
 
 %define _xinputconf %_sysconfdir/X11/xinit/xinput.d/ibus.conf
@@ -212,7 +214,7 @@ the functionality of the installed Intelligent Input Bus.
 %prep
 %setup
 %patch10 -p1
-%{?_enable_snapshot:touch ChangeLog}
+touch ChangeLog
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -237,7 +239,8 @@ the functionality of the installed Intelligent Input Bus.
     %{?_disable_emoji_dict:--disable-emoji-dict} \
     %{?_disable_unicode_dict:--disable-unicode-dict} \
     %{subst_enable appindicator} \
-    %{?_enable_installed_tests:--enable-install-tests}
+    %{?_enable_installed_tests:--enable-install-tests} \
+    %{?_enable_gtk_doc:--enable-gtk-doc}
 %nil
 %make_build
 
@@ -363,6 +366,9 @@ xvfb-run %make -k check VERBOSE=1
 %endif
 
 %changelog
+* Fri Nov 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.29-alt1
+- 1.5.29
+
 * Tue Feb 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.28-alt1
 - 1.5.28
 
