@@ -1,10 +1,11 @@
 %define pypi_name dateparser
-#regex!=2019.02.19,!=2021.8.27,<2022.3.15
+
+# 5 failed, 23922 passed in 159.28s
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.1.8
-Release: alt1.2
+Version: 1.2.0
+Release: alt1
 
 Summary: Python parser for human readable dates 
 License: BSD-3-Clause
@@ -31,7 +32,7 @@ BuildRequires: python3-module-pytest-cov python3-module-parameterized
 BuildRequires: python3-module-orderedset python3-module-convertdate
 BuildRequires: python3-module-ruamel-yaml python3-module-umalqurra
 BuildRequires: python3-module-hijri-converter python3-module-langdetect
-BuildRequires: python3-module-fasttext}
+BuildRequires: python3(fasttext) python3(parsel) python3(git)}
 
 %description
 Date parsing library designed to parse dates from HTML pages.
@@ -88,6 +89,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%pypi_name/
 
 
 %changelog
+* Sat Nov 18 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu May 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1.8-alt1.2
 - removed python3-module-nose from BR (ALT #46066)
 
