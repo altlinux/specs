@@ -1,6 +1,6 @@
 Name:           wf-recorder
-Version:        0.4.1
-Release:        alt2
+Version:        0.4.2
+Release:        alt1
 Summary:        Utility program for screen recording of wlroots-based compositors
 License:        MIT
 Group:          Video
@@ -47,7 +47,7 @@ Name=Start screen record
 Name[ru]=Начать запись экрана
 Comment=start button for wf-recorder
 Exec=wf_record.sh &
-Icon=record-desktop
+Icon=media-record
 Terminal=false
 Type=Application
 Categories=Video;
@@ -80,9 +80,13 @@ EOF
 %{_mandir}/man?/%{name}*
 
 %changelog
+* Sat Nov 18 2023 Artyom Bystrov <arbars@altlinux.org> 0.4.2-alt1
+- Add dialog window with sound recording option
+- Add notifications about start and stop record
+- Fix start icon
+
 * Fri Nov 10 2023 Artyom Bystrov <arbars@altlinux.org> 0.4.1-alt2
 - Add run script and "buttons" to run and stop record
-
 
 * Sun Nov  5 2023 Artyom Bystrov <arbars@altlinux.org> 0.4.1-alt1
 - Initial commit for Sisyphus
