@@ -1,16 +1,17 @@
 %define cl_hpp_ver 2.0.10
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: opencl-headers
-Version: 2.2
+Version: 2023.04.17
 Release: alt1
+Epoch: 1
 
 Summary: OpenCL (Open Computing Language) header files
 
 License: MIT
-Group: Development/C++
+Group: Development/C
 Url: https://www.khronos.org/registry/cl/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 #Source-git: https://github.com/KhronosGroup/OpenCL-Headers.git
 # Source-url: https://github.com/KhronosGroup/OpenCL-Headers/archive/master.zip
@@ -20,6 +21,9 @@ Source1: https://github.com/KhronosGroup/OpenCL-CLHPP/releases/download/v%cl_hpp
 # OCL 1.2 compatibility
 Source2: https://www.khronos.org/registry/cl/api/%version/cl.hpp
 
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
+
 BuildArch: noarch
 
 %description
@@ -27,33 +31,30 @@ BuildArch: noarch
 
 %prep
 %setup
-
-cp -p %SOURCE1 %SOURCE2 opencl22/CL/
+cp -p %SOURCE1 %SOURCE2 CL/
 # We're not interested in Direct3D things
-rm -vf opencl22/CL/{cl_dx9_media_sharing*.h,cl_d3d10.h,cl_d3d11.h}
+rm -vf CL/{cl_dx9_media_sharing*.h,cl_d3d10.h,cl_d3d11.h}
 
 %build
-# Nothing to build
+%cmake
+%cmake_build
 
 %install
-mkdir -p %buildroot%_includedir/CL/
-install -p -m 0644 opencl22/CL/* -t %buildroot%_includedir/CL/
+%cmake_install
 
 %files
-%dir %_includedir/CL/
-%_includedir/CL/opencl.h
-%_includedir/CL/cl_platform.h
-%_includedir/CL/cl.h
-%_includedir/CL/cl_ext.h
-%_includedir/CL/cl_ext_intel.h
-%_includedir/CL/cl_egl.h
-%_includedir/CL/cl_gl.h
-%_includedir/CL/cl_gl_ext.h
-%_includedir/CL/cl_va_api_media_sharing_intel.h
-%_includedir/CL/cl2.hpp
-%_includedir/CL/cl.hpp
+%_includedir/CL
+%_datadir/cmake/OpenCLHeaders
+%_datadir/pkgconfig/OpenCL-Headers.pc
 
 %changelog
+* Thu Nov 16 2023 L.A. Kostis <lakostis@altlinux.ru> 1:2023.04.17-alt1
+- Rebased to v2023.04.17.
+- .spec: restructure.
+
+* Thu Nov 16 2023 L.A. Kostis <lakostis@altlinux.ru> 2.2-alt2
+- Fix compile on ppc64le (upstream pull #38).
+
 * Sat Jun 17 2017 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt1
 - new version (2.2) with rpmgs script
 

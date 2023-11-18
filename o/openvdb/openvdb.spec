@@ -1,16 +1,21 @@
 %define _unpackaged_files_terminate_build 1
+
+# enable LTO/full debuginfo only on verified arches due resource constrains
+%ifnarch x86_64 ppc64le aarch64
+%define optflags_debug -g1
+%global optflags_lto %nil
+%define build_type Release
+%else
+%define build_type RelWithDebInfo
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
-
-%ifarch %mips32
-%define optflags_debug -g1
 %endif
 
-%define soname 9.0
+%define soname 10.1
 
 Name: openvdb
-Version: 9.0.0
-Release: alt2
+Version: 10.1.0
+Release: alt1
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: MPL-2.0-no-copyleft-exception
@@ -22,7 +27,7 @@ Source: %name-%version.tar
 Patch1: openvdb-8.0.0-alt-link-with-libatomic-on-mips.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: boost-complete
+BuildRequires: boost-devel boost-interprocess-devel
 BuildRequires: cmake
 BuildRequires: doxygen
 BuildRequires: gcc-c++
@@ -38,6 +43,7 @@ BuildRequires: pkgconfig(xi)
 BuildRequires: pkgconfig(zlib) > 1.2.7
 BuildRequires: pkgconfig(python3)
 BuildRequires: python3-module-numpy libnumpy-py3-devel
+BuildRequires: pybind11-devel
 
 %description
 OpenVDB is an Academy Award-winning open-source C++ library comprising a novel
@@ -82,6 +88,15 @@ volumetric applications typically encountered in feature film production.
 
 This package contains the Python module.
 
+%package doc
+Summary: OpenVDB development documentation
+Group: Documentation
+Requires: %name-devel = %EVR
+BuildArch: noarch
+
+%description doc
+OpenVDB development documentation
+
 %prep
 %setup
 %autopatch -p1
@@ -92,8 +107,6 @@ sed -i \
 	%name/%name/CMakeLists.txt %name/%name/python/CMakeLists.txt
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-
 %cmake \
 	-DOPENVDB_BUILD_DOCS=ON \
 	-DOPENVDB_CORE_SHARED=ON \
@@ -108,6 +121,11 @@ sed -i \
 	-DPython_EXECUTABLE=%_bindir/python3 \
 	-DOPENVDB_USE_IMATH_HALF:BOOL=ON \
 	-DOPENVDB_IMATH_VERSION=3 \
+	-DOPENVDB_BUILD_NANOVDB:BOOL=ON \
+	-DCMAKE_BUILD_TYPE=%build_type \
+%ifarch x86_64
+	-DOPENVDB_SIMD=SSE42 \
+%endif
 	%nil
 
 %cmake_build
@@ -117,6 +135,8 @@ sed -i \
 
 %files
 %_bindir/vdb_print
+%_bindir/nanovdb_print
+%_bindir/nanovdb_validate
 
 %files -n lib%name%soname
 %doc %name/%name/LICENSE %name/%name/COPYRIGHT
@@ -125,15 +145,25 @@ sed -i \
 %_libdir/lib%{name}.so.%{soname}.*
 
 %files -n python3-module-%name
-%python3_sitelibdir/py%{name}.so
+%python3_sitelibdir/py%{name}.cpython-*.so
 
 %files devel
-%_defaultdocdir/OpenVDB
 %_includedir/*
 %_libdir/lib%{name}.so
 %_libdir/cmake/*
 
+%files doc
+%_defaultdocdir/OpenVDB
+
 %changelog
+* Thu Nov 16 2023 L.A. Kostis <lakostis@altlinux.ru> 10.1.0-alt1
+- Updated to upstream version 10.1.0.
+- BR: update.
+- Move documentation to separate noarch package.
+- Enable LTO/full debuginfo only on verified arches.
+- Enable NanoVDB.
+- Build with SSE42 on x86_64.
+
 * Mon Mar 20 2023 Alexander Burmatov <thatman@altlinux.org> 9.0.0-alt2
 - Fix build requires.
 

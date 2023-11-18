@@ -43,7 +43,7 @@
 
 Name: blender
 Version: 3.6.5
-Release: alt2
+Release: alt3
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -82,7 +82,7 @@ Patch2000: blender-e2k-support.patch
 Patch300: 0001-Cycles-Fix-MNEE-not-accounting-for-closure-Fresnel.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: boost-filesystem-devel boost-locale-devel
+BuildRequires: boost-filesystem-devel boost-locale-devel boost-wave-devel
 BuildRequires: cmake gcc-c++
 BuildRequires: libGLEW-devel libXi-devel
 BuildRequires: libavdevice-devel libavformat-devel libavfilter-devel libswresample-devel
@@ -394,6 +394,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Fri Nov 17 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.5-alt3
+- BR: adjust boost requires.
+
 * Tue Nov 14 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.5-alt2
 - Update BR:
   + Added WebP support.

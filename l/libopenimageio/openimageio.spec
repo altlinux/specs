@@ -11,7 +11,7 @@
 
 Name:           lib%oname
 Version:        2.5.5.0
-Release:        alt1
+Release:        alt2
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -57,7 +57,7 @@ BuildRequires:  libdcmtk-devel
 %endif
 BuildRequires:  libopencv-devel
 BuildRequires: libavcodec-devel libavformat-devel libswscale-devel
-BuildRequires: libheif-devel
+BuildRequires: libheif-devel libPtex-devel
 
 # WARNING: OpenColorIO and OpenImageIO are cross dependent.
 # If an ABI incompatible update is done in one, the other also needs to be
@@ -170,7 +170,6 @@ rm -fr src/include/OpenImageIO/detail/pugixml/
 	-DINSTALL_FONTS:BOOL=FALSE \
 	-DUSE_EXTERNAL_PUGIXML:BOOL=TRUE \
 	-DSTOP_ON_WARNING:BOOL=FALSE \
-	-DJPEG_INCLUDE_DIR=%_includedir \
 	-DOPENJPEG_INCLUDE_DIR=$(pkg-config --variable=includedir libopenjp2) \
 	-DOpenGL_GL_PREFERENCE=GLVND \
 	-DVERBOSE=TRUE \
@@ -183,6 +182,7 @@ rm -fr src/include/OpenImageIO/detail/pugixml/
 	-DBUILD_DOCS:BOOL=FALSE \
 %else
 	-DBUILD_DOCS:BOOL=TRUE \
+	-DCMAKE_CXX_STANDARD=17 \
 %endif
 	%nil
 
@@ -233,6 +233,10 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Thu Nov 16 2023 L.A. Kostis <lakostis@altlinux.ru> 2.5.5.0-alt2
+- Build: use C++17 for new openvdb.
+- BR: added Ptex.
+
 * Tue Nov 07 2023 L.A. Kostis <lakostis@altlinux.ru> 2.5.5.0-alt1
 - Updated to upstream version 2.5.5.0.
 
