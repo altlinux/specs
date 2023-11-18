@@ -4,7 +4,7 @@
 %add_findreq_skiplist %_libdir/cmake/*.py
 
 Name: kf5-%rname
-Version: 5.111.0
+Version: 5.112.0
 Release: alt1
 %K5init altplace
 
@@ -82,7 +82,12 @@ KF5 library
 %install
 %K5install
 %K5install_move data doc
-mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
+if [ "%_datadir/locale" != "%_K5i18n" ] ; then
+    mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
+else
+    cp -arl %buildroot/%_datadir/kf5/* %buildroot/%_datadir/ ||:
+    rm -rf %buildroot/%_datadir/kf5/
+fi
 
 rm -rf %buildroot/%_libdir/cmake/KF5KDELibs4Support/FindSIP.*
 
@@ -131,6 +136,9 @@ rm -rf %buildroot/%_libdir/cmake/KF5KDELibs4Support/FindSIP.*
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Wed Nov 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt1
+- new version
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt1
 - new version
 

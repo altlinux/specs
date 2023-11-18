@@ -6,8 +6,8 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.111.0
-Release: alt2
+Version: 5.112.0
+Release: alt1
 %K5init no_altplace
 
 Group: System/Libraries
@@ -139,6 +139,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Wed Nov 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt1
+- new version
+
 * Tue Nov 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt2
 - force standard placement
 

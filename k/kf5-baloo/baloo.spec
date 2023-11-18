@@ -5,8 +5,8 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.111.0
-Release: alt2
+Version: 5.112.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -126,6 +126,9 @@ done
 %_K5lib/libKF5BalooEngine.so.*
 
 %changelog
+* Wed Nov 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt1
+- new version
+
 * Sat Nov 04 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt2
 - dont hardcode path in service file
 

@@ -1,8 +1,8 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.111.0
-Release: alt2
+Version: 5.112.0
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -133,6 +133,9 @@ fi
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Wed Nov 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt1
+- new version
+
 * Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.111.0-alt2
 - don't force alternate placement placement
 - add alternative for dbus org.freedesktop.secrets.service
