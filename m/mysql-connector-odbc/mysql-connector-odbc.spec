@@ -3,7 +3,7 @@
 
 Name: mysql-connector-odbc
 Version: 8.0.35
-Release: alt1
+Release: alt2
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
 
@@ -22,6 +22,7 @@ Source2: odbcinst.ini
 
 Patch1: %name-8.0.22-alt-rpath.patch
 Patch2: %name-8.0.13-fedora-myodbc-64bit.patch
+Patch3: %name-8.0.35-libdir-wtf.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -46,6 +47,7 @@ setup instructions can be found at
 
 %patch1 -p2
 %patch2 -p1
+%patch3 -p1
 
 %build
 %cmake -G "Unix Makefiles" \
@@ -83,6 +85,9 @@ rm -f %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt,INFO_BIN,INFO_SRC}
 %exclude %_prefix/test
 
 %changelog
+* Sat Nov 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.0.35-alt2
+- NMU: fixed FTBFS on LoongArch (and possibly riscv64)
+
 * Sat Nov 18 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.35-alt1
 - New version
 
