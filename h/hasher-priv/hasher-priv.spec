@@ -1,5 +1,5 @@
 Name: hasher-priv
-Version: 2.0.12
+Version: 2.0.13
 Release: alt1
 
 Summary: A privileged helper for the hasher project
@@ -77,6 +77,11 @@ fi
 %doc DESIGN
 
 %changelog
+* Sat Nov 18 2023 Dmitry V. Levin <ldv@altlinux.org> 2.0.13-alt1
+- hasher-useradd: added -f/--force option to skip uid check (by Alexey Gladkov).
+- daemon.conf: added min_uid and min_gid options to change
+  minimal allowed uid and gid values (by Alexey Gladkov).
+
 * Tue Jul 25 2023 Arseny Maslennikov <arseny@altlinux.org> 2.0.12-alt1
 - hasher-useradd: Started using gpasswd(8) again.
 
