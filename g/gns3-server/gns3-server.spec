@@ -1,9 +1,8 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%def_disable check
+%def_with doc
 
-%add_verify_elf_skiplist %python3_sitelibdir/gns3server/compute/docker/resources/bin/busybox
 %add_findreq_skiplist %python3_sitelibdir/gns3server/compute/docker/*
 %add_python3_req_skip prompt_toolkit.eventloop.base
 %add_python3_req_skip prompt_toolkit.interface
@@ -11,67 +10,65 @@
 %add_python3_req_skip prompt_toolkit.terminal.vt100_output
 
 Name: gns3-server
-Version: 2.2.35.1
+Version: 2.2.44.1
 Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
-License: GPLv3
-Group: File tools
+License: GPL-3.0-or-later
+Group: Emulators
 Url: https://github.com/GNS3/gns3-server
 
 Buildarch: noarch
 
 Source: %name-%version.tar
+Patch: 0001-changing-busybox-udhcpc-script-path.patch
 
-# test_lock_decorator is failed at ALT girar
-Patch: drop-test_lock_decorator.patch
-
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3 rpm-build-gir
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3-module-importlib-resources
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
+
+%if_with doc
+BuildRequires: python3-module-sphinx
+%endif
 Requires: cpulimit
 Requires: dynamips >= 0.2.11
-Requires: python3-module-aiofiles >= 22.1.0
-Requires: python3-module-aiohttp >= 3.8.3
-Requires: python3-module-aiohttp-cors >= 0.7.0
-Requires: python3-module-async-timeout >= 3.0.1
-Requires: python3-module-jinja2 >= 3.1.2
-Requires: python3-module-jsonschema >= 3.2.0
-Requires: python3-module-psutil >= 5.9.2
-#Requires: python3-module-sentry-sdk >= 1.5.12
 Requires: iouyap
 Requires: ubridge
 Requires: vpcs
+Requires(pre): busybox
 Conflicts: gns3 < 1.0.0
-
-%if_disabled check
-%else
-BuildRequires: /proc
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-aiohttp
-BuildRequires: python3-module-aiohttp >= 3.8.3
-BuildRequires: python3-module-aiohttp-tests
-BuildRequires: python3-module-jsonschema >= 3.2.0
-BuildRequires: python3-module-aiofiles >= 22.1.0
-BuildRequires: python3-module-psutil >= 5.9.2
-BuildRequires: python3-module-jinja2 >= 3.1.2
-BuildRequires: python3-module-distro
-BuildRequires: python3-module-aiohttp-cors >= 0.7.0
-#BuildRequires: python3-module-cpuinfo
-%endif
 
 %description
 The GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM.
 Clients like the GNS3 GUI controls the server using a HTTP REST API.
+
+%package doc
+Summary: Documentation for %name
+Group: Documentation
+
+%description doc
+Documentation for %name.
 
 %prep
 %setup
 %patch -p1
 echo '' > requirements.txt
 
+# Don't bundle busybox with the package
+sed -i -r '/^copy_busybox/d' setup.py
+
+# Don't bundle OVMF_CODE.fd OVMF_VARS.fd with the package
+rm -fv %buildroot/%python3_sitelibdir/gns3server/disks/OVMF_CODE.fd
+rm -fv %buildroot/%python3_sitelibdir/gns3server/disks/OVMF_VARS.fd
+
 %build
 %pyproject_build
+
+# Build the doc1834283s
+%make_build -C docs html SPHINXBUILD=py3_sphinx-build
+/bin/rm -f docs/_build/html/.buildinfo
 
 %install
 %pyproject_install
@@ -80,17 +77,51 @@ echo '' > requirements.txt
 rm tests/controller/gns3vm/test_virtualbox_gns3_vm.py
 %endif
 
-%check
-export PYTHONPATH=%buildroot/%python3_sitelibdir/
-py.test3 -v
+touch %buildroot%python3_sitelibdir/gns3server/compute/docker/resources/bin/busybox
+
+# Remove shebang
+find %buildroot/%python3_sitelibdir/ -name '*.py' -print \
+   -exec sed -i '1{\@^#!/usr/bin/env python@d}' {} \;
+
+# Set bit execution
+find %buildroot/%python3_sitelibdir/ -name '*.sh' -print \
+   -exec chmod +x {} \;
+chmod +x %buildroot/%python3_sitelibdir/gns3server/compute/docker/resources/bin/udhcpc
+chmod +x %buildroot/%python3_sitelibdir/gns3server/compute/docker/resources/etc/udhcpc/default.script
+
+# Remove empty file
+rm -f %buildroot/%python3_sitelibdir/gns3server/symbols/.gitkeep
+
+%post
+# Replace bundled busybox with ALT Linux one
+cp -fp /bin/busybox %python3_sitelibdir/gns3server/compute/docker/resources/bin/busybox
+
+# Replace bundled OVMF_CODE.fd OVMF_VARS.fd with ALT Linux ones
+#cp -fp %_datadir/edk2/ovmf/OVMF_CODE.fd %python3_sitelibdir/gns3server/disks/OVMF_CODE.fd
+#cp -fp %_datadir/edk2/ovmf/OVMF_VARS.fd %python3_sitelibdir/gns3server/disks/OVMF_VARS.fd
 
 %files
-%doc AUTHORS README.rst
+%doc README.md AUTHORS CHANGELOG
 %_bindir/*
 %python3_sitelibdir/gns3server
 %python3_sitelibdir/gns3_server-%version.dist-info/
+%ghost %python3_sitelibdir/gns3server/compute/docker/resources/bin/busybox
+%ghost %python3_sitelibdir/gns3server/disks/OVMF_CODE.fd
+%ghost %python3_sitelibdir/gns3server/disks/OVMF_VARS.fd
+
+%files doc
+%doc docs/_build/html
 
 %changelog
+* Fri Nov 17 2023 Anton Midyukov <antohami@altlinux.org> 2.2.44.1-alt1
+- New version 2.2.44.1
+- fix License
+- build documentation
+- change Group: Emulators
+
+* Mon Jun 26 2023 Anton Midyukov <antohami@altlinux.org> 2.2.40.1-alt1
+- New version 2.2.40.1.
+
 * Thu Dec 22 2022 Anton Midyukov <antohami@altlinux.org> 2.2.35.1-alt1
 - new version 2.2.35.1
 - switch to use pyproject.toml

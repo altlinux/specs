@@ -2,12 +2,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gns3-gui
-Version: 2.2.35.1
+Version: 2.2.44.1
 Release: alt1
 
 Summary: GNS3 Graphical User Interface
-License: GPLv3
-Group: File tools
+License: GPL-3.0-or-later
+Group: Emulators
 Url: https://github.com/GNS3/gns3-gui
 
 Buildarch: noarch
@@ -19,12 +19,13 @@ Source3: gns3-48x48.png
 #Source4: gns3.xml
 Source5: gns3.desktop
 
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
-Requires: python3-module-jsonschema >= 3.2.0
-Requires: python3-module-raven >= 5.23.0
-Requires: python3-module-psutil >= 5.9.0
-Requires: python3-module-service_identity
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3 rpm-build-gir
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+Requires: telnet
+Requires: socat
 
 %description
 GNS3 is a excellent complementary tool to real labs for administrators
@@ -52,10 +53,10 @@ Full installation gns3-server, gns3-gui and optional Requires.
 echo '' > requirements.txt
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 install -Dp -m0644 %SOURCE1 %buildroot%_miconsdir/gns3.png
 install -Dp -m0644 %SOURCE1 %buildroot%_iconsdir/hicolor/48x48/mimetypes/application-x-gns3.png
 install -Dp -m0644 %SOURCE2 %buildroot%_niconsdir/gns3.png
@@ -63,12 +64,25 @@ install -Dp -m0644 %SOURCE3 %buildroot%_liconsdir/gns3.png
 #install -Dp -m0644 %SOURCE4 %buildroot%_datadir/mime/packages/gns3.xml
 install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 
+	
+# Remove shebang
+for lib in `find %buildroot/%python3_sitelibdir/ -name '*.py'`; do
+ echo $lib
+ sed -i '1{\@^#!/usr/bin/env python@d}' $lib
+done
+ 
+# Remove empty files
+find %buildroot/%python3_sitelibdir/ -name '.keep' -type f -delete
+ 
+# Remove exec perm
+find %buildroot/%python3_sitelibdir/ -type f -exec chmod -x {} \;
+
 %files
-%doc AUTHORS LICENSE README.rst
+%doc AUTHORS LICENSE README.md
 %_bindir/*
 %python3_sitelibdir/gns3
-%python3_sitelibdir/gns3_gui-*.egg-info
-%_desktopdir/gns3.desktop
+%python3_sitelibdir/gns3_gui-%version.dist-info/
+%_desktopdir/gns3*.desktop
 %_iconsdir/hicolor/*/apps/gns3.*
 %_iconsdir/hicolor/*/mimetypes/application-x-gns3*.*
 %_datadir/mime/packages/gns3-gui.xml
@@ -76,6 +90,12 @@ install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 %files -n gns3
 
 %changelog
+* Sat Nov 18 2023 Anton Midyukov <antohami@altlinux.org> 2.2.44.1-alt1
+- New version 2.2.44.1
+- fix License
+- change Group: Emulators
+- migration to PEP517
+
 * Tue Jan 03 2023 Anton Midyukov <antohami@altlinux.org> 2.2.35.1-alt1
 - new version 2.2.35.1
 
