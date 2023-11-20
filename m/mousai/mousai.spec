@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: mousai
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Identify songs in seconds
@@ -79,6 +79,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Nov 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt1
+- 0.7.6
+
 * Thu Nov 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt1
 - first build for Sisyphus (v0.7.5-134-gd53fb71)
 
