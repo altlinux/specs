@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: Python library that is a collection of functions and objects for common network automation tasks
 License: Apache-2.0
@@ -22,6 +22,8 @@ BuildRequires: python3-module-toml
 BuildRequires: python3-module-jinja2
 BuildRequires: python3-module-jsonschema
 %endif
+
+%add_python3_req_skip distutils.version
 
 BuildArch: noarch
 
@@ -53,5 +55,8 @@ rm -f %buildroot%python3_sitelibdir/README.md
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Nov 20 2023 Alexander Burmatov <thatman@altlinux.org> 1.6.0-alt2
+- Skip distutils requires.
+
 * Tue Nov 14 2023 Alexander Burmatov <thatman@altlinux.org> 1.6.0-alt1
 - Initial build for Sisyphus.
