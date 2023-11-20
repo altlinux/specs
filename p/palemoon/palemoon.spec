@@ -1,4 +1,4 @@
-# git commit f8b690cff91c3f281fddad01c4999a96a283949b
+# git commit 30b19d3ebaff7d7a91c130f910cf63e335dfce37
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
@@ -6,7 +6,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Name: palemoon
 Version:  32.5.0
 
-Release: alt1_1_git_30b19d3eb
+Release: alt2
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -79,39 +79,29 @@ Patch114: nemoon_branding-31.0.0.patch
 Patch115: palemoon-32.4.0-mathops.patch
 Patch116: palemoon-32.4.0-hunspell.patch
 
-#set_gcc_version 10
 %set_autoconf_version 2.13
 
 
-# Automatically added by buildreq on Sat Nov 18 2023
-# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base python3-dev python3-module-setuptools sh5 xorg-proto-devel zlib-devel
-BuildRequires: doxygen gcc-c++ libGConf-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libgtk+3-devel libhunspell-devel libpulseaudio-devel
-BuildRequires: libsocket python-modules-distutils python-modules-json python-modules-wsgiref unzip yasm zip
+# Automatically added by buildreq on Mon Nov 20 2023
+# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel
+# libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libctf-nobfd0
+# libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel
+# libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email
+# python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base
+# python3-dev python3-module-setuptools sh5 xorg-proto-devel zlib-devel
+BuildRequires: doxygen gcc-c++ libGConf-devel libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel
+BuildRequires: libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket python-modules-distutils python-modules-json
+BuildRequires: python-modules-wsgiref unzip yasm zip
+
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: gobject-introspection-devel libssl-devel perl(Archive/Zip.pm) perl(CGI.pm) perl(LWP/Simple.pm)
 BuildRequires: perl(XML/LibXML.pm) perl(XML/LibXSLT.pm) perl(diagnostics.pm) perl(fastcwd.pl) swig texinfo
 # END SourceDeps(oneline)
 
-
-BuildPreReq: libXcomposite-devel libXdamage-devel libdbus-glib-devel libgtk+2-devel libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket python-modules-distutils python-modules-json
-BuildPreReq: python-modules-wsgiref unzip yasm zip
-
-BuildPreReq: libevent-devel
-BuildPreReq:   gyp
-BuildPreReq:   ninja-build
-BuildPreReq:   chrpath zlib-devel libsqlite3-devel
-
 BuildPreReq: %_bindir/python2.7 python2-base
 
-BuildPreReq: libvpx-devel libzfs-devel
-BuildPreReq: libnspr-devel
-
 %ifarch x86_64
-BuildRequires: libcpuid-devel
-%endif
-
-%ifarch i586
 BuildRequires: libcpuid-devel
 %endif
 
@@ -131,26 +121,6 @@ BuildPreReq: chrpath
 BuildPreReq: autoconf_%_autoconf_version
 
 BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel
-
-BuildRequires: pkgconfig(hunspell)
-BuildRequires: clang%llvm_version
-BuildRequires: clang%llvm_version-devel
-BuildRequires: llvm%llvm_version-devel
-BuildRequires: lld%llvm_version-devel
-BuildRequires: libstdc++-devel
-BuildRequires: glibc-kernheaders-generic
-BuildRequires: rpm-macros-alternatives
-BuildRequires: rust >= %rust_version
-BuildRequires: rust-cargo >= %cargo_version
-BuildRequires: node
-#BuildRequires: nasm yasm
-BuildRequires: yasm
-
-BuildRequires: zip unzip
-BuildRequires: libshell
-BuildRequires: libwireless-devel
-BuildRequires: libnss-devel-static
-BuildRequires: xorg-cf-files chrpath alternatives
 
 %description
 The %sname project is a redesign of Mozilla's  Firefox browser component,
@@ -234,10 +204,6 @@ cd ..
 
 %patch23 -p1
 
-#ifarch ppc64le
-#patch15 -p1
-#endif
-
 #Pach from Rosa
 ##patch101 -p1 -b .lang
 %patch103  -p1 -b .disable-software-update
@@ -306,22 +272,11 @@ echo "ac_add_options --with-pthreads" >> .mozconfig
 echo "ac_add_options --x-libraries=%_libdir/X11" >> .mozconfig
 echo "ac_add_options --with-nss-prefix=%_libdir" >> .mozconfig
 
-%ifarch %ix86
- echo "ac_add_options --with-arch=i586" >> .mozconfig
- echo 'ac_add_options --enable-optimize=" -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
-%endif
-
 %ifarch x86_64
  echo "ac_add_options --with-arch=x86-64" >> .mozconfig
  echo 'ac_add_options --enable-optimize=" -march=x86-64 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
-
-#ifarch ppc64le
-# echo 'ac_add_options --enable-optimize=" -maltivec "' >> .mozconfig
-# echo 'ac_add_options "-DNSS_DISABLE_CRYPTO_VSX=1"'
-#endif
-# echo 'ac_add_options --enable-optimize=" -mcpu=powerpc64 -maltivec  -mpower8-vector"' >> .mozconfig
 
 %build
 cd %sname
@@ -341,11 +296,7 @@ MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
                 sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
 
 export CFLAGS="$MOZ_OPT_FLAGS"
-export CXXFLAGS="$MOZ_OPT_FLAGS -Wno-error=format-overflow -Wmaybe-uninitialized -Wreorder -D_GNUC_"
-
-#ifarch ppc64le
-#  CXXFLAGS+="-DNSS_DISABLE_CRYPTO_VSX=1"
-#endif
+export CXXFLAGS="$MOZ_OPT_FLAGS -Wno-error=format-overflow -Wmaybe-uninitialized -Wreorder -fno-rtti -ffunction-sections -fdata-sections -D_GNUC_"
 
 # Add fake RPATH
 rpath="/$(printf %%s '%newmoon_bindir' |tr '[:print:]' '_')"
@@ -353,8 +304,6 @@ export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 
 # for  palemoon_rpath-27.0.2.patch
 export RPATH_PATH="$rpath"
-
-%{?_is_lp64:export USE_64=1}
 
 echo '%newmoon_bindir'
 echo "$rpath"
@@ -370,12 +319,6 @@ export SHELL=/bin/sh
 %__autoconf
 
 MOZ_SMP_FLAGS=%_smp_mflags
-#ifarch %ix86
-#[ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
-#[ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
-#%else
-#    MOZ_SMP_FLAGS=-j${NPROCS:-4}
-#endif
 
 TOPSRCDIR=$pwd
 
@@ -544,6 +487,9 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Mon Nov 20 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.0-alt2
+- Release 32.5.0
+
 * Thu Nov 16 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.0-alt1_1_git_30b19d3eb
 - Version 32.5.0 (git commit 30b19d3eb)
 (CVE-2023-5722, CVE-2023-5723, CVE-2023-5724, CVE-2023-5727)
