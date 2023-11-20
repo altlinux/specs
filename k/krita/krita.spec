@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 %def_disable python_bindings
 
-%define sover 18
+%define sover 19
 %define libkritacommand libkritacommand%sover
 %define libkritaimpex libkritaimpex%sover
 %define libkritalibkis libkritalibkis%sover
@@ -35,10 +35,11 @@
 %define libkritapsdutils libkritapsdutils%sover
 %define libkritatiffpsd libkritatiffpsd%sover
 %define libkritaexifcommon libkritaexifcommon%sover
+%define libkritamultiarch libkritamultiarch%sover
 
 Name: krita
-Version: 5.1.5
-Release: alt3
+Version: 5.2.1
+Release: alt1
 %K5init no_altplace
 
 Group: Graphics
@@ -71,23 +72,26 @@ BuildRequires: extra-cmake-modules
 BuildRequires: qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel qt5-x11extras-devel
 BuildRequires: python3-devel
 %if_enabled python_bindings
-BuildRequires: python3-module-PyQt5-devel python3-module-sip5
+BuildRequires: python3-module-PyQt5-devel python3-module-sip6
 %endif
-BuildRequires: eigen3 libfftw3-devel libgomp-devel libgsl-devel
+BuildRequires: eigen3 libfftw3-devel libgomp-devel libgsl-devel libunibreak5-devel libfribidi-devel
 BuildRequires: boost-devel boost-geometry-devel
+BuildRequires: xsimd-devel immer-devel zug-devel lager-devel
 #BuildRequires: libgif-devel
 BuildRequires: quazip-qt5-devel
 #BuildRequires: libquadmath-devel
 BuildRequires: libopencolorio2.0-devel
 BuildRequires: libXres-devel libxcbutil-devel
-BuildRequires: libjpeg-devel libpng-devel libpoppler-qt5-devel libraw-devel libtiff-devel libwebp-devel
-BuildRequires: libturbojpeg-devel pkgconfig(libopenjp2) libjxl-devel
+BuildRequires: libjpeg-devel libpng-devel libpoppler-qt5-devel libraw-devel libwebp-devel libtiff-devel
+BuildRequires: libturbojpeg-devel pkgconfig(libopenjp2) /usr/bin/opj2_decompress
+#BuildRequires: libjxl-devel # absent on i586
 BuildRequires: libheif-devel
 #BuildRequires: openexr-devel
 BuildRequires: libexiv2-devel liblcms2-devel
-#BuildRequires: libmypaint-devel
-BuildRequires: xsimd-devel
+BuildRequires: mlt7xx-devel libSDL2-devel
+BuildRequires: libmypaint-devel
 BuildRequires: kf5-karchive-devel kf5-kcrash-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kwindowsystem-devel
+BuildRequires: kde5-libkdcraw-devel
 
 %description
 Krita is a free and open source digital painting application.
@@ -364,14 +368,21 @@ Requires: %name-common >= %EVR
 %description -n %libkritaexifcommon
 %name library
 
+%package -n %libkritamultiarch
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libkritamultiarch
+%name library
+
 %prep
 %setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
-sed -i 's|sipbuild|sipbuild5|' cmake/modules/FindSIP.py
-sed -i 's|sipbuild|sipbuild5|' cmake/modules/sip-generate.py
+#sed -i 's|sipbuild|sipbuild5|' cmake/modules/FindSIP.py
+#sed -i 's|sipbuild|sipbuild5|' cmake/modules/sip-generate.py
 %ifarch %arm
 sed -i 's,HAVE_OCIO,0,' plugins/dockers/CMakeLists.txt
 %endif
@@ -510,8 +521,14 @@ done
 %files -n %libkritaexifcommon
 %_libdir/libkritaexifcommon.so.%sover
 %_libdir/libkritaexifcommon.so.*
+%files -n %libkritamultiarch
+%_libdir/libkritamultiarch.so.%sover
+%_libdir/libkritamultiarch.so.*
 
 %changelog
+* Wed Nov 08 2023 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- new version
+
 * Tue May 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.1.5-alt3
 - build with xsimd
 
