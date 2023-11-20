@@ -1,14 +1,16 @@
 %define rname kdesu
+%define kdesu_user _kdesu5
+%define kdesu_user_dir %_localstatedir/%kdesu_user
 
 Name: kf5-%rname
 Version: 5.112.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 user interface for running shell commands with root privileges
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: CC0-1.0 AND GPL-2.0-only AND LGPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND LGPL-3.0-only AND LicenseRef-KDE-Accepted-LGPL
 
 Source: %rname-%version.tar
 Patch1: alt-fix-su-to-different-non-root-user.patch
@@ -52,7 +54,6 @@ Requires: %name-common = %version-%release
 %description -n libkf5desu
 KF5 library
 
-
 %prep
 %setup -n %rname-%version
 %patch1 -p2
@@ -65,8 +66,14 @@ KF5 library
 
 %install
 %K5install
+
+mkdir -p %buildroot/%kdesu_user_dir
+
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
+
+%pre
+/usr/sbin/useradd -M -r -d %kdesu_user_dir -s /sbin/nologin -c 'KDE SU wrapper' %kdesu_user 2>/dev/null || :
 
 %files common -f %name.lang
 %doc LICENSES/* README.md
@@ -80,11 +87,15 @@ KF5 library
 %_K5archdata/mkspecs/modules/qt_KDESu.pri
 
 %files -n libkf5desu
+%attr(0750,root,%kdesu_user) %dir %kdesu_user_dir
 %_K5exec/kdesu_stub
-%attr(2711,root,nobody) %_K5exec/kdesud
+%attr(2711,root,%kdesu_user) %_K5exec/kdesud
 %_K5lib/libKF5Su.so.*
 
 %changelog
+* Fri Nov 17 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt2
+- create a special system user
+
 * Wed Nov 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt1
 - new version
 
