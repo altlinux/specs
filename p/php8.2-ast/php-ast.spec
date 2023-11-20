@@ -1,7 +1,7 @@
 %define php_extension ast
 
 Name: php%_php_suffix-%php_extension
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1.%php_version
 
 Summary: Extension exposing PHP 7 abstract syntax tree
@@ -9,7 +9,9 @@ License: BSD-3-Clause
 Group: System/Servers
 
 Url: https://github.com/nikic/php-ast
-Source: php-%php_extension-%version.tar
+Source0: php-%php_extension-%version.tar
+Source1: php-%php_extension.ini
+Source2: php-%php_extension-params.sh
 
 BuildRequires(pre): rpm-build-php8.2-version
 BuildRequires: rpm-build-php
@@ -28,6 +30,8 @@ phpize
 
 %install
 %php_make_install
+install -D -m 644 %SOURCE1 %buildroot/%php_extconf/%php_extension/config
+install -D -m 644 %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 
 %check
 NO_INTERACTION=1 make test
@@ -40,6 +44,9 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %version-%release
+
+* Thu Nov 16 2023 Alexey Shemyakin <alexeys@altlinux.org> 1.1.1-alt1
+- Update to version 1.1.1.
 
 * Fri Oct 13 2023 Alexey Shemyakin <alexeys@altlinux.org> 1.1.0-alt1
 - Initial build for ALT.
