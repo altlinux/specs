@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.61
+Version: 1.62
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -259,6 +259,10 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Sat Nov 18 2023 Vitaly Chikunov <vt@altlinux.org> 1.62-alt1
+- Slightly improve microvm boot and qemu option passing thru.
+- initrd: Install tools symlinks for busybox.
+
 * Tue Nov 14 2023 Vitaly Chikunov <vt@altlinux.org> 1.61-alt1
 - Add 'exact command' mode (when there is more than single argument).
 
