@@ -1,6 +1,6 @@
 Name: alt-tasks
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Utility for observing ALT Linux tasks
 License: GPLv3
@@ -38,6 +38,9 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Nov 17 2023 Alexey Appolonov <alexey@altlinux.org> 0.9.0-alt2
+- Corrected copyright notices.
+
 * Mon Nov 06 2023 Alexey Appolonov <alexey@altlinux.org> 0.9.0-alt1
 - Ability to filter the results by src package names taken from a txt file;
 - Ability to process all targets at once (with a single command).
