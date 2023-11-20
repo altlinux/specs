@@ -2,8 +2,8 @@
 
 %def_with check
 
-Name: rapidfuzz-devel
-Version: 2.1.1
+Name: rapidfuzz-cpp
+Version: 2.2.3
 Release: alt1
 
 Summary: Rapid fuzzy string matching in C++ using the Levenshtein Distance
@@ -26,6 +26,13 @@ BuildRequires: catch-devel
 %description
 %summary.
 
+%package devel
+Summary: Rapid fuzzy string matching in C++ using the Levenshtein Distance
+Group: Development/C++
+
+%description devel
+%summary.
+
 %prep
 %setup
 
@@ -44,12 +51,18 @@ BuildRequires: catch-devel
 %check
 %ctest
 
-%files
+%files devel
 %doc LICENSE README.md CHANGELOG.md
 %_includedir/rapidfuzz
 %_libdir/cmake/rapidfuzz
 
 %changelog
+* Mon Nov 20 2023 Anton Zhukharev <ancieg@altlinux.org> 2.2.3-alt1
+- Updated to 2.2.3.
+
+* Mon Nov 20 2023 Anton Zhukharev <ancieg@altlinux.org> 2.1.1-alt2
+- Renamed to rapidfuzz-cpp to match the project name.
+
 * Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 2.1.1-alt1
 - Built for ALT Sisyphus.
 
