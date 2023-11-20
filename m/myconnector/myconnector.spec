@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.5
+Version:  2.5.1
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -138,6 +138,9 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Mon Nov 20 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.5.1-alt1
+- [FreeRDP] Fixed connecting with NLA if username is not set
+
 * Fri Nov 17 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.5-alt1
 - [CLI] Added an update of the program via the Internet
 - [SSH] Added Terminal
