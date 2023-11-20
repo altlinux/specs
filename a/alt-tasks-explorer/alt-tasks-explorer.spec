@@ -4,7 +4,7 @@
 
 Name: %{base}-explorer
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: A set of utils used on top of the "alt-task" utility
 License: GPLv3
@@ -41,7 +41,7 @@ cp %{base}-* %{buildroot}%{_bindir}
 # Modules
 cp alt_tasks_explorer/*.py %{buildroot}%{thislibdir}
 # Documentation
-cp COPYING %{buildroot}%{thisdocdir}
+cp COPYING readme.txt %{buildroot}%{thisdocdir}
 
 %files
 %{_bindir}/%{base}-*
@@ -51,5 +51,8 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
-* Thu Nov 15 2023 Alexey Appolonov <alexey@altlinux.org> 0.1.0-alt1
+* Mon Nov 20 2023 Alexey Appolonov <alexey@altlinux.org> 0.1.0-alt2
+- Added manual.
+
+* Thu Nov 16 2023 Alexey Appolonov <alexey@altlinux.org> 0.1.0-alt1
 - Initial release.
