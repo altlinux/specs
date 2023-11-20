@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.14.5
+Version: 1.14.6
 Release: alt1
 
 Summary: Installer common parts
@@ -107,6 +107,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 1.14.6-alt1
+- install2: stop splash before run alterator-vnc
+
 * Mon Oct 09 2023 Dmitry Terekhin <jqt4@altlinux.org> 1.14.5-alt1
 - postinstall.d/65-setup-services.sh: add (un)mask units
 
