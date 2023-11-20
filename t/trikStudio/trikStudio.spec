@@ -8,7 +8,7 @@
 
 Name: trikStudio
 Version: 2022.2
-Release: alt2
+Release: alt2.1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -112,8 +112,14 @@ popd
 # Quick hack for python3.11 but think about using system pythonqt library.
 %patch5 -p1
 
+%ifarch loongarch64 riscv64
+# gold does not work on these architectures
+sed -e '/use_gold_linker/d' -i \
+    global.pri \
+    plugins/robots/thirdparty/trikRuntime/trikRuntime/global.pri
+%endif
+
 %build
-export NPROCS=1
 %qmake_qt5 -r \
     LIBS+="`pkg-config --libs quazip1-qt5`" \
     INCLUDEPATH+="`pkg-config --cflags-only-I quazip1-qt5 |
@@ -203,6 +209,10 @@ popd
 %endif
 
 %changelog
+* Mon Nov 20 2023 Ivan A. Melnikov <iv@altlinux.org> 2022.2-alt2.1
+- Don't use gold on loongarch64 and riscv64
+- Allow building with multiple parallel processes
+
 * Fri May 05 2023 Grigory Ustinov <grenka@altlinux.org> 2022.2-alt2
 - Fixed build with python3.11.
 
