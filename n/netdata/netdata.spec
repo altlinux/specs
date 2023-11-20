@@ -14,7 +14,7 @@
 %define netdatauser netdata
 Name: netdata
 Version: 1.43.2
-Release: alt2
+Release: alt3
 
 Summary: Real-time performance monitoring, done right!
 
@@ -28,6 +28,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Source1: netdata.logrotate
+
+# https://github.com/netdata/netdata/pull/16259
+Patch1: 938bcf54af73e2c28e3cefa1b7fe24de90548241.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: bash4
@@ -131,6 +134,7 @@ Use this plugin to enable metrics collection from cupsd, the daemon running when
 
 %prep
 %setup
+%patch1 -p1
 
 %if_enabled cloud
 # strange upstream wants static libs
@@ -302,6 +306,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Mon Nov 20 2023 Vitaly Lipatov <lav@altlinux.ru> 1.43.2-alt3
+- restore distutils patch (ALT bug 48184)
+
 * Fri Nov 10 2023 Vitaly Lipatov <lav@altlinux.ru> 1.43.2-alt2
 - fix libexecdir using for conf.d (ALT bug 48381)
 
