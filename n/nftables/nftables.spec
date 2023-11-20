@@ -1,12 +1,14 @@
+%define sover   1
+
 Name:           nftables
 Epoch:          1
 Version:        1.0.9
-Release:        alt1
+Release:        alt2
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
 License:        GPL-2.0-only
 URL:            http://netfilter.org/projects/nftables
-Requires:       lib%name = %version-%release
+Requires:       lib%name%sover = %EVR
 # git://git.netfilter.org/nftables
 Source:        %name-%version.tar
 
@@ -18,17 +20,20 @@ libnftnl is a userspace library providing a low-level netlink programming interf
 in-kernel nf_tables subsystem. The library libnftnl has been previously known as libnftables.
 This library is currently used by nftables.
 
-%package -n lib%name
+%package -n lib%name%sover
 Summary: Library for %name
 Group: System/Libraries
+Provides: lib%name = %EVR
+Obsoletes: lib%name < %EVR
 
-%description -n lib%name
+
+%description -n lib%name%sover
 This package contains shared libraries used by %name.
 
 %package -n lib%name-devel
 Summary: Development package that includes the %name header files
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name%sover = %EVR
 
 %description -n lib%name-devel
 The devel package contains the include files
@@ -89,7 +94,7 @@ install -pDm0644 nftables.service %buildroot%_unitdir/nftables.service
 %_sbindir/*
 %_man8dir/*
 
-%files -n lib%name
+%files -n lib%name%sover
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
@@ -103,6 +108,9 @@ install -pDm0644 nftables.service %buildroot%_unitdir/nftables.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Nov 20 2023 Alexei Takaseev <taf@altlinux.org> 1:1.0.9-alt2
+- Rename lib%name to lib%name%sover (ALT #37280)
+
 * Fri Oct 20 2023 Alexei Takaseev <taf@altlinux.org> 1:1.0.9-alt1
 - 1.0.9
 
