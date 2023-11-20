@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo4.4
-Version: 4.4.25
+Version: 4.4.26
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
@@ -199,6 +199,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Mon Nov 20 2023 Alexei Takaseev <taf@altlinux.org> 4.4.26-alt1
+- 4.4.26
+
 * Wed Oct 04 2023 Alexei Takaseev <taf@altlinux.org> 4.4.25-alt1
 - 4.4.25
 - Remove unneeded BuildRequires
