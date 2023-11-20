@@ -2,7 +2,7 @@ Name: AlephOne
 Version: 1.0.2
 %define uversion 20220115
 
-Release: alt1
+Release: alt1.1
 
 Summary: 3D first-person shooter game
 License: %gpl2plus
@@ -20,6 +20,8 @@ Source2: %name-48x48.png
 Source3: alephone-wrapper.sh
 
 #Patch0: %name-1.0.1-gcc8-fix.patch
+Patch1: ax_boost_base-loongarch64.patch
+
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -52,6 +54,7 @@ alephone "~/Marathon Infinity"
 %prep
 %setup -n %name-%uversion
 #patch0 -p2
+%patch1 -p1
 
 %build
 #add_optflags -fpermissive
@@ -97,6 +100,9 @@ alephone "~/Marathon Infinity"
 
 
 %changelog
+* Mon Nov 20 2023 Ivan A. Melnikov <iv@altlinux.org> 1.0.2-alt1.1
+- NMU: fix FTBFS on loongarch64
+
 * Sun Jul 17 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.2-alt1
 - Update to Release 20220115 from github
 
