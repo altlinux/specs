@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.62
+%define kernel_sublevel	.63
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -600,6 +600,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Nov 20 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.63-alt1
+- v6.1.63 (2023-11-20).
+- config: Enable HID_REDRAGON module (ALT#48182).
+
 * Wed Nov 08 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.62-alt1
 - v6.1.62 (2023-11-08).
 
