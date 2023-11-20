@@ -1,6 +1,6 @@
 Name: librados2-perl
 Summary: Perl bindings for librados
-Version: 1.3.1
+Version: 1.4.1
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -19,16 +19,21 @@ This package contains librados perl binding used by PVE
 
 %prep
 %setup -q
-sed -i 's/ -D_FORTIFY_SOURCE=2//' Makefile
+
+%build
+%make RADOS.so
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %perl_vendor_privlib/PVE
 %perl_vendor_autolib/PVE
 
 %changelog
+* Mon Nov 20 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
 * Thu Jun 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.3.1-alt1
 - 1.3-1
 
