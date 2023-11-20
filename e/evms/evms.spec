@@ -5,7 +5,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt70
+Release: alt71
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -174,6 +174,14 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Mon Nov 20 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt71
+- fixes:
+  + fix potential null pointer dereference
+  + swapfs: fix UUID option (Closes: #46843)
+  + truncate volume name if it doesn't fit (Closes: #47037)
+  + luks: ensure "_luks" in volume name (Closes: $47041)
+  + GPT: use Megabytes instead of Sectors (Closes: 42029)
+
 * Fri Nov 03 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt70
 - GPT: fix partitioning on nvme disks with 4k-sectors
 
