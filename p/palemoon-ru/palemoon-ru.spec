@@ -4,8 +4,8 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	32.4.0
-%define max_version	32.5.*
+%define min_version	32.5.0
+%define max_version	32.6.*
 
 %define bname		newmoon
 %define sdir		searchplugins
@@ -14,10 +14,10 @@
 
 Name: palemoon-ru
 
-Version: 32.4.0
-Release: alt2
+Version: 32.5.0
+Release: alt1
 
-ExcludeArch: %ix86 %arm ppc64le
+ExclusiveArch: x86_64 aarch64
 
 Summary: Russian (RU) Language Pack for Pale Moon
 License: MPL-2.0
@@ -129,8 +129,11 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
+* Sun Nov 19 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.5.0-alt1
+- Version 32.5.0
+
 * Wed Sep 20 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.4.0-alt2
--  Version 32.4.0
+- Version 32.4.0
 
 * Fri Sep 15 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1.1
 - Add ExcludeArch ppc64le arch

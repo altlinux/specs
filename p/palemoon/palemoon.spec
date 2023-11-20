@@ -4,9 +4,9 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version:  32.4.1
+Version:  32.5.0
 
-Release: alt1
+Release: alt1_1_git_30b19d3eb
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -14,7 +14,7 @@ Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
-ExcludeArch: %ix86 %arm ppc64le
+ExclusiveArch: x86_64 aarch64
 
 %define sname palemoon
 %define bname newmoon
@@ -49,7 +49,7 @@ Source11: content.tar
 Source12: xulstore.json
 Source13: kde.js
 
-Patch15: palemoon-32.0.1-ppc64le-alt1.patch
+#Patch15: palemoon-32.0.1-ppc64le-alt1.patch
 
 #Patch1: palemoon_google_add-26.4.0.patch
 Patch16: mozilla_palimoon-29.4.6-cross-desctop.patch
@@ -82,26 +82,38 @@ Patch116: palemoon-32.4.0-hunspell.patch
 #set_gcc_version 10
 %set_autoconf_version 2.13
 
-BuildPreReq: libXcomposite-devel libXdamage-devel
-# Automatically added by buildreq on Tue Sep 05 2023
-# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base sh4 xorg-proto-devel zlib-devel
-BuildRequires: doxygen gcc-c++ libGConf-devel libXt-devel libalsa-devel
-BuildRequires: libdbus-glib-devel libgtk+2-devel libgtk+3-devel
-BuildRequires: libhunspell-devel libpulseaudio-devel libsocket
-BuildRequires: python-modules-distutils python-modules-json
-BuildRequires: python-modules-wsgiref unzip yasm zip
 
-BuildRequires: libevent-devel
+# Automatically added by buildreq on Sat Nov 18 2023
+# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base python3-dev python3-module-setuptools sh5 xorg-proto-devel zlib-devel
+BuildRequires: doxygen gcc-c++ libGConf-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libgtk+3-devel libhunspell-devel libpulseaudio-devel
+BuildRequires: libsocket python-modules-distutils python-modules-json python-modules-wsgiref unzip yasm zip
+
+# BEGIN SourceDeps(oneline):
+BuildRequires: gobject-introspection-devel libssl-devel perl(Archive/Zip.pm) perl(CGI.pm) perl(LWP/Simple.pm)
+BuildRequires: perl(XML/LibXML.pm) perl(XML/LibXSLT.pm) perl(diagnostics.pm) perl(fastcwd.pl) swig texinfo
+# END SourceDeps(oneline)
 
 
-BuildRequires: %_bindir/python2.7 python2-base
+BuildPreReq: libXcomposite-devel libXdamage-devel libdbus-glib-devel libgtk+2-devel libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket python-modules-distutils python-modules-json
+BuildPreReq: python-modules-wsgiref unzip yasm zip
 
-BuildRequires: libvpx-devel libzfs-devel
+BuildPreReq: libevent-devel
+BuildPreReq:   gyp
+BuildPreReq:   ninja-build
+BuildPreReq:   chrpath zlib-devel libsqlite3-devel
+
+BuildPreReq: %_bindir/python2.7 python2-base
+
+BuildPreReq: libvpx-devel libzfs-devel
+BuildPreReq: libnspr-devel
 
 %ifarch x86_64
 BuildRequires: libcpuid-devel
 %endif
 
+%ifarch i586
+BuildRequires: libcpuid-devel
+%endif
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: bzlib-devel gobject-introspection-devel libgtest-devel libpng-devel libssl-devel swig texinfo zlib-devel
@@ -131,7 +143,9 @@ BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
 BuildRequires: rust-cargo >= %cargo_version
 BuildRequires: node
-BuildRequires: nasm yasm
+#BuildRequires: nasm yasm
+BuildRequires: yasm
+
 BuildRequires: zip unzip
 BuildRequires: libshell
 BuildRequires: libwireless-devel
@@ -275,7 +289,9 @@ cp -f %SOURCE4 .mozconfig
 
 echo "mk_add_options MOZ_OBJDIR=obj-%_arch" >> .mozconfig
 
-echo "mk_add_options MOZ_MAKE_FLAGS=-j${NPROCS:-4}" >> .mozconfig
+
+# echo "mk_add_options MOZ_MAKE_FLAGS=-j${NPROCS:-4}" >> .mozconfig
+echo "mk_add_options MOZ_MAKE_FLAGS=%_smp_mflags" >> .mozconfig
 # echo "ac_add_options --enable-rpath"  >> .mozconfig
 
 ## echo "ac_add_options --disable-static" >> .mozconfig
@@ -300,10 +316,12 @@ echo "ac_add_options --with-nss-prefix=%_libdir" >> .mozconfig
  echo 'ac_add_options --enable-optimize=" -march=x86-64 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
-%ifarch ppc64le
- echo 'ac_add_options --enable-optimize=" -mcpu=powerpc64 -maltivec  -mpower8-vector"' >> .mozconfig
+
+#ifarch ppc64le
+# echo 'ac_add_options --enable-optimize=" -maltivec "' >> .mozconfig
 # echo 'ac_add_options "-DNSS_DISABLE_CRYPTO_VSX=1"'
-%endif
+#endif
+# echo 'ac_add_options --enable-optimize=" -mcpu=powerpc64 -maltivec  -mpower8-vector"' >> .mozconfig
 
 %build
 cd %sname
@@ -336,6 +354,8 @@ export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 # for  palemoon_rpath-27.0.2.patch
 export RPATH_PATH="$rpath"
 
+%{?_is_lp64:export USE_64=1}
+
 echo '%newmoon_bindir'
 echo "$rpath"
 
@@ -349,13 +369,13 @@ export SHELL=/bin/sh
 
 %__autoconf
 
-MOZ_SMP_FLAGS=-j1
-%ifarch %ix86
-[ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
-[ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
-%else
-    MOZ_SMP_FLAGS=-j${NPROCS:-4}
-%endif
+MOZ_SMP_FLAGS=%_smp_mflags
+#ifarch %ix86
+#[ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
+#[ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
+#%else
+#    MOZ_SMP_FLAGS=-j${NPROCS:-4}
+#endif
 
 TOPSRCDIR=$pwd
 
@@ -524,6 +544,13 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Thu Nov 16 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.0-alt1_1_git_30b19d3eb
+- Version 32.5.0 (git commit 30b19d3eb)
+(CVE-2023-5722, CVE-2023-5723, CVE-2023-5724, CVE-2023-5727)
+
+* Wed Oct 18 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.4.1-alt1.1
+- Update Changelog
+
 * Mon Sep 18 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.4.1-alt1
 - Version 32.4.1 (CVE 2023-4863)
 
