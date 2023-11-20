@@ -1,5 +1,5 @@
 Name: nfs
-Version: 2.6.3
+Version: 2.6.4
 Release: alt1
 Epoch: 1
 
@@ -316,6 +316,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Mon Nov 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.4-alt1
+- 2.6.4 released
+
 * Thu Apr 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.3-alt1
 - 2.6.3 released
 
