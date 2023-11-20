@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.5
-Release: alt1
+Release: alt2
 Summary: Build manual page from python's ArgumentParser object
 License: Apache-2.0
 Group: Development/Python3
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
+# distutils was removed in python 3.12
+%filter_from_requires /python3(distutils\(\..*\)\?)/d
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
@@ -70,6 +72,9 @@ mv %buildroot%_bindir/argparse-manpage{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 20 2023 Stanislav Levin <slev@altlinux.org> 4.5-alt2
+- Dropped dependency on distutils (removed in Python3.12).
+
 * Wed Nov 01 2023 Stanislav Levin <slev@altlinux.org> 4.5-alt1
 - 4.3 -> 4.5.
 
