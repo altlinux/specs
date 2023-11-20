@@ -4,10 +4,10 @@
 %define sover %major
 Name: projectm
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 %define libprojectm libprojectm%{major}_%{sover}
-%define libprojectm_playlist libprojectm%{major}-playlist_%{sover}
+%define libprojectm_playlist libprojectm%{major}-playlist%{sover}
 
 Group: System/Libraries
 Summary: Awesome music visualizer
@@ -29,6 +29,7 @@ Unix.
 %package -n %libprojectm
 Summary: Awesome music visualizer library
 Group: System/Libraries
+Requires: projectm-presets
 %description -n %libprojectm
 projectM is a reimplementation of Milkdrop under OpenGL. It is an
 awesome music visualizer. There is nothing better in the world of
@@ -37,6 +38,10 @@ Unix.
 %package -n %libprojectm_playlist
 Summary: Awesome music visualizer library
 Group: System/Libraries
+%if "%sover" == "4"
+Provides: libprojectm4-playlist_4 = %EVR
+Obsoletes: libprojectm4-playlist_4 = %EVR
+%endif
 %description -n %libprojectm_playlist
 projectM is a reimplementation of Milkdrop under OpenGL. It is an
 awesome music visualizer. There is nothing better in the world of
@@ -46,6 +51,7 @@ Unix.
 Summary: Header files for projectM library
 Group: Development/C
 Requires: %libprojectm
+Requires: libgomp-devel
 %description devel
 Header files for projectM library.
 
@@ -96,5 +102,8 @@ Static projectM library.
 %_libdir/cmake/projectM%{major}*/
 
 %changelog
+* Fri Nov 17 2023 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt2
+- require projectm-presets
+
 * Fri Oct 27 2023 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt1
 - initial build

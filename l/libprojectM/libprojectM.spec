@@ -8,7 +8,7 @@
 
 Name: lib%oname
 Version: 2.1.0
-Release: alt16
+Release: alt17
 
 Summary: Awesome music visualizer
 License: LGPLv2.1
@@ -137,12 +137,8 @@ mkdir -p %buildroot/%_datadir/%oname/fonts/
 %files
 %doc AUTHORS.txt FAQ.txt docs/doxygen/html
 %_libdir/libprojectM.so.*
-%dir %_datadir/%oname/
 %_datadir/%oname/config.inp
-%dir %_datadir/%oname/fonts/
-%dir %_datadir/%oname/presets/
 %_datadir/%oname/presets/*
-%dir %_datadir/%oname/shaders/
 %_datadir/%oname/shaders/*
 
 %if_enabled qt
@@ -176,6 +172,9 @@ mkdir -p %buildroot/%_datadir/%oname/fonts/
 # - consider https://src.fedoraproject.org/rpms/libprojectM/raw/master/f/libprojectM-c++14.patch
 
 %changelog
+* Fri Nov 17 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt17
+- move dirs to separate package
+
 * Fri Nov 03 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt16
 - exclude font symlinks
 
