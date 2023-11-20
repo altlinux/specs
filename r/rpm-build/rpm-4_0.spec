@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.192
+Version: 4.0.4.193
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Fri Nov 17 2023 Vitaly Chikunov <vt@altlinux.org> 4.0.4.193-alt1
+- debuginfo: Add .gnu_debuglink symlink for vmlinux.
+
 * Sun Sep 10 2023 Vitaly Chikunov <vt@altlinux.org> 4.0.4.192-alt1
 - Backport support of tilde in version & release (ALT#46585).
 
