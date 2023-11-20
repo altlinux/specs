@@ -1,6 +1,6 @@
 Name: horizon
 Version: 2.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Horizon is a free EDA package
 License: GPL-3.0-or-later
@@ -40,10 +40,19 @@ BuildRequires: libspnav-devel
 %add_optflags -I%_includedir/sigc++-2.0
 %add_optflags -I%_includedir/glm
 export CXXFLAGS='%optflags' 
-%make_build
+%make_build \
+%ifarch loongarch64 riscv64
+	GOLD= \
+%endif
+	%nil
+
 
 %install
-%makeinstall_std PREFIX=%prefix
+%makeinstall_std PREFIX=%prefix \
+%ifarch loongarch64 riscv64
+	GOLD= \
+%endif
+	%nil
 
 %files
 %_bindir/*
@@ -53,6 +62,10 @@ export CXXFLAGS='%optflags'
 %doc *.md
 
 %changelog
+* Mon Nov 20 2023 Ivan A. Melnikov <iv@altlinux.org> 2.5.0-alt1.1
+- NMU: don't use gold for linking on loongarch64 and riscv64
+  (gold does not work on these architectures)
+
 * Mon Jun 26 2023 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
 - new version 2.5.0
 
