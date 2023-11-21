@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 384
+%define centos_release 387
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -659,6 +659,51 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Nov 21 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.387-alt1.el9
+- Updated to kernel-5.14.0-387.el9 (fixes: CVE-2023-1192, CVE-2023-20569, CVE-2023-20588, CVE-2023-20593, CVE-2023-28866, CVE-2023-31083, CVE-2023-3567, CVE-2023-3812, CVE-2023-40283, CVE-2023-42753, CVE-2023-5178):
+  + Bluetooth: hci_ldisc: check HCI_UART_PROTO_READY flag in HCIUARTGETPROTO
+  + CNB94: lib: cpu_rmap: Add irq_cpu_rmap_remove to complement irq_cpu_rmap_add
+  + CNB94: virtchnl: Sync headers with upstream
+  + Enable -Werror for s390x and ppc64le
+  + Ext4 Update for 9.4
+  + Implement counters for nested guest shadow events
+  + KVM: selftests: aarch64: Fix page_fault_test failure
+  + Merge remote-tracking branch 'refs/remotes/c9s/merge-requests/3244' into c9s-iommu
+  + Merge remote-tracking branch 'refs/remotes/c9s/merge-requests/3245' into c9s-iommu
+  + RHEL-9.4 P1 Wireguard stable backport
+  + RHEL-9.4 Update IPMI to upstream v6.5+
+  + Revert "rcu: Permit start_poll_synchronize_rcu_expedited() to be invoked early"
+  + SCSI updates for 9.4
+  + USB/TB code rebase of supported drivers to upstream v6.4
+  + Update net/bluetooth and drivers/bluetooth to upstream v6.5
+  + Updates for Power IOMMU
+  + Updates for powerpc CPT SMT
+  + [s390] [IBM 9.4 FEAT] Upgrade the SMC driver to latest from upstream, e.g. kernel 6.4
+  + [s390] [IBM 9.4 FEAT] Upgrade the qeth driver to latest from upstream, e.g. kernel 6.4
+  + arm64: dts: imx8 updates
+  + cifs: Fix UAF in cifs_demultiplex_thread()
+  + clk: Sanitize possible_parent_show to Handle Return Value of of_clk_get_parent_name
+  + hwmon: (ina3221) Add support for channel summation disable
+  + iommu: IOMMU and DMA-mapping API Updates for 9.4
+  + livepatch: selected fixes for rhel-9.4
+  + nd_btt: Make BTT lanes preemptible
+  + net: tun: fix bugs for oversize packet when napi frags enabled
+  + netfilter: ipset: add the missing IP_SET_HASH_WITH_NET0 macro for ip_set_hash_netportnet.c
+  + nvme: update the drivers
+  + nvmet-tcp: Fix a possible UAF in queue intialization setup
+  + redhat/configs: Increase CONFIG_NODES_SHIFT from 6 to 8 for arm64
+  + redhat: various fix ups
+  + scsi: mpi3mr: driver update
+  + scsi: mpt3sas: driver updates
+  + tcp: stable backport for 9.4 phase 1
+  + tty: serial: fsl_lpuart: driver updates
+  + update drivers/base to v6.4
+  + vc_screen: move load of struct vc_data pointer in vcs_read() to avoid UAF
+  + vfio: Updates for RHEL9.4
+  + wifi: rtw89: Fix loading of compressed firmware
+  + x86/speculation: Disable IBRS when idle
+  + x86/srso: AMD Speculative RAS Overflow (Inception) Mitigation CVE-2023-20569
+
 * Mon Nov 13 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.384-alt1.el9
 - Updated to kernel-5.14.0-384.el9 (fixes: CVE-2023-39189, CVE-2023-39193, CVE-2023-39194, CVE-2023-39198, CVE-2023-5717):
   + CNB94: page_pool: allow caching from safely localized NAPI
