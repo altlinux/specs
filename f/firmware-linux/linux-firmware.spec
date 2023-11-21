@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20231115
-Release: alt2
+Version: 20231120
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -76,6 +76,13 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Nov 21 2023 Cronbuild Service <cronbuild@altlinux.org> 20231120-alt1
+- upstream changes (GIT 9552083a):
+  + mediatek: Sync shared memory structure changes (thx Jason Chen)
+  + Intel Bluetooth: Update firmware file for Intel Bluetooth BE200 (thx Kiran K)
+  + i915: Update MTL DMC to v2.19 (thx Gustavo Sousa)
+  + iwlwifi: fix for the new FWs from core83-55 release (thx Gregory Greenman)
+
 * Thu Nov 16 2023 Anton Midyukov <antohami@altlinux.org> 20231115-alt2
 - copy-firmware.sh: do'nt require rdfind
 
