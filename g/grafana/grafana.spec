@@ -5,7 +5,7 @@
 %def_enable prebuilded_frontend
 
 Name:		grafana
-Version:	9.5.5
+Version:	10.2.2
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -29,10 +29,10 @@ Source17: %name.tmpfiles
 # error Command failed with signal "SIGXCPU"
 ExclusiveArch: %ix86 x86_64 %arm aarch64 mipsel riscv64
 BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
-BuildRequires: golang >= 1.19
+BuildRequires: golang >= 1.20
 %if_disabled prebuilded_frontend
 BuildRequires: npm
-BuildRequires: node >= 14 node-devel node-gyp
+BuildRequires: node >= 18 node-devel node-gyp
 %endif
 BuildRequires: wire
 BuildRequires: fontconfig libfreetype
@@ -44,14 +44,14 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 
 %prep
 # Build the Front-end Assets
-# $ node .yarn/releases/yarn-3.2.0.cjs install
+# $ node .yarn/releases/yarn-3.6.1.cjs install
 # $ git add .pnp.cjs .pnp.loader.mjs .yarn -f
 # $ git commit -n --no-post-rewrite -m "add node js modules"
 
 # Test build
 # $ export NODE_OPTIONS="--max-old-space-size=8192" # Increase to 8 GB
-# $ node .yarn/releases/yarn-3.2.0.cjs run build
-# $ node .yarn/releases/yarn-3.2.0.cjs run plugins:build-bundled
+# $ node .yarn/releases/yarn-3.6.1.cjs run build
+# $ node .yarn/releases/yarn-3.6.1.cjs run plugins:build-bundled
 #
 # Go vendors modules
 # $ go mod vendor -v
@@ -88,15 +88,15 @@ export NODE_OPTIONS=--max_old_space_size=2048
 #npm rebuild
 #npm run build
 #go run build.go build-frontend
-node .yarn/releases/yarn-3.2.0.cjs run build
-node .yarn/releases/yarn-3.2.0.cjs run plugins:build-bundled
+node .yarn/releases/yarn-3.6.1.cjs run build
+node .yarn/releases/yarn-3.6.1.cjs run plugins:build-bundled
 %endif
 
 # generate code from .cue files
 go generate ./pkg/plugins/plugindef
 go generate ./kinds/gen.go
 go generate ./public/app/plugins/gen.go
-go generate ./pkg/kindsys/report.go
+go generate ./pkg/kindsysreport/codegen/report.go
 
 # generate go files
 wire gen -tags oss ./pkg/server ./pkg/cmd/grafana-cli/runner
@@ -216,6 +216,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Tue Nov 21 2023 Alexey Shabalin <shaba@altlinux.org> 10.2.2-alt1
+- 10.2.2
+
 * Thu Jun 29 2023 Alexey Shabalin <shaba@altlinux.org> 9.5.5-alt1
 - 9.5.5
 - Switch from separate server & cli to a unified grafana binary
@@ -227,6 +230,7 @@ fi
   + CVE-2023-1410
   + CVE-2023-2183
   + CVE-2023-2801
+  + CVE-2023-3128
   + CVE-2023-22462
   + CVE-2023-28119
 
