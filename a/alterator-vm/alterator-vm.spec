@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.36
+Version: 0.4.37
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -37,6 +37,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Tue Nov 21 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.37-alt1
+- options: rewrite option querying by name (Fixes: 42029)
+
 * Mon Nov 20 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.36-alt1
 - Make "Create (Encrypted) Volume" buttons mutually exclusive (Closes: #45310)
 - new operation: "Create Encrypted Volume" on disk wothout partition table (Closes: 28830)
