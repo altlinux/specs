@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: xdg-desktop-portal-hyprland
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: xdg-desktop-portal backend for Hyprland
@@ -63,6 +63,9 @@ XDG Desktop Portal implementation for Hyprland.
 
 
 %changelog
+* Tue Nov 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
+- 1.2.5
+
 * Sat Nov 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
