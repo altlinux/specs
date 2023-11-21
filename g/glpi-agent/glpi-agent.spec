@@ -1,5 +1,5 @@
 Name:    glpi-agent
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Summary: GLPI Agent
@@ -10,6 +10,7 @@ Url:     https://github.com/glpi-project/glpi-agent
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: %name-alt-use-sysconfig-file.patch
 
 BuildArch: noarch
 
@@ -55,6 +56,7 @@ acting as a control point.
 
 %prep
 %setup
+%patch0 -p1
 # Remove files only used under win32
 rm -rf lib/GLPI/Agent/Daemon
 
@@ -136,6 +138,10 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Thu Nov 16 2023 Andrey Cherepanov <cas@altlinux.org> 1.6-alt1
+- New version.
+- Added EnvironmentFile to service.
+
 * Sat Jun 24 2023 Andrey Cherepanov <cas@altlinux.org> 1.5-alt1
 - New version.
 
