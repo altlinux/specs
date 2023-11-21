@@ -1,6 +1,6 @@
 # force to use GDK_BACKEND=x11 while wxWidgets wxGLCanvas
-# do not support Wayland
-%def_enable gdk_x11
+# WxGTK Wayland support
+%def_disable gdk_x11
 # Python scripting interface disabled by default since 2018.0.0
 %def_enable hsi
 # lapack support disabled by default
@@ -8,8 +8,8 @@
 %def_enable epoxy
 
 Name: hugin
-Version: 2022.0.0
-Release: alt3
+Version: 2023.0.0
+Release: alt1
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
@@ -19,9 +19,6 @@ Url: https://hugin.sourceforge.net/
 #tarball: https://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source: %name-%version.tar
 Patch1: Add-translations-in-desktop-files.patch
-# https://sourceforge.net/p/hugin/hugin/ci/4a3fe139b64b06f95c80db9d24a1a5a35e7abb60/
-Patch10: hugin-2023-up-epoxy.patch
-Patch11: hugin-2022.0.0-gentoo-exiv2-0.28.patch
 
 %define boost_ver 1.54
 %define pano_ver 2.9.21
@@ -60,8 +57,6 @@ panorama, stitch any series of overlapping pictures and much more.
 %prep
 %setup
 %patch1 -p2
-%patch10 -p1
-%patch11 -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -106,6 +101,9 @@ done
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sun Nov 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2023.0.0-alt1
+- 2023.0.0
+
 * Tue Nov 07 2023 Yuri N. Sedunov <aris@altlinux.org> 2022.0.0-alt3
 - rebuilt against libexiv2.so.28
 
