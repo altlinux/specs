@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: galera
-Version: 26.4.13
+Version: 26.4.16
 Release: alt1
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
@@ -73,8 +73,8 @@ install -D -m 644 %SOURCE2 %buildroot%_unitdir/garbd.service
 mkdir -p %buildroot{%_localstatedir,%_logdir}/garbd
 install -D -m 644 %SOURCE3 %buildroot%_tmpfilesdir/garbd.conf
 install -D -m 644 %SOURCE4 %buildroot%_sysconfdir/garbd/garbd.conf
-#install -D -m 755 garb/garbd %buildroot%_sbindir/garbd
-#install -D -m 644 libgalera_smm.so %buildroot%_libdir/galera/libgalera_smm.so
+#install -D -m 755 garb/garbd %%buildroot%%_sbindir/garbd
+#install -D -m 644 libgalera_smm.so %%buildroot%%_libdir/galera/libgalera_smm.so
 install -D -m 644 COPYING %buildroot%_docdir/galera/COPYING
 install -D -m 644 scripts/packages/README %buildroot%_docdir/galera/README
 install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README-MySQL
@@ -112,6 +112,9 @@ useradd -r -g _garbd -c "Galera Arbitrator Daemon" -d %_localstatedir/garbd -s /
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Tue Nov 21 2023 Alexey Shabalin <shaba@altlinux.org> 26.4.16-alt1
+- 26.4.16
+
 * Fri Dec 02 2022 Alexey Shabalin <shaba@altlinux.org> 26.4.13-alt1
 - 26.4.13
 
