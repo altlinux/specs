@@ -39,7 +39,7 @@ Group:          Monitoring
 
 Name:           icinga2
 Version:        2.14.0
-Release:        alt3
+Release:        alt3.1
 URL:            https://www.icinga.com/
 Source:         https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
 
@@ -158,6 +158,11 @@ Provides Nano syntax highlighting for icinga2.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p2
+%ifarch %e2k
+# compiler bug workaround
+sed -i '/Lazy(const Lazy/s/explicit//' lib/base/object.hpp
+sed -i 's/operator Lazy<U>()/Lazy<U> edg_fix_dummy()/' lib/base/object.hpp
+%endif
 
 %build
 CMAKE_OPTS="
@@ -415,6 +420,9 @@ fi
 %_datadir/nano/%name.nanorc
 
 %changelog
+* Tue Nov 21 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.14.0-alt3.1
+- Fixed build for Elbrus.
+
 * Mon Nov 13 2023 Paul Wolneykien <manowar@altlinux.org> 2.14.0-alt3
 - Require nagios-plugins, nagios-plugins-local and
   nagios-plugins-network.
