@@ -20,7 +20,7 @@
 
 Name: stb
 Version: 2.38
-Release: alt2.g%git.%snapdate
+Release: alt3.g%git.%snapdate
 
 Summary: single-file libraries for C/C++
 License: MIT or ALT-Public-Domain
@@ -183,6 +183,8 @@ Patch15: 0001-Fix-Null-pointer-dereference-because-of-an-uninitial.patch
 # (GHSL-2023-165/CVE-2023-45675)
 # https://github.com/nothings/stb/issues/1552
 Patch16: %url/pull/1553.patch
+
+Patch17: alt-stb-loongarch64-and-riscv64-support.patch
 
 %global stb_c_lexer_version 0.12
 %global stb_connected_components_version 0.96
@@ -360,6 +362,9 @@ EOF
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Tue Nov 21 2023 Ivan A. Melnikov <iv@altlinux.org> 2.38-alt3.g03f50e3.20231115
+- NMU: loongarch64 and riscv64 support
+
 * Sun Nov 19 2023 L.A. Kostis <lakostis@altlinux.ru> 2.38-alt2.g03f50e3.20231115
 - Added more tweaks from Fedora:
   + disable stb_include (as it's not safe to use).
