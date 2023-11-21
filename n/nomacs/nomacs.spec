@@ -4,7 +4,7 @@
 
 Name: nomacs
 Version: 3.17.2287
-Release: alt1
+Release: alt2
 
 License: GPLv3+ and CC-BY
 Group: Graphics
@@ -129,6 +129,9 @@ sed -i -e 's|Image Lounge|Image?Lounge|g' %{name}.lang
 
 
 %changelog
+* Fri Nov 17 2023 Ilya Mashkin <oddity@altlinux.ru> 3.17.2287-alt2
+- rebuild with new libexiv2
+
 * Fri Nov 17 2023 Ilya Mashkin <oddity@altlinux.ru> 3.17.2287-alt1
 - 3.17.2287
 - skip plugins

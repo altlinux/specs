@@ -11,7 +11,7 @@
 
 Name: pix
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: An image viewer and browser utility.
 License: GPLv2+
@@ -129,6 +129,9 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Nov 8 2023 Vladimir Didenko <cow@altlinux.org> 3.0.2-alt2
+- Update to 3.0.2-4-gd6edbd4 to support build with exiv 0.28
+
 * Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 3.0.2-alt1
 - 3.0.2
 

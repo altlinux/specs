@@ -4,7 +4,7 @@
 
 Name: phototonic
 Version: 2.1.136
-Release: alt1
+Release: alt2
 
 Summary: An image viewer and organizer
 Group: Graphics
@@ -70,6 +70,9 @@ cp -r translations/*.qm %buildroot%_datadir/%name/translations
 %_datadir/metainfo/phototonic.appdata.xml
 
 %changelog
+* Fri Nov 17 2023 Ilya Mashkin <oddity@altlinux.ru> 2.1.136-alt2
+- rebuild with new libexiv2
+
 * Fri Nov 17 2023 Ilya Mashkin <oddity@altlinux.ru> 2.1.136-alt1
 - 2.1.136
 

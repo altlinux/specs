@@ -3,7 +3,7 @@
 
 Name: rawstudio
 Version: %ver_major
-Release: alt0.8
+Release: alt0.9
 
 Summary: Rawstudio is an open source raw-image converter written in GTK+
 License: GPLv2+
@@ -21,6 +21,9 @@ Source: %name-%version.tar
 Patch1: rawstudio-2.0-fc-lensfun.patch
 Patch2: rawstudio-2.1-alt-lfs.patch
 Patch3: rawstudio-2.1-alt-e2k.patch
+# https://github.com/sergiomb2/ufraw/issues/12
+Patch4: %name-2.1-up-exiv2-0.28.patch
+Patch5: %name-2.1-alt-exiv2-0.28.patch
 
 BuildRequires: gcc-c++ libgtk+3-devel libappstream-glib-devel libGConf-devel libdbus-devel
 BuildRequires: libexiv2-devel liblcms2-devel libfftw3-devel libflickcurl-devel
@@ -40,11 +43,21 @@ Rawstudio can read and convert RAW-images from most digital cameras.
 # workaround mcst#6575 for lcc < 1.27 (ilyakurdyukov@)
 sed -i "s/^inline/static &/" plugins/dcp/dcp.c
 %endif
+%patch4 -p1 -b .exiv2
+%patch5 -p1 -b .exiv2
+%if 0
+sed -i 's/AutoPtr/UniquePtr/
+        s/toLong/toInt64/
+        s/copy(buf.pData_/copy(buf.data()/
+        s/buf.pData_/buf.c_data()/
+        s/buf.size_/buf.size()/' plugins/meta-exiv2/exiv2-metadata.cpp plugins/load-*/exiv2-colorspace.cpp
 
+sed -i  's/std::auto_ptr/std::unique_ptr/' plugins/meta-exiv2/exiv2-metadata.cpp
+%endif
 [ ! -d m4 ] && mkdir m4
 
 %build
-%add_optflags -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_32
+%add_optflags -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_32 %(getconf LFS_CFLAGS)
 glib-gettextize -c -f
 %autoreconf
 %configure --disable-static \
@@ -75,6 +88,9 @@ glib-gettextize -c -f
 %exclude %_pkgconfigdir
 
 %changelog
+* Tue Nov 07 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt0.9
+- rebuilt against libexiv2.so.28
+
 * Thu Apr 27 2023 Michael Shigorin <mike@altlinux.org> 2.1-alt0.8
 - E2K: fix broken inline (ilyakurdyukov@; cf. mcst#6575)
 

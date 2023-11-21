@@ -1,23 +1,20 @@
-%def_disable snapshot
+%def_enable snapshot
 %define beta %nil
 
 %def_enable video
+%def_enable curl
 %def_enable webready
 %def_disable ssh
-%def_disable tests
+%def_enable tests
+%ifarch armh aarch64
 %def_disable check
-
-%ifnarch %e2k
-%define gcc_ver 9
-%define optflags_lto %nil
-%set_gcc_version %gcc_ver
 %else
-%define gcc_ver %nil
+%def_disable check
 %endif
 
 Name: exiv2
-Version: 0.27.7
-Release: alt1.1%beta
+Version: 0.28.1
+Release: alt1%beta
 
 Summary: Command line tool to access EXIF data in image files
 License: GPL-2.0-or-later
@@ -30,12 +27,15 @@ Source: https://github.com/Exiv2/%name/archive/v%version/%name-%version.tar.gz
 Vcs: https://github.com/Exiv2/exiv2.git
 Source: %name-%version.tar
 %endif
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc%gcc_ver-c++ libexpat-devel zlib-devel
+BuildRequires: /proc cmake gcc-c++ python3
+BuildRequires: libexpat-devel zlib-devel
+BuildRequires: libbrotli-devel libinih-devel
 BuildRequires: doxygen xsltproc graphviz
 %{?_enable_tests:BuildRequires: libgtest-devel}
+%{?_enable_curl:BuildRequires: libcurl-devel}
 %{?_enable_webready:BuildRequires: libcurl-devel libssh-devel libgcrypt-devel}
 %{?_enable_check:BuildRequires: ctest}
 
@@ -55,7 +55,7 @@ libexiv2 is a C++ library to access image metadata.
 %package -n libexiv2-devel
 Summary: Headers and links to compile against the exiv2 library
 Group: Development/C
-Requires: libexiv2 = %version-%release
+Requires: libexiv2 = %EVR
 
 %description -n libexiv2-devel
 This package contains all files which one needs to compile programs using the
@@ -71,6 +71,7 @@ exiv2 library.
 	-DEXIV2_BUILD_SAMPLES:BOOL=OFF \
 	-DEXIV2_ENABLE_BMFF:BOOL=ON \
 	%{?_enable_video:-DEXIV2_ENABLE_VIDEO:BOOL=ON} \
+	%{?_enable_curl:-DEXIV2_ENABLE_CURL:BOOL=ON} \
 	%{?_enable_webready:-DEXIV2_ENABLE_WEBREADY:BOOL=ON} \
 	%{?_enable_ssh:-DEXIV2_ENABLE_SSH:BOOL=ON} \
 	%{?_enable_tests:-DEXIV2_BUILD_UNIT_TESTS:BOOL=ON}
@@ -82,8 +83,7 @@ exiv2 library.
 %find_lang exiv2
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%cmake_build -t tests
+%ctest
 
 %files
 %_bindir/%name
@@ -95,13 +95,19 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files -n libexiv2-devel
 %_libdir/lib%name.so
-%_libdir/libexiv2-xmp.a
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
 %_libdir/cmake/%name/
 
 
 %changelog
+* Wed Nov 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.28.1-alt1
+- v0.28.1-1-gc351c7cce
+
+* Mon Oct 23 2023 Yuri N. Sedunov <aris@altlinux.org> 0.28.0-alt1
+- v0.28.0-79-g42e2f62a2
+- built with current gcc
+
 * Tue Jul 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.27.7-alt1.1
 - enabled BMFF support (ALT #46748)
 

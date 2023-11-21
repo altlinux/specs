@@ -9,7 +9,7 @@
 
 Name: hugin
 Version: 2022.0.0
-Release: alt2
+Release: alt3
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
@@ -21,6 +21,7 @@ Source: %name-%version.tar
 Patch1: Add-translations-in-desktop-files.patch
 # https://sourceforge.net/p/hugin/hugin/ci/4a3fe139b64b06f95c80db9d24a1a5a35e7abb60/
 Patch10: hugin-2023-up-epoxy.patch
+Patch11: hugin-2022.0.0-gentoo-exiv2-0.28.patch
 
 %define boost_ver 1.54
 %define pano_ver 2.9.21
@@ -60,6 +61,7 @@ panorama, stitch any series of overlapping pictures and much more.
 %setup
 %patch1 -p2
 %patch10 -p1
+%patch11 -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -104,6 +106,9 @@ done
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Tue Nov 07 2023 Yuri N. Sedunov <aris@altlinux.org> 2022.0.0-alt3
+- rebuilt against libexiv2.so.28
+
 * Wed Jun 07 2023 Yuri N. Sedunov <aris@altlinux.org> 2022.0.0-alt2
 - build with libepoxy instead of GLEW for OpenGL pointer management (ALT #45876)
 

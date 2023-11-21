@@ -6,7 +6,7 @@
 
 Name: viewnior
 Version: 1.8
-Release: alt1
+Release: alt2
 
 Summary: Elegant image viewer
 License: GPLv3+
@@ -71,6 +71,9 @@ chmod 644 AUTHORS COPYING NEWS README.md TODO src/*
 %_datadir/metainfo/%{name}.metainfo.xml
 
 %changelog
+* Fri Nov 17 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8-alt2
+- rebuild with new libexiv2
+
 * Fri Nov 17 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8-alt1
 - 1.8
 

@@ -3,7 +3,7 @@
 
 Name: ufraw
 Version: 0.23
-Release: alt0.4
+Release: alt0.5
 
 Summary: UFRaw is a graphical utility for opening and converting RAW files from digital photo cameras
 License: GPLv2+
@@ -17,6 +17,8 @@ Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 Vcs: https://github.com/sergiomb2/ufraw.git
 Source: %name-%version.tar
 %endif
+# https://github.com/sergiomb2/ufraw/issues/12
+Patch1: ufraw-0.22-r4-up-exiv2-0.28.patch
 
 Requires(pre): GConf
 
@@ -52,6 +54,8 @@ GIMP plugin for opening and converting RAW files from digital photo cameras
 
 %prep
 %setup
+%patch1 -p1
+
 # downgrade gettext required version
 sed -i 's;\[0.21\];[0.20.2];' configure.ac
 
@@ -99,6 +103,9 @@ fi
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Tue Nov 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.23-alt0.5
+- rebuilt against libexiv2.so.28
+
 * Wed May 26 2021 Yuri N. Sedunov <aris@altlinux.org> 0.23-alt0.4
 - rebuilt against libcfitsio.so.9
 
