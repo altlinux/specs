@@ -30,7 +30,7 @@ Name: kde5-%rname
 %define ver_minor 1
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
-Release: alt2
+Release: alt3
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 %define sover %version
@@ -102,6 +102,8 @@ Source3: doc-translated.tar
 Source6: CMakeLists.txt
 #
 Source10: mysql_install_db
+#
+Patch1: exiv2-0.28.patch
 # ALT
 Patch100: alt-libraw-aarch64.patch
 Patch101: alt-own-mysql-install-db.patch
@@ -187,6 +189,7 @@ Development files for %label.
 %prep
 %setup -n %rname-%version -c -a1 -a2 -a3
 mv %rname-%version core
+%patch1 -p1
 pushd core
 %patch100 -p1
 %patch101 -p1
@@ -337,6 +340,9 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Tue Nov 21 2023 Sergey V Turchin <zerg@altlinux.org> 8.1.0-alt3
+- fix compile with exiv2-0.28
+
 * Mon Sep 11 2023 Sergey V Turchin <zerg@altlinux.org> 8.1.0-alt2
 - fix build requires
 
