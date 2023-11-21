@@ -8,7 +8,7 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.9.2
+Version: 2.9.3
 Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
@@ -880,6 +880,23 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Mon Nov 20 2023 Evgeny Sinelnikov <sin@altlinux.org> 2.9.3-alt1
+- Update to latest 2.9 major release.
+  + KCM: provide mechanism to purge expired credentials.
+  + Default hardening - id_provider channel defaults unencrypted with starttls.
+  + sssd-sudo missing debug statement in its .service file.
+  + SSSD goes offline during initgroups of trusted user if a group is
+    missing SID.
+  + Incorrect handling of reverse IPv6 update results in update failure.
+  + sssd-2.9.2 breaks smart card authentication (on el8).
+- The proxy provider is now able to handle certificate mapping and matching
+  rules and users handled by the proxy provider can be configured for local
+  Smartcard authentication.
+- Passkey doesn't fail when using FreeIPA server-side authentication and
+  require-user-verification=false.
+- When adding a new credential to KCM and the user has already reached their
+  limit, the oldest expired credential will be removed to free some space.
+
 * Fri Oct 06 2023 Evgeny Sinelnikov <sin@altlinux.org> 2.9.2-alt1
 - Update to latest 2.9 major release.
 - sss_simpleifp library removed due it deprecated.
