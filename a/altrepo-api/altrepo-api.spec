@@ -5,7 +5,7 @@
 %define oname altrepo_api
 
 Name: altrepo-api
-Version: 1.9.4
+Version: 1.15.10
 Release: alt1
 
 Summary: ALTRepo API is a REST API for the repository database of ALT distribution
@@ -30,6 +30,9 @@ BuildRequires: python3-module-mmh3
 BuildRequires: python3-module-gunicorn
 BuildRequires: python3-module-flask-restx
 BuildRequires: python3-module-clickhouse-driver
+BuildRequires: python3-module-pyjwt
+BuildRequires: python3-module-redis-py
+BuildRequires: python3-module-ldap
 %endif
 
 Source0: %name-%version.tar
@@ -81,6 +84,9 @@ mkdir -p %buildroot%_logdir/altrepo-api
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Nov 21 2023 Danil Shein <dshein@altlinux.org> 1.15.10-alt1
+ - 1.9.4 -> 1.15.10
+
 * Wed Mar 22 2023 Danil Shein <dshein@altlinux.org> 1.9.4-alt1
  - 1.8.11 -> 1.9.4
 
