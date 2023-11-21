@@ -1,13 +1,13 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: gpsim
-Version: 0.31.0
-Release: alt2
+Version: 0.32.1
+Release: alt1
 
 Summary: Software simulator for Microchip PIC microcontrollers
 Summary(ru_RU.UTF-8): Программный эмулятор микроконтроллеров PIC фирмы Microchip
 
-License: GPL
+License: GPL-2.0+ and LGPL-2.1
 Group: Monitoring
 Url: http://gpsim.sourceforge.net/gpsim.html
 
@@ -88,7 +88,7 @@ applications which will use libgpsim
 %prep
 %setup
 %patch3
-%patch4
+%patch4 -p2
 %patch5 -p2
 %patch6 -p2
 %patch7 -p2
@@ -117,8 +117,8 @@ install -pDm644 doc/metadata/gpsim.png %buildroot%_pixmapsdir/gpsim.png
 %_pixmapsdir/%name.png
 
 %files -n lib%name
-%doc ANNOUNCE AUTHORS COPYING COPYING.LESSER ChangeLog HISTORY NEWS
-%doc README README.EXAMPLES README.MODULES TODO
+%doc ANNOUNCE AUTHORS ChangeLog HISTORY
+%doc README README.EXAMPLES README.MODULES TODO PROCESSORS
 %doc doc/gpsim.lyx doc/gpsim.pdf doc/gpsim.ps
 %doc examples/
 %_libdir/*.so.*
@@ -128,6 +128,9 @@ install -pDm644 doc/metadata/gpsim.png %buildroot%_pixmapsdir/gpsim.png
 %_libdir/*.so
 
 %changelog
+* Thu Nov 16 2023 Andrey Cherepanov <cas@altlinux.org> 0.32.1-alt1
+- New version
+
 * Mon Jul 01 2019 Michael Shigorin <mike@altlinux.org> 0.31.0-alt2
 - E2K: explicit -std=c++11
 - Don't strip libraries (for debuginfo)
