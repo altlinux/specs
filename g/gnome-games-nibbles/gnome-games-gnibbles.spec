@@ -1,49 +1,53 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name nibbles
 %define __name gnome-%_name
 %define xdg_name org.gnome.Nibbles
-%define ver_major 3.38
+%define ver_major 4.0
+%define beta .rc
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.3
-Release: alt1
+Version: %ver_major
+Release: alt0.9%beta
 
-Summary: A cute little game that has no short description
+Summary: Guide a worm around a maze
 Group: Games/Boards
-License: GPLv3+
-Url: https://wiki.gnome.org/Nibbles
+License: GPL-3.0-or-later
+Url: https://wiki.gnome.org/Apps/Nibbles
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version%beta.tar.xz
 %else
-Source: %__name-%version.tar
+Source: %__name-%version%beta.tar
 %endif
 
-Provides:  %__name = %version-%release
+Provides:  %__name = %EVR
 Obsoletes: gnome-games-gnibbles
-Provides:  gnome-games-gnibbles = %version-%release
+Provides:  gnome-games-gnibbles = %EVR
 
-%define glib_ver 2.32.0
-%define gtk_ver 3.4.0
-%define clutter_ver 1.14.4
+%define glib_ver 2.66.0
+%define gtk_ver 4.2.0
 
-BuildRequires(pre): meson
-BuildRequires: yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libgsound-devel libclutter-devel >= %clutter_ver libclutter-gtk3-devel
-BuildRequires: libgnome-games-support-devel >= 1.8.0
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
+BuildRequires: yelp-tools gsettings-desktop-schemas-devel
+BuildRequires: desktop-file-utils /usr/bin/appstreamcli
+BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
+BuildRequires: libgsound-devel
+BuildRequires: pkgconfig(libgnome-games-support-2)
 
 %description
-Gnibbles is a game where the user controls a snake. The snake moves
-around the board, eating diamonds while avoiding the walls placed around
-it.
-
+Control a worm in its quest to eat bonuses and become longer.
+Outmaneuver enemy worms while eating apples and bananas to increase your
+length. Each worm has six lives and loses one by running into a wall,
+another worm, or itself. The enemy worms are after the same bonuses that
+you are, so be careful. If the worms become too large, you won't have
+much room to move.
 
 %prep
-%setup -n %__name-%version
+%setup -n %__name-%version%beta
 
 %build
 %meson
@@ -54,7 +58,7 @@ it.
 %find_lang --with-gnome %__name
 
 %files -f gnome-%_name.lang
-%attr(2711,root,games) %_bindir/%__name
+%_bindir/%__name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%__name
 %_datadir/dbus-1/services/%xdg_name.service
@@ -63,8 +67,12 @@ it.
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
+%doc NEWS
 
 %changelog
+* Wed Nov 22 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt0.9.rc
+- updated to 4.0.rc-5-g495a5a0 (ported to GTK4)
+
 * Mon May 01 2023 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
 - 3.38.3
 
