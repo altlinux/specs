@@ -19,10 +19,10 @@
 
 
 Name: kde5-%rname
-Version: 0.26.6
+Version: 0.26.13
 Release: alt1
 Epoch: 1
-%K5init altplace
+%K5init
 
 Group: Development/Tools
 Summary: Viewing and editing of data on the byte level
@@ -139,7 +139,6 @@ mv %buildroot/%_K5xdgmime/okteta{,5}.xml
 %files
 %_K5bin/*
 %_K5plug/kf5/parts/*.so
-%_K5plug/designer/*.so
 %_K5data/okteta/
 %_K5data/knsrcfiles/*.knsrc
 %_K5xdgmime/*.xml
@@ -147,9 +146,10 @@ mv %buildroot/%_K5xdgmime/okteta{,5}.xml
 %_K5icon/*/*/apps/*.*
 %_K5cfg/*.kcfg
 %_K5srv/*.desktop
+%_datadir/metainfo/*.xml
 
 %files devel
-#%_K5inc/okteta_version.h
+%_K5plug/designer/*okteta*.so
 %_K5inc/*/
 %_K5link/lib*.so
 %_K5lib/cmake/*/
@@ -183,6 +183,9 @@ mv %buildroot/%_K5xdgmime/okteta{,5}.xml
 
 
 %changelog
+* Wed Nov 22 2023 Sergey V Turchin <zerg@altlinux.org> 1:0.26.13-alt1
+- new version
+
 * Wed Jul 28 2021 Sergey V Turchin <zerg@altlinux.org> 1:0.26.6-alt1
 - new version
 
