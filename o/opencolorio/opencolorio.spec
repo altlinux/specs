@@ -1,16 +1,20 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%ifarch %ix86
+%set_verify_elf_method relaxed
+%else
 %set_verify_elf_method strict
+%endif
 
 # TODO: build docs
 
 %define oname opencolorio
-%define soname 2.2
+%define soname 2.3
 
-Name:           lib%oname%soname
-Version:        2.2.1
-Release:        alt3.1
+Name:           %oname
+Version:        2.3.0
+Release:        alt1
 Summary:        Enables color transforms and image display across graphics apps
 
 License:        BSD-3-Clause
@@ -18,11 +22,14 @@ Group:          System/Libraries
 URL:            https://opencolorio.org/
 
 # https://github.com/imageworks/OpenColorIO.git
-Source:         %name-%version.tar
+Source:         OpenColorIO-%version.tar
 
 Patch1: opencolorio-alt-install.patch
 Patch2: opencolorio-alt-armh-multiple-definition.patch
-Patch3: opencolorio-alt-minizip-ng.patch
+Patch3: opencolorio-yaml-cpp-0.8.patch
+%ifarch %ix86
+Patch4: opencolorio-i586.patch
+%endif
 
 # Utilities
 BuildRequires: cmake gcc-c++
@@ -60,24 +67,35 @@ manner across multiple graphics applications. Unlike other color management
 solutions, OCIO is geared towards motion-picture post production, with an
 emphasis on visual effects and animation color pipelines.
 
-%package -n %oname%soname-tools
+%package -n lib%oname%soname
+Summary:        Enables color transforms and image display across graphics apps
+Group:          System/Libraries
+
+%description -n lib%oname%soname
+OCIO enables color transforms and image display to be handled in a consistent
+manner across multiple graphics applications. Unlike other color management
+solutions, OCIO is geared towards motion-picture post production, with an
+emphasis on visual effects and animation color pipelines.
+
+%package tools
 Summary:        Command line tools for %oname
 Group:          Other
-Provides:       opencolorio-tools = %version
 Provides:       opencolorio2.0-tools = %EVR
+Provides:       opencolorio2.2-tools = %EVR
 Obsoletes:      opencolorio2.0-tools < %EVR
+Obsoletes:      opencolorio2.2-tools < %EVR
 
-%description -n %oname%soname-tools
+%description tools
 Command line tools for %oname.
 
-%package devel
+%package -n lib%{oname}2.2-devel
 Summary:        Development libraries and headers for %oname
 Group:          Development/Other
-Provides:       libopencolorio-devel = %version
+Provides:       lib%oname-devel = %EVR
 Provides:       libopencolorio2.0-devel = %EVR
 Obsoletes:      libopencolorio2.0-devel < %EVR
 
-%description devel
+%description -n lib%{oname}2.2-devel
 Development libraries and headers for %oname.
 
 %package -n python3-module-%oname
@@ -88,10 +106,13 @@ Group:          Development/Python3
 %oname python3 module.
 
 %prep
-%setup
+%setup -n OpenColorIO-%version
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%ifarch %ix86
+%patch4 -p1
+%endif
 %ifarch %e2k
 # ld: multiple definition of LoadLutFile
 sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
@@ -105,6 +126,7 @@ sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
 %add_optflags -DNDEBUG
 
 %cmake \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
 	-DOCIO_BUILD_PYTHON:BOOL=ON \
 	-DOCIO_BUILD_STATIC=OFF \
@@ -121,6 +143,7 @@ sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
 %endif
 	-DCMAKE_CXX_STANDARD=14 \
 	-Dminizip-ng_INCLUDE_DIR=%_includedir/minizip \
+	-DPYTHON_VARIANT_PATH=%python3_sitelibdir \
 	%nil
 
 %cmake_build
@@ -141,6 +164,7 @@ for i in %buildroot%_bindir/* ; do
 done
 rm -fr %buildroot%_libdir/libOpenColorIOimageioapphelpers.a
 
+
 %check
 pushd %_cmake__builddir
 # currently tests only pass on x86_64
@@ -158,7 +182,7 @@ popd
 %_libdir/*.so.%{soname}
 %_libdir/*.so.%{soname}.*
 
-%files -n %oname%soname-tools
+%files tools
 %_bindir/ocioarchive
 %_bindir/ociobakelut
 %_bindir/ociocheck
@@ -171,16 +195,19 @@ popd
 %_bindir/ociowrite
 %_man1dir/*
 
-%files devel
+%files -n lib%{oname}2.2-devel
 %_includedir/OpenColorIO/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_libdir/cmake/OpenColorIO/
 
 %files -n python3-module-%oname
-%python3_sitelibdir/*.so
+%python3_sitelibdir/PyOpenColorIO
 
 %changelog
+* Tue Nov 21 2023 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt1
+- - New version 2.3.0. (ALT# 48435)
+
 * Sun Aug 06 2023 Nazarov Denis <nenderus@altlinux.org> 2.2.1-alt3.1
 - Fix FTBFS
 

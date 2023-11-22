@@ -19,7 +19,7 @@
 
 Name: OpenUSD
 Version: 23.11
-Release: alt0.1
+Release: alt0.2
 Summary: Universal Scene Description library
 Group: Development/Other
 License: Apache-2.0
@@ -44,6 +44,8 @@ Patch1: openusd-alt-tbb-disable-debug-relwithdebinfo.patch
 Patch2: embree4.patch
 # SONAME patch from Fedora/RH
 Patch3: 0001-Downstream-only-add-an-SONAME-version.patch
+# https://github.com/PixarAnimationStudios/OpenUSD/pull/2651
+Patch4: OpenColorIO-2.3.patch
 
 BuildRequires(pre): cmake rpm-build-python3 ninja-build
 BuildRequires: gcc-c++
@@ -379,6 +381,9 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %python3_sitelibdir/pxr
 
 %changelog
+* Wed Nov 22 2023 Nazarov Denis <nenderus@altlinux.org> 23.11-alt0.2
+- build with OpenColorIO 2.3
+
 * Wed Nov 15 2023 L.A. Kostis <lakostis@altlinux.ru> 23.11-alt0.1
 - Initial build for ALTLinux.
 - .spec loosely based on RH Rawhide.
