@@ -3,7 +3,7 @@
 
 Name: atop
 Version: 2.9.0
-Release: alt1
+Release: alt2
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
@@ -64,6 +64,9 @@ done
 /usr/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Wed Nov 22 2023 Leontiy Volodin <lvol@altlinux.org> 2.9.0-alt2
+- Fix version (ALT #48545)
+
 * Fri Nov 03 2023 Leontiy Volodin <lvol@altlinux.org> 2.9.0-alt1
 - atop 2.9.0
 
