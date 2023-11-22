@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 119.0.1
+Version: 120.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -20,6 +20,7 @@ Patch006: 0006-bmo-1559213-Support-system-av1.patch
 Patch007: 0007-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch008: 0008-ALT-fix-double_t-redefinition.patch
 Patch009: 0009-build-Disable-Werror.patch
+Patch010: 0010-Add-dbus-cflags.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -426,6 +427,20 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Nov 21 2023 Alexey Gladkov <legion@altlinux.ru> 120.0-alt1
+- New release (120.0).
+- Security fixes:
+  + CVE-2023-6204: Out-of-bound memory access in WebGL2 blitFramebuffer
+  + CVE-2023-6205: Use-after-free in MessagePort::Entangled
+  + CVE-2023-6206: Clickjacking permission prompts using the fullscreen transition
+  + CVE-2023-6207: Use-after-free in ReadableByteStreamQueueEntry::Buffer
+  + CVE-2023-6208: Using Selection API would copy contents into X11 primary selection.
+  + CVE-2023-6209: Incorrect parsing of relative URLs starting with "///"
+  + CVE-2023-6210: Mixed-content resources not blocked in a javascript: pop-up
+  + CVE-2023-6211: Clickjacking to load insecure pages in HTTPS-only mode
+  + CVE-2023-6212: Memory safety bugs fixed in Firefox 120, Firefox ESR 115.5, and Thunderbird 115.5
+  + CVE-2023-6213: Memory safety bugs fixed in Firefox 120
+
 * Mon Nov 13 2023 Alexey Gladkov <legion@altlinux.ru> 119.0.1-alt1
 - New release (119.0.1).
 
