@@ -1,7 +1,7 @@
 %def_with gtk
 
 Name: doublecmd
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 Epoch: 1
 
@@ -16,6 +16,7 @@ Source2: %name.watch
 Patch0: doublecmd-use-default-terminal.patch
 Patch1: doublecmd-not-install-zdli.patch
 Patch2: doublecmd-alt-build-in-one-thread.patch
+Patch3: doublecmd-alt-remove-beta-suffix.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -144,6 +145,9 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Nov 21 2023 Andrey Cherepanov <cas@altlinux.org> 1:1.1.6-alt1
+- New version.
+
 * Mon Nov 06 2023 Andrey Cherepanov <cas@altlinux.org> 1:1.1.5-alt1
 - New version.
 
