@@ -3,19 +3,19 @@ BuildRequires(pre): rpm-macros-mageia-compat
 BuildRequires: /usr/bin/doxygen gcc-c++ libGLU-devel libglvnd-devel python3-devel rpm-build-python3 swig unzip zip
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
+%define _localstatedir %_var
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name assimp
 %define major   5
 %define minor   2
-%define libname lib%{name}%{major}
-%define devname lib%{name}-devel
+%define libname lib%name%major
+%define devname lib%name-devel
 
-Name:           assimp
-Version:        5.2.2
-Release:        alt1_3
-Summary:        Library to import various 3D model formats into applications
-Group:          Graphics
+Name: assimp
+Version: 5.2.2
+Release: alt2
+Summary: Library to import various 3D model formats into applications
+Group: Graphics
 # Assimp is BSD
 # Bundled contrib/clipper is Boost
 # Bundled contrib/Open3DGC is MIT
@@ -24,45 +24,39 @@ Group:          Graphics
 # Bundled contrib/unzip is zlib
 # Bundled contrib/zip is unlicense
 # Bundled contrib/zlib is zlib
-License:        BSD and MIT and Boost and unlicense and zlib
-URL:            https://github.com/assimp/assimp
+License: BSD and MIT and Boost and unlicense and zlib
+Url: https://github.com/assimp/assimp
 
 # Github releases include nonfree models, source tarball must be re-generated
 # using assimp_generate_tarball.sh
-Source0:        %{name}-%{version}-free.tar.xz
-Source1:        assimp_generate_tarball.sh
+Source0: %name-%version-free.tar.xz
+Source1: assimp_generate_tarball.sh
 
 # Un-bundle libraries that are provided by the distribution.
 # Also fixes FTBFS: https://github.com/assimp/assimp/issues/4334
-Patch0:         assimp-5.2.2-mga-unbundle.patch
+Patch0: assimp-5.2.2-mga-unbundle.patch
 # Endless sigh...
-Patch1:         assimp-5.2.2-mga-fix-version.patch
+Patch1: assimp-5.2.2-mga-fix-version.patch
 # Disable -Werror flag, doesn't pass compilation with GCC 12
-Patch2:         assimp-5.2.2-no-Werror.patch
+Patch2: assimp-5.2.2-no-Werror.patch
 # https://github.com/assimp/assimp/pull/4203 Reinstate a deprecated gltfpbr macro: AI_MATKEY_GLTF_PBRSPECULARGLOSSINESS
-Patch3:         assimp-5.2.2-reinstate-gltfpbr-macro.patch
+Patch3: assimp-5.2.2-reinstate-gltfpbr-macro.patch
 
-BuildRequires:  boost-complete
-BuildRequires:  ccmake cmake ctest
-BuildRequires:  pkgconfig(gtest)
-BuildRequires:  pkgconfig(minizip)
-BuildRequires:  pkgconfig(poly2tri)
-BuildRequires:  pkgconfig(pugixml)
-BuildRequires:  pkgconfig(zlib)
-BuildRequires:  stbi-devel
-BuildRequires:  libutfcpp-devel
+BuildRequires: boost-complete
+BuildRequires: cmake
+BuildRequires: pkgconfig(gtest)
+BuildRequires: pkgconfig(minizip)
+BuildRequires: pkgconfig(poly2tri)
+BuildRequires: pkgconfig(pugixml)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(stb)
+BuildRequires: libutf8cpp-devel
 
 # Incompatible - https://github.com/assimp/assimp/issues/788
 #BuildRequires:  pkgconfig(polyclipping)
 # Needs unstable git version we don't package yet
 #BuildRequires:  rapidjson
 
-Provides: bundled(polyclipping) = 4.8.8
-Provides: bundled(open3dgc)
-Provides: bundled(openddl-parser)
-Provides: bundled(rapidjson)
-# https://github.com/kuba--/zip
-Provides: bundled(zip)
 Source44: import.info
 
 %description
@@ -74,52 +68,51 @@ systems, but is not limited to these applications.
 This package contains the assimp binary, a tool to work with various formats.
 
 %files
-%{_bindir}/%{name}
+%_bindir/%name
 
 #----------------------------------------------------------------------------
 
-%package -n     %{libname}
-Summary:        Library to import various 3D model formats into applications
-Group:          System/Libraries
+%package -n     %libname
+Summary: Library to import various 3D model formats into applications
+Group: System/Libraries
 
-%description -n %{libname}
+%description -n %libname
 Assimp, the Open Asset Import Library, is a free library to import various
 well-known 3D model formats into applications. Assimp aims to provide a full
 asset conversion pipeline for use in game engines and real-time rendering
 systems, but is not limited to these applications.
 
-%files -n       %{libname}
+%files -n       %libname
 %doc Readme.md LICENSE CREDITS CHANGES
-%{_libdir}/lib%{name}.so.%{major}
-%{_libdir}/lib%{name}.so.%{version}
+%_libdir/lib%name.so.%major
+%_libdir/lib%name.so.%version
 
 #----------------------------------------------------------------------------
 
-%package -n     %{devname}
-Summary:        Header files and development libraries for assimp
-Group:          Development/C++
-Provides:       %{name}-devel = %{version}-%{release}
-Requires:       %{libname} = %{version}-%{release}
+%package -n     %devname
+Summary: Header files and development libraries for assimp
+Group: Development/C++
+Provides: %name-devel = %version-%release
+Requires: %libname = %version-%release
 
-%description -n %{devname}
+%description -n %devname
 This package contains the header files and development libraries for assimp.
 You need to install it if you want to develop programs using assimp.
 
-%files -n       %{devname}
-%{_includedir}/%{name}/
-%{_libdir}/lib%{name}.so
-%{_libdir}/cmake/%{name}-%{major}.%{minor}
-%{_libdir}/pkgconfig/%{name}.pc
+%files -n       %devname
+%_includedir/%name/
+%_libdir/lib%name.so
+%_libdir/cmake/%name-%major.%minor
+%_libdir/pkgconfig/%name.pc
 
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-
 
 # Get rid of bundled libs so we can't accidentally build against them
 rm -rf contrib/android-cmake
@@ -141,7 +134,7 @@ rm -rf contrib/zlib
 # as of lcc 1.25.20
 %add_optflags -Wno-error=maybe-uninitialized
 %endif
-%{mageia_cmake} \
+%mageia_cmake \
   -DASSIMP_BUILD_TESTS=OFF
 
 %mageia_cmake_build
@@ -149,8 +142,11 @@ rm -rf contrib/zlib
 %install
 %mageia_cmake_install
 
-
 %changelog
+* Wed Nov 22 2023 L.A. Kostis <lakostis@altlinux.ru> 5.2.2-alt2
+- use stb instead of stbi (which is unmaintained and has security bugs).
+- update BR.
+
 * Thu Apr 14 2022 Igor Vlasenko <viy@altlinux.org> 5.2.2-alt1_3
 - update by mgaimport
 
