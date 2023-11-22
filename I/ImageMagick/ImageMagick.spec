@@ -1,6 +1,6 @@
 %define mversion	7
 %define dversion	%mversion.1.1
-%define drelease	15
+%define drelease	21
 %define qlev		Q16HDRI
 %define mgkdir		ImageMagick
 %define soname		10
@@ -24,6 +24,7 @@ Group: Graphics
 Url: http://www.imagemagick.org/
 VCS: https://github.com/ImageMagick/ImageMagick
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 Source1: %name.desktop
 Source2: imagemagick16.png
@@ -153,6 +154,7 @@ Documentation for %name
 
 %prep
 %setup -q 
+%patch0 -p1
 touch config.rpath
 
 %ifarch %e2k
@@ -265,6 +267,9 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Nov 22 2023 Anton Farygin <rider@altlinux.ru> 7.1.1.21-alt1
+- 7.1.1.15 -> 7.1.1.21
+
 * Wed Aug 30 2023 Anton Farygin <rider@altlinux.ru> 7.1.1.15-alt1
 - 6.9.12.93 -> 7.1.1.15
 - enabled HDRI by default
