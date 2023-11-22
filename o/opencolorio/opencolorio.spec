@@ -9,26 +9,26 @@
 
 # TODO: build docs
 
-%define oname opencolorio
 %define soname 2.3
 
-Name:           %oname
-Version:        2.3.0
-Release:        alt1
-Summary:        Enables color transforms and image display across graphics apps
+Name: opencolorio
+Version: 2.3.0
+Release: alt2
 
-License:        BSD-3-Clause
-Group:          System/Libraries
-URL:            https://opencolorio.org/
+Summary: Enables color transforms and image display across graphics apps
+License: BSD-3-Clause
+Group: System/Libraries
+
+URL: https://%name.org/
 
 # https://github.com/imageworks/OpenColorIO.git
-Source:         OpenColorIO-%version.tar
+Source: OpenColorIO-%version.tar
 
-Patch1: opencolorio-alt-install.patch
-Patch2: opencolorio-alt-armh-multiple-definition.patch
-Patch3: opencolorio-yaml-cpp-0.8.patch
+Patch1: %name-alt-install.patch
+Patch2: %name-alt-armh-multiple-definition.patch
+Patch3: %name-yaml-cpp-0.8.patch
 %ifarch %ix86
-Patch4: opencolorio-i586.patch
+Patch4: %name-i586.patch
 %endif
 
 # Utilities
@@ -67,43 +67,44 @@ manner across multiple graphics applications. Unlike other color management
 solutions, OCIO is geared towards motion-picture post production, with an
 emphasis on visual effects and animation color pipelines.
 
-%package -n lib%oname%soname
-Summary:        Enables color transforms and image display across graphics apps
-Group:          System/Libraries
+%package -n lib%name%soname
+Summary: Enables color transforms and image display across graphics apps
+Group: System/Libraries
 
-%description -n lib%oname%soname
+%description -n lib%name%soname
 OCIO enables color transforms and image display to be handled in a consistent
 manner across multiple graphics applications. Unlike other color management
 solutions, OCIO is geared towards motion-picture post production, with an
 emphasis on visual effects and animation color pipelines.
 
 %package tools
-Summary:        Command line tools for %oname
-Group:          Other
-Provides:       opencolorio2.0-tools = %EVR
-Provides:       opencolorio2.2-tools = %EVR
-Obsoletes:      opencolorio2.0-tools < %EVR
-Obsoletes:      opencolorio2.2-tools < %EVR
+Summary: Command line tools for %name
+Group: Other
+Provides: opencolorio2.0-tools = %EVR
+Provides: opencolorio2.2-tools = %EVR
+Obsoletes: opencolorio2.0-tools < %EVR
+Obsoletes: opencolorio2.2-tools < %EVR
 
 %description tools
-Command line tools for %oname.
+Command line tools for %name.
 
-%package -n lib%{oname}2.2-devel
-Summary:        Development libraries and headers for %oname
-Group:          Development/Other
-Provides:       lib%oname-devel = %EVR
-Provides:       libopencolorio2.0-devel = %EVR
-Obsoletes:      libopencolorio2.0-devel < %EVR
+%package -n lib%name-devel
+Summary: Development libraries and headers for %name
+Group: Development/Other
+Provides: libopencolorio2.0-devel = %EVR
+Provides: libopencolorio2.2-devel = %EVR
+Obsoletes: libopencolorio2.0-devel < %EVR
+Obsoletes: libopencolorio2.2-devel < %EVR
 
-%description -n lib%{oname}2.2-devel
-Development libraries and headers for %oname.
+%description -n lib%name-devel
+Development libraries and headers for %name.
 
-%package -n python3-module-%oname
-Summary:        %oname python3 module
-Group:          Development/Python3
+%package -n python3-module-%name
+Summary: %name python3 module
+Group: Development/Python3
 
-%description -n python3-module-%oname
-%oname python3 module.
+%description -n python3-module-%name
+%name python3 module.
 
 %prep
 %setup -n OpenColorIO-%version
@@ -149,7 +150,7 @@ sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # Generate man pages
 mkdir -p %buildroot%_man1dir
@@ -176,11 +177,11 @@ ctest ||:
 %endif
 popd
 
-%files -n lib%oname%soname
+%files -n lib%name%soname
 %doc LICENSE THIRD-PARTY.md
 %doc CHANGELOG.md CONTRIBUTING.md COMMITTERS.md GOVERNANCE.md PROCESS.md README.md SECURITY.md
-%_libdir/*.so.%{soname}
-%_libdir/*.so.%{soname}.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files tools
 %_bindir/ocioarchive
@@ -195,16 +196,19 @@ popd
 %_bindir/ociowrite
 %_man1dir/*
 
-%files -n lib%{oname}2.2-devel
+%files -n lib%name-devel
 %_includedir/OpenColorIO/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_libdir/cmake/OpenColorIO/
 
-%files -n python3-module-%oname
+%files -n python3-module-%name
 %python3_sitelibdir/PyOpenColorIO
 
 %changelog
+* Wed Nov 22 2023 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt2
+- Rename devel subpackage (ALT #48435)
+
 * Tue Nov 21 2023 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt1
 - - New version 2.3.0. (ALT# 48435)
 
