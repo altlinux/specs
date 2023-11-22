@@ -6,7 +6,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Name: palemoon
 Version:  32.5.0
 
-Release: alt2
+Release: alt3
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -18,10 +18,6 @@ ExclusiveArch: x86_64 aarch64
 
 %define sname palemoon
 %define bname newmoon
-
-%define llvm_version  16.0
-%define rust_version  1.65.0
-%define cargo_version 1.65.0
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -49,18 +45,17 @@ Source11: content.tar
 Source12: xulstore.json
 Source13: kde.js
 
-#Patch15: palemoon-32.0.1-ppc64le-alt1.patch
 
 #Patch1: palemoon_google_add-26.4.0.patch
 Patch16: mozilla_palimoon-29.4.6-cross-desctop.patch
 
 Patch18: mozilla_palimoon-29.4.6-bug-1153109-enable-stdcxx-compat.patch
 
-Patch21: palemoon-build-el5-nss.patch
+#Patch21: palemoon-build-el5-nss.patch
 
 Patch22: palemoon_rpath-29.4.6.patch
 
-Patch23: palemoon_version-29.4.6.patch
+Patch23: palemoon_version-32.5.0.patch
 Patch24: palemoon-31.0.0-ui_picker_false.patch
 #Patch25: palemoon-31.3.0.1-lock_impl_posix.patch
 
@@ -78,6 +73,7 @@ Patch113: palemoon-29.4.6-kde-background.patch
 Patch114: nemoon_branding-31.0.0.patch
 Patch115: palemoon-32.4.0-mathops.patch
 Patch116: palemoon-32.4.0-hunspell.patch
+Patch117: palemoon-32.5.0-locale.patch
 
 %set_autoconf_version 2.13
 
@@ -100,6 +96,7 @@ BuildRequires: perl(XML/LibXML.pm) perl(XML/LibXSLT.pm) perl(diagnostics.pm) per
 # END SourceDeps(oneline)
 
 BuildPreReq: %_bindir/python2.7 python2-base
+BuildPreReq: libXcomposite-devel libXdamage-devel
 
 %ifarch x86_64
 BuildRequires: libcpuid-devel
@@ -113,7 +110,7 @@ BuildRequires(pre): mozilla-common-devel rpm-macros-alternatives mozilla-common
 BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildPreReq: python-module-future python-modules-json python-modules-wsgiref
-BuildPreReq: libnss-devel libnss
+BuildPreReq: libnss-devel
 
 #BuildRequires: gcc%%{_gcc_version}-c++
 
@@ -121,6 +118,7 @@ BuildPreReq: chrpath
 BuildPreReq: autoconf_%_autoconf_version
 
 BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel
+BuildRequires: libhunspell-devel
 
 %description
 The %sname project is a redesign of Mozilla's  Firefox browser component,
@@ -219,6 +217,7 @@ cd ..
 %patch114 -p1
 %patch115 -p1
 %patch116 -p1
+%patch117 -p1
 
 
 cd %sname
@@ -255,9 +254,9 @@ cp -f %SOURCE4 .mozconfig
 
 echo "mk_add_options MOZ_OBJDIR=obj-%_arch" >> .mozconfig
 
-
 # echo "mk_add_options MOZ_MAKE_FLAGS=-j${NPROCS:-4}" >> .mozconfig
 echo "mk_add_options MOZ_MAKE_FLAGS=%_smp_mflags" >> .mozconfig
+
 # echo "ac_add_options --enable-rpath"  >> .mozconfig
 
 ## echo "ac_add_options --disable-static" >> .mozconfig
@@ -270,7 +269,7 @@ echo "ac_add_options --enable-system-hunspell" >> .mozconfig
 echo "ac_add_options --with-pthreads" >> .mozconfig
 
 echo "ac_add_options --x-libraries=%_libdir/X11" >> .mozconfig
-echo "ac_add_options --with-nss-prefix=%_libdir" >> .mozconfig
+echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
 
 %ifarch x86_64
  echo "ac_add_options --with-arch=x86-64" >> .mozconfig
@@ -296,7 +295,8 @@ MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
                 sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
 
 export CFLAGS="$MOZ_OPT_FLAGS"
-export CXXFLAGS="$MOZ_OPT_FLAGS -Wno-error=format-overflow -Wmaybe-uninitialized -Wreorder -fno-rtti -ffunction-sections -fdata-sections -D_GNUC_"
+#export CXXFLAGS="$MOZ_OPT_FLAGS -Wno-error=format-overflow -Wmaybe-uninitialized -Wreorder -fno-rtti -ffunction-sections -fdata-sections -D_GNUC_"
+export CXXFLAGS="$MOZ_OPT_FLAGS -Wno-error=format-overflow -Wmaybe-uninitialized -Wreorder -D_GNUC_"
 
 # Add fake RPATH
 rpath="/$(printf %%s '%newmoon_bindir' |tr '[:print:]' '_')"
@@ -348,7 +348,7 @@ gcc %optflags \
 ## ? install -D -m644 %SOURCE12 obj-%_arch/dist/bin/browser/defaults/profile/xulstore.json
 
 # нужен только с патчами KDE
-# install -D -m644 %SOURCE13 obj-%_arch/dist/bin/defaults/pref/kde.js
+install -D -m644 %SOURCE13 obj-%_arch/dist/bin/defaults/pref/kde.js
 
 cd palemoon
 
@@ -487,6 +487,12 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Wed Nov 22 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.0-alt3
+- Add palemoon_version-32.5.0.patch and  palemoon-32.5.0-locale.patch
+
+* Wed Nov 22 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.0-alt2.1
+- Changed palemoon-mozconfig
+
 * Mon Nov 20 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.0-alt2
 - Release 32.5.0
 
@@ -931,3 +937,5 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+
+
