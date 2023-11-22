@@ -2,7 +2,7 @@
 
 Name:    nx-libs
 Version: 3.5.99.26.1
-Release: alt3.1
+Release: alt3.2
 
 Summary: NX X11 protocol compression libraries
 
@@ -19,6 +19,7 @@ Source2: patches.etersoft.tar
 Patch2: nx-libs-github-pull-1023-riscv64-support.patch
 # loongarch64 support (from https://github.com/ArcticaProject/nx-libs/pull/1062)
 Patch3: nx-libs-github-pull-1062-loongarch64-support.patch
+Patch2000: nx-libs-e2k.patch
 
 BuildRequires: gcc-c++
 BuildRequires: fontconfig-devel
@@ -140,6 +141,9 @@ This package provides the nxdialog helper script.
 %setup
 %patch2 -p1
 %patch3 -p1
+%ifarch %e2k
+%patch2000 -p2
+%endif
 
 # Apply all patches from debian/patches
 cat debian/patches/series | while read patchfile;do 
@@ -332,6 +336,9 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 
 
 %changelog
+* Wed Nov 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.5.99.26.1-alt3.2
+- e2k patch
+
 * Fri Oct 27 2023 Ivan A. Melnikov <iv@altlinux.org> 3.5.99.26.1-alt3.1
 - add patches for loongarch64 and riscv64 support
 
