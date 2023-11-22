@@ -1,5 +1,5 @@
 Name: autorepo-altnode-repocop
-Version: 0.35
+Version: 0.36
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -12,6 +12,8 @@ Source: %name-%version.tar
 
 BuildRequires: perl(Pod/Text.pm) repocop-resource-html repocop > 0.79
 Requires: repocop > 0.82
+# for sisyphus repocop node
+Requires: perl-ALTLinux-ACL
 Requires: repocop-report-broken-metadata
 Requires: pigz pzstd
 Conflicts: repocop-unittest-unmet-dependency < 0.10
@@ -54,6 +56,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/repocop-tasktest-*
 
 %changelog
+* Wed Nov 22 2023 Igor Vlasenko <viy@altlinux.org> 0.36-alt1
+- updated deps
+
 * Thu Nov 16 2023 Igor Vlasenko <viy@altlinux.org> 0.35-alt1
 - fixed minor bug in repocop-daily
 
