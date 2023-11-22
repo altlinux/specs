@@ -7,13 +7,11 @@
 %define min_version	32.5.0
 %define max_version	32.6.*
 
-%define bname		newmoon
-%define newmoon_dir 	%palemoon_datadir/browser/
 
 Name: palemoon-uk
 
 Version: 32.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Ukrainian (UA) Language Pack for Pale Moon
 License: MPL-2.0
@@ -28,10 +26,10 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source: uk_palemoon_%version.xpi
 Source2: uk_UA_%version.tar
 
-Requires: hunspell-uk
-Requires: palemoon >= 27.7.0
 
-#BuildArch: noarch
+Requires: hunspell-uk
+Requires: palemoon >= 32.4.0
+
 
 BuildRequires(pre):	rpm-build-palemoon
 
@@ -56,15 +54,17 @@ mkdir -p -- \
 	%buildroot/%cid_dir \
 	%buildroot/%cid_dict_dir/dictionaries
 
-install -d -m 755 %buildroot/%newmoon_dir/
+#install -d -m 755 %buildroot/%newmoon_dir/
 
 # Install translation
 cp -r -- %cid/* %buildroot/%cid_dir
+
+
 ls uk_UA_%version/*
 cp uk_UA_%version/install.rdf %buildroot/%cid_dict_dir
 
-cd -
 
+cd -
 
 ln -s %_datadir/myspell/uk_UA.aff %buildroot/%cid_dict_dir/dictionaries/uk-UA.aff
 ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk-UA.dic
@@ -73,7 +73,11 @@ ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk-UA.di
 %cid_dir
 %cid_dict_dir
 
+
 %changelog
+* Thu Nov 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.5.0-alt1.1
+- Fix source
+
 * Mon Nov 20 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.5.0-alt1
 - Update to release 32.5.0
 
