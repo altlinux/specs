@@ -32,11 +32,7 @@
 
 # context
 %def_with context
-%ifarch %e2k
-%def_without coroutine
-%else
 %def_with coroutine
-%endif
 
 %if_with mpi
 %define mpiimpl openmpi
@@ -64,7 +60,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt3
+Release: alt4
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -1857,6 +1853,9 @@ done
 
 
 %changelog
+* Wed Nov 22 2023 Michael Shigorin <mike@altlinux.org> 1:1.83.0-alt4
+- E2K: drop special coroutine handling in spec (ilyakurdyukov@)
+
 * Thu Oct 05 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.83.0-alt3
 - E2K: replacement_field_rule is moved in 1.83.0 (thx ilyakurdyukov@)
 - Context: fix Mac OS detection in ucontext
