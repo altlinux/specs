@@ -1,6 +1,6 @@
 Name:    coin3d
-Version: 4.0.0
-Release: alt2.2
+Version: 4.0.1
+Release: alt1
 Summary: OpenGL-based, 3D graphics library
 License: BSD-3-Clause
 Group:   System/Libraries
@@ -10,7 +10,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 
 Patch1: 0002-Added-c-suffix-to-SO_VERSION.patch
-Patch2: 0003-Drop-use-of-cpack.patch
 Patch3: 01_convert_old_patches.patch
 Patch4: fix-cmake-3.19.patch
 
@@ -122,7 +121,6 @@ This package contains architecture independent files of Coin3D.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 
@@ -132,14 +130,15 @@ This package contains architecture independent files of Coin3D.
        -DCOIN_BUILD_DOCUMENTATION=TRUE \
        -DCOIN_BUILD_DOCUMENTATION_MAN=TRUE \
        -DHAVE_MULTIPLE_VERSION=TRUE \
-       -DUSE_EXTERNAL_EXPAT=TRUE
+       -DUSE_EXTERNAL_EXPAT=TRUE \
+       -DCOIN_USE_CPACK=FALSE
 %ninja_build -C BUILD
 
 %install
 %ninja_install -C BUILD
 
 %files -n lib%name
-%doc AUTHORS ChangeLog README{,.UNIX} THANKS FAQ*
+%doc AUTHORS ChangeLog README{.md,.UNIX} THANKS FAQ* RELNOTES
 %_libdir/*.so.*
 
 %files -n lib%name-devel
@@ -153,12 +152,15 @@ This package contains architecture independent files of Coin3D.
 %doc docs/*
 %doc %_defaultdocdir/Coin4
 %_man3dir/*
-%exclude %_man3dir/details.3*
+%exclude %_man3dir/coin_details.3*
 
 %files common
 %_datadir/Coin4
 
 %changelog
+* Tue Nov 21 2023 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
+- New version.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 4.0.0-alt2.2
 - NMU: spec: adapted to new cmake macros.
 
