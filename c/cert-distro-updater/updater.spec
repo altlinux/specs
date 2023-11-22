@@ -1,6 +1,6 @@
 Name:     cert-distro-updater
 Version:  1.3
-Release:  alt5
+Release:  alt6
 
 Summary:  Updater of packages for distros with security and integrity
 License:  GPL v2+
@@ -45,6 +45,9 @@ install -Dm 0750 parser-bootloader-extlinux-conf.awk %buildroot%_sbindir/parser-
 /lib/systemd/system/*
 
 %changelog
+* Thu Nov 23 2023 Paul Wolneykien <manowar@altlinux.org> 1.3-alt6
+- Fixed "WantedBy" in updater-after.service (closes: 48553).
+
 * Thu Nov 02 2023 Paul Wolneykien <manowar@altlinux.org> 1.3-alt5
 - Obsolete updater < 1.3-alt4.
 
