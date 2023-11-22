@@ -2,19 +2,26 @@
 
 Name: libtar
 Version: 1.2.20
-Release: alt2.git.6d0ab4c
+Release: alt3.git.6d0ab4c
 Summary: C library for manipulating POSIX tar files
 License: BSD
 Group: System/Libraries
 Url: https://repo.or.cz/w/libtar.git
-
-# git://repo.or.cz/libtar.git
 Source: %name-%version.tar
 
 # Patches from Debian
 Patch1: CVE-2013-4420.patch
 Patch2: oldgnu_prefix.patch
 Patch3: no_strip.patch
+
+# Patches from Fedoara
+# fix programming mistakes detected by static analysis
+Patch10:         libtar-1.2.20-static-analysis.patch
+# fix out-of-bounds read in gnu_long{name,link} (CVE-2021-33643 CVE-2021-33644)
+Patch11:         libtar-1.2.20-CVE-2021-33643-CVE-2021-33644.patch
+# fix memory leaks through gnu_long{name,link} (CVE-2021-33645 CVE-2021-33646)
+Patch12:        libtar-1.2.20-CVE-2021-33645-CVE-2021-33646.patch
+Patch13: libtar-configure-c99.patch
 
 # Automatically added by buildreq on Tue Mar 09 2010
 BuildRequires: zlib-devel
@@ -37,6 +44,10 @@ programs which will use the %name library.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 # set correct version for .so build
 %define ltversion %(echo %{version} | tr '.' ':')
@@ -61,6 +72,10 @@ lib/Makefile.in
 %_man3dir/*
 
 %changelog
+* Wed Nov 22 2023 Anton Farygin <rider@altlinux.ru> 1.2.20-alt3.git.6d0ab4c
+- Applied patches from Fedora (Fixes: CVE-2021-33643, CVE-2021-33644,
+				      CVE-2021-33645, CVE-2021-33646)
+
 * Thu Oct 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.20-alt2.git.6d0ab4c
 - Applied patches from Debian (Fixes: CVE-2013-4420).
 
