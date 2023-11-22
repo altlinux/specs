@@ -6,8 +6,8 @@
 %define xdg_name org.gnome.rhythmbox.plugins.alternative_toolbar
 
 Name: rhythmbox-plugins-%_name
-Version: %ver_major.3
-Release: alt1.1%beta
+Version: %ver_major.4
+Release: alt1%beta
 
 Summary: An alternative toolbar for Rhythmbox
 Group: Sound
@@ -55,6 +55,9 @@ Compact toolbar which can be hidden.
 %doc ChangeLog README*
 
 %changelog
+* Wed Nov 22 2023 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt1
+- 0.20.4
+
 * Thu Sep 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1.1
 - explicitly required rhythmbox-plugins-python (ALT #47567)
 
