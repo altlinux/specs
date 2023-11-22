@@ -2,11 +2,13 @@
 
 Name: librep
 Version: 0.92.3
-Release: alt5
+Release: alt6
 
 Summary: An embeddable LISP environment
 License: GPL
 Group: Development/Other
+
+ExcludeArch: armh
 
 Url: http://librep.sourceforge.net/
 Source: %name-%version.tar
@@ -110,6 +112,11 @@ EOF
 %_man1dir/repdoc.1*
 
 %changelog
+* Wed Nov 22 2023 Ivan A. Melnikov <iv@altlinux.org> 0.92.3-alt6
+- Assume downwards stack direction for loongarch64 and riscv64
+  (fixes FTBFS on those architectures).
+- Don't build on armh (broken now).
+
 * Sun Oct 27 2019 Michael Shigorin <mike@altlinux.org> 0.92.3-alt5
 - E2K: fixed build (lcc is __not__ gcc though!).
 - Replaced %%_target_platform with %%_configure_platform
