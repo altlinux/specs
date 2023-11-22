@@ -1,20 +1,20 @@
-# commit a249151e4508704be8db9856627f61018862cb66
+# commit 1457a094dd4e970e6b1fa1e4d7a053c80adf5fe7
 
-%undefine git_commit
+%define git_commit 1457a094d
 
-%def_disable plugins
+%def_enable plugins
 
 %def_disable menufile
 
 %undefine cvs
 
 Name: bzflag
-Version: 2.4.26
+Version: 2.5.3
 
-%ifndef git_commit
-Release: alt1
-%else
+%ifdef git_commit
 Release: alt0.git_1_%git_commit
+%else
+Release: alt1
 %endif
 
 Summary: A multiplayer 3D tank battle game
@@ -24,11 +24,11 @@ Packager: Motsyo Gennadi <drool@altlinux.ru>
 
 Url: http://www.bzflag.org
 
-# commit e2fefdbb30154605c61fb85315d1d39e9be34689
+# commit 1457a094dd4e970e6b1fa1e4d7a053c80adf5fe7
 %ifdef git_commit
-Source: %name-%version-%release.tar.bz2
+Source: %name-%version-%release.tar
 %else
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 %endif
 
 
@@ -48,12 +48,14 @@ Summary(uk_UA.UTF-8): Тривимірна мережева гра на танк
 
 #Requires: %name-server
 
-# Automatically added by buildreq on Thu May 04 2017 (-bi)
-# optimized out: elfutils libGL-devel libGLU-devel libX11-devel libgpg-error libstdc++-devel libtinfo-devel perl pkg-config python-base termutils xorg-xf86vidmodeproto-devel xorg-xproto-devel xz
-BuildRequires: gcc-c++ libSDL2-devel libGLEW-devel libXext-devel libXxf86vm-devel libcares-devel libcurl-devel libncurses-devel zlib-devel
+# Automatically added by buildreq on Tue Nov 21 2023 (-bi)
+# optimized out: debugedit elfutils glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libGLU-devel libctf-nobfd0 libglvnd-devel libgpg-error libp11-kit libsasl2-3 libstdc++-devel libtinfo-devel perl pkg-config python3 python3-base rpm-build-file sh5 termutils xz zlib-devel
+BuildRequires: gcc-c++ libGLEW-devel libSDL2-devel libcares-devel libcurl-devel libglm-devel libncurses-devel libpng-devel perl-parent
 
 # BuildRequires: catdoc iconv
+BuildRequires: ccache
 BuildRequires: catdoc
+BuildRequires: libglm-devel
 
 %description
 BZFlag is a multiplayer 3D tank battle game. It's one of the most popular games
@@ -147,26 +149,27 @@ This package contains BZFlags standalone game server.
 
 %build
 %autoreconf
-#autogen.sh
+#./autogen.sh
 export CARES_DIR=%_includedir
 # Use PIE because bzflag/bzfs are networked server applications
 CFLAGS='-fPIC %{optflags} -fno-strict-aliasing' \
 CXXFLAGS='-fPIC %{optflags} -fno-strict-aliasing' \
 LDFLAGS='-pie' \
 SDL_CFLAGS='-I%{_prefix}/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT' \
+
 %configure \
 	--bindir=%_gamesbindir \
 	--datadir=%_gamesdatadir \
 	--with-pic \
         --disable-dependency-tracking \
+	--with-gnu-ld \
 	--enable-threads \
 	%{subst_enable plugins} \
 	--without-regex \
 	--enable-robots \
- --libdir=%{_libdir}/%{name} --with-SDL=2 \
+    --libdir=%{_libdir}/%{name} --with-SDL=2 \
     --prefix=%{_prefix} --exec-prefix=%{_prefix} \
     --with-sdl-prefix=%{_prefix} --with-sdl-exec-prefix=%{_prefix}
-
 
 %make_build
 cd misc
@@ -217,9 +220,9 @@ mkdir -p %buildroot/var/run/%name
 %_gamesbindir/%name
 %_gamesdatadir/%name
 %if_enabled menufile
-%_menudir/%name
+ %_menudir/%name
 %else
-%_datadir/applications/*
+ %_datadir/applications/*
 %endif
 %_miconsdir/%name.png
 %_niconsdir/%name.png
@@ -232,10 +235,19 @@ mkdir -p %buildroot/var/run/%name
 %files server
 %doc misc/bzfs.conf misc/filter.txt misc/groups.conf
 %_gamesbindir/bzfs
+
+%if_enabled plugins
+ %_libdir/bzflag/*.so
+ %exclude %_libdir/bzflag/*.la
+%endif
+
 %_man6dir/bzfs.6.*
 %_initdir/bzfs
 
 %changelog
+* Tue Nov 21 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2.5.3-alt0.git_1_1457a094d
+- Update to git commit 1457a094d
+
 * Tue Nov 29 2022 Ilya Mashkin <oddity@altlinux.ru> 2.4.26-alt1
 - 2.4.26 Release
 
