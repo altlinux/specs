@@ -4,7 +4,7 @@
 
 %define _name granite
 %define rdn_name io.elementary.%_name-%api_ver_major
-%define ver_major 7.3
+%define ver_major 7.4
 %define api_ver_major 7
 %define api_ver 7.0
 %define sover 7
@@ -29,7 +29,7 @@ Source: %_name-%version.tar
 %define gtk4_ver 4.4
 %define vala_ver 0.40
 
-Requires: elementary-icon-theme >= %ver_major
+Requires: elementary-icon-theme >= 7.3
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson sassc
@@ -128,6 +128,9 @@ GObject introspection devel data for the Granite library.
 
 
 %changelog
+* Tue Nov 21 2023 Yuri N. Sedunov <aris@altlinux.org> 7.4.0-alt1
+- 7.4.0
+
 * Tue Jun 13 2023 Yuri N. Sedunov <aris@altlinux.org> 7.3.0-alt1
 - 7.3.0
 
