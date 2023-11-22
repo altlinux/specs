@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20230701
+Version: 20231121
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -48,6 +48,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Tue Nov 21 2023 Leonid Krivoshein <klark@altlinux.org> 20231121-alt1
+- improvements to logging during boot loading (closes #37201)
+
 * Sat Jul 01 2023 Anton Midyukov <antohami@altlinux.org> 20230701-alt1
 - init.c: mount and overmount /run
 
