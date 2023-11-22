@@ -34,7 +34,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -92,6 +92,7 @@ Patch406: alt-009-fix-appdata.patch
 Patch410: alt-005-svg-icons-1.patch
 Patch411: alt-006-svg-icons-2.patch
 Patch412: alt-007-svg-icons-3.patch
+Patch413: alt-013-icu74.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
@@ -372,6 +373,7 @@ echo Direct build
 #patch410 -p1
 #patch411 -p1
 #patch412 -p1
+%patch413 -p1
 
 %patch500 -p0
 
@@ -528,7 +530,8 @@ export ac_cv_prog_LO_CLANG_CC=""
 export _JAVA_OPTIONS="-XX:ParallelGCThreads=4 $_JAVA_OPTIONS"
 %endif
 
-%make build AR=/usr/bin/ar RANLIB=/usr/bin/ranlib verbose=true
+%make build AR=/usr/bin/ar RANLIB=/usr/bin/ranlib
+#      verbose=true
 
 # Generate typelib files
 ## TODO us
@@ -717,6 +720,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Nov 22 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.8.2-alt2
+- FTBFS: fixed build with icu 74 (https://bugs.documentfoundation.org/show_bug.cgi?id=158108)
+- Reduced log output.
+
 * Sat Nov 04 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.8.2-alt1
 - New version.
 
