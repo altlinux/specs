@@ -74,6 +74,25 @@
 %def_disable cephfs
 %endif
 
+%if_with clustering_support
+%if_with libcephfs
+%def_enable ceph_mutex
+%else
+%def_disable ceph_mutex
+%endif
+%ifarch %e2k
+%def_disable pcp_pmda
+%def_disable etcd_mutex
+%else
+%def_disable pcp_pmda
+%def_enable etcd_mutex
+%endif
+%else
+%def_disable ceph_mutex
+%def_disable pcp_pmda
+%def_disable etcd_mutex
+%endif
+
 %ifarch %e2k
 %def_disable io_uring
 %else
@@ -101,7 +120,7 @@
 %endif
 
 Name:    samba
-Version: 4.18.8
+Version: 4.19.2
 Release: alt1
 
 Group:   System/Servers
@@ -184,6 +203,16 @@ BuildRequires: libtirpc-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libtasn1-utils
 
+%if_enabled pcp_pmda
+BuildRequires: libpcp-devel
+%endif
+%if_enabled ceph_mutex
+BuildRequires: librados-devel
+%endif
+%if_enabled etcd_mutex
+BuildRequires: python3-module-etcd
+%endif
+
 %if_with mitkrb5
 BuildRequires: libssl-devel
 BuildRequires: libkrb5-devel
@@ -199,6 +228,10 @@ BuildRequires: python3-module-markdown
 BuildRequires: python3-module-dns
 %endif
 
+%if_with separate_heimdal_server
+BuildRequires: perl-JSON-PP
+%endif
+
 BuildRequires: glibc-devel glibc-kernheaders
 # https://bugzilla.samba.org/show_bug.cgi?id=9863
 BuildConflicts: setproctitle-devel
@@ -212,22 +245,22 @@ BuildRequires: libdbus-devel
 %endif
 
 %if_without talloc
-BuildRequires: libtalloc-devel >= 2.4.0
+BuildRequires: libtalloc-devel >= 2.4.1
 BuildRequires: python3-module-talloc-devel
 %endif
 
 %if_without tevent
-BuildRequires: libtevent-devel >= 0.14.0
+BuildRequires: libtevent-devel >= 0.15.0
 BuildRequires: python3-module-tevent
 %endif
 
 %if_without tdb
-BuildRequires: libtdb-devel >= 1.4.8
+BuildRequires: libtdb-devel >= 1.4.9
 BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.7.2
+%define ldb_version 2.8.0
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -466,6 +499,7 @@ link against the SMB, RPC and other protocols provided by the Samba suite.
 %package common-tools
 Summary: Tools for Samba servers and clients
 Group: System/Servers
+Requires: %name-common-client = %version-%release
 Provides: %dcname-common-tools = %version-%release
 Obsoletes: %dcname-common-tools < 4.10
 Conflicts: gnustep-gworkspace
@@ -741,13 +775,40 @@ Requires: iproute
 Requires: iptables
 # for flock, getopt, kill:
 Requires: util-linux
-Conflicts: ctdb
+Provides: ctdb = %version-%release
 
 %description ctdb
 CTDB is a cluster implementation of the TDB database used by Samba and other
 projects to store temporary data. If an application is already using TDB for
 temporary data it is very easy to convert that application to be cluster aware
 and use CTDB instead.
+
+%package ctdb-pcp-pmda
+Summary: CTDB PCP pmda support
+Group: System/Servers
+Requires: %name-ctdb = %version-%release
+Provides: ctdb-pcp-pmda = %version-%release
+
+%description ctdb-pcp-pmda
+Performance Co-Pilot (PCP) support for CTDB
+
+%package ctdb-etcd-mutex
+Summary: CTDB ETCD mutex helper
+Group: System/Servers
+Requires: %name-ctdb = %version-%release
+Provides: ctdb-etcd-mutex = %version-%release
+
+%description ctdb-etcd-mutex
+Support for using an existing ETCD cluster as a mutex helper for CTDB
+
+%package ctdb-ceph-mutex
+Summary: CTDB ceph mutex helper
+Group: System/Servers
+Requires: %name-ctdb = %version-%release
+Provides: ctdb-ceph-mutex = %version-%release
+
+%description ctdb-ceph-mutex
+Support for using an existing CEPH cluster as a mutex helper for CTDB
 
 %package ctdb-tests
 Summary: CTDB clustered database test suite
@@ -923,6 +984,15 @@ cp -a ../%rname-%version ../%rname-%version-separate-heimdal-server
 %endif \
 %if_with clustering_support \
 	--with-cluster-support \
+%if_enabled pcp_pmda \
+	--enable-pmda \
+%endif \
+%if_enabled etcd_mutex \
+	--enable-etcd-reclock \
+%endif \
+%if_enabled ceph_mutex \
+	--enable-ceph-reclock \
+%endif \
 %endif \
 	--libdir=%_samba_libdir \
 	--with-modulesdir=%_samba_mod_libdir \
@@ -1440,7 +1510,6 @@ control role-sambashare enabled
 %_man1dir/smbclient.1*
 %_man1dir/smbcquotas.1*
 %_man1dir/smbget.1*
-%_man5dir/smbgetrc.5*
 %exclude %_man1dir/smbtar.1*
 %_man1dir/smbtree.1*
 %_man5dir/smbpasswd.5*
@@ -1544,11 +1613,13 @@ control role-sambashare enabled
 %_bindir/pdbedit
 %endif
 %_bindir/profiles
+%_bindir/samba-log-parser
 %_bindir/smbcontrol
 %_bindir/smbstatus
 %_bindir/testparm
 %if_with doc
 %_man1dir/profiles.1*
+%_man1dir/samba-log-parser.1*
 %_man1dir/smbcontrol.1*
 %_man1dir/smbstatus.1*
 %_man1dir/testparm.1*
@@ -1622,6 +1693,7 @@ control role-sambashare enabled
 %_samba_libdir/libsamba-errors.so.%{libsamba_errors_so_version}*
 %_samba_libdir/libsamba-hostconfig.so.%{libsamba_hostconfig_so_version}*
 %_samba_libdir/libsamba-util.so.%{libsamba_util_so_version}*
+%_samba_libdir/libsamdb.so.%{libsamdb_so_version}*
 %_samba_libdir/libsmbconf.so.%{libsmbconf_so_version}*
 %_samba_libdir/libsmbldap.so.%{libsmbldap_so_version}*
 %_samba_libdir/libtevent-util.so.%{libtevent_util_so_version}*
@@ -1636,10 +1708,12 @@ control role-sambashare enabled
 %_samba_mod_libdir/libauthkrb5-samba4.so
 %_samba_mod_libdir/libcli-cldap-samba4.so
 %_samba_mod_libdir/libcli-ldap-common-samba4.so
+%_samba_mod_libdir/libcli-ldap-samba4.so
 %_samba_mod_libdir/libcli-nbt-samba4.so
 %_samba_mod_libdir/libcliauth-samba4.so
 %_samba_mod_libdir/libclidns-samba4.so
 %_samba_mod_libdir/libcluster-samba4.so
+%_samba_mod_libdir/libcmdline-samba4.so
 %_samba_mod_libdir/libcmdline-contexts-samba4.so
 %_samba_mod_libdir/libcommon-auth-samba4.so
 %if_with clustering_support
@@ -1653,6 +1727,7 @@ control role-sambashare enabled
 %_samba_mod_libdir/libevents-samba4.so
 %_samba_mod_libdir/libflag-mapping-samba4.so
 %_samba_mod_libdir/libgenrand-samba4.so
+%_samba_mod_libdir/libgensec-samba4.so
 %_samba_mod_libdir/libinterfaces-samba4.so
 %_samba_mod_libdir/libiov-buf-samba4.so
 %_samba_mod_libdir/libkrb5samba-samba4.so
@@ -1661,6 +1736,7 @@ control role-sambashare enabled
 %_samba_mod_libdir/libmessages-dgm-samba4.so
 %_samba_mod_libdir/libmessages-util-samba4.so
 %_samba_mod_libdir/libmsghdr-samba4.so
+%_samba_mod_libdir/libndr-samba4.so
 %_samba_mod_libdir/libndr-samba-samba4.so
 %_samba_mod_libdir/libnetif-samba4.so
 %_samba_mod_libdir/libnpa-tstream-samba4.so
@@ -1676,6 +1752,7 @@ control role-sambashare enabled
 %_samba_mod_libdir/libsamba-sockets-samba4.so
 %_samba_mod_libdir/libsamba3-util-samba4.so
 %_samba_mod_libdir/libsamdb-common-samba4.so
+%_samba_mod_libdir/libsecrets3-samba4.so
 %_samba_mod_libdir/libserver-id-db-samba4.so
 %_samba_mod_libdir/libserver-role-samba4.so
 %_samba_mod_libdir/libshares-samba4.so
@@ -1699,7 +1776,6 @@ control role-sambashare enabled
 # libraries needed by the public libraries
 %_samba_libdir/libdcerpc.so.%{libdcerpc_so_version}*
 %_samba_libdir/libdcerpc-server-core.so.%{libdcerpc_server_core_so_version}*
-%_samba_libdir/libsamdb.so.%{libsamdb_so_version}*
 %_samba_libdir/libsamba-passdb.so.%{libsamba_passdb_so_version}*
 
 %dir %_samba_mod_libdir/pdb
@@ -1712,15 +1788,10 @@ control role-sambashare enabled
 %_samba_mod_libdir/libMESSAGING-samba4.so
 %_samba_mod_libdir/libads-samba4.so
 %_samba_mod_libdir/libauth-samba4.so
-%_samba_mod_libdir/libauth4-samba4.so
-%_samba_mod_libdir/libcli-ldap-samba4.so
 %_samba_mod_libdir/libcli-smb-common-samba4.so
 %_samba_mod_libdir/libcli-spoolss-samba4.so
-%_samba_mod_libdir/libcmdline-samba4.so
-%_samba_mod_libdir/libdb-glue-samba4.so
 %_samba_mod_libdir/libdcerpc-pkt-auth-samba4.so
 %_samba_mod_libdir/libdcerpc-samba4.so
-%_samba_mod_libdir/libgensec-samba4.so
 %_samba_mod_libdir/libgpext-samba4.so
 %_samba_mod_libdir/libgpo-samba4.so
 %_samba_mod_libdir/libgse-samba4.so
@@ -1730,13 +1801,10 @@ control role-sambashare enabled
 %_samba_mod_libdir/libmscat-samba4.so
 %_samba_mod_libdir/libmsrpc3-samba4.so
 %_samba_mod_libdir/libnet-keytab-samba4.so
-%_samba_mod_libdir/libndr-samba4.so
 
-%_samba_mod_libdir/libpac-samba4.so
 %_samba_mod_libdir/libprinter-driver-samba4.so
 %_samba_mod_libdir/libprinting-migrate-samba4.so
 %_samba_mod_libdir/libregistry-samba4.so
-%_samba_mod_libdir/libsecrets3-samba4.so
 %_samba_mod_libdir/libsmbclient-raw-samba4.so
 %_samba_mod_libdir/libsmbldaphelper-samba4.so
 %_samba_mod_libdir/libsmbd-base-samba4.so
@@ -1806,9 +1874,14 @@ control role-sambashare enabled
 %_samba_mod_libdir/libkdc-samba4.so.2
 %_samba_mod_libdir/libkdc-samba4.so.2.0.0
 %endif #!mitkrb5
+%_samba_mod_libdir/libad-claims-samba4.so
+%_samba_mod_libdir/libauth4-samba4.so
+%_samba_mod_libdir/libauthn-policy-util-samba4.so
+%_samba_mod_libdir/libdb-glue-samba4.so
 %_samba_mod_libdir/libdnsserver-common-samba4.so
 %_samba_mod_libdir/libdsdb-module-samba4.so
 %_samba_mod_libdir/libdsdb-garbage-collect-tombstones-samba4.so
+%_samba_mod_libdir/libpac-samba4.so
 %_samba_mod_libdir/libscavenge-dns-records-samba4.so
 %if_with ldb_modules
 %if_with separate_heimdal_server
@@ -2106,6 +2179,30 @@ control role-sambashare enabled
 %_bindir/ctdb_run_cluster_tests
 %_datadir/ctdb/tests
 %endif #testsuite
+
+%if_enabled pcp_pmda
+%files ctdb-pcp-pmda
+%dir %_localstatedir/lib/pcp/pmdas/ctdb
+%_localstatedir/lib/pcp/pmdas/ctdb/Install
+%_localstatedir/lib/pcp/pmdas/ctdb/README
+%_localstatedir/lib/pcp/pmdas/ctdb/Remove
+%_localstatedir/lib/pcp/pmdas/ctdb/domain.h
+%_localstatedir/lib/pcp/pmdas/ctdb/help
+%_localstatedir/lib/pcp/pmdas/ctdb/pmdactdb
+%_localstatedir/lib/pcp/pmdas/ctdb/pmns
+%endif
+
+%if_enabled etcd_mutex
+%files ctdb-etcd-mutex
+%_libexecdir/ctdb/ctdb_etcd_lock
+%_man7dir/ctdb-etcd.7*
+%endif
+
+%if_enabled ceph_mutex
+%files ctdb-ceph-mutex
+%_libexecdir/ctdb/ctdb_mutex_ceph_rados_helper
+%_man7dir/ctdb_mutex_ceph_rados_helper.7*
+%endif
 %endif #clustering_support
 
 %files -n task-samba-dc
@@ -2115,8 +2212,61 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Nov 06 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.19.2-alt1
+- Update to stable release of Samba 4.19 with latest bugfixes and new features:
+ + Migrated smbget to use common command line parser. This has some advantages
+   as you get all the feature it provides like Kerberos authentication. The
+   support for smbgetrc has been removed.
+ + gpupdate changes: The libgpo.get_gpo_list function has been deprecated in
+   favor of an implementation written in python,  connects to Active Directory
+   using the SamDB module, instead of ADS (which is what libgpo uses).
+ + Improved winbind logging and a new tool for parsing the winbind logs. Winbind
+   logs (if smb.conf 'winbind debug traceid = yes' is set) contain new trace
+   header fields 'traceid' and 'depth'.
+ + AD database prepared to Functional Level 2016 standards for new domains.
+   While Samba still provides only Functional Level 2008R2 by default, Samba as
+   an AD DC will now, in provision ensure that the blank database is already
+   prepared for Functional Level 2016, with AD Schema 2019.
+ + Kerberos Claims, Authentication Silos and NTLM authentication policies.
+   The primary limitation is that while Samba can read and write claims
+   in the directory, and populate the PAC, Samba does not yet use them
+   for access control decisions.
+ + Improved KDC Auditing now provides Samba-style JSON audit logging of all
+   issued Kerberos tickets, including if they would fail a policy that is not
+   yet enforced. Additionally most failures are audited.
+ + Kerberos Armoring (FAST) Support for Windows clients. In domains where the
+   domain controller functional level is set to 2012, 2012_R2 or 2016, Windows
+   clients will, if configured via GPO, use FAST to protect user passwords
+   between (in particular) a workstation and the KDC on the AD DC. This is a
+   significant security improvement, as weak passwords in an AS-REQ are no
+   longer available for offline attack.
+ + Claims compression in the AD PAC. Samba as an AD DC will compress "AD claims"
+   using the same compression algorithm as Microsoft Windows.
+ + Resource SID compression in the AD PAC. Samba as an AD DC will now correctly
+   populate the various PAC group membership buffers, splitting global and local
+   groups correctly.
+ + Resource Based Constrained Delegation (RBCD) support in both MIT and Heimdal.
+   Samba 4.17 added to samba-tool delegation the 'add-principal' and
+   'del-principal' subcommands in order to manage RBCD, and the database changes
+   made by these tools are now honoured by the Heimdal KDC once Samba is upgraded.
+ + New samba-tool support for silos, claims, sites and subnets.
+   samba-tool can now list, show, add and manipulate Authentication Silos
+   (silos) and Active Directory Authentication Claims (claims).
+ + Updated Heimdal import. Samba's Heimdal branch (known as lorikeet-heimdal)
+   has been updated to the current pre-8.0 (master) tree from upstream Heimdal,
+   ensuring that this vendored copy, included in our release remains as close as
+   possible to the current upstream code.
+ + Revocation support in Heimdal KDC for PKINIT certificates. Samba will now
+   correctly honour the revocation of 'smart card' certificates used for PKINIT
+   Kerberos authentication.
+ + Require encrypted connection to modify unicodePwd on the AD DC.
+ + Samba AD TLS Certificates can be reloaded. The TLS certificates used for
+   Samba's AD DC LDAP server were previously only read on startup, and this
+   meant that when then expired it was required to restart Samba, disrupting
+   service to other users (smbcontrol ldap_server reload-certs).
+
 * Wed Nov 01 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.18.8-alt1
-- Update to stable release of Samba 4.18 with latest bugfixes and new features:
+- Update to maintenance release of Samba 4.18 with latest bugfixes and new features:
  + SMB Server performance improvements. The locking overhead for contended path
    based operations is reduced by an additional factor of ~ 3 compared to 4.17.
  + More succinct samba-tool error messages.
@@ -2251,7 +2401,7 @@ control role-sambashare enabled
   + vfs_fruit might cause a failing open for delete (Samba#15378).
   + named crashes on DLZ zone update (Samba#14030).
   + winbind recurses into itself via rpcd_lsad (Samba#15361).
-  + cli_list loops 100% CPU against pre-lanman2 servers (Samba#15382).
+  + cli_list loops 100%% CPU against pre-lanman2 servers (Samba#15382).
   + smbclient leaks fds with showacls (Samba#15391).
   + aes256 smb3 encryption algorithms are not allowed in
     smb3_sid_parse() (Samba#15374).
