@@ -1,5 +1,5 @@
 Name: zorin-icon-themes
-Version: 3.0.4
+Version: 3.1
 Release: alt1
 Summary: Zorin icon themes
 
@@ -36,6 +36,9 @@ mkdir -p %buildroot%_iconsdir
 cp -a Zorin* %buildroot%_iconsdir
 
 %changelog
+* Thu Nov 23 2023 Kirill Izmestev <felixz@altlinux.org> 3.1-alt1
+- new version 3.1
+
 * Sat Nov 18 2023 Kirill Izmestev <felixz@altlinux.org> 3.0.4-alt1
 - new version 3.0.4
 
