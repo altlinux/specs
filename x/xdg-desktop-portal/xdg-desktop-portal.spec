@@ -7,7 +7,7 @@
 %def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.18.1
+Version: 1.18.2
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -50,8 +50,11 @@ BuildRequires: pkgconfig(libportal) >= %portal_ver
 %{?_enable_docs:BuildRequires: xmlto docbook-dtds docbook-style-xsl}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_installed_tests:BuildRequires: /proc fuse3 pipewire
-BuildRequires: python3-module-pytest python3-module-pygobject3
+BuildRequires: python3(pytest)  python3-module-pygobject3
 BuildRequires: python3-module-dbus python3-module-dbusmock}
+# with our xdist tests failed in hasher with typical error
+# Error creating thread: Resource temporarily unavailable
+# python3(xdist)
 
 %description
 xdg-desktop-portal works by exposing a series of D-Bus interfaces known as
@@ -72,6 +75,7 @@ The pkg-config file for %name.
 Summary: Tests for the %name
 Group: Development/Other
 Requires: %name = %EVR
+Requires: flatpak >= 1.6.0
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -128,6 +132,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Thu Nov 23 2023 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
+- 1.18.2
+
 * Thu Oct 26 2023 Yuri N. Sedunov <aris@altlinux.org> 1.18.1-alt1
 - 1.18.1
 
