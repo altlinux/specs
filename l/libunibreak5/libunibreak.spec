@@ -4,7 +4,7 @@
 %define libunibreak %rname%major
 Name: %libunibreak
 Version: 5.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Unicode line-breaking library
@@ -30,6 +30,7 @@ Summary: Development files for libunibreak
 Provides: libunibreak-devel = %version
 Conflicts: libunibreak-devel
 Conflicts: libunibreak3-devel
+Conflicts: liblinebreak-devel
 Requires(post,preun): alternatives >= 0.2
 %description devel
 The libunibreak-devel package contains libraries and header files for
@@ -65,6 +66,9 @@ __EOF__
 %_libdir/pkgconfig/%rname-%major.pc
 
 %changelog
+* Thu Nov 23 2023 Sergey V Turchin <zerg@altlinux.org> 5.1-alt3
+- fix conflicts (fixes: 48549)
+
 * Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.1-alt2
 - add alternatives support for pc-file
 
