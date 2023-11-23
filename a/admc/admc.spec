@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -109,6 +109,20 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Fri Nov 17 2023 Valery Sinelnikov <greh@altlinux.org> 0.15.0-alt1
+- Domain info root item is added to console tree. Its results widget
+  contains tree with sites, domain controllers and FSMO role items. It
+  also contains number of sites and domain controllers, forest and domain
+  functional levels, domain schema version.
+- Fixed bug with remaining failed connection options. Now after a failed
+  connection attempt, the old connection settings are returned and
+  connection options dialog doesnt close.
+- GPO creation/renaming with only spaces bug fixed. (closes: 44684)
+- Add group rename sam account name autofill. (closes: 47082)
+- Add disabled computer icon. (closes: 47551)
+- Add warning message for multiple object deletion and non-empty OU
+  deletion.
+
 * Tue Sep 05 2023 Valery Sinelnikov <greh@altlinux.org> 0.14.0-alt1
 - Possible errors due to domain controller switching are fixed
   (revealed with failed tests).
