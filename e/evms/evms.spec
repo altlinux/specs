@@ -5,7 +5,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt72
+Release: alt73
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -174,6 +174,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Thu Nov 23 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt73
+- GPT: fix regression after alt70
+
 * Tue Nov 21 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt72
 - revert "GPT: use Megabytes instead of Sectors (Closes: 42029)"
 
