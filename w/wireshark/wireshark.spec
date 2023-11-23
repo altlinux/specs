@@ -6,10 +6,10 @@
 # as they are loaded into wireshark/tshark processes which guarantee that linkage
 %set_verify_elf_method unresolved=relaxed
 
-%define _pluginsdir %_libdir/%name/plugins/4.0
+%define _pluginsdir %_libdir/%name/plugins/4.2
 
 Name: wireshark
-Version: 4.0.8
+Version: 4.2.0
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -37,7 +37,7 @@ BuildRequires: libcares-devel
 BuildRequires: libsmi-devel
 BuildRequires: libGeoIP-devel
 BuildRequires: libglib2-devel
-BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-tools-devel qt5-svg-devel
+BuildRequires: qt6-base-devel qt6-multimedia-devel qt6-tools-devel qt6-svg-devel qt6-5compat-devel qt6-svg
 BuildRequires: cmake
 BuildRequires: libsystemd-devel
 BuildRequires: libmaxminddb-devel
@@ -123,13 +123,14 @@ cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
 
 %install
 %cmakeinstall_std
+%cmake_install --component Development
 rm -f %buildroot%_libdir/%name/plugins/%version/*.la
 
 mkdir -p %buildroot{%_controldir,%_menudir,%_datadir/applications,%_niconsdir,%_liconsdir,%_miconsdir,%_iconsdir/hicolor/scalable/apps}
 cp -p resources/icons/wsicon16.png %buildroot%_miconsdir/wireshark.png
 cp -p resources/icons/wsicon32.png %buildroot%_niconsdir/wireshark.png
 cp -p resources/icons/wsicon48.png %buildroot%_liconsdir/wireshark.png
-cp -p resources/icons/wsicon.svg %buildroot%_iconsdir/hicolor/scalable/apps/wireshark.svg
+cp -p resources/wslogo.svg %buildroot%_iconsdir/hicolor/scalable/apps/wireshark.svg
 
 mkdir -p %buildroot%_includedir/wiretap
 install -p -m644 wiretap/wtap.h %buildroot%_includedir/wiretap/wtap.h
@@ -176,7 +177,6 @@ _EOF_
 %_man1dir/randpkt.*
 %_man1dir/randpktdump.*
 %_man1dir/sdjournal.*
-%_man1dir/dftest.*
 %_man1dir/dumpcap.*
 %_man1dir/editcap.*
 %_man1dir/mergecap.*
@@ -197,9 +197,7 @@ _EOF_
 %_libdir/libwsutil.so.*
 %_libdir/libwiretap.so.*
 %_man1dir/wireshark.*
-%_miconsdir/wireshark.png
-%_niconsdir/wireshark.png
-%_liconsdir/wireshark.png
+%_man1dir/falcodump.*
 %_iconsdir/hicolor/*/mimetypes/*.png
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
@@ -223,9 +221,12 @@ _EOF_
 %_libdir/libwireshark.so
 %_libdir/libwsutil.so
 %_pkgconfigdir/wireshark.pc
-%_libdir/%name/cmake
+%_libdir/cmake/%name
 
 %changelog
+* Wed Nov 22 2023 Anton Farygin <rider@altlinux.ru> 4.2.0-alt1
+- 4.2.0
+
 * Thu Sep 14 2023 Anton Farygin <rider@altlinux.ru> 4.0.8-alt1
 - 4.0.8
 
