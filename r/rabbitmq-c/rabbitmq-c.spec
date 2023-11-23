@@ -4,7 +4,7 @@
 
 Name: rabbitmq-c
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: RabbitMQ C client
 Group: System/Libraries
@@ -83,6 +83,9 @@ popd
 %_libdir/cmake
 
 %changelog
+* Thu Nov 23 2023 Egor Ignatov <egori@altlinux.org> 0.13.0-alt2
+- Backport CVE fix (fixes: CVE-2023-35789)
+
 * Tue Feb 07 2023 Egor Ignatov <egori@altlinux.org> 0.13.0-alt1
 - 0.13.0
 
