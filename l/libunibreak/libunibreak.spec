@@ -2,7 +2,7 @@
 %define rname libunibreak
 Name: libunibreak
 Version: 3.0
-Release: alt3
+Release: alt4
 
 Summary: Unicode line-breaking library
 License: zlib
@@ -28,6 +28,7 @@ showbreak and breaktext.
 Summary: Development files for libunibreak
 Group: Development/C
 Requires(post,preun): alternatives >= 0.2
+Conflicts: liblinebreak-devel
 %description devel
 The libunibreak-devel package contains libraries and header files for
 developing applications that use libunibreak.
@@ -60,6 +61,9 @@ __EOF__
 %_libdir/pkgconfig/%rname-%major.pc
 
 %changelog
+* Thu Nov 23 2023 Sergey V Turchin <zerg@altlinux.org> 3.0-alt4
+- fix conflicts (fixes: 48549)
+
 * Thu Nov 09 2023 Sergey V Turchin <zerg@altlinux.org> 3.0-alt3
 - package devel files again
 - add alternatives support for pc-file
