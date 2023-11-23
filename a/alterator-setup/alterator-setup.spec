@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -87,10 +87,10 @@ EOF
 /lib/systemd/system/setup.target
 
 %files -n installer-feature-%name-stage2
-%_datadir/install2/postinstall.d/80-alterator-setup
+%_datadir/install2/postinstall.d/91-alterator-setup
 
 %files -n installer-feature-%name-x11vnc-stage2
-%_datadir/install2/postinstall.d/81-alterator-setup-vnc
+%_datadir/install2/postinstall.d/92-alterator-setup-vnc
 
 %post
 if [ -x /sbin/sd_booted ]; then
@@ -105,6 +105,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Thu Nov 23 2023 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt1
+- Remove /etc/firsttime.flag when install, and touch it after setup
+
 * Sun Oct 08 2023 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
 - run alterator-setup if the systemd.unit=setup.target in kernel cmdline
 - notes-license.desktop: update Name[ru]
