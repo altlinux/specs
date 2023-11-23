@@ -26,7 +26,7 @@
 
 Name: qt6-webengine
 Version: 6.6.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -38,6 +38,7 @@ Source: %qt_module-everywhere-src-%version.tar
 Source100: jquery.min.js
 Source101: jquery.tablesorter.min.js
 Patch1: alt-ftbfs.patch
+Patch2: chromium-icu-74.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
@@ -186,6 +187,9 @@ Requires: libqt6-core = %_qt6_version
 %setup -n %qt_module-everywhere-src-%version
 #
 %patch1 -p1
+pushd src/3rdparty/chromium
+%patch2 -p1
+popd
 #
 %patch200 -p1
 %patch201 -p1
@@ -404,6 +408,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Thu Nov 23 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt2
+- fix to build with icu-74
+
 * Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
 - new version
 
