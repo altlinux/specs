@@ -16,7 +16,7 @@
 
 Name:           icinga-l10n
 Version:        1.3.0
-Release:        alt1
+Release:        alt2
 Summary:        Icinga L10n
 License:        GPL-2.0-or-later
 Group:          Monitoring
@@ -44,5 +44,8 @@ cp -prv locale %buildroot/%basedir
 %basedir
 
 %changelog
+* Thu Nov 23 2023 Paul Wolneykien <manowar@altlinux.org> 1.3.0-alt2
+- Save git remotes.
+
 * Thu Nov 16 2023 Paul Wolneykien <manowar@altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus.

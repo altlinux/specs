@@ -20,7 +20,6 @@
 #%endif
 
 %def_disable configure_systemd_limits
-%def_without selinux
 
 %define icinga_user icinga
 %define icinga_group icinga
@@ -39,13 +38,14 @@ Group:          Monitoring
 
 Name:           icinga2
 Version:        2.14.0
-Release:        alt3.1
+Release:        alt5
 URL:            https://www.icinga.com/
 Source:         https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
 
 Patch0:         icinga2-graphite.patch
 Patch1:         icinga2-vim_syntax.patch
 Patch2:         icinga2-fix-unitdir-alt.patch
+Patch3:         icinga2-fix-plugin-loader-path.patch
 
 Requires:       %name-bin = %version-%release
 Requires:       %name-common = %version-%release
@@ -83,10 +83,6 @@ BuildRequires:  logrotate
 BuildRequires:  libmariadb-devel
 BuildRequires:  postgresql-devel
 
-%if_with selinux
-BuildRequires:  checkpolicy selinux-policy-alt
-%endif
-
 %description
 Meta package for Icinga 2 Core and DB IDO.
 
@@ -101,6 +97,7 @@ This subpackage provides the binaries for Icinga 2 Core.
 %package common
 Summary:        Common Icinga 2 configuration
 Group:          Monitoring
+BuildArch:      noarch
 
 %description common
 This subpackage provides common directories, and the UID and GUID definitions
@@ -109,6 +106,7 @@ among Icinga 2 related packages.
 %package doc
 Summary:        Documentation for Icinga 2
 Group:          Documentation
+BuildArch:      noarch
 
 %description doc
 This subpackage provides documentation for Icinga 2.
@@ -129,19 +127,10 @@ Group:          Monitoring
 Icinga 2 IDO PostgreSQL database backend. Compatible with Icinga 1.x
 IDOUtils schema >= 1.12.
 
-%global selinux_variants mls targeted
-%global selinux_modulename %name
-
-%package selinux
-Summary:        SELinux policy module supporting icinga2
-Group:          System/Base
-
-%description selinux
-SELinux policy module supporting icinga2.
-
 %package -n vim-%name
 Summary:        Vim syntax highlighting for icinga2
 Group:          Editors
+BuildArch:      noarch
 
 %description -n vim-%name
 Provides Vim syntax highlighting for icinga2.
@@ -149,6 +138,7 @@ Provides Vim syntax highlighting for icinga2.
 %package -n nano-%name
 Summary:        Nano syntax highlighting for icinga2
 Group:          Editors
+BuildArch:      noarch
 
 %description -n nano-%name
 Provides Nano syntax highlighting for icinga2.
@@ -158,6 +148,8 @@ Provides Nano syntax highlighting for icinga2.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
+
 %ifarch %e2k
 # compiler bug workaround
 sed -i '/Lazy(const Lazy/s/explicit//' lib/base/object.hpp
@@ -190,17 +182,6 @@ CMAKE_OPTS="$CMAKE_OPTS -DUSE_SYSTEMD=ON"
 %cmake $CMAKE_OPTS
 %cmake_build
 
-%if_with selinux
-pushd tools/selinux
-for selinuxvariant in %selinux_variants
-do
-  make NAME=$selinuxvariant -f %_datadir/selinux/alt/Makefile
-  mv %selinux_modulename.pp %selinux_modulename.pp.$selinuxvariant
-  make NAME=$selinuxvariant -f %_datadir/selinux/alt/Makefile clean
-done
-popd
-%endif
-
 %install
 %cmake_install
 
@@ -211,17 +192,6 @@ install -D -m 0644 etc/initsystem/icinga2.service.limits.conf %{buildroot}/%{_un
 
 # remove features-enabled symlinks
 rm -f %buildroot%_sysconfdir/%name/features-enabled/*.conf
-
-%if_with selinux
-pushd tools/selinux
-for selinuxvariant in %selinux_variants
-do
-  install -d %buildroot%_datadir/selinux/$selinuxvariant
-  install -p -m 644 %selinux_modulename.pp.$selinuxvariant \
-    %buildroot%_datadir/selinux/$selinuxvariant/%selinux_modulename.pp
-done
-popd
-%endif
 
 install -D -m 0644 tools/syntax/vim/syntax/%name.vim %buildroot%_datadir/vim/vimfiles/syntax/%name.vim
 install -D -m 0644 tools/syntax/vim/ftdetect/%name.vim %buildroot%_datadir/vim/vimfiles/ftdetect/%name.vim
@@ -294,27 +264,6 @@ fi
 if [ $1 -eq 0 ]; then
   # deinstallation of the package -- remove ido-pgsql feature
   rm -f %_sysconfdir/%name/features-enabled/ido-pgsql.conf
-fi
-
-%post selinux
-for selinuxvariant in %selinux_variants
-do
-  /usr/sbin/semodule -s $selinuxvariant -i \
-    %_datadir/selinux/$selinuxvariant/%selinux_modulename.pp &> /dev/null || :
-done
-/sbin/fixfiles -R %name-bin restore &> /dev/null || :
-/sbin/fixfiles -R %name-common restore &> /dev/null || :
-/sbin/semanage port -a -t %{name}_port_t -p tcp 5665 &> /dev/null || :
-
-%postun selinux
-if [ $1 -eq 0 ] ; then
-  /sbin/semanage port -d -t icinga2_port_t -p tcp 5665 &> /dev/null || :
-  for selinuxvariant in %selinux_variants
-  do
-     /usr/sbin/semodule -s $selinuxvariant -r %selinux_modulename &> /dev/null || :
-  done
-  /sbin/fixfiles -R icinga2-bin restore &> /dev/null || :
-  /sbin/fixfiles -R icinga2-common restore &> /dev/null || :
 fi
 
 %files
@@ -403,13 +352,6 @@ fi
 %_datadir/icinga2-ido-pgsql
 %ghost %_sysconfdir/%name/features-enabled/ido-pgsql.conf
 
-%if_with selinux
-%files selinux
-%defattr(-,root,root,0755)
-%doc tools/selinux/*
-%_datadir/selinux/*/%selinux_modulename.pp
-%endif
-
 %files -n vim-%name
 %defattr(-,root,root,-)
 %_datadir/vim/vimfiles/syntax/%name.vim
@@ -420,6 +362,14 @@ fi
 %_datadir/nano/%name.nanorc
 
 %changelog
+* Thu Nov 23 2023 Paul Wolneykien <manowar@altlinux.org> 2.14.0-alt5
+- Remove disabled 'selinux' subpackage from the spec.
+- Fix: Make -common, -doc, vim- and nano- subpackages noarch.
+
+* Thu Nov 23 2023 Paul Wolneykien <manowar@altlinux.org> 2.14.0-alt4
+- Save git remotes.
+- Fix: Load feature plugins by full path (patch).
+
 * Tue Nov 21 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.14.0-alt3.1
 - Fixed build for Elbrus.
 

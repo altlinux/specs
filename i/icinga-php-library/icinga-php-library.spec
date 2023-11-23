@@ -15,7 +15,7 @@
 
 Name:           icinga-php-library
 Version:        0.13.1
-Release:        alt1
+Release:        alt2
 Summary:        Icinga PHP Library for Icinga Web 2
 License:        MIT
 Group:          Monitoring
@@ -54,5 +54,8 @@ fdupes %buildroot%basedir
 %basedir
 
 %changelog
+* Thu Nov 23 2023 Paul Wolneykien <manowar@altlinux.org> 0.13.1-alt2
+- Save git remotes.
+
 * Wed Nov 15 2023 Paul Wolneykien <manowar@altlinux.org> 0.13.1-alt1
 - Initial build for Sisyphus.

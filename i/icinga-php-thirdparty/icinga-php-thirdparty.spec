@@ -15,7 +15,7 @@
 
 Name:           icinga-php-thirdparty
 Version:        0.12.0
-Release:        alt1
+Release:        alt2
 Summary:        Icinga PHP Thirdparty for Icinga Web 2
 License:        MIT
 Group:          Monitoring
@@ -59,5 +59,8 @@ fdupes %buildroot%basedir
 %basedir
 
 %changelog
+* Thu Nov 23 2023 Paul Wolneykien <manowar@altlinux.org> 0.12.0-alt2
+- Save git remotes.
+
 * Wed Nov 15 2023 Paul Wolneykien <manowar@altlinux.org> 0.12.0-alt1
 - Initial build for Sisyphus.

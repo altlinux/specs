@@ -15,12 +15,12 @@
 %define icinga_user icinga
 %define icinga_group icinga
 %define icingacmd_group icingacmd
-%define icingaweb_group icingaweb
+%define icingaweb_group icingaweb2
 %define webdir %_var/www/vhosts/%name
 
 Name:           icingaweb2
 Version:        2.12.0
-Release:        alt2
+Release:        alt4
 
 Summary:        Icinga Web
 License:        GPL-2.0-or-later
@@ -29,6 +29,7 @@ Group:          Monitoring
 URL:            https://icinga.com
 
 Source0:        https://github.com/Icinga/icingaweb2/archive/v%version/%name-%version.tar
+Patch0:         icingaweb2-skip-etc-open.patch
 
 Requires:       icinga-l10n >= 1.1.0
 Requires:       icinga2-common
@@ -40,9 +41,9 @@ BuildRequires:  icinga-php-library >= 0.13.0
 
 Provides:       icinga2-web
 
-Requires:       icinga2-cli = %version-%release
+Requires:       %name-cli = %version-%release
 Requires:       %name-common = %version-%release
-Requires:       icinga2-php = %version-%release
+Requires:       %name-php = %version-%release
 Requires:       webserver-common
 
 BuildArch:      noarch
@@ -57,16 +58,16 @@ Group:          Monitoring
 %description common
 Manages common files for Icinga Web and the Icinga CLI.
 
-%package -n icinga2-cli
+%package cli
 Summary:        Icinga CLI
 Group:          Monitoring
 Requires:       bash-completion
 Requires:       icinga-l10n >= 1.1.0
 Requires:       %name-common = %version-%release
-Requires:       icinga2-php = %version-%release
+Requires:       %name-php = %version-%release
 Requires:       php%_php_major.%_php_minor
 
-%description -n icinga2-cli
+%description cli
 Icinga command line interface.
 
 %package php-fpm
@@ -76,14 +77,39 @@ Group:          System/Configuration/Other
 %description php-fpm
 This package contains the PHP FPM configuration file to run %name with php-fpm (fpm-fcgi).
 
-%package -n icinga2-php
+%package php
 Summary:        Icinga Web PHP library
 Group:          Development/Other
 Requires:       icinga-php-library >= 0.13.0
 Requires:       icinga-php-thirdparty >= 0.12.0
+Requires:       php%_php_major.%_php_minor-openssl
+Requires:       %name-php-sql = %version-%release
+Requires:       php%_php_major.%_php_minor-ldap
+Requires:       php%_php_major.%_php_minor-mbstring
+Requires:       php%_php_major.%_php_minor-gd
+Requires:       php%_php_major.%_php_minor-imagick
+Requires:       php%_php_major.%_php_minor-curl
 
-%description -n icinga2-php
+%description php
 Icinga Web PHP and vendor libraries.
+
+%package php-mysql
+Summary:        MySQL PDO bindings for Icinga Web PHP library
+Group:          Development/Other
+Requires:       php%_php_major.%_php_minor-pdo_mysql
+Provides:       %name-php-sql = %version-%release
+
+%description php-mysql
+Selects MySQL PDO module to be used with Icinga Web PHP library.
+
+%package php-pgsql
+Summary:        PostgreSQL PDO bindings for Icinga Web PHP library
+Group:          Development/Other
+Requires:       php%_php_major.%_php_minor-pdo_pgsql
+Provides:       %name-php-sql = %version-%release
+
+%description php-pgsql
+Selects PostgreSQL PDO module to be used with Icinga Web PHP library.
 
 %package nginx
 Summary:        Run Icinga Web with Nginx web server
@@ -99,6 +125,7 @@ web server.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 cat <<EOF >%name-php-fpm.conf
@@ -120,7 +147,7 @@ env[TMPDIR] = /run/%name
 env[TMP] = /run/%name
 php_value[include_path] = ./
 php_admin_value[display_errors] = Off
-php_admin_value[open_basedir] = %_datadir/%name:%_sysconfdir/%name:%_var/log/%name:%_datadir/icinga-php:%_localstatedir/%name:%webdir/sessions:%webdir/tmp:%_datadir/icinga-L10n/locale:/run/%name
+php_admin_value[open_basedir] = %_datadir/%name:%_sysconfdir/%name:%_var/log/%name:%_datadir/icinga-php:%_localstatedir/%name:%webdir/sessions:%webdir/tmp:%_datadir/icinga-L10n/locale:/run/%name:%_sysconfdir/%name
 php_admin_value[upload_tmp_dir] = %webdir/tmp
 php_admin_value[session.save_path] = %webdir/sessions
 php_admin_value[upload_max_filesize]=10G
@@ -220,7 +247,7 @@ fi
 %attr(0770, root, %icingaweb_group) %config(noreplace) %dir %_sysconfdir/%name/modules
 %attr(2770, root, %icingaweb_group) %dir %_sysconfdir/%name/enabledModules
 
-%files -n icinga2-cli
+%files cli
 %_datadir/%name/application/clicommands
 %_datadir/bash-completion/completions/icingacli
 %_bindir/icingacli
@@ -230,15 +257,27 @@ fi
 %config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
 %ghost %dir /run/%name
 
-%files -n icinga2-php
+%files php
 %_datadir/%name/library
 %dir %_datadir/icinga-php
+
+%files php-mysql
+%files php-pgsql
 
 %files nginx
 %config(noreplace) %_sysconfdir/nginx/sites-available.d/%name.conf
 %ghost %_sysconfdir/nginx/sites-enabled.d/%name.conf
 
 %changelog
+* Thu Nov 23 2023 Paul Wolneykien <manowar@altlinux.org> 2.12.0-alt4
+- Rename all subpackages to icingaweb2-*.
+
+* Thu Nov 23 2023 Paul Wolneykien <manowar@altlinux.org> 2.12.0-alt3
+- Allow to open /etc/icingaweb2 dir and skip to open "/etc/" (patch).
+- Add PHP dependencies (openssl, sql, ldap and others).
+- Change group name to "icingaweb2" (hardcoded in docs!).
+- Save git remotes.
+
 * Thu Nov 16 2023 Paul Wolneykien <manowar@altlinux.org> 2.12.0-alt2
 - Fix: Require icinga2-common (for icigna user and groups).
 
