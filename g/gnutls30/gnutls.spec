@@ -3,8 +3,8 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.8.1
-Release: alt2
+Version: 3.8.2
+Release: alt1
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -19,10 +19,6 @@ Patch4: tests-Use-IPv4-only-in-s_server.patch
 Patch8: fix-32bit-LTS.patch
 Patch10: tests-Don-t-use-lscpu.patch
 Patch11: tests-Fix-work-with-ALT-faketime.patch
-
-# Patch from upstream git, must be dropped when new version
-# will be released.
-Patch100: Move-the-GNUTLS_NO_EXTENSIONS-compatibility-define-t.patch
 
 %define libcxx libgnutlsxx%libgnutlsxx_soname
 %define libssl libgnutls%{libgnutls_openssl_soname}-openssl
@@ -190,8 +186,6 @@ This package contains the GnuTLS API Reference Manual.
 %patch10 -p1
 %patch11 -p2
 
-%patch100 -p1
-
 touch doc/*.texi
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
@@ -293,6 +287,10 @@ make -k check
 %docdir/*.cfg
 
 %changelog
+* Thu Nov 23 2023 Mikhail Efremov <sem@altlinux.org> 3.8.2-alt1
+- Dropped obsoleted patch.
+- Updated to 3.8.2 (closes: #48558) (fixes: CVE-2023-5981).
+
 * Tue Aug 15 2023 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt2
 - Workaround tests failure.
 
