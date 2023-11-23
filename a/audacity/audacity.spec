@@ -14,7 +14,7 @@
 
 Name: audacity
 Version: 3.4.2
-Release: alt1
+Release: alt1.1
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -34,6 +34,7 @@ Patch0002: 0002-Use-home-directory-for-temp-dir-instead-of-var-tmp-t.patch
 Patch0003: 0003-Fix-building-with-system-sbsms.patch
 Patch0005: 0005-Fix-lv2-external-gui.patch
 Patch0006: 0006-Find-modules-in-lib64.patch
+Source2000: audacity-e2k.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -142,7 +143,10 @@ sed -i "/std::initializer_list/s/static//" src/prefs/GUIPrefs.cpp
 sed -i "s/.*\[ upstream, downstream \].*/\
 for (auto \&fix : mDecoratedSources) {\
 auto \&upstream = fix.upstream; auto \&downstream = fix.downstream;/" \
-  libraries/lib-sample-track/Mix.cpp
+  libraries/lib-mixer/Mix.cpp
+sed -i "s/mAdjustPolicy{}/mAdjustPolicy/" \
+  src/tracks/playabletrack/wavetrack/ui/WaveClipAdjustBorderHandle.h
+patch -p2 -i %SOURCE2000
 %endif
 
 %build
@@ -245,6 +249,9 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 %_datadir/%name/help
 
 %changelog
+* Thu Nov 23 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.2-alt1.1
+- Fixed build for Elbrus
+
 * Fri Nov 17 2023 Ivan A. Melnikov <iv@altlinux.org> 3.4.2-alt1
 - 3.4.2
 
