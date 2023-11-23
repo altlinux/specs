@@ -22,7 +22,7 @@
 
 Name: LibreOffice
 %define hversion 7.6
-%define urelease 2.1
+%define urelease 3.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -60,6 +60,8 @@ Source300:      libreoffice.unused
 
 ## FC patches
 Patch1: FC-0001-disable-libe-book-support.patch
+Patch2: kahansum_test_fix_for_aarc64_s390x.patch
+Patch3: pdfdoc.patch
 
 ## Long-term FC patches
 
@@ -76,6 +78,9 @@ Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
 # content of patch shared to Weblate-LibreOffice by @NeuroFreak
 Patch600: LibreOffice-7.4.2.3-update-russian-translation.patch
+
+# Stolen from %name-still
+Patch700: alt-013-icu74.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -298,6 +303,8 @@ Provides additional %{langname} translations and resources for %name. \
 
 ## FC apply patches
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 ## Long-term FC patches applying
 
@@ -312,6 +319,8 @@ Provides additional %{langname} translations and resources for %name. \
 %patch500 -p0
 # Patch with russian translation update
 #patch600 -p1
+
+%patch700 -p1
 
 # TODO move officebean to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -367,6 +376,9 @@ test -n "libreoffice.config"
 sed -i '/# STAR_PROFILE_LOCKING_DISABLED/i\
 test -r %conffile && . %conffile ||:
 /# STAR_PROFILE_LOCKING_DISABLED/,/#.*JITC_PROCESSOR_TYPE_EXPORT/d' desktop/scripts/soffice.sh
+
+# Avoid overlinking
+sed -i "s@no-as-needed@as-needed@" solenv/gbuild/platform/unxgcc.mk
 
 %build
 grep -l GCC_VERSION configure* | while read F; do
@@ -621,6 +633,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Nov 15 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.6.3.1-alt1
+- Update to 7.6.3.1
+
 * Fri Sep 29 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.6.2.1-alt1
 - Update to 7.6.2.1
 

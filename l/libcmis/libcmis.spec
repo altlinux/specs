@@ -1,6 +1,6 @@
 Name: libcmis
-Version: 0.5.2
-Release: alt6.git.f7466a8
+Version: 0.6.0
+Release: alt1
 
 Summary: A C++ client library for the CMIS interface
 License: GPLv2+ or LGPLv2+ or MPL-1.1
@@ -71,6 +71,9 @@ mkdir -p m4
 %_man1dir/*.1*
 
 %changelog
+* Fri Nov 10 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.6.0-alt1
+- Update to upstream v0.6.0
+
 * Thu Sep 23 2021 Andrey Cherepanov <cas@altlinux.org> 0.5.2-alt6.git.f7466a8
 - NMU: Update to f7466a8 Merge pull request #43 from caolanm/merge_libreoffice_modifications (ALT #40922).
 - Fix MPL license name according to SPDX.

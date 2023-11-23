@@ -34,7 +34,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -445,6 +445,9 @@ export CXXFLAGS="$CFLAGS"
 # XXX no "thin" LTO option in GCC!
 sed -i 's/-flto=thin/-flto=jobserver/g' solenv/gbuild/platform/com_GCC_defs.mk
 
+# new libcmis
+sed -i "s@libcmis-0.5@libcmis-0.6@g" configure.ac
+
 PARALLEL=$(nproc)
 %ifarch ppc64le
 # reduce excessive resource use
@@ -720,6 +723,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Nov 22 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.5.8.2-alt3
+- NMU: rebuilt with libcmis-0.6
+
 * Wed Nov 22 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.8.2-alt2
 - FTBFS: fixed build with icu 74 (https://bugs.documentfoundation.org/show_bug.cgi?id=158108)
 - Reduced log output.
