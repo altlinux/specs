@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name dirty-equals
 %define mod_name dirty_equals
+%define postrel post0
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
-Release: alt1
+Version: 0.7.1
+Release: alt1.%postrel
 
 Summary: Doing dirty (but extremely useful) things with equals
 License: MIT
@@ -18,15 +19,13 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch0: dirty-equals-0.7.0-upstream-fix-pydantic-version-checking.patch
-Patch1: dirty-equals-0.7.0-alt-fix-IsUrl-for-pydanticV2.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3-module-pydantic
+%pyproject_builddeps_metadata_extra pydantic
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -44,7 +43,6 @@ checking the response to API calls and the contents of a database.
 
 %prep
 %setup
-%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -64,9 +62,12 @@ touch pytest.ini
 %files
 %doc README.md LICENSE
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/%{pep427_name %pypi_name}-%version.%postrel.dist-info/
 
 %changelog
+* Thu Nov 23 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.7.1-alt1.post0
+- 0.7.0 -> 0.7.1-post0
+
 * Mon Nov 13 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.7.0-alt1
 - 0.4 -> 0.7.0
 
