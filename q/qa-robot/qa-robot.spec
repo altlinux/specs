@@ -1,6 +1,6 @@
 Name: qa-robot
-Version: 0.3.9
-Release: alt2
+Version: 0.3.10
+Release: alt1
 
 Summary: Simple notification system
 License: GPL
@@ -76,6 +76,9 @@ popd
 %_man1dir/rpmpeek*
 
 %changelog
+* Thu Nov 23 2023 Vitaly Chikunov <vt@altlinux.org> 0.3.10-alt1
+- rpmpeek: Add (bash) user-friendly mode.
+
 * Wed Mar 27 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.3.9-alt2
 - Splitted subpkgs off: tmpdir.sh, rpmpeek.
 
