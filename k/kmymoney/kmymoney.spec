@@ -6,7 +6,7 @@
 
 Name:    kmymoney
 Version: 5.1.3
-Release: alt2
+Release: alt3
 
 Summary: A Personal Finance Manager for KDE
 Summary(ru_RU.UTF-8): Учёт финансов под KDE
@@ -293,7 +293,7 @@ cp %SOURCE1 po/ru/kmymoney.po
 %_K5lib/libkmm_settings.so.*
 %_K5lib/libkmm_widgets.so.*
 %_K5lib/libkmm_printer.so.*
-%_desktopdir/*%name.desktop
+%_K5xdgapp/*%name.desktop
 %doc %_K5doc/en/*
 %_K5cfg/*.kcfg
 #_K5srvtyp/*.desktop
@@ -389,6 +389,9 @@ cp %SOURCE1 po/ru/kmymoney.po
 %exclude %_K5doc/en
 
 %changelog
+* Thu Nov 23 2023 Andrey Cherepanov <cas@altlinux.org> 5.1.3-alt3
+- Used correct macros for desktop file location (ALT #48222).
+
 * Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 5.1.3-alt2
 - FTBFS: fixed desktop file location.
 
