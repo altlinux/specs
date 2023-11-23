@@ -5,7 +5,7 @@
 
 Name:    palemoon-locale_switcher
 Version: 3.1.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: The Palemoon locale switcher
 
@@ -15,7 +15,8 @@ Group: Networking/WWW
 Url: http://www.gooeysoftware.com/mozaddons/zinglocale/
 
 # BuildArch: noarch
-ExcludeArch: %ix86 %arm ppc64le
+ExclusiveArch: x86_64 aarch64
+
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -23,8 +24,6 @@ Source: %pname-%version.xpi
 #Patch: pm_locale_switch-3.1.0-locale.patch
 
 BuildRequires(pre):	rpm-build-palemoon
-#BuildRequires(pre):	rpm-build-firefox
-#BuildRequires(pre):	rpm-build-seamonkey
 
 # Automatically added by buildreq on Thu Jul 16 2015
 BuildRequires: libdb4-devel unzip
@@ -58,11 +57,14 @@ fi
 %cid_dir
 
 %changelog
+* Thu Nov 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt2.2
+- Change to ExclusiveArch x86_64 aarch64
+
 * Sun Sep 17 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt2.1
 - Add ExcluderArch ppc64le
 
 * Fri Dec 23 2022 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt2
-- Fix build
+- Fix pm_locale_switch
 - Remove patch
 
 * Wed Jul 20 2022 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt1
