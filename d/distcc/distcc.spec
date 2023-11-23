@@ -2,7 +2,7 @@
 
 Name: distcc
 Version: 3.4
-Release: alt9
+Release: alt10
 
 Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
 
@@ -19,7 +19,7 @@ Source4: distccd.service
 
 BuildRequires: binutils-devel
 BuildRequires: libavahi-devel libpopt-devel
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 
 %add_python3_req_skip distcc_pump_c_extensions
@@ -137,6 +137,9 @@ rm -f %buildroot%_sysconfigdir/distcc/commands.allow.sh
 %python3_sitelibdir/include_server*
 
 %changelog
+* Thu Nov 23 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4-alt10
+- include_server: use setuptools instead of distutils (Closes: #48232)
+
 * Sat Nov 19 2022 Ivan A. Melnikov <iv@altlinux.org> 3.4-alt9
 - update-distcc-symlinks: add ALT-specific GCC location;
 - replace deprecated egrep call with grep -E.
