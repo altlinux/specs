@@ -5,8 +5,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jfreechart
-Version:        1.5.3
-Release:        alt1_3jpp11
+Version:        1.5.4
+Release:        alt1_2jpp11
 Summary:        A 2D chart library for Java applications (JavaFX, Swing or server-side)
 License:        LGPLv2+
 URL:            https://www.jfree.org/jfreechart
@@ -40,7 +40,7 @@ multiple formats including SVG, PNG and PDF).
 %pom_add_dep org.apiguardian:apiguardian-api:1.1.1
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -50,6 +50,9 @@ multiple formats including SVG, PNG and PDF).
 %doc README.md
 
 %changelog
+* Thu Nov 23 2023 Igor Vlasenko <viy@altlinux.org> 0:1.5.4-alt1_2jpp11
+-new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.5.3-alt1_3jpp11
 - new version
 
