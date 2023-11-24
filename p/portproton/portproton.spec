@@ -1,5 +1,5 @@
 Name: portproton
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Installer for PortProton
@@ -36,6 +36,9 @@ install -Dm644 %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Nov 24 2023 Mikhail Tergoev <fidel@altlinux.org> 1.3-alt1
+- updated to v1.3
+
 * Sat Nov 11 2023 Mikhail Tergoev <fidel@altlinux.org> 1.2-alt1
 - updated to v1.2
 - updated icon file (png to svg)
