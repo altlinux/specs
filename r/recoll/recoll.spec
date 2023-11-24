@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.36.1
+Version: 1.36.2
 Release: alt1
 
 Summary: A personal full text search package
@@ -189,6 +189,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Fri Nov 24 2023 Michael Shigorin <mike@altlinux.org> 1.36.2-alt1
+- new version (watch file uupdate)
+
 * Tue Nov 07 2023 Michael Shigorin <mike@altlinux.org> 1.36.1-alt1
 - 1.36.1
 
