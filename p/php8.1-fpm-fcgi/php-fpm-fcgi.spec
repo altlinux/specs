@@ -8,7 +8,7 @@ Group: System/Servers
 Url: http://www.php.net/
 License: PHP-3.01
 
-Requires: php = %php_version
+Requires: php8.1 = %php_version
 Provides: php-engine = %php_version-%php_release
 
 Source1: php.ini
