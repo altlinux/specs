@@ -1,7 +1,7 @@
 %define origname mononoki
 
 Name: fonts-ttf-%origname
-Version: 1.2
+Version: 1.6
 Release: alt1
 
 Summary: A font for programming and code review
@@ -31,5 +31,8 @@ install -m644 *.ttf %buildroot%_ttffontsdir/%origname/
 %_ttffontsdir/%origname/
 
 %changelog
+* Fri Nov 24 2023 Anton Zhukharev <ancieg@altlinux.org> 1.6-alt1
+- (NMU) Updated to 1.6.
+
 * Sun Jun 17 2018 Elvira Khabirova <lineprinter@altlinux.org> 1.2-alt1
 - Initial build
