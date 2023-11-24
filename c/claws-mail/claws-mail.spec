@@ -20,7 +20,6 @@
 %def_enable 	dillo
 %def_disable 	fancy
 %endif
-%def_enable 	gdata
 %def_enable 	litehtmlviewer
 %ifnarch %e2k
 %def_enable 	python
@@ -32,8 +31,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
-Version:	4.1.1
-Release: 	alt2
+Version:	4.2.0
+Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	GPLv3+
@@ -72,12 +71,6 @@ BuildRequires: libcurl-devel
 # For plugin-fancy
 %if_enabled fancy
 BuildRequires: libwebkit2gtk-devel
-BuildRequires: libsoup-gnome-devel
-%endif
-
-# For plugin-gdata
-%if_enabled gdata
-BuildRequires: libgdata-devel >= 0.17.1
 %endif
 
 # For plugin-litehtmlviewer
@@ -196,9 +189,6 @@ Requires:	%name-plugin-dillo = %version-%release
 Requires:	%name-plugin-fancy = %version-%release
 %endif
 Requires:	%name-plugin-fetchinfo = %version-%release
-%if_enabled gdata
-Requires:	%name-plugin-gdata = %version-%release
-%endif
 Requires:	%name-plugin-keywordwarner = %version-%release
 Requires:	%name-plugin-libravatar = %version-%release
 %if_enabled litehtmlviewer
@@ -357,16 +347,6 @@ Requires:	%name = %version-%release
 %description	plugin-fetchinfo
 This plugin inserts headers containing some download information: UIDL,
 Claws' account name, POP server, user ID and retrieval time.
-
-%package	plugin-gdata
-Summary:	Access to GData (Google services) for Claws Mail
-Group:		Networking/Mail
-Requires:	%name = %version-%release
-
-%description	plugin-gdata
-Access to GData (Google services) for Claws Mail.
-The only currently implemented feature is inclusion of
-Google contacts into the Tab-address completion.
 
 %package	plugin-keywordwarner
 Summary:	Warn when message text contains a keyword
@@ -662,9 +642,6 @@ export LDFLAGS=-pie
 		%if_disabled fancy
 		--disable-fancy-plugin \
 		%endif
-		%if_disabled gdata
-		--disable-gdata-plugin \
-		%endif
 		%if_disabled litehtmlviewer
 		--disable-litehtml_viewer-plugin \
 		%endif
@@ -766,18 +743,13 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %if_enabled fancy
 %files plugin-fancy
 %_claws_plugins_path/fancy.so
-%dir %_claws_plugins_path/web_extensions/
-%_claws_plugins_path/web_extensions/fancywebextension.so
-%exclude %_claws_plugins_path/web_extensions/*.la
+%dir %_libdir/%name/web_extensions/
+%_libdir/%name/web_extensions/fancywebextension.so
+%exclude %_libdir/%name/web_extensions/*.la
 %endif
 
 %files plugin-fetchinfo
 %_claws_plugins_path/fetchinfo.so
-
-%if_enabled gdata
-%files plugin-gdata
-%_claws_plugins_path/gdata.so
-%endif
 
 %files plugin-keywordwarner
 %_claws_plugins_path/keyword_warner.so
@@ -859,6 +831,12 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Fri Nov 24 2023 Mikhail Efremov <sem@altlinux.org> 4.2.0-alt1
+- Patch from upstream:
+    + if cmd is invalid, NULL it.
+- Dropped gdata plugin.
+- Updated to 4.2.0.
+
 * Thu Jun 22 2023 Mikhail Efremov <sem@altlinux.org> 4.1.1-alt2
 - Patches from upstream:
   + po/ru.po: fix "text" translation;

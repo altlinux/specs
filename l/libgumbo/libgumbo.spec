@@ -2,20 +2,21 @@
 %def_with docs
 %def_with python
 
+%define soname 2
+
 Name: libgumbo
-Version: 0.10.1
-Release: alt2.1
+Version: 0.12.1
+Release: alt1
 
 Summary: An HTML5 parsing library
-License: %asl-2.0
+License: Apache-2.0
 Group: System/Libraries
 
-Url: https://github.com/google/gumbo-parser
-# Upstream: https://github.com/google/gumbo-parser
+Url: https://codeberg.org/grisha/gumbo-parser
+Vcs: https://codeberg.org/grisha/gumbo-parser.git
 Source: %_name-%version.tar
 Patch: %_name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++
 
 %{?_with_python:BuildRequires: python3-devel python3-module-setuptools}
@@ -31,10 +32,20 @@ a pure C99 library with no outside dependencies.
 It's designed to serve as a building block for other tools and libraries such as
 linters, validators, templating languages, and refactoring and analysis tools.
 
+%package -n %name%soname
+Summary: %summary
+Group: System/Libraries
+
+%description -n %name%soname
+Gumbo is an implementation of the HTML5 parsing algorithm implemented as
+a pure C99 library with no outside dependencies.
+It's designed to serve as a building block for other tools and libraries such as
+linters, validators, templating languages, and refactoring and analysis tools.
+
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name%soname = %version-%release
 
 %description devel
 This package contains libraries and header files for
@@ -55,7 +66,7 @@ This package contains development documentation for %name.
 %package -n python3-module-gumbo
 Summary: Python3 bindings to %name
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name%soname = %version-%release
 BuildArch: noarch
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir_noarch
@@ -102,8 +113,9 @@ install -m 644 docs/man/man3/*.3 %buildroot%_man3dir/
 %check
 make check
 
-%files
-%_libdir/%name.so.*
+%files -n %name%soname
+%_libdir/%name.so.%soname
+%_libdir/%name.so.%soname.*
 
 %files devel
 %_includedir/*
@@ -112,7 +124,7 @@ make check
 
 %if_with docs
 %files devel-doc
-%doc docs/html/ COPYING *.md
+%doc docs/html/ doc/COPYING doc/*.md
 %_man3dir/*
 %endif
 
@@ -122,6 +134,12 @@ make check
 %endif
 
 %changelog
+* Wed Nov 22 2023 Mikhail Efremov <sem@altlinux.org> 0.12.1-alt1
+- Added Vcs tag.
+- Updated url tag.
+- Don't use rpm-build-licenses.
+- Updated to 0.12.1.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.10.1-alt2.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
