@@ -2,7 +2,7 @@
 
 Name:    gz-physics
 Version: 6.4.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Abstract physics interface designed to support simulation and rapid development of robot applications
 License: Apache-2.0
@@ -34,7 +34,6 @@ BuildRequires: libfmt-devel
 BuildRequires: libode-devel
 BuildRequires: zlib-devel
 BuildRequires: libminizip-devel
-BuildRequires: libstbi-devel
 BuildRequires: libpoly2tri-devel
 
 %description
@@ -84,6 +83,9 @@ rm -f %buildroot%_libdir/pkgconfig/gz-physics*-bullet-*plugin.pc
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Nov 22 2023 L.A. Kostis <lakostis@altlinux.ru> 6.4.0-alt1.2
+- BR: remove stbi (not used).
+
 * Thu Aug 24 2023 Michael Shigorin <mike@altlinux.org> 6.4.0-alt1.1
 - E2K: build without dart
 

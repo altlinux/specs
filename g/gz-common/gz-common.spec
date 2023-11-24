@@ -2,7 +2,7 @@
 
 Name:    gz-common
 Version: 5.4.0
-Release: alt3
+Release: alt3.1
 
 Summary: Gazebo Common : AV, Graphics, Events, and much more
 License: Apache-2.0
@@ -47,7 +47,6 @@ BuildRequires: libstdc++-devel-static
 BuildRequires: libgdal-devel
 BuildRequires: libassimp-devel
 BuildRequires: libminizip-devel
-BuildRequires: libstbi-devel
 BuildRequires: libpoly2tri-devel
 
 %description
@@ -100,6 +99,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Nov 22 2023 L.A. Kostis <lakostis@altlinux.ru> 5.4.0-alt3.1
+- BR: remove stbi (not used).
+
 * Fri Oct 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.4.0-alt3
 - NMU: avoid spurious dependency on gnustep.
 
