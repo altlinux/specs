@@ -1,7 +1,7 @@
 Summary: multitail lets you view one or multiple files like the original tail program.
 Summary(ru_RU.KOI8-R): multitail позволяет просматривать один или несколько файлов
 Name: multitail
-Version: 7.0.0
+Version: 7.1.2
 Release: alt1
 License: Apache-2.0
 Group: Monitoring
@@ -33,10 +33,10 @@ multitail позволяет просматривать один или несколько файлов подобно оригинальной
 
 %prep
 %setup -q -n %name-%version
-%patch1 -p1
-%patch2 -p1
+#patch1 -p1
+#patch2 -p1
 # Fix correct version
-sed -i 's/6.4.3/7.0.0/' CMakeLists.txt
+#sed -i 's/6.4.3/7.0.0/' CMakeLists.txt
 # Let rpm handle the config file
 sed -i '/multitail.conf.new/d' CMakeLists.txt
 # Install conversion-scripts manually
@@ -56,8 +56,8 @@ mkdir -p %{buildroot}%{_sysconfdir}
 
 install -D -m 644 $RPM_BUILD_DIR/%name-%version/%name.conf $RPM_BUILD_ROOT/%_sysconfdir/%name.conf.new
 bzip2 -9 $RPM_BUILD_ROOT/%_man1dir/multitail.1
-rm -f $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.0.0/*
-rmdir $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.0.0/
+rm -f $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.1.2/*
+rmdir $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.1.2/
 
 %files
 %_bindir/%name
@@ -66,6 +66,9 @@ rmdir $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.0.0/
 %doc INSTALL README.md LICENSE manual.html %name.conf
 
 %changelog
+* Fri Nov 24 2023 Ilya Mashkin <oddity@altlinux.ru> 7.1.2-alt1
+- 7.1.2
+
 * Wed Dec 07 2022 Ilya Mashkin <oddity@altlinux.ru> 7.0.0-alt1
 - 7.0.0
 - Change License from GPL2 to Apache2
