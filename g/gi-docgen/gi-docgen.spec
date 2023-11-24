@@ -6,8 +6,8 @@
 %def_enable check
 
 Name: gi-docgen
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: Documentation tool for GObject-based libraries
 Group: Development/Other
@@ -84,6 +84,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %_datadir/%modname/templates/
 
 %changelog
+* Fri Nov 24 2023 Yuri N. Sedunov <aris@altlinux.org> 2023.2-alt1
+- 2023.2
+
 * Thu Apr 27 2023 Yuri N. Sedunov <aris@altlinux.org> 2023.1-alt1.1
 - explicitly required python3-module-toml
 
