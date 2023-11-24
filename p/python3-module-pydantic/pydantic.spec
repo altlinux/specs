@@ -4,8 +4,8 @@
 %define pypi_name pydantic
 
 Name: python3-module-%pypi_name
-Version: 2.4.2
-Release: alt3
+Version: 2.5.2
+Release: alt1
 
 Summary: Data parsing and validation using Python type hints
 License: MIT
@@ -59,7 +59,7 @@ with pydantic.
 # Also generating north_star_data.json at each test exec and comparing it with
 # expected md5sum leads to failed build, because of Faker or something else has
 # been updated.
-%pyproject_run_pytest -vra --ignore='tests/test_docs.py' --benchmark-skip
+%pyproject_run_pytest --ignore='tests/test_docs.py' --benchmark-skip
 
 %files
 %doc LICENSE *.md
@@ -67,6 +67,9 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 23 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.5.2-alt1
+- 2.4.2 -> 2.5.2
+
 * Wed Nov 08 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.4.2-alt3
 - Fixed FTBFS: skip benchmark tests with their often changed expected md5sum of
   testing data

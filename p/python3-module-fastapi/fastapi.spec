@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.104.1
-Release: alt1
+Release: alt2
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
 License: MIT
@@ -18,6 +18,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: fastapi-0.95.1-alt-fix-databases-tests-connections.patch
+Patch1: fastapi-0.104.1-alt-fix-build-with-pydantic-ge-v2.5.0.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -77,7 +78,7 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 # starlette.
 # See https://github.com/tiangolo/fastapi/pull/9636#discussion_r1224626560.
 # Temporary skip this test.
-%pyproject_run_pytest -vra -Wignore \
+%pyproject_run_pytest -Wignore \
     --deselect='tests/test_tutorial/test_async_sql_databases/test_tutorial001.py::test_create_read' \
     --deselect='tests/test_dependency_normal_exceptions.py::test_dependency_gets_exception' \
     tests
@@ -88,6 +89,9 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Nov 24 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.104.1-alt2
+- Fix failed tests when build with pydantic >= 2.5.0
+
 * Mon Oct 30 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.104.1-alt1
 - 0.104.0 -> 0.104.1
 

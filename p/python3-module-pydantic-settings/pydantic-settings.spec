@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.3
+Version: 2.1.0
 Release: alt1
 
 Summary: Settings management using pydantic
@@ -54,7 +54,7 @@ for discussion.
 
 %check
 # tests/test_docs.py: do not execute docs tests
-%pyproject_run_pytest -vra --ignore='tests/test_docs.py'
+%pyproject_run_pytest --ignore='tests/test_docs.py'
 
 %files
 %doc README.md docs
@@ -62,6 +62,9 @@ for discussion.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Nov 24 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.1.0-alt1
+- 2.0.3 -> 2.1.0
+
 * Fri Aug 18 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.0.3-alt1
 - 2.0.2 -> 2.0.3
 
