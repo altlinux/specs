@@ -1,5 +1,5 @@
 Name: installer-distro-alt-workstation
-Version: 10.2.0
+Version: 10.3.0
 Release: alt1
 
 Summary: Installer configuration (ALT Workstation)
@@ -20,7 +20,7 @@ It is derived from installer-distro-altlinux-desktop.
 Summary: Installer configuration and scripts (stage2 part)
 License: GPL-2.0+
 Group: System/Configuration/Other
-Requires: installer-stage2
+Requires: installer-common-stage2 >= 1.14.4-alt1
 # modules
 Requires: alterator-sysconfig
 Requires: alterator-datetime
@@ -73,6 +73,10 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Nov 22 2023 Mikhail Efremov <sem@altlinux.org> 10.3.0-alt1
+- stage2: Don't try to remove alterator-wizardface.
+- stage2: Fix preinstall.d/80-setup-user-groups.
+
 * Thu Dec 08 2022 Mikhail Efremov <sem@altlinux.org> 10.2.0-alt1
 - stage2: Rewrite 80-setup-user-groups.
 
