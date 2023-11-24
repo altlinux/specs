@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.6.0
+Version: 4.6.1
 Epoch: 1
 Release: %rel
 
@@ -120,6 +120,10 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 24 2023 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.1-alt1
+- 4.6.1
+- Fix invisible tray icon (Closes: #48285, #48286)
+
 * Sun Oct 29 2023 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.0-alt1
 - 4.6.0
 
