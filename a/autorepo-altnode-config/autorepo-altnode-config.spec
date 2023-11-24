@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: autorepo-altnode-config
-Version: 0.19
+Version: 0.20
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -68,14 +68,6 @@ mkdir -p %buildroot%_sysconfdir/sysctl.d
 echo "vm.swappiness = 10" > %buildroot%_sysconfdir/sysctl.d/10-autorepo.conf
 
 %post
-# postfix
-if ! grep '^relayhost' /etc/postfix/main.cf; then
-    cat >> /etc/postfix/main.cf <<EOF
-# altnode auto configuration
-relayhost = [relay.mskdc.altlinux.org]
-EOF
-    service postfix restart ||:
-fi
 # rsync-server
 if ! grep '^\[pub\]' /etc/rsyncd.conf; then
     cat >> /etc/rsyncd.conf <<EOF
@@ -103,6 +95,23 @@ if grep 'only_from = 127.0.0.1' /etc/xinetd.conf; then
     sed -i -e 's,only_from = .*,only_from = 0.0.0.0,' /etc/xinetd.conf
 fi
 service xinetd restart
+# postfix
+if ! grep '^relayhost' /etc/postfix/main.cf; then
+    cat >> /etc/postfix/main.cf <<EOF
+# altnode auto configuration
+relayhost = [relay.mskdc.altlinux.org]
+EOF
+    chkconfig postfix on ||:
+    service postfix restart ||:
+fi
+if ! grep '^myhostname' /etc/postfix/main.cf; then
+    echo "WARNING: myhostname not found in /etc/postfix/main.cf"
+else
+    mailfqdn=`grep '^myhostname' /etc/postfix/main.cf | awk '{print $3}'`
+    if [ x$mailfqdn != x`hostname` ]; then
+	echo "WARNING: myhostname in /etc/postfix/main.cf does not match hostname"
+    fi
+fi
 service monit restart ||:
 
 %post nginx
@@ -146,6 +155,9 @@ fi
 %_sysconfdir/autorepo/apt/sources.list.*
 
 %changelog
+* Fri Nov 24 2023 Igor Vlasenko <viy@altlinux.org> 0.20-alt1
+- cronbuild node support
+
 * Thu Nov 16 2023 Igor Vlasenko <viy@altlinux.org> 0.19-alt1
 - set vm.swappiness = 10
 
