@@ -1,5 +1,5 @@
 Name: installer-feature-lightdm
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 
 Summary: Installer hook for lightdm configuration
@@ -34,6 +34,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Nov 22 2023 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
+- Create firsttime script to setup ldm-gtk-greeter first user.
+
 * Wed Oct 16 2019 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1
 - Setup lightdm-gtk-greeter.conf if needed.
 
