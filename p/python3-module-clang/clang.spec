@@ -5,7 +5,7 @@
 
 Name:       python3-module-%oname
 Version:    16.0.6
-Release:    alt1
+Release:    alt2
 
 Summary:    Libclang python bindings
 License:    Apache-2.0
@@ -13,11 +13,13 @@ Group:      Development/Python3
 Url:        https://pypi.org/project/libclang/
 VCS:        https://github.com/sighingnow/libclang
 
-BuildArch:  noarch
-
 Source0:    %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: clang16.0-devel
+BuildRequires: llvm16.0-devel
 
 %description
 The aim of this project is to make the clang.cindex
@@ -28,17 +30,30 @@ up the LLVM environment.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+
+# Using system libclang.so
+libdir=$(llvm-config-16 --libdir)
+ln -s $libdir/libclang.so %buildroot%python3_sitelibdir/%oname/native/libclang.so
 
 %files
-%doc LICENSE.TXT README.md docs/
+%doc LICENSE.TXT README.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/lib%oname-%version-*.egg-info
+%python3_sitelibdir/lib%oname-%version.dist-info
 
 %changelog
+* Thu Nov 23 2023 Anton Vyatkin <toni@altlinux.org> 16.0.6-alt2
+- Using system lib.
+
 * Fri Jul 28 2023 Anton Vyatkin <toni@altlinux.org> 16.0.6-alt1
 - New version 16.0.6.
 
