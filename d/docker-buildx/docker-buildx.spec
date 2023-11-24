@@ -1,8 +1,8 @@
 %global pkg_name github.com/docker/buildx
 
 Name:     docker-buildx
-Version:  0.11.2
-Release:  alt2
+Version:  0.12.0
+Release:  alt1
 
 Summary:  Docker CLI plugin for extended build capabilities with BuildKit
 License:  Apache-2.0
@@ -46,6 +46,9 @@ install -D -m 0755 .build/%name %buildroot%{_libexecdir}/docker/cli-plugins/%nam
 %{_libexecdir}/docker/cli-plugins/%name
 
 %changelog
+* Thu Nov 23 2023 Vladimir Didenko <cow@altlinux.org> 0.12.0-alt1
+- New version
+
 * Fri Jul 28 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.11.2-alt2
 - Fix version info (Closes: 47052)
 

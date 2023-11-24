@@ -3,7 +3,7 @@
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%global commit      8e4b0bde866788eec76735cc77c4720144248fb7
+%global commit      4f03e100cb967922bec7459a78d16ccbac9bb81d
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
@@ -11,8 +11,8 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.7.8
-Release:	alt1.1
+Version:	1.7.9
+Release:	alt1
 Summary:	A daemon to control runC
 
 Group:		Development/Other
@@ -90,6 +90,9 @@ install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/config.toml
 %_man8dir/*
 
 %changelog
+* Thu Nov 23 2023 Vladimir Didenko <cow@altlinux.org> 1.7.9-alt1
+- 1.7.9
+
 * Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 1.7.8-alt1.1
 - NMU: Add patch for loongarch64 support
 

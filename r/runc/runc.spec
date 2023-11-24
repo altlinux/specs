@@ -7,7 +7,7 @@
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
-%global commit      82f18fe0e44a59034f3e1f45e475fa5636e539aa
+%global commit      18a0cb0f32bcac2ecc9a10f327d282759c144dab
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
@@ -15,8 +15,8 @@
 %brp_strip_none %_bindir/*
 
 Name:           runc
-Version:        1.1.9
-Release:        alt1.1
+Version:        1.1.10
+Release:        alt1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -79,6 +79,9 @@ EOF
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Thu Nov 23 2023 Vladimir Didenko <cow@altlinux.ru> 1.1.10-alt1
+- New version
+
 * Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 1.1.9-alt1.1
 - NMU: add patch for loongarch64 support
 
