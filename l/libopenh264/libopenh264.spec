@@ -1,6 +1,6 @@
 %define oname openh264
 %def_enable check
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 loongarch64
 %def_with meson
 %else
 %def_without meson
@@ -9,8 +9,8 @@
 %def_disable static
 
 Name: libopenh264
-Version: 2.3.1
-Release: alt1.1
+Version: 2.4.0
+Release: alt1
 
 Summary: H.264 codec library
 License: BSD-2-Clause
@@ -18,7 +18,7 @@ Group: System/Libraries
 Url: http://www.openh264.org/
 
 Vcs: https://github.com/cisco/openh264.git
-# Source-url: https://github.com/cisco/openh264/archive/v%version/%oname-%version.tar.gz
+#Source: https://github.com/cisco/openh264/archive/v%version/%oname-%version.tar.gz
 Source: %name-%version.tar
 
 Provides: libopenh264_7 = %version-%release
@@ -112,6 +112,10 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 %endif
 
 %changelog
+* Fri Nov 24 2023 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+- build from upstream git
+
 * Tue Dec 06 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1.1
 - obsoletes/provides libopenh264_7 (ALT #44549)
 
