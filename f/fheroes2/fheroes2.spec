@@ -3,7 +3,7 @@
 %def_without cmake
 Name: fheroes2
 Epoch: 2
-Version: 1.0.9
+Version: 1.0.10
 #define rev 20210604
 #Release: alt1.%rev
 Release: alt1
@@ -20,7 +20,7 @@ Source2: %name.sh
 Source3: %name.png
 Source4: fheroes2-data.spec
 Source5: README.ALT
-Patch0: fheroes2-1.0.9-random-skills.patch
+Patch0: fheroes2-1.0.10-random-skills.patch
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
@@ -115,6 +115,9 @@ install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Fri Nov 24 2023 Igor Vlasenko <viy@altlinux.org> 2:1.0.10-alt1
+- new version
+
 * Sat Oct 14 2023 Igor Vlasenko <viy@altlinux.org> 2:1.0.9-alt1
 - new version
 
