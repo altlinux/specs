@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kube-vip
-Version: 0.6.0
+Version: 0.6.3
 Release: alt1
 
 Summary:  Kubernetes Control Plane Virtual IP and Load-Balancer
@@ -41,6 +41,9 @@ export GOPATH="%go_path"
 %_bindir/kube-vip
 
 %changelog
+* Fri Nov 24 2023 Egor Ignatov <egori@altlinux.org> 0.6.3-alt1
+- 0.6.3
+
 * Sun May 28 2023 Egor Ignatov <egori@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
