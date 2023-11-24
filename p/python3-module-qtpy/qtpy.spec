@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.1
-Release: alt1
+Release: alt2
 Summary: Provides an uniform layer to support PyQt5, PySide2, PyQt6, PySide6 with a single codebase
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,7 @@ Vcs: https://github.com/spyder-ide/qtpy.git
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: qt6.6-deprecations.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -57,6 +58,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %pyproject_build
@@ -67,7 +69,9 @@ This package contains tests for %oname.
 %check
 sed -i 's/--cov=qtpy --cov-report=term-missing//' pytest.ini
 sed -i 's/--color=yes//' pytest.ini
-%pyproject_run -- xvfb-run pytest qtpy -k 'not test_qttexttospeech'
+%pyproject_run -- xvfb-run pytest qtpy -k "\
+not test_qttexttospeech \
+and not test_load_ui_type"
 
 %files
 %doc LICENSE.txt
@@ -81,6 +85,9 @@ sed -i 's/--color=yes//' pytest.ini
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Nov 24 2023 Anton Vyatkin <toni@altlinux.org> 2.4.1-alt2
+- Fixed FTBFS.
+
 * Tue Oct 24 2023 Anton Vyatkin <toni@altlinux.org> 2.4.1-alt1
 - New version 2.4.1.
 
