@@ -1,6 +1,6 @@
 Name:     papirus-icon-theme
 Version:  20231101
-Release:  alt1
+Release:  alt2
 
 Summary:  All Papirus icon themes
 License:  GPLv3
@@ -18,6 +18,7 @@ Requires: icon-theme-Papirus-Dark = %EVR
 Requires: icon-theme-Papirus-Education = %EVR
 Requires: icon-theme-Papirus-Light = %EVR
 Requires: icon-theme-ePapirus = %EVR
+Requires: icon-theme-ePapirus-Dark = %EVR
 
 %description
 Papirus is a free and open source SVG icon theme for Linux, based on
@@ -25,13 +26,14 @@ Paper Icon Set with a lot of new icons and a few extras, like
 Hardcode-Tray support, KDE colorscheme support, Folder Color support,
 and others.
 
-Papirus icon theme is available in five variants:
+Papirus icon theme is available in six variants:
 
 * Papirus
 * Papirus Dark
 * Papirus Education
 * Papirus Light
-* ePapirus (for elementary OS and Pantheon Desktop)
+* ePapirus (for elementary OS and Pantheon Desktop only)
+* ePapirus Dark (for elementary OS and Pantheon Desktop only)
 
 %package -n icon-theme-Papirus
 Summary: Papirus icon theme
@@ -43,7 +45,7 @@ Group: Other
 %package -n icon-theme-Papirus-Dark
 Summary: Papirus-Dark icon theme
 Group: Other
-Requires(pre): icon-theme-Papirus
+Requires: icon-theme-Papirus
 
 %description -n icon-theme-Papirus-Dark
 %summary.
@@ -51,7 +53,7 @@ Requires(pre): icon-theme-Papirus
 %package -n icon-theme-Papirus-Education
 Summary: Papirus-Education icon theme
 Group: Other
-Requires(pre): icon-theme-Papirus
+Requires: icon-theme-Papirus-Light
 
 %description -n icon-theme-Papirus-Education
 %summary.
@@ -59,7 +61,7 @@ Requires(pre): icon-theme-Papirus
 %package -n icon-theme-Papirus-Light
 Summary: Papirus-Light icon theme
 Group: Other
-Requires(pre): icon-theme-Papirus
+Requires: icon-theme-Papirus
 
 %description -n icon-theme-Papirus-Light
 %summary.
@@ -67,9 +69,58 @@ Requires(pre): icon-theme-Papirus
 %package -n icon-theme-ePapirus
 Summary: ePapirus icon theme
 Group: Other
-Requires(pre): icon-theme-Papirus
+Requires: icon-theme-Papirus
 
 %description -n icon-theme-ePapirus
+%summary.
+
+%package -n icon-theme-ePapirus-Dark
+Summary: ePapirus-Dark icon theme
+Group: Other
+Requires: icon-theme-Papirus
+Requires: icon-theme-ePapirus
+
+%description -n icon-theme-ePapirus-Dark
+%summary.
+
+%package -n papirus-remix-icon-theme
+Summary: Remix of Papirus theme with all colors of folder icons
+Group: Other
+Requires: icon-theme-Papirus-Remix = %EVR
+Requires: icon-theme-Papirus-Dark-Remix = %EVR
+Requires: icon-theme-Papirus-Light-Remix = %EVR
+
+%description -n papirus-remix-icon-theme
+Papirus Remix is a remix of Papirus icon theme for easy selection
+of different color themes.
+
+Papirus Remix icon theme is available in three variants for every of 25 folder colors:
+
+* Papirus <Color>
+* Papirus Dark <Color>
+* Papirus Light <Color>
+
+%package -n icon-theme-Papirus-Remix
+Summary: Papirus Remix icon theme
+Group: Other
+
+%description -n icon-theme-Papirus-Remix
+%summary.
+
+%package -n icon-theme-Papirus-Dark-Remix
+Summary: Papirus Dark Remix icon theme
+Group: Other
+Requires: icon-theme-Papirus-Remix
+
+%description -n icon-theme-Papirus-Dark-Remix
+%summary.
+
+%package -n icon-theme-Papirus-Light-Remix
+Summary: Papirus Light Remix icon theme
+Group: Other
+Requires: icon-theme-Papirus-Remix
+
+%description -n icon-theme-Papirus-Light-Remix
 %summary.
 
 %prep
@@ -81,7 +132,7 @@ for i in 16 22 24 32 48 64;do
     ln -s internet-web-browser.svg Papirus/${i}x${i}/apps/applications-network.svg
 done
 
-# Make new theme Papirus-Education with orange folder icons 
+# Make new theme Papirus-Education with orange folder icons
 color=orange
 THEME_DIR=Papirus-Edu
 mkdir $THEME_DIR
@@ -132,9 +183,137 @@ ln -s ../../Papirus-Light/22x22/panel $THEME_DIR/22x22/panel
 rm -rf $THEME_DIR/16x16/panel
 ln -s ../../Papirus-Light/16x16/panel $THEME_DIR/16x16/panel
 
+# Make Papirus Remix themes with all colors of folder icons
+%define THEMES Adwaita Black BlueGrey Breeze Brown Carmine Cyan DarkCyan DeepOrange Green Grey Indigo Magenta Nordic Orange PaleBrown PaleOrange Pink Red Teal Violet White Yaru Yellow
+%define PTHEME Blue
+
+Pcolor=%PTHEME
+Pcolor=${Pcolor,,}
+Papirus=Papirus-%PTHEME
+
+# Make Papirus Remix primary theme
+cp -a Papirus $Papirus
+subst "s/Papirus/$Papirus/g" $Papirus/index.theme
+
+# Make Papirus-<Color> themes indexes from Papirus Remix primary theme
+for theme in %THEMES; do
+	THEME_DIR=Papirus-$theme
+	mkdir $THEME_DIR
+	cp $Papirus/index.theme $THEME_DIR
+	subst "s/$Papirus/$THEME_DIR/g" $THEME_DIR/index.theme
+done
+
+# Edit Papirus Remix primary theme and make Papirus-<Color> themes
+for dir in $Papirus/*; do
+	[ -d "$dir" ] || continue
+	size="${dir#*/}"
+	if [ -L "$dir" ]; then
+		for t in %THEMES; do
+			cp -P $dir Papirus-$t
+		done
+	else
+	if [ "$size" = "symbolic" ] || [ "$size" = "16x16" ]; then
+		for t in %THEMES; do
+			ln -s ../$Papirus/$size Papirus-$t
+		done
+	else
+	for t in %THEMES; do
+		mkdir Papirus-$t/$size
+	done
+	for d in $dir/*; do
+		if [ -L "$d" ]; then
+			for t in %THEMES; do
+				cp -P $d Papirus-$t/$size
+			done
+		else
+		category="$(basename $d)"
+		if [ "$category" = "places" ]; then
+			pushd $d
+			[ -f "folder-red.svg" ] && [ -L "folder-root.svg" ] && \
+			rm -f "folder-root.svg" && cp "folder-red.svg" "folder-root.svg"
+			for i in *-$Pcolor*.svg; do
+				[ -L "$i" ] && rm -f $i
+				[ -f "$i" ] && [ -L "${i/-$Pcolor/}" ] && \
+				rm -f "${i/-$Pcolor/}" && mv -f "$i" "${i/-$Pcolor/}"
+			done
+			files=`ls *.svg`
+			for t in %THEMES; do
+				f=`ls *-${t,,}*.svg`
+				for i in $f; do
+					files="${files/$i/}"
+				done
+			done
+			for t in %THEMES; do
+				mkdir ../../../Papirus-$t/$size/places
+				for i in $files; do
+					if [ -L "$i" ]; then
+						cp -P $i ../../../Papirus-$t/$size/places
+					else
+						ln -s ../../../$d/$i ../../../Papirus-$t/$size/places
+					fi
+				done
+				color="${t,,}"
+				for i in *-$color*.svg; do
+					[ -L "$i" ] && rm -f $i
+					[ -f "$i" ] && mv -f $i ../../../Papirus-$t/$size/places/${i/-$color/}
+				done
+			done
+			popd
+		else
+			for t in %THEMES; do
+				ln -s ../../$Papirus/$size/$category Papirus-$t/$size
+			done
+		fi
+		fi
+	done
+	fi
+	fi
+done
+
+# Make Papirus-Dark-<Color> and Papirus-Light-<Color> themes with other colors of folder icons
+for style in Dark Light; do
+	for theme in %PTHEME %THEMES; do
+		THEME_DIR=Papirus-$style-$theme
+		mkdir $THEME_DIR
+		cp Papirus-$style/index.theme $THEME_DIR
+		subst "s/Name=Papirus-$style/Name=$THEME_DIR/g; \
+		s/Comment=Papirus/Comment=Papirus-$theme/g" $THEME_DIR/index.theme
+
+		for dir in Papirus-$style/*; do
+			[ -d "$dir" ] || continue
+			size="${dir#*/}"
+			if [ -L "$dir" ]; then
+				if [ "${size: -3:3}" = "@2x" ]; then
+					cp -P $dir $THEME_DIR
+				else
+					ln -s ../Papirus-$theme/$size $THEME_DIR
+				fi
+			else
+				mkdir $THEME_DIR/$size
+				for d in $dir/*; do
+					category="$(basename $d)"
+					if [ -L "$d" ]; then
+						if [ "$category" = "categories" ]; then
+							cp -P $d $THEME_DIR/$size
+						else
+							ln -s ../../Papirus-$theme/$size/$category $THEME_DIR/$size
+						fi
+					else
+					if [ "$theme" = "%PTHEME" ]; then
+						cp -a $d $THEME_DIR/$size
+					else
+						ln -s ../../Papirus-$style-%PTHEME/$size/$category $THEME_DIR/$size
+					fi
+					fi
+				done
+			fi
+		done
+	done
+done
+
 %install
 mkdir -p %buildroot%_iconsdir
-cp -a Papirus Papirus-Dark Papirus-Edu Papirus-Light ePapirus %buildroot%_iconsdir
+cp -a Papirus* ePapirus* %buildroot%_iconsdir
 
 %files
 %doc AUTHORS LICENSE README.md
@@ -159,7 +338,34 @@ cp -a Papirus Papirus-Dark Papirus-Edu Papirus-Light ePapirus %buildroot%_iconsd
 %doc AUTHORS LICENSE README.md
 %_iconsdir/ePapirus
 
+%files -n icon-theme-ePapirus-Dark
+%doc AUTHORS LICENSE README.md
+%_iconsdir/ePapirus-Dark
+
+%files -n papirus-remix-icon-theme
+%doc AUTHORS LICENSE README.md
+
+%files -n icon-theme-Papirus-Remix
+%doc AUTHORS LICENSE README.md
+%{expand:%(\
+    for theme in %{PTHEME} %{THEMES}; do \
+	echo -e "%%_iconsdir/Papirus-$theme";\
+    done\
+)}
+
+%files -n icon-theme-Papirus-Dark-Remix
+%doc AUTHORS LICENSE README.md
+%_iconsdir/Papirus-Dark-*
+
+%files -n icon-theme-Papirus-Light-Remix
+%doc AUTHORS LICENSE README.md
+%_iconsdir/Papirus-Light-*
+
 %changelog
+* Thu Nov 16 2023 Kirill Izmestev <felixz@altlinux.org> 20231101-alt2
+- Add ePapirus-Dark theme
+- Add Papirus Remix theme with all colors of folders. (ALT #47651)
+
 * Fri Nov 03 2023 Kirill Izmestev <felixz@altlinux.org> 20231101-alt1
 - New version.
 
