@@ -315,7 +315,7 @@
 
 Name: %lname
 Version: 1.5
-Release: alt1.%svnrev.2
+Release: alt1.%svnrev.3
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -368,6 +368,7 @@ Patch19: 0019-ppc-disable-vsx-on-little-endian-systems.patch
 Patch20: 0020-fix-tools-build-with-shared-ffmpeg.patch
 Patch21: 0021-fix-usage-mp_msg.patch
 Patch22: 0022-Secure-IPC-perms.patch
+Patch23: 0023-loongarch64-riscv64-support.patch
 Source2000: mplayer-e2k.patch
 
 %if_enabled gui
@@ -1158,6 +1159,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Fri Nov 24 2023 Ivan A. Melnikov <iv@altlinux.org> 1.5-alt1.38416.3
+- Add loongarch64 and riscv64 support.
+
 * Wed Apr 19 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5-alt1.38416.2
 - Fixed patch for Elbrus.
 
