@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    pdal
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: PDAL is Point Data Abstraction Library. GDAL for point cloud data.
@@ -18,9 +18,12 @@ BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: bash-completion
 BuildRequires: hdf-devel
+BuildRequires: libcryptopp-devel
 BuildRequires: libcurl-devel
 BuildRequires: libgdal-devel
 BuildRequires: libgeotiff-devel
+BuildRequires: liblz4-devel
+BuildRequires: libpnetcdf-devel
 BuildRequires: libssl-devel
 BuildRequires: libunwind-devel
 BuildRequires: libxml2-devel
@@ -73,6 +76,9 @@ sed -i '/{CMAKE_DL_LIBS}/a unwind' CMakeLists.txt
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sat Nov 25 2023 Andrey Cherepanov <cas@altlinux.org> 2.6.1-alt1
+- New version.
+
 * Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
 - New version.
 
