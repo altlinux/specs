@@ -4,7 +4,7 @@
 %define optflags_lto %nil
 
 Name: qt5-declarative
-Version: 5.15.10
+Version: 5.15.11
 Release: alt1
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
@@ -296,6 +296,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Wed Nov 22 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.11-alt1
+- new version
+
 * Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt1
 - new version
 

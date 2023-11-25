@@ -36,8 +36,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.10
-Release: alt2
+Version: 5.15.11
+Release: alt1
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -59,12 +59,10 @@ Source20: kde-qt-5.15.tar
 # KDE
 Patch2: kde-5.15-rev-f8ad329f7ee.patch
 # 
-Patch20: QTBUG-94557.patch
 # FC
 Patch51: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch52: qtbase-opensource-src-5.7.1-moc_macros.patch
 Patch53: qtbase-use-wayland-on-gnome.patch
-Patch54: qtbase-libxkbcommon-1.6.0.patch
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
 # ALT
@@ -399,12 +397,9 @@ while read p; do
 done
 %patch2 -p1
 #
-%patch20 -p1
-#
 %patch51 -p1
 %patch52 -p1
 %patch53 -p1
-%patch54 -p1
 #
 %patch100 -p1
 #
@@ -868,6 +863,9 @@ make check -k ||:
 
 
 %changelog
+* Wed Nov 22 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.11-alt1
+- new version
+
 * Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt2
 - fix to build with new libxkbcommon
 

@@ -3,7 +3,7 @@
 %global qt_module qtx11extras
 
 Name: qt5-x11extras
-Version: 5.15.10
+Version: 5.15.11
 Release: alt1
 
 Group: System/Libraries
@@ -104,6 +104,9 @@ export QT_HASH_SEED=0
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Nov 22 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.11-alt1
+- new version
+
 * Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt1
 - new version
 
