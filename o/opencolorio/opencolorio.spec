@@ -13,7 +13,7 @@
 
 Name: opencolorio
 Version: 2.3.0
-Release: alt2
+Release: alt2.1
 
 Summary: Enables color transforms and image display across graphics apps
 License: BSD-3-Clause
@@ -27,9 +27,7 @@ Source: OpenColorIO-%version.tar
 Patch1: %name-alt-install.patch
 Patch2: %name-alt-armh-multiple-definition.patch
 Patch3: %name-yaml-cpp-0.8.patch
-%ifarch %ix86
 Patch4: %name-i586.patch
-%endif
 
 # Utilities
 BuildRequires: cmake gcc-c++
@@ -206,6 +204,9 @@ popd
 %python3_sitelibdir/PyOpenColorIO
 
 %changelog
+* Sat Nov 25 2023 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt2.1
+- Fix rebuild on i586
+
 * Wed Nov 22 2023 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt2
 - Rename devel subpackage (ALT #48435)
 
