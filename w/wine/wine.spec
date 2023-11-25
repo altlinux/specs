@@ -9,11 +9,11 @@
 %def_with devel
 %def_without vanilla
 %define gecko_version 2.47.4
-%define mono_version 8.0.0
+%define mono_version 8.1.0
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.20
+%define major 8.21
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -849,6 +849,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sat Nov 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.21.1-alt1
+- new version 8.21.1 (with rpmrb script)
+- set strict require wine-mono 8.1.0 (needed since 8.19)
+
 * Sun Nov 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.20.1-alt1
 - new version 8.20.1 (with rpmrb script)
 
