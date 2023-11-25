@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 2022.6
+Version: 2023.3.post1
 Release: alt1
 
 Summary: World timezone definitions, modern and historical
@@ -50,6 +50,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Nov 25 2023 Grigory Ustinov <grenka@altlinux.org> 1:2023.3.post1-alt1
+- Build new version for python3.12.
+
 * Thu Dec 08 2022 Stanislav Levin <slev@altlinux.org> 1:2022.6-alt1
 - 2021.1 -> 2022.6.
 
