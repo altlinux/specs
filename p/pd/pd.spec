@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 %define rver	0.42-6
 %define ver	%(echo %rver|tr '-' '.')
-%define rel	12
+%define rel	13
 %add_optflags -fcommon
 
 Summary:	Real-time patchable audio and multimedia processor
@@ -15,7 +15,7 @@ Release:	alt5_%{rel}
 License:	BSD
 Group:		Sciences/Other
 URL:		http://www.puredata.org
-Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{rver}.src.tar.gz
+Source0:	https://downloads.sourceforge.net/pure-data/%{name}-%{rver}.src.tar.gz
 Patch0:		pd-0.42-6-tcl86.patch
 Patch1:		pd-0.42-6-big_endian.patch
 Patch2:		pd-0.42-6-fix_strncpy_usage.patch
@@ -79,6 +79,7 @@ export CPPFLAGS="%{optflags}"
 	--enable-portaudio \
 	--enable-portmidi
 
+subst "s|-ljack|$(pkg-config --libs jack)|" makefile
 %make_build LDFLAGS=""
 popd
 
@@ -110,6 +111,9 @@ install -m 644 man/*.1 %{buildroot}/%{_mandir}/man1
 
 
 %changelog
+* Sat Nov 25 2023 Igor Vlasenko <viy@altlinux.org> 0.42.6-alt5_13
+- update
+
 * Tue Nov 02 2021 Igor Vlasenko <viy@altlinux.org> 0.42.6-alt5_12
 - restored e2k fix
 
