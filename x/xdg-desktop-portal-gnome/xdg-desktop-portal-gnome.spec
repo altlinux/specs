@@ -2,8 +2,10 @@
 %define ver_major 45
 %define beta %nil
 
+%def_enable check
+
 Name: xdg-desktop-portal-gnome
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Desktop Portal
@@ -39,6 +41,9 @@ to provide various portal features.
 %meson_install
 %find_lang %name
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_libexecdir/%name
 %_desktopdir/%name.desktop
@@ -50,6 +55,9 @@ to provide various portal features.
 
 
 %changelog
+* Sun Nov 26 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
+- 45.1
+
 * Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
