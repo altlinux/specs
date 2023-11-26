@@ -1,7 +1,7 @@
 # Spec file for pv - Pipe Viewer 
 
 Name: pv
-Version: 1.8.0
+Version: 1.8.5
 Release: alt1
 
 Summary: Pipe Viewer
@@ -54,6 +54,9 @@ popd
 %exclude %_datadir/doc
 
 %changelog
+* Sun Nov 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.8.5-alt1
+- New version
+
 * Sat Oct 21 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.8.0-alt1
 - New version
 - Licensing change from Artistic 2.0 to GPLv3+
