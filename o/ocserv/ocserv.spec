@@ -3,10 +3,11 @@
 %def_with maxmind
 %def_enable man
 %def_disable check
+%def_enable oidc_auth
 
 Name: ocserv
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: OpenConnect SSL VPN server
 License: GPLv2+
@@ -48,6 +49,9 @@ BuildRequires: /proc
 %if_enabled man
 BuildRequires: /usr/bin/ronn
 %endif
+%if_enabled oidc_auth
+BuildRequires: libcjose-devel libcurl-devel libjansson-devel
+%endif
 
 Requires: gnutls-utils
 Requires: iproute2
@@ -80,8 +84,8 @@ sed -i 's/run-as-group = nogroup/run-as-group = nobody/g' tests/data/*.config
     --without-libwrap \
     --without-root-tests \
     --runstatedir=/run \
-    %{subst_with maxmind}
-
+    %{subst_with maxmind} \
+    %{?_enable_oidc_auth:--enable-oidc-auth}
 %make_build
 
 %install
@@ -134,8 +138,11 @@ export PATH=/sbin:/usr/sbin:$PATH
 %_initdir/%name
 
 %changelog
+* Sun Nov 26 2023 Nikolay Burykin <bne@altlinux.org> 1.2.1-alt2
+- build with --enable-oidc-auth
+
 * Thu Sep 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.2.1-alt1
-- 1new version 1.2.1
+- new version 1.2.1
 
 * Tue Dec 27 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.6-alt2
 - Backported upstream patches
