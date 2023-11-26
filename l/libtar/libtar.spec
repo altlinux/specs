@@ -2,7 +2,7 @@
 
 Name: libtar
 Version: 1.2.20
-Release: alt3.git.6d0ab4c
+Release: alt4.git.6d0ab4c
 Summary: C library for manipulating POSIX tar files
 License: BSD
 Group: System/Libraries
@@ -62,8 +62,9 @@ lib/Makefile.in
 %install
 %makeinstall_std
 
+rm -f %buildroot%_bindir/%name
+
 %files
-%_bindir/%name
 %_libdir/%name.so.*
 
 %files devel
@@ -72,6 +73,9 @@ lib/Makefile.in
 %_man3dir/*
 
 %changelog
+* Sun Nov 26 2023 Anton Farygin <rider@altlinux.ru> 1.2.20-alt4.git.6d0ab4c
+- removed /usr/bin/libtar from the library package
+
 * Wed Nov 22 2023 Anton Farygin <rider@altlinux.ru> 1.2.20-alt3.git.6d0ab4c
 - Applied patches from Fedora (Fixes: CVE-2021-33643, CVE-2021-33644,
 				      CVE-2021-33645, CVE-2021-33646)
