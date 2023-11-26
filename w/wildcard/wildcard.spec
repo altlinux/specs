@@ -5,7 +5,7 @@
 %def_disable bootstrap
 
 Name: wildcard
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: regular expression testing app for GNOME
@@ -64,6 +64,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Nov 26 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
+- 0.3.3
+
 * Sat Nov 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
 - 0.3.2
 
