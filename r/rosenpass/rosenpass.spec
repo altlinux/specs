@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: rosenpass
-Version: 0.1.1
+Version: 0.2.1
 Release: alt1
 Summary: Post-quantum secure VPN with WireGuard
 License: MIT or Apache-2.0
@@ -21,6 +21,11 @@ BuildRequires: cmake
 %description
 Rosenpass is a formally verified, post-quantum secure VPN that uses
 WireGuard to transport the actual data.
+
+This is experimental and all (non-packaging) bug reports should go to
+upstream tracker:
+
+  https://github.com/rosenpass/rosenpass/issues
 
 %prep
 %setup
@@ -56,8 +61,10 @@ sed -i 's!,"liboqs/CMakeLists.txt":"[^"]\+",!,!'	vendor/oqs-sys/.cargo-checksum.
 cargo build %_smp_mflags --offline --release
 
 %install
-cargo install %_smp_mflags --offline --no-track --path .
+install -Dp target/release/rosenpass -t %buildroot%_bindir
 install -Dp rp -t %buildroot%_bindir
+install -Dpm644 doc/rosenpass.1 -t %buildroot%_man1dir
+install -Dpm644 doc/rp.1 -t %buildroot%_man1dir
 
 %define _customdocdir %_docdir/%name
 
@@ -66,8 +73,8 @@ cargo test %_smp_mflags --release --no-fail-fast --locked
 
 # Also manual test for rosenpass.
 PATH=%buildroot%_bindir:$PATH
-rosenpass keygen private-key r1 public-key p1
-rosenpass keygen private-key r2 public-key p2
+rosenpass gen-keys --secret-key r1 --public-key p1
+rosenpass gen-keys --secret-key r2 --public-key p2
 rosenpass exchange private-key r1 public-key p1 verbose listen 0:2345 peer public-key p2 outfile o1 &
 rosenpass exchange private-key r2 public-key p2 verbose peer public-key p1 endpoint 127.1:2345 outfile o2 &
 sleep 1
@@ -78,7 +85,12 @@ kill %%1 %%2
 %doc LICENSE* readme*
 %_bindir/rosenpass
 %_bindir/rp
+%_man1dir/rosenpass.1*
+%_man1dir/rp.1*
 
 %changelog
+* Sun Nov 26 2023 Vitaly Chikunov <vt@altlinux.org> 0.2.1-alt1
+- Update to v0.2.1 (2023-11-18) (ALT#48591).
+
 * Fri Mar 03 2023 Vitaly Chikunov <vt@altlinux.org> 0.1.1-alt1
 - First import v0.1.1-7-gbecc8c05 (2023-02-28).
