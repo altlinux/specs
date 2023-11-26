@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
 Version: 1.74.0
-Release: alt1
+Release: alt1.1
 Summary: The Rust Programming Language
 
 %define r_ver 1.73.0
@@ -91,6 +91,9 @@ BuildRequires: rust-cargo
 %endif
 %ifarch loongarch64
 %define r_arch loongarch64
+%endif
+%ifarch riscv64
+%define r_arch riscv64gc
 %endif
 
 %ifarch armh
@@ -458,6 +461,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Sun Nov 26 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.74.0-alt1.1
+- NMU: spec: riscv64 support
+
 * Fri Nov 17 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.74.0-alt1
 - New version (1.74.0).
 
