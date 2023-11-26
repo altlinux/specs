@@ -1,5 +1,5 @@
 Name: vym
-Version: 2.8.8
+Version: 2.9.26
 Release: alt1
 
 Summary: QT based MindMap editor
@@ -13,15 +13,19 @@ Group: Office
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: %name-2.8.7-alt-pdf_path.patch
-Patch2: %name-2.8.7-alt-return_type.patch
+Patch2: %name-2.9.22-alt-VYMBASEDIR.patch
 
 Source1: %name.desktop
 
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-xdg
 
-# Automatically added by buildreq on Fri Apr 19 2019
-# optimized out: fontconfig gcc-c++ gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libstdc++-devel python-base python-modules python3 python3-base python3-dev qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4 tex-common texlive texlive-collection-basic texlive-dist
-BuildRequires: kf5-kwallet-devel qt5-location-devel qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-tools-devel qt5-webchannel-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
+# Automatically added by buildreq on Sun Oct 29 2023
+# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libglvnd-devel libgpg-error libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel pkg-config python-modules python2-base python3 python3-base python3-dev qt5-base-devel qt5-tools sh5
+BuildRequires: cmake libdbus-devel qt5-script-devel qt5-svg-devel qt5-tools-devel
+%ifnarch %e2k ppc64le
+BuildRequires: qt5-webengine-devel
+%endif
 
 # For PDF docs generation
 BuildRequires: makeinfo texi2dvi texlive-dist
@@ -40,41 +44,41 @@ over complex contexts.
 %patch2
 
 %build
-%qmake_qt5 vym.pro PREFIX=%_prefix DATADIR=%_datadir/vym
-%make_build        PREFIX=%_prefix DATADIR=%_datadir/vym VYM_DOCDIR=%_datadir/vym/doc
+%cmake -DCMAKE_INSTALL_DATAROOTDIR:PATH=%_datadir/vym
+%cmake_build
 
-pushd lang
-for i in *.ts; do
-    lconvert-qt5 $i -o `basename $i .ts`.qm
-done
-popd
+#pushd lang
+#for i in *.ts; do
+#    lconvert-qt5 $i -o `basename $i .ts`.qm
+#done
+#popd
 
-pushd tex
-texi2dvi -p vym.tex    > /dev/null
-texi2dvi -p vym_es.tex > /dev/null
-texi2dvi -p vym_fr.tex > /dev/null
-popd
+#pushd tex
+#texi2dvi -p vym.tex    > /dev/null
+#texi2dvi -p vym_es.tex > /dev/null
+#texi2dvi -p vym_fr.tex > /dev/null
+#popd
 
 %install
-%installqt5        PREFIX=%_prefix DATADIR=%_datadir/vym
+%cmake_install
+
 install -D -m0644 doc/%name.1.gz %buildroot%_man1dir/%name.1.gz
 install -D -m0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 sed -e 's#ICONDIR#%_datadir/%name/icons#' -i %buildroot%_desktopdir/%name.desktop
 
+#mkdir %buildroot%_datadir/%name/lang/
+#pushd lang
+#for i in *.qm; do
+#    install -D -m0664 $i %buildroot%_datadir/%name/lang/$i
+#done
+#popd
 
-mkdir %buildroot%_datadir/%name/lang/
-pushd lang
-for i in *.qm; do
-    install -D -m0664 $i %buildroot%_datadir/%name/lang/$i
-done
-popd
-
-mkdir %buildroot%_datadir/%name/doc/
-pushd tex
-for i in *.pdf; do
-    install -D -m0644 $i %buildroot%_datadir/%name/doc/$i
-done
-popd
+#mkdir -p %buildroot%_datadir/%name/doc/
+#pushd tex
+#for i in *.pdf; do
+#    install -D -m0644 $i %buildroot%_datadir/%name/doc/$i
+#done
+#popd
 
 
 %files
@@ -85,11 +89,17 @@ popd
 
 %_datadir/%name/*
 %exclude %_datadir/%name/scripts
+%exclude %_datadir/%name/man
 
 %_desktopdir/%name.desktop
+%_iconsdir/hicolor/*/apps/*
+%_xdgmimedir/packages/*
 
 
 %changelog
+* Sun Nov 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.9.26-alt1
+- New version
+
 * Thu Jun 17 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.8.8-alt1
 - New version
 
