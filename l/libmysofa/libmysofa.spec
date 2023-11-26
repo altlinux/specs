@@ -1,10 +1,11 @@
 %def_enable snapshot
 %define _name mysofa
 
+%def_enable tests
 %def_enable check
 
 Name: lib%_name
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Reader for AES SOFA files to get better HRTFs 
@@ -16,12 +17,13 @@ Vcs: https://github.com/hoene/libmysofa.git
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Source: %url/archive/v%version/%name-%version.tar
+Source: %name-%version.tar
 %endif
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ zlib-devel
-%{?_enable_check:BuildRequires: ctest CUnit-devel nodejs}
+%{?_enable_tests:BuildRequires: CUnit-devel nodejs}
+%{?_enable_check:BuildRequires: ctest}
 
 %description
 This is a simple set of C functions to read AES SOFA files, if they
@@ -43,9 +45,11 @@ developing applications that use %name.
 sed -i 's;\/build\/;/%_cmake__builddir/;' tests/compare*.sh
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake \
+    -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_STATIC_LIBS=OFF \
-    %{?_disable_check:-DBUILD_TEST=OFF}
+    %{?_disable_tests:-DBUILD_TESTS=OFF}
 %nil
 %cmake_build
 
@@ -57,7 +61,7 @@ export ARGS="--rerun-failed --output-on-failure"
 %cmake_build -t test
 
 %files
-%_bindir/mysofa2json
+%{?_enable_tests:%_bindir/mysofa2json}
 %_libdir/%name.so.*
 %_datadir/%name/
 %doc README* SECURITY* LICENSE
@@ -66,8 +70,12 @@ export ARGS="--rerun-failed --output-on-failure"
 %_includedir/%_name.h
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
+%_libdir/cmake/mysofa/
 
 %changelog
+* Sun Nov 26 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
+- updated to v1.3.2-8-g52494cc
+
 * Thu Feb 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
 - first build for Sisyphus (v1.3.1-8-gbed445b)
 

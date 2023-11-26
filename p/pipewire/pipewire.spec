@@ -6,7 +6,7 @@
 %endif
 
 %define _libexecdir %prefix/libexec
-%define ver_major 0.3
+%define ver_major 1.0
 %define ms_ver 0.4.2
 %define api_ver 0.3
 %define spa_api_ver 0.2
@@ -42,7 +42,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.85
+Version: %ver_major.0
 Release: alt1
 
 Summary: Media Sharing Server
@@ -105,7 +105,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_lv2:BuildRequires: liblilv-devel}
 %{?_enable_libcanberra:BuildRequires: libcanberra-devel}
 %{?_enable_docs:BuildRequires: doxygen graphviz fonts-otf-adobe-source-sans-pro fonts-ttf-google-droid-sans}
-%{?_enable_man:BuildRequires: python3-module-docutils}
+%{?_enable_man:BuildRequires: doxygen}
 %{?_enable_check:BuildRequires: /proc gcc-c++ libcap-devel}
 
 %description
@@ -196,7 +196,7 @@ mv media-session-%ms_ver subprojects/media-session
 export LIB=%_lib
 %meson \
 	%{?_enable_docs:-Ddocs=enabled} \
-	%{?_disable_man:-Dman=disabled} \
+	%{?_enable_man:-Dman=enabled} \
 	%{?_enable_jack_devel:-Djack-devel=true} \
 	%{?_enable_gstreamer:-Dgstreamer=enabled} \
 	%{?_enable_vulkan:-Dvulkan=enabled} \
@@ -315,6 +315,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_man1dir/%name.1*
 %_man1dir/%name-pulse.1*
 %_man5dir/%name.conf.5*
+%_man5dir/%name-pulse.conf.5*
 %endif
 %doc README* NEWS
 
@@ -331,6 +332,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_includedir/spa-%spa_api_ver/
 %_pkgconfigdir/lib%name-%api_ver.pc
 %_pkgconfigdir/libspa-%spa_api_ver.pc
+%_man7dir/*
 
 %if_enabled docs
 %files libs-devel-doc
@@ -369,7 +371,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_man1dir/pw-cli.1*
 %_man1dir/pw-config.1*
 %_man1dir/pw-dot.1.*
+%_man1dir/pw-dump.1.*
 %_man1dir/pw-link.1.*
+%_man1dir/pw-loopback.1.*
 %_man1dir/pw-metadata.1.*
 %_man1dir/pw-mididump.1.*
 %_man1dir/pw-mon.1*
@@ -394,6 +398,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Sun Nov 26 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Thu Nov 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.85-alt1
 - 0.3.85
 
