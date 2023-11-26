@@ -1,7 +1,7 @@
 # SPEC file for duperemove package
 
 Name:    duperemove
-Version: 0.13
+Version: 0.14.1
 Release: alt1
 
 Summary: tool for deduping file system extents
@@ -18,9 +18,9 @@ Patch0:  %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Tue Oct 15 2019
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 pkg-config python-base python-modules python3 python3-base python3-dev ruby ruby-stdlibs sh4
-BuildRequires: glib2-devel libsqlite3-devel
+# Automatically added by buildreq on Sun Nov 26 2023
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error pkg-config python-modules python2-base python3 python3-base python3-dev python3-module-setuptools sh5
+BuildRequires: glib2-devel libblkid-devel libmount-devel libsqlite3-devel libuuid-devel
 
 %description
 Duperemove  is a simple tool for finding duplicated extents
@@ -55,6 +55,7 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
     DESTDIR=%buildroot \
     PREFIX=%_usr \
     install
+install -m 0755 show-shared-extents %buildroot%_bindir/
 
 %files
 %doc README.md LICENSE.xxhash
@@ -71,6 +72,9 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
 %_man8dir/hashstats.*
 
 %changelog
+* Sun Nov 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.14.1-alt1
+- New version
+
 * Sat Oct 21 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.13-alt1
 - New version
 
