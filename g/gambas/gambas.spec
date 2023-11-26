@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define appdir  %_datadir/gambas3
-%ifarch %e2k ppc64le
+%ifnarch %qt5_qtwebengine_arches
 %def_disable qtwebengine
 %def_disable qtwebkit
 %else
@@ -19,7 +19,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 
 Name:    gambas
 Version: 3.18.3
-Release: alt1
+Release: alt1.1
 
 Summary: IDE based on a basic interpreter with object extensions
 License: GPL-2.0+
@@ -32,6 +32,7 @@ Source1: %name.desktop
 # Unable to build gb.form
 ExcludeArch: armh
 
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: rpm-build-xdg
 BuildRequires: autoconf
 BuildRequires: automake
@@ -1918,6 +1919,9 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.geom.list
 
 %changelog
+* Sun Nov 26 2023 Ivan A. Melnikov <iv@altlinux.org> 3.18.3-alt1.1
+- NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64).
+
 * Mon Jun 26 2023 Andrey Cherepanov <cas@altlinux.org> 3.18.3-alt1
 - New version.
 
