@@ -6,7 +6,7 @@
 
 Name:		grafana
 Version:	10.2.2
-Release:	alt1
+Release:	alt1.1
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -27,7 +27,7 @@ Source17: %name.tmpfiles
 #ExclusiveArch: %%go_arches
 # on ppc64le error:
 # error Command failed with signal "SIGXCPU"
-ExclusiveArch: %ix86 x86_64 %arm aarch64 mipsel riscv64
+ExclusiveArch: %ix86 x86_64 %arm aarch64 loongarch64 mipsel riscv64
 BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
 BuildRequires: golang >= 1.20
 %if_disabled prebuilded_frontend
@@ -216,6 +216,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Sun Nov 26 2023 Ivan A. Melnikov <iv@altlinux.org> 10.2.2-alt1.1
+- NMU: Build on loongarch64.
+
 * Tue Nov 21 2023 Alexey Shabalin <shaba@altlinux.org> 10.2.2-alt1
 - 10.2.2
 
