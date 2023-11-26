@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:		libbpg
 Version:	0.9.8
-Release:	alt1_1
+Release:	alt1_3
 Summary:	A library of functions for manipulating BPG image format files
 License:	LGPLv2+ and BSD
 Group:		Graphics
@@ -19,7 +19,7 @@ BuildRequires:	libnuma-devel
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(SDL_image)
 
-ExclusiveArch:	%{ix86} x86_64
+ExcludeArch: %{arm}
 Source44: import.info
 
 %description
@@ -41,6 +41,7 @@ main advantages are:
 %setup -q
 %patch0 -p1
 
+
 %build
 %make_build
 
@@ -55,6 +56,9 @@ main advantages are:
 
 
 %changelog
+* Sun Nov 26 2023 Igor Vlasenko <viy@altlinux.org> 0.9.8-alt1_3
+- more arches
+
 * Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.8-alt1_1
 - update by mgaimport
 
