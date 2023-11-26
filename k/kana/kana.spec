@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 1.2
+%define ver_major 1.3
 %define rdn_name com.felipekinoshita.Kana
 
 %def_disable bootstrap
@@ -72,6 +72,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Nov 26 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
+- 1.3
+
 * Wed Nov 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
 - 1.2
 
