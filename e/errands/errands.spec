@@ -6,13 +6,13 @@
 %def_disable check
 
 Name: errands
-Version: %ver_major.0.4
+Version: %ver_major.0.5
 Release: alt1
 
 Summary: Todo application for GNOME
 License: MIT
 Group: Office
-Url: https://github.com/mrvladus/Errands.git
+Url: https://github.com/mrvladus/Errands
 
 %if_disabled snapshot
 Source: %url/-/archive/v%version/%name-%version.tar.gz
@@ -65,6 +65,9 @@ Todo application for those who prefer simplicity.
 %doc README*
 
 %changelog
+* Mon Nov 27 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.5-alt1
+- 45.0.5
+
 * Sun Nov 05 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.4-alt1
 - updated to 45.0.4-27-g01e9d07
 
