@@ -12,13 +12,21 @@
 %def_disable check
 %endif
 
+%ifarch riscv64 %mips %e2k
+%def_without java_tests
+%else
+%def_with java_tests
+%endif
+
 # normal package may include python3 or java support
 %def_with python3
 %def_with java
+%def_with ruby
 %else
 # for legacy package python3 and java should always be disabled since it's not packed anyway
 %def_without python3
 %def_without java
+%def_without ruby
 %endif
 
 %if_disabled legacy
@@ -27,7 +35,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.21.12
-Release: alt3
+Release: alt4
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -52,6 +60,7 @@ BuildRequires: python3-devel libnumpy-py3-devel
 BuildRequires: python3-module-setuptools python-tools-2to3
 BuildRequires: python3-module-dateutil
 %endif
+%if_with ruby
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2
 BuildRequires: gem(rake-compiler) >= 1.1.0 gem(rake-compiler) < 2
@@ -60,6 +69,7 @@ BuildRequires: gem(test-unit) >= 3.0 gem(test-unit) < 4
 %ruby_use_gem_dependency rake-compiler >= 1.1.0,rake-compiler < 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%endif
 
 %description
 Protocol Buffers are a way of encoding structured data in
@@ -149,13 +159,15 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.gson:gson)
 BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(com.google.guava:guava-testlib)
-BuildRequires:  mvn(com.google.truth:truth)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+%if_with java_tests
 BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(com.google.truth:truth)
+BuildRequires:  mvn(junit:junit)
+%endif
 BuildRequires(pre):  rpm-build-java
 BuildRequires:  libgmock-devel libgtest-devel
 Conflicts: %name-compiler > %version
@@ -341,14 +353,18 @@ export MAVEN_OPTS=-Xmx1024m
 %endif
 %pom_disable_module kotlin java/pom.xml
 %pom_disable_module kotlin-lite java/pom.xml
-%mvn_build -s -- -f java/pom.xml
+%mvn_build -s %{?_without_java_tests:--skip-tests} -- -f java/pom.xml
 %endif
 
+%if_with ruby
 %ruby_build
+%endif
 
 %install
 %makeinstall_std
+%if_with ruby
 %ruby_install
+%endif
 
 %if_with python3
 pushd python
@@ -414,6 +430,7 @@ popd
 %endif
 %endif
 
+%if_with ruby
 %files -n gem-google-protobuf
 %ruby_gemspecdir/google-protobuf-*.gemspec
 %ruby_gemslibdir/google-protobuf-*
@@ -424,9 +441,14 @@ popd
 
 %files -n gem-google-protobuf-devel
 %_includedir/google/protobuf_c/
+%endif
 
 
 %changelog
+* Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 3.21.12-alt4
+- spec: added --without=ruby knob for bootstrap purposes (asheplyakov@);
+- build w/o java tests on riscv64 and mipsel.
+
 * Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 3.21.12-alt3
 - drop unused BR: libnumpy-devel
 
