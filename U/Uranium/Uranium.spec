@@ -7,7 +7,7 @@
 
 Name:    Uranium
 Version: 5.3.1
-Release: alt1
+Release: alt2
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -49,6 +49,10 @@ Source7: CPackConfig.cmake
 Source8: Doxyfile
 
 Patch: Uranium-4.7.1-set-default-languages.patch
+
+# from Fedora
+Patch2: Uranium-5.3.0-qt-try-ints-then-bytes-for-gl-mask-functions.patch
+Patch3: Uranium-5.3.0-qt-6.5-hack.patch
 
 %description
 %summary
@@ -114,6 +118,9 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) and not Tes
 %doc html LICENSE
 
 %changelog
+* Mon Nov 27 2023 Anton Midyukov <antohami@altlinux.org> 5.3.1-alt2
+- Add patches for qt6.6 support
+
 * Tue Apr 25 2023 Anton Midyukov <antohami@altlinux.org> 5.3.1-alt1
 - new version (5.3.1) with rpmgs script
 
