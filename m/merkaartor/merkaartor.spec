@@ -2,15 +2,15 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%ifarch %e2k ppc64le
-%def_disable qtwebengine
-%else
+%ifarch %qt5_qtwebengine_arches
 %def_enable qtwebengine
+%else
+%def_disable qtwebengine
 %endif
 
 Name: merkaartor
 Version: 0.19.0
-Release: alt2
+Release: alt2.1
 
 Summary: an OpenStreetMap editor
 License: GPLv2
@@ -21,6 +21,7 @@ Url: https://github.com/openstreetmap/merkaartor
 Source: %name-%version.tar
 Patch1: %name-0.18.3-fedora-no-git-version.patch
 
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: boost-devel gcc-c++ glibc-devel-static
 BuildRequires: libgdal-devel libproj-devel libexiv2-devel zlib-devel libsqlite3-devel
 BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel
@@ -72,6 +73,9 @@ lrelease-qt5 Merkaartor.pro
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 0.19.0-alt2.1
+- NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64).
+
 * Wed Oct 19 2022 Vladislav Zavjalov <slazav@altlinux.org> 0.19.0-alt2
 - Use new proj interface
 
