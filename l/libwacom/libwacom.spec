@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.8
+%define ver_major 2.9
 %define sover 9
 %def_disable docs
 
@@ -33,6 +33,7 @@ Requires: python3-module-pyudev python3-module-libevdev
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind rpm-build-python3
 BuildRequires: /proc meson glib2-devel libgudev-devel libxml2-devel
+BuildRequires: pkgconfig(libevdev)
 %{?_enable_docs:BuildRequires: doxygen graphviz}
 %{?_enable_tests:
 BuildRequires: python3-module-pytest
@@ -124,6 +125,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Nov 27 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1
+- 2.9.0
+
 * Thu Aug 31 2023 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
 - 2.8.0
 
