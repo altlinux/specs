@@ -1,14 +1,14 @@
 %define lib_name libalkimia5
 
-%ifarch %e2k ppc64le
-%def_disable qtwebengine
-%else
+%ifarch %qt5_qtwebengine_arches
 %def_enable qtwebengine
+%else
+%def_disable qtwebengine
 %endif
 
 Name:    alkimia
 Version: 8.1.2
-Release: alt3
+Release: alt3.1
 
 Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
 License: LGPLv2+
@@ -19,6 +19,7 @@ URL:     http://community.kde.org/Alkimia/libalkimia
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-base-devel
@@ -105,6 +106,9 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 8.1.2-alt3.1
+- NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64).
+
 * Fri Oct 27 2023 Andrey Cherepanov <cas@altlinux.org> 8.1.2-alt3
 - Fixed build (ALT #48214) (thanks zerg@).
 
