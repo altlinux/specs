@@ -3,7 +3,7 @@
 
 Name:     minitube
 Version:  3.9.3
-Release:  alt1.1
+Release:  alt1.2
 
 Summary: a YouTube desktop application
 
@@ -22,11 +22,12 @@ Patch1:  %name-fix-mpv-api-change.patch
 
 BuildRequires(pre): rpm-build-licenses desktop-file-utils
 BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt5-webengine
 
 # Automatically added by buildreq on Fri Jul 09 2021
 # optimized out: fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libcairo-gobject libcdio-paranoia libdc1394-22 libgdk-pixbuf libglvnd-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-sql libqt5-widgets libqt5-x11extras librabbitmq-c libraw1394-11 libspirv-tools0 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server libx265-199 libxcb-devel python-modules python2-base python3 python3-base python3-module-paste qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel ruby ruby-stdlibs sh4
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel libmpv-devel qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
-%ifnarch %e2k ppc64le
+%ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel
 %endif
 
@@ -87,6 +88,9 @@ ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 %_datadir/%name
 
 %changelog
+* Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 3.9.3-alt1.2
+- NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64).
+
 * Mon Nov 14 2022 L.A. Kostis <lakostis@altlinux.ru> 3.9.3-alt1.1
 - NMU:
   + apply fix for libmpv2 compatibility.
