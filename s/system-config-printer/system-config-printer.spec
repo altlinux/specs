@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.18
-Release: alt1
+Release: alt2
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -15,10 +15,13 @@ Patch2: about_logo.patch
 Patch3: %name-alt-fix-SMB-auth-fields-order.patch
 Patch4: %name-1.5.11-plugins.patch
 Patch5: %name-alt-cups-service-name.patch
+Patch6: %name-Makefile.am-cupshelpers.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: autoconf-archive
 BuildRequires: python3-devel
+BuildRequires: python3-module-pyproject-installer
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cups
 BuildRequires: python3-module-pluggy
 BuildRequires: desktop-file-utils
@@ -76,10 +79,12 @@ sed -i 's/mod.*ins.*_aft.*//' newprinter.py
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 ./bootstrap
 %configure --with-udev-rules
+%make_build
 
 %install
 %makeinstall_std udevrulesdir=/lib/udev/rules.d \
@@ -117,9 +122,14 @@ exit 0
 %files -n python3-module-cupshelpers
 %config(noreplace) %_sysconfdir/cupshelpers/*.xml
 %python3_sitelibdir_noarch/cupshelpers
-%python3_sitelibdir_noarch/cupshelpers-*
+%python3_sitelibdir_noarch/cupshelpers-*.dist-info
 
 %changelog
+* Sat Nov 25 2023 Arseny Maslennikov <arseny@altlinux.org> 1.5.18-alt2
+- Fixed FTBFS by building python3(cupshelpers) with pyproject_installer
+  instead of direct setup.py. As a direct effect of that change, dist-info for
+  that module is produced and packaged instead of egg-info.
+
 * Wed Aug 31 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.18-alt1
 - New version.
 
