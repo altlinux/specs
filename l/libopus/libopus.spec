@@ -2,7 +2,7 @@
 
 Name: libopus
 Version: 1.4
-Release: alt1
+Release: alt1.1
 
 Summary: Opus Audio Codec library
 License: BSD
@@ -48,6 +48,7 @@ statically linked libopus-based software.
 printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 %meson -Dintrinsics=auto \
        -Dcheck-asm=true \
+       -Dcustom-modes=true \
 %ifarch x86_64
        -Drtcd=disabled
 %endif
@@ -76,6 +77,9 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 %endif
 
 %changelog
+* Mon Nov 27 2023 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt1.1
+- enable custom modes (closes #48590).
+
 * Fri Apr 28 2023 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt1
 - 1.4.
 
