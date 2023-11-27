@@ -1,8 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define bootstrap_tagset %nil
+#define bootstrap_tagset AutoReqProv: yes,noperl
+%def_with boorstrap_perl_wrapper
+
 
 Name: perl
-Version: 5.34.1
-Release: alt1
+Version: 5.38.0
+Release: alt0.4
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -39,10 +43,12 @@ Patch19: perl-5.28.1-alt-viy-no-check-sums-in-customized.t.patch
 Patch20: perl-5.24.1-alt-viy-installperl-ExtUtils-MakeMaker-version.patch
 # mail from Oleg Solovyov; see patch body
 Patch21: perl-5.24.3-alt-solovyov.patch
-Patch23: perl-5.22.3-alt-mcpain-trust-mode.patch
+# asked mcpain@. 2023-10-18 he still needs this hack
+# wait for resolution
+#Patch23: perl-5.38.0-alt-mcpain-trust-mode.patch
 
 # cpan update patches here. use format below:
-Patch50: cpan-update-Scalar-List-Utils-1.55-to-Scalar-List-Utils-1.56.patch
+#Patch50: cpan-update-Scalar-List-Utils-1.55-to-Scalar-List-Utils-1.56.patch
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora)[shift=300]: -----------------------
@@ -56,6 +62,15 @@ Patch312:        perl-5.27.8-hints-linux-Add-lphtread-to-lddlflags.patch
 
 # Pass the correct CFLAGS to dtrace
 Patch313:        perl-5.28.0-Pass-CFLAGS-to-dtrace.patch
+
+# Fix broken certain locale-related functionality when embedding Perl code
+# into a C program. Bug #2240458, GH #21366
+# Backported perl5 commit 7af2d20
+# Fixed in perl 5.39.3, in locale.c was more changes
+Patch314:         perl-5.38.0-Revert-Do-uselocale-earlier-in-init-process.patch
+
+# If optimizing -O is used, add the definition to .ph files, bug #2152012
+Patch502:       perl-5.36.0-Add-definition-of-OPTIMIZE-to-.ph-files.patch
 # EndPatches(fedora): --------------------------------------
 
 # there's a problem with strict.pm
@@ -68,9 +83,6 @@ Patch313:        perl-5.28.0-Pass-CFLAGS-to-dtrace.patch
 %add_findreq_skiplist */Data/Dumper.pm
 # open.pm requires Encode in certain cases
 %add_findreq_skiplist */open.pm
-# Pod::Html requires Pod::Simple
-%add_findreq_skiplist */Pod/Html.pm
-%add_findreq_skiplist */pod2html
 # It requires Encode which we split out
 %add_findreq_skiplist */ExtUtils/MakeMaker.pm
 %add_findreq_skiplist */ExtUtils/MakeMaker/Locale.pm
@@ -80,7 +92,15 @@ Patch313:        perl-5.28.0-Pass-CFLAGS-to-dtrace.patch
 # do not provide auxiliary unicore libraries
 %add_findprov_skiplist */unicore/*/*
 
+# Pod-Html requires Pod-Simple, moved to subpackage
+%add_findreq_skiplist */Pod/Html/Util.pm
+%add_findreq_skiplist */Pod/Html.pm
+%add_findreq_skiplist */pod2html
+
+
 BuildRequires: /proc
+
+%bootstrap_tagset
 
 %package base
 Summary: Pathologically Eclectic Rubbish Lister
@@ -91,16 +111,21 @@ Provides: perl-PerlIO = %epoch:%version perl-Storable = %epoch:%version
 Obsoletes: perl-PerlIO < %epoch:%version perl-Storable < %epoch:%version
 Provides: perl-version = 0.99
 Obsoletes: perl-version < 0.99
-Provides: perl-Digest-MD5 = 2.55
+Provides: perl-Digest-MD5 = 2.57
 Obsoletes: perl-Digest-MD5 < 2.55
-Provides: perl-Time-HiRes = 1.9741
+Provides: perl-Time-HiRes = 1.976
 Obsoletes: perl-Time-HiRes < 1.9741
-Provides: perl-MIME-Base64 = 3.15
+Provides: perl-MIME-Base64 = 3.16
 Obsoletes: perl-MIME-Base64 < 3.15
-Provides: perl-IPC-SysV = 2.07
-Obsoletes: perl-IPC-SysV < 2.07-alt2
+Provides: perl-IPC-SysV = 2.09
+Obsoletes: perl-IPC-SysV < 2.08
 Provides: perl-PathTools = 3.75
 Obsoletes: perl-PathTools < 3.75-alt2
+# for compatibility with other distro
+Provides: perl-Data-Dumper = 2.188
+# autoimports
+Conflicts: perl-builtin-Backport < 0.03
+%bootstrap_tagset
 
 %package devel
 Summary: Perl header files and development modules
@@ -116,12 +141,13 @@ Provides: perl-Test2 = 0.000045
 Obsoletes: perl-Test2 < 0.000045
 Conflicts: perl-Test2 < 0.000045
 
-%define libdb4_devel libdb4.8-devel
-BuildRequires: %libdb4_devel libgdbm-devel
+%define libdb_devel libdb5.3-devel
+BuildRequires: %libdb_devel libgdbm-devel
 # perl IO-AIO module pass perl link options to configure.
 # without those devel libs configure fails.
-#Requires: %libdb4_devel
+#Requires: %libdb_devel
 Requires: libgdbm-devel
+%bootstrap_tagset
 
 %package pod
 Summary: Perl documentation
@@ -129,17 +155,20 @@ Group: Development/Documentation
 Requires: perl-base = %epoch:%version
 Provides: perl-doc = %epoch:%version
 BuildArch: noarch
+%bootstrap_tagset
 
 %package threads
 Summary: Perl thread modules
 Group: Development/Perl
 Requires: perl-base = %EVR
+%bootstrap_tagset
 
 %package unicore
 Summary: Perl Unicode library
 Group: Development/Perl
 Requires: perl-Unicode-Normalize = %EVR
 BuildArch: noarch
+%bootstrap_tagset
 
 %package DBM
 Summary: Perl modules for accessing DBM databases
@@ -147,11 +176,23 @@ Group: Development/Perl
 Requires: perl-base = %EVR
 Provides:  perl-DB_File
 Obsoletes: perl-DB_File
+%bootstrap_tagset
 
 %package Unicode-Normalize
 Summary: Unicode normalization forms
 Group: Development/Perl
 Requires: perl-base = %EVR
+%bootstrap_tagset
+
+%package Pod-Html
+Summary: Convert pod files to HTML
+Group: Development/Perl
+BuildArch: noarch
+Requires: perl-base = %EVR
+Requires: perl-Pod-Simple
+Conflicts: perl-base < 1:5.37
+%bootstrap_tagset
+
 
 %description
 Perl is a high-level programming language with roots in C, sed, awk
@@ -204,6 +245,12 @@ This module provides support for normalized forms of Unicode text,
 as described in Unicode Standard Annex #15.  With these forms,
 equivalent text will have identical binary representations.
 
+%description Pod-Html
+This module converts files from pod format (see perlpod) to HTML format.
+It can automatically generate indexes and cross-references, and it keeps
+a cache of things it knows how to cross-reference.
+
+
 %prep
 %setup -q
 %patch01 -p1
@@ -227,14 +274,12 @@ equivalent text will have identical binary representations.
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
-%patch23 -p1
-%patch50 -p1
+# patch23 needs groking
+#patch23 -p1
+#patch50 -p1
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora): ------------------------------------
-%patch310 -p1
-%patch312 -p1
-%patch313 -p1
 # EndPatches(fedora): --------------------------------------
 
 # .orig files can break some test
@@ -339,6 +384,7 @@ rm -r %buildroot{%privlib,%archlib,%autolib}/Encode*
 rm %buildroot%archlib/encoding.pm %buildroot%_bindir/{enc2xs,encguess,piconv}
 rm %buildroot%privlib/encoding/warnings.pm
 rm %buildroot%privlib/experimental.pm
+rm %buildroot%privlib/stable.pm
 rm -r %buildroot%privlib/ExtUtils/CBuilder*
 rm -r %buildroot%privlib/Filter*
 rm %buildroot%privlib/File/Fetch.pm
@@ -408,10 +454,29 @@ EOF
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d/
 echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 
+%if_with boorstrap_perl_wrapper
+cat > %buildroot%_bindir/perl-bootstrap-wrapper <<'EOF'
+#!/bin/sh
+# bootstrap
+buildroot_perl5=/usr/src/tmp/perl-buildroot/usr/bin/perl%version
+if [ -e $buildroot_perl5 ]; then
+export LD_PRELOAD=/usr/src/tmp/perl-buildroot%_libdir/libperl-5.38.so
+exec $buildroot_perl5 "$@"
+fi
+exec /usr/bin/perl%version "$@"
+EOF
+chmod 755 %buildroot%_bindir/perl-bootstrap-wrapper
+ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
+%endif
+
+
 %files	base
 %doc	Artistic AUTHORS README
 	%_bindir/perl
 	%_bindir/perl5*
+%if_with boorstrap_perl_wrapper
+	%_bindir/perl-bootstrap-wrapper
+%endif
 	%_libdir/libperl-%ver.so
 # skeleton
 %dir	%privlib
@@ -460,6 +525,7 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 %doc	%privlib/version/Internals.pod
 	%privlib/vmsish.pm
 	%privlib/warnings*
+	%privlib/builtin.pm
 # module loaders
 	%privlib/AutoLoader.pm
 	%archlib/DynaLoader.pm
@@ -481,11 +547,6 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 # initial unicode support
 %dir	%privlib/unicore
 %dir	%privlib/unicore/To
-	%privlib/unicore/To/Digit.pl
-	%privlib/unicore/To/Fold.pl
-	%privlib/unicore/To/Lower.pl
-	%privlib/unicore/To/Title.pl
-	%privlib/unicore/To/Upper.pl
 	%privlib/unicore/To/Cf.pl
 	%privlib/unicore/To/Lc.pl
 	%privlib/unicore/To/Tc.pl
@@ -732,9 +793,6 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/ExtUtils/testlib.pm
 	%privlib/ExtUtils/typemap
 	%privlib/ExtUtils/xsubpp
-%dir	%privlib/Pod
-	%privlib/Pod/Html.pm
-	%_bindir/pod2html
 	%privlib/Test.pm
 %dir	%privlib/Test
 %doc	%privlib/Test/Tutorial.pod
@@ -872,11 +930,6 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 %exclude %privlib/unicore/lib/Perl/Word.pl
 %exclude %privlib/unicore/lib/Upper/Y.pl
 	%privlib/unicore/To/
-%exclude %privlib/unicore/To/Digit.pl
-%exclude %privlib/unicore/To/Fold.pl
-%exclude %privlib/unicore/To/Lower.pl
-%exclude %privlib/unicore/To/Title.pl
-%exclude %privlib/unicore/To/Upper.pl
 %exclude %privlib/unicore/To/Cf.pl
 %exclude %privlib/unicore/To/Lc.pl
 %exclude %privlib/unicore/To/Tc.pl
@@ -889,6 +942,8 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/unicore/SpecialCasing.txt
 # not required
 	%privlib/unicore/NamedSequences.txt
+# seems for self test only
+%exclude %privlib/unicore/TestNorm.pl
 
 %files	DBM
 	%privlib/AnyDBM_File.pm
@@ -909,7 +964,21 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%archlib/Unicode/Normalize.pm
 	%autolib/Unicode
 
+%files	Pod-Html
+%dir	%privlib/Pod
+	%privlib/Pod/Html.pm
+%dir	%privlib/Pod/Html
+	%privlib/Pod/Html/Util.pm
+	%_bindir/pod2html
+
 %changelog
+* Sat Nov 11 2023 Igor Vlasenko <viy@altlinux.org> 1:5.38.0-alt0.4
+- 5.34.1 -> 5.38.0
+- added perl-Pod-Html
+- build with libdb5.3
+- added Provides: perl-Data-Dumper (closes: #45789)
+- bootstrap perl wrapper on
+
 * Mon Jul 04 2022 Igor Vlasenko <viy@altlinux.org> 1:5.34.1-alt1
 - nobootstrap build
 

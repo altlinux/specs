@@ -1,10 +1,10 @@
-%def_without bootstrap
+%def_with bootstrap
 %add_findreq_skiplist %perl_vendor_archlib/Readonly/XS.pm
 %define dist Readonly-XS
 
 Name: perl-%dist
 Version: 1.05
-Release: alt10
+Release: alt20
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -40,6 +40,9 @@ scalar variables.
 %perl_vendor_autolib/Readonly
 
 %changelog
+* Fri Nov 24 2023 Igor Vlasenko <viy@altlinux.org> 1.05-alt20
+- rebuild with new perl 5.38.0 (bootstrapped)
+
 * Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 1.05-alt10
 - unbootstrap
 
