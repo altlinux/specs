@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -10,7 +10,7 @@ BuildRequires: cmake gcc
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
 BuildRequires: alterator-manager-devel >= 0.1.10
 
-Requires: alterator-manager >= 0.1.10-alt1
+Requires: alterator-manager >= 0.1.11-alt1
 
 Source: %name-%version.tar
 
@@ -33,6 +33,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Mon Nov 27 2023 Ivan Savin <svn17@altlinux.org> 0.1.8-alt1
+- Add support for the action_id field from the InterfaceObjectInfo structure.
+
 * Tue Oct 31 2023 Ivan Savin <svn17@altlinux.org> 0.1.7-alt1
 - Add the ability to add environment variables from the alterator-manager
   database.

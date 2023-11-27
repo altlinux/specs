@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.10
-Release: alt2
+Version: 0.1.11
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -52,6 +52,14 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %_includedir/alterator
 
 %changelog
+* Mon Nov 27 2023 Ivan Savin <svn17@altlinux.org> 0.1.11-alt1
+- Change the format of the top section of backend files.
+- Add the ability to set an action_id without a ru.basealt.alterator prefix
+  using the action_id field in the manager section.
+- Improve memory release logic for variables in the save_info_from_backend_file
+  function in file alterator_manager_backends.h.
+- Update docs/README-ru.md.
+
 * Wed Nov 01 2023 Ivan Savin <svn17@altlinux.org> 0.1.10-alt2
 - Update docs/README-ru.md.
 
