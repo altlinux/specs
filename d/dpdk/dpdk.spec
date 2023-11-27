@@ -11,7 +11,7 @@
 
 Name: dpdk
 Version: 22.11.3
-Release: alt1
+Release: alt2
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
 Summary: Set of libraries and drivers for fast packet processing
@@ -26,7 +26,7 @@ Patch0001: 0001-Do-not-redefine-strlcpy-and-strlcat.patch
 # other techniques, carefully crafted assembly instructions.  As such it
 # needs extensive work to port it to other architectures.
 #
-ExclusiveArch: x86_64 %{ix86} aarch64 ppc64le riscv64
+ExclusiveArch: x86_64 %{ix86} aarch64 ppc64le riscv64 loongarch64
 
 BuildRequires(pre): meson >= 0.53.2
 BuildRequires(pre): rpm-build-python3
@@ -151,6 +151,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Oct 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 22.11.3-alt2
+- NMU: build on LoongArch.
+
 * Tue Oct 10 2023 Alexey Shabalin <shaba@altlinux.org> 22.11.3-alt1
 - Update to LTS release 22.11.3.
 
