@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%mname
-Version: 3.4.3
-Release: alt2
+Version: 3.4.4
+Release: alt1
 Summary: Python modules for implementing LDAP clients
 License: Python-style or MIT
 Group: Development/Python3
@@ -69,6 +69,9 @@ export BIN="$PATH:%_sbindir"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 27 2023 Stanislav Levin <slev@altlinux.org> 3.4.4-alt1
+- 3.4.3 -> 3.4.4 (closes: #48579).
+
 * Fri Jun 09 2023 Stanislav Levin <slev@altlinux.org> 3.4.3-alt2
 - Shipped slapdtest package.
 
@@ -132,7 +135,7 @@ export BIN="$PATH:%_sbindir"
 - new 2.0.2
 
 * Mon May 24 2004 Konstantin Klimchev <koka@altlinux.ru> 2.0.0-alt2
-- new 2.0.0 
+- new 2.0.0
 
 * Tue May 18 2004 Konstantin Klimchev <koka@altlinux.ru> 2.0.0-alt1.pre21
 - new python policy
