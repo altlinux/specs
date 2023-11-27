@@ -24,8 +24,8 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 11.0.3
-Release: alt2
+Version: 12.0.0
+Release: alt1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -89,6 +89,8 @@ BuildRequires: libffi-devel
 BuildRequires: xml-utils
 BuildRequires: python3-module-lxml
 BuildRequires: python3-module-beautifulsoup4
+BuildRequires: libedit-devel
+BuildRequires: terminfo
 
 Requires: %name-core = %EVR
 # Add Qt5 build environment to build Qt project
@@ -215,6 +217,7 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_iconsdir/hicolor/*/apps/QtProject-qtcreator.png
 %_desktopdir/*.desktop
 %_datadir/metainfo/*.xml
+%_libdir/qbs/plugins/*.so
 
 %files doc
 %_defaultdocdir/qtcreator
@@ -224,6 +227,9 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_datadir/qtcreator/*
 
 %changelog
+* Mon Nov 27 2023 Andrey Cherepanov <cas@altlinux.org> 12.0.0-alt1
+- New version.
+
 * Wed Nov 15 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 11.0.3-alt2
 - NMU: fixed FTBFS on LoongArch (reduced debuginfo so it fits into 4 GB).
 
