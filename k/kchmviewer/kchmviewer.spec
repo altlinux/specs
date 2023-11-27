@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
-%ifarch %e2k ppc64le
-%def_disable qtwebengine
-%else
+%ifarch %qt5_qtwebengine_arches
 %def_enable qtwebengine
+%else
+%def_disable qtwebengine
 %endif
 
 Name: kchmviewer
 Version: 8.0
-Release: alt2
+Release: alt2.1
 Summary: A CHM (Winhelp) and EPUB viewer
 License: %gpl3plus
 Group: Office
@@ -24,6 +24,7 @@ Patch4: kchmviewer-8.0-remove-debug-output.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: gcc-c++ libchm-devel libzip-devel qt5-base-devel
 BuildRequires: libXxf86misc-devel
 %if_enabled qtwebengine
@@ -73,6 +74,9 @@ install -pD -m644 packages/kchmviewer.desktop %buildroot%_desktopdir/%name.deskt
 %doc COPYING
 
 %changelog
+* Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 8.0-alt2.1
+- NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64).
+
 * Fri Jan 28 2022 Sergey V Turchin <zerg@altlinux.org> 8.0-alt2
 - build with qtwebkit instead of qtwebengine on ppc64le and e2k
 
