@@ -1,12 +1,12 @@
-%ifarch %e2k ppc64le
-%def_disable qtwebengine
-%else
+%ifarch %qt5_qtwebengine_arches
 %def_enable qtwebengine
+%else
+%def_disable qtwebengine
 %endif
 
 Name: seadrive-gui
 Version: 2.0.19
-Release: alt2
+Release: alt2.1
 
 Summary: Seafile Drive client
 
@@ -21,6 +21,7 @@ Source: %name-%version.tar
 #Requires: seadrive-daemon >= 1.0.0
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-qt5-webengine
 
 BuildRequires: cmake libsqlite3-devel libssl-devel zlib-devel libcurl-devel
 BuildRequires: qt5-imageformats qt5-tools-devel qt5-base-devel
@@ -69,6 +70,9 @@ PATH=%_qt5_bindir:$PATH %cmake_insource
 %_pixmapsdir/*
 
 %changelog
+* Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 2.0.19-alt2.1
+- NMU: use rpm-macros-qt5-webengine (fixes build on loongarch64)
+
 * Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 2.0.19-alt2
 - build with qtwebkit on ppc64le
 
