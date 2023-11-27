@@ -1,21 +1,19 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt1
+%define rel alt1.1
 
 Name: qbittorrent
 Version: 4.6.1
 Epoch: 1
 Release: %rel
 
-#ExcludeArch: ppc64le
-
 Summary: qBittorrent is a bittorrent client written in C++ / Qt5 using the good libtorrent library
 Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написанный на C++ / Qt5, использующий библиотеку libtorrent.
-Summary(uk_UA.UTF-8): qBittorrent - bittorrent-клієнт, написаний на C++ / Qt5, використовує бібліотеку libtorrent.
 License: GPLv2+
 Group: Networking/File transfer
 Url: http://qbittorrent.org
 
 Source: %name-%version.tar.gz
+Patch3500: ax_boost_base-loongarch64.patch
 
 BuildPreReq: desktop-file-utils
 
@@ -24,6 +22,7 @@ BuildRequires: gcc-c++ qt5-base-devel qt5-tools qt5-svg-devel
 BuildRequires: GeoIP-Lite-Country
 BuildRequires: libnotify-devel
 BuildRequires: zlib-devel
+BuildRequires: gnu-config
 
 %if "%rel" == "alt0.M80P"
 %define ltr libtorrent-rasterbar9-devel
@@ -48,13 +47,6 @@ qBittorrent - клиент bittorrent написанный на C++ / Qt5, ис�
 qBittorrent стремится быть хорошей альтернативой всем другим bittorrent
 клиентам. Автор Christophe Dumez, французский студент в области IT.
 
-%description -l uk_UA.UTF8
-qBittorrent - клієнт bittorrent, написаний на C++ / Qt5, використовує
-бібліотеку libtorrent-rasterbar (Arvid Nordberg). qBittorrent є вільне
-ПЗ з відкритим вихідним кодом, розповсюджується під ліцензією GNU GPL.
-qBittorrent прагне бути хорошою альтернативою всім іншим bittorrent
-клієнтам. Автор Christophe Dumez, французьський студент в області IT.
-
 %package nox
 Summary: qbittorrent version without GUI (WebUI version)
 Group: Networking/File transfer
@@ -69,14 +61,9 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 
 По умолчанию открывается порт 8080 с логином/паролем admin/adminadmin
 
-%description -l uk_UA.UTF8 nox
-Веб-інтерфейс для qbittorrent
-
-За замовчанням доступний на порту 8080 з логіном/паролем admin/adminadmin
-
 %prep
 %setup -q
-#-n qBittorrent-release-%version
+%patch3500 -p1
 
 %ifarch %e2k
 sed -i "1i #include <cstdlib>\nnamespace std { using ::aligned_alloc; }" \
@@ -92,10 +79,8 @@ sed -i -E '/inline namespace/h;/^ *Q_ENUM_NS\(/{G;s/Q_ENUM_NS/&2/;s/\)\n.*inline
 %add_optflags -std=c++14
 %endif
 
-%ifarch %e2k ppc64le riscv64
-sed -i 's,aarch64,&|riscv64|ppc64le|e2k,' m4/ax_boost_base.m4
-%endif
 ./bootstrap.sh
+cp -aft build-aux/ /usr/share/gnu-config/config.{guess,sub}
 %_configure_script --prefix=%buildroot%_usr
 %make_build
 
@@ -120,6 +105,11 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Nov 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:4.6.1-alt1.1
+- NMU: fixed FTBFS on LoongArch:
+  + use fresh config.{guess,sub}
+  + tell ax_boost_base to search libs in /usr/lib64 on LoongArch
+
 * Fri Nov 24 2023 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.1-alt1
 - 4.6.1
 - Fix invisible tray icon (Closes: #48285, #48286)
