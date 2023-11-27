@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
-%ifarch %e2k ppc64le
-%def_disable qtwebengine
-%else
+%ifarch %qt5_qtwebengine_arches
 %def_enable qtwebengine
+%else
+%def_disable qtwebengine
 %endif
 
 Name: gpsbabel
 Version: 1.7.0
-Release: alt2
+Release: alt2.1
 Summary: A tool to convert between various formats used by GPS devices
 License: GPL
 Group: Sciences/Geosciences
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 
 Patch1: %name-%version-alt.patch
 
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: libexpat-devel libusb-devel zlib-devel libminizip-devel gcc-c++
 BuildRequires: libshape-devel
 BuildRequires: qt5-base-devel qt5-tools
@@ -116,6 +117,9 @@ install -m 0644 -p gui/images/appicon.png %buildroot%_iconsdir/hicolor/256x256/a
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 1.7.0-alt2.1
+- NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64)
+
 * Fri Jan 28 2022 Sergey V Turchin <zerg@altlinux.org> 1.7.0-alt2
 - build with qtwebkit instead of qtwebengione on e2k and ppc64le
 
