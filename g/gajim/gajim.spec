@@ -5,7 +5,7 @@
 
 Name: gajim
 Version: 1.8.4
-Release: alt1
+Release: alt2
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -38,6 +38,12 @@ Obsoletes: gajim-plugin-omemo <= 2.9.0-alt1 python3-module-gajim-omemo <= 2.9.0-
 %py3_requires cairo
 
 %add_python3_req_skip winsdk.windows.ui winsdk.windows.ui.viewmanagement
+
+%ifarch %e2k
+BuildRequires: librpmconstant-devel
+Requires: librpmconstant0
+%endif
+
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools libsoup-gir-devel libgtksourceview4-gir-devel pyproject-build rpm-macros-python3 python3-module-build
@@ -117,6 +123,9 @@ end
 
 
 %changelog
+* Mon Nov 27 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8.4-alt2
+- Fix build on Elbrus
+
 * Mon Nov 27 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8.4-alt1
 - 1.8.4
 
