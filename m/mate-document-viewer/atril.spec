@@ -6,7 +6,7 @@
 
 Name: mate-document-viewer
 Version: 1.26.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Document viewer
 License: GPLv2+ and LGPLv2+ and MIT
@@ -99,8 +99,6 @@ It adds an additional tab called "Document" to the file properties dialog.
 %package thumbnailer
 Group: Graphical desktop/MATE
 Summary: Atril thumbnailer extension for caja
-Requires: mate-file-manager
-BuildArch: noarch
 
 %description thumbnailer
 This package contains the atril extension for the
@@ -136,7 +134,8 @@ find %buildroot%_libdir -name \*.la -delete
 
 %files -f %rname.lang
 %doc README.md COPYING NEWS AUTHORS
-%_bindir/*
+%_bindir/atril
+%_bindir/atril-previewer
 %_libexecdir/atrild
 %_datadir/%rname
 %_desktopdir/%rname.desktop
@@ -185,6 +184,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/caja/extensions/libatril-properties-page.caja-extension
 
 %files thumbnailer
+%_bindir/atril-thumbnailer
 %_datadir/thumbnailers/atril.thumbnailer
 
 %files devel
@@ -195,6 +195,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Nov 27 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
+- fixed requires for mate-document-viewer-thumbnailer (closes: #48498)
+
 * Thu May 04 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
 - 1.26.1
 
