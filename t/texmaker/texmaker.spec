@@ -1,6 +1,6 @@
 Name: texmaker
 Version: 5.1.4
-Release: alt1
+Release: alt1.1
 
 Summary: free cross-platform LaTeX editor with a Qt interface
 License: GPLv2+
@@ -22,9 +22,10 @@ Patch1:		%{name}-5.1.0-unbundle-hunspell.patch
 Patch2:		%{name}-5.1.0-viewfiles.patch
 
 
+BuildRequires(pre): rpm-macros-qt5-webengine
 # Automatically added by buildreq on Thu Apr 24 2008
 BuildRequires: fontconfig gcc-c++ qt5-base-devel qt5-tools-devel libpoppler-devel libpoppler-qt5-devel qt5-script-devel libhunspell-devel libqtsingleapplication-qt5-devel
-%ifnarch ppc64le %e2k
+%ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel
 %else
 BuildRequires: qt5-declarative-devel rpm-build-qml
@@ -64,6 +65,9 @@ rm -fr hunspell singleapp
 
 
 %changelog
+* Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 5.1.4-alt1.1
+- NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64)
+
 * Sun May 07 2023 Ilya Mashkin <oddity@altlinux.ru> 5.1.4-alt1
 - 5.1.4
 
