@@ -2,14 +2,16 @@
 %define pypi_name PyOpenGL
 %define modulename python3-module-%oname
 
+%def_with check
+
 Name: python3-module-pyopengl
-Version: 3.1.6
-Release: alt2.1
+Version: 3.1.7
+Release: alt1
 
 Summary: Metapackage including python modules for OpenGL library
 
 Group: Development/Python3
-License: see license.txt
+License: BSD-3-Clause
 Url: http://pyopengl.sourceforge.net
 
 # https://pypi.org/project/PyOpenGL
@@ -20,6 +22,16 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython
 BuildRequires: libnumpy-py3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pygame
+BuildRequires: libOSMesa-devel
+BuildRequires: libfreeglut-devel
+BuildRequires: xvfb-run
+%endif
 
 %description
 OpenGL bindings for Python including support for GL extensions,
@@ -69,33 +81,41 @@ find tests -type f -name '*.py' -exec \
 find accelerate/src/ -name "*.c" | xargs rm -fv
 
 %build
-%python3_build
+%pyproject_build
 pushd accelerate
-%python3_build
+%pyproject_build
 popd
 
 %install
-%python3_install
+%pyproject_install
 pushd accelerate
-%python3_install
+%pyproject_install
 popd
 
 %check
-# tests need available video device
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch:%buildroot%python3_sitelibdir
+xvfb-run -a -s "-screen 0 1024x768x24 -ac +extension GLX +render -noreset" py.test-3 tests
+xvfb-run -a -s "-screen 0 1024x768x24 -ac +extension GLX +render -noreset" py.test-3 accelerate/tests
 
 %files -n %modulename
+%doc license.txt readme.rst
 %python3_sitelibdir_noarch/%oname
-%python3_sitelibdir_noarch/Py%{oname}-*.egg-info
+%python3_sitelibdir_noarch/Py%{oname}-%version.dist-info
 %exclude %python3_sitelibdir_noarch/%oname/Tk
 
 %files -n %modulename-tk
 %python3_sitelibdir_noarch/%oname/Tk
 
 %files -n %{modulename}_accelerate
+%doc license.txt readme.rst
 %python3_sitelibdir/%{oname}_accelerate
-%python3_sitelibdir/Py%{oname}_accelerate*.egg-info
+%python3_sitelibdir/Py%{oname}_accelerate-%version.dist-info
 
 %changelog
+* Mon Nov 27 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.7-alt1
+- Build new version (Closes: #48599).
+- Build with check.
+
 * Wed Jun 14 2023 Stanislav Levin <slev@altlinux.org> 3.1.6-alt2.1
 - NMU: mapped PyPI name to distro's one.
 
