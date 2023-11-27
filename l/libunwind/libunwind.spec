@@ -1,6 +1,6 @@
 Name: libunwind
-Version: 1.6.2
-Release: alt1
+Version: 1.7.0
+Release: alt2
 
 Summary: An unwinding library
 License: MIT
@@ -53,6 +53,10 @@ make
 %_includedir/*
 
 %changelog
+* Sat Jul 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.7.0-alt2
+- Updated to 1.7.0 (set release to -alt2 so this version is newer than
+  that in sisyphus_loongarch64).
+
 * Tue Feb 08 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.2-alt1
 - Updated to 1.6.2.
 
