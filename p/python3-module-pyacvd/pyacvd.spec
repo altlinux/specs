@@ -6,7 +6,7 @@
 %define oname pyacvd
 
 Name: python3-module-%oname
-Version: 0.2.9
+Version: 0.2.10
 Release: alt1
 
 Summary: Python implementation of surface mesh resampling algorithm ACVD.
@@ -23,10 +23,9 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-hatchling
-BuildRequires: python3-module-hatch-vcs
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pyvista
-BuildRequires: python3-module-oldest-supported-numpy
+BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-scipy
 
 %description
@@ -65,6 +64,9 @@ cp -far tests/*.py %buildroot%python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Nov 23 2023 Elizaveta Morozova <morozovaes@altlinux.org> 0.2.10-alt1
+- Updated version, dependencies.
+
 * Wed Oct 18 2023 Elizaveta Morozova <morozovaes@altlinux.org> 0.2.9-alt1
 - Initial build for ALT.
 
