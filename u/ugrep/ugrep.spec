@@ -5,14 +5,15 @@
 %set_verify_elf_method strict
 
 Name: ugrep
-Version: 4.3.3
+Version: 4.3.4
 Release: alt1
 
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
 License: BSD-3-Clause
 Group: File tools
 
-Url: https://github.com/Genivia/ugrep
+Url: https://ugrep.com
+Vcs: https://github.com/Genivia/ugrep
 Source0: https://github.com/Genivia/ugrep/archive/v%version.tar.gz#/%{name}-%{version}.tar.gz
 Source100: ugrep.watch
 AutoReq: noshell
@@ -20,6 +21,7 @@ AutoReq: noshell
 BuildRequires: bzlib-devel
 BuildRequires: gcc-c++
 BuildRequires: hardlink
+BuildRequires: libbrotli-devel
 BuildRequires: liblz4-devel
 BuildRequires: liblzma-devel
 BuildRequires: libpcre2-devel
@@ -50,6 +52,7 @@ fuzzy search.
 hardlink -v %buildroot%_bindir
 
 %check
+bin/ugrep --version | bin/ugrep '^%name \Q%version\E\s'
 %make_build test
 
 %files
@@ -59,6 +62,9 @@ hardlink -v %buildroot%_bindir
 %_datadir/%name
 
 %changelog
+* Mon Nov 27 2023 Vitaly Chikunov <vt@altlinux.org> 4.3.4-alt1
+- Update to 4.3.4 (2023-11-27).
+
 * Thu Nov 16 2023 Vitaly Chikunov <vt@altlinux.org> 4.3.3-alt1
 - Update to 4.3.3 (2023-11-16).
 
