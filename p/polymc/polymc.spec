@@ -1,6 +1,6 @@
 Name: polymc
 Version: 5.1
-Release: alt3
+Release: alt4
 
 Summary: Minecraft launcher with ability to manage multiple instances
 
@@ -14,12 +14,17 @@ Source: %name-%version.tar
 # Source1-url: https://github.com/PolyMC/libnbtplusplus/archive/refs/heads/master.zip
 Source1: %name-libnbtplusplus-%version.tar
 
+# Gix build with Qt 6.6.0: https://github.com/PolyMC/PolyMC/commit/c0ca8d21cae003a476d000834b71b12fc5af5245
+Patch1: c0ca8d21cae003a476d000834b71b12fc5af5245.patch
+
 ExcludeArch: %arm
 
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: zlib-devel bzlib-devel libGLU-devel
-BuildRequires: qt6-base-devel qt6-svg-devel qt6-charts-devel qt6-5compat-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-svg-devel qt6-svg
+BuildRequires: qt6-charts-devel qt6-5compat-devel
 
 BuildRequires: cmake gcc-c++ extra-cmake-modules
 
@@ -42,6 +47,7 @@ a simple interface.
 
 %prep
 %setup -a1
+%patch1 -p1
 %__subst 's|share/jars|share/polymc/jars|' CMakeLists.txt launcher/Application.cpp
 
 %build
@@ -49,7 +55,7 @@ a simple interface.
     -DLauncher_BUILD_PLATFORM="alt" \
     -DLauncher_QT_VERSION_MAJOR="6" \
     -DLauncher_UPDATER_BASE:STRING="" \
-    -DLauncher_META_URL:STRING="https://meta.scrumplex.rocks/v1/" \
+    -DLauncher_META_URL:STRING="https://meta.polymc.org/v1" \
     %nil
 %cmake_build
 
@@ -71,6 +77,10 @@ a simple interface.
 #_datadir/qlogging-categories6/*.categories
 
 %changelog
+* Sun Nov 26 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1-alt4
+- fix META URL (ALT bug 48495)
+- fix build with Qt 6.6.0
+
 * Sun Aug 20 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1-alt3
 - fix summary, add README, set license to GPL-3.0-only
 
