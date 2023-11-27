@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 
 Summary: a Jabber client written in PyGTK
@@ -25,7 +25,7 @@ Requires: python3 >= 3.10
 %filter_from_requires /^typelib(AppIndicator3)/d
 
 Requires: libgtk+3-gir libgtksourceview4-gir
-Requires: python3-module-nbxmpp >= 4.5.2
+Requires: python3-module-nbxmpp >= 4.5.3
 Requires: typelib(AyatanaAppIndicator3)
 # gajim >= 1.8 has imcoropated OMEMO support
 Obsoletes: gajim-plugin-omemo <= 2.9.0-alt1 python3-module-gajim-omemo <= 2.9.0-alt1
@@ -39,13 +39,9 @@ Obsoletes: gajim-plugin-omemo <= 2.9.0-alt1 python3-module-gajim-omemo <= 2.9.0-
 
 %add_python3_req_skip winsdk.windows.ui winsdk.windows.ui.viewmanagement
 
-%ifarch %e2k
-BuildRequires: liblua5.3-devel rpm-macros-lua
-%endif
-
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools libsoup-gir-devel libgtksourceview4-gir-devel pyproject-build rpm-macros-python3 python3-module-build
-BuildRequires: python3-module-nbxmpp >= 4.5.2
+BuildRequires: python3-module-nbxmpp >= 4.5.3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildArch: noarch
@@ -119,13 +115,11 @@ end
 %_datadir/%name/other/*
 %_datadir/%name/gui/*
 
-#_desktopdir/%name.desktop
-#_desktopdir/%name-remote.desktop
-#_iconsdir/hicolor/scalable/apps/%name.svg
-#_iconsdir/hicolor/64x64/apps/%name.png
-#_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Mon Nov 27 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8.4-alt1
+- 1.8.4
+
 * Sat Nov 11 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8.3-alt1
 - 1.8.3
 
