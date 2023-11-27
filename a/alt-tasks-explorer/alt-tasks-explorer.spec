@@ -4,7 +4,7 @@
 
 Name: %{base}-explorer
 Version: 0.1.0
-Release: alt2
+Release: alt3
 
 Summary: A set of utils used on top of the "alt-task" utility
 License: GPLv3
@@ -51,6 +51,9 @@ cp COPYING readme.txt %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Mon Nov 27 2023 Alexey Appolonov <alexey@altlinux.org> 0.1.0-alt3
+- Edited manual.
+
 * Mon Nov 20 2023 Alexey Appolonov <alexey@altlinux.org> 0.1.0-alt2
 - Added manual.
 
