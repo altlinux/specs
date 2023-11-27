@@ -1,6 +1,6 @@
 Name: astyle
 Version: 3.1
-Release: alt2
+Release: alt3
 
 Summary: A small, fast automatic indentation filter for C/C++/Java code
 License: GPL
@@ -11,7 +11,7 @@ Source: %{name}_%{version}_linux.tar.gz
 # Make the astyle-lib usable for arduino
 Patch: astyle-arduino.patch
 
-BuildRequires: gcc-c++ java-devel-default
+BuildRequires: gcc-c++
 
 %global majorversion    3
 %global soversion       %version
@@ -61,7 +61,7 @@ chmod a-x doc/*
 
 pushd src
     # it's much easier to compile it here than trying to fix the Makefile
-    g++ %optflags -DASTYLE_LIB -DASTYLE_JNI -fPIC -I/usr/lib/jvm/java/include -I/usr/lib/jvm/java/include/linux -c ASBeautifier.cpp ASEnhancer.cpp ASFormatter.cpp ASResource.cpp astyle_main.cpp
+    g++ %optflags -DASTYLE_LIB -fPIC -c ASBeautifier.cpp ASEnhancer.cpp ASFormatter.cpp ASResource.cpp astyle_main.cpp
     g++ -shared -o libastyle.so.%soversion *.o -Wl,-soname,libastyle.so.%majorversion
     ln -s libastyle.so.%soversion libastyle.so
     g++ %optflags -c ASLocalizer.cpp astyle_main.cpp
@@ -94,6 +94,9 @@ install -p -m 644 doc/*.html %buildroot%_datadir/doc/%name/html/
 %_includedir/%name.h
 
 %changelog
+* Wed Jun 07 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.1-alt3
+- spec: removed build dependencies on java (java bindings are not built anyway)
+
 * Mon Jun 17 2019 Michael Shigorin <mike@altlinux.org> 3.1-alt2
 - E2K: explicit -std=c++11
 - minor spec cleanup
