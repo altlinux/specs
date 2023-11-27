@@ -9,7 +9,7 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.34.0
+Version: 3.34.1
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -364,6 +364,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Sat Nov 25 2023 Andrey Cherepanov <cas@altlinux.org> 3.34.1-alt1
+- New version.
+
 * Sun Oct 29 2023 Andrey Cherepanov <cas@altlinux.org> 3.34.0-alt1
 - New version.
 
