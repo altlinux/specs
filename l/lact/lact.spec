@@ -2,7 +2,7 @@
 
 Name: lact
 Version: 0.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Linux AMDGPU Control Application
 License: MIT
@@ -11,7 +11,7 @@ Group: Monitoring
 URL: https://github.com/ilya-zlobintsev/LACT
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64 aarch64 ppc64le
+ExclusiveArch: x86_64 aarch64 ppc64le loongarch64
 
 # Source-url: https://github.com/ilya-zlobintsev/LACT/archive/v%version/LACT-%version.tar.gz
 Source0: LACT-%version.tar
@@ -62,6 +62,9 @@ DESTDIR=%buildroot%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Mon Nov 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.5.0-alt1.1
+- NMU: build for LoongArch too
+
 * Sat Nov 25 2023 Nazarov Denis <nenderus@altlinux.org> 0.5.0-alt1
 - Initial build for ALT Linux
 
