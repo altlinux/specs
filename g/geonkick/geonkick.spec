@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     geonkick
-Version:  2.10.2
+Version:  3.0.0
 Release:  alt1
 
 Summary:  A free software percussion synthesizer
@@ -13,6 +13,7 @@ Url:      https://geonkick.org/
 
 Source:   %name-%version.tar
 Patch1:   geonkick-alt-linking-fixes.patch
+Patch2:   geonkick-alt-fix-build-with-unsigned-char.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: pkgconfig(RapidJSON)
@@ -78,6 +79,9 @@ This package contains Geonkick build as LV2 plugins.
 
 
 %changelog
+* Sun Nov 26 2023 Ivan A. Melnikov <iv@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Sun Oct 29 2023 Ivan A. Melnikov <iv@altlinux.org> 2.10.2-alt1
 - switch to new upstream
 - 2.10.2
