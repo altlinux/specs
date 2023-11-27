@@ -1,6 +1,6 @@
 Name: vym
 Version: 2.9.26
-Release: alt1
+Release: alt1.1
 
 Summary: QT based MindMap editor
 Url: http://www.insilmaril.de/vym/
@@ -19,11 +19,12 @@ Source1: %name.desktop
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-xdg
+BuildRequires(pre): rpm-macros-qt5-webengine
 
 # Automatically added by buildreq on Sun Oct 29 2023
 # optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libglvnd-devel libgpg-error libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel pkg-config python-modules python2-base python3 python3-base python3-dev qt5-base-devel qt5-tools sh5
 BuildRequires: cmake libdbus-devel qt5-script-devel qt5-svg-devel qt5-tools-devel
-%ifnarch %e2k ppc64le
+%ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel
 %endif
 
@@ -97,6 +98,9 @@ sed -e 's#ICONDIR#%_datadir/%name/icons#' -i %buildroot%_desktopdir/%name.deskto
 
 
 %changelog
+* Mon Nov 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.9.26-alt1.1
+- NMU: fixed FTBFS on LoongArch
+
 * Sun Nov 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.9.26-alt1
 - New version
 
