@@ -1,5 +1,5 @@
 Name: libdrm
-Version: 2.4.117
+Version: 2.4.118
 Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
@@ -89,6 +89,9 @@ Will void your warranty.
 %_bindir/*
 
 %changelog
+* Mon Nov 27 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.118-alt1
+- 2.4.118
+
 * Mon Oct 23 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.117-alt1
 - 2.4.117
 
