@@ -5,7 +5,7 @@
 
 Name: vgrep
 Version: 2.6.1
-Release: alt1
+Release: alt2
 Summary: a user-friendly pager for grep
 License: GPL-3.0
 Group: Text tools
@@ -26,7 +26,11 @@ directory trees or showing the context lines before and after the matches.
 %setup
 
 %build
-go build -v -buildmode=pie -ldflags="-X main.version=%version"
+go build -v \
+	%ifnarch loongarch64
+	-buildmode=pie \
+	%endif
+	-ldflags="-X main.version=%version"
 go-md2man -in docs/vgrep.1.md -out docs/vgrep.1
 
 %install
@@ -41,5 +45,8 @@ install -D -p -m 0644 docs/vgrep.1 %buildroot%_man1dir/vgrep.1
 %_man1dir/vgrep.1*
 
 %changelog
+* Mon Nov 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.6.1-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Sat Jun 10 2023 Vitaly Chikunov <vt@altlinux.org> 2.6.1-alt1
 - First import v2.6.1-10-g5bda867 (2023-06-05).
