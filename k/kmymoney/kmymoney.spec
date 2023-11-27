@@ -1,12 +1,12 @@
-%ifarch %e2k ppc64le
-%def_disable qtwebengine
-%else
+%ifarch %qt5_qtwebengine_arches
 %def_enable qtwebengine
+%else
+%def_disable qtwebengine
 %endif
 
 Name:    kmymoney
 Version: 5.1.3
-Release: alt3
+Release: alt3.1
 
 Summary: A Personal Finance Manager for KDE
 Summary(ru_RU.UTF-8): Учёт финансов под KDE
@@ -24,6 +24,7 @@ AutoReq: yes, noperl
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: python3-dev
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: qt5-declarative-devel
@@ -389,6 +390,9 @@ cp %SOURCE1 po/ru/kmymoney.po
 %exclude %_K5doc/en
 
 %changelog
+* Tue Nov 28 2023 Ivan A. Melnikov <iv@altlinux.org> 5.1.3-alt3.1
+- NMU: Used rpm-macros-qt5-webengine (fixes build on loongarch64).
+
 * Thu Nov 23 2023 Andrey Cherepanov <cas@altlinux.org> 5.1.3-alt3
 - Used correct macros for desktop file location (ALT #48222).
 
