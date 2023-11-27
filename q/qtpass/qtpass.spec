@@ -5,7 +5,7 @@
 
 Name:     qtpass
 Version:  1.4.0
-Release:  alt1
+Release:  alt1.1
 
 Summary: a multi-platform GUI for pass, the standard unix password manager
 Summary(ru_RU.UTF-8): кросс-платформенный интерфейс к менеджеру паролей pass
@@ -27,12 +27,13 @@ Source2: %name-32.png
 Source3: %name-48.png
 
 BuildRequires(pre): rpm-build-licenses desktop-file-utils
+BuildRequires(pre): rpm-macros-qt5-webengine
 
 
 # Automatically added by buildreq on Tue Jan 28 2020
 # optimized out: gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libqt5-core libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-modules python2-base python3 python3-base python3-dev qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel ruby ruby-stdlibs sh4
 BuildRequires: kf5-kwallet-devel python3-module-mpl_toolkits qt5-multimedia-devel qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
-%ifnarch %e2k ppc64le
+%ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel
 %endif
 
@@ -107,6 +108,9 @@ install -D -m0644 -- qtpass.appdata.xml %buildroot%_datadir/appdata/%name.appdat
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 1.4.0-alt1.1
+- NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64)
+
 * Sun Oct 29 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.4.0-alt1
 - New version
 - ppc64le: avoid webengine (missing)
