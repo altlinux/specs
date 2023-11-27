@@ -19,7 +19,7 @@
 
 Name: nvidia_glx_libs
 Version: 535.129.03
-Release: alt1
+Release: alt1.1
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -195,6 +195,10 @@ install -m 0644 nvidia-smi.1.gz %buildroot/%_man1dir/
 %endif
 mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
 install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
+# fixing the work of CUDA rendering in DaVinci Resolve without nvidia-cuda-toolkit
+ln -s libcuda.so.%version %buildroot%_libdir/libcuda.so
+ln -s libnvcuvid.so.%version %buildroot%_libdir/libnvcuvid.so
+ln -s libnvidia-encode.so.%version %buildroot%_libdir/libnvidia-encode.so
 
 %files -n ocl-nvidia
 %files -n libnvidia-ptxjitcompiler
@@ -206,6 +210,7 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %files -n libcuda
 %_libdir/libcuda.so.%{nvidia_sover}
 %_libdir/libcuda.so.%version
+%_libdir/libcuda.so
 %files -n libnvidia-opencl
 %_libdir/libnvidia-opencl.so.%{nvidia_sover}
 %_libdir/libnvidia-opencl.so.%version
@@ -213,9 +218,11 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %files -n libnvcuvid
 %_libdir/libnvcuvid.so.%{nvidia_sover}
 %_libdir/libnvcuvid.so.%version
+%_libdir/libnvcuvid.so
 %files -n libnvidia-encode
 %_libdir/libnvidia-encode.so.%{nvidia_sover}
 %_libdir/libnvidia-encode.so.%version
+%_libdir/libnvidia-encode.so
 %files -n libnvidia-nvvm
 %_libdir/libnvidia-nvvm.so.%{nvvm_sover}
 %_libdir/libnvidia-nvvm.so.%version
@@ -246,6 +253,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %endif
 
 %changelog
+* Thu Nov 23 2023 Mikhail Tergoev <fidel@altlinux.org> 535.129.03-alt1.1
+- NMU: fixing the work of CUDA rendering in DaVinci Resolve without nvidia-cuda-toolkit
+
 * Fri Nov 03 2023 Sergey V Turchin <zerg@altlinux.org> 535.129.03-alt1
 - new version
 
