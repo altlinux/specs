@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/pdftotext
 
 Name: csync2
 Version: 2.0
-Release: alt2
+Release: alt3
 
 Summary: Csync2 is a cluster synchronization tool
 
@@ -19,6 +19,7 @@ Source2: %name.init
 Source3: csync2.socket
 Source4: csync2@.service
 Source5: gen-cert
+Patch0: %name-%version-%release.patch
 
 # Automatically added by buildreq on Fri Mar 31 2006
 BuildRequires: flex libgnutls-openssl-devel librsync-devel libtasn1-devel libsqlite3-devel xpdf-utils
@@ -36,6 +37,7 @@ much more than just 2 hosts, handle file deletions and can detect conflicts.
 
 %prep
 %setup
+%patch0 -p1
 %ifarch %e2k
 # name collision with existing function from "string.h"
 sed -i "s/strlcpy/rsync_strlcpy/" rsync.c
@@ -83,6 +85,9 @@ touch %buildroot/etc/%name/csync2_ssl_key.pem
 %ghost /etc/%name/csync2_ssl_key.pem
 
 %changelog
+* Mon Nov 27 2023 Anton Farygin <rider@altlinux.ru> 2.0-alt3
+- added commits from upstream git (Fixes: CVE-2019-15522, CVE-2019-15523)
+
 * Fri Feb 17 2023 Anton Farygin <rider@altlinux.ru> 2.0-alt2
 - Fixed so-names for libpq and libsqlite3 (closes: #42567)
 
