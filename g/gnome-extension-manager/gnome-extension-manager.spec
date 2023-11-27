@@ -1,6 +1,6 @@
 Name: gnome-extension-manager
-Version: 0.4.2
-Release: alt3
+Version: 0.4.3
+Release: alt1
 
 Summary: A utility for browsing and installing GNOME Shell Extensions
 License: GPL-3.0
@@ -54,9 +54,12 @@ With Extension Manager you can:
 %_datadir/applications/*.desktop
 %_datadir/glib-2.0/schemas/com.mattjakeman.ExtensionManager.gschema.xml
 %_datadir/icons/*/*/*/*.svg
-%_datadir/metainfo/*.appdata.xml
+%_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Mon Nov 27 2023 Roman Alifanov <ximper@altlinux.org> 0.4.3-alt1
+- new version 0.4.3 (with rpmrb script)
+
 * Thu Jul 20 2023 Roman Alifanov <ximper@altlinux.org> 0.4.2-alt3
 - renaming package because old name was not specified
 
