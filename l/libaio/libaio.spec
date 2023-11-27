@@ -1,6 +1,6 @@
 Name: libaio
 Version: 0.3.113
-Release: alt1
+Release: alt2
 
 Summary: Linux-native asynchronous I/O access library
 License: LGPLv2+
@@ -61,6 +61,9 @@ the Linux-native asynchronous I/O facility ("async I/O", or "aio").
 %_libdir/*.a
 
 %changelog
+* Tue Sep 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.3.113-alt2
+- Suppressed faulty test on LoongArch
+
 * Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 0.3.113-alt1
 - new version 0.3.113
 
