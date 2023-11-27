@@ -30,6 +30,7 @@
 %def_enable lc3
 #system service: not recommended and disabled by default
 %def_disable systemd_system_service
+%def_enable selinux
 # disabled by default
 %def_disable vulkan
 %ifarch %e2k
@@ -43,7 +44,7 @@
 
 Name: pipewire
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -60,6 +61,7 @@ Source: %name-%version.tar
 # 0.4.1-15
 Source1: media-session-%ms_ver.tar
 Patch: %name-0.3.19-alt-rpath.patch
+Patch1: %name-1.0.0-alt-fix-build-examples.patch
 
 Requires: %name-libs = %EVR
 %{?_enable_wireplumber:Requires: wireplumber}
@@ -104,6 +106,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
 %{?_enable_lv2:BuildRequires: liblilv-devel}
 %{?_enable_libcanberra:BuildRequires: libcanberra-devel}
+%{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_docs:BuildRequires: doxygen graphviz fonts-otf-adobe-source-sans-pro fonts-ttf-google-droid-sans}
 %{?_enable_man:BuildRequires: doxygen}
 %{?_enable_check:BuildRequires: /proc gcc-c++ libcap-devel}
@@ -184,6 +187,7 @@ This package provides development files for PipeWire JACK.
 
 %prep
 %setup -a1
+%patch1 -p1 -b .ex
 %ifarch %e2k
 # no attribute cleanup in C++ mode, but it's only used in C sources
 sed -i '1i #ifndef __cplusplus' spa/include/spa/utils/cleanup.h
@@ -210,6 +214,7 @@ export LIB=%_lib
 	%{?_disable_libcanberra:-Dlibcanberra=disabled} \
 	%{?_enable_lc3:-Dbluez5-codec-lc3=enabled} \
 	%{?_disable_systemd:-Dsystemd=disabled} \
+	%{?_disable_selinux:-Dselinux=disabled} \
 	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
 	%{?_disable_examples:-Dexamples=disabled} \
 	-Dsession-managers='media-session'
@@ -398,6 +403,11 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Mon Nov 27 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2
+- rebuild against libopus with custom modes enabled
+- enabled selinux support
+- fixed build with -Dexamples=disabled
+
 * Sun Nov 26 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
