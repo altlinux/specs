@@ -32,7 +32,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.6.0
-Release: alt2
+Release: alt3
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -54,6 +54,10 @@ Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
 Patch3: qtbase-tell-the-truth-about-private-API.patch
 Patch4: qtbase-use-qgnomeplatform-as-default-platform-theme-on-gnome.patch
 Patch5: qtbase-libxkbcommon-1.6.0.patch
+# Debian
+Patch100: remove_rpath_from_examples.patch
+Patch101: be_verbose_on_plugin_inclusion.patch
+Patch102: enable_skip_plugins.patch
 # ALT
 Patch1000: alt-timezone.patch
 Patch1001: alt-zonetab.patch
@@ -372,6 +376,11 @@ OpenGL widgets library for the Qt%major toolkit
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+#
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
+#
 %patch1000 -p1
 %patch1001 -p1
 %patch1002 -p1
@@ -819,6 +828,10 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Nov 28 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt3
+- remove rpath from examples
+- turn off build dependencies on plugins by default
+
 * Wed Nov 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt2
 - fix build docs
 
