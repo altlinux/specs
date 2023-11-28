@@ -44,7 +44,7 @@
 
 Name: pipewire
 Version: %ver_major.0
-Release: alt2
+Release: alt2.1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -192,6 +192,8 @@ This package provides development files for PipeWire JACK.
 # no attribute cleanup in C++ mode, but it's only used in C sources
 sed -i '1i #ifndef __cplusplus' spa/include/spa/utils/cleanup.h
 echo -e "\n#else\n#define SPA_DEFINE_AUTO_CLEANUP(...)\n#endif" >> spa/include/spa/utils/cleanup.h
+sed -i -E 's/static const char \*const (.*) =/#define \1 /;T;:a;s/;$//;t;s/$/\\/;n;ba' \
+    src/modules/module-protocol-pulse/modules/module-*.c
 %endif
 
 mv media-session-%ms_ver subprojects/media-session
@@ -403,6 +405,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Tue Nov 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2.1
+- E2K: ftbfs workaround by ilyakurdyukov@ (mcst#8330, #8500)
+
 * Mon Nov 27 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2
 - rebuild against libopus with custom modes enabled
 - enabled selinux support
