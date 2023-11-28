@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: psi-plus
-Version: 1.5.1627
+Version: 1.5.1653
 Release: alt1
 
 Summary: Psi+ Jabber client
@@ -729,6 +729,9 @@ rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp,skins,noughtsandc
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Tue Nov 28 2023 Oleg Solovyov <mcpain@altlinux.org> 1.5.1653-alt1
+- Version 1.5.1653
+
 * Tue May 24 2022 Oleg Solovyov <mcpain@altlinux.org> 1.5.1627-alt1
 - Version 1.5.1627
 
