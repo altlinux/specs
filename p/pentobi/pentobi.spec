@@ -1,6 +1,6 @@
 Name: pentobi
 Version: 21.0
-Release: alt1
+Release: alt1.1
 
 Summary: A computer program that plays the board game Blokus
 
@@ -12,12 +12,13 @@ Url: https://pentobi.sourceforge.io
 Source: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-qt5-webengine
 
 # Automatically added by buildreq on Wed Jun 15 2022
 # optimized out: cmake-modules dconf fontconfig gcc-c++ glib-networking glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libcairo-gobject libgdk-pixbuf libglvnd-devel libgpg-error libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickcontrols2 libqt5-quicktemplates2 libsasl2-3 libssl-devel libstdc++-devel python3 python3-base python3-module-libxml2 qt5-base-devel qt5-declarative-devel qt5-tools sh4 shared-mime-info xml-common
 BuildRequires: cmake docbook-style-xsl itstool libGConf libappstream-glib-devel libgtk+3-devel libpolkit-devel librsvg-utils qt5-imageformats qt5-quickcontrols2-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel xsltproc
 
-%ifnarch ppc64le
+%ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel
 %endif
 
@@ -54,6 +55,9 @@ mkdir -p %buildroot%_sysconfdir
 %_mandir/*/man6/*
 
 %changelog
+* Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 21.0-alt1.1
+- NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64)
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 21.0-alt1
 - Autobuild version bump to 21.0
 - Fix ppc build
