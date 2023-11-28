@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 45
 %define beta %nil
@@ -11,7 +11,7 @@
 
 Name: gnome-initial-setup
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: GNOME Initial Setup
 Group: Graphical desktop/GNOME
@@ -46,11 +46,11 @@ Source: %name-%version%beta.tar
 # to avoid conflict between webki2gtk{4.1,6.0}-debuginfo
 %add_debuginfo_skiplist %_libexecdir/*
 
-Requires: dconf geoclue2 >= %geoclue_ver
+Requires: gdm dconf geoclue2 >= %geoclue_ver
 Requires: gsettings-desktop-schemas >= %gsds_ver
 Requires: ibus gnome-keyring tecla
-Requires: gnome-getting-started-docs
 Requires: gnome-tour
+Requires: shadow-utils
 %{?_enable malcontent:Requires: malcontent >= %malcontent_ver}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
@@ -120,6 +120,10 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Tue Nov 28 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt2
+- 45.0-11-gdcd515ca (updated translations)
+- fixed runtime dependencies
+
 * Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
