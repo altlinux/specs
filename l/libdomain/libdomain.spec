@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libdomain
-Version: 0.9.1
+Version: 0.9.5
 Release: alt1
 
 Summary: Libdomain library provides ability to manipulate LDAP entries.
@@ -70,6 +70,11 @@ install -v -p -m 644 -D %_builddir/%name-%version/src/*.h %buildroot%_includedir
 %_bindir/*
 
 %changelog
+* Tue Nov 28 2023 Vladimir Rubanov <august@altlinux.org> 0.9.5-alt1
+- Fixes:
+  + Implement initial samba support.
+  + Implement test suite for samba.
+
 * Mon Nov 20 2023 Vladimir Rubanov <august@altlinux.org> 0.9.1-alt1
 - Fixes:
   + Fix user blocking and unblocing in OpenLDAP 2.6.
