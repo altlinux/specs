@@ -4,7 +4,7 @@
 
 Name: python3-module-%mod_name
 Version: 9.0.0
-Release: alt1
+Release: alt2
 Summary: Get CPU info with pure Python
 License: MIT
 Group: Development/Python3
@@ -13,6 +13,7 @@ Vcs: https://github.com/workhorsy/py-cpuinfo
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch3500: 0001-Add-support-for-LoongArch.patch
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 Conflicts: python-module-%mod_name <= 3.3.0-alt2
@@ -30,6 +31,7 @@ any compilation(C/C++, assembly, et cetera) to use. It works with Python 3.
 
 %prep
 %setup
+%patch3500 -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -49,6 +51,9 @@ any compilation(C/C++, assembly, et cetera) to use. It works with Python 3.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Aug 13 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 9.0.0-alt2
+- Added LoongArch support.
+
 * Tue May 02 2023 Stanislav Levin <slev@altlinux.org> 9.0.0-alt1
 - 8.0.0 -> 9.0.0.
 
