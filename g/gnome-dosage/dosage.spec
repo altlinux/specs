@@ -3,13 +3,13 @@
 
 %define _name dosage
 %define __name Dosage
-%define ver_major 1.2
+%define ver_major 1.4
 %define rdn_name io.github.diegopvlk.Dosage
 
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Dosage
@@ -35,7 +35,7 @@ Requires: typelib(Xdp) = 1.0
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson /usr/bin/gjs
 BuildRequires: blueprint-compiler >= %bp_ver typelib(Adw)
-%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Keep track of your treatments.
@@ -73,6 +73,9 @@ Features:
 %doc README*
 
 %changelog
+* Tue Nov 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Sat Nov 18 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
