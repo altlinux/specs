@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 387
+%define centos_release 390
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -659,6 +659,45 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Nov 28 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.390-alt1.el9
+- Updated to kernel-5.14.0-390.el9 (fixes: CVE-2023-45871):
+  + ARM TLB Invalidate ASID improvements
+  + CNB94: net: add missing includes and forward declarations under net/
+  + EDAC: add support for Granite Rapids
+  + Memory: Architectural Linear Address Masking (LAM)
+  + Merge branch 'c9s-iommu' into RHEL-11561
+  + Merge branch 'pci-sac' into RHEL-11561
+  + Merge branch 'rhel9.4-vfio' into RHEL-11561
+  + RHEL-9.4 P1 Bond stable backport
+  + RHEL-9.4 P1 Selftest stable backport
+  + Revert "KVM: s390: selftests: Add selftest for single-stepping"
+  + Update userspace / kernel rv to latest upstream kernel
+  + bpf: Change syscall_nr type to int in struct syscall_tp_t
+  + bpf: update to 6.5
+  + driver/base/cpu: Retry online operation if -EBUSY
+  + ext4: fix racy may inline data check in dio write
+  + fbdev/simplefb: Support memory-region & power-domains
+  + gfs2: Fix another freeze/thaw hang
+  + igb: set max size RX buffer when store bad packet is enabled
+  + lpfc updates, patch sets 14.2.0.13 and 14.2.0.14 for centos-9
+  + macsec: backports from upstream
+  + mptcp: rebase to Linux 6.7
+  + net-core: stable backports for 9.4 phase 1
+  + net/other: phase-1 backports for RHEL-9.4
+  + net/sched: phase-1 backports for RHEL-9.4
+  + net: backport drop reason related patches
+  + nvme-auth: use chap->s2 to indicate bidirectional authentication
+  + ovs: P1 backports from upstream
+  + perf: sync with upstream v6.6
+  + sched/fair: Make the BW replenish timer expire in hardirq context for PREEMPT_RT
+  + scsi: qedf: update qedf driver to latest upstream
+  + scsi: qedi: update qedi driver to latest upstream
+  + scsi: qla2xxx: update qla2xxx driver to latest upstream
+  + tcp: allow again tcp_disconnect() when threads are waiting
+  + tcp: enforce receive buffer memory limits by allowing the tcp window to shrink
+  + tipc: backports from upstream
+  + xfrm: backports from upstream
+
 * Tue Nov 21 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.387-alt1.el9
 - Updated to kernel-5.14.0-387.el9 (fixes: CVE-2023-1192, CVE-2023-20569, CVE-2023-20588, CVE-2023-20593, CVE-2023-28866, CVE-2023-31083, CVE-2023-3567, CVE-2023-3812, CVE-2023-40283, CVE-2023-42753, CVE-2023-5178):
   + Bluetooth: hci_ldisc: check HCI_UART_PROTO_READY flag in HCIUARTGETPROTO
