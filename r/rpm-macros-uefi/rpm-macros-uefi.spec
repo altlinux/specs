@@ -1,5 +1,5 @@
 Name: rpm-macros-uefi
-Version: 0.6
+Version: 0.7
 Release: alt2
 
 Summary: A set of RPM macros to help package UEFI related things
@@ -15,7 +15,9 @@ Url: http://www.altlinux.org/UEFI
 Summary: macros and tools to help package UEFI related things
 Group: Development/Other
 Requires: rpm-macros-uefi = %EVR
+%ifnarch loongarch64
 Requires: pesign
+%endif
 
 %description -n rpm-macros-uefi
 This package carries helpful macros to package UEFI binaries.
@@ -44,6 +46,9 @@ cat > %buildroot%macrofile << EOF
 %ifarch aarch64
 %%_efi_arch aa64
 %endif
+%ifarch loongarch64
+%%_efi_arch loongarch64
+%endif
 EOF
 
 %files -n rpm-macros-uefi
@@ -52,6 +57,12 @@ EOF
 %files -n rpm-build-uefi
 
 %changelog
+* Tue Nov 28 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.7-alt2
+- added %%_efi_arch definition for loongarch64
+- do NOT require pesing on LoongArch (restricted boot is not available)
+- note: release is -alt2 so this version is newer than the one in
+  sisyphus_loongarch64
+
 * Sat Apr 16 2022 Igor Vlasenko <viy@altlinux.org> 0.6-alt2
 - NMU: moved deps to rpm-build-uefi
 
