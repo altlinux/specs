@@ -3,7 +3,7 @@
 
 Name: scratch-desktop
 Version: 3.30.5
-Release: alt1
+Release: alt2
 
 Group: Education
 License: BSD-3-Clause
@@ -20,6 +20,7 @@ Source1: node_modules.tar
 Source2: static.tar
 Source3: scratch-desktop.desktop
 Source4: scratch-microbit.hex.zip
+Source5: scratch-desktop.xml
 
 Patch1: 0001-Fix-package-build.patch
 Patch2: 0002-Fix-launch-application.patch
@@ -103,6 +104,9 @@ install -D -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 mkdir -p %buildroot%_libdir/electron4/resources/static/
 cp -a static/* %buildroot%_libdir/electron4/resources/static/
 
+# Create the mime-type for *.sb3
+install -Dm0644 %SOURCE5 %buildroot%_datadir/mime/packages/%name.xml
+
 %files
 %doc LICENSE TRADEMARK README.md
 %scratch_installdir/
@@ -112,8 +116,13 @@ cp -a static/* %buildroot%_libdir/electron4/resources/static/
 %_libdir/electron4/resources/static
 %exclude %dir %_libdir/electron4
 %exclude %dir %_libdir/electron4/resources
+%_datadir/mime/packages/%name.xml
 
 %changelog
+* Tue Nov 28 2023 Andrey Cherepanov <cas@altlinux.org> 3.30.5-alt2
+- Added MIME type for Scratch Desktop projects *.sb3.
+- Added pass opened file name to application desktop file.
+
 * Fri Nov 24 2023 Andrey Cherepanov <cas@altlinux.org> 3.30.5-alt1
 - New version.
 - Build only for x86_64 and aarch64.
