@@ -2,7 +2,7 @@
 
 Name: libEMF
 Version: 1.0.13
-Release: alt1
+Release: alt2
 
 Summary: A library for generating Enhanced Metafiles
 License: LGPLv2+ and GPLv2+
@@ -11,6 +11,7 @@ Group: System/Libraries
 Url: http://libemf.sourceforge.net
 Source0: http://downloads.sourceforge.net/libemf/libemf-%version.tar.gz
 Source1: libEMF.watch
+Patch3500: 0001-winnt.h-added-dummy-CONTEXT-struct-for-LoongArch.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Dec 13 2009
@@ -65,6 +66,7 @@ libEMF static files.
 
 %prep
 %setup -n libemf-%version
+%patch3500 -p1
 
 %build
 %autoreconf
@@ -96,6 +98,9 @@ make check
 %endif
 
 %changelog
+* Sat Sep 23 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.0.13-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Sun Jun 14 2020 Michael Shigorin <mike@altlinux.org> 1.0.13-alt1
 - new version (watch file uupdate)
 
