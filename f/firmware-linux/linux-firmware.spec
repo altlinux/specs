@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20231120
+Version: 20231128
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -57,7 +57,7 @@ firmware for LiquidIO II Smart NICs
 %patch -p1
 
 %install
-DESTDIR=%buildroot FIRMWAREDIR=lib/firmware make install
+DESTDIR=%buildroot FIRMWAREDIR=lib/firmware make install-nodedup
 hardlink -cv %buildroot/lib/firmware
 
 ## *TODO* check these too
@@ -76,6 +76,25 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Nov 28 2023 Anton Midyukov <antohami@altlinux.org> 20231128-alt1
+- configuration changes:
+  + Revert "copy-firmware.sh: do'nt require rdfind";
+  + spec: make install-nodedup
+- upstream changes (GIT 5aadb590):
+  + rtl_bt: Update RTL8852A BT USB firmware to 0xDFC8_145F (thx Hilda Wu)
+  + ice: update ice DDP wireless_edge package to 1.3.13.0 (thx Przemek Kitszel)
+  + update firmware for mediatek bluetooth chip (MT7922) (thx Chris Lu)
+  + update firmware for mediatek bluetooth chip (MT7921) (thx Chris Lu)
+  + update firmware for MT7922 WiFi device (thx Deren Wu)
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+  + Makefile, copy-firmware: Use portable "command -v" to detect
+    installed programs (thx Eli Schwartz)
+  + amdgpu: update DMCUB firmware to 0.0.194.0 for DCN321 and DCN32 (thx Tom Chung)
+  + powervr: add firmware for Imagination Technologies AXE-1-16M GPU (thx Frank Binns)
+  + ice: update ice DDP comms package to 1.3.45.0 (thx Przemek Kitszel)
+  + ice: update ice DDP package to 1.3.35.0 (thx Przemek Kitszel)
+  + mediatek: Remove an unused packed library (thx Jason Chen)
+
 * Tue Nov 21 2023 Cronbuild Service <cronbuild@altlinux.org> 20231120-alt1
 - upstream changes (GIT 9552083a):
   + mediatek: Sync shared memory structure changes (thx Jason Chen)
