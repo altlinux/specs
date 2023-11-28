@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.25.1
+Version: 2.25.2
 Release: alt1
 Summary: A set of server components for JupyterLab and JupyterLab like applications
 License: BSD-3-Clause
@@ -59,6 +59,9 @@ sed -i 's/--doctest-modules//' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Nov 28 2023 Anton Vyatkin <toni@altlinux.org> 2.25.2-alt1
+- New version 2.25.2.
+
 * Thu Nov 09 2023 Anton Vyatkin <toni@altlinux.org> 2.25.1-alt1
 - New version 2.25.1.
 

@@ -8,8 +8,8 @@
 %def_with check
 
 Name: ipython3
-Version: 8.17.2
-Release: alt1.1
+Version: 8.18.1
+Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -222,6 +222,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Tue Nov 28 2023 Anton Vyatkin <toni@altlinux.org> 8.18.1-alt1
+- New version 8.18.1.
+
 * Mon Nov 13 2023 Mikhail Gordeev <obirvalger@altlinux.org> 8.17.2-alt1.1
 - NMU: Add requires to pickleshare to fix exception after %%rehashx.
 
