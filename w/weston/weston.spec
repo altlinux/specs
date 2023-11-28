@@ -120,7 +120,7 @@
 %def_disable check
 
 Name: weston
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Reference compositor for Wayland
@@ -199,7 +199,7 @@ This package contains Weston compositor libraries.
 %package -n lib%name-devel
 Summary: Development libraries for weston
 Group: Development/C
-Requires: %name = %EVR
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Header and Library files for doing development with the weston.
@@ -217,6 +217,7 @@ Header and Library files for doing development with the weston.
 Summary: Development files for weston
 Group: Development/C
 Requires: %name = %EVR
+Requires: lib%name-devel = %EVR
 
 %description devel
 Header files for doing development with the weston.
@@ -324,6 +325,9 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Wed Nov 29 2023 Yuri N. Sedunov <aris@altlinux.org> 12.0.3-alt1
+- 12.0.3
+
 * Sun Aug 06 2023 Yuri N. Sedunov <aris@altlinux.org> 12.0.2-alt1
 - 12.0.2
 
