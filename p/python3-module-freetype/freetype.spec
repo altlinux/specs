@@ -1,8 +1,8 @@
 %define oname freetype
 
 Name: python3-module-%oname
-Version: 2.1.0.post1
-Release: alt2
+Version: 2.4.0
+Release: alt1
 
 Summary: Freetype python bindings
 License: BSD
@@ -16,10 +16,15 @@ Source: %name-%version.tar
 Patch1: %oname-1.1-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: pyinstaller
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: libfreetype
+
+BuildRequires: /proc
 
 Requires: lib%oname
 
@@ -55,10 +60,12 @@ This package contains documentation for %oname.
 sed -i 's|sphinx-build|&-3|' doc/Makefile
 
 %build
-%python3_build_debug
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_install
 
 %make -C doc pickle
 %make -C doc html
@@ -66,7 +73,7 @@ sed -i 's|sphinx-build|&-3|' doc/Makefile
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-%__python3 setup.py test
+%tox_check_pyproject
 
 %files
 %doc *.rst *.txt
@@ -80,6 +87,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc examples doc/_build/html
 
 %changelog
+* Tue Nov 28 2023 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
+- Build new version (Closes: #48597).
+
 * Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.1.0.post1-alt2
 - Build for python2 disabled.
 
