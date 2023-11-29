@@ -4,7 +4,7 @@
 %def_disable domU
 
 Name: kernel-image-rpi-def
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_need_version	5.15
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -264,6 +264,18 @@ find arch/%arch_dir/boot/dts -type f -name \*.dtb | xargs -iz install -pm0644 z 
 mkdir -p %buildroot/lib/devicetree/$KernelVer/overlays
 find -L arch/%arch_dir/boot/dts/overlays -type f -name \*.dtbo | xargs -iz install -pm0644 z %buildroot/lib/devicetree/$KernelVer/overlays
 
+Vendors="
+	allwinner
+	rockchip
+"
+for vendor in $Vendors; do
+	mkdir -p %buildroot/lib/devicetree/$KernelVer/"$vendor"
+	find arch/%arch_dir/boot/dts/"$vendor" -type f -name \*.dtb | xargs -iz install -pm0644 z %buildroot/lib/devicetree/$KernelVer/"$vendor"
+
+	mkdir -p %buildroot/lib/devicetree/$KernelVer/"$vendor"/overlay
+	find -L arch/%arch_dir/boot/dts/"$vendor"/overlay -type f -name \*.dtbo | xargs -iz install -pm0644 z %buildroot/lib/devicetree/$KernelVer/"$vendor"/overlay
+done
+
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
 install -d %buildroot%kbuild_dir
 cp -a include %buildroot%kbuild_dir/include
@@ -450,6 +462,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Nov 10 2023 Dmitry Terekhin <jqt4@altlinux.org> 1:5.15.92-alt2
+- Fix dtb packaging
+
 * Tue Nov 07 2023 Dmitry Terekhin <jqt4@altlinux.org> 1:5.15.92-alt1
 - Updated to 5.15.92
 - https://github.com/raspberrypi/linux.git rpi-5.15.y commit 14b35093ca68bf2c81bbc90aace5007142b40b40
