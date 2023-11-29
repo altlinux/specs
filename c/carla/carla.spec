@@ -7,7 +7,7 @@
 %filter_from_requires '/^python3\(modtools/d'
 
 Name: carla
-Version: 2.5.4
+Version: 2.5.7
 Release: alt1
 
 Summary: A featureful audio plugin host
@@ -125,6 +125,9 @@ make features # log build configuration
 %_pkgconfigdir/carla-*.pc
 
 %changelog
+* Mon Nov 27 2023 Arseny Maslennikov <arseny@altlinux.org> 2.5.7-alt1
+- 2.5.4 -> 2.5.7.
+
 * Fri Jun 23 2023 Arseny Maslennikov <arseny@altlinux.org> 2.5.4-alt1
 - 2.4.3 -> 2.5.4.
 
