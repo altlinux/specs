@@ -1,59 +1,29 @@
-%define tarver 1.9.0-49
+%define tarver 1.9.0-69
 %define mainver %( echo %tarver | sed 's/-.*//' )
 %define soname  0
 
 %def_with cocoa
 
 Name: giac
-Version: 1.9.0.49
+Version: 1.9.0.69
 Release: alt1
 
 Summary: Computer algebra system
 
 License: GPL-3.0+
 Group: Sciences/Mathematics
-Url: http://www-fourier.ujf-grenoble.fr/~parisse/giac.html
+Url: https://www-fourier.ujf-grenoble.fr/~parisse/giac.html
 
-Source: http://www-fourier.ujf-grenoble.fr/~parisse/debian/dists/stable/main/source/giac_%tarver.tar.gz
+# Source-url: https://www-fourier.ujf-grenoble.fr/~parisse/debian/dists/stable/main/source/giac_%tarver.tar.gz
+Source: %name-%version.tar.gz
 
 # Some files is not compiled with -fpic/-fPIC on armh and ppc64le.
 ExcludeArch: armh ppc64le
 
-BuildRequires: bison
-BuildRequires: libblas-devel
-BuildRequires: byacc
-BuildRequires: flex
-BuildRequires: libfltk-devel
-BuildRequires: gcc-c++
+BuildRequires: flex gcc-c++ libXft-devel libXinerama-devel libblas-devel libcurl-devel libecm-devel libfltk-devel libgfortran-devel libglpk-devel libgsl-devel libjpeg-devel liblapack-devel libmpfi-devel libntl-devel libreadline-devel libsamplerate-devel nauty-devel pari-devel
 %ifnarch %e2k
 BuildRequires: gcc-fortran
 %endif
-BuildRequires: libglpk-devel
-BuildRequires: libgmp-devel
-BuildRequires: libecm-devel
-BuildRequires: hicolor-icon-theme
-BuildRequires: liblapack-devel
-BuildRequires: latex2html
-BuildRequires: libjpeg-devel
-BuildRequires: libmpfi-devel
-BuildRequires: libmpfr-devel
-BuildRequires: nauty-devel
-BuildRequires: libntl-devel
-BuildRequires: pari-devel
-BuildRequires: libreadline-devel
-BuildRequires: shared-mime-info
-BuildRequires: texlive
-BuildRequires: fontconfig-devel
-BuildRequires: libgio-devel
-BuildRequires: libglvnd-devel
-BuildRequires: libgsl-devel
-BuildRequires: libcurl-devel
-BuildRequires: libpng-devel
-BuildRequires: libsamplerate-devel
-BuildRequires: libX11-devel
-BuildRequires: libXext-devel
-BuildRequires: libXft-devel
-BuildRequires: libXinerama-devel
 %if !%{with cocoa}
 BuildRequires: libao-devel
 %endif
@@ -101,7 +71,7 @@ This document describes the basic structure and provides information on
 usage of giac, a computer algebra system.
 
 %prep
-%setup -n %name-%mainver
+%setup
 %ifarch %e2k
 # name collision
 sed -i "/gen _compare/i #undef __compare" src/misc.cc
@@ -222,6 +192,10 @@ rm %buildroot%_docdir/giac/Makefile.am
 %_docdir/giac/*/
 
 %changelog
+* Wed Nov 29 2023 Leontiy Volodin <lvol@altlinux.org> 1.9.0.69-alt1
+- New version.
+- Cleanup BRs.
+
 * Tue Jun 13 2023 Leontiy Volodin <lvol@altlinux.org> 1.9.0.49-alt1
 - New version.
 
