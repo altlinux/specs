@@ -7,7 +7,7 @@
 
 Name: fish
 Version: 3.6.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -47,6 +47,9 @@ for f in $(find share/tools -type f -name '*.py'); do
     sed -i -e '1{s@^#!.*@#!%{__python3}@}' "$f"
 done
 
+%ifarch %e2k
+sed -i 's/(\*handle_flag_q)>/(handle_flag_q)*>/' src/builtins/path.cpp
+%endif
 
 %build
 %cmake -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir
@@ -84,6 +87,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Wed Nov 29 2023 Michael Shigorin <mike@altlinux.org> 3.6.1-alt1.2
+- E2K: lcc 1.26.20 ftbfs workaround by ilyakurdyukov@ (mcst#8502)
+
 * Sat May 27 2023 Alexey Shabalin <shaba@altlinux.org> 3.6.1-alt1.1
 - disable tests for arm32
 
