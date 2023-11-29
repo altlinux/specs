@@ -4,7 +4,7 @@
 %define _libexecdir /usr/libexec
 
 Name: flannel
-Version: 0.22.3
+Version: 0.23.0
 Release: alt1
 
 Summary: flannel is a network fabric for containers
@@ -58,6 +58,9 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Wed Nov 29 2023 Alexander Stepchenko <geochip@altlinux.org> 0.23.0-alt1
+- 0.22.3 -> 0.23.0
+
 * Wed Oct 04 2023 Alexander Stepchenko <geochip@altlinux.org> 0.22.3-alt1
 - 0.22.0 -> 0.22.3
 
