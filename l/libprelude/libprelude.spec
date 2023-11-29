@@ -17,7 +17,7 @@ Group: System/Libraries
 
 Name:           libprelude
 Version:        5.2.0
-Release:        alt1_13
+Release:        alt1_14
 Summary:        Secure Connections between all Sensors and the Prelude Manager
 License:        LGPL-2.1+
 URL:            https://www.prelude-siem.org/
@@ -49,6 +49,7 @@ Patch11:        libprelude-5.2.0-ruby27.patch
 Patch12:        libprelude-5.2.0-clean_libprelude-config.patch
 # #1973946
 Patch13:        libprelude-5.2.0-fix-PyIOBase_Type.patch
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  bison
@@ -67,7 +68,7 @@ BuildRequires:  pkgconfig(lua) >= 5.2
 BuildRequires:  pkgconfig(ruby)
 BuildRequires:  pkgconfig(zlib)
 
-%ifnarch s390 ppc64 ppc64le
+%ifarch %valgrind_arches
 BuildRequires:  valgrind
 %endif
 
@@ -317,6 +318,9 @@ patch -d %{buildroot}%{_includedir}/libprelude/ -p0 < %SOURCE1
 %doc AUTHORS ChangeLog README NEWS
 
 %changelog
+* Wed Nov 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.2.0-alt1_14
+- NMU: fixed FTBFS on LoongArch (use rpm-macros-valgrind)
+
 * Wed Aug 24 2022 Pavel Skrylev <majioa@altlinux.org> 5.2.0-alt1_13
 - !fix path to ruby library
 
