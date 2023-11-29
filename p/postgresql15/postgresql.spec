@@ -5,14 +5,20 @@
 %def_with icu
 
 # Use JIT
+%ifarch loongarch64
+# JIT relies on functionality available in llvm versions <= 15
+# (typed pointers). LoongArch targets are supported in llvm >= 16
+%def_without jit
+%else
 %def_with jit
+%endif
 
 %set_autoconf_version 2.60
 
 %define prog_name            postgresql
 %define postgresql_major     15
 %define postgresql_minor     5
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -957,6 +963,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 15.5-alt2
+- NMU: fixed FTBFS on LoongArch (build without jit, llvm <= 15 is not available)
+
 * Wed Nov 08 2023 Alexei Takaseev <taf@altlinux.org> 15.5-alt1
 - 15.5 (Fixes CVE-2023-5868, CVE-2023-5869, CVE-2023-5870)
 - Change 0004-Setup-logging.patch to JSON log format
