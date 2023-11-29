@@ -4,7 +4,7 @@
 
 Summary: A collection of unix tools
 Name: moreutils
-Version: 0.67
+Version: 0.68
 Release: alt1
 License: GPLv2+
 Group: File tools
@@ -81,6 +81,9 @@ make check
 %_man1dir/parallel.1*
 
 %changelog
+* Wed Nov 29 2023 Vitaly Chikunov <vt@altlinux.org> 0.68-alt1
+- Update to 0.68 (2023-11-28).
+
 * Wed Jan 25 2023 Vitaly Chikunov <vt@altlinux.org> 0.67-alt1
 - Update to 0.67 (2021-12-21).
 - Enabled LFS on 32-bit systems.
