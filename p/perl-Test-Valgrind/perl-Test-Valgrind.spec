@@ -6,12 +6,14 @@ BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl-devel perl-podlators
 Name:		perl-Test-Valgrind
 Summary:	Generate suppressions, analyze and test any command with valgrind
 Version:	1.19
-Release:	alt1
+Release:	alt2
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Valgrind/
 Source:	http://www.cpan.org/authors/id/V/VP/VPIT/Test-Valgrind-%{version}.tar.gz
-BuildArch:	noarch
+
+BuildRequires(pre): rpm-macros-valgrind
+
 BuildRequires:	perl(base.pm)
 BuildRequires:	perl(Carp.pm)
 BuildRequires:	perl(Digest/MD5.pm)
@@ -34,7 +36,6 @@ BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(XML/Twig.pm)
 BuildRequires:	perl(XSLoader.pm)
 BuildRequires:	perl(version.pm)
-BuildRequires:	valgrind >= 3.1.0
 Requires:	perl(Carp.pm)
 Requires:	perl(Digest/MD5.pm)
 Requires:	perl(File/HomeDir.pm) >= 0.86
@@ -44,7 +45,11 @@ Requires:	perl(Filter/Util/Call.pm)
 Requires:	perl(List/Util.pm)
 Requires:	perl(Perl/Destruct/Level.pm)
 Requires:	perl(XML/Twig.pm)
+
+%ifarch %valgrind_arches
+BuildRequires:	valgrind >= 3.1.0
 Requires:	valgrind >= 3.1.0
+%endif
 
 # Don't "provide" private Perl libs
 
@@ -99,6 +104,10 @@ fi
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 04 2021 Ivan A. Melnikov <iv@altlinux.org> 1.19-alt2
+- don't require valgrind (and do nothing) on
+  architectures that valgrind does not support
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
 - automated CPAN update
 
