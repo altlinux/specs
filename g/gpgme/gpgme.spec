@@ -17,7 +17,7 @@
 %add_python_req_skip _gpgme
 
 Name: gpgme
-Version: 1.22.0
+Version: 1.23.1
 Release: alt2
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
@@ -32,12 +32,13 @@ Requires: %gpg_bin_path
 Source: gpgme-%version.tar
 
 # Upstream patches
-Patch1: gpgme-1.22.0-fix-build-in-source-directory.patch
+# --
 
 # Suse
 Patch2: gpgme-D545-python310.patch
 
 # ALT
+Patch3: gpgme-1.23.1-fix-easy_install.patch
 Patch11: gpgme-1.4.3-alt-version-script.patch
 Patch15: alt-revision.patch
 
@@ -152,8 +153,8 @@ GPGME-based statically linked applications.
 %prep
 %setup
 
-%patch1 -p1
 %patch2 -p1
+%patch3 -p2
 %patch11 -p1
 %patch15 -p2
 %patch16 -p1
@@ -201,10 +202,16 @@ export PATH=$PWD/tmp_bin:$PATH
 %doc AUTHORS NEWS README THANKS
 
 %files -n python3-module-gpg
-%python3_sitelibdir/gpg*
+%dir %python3_sitelibdir/gpg-%version-py*egg-info
+%python3_sitelibdir/gpg-%version-py*egg-info/PKG-INFO
+%python3_sitelibdir/gpg-%version-py*egg-info/*.txt
+%dir %python3_sitelibdir/gpg
+%python3_sitelibdir/gpg/*
 
 %files -n python-module-gpg
-%python_sitelibdir/gpg*
+%python_sitelibdir/gpg-%version-py*.egg-info
+%dir %python_sitelibdir/gpg
+%python_sitelibdir/gpg/*
 
 %files -n lib%name-devel
 %_bindir/gpgme-config
@@ -238,6 +245,13 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Wed Nov 29 2023 Paul Wolneykien <manowar@altlinux.org> 1.23.1-alt2
+- Refine file globs for python packages.
+- Workaround setuptools bug \#3143 (patch).
+
+* Thu Nov 23 2023 Paul Wolneykien <manowar@altlinux.org> 1.23.1-alt1
+- New version 1.23.1.
+
 * Mon Sep 11 2023 Paul Wolneykien <manowar@altlinux.org> 1.22.0-alt2
 - Fix build in source directory (patch).
 
