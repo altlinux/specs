@@ -1,10 +1,11 @@
 %def_with matelike
 %def_without gnome2
 %def_without kde3
+%def_without kde4
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.69
+Version: 0.70
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -348,12 +349,20 @@ touch /etc/xdg/menus/lxde-applications.menu
 %exclude %_sysconfdir/xdg/menus/enlightenment-applications.menu
 %dir %_sysconfdir/xdg/menus/enlightenment-applications-merged
 
+%if_with kde4
 %files kde4
 %config %_sysconfdir/kde4/xdg/menus/applications-merged/50-kde4-merged.menu
 %dir %_sysconfdir/kde4/xdg/menus/applications-merged
 %_datadir/kde4/desktop-directories/altlinux-*.directory
+%else
+%exclude %_sysconfdir/kde4/xdg/menus/applications-merged/50-kde4-merged.menu
+%endif
 
 %changelog
+* Mon Nov 27 2023 Igor Vlasenko <viy@altlinux.org> 0.70-alt1
+- removed kde4 menu
+- use Icon=applications-internet in altlinux-network.directory
+
 * Wed Nov 15 2023 Anton Midyukov <antohami@altlinux.org> 0.69-alt1
 - cinnamon-applications.menu: fix submenu Settings (ALT bug: 42811)
 
