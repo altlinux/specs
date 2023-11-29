@@ -1,10 +1,10 @@
 %def_enable snapshot
 
 %define _name curtail
-%define ver_major 1.7
+%define ver_major 1.8
 %define xdg_name com.github.huluti.Curtail
 
-#data/com.github.huluti.Curtail.appdata.xml: FAILED:
+# online screenshots
 %def_disable check
 
 Name: curtail
@@ -38,7 +38,7 @@ Requires: oxipng
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson yelp-tools
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 
 %description
@@ -72,6 +72,9 @@ whether keep or not metadata of images.
 %doc README*
 
 %changelog
+* Wed Nov 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- updated to 1.8.0-6-gc67c19c
+
 * Thu Sep 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - first build for Sisyphus (1.7.0-28-gafc2978)
 
