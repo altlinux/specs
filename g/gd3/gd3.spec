@@ -3,10 +3,11 @@
 %set_verify_elf_method strict
 
 %def_disable static
+%def_enable rust
 
 Name: gd3
 Version: 2.3.3
-Release: alt1
+Release: alt2
 Summary: A graphics library for drawing image files in various formats
 License: BSD-style
 Group: Graphics
@@ -17,7 +18,9 @@ Source: %name-%version.tar
 
 BuildRequires: fontconfig-devel libXpm-devel libfreetype-devel libjpeg-devel libpng-devel
 BuildRequires: libwebp-devel zlib-devel libtiff-devel
+%if_enabled rust
 BuildRequires: libheif-devel
+%endif
 
 # needed for tests
 BuildRequires: fonts-ttf-dejavu
@@ -133,7 +136,7 @@ resampling (smooth resizing of truecolor images) and so forth.
 %makeinstall_std
 
 %check
-%ifarch %ix86 aarch64 ppc64le riscv64
+%ifarch %ix86 aarch64 ppc64le riscv64 loongarch64
 # Tests are known to be buggy on x86 32bit due to rounding issues. See:
 # https://github.com/libgd/libgd/issues/359
 # https://github.com/libgd/libgd/issues/242
@@ -161,6 +164,11 @@ resampling (smooth resizing of truecolor images) and so forth.
 %_bindir/*
 
 %changelog
+* Wed Nov 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.3.3-alt2
+- spec:
+  + run tests on LoongArch.
+  + support building without rust stuff (to simplify bootstrap).
+
 * Mon Oct 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt1
 - Updated to upstream version 2.3.3.
 
