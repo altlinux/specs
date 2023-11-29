@@ -2,8 +2,8 @@
 %define soversion 2
 
 Name: zlib-ng
-Version: 2.1.4
-Release: alt1.1
+Version: 2.1.5
+Release: alt1
 
 Summary: Zlib replacement with optimizations
 Summary(ru_RU.UTF-8): Замена Zlib с оптимизацией
@@ -104,6 +104,9 @@ developing application that use %name.
 %_libdir/libz-ng.a
 
 %changelog
+* Wed Nov 29 2023 Nazarov Denis <nenderus@altlinux.org> 2.1.5-alt1
+- New version 2.1.5.
+
 * Sun Oct 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1.4-alt1.1
 - e2k patch update
 
