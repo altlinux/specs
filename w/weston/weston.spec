@@ -1,5 +1,5 @@
-%define ver_major 12.0
-%define api_ver_major 12
+%define ver_major 13.0
+%define api_ver_major 13
 %define api_ver %api_ver_major
 %define clientsdir %_libdir/%name/clients
 %define soname 1
@@ -120,7 +120,7 @@
 %def_disable check
 
 Name: weston
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Reference compositor for Wayland
@@ -183,7 +183,7 @@ BuildRequires: pkgconfig(gstreamer-%gst_api_ver) pkgconfig(gstreamer-allocators-
 BuildRequires: pkgconfig(gstreamer-app-%gst_api_ver) pkgconfig(gstreamer-video-%gst_api_ver)}
 %{?_enable_test_junit_xml:BuildRequires: libxml2-devel}
 %{?_enable_check:BuildRequires: xkeyboard-config /%_bindir/Xwayland}
-%{?_enable_backend_vnc:BuildRequires: libaml-devel libneatvnc-devel}
+%{?_enable_backend_vnc:BuildRequires: libaml-devel libneatvnc-devel >= 0.7}
 
 %description
 Weston is the reference wayland compositor that can run on KMS, under X11
@@ -241,8 +241,7 @@ Header files for doing development with the weston.
 	%{?_disable_pipewire:-Dpipewire=false} \
 	%{?_disable_test_junit_xml:-Dtest-junit-xml=false} \
 	%{?_enable_deprecated_backend_fbdev:-Ddeprecated-backend-fbdev=true} \
-	%{?_enable_deprecated_color_management_static:-Ddeprecated-color-management-static=true} \
-	%{?_disable_launcher_libseat:-Dlauncher-libseat=false}
+	%{?_enable_deprecated_color_management_static:-Ddeprecated-color-management-static=true}
 %nil
 %meson_build -v
 
@@ -325,6 +324,9 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Wed Nov 29 2023 Yuri N. Sedunov <aris@altlinux.org> 13.0.0-alt1
+- 13.0.0
+
 * Wed Nov 29 2023 Yuri N. Sedunov <aris@altlinux.org> 12.0.3-alt1
 - 12.0.3
 

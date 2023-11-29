@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: neatvnc
-Version: 0.6.0
+Version: 0.7.1
 Release: alt1
 
 Summary: A liberally licensed VNC server library with a clean interface
@@ -38,6 +38,7 @@ This package contains shared Neat VNC library.
 Summary: Neat VNC development file
 Group: Development/C
 Requires: lib%name = %EVR
+Requires: libaml-devel
 
 %description -n lib%name-devel
 This package contains header files required to develop
@@ -70,6 +71,12 @@ Neat VNC based software.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Nov 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
+* Thu Oct 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Thu May 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - first build for Sisyphus
 
