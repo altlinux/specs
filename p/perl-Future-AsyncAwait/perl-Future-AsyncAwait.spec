@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 #set_perl_req_method relaxed
 %define module_name Future-AsyncAwait
-%def_with bootstrap
+%def_without bootstrap
 
 #BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm)
 # BEGIN SourceDeps(oneline):
@@ -21,7 +21,7 @@ BuildRequires: perl(Syntax/Keyword/Defer.pm) perl(Syntax/Keyword/Dynamically.pm)
 
 Name: perl-%module_name
 Version: 0.66
-Release: alt2.1
+Release: alt3
 Summary: deferred subroutine syntax for futures
 Group: Development/Perl
 License: perl
@@ -61,6 +61,9 @@ The new syntax takes the form of two new keywords, async and await.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Nov 30 2023 Igor Vlasenko <viy@altlinux.org> 0.66-alt3
+- unbootstrap
+
 * Fri Nov 24 2023 Igor Vlasenko <viy@altlinux.org> 0.66-alt2.1
 - rebuild with new perl 5.38.0 (bootstrapped)
 
