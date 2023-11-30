@@ -2,7 +2,7 @@
 
 Name: mk-configure
 Version: 0.38.2
-Release: alt3
+Release: alt4
 
 Summary: Lightweight replacement for GNU autotools
 License: BSD-2-Clause and MIT and ISC
@@ -26,7 +26,7 @@ Requires: rpm-macros-%name = %version-%release
 
 # required for %%check
 BuildRequires: flex bison gcc-c++ glib2-devel groff-base zlib-devel libbsd-devel bmkdep
-BuildRequires: perl-podlators perl-devel lua-devel info-install makeinfo m4
+BuildRequires: perl-podlators perl-Pod-Html lua-devel info-install makeinfo m4
 
 %ifarch %clang_arches
 BuildRequires: clang
@@ -123,6 +123,9 @@ bmake nodeps-cleandir-tests
 # - add %%config %%_sysconfdir/rpm/macros.mkcmake (extra source)
 
 %changelog
+* Thu Nov 30 2023 Aleksey Cheusov <cheusov@altlinux.org> 0.38.2-alt4
+- Update BuildDepends for pod2html
+
 * Sun May 21 2023 Aleksey Cheusov <cheusov@altlinux.org> 0.38.2-alt3
 - Fix USE_FORT mode on latest sisyphus with gcc-12.2.1
 
