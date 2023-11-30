@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.14.6
+Version: 1.14.7
 Release: alt1
 
 Summary: Installer common parts
@@ -107,6 +107,11 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Nov 30 2023 Michael Shigorin <mike@altlinux.org> 1.14.7-alt1
+- initinstall.d/10-network.sh:
+  + avoid 'myhostname' to fix hostname suggestions (ALT#48641)
+  + minor code cleanup
+
 * Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 1.14.6-alt1
 - install2: stop splash before run alterator-vnc
 
