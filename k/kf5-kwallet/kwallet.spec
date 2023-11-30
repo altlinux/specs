@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.112.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: System/Libraries
@@ -94,7 +94,7 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %K5find_qtlang %name --all-name
 
 install -d %buildroot/%_sysconfdir/alternatives/packages.d/
-echo > %buildroot/%_sysconfdir/alternatives/packages.d/%name
+> %buildroot/%_sysconfdir/alternatives/packages.d/%name
 # install alternative
 if [ "%_K5dbus_srv" == "%_datadir/dbus-1/services" ] ; then
     mkdir -p %buildroot/%_datadir/kf5/dbus-1/services/
@@ -133,6 +133,9 @@ fi
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Thu Nov 30 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt2
+- fix empty alternatives file
+
 * Wed Nov 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt1
 - new version
 
