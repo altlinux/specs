@@ -1,8 +1,8 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt1.1
+%define rel alt1
 
 Name: qbittorrent
-Version: 4.6.1
+Version: 4.6.2
 Epoch: 1
 Release: %rel
 
@@ -105,6 +105,9 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 30 2023 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.2-alt1
+- 4.6.2
+
 * Mon Nov 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:4.6.1-alt1.1
 - NMU: fixed FTBFS on LoongArch:
   + use fresh config.{guess,sub}
