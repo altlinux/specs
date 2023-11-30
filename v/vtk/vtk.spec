@@ -6,7 +6,7 @@
 
 Name: vtk
 Version: %ver.0
-Release: alt1.2
+Release: alt1.3
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -48,6 +48,8 @@ Patch8: %name-%version-alt-PoissonReconstruction-build.patch
 Patch9: %name-%version-alt-SplineDrivenImageSlicer-install-headers.patch
 
 Patch10: 0001-Fix-build-on-GCC13.patch
+Patch3500: 0002-Fixed-FTBFS-on-LoongArch.patch
+
 Requires: lib%name%ver = %EVR
 
 BuildRequires(pre): rpm-build-python3
@@ -265,6 +267,7 @@ This package contains VTK QML plugin.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch3500 -p1
 
 pushd Remote/PoissonReconstruction
 %patch8 -p1
@@ -413,6 +416,9 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %endif
 
 %changelog
+* Mon Sep 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 9.1.0-alt1.3
+- NMU: fixed FTBFS on LoongArch
+
 * Tue Jul  4 2023 Artyom Bystrov <arbars@altlinux.org> 9.1.0-alt1.2
 - Fix build on GCC13
 
