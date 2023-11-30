@@ -2,7 +2,7 @@
 
 Name: rpm-build-perl
 Version: 0.85
-Release: alt4
+Release: alt5
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPLv2+
@@ -33,7 +33,7 @@ tags for the package.
 %if_with bootstrap
 rm -r ConstOptree
 %endif
-%patch -p1
+#patch -p1
 
 %build
 %perl_vendor_build
@@ -81,6 +81,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Thu Nov 30 2023 Igor Vlasenko <viy@altlinux.org> 0.85-alt5
+- disabled notest upgrade hack
+
 * Sun Nov 05 2023 Igor Vlasenko <viy@altlinux.org> 0.85-alt4
 - upgrade to perl 5.38: swtich to libdb5.3
 - bootstrap: enabled notest upgrade hack
