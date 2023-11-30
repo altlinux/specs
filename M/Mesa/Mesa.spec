@@ -7,9 +7,10 @@
 %define gallium_drivers_add() %{expand:%%global gallium_drivers %{?gallium_drivers:%gallium_drivers,}%{1}}
 %define vulkan_drivers_add() %{expand:%%global vulkan_drivers %{?vulkan_drivers:%vulkan_drivers,}%{1}}
 
-%define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k
-%define vulkan_radeon_arches %ix86 x86_64 ppc64le mipsel %e2k
+%define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
+%define vulkan_radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
 %define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
+%define vulkan_nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
 %define intel_arches %ix86 x86_64
 %define vulkan_intel_arches %ix86 x86_64
 %define vulkan_virtio_arches %ix86 x86_64 aarch64 ppc64le mipsel
@@ -68,9 +69,13 @@
 %gallium_drivers_add zink
 %ifarch %vulkan_intel_arches
 %vulkan_drivers_add intel
+%vulkan_drivers_add intel_hasvk
 %endif
 %ifarch %vulkan_radeon_arches
 %vulkan_drivers_add amd
+%endif
+%ifarch %vulkan_nouveau_arches
+%vulkan_drivers_add nouveau-experimental
 %endif
 %ifarch %vulkan_virtio_arches
 %vulkan_drivers_add virtio
@@ -80,10 +85,14 @@
 %vulkan_drivers_add broadcom
 %vulkan_drivers_add panfrost
 %endif
+%ifarch loongarch64
+# LS7A1000 and LS7A2000 chipsets, and Loongson SoCs have vivante GPU
+%gallium_drivers_add etnaviv
+%endif
 %vulkan_drivers_add swrast
 
-%define ver_major 23.2
-%define ver_minor 1
+%define ver_major 23.3
+%define ver_minor 0
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -427,7 +436,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 #define _unpackaged_files_terminate_build 1
 
 %files -n libGLX-mesa
+%if %ver_minor > 0
 %doc %ver_major.*.html
+%endif
 %_libdir/libGLX_mesa.so.*
 %_libdir/libglapi.so.*
 
@@ -532,7 +543,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/iris_dri.so
 %ifarch %vulkan_intel_arches
 %_libdir/libvulkan_intel.so
+%_libdir/libvulkan_intel_hasvk.so
 %_datadir/vulkan/icd.d/intel_icd*.json
+%_datadir/vulkan/icd.d/intel_hasvk_icd*.json
 %ifarch %gallium_opencl_arches
 %_libdir/gallium-pipe/pipe_i9?5.so
 %_libdir/gallium-pipe/pipe_crocus.so
@@ -546,6 +559,10 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/nouveau_*dri.so
 %_libdir/dri/nouveau_drv_video.so
 %_libdir/vdpau/libvdpau_nouveau.so*
+%ifarch %vulkan_nouveau_arches
+%_libdir/libvulkan_nouveau.so
+%_datadir/vulkan/icd.d/nouveau_icd*.json
+%endif
 %ifarch %gallium_opencl_arches
 %_libdir/gallium-pipe/pipe_nouveau.so
 %endif
@@ -588,6 +605,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Nov 30 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.3.0-alt1
+- 23.3.0
+
 * Mon Oct 02 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.2.1-alt1
 - 23.2.1
 
