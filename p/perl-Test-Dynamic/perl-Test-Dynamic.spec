@@ -2,7 +2,7 @@
 
 Name: perl-Test-Dynamic
 Version: 1.3.3
-Release: alt4
+Release: alt5
 
 Summary: Advanced automatic test counting for Test::More
 
@@ -16,7 +16,7 @@ BuildArch: noarch
 Source: %dist-%version.tar.gz
 
 # Automatically added by buildreq on Thu May 15 2008
-BuildRequires: perl-devel perl-Pod-Simple
+BuildRequires: perl-devel perl-Pod-Simple /usr/bin/pod2html
 
 %description
 This module helps to count your tests for you in an automatic way. When you add
@@ -36,6 +36,9 @@ number for you.
 %perl_vendor_privlib/Test/Dynamic.pm
 
 %changelog
+* Thu Nov 30 2023 Igor Vlasenko <viy@altlinux.org> 1.3.3-alt5
+- added BR: /usr/bin/pod2html
+
 * Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 1.3.3-alt4
 - fixed build
 
