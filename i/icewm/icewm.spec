@@ -5,7 +5,7 @@
 
 Name: %realname
 Version: 3.4.4
-Release: alt1
+Release: alt2
 Epoch:3
 
 Summary: X11 Window Manager
@@ -38,11 +38,11 @@ Patch0: %realname-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
-# Automatically added by buildreq on Sun Jun 27 2021
+# Automatically added by buildreq on Thu Nov 30 2023
 BuildRequires: cmake gcc-c++ imlib2-devel libSM-devel libXcomposite-devel
 BuildRequires: libXdamage-devel libXft-devel libXinerama-devel libXpm-devel
 BuildRequires: libXrandr-devel libalsa-devel libao-devel libfribidi-devel
-BuildRequires: librsvg-devel libsndfile-devel perl-Pod-Usage perl-devel
+BuildRequires: librsvg-devel libsndfile-devel perl-Pod-Html perl-Pod-Usage
 %if_with markdown
 BuildRequires: discount
 %else
@@ -147,6 +147,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Thu Nov 30 2023 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.4.4-alt2
+- BR: replaced perl-devel by perl-Pod-Html
+
 * Sun Nov 05 2023 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.4.4-alt1
 - 3.4.4
 
