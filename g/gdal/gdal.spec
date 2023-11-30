@@ -1,4 +1,5 @@
-%def_with docs
+%define _unpackaged_files_terminate_build 1
+%def_without docs
 %def_without check
 
 # TODO: enable system libtiff when it will support BigTiff (from 4.0?)
@@ -7,8 +8,8 @@
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
-Version: 3.6.2
-Release: alt1.2
+Version: 3.8.0
+Release: alt1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -21,6 +22,7 @@ Patch: %name-2.2.3-alt-mysql8-transition.patch
 
 %define libname lib%name
 
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel
 BuildRequires: libexpat-devel libgeos-devel libgif-devel libhdf5-devel
 BuildRequires: libjpeg-devel libpng-devel libsqlite3-devel
@@ -118,8 +120,8 @@ Python module for %name.
 %patch -p0
 
 %build
-%add_optflags -fno-strict-aliasing -I%_includedir/netcdf
-%cmake \
+%add_optflags -fno-strict-aliasing
+%cmake -GNinja \
     -DBUILD_SHARED_LIBS:BOOL=ON \
     -DCMAKE_INSTALL_INCLUDEDIR:PATH=%_includedir/%name \
     -DGDAL_USE_EXTERNAL_LIBS=ON \
@@ -157,7 +159,7 @@ Python module for %name.
     -DOGR_BUILD_OPTIONAL_DRIVERS=ON \
     -DBUILD_TESTING=OFF
 
-%cmake_build
+%ninja_build -C "%_cmake__builddir"
 %if_with docs
 export LD_LIBRARY_PATH="$PWD/%_cmake__builddir"
 export PYTHONPATH="$PWD/%_cmake__builddir/swig/python"
@@ -170,7 +172,7 @@ make SPHINXBUILD="sphinx-build-3" -C doc man
 %endif
 
 %install
-%cmake_install
+%ninja_install -C "%_cmake__builddir"
 %if_with docs
 mkdir -p %buildroot%_man1dir
 install -m 644 doc/build/man/*.1 %buildroot%_man1dir
@@ -192,14 +194,16 @@ popd
 %_bindir/nearblack
 %_bindir/gnmanalyse
 %_bindir/gnmmanage
+%_bindir/sozip
 %exclude %_bindir/gdal-config
 %exclude %_bindir/*.py
 %_datadir/bash-completion/completions/gdal*
 %_datadir/bash-completion/completions/ogr*
 %_libdir/cmake/%name/*.cmake
-%if_with docs
 %_man1dir/*
+%exclude %_man1dir/gdal-config.1*
 
+%if_with docs
 %files doc
 %doc *.md *.txt doc/build/html
 %endif
@@ -212,6 +216,7 @@ popd
 %_libdir/*.so
 %_includedir/%name
 %_pkgconfigdir/gdal.pc
+%_man1dir/gdal-config.1*
 
 %files -n %libname
 %_libdir/*.so.*
@@ -221,6 +226,14 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 21 2023 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
+- New version.
+
+* Wed Oct 18 2023 Andrey Cherepanov <cas@altlinux.org> 3.7.2-alt1
+- New version.
+- Built without documentation.
+- Used ninja-build.
+
 * Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 3.6.2-alt1.2
 - FTBFS: remote autotest build.
 
