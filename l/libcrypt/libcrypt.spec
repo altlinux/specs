@@ -1,6 +1,6 @@
 Name: libcrypt
-Version: 4.4.35
-Release: alt2
+Version: 4.4.36
+Release: alt1
 
 Summary: Modern password hashing library
 License: LGPLv2.1+
@@ -99,6 +99,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_libdir/lib*crypt.a
 
 %changelog
+* Sat Nov 25 2023 Dmitry V. Levin <ldv@altlinux.org> 4.4.36-alt1
+- v4.4.35 -> v4.4.36.
+
 * Wed Oct 11 2023 Vitaly Chikunov <vt@altlinux.org> 4.4.35-alt2
 - Package libcrypt-devel-static.
 
