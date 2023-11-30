@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define bootstrap_tagset %nil
 #define bootstrap_tagset AutoReqProv: yes,noperl
-%def_with boorstrap_perl_wrapper
+%def_without boorstrap_perl_wrapper
 
 
 Name: perl
 Version: 5.38.0
-Release: alt0.4
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -972,6 +972,9 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 	%_bindir/pod2html
 
 %changelog
+* Thu Nov 30 2023 Igor Vlasenko <viy@altlinux.org> 1:5.38.0-alt1
+- bootstrap perl wrapper off
+
 * Sat Nov 11 2023 Igor Vlasenko <viy@altlinux.org> 1:5.38.0-alt0.4
 - 5.34.1 -> 5.38.0
 - added perl-Pod-Html
