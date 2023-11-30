@@ -1,9 +1,9 @@
 %define pypi_name apsw
-%define sqlite_ver 3.42.0
+%define sqlite_ver 3.44.2
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.42.0.1
+Version: 3.44.2.0
 Release: alt1
 
 Summary: Another Python SQLite Wrapper
@@ -17,7 +17,7 @@ Source: https://github.com/rogerbinns/%pypi_name/releases/download/%version/%pyp
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: unzip libsqlite3-devel >= %sqlite_ver
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3(wheel) python3(setuptools)
 
 %description
 APSW is a Python 3 wrapper for the SQLite embedded relational database
@@ -31,6 +31,8 @@ find . -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 
 %build
 %define opts --enable=load_extension
+# error: option --enable not recognized
+#%%pyproject_build --backend-config-settings='{"--build-option": ["%opts"]}'
 %python3_build %opts
 
 %install
@@ -50,6 +52,9 @@ gcc %optflags %optflags_shared -shared -o ./testextension.sqlext -I. -Isqlite3 s
 %doc doc/*
 
 %changelog
+* Thu Nov 30 2023 Yuri N. Sedunov <aris@altlinux.org> 3.44.2.0-alt1
+- 3.44.2.0
+
 * Wed Jul 26 2023 Yuri N. Sedunov <aris@altlinux.org> 3.42.0.1-alt1
 - 3.42.0.1
 
