@@ -1,5 +1,5 @@
 Name: parole
-Version: 4.18.0
+Version: 4.18.1
 Release: alt1
 
 %def_enable clutter
@@ -11,6 +11,7 @@ Group: Video
 URL: https://docs.xfce.org/apps/parole/start
 Vcs: https://gitlab.xfce.org/apps/parole.git
 Source: %name-%version.tar
+Source1: alt_ru.po
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -48,6 +49,10 @@ for developing plugins for %name.
 %patch -p1
 mkdir m4
 
+# Merge our own and upstream Russian translations
+msgcat --use-first -o merged_ru.po %SOURCE1 po/ru.po
+mv -f merged_ru.po po/ru.po
+
 %build
 %xfce4reconf
 %configure \
@@ -78,6 +83,10 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Nov 30 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
+- Use our own Russian translation.
+- Updated to 4.18.1.
+
 * Sun Feb 19 2023 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
 - Updated to 4.18.0.
 
