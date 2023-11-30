@@ -4,13 +4,13 @@
 
 %define _unpackaged_files_terminate_build 1
 
-%def_without appindicator
+%def_with appindicator
 %def_with team
 %def_without selinux
 
 Name: NetworkManager-applet-gtk
 Version: 1.34.0
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -27,7 +27,7 @@ BuildRequires: libnm-gir-devel >= %nm_version
 BuildRequires: libmm-glib-devel
 BuildRequires: libsecret-devel
 BuildRequires: libnma-devel >= 1.8.28-alt1
-%{?_with_appindicator:BuildRequires: libappindicator-gtk3-devel}
+%{?_with_appindicator:BuildRequires: libayatana-appindicator3-devel libdbusmenu-gtk3-devel}
 %{?_with_team:BuildRequires: libjansson-devel}
 %{?_with_selinux:BuildRequires: libselinux-devel}
 
@@ -94,6 +94,9 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Thu Nov 30 2023 Mikhail Efremov <sem@altlinux.org> 1.34.0-alt2
+- Enabled indicator support (closes: #48555).
+
 * Wed Oct 04 2023 Mikhail Efremov <sem@altlinux.org> 1.34.0-alt1
 - Updated to 1.34.0.
 
