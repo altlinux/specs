@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%def_with bootstrap
+%def_without bootstrap
 
 BuildRequires: perl-podlators
 Name: perl-Glib-Object-Introspection
 Version: 0.051
-Release: alt2.1
+Release: alt3
 
 Summary: Dynamically create Perl language bindings
 Group: Development/Perl
@@ -54,6 +54,9 @@ export LANG=ru_RU.UTF-8
 %_man1dir/perli11ndoc.1*
 
 %changelog
+* Thu Nov 30 2023 Igor Vlasenko <viy@altlinux.org> 0.051-alt3
+- unbootstrap
+
 * Fri Nov 24 2023 Igor Vlasenko <viy@altlinux.org> 0.051-alt2.1
 - rebuild with new perl 5.38.0 (bootstrapped)
 
