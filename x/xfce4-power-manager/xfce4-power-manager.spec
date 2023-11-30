@@ -1,5 +1,5 @@
 Name: xfce4-power-manager
-Version: 4.18.2
+Version: 4.18.3
 Release: alt1
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4util libxfconf-devel libxfce4panel-gtk3-devel
-BuildRequires: libxfce4ui-gtk3-devel >= 4.18.2
+BuildRequires: libxfce4ui-gtk3-devel >= 4.18.4
 BuildRequires: libXext-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libnotify-devel >= 0.4.1
@@ -44,8 +44,6 @@ applications to prevent automatic sleep actions via the power manager.
 %patch -p1
 
 %build
-# Don't use git tag in version.
-%xfce4_drop_gitvtag xfpm_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
@@ -76,6 +74,11 @@ applications to prevent automatic sleep actions via the power manager.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Nov 30 2023 Mikhail Efremov <sem@altlinux.org> 4.18.3-alt1
+- Dropped %%xfce4_drop_gitvtag macro.
+- Required libxfce4ui >= 4.18.4.
+- Updated to 4.18.3.
+
 * Tue May 30 2023 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
 - Updated to 4.18.2.
 
