@@ -1,5 +1,5 @@
 Name: exim
-Version: 4.96
+Version: 4.97
 Release: alt1
 Summary: Exim MTA
 Group: Networking/Mail
@@ -19,8 +19,8 @@ BuildRequires: libldap-devel
 BuildRequires: libmariadb-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: postgresql-devel
-# for exigrep
-BuildRequires: perl-Pod-Usage
+# for utils
+BuildRequires: perl-Pod-Usage perl-File-FcntlLock perl-experimental
 
 %description
 Exim is a highly flexible and feature-rich mail transfer agent
@@ -111,7 +111,7 @@ do
   echo EXIM_RELEASE_VERSION=%version >> src/version.sh
   echo EXIM_VARIANT_VERSION=%release >> src/version.sh
   echo EXIM_COMPILE_NUMBER=1 >> src/version.sh
-  export CFLAGS="-I%_includedir/openssl -I%_includedir/pgsql"
+  export CFLAGS="-Wno-format -I%_includedir/openssl -I%_includedir/pgsql"
   export LDFLAGS="-s -lpq -lldap -llber"
   %make_build
   cp -a build-Linux-*/%name ./%name.$buildtype
@@ -221,7 +221,9 @@ test -s mail-server.key || exim-mkcert
 %_sbindir/exim_dbmbuild
 %_sbindir/exim_dumpdb
 %_sbindir/exim_fixdb
+%_sbindir/exim_id_update
 %_sbindir/exim_lock
+%_sbindir/exim_msgdate
 %_sbindir/eximstats
 %_sbindir/exim_tidydb
 %_sbindir/exinext
@@ -230,10 +232,15 @@ test -s mail-server.key || exim-mkcert
 %_sbindir/exiqsumm
 %_sbindir/exiwhat
 
+
 %files doc
 %doc Readme.pod vmail-dovecot.txt
 
 %changelog
+* Tue Nov 28 2023 Gremlin from Kremlin <gremlin@altlinux.org> 4.97-alt1
+- update to 4.97 (fix CVE-2023-42114 ... CVE-2023-42116)
+- fix RM_COMMAND in scripts (#47254 #47255)
+
 * Mon Jul 03 2023 Gremlin from Kremlin <gremlin@altlinux.org> 4.96-alt1
 - update to 4.96 (#46381)
 - build with libpcre2
