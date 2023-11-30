@@ -6,7 +6,7 @@
 %define gst_api_ver 1.0
 
 Name: decibels
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Sound Player for GNOME
@@ -69,6 +69,9 @@ The GNOME application for play sound files.
 
 
 %changelog
+* Thu Nov 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.7-alt1
+- 0.1.7
+
 * Sat Nov 25 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1
 - first build for Sisyphus (0.1.6-10-g87d200a)
 
