@@ -1,13 +1,14 @@
 %define major 3
 %define rname libunibreak
+%define pkg_devel libunibreak%major-devel
 Name: libunibreak
 Version: 3.0
-Release: alt4
+Release: alt5
 
 Summary: Unicode line-breaking library
 License: zlib
 Group: System/Libraries
-URL: http://vimgadgets.sourceforge.net/libunibreak
+Url: http://vimgadgets.sourceforge.net/libunibreak
 Packager: Mikhail Kolchin <mvk@altlinux.org>
 
 Source: %name-%version.tar.gz
@@ -24,12 +25,15 @@ It is designed to be used in a generic text renderer. FBReader is one
 real-world example, and you may also check some simple sample code, like
 showbreak and breaktext.
 
-%package devel
+%package -n %pkg_devel
 Summary: Development files for libunibreak
 Group: Development/C
 Requires(post,preun): alternatives >= 0.2
 Conflicts: liblinebreak-devel
-%description devel
+Conflicts: libunibreak5-devel
+Provides: libunibreak-devel = %version
+Obsoletes: libunibreak-devel < %EVR
+%description -n %pkg_devel
 The libunibreak-devel package contains libraries and header files for
 developing applications that use libunibreak.
 
@@ -54,13 +58,16 @@ __EOF__
 %doc AUTHORS ChangeLog LICENCE NEWS README.md
 %_libdir/*.so.*
 
-%files devel
+%files -n %pkg_devel
 %config /%_sysconfdir/alternatives/packages.d/%name-devel
 %_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/%rname-%major.pc
 
 %changelog
+* Thu Nov 30 2023 Sergey V Turchin <zerg@altlinux.org> 3.0-alt5
+- rename devel subpackage
+
 * Thu Nov 23 2023 Sergey V Turchin <zerg@altlinux.org> 3.0-alt4
 - fix conflicts (fixes: 48549)
 
