@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 1.2.5
-Release: alt3
+Release: alt4
 
 Summary: Safe wrapper to DBI interface
 
@@ -15,7 +15,7 @@ Packager: Mikhail Pokidko <pma@altlinux.org>
 BuildArch: noarch
 Source: %dist-%version.tar.gz
 
-BuildRequires: perl-DBD-Pg perl-devel perl-Pod-Simple
+BuildRequires: perl-DBD-Pg perl-devel perl-Pod-Simple /usr/bin/pod2html
 
 %description
 The purpose of this module is to give controlled, limited access to an application,
@@ -51,6 +51,9 @@ of the above, there are matching methods to remove them as well.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Thu Nov 30 2023 Igor Vlasenko <viy@altlinux.org> 1.2.5-alt4
+- added BR: /usr/bin/pod2html
+
 * Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 1.2.5-alt3
 - fixed build with perl-5.16
 - spec cleanup
