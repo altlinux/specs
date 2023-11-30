@@ -1,14 +1,12 @@
 Name: anilibria-winmaclinux
 Version: 1.2.11
-Release: alt1
+Release: alt2
 
 Summary: AniLibria online video player for desktop platforms
 Summary(ru_RU.UTF-8): Онлайн-видеоплеер AniLibria для настольных платформ
 License: GPL-3.0-only
 Group: Video
 Url: http://anilibriadesktop.reformal.ru
-
-ExcludeArch: %not_qt5_qtwebengine_arches
 
 Requires: qt5-graphicaleffects
 Requires: libqt5-multimedia
@@ -25,8 +23,6 @@ Patch1: %name-1.2.4-alt-fix_prefix.patch
 
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-webview-devel
-BuildRequires: qt5-webengine-devel
 BuildRequires: qt5-graphicaleffects
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-websockets-devel
@@ -35,7 +31,6 @@ BuildRequires: qt5-quickcontrols2-devel
 BuildRequires: gstreamer1.0-devel
 
 BuildRequires(pre): rpm-macros-qt5 
-BuildRequires(pre): rpm-macros-qt5-webengine
 
 %description
 Linux\Windows\Mac client for online viewing of cartoons and animated films
@@ -68,6 +63,11 @@ popd
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Thu Nov 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2.11-alt2
+- NMU: removed qt5-webengine from (build) requirements since this package
+  does not use webengine/webview (see src/AniLibria.pro and dependencies
+  of the binary package). Build on more architectures (including LoongArch).
+
 * Tue Nov 28 2023 Roman Alifanov <ximper@altlinux.org> 1.2.11-alt1
 - new version 1.2.11 (with rpmrb script) (ALT Bug 48603)
 
