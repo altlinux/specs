@@ -6,7 +6,7 @@ epoch:1
 %define kernel_need_version	6.6
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	6.6
-%define kernel_sublevel .2
+%define kernel_sublevel .3
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -45,6 +45,7 @@ Summary: The Linux kernel (the core of the Linux operating system)
 License: GPL
 Group: System/Kernel and hardware
 Url: http://www.kernel.org/
+# https://xff.cz/git/linux
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Patch0: %name-%version-%release.patch
@@ -423,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Nov 30 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.3-alt1
+- orange-pi-6.6-20231128-2239
+
 * Mon Nov 27 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.2-alt1
 - 6.6.2
 
