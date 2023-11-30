@@ -1,7 +1,7 @@
 %define ocamlmod yaml
 Name: ocaml-%ocamlmod
-Version: 3.0.0
-Release: alt2
+Version: 3.2.0
+Release: alt1
 Summary: Parse and generate YAML 1.1 files
 Group: Development/ML
 License: ISC
@@ -13,6 +13,7 @@ BuildRequires: ocaml-dune-configurator-devel ocaml-bos-devel ocaml-ctypes-devel
 BuildRequires: ocaml-ppx_sexp_conv-devel ocaml-sexplib-devel ocaml-rresult-devel >= 0.7.0
 BuildRequires: ocaml-fmt-devel  ocaml-logs-devel
 BuildRequires: ocaml-ppxlib-devel
+BuildRequires(pre): rpm-build-ocaml >= 1.6
 
 %description
 This is an OCaml library to parse and generate the YAML file format. It is
@@ -45,6 +46,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 3.2.0-alt1
+- 3.2.0
+
 * Mon Jan 03 2022 Anton Farygin <rider@altlinux.ru> 3.0.0-alt2
 - added a patch to porting from Result to Stdlib.result
 

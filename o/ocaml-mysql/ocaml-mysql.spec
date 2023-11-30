@@ -1,38 +1,36 @@
-%set_verify_elf_method textrel=relaxed
-
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: ocaml-mysql
 Version: 1.2.4
-Release: alt2
+Release: alt3
 
 Summary: MySQL bindings for OCaml
-License: LGPLv2.1
+License: LGPL-2.1-only
 Group: Development/ML
 
-URL: http://ygrek.org.ua/p/ocaml-mysql/
-# https://github.com/ygrek/ocaml-mysql
+URL: https://ygrek.org/p/ocaml-mysql/
+VCS: https://github.com/ygrek/ocaml-mysql
 Source: ocaml-mysql-%version.tar
 Patch0: ocaml-mysql-1.2.2-alt-mysql8-transition.patch
 
-Requires: %name-runtime = %version-%release
-
 BuildRequires: ocaml-findlib libMySQL-devel zlib-devel chrpath
+BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 
-%package runtime
+%package devel
 Summary: MySQL bindings for OCaml
 Group: Development/ML
-Conflicts: %name < %version-%release
+Conflicts: %name < %EVR
+Requires: %name = %EVR
 
 %description
 ocaml-mysql is a package for OCaml that provides access to MySQL
 databases. It consists of low level functions implemented in C and
 a module Mysql intended for application development.
 
-%description runtime
+%description devel
 ocaml-mysql is a package for OCaml that provides access to MySQL
 databases. It consists of low level functions implemented in C and
 a module Mysql intended for application development.
 
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %prep
 %setup -q
@@ -41,30 +39,35 @@ a module Mysql intended for application development.
 
 %build
 %configure
-make all opt
+make all
+%ifarch %ocaml_native_arch
+make opt
+%endif
 
 %install
 export OCAMLFIND_LDCONF=ignore
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml/site-lib
+export OCAMLFIND_DESTDIR=%buildroot%_ocamldir
 mkdir -p $OCAMLFIND_DESTDIR
 %makeinstall_std
 
 #remove rpath
-chrpath -d %buildroot%_libdir/ocaml/site-lib/mysql/dllmysql_stubs.so
+chrpath -d %buildroot%_ocamldir/mysql/dllmysql_stubs.so
 
 # move runtime to stublibs
-mkdir -p %buildroot%_libdir/ocaml/stublibs
-mv %buildroot%_libdir/ocaml/site-lib/mysql/dllmysql_stubs.so %buildroot%_libdir/ocaml/stublibs
+mkdir -p %buildroot%_ocamldir/stublibs
+mv %buildroot%_ocamldir/mysql/dllmysql_stubs.so %buildroot%_ocamldir/stublibs
 
-%files
-%dir %_libdir/ocaml/site-lib/mysql
-%_libdir/ocaml/site-lib/mysql/*
+%ocaml_find_files
+
+%files -f ocaml-files.runtime
 %doc CHANGES README
 
-%files runtime
-%_libdir/ocaml/stublibs/dll*.so
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 23 2023 Anton Farygin <rider@altlinux.ru> 1.2.4-alt3
+- fix build with bytecode ocaml
+
 * Fri Oct 01 2021 Egor Ignatov <egori@altlinux.org> 1.2.4-alt2
 - fix build with lto
 

@@ -1,6 +1,6 @@
 %define libname ppx_sexp_conv
 Name: ocaml-%libname
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 Summary: Generation of S-expression conversion functions from type definitions
 License: Apache-2.0
@@ -42,6 +42,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
+- 0.16.0
+
 * Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
 - 0.15.0
 

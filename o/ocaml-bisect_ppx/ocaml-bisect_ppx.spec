@@ -1,13 +1,12 @@
 %define libname bisect_ppx
 Name: ocaml-%libname
-Version: 2.8.1
+Version: 2.8.3
 Release: alt1
 Summary: Code coverage for OCaml
 Group: Development/ML
 License: MPL-2.0
 Url: https://github.com/aantron/bisect_ppx
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml >= 4.07.1
 BuildRequires: dune
@@ -32,7 +31,6 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %dune_build -p %libname
@@ -48,6 +46,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 2.8.3-alt1
+- 2.8.1 -> 2.8.3
+
 * Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 2.8.1-alt1
 - 2.7.1 -> 2.8.1
 

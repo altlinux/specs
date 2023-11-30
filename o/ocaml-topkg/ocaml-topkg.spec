@@ -1,7 +1,7 @@
 %define oname   topkg
 Name: ocaml-topkg
-Version: 1.0.5
-Release: alt1
+Version: 1.0.6
+Release: alt2
 Summary: The transitory OCaml software packager
 License: ISC
 Group: Development/ML
@@ -11,6 +11,7 @@ BuildRequires: opam
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-ocamlbuild
+BuildRequires: rpm-build-ocaml >= 1.6
 
 %description
 Topkg is a packager for distributing OCaml software. It provides
@@ -50,24 +51,21 @@ opam-installer \
 # remove bogus path of docs
 rm -rf %buildroot%prefix/doc/%oname
 
-%files
-%doc README.md CHANGES.md LICENSE.md
-%dir %_libdir/ocaml/topkg
-%_libdir/ocaml/topkg/META
-%_libdir/ocaml/topkg/*.cmi
-%_libdir/ocaml/topkg/*.cma
+%ocaml_find_files
 
-%files devel
+%files -f ocaml-files.runtime
+%doc README.md CHANGES.md LICENSE.md
+
+%files devel -f ocaml-files.devel
 %doc doc/ test/
-%_libdir/ocaml/topkg/opam
-%_libdir/ocaml/topkg/*.a
-%_libdir/ocaml/topkg/*.cmx
-%_libdir/ocaml/topkg/*.cmxa
-%_libdir/ocaml/topkg/*.cmxs
-%_libdir/ocaml/topkg/*.mli
-%_libdir/ocaml/topkg/*.cmti
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1.0.6-alt2
+- added support for bytecode-only version of the ocaml package
+
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 1.0.6-alt1
+- 1.0.7
+
 * Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 1.0.5-alt1
 - 1.0.5
 

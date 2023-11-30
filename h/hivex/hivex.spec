@@ -7,7 +7,7 @@
 
 Name: hivex
 Version: 1.3.23
-Release: alt2
+Release: alt3
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -21,6 +21,7 @@ BuildRequires: perl-Test-Pod /usr/bin/pod2html
 BuildRequires: perl-Test-Pod-Coverage
 BuildRequires: perl-libintl
 %{?_enable_ocaml:BuildRequires: ocaml ocaml-findlib ocaml-ocamldoc ocaml-ocamlbuild}
+%{?_enable_ocaml:BuildRequires(pre): rpm-build-ocaml >= 1.6.1}
 %{?_enable_ruby:BuildRequires: ruby rpm-build-ruby ruby-rake ruby-mkrf libruby-devel rubygems}
 %{?_enable_perl:BuildRequires: perl(Test/More.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Stringy.pm)}
 %{?_enable_python:BuildRequires: python3-devel}
@@ -134,6 +135,7 @@ ruby-%name contains Ruby bindings for %name.
 	%{subst_enable ocaml} \
 	%{subst_enable perl} \
 	%{subst_enable python} \
+	%{subst_enable ocaml} \
 	--disable-rpath
 
 %make INSTALLDIRS=vendor
@@ -144,12 +146,8 @@ make check
 %install
 %make install INSTALLDIRS=vendor DESTDIR=%buildroot
 
-%if_disabled ocaml
-# Delete OCaml files, in case the user had OCaml installed and it was
-# picked up by the configure script.
-# XXX Add ./configure --disable-ocaml upstream.
-rm -rf %buildroot%_libdir/ocaml/hivex
-rm -f  %buildroot%_libdir/ocaml/stublibs/*hivex*
+%if_enabled ocaml
+%ocaml_find_files
 %endif
 
 # Remove unwanted libtool *.la file:
@@ -190,21 +188,11 @@ rm -f %buildroot%python3_sitelibdir/libhivexmod.la
 %endif
 
 %if_enabled ocaml
-%files -n ocaml-%name
+%files -n ocaml-%name -f ocaml-files.runtime
 %doc README.md
-%_libdir/ocaml/hivex
-%exclude %_libdir/ocaml/hivex/*.a
-%exclude %_libdir/ocaml/hivex/*.cmxa
-%exclude %_libdir/ocaml/hivex/*.cmx
-%exclude %_libdir/ocaml/hivex/*.mli
-%_libdir/ocaml/stublibs/*.so
 %_libdir/ocaml/stublibs/*.so.owner
 
-%files -n ocaml-%name-devel
-%_libdir/ocaml/hivex/*.a
-%_libdir/ocaml/hivex/*.cmxa
-%_libdir/ocaml/hivex/*.cmx
-%_libdir/ocaml/hivex/*.mli
+%files -n ocaml-%name-devel -f ocaml-files.devel
 %endif
 
 %if_enabled perl
@@ -226,6 +214,9 @@ rm -f %buildroot%python3_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Fri Nov 24 2023 Anton Farygin <rider@altlinux.ru> 1.3.23-alt3
+- fixed build with bytecode-only ocaml
+
 * Sun Oct 29 2023 Igor Vlasenko <viy@altlinux.org> 1.3.23-alt2
 - NMU: perl5.38 support
 

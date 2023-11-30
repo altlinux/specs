@@ -1,12 +1,13 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: ocaml-camlbz2
 Version: 0.7.0
-Release: alt2
+Release: alt3
 Summary: OCaml bindings for the libbz2
 License: LGPLv2 with OCaml-LGPL-linking-exception
 Group: Development/ML
 Url: http://camlbz2.forge.ocamlcore.org/
 Source0: %name-%version.tar
+BuildRequires(pre): rpm-build-ocaml >= 1.6
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: bzlib-devel
@@ -39,31 +40,31 @@ developing applications that use %name.
 %build
 %autoreconf
 %configure
-make
+# to fix build without ocamlopt
+sed -i '/OCAMLOPT := no/d' Makefile
+%make 
 
 %install
 export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot/%_libdir/ocaml
+export OCAMLFIND_DESTDIR=%buildroot/%_ocamldir
 export DLLDIR=$OCAMLFIND_DESTDIR/stublibs
 mkdir -p $OCAMLFIND_DESTDIR/bz2
 mkdir -p $DLLDIR
 make install
+%__install -m644 *.cmt* %buildroot/%_ocamldir/bz2/
 
-%files
+%ocaml_find_files
+
+%files -f ocaml-files.runtime
 %doc BUGS COPYING ChangeLog INSTALL LICENSE README ROADMAP
-%dir %_libdir/ocaml/bz2
-%_libdir/ocaml/bz2/META
-%_libdir/ocaml/bz2/*.cma
-%_libdir/ocaml/bz2/*.cmi
 %_libdir/ocaml/stublibs/*.so*
 
-%files devel
-%_libdir/ocaml/bz2/*.a
-%_libdir/ocaml/bz2/*.cmxa
-%_libdir/ocaml/bz2/*.cmx
-%_libdir/ocaml/bz2/*.mli
+%files devel -f ocaml-files.devel
 
 %changelog
+* Sat Nov 18 2023 Anton Farygin <rider@altlinux.ru> 0.7.0-alt3
+- fixed build without ocamlopt
+
 * Sat Sep 18 2021 Anton Farygin <rider@altlinux.ru> 0.7.0-alt2
 - fixed build with emabled LTO
 

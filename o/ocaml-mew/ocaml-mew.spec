@@ -1,8 +1,7 @@
 %def_with check
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-mew
 Version: 0.1.0
-Release: alt2
+Release: alt3
 Summary: Modal Editing Witch
 
 Group: Development/ML
@@ -13,9 +12,12 @@ Source: %name-%version.tar
 BuildRequires: dune ocaml-trie-devel ocaml-result-devel
 %if_with check
 BuildRequires: ocaml-ppx_expect-devel
+BuildRequires: ocaml-ppx_sexp_conv-devel
+BuildRequires: ocaml-ppx_compare-devel
+BuildRequires: ocaml-ppx_enumerate-devel
+BuildRequires: ocaml-ppx_hash-devel
 %endif
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildPreReq: rpm-build-ocaml >= 1.4
 
 %description
 This is the core module of mew, a general modal editing engine generator.
@@ -48,6 +50,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 0.1.0-alt3
+- updated BuildRequires
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.1.0-alt2
 - cleanup spec and buildrequires
 - enabled check

@@ -1,7 +1,13 @@
+%ifarch %ocaml_native_arch
+%def_with check
+%else
+%def_without check
+%endif
+
 %define pkgname ocplib-endian
 Name: ocaml-%pkgname
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: Functions to read/write int16/32/64 from strings, bigarrays
 License: LGPLv2+
 Group: Development/ML
@@ -13,6 +19,7 @@ BuildRequires: ocaml-findlib
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-ocamldoc
 BuildRequires: dune
+BuildRequires: rpm-build-ocaml >= 1.6
 
 %description
 Optimised functions to read and write int16/32/64 from strings,
@@ -55,6 +62,9 @@ signature files for developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 17 2023 Anton Farygin <rider@altlinux.ru> 1.2-alt2
+- disabled tests for non-native ocaml architectures
+
 * Fri Dec 10 2021 Anton Farygin <rider@altlinux.ru> 1.2-alt1
 - 1.2
 

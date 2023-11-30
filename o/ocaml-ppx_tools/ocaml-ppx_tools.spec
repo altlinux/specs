@@ -1,13 +1,13 @@
 %define libname ppx_tools
 Name: ocaml-%libname
-Version: 6.5
+Version: 6.6
 Release: alt1
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
 Group: Development/ML
 Url: https://github.com/alainfrisch/ppx_tools
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib dune ocaml-cppo
+BuildRequires: dune ocaml-cppo ocaml
 
 %description
 Tools for authors of syntactic tools (such as ppx rewriters).
@@ -46,6 +46,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 14 2023 Anton Farygin <rider@altlinux.ru> 6.6-alt1
+- 6.5 -> 6.6
+
 * Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 6.5-alt1
 - 6.4 - 6.5
 

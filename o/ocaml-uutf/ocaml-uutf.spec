@@ -1,17 +1,17 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-uutf
 Version: 1.0.3
-Release: alt1
+Release: alt2
 Summary: Non-blocking streaming codec for UTF-8, UTF-16, UTF-16LE and UTF-16BE
 License: BSD3
 Group: Development/ML
-Url: http://erratique.ch/software/uutf
+Url: https://erratique.ch/software/uutf
 Source0: %name-%version.tar
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-cmdliner-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-topkg opam
+BuildRequires: rpm-build-ocaml >= 1.6
 
 %description
 Uutf is an non-blocking streaming Unicode codec for OCaml to decode and
@@ -41,27 +41,20 @@ ocaml pkg/pkg.ml build
 
 %install
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml 
+%ocaml_find_files
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md CHANGES.md
-%dir %_libdir/ocaml/uutf
-%_libdir/ocaml/uutf/opam
-%_libdir/ocaml/uutf/META
-%_libdir/ocaml/uutf/*.cma
-%_libdir/ocaml/uutf/*.cmi
-%_libdir/ocaml/uutf/*.cmti
-%_libdir/ocaml/uutf/*.cmxs
 %_bindir/utftrip
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc doc/
 %doc test/
-%_libdir/ocaml/uutf/*.a
-%_libdir/ocaml/uutf/*.cmxa
-%_libdir/ocaml/uutf/*.cmx
-%_libdir/ocaml/uutf/*.mli
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1.0.3-alt2
+- added support for bytecode-only version of the ocaml package- 
+
 * Thu Mar 24 2022 Anton Farygin <rider@altlinux.ru> 1.0.3-alt1
 - 1.0.3
 

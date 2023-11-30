@@ -1,6 +1,6 @@
 %define  modulename domain-name
 Name:    ocaml-%modulename
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 Summary: An OCaml library for RFC 1035 Internet domain names
 License: ISC
@@ -41,6 +41,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 0.4.0-alt1
+- 0.4.0
+
 * Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 0.3.1-alt1
 - 0.3.1
 

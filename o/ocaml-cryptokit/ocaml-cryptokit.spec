@@ -4,8 +4,8 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 1.16.1
-Release: alt2
+Version: 1.18
+Release: alt1
 Group: Development/ML
 Summary: OCaml library of cryptographic and hash functions
 License: LGPLv2 with OCaml-LGPL-linking-exception
@@ -66,6 +66,9 @@ developing applications that use %name.
 %doc README.md Changes
 
 %changelog
+* Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 1.18-alt1
+- 1.18
+
 * Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 1.16.1-alt2
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
 - spec: SPDX the ocaml linking exception in license tag

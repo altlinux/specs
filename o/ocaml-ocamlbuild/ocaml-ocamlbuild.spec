@@ -1,18 +1,24 @@
 %define pkgname ocamlbuild
+%ifarch %ocaml_native_arch
+%define native true
+%else
+%define native false
+%endif
 Name: ocaml-%pkgname
-Version: 0.14.1
-Release: alt1
+Version: 0.14.2
+Release: alt2
 Epoch: 1
-
 Summary: The Objective Caml project compilation tool
-License: Distributable
+License: LGPLv2 with OCaml-LGPL-linking-exception
 Group: Development/ML
 Url: https://github.com/ocaml/ocamlbuild
 
 Source: %name-%version.tar
 Source1: ocaml-ocamlbuild.watch
+Patch0: %name-%version-%release.patch
+BuildRequires: rpm-build-ocaml >= 1.6
 
-BuildRequires: ocaml >= 4.07
+BuildRequires: ocaml >= 4.14
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -31,11 +37,12 @@ This package contains development files for %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %add_optflags -DUSE_NON_CONST -D_FILE_OFFSET_BITS=64
 
-env OCAML_NATIVE=true make configure
+env OCAML_NATIVE=%native make configure
 make
 
 %install
@@ -44,28 +51,26 @@ make install DESTDIR=%buildroot BINDIR=%_bindir LIBDIR=%_libdir/ocaml
 # Remove the META file.  It will be replaced by ocaml-ocamlfind (findlib).
 rm %buildroot%_libdir/ocaml/%pkgname/META
 
-%files
+%ocaml_find_files
+
+%files -f ocaml-files.runtime
 %doc Changes Readme.md LICENSE
 %_bindir/ocamlbuild
 %_bindir/ocamlbuild.byte
+%ifarch %ocaml_native_arch
 %_bindir/ocamlbuild.native
+%endif
 %_mandir/man1/ocamlbuild.1*
-%_libdir/ocaml/ocamlbuild
-%exclude %_libdir/ocaml/ocamlbuild/*.a
-%exclude %_libdir/ocaml/ocamlbuild/*.o
-%exclude %_libdir/ocaml/ocamlbuild/*.cmx
-%exclude %_libdir/ocaml/ocamlbuild/*.cmxa
-%exclude %_libdir/ocaml/ocamlbuild/*.mli
 
-%files devel
-%doc LICENSE
-%_libdir/ocaml/ocamlbuild/*.a
-%_libdir/ocaml/ocamlbuild/*.o
-%_libdir/ocaml/ocamlbuild/*.cmx
-%_libdir/ocaml/ocamlbuild/*.cmxa
-%_libdir/ocaml/ocamlbuild/*.mli
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1:0.14.2-alt2
+- added support for bytecode-only version of the ocaml package
+
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 1:0.14.2-alt1
+- 0.14.2
+
 * Fri Mar 25 2022 Anton Farygin <rider@altlinux.ru> 1:0.14.1-alt1
 - 0.14.1
 

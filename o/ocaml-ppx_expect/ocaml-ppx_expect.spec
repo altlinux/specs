@@ -1,6 +1,6 @@
 %define ocamlmod ppx_expect
 Name: ocaml-%ocamlmod
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 Summary: a cram like framework for OCaml
 Group: Development/ML
@@ -39,14 +39,14 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-%dune_build --release @install
+%dune_build -p %ocamlmod
 
 %install
-%dune_install
+%dune_install %ocamlmod
 
 # tests is broken in upstream
-#%check
-#dune runtest
+#check
+#dune_check -p %ocamlmod
 
 %files -f ocaml-files.runtime
 %doc LICENSE.md
@@ -55,6 +55,9 @@ developing applications that use %name.
 %doc README.org CHANGES.md
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
+- 0.16.0
+
 * Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
 - 0.15.0
 

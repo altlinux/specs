@@ -1,3 +1,12 @@
+# subpackages build order
+# - bootstrap
+# - configurator
+# - private-libs
+# - site
+# - ordering
+# - dyn
+# - stdune
+
 %define dune_pkg bootstrap
 %if "%dune_pkg" != "bootstrap"
 %define subpackagename -%dune_pkg
@@ -11,7 +20,7 @@
 
 Name: dune%subpackagename
 Version: 3.11.1
-Release: alt1
+Release: alt2
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -20,12 +29,25 @@ Source0: dune-%version.tar
 Patch0: dune-%version-%release.patch
 Provides: ocaml-dune = %EVR
 
-BuildRequires: ocaml >= 4.08.0
-BuildRequires: ocaml-findlib-devel
+BuildRequires: ocaml >= 4.14.0
+BuildRequires: rpm-build-ocaml >= 1.5
 BuildRequires: opam
 %if_with subpackage
 BuildRequires: dune
 BuildRequires: ocaml-csexp-devel
+%endif
+
+%if "%dune_pkg" == "bootstrap"
+%package -n emacs-dune
+Summary: Emacs support for Ocaml Dune
+Requires: %name = %EVR
+Requires: emacs-common
+BuildRequires: rpm-build-emacs
+BuildArch: noarch
+Group: Development/ML
+%description -n emacs-dune
+The %{name}-emacs package contains Emacs integration with the dune build
+system, a mode to edit dune files, and flymake support for dune files.
 %endif
 
 %description
@@ -40,6 +62,7 @@ daily by hundred of developers, which means that it is highly tested and
 productive.
 
 %if "%dune_pkg" == "configurator"
+%define pkgname %name
 %package -n ocaml-%name
 Group: Development/ML
 Summary: Helper dune library for gathering system configuration
@@ -57,6 +80,7 @@ Among other things, dune-configurator allows one to:
 %endif
 
 %if "%dune_pkg" == "private-libs"
+%define pkgname %name
 %package -n ocaml-%name
 Group: Development/ML
 Summary: Runtime files for %name
@@ -67,15 +91,60 @@ packages. However, it is not meant for public consumption and provides
 no stability guarantee.
 %endif
 
+%if "%dune_pkg" == "site"
+%define pkgname %name
+%package -n ocaml-%name
+Group: Development/ML
+Summary: Embed location information inside executables and libraries
+Requires: dune = %EVR
+BuildRequires: ocaml-dune-private-libs-devel = %version
+%description -n ocaml-%name
+This library enables embedding location information inside executables
+and libraries.
+%endif
+
+%if "%dune_pkg" == "ordering"
+%define pkgname %dune_pkg
+%package -n ocaml-%dune_pkg
+Group: Development/ML
+Summary: Element ordering
+Requires: dune = %EVR
+%description -n ocaml-%dune_pkg
+Element ordering
+%endif
+
+%if "%dune_pkg" == "dyn"
+%define pkgname %dune_pkg
+%package -n ocaml-%dune_pkg
+Group: Development/ML
+Summary: Dynamic type
+Requires: dune = %EVR
+BuildRequires: ocaml-ordering-devel = %version ocaml-pp-devel
+%description -n ocaml-%dune_pkg
+Dynamic type.
+%endif
+
+%if "%dune_pkg" == "stdune"
+%define pkgname %dune_pkg
+%package -n ocaml-%pkgname
+Group: Development/ML
+Summary: Dune's unstable standard library
+Requires: dune = %EVR
+BuildRequires: ocaml-dune-private-libs-devel = %version ocaml-ordering-devel = %version
+BuildRequires: ocaml-csexp-devel ocaml-pp-devel ocaml-dyn-devel = %version
+%description -n ocaml-%pkgname
+This library offers no backwards compatibility guarantees. Use at your own risk.
+%endif
+
 %if_with subpackage
-%package -n ocaml-%name-devel
+%package -n ocaml-%pkgname-devel
 Summary: Development files for %name
 Group: Development/ML
 Requires: ocaml-result-devel
-Requires: ocaml-%name = %EVR
-%description -n ocaml-%name-devel
-The %name-devel package contains libraries and signature files for
-developing applications that use %name.
+Requires: ocaml-%pkgname = %EVR
+%description -n ocaml-%pkgname-devel
+The ocaml-%pkgname-devel package contains libraries and signature files for
+developing applications that use ocaml-%pkgname.
 %endif
 
 %prep
@@ -96,15 +165,16 @@ sed -i '/^(name/a (version %version)' dune-project
 %if_without subpackage
 %make_build release
 %else
-rm -rf vendor/csexp
-%dune_build -p %name
+rm -rf vendor/csexp vendor/pp
+%dune_build -p %pkgname
 %endif
 
 %install
 %if_with subpackage
-%dune_install %name
+%dune_install %pkgname
 %else
 ./dune.exe install --destdir=%buildroot dune
+%byte_recompile_lispdir
 %endif
 
 %check
@@ -152,21 +222,23 @@ rm -rf vendor/csexp
 %_man1dir/dune-show.1.*
 %_man1dir/dune-shutdown.1.*
 %_man1dir/dune-promotion.1.*
-%endif
 
-%if "%dune_pkg" == "private-libs"
-%files -n ocaml-%name -f ocaml-files.runtime
-%endif
-
-%if "%dune_pkg" == "configurator"
-%files -n ocaml-%name -f ocaml-files.runtime
+%files -n emacs-dune
+%_emacslispdir/*
 %endif
 
 %if_with subpackage
-%files -n ocaml-%name-devel -f ocaml-files.devel
+%files -n ocaml-%pkgname -f ocaml-files.runtime
+
+%files -n ocaml-%pkgname-devel -f ocaml-files.devel
 %endif
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 3.11.1-alt2
+- removed ocaml-findlib-devel from BuildRequires
+- added emacs-dune subpackage
+- built ordering, site, dyn and stdune packages
+
 * Thu Nov 02 2023 Anton Farygin <rider@altlinux.ru> 3.11.1-alt1
 - 2.9.3 -> 3.11.1
 

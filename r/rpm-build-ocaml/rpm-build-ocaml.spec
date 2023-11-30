@@ -1,5 +1,5 @@
 Name: rpm-build-ocaml
-Version: 1.5.0
+Version: 1.6.2
 Release: alt1
 BuildArch: noarch
 
@@ -34,6 +34,16 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Wed Nov 22 2023 Anton Farygin <rider@altlinux.ru> 1.6.2-alt1
+- fixed removal of the dependencies for ocaml symbols without a
+  hash information from the modules
+
+* Sun Nov 19 2023 Anton Farygin <rider@altlinux.ru> 1.6.1-alt1
+- added cmt and cmti files to requires and provides tracking
+
+* Wed Nov 15 2023 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
+- added %%ocaml_native_arch and %%ocaml_find_files
+
 * Wed Nov 08 2023 Anton Farygin <rider@altlinux.ru> 1.5.0-alt1
 - added .o and .cmo files to filelist of the devel package in
   dune_install macros

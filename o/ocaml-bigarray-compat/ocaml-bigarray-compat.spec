@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define  modulename bigarray-compat
 Name:    ocaml-%modulename
-Version: 1.0.0
-Release: alt2
+Version: 1.1.0
+Release: alt1
 Summary: Compatibility library to use Stdlib.Bigarray when possible
 License: ISC
 Group:   Development/ML
@@ -41,6 +41,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+
 * Thu Oct 15 2020 Anton Farygin <rider@altlinux.ru> 1.0.0-alt2
 - migrated to rpm-build-ocaml-1.4
 

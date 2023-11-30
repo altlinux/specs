@@ -1,6 +1,6 @@
 Name: ocaml-ocamlfuse
 Version: 2.7.1
-Release: alt11
+Release: alt12
 Summary: Ocaml FUSE binding
 Group: Development/ML
 License: GPL-2.0
@@ -8,7 +8,7 @@ Url: https://opam.ocaml.org/packages/ocamlfuse/
 # https://github.com/astrada/ocamlfuse
 Source: %name-%version.tar
 BuildRequires: libfuse-devel
-BuildRequires: ocaml ocaml-camlidl ocaml-camlidl-devel ocaml-findlib ocaml-ocamldoc
+BuildRequires: ocaml ocaml-camlidl-devel ocaml-ocamldoc ocaml-findlib
 BuildRequires: ocaml-dune-configurator-devel ocaml-dune-private-libs-devel
 Provides: ocaml-fuse = %EVR
 Obsoletes: ocaml-fuse < %EVR
@@ -39,7 +39,7 @@ developing applications that use %name.
 %dune_build -p ocamlfuse
 
 %install
-%dune_install
+%dune_install ocamlfuse
 
 %files -f ocaml-files.runtime
 %doc LICENSE README.md
@@ -47,6 +47,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 2.7.1-alt12
+- updated to v2.7.1_cvs8
+
 * Wed Mar 17 2021 Anton Farygin <rider@altlinux.org> 2.7.1-alt11
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
 - simplified specfile with macros from rpm-build-ocaml 1.4

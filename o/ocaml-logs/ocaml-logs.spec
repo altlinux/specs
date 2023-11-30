@@ -1,16 +1,17 @@
 %define libname logs
 Name:           ocaml-%libname
 Version:        0.7.0
-Release:        alt1
+Release:        alt2
 Summary:        Logging infrastructure for OCaml
 License:        ISC
 Group:          Development/ML
-Url:            http://erratique.ch/software/logs
-# https://github.com/dbuenzli/logs
+Url:            https://erratique.ch/software/logs
+VCS: https://github.com/dbuenzli/logs
 Source: %name-%version.tar
 
 BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
 BuildRequires: ocaml-fmt ocaml-lwt-devel
+BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 
 %package devel
 Summary: Development files for programs which will use the %name
@@ -40,21 +41,17 @@ ocaml pkg/pkg.ml build --with-js_of_ocaml false \
 %install
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
-%files
-%doc LICENSE.md CHANGES.md README.md
-%_libdir/ocaml/%libname
-%exclude %_libdir/ocaml/%libname/*.a
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.mli
+%ocaml_find_files
 
-%files devel
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.mli
+%files -f ocaml-files.runtime
+%doc LICENSE.md CHANGES.md README.md
+
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 0.7.0-alt2
+- added support for bytecode-only version of the ocaml package
+
 * Tue Mar 23 2021 Anton Farygin <rider@altlinux.org> 0.7.0-alt1
 - 0.7.0
 

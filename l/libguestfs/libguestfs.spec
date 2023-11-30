@@ -31,7 +31,7 @@
 
 Name: libguestfs
 Version: 1.50.1
-Release: alt2
+Release: alt3
 
 Summary: Library for accessing and modifying virtual machine disk images
 License: LGPLv2+
@@ -82,7 +82,7 @@ BuildRequires: libfuse-devel
 
 %if_enabled ocaml
 BuildRequires(pre): rpm-build-ocaml
-BuildRequires: ocaml ocaml-findlib ocaml-gettext-devel ocaml-ounit-devel ocaml-ocamldoc ocaml-ocamlbuild ocaml-hivex-devel ocaml-augeas
+BuildRequires: ocaml ocaml-findlib ocaml-gettext-devel ocaml-ounit-devel ocaml-ocamldoc ocaml-ocamlbuild ocaml-hivex-devel ocaml-augeas-devel
 %endif
 
 %if_enabled python
@@ -489,8 +489,10 @@ fi
 %files -n ocaml-%name
 %_libdir/ocaml/guestfs
 %exclude %_libdir/ocaml/guestfs/*.a
+%ifarch %ocaml_native_arch
 %exclude %_libdir/ocaml/guestfs/*.cmxa
 %exclude %_libdir/ocaml/guestfs/*.cmx
+%endif
 %exclude %_libdir/ocaml/guestfs/*.mli
 %_libdir/ocaml/stublibs/*.so
 %_libdir/ocaml/stublibs/*.so.owner
@@ -498,8 +500,10 @@ fi
 %files -n ocaml-%name-devel
 %doc ocaml/examples/*.ml
 %_libdir/ocaml/guestfs/*.a
+%ifarch %ocaml_native_arch
 %_libdir/ocaml/guestfs/*.cmxa
 %_libdir/ocaml/guestfs/*.cmx
+%endif
 %_libdir/ocaml/guestfs/*.mli
 %_man3dir/guestfs-ocaml.3*
 %endif #ocaml
@@ -557,6 +561,9 @@ fi
 %endif #erlang
 
 %changelog
+* Thu Nov 23 2023 Egor Ignatov <egori@altlinux.org> 1.50.1-alt3
+- support build on architectures without ocamlopt
+
 * Mon Jun 05 2023 Grigory Ustinov <grenka@altlinux.org> 1.50.1-alt2
 - disable tests
 

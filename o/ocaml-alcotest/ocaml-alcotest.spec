@@ -1,7 +1,13 @@
+%ifnarch %ocaml_native_arch
+%define relax_check ||:
+%else
+%define relax_check %nil
+%endif
+
 %define libname alcotest
 Name: ocaml-%libname
-Version: 1.6.0
-Release: alt1
+Version: 1.7.0
+Release: alt2
 Summary: Alcotest is a lightweight and colourful test framework.
 Group: Development/ML
 License: ISC
@@ -49,7 +55,7 @@ rm -rf %buildroot/usr/doc
 
 
 %check
-%dune_check -p %libname
+%dune_check -p %libname %relax_check
 
 %files -f ocaml-files.runtime
 %doc README.md
@@ -57,6 +63,12 @@ rm -rf %buildroot/usr/doc
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1.7.0-alt2
+- relaxed check on architectures without a native compiler
+
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 1.7.0-alt1
+- 1.7.0
+
 * Wed Aug 23 2023 Ildar Mulyukov <ildar@altlinux.ru> 1.6.0-alt1
 - new version
 

@@ -1,16 +1,16 @@
 %def_with check
 Summary: CUDF (Common Upgradeability Description Format) tools and libraries
 Name: cudf
-Version: 0.9
-Release: alt9
-# VCS: https://gitlab.com/irill/cudf.git
+Version: 0.10
+Release: alt1
+VCS: https://gitlab.com/irill/cudf.git
 Source: %name-%version.tar
 Url: https://www.mancoosi.org/cudf/
 License: LGPLv3
 Group: Development/ML
-BuildRequires: ocaml ocaml-findlib ocaml-extlib-devel perl-podlators ocaml-ocamlbuild libncurses-devel glib2-devel
+BuildRequires: ocaml dune ocaml-extlib-devel perl-podlators ocaml-ocamlbuild libncurses-devel glib2-devel
 %if_with check
-BuildRequires: ocaml-ounit
+BuildRequires: ocaml-ounit-devel
 %endif
 
 %description
@@ -38,21 +38,6 @@ documents. In particular it contains cudf-check, which enables checking of
 document properties such as installation consistency and matching of problems
 with their solutions.
 
-%package devel
-Summary: CUDF (Common Upgradeability Description Format) C development stuff
-Group: Development/ML
-
-%description devel
-CUDF (for Common Upgradeability Description Format) is a format for describing
-upgrade scenarios in package-based Free and Open Source Software distribution.
-
-libCUDF is a library to manipulate so called CUDF documents. A CUDF document
-describe an upgrade problem, as faced by package managers in popular
-package-based GNU/Linux distributions.
-
-This package contains the development stuff needed to use libCUDF in your C
-programs.
-
 %package -n ocaml-%name-devel
 Summary: CUDF (Common Upgradeability Description Format) OCaml development stuff
 Group: Development/ML
@@ -72,32 +57,25 @@ programs.
 %setup
 
 %build
-sed -i 's,oUnit,ounit2,' _tags
-make all c-lib
-which /usr/bin/ocamlopt > /dev/null && make opt c-lib-opt
+%dune_build -p cudf
 
 %install
-make install				\
-    DESTDIR="$RPM_BUILD_ROOT"		\
-    LIBDIR="%_libdir"			\
-    OCAMLLIBDIR="%_libdir/ocaml"
+%dune_install
 
 %check
-make test
+%dune_check
 
 %files tools
 %_bindir/cudf-check
 %_bindir/cudf-parse-822
 
-%files devel
-%_includedir/cudf.h
-%_libdir/*.a
-%_libdir/pkgconfig/cudf.pc
-
 %files -n ocaml-%name-devel
 %_libdir/ocaml/cudf
 
 %changelog
+* Sat Jul 15 2023 Anton Farygin <rider@altlinux.ru> 0.10-alt1
+- 0.10
+
 * Mon Dec 13 2021 Anton Farygin <rider@altlinux.ru> 0.9-alt9
 - fixed URL
 - enabled check

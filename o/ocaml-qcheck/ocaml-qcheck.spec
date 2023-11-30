@@ -5,7 +5,7 @@
 
 %define libname qcheck
 Name: ocaml-%libname
-Version: 0.18.1
+Version: 0.21.2
 Release: alt1
 Summary: QuickCheck inspired property-based testing for OCaml
 Group: Development/ML
@@ -15,6 +15,7 @@ Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildRequires: dune
 BuildRequires: ocaml
+BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-ounit-devel
 BuildRequires: ocaml-alcotest-devel
 
@@ -44,7 +45,7 @@ developing applications that use %name.
 rm -rf %buildroot/usr/doc
 
 %check
-sed -i '19d' example/alcotest/output.txt.expected
+#sed -i '19d' example/alcotest/output.txt.expected
 %dune_check
 
 %files -f ocaml-files.runtime
@@ -53,6 +54,9 @@ sed -i '19d' example/alcotest/output.txt.expected
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 0.21.2-alt1
+- 0.21.2
+
 * Mon Feb 21 2022 Anton Farygin <rider@altlinux.ru> 0.18.1-alt1
 - 0.18.1
 

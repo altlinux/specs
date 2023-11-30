@@ -1,7 +1,7 @@
 %define  modulename ppx_module_timer
 
 Name:    ocaml-%modulename
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: Ppx rewriter that records top-level module startup times
@@ -47,6 +47,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
+- 0.16.0
+
 * Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
 - 0.15.0
 

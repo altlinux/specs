@@ -1,12 +1,12 @@
 Name: ocaml-ocamlnet
 Version: 4.1.9
-Release: alt2
+Release: alt3
 Summary: Network protocols for OCaml
 License: BSD
 Group: Development/ML
 
-Url: http://projects.camlcity.org/projects/ocamlnet.html
-# https://gitlab.camlcity.org/gerd/lib-ocamlnet3.git
+Url: https://projects.camlcity.org/projects/ocamlnet.html
+VCS: https://gitlab.com/gerdstolpmann/lib-ocamlnet3.git
 Source0:%name-%version.tar
 
 BuildPreReq: /dev/shm
@@ -20,6 +20,7 @@ BuildRequires: libgnutls-devel libnettle-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libncurses-devel
 BuildRequires: tcl-devel
+BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 
 %global __ocaml_requires_opts -i Asttypes -i Outcometree -i Parsetree
 
@@ -111,7 +112,9 @@ files for developing applications that use %name-nethttpd.
   -enable-zip
 
 make all
+%ifarch %ocaml_native_arch
 make opt
+%endif
 
 %install
 export DESTDIR=$RPM_BUILD_ROOT
@@ -130,63 +133,41 @@ mkdir -p $RPM_BUILD_ROOT/etc/prelink.conf.d
 echo -e '-b /usr/bin/netplex-admin\n-b /usr/bin/ocamlrpcgen' \
   > $RPM_BUILD_ROOT/etc/prelink.conf.d/ocaml-ocamlnet.conf
 
-%files
+%ocaml_find_files
+
+%files -f ocaml-files.runtime
 %doc ChangeLog RELNOTES
-%_libdir/ocaml/equeue
-%_libdir/ocaml/equeue-tcl
-%_libdir/ocaml/netcamlbox
-%_libdir/ocaml/netcgi2
-%_libdir/ocaml/netcgi2-plex
-%_libdir/ocaml/netclient
-%_libdir/ocaml/netgss-system
-%_libdir/ocaml/netmulticore
-%_libdir/ocaml/netplex
-%_libdir/ocaml/netshm
-%_libdir/ocaml/netstring
-%_libdir/ocaml/netstring-pcre
-%_libdir/ocaml/netsys
-%_libdir/ocaml/nettls-gnutls
-%_libdir/ocaml/netunidata
-%_libdir/ocaml/netzip
-%_libdir/ocaml/rpc
-%_libdir/ocaml/rpc-auth-local
-%_libdir/ocaml/rpc-generator
-%_libdir/ocaml/shell
-%exclude %_libdir/ocaml/*/*.a
-%exclude %_libdir/ocaml/*/*.cmxa
-%exclude %_libdir/ocaml/*/*.cmx
-%exclude %_libdir/ocaml/*/*.o
-%exclude %_libdir/ocaml/*/*.mli
-%_libdir/ocaml/stublibs/*.so
-%_libdir/ocaml/stublibs/*.so.owner
 %_datadir/%name/
 %_bindir/netplex-admin
 %_bindir/ocamlrpcgen
 %config(noreplace) /etc/prelink.conf.d/ocaml-ocamlnet.conf
+%exclude %_libdir/ocaml/nethttpd
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc ChangeLog RELNOTES
-%_libdir/ocaml/*/*.a
-%_libdir/ocaml/*/*.cmxa
-%_libdir/ocaml/*/*.cmx
-%_libdir/ocaml/*/*.o
-%_libdir/ocaml/*/*.mli
-%exclude %_libdir/ocaml/nethttpd/*
+%exclude %_libdir/ocaml/nethttpd
 
 %files nethttpd
 %doc ChangeLog RELNOTES
-%_libdir/ocaml/nethttpd
+%_libdir/ocaml/nethttpd/*
+%ifarch %ocaml_native_arch
 %exclude %_libdir/ocaml/nethttpd/*.a
 %exclude %_libdir/ocaml/nethttpd/*.cmxa
+%endif
 %exclude %_libdir/ocaml/nethttpd/*.mli
 
 %files nethttpd-devel
 %doc ChangeLog RELNOTES
+%ifarch %ocaml_native_arch
 %_libdir/ocaml/nethttpd/*.a
 %_libdir/ocaml/nethttpd/*.cmxa
+%endif
 %_libdir/ocaml/nethttpd/*.mli
 
 %changelog
+* Fri Nov 24 2023 Anton Farygin <rider@altlinux.ru> 4.1.9-alt3
+- fixed build with bytecode-only ocaml
+
 * Wed Nov 03 2021 Anton Farygin <rider@altlinux.ru> 4.1.9-alt2
 - disabled gtk2 support
 

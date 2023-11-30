@@ -1,17 +1,17 @@
-%set_verify_elf_method textrel=relaxed
 %define libname uuidm
 Name: ocaml-%libname
-Version: 0.9.7
-Release: alt1
+Version: 0.9.8
+Release: alt2
 Summary: Universally unique identifiers (UUIDs) for OCaml
 License: ISC
 Group: Development/ML
-Url: http://erratique.ch/software/uuidm
-# https://github.com/dbuenzli/uuidm
+Url: https://erratique.ch/software/uuidm
+VCS: https://github.com/dbuenzli/uuidm
 Source: %name-%version.tar
 
 BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
 BuildRequires: ocaml-cmdliner-devel ocaml-result-devel
+BuildRequires: rpm-build-ocaml >= 1.6
 
 %package devel
 Summary: Development files for programs which will use the BOS library
@@ -37,22 +37,21 @@ ocaml pkg/pkg.ml build
 sed -i 's,%%%%VERSION%%%%,%version,g' pkg/META
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
-%files
+%ocaml_find_files
+
+%files -f ocaml-files.runtime
 %doc LICENSE.md CHANGES.md README.md
 %_bindir/uuidtrip
-%_libdir/ocaml/%libname
-%exclude %_libdir/ocaml/%libname/*.a
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.mli
 
-%files devel
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.mli
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 0.9.8-alt2
+- added support for bytecode-only version of the ocaml package
+
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.9.8-alt1
+- 0.9.8
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.9.7-alt1
 - 0.9.7
 

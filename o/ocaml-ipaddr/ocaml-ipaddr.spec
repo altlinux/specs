@@ -1,6 +1,6 @@
 %define  modulename ipaddr
 Name:    ocaml-%modulename
-Version: 5.3.0
+Version: 5.5.0
 Release: alt1
 Summary: An OCaml library for manipulation of IP (and MAC) address representations 
 License: ISC
@@ -32,7 +32,6 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-sed -si 's,oUnit,ounit2,' lib_test/dune
 %dune_build --release @install
 
 %install
@@ -47,6 +46,9 @@ sed -si 's,oUnit,ounit2,' lib_test/dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Nov 08 2023 Anton Farygin <rider@altlinux.ru> 5.5.0-alt1
+- 5.5.0
+
 * Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 5.3.0-alt1
 - 5.3.0
 

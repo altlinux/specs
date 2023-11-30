@@ -1,17 +1,14 @@
 Name: ocaml-ounit
-Version: 2.2.4
-Release: alt3
+Version: 2.2.7
+Release: alt1
 Summary: Unit test framework for OCaml
 Group: Development/ML
 License: MIT
-Url: http://ounit.forge.ocamlcore.org/
-# https://github.com/gildor478/ounit
+Url: https://github.com/gildor478/ounit
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-
-BuildRequires: ocaml-findlib-devel
 BuildRequires: libev-devel
-BuildRequires: dune
+BuildRequires: dune ocaml
 
 %description
 OUnit is a unit test framework for OCaml. It allows one to easily
@@ -48,6 +45,9 @@ developing applications that use %name.
 %doc LICENSE.txt README.md CHANGES.md
 
 %changelog
+* Thu Nov 02 2023 Anton Farygin <rider@altlinux.ru> 2.2.7-alt1
+- 2.2.7
+
 * Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 2.2.4-alt3
 - disabled lwt variant of the ounit2
 

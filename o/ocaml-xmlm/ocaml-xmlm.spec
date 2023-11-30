@@ -1,19 +1,19 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-xmlm
 %global libname %(sed -e 's/^ocaml-//' <<< %name)
 Group: Development/ML
-Version: 1.3.0
-Release: alt5
+Version: 1.4.0
+Release: alt1
 Summary: A streaming XML codec
 License: BSD
 Url: http://erratique.ch/software/xmlm
-# https://github.com/dbuenzli/xmlm
+VCS: https://github.com/dbuenzli/xmlm
 Source0: %name-%version.tar
 BuildRequires: ocaml >= 4.06
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-topkg
 BuildRequires: opam
+BuildRequires: rpm-build-ocaml >= 1.6
 
 %description
 Xmlm is an OCaml streaming codec to decode and encode the XML data
@@ -39,25 +39,19 @@ ocaml ./pkg/pkg.ml build
 %install
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
-%files
+%ocaml_find_files
+
+%files -f ocaml-files.runtime
 %doc README.md LICENSE.md
 %_bindir/xmltrip
-%_libdir/ocaml/xmlm/
-%exclude %_libdir/ocaml/*/*.a
-%exclude %_libdir/ocaml/*/*.cmxa
-%exclude %_libdir/ocaml/*/*.cmxs
-%exclude %_libdir/ocaml/*/*.cmx
-%exclude %_libdir/ocaml/*/*.mli
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc CHANGES.md _build/test/examples.ml _build/test/xhtml.ml doc
-%_libdir/ocaml/*/*.a
-%_libdir/ocaml/*/*.cmxa
-%_libdir/ocaml/*/*.cmxs
-%_libdir/ocaml/*/*.cmx
-%_libdir/ocaml/*/*.mli
 
 %changelog
+* Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 1.3.0-alt5
 - rebuilt with ocaml-4.08
 

@@ -1,16 +1,12 @@
 Name: ocaml-extlib
-Version: 1.7.8
-Release: alt2
+Version: 1.7.9
+Release: alt1
 Summary: extended standard library for OCaml
 License: LGPLv2 with OCaml-LGPL-linking-exception
 Group: Development/ML
-Url: http://code.google.com/p/ocaml-extlib/
-# https://github.com/ygrek/ocaml-extlib
+Url: https://github.com/ygrek/ocaml-extlib
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
-Requires: ocaml-runtime
-BuildRequires: rpm-build-ocaml ocaml-ocamldoc ocaml-findlib ocaml-cppo
+BuildRequires: rpm-build-ocaml ocaml-cppo dune ocaml
 
 %description
 ExtLib is a project aiming at providing a complete - yet small - standard
@@ -39,37 +35,26 @@ developing applications that use %name.
 
 %prep
 %setup
-pushd src
-%patch0 -p1
-popd
 
 %build
-%make
-%make doc
+%dune_build
 
 %install
-mkdir -p %buildroot%_libdir/ocaml
-%makeinstall OCAMLFIND_INSTFLAGS="-destdir %buildroot%_libdir/ocaml/"
+%dune_install
 
 %check
-make test
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md LICENSE
-%_libdir/ocaml/extlib
-%exclude %_libdir/ocaml/extlib/*.a
-%exclude %_libdir/ocaml/extlib/*.cmxa
-%exclude %_libdir/ocaml/extlib/*.cmx
-%exclude %_libdir/ocaml/extlib/*.mli
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc CHANGES
-%_libdir/ocaml/extlib/*.a
-%_libdir/ocaml/extlib/*.cmxa
-%_libdir/ocaml/extlib/*.cmx
-%_libdir/ocaml/extlib/*.mli
 
 %changelog
+* Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 1.7.9-alt1
+- 1.7.9
+
 * Wed May 19 2021 Anton Farygin <rider@altlinux.ru> 1.7.8-alt2
 - fixed typo in install section
 

@@ -1,6 +1,6 @@
 %define  modulename ppx_base
 Name:    ocaml-%modulename
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: Base set of ppx rewriters
@@ -12,6 +12,7 @@ BuildRequires: ocaml-ppx_enumerate-devel ocaml-ppx_cold-devel
 BuildRequires: ocaml-base-devel ocaml-ppxlib-devel
 BuildRequires: ocaml-ppx_sexp_conv-devel ocaml-ppx_compare-devel
 BuildRequires: ocaml-octavius-devel
+BuildRequires: ocaml-ppx_globalize-devel
 
 Source:  %modulename-%version.tar
 
@@ -23,6 +24,7 @@ Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %EVR
 Requires: ocaml-ppxlib-devel
+Requires: ocaml-ppx_globalize-devel
 Requires: ocaml-ppx_cold-devel
 Requires: ocaml-ppx_sexp_conv-devel
 Requires: ocaml-ppx_compare-devel
@@ -52,6 +54,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
+- 0.16.0
+
 * Sun Jan 09 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
 - 0.15.0
 

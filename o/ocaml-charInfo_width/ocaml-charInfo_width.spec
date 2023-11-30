@@ -1,20 +1,30 @@
-%set_verify_elf_method textrel=relaxed
-Name: ocaml-charInfo_width
-Version: 1.1.0
+%def_with check
+%define pkgname charInfo_width
+Name: ocaml-%pkgname
+Version: 2.0.0
 Release: alt1
 Summary: Determine column width for a character
-
 Group: Development/ML
 License: MIT
 Url: https://bitbucket.org/zandoye/charinfo_width/
 Source: %name-%version.tar
 
-BuildRequires: dune ocaml-camomile ocaml-result
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildRequires: dune
+BuildRequires: ocaml-camomile-devel
+BuildRequires: ocaml-result-devel
+BuildPreReq: rpm-build-ocaml >= 1.4
+%if_with check
+BuildRequires: ocaml-ppx_expect-devel
+BuildRequires: ocaml-ppx_sexp_conv-devel
+BuildRequires: ocaml-ppx_compare-devel
+BuildRequires: ocaml-ppx_enumerate-devel
+BuildRequires: ocaml-ppx_hash-devel
+BuildRequires: ocaml-camlp-streams-devel
+%endif
 
 %description
-%summary.
+This module is implemented purely in OCaml and the width function follows the
+prototype of POSIX's wcwidth.
 
 %package devel
 Summary: Development files for %name
@@ -29,28 +39,21 @@ developing applications that use %name.
 %setup
 
 %build
-dune build
+%dune_build -p %pkgname
 
 %install
-dune install --destdir=%buildroot
+%dune_install %pkgname
 
-%files
-%dir %_libdir/ocaml/charInfo_width
-%_libdir/ocaml/charInfo_width*/META
-%_libdir/ocaml/charInfo_width*/*.cma
-%_libdir/ocaml/charInfo_width*/*.cmi
-%_libdir/ocaml/charInfo_width*/*.cmxs
+%check
+%dune_check -p %pkgname
 
-%files devel
-%_libdir/ocaml/charInfo_width*/dune-package
-%_libdir/ocaml/charInfo_width*/opam
-%_libdir/ocaml/charInfo_width*/*.a
-%_libdir/ocaml/charInfo_width*/*.cmt*
-%_libdir/ocaml/charInfo_width*/*.cmxa
-%_libdir/ocaml/charInfo_width*/*.cmx
-%_libdir/ocaml/charInfo_width*/*.mli
-%_libdir/ocaml/charInfo_width*/*.ml
+%files -f ocaml-files.runtime
+
+%files devel -f ocaml-files.devel
 
 %changelog
+* Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+
 * Sun Jun 21 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus

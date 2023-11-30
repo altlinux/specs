@@ -1,5 +1,5 @@
 Name: ocaml-menhir
-Version: 20211230
+Version: 20230608
 Release: alt1
 Summary: LR(1) parser generator for the OCaml programming language.
 
@@ -48,6 +48,9 @@ replacing all calls to module Parsing with new Menhir-specific keywords.
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 20230608-alt1
+- 20211230 -> 20230608
+
 * Wed Jan 05 2022 Anton Farygin <rider@altlinux.ru> 20211230-alt1
 - 20211012 -> 20211230
 

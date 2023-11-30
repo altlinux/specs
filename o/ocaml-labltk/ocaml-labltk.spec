@@ -2,20 +2,21 @@
 %define pkgname labltk
 
 Name: ocaml-%pkgname
-Version: 8.06.11
-Release: alt1
+Version: 8.06.13
+Release: alt2
 
 Summary: Tcl/Tk interface for OCaml
 Group: Development/ML
 
-License: LGPLv2+ with exceptions
-
-Url: https://forge.ocamlcore.org/projects/labltk/
+License: LGPL-2.1-or-later WITH OCaml-LGPL-linking-exception
+Url: https://garrigue.github.io/labltk/
+VCS: https://github.com/garrigue/labltk
 Source: %name-%version.tar
 Conflicts: labltk
 Obsoletes: %name-runtime < %EVR
 Provides: %name-runtime = %EVR
 BuildRequires: ocaml >= 4.12
+BuildRequires: rpm-build-ocaml >= 1.6
 BuildRequires: tcl-devel, tk-devel
 
 %description
@@ -38,22 +39,12 @@ object-oriented programming language from the ML family of languages.
 LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
 contains files needed to develop OCaml programs using LablTk.
 
-
-%package -n ocaml-ocamlbrowser
-Summary: OCaml interface browser
-Group: Development/ML
-Requires: %name = %EVR
-Conflicts: ocamlbrowser
-
-%description -n ocaml-ocamlbrowser
-Objective Caml is a high-level, strongly-typed, functional and
-object-oriented programming language from the ML family of languages.
-
-This package provides OCamlBrowser, a source and compiled interface
-browser, written using LablTk.
-
 %prep
 %setup -q
+# don't build browser
+mv browser browser.old
+mkdir browser
+echo -e 'all:\ninstall:\n' > browser/Makefile
 
 %build
 
@@ -61,7 +52,9 @@ find -type f | xargs sed -i -e 's/-warn-error/-w/g'
 export MAKE='make --no-print-directory' 
 ./configure --verbose 
 make all SHAREDCCCOMPOPTS='%optflags -fPIC'
+%ifarch %ocaml_native_arch
 make opt
+%endif
 
 %install
 mkdir -p %buildroot%_bindir
@@ -73,25 +66,24 @@ make install \
     INSTALLDIR=%buildroot%_libdir/ocaml/labltk \
     STUBLIBDIR=%buildroot%_libdir/ocaml/stublibs
 
-%files devel
+%ocaml_find_files
+
+%files devel -f ocaml-files.devel
 %doc Changes README.mlTk
 %_bindir/labltk
-%_libdir/ocaml/labltk
-%exclude %_libdir/ocaml/labltk/*.cmi
-%exclude %_libdir/ocaml/labltk/*.cma
-%exclude %_libdir/ocaml/labltk/*.cmo
-%exclude %_libdir/ocaml/labltk/*.cmx
+%_ocamldir/labltk/labltktop
+%_ocamldir/labltk/pp
+%_ocamldir/labltk/tkcompiler
 
-%files 
-%_libdir/ocaml/stublibs/dlllabltk.so
-%_libdir/ocaml/labltk/*.cmi
-%_libdir/ocaml/labltk/*.cma
-%_libdir/ocaml/labltk/*.cmo
-
-%files -n ocaml-ocamlbrowser
-%_bindir/ocamlbrowser
+%files -f ocaml-files.runtime
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 8.06.13-alt2
+- added support for bytecode-only version of the ocaml package
+
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 8.06.13-alt1
+- 8.06.13
+
 * Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 8.06.11-alt1
 - 8.06.11
 

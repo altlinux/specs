@@ -1,18 +1,21 @@
 %define module camlp5
 Name: ocaml-camlp5
-Version: 8.00.03
+Version: 8.02.01
 Release: alt1
 
 Summary: preprocessor-pretty-printer of OCaml
-License: BSD-style
+License: BSD-3-Clause
 Group: Development/ML
 Url: https://camlp5.github.io/
 
 Source: %name-%version.tar
 Provides: camlp5 = %EVR
 Obsoletes: camlp5 < %EVR
-BuildRequires: ocaml >= 4.08.1 ocaml-findlib
+BuildRequires: ocaml >= 4.08.1 ocaml-findlib ocaml-camlp-streams-devel
+BuildRequires: ocaml-rresult-devel ocaml-bos-devel ocaml-re-devel ocaml-fmt-devel
+BuildRequires: ocaml-astring-devel ocaml-fpath-devel
 BuildRequires: perl-IPC-System-Simple perl-String-ShellQuote
+BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 
 %description
 Camlp5 is a preprocessor-pretty-printer of OCaml.
@@ -25,13 +28,25 @@ compilation of older packages (e.g. ocamlnet).
 %setup -q
 
 %build
-./configure --strict --mandir %_mandir
+./configure --strict \
+	    --mandir %_mandir \
+%ifnarch %ocaml_native_arch
+	    --no-opt \
+	    %nil
+%make world
+%else
+            %nil
 %make world.opt
+%endif
 
 %install
+mkdir -p %buildroot%_ocamldir
 %make_install DESTDIR=%buildroot install
 
-install -p -m644 compile/pa_o_fast.cmi %buildroot%_libdir/ocaml/%module/
+%ifarch %ocaml_native_arch
+install -p -m644 compile/pa_o_fast.cmi %buildroot%_ocamldir/%module/
+%endif
+
 
 %files
 %_bindir/%{module}*
@@ -41,6 +56,10 @@ install -p -m644 compile/pa_o_fast.cmi %buildroot%_libdir/ocaml/%module/
 %_man1dir/*5*.1*
 
 %changelog
+* Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 8.02.01-alt1
+- 8.02.01
+- added support to build without native ocaml
+
 * Wed Mar 30 2022 Anton Farygin <rider@altlinux.ru> 8.00.03-alt1
 - 8.00.03
 

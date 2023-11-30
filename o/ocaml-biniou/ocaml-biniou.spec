@@ -1,19 +1,17 @@
-%set_verify_elf_method textrel=relaxed
 %define ocamlmod biniou
-
 Name: ocaml-%ocamlmod
-Version: 1.2.1
-Release: alt3
+Version: 1.2.2
+Release: alt1
 Summary: Safe and fast binary data format
 Group: Development/ML
-License: BSD
-Url: http://mjambon.com/biniou.html
-# https://github.com/mjambon/biniou
+License: BSD-3-Clause
+Url:https://github.com/mjambon/biniou
 Source0:%name-%version.tar
 
-BuildRequires: ocaml >= 4.08
+BuildRequires: ocaml >= 4.14
 BuildRequires: ocaml-easy-format-devel
 BuildRequires: ocaml-ocamldoc
+BuildRequires: ocaml-camlp-streams-devel
 BuildRequires: dune opam
 
 %description
@@ -61,6 +59,10 @@ mv %buildroot%_bindir/{,ocaml-}bdump
 %_bindir/ocaml-bdump
 
 %changelog
+* Wed Nov 08 2023 Anton Farygin <rider@altlinux.ru> 1.2.2-alt1
+- 1.2.2
+- fixed License and Url tags
+
 * Fri Sep 18 2020 Anton Farygin <rider@altlinux.ru> 1.2.1-alt3
 - migrated to rpm-build-ocaml 1.4
 

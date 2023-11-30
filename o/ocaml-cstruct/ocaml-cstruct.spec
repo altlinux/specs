@@ -1,9 +1,7 @@
 %define  modulename cstruct
-
-# TODO: async
 %define opamodules cstruct,cstruct-unix,cstruct-lwt,cstruct-sexp
 Name:    ocaml-%modulename
-Version: 6.0.1
+Version: 6.2.0
 Release: alt1
 Summary: access C-like structures directly from OCaml
 License: ISC
@@ -20,7 +18,7 @@ BuildRequires: ocaml-alcotest-devel
 BuildRequires: ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-alcotest-devel
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildRequires(pre): rpm-build-ocaml >= 1.6
 
 %description
 Cstruct is a library and syntax extension to make it easier to access C-like
@@ -56,6 +54,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 03 2023 Anton Farygin <rider@altlinux.ru> 6.2.0-alt1
+- 6.2.0
+
 * Tue Sep 14 2021 Anton Farygin <rider@altlinux.ru> 6.0.1-alt1
 - 6.0.1
 

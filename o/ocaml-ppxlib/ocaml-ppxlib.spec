@@ -17,8 +17,8 @@
 %endif
 
 Name: ocaml-%libname
-Version: 0.24.0
-Release: alt1.1
+Version: 0.31.0
+Release: alt1
 Summary: Base library and tools for ppx rewriters.
 License: MIT
 Group: Development/ML
@@ -46,7 +46,7 @@ A comprehensive toolbox for ppx development. It features:
 Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %version-%release
-Requires: ocaml-result-devel
+Requires: ocaml-result-devel ocaml-ppx_derivers-devel
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -58,10 +58,10 @@ developing applications that use %name.
 
 %build
 sed -i 's/ stdlib-shims//' */dune */*/dune
-%dune_build -p %libname
+%dune_build -p %libname @install
 
 %install
-%dune_install
+%dune_install %libname
 rm -rf %buildroot%_bindir
 
 %check
@@ -70,10 +70,12 @@ rm -rf %buildroot%_bindir
 %files -f ocaml-files.runtime
 %doc README.md LICENSE.md CHANGES.md
 
-
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.31.0-alt1
+- 0.31.0
+
 * Thu Jul 27 2023 Ivan A. Melnikov <iv@altlinux.org> 0.24.0-alt1.1
 - NMU: replace deprecated egrep with grep -E in tests to fix FTBFS
 

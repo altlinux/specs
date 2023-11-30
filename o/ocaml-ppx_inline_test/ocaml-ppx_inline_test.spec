@@ -1,6 +1,6 @@
 %define ocamlmod ppx_inline_test
 Name: ocaml-%ocamlmod
-Version: 0.15.0
+Version: 0.16.1
 Release: alt1
 Summary: Syntax extension for writing in-line tests in ocaml code
 Group: Development/ML
@@ -49,6 +49,9 @@ developing applications that use %name.
 %doc README.md CHANGES.md
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.1-alt1
+- 0.16.1
+
 * Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
 - 0.15.0
 

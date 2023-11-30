@@ -1,16 +1,17 @@
 %define libname bos
 Name:           ocaml-%libname
 Version:        0.2.1
-Release:        alt1
+Release:        alt2
 Summary:        Basic OS interaction for OCaml
 License:        ISC
 Group:          Development/ML
-Url:            http://erratique.ch/software/bos
-# https://github.com/dbuenzli/bos
+Url:            https://erratique.ch/software/bos
+VCS: https://github.com/dbuenzli/bos
 Source: %name-%version.tar
 
 BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
 BuildRequires: ocaml-astring ocaml-rresult ocaml-fpath ocaml-fmt ocaml-logs-devel
+BuildRequires(pre): rpm-build-ocaml >= 1.6
 
 %package devel
 Summary: Development files for programs which will use the BOS library
@@ -37,22 +38,17 @@ ocaml pkg/pkg.ml build
 %install
 sed -i 's,%%%%VERSION_NUM%%%%,%version,g' pkg/META
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+%ocaml_find_files
 
-%files
+%files -f ocaml-files.runtime
 %doc LICENSE.md CHANGES.md README.md
-%_libdir/ocaml/%libname
-%exclude %_libdir/ocaml/%libname/*.a
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.mli
 
-%files devel
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.mli
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 0.2.1-alt2
+- added support for bytecode-only version of the ocaml package
+
 * Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 0.2.1-alt1
 - 0.2.1
 

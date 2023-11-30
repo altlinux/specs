@@ -1,5 +1,5 @@
 Name: utop
-Version: 2.9.1
+Version: 2.13.1
 Release: alt1
 Summary: Universal toplevel for OCaml
 
@@ -7,10 +7,17 @@ Group: Development/ML
 License: MIT
 Url: https://github.com/ocaml-community/utop
 Source: %name-%version.tar
-
-BuildRequires: dune ocaml-cppo ocaml-lambda-term ocaml-findlib
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+Provides: ocaml-%name = %EVR
+BuildRequires: dune ocaml-cppo 
+BuildRequires: ocaml-xdg-devel
+BuildRequires: ocaml-findlib-devel
+BuildRequires: ocaml-alcotest-devel
+BuildRequires: ocaml-lambda-term-devel
+BuildRequires: ocaml-lwt-devel
+BuildRequires: ocaml-zed-devel
+BuildRequires: ocaml-logs-devel
+BuildRequires: libev-devel
+BuildPreReq: rpm-build-ocaml >= 1.4
 
 %description
 utop is an improved toplevel (i.e., Read-Eval-Print Loop) for OCaml.
@@ -49,6 +56,9 @@ sed -i 's/%%%%VERSION%%%%/%version/' src/lib/uTop.ml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 2.13.1-alt1
+- 2.13.1
+
 * Tue Mar 29 2022 Anton Farygin <rider@altlinux.ru> 2.9.1-alt1
 - 2.9.1
 

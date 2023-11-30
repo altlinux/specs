@@ -1,6 +1,5 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-camomile
-Version: 1.0.2
+Version: 2.0.0
 Release: alt1
 Summary: Unicode library for OCaml
 License: LGPLv2+
@@ -8,10 +7,10 @@ Group: Development/ML
 Url: https://github.com/yoriyuki/Camomile
 Source0: %name-%version.tar
 BuildRequires: ocaml >= 4.08
-BuildRequires: ocaml-findlib-devel
-BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-cppo
-BuildRequires: dune opam
+BuildRequires: dune
+BuildRequires: ocaml-stdlib-random-devel
+BuildRequires: ocaml-dune-site-devel
+BuildRequires: ocaml-camlp-streams-devel
 Requires: %name-data = %EVR
 
 %description
@@ -31,6 +30,7 @@ developing applications that use %name.
 
 %package data
 Group: Development/ML
+Requires: %name = %EVR
 Summary: Data files for %name
 
 %description data
@@ -46,42 +46,26 @@ applications that use %name.
 ulimit -Hs 65536
 ulimit -Ss 65536
 %endif
-dune build --verbose --profile release
+%dune_build
 
 %install
-dune install \
-         --destdir=%buildroot \
-         --libdir=%_libdir/ocaml \
-         --verbose \
-         --profile release
-
-rm -rf %buildroot/usr/doc
-
-# Install the *.mli files by hand.
-cp _build/install/default/lib/camomile/library/*.mli %buildroot%_libdir/ocaml/camomile/
+%dune_install
 
 %check
-# broken in 1.0.2
-# dune runtest --profile release
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md CHANGES.md LICENSE.md
-%_libdir/ocaml/camomile
-%exclude %_libdir/ocaml/camomile/*.a
-%exclude %_libdir/ocaml/camomile/*.cmxa
-%exclude %_libdir/ocaml/camomile/*.cmx
-%exclude %_libdir/ocaml/camomile/*.mli
 
-%files devel
-%_libdir/ocaml/camomile/*.a
-%_libdir/ocaml/camomile/*.cmxa
-%_libdir/ocaml/camomile/*.cmx
-%_libdir/ocaml/camomile/*.mli
+%files devel -f ocaml-files.devel
 
 %files data
 %_datadir/camomile/
 
 %changelog
+* Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+
 * Wed Aug 14 2019 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 

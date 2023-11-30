@@ -5,13 +5,13 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 0.9.1
+Version: 0.9.2
 Release: alt2
 Summary: OCaml Curl library (ocurl)
 License: MIT
 Group: Development/ML
-Url: http://ocurl.forge.ocamlcore.org/
-# https://github.com/ygrek/ocurl
+Url: https://ygrek.org/p/ocurl/
+VCS: https://github.com/ygrek/ocurl
 Source0: %name-%version.tar
 
 BuildRequires: ocaml ocaml-findlib libcurl-devel
@@ -31,6 +31,10 @@ developing applications that use %name.
 
 %prep
 %setup
+
+%ifnarch %ocaml_native_arch
+sed -i 's/ curl_lwt\$(EXT_OBJ)//;s/ curl\$(EXT_LIB)//' Makefile.in
+%endif
 
 %build
 # Parallel builds don't work.
@@ -53,18 +57,24 @@ make install
 # Make clean in the examples dir so our docs don't contain binaries.
 make -C examples clean
 
-%files
+%ocaml_find_files
+
+%files -f ocaml-files.runtime
 %doc COPYING
-%pkgsitelib
-%exclude %pkgsitelib/*.mli
-%ocamlstublib/*.so
 %ocamlstublib/*.so.owner
 
-%files devel
+
+%files devel -f ocaml-files.devel
 %doc examples/*
-%pkgsitelib/*.mli
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 0.9.2-alt2
+- added support for bytecode-only version of the ocaml package
+- fixed URL and VCS tags
+
+* Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 0.9.2-alt1
+- 0.9.2
+
 * Sat Sep 18 2021 Anton Farygin <rider@altlinux.ru> 0.9.1-alt2
 - fixed build with enabled LTO
 

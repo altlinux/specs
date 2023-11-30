@@ -1,17 +1,22 @@
-%set_verify_elf_method textrel=relaxed
-Name: ocaml-expat
-Version: 1.1.0
-Release: alt5
+%global pkgname expat
+%define ocamlsitelib %_libdir/ocaml
+%define pkgsitelib %ocamlsitelib/%pkgname
+%define ocamlstublib %_libdir/ocaml/stublibs
+Name: ocaml-%pkgname
+Version: 1.3.0
+Release: alt2
 Summary: OCaml wrapper for the Expat XML parsing library
 License: MIT
 Group: Development/ML
 
-Url: http://www.xs4all.nl/~mmzeeman/ocaml/
+Url: https://mmzeeman.home.xs4all.nl/ocaml/
+VCS: https://github.com/whitequark/ocaml-expat
 Source0: %name-%version.tar
 
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib-devel, libexpat-devel, chrpath
-BuildRequires: util-linux-ng, gawk
+BuildRequires: ocaml-findlib-devel, libexpat-devel
+BuildRequires: chrpath
+BuildRequires: rpm-build-ocaml >= 1.6
 
 %description
 An ocaml wrapper for the Expat XML parsing library. It allows you to
@@ -33,35 +38,33 @@ developing applications that use %name.
 %build
 make depend
 make all \
+%ifarch %ocaml_native_arch
   allopt \
   OCAMLC="ocamlc.opt -g" \
   OCAMLOPT="ocamlopt.opt -g"
+%endif
 
 %install
-export DESTDIR=$RPM_BUILD_ROOT
-export OCAMLFIND_DESTDIR=$RPM_BUILD_ROOT%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
-make install
+export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
+mkdir -p $OCAMLFIND_DESTDIR/stublibs
+%makeinstall_std
+chrpath -d %buildroot%ocamlstublib/*.so
 
-# Remove rpath from stublibs .so file.
-chrpath --delete $RPM_BUILD_ROOT%_libdir/ocaml/stublibs/*.so
+%ocaml_find_files
 
-%files
+%files -f ocaml-files.runtime
 %doc LICENCE README changelog
-%_libdir/ocaml/expat
-%_libdir/ocaml/stublibs/*.so
-%_libdir/ocaml/stublibs/*.so.owner
-%exclude %_libdir/ocaml/expat/*.a
-%exclude %_libdir/ocaml/expat/*.cmxa
-%exclude %_libdir/ocaml/expat/*.mli
+%ocamlstublib/*.so.owner
 
-%files devel
-%doc LICENCE README changelog
-%_libdir/ocaml/expat/*.a
-%_libdir/ocaml/expat/*.cmxa
-%_libdir/ocaml/expat/*.mli
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1.3.0-alt2
+- added support for bytecode-only version of the ocaml package
+
+* Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 1.3.0-alt1
+- 1.3.0
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.1.0-alt5
 - rebuilt with ocaml-4.08
 

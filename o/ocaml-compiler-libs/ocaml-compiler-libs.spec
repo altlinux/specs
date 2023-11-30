@@ -1,13 +1,13 @@
 %define libname ocaml-compiler-libs
 Name: %libname
 Version: 0.12.4
-Release: alt1
+Release: alt2
 Summary: OCaml compiler libraries repackaged
 License: Apache-2.0
 Group: Development/ML
 Url: https://github.com/janestreet/ocaml-compiler-libs
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel dune 
+BuildRequires: dune ocaml
 
 %description
 This packages exposes the OCaml compiler libraries repackages under the toplevel
@@ -37,6 +37,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.12.4-alt2
+- fixed buildrequires 
+
 * Mon Sep 06 2021 Anton Farygin <rider@altlinux.ru> 0.12.4-alt1
 - 0.12.4
 

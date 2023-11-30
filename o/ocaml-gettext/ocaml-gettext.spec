@@ -2,21 +2,24 @@
 %define ocamlmodule gettext
 Name: ocaml-%ocamlmodule
 Version: 0.4.2
-Release: alt3
+Release: alt4
 Summary: OCaml library for i18n
 Group: Development/ML
 License: LGPLv2+ with OCaml-LGPL-linking-exception
 Url: https://github.com/gildor478/ocaml-gettext
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: ocaml-dune-configurator-devel
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-cppo
+BuildRequires: ocaml-camlp-streams-devel
 BuildRequires: ocaml-camomile-devel
 BuildRequires: ocaml-fileutils-devel >= 0.4.4
 BuildRequires: docbook-style-xsl
 BuildRequires: xsltproc
 BuildRequires: libxml2
 %if_with check
+BuildRequires: ocaml-dune-site-devel
 BuildRequires: ocaml-ounit-devel
 %endif
 
@@ -43,6 +46,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %dune_build --release @install
@@ -65,6 +69,11 @@ find test -type f -name dune -exec sed -i 's,oUnit,ounit2,' {} \;
 %_man5dir/*.5*
 
 %changelog
+* Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 0.4.2-alt4
+- ported to camomile 2
+- replaced ounit to ounit2
+- added commits from upstream PR 28 and 24 against ocaml 5
+
 * Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 0.4.2-alt3
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
 - spec: use SPDX for ocaml linking exception in license tag

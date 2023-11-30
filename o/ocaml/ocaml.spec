@@ -1,13 +1,23 @@
-# fix for build on armv7
-%remove_optflags -fomit-frame-pointer
-%ifnarch %ix86 %arm
+# enabled LTO leads to a  slowdown
+%define optflags_lto %nil
+# with enabled WAll two tests fall
+%define optflags_warnings %nil
+
+%ifarch %ocaml_native_arch
+%def_with nativeocaml
 %def_with check
 %else
+%def_without nativeocaml
 %def_without check
 %endif
 
+# https://github.com/ocaml/ocaml/issues/9050
+%filter_from_requires /Backend_intf/d
+%filter_from_requires /Inlining_decision_intf/d
+%filter_from_requires /Simplify_boxed_integer_ops_intf/d
+
 Name: ocaml
-Version: 4.13.1
+Version: 4.14.1
 Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
@@ -19,11 +29,13 @@ Source0: %name-%version.tar
 Source1: ocaml-reqprov.ml
 
 Patch1: ocaml-3.12.1-alt-stdlib-pdf.patch
-Patch2: ocaml-4.13-alt-mk-reqprov.patch
+Patch2: ocaml-4.14-alt-mk-reqprov.patch
+Patch3: ocaml-4.14.1-more-source-artifacts.patch
 Patch4: ocaml-4.11.1-RH-configure-Allow-user-defined-C-compiler-flags.patch
+Patch5: ocaml-4.14.1-alt-ocamldoc-install-all-cmti.patch
 
-Requires: rpm-build-ocaml >= 1.4
-BuildRequires(pre): rpm-build-ocaml >= 1.1.1
+Requires: rpm-build-ocaml >= 1.6.1
+BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 
 Conflicts: ocaml4
 Obsoletes: ocaml4
@@ -75,33 +87,38 @@ from special comments embedded in source files.
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
-%add_optflags -DUSE_NON_CONST -D_FILE_OFFSET_BITS=64
+install -pD -m644 %SOURCE1 tools/reqprov.ml
+%add_optflags -D_FILE_OFFSET_BITS=64
 ./configure \
-	OC_CFLAGS="$CFLAGS" \
-	OC_LDFLAGS="$LDFLAGS"  \
+	CFLAGS="%optflags" \
 	-bindir %_bindir \
 	-libdir %_libdir/ocaml \
 	-mandir %_mandir \
+%if_without nativeocaml
+	--disable-native-compiler \
+%endif
 %if_with check
         --enable-ocamltest \
 %endif
 	%nil
 
-%make_build world.opt
+%make_build world
+
+%if_with nativeocaml
 %make_build opt
 %make_build opt.opt
-
-install -pD -m644 %SOURCE1 tools/reqprov.ml
-make -C tools reqprov
+%endif
 
 %install
 make install DESTDIR=%buildroot
 perl -pi -e "s|%buildroot||" %buildroot%_libdir/ocaml/ld.conf
 
-install -pD -m755 tools/reqprov %buildroot%_rpmlibdir/ocaml-reqprov
+install -pD -m755 tools/ocamlreqprov %buildroot%_rpmlibdir/ocaml-reqprov
 
 %check
 pushd testsuite
@@ -119,7 +136,6 @@ popd
 %_libdir/ocaml/camlheader
 %_libdir/ocaml/camlheader_ur
 %_libdir/ocaml/expunge
-%_libdir/ocaml/extract_crc
 %_libdir/ocaml/*.*
 %exclude %_libdir/ocaml/ld.conf
 %_libdir/ocaml/caml/
@@ -132,10 +148,12 @@ popd
 %_libdir/ocaml/compiler-libs/*.cmi
 %_libdir/ocaml/compiler-libs/*.cmo
 %_libdir/ocaml/compiler-libs/*.cma
+%if_with nativeocaml
 %_libdir/ocaml/compiler-libs/*.a
 %_libdir/ocaml/compiler-libs/*.cmxa
 %_libdir/ocaml/compiler-libs/*.cmx
 %_libdir/ocaml/compiler-libs/*.o
+%endif
 
 %files runtime
 %_bindir/ocamlrun
@@ -147,7 +165,6 @@ popd
 %_libdir/ocaml/stublibs/dllunix.so
 %_libdir/ocaml/camlheaderd
 %_libdir/ocaml/camlheaderi
-
 %dir %_libdir/ocaml/stublibs
 %_rpmlibdir/ocaml-reqprov
 
@@ -157,6 +174,11 @@ popd
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Fri Nov 03 2023 Anton Farygin <rider@altlinux.ru> 4.14.1-alt1
+- 4.14.1
+- new implementaion of the ocaml-reqprov
+- added support for bytecode-only build of the ocaml
+
 * Mon Oct 25 2021 Anton Farygin <rider@altlinux.ru> 4.13.1-alt1
 - 4.13.1
 

@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: ocaml-parmap
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 Summary: Small OCaml library allowing to exploit multicore architectures
 Group: Development/ML
@@ -17,12 +17,7 @@ Source0: %name-%version.tar
 BuildRequires(pre): rpm-build-ocaml
 BuildRequires: dune
 BuildRequires: ocaml
-BuildRequires: ocaml-configurator
-BuildRequires: ocaml-csexp-devel
 BuildRequires: ocaml-dune-configurator-devel
-BuildRequires: ocaml-findlib
-BuildRequires: ocaml-ocamlbuild
-BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-result-devel
 
 %description
@@ -53,26 +48,16 @@ developing applications that use %name.
 # fastest test just to be sure parmap is working at all.
 dune exec -p parmap tests/simplescalefold.exe
 
-%files
+%files -f ocaml-files.runtime
 %_docdir/parmap
-%_libdir/ocaml/parmap/*.cmi
-%_libdir/ocaml/parmap/*.cma
-%_libdir/ocaml/parmap/*.cmxs
 %_libdir/ocaml/stublibs/dllparmap_stubs.so*
 
-%files devel
-%_libdir/ocaml/parmap/META
-%_libdir/ocaml/parmap/opam
-%_libdir/ocaml/parmap/dune-package
-%_libdir/ocaml/parmap/*.a
-%_libdir/ocaml/parmap/*.cmxa
-%_libdir/ocaml/parmap/*.cmti
-%_libdir/ocaml/parmap/*.cmt
-%_libdir/ocaml/parmap/*.cmx
-%_libdir/ocaml/parmap/*.mli
-%_libdir/ocaml/parmap/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 1.2.5-alt1
+- 1.2.5
+
 * Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 1.2.4-alt1
 - 1.2.4
 

@@ -1,6 +1,6 @@
 %define ocamlmod fileutils
 Name: ocaml-%ocamlmod
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 Summary: OCaml library for common file and filename operations
 Group: Development/ML
@@ -8,6 +8,7 @@ License: LGPLv2.1 with OCaml-LGPL-linking-exception
 VCS: https://github.com/gildor478/ocaml-fileutils
 Url: https://forge.ocamlcore.org/projects/ocaml-fileutils/
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml dune ocaml-ounit-devel
 
@@ -32,11 +33,11 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-sed -i '/stdlib-shims/d' *.opam
-sed -i 's,stdlib-shims,,' src/lib/fileutils/dune test/dune
-sed -i 's,oUnit,ounit2,' test/dune
+sed -i '/stdlib-shims/d;/seq/d' *.opam
+sed -i 's/stdlib-shims//;s/seq//' *.opam src/lib/fileutils/dune test/dune
 %dune_build -p %ocamlmod
 
 %install
@@ -51,6 +52,10 @@ sed -i 's,oUnit,ounit2,' test/dune
 %doc LICENSE.txt CHANGES.md README.md
 
 %changelog
+* Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 0.6.4-alt1
+- 0.6.3 -> 0.6.4
+- added patch from fedora with fix broken FuleUtils.cmp
+
 * Mon Jan 10 2022 Anton Farygin <rider@altlinux.ru> 0.6.3-alt1
 - 0.5.3 -> 0.6.3
 

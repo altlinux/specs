@@ -4,7 +4,7 @@
 %def_without check
 
 Name: ocaml-odoc
-Version: 2.0.2
+Version: 2.3.1
 Release: alt1
 Summary: Documentation compiler for OCaml and Reason
 Group: Development/ML
@@ -18,6 +18,7 @@ BuildRequires: ocaml-findlib-devel
 BuildRequires: dune
 BuildRequires: ocaml-cmdliner-devel ocaml-bos-devel
 BuildRequires: ocaml-cppo
+BuildRequires: ocaml-camlp-streams-devel
 BuildRequires: ocaml-fmt-devel
 BuildRequires: ocaml-tyxml-devel
 BuildRequires: ocaml-re-devel
@@ -26,17 +27,27 @@ BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-astring-devel
 BuildRequires: ocaml-fpath-devel
 BuildRequires: ocaml-migrate-parsetree-devel
-BuildRequires: ocaml-odoc-parser-devel
 %if_with check
 BuildRequires: ocaml-bisect_ppx-devel
 BuildRequires: ocaml-markup-devel
 BuildRequires: ocaml-alcotest-devel
 BuildRequires: ocaml-sexplib-devel
 %endif
+Conflicts: ocaml-odoc-parser <= 1.0.0
 
 %description
 odoc is a documentation generator for OCaml. It reads doc comments ,
 delimited with (** ... *), and outputs HTML.
+
+%package devel
+Summary: Development files for %name
+Group: Development/ML
+Requires: %name = %EVR
+Conflicts: ocaml-odoc-parser-devel <= 1.0.0
+
+%description devel
+The %name-devel package contains libraries and
+signature files for developing applications that use %name.
 
 %prep
 %setup
@@ -53,13 +64,17 @@ mkdir -p %buildroot/%_docdir
 %check
 %dune_check
 
-%files
+%files -f ocaml-files.runtime
 %_docdir/*
 %_bindir/odoc
 %_datadir/odoc
-%_libdir/ocaml/odoc
+
+%files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 2.3.1-alt1
+- 2.3.1
+
 * Fri Dec 10 2021 Anton Farygin <rider@altlinux.ru> 2.0.2-alt1
 - 2.0.2
 

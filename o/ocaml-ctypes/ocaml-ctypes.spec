@@ -1,5 +1,6 @@
-Name: ocaml-ctypes
-Version: 0.20.1
+%define pkgname ctypes
+Name: ocaml-%pkgname
+Version: 0.21.1
 Release: alt1
 Summary: Combinators for binding to C libraries without writing any C
 
@@ -7,13 +8,9 @@ Group: Development/ML
 License: MIT
 Url: https://github.com/ocamllabs/ocaml-ctypes
 Source: %name-%version.tar
-
-Patch1: make-ocamlfind-ldconf.patch
-Patch2: make-install-mls.patch
-
-BuildRequires: ocaml-findlib ocaml-integers-devel ocaml-bigarray-compat-devel
-BuildRequires: libffi-devel
-Requires: rpm-build-ocaml >= 1.1
+BuildRequires:  ocaml-integers-devel ocaml-bigarray-compat-devel
+BuildRequires: libffi-devel 
+BuildRequires: dune ocaml ocaml-dune-configurator-devel
 BuildPreReq: rpm-build-ocaml >= 1.1
 
 %description
@@ -31,39 +28,24 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
 
 %build
-%make
+%dune_build -p %pkgname
 
 %install
-mkdir -p %buildroot/%_libdir/ocaml
-cp %_libdir/ocaml/ld.conf ld.conf
-chmod +x ld.conf
-%makeinstall_std OCAMLFIND_LDCONF=ld.conf OCAMLFIND_DESTDIR=%buildroot/%_libdir/ocaml
-mkdir -p %buildroot/%_libdir/ocaml/stublibs
-mv %buildroot/%_libdir/ocaml/ctypes/dll*.so %buildroot/%_libdir/ocaml/stublibs
+%dune_install %pkgname
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/ctypes
-%_libdir/ocaml/ctypes*/META
-%_libdir/ocaml/ctypes*/*.cma
-%_libdir/ocaml/ctypes*/*.cmi
-%_libdir/ocaml/ctypes*/*.cmxs
 %_libdir/ocaml/stublibs/*.so
 
-%files devel
-%_libdir/ocaml/ctypes*/*.a
-%_libdir/ocaml/ctypes*/*.cmt*
-%_libdir/ocaml/ctypes*/*.cmxa
-%_libdir/ocaml/ctypes*/*.cmx
-%_libdir/ocaml/ctypes*/*.mli
-%_libdir/ocaml/ctypes*/*.ml
-%_libdir/ocaml/ctypes*/*.h
+%files devel -f ocaml-files.devel
+%_libdir/ocaml/%pkgname/*.h
 
 %changelog
+* Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 0.21.1-alt1
+- 0.21.1
+
 * Tue Apr 12 2022 Anton Farygin <rider@altlinux.ru> 0.20.1-alt1
 - 0.20.1
 

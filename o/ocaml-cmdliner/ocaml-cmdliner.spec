@@ -1,23 +1,16 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-cmdliner
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: Declarative definition of command line interfaces for OCaml
-
-# In order for this to work as a "global" macro it has to come after the
-# definition of Name:, evidently.
-%global libname %(echo %name | sed -e 's/^ocaml-//')
-
 License: ISC
 Url: https://github.com/dbuenzli/cmdliner/
 Source0: %name-%version.tar
 Group: Development/ML
 
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib-devel
-BuildRequires: dune opam
+BuildRequires: dune
 BuildRequires: ocaml-result-devel
-BuildRequires: ocaml-odoc
 
 %description
 Cmdliner allows the declarative definition of command line
@@ -46,7 +39,7 @@ developing applications that use %name.
 %setup
 
 %build
-%dune_build --release @install @doc
+%dune_build --release @install
 
 %install
 %dune_install
@@ -55,9 +48,12 @@ developing applications that use %name.
 %doc README.md CHANGES.md
 
 %files devel -f ocaml-files.devel
-%doc _build/default/_doc/*
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2
+- cleanup buildrequires
+- build without docs to avoid cycles in rebuild order
+
 * Wed Aug 23 2023 Ildar Mulyukov <ildar@altlinux.ru> 1.2.0-alt1
 - new version
 

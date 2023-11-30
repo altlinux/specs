@@ -1,24 +1,19 @@
-# ./usr/lib/ocaml/yojson/yojson.cmxs: TEXTREL entry found: 0x00000000
-%set_verify_elf_method textrel=relaxed
 %def_with check
-
 Name: ocaml-yojson
 %define libname %(sed -e 's/^ocaml-//' <<< %name)
-Version: 1.7.0
-Release: alt4
+Version: 2.1.1
+Release: alt2
 Summary: An optimized parsing and printing library for the JSON format
 Group: Development/ML
-License: BSD
-Url: http://opam.ocaml.org/packages/yojson/
-# https://github.com/mjambon/yojson.git
+License: BSD-3-Clause
+Url: https://github.com/ocaml-community/yojson
+VCS: https://github.com/mjambon/yojson.git
 Source0: %name-%version.tar
-BuildRequires: ocaml >= 4.04
-BuildRequires: ocaml-findlib
+Source44: %name.watch
+BuildRequires: ocaml >= 4.14
 BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-biniou-devel
 BuildRequires: ocaml-cppo
-BuildRequires: ocaml-easy-format-devel
-BuildRequires: opam dune
+BuildRequires: dune >= 2.7
 
 %if_with check
 BuildRequires: ocaml-alcotest-devel
@@ -47,24 +42,32 @@ developing applications that use %name.
 
 %prep
 %setup
+subst '/libraries seq/d' lib/dune
 
 %build
-%dune_build --release @install
+%dune_build -p %libname
 
 %install
-%dune_install
+%dune_install %libname
 
 %check
-%dune_check
+%dune_check -p %libname
 
 %files -f ocaml-files.runtime
-%doc LICENSE.md
+%doc CODEOWNERS LICENSE.md
 %_bindir/ydump
 
 %files devel -f ocaml-files.devel
-%doc README.md Changes examples
+%doc README.md CHANGES.md examples
 
 %changelog
+* Tue Nov 14 2023 Anton Farygin <rider@altlinux.ru> 2.1.1-alt2
+- fixed URL and homepage
+- updated BuildRequires
+
+* Sat Nov 11 2023 Ildar Mulyukov <ildar@altlinux.ru> 2.1.1-alt1
+- new version
+
 * Fri Sep 18 2020 Anton Farygin <rider@altlinux.ru> 1.7.0-alt4
 - migrated to rpm-build-ocaml 1.4
 

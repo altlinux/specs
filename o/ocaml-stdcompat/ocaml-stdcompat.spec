@@ -1,14 +1,13 @@
 %define libname stdcompat
 Name: ocaml-%libname
-Version: 17
+Version: 19
 Release: alt1
 Summary: Compatibility module for OCaml standard library
 License: BSD-3-Clause
 Group: Development/ML
 Url: https://github.com/thierry-martinez/stdcompat
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
-BuildRequires: ocaml-result-devel dune opam
+BuildRequires: dune ocaml
 
 %description
 Compatibility module for OCaml standard library allowing programs to use some
@@ -26,40 +25,25 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
-make -f Makefile.bootstrap
-%configure --libdir=%_libdir/ocaml
-%make all
-
-%check
-%make test
+%dune_build
 
 %install
-%makeinstall_std
+%dune_install
 
+%check
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md ChangeLog COPYING 
-%dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%libname/*
-%_libdir/ocaml/stublibs/*.so*
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.cmt*
-%exclude %_libdir/ocaml/%libname/*.ml
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmxs
 
-
-%files devel
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.cmt*
-%_libdir/ocaml/%libname/*.ml
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
+%files devel -f ocaml-files.devel
 
 %changelog
+* Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 19-alt1
+- 17 -> 19
+
 * Mon Oct 04 2021 Anton Farygin <rider@altlinux.ru> 17-alt1
 - 15 -> 17
 

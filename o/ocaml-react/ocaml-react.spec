@@ -1,19 +1,18 @@
-# on i586: verify-elf: ERROR: ./usr/lib/ocaml/react/react.cmxs: TEXTREL entry found: 0x00000000
-%set_verify_elf_method textrel=relaxed
+%global pkgname react
+%define ocamlsitelib %_libdir/ocaml
+%define pkgsitelib %ocamlsitelib/%pkgname
+%define ocamlstublib %_libdir/ocaml/stublibs/
 
-Name: ocaml-react
-Version: 1.2.1
-Release: alt4
-Summary: Development files for %name
+Name: ocaml-%pkgname
+Version: 1.2.2
+Release: alt2
+Summary: OCaml module for Functional Reactive Programming (FRP)
 License: BSD
 Group: Development/ML
-Url: http://erratique.ch/software/react
-# http://erratique.ch/repos/react.git
+Url: https://erratique.ch/software/react
+VCS: https://github.com/dbuenzli/react
 Source: %name-%version.tar
-Requires: %name-runtime = %version-%release
-Requires: rpm-build-ocaml >= 1.1.1
-
-BuildPreReq: rpm-build-ocaml >= 1.1.1
+BuildPreReq: rpm-build-ocaml >= 1.6
 BuildRequires: ocaml ocaml-ocamlbuild ocaml-findlib opam ocaml-topkg
 
 %description
@@ -28,11 +27,11 @@ the new BSD license.
 Given an absolute notion of time Rtime helps you to manage a timeline
 and provides time stamp events, delayed events and delayed signals.
 
-%package runtime
+%package devel
 Summary: OCaml module for Functional Reactive Programming (FRP)
 Group: Development/ML
-
-%description runtime
+Requires: %name = %EVR
+%description devel
 React is an OCaml module for functional reactive programming (FRP).
 It provides support to program with time varying values : applicative
 events and signals. React doesn't define any primitive event or signal,
@@ -54,17 +53,19 @@ ocaml pkg/pkg.ml build
 %install
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
+%ocaml_find_files
 
-%files runtime
-%_libdir/ocaml/react
-%exclude %_libdir/ocaml/react/*.cmx
-%exclude %_libdir/ocaml/react/*.mli
+%files -f ocaml-files.runtime
 
-%files
-%_libdir/ocaml/react/*.cmx
-%_libdir/ocaml/react/*.mli
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1.2.2-alt2
+- added support for bytecode-only version of the ocaml package
+
+* Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 1.2.2-alt1
+- 1.2.2
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.2.1-alt4
 - rebuilt with ocaml-4.08
 

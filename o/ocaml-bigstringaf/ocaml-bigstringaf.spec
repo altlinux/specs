@@ -5,14 +5,14 @@
 %endif
 %define modulename bigstringaf
 Name: ocaml-%modulename
-Version: 0.8.0
+Version: 0.9.1
 Release: alt1
 Summary: Bigstring intrinsics and fast blits based on memcpy/memmove
 License: BSD-3-Clause
 Group: Development/ML
 Url: https://github.com/inhabitedtype/bigstringaf
 Source: %name-%version.tar
-BuildRequires: dune ocaml-bigarray-compat-devel
+BuildRequires: dune ocaml-dune-configurator-devel
 %if_with check
 BuildRequires: ocaml-alcotest-devel
 %endif
@@ -53,6 +53,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.9.1-alt1
+- 0.9.1
+
 * Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 0.8.0-alt1
 - 0.8.0
 

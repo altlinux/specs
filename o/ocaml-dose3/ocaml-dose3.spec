@@ -1,7 +1,7 @@
 %def_with check
 Name: ocaml-dose3
 Version: 7.0.0
-Release: alt1
+Release: alt2
 Summary: Framework for managing distribution packages and dependencies
 Group: Development/ML
 
@@ -15,23 +15,19 @@ Source0: %name-%version.tar
 
 BuildRequires: ocaml
 BuildRequires: dune
-BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-ocamlgraph-devel
-BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-extlib-devel
 BuildRequires: ocaml-expat-devel
-BuildRequires: ocaml-xml-light-devel
 BuildRequires: ocaml-re-devel
 BuildRequires: ocaml-cudf-devel
-BuildRequires: ocaml-cppo
-BuildRequires: ocaml-curl
-BuildRequires: ocaml-zip-devel
 BuildRequires: ocaml-camlbz2-devel
 BuildRequires: ocaml-base64-devel
 BuildRequires: ocaml-parmap-devel
-BuildRequires: ocaml-ounit-devel
 BuildRequires: ocaml-odoc
+BuildRequires: ocaml-zip-devel
+BuildRequires: ocaml-camlp-streams-devel
 %if_with check
+BuildRequires: ocaml-ounit-devel
 BuildRequires: /usr/bin/dpkg 
 BuildRequires: python3-module-yaml
 %endif
@@ -118,6 +114,10 @@ install -m0644 doc/manpages/*.5 %buildroot%_man5dir/
 %_bindir/dose-builddebcheck
 
 %changelog
+* Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 7.0.0-alt2
+- fixed build with ocamlgraph 2.1.0 
+- updated BuildRequires for ocaml-4.14 environment
+
 * Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 7.0.0-alt1
 - 7.0.0
 

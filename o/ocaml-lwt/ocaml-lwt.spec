@@ -1,7 +1,7 @@
 %define lwt_modules lwt,lwt_ppx,lwt_react
 Name: ocaml-lwt
 Version: 5.7.0
-Release: alt1
+Release: alt3
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -9,12 +9,12 @@ License: MIT
 Url: http://ocsigen.org/lwt/
 # https://github.com/ocsigen/lwt
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
 
-BuildRequires:  ocaml-ocamldoc termutils ocaml-ssl ocaml-react glib2-devel libev-devel chrpath
+BuildRequires:  ocaml-ocamldoc termutils ocaml-ssl ocaml-react-devel glib2-devel libev-devel chrpath
 BuildRequires: dune ocaml-cppo ocaml-bisect_ppx-devel ocaml-ppxlib-devel ocaml-ocplib-endian-devel
 BuildRequires: ocaml-migrate-parsetree-devel ocaml-result-devel
 BuildRequires: ocaml-dune-configurator-devel ocaml-luv-devel
+BuildRequires(pre): rpm-build-ocaml >= 1.6
 
 %description
 Lwt is a lightweight thread library for Objective Caml.  This library
@@ -32,7 +32,6 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %dune_build -p %lwt_modules
@@ -50,6 +49,13 @@ developing applications that use %name.
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Fri Nov 17 2023 Anton Farygin <rider@altlinux.ru> 5.7.0-alt3
+- fixed build with bytecode-only ocaml
+
+* Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 5.7.0-alt2
+- fixed BuildRequires
+- removed unused ALT patch
+
 * Fri Nov 03 2023 Anton Farygin <rider@altlinux.ru> 5.7.0-alt1
 - 5.5.0 -> 5.7.0
 

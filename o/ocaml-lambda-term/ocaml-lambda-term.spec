@@ -1,6 +1,7 @@
-Name: ocaml-lambda-term
-Version: 3.1.0
-Release: alt2
+%define pkgname lambda-term
+Name: ocaml-%pkgname
+Version: 3.3.2
+Release: alt1
 Summary: Terminal manipulation library for OCaml
 
 Group: Development/ML
@@ -9,11 +10,11 @@ Url: https://github.com/ocaml-community/lambda-term
 Source: %name-%version.tar
 
 BuildRequires: dune ocaml-cppo ocaml-mew-devel ocaml-mew_vi-devel
-BuildRequires: ocaml-lwt_log-devel ocaml-zed-devel 
-BuildRequires: ocaml-trie-devel ocaml-lwt-devel ocaml-charInfo_width-devel
+BuildRequires: ocaml-lwt_log-devel ocaml-zed-devel >= 3.2.0
+BuildRequires: ocaml-trie-devel ocaml-lwt-devel ocaml-logs-devel
 BuildRequires: ocaml-camomile-devel
 BuildRequires: libev-devel
-BuildRequires: rpm-build-ocaml >= 1.1
+BuildRequires: rpm-build-ocaml >= 1.4
 
 %description
 Lambda-Term is a cross-platform library for manipulating the terminal. It
@@ -33,10 +34,10 @@ developing applications that use %name.
 %setup
 
 %build
-%dune_build --release @install
+%dune_build -p %pkgname
 
 %install
-%dune_install
+%dune_install %pkgname
 
 %files -f ocaml-files.runtime
 %doc CHANGES.md README.md
@@ -49,6 +50,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 3.3.2-alt1
+- 3.3.2
+
 * Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 3.1.0-alt2
 - cleanup specfile
 

@@ -1,17 +1,15 @@
-%set_verify_elf_method textrel=relaxed
 %define libname stringext
 Name: ocaml-%libname
 Version: 1.6.0
-Release: alt2
+Release: alt3
 Summary: Extra string functions for OCaml
 Group: Development/ML
-License: BSD
-Url: https://github.com/ocaml-ppx/ppx_derivers
+License: MIT
+Url: https://github.com/rgrinberg/stringext
 Source0: %name-%version.tar
 BuildRequires: dune
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib
-BuildRequires: opam
+BuildRequires: rpm-build-ocaml > 1.4
 BuildRequires: ocaml-ounit-devel
 BuildRequires: ocaml-qcheck-devel
 
@@ -33,37 +31,24 @@ developing applications that use %name.
 
 %build
 sed -i 's,oUnit,ounit2,' lib_test/dune
-dune build -p %libname 
+%dune_build
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %libname.install
-rm -rf %buildroot/usr/doc
-
-# Makes *.cmxs executable such that they will be stripped.
-find %buildroot -name '*.cmxs' -exec chmod 0755 {} \;
+%dune_install
 
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%libname/META
-%_libdir/ocaml/%libname/*.cmi
-%_libdir/ocaml/%libname/*.cma
-%_libdir/ocaml/%libname/*.a
 
-%files devel
-%_libdir/ocaml/%libname/opam
-%_libdir/ocaml/%libname/dune-package
-%_libdir/ocaml/%libname/*.cmt
-%_libdir/ocaml/%libname/*.cmti
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.ml*
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
+%files devel -f ocaml-files.devel
 
 %changelog
+* Wed Nov 08 2023 Anton Farygin <rider@altlinux.ru> 1.6.0-alt3
+- fixed URL and License tag
+- cleanup specfile
+
 * Fri Feb 21 2020 Anton Farygin <rider@altlinux.ru> 1.6.0-alt2
 - fixed build with ounit-2.2.2
 

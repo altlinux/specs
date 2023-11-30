@@ -1,14 +1,14 @@
 %define _name findlib
 Name: ocaml-%_name
-Version: 1.9.3
-Release: alt1
+Version: 1.9.6
+Release: alt2
 Summary: A module packaging tool for OCaml
-License: BSD
+License: MIT
 Group: Development/ML
-Url: http://projects.camlcity.org/projects/findlib.html
-# https://github.com/ocaml/ocamlfind
+Url: https://projects.camlcity.org/projects/findlib.html
+VCS: https://github.com/ocaml/ocamlfind
 Source: %_name-%version.tar
-BuildRequires: rpm-build-ocaml >= 1.2 ocaml-labltk-devel >= 8.06.2 libtinfo-devel ocaml-ocamldoc
+BuildRequires: rpm-build-ocaml >= 1.6 ocaml-labltk-devel >= 8.06.2 libtinfo-devel ocaml-ocamldoc
 BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel openjade
 
 %description
@@ -45,13 +45,15 @@ sed -i -e '/path/s,@SITELIB@,\0:%_libdir/ocaml,' findlib.conf.in
 tools/extract_args/extract_args -o src/findlib/ocaml_args.ml ocamlc ocamlcp ocamlmktop ocamlopt ocamldep ocamldoc ||:
 cat src/findlib/ocaml_args.ml
 ./configure \
+    -no-custom \
     -mandir %_mandir \
     -config %_libdir/ocaml/etc/findlib.conf \
-    -no-camlp4 \
     -sitelib `ocamlc -where` \
     #
-make all
-make opt
+make all OCAMLC_FLAGS=-bin-annot
+%ifarch %ocaml_native_arch
+make opt OCAMLC_FLAGS=-bin-annot
+%endif
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
@@ -60,40 +62,29 @@ make install \
      prefix=$RPM_BUILD_ROOT \
      OCAMLFIND_BIN=%{_bindir} \
      OCAMLFIND_MAN=%{_mandir}
+%__install -m644 src/findlib/*.cmt* %buildroot%_ocamldir/findlib/
+%ocaml_find_files
 
-# install dummy META library for seq
-mkdir -p %buildroot%_libdir/ocaml/seq
-
-cat >> %buildroot%_libdir/ocaml/seq/META<<'EOF'
-name="seq"
-version="[distributed with OCaml 4.07 or above]"
-description="dummy backward-compatibility package for iterators"
-requires=""
-EOF
-
-
-%files
+%files -f ocaml-files.runtime
+%doc LICENSE
 %_bindir/ocamlfind
-%_libdir/ocaml/etc/*
 %_libdir/ocaml/topfind
-%_libdir/ocaml/*
+%_libdir/ocaml/etc/*
 %_man1dir/ocamlfind.1*
 %_man5dir/*
-%exclude %_libdir/ocaml/findlib/*.a
-%exclude %_libdir/ocaml/findlib/*.cmxa
-%exclude %_libdir/ocaml/findlib/*.mli
-%exclude %_libdir/ocaml/findlib/Makefile.config
-%doc LICENSE
 
-%files devel
-%doc LICENSE doc/README doc/guide-html
-%_libdir/ocaml/findlib/*.a
-%_libdir/ocaml/findlib/*.cmxa
-%_libdir/ocaml/findlib/*.mli
+%files devel -f ocaml-files.devel
+%doc doc/README doc/guide-html
 %_libdir/ocaml/findlib/Makefile.config
-
+%_libdir/ocaml/findlib/Makefile.packages
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1.9.6-alt2
+- added support for bytecode-only version of the ocaml package
+
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 1.9.6-alt1
+- 1.9.3 -> 1.9.6
+
 * Mon Jan 31 2022 Anton Farygin <rider@altlinux.ru> 1.9.3-alt1
 - 1.9.1 -> 1.9.3
 

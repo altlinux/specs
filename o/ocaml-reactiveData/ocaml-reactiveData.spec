@@ -1,54 +1,46 @@
-%set_verify_elf_method textrel=relaxed
 %define libname reactiveData
-Name:           ocaml-%libname
-Version:        0.2.2
-Release:        alt1
-Summary:        Functional reactive programming with incremental changes in data structures
-License:        LGPLv3 with OCaml linking exception
-Group:          Development/ML
-Url:            https://github.com/ocsigen/reactiveData
+Name: ocaml-%libname
+Version: 0.3
+Release: alt1
+Summary: Functional reactive programming with incremental changes in data structures
+License: LGPL-3.0-or-later WITH OCaml-LGPL-linking-exception
+Group: Development/ML
+Url: https://github.com/ocsigen/reactiveData
 Source: %name-%version.tar
-
-BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
-BuildRequires: ocaml-react
+BuildRequires: dune ocaml >= 4.07.1
+BuildRequires: ocaml-react-devel
 
 %package devel
 Summary: Development files for programs which will use the %name
 Group: Development/ML
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description
 ReactiveData is an OCaml module for functional reactive programming (FRP) based on React.
 It adds support to incremental changes in data structures by reasoning on patches instead of absolute values.
 
 %description devel
-This package includes development files necessary for developing 
+This package includes development files necessary for developing
 programs which use %name
 
 %prep
-%setup -q
+%setup
 
 %build
-ocaml pkg/build.ml native=true native-dynlink=true
+%dune_build
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+%dune_install
 
-%files
-%doc LICENSE CHANGES README.md
-%_libdir/ocaml/%libname
-%exclude %_libdir/ocaml/%libname/*.a
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.mli
+%files -f ocaml-files.runtime
+%doc LICENSE CHANGES.md README.md
 
-%files devel
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.mli
+%files devel -f ocaml-files.devel
 
 %changelog
+* Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 0.3-alt1
+- 0.3
+
 * Sun Jun 09 2019 Anton Farygin <rider@altlinux.ru> 0.2.2-alt1
 - 0.2.2
 

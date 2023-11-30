@@ -1,7 +1,7 @@
 %define  modulename cairo2
 %def_with check
 Name:    ocaml-%modulename
-Version: 0.6.2
+Version: 0.6.4
 Release: alt1
 Summary: Ocaml binding to Cairo, a 2D Vector Graphics Library
 License: LGPL-3.0-only
@@ -44,6 +44,9 @@ developing applications that use %name.
 %_ocamldir/%modulename/*.h
 
 %changelog
+* Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 0.6.4-alt1
+- 0.6.4
+
 * Mon Mar 22 2021 Anton Farygin <rider@altlinux.org> 0.6.2-alt1
 - 0.6.2
 

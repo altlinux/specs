@@ -1,15 +1,15 @@
 %define libname parsexp
 Name: ocaml-%libname
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 Summary: S-expression parsing library for ocaml
 Group: Development/ML
 License: Apache-2.0
 Url: https://github.com/janestreet/parsexp
 Source0: %name-%version.tar
-BuildRequires: dune >= 1.8
-BuildRequires: ocaml-sexplib0-devel >= 0.14.0
-BuildRequires: ocaml-base-devel >= 0.14.0
+BuildRequires: dune >= 3.8
+BuildRequires: ocaml-sexplib0-devel >= 0.16.0
+BuildRequires: ocaml-base-devel >= 0.16.0
 BuildRequires: rpm-build-ocaml >= 1.4
 
 %description
@@ -36,7 +36,7 @@ It provides three different class of parsers:
 Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %EVR
-Requires: ocaml-base-devel >= 0.14.0
+Requires: ocaml-base-devel >= 0.16.0
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -61,6 +61,9 @@ rm -rf %buildroot/usr/share/doc
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
+- 0.16.0
+
 * Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
 - 0.15.0
 

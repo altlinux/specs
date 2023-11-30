@@ -1,13 +1,15 @@
 %define libname gen
 Name: ocaml-%libname
-Version: 1.0
+Version: 1.1
 Release: alt1
 Summary: Simple and efficient iterators (modules Gen and GenLabels).
-License: BSD
+License: BSD-2-Clause
 Group: Development/ML
 Url: https://github.com/c-cube/gen
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel ocaml-dune-configurator-devel ocaml-result-devel
+Patch0: %name-%version-%release.patch
+BuildRequires: ocaml-dune-configurator-devel ocaml-result-devel
+BuildRequires: dune
 BuildRequires: ocaml-qcheck-devel ocaml-ounit-devel ocaml-odoc ocaml-qtest-devel
 
 %description
@@ -25,6 +27,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %dune_build -p %libname
@@ -42,6 +45,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 1.1-alt1
+- 1.0 -> 1.1
+
 * Sun Jan 30 2022 Anton Farygin <rider@altlinux.ru> 1.0-alt1
 - 0.5.3 -> 1.0
 

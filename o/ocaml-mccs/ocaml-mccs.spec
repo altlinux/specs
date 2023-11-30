@@ -1,19 +1,14 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-mccs
-Version: 1.1.13
+Version: 1.1.16
 Release: alt1
 Summary: Multi Criteria CUDF Solver with OCaml bindings
-# Original C/C++ code is BSD, OCaml bindings are LGPL.
-# Linking exception, see included COPYING file.
-License: BSD and LGPLv3+ with exceptions
+License: LGPL-2.1-only WITH OCaml-LGPL-linking-exception and BSD-3-Clause and GPL-3.0-only
 Group: Development/ML
-Url: https://github.com/AltGr/ocaml-mccs
+Url: https://github.com/ocaml-opam/ocaml-mccs
 Source0: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: dune
-BuildRequires: gcc
 BuildRequires: gcc-c++
-BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-cudf-devel
 BuildRequires: libglpk-devel
 
@@ -41,42 +36,20 @@ developing applications that use %name.
 %setup
 
 %build
-dune build -p mccs
+%dune_build
 
 %install
-dune install --destdir=%buildroot 
+%dune_install
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md LICENCE
-%dir %_libdir/ocaml/mccs/
-%_libdir/ocaml/mccs/META
-%_libdir/ocaml/mccs/opam
-%_libdir/ocaml/mccs/*.cma
-%_libdir/ocaml/mccs/*.cmi
-%_libdir/ocaml/mccs/*.cmx
-%_libdir/ocaml/mccs/*.cmxs
-%_libdir/ocaml/stublibs/*.so
-%dir %_libdir/ocaml/mccs/glpk/
-%dir %_libdir/ocaml/mccs/glpk/internal/
-%_libdir/ocaml/mccs/glpk/internal/*.cma
-%_libdir/ocaml/mccs/glpk/internal/*.cmi
-%_libdir/ocaml/mccs/glpk/internal/*.cmx
-%_libdir/ocaml/mccs/glpk/internal/*.cmxs
 
-%files devel
-%_libdir/ocaml/mccs/*.a
-%_libdir/ocaml/mccs/*.cmxa
-%_libdir/ocaml/mccs/dune-package
-%_libdir/ocaml/mccs/*.cmt
-%_libdir/ocaml/mccs/*.cmti
-%_libdir/ocaml/mccs/*.ml
-%_libdir/ocaml/mccs/*.mli
-%_libdir/ocaml/mccs/glpk/internal/*.a
-%_libdir/ocaml/mccs/glpk/internal/*.cmxa
-%_libdir/ocaml/mccs/glpk/internal/*.cmt
-%_libdir/ocaml/mccs/glpk/internal/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 1.1.16-alt1
+- 1.1+16
+
 * Wed Sep 08 2021 Anton Farygin <rider@altlinux.ru> 1.1.13-alt1
 - 1.1.13
 

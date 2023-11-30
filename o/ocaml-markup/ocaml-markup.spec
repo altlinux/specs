@@ -1,9 +1,15 @@
+%define libnamelwt %libname-lwt
+%define pkglist markup,markup-lwt
 %def_with check
 %define libname markup
-%define libnamelwt %libname-lwt
+%ifarch %ocaml_native_arch
+%def_with native
+%else
+%def_without native
+%endif
 Name: ocaml-%libname
 Version: 1.0.3
-Release: alt1
+Release: alt2
 Summary: Error-recovering streaming HTML5 and XML parsers.
 License: MIT
 Group: Development/ML
@@ -11,8 +17,9 @@ Url: https://github.com/aantron/markup.ml
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-build-ocaml >= 1.6
 BuildRequires: ocaml >= 4.07.1 dune >= 2.9
-BuildRequires: ocaml-uutf-devel ocaml-lwt-devel ocaml-bisect_ppx-devel ocaml-migrate-parsetree-devel ocaml-result-devel
+BuildRequires: ocaml-uutf-devel ocaml-bisect_ppx-devel ocaml-migrate-parsetree-devel ocaml-result-devel
 
 %if_with check
 BuildRequires: ocaml-ounit-devel libev-devel
@@ -37,6 +44,7 @@ programs which use %name
 Summary: Adapter between Markup.ml and Lwt
 Group: Development/ML
 Requires: %name = %EVR
+BuildRequires: ocaml-lwt-devel
 
 %package lwt-devel
 Summary: Development files for programs which will use the %name-lwt
@@ -56,42 +64,54 @@ programs which use %name-lwt
 %patch0 -p1
 
 %build
-%dune_build -p markup,markup-lwt
+%dune_build -p %pkglist
 
 %install
-%dune_install
+%dune_install %libname
+%dune_install %libnamelwt
 
 %check
-%dune_check -p markup,markup-lwt
+%dune_check -p %pkglist
 
 %files
 %doc LICENSE.md README.md
 %_libdir/ocaml/%libname
+%if_with native
 %exclude %_libdir/ocaml/%libname/*.a
 %exclude %_libdir/ocaml/%libname/*.cmxa
 %exclude %_libdir/ocaml/%libname/*.cmx
+%endif
 %exclude %_libdir/ocaml/%libname/*.mli
 
 %files devel
+%if_with native
 %_libdir/ocaml/%libname/*.a
 %_libdir/ocaml/%libname/*.cmxa
 %_libdir/ocaml/%libname/*.cmx
+%endif
 %_libdir/ocaml/%libname/*.mli
 
 %files lwt
 %_libdir/ocaml/%libnamelwt
+%if_with native
 %exclude %_libdir/ocaml/%libnamelwt/*.a
 %exclude %_libdir/ocaml/%libnamelwt/*.cmxa
 %exclude %_libdir/ocaml/%libnamelwt/*.cmx
+%endif
 %exclude %_libdir/ocaml/%libnamelwt/*.mli
 
 %files lwt-devel
+%if_with native
 %_libdir/ocaml/%libnamelwt/*.a
 %_libdir/ocaml/%libnamelwt/*.cmxa
 %_libdir/ocaml/%libnamelwt/*.cmx
+%endif
 %_libdir/ocaml/%libnamelwt/*.mli
 
 %changelog
+* Sat Nov 18 2023 Anton Farygin <rider@altlinux.ru> 1.0.3-alt2
+- support for bytecode-only ocaml
+
 * Tue Mar 29 2022 Anton Farygin <rider@altlinux.ru> 1.0.3-alt1
 - 1.0.3
 

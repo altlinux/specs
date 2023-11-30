@@ -1,19 +1,14 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt_log
 Version: 1.1.2
-Release: alt1
+Release: alt2
 Summary: Lwt-friendly logger
 
 Group: Development/ML
 License: LGPL-2.1
 Url: https://github.com/ocsigen/lwt_log
 Source: %name-%version.tar
-
-# Remove self dependence
-%filter_from_requires /ocaml-cmi(Lwt_log_core)/d
-
 BuildRequires: dune ocaml-lwt
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildPreReq: rpm-build-ocaml >= 1.6
 
 %description
 %summary.
@@ -42,6 +37,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 17 2023 Anton Farygin <rider@altlinux.ru> 1.1.2-alt2
+- specfile cleanup
+
 * Fri Nov 03 2023 Anton Farygin <rider@altlinux.ru> 1.1.2-alt1
 - 1.1.2
 

@@ -2,19 +2,19 @@
 %global pkgname zarith
 %define ocamlstublib %_ocamldir/stublibs/
 Name: ocaml-%pkgname
-Version: 1.12
-Release: alt2
+Version: 1.13
+Release: alt1
 Summary: OCaml interface to GMP
 Group: Development/ML
 # The license has a static linking exception
 License: LGPLv2 with OCaml-LGPL-linking-exception
 Url: https://github.com/ocaml/Zarith
 Source0: %name-%version.tar
-
 BuildRequires: libgmp-devel
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
+BuildRequires(pre): rpm-build-ocaml >= 1.6
 
 %description
 This library implements arithmetic and logical operations over
@@ -73,27 +73,20 @@ make doc
 mkdir -p %buildroot%ocamlstublib
 mkdir -p %buildroot%_ocamldir
 make install INSTALLDIR=%buildroot%_libdir/ocaml
+%ocaml_find_files
 
-%files
+%files -f ocaml-files.runtime
 %doc Changes
-%_ocamldir/%pkgname
-%exclude %_ocamldir/%pkgname/*.mli
-%exclude %_ocamldir/%pkgname/*.h
-%exclude %_ocamldir/%pkgname/*.a
-%exclude %_ocamldir/%pkgname/*.cmx
-%exclude %_ocamldir/%pkgname/*.cmxa
-%ocamlstublib/*.so
 %ocamlstublib/*.so.owner
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc README.md html
-%_ocamldir/%pkgname/*.mli
 %_ocamldir/%pkgname/*.h
-%_ocamldir/%pkgname/*.a
-%_ocamldir/%pkgname/*.cmx
-%_ocamldir/%pkgname/*.cmxa
 
 %changelog
+* Wed Nov 08 2023 Anton Farygin <rider@altlinux.ru> 1.13-alt1
+- 1.13
+
 * Sat Sep 18 2021 Anton Farygin <rider@altlinux.ru> 1.12-alt2
 - fixed build with enabled LTO
 

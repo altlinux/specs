@@ -1,19 +1,19 @@
+%ifarch %ocaml_native_arch
+%def_with native
+%endif
 %define pkgname zip
 Name: ocaml-%pkgname
 Version: 1.11
-Release: alt1
+Release: alt2
 Summary: OCaml library for reading and writing zip, jar and gzip files
-
 Group: Development/ML
 License: LGPLv2.1+ with OCaml-LGPL-linking-exception
 Url: https://github.com/xavierleroy/camlzip
-
-Provides: ocaml4-zip
-Obsoletes: ocaml4-zip
-
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-ocaml >= 1.6
 BuildRequires: ocaml zlib-devel ocaml-findlib
+
 
 %description
 This Objective Caml library provides easy access to compressed files
@@ -24,7 +24,7 @@ formats.
 %package devel
 Summary: Development files for %name
 Group: Development/ML
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -34,43 +34,29 @@ developing applications that use %name.
 %setup
 
 %build
-%make_build all
+%make_build allbyt
+%if_with native
 %make_build allopt
-
-cat > META <<EOF
-name = "%name"
-version = "%version"
-requires = "unix"
-description = "%description"
-archive(byte) = "zip.cma"
-archive(native) = "zip.cmxa"
-EOF
+%endif
 
 %install
-mkdir -p %buildroot%_libdir/ocaml/%pkgname
-mkdir -p %buildroot%_libdir/ocaml/stublibs
-
+export OCAMLFIND_LDCONF=ignore
 export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
+export OCAMLFIND_DESTDIR=%buildroot%_ocamldir
+mkdir -p %buildroot%_ocamldir
+%make install
 
-ocamlfind install %pkgname *.cma *.cmxa *.a *.cmx *.cmi *.mli dll*.so META
+%ocaml_find_files
 
-%files
-%_libdir/ocaml/%pkgname
-%_libdir/ocaml/stublibs/*.so
-%_libdir/ocaml/stublibs/*.so.owner
-%exclude %_libdir/ocaml/%pkgname/*.a
-%exclude %_libdir/ocaml/%pkgname/*.cmxa
-%exclude %_libdir/ocaml/%pkgname/*.cmx
-%exclude %_libdir/ocaml/%pkgname/*.mli
 
-%files devel
-%_libdir/ocaml/%pkgname/*.a
-%_libdir/ocaml/%pkgname/*.cmxa
-%_libdir/ocaml/%pkgname/*.cmx
-%_libdir/ocaml/%pkgname/*.mli
+%files -f ocaml-files.runtime
+
+%files devel -f ocaml-files.devel
 
 %changelog
+* Sat Nov 18 2023 Anton Farygin <rider@altlinux.ru> 1.11-alt2
+- fixed build with bytecode-only ocaml
+
 * Wed Oct 06 2021 Anton Farygin <rider@altlinux.ru> 1.11-alt1
 - 1.11
 

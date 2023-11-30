@@ -1,14 +1,21 @@
+%def_with check
+%ifnarch %ix86 armh ppc64le
+%define relax %nil
+%else
+%define relax ||:
+%endif
 %define libname iter
 Name: ocaml-%libname
-Version: 1.4
+Version: 1.8
 Release: alt1
 Summary: Simple and lightweight iterator abstract data type for OCaml
 License: BSD
 Group: Development/ML
 Url: https://github.com/c-cube/iter/
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel ocaml-dune-configurator-devel ocaml-result-devel
+BuildRequires: dune ocaml-result-devel
 BuildRequires: ocaml-qcheck-devel ocaml-ounit-devel ocaml-odoc ocaml-qtest-devel
+BuildRequires: ocaml-mdx-devel
 Provides: ocaml-sequence = %EVR
 Obsoletes: ocaml-sequence
 
@@ -31,14 +38,13 @@ developing applications that use %name.
 %setup
 
 %build
-rm -f dune
 %dune_build --release @install
 
 %install
 %dune_install
 
 %check
-%dune_check
+%dune_check %relax
 
 %files -f ocaml-files.runtime
 %doc README.md LICENSE CHANGELOG.md
@@ -46,6 +52,14 @@ rm -f dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 24 2023 Anton Farygin <rider@altlinux.ru> 1.8-alt1
+- 1.7 -> 1.8
+- relaxed check on the ppc64le and 32-bit architectures
+
+* Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 1.7-alt1
+- 1.4 -> 1.7
+- disabled tests on 32-bit platforms
+
 * Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 1.4-alt1
 - 1.3 -> 1.4
 

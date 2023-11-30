@@ -1,5 +1,5 @@
 Name: ocaml-migrate-parsetree
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 Summary: Convert OCaml parsetrees between different major versions
 Group: Development/ML
@@ -8,8 +8,6 @@ Url: https://github.com/ocaml-ppx/ocaml-migrate-parsetree
 Source0: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: dune cinaps
-BuildRequires: ocaml-result-devel
-BuildRequires: ocaml-ppx_derivers-devel
 
 %description
 This library converts between parsetrees of different OCaml versions.
@@ -43,6 +41,9 @@ files for developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 2.4.0-alt1
+- 2.3.0 -> 2.4.0
+
 * Fri Dec 10 2021 Anton Farygin <rider@altlinux.ru> 2.3.0-alt1
 - 2.2.0 -> 2.3.0
 

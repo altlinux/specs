@@ -1,12 +1,12 @@
 %define libname fmt
 Name:           ocaml-%libname
-Version:        0.8.10
-Release:        alt1
+Version:        0.9.0
+Release:        alt2
 Summary:        OCaml Format pretty-printer combinators
 License:        ISC
 Group:          Development/ML
-Url:            http://erratique.ch/software/fmt
-# https://github.com/dbuenzli/fmt
+Url: https://erratique.ch/software/fmt
+VCS: https://github.com/dbuenzli/fmt
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
@@ -36,21 +36,20 @@ ocaml pkg/pkg.ml build
 %install
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
-%files
-%doc LICENSE.md CHANGES.md README.md
-%_libdir/ocaml/%libname
-%exclude %_libdir/ocaml/%libname/*.a
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.mli
+%ocaml_find_files
 
-%files devel
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.mli
+%files -f ocaml-files.runtime
+%doc LICENSE.md CHANGES.md README.md
+
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 0.9.0-alt2
+- added support for bytecode-only version of the ocaml package
+
+* Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.9.0-alt1
+- 0.9.0
+
 * Tue Oct 12 2021 Anton Farygin <rider@altlinux.ru> 0.8.10-alt1
 - 0.8.10
 

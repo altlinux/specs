@@ -1,20 +1,15 @@
-#ERROR: ./usr/lib/ocaml/easy-format/easy_format.cmxs: TEXTREL entry found: 0x00000000
-%set_verify_elf_method textrel=relaxed
 %define ocamlmod easy-format
 Name: ocaml-%ocamlmod
-Version: 1.3.2
-Release: alt2
+Version: 1.3.4
+Release: alt1
 Summary: High-level and functional interface to the Format module
-License: BSD
+License: BSD-3-Clause
 Group: Development/ML
-Url: https://opam.ocaml.org/packages/easy-format/
-# https://github.com/mjambon/easy-format
+Url: https://github.com/ocaml-community/easy-format
 Source: %name-%version.tar
-Patch0: ocaml-easy-format-suse-fixbuild.patch 
 BuildRequires: ocaml >= 4.04
 BuildRequires: ocaml-ocamldoc
 BuildRequires: dune
-BuildRequires: opam
 
 %description
 This module offers a high-level and functional interface to the Format
@@ -46,7 +41,6 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %dune_build -p %ocamlmod
@@ -64,6 +58,9 @@ developing applications that use %name.
 %doc LICENSE README.md CHANGES.md
 
 %changelog
+* Wed Nov 08 2023 Anton Farygin <rider@altlinux.ru> 1.3.4-alt1
+- 1.3.4
+
 * Fri Sep 18 2020 Anton Farygin <rider@altlinux.ru> 1.3.2-alt2
 - migrated to rpm-build-ocaml 1.4
 

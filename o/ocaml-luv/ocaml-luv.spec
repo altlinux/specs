@@ -1,22 +1,27 @@
 %def_with check
+%ifarch %ocaml_native_arch
+%define relax %nil
+%else
+%define relax ||:
+%endif
 %define  modulename luv
 Name:    ocaml-%modulename
-Version: 0.5.11
-Release: alt1
+Version: 0.5.12
+Release: alt2
 Summary: Binding to libuv for ocaml: cross-platform asynchronous I/O
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/aantron/luv
 Source:  %name-%version.tar
 Patch0: %name-%version-%release.patch
-
 BuildRequires: dune
 BuildRequires: libuv-devel >= 1.42.0-alt1
-BuildRequires: ocaml-base-devel
+%if_with check
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-alcotest-devel
+%endif
 BuildRequires: ocaml-ctypes-devel
-BuildPreReq: rpm-build-ocaml >= 1.4
+BuildRequires(pre): rpm-build-ocaml >= 1.6
 
 
 %description
@@ -43,10 +48,10 @@ developing applications that use %name.
 
 %build
 export LUV_USE_SYSTEM_LIBUV=yes
-%dune_build -p %modulename
+%dune_build -p %modulename,luv_unix
 
 %install
-%dune_install %modulename
+%dune_install %modulename luv_unix
 
 %check
 export LUV_USE_SYSTEM_LIBUV=yes
@@ -54,7 +59,7 @@ export TRAVIS=true
 # remove version test, broken in upstream
 rm -f test/version.ml
 sed -i '/Version\.tests\;/d' test/tester.ml
-%dune_check
+%dune_check -p %modulename,luv_unix %relax
 
 %files -f ocaml-files.runtime
 %doc README.md
@@ -62,6 +67,12 @@ sed -i '/Version\.tests\;/d' test/tester.ml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 17 2023 Anton Farygin <rider@altlinux.ru> 0.5.12-alt2
+- relaxed tests when ocaml in bytecode-only
+
+* Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 0.5.12-alt1
+- 0.5.12
+
 * Sun Feb 20 2022 Anton Farygin <rider@altlinux.ru> 0.5.11-alt1
 - 0.5.11
 

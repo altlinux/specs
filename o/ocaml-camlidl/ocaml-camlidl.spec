@@ -1,21 +1,23 @@
-%set_verify_elf_method textrel=relaxed
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: ocaml-camlidl
-Version: 1.09
+Version: 1.12
 Release: alt2
 Summary: Stub code generator and COM binding for Objective Caml
-License: QPL and LGPLv2 with exceptions
+License: QPL-1.0 WITH OCaml-LGPL-linking-exception and LGPL-2.0-or-later WITH OCaml-LGPL-linking-exception
 Group: Development/ML
-Url: http://caml.inria.fr/pub/old_caml_site/camlidl/
-# http://opam.ocaml.org/packages/camlidl/camlidl.1.05/
+Url: https://github.com/xavierleroy/camlidl
 Source0: %name-%version.tar
 # META file from Debian
 Source1: META.camlidl.in
 
-# Build the compiler into a native code program using ocamlopt.
-Patch1: camlidl-1.05-use-ocamlopt-for-compiler.patch
+Patch2: fedora-camlidl-Allow-destdir-installs.patch
+Patch3: fedora-camlidl-Pass-g-option-to-ocamlmklib.patch
+
+BuildRequires(pre): rpm-build-ocaml >= 1.6
 
 BuildRequires: ocaml
 BuildRequires: ocaml-ocamldoc
+
 
 %description
 CamlIDL is a stub code generator and COM binding for Objective Caml.
@@ -34,7 +36,7 @@ CamlIDL comprises two parts:
 
 %package devel
 Summary: Development files for %name
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Group: Development/ML
 
 %description devel
@@ -43,11 +45,18 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch2 -p1
+%patch3 -p1
 
-%patch1 -p1
-
-sed -e 's|^OCAMLLIB=.*|OCAMLLIB=%_libdir/ocaml|' \
-    -e 's|^BINDIR=.*|BINDIR=%_bindir|' \
+sed -e 's|^OCAMLLIB=.*|OCAMLLIB=%{_libdir}/ocaml|' \
+    -e 's|^BINDIR=.*|BINDIR=%{_bindir}|' \
+    -e 's|^CFLAGS=.*|CFLAGS=%{optflags}|' \
+%ifarch %ocaml_native_arch
+    -e 's|^OCAMLC=.*|OCAMLC=ocamlc.opt -g -bin-annot|' \
+    -e 's|^OCAMLOPT=.*|OCAMLOPT=ocamlopt.opt -g|' \
+%else
+    -e 's|^OCAMLC=.*|OCAMLC=ocamlc -g -bin-annot|' \
+%endif
     < config/Makefile.unix \
     > config/Makefile
 
@@ -62,28 +71,29 @@ mkdir -p %buildroot%_libdir/ocaml/camlidl
 mkdir -p %buildroot%_libdir/ocaml/stublibs
 mkdir -p %buildroot%_bindir
 
-sed 's/@VERSION@/%version/' < %SOURCE1 > %buildroot%_libdir/ocaml/camlidl/META
+sed 's/@VERSION@/%version/' < %SOURCE1 > %buildroot%_ocamldir/camlidl/META
 
-make OCAMLLIB=%buildroot%_libdir/ocaml \
-     BINDIR=%buildroot%_bindir \
-     install
+%makeinstall_std
+%__install -m644 lib/*.cm* %buildroot%_ocamldir/
 
-%files
+%ocaml_find_files
+
+%files -f ocaml-files.runtime
 %doc LICENSE
-%_libdir/ocaml/*.*
 %_libdir/ocaml/stublibs/dllcamlidl.so
-%exclude %_libdir/ocaml/*.a
-%exclude %_libdir/ocaml/*.cmxa
 %_bindir/camlidl
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc LICENSE README Changes tests
-%_libdir/ocaml/camlidl
-%_libdir/ocaml/*.a
-%_libdir/ocaml/*.cmxa
 %_libdir/ocaml/caml/*.h
 
 %changelog
+* Sat Nov 18 2023 Anton Farygin <rider@altlinux.ru> 1.12-alt2
+- fixed build for bytecode ocaml
+
+* Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 1.12-alt1
+- 1.12
+
 * Mon Dec 14 2020 Anton Farygin <rider@altlinux.ru> 1.09-alt2
 - enable relaxed mode for textrel check
 

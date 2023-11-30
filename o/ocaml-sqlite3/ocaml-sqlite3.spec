@@ -3,7 +3,7 @@
 %define module sqlite3
 Name: ocaml-%module
 Version: 5.1.0
-Release: alt1
+Release: alt2
 Summary: OCaml library for accessing SQLite3 databases
 License: MIT
 Group: Development/ML
@@ -14,6 +14,10 @@ Source: %name-%version.tar
 BuildRequires: libsqlite3-devel ocaml-dune-configurator-devel rpm-build-ocaml
 %if_with check
 BuildRequires: ocaml-ppx_inline_test-devel
+BuildRequires: ocaml-ppx_enumerate-devel
+BuildRequires: ocaml-ppx_compare-devel
+BuildRequires: ocaml-ppx_sexp_conv-devel
+BuildRequires: ocaml-ppx_hash-devel
 %endif
 Provides: ocaml4-%module
 Obsoletes: ocaml4-%module
@@ -49,6 +53,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 14 2023 Anton Farygin <rider@altlinux.ru> 5.1.0-alt2
+- fix BuildRequires
+
 * Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 5.1.0-alt1
 - 5.1.0
 

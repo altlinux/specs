@@ -1,15 +1,17 @@
+%def_with check
 Name: ocaml-ssl
-Version: 0.5.10
+Version: 0.7.0
 Release: alt1
 Summary: OCaml bindings for the OpenSSL library
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Group: Development/ML
 Url: https://github.com/savonet/ocaml-ssl
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-# Automatically added by buildreq on Sun Jan 06 2008
-BuildRequires: ocaml-findlib libssl-devel
+BuildRequires: libssl-devel
 BuildRequires: ocaml ocaml-dune-configurator-devel
+%if_with check
+BuildRequires: ocaml-alcotest-devel
+%endif
 
 %description
 This package contains OCaml bindings for libssl.
@@ -29,18 +31,24 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
 %build
 %dune_build -p ssl
 
 %install
 %dune_install
 
+%check
+%dune_check
+
 %files -f ocaml-files.runtime
 
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 0.7.0-alt1
+- 0.7.0
+- enabled tests
+
 * Fri Mar 26 2021 Anton Farygin <rider@altlinux.org> 0.5.10-alt1
 - 0.5.10
 
