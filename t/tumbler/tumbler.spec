@@ -3,8 +3,8 @@
 %def_enable gepub
 
 Name: tumbler
-Version: 4.18.1
-Release: alt2
+Version: 4.18.2
+Release: alt1
 
 Summary: A thumbnail D-Bus service
 License: GPLv2+ and LGPLv2+
@@ -93,6 +93,9 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Nov 30 2023 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
+- Updated to 4.18.2.
+
 * Tue Apr 18 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt2
 - Don't use _user_unitdir macro.
 
