@@ -10,7 +10,7 @@
 
 Name: plasma5-polkit-kde-agent
 Version: 5.27.9
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init
 
@@ -92,6 +92,9 @@ KF5 library
 %endif
 
 %changelog
+* Thu Nov 30 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt3
+- select any user if not selected by default
+
 * Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
 - dont force alternate placement
 
