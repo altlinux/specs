@@ -1,6 +1,6 @@
 Name: xfce4-settings
-Version: 4.18.3
-Release: alt2
+Version: 4.18.4
+Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -47,8 +47,6 @@ for the Xfce desktop.
 %patch -p1
 
 %build
-# Don't use git tag in version.
-%xfce4_drop_gitvtag xfce4_settings_version_tag configure.ac.in
 %xfce4reconf
 %configure  \
 	--enable-debug=minimum \
@@ -88,6 +86,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Thu Nov 30 2023 Mikhail Efremov <sem@altlinux.org> 4.18.4-alt1
+- Updated to 4.18.4.
+
 * Mon Jul 10 2023 Mikhail Efremov <sem@altlinux.org> 4.18.3-alt2
 - Fixed Russian translation (closes: #46825).
 
