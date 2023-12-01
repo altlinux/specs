@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%def_with bootstrap
+%def_without bootstrap
 
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 7.3.3
-Release: alt4
+Release: alt5
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -146,6 +146,9 @@ fi
 %perl_vendor_privlib/PVE/Cluster/Setup.pm
 
 %changelog
+* Fri Dec 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.3-alt5
+- build without bootstrap
+
 * Sun Oct 29 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.3-alt4
 - add bootstrap mode (Closes: #48151)
 
