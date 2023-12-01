@@ -6,7 +6,7 @@
 Name: pve-access-control
 Summary: PVE access control library
 Version: 7.4.3
-Release: alt2
+Release: alt3
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
@@ -71,6 +71,9 @@ control function used by Proxmox VE.
 %_datadir/zsh/vendor-completions/_pveum
 
 %changelog
+* Fri Dec 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt3
+- temporarily revert 'use TFA authentication api v2' commit (Closes: #48619)
+
 * Mon Oct 30 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt2
 - add logging for user status and ACL changes
 
