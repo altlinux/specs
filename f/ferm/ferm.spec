@@ -3,7 +3,7 @@
 
 Name: ferm
 Version: 2.7
-Release: alt1
+Release: alt2
 
 Summary: iptables frontend For Easy Rule Making
 
@@ -31,7 +31,7 @@ Requires: iptables
 
 # Automatically added by buildreq on Tue Aug 11 2020
 # optimized out: perl perl-Encode perl-HTML-Parser perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
-BuildRequires: perl-Pod-Usage perl-devel
+BuildRequires: perl-Pod-Usage perl-devel /usr/bin/pod2html
 
 %description
 ferm, pronounced "firm", stands for "For Easy Rule Making",
@@ -107,6 +107,9 @@ install -pD -m0640 -- %SOURCE4  %buildroot%_sysconfdir/sysconfig/%name
 
 
 %changelog
+* Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 2.7-alt2
+- NMU: fixed build with perl 5.38 - added BR: /usr/bin/pod2html
+
 * Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.7-alt1
 - New version:
   * support for the nfacct netfilter module
