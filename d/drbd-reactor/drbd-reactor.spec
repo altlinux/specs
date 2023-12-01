@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: drbd-reactor
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 Summary: React to DRBD events via plugins.
 
@@ -17,7 +17,7 @@ BuildRequires: rust-cargo
 BuildRequires: systemd-devel
 BuildRequires: /proc
 
-Requires: drbd-utils >= 9.21.2
+Requires: drbd-utils >= 9.26.0
 
 %description
 Daemon monitoring the state of DRBD resources, and executing plugins
@@ -86,6 +86,9 @@ install -D -m644 example/ctl.completion.bash %buildroot%_datadir/bash-completion
 %_man5dir/drbd-reactor.prometheus.5*
 
 %changelog
+* Fri Dec 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.4.0-alt1
+- v1.4.0
+
 * Wed Oct 11 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.3.0-alt1
 - v1.3.0
 
