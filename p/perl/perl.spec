@@ -5,8 +5,8 @@
 
 
 Name: perl
-Version: 5.38.0
-Release: alt1
+Version: 5.38.2
+Release: alt0.1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -39,13 +39,17 @@ Patch17: perl-5.26.1-alt-viy-Unicode-Normalize-fix-deps.patch
 Patch18: perl-5.32.1-alt-viy-disable-Time-HiRes-itimer.t.patch
 Patch19: perl-5.28.1-alt-viy-no-check-sums-in-customized.t.patch
 # temporary quick hack; should be replaced by a proper surgery
-# not installing version::regex will live perl.req's unmets
+# not installing version::regex will create perl.req's unmets
 Patch20: perl-5.24.1-alt-viy-installperl-ExtUtils-MakeMaker-version.patch
 # mail from Oleg Solovyov; see patch body
 Patch21: perl-5.24.3-alt-solovyov.patch
 # asked mcpain@. 2023-10-18 he still needs this hack
 # wait for resolution
-#Patch23: perl-5.38.0-alt-mcpain-trust-mode.patch
+#Patch22: perl-5.38.0-alt-mcpain-trust-mode.patch
+Patch23: perl-5.38.0-alt-e2k-bitfields.patch
+# hack;
+# Perl lib version (5.38.2) doesn't match executable 'buildroot/usr/bin/perl5.38.2' version (5.38.0) at buildroot/usr/lib64/perl5/Config.pm line 62.
+Source24: perl-5.38.2-alt-Config.pm-hack.patch
 
 # cpan update patches here. use format below:
 #Patch50: cpan-update-Scalar-List-Utils-1.55-to-Scalar-List-Utils-1.56.patch
@@ -274,8 +278,11 @@ a cache of things it knows how to cross-reference.
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
-# patch23 needs groking
-#patch23 -p1
+# patch22 needs groking
+#patch22 -p1
+%ifarch %e2k
+%patch23 -p1
+%endif
 #patch50 -p1
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
@@ -332,6 +339,12 @@ make
 #make libperl-%ver.so
 #make -C ext/re OPTIMIZE+='%optflags -O1' re_exec.o
 #make -C ext/re all
+%endif
+
+%if "%version" == "5.38.2"
+# ugly hack for buildroot
+# Perl lib version (5.38.2) doesn't match executable 'buildroot/usr/bin/perl5.38.2' version (5.38.0) at buildroot/usr/lib64/perl5/Config.pm line 62.
+patch -p1 < %{SOURCE24}
 %endif
 
 %check
@@ -972,6 +985,11 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 	%_bindir/pod2html
 
 %changelog
+* Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 1:5.38.2-alt0.1
+- 5.38.0 -> 5.38.2
+- lcc support: perl-5.38.0-alt-e2k-bitfields.patch
+- bootstrap; see Source24: perl-5.38.2-alt-Config.pm-hack.patch
+
 * Thu Nov 30 2023 Igor Vlasenko <viy@altlinux.org> 1:5.38.0-alt1
 - bootstrap perl wrapper off
 
