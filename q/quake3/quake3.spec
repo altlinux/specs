@@ -4,24 +4,17 @@
 
 %define revision 2349
 
-%define __arch %_arch
-%ifarch %ix86
-%define __arch i386
-%endif
-%ifarch %e2k
-%define __arch e2k
-%endif
+# ioquake3/Makefile, line 9
+%define __arch %(uname -m | sed -e s/i.86/i386/)
 
 Name: quake3
 Version: 1.36
-Release: alt6.svn%revision
+Release: alt7.svn%revision
 
 Summary: Quake 3: Arena by ID Software
 License: GPL-2
 Group: Games/Arcade
 Url: http://ioquake3.org
-
-ExcludeArch: %arm
 
 Source0: ioquake3-r%revision.tar.bz2
 
@@ -197,6 +190,9 @@ echo "In order to actually play the game, you'll need pak-files from original ga
 %dir %attr(1770,root,%_group) %_home
 
 %changelog
+* Fri Dec 01 2023 Ivan A. Melnikov <iv@altlinux.org> 1.36-alt7.svn2349
+- Build on %%arm
+
 * Tue Nov 28 2023 Ivan A. Melnikov <iv@altlinux.org> 1.36-alt6.svn2349
 - Build on loongarch64 and riscv64
 
