@@ -1,5 +1,5 @@
 Name:    entr
-Version: 5.4
+Version: 5.5
 Release: alt1
 
 Summary: Event Notify Test Runner
@@ -35,6 +35,9 @@ on the command line.
 %_man1dir/*
 
 %changelog
+* Fri Dec 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 5.5-alt1
+- 5.5
+
 * Sat Aug 26 2023 Andrew A. Vasilyev <andy@altlinux.org> 5.4-alt1
 - Initial build for ALT.
 
