@@ -1,6 +1,6 @@
 Name: lavaps
 Version: 2.7
-Release: alt3
+Release: alt4
 
 Summary: a lava lamp of currently running processes
 License: GPL
@@ -17,7 +17,7 @@ Summary(uk_UA.KOI8-U): в╕дображення наявних процес╕в
 
 # Automatically added by buildreq on Wed Nov 09 2011
 # optimized out: GConf ORBit2-devel fontconfig fontconfig-devel glib2-devel gnome-vfs gnome-vfs-devel libGConf-devel libICE-devel libSM-devel libX11-devel libart_lgpl-devel libatk-devel libavahi-glib libbonobo-devel libbonoboui-devel libcairo-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgnome-devel libgnome-keyring libgnomecanvas-devel libgpg-error libgtk+2-devel libpango-devel libpopt-devel libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators pkg-config xorg-xproto-devel
-BuildRequires: gcc-c++ imake libXext-devel libgnomeui-devel perl-Pod-Parser perl-XML-Parser perl-devel tcl xorg-cf-files
+BuildRequires: gcc-c++ imake libXext-devel libgnomeui-devel perl-Pod-Parser perl-XML-Parser perl-devel tcl xorg-cf-files /usr/bin/pod2html
 
 %description
 Lavaps is an interactive process-tracking program like ``top'', but
@@ -62,6 +62,9 @@ install -pDm644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %_sysconfdir/gconf/schemas/*
 
 %changelog
+* Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 2.7-alt4
+- NMU: fixed build with perl 5.38
+
 * Wed Nov 09 2011 Michael Shigorin <mike@altlinux.org> 2.7-alt3
 - applied debian patch to fix FTBFS:
   + superfluous header included
