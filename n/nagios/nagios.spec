@@ -13,7 +13,7 @@
 
 Name: nagios
 Version: 3.0.6
-Release: alt17
+Release: alt18
 
 Summary: Services and network monitoring system
 License: GPL
@@ -76,9 +76,6 @@ Requires: nagios-plugins
 
 # Automatically added by buildreq on Mon Oct 17 2011
 BuildRequires: glib2-devel libgd2-devel libjpeg-devel libltdl7-devel libpng-devel perl-devel traceroute
-
-# tmp hack to help rebuild perl (nagios randomly triggers gcc bug)
-%define optflags_lto %nil
 
 %description
 Nagios(R) is a host and service monitor designed to inform you of network
@@ -399,6 +396,9 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %files full
 
 %changelog
+* Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 3.0.6-alt18
+- NMU: removed tmp hack (next time make -j1 should help?)
+
 * Tue Nov 07 2023 Igor Vlasenko <viy@altlinux.org> 3.0.6-alt17
 - NMU: tmp hack to help rebuild perl: set optflags_lto %nil
 
