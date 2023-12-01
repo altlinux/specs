@@ -4,8 +4,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plantuml
-Version:        1.2022.5
-Release:        alt1_3jpp11
+Version:        1.2022.6
+Release:        alt1_2jpp11
 Epoch:          2
 Summary:        Program to generate UML diagram from a text description
 
@@ -26,6 +26,8 @@ BuildRequires:  javapackages-local
 # uses /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
 Source44: import.info
+# see https://bugzilla.altlinux.org/48358
+Requires: graphviz
 
 %description
 PlantUML is a program allowing to draw UML diagrams, using a simple
@@ -87,6 +89,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference COPYING
 
 %changelog
+* Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 2:1.2022.6-alt1_2jpp11
+- new version
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 2:1.2022.5-alt1_3jpp11
 - new version
 
