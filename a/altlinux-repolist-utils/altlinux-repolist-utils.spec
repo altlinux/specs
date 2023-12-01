@@ -1,5 +1,5 @@
 Name: altlinux-repolist-utils
-Version: 0.009
+Version: 0.010
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -44,6 +44,9 @@ install -m 644 ALTLinux/RepoList/*.pm %buildroot%perl_vendor_privlib/ALTLinux/Re
 %perl_vendor_privlib/ALTLinux/*
 
 %changelog
+* Tue Nov 28 2023 Igor Vlasenko <viy@altlinux.org> 0.010-alt1
+- added --pipe mode
+
 * Sun Nov 05 2023 Igor Vlasenko <viy@altlinux.org> 0.009-alt1
 - added altlinux-repolist-bin-* symlinks
 
