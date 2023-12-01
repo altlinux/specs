@@ -1,10 +1,10 @@
 Name:    rakarrack-plus
-Version: 1.2.3
-Release: alt1.1
+Version: 1.2.4
+Release: alt1
 
 Summary: Rakarrack plus LV2s
 License: GPL-2.0
-Group:   Other
+Group:   Sound
 Url:     https://github.com/Stazed/rakarrack-plus
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
@@ -77,6 +77,9 @@ sed -i 's/-fvect-cost-model//' CMakeLists.txt
 %_datadir/RakarrackPlus.lv2
 
 %changelog
+* Fri Dec  1 2023 Artyom Bystrov <arbars@altlinux.org> 1.2.4-alt1
+- Update to new version
+
 * Mon Sep 25 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.3-alt1.1
 - Fixed build for Elbrus
 
