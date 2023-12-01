@@ -1,6 +1,6 @@
 Name: upx
 Version: 3.96
-Release: alt2
+Release: alt3
 
 Summary: The Ultimate Packer for eXecutables
 License: GPLv2+
@@ -12,7 +12,7 @@ Patch1: %name-misleading-indentation.patch
 
 # Automatically added by buildreq on Mon Feb 11 2019
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators python-base sh4
-BuildRequires: gcc-c++ libucl-devel perl-Pod-Usage perl-devel zlib-devel
+BuildRequires: gcc-c++ libucl-devel perl-Pod-Usage perl-devel zlib-devel /usr/bin/pod2html
 
 %description
 UPX is an advanced executable packer for several different executable formats.
@@ -40,6 +40,9 @@ install -pD -m644 doc/upx.1 %buildroot%_man1dir/upx.1
 %_man1dir/upx*
 
 %changelog
+* Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 3.96-alt3
+- NMU: fixed build with perl 5.38 - added BR: /usr/bin/pod2html
+
 * Thu Sep 30 2021 Alexander Danilov  <admsasha@altlinux.org> 3.96-alt2
 - Fixed misleading indentation
 
