@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: usbutils
-Version: 015
+Version: 017
 Release: alt1
 
 Summary: Linux USB utilities
@@ -30,6 +32,7 @@ the USB bus.
 %install
 %makeinstall
 rm -f %buildroot%_bindir/lsusb.py
+rm -f %buildroot%_pkgconfigdir/*.pc
 
 %files
 %_bindir/*
@@ -38,6 +41,9 @@ rm -f %buildroot%_bindir/lsusb.py
 %doc NEWS README.md
 
 %changelog
+* Fri Dec 01 2023 Alexey Shabalin <shaba@altlinux.org> 017-alt1
+- New version 017.
+
 * Thu Nov 03 2022 Alexey Shabalin <shaba@altlinux.org> 015-alt1
 - new version 015
 
