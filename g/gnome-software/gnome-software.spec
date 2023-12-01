@@ -36,7 +36,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -201,6 +201,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Dec 01 2023 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
+- 45.2
+
 * Fri Oct 20 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 - removed gnome-packagekit from requires (ALT #48003)
