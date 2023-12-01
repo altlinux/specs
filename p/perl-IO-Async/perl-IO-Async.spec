@@ -3,7 +3,7 @@
 
 Name: perl-%oname
 Version: 0.802
-Release: alt1
+Release: alt2
 
 Summary: Asynchronous event-driven programming
 Group: Development/Perl
@@ -16,7 +16,7 @@ Source: %oname-%version.tar
 BuildArch: noarch
 BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Future.pm) perl(Future/Utils.pm) perl-devel perl(Struct/Dumb.pm) perl(Future/IO.pm)
 # tests
-BuildRequires: perl(Test/Refcount.pm) perl(Test/Fatal.pm) perl(Test/Future/IO/Impl.pm) perl(Test/Identity.pm) perl(Test/Metrics/Any.pm)
+BuildRequires: perl(Test/Refcount.pm) perl(Test/Fatal.pm) perl(Test/Future/IO/Impl.pm) perl(Test/Identity.pm) perl(Test/Metrics/Any.pm) perl(experimental.pm)
 
 %add_findreq_skiplist */IO/Async/MergePoint.pm
 
@@ -66,6 +66,9 @@ This package contains tests for %name.
 %perl_vendor_privlib/IO/Async/Test.pm
 
 %changelog
+* Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 0.802-alt2
+- fixed build with perl 5.38
+
 * Thu Aug 18 2022 Igor Vlasenko <viy@altlinux.org> 0.802-alt1
 - new version
 
