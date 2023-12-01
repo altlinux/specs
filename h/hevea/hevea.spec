@@ -1,8 +1,14 @@
+
+%ifarch %ocaml_native_arch
 %define target TARGET=opt
+%else
+%define target TARGET=byte
+%endif
+
 
 Name: hevea
 Version: 2.36
-Release: alt1
+Release: alt2
 Packager: %packager
 
 Group: Publishing
@@ -14,7 +20,8 @@ Source: %url/distri/%name-%version.tar.gz
 
 Requires: /usr/bin/latex, /usr/bin/pdflatex
 
-BuildRequires: rpm-build-ocaml ocaml ocaml-ocamlbuild
+BuildRequires(pre): rpm-build-ocaml >= 1.6.1
+BuildRequires: ocaml ocaml-ocamlbuild
 
 %description
 HeVeA is a LaTeX to HTML translator. Its remarkable features are
@@ -52,6 +59,9 @@ rm -f config.sh
 %doc README CHANGES LICENSE pub.txt
 
 %changelog
+* Sat Dec 02 2023 Ivan A. Melnikov <iv@altlinux.org> 2.36-alt2
+- Build as bytecode on architectures w/o native ocaml compiler.
+
 * Sun Oct 02 2022 Andrey Bergman <vkni@altlinux.org> 2.36-alt1
 - Update to version 2.36.
 
