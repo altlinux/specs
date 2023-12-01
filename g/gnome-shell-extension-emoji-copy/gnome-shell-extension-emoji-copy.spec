@@ -2,7 +2,7 @@
 
 %define _name emoji-copy
 %define old_name emoji-selector
-%define ver_major 1.0.0
+%define ver_major 1.0
 %define beta %nil
 %define uuid emoji-copy@felipeftn
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: Emoji Selector for GNOME Shell
@@ -25,6 +25,8 @@ Source: %url/-/archive/v%version%beta/%_name-%version%beta.tar.gz
 Vcs: https://github.com/felipeftn/emoji-copy.git
 Source: %_name-%version%beta.tar
 %endif
+# reverse this
+Patch: %_name-1.0.1-up-transgenders.patch
 
 BuildArch: noarch
 
@@ -40,6 +42,7 @@ most emojis. Clicking on an emoji copies it to your clipboard.
 
 %prep
 %setup -n %_name-%version%beta
+%patch -p1 -R
 
 %build
 ./update-and-compile-translations.sh
@@ -62,6 +65,9 @@ popd
 %doc README.md
 
 %changelog
+* Fri Dec 01 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Mon Nov 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus
 

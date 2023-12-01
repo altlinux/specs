@@ -28,6 +28,9 @@
 %def_enable lv2
 %def_enable libcanberra
 %def_enable lc3
+# bluez5-backend-native-mm
+# https://gitlab.freedesktop.org/pipewire/pipewire/-/merge_requests/1379
+%def_enable mm
 #system service: not recommended and disabled by default
 %def_disable systemd_system_service
 %def_enable selinux
@@ -44,7 +47,7 @@
 
 Name: pipewire
 Version: %ver_major.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -70,6 +73,7 @@ Requires: rtkit
 
 %define meson_ver 0.59
 %define gst_ver 1.10
+%define mm_ver 1.10.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson >= %meson_ver libgio-devel libudev-devel libdbus-devel
@@ -82,6 +86,7 @@ BuildRequires: libmysofa-devel
 BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
 BuildRequires: libfreeaptx-devel libopus-devel
 %{?_enable_lc3:BuildRequires: liblc3-devel}
+%{?_enable_mm:BuildRequires: pkgconfig(ModemManager) >= %mm_ver}
 # LC3plus BT codec
 # BuildRequires: lc3plus-devel
 # for pw-top
@@ -136,6 +141,7 @@ a PipeWire media server.
 Summary: PipeWire media server documentation
 Group: Documentation
 # https://bugzilla.altlinux.org/34101
+# "dot output is inconsistent across architectures"
 BuildArch: noarch
 Conflicts: %name-libs-devel < %version
 
@@ -215,6 +221,7 @@ export LIB=%_lib
 	%{?_disable_lv2:-Dlv2=disabled} \
 	%{?_disable_libcanberra:-Dlibcanberra=disabled} \
 	%{?_enable_lc3:-Dbluez5-codec-lc3=enabled} \
+	%{?_enable_mm:-Dbluez5-backend-native-mm=enabled} \
 	%{?_disable_systemd:-Dsystemd=disabled} \
 	%{?_disable_selinux:-Dselinux=disabled} \
 	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
@@ -405,6 +412,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Thu Nov 30 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2.2
+- enabled ModemManager in native backend in bluez5 spa plugin
+
 * Tue Nov 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2.1
 - E2K: ftbfs workaround by ilyakurdyukov@ (mcst#8330, #8500)
 
