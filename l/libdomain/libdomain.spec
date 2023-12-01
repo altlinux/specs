@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libdomain
-Version: 0.9.5
+Version: 0.9.7
 Release: alt1
 
 Summary: Libdomain library provides ability to manipulate LDAP entries.
@@ -16,6 +16,7 @@ BuildRequires: gcc gcc-c++
 
 BuildRequires: libldap-devel libverto-devel libverto-libev-devel libverto-glib-devel libverto-libevent-devel
 BuildRequires: libtalloc-devel libsasl2-devel
+BuildRequires: libconfig-devel
 BuildRequires: cgreen
 
 BuildRequires: doxygen
@@ -70,6 +71,14 @@ install -v -p -m 644 -D %_builddir/%name-%version/src/*.h %buildroot%_includedir
 %_bindir/*
 
 %changelog
+* Fri Dec 1 2023 Vladimir Rubanov <august@altlinux.org> 0.9.7-alt1
+- Implemented:
+  + Implement initial timeout test.
+  + Implement configuration loading and tests.
+- Fixes:
+  + Fix issue with directory test.
+  + Improve description in configure test.
+
 * Tue Nov 28 2023 Vladimir Rubanov <august@altlinux.org> 0.9.5-alt1
 - Fixes:
   + Implement initial samba support.
