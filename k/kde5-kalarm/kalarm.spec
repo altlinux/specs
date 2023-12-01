@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 23.08.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,8 @@ Obsoletes: kde5-pim-kalarm < %EVR
 Conflicts: kde5-pim-common < 16.12
 
 Source: %rname-%version.tar
-Patch: alt-kalarm-ignore-tz.patch
+Patch1: 42306336.patch
+#Patch100: alt-kalarm-ignore-tz.patch
 
 # Automatically added by buildreq on Thu Mar 16 2017 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kde5-libkleo-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdb4-devel libdbusmenu-qt52 libgpg-error libgpgme-devel libical-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -68,7 +69,7 @@ Requires: %name-common
 
 %prep
 %setup -n %rname-%version
-#%patch -p3
+%patch1 -p1
 
 %build
 %K5build
@@ -109,6 +110,9 @@ Requires: %name-common
 %_K5lib/libkalarmplugin.so.*
 
 %changelog
+* Fri Dec 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt2
+- show correct calendar names when deleting (thanks krf10@alt) (closes: 41826)
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 
