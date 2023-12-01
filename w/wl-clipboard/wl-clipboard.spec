@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wl-clipboard
-Version: 2.0.0
+Version: 2.2.1
 Release: alt1
 Summary: Command-line copy/paste utilities for Wayland
 Group: System/X11
@@ -37,8 +37,12 @@ sockets, files and so on.
 %_man1dir/*
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/site-functions/*
+%_datadir/fish/vendor_completions.d/*
 
 %changelog
+* Thu Nov 30 2023 Andrey Limachko <liannnix@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Mon Oct 07 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
