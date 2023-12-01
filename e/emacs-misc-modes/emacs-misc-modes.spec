@@ -2,7 +2,7 @@
 # $Id: emacs-misc-modes.spec,v 1.8 2006/02/04 17:54:06 eugene Exp $
 
 Version: 0.2
-Release: alt10.4
+Release: alt10.5
 Name: emacs-misc-modes
 License: GPL
 Group: Editors
@@ -16,8 +16,8 @@ Source: %name.tar.gz
 
 BuildArch: noarch
 
-BuildPreReq: emacs-devel >= 0.0.1-alt2
-BuildPreReq: emacs26-X11-athena
+BuildRequires: emacs-devel >= 0.0.1-alt2
+BuildRequires: emacs-nox
 
 # Automatically added by buildreq on Tue Dec 24 2002
 BuildRequires: emacs-cedet emacs-gnus
@@ -44,6 +44,9 @@ install -m 644 *.info* %buildroot%_infodir/
 %_infodir/*
 
 %changelog
+* Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 0.2-alt10.5
+- NMU: fixed build
+
 * Mon May 17 2021 Slava Aseev <ptrnine@altlinux.org> 0.2-alt10.4
 - NMU: dropped emacs-bbdb (was removed in #268867)
 
