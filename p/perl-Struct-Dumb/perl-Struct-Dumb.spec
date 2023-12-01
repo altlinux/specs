@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Struct-Dumb
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test2/V0.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test2/V0.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.14
-Release: alt1
+Release: alt2
 Summary: make simple lightweight record-like structures
 Group: Development/Perl
 License: perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/S*
 
 %changelog
+* Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 0.14-alt2
+- fixed build with perl 5.38
+
 * Sun Feb 12 2023 Igor Vlasenko <viy@altlinux.org> 0.14-alt1
 - automated CPAN update
 
