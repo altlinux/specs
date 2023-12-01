@@ -1,5 +1,5 @@
 Name: pdfarranger
-Version: 1.9.1
+Version: 1.10.1
 Release: alt1
 Url: https://github.com/pdfarranger/pdfarranger
 Group: Publishing
@@ -9,9 +9,9 @@ Source: %name-%version.tar.gz
 Summary: Split pdf documents and rotate, crop and rearrange their pages
 Requires: python3-module-%name = %version-%release, python3-module-pikepdf
 
-# Automatically added by buildreq on Tue Dec 29 2020
-# optimized out: perl perl-Encode perl-XML-Parser perl-parent python2-base python3 python3-base python3-dev python3-module-paste python3-module-pkg_resources sh4
-BuildRequires: intltool python3-module-distutils-extra python3-module-setuptools python3-module-sphinxcontrib
+# Automatically added by buildreq on Fri Dec 01 2023
+# optimized out: bash5 libgpg-error python3 python3-base python3-dev python3-module-pkg_resources python3-module-py3dephell python3-module-setuptools sh5
+BuildRequires: python3-module-distutils-extra python3-module-pyproject-installer python3-module-wheel
 
 %description
 Pdfarranger is a small python-gtk application, which helps the user to
@@ -29,14 +29,16 @@ Supplemental module for %name, %summary
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 install -d %buildroot%_iconsdir
 cp -a data/icons/* %buildroot/%_iconsdir/
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %_bindir/*
 %_desktopdir/*%{name}*.desktop
 %_man1dir/*
@@ -48,6 +50,9 @@ cp -a data/icons/* %buildroot/%_iconsdir/
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Dec 01 2023 Fr. Br. George <george@altlinux.org> 1.10.1-alt1
+- Autobuild version bump to 1.10.1
+
 * Fri Oct 28 2022 Fr. Br. George <george@altlinux.org> 1.9.1-alt1
 - Autobuild version bump to 1.9.1
 
