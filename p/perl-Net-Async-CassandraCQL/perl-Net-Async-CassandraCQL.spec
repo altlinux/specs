@@ -4,7 +4,7 @@
 
 Name: perl-Net-Async-CassandraCQL
 Version: 0.12
-Release: alt2
+Release: alt3
 
 Summary: use Cassandra databases with IO::Async using CQL
 
@@ -23,7 +23,7 @@ BuildRequires(pre): perl-devel rpm-build-licenses
 
 # Automatically added by buildreq on Fri May 29 2015
 # optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Compress-Snappy perl-Encode perl-Future perl-IO-Socket-IP perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Struct-Dumb perl-Sub-Exporter-Progressive perl-Test-Fatal perl-Test-Refcount perl-devel perl-parent perl-podlators
-BuildRequires: perl-Compress-LZ4 perl-Devel-GlobalDestruction perl-Devel-Refcount perl-HTML-Parser perl-IO-Async perl-Module-Build perl-Protocol-CassandraCQL perl-Test-HexString perl-Test-Identity perl-Test-Pod
+BuildRequires: perl-Compress-LZ4 perl-Devel-GlobalDestruction perl-Devel-Refcount perl-HTML-Parser perl-IO-Async perl-Module-Build perl-Protocol-CassandraCQL perl-Test-HexString perl-Test-Identity perl-Test-Pod perl(experimental.pm)
 BuildRequires: perl-IO-Async-tests
 
 # For 32bit platforms
@@ -58,6 +58,9 @@ communicate with Cassandra.
 %perl_vendor_privlib/Net/Async/CassandraCQL*
 
 %changelog
+* Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 0.12-alt3
+- NMU: fixed build with perl 5.38
+
 * Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.12-alt2
 - add BR: perl-IO-Async-tests
 
