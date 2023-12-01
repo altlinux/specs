@@ -6,13 +6,13 @@
 %define module_name Future-IO
 %define test_module_name Test-Future-IO-Impl
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Future.pm) perl(Module/Build.pm) perl(Struct/Dumb.pm) perl(Test/ExpectAndCheck.pm) perl(Test/Future/IO/Impl.pm) perl(Test/Identity.pm) perl(Test/More.pm) perl(Test2/V0.pm) perl(Time/HiRes.pm)
+BuildRequires: perl(Future.pm) perl(Module/Build.pm) perl(Struct/Dumb.pm) perl(Test/ExpectAndCheck.pm) perl(Test/Future/IO/Impl.pm) perl(Test/Identity.pm) perl(Test/More.pm) perl(Test2/V0.pm) perl(Time/HiRes.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.15
-Release: alt2
+Release: alt3
 Summary: Future-returning IO methods
 Group: Development/Perl
 License: perl
@@ -67,6 +67,9 @@ esac
 %endif
 
 %changelog
+* Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 0.15-alt3
+- fixed build with perl 5.38
+
 * Wed Oct 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.15-alt2
 - NMU: disable 04syswrite test on LoongArch too. Fixes FTBFS on LoongArch.
 
