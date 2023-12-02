@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: 1.11.1
-Release: alt2
+Release: alt3
 
 Summary: Generic Programming for Computer Vision
 License: MIT
@@ -24,12 +24,13 @@ Source: https://github.com/ukoethe/%_name/releases/download/Version-1-11-1/%_nam
 Source: %_name-%version.tar
 %endif
 # partially deimproved FindOpenEXR
-Patch: vigra-1.11.0-alt-findexr.patch
+Patch: vigra-1.11.1-fedora-openexr3.patch
 
 # for vigra-config
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ cmake libfftw3-devel libjpeg-devel libpng-devel libtiff-devel
-BuildRequires: openexr-devel doxygen
+BuildRequires: openexr-devel >= 3
+BuildRequires: doxygen
 %{?_with_hdf5:BuildRequires: libhdf5-devel}
 %{?_enable_python:BuildRequires: boost-python3-devel libnumpy-devel}
 %ifnarch e2k
@@ -78,7 +79,7 @@ This package provides Python3 bindings for VIGRA library.
 
 %prep
 %setup -n %_name-%version
-%patch
+%patch -p1
 # fix shebang
 sed -i 's|\(#!\/usr\/bin\/\)env \(python\)|\1\23|' config/vigra-config.in
 
@@ -125,6 +126,9 @@ sed -i 's,-ftemplate-depth=900,,' CMakeLists.txt
 
 
 %changelog
+* Sat Dec 02 2023 Ivan A. Melnikov <iv@altlinux.org> 1.11.1-alt3
+- fix build with OpenEXR 3+ with patch from fedora
+
 * Tue Dec 31 2019 Yuri N. Sedunov <aris@altlinux.org> 1.11.1-alt2
 - updated to 1-11-1-45-g8acd73a5
 
