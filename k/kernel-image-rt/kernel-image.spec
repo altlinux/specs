@@ -1,7 +1,7 @@
 Name: kernel-image-rt
 %define kernel_base_version	6.1
-%define kernel_sublevel	.59
-%define kernel_rt_release	rt16
+%define kernel_sublevel	.64
+%define kernel_rt_release	rt17
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -367,8 +367,6 @@ find . -mindepth 2 -type f | \
        while read f; do ln -srv "$f" "$(basename $f)"; done
 popd
 %endif
-mkdir -p %buildroot/lib/devicetree
-ln -s /boot/devicetree/$KernelVer %buildroot/lib/devicetree/$KernelVer
 %endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
@@ -551,7 +549,6 @@ check-pesign-helper
 %ghost %modules_dir/modules.builtin.bin
 %ifarch aarch64 %arm
 /boot/devicetree/%kversion-%flavour-%krelease
-/lib/devicetree/%kversion-%flavour-%krelease
 %endif
 
 %if_enabled domU
@@ -610,6 +607,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Dec 02 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.64-alt1.rt17
+- v6.1.64-rt17 (2023-12-01).
+- config: Enable HID_REDRAGON module (ALT#48182).
+- Remove symlinking to /lib/devicetree (ALT#48055).
+
 * Sat Oct 21 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.59-alt1.rt16
 - v6.1.59-rt16 (2023-10-20).
 
