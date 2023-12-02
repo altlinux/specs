@@ -22,7 +22,7 @@ Epoch:                  1
 
 Name:           eclipse-swt
 Version:        4.25
-Release:        alt1_1jpp11
+Release:        alt1_1jpp11.1
 Summary:        Eclipse SWT: The Standard Widget Toolkit for GTK+
 
 License:        EPL-2.0
@@ -39,7 +39,7 @@ Patch1:         eclipse-swt-rm-eclipse-tasks-and-customize-build.patch
 # Add fedora cflags to build native libs
 Patch2:         eclipse-swt-fedora-build-native.patch
 
-ExclusiveArch:  s390x x86_64 aarch64 ppc64le
+ExclusiveArch:  s390x x86_64 aarch64 ppc64le loongarch64
 
 Requires:       java-11-openjdk
 Requires:       libwebkit2gtk libwebkit2gtk-gir
@@ -148,6 +148,9 @@ cp -a %{swtsrcdir}/*.so %{buildroot}/%{_libdir}/%{name}
 %doc --no-dereference NOTICE
 
 %changelog
+* Sat Dec 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:4.25-alt1_1jpp11.1
+- NMU: build for LoongArch.
+
 * Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 1:4.25-alt1_1jpp11
 - update
 
