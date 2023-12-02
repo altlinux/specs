@@ -3,7 +3,7 @@
 
 Name:     lucidor
 Version:  0.9.15
-Release:  alt2
+Release:  alt2.1
 
 Summary: E-book reader application
 
@@ -11,6 +11,8 @@ Group:    Text tools
 License:  %gpl3plus
 URL:      http://lucidor.org/lucidor/
 Packager: Nikolay Fetisov <naf@altlinux.ru>
+
+Autoreq: noshell
 
 ExclusiveArch: x86_64 aarch64 
 
@@ -32,6 +34,8 @@ BuildRequires: desktop-file-utils
 # Automatically added by buildreq on Thu Jan 05 2012
 # optimized out: fontconfig libgdk-pixbuf
 BuildRequires: librsvg-utils
+
+Requires: newmoon
 
 %description
 Lucidor is a computer program for reading and handling e-books.
@@ -103,6 +107,9 @@ install -d %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sun Dec 03 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.9.15-alt2.1
+- fIX Requires
+
 * Thu Nov 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.9.15-alt2
 - Add Russin Translate
 
