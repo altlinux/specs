@@ -25,7 +25,7 @@
 # the generic RPC driver, and test driver and no libvirtd
 # Default to a full server + client build
 
-%ifarch %ix86 x86_64 armh aarch64 ppc64le riscv64
+%ifarch %ix86 x86_64 armh aarch64 ppc64le riscv64 loongarch64
 %def_enable server_drivers
 %else
 %def_disable server_drivers
@@ -75,7 +75,7 @@
 %def_with storage_iscsi
 %def_with storage_iscsi_direct
 %def_with storage_disk
-%ifarch x86_64 aarch64 ppc64le
+%ifarch x86_64 aarch64 ppc64le loongarch64
 %def_with storage_rbd
 %else
 %def_without storage_rbd
@@ -88,7 +88,7 @@
 %endif
 %def_with storage_zfs
 %def_without storage_vstorage
-%ifarch %ix86 x86_64 ppc64le aarch64 s390x
+%ifarch %ix86 x86_64 ppc64le aarch64 s390x loongarch64
 %def_with numactl
 %else
 %def_without numactl
@@ -187,7 +187,7 @@
 
 Name: libvirt
 Version: 9.8.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
@@ -1403,6 +1403,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Sat Dec 02 2023 Ivan A. Melnikov <iv@altlinux.org> 9.8.0-alt2
+- Enable server dirvers on loongarch64.
+
 * Wed Oct 18 2023 Alexey Shabalin <shaba@altlinux.org> 9.8.0-alt1
 - 9.8.0
 - Build with nbdkit.
