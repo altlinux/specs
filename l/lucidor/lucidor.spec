@@ -3,7 +3,7 @@
 
 Name:     lucidor
 Version:  0.9.15
-Release:  alt1
+Release:  alt2
 
 Summary: E-book reader application
 
@@ -12,12 +12,18 @@ License:  %gpl3plus
 URL:      http://lucidor.org/lucidor/
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 
-ExcludeArch: armh
+ExclusiveArch: x86_64 aarch64 
 
 Source0: %name-%version.tar
+Source1: ru-RU.tar 
+
 
 Patch0: %name-0.9.7-alt-desktop.patch
-Patch1: %name-0.9.15-alt-firefox.patch
+Patch1: %name-0.9.15-alt-basilisk.patch
+
+Patch2: %name-0.9.15-translate_ru.patch
+Patch3: %name-0.9.15-collection.patch
+Patch4: %name-0.9.15-language.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -39,21 +45,39 @@ Lucidor provides functionality to:
   for example by browsing OPDS catalogs.
 - Convert web feeds into e-books.
 
+%description -l ru_RU.UTF-8
+Lucidor - компьютерная программа для чтения электронных книг и работы с ними.
+Lucidor поддерживает электронные книги в формате epub и каталогив формате OPDS.
+
+Lucidor позволяетя:
+- Читать электронные книги формата epub.
+- Организовать собственную коллекциию электронных книг в виде локальной книжной полки.
+- Искать и загружать электронные книги из Интернета, например, просматривая каталоги OPDS.
+- Конвертировать веб-каналы в электронные книги.
+
 %prep
 %setup
 %patch0
-%patch1 -p2
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
-mv gpl-3.0.txt gpl-3.0.txt.orig
+cd lucidor/chrome/locale/
+tar -xf %SOURCE1
+cd -
+
+rm  gpl-3.0.txt
 ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/gpl-3.0.txt) gpl-3.0.txt
 
+
 %build
-make
+%make
 
 %install
-make install install-man install-mime DESTDIR=%buildroot
+%make install install-man install-mime DESTDIR=%buildroot
 
-mkdir -p %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
+install -d %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 /usr/bin/rsvg-convert -w 16 -h 16 -f png -o %buildroot%_miconsdir/%name.png -- data/icons/scalable/apps/lucidor.svg
 /usr/bin/rsvg-convert -w 32 -h 32 -f png -o %buildroot%_niconsdir/%name.png -- data/icons/scalable/apps/lucidor.svg
 /usr/bin/rsvg-convert -w 48 -h 48 -f png -o %buildroot%_liconsdir/%name.png -- data/icons/scalable/apps/lucidor.svg
@@ -79,6 +103,9 @@ mkdir -p %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu Nov 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.9.15-alt2
+- Add Russin Translate
+
 * Tue Oct 10 2023 Pavel Vasenkov <pav@altlinux.org> 0.9.15-alt1
 - New version (Closes: #47908)
 
@@ -99,3 +126,6 @@ mkdir -p %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 
 * Fri Jan 06 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.7-alt1
 - Initial build for ALT Linux Sisyphus
+
+
+
