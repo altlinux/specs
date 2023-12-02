@@ -12,7 +12,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -75,7 +75,7 @@ Requires: gnome-control-center
 # 
 #Requires: polari
 # for OSK
-Requires: ibus ibus-gtk3
+Requires: ibus ibus-gtk4
 # for zipped extensions
 Requires: unzip
 # synce 3.38
@@ -284,6 +284,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Sat Dec 02 2023 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
+- 45.2
+
 * Wed Nov 01 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 

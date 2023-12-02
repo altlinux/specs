@@ -20,8 +20,8 @@
 %def_disable libdisplay_info
 
 Name: mutter
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.2
+Release: alt1%beta
 Epoch: 1
 
 Summary: Clutter based compositing Window Manager
@@ -272,6 +272,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Sat Dec 02 2023 Yuri N. Sedunov <aris@altlinux.org> 1:45.2-alt1
+- 45.2
+
 * Wed Nov 01 2023 Yuri N. Sedunov <aris@altlinux.org> 1:45.1-alt1.1
 - rebuilt against Xwayland with emulated input support
 
