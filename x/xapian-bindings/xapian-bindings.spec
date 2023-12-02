@@ -9,7 +9,7 @@
 %def_without doc
 
 Name: xapian-bindings
-Version: 1.4.23
+Version: 1.4.24
 Release: alt1
 Summary: Xapian search engine bindings
 License: GPL-2.0-or-later
@@ -145,6 +145,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Sat Dec 02 2023 Vitaly Chikunov <vt@altlinux.org> 1.4.24-alt1
+- Update to 1.4.24 (2023-11-06).
+
 * Tue Jul 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.4.23-alt1
 - Update to 1.4.23 (2023-07-07).
 
