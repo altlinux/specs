@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 Epoch: 1
 
@@ -43,7 +43,7 @@ BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 4.0}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
-%{?_enable_check:BuildRequires: xvfb-run librsvg}
+%{?_enable_check:BuildRequires: xvfb-run librsvg xdg-desktop-portal}
 
 %description
 libadwaita is a collection of GTK4 widgets for adaptive applications
@@ -144,6 +144,12 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Fri Dec 01 2023 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.1-alt1
+- 1.4.1
+
+* Wed Oct 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.0-alt2
+- updated to 1.4.0-9-g21ed9bb7
+
 * Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.0-alt1
 - 1.4.0
 

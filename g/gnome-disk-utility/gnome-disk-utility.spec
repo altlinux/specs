@@ -6,13 +6,13 @@
 %def_enable libsystemd
 
 Name: gnome-disk-utility
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Disk management application
 License: LGPLv2+
 Group: System/Libraries
-Url: https://wiki.gnome.org/Apps/Disks
+Url: https://apps.gnome.org/DiskUtility
 
 Requires: udisks2 cryptsetup
 Requires: gnome-icon-theme-symbolic
@@ -84,6 +84,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Fri Dec 01 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
+- 45.1
+
 * Sun Sep 10 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
