@@ -3,16 +3,14 @@
 %set_verify_elf_method strict
 
 Name: libseccomp
-Version: 2.5.4
-Release: alt3
+Version: 2.5.5
+Release: alt1
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
 Group: System/Libraries
 Url: https://github.com/seccomp/libseccomp
 
-#https://github.com/seccomp/libseccomp.git
 Source: %name-%version.tar
-Patch1: %name-%version.patch
 
 BuildRequires: gperf
 %{?!_without_check:%{?!_disable_check:
@@ -44,11 +42,11 @@ This package contains development files of %name.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
-%configure --disable-static --enable-silent-rules
+%configure --disable-static
 %make_build V=1
 
 %install
@@ -62,18 +60,18 @@ for f in %buildroot%_libdir/*.so; do
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
+install -p tools/scmp_api_level     %buildroot%_bindir
+install -p tools/scmp_app_inspector %buildroot%_bindir
+install -p tools/scmp_arch_detect   %buildroot%_bindir
+install -p tools/scmp_bpf_disasm    %buildroot%_bindir
+install -p tools/scmp_bpf_sim       %buildroot%_bindir
+
 %check
 unset MAKEFLAGS
 export  LIBSECCOMP_TSTCFG_JOBS=0 \
 	LIBSECCOMP_TSTCFG_TYPE=live \
 	LIBSECCOMP_TSTCFG_MODE_LIST=c
 %make_build check V=1
-
-install -p tools/scmp_api_level     %buildroot%_bindir
-install -p tools/scmp_app_inspector %buildroot%_bindir
-install -p tools/scmp_arch_detect   %buildroot%_bindir
-install -p tools/scmp_bpf_disasm    %buildroot%_bindir
-install -p tools/scmp_bpf_sim       %buildroot%_bindir
 
 %define _customdocdir %_docdir/%name
 
@@ -90,6 +88,9 @@ install -p tools/scmp_bpf_sim       %buildroot%_bindir
 %_man3dir/*
 
 %changelog
+* Sat Dec 02 2023 Vitaly Chikunov <vt@altlinux.org> 2.5.5-alt1
+- Update to v2.5.5 (2023-12-01).
+
 * Mon Mar 27 2023 Vitaly Chikunov <vt@altlinux.org> 2.5.4-alt3
 - spec: Move doc and developer tools into -devel package.
 
