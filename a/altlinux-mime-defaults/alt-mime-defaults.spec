@@ -1,6 +1,6 @@
 #def_without N
 Name: altlinux-mime-defaults
-Version: 0.442
+Version: 0.443
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -51,6 +51,9 @@ touch %buildroot%_sysconfdir/xdg/mimeapps.list
 %endif
 
 %changelog
+* Sat Dec 02 2023 Igor Vlasenko <viy@altlinux.org> 0.443-alt1
+- updated mime defaults
+
 * Wed Nov 22 2023 Igor Vlasenko <viy@altlinux.org> 0.442-alt1
 - updated mime defaults (due to KDE kf5-*.desktop prefix migration)
 
