@@ -21,8 +21,10 @@
 
 %ifarch x86_64 aarch64
 %def_with openpgl
+%def_with usd
 %else
 %def_without openpgl
+%def_without usd
 %endif
 
 %ifarch x86_64 ppc64le
@@ -42,8 +44,8 @@
 %def_with jemalloc
 
 Name: blender
-Version: 3.6.5
-Release: alt3
+Version: 4.0.1
+Release: alt0.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -62,27 +64,26 @@ Source: %name-%version.tar
 Source1: %name-%version-release-scripts-addons_contrib.tar
 Source2: %name-%version-release-scripts-addons.tar
 
-Patch21: blender-2.66-alt-pcre.patch
-Patch22: blender-2.77-alt-enable-localization.patch
-Patch23: blender-2.92-alt-include-deduplication-check-skip.patch
-Patch24: blender-2.80-alt-use-system-glog.patch
-# TODO not sure we need this patch
-Patch25: blender-2.90.0-alt-embree-components.patch
-Patch26: blender-3.0.0-alt-doc.patch
-Patch27: blender-2.90-alt-non-x86_64-linking.patch
-Patch28: blender-2.93.0-suse-reproducible.patch
-Patch29: blender-alt-fix-clang-linking.patch
-Patch30: blender-3.4.1-gcc-13-fix.patch
-Patch31: blender-3.6.0-alt-remove-python2-dependency.patch
-Patch32: blender-3.6.3-alt-hiprt-enable.patch
+Patch21: blender-2.77-alt-enable-localization.patch
+Patch22: blender-2.92-alt-include-deduplication-check-skip.patch
+Patch23: blender-2.80-alt-use-system-glog.patch
+Patch24: blender-2.90-alt-non-x86_64-linking.patch
+Patch25: blender-3.4.1-gcc-13-fix.patch
+Patch26: blender-4.0.1-alt-pcre.patch
+Patch27: blender-4.0.1-suse-reproducible.patch
+Patch28: blender-4.0.1-alt-hiprt-enable.patch
+Patch29: blender-4.0.1-alt-fix-manpage.patch
+Patch30: blender-alt-fix-clang-linking.patch
+
+# upstream fixes to merge
+# ppc64le: fix build with SSE
+# https://projects.blender.org/blender/blender/pulls/115098
+Patch100: 0001-Fix-build-error-on-architectures-without-SSE-or-sse2.patch
 
 Patch2000: blender-e2k-support.patch
 
-# Fixes from main
-Patch300: 0001-Cycles-Fix-MNEE-not-accounting-for-closure-Fresnel.patch
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: boost-filesystem-devel boost-locale-devel boost-wave-devel
+BuildRequires: boost-filesystem-devel boost-locale-devel boost-wave-devel boost-python3-devel
 BuildRequires: cmake gcc-c++
 BuildRequires: libGLEW-devel libXi-devel
 BuildRequires: libavdevice-devel libavformat-devel libavfilter-devel libswresample-devel
@@ -153,6 +154,10 @@ BuildRequires: hiprt-devel
 
 %if_with openpgl
 BuildRequires: openpgl-devel
+%endif
+
+%if_with usd
+BuildRequires: OpenUSD-devel
 %endif
 
 %add_python3_path %_datadir/%name/scripts
@@ -250,14 +255,15 @@ This package contains binaries for AMD GPUs to use with HIP.
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
-#%%patch25 -p1
+%patch25 -p1
 %patch26 -p1
 %patch27 -p1
 %patch28 -p1
 %patch29 -p1
 %patch30 -p1
-%patch31 -p1
-%patch32 -p1
+
+# upstream patches
+%patch100 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -265,8 +271,6 @@ This package contains binaries for AMD GPUs to use with HIP.
 sed -i "/-Werror=return-type/d" CMakeLists.txt
 sed -i 's/"${CMAKE_C_COMPILER_VERSION}" VERSION_LESS/"100" VERSION_LESS/' CMakeLists.txt
 %endif
-
-%patch300 -p1
 
 # Delete the bundled FindOpenJPEG to make find_package use the system version
 # instead (the local version hardcodes the openjpeg version so it is not update
@@ -279,6 +283,11 @@ rm -rf extern/{Eigen3,glew,lzo,gflags,glog}
 %build
 BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
 BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
+
+# Explicitly use python3 in hashbangs.
+pushd scripts/addons
+subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
+popd
 
 # needed due to non-standard location of pcre.h header
 %add_optflags "-I%_includedir/pcre"
@@ -322,6 +331,11 @@ fi
 %else
 	-DWITH_CYCLES_EMBREE:BOOL=OFF \
 %endif
+%if_with usd
+	-DWITH_USD:BOOL=ON \
+%else
+	-DWITH_USD:BOOL=OFF \
+%endif
 	-DWITH_OPENCOLORIO=ON \
 	-DWITH_OPENVDB:BOOL=ON \
 	-DWITH_OPENVDB_BLOSC:BOOL=ON \
@@ -329,6 +343,7 @@ fi
 	-DWITH_SYSTEM_EIGEN3:BOOL=ON \
 	-DWITH_SYSTEM_GFLAGS:BOOL=ON \
 	-DWITH_SYSTEM_GLOG:BOOL=ON \
+	-DWITH_SYSTEM_FREETYPE:BOOL=ON \
 	-DWITH_IMAGE_OPENEXR=ON \
 	-DWITH_TBB:BOOL=ON \
 	-DPYTHON_VERSION="%_python3_version" \
@@ -359,12 +374,9 @@ popd
 %install
 %cmake_install
 
-mkdir -p %buildroot%_datadir/metainfo
-install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
-
 %files
 %_bindir/*
-%_desktopdir/*
+%_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_datadir/%name/
@@ -375,9 +387,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %if_with hiprt
 %exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_rt_gfx.*
 %endif
-%_datadir/metainfo/*.appdata.xml
+%_datadir/metainfo/*.metainfo.xml
 %_defaultdocdir/%name/
-%_man1dir/*.1*
+%_man1dir/%name.1*
 
 %if_with hip
 %files cycles-hip-kernels
@@ -394,8 +406,12 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
-* Fri Nov 17 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.5-alt3
-- BR: adjust boost requires.
+* Wed Nov 29 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.1-alt0.1
+- Update to 4.0.1:
+  + Rediffed patches and drop obsoleted ones.
+  + Added patch to fix man page generation in isolated env.
+  + BR: Added OpenUSD dependency.
+  + ppc64le: fix build.
 
 * Tue Nov 14 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.5-alt2
 - Update BR:
