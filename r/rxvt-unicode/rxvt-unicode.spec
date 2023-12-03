@@ -1,6 +1,6 @@
 Name: rxvt-unicode
 Version: 9.30
-Release: alt1
+Release: alt1.1
 
 Summary:  rxvt-unicode is a clone of the well known terminal emulator rxvt
 License: GPL-3.0-or-later
@@ -25,6 +25,7 @@ Source2: %name.desktop
 Patch0001: 0001-ALT-Change-cutchars.patch
 Patch0002: 0002-Prefer-XDG_RUNTIME_DIR-over-the-HOME.patch
 Patch0003: 0003-ALT-Fix-path-to-the-xsubpp-utility.patch
+Patch0004: 0004-Upstream-fix-unicode-characters-with-perl-5.38.0.patch
 
 BuildRequires: alternatives
 BuildRequires: gcc-c++
@@ -75,6 +76,9 @@ install -pD -m644 %SOURCE2 %buildroot/%_desktopdir/%name.desktop
 %_libdir/urxvt/
 
 %changelog
+* Sun Dec 03 2023 Ivan A. Melnikov <iv@altlinux.org> 9.30-alt1.1
+- Fix display of unicode characters with perl 5.38.0 (ALT#48669).
+
 * Mon Oct 10 2022 Alexey Gladkov <legion@altlinux.ru> 9.30-alt1
 - New release (9.30).
 
