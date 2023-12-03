@@ -1,19 +1,17 @@
-%define ver_major 5.8
+%define ver_major 6.0
 
 Name: cinnamon-translations
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Translations for Cinnamon
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-translations
-Packager: Vladimir Didenko <cow@altlinux.org>
 BuildArch: noarch
 
+# Source-url: https://github.com/linuxmint/cinnamon-translations/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
-
-BuildPreReq: rpm-build-licenses
 
 Conflicts: cinnamon < 1.9.1
 
@@ -23,7 +21,7 @@ Translations for Cinnamon
 %package -n nemo-translations
 Summary: Translations for Nemo
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
+License: GPL-2.0-or-later
 
 %description -n nemo-translations
 Translations for Nemo
@@ -31,7 +29,7 @@ Translations for Nemo
 %package -n nemo-extensions-translations
 Summary: Translations for Nemo extensions
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
+License: GPL-2.0-or-later
 
 %description -n nemo-extensions-translations
 Translations for Nemo extensions
@@ -39,7 +37,7 @@ Translations for Nemo extensions
 %package -n cinnamon-control-center-translations
 Summary: Translations for cinnamon-control-center
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
+License: GPL-2.0-or-later
 
 %description -n cinnamon-control-center-translations
 Translations for cinnamon-control-center
@@ -47,7 +45,7 @@ Translations for cinnamon-control-center
 %package -n cinnamon-screensaver-translations
 Summary: Translations for cinnamon-screensaver
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
+License: GPL-2.0-or-later
 
 %description -n cinnamon-screensaver-translations
 Translations for cinnamon-screensaver
@@ -55,7 +53,7 @@ Translations for cinnamon-screensaver
 %package -n cinnamon-session-translations
 Summary: Translations for cinnamon-session
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
+License: GPL-2.0-or-later
 
 %description -n cinnamon-session-translations
 Translations for cinnamon-session
@@ -63,7 +61,7 @@ Translations for cinnamon-session
 %package -n cinnamon-settings-daemon-translations
 Summary: Translations for cinnamon-settings-daemon
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
+License: GPL-2.0-or-later
 
 %description -n cinnamon-settings-daemon-translations
 Translations for cinnamon-settings-daemon
@@ -102,6 +100,10 @@ cp -Rp usr/share/locale/* %{buildroot}%{_datadir}/locale
 %files -n cinnamon-settings-daemon-translations -f cinnamon-settings-daemon.lang
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
+- 6.0.0
+- Fix License
+
 * Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 5.8.2-alt1
 - 5.8.2
 

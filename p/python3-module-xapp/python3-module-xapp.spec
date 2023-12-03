@@ -1,7 +1,7 @@
 %define oname xapp
 
 Name: python3-module-%oname
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: Python Xapp Library
@@ -10,11 +10,12 @@ License: LGPLv2
 Group: Development/Python
 Url: https://github.com/linuxmint/python-xapp
 
+# Source-url: https://github.com/linuxmint/python3-xapp/archive/refs/tags/%version.tar.gz
 Source: python-%oname-%version.tar
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: rpm-build-gir
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3 rpm-build-gir
 BuildRequires: meson
 
 %description
@@ -34,6 +35,9 @@ Python Xapp Library
 %python3_sitelibdir/%oname/
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
+- New version
+
 * Fri Nov 18 2022 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
 - New version
 

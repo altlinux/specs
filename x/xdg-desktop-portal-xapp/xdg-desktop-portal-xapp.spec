@@ -2,7 +2,7 @@
 %define ver_major 1.0
 
 Name: xdg-desktop-portal-xapp
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Xapp Desktop Portal
@@ -10,6 +10,7 @@ License: LGPL-2.1-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/xdg-desktop-portal-xapp/
 
+# Source-url: https://github.com/linuxmint/xdg-desktop-portal-xapp/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 %define xdg_desktop_portal_ver 1.15.0
@@ -47,6 +48,9 @@ and various pieces of Cinnamon/MATE/Xfce4 infrastructure.
 
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 1.0.4-alt1
+- new version (1.0.4) with rpmgs script
+
 * Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 1.0.3-alt1
 - new version
 

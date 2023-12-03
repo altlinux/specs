@@ -1,4 +1,4 @@
-%define ver_major 5.8
+%define ver_major 6.0
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -7,14 +7,13 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-settings-daemon
-Packager: Vladimir Didenko <cow at packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -63,7 +62,10 @@ BuildRequires: libxklavier-devel >= %xklavier_ver
 BuildRequires: libibus-devel >= %ibus_ver
 BuildRequires: libcom_err-devel
 BuildRequires: libkrb5-devel
+BuildRequires: librsvg-devel
+BuildRequires: libwacom-devel
 BuildRequires: meson
+BuildRequires: cmake
 
 %description
 Cinnamon Settings Daemon is a program that organizes access to general Cinnamon
@@ -104,6 +106,7 @@ developing applications that use %name.
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/polkit-1/actions/org.cinnamon.settings-daemon.plugins.power.policy
 %_datadir/polkit-1/actions/org.cinnamon.settingsdaemon.datetimemechanism.policy
+%_datadir/polkit-1/actions/org.cinnamon.settings-daemon.plugins.wacom.policy
 %_datadir/dbus-1/system-services/org.cinnamon.SettingsDaemon.DateTimeMechanism.service
 %_datadir/dbus-1/system.d/org.cinnamon.SettingsDaemon.DateTimeMechanism.conf
 %_sysconfdir/xdg/autostart/*.desktop
@@ -116,6 +119,9 @@ developing applications that use %name.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
+- 6.0.0
+
 * Thu Jun 15 2023 Vladimir Didenko <cow@altlinux.org> 5.8.1-alt1
 - 5.8.1
 

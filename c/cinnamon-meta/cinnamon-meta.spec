@@ -1,19 +1,15 @@
-%define ver_major 5.6
+%define ver_major 6.0
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Cinnamon desktop meta package
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 
 Url: https://github.com/linuxmint/Cinnamon
-Packager: Vladimir Didenko <cow@altlinux.org>
 BuildArch: noarch
-
-BuildPreReq: rpm-build-licenses
-
 
 %description
 A set of virtual packages for Cinnamon Desktop installation.
@@ -25,7 +21,7 @@ Group: Graphical desktop/GNOME
 # cow@: cinnamon-minimal is now moved to cinnamon package.
 # See https://bugzilla.altlinux.org/42722 for details
 Requires: cinnamon-minimal >= %ver_major
-Provides: cinnamon-full = %version-%release
+Provides: cinnamon-full = %EVR
 # Default terminal
 Requires: gnome-terminal
 
@@ -51,7 +47,7 @@ for a default Cinnamon desktop.
 Summary: Meta package for Cinnamon desktop and set of default applications
 Group: Graphical desktop/GNOME
 
-Requires: cinnamon-default = %version-%release
+Requires: cinnamon-default = %EVR
 
 # Color manager
 Requires: gnome-color-manager
@@ -98,6 +94,10 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Sat Dec 02 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
+- bump version
+- cleanup spec
+
 * Sat Nov 04 2023 Anton Midyukov <antohami@altlinux.org> 5.6.0-alt2
 - NMU:
   + regular: do'nt require pulseaudio-daemon, alsa-plugins-pulse

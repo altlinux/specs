@@ -1,16 +1,16 @@
 Name: xviewer
-Version: 3.4.1
+Version: 3.4.2
 Release: alt1
 
 Summary: Fast and functional image viewer.
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphics
 Url: https://github.com/linuxmint/xviewer
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
+BuildPreReq: rpm-build-gnome
 
 # From configure.in
 BuildRequires: gnome-common intltool yelp-tools
@@ -98,6 +98,9 @@ the functionality of the Xviewer GUI.
 %_libdir/%name/girepository-1.0/*.typelib
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 3.4.2-alt1
+- New version
+
 * Fri Jun 9 2023 Vladimir Didenko <cow@altlinux.org> 3.4.1-alt1
 - New version
 

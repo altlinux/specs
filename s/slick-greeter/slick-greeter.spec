@@ -2,12 +2,14 @@
 %define _localstatedir %_var/lib
 
 Name: slick-greeter
-Version: 1.8.2
+Version: 2.0.0
 Release: alt1
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
 License: GPLv3+
 Url: https://github.com/linuxmint/slick-greeter
+
+# Source-url: https://github.com/linuxmint/slick-greeter/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.conf
 Source2: %name.gschema.override
@@ -51,15 +53,15 @@ NOCONFIGURE=1 ./autogen.sh
 %makeinstall_std
 
 install -Dpm 0644 debian/90-slick-greeter.conf \
-  %{buildroot}%{_datadir}/lightdm/lightdm.conf.d/90-slick-greeter.conf
+  %buildroot%_datadir/lightdm/lightdm.conf.d/90-slick-greeter.conf
 
-install -Dpm 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/lightdm/slick-greeter.conf
+install -Dpm 0644 %SOURCE1 %buildroot%_sysconfdir/lightdm/slick-greeter.conf
 
-install -Dpm 0644 %{SOURCE2} \
-  %{buildroot}%{_datadir}/glib-2.0/schemas/10_slick-greeter.gschema.override
+install -Dpm 0644 %SOURCE2 \
+  %buildroot%_datadir/glib-2.0/schemas/10_slick-greeter.gschema.override
 
 # remove broken icon (points to not existing ubuntu.png)
-rm -f %{buildroot}%{_datadir}/%name/badges/ubuntu-2d.png
+rm -f %buildroot%_datadir/%name/badges/ubuntu-2d.png
 
 %find_lang %name
 
@@ -71,20 +73,24 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %files -f %name.lang
 %_altdir/%name
 %_sbindir/%name
-%{_bindir}/%name-check-hidpi
-%{_bindir}/%name-enable-tap-to-click
+%_bindir/%name-check-hidpi
+%_bindir/%name-enable-tap-to-click
 # We use /etc/X11/xinit/fixkeyboard script instead
-%exclude %{_bindir}/%name-set-keyboard-layout
+%exclude %_bindir/%name-set-keyboard-layout
 %_datadir/%name
 %_datadir/xgreeters/%name.desktop
 %_datadir/lightdm/lightdm.conf.d/90-%name.conf
 %_datadir/glib-2.0/schemas/*
 %config(noreplace) %_sysconfdir/lightdm/%name.conf
-%{_mandir}/man1/slick-greeter-set-keyboard-layout.1.*
-%{_mandir}/man1/slick-greeter-check-hidpi.1.*
-%{_mandir}/man8/slick-greeter.8.*
+%_man1dir/slick-greeter-enable-tap-to-click.1.*
+%_man1dir/slick-greeter-set-keyboard-layout.1.*
+%_man1dir/slick-greeter-check-hidpi.1.*
+%_man8dir/slick-greeter.8.*
 
 %changelog
+* Sat Dec 02 2023 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 1.8.2-alt1
 - 1.8.2
 

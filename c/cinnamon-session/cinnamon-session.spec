@@ -1,30 +1,29 @@
-%define ver_major 5.8
+%define ver_major 6.0
 %define _libexecdirname libexec
 %define _libexecdir %_prefix/%_libexecdirname
 %define _name cinnamon
 
-%def_disable wmsession
-
 Name: %{_name}-session
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 License: GPLv2+
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 Group: Graphical desktop/GNOME
 URL: https://github.com/linuxmint/cinnamon-session
-Packager: Vladimir Didenko <cow@altlinux.org>
 
+# Source-url: https://github.com/linuxmint/cinnamon-session/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Source1: %{_name}.session
 Source2: %{_name}2d.session
-Source3: start%{_name}-common
-Source4: start%{_name}
-Source5: start%{_name}2d
-Source6: 02Cinnamon
-Source7: 02Cinnamon2D
+Source3: %{_name}-wayland.session
+Source4: start%{_name}-common
+Source5: start%{_name}
+Source6: start%{_name}2d
+Source7: start%{_name}-wayland
 Source8: %{_name}.desktop
 Source9: %{_name}2d.desktop
+Source10: %{_name}-wayland.desktop
 Patch: %name-%version-%release.patch
 
 # From configure.in
@@ -44,8 +43,12 @@ Requires: upower polkit-gnome gcr
 Requires: %name-translations
 Requires: cinnamon-screensaver
 
+%add_python3_req_skip config
+
+BuildRequires(pre): rpm-macros-python3
+BuildPreReq: rpm-build-python3
 # From configure.in
-BuildRequires(pre): meson
+BuildPreReq: meson
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: libgio-devel glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -70,6 +73,15 @@ desktop experience.
 
 This package provides the Cinnamon session manager.
 
+%package wayland
+Summary: Wayland session for Cinnamon
+Group: Graphical desktop/GNOME
+BuildArch: noarch
+Requires(pre): %{_name} >= %ver_major
+
+%description wayland
+Wayland session for Cinnamon.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -83,19 +95,18 @@ This package provides the Cinnamon session manager.
 
 install -pD -m655 %SOURCE1 %buildroot%_datadir/%name/sessions/%{_name}.session
 install -pD -m655 %SOURCE2 %buildroot%_datadir/%name/sessions/%{_name}2d.session
-install -pD -m755 %SOURCE3 %buildroot%_datadir/%name/start%{_name}-common
-install -pD -m755 %SOURCE4 %buildroot%_bindir/start%{_name}
-install -pD -m755 %SOURCE5 %buildroot%_bindir/start%{_name}2d
-
-%if_enabled wmsession
-mkdir -p %buildroot%_x11sysconfdir/wmsession.d
-install -pD -m655 %SOURCE6 %buildroot%_x11sysconfdir/wmsession.d
-install -pD -m655 %SOURCE7 %buildroot%_x11sysconfdir/wmsession.d
-%endif
+install -pD -m655 %SOURCE3 %buildroot%_datadir/%name/sessions/%{_name}-wayland.session
+install -pD -m755 %SOURCE4 %buildroot%_datadir/%name/start%{_name}-common
+install -pD -m755 %SOURCE5 %buildroot%_bindir/start%{_name}
+install -pD -m755 %SOURCE6 %buildroot%_bindir/start%{_name}2d
+install -pD -m755 %SOURCE7 %buildroot%_bindir/start%{_name}-wayland
 
 mkdir -p %buildroot%_datadir/xsessions
 install -pD -m655 %SOURCE8 %buildroot%_datadir/xsessions
 install -pD -m655 %SOURCE9 %buildroot%_datadir/xsessions
+
+mkdir -p %buildroot%_datadir/wayland-sessions
+install -pD -m655 %SOURCE10 %buildroot%_datadir/wayland-sessions
 
 rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 
@@ -115,11 +126,24 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_iconsdir/hicolor/*/apps/cinnamon-session-properties.*
 %config %_datadir/glib-2.0/schemas/org.cinnamon.SessionManager.gschema.xml
 %_mandir/man?/*
-%{?_enable_wmsession:%_x11sysconfdir/wmsession.d/*}
+%_datadir/%name/cinnamon-session-quit.py
+%_datadir/%name/config.py
 %_datadir/xsessions/*.desktop
 %doc AUTHORS NEWS README
 
+%files wayland
+%_datadir/cinnamon-session/sessions/%{_name}-wayland.session
+%_datadir/wayland-sessions/%{_name}-wayland.desktop
+
 %changelog
+* Sun Dec 03 2023 Anton Midyukov <antohami@altlinux.org> 6.0.1-alt2
+- pack cinnamon-session-quit.py
+
+* Sat Dec 02 2023 Anton Midyukov <antohami@altlinux.org> 6.0.1-alt1
+- 6.0.1
+- add experimental wayland session
+- cleanup spec
+
 * Thu Jun 15 2023 Vladimir Didenko <cow@altlinux.org> 5.8.1-alt1
 - 5.8.1
 

@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 5.8
+%define ver_major 6.0
 %define api_ver 3.0
 %def_disable static
 %def_enable gtk_doc
@@ -13,7 +13,6 @@ Summary: Library with common API for various Cinnamon modules
 License: GPLv2+ and LGPLv2+ and MIT
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-desktop
-Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -39,6 +38,7 @@ BuildRequires: iso-codes-devel
 BuildRequires: libSM-devel libXrandr-devel libXext-devel xkeyboard-config-devel libxkbfile-devel
 BuildRequires: hwdatabase >= 0.3.31-alt1
 BuildRequires: libpulseaudio-devel
+BuildRequires: libsystemd-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
 BuildRequires: libaccountsservice-devel
 
@@ -154,6 +154,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
+- 6.0.0
+
 * Thu Jun 8 2023 Vladimir Didenko <cow@altlinux.org> 5.8.0-alt1
 - 5.8.0
 

@@ -3,14 +3,13 @@
 %define libxappsdir /usr/lib/xapps
 
 Name: xapps
-Version: 2.6.1
+Version: 2.8.0
 Release: alt1
 
 Summary: Libraries and common resources for XApps
 License: %gpl3only
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/xapps
-Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -23,7 +22,7 @@ BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-build-python3
 
 # From configure.in
 BuildPreReq: intltool >= 0.35
-BuildPreReq: libgtk+3-devel >= 3.3.6
+BuildPreReq: libgtk+3-devel >= 3.22.0
 BuildPreReq: glib2-devel >= 2.35.0
 BuildPreReq: libgio-devel >= 2.28.0
 BuildPreReq: gtk-doc >= 1.4
@@ -213,6 +212,9 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Thu Jun 15 2023 Vladimir Didenko <cow@altlinux.org> 2.6.1-alt1
 - 2.6.1
 

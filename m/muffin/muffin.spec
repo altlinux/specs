@@ -4,7 +4,7 @@
 %define sover 0
 
 Name: muffin
-Version: 5.8.1
+Version: 6.0.0
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
@@ -12,8 +12,8 @@ License: GPLv2+
 Group: Graphical desktop/GNOME
 
 Url: https://github.com/linuxmint/muffin
-# To generate tarball
-# wget https://github.com/linuxmint/muffin/tarball/1.0.2 -O muffin-1.0.2.tar.gz
+
+# Source-url: https://github.com/linuxmint/muffin/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -50,7 +50,7 @@ Requires: zenity
 
 BuildPreReq: rpm-build-gir >= 0.7.1-alt6
 BuildPreReq: libgtk+3-devel >= 3.3.3
-BuildRequires(pre): meson
+BuildPreReq: meson
 BuildRequires: libcanberra-gtk3-devel libstartup-notification-devel
 BuildRequires: libXrandr-devel libXcursor-devel libXcomposite-devel
 BuildRequires: libXinerama-devel libXext-devel libSM-devel
@@ -68,6 +68,10 @@ BuildRequires: libgudev-devel libinput-devel
 BuildRequires: libEGL-devel
 BuildRequires: libgraphene-devel libgraphene-gir-devel libfribidi-devel libdbus-devel pipewire-libs-devel
 BuildRequires: libwacom-devel
+BuildRequires: wayland-protocols
+BuildRequires: libsystemd-devel
+BuildRequires: xorg-xwayland
+BuildRequires: cvt
 
 %description
 Muffin is a window and compositing manager that displays and manages
@@ -187,6 +191,9 @@ ln -sf %name/lib%name-cogl-%api_ver.so.%sover \
 %_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
+- 6.0.0
+
 * Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 5.8.1-alt1
 - 5.8.1
 

@@ -6,18 +6,18 @@
 %def_enable introspection
 
 Name: xreader
-Version: 3.8.2
-Release: alt2
+Version: 3.8.3
+Release: alt1
 
 Summary: A document viewer
 Group: Office
-License: %gpl2only
+License: GPL-2.0-or-later
 Url: https://github.com/linuxmint/xreader
 
+# Source-url: https://github.com/linuxmint/xreader/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
 Requires: lib%name = %version-%release
 Requires: gnome-icon-theme gnome-icon-theme-symbolic icon-theme-adwaita
 Requires: gvfs-backend-recent-files
@@ -147,6 +147,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 3.8.3-alt1
+- New version
+
 * Mon Oct 9 2023 Vladimir Didenko <cow@altlinux.org> 3.8.2-alt2
 - New version 3.8.2-5-g31c9f12 (fixes build with meson 1.2)
 

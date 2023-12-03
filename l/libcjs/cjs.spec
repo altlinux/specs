@@ -1,4 +1,4 @@
-%define ver_major 5.8
+%define ver_major 6.0
 %define _name cjs
 %define api_ver 1.0
 
@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: Javascript Bindings for Cinnamon
 Group: System/Libraries
@@ -17,6 +17,7 @@ Group: System/Libraries
 License: MIT and (MPL-1.1 or GPLv2+ or LGPLv2+)
 Url: https://github.com/linuxmint/cjs
 
+# Source-url: https://github.com/linuxmint/cjs/archive/refs/tags/%version.tar.gz
 Source: %_name-%version.tar
 Patch: %_name-%version-%release.patch
 
@@ -98,6 +99,9 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
+- 6.0.0
+
 * Mon Jul 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.8.0-alt1.1
 - spec: added --without=valgrind knob. Fixes build on LoongArch.
 

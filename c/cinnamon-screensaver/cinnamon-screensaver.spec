@@ -1,9 +1,9 @@
-%define ver_major 5.8
+%define ver_major 6.0
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.1
-Release: alt1.gitd5ad373
+Version: %ver_major.0
+Release: alt1
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -14,6 +14,7 @@ Provides: screen-saver-engine
 Provides: screen-saver-frontend
 Provides: cinnamon-screensaver-module
 
+# Source-url: https://github.com/linuxmint/cinnamon-screensaver/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.pam
 Patch: %name-%version-%release.patch
@@ -123,6 +124,9 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
+- 6.0.0
+
 * Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 5.8.1-alt1.gitd5ad373
 - 5.8.1-1-gd5ad373
 

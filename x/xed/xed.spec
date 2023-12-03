@@ -4,13 +4,14 @@
 
 Name: xed
 Version: 3.4.3
-Release: alt1
+Release: alt2
 
 Summary: xed is a small and lightweight text editor.
 License: GPLv2
 Group: Editors
 Url: https://github.com/linuxmint/xed
 
+# Source-url: https://github.com/linuxmint/xed/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 %define pkglibdir %_libdir/%name
@@ -24,8 +25,8 @@ Requires: xapps-icons
 
 Provides: typelib(Xed)
 
-BuildRequires(pre): rpm-build-gnome
-BuildRequires(pre): rpm-build-python3
+BuildPreReq: rpm-build-gnome
+BuildPreReq: rpm-build-python3
 
 BuildPreReq: intltool
 BuildRequires: yelp-tools xmllint itstool
@@ -140,6 +141,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 3.4.3-alt2
+- Rebuild with cinnamon 6.0
+
 * Mon Jul 10 2023 Vladimir Didenko <cow@altlinux.org> 3.4.3-alt1
 - New version
 

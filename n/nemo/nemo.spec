@@ -1,12 +1,12 @@
 %define api_ver 3.0
-%define ver_major 5.8
+%define ver_major 6.0
 
 %def_enable exempi
 %def_enable introspection
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -14,6 +14,7 @@ License: GPLv2+
 Group: Graphical desktop/GNOME
 URL: https://github.com/linuxmint/nemo
 
+# Source-url: https://github.com/linuxmint/nemo/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
@@ -42,7 +43,7 @@ Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.9.1
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses rpm-build-gir rpm-build-python3
+BuildPreReq: meson rpm-build-gnome rpm-build-gir rpm-build-python3
 BuildPreReq: pkgconfig >= %pkgconfig_ver
 BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
 # for %%check
@@ -183,6 +184,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
+- 6.0.0
+
 * Thu Oct 19 2023 Vladimir Didenko <cow@altlinux.org> 5.8.5-alt1
 - 5.8.5
 - remove unused tracker build dependency

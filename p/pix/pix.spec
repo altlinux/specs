@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.0
+%define ver_major 3.2
 %define gst_api_ver 1.0
 %def_enable debug
 %def_enable exiv2
@@ -10,14 +10,15 @@
 %def_disable libopenraw
 
 Name: pix
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: An image viewer and browser utility.
 License: GPLv2+
 Group: Graphics
 Url: https://github.com/linuxmint/pix
 
+# Source-url: https://github.com/linuxmint/pix/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 # From configure.in
@@ -129,6 +130,9 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
+- new version (3.2.0) with rpmgs script
+
 * Wed Nov 8 2023 Vladimir Didenko <cow@altlinux.org> 3.0.2-alt2
 - Update to 3.0.2-4-gd6edbd4 to support build with exiv 0.28
 

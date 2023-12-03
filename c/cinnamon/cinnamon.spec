@@ -1,14 +1,16 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 5.8.4
-Release: alt2.git69727ba
+Version: 6.0.0
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
 Group: Graphical desktop/GNOME
 
-Url: http://cinnamon.linuxmint.com
+Url: https://github.com/linuxmint/cinnamon
+
+# Source-url: https://github.com/linuxmint/cinnamon/archive/refs/tags/%version.tar.gz
 Source0: %name-%version.tar
 Source1: polkit-%name-authentication-agent-1.desktop
 
@@ -27,6 +29,7 @@ Patch: %name-%version-%release.patch
 %define bt_ver 3.0.0
 
 Provides: desktop-notification-daemon
+Provides: cinnamon-data = %EVR
 
 Requires: dconf
 Requires: upower
@@ -46,7 +49,10 @@ Requires: libsoup-gir
 # needed to install applets
 Requires: gettext-tools
 
-BuildRequires(pre): rpm-build-gir >= 0.7.3 rpm-build-python3
+Obsoletes: %name-data < %EVR
+
+BuildRequires(pre): rpm-build-gir >= 0.7.3
+BuildPreReq: rpm-build-python3
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libcjs-devel >= %cjs_ver
 BuildPreReq: libjson-glib-devel >= %json_glib_ver
@@ -81,7 +87,7 @@ BuildRequires: libxapps-devel libxapps-gir-devel
 # install cinnamon DE not using the meta package but cinnamon package instead.
 Provides: cinnamon-minimal = %version-%release
 Obsoletes: cinnamon-minimal < 5.6
-Requires: cinnamon-session
+Requires: cinnamon-session > 6.0.0
 Requires: nemo
 Requires: cinnamon-screensaver
 Requires: cinnamon-control-center
@@ -93,19 +99,6 @@ Requires: gvfs gvfs-backends gvfs-utils
 Requires: gucharmap
 Requires: xdg-desktop-portal-xapp
 
-%description
-Cinnamon is a Linux desktop which provides advanced innovative features
-and a traditional user experience.
-
-The desktop layout is similar to Gnome 2. The underlying technology is
-forked from Gnome Shell. The emphasis is put on making users feel at
-home and providing them with an easy to use and comfortable desktop
-experience.
-
-%package data
-Summary: Arch independent files for Cinnamon
-Group: Graphical desktop/GNOME
-BuildArch: noarch
 Provides: python3(cme)
 Provides: python3(Spices)
 # https://bugzilla.altlinux.org/36995
@@ -116,8 +109,14 @@ Requires: xapp-sn-watcher
 # Required for cinnamon-settings info module
 Requires: python3(distro)
 
-%description data
-This package provides noarch data needed for Cinnamon to work.
+%description
+Cinnamon is a Linux desktop which provides advanced innovative features
+and a traditional user experience.
+
+The desktop layout is similar to Gnome 2. The underlying technology is
+forked from Gnome Shell. The emphasis is put on making users feel at
+home and providing them with an easy to use and comfortable desktop
+experience.
 
 %package devel-doc
 Summary: Development doc package for Cinnamon
@@ -139,13 +138,6 @@ rm -rf debian
 
 %install
 %meson_install
-
-
-rm -f %buildroot/%_man1dir/cinnamon-session-cinnamon.1
-rm -f %buildroot/%_man1dir/cinnamon-session-cinnamon2d.1
-
-desktop-file-validate %buildroot%_desktopdir/cinnamon.desktop
-desktop-file-validate %buildroot%_desktopdir/cinnamon2d.desktop
 
 #install polkit files
 install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
@@ -174,6 +166,13 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 # gnome-shell provides typelib(St) as well
 %filter_from_provides /typelib(St)/d
 
+rm -f %buildroot/%_man1dir/cinnamon-session-cinnamon.1
+rm -f %buildroot/%_man1dir/cinnamon-session-cinnamon2d.1
+
+desktop-file-validate %buildroot%_desktopdir/cinnamon.desktop
+desktop-file-validate %buildroot%_desktopdir/cinnamon2d.desktop
+desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
+
 %files
 %exclude %_bindir/%{name}-launcher
 %_bindir/*
@@ -181,12 +180,12 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %_libexecdir/cinnamon/cinnamon-hotplug-sniffer
 %_libexecdir/cinnamon/cinnamon-perf-helper
 %_libexecdir/cinnamon/cinnamon-calendar-server.py
-
-%files data
 %exclude %_xdgmenusdir/cinnamon-applications-merged
 %exclude %_xdgmenusdir/cinnamon-applications.menu
 %exclude %_datadir/xsessions/*.desktop
+%exclude %_datadir/wayland-sessions/*.desktop
 %exclude %_datadir/cinnamon-session/sessions/*.session
+%_datadir/xdg-desktop-portal/x-cinnamon-portals.conf
 %exclude %_girdir/*
 %_datadir/cinnamon/
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
@@ -208,6 +207,10 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
+- 6.0.0
+- remove subpackage-data
+
 * Wed Aug 30 2023 Vladimir Didenko <cow@altlinux.org> 5.8.4-alt2.git69727ba
 - Remove libcroco-devel from the build deps (not used by package)
 
