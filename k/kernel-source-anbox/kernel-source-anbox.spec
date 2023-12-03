@@ -7,7 +7,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt3.g%{git}
+Release: alt4.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Anbox kernel modules sources
 License: GPLv3/GPLv2
@@ -51,6 +51,13 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %_udevrulesdir/99-anbox.rules
 
 %changelog
+* Sun Dec 03 2023 L.A. Kostis <lakostis@altlinux.ru> 14-alt4.gae26ba2
+- Apply fixes from kernel-6.6:
+  + binderfs: Drop unused #include <linux/radix-tree.h>
+  + binder: fix memory leak in binder_init()
+  + binder: fix UAF of alloc->vma in race with munmap()
+  + binderfs: convert to ctime accessor functions
+
 * Wed Sep 13 2023 L.A. Kostis <lakostis@altlinux.ru> 14-alt3.gae26ba2
 - udev.rules: remove useless macros.
 
