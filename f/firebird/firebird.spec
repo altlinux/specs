@@ -13,7 +13,7 @@
 
 Name: firebird
 Version: %major.%minor
-Release: alt4
+Release: alt5
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -43,6 +43,9 @@ Patch1003: %name-%version-alt-disable-examples.patch
 
 # Elbrus
 Patch2000: %name-e2k.patch
+
+# LoongArch
+Patch3500: %name-loongarch.patch
 
 Requires: libfbclient = %EVR
 
@@ -152,6 +155,7 @@ Examples for Firebird SQL server.
 %ifarch %e2k
 %patch2000 -p1
 %endif
+%patch3500 -p1
 
 # sed vs patch for portability and addtional location changes
 # based on FIREBIRD=%_libdir/firebird
@@ -407,6 +411,9 @@ fi
 %_datadir/%name/examples
 
 %changelog
+* Sun Dec 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.0.0.2496.0-alt5
+- NMU: LoongArch support (compile tested only).
+
 * Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0.2496.0-alt4
 - Disabled LTO.
 
