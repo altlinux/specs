@@ -3,7 +3,7 @@
 %def_without ivman
 %def_with blueberry
 Name: icewm-startup
-Version: 0.214
+Version: 0.215
 Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
@@ -224,6 +224,16 @@ AutoReq: no
 
 %description pnmixer
 pnmixer plug-in for simple sound volume control.
+
+%package polkit-gnome
+Group: Graphical desktop/Icewm
+Summary: polkit-gnome autostart at IceWM startup
+Summary(ru_RU.UTF-8): автозапуск polkit-gnome при старте IceWM
+Requires: %name polkit-gnome
+AutoReq: no
+
+%description polkit-gnome
+polkit-gnome plug-in for polkit authentication agent autostart.
 
 %package redshift-gtk
 Group: Graphical desktop/Icewm
@@ -545,6 +555,7 @@ echo 'ivman&'> %buildroot/%icewmconfdir/startup.d/ivman
 %endif
 echo "/usr/libexec/notification-daemon&" > %buildroot/%icewmconfdir/startup.d/notification-daemon
 echo "pnmixer&" > %buildroot/%icewmconfdir/startup.d/pnmixer
+echo "/usr/libexec/polkit-1/polkit-gnome-authentication-agent-1&" > %buildroot/%icewmconfdir/startup.d/polkit-gnome
 echo "spacefm --desktop&" > %buildroot/%icewmconfdir/startup.d/spacefm
 echo 'xscreensaver -nosplash&'> %buildroot/%icewmconfdir/startup.d/xscreensaver
 
@@ -657,6 +668,9 @@ fi
 %files pnmixer
 %config %icewmconfdir/startup.d/pnmixer
 
+%files polkit-gnome
+%config %icewmconfdir/startup.d/polkit-gnome
+
 %files redshift-gtk
 %config %icewmconfdir/startup.d/redshift-gtk
 
@@ -689,6 +703,9 @@ fi
 %icewmconfdir/XXkb.conf
 
 %changelog
+* Sun Dec 03 2023 Anton Midyukov <antohami@altlinux.org> 0.215-alt1
+- added polkit-gnome
+
 * Mon Nov 16 2020 Igor Vlasenko <viy@altlinux.ru> 0.214-alt1
 - added blueberry-tray
 
