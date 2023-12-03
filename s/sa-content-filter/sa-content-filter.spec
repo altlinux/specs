@@ -6,7 +6,7 @@
 
 Name: sa-content-filter
 Version: 0.1
-Release: alt3.qa1
+Release: alt3.qa2
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -46,7 +46,7 @@ fi
 
 %postun
 if [ "$1" -eq 0 ]; then
-	subst 's,SPAMDOPTIONS=%spamd_options,SPAMDOPTIONS=""' %spamd_conf
+	subst 's,SPAMDOPTIONS=%spamd_options,SPAMDOPTIONS="",' %spamd_conf
 fi
 
 %files
@@ -58,6 +58,9 @@ fi
 %attr(710,%spamd_user,%spamd_group) %dir %_var/run/spamd/
 
 %changelog
+* Sun Dec 03 2023 Ivan A. Melnikov <iv@altlinux.org> 0.1-alt3.qa2
+- NMU: fix postun trigger
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3.qa1
 - NMU: applied repocop patch
 
