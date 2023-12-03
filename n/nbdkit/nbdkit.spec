@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,unresolved=relaxed
 
 Name: nbdkit
-Version: 1.37.2
+Version: 1.37.3
 Release: alt1
 Summary: NBD server with stable plugin ABI and permissive license
 License: BSD-3-Clause
@@ -106,7 +106,7 @@ grep -rlZ 'mke2fs -' | xargs -rt0 sed -i 's!mke2fs -!/sbin/&!'
 find %buildroot%_libdir -name '*.la' -delete
 
 %check
-./nbdkit --version | grep -F '%name %version '
+./nbdkit --version | grep -P '^%name \Q%version\E '
 ./nbdkit --dump-config
 # Upstream tests.
 %make_build check || {
@@ -145,6 +145,9 @@ nbdkit -U - memory 1G --run 'nbdinfo "$uri"'
 %files checkinstall
 
 %changelog
+* Mon Dec 04 2023 Vitaly Chikunov <vt@altlinux.org> 1.37.3-alt1
+- Update to v1.37.3 (2023-11-26).
+
 * Wed Nov 08 2023 Vitaly Chikunov <vt@altlinux.org> 1.37.2-alt1
 - Update to v1.37.2 (2023-11-07).
 
