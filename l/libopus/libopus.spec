@@ -2,7 +2,7 @@
 
 Name: libopus
 Version: 1.4
-Release: alt1.1
+Release: alt1.2
 
 Summary: Opus Audio Codec library
 License: BSD
@@ -15,6 +15,7 @@ Patch: libopus-silk-fix-missing-have_arm_intrinsics_or_asm.patch
 BuildRequires(pre): meson, cmake
 
 %def_disable static
+%def_enable doc
 
 %description
 The Opus codec is designed for interactive speech and audio transmission
@@ -25,7 +26,9 @@ incorporates technology from Skype's SILK codec and Xiph.Org's CELT codec.
 Summary: Development files for libopus
 Group: Development/C
 PreReq: %name = %version-%release
+%if_enabled doc
 BuildRequires: doxygen, graphviz, fonts-ttf-dejavu
+%endif
 
 %description devel
 This package contains the header files and documentation needed
@@ -68,8 +71,10 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
+%if_enabled doc
 %dir %_docdir/opus/
 %_docdir/opus/*
+%endif
 
 %if_enabled static
 %files devel-static
@@ -77,6 +82,9 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 %endif
 
 %changelog
+* Mon Dec 04 2023 Ivan A. Melnikov <iv@altlinux.org> 1.4-alt1.2
+- NMU: add with_doc knob to simplify bootstrap (asheplyakov@)
+
 * Mon Nov 27 2023 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt1.1
 - enable custom modes (closes #48590).
 
