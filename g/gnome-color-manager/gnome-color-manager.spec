@@ -8,7 +8,7 @@
 
 Name: gnome-color-manager
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Color profile manager for the GNOME desktop
 License: GPL-2.0
@@ -30,8 +30,6 @@ Requires: colord icc-profiles
 %define colord_ver 1.3.1
 %define colord_gtk_ver 0.1.20
 %define lcms_ver 2.2
-
-
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson gcc-c++ yelp-tools /usr/bin/appstream-util
@@ -103,6 +101,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README AUTHORS
 
 %changelog
+* Mon Dec 04 2023 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt3
+- updated to GNOME_COLOR_MANAGER_3_36_0-58-ga53973f5
+
 * Fri Oct 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
 - updated to GNOME_COLOR_MANAGER_3_36_0-41-gb96372b4
 - updated BR
