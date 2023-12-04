@@ -3,7 +3,7 @@
 %global import_path github.com/gopasspw/gopass
 
 Name:    gopass
-Version: 1.15.8
+Version: 1.15.11
 Release: alt1
 
 Summary: The slightly more awesome standard unix password manager for teams
@@ -69,6 +69,9 @@ cd .build/src/%import_path
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Mon Dec 04 2023 Alexander Stepchenko <geochip@altlinux.org> 1.15.11-alt1
+- 1.15.8 -> 1.15.11
+
 * Wed Oct 04 2023 Alexander Stepchenko <geochip@altlinux.org> 1.15.8-alt1
 - 1.15.5 -> 1.15.8
 - Drop ownership of system-wide autocompletion directories.
