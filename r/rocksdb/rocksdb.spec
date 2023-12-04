@@ -16,7 +16,7 @@
 
 Name: rocksdb
 Version: 7.9.3
-Release: alt1.1
+Release: alt1.2
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
 # License is changed from "BSD-plus-Patents" (BSD-3-Clause) to GPL-2.0 AND Apache-2.0 in 2017.
@@ -97,6 +97,8 @@ sed -i 's/#error No timer .*/return __rdtsc();/;1i #include <x86intrin.h>' \
 %add_optflags -mno-sse4.2
 sed -i 's/-msse4.2/-mno-sse4.2/' CMakeLists.txt
 %endif
+# XXX: `-mcpu=loongarch64` is NOT a valid GCC for LoongArch
+sed -i '/-mcpu=loongarch64/ { d }' CMakeLists.txt
 
 #rm -rf third-party/gtest-1.7.0
 #rm java/benchmark/src/main/java/org/rocksdb/benchmark/DbBenchmark.java
@@ -152,6 +154,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sat Sep 23 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 7.9.3-alt1.2
+- NMU: fixed FTBFS on LoongArch.
+
 * Fri Sep 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.9.3-alt1.1
 - Fixed build for Elbrus.
 
