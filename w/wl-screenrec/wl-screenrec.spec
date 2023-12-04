@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 0.1
 
 %def_disable bootstrap
@@ -6,13 +6,13 @@
 %def_disable check
 
 Name: wl-screenrec
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: High performance screen recorder for wlroots Wayland
 License: Apache-2.0
 Group: Video
-Url: https://github.com/russelltg/wl-screenrec.git
+Url: https://github.com/russelltg/wl-screenrec
 
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
@@ -60,6 +60,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Mon Dec 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1
+- 0.1.2
+
 * Sat Nov 25 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
 - first build for Sisyphus (v0.1.1-5-g82622bb)
 
