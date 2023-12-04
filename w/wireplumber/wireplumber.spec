@@ -9,8 +9,8 @@
 %define soversion 0
 
 Name: wireplumber
-Version: 0.4.15
-Release: alt2
+Version: 0.4.17
+Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
 
@@ -23,7 +23,7 @@ BuildRequires: pkgconfig(gobject-2.0) >= 2.62
 BuildRequires: pkgconfig(gmodule-2.0) >= 2.62
 BuildRequires: pkgconfig(gio-2.0) >= 2.62
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.62
-BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.52
+BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.68
 BuildRequires: liblua5.3-devel
 %if_enabled introspection
 BuildRequires(pre): gobject-introspection-devel
@@ -191,6 +191,9 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Mon Dec 04 2023 Arseny Maslennikov <arseny@altlinux.org> 0.4.17-alt1
+- 0.4.15 -> 0.4.17.
+
 * Mon Oct 16 2023 Michael Shigorin <mike@altlinux.org> 0.4.15-alt2
 - Added explicit BR: python3-module-setuptools to fix ftbfs on e2k.
 
