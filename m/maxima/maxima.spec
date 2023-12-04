@@ -36,7 +36,7 @@
 Name: maxima
 Version: 5.47.0
 %define maxima_version 5.47.0
-Release: alt2
+Release: alt4
 
 Summary: Maxima Computer Algebra System
 License: GPLv2
@@ -72,7 +72,7 @@ BuildRequires(pre): rpm-macros-sbcl
 BuildRequires: python3-devel rpm-build-python3
 
 ExclusiveArch: %sbcl_arches %e2k ppc64le armh
-
+# ppc64le armh
 %description
 Maxima is a full symbolic computation program.  It is full featured
 doing symbolic manipulation of polynomials, matrices, rational
@@ -432,11 +432,13 @@ find . -name maxima-index.lisp | while read f;do
 done
 popd
 
+cp %buildroot%_infodir/maxima-index-html.lisp %buildroot%doc_dir
+
 # Remove disallowed ELF files in /usr/share
 rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-double-quote
 
 %files common
-%doc doc/maximabook/maxima.pdf
+%doc doc/maximabook/maxima.pdf 
 %_bindir/maxima
 %_bindir/rmaxima
 %_infodir/*
@@ -599,6 +601,12 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %endif
 
 %changelog
+* Mon Dec 04 2023 Ilya Mashkin <oddity@altlinux.ru> 5.47.0-alt4
+- Skip ppc64le, armh
+
+* Thu Nov 30 2023 Ilya Mashkin <oddity@altlinux.ru> 5.47.0-alt3
+- Fix missing docs, real move info to doc (Closes: #47053)
+
 * Sun Aug 06 2023 Ilya Mashkin <oddity@altlinux.ru> 5.47.0-alt2
 - Fix missing docs (Closes: #47053)
 
