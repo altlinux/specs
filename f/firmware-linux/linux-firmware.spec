@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20231128
+Version: 20231204
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,12 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Dec 04 2023 Cronbuild Service <cronbuild@altlinux.org> 20231204-alt1
+- upstream changes (GIT b9d971b9):
+  + cxgb4: Update firmware to revision 1.27.5.0 (thx Rahul Lakkireddy)
+  + add firmware for en8811h 2.5G ethernet phy (thx SkyLake.Huang)
+  + s5p-mfc: Add MFC v12 Firmware (thx Aakarsh Jain)
+
 * Tue Nov 28 2023 Anton Midyukov <antohami@altlinux.org> 20231128-alt1
 - configuration changes:
   + Revert "copy-firmware.sh: do'nt require rdfind";
