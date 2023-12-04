@@ -6,7 +6,7 @@ Group: File tools
 
 Name:           lynis
 Version:        3.0.0
-Release:        alt2
+Release:        alt3
 Summary:        Security and system auditing tool
 License:        GPLv3
 URL:            https://cisofy.com/lynis/
@@ -19,6 +19,16 @@ Requires:       audit
 Requires:       e2fsprogs
 Requires:       module-init-tools
 
+# these dependencies are optional
+%filter_from_requires /sbin.kldstat/d
+%filter_from_requires /usr.bin.isainfo/d
+%filter_from_requires /usr.bin.sw_vers/d
+%filter_from_requires /usr.libexec.ApplicationFirewall.socketfilterfw/d
+%filter_from_requires /usr.sbin.bootinfo/d
+%filter_from_requires /usr.sbin.modinfo/d
+%filter_from_requires /usr.sbin.prtconf/d
+%filter_from_requires /usr.xpg4.bin.id/d
+
 %description
 Lynis is an auditing and hardening tool for Unix/Linux and you might even call
 it a compliance tool. It scans the system and installed software. Then it 
@@ -29,6 +39,8 @@ improve the security defense of the system.
 %prep
 %setup -q -n %name
 
+# make sisyphus_check happy
+sed -i -E 's/(\(python)/\13/' include/functions
 
 %build
 # Empty build.
@@ -84,6 +96,9 @@ done
 %ghost %_localstatedir/log/lynis-report.dat
 
 %changelog
+* Mon Dec 04 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt3
+- Fixed FTBFS (Closes: #48583).
+
 * Tue Jul 14 2020 Pavel Vasenkov <pav@altlinux.org> 3.0.0-alt2
 - initial build for sisyphus
 
