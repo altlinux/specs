@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Education
@@ -11,6 +11,8 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+
+Patch0: fix-example-saving-error.patch
 
 # Automatically added by buildreq on Fri Mar 18 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 xml-common xml-utils
@@ -38,6 +40,7 @@ you can not only learn but feel how physics works!
 
 %prep
 %setup -n %rname-%version
+%patch0 -p2
 
 %build
 %K5build
@@ -64,6 +67,9 @@ you can not only learn but feel how physics works!
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Dec 04 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.3-alt2
+- fix an error when saving an example file (ALT #48326)
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 
