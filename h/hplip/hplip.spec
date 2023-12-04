@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.23.8
+Version: 3.23.12
 Release: alt1
 Epoch:   1
 
@@ -1126,6 +1126,15 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sat Dec 02 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.23.12-alt1
+- New version.
+- Added support for the following new printers:
+  + HP OfficeJet Pro 9130b, 9120b, 9110b series
+  + HP Color LaserJet Enterprise Flow MFP X58045z, X58045zs
+  + HP Color LaserJet Enterprise MFP X58045, X58045dn
+  + HP LaserJet Pro P1106 plus
+  + HP LaserJet Pro P1108 plus
+
 * Wed Sep 20 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.23.8-alt1
 - New version.
 - Added support for the following new printers:
