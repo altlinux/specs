@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victoriametrics-cluster
-Version: 1.94.0
+Version: 1.95.1
 Release: alt1
 Summary: The best long-term remote storage for Prometheus
 
@@ -11,6 +11,13 @@ Group: Development/Other
 License: Apache-2.0
 Url: https://victoriametrics.com/
 Source0: %name-%version.tar
+
+Source2: vminsert.service
+Source3: vminsert.sysconfig
+Source4: vmselect.service
+Source5: vmselect.sysconfig
+Source6: vmstorage.service
+Source7: vmstorage.sysconfig
 
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64 aarch64
@@ -32,6 +39,8 @@ It increases cluster availability, simplifies cluster maintenance and cluster sc
 Summary: vmstorage for %name
 Group: Development/Other
 Provides: vmstorage = %EVR
+Provides: victoriametrics-vmstorage = %EVR
+Requires(pre): victoriametrics-common
 
 %description vmstorage
 vmstorage performs the following tasks:
@@ -42,6 +51,8 @@ vmstorage performs the following tasks:
 Summary: vminsert for %name
 Group: Development/Other
 Provides: vminsert = %EVR
+Provides: victoriametrics-vminsert = %EVR
+Requires(pre): victoriametrics-common
 
 %description vminsert
 vminsert routes the ingested data to vmstorage.
@@ -50,6 +61,8 @@ vminsert routes the ingested data to vmstorage.
 Summary: vmselect for %name
 Group: Development/Other
 Provides: vmselect = %EVR
+Provides: victoriametrics-vmselect = %EVR
+Requires(pre): victoriametrics-common
 
 %description vmselect
 vmselect performs the following tasks:
@@ -87,16 +100,52 @@ install -m 0755 bin/vminsert %buildroot%_bindir/vminsert
 install -m 0755 bin/vmselect %buildroot%_bindir/vmselect
 install -m 0755 bin/vmstorage %buildroot%_bindir/vmstorage
 
+mkdir -p %buildroot%_sharedstatedir/victoria-metrics/cluster-data
+mkdir -p %buildroot%_sysconfdir/sysconfig
+mkdir -p %buildroot%_unitdir
+install -m644 %SOURCE2 %buildroot%_unitdir/vminsert.service
+install -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name-vminsert
+install -m644 %SOURCE4 %buildroot%_unitdir/vmselect.service
+install -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name-vmselect
+install -m644 %SOURCE6 %buildroot%_unitdir/vmstorage.service
+install -m644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/%name-vmstorage
+
+%post vminsert
+%post_service vminsert
+%preun vminsert
+%preun_service vminsert
+
+%post vmselect
+%post_service vmselect
+%preun vmselect
+%preun_service vmselect
+
+%post vmstorage
+%post_service vmstorage
+%preun vmstorage
+%preun_service vmstorage
+
 %files vminsert
 %_bindir/vminsert
+%config(noreplace) %_sysconfdir/sysconfig/%name-vminsert
+%_unitdir/vminsert.service
 
 %files vmselect
 %_bindir/vmselect
+%config(noreplace) %_sysconfdir/sysconfig/%name-vmselect
+%_unitdir/vmselect.service
 
 %files vmstorage
 %_bindir/vmstorage
+%config(noreplace) %_sysconfdir/sysconfig/%name-vmstorage
+%_unitdir/vmstorage.service
+%dir %attr(0755, _victoriametrics, _victoriametrics) %_sharedstatedir/victoria-metrics/cluster-data
 
 %changelog
+* Mon Dec 04 2023 Alexey Shabalin <shaba@altlinux.org> 1.95.1-alt1
+- new version 1.95.1
+- add systemd units and configs
+
 * Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 1.94.0-alt1
 - new version 1.94.0
 
