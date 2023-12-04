@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 
 Summary: Automagic shell tab completion for Python CLI applications
@@ -46,6 +46,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %doc README.rst CONTRIBUTING.md LICENCE docs/index.md docs/use.md examples
 
 %changelog
+* Mon Dec 04 2023 Alexander Stepchenko <geochip@altlinux.org> 1.6.5-alt1
+- 1.6.4 -> 1.6.5
+
 * Wed Oct 04 2023 Alexander Stepchenko <geochip@altlinux.org> 1.6.4-alt1
 - 1.6.1 -> 1.6.4
 
