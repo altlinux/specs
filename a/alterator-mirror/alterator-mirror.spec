@@ -1,10 +1,10 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.4.9
+Version: 0.4.10
 Release: alt1
 
-Source:%name-%version.tar
+Source: %name-%version.tar
 
 Summary: local mirrors setup and maintainance
 License: GPL
@@ -36,6 +36,14 @@ Conflicts: apt-conf-branch < 5.0-alt2
 %description
 local mirrors setup and maintainance
 
+%package allowed
+Summary: List of pathes of allowed mirrors
+Group: System/Configuration/Other
+Requires: %name = %EVR
+
+%description allowed
+%summary.
+
 %prep
 %setup -q
 
@@ -46,10 +54,12 @@ local mirrors setup and maintainance
 %makeinstall
 install -d %buildroot%_logdir/%name
 install -Dpm640 %name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
+install -Dpm640 allowed %buildroot%_sysconfdir/alterator/mirror/allowed
 
 %files
 %config(noreplace) %_sysconfdir/logrotate.d/*
 %config(noreplace) %_sysconfdir/alterator/mirror
+%exclude %_sysconfdir/alterator/mirror/allowed
 %_sbindir/*
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*
@@ -59,7 +69,15 @@ install -Dpm640 %name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
 %_alterator_backend3dir/*
 %attr(700,root,adm) %_logdir/%name
 
+%files allowed
+%config(noreplace) %_sysconfdir/alterator/mirror/allowed
+
 %changelog
+* Mon Dec 04 2023 Andrey Cherepanov <cas@altlinux.org> 0.4.10-alt1
+- Supported allowed repo names in /etc/alterator/mirror/allowed.
+- Fixed regexp for custom url (ALT #43503).
+- Added alterator-mirror-allowed package with allowed repositories.
+
 * Tue Apr 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.4.9-alt1
 - Enable and start crond service to start scheduled execution.
 
