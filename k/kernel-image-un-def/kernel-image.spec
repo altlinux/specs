@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1
-%define kernel_base_version	6.5
-%define kernel_sublevel	.13
+%define kernel_base_version	6.6
+%define kernel_sublevel	.4
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -520,9 +520,6 @@ if ! timeout 999 vm-run --kvm=cond \
         sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
         exit 1
 fi
-# Verify fchmodat2 backport.
-make -C tools/testing/selftests/fchmodat2
-timeout 300 vm-run tools/testing/selftests/fchmodat2/fchmodat2_test
 
 %post checkinstall
 check-pesign-helper
@@ -592,6 +589,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Dec 03 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.6.4-alt1
+- v6.6.4 (2023-12-03).
+
+* Fri Dec 01 2023 Vitaly Chikunov <vt@altlinux.org> 1:6.6.3-alt1
+- Rebase to v6.6.3 (2023-11-28).
+
 * Wed Nov 29 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.5.13-alt1
 - v6.5.13 (2023-11-28).
 

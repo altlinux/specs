@@ -1,6 +1,6 @@
 %define module_name	evdi
 %define module_version	1.14.1
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		un-def
 %define karch %ix86 x86_64 armh aarch64
@@ -31,7 +31,9 @@ PreReq: coreutils
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
-Patch: %module_name-%module_version-centos9.patch
+Patch0: %module_name-%module_version-centos9.patch
+# https://github.com/DisplayLink/evdi/pull/436
+Patch1: 436.patch
 
 %description
 Extensible Virtual Display Interface
@@ -48,8 +50,9 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 # centos backported some fixes for 5.15+
 if [ %flavour == "centos" ]; then
-%patch -p1
+%patch0 -p1
 fi
+%patch1 -p2
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour M=`pwd` V=1 modules
@@ -65,6 +68,9 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Dec 02 2023 L.A. Kostis <lakostis@altlinux.org> 1.14.1-alt2
+- Apply patch to compile with kernel 6.6 (upstream PR#436).
 
 * Tue Sep 05 2023 L.A. Kostis <lakostis@altlinux.org> 1.14.1-alt1
 - Updated to 1.14.1.
