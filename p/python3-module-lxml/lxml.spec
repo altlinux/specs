@@ -1,11 +1,11 @@
-%def_without bootstrap
+%def_with bootstrap
 
-%def_with check
+%def_without check
 
 %define oname lxml
 
 Name: python3-module-lxml
-Version: 4.9.3
+Version: 4.9.3.0.112.gitc18f89b8
 Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API
@@ -18,8 +18,6 @@ URL: https://pypi.org/project/lxml
 Source: %name-%version.tar
 
 Patch: Skip-failing-test-test_html_prefix_nsmap.patch
-Patch1: Make-the-validation-of-ISO-Schematron-files-optional.patch
-Patch2: 57d328d611ea5b3f49a6c132617e37f29a36525e.patch
 
 %if_without bootstrap
 # Used for tests only, but depends on lxml itself,
@@ -61,8 +59,9 @@ This package contains documentation for lxml.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
-%patch2 -p1
+
+# a0 breaks some tests in other packages, for ex: python3(libvirt)
+sed -i 's/5.0.0a0/4.9.3/' src/lxml/__init__.py
 
 find -type f -name '*.c' -print -delete >&2
 
@@ -90,12 +89,16 @@ python3 test.py -vuf
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%oname-4.9.3.dist-info
 
 %files doc
 %doc doc samples
 
 %changelog
+* Sat Nov 11 2023 Grigory Ustinov <grenka@altlinux.org> 4.9.3.0.112.gitc18f89b8-alt1
+- Automatically updated to 4.9.3.0.112.gitc18f89b8.
+- Bootstrap for python3.12.
+
 * Fri Sep 15 2023 Grigory Ustinov <grenka@altlinux.org> 4.9.3-alt1
 - Automatically updated to 4.9.3.
 - Build with check, without bootstrap.
