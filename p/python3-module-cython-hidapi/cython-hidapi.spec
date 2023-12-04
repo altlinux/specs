@@ -1,7 +1,7 @@
 %define oname hidapi
 Name: python3-module-cython-hidapi
 Version: 0.14.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python wrapper for the hidapi
 
@@ -11,6 +11,8 @@ Url: https://github.com/trezor/cython-hidapi
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+
+Patch: 5cc527e4cc6fb82bed718cc9f0cdc7e47b61bb9c.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
@@ -24,6 +26,7 @@ Python wrapper for the hidapi
 
 %prep
 %setup
+%patch -p1
 
 %build
 export CFLAGS="%optflags"
@@ -37,6 +40,9 @@ export CFLAGS="%optflags"
 %python3_sitelibdir/*
 
 %changelog
+* Fri Nov 10 2023 Grigory Ustinov <grenka@altlinux.org> 0.14.0-alt1.1
+- Fixed build with Cython 3.0.5.
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 0.14.0-alt1
 - new version 0.14.0 (with rpmrb script)
 
