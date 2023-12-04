@@ -3,7 +3,7 @@
 %define libxappsdir /usr/lib/xapps
 
 Name: xapps
-Version: 2.8.0
+Version: 2.8.1
 Release: alt1
 
 Summary: Libraries and common resources for XApps
@@ -11,6 +11,7 @@ License: %gpl3only
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/xapps
 
+# Source-url: https://github.com/linuxmint/xapp/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -212,6 +213,9 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
 %changelog
+* Mon Dec 04 2023 Anton Midyukov <antohami@altlinux.org> 2.8.1-alt1
+- 2.8.1
+
 * Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 2.8.0-alt1
 - 2.8.0
 

@@ -10,7 +10,7 @@
 %def_disable libopenraw
 
 Name: pix
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An image viewer and browser utility.
@@ -20,6 +20,9 @@ Url: https://github.com/linuxmint/pix
 
 # Source-url: https://github.com/linuxmint/pix/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+
+Obsoletes: pix-data < %EVR
+Provides: pix-data = %EVR
 
 # From configure.in
 %define glib_ver 2.38.0
@@ -82,14 +85,6 @@ It features some advanced tools, too:
    * JPEG lossless transformations.
    * Find duplicated images.
 
-%package data
-Summary: Arch independent files for pix
-Group: Graphics
-BuildArch: noarch
-
-%description data
-This package provides noarch data needed for pix to work.
-
 %package devel
 Summary: pix development files
 Group: Development/C
@@ -110,12 +105,10 @@ This package contains headers needed to build extensions for pix.
 
 %find_lang --with-gnome %name
 
-%files
+%files -f %name.lang
 %_bindir/*
 %dir %_libdir/pix/extensions
 %_libdir/pix/extensions/*
-
-%files data  -f %name.lang
 %_datadir/locale/sr@Latn/LC_MESSAGES/pix.mo
 %_desktopdir/*
 %_datadir/%name/
@@ -130,6 +123,10 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Dec 04 2023 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1
+- new version (3.2.1) with rpmgs script
+- remove data subpackage
+
 * Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
 - new version (3.2.0) with rpmgs script
 

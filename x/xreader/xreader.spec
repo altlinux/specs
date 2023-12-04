@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: xreader
-Version: 3.8.3
+Version: 3.8.4
 Release: alt1
 
 Summary: A document viewer
@@ -119,7 +119,6 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %_libexecdir/xreader*
 %_desktopdir/%name.desktop
 %_datadir/metainfo/%name.appdata.xml
-
 %_datadir/dbus-1/services/org.x.reader.Daemon.service
 %_datadir/%name/
 %_datadir/thumbnailers/xreader.thumbnailer
@@ -147,6 +146,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Mon Dec 04 2023 Anton Midyukov <antohami@altlinux.org> 3.8.4-alt1
+- New version
+
 * Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 3.8.3-alt1
 - New version
 

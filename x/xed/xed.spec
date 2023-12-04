@@ -3,11 +3,11 @@
 %define api_ver 3.0
 
 Name: xed
-Version: 3.4.3
-Release: alt2
+Version: 3.4.4
+Release: alt1
 
 Summary: xed is a small and lightweight text editor.
-License: GPLv2
+License: GPL-2.0-or-later
 Group: Editors
 Url: https://github.com/linuxmint/xed
 
@@ -23,6 +23,8 @@ Requires: dconf gnome-icon-theme gvfs zenity
 %{?_enable_zeitgeist:Requires: zeitgeist}
 Requires: xapps-icons
 
+Obsoletes: xed-data < %EVR
+Provides: xed-data = %EVR
 Provides: typelib(Xed)
 
 BuildPreReq: rpm-build-gnome
@@ -54,14 +56,6 @@ xed is a small and lightweight text editor.
 
 xed supports most standard editing features, plus several not found in your
 average text editor (plugins being the most notable of these).
-
-%package data
-Summary: Arch independent files for xed
-Group: Editors
-BuildArch: noarch
-
-%description data
-This package provides noarch data needed for xed to work.
 
 %package devel
 Group: Development/C
@@ -120,11 +114,9 @@ rm -f %buildroot%_libdir/%name/*.la
 
 %find_lang --with-gnome %name
 
-%files
+%files -f %name.lang
 %_bindir/*
 %pkglibdir
-
-%files data -f %name.lang
 %pkgdatadir/
 %_desktopdir/%name.desktop
 %_mandir/man?/*
@@ -141,6 +133,11 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Mon Dec 04 2023 Anton Midyukov <antohami@altlinux.org> 3.4.4-alt1
+- 3.4.4
+- Remove data subpackage
+- Fix License
+
 * Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 3.4.3-alt2
 - Rebuild with cinnamon 6.0
 

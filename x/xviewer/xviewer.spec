@@ -1,5 +1,5 @@
 Name: xviewer
-Version: 3.4.2
+Version: 3.4.3
 Release: alt1
 
 Summary: Fast and functional image viewer.
@@ -7,6 +7,7 @@ License: GPL-2.0-or-later
 Group: Graphics
 Url: https://github.com/linuxmint/xviewer
 
+# Source-url: https://github.com/linuxmint/xviewer/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -46,7 +47,7 @@ This package contains files necessary to develop plugins for Xviewer.
 %package gir
 Summary: GObject introspection data for the Xviewer
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Xviewer
@@ -55,7 +56,7 @@ GObject introspection data for the Xviewer
 Summary: Tests for the Xviewer
 Group: Development/Other
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -98,6 +99,9 @@ the functionality of the Xviewer GUI.
 %_libdir/%name/girepository-1.0/*.typelib
 
 %changelog
+* Mon Dec 04 2023 Anton Midyukov <antohami@altlinux.org> 3.4.3-alt1
+- New version
+
 * Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 3.4.2-alt1
 - New version
 
