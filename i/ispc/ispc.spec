@@ -9,7 +9,7 @@
 %endif
 
 Name: ispc
-Version: 1.21.0
+Version: 1.22.0
 Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
@@ -98,9 +98,9 @@ sed -i 's/clangFrontend.*clangLex/clang-cpp/' CMakeLists.txt
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DCMAKE_EXE_LINKER_FLAGS="%optflags %{?_with_lld:-fuse-ld=lld -Wl,--build-id=sha1} -fPIE" \
+	-DCMAKE_EXE_LINKER_FLAGS="%optflags %{?_with_lld:-fuse-ld=lld} -fPIE" \
 %if_with lld
-	-DCMAKE_SHARED_LINKER_FLAGS="$LDFLAGS %{?_with_lld:-fuse-ld=lld -Wl,--build-id=sha1}" \
+	-DCMAKE_SHARED_LINKER_FLAGS="$LDFLAGS %{?_with_lld:-fuse-ld=lld}" \
 %endif
 	-DLLVM_DIR=$(llvm-config --cmakedir) \
 	-DCMAKE_STRIP:STRING="" \
@@ -170,6 +170,12 @@ ispc --support-matrix
 %endif
 
 %changelog
+* Sun Dec 03 2023 L.A. Kostis <lakostis@altlinux.ru> 1.22.0-alt1
+- 1.22.0.
+
+* Wed Nov 08 2023 L.A. Kostis <lakostis@altlinux.ru> 1.21.1-alt1
+- 1.21.1.
+
 * Mon Sep 11 2023 L.A. Kostis <lakostis@altlinux.ru> 1.21.0-alt1
 - 1.21.0.
 
