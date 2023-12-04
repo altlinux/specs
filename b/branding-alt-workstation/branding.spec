@@ -19,13 +19,11 @@
 %define alterator_browser_weight 53
 %define artworks_weight 000012000053
 
-%define data_cur_dir %_datadir/branding-data-current
-
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.1
-Release: alt4.1
+Version: 10.1.900
+Release: alt1
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -37,6 +35,9 @@ BuildRequires: design-bootloader-source >= 5.0-alt2 fribidi
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
 BuildRequires: qt5-base-devel
+
+# for licenses
+BuildRequires: distro-licenses
 
 BuildRequires: ImageMagick fontconfig bc
 
@@ -256,6 +257,9 @@ Requires(post): indexhtml-common
 sed -i 's,#alt-workstation,&-e2k,' indexhtml/index-*.html.in
 %endif
 
+cp -a /usr/share/distro-licenses/ALT_Product_License/license.ru.html.in notes/
+cp -a /usr/share/distro-licenses/ALT_Product_License/license.all.html.in notes/
+
 %build
 autoconf
 THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%distro_version PRODUCT_BASE_NAME_RU='%distro_base_name_ru' PRODUCT_BASE_NAME='%distro_base_name' PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' GTK_THEME='%gtk_theme' ICON_THEME='%icon_theme' ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ARTWORKS_WEIGHT='%artworks_weight' ./configure
@@ -314,12 +318,6 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 [ "$1" -eq 1 ] || exit 0
 /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
 
-#notes
-%post notes
-if ! [ -e %_datadir/alt-notes/license.all.html ]; then
-	cp -a %data_cur_dir/alt-notes/license.*.html %_datadir/alt-notes/
-fi
-
 %files alterator
 %config %_altdir/*.rcc
 /usr/share/alterator-browser-qt/design/*.rcc
@@ -339,11 +337,7 @@ fi
 %_sysconfdir/buildreqs/packages/ignore.d/*
 
 %files notes
-%dir %data_cur_dir
-%data_cur_dir/alt-notes
-%_datadir/alt-notes/livecd-*
-%_datadir/alt-notes/release-notes.*
-%ghost %config(noreplace) %_datadir/alt-notes/license.*.html
+%_datadir/alt-notes/*
 
 %files mate-settings
 %_sysconfdir/skel/.config/
@@ -366,6 +360,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Dec 04 2023 Mikhail Efremov <sem@altlinux.org> 10.1.900-alt1
+- mate-settings: Don't use user background in the lightdm-gtk-greeter.
+- notes: Always update licenses.
+- notes: Use licenses from distro-licenses package.
+
 * Thu Nov 02 2023 Michael Shigorin <mike@altlinux.org> 10.1-alt4.1
 - E2K: link to platform-specific distribution manual (rm#115880)
 
