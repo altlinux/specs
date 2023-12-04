@@ -4,7 +4,9 @@
 %global optflags_lto %nil
 
 %def_without lapack
-%ifnarch %e2k
+%ifnarch %e2k loongarch64
+# XXX: loongarch64: LOONGSON3R5 code uses LSA/LSAX, and open source toolchains
+#      does NOT support LSA yet.
 %def_enable dynamic_arch
 %endif
 
@@ -20,11 +22,14 @@
 %ifarch %mips
 %define oblas_target MIPS32_GENERIC
 %endif
+%ifarch loongarch64
+%define oblas_target LOONGSONGENERIC
+%endif
 
 
 Name: openblas
 Version: 0.3.23
-Release: alt1.2
+Release: alt2
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -154,6 +159,9 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 %exclude %_libdir/*.a
 
 %changelog
+* Mon Dec 04 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.3.23-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Fri Jul 28 2023 Ivan A. Melnikov <iv@altlinux.org> 0.3.23-alt1.2
 - NMU: spec: fix FTBFS on riscv64 by passing TARGET
   to make install if TARGET is specified
