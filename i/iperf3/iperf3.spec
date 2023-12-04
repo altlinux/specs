@@ -4,8 +4,8 @@
 %define use_chrpath 1
 
 Name: iperf3
-Version: 3.14
-Release: alt2
+Version: 3.16
+Release: alt1
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
 License: BSD-3-Clause and MIT
@@ -63,8 +63,8 @@ This package contains development files of iperf3
 %prep
 %setup -q -n %native-%version
 
-%patch0 -p1
-%patch1 -p1
+#patch0 -p1
+#patch1 -p1
 
 %build
 
@@ -118,6 +118,11 @@ chrpath -d %buildroot/%_bindir/iperf3
 %_libdir/lib%native.so
 
 %changelog
+* Mon Dec 04 2023 Sergey Y. Afonin <asy@altlinux.org> 3.16-alt1
+- New version
+- iperf3-3.10-idle-tcp-DoS.patch and iperf3-3.14-issue1554.patch
+  isn't needed since 3.15
+
 * Wed Aug 02 2023 Sergey Y. Afonin <asy@altlinux.org> 3.14-alt2
 - Added patch for issue #1554 (ALT #47017)
 
