@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt228
+%define pkg_rel alt229
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -110,6 +110,7 @@ Patch9: buildfix_kernel_6.4.patch
 Patch10: buildfix_kernel_6.5-garbage-collect-all-references-to-get_user.patch
 Patch11: buildfix_kernel_6.5-handle-get_user_pages-vmas-argument-remova.patch
 Patch12: buildfix_kernel_6.5-handle-get_user_pages-vmas-argument-remova_uvm.patch
+Patch13: buildfix_kernel_6.6.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -193,6 +194,7 @@ fi
 if [ -e nvidia-uvm/nvidia-uvm.Kbuild ] ; then
 %patch12 -p1
 fi
+%patch13 -p2
 rm -rf precompiled
 popd
 
@@ -380,6 +382,9 @@ fi
 %endif
 
 %changelog
+* Mon Dec 04 2023 Sergey V Turchin <zerg@altlinux.org> 390.157-alt229
+- add fix against 6.6 kernel
+
 * Tue Sep 19 2023 Sergey V Turchin <zerg@altlinux.org> 390.157-alt228
 - add fix against 6.5 kernel
 
