@@ -1,5 +1,5 @@
 Name: lightdm-settings
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 Summary: Configuration tool for the LightDM display manager
 Group: Graphical desktop/Other
@@ -48,6 +48,9 @@ chmod -c 0755 %buildroot%_bindir/%name \
 %_datadir/polkit-1/actions/org.x.%name.policy
 
 %changelog
+* Mon Dec 04 2023 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Sat Dec 02 2023 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
