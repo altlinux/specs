@@ -1,7 +1,7 @@
 Name: kernel-image-rt
 %define kernel_base_version	6.1
-%define kernel_sublevel	.64
-%define kernel_rt_release	rt17
+%define kernel_sublevel	.65
+%define kernel_rt_release	rt18
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -607,6 +607,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Dec 04 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.65-alt1.rt18
+- v6.1.65-rt18 (2023-12-03).
+
 * Sat Dec 02 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.64-alt1.rt17
 - v6.1.64-rt17 (2023-12-01).
 - config: Enable HID_REDRAGON module (ALT#48182).
