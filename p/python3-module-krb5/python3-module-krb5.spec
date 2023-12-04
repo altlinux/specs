@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Python krb5 API interface
@@ -52,5 +52,8 @@ details through GSSAPI.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Dec 04 2023 Andrey Limachko <liannnix@altlinux.org> 0.5.1-alt1
+- New version 0.5.1.
+
 * Sun Jul 09 2023 Andrey Limachko <liannnix@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus
