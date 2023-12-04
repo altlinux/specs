@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -19,6 +19,7 @@ VARIANTS="\
 Platform6-server-light \
 alt-desktop \
 alt-education \
+alt-platform-builder \
 alt-server \
 alt-server-v \
 alt-sisyphus \
@@ -72,6 +73,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Nov 23 2023 Anton Midyukov <antohami@altlinux.org> 1.0.9-alt1
+- Added alt-platform-builder
+
 * Fri Jun 09 2023 Roman Alifanov <ximper@altlinux.org> 1.0.8-alt1
 - NMU: Added etersoft-ximper (ALT bug 47384)
 
