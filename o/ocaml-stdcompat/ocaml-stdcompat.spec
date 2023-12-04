@@ -1,7 +1,7 @@
 %define libname stdcompat
 Name: ocaml-%libname
 Version: 19
-Release: alt1
+Release: alt2
 Summary: Compatibility module for OCaml standard library
 License: BSD-3-Clause
 Group: Development/ML
@@ -39,8 +39,12 @@ developing applications that use %name.
 %doc README.md ChangeLog COPYING 
 
 %files devel -f ocaml-files.devel
+%_ocamldir/%libname/*.h
 
 %changelog
+* Mon Dec 04 2023 Anton Farygin <rider@altlinux.ru> 19-alt2
+- added a lost header to the development package (Closes: #48671)
+
 * Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 19-alt1
 - 17 -> 19
 
