@@ -1,6 +1,6 @@
 Name:     papirus-icon-theme
-Version:  20231101
-Release:  alt2
+Version:  20231201
+Release:  alt1
 
 Summary:  All Papirus icon themes
 License:  GPLv3
@@ -362,6 +362,9 @@ cp -a Papirus* ePapirus* %buildroot%_iconsdir
 %_iconsdir/Papirus-Light-*
 
 %changelog
+* Sat Dec 02 2023 Kirill Izmestev <felixz@altlinux.org> 20231201-alt1
+- New version.
+
 * Thu Nov 16 2023 Kirill Izmestev <felixz@altlinux.org> 20231101-alt2
 - Add ePapirus-Dark theme
 - Add Papirus Remix theme with all colors of folders. (ALT #47651)
