@@ -1,12 +1,12 @@
-# git commit 30b19d3ebaff7d7a91c130f910cf63e335dfce37
+# git commit 76f69ecaaa257f78073f44ba7d03923ec55d693e
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version:  32.5.0
+Version: 32.5.1
 
-Release: alt3
+Release: alt1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -15,6 +15,7 @@ Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
 ExclusiveArch: x86_64 aarch64
+# ppc64le
 
 %define sname palemoon
 %define bname newmoon
@@ -32,7 +33,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source: %sname-source-%version-%release.tar
 
 Source1: rpm-build.tar
-Source2: defaults-newmoon.tar
+Source2: defaults-%bname.tar
 
 Source4: %sname-mozconfig
 Source6: %bname.desktop
@@ -45,6 +46,7 @@ Source11: content.tar
 Source12: xulstore.json
 Source13: kde.js
 
+#Patch15: palemoon-32.0.1-ppc64le-alt1.patch
 
 #Patch1: palemoon_google_add-26.4.0.patch
 Patch16: mozilla_palimoon-29.4.6-cross-desctop.patch
@@ -70,13 +72,14 @@ Patch111: palemoon-29.4.6-firefox-kde.patch
 Patch112: palemoon-29.4.6-mozilla-kde.patch
 Patch113: palemoon-29.4.6-kde-background.patch
 
-Patch114: nemoon_branding-31.0.0.patch
 Patch115: palemoon-32.4.0-mathops.patch
 Patch116: palemoon-32.4.0-hunspell.patch
 Patch117: palemoon-32.5.0-locale.patch
 
-%set_autoconf_version 2.13
+#Patch114: mewmoon_branding-31.0.0.patch
+Patch200: %bname-32.5.1-branding.patch
 
+%set_autoconf_version 2.13
 
 # Automatically added by buildreq on Mon Nov 20 2023
 # optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel
@@ -88,7 +91,6 @@ Patch117: palemoon-32.5.0-locale.patch
 BuildRequires: doxygen gcc-c++ libGConf-devel libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel
 BuildRequires: libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket python-modules-distutils python-modules-json
 BuildRequires: python-modules-wsgiref unzip yasm zip
-
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: gobject-introspection-devel libssl-devel perl(Archive/Zip.pm) perl(CGI.pm) perl(LWP/Simple.pm)
@@ -110,14 +112,12 @@ BuildRequires(pre): mozilla-common-devel rpm-macros-alternatives mozilla-common
 BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildPreReq: python-module-future python-modules-json python-modules-wsgiref
-BuildPreReq: libnss-devel
 
 #BuildRequires: gcc%%{_gcc_version}-c++
 
 BuildPreReq: chrpath
 BuildPreReq: autoconf_%_autoconf_version
 
-BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libhunspell-devel
 
 %description
@@ -129,31 +129,29 @@ cross-platform.
 Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
 
-%package -n newmoon
+%package -n %bname
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 Group: Networking/WWW
 
-#Obsoletes: palemoon  < 29.4.6
 Provides: palemoon = %EVR
 Provides: webclient
 
-Conflicts: newmoon < 31.0.0
-#Obsoletes: newmoon < 29.4.6
+Conflicts: %bname < 31.0.0
 
-Requires: libgstreamer1.0 gst-libav
-Requires: gst-plugins-base1.0
+#Requires: libgstreamer1.0 gst-libav
+#Requires: gst-plugins-base1.0
 
 # Protection against fraudulent DigiNotar certificates
-Requires: libnss
+#Requires: libnss
 
-%description -n newmoon
+%description -n %bname
 The New Moon browser, an unofficial branding of the Pale Moon project browser
 The %sname project is a redesign of Mozilla's  Firefox browser component,
 written using the XUL user interface language and designed to be
 cross-platform.
 
-%description -n newmoon -l ru_RU.UTF8
+%description -n %bname -l ru_RU.UTF8
 Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
@@ -175,8 +173,7 @@ These helper macros provide possibility to rebuild
 
 #cd UXP-PM%{version}_Release
 # patch to move files directly to /usr/lib No more symlinks
-
-pushd palemoon/platform
+pushd platform
 sed -e 's;$(libdir)/$(MOZ_APP_NAME)-$(MOZ_APP_VERSION);$(libdir)/$(MOZ_APP_NAME);g' -i config/baseconfig.mk
 sed -e 's;$(libdir)/$(MOZ_APP_NAME)-devel-$(MOZ_APP_VERSION);$(libdir)/$(MOZ_APP_NAME)-devel;g' -i config/baseconfig.mk
 popd
@@ -196,9 +193,7 @@ popd
 
 %patch22 -p1
 
-cd %sname
 tar -xf %SOURCE1
-cd ..
 
 %patch23 -p1
 
@@ -214,21 +209,23 @@ cd ..
 #patch112 -p1 -b .kdemoz
 #patch113 -p1 -b .kdebackground
 
-%patch114 -p1
 %patch115 -p1
 %patch116 -p1
 %patch117 -p1
 
+#patch114 -p1
+
+%patch200 -p1
 
 cd %sname
-
-
 # icons
 for s in 16 22 24 32 48 256; do
 	install -D -m 644 \
-		../defaults-newmoon/default$s.png \
-		palemoon/branding/unofficial/
+		../defaults-%bname/default$s.png \
+		branding/unofficial/
 done
+
+cd -
 
 cat >> confvars.sh <<EOF
 MOZ_UPDATER=
@@ -276,10 +273,29 @@ echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
  echo 'ac_add_options --enable-optimize=" -march=x86-64 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
+pwd
+
+cat << EOF >> palemoon/app/profile/prefs.js
+user_pref("browser.EULA.override", true);
+user_pref("browser.ctrlTab.previews", true);
+user_pref("browser.tabs.insertRelatedAfterCurrent", false);
+user_pref("browser.tabs.onTop", true);
+user_pref("browser.startup.homepage", "file://%_docdir/HTML/index.html");
+user_pref("browser.backspace_action", 2);
+user_pref("browser.display.use_system_colors", true);
+user_pref("browser.download.folderList", 1);
+user_pref("browser.link.open_external", 3);
+user_pref("app.update.auto", false);
+user_pref("app.update.enabled", false);
+user_pref("app.update.autoInstallEnabled", false);
+user_pref("dom.ipc.plugins.enabled.nswrapper*", false);
+user_pref("extensions.autoDisableScopes", 0);
+user_pref("extensions.shownSelectionUI", true);
+user_pref("network.manage-offline-status", true);
+user_pref("browser.urlbar.decodeURLsOnCopy", true);
+EOF
 
 %build
-cd %sname
-
 %add_optflags %optflags_shared
 
 %add_findprov_lib_path %newmoon_datadir
@@ -346,14 +362,13 @@ gcc %optflags \
 
 %install
 ## ? install -D -m644 %SOURCE12 obj-%_arch/dist/bin/browser/defaults/profile/xulstore.json
-
 # нужен только с патчами KDE
-install -D -m644 %SOURCE13 obj-%_arch/dist/bin/defaults/pref/kde.js
+#install -D -m644 %SOURCE13 obj-%_arch/dist/bin/defaults/pref/kde.js
 
-cd palemoon
-
+#cd palemoon
 cd obj-%_arch
 %makeinstall MOZ_APP_VERSION=%version SHELL=/bin/sh
+
 
 #makeinstall_std MOZ_APP_VERSION=%version COMSPEC=rpm SHELL=/bin/sh
 # MOZILLABUILD SHELL=/bin/sh COMSPEC=rpm
@@ -364,12 +379,10 @@ mkdir -p \
 	%buildroot/%mozilla_arch_extdir/%palemoon_cid \
 	%buildroot/%mozilla_noarch_extdir/%palemoon_cid
 
-cd ..
-
 # icons
 for s in 16 32 48; do
 	install -D -m 644 \
-		../defaults-newmoon/default$s.png \
+		../defaults-%bname/default$s.png \
 		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%bname.png
 done
 
@@ -377,15 +390,17 @@ if [ -f %buildroot/%_bindir/%sname ];then
     rm  -f %buildroot/%_bindir/%sname
 fi
 
+cd ..
+
 install  %bname  %buildroot/%_bindir/%bname
 
 mkdir -p -- \
 	%buildroot/%_rpmmacrosdir
 
-#sed \
-#	-e 's,@palemoon_version@,%version,' \
-#	-e 's,@palemoon_release@,%release,' \
-#	 rpm-build/rpm.macros.%sname.standalone > %buildroot/%_rpmmacrosdir/%sname
+sed \
+	-e 's,@palemoon_version@,%version,' \
+	-e 's,@palemoon_release@,%release,' \
+	 rpm-build/rpm.macros.%sname.standalone > %buildroot/%_rpmmacrosdir/%sname
 
 install -D -m 644 rpm-build/rpm.macros.%sname.standalone  %buildroot/%_rpmmacrosdir/%sname
 
@@ -393,8 +408,8 @@ pushd %buildroot
 
 # Remove devel files
 rm -rf -- \
- 	%buildroot%_libdir/newmoon-devel-%version \
- 	%buildroot%_libdir/newmoon-devel \
+ 	%buildroot%_libdir/%bname-devel-%version \
+ 	%buildroot%_libdir/%bname-devel \
  	%buildroot%_datadir/idl/%bname-%version
 
 # install menu file
@@ -407,27 +422,9 @@ install -d -m 755 %buildroot/%newmoon_bindir/browser/defaults/preferences/
 #pref("extensions.getAddons.cache.enabled", false);
 #EOF
 
-cat << EOF >> %buildroot%newmoon_bindir/defaults/pref/prefs.js
-user_pref("browser.EULA.override", true);
-user_pref("browser.ctrlTab.previews", true);
-user_pref("browser.tabs.insertRelatedAfterCurrent", false);
-user_pref("browser.tabs.onTop", true);
-user_pref("browser.startup.homepage", "file://%_docdir/HTML/index.html");
-user_pref("browser.backspace_action", 2);
-user_pref("browser.display.use_system_colors", true);
-user_pref("browser.download.folderList", 1);
-user_pref("browser.link.open_external", 3);
-user_pref("app.update.auto", false);
-user_pref("app.update.enabled", false);
-user_pref("app.update.autoInstallEnabled", false);
-user_pref("dom.ipc.plugins.enabled.nswrapper*", false);
-user_pref("extensions.autoDisableScopes", 0);
-user_pref("extensions.shownSelectionUI", true);
-user_pref("network.manage-offline-status", true);
-user_pref("browser.urlbar.decodeURLsOnCopy", true);
-EOF
 
-install -m 644 %_builddir/palemoon-%version/defaults-newmoon/default48.png %buildroot%newmoon_bindir/browser/chrome/icons/default/PMaboutDialog48.png
+
+install -m 644 %_builddir/palemoon-%version/defaults-%bname/default48.png %buildroot%newmoon_bindir/browser/chrome/icons/default/PMaboutDialog48.png
 
 set -x
 
@@ -462,9 +459,9 @@ printf '%_bindir/xbrowser\t%_bindir/%bname\t99\n' >./%_altdir/%bname
 # Add Doc
 install -D -m 644 %SOURCE9  %_builddir/%sname-%version
 install -D -m 644 %SOURCE10 %_builddir/%sname-%version
-install -D -m 644 %_builddir/palemoon-%version/palemoon/AUTHORS %_builddir/%sname-%version
-install -D -m 644 %_builddir/palemoon-%version/palemoon/LICENSE %_builddir/%sname-%version
-install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sname-%version
+# install -D -m 644 %_builddir/palemoon-%version/AUTHORS %_builddir/%sname-%version
+# install -D -m 644 %_builddir/palemoon-%version/LICENSE %_builddir/%sname-%version
+# install -D -m 644 %_builddir/palemoon-%version/README.md %_builddir/%sname-%version
 
 %files -n %bname
 %dir %newmoon_bindir
@@ -487,6 +484,10 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Sun Dec 03 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.1-alt1
+- Release 32.5.1
+(CVE-2023-6204, CVE-2023-6210, CVE-2023-6209 and CVE-2023-6205)
+
 * Wed Nov 22 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.0-alt3
 - Add palemoon_version-32.5.0.patch and  palemoon-32.5.0-locale.patch
 
