@@ -5,15 +5,22 @@
 
 %def_with python
 %def_with python3
+%ifarch %e2k
+# needs thorough update, esp. rpm-macros-ruby
+%def_without ruby
+%else
 %def_with ruby
+%endif
 %def_without doc
 
 Name: xapian-bindings
 Version: 1.4.24
-Release: alt1
+Release: alt2
+
 Summary: Xapian search engine bindings
 License: GPL-2.0-or-later
 Group: Development/Databases
+
 Url: http://www.xapian.org/
 Vcs: git://git.xapian.org/xapian
 
@@ -145,6 +152,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Tue Dec 05 2023 Michael Shigorin <mike@altlinux.org> 1.4.24-alt2
+- E2K: build without ruby (macros need update)
+
 * Sat Dec 02 2023 Vitaly Chikunov <vt@altlinux.org> 1.4.24-alt1
 - Update to 1.4.24 (2023-11-06).
 
