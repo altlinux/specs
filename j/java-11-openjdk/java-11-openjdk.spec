@@ -26,6 +26,7 @@ BuildRequires: unzip gcc-c++ libstdc++-devel-static
 BuildRequires: libXext-devel libXrender-devel libXcomposite-devel
 BuildRequires(pre): browser-plugins-npapi-devel lsb-release
 BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): ca-trust-java
 %set_compress_method none
 %filter_from_requires /.usr.bin.java/d
 BuildRequires: /proc rpm-build-java
@@ -128,7 +129,7 @@ BuildRequires: /proc rpm-build-java
 # Set of architectures for which we build debug builds
 %global debug_arches    %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64} s390x
 # Set of architectures with a Just-In-Time (JIT) compiler
-%global jit_arches      %{debug_arches} %{arm}
+%global jit_arches      %{debug_arches} %{arm} loongarch64
 # Set of architectures which run a full bootstrap cycle
 %global bootstrap_arches %{jit_arches}
 # Set of architectures which support SystemTap tapsets
@@ -136,7 +137,7 @@ BuildRequires: /proc rpm-build-java
 # Set of architectures with a Ahead-Of-Time (AOT) compiler
 %global aot_arches      x86_64 %{aarch64}
 # Set of architectures which support the serviceability agent
-%global sa_arches       %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64} %{arm}
+%global sa_arches       %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64} %{arm} loongarch64
 # Set of architectures which support class data sharing
 # See https://bugzilla.redhat.com/show_bug.cgi?id=513605
 # MetaspaceShared::generate_vtable_methods is not implemented for the PPC JIT
@@ -261,6 +262,10 @@ BuildRequires: /proc rpm-build-java
 %ifarch sparc64
 %global archinstall sparcv9
 %endif
+%ifarch loongarch64
+%global archinstall loongarch64
+%global stapinstall loongarch64
+%endif
 %ifnarch %{jit_arches}
 %global archinstall %{_arch}
 %endif
@@ -301,7 +306,7 @@ BuildRequires: /proc rpm-build-java
 %global minorver    0
 %global buildver    8
 %global rpmrelease  1
-%global dist		jpp11
+%global dist		jpp12
 #%%global tagsuffix      ""
 # priority must be 8 digits in total; untill openjdk 1.8 we were using 18..... so when moving to 11 we had to add another digit
 %if %is_system_jdk
@@ -502,6 +507,9 @@ Patch2:    rh1648644-java_access_bridge_privileged_security.patch
 
 Patch3:    rh649512-remove_uses_of_far_in_jpeg_libjpeg_turbo_1_4_compat_for_jdk10_and_up.patch
 
+# LoongArch
+Patch3500: jdk11u-loongarch.patch
+
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libalsa-devel
@@ -602,6 +610,7 @@ Group: Development/Java
 Summary: %{origin_nice} Headless Runtime Environment %{majorver}
 
 # Require /etc/pki/java/cacerts
+Requires(pre): ca-trust-java
 Requires: ca-trust
 # Require javapackages-filesystem for ownership of /usr/lib/jvm/ and macros
 Requires: javapackages-filesystem
@@ -861,6 +870,7 @@ pushd %{top_level_dir_name}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch3500 -p1
 popd # openjdk
 
 %patch1000
@@ -1754,6 +1764,10 @@ fi
 %endif
 
 %changelog
+* Mon Sep 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0:11.0.20.0.8-alt1_1jpp12
+- NMU: support LoongArch architecture (patch from https://github.com/loongson/jdk11u.git
+  branch master-ls, commit 6d17df1e42474ecf2feb7960cc47c2b9a3ddca43)
+
 * Thu Aug 24 2023 Andrey Cherepanov <cas@altlinux.org> 0:11.0.20.0.8-alt1_1jpp11
 - New version.
 - Security fixes
