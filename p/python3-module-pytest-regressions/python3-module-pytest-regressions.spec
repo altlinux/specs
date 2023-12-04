@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.5.0
-Release: alt1
+Release: alt2
 Summary: Pytest plugin for regression testing
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,7 @@ Vcs: https://github.com/ESSS/pytest-regressions
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 %py3_provides %pypi_name
 
 %pyproject_runtimedeps_metadata
@@ -32,6 +33,7 @@ Fixtures to write regression tests.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -51,6 +53,9 @@ Fixtures to write regression tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 04 2023 Stanislav Levin <slev@altlinux.org> 2.5.0-alt2
+- Restored the numpy patch back for transparent backports.
+
 * Sun Oct 08 2023 Anton Zhukharev <ancieg@altlinux.org> 2.5.0-alt1
 - Updated to 2.5.0.
 
