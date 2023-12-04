@@ -1,7 +1,5 @@
-%define dnum 814
-
 Name: ocl-icd
-Version: 2.2.14
+Version: 2.3.2
 Release: alt1
 
 Summary: OpenCL ICD Bindings
@@ -61,6 +59,7 @@ make check
 
 %files devel
 %doc ocl_icd_loader_gen.map ocl_icd_bindings.c
+%_bindir/cllayerinfo
 %_includedir/ocl_icd.h
 %_libdir/libOpenCL.so
 %_pkgconfigdir/%name.pc
@@ -68,6 +67,10 @@ make check
 %_man7dir/*
 
 %changelog
+* Sun Dec 03 2023 L.A. Kostis <lakostis@altlinux.ru> 2.3.2-alt1
+- Updated to v2.3.2 (Fix FTBFS with new opencl-headers).
+- Added cllayerinfo to -devel subpackage.
+
 * Sun Feb 28 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2.14-alt1
 - new version 2.2.14 (with rpmrb script)
 - change source url and url
