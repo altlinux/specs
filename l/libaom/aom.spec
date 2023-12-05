@@ -9,13 +9,14 @@
 # tests require downloading ~750Mb of video data
 # and run really long (up to a few hours)
 %def_disable longcheck
+%def_enable doc
 
 # TODO: remove later this fix for documentation
 %define _cmake__builddir BUILD
 
 Name: lib%oname
 Version: 3.5.0
-Release: alt1
+Release: alt2
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
@@ -30,7 +31,11 @@ Patch1: %name-alt-version.patch
 Patch2: %name-alt-dont-install-static-libs.patch
 Patch2000: %name-e2k-simd.patch
 
-BuildRequires: cmake gcc-c++ doxygen /usr/bin/dot
+BuildRequires: cmake gcc-c++ doxygen
+%if_with doc
+# build dependencies of graphviz are insane
+BuildRequires: /usr/bin/dot
+%endif
 %ifarch %ix86 x86_64
 BuildRequires: yasm
 %endif
@@ -94,10 +99,14 @@ echo -n %version > version
 %cmake \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
-%ifarch armh ppc64le
+%ifarch armh ppc64le loongarch64
 	-DAOM_TARGET_CPU:STRING=generic \
 %endif
+%if_enabled doc
 	-DENABLE_DOCS:BOOL=ON \
+%else
+	-DENABLE_DOCS:BOOL=OFF \
+%endif
 	-DENABLE_EXAMPLES:BOOL=ON \
 	-DENABLE_TOOLS:BOOL=ON \
 %if_disabled longcheck
@@ -138,10 +147,16 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %files tools
 %_bindir/*
 
+%if_enabled doc
 %files docs
 %doc %_cmake__builddir/docs/html
+%endif
 
 %changelog
+* Tue May 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.5.0-alt2
+- NMU: fixed FTBFS on LoongArch. While at it made it possible to skip
+  the documentation.
+
 * Tue Dec 20 2022 Valery Inozemtsev <shrek@altlinux.ru> 3.5.0-alt1
 - Updated to upstream version 3.5.0.
 
