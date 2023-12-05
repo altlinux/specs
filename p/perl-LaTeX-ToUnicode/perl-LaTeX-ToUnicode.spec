@@ -6,7 +6,7 @@ BuildRequires: perl(Data/Dumper/Concise.pm) perl(Exporter.pm) perl(ExtUtils/Make
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.53
+Version: 0.54
 Release: alt1
 Summary: Convert LaTeX commands to Unicode
 Group: Development/Perl
@@ -45,6 +45,9 @@ scripts for %name
 %_bindir/ltx2unitxt
 
 %changelog
+* Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 0.54-alt1
+- automated CPAN update
+
 * Tue Aug 22 2023 Igor Vlasenko <viy@altlinux.org> 0.53-alt1
 - automated CPAN update
 
