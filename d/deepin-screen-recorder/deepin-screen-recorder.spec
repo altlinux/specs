@@ -3,7 +3,7 @@
 
 Name: deepin-screen-recorder
 Version: 5.10.22
-Release: alt1
+Release: alt2
 
 Summary: Default screen recorder application for Deepin
 
@@ -40,7 +40,6 @@ BuildRequires: gsettings-qt-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-svg-devel
-BuildRequires: libprocps-devel
 BuildRequires: libavcodec-devel
 BuildRequires: libavformat-devel
 BuildRequires: libavfilter-devel
@@ -118,6 +117,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/screen-capture/
 
 %changelog
+* Tue Dec 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.10.22-alt2
+- NMU: fixed FTBFS (build without libprocps-devel, no longer available).
+  Thanks to iv@.
+
 * Thu May 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.22-alt1
 - New version (5.10.22).
 
