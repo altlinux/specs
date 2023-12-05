@@ -8,7 +8,7 @@
 
 Name: NetworkManager-openconnect
 Version: 1.2.10
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN integration for openconnect
@@ -62,14 +62,12 @@ NetworkManager panel applet.
 
 %package gtk4
 License: GPLv2+
-Summary: Applications for use %name with %nm_applet_name
+Summary: Files for GTK4 applications to use %name
 Group: Graphical desktop/GNOME
-Requires: %nm_applet_name >= %nm_applet_version
 Requires: NetworkManager-openconnect = %version-%release
 
 %description gtk4
-This package contains applications for use with
-NetworkManager panel applet build with gtk4.
+This package contains files for GTK4 applications to use %name.
 
 %prep
 %setup
@@ -129,6 +127,11 @@ useradd  -r -s /sbin/nologin -d %_sharedstatedir/nm-openconnect -M \
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Wed Nov 29 2023 Anton Midyukov <antohami@altlinux.org> 1.2.10-alt2
+- NMU:
+  + gtk4: Remove dependency on NetworkManager-applet-gtk (ALT#48620).
+  + gtk4: Update summary, descriptions.
+
 * Mon Sep 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.2.10-alt1
 - New version 1.2.10.
 - Add gtk4 package.
