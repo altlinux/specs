@@ -7,7 +7,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(blib.pm) perl
 %define upstream_version 0.11
 
 Name:       perl-%{upstream_name}
-Version:    0.131
+Version:    0.132
 Release:    alt1
 
 Summary:    A subclass of Array::Iterator to allow forwards and backwards iteration
@@ -55,6 +55,9 @@ make test
 
 
 %changelog
+* Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 0.132-alt1
+- automated CPAN update
+
 * Tue Oct 05 2021 Igor Vlasenko <viy@altlinux.org> 0.131-alt1
 - automated CPAN update
 
