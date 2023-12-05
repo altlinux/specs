@@ -2,7 +2,7 @@
 
 Name: howdy
 Version: 3.0.0
-Release: alt10.beta1.gitc5b1766
+Release: alt11.beta1.gitc5b1766
 Summary: Windows Hello style authentication
 
 License: MIT
@@ -32,6 +32,14 @@ Patch9: pr853-connect-to-signals-of-the-shown-window.patch
 Patch10: pr855-segfault-adding-a-model.patch
 Patch11: pr857-fix-things-regarding-translations.patch
 Patch12: integrate-translations.patch
+Patch13: dont-use-auth-ui.patch
+Patch14: pr862-1-also-use-PKEXEC_UID-to-get-username.patch
+Patch15: pr862-2-update-the-container-when-the-slide-changes.patch
+Patch16: pr862-3-remove-reading-of-non-existent-_variables-file.patch
+Patch17: pr862-4-more-correct-preview-when-stretching-the-window.patch
+Patch18: pr862-5-don-t-add-a-model-if-the-user-list-is-empty.patch
+Patch19: pr862-6-show-real-camera-ID-in-the-Video-tab.patch
+Patch20: pr862-7-handle-the-case-if-there-are-no-cameras-via-except.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-pam0
@@ -82,6 +90,14 @@ The package provides gtk interface for %name.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
 cp -a %SOURCE1 %SOURCE2 %SOURCE3 .
 bzip2 -dv *.bz2
 sed -i 's|/usr/bin/env python3|%__python3|' \
@@ -125,6 +141,17 @@ cp -a *.dat %buildroot%_datadir/dlib-data/
 %_datadir/howdy-gtk/
 
 %changelog
+* Tue Dec 05 2023 Anton Golubev <golubevan@altlinux.org> 3.0.0-alt11.beta1.gitc5b1766
+- howdy-gtk: Add default args to exit functions (ALT #48543)
+- Don't pkexec if already root
+- Handle the case if there are no cameras via except (ALT #48544)
+- Show real camera ID in the 'Video' tab (ALT #48542)
+- Don't add a model if the user list is empty (ALT #48529)
+- More correct preview when stretching the window (ALT #48527)
+- Remove reading of non-existent '_variables' file (ALT #48500)
+- Update the container when the slide changes (ALT #48502)
+- Also use PKEXEC_UID to get username (ALT #48503)
+
 * Fri Nov 17 2023 Anton Golubev <golubevan@altlinux.org> 3.0.0-alt10.beta1.gitc5b1766
 - actually add translations
 
