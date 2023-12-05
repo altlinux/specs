@@ -1,5 +1,5 @@
 Name: rtl_433
-Version: 22.11
+Version: 23.11
 Release: alt1
 
 Summary: Generic radio data receiver
@@ -39,6 +39,9 @@ touch %buildroot%_sysconfdir/rtl_433/rtl_433.conf
 %_includedir/rtl_433*.h
 
 %changelog
+* Tue Dec 05 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 23.11-alt1
+- 23.11 released
+
 * Mon Nov 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 22.11-alt1
 - 22.11 released
 
