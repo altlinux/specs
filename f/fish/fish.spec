@@ -6,8 +6,8 @@
 %endif
 
 Name: fish
-Version: 3.6.1
-Release: alt1.2
+Version: 3.6.4
+Release: alt1
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -87,6 +87,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Wed Dec 06 2023 Alexey Shabalin <shaba@altlinux.org> 3.6.4-alt1
+- 3.6.4 (Fixes: CVE-2023-49284)
+
 * Wed Nov 29 2023 Michael Shigorin <mike@altlinux.org> 3.6.1-alt1.2
 - E2K: lcc 1.26.20 ftbfs workaround by ilyakurdyukov@ (mcst#8502)
 
