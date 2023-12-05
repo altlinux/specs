@@ -5,8 +5,8 @@
 %endif
 
 Name: python3-module-PySide2
-Version: 5.15.2
-Release: alt4
+Version: 5.15.11
+Release: alt1
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python3
@@ -17,17 +17,6 @@ URL: https://wiki.qt.io/Qt_for_Python
 Source: pyside-setup-opensource-src-%version.tar
 Patch1: pyside2-link-with-python.patch
 Patch2: python-pyside2-options_py.patch
-# https://codereview.qt-project.org/gitweb?p=pyside/pyside-setup.git;a=commitdiff;h=1422cf4a7f277fb13fd209f24a90d6c02641497d;hp=99d76b5e4e2397fcb4ddf45de91748ab1861f755
-Patch3: pyside2-fix-build-with-numpy1.23.0.patch
-
-# patches from debian
-Patch10: py3.10-prep-Finally-support-Python-3.10.patch
-Patch11: py3.10-prep-Fix-a-very-old-refcounting-error-in-time_test.patch
-Patch12: py3.10-prep-Fix-parser.py-for-changed-typing-module.patch
-Patch13: py3.10-prep-reset-the-type-cache-after-feature-switching.patch
-
-# patch from https://src.fedoraproject.org/rpms/python-pyside2/pull-request/10#commit_list
-Patch14: python3.11.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-python3
@@ -54,9 +43,6 @@ BuildRequires: qt5-charts-devel
 BuildRequires: qt5-datavis3d-devel
 BuildRequires: qt5-remoteobjects-devel
 BuildRequires: qt5-script-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-xmlpatterns-devel
-BuildRequires: qt5-tools-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-scxml-devel
 BuildRequires: qt5-sensors-devel
@@ -152,13 +138,6 @@ the previous versions (without the 2) refer to Qt 4.
 %setup -n pyside-setup-opensource-src-%version
 %patch1 -p2
 %patch2 -p1
-%patch3 -p1
-
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
 
 %build
 %ifarch %e2k
@@ -221,6 +200,12 @@ done
 %python3_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Tue Dec 05 2023 Aleksei Kalinin <kaa@altlinux.org> 5.15.11-alt1
+- NMU:
+  + Cleared BuildRequires duplicates.
+  + Unnecessary patches removed.
+  + Updated sources form tarball.
+
 * Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 5.15.2-alt4
 - Fixed build with numpy1.23.
 
