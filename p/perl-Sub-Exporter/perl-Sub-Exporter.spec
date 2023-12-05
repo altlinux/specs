@@ -18,7 +18,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm)
 %define _enable_test 1
 
 Name: perl-Sub-Exporter
-Version: 0.990
+Version: 0.991
 Release: alt1
 
 Summary: a sophisticated exporter for custom-built routines
@@ -52,6 +52,9 @@ None.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 0.991-alt1
+- automated CPAN update
+
 * Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.990-alt1
 - automated CPAN update
 
