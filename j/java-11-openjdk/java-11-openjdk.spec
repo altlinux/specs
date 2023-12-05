@@ -41,7 +41,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.20.0.8
+%define version 11.0.21.0.9
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -302,11 +302,11 @@ BuildRequires: /proc rpm-build-java
 %global origin          openjdk
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
-%global securityver 20
+%global securityver 21
 %global minorver    0
-%global buildver    8
+%global buildver    9
 %global rpmrelease  1
-%global dist		jpp12
+%global dist		jpp11
 #%%global tagsuffix      ""
 # priority must be 8 digits in total; untill openjdk 1.8 we were using 18..... so when moving to 11 we had to add another digit
 %if %is_system_jdk
@@ -316,7 +316,6 @@ BuildRequires: /proc rpm-build-java
 %define priority %( printf '%08d' 3 )
 %endif
 %global newjavaver      %{majorver}.%{minorver}.%{securityver}.0
-
 %global javaver         %{majorver}
 
 # Define milestone (EA for pre-releases, GA for releases)
@@ -413,7 +412,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -863,6 +862,9 @@ if [ $prioritylength -ne 8 ] ; then
 fi
 
 # OpenJDK patches
+
+# Rename versioning subdirectory to openjdk
+mv jdk-%{majorver}.%{minorver}.%{securityver}+%{buildver}%{?tagsuffix:-%{tagsuffix}} %{top_level_dir_name}
 
 # Remove libraries that are linked
 sh %{SOURCE12}
@@ -1764,6 +1766,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 05 2023 Andrey Cherepanov <cas@altlinux.org> 0:11.0.21.0.9-alt1
+- New version (fixes CVE-2023-22081)
+
 * Mon Sep 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0:11.0.20.0.8-alt1_1jpp12
 - NMU: support LoongArch architecture (patch from https://github.com/loongson/jdk11u.git
   branch master-ls, commit 6d17df1e42474ecf2feb7960cc47c2b9a3ddca43)
