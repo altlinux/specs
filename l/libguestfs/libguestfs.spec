@@ -31,7 +31,7 @@
 
 Name: libguestfs
 Version: 1.50.1
-Release: alt3
+Release: alt3.1
 
 Summary: Library for accessing and modifying virtual machine disk images
 License: LGPLv2+
@@ -330,7 +330,7 @@ export PYTHON=%__python3
 	%{subst_enable static} \
 	--with-default-backend=direct \
 	--with-extra="ALTLinux,release=%version-%release,libvirt" \
-	--with-qemu="qemu-kvm qemu-system-%_build_arch qemu" \
+	--with-qemu="qemu-kvm qemu-system-%_arch qemu" \
 	--disable-silent-rules \
 	--disable-probes \
 	--disable-rpath
@@ -561,6 +561,10 @@ fi
 %endif #erlang
 
 %changelog
+* Mon Dec 04 2023 Ivan A. Melnikov <iv@altlinux.org> 1.50.1-alt3.1
+- NMU: use %_arch instead of %_build_arch, which evaluates
+  to 'unknown' (fixes FTBFS on loongarch64).
+
 * Thu Nov 23 2023 Egor Ignatov <egori@altlinux.org> 1.50.1-alt3
 - support build on architectures without ocamlopt
 
