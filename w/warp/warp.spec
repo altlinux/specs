@@ -5,10 +5,11 @@
 
 %define optflags_lto %nil
 
+%def_enable check
 %def_disable bootstrap
 
 Name: warp
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Fast and secure file transfer tool
@@ -36,11 +37,10 @@ Requires: yelp
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
 BuildRequires: yelp-tools
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
-#BuildRequires: /usr/bin/appstreamcli
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(dbus-1)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
 
 %description
 Warp allows you to securely send files to each other via the internet or
@@ -78,6 +78,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Dec 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
+- 0.6.2
+
 * Fri Oct 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
