@@ -16,7 +16,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.25.2
-Release: alt1
+Release: alt2
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
 Group: Development/Python3
@@ -29,6 +29,8 @@ Source1: %pyproject_deps_config_name
 Patch: numpy-1.20.2-Remove-strict-dependency-on-testing-package.patch
 Patch1: numpy-1.21.1-alt-use-system-fallocate-declaration.patch
 Patch4: numpy-1.21.4-alt-use-sleep-in-auxv-test.patch
+Patch5: numpy-1.25.2-alt-loongarch64-selected_real_kind.patch
+
 # E2K patchset with MCST numbering scheme
 %ifarch %e2k
 Patch1001: 0001-arch_e2k_define.patch
@@ -213,6 +215,9 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Tue Dec 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.25.2-alt2
+- NMU: applied selectedrealkind check fix for loongarch64 (thanks to iv@).
+
 * Tue Aug 01 2023 Stanislav Levin <slev@altlinux.org> 1:1.25.2-alt1
 - 1.25.1 -> 1.25.2.
 
