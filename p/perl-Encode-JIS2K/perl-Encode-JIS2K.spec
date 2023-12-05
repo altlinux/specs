@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Encode-JIS2K
 Name: perl-%dist
-Version: 0.03
-Release: alt1.2
+Version: 0.05
+Release: alt1
 
 Summary: JIS X 0212 (aka JIS 2000) encodings
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DA/DANKOGAI/Encode-JIS2K-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DANKOGAI/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Encode-JP perl-Encode-devel perl-devel
@@ -20,7 +20,7 @@ charset (AKA JIS 2000): euc-jisx0213, shiftjisx0123, iso-2022-jp-3,
 jis0213-1-raw, jis0213-2-raw.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +34,9 @@ jis0213-1-raw, jis0213-2-raw.
 %perl_vendor_autolib/Encode
 
 %changelog
+* Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 0.05-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1.2
 - rebuild with new perl 5.28.1
 
