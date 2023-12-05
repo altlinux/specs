@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-CoreList
 Name: perl-%dist
-Version: 5.20231025
+Version: 5.20231129
 Release: alt1
 
 Summary: What modules shipped with versions of perl
@@ -36,6 +36,9 @@ shipped with each version of perl.
 %perl_vendor_privlib/Module
 
 %changelog
+* Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 5.20231129-alt1
+- automated CPAN update
+
 * Fri Oct 27 2023 Igor Vlasenko <viy@altlinux.org> 5.20231025-alt1
 - automated CPAN update
 
