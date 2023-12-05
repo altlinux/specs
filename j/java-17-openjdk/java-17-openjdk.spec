@@ -270,9 +270,9 @@
 # New Version-String scheme-style defines
 %global featurever 17
 %global interimver 0
-%global updatever 8
+%global updatever 9
 %global patchver 0
-%global buildver 7
+%global buildver 9
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -293,14 +293,13 @@
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global top_level_dir_name_backup %{top_level_dir_name}-backup
-%global rpmrelease      2
 # Priority must be 8 digits in total; up to openjdk 1.8, we were using 18..... so when we moved to 11, we had to add another digit
 # Using 10 digits may overflow the int used for priority, so we combine the patch and build versions
 # It is very unlikely we will ever have a patch version > 4 or a build version > 20, so we combine as (patch * 20) + build.
 # This means 11.0.9.0+11 would have had a priority of 11000911 as before
 # A 11.0.9.1+1 would have had a priority of 11000921 (20 * 1 + 1), thus ensuring it is bigger than 11.0.9.0+11
 # TODO hardcoded
-%global priority 17000807
+%global priority 17000909
 %global newjavaver %{featurever}.%{interimver}.%{updatever}.%{patchver}
 %global javaver %{featurever}
 
@@ -357,7 +356,7 @@
 
 Name:    java-17-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -441,7 +440,7 @@ ExcludeArch: armh
 %global __jar_repack 0
 
 # The source tarball, generated using generate_source_tarball.sh
-Source0: openjdk-jdk%{featurever}u-%{vcstag}.tar.xz
+Source0: openjdk-%{filever}+%{buildver}%{?tagsuffix:-%{tagsuffix}}.tar.xz
 
 %if_with fresh_libjvm
 Source1: bootstrap.tar
@@ -488,6 +487,7 @@ Patch1:    rh1648242-accessible_toolkit_crash_do_not_break_jvm.patch
 # Restrict access to java-atk-wrapper classes
 Patch2:    rh1648644-java_access_bridge_privileged_security.patch
 Patch3:    rh649512-remove_uses_of_far_in_jpeg_libjpeg_turbo_1_4_compat_for_jdk10_and_up.patch
+Patch4:    openjdk17-alt-fix-build-for-i586.patch
 
 #############################################
 #
@@ -934,6 +934,9 @@ mkdir -p %{bootjdk}
 %__cp -af bootstrap/%archinstall/* %{bootjdk}
 %endif
 
+# Rename versioning subdirectory to openjdk
+mv %{vcstag} %{top_level_dir_name}
+
 # OpenJDK patches
 # Remove libraries that are linked by both static and dynamic builds
 sh %{SOURCE12} %{top_level_dir_name}
@@ -943,6 +946,7 @@ pushd %{top_level_dir_name}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 # nss.cfg PKCS11 support; must come last as it also alters java.security
 %patch1000 -p1
 popd # openjdk
@@ -1994,6 +1998,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 05 2023 Andrey Cherepanov <cas@altlinux.org> 0:17.0.9.0.9-alt1
+- New version (fixes CVE-2023-22081 and CVE-2023-22025).
+
 * Mon Sep 04 2023 Andrey Cherepanov <cas@altlinux.org> 0:17.0.8.0.7-alt2
 - Replaced %%majorver by %%featurever in desktop files (ALT #47000).
 - Fixed %%priotity.
