@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kde5-kcm-howdy
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: KDE Workspace 5 Howdy configuration module
@@ -69,6 +69,13 @@ KDE Workspace 5 Howdy configuration module
 %_K5dbus_sys_srv/org.kde.kcontrol.kcmhowdy.service
 
 %changelog
+* Tue Dec 05 2023 Anton Golubev <golubevan@altlinux.org> 0.1.1-alt1
+- make more proper ScrollViews (ALT #48540)
+- use utf-8 for model name (ALT #48538)
+- make sure helper is disabled after the error (ALT #48537)
+- don't show "Default" button on models tab (ALT #48536)
+- fix typo in 'dark_threshold' (ALT #48535)
+
 * Tue Nov 14 2023 Anton Golubev <golubevan@altlinux.org> 0.1.0-alt1
 - show preview before face scan
 - remove the 'altplace' option
