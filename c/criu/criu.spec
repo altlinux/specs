@@ -1,11 +1,12 @@
 # FIXME
 %define optflags_lto %nil
 %ifnarch ppc64le
-%def_with amdgpu
+%define with_amdgpu 1
 %endif
+%define _unpackaged_files_terminate_build 1
 
 Name: criu
-Version: 3.18
+Version: 3.19
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks
@@ -17,17 +18,33 @@ VCS: git://github.com/checkpoint-restore/criu.git
 Source: %name-%version.tar
 # Source1: criu.watch
 # git://git.altlinux.org/gears/c/%%name.git
+Source2: criu-tmpfiles.conf
 Patch: %name-%version.patch
 
 Obsoletes: crtools < %EVR
 ExclusiveArch: x86_64 aarch64 ppc64le
 
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-protobuf
+BuildRequires: python3(pip)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+BuildRequires: glibc-devel
+BuildRequires: libnl-devel
+BuildRequires: libcap-devel
+BuildRequires: libselinux-devel
 BuildRequires: libnet2-devel
 BuildRequires: libprotobuf-c-devel %_bindir/protoc-c
 BuildRequires: libprotobuf-devel protobuf-compiler
 BuildRequires: asciidoc xmlto %_bindir/a2x
 BuildRequires: libnftables-devel
 BuildRequires: libgnutls-devel
+BuildRequires: libbsd-devel
+%ifdef with_amdgpu
+BuildRequires: libdrm-devel
+%endif
 
 %description
 An utility to checkpoint/restore tasks.
@@ -63,13 +80,6 @@ Files for development with libcriu.
 Summary: Python library of checkpoint/restore
 Group: System/Libraries
 BuildArch: noarch
-BuildRequires: python3-devel
-BuildRequires: glibc-devel
-BuildRequires: libprotobuf-c-devel
-BuildRequires: libnl-devel
-BuildRequires: libcap-devel
-BuildRequires: libselinux-devel
-BuildRequires(pre): rpm-build-python3
 Provides: crit = %EVR
 Provides: python-module-criu
 Obsoletes: crtools-pycriu
@@ -80,15 +90,12 @@ Obsoletes: python-module-criu
 %description -n python3-module-criu
 Python library library of checkpoint/restore.
 
-%if_with amdgpu
 %package plugin-amdgpu
-BuildRequires: libdrm-devel
 Summary: AMDGPU plugin for checkpoint/restore.
 Group: System/Libraries
 
 %description plugin-amdgpu
 This package contains the AMDGPU ROCm support plugin for checkpoint/restore.
-%endif
 
 %prep
 %setup -n criu-%version
@@ -100,25 +107,35 @@ This package contains the AMDGPU ROCm support plugin for checkpoint/restore.
 %add_optflags -fno-stack-protector -fno-stack-clash-protection
 export CFLAGS="%optflags"
 %make_build \
-	%ifarch armh
-		UNAME-M=armv7l \
-	%endif
+%ifarch armh
+	UNAME-M=armv7l \
+%endif
 	PREFIX=%prefix V=1 all docs
 
 %install
+sed -i -e "s,--upgrade --ignore-installed,--no-index --no-deps -v --no-build-isolation,g" lib/Makefile crit/Makefile
 %makeinstall_std \
-	%ifarch armh
-		UNAME-M=armv7l \
-	%endif
-	PREFIX=%prefix LIBDIR=%_libdir LIBEXECDIR=%_libexecdir SYSTEMDUNITDIR=%_unitdir
+%ifarch armh
+    UNAME-M=armv7l \
+%endif
+    PREFIX=%_prefix LIBDIR=%_libdir LIBEXECDIR=%_libexecdir SYSTEMDUNITDIR=%_unitdir PYTHON=%__python3
+
+mkdir -p %buildroot%_tmpfilesdir
+install -m 0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
+install -d -m 0755 %buildroot/run/%name/
 
 ln -s criu %buildroot%_sbindir/crtools
 ln -s criu.8 %buildroot%_man8dir/crtools.8
 
 find %buildroot -name 'lib*.a' -delete
+%ifndef with_amdgpu
+echo "Removing %buildroot%_man1dir/criu-amdgpu-plugin.1*"
+rm -f %buildroot%_man1dir/criu-amdgpu-plugin.1*
+%endif
 
 %files
 %doc README.md COPYING CREDITS
+%_tmpfilesdir/%name.conf
 %_sbindir/criu
 %_sbindir/criu-ns
 %_sbindir/crtools
@@ -132,8 +149,10 @@ find %buildroot -name 'lib*.a' -delete
 
 %files -n python3-module-criu
 %_bindir/crit
+%python3_sitelibdir_noarch/crit
 %python3_sitelibdir_noarch/pycriu
-%python3_sitelibdir_noarch/crit-*.egg-info
+%python3_sitelibdir_noarch/crit-%version.dist-info/
+%python3_sitelibdir_noarch/pycriu-%version.dist-info/
 %_man1dir/crit.1*
 
 %files -n libcriu2
@@ -148,15 +167,18 @@ find %buildroot -name 'lib*.a' -delete
 %_libdir/*.so
 %_pkgconfigdir/criu.pc
 
-%if_with amdgpu
+%ifdef with_amdgpu
 %files plugin-amdgpu
 %doc plugins/amdgpu/README.md
-%_man1dir/amdgpu_plugin.1*
+%_man1dir/criu-amdgpu-plugin.1*
 %dir %_libdir/criu
 %_libdir/criu/amdgpu_plugin.so
 %endif
 
 %changelog
+* Fri Dec 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.19-alt1
+- Updated to 3.19.
+
 * Wed Aug 23 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.18-alt1
 - Updated to 3.18.
 - Changed name to criu.
