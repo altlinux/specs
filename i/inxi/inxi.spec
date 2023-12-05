@@ -1,6 +1,6 @@
 Name: inxi
 Version: 3.3.31.2
-Release: alt1
+Release: alt1.1
 
 Summary: A full featured system information script
 Summary(ru): Скрипт вывода полной информации об оборудовании и системе
@@ -11,6 +11,7 @@ URL: https://smxi.org
 Vcs: https://codeberg.org/smxi/inxi
 # Source-url: https://codeberg.org/smxi/inxi/archive/%version/%name-%version-1.tar.gz
 Source: %name-%version.tar.gz
+Patch1: %name-3.3.31.2-platform.patch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -38,6 +39,8 @@ Inxi позволяет выводить различную информацию
 
 %prep
 %setup
+%patch1 -p0
+
 # Disable 'update' with inxi.conf method (suggested by upstream). This will
 # tell user:
 #   Error 20: Option: U has been disabled by the inxi distribution maintainer.
@@ -63,6 +66,9 @@ perl -c inxi
 %_man1dir/%name.1*
 
 %changelog
+* Tue Dec 05 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.3.31.2-alt1.1
+- Add inxi-3.3.31.2-platform.patch (ALT bug #48682)
+
 * Tue Nov 07 2023 Leontiy Volodin <lvol@altlinux.org> 3.3.31.2-alt1
 - New version 3.3.31-2.
 
