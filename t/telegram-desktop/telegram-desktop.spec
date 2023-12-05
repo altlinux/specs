@@ -22,10 +22,10 @@
 %def_without system_fonts
 %def_without ninja
 %def_without ffmpeg_static
-%def_without jemalloc
+%def_with scudo
 
 Name: telegram-desktop
-Version: 4.11.8
+Version: 4.12.2
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -280,7 +280,6 @@ for i in \
 %endif
 	Telegram/ThirdParty/QR \
 	Telegram/ThirdParty/expected \
-	Telegram/ThirdParty/jemalloc \
 	Telegram/ThirdParty/fcitx5-qt \
 	Telegram/ThirdParty/hime \
 	Telegram/ThirdParty/hunspell \
@@ -342,8 +341,8 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 %else
     -DQT_VERSION_MAJOR=5 \
 %endif
-%if_without jemalloc
-    -DDESKTOP_APP_DISABLE_JEMALLOC=ON \
+%if_without scudo
+    -DDESKTOP_APP_DISABLE_SCUDO=ON \
 %endif
 %if_with wayland
     -DDESKTOP_APP_DISABLE_WAYLAND_INTEGRATION:BOOL=OFF \
@@ -403,6 +402,10 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Mon Dec 04 2023 Vitaly Lipatov <lav@altlinux.ru> 4.12.2-alt1
+- new version 4.12.2 (with rpmrb script)
+- upstream switched from jemalloc to scudo
+
 * Wed Nov 15 2023 Vitaly Lipatov <lav@altlinux.ru> 4.11.8-alt1
 - new version 4.11.8 (with rpmrb script)
 
