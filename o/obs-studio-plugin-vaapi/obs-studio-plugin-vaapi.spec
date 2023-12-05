@@ -1,5 +1,5 @@
 Name: obs-studio-plugin-vaapi
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: OBS Studio VAAPI support via GStreamer
@@ -54,6 +54,9 @@ Not all options make sense to change.
 %_libdir/obs-plugins/obs-vaapi.so
 
 %changelog
+* Tue Dec 05 2023 Mikhail Tergoev <fidel@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Tue Oct 24 2023 Mikhail Tergoev <fidel@altlinux.org> 0.4.0-alt1
 - initial build for ALT Sisyphus
 
