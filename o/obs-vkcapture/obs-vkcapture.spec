@@ -1,6 +1,6 @@
 Name: obs-vkcapture
 Version: 1.4.7
-Release: alt1
+Release: alt2
 
 Summary: OBS Linux Vulkan/OpenGL game capture
 
@@ -9,6 +9,7 @@ Group: Other
 Url: https://github.com/nowrep/obs-vkcapture
 
 Source: %name-%version.tar
+Patch1: %name-loongarch-riscv.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -28,6 +29,7 @@ env OBS_VKCAPTURE=1 command.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
@@ -48,6 +50,9 @@ env OBS_VKCAPTURE=1 command.
 %_datadir/vulkan/implicit_layer.d/obs_vkcapture_64.json
 
 %changelog
+* Tue Dec 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.4.7-alt2
+- NMU: fixed FTBFS on LoongArch (and possibly riscv64)
+
 * Tue Dec 05 2023 Mikhail Tergoev <fidel@altlinux.org> 1.4.7-alt1
 - 1.4.7
 
