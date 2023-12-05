@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 390
+%define centos_release 394
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -659,6 +659,42 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Dec 05 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.394-alt1.el9
+- Updated to kernel-5.14.0-394.el9:
+  + Add Add Intel Meteor Lake PCH-S LPSS PCI IDs
+  + Add i2c-i801 support for MTL-S PCH
+  + Add pinctrl support for MTL-S
+  + Add support for Intel Birch Stream SoC
+  + Backport OPP Tables for UFS Node
+  + CNB94: ipv4: Invalidate neighbour for broadcast address upon address addition
+  + CNB94: neighbour: annotate lockless accesses to n->nud_state
+  + CNB94: net: add check for current MAC address in dev_set_mac_address
+  + CNB94: xsk: Multi-buffer support
+  + Fix possible deadlock in audit_exe_compare() code path
+  + Merge commit '6085d3e6a6013fce864c359ac6faa23e3d8cb7da'
+  + Merge commit '86bc7724d3d9ea8e92fbe0ceb6238a56ee3ce720'
+  + Performance improvements of cryptography for PowerPC
+  + RDMA/irdma: driver update to v6.6
+  + RDMA: Bug fixes from v6.6
+  + RDT: Support non-contiguous masks to be programmed into cache capacity MSRs
+  + USB/TB code rebase of supported drivers to upstream v6.5
+  + Update Kunit (el9.4)
+  + Update userspace rtla to latest upstream
+  + Updates for powerpc fadump and vmcore
+  + XFS: sync to newer upstream version for RHEL9.4
+  + arm64: update core arm64 code to upstream v6.6
+  + block, bfq: fix uaf for bfqq in bic_set_bfqq()
+  + bnxt_en: Driver update for RHEL-9.4
+  + drm/mgag200: Flush the cache to improve latency
+  + nvme: update firmware version after commit
+  + perf test: Skip CoreSight tests if cs_etm// event is not available
+  + perf: fix two broken tests
+  + perf: sync tools headers with kernel
+  + powerpc/code-patching: Pre-map patch area
+  + redhat/Makefile: fix the detection of "-n" (RHTEST)
+  + treewide: Implement new Red Hat driver and device status infrastructure
+  + Various changes and improvements that are poorly described in merge.
+
 * Tue Nov 28 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.390-alt1.el9
 - Updated to kernel-5.14.0-390.el9 (fixes: CVE-2023-45871):
   + ARM TLB Invalidate ASID improvements
