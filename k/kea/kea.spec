@@ -9,8 +9,8 @@
 %define _localstatedir /var
 
 Name: kea
-Version: 2.4.0
-Release: alt2
+Version: 2.4.1
+Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
 License: MPL-2.0 and BSL-1.0
@@ -228,6 +228,9 @@ sed -i -e s/\"output\".*/\"output\":\ \"stdout\",/ -e s@\/\/\ \"pattern@\"patter
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Dec 06 2023 Alexey Shabalin <shaba@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Mon Oct 16 2023 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt2
 - fixed execute kea-shell (fix define python3 site-packages path)
 
