@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Unix-Mknod
 Name: perl-%dist
-Version: 0.04
-Release: alt4
+Version: 0.05
+Release: alt1
 
 Summary: Perl extension for mknod, major, minor, and makedev
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PI/PIRZYK/%{dist}-%{version}.tar.gz
 # Adapt to changes in glibc-2.27.9000, bug #1551656, CPAN RT#124687
 Patch0:         Unix-Mknod-0.04-Include-sys-sysmacros.h-on-glibc.patch
 
@@ -21,7 +22,7 @@ that may or may not be macros in .h files.  It also allows access to the
 mknod(2) system call.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch0 -p1
 
 %build
@@ -36,6 +37,9 @@ mknod(2) system call.
 %perl_vendor_autolib/Unix
 
 %changelog
+* Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 0.05-alt1
+- automated CPAN update
+
 * Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.04-alt4
 - fixed build
 
