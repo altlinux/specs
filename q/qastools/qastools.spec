@@ -1,5 +1,5 @@
 Name: qastools
-Version: 0.23.0
+Version: 1.0.0
 Release: alt1
 
 Summary: Collection of desktop applications for ALSA
@@ -9,20 +9,21 @@ Group: Sound
 Url: http://xwmw.org/qastools
 Source: %name-%version.tar
 Patch: disabled-tray-icon-at-startup.patch
-Packager: Anton Midyukov <antohami@altlinux.org>
+
+# https://bugzilla.altlinux.org/47318
+Requires: qt6-svg
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel
-# BuildRequires: qt5-linguist
+BuildRequires: qt6-base-devel qt6-svg-devel qt6-tools-devel
 BuildRequires: pkgconfig(alsa)
 # For libudev.h
 BuildRequires: libudev-devel
 
-Requires: qasconfig = %version-%release
-Requires: qashctl = %version-%release
-Requires: qasmixer = %version-%release
+Requires: qasconfig = %EVR
+Requires: qashctl = %EVR
+Requires: qasmixer = %EVR
 
 %description
 QasTools is a collection of desktop applications for the ALSA sound system.
@@ -105,6 +106,11 @@ done
 %_datadir/metainfo/qasmixer.appdata.xml
 
 %changelog
+* Tue Dec 05 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
+- New version 1.0.0
+- build with qt6
+- Requires: qt6-svg
+
 * Fri Aug 07 2020 Anton Midyukov <antohami@altlinux.org> 0.23.0-alt1
 - new version 0.23.0
 
