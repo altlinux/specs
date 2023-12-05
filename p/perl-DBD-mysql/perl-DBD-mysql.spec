@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-mysql
 Name: perl-%dist
-Version: 5.002
+Version: 5.003
 Release: alt1
 
 Summary: MySQL driver for DBI interface in Perl
@@ -44,6 +44,9 @@ rm %buildroot%perl_vendor_archlib/Bundle/DBD/mysql.pm
 %perl_vendor_autolib/DBD
 
 %changelog
+* Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 5.003-alt1
+- automated CPAN update
+
 * Wed Oct 25 2023 Igor Vlasenko <viy@altlinux.org> 5.002-alt1
 - automated CPAN update
 
