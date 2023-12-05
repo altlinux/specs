@@ -1,9 +1,8 @@
-# system bus required
-%def_enable check
+%define _libexecdir /usr/libexec
 
 Name: polkit
-Version: 0.120
-Release: alt1.qa2
+Version: 123
+Release: alt1
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -16,11 +15,9 @@ Requires(pre): dbus
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: %name-0.109-alt-helper_path.patch
 
-BuildRequires: gcc-c++ gobject-introspection-devel gtk-doc libexpat-devel libpam-devel
-BuildRequires: libmozjs78-devel pkgconfig(systemd)
-%{?_enable_check:BuildRequires: /proc dbus-tools-gui python3-module-dbusmock}
+BuildRequires: meson gcc-c++ gobject-introspection-devel gtk-doc libexpat-devel libpam-devel
+BuildRequires: pkgconfig(duktape) pkgconfig(systemd)
 
 %description
 PolicyKit is a toolkit for defining and handling authorizations.
@@ -70,7 +67,6 @@ GObject introspection devel data for the Polkit-1.0 library
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 touch ChangeLog
 
@@ -78,22 +74,19 @@ touch ChangeLog
 %ifarch %e2k
 %add_optflags -std=gnu++11
 %endif
-%autoreconf
-%configure \
-	--libexecdir=%_prefix/libexec \
-	--localstatedir=%_var \
-	--enable-gtk-doc \
-	--disable-static \
-	--enable-libsystemd-login=yes
-%make
+%meson \
+	-D authfw=pam \
+	-D examples=false \
+	-D gtk_doc=true \
+	-D introspection=true \
+	-D man=true \
+	-D session_tracking=libsystemd-login
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name-1
-
-%check
-%make check
 
 %pre
 %_sbindir/groupadd -r -f polkitd 2>/dev/null ||:
@@ -103,7 +96,6 @@ touch ChangeLog
 %files -f %name-1.lang
 %dir %_sysconfdir/%name-1
 %attr(0700,polkitd,root) %dir %_sysconfdir/%name-1/rules.d
-%_sysconfdir/%name-1/rules.d/50-default.rules
 %_datadir/dbus-1/system.d/org.freedesktop.PolicyKit1.conf
 %_sysconfdir/pam.d/polkit-1
 %_bindir/pk[act]*
@@ -114,7 +106,9 @@ touch ChangeLog
 %dir %_datadir/%name-1
 %dir %_datadir/%name-1/actions
 %attr(0700,polkitd,root) %dir %_datadir/%name-1/rules.d
+%_datadir/%name-1/policyconfig-1.dtd
 %_datadir/%name-1/actions/org.freedesktop.policykit.policy
+%exclude %_datadir/%name-1/rules.d/50-default.rules
 %_datadir/dbus-1/system-services/org.freedesktop.PolicyKit1.service
 %systemd_unitdir/polkit.service
 %_man1dir/*.1*
@@ -137,11 +131,11 @@ touch ChangeLog
 %files -n lib%name-gir-devel
 %_girdir/*.gir
 
-# examples
-%exclude %_bindir/pk-example-frobnicate
-%exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
-
 %changelog
+* Mon Dec 04 2023 Valery Inozemtsev <shrek@altlinux.ru> 123-alt1
+- 123
+- is not packed 50-default.rules (closes: #35763)
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 0.120-alt1.qa2
 - upplied upstream fix for CVE-2021-4115 (GHSL-2021-077)
 
