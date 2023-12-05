@@ -2,7 +2,7 @@
 %define m_distro Test-Strict
 Name: perl-Test-Strict
 Version: 0.52
-Release: alt1
+Release: alt2
 Summary: Check syntax, presence of use strict; and test coverage
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -13,6 +13,9 @@ Url: http://search.cpan.org/~pdenis/Test-Strict/
 
 BuildArch: noarch
 Source: %m_distro-%version.tar
+# Fix for failing test
+# https://github.com/manwar/Test-Strict/issues/32
+Patch0:         Test-Strict-0.52-Dont-simultaneously-test-c-and-v-switches.patch
 BuildRequires: perl-Test-Pod-Coverage perl-Test-Pod perl-CGI perl-devel perl-Devel-Cover perl-Storable perl-B-Debug perl(IO/Scalar.pm)
 
 %description
@@ -20,6 +23,7 @@ BuildRequires: perl-Test-Pod-Coverage perl-Test-Pod perl-CGI perl-devel perl-Dev
 
 %prep
 %setup -q -n %m_distro-%version
+%patch0 -p1
 # fix test 04
 mkdir cover_db
 
@@ -34,6 +38,9 @@ mkdir cover_db
 %doc Changes README
 
 %changelog
+* Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 0.52-alt2
+- fixed build with perl 5.38
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
 - new version
 
