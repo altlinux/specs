@@ -8,12 +8,14 @@
 
 %def_without devel
 %def_without vanilla
+
+# get versions gecko amd mono from wine/dlls/appwiz.cpl/addons.c
 %define gecko_version 2.47.4
 %define mono_version 8.1.0
 %define winetricks_version 20230505
 
 %define basemajor 8.x
-%define major 8.19
+%define major 8.21
 %define rel %nil
 %define conflictbase wine-vanilla
 
@@ -841,6 +843,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 05 2023 Mikhail Tergoev <fidel@altlinux.org> 1:8.21-alt1
+- update to 8.21
+
 * Wed Nov 08 2023 Mikhail Tergoev <fidel@altlinux.org> 1:8.19-alt1
 - update to 8.19
 - mono 8.1.0
