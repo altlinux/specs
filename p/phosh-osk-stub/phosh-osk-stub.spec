@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: phosh-osk-stub
-Version: 0.33.0
+Version: 0.34.0
 Release: alt1
 
 Summary: Phosh OSK Stub
@@ -89,6 +89,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Tue Dec 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.34.0-alt1
+- 0.34.0
+
 * Thu Nov 23 2023 Yuri N. Sedunov <aris@altlinux.org> 0.33.0-alt1
 - first build for Sisyphus
 
