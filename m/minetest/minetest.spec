@@ -1,11 +1,11 @@
 %def_with l10n
 %define _hardened_build 1
 %global gitname celeron55
-%define irrlichtmt_version 1.9.0mt10
+%define irrlichtmt_version 1.9.0mt13
 
 Name: minetest
-Version: 5.7.0
-Release: alt1
+Version: 5.8.0
+Release: alt2
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -24,7 +24,7 @@ Source2: %{name}.service
 Source3: %{name}.rsyslog
 Source4: %{name}.logrotate
 Source5: %{name}.README
-Source6: %{name}_game-%version.tar.gz
+#Source6: %{name}_game-5.7.0.tar.gz
 Source7: http://www.gnu.org/licenses/lgpl-2.1.txt
 # Now using its own Minetest-specific fork of irrlicht.
 Source8:	https://github.com/minetest/irrlicht/archive/%{irrlichtmt_version}/irrlicht-%{irrlichtmt_version}.tar.gz
@@ -87,10 +87,10 @@ System.
 # -a 1 -a 2
 %patch0 -p1
 
-pushd games
-tar xf %SOURCE6
-mv %{name}_game-%version %{name}_game
-popd
+#pushd games
+#tar xf %SOURCE6
+#mv %{name}_game-%version %{name}_game
+#popd
 
 cp %SOURCE7 doc/
 
@@ -182,7 +182,7 @@ fi
 %_datadir/metainfo/*.appdata.xml
 
 %files server
-%doc README.md doc/lgpl-2.1.txt doc/world_format.txt doc/protocol.txt README
+%doc README.md doc/lgpl-2.1.txt doc/world_format.md doc/protocol.txt README
 #_bindir/%{name}server
 %_unitdir/%{name}.service
 %config(noreplace) %{_sysconfdir}/%{name}.conf
@@ -192,6 +192,13 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Tue Dec 05 2023 Ilya Mashkin <oddity@altlinux.ru> 5.8.0-alt2
+- Do not package minetest_game
+
+* Tue Dec 05 2023 Ilya Mashkin <oddity@altlinux.ru> 5.8.0-alt1
+- 5.8.0
+- Minetest Game no longer comes preinstalled
+
 * Mon Jun 05 2023 Ilya Mashkin <oddity@altlinux.ru> 5.7.0-alt1
 - 5.7.0
 
