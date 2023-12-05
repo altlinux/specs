@@ -1,6 +1,6 @@
 
 Name: mame
-Version: 0.260
+Version: 0.261
 Release: alt1
 Group: Games/Arcade
 Summary: Multiple Arcade Machine Emulator
@@ -30,7 +30,7 @@ Provides: bundled(luafilesystem)
 Provides: bundled(lua-linenoise)
 Provides: bundled(lua-zlib)
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 %description
 MAME stands for Multiple Arcade Machine Emulator.  When used in conjunction
@@ -291,6 +291,10 @@ find %buildroot%_datadir/%name -name LICENSE -exec rm {} \;
 %_datadir/%name/hash/*
 
 %changelog
+* Sat Dec  2 2023  Artyom Bystrov <arbars@altlinux.org> 0.261-alt1
+- Update to new version
+- Build for aarch64 is back
+
 * Sun Oct 29 2023 Artyom Bystrov <arbars@altlinux.org> 0.260-alt1
 - Update to new version
 
