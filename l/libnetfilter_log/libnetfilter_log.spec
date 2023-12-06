@@ -1,18 +1,22 @@
 Name: libnetfilter_log
-Version: 1.0.1
-Release: alt1.qa1
+Version: 1.0.2
+Release: alt1
 Epoch: 1
 
 Summary: libnfnetlink receive to-be-logged packets from the kernel nfnetlink_log subsystem
 Url: http://netfilter.org/projects/libnetfilter_log/
-License: %gpl2plus
+License: GPLv2+
 Group: System/Libraries
-#git://git.netfilter.org/libnetfilter_log
+Vcs: git://git.netfilter.org/libnetfilter_log
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: libnfnetlink-devel >= 0.0.40
+BuildRequires: libnfnetlink-devel >= 0.0.41
+BuildRequires: libmnl-devel
+BuildRequires: libnetfilter_conntrack-devel
+BuildRequires: doxygen
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 libnetfilter_log is a userspace library providing interface to packets
@@ -22,7 +26,7 @@ a system that deprecates the old syslog/dmesg based packet logging.
 %package devel
 Summary: Development part of libnetfilter_log.
 Group: Development/C
-Requires: %name = %{?epoch:%epoch:}%version-%release
+Requires: %name = %EVR
 
 %description devel
 Development part of libnetfilter_log.
@@ -32,15 +36,13 @@ Development part of libnetfilter_log.
 %patch -p1
 
 %build
-# Use nfnetlink_log.h from glibc-kernheaders
-KERNEL_DIR=%_includedir/linux-default/ ./autogen.sh distrib
+%autoreconf
 %configure \
-	--disable-static
+	--disable-static \
+	--enable-man-pages
 %make_build
 
 %install
-#mkdir -p %buildroot%_libdir/%name
-#mkdir -p %buildroot%_includedir/%name
 %makeinstall_std
 
 %files
@@ -51,8 +53,16 @@ KERNEL_DIR=%_includedir/linux-default/ ./autogen.sh distrib
 %_includedir/%name/*
 %_libdir/*.so
 %_libdir/pkgconfig/*
+%_man3dir/*
 
 %changelog
+* Wed Dec 06 2023 Mikhail Efremov <sem@altlinux.org> 1:1.0.2-alt1
+- Build man pages.
+- Updated doxygen/build_man.sh.
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 1.0.2.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1.qa1
 - NMU: applied repocop patch
 

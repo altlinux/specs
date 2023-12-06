@@ -1,5 +1,5 @@
 Name: ulogd
-Version: 2.0.7
+Version: 2.0.8
 Release: alt1
 
 %def_disable nfacct
@@ -8,18 +8,18 @@ Release: alt1
 
 Summary: ulogd - The userspace logging daemon for netfilter
 Url: http://www.netfilter.org/projects/ulogd/
-License: %gpl2plus
+License: GPLv2+
 Group: System/Servers
 
+Vcs: git://git.netfilter.org/ulogd2
 Source: http://www.netfilter.org/projects/ulogd/files/%name-%version.tar
 Source1: %name.init
 Source2: %name.logrotate
 Source3: %name.service
 Patch0: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: libpcap-devel zlib-devel libMySQL-devel postgresql-devel libsqlite3-devel libdbi-devel
-BuildRequires: libnfnetlink-devel libmnl-devel libnetfilter_log-devel libnetfilter_conntrack-devel
+BuildRequires: libnfnetlink-devel libmnl-devel libnetfilter_log-devel >= 1.0.2 libnetfilter_conntrack-devel
 %{?_enable_nfacct:BuildRequires: libnetfilter_acct-devel}
 
 # For JSON plugin
@@ -37,7 +37,7 @@ easy-to-use plugin interface to add new protocols and new output targets.
 %package mysql
 Summary: MySQL output plugin for ulogd
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description mysql
 ulogd-mysql is a MySQL output plugin for ulogd. It enables logging of
@@ -46,7 +46,7 @@ firewall information into a MySQL database.
 %package pgsql
 Summary: PostgreSQL output plugin for ulogd
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description pgsql
 ulogd-pgsql is a PostgreSQL output plugin for ulogd. It enables logging of
@@ -55,7 +55,7 @@ firewall information into a PostgreSQL database.
 %package sqlite3
 Summary: SQLite3 output plugin for ulogd
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description sqlite3
 ulogd-sqlite3 is a SQLite output plugin for ulogd. It enables logging of
@@ -64,7 +64,7 @@ firewall information into a SQLite v.3 database.
 %package dbi
 Summary: Libdbi framework output plugin for %name
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description dbi
 %name-dbi is a libdbi output plugin for %name. It enables logging of
@@ -79,15 +79,11 @@ firewall information through a libdbi interface.
 %autoreconf
 %configure \
 	--disable-static \
-	--with-dbi-lib=%_libdir \
-	--with-jansson \
+	--enable-json \
 	%{subst_enable nfacct}
 
 make DESTDIR=%buildroot
 make -C doc
-#rm -f ulogd
-#export LDFALGS="-pie"
-#make ulogd
 
 %install
 mkdir -p %buildroot/%_logdir/%name
@@ -119,7 +115,7 @@ sed -i -r 's;^(plugin="%_libdir/ulogd/ulogd_inpflow_NFACCT\.so");#\1;' %buildroo
 
 %pre
 %_sbindir/groupadd -r -f %name >/dev/null 2>&1
-%_sbindir/useradd -r -n -g %name -d /dev/null -s /dev/null %name >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -N -g %name -d /dev/null -s /dev/null %name >/dev/null 2>&1 ||:
 
 %preun
 %preun_service %name
@@ -160,6 +156,11 @@ sed -i -r 's;^(plugin="%_libdir/ulogd/ulogd_inpflow_NFACCT\.so");#\1;' %buildroo
 %_libdir/%name/ulogd_output_DBI.so
 
 %changelog
+* Wed Dec 06 2023 Mikhail Efremov <sem@altlinux.org> 2.0.8-alt1
+- Don't use rpm-build-licenses.
+- Use useradd -N instead of -n.
+- Updated to 2.0.8.
+
 * Wed Feb 06 2019 Mikhail Efremov <sem@altlinux.org> 2.0.7-alt1
 - ulogd.logrotate: Replace *.pktlog with *.json.
 - Fix log path for json1.
