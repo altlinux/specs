@@ -1,6 +1,6 @@
 Name: firmware-linux
 Version: 20231204
-Release: alt1
+Release: alt2
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -12,21 +12,6 @@ Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 Provides: linux-firmware
-Provides: firmware-iwl1000
-Provides: firmware-iwl3945 firmware-iwl4965 firmware-iwl5000 firmware-iwl5150
-Provides: firmware-iwl6000 firmware-iwl6050
-Obsoletes: firmware-iwl1000
-Obsoletes: firmware-iwl3945 firmware-iwl4965 firmware-iwl5000 firmware-iwl5150
-Obsoletes: firmware-iwl6000 firmware-iwl6050
-Provides:  firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870 firmware-rt3090
-Obsoletes: firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870 firmware-rt3090
-Provides: firmware-rt61pci firmware-rt73usb
-Obsoletes: firmware-rt61pci firmware-rt73usb
-Obsoletes: firmware-libertas-sd8686 firmware-libertas-usb8388
-Provides: firmware-ql2100 firmware-ql2200 firmware-ql2300 firmware-ql2322 firmware-ql2400 firmware-ql2500
-Obsoletes: firmware-ql2100 firmware-ql2200 firmware-ql2300 firmware-ql2322 firmware-ql2400 firmware-ql2500
-Provides: firmware-amd-ucode
-Obsoletes: firmware-amd-ucode <= 2.0
 
 BuildRequires: hardlink
 Requires: udev
@@ -52,6 +37,27 @@ Summary: firmware for LiquidIO Smart NICs
 %description liquidio
 firmware for LiquidIO II Smart NICs
 
+%package qcom
+Group: System/Kernel and hardware
+Summary: firmware for Qualcomm platforms
+
+%description qcom
+firmware for Qualcomm platforms (most of it)
+
+%package mrvl
+Group: System/Kernel and hardware
+Summary: firmware for Marvell Prestera
+
+%description mrvl
+firmware for Marvell Prestera switchdev
+
+%package mellanox
+Group: System/Kernel and hardware
+Summary: firmware for Mellanox Spectrum
+
+%description mellanox
+firmware for Mellanox Spectrum switchdev
+
 %prep
 %setup -n %name-%version
 %patch -p1
@@ -68,6 +74,9 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/*
 %exclude /lib/firmware/netronome
 %exclude /lib/firmware/liquidio
+%exclude /lib/firmware/qcom/*/
+%exclude /lib/firmware/mrvl/*/
+%exclude /lib/firmware/mellanox
 
 %files netronome
 /lib/firmware/netronome
@@ -75,7 +84,21 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 %files liquidio
 /lib/firmware/liquidio
 
+%files qcom
+/lib/firmware/qcom/*/
+
+%files mrvl
+/lib/firmware/mrvl/*/
+
+%files mellanox
+/lib/firmware/mellanox
+
 %changelog
+* Wed Dec 06 2023 Michael Shigorin <mike@altlinux.org> 20231204-alt2
+- split off qcom, mrvl, mellanox subpackages:
+  these hold huge firmwares for rare SoCs (e.g. robotics, 100GE switches)
+- minor spec cleanup (see also ALT#46206)
+
 * Mon Dec 04 2023 Cronbuild Service <cronbuild@altlinux.org> 20231204-alt1
 - upstream changes (GIT b9d971b9):
   + cxgb4: Update firmware to revision 1.27.5.0 (thx Rahul Lakkireddy)
