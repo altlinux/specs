@@ -7,14 +7,14 @@
 %define gallium_drivers_add() %{expand:%%global gallium_drivers %{?gallium_drivers:%gallium_drivers,}%{1}}
 %define vulkan_drivers_add() %{expand:%%global vulkan_drivers %{?vulkan_drivers:%vulkan_drivers,}%{1}}
 
-%define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
-%define vulkan_radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
-%define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
+%define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64 riscv64
+%define vulkan_radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64 riscv64
+%define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k riscv64
 %define vulkan_nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
 %define intel_arches %ix86 x86_64
 %define vulkan_intel_arches %ix86 x86_64
-%define vulkan_virtio_arches %ix86 x86_64 aarch64 ppc64le mipsel
-%define virgl_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
+%define vulkan_virtio_arches %ix86 x86_64 aarch64 ppc64le mipsel loongarch64 riscv64
+%define virgl_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k loongarch64 riscv64
 %define armsoc_arches %arm aarch64
 %define svga_arches %ix86 x86_64
 
@@ -26,7 +26,7 @@
 %define dri_megadriver_arches %radeon_arches %nouveau_arches
 %define gallium_megadriver_arches %radeon_arches %nouveau_arches
 # XA state tracker requires at least one of the following gallium drivers: nouveau, freedreno, i915, svga
-%define xa_arches %nouveau_arches %virgl_arches %armsoc_arches
+%define xa_arches %nouveau_arches %armsoc_arches %svga_arches
 
 %gallium_drivers_add swrast
 %ifarch %radeon_arches
@@ -84,6 +84,7 @@
 %vulkan_drivers_add freedreno
 %vulkan_drivers_add broadcom
 %vulkan_drivers_add panfrost
+%vulkan_drivers_add imagination-experimental
 %endif
 %ifarch loongarch64
 # LS7A1000 and LS7A2000 chipsets, and Loongson SoCs have vivante GPU
@@ -96,7 +97,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt3
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -232,6 +233,7 @@ Group: Development/C
 %package -n xorg-dri-swrast
 Summary: Mesa software rendering libraries
 Group: System/X11
+Requires: libvulkan1
 
 %description -n xorg-dri-swrast
 Mesa software rendering libraries
@@ -597,14 +599,30 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/libvulkan_freedreno.so
 %_libdir/libvulkan_broadcom.so
 %_libdir/libvulkan_panfrost.so
+%_libdir/libvulkan_powervr_mesa.so
+%_libdir/libpowervr_rogue.so
 %_datadir/vulkan/icd.d/freedreno_icd*.json
 %_datadir/vulkan/icd.d/broadcom_icd*.json
 %_datadir/vulkan/icd.d/panfrost_icd*.json
+%_datadir/vulkan/icd.d/powervr_mesa_icd*.json
 %endif
 
 %files -n mesa-dri-drivers
 
 %changelog
+* Wed Dec 06 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.3.0-alt3
+- enable vulkan driver imagination
+
+* Fri Dec 01 2023 Ivan A. Melnikov <iv@altlinux.org> 4:23.3.0-alt2
+- build on riscv64
+  + add riscv64 to varios architecture groups
+  + fix llvmpipe on riscv64
+- build on loongarch64
+  + fix llvmpipe on loongarch64
+  + build virtio drivers on loongarch64
+- fix setting MCPU on mips*
+- don't enable XA state tracker on %%virgl_arches
+
 * Thu Nov 30 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.3.0-alt1
 - 23.3.0
 
