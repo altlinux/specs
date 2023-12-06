@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: A pytest plugin for testing Jupyter libraries and extensions
@@ -49,6 +49,9 @@ sed -i '/pytest_jupyter.jupyter_server/d' tests/conftest.py
 %python3_sitelibdir/pytest_jupyter-%version.dist-info
 
 %changelog
+* Wed Dec 06 2023 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Fri Jun 02 2023 Anton Vyatkin <toni@altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus
 
