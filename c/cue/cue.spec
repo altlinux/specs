@@ -1,6 +1,6 @@
 %global import_path github.com/cue-lang/cue
 Name:    cue
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: Validate and define text-based and dynamic configuration
@@ -50,6 +50,9 @@ mkdir -p %buildroot%_datadir/bash-completion/completions
 mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %buildroot%_bindir/%name completion fish > %buildroot%_datadir/fish/vendor_completions.d/%name.fish
 
+%check
+go test -v -run='!(^TestGenerate$)' ./...
+
 %files
 %doc *.md
 %_bindir/*
@@ -58,6 +61,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Dec 06 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.7.0-alt1
+- new version 0.7.0
+
 * Wed Aug 09 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.6.0-alt1
 - new version 0.6.0
 
