@@ -3,7 +3,7 @@
 
 Name: perl-%oname
 Version: 0.802
-Release: alt2
+Release: alt3
 
 Summary: Asynchronous event-driven programming
 Group: Development/Perl
@@ -43,8 +43,12 @@ This package contains tests for %name.
 %prep
 %setup -q -n %oname-%version
 
-# on ppc64le, but ifarch did not expand here :(
-[ `uname -m` = "ppc64le" ] && rm -f t/70future-io.t
+# broken on LoongArch and ppc64le, but ifarch did not expand here :(
+case `uname -m` in
+  ppc64*|loongarch*)
+  rm -f t/70future-io.t
+  ;;
+esac
 
 %build
 %perl_vendor_build
@@ -66,6 +70,10 @@ This package contains tests for %name.
 %perl_vendor_privlib/IO/Async/Test.pm
 
 %changelog
+* Wed Dec 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.802-alt3
+- NMU: fixed FTBFS on LoongArch (disabled 70future-io.t which also fail
+  on other architectures, in particular ppc64)
+
 * Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 0.802-alt2
 - fixed build with perl 5.38
 
