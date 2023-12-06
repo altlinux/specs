@@ -10,7 +10,7 @@ BuildRequires: jpackage-11-compat
 Name:           apache-commons-daemon
 Summary:        Defines API to support an alternative invocation mechanism
 Version:        1.2.4
-Release:        alt2_1jpp11
+Release:        alt3_1jpp11
 License:        ASL 2.0
 
 URL:            https://commons.apache.org/%{base_name}
@@ -29,6 +29,7 @@ BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 Source44: import.info
 Patch33: apache-commons-daemon-1.2.0-e2k.patch
 Patch34: apache-commons-daemon-1.2.0-riscv64.patch
+Patch35: apache-commons-daemon-1.2.4-loongarch64.patch
 
 %description
 The scope of this package is to define an API in line with the current
@@ -64,6 +65,7 @@ API documentation for apache-commons-daemon.
 
 %patch33 -p1
 %patch34 -p1
+%patch35 -p1
 
 # mark example files as non-executable
 chmod 644 src/samples/*
@@ -115,6 +117,9 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 
 
 %changelog
+* Wed Dec 06 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.2.4-alt3_1jpp11
+- loongarch64 support
+
 * Mon Feb 21 2022 Ivan A. Melnikov <iv@altlinux.org> 1:1.2.4-alt2_1jpp11
 - riscv64 support
 
