@@ -19,8 +19,8 @@
 %define webdir %_var/www/vhosts/%name
 
 Name:           icingaweb2
-Version:        2.12.0
-Release:        alt4
+Version:        2.12.1
+Release:        alt1
 
 Summary:        Icinga Web
 License:        GPL-2.0-or-later
@@ -269,6 +269,9 @@ fi
 %ghost %_sysconfdir/nginx/sites-enabled.d/%name.conf
 
 %changelog
+* Wed Dec 06 2023 Andrey Limachko <liannnix@altlinux.org> 2.12.1-alt1
+- New version 2.12.1.
+
 * Thu Nov 23 2023 Paul Wolneykien <manowar@altlinux.org> 2.12.0-alt4
 - Rename all subpackages to icingaweb2-*.
 
