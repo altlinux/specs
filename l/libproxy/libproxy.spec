@@ -5,11 +5,11 @@
 %def_with kde
 %def_with env
 %def_with sysconfig
-%def_with duktape
+%def_without duktape
 
 Name: libproxy
 Version: 0.5.3
-Release: alt1
+Release: alt1.1
 Summary: A library that provides automatic proxy configuration management
 
 Group: System/Libraries
@@ -135,6 +135,9 @@ Development docs package for %name libraries.
 %_defaultdocdir/libproxy-1.0
 
 %changelog
+* Thu Dec 07 2023 Michael Shigorin <mike@altlinux.org> 0.5.3-alt1.1
+- bootstrap build without duktape (to upgrade it)
+
 * Mon Aug 21 2023 Alexey Shabalin <shaba@altlinux.org> 0.5.3-alt1
 - New version 0.5.3.
 
