@@ -1,15 +1,16 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.33
+%define ver_major 0.34
 %define api_ver 0
-%define beta %nil
+%define beta .beta1
 %define rdn_name sm.puri.Phoc
 
 %define dev_uid 500
-%define wlroots_ver 0.16.2
-%define gmobile_ver v0.0.3
+%define wlroots_ver 767eedd
+%define gmobile_ver v0.0.4
 
 # since 0.30 system 0.16 may be used but patched version required
+# but 0.34.0 required patched 0.17 version
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %def_enable gtk_doc
@@ -18,7 +19,7 @@
 
 Name: phoc
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt0.5%beta
 
 Summary: Display compositor designed for mobile devices
 License: GPL-3.0-or-later
@@ -34,25 +35,26 @@ Source: %name-%version%beta.tar
 Source1: gmobile-%gmobile_ver.tar
 %{?_enable_embed_wlroots:Source2: wlroots-%wlroots_ver.tar}
 
+%define glib_ver 2.74
+%define wayland_proto_ver 1.15
 %define gnome_desktop_ver 43
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson
-BuildRequires: pkgconfig(gio-2.0) >= 2.66
-BuildRequires: pkgconfig(glib-2.0) >= 2.66
+BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gnome-desktop-3.0) >= %gnome_desktop_ver
-BuildRequires: pkgconfig(gobject-2.0) >= 2.50.0
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
 BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(libdisplay-info)
 BuildRequires: pkgconfig(glesv2)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
-BuildRequires: pkgconfig(wayland-protocols) >= 1.15
+BuildRequires: pkgconfig(wayland-protocols) >= %wayland_proto_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(xcb-icccm)
 
@@ -114,13 +116,17 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/sm.puri.phoc.gschema.xml
 %_iconsdir/hicolor/symbolic/apps/%rdn_name.svg
-%{?_enable_man:%_man1dir/%name.1*}
+%{?_enable_man:%_man1dir/%name.1*
+%_man5dir/%name.ini.5*}
 %doc README.md NEWS
 
 %files devel-doc
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Wed Dec 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.34.0-alt0.5.beta1
+- 0.34.0.beta1
+
 * Sat Oct 28 2023 Yuri N. Sedunov <aris@altlinux.org> 0.33.0-alt1
 - 0.33.0
 

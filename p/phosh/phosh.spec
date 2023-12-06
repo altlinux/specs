@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.33
+%define ver_major 0.34
 %define beta %nil
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
@@ -40,7 +40,7 @@ Requires: %name-data = %EVR
 # to avoid circular dependency
 %filter_from_requires /\/usr\/bin\/%name-session/d
 %filter_from_requires /\/usr\/libexec\/%name/d
-Requires: phoc >= 0.28
+Requires: phoc >= 0.34
 Requires: gnome-shell-data
 Requires: mutter-gnome
 Requires: gnome-session
@@ -58,7 +58,7 @@ BuildRequires: libcallaudio-devel
 BuildRequires: libfeedback-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(gcr-3) >= 3.7.5
-BuildRequires: pkgconfig(gio-2.0) >= 2.72
+BuildRequires: pkgconfig(gio-2.0) >= 2.76
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.58
 BuildRequires: pkgconfig(glib-2.0) >= 2.70.0
 BuildRequires: pkgconfig(gnome-desktop-3.0) >= 3.26
@@ -194,6 +194,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Wed Dec 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.34.0-alt1
+- 0.34.0
+
 * Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.33.0-alt1
 - 0.33.0
 
