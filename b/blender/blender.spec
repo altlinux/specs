@@ -44,7 +44,7 @@
 %def_with jemalloc
 
 Name: blender
-Version: 4.0.1
+Version: 4.0.2
 Release: alt0.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -71,14 +71,11 @@ Patch24: blender-2.90-alt-non-x86_64-linking.patch
 Patch25: blender-3.4.1-gcc-13-fix.patch
 Patch26: blender-4.0.1-alt-pcre.patch
 Patch27: blender-4.0.1-suse-reproducible.patch
-Patch28: blender-4.0.1-alt-hiprt-enable.patch
-Patch29: blender-4.0.1-alt-fix-manpage.patch
+Patch28: blender-4.0.2-alt-hiprt-enable.patch
+Patch29: blender-4.0.2-alt-fix-manpage.patch
 Patch30: blender-alt-fix-clang-linking.patch
 
 # upstream fixes to merge
-# ppc64le: fix build with SSE
-# https://projects.blender.org/blender/blender/pulls/115098
-Patch100: 0001-Fix-build-error-on-architectures-without-SSE-or-sse2.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -263,7 +260,6 @@ This package contains binaries for AMD GPUs to use with HIP.
 %patch30 -p1
 
 # upstream patches
-%patch100 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -406,6 +402,10 @@ popd
 %endif
 
 %changelog
+* Wed Dec 06 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.1
+- Update to 4.0.2:
+  + Rediffed patches and drop merged ones.
+
 * Wed Nov 29 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.1-alt0.1
 - Update to 4.0.1:
   + Rediffed patches and drop obsoleted ones.
