@@ -16,7 +16,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.25.2
-Release: alt2
+Release: alt3
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
 Group: Development/Python3
@@ -47,6 +47,9 @@ BuildRequires: gcc-c++ gcc-fortran liblapack-devel swig
 # some tests want /proc/meminfo
 BuildRequires: /proc
 %endif
+
+# _pytesttester is optional and mocked if missing on import of numpy
+%add_python3_req_skip numpy._pytesttester
 
 # numpy provides the hook for PyInstaller via entry_points mechanism
 # PyInstaller will call this hook
@@ -215,6 +218,9 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Wed Dec 06 2023 Stanislav Levin <slev@altlinux.org> 1:1.25.2-alt3
+- Dropped dependency on extra tests packages (closes: #48687).
+
 * Tue Dec 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.25.2-alt2
 - NMU: applied selectedrealkind check fix for loongarch64 (thanks to iv@).
 
