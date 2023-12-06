@@ -2,7 +2,7 @@
 
 Name: libaften
 Version: 0.0.8
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Aften: A/52 audio encoder
@@ -12,13 +12,13 @@ Group: System/Libraries
 Url: http://%oname.sourceforge.net/
 Source: http://dl.sourceforge.net/%oname/%oname-%version.tar.bz2
 Patch2000: %name-e2k-simd.patch
+Patch3500: %name-nosimd-arches.patch
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Automatically added by buildreq on Thu Aug 02 2007
-BuildRequires: cmake yasm subversion
+ExcludeArch: ppc64le
 
-# used to build on armh back in 2013 but not in 2021
-ExclusiveArch: %ix86 x86_64 %e2k
+# Automatically added by buildreq on Thu Aug 02 2007
+BuildRequires: cmake yasm
 
 %description
 A simple AC3-compatible audio encoder based on FFmpeg.
@@ -36,6 +36,7 @@ Header files for %name library.
 %ifarch %e2k
 %patch2000 -p1
 %endif
+%patch3500 -p1
 
 %build
 mkdir -p default && cd default
@@ -58,6 +59,10 @@ test -d %buildroot%_libdir || mv %buildroot%_prefix/lib %buildroot%_libdir
 %_includedir/*
 
 %changelog
+* Wed Dec 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:0.0.8-alt4
+- NMU: fixed FTBFS on non-x86 architectures (except ppc64).
+  While at it wiped out extraneous build requirements.
+
 * Tue Jun 08 2021 Michael Shigorin <mike@altlinux.org> 1:0.0.8-alt3
 - built for sisyphus (with minor spec cleanup)
 
