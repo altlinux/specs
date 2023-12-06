@@ -1,6 +1,6 @@
 Name: punesemu
 Version: 0.110
-Release: alt1
+Release: alt2
 
 Summary: Qt-based NES emulator and NSF/NSFe Music Player
 License: GPLv2
@@ -8,6 +8,7 @@ Group: Emulators
 
 Url: https://github.com/punesemu/puNES
 Source: %name-%version.tar
+Patch1: punesemu-va_list-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -22,7 +23,7 @@ BuildRequires: libavutil-devel libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: libGLU-devel
 
-ExcludeArch: armh aarch64
+ExcludeArch: armh
 
 
 %description
@@ -31,6 +32,7 @@ Qt-based Nintendo Entertaiment System emulator and NSF/NSFe Music Player
 
 %prep
 %setup
+%patch1 -p1
 
 
 %build
@@ -56,6 +58,11 @@ rm -rf %buildroot/usr/share/doc/puNES/
 %_datadir/metainfo/
 
 %changelog
+* Wed Dec 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.110-alt2
+- NMU: fixed FTBFS on aarch64 (va_list is NOT a pointer there).
+  While at it cleaned up build requirements (libudev-devel should be
+  used, not libudev0). Fixes FTBFS on LoongArch.
+
 * Mon Dec 04 2023 Alexey Shemyakin <alexeys@altlinux.org> 0.110-alt1
 - Inital build for ALT.
 
