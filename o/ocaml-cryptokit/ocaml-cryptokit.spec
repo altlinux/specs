@@ -5,7 +5,7 @@
 
 Name: ocaml-%pkgname
 Version: 1.18
-Release: alt1
+Release: alt2
 Group: Development/ML
 Summary: OCaml library of cryptographic and hash functions
 License: LGPLv2 with OCaml-LGPL-linking-exception
@@ -49,6 +49,15 @@ developing applications that use %name.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i '1i #undef __AES__' src/aesni.c
+%ifarch e2k e2kv4 e2kv5
+sed -i '1i #undef __PCLMUL__' src/pclmul.c
+%else
+sed -i 's/#include <cpuid.h>/#define __get_cpuid(x,a,b,c,d) (*(c)=-1,1)/' \
+	src/pclmul.c
+%endif
+%endif
 
 %build
 %dune_build -p %pkgname @install
@@ -66,6 +75,9 @@ developing applications that use %name.
 %doc README.md Changes
 
 %changelog
+* Thu Dec 07 2023 Michael Shigorin <mike@altlinux.org> 1.18-alt2
+- E2K: fix build (ilyakurdyukov@)
+
 * Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 1.18-alt1
 - 1.18
 
