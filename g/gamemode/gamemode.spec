@@ -2,8 +2,8 @@
 %define _sysusersdir /lib/sysusers.d
 
 Name: gamemode
-Version: 1.7
-Release: alt1.1
+Version: 1.8
+Release: alt1
 
 Summary: Optimise Linux system performance on demand 
 License: BSD
@@ -68,13 +68,16 @@ Development files for GameMode
 %_bindir/%{name}run
 %_bindir/%{name}list
 %_bindir/%{name}-simulate-game
-%dir %_datadir/%name
-%_datadir/%name/%name.ini
+%config %_sysconfdir/security/limits.d/10-%name.conf
+%_datadir/%name
 %_datadir/dbus-1/services/com.feralinteractive.GameMode.service
 %_datadir/metainfo/io.github.feralinteractive.%name.metainfo.xml
 %_datadir/polkit-1/actions/com.feralinteractive.GameMode.policy
+%_datadir/polkit-1/rules.d/%name.rules
+%_libexecdir/cpucorectl
 %_libexecdir/cpugovctl
 %_libexecdir/gpuclockctl
+%_libexecdir/procsysctl
 %_libexecdir/systemd/user/gamemoded.service
 %_sysusersdir/%name.conf
 %_man1dir/*
@@ -92,6 +95,9 @@ Development files for GameMode
 %_libdir/lib%{name}auto.so
 
 %changelog
+* Wed Dec 06 2023 Nazarov Denis <nenderus@altlinux.org> 1.8-alt1
+- New version 1.8.
+
 * Sat Jul 29 2023 Nazarov Denis <nenderus@altlinux.org> 1.7-alt1.1
 - Fix FTBFS
 
