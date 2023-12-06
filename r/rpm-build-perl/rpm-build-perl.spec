@@ -2,7 +2,7 @@
 
 Name: rpm-build-perl
 Version: 0.85
-Release: alt5
+Release: alt6
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPLv2+
@@ -11,6 +11,7 @@ Group: Development/Other
 URL: %CPAN %name
 Source: %name-%version.tar.gz
 Patch: perl-upgrade-notest-hack.patch
+Patch1: perl-5.38-try-catch-feature-hack.patch
 
 # Automatically added by buildreq on Thu Nov 17 2011
 BuildRequires: perl-Encode-JP perl-Encode-KR perl-Filter perl-Try-Tiny perl-devel
@@ -34,6 +35,7 @@ tags for the package.
 rm -r ConstOptree
 %endif
 #patch -p1
+%patch1 -p1
 
 %build
 %perl_vendor_build
@@ -81,6 +83,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Wed Dec 06 2023 Igor Vlasenko <viy@altlinux.org> 0.85-alt6
+- fix FTBFS. TODO: properly grock new try..catch feature.
+
 * Thu Nov 30 2023 Igor Vlasenko <viy@altlinux.org> 0.85-alt5
 - disabled notest upgrade hack
 
