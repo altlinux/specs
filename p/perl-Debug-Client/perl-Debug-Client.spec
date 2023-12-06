@@ -1,6 +1,6 @@
 Name: perl-Debug-Client
 Version: 0.31
-Release: alt2
+Release: alt3
 
 Summary: debugger client side code for Padre, The Perl IDE.
 Group: Development/Perl
@@ -8,7 +8,8 @@ License: perl
 
 Url: %CPAN Debug-Client
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch0: perl-Debug-Client-0.31-issue2.patch
+Patch1: perl-Debug-Client-0.31-perl5.38-no-given-when.patch
 
 BuildArch: noarch
 BuildRequires: perl(PadWalker.pm) perl(Test/Requires.pm) perl(Test/CheckDeps.pm) perl(Test/Deep.pm) perl(parent.pm) perl(Test/Class.pm) perl(File/HomeDir.pm) perl-devel perl(IO/Socket/IP.pm) perl(Term/ReadLine/Gnu.pm)
@@ -18,7 +19,8 @@ BuildRequires: perl(PadWalker.pm) perl(Test/Requires.pm) perl(Test/CheckDeps.pm)
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 # no upstream patch yet
 # see https://github.com/PadreIDE/Debug-Client/issues/12
@@ -36,6 +38,9 @@ BuildRequires: perl(PadWalker.pm) perl(Test/Requires.pm) perl(Test/CheckDeps.pm)
 %doc Changes README
 
 %changelog
+* Wed Dec 06 2023 Igor Vlasenko <viy@altlinux.org> 0.31-alt3
+- fixed https://github.com/PadreIDE/Debug-Client/issues/13
+
 * Sun Jun 27 2021 Igor Vlasenko <viy@altlinux.org> 0.31-alt2
 - disabled test 11 for the sake of p10 (closes: #40292)
 - known as https://github.com/PadreIDE/Debug-Client/issues/12
