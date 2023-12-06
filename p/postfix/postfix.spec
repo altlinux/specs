@@ -1,5 +1,5 @@
 Name: postfix
-Version: 3.6.10
+Version: 3.8.3
 Release: alt1
 Epoch: 1
 
@@ -490,8 +490,8 @@ sed '/\/postfix-[^-.]*\.so/d' -i %name.files
 /usr/sbin/groupadd -r -f %mail_owner
 /usr/sbin/groupadd -r -f %default_privs
 /usr/sbin/groupadd -r -f %mail_admin
-/usr/sbin/useradd -r -n -g %name -d %ROOT -s /dev/null -c %name %name >/dev/null 2>&1 ||:
-/usr/sbin/useradd -r -n -g %default_privs -d /dev/null -s /dev/null -c %default_privs %default_privs >/dev/null 2>&1 ||:
+/usr/sbin/useradd -r -N -g %name -d %ROOT -s /dev/null -c %name %name >/dev/null 2>&1 ||:
+/usr/sbin/useradd -r -N -g %default_privs -d /dev/null -s /dev/null -c %default_privs %default_privs >/dev/null 2>&1 ||:
 
 %pre_service_stop_posttrans_start %name
 if [ $1 -ge 2 ]; then
@@ -662,6 +662,10 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Wed Dec 06 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.8.3-alt1
+- Updated to 3.8.3.
+- Fixed repocop specfile-useradd-n warning.
+
 * Sun Aug 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.10-alt1
 - Updated to 3.6.10.
 
