@@ -9,7 +9,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    5.0.7
-Release:    alt1
+Release:    alt2
 %if %release == alt3nt
 %define _without_test 1
 %endif
@@ -18,6 +18,7 @@ License:    BSD
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
 Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
+Patch: Tapper-CLI-5.0.7-no-given.patch
 
 BuildRequires: perl(App/Cmd.pm)
 BuildRequires: perl(App/Cmd/Command.pm)
@@ -70,6 +71,7 @@ Command line tools for Tapper.
 
 %prep
 %setup -q -n %{upstream_name}-%{version}
+%patch -p1
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -89,6 +91,9 @@ Command line tools for Tapper.
 %_man1dir/tapper*
 
 %changelog
+* Wed Dec 06 2023 Igor Vlasenko <viy@altlinux.org> 5.0.7-alt2
+- perl 5.38: Tapper-CLI-5.0.7-no-given.patch
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.7-alt1
 - automated CPAN update
 
