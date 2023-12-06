@@ -1,11 +1,11 @@
 %define _libexecdir %_prefix/libexec
 
 Name: inn
-Version: 2.6.4
+Version: 2.7.1
 Release: alt1
 
 Summary: The InterNetNews (INN) system, an Usenet news server
-License: %gpl2plus
+License: GPLv2+ and BSD and MIT
 Group: System/Servers
 
 Url: http://ftp.isc.org/isc/inn/
@@ -26,15 +26,13 @@ Source9: innwatch.init
 #Source10: pgpverify-1.2.1
 #Source11: %name-faq.tar
 
-Patch1: 0001-Fix-libstorage-linking.patch
+Patch1: 0001-Fix-libinnstorage-linking.patch
 Patch2: 0001-Fix-krb5-inclusion.patch
 Patch3: 0001-inn-lib-date.c-remove-erroneous-include.patch
 Patch4: big-alt-patch.patch
 Patch5: inn-redhat_build.patch
 Patch6: inn-2.5.2-pconf.patch
-Patch7: inn-2.6.2-linelimit-1098.patch
-
-BuildRequires(pre): rpm-build-licenses
+Patch7: inn-2.7.1-linelimit-1098.patch
 
 Requires: lib%name = %version-%release
 
@@ -47,6 +45,8 @@ BuildRequires: ctags flex gnupg  su tcl time uucp wget gawk ncompress perl-podla
 BuildRequires: libkrb5-devel libpam-devel libssl-devel libsasl2-devel libdb4-devel libe2fs-devel
 BuildRequires: perl-devel perl-libnet perl-Math-BigInt perl-Encode perl-MIME-tools perl-GD-Text
 BuildRequires: python-devel python-modules-compiler python-modules-encodings
+
+BuildRequires: libcanlock-devel
 
 %description
 INN (InterNetNews) is a complete system for serving Usenet news and/or
@@ -110,7 +110,7 @@ news servers.
 #patch4 -p2
 %patch5 -p1
 %patch6 -p1
-%patch7 -p2
+%patch7 -p1
 
 %build
 
@@ -154,6 +154,7 @@ export CFLAGS="%optflags %optflags_shared"
 	--with-sasl \
 	--with-bdb \
 	--with-krb5 \
+	--with-canlock \
 	#
 
 # Removed bad RPATH
@@ -306,6 +307,8 @@ fi
 %attr(644,root,news) %config(noreplace) %_sysconfdir/news/innshellvars.local
 %attr(644,root,news) %config(noreplace) %_sysconfdir/news/innshellvars.pl.local
 %attr(644,root,news) %config(noreplace) %_sysconfdir/news/innshellvars.tcl.local
+%attr(644,root,news) %config(noreplace) %_sysconfdir/news/inn-secrets.conf
+%attr(644,root,news) %config(noreplace) %_sysconfdir/news/ovsqlite.conf
 
 %_sysconfdir/cron.hourly/*
 %_sysconfdir/cron.daily/*
@@ -328,6 +331,7 @@ fi
 %_man1dir/pgpverify.*
 %_man1dir/sm.*
 %_man1dir/pullnews.*
+%_man1dir/gencancel.*
 
 %_man5dir/*
 %_man8dir/*
@@ -368,7 +372,7 @@ fi
 %_libexecdir/%name/mailpost
 %_libexecdir/%name/pullnews
 %_libexecdir/%name/scanspool
-%_libexecdir/%name/signcontrol
+#_libexecdir/%name/signcontrol
 %_libexecdir/%name/sm
 %_libexecdir/%name/actmerge
 %_libexecdir/%name/actsync
@@ -379,7 +383,7 @@ fi
 %_libexecdir/%name/controlbatch
 %_libexecdir/%name/controlchan
 %_libexecdir/%name/cvtbatch
-%_libexecdir/%name/filechan
+#_libexecdir/%name/filechan
 %_libexecdir/%name/inndf
 %_libexecdir/%name/innxmit
 %_libexecdir/%name/innxbatch
@@ -390,7 +394,7 @@ fi
 %_libexecdir/%name/overchan
 %_libexecdir/%name/pgpverify
 %_libexecdir/%name/send-ihave
-%_libexecdir/%name/send-nntp
+#_libexecdir/%name/send-nntp
 %_libexecdir/%name/send-uucp
 %_libexecdir/%name/sendxbatches
 %_libexecdir/%name/shlock
@@ -411,6 +415,10 @@ fi
 %_libexecdir/%name/buffindexed_d
 %_libexecdir/%name/tinyleaf
 %_libexecdir/%name/rc.news
+%_libexecdir/%name/gencancel
+%_libexecdir/%name/innreport-display.conf
+%_libexecdir/%name/ovsqlite-server
+%_libexecdir/%name/ovsqlite-util
 
 %dir %_libexecdir/%name/auth
 
@@ -429,9 +437,9 @@ fi
 %_libexecdir/%name/control/newgroup.pl
 %_libexecdir/%name/control/rmgroup.pl
 %_libexecdir/%name/control/sendme.pl
-%_libexecdir/%name/control/sendsys.pl
-%_libexecdir/%name/control/senduuname.pl
-%_libexecdir/%name/control/version.pl
+#_libexecdir/%name/control/sendsys.pl
+#_libexecdir/%name/control/senduuname.pl
+#_libexecdir/%name/control/version.pl
 
 %dir %_libexecdir/%name/rnews.libexec
 %_libexecdir/%name/rnews.libexec/bunbatch
@@ -446,12 +454,12 @@ fi
 
 %files -n lib%name
 %_libdir/libinn.so.*
-%_libdir/libstorage.so.*
+%_libdir/libinnstorage.so.*
 %_libdir/libinnhist.so.*
 
 %files -n lib%name-devel
 %_libdir/libinn.so
-%_libdir/libstorage.so
+%_libdir/libinnstorage.so
 %_libdir/libinnhist.so
 %_includedir/%name
 %_man3dir/*
@@ -462,6 +470,14 @@ fi
 %_bindir/inews
 
 %changelog
+* Mon Dec 04 2023 Sergey Y. Afonin <asy@altlinux.org> 2.7.1-alt1
+- 2.7.1 (with libcanlock, ALT #44169)
+- updated License tag to SPDX syntax, added BSD and MIT
+- adopted patches for 2.7.1:
+   0001-Fix-libinnstorage-linking.patch
+   redhat_build.patch
+   linelimit-1098.patch
+
 * Mon Apr 12 2021 Sergey Y. Afonin <asy@altlinux.org> 2.6.4-alt1
 - 2.6.4
 - added check for /var/run/news directory to init script
