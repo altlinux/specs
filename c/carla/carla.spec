@@ -8,7 +8,7 @@
 
 Name: carla
 Version: 2.5.7
-Release: alt1
+Release: alt2
 
 Summary: A featureful audio plugin host
 
@@ -67,6 +67,10 @@ This package includes development files for libcarla.
 
 %prep
 %setup
+%ifarch %e2k
+%add_optflags -mno-sse
+echo > source/modules/ysfx/sources/eel2-gas/sources/asm-nseel-x64-sse.S
+%endif
 
 rm -rf data/{macos,windows}
 
@@ -125,6 +129,9 @@ make features # log build configuration
 %_pkgconfigdir/carla-*.pc
 
 %changelog
+* Thu Dec 07 2023 Michael Shigorin <mike@altlinux.org> 2.5.7-alt2
+- E2K: fix build (ilyakurdyukov@).
+
 * Mon Nov 27 2023 Arseny Maslennikov <arseny@altlinux.org> 2.5.7-alt1
 - 2.5.4 -> 2.5.7.
 
