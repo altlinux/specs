@@ -16,7 +16,7 @@
 %define _libexecdir %prefix/libexec
 
 Name: mold
-Version: 2.3.3
+Version: 2.4.0
 Release: alt1
 
 Summary: A Modern Linker
@@ -104,6 +104,9 @@ rm -rfv %buildroot%_docdir/mold
 %_man1dir/*mold.1.*
 
 %changelog
+* Wed Dec 06 2023 Anton Zhukharev <ancieg@altlinux.org> 2.4.0-alt1
+- Updated to 2.4.0.
+
 * Wed Nov 15 2023 Anton Zhukharev <ancieg@altlinux.org> 2.3.3-alt1
 - Updated to 2.3.3.
 
