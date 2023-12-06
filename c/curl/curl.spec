@@ -31,7 +31,7 @@
 %endif
 
 Name: curl
-Version: 8.4.0
+Version: 8.5.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -207,6 +207,12 @@ popd
 %endif
 
 %changelog
+* Wed Dec 06 2023 Anton Farygin <rider@altlinux.ru> 8.5.0-alt1
+- 8.4.0 -> 8.5.0
+- Fixes:
+   * CVE-2023-46218: cookie mixed case PSL bypass
+   * CVE-2023-46219: HSTS long file name clears contents
+
 * Wed Oct 11 2023 Anton Farygin <rider@altlinux.ru> 8.4.0-alt1
 - 8.3.0 -> 8.4.0
 - Fixes:
