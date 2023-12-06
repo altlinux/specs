@@ -34,7 +34,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt4
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -55,7 +55,7 @@ Obsoletes: %name-full < %EVR
 Obsoletes: LibreOffice4
 Conflicts: LibreOffice
 
-%define with_lang ru be de fr uk pt-BR es kk tt el uz
+%define with_lang ru be de fr uk pt-BR es kk tt el uz ky
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
 #Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
 Requires: gst-libav
@@ -431,6 +431,9 @@ test -r %conffile && . %conffile ||:
 # Put Python3 shebang
 subst '1i#!/usr/bin/python3' odk/examples/python/toolpanel/toolpanel.py
 
+# Guess Kyrgyz localization as complete
+subst '/ks /a ky \\' solenv/inc/langlist.mk
+
 %build
 export CC=%_target_platform-gcc
 export CXX=%_target_platform-g++
@@ -713,6 +716,7 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %langpack    -h -l tt -s tt -n Tatar
 %langpack -m -h -l el -s el -n Greek
 %langpack       -l uz -s uz -n Uzbek
+%langpack       -l ky -s ky -n Kyrgyz
 
 %files -n libreofficekit-still
 #_typelibdir/LOKDocView-*.typelib
@@ -723,6 +727,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Dec 06 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.8.2-alt4
+- Added Kyrgyz localization.
+
 * Wed Nov 22 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.5.8.2-alt3
 - NMU: rebuilt with libcmis-0.6
 
