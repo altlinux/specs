@@ -1,12 +1,12 @@
-%ifarch %e2k ppc64le
-%def_disable qtwebengine
-%else
+%ifarch %qt5_qtwebengine_arches
 %def_enable qtwebengine
+%else
+%def_disable qtwebengine
 %endif
 
 Name: python3-module-PySide2
 Version: 5.15.11
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python3
@@ -20,6 +20,7 @@ Patch2: python-pyside2-options_py.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires(pre): cmake
 %if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
@@ -200,6 +201,9 @@ done
 %python3_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Wed Dec 06 2023 Ivan A. Melnikov <iv@altlinux.org> 5.15.11-alt1.1
+- NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64).
+
 * Tue Dec 05 2023 Aleksei Kalinin <kaa@altlinux.org> 5.15.11-alt1
 - NMU:
   + Cleared BuildRequires duplicates.
