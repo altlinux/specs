@@ -2,7 +2,7 @@
 
 Name: optional-lite
 Version: 3.5.0
-Release: alt1.git00e9cf5c
+Release: alt2.git00e9cf5c
 
 Summary: optional lite: A single-file header-only version of a C++17-like optional
 License: BSL-1.0
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake cmake
-BuildRequires: gcc-c++ libstdc++10-devel libcxx
+BuildRequires: gcc-c++
 
 %description
 A single-file header-only version of a C++17-like optional,
@@ -36,5 +36,8 @@ a nullable object for C++98, C++11 and later
 %_libdir/cmake/%name
 
 %changelog
+* Mon Oct 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.5.0-alt2.git00e9cf5c
+- NMU: removed superfluous build requirements. Fixes FTBFS on LoongArch.
+
 * Fri May 19 2023 Aleksei Kalinin <kaa@altlinux.org> 3.5.0-alt1.git00e9cf5c
 - Initial build for Sisyphus
