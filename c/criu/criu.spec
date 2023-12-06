@@ -1,13 +1,13 @@
 # FIXME
 %define optflags_lto %nil
-%ifnarch ppc64le
+%ifnarch ppc64le loongarch64
 %define with_amdgpu 1
 %endif
 %define _unpackaged_files_terminate_build 1
 
 Name: criu
 Version: 3.19
-Release: alt1
+Release: alt1.1
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
@@ -22,7 +22,7 @@ Source2: criu-tmpfiles.conf
 Patch: %name-%version.patch
 
 Obsoletes: crtools < %EVR
-ExclusiveArch: x86_64 aarch64 ppc64le
+ExclusiveArch: x86_64 aarch64 ppc64le loongarch64
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -176,6 +176,9 @@ rm -f %buildroot%_man1dir/criu-amdgpu-plugin.1*
 %endif
 
 %changelog
+* Tue Dec 05 2023 Ivan A. Melnikov <iv@altlinux.org> 3.19-alt1.1
+- NMU: build on loongarch64
+
 * Fri Dec 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.19-alt1
 - Updated to 3.19.
 
