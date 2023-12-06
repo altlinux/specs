@@ -1,19 +1,18 @@
 %define oname duktape
+
 Name: libduktape
-Version: 2.6.0
+Version: 2.7.0
 Release: alt2
 
 Summary: Embeddable Javascript engine library
-
 License: MIT
 Group: System/Libraries
+
 Url: http://duktape.org/
-
 Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 # Source-url: http://duktape.org/%oname-%version.tar.xz
 Source: %name-%version.tar
-Patch: duktape-2.3.0-makefile.patch
+Patch: duktape-2.7.0-makefile.patch
 
 %description
 Duktape is an embeddable Javascript engine, with a focus on portability
@@ -53,39 +52,24 @@ This package contains a commandline duk interpreter.
 %make -f Makefile.sharedlibrary duk
 #make -f Makefile.cmdline
 
-cat > duktape.pc <<-EOF
-prefix=%prefix
-exec_prefix=%prefix
-libdir=%_libdir
-
-Name: %oname
-Description: embeddable javascript engine
-Version: %version
-
-Requires:
-Cflags:
-Libs: -l%oname
-EOF
-
 %install
 %makeinstall_std \
 	INSTALL_PREFIX="%prefix" \
-	LIBDIR="%_libdir" \
+	LIBDIR="/%_lib" \
 	-f Makefile.sharedlibrary
 
 mkdir -p %buildroot%_bindir
 install -m 755 duk %buildroot%_bindir/duk
 
-mkdir -p %buildroot%_libdir/pkgconfig
-install -m 644 duktape.pc %buildroot%_libdir/pkgconfig
-
 %files
 %_libdir/libduktape.so.*
+%_libdir/libduktaped.so.*
 
 %files devel
 %_includedir/duk_config.h
 %_includedir/duktape.h
 %_libdir/libduktape.so
+%_libdir/libduktaped.so
 %_libdir/pkgconfig/duktape.pc
 
 %files -n %oname
@@ -93,6 +77,13 @@ install -m 644 duktape.pc %buildroot%_libdir/pkgconfig
 %_bindir/duk
 
 %changelog
+* Wed Dec 06 2023 Michael Shigorin <mike@altlinux.org> 2.7.0-alt2
+- package duktaped library too
+
+* Wed Dec 06 2023 Michael Shigorin <mike@altlinux.org> 2.7.0-alt1
+- new version 2.7.0 (with rpmgs script)
+- link with -lm (see upstream issues 2464, 2484)
+
 * Thu Jun 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.6.0-alt2
 - Added pkg-config data (closes:  #46355)
 
