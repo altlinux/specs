@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: IMSProg
-Version: 1.0.27
+Version: 1.1.2
 Release: alt1
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
@@ -76,10 +76,10 @@ pushd IMSProg_programmer
 %cmake_install
 popd
 
-# move udev rules to %_udevrulesdir
-mkdir -p %buildroot%_udevrulesdir
-mv %buildroot%_sysconfdir/udev/rules.d/99-CH341.rules \
-   %buildroot%_udevrulesdir/99-CH341.rules
+# remove updater for %_sysconfdir/imsprog/IMSProg.Dat
+rm %buildroot%_bindir/IMSProg_database_update
+rm %buildroot%_desktopdir/IMSProg_database_update.desktop
+rm %buildroot%_pixmapsdir/IMSProg_database_update.png
 
 # rename README
 cp IMSProg_editor/README.md IMSProg_editor.md
@@ -87,15 +87,25 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 
 %files
 %doc README.md IMSProg_editor.md IMSProg_programmer.md
-%_bindir/%name
-%_bindir/%{name}_editor
-%_datadir/%name
-%_desktopdir/%name.desktop
-%_desktopdir/%{name}_editor.desktop
+%_docdir/imsprog/
+%_bindir/IMSProg
+%_bindir/IMSProg_editor
+#%%_bindir/IMSProg_database_update
+%_datadir/imsprog
+%_desktopdir/IMSProg.desktop
+%_desktopdir/IMSProg_editor.desktop
+#%%_desktopdir/IMSProg_database_update.desktop
+%dir %_sysconfdir/imsprog
+%_sysconfdir/imsprog/IMSProg.Dat
 %_udevrulesdir/99-CH341.rules
-%_iconsdir/hicolor/64x64/apps/%{name}_editor.png
-%_iconsdir/hicolor/64x64/apps/%name.png
+%_pixmapsdir/chipEdit64.png
+%_pixmapsdir/IMSProg64.png
+#%%_pixmapsdir/IMSProg_database_update.png
+%_man1dir/*.1.*
 
 %changelog
+* Wed Dec 06 2023 Anton Midyukov <antohami@altlinux.org> 1.1.2-alt1
+- new version (Closes: 48694)
+
 * Fri Oct 13 2023 Anton Midyukov <antohami@altlinux.org> 1.0.27-alt1
 - initial build (Closes: 47993)
