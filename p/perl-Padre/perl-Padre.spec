@@ -4,7 +4,7 @@ BuildRequires: fonts-ttf-liberation
 %define dist Padre
 Name: perl-Padre
 Version: 1.02
-Release: alt1
+Release: alt2
 
 
 Summary: Padre - Perl Application Development and Refactoring Environment
@@ -14,6 +14,7 @@ Group: Development/Perl
 Url: %CPAN %dist
 VCS: git+https://github.com/PadreIDE/Padre.git
 Source: %name-%version.tar
+Patch: perl-Padre-1.02-perl5.38-no-given-when.patch
 
 %add_findreq_skiplist */Padre/Wx/About.pm
 %add_findreq_skiplist */Padre/Wx/FunctionList.pm
@@ -31,6 +32,7 @@ Provides: padre = %EVR
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 xvfb-run -a perl Makefile.PL PREFIX=/usr INSTALLDIRS=vendor
@@ -73,6 +75,9 @@ EOF
 %doc Changes README* Artistic
 
 %changelog
+* Thu Dec 07 2023 Igor Vlasenko <viy@altlinux.org> 1.02-alt2
+- fix for perl 5.38
+
 * Wed Aug 30 2023 Igor Vlasenko <viy@altlinux.org> 1.02-alt1
 - new version
 
