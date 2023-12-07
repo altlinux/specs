@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.0
-Release: alt1
+Release: alt2
 Summary: Python wrapper around Lua and LuaJIT
 License: MIT
 Group: Development/Python3
@@ -72,6 +72,9 @@ ENDUNITTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 07 2023 Stanislav Levin <slev@altlinux.org> 2.0-alt2
+- Backported fix for build against Cython 3.0.
+
 * Thu May 11 2023 Stanislav Levin <slev@altlinux.org> 2.0-alt1
 - 1.14.1 -> 2.0.
 
