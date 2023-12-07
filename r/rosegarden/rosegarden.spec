@@ -1,5 +1,5 @@
 Name: rosegarden
-Version: 23.06
+Version: 23.12
 Release: alt1
 
 Summary: MIDI sequencer and musical notation editor
@@ -51,6 +51,9 @@ recording environments.
 %_datadir/mime/packages/rosegarden.*
 
 %changelog
+* Thu Dec 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 23.12-alt1
+- 23.12 released
+
 * Mon Oct 09 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 23.06-alt1
 - 23.06 released
 
