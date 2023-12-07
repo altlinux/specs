@@ -6,7 +6,7 @@
 
 Name: python3-module-%modulename
 Version: 0.12.4
-Release: alt1.1
+Release: alt1.3
 
 Summary: Scientific Graphics and GUI Library for Python
 License: MIT
@@ -17,6 +17,8 @@ Url: http://http://www.pyqtgraph.org
 BuildArch: noarch
 
 Source: %name-%version.tar
+
+Patch1: pyqtgraph-upstream-generate-random-integers-directly.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-devel
@@ -37,6 +39,7 @@ BuildRequires: python3-module-matplotlib-qt5
 BuildRequires: xvfb-run
 BuildRequires: python3-module-pytest-xvfb
 BuildRequires: mesa-dri-drivers
+BuildRequires: libOpenGL
 %endif
 
 # skip optional dependencies
@@ -44,6 +47,7 @@ BuildRequires: mesa-dri-drivers
 %add_python3_req_skip PyQt6
 %add_python3_req_skip PySide2 PySide2.QtCore PySide2.QtGui PySide2.QtWidgets
 %add_python3_req_skip PySide6.QtCore PySide6.QtGui PySide6.QtWidgets
+%add_python3_req_skip numba
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/%modulename/canvas
 
@@ -56,6 +60,7 @@ GraphicsView framework for fast display.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -76,6 +81,16 @@ py.test3 -v -k "not (test_reload) and not (test_PolyLineROI)"
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Dec 07 2023 Ivan A. Melnikov <iv@altlinux.org> 0.12.4-alt1.3
+- NMU: backport upstream patch to fix tests
+  on aarch64 and ppc64le.
+
+* Thu Dec 07 2023 Ivan A. Melnikov <iv@altlinux.org> 0.12.4-alt1.2
+- NMU:
+  + add BR on libOpenGL for testing (fixes FTBFS);
+  + skip numba requirements as it's an optional depency
+    (also fixes FTBFS on loongarch64 and riscv64).
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.12.4-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
