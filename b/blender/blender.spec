@@ -14,9 +14,11 @@
 %ifarch x86_64
 %def_with hip
 %def_with hiprt
+%def_with cuda
 %else
 %def_without hip
 %def_without hiprt
+%def_without cuda
 %endif
 
 %ifarch x86_64 aarch64
@@ -45,7 +47,7 @@
 
 Name: blender
 Version: 4.0.2
-Release: alt0.1
+Release: alt0.2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -157,6 +159,13 @@ BuildRequires: openpgl-devel
 BuildRequires: OpenUSD-devel
 %endif
 
+%if_with cuda
+BuildRequires: nvidia-cuda-devel
+# .cubin files are ELF files but we still don't know how
+# to handle them.
+%set_verify_elf_skiplist %_datadir/%name/*/scripts/addons/cycles/lib/*.cubin
+%endif
+
 %add_python3_path %_datadir/%name/scripts
 %add_python3_req_skip _bpy
 %add_python3_req_skip _bpy_path
@@ -245,6 +254,19 @@ graphics cards.
 This package contains binaries for AMD GPUs to use with HIP.
 %endif
 
+%if_with cuda
+%package cycles-nvidia-kernels
+Summary: Cycles precompiled binaries for CUDA
+Group: System/Libraries
+Requires: %name = %EVR, libcuda
+
+%description cycles-nvidia-kernels
+Precompiled GPU binaries for GPU accelerated rendering with Cycles on various
+graphics cards.
+
+This package contains binaries for Nvidia GPUs to use with CUDA.
+%endif
+
 %prep
 %setup -a1 -a2
 
@@ -300,6 +322,9 @@ fi
 %if_with hip
 	-DWITH_CYCLES_HIP_BINARIES:BOOL=ON \
 %endif #hip
+%if_with cuda
+	-DWITH_CYCLES_CUDA_BINARIES:BOOL=ON \
+%endif #cuda
 %if_with hiprt
 	-DHIPRT_ROOT_DIR=/usr \
 	-DWITH_CYCLES_DEVICE_HIPRT:BOOL=ON \
@@ -377,11 +402,14 @@ popd
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_datadir/%name/
 %if_with hip
-%exclude %dir %_datadir/%name/*/scripts/addons/cycles/lib
 %exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_gfx*.fatbin
 %endif
 %if_with hiprt
 %exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_rt_gfx.*
+%endif
+%if_with cuda
+%exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_compute*.ptx
+%exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_sm_*.cubin
 %endif
 %_datadir/metainfo/*.metainfo.xml
 %_defaultdocdir/%name/
@@ -389,11 +417,16 @@ popd
 
 %if_with hip
 %files cycles-hip-kernels
-%dir %_datadir/%name/*/scripts/addons/cycles/lib
 %_datadir/%name/*/scripts/addons/cycles/lib/kernel_gfx*.fatbin
 %if_with hiprt
 %_datadir/%name/*/scripts/addons/cycles/lib/kernel_rt_gfx.*
 %endif
+%endif
+
+%if_with cuda
+%files cycles-nvidia-kernels
+%_datadir/%name/*/scripts/addons/cycles/lib/kernel_compute*.ptx
+%_datadir/%name/*/scripts/addons/cycles/lib/kernel_sm_*.cubin
 %endif
 
 %if_with docs
@@ -402,6 +435,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 06 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.2
+- Added CUDA support (tnx to fidel@ for packages).
+
 * Wed Dec 06 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.1
 - Update to 4.0.2:
   + Rediffed patches and drop merged ones.
