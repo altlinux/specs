@@ -1,15 +1,15 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(IO/All.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Markdown.pm) perl(YAML/Tiny.pm) perl-podlators
+BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(IO/All.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Html.pm) perl(Pod/Markdown.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Starlet
 Version:        0.31
-Release:        alt1_10
+Release:        alt1_22
 Summary:        Simple, high-performance PSGI/Plack HTTP server
-License:        GPL+ or Artistic
+License:        GPL-1.0-or-later OR Artistic-1.0-Perl
 URL:            https://metacpan.org/release/Starlet
 Source0:        https://cpan.metacpan.org/authors/id/K/KA/KAZUHO/Starlet-%{version}.tar.gz
 BuildArch:      noarch
@@ -65,11 +65,11 @@ rm -r inc/
 sed -i -e '/^inc\/.*$/d' MANIFEST
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
+%{make_build}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+%{makeinstall_std}
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -80,6 +80,9 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Dec 07 2023 Igor Vlasenko <viy@altlinux.org> 0.31-alt1_22
+- fixed build with perl 5.38
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_10
 - update to new release by fcimport
 
