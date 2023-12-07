@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.2.1
+Version: 1.3.3
 Release: alt1
 
 Summary: Install and Run Python Applications in Isolated Environments
@@ -35,6 +35,7 @@ BuildRequires: python3-module-pytest
 
 %prep
 %setup
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -54,6 +55,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 07 2023 Anton Zhukharev <ancieg@altlinux.org> 1.3.3-alt1
+- Updated to 1.3.3.
+
 * Thu Nov 23 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt1
 - Built for ALT Sisyphus.
 
