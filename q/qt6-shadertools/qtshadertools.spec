@@ -1,7 +1,7 @@
 %global qt_module qtshadertools
 
 Name: qt6-shadertools
-Version: 6.6.0
+Version: 6.6.1
 Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
@@ -110,6 +110,9 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
+- new version
+
 * Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
 - new version
 

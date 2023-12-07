@@ -1,25 +1,26 @@
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+%global qt_module qtdoc
 
-%global qt_module qtserialport
-
-Name: qt6-serialport
+Name: qt6-doc
 Version: 6.6.1
 Release: alt1
 
-Group: System/Libraries
-Summary: Qt6 - SerialPort component
+Group: Development/KDE and QT
+Summary: Main Qt6 Reference Documentation
 Url: http://qt.io/
-License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later)
+License: FDL
+
+#BuildArch: noarch
 
 Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
-BuildRequires: cmake glibc-devel qt6-base-devel qt6-tools-devel
-BuildRequires: pkgconfig(libudev)
+BuildRequires: cmake qt6-base-devel
+BuildRequires: qt6-svg-devel qt6-declarative-devel qt6-tools-devel
 
 %description
-Qt Serial Port provides the basic functionality, which includes configuring,
-I/O operations, getting and setting the control signals of the RS-232 pinouts.
+QtDoc contains the main Qt Reference Documentation, which includes
+overviews, Qt topics, and examples not specific to any Qt module.
 
 %package common
 Summary: Common package for %name
@@ -32,7 +33,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: qt6-base-devel
 %description devel
 %summary.
@@ -40,27 +41,29 @@ Requires: qt6-base-devel
 %package devel-static
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name-devel
 %description devel-static
 %summary.
 
 %package doc
+BuildArch: noarch
 Summary: Document for developing apps which will use Qt6 %qt_module
 Group: Development/KDE and QT
-Requires: %name-common = %EVR
+Requires: %name-common
 %description doc
 This package contains documentation for Qt6 %qt_module
 
-%package -n libqt6-serialport
+%package -n libqt6-doc
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
-%description -n libqt6-serialport
+Requires: %name-common
+%description -n libqt6-doc
 %summary
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+#syncqt.pl-qt6 -version %version
 
 %build
 %Q6build
@@ -74,39 +77,13 @@ Requires: %name-common = %EVR
 %make -C BUILD DESTDIR=%buildroot install_docs ||:
 %endif
 
-%files common
-%doc LICENSES/*
-
-%files -n libqt6-serialport
-%_qt6_libdir/libQt?SerialPort.so.*
-
-%files devel
-%_qt6_headerdir/Qt*/
-%_qt6_libdatadir/libQt*.so
-%_qt6_libdatadir/libQt*.prl
-%_qt6_libdir/libQt*.so
-%_qt6_libdir/libQt*.prl
-%_qt6_libdir/cmake/Qt*/
-%_qt6_archdatadir/mkspecs/modules/qt_lib_*.pri
-%_qt6_archdatadir/metatypes/qt6*.json
-%_qt6_archdatadir/modules/*.json
-%_pkgconfigdir/Qt?*.pc
-
-%files doc
+%files
 %if %qdoc_found
 %_qt6_docdir/*
 %endif
 %_qt6_examplesdir/*
+%_qt6_archdatadir/mkspecs/*doc*
 
 %changelog
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
-- new version
-
-* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
-- new version
-
-* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
-- new version
-
-* Mon Jun 06 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build

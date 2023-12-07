@@ -2,7 +2,7 @@
 %global qt_module qtnetworkauth
 
 Name: qt6-networkauth
-Version: 6.6.0
+Version: 6.6.1
 Release: alt1
 
 Group: System/Libraries
@@ -93,6 +93,9 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
+- new version
+
 * Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
 - new version
 

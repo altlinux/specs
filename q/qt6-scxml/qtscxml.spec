@@ -2,7 +2,7 @@
 %global qt_module qtscxml
 
 Name: qt6-scxml
-Version: 6.6.0
+Version: 6.6.1
 Release: alt1
 
 Group: System/Libraries
@@ -125,7 +125,7 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_libdir/cmake/Qt*/
 %_qt6_archdatadir/mkspecs/modules/qt_lib_*.pri
 %_qt6_archdatadir/mkspecs/features/*scxml*.prf
-%_qt6_archdatadir/metatypes/qt6*.json
+%_qt6_archdatadir/metatypes/qt*.json
 %_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
 
@@ -136,6 +136,9 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
+- new version
+
 * Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
 - new version
 

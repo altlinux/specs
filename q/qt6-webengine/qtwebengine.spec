@@ -25,8 +25,8 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.6.0
-Release: alt2
+Version: 6.6.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -43,7 +43,6 @@ Patch2: chromium-icu-74.patch
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
 Patch202: compressing_files.patch
-Patch203: ffmpeg-remove-x86-optimization.patch
 
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
@@ -194,7 +193,6 @@ popd
 %patch200 -p1
 %patch201 -p1
 %patch202 -p1
-%patch203 -p1
 #
 #ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 
@@ -408,6 +406,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
+- new version
+
 * Thu Nov 23 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt2
 - fix to build with icu-74
 

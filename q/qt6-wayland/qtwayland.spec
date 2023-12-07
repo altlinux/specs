@@ -2,7 +2,7 @@
 %global qt_module qtwayland
 
 Name: qt6-wayland
-Version: 6.6.0
+Version: 6.6.1
 Release: alt1
 
 Group: System/Libraries
@@ -128,6 +128,11 @@ Requires: libqt6-core = %_qt6_version
 %make -C BUILD DESTDIR=%buildroot install_docs ||:
 %endif
 
+# relax depends on plugins files
+for f in %buildroot/%_libdir/cmake/Qt?*/Qt*Targets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
+
 %files common
 %doc LICENSES/*
 
@@ -176,6 +181,9 @@ Requires: libqt6-core = %_qt6_version
 %endif
 
 %changelog
+* Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
+- new version
+
 * Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
 - new version
 

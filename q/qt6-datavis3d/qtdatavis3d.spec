@@ -1,26 +1,24 @@
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+%global qt_module qtdatavis3d
 
-%global qt_module qtsensors
-
-Name: qt6-sensors
-Version: 6.6.1
+Name: qt6-datavis3d
+Version: 6.1.1
 Release: alt1
 
 Group: System/Libraries
-Summary: Qt6 - QtSensors component
-Url: http://qt.io/
-License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later)
+Summary: Qt6 - Data Visualization component
+Url: http://www.qt.io/
+License: GPL-3.0-only with Qt-GPL-exception-1.0
 
 Source: %qt_module-everywhere-src-%version.tar
 
-BuildRequires(pre): rpm-macros-qt6
-BuildRequires: cmake glibc-devel qt6-declarative-devel
-BuildRequires(pre): qt6-tools
+BuildRequires(pre): rpm-macros-qt6 qt6-tools
+BuildRequires: cmake qt6-base-devel
+BuildRequires: qt6-declarative-devel qt6-multimedia-devel
 
 %description
-The Qt Sensors API provides access to sensor hardware via QML and C++
-interfaces.  The Qt Sensors API also provides a motion gesture recognition
-API for devices.
+Qt Data Visualization module provides multiple graph types to visualize data in 3D space
+both with C++ and Qt Quick 2.
 
 %package common
 Summary: Common package for %name
@@ -33,7 +31,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: qt6-base-devel
 %description devel
 %summary.
@@ -41,7 +39,7 @@ Requires: qt6-base-devel
 %package devel-static
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name-devel
 %description devel-static
 %summary.
@@ -49,28 +47,29 @@ Requires: %name-devel
 %package doc
 Summary: Document for developing apps which will use Qt6 %qt_module
 Group: Development/KDE and QT
-Requires: %name-common = %EVR
+Requires: %name-common
 %description doc
 This package contains documentation for Qt6 %qt_module
 
-%package -n libqt6-sensors
+%package -n libqt6-datavisualization
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
-%description -n libqt6-sensors
-%summary
+%description -n libqt6-datavisualization
+%summary.
 
-%package -n libqt6-sensorsquick
+%package -n libqt6-datavisualizationqml
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
-%description -n libqt6-sensorsquick
-%summary
+%description -n libqt6-datavisualizationqml
+%summary.
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+#syncqt.pl-qt6 -version %version
 
 %build
 %Q6build
@@ -85,17 +84,14 @@ Requires: libqt6-core = %_qt6_version
 %endif
 
 %files common
-%doc LICENSES/*
 
 %files
-%_qt6_plugindir/sensors/
-%_qt6_archdatadir/qml/QtSensors/
+%_qt6_qmldir/QtDataVisualization/
 
-%files -n libqt6-sensors
-%_qt6_libdir/libQt?Sensors.so.*
-
-%files -n libqt6-sensorsquick
-%_qt6_libdir/libQt?SensorsQuick.so.*
+%files -n libqt6-datavisualization
+%_qt6_libdir/libQt?DataVisualization.so.*
+%files -n libqt6-datavisualizationqml
+%_qt6_libdir/libQt?DataVisualizationQml.so.*
 
 %files devel
 %_qt6_headerdir/Qt*/
@@ -104,26 +100,17 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_libdir/libQt*.prl
 %_qt6_libdatadir/libQt*.prl
 %_qt6_libdir/cmake/Qt*/
-%_qt6_archdatadir/mkspecs/modules/qt_lib_*.pri
-%_qt6_archdatadir/metatypes/qt6*.json
+%_qt6_libdir/pkgconfig/Qt*.pc
+%_qt6_archdatadir/mkspecs/modules/*.pri
+%_qt6_archdatadir/metatypes/qt*.json
 %_qt6_archdatadir/modules/*.json
-%_pkgconfigdir/Qt?*.pc
 
 %files doc
 %if %qdoc_found
 %_qt6_docdir/*
 %endif
-#%_qt6_examplesdir/*
+%_qt6_examplesdir/*
 
 %changelog
-* Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
-- new version
-
-* Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
-- new version
-
-* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
-- new version
-
-* Mon Jun 06 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+* Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.1.1-alt1
 - initial build

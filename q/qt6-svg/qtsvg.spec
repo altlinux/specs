@@ -2,7 +2,7 @@
 %global qt_module qtsvg
 
 Name: qt6-svg
-Version: 6.6.0
+Version: 6.6.1
 Release: alt2
 
 Group: System/Libraries
@@ -11,9 +11,6 @@ Url: http://qt.io/
 License:  LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
 Source: %qt_module-everywhere-src-%version.tar
-Patch1: qtsvg-fix-nullptr-dereference-with-invalid-svg.patch
-Patch2: qtsvg-make-sure-we-dont-load-invalid-svg-twice.patch
-Patch3: qtsvg-verify-loading-of-invalid-svg-files-dont-crash.patch
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: qt6-base-devel
@@ -36,7 +33,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: qt6-base-devel
 %description devel
 %summary.
@@ -44,7 +41,7 @@ Requires: qt6-base-devel
 %package devel-static
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name-devel
 %description devel-static
 %summary.
@@ -52,33 +49,28 @@ Requires: %name-devel
 %package doc
 Summary: Document for developing apps which will use Qt6 %qt_module
 Group: Development/KDE and QT
-Requires: %name-common = %EVR
+Requires: %name-common
 %description doc
 This package contains documentation for Qt6 %qt_module
 
 %package -n libqt6-svg
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
-Provides: %name = %EVR
 %description -n libqt6-svg
 %summary
 
 %package -n libqt6-svgwidgets
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
-Provides: %name = %EVR
 %description -n libqt6-svgwidgets
 %summary
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %Q6build
@@ -132,6 +124,12 @@ done
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Dec 06 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt2
+- fix provides (closes: 47318)
+
+* Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
+- new version
+
 * Fri Nov 17 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt2
 - add upstream fixes
 
