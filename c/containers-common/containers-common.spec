@@ -15,7 +15,7 @@
 
 Epoch: 1
 Name: containers-common
-Version: 2
+Version: 3
 Release: alt1
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -153,6 +153,9 @@ install -d -p -m 755 %buildroot/%_datadir/alt/secrets
 %files extra
 
 %changelog
+* Thu Dec 07 2023 Alexey Shabalin <shaba@altlinux.org> 1:3-alt1
+- Update sources
+
 * Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 1:2-alt1
 - Update sources
 - Add containers-common-extra subpackage
