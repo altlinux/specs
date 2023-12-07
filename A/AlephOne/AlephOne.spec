@@ -1,8 +1,8 @@
-Name: AlephOne
-Version: 1.0.2
 %define uversion 20220115
 
-Release: alt1.1
+Name: AlephOne
+Version: 1.0.2
+Release: alt1.2
 
 Summary: 3D first-person shooter game
 License: %gpl2plus
@@ -55,6 +55,10 @@ alephone "~/Marathon Infinity"
 %setup -n %name-%uversion
 #patch0 -p2
 %patch1 -p1
+%ifarch %e2k
+sed -i 's,aarch64,&|e2k,' m4/ax_boost_base.m4
+%endif
+
 
 %build
 #add_optflags -fpermissive
@@ -100,6 +104,9 @@ alephone "~/Marathon Infinity"
 
 
 %changelog
+* Thu Dec 07 2023 Michael Shigorin <mike@altlinux.org> 1.0.2-alt1.2
+- E2K: fix boost detection
+
 * Mon Nov 20 2023 Ivan A. Melnikov <iv@altlinux.org> 1.0.2-alt1.1
 - NMU: fix FTBFS on loongarch64
 
