@@ -30,7 +30,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -438,6 +438,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Thu Dec 07 2023 Yuri N. Sedunov <aris@altlinux.org> 2.78.3-alt1
+- 2.78.3
+
 * Tue Dec 05 2023 Yuri N. Sedunov <aris@altlinux.org> 2.78.2-alt1
 - 2.78.2
 
