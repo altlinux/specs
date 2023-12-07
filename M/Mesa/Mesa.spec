@@ -97,7 +97,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt3
+Release: alt4
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -610,6 +610,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Dec 07 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.3.0-alt4
+- cherry-pick fff3fc45 (closes: #48653)
+
 * Wed Dec 06 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.3.0-alt3
 - enable vulkan driver imagination
 
