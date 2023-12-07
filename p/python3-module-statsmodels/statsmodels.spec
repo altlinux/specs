@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.14.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Statistical computations and models for Python
 License: BSD-3-Clause
@@ -68,6 +68,9 @@ ENDUNITTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 07 2023 Stanislav Levin <slev@altlinux.org> 1:0.14.0-alt2
+- Backported fix for build against Cython 3.0.
+
 * Fri Jul 14 2023 Stanislav Levin <slev@altlinux.org> 1:0.14.0-alt1
 - 0.11.1 -> 0.14.0.
 
