@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.14
+Version: 3.4.15
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Thu Dec 07 2023 Sergey V Turchin <zerg at altlinux dot org> 3.4.15-alt1
+- remove standard output from subprocesses when open URLs
+
 * Tue May 02 2023 Sergey V Turchin <zerg at altlinux dot org> 3.4.14-alt1
 - don't increase default font size on small screens
 
