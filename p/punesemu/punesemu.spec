@@ -1,6 +1,6 @@
 Name: punesemu
 Version: 0.110
-Release: alt2
+Release: alt3
 
 Summary: Qt-based NES emulator and NSF/NSFe Music Player
 License: GPLv2
@@ -15,7 +15,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: qt5-base-devel qt5-tools-devel
 BuildRequires: qt5-svg-devel
-BuildRequires: libalsa-devel libudev0
+BuildRequires: libalsa-devel libudev-devel
 BuildRequires: libX11-devel libXrandr-devel libXext-devel
 BuildRequires: p7zip
 BuildRequires: libavcodec-devel libavformat-devel
@@ -58,6 +58,10 @@ rm -rf %buildroot/usr/share/doc/puNES/
 %_datadir/metainfo/
 
 %changelog
+* Thu Dec 07 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.110-alt3
+- NMU: cleaned up build requirements for real (libudev-devel should be
+  used, not libudev0). Fixes FTBFS on LoongArch.
+
 * Wed Dec 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.110-alt2
 - NMU: fixed FTBFS on aarch64 (va_list is NOT a pointer there).
   While at it cleaned up build requirements (libudev-devel should be
