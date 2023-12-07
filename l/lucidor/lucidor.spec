@@ -3,7 +3,7 @@
 
 Name:     lucidor
 Version:  0.9.15
-Release:  alt2.2
+Release:  alt2.3
 
 Summary: E-book reader application
 
@@ -14,7 +14,7 @@ Packager: Nikolay Fetisov <naf@altlinux.ru>
 
 Autoreq: noshell
 
-ExclusiveArch: x86_64 aarch64 %e2k
+ExclusiveArch: x86_64 aarch64
 
 Source0: %name-%version.tar
 Source1: ru-RU.tar 
@@ -107,6 +107,9 @@ install -d %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu Dec 07 2023 Michael Shigorin <mike@altlinux.org> 0.9.15-alt2.3
+- EA: -= %%e2k (no xulrunner 52/45 available atm, sorry for the noise)
+
 * Wed Dec 06 2023 Michael Shigorin <mike@altlinux.org> 0.9.15-alt2.2
 - EA: += %%e2k
 
