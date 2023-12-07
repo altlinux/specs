@@ -98,8 +98,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.5
-Release: alt1.2
+Version: %ver_major.7
+Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -2425,6 +2425,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Dec 07 2023 Alexey Shabalin <shaba@altlinux.org> 1:254.7-alt1
+- 254.7 (Fixes: CVE-2023-31439)
+
 * Thu Oct 05 2023 Ivan A. Melnikov <iv@altlinux.org> 1:254.5-alt1.2
 - NMU: fix build w/o tpm2
 
