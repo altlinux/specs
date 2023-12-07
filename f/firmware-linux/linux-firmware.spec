@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20231204
-Release: alt2
+Version: 20231205
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -94,6 +94,10 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Thu Dec 07 2023 Cronbuild Service <cronbuild@altlinux.org> 20231205-alt1
+- upstream changes (GIT c004dbee):
+  + Update AMD cpu microcode (thx John Allen)
+
 * Wed Dec 06 2023 Michael Shigorin <mike@altlinux.org> 20231204-alt2
 - split off qcom, mrvl, mellanox subpackages:
   these hold huge firmwares for rare SoCs (e.g. robotics, 100GE switches)
