@@ -1,7 +1,7 @@
 %define module ALTLinux-ACL
 
 Name: perl-%module
-Version: 0.223
+Version: 0.224
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -19,6 +19,22 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-IPC-Run3 perl(Data/Array2Array
 %description
 %summary
 
+%package -n altlinux-acl-utils
+Group: Databases
+Summary: utilities for cached access to ALTLinux ACL files
+Requires: %name = %EVR
+Conflicts: perl-ALTLinux-ACL < 0.224
+Obsoletes: perl-ALTLinux-ACL < 0.224
+
+%description -n altlinux-acl-utils
+Utilities for cached quering ALTLinux ACL files
+and processing lists of source rpm names or files.
+
+Typical usage:
+* append acl list to the source list
+* prepend acl leader to the source list
+* filter source list by access according to acl
+
 %prep
 %setup -q -n %module-%version
 
@@ -29,13 +45,18 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-IPC-Run3 perl(Data/Array2Array
 %perl_vendor_install
 
 %files
+%perl_vendor_privlib/ALT*
+
+%files -n altlinux-acl-utils
 #doc Changes
 #doc README
-%perl_vendor_privlib/ALT*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Thu Dec 07 2023 Igor Vlasenko <viy@altlinux.org> 0.224-alt1
+- split altlinux-acl-utils subpackage
+
 * Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 0.223-alt1
 - new version
 
