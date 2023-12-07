@@ -4,13 +4,13 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     podman
-Version:  4.7.1
+Version:  4.8.1
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0
 Group:    System/Configuration/Other
-# https://github.com/containers/podman.git
+Vcs:      https://github.com/containers/podman.git
 Url:      https://podman.io/
 
 Source:   %name-%version.tar
@@ -23,8 +23,10 @@ BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
 BuildRequires: libassuan-devel libsystemd-devel libsubid-devel
 BuildRequires: /proc
 
+Requires: catatonit
 Requires: conmon >= 2.1.7
 Requires: containers-common-extra
+Requires: gvisor-tap-vsock
 %ifnarch %e2k %arm %ix86
 Requires: netavark >= 1.6.0
 %endif
@@ -153,6 +155,11 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Tue Dec 05 2023 Alexey Shabalin <shaba@altlinux.org> 4.8.1-alt1
+- New version 4.8.1.
+- Add Requires: catatonit (ALT#47032).
+- Add Requires: gvisor-tap-vsock.
+
 * Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 4.7.1-alt1
 - New version 4.7.1.
 
