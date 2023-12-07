@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: plasma5-%rname
-Version: 5.27.9
-Release: alt2
+Version: 5.27.10
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -207,6 +207,9 @@ done
 
 
 %changelog
+* Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt1
+- new version
+
 * Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
 - dont force alternate placement
 

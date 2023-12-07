@@ -1,8 +1,8 @@
 %define rname breeze-plymouth
 
 Name: plasma5-%{rname}
-Version: 5.27.9
-Release: alt2
+Version: 5.27.10
+Release: alt1
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -88,6 +88,9 @@ cat %SOURCE11 >breeze/images/os.logo.png
 /usr/share/plymouth/themes/breeze/
 
 %changelog
+* Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt1
+- new version
+
 * Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
 - dont force alternate placement
 

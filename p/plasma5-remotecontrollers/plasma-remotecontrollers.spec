@@ -4,8 +4,8 @@
 %def_disable xwiimote
 
 Name: plasma5-remotecontrollers
-Version: 5.27.9
-Release: alt2
+Version: 5.27.10
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -110,6 +110,9 @@ mv %buildroot/%_libdir/udev/rules.d/40-uinput.rules %buildroot/%_udevrulesdir/40
 %_K5dbus_iface/*remotecontrollers*
 
 %changelog
+* Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt1
+- new version
+
 * Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt2
 - dont force alternate placement
 

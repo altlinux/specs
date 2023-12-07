@@ -5,8 +5,8 @@
 %define rname kwallet-pam
 
 Name: plasma5-%rname
-Version: 5.27.9
-Release: alt3
+Version: 5.27.10
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -103,6 +103,9 @@ sed -i '/^ExecStart=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
 %_unitdir_user/*.service
 
 %changelog
+* Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt1
+- new version
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.9-alt3
 - fix find kwalletd
 

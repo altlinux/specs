@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.27.9
-Release: alt5
+Version: 5.27.10
+Release: alt1
 Epoch: 1
 %K5init
 
@@ -551,6 +551,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt1
+- new version
+
 * Mon Nov 13 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt5
 - fix lockout applet (closes: 48379)
 

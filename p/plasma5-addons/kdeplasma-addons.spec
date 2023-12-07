@@ -14,8 +14,8 @@
 %define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: plasma5-addons
-Version: 5.27.9
-Release: alt2
+Version: 5.27.10
+Release: alt1
 Epoch: 1
 %K5init
 
@@ -166,6 +166,9 @@ touch touch-%_arch
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt1
+- new version
+
 * Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
 - dont force alternate placement
 

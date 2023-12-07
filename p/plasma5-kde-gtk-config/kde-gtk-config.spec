@@ -1,8 +1,8 @@
 %define rname kde-gtk-config
 
 Name: plasma5-%rname
-Version: 5.27.9
-Release: alt2
+Version: 5.27.10
+Release: alt1
 Epoch: 1
 %K5init
 
@@ -95,6 +95,9 @@ ADD_OPTFLAGS=`pkg-config --cflags harfbuzz`
 %_datadir/themes/Breeze/window_decorations.css
 
 %changelog
+* Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt1
+- new version
+
 * Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.9-alt2
 - dont force alternate placement
 
