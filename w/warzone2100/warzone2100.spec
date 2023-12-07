@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: warzone2100
-Version: 4.2.6
-Release: alt2
+Version: 4.4.2
+Release: alt1
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
 License: GPLv2+ and CC-BY-SA-3.0
 Group: Games/Strategy
@@ -37,12 +37,19 @@ Source8: %name-%version-3rdparty-SQLiteCpp.tar
 Source9: %name-%version-3rdparty-SQLiteCpp-googletest.tar
 Source10: %name-%version-data-base-texpages.tar
 Source11: %name-%version-data-music.tar
+Source12: %name-%version-data-fonts.tar
+Source13: %name-%version-3rdparty-quickjs-wz.tar
+Source14: %name-%version-3rdparty-basis_universal.tar
+Source15: %name-%version-data-terrain_overrides-classic.tar
 
 Source1000: %name.watch
+# https://github.com/Warzone2100/data-terrain-high/releases/download/v1/high.wz
+Source1001: high.wz
 
 Patch1: %name-alt-unbundle-libs.patch
 Patch2: %name-alt-dont-install-portable-marker.patch
 Patch3: 0001-Fix-build-on-GCC13.patch
+Patch4: %name-alt-bundle-prebuilt.patch
 
 BuildRequires: /proc
 BuildRequires: qt5-base-devel qt5-3d-devel qt5-script-devel qt5-x11extras-devel openssl-devel
@@ -59,6 +66,10 @@ BuildRequires: libsodium-devel
 BuildRequires: libcurl-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libfmt-devel
+BuildRequires: asciidoctor
+BuildRequires: libharfbuzz-devel
+BuildRequires: libopus-devel
+BuildRequires: libopusfile-devel
 
 # 'zip -T' called in build process needs unzip to work...
 
@@ -81,12 +92,14 @@ BuildArch: noarch
 Game data for warzone2100.
 
 %prep
-%setup -a1 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11
+%setup -a1 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 install -m644 %SOURCE2 build_tools/autorevision.cache
+install -m644 %SOURCE1001 data/terrain_overrides/high.wz
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -95,6 +108,7 @@ install -m644 %SOURCE2 build_tools/autorevision.cache
 	-DWZ_DISTRIBUTOR="ALT Linux" \
 	-DWZ_FINDSDL2_NOCONFIG:BOOL=OFF \
 	-DWZ_ENABLE_WARNINGS_AS_ERRORS:BOOL=OFF \
+	-DWZ_FORCE_MINIMAL_OPUSFILE:BOOL=OFF \
 	%nil
 
 %cmake_build
@@ -109,7 +123,7 @@ install -pD -m644 warzone2100_16x16.png %buildroot%_miconsdir/warzone2100.png
 
 rm -rf %buildroot%_datadir/fonts
 rm -rf %buildroot%_datadir/doc
-rm -rf %buildroot%_iconsdir/warzone2100.png
+rm -rf %buildroot%_iconsdir/net.wz2100.warzone2100.png
 
 %find_lang warzone2100
 
@@ -128,6 +142,9 @@ rm -rf %buildroot%_iconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Mon Dec 04 2023 Elizaveta Morozova <morozovaes@altlinux.org> 4.4.2-alt1
+- Updated version.
+
 * Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 4.2.6-alt2
 - Fix build on GCC13
 
