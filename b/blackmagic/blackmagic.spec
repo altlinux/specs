@@ -1,5 +1,5 @@
 Name: blackmagic
-Version: 1.10.0
+Version: 1.10.1
 Release: alt1
 
 Summary: In-application debugging tool for embedded microprocessors
@@ -43,6 +43,9 @@ install -pm0644 -D driver/99-blackmagic.rules %buildroot%_udevrulesdir/60-blackm
 %_bindir/swolisten
 
 %changelog
+* Thu Dec 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.10.1-alt1
+- 1.10.1 released
+
 * Mon Oct 30 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.10.0-alt1
 - 1.10.0 released
 
