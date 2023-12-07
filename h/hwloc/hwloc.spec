@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hwloc
-Version: 2.9.3
+Version: 2.10.0
 Release: alt1
 Summary: Portable Hardware Locality (hwloc)
 License: BSD
@@ -125,6 +125,9 @@ This package contains documentation for hwloc.
 %doc doc/doxygen-doc/html
 
 %changelog
+* Thu Dec 07 2023 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt1
+- New version.
+
 * Wed Oct 11 2023 Andrey Cherepanov <cas@altlinux.org> 2.9.3-alt1
 - New version.
 
