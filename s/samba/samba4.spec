@@ -120,7 +120,7 @@
 %endif
 
 Name:    samba
-Version: 4.19.2
+Version: 4.19.3
 Release: alt1
 
 Group:   System/Servers
@@ -2212,6 +2212,15 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Dec 05 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.19.3-alt1
+- Update to stable release of Samba 4.19 with fixes of the Samba CVE for
+  Deleted Object tombstones visible in AD LDAP to normal users (CVE-2018-14628).
+- Security fixes:
+  + CVE-2018-14628: Wrong ntSecurityDescriptor values for "CN=Deleted Objects"
+                    allow read of object tombstones over LDAP
+                    (Administrator action required!)
+                    https://www.samba.org/samba/security/CVE-2018-14628.html
+
 * Mon Nov 06 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.19.2-alt1
 - Update to stable release of Samba 4.19 with latest bugfixes and new features:
  + Migrated smbget to use common command line parser. This has some advantages
