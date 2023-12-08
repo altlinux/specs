@@ -1,13 +1,12 @@
 Name: xisxwayland
 Version: 2
-Release: alt1
+Release: alt2
 
 Summary: Tool to check if the X server is XWayland
 License: MIT
 Group: System/X11
 
-Url: https://www.x.org
-Packager: Artem Kurashov <saahriktu@altlinux.org>
+Url: https://gitlab.freedesktop.org/xorg/app/xisxwayland
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
@@ -36,5 +35,8 @@ Xwayland server and 1 otherwise.
 %_man1dir/%name.1*
 
 %changelog
+* Thu Nov 30 2023 Artem Kurashov <saahriktu@altlinux.org> 2-alt2
+- Tidying up the .spec file.
+
 * Mon Feb 13 2023 Artem Kurashov <saahriktu@altlinux.org> 2-alt1
-- Initial package
+- Initial package.
