@@ -2,16 +2,17 @@
 %define optflags_lto %nil
 
 %define binary_name missioncenter
-%define ver_major 0.3
+%define ver_major 0.4
 %define rdn_name io.missioncenter.MissionCenter
-%define nvtop_ver be47f8c560487efc6e6a419d59c69bfbdb819324
+# src/sys_info_v2/gatherer/3rdparty/nvtop/nvtop.json
+%define nvtop_ver 45a1796375cd617d16167869bb88e5e69c809468
 
 %def_disable bootstrap
 
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Mission Center
@@ -93,6 +94,9 @@ sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\23|' data/hwdb/*.py
 
 
 %changelog
+* Fri Dec 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Wed Oct 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - first build for Sisyphus
 
