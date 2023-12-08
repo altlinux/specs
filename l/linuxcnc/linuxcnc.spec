@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.1
-Release: alt2.20231009
+Release: alt3.20231009
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -12,7 +12,7 @@ License: GPLv2+ and LGPLv2
 Group: Engineering
 Url: https://github.com/LinuxCNC/linuxcnc
 
-ExclusiveArch: aarch64 alpha %arm ia64 %ix86 x86_64 %e2k
+ExclusiveArch: aarch64 alpha %arm ia64 %ix86 x86_64 %e2k loongarch64
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -239,6 +239,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Thu Dec 07 2023 Ivan A. Melnikov <iv@altlinux.org> 2.9.1-alt3.20231009
+- NMU: loongarch64 support (thx asheplyakov@).
+
 * Fri Oct 13 2023 Grigory Ustinov <grenka@altlinux.org> 2.9.1-alt2.20231009
 - NMU: dropped dependency on distutils.
 
