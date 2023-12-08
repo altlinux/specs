@@ -1,6 +1,6 @@
 Name:    netbox-config-backup
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: A configuration backup system using napalm
 License: Apache-2.0
@@ -50,5 +50,8 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/ncb-rq@.service
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Thu Dec 07 2023 Alexander Burmatov <thatman@altlinux.org> 1.5.0-alt2
+- Fix service file.
+
 * Sat Nov 11 2023 Alexander Burmatov <thatman@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus.
