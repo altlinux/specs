@@ -2,7 +2,7 @@
 
 Name: libnvme
 Version: 1.6
-Release: alt1
+Release: alt2
 Summary: Linux-native nvme device management library
 Group: System/Libraries
 
@@ -14,6 +14,8 @@ Url: http://github.com/linux-nvme/libnvme
 
 BuildRequires(pre): meson
 BuildRequires: libjson-c-devel libdbus-devel openssl-devel
+BuildRequires: python3-dev rpm-macros-python3 rpm-build-python3 
+BuildRequires: swig libkeyutils-devel
 
 %description
 Provides library functions for accessing and managing nvme devices on a Linux
@@ -34,6 +36,14 @@ Group: Development/C
 %description devel
 This package provides header files to include and libraries to link with
 for Linux-native nvme device maangement.
+
+%package -n python3-module-libnvme
+Summary: Python files for Linux-native nvme
+Requires: %{name}%{soname}
+Group: Development/Python
+ 
+%description -n python3-module-libnvme
+This package provides Python files for Linux-native nvme device maangement.
 
 %prep
 %setup
@@ -62,7 +72,13 @@ rm -f %buildroot%_libdir/*.a
 %_pkgconfigdir/*
 %_man2dir/*
 
+%files -n python3-module-libnvme
+%python3_sitelibdir/libnvme/
+
 %changelog
+* Tue Dec 05 2023 Artem Kurashov <saahriktu@altlinux.org> 1.6-alt2
+- Add python3-module-libnvme package.
+
 * Sat Nov 04 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6-alt1
 - 1.6.
 
