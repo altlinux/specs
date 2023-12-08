@@ -1,5 +1,5 @@
 Name: v4l-utils
-Version: 1.24.1
+Version: 1.26.0
 Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
@@ -8,7 +8,8 @@ Group: Video
 Url: http://linuxtv.org
 
 Source: %name-%version-%release.tar
-BuildRequires: gcc-c++ libalsa-devel libGLU-devel libjpeg-devel
+BuildRequires: gcc-c++ meson
+BuildRequires: libalsa-devel libGLU-devel libjpeg-devel
 BuildRequires: libsystemd-devel libudev-devel qt5-base-devel
 
 %package -n ir-keytable
@@ -78,12 +79,11 @@ also serve as a generic video/TV viewer application.
 %setup
 
 %build
-[ -x bootstrap.sh ] && ./bootstrap.sh
-%configure --disable-static
-%make_build
+%meson -Dgconv=disabled
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
 %doc ChangeLog COPYING README.*
@@ -143,6 +143,9 @@ also serve as a generic video/TV viewer application.
 %endif
 
 %changelog
+* Fri Dec 08 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.26.0-alt1
+- 1.26.0 released
+
 * Tue Feb 28 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.24.1-alt1
 - 1.24.1 released
 
