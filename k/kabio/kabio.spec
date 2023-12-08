@@ -2,7 +2,7 @@
 
 Name: kabio
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Kabio is a program that recognizes notes from a signal
 License: GPL-3.0
@@ -35,6 +35,9 @@ sed -i 's/find_package(Qt5LinguistTools)/&\nfind_package(PkgConfig)\npkg_check_m
 sed -i '/\.qm/s|build|%_cmake__builddir|' src/resources.qrc
 
 %build
+%ifarch %e2k
+%add_optflags -Wno-error=unused-variable
+%endif
 %cmake -DCMAKE_BUILD_TYPE:STRING=Release
 %nil
 %cmake_build --parallel 1
@@ -54,6 +57,9 @@ sed -i '/\.qm/s|build|%_cmake__builddir|' src/resources.qrc
 %doc README*
 
 %changelog
+* Fri Dec 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1.1
+- fixed build for %%e2k
+
 * Tue Nov 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - first build for Sisyphus
 
