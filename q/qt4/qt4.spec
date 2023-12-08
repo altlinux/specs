@@ -42,7 +42,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt25
+%define rlz alt26
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -802,7 +802,7 @@ sed -i /meego/d src/plugins/graphicssystems/graphicssystems.pro
 
 %build
 %define optflags_lto %nil
-%add_optflags -std=gnu++98 -Wno-deprecated -DOPENSSL_LOAD_CONF -DOPENSSL_NO_SSL2
+%add_optflags -std=gnu++98 -fpermissive -Wno-deprecated -DOPENSSL_LOAD_CONF -DOPENSSL_NO_SSL2
 # install %%optflags
 subst "s|^\s*QMAKE_CFLAGS\s*=.*$|QMAKE_CFLAGS = %optflags -DGLX_GLXEXT_LEGACY|" mkspecs/*/qmake.conf
 subst "s|^\s*QMAKE_CFLAGS\s*=.*$|QMAKE_CFLAGS = %optflags -DGLX_GLXEXT_LEGACY|" mkspecs/common/g++.conf
@@ -1493,6 +1493,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Tue Sep 26 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.8.7-alt26
+- NMU: build with -fpermissive to avoid FTBFS with GCC 13
+
 * Fri Oct 01 2021 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt25
 - fix to build with gcc11
 
