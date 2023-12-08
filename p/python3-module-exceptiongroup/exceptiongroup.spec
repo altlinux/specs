@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.3
+Version: 1.2.0
 Release: alt1
 Summary: Backport of PEP 654 (exception groups)
 License: MIT
@@ -49,6 +49,9 @@ Backport of PEP 654 (exception groups)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Dec 07 2023 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.3 -> 1.2.0.
+
 * Tue Aug 15 2023 Stanislav Levin <slev@altlinux.org> 1.1.3-alt1
 - 1.1.2 -> 1.1.3.
 
