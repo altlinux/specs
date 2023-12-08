@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.14
+Version: 1.5.15
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,18 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Dec 08 2023 Anton Midyukov <antohami@altlinux.org> 1.5.15-alt1
+- dev: overrides packages in main repo only when selected use/dev/repo
+- e2k: fix 40-e2k-boot-conf (thanks Michael Shigorin @mike)
+- net, x11, pkg.in/lists: rename & replace tagged lists: base+nm, desktop+nm
+- x11: add +nm-gtk4, use/x11/gtk4/nm (NetworkManager-*-gtk*)
+- mixin.mk, regular-vm.mk: replace mixin/vm-archdep* to mixin.mk
+- vmguest: create dri subtargets from x11, other fixes
+- stage2, live-install: --no-hardlinks to squashcfg.mk if LIVE_INSTALL specified
+- datetime: initial feature
+- firmware: do not add non-existent packages firmware-rt.*
+- base+firmware+wireless: cleanup non-existent packages
+
 * Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 1.5.14-alt1
 - image.in/Makefile: fix show out image size
 - distro.mk: fix VOL_SET when is empty (fixed typo)
