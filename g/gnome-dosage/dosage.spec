@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: GNOME Dosage
@@ -73,6 +73,9 @@ Features:
 %doc README*
 
 %changelog
+* Sat Dec 09 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.6-alt1
+- 1.4.6
+
 * Thu Dec 07 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
 - 1.4.5
 
