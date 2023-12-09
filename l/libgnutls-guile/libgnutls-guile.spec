@@ -1,6 +1,6 @@
 Name: libgnutls-guile
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: Guile bindings for the GnuTLS library
 License: LGPLv2.1+ and GPLv3+
@@ -14,12 +14,7 @@ BuildRequires: makeinfo
 # Unfortunately we have different version
 # on e2k and don't have guile-devel.
 # See https://bugzilla.altlinux.org/34496
-%ifarch %e2k
-BuildRequires: guile20-devel
-BuildRequires: libguile20-devel
-%else
 BuildRequires: guile22-devel
-%endif
 Obsoletes: libgnutls-new-guile < %version
 
 %description
@@ -50,6 +45,9 @@ Guile-GnuTLS provides Guile bindings for the GnuTLS library.
 %exclude %_libdir/guile/*/extensions/*.la
 
 %changelog
+* Sun Dec 10 2023 Michael Shigorin <mike@altlinux.org> 4.0.0-alt2
+- E2K: no special handling required.
+
 * Wed Sep 06 2023 Mikhail Efremov <sem@altlinux.org> 4.0.0-alt1
 - Updated to 4.0.0.
 
