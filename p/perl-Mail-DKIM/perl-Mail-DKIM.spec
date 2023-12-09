@@ -1,20 +1,24 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Carp.pm) perl(Crypt/OpenSSL/RSA.pm) perl(Crypt/PK/Ed25519.pm) perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(Getopt/Long/Descriptive.pm) perl(MIME/Base64.pm) perl(MIME/Lite.pm) perl(Mail/Address.pm) perl(Mail/AuthenticationResults/Header/AuthServID.pm) perl(Net/DNS.pm) perl(Net/DNS/Resolver.pm) perl(Net/DNS/Resolver/Mock.pm) perl(Pod/Usage.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/RequiresInternet.pm) perl(Test/Simple.pm) perl(YAML/XS.pm) perl(base.pm) perl(lib.pm) perl(strict.pm) perl(warnings.pm)
+# END SourceDeps(oneline)
+%define module_name Mail-DKIM
 %define _unpackaged_files_terminate_build 1
 # network is disabled :(
 %def_disable test
 %define module Mail-DKIM
 
 Name: perl-%module
-Version: 1.20200513.1
+Version: 1.20230911
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
 Summary: Perl module for DKIM-based mail-signing and -verifying
-License: Perl
+License: perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source0: http://www.cpan.org/authors/id/M/MB/MBRADSHAW/%{module}-%{version}.tar.gz
+Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/MB/MBRADSHAW/%{module_name}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +30,7 @@ This module implements the various components of the DKIM message-signing and
 verifying standard for Internet mail.
 
 %prep
-%setup -q -n %{module}-%{version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,11 +39,13 @@ verifying standard for Internet mail.
 %perl_vendor_install
 
 %files
-%doc Changes README.md doc README
+%doc README Changes LICENSE TODO README.md doc
 %perl_vendor_privlib/Mail
-#exclude %perl_vendor_privlib/Mail/sample*
 
 %changelog
+* Fri Dec 08 2023 Igor Vlasenko <viy@altlinux.org> 1.20230911-alt1
+- updated by package builder
+
 * Tue Jun 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.20200513.1-alt1
 - automated CPAN update
 
