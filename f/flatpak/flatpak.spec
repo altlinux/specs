@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.14.4
+Version: 1.14.5
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -134,6 +134,7 @@ NOCONFIGURE=1 ./autogen.sh
            --with-systemduserunitdir=%_userunitdir \
            --with-sysusersdir=%_sysusersdir \
            --with-systemdsystemenvgendir=%_env_gen_dir \
+           --with-tmpfilesdir=%_tmpfilesdir \
            %endif
            %{?_with_system_dbus_proxy:DBUS_PROXY=%_bindir/xdg-dbus-proxy}
 %nil
@@ -193,6 +194,7 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_env_gen_dir/60-%name-system-only
 %_user_env_gen_dir/60-%name
 %_userunitdir/%name-oci-authenticator.service
+%_tmpfilesdir/%name.conf
 %endif
 
 %_man5dir/*
@@ -220,6 +222,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Sat Dec 09 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.5-alt1
+- 1.14.5
+
 * Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
 - 1.14.4 (fixed CVE-2023-28100, CVE-2023-28101)
 
