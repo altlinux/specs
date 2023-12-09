@@ -1,14 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname pyliblo
 
 Name: %oname
-Version: 0.10.0
-Release: alt5
+Version: 0.10.2
+Release: alt1
 Summary: Python bindings for the liblo OSC library
 
 License: GPLv2+
 Group: Development/Python3
 URL: http://das.nasophon.de/pyliblo/
 
+VCS: https://github.com/bonktree/pyliblo
 Source0:        %name-%version.tar
 
 BuildRequires:  gcc
@@ -67,10 +70,13 @@ chmod -x examples/*
 
 %files -n python3-module-%oname
 %doc NEWS README examples/ COPYING
-%python3_sitelibdir/liblo*.so
+%python3_sitelibdir/liblo*
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Dec 09 2023 Arseny Maslennikov <arseny@altlinux.org> 0.10.2-alt1
+- 0.10.0 -> 0.10.2.
+
 * Sat Dec 09 2023 Arseny Maslennikov <arseny@altlinux.org> 0.10.0-alt5
 - Split out the example utilities to a new subpackage: pyliblo-utils.
 
