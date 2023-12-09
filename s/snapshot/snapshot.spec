@@ -4,9 +4,10 @@
 %define xdg_name org.gnome.Snapshot
 
 %def_disable bootstrap
+%def_enable check
 
 Name: snapshot
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Camera
@@ -33,13 +34,14 @@ Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-plugins-bad1.0 >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson rust-cargo /usr/bin/appstream-util desktop-file-utils
+BuildRequires: meson rust-cargo
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(pango) >= %pango_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-video-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-plugins-bad-1.0) >= %gst_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
 #BuildRequires: pkgconfig(libheif) >= %heif_ver
 #BuildRequires: librsvg-devel libxml2-devel
 
@@ -63,6 +65,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %meson_install
 %find_lang %name
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
@@ -74,6 +79,10 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Dec 09 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
+- 45.1
+- enabled %%check
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
