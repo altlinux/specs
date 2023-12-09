@@ -1,6 +1,6 @@
 Name: liquidwar6
 Version: 0.6.3902
-Release: alt6
+Release: alt7
 
 Summary: A unique multiplayer wargame
 License: GPL
@@ -28,10 +28,7 @@ on Internet.
 %prep
 %setup
 %patch0 -p1
-%ifnarch %e2k
-# guile 2.0 so far
 %patch1 -p1
-%endif
 
 # Building the package
 %build
@@ -60,6 +57,9 @@ rm -rf %buildroot%prefix/libexec
 %_desktopdir/%{name}*
 
 %changelog
+* Sun Dec 10 2023 Michael Shigorin <mike@altlinux.org> 0.6.3902-alt7
+- E2K: no special handling required
+
 * Thu Jun 25 2020 Michael Shigorin <mike@altlinux.org> 0.6.3902-alt6
 - E2K: guile 2.0 so far, no need for patch1
 
