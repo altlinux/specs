@@ -1,6 +1,6 @@
 Name: qastools
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Collection of desktop applications for ALSA
 License: GPLv3
@@ -9,9 +9,6 @@ Group: Sound
 Url: http://xwmw.org/qastools
 Source: %name-%version.tar
 Patch: disabled-tray-icon-at-startup.patch
-
-# https://bugzilla.altlinux.org/47318
-Requires: qt6-svg
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -41,6 +38,8 @@ Summary: ALSA configuration browser
 Group: Sound
 Requires: qascommon = %version-%release
 Requires: icon-theme-hicolor
+# https://bugzilla.altlinux.org/47318
+Requires: qt6-svg
 
 %description -n qasconfig
 Browser for the ALSA configuration tree.
@@ -50,6 +49,8 @@ Summary: ALSA complex mixer
 Group: Sound
 Requires: qascommon = %version-%release
 Requires: icon-theme-hicolor
+# https://bugzilla.altlinux.org/47318
+Requires: qt6-svg
 
 %description -n qashctl
 Mixer for ALSA's more complex "High level Control Interface".
@@ -59,6 +60,8 @@ Summary: ALSA simple mixer
 Group: Sound
 Requires: qascommon = %version-%release
 Requires: icon-theme-hicolor
+# https://bugzilla.altlinux.org/47318
+Requires: qt6-svg
 
 %description -n qasmixer
 Desktop mixer for ALSA's "Simple Mixer Interface" (alsamixer).
@@ -106,6 +109,9 @@ done
 %_datadir/metainfo/qasmixer.appdata.xml
 
 %changelog
+* Wed Dec 06 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt2
+- Requires: qt6-svg for qasconfig, qashctl, qasmixer
+
 * Tue Dec 05 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
 - New version 1.0.0
 - build with qt6
