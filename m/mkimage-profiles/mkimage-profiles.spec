@@ -1,6 +1,6 @@
 Name: mkimage-profiles
 Version: 1.5.15
-Release: alt1
+Release: alt2
 
 Summary: ALT based distribution metaprofile
 License: GPLv2+
@@ -24,11 +24,11 @@ Requires: mkimage-preinstall
 %define mpdir %_datadir/%name
 %add_findreq_skiplist %mpdir/*.in/*
 
-%ifarch loongarch64
-# No java here [yet]
-%def_without doc
-%else
+%if %_build_cpu != "loongarch64"
 %def_with doc
+%else
+# XXX: documentation tools dependencies are INSANE (java)
+%def_without doc
 %endif
 %define docs $HOME/docs
 
@@ -134,6 +134,13 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Sat Dec 09 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.5.15-alt2
+- vmguest: unbreak on non-x86 architectures
+- LoongArch:
+  + install drivers and tools for VM guests
+  + install dmidecode
+  + do not build documentation (requires java and co)
+
 * Fri Dec 08 2023 Anton Midyukov <antohami@altlinux.org> 1.5.15-alt1
 - dev: overrides packages in main repo only when selected use/dev/repo
 - e2k: fix 40-e2k-boot-conf (thanks Michael Shigorin @mike)
