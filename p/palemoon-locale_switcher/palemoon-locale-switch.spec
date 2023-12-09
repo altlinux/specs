@@ -5,7 +5,7 @@
 
 Name:    palemoon-locale_switcher
 Version: 3.1.0
-Release: alt2.2
+Release: alt2.3
 
 Summary: The Palemoon locale switcher
 
@@ -21,7 +21,6 @@ ExclusiveArch: x86_64 aarch64
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %pname-%version.xpi
-#Patch: pm_locale_switch-3.1.0-locale.patch
 
 BuildRequires(pre):	rpm-build-palemoon
 
@@ -42,11 +41,17 @@ and is distributed under the GNU General Public License, V3.
 
 %prep
 %setup -c -n %pname-%version/%cid
-#patch -p2
+
 
 %install
 mkdir -p %buildroot/%cid_dir
 cp -r pm_locale_switch/. %buildroot/%cid_dir
+
+install -d %buildroot%palemoon_datadir/defaults/pref/
+
+cat << EOF >> %buildroot%palemoon_datadir/defaults/pref/local_switcher_pref.js
+pref("intl.locale.matchOS", false);
+EOF
 
 %postun
 if [ "$1" = 0 ]; then
@@ -55,8 +60,12 @@ fi
 
 %files
 %cid_dir
+%palemoon_datadir/defaults/pref/local_switcher_pref.js
 
 %changelog
+* Sat Dec 09 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt2.3
+- Add local_switcher_pref.js (ALT bug #48746)
+
 * Thu Nov 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt2.2
 - Change to ExclusiveArch x86_64 aarch64
 
