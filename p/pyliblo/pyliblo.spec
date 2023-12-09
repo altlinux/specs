@@ -2,7 +2,7 @@
 
 Name: %oname
 Version: 0.10.0
-Release: alt4
+Release: alt5
 Summary: Python bindings for the liblo OSC library
 
 License: GPLv2+
@@ -34,7 +34,18 @@ pyliblo is a Python wrapper for the liblo Open Sound Control library.
 It supports almost the complete functionality of liblo, allowing you
 to send and receive OSC messages using a nice and simple Python API.
 
-Also included are the command line utilities send_osc and dump_osc.
+This package contains the Python module.
+
+%package -n %oname-utils
+Summary: Utilities to accompany the liblo OSC library
+Group: Sound
+
+%description -n %oname-utils
+pyliblo is a Python wrapper for the liblo Open Sound Control library.
+It supports almost the complete functionality of liblo, allowing you
+to send and receive OSC messages using a nice and simple Python API.
+
+This package contains the command line utilities send_osc and dump_osc.
 
 %prep
 %setup
@@ -50,14 +61,19 @@ chmod -x examples/*
 %install
 %pyproject_install
 
+%files -n %oname-utils
+%_bindir/*_osc
+%_mandir/man*/*_osc.*
+
 %files -n python3-module-%oname
 %doc NEWS README examples/ COPYING
-%_mandir/man*/*.*
-%_bindir/*_osc
 %python3_sitelibdir/liblo*.so
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Dec 09 2023 Arseny Maslennikov <arseny@altlinux.org> 0.10.0-alt5
+- Split out the example utilities to a new subpackage: pyliblo-utils.
+
 * Wed Jul 20 2022 Arseny Maslennikov <arseny@altlinux.org> 0.10.0-alt4
 - Rebuilt for the following reasons:
   + to use %%pyproject_* in spec file;
