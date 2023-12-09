@@ -2,7 +2,7 @@
 
 Name: alterator-mirror
 Version: 0.4.10
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -19,12 +19,7 @@ Requires: vixie-cron
 
 BuildPreReq: alterator >= 5.0
 BuildRequires: alterator-fbi
-
-%ifarch %e2k
-BuildRequires: guile20-devel libguile20-devel
-%else
 BuildRequires: guile22-devel
-%endif
 
 Conflicts: alterator-fbi < 5.17-alt4
 Conflicts: apt-conf-sisyphus < 5.0-alt3
@@ -73,6 +68,9 @@ install -Dpm640 allowed %buildroot%_sysconfdir/alterator/mirror/allowed
 %config(noreplace) %_sysconfdir/alterator/mirror/allowed
 
 %changelog
+* Sat Dec 09 2023 Michael Shigorin <mike@altlinux.org> 0.4.10-alt2
+- E2K: no special handling required.
+
 * Mon Dec 04 2023 Andrey Cherepanov <cas@altlinux.org> 0.4.10-alt1
 - Supported allowed repo names in /etc/alterator/mirror/allowed.
 - Fixed regexp for custom url (ALT #43503).
