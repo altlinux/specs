@@ -4,7 +4,7 @@
 %define libkpimimportwizard libkpimimportwizard%sover
 
 Name: kde5-%rname
-Version: 23.08.3
+Version: 23.08.4
 Release: alt1
 %K5init
 
@@ -91,6 +91,9 @@ sed -i '/DESTINATION/s/\${KDE_INSTALL_INCLUDEDIR}\/KPim\//${KDE_INSTALL_INCLUDED
 %_K5lib/libKPim5ImportWizard.so.*
 
 %changelog
+* Fri Dec 08 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 

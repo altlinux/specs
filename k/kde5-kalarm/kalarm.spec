@@ -5,8 +5,8 @@
 %define libkalarmplugin libkalarmplugin%pim_sover
 
 Name: kde5-%rname
-Version: 23.08.3
-Release: alt2
+Version: 23.08.4
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,6 @@ Obsoletes: kde5-pim-kalarm < %EVR
 Conflicts: kde5-pim-common < 16.12
 
 Source: %rname-%version.tar
-Patch1: 42306336.patch
 #Patch100: alt-kalarm-ignore-tz.patch
 
 # Automatically added by buildreq on Thu Mar 16 2017 (-bi)
@@ -69,7 +68,6 @@ Requires: %name-common
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
@@ -110,6 +108,9 @@ Requires: %name-common
 %_K5lib/libkalarmplugin.so.*
 
 %changelog
+* Fri Dec 08 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Fri Dec 01 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt2
 - show correct calendar names when deleting (thanks krf10@alt) (closes: 41826)
 
