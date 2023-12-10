@@ -2,21 +2,24 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%define libexec %_libdir
+
 Name: speech-dispatcher
-Version: 0.10.2
-Release: alt2
+Version: 0.11.5
+Release: alt1
 
 Summary: A speech output processing service
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Sound
 URL: http://www.freebsoft.org/speechd
 
-Source: http://devel.freebsoft.org/pub/projects/speechd/%name-%version.tar
+# Source-url: https://github.com/brailcom/speechd/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
+
 # fc
 Source1: %{name}d.service
 Patch: speech-dispatcher-0.8-alt-flite.patch
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: libdotconf-devel >= 0.3
 BuildRequires: gcc-c++ glib2-devel glibc-devel-static intltool
 BuildRequires: libXau-devel  libltdl7-devel
@@ -102,7 +105,7 @@ This python module allows programmsaccess speech-dispatcher service.
 %autoreconf
 %configure --with-espeak \
 	   --with-flite  \
-           --with-pico \
+	   --with-pico \
 	   --with-pulse \
 	   --with-alsa \
 	   --with-libao \
@@ -112,6 +115,7 @@ This python module allows programmsaccess speech-dispatcher service.
 	   --without-ibmtts \
 	   --without-baratinoo \
 	   --disable-static \
+	   --with-module-bindir=%{_libdir}/speech-dispatcher-modules/
 	   %nil
 %make_build
 
@@ -168,6 +172,9 @@ find %buildroot%_libdir -name '*.la' -delete
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Sat Dec 09 2023 Anton Midyukov <antohami@altlinux.org> 0.11.5-alt1
+- 0.11.5 (Closes: 48428)
+
 * Fri Oct 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.2-alt2
 - Fixed build with LTO
 
