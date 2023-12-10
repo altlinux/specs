@@ -11,8 +11,8 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 059
-Release: alt1
+Version: 060
+Release: alt0.1
 
 Summary: Initramfs generator using udev
 Group: System/Base
@@ -307,6 +307,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/01systemd-ac-power
 %dracutlibdir/modules.d/01systemd-ask-password
 %dracutlibdir/modules.d/01systemd-coredump
+%dracutlibdir/modules.d/01systemd-creds
 %dracutlibdir/modules.d/01systemd-hostnamed
 %dracutlibdir/modules.d/01systemd-initrd
 %dracutlibdir/modules.d/01systemd-integritysetup
@@ -318,7 +319,6 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/01systemd-pstore
 %dracutlibdir/modules.d/01systemd-repart
 %dracutlibdir/modules.d/01systemd-resolved
-%dracutlibdir/modules.d/01systemd-rfkill
 %dracutlibdir/modules.d/01systemd-sysext
 %dracutlibdir/modules.d/01systemd-sysctl
 %dracutlibdir/modules.d/01systemd-sysusers
@@ -428,7 +428,6 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/01systemd-networkd
 %dracutlibdir/modules.d/35connman
 %dracutlibdir/modules.d/35network-legacy
-%dracutlibdir/modules.d/35network-wicked
 %dracutlibdir/modules.d/40network
 %dracutlibdir/modules.d/45ifcfg
 %dracutlibdir/modules.d/45url-lib
@@ -490,6 +489,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Sun Dec 10 2023 Alexey Shabalin <shaba@altlinux.org> 060-alt0.1
+- 060 pre-release
+
 * Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 059-alt1
 - 059
 
