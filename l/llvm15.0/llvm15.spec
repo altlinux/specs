@@ -79,7 +79,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt6
+Release: alt7
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -109,6 +109,8 @@ Patch19: llvm-D132140.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 Patch103: clang-15-alt-rocm-device-libs-path.patch
+# fix libdevice search path for CUDA
+Patch104: clang-alt-nvvm-libdevice.patch
 # use DWARF4 by default
 Patch200: clang-produce-DWARF4-by-default.patch
 
@@ -629,6 +631,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1 -b .clang-rocm-device-libs-path
+%patch104 -p1 -b .clang-libdevice-fix-path
 %patch200 -p1
 
 # LLVM 12 and onward deprecate Python 2:
@@ -1197,6 +1200,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Fri Dec 08 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt7
+- Applied fixes:
+  clang: fix CUDA libdevice search path.
+
 * Mon Oct 02 2023 Arseny Maslennikov <arseny@altlinux.org> 15.0.7-alt6
 - Fix FTBFS: use llvm15.0 to build us explicitly.
 - clang: Pass --build-id=sha1 to linkers by default. (Closes: 47780)
