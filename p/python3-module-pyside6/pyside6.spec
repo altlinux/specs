@@ -12,8 +12,8 @@
 %global clang_version %(echo %llvm_version | cut -d . -f 1)
 
 Name: python3-module-%mod_name
-Version: 6.6.0
-Release: alt2
+Version: 6.6.1
+Release: alt1
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -24,7 +24,6 @@ URL: https://wiki.qt.io/Qt_for_Python
 Source: pyside-setup-opensource-%version.tar
 Patch0: always-link-to-python-libraries.patch
 Patch1: pyside6-6.6.0-no-qtexampleicons.patch
-Patch2: pyside6-6.6.0-fix-qtasyncio-install-dir.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ninja
@@ -176,7 +175,6 @@ to Python, or even to get useful information to debug an application.
 %setup -n pyside-setup-opensource-%version
 %patch0 -p0
 %patch1 -p2
-%patch2 -p2
 
 %build
 # Fix installation dir
@@ -206,9 +204,6 @@ DESTDIR="/usr/src/tmp/%{name}-buildroot" cmake --install %_cmake__builddir/sourc
 DESTDIR="/usr/src/tmp/%{name}-buildroot" cmake --install %_cmake__builddir/sources/pyside6
 
 sed -i 's#env python$#python3#' %buildroot%_bindir/shiboken_tool.py
-
-mkdir -p %buildroot%_qt6_plugindir/designer
-mv %buildroot/usr/plugins/designer/libPySidePlugin.so %buildroot%_qt6_plugindir/designer
 
 #Generate egg-info manually and install since we're performing a cmake build.
 export PATH="%_qt6_bindir:$PATH"
@@ -261,7 +256,6 @@ popd
 %doc README.md
 %_libdir/libpyside6.abi3.so.*
 %_libdir/libpyside6qml.abi3.so.*
-%dir %_qt6_plugindir/designer
 %_qt6_plugindir/designer/libPySidePlugin.so
 %python3_sitelibdir/PySide6
 %python3_sitelibdir/PySide6-%version-*.egg-info
@@ -295,6 +289,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Sun Dec 10 2023 Anton Vyatkin <toni@altlinux.org> 6.6.1-alt1
+- new version 6.6.1
+
 * Wed Nov 15 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.6.0-alt2
 - NMU: fixed FTBFS on LoongArch (use llvm 16)
 
