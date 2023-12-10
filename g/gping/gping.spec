@@ -1,14 +1,16 @@
 %def_with check
 
 Name: gping
-Version: 1.8.0
+Version: 1.16.0
 Release: alt1
 Summary: Ping, but with a graph
 License: MIT
 Group: Networking/Other
 Url: https://github.com/orf/gping
 Source: %name-%version.tar
+Source1: vendor.tar
 
+BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
 
 %if_with check
@@ -19,7 +21,7 @@ BuildRequires: iputils
 %summary.
 
 %prep
-%setup
+%setup -a 1
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -30,18 +32,21 @@ directory = "vendor"
 EOF
 
 %build
-cargo build --offline --release
+%rust_build
 
 %install
-install -Dm 0755 target/release/%name %buildroot%_bindir/%name
+%rust_install
 
 %check
-cargo test
+%rust_test
 
 %files
 %_bindir/%name
 
 %changelog
+* Sun Dec 10 2023 Alexander Makeenkov <amakeenk@altlinux.org> 1.16.0-alt1
+- Updated to version 1.16.0.
+
 * Mon Jan 30 2023 Alexander Makeenkov <amakeenk@altlinux.org> 1.8.0-alt1
 - Updated to version 1.8.0
 
