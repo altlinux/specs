@@ -4,9 +4,9 @@
 %define optflags_lto %nil
 %filter_from_requires /^sudo$/d
 
-%define pkg_version 6.5
+%define pkg_version 6.6
 %define xdg_name org.a11y.brlapi
-%define api_ver 0.8.4
+%define api_ver 0.8.5
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
 
@@ -27,7 +27,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt1.1
+Release: alt1
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -35,7 +35,8 @@ License: GPLv2+
 Url: http://mielke.cc/brltty/
 
 Vcs: https://github.com/brltty/brltty.git
-Source: http://mielke.cc/brltty/archive/%name-%version.tar.xz
+# Source-url: http://mielke.cc/brltty/archive/%name-%version.tar.xz
+Source: %name-%version.tar
 # from fc
 Source1: %name.service
 Source2: ru_brltty.tar
@@ -403,6 +404,9 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %endif
 
 %changelog
+* Sat Dec 09 2023 Anton Midyukov <antohami@altlinux.org> 6.6-alt1
+- 6.6 (Closes: 48429)
+
 * Thu Apr 27 2023 Sergey V Turchin <zerg@altlinux.org> 6.5-alt1.1
 - NMU: don't require sudo (closes: 45900)
 - NMU: disable LTO to fix compile
