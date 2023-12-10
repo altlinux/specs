@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Mission Center
@@ -94,6 +94,9 @@ sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\23|' data/hwdb/*.py
 
 
 %changelog
+* Sun Dec 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Fri Dec 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
