@@ -1,6 +1,6 @@
 Name:     zxing-cpp
-Version:  2.1.0
-Release:  alt1.1
+Version:  2.2.0
+Release:  alt1
 
 Summary:  C++ port of ZXing
 License:  Apache-2.0 and LGPL-2.0 with exceptions
@@ -75,6 +75,9 @@ sed -i '1i #define preferred_separator preferred_separator_zxing' test/blackbox/
 %_libdir/pkgconfig/zxing.pc
 
 %changelog
+* Sat Dec 09 2023 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
+- New version.
+
 * Fri Nov 11 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1.0-alt1.1
 - Fixed build for Elbrus.
 
