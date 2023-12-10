@@ -89,7 +89,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt2
+Release: alt3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -121,6 +121,7 @@ Patch22: clang-D142199.patch
 Patch23: clang-alt-riscv64-dynamic-linker-path.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
+Patch103: clang-alt-nvvm-libdevice.patch
 
 Patch200: 0001-RuntimeDyld-RISCV-Minimal-riscv64-support.patch
 Patch201: 0002-RuntimeDyld-RISCV-Impleemnd-HI20-and-LO12_I-relocs.patch
@@ -704,6 +705,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch23 -p1
 %patch101 -p1
 %patch102 -p2
+%patch103 -p1
 
 %patch200 -p2
 %patch201 -p2
@@ -1318,6 +1320,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Sun Dec 10 2023 L.A. Kostis <lakostis@altlinux.ru> 17.0.3-alt3
+- Applied fixes:
+  + clang: fix CUDA libdevice search path.
+
 * Fri Oct 27 2023 Ivan A. Melnikov <iv@altlinux.org> 17.0.3-alt2
 - Enchance riscv64 and loongarch64 support:
   + correct dynamic linker path on riscv64;
