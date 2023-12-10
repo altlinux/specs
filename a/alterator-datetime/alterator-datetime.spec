@@ -1,13 +1,14 @@
 # -*- mode: RPM-SPEC; tab-width: 8; fill-column: 70; -*- 
 
 Name: alterator-datetime
-Version: 4.8.1
-Release: alt2
+Version: 4.8.2
+Release: alt1
 
 Summary: alterator module for date/time setup
 License: GPL
 Group: System/Configuration/Other
 
+Requires: %name-functions = %EVR
 Requires: alterator >= 5.2-alt1 alterator-sh-functions >= 0.6-alt5
 Requires: alterator-service-functions >= 2.0.0-alt1
 Requires: alterator-l10n >= 2.9.117-alt1
@@ -33,6 +34,13 @@ BuildRequires: guile-devel
 %description
 alterator module for date/time setup
 
+%package functions
+Summary: Helper functions for %name
+Group: System/Base
+
+%description functions
+Helper functions for %name.
+
 %prep
 %setup
 
@@ -46,7 +54,7 @@ alterator module for date/time setup
 %makeinstall
 
 %files
-%_bindir/*
+%_bindir/dumpisotab
 %_sysconfdir/alterator/*
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*
@@ -56,7 +64,16 @@ alterator module for date/time setup
 %_alterator_libdir/type/*
 %_datadir/install2/postinstall.d/*
 
+%files functions
+%_bindir/alterator-datetime-functions
+
 %changelog
+* Sun Dec 10 2023 Anton Midyukov <antohami@altlinux.org> 4.8.2-alt1
+- alterator-datetime-functions: add get_utc_cmdline function
+
+* Sun Dec 10 2023 Anton Midyukov <antohami@altlinux.org> 4.8.1-alt3
+- Separate subpackage alterator-datetime-functions
+
 * Wed Oct 11 2023 Michael Shigorin <mike@altlinux.org> 4.8.1-alt2
 - E2K: move to guile22 too
 - minor spec cleanup (see also ALT#46206)
