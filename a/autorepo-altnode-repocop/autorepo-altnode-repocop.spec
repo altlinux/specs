@@ -1,5 +1,5 @@
 Name: autorepo-altnode-repocop
-Version: 0.36
+Version: 0.37
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -56,6 +56,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/repocop-tasktest-*
 
 %changelog
+* Sun Dec 10 2023 Igor Vlasenko <viy@altlinux.org> 0.37-alt1
+- support for archive in repocop/autoimports
+
 * Wed Nov 22 2023 Igor Vlasenko <viy@altlinux.org> 0.36-alt1
 - updated deps
 
