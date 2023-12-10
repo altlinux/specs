@@ -93,7 +93,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt7
+Release: alt8
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -125,6 +125,7 @@ Patch21: 0001-lld-Pass-random.randint-stop-parameter-as-int.patch
 Patch22: clang-D142199.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
+Patch103: clang-alt-nvvm-libdevice.patch
 Patch3500: llvm-16-loongarch-cpuname.patch
 
 %if_with clang
@@ -661,6 +662,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch22 -p1 -b .recommonmark
 %patch101 -p1
 %patch102 -p2
+%patch103 -p1
 %patch3500 -p1 -b .la64
 
 # LLVM 12 and onward deprecate Python 2:
@@ -1263,6 +1265,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Sun Dec 10 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt8
+- Applied fixes:
+  + clang: fix CUDA libdevice search path.
+
 * Fri Nov 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 16.0.6-alt7
 - spec: clang-devel does not fit into 4 GB on LoongArch, split clangTidy.a
   into a subpackage to avoid the problem. Fixes FTBFS on LoongArch.
