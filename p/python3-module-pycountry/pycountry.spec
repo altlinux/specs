@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 22.3.5
+Version: 23.12.7
 Release: alt1
 
 Summary: ISO country, subdivision, language, currency and script definitions
@@ -17,8 +17,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-poetry-core
 %if_with check
 BuildRequires: python3-module-pytest-cov
 %endif
@@ -62,6 +61,9 @@ This package contains tests for %oname
 
 
 %changelog
+* Sun Dec 10 2023 Anton Vyatkin <toni@altlinux.org> 23.12.7-alt1
+- New version 23.12.7.
+
 * Wed Mar 29 2023 Anton Vyatkin <toni@altlinux.org> 22.3.5-alt1
 - New version 22.3.5.
 
