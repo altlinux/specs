@@ -10,8 +10,12 @@
 %def_enable man
 %def_enable check
 
+# since 0.21.2
+# ['libgcrypt', 'gnutls', 'disabled'], value: 'libgcrypt'
+%define crypto libgcrypt
+
 Name: libsecret
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
@@ -30,12 +34,15 @@ Patch: %name-0.20.0-alt-python3_shebang.patch
 %define glib_ver 2.44.0
 %define vala_ver 0.17.2.12
 %define gcrypt_ver 1.4.5
+%define gnutls_ver 3.8.2
+%define tss_ver 3.0.3
 
 BuildRequires(pre): rpm-macros-meson >= 0.50 rpm-macros-valgrind
 BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgcrypt-devel >= %gcrypt_ver
-BuildRequires: libtpm2-tss-devel
+BuildRequires: pkgconfig(libgcrypt) >= %gcrypt_ver
+#BuildRequires: pkgconfig(gnutls) >= %gnutls_ver
+BuildRequires: libtpm2-tss-devel >= %tss_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
@@ -56,7 +63,7 @@ Supported by gnome-keyring and ksecretservice.
 %package devel
 Summary: Development files and libraries for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 libsecrets is a client for the Secret Service DBus API. The Secret
@@ -81,7 +88,7 @@ This package provides development documentations for %name.
 %package gir
 Summary: GObject introspection data for %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %name library.
@@ -90,8 +97,8 @@ GObject introspection data for the %name library.
 Summary: GObject introspection devel data for %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for %name.
@@ -102,6 +109,7 @@ GObject introspection devel data for %name.
 
 %build
 %meson \
+-Dcrypto='%crypto' \
 %{?_disable_introspection:-Dintrospection=false} \
 %{?_disable_vala:-Dvapi=false} \
 %{?_disable_gtk_doc:-Dgtk_doc=false} \
@@ -147,6 +155,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Sun Dec 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.21.2-alt1
+- 0.21.2
+
 * Wed Sep 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.21.1-alt1
 - 0.21.1
 
