@@ -1,7 +1,8 @@
 %def_without lightning
 %def_without system_mozldap
 %def_without system_nss
-%define clang_version 12.0
+%define llvm_version 15
+%define clang_version %llvm_version.0
 
 %define sm_prefix %_libdir/%name
 %define sm_datadir %_datadir/%name
@@ -20,7 +21,7 @@
 %define ciddir %sm_prefix/extensions/%cid
 
 Name: seamonkey
-Version: 2.53.17.1
+Version: 2.53.18
 Release: alt1
 Epoch: 1
 Summary: Web browser and mail reader
@@ -276,14 +277,12 @@ export CXXFLAGS="$CXXFLAGS -Wl,--no-keep-memory -Wl,--reduce-memory-overheads -W
 #export CXXFLAGS="$CXXFLAGS -Wl,--no-threads -Wl,--no-keep-files-mapped -Wl,--no-map-whole-files -Wl,--no-mmap-output-file -Wl,--stats"
 %endif
 
-export CC="clang"
-export CXX="clang++"
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export RANLIB="llvm-ranlib"
-export LLVM_PROFDATA="llvm-profdata"
+export CC="clang-%llvm_version"
+export CXX="clang++-%llvm_version"
+export AR="llvm-ar-%llvm_version"
+export NM="llvm-nm-%llvm_version"
+export RANLIB="llvm-ranlib-%llvm_version"
+export LLVM_PROFDATA="llvm-profdata-%llvm_version"
 
 export PREFIX="%_prefix"
 export LIBDIR="%_libdir"
@@ -475,6 +474,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 
 
 %changelog
+* Mon Dec 11 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.53.18-alt1
+- New version.
+
 * Tue Sep 26 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.53.17.1-alt1
 - New version.
 
