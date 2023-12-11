@@ -2,7 +2,7 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.16.0
+Version: 2.16.1
 Release: alt1
 
 Group:   System/Configuration/Other
@@ -30,6 +30,7 @@ BuildRequires: python3-module-resolvelib
 BuildRequires: python3-module-wheel
 
 Requires: ca-certificates >= 2015.10.29
+%py3_requires ansible
 %py3_requires yaml
 %py3_requires paramiko
 %py3_requires resolvelib
@@ -39,12 +40,10 @@ Requires: ca-certificates >= 2015.10.29
 %add_findreq_skiplist %python3_sitelibdir/%rname/plugins/*
 %add_findreq_skiplist %python3_sitelibdir/%rname/module_utils/ansible_tower.py
 
-# Do not provide ansible.* because ansible-core conflicts with ansible
-AutoProv: yes,nopython3
 %filter_from_requires /python3(ansible\./d
 %filter_from_requires /yum/d
 
-Conflicts: ansible
+Conflicts: ansible < 8.0.0
 
 %description
 Ansible is a radically simple model-driven configuration management,
@@ -52,6 +51,13 @@ multi-node deployment, and remote task execution system. Ansible works
 over SSH and does not require any software or daemons to be installed
 on remote nodes. Extension modules can be written in any language and
 are transferred to managed machines automatically.
+
+%package -n python3-module-ansible
+Summary: Python module for %name
+Group: Development/Python3
+
+%description -n python3-module-ansible
+%summary.
 
 %prep
 %setup -n %rname-%version
@@ -67,7 +73,7 @@ cp %SOURCE2 lib/ansible/modules/apt_repo.py
 install -Dpm 0644 %SOURCE3 %buildroot%_sysconfdir/%rname/ansible.cfg
 touch %buildroot%_sysconfdir/%rname/hosts
 
-# Fix shebangs
+# Remove tests
 rm -f %buildroot%_bindir/ansible-test
 rm -rf %buildroot%python3_sitelibdir/ansible_test
 
@@ -75,9 +81,19 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %doc README.md changelogs/CHANGELOG-v*.rst
 %_bindir/%{rname}*
 %config(noreplace) %_sysconfdir/%rname
+
+%files -n python3-module-ansible
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Mon Dec 11 2023 Andrey Cherepanov <cas@altlinux.org> 2.16.1-alt1
+- New version.
+- Update apt_repo and apt_rpm from community.general 8.1.0 (ALT #48091).
+
+* Fri Dec 01 2023 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt2
+- Excluded python3 library to python3-module-ansible.
+- Fixed build with ansible from python3-module-ansible-collections.
+
 * Thu Nov 09 2023 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt1
 - New version.
 
