@@ -1,28 +1,30 @@
 %def_disable snapshot
-%define modname feedparser
+%define pypi_name feedparser
+
 %def_without doc
+# no tests/tests in tarball
 %def_disable check
 
-Name: python3-module-%modname
-Version: 6.0.10
+Name: python3-module-%pypi_name
+Version: 6.0.11
 Release: alt1
 
 Summary: Universal feed parser for Python
 Group: Development/Python3
 License: BSD-2-Clause
-Url: https://github.com/kurtmckee/%modname
+Url: https://github.com/kurtmckee/%pypi_name
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel >= 3.6 python3-module-setuptools
+BuildRequires: python3-devel >= 3.8 python3(wheel) python3(setuptools)
 %{?_with_doc:BuildRequires: python3-module-sphinx python3-module-requests}
-%{?_enable_check:BuildRequires: python3-module-tox}
+%{?_enable_check:BuildRequires: python3(pytest) python3-module-requests}
 
 %if_disabled snapshot
-Source: https://pypi.io/packages/source/f/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/f/%pypi_name/%pypi_name-%version.tar.gz
 %else
-Source: %modname-%version.tar
+Source: %pypi_name-%version.tar
 %endif
 
 %description
@@ -42,17 +44,17 @@ Requires: %name = %EVR
 This package contains documentation for the Universal feed parser.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 find -type f -print0 |
 	xargs -r0 sed -i 's/\r//' --
 
 %build
-%python3_build
+%pyproject_build
 %{?_with_doc:py3_sphinx-build -b html docs html}
 
 %install
-%python3_install
+%pyproject_install
 
 %define docdir %_docdir/%name
 mkdir -p %buildroot%docdir
@@ -60,10 +62,14 @@ install -pm644 LICENSE NEWS README.rst %buildroot%docdir/
 %{?_with_doc:cp -a html %buildroot%docdir/}
 
 %check
-tox.py3
+export PYTHONPATH=%buildroot%python3_sitelibdir
+pushd tests
+%__python3 runtests.py
+popd
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %dir %docdir
 %docdir/[LNR]*
 
@@ -74,6 +80,10 @@ tox.py3
 %endif
 
 %changelog
+* Mon Dec 11 2023 Yuri N. Sedunov <aris@altlinux.org> 6.0.11-alt1
+- 6.0.11
+- ported to %%pyproject* macros
+
 * Sun May 22 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.10-alt1
 - 6.0.10
 
