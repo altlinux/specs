@@ -1,5 +1,5 @@
 Name:    python3-module-googleapis-common-protos
-Version: 1.61.0
+Version: 1.62.0
 Release: alt1
 
 Summary: Common protobufs used in Google APIs
@@ -10,11 +10,13 @@ URL:     https://github.com/googleapis/python-api-common-protos
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-dev python3-module-setuptools python3-module-wheel
 
 BuildArch: noarch
 
 Source: python-api-common-protos-%version.tar
+
+%py3_provides google.longrunning google.rpc
 
 %description
 googleapis-common-protos contains the python classes generated from the common
@@ -24,16 +26,19 @@ protos in the googleapis/api-common-protos repository.
 %setup -n python-api-common-protos-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc *.md
 %python3_sitelibdir/*
 
 %changelog
+* Fri Dec 08 2023 Andrey Cherepanov <cas@altlinux.org> 1.62.0-alt1
+- New version.
+
 * Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 1.61.0-alt1
 - New version.
 
