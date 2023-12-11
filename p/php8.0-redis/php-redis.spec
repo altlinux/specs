@@ -1,12 +1,11 @@
 # TODO:
-#    --enable-redis-igbinary \
 #    --enable-redis-msgpack \
 
 %define		php_extension	redis
 %define 	real_name	redis
 Name:	 	php%_php_suffix-%php_extension
 Version:	5.3.7
-Release:	alt1.%php_version
+Release:	alt2.%php_version
 Summary:	Client extension for Redis key-value store
 License:	PHP-3.01
 Group:		System/Servers
@@ -18,7 +17,9 @@ Source2: php-redis-params.sh
 
 BuildRequires(pre): rpm-build-php8.0-version
 BuildRequires: php-devel = %php_version
-BuildRequires: liblzf-devel libzstd-devel liblz4-devel
+BuildRequires: liblzf-devel libzstd-devel liblz4-devel php%_php_suffix-igbinary-devel
+
+Requires: php%_php_suffix-igbinary
 
 %description
 The phpredis extension provides an API for communicating with the Redis key-value store.
@@ -38,7 +39,8 @@ export LDFLAGS=-lphp-%_php_version
     --enable-redis-zstd \
     --with-libzstd \
     --enable-redis-lz4 \
-    --with-liblz4
+    --with-liblz4 \
+    --enable-redis-igbinary
 
 %php_make
 
@@ -47,20 +49,23 @@ export LDFLAGS=-lphp-%_php_version
 install -D -m 644 -- %SOURCE1 %buildroot/%php_extconf/%php_extension/config
 install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 
-%files
-%doc CREDITS *.markdown
-%php_extconf/%php_extension
-%php_extdir/*
-
 %post
 %php_extension_postin
 
 %preun
 %php_extension_preun
 
+%files
+%doc CREDITS *.markdown
+%php_extconf/%php_extension
+%php_extdir/*
+
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Tue Dec 05 2023 Alexandr Antonov <aas@altlinux.org> 3.2.15-alt1.%php_version
+- build with igbinary support
 
 * Sat Feb 19 2022 Anton Farygin <rider@altlinux.ru> 5.3.7-alt1
 - 5.3.6 -> 5.3.7
