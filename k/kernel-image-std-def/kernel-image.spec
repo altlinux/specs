@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.66
+%define kernel_sublevel	.67
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -600,6 +600,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Dec 11 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.67-alt1
+- v6.1.67 (2023-12-11).
+- config: Enable CONFIG_VSOCKMON=m.
+
 * Fri Dec 08 2023 Kernel Bot <kernelbot@altlinux.org> 2:6.1.66-alt1
 - v6.1.66 (2023-12-08).
 - Revert "scsi: aacraid: Reply queue mapping to CPUs based on IRQ
