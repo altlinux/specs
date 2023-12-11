@@ -1,6 +1,6 @@
 Name: emacs
 Version: 29.1
-Release: alt2
+Release: alt3
 
 Summary: GNU Emacs text editor
 License: GPLv3+
@@ -210,7 +210,7 @@ mkdir build-athena && pushd build-athena
 	--with-x-toolkit=athena
 popd
 
-mkdir -p build-gtk3 && pushd build-gtk3
+mkdir build-gtk3 && pushd build-gtk3
 %configure %_configure_mostly --with-x-toolkit=gtk3
 popd
 
@@ -249,6 +249,9 @@ echo build-pgtk/native-lisp/* |sed 's,build-pgtk/,%_libdir/%name/%version/,' > p
 %else
 touch pgtk.ls
 %endif
+
+# better suited to handle all build variants
+install -pm0755 build-pgtk/lib-src/emacsclient %buildroot%_bindir/emacsclient
 
 # remove the installed duplicate emacs binaries
 # -- it'll be a link managed by `alternatives':
@@ -368,6 +371,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Mon Dec 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 29.1-alt3
+- utilize emacsclient from pgtk build (closes: 48754)
+
 * Mon Sep 25 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 29.1-alt2
 - add arch-dependant site-lisp directory
 
