@@ -121,7 +121,7 @@
 
 Name:    samba
 Version: 4.19.3
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1379,7 +1379,6 @@ control role-sambashare enabled
 %_datadir/PolicyDefinitions/*/*.adml
 
 %files dc-common
-%_sysconfdir/pam.d/samba
 %dir /var/lib/samba/sysvol
 %dir %_datadir/samba/setup
 %_datadir/samba/setup
@@ -1562,6 +1561,7 @@ control role-sambashare enabled
 %endif
 
 %files common
+%_sysconfdir/pam.d/samba
 %if_without winbind
 %dir /var/lib/samba
 %attr(710,root,root) %dir /var/lib/samba/private
@@ -2212,6 +2212,10 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Dec 12 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.19.3-alt2
+- Replace samba service pam config to samba-common due regression with password
+  authentication in security = user mode with obey pam restrictions = yes.
+
 * Tue Dec 05 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.19.3-alt1
 - Update to stable release of Samba 4.19 with fixes of the Samba CVE for
   Deleted Object tombstones visible in AD LDAP to normal users (CVE-2018-14628).
