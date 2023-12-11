@@ -11,7 +11,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
@@ -133,6 +133,9 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %endif
 
 %changelog
+* Fri Dec 08 2023 Stanislav Levin <slev@altlinux.org> 1.7.1-alt1
+- 1.7.0 -> 1.7.1.
+
 * Tue Nov 14 2023 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
 - 1.6.1 -> 1.7.0.
 
