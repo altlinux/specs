@@ -3,7 +3,7 @@
 
 Name: libxfce4util
 Version: 4.18.1
-Release: alt1
+Release: alt2
 
 Summary: Utility library for the Xfce desktop environment
 Summary(ru_RU.UTF-8): Библиотека утилит для рабочего стола Xfce
@@ -15,6 +15,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/libxfce4util.git
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 # Automatically added by buildreq on Wed Jan 13 2010
@@ -72,6 +73,7 @@ Vala bindings for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %xfce4reconf
@@ -114,6 +116,9 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Fri Dec 01 2023 Kirill Izmestev <felixz@altlinux.org> 4.18.1-alt2
+- Apply patch(3a279d2b) from the master branch (ALT #48589).
+
 * Wed Jan 11 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
 - Updated to 4.18.1.
 
