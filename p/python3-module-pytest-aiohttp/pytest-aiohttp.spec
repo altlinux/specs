@@ -5,33 +5,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 Summary: pytest plugin for aiohttp support
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/pytest-aiohttp/
 VCS: https://github.com/aio-libs/pytest-aiohttp
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
-# well-known PyPI name
-%py3_provides %pypi_name
-
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# dependencies
-BuildRequires: python3(aiohttp)
-BuildRequires: python3(aiohttp.test_utils)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-asyncio)
+%pyproject_builddeps_metadata
+# tests require aiohttp.test_utils
+BuildRequires: python3-module-aiohttp-tests
 %endif
 
 %description
@@ -40,14 +31,9 @@ pytest plugin for aiohttp support
 %prep
 %setup
 %autopatch -p1
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -64,6 +50,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Dec 08 2023 Stanislav Levin <slev@altlinux.org> 1.0.5-alt1
+- 1.0.4 -> 1.0.5.
+
 * Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 1.0.4-alt1
 - 0.3.0 -> 1.0.4.
 
