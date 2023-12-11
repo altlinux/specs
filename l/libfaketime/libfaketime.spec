@@ -1,17 +1,15 @@
 Name: libfaketime
 Version: 0.9.10
-Release: alt1
+Release: alt2
 
 Summary: Manipulate system time per process for testing purposes
-
 License: GPLv2+
 Group: Development/C
-Url: https://github.com/wolfcw/libfaketime
 
+Url: https://github.com/wolfcw/libfaketime
 # Source-url: https://github.com/wolfcw/libfaketime/archive/refs/tags/v%version.tar.gz
 Source: libfaketime-%version.tar
-
-Patch1: libfaketime-symver.patch
+Patch: libfaketime-symver.patch
 
 #Provides: faketime
 Conflicts: faketime
@@ -28,7 +26,7 @@ time system- wide.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 # use external uthash.h from libuthash-devel
 rm -v src/uthash.h
 
@@ -36,14 +34,16 @@ rm -v src/uthash.h
 cd src
 
 # https://github.com/wolfcw/libfaketime/blob/master/README.packagers
-# Upstream libfaketime requires a mess of different compile time flags for different glibc versions and architectures.
+# Upstream libfaketime requires a mess of different compile time flags
+# for different glibc versions and architectures.
 # https://github.com/wolfcw/libfaketime/pull/178
 # Goal is to build time autodetect these with autotools in the next release ...
 
 # TODO: see rpm-build-features
 FAKETIME_COMPILE_CFLAGS="BOGUS"
 
-  # for reasons we don't know the old glibc workaround is required here but not on archv7hl and aarch64 ...
+# for reasons we don't know the old glibc workaround is required here
+# but not on archv7hl and aarch64 ...
 %ifarch %ix86 x86_64
     echo "force_monotonic"
     export FAKETIME_COMPILE_CFLAGS="-DFORCE_MONOTONIC_FIX"
@@ -52,7 +52,7 @@ FAKETIME_COMPILE_CFLAGS="BOGUS"
     echo "force_monotonic and pthread_nonver"
     export FAKETIME_COMPILE_CFLAGS="-DFORCE_MONOTONIC_FIX -DFORCE_PTHREAD_NONVER"
 %endif
-%ifarch armh aarch64
+%ifarch armh aarch64 %e2k riscv64 loongarch64
     unset FAKETIME_COMPILE_CFLAGS
 %endif
 
@@ -61,11 +61,18 @@ if [ "$FAKETIME_COMPILE_CFLAGS" == "BOGUS" ]; then
   exit 1
 fi
 
+%ifarch %e2k
+# still needed as of lcc 1.26.21
+%add_optflags -Wno-error=attributes
+%endif
+
 export CFLAGS="%optflags -Wno-nonnull-compare -Wno-strict-aliasing"
 %make_build PREFIX="%prefix" LIBDIRNAME="/%_lib/faketime" all
 
 %check
+%ifnarch armh %ix86 mipsel
 %make_build -C test
+%endif
 
 %install
 %makeinstall_std PREFIX="%prefix" LIBDIRNAME="/%_lib/faketime"
@@ -82,6 +89,10 @@ rm -r %buildroot/%_docdir/faketime
 %_man1dir/*
 
 %changelog
+* Mon Dec 11 2023 Michael Shigorin <mike@altlinux.org> 0.9.10-alt2
+- build on e2k and other new arches too
+- minor spec cleanup
+
 * Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.10-alt1
 - new version 0.9.10 (with rpmrb script)
 
