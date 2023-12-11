@@ -12,9 +12,10 @@
 %define mono_version 8.1.0
 %define winetricks_version 20230505
 
-%define basemajor 8.x
-%define major 8.21
-%define rel %nil
+# https://dl.winehq.org/wine/source/
+%define basemajor 9.0
+%define major 9.0
+%define rel -rc1
 %define conflictbase wine
 
 # build ping subpackage
@@ -66,7 +67,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt1
+Release: alt1.rc1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -830,6 +831,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Dec 11 2023 Vitaly Lipatov <lav@altlinux.ru> 1:9.0-alt1.rc1
+- new version (9.0-rc1) with rpmgs script
+
 * Sat Nov 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.21-alt1
 - new version 8.21 (with rpmrb script)
 
