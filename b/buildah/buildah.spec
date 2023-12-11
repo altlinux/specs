@@ -10,7 +10,7 @@
 
 Name: buildah
 Version: 1.33.2
-Release: alt1
+Release: alt2
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
 License: Apache-2.0
@@ -30,6 +30,7 @@ BuildRequires: libassuan-devel
 BuildRequires: libseccomp-devel
 BuildRequires: glib2-devel
 BuildRequires: libsubid-devel
+BuildRequires: libsystemd-devel
 
 Requires: tzdata
 Requires: containers-common-extra
@@ -86,6 +87,10 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Dec 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.33.2-alt2
+- Fixed libsubid detection.
+- Build with libsystemd.
+
 * Tue Dec 05 2023 Alexey Shabalin <shaba@altlinux.org> 1.33.2-alt1
 - New version 1.33.2.
 
