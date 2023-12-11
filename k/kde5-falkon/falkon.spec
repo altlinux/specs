@@ -17,7 +17,7 @@
 
 Name: kde5-%rname
 Version: 23.08.3
-Release: alt2
+Release: alt3
 %K5init no_altplace
 
 Summary: Very fast web-browser
@@ -31,11 +31,13 @@ Provides: webclient x-www-browser
 Requires(post,preun): alternatives >= 0.2
 Requires: qt5-imageformats qt5-svg qt5-translations
 
+Provides: %rname = %version-%release
 Provides: %rname-gnome3 = %EVR
 Obsoletes: %rname-gnome3 < %EVR
 Provides: %rname-kde5 = %EVR
 Obsoletes: %rname-kde5 < %EVR
-Provides: %rname = %version-%release
+Provides: %rname-core = %EVR
+Obsoletes: %rname-core < %EVR
 Provides: %rname-kde = %version-%release
 Provides: qupzilla-kde5 = %version-%release
 Obsoletes: qupzilla-kde5 < %version-%release
@@ -154,6 +156,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.*
 
 %changelog
+* Mon Dec 11 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt3
+- fix obsoletes
+
 * Fri Dec 08 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt2
 - merge subpackages
 - enable python plugins
