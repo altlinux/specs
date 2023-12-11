@@ -7,8 +7,8 @@
 %define _pseudouser_home     %_var/empty
 
 Name: greetd
-Version: 0.8.0
-Release: alt2
+Version: 0.9.0
+Release: alt1
 Summary: Generic greeter daemon
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -20,8 +20,7 @@ Source1: %name-%version-vendor.tar
 # adapted pam file from Arch
 Source2: %name.pam
 
-Patch1: greetd-alt-compat.patch
-Patch3500: 0001-updated-vendored-libc-crate-for-LoongArch-support.patch
+Patch1: %name-%version-%release.patch
 
 BuildRequires: /proc
 BuildRequires: rust
@@ -36,7 +35,6 @@ that makes no assumptions about what you want to launch.
 %prep
 %setup -a1
 %patch1 -p1
-%patch3500 -p1
 
 mkdir -p .cargo
 cat > .cargo/config <<EOF
@@ -103,6 +101,12 @@ install -Dm644 config.toml %buildroot%_sysconfdir/greetd/config.toml
 %_man7dir/*.7*
 
 %changelog
+* Mon Dec 11 2023 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
+- NMU: update to upstream version 0.9.0.
+
+* Mon Dec 11 2023 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt3
+- NMU: patch from diff (for update version)
+
 * Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.8.0-alt2
 - NMU: support LoongArch architecture
 
