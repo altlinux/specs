@@ -5,29 +5,29 @@
 %add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
 Name: yubico-piv-tool
-Version: 2.3.1
+Version: 2.4.2
 Release: alt1
 
 Summary: Command line tool for the YubiKey PIV application
 License: BSD-2-Clause
 Group: System/Configuration/Hardware
-Url: https://github.com/Yubico/yubico-piv-tool
+Url: https://developers.yubico.com/yubico-piv-tool/
+Vcs: https://github.com/Yubico/yubico-piv-tool
 
 Source: %name-%version.tar
+
+Requires: pcsc-lite-ccid
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: libtool
 BuildRequires: libssl-devel
 BuildRequires: libcheck-devel
 BuildRequires: libpcsclite-devel
-BuildRequires: pkg-config
+BuildRequires: zlib-devel
 BuildRequires: gengetopt
 BuildRequires: help2man
 BuildRequires: ctest
-
-Requires: pcsc-lite-ccid
 
 %description
 The Yubico PIV tool is used for interacting with the Personal Identity
@@ -41,23 +41,21 @@ a command-line tools is included.
 Summary: Development files for yubico-piv-tool
 Group: Development/Other
 
-Requires: %name = %EVR
-
 %description devel
-%summary
+%summary.
 
 %prep
 %setup
 
 %build
-%cmake_insource -DBUILD_STATIC_LIB=OFF
+%cmake -DBUILD_STATIC_LIB=OFF
 %cmake_build
 
 %install
 %cmake_install
 
 %check
-%make_build test 
+%ctest
 
 %files
 %doc COPYING NEWS README
@@ -75,6 +73,9 @@ Requires: %name = %EVR
 %_libdir/pkgconfig/ykcs11.pc
 
 %changelog
+* Mon Dec 11 2023 Anton Zhukharev <ancieg@altlinux.org> 2.4.2-alt1
+- Updated to 2.4.2.
+
 * Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 2.3.1-alt1
 - New version.
 - Set strict ELF verification.
