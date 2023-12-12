@@ -1,16 +1,10 @@
 %define oname cattrs
 
-# 9 failed in tests/test_typeddicts.py
-# OverflowError: timestamp out of range for platform time_t
-%ifnarch i586 armh
 %def_with check
-%else
-%def_without check
-%endif
 
 Name:    python3-module-%oname
-Version: 23.1.2
-Release: alt2
+Version: 23.2.3
+Release: alt1
 
 Summary: Complex custom class converters for attrs.
 
@@ -27,6 +21,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-poetry
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
 
 %if_with check
 BuildRequires: python3-module-pytest-benchmark
@@ -65,9 +61,11 @@ your classes and enumerations into dictionaries, integers and strings.
 %setup
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
@@ -81,6 +79,9 @@ your classes and enumerations into dictionaries, integers and strings.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Dec 12 2023 Grigory Ustinov <grenka@altlinux.org> 23.2.3-alt1
+- Automatically updated to 23.2.3.
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 23.1.2-alt2
 - Fixed FTBFS.
 
