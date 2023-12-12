@@ -1,6 +1,6 @@
 Name: libfaketime
 Version: 0.9.10
-Release: alt2
+Release: alt3
 
 Summary: Manipulate system time per process for testing purposes
 License: GPLv2+
@@ -52,8 +52,12 @@ FAKETIME_COMPILE_CFLAGS="BOGUS"
     echo "force_monotonic and pthread_nonver"
     export FAKETIME_COMPILE_CFLAGS="-DFORCE_MONOTONIC_FIX -DFORCE_PTHREAD_NONVER"
 %endif
-%ifarch armh aarch64 %e2k riscv64 loongarch64
+%ifarch armh aarch64 %e2k riscv64
     unset FAKETIME_COMPILE_CFLAGS
+%endif
+%ifarch loongarch64
+    echo "force_pthread_nonver"
+    export FAKETIME_COMPILE_CFLAGS="-DFORCE_PTHREAD_NONVER"
 %endif
 
 if [ "$FAKETIME_COMPILE_CFLAGS" == "BOGUS" ]; then
@@ -89,6 +93,9 @@ rm -r %buildroot/%_docdir/faketime
 %_man1dir/*
 
 %changelog
+* Tue Dec 12 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.9.10-alt3
+- NMU: fixed FTBFS on LoongArch
+
 * Mon Dec 11 2023 Michael Shigorin <mike@altlinux.org> 0.9.10-alt2
 - build on e2k and other new arches too
 - minor spec cleanup
