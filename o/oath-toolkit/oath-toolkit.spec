@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_enable pskc
 %def_enable pam
 
 Name: oath-toolkit
-Version: 2.6.6
+Version: 2.6.9
 Release: alt1
 Summary: Toolkit for one-time password authentication systems
 License: GPLv3+
@@ -136,8 +138,14 @@ touch ChangeLog
 # parallel build error ?
 %make
 
+%check
+%make check
+
 %install
 %makeinstall_std
+
+# remove .la files created by libtool
+find %buildroot -name "*.la" -exec rm -f {} \;
 
 %files -n oathtool
 %_bindir/oathtool
@@ -179,6 +187,10 @@ touch ChangeLog
 %endif
 
 %changelog
+* Wed Dec 13 2023 Evgeny Sinelnikov <sin@altlinux.org> 2.6.9-alt1
+- Update to release 2.6.9 with mutliple fixes and improved libxmlsec compatibility.
+- Enable build check tests.
+
 * Fri Feb 12 2021 Alexey Shabalin <shaba@altlinux.org> 2.6.6-alt1
 - 2.6.6
 - enable build libpskc
@@ -190,7 +202,7 @@ touch ChangeLog
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt3
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
 * Fri Sep 07 2018 Alexey Shabalin <shaba@altlinux.org> 2.6.2-alt2
 - rebuild for aarch64
