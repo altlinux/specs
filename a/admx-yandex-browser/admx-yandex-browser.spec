@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-yandex-browser
-Version: 104.0
-Release: alt2
+Version: 116.0
+Release: alt1
 
 Summary: YandexBrowser-specific ADMX policy templates
 License: CC-BY-2.5
@@ -58,6 +58,9 @@ done
 %_destdir/*/*.adml
 
 %changelog
+* Tue Dec 12 2023 Evgeny Sinelnikov <sin@altlinux.org> 116.0-alt1
+- Update policy templates to release 116.0.5845.228
+
 * Tue Oct 25 2022 Evgeny Sinelnikov <sin@altlinux.org> 104.0-alt2
 - Update installation process for release 104.0.5112.114
 
