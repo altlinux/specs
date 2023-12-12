@@ -60,7 +60,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt4
+Release: alt5
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -1264,6 +1264,8 @@ EOF
 sed -i 's/BOOST_GCC >= 70000/0/' boost/assert/source_location.hpp
 # "expression not folded to a constant due to excessive constexpr function call complexity"
 sed -i 's/static constexpr/static const/' libs/url/src/detail/replacement_field_rule.cpp
+sed -i '/large_power_of_5\[\] =/s/\[\]/[5]/' \
+	boost/json/detail/charconv/detail/fast_float/bigint.hpp
 %endif
 
 cat >> ./tools/build/src/user-config.jam << EOF
@@ -1853,6 +1855,9 @@ done
 
 
 %changelog
+* Tue Dec 12 2023 Michael Shigorin <mike@altlinux.org> 1:1.83.0-alt5
+- E2K: fix ceph build (ilyakurdyukov@)
+
 * Wed Nov 22 2023 Michael Shigorin <mike@altlinux.org> 1:1.83.0-alt4
 - E2K: drop special coroutine handling in spec (ilyakurdyukov@)
 
