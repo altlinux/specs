@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.12
+Version: 1.13
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -40,10 +40,12 @@ This is recommended way of upgrading kernel for ALT Linux.
 mkdir -p %buildroot%_sbindir
 install -pm755 update-kernel %buildroot%_sbindir/
 install -pm755 remove-old-kernels %buildroot%_sbindir/
+install -pm755 debuginfo-kernel-install -t %buildroot%_sbindir
 install -Dp update-kernel.8 -t %buildroot%_man8dir/
 install -Dp update-kernel.8.ru %buildroot%_mandir/ru/man8/update-kernel.8
 install -Dp bash_completion %buildroot/usr/share/bash-completion/completions/update-kernel
 ln -sf update-kernel %buildroot/usr/share/bash-completion/completions/remove-old-kernels
+ln -sf update-kernel %buildroot/usr/share/bash-completion/completions/debuginfo-kernel-install
 
 %check
 make check
@@ -51,11 +53,15 @@ make check
 %files
 %_sbindir/update-kernel
 %_sbindir/remove-old-kernels
+%_sbindir/debuginfo-kernel-install
 %_man8dir/*.8*
 %_mandir/ru/man8/*.8*
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri Dec 08 2023 Vitaly Chikunov <vt@altlinux.org> 1.13-alt1
+- Add debuginfo-kernel-install tool (experimental tool for developers).
+
 * Fri Nov 17 2023 Vitaly Chikunov <vt@altlinux.org> 1.12-alt1
 - Add --debuginfo option.
 
