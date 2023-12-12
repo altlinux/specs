@@ -1,8 +1,9 @@
 %define oname click-plugins
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.0.2
-Release: alt4
+Version: 1.1.1
+Release: alt1
 
 Summary: Register CLI commands via setuptools entry-points
 License: BSD
@@ -13,11 +14,13 @@ BuildArch: noarch
 
 # https://github.com/click-contrib/click-plugins.git
 Source: %name-%version.tar
-Patch0: click-plugins-1.0.2-Click-7-changes-how-command-names-are-generated.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-click
-BuildRequires: python3-module-pytest-cov
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra dev
+%endif
 
 %description
 An extension module for click to enable registering CLI commands via
@@ -36,17 +39,17 @@ This package contains examples for %oname.
 
 %prep
 %setup
-%patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test -v
-py.test3 -vv tests --cov click_plugins --cov-report term-missing
+%pyproject_run_pytest
 
 %files
 %doc *.txt *.rst
@@ -56,6 +59,10 @@ py.test3 -vv tests --cov click_plugins --cov-report term-missing
 %doc example/*
 
 %changelog
+* Sat Dec 02 2023 Mikhail Chernonog <snowmix@altlinux.org> 1.1.1-alt1
+- 1.0.2 -> 1.1.1
+- Delete patch.
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt4
 - replace BR python3-module-click-tests with python3-module-click
 
