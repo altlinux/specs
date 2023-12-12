@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libdomain
-Version: 0.9.9
+Version: 0.9.10
 Release: alt1
 
 Summary: Libdomain library provides ability to manipulate LDAP entries.
@@ -23,6 +23,7 @@ BuildRequires: ragel
 BuildRequires: doxygen
 
 Requires: libverto-glib libverto-libev libverto-libevent
+Requires: libsasl2-plugin-gssapi
 
 Source0: %name-%version.tar
 
@@ -72,6 +73,13 @@ install -v -p -m 644 -D %_builddir/%name-%version/src/*.h %buildroot%_includedir
 %_bindir/*
 
 %changelog
+* Tue Dec 12 2023 Vladimir Rubanov <august@altlinux.org> 0.9.10-alt1
+- Fixes:
+  + Fix remove attribute test.
+  + Fix search test.
+- Implemented:
+  + Ensure test suite supports Windows AD 2012R2.
+
 * Wed Dec 6 2023 Vladimir Rubanov <august@altlinux.org> 0.9.9-alt1
 - Implemented:
   + Implement reconnect test.
