@@ -3,7 +3,7 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 23.04.3
+Version: 23.08.4
 Release: alt1
 %K5init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
@@ -95,7 +95,6 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_K5cfg/*kdenlive*
 %_iconsdir/*/*/*/*.*
 %_K5notif/*rc
-%_K5xmlgui/kdenlive/
 %_K5xdgmime/*.xml
 %_man1dir/kdenlive*
 %_datadir/metainfo/org.kde.kdenlive.appdata.xml
@@ -104,6 +103,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Tue Jul 18 2023 Sergey V Turchin <zerg@altlinux.org> 23.04.3-alt1
 - new version
 
