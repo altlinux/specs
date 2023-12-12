@@ -2,8 +2,8 @@
 %define _libexecdir /usr/libexec
 
 Name: netavark
-Version: 1.8.0
-Release: alt2
+Version: 1.9.0
+Release: alt1
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
 Group: Development/Other
@@ -56,6 +56,16 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
+[term]
+verbose = true
+quiet = false
+
+[build]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
+
+[profile.release]
+strip = false
 EOF
 
 %build
@@ -70,9 +80,11 @@ popd
 
 %post
 %post_systemd_postponed %name-dhcp-proxy.service
+%post_systemd_postponed %name-firewalld-reload.service
 
 %preun
 %preun_systemd %name-dhcp-proxy.service
+%preun_systemd %name-firewalld-reload.service
 
 %files
 %doc README.md
@@ -81,6 +93,9 @@ popd
 %_unitdir/*
 
 %changelog
+* Mon Dec 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
+- New version 1.9.0.
+
 * Fri Oct 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.8.0-alt2
 - NMU: fixed FTBFS on LoongArch.
 
