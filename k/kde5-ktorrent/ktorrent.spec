@@ -11,8 +11,8 @@
 %add_findreq_skiplist %_K5data/%rname/scripts/*.py
 
 Name: kde5-%rname
-Version: 23.08.3
-Release: alt2
+Version: 23.08.4
+Release: alt1
 %K5init
 
 Group:     Networking/File transfer
@@ -105,6 +105,9 @@ done
 
 
 %changelog
+* Mon Dec 11 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Mon Nov 27 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt2
 - using rpm-macros-qt5-webengine
 

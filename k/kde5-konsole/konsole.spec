@@ -8,7 +8,7 @@
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: kde5-%rname
-Version: 23.08.3
+Version: 23.08.4
 Release: alt1
 %K5init no_altplace
 
@@ -147,6 +147,7 @@ __EOF__
 %_K5data/knsrcfiles/*konsole*
 %_K5data/kglobalaccel/*konsole*
 %_datadir/metainfo/*konsole*
+%_datadir//zsh/site-functions/*konsole*
 
 %files -n %libkonsoleprivate
 %_K5lib/libkonsoleprivate.so.*
@@ -157,6 +158,9 @@ __EOF__
 %_K5lib/libkonsoleapp.so.%sover
 
 %changelog
+* Mon Dec 11 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 

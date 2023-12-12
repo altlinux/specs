@@ -4,7 +4,7 @@
 %define libaudiotubecore libaudiotubecore%sover
 
 Name: kde5-%rname
-Version: 23.08.3
+Version: 23.08.4
 Release: alt1
 %K5init
 
@@ -58,6 +58,9 @@ Convergent YouTube Music client.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Dec 11 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 
