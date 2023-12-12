@@ -9,7 +9,7 @@
 
 Name: NetworkManager-sstp
 Version: 1.3.1
-Release: alt1.git.f4395810
+Release: alt2.git.f4395810
 
 Summary:  NetworkManager VPN plugin for SSTP
 License: GPLv2+
@@ -105,10 +105,15 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %exclude %_libdir/NetworkManager/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
+%if_with gtk4
 %files gtk4
 %_libdir/NetworkManager/libnm-gtk4-vpn-plugin-sstp-editor.so
+%endif
 
 %changelog
+* Tue Dec 12 2023 Michael Shigorin <mike@altlinux.org> 1.3.1-alt2.git.f4395810
+- fix gtk4 knob
+
 * Mon Aug 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.3.1-alt1.git.f4395810
 - upstream master snapshot
 
