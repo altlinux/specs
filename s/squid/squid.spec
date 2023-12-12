@@ -18,7 +18,7 @@
 %define langpack_ver 20230225
 
 Name: squid
-Version: 6.5
+Version: 6.6
 Release: alt1
 
 Summary: The Squid proxy caching server
@@ -327,6 +327,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Thu Dec 07 2023 Egor Ignatov <egori@altlinux.org> 6.6-alt1
+- 6.6
+
 * Thu Nov 09 2023 Egor Ignatov <egori@altlinux.org> 6.5-alt1
 - 6.5
 
