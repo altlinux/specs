@@ -1,14 +1,14 @@
 Name: qastools
-Version: 1.0.0
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: Collection of desktop applications for ALSA
-License: GPLv3
+License: GPL-3.0
 Group: Sound
 
 Url: http://xwmw.org/qastools
 Source: %name-%version.tar
-Patch: disabled-tray-icon-at-startup.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -109,6 +109,9 @@ done
 %_datadir/metainfo/qasmixer.appdata.xml
 
 %changelog
+* Tue Dec 12 2023 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Wed Dec 06 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt2
 - Requires: qt6-svg for qasconfig, qashctl, qasmixer
 
