@@ -1,5 +1,5 @@
 Name: linuxptp
-Version: 4.1
+Version: 4.2
 Release: alt1
 
 Summary: Precision Time Protocol (PTP) implementation
@@ -60,6 +60,9 @@ install -pm0644 phc2sys.service %buildroot%_unitdir/phc2sys.service
 %_man8dir/*
 
 %changelog
+* Tue Dec 12 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2-alt1
+- 4.2 released
+
 * Wed Oct  4 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.1-alt1
 - 4.1 released
 
