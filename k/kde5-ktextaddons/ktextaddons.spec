@@ -8,10 +8,12 @@
 %define libkf5textemoticonswidgets libkf5textemoticonswidgets%sover
 %define libkf5textautocorrectionwidgets libkf5textautocorrectionwidgets%sover
 %define libkf5textautocorrectioncore libkf5textautocorrectioncore%sover
+%define libkf5textutils libkf5textutils%sover
+%define libkf5textcustomeditor libkf5textcustomeditor%sover
 
 Name: kde5-%rname
-Version: 1.3.2
-Release: alt1
+Version: 1.5.2
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -26,7 +28,8 @@ Source: %rname-%version.tar
 #BuildRequires: appstream clang-tools extra-cmake-modules kf5-karchive-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kxmlgui-devel libqtkeychain-qt5-devel python-modules-compiler python3-module-mpl_toolkits python3-module-setuptools python3-module-zope qt5-imageformats qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel tbb-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules
-BuildRequires: kf5-karchive-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kxmlgui-devel
+BuildRequires: kf5-karchive-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kxmlgui-devel kf5-kio-devel
+BuildRequires: kf5-sonnet-devel kf5-syntax-highlighting-devel
 BuildRequires: libqtkeychain-qt5-devel
 BuildRequires: qt5-speech-devel qt5-tools-devel
 
@@ -96,6 +99,20 @@ Requires: %name-common
 %description -n %libkf5textautocorrectioncore
 %name library
 
+%package -n %libkf5textutils
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common
+%description -n %libkf5textutils
+%name library
+
+%package -n %libkf5textcustomeditor
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common
+%description -n %libkf5textcustomeditor
+%name library
+
 %package devel
 Summary: Development files for %name
 Group: Development/KDE and QT
@@ -118,6 +135,7 @@ This package contains the development files for %name.
 
 
 %files common -f %name.lang
+%_datadir/qlogging-categories5/*.*categories
 
 %files
 %_K5plug/kf5/translator/translator_*.so
@@ -146,14 +164,27 @@ This package contains the development files for %name.
 %files -n %libkf5textautocorrectioncore
 %_K5lib/libKF5TextAutoCorrectionCore.so.*
 %_K5lib/libKF5TextAutoCorrectionCore.so.%sover
+%files -n %libkf5textutils
+%_K5lib/libKF5TextUtils.so.*
+%_K5lib/libKF5TextUtils.so.%sover
+%files -n %libkf5textcustomeditor
+%_K5lib/libKF5TextCustomEditor.so.*
+%_K5lib/libKF5TextCustomEditor.so.%sover
+
 
 %files devel
-%_K5plug/designer/*texttranslator*.so
+%_K5plug/designer/*text*.so
 %_K5inc/Text*/
 %_K5link/lib*.so
 %_libdir/cmake/KF5Text*/
 %_K5archdata/mkspecs/modules/qt_?ext*.pri
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 1.5.2-alt2
+- update russian translation
+
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 1.5.2-alt1
+- new version
+
 * Mon May 29 2023 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt1
 - initial build
