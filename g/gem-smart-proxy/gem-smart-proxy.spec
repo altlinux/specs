@@ -2,7 +2,7 @@
 
 Name:          gem-smart-proxy
 Version:       3.5.1
-Release:       alt3
+Release:       alt3.1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -61,6 +61,7 @@ BuildRequires: gem(webrick) >= 1.0 gem(webrick) < 2
 %ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
 %ruby_use_gem_dependency rsec >= 1.0.0,rsec < 2
 %ruby_use_gem_dependency ci_reporter >= 2.0.0,ci_reporter < 3
+%ruby_use_gem_dependency psych >= 4.0.4,psych < 5
 %ruby_alias_names smart_proxy,smart-proxy
 Requires:      /usr/sbin/railsctl
 Requires:      gem(json) >= 0
@@ -97,7 +98,7 @@ booting
 
 %package       -n smart-proxy
 Version:       3.5.1
-Release:       alt3
+Release:       alt3.1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета smart_proxy
 Group:         Development/Ruby
@@ -105,7 +106,7 @@ BuildArch:     noarch
 
 Requires:      gem(smart_proxy) = 3.5.1
 Requires:      gem(redfish_client) >= 0.5.1
-Requires:      gem(psych) = 4.0.3
+Requires:      gem(psych) >= 4.0.4
 Requires:      gem(rubyipmi) >= 0.10.0
 Requires:      gem(pry) >= 0
 Requires:      gem(rdoc) >= 0
@@ -128,6 +129,7 @@ Requires:      gem(smart_proxy_chef) >= 0.2.0
 Requires:      gem(ed25519) >= 0
 Requires:      gem(bcrypt_pbkdf) >= 0
 Conflicts:     smart-proxy-compat
+Conflicts:     gem(psych) >= 5
 
 %description   -n smart-proxy
 RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet executable(s).
@@ -158,7 +160,7 @@ booting
 
 %package       -n gem-smart-proxy-doc
 Version:       3.5.1
-Release:       alt3
+Release:       alt3.1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета smart_proxy
 Group:         Development/Documentation
@@ -196,7 +198,7 @@ booting
 
 %package       -n gem-smart-proxy-devel
 Version:       3.5.1
-Release:       alt3
+Release:       alt3.1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета smart_proxy
 Group:         Development/Ruby
@@ -320,6 +322,9 @@ rm -rf %_localstatedir/smart-proxy/Gemfile.lock
 
 
 %changelog
+* Fri Dec 01 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt3.1
+- ! fixed dep to psych to equal or more than 4.0.4
+
 * Mon Apr 10 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt3
 - * using railsctl to run service
 

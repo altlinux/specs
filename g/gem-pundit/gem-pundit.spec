@@ -1,7 +1,8 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname pundit
 
 Name:          gem-pundit
-Version:       2.3.0
+Version:       2.3.1
 Release:       alt1
 Summary:       Minimal authorization through OO design and pure Ruby classes
 License:       MIT
@@ -34,7 +35,7 @@ BuildConflicts: gem(rubocop) >= 2
 Requires:      gem(activesupport) >= 3.0.0
 Obsoletes:     ruby-pundit < %EVR
 Provides:      ruby-pundit = %EVR
-Provides:      gem(pundit) = 2.3.0
+Provides:      gem(pundit) = 2.3.1
 
 
 %description
@@ -44,14 +45,14 @@ scaleable authorization system.
 
 
 %package       -n gem-pundit-doc
-Version:       2.3.0
+Version:       2.3.1
 Release:       alt1
 Summary:       Minimal authorization through OO design and pure Ruby classes documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pundit
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(pundit) = 2.3.0
+Requires:      gem(pundit) = 2.3.1
 
 %description   -n gem-pundit-doc
 Minimal authorization through OO design and pure Ruby classes documentation
@@ -66,14 +67,14 @@ scaleable authorization system.
 
 
 %package       -n gem-pundit-devel
-Version:       2.3.0
+Version:       2.3.1
 Release:       alt1
 Summary:       Minimal authorization through OO design and pure Ruby classes development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pundit
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(pundit) = 2.3.0
+Requires:      gem(pundit) = 2.3.1
 Requires:      gem(actionpack) >= 3.0.0
 Requires:      gem(activemodel) >= 3.0.0
 Requires:      gem(bundler) >= 0
@@ -124,6 +125,9 @@ scaleable authorization system.
 
 
 %changelog
+* Sat Dec 02 2023 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt1
+- ^ 2.3.0 -> 2.3.1
+
 * Sat Jan 28 2023 Pavel Skrylev <majioa@altlinux.org> 2.3.0-alt1
 - ^ 2.1.1 -> 2.3.0
 

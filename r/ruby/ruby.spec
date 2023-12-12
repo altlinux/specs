@@ -1,17 +1,12 @@
-%def_without   bootstrap
-%def_enable    shared
-%def_enable    rubygems
+%define        _unpackaged_files_terminate_build 1
 %define        ruby_version 3.1.0
-%define        libdir %_prefix/lib/%name
-%define        includedir %_includedir
-%define        ridir %_datadir/ri
-%define        vendordir %libdir/vendor_%name
 %define        lname lib%name
-%define        _version 3.1.2
+%define        _version 3.1.4
+%define        __ruby env GEM_HOME=%_libexecdir/%name/gemie RUBYLIB=./:./lib ./miniruby -rerb -rrbconfig
 
 Name:          ruby
 Version:       %_version
-Release:       alt2.1
+Release:       alt1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -19,32 +14,18 @@ Url:           http://www.%name-lang.org/
 Vcs:           https://github.com/ruby/ruby.git
 
 Source0:       %name-%_version.tar
-Source1:       fakeruby.sh
-Source2:       miniruby.sh
+Source1:       %name.sh.erb
 Source3:       ruby.macros.erb
 Source4:       ruby.env
-Patch:         realpath.patch
+Source5:       static.tar
 Patch1:        use_system_dirs.patch
-Patch2:        block_install_gems.patch
-Patch3:        single_instantiating.patch
-Patch4:        support_multiple_gem_trees.patch
+Patch2:        single_instantiating.patch
+Patch3:        alt_support_multiple_gem_trees.patch
+Patch4:        realpath.patch
+Patch5:        alt_block_install_gems.patch
 BuildRequires(pre): rpm-macros-valgrind
-BuildRequires: /usr/bin/setup.rb
-BuildRequires: doxygen
-BuildRequires: groff-base
-BuildRequires: libdb4-devel
-BuildRequires: libffi-devel
-BuildRequires: libgdbm-devel
-BuildRequires: libncursesw-devel
-BuildRequires: libreadline-devel
-BuildRequires: libssl-devel
-BuildRequires: zlib-devel
-BuildRequires: libyaml-devel
-%ifarch %valgrind_arches
-BuildRequires: valgrind-devel
-%endif
-BuildRequires: gcc-c++
-%{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %_version}
+BuildRequires(pre): rpm-build-kernel
+BuildRequires: rvm-devel
 %if_with check
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(rake-compiler) >= 0
@@ -52,12 +33,17 @@ BuildRequires: gem(benchmark_driver) >= 0
 BuildRequires: gem(test-unit) >= 3.3.5
 BuildRequires: gem(rake) >= 12.3.3
 %endif
+%if_without check
+BuildConflicts: ruby
+%endif
 
 # Ruby built using LTO cannot rebuild itself because of segfaults
-%define optflags_lto %nil
+%define        optflags_lto %nil
 Requires:      %lname = %_version-%release
 Requires:      ruby-stdlibs = %_version-%release
-Requires:      gem irb erb ri rdoc rake bundle
+Requires:      gem irb erb
+Requires:      /bin/install
+Requires:      rvm-devel
 %define obsolete() \
 Provides:      %1 = %_version-%release \
 Obsoletes:     %1
@@ -66,6 +52,8 @@ Obsoletes:     %1
 echo "Provides: %name-module-$m = %_version-%release"; \
 echo "Obsoletes: %name-module-$m"; \
 done)
+Provides:      ri = 6.4.0
+Obsoletes:     ri < 6.4.1
 
 
 %description
@@ -94,20 +82,10 @@ This package contains Ruby shared libraries.
 %package       -n %lname-devel
 Summary:       Files for compiling extension modules for Ruby
 Group:         Development/C
-%{?_enable_shared:Requires: %lname = %_version-%release}
+Requires:      %lname = %_version-%release
 Requires:      doxygen
+Requires:      rvm-devel
 Requires:      groff-base
-Requires:      libssl-devel
-Requires:      libreadline-devel
-Requires:      libdb4-devel
-Requires:      libffi-devel
-Requires:      libgdbm-devel
-Requires:      libncursesw-devel
-Requires:      zlib-devel
-Requires:      libyaml-devel
-%ifarch %valgrind_arches
-Requires:      valgrind-devel
-%endif
 Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 0
@@ -140,24 +118,15 @@ Summary:       Standard Ruby libraries
 Group:         Development/Ruby
 Requires:      %lname = %_version-%release
 Requires:      ruby = %_version-%release
-Requires:      libyaml2
-Requires:      libgdbm
-Requires:      libssl1.1
-Requires:      libcrypto1.1
-Requires:      libffi8
-Requires:      gem(minitest) >= 5.13.0
-Requires:      gem(net-telnet) >= 0.2
-Requires:      gem(power_assert) >= 1.1.7
-Requires:      gem(rake) >= 13.0.1
-Requires:      gem(test-unit) >= 3.3.4
-Requires:      gem(xmlrpc) >= 0.3.0
+Provides:      rdoc = 6.4.0
+Provides:      bundle = 2.3.26
 Provides:      %name-libs = %_version-%release
 Provides:      %name-racc-runtime = %_version
 Provides:      gem(ipaddr) = 1.2.4
 Provides:      gem(fcntl) = 1.0.1
 Provides:      gem(stringio) = 3.0.1
 Provides:      gem(strscan) = 3.0.1
-Provides:      gem(bundler) = 2.3.7
+Provides:      gem(bundler) = 2.3.26
 Provides:      gem(english) = 0.7.1
 Provides:      gem(abbrev) = 0.1.0
 Provides:      gem(base64) = 0.1.1
@@ -172,29 +141,29 @@ Provides:      gem(readline) = 0.0.3
 Provides:      gem(resolv-replace) = 0.1.0
 Provides:      gem(resolv) = 0.2.1
 Provides:      gem(ruby2_keywords) = 0.0.5
-Provides:      gem(securerandom) = 0.1.1
+Provides:      gem(securerandom) = 0.2.0
 Provides:      gem(shellwords) = 0.1.0
 Provides:      gem(tempfile) = 0.1.2
-Provides:      gem(time) = 0.2.0
+Provides:      gem(time) = 0.2.2
 Provides:      gem(tmpdir) = 0.1.2
 Provides:      gem(tsort) = 0.1.0
 Provides:      gem(un) = 0.2.0
 Provides:      gem(etc) = 1.3.0
 Provides:      gem(nkf) = 0.1.1
-Provides:      gem(cgi) = 0.3.1
-Provides:      gem(csv) = 3.2.2
+Provides:      gem(cgi) = 0.3.6
+Provides:      gem(csv) = 3.2.5
 Provides:      gem(drb) = 2.1.0
 Provides:      gem(irb) = 1.4.1
 Provides:      gem(net-protocol) = 0.1.2
 Provides:      gem(set) = 1.0.2
-Provides:      gem(uri) = 0.11.0
+Provides:      gem(uri) = 0.12.1
 Provides:      gem(date) = 3.2.2
 Provides:      gem(json) = 2.6.1
 Provides:      gem(zlib) = 2.1.1
 Provides:      gem(racc) = 1.6.0
 Provides:      gem(rdoc) = 6.4.0
 Provides:      gem(yaml) = 0.2.0
-Provides:      gem(psych) = 4.0.3
+Provides:      gem(psych) = 4.0.4
 Provides:      gem(open3) = 0.1.1
 Provides:      gem(rinda) = 0.1.1
 Provides:      gem(digest) = 3.1.0
@@ -202,9 +171,9 @@ Provides:      gem(fiddle) = 1.1.0
 Provides:      gem(syslog) = 0.1.0
 Provides:      gem(logger) = 1.5.0
 Provides:      gem(pstore) = 0.1.1
-Provides:      gem(reline) = 0.3.0
+Provides:      gem(reline) = 0.3.1
 Provides:      gem(io-wait) = 0.2.1
-Provides:      gem(openssl) = 3.0.0
+Provides:      gem(openssl) = 3.0.1
 Provides:      gem(ostruct) = 0.5.2
 Provides:      gem(timeout) = 0.2.0
 Provides:      gem(weakref) = 0.1.1
@@ -212,7 +181,7 @@ Provides:      gem(pathname) = 0.2.0
 Provides:      gem(readline-ext) = 0.1.4
 Provides:      gem(win32ole) = 1.8.8
 Provides:      gem(delegate) = 0.2.0
-Provides:      gem(net-http) = 0.2.0
+Provides:      gem(net-http) = 0.3.0
 Provides:      gem(observer) = 0.1.1
 Provides:      gem(optparse) = 0.2.0
 Provides:      gem(singleton) = 0.1.1
@@ -258,26 +227,14 @@ Obsoletes:     %name-tools
 irb is the REPL(read-eval&print loop) environment for Ruby programs.
 
 %package       -n ri-doc
-Summary:       Ruby ri executable man page
+Summary:       Ruby ri executable document
 Group:         Development/Documentation
 BuildArch:     noarch
-Requires:      %_bindir/ri
 Requires:      %name = %_version
-
-%description   -n ri-doc
-Ruby ri executable man page
-
-
-%package       doc
-Summary:       Ruby ri documentation
-Group:         Development/Documentation
-BuildArch:     noarch
 Provides:      %name-doc-ri
 Obsoletes:     %name-doc-ri
-Requires:      ri
-Requires:      ruby = %_version-%release
 
-%description   doc
+%description   -n ri-doc
 Ruby is an interpreted scripting language for quick and easy object-oriented
 programming. It has many features for processing text files and performing
 system management tasks (as in Perl). It is simple, straight-forward, and
@@ -285,24 +242,25 @@ extensible.
 
 This package contains Ruby documentation in ri format.
 
-
-%if_without bootstrap
-%package       miniruby-src
-Summary:       Preprocessed miniruby sources
-Group:         Development/Ruby
+%package       doc
+Summary:       Ruby manuals and documentation
+Group:         Development/Documentation
 BuildArch:     noarch
+Requires:      ruby = %EVR
 
-%description   miniruby-src
-Contains generated files for preprocessed miniruby sources in patch
-format. This files are required for ruby bootstrapping, especially
-on different arches.
-%endif
+%description   doc
+Ruby is an interpreted scripting language for quick and easy object-oriented
+programming. It has many features for processing text files and performing
+system management tasks (as in Perl). It is simple, straight-forward, and
+extensible.
+
+Ruby manuals and documentation.
 
 
 %package       -n gem
 Epoch:         2
-Version:       3.3.7
-Release:       alt2.1
+Version:       3.3.26
+Release:       alt1
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -319,8 +277,8 @@ Ruby gem executable and framework.
 
 %package       -n rpm-macros-ruby
 Epoch:         1
-Version:       1.1.0
-Release:       alt2.1
+Version:       %_version
+Release:       alt1
 Summary:       rpm macros for Ruby packages
 Group:         Development/Ruby
 
@@ -329,194 +287,110 @@ rpm macros for Ruby packages.
 
 
 %prep
-%setup -q
+%setup -q -a5
 %autopatch -p1
-#́# More strict shebang
-sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' bin/*
-# Remove $ruby_version from libs path
-sed -i 's|/\$(ruby_version)||g;s|\(/%name/\)#{version}/|\1|g' tool/mkconfig.rb
-sed -i 's|/\${ruby_version}||' template/%name.pc.in configure.ac
-sed -i -r "/ridatadir[[:blank:]]*=/s/[[:blank:]]+CONFIG\['ruby_version'\],//" tool/rbinstall.rb
-sed -i 's|[[:blank:]]*"/"RUBY_LIB_VERSION$||' version.c
-
-# capi-docs
-sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' tool/rbinstall.rb
-# put config.guess and config.sub from /usr/share/gnu-config
-cp -a /usr/share/gnu-config/config.* tool
-# FIX: automatize
-echo "
-#define RUBY_REVISION \"a21a3b7d23\"
-#define RUBY_FULL_REVISION \"a21a3b7d23704a01d34bd79d09dc37897e00922a\"
-#define RUBY_BRANCH_NAME \"%_version\"
-#define RUBY_RELEASE_DATETIME \"2021-07-07T12:06:44Z\"
-" > revision.h
-
-%build
-%define ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
-%autoreconf
-my_configure() {
-    %configure \
-        %{subst_enable shared} \
-%ifarch %valgrind_arches
-        %{subst_enable valgrind} \
-%endif
-        %{subst_enable rubygems} \
-        --enable-use-system-dirs \
-        --enable-single-instantiating \
-        --disable-rpath "$@" \
-        --docdir=%_docdir/%name-%ruby_version \
-        --with-ridir=%ridir \
-        --with-cachedir=%_cachedir/%name \
-        --with-archlibdir=%_libdir/%name \
-        --with-rubylibprefix=%libdir \
-        --with-rubyarchdir=%_libdir/%name \
-        --with-rubyarchprefix=%_libdir/%name \
-        --with-rubysitearchprefix=%_usr/local/%_lib/%name \
-        --with-rubyhdrdir=%_includedir/ruby \
-        --with-rubyarchhdrdir=/usr/include/ruby \
-        --with-vendordir=%libdir/vendor_ruby \
-        --with-vendorlibdir=%libdir/vendor_ruby \
-        --with-vendorarchdir=%_libdir/%name/vendor_ruby/ \
-        --with-vendorhdrdir=%_includedir/vendor_ruby \
-        --with-vendorarchhdrdir=%_includedir/vendor_ruby \
-        --with-sitedir=%_usr/local/lib/%name \
-        --with-sitelibdir=%_usr/local/lib/%name \
-        --with-sitearchdir=%_usr/local/%_lib/%name \
-        --with-sitearchlibdir=%_usr/local/%_lib/%name \
-        --with-sitearchincludedir=%_usr/local/include/site_ruby \
-        --with-sitehdrdir=%_usr/local/include/site_ruby \
-        --with-sitearchhdrdir=%_usr/local/include/site_ruby \
-        %{?ruby_version:--with-ruby-version=%ruby_version}
-}
-
-%if_with bootstrap
-# *** 1st stage ***
-# Build miniruby with preprocessed files from miniruby-src in a
-# separate directory
-
-cd %_builddir
-cp -a %name-%_version %name-%_version-miniruby
-cd %name-%_version-miniruby
-cp %SOURCE1 .
-cp %SOURCE2 .
-
-my_configure --with-baseruby=$PWD/fakeruby.sh
-patch -p1 -l < %_datadir/%name-%_version-miniruby/miniruby-src.patch
-%make_build miniruby
-
-# miniruby cannot generate these files
-cp *.inc ../%name-%_version/
-
-# *** 2nd stage ***
-# Build ruby with host miniruby frome 1st stage as baseruby
-cd %_builddir/%name-%_version
-my_configure --with-baseruby=%_builddir/%name-%_version-miniruby/miniruby.sh
-
-%else #_with_bootstrap
-my_configure
-
-#́ Copy sources after configure, so that generated files for
-# miniruby can be extracted later to facilitate bootstrapping.
-cp -a %_builddir/%name-%_version %_builddir/%name-%_version-configured
-
-# Build miniruby only, so that we can diff only minimal generated data.
-%make_build miniruby
-
-# Create diff for changed sources files with non-essential filtered out.
-# For diff !0 exit status is normal.
-pushd %_builddir
-diff -Nur -x "*.o" -x miniruby -x "*.log" -x autom4te.cache \
-    %name-%_version-configured %name-%_version > miniruby-src.patch || :
-popd
-%endif #_with_bootstrap
-
-%make_build
-setup.rb config --prefixes=ruby,gem --use-gem-dependencies="$RPM_RUBY_USE_GEM_DEPENDENCY_LIST" --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib --use=stdlibs --alias=psych,bar,yaml,webrick,uri,tracer,timeout,singleton,rss,rexml,readline,prime,mutex_m,ipaddr,fileutils,rdoc,racc,pstore,ostruct,open3,observer,net-smtp,net-pop,matrix,logger,irb,getoptlong,forwardable,did_you_mean,delegate,csv,cgi,bundler,benchmark,zlib,strscan,stringio,sdbm,readline-ext,openssl,json,io-console,gdbm,fiddle,fcntl,etc,dbm,date,bigdecimal,reline --ignore-path-tokens=templates,sample,spec
-setup.rb document
+cp -r static/* ./
 
 %install
-%makeinstall_std
-echo "VENDOR_SPECIFIC=true" > %buildroot%vendordir/vendor-specific.rb
-install -Dm 0755 %lname-static.a %buildroot%_libdir/%lname-static.a
-ln -s %lname-static.a %buildroot%_libdir/%lname.a
-mv %buildroot%_pkgconfigdir/%name{*,}.pc
-install -d -m 0755 %buildroot%_docdir/%name-%ruby_version
-mkdir -p %buildroot%ridir/%ruby_version
-mv %buildroot%ridir/system %buildroot%ridir/%ruby_version/
-install -d -m 0755 %buildroot%ridir/%ruby_version/site
-install -p -m 0644 COPYING* LEGAL NEWS* README* %buildroot%_docdir/%name-%ruby_version/
-# install compiled header config.h
-install -D -m 0644 $(find .ext/include/ -name config.h) %buildroot%ruby_includedir/ruby/config.h
-# when ruby_arch isn't the same as compilable fix it with symlinks
-find %buildroot%_libexecdir -iregex ".*-linux[^\/]*$" -type d |while read -r i; do ln -s "%ruby_arch" $(dirname "$i")/ 2>/dev/null || true; done
+%define ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
 
-%define ruby_libdir %libdir
-%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/%name RUBYLIB=%buildroot%libdir:%buildroot%_libdir/%name:%buildroot %buildroot%_bindir/%name
-
-export RUBYLIB=%buildroot%libdir:%buildroot%_libdir/%name
-export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/%name
-
-%if_without bootstrap
-mkdir -p %buildroot%_datadir/%name-%_version-miniruby
-mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%_version-miniruby/
+INSTALL=/bin/install rvm reinstall . \
+   --gems-path=/tmp/ \
+   --rubies-path=/tmp \
+   --log-path=/tmp/ \
+   --enable-shared \
+%ifarch %valgrind_arches
+   --enable-valgrind \
 %endif
+   --enable-rubygems \
+   --enable-use-system-dirs \
+   --enable-single-instantiating \
+   --enable-install-doc \
+   --enable-install-rdoc \
+   --enable-install-capi \
+   --disable-rpath \
+   --mandir=%_mandir \
+   --libdir=%_libdir \
+   --datarootdir=%_datadir \
+   --libexecdir=%_libexecdir \
+   --bindir=%_libexecdir/%name/bin \
+   --sysconfdir=%_sysconfdir \
+   --sharedstatedir=%_localstatedir \
+   --localstatedir=%_localstatedir \
+   --runstatedir=%_runtimedir \
+   --docdir=%_defaultdocdir/%name \
+   --with-baseruby=no \
+   --with-destdir=%buildroot \
+   --with-cachedir=%_cachedir/%name \
+   --with-ridir=%_datadir/ri/ \
+   --with-exec-prefix=%_libexecdir/%name/bin \
+   --with-rubylibdir=%_libexecdir/%name \
+   --with-archlibdir=%_libdir/%name \
+   --with-rubylibprefix=%_libexecdir/%name \
+   --with-rubyarchprefix=%_libdir/%name \
+   --with-rubyarchdir=%_libdir/%name \
+   --with-rubyhdrdir=%_includedir \
+   --with-rubyarchhdrdir=%_includedir/%name/arch \
+   --with-sitedir=%_usr/local/lib \
+   --with-sitelibdir=%_usr/local/lib/%name \
+   --with-sitearchdir=%_usr/local/%_lib/%name \
+   --with-sitearchlibdir=%_usr/local/%_lib/%name \
+   --with-sitearchdir=%_usr/local/%_lib/%name \
+   --with-sitehdrdir=%_usr/local/include \
+   --with-sitearchincludedir=%_usr/local/include/%name \
+   --with-sitearchhdrdir=%_usr/local/include/%name \
+   --with-rubysitearchprefix=%_usr/local/%_lib/%name \
+   --with-vendordir=%_cachedir \
+   --with-vendorlibdir=%_cachedir/%name \
+   --with-vendorarchdir=%_cachedir/%name \
+   --with-vendorhdrdir=%_cachedir/%name/include \
+   --with-vendorarchhdrdir=%_cachedir/%name/include \
+   --with-rdoc=ri,html \
+   -C --prefix=%_prefix
 
-find %buildroot%libdir
-%__ruby -e "p $:.grep(/-linux/)"
-setup.rb install --install_prefix=%buildroot --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST"
-# TODO keep gem specs conly for default folder with gems
-mv %buildroot%libdir/gemie/specifications/default %buildroot%libdir/specifications
-rm -rf %buildroot%libdir/gemie/{gems,specifications}/*
+mkdir -p \
+   %buildroot%_libexecdir \
+   %buildroot%_cachedir/%name/gemie \
+   %buildroot%_bindir/ \
+   %buildroot%_sysconfdir/bashrc.d/ \
+   %buildroot%_libdir \
+   %buildroot%_docdir/%name
 
-mkdir -p %buildroot%_cachedir/%name/gemie
-# Make empty dir for ri documentation
-mkdir -p %buildroot%_datadir/ri/site/%ruby_version
-rm -rf %buildroot%_bindir/{ri,rdoc,bundle,bundler,racc}
-
-%ifarch armh
-# workaround inconsistency between extension install path and search path
-EX="%buildroot%libdir/gems/%ruby_version/extensions"
-mkdir -p "$EX/armh-linux"
-ln -s armh-linux "${EX}/armh-linux-eabi"
-%endif
+cp COPYING LEGAL NEWS* README.md README.EXT *.ja %buildroot%_docdir/%name/
+while read -d " " i; do ln -s ../../%_libexecdir/%name/bin/$i %buildroot%_bindir/; done <<< "ruby ri erb irb gem "
 
 # install ruby macros
 install -D -p -m 0644 %SOURCE4 %buildroot%_rpmmacrosdir/ruby.env
-%__ruby -rerb -e 'File.open("%buildroot%_rpmmacrosdir/ruby", "w") { |f| f.puts ERB.new(IO.read("%SOURCE3")).result }'
-
+%__ruby -e 'File.open("%buildroot%_rpmmacrosdir/ruby", "w") { |f| f.puts ERB.new(IO.read("%SOURCE3")).result }'
+%__ruby -e 'File.open("%buildroot%_sysconfdir/bashrc.d/%name.sh", "w") { |f| f.puts ERB.new(IO.read("%SOURCE1")).result }'
 
 %check
-%make_build test
-setup.rb test
+make test
+
+%post
+echo "NOTE: to make the environment variable changes come into effect, please relogin the terminal session" 1>&2
 
 %files
-%doc %dir %_docdir/%name-%ruby_version
-%doc %_docdir/%name-%ruby_version/COPYING
-%doc %_docdir/%name-%ruby_version/LEGAL
-%doc %_docdir/%name-%ruby_version/NEWS*
-%doc %_docdir/%name-%ruby_version/README.*
-%lang(ja) %doc %_docdir/%name-%ruby_version/*.ja
+%_libexecdir/%name/bin
 %_bindir/%name
-%dir %_datadir/ri
-%_mandir/%name.*
+%_bindir/ri
 %_man1dir/%name.*
-%dir %_cachedir/%name/gemie
-%dir %ridir
-
+%dir %_datadir/ri
+%attr(0755,root,root) %_sysconfdir/bashrc.d/%name.sh
+%dir %attr(775,root,rvm) %_cachedir/%name/gemie
 
 %files         -n %lname
-%{?_enable_shared:%_libdir/*.so.*}
+%_libdir/*.so.*
 
 %files         -n %lname-devel
 %_pkgconfigdir/*
-%includedir/*
-%{?_enable_shared:%_libdir/*.so}
-
-%files         -n %lname-devel-static
-%_libdir/*.a
+%_includedir/%name
+%_includedir/%name.h
+%_libdir/*.so
 
 %files         stdlibs
-%libdir
+%exclude %_libexecdir/%name/bin
+%_libexecdir/%name
 %_libdir/%name
 
 %files         -n gem
@@ -525,33 +399,42 @@ setup.rb test
 %files         -n erb
 %_bindir/erb
 %_man1dir/erb.*
-%_mandir/erb.*
 
 %files         -n irb
 %lang(ja) %doc doc/irb/*.ja
 %_bindir/irb
 %_man1dir/irb.*
-%_mandir/irb.1.xz
 
 %files         doc
-%dir %ridir/%ruby_version/site
-%ridir/*
+%doc %_docdir/%name/COPYING
+%doc %_docdir/%name/LEGAL
+%doc %_docdir/%name/NEWS*
+%doc %_docdir/%name/README.md
+%doc %_docdir/%name/README.EXT
+%doc %_docdir/%name
+%lang(ja) %doc %_docdir/%name/*.ja
 
 %files         -n ri-doc
 %_man1dir/ri.*
-%_mandir/ri.*
-
-%if_without bootstrap
-%files miniruby-src
-%_datadir/%name-%_version-miniruby/miniruby-src.patch
-%endif
+%_datadir/ri/system
 
 %files         -n rpm-macros-ruby
 %_rpmmacrosdir/ruby
 %_rpmmacrosdir/ruby.env
 
-
 %changelog
+* Mon Nov 13 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt1
+- ^ 3.1.2 -> 3.1.4 (closes #47868)
+- * moved build to rvm
+- * BREAK: changed some things to rpm-build-macros
+- ! fixed:
+ + CVE-2022-39253 for bundler
+ + enabled permissions to /var/lib/ruby/gemie/ (closes #45251)
+ + enable running gemserver (closes #48325)
+ + custom gem installation (closes #47660)
+ + loading ruby's so libraries (closes #48249)
+ + drop explicit dependencies to libs including ssl1.1 (closes #48713)
+
 * Mon Jun 19 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.2-alt2.1
 - - removed rpm-build-ruby build dependency (closes #46576)
 

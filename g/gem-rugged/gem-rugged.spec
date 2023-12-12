@@ -2,7 +2,7 @@
 %define        gemname rugged
 
 Name:          gem-rugged
-Version:       1.5.1
+Version:       1.7.1
 Release:       alt1
 Summary:       Rugged is a Ruby binding to the libgit2 linkable library
 License:       MIT
@@ -24,7 +24,7 @@ BuildConflicts: gem(minitest) >= 6
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(rugged) = 1.5.1
+Provides:      gem(rugged) = 1.7.1
 
 
 %description
@@ -33,14 +33,14 @@ testing and using the libgit2 library in a language that is awesome.
 
 
 %package       -n gem-rugged-doc
-Version:       1.5.1
+Version:       1.7.1
 Release:       alt1
 Summary:       Rugged is a Ruby binding to the libgit2 linkable library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rugged
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rugged) = 1.5.1
+Requires:      gem(rugged) = 1.7.1
 
 %description   -n gem-rugged-doc
 Rugged is a Ruby binding to the libgit2 linkable library documentation
@@ -54,14 +54,14 @@ testing and using the libgit2 library in a language that is awesome.
 
 
 %package       -n gem-rugged-devel
-Version:       1.5.1
+Version:       1.7.1
 Release:       alt1
 Summary:       Rugged is a Ruby binding to the libgit2 linkable library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rugged
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rugged) = 1.5.1
+Requires:      gem(rugged) = 1.7.1
 Requires:      gem(rake-compiler) >= 0.9.0
 Requires:      gem(pry) >= 0
 Requires:      gem(minitest) >= 5.0
@@ -108,6 +108,9 @@ testing and using the libgit2 library in a language that is awesome.
 
 
 %changelog
+* Wed Dec 06 2023 Pavel Skrylev <majioa@altlinux.org> 1.7.1-alt1
+- ^ 1.5.1 -> 1.7.1
+
 * Thu Mar 02 2023 Pavel Skrylev <majioa@altlinux.org> 1.5.1-alt1
 - ^ 1.4.3 -> 1.5.1
 

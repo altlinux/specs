@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.5.1
-Release:       alt6
+Release:       alt7
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -305,7 +305,6 @@ Requires:      gem(foreman_api_client) >= 1.0.2
 Requires:      gem(foreman_monitoring) >= 2.1.0
 Requires:      gem(foreman_webhooks) >= 3.0.5
 Requires:      gem(foreman_cert_revoke_host) >= 0.1.2
-Requires:      gem(oauth) >= 0
 Requires:      gem(rss) >= 0
 Requires:      gem(gridster-rails) >= 0
 Requires:      gem(spice-html5-rails) >= 0
@@ -344,7 +343,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.5.1
-Release:       alt6
+Release:       alt7
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -510,6 +509,10 @@ railsctl cleanup %name
 
 
 %changelog
+* Mon Dec 11 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt7
+- - removed ssl_dhparam from foreman.nginx.conf
+- ! fixed foreman service file
+
 * Tue Aug 01 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt6
 - ! fixed fast gettext calls for 2.3.0 version
 

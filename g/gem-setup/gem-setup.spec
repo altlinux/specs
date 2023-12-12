@@ -1,8 +1,9 @@
+%define        __setup_rb GEM_HOME=%ruby_gemhome %__ruby $(which setup-rb 2>/dev/null || which setup)
 %define        pkgname setup
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt8
+Release:       alt9
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -10,6 +11,8 @@ Url:           https://github.com/rubyworks/setup
 Vcs:           https://github.com/majioa/setup.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Source:        %name-%version.tar
 Patch:         patch.patch
@@ -18,6 +21,7 @@ BuildRequires(pre): rpm-build-ruby
 
 Requires:      chrpath
 Requires:      setup-rb
+Provides:      gem(setup) = %version
 
 %description
 Every well practiced Rubyist is aware of Minero Aoki's ever setup.rb script.
@@ -37,6 +41,7 @@ Summary:       Executable file for %gemname gem
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
+Requires:      gem(setup) = %version
 
 %description   -n setup-rb
 Executable file for %gemname gem.
@@ -50,6 +55,7 @@ Summary:       Documentation files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
+Requires:      gem(setup) = %version
 
 %description   doc
 Documentation files for %gemname gem.
@@ -61,11 +67,10 @@ Documentation files for %gemname gem.
 %prep
 %setup
 %patch -p1
-sed "/version/i \$:.unshift('/usr/src/RPM/BUILD/gem-setup-5.999.4/lib')" -i bin/setup.rb
 
 %build
 export PATH=$PATH:$(pwd)/bin
-%__setup_rb build --use=setup --alias=setup-rb --version-replace=%version
+%__setup_rb build --use=setup --version-replace=%version
 
 %install
 export PATH=$PATH:$(pwd)/bin
@@ -82,13 +87,19 @@ export PATH=$PATH:$(pwd)/bin
 
 %files         -n setup-rb
 %doc README*
-%_bindir/setup.rb
+%ruby_bindir/setup-rb
 
 %files         doc
 %ruby_gemdocdir
 
 
 %changelog
+* Wed Nov 22 2023 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt9
+- * BREAK: setup exec moved into %%ruby_bindir
+- * renamed setup.rb to setup-rb
+- ! parse makefile if no target folder defined
+- ! touch gem.build_completre anyway even real compilation isn't performed
+
 * Thu Oct 19 2023 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt8
 - ! fixed jeweler spec detecton by using class variable storage
 

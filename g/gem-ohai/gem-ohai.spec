@@ -1,7 +1,8 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname ohai
 
 Name:          gem-ohai
-Version:       18.0.26
+Version:       18.1.16
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON
 License:       Apache-2.0
@@ -14,7 +15,7 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_with check
-BuildRequires: gem(chefstyle) = 2.2.2
+BuildRequires: gem(chefstyle) >= 2.2.2
 BuildRequires: gem(ipaddr_extensions) >= 0
 BuildRequires: gem(rake) >= 10.1.0
 BuildRequires: gem(rspec-collection_matchers) >= 1.0
@@ -39,6 +40,7 @@ BuildRequires: gem(mixlib-shellout) >= 3.2.5
 BuildRequires: gem(plist) >= 3.1
 BuildRequires: gem(train-core) >= 0
 BuildRequires: gem(wmi-lite) >= 1.0
+BuildConflicts: gem(chefstyle) >= 3
 BuildConflicts: gem(rspec-collection_matchers) >= 2
 BuildConflicts: gem(rspec-core) >= 4
 BuildConflicts: gem(rspec-expectations) >= 4
@@ -58,7 +60,7 @@ BuildConflicts: gem(wmi-lite) >= 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
-%ruby_ignore_names rails
+%ruby_use_gem_dependency chefstyle >= 2.2.2,chefstyle < 3
 Requires:      gem(chef-config) >= 14.12
 Requires:      gem(chef-utils) >= 16.0
 Requires:      gem(ffi) >= 1.9
@@ -82,8 +84,9 @@ Conflicts:     gem(plist) >= 4
 Conflicts:     gem(wmi-lite) >= 2
 Obsoletes:     ohai < %EVR
 Provides:      ohai = %EVR
-Provides:      gem(ohai) = 18.0.26
+Provides:      gem(ohai) = 18.1.16
 
+%ruby_bindir_to %ruby_bindir
 
 %description
 Ohai is a tool that is used to detect attributes on a node, and then provide
@@ -92,14 +95,14 @@ is required by the chef-client and must be present on a node.
 
 
 %package       -n ohai
-Version:       18.0.26
+Version:       18.1.16
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета ohai
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 18.0.26
+Requires:      gem(ohai) = 18.1.16
 
 %description   -n ohai
 Ohai profiles your system and emits JSON executable(s).
@@ -113,14 +116,14 @@ is required by the chef-client and must be present on a node.
 
 
 %package       -n gem-ohai-doc
-Version:       18.0.26
+Version:       18.1.16
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ohai
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 18.0.26
+Requires:      gem(ohai) = 18.1.16
 
 %description   -n gem-ohai-doc
 Ohai profiles your system and emits JSON documentation files.
@@ -134,15 +137,15 @@ is required by the chef-client and must be present on a node.
 
 
 %package       -n gem-ohai-devel
-Version:       18.0.26
+Version:       18.1.16
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ohai
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 18.0.26
-Requires:      gem(chefstyle) = 2.2.2
+Requires:      gem(ohai) = 18.1.16
+Requires:      gem(chefstyle) >= 2.2.2
 Requires:      gem(ipaddr_extensions) >= 0
 Requires:      gem(rake) >= 10.1.0
 Requires:      gem(rspec-collection_matchers) >= 1.0
@@ -155,6 +158,7 @@ Requires:      gem(pry) >= 0
 Requires:      gem(pry-byebug) >= 0
 Requires:      gem(pry-stack_explorer) >= 0
 Requires:      gem(rb-readline) >= 0
+Conflicts:     gem(chefstyle) >= 3
 Conflicts:     gem(rspec-collection_matchers) >= 2
 Conflicts:     gem(rspec-core) >= 4
 Conflicts:     gem(rspec-expectations) >= 4
@@ -189,7 +193,7 @@ is required by the chef-client and must be present on a node.
 %ruby_gemlibdir
 
 %files         -n ohai
-%_bindir/ohai
+%ruby_bindir/ohai
 
 %files         -n gem-ohai-doc
 %ruby_gemdocdir
@@ -198,6 +202,9 @@ is required by the chef-client and must be present on a node.
 
 
 %changelog
+* Mon Dec 04 2023 Pavel Skrylev <majioa@altlinux.org> 18.1.16-alt1
+- ^ 18.0.26 -> 18.1.16
+
 * Fri Jan 27 2023 Pavel Skrylev <majioa@altlinux.org> 18.0.26-alt1
 - ^ 18.0.10 -> 18.0.26
 

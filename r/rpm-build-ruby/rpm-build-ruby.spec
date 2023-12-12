@@ -1,8 +1,6 @@
-%def_disable check
-
 Name:          rpm-build-ruby
 Epoch:         1
-Version:       1.1.0
+Version:       1.1.1
 Release:       alt1
 Summary:       RPM helper scripts to calculate Ruby dependencies
 License:       GPLv2
@@ -12,14 +10,13 @@ BuildArch:     noarch
 
 Requires:      rpm-macros-ruby
 Requires:      ruby
+Requires:      rake
+Requires:      rdoc
+Requires:      setup-rb
 Requires:      libruby-devel
-Requires:      /usr/bin/rdoc
-Requires:      /usr/bin/rake
 Requires:      /bin/sed
 Conflicts:     rpm-build <= 4.0.4-alt24
 AutoReq:       yes,noruby
-
-%{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
 %description
 These helper scripts will look at Ruby source files in your package, and will
@@ -40,6 +37,10 @@ install -p -m 0755 ruby.{req,prov}* %buildroot%_rpmlibdir/
 
 
 %changelog
+* Tue Nov 28 2023 Pavel Skrylev <majioa@altlinux.org> 1:1.1.1-alt1
+- * BREAK: setup dep detection script placement is detected on-the-fly
+- ! fixed dep to rake/rdoc as package instead of path to executable
+
 * Thu Aug 18 2022 Pavel Skrylev <majioa@altlinux.org> 1:1.1.0-alt1
 - crop out macros in favor of ruby package
 

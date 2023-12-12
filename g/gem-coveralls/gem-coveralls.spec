@@ -2,7 +2,7 @@
 
 Name:          gem-coveralls
 Version:       0.8.23.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Coveralls for Ruby
 Summary(ru_RU.UTF-8): Покрытия для рубина
 License:       MIT
@@ -13,12 +13,12 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         no_truthy.patch
 BuildRequires(pre): rpm-build-ruby
 %if_with check
 BuildRequires: gem(bundler) >= 2.0
 BuildRequires: gem(rake) >= 10.3
 BuildRequires: gem(rspec) >= 3.2
-BuildRequires: gem(truthy) >= 1
 BuildRequires: gem(vcr) >= 2.9
 BuildRequires: gem(webmock) >= 1.20
 BuildRequires: gem(addressable) >= 2.3.8
@@ -55,6 +55,7 @@ Conflicts:     gem(thor) >= 2.0
 Provides:      gem(coveralls) = 0.8.23.2
 
 %ruby_use_gem_version coveralls:0.8.23.2
+%ruby_bindir_to %ruby_bindir
 
 %description
 Coveralls was designed with Ruby projects in mind, and we've made it as easy as
@@ -65,24 +66,24 @@ we possibly can to get started.
 простым на сколько могли, чтобы сразу начать разработку.
 
 
-%package       -n coveralls
+%package       -n coveralls-bin
 Version:       0.8.23.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Coveralls for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета coveralls
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(coveralls) = 0.8.23.2
-Conflicts:     python-module-z4r-coveralls
+Conflicts:     coveralls
 
-%description   -n coveralls
+%description   -n coveralls-bin
 Coveralls for Ruby executable(s).
 
 Coveralls was designed with Ruby projects in mind, and we've made it as easy as
 we possibly can to get started.
 
-%description   -n coveralls -l ru_RU.UTF-8
+%description   -n coveralls-bin -l ru_RU.UTF-8
 Исполнямка для самоцвета coveralls.
 
 Покрытия были разработаны для проектов рубина с умом, мы сделали его настолько
@@ -91,7 +92,7 @@ we possibly can to get started.
 
 %package       -n gem-coveralls-doc
 Version:       0.8.23.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Coveralls for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета coveralls
 Group:         Development/Documentation
@@ -114,7 +115,7 @@ we possibly can to get started.
 
 %package       -n gem-coveralls-devel
 Version:       0.8.23.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Coveralls for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета coveralls
 Group:         Development/Ruby
@@ -124,7 +125,6 @@ Requires:      gem(coveralls) = 0.8.23.2
 Requires:      gem(bundler) >= 2.0
 Requires:      gem(rake) >= 10.3
 Requires:      gem(rspec) >= 3.2
-Requires:      gem(truthy) >= 1
 Requires:      gem(vcr) >= 2.9
 Requires:      gem(webmock) >= 1.20
 Requires:      gem(addressable) >= 2.3.8
@@ -149,6 +149,7 @@ we possibly can to get started.
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -164,9 +165,9 @@ we possibly can to get started.
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         -n coveralls
+%files         -n coveralls-bin
 %doc README.md
-%_bindir/coveralls
+%ruby_bindir/coveralls
 
 %files         -n gem-coveralls-doc
 %doc README.md
@@ -177,6 +178,9 @@ we possibly can to get started.
 
 
 %changelog
+* Sat Dec 02 2023 Pavel Skrylev <majioa@altlinux.org> 0.8.23.2-alt0.2
+- ! fixed bindir and patch t remove truthy gem
+
 * Fri Jan 27 2023 Pavel Skrylev <majioa@altlinux.org> 0.8.23.2-alt0.1
 - ^ 0.8.23[1] -> 0.8.23[2]
 

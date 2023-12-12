@@ -1,8 +1,9 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname mini_portile2
 
 Name:          gem-mini-portile2
-Version:       2.8.0
-Release:       alt1.1
+Version:       2.8.5
+Release:       alt1
 Summary:       Simple autoconf builder for developers
 License:       MIT
 Group:         Development/Ruby
@@ -14,20 +15,28 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_with check
-BuildRequires: gem(bundler) >= 2.1.4 gem(bundler) < 3
-BuildRequires: gem(minitar) >= 0.9 gem(minitar) < 1
-BuildRequires: gem(minitest) >= 5.15 gem(minitest) < 6
-BuildRequires: gem(minitest-hooks) >= 1.5 gem(minitest-hooks) < 2
-BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
-BuildRequires: gem(webrick) >= 1.7 gem(webrick) < 2
+BuildRequires: gem(net-ftp) >= 0
+BuildRequires: gem(bundler) >= 2.1.4
+BuildRequires: gem(minitar) >= 0.9
+BuildRequires: gem(minitest) >= 5.15
+BuildRequires: gem(minitest-hooks) >= 1.5
+BuildRequires: gem(rake) >= 13.0
+BuildRequires: gem(webrick) >= 1.7
+BuildConflicts: gem(bundler) >= 3
+BuildConflicts: gem(minitar) >= 1
+BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(minitest-hooks) >= 2
+BuildConflicts: gem(rake) >= 14
+BuildConflicts: gem(webrick) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
 %ruby_alias_names mini_portile2,mini-portile2
 Obsoletes:     ruby-mini_portile2 < %EVR
 Provides:      ruby-mini_portile2 = %EVR
-Provides:      gem(mini_portile2) = 2.8.0
+Provides:      gem(mini_portile2) = 2.8.5
 
 
 %description
@@ -37,14 +46,14 @@ version of an underlying dependency that you'd like to use.
 
 
 %package       -n gem-mini-portile2-doc
-Version:       2.8.0
-Release:       alt1.1
+Version:       2.8.5
+Release:       alt1
 Summary:       Simple autoconf builder for developers documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mini_portile2
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(mini_portile2) = 2.8.0
+Requires:      gem(mini_portile2) = 2.8.5
 
 %description   -n gem-mini-portile2-doc
 Simple autoconf builder for developers documentation files.
@@ -58,20 +67,27 @@ version of an underlying dependency that you'd like to use.
 
 
 %package       -n gem-mini-portile2-devel
-Version:       2.8.0
-Release:       alt1.1
+Version:       2.8.5
+Release:       alt1
 Summary:       Simple autoconf builder for developers development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета mini_portile2
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(mini_portile2) = 2.8.0
-Requires:      gem(bundler) >= 2.1.4 gem(bundler) < 3
-Requires:      gem(minitar) >= 0.9 gem(minitar) < 1
-Requires:      gem(minitest) >= 5.15 gem(minitest) < 6
-Requires:      gem(minitest-hooks) >= 1.5 gem(minitest-hooks) < 2
-Requires:      gem(rake) >= 13.0 gem(rake) < 14
-Requires:      gem(webrick) >= 1.7 gem(webrick) < 2
+Requires:      gem(mini_portile2) = 2.8.5
+Requires:      gem(net-ftp) >= 0
+Requires:      gem(bundler) >= 2.1.4
+Requires:      gem(minitar) >= 0.9
+Requires:      gem(minitest) >= 5.15
+Requires:      gem(minitest-hooks) >= 1.5
+Requires:      gem(rake) >= 13.0
+Requires:      gem(webrick) >= 1.7
+Conflicts:     gem(bundler) >= 3
+Conflicts:     gem(minitar) >= 1
+Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(minitest-hooks) >= 2
+Conflicts:     gem(rake) >= 14
+Conflicts:     gem(webrick) >= 2
 
 %description   -n gem-mini-portile2-devel
 Simple autoconf builder for developers development package.
@@ -110,6 +126,9 @@ version of an underlying dependency that you'd like to use.
 
 
 %changelog
+* Wed Nov 29 2023 Pavel Skrylev <majioa@altlinux.org> 2.8.5-alt1
+- ^ 2.8.0 -> 2.8.5
+
 * Wed Oct 05 2022 Pavel Skrylev <majioa@altlinux.org> 2.8.0-alt1.1
 - !close gem build requires into "with check" proptected section
 
