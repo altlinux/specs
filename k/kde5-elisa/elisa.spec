@@ -4,7 +4,7 @@
 %define libelisalib libelisalib%sover
 
 Name: kde5-%rname
-Version: 23.08.3
+Version: 23.08.4
 Release: alt1
 %K5init
 
@@ -27,6 +27,7 @@ BuildRequires: qt5-declarative-devel qt5-multimedia-devel qt5-quickcontrols2-dev
 BuildRequires: kf5-kcmutils-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel
 BuildRequires: kf5-kdoctools-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kio-devel
 BuildRequires: kf5-kirigami-devel kf5-kpackage-devel kf5-kiconthemes-devel
+BuildRequires: kf5-baloo-devel
 
 
 %description
@@ -93,6 +94,9 @@ sed -i '/find_package.*UPNPQT/s|UPNPQT|UPNPQT_disabled|' CMakeLists.txt
 %_K5lib/libelisaLib.so.*
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 

@@ -16,8 +16,8 @@
 %def_enable python_plugins
 
 Name: kde5-%rname
-Version: 23.08.3
-Release: alt3
+Version: 23.08.4
+Release: alt1
 %K5init no_altplace
 
 Summary: Very fast web-browser
@@ -156,6 +156,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.*
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Mon Dec 11 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt3
 - fix obsoletes
 

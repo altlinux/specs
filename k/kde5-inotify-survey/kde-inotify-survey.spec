@@ -1,7 +1,7 @@
 %define rname kde-inotify-survey
 
 Name: kde5-inotify-survey
-Version: 23.08.3
+Version: 23.08.4
 Release: alt1
 %K5init man
 
@@ -53,6 +53,9 @@ Sporting a kded module to tell you when things are getting dicey and a CLI tool 
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 

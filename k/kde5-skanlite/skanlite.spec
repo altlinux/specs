@@ -10,7 +10,7 @@
 %endif
 
 Name: kde5-%rname
-Version: 23.08.3
+Version: 23.08.4
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -63,6 +63,9 @@ with auto-generated names and format.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 

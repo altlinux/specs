@@ -1,7 +1,7 @@
 %define rname colord-kde
 
 Name: kde5-colord
-Version: 23.08.3
+Version: 23.08.4
 Release: alt1
 %K5init
 
@@ -50,6 +50,9 @@ KDE support for colord including KDE Daemon module and System Settings module.
 %_K5data/kpackage/kcms/*colord*
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 
