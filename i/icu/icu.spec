@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define real_ver_major 74
-%define real_ver_minor 1
+%define real_ver_minor 2
 %define real_ver %{real_ver_major}.%{real_ver_minor}
 
 %def_without doc
@@ -27,6 +27,7 @@ Source: https://github.com/unicode-org/%name/releases/download/release-%{real_ve
 Vcs: https://github.com/unicode-org/icu.git
 Source: icu-%version.tar
 %endif
+Source1: LICENSE-Unicode-v3
 Patch: icu-6.3.1-alt-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -84,6 +85,7 @@ support. This package contains sample code for ICU.
 %prep
 %setup -c
 %setup -DT -n %name-%version/icu
+cp %SOURCE1 ../LICENSE
 %ifarch %e2k
 %patch -p2
 %add_optflags -finput-charset=utf8
@@ -141,6 +143,9 @@ cd source
 %_datadir/icu/samples
 
 %changelog
+* Wed Dec 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1:7.4.2-alt1
+- 7.4.2
+
 * Tue Oct 31 2023 Yuri N. Sedunov <aris@altlinux.org> 1:7.4.1-alt1
 - 7.4.1
 

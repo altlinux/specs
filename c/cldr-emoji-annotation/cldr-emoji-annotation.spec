@@ -1,11 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 44
-%define tag_ver release-%ver_major
+%define ver_minor 1
+%define tag_ver release-%ver_major-%ver_minor
 %def_enable check
 
 Name: cldr-emoji-annotation
-Version: %ver_major
+Version: %ver_major.%ver_minor
 Release: alt1
 
 # Annotation files are in Unicode license
@@ -102,6 +103,9 @@ done
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed Dec 13 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
+- 44.1
+
 * Tue Oct 31 2023 Yuri N. Sedunov <aris@altlinux.org> 44-alt1
 - updated to release-44-1-gfa9259fb6d
 
