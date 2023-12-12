@@ -84,7 +84,7 @@
 # Set of architectures for which we build fastdebug builds
 %global fastdebug_arches x86_64 ppc64le aarch64
 # Set of architectures with a Just-In-Time (JIT) compiler
-%global jit_arches      %{arm} %{aarch64} %{ix86} %{power64} s390x sparcv9 sparc64 x86_64
+%global jit_arches      %{arm} %{aarch64} %{ix86} %{power64} s390x sparcv9 sparc64 x86_64 loongarch64
 # Set of architectures which use the Zero assembler port (!jit_arches)
 %global zero_arches ppc s390
 # Set of architectures which run a full bootstrap cycle
@@ -94,7 +94,7 @@
 # Set of architectures with a Ahead-Of-Time (AOT) compiler
 %global aot_arches      x86_64 %{aarch64}
 # Set of architectures which support the serviceability agent
-%global sa_arches       %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64} %{arm}
+%global sa_arches       %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64} %{arm} loongarch64
 # Set of architectures which support class data sharing
 # See https://bugzilla.redhat.com/show_bug.cgi?id=513605
 # MetaspaceShared::generate_vtable_methods is not implemented for the PPC JIT
@@ -261,6 +261,10 @@
 %global archinstall sparcv9
 %global stapinstall %{_target_cpu}
 %endif
+%ifarch loongarch64
+%global archinstall loongarch64
+%global stapinstall loongarch64
+%endif
 # Need to support noarch for srpm build
 %ifarch noarch
 %global archinstall %{nil}
@@ -356,7 +360,7 @@
 
 Name:    java-17-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1
+Release: alt2
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -488,6 +492,10 @@ Patch1:    rh1648242-accessible_toolkit_crash_do_not_break_jvm.patch
 Patch2:    rh1648644-java_access_bridge_privileged_security.patch
 Patch3:    rh649512-remove_uses_of_far_in_jpeg_libjpeg_turbo_1_4_compat_for_jdk10_and_up.patch
 Patch4:    openjdk17-alt-fix-build-for-i586.patch
+# LoongArch support
+Patch3500: jdk17u-17.0.9-loongarch.patch
+# Alas LoongArch patch somewhat breaks PPC, hence the fixup
+Patch3510: jdk17u-17.0.9-ppc-fixup.patch
 
 #############################################
 #
@@ -501,6 +509,7 @@ BuildRequires: libXext-devel libXrender-devel libXcomposite-devel
 BuildRequires(pre): browser-plugins-npapi-devel lsb-release
 BuildRequires(pre): rpm-macros-java
 BuildRequires: ca-certificates-java
+BuildRequires(pre): ca-trust-java
 BuildRequires(pre): libnss-devel
 
 %set_compress_method none
@@ -613,7 +622,7 @@ Summary: %{origin_nice} %{featurever} Headless Runtime Environment
 Group: Development/Java
 
 # Require /etc/pki/java/cacerts
-Requires: ca-trust
+Requires(pre): ca-trust
 # Require javapackages-filesystem for ownership of /usr/lib/jvm/ and macros
 Requires: javapackages-filesystem
 # Require zone-info data provided by tzdata-java sub-package
@@ -947,6 +956,8 @@ pushd %{top_level_dir_name}
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch3500 -p1
+%patch3510 -p1
 # nss.cfg PKCS11 support; must come last as it also alters java.security
 %patch1000 -p1
 popd # openjdk
@@ -1088,7 +1099,11 @@ function buildjdk() {
 %ifarch %{ppc64le}
     --with-jobs=1 \
 %else
+%ifarch loongarch64
+    --with-jobs=$NUM_PROC \
+%else
     --with-jobs=8 \
+%endif
 %endif
     --with-version-build=%{buildver} \
     --with-version-pre="%{ea_designator}" \
@@ -1998,6 +2013,10 @@ fi
 %endif
 
 %changelog
+* Tue Dec 12 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0:17.0.9.0.9-alt2
+- Support LoongArch architecture (patch from https://github.com/loongson/jdk17u
+  branch master-ls, commit 84bd3bf8f104c294b595be579fa4268c5c83ed82).
+
 * Tue Dec 05 2023 Andrey Cherepanov <cas@altlinux.org> 0:17.0.9.0.9-alt1
 - New version (fixes CVE-2023-22081 and CVE-2023-22025).
 
