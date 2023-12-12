@@ -1,5 +1,5 @@
 Name: DSR
-Version: 241
+Version: 242
 Release: alt1
 
 Summary: DSR - A program for modelling of disordered solvents with SHELXL
@@ -63,11 +63,14 @@ install -m 644 example/* %buildroot%_datadir/%name/example
 cp -R src/dsr_shelx/fit %buildroot%_datadir/%name
 
 %files
-%doc README dsrchangelog.html
+%doc README.md dsrchangelog.html
 %_bindir/dsr
 %_datadir/%name
 
 %changelog
+* Tue Dec 12 2023 Denis G. Samsonenko <ogion@altlinux.org> 242-alt1
+- new version
+
 * Sun Sep 17 2023 Denis G. Samsonenko <ogion@altlinux.org> 241-alt1
 - new version
 
