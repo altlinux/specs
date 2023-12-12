@@ -3,7 +3,7 @@
 %define libkokocommon libkokocommon%sover
 
 Name: kde5-%rname
-Version: 23.08.3
+Version: 23.08.4
 Release: alt1
 %K5init
 
@@ -100,6 +100,9 @@ rm -f cities1000.txt
 %_K5lib/libkokocommon.so.%sover
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Wed Dec 06 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 
