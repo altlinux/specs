@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.15.1
+Version: 1.5.15.2
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,10 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Tue Dec 12 2023 Anton Midyukov <antohami@altlinux.org> 1.5.15.2-alt1
+- Fix vmguest feature after commit "vmguest: simplify the code"
+- various fixes for regular.mk
+
 * Sat Dec 09 2023 Anton Midyukov <antohami@altlinux.org> 1.5.15.1-alt1
 - fix vmguest feature for non-x86 architectures (thx Alexey Sheplyakov
   @asheplyakov)
