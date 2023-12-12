@@ -1,8 +1,8 @@
 %define rname step
 
 Name: kde5-%rname
-Version: 23.08.3
-Release: alt2
+Version: 23.08.4
+Release: alt1
 %K5init
 
 Group: Education
@@ -67,6 +67,9 @@ you can not only learn but feel how physics works!
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Mon Dec 04 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.3-alt2
 - fix an error when saving an example file (ALT #48326)
 

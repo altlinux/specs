@@ -15,8 +15,8 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 23.08.3
-Release: alt2
+Version: 23.08.4
+Release: alt1
 %K5init
 
 Group: Education
@@ -151,6 +151,9 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Mon Nov 27 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt2
 - using rpm-macros-qt5-webengine
 

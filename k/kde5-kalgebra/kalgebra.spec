@@ -7,8 +7,8 @@
 %endif
 
 Name: kde5-%rname
-Version: 23.08.3
-Release: alt2
+Version: 23.08.4
+Release: alt1
 %K5init
 
 Group: Education
@@ -67,6 +67,9 @@ however, one does not need to know MathML to use KAlgebra.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Mon Nov 27 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt2
 - using rpm-macros-qt5-webengine
 

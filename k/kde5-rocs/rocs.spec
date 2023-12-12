@@ -4,7 +4,7 @@
 %define librocsgraphtheory librocsgraphtheory%rocsgraphtheory_sover
 
 Name: kde5-%rname
-Version: 23.08.3
+Version: 23.08.4
 Release: alt1
 %K5init
 
@@ -93,6 +93,9 @@ KF5 library
 %_K5lib/librocsgraphtheory.so.*
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkeduvocdocument libkeduvocdocument%keduvocdocument_sover
 
 Name: kde5-%rname
-Version: 23.08.3
+Version: 23.08.4
 Release: alt1
 %K5init
 
@@ -76,6 +76,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libKEduVocDocument.so.*
 
 %changelog
+* Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
+- new version
+
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
 
