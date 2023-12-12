@@ -15,11 +15,26 @@
 %endif
 %def_enable docs
 %def_with cxx
+
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
+
+%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
 %def_with system_tzdata
+%else
+%def_without system_tzdata
+%endif
 
 Name: libical
 Version: 3.0.17
-Release: alt1
+Release: alt1.1
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -37,16 +52,14 @@ Source: %name-%version.tar
 %define xml2_ver 2.7.3
 %{?_with_system_tzdata:Requires: tzdata >= %tzdata_ver}
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-gir
+BuildRequires(pre): rpm-macros-cmake %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
 BuildRequires: cmake gcc-c++ gtk-doc libicu-devel icu-utils
 %{?_enable_ninja:BuildRequires: ninja-build}
 %{?_with_system_tzdata:BuildRequires: tzdata >= %tzdata_ver}
 %{?_with_bdb:BuildRequires: libdb4-devel}
 %{?_enable_ical_glib:BuildRequires: libgio-devel >= %glib_ver libxml2-devel >= %xml2_ver}
-%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
-BuildRequires: gobject-introspection-devel}
-%{?_enable_vala:BuildRequires(pre): rpm-build-vala
-BuildRequires: vala-tools}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_check:BuildRequires: ctest python3-module-pygobject3}
 
 %description
@@ -58,7 +71,7 @@ component properties, parameters, and subcomponents
 %package devel
 Summary: Files for developing applications that use libical
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 # since 2.0.0
 Requires: libicu-devel
 
@@ -69,7 +82,7 @@ libical.
 %package gir
 Summary: GObject introspection data for the Libical
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Libical library.
@@ -78,8 +91,8 @@ GObject introspection data for the Libical library.
 Summary: GObject introspection devel data for the Libical
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Libical library.
@@ -87,7 +100,7 @@ GObject introspection devel data for the Libical library.
 %package -n %name-glib
 Summary: A GObject interface of the libical library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n %name-glib
 This package provides Libical-Glib library with GObject bindings to
@@ -96,8 +109,8 @@ libical library.
 %package -n %name-glib-devel
 Summary: Files for developing applications that use Libical-Glib
 Group: Development/C
-Requires: %name-glib = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-glib = %EVR
+Requires: %name-devel = %EVR
 
 %description -n %name-glib-devel
 The header files and libtool library for developing applications that use
@@ -106,7 +119,7 @@ Libical-Glib.
 %package -n %name-glib-gir
 Summary: GObject introspection data for the Libical-Glib
 Group: System/Libraries
-Requires: %name-glib = %version-%release
+Requires: %name-glib = %EVR
 
 %description -n %name-glib-gir
 GObject introspection data for the Libical-Glib library.
@@ -115,8 +128,8 @@ GObject introspection data for the Libical-Glib library.
 Summary: GObject introspection devel data for the Libical-Glib
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-glib-gir = %version-%release
-Requires: %name-glib-devel = %version-%release
+Requires: %name-glib-gir = %EVR
+Requires: %name-glib-devel = %EVR
 
 %description -n %name-glib-gir-devel
 GObject introspection devel data for the Libical-Glib library.
@@ -125,7 +138,7 @@ GObject introspection devel data for the Libical-Glib library.
 Summary: Development documentation for Libical-Glib
 Group: Development/Documentation
 BuildArch: noarch
-Conflicts: %name-gloib-devel < %version-%release
+Conflicts: %name-glib-devel < %version-%release
 
 %description -n %name-glib-devel-doc
 This package contains development documentation for the Libical-Glib
@@ -134,7 +147,7 @@ library.
 %prep
 %setup
 #src/libical/icaltz-util.h:#define ZONES_TAB_SYSTEM_FILENAME "zone.tab"
-sed -i 's|zone.tab|zone1970.tab|' src/libical/icaltz-util.h
+%{?_with_system_tzdata:sed -i 's|zone.tab|zone1970.tab|' src/libical/icaltz-util.h}
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -211,6 +224,9 @@ sed -i 's|zone.tab|zone1970.tab|' src/libical/icaltz-util.h
 
 
 %changelog
+* Tue Dec 12 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.17-alt1.1
+- prepared build with builtin tzdata for p10 and below
+
 * Sun Oct 15 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.17-alt1
 - 3.0.17
 
