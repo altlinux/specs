@@ -1,5 +1,5 @@
 Name: fonts-ttf-lxgw-wenkai
-Version: 1.311
+Version: 1.312
 Release: alt1
 Summary: An open-source Chinese font derived from Fontworks' Klee One
 License: OFL-1.1
@@ -27,6 +27,9 @@ BuildRequires: rpm-build-fonts
 %files -f lxgw-wenkai.files
 
 %changelog
+* Wed Dec 13 2023 Anton Midyukov <antohami@altlinux.org> 1.312-alt1
+- new version (1.312) with rpmgs script
+
 * Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 1.311-alt1
 - new version (1.311) with rpmgs script
 
