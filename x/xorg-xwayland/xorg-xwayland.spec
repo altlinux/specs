@@ -2,8 +2,8 @@
 %define _deffontdir catalogue:%_sysconfdir/X11/fontpath.d
 
 Name: xorg-xwayland
-Version: 23.2.2
-Release: alt2
+Version: 23.2.3
+Release: alt1
 Epoch: 2
 License: MIT
 Summary: Wayland X server
@@ -61,6 +61,9 @@ necessary for developing Wayland compositors using Xwayland
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 13 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:23.2.3-alt1
+- 23.2.3
+
 * Wed Nov 01 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:23.2.2-alt2
 - enabled emulated input support (closes: #48278)
 
