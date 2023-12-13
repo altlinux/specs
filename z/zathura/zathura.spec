@@ -1,7 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
+%if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
+%define tests enabled
+%else
+%define tests disabled
+%endif
+
 Name: zathura
-Version: 0.5.2
+Version: 0.5.4
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -13,19 +19,22 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: libgirara-devel >= 0.3.6-alt1
+BuildRequires: libgirara-devel >= 0.4.1-alt1
 BuildRequires: intltool libgtk+3-devel libsqlite3-devel python3-module-docutils libmagic-devel zlib-devel
 BuildRequires: libsynctex-devel
 BuildRequires: libseccomp-devel
+BuildRequires: libjson-glib-devel
 # For man pages
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 # To create icons
 BuildRequires: librsvg-utils
+#For tests
+%{?!_without_check:%{?!_disable_check:BuildRequires: libcheck-devel xvfb-run libappstream-glib desktop-file-utils}}
 
-Conflicts: zatura-pdf-poppler < 0.2.5-alt1
-Conflicts: zatura-djvu < 0.2.3-alt2
-Conflicts: zatura-ps < 0.2.2-alt2
-Conflicts: zatura-cb < 0.1.2-alt2
+Conflicts: zatura-pdf-poppler < 0.3.2-alt1
+Conflicts: zatura-djvu < 0.2.9-alt3
+Conflicts: zatura-ps < 0.2.7-alt3
+Conflicts: zatura-cb < 0.1.10-alt3
 
 %description
 zathura is a highly customizable and functional document viewer based on
@@ -49,7 +58,9 @@ developing applications that use %name.
 %patch -p1
 
 %build
-%meson
+%meson \
+	-Dtests=%tests
+
 %meson_build -v
 
 %install
@@ -57,6 +68,9 @@ developing applications that use %name.
 #  Create directory for plugins
 mkdir -p %buildroot%_libdir/zathura
 %find_lang %name
+
+%check
+%meson_test
 
 %files -f %name.lang
 %doc LICENSE AUTHORS README.md
@@ -77,6 +91,11 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Wed Dec 13 2023 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
+- tests: Don't run xvfb tests in parallel.
+- Enabled tests.
+- Updated to 0.5.4.
+
 * Tue Nov 29 2022 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
 - Updated to 0.5.2.
 

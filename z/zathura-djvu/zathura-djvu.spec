@@ -2,7 +2,7 @@
 
 Name: zathura-djvu
 Version: 0.2.9
-Release: alt2
+Release: alt3
 
 Summary: DjVU support for zathura
 License: Zlib
@@ -43,6 +43,9 @@ the djvulibre library.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Dec 13 2023 Mikhail Efremov <sem@altlinux.org> 0.2.9-alt3
+- Rebuild with zatura-0.5.4.
+
 * Tue Nov 29 2022 Mikhail Efremov <sem@altlinux.org> 0.2.9-alt2
 - Rebuild with zatura-0.5.2.
 

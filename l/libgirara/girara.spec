@@ -2,8 +2,14 @@
 %define _soname 3
 %define _unpackaged_files_terminate_build 1
 
+%if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
+%define tests enabled
+%else
+%define tests disabled
+%endif
+
 Name: lib%_name
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -19,6 +25,7 @@ BuildRequires(pre): meson
 
 BuildRequires: libgtk+3-devel >= 3.4 libnotify-devel libpango-devel
 BuildRequires: intltool
+%{?!_without_check:%{?!_disable_check:BuildRequires: libcheck-devel xvfb-run}}
 
 %description
 girara is a library that implements a user interface that focuses on
@@ -41,13 +48,17 @@ developing applications that use %name.
 %build
 %meson \
 	-Dnotify=enabled \
-	-Djson=disabled
+	-Djson=disabled \
+	-Dtests=%tests
 
 %meson_build -v
 
 %install
 %meson_install
 %find_lang %name-gtk3-%_soname
+
+%check
+%meson_test
 
 %files -f %name-gtk3-%_soname.lang
 %doc AUTHORS README.md LICENSE
@@ -60,6 +71,10 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Dec 13 2023 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
+- Enabled tests.
+- Updated to 0.4.1.
+
 * Wed Mar 22 2023 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
 - Updated to 0.4.0.
 
