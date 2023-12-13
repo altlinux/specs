@@ -1,9 +1,9 @@
 %define  oname yappi
 
-%def_without check
+%def_with check
 
 Name:    python3-module-%oname
-Version: 1.4.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Yet Another Python Profiler, but this time support Multithread/CPU time profiling
@@ -33,6 +33,7 @@ Conflicts: python-module-%oname
 %python3_install
 
 %check
+export PATH=$PATH:%buildroot/usr/bin
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %__python3 run_tests.py
 
@@ -43,6 +44,10 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Wed Dec 13 2023 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt1
+- Automatically updated to 1.6.0.
+- Build with check.
+
 * Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
 - Automatically updated to 1.4.0.
 
