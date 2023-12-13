@@ -11,11 +11,17 @@
 %set_verify_elf_method strict
 %endif
 
+%ifarch x86_64
+%def_with cuda
+%else
+%def_without cuda
+%endif
+
 %define soname 10.1
 
 Name: openvdb
 Version: 10.1.0
-Release: alt1
+Release: alt2
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: MPL-2.0-no-copyleft-exception
@@ -44,6 +50,9 @@ BuildRequires: pkgconfig(zlib) > 1.2.7
 BuildRequires: pkgconfig(python3)
 BuildRequires: python3-module-numpy libnumpy-py3-devel
 BuildRequires: pybind11-devel
+%if_with cuda
+BuildRequires: nvidia-cuda-devel-static
+%endif
 
 %description
 OpenVDB is an Academy Award-winning open-source C++ library comprising a novel
@@ -126,6 +135,11 @@ sed -i \
 %ifarch x86_64
 	-DOPENVDB_SIMD=SSE42 \
 %endif
+%if_with cuda
+	-DNANOVDB_USE_CUDA=ON \
+	-DNANOVDB_CUDA_KEEP_PTX=ON \
+	-DNANOVDB_USE_INTRINSICS=ON \
+%endif
 	%nil
 
 %cmake_build
@@ -156,6 +170,9 @@ sed -i \
 %_defaultdocdir/OpenVDB
 
 %changelog
+* Mon Dec 11 2023 L.A. Kostis <lakostis@altlinux.ru> 10.1.0-alt2
+- x86_64: Build nanovdb with CUDA.
+
 * Thu Nov 16 2023 L.A. Kostis <lakostis@altlinux.ru> 10.1.0-alt1
 - Updated to upstream version 10.1.0.
 - BR: update.
