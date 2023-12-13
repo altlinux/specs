@@ -10,7 +10,7 @@
 
 Name: xscreensaver
 Version: 5.45
-Release: alt3
+Release: alt4
 
 Summary: A screen saver and locker for the X window system
 
@@ -198,6 +198,9 @@ This package contains xscreensaver configuration frontend.
 %endif
 cp %SOURCE6 po/ru.po
 
+# Remove drug molecules
+rm -f hacks/images/molecules/{cocaine,dthc}.pdb
+
 %build
 %autoreconf
 %configure \
@@ -333,6 +336,9 @@ find %buildroot -name "*handsy*" -delete
 %files -n desktop-screensaver-modules-xscreensaver-gl -f xscreensaver-desktop-gl
 
 %changelog
+* Wed Dec 13 2023 Andrey Cherepanov <cas@altlinux.org> 5.45-alt4
+- Remove drug molecules.
+
 * Tue May 30 2023 Mikhail Efremov <sem@altlinux.org> 5.45-alt3
 - Fix desktop-screensaver-modules-xscreensaver* subpackages (closes: #45599).
 
