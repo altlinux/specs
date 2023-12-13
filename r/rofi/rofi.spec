@@ -1,38 +1,27 @@
-
 Name: rofi
-Version: 1.7.5
+Version: 1.7.5+wayland2
 Release: alt1
 Summary: A window switcher, run dialog and dmenu replacement
 License: MIT
 Group: Graphical desktop/Other
 Url: https://davedavenport.github.io/rofi/
-Packager: Konstantin Artyushkin <akv@altlinux.org>
+Vcs: https://github.com/lbonn/rofi
 
-Source: https://github.com/DaveDavenport/%name/releases/download/%version/%name-%version.tar.gz
+Source: https://github.com/lbonn/rofi/releases/download/1.7.5+wayland2/rofi-1.7.5+wayland2.tar.gz
 #It tries to use x-terminal-emulator which is only available on debian systems, I replace it with xdg-terminal.
 #Patch: 0001-Replace-x-terminal-emulator-with-xdg-terminal.patch
 Patch: 0002-Workaround-for-ALT-flex-changes-ALT-35141.patch
 
-BuildRequires: libX11-devel
-BuildRequires: libXft-devel
-BuildRequires: libXinerama-devel
-BuildRequires: libpango-devel
-BuildRequires: libxcb-devel
-BuildRequires: libxcbutil-devel
-BuildRequires: libxcbutil-xrm-devel
-BuildRequires: libxcbutil-icccm-devel
-BuildRequires: libxcbutil-cursor-devel
-BuildRequires: libxkbcommon-devel
-BuildRequires: libxkbcommon-x11-devel
-BuildRequires: libstartup-notification-devel
-BuildRequires: glib2-devel libgio-devel
-BuildRequires: librsvg-devel
-BuildRequires: libcairo-devel
-BuildRequires: libcheck-devel
-BuildRequires: flex
+BuildRequires(pre): rpm-macros-meson
+# Automatically added by buildreq on Fri Nov 24 2023
+# optimized out: glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libcairo-devel libgdk-pixbuf libgio-devel libgpg-error libharfbuzz-devel libstartup-notification libwayland-client libwayland-client-devel libwayland-cursor libxcb-devel libxcb-render-util libxcbutil-cursor libxcbutil-icccm libxcbutil-image libxkbcommon-devel libxkbcommon-x11 ninja-build pkg-config python3 python3-base python3-dev python3-module-setuptools sh5 wayland-devel xml-utils xorg-proto-devel xz
+BuildRequires: flex libcheck-devel libgdk-pixbuf-devel libpango-devel libstartup-notification-devel libwayland-cursor-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxkbcommon-x11-devel meson wayland-protocols
+
 Requires: xdg-utils
 
 %description
+https://github.com/lbonn/rofi fork with Wayland support
+
 A popup window switcher roughly based on superswitcher, requiring only xlib and pango.
 This version started off as a clone of simpleswitcher, the version from Sean Pringle.
 All credit for this great tool should go to him. Rofi developed extra features,
@@ -51,12 +40,12 @@ Requires: %name
 %patch0 -p1
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson \
+
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
 %doc Changelog README.md COPYING
@@ -67,13 +56,16 @@ Requires: %name
 %_man5dir/%name-*
 %_datadir/%name/themes/*
 %_desktopdir/*.desktop
-%_iconsdir/hicolor/apps/rofi.svg
+%_iconsdir/hicolor/scalable/apps/rofi.svg
 
 %files devel
 %_includedir/%name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Nov 24 2023 Ildar Mulyukov <ildar@altlinux.ru> 1.7.5+wayland2-alt1
+- switch to the wayland port
+
 * Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
 - new version 1.7.5 (with rpmrb script)
 - add BR: libxcbutil-cursor-devel, cleanup spec
