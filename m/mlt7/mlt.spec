@@ -21,7 +21,7 @@
 
 Name: %nam%mlt_major
 Version: 7.22.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Summary: Multimedia framework designed for television broadcasting
@@ -31,6 +31,7 @@ Url: https://www.mltframework.org/
 
 Source: %nam-%version.tar
 Source1: mlt++-config.h
+Source10: glaxnimate.tar
 # Debian
 Patch20: 01-changed-preset-path.diff
 # ALT
@@ -53,6 +54,7 @@ BuildRequires: libswresample-devel
 BuildRequires: libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel
 BuildRequires: librubberband-devel libvorbis-devel
 BuildRequires: libxml2-devel swig ladspa_sdk
+BuildRequires: libarchive-devel
 %if_enabled libvidstab
 BuildRequires: libvidstab-devel
 %endif
@@ -103,7 +105,9 @@ Group: Development/Python
 This module allows to work with %Name using python..
 
 %prep
-%setup -n %nam-%version
+%setup -n %nam-%version -a10
+rm -rf src/modules/glaxnimate/glaxnimate
+mv glaxnimate src/modules/glaxnimate/
 %if %is_ffmpeg
 %else
 %patch20 -p1
@@ -139,6 +143,7 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %K5build \
     -DSWIG_PYTHON=ON \
     -DMOD_OPENCV=%{?_enable_opencv:ON}%{!?_enable_opencv:OFF} \
+    -DMOD_GLAXNIMATE=ON \
     #
 
 %install
@@ -175,6 +180,9 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Wed Dec 13 2023 Sergey V Turchin <zerg@altlinux.org> 7.22.0-alt2
+- build glaxnimate module
+
 * Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 7.22.0-alt1
 - new version
 
