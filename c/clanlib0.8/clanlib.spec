@@ -6,7 +6,7 @@
 
 Name: clanlib0.8
 Version: 0.8.1
-Release: alt8
+Release: alt9
 Summary: The ClanLib Game SDK
 License: LGPL
 Group: System/Libraries
@@ -25,6 +25,7 @@ Patch4: clanlib-0.8.1-alt-glibc-2.16.patch
 Patch5: clanlib-0.8.1-alt-libpng15.patch
 Patch6: clanlib-0.8.1-alt-gcc6.patch
 Patch7: clanlib-0.8.1-alt-perl.patch
+Patch8: ClanLib-0.8.0-use-pthread_mutexattr_settype.patch
 
 
 Obsoletes: clanLib
@@ -161,6 +162,7 @@ work for game developers. This package contains the documentation.
 %patch5 -p2
 %patch6 -p2
 %patch7 -p2
+%patch8 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -246,6 +248,10 @@ install -pD -m755 %SOURCE1 %buildroot%_bindir/launch_x11_clanapp
 %_libdir/libclanGUIStyleSilver-*.so.*
 
 %changelog
+* Wed Dec 13 2023 Ivan A. Melnikov <iv@altlinux.org> 0.8.1-alt9
+- Add patch from fedora to use pthread_mutexattr_settype instead
+  of its non-portable equivalent (fixes FTBFS on loongarch64).
+
 * Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt8
 - Disabled installation of static libraries.
 
