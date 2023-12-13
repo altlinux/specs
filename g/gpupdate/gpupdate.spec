@@ -32,7 +32,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.9.13.2
+Version: 0.9.13.3
 Release: alt1
 
 Summary: GPT applier
@@ -183,6 +183,10 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Wed Dec 13 2023 Valery Sinelnikov <greh@altlinux.org> 0.9.13.3-alt1
+- Fixed bug handling of invalid username
+  when requesting cache (closes: 48310)
+
 * Tue Nov 28 2023 Valery Sinelnikov <greh@altlinux.org> 0.9.13.2-alt1
 - Fixed kde_applier bug (closes: 47995)
 
