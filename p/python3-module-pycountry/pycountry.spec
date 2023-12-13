@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 23.12.7
+Version: 23.12.11
 Release: alt1
 
 Summary: ISO country, subdivision, language, currency and script definitions
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-poetry-core
 %if_with check
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-importlib-metadata
 %endif
 
 %description
@@ -61,6 +62,9 @@ This package contains tests for %oname
 
 
 %changelog
+* Wed Dec 13 2023 Anton Vyatkin <toni@altlinux.org> 23.12.11-alt1
+- New version 23.12.11.
+
 * Sun Dec 10 2023 Anton Vyatkin <toni@altlinux.org> 23.12.7-alt1
 - New version 23.12.7.
 
