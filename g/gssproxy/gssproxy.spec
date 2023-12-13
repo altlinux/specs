@@ -8,7 +8,7 @@
 
 Name: gssproxy
 Version: 0.9.1
-Release: alt1
+Release: alt1.1
 Summary: GSSAPI Proxy
 
 Group: System/Servers
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-macros-valgrind
 
 BuildRequires: libxslt
 BuildRequires: xsltproc
@@ -47,7 +48,7 @@ BuildRequires: openldap-clients
 BuildRequires: openldap-servers
 
 # https://pagure.io/gssproxy/issue/227
-%ifnarch %ix86 mipsel ppc64le armh
+%ifarch %valgrind_arches
 BuildRequires: valgrind
 %endif
 
@@ -96,7 +97,7 @@ GSSAPI Proxy configuration for NFS client
 
 # https://pagure.io/gssproxy/issue/227
 %make check \
-%ifarch %ix86 mipsel ppc64le armh
+%ifnarch %valgrind_arches
 	CHECKARGS="--valgrind-cmd=" \
 %endif
 	%nil
@@ -172,6 +173,11 @@ echo 'run_as_user = %gssproxy_user' >> %buildroot%_sysconfdir/gssproxy/gssproxy.
 %attr(0640,root,%gssproxy_user) %config(noreplace) %_sysconfdir/gssproxy/99-network-fs-clients.conf
 
 %changelog
+* Sat Dec 09 2023 Ivan A. Melnikov <iv@altlinux.org> 0.9.1-alt1.1
+- NMU: fix FTBFS on loongarch64
+  + use rpm-macros-valgrind;
+  + backport tests/userproxytest.c fix from upstream.
+
 * Thu Oct 06 2022 Stanislav Levin <slev@altlinux.org> 0.9.1-alt1
 - 0.8.4 -> 0.9.1.
 
