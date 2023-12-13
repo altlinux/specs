@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-wifi
-Version: 0.18.1
+Version: 0.18.2
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -44,6 +44,9 @@ alterator module for wi-fi connections administration
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Dec 13 2023 Sergey V Turchin <zerg@altlinux.org> 0.18.2-alt1
+- don't force window height
+
 * Tue Oct 03 2023 Sergey V Turchin <zerg@altlinux.org> 0.18.1-alt1
 - set window size more flexible
 
