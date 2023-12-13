@@ -2,7 +2,7 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.16.1
+Version: 2.16.2
 Release: alt1
 
 Group:   System/Configuration/Other
@@ -86,6 +86,9 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Wed Dec 13 2023 Andrey Cherepanov <cas@altlinux.org> 2.16.2-alt1
+- New version.
+
 * Mon Dec 11 2023 Andrey Cherepanov <cas@altlinux.org> 2.16.1-alt1
 - New version.
 - Update apt_repo and apt_rpm from community.general 8.1.0 (ALT #48091).
