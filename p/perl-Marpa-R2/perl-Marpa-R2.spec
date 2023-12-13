@@ -10,7 +10,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 12.000000
-Release: alt1
+Release: alt2
 Summary: Release 2 of Marpa
 Group: Development/Perl
 License: open_source
@@ -23,7 +23,7 @@ From summary: %summary
 
 %prep
 %setup -q -n %{module_name}-%{version}
-%ifarch e2k
+%ifarch e2k loongarch64
 cd engine/read_only
 %autoreconf
 %endif
@@ -43,6 +43,9 @@ cd engine/read_only
 %_bindir/*
 
 %changelog
+* Wed Dec 13 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 12.000000-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Thu Dec 29 2022 Igor Vlasenko <viy@altlinux.org> 12.000000-alt1
 - automated CPAN update
 
