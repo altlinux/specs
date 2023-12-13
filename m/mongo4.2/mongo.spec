@@ -3,20 +3,20 @@
 %endif
 
 Name: mongo4.2
-Version: 4.2.24
-Release: alt3
+Version: 4.2.25
+Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
 Group: Development/Databases
 Url: https://www.mongodb.org
 Source: %name-%version.tar
+Patch0: mongo4.2-4.2.24-debuginfo.patch
 
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
 ExclusiveArch: x86_64 aarch64 ppc64el %e2k
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /proc gcc10 gcc10-c++ python3-module-pymongo python3-module-pkg_resources
-BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
@@ -75,6 +75,7 @@ MongoDB instance.
 
 %prep
 %setup
+%patch0 -p1
 
 # CRLF -> LF
 sed -i 's/\r//' README
@@ -211,6 +212,13 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Wed Dec 13 2023 Alexei Takaseev <taf@altlinux.org> 4.2.25-alt1
+- 4.2.25
+
+* Tue Oct 10 2023 Alexei Takaseev <taf@altlinux.org> 4.2.24-alt4
+- Reduce debuginfo
+- Remove unneeded BuildRequires
+
 * Thu Apr 27 2023 Alexei Takaseev <taf@altlinux.org> 4.2.24-alt3
 - Remove unneeded Provides
 
