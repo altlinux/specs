@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%modulename
-Version: 18.8.0
+Version: 18.9.0
 Release: alt1
 
 Summary: CherryPy is a pythonic, object-oriented web development framework
@@ -64,6 +64,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %exclude %python3_sitelibdir/%modulename/test
 
 %changelog
+* Wed Dec 13 2023 Grigory Ustinov <grenka@altlinux.org> 18.9.0-alt1
+- Automatically updated to 18.9.0.
+
 * Mon Jun 12 2023 Grigory Ustinov <grenka@altlinux.org> 18.8.0-alt1
 - Automatically updated to 18.8.0 (Closes: #46442).
 
