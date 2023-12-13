@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.6.0
-Release: alt1.1
+Version: 0.6.1
+Release: alt1
 
 Summary: ALT Local Policies Default templates
 License: GPLv2+
@@ -81,6 +81,11 @@ fi
 %_datadir/%name/*
 
 %changelog
+* Wed Dec 13 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.6.1-alt1
+- Fix krb5-conf-ccache control:
+ * Incorrect file presence check when option not found has been fixed.
+ * Avoid grep warning with 'stray \ before /' pattern (ALT#47648).
+
 * Mon Jan 23 2023 Ivan A. Melnikov <iv@altlinux.org> 0.6.0-alt1.1
 - NMU: ensure this package doesn't require
   xmlbeans-scripts (ALT#45002).
