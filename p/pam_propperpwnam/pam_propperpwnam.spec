@@ -1,6 +1,6 @@
 Name: pam_propperpwnam
 Version: 0.0.1
-Release: alt1
+Release: alt2
 
 Summary: PAM module that uses login name configured through NSS
 License: BSD-3-Clause
@@ -47,12 +47,17 @@ sed -i 's/$(CC)/$(CC) $(CFLAGS)/' Makefile
 
 %install
 install -D -m 644 pam_propperpwnam.so %buildroot/%_lib/security/pam_propperpwnam.so
+install -D -m 755 pam_propperpwnam.control %buildroot/%_sysconfdir/control.d/facilities/pam_propperpwnam
 
 %files -n %pam_name
 /%_lib/security/*
+%_sysconfdir/control.d/facilities/pam_propperpwnam
 %doc LICENSE README
 
 %changelog
+* Wed Dec 13 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.0.1-alt2
+- Add control pam_propperpwnam for support module in system authentication (ALT#47713).
+
 * Tue Jul 04 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.0.1-alt1
 - Initial build for Sisyphus.
 
