@@ -7,8 +7,8 @@
 
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup%pxbu_major_minor
-Version: 8.0.34
-Release: alt2
+Version: 8.0.35
+Release: alt1
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
 Group: Databases
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 Source1: boost_1_77_0.tar.bz2
 Source2: libkmip.tar
 Patch0: percona-xtrabackup-8.0.28-missing-memory-header.patch
-Patch1: percona-xtrabackup80-8.0.33-fix-gcc13.patch
 Patch2000: percona-xtrabackup-e2k.patch
 
 Obsoletes: xtrabackup < 2.0.0
@@ -40,7 +39,6 @@ Online backup for InnoDB/XtraDB in MySQL, MariaDB and Percona Server.
 %prep
 %setup -n %name-%version
 %patch0 -p1
-%patch1 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -97,6 +95,10 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_libdir/xtrabackup
 
 %changelog
+* Thu Dec 14 2023 Alexei Takaseev <taf@altlinux.org> 8.0.35-alt1
+- 8.0.35-30
+- Drop percona-xtrabackup80-8.0.33-fix-gcc13.patch fixed in upstream
+
 * Thu Oct 12 2023 Alexei Takaseev <taf@altlinux.org> 8.0.34-alt2
 - Change BR: libprocps-devel -> libproc2-devel
 
