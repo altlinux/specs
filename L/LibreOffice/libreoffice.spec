@@ -22,7 +22,7 @@
 
 Name: LibreOffice
 %define hversion 7.6
-%define urelease 3.1
+%define urelease 4.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -633,6 +633,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Dec 14 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.6.4.1-alt1
+- Update to 7.6.4.1 (fix CVE-2023-6186 and CVE-2023-6185)
+
 * Wed Nov 15 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.6.3.1-alt1
 - Update to 7.6.3.1
 

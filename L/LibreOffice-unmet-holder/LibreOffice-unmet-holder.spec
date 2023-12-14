@@ -1,5 +1,5 @@
 Name: LibreOffice-unmet-holder
-Version: 7.6.3.1
+Version: 7.6.4.1
 Release: alt1
 
 Summary: Empty LibreOffice dependency holder on platforms that don't have one
@@ -15,6 +15,9 @@ Provides: LibreOffice, LibreOffice-gnome, LibreOffice-langpack-ru, /usr/bin/libr
 %files
 
 %changelog
+* Sat Dec 09 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.6.4.1-alt1
+- New release 7.6.4.1
+
 * Wed Nov 22 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.6.3.1-alt1
 - New release 7.6.3.1
 

@@ -28,13 +28,13 @@
 
 Name: LibreOffice-still
 %define hversion 7.5
-%define urelease 8.2
+%define urelease 9.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt4
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -79,8 +79,6 @@ Source401: libreoffice-icons-symbolic.tar
 Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
 Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-Patch4: FC-0001-Revert-tdf-101630-gdrive-support-w-oAuth-and-Drive-A.patch
-Patch5: FC-0001-disable-libe-book-support.patch
 
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
@@ -360,8 +358,6 @@ echo Direct build
 #patch1 -p1                                                                                                                                                                                   
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-#patch5 -p1
 
 ## ALT apply patches
 %patch401 -p0
@@ -727,6 +723,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Dec 07 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.9.2-alt1
+- New version (fixes CVE-2023-6186 and CVE-2023-6185).
+
 * Wed Dec 06 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.8.2-alt4
 - Added Kyrgyz localization.
 

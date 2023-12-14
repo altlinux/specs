@@ -1,5 +1,5 @@
 Name: libcmis
-Version: 0.6.0
+Version: 0.6.2
 Release: alt1
 
 Summary: A C++ client library for the CMIS interface
@@ -71,6 +71,9 @@ mkdir -p m4
 %_man1dir/*.1*
 
 %changelog
+* Thu Dec 07 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.6.2-alt1
+- Update to upstream v0.6.2
+
 * Fri Nov 10 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.6.0-alt1
 - Update to upstream v0.6.0
 
