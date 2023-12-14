@@ -3,7 +3,7 @@
 
 Name:    appstream
 Version: 0.16.4
-Release: alt1
+Release: alt2
 
 Summary: Utilities to generate, maintain and access the AppStream Xapian database
 # library; LGPLv2+, tools: GPLv2+
@@ -43,12 +43,38 @@ BuildRequires: /proc
 BuildRequires: libxmlb-devel
 BuildRequires: qt5-tools
 BuildRequires: libsystemd-devel
+BuildRequires: libcairo-devel
+BuildRequires: libgdk-pixbuf-devel
+BuildRequires: libgdk-pixbuf-gir-devel
+BuildRequires: libpango-devel
+BuildRequires: librsvg-devel
 
 #Requires: appstream-data
 
 %description
 AppStream-Core makes it easy to access application information from the
 AppStream database over a nice GObject-based interface.
+
+%package compose
+Summary: Executable for generating AppStream data
+Group:   System/Configuration/Packaging
+
+%description compose
+%summary.
+
+%package -n libappstream-compose
+Summary: Library for generating AppStream data
+Group: System/Libraries
+
+%description -n libappstream-compose
+%summary.
+
+%package -n libappstream-compose-devel
+Summary: Development files for %name
+Group: Development/C
+
+%description -n libappstream-compose-devel
+%summary.
 
 %package -n libappstream
 Summary: Library to access AppStream services
@@ -106,13 +132,14 @@ sed -i "s/-Werror=shadow/-Wno-error=shadow/" meson.build
 %endif
 
 %build
-%meson  -Dqt=true \
+%meson -Dqt=true \
 %if_with docs
 	-Ddocs=true \
 %else
 	-Ddocs=false \
 %endif
-	-Dstemming=true
+	-Dstemming=true \
+	-Dcompose=true
 %ifarch %e2k
 export LD_LIBRARY_PATH=$(pwd)/%__builddir/src
 %endif
@@ -167,8 +194,27 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 %files doc
 %_defaultdocdir/%name
 %_datadir/gtk-doc/html/appstream
+%_datadir/gtk-doc/html/appstream-compose
+
+%files compose
+%_libexecdir/appstreamcli-compose
+%_man1dir/appstreamcli-compose.1*
+%_datadir/metainfo/org.freedesktop.appstream.compose.metainfo.xml
+
+%files -n libappstream-compose
+%_libdir/libappstream-compose.so.*
+%_libdir/girepository-1.0/AppStreamCompose-1.0.typelib
+
+%files -n libappstream-compose-devel
+%_includedir/appstream-compose/
+%_libdir/libappstream-compose.so
+%_libdir/pkgconfig/appstream-compose.pc
+%_datadir/gir-1.0/AppStreamCompose-1.0.gir
 
 %changelog
+* Thu Dec 14 2023 Andrey Cherepanov <cas@altlinux.org> 0.16.4-alt2
+- Built with -Dcompose=true (ALT #48797).
+
 * Sat Nov 11 2023 Andrey Cherepanov <cas@altlinux.org> 0.16.4-alt1
 - New version.
 
