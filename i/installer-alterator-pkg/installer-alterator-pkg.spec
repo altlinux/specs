@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -57,6 +57,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Dec 12 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 3.1.3-alt1
+- add reading checkbox state from conf file
+
 * Tue Aug 01 2023 Sergey V Turchin <zerg@altlinux.org> 3.1.2-alt1
 - rearrange groups UI
 
