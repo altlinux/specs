@@ -1,10 +1,10 @@
 %define clang_arches %ix86 x86_64 aarch64 ppc64el armh mipsel
 
 Name: mk-configure
-Version: 0.38.2
-Release: alt4
+Version: 0.38.3
+Release: alt1
 
-Summary: Lightweight replacement for GNU autotools
+Summary: Build system on top of bmake
 License: BSD-2-Clause and MIT and ISC
 Group: Development/Tools
 
@@ -14,8 +14,6 @@ Source: %name-%version.tar
 Source1: %name.macros
 
 Packager: Aleksey Cheusov <cheusov@altlinux.org>
-
-BuildArch: noarch
 
 Requires:      bmake bmkdep
 BuildRequires: bmake mk-files binutils
@@ -40,8 +38,10 @@ BuildRequires: clang
 %define pkgdocdir %_docdir/%name-%version
 
 %description
-mk-configure is a lightweight replacement for GNU autotools, written in
-bmake (portable version of NetBSD make) and POSIX tools.
+mk-configure is a cross-platform open-source build system implemented
+on top of bmake and POSIX utilities. It provides support for C, C++
+and Lua languages out of the box. Also, supported are abilities to
+check environment for cross-platform development.
 
 %package doc
 Summary: %name documentation
@@ -123,6 +123,9 @@ bmake nodeps-cleandir-tests
 # - add %%config %%_sysconfdir/rpm/macros.mkcmake (extra source)
 
 %changelog
+* Thu Dec 14 2023 Aleksey Cheusov <cheusov@altlinux.org> 0.38.3-alt1
+- 0.38.3
+
 * Thu Nov 30 2023 Aleksey Cheusov <cheusov@altlinux.org> 0.38.2-alt4
 - Update BuildDepends for pod2html
 
