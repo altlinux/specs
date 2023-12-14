@@ -5,7 +5,7 @@
 
 
 Name: sudo
-Version: 1.9.15p1
+Version: 1.9.15p3
 Release: alt1
 Epoch: 1
 
@@ -263,6 +263,12 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Thu Dec 14 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.15p3-alt1
+- Update to stable release with fixing regressions to changes in sudo 1.9.15.
+
+* Thu Nov 23 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.15p2-alt1
+- Update to latest stable bugfix release.
+
 * Wed Nov 08 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.15p1-alt1
 - Update to latest stable bugfix and security release (fixes: CVE-2023-42465):
  + The sudoers plugin has been modified to make it more resilient to ROWHAMMER
