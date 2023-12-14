@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Mission Center
@@ -36,7 +36,7 @@ ExcludeArch: %ix86 armh ppc64le
 %define gtk_ver 4.10
 %define adwaita_ver 1.2
 
-Requires: dconf
+Requires: dconf /usr/sbin/dmidecode
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
@@ -68,6 +68,9 @@ popd
 mkdir -p %__builddir/src/sys_info_v2/gatherer/src/debug/build/native
 mv nvtop-%nvtop_ver %{__builddir}/src/sys_info_v2/gatherer/src/debug/build/native/nvtop-%nvtop_ver
 
+# hardcode dmidecode path
+sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
+
 #TODO: build with system hw.db
 sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\23|' data/hwdb/*.py
 
@@ -94,6 +97,11 @@ sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\23|' data/hwdb/*.py
 
 
 %changelog
+* Thu Dec 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+- added dmidecode to runtime dependencies
+  src/sys_info_v2/mem_info.rs: hardcode dmidecode path
+
 * Sun Dec 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
