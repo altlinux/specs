@@ -1,5 +1,5 @@
 Name: bmake
-Version: 20220418
+Version: 20231124
 Release: alt1
 
 Summary: The NetBSD make(1) tool
@@ -9,8 +9,7 @@ Group: Development/Tools
 Url: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/
 
 Source: %name-%version.tar.gz
-Patch: bmake-egrep.patch
-BuildRequires: tcsh pdksh
+BuildRequires: tcsh pdksh bc
 
 #Requires: pkgsrc-mk-files
 
@@ -30,7 +29,6 @@ Please install mk-files or pkgsrc-mk-files to use bmake.
 
 %prep
 %setup -n %name
-%patch -p1
 
 %build
 unset MAKEFLAGS
@@ -52,6 +50,9 @@ install -pDm755 Linux/bmake %buildroot%_bindir/bmake
 %dir %_datadir/mk/
 
 %changelog
+* Thu Dec 14 2023 Aleksey Cheusov <cheusov@altlinux.org> 20231124-alt1
+- Update to 20231124
+
 * Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 20220418-alt1
 - Autobuild version bump to 20220418
 
