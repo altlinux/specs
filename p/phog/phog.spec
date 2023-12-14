@@ -7,7 +7,7 @@
 
 Name: phog
 Version: 0.1.5
-Release: alt0.1
+Release: alt0.2
 
 Summary: Phone Greeter
 Group: Graphical desktop/GNOME
@@ -21,6 +21,8 @@ Source: https://gitlab.com/mobian1/phog/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
+# fix DEFAULT_MAX_UID detection
+Patch1: %name-0.1.5-alt-fix-min-max-uid.patch
 
 %define phoc_ver 0.33
 
@@ -52,6 +54,7 @@ and Pine64's PinePhone.
 
 %prep
 %setup -n %name-%version
+%patch1 -p2 -b .uid
 
 %build
 %meson
@@ -75,6 +78,10 @@ xvfb-run %__meson_test
 %doc README*
 
 %changelog
+* Thu Dec 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt0.2
+- src/greetd.c:
+  fixed DEFAULT_MAX_UID detection if /etc/login.defs unaccessible (antohami@)
+
 * Thu Dec 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt0.1
 - first preview for Sisyphus (0.1.5-5-g199ac78a)
 
