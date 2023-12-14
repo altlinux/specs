@@ -10,13 +10,13 @@ BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-%define fedora 34
+BuildRequires: jpackage-generic-compat
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 9.0.59
+%define version 9.0.83
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -50,7 +50,7 @@ BuildRequires: jpackage-default
 %global jspspec 2.3
 %global major_version 9
 %global minor_version 0
-%global micro_version 59
+%global micro_version 83
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 4.0
 %global elspec 3.0
@@ -75,7 +75,7 @@ BuildRequires: jpackage-default
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1_3jpp11
+Release:       alt1_1jpp11
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 License:       Apache-2.0
@@ -93,13 +93,16 @@ Source30:      tomcat-preamble
 Source31:      tomcat-server
 Source32:      tomcat-named.service
 Source33:      java-9-start-up-parameters.conf
+#ExcludeArch: armh
+Source34:      %{name}-%{version}-armh.tar
+Source35:      %{name}-%{version}-mfiles.tar
 
 Patch0:        %{name}-%{major_version}.%{minor_version}-bootstrap-MANIFEST.MF.patch
 Patch1:        %{name}-%{major_version}.%{minor_version}-tomcat-users-webapp.patch
 Patch2:        %{name}-build.patch
 Patch3:        %{name}-%{major_version}.%{minor_version}-catalina-policy.patch
 Patch4:        rhbz-1857043.patch
-Patch5:        %{name}-%{major_version}.%{minor_version}-JDTCompiler.patch
+Patch6:        %{name}-%{major_version}.%{minor_version}-bnd-annotation.patch
 
 BuildArch:     noarch
 
@@ -109,16 +112,15 @@ BuildRequires: findutils
 BuildRequires: javapackages-local
 BuildRequires: aqute-bnd
 BuildRequires: aqute-bndlib
-BuildRequires: wsdl4j
 BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-homed systemd-networkd systemd-portable systemd-sysvinit
 
+#Requires:      java
 Requires:      javapackages-tools
-Requires:      procps
 Requires:      %{name}-lib = %{epoch}:%{version}-%{release}
 %if 0%{?fedora} || 0%{?rhel} > 7
 Requires:    tomcat-native >= %{native_version}
 %endif
-Requires(pre):    shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
+Requires(pre):    shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-submap shadow-utils
 
 # added after log4j sub-package was removed
 Provides:         %{name}-log4j = %{epoch}:%{version}-%{release}
@@ -158,7 +160,7 @@ Group: Development/Other
 Summary: Apache Tomcat JavaServer Pages v%{jspspec} API Implementation Classes
 Provides: jsp = %{jspspec}
 Obsoletes: %{name}-jsp-2.2-api
-Requires: %{name}-servlet-%{servletspec}-api = %{epoch}:%{version}-%{release}
+Requires: tomcat-lib tomcat-servlet-4.0-api
 Requires: %{name}-el-%{elspec}-api = %{epoch}:%{version}-%{release}
 
 %description jsp-%{jspspec}-api
@@ -167,8 +169,8 @@ Apache Tomcat JSP API Implementation Classes.
 %package lib
 Group: Development/Other
 Summary: Libraries needed to run the Tomcat Web container
-Requires: %{name}-jsp-%{jspspec}-api = %{epoch}:%{version}-%{release}
-Requires: %{name}-servlet-%{servletspec}-api = %{epoch}:%{version}-%{release}
+Requires: tomcat-jsp-2.3-api tomcat-lib
+Requires: tomcat-lib tomcat-servlet-4.0-api
 Requires: %{name}-el-%{elspec}-api = %{epoch}:%{version}-%{release}
 Requires: ecj >= 1:4.10
 Requires(preun): coreutils
@@ -215,7 +217,7 @@ find . -type f \( -name "*.bat" -o -name "*.class" -o -name Thumbs.db -o -name "
 %patch2 -p0
 %patch3 -p0
 %patch4 -p0
-%patch5 -p0
+%patch6 -p0
 
 # Remove webservices naming resources as it's generally unused
 rm -rf java/org/apache/naming/factory/webservices
@@ -228,8 +230,8 @@ rm -rf java/org/apache/naming/factory/webservices
 %mvn_package ":tomcat-servlet-api" tomcat-servlet-api
 %patch33 -p0
 
-
 %build
+case `uname -m` in arm*) exit 0;; esac
 export OPT_JAR_LIST="xalan-j2-serializer"
 # we don't care about the tarballs and we're going to replace
 # tomcat-dbcp.jar with apache-commons-{collections,dbcp,pool}-tomcat5.jar
@@ -247,14 +249,9 @@ touch HACK
   -Dcommons-daemon.native.win.mgr.exe="HACK" \
   -Dnsis.exe="HACK" \
   -Djaxrpc-lib.jar="HACK" \
-  -Dwsdl4j-lib.jar="$(build-classpath wsdl4j)" \
+  -Dwsdl4j-lib.jar="HACK" \
   -Dbnd.jar="$(build-classpath aqute-bnd/biz.aQute.bnd)" \
-  -Dbndlib.jar="$(build-classpath aqute-bnd/biz.aQute.bndlib)" \
-  -Dbndlibg.jar="$(build-classpath aqute-bnd/aQute.libg)" \
-  -Dbndannotation.jar="$(build-classpath aqute-bnd/biz.aQute.bnd.annotation)" \
-  -Dosgi-annotations.jar="$(build-classpath aqute-bnd/biz.aQute.bnd.annotation)" \
-  -Dslf4j-api.jar="$(build-classpath slf4j/slf4j-api)" \
-  -Dosgi-cmpn.jar="$(build-classpath osgi-compendium/osgi.cmpn)" \
+  -Dbnd-annotation.jar="$(build-classpath aqute-bnd/biz.aQute.bnd.annotation)" \
   -Dversion="%{version}" \
   -Dversion.build="%{micro_version}" \
   deploy
@@ -267,6 +264,14 @@ rm -rf output/build/webapps/examples
 
 
 %install
+# tmp hack not to break java repo on armh
+if [  -n "$(uname -m| grep arm)" ]; then
+mkdir -p %buildroot
+tar -C %buildroot -x -f %{SOURCE34}
+tar -x -f %{SOURCE35}
+exit 0
+fi
+
 # build initial path structure
 install -d -m 0755 ${RPM_BUILD_ROOT}%{_bindir}
 install -d -m 0755 ${RPM_BUILD_ROOT}%{_sbindir}
@@ -358,6 +363,8 @@ pushd ${RPM_BUILD_ROOT}%{libdir}
     ln -s ../../java/%{name}-servlet-%{servletspec}-api.jar .
     ln -s ../../java/%{name}-el-%{elspec}-api.jar .
     ln -s $(build-classpath ecj/ecj) jasper-jdt.jar
+    
+    cp ../../%{name}/bin/tomcat-juli.jar .
 popd
 
 # symlink to the FHS locations where we've installed things
@@ -373,7 +380,7 @@ popd
 # Install the maven metadata for the spec impl artifacts as other projects use them
 #install -d -m 0755 ${RPM_BUILD_ROOT}%{_mavenpomdir}
 pushd res/maven
-    for pom in tomcat-el-api.pom tomcat-jsp-api.pom tomcat-servlet-api.pom; do
+    for pom in *.pom; do
         # fix-up version in all pom files
         sed -i 's/@MAVEN.DEPLOY.VERSION@/%{version}/g' $pom
     done
@@ -383,6 +390,49 @@ popd
 %mvn_artifact res/maven/tomcat-el-api.pom output/build/lib/el-api.jar
 %mvn_artifact res/maven/tomcat-jsp-api.pom output/build/lib/jsp-api.jar
 %mvn_artifact res/maven/tomcat-servlet-api.pom output/build/lib/servlet-api.jar
+
+%mvn_file org.apache.tomcat:tomcat-annotations-api tomcat/annotations-api
+%mvn_artifact res/maven/tomcat-annotations-api.pom ${RPM_BUILD_ROOT}%{libdir}/annotations-api.jar
+%mvn_artifact res/maven/tomcat-api.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-api.jar
+%mvn_file org.apache.tomcat:tomcat-catalina-ant tomcat/catalina-ant
+%mvn_artifact res/maven/tomcat-catalina-ant.pom ${RPM_BUILD_ROOT}%{libdir}/catalina-ant.jar
+%mvn_file org.apache.tomcat:tomcat-catalina-ha tomcat/catalina-ha
+%mvn_artifact res/maven/tomcat-catalina-ha.pom ${RPM_BUILD_ROOT}%{libdir}/catalina-ha.jar
+%mvn_file org.apache.tomcat:tomcat-catalina tomcat/catalina
+%mvn_artifact res/maven/tomcat-catalina.pom ${RPM_BUILD_ROOT}%{libdir}/catalina.jar
+%mvn_artifact res/maven/tomcat-coyote.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-coyote.jar
+%mvn_artifact res/maven/tomcat-dbcp.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-dbcp.jar
+%mvn_artifact res/maven/tomcat-i18n-cs.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-i18n-cs.jar
+%mvn_artifact res/maven/tomcat-i18n-de.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-i18n-de.jar
+%mvn_artifact res/maven/tomcat-i18n-es.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-i18n-es.jar
+%mvn_artifact res/maven/tomcat-i18n-fr.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-i18n-fr.jar
+%mvn_artifact res/maven/tomcat-i18n-ja.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-i18n-ja.jar
+%mvn_artifact res/maven/tomcat-i18n-ko.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-i18n-ko.jar
+%mvn_artifact res/maven/tomcat-i18n-pt-BR.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-i18n-pt-BR.jar
+%mvn_artifact res/maven/tomcat-i18n-ru.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-i18n-ru.jar
+%mvn_artifact res/maven/tomcat-i18n-zh-CN.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-i18n-zh-CN.jar
+%mvn_file org.apache.tomcat:tomcat-jasper-el tomcat/jasper-el
+%mvn_artifact res/maven/tomcat-jasper-el.pom ${RPM_BUILD_ROOT}%{libdir}/jasper-el.jar
+%mvn_file org.apache.tomcat:tomcat-jasper tomcat/jasper
+%mvn_artifact res/maven/tomcat-jasper.pom ${RPM_BUILD_ROOT}%{libdir}/jasper.jar
+%mvn_file org.apache.tomcat:tomcat-jaspic-api tomcat/jaspic-api
+%mvn_artifact res/maven/tomcat-jaspic-api.pom ${RPM_BUILD_ROOT}%{libdir}/jaspic-api.jar
+%mvn_artifact res/maven/tomcat-jdbc.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-jdbc.jar
+%mvn_artifact res/maven/tomcat-jni.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-jni.jar
+%mvn_artifact res/maven/tomcat-juli.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-juli.jar
+%mvn_file org.apache.tomcat:tomcat-ssi tomcat/catalina-ssi
+%mvn_artifact res/maven/tomcat-ssi.pom ${RPM_BUILD_ROOT}%{libdir}/catalina-ssi.jar
+%mvn_file org.apache.tomcat:tomcat-storeconfig tomcat/catalina-storeconfig
+%mvn_artifact res/maven/tomcat-storeconfig.pom ${RPM_BUILD_ROOT}%{libdir}/catalina-storeconfig.jar
+%mvn_file org.apache.tomcat:tomcat-tribes tomcat/catalina-tribes
+%mvn_artifact res/maven/tomcat-tribes.pom ${RPM_BUILD_ROOT}%{libdir}/catalina-tribes.jar
+%mvn_artifact res/maven/tomcat-util-scan.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-util-scan.jar
+%mvn_artifact res/maven/tomcat-util.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-util.jar
+%mvn_file org.apache.tomcat:tomcat-websocket-api tomcat/websocket-api
+%mvn_artifact res/maven/tomcat-websocket-api.pom ${RPM_BUILD_ROOT}%{libdir}/websocket-api.jar
+%mvn_artifact res/maven/tomcat-websocket.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-websocket.jar
+%mvn_artifact res/maven/tomcat.pom
+
 %mvn_install
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jsp_tomcat-jsp-2.3-api<<EOF
 %{_javadir}/jsp.jar	%{_javadir}/%{name}-jsp-%{jspspec}-api.jar	20200
@@ -476,36 +526,50 @@ exit 0
 %files docs-webapp
 %{appdir}/docs
 
-%files lib
+%files lib -f .mfiles
 %dir %{libdir}
 %{libdir}/*.jar
 %{_javadir}/*.jar
 %{bindir}/tomcat-juli.jar
 %exclude %{libdir}/%{name}-el-%{elspec}-api.jar
+%exclude %{libdir}/%{name}-servlet-%{servletspec}*.jar
+%exclude %{libdir}/%{name}-jsp-%{jspspec}*.jar
 %exclude %{_javadir}/%{name}-servlet-%{servletspec}*.jar
 %exclude %{_javadir}/%{name}-el-%{elspec}-api.jar
 %exclude %{_javadir}/%{name}-jsp-%{jspspec}*.jar
+%exclude %{_javadir}/%{name}-servlet-api.jar
+%exclude %{_javadir}/%{name}-el-api.jar
+%exclude %{_javadir}/%{name}-jsp-api.jar
+%exclude %{_jnidir}/*
 
 %files jsp-%{jspspec}-api -f .mfiles-tomcat-jsp-api
 %_altdir/jsp_tomcat-jsp-2.3-api
 %{_javadir}/%{name}-jsp-%{jspspec}*.jar
+%{libdir}/%{name}-jsp-%{jspspec}*.jar
+%{_javadir}/%{name}-jsp-api.jar
 
 %files servlet-%{servletspec}-api -f .mfiles-tomcat-servlet-api
 %_altdir/servlet_tomcat-servlet-4.0-api
 %doc LICENSE
 %{_javadir}/%{name}-servlet-%{servletspec}*.jar
+%{libdir}/%{name}-servlet-%{servletspec}*.jar
+%{_javadir}/%{name}-servlet-api.jar
 
 %files el-%{elspec}-api -f .mfiles-tomcat-el-api
 %_altdir/elspec_tomcat-el-3.0-api
 %doc LICENSE
 %{_javadir}/%{name}-el-%{elspec}-api.jar
 %{libdir}/%{name}-el-%{elspec}-api.jar
+%{_javadir}/%{name}-el-api.jar
 
 %files webapps
 %defattr(0644,tomcat,tomcat,0755)
 %{appdir}/ROOT
 
 %changelog
+* Tue Dec 12 2023 Igor Vlasenko <viy@altlinux.org> 1:9.0.83-alt1_1jpp11
+-new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:9.0.59-alt1_3jpp11
 - new version
 
