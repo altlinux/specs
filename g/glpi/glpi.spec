@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.10
+Version: 10.0.11
 Release: alt1
 
 Summary: IT and asset management software
@@ -36,17 +36,6 @@ Group: Networking/Other
 Requires: %name = %version-%release, apache2
 %description apache2
 Apache 2.x web-server configuration for %name
-
-%package php8.0
-Summary: PHP8.0 dependencies for %name
-Group: Networking/Other
-Requires: %name = %version-%release
-Requires: php8.0
-Requires: php8.0-curl, php8.0-fileinfo, php8.0-gd2, php8.0-json, php8.0-mbstring, php8.0-mysqlnd-mysqli, php8.0-session, php8.0-zlib, php8.0-intl
-Requires: php8.0-bz2, php8.0-exif, php8.0-ldap, php8.0-opcache, php8.0-openssl, php8.0-sodium, php8.0-xmlreader, php8.0-zip
-
-%description php8.0
-php8.0 dependencies for %name
 
 %package php8.1
 Summary: PHP8.1 dependencies for %name
@@ -173,13 +162,20 @@ fi
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
-%files php8.0
-
 %files php8.1
 
 %files php8.2
 
 %changelog
+* Thu Dec 14 2023 Pavel Zilke <zidex@altlinux.org> 10.0.11-alt1
+- New version 10.0.11
+- This release fixes a security issue that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2023-43813 : Authenticated SQL Injection
+ + CVE-2023-46727 : SQL injection through inventory agent request
+ + CVE-2023-46726 : Remote code execution from LDAP server configuration form on PHP 7.4
+- Deleted glpi-php8.0
+
 * Sun Oct 01 2023 Pavel Zilke <zidex@altlinux.org> 10.0.10-alt1
 - New version 10.0.10
 - This release fixes a security issue that has been recently discovered. Update is recommended!
