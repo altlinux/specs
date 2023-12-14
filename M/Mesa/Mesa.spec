@@ -93,11 +93,11 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 23.3
-%define ver_minor 0
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt4
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -438,9 +438,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 #define _unpackaged_files_terminate_build 1
 
 %files -n libGLX-mesa
-%if %ver_minor > 0
 %doc %ver_major.*.html
-%endif
 %_libdir/libGLX_mesa.so.*
 %_libdir/libglapi.so.*
 
@@ -610,6 +608,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Dec 14 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.3.1-alt1
+- 23.3.1
+
 * Thu Dec 07 2023 Valery Inozemtsev <shrek@altlinux.ru> 4:23.3.0-alt4
 - cherry-pick fff3fc45 (closes: #48653)
 
