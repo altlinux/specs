@@ -9,7 +9,7 @@
 %{?_enable_docs:%def_enable docbook_docs}
 
 Name: flatpak-builder
-Version: 1.2.3
+Version: 1.4.0
 Release: alt1
 Epoch:1
 
@@ -25,13 +25,16 @@ Vcs: https://github.com/flatpak/flatpak-builder.git
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.44
+%define glib_ver 2.66
 %define ostree_ver 2017.14
 %define flatpak_ver 1.12.4
 %define debugedit_ver 5.0
 %define libdw_ver 0.172
+%define appstream_ver 0.16.4-alt2
 
 Requires(pre): flatpak >= %flatpak_ver
+# /usr/bin/appstreamcli with compose support
+Requires: /usr/bin/appstreamcli appstream-compose >= %appstream_ver
 Requires: libostree >= %ostree_ver
 Requires: /usr/bin/bzip2
 Requires: /usr/bin/brz
@@ -47,6 +50,7 @@ Requires: /usr/bin/7z
 %{?_with_system_debugedit:Requires: debugedit >= %debugedit_ver}
 
 BuildRequires: flatpak >= %flatpak_ver
+BuildRequires: /usr/bin/appstreamcli appstream-compose >= %appstream_ver
 BuildRequires: libcap-devel
 BuildRequires: libdwarf-devel
 BuildRequires: pkgconfig(glib-2.0) >= %glib_ver
@@ -91,6 +95,9 @@ See http://flatpak.org/ for more information.
 %{?_enable_docbook_docs:%doc %_docdir/%name}}
 
 %changelog
+* Wed Dec 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.0-alt1
+- 1.4.0
+
 * Mon Nov 28 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.2.3-alt1
 - 1.2.3
 
