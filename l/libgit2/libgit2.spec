@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: libgit2
-Version: 1.6.4
+Version: 1.7.1
 Release: alt1
 
 Summary: linkable library for Git
@@ -81,6 +81,9 @@ sed -i '/-sonline/s/^/#/' tests/libgit2/CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Thu Apr 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
 - 1.6.4
 
