@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.119
-Release: alt1
+Version: 0.120
+Release: alt2
 
 Summary: Utilities to build kernel packages for ALT Linux
 License: GPL-2.0-or-later
@@ -83,8 +83,9 @@ kernel packaging conventions.
 %makeinstall_std
 
 %check
-%ifarch i586 armh
+%ifarch i586 armh loongarch64
 # FAKETIME does not work on armh and i586
+# FAKETITME fails to build on LoongArch
 %make_build shellcheck
 %else
 %make_build check
@@ -101,6 +102,12 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Fri Jun 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.120-alt2
+- Defined base_arch for LoongArch.
+- Disabled some check on LoongArch (libfaketime is not available).
+- Note: release is -alt2 so this version is newer than the one
+  in sisyphus_loongarch64.
+
 * Mon May 22 2023 Vitaly Chikunov <vt@altlinux.org> 0.119-alt1
 - Fix fgrep warning.
 - kernel.req: Detect unmets between kernel modules.
