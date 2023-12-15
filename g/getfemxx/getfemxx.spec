@@ -5,7 +5,7 @@
 %define rname getfem
 Name: getfemxx
 Version: 5.3
-Release: alt9
+Release: alt10
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
@@ -16,7 +16,7 @@ Provides: %rname = %EVR
 Obsoletes: %rname < %EVR
 
 Source0: getfem-%version.tar
-Patch1: alt-ppc64le.patch
+Patch1: alt-ax_boost_base.patch
 Patch2: getfemxx-ax-python.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -115,6 +115,9 @@ install -m 0644 \
 %python3_sitelibdir/*getfem*.so
 
 %changelog
+* Fri Dec 15 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.3-alt10
+- NMU: fixed FTBFS on LoongArch
+
 * Fri Apr 28 2023 Michael Shigorin <mike@altlinux.org> 5.3-alt9
 - E2K: fix broken lib64 boost test (ilyakurdyukov@)
 
