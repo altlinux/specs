@@ -1,7 +1,7 @@
-%define sover 292
+%define sover 338
 
 Name: libplacebo
-Version: 6.292.1
+Version: 6.338.1
 Release: alt0.1
 Summary: libplacebo is essentially the core rendering algorithms and ideas of mpv turned into a library
 Group: System/Libraries
@@ -11,7 +11,7 @@ Source0: %url/%name/archive/v%version/%name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: libshaderc-devel libvulkan-devel python3-module-jinja2 python3-module-glad2 liblcms2-devel gcc-c++
+BuildRequires: libshaderc-devel libvulkan-devel python3-module-jinja2 python3-module-glad2 liblcms2-devel gcc-c++ libxxhash-devel >= 0.8.1
 %ifnarch %e2k
 BuildRequires: libunwind-devel libdovi-devel
 %endif
@@ -56,6 +56,13 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Dec 15 2023 L.A. Kostis <lakostis@altlinux.ru> 6.338.1-alt0.1
+- v6.338.1.
+- BR: added xxhash.
+
+* Tue Sep 05 2023 L.A. Kostis <lakostis@altlinux.ru> 6.292.1-alt0.2
+- Rebuild w/ new ffmpeg.
+
 * Tue Sep 05 2023 L.A. Kostis <lakostis@altlinux.ru> 6.292.1-alt0.1
 - v6.292.1.
 

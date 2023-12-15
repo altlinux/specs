@@ -2,9 +2,13 @@
 %def_enable lua
 %endif
 
+# vulkan interop needs ffmpeg 6.1
+# and vulkan >= 1.3.255
+%def_disable vulkan_interop
+
 Name: mpv
-Version: 0.36.0
-Release: alt1.2
+Version: 0.37.0
+Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -29,7 +33,7 @@ BuildRequires: libswresample-devel libxkbcommon-devel libdrm-devel libv4l-devel 
 
 BuildRequires: libenca-devel libuchardet-devel libvulkan-devel libwayland-egl-devel libwayland-cursor-devel libwayland-client-devel wayland-protocols python3-base
 
-BuildRequires: libgbm-devel libplacebo-devel libSDL2-devel libavdevice-devel libXpresent-devel
+BuildRequires: libgbm-devel libplacebo-devel >= 6.338.0 libSDL2-devel libavdevice-devel libXpresent-devel
 
 BuildRequires: libzimg-devel vapoursynth-devel libshaderc-devel nv-codec-headers pipewire-libs-devel libsixel-devel
 
@@ -99,6 +103,9 @@ This package contains %name shared library
 %if_enabled lua
 	-D lua=enabled \
 %endif
+%if_enabled vulkan_interop
+	-D vulkan-interop=enabled \
+%endif
 	-D libbluray=enabled \
 	-D dvdnav=enabled \
 	-D libmpv=true \
@@ -127,6 +134,7 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_iconsdir/hicolor/128x128/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_desktopdir/%name.desktop
+%_datadir/metainfo/%name.metainfo.xml
 %doc Copyright README.md RELEASE_NOTES etc/input.conf etc/mplayer-input.conf etc/mpv.conf etc/restore-old-bindings.conf
 
 %files -n zsh-completion-%name
@@ -144,6 +152,12 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Fri Dec 15 2023 L.A. Kostis <lakostis@altlinux.ru> 0.37.0-alt1
+- 0.37.0.
+
+* Sun Sep 17 2023 L.A. Kostis <lakostis@altlinux.ru> 0.36.0-alt1.3
+- Enable vulkan-interop.
+
 * Thu Sep 14 2023 L.A. Kostis <lakostis@altlinux.ru> 0.36.0-alt1.2
 - Apply fix from master branch:
   + context_drm_egl: don't free egl properties if they are null (closes #47577)

@@ -1,6 +1,6 @@
 Name: xxhash
-Version: 0.8.0
-Release: alt2
+Version: 0.8.2
+Release: alt1
 
 Summary: Extremely fast hash algorithm
 # xxhash.c and xxhash.h are BSD-2-Clause
@@ -51,13 +51,13 @@ mv xxhsum_inlinedXXH xxhsum
 %install
 export CC=false CXX=false # nothing should be compiled or linked during install
 %makeinstall_std PREFIX=%_prefix LIBDIR=%_libdir
+rm -rf %buildroot%_libdir/*.a
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
 %check
-export CC=false CXX=false # nothing should be compiled or linked during check
 make check
 make test-xxhsum-c
 
@@ -77,6 +77,9 @@ make test-xxhsum-c
 %_pkgconfigdir/libxxhash.pc
 
 %changelog
+* Fri Dec 15 2023 L.A. Kostis <lakostis@altlinux.ru> 0.8.2-alt1
+- 0.8.2.
+
 * Tue Jul 06 2021 Dmitry V. Levin <ldv@altlinux.org> 0.8.0-alt2
 - Use default %%_optlevel to fix build on ppc64le (by glebfm@).
 

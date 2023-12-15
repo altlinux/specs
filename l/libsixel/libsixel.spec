@@ -2,7 +2,7 @@
 
 Name: libsixel
 Version: 1.10.3
-Release: alt1
+Release: alt2
 
 Summary: A SIXEL encoder/decoder implementation
 License: MIT
@@ -15,6 +15,7 @@ BuildRequires(pre): meson
 
 # Automatically added by buildreq on Fri Nov 23 2018 (-bb)
 BuildRequires: libcurl-devel libgd3-devel libgdk-pixbuf-devel libjpeg-devel libnss-myhostname libpng-devel
+BuildRequires: libstb-devel
 
 %description
 This package provides encoder/decoder implementation for DEC SIXEL graphics,
@@ -63,6 +64,11 @@ Bash completion for %name.
 
 %prep
 %setup -q
+# Unbundle stb_image, stb_image_write:
+pushd src
+ln -svf %_includedir/stb/stb_image.h %_includedir/stb/stb_image_write.h ./
+popd
+
 
 %build
 %meson \
@@ -96,6 +102,9 @@ rm -fv %buildroot%_libdir/*.a ||:
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri Dec 15 2023 L.A. Kostis <lakostis@altlinux.ru> 1.10.3-alt2
+- Unbundle stb_image.
+
 * Thu Mar 30 2023 L.A. Kostis <lakostis@altlinux.ru> 1.10.3-alt1
 - 1.10.3.
 - switch to meson.
