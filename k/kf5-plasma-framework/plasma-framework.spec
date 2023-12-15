@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.112.0
+Version: 5.113.0
 Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
@@ -105,10 +105,9 @@ KF5 library
 %files common -f %name.lang
 %doc LICENSES/* README.md
 %_datadir/qlogging-categories5/*.*categories
-%_K5i18n/*/LC_SCRIPTS/libplasma5/
+#%_K5i18n/*/LC_SCRIPTS/libplasma5/
 %dir %_K5data/plasma/
 %_K5data/plasma/desktoptheme/
-#%_K5notif/*.notifyrc
 
 %files
 #%_K5qml/*
@@ -116,18 +115,13 @@ KF5 library
 #%exclude %_K5qml/org/kde/plasma/core/private/
 
 %files devel
-#%_K5inc/plasma_version.h
 %_K5inc/?lasma*/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Plasma*
 %_K5data/kdevappwizard/templates/*
-#%_K5archdata/mkspecs/modules/qt_Plasma-Framework.pri
-#%_K5dbus_iface/*.xml
 
 %files -n libkf5plasma
 %_K5lib/libKF5Plasma.so.*
-#%_K5plug/kf5/kded/platformstatus.so
-#%_K5plug/plasma_engine_testengine.so
 
 %files -n libkf5plasmaquick
 %dir %_K5plug/plasma/scriptengines/
@@ -142,10 +136,12 @@ KF5 library
 %_K5qml/QtQuick/
 %_K5qml/org/kde/plasma/*/
 %_K5qml/org/kde/kirigami.2/*/
-#%_K5srv/*.desktop
 %_K5srvtyp/*.desktop
 
 %changelog
+* Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.113.0-alt1
+- new version
+
 * Wed Nov 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt1
 - new version
 

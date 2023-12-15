@@ -1,8 +1,8 @@
 %define rname kcalendarcore
 
 Name: kf5-kcalcore
-Version: 5.112.0
-Release: alt2
+Version: 5.113.0
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -91,6 +91,9 @@ KF5 library
 %_K5lib/libKF5CalendarCore.so.*
 
 %changelog
+* Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.113.0-alt1
+- new version
+
 * Mon Dec 11 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.112.0-alt2
 - fix freeze upon view change (closes: #48716) (thanks krf10@alt)
 

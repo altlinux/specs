@@ -1,7 +1,7 @@
-%define rname oxygen-icons5
+%define rname oxygen-icons
 
 Name: kf5-oxygen-icons
-Version: 5.112.0
+Version: 5.113.0
 Release: alt1
 %K5init no_altplace
 
@@ -97,6 +97,9 @@ done
 %_iconsdir/oxygen*/
 
 %changelog
+* Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.113.0-alt1
+- new version
+
 * Wed Nov 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt1
 - new version
 

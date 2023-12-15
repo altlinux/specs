@@ -3,8 +3,8 @@
 %define kdesu_user_dir %_localstatedir/%kdesu_user
 
 Name: kf5-%rname
-Version: 5.112.0
-Release: alt2
+Version: 5.113.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -93,6 +93,9 @@ mkdir -p %buildroot/%kdesu_user_dir
 %_K5lib/libKF5Su.so.*
 
 %changelog
+* Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.113.0-alt1
+- new version
+
 * Fri Nov 17 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt2
 - create a special system user
 

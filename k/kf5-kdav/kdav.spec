@@ -4,7 +4,7 @@
 %define libkpimkdav libkpimkdav%sover
 
 Name: kf5-%rname
-Version: 5.112.0
+Version: 5.113.0
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -79,6 +79,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libKF5DAV.so.*
 
 %changelog
+* Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.113.0-alt1
+- new version
+
 * Wed Nov 15 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.112.0-alt1
 - new version
 

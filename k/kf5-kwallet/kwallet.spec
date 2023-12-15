@@ -1,8 +1,8 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.112.0
-Release: alt2
+Version: 5.113.0
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -133,6 +133,9 @@ fi
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.113.0-alt1
+- new version
+
 * Thu Nov 30 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt2
 - fix empty alternatives file
 

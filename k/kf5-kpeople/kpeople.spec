@@ -1,7 +1,7 @@
 %define rname kpeople
 
 Name: kf5-%rname
-Version: 5.112.0
+Version: 5.113.0
 Release: alt1
 %K5init altplace
 
@@ -92,6 +92,9 @@ KF5 library
 %_K5lib/libKF5PeopleWidgets.so.*
 
 %changelog
+* Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.113.0-alt1
+- new version
+
 * Wed Nov 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.112.0-alt1
 - new version
 
