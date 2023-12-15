@@ -1,45 +1,45 @@
-%define ver_major 3.44
+%define ver_major 4.0
 %define beta %nil
-%def_enable libnotify
+%define xdg_name org.gnome.Zenity
+
 %def_enable webkitgtk
+%def_enable man
 %def_enable check
 
 Name: zenity
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The GNOME port of dialog(1)
-License: LGPL-2.1
+License: LGPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/Zenity
 
+Vcs: https://gitlab.gnome.org/GNOME/zenity.git
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
-%define glib_ver 2.43.4
-%define gtk_ver 3.16.0
-%define webkit_api_ver 4.1
+%define adw_ver 1.2
+%define webkit_api_ver 6.0
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson yelp-tools
-BuildRequires: glib2-devel > %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver
-%{?_enable_libnotify:BuildRequires: libnotify-devel >= 0.7.0}
-%{?_enable_webkitgtk:BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver)}
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+%{?_enable_webkitgtk:BuildRequires: pkgconfig(webkitgtk-%webkit_api_ver)}
+%{?_enable_man:BuildRequires: help2man}
+%{?_enable_check:BuildRequires:desktop-file-utils}
 
 %description
-Zenity is a tool that allows you to display Gtk+ dialog boxes from
-the command line and through shell scripts.  It is similar to gdialog,
-but is intended to be saner.  It comes from the same family as dialog,
-Xdialog, and cdialog, but it surpasses those projects by having
-a cooler name.
+This is Zenity: the GNOME port of the venerable 'dialog' program,
+which allows you to display dialog boxes from the command-line
+and shell scripts.
 
 %prep
 %setup -n %name-%version%beta
 
 %build
 %meson \
-	%{?_enable_libnotify:-Dlibnotify=true} \
 	%{?_enable_webkitgtk:-Dwebkitgtk=true}
+	%{?_disable_man:-Dmanpage=false}
 %nil
 %meson_build
 
@@ -52,12 +52,15 @@ a cooler name.
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/gdialog
-%_datadir/%name
-%_man1dir/*
-%doc AUTHORS NEWS README* THANKS TODO
+%_desktopdir/%xdg_name.desktop
+%_iconsdir/hicolor/*/*/%name.png
+%{?_enable_man:%_man1dir/*}
+%doc AUTHORS NEWS README*
 
 %changelog
+* Fri Dec 08 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0 (ported to libadwaita/webkitgtk-6.0)
+
 * Fri Aug 11 2023 Yuri N. Sedunov <aris@altlinux.org> 3.44.2-alt1
 - 3.44.2
 
