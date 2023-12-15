@@ -8,7 +8,7 @@
 %define rname qmmp
 Name: qmmp%major
 Version: 2.1.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init no_altplace appdata
 
@@ -99,6 +99,7 @@ Other features:
 %package -n qmmp
 Group: Sound
 Summary: Qmmp - Qt-based multimedia player
+Conflicts: qmmp1
 Requires: unzip winamplike-skins
 %description -n qmmp
 %{description}
@@ -174,5 +175,8 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_K5link/lib*.so
 
 %changelog
+* Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 1:2.1.5-alt2
+- add conflict with qmmp1
+
 * Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 1:2.1.5-alt1
 - initial build
