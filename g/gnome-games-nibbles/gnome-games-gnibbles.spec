@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name nibbles
 %define __name gnome-%_name
 %define xdg_name org.gnome.Nibbles
 %define ver_major 4.0
-%define beta .rc
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major
-Release: alt0.9%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Guide a worm around a maze
 Group: Games/Boards
@@ -27,8 +27,8 @@ Provides:  %__name = %EVR
 Obsoletes: gnome-games-gnibbles
 Provides:  gnome-games-gnibbles = %EVR
 
-%define glib_ver 2.66.0
-%define gtk_ver 4.2.0
+%define glib_ver 2.78.0
+%define gtk_ver 4.6.0
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -70,6 +70,9 @@ much room to move.
 %doc NEWS
 
 %changelog
+* Fri Dec 15 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Wed Nov 22 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt0.9.rc
 - updated to 4.0.rc-5-g495a5a0 (ported to GTK4)
 
