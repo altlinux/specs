@@ -4,7 +4,7 @@
 %def_disable dnstap
 
 Name: knot-resolver
-Version: 6.0.2
+Version: 6.0.4
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -186,6 +186,9 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %_datadir/fish/completions/kresctl.fish
 
 %changelog
+* Fri Dec 15 2023 Alexey Shabalin <shaba@altlinux.org> 6.0.4-alt1
+- 6.0.4
+
 * Mon Sep 04 2023 Alexey Shabalin <shaba@altlinux.org> 6.0.2-alt1
 - 6.0.2
 
