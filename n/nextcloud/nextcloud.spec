@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define php_version 8.1
+%define php_version 8.2
 
 Name: nextcloud
-Version: 27.0.1
+Version: 27.1.4
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -151,6 +151,8 @@ ssl_generate "nextcloud"
 %dir %attr(0770,root,_webserver) %_localstatedir/%name
 %installdir/data
 %installdir/*.php
+%installdir/*.json
+%installdir/*.lock
 %installdir/.htaccess
 %installdir/.user.ini
 %doc %installdir/AUTHORS
@@ -165,6 +167,15 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Mon Dec 04 2023 Andrey Cherepanov <cas@altlinux.org> 27.1.4-alt1
+- New version (fixes: CVE-2023-48306, CVE-2023-48305, CVE-2023-48304,
+  CVE-2023-48303, CVE-2023-48302, CVE-2023-48301, CVE-2023-48239,
+  CVE-2023-45148).
+
+* Tue Oct 24 2023 Andrey Cherepanov <cas@altlinux.org> 27.1.2-alt1
+- New version.
+- Used PHP 8.2.
+
 * Sun Jul 30 2023 Andrey Cherepanov <cas@altlinux.org> 27.0.1-alt1
 - New version.
 
