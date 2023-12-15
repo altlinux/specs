@@ -5,8 +5,8 @@
 %def_with x2go
 
 Name: remmina
-Version: 1.4.27
-Release: alt2
+Version: 1.4.33
+Release: alt1
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -33,8 +33,8 @@ BuildRequires: libgcrypt-devel libssl-devel
 BuildRequires: libjpeg-devel libtasn1-devel libpng-devel libpixman-devel zlib-devel
 BuildRequires: pkgconfig(glib-2.0) >= 2.30 pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0)
 BuildRequires: pkgconfig(avahi-ui-gtk3) >= 0.6.30 pkgconfig(avahi-client) >= 0.6.30
-BuildRequires: pkgconfig(freerdp2) >= 2.0.0 libcups-devel
-BuildRequires: pkgconfig(winpr2)
+BuildRequires: libfreerdp-devel libwinpr-devel
+BuildRequires: libcups-devel
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.14.0 pkgconfig(gdk-pixbuf-2.0) pkgconfig(pango)
 BuildRequires: pkgconfig(atk)
 BuildRequires: pkgconfig(cairo)
@@ -42,7 +42,7 @@ BuildRequires: pkgconfig(wayland-client) pkgconfig(wayland-cursor) pkgconfig(way
 BuildRequires: pkgconfig(libsecret-1)
 %{?_with_kwallet:BuildRequires: kf5-kwallet-devel}
 BuildRequires: pkgconfig(libssh) >= 0.6
-BuildRequires: pkgconfig(libvncserver)
+BuildRequires: pkgconfig(libvncserver) pkgconfig(libvncclient)
 %{?_with_gvnc:BuildRequires: pkgconfig(gvnc-1.0) pkgconfig(gvncpulse-1.0) pkgconfig(gtk-vnc-2.0)}
 %{?_with_telepathy:BuildRequires: pkgconfig(telepathy-glib) pkgconfig(dbus-glib-1)}
 %{?_with_x2go:BuildRequires: pyhoca-cli}
@@ -252,7 +252,6 @@ that shows up under the display manager session menu.
      %{?_without_telepathy:-DWITH_TELEPATHY=OFF} \
     -DWITH_VTE=ON \
     -DWITH_KIOSK_SESSION=ON \
-    -DWITH_NEWS=OFF \
     %{?_with_gvnc:-DWITH_GVNC=ON} \
     %{?_with_x2go:-DWITH_X2GO=ON} \
     %{?_with_kwallet:-DWITH_KF5WALLET=ON} \
@@ -357,6 +356,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Fri Dec 15 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.33-alt1
+- new version 1.4.33
+
 * Mon Feb 13 2023 Anton Midyukov <antohami@altlinux.org> 1.4.27-alt2
 - NMU: build with pkgconfig(ayatana-appindicator3-0.1) instead
   pkgconfig(appindicator3-0.1)
