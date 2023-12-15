@@ -11,7 +11,8 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/gettext pkgconfig(bzip2) p
 
 Name:           fcitx5-configtool
 Version:        5.1.1
-Release:        alt2_%autorelease
+Release:        alt3_%autorelease
+%K5init		man appdata
 Summary:        Configuration tools used by fcitx5
 License:        GPLv2+
 URL:            https://github.com/fcitx/fcitx5-configtool
@@ -115,9 +116,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 %files -f %{name}.lang 
 %doc --no-dereference LICENSES/GPL-2.0-or-later.txt
 %doc README
-%{_bindir}/fcitx5-config-qt
+%_K5bin/fcitx5-config-qt
+%_K5bin/kbd-layout-viewer5
 %{_datadir}/applications/org.fcitx.fcitx5-config-qt.desktop
-%{_bindir}/kbd-layout-viewer5
 %{_datadir}/applications/kbd-layout-viewer5.desktop
 
 %files -n kcm-fcitx5 -f %{translation_domain}.lang 
@@ -126,10 +127,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 %{_datadir}/kpackage/kcms/%{translation_domain}
 %{_datadir}/kservices5/kcm_fcitx5.desktop
 %{_metainfodir}/%{translation_domain}.appdata.xml
-%{_bindir}/fcitx5-plasma-theme-generator
+%_K5bin/fcitx5-plasma-theme-generator
 
 %files -n fcitx5-migrator
-%{_bindir}/fcitx5-migrator
+%_K5bin/fcitx5-migrator
 %{_libdir}/libFcitx5Migrator.so.5*
 %{_libdir}/libFcitx5Migrator.so.1
 %{_datadir}/applications/org.fcitx.fcitx5-migrator.desktop
@@ -138,6 +139,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 %{_libdir}/libFcitx5Migrator.so
 
 %changelog
+* Thu Dec 14 2023 Kirill Izmestev <felixz@altlinux.org> 5.1.1-alt3_1
+- fixed build for p10 (ALT #48268)
+
 * Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt2_1
 - fixed build
 
