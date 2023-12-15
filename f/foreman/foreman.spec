@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.5.1
-Release:       alt7
+Release:       alt8
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -343,7 +343,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.5.1
-Release:       alt7
+Release:       alt8
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -509,6 +509,10 @@ railsctl cleanup %name
 
 
 %changelog
+* Thu Dec 14 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt8
+- ! fixed fast-gettext patch
+- ! fixed russian translation
+
 * Mon Dec 11 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt7
 - - removed ssl_dhparam from foreman.nginx.conf
 - ! fixed foreman service file
