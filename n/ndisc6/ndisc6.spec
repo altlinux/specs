@@ -1,6 +1,6 @@
 Name: ndisc6
 Version: 1.0.7
-Release: alt1
+Release: alt2
 
 Summary: IPv6 diagnostic tools
 License: GPLv2+
@@ -89,6 +89,10 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Fri Dec 15 2023 Mikhail Efremov <sem@altlinux.org> 1.0.7-alt2
+- Patch from upstream:
+  + Fix reading uninitialized memory when parsing PREF64.
+
 * Wed Apr 05 2023 Mikhail Efremov <sem@altlinux.org> 1.0.7-alt1
 - Enabled LFS on 32-bit systems.
 - Added 'set_verify_elf_method strict'.
