@@ -11,7 +11,7 @@
 
 Name: p11-kit
 Version: 0.25.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Utilities for PKCS#11 modules
@@ -230,6 +230,13 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Fri Dec 15 2023 Mikhail Efremov <sem@altlinux.org> 1:0.25.3-alt2
+- Patches from upstream:
+  + Add the flags required for libtasn1 to libp11-asn1.la;
+  + import-object: Avoid integer truncation on 32-bit platforms;
+  + Fix issues found by static analysis;
+  + Fix usage message in p11-kit list-tokens command.
+
 * Wed Nov 15 2023 Mikhail Efremov <sem@altlinux.org> 1:0.25.3-alt1
 - 0.25.3.
 
