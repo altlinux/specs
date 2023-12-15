@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libxml2
-Version: 2.10.4
+Version: 2.12.3
 Release: alt1
 Epoch: 1
 
@@ -26,11 +26,11 @@ BuildRequires: liblzma-devel zlib-devel
 
 %if_with python2
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
+BuildRequires: python-devel python-module-setuptools
 %endif
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools
 
 %package devel
 Summary: Development environment for building applications manipulating XML files
@@ -235,6 +235,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/gtk-doc/html/libxml2
 
 %changelog
+* Fri Dec 15 2023 Alexey Shabalin <shaba@altlinux.org> 1:2.12.3-alt1
+- 2.12.3 (Fixes: CVE-2023-45322)
+
 * Tue Apr 25 2023 Alexey Shabalin <shaba@altlinux.org> 1:2.10.4-alt1
 - 2.10.4 (Fixes: CVE-2023-29469, CVE-2023-28484)
 
