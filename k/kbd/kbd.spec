@@ -2,7 +2,7 @@
 
 Name: kbd
 Epoch: 0
-Version: 2.6.1
+Version: 2.6.4
 Release: alt1
 
 Group: Terminals
@@ -418,6 +418,9 @@ done
 %_man1dir/vlock.*
 
 %changelog
+* Fri Dec 15 2023 Alexey Gladkov <legion@altlinux.ru> 0:2.6.4-alt1
+- New release version (2.6.4).
+
 * Sat Jul 01 2023 Alexey Gladkov <legion@altlinux.ru> 0:2.6.1-alt1
 - New release version (2.6.1).
 
