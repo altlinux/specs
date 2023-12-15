@@ -10,7 +10,7 @@
 %endif
 
 Name: asterisk
-Version: 20.5.0
+Version: 20.5.1
 Release: alt1
 
 Summary: Open source PBX
@@ -319,6 +319,9 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Fri Dec 15 2023 Alexei Takaseev <taf@altlinux.org> 20.5.1-alt1
+- 20.5.1
+
 * Thu Nov 02 2023 Alexei Takaseev <taf@altlinux.org> 20.5.0-alt1
 - 20.5.0
 
