@@ -1,25 +1,30 @@
 %define oname pyclipper
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0.6
-Release: alt2
+Version: 1.3.0.post5
+Release: alt1
 
 Summary: Cython wrapper for the C++ translation of the Angus Johnson's Clipper library
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pyclipper/
-# https://github.com/greginvm/pyclipper.git
+Url: https://pypi.org/project/pyclipper
+Vcs: https://github.com/fonttools/pyclipper
 
 Source: %name-%version.tar
-Patch: pyclipper-setup.py.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ libpolyclipping-devel
-BuildRequires: python3-devel python3-module-pytest
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: gcc-c++
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
-
 
 %description
 Pyclipper is a Cython wrapper exposing public functions and classes of
@@ -27,32 +32,27 @@ the C++ translation of the Angus Johnson's Clipper library.
 
 %prep
 %setup
-%patch -p1
-
-sed -i -e 's,use_scm_version=True,version="%version",' setup.py
-
-sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
-    $(find ./ -name '*.py')
-
-rm -f %oname/clipper.*
 
 %build
-%add_optflags -fno-strict-aliasing -I%_includedir/polyclipping
-
-%python3_build_debug
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-#CFLAGS="-I%_includedir/polyclipping" python3 setup.py test
+%pyproject_run_pytest -v
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 
 %changelog
+* Fri Dec 15 2023 Anton Vyatkin <toni@altlinux.org> 1.3.0.post5-alt1
+- New version 1.3.0.post5.
+
 * Wed Nov 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.6-alt2
 - python2 disabled
 
