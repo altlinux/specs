@@ -11,7 +11,7 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%global llvm_version 16.0
+%global llvm_version 17.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
@@ -34,7 +34,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        119.0.6045.159
+Version:        120.0.6099.109
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -83,16 +83,17 @@ Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
 Patch016: 0016-DEBIAN-use-system-libevent-library.patch
-Patch017: 0017-ALT-Use-system-libusb-libsecret-flatbuffers.patch
+Patch017: 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-GENTOO-EnumTable-crash.patch
 Patch020: 0020-ARCH-Add-missing-header.patch
 Patch021: 0021-ALT-Do-not-hardcode-flatbuffer-version.patch
-Patch022: 0022-Add-missing-headers.patch
-Patch023: 0023-FEDORA-System-brotli.patch
-Patch024: 0024-atspi-mark-possibly-unused-gn-variables.patch
-Patch025: 0025-Revert-Use-aggregate-init-designed-initializers-more.patch
-Patch026: 0026-Add-std-namespace.patch
+Patch022: 0022-FEDORA-System-brotli.patch
+Patch023: 0023-atspi-mark-possibly-unused-gn-variables.patch
+Patch024: 0024-Revert-Use-aggregate-init-designed-initializers-more.patch
+Patch025: 0025-Disable-various-compiler-configs.patch
+Patch026: 0026-Use-std-nullptr_t-instead-of-nullptr_t.patch
+Patch027: 0027-Add-missing-headers.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -155,6 +156,7 @@ BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(libevdev)
 BuildRequires:  pkgconfig(libevent)
 BuildRequires:  pkgconfig(libffi)
+BuildRequires:  pkgconfig(libhwy)
 BuildRequires:  pkgconfig(libjpeg)
 BuildRequires:  pkgconfig(libopenjp2)
 BuildRequires:  pkgconfig(libpci)
@@ -516,6 +518,19 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Dec 16 2023 Alexey Gladkov <legion@altlinux.ru> 120.0.6099.109-alt1
+- New version (120.0.6099.109).
+- Security fixes:
+  - CVE-2023-6702: Type Confusion in V8.
+  - CVE-2023-6703: Use after free in Blink.
+  - CVE-2023-6704: Use after free in libavif.
+  - CVE-2023-6705: Use after free in WebRTC.
+  - CVE-2023-6706: Use after free in FedCM.
+  - CVE-2023-6707: Use after free in CSS.
+
+* Thu Dec 07 2023 Alexey Gladkov <legion@altlinux.ru> 120.0.6099.71-alt1
+- New version (120.0.6099.71).
+
 * Thu Nov 16 2023 Alexey Gladkov <legion@altlinux.ru> 119.0.6045.159-alt1
 - New version (119.0.6045.159).
 - Security fixes:
