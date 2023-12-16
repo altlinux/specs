@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define abi_ver 3.0
 %define ver_major 3.0
@@ -14,7 +14,7 @@
 
 Name: abiword
 Version: %ver_major.5
-Release: alt1.2
+Release: alt2
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -25,7 +25,8 @@ Url: http://www.abisource.com/
 Source: https://www.abisource.com/downloads/abiword/%version/source/%name-%version.tar.gz
 #Source: https://github.com/AbiWord/abiword/archive/release-%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/AbiWord/abiword.git
+#Vcs: https://github.com/AbiWord/abiword.git
+Vcs: https://gitlab.gnome.org/World/AbiWord.git
 Source: %name-%version.tar
 %endif
 
@@ -152,7 +153,7 @@ sed -i "s|python|\$(PYTHON)|" src/gi-overrides/Makefile.am
 
 %build
 %add_optflags -std=c++11 %(getconf LFS_CFLAGS)
-%autoreconf
+%{?_disable_snapshot:%autoreconf}%{?_enable_snapshot:./autogen.sh}
 %configure \
 	--enable-print \
 	--enable-plugins \
@@ -210,6 +211,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python3_sitelibdir/gi/overrides/*
 
 %changelog
+* Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt2
+- updated to 3.0.5-12-g545d30fe1 (fixed build with libxml2-2.12.x)
+
 * Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt1.2
 - disabled libchamplain support to avoid libsoup{2.4,3.0} conflict
 
