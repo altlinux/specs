@@ -1,7 +1,7 @@
 %def_enable snapshot
 %define _name Paper-Clip
 %define binary_name pdf-metadata-editor
-%define ver_major 3.6
+%define ver_major 4.0
 %define rdn_name io.github.diegoivan.pdf_metadata_editor
 
 %def_enable check
@@ -31,7 +31,7 @@ BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(poppler-glib)
-BuildRequires: pkgconfig(libportal-gtk4)
+BuildRequires: pkgconfig(exempi-2.0)
 
 %description
 %summary
@@ -60,6 +60,9 @@ BuildRequires: pkgconfig(libportal-gtk4)
 
 
 %changelog
+* Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1
+- updated to v4.0-5-g6e784e0
+
 * Sun Nov 05 2023 Yuri N. Sedunov <aris@altlinux.org> 3.6-alt1
 - 3.6
 
