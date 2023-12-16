@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _name gupnp-av
 %define ver_major 0.14
 %define api_ver 1.0
@@ -5,10 +7,11 @@
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
+%def_enable check
 
 Name: libgupnp-av
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A library to handle UPnP A/V profiles
 Group: System/Libraries
@@ -16,7 +19,11 @@ License: LGPL-2.1
 Url: http://www.gupnp.org/
 
 Vcs: https://gitlab.gnome.org/GNOME/gupnp-av.git
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson glib2-devel >= 2.58 libxml2-devel
@@ -98,11 +105,11 @@ GObject introspection devel data for the GUPnP A/V library
 %nil
 %meson_build
 
-%check
-%meson_test
-
 %install
 %meson_install
+
+%check
+%meson_test
 
 %files
 %_libdir/*.so.*
@@ -131,6 +138,9 @@ GObject introspection devel data for the GUPnP A/V library
 
 
 %changelog
+* Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt2
+- updated to 0.14.1-9-g1e10a41 (fixed build with libxml2-2.12.x)
+
 * Fri Jun 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt1
 - 0.14.1
 
