@@ -1,9 +1,9 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 0.12
 
 Name: gupnp-tools
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: GUPnP Tools
 Group: Development/Other
@@ -74,6 +74,9 @@ test and debug one's UPnP devices and control points.
 %doc AUTHORS README* NEWS
 
 %changelog
+* Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt2
+- updated to 0.12.1-9-g88a441f (fixed build with libxml2-2.12.x)
+
 * Wed Aug 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt1
 - 0.12.1
 
