@@ -1,5 +1,5 @@
 Name:    libzim
-Version: 9.0.0
+Version: 9.1.0
 Release: alt1
 Summary: Library for reading/writing ZIM files
 
@@ -67,6 +67,9 @@ sed -i "s/compiler.get_id()/'gcc'/" meson.build
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Dec 16 2023 Andrey Cherepanov <cas@altlinux.org> 9.1.0-alt1
+- New version.
+
 * Sun Nov 12 2023 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
 - New version.
 
