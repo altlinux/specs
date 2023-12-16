@@ -2,7 +2,7 @@
 
 Name: liferea
 Version: 1.15.4
-Release: alt1.1
+Release: alt1.2
 
 Summary: A RSS News Reader for GNOME
 License: GPLv2
@@ -65,6 +65,9 @@ Play music and videos directly from Liferea
 %setup
 %patch -p1
 
+# fix compatibility with libxml2-2.12.x
+sed -i '/^#include <libxml\/xmlmemory.h>/i #include <libxml/globals.h>' src/node_type.h
+
 %build
 %autoreconf
 %configure \
@@ -120,6 +123,9 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/media-player.*
 
 %changelog
+* Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.15.4-alt1.2
+- fixed build with libxml2-2.12.x
+
 * Tue Oct 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1.15.4-alt1.1
 - skip AppIndicator3 typelib dependency
 
