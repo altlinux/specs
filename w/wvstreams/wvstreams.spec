@@ -4,7 +4,7 @@
 
 Name: wvstreams
 Version: 4.6.1
-Release: alt8
+Release: alt9
 
 Summary: C++ libraries for rapid application development
 License: LGPL-2.0
@@ -37,7 +37,6 @@ Patch2000: %name-e2k.patch
 
 BuildPreReq: gcc-c++
 BuildPreReq: OpenSP /proc
-# Automatically added by buildreq on Mon Jan 05 2009
 BuildRequires: boost-devel docbook-style-dsssl doxygen graphviz
 BuildRequires: libcom_err-devel libdbus-devel libpam-devel libqt3-devel
 BuildRequires: libreadline-devel libssl-devel openjade
@@ -77,7 +76,6 @@ Summary: %summary
 Group: Development/Documentation
 Requires: lib%name-devel = %version-%release
 Provides: %name-doxy-manual = %version-%release
-BuildArch: noarch
 %description -n lib%name-devel-doc
 WvStreams aims to be an efficient, secure, and easy-to-use library
 for doing network applications development.
@@ -298,6 +296,9 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/pkgconfig/libwvqt.pc
 
 %changelog
+* Fri Dec 15 2023 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt9
+- Rebuilt with openssl 3.x (ALT #48809).
+
 * Thu Sep 02 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.6.1-alt8
 - Fixed passing of **data instead of *data in wvtripledes.cc
 - Added patch for Elbrus
