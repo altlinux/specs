@@ -1,11 +1,11 @@
-%define php_version 8.0
+%define php_version 8.2
 %define system_requires apache2-base, apache2-mod_php%php_version, apache2-mod_ssl, mariadb-server
-%define deploy_requires deploy >= 0.3
+%define deploy_requires deploy >= 0.4
 %define rule_requires   python3-module-pymysql, pwgen, curl
 
 Name: installed-db-office-server
-Version: 1.5.3
-Release: alt2
+Version: 1.5.4
+Release: alt1
 Summary: Databases and config files for moodle, mediawiki and nextcloud
 License: GPL-2.0+
 Group: System/Configuration/Other
@@ -28,6 +28,9 @@ Requires: %rule_requires
 Requires: mediawiki
 Requires: mediawiki-apache2
 Requires: mediawiki-mysql
+Requires: python3-module-pymysql
+Requires: pwgen
+Requires: curl
 
 %description mediawiki
 Databases and config files for mediawiki
@@ -42,6 +45,9 @@ Requires: moodle
 Requires: moodle-apache2
 Requires: moodle-base
 Requires: moodle-local-mysql
+Requires: python3-module-pymysql
+Requires: pwgen
+Requires: curl
 
 %description moodle
 Databases and config files for moodle
@@ -56,6 +62,9 @@ Requires: nextcloud
 Requires: nextcloud-apache2
 Requires: php%php_version-pcntl
 Requires: php%php_version-pdo_mysql
+Requires: python3-module-pymysql
+Requires: pwgen
+Requires: curl
 Provides: %name-owncloud = %EVR
 Obsoletes: %name-owncloud < %EVR
 
@@ -88,6 +97,10 @@ done
 %_libexecdir/alterator/hooks/root.d/nextcloud
 
 %changelog
+* Sat Dec 16 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.4-alt1
+- Use PHP 8.2.
+- Add python3-module-pymysql, pwgen and curl.
+
 * Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt2
 - Use PHP 8.0.
 
