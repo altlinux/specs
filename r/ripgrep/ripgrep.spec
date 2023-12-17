@@ -3,16 +3,19 @@
 
 Name: ripgrep
 Version: 14.0.3
-Release: alt1
+Release: alt2
 Summary: Recursively searches directories for a regex pattern
 License: MIT and Unlicense
 Group: File tools
 Url: https://github.com/BurntSushi/ripgrep
 Source: %name-%version.tar
 Source1: vendor.tar
+Patch1: 0001-pcre2-sys-disable-JIT-on-LoongArch-not-supported.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
+BuildRequires: cargo-vendor-checksum
+BuildRequires: diffstat
 
 %ifarch i586 armh
 %filter_from_requires /libc.so.6(GLIBC_PRIVATE)/d
@@ -24,6 +27,7 @@ your current directory for a regex pattern.
 
 %prep
 %setup -a 1
+%patch1 -p1
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -32,6 +36,8 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 EOF
+diffstat -p1 -l %PATCH1 | sed -re 's@vendor/@@' | \
+xargs cargo-vendor-checksum --files-in-vendor-dir
 
 %build
 # XXX: help pcre2-sys to disable JIT on LoongArch
@@ -65,6 +71,9 @@ install -m 0644 _%bin_name %buildroot/%_datadir/zsh/site-functions
 %doc COPYING LICENSE-MIT UNLICENSE
 
 %changelog
+* Sun Dec 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 14.0.3-alt2
+- NMU: restored LoongArch support
+
 * Thu Dec 14 2023 Alexander Makeenkov <amakeenk@altlinux.org> 14.0.3-alt1
 - Updated to version 14.0.3.
 
