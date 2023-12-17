@@ -3,33 +3,35 @@
 
 Name: obconf-qt
 Version: 0.16.3
-Release: alt1
+Release: alt2
 
 Summary: Openbox configuration tool
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+Url: https://github.com/lxqt/obconf-qt
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
 BuildRequires: pkgconfig(expat)
 BuildRequires: libopenbox-devel
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_bindir/*
@@ -39,6 +41,10 @@ BuildRequires: libopenbox-devel
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Sun Dec 17 2023 Anton Midyukov <antohami@altlinux.org> 0.16.3-alt2
+- fix build with libxml2-2.12.xr
+- update URL
+
 * Thu Sep 07 2023 Anton Midyukov <antohami@altlinux.org> 0.16.3-alt1
 - New version 0.16.3.
 
