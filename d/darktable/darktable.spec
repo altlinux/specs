@@ -18,7 +18,7 @@
 
 Name: darktable
 Version: %ver_major.2
-Release: alt2
+Release: alt2.1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -33,6 +33,7 @@ Patch: darktable-3.0.0-is_supported_platform.patch
 # based on https://bugzilla.altlinux.org/attachment.cgi?id=8682&action=edit
 # by Pavel Nakonechnyi
 Patch1: darktable-4.4.0-alt-disable-use-of-gcc-graphite.patch
+Patch10: rawspeed-3.6-up-libxml2-2.12.patch
 
 ExcludeArch: %ix86 armh
 AutoReq: nolua
@@ -96,6 +97,9 @@ light table. It also enables you to develop raw images and enhance them.
 %prep
 %setup -n %name-%version
 %patch1 -p1
+pushd src/external/rawspeed
+%patch10 -p1
+popd
 
 %build
 %ifarch ppc64le
@@ -147,6 +151,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Sun Dec 17 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt2.1
+- fixed build with libxml2-2.12.x
+
 * Thu Sep 07 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt2
 - rebuilt with system libraw-0.21
 - AutoReq: nolua
