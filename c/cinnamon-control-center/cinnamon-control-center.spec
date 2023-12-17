@@ -9,7 +9,7 @@
 
 Name: cinnamon-control-center
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -32,7 +32,6 @@ Source: %name-%version.tar
 %define gnome_menus_ver 3.5.5
 %define goa_ver 3.5.90
 %define sett_daemon_ver 0.0.1
-%define bt_ver 3.5.92
 %define systemd_ver 40
 %define ibus_ver 1.4.99
 
@@ -76,7 +75,6 @@ BuildRequires: libnm-devel >= %nm_ver
 BuildRequires: libnma-devel >= %nm_ver
 BuildRequires: libmm-glib-devel
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver colord-devel
-BuildRequires: libgnome-bluetooth-devel >= %bt_ver
 BuildRequires: libclutter-gtk3-devel
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
 
@@ -149,6 +147,9 @@ you'll want to install this package.
 
 
 %changelog
+* Sun Dec 17 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt2
+- rebuild without gnome-bluetooth (not used)
+
 * Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
 - 6.0.0
 
