@@ -15,7 +15,7 @@
 # https://dl.winehq.org/wine/source/
 %define basemajor 9.0
 %define major 9.0
-%define rel -rc1
+%define rel -rc2
 %define conflictbase wine
 
 # build ping subpackage
@@ -67,7 +67,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt1.rc1
+Release: alt1.rc2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -831,6 +831,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sun Dec 17 2023 Vitaly Lipatov <lav@altlinux.ru> 1:9.0-alt1.rc2
+- new version (9.0-rc2) with rpmgs script
+
 * Mon Dec 11 2023 Vitaly Lipatov <lav@altlinux.ru> 1:9.0-alt1.rc1
 - new version (9.0-rc1) with rpmgs script
 
