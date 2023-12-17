@@ -10,7 +10,7 @@
 
 Name: gnustep-base
 Version: 1.29.0
-Release: alt1.1
+Release: alt2
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -24,6 +24,7 @@ Source: %name-%version.tar
 Source1: %name.init
 Patch1: %name-alt-objc2.patch
 Patch2: %name-use_system-wide_crypto-policies.patch
+Patch3: 0001-Fix-GSXML-compatibility-with-libxml2-v2.11.0.patch
 
 Requires: lib%name = %EVR
 
@@ -85,6 +86,7 @@ Development documentation for %name.
 %patch1 -p1
 %endif
 %patch2 -p1
+%patch3 -p1
 
 %build
 %if_with objc2
@@ -180,6 +182,9 @@ fi
 %endif
  
 %changelog
+* Sun Dec 17 2023 Andrey Cherepanov <cas@altlinux.org> 1:1.29.0-alt2
+- FTBFS: fixed build with libxml2-2.12.
+
 * Wed Aug 09 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.29.0-alt1.1
 - NMU: fix FTBFS plus minor cleanups:
   + pin autoconf to 2.60
