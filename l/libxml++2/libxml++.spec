@@ -1,15 +1,16 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name libxml++
+%define git_name libxmlplusplus
 %define ver_major 2.42
 %define api_ver 2.6
 
-%def_enable doc
+%def_disable doc
 %def_enable check
 
 Name: %{_name}2
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: C++ wrapper for the libxml2 XML parser library
 Group: System/Libraries
@@ -19,7 +20,8 @@ Url: http://libxmlplusplus.sourceforge.net/
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
-Source: %_name-%version.tar
+Vcs: https://github.com/libxmlplusplus/libxmlplusplus.git
+Source: %git_name-%version.tar
 %endif
 
 BuildRequires(pre): rpm-macros-meson >= 0.55
@@ -50,7 +52,7 @@ Conflicts: %name-devel < %version
 This package contains the development documentation for libxml++ library.
 
 %prep
-%setup -n %_name-%version
+%setup -n %{?_disable_snapshot:%_name}%{?_enable_snapshot:%git_name}-%version
 
 %build
 %ifarch %e2k
@@ -58,7 +60,8 @@ This package contains the development documentation for libxml++ library.
 %endif
 %{?_enable_snapshot:mm-common-prepare --force --copy}
 %meson \
-    %{?_enable_snapshot:-Denable-maintainer-mode=true} \
+    %{?_enable_snapshot:-Dmaintainer-mode=true \
+    %{?_disable_doc:-Dbuild-documentation=false}}
     %{?_enable_doc:-Dbuild-documentation=true}
 %nil
 %meson_build
@@ -67,12 +70,11 @@ This package contains the development documentation for libxml++ library.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/*.so.*
-%doc AUTHORS NEWS README
+%doc NEWS README*
 
 %files devel
 %_includedir/*
@@ -87,6 +89,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Dec 17 2023 Yuri N. Sedunov <aris@altlinux.org> 2.42.2-alt1.1
+- updated to 2.42.2-14-g468bc74 (fixed build with libxml2-2.12.x)
+
 * Fri Sep 09 2022 Yuri N. Sedunov <aris@altlinux.org> 2.42.2-alt1
 - 2.42.2
 

@@ -1,26 +1,34 @@
+%def_enable snapshot
+
 %define _name libxml++
+%define git_name libxmlplusplus
 %define ver_major 3.2
 %define api_ver 3.0
 
-%def_enable docs
+%def_disable doc
 %def_enable check
 
 Name: %{_name}3
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: C++ wrapper for the libxml2 XML parser library
 Group: System/Libraries
 License: LGPL-2.1
 Url: https://libxmlplusplus.sourceforge.net/
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Vcs: https://github.com/libxmlplusplus/libxmlplusplus.git
+Source: %git_name-%version.tar
+%endif
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson mm-common gcc-c++ 
 BuildRequires: libglibmm-devel >= 2.32.0
 BuildRequires: libxml2-devel >= 2.7.7
-%{?_enable_docs:BuildRequires: doxygen graphviz docbook-style-xsl xsltproc}
+%{?_enable_doc:BuildRequires: doxygen graphviz docbook-style-xsl xsltproc}
 
 %description
 libxml++ is a C++ wrapper for the libxml2 XML parser library.
@@ -45,13 +53,14 @@ Conflicts: %name-devel < %version
 This package contains the development documentation for libxml++ library.
 
 %prep
-%setup -n %_name-%version
+%setup -n %{?_disable_snapshot:%_name}%{?_enable_snapshot:%git_name}-%version
 
 %build
 %{?_enable_snapshot:mm-common-prepare --force --copy}
 %meson \
-    %{?_enable_snapshot:-Denable-maintainer-mode=true} \
-    %{?_enable_docs:-Dbuild-documentation=true}
+    %{?_enable_snapshot:-Dmaintainer-mode=true \
+    %{?_disable_doc:-Dbuild-documentation=false}}
+    %{?_enable_doc:-Dbuild-documentation=true}
 %nil
 %meson_build
 
@@ -63,7 +72,7 @@ This package contains the development documentation for libxml++ library.
 
 %files
 %_libdir/%_name-%api_ver.so.*
-%doc AUTHORS NEWS README
+%doc NEWS README*
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -78,6 +87,9 @@ This package contains the development documentation for libxml++ library.
 %endif
 
 %changelog
+* Sun Dec 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2.4-alt1.1
+- updated to 3.2.4-17-g6997d49 (fixed build with libxml2-2.12.x)
+
 * Fri Sep 30 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.4-alt1
 - 3.2.4
 
