@@ -20,7 +20,7 @@
 
 Name: gnome-online-accounts
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Provide online accounts information
 Group: Graphical desktop/GNOME
@@ -108,6 +108,8 @@ This package contains development documentation for the %name libraries.
 
 %prep
 %setup
+# libxml/xmlIO.h no longer includes libxml/parser.h
+sed -i '/#include <libxml\/xmlIO.h>/i #include <libxml/parser.h>' src/goabackend/goaewsclient.c
 
 %build
 %meson \
@@ -179,6 +181,9 @@ This package contains development documentation for the %name libraries.
 %endif
 
 %changelog
+* Sun Dec 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1.1
+- fixed build with libxml2-2.12.x
+
 * Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
 - 3.48.0
 
