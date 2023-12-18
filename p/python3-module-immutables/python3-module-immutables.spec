@@ -1,7 +1,7 @@
 %define  modulename immutables
 
 Name:    python3-module-%modulename
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: A high-performance immutable mapping type for Python.
@@ -38,6 +38,9 @@ CPython 3.7 in the contextvars module (see PEP 550 and PEP 567 for more details)
 %doc README.*
 
 %changelog
+* Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.20-alt1
+- Automatically updated to 0.20.
+
 * Wed Dec 14 2022 Grigory Ustinov <grenka@altlinux.org> 0.19-alt1
 - Automatically updated to 0.19.
 
