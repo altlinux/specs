@@ -34,7 +34,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -91,6 +91,7 @@ Patch410: alt-005-svg-icons-1.patch
 Patch411: alt-006-svg-icons-2.patch
 Patch412: alt-007-svg-icons-3.patch
 Patch413: alt-013-icu74.patch
+Patch414: libxml2-2.12-fixed-build.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
@@ -370,6 +371,8 @@ echo Direct build
 #patch411 -p1
 #patch412 -p1
 %patch413 -p1
+# https://bugs.documentfoundation.org/show_bug.cgi?id=158302
+%patch414 -p1
 
 %patch500 -p0
 
@@ -723,6 +726,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Dec 18 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.9.2-alt2
+- FTBFS: fixed build with libxml2 2.12 (ALT #48841).
+
 * Thu Dec 07 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.9.2-alt1
 - New version (fixes CVE-2023-6186 and CVE-2023-6185).
 
