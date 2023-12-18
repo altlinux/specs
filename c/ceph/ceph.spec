@@ -26,10 +26,10 @@
 %def_without mgr_dashboard
 %def_with blustore
 %def_with liburing
-%ifarch loongarch64 riscv64
-%def_without pmem
-%else
+%ifarch x86_64 aarch64 ppc64le
 %def_with pmem
+%else
+%def_without pmem
 %endif
 %def_with rbd_rwl_cache
 %def_with rbd_ssd_cache
@@ -60,7 +60,7 @@
 
 Name: ceph
 Version: 17.2.6
-Release: alt3.2
+Release: alt3.3
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -842,6 +842,17 @@ tar -xf %SOURCE37 -C src/utf8proc
 %endif
 
 %patch -p1
+%ifarch %e2k
+sed -i '/CXX>:-fno-new-ttp-matching>)/d' src/CMakeLists.txt
+sed -i 's/__INTEL_COMPILER/__EDG__/' src/include/stringify.h
+sed -E -i 's/(friend class )interval_set::/\1/' src/include/interval_set.h
+sed -E -i 's/(internal_capacity_holder\(\)) = default;/\1 {}/' src/include/function2.hpp
+sed -i 's/(RadosClient/(librados::RadosClient/' src/librados/IoCtxImpl.cc
+sed -i '/extra_preargs=\[/d;/^setup(/i ext_args["extra_compile_args"].append("-iquoteL/C/C/F/I/X")' \
+	src/pybind/cephfs/setup.py
+sed -i '/#include "common\/ref\.h"/a #include "librbd/crypto/CryptoInterface.h"' \
+  src/librbd/crypto/EncryptionFormat.h
+%endif
 
 cat << __EOF__ > src/.git_version
 %git_version
@@ -850,6 +861,9 @@ __EOF__
 
 
 %build
+%ifarch %e2k
+%define optflags_debug -g0
+%endif
 export NPROCS=%build_parallel_jobs
 
 %if_with cephfs_java
@@ -1829,6 +1843,13 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Mon Dec 18 2023 Michael Shigorin <mike@altlinux.org> 17.2.6-alt3.3
+- NMU: build on %%e2k (ilyakurdyukov@)
+  + disable pmem either (move to whitelist, actually; mike@)
+  + workaround ftbfs issues with lcc 1.26
+  + lower debuginfo volume to fit cpio size limit,
+    see http://altlinux.org/lcc#R_E2K_32_ABS
+
 * Fri Oct 20 2023 Ivan A. Melnikov <iv@altlinux.org> 17.2.6-alt3.2
 - NMU: build on riscv64 and loongarch64
   + disable pmem on those architectures (not available yet);
