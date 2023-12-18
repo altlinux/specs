@@ -2,12 +2,13 @@
 %define cfg %_builddir/%name-%version/
 
 Name:    lazarus
-Version: 2.2.6
-Release: alt2
+Version: 3.0
+Release: alt1
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
 License: GPL-2.0 and LGPL-2.0 and MPL-1.1
+# For additional components and tools: LGPL-2.0 and LGPL-2.1 and MPL-1.1 and MPL-2.0 and GPL-2.0 and BSD-3-Clause
 Group:   Development/Other
 Url:     http://www.lazarus-ide.org/
 # Git: https://gitlab.com/freepascal.org/lazarus/lazarus.git
@@ -27,6 +28,7 @@ Patch2: %name-fix-desktop-file.patch
 Patch3: %name-fix-install-path-in-Makefile.patch
 Patch4: %name-2.0.2-fix-fpc-search.patch
 Patch6:	%name-set-user-TestBuildDirectory.patch
+Patch7: %name-alt-qtpas_bootstrap_3.0.patch
 
 # Patches from Debian
 Patch11: lazarus-default-config.patch
@@ -35,17 +37,16 @@ Patch12: lazarus-lcl-with-multple-widget-sets.patch
 # Other patches
 Patch13: lazarus-customform-sigsegv-fix.patch
 
-# Upstream fixes
-
 BuildRequires(pre): qt5-base-devel
-BuildRequires: fpc >= 2.6.4 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils 
+BuildRequires(pre): rpm-build-python3
+BuildRequires: fpc >= 3.2.2 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5pas-devel
 # .xct files for documentation build
 BuildRequires: fpc-docs
 
-Requires:   fpc >= 2.6.4 fpc-src fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
+Requires:   fpc >= 3.2.2 fpc-src fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
 Requires:   glibc-devel
 Requires:   libdbus-devel
 Requires:   xterm
@@ -71,6 +72,27 @@ Lazarus - свободно-распространяемая, с открытым
 Development tool) на FreePascal, использующая библиотеки компонет LCL
 (Lazarus component library).  LCL входят в состав данного пакета.
 
+%package additional
+Summary: Additional components and tools for Lazarus
+License: LGPL-2.0 and LGPL-2.1 and MPL-1.1 and MPL-2.0 and GPL-2.0 and BSD-3-Clause
+Group:   Development/Other
+Requires: lazarus = %EVR
+
+%description additional
+Additional components and tools for Lazarus:
+* fortes4lazarus
+* fpspreadsheet
+* GLScene
+* Indy
+* jvcl
+* lnet
+* Orca_Ext
+* powerpdf
+* rxnew
+* Virtual-TreeView
+* zeoslib
+* explorateur_lrs
+
 %package qt5
 Summary: Interface for Lazarus based on Qt5
 Group: Development/Other
@@ -90,12 +112,7 @@ Requires: %name = %EVR
 %description gtk
 Interface for Lazarus based on GTK+.
 
-# The version is taken from lcl/interfaces/qt5/cbindings/Qt5Pas.pro
-%global qt5pas_version 2.6
-%global qt5pas_release alt1
 %package -n qt5pas
-Version: %qt5pas_version
-Release: %qt5pas_release
 Summary: Qt5 bindings for Pascal
 Group:   Development/Other
 
@@ -103,11 +120,9 @@ Group:   Development/Other
 Qt5 bindings for Pascal from Lazarus.
 
 %package -n qt5pas-devel
-Version: %qt5pas_version
-Release: %qt5pas_release
 Summary: Development files for qt5pas
 Group:   Development/Other
-Requires: qt5pas = %qt5pas_version-%qt5pas_release
+Requires: qt5pas = %EVR
 
 %description -n qt5pas-devel
 The qt5pas-devel package contains libraries and header files for
@@ -123,7 +138,8 @@ tar xf %SOURCE2
 %patch3 -p2
 subst 's|/usr/lib/|%{_libdir}/|' %PATCH4
 %patch4 -p2
-%patch6 -p2
+%patch6 -p1
+%patch7 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p2
@@ -166,6 +182,26 @@ sed -e "s#__LAZARUSDIR__#%{cfg}#" tools/install/linux/environmentoptions.xml > e
 # Build apiwizz
 make -C tools/apiwizz/
 %endif
+
+# Build additional components
+# TODO: GLScene fortes4lazarus fpspreadsheet(FileNameIsAbsolute is unknown) jvcl rxnew(rx)
+for lpk in \
+    Indy/Lib/indylaz.lpk \
+    Orca_Ext/pl_OpenGL/pl_opengl.lpk \
+    VirtualTreeView-Lazarus/Source/virtualtreeview_package.lpk \
+    lnet/lazaruspackage/lnetbase.lpk \
+    lnet/lazaruspackage/lnetvisual.lpk \
+    powerpdf/pack_powerpdf.lpk \
+    zeoslib/packages/lazarus/zcomponent.lpk \
+    zeoslib/packages/lazarus/zcomponentdesign.lpk \
+    zeoslib/packages/lazarus/zcore.lpk \
+    zeoslib/packages/lazarus/zdbc.lpk \
+    zeoslib/packages/lazarus/zparsesql.lpk \
+    zeoslib/packages/lazarus/zplain.lpk
+do
+	echo "Building components/$lpk..."
+	./lazbuild --ws="$LCL_PLATFORM" --pcp=%cfg components/$lpk
+done
 
 # Build explorateur_lrs
 ./lazbuild --ws="$LCL_PLATFORM" --pcp=%cfg tools/explorateur_lrs/LRS_Explorer.lpr
@@ -265,11 +301,16 @@ rm -rf %buildroot$LAZARUSDIR/lazarus.app
 rm -f %buildroot$LAZARUSDIR/lazarus
 ln -s ../../bin/lazarus %buildroot$LAZARUSDIR/lazarus
 
+# Fix python3 shebang
+subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScene/external/Tetgen/tetgentogls.py
+
 %files
 %_libdir/%name
 %_bindir/*
 %exclude %_bindir/lazarus-qt5
 %exclude %_bindir/lazarus-gtk
+%exclude %_bindir/LRS_Explorer
+%exclude %_bindir/lrsexplorer
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/environmentoptions.xml
 %config(noreplace) %_sysconfdir/%name/projectoptions.xml
@@ -282,6 +323,34 @@ ln -s ../../bin/lazarus %buildroot$LAZARUSDIR/lazarus
 %dir %_datadir/fpcsrc/packages/fcl-base
 %exclude %_libdir/libQt5Pas.so*
 %_iconsdir/hicolor/48x48/mimetypes/*.png
+%exclude %_libdir/lazarus/components/fortes4lazarus
+%exclude %_libdir/lazarus/components/fpspreadsheet
+%exclude %_libdir/lazarus/components/GLScene
+%exclude %_libdir/lazarus/components/Indy
+%exclude %_libdir/lazarus/components/jvcl
+%exclude %_libdir/lazarus/components/lnet
+%exclude %_libdir/lazarus/components/Orca_Ext
+%exclude %_libdir/lazarus/components/powerpdf
+%exclude %_libdir/lazarus/components/rxnew
+%exclude %_libdir/lazarus/components/VirtualTreeView-Lazarus
+%exclude %_libdir/lazarus/components/zeoslib
+%exclude %_libdir/lazarus/tools/explorateur_lrs
+
+%files additional
+%_bindir/LRS_Explorer
+%_bindir/lrsexplorer
+%_libdir/lazarus/components/fortes4lazarus
+%_libdir/lazarus/components/fpspreadsheet
+%_libdir/lazarus/components/GLScene
+%_libdir/lazarus/components/Indy
+%_libdir/lazarus/components/jvcl
+%_libdir/lazarus/components/lnet
+%_libdir/lazarus/components/Orca_Ext
+%_libdir/lazarus/components/powerpdf
+%_libdir/lazarus/components/rxnew
+%_libdir/lazarus/components/VirtualTreeView-Lazarus
+%_libdir/lazarus/components/zeoslib
+%_libdir/lazarus/tools/explorateur_lrs
 
 %files qt5
 %_bindir/lazarus-qt5
@@ -300,6 +369,15 @@ ln -s ../../bin/lazarus %buildroot$LAZARUSDIR/lazarus
 %_libdir/libQt5Pas.so
 
 %changelog
+* Sun Dec 17 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.0-alt1
+- New version.
+- Bootstraped qtpas with version of lazarus.
+
+* Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.2.6-alt3
+- Updated additional components, add Orca_Ext, Virtual-TreeView, jvcl.
+- Built additional components.
+- Package additional components and tools to lazarus-additional.
+
 * Mon Sep 04 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.2.6-alt2
 - Use upstream sources from tag lazarus_2_2_6 (ALT #47097).
 
