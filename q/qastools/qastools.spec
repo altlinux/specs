@@ -1,5 +1,5 @@
 Name: qastools
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Collection of desktop applications for ALSA
@@ -109,6 +109,9 @@ done
 %_datadir/metainfo/qasmixer.appdata.xml
 
 %changelog
+* Mon Dec 18 2023 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Tue Dec 12 2023 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
 - new version 1.1.0
 
