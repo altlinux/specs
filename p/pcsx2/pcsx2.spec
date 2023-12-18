@@ -2,22 +2,23 @@
 %define llvm_version 17.0
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20231014024210
+%define svn_rev 20231218210658
 
 %define gtest_version 1.12.1
 %define zstd_version 1.5.5
-%define vulkan_headers_version 1.3.226
+%define vulkan_headers_version 1.3.272
 %define glslang_version 11.7.1
-%define rcheevos_commit 43f8c2a2a0750561786f17dd35af8755716705aa
+%define rcheevos_commit 8afec6c55e3a0f72368a5a085203bab1b8828ffb
 %define libwebp_version 1.3.2
-%define fmt_version 8.1.1
+%define fmt_commit 5cfd28d476c6859617878f951931b8ce7d36b9df
 %define rapidyaml_version 0.4.1
 %define c4core_commit d35c7c9bf370134595699d791e6ff8db018ddc8d
 %define cmake_commit 371982300ff5a076d7c3199057ebed77bbe3472f
 %define debugbreak_commit 5dcbe41d2bd4712c8014aa7e843723ad7b40fd74
+%define lz4_commit b8fd2d15309dd4e605070bd4486e26b6ef814e29
 
 Name: pcsx2
-Version: 1.7.5107
+Version: 1.7.5312
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -64,8 +65,8 @@ Source4: glslang-%glslang_version.tar
 Source5: rcheevos-%rcheevos_commit.tar
 # https://github.com/webmproject/libwebp/archive/v%libwebp_version/libwebp-%libwebp_version.tar.gz
 Source6: libwebp-%libwebp_version.tar
-# https://github.com/fmtlib/fmt/archive/%fmt_version/fmt-%fmt_version.tar.gz
-Source7: fmt-%fmt_version.tar
+# https://github.com/fmtlib/fmt/archive/%fmt_commit/fmt-%fmt_commit.tar.gz
+Source7: fmt-%fmt_commit.tar
 # https://github.com/biojppm/rapidyaml/archive/v%rapidyaml_version/rapidyaml-%rapidyaml_version.tar.gz
 Source8: rapidyaml-%rapidyaml_version.tar
 # https://github.com/biojppm/c4core/archive/%c4core_commit/c4core-%c4core_commit.tar.gz
@@ -74,6 +75,8 @@ Source9: c4core-%c4core_commit.tar
 Source10: cmake-%cmake_commit.tar
 # https://github.com/biojppm/debugbreak/archive/%debugbreak_commit/debugbreak-%debugbreak_commit.tar.gz
 Source11: debugbreak-%debugbreak_commit.tar
+# https://github.com/lz4/lz4/archive/%lz4_commit/lz4-%lz4_commit.tar.gz
+Source12: lz4-%lz4_commit.tar
 
 BuildRequires: clang%llvm_version
 BuildRequires: ctest
@@ -114,7 +117,7 @@ PCSX2 is an emulator for the playstation 2 video game console. It is written mos
 There is still lot of on going work to improve compatibility & speed.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
 
 %__mv -Tf ../googletest-release-%gtest_version 3rdparty/gtest
 %__mv -Tf ../zstd-%zstd_version 3rdparty/zstd/zstd
@@ -122,11 +125,12 @@ There is still lot of on going work to improve compatibility & speed.
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../rcheevos-%rcheevos_commit 3rdparty/rcheevos/rcheevos
 %__mv -Tf ../libwebp-%libwebp_version 3rdparty/libwebp/libwebp
-%__mv -Tf ../fmt-%fmt_version 3rdparty/fmt/fmt
+%__mv -Tf ../fmt-%fmt_commit 3rdparty/fmt/fmt
 %__mv -Tf ../rapidyaml-%rapidyaml_version 3rdparty/rapidyaml/rapidyaml
 %__mv -Tf ../c4core-%c4core_commit 3rdparty/rapidyaml/rapidyaml/ext/c4core
 %__mv -Tf ../cmake-%cmake_commit 3rdparty/rapidyaml/rapidyaml/ext/c4core/cmake
 %__mv -Tf ../debugbreak-%debugbreak_commit 3rdparty/rapidyaml/rapidyaml/ext/c4core/src/c4/ext/debugbreak
+%__mv -Tf ../lz4-%lz4_commit 3rdparty/lz4/lz4
 
 %build
 export ALTWRAP_LLVM_VERSION=%llvm_version
@@ -173,6 +177,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %_iconsdir/hicolor/256x256/apps/PCSX2.png
 
 %changelog
+* Tue Dec 19 2023 Nazarov Denis <nenderus@altlinux.org> 1.7.5312-alt1
+- Version 1.7.5312
+
 * Wed Oct 18 2023 Nazarov Denis <nenderus@altlinux.org> 1.7.5107-alt1
 - Version 1.7.5107
 
