@@ -15,7 +15,7 @@
 
 Name: xapian-bindings
 Version: 1.4.24
-Release: alt2
+Release: alt3
 
 Summary: Xapian search engine bindings
 License: GPL-2.0-or-later
@@ -32,8 +32,9 @@ BuildRequires: gcc-c++
 BuildRequires: libruby-devel
 BuildRequires: libxapian-devel = %version
 %if_with ruby
-BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): rpm-macros-ruby
+BuildRequires: rpm-build-ruby
+BuildRequires: /usr/bin/rdoc
 %endif
 %if_with python
 %setup_python_module %name
@@ -152,6 +153,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Sat Dec 16 2023 Vitaly Chikunov <vt@altlinux.org> 1.4.24-alt3
+- Fix FTBFS after ruby-3.1.4-alt1 update not bringing rdoc tool.
+
 * Tue Dec 05 2023 Michael Shigorin <mike@altlinux.org> 1.4.24-alt2
 - E2K: build without ruby (macros need update)
 
