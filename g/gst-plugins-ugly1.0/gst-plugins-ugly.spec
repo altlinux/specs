@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -22,13 +22,13 @@ Group: System/Libraries
 License: LGPLv2+
 Url: http://gstreamer.freedesktop.org/
 
-Provides: %_name-ugly = %version-%release
+Provides: %_name-ugly = %EVR
 
 Requires: gstreamer%api_ver >= %ver_major
 Requires: lib%_name%api_ver >= %ver_major
 
-Provides: %_name%api_ver-lame = %version-%release
-Provides: %_name%api_ver-mad = %version-%release
+Provides: %_name%api_ver-lame = %EVR
+Provides: %_name%api_ver-mad = %EVR
 
 Source: http://gstreamer.freedesktop.org/src/%_name-ugly/%_name-ugly-%version.tar.xz
 
@@ -51,7 +51,7 @@ The code might be widely known to present patent problems.
 Summary: Development documentation for GStreamer Ugly plugins
 Group: Development/Documentation
 BuildArch: noarch
-Provides: %_name-ugly-devel-doc = %version-%release
+Provides: %_name-ugly-devel-doc = %EVR
 
 %description devel-doc
 This package contains development documentation for GStreamer Ugly plugin
@@ -97,6 +97,9 @@ collection.
 %endif
 
 %changelog
+* Mon Dec 18 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.8-alt1
+- 1.22.8
+
 * Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.7-alt1
 - 1.22.7
 

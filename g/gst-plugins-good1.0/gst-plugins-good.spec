@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -30,7 +30,7 @@ Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%_name-good/%_name-good-%version.tar.xz
 
-Provides: %_name-good = %version-%release
+Provides: %_name-good = %EVR
 # https://bugzilla.altlinux.org/45382
 Conflicts: gst-plugins-ugly%api_ver < 1.22.0
 
@@ -83,7 +83,7 @@ This package contains Qt6 Qml plugin for Gstreamer.
 Summary: Development documentation for GStreamer Good plugins
 Group: Development/Documentation
 BuildArch: noarch
-Provides: %_name-good-devel-doc = %version-%release
+Provides: %_name-good-devel-doc = %EVR
 
 %description devel-doc
 This package contains development documentation for GStreamer Good Plugins
@@ -131,6 +131,9 @@ This package contains development documentation for GStreamer Good Plugins
 %endif
 
 %changelog
+* Mon Dec 18 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.8-alt1
+- 1.22.8
+
 * Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.7-alt1
 - 1.22.7
 

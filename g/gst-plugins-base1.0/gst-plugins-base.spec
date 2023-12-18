@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %_name-base%api_ver
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -34,9 +34,9 @@ Source: http://gstreamer.freedesktop.org/src/%_name-base/%_name-base-%version.ta
 Source: %_name-base-%version.tar
 %endif
 
-Provides: %_name-base = %version-%release
+Provides: %_name-base = %EVR
 
-Requires: lib%_name%api_ver = %version-%release
+Requires: lib%_name%api_ver = %EVR
 Requires: gstreamer%api_ver >= %ver_major
 Conflicts: gst-plugins-bad%api_ver < %ver_major
 
@@ -69,7 +69,7 @@ included.
 %package -n lib%_name%api_ver
 Summary: GStreamer plugin libraries
 Group: System/Libraries
-Provides: lib%_name = %version-%release
+Provides: lib%_name = %EVR
 # GstGL moved from bad to base in 1.13
 # https://bugzilla.altlinux.org/show_bug.cgi?id=35636
 Conflicts: gst-plugins-bad%api_ver < 1.13
@@ -80,8 +80,8 @@ Helper libraries for GStreamer plugins, containing base classes useful for eleme
 %package -n lib%_name%api_ver-gir
 Summary: GObject introspection data for the GStreamer library
 Group: System/Libraries
-Provides: lib%_name-gir = %version-%release
-Requires: lib%_name%api_ver = %version-%release
+Provides: lib%_name-gir = %EVR
+Requires: lib%_name%api_ver = %EVR
 
 %description -n lib%_name%api_ver-gir
 GObject introspection data for the GStreamer library
@@ -89,8 +89,8 @@ GObject introspection data for the GStreamer library
 %package -n %_name%api_ver-tools
 Summary: GStreamer plugin tools
 Group: Development/Other
-Provides: %_name-tools = %version-%release
-Requires: %name = %version-%release
+Provides: %_name-tools = %EVR
+Requires: %name = %EVR
 
 %description -n %_name%api_ver-tools
 This package contains a few test tools from the
@@ -99,8 +99,8 @@ GStreamer Base Plugins distribution.
 %package -n %_name%api_ver-devel
 Summary: Development files for GStreamer plugins
 Group: Development/C
-Provides: %_name-devel = %version-%release
-Requires: lib%_name%api_ver = %version-%release
+Provides: %_name-devel = %EVR
+Requires: lib%_name%api_ver = %EVR
 Requires: gstreamer%api_ver-devel
 
 %description -n %_name%api_ver-devel
@@ -111,7 +111,7 @@ to develop GStreamer plugins.
 Summary: Development documentation for GStreamer Base plugins
 Group: Development/Documentation
 BuildArch: noarch
-Provides: %_name-devel-doc = %version-%release
+Provides: %_name-devel-doc = %EVR
 
 %description -n %_name%api_ver-devel-doc
 This package contains development documentation for GStreamer Base Plugins
@@ -120,9 +120,9 @@ This package contains development documentation for GStreamer Base Plugins
 Summary: GObject introspection devel data for the GStreamer library
 Group: System/Libraries
 BuildArch: noarch
-Provides: %_name-gir-devel = %version-%release
-Requires: lib%_name%api_ver-gir = %version-%release
-Requires: %_name%api_ver-devel = %version-%release
+Provides: %_name-gir-devel = %EVR
+Requires: lib%_name%api_ver-gir = %EVR
+Requires: %_name%api_ver-devel = %EVR
 
 %description -n %_name%api_ver-gir-devel
 GObject introspection devel data for the GStreamer library
@@ -203,6 +203,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Mon Dec 18 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.8-alt1
+- 1.22.8
+
 * Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.7-alt1
 - 1.22.7
 

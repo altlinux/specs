@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -21,10 +21,10 @@ Url: http://gstreamer.freedesktop.org
 
 Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 
-Provides: %_name = %version-%release
+Provides: %_name = %EVR
 
 Requires(pre): libcap-utils
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %define glib_ver 2.44.0
 %define meson_ver 0.54
@@ -52,7 +52,7 @@ plugins.
 %package -n lib%name
 Summary: Shared libraries of GStreamer
 Group: System/Libraries
-Provides: lib%_name = %version-%release
+Provides: lib%_name = %EVR
 
 %description -n lib%name
 This package contains the shared libraries of the GStreamer media framework
@@ -60,8 +60,8 @@ This package contains the shared libraries of the GStreamer media framework
 %package -n lib%name-gir
 Summary: GObject introspection data for the GStreamer library
 Group: System/Libraries
-Provides: lib%_name-gir = %version-%release
-Requires: lib%name = %version-%release
+Provides: lib%_name-gir = %EVR
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the GStreamer library
@@ -69,8 +69,8 @@ GObject introspection data for the GStreamer library
 %package devel
 Summary: Development files for GStreamer streaming-media framework
 Group: Development/C
-Provides: %_name-devel = %version-%release
-Requires: lib%name = %version-%release
+Provides: %_name-devel = %EVR
+Requires: lib%name = %EVR
 
 %description devel
 This package contains the libraries and header files necessary to
@@ -80,8 +80,8 @@ develop applications and plugins for GStreamer
 Summary: GObject introspection devel data for the GStreamer library
 Group: System/Libraries
 BuildArch: noarch
-Provides: lib%_name-gir-devel = %version-%release
-Requires: lib%name-gir = %version-%release %name-devel = %version-%release
+Provides: lib%_name-gir-devel = %EVR
+Requires: lib%name-gir = %EVR %name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the GStreamer library
@@ -90,7 +90,7 @@ GObject introspection devel data for the GStreamer library
 Summary: Development documentation for GStreamer
 Group: Development/C
 BuildArch: noarch
-Provides: %_name-devel-doc = %version-%release
+Provides: %_name-devel-doc = %EVR
 
 %description devel-doc
 This package contains development documentation for GStreamer
@@ -98,8 +98,8 @@ This package contains development documentation for GStreamer
 %package utils
 Summary: GStreamer utilities
 Group: System/Libraries
-Provides: %_name-utils = %version-%release
-Requires: lib%name = %version-%release
+Provides: %_name-utils = %EVR
+Requires: lib%name = %EVR
 
 %description utils
 This package contains some utilities used to register, analyze, and run
@@ -191,6 +191,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_libexecdir/%_name-%api_ver/gst-plugins-doc-cache-generator
 
 %changelog
+* Mon Dec 18 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.8-alt1
+- 1.22.8
+
 * Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.7-alt1
 - 1.22.7
 

@@ -8,7 +8,7 @@
 %def_disable doc
 
 Name: gst-devtools
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: GStreamer development and validation tools
@@ -28,7 +28,7 @@ Source: %name-%version.tar
 Obsoletes: gst-validate < 1.17.1
 Provides: gst-validate = %EVR
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: gst-plugins-base%gst_api_ver
 
 %add_python3_path %_libdir/gst-validate-launcher/python
@@ -150,6 +150,9 @@ GObject introspection devel data for the Gst Validate library.
 %endif
 
 %changelog
+* Mon Dec 18 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.8-alt1
+- 1.22.8
+
 * Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.7-alt1
 - 1.22.7
 
