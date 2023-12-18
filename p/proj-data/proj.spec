@@ -1,5 +1,5 @@
 Name: proj-data
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: Data package for libproj
@@ -24,6 +24,9 @@ cp * %buildroot%_datadir/proj/
 %_datadir/proj/*
 
 %changelog
+* Mon Dec 18 2023 Vladislav Zavjalov <slazav@altlinux.org> 1.16-alt1
+- v.1.16
+
 * Mon Sep 25 2023 Vladislav Zavjalov <slazav@altlinux.org> 1.15-alt1
 - v.1.15
 
