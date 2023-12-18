@@ -1,91 +1,58 @@
+%define _unpackaged_files_terminate_build 1
 %define oname flask-wtf
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.1.1
+Version: 1.2.1
 Release: alt1
 
 Summary: Simple integration of Flask and WTForms
-
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Flask-WTF/
+Url: https://pypi.org/project/Flask-WTF/
+Vcs: https://github.com/wtforms/flask-wtf
 
-# https://github.com/lepture/flask-wtf.git
+BuildArch: noarch
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-flask
 BuildRequires: python3-module-flask-babel
-BuildRequires: python3-module-pallets-sphinx-themes
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-sphinx-issues
-BuildRequires: python3-module-sphinxcontrib-log-cabinet
-BuildRequires: python3-module-werkzeug
-BuildRequires: python3-module-wheel
 BuildRequires: python3-module-wtforms
-
-%py3_provides flask_wtf
-
-BuildArch: noarch
+%endif
 
 %description
 Simple integration of Flask and WTForms, including CSRF, file upload and
 Recaptcha integration.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Simple integration of Flask and WTForms, including CSRF, file upload and
-Recaptcha integration.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Simple integration of Flask and WTForms, including CSRF, file upload and
-Recaptcha integration.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
 
-sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
-
 %build
 %pyproject_build
-PYTHONPATH=$(pwd)/src %make -C docs pickle html
 
 %install
 %pyproject_install
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
-%doc README.rst
-%python3_sitelibdir/flask_wtf
-%python3_sitelibdir/Flask_WTF-%version.dist-info
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html examples
+%doc LICENSE.rst README.rst
+%python3_sitelibdir/flask_wtf/
+%python3_sitelibdir/flask_wtf-%version.dist-info/
 
 %changelog
+* Mon Dec 18 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt1
+- Updated to 1.2.1.
+- Removed docs and pickles subpackages.
+
 * Wed Jan 18 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt1
 - Automatically updated to 1.1.1.
 - Build with check.

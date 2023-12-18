@@ -1,54 +1,62 @@
 %define _unpackaged_files_terminate_build 1
-%define oname Flask-Babel
+%define pypi_name flask-babel
+%define mod_name flask_babel
 
 %def_with check
 
-Name: python3-module-flask-babel
-Version: 3.0.1
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 4.0.0
+Release: alt1
 
-Summary: Adds i18n/l10n support to Flask applications
-
-License: BSD
+Summary: i18n and l10n support for Flask based on Babel and pytz
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Flask-Babel/
-
-Source: %name-%version.tar
+Url: https://pypi.org/project/flask-babel/
+Vcs: https://github.com/python-babel/flask-babel
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
+Source0: %name-%version.tar
+Patch0: %name-4.0.0-alt-fix-tests.patch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-babel
+BuildRequires: python3-module-poetry-core
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-flask
+BuildRequires: python3-module-babel
 BuildRequires: python3-module-pytz
 %endif
 
-%py3_provides flask_babel
-
 %description
-Adds i18n/l10n support to Flask applications with the help of the Babel
-library.
+Implements i18n and l10n support for Flask.
+This is based on the Python babel and pytz modules.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%python3_test
+%pyproject_run_pytest -vra
 
 %files
-%doc PKG-INFO LICENSE README.md
-%python3_sitelibdir/*
+%doc LICENSE CHANGELOG README.md
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 18 2023 Anton Zhukharev <ancieg@altlinux.org> 4.0.0-alt1
+- Updated to 4.0.0.
+- Built from upstream VCS.
+- Updated summary and description.
+
 * Sat May 20 2023 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt2
 - add BR: python3-module-pytz for check
 

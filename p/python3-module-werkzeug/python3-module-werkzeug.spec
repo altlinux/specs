@@ -2,47 +2,40 @@
 %define pypi_name Werkzeug
 %define mod_name werkzeug
 
-%def_enable check
+%def_with check
 
 Name: python3-module-%mod_name
-Version: 2.2.2
-Release: alt2
+Version: 3.0.1
+Release: alt1
 
 Summary: Werkzeug is one of the most advanced WSGI utility modules
-
 License: BSD-3-Clause
 Group: Development/Python3
-URL: https://palletsprojects.com/p/werkzeug/
-VCS: https://github.com/pallets/werkzeug
+Url: https://palletsprojects.com/p/werkzeug/
+Vcs: https://github.com/pallets/werkzeug
 
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-%release.patch
-Patch1: alt_tests_conftest_py.patch
 
 # well-known PyPI name
-%py3_provides %pypi_name
 Provides: python3-module-%pypi_name = %EVR
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-%if_enabled check
-# dependencies
-BuildRequires: python3(markupsafe)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 BuildRequires: /proc
-BuildRequires: pytest3
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-xprocess
-BuildRequires: python3-module-pytest-timeout
-BuildRequires: python3-module-cryptography
 %endif
 
 %description
 Werkzeug is a comprehensive WSGI web application library.
-It began as a simple collection of various utilities for WSGI 
+It began as a simple collection of various utilities for WSGI
 applications and has become one of the most advanced WSGI utility libraries.
 
 Flask wraps Werkzeug, using it to handle the details of WSGI while providing
@@ -51,6 +44,11 @@ more structure and patterns for defining powerful applications.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements/tests.txt
+%endif
 
 %build
 %pyproject_build
@@ -63,11 +61,14 @@ more structure and patterns for defining powerful applications.
 %pyproject_run_pytest -vra -k "not test_reloader_sys_path and not test_exclude_patterns"
 
 %files
-%doc CHANGES.rst README.rst
+%doc LICENSE.rst CHANGES.rst README.rst
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 06 2023 Anton Zhukharev <ancieg@altlinux.org> 3.0.1-alt1
+- Updated to 3.0.1 (fixed CVE-2023-23934, CVE-2023-25577, CVE-2023-46136).
+
 * Wed Feb 08 2023 Stanislav Levin <slev@altlinux.org> 2.2.2-alt2
 - Fixed FTBFS (packaging 22).
 

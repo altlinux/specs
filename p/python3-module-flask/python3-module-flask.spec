@@ -1,48 +1,48 @@
 %define _unpackaged_files_terminate_build 1
-%define oname Flask
+%define pypi_name Flask
+%define mod_name flask
 
-%def_enable check
+%def_with check
 
-Name: python3-module-flask
-Version: 2.2.2
+Name: python3-module-%mod_name
+Version: 3.0.0
 Release: alt1
 
-Summary: Flask is a lightweight WSGI web application framework.
+Summary: Flask is a lightweight WSGI web application framework
 License: BSD-3-Clause
 Group: Development/Python3
-URL: https://palletsprojects.com/p/flask/
-VCS:  https://github.com/pallets/flask
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-%if_enabled check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-tox-no-deps
-BuildRequires: python3-module-tox-console-scripts
-BuildRequires: python3-module-jinja2
-BuildRequires: python3-module-werkzeug >= 2.0
-BuildRequires: python3-module-itsdangerous
-BuildRequires: python3-module-click
-%endif
-
-# /usr/bin/flask
-Obsoletes: python-module-flask
-Conflicts: python-module-flask
+Url: https://palletsprojects.com/p/flask/
+Vcs: https://github.com/pallets/flask
 
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
+%pyproject_runtimedeps_metadata
+Provides: python3-module-%pypi_name = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
-Flask is a lightweight WSGI web application framework. It is designed to 
-make getting started quick and easy, with the ability to scale up to complex 
-applications. It began as a simple wrapper around Werkzeug and Jinja and 
-has become one of the most popular Python web application frameworks.
+Flask is a lightweight WSGI web application framework. It is designed
+to make getting started quick and easy, with the ability to scale up to
+complex applications. It began as a simple wrapper around Werkzeug and
+Jinja and has become one of the most popular Python web application
+frameworks.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements/tests.txt
+%endif
 
 %build
 %pyproject_build
@@ -51,14 +51,18 @@ has become one of the most popular Python web application frameworks.
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -vra
 
 %files
-%doc *.rst
-%_bindir/flask
-%python3_sitelibdir/*
+%doc LICENSE.rst CHANGES.rst README.rst
+%_bindir/%mod_name
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 06 2023 Anton Zhukharev <ancieg@altlinux.org> 3.0.0-alt1
+- Updated to 3.0.0 (fixed CVE-2023-30861).
+
 * Tue Sep 20 2022 Danil Shein <dshein@altlinux.org> 2.2.2-alt1
 - new version 2.2.2
   + migrate to pyproject macroses

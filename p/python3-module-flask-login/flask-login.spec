@@ -1,16 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname flask-login
 
 %def_enable check
 
 Name: python3-module-%oname
-Version: 0.6.2
-Release: alt2
+Version: 0.6.3
+Release: alt1
 
 Summary: User session management for Flask
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Flask-Login/
-VCS: https://github.com/maxcountryman/flask-login.git
+Url: https://pypi.org/project/Flask-Login/
+Vcs: https://github.com/maxcountryman/flask-login
+
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -24,12 +26,7 @@ BuildRequires: python3-module-blinker
 BuildRequires: python3-module-semantic_version
 BuildRequires: python3-module-asgiref
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-tox-no-deps
-BuildRequires: python3-module-tox-console-scripts
-BuildRequires: python3-module-coverage
 %endif
-
 
 %description
 Flask-Login provides user session management for Flask. It handles the
@@ -51,14 +48,17 @@ extension capable of loading users from their ID.
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -vra ./tests
+%pyproject_run_pytest -vra
 
 %files
-%doc CHANGES.md LICENSE README* docs/*.rst
-%python3_sitelibdir/*
-
+%doc CHANGES.md LICENSE README.md
+%python3_sitelibdir/flask_login/
+%python3_sitelibdir/Flask_Login-%version.dist-info/
 
 %changelog
+* Mon Dec 18 2023 Anton Zhukharev <ancieg@altlinux.org> 0.6.3-alt1
+- Updated to 0.6.3.
+
 * Thu Jun 08 2023 Danil Shein <dshein@altlinux.org> 0.6.2-alt2
 - NMU: fix FTBFS due to tests failed
   + migrate to pyproject macroses

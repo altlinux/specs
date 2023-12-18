@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 6.4.5
-Release: alt1
+Release: alt2
 
 Summary: Tryton server
 License: GPL-3
@@ -76,6 +76,9 @@ python3 -m unittest discover -s trytond.tests -v
 
 
 %changelog
+* Mon Dec 18 2023 Anton Zhukharev <ancieg@altlinux.org> 6.4.5-alt2
+- Applied patches from upstream for compatibility with werkzeug 3.0.
+
 * Tue Sep 20 2022 Danil Shein <dshein@altlinux.org> 6.4.5-alt1
 - version updated to 6.4.5
 

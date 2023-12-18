@@ -1,32 +1,30 @@
 %define _unpackaged_files_terminate_build 1
-%define oname httpbin
+%define pypi_name httpbin
 
-%def_enable check
+%def_with check
 
-Name: python3-module-%oname
-Version: 0.7.0
-Release: alt3
+Name: python3-module-%pypi_name
+Version: 0.10.1
+Release: alt1
+
 Summary: HTTP Request and Response Service
-License: MIT
+License: ISC
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/httpbin/
-# https://github.com/postmanlabs/httpbin
+Url: https://pypi.org/project/httpbin/
+Vcs: https://github.com/psf/httpbin
+
 BuildArch: noarch
 
-Source: %oname-%version.tar
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-
-%if_enabled check
-BuildRequires: python3-module-flask
-BuildRequires: python3-module-six
-BuildRequires: python3-module-werkzeug
-BuildRequires: python3-module-raven
-BuildRequires: python3-module-brotlipy
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra test
 %endif
-
-
-%py3_provides %oname
 
 %description
 Testing an HTTP Library can become difficult sometimes. PostBin.org is
@@ -37,23 +35,30 @@ considered.
 All endpoint responses are JSON-encoded.
 
 %prep
-%setup -n %oname-%version
+%setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir/
-python3 test_httpbin.py
+%pyproject_run_pytest -vra
 
 %files
-%doc AUTHORS *.md LICENSE
-%python3_sitelibdir/*
+%doc AUTHORS README.md LICENSE
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 18 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.1-alt1
+- Updated to 0.10.1.
+- Changed upstream to PSF (Python Software Foundation).
+
 * Mon Sep 26 2022 Danil Shein <dshein@altlinux.org> 0.7.0-alt3
 - NMU: Fix Werkzeug 2.1.x compatibility
   + enable tests

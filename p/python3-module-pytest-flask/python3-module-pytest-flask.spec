@@ -1,66 +1,65 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-flask
+%define pypi_name pytest-flask
+%define mod_name pytest_flask
 
-%def_enable check
+%def_with check
 
-Name: python3-module-%oname
-Version: 1.2.0
+Name: python3-module-%pypi_name
+Version: 1.3.0
 Release: alt1
 
 Summary: A set of pytest fixtures to test Flask applications
 License: MIT
 Group: Development/Python3
-Url: https://github.com/pytest-dev/pytest-flask
-VCS: https://github.com/pytest-dev/pytest-flask
+Url: https://pypi.org/project/pytest-flask/
+Vcs: https://github.com/pytest-dev/pytest-flask
 
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pip
-BuildRequires: python3-module-flask
-BuildRequires: python3-module-setuptools_scm
-%if_enabled check
-BuildRequires: pytest3
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-tox-no-deps
-BuildRequires: python3-module-tox-console-scripts
-BuildRequires: python3-module-coverage
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%add_pyproject_deps_check_filter pytest-pep8
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
-%py3_provides pytest_flask
-
 %description
-An extension of pytest test runner which provides a set of useful 
-tools to simplify testing and development of the Flask extensions 
+An extension of pytest test runner which provides a set of useful
+tools to simplify testing and development of the Flask extensions
 and applications.
 
 %prep
 %setup
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements/test.txt
+%endif
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PYTHONPATH=%buildroot%python3_sitelibdir/
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%pyproject_run_pytest -vra
 
 %files
-%doc LICENSE *.rst
-%python3_sitelibdir/*
-
+%doc LICENSE README.rst
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 12 2023 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
+- Updated to 1.3.0.
+
 * Fri Mar 04 2022 Danil Shein <dshein@altlinux.org> 1.2.0-alt1
 - new version 0.10.0 -> 1.2.0
 
