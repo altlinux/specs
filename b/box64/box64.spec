@@ -1,6 +1,9 @@
+
+%define _unpackaged_files_terminate_build 1
+
 Name: box64
-Version: 0.2.0
-Release: alt1
+Version: 0.2.6
+Release: alt1.1
 
 Summary: Linux Userspace x86_64 Emulator with a twist
 
@@ -10,10 +13,12 @@ Url: https://github.com/ptitSeb/box64.git
 
 Packager: Dmitry Terekhin <jqt4@altlinux.org>
 
-ExclusiveArch: riscv64 aarch64
+ExclusiveArch: aarch64 loongarch64 riscv64
 
 Source: %name-%version.tar
+Patch:  %name-%version-%release.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: python3
@@ -22,49 +27,58 @@ BuildRequires: python3
 Box64 lets you run x86_64 Linux programs (such as games)
 on non-x86_64 Linux systems.
 
-%ifarch riscv64
-%define targets RV64
-%endif
 %ifarch aarch64
-%define targets ARM_DYNAREC
+%define target ARM64
 %endif
+%ifarch loongarch64
+%define target LARCH64
+%endif
+%ifarch riscv64
+%define target RV64
+%endif
+
+# hey brp, please don't touch x86_64 libs
+%define sysroot %_libexecdir/x86_64-linux-gnu
+%add_verify_elf_skiplist %sysroot/*
+%add_findreq_skiplist %sysroot/*
+%add_findprov_skiplist %sysroot/*
+%add_debuginfo_skiplist %sysroot/*
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-for board in %targets; do
-    mkdir build
-    cd build
-    cmake .. -D${board}=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/usr
-    %make_build
-    cd ..
-    mkdir "${board}/"
-    cd build
-    make DESTDIR="../${board}/" install
-    cd ..
-    rm -rf build
-done
+%cmake \
+    -D%target:BOOL=ON \
+    -DNOGIT:BOOL=ON \
+    %nil
+%cmake_build
 
 %install
-for board in %targets; do
-    mkdir -p %buildroot/
-    cp -r ${board}/* %buildroot/
-    %add_verify_elf_skiplist /usr/lib/x86_64-linux-gnu/*
-    %add_findreq_skiplist /usr/lib/x86_64-linux-gnu/*
-    %add_findprov_skiplist /usr/lib/x86_64-linux-gnu/*
-    %add_debuginfo_skiplist /usr/lib/x86_64-linux-gnu/*
-done
+%cmake_install
+
+mkdir -p %buildroot/lib
+mv %buildroot/etc/binfmt.d %buildroot/lib/
 
 %files
-%doc docs/*
-/etc/binfmt.d/box64.conf
-/etc/box64.box64rc
-/usr/bin/box64
-/usr/lib/x86_64-linux-gnu
-/usr/lib/x86_64-linux-gnu/*
-
+%doc README.md docs/*
+%_bindir/box64
+%_sysconfdir/box64.box64rc
+%_binfmtdir/box64.conf
+%sysroot
 
 %changelog
+* Mon Dec 18 2023 Ivan A. Melnikov <iv@altlinux.org> 0.2.6-alt1.1
+- Fix build on loongarch64.
+
+* Sun Dec 17 2023 Ivan A. Melnikov <iv@altlinux.org> 0.2.6-alt1
+- 0.2.6
+- simplify spec
+- loongarch64 support
+
+* Mon Aug 21 2023 Ivan A. Melnikov <iv@altlinux.org> 0.2.4-alt1
+- 0.2.4
+
 * Tue Feb 07 2023 Dmitry Terekhin <jqt4@altlinux.org> 0.2.0-alt1
 - Initial build
