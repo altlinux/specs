@@ -60,7 +60,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt5
+Release: alt6
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -97,7 +97,6 @@ Patch92: boost-1.83.0-alt-context-fix-macos-detection.patch
 # https://github.com/boostorg/unordered/issues/205
 Patch93: boost-1.83.0-upstream-unordered-fix-copy-assign.patch
 
-Patch1000: boost-1.63.0-alt-python-paths.patch
 Patch2000: boost-1.83-e2k-makecontext.patch
 
 # we use %%_python3_abiflags
@@ -1855,6 +1854,9 @@ done
 
 
 %changelog
+* Sat Dec 16 2023 Grigory Ustinov <grenka@altlinux.org> 1:1.83.0-alt6
+- Build without distutils
+
 * Tue Dec 12 2023 Michael Shigorin <mike@altlinux.org> 1:1.83.0-alt5
 - E2K: fix ceph build (ilyakurdyukov@)
 
