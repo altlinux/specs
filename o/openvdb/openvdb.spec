@@ -21,7 +21,7 @@
 
 Name: openvdb
 Version: 10.1.0
-Release: alt2
+Release: alt3
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: MPL-2.0-no-copyleft-exception
@@ -115,6 +115,12 @@ sed -i \
 	-e 's|lib$|%_lib|g' \
 	%name/%name/CMakeLists.txt %name/%name/python/CMakeLists.txt
 
+%ifarch %e2k
+# (10.1.0) lcc is not really gcc (still 1.26.21 pretends to be like 9.3.0)
+sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
+	cmake/config/OpenVDBVersions.cmake
+%endif
+
 %build
 %cmake \
 	-DOPENVDB_BUILD_DOCS=ON \
@@ -170,6 +176,9 @@ sed -i \
 %_defaultdocdir/OpenVDB
 
 %changelog
+* Mon Dec 18 2023 Michael Shigorin <mike@altlinux.org> 10.1.0-alt3
+- E2K: fix build (lcc 1.26.x pretends to be like gcc 9.3.0)
+
 * Mon Dec 11 2023 L.A. Kostis <lakostis@altlinux.ru> 10.1.0-alt2
 - x86_64: Build nanovdb with CUDA.
 
