@@ -12,7 +12,7 @@
 
 Name: libabseil-cpp
 Version: 20230125.3
-Release: alt2
+Release: alt3
 
 Summary: C++ Common Libraries
 
@@ -194,6 +194,7 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_time.so.%soversion
 %_libdir/libabsl_time_zone.so.%soversion
 
+%if_enabled check
 %files testing
 # TESTONLY libraries (that are actually installed):
 # absl/base/CMakeLists.txt
@@ -216,7 +217,7 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_per_thread_sem_test_common.so.%soversion
 # absl/time/CMakeLists.txt
 %_libdir/libabsl_time_internal_test_util.so.%soversion
-
+%endif
 
 %files devel
 %doc LICENSE
@@ -228,6 +229,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 18 2023 Michael Shigorin <mike@altlinux.org> 20230125.3-alt3
+- fix build with check disabled
+
 * Mon Jul 31 2023 Vitaly Lipatov <lav@altlinux.ru> 20230125.3-alt2
 - move test only libs to subpackage testing
 
