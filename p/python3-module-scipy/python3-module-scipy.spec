@@ -1,21 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_without check
-%ifarch x86_64 aarch64 loongarch64
 %def_with pythran
-%else
-%def_without pythran
-%endif
 
 %define modname scipy
-%define ver_major 1.10
-%define ver_minor 1
+%define ver_major 1.11
+%define ver_minor 4
 
 %define numpy_version 1.16.5
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -28,7 +24,7 @@ Source0: %name-%version.tar
 Source1: site.cfg
 # submodules  by update-submodules.sh
 Source2: %name-%version-doc-source-_static-scipy-mathjax.tar
-Source3: %name-%version-scipy-_lib-boost.tar
+Source3: %name-%version-scipy-_lib-boost_math.tar
 Source4: %name-%version-scipy-_lib-highs.tar
 Source5: %name-%version-scipy-_lib-unuran.tar
 Source6: %name-%version-scipy-sparse-linalg-_propack-PROPACK.tar
@@ -42,6 +38,8 @@ BuildRequires: gcc-c++ gcc-fortran
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel python3-module-numpy-testing
 BuildRequires: python3-module-Cython
+BuildRequires: meson
+BuildRequires: python3-module-mesonpy
 BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-matplotlib
 BuildRequires: python3-module-pybind11
@@ -61,7 +59,6 @@ Requires: %python3_sitelibdir_noarch
 Requires: python3-module-numpy >= %numpy_version
 %add_python3_req_skip _min_spanning_tree _shortest_path _tools
 %add_python3_req_skip _traversal sympy
-%add_python3_req_skip distutils
 %if_with check
 BuildRequires: /usr/bin/pytest3
 BuildRequires: python3-module-numpy-tests
@@ -118,13 +115,11 @@ sed -i -e 's/lapack, /clapack, eml_algebra_mt, /g' -e 's/openblas, /blas, /g' si
 
 export SCIPY_USE_PYTHRAN=0%{?with_pythran}
 %add_optflags -I%_includedir/suitesparse -fno-strict-aliasing %optflags_shared
-%python3_build_debug build_ext build_py build_clib \
-	config_fc --fcompiler=gnu95
+%pyproject_build
 
 %install
 export SCIPY_USE_PYTHRAN=0%{?with_pythran}
-%python3_install install_lib install_headers \
-	install_data config_fc
+%pyproject_install
 find %buildroot%python3_sitelibdir -type f -exec \
 	sed -i 's|#! %_bindir/env python|#!%_bindir/python3|' -- '{}' + ||:
 find %buildroot%python3_sitelibdir -type f -exec \
@@ -140,8 +135,6 @@ for i in $(find ./ -name '*.h'); do
 done
 popd
 
-install -p -m644 $(find ./ -name fortranobject.h | head -n 1) \
-	%buildroot%_includedir/%modname-py3
 pushd %buildroot%python3_sitelibdir/%modname/sparse/csgraph
 for i in $(ls *.so); do
 	ln -s %python3_sitelibdir/%modname/sparse/csgraph/$i \
@@ -171,12 +164,17 @@ popd
 
 
 %files -f %name.lang
-%python3_sitelibdir/*
+%python3_sitelibdir/_*.so
+%python3_sitelibdir/%modname
+%python3_sitelibdir/%modname-%version.dist-info
 
 %files devel
 %_includedir/%modname-py3
 
 %changelog
+* Thu Dec 14 2023 Grigory Ustinov <grenka@altlinux.org> 1.11.4-alt1
+- 1.10.1 -> 1.11.4 (Closes: #48573).
+
 * Mon Oct 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.10.1-alt2
 - Use pythran on LoongArch. Unbreaks scipy.stats on LoongArch.
 
