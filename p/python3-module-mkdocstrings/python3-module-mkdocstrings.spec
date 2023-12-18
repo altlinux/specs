@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.23.0
-Release: alt2
+Version: 0.24.0
+Release: alt1
 
 Summary: Automatic documentation from sources, for MkDocs
 License: ISC
@@ -70,6 +70,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Dec 14 2023 Alexander Burmatov <thatman@altlinux.org> 0.24.0-alt1
+- Update version to 0.24.0.
+
 * Fri Oct 27 2023 Alexander Burmatov <thatman@altlinux.org> 0.23.0-alt2
 - Enable check.
 

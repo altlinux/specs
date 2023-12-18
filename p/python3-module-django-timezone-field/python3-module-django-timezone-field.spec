@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 6.0.1
+Version: 6.1.0
 Release: alt1
 
 Summary: A Django app providing DB, form, and REST framework fields for zoneinfo and pytz timezone objects
@@ -48,5 +48,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 12 2023 Alexander Burmatov <thatman@altlinux.org> 6.1.0-alt1
+- Update version to 6.1.0.
+
 * Wed Oct 04 2023 Alexander Burmatov <thatman@altlinux.org> 6.0.1-alt1
 - Initial build for Sisyphus.

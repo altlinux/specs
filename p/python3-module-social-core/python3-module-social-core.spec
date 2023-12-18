@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.4.2
+Version: 4.5.1
 Release: alt1
 
 Summary: Python Social Auth - Core
@@ -71,5 +71,8 @@ sed -i 's|requests.packages.urllib3.poolmanager|urllib3.poolmanager|' \
 %python3_sitelibdir/social_core/tests/
 
 %changelog
+* Tue Dec 12 2023 Alexander Burmatov <thatman@altlinux.org> 4.5.1-alt1
+- Update to version 4.5.1.
+
 * Tue Oct 03 2023 Alexander Burmatov <thatman@altlinux.org> 4.4.2-alt1
 - Initial build for Sisyphus.

@@ -1,8 +1,8 @@
 %def_with docs
 
 Name:    netbox
-Version: 3.6.3
-Release: alt3
+Version: 3.6.6
+Release: alt1
 
 Summary: The premier source of truth powering network automation
 License: Apache-2.0
@@ -56,7 +56,7 @@ Requires: python3-module-drf-spectacular-sidecar
 BuildArch: noarch
 
 Source: %name-%version.tar
-Source1: netbox.socket
+Source1: netbox-tmpfile.conf
 Source2: httpd2.conf
 Source3: httpd2-ssl.conf
 Source4: README
@@ -134,7 +134,8 @@ touch %buildroot%_sysconfdir/nginx/sites-enabled.d/netbox.conf
 mkdir -p %buildroot%_unitdir
 cp contrib/netbox.service %buildroot%_unitdir/netbox.service
 cp contrib/netbox-rq.service %buildroot%_unitdir/netbox-rq.service
-install -p -D -m 644 %SOURCE1 %buildroot%_unitdir/netbox.socket
+# Tmp file
+install -p -D -m 644 %SOURCE1 %buildroot%_tmpfilesdir/netbox.conf
 # Documentation
 install -p -D -m 644 %SOURCE4 %buildroot%_defaultdocdir/netbox/README
 # Scripts
@@ -158,12 +159,12 @@ fi
 %preun_systemd netbox-rq.service
 
 %post nginx
-%post_systemd_postponed netbox.service netbox.socket
+%post_systemd_postponed netbox.service
 # Create SSL certificate for HTTPS server
 cert-sh generate nginx-netbox ||:
 
 %preun nginx
-%preun_systemd netbox.service netbox.socket
+%preun_systemd netbox.service
 
 %post apache2
 # Create SSL certificate for HTTPS server
@@ -189,11 +190,15 @@ cert-sh generate apache2-netbox ||:
 
 %files nginx
 %_unitdir/netbox.service
-%_unitdir/netbox.socket
+%_tmpfilesdir/netbox.conf
 %config(noreplace) %_sysconfdir/nginx/sites-available.d/netbox.conf
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Mon Dec 11 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.6-alt1
+- New 3.6.6 version.
+- Set the correct runtime dir.
+
 * Thu Nov 09 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.3-alt3
 - Fix upgrade script.
 

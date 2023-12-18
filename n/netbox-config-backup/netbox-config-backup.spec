@@ -1,6 +1,6 @@
 Name:    netbox-config-backup
 Version: 1.5.0
-Release: alt2
+Release: alt3
 
 Summary: A configuration backup system using napalm
 License: Apache-2.0
@@ -50,6 +50,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/ncb-rq@.service
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Thu Dec 14 2023 Alexander Burmatov <thatman@altlinux.org> 1.5.0-alt3
+- Remove RuntimeDirectory from service file.
+
 * Thu Dec 07 2023 Alexander Burmatov <thatman@altlinux.org> 1.5.0-alt2
 - Fix service file.
 
