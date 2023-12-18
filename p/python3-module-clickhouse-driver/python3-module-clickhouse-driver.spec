@@ -3,7 +3,7 @@
 
 Name:       python3-module-%oname
 Version:    0.2.5
-Release:    alt1
+Release:    alt2
 License:    MIT
 Group:      Development/Python3
 Summary:    ClickHouse Python Driver with native interface support.
@@ -15,6 +15,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-tzlocal
 BuildRequires: python3-module-pytz
+BuildRequires: python3-module-Cython
 
 Requires: python3-module-clickhouse-cityhash
 Requires: python3-module-numpy
@@ -39,6 +40,9 @@ Package contains tests for %name.
 
 %prep
 %setup
+
+# Force recythonize it please!
+find . -name "*.c" | xargs rm -fv
 
 %build
 %pyproject_build
@@ -65,6 +69,9 @@ install -pm0644 docs/*/man/*.1 %buildroot/%_man1dir/
 %python3_sitelibdir/clickhouse_driver/tests/
 
 %changelog
+* Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.5-alt2
+- Added recythonizing of sources
+
 * Wed Mar 29 2023 Danil Shein <dshein@altlinux.org> 0.2.5-alt1
 - NMU: 0.2.4 -> 0.2.5
   + fix FTBFS
