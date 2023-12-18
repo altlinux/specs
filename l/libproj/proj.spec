@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libproj
-Version: 9.3.0
+Version: 9.3.1
 Release: alt1
 
 Summary: PROJ.4 - cartographic projections library
@@ -90,6 +90,9 @@ Empty package. US and Canadian datum shift grids moved to libproj
 %files nad
 
 %changelog
+* Mon Dec 18 2023 Vladislav Zavjalov <slazav@altlinux.org> 9.3.1-alt1
+- 9.3.1
+
 * Mon Sep 25 2023 Vladislav Zavjalov <slazav@altlinux.org> 9.3.0-alt1
 - 9.3.0
 
