@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libffado
-Version: 2.4.1
-Release: alt4
+Version: 2.4.7
+Release: alt1
 
 Summary: Free firewire audio driver library
 License: GPLv2+
@@ -10,8 +10,7 @@ Group: Sound
 
 Url: http://www.ffado.org/
 Source: %name-%version.tar
-Patch: libffado-2.0-alt.patch
-Patch1: libffado-mixer-py3.patch
+Patch: libffado-2.4.7-alt.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libdbus-devel libexpat-devel libiec61883-devel libxml++2-devel
@@ -19,7 +18,7 @@ BuildRequires: libalsa-devel
 BuildRequires: libdbus-c++-devel
 BuildRequires: qt5-dbus
 BuildRequires: python3-dev
-BuildRequires: python3-module-PyQt5 python3-module-dbus
+BuildRequires: python3-module-PyQt5-devel python3-module-dbus
 BuildRequires: scons xdg-utils libconfig-c++-devel
 
 %description
@@ -53,8 +52,7 @@ Python 3 bindings for %name, %summary
 
 %prep
 %setup
-%patch -p2
-%patch1 -p1
+%autopatch -p2
 cp -at admin/ -- /usr/share/gnu-config/config.guess
 
 # XXX this uses non-existing module and is not used itself!
@@ -72,8 +70,8 @@ sed -i 's|/usr/bin/.*python$|/usr/bin/python3|' \
 sed -i 's|-m32||' SConstruct
 
 %build
-export CFLAGS="%optflags -ffast-math"
-export CXXFLAGS="%optflags -ffast-math --std=gnu++11"
+export CFLAGS="%optflags"
+export CXXFLAGS="%optflags --std=gnu++11"
 [ -n "$NPROCS" ] || NPROCS=%__nprocs;
 scons -j$NPROCS \
 	PREFIX=%prefix \
@@ -82,6 +80,7 @@ scons -j$NPROCS \
 	CFLAGS='%optflags' \
 	CXXFLAGS='%optflags' \
 	CUSTOM_ENV=True \
+	ENABLE_OPTIMIZATIONS=True \
 	MANDIR=%_mandir \
 	PYPKGDIR=%python3_sitelibdir_noarch/ \
 	PYTHON_INTERPRETER=%__python3
@@ -108,7 +107,7 @@ rm -f %buildroot%_datadir/metainfo/ffado-mixer.appdata.xml
 %files devel
 %dir %_includedir/libffado
 %_includedir/libffado/*.h
-%_libdir/pkgconfig/libffado.pc
+%_pkgconfigdir/libffado.pc
 %_libdir/libffado.so
 
 %files -n ffado
@@ -119,10 +118,15 @@ rm -f %buildroot%_datadir/metainfo/ffado-mixer.appdata.xml
 %_datadir/dbus-1/services/org.ffado.Control.service
 /lib/udev/rules.d/*ffado*.rules
 
-#files -n python3-module-ffado
-#python3_sitelibdir_noarch/ffado
+%files -n python3-module-ffado
+%python3_sitelibdir_noarch/ffado
 
 %changelog
+* Mon Dec 18 2023 L.A. Kostis <lakostis@altlinux.ru> 2.4.7-alt1
+- 2.4.7 (closes #47584).
+- Restore python3 module.
+- Enable arch-specific optimisations if available.
+
 * Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt4
 - NMU: disable python3-module-ffado packing (until 2.4.4)
 
