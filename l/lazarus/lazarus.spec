@@ -3,7 +3,7 @@
 
 Name:    lazarus
 Version: 3.0
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -28,7 +28,6 @@ Patch2: %name-fix-desktop-file.patch
 Patch3: %name-fix-install-path-in-Makefile.patch
 Patch4: %name-2.0.2-fix-fpc-search.patch
 Patch6:	%name-set-user-TestBuildDirectory.patch
-Patch7: %name-alt-qtpas_bootstrap_3.0.patch
 
 # Patches from Debian
 Patch11: lazarus-default-config.patch
@@ -139,7 +138,6 @@ tar xf %SOURCE2
 subst 's|/usr/lib/|%{_libdir}/|' %PATCH4
 %patch4 -p2
 %patch6 -p1
-%patch7 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p2
@@ -369,6 +367,9 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScen
 %_libdir/libQt5Pas.so
 
 %changelog
+* Mon Dec 18 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.0-alt2
+- End of bootstrap qtpas.
+
 * Sun Dec 17 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.0-alt1
 - New version.
 - Bootstraped qtpas with version of lazarus.
