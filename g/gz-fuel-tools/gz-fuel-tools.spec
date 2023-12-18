@@ -2,7 +2,7 @@
 
 Name:    gz-fuel-tools
 Version: 8.0.2
-Release: alt1
+Release: alt2
 
 Summary: A client library and command line tools for interacting with Gazebo Fuel servers
 License: Apache-2.0
@@ -62,6 +62,7 @@ Group: Development/C++
 %_libdir/lib*.so
 %_datadir/gz/*.yaml
 %_datadir/gz/fuel_tools*
+%_datadir/gz/gz-fuel_tools*
 
 %files -n lib%{name}-devel
 %_includedir/gz/fuel_tools*
@@ -69,6 +70,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Dec 18 2023 Andrey Cherepanov <cas@altlinux.org> 8.0.2-alt2
+- Packaged gz-fuel_tools8/gz-fuel_tools8.tag.xml.
+
 * Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 8.0.2-alt1
 - New version.
 
