@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname hiredis
 
-%def_with check
+# needs tox-docker
+%def_without check
 
 Name: python3-module-%oname
-Version: 2.0.0
+Version: 2.3.2
 Release: alt1
 
 Summary: Python wrapper for hiredis
@@ -17,6 +18,8 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: libhiredis-devel
 
 %if_with check
@@ -34,27 +37,22 @@ Python wrapper for hiredis.
 rm -r ./vendor/hiredis/
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-commands =
-    {envpython} test.py
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/*.dist-info
 
 %changelog
+* Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.2-alt1
+- Automatically updated to 2.3.2.
+
 * Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
 - 1.1.0 -> 2.0.0
 
