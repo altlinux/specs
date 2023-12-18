@@ -4,11 +4,12 @@
 
 Name: ceph-deploy
 Version: 2.1.0
-Release: alt2
+Release: alt3
 
 Summary: Deploy Ceph with minimal infrastructure
 License: MIT
 Group: System/Base
+
 Url: https://github.com/ceph/ceph-deploy
 BuildArch: noarch
 
@@ -76,6 +77,8 @@ sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
+sed -i 's/python-module/python3-module/g' ceph_deploy/hosts/alt/uninstall.py
+
 %build
 %python3_build
 
@@ -101,6 +104,10 @@ install -pDm644 docs/build/man/%name.1 %buildroot%_man1dir/%name.1
 
 
 %changelog
+* Mon Dec 18 2023 Michael Shigorin <mike@altlinux.org> 2.1.0-alt3
+- make uninstall.py target python3 modules with removal
+  (thx Andrey Firsov for the proposed fix)
+
 * Fri Sep 10 2021 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt2
 - Revert "osd: decode output from remoto" (Closed: 40875)
 
