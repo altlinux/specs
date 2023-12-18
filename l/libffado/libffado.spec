@@ -2,7 +2,7 @@
 
 Name: libffado
 Version: 2.4.7
-Release: alt1
+Release: alt2
 
 Summary: Free firewire audio driver library
 License: GPLv2+
@@ -15,6 +15,7 @@ Patch: libffado-2.4.7-alt.patch
 BuildRequires: gcc-c++
 BuildRequires: libdbus-devel libexpat-devel libiec61883-devel libxml++2-devel
 BuildRequires: libalsa-devel
+BuildRequires: pkgconfig(jack)
 BuildRequires: libdbus-c++-devel
 BuildRequires: qt5-dbus
 BuildRequires: python3-dev
@@ -122,6 +123,9 @@ rm -f %buildroot%_datadir/metainfo/ffado-mixer.appdata.xml
 %python3_sitelibdir_noarch/ffado
 
 %changelog
+* Mon Dec 18 2023 L.A. Kostis <lakostis@altlinux.ru> 2.4.7-alt2
+- BR: added jack.
+
 * Mon Dec 18 2023 L.A. Kostis <lakostis@altlinux.ru> 2.4.7-alt1
 - 2.4.7 (closes #47584).
 - Restore python3 module.
