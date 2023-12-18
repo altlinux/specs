@@ -51,7 +51,7 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.9.12
+Version: 4.11.0
 Release: alt1
 
 Summary: The Identity, Policy and Audit system
@@ -146,6 +146,8 @@ BuildRequires: python3(pyasn1_modules)
 BuildRequires: python3(pysss_nss_idmap)
 BuildRequires: python3(yubico)
 BuildRequires: python3(requests)
+# urllib3.util.ssl_match_hostname
+BuildRequires: python3-module-urllib3 >= 1.26.8
 BuildRequires: python3(dateutil)
 BuildRequires: python3(dns)
 BuildRequires: python3(pyhbac)
@@ -155,7 +157,6 @@ BuildRequires: python3(pysss)
 BuildRequires: python3(pytest_sourceorder)
 BuildRequires: python3-module-lib389 >= %ds_version
 BuildRequires: python3(qrcode)
-BuildRequires: python3-module-openssl
 # python3(samba) has multiple providers
 BuildRequires: python3-module-samba
 %endif
@@ -248,6 +249,8 @@ Requires: python3-module-pki-base >= %pki_version
 Requires: python3-module-sssdconfig >= %sssd_version
 Requires: python3-module-samba
 Requires: python3-module-psutil
+# urllib3.util.ssl_match_hostname
+Requires: python3-module-urllib3 >= 1.26.8
 Requires: librpm
 Obsoletes: python3-module-ipaserver-ntp < %EVR
 Provides: python3-module-ipaserver-ntp = %EVR
@@ -452,9 +455,10 @@ Requires: python3-module-ldap >= %python_ldap_version
 Requires: python3-module-pyusb
 Requires: python3-module-qrcode
 Requires: python3-module-requests
+# urllib3.util.ssl_match_hostname
+Requires: python3-module-urllib3 >= 1.26.8
 Requires: python3-module-sss-murmur
 Requires: python3-module-yubico
-Requires: python3-module-openssl
 %py3_provides ipaplatform
 %py3_provides ipaplatform.constants
 %py3_provides ipaplatform.osinfo
@@ -1092,6 +1096,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Tue Dec 12 2023 Stanislav Levin <slev@altlinux.org> 4.11.0-alt1
+- 4.9.12 -> 4.11.0.
+
 * Tue May 23 2023 Stanislav Levin <slev@altlinux.org> 4.9.12-alt1
 - 4.9.11 -> 4.9.12.
 
