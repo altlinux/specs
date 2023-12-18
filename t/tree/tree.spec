@@ -5,7 +5,7 @@
 
 Name: tree
 Version: 2.1.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: List contents of directories in a tree-like format
@@ -25,8 +25,12 @@ LS_COLORS environment variable is set and output is to tty.
 %setup
 
 %build
+%ifnarch %e2k
+# unsupported as of lcc 1.26.21
+%add_optflags -fanalyzer
+%endif
 # Upstream have LDFLAGS=-s causing binaries to be stripped.
-%make_build CFLAGS="%optflags %(getconf LFS_CFLAGS) -fanalyzer" LDFLAGS=
+%make_build CFLAGS="%optflags %(getconf LFS_CFLAGS)" LDFLAGS=
 
 %install
 install -Dpm755 -t %buildroot%_bindir  tree
@@ -42,6 +46,9 @@ cd %buildroot
 %_man1dir/tree.1*
 
 %changelog
+* Mon Dec 18 2023 Michael Shigorin <mike@altlinux.org> 1:2.1.1-alt2
+- E2K: avoid lcc-unsupported option
+
 * Thu Jul 13 2023 Vitaly Chikunov <vt@altlinux.org> 1:2.1.1-alt1
 - Update to 2.1.1 (2023-05-30).
 - spec: %%changelog clean-up.
