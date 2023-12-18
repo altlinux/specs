@@ -35,7 +35,7 @@
 
 Name:           chromium
 Version:        120.0.6099.109
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -86,14 +86,13 @@ Patch016: 0016-DEBIAN-use-system-libevent-library.patch
 Patch017: 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-GENTOO-EnumTable-crash.patch
-Patch020: 0020-ARCH-Add-missing-header.patch
-Patch021: 0021-ALT-Do-not-hardcode-flatbuffer-version.patch
-Patch022: 0022-FEDORA-System-brotli.patch
-Patch023: 0023-atspi-mark-possibly-unused-gn-variables.patch
-Patch024: 0024-Revert-Use-aggregate-init-designed-initializers-more.patch
-Patch025: 0025-Disable-various-compiler-configs.patch
-Patch026: 0026-Use-std-nullptr_t-instead-of-nullptr_t.patch
-Patch027: 0027-Add-missing-headers.patch
+Patch020: 0020-ALT-Do-not-hardcode-flatbuffer-version.patch
+Patch021: 0021-FEDORA-System-brotli.patch
+Patch022: 0022-atspi-mark-possibly-unused-gn-variables.patch
+Patch023: 0023-Revert-Use-aggregate-init-designed-initializers-more.patch
+Patch024: 0024-Use-std-nullptr_t-instead-of-nullptr_t.patch
+Patch025: 0025-Add-missing-headers.patch
+Patch026: 0026-Disable-unsupported-compiler-flags.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -223,11 +222,10 @@ faster, and more stable way for all Internet users to experience the web.
 %autopatch -p1
 
 sed -i \
-	-e 's/"-ffile-compilation-dir=."//g' \
-	-e 's/"-no-canonical-prefixes"//g' \
-	-e 's/"-no-opaque-pointers",//g' \
-	-e 's/"-Wl,-mllvm,-disable-auto-upgrade-debug-info"//g' \
-	build/config/compiler/BUILD.gn
+        -e 's/"-ffile-compilation-dir=."//g' \
+        -e 's/"-no-canonical-prefixes"//g' \
+        -e 's/"-no-opaque-pointers",//g' \
+        build/config/compiler/BUILD.gn
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
 ln -s %_bindir/node third_party/node/linux/node-linux-x64/bin/node
@@ -518,6 +516,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Mon Dec 18 2023 Alexey Gladkov <legion@altlinux.ru> 120.0.6099.109-alt2
+- Bring back optimization flags.
+
 * Sat Dec 16 2023 Alexey Gladkov <legion@altlinux.ru> 120.0.6099.109-alt1
 - New version (120.0.6099.109).
 - Security fixes:
