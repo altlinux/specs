@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 23.08.4
-Release: alt1
+Release: alt2
 %K5init
 
 Summary: Calendar application for Plasma Mobile
@@ -16,6 +16,7 @@ Url: https://anongit.kde.org/calindori.git
 Requires: kf5-kirigami
 
 Source: %rname-%version.tar
+Patch1: fix-segfault-when-deleting-event-or-todo.patch
 
 # Automatically added by buildreq on Thu Mar 19 2020 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kconfig-devel kf5-kcoreaddons-devel libdb4-devel libdbusmenu-qt52 libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-quickcontrols2 libqt5-svg libqt5-test libqt5-texttospeech libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms pkg-config python-modules python2-base python3 python3-base qt5-base-devel qt5-declarative-devel rpm-build-python3 sh4
@@ -35,6 +36,7 @@ Calindori is a touch friendly calendar application. It has been designed for mob
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -54,6 +56,9 @@ Calindori is a touch friendly calendar application. It has been designed for mob
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Dec 18 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
+- fix segfault when deleting event or todo from associated lists (closes: 42708) (thanks krf10@alt)
+
 * Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 
