@@ -3,7 +3,7 @@
 %define oname mpi4py
 
 Name: python3-module-%oname
-Version: 3.1.1
+Version: 3.1.5
 Release: alt1
 Summary: MPI bindings for Python
 License: Public
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): rpm-build-python3
 BuildRequires: openmpi-devel python3-module-zope
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 This package is constructed on top of the MPI-1
@@ -64,8 +66,7 @@ unset CXXFLAGS
 unset FFLAGS
 %add_optflags -I%mpidir/include -I%_includedir/python%_python3_version
 sed -i 's|^PYTHON.*|PYTHON = python3|' makefile
-%make_ext config
-%make_build_ext
+%pyproject_build
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -76,7 +77,7 @@ OPTFLAGS="%optflags -I%mpidir/include -I%_includedir/python%_python3_version"
 export CFLAGS="${OPTFLAGS}"
 export CXXFLAGS="${OPTFLAGS}"
 export FFLAGS="${OPTFLAGS}"
-%python3_install --optimize=2
+%pyproject_install
 
 install -d %buildroot%_docdir/%name
 cp -fR docs/source %buildroot%_docdir/%name/
@@ -93,6 +94,9 @@ cp -fR docs/source %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt1
+- Automatically updated to 3.1.5.
+
 * Thu Oct 21 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
 - Automatically updated to 3.1.1.
 
