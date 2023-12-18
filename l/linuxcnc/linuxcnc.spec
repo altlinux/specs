@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.1
-Release: alt3.20231009
+Release: alt4.20231009
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -239,6 +239,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 2.9.1-alt4.20231009
+- NMU: add support for python3.12.
+
 * Thu Dec 07 2023 Ivan A. Melnikov <iv@altlinux.org> 2.9.1-alt3.20231009
 - NMU: loongarch64 support (thx asheplyakov@).
 
