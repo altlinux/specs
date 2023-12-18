@@ -1,12 +1,12 @@
-%define version_SingleApplication v3.3.4
+%define version_SingleApplication v3.5.1
 %define version_QTaskbarControl 2.0.2
-%define version_QOnlineTranslator 1.6.1
-%define version_QHotkey 1.4.2
-%define version_circle_flags v2.6.1
-%define version_Fluent 2022-11-30
+%define version_QOnlineTranslator 1.6.4
+%define version_QHotkey 1.5.0
+%define version_circle_flags v2.7.0
+%define version_Fluent 2023-06-07
 
 Name: crow-translate
-Version: 2.10.4
+Version: 2.11.0
 Release: alt1
 
 Summary: A Qt GUI for Google, Yandex and Bing translators
@@ -37,14 +37,12 @@ Source5: circle-flags.tar
 # Source6-url: https://github.com/vinceliuice/Fluent-icon-theme/archive/refs/tags/%version_Fluent.tar.gz
 Source6: Fluent-icon-theme.tar
 
-Patch1: crow-2.9.1-alt-icon_theme.patch
-Patch2: crow-2.10.0-alt-desktop.patch
-
 BuildRequires: extra-cmake-modules
 BuildRequires: libleptonica-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-x11extras-devel
+BuildRequires: kf5-kwayland-devel
 BuildRequires: tesseract-devel >= 4.0.0
 BuildRequires: libqt5-concurrent
 BuildRequires: cmake
@@ -73,7 +71,7 @@ Recommended icons for the Breeze app.
 
 %prep
 %setup
-%autopatch -p2
+
 %ifarch %e2k
 # workaround of SIGILL in ecf_opt64 from LCC 1.25.23
 sed -i -E "s/qOverload<([^>]*)>\(&([^:]*::)/(void(\\2*)(\\1))(\&\\2/" \
@@ -96,9 +94,18 @@ tar -xf %SOURCE4 -C src/third-party/qhotkey/ --strip-components=1
 tar -xf %SOURCE5 -C src/circle-flags/ --strip-components=1
 tar -xf %SOURCE6 -C src/Fluent-icon-theme/ --strip-components=1
 
+# Analog of crow-2.10.0-alt-desktop.patch
+subst "s|Categories=Office;Qt;|Categories=Qt;Graphics;OCR;Scanning;|" data/io.crow_translate.CrowTranslate.desktop
+
+# Fix QX11Info: No such file or directory
+subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/mainwindow.cpp
+subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/ocr/screengrabbers/abstractscreengrabber.cpp
+subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/ocr/snippingarea.cpp
+subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/xdgdesktopportal.cpp
+
 %build
 %cmake \
-    -DWITH_KWAYLAND=OFF
+    -DWITH_KWAYLAND=ON
 
 %cmake_build
 
@@ -109,11 +116,18 @@ tar -xf %SOURCE6 -C src/Fluent-icon-theme/ --strip-components=1
 %doc README.md COPYING
 %_bindir/crow
 %_desktopdir/io.crow_translate.CrowTranslate.desktop
-%_datadir/Crow*/*
+%_datadir/crow*/*
 %_datadir/metainfo/io.crow_translate.CrowTranslate.metainfo.xml
 %_iconsdir/hicolor/*/*/crow-translate*
 
 %changelog
+* Sun Nov 12 2023 Roman Alifanov <ximper@altlinux.org> 2.11.0-alt1
+- new version (2.11.0) with rpmgs script (ALT bug 48383)
+- updated libraries and icons
+- added fix for error "QX11Info: there is no such file or directory"
+- enabled build with kwayland
+- dropped (or replaced with a subst analog) some patches
+
 * Wed Apr 19 2023 Evgeny Chuck <koi@altlinux.org> 2.10.4-alt1
 - new version (2.10.4) with rpmgs script
 
