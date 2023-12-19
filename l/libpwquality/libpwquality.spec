@@ -1,21 +1,30 @@
+%def_enable snapshot
+
 %define _name pwquality
 
 Name: lib%_name
 Version: 1.4.5
-Release: alt1
+Release: alt2
 
 Summary: A library for password generation and password quality checking
 License: BSD or GPL-2.0-or-later
 Group: System/Libraries
 Url: https://github.com/%name/%name/
 
+%if_disabled snapshot
 Source: %url/releases/download/%name-%version/%name-%version.tar.bz2
+%else
+Vcs: https://github.com/libpwquality/libpwquality.git
+Source: %name-%version.tar
+%endif
 
 Provides: pam_%_name = %EVR
 Requires: cracklib-words pam
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: cracklib-devel pam-devel
-BuildRequires: rpm-build-python3 python3-devel
+BuildRequires: python3-devel python3(setuptools)
+BuildRequires: /usr/bin/pod2man
 
 %description
 This is a library for password quality checks and generation of random
@@ -49,7 +58,7 @@ Python3 applications.
 
 %build
 %define opts --with-securedir=%_pam_modules_dir --disable-static
-
+%autoreconf
 %configure \
 	%opts \
 	--with-python-binary=python3 \
@@ -93,6 +102,9 @@ ln -sf ../../%_lib/%name.so.1 %buildroot%_libdir/%name.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Dec 19 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt2
+- updated to 1.4.5-9-g3061819 (ported to setuptools instead of distutils)
+
 * Fri Nov 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
 - 1.4.5
 - removed obsolete python2 part
