@@ -1,9 +1,3 @@
-#2021-09-14  Alex Tutubalin <lexa@lexa.ru>
-#...
-# * API/datastruct Changes:
-#  - imgdata.params.shot_select moved to imgdata.rawparams.shot_select
-#   (because this is decode-time option, not postprocessing option)
-
 %def_disable snapshot
 %def_disable static
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
@@ -15,7 +9,7 @@
 %define dmp_ver 0.18.8
 
 Name: libraw
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: library for reading RAW files obtained from digital photo cameras
@@ -34,7 +28,8 @@ Source: %_name-%version.tar
 Source1: %url/data/%_name-demosaic-pack-GPL2-%dmp_ver.tar.gz
 Source2: %url/data/%_name-demosaic-pack-GPL3-%dmp_ver.tar.gz
 
-BuildRequires: gcc-c++ libjasper-devel liblcms2-devel libjpeg-devel libgomp-devel
+BuildRequires: gcc-c++ libjasper-devel liblcms2-devel
+BuildRequires: libjpeg-devel libgomp-devel zlib-devel
 
 %description
 LibRaw is a library for reading RAW files from digital photo cameras
@@ -46,7 +41,7 @@ This package contains shared library.
 %package samples
 Group: Graphics
 Summary: sample tools based on the libraw
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description samples
 LibRaw is a library for reading RAW files from digital photo cameras
@@ -58,7 +53,7 @@ This package contains samples binaries.
 %package devel
 Group: Development/C
 Summary: library for reading RAW files
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 LibRaw is a library for reading RAW files from digital photo cameras
@@ -70,7 +65,7 @@ This package contains library headers.
 %package devel-static
 Group: Development/C
 Summary: static library for reading RAW files
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 LibRaw is a library for reading RAW files from digital photo cameras
@@ -127,6 +122,9 @@ export LIBS+="-lpthread -lomp"
 %endif
 
 %changelog
+* Tue Dec 19 2023 Yuri N. Sedunov <aris@altlinux.org> 0.21.2-alt1
+- 0.21.2
+
 * Thu Feb 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.21.1-alt1
 - 0.21.1
 
