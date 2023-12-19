@@ -4,7 +4,7 @@
 
 Name: biosig
 Version: 2.3.1
-Release: alt2
+Release: alt2.1
 
 Summary: Reading and writing routines for different biosignal data formats
 License: GPL-3.0+
@@ -18,6 +18,7 @@ Patch2: %name-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel
+BuildRequires: python3-module-setuptools
 BuildRequires: gcc-c++
 BuildRequires: libalsa-devel
 BuildRequires: libb64-devel
@@ -152,6 +153,9 @@ rm -f biosig4c++/doc/mexSLOAD.1
 %python3_sitelibdir/Biosig-%version-py%{_python3_version}.egg-info
 
 %changelog
+* Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt2.1
+- NMU: Add build dependency on setuptools.
+
 * Wed Jan 19 2022 Michael Shigorin <mike@altlinux.org> 2.3.1-alt2
 - Introduce dcmtk knob (on by default).
 
