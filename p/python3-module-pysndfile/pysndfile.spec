@@ -1,22 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname pysndfile
+%define pypi_name pysndfile
+%def_disable check
 
-Name: python3-module-%oname
-Version: 1.1.0
-Release: alt3
+Name: python3-module-%pypi_name
+# see _pysndfile_version in _pysndfile.pyx
+Version: 1.4.4
+Release: alt1
 
 Summary: Cython wrapper class for reading/writing soundfiles using libsndfile
 License: LGPLv3
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/pysndfile/
 
-Source: %oname-%version.tar
+#Source: https://pypi.io/packages/source/p/pysndfile/pysndfile-%version.tar.gz
+Vcs: https://forge-2.ircam.fr/roebel/pysndfile.git
+Source: %pypi_name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libsndfile-devel
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-Cython libnumpy-py3-devel
+BuildRequires: python3-devel python3(wheel) python3(setuptools)
+BuildRequires: python3(cython) libnumpy-py3-devel
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-html5lib python3-module-notebook
 
@@ -31,30 +35,32 @@ Due to the use of libsndfile nearly all sound file formats, (besides mp3
 and derived formats) can be read and written with PySndfile.
 
 %prep
-%setup -n %oname-%version
-
-rm -f *.cpp
+%setup -n %pypi_name-%version
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
 export FFLAGS="%optflags"
+export PYTHONPATH=%buildroot%python3_sitelibdir
 
-%__python3 setup.py test
-PYTHONPATH=%buildroot%python3_sitelibdir python3 tests/pysndfile_test.py
+#%__python3 setup.py test
+%__python3 tests/pysndfile_test.py
 
 %files
 %doc ChangeLog README.*
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 19 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
+- 1.4.4
+
 * Thu Mar 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt3
 - Build for python2 disabled.
 
