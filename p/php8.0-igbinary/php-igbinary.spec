@@ -3,7 +3,7 @@
 
 Name:           php%_php_suffix-%php_extension
 Version:        3.2.15
-Release:        alt1.%php_version
+Release:        alt2.%php_version
 Summary:        Replacement for the standard PHP serializer
 Group:		System/Servers
 License:        BSD-3-Clause
@@ -71,6 +71,9 @@ make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Tue Dec 19 2023 Alexandr Antonov <aas@altlinux.org> 3.2.15-alt2.%php_version
+- renamed the ini file (ALT #48855)
 
 * Tue Dec 05 2023 Alexandr Antonov <aas@altlinux.org> 3.2.15-alt1.%php_version
 - Init for ALT.
