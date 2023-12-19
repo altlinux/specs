@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.7.3
+Version: 1.7.5
 Release: alt1
 
 Summary: A Python handler for mkdocstrings
@@ -18,6 +18,7 @@ BuildRequires: python3-module-pdm-backend
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-forked
 BuildRequires: python3-module-markdown
 BuildRequires: python3-module-mkdocs
 BuildRequires: python3-module-griffe
@@ -66,5 +67,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 19 2023 Alexander Burmatov <thatman@altlinux.org> 1.7.5-alt1
+- Update version to 1.7.5.
+
 * Wed Oct 25 2023 Alexander Burmatov <thatman@altlinux.org> 1.7.3-alt1
 - Initial build for Sisyphus.

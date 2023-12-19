@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.36.7
+Version: 0.38.1
 Release: alt1
 
 Summary: Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API
@@ -58,5 +58,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 19 2023 Alexander Burmatov <thatman@altlinux.org> 0.38.1-alt1
+- Update version to 0.38.1.
+
 * Wed Oct 25 2023 Alexander Burmatov <thatman@altlinux.org> 0.36.7-alt1
 - Initial build for Sisyphus.
