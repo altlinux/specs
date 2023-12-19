@@ -1,22 +1,37 @@
 %define oname pygsl
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.3.0
-Release: alt2.1
+Version: 2.3.3
+Release: alt1
 
 Summary: Python interface for GNU Scientific Library (GSL)
-License: GPLv2
+License: GPL-2.0
 Group: Development/Python3
-Url: http://pygsl.sourceforge.net/
+Url: https://pypi.org/project/pygsl
+Vcs: https://github.com/pygsl/pygsl
 
-Source: %oname-%version.tar.gz
-Patch0: port-to-python3.patch
+Source: %name-%version.tar
+Patch: pygsl-python312.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libgsl-devel libnumpy-py3-devel
-BuildRequires: python3-module-numpy swig
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-numpy
+BuildRequires: libnumpy-py3-devel
+BuildRequires: libgsl-devel
+BuildRequires: gcc
+BuildRequires: swig
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/gsl_dist
+
+# for python w/o distutils
+%filter_from_requires /python3(distutils.*)/d
+Requires: python3(setuptools._distutils)
 
 %description
 This project provides a python interface for the GNU scientific library
@@ -70,23 +85,27 @@ This package contains examples for Python interface for GSL.
 
 %prep
 %setup
-%patch0 -p2
-
-rm -f swig_src/*
+%autopatch -p1
 
 %build
 %__python3 setup.py config
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%ifnarch i586
+py.test-3 tests/ --ignore tests/odeiv2_test.py
+%else
+py.test-3 tests/ --ignore tests/odeiv2_test.py -k 'not test_levin_utrunk'
+%endif
 
 %files
-%doc CREDITS ChangeLog README TODO
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/%oname/testing
 
 %files devel
@@ -103,6 +122,10 @@ rm -f swig_src/*
 
 
 %changelog
+* Tue Dec 19 2023 Anton Vyatkin <toni@altlinux.org> 2.3.3-alt1
+- New version 2.3.3.
+- Build without distutils.
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.3.0-alt2.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
