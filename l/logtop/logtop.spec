@@ -2,7 +2,7 @@
 
 Name: logtop
 Version: 0.7
-Release: alt1
+Release: alt1.1
 Summary: Display real time statistics of whatever you want
 License: BSD-2-Clause
 Group: Text tools
@@ -15,6 +15,7 @@ Patch1: %name-%version-alt-build.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: swig libncurses-devel libncursesw-devel libuthash-devel
 BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
 
 Requires: lib%name = %EVR
 
@@ -74,6 +75,9 @@ sed -i '/^ogtop_swigregister/d' %buildroot%python3_sitelibdir/%name.py
 
 
 %changelog
+* Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 0.7-alt1.1
+- NMU: Add build dependency on setuptools.
+
 * Fri Jul 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7-alt1
 - Updated to upstream version 0.7.
 
