@@ -1,6 +1,6 @@
 Name: pam_wrapper
 Version: 1.1.5
-Release: alt1
+Release: alt1.1
 Summary: A tool to test PAM applications and PAM modules
 License: GPLv3+
 Url: http://cwrap.org/
@@ -15,6 +15,7 @@ BuildRequires: pam-devel
 BuildRequires: doxygen
 BuildRequires: git
 BuildRequires: ctest
+BuildRequires: python3-module-setuptools
 
 %description
 This component of cwrap allows you to either test your PAM (Linux-PAM
@@ -124,6 +125,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %python3_sitelibdir/pypamtest.so
 
 %changelog
+* Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.5-alt1.1
+- NMU: Add build dependency on setuptools.
+
 * Tue Dec 12 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.1.5-alt1
 - Fixed building with Python 3.12
 
