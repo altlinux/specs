@@ -1,6 +1,6 @@
 Name: i2c-tools
 Version: 4.3
-Release: alt1
+Release: alt2
 
 Summary: I2C tools
 License: GPLv2+
@@ -17,6 +17,7 @@ Source: %name-%version-%release.tar
 # Source-url: https://www.kernel.org/pub/software/utils/i2c-tools/%name-%version.tar.xz
 
 BuildRequires: python3-devel
+BuildRequires: python3(setuptools)
 
 %description
 %name package contains a heterogeneous set of I2C tools for Linux:
@@ -50,6 +51,7 @@ Group: Development/C
 
 %prep
 %setup
+sed -i 's,distutils\.core,setuptools,' py-smbus/setup.py
 
 %build
 make CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS" BUILD_STATIC_LIB=0 EXTRA=eeprog
@@ -114,6 +116,9 @@ echo 'i2c-dev' > %buildroot%_libdir/modules-load.d/%name.conf
 %_man3dir/libi2c.3*
 
 %changelog
+* Tue Dec 19 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.3-alt2
+- dropped obsolete distutils build req
+
 * Thu Sep 09 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.3-alt1
 - 4.3 released
 - dropped obsolete eepromer subpackage
