@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.13.3
+Version: 0.1.13.4
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,9 @@ done
 %_destdir
 
 %changelog
+* Mon Dec 18 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.13.4-alt1
+- Fixed language KDE policy blocking key (closes: 48833)
+
 * Thu Nov 30 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.13.3-alt1
 - Fix bugs KDE policy (closes: 47996, 47998)
 

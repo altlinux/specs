@@ -32,7 +32,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.9.13.3
+Version: 0.9.13.4
 Release: alt1
 
 Summary: GPT applier
@@ -183,6 +183,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Mon Dec 18 2023 Valery Sinelnikov <greh@altlinux.org> 0.9.13.4-alt1
+- Fixed regular expression to search for wallpaper management section (closes: 48828)
+
 * Wed Dec 13 2023 Valery Sinelnikov <greh@altlinux.org> 0.9.13.3-alt1
 - Fixed bug handling of invalid username
   when requesting cache (closes: 48310)
