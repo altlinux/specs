@@ -4,7 +4,7 @@
 
 Name: %oname
 Version: 0.10.2
-Release: alt1
+Release: alt2
 Summary: Python bindings for the liblo OSC library
 
 License: GPLv2+
@@ -74,6 +74,9 @@ chmod -x examples/*
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Dec 19 2023 Arseny Maslennikov <arseny@altlinux.org> 0.10.2-alt2
+- Make another attempt to fix compatibility with Cython > 3.
+
 * Sat Dec 09 2023 Arseny Maslennikov <arseny@altlinux.org> 0.10.2-alt1
 - 0.10.0 -> 0.10.2.
 
