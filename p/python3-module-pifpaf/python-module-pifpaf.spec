@@ -3,9 +3,10 @@
 Summary: Suite of tools and fixtures to manage daemons for testing
 Name: python3-module-%oname
 Version: 3.1.5
-Release: alt1
+Release: alt2
 Url: https://pypi.org/project/pifpaf
 Source: %oname-%version.tar.gz
+Patch: remove-distutils-for-python-3.12.patch
 License: Apache-2.0
 Group: Development/Python3
 
@@ -36,6 +37,7 @@ This package contains tests for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p2
 
 %build
 export LANG=en_US.UTF-8
@@ -55,6 +57,9 @@ export LANG=en_US.UTF-8
 %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt2
+- Drop dependency on distutils.
+
 * Wed May 12 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt1
 - Build new version.
 
