@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 4.19.19
-Release: alt9.1
+Release: alt9.2
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -24,6 +24,7 @@ Patch1: reimplementation_of_newer_and_newer_group_functions.patch
 
 BuildRequires(pre): rpm-build-python3 python3-devel
 BuildRequires: flex gcc-c++
+BuildRequires: python3-module-setuptools
 
 %description
 Generates Python bindings for C++ class libraries from a set of class
@@ -81,6 +82,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 #doc doc/*
 
 %changelog
+* Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.19.19-alt9.2
+- Add missed dependency on setuptools.
+
 * Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 4.19.19-alt9.1
 - Slightly fixed distutils' reimplementation patch.
 
