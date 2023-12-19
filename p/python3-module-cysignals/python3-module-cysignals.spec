@@ -1,8 +1,8 @@
 %define  modulename cysignals
 
 Name:    python3-module-%modulename
-Version: 1.11.2
-Release: alt2
+Version: 1.11.4
+Release: alt1
 
 Summary: cysignals: interrupt and signal handling for Cython
 License: LGPL-3.0
@@ -19,6 +19,7 @@ BuildRequires: python3-module-Cython
 Source: %modulename-%version.tar
 
 Patch: remove-distutils-for-python-3.12.patch
+Patch1: remove-legacy-implicit-noexcept.patch
 
 %description
 The cysignals package provides mechanisms to handle interrupts (and other
@@ -27,6 +28,7 @@ signals and errors) in Cython code.
 %prep
 %setup -n %modulename-%version
 %patch -p1
+%patch1 -p1
 
 %build
 %pyproject_build
@@ -42,6 +44,9 @@ signals and errors) in Cython code.
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Tue Dec 19 2023 Anton Vyatkin <toni@altlinux.org> 1.11.4-alt1
+- New version 1.11.4.
+
 * Fri Oct 13 2023 Grigory Ustinov <grenka@altlinux.org> 1.11.2-alt2
 - Dropped dependency on distutils.
 
