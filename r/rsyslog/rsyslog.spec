@@ -27,7 +27,7 @@
 %def_enable libcap_ng
 
 Name: rsyslog
-Version: 8.2310.0
+Version: 8.2312.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -463,12 +463,11 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-snmp \
 	--enable-unlimited-select \
 	--enable-usertools \
-	--enable-generate-man-pages \
 	%{subst_enable mmkubernetes} \
 	%{subst_enable clickhouse} \
 	%{subst_enable libsystemd} \
 	%{?_enable_libcap_ng:--enable-libcap-ng} \
-	--with-systemdsystemunitdir=%_unitdir
+	--enable-generate-man-pages
 
 %make_build
 
@@ -688,6 +687,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Tue Dec 19 2023 Alexey Shabalin <shaba@altlinux.org> 8.2312.0-alt1
+- New version 8.2312.0.
+
 * Thu Nov 30 2023 Alexey Shabalin <shaba@altlinux.org> 8.2310.0-alt1
 - New version 8.2310.0.
 
