@@ -4,9 +4,12 @@ Name:           python3-module-%{pypi_name}
 License:        LGPLv2+
 Group:          Development/Python3
 Summary:        Python module to work with kernel modules
-Version:        0.9
-Release:        alt3
-URL:            https://github.com/agrover/python-kmod/
+Version:        0.9.2
+Release:        alt1
+# Old upstream
+# URL:            https://github.com/agrover/python-kmod/
+# Fork
+URL:            https://github.com/maurizio-lombardi/python-kmod.git
 Packager:       Python Development Team <python@packages.altlinux.org>
 Source:         %{pypi_name}-%{version}.tar
 BuildRequires:  libkmod-devel
@@ -33,6 +36,10 @@ Linux kernel modules, using libkmod.
 %{python3_sitelibdir}/kmod*.egg-info
 
 %changelog
+* Tue Dec 19 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.9.2-alt1
+- Changed upstream to fork
+- Updated to 0.9.2
+
 * Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.9-alt3
 - Drop python2 support.
 
