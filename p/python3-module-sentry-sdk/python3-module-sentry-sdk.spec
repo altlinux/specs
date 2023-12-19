@@ -1,49 +1,69 @@
 %define oname sentry-sdk
+%define mod_name sentry_sdk
 %define sourcename sentry-python
 
-Name: python3-module-%oname
-Version: 1.5.4
-Release: alt1
-Summary: Sentry SDK for Python 3
-License: BSD-2-Clause
-Group: Development/Python3
-Url: https://github.com/getsentry/sentry-python
-# Source-url: %url/releases/download/%version/%oname-%version.tar.gz
-Source: %sourcename-%version.tar
+%def_with check
 
+Name: python3-module-%oname
+Version: 1.39.1
+Release: alt1
+
+Summary: The official Python SDK for Sentry.io
+
+License: MIT
+Group: Development/Python3
+Url: https://pypi.org/project/sentry-sdk
+Vcs: https://github.com/getsentry/sentry-python
 BuildArch: noarch
 
+Source: %sourcename-%version.tar
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-urllib3
+BuildRequires: python3-module-certifi
+BuildRequires: python3-module-werkzeug
+BuildRequires: python3-module-executing
+BuildRequires: python3-module-pytest-localserver
+BuildRequires: python3-module-pysocks
+BuildRequires: python3-module-pip
+BuildRequires: python3-module-pytest-asyncio
+%endif
+
+%add_findreq_skiplist %python3_sitelibdir/%mod_name/integrations/*
 
 %description
-Bad software is everywhere, and we're tired of it.
-Sentry is on a mission to help developers write
-better software faster, so we can get back to
-enjoying technology.
-This is the next line of the Python SDK for Sentry,
-intended to replace the raven package on PyPI.
+%summary.
 
 %prep
 %setup -n %sourcename-%version
 
-# drop chalice integration
-rm -r sentry_sdk/integrations/chalice.py
-
-# drop old egg-info
-rm -r sentry_sdk.egg-info
-
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+rm -rf tests/ingegrations
+
+%check
+%pyproject_run_pytest -v --ignore tests/integrations/gcp/test_gcp.py \
+    --ignore tests/integrations/socket/test_socket.py \
+    --deselect tests/test_utils.py::test_default_release \
+    --deselect tests/integrations/wsgi/test_wsgi.py::test_session_mode_defaults_to_request_mode_in_wsgi_handler \
+    --deselect tests/integrations/wsgi/test_wsgi.py::test_auto_session_tracking_with_aggregates
 
 %files -n python3-module-%oname
 %doc README.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name
+%python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Dec 18 2023 Alexander Burmatov <thatman@altlinux.org> 1.39.1-alt1
+- New version 1.39.1 (thx toni@).
+
 * Wed Jan 26 2022 Anton Midyukov <antohami@altlinux.org> 1.5.4-alt1
 - initial build
