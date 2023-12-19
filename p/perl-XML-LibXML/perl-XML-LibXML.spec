@@ -3,15 +3,24 @@
 %def_with bootstrap
 Name: perl-%dist
 Version: 2.0209
-Release: alt2.1
+Release: alt2.2
 
 Summary: Perl binding for libxml2
-License: GPL or Artistic
+License: Artistic-1.0 OR GPL-2.0-or-later
 Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{dist}-%{version}.tar.gz
 Patch: XML-LibXML-2.0207-alt-at-autoreq.patch
+
+# To reduce dependencies replace Alien::Libxml2 with pkg-config
+Patch101: XML-LibXML-2.0208-Use-pkgconfig-instead-of-Alien-Libxml2.patch
+#BuildRequires: perl-Alien-Libxml2
+# Fix callback prototypes, in upstream after 2.0209, bug #2251181
+Patch102: XML-LibXML-2.0209-libxml-mm-Fix-function-prototypes-in-function-pointe.patch
+# Adjust external entity callback to libxml2-2.12.0, in upstream after 2.0209,
+# bug #2251181, <https://github.com/shlomif/perl-XML-LibXML/issues/82>
+Patch103: XML-LibXML-2.0209-Fix-copying-external-entity-from-an-ext_ent_handler-.patch
 
 Provides: perl-XML-LibXML-Common = 0.13-alt99
 Obsoletes: perl-XML-LibXML-Common < 0.13-alt99
@@ -22,7 +31,6 @@ Requires: %(rpmquery --qf '%%{NAME} = %%{VERSION}' libxml2)
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libxml2-devel perl-Devel-CheckLib perl-Test-Differences perl-Test-Pod perl-URI perl-XML-NamespaceSupport
-BuildRequires: perl-Alien-Libxml2
 
 %if_with bootstrap
 BuildRequires: perl-XML-SAX-Base
@@ -39,6 +47,9 @@ providing access to the XPath API in libxml2.
 %prep
 %setup -q -n %{dist}-%{version}
 %patch -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
 
 %if_with bootstrap
 # bootstrap: disable build dependency on XML::SAX
@@ -66,6 +77,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Tue Dec 19 2023 Alexey Shabalin <shaba@altlinux.org> 2.0209-alt2.2
+- add patches from fedora
+
 * Fri Dec 15 2023 Alexey Shabalin <shaba@altlinux.org> 2.0209-alt2.1
 - rebuild with new libxml2 2.12.3 (bootstrapped)
 
