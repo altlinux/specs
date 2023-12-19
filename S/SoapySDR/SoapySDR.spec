@@ -5,7 +5,7 @@
 
 Name: SoapySDR
 Version: %maj_ver.1
-Release: alt3
+Release: alt4
 Summary: A Vendor Neutral and Platform Independent SDR Support Library
 Group: Engineering
 License: BSL
@@ -14,12 +14,14 @@ Url: https://github.com/pothosware/%name
 Source: soapy-sdr-%version.tar
 # Source-url: https://github.com/pothosware/%name/archive/refs/tags/soapy-sdr-%version.tar.gz
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
+BuildRequires(pre): rpm-macros-python3 rpm-macros-cmake
+BuildRequires: rpm-build-python3
 BuildRequires: ctest cmake
 BuildRequires: gcc-c++
 BuildRequires: swig
 BuildRequires: doxygen
 BuildRequires: python3-devel
+BuildRequires: python3(setuptools)
 BuildRequires: python3-module-numpy python3-module-numpy-testing
 
 %description
@@ -96,9 +98,12 @@ popd
 %_datadir/cmake/%name/*
 
 %files -n %name-doc
-%_docdir/%name/*
+%_docdir/%name
 
 %changelog
+* Tue Dec 19 2023 Anton Midyukov <antohami@altlinux.org> 0.8.1-alt4
+- spec: add BR python3(setuptools) for python3.12 support; small cleanup
+
 * Mon Jun 27 2022 Anton Midyukov <antohami@altlinux.org> 0.8.1-alt3
 - Initial build in Sisyphus
 
