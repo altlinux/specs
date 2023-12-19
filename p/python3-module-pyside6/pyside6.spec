@@ -13,7 +13,7 @@
 
 Name: python3-module-%mod_name
 Version: 6.6.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -207,7 +207,6 @@ sed -i 's#env python$#python3#' %buildroot%_bindir/shiboken_tool.py
 
 #Generate egg-info manually and install since we're performing a cmake build.
 export PATH="%_qt6_bindir:$PATH"
-export SETUPTOOLS_USE_DISTUTILS=stdlib
 %__python3 setup.py egg_info
 for name in PySide6 shiboken6 shiboken6_generator; do
   mkdir -p %buildroot%python3_sitelibdir/$name-%version-py%_python3_version.egg-info
@@ -289,6 +288,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Tue Dec 19 2023 Anton Vyatkin <toni@altlinux.org> 6.6.1-alt1.1
+- don't use distutils
+
 * Sun Dec 10 2023 Anton Vyatkin <toni@altlinux.org> 6.6.1-alt1
 - new version 6.6.1
 
