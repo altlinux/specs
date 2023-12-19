@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.9.0
-Release: alt2
+Release: alt3
 Summary: http request/response parser
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(Cython)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -39,22 +41,22 @@ rm -f http_parser/parser.c
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc NOTICE *.rst *.md THANKS examples
 %python3_sitelibdir/*
 
 %changelog
+* Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt3
+- Moved on pyproject macros.
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.9.0-alt2
 - Stopped build for Python2.
 
