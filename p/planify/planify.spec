@@ -1,12 +1,12 @@
 %def_enable snapshot
 %define _name planify
-%define ver_major 4.2
+%define ver_major 4.3
 %define rdn_name io.github.alainm23.%_name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: Planify
@@ -95,6 +95,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Tue Dec 19 2023 Yuri N. Sedunov <aris@altlinux.org> 4.3-alt1
+- 4.3
+
 * Tue Dec 19 2023 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
 - first build for Sisyphus (4.2.1-7-g8e7515f3)
 
