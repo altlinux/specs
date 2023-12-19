@@ -2,7 +2,7 @@
 
 Name:    libomniORB
 Version: 4.3.0
-Release: alt3
+Release: alt3.1
 
 Summary: ORB from AT&T (core libraries)
 
@@ -25,6 +25,7 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: gcc-c++ libssl-devel zlib-devel
 BuildRequires: python3-dev
+BuildRequires: python3-module-setuptools
 
 %description
 omniORB is an Object Request Broker (ORB) that implements the 2.3
@@ -215,6 +216,9 @@ install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/omninames
 %endif
 
 %changelog
+* Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt3.1
+- NMU: Add build dependency on setuptools.
+
 * Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt3
 - fix build with new python, cleanup spec, enable SMP build
 
