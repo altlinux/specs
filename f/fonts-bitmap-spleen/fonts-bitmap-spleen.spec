@@ -1,7 +1,7 @@
 %define cname spleen
 
 Name: fonts-bitmap-%cname
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Monospaced bitmap fonts
@@ -64,9 +64,12 @@ done
 %bitmap_fonts_install %cname
 
 %files -f %cname.files
-%doc LICENSE AUTHORS README.md
+%doc LICENSE AUTHORS README.md FAQ
 
 %changelog
+* Tue Dec 19 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.1-alt1
+- Updated to 2.0.1.
+
 * Sun Oct 01 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.0-alt1
 - Built for ALT Sisyphus.
 
