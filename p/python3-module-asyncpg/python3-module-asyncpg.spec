@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.29.0
-Release: alt1
+Release: alt2
 
 Summary: A fast PostgreSQL Database Client Library for Python/asyncio
 License: Apache-2.0
@@ -16,6 +16,7 @@ Vcs: https://github.com/MagicStack/asyncpg
 Source0: %name-%version.tar
 Source1: submodules.tar
 Source2: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -41,6 +42,7 @@ the PostgreSQL protocol may work, but are not being actively tested.
 
 %prep
 %setup -a1
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -62,6 +64,9 @@ the PostgreSQL protocol may work, but are not being actively tested.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 19 2023 Anton Zhukharev <ancieg@altlinux.org> 0.29.0-alt2
+- Fixed building with cython>3.
+
 * Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 0.29.0-alt1
 - Updated to 0.29.0.
 
