@@ -5,7 +5,7 @@
 
 Name: python3-module-pygobject
 Version: %major.6
-Release: alt13
+Release: alt14
 Summary: Python 3 bindings for GObject
 
 License: LGPL
@@ -33,6 +33,10 @@ BuildRequires: python3-devel python3-module-pycairo-devel python3-module-pycairo
 # ? python-modules
 %add_python_req_skip keyword scmexpr
 %add_python3_req_skip _gio
+
+# for python w/o distutils
+%filter_from_requires /python3(distutils.*)/d
+Requires: python3(setuptools._distutils)
 
 %description
 This package provides Python bindings for the GLib, GObject and GIO,
@@ -136,6 +140,9 @@ find %buildroot -type f -name '*.py' -exec 2to3 -w '{}' +
 %endif
 
 %changelog
+* Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.28.6-alt14
+- Build without distutils.
+
 * Tue Dec 13 2022 Grigory Ustinov <grenka@altlinux.org> 2.28.6-alt13
 - Fixed build with python3.11.
 
