@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: shadowsocks-rust
-Version: 1.16.2
+Version: 1.17.1
 Release: alt1
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: MIT
@@ -77,6 +77,12 @@ install -m0640 .gear/*.json %buildroot%_sysconfdir/%name
 %_bindir/ss*
 
 %changelog
+* Mon Dec 18 2023 Vitaly Chikunov <vt@altlinux.org> 1.17.1-alt1
+- Update to v1.17.1 (2023-11-26).
+
+* Wed Nov 15 2023 Vitaly Chikunov <vt@altlinux.org> 1.17.0-alt1
+- Update to v1.17.0 (2023-10-15).
+
 * Mon Sep 25 2023 Vitaly Chikunov <vt@altlinux.org> 1.16.2-alt1
 - Update to v1.16.2 (2023-09-23).
 
