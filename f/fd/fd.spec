@@ -1,5 +1,5 @@
 Name: fd
-Version: 8.7.1
+Version: 9.0.0
 Release: alt1
 Summary: A simple, fast and user-friendly alternative to 'find'
 License: MIT and Apache-2.0
@@ -10,6 +10,10 @@ Source1: vendor.tar
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
+
+%ifarch i586 armh
+%filter_from_requires /libc.so.6(GLIBC_PRIVATE)/d
+%endif
 
 %description
 fd is an alternative to GNU find. It features:
@@ -55,6 +59,9 @@ install -Dm 0644 contrib/completion/_%name %buildroot%_datadir/zsh/site-function
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Dec 19 2023 Alexander Makeenkov <amakeenk@altlinux.org> 9.0.0-alt1
+- Updated to version 9.0.0.
+
 * Sun Oct 22 2023 Alexander Makeenkov <amakeenk@altlinux.org> 8.7.1-alt1
 - Updated to version 8.7.1.
 
