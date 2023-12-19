@@ -2,7 +2,7 @@
 %define _localstatedir %_var/lib
 
 Name: slick-greeter
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
@@ -88,6 +88,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_man8dir/slick-greeter.8.*
 
 %changelog
+* Tue Dec 19 2023 Anton Midyukov <antohami@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Mon Dec 04 2023 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
