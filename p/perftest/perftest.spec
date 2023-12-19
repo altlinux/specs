@@ -3,13 +3,14 @@
 Name: perftest
 Summary: IB Performance tests
 Version: 4.5.0.20
-Release: alt1
+Release: alt2
 License: %gpl2only
 Group: Monitoring
 Url: https://github.com/linux-rdma/perftest
 
 Source: %name-%version.tar
 Patch2000: %name-e2k.patch
+Patch3500: %name-loongarch64.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: librdmacm-devel
@@ -24,6 +25,7 @@ gen2 uverbs microbenchmarks.
 %ifarch %e2k
 %patch2000 -p1
 %endif
+%patch3500 -p1
 
 %build
 ./autogen.sh
@@ -40,6 +42,9 @@ install -m 0755 raw_ethernet_{bw,lat} %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Tue Dec 19 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.5.0.20-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Mon Feb 06 2023 Anton Farygin <rider@altlinux.ru> 4.5.0.20-alt1
 - 4.4.0.32 -> 4.5.0.20
 
