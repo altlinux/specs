@@ -3,7 +3,7 @@
 
 Name: tigervnc
 Version: 1.13.1
-Release: alt1
+Release: alt2
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -294,6 +294,9 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Tue Dec 19 2023 Fr. Br. George <george@altlinux.org> 1.13.1-alt2
+- Eliminate missing -rfbwait option
+
 * Fri Oct 13 2023 Fr. Br. George <george@altlinux.org> 1.13.1-alt1
 - Udate to 1.13.1
 - Update patches
