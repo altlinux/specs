@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-LibXML
-%def_with bootstrap
+%def_without bootstrap
 Name: perl-%dist
 Version: 2.0209
-Release: alt2.2
+Release: alt3
 
 Summary: Perl binding for libxml2
 License: Artistic-1.0 OR GPL-2.0-or-later
@@ -77,6 +77,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Tue Dec 19 2023 Alexey Shabalin <shaba@altlinux.org> 2.0209-alt3
+- unbootstrap
+
 * Tue Dec 19 2023 Alexey Shabalin <shaba@altlinux.org> 2.0209-alt2.2
 - add patches from fedora
 
