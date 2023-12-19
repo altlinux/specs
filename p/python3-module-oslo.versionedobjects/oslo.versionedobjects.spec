@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.2.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Oslo Versioned Objects library
 
@@ -52,6 +52,10 @@ BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: python3-module-sphinx >= 2.0.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 %endif
+
+# for python w/o distutils
+%filter_from_requires /python3(distutils.*)/d
+Requires: python3(setuptools._distutils)
 
 %description
 The oslo.versionedobjects library provides a generic versioned object model
@@ -127,6 +131,9 @@ install -pDm 644 man/osloversionedobjects.1 %buildroot%_man1dir/osloversionedobj
 %endif
 
 %changelog
+* Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt2
+- Build without distutils.
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Automatically updated to 3.2.0.
 
