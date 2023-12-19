@@ -3,16 +3,16 @@
 %set_verify_elf_method strict
 
 Name: sysstat
-Version: 12.7.4
+Version: 12.7.5
 Release: alt1
 Summary: Performance monitoring tools for Linux
 License: GPL-2.0-or-later
 Group: Monitoring
-URL: http://sebastien.godard.pagesperso-orange.fr/
-Vcs: https://github.com/sysstat/sysstat.git
+URL: https://sysstat.github.io/
+Vcs: https://github.com/sysstat/sysstat
+
 Source: %name-%version.tar
 Source1: sysstat.init
-
 BuildRequires: libsensors3-devel
 BuildRequires: libsystemd-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc desktop-file-utils}}
@@ -170,7 +170,7 @@ fi
 %_man5dir/*
 %_man8dir/*
 %attr(750,root,adm) %_logdir/sa
-%doc CHANGES CREDITS FAQ.md README.md BUG_REPORT
+%doc COPYING CHANGES CREDITS FAQ.md README.md BUG_REPORT
 
 %files isag
 %doc contrib/isag/README-isag
@@ -179,6 +179,10 @@ fi
 %_desktopdir/isag.desktop
 
 %changelog
+* Mon Dec 18 2023 Vitaly Chikunov <vt@altlinux.org> 12.7.5-alt1
+- Update to v12.7.5 (2023-12-17).
+- Update URL.
+
 * Thu Jun 22 2023 Vitaly Chikunov <vt@altlinux.org> 12.7.4-alt1
 - Update to v12.7.4 (2023-06-18).
 
