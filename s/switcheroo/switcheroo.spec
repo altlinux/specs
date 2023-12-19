@@ -6,7 +6,7 @@
 %def_disable bootstrap
 
 Name: switcheroo
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Simple App to Convert Photo Images
@@ -57,6 +57,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Dec 19 2023 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- updated to v2.0.1-5-g698957d
+
 * Sat Nov 25 2023 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - first build for Sisyphus (v2.0.0-4-g2ac1c4c)
 
