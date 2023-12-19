@@ -1,17 +1,27 @@
 Name: jack_mixer
-Version: 15.1
+Version: 18
 Release: alt1
 Summary: Jack Audio Mixer
-License: GPLv2+
+License: GPL-2.0
 Group: Sound
 Url: https://rdio.space/jackmixer/
-# git: https://github.com/jack-mixer/jack_mixer
+Vcs: https://github.com/jack-mixer/jack_mixer
+
 Source0: %name-%version.tar
+
+Requires: libgtk+3-gir
+
 BuildRequires: meson ninja-build
 BuildRequires: glib2-devel
-BuildRequires: python3-dev python3-module-pygobject3 python3-module-pycairo python3-module-pyxdg python3-module-Cython
+BuildRequires: python3-dev
+BuildRequires: python3-module-pygobject3
+BuildRequires: python3-module-pycairo
+BuildRequires: python3-module-pyxdg
+BuildRequires: python3-module-Cython
 BuildRequires: libjack-devel
 BuildRequires: python3-module-docutils
+BuildRequires: python3-module-appdirs
+BuildRequires: libgtk+3
 
 %description
 %name is a GTK+  JACK audio mixer app with a look similar to its hardware
@@ -29,15 +39,17 @@ multiple JACK audio streams.
 %meson_install
 
 %files
-%doc AUTHORS
+%doc README.*
 %_bindir/*
-%python3_sitelibdir/*
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*
 
 %changelog
+* Tue Dec 19 2023 Anton Vyatkin <toni@altlinux.org> 18-alt1
+- New version 18
+
 * Wed Apr 14 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 15.1-alt1
 - Version 15.1
 - buildsystem changed to meson
