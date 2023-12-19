@@ -2,7 +2,7 @@
 
 Name: glpi
 Version: 10.0.11
-Release: alt1
+Release: alt2
 
 Summary: IT and asset management software
 License: GPLv3
@@ -91,12 +91,12 @@ echo "If you upgrade from previous version (less than 9.5) then read /usr/share/
 
 %post apache2
 if [ "$1" = "1" ]; then
-  a2enmode rewrite
+  a2enmod rewrite
   a2ensite %name
   %_initdir/httpd2 condreload
 fi
 if [ "$1" = "2" ]; then
-  a2enmode rewrite
+  a2enmod rewrite
   %_initdir/httpd2 condreload
 fi
 
@@ -167,6 +167,9 @@ fi
 %files php8.2
 
 %changelog
+* Tue Dec 19 2023 Pavel Zilke <zidex@altlinux.org> 10.0.11-alt2
+- Fix spec (ALT #48856)
+
 * Thu Dec 14 2023 Pavel Zilke <zidex@altlinux.org> 10.0.11-alt1
 - New version 10.0.11
 - This release fixes a security issue that has been recently discovered. Update is recommended!
