@@ -1,5 +1,5 @@
 Name: arm-none-eabi-gcc
-Version: 12.3.1
+Version: 13.2.1
 Release: alt1
 
 Summary: GNU Compiler Collection
@@ -12,10 +12,10 @@ Requires: arm-none-eabi-newlib
 Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ flex zlib-devel libgmp-devel libmpc-devel autogen
-BuildRequires: arm-none-eabi-binutils >= 2.35
+BuildRequires: arm-none-eabi-binutils >= 2.41
 BuildRequires: arm-none-eabi-newlib
 
-Requires: arm-none-eabi-binutils >= 2.35
+Requires: arm-none-eabi-binutils >= 2.41
 %add_python_req_skip libstdcxx gdb
 
 %package c++
@@ -119,6 +119,9 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Tue Dec 19 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.2.1-alt1
+- 13.2.1
+
 * Tue Sep 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.3.1-alt1
 - 12.3.1
 
