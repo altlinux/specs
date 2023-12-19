@@ -1,5 +1,5 @@
 Name: goverlay
-Version: 0.9.1
+Version: 1.0
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
@@ -51,6 +51,9 @@ help manage Linux overlays. Currently supported:
 /usr/libexec/goverlay
 
 %changelog
+* Tue Dec 19 2023 Ilya Mashkin <oddity@altlinux.ru> 1.0-alt1
+- 1.0
+
 * Sat Dec 24 2022 Ilya Mashkin <oddity@altlinux.ru> 0.9.1-alt1
 - 0.9.1
 - Add Requires: vulkan-tools vkBasalt (Closes: #43372)
