@@ -1,12 +1,12 @@
 Name:    empty
-Version: 0.6.21b
+Version: 0.6.23c
 Release: alt1
 
 Summary: Run interactive console applications in batch mode
 License: Common Public License
 Group:   System/Configuration/Other
 Url:     http://%name.sourceforge.net
-Source:  http://heanet.dl.sourceforge.net/sourceforge/%name/%name-%version.tar.gz
+Source:  http://heanet.dl.sourceforge.net/sourceforge/%name/%name-%version.tgz
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 BuildPreReq: glibc-devel >= 2.0
@@ -57,9 +57,12 @@ Empty - это утилита, которая служит для организации автоматического выполнения
 %files
 %_bindir/%name
 %_man1dir/%name.*
-%doc README CHANGELOG examples
+%doc CHANGELOG examples
 
 %changelog
+* Tue Dec 19 2023 Ilya Mashkin <oddity@altlinux.ru> 0.6.23c-alt1
+- update to new version 0.6.23
+
 * Wed Jan 26 2022 Ilya Mashkin <oddity@altlinux.ru> 0.6.21b-alt1
 - update to new version 0.6.21
 
