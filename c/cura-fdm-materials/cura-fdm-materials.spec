@@ -1,5 +1,5 @@
 Name: cura-fdm-materials
-Version: 5.3.0
+Version: 5.4.0
 Release: alt1
 Summary: Cura FDM Material database
 License: Public Domain
@@ -41,6 +41,9 @@ cp %SOURCE2 %SOURCE3 .
 %_datadir/cura/resources/materials
 
 %changelog
+* Mon Dec 18 2023 Anton Midyukov <antohami@altlinux.org> 5.4.0-alt1
+- new version (5.4.0) with rpmgs script
+
 * Thu Apr 27 2023 Anton Midyukov <antohami@altlinux.org> 5.3.0-alt1
 - new version (5.3.0) with rpmgs script
 

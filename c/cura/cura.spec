@@ -6,7 +6,7 @@
 
 Name: cura
 Epoch: 1
-Version: 5.3.1
+Version: 5.4.0
 Release: alt1
 Summary: 3D printer control software
 License: LGPLv3+
@@ -32,22 +32,25 @@ Patch4: 0001-Avoid-crash-caused-by-KDE-qqc2-desktop-style.patch
 # Fedora patch
 # Skip forced loading SentryLogger to avoid an error on startup
 Patch10: 028e7f7.patch
-
+# Avoid "KeyError: material_name" crash
+# https://github.com/Ultimaker/Cura/pull/17642.patch
+Patch11: 17642.patch
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
+BuildRequires(pre): rpm-macros-python3 rpm-macros-cmake
+BuildRequires: rpm-build-python3
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: dos2unix
 BuildRequires: python3-devel
-BuildRequires: Uranium >= %version
+BuildRequires: Uranium >= 5.4.0
 BuildRequires: python3-module-pynest2d
 # Tests
 %if 0%{?with_check}
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pip
-BuildRequires: python3-module-savitar
+BuildRequires: python3-module-savitar >= 5.3.0
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-keyring >= 21
 BuildRequires: python3-module-dbus
@@ -56,12 +59,13 @@ BuildRequires: python3(importlib_metadata)
 
 %py3_requires serial zeroconf
 Requires: python3-module-savitar
-Requires: Uranium = %version
+Requires: Uranium = 5.4.0
 Requires: CuraEngine = %epoch:%version
 Requires: cura-fdm-materials
 Requires: 3dprinter-udev-rules
 Requires: python3-module-keyring >= 21
 Requires: qt6-declarative
+Requires: qt6-svg
 # need for plugins
 Requires: python3-module-Charon
 Requires: python3-module-trimesh
@@ -150,6 +154,9 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Mon Dec 18 2023 Anton Midyukov <antohami@altlinux.org> 1:5.4.0-alt1
+- new version (5.4.0) with rpmgs script
+
 * Thu Apr 27 2023 Anton Midyukov <antohami@altlinux.org> 1:5.3.1-alt1
 - new version (5.3.1) with rpmgs script (Closes: 43069)
 

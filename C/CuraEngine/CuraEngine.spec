@@ -3,11 +3,11 @@
 
 Name: CuraEngine
 Epoch: 1
-Version: 5.3.1
-Release: alt1.1
+Version: 5.4.0
+Release: alt1
 
 Summary: Engine for processing 3D models into G-code instructions for 3D printers
-License: AGPL-3.0
+License: AGPL-3.0-or-later
 Group: Engineering
 Url: https://github.com/Ultimaker/CuraEngine
 
@@ -21,8 +21,16 @@ Source4: FindStb.cmake
 Source5: CMakeLists.txt
 Source6: CPackConfig.cmake
 
+# This is some kind of "public" layer of a private logging thing
+# It's header-only and not usable as a system library,
+# so I (churchyard) decided to bundle it for now. Shame on me.
+# It's AGPL-3.0-or-later.
+%global scripta_version c378c837eeb505146ab67abe0904bfed2099128f
+# Source7-url: https://github.com/Ultimaker/Scripta_public/archive/%{scripta_version}/Scripta_public-%{scripta_version}.tar.gz
+Source7: Scripta_public.tar
+
 Patch2: %name-static-libstdcpp.patch
-Patch3: %name-5.3.0-fmt10.patch
+Patch3: %name-5.4.0-fmt10.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -57,6 +65,9 @@ cp -a %SOURCE2 %SOURCE3 %SOURCE4 cmake
 rm -rf CMakeLists.txt
 cp -a %SOURCE5 %SOURCE6 .
 
+tar xf %SOURCE7
+mv Scripta_public/include/scripta/ include
+
 %autopatch -p1
 
 # bundled libraries
@@ -84,6 +95,9 @@ rm -rf libs
 %doc README.md
 
 %changelog
+* Mon Dec 18 2023 Anton Midyukov <antohami@altlinux.org> 1:5.4.0-alt1
+- new version (5.4.0) with rpmgs script
+
 * Thu Oct 12 2023 Nazarov Denis <nenderus@altlinux.org> 1:5.3.1-alt1.1
 - NMU: Fix build with libfmt 10
 
