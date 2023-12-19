@@ -6,7 +6,7 @@
 
 Name: avidemux-qt
 Version: 2.8.1
-Release: alt2
+Release: alt3
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -58,7 +58,7 @@ BuildRequires: liblzma-devel liblzo2-devel libsqlite3-devel libfreetype-devel fo
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel
 BuildRequires: libvdpau-devel libva-devel libXv-devel libXvMC-devel
 %ifarch %ix86 x86_64 aarch64
-BuildRequires: nv-codec-headers
+#BuildRequires: nv-codec-headers
 %endif
 %if_enabled xvba
 BuildRequires: libxvba-devel
@@ -212,6 +212,9 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Tue Dec 19 2023 Sergey V Turchin <zerg@altlinux.org> 2.8.1-alt3
+- temporary build without nvenc (closes: 48851)
+
 * Mon Sep 04 2023 Sergey V Turchin <zerg@altlinux.org> 2.8.1-alt2
 - fix compile with new binutils
 
