@@ -1,7 +1,7 @@
-%define sover 41
+%define sover 42
 
 Name: wolfssl
-Version: 5.6.4
+Version: 5.6.6
 Release: alt1
 
 Summary: Embedded SSL/TLS Library
@@ -58,6 +58,9 @@ This package contains the header files and development libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Dec 20 2023 Nazarov Denis <nenderus@altlinux.org> 5.6.6-alt1
+- New version 5.6.6.
+
 * Tue Nov 07 2023 Nazarov Denis <nenderus@altlinux.org> 5.6.4-alt1
 - New version 5.6.4.
 
