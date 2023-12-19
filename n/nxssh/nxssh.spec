@@ -2,7 +2,7 @@
 
 Name: nxssh
 Version: 7.5
-Release: alt13
+Release: alt14
 
 Summary: Openssh portable (Etersoft edition) for using with NX in RX@Etersoft
 
@@ -31,8 +31,8 @@ Openssh portable (Etersoft edition) for using with NX in RX@Etersoft.
 %prep
 %setup
 
-# fix build with openssl 1.1
-if [ -s %_libdir/libssl.so.1.1 ] || [ -s /%_lib/libssl.so.1.1 ] ; then
+# fix build with openssl >= 1.1
+if [ ! -s %_libdir/libssl.so.1.0.* ] || [ ! -s /%_lib/libssl.so.1.0.* ] ; then
 %patch1 -p1
 fi
 
@@ -59,6 +59,9 @@ install -m755 nxssh %buildroot%_bindir/
 %_bindir/nxssh
 
 %changelog
+* Thu Nov 30 2023 Konstantin Artyushkin <akv@altlinux.org> 7.5-alt14
+- fix build for openssl >= 1.1
+
 * Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 7.5-alt13
 - fix build
 
