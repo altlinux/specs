@@ -5,7 +5,7 @@
 
 Name: vkBasalt
 Version: 0.3.2.10
-Release: alt1
+Release: alt1.1
 Summary: Vulkan post processing layer
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 # The entire source code is zlib except:
@@ -27,8 +27,6 @@ BuildRequires: vulkan-validation-layers
 
 BuildRequires: pkgconfig(vulkan)
 BuildRequires: pkgconfig(x11)
-
-Requires: goverlay
 
 Provides: bundled(reshade) = 0~git%shortcommit
 
@@ -69,6 +67,9 @@ install -Dpm 0644 config/%name.conf -t %buildroot%_sysconfdir/
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Tue Dec 12 2023 Mikhail Tergoev <fidel@altlinux.org> 0.3.2.10-alt1.1
+- NMU: removed goverlay from dependencies (ALT bug: 48779)
+
 * Wed Jul 12 2023 Ilya Mashkin <oddity@altlinux.ru> 0.3.2.10-alt1
 - 0.3.2.10
 
