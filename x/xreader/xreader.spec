@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: xreader
-Version: 3.8.4
+Version: 4.0.0
 Release: alt1
 
 Summary: A document viewer
@@ -38,7 +38,7 @@ BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-
 %{?_enable_xps:BuildRequires: libgxps-devel}
 BuildRequires: libSM-devel libICE-devel libXi-devel
 BuildRequires: libxapps-devel
-BuildRequires: libwebkit2gtk-devel
+BuildRequires: libwebkit2gtk4.1-devel
 BuildRequires: mathjax
 BuildRequires: gtk-doc
 
@@ -146,6 +146,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Tue Dec 19 2023 Anton Midyukov <antohami@altlinux.org> 4.0.0-alt1
+- New version
+
 * Mon Dec 04 2023 Anton Midyukov <antohami@altlinux.org> 3.8.4-alt1
 - New version
 
