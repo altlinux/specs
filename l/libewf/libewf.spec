@@ -1,6 +1,8 @@
+%def_disable python3
+
 Name: libewf
 Version: 20171104
-Release: alt2
+Release: alt3
 
 Summary: Library and tools to support the Expert Witness Compression Format
 
@@ -13,7 +15,11 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++ libssl-devel libuuid-devel zlib-devel
 
-BuildPreReq: libfuse-devel python3-devel flex
+BuildPreReq: libfuse-devel flex
+
+%if_enabled python3
+BuildRequires: python3-devel
+%endif
 
 %description
 libewf is library for support of the Expert Witness Compression Format (EWF).
@@ -31,6 +37,7 @@ Requires: libewf = %version-%release
 %description devel
 Header files and libraries for developing applications which will use libewf.
 
+%if_enabled python3
 %package -n python3-module-pyewf
 Summary: python3 bindings for libewf
 Group: Development/Python3
@@ -43,6 +50,7 @@ format and the EnCase (EWF-E01) format. libewf allows to read files created by
 EnCase 1 to 5, linen and FTK Imager.
 
 This package contains python3 bindings for libewf.
+%endif
 
 %prep
 %setup
@@ -52,8 +60,8 @@ This package contains python3 bindings for libewf.
 %configure \
 	--disable-static \
 	--disable-rpath \
-	--enable-wide-character-type \
-	--enable-python3
+	%{subst_enable python3} \
+	--enable-wide-character-type
 %make_build
 
 %install
@@ -75,10 +83,15 @@ find %buildroot -name '*.la' -delete
 %_man3dir/*
 %_pkgconfigdir/libewf.pc
 
+%if_enabled python3
 %files -n python3-module-pyewf
 %python3_sitelibdir/*.so
+%endif
 
 %changelog
+* Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 20171104-alt3
+- Add knob for building without python.
+
 * Mon Sep 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20171104-alt2
 - NMU: fixed FTBFS with OpenSSL 3.
 
