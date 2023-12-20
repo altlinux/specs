@@ -6,7 +6,7 @@
 
 Name: audit
 Version: 3.1.2
-Release: alt2
+Release: alt2.1
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
 Group: Monitoring
@@ -22,6 +22,7 @@ Requires: service >= 0.5.26-alt1
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libkrb5-devel perl-XML-Parser python-devel swig intltool
 BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
 BuildRequires: libcap-ng-devel
 %endif
 
@@ -238,6 +239,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.2-alt2.1
+- NMU: Add build dependency on setuptools.
+
 * Wed Sep 20 2023 Michael Shigorin <mike@altlinux.org> 3.1.2-alt2
 - add %%check
 
