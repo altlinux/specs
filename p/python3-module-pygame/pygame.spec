@@ -1,7 +1,7 @@
 %define oname pygame
 
 Name: python3-module-pygame
-Version: 2.3.0
+Version: 2.5.2
 Release: alt1
 
 Summary: A Python module for interfacing with the SDL multimedia library
@@ -23,6 +23,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel
 BuildRequires: libjpeg-devel libpng-devel libportmidi-devel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-Cython
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 
 Requires: libSDL >= 1.2.7
@@ -97,6 +98,9 @@ sed -i '/^pkg_dir =/s@pkg_dir = .*@pkg_dir = "%_defaultdocdir/python3-module-pyg
 
 
 %changelog
+* Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.2-alt1
+- Automatically updated to 2.5.2.
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - new version 2.3.0 (with rpmrb script)
 
