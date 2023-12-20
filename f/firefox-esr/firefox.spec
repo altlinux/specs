@@ -19,7 +19,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 115.4.0
+Version: 115.6.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -530,6 +530,32 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Dec 20 2023 Pavel Vasenkov <pav@altlinux.org> 115.6.0-alt1
+- New ESR version.
+- Security fixes
+  + CVE-2023-6856 Heap-buffer-overflow affecting WebGL DrawElementsInstanced method with Mesa VM driver
+  + CVE-2023-6865 Potential exposure of uninitialized data in EncryptingOutputStream
+  + CVE-2023-6857 Symlinks may resolve to smaller than expected buffers
+  + CVE-2023-6858 Heap buffer overflow in nsTextFragment
+  + CVE-2023-6859 Use-after-free in PR_GetIdentitiesLayer
+  + CVE-2023-6860 Potential sandbox escape due to VideoBridge lack of texture validation
+  + CVE-2023-6867 Clickjacking permission prompts using the popup transition
+  + CVE-2023-6861 Heap buffer overflow affected nsWindow::PickerOpen(void) in headless mode
+  + CVE-2023-6862 Use-after-free in nsDNSService
+  + CVE-2023-6863 Undefined behavior in ShutdownObserver()
+  + CVE-2023-6864 Memory safety bugs fixed in Firefox 121, Firefox ESR 115.6, and Thunderbird 115.6
+
+* Thu Nov 23 2023 Pavel Vasenkov <pav@altlinux.org> 115.5.0-alt1
+- New ESR version.
+- Security fixes
+  + CVE-2023-6204 Out-of-bound memory access in WebGL2 blitFramebuffer
+  + CVE-2023-6205 Use-after-free in MessagePort::Entangled
+  + CVE-2023-6206 Clickjacking permission prompts using the fullscreen transition
+  + CVE-2023-6207 Use-after-free in ReadableByteStreamQueueEntry::Buffer
+  + CVE-2023-6208 Using Selection API would copy contents into X11 primary selection.
+  + CVE-2023-6209 Incorrect parsing of relative URLs starting with "///"
+  + CVE-2023-6212 Memory safety bugs fixed in Firefox 120, Firefox ESR 115.5, and Thunderbird 115.5
+
 * Thu Nov 02 2023 Pavel Vasenkov <pav@altlinux.org> 115.4.0-alt1
 - New ESR version.
 - Security fixes
