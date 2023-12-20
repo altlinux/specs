@@ -1,5 +1,5 @@
 Name: debootstrap
-Version: 1.0.132
+Version: 1.0.133
 Release: alt1
 Summary: Debian GNU/Linux bootstrapper
 
@@ -9,7 +9,7 @@ Url: http://code.erisian.com.au/Wiki/debootstrap
 
 # Repacked http://ftp.debian.org/debian/pool/main/d/debootstrap/%{name}_%version.tar.gz
 Source: %name-%version.tar
-Patch1: debootstrap-perms.patch
+Patch1: debootstrap-alt-mask-optional-reqs.patch
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ Debian GNU/Linux guest system.
 
 %prep
 %setup
-%patch1 -p1
+%patch1 -p2
 
 %install
 install -d %buildroot%_datadir/debootstrap/scripts/
@@ -46,6 +46,9 @@ touch -r debootstrap  %buildroot%_sbindir/debootstrap
 %doc debian/changelog debian/copyright README
 
 %changelog
+* Wed Dec 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.133-alt1
+- Updated to 1.0.133.
+
 * Sat Sep 02 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.132-alt1
 - Updated to 1.0.132.
 
